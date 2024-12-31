@@ -10,6 +10,7 @@ struct SecuritySettingsView: View {
     @State var editPasscodePresented = false
     @State var createDuressPasscodePresented = false
     @State var editDuressPasscodePresented = false
+    @State var subscriptionPresented = false
 
     var body: some View {
         ScrollableThemeView {
@@ -110,13 +111,19 @@ struct SecuritySettingsView: View {
                 }
 
                 VStack(spacing: 0) {
+                    PremiumListSectionHeader()
+
                     ListSection {
                         if viewModel.isDuressPasscodeSet {
                             ClickableRow(action: {
+                                guard viewModel.premiumEnabled else {
+                                    subscriptionPresented = true
+                                    return
+                                }
                                 unlockReason = .changeDuressPasscode
                             }) {
                                 Image("switch_wallet_24").themeIcon(color: .themeJacob)
-                                Text("settings_security.edit_duress_passcode".localized).themeBody(color: .themeJacob)
+                                Text("settings_security.edit_duress_passcode".localized).themeBody()
                             }
 
                             ClickableRow(action: {
@@ -125,8 +132,14 @@ struct SecuritySettingsView: View {
                                 Image("trash_24").themeIcon(color: .themeLucian)
                                 Text("settings_security.disable_duress_mode".localized).themeBody(color: .themeLucian)
                             }
+                            .modifier(ColoredBorder())
                         } else {
                             ClickableRow(action: {
+                                guard viewModel.premiumEnabled else {
+                                    subscriptionPresented = true
+                                    return
+                                }
+
                                 if viewModel.isPasscodeSet {
                                     unlockReason = .enableDuressMode
                                 } else {
@@ -134,8 +147,9 @@ struct SecuritySettingsView: View {
                                 }
                             }) {
                                 Image("switch_wallet_24").themeIcon(color: .themeJacob)
-                                Text("settings_security.enable_duress_mode".localized).themeBody(color: .themeJacob)
+                                Text("settings_security.enable_duress_mode".localized).themeBody()
                             }
+                            .modifier(ColoredBorder())
                         }
                     }
 
@@ -200,6 +214,9 @@ struct SecuritySettingsView: View {
             }
             .sheet(isPresented: $editDuressPasscodePresented) {
                 ThemeNavigationView { EditPasscodeModule.editDuressPasscodeView(showParentSheet: $editDuressPasscodePresented) }
+            }
+            .sheet(isPresented: $subscriptionPresented) {
+                PurchasesView()
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }

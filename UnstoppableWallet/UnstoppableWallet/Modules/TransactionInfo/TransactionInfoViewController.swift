@@ -82,6 +82,11 @@ class TransactionInfoViewController: ThemeViewController {
     }
 
     private func openResend(type: ResendTransactionType) {
+        guard viewModel.hasSubscription else {
+            present(PurchasesView().toViewController(), animated: true)
+            return
+        }
+
         do {
             if let evmAdapter = adapter as? BaseEvmAdapter {
                 let viewController = try SendEvmConfirmationModule.resendViewController(adapter: adapter, type: type, transactionHash: viewModel.transactionHash)
@@ -194,14 +199,14 @@ class TransactionInfoViewController: ThemeViewController {
         return CellBuilderNew.row(
             rootElement: .hStack([
                 .imageElement(image: .local(image?.withTintColor(color)), size: .image24),
-                .textElement(text: .body(title, color: color)),
+                .textElement(text: .body(title)),
             ]),
             tableView: tableView,
             id: "option-\(rowInfo.index)",
             height: .heightCell48,
             autoDeselect: true,
             bind: { cell in
-                cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+                cell.set(backgroundStyle: .borderedLawrence(.themeJacob), isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
             },
             action: action
         )
@@ -557,9 +562,19 @@ extension TransactionInfoViewController: SectionsDataSource {
                 footerState = .margin(height: index == viewItems.count - 1 ? .margin32 : 0)
             }
 
+            let headerState: ViewState<UITableViewHeaderFooterView>
+            if let header = sectionViewItem.header {
+                switch header {
+                case .premium:
+                    headerState = .static(view: PremiumHeaderFooterView(), height: .margin48)
+                }
+            } else {
+                headerState = .margin(height: .margin12)
+            }
+
             return Section(
                 id: "section_\(index)",
-                headerState: .margin(height: .margin12),
+                headerState: headerState,
                 footerState: footerState,
                 rows: sectionViewItem.viewItems.enumerated().map { index, viewItem in
                     row(viewItem: viewItem, rowInfo: RowInfo(index: index, isFirst: index == 0, isLast: index == sectionViewItem.viewItems.count - 1))

@@ -57,7 +57,6 @@ class MainSettingsViewController: ThemeViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
 
         tableView.registerHeaderFooter(forClass: HighlightedSubtitleHeaderFooterView.self)
-        tableView.registerHeaderFooter(forClass: PremiumHeaderFooterView.self)
         tableView.registerCell(forClass: MainSettingsPremiumCell.self)
         tableView.sectionDataSource = self
 
@@ -648,18 +647,14 @@ extension MainSettingsViewController: SectionsDataSource {
         var sections: [SectionProtocol] = [
             Section(id: "token", headerState: .margin(height: .margin32), rows: tokenRows),
             Section(id: "account", headerState: .margin(height: .margin32), rows: accountRows),
-            Section(id: "appearance_settings", headerState: .margin(height: .margin32), footerState: .margin(height: .margin24), rows: appearanceRows),
+            Section(id: "appearance_settings", headerState: .margin(height: .margin32), rows: appearanceRows),
         ]
 
         if viewModel.hasSubscription, viewModel.premiumSubscription {
             sections.append(
                 Section(
                     id: "premium",
-                    headerState: .cellType(
-                        hash: "subscription.premium.label".localized,
-                        binder: { _ in },
-                        dynamicHeight: { _ in .margin32 }
-                    ),
+                    headerState: .static(view: PremiumHeaderFooterView(), height: .margin32 + .margin24),
                     rows: premiumSupportRows
                 )
             )
@@ -778,7 +773,7 @@ class PremiumHeaderFooterView: UITableViewHeaderFooterView {
         addSubview(iconView)
         iconView.snp.makeConstraints { maker in
             maker.leading.equalToSuperview().inset(CGFloat.margin32)
-            maker.top.equalToSuperview().inset(CGFloat.margin6)
+            maker.bottom.equalToSuperview().inset(9)
             maker.size.equalTo(CGFloat.iconSize16)
         }
 
@@ -786,7 +781,7 @@ class PremiumHeaderFooterView: UITableViewHeaderFooterView {
         label.snp.makeConstraints { maker in
             maker.leading.equalTo(iconView.snp.trailing).offset(CGFloat.margin6)
             maker.trailing.equalToSuperview().inset(CGFloat.margin32)
-            maker.top.equalToSuperview().inset(CGFloat.margin6)
+            maker.bottom.equalToSuperview().inset(9)
         }
 
         label.font = .subhead1
