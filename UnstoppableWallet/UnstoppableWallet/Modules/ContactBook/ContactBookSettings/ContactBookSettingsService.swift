@@ -62,7 +62,7 @@ extension ContactBookSettingsService {
     }
 
     func toggle(isOn: Bool) {
-        // if user want's to disable, just save state
+        // if user wants to disable, just save state
         guard isOn else {
             activated = false
             return
