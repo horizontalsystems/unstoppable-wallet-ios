@@ -6,7 +6,6 @@ class PurchasesViewModel: ObservableObject {
         .init(title: "token_insights", iconName: "circle_portfolio_24"),
         .init(title: "advanced_search", iconName: "search_discovery_24"),
         .init(title: "trade_signals", iconName: "bell_ring_24"),
-        .init(title: "favorable_swaps", iconName: "precent_24"),
         .init(title: "tx_speed_up", iconName: "outgoing_raw_24"),
         .init(title: "duress_mode", iconName: "switch_wallet_24"),
         .init(title: "address_phishing", iconName: "shield_24"),

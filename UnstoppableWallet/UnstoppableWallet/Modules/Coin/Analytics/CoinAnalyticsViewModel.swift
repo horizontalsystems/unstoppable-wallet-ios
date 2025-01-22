@@ -5,14 +5,18 @@ import HsExtensions
 import MarketKit
 
 class CoinAnalyticsViewModel: ObservableObject {
+    private var cancellables = Set<AnyCancellable>()
+
     let coin: Coin
     private let marketKit = App.shared.marketKit
     private let currencyManager = App.shared.currencyManager
+    private let purchaseManager = App.shared.purchaseManager
     private var tasks = Set<AnyTask>()
 
+    @Published private(set) var premiumEnabled: Bool = false
     @Published private(set) var state: State = .loading
 
-    private let isPurchased = true
+    private let isPurchased = false
 
     private let ratioFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -34,6 +38,13 @@ class CoinAnalyticsViewModel: ObservableObject {
 
     init(coin: Coin) {
         self.coin = coin
+        premiumEnabled = purchaseManager.subscription != nil
+        purchaseManager.$subscription
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] subscription in
+                self?.premiumEnabled = subscription != nil
+            }
+            .store(in: &cancellables)
     }
 
     private func handle(analytics: Analytics) async {

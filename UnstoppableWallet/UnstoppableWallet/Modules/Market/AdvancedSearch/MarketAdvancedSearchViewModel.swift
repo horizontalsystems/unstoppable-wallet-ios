@@ -34,6 +34,7 @@ class MarketAdvancedSearchViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
+    private var categoriesTasks = Set<AnyTask>()
 
     private var internalState: State = .loading {
         didSet {
@@ -44,7 +45,7 @@ class MarketAdvancedSearchViewModel: ObservableObject {
     @Published private(set) var state: State = .loading
     @Published private(set) var premiumEnabled: Bool = false
 
-    @Published var top: MarketModule.Top = .top250 {
+    @Published var top: MarketModule.Top = .default {
         didSet {
             guard top != oldValue else {
                 return
@@ -55,6 +56,13 @@ class MarketAdvancedSearchViewModel: ObservableObject {
     }
 
     @Published var volume: ValueFilter = .none {
+        didSet {
+            syncState()
+        }
+    }
+
+    @Published var allCategoriesState: CategoriesState = .loading
+    @Published var categories: CategoryFilter = .any {
         didSet {
             syncState()
         }
@@ -165,6 +173,29 @@ class MarketAdvancedSearchViewModel: ObservableObject {
             .store(in: &cancellables)
 
         syncMarketInfos()
+        syncCategories()
+    }
+
+    private func syncCategories() {
+        categoriesTasks = Set()
+
+        Task { [weak self, marketKit, currencyManager] in
+            await MainActor.run { [weak self] in
+                self?.allCategoriesState = .loading
+            }
+
+            do {
+                let categories = try await marketKit.coinCategories(currencyCode: currencyManager.baseCurrency.code)
+
+                await MainActor.run { [weak self] in
+                    self?.allCategoriesState = .loaded(categories: categories)
+                }
+            } catch {
+                await MainActor.run { [weak self] in
+                    self?.allCategoriesState = .failed(error: error)
+                }
+            }
+        }.store(in: &categoriesTasks)
     }
 
     private func syncState() {
@@ -181,8 +212,9 @@ class MarketAdvancedSearchViewModel: ObservableObject {
             state = .failed(error: error)
         }
 
-        canReset = top != .top250
+        canReset = top != .default
             || volume != .none
+            || categories != .any
             || listedOnTopExchanges != false
             || goodCexVolume != false
             || goodDexVolume != false
@@ -203,6 +235,7 @@ class MarketAdvancedSearchViewModel: ObservableObject {
 
             return
                 inBounds(value: marketInfo.totalVolume, lower: volume.lowerBound, upper: volume.upperBound) &&
+                inCategories(marketInfo: marketInfo) && 
                 (!listedOnTopExchanges || marketInfo.listedOnTopExchanges == true) &&
                 (!goodCexVolume || marketInfo.solidCex == true) &&
                 (!goodDexVolume || marketInfo.solidDex == true) &&
@@ -242,6 +275,14 @@ class MarketAdvancedSearchViewModel: ObservableObject {
 
         return false
     }
+
+    private func inCategories(marketInfo: MarketInfo) -> Bool {
+        switch categories {
+            case .any: return true
+        case let .list(array): return !Set(array).intersection(Set(marketInfo.categoryIds)).isEmpty
+        }
+    }
+
 
     private func filteredBySignal(marketInfo: MarketInfo) -> Bool {
         guard let signal else {
@@ -296,7 +337,7 @@ class MarketAdvancedSearchViewModel: ObservableObject {
 
 extension MarketAdvancedSearchViewModel {
     var tops: [MarketModule.Top] {
-        [.top100, .top250, .top500, .top1000, .top1500]
+        MarketModule.Top.allCases
     }
 
     var valueFilters: [ValueFilter] {
@@ -351,8 +392,9 @@ extension MarketAdvancedSearchViewModel {
     func reset() {
         syncStateEnabled = false
 
-        top = .top250
+        top = .default
         volume = .none
+        categories = .any
         listedOnTopExchanges = false
         goodDexVolume = false
         goodCexVolume = false
@@ -376,6 +418,46 @@ extension MarketAdvancedSearchViewModel {
         case loading
         case loaded(marketInfos: [MarketInfo])
         case failed(error: Error)
+    }
+
+    enum CategoriesState {
+        case loading
+        case loaded(categories: [CoinCategory])
+        case failed(error: Error)
+    }
+
+    enum CategoryFilter: Identifiable, Equatable {
+        case any
+        case list([Int])
+
+        var id: String {
+            switch self {
+                case .any: return "any"
+                case let .list(array): return array.sorted().map { $0.description }.joined(separator: "|")
+            }
+        }
+
+        var title: String {
+            switch self {
+                case .any: return "selector.any".localized
+                case let .list(array): return array.count.description
+            }
+        }
+
+        static func == (lhs: Self, rhs: Self) -> Bool {
+            switch (lhs, rhs) {
+                case (.any, .any): return true
+                case (.list, .list): return lhs.id == rhs.id
+                default: return false
+            }
+        }
+
+        func `include`(id: Int) -> Bool {
+            if case let .list(array) = self {
+                return array.firstIndex(of: id) != nil
+            }
+            return false
+        }
     }
 
     enum ValueFilter: CaseIterable, Identifiable {

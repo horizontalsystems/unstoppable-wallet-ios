@@ -7,6 +7,7 @@ struct MarketAdvancedSearchView: View {
 
     @State var topPresented = false
     @State var volumePresented = false
+    @State var categoriesPresented = false
     @State var blockchainsPresented = false
     @State var signalsPresented = false
     @State var priceCloseToPresented = false
@@ -29,6 +30,13 @@ struct MarketAdvancedSearchView: View {
 
                             VStack(spacing: 0) {
                                 PremiumListSectionHeader()
+                                ListSection {
+                                    categoriesRow()
+                                }
+                                .modifier(ColoredBorder())
+                            }
+
+                            VStack(spacing: 0) {
                                 ListSection {
                                     priceChangeRow()
                                     pricePeriodRow()
@@ -141,7 +149,10 @@ struct MarketAdvancedSearchView: View {
                             viewModel.top = top
                             topPresented = false
                         } content: {
-                            Text(top.title).themeBody()
+                            VStack(spacing: 1) {
+                                Text(top.title).themeBody()
+                                Text(top.description).themeSubhead2()
+                            }
 
                             if viewModel.top == top {
                                 Image("check_1_20").themeIcon(color: .themeJacob)
@@ -191,6 +202,20 @@ struct MarketAdvancedSearchView: View {
                 .themeListStyle(.bordered)
                 .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin24, trailing: .margin16))
             }
+        }
+    }
+
+    @ViewBuilder private func categoriesRow() -> some View {
+        ClickableRow(spacing: .margin8) {
+            categoriesPresented = true
+        } content: {
+            Text("market.advanced_search.categories".localized).textBody()
+            Spacer()
+            Text(viewModel.categories.title).textSubhead1(color: color(categoriesFilter: viewModel.categories))
+            Image("arrow_small_down_20").themeIcon()
+        }
+        .sheet(isPresented: $categoriesPresented) {
+            MarketAdvancedSearchCategoriesView(viewModel: viewModel, isPresented: $categoriesPresented)
         }
     }
 
@@ -487,6 +512,13 @@ struct MarketAdvancedSearchView: View {
     private func color(valueFilter: MarketAdvancedSearchViewModel.ValueFilter) -> Color {
         switch valueFilter {
         case .none: return .themeGray
+        default: return .themeLeah
+        }
+    }
+
+    private func color(categoriesFilter: MarketAdvancedSearchViewModel.CategoryFilter) -> Color {
+        switch categoriesFilter {
+        case .any: return .themeGray
         default: return .themeLeah
         }
     }

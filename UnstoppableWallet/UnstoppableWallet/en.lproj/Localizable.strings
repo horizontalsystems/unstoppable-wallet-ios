@@ -29,6 +29,7 @@
 "button.i_understand" = "I Understand";
 "button.learn_more" = "Learn More";
 "button.unlock" = "Unlock";
+"button.select" = "Select";
 
 "alert" = "Alert";
 "alert.copied" = "Copied";
@@ -833,6 +834,7 @@
 "market.advanced_search.choose_set" = "Choose Set";
 "market.advanced_search.market_cap" = "Market Cap";
 "market.advanced_search.volume" = "Trading Volume (24h)";
+"market.advanced_search.categories" = "Sectors";
 
 "market.advanced_search.listed_on_top_exchanges" = "Listed on Top Exchanges";
 "market.advanced_search.good_cex_volume" = "Good CEX Volume";
@@ -879,6 +881,16 @@
 "market.advanced_search.more_10_b" = "> 10B";
 "market.advanced_search.more_50_b" = "> 50B";
 "market.advanced_search.more_500_b" = "> 500B";
+
+"market.advanced_search.top.m_cap" = "M.Cap";
+"market.advanced_search.top.more_1_b" = "> $1B";
+"market.advanced_search.top.more_500_m" = "> $500M";
+"market.advanced_search.top.more_250_m" = "> $250M";
+"market.advanced_search.top.more_100_m" = "> $100M";
+"market.advanced_search.top.more_25_m" = "> $25M";
+"market.advanced_search.top.more_10_m" = "> $10M";
+"market.advanced_search.top.more_5_m" = "> $5M";
+"market.advanced_search.top.more_1_m" = "> $1M";
 
 "market.advanced_search.day" = "1 Day";
 "market.advanced_search.week" = "1 Week";
@@ -1312,7 +1324,7 @@
 "settings.rate_us" = "Rate Us";
 "settings.tell_friends" = "Tell Friends";
 "settings.contact_us" = "Contact Us";
-"settings.social_networks.label" = "Be Unstoppable";
+"settings.social_networks.label" = "Join Unstoppables";
 "settings.social_networks.footer" = "Learn and master crypto via exclusive videos. Get to know us informally. Be the first to see things we work on.";
 "settings.get_your_tokens" = "Get UWT Tokens";
 
@@ -2196,10 +2208,6 @@
 "purchases.trade_signals" = "Trade Signals";
 "purchases.trade_signals.description" = "Signals for confident trading.";
 "purchases.trade_signals.info" = "Trade Signals provide real-time notifications about potential trading opportunities and market risks. Using advanced algorithms, this feature analyzes market conditions, trends, and indicators to highlight profitable opportunities or warn against potential losses. Ideal for active traders, it ensures users stay informed and ready to act in a fast-moving market.";
-
-"purchases.favorable_swaps" = "Favorable Swaps";
-"purchases.favorable_swaps.description" = "Signals for confident trading.";
-"purchases.favorable_swaps.info" = "This feature ensures optimal trade conditions by offering reduced fees and competitive exchange rates. By leveraging favorable liquidity pools and minimizing unnecessary charges, users can maximize their transaction value while saving on costs. It’s designed for those who prioritize efficiency and cost-effectiveness in their trades.";
 
 "purchases.tx_speed_up" = "Tx Speed UP / Cancel ";
 "purchases.tx_speed_up.description" = "Speed up and cancel transactions.";

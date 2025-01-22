@@ -125,11 +125,12 @@ extension MarketModule.Top {
         switch self {
         case .top100: return .top100
         case .top200: return .top200
-        case .top250: return .top250
         case .top300: return .top300
         case .top500: return .top500
         case .top1000: return .top1000
         case .top1500: return .top1500
+        case .top2000: return .top2000
+        case .top2500: return .top2500
         }
     }
 }
