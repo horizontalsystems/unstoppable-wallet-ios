@@ -27,7 +27,7 @@ class MarketCoinsViewModel: ObservableObject {
         }
     }
 
-    var top: MarketModule.Top = .top100 {
+    var top: MarketModule.Top = .default {
         didSet {
             stat(page: .markets, event: .switchMarketTop(marketTop: top.statMarketTop))
             syncState()

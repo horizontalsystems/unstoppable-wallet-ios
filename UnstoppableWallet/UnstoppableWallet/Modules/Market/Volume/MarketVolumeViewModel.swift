@@ -68,7 +68,7 @@ extension MarketVolumeViewModel {
 
         Task { [weak self, marketKit, currency] in
             do {
-                let marketInfos = try await marketKit.marketInfos(top: MarketModule.Top.top100.rawValue, currencyCode: currency.code)
+                let marketInfos = try await marketKit.marketInfos(top: MarketModule.Top.default.rawValue, currencyCode: currency.code)
 
                 await MainActor.run { [weak self] in
                     self?.internalState = .loaded(marketInfos: marketInfos)

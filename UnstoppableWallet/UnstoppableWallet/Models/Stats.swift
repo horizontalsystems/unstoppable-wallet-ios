@@ -460,11 +460,12 @@ enum StatField: String {
 enum StatMarketTop: String {
     case top100
     case top200
-    case top250
     case top300
     case top500
     case top1000
     case top1500
+    case top2000
+    case top2500
 }
 
 enum StatEntity: String {
