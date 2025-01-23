@@ -52,7 +52,7 @@ enum WalletModule {
         return WalletViewController(viewModel: viewModel)
     }
 
-    static func sendTokenListViewController(allowedBlockchainTypes: [BlockchainType]? = nil, allowedTokenTypes: [TokenType]? = nil, mode: PreSendViewModel.Mode = .regular) -> UIViewController? {
+    static func sendTokenListViewController(allowedBlockchainTypes: [BlockchainType]? = nil, allowedTokenTypes: [TokenType]? = nil, address: String? = nil, amount: Decimal? = nil) -> UIViewController? {
         guard let account = App.shared.accountManager.activeAccount else {
             return nil
         }
@@ -102,13 +102,14 @@ enum WalletModule {
         let viewController = WalletTokenListViewController(viewModel: viewModel, dataSource: dataSourceChain)
         dataSource.viewController = viewController
         dataSource.onSelectWallet = { [weak viewController] wallet in
-            let module = App.shared.newSendEnabled(wallet: wallet) ?
-                PreSendView(wallet: wallet, mode: mode, onDismiss: { viewController?.dismiss(animated: true) }).toViewController() :
-                SendModule.controller(wallet: wallet, mode: mode)
+            let module = SendAddressView(
+                wallet: wallet,
+                address: address,
+                amount: amount,
+                onDismiss: { viewController?.dismiss(animated: true) }
+            ).toViewController()
 
-            if let module {
-                viewController?.navigationController?.pushViewController(module, animated: true)
-            }
+            viewController?.navigationController?.pushViewController(module, animated: true)
         }
 
         return ThemeNavigationController(rootViewController: viewController)
@@ -237,14 +238,16 @@ enum WalletModule {
                 return
             }
 
-            let module = App.shared.newSendEnabled(wallet: wallet) ?
-                PreSendView(wallet: wallet, mode: .predefined(address: address), onDismiss: { viewController?.dismiss(animated: true) }).toViewController() :
-                SendModule.controller(wallet: wallet, mode: .predefined(address: address))
+            let module = PreSendView(
+                wallet: wallet,
+                resolvedAddress: .init(address: address),
+                addressVisible: false,
+                onDismiss: { viewController?.dismiss(animated: true) }
+            )
+            .toViewController()
 
-            if let module {
-                viewController?.navigationController?.pushViewController(module, animated: true)
-                stat(page: .donate, event: .openSend(token: wallet.token))
-            }
+            viewController?.navigationController?.pushViewController(module, animated: true)
+            stat(page: .donate, event: .openSend(token: wallet.token))
         }
 
         return ThemeNavigationController(rootViewController: viewController)

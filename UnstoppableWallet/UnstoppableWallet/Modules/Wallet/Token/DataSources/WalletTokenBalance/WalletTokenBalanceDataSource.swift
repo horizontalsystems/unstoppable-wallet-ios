@@ -172,12 +172,10 @@ class WalletTokenBalanceDataSource: NSObject {
             }
         case let .wallet(wallet):
             cell.actions[.send] = { [weak self] in
-                let module = App.shared.newSendEnabled(wallet: wallet) ? PreSendView(wallet: wallet, showIcon: true).toNavigationViewController() : SendModule.controller(wallet: wallet).map { ThemeNavigationController(rootViewController: $0) }
+                let module = SendAddressView(wallet: wallet).toNavigationViewController()
 
-                if let module {
-                    self?.parentViewController?.present(module, animated: true)
-                    stat(page: .tokenPage, event: .openSend(token: wallet.token))
-                }
+                self?.parentViewController?.present(module, animated: true)
+                stat(page: .tokenPage, event: .openSend(token: wallet.token))
             }
             cell.actions[.swap] = { [weak self] in
                 let viewController = MultiSwapView(token: wallet.token).toViewController()

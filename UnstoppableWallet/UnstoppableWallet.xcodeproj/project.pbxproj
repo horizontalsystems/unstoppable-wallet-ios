@@ -2704,6 +2704,12 @@
 		D0F766D02D1AD36200E409AD /* SpamAddressDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F766CE2D1AD36200E409AD /* SpamAddressDetector.swift */; };
 		D0F9F5172B99857700C3190A /* FeeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F9F5162B99857700C3190A /* FeeSettings.swift */; };
 		D0F9F5182B99857700C3190A /* FeeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F9F5162B99857700C3190A /* FeeSettings.swift */; };
+		D30C4D412D392FCB0082B487 /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D402D392FC50082B487 /* AddressView.swift */; };
+		D30C4D422D392FCB0082B487 /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D402D392FC50082B487 /* AddressView.swift */; };
+		D30C4D442D392FD50082B487 /* AddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D432D392FD00082B487 /* AddressViewModel.swift */; };
+		D30C4D452D392FD50082B487 /* AddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D432D392FD00082B487 /* AddressViewModel.swift */; };
+		D30C4D492D3A2B1C0082B487 /* SendAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D482D3A2B1C0082B487 /* SendAddressView.swift */; };
+		D30C4D4B2D3A2B1C0082B487 /* SendAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D482D3A2B1C0082B487 /* SendAddressView.swift */; };
 		D30D7E5F2CAAC89700B8CAA7 /* TonConnectEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30D7E5E2CAAC89700B8CAA7 /* TonConnectEventHandler.swift */; };
 		D30D7E602CAAC89700B8CAA7 /* TonConnectEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30D7E5E2CAAC89700B8CAA7 /* TonConnectEventHandler.swift */; };
 		D30D7E622CAACCF300B8CAA7 /* TonConnectSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30D7E612CAACCF300B8CAA7 /* TonConnectSendView.swift */; };
@@ -4616,6 +4622,9 @@
 		D0F132A62B6B990500C7310E /* RbfDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RbfDataSource.swift; sourceTree = "<group>"; };
 		D0F766CE2D1AD36200E409AD /* SpamAddressDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamAddressDetector.swift; sourceTree = "<group>"; };
 		D0F9F5162B99857700C3190A /* FeeSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeSettings.swift; sourceTree = "<group>"; };
+		D30C4D402D392FC50082B487 /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
+		D30C4D432D392FD00082B487 /* AddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewModel.swift; sourceTree = "<group>"; };
+		D30C4D482D3A2B1C0082B487 /* SendAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendAddressView.swift; sourceTree = "<group>"; };
 		D30D7E5E2CAAC89700B8CAA7 /* TonConnectEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonConnectEventHandler.swift; sourceTree = "<group>"; };
 		D30D7E612CAACCF300B8CAA7 /* TonConnectSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonConnectSendView.swift; sourceTree = "<group>"; };
 		D30D7E642CAACCFB00B8CAA7 /* TonConnectSendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonConnectSendViewModel.swift; sourceTree = "<group>"; };
@@ -5546,6 +5555,8 @@
 		11B354AB3C3435F2D5F39EE6 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				D30C4D462D3A2AF20082B487 /* SendAddress */,
+				D30C4D3F2D392FBF0082B487 /* Address */,
 				D3A12E982CC8C6CE008D5F99 /* Education */,
 				D362879D2CA2B32900ADAF3B /* TonConnect */,
 				D3E1E8722C21856000E07052 /* Purchases */,
@@ -8641,6 +8652,23 @@
 			path = Transactions;
 			sourceTree = "<group>";
 		};
+		D30C4D3F2D392FBF0082B487 /* Address */ = {
+			isa = PBXGroup;
+			children = (
+				D30C4D432D392FD00082B487 /* AddressViewModel.swift */,
+				D30C4D402D392FC50082B487 /* AddressView.swift */,
+			);
+			path = Address;
+			sourceTree = "<group>";
+		};
+		D30C4D462D3A2AF20082B487 /* SendAddress */ = {
+			isa = PBXGroup;
+			children = (
+				D30C4D482D3A2B1C0082B487 /* SendAddressView.swift */,
+			);
+			path = SendAddress;
+			sourceTree = "<group>";
+		};
 		D311DA1A2BCD28C10013DB8F /* SendNew */ = {
 			isa = PBXGroup;
 			children = (
@@ -9597,6 +9625,7 @@
 				D05E96A12A2627C8002CCD71 /* TronExternalContractCallTransactionRecord.swift in Sources */,
 				11B35F27274120E53E2C1ADE /* Faq.swift in Sources */,
 				D008CA63267C8DFD00001E0A /* SwapTransactionRecord.swift in Sources */,
+				D30C4D4B2D3A2B1C0082B487 /* SendAddressView.swift in Sources */,
 				11B35B077A52041C9939C6E8 /* FaqCell.swift in Sources */,
 				11B35BF0FDB441A29B9467AF /* CoinSelectService.swift in Sources */,
 				D36DE0CD272FD864000BC916 /* UniswapTradeService.swift in Sources */,
@@ -10239,6 +10268,7 @@
 				11B359F1AB3B0B00DD42E61C /* TokenProtocol.swift in Sources */,
 				D3384D112BFDCBDE00515664 /* MarketEtfView.swift in Sources */,
 				D3C598752C16CDC400789D69 /* CoinAnalyticsViewModel.swift in Sources */,
+				D30C4D442D392FD50082B487 /* AddressViewModel.swift in Sources */,
 				11B3588C582E45D149BB42BB /* Token.swift in Sources */,
 				11B35FC689D745FFBB3684C4 /* TokenType.swift in Sources */,
 				11B354F237E59C24ED8F3759 /* TokenQuery.swift in Sources */,
@@ -10431,6 +10461,7 @@
 				11B35D57964143D9FAAC6A4F /* CexCoinService.swift in Sources */,
 				11B3520F75BD8D46B1F44B3F /* CexAmountInputViewModel.swift in Sources */,
 				11B359029FFF4106B703694C /* CexDepositNetworkSelectModule.swift in Sources */,
+				D30C4D422D392FCB0082B487 /* AddressView.swift in Sources */,
 				D3DB51AC2BD787A00091BBDB /* MarketCoinsViewModel.swift in Sources */,
 				11B35895C483A56545A6700E /* CexDepositNetworkSelectViewController.swift in Sources */,
 				11B359D10C2A7258AF0F2B60 /* CexDepositNetworkSelectViewModel.swift in Sources */,
@@ -11089,6 +11120,7 @@
 				11B35B664765E4EAA7E0E14F /* Faq.swift in Sources */,
 				6BAAF34B2B9B245C00EFE5B2 /* SlideButton.swift in Sources */,
 				D008CA62267C8DFD00001E0A /* SwapTransactionRecord.swift in Sources */,
+				D30C4D492D3A2B1C0082B487 /* SendAddressView.swift in Sources */,
 				11B357DD946C13E58E69A0BE /* FaqCell.swift in Sources */,
 				11B358092D442440DAAE8AC0 /* CoinSelectService.swift in Sources */,
 				58AAA9A289DE179B76AFA99F /* KeyboardAwareViewController.swift in Sources */,
@@ -11731,6 +11763,7 @@
 				11B352C452D8E9C00FD26E8A /* NftActivityHeaderView.swift in Sources */,
 				D3384D102BFDCBDE00515664 /* MarketEtfView.swift in Sources */,
 				D3C598742C16CDC400789D69 /* CoinAnalyticsViewModel.swift in Sources */,
+				D30C4D452D392FD50082B487 /* AddressViewModel.swift in Sources */,
 				11B3589541E87A032D9D2D50 /* BottomSingleSelectorViewController.swift in Sources */,
 				11B359752E118A95F4705B95 /* TokenProtocol.swift in Sources */,
 				11B35DDD77B56489D1EB72C5 /* Token.swift in Sources */,
@@ -11923,6 +11956,7 @@
 				11B356D67F706464900DBD25 /* CexCoinService.swift in Sources */,
 				11B350667CC409D86A3C4C6A /* CexAmountInputViewModel.swift in Sources */,
 				11B35A51BDF5BA34DA7B227E /* CexDepositNetworkSelectModule.swift in Sources */,
+				D30C4D412D392FCB0082B487 /* AddressView.swift in Sources */,
 				D3DB51AB2BD787A00091BBDB /* MarketCoinsViewModel.swift in Sources */,
 				11B35A07ED63F869C0203244 /* CexDepositNetworkSelectViewController.swift in Sources */,
 				11B358DC90F3372DB98BD4A5 /* CexDepositNetworkSelectViewModel.swift in Sources */,
