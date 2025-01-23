@@ -50,17 +50,6 @@ struct AboutView: View {
 
                         Image.disclosureIcon
                     }
-
-                    NavigationRow(destination: {
-                        PrivacyPolicyView(config: .privacy)
-                            .navigationTitle(PrivacyPolicyViewController.Config.privacy.title)
-                            .onFirstAppear { stat(page: .aboutApp, event: .open(page: .privacy)) }
-                            .ignoresSafeArea()
-                    }) {
-                        Image("user_24").themeIcon()
-                        Text("settings.privacy".localized).themeBody()
-                        Image.disclosureIcon
-                    }
                 }
 
                 ListSection {

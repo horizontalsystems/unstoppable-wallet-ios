@@ -22,6 +22,7 @@ class MainSettingsViewController: ThemeViewController {
     private let walletConnectCell = BaseSelectableThemeCell()
     private let tonConnectCell = BaseSelectableThemeCell()
     private let securityCell = BaseSelectableThemeCell()
+    private let privacyCell = BaseSelectableThemeCell()
     private let appearanceCell = BaseSelectableThemeCell()
     private let subscriptionCell = BaseSelectableThemeCell()
     private let contactBookCell = BaseSelectableThemeCell()
@@ -80,6 +81,9 @@ class MainSettingsViewController: ThemeViewController {
         securityCell.set(backgroundStyle: .lawrence, isFirst: true)
         syncSecurityCell()
 
+        privacyCell.set(backgroundStyle: .lawrence)
+        buildTitleValue(cell: privacyCell, image: UIImage(named: "eye_2_24"), title: "settings.privacy".localized)
+        
         appearanceCell.set(backgroundStyle: .lawrence)
         buildTitleValue(cell: appearanceCell, image: UIImage(named: "brush_24"), title: "appearance.title".localized)
 
@@ -319,6 +323,17 @@ class MainSettingsViewController: ThemeViewController {
                     self?.navigationController?.pushViewController(viewController, animated: true)
 
                     stat(page: .settings, event: .open(page: .security))
+                }
+            ),
+            StaticRow(
+                cell: privacyCell,
+                id: "privacy",
+                height: .heightCell48,
+                action: { [weak self] in
+                    let viewController =  PrivacyPolicyView(config: .privacy).toViewController(title: "settings.privacy".localized)
+
+                    self?.navigationController?.pushViewController(viewController, animated: true)
+                    stat(page: .settings, event: .open(page: .privacy))
                 }
             ),
             StaticRow(
