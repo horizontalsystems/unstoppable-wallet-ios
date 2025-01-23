@@ -411,6 +411,10 @@
 
 "blockchain_type.recommended" = " (recommended)";
 
+// Address
+
+"address.title" = "Enter Address";
+
 // Send
 
 "send.title" = "Send %@";

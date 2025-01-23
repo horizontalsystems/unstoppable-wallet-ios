@@ -9,7 +9,6 @@ class AddressViewModelNew: ObservableObject {
 
     private var addressUriParser: AddressUriParser
     private let parserChain: AddressParserChain
-    private let securityCheckerChain: AddressSecurityCheckerChain
 
     let blockchainType: BlockchainType?
     private let contactBookManager: ContactBookManager = App.shared.contactManager
@@ -39,7 +38,6 @@ class AddressViewModelNew: ObservableObject {
     init(initial: AddressInput.Initial) {
         addressUriParser = AddressParserFactory.parser(blockchainType: initial.blockchainType, tokenType: nil)
         parserChain = AddressParserFactory.parserChain(blockchainType: initial.blockchainType)
-        securityCheckerChain = AddressSecurityCheckerFactory.securityCheckerChain(blockchainType: initial.blockchainType)
 
         blockchainType = initial.blockchainType
 
@@ -85,18 +83,8 @@ class AddressViewModelNew: ObservableObject {
                 .handle(address: address)
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .observeOn(MainScheduler.instance)
-                .flatMap { [weak self] parsedAddress -> Single<(Address?, [AddressSecurityCheckerChain.SecurityIssue])> in
-                    guard let _address = parsedAddress, let securityCheckerChain = self?.securityCheckerChain else {
-                        return .just((parsedAddress, []))
-                    }
-
-                    return securityCheckerChain.handle(address: _address).map { (_address, $0) }
-                }
                 .subscribe(
-                    onSuccess: { [weak self] parsedAddress, securityIssues in
-                        print("securityIssues: \(securityIssues)")
-                        self?.sync(parsedAddress, uri: uri, securityIssues: securityIssues)
-                    },
+                    onSuccess: { [weak self] in self?.sync($0, uri: uri) },
                     onError: { [weak self] in self?.sync($0, text: text) }
                 )
                 .disposed(by: addressParserDisposeBag)
@@ -113,13 +101,13 @@ class AddressViewModelNew: ObservableObject {
         }
     }
 
-    private func sync(_ address: Address?, uri: AddressUri?, securityIssues: [AddressSecurityCheckerChain.SecurityIssue]) {
+    private func sync(_ address: Address?, uri: AddressUri?) {
         guard let address else {
             result = .idle
             return
         }
 
-        result = .valid(.init(address: address, uri: uri, securityIssues: securityIssues))
+        result = .valid(.init(address: address, uri: uri))
     }
 
     private func sync(_ error: Error, text: String) {
@@ -191,11 +179,6 @@ enum AddressInput {
     struct Success: Equatable {
         let address: Address
         let uri: AddressUri?
-        let securityIssues: [AddressSecurityCheckerChain.SecurityIssue]
-
-        static func == (lhs: AddressInput.Success, rhs: AddressInput.Success) -> Bool {
-            lhs.address == rhs.address && lhs.uri == rhs.uri
-        }
     }
 
     struct Failure: Equatable {

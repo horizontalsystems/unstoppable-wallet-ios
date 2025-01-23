@@ -53,7 +53,8 @@ class AddressAppShowModule {
         guard let viewController = WalletModule.sendTokenListViewController(
             allowedBlockchainTypes: allowedBlockchainTypes,
             allowedTokenTypes: allowedTokenType.map { [$0] },
-            mode: .prefilled(address: uri.address, amount: uri.amount)
+            address: uri.address,
+            amount: uri.amount
         ) else {
             return
         }

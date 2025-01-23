@@ -5,7 +5,7 @@ import ThemeKit
 
 struct PreSendView: View {
     @StateObject var viewModel: PreSendViewModel
-    private let showIcon: Bool
+    private let addressVisible: Bool
     private let onDismiss: (() -> Void)?
 
     @Environment(\.presentationMode) private var presentationMode
@@ -14,9 +14,9 @@ struct PreSendView: View {
     @State private var settingsPresented = false
     @State private var confirmPresented = false
 
-    init(wallet: Wallet, mode: PreSendViewModel.Mode = .regular, showIcon: Bool = false, onDismiss: (() -> Void)? = nil) {
-        _viewModel = StateObject(wrappedValue: PreSendViewModel(wallet: wallet, mode: mode))
-        self.showIcon = showIcon
+    init(wallet: Wallet, resolvedAddress: ResolvedAddress, amount: Decimal? = nil, addressVisible: Bool = true, onDismiss: (() -> Void)? = nil) {
+        _viewModel = StateObject(wrappedValue: PreSendViewModel(wallet: wallet, resolvedAddress: resolvedAddress, amount: amount))
+        self.addressVisible = addressVisible
         self.onDismiss = onDismiss
     }
 
@@ -24,13 +24,13 @@ struct PreSendView: View {
         ThemeView {
             ScrollView {
                 VStack(spacing: .margin16) {
+                    if addressVisible {
+                        addressView()
+                    }
+
                     VStack(spacing: .margin8) {
                         inputView()
                         availableBalanceView(value: balanceValue())
-                    }
-
-                    if viewModel.addressVisible {
-                        addressView()
                     }
 
                     if viewModel.hasMemo {
@@ -69,12 +69,6 @@ struct PreSendView: View {
         .navigationTitle("Send \(viewModel.token.coin.code)")
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                if showIcon {
-                    CoinIconView(coin: viewModel.token.coin)
-                }
-            }
-
             ToolbarItem(placement: .navigationBarTrailing) {
                 if let handler = viewModel.handler, handler.hasSettings {
                     Button(action: {
@@ -195,14 +189,21 @@ struct PreSendView: View {
     }
 
     @ViewBuilder private func addressView() -> some View {
-        AddressViewNew(
-            initial: .init(
-                blockchainType: viewModel.token.blockchainType,
-                showContacts: true
-            ),
-            text: $viewModel.address,
-            result: $viewModel.addressResult
-        )
+        ListSection {
+            ClickableRow {
+                presentationMode.wrappedValue.dismiss()
+            } content: {
+                Text("send.confirmation.to".localized).textSubhead2()
+
+                Spacer()
+
+                Text(viewModel.resolvedAddress.address)
+                    .textSubhead1(color: .themeLeah)
+                    .multilineTextAlignment(.trailing)
+
+                Image("arrow_small_down_20").themeIcon()
+            }
+        }
     }
 
     @ViewBuilder private func memoView() -> some View {
@@ -268,10 +269,6 @@ struct PreSendView: View {
             title = "send.enter_amount".localized
         } else if let availableBalance = viewModel.availableBalance, let amount = viewModel.amount, amount > availableBalance {
             title = "send.insufficient_balance".localized
-        } else if case .empty = viewModel.addressState {
-            title = "send.enter_address".localized
-        } else if case .invalid = viewModel.addressState {
-            title = "send.invalid_address".localized
         } else {
             title = "send.next_button".localized
             disabled = viewModel.sendData == nil
