@@ -318,13 +318,14 @@ class App {
             logger: logger
         )
 
+        purchaseManager = PurchaseManager()
+
         let statStorage = StatStorage(dbPool: dbPool)
-        statManager = StatManager(marketKit: marketKit, storage: statStorage, userDefaultsStorage: userDefaultsStorage)
+        statManager = StatManager(marketKit: marketKit, storage: statStorage, userDefaultsStorage: userDefaultsStorage, purchaseManager: purchaseManager)
 
         let tonConnectStorage = try TonConnectStorage(dbPool: dbPool)
         tonConnectManager = TonConnectManager(storage: tonConnectStorage, accountManager: accountManager)
 
-        purchaseManager = PurchaseManager()
 
         kitCleaner = KitCleaner(accountManager: accountManager)
 
