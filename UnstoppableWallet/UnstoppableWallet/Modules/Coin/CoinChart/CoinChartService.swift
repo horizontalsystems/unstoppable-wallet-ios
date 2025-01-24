@@ -166,7 +166,7 @@ extension CoinChartService {
     func fetchWithUpdatedIndicators() {
         switch periodType {
         case let .byCustomPoints(interval, _):
-            let updatedType: HsPeriodType = .byCustomPoints(interval, indicatorRepository.extendedPointCount)
+            let updatedType: HsPeriodType = .byCustomPoints(App.shared.priceChangeModeManager.convert(period: interval), indicatorRepository.extendedPointCount)
             if periodType == updatedType {
                 fetch()
             } else {
@@ -177,7 +177,7 @@ extension CoinChartService {
     }
 
     func setPeriod(interval: HsTimePeriod) {
-        periodType = .byCustomPoints(interval, indicatorRepository.extendedPointCount)
+        periodType = .byCustomPoints(App.shared.priceChangeModeManager.convert(period: interval), indicatorRepository.extendedPointCount)
     }
 
     func start() {
