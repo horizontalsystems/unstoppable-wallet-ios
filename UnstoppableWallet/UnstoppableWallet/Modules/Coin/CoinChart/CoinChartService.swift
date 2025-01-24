@@ -87,6 +87,7 @@ class CoinChartService {
         Task { [weak self, marketKit, coinUid] in
             do {
                 self?.startTime = try await marketKit.chartPriceStart(coinUid: coinUid)
+                self?.fetchData()
             } catch {
                 self?.state = .failed(error)
             }
@@ -156,7 +157,10 @@ extension CoinChartService {
     }
 
     var validIntervals: [HsTimePeriod] {
-        HsChartHelper.validIntervals(startTime: startTime)
+        if let startTime {
+            return HsChartHelper.validIntervals(startTime: startTime)
+        }
+        return []
     }
 
     func setPeriodAll() {
@@ -199,8 +203,13 @@ extension CoinChartService {
 
         if startTime == nil {
             fetchStartTime()
+            return
         }
 
+        fetchData()
+    }
+    
+    private func fetchData() {
         if chartPointsMap[periodType] != nil {
             syncState()
         } else {
