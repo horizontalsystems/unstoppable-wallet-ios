@@ -6,12 +6,10 @@ import RxSwift
 
 class ChainalysisAddressValidator {
     private let baseUrl = "https://public.chainalysis.com/api/v1/address/"
-    private let networkManager: NetworkManager
+    private let networkManager = App.shared.networkManager
     private let headers: HTTPHeaders
 
-    init(networkManager: NetworkManager) {
-        self.networkManager = networkManager
-
+    init() {
         headers = HTTPHeaders([
             HTTPHeader(name: "X-API-KEY", value: AppConfig.chainalysisApiKey),
             HTTPHeader(name: "Accept", value: "application/json"),
@@ -19,18 +17,10 @@ class ChainalysisAddressValidator {
     }
 }
 
-extension ChainalysisAddressValidator: IAddressSecurityCheckerItem {
-    func handle(address: Address) -> Single<AddressSecurityCheckerChain.SecurityIssue?> {
-        let request = networkManager.session.request("\(baseUrl)\(address.raw)", headers: headers)
-        let response: Single<ChainalysisAddressValidatorResponse> = networkManager.single(request: request)
-
-        return response.map {
-            if $0.identifications.isEmpty {
-                return nil
-            }
-
-            return .sanctioned(description: "Sanctioned address. \($0.identifications.count) identifications found.")
-        }
+extension ChainalysisAddressValidator: IAddressSecurityChecker {
+    func check(address: Address) async throws -> Bool {
+        let response: ChainalysisAddressValidatorResponse = try await networkManager.fetch(url: "\(baseUrl)\(address.raw)", headers: headers)
+        return !response.identifications.isEmpty
     }
 }
 

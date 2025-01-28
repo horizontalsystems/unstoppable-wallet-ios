@@ -2592,8 +2592,8 @@
 		D06A171C2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06A171A2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift */; };
 		D06B302C2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */; };
 		D06B302D2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */; };
-		D06F60032D195FBC0033A288 /* AddressSecurityCheckerChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F60012D195FBC0033A288 /* AddressSecurityCheckerChain.swift */; };
-		D06F60052D195FBC0033A288 /* AddressSecurityCheckerChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F60012D195FBC0033A288 /* AddressSecurityCheckerChain.swift */; };
+		D06F60032D195FBC0033A288 /* AddressSecurityIssueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F60012D195FBC0033A288 /* AddressSecurityIssueType.swift */; };
+		D06F60052D195FBC0033A288 /* AddressSecurityIssueType.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F60012D195FBC0033A288 /* AddressSecurityIssueType.swift */; };
 		D06F60082D195FE90033A288 /* AddressSecurityCheckerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F60072D195FE90033A288 /* AddressSecurityCheckerFactory.swift */; };
 		D06F60092D195FE90033A288 /* AddressSecurityCheckerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06F60072D195FE90033A288 /* AddressSecurityCheckerFactory.swift */; };
 		D07157DB2A2DD968006F141F /* SendTronModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DA2A2DD968006F141F /* SendTronModule.swift */; };
@@ -4568,7 +4568,7 @@
 		D066A45E2C6CC7E200074E35 /* WelcomeScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreenViewModel.swift; sourceTree = "<group>"; };
 		D06A171A2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeSettingsViewHelper.swift; sourceTree = "<group>"; };
 		D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyFeeSettingsViewModel.swift; sourceTree = "<group>"; };
-		D06F60012D195FBC0033A288 /* AddressSecurityCheckerChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSecurityCheckerChain.swift; sourceTree = "<group>"; };
+		D06F60012D195FBC0033A288 /* AddressSecurityIssueType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSecurityIssueType.swift; sourceTree = "<group>"; };
 		D06F60072D195FE90033A288 /* AddressSecurityCheckerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSecurityCheckerFactory.swift; sourceTree = "<group>"; };
 		D07157DA2A2DD968006F141F /* SendTronModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronModule.swift; sourceTree = "<group>"; };
 		D07157DD2A2DDA09006F141F /* SendTronService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronService.swift; sourceTree = "<group>"; };
@@ -7125,7 +7125,7 @@
 			children = (
 				D05C8E892D22931A006EE778 /* ChainalysisAddressValidator.swift */,
 				D0F766CE2D1AD36200E409AD /* SpamAddressDetector.swift */,
-				D06F60012D195FBC0033A288 /* AddressSecurityCheckerChain.swift */,
+				D06F60012D195FBC0033A288 /* AddressSecurityIssueType.swift */,
 				58AAA7305EF2A12D3DC82B32 /* AddressParserChain.swift */,
 				58AAAAC62C5B05463D339BCC /* EvmAddressParserItem.swift */,
 				58AAA9A4761030BE9F60C85E /* UdnAddressParserItem.swift */,
@@ -9927,7 +9927,7 @@
 				D07157DC2A2DD968006F141F /* SendTronModule.swift in Sources */,
 				11B35A82532EC55909EFBAD8 /* LaunchScreen.swift in Sources */,
 				6BB14F762C01D04200E879B2 /* CheckBoxUiView.swift in Sources */,
-				D06F60052D195FBC0033A288 /* AddressSecurityCheckerChain.swift in Sources */,
+				D06F60052D195FBC0033A288 /* AddressSecurityIssueType.swift in Sources */,
 				6BCD53052A161F4100993F20 /* ICloudBackupTermsViewController.swift in Sources */,
 				11B354FA6F6BF59F64560590 /* CoinTreasuriesViewModel.swift in Sources */,
 				11B35F6092E0950714E277E4 /* PostCell.swift in Sources */,
@@ -11422,7 +11422,7 @@
 				D087627629815DAE00E6FFD4 /* ChooseWatchViewModel.swift in Sources */,
 				11B35ED9D5F95988E9335440 /* CoinAnalyticsModule.swift in Sources */,
 				D389BC4C2C0DDCF500724504 /* MarketAdvancedSearchBlockchainsView.swift in Sources */,
-				D06F60032D195FBC0033A288 /* AddressSecurityCheckerChain.swift in Sources */,
+				D06F60032D195FBC0033A288 /* AddressSecurityIssueType.swift in Sources */,
 				D0118E4B2B7CC63300D55CE6 /* ResendBitcoinViewController.swift in Sources */,
 				6BB14F752C01D04200E879B2 /* CheckBoxUiView.swift in Sources */,
 				11B3551E5E9A6D167F7BA078 /* LaunchScreenManager.swift in Sources */,

@@ -12,4 +12,8 @@ extension Image {
     static var checkIcon: some View {
         Image("check_1_20").themeIcon(color: .themeJacob)
     }
+
+    static var warningIcon: some View {
+        Image("warning_2_20").themeIcon(color: .themeLucian)
+    }
 }

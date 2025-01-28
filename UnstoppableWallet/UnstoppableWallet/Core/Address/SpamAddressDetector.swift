@@ -1,5 +1,3 @@
-import RxSwift
-
 class SpamAddressDetector {
     private let spamAddressManager: SpamAddressManager
 
@@ -8,15 +6,8 @@ class SpamAddressDetector {
     }
 }
 
-extension SpamAddressDetector: IAddressSecurityCheckerItem {
-    func handle(address: Address) -> Single<AddressSecurityCheckerChain.SecurityIssue?> {
-        var result: AddressSecurityCheckerChain.SecurityIssue? = nil
-
-        let spamAddress = spamAddressManager.find(address: address.raw.uppercased())
-        if let spamAddress {
-            result = .spam(transactionHash: spamAddress.transactionHash.hs.hexString)
-        }
-
-        return Single.just(result)
+extension SpamAddressDetector: IAddressSecurityChecker {
+    func check(address: Address) async throws -> Bool {
+        spamAddressManager.find(address: address.raw.uppercased()) != nil
     }
 }
