@@ -25,7 +25,12 @@ struct PreSendView: View {
             ScrollView {
                 VStack(spacing: .margin16) {
                     if addressVisible {
-                        addressView()
+                        if viewModel.resolvedAddress.issueTypes.isEmpty {
+                            addressView()
+                        } else {
+                            addressView()
+                                .overlay(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).stroke(Color.themeRed50, lineWidth: .heightOneDp))
+                        }
                     }
 
                     VStack(spacing: .margin8) {
@@ -60,6 +65,7 @@ struct PreSendView: View {
                                 presentationMode.wrappedValue.dismiss()
                             }
                         }
+                        .toolbarRole(.editor)
                     }
                 }
             ) {
@@ -200,6 +206,10 @@ struct PreSendView: View {
                 Text(viewModel.resolvedAddress.address)
                     .textSubhead1(color: .themeLeah)
                     .multilineTextAlignment(.trailing)
+
+                if !viewModel.resolvedAddress.issueTypes.isEmpty {
+                    Image.warningIcon
+                }
 
                 Image("arrow_small_down_20").themeIcon()
             }

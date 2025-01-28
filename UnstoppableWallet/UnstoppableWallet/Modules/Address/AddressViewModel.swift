@@ -4,6 +4,7 @@ import MarketKit
 
 class AddressViewModel: ObservableObject {
     private let wallet: Wallet
+    let issueTypes: [AddressSecurityIssueType]
     private var cancellables = Set<AnyCancellable>()
 
     @Published var address: String = ""
@@ -13,14 +14,17 @@ class AddressViewModel: ObservableObject {
         }
     }
 
-    @Published var state: State = .empty {
+    @Published var state: State = .empty
+
+    @Published var checkStates = [AddressSecurityIssueType: CheckState]() {
         didSet {
-            // todo
+            syncValidState()
         }
     }
 
     init(wallet: Wallet, address: String?) {
         self.wallet = wallet
+        issueTypes = AddressSecurityIssueType.issueTypes(blockchainType: wallet.token.blockchainType)
 
         defer {
             if let address {
@@ -36,9 +40,57 @@ class AddressViewModel: ObservableObject {
         case .loading, .invalid:
             state = .invalid
         case let .valid(success):
-            let address = success.address.raw
-            state = .valid(address: address)
+            check(address: success.address)
         }
+    }
+
+    private func check(address: Address) {
+        for type in issueTypes {
+            checkStates[type] = .checking
+        }
+
+        state = .checking
+
+        for type in issueTypes {
+            let checker = AddressSecurityCheckerFactory.addressSecurityChecker(type: type)
+
+            Task {
+                do {
+                    let hasIssue = try await checker.check(address: address)
+
+                    await MainActor.run {
+                        checkStates[type] = hasIssue ? .detected : .clear
+                    }
+                } catch {
+                    await MainActor.run {
+                        checkStates[type] = .notAvailable
+                    }
+                }
+            }
+        }
+    }
+
+    private func syncValidState() {
+        guard case .checking = state else {
+            return
+        }
+
+        var detectedTypes = [AddressSecurityIssueType]()
+
+        for type in issueTypes {
+            let checkState = checkStates[type] ?? .notAvailable
+
+            switch checkState {
+            case .checking:
+                return
+            case .detected:
+                detectedTypes.append(type)
+            default: ()
+            }
+        }
+
+        let resolvedAddress = ResolvedAddress(address: address, issueTypes: detectedTypes)
+        state = .valid(resolvedAddress: resolvedAddress)
     }
 }
 
@@ -52,18 +104,15 @@ extension AddressViewModel {
     enum State {
         case empty
         case invalid
-        case valid(address: String)
-
-        var address: String? {
-            switch self {
-            case let .valid(address): return address
-            default: return nil
-            }
-        }
+        case checking
+        case valid(resolvedAddress: ResolvedAddress)
     }
-}
 
-// TODO: extract to separate file
-struct ResolvedAddress: Hashable {
-    let address: String
+    enum CheckState {
+        case checking
+        case clear
+        case detected
+        case notAvailable
+        case locked
+    }
 }

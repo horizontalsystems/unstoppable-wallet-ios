@@ -240,7 +240,7 @@ enum WalletModule {
 
             let module = PreSendView(
                 wallet: wallet,
-                resolvedAddress: .init(address: address),
+                resolvedAddress: .init(address: address, issueTypes: []),
                 addressVisible: false,
                 onDismiss: { viewController?.dismiss(animated: true) }
             )
