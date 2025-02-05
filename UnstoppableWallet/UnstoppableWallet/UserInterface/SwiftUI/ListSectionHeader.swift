@@ -10,3 +10,13 @@ struct ListSectionHeader: View {
             .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
     }
 }
+
+struct ListSectionHeader2: View {
+    let text: String
+
+    var body: some View {
+        Text(text.uppercased())
+            .themeSubhead1()
+            .frame(height: .heightSingleLineCell)
+    }
+}

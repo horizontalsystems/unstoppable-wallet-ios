@@ -104,6 +104,8 @@ class App {
 
     let purchaseManager: PurchaseManager
 
+    let recentAddressStorage: RecentAddressStorage
+
     let kitCleaner: KitCleaner
     let appManager: AppManager
 
@@ -319,6 +321,8 @@ class App {
         )
 
         purchaseManager = PurchaseManager()
+
+        recentAddressStorage = try RecentAddressStorage(dbPool: dbPool)
 
         let statStorage = StatStorage(dbPool: dbPool)
         statManager = StatManager(marketKit: marketKit, storage: statStorage, userDefaultsStorage: userDefaultsStorage, purchaseManager: purchaseManager)

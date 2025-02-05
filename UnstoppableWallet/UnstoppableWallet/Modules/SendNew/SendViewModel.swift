@@ -6,6 +6,7 @@ import MarketKit
 class SendViewModel: ObservableObject {
     private let currencyManager = App.shared.currencyManager
     private let marketKit = App.shared.marketKit
+    private let recentAddressStorage = App.shared.recentAddressStorage
 
     private var syncTask: AnyTask?
     private var timer: AnyCancellable?
@@ -15,6 +16,8 @@ class SendViewModel: ObservableObject {
     let handler: ISendHandler?
     let transactionService: ITransactionService?
     let currency: Currency
+
+    private let address: String?
 
     @Published var rates = [String: Decimal]()
 
@@ -62,9 +65,10 @@ class SendViewModel: ObservableObject {
         return true
     }
 
-    init(sendData: SendData) {
+    init(sendData: SendData, address: String? = nil) {
         handler = SendHandlerFactory.handler(sendData: sendData)
         currency = currencyManager.baseCurrency
+        self.address = address
 
         if let handler {
             transactionService = TransactionServiceFactory.transactionService(blockchainType: handler.baseToken.blockchainType, initialTransactionSettings: handler.initialTransactionSettings)
@@ -157,6 +161,10 @@ extension SendViewModel {
             await set(sending: true)
 
             _ = try await handler.send(data: data)
+
+            if let address {
+                try? recentAddressStorage.save(address: address, blockchainUid: handler.baseToken.blockchain.uid)
+            }
         } catch {
             await set(sending: false)
             errorSubject.send(error.smartDescription)

@@ -2710,6 +2710,10 @@
 		D30C4D452D392FD50082B487 /* AddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D432D392FD00082B487 /* AddressViewModel.swift */; };
 		D30C4D492D3A2B1C0082B487 /* SendAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D482D3A2B1C0082B487 /* SendAddressView.swift */; };
 		D30C4D4B2D3A2B1C0082B487 /* SendAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D482D3A2B1C0082B487 /* SendAddressView.swift */; };
+		D30C4D512D537E7B0082B487 /* RecentAddressStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D502D537E7B0082B487 /* RecentAddressStorage.swift */; };
+		D30C4D522D537E7B0082B487 /* RecentAddressStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D502D537E7B0082B487 /* RecentAddressStorage.swift */; };
+		D30C4D542D537E990082B487 /* RecentAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D532D537E990082B487 /* RecentAddress.swift */; };
+		D30C4D552D537E990082B487 /* RecentAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D532D537E990082B487 /* RecentAddress.swift */; };
 		D30D7E5F2CAAC89700B8CAA7 /* TonConnectEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30D7E5E2CAAC89700B8CAA7 /* TonConnectEventHandler.swift */; };
 		D30D7E602CAAC89700B8CAA7 /* TonConnectEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30D7E5E2CAAC89700B8CAA7 /* TonConnectEventHandler.swift */; };
 		D30D7E622CAACCF300B8CAA7 /* TonConnectSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30D7E612CAACCF300B8CAA7 /* TonConnectSendView.swift */; };
@@ -4625,6 +4629,8 @@
 		D30C4D402D392FC50082B487 /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
 		D30C4D432D392FD00082B487 /* AddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewModel.swift; sourceTree = "<group>"; };
 		D30C4D482D3A2B1C0082B487 /* SendAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendAddressView.swift; sourceTree = "<group>"; };
+		D30C4D502D537E7B0082B487 /* RecentAddressStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentAddressStorage.swift; sourceTree = "<group>"; };
+		D30C4D532D537E990082B487 /* RecentAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentAddress.swift; sourceTree = "<group>"; };
 		D30D7E5E2CAAC89700B8CAA7 /* TonConnectEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonConnectEventHandler.swift; sourceTree = "<group>"; };
 		D30D7E612CAACCF300B8CAA7 /* TonConnectSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonConnectSendView.swift; sourceTree = "<group>"; };
 		D30D7E642CAACCFB00B8CAA7 /* TonConnectSendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonConnectSendViewModel.swift; sourceTree = "<group>"; };
@@ -5882,6 +5888,7 @@
 				D36E50832BF75B6900C361BD /* WatchlistTimePeriod.swift */,
 				D34A29B52BFB4E3200F63036 /* WatchlistSortBy.swift */,
 				D3384D4D2C07020300515664 /* PriceChangeMode.swift */,
+				D30C4D532D537E990082B487 /* RecentAddress.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -6045,6 +6052,7 @@
 				11B35BFA410F267D3A9B8E43 /* KeychainStorage.swift */,
 				11B35847887E070CA535F890 /* UserDefaultsStorage.swift */,
 				11B35D6FC62F4797DEE1C419 /* StatStorage.swift */,
+				D30C4D502D537E7B0082B487 /* RecentAddressStorage.swift */,
 			);
 			path = Storage;
 			sourceTree = "<group>";
@@ -9988,6 +9996,7 @@
 				ABC9A251119A2486465B315E /* WalletConnectService.swift in Sources */,
 				ABC9AB86218564E4873F6428 /* WalletConnectUriHandler.swift in Sources */,
 				ABC9A9E3191338CD0D1DE8AE /* WalletConnectModule.swift in Sources */,
+				D30C4D542D537E990082B487 /* RecentAddress.swift in Sources */,
 				D09D76922A2E0753004311E6 /* SendTronConfirmationViewModel.swift in Sources */,
 				ABC9A4566EA1995007490C0D /* SendFeeViewModel.swift in Sources */,
 				ABC9A6C0A45A33C83B632D58 /* SendFeeService.swift in Sources */,
@@ -10510,6 +10519,7 @@
 				11B359FBC96E5ED356519001 /* WalletTokenListViewModel.swift in Sources */,
 				6B9032C92D1D6FD400F3F5AC /* PurchaseListView.swift in Sources */,
 				11B354A1F79EDA1E58E50418 /* WalletTokenListViewController.swift in Sources */,
+				D30C4D512D537E7B0082B487 /* RecentAddressStorage.swift in Sources */,
 				11B35D09F6CBE8A070C415F7 /* WalletTokenListViewItemFactory.swift in Sources */,
 				11B35208D0EACC4FEAB69B73 /* CexDepositViewItemFactory.swift in Sources */,
 				11B35BF3BDEA6437804FCC5D /* BlockchainTokensView.swift in Sources */,
@@ -11483,6 +11493,7 @@
 				11B35349D234724EE34956A0 /* EvmBlockchainManager.swift in Sources */,
 				ABC9A3613C5477C07F37F48C /* WalletConnectListViewController.swift in Sources */,
 				ABC9A2E71264B12B7FFC3736 /* WalletConnectListService.swift in Sources */,
+				D30C4D552D537E990082B487 /* RecentAddress.swift in Sources */,
 				ABC9A3114AEA853305A33586 /* WalletConnectListModule.swift in Sources */,
 				ABC9A32176DC914BBB4E9BFF /* WalletConnectListViewModel.swift in Sources */,
 				ABC9AB0F8FE5808DB889C081 /* WalletConnectScanQrViewModel.swift in Sources */,
@@ -12005,6 +12016,7 @@
 				11B35BB8900C2EE48F99AEFE /* WalletTokenCell.swift in Sources */,
 				6B9032C82D1D6FD400F3F5AC /* PurchaseListView.swift in Sources */,
 				11B352EA1BB54971DB960DDF /* WalletTokenListService.swift in Sources */,
+				D30C4D522D537E7B0082B487 /* RecentAddressStorage.swift in Sources */,
 				11B356A2666F52C272B4E465 /* WalletTokenListViewModel.swift in Sources */,
 				11B354CF393A2EAFDABE1C47 /* WalletTokenListViewController.swift in Sources */,
 				11B35E09BB62E1B486F213D2 /* WalletTokenListViewItemFactory.swift in Sources */,

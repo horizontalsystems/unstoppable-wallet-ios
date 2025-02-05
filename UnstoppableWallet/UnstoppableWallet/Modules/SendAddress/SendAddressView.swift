@@ -37,8 +37,14 @@ struct SendAddressView: View {
                 ),
                 destination: {
                     if let resolvedAddress {
-                        PreSendView(wallet: wallet, resolvedAddress: resolvedAddress, amount: amount, onDismiss: onDismiss)
-                            .toolbarRole(.editor)
+                        PreSendView(wallet: wallet, resolvedAddress: resolvedAddress, amount: amount) {
+                            if let onDismiss {
+                                onDismiss()
+                            } else {
+                                presentationMode.wrappedValue.dismiss()
+                            }
+                        }
+                        .toolbarRole(.editor)
                     }
                 }
             ) {

@@ -538,6 +538,8 @@
 
 "send.address.enter_address" = "Enter Address";
 "send.address.invalid_address" = "Invalid Address";
+"send.address.recent" = "Recent";
+"send.address.contacts" = "Contacts";
 "send.address.checking" = "Checking";
 "send.address.phishing_check" = "Phishing Check";
 "send.address.blacklist_check" = "Blacklist Check";
