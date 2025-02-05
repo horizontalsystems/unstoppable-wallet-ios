@@ -6,7 +6,7 @@ import ThemeKit
 struct PreSendView: View {
     @StateObject var viewModel: PreSendViewModel
     private let addressVisible: Bool
-    private let onDismiss: (() -> Void)?
+    private let onDismiss: () -> Void
 
     @Environment(\.presentationMode) private var presentationMode
     @FocusState private var focusField: FocusField?
@@ -14,7 +14,7 @@ struct PreSendView: View {
     @State private var settingsPresented = false
     @State private var confirmPresented = false
 
-    init(wallet: Wallet, resolvedAddress: ResolvedAddress, amount: Decimal? = nil, addressVisible: Bool = true, onDismiss: (() -> Void)? = nil) {
+    init(wallet: Wallet, resolvedAddress: ResolvedAddress, amount: Decimal? = nil, addressVisible: Bool = true, onDismiss: @escaping () -> Void) {
         _viewModel = StateObject(wrappedValue: PreSendViewModel(wallet: wallet, resolvedAddress: resolvedAddress, amount: amount))
         self.addressVisible = addressVisible
         self.onDismiss = onDismiss
@@ -56,14 +56,9 @@ struct PreSendView: View {
                 isActive: $confirmPresented,
                 destination: {
                     if let sendData = viewModel.sendData {
-                        RegularSendView(sendData: sendData) {
+                        RegularSendView(sendData: sendData.sendData, address: sendData.address) {
                             HudHelper.instance.show(banner: .sent)
-
-                            if let onDismiss {
-                                onDismiss()
-                            } else {
-                                presentationMode.wrappedValue.dismiss()
-                            }
+                            onDismiss()
                         }
                         .toolbarRole(.editor)
                     }

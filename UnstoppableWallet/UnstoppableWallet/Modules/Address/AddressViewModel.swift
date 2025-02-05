@@ -5,6 +5,8 @@ import MarketKit
 class AddressViewModel: ObservableObject {
     private let wallet: Wallet
     let issueTypes: [AddressSecurityIssueType]
+    let contacts: [Contact]
+    let recentContact: Contact?
     private var cancellables = Set<AnyCancellable>()
 
     @Published var address: String = ""
@@ -25,6 +27,24 @@ class AddressViewModel: ObservableObject {
     init(wallet: Wallet, address: String?) {
         self.wallet = wallet
         issueTypes = AddressSecurityIssueType.issueTypes(blockchainType: wallet.token.blockchainType)
+
+        let contacts = App.shared.contactManager.contacts(blockchainUid: wallet.token.blockchain.uid)
+            .compactMap { contact -> Contact? in
+                guard let address = contact.address(blockchainUid: wallet.token.blockchain.uid) else {
+                    return nil
+                }
+
+                return Contact(uid: contact.uid, name: contact.name, address: address.address)
+            }
+            .sorted { $0.name ?? "" < $1.name ?? "" }
+
+        let recentAddress = try? App.shared.recentAddressStorage.address(blockchainUid: wallet.token.blockchain.uid)
+
+        recentContact = recentAddress.map { address in
+            Contact(uid: "recent", name: contacts.first(where: { $0.address.lowercased() == address.lowercased() })?.name, address: address)
+        }
+
+        self.contacts = contacts
 
         defer {
             if let address {
@@ -114,5 +134,15 @@ extension AddressViewModel {
         case detected
         case notAvailable
         case locked
+    }
+
+    struct Contact: Identifiable {
+        let uid: String
+        let name: String?
+        let address: String
+
+        var id: String {
+            uid
+        }
     }
 }

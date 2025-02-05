@@ -16,7 +16,7 @@ struct AddressView: View {
     var body: some View {
         BottomGradientWrapper {
             ScrollView {
-                VStack(spacing: .margin16) {
+                VStack(spacing: 0) {
                     AddressViewNew(
                         initial: .init(
                             blockchainType: viewModel.token.blockchainType,
@@ -28,6 +28,22 @@ struct AddressView: View {
                     .padding(.bottom, .margin12)
 
                     switch viewModel.state {
+                    case .empty, .invalid:
+                        if let recentContact = viewModel.recentContact {
+                            ListSectionHeader2(text: "send.address.recent".localized)
+                            ListSection {
+                                row(contact: recentContact)
+                            }
+                            .themeListStyle(.bordered)
+                        }
+
+                        if !viewModel.contacts.isEmpty {
+                            ListSectionHeader2(text: "send.address.contacts".localized)
+                            ListSection {
+                                ForEach(viewModel.contacts) { row(contact: $0) }
+                            }
+                            .themeListStyle(.bordered)
+                        }
                     case .checking, .valid:
                         ListSection {
                             VStack(spacing: 0) {
@@ -37,6 +53,7 @@ struct AddressView: View {
                             }
                         }
                         .themeListStyle(.bordered)
+                        .padding(.top, .margin16)
 
                         let cautions = viewModel.issueTypes.filter { viewModel.checkStates[$0] == .detected }.map { $0.caution }
 
@@ -46,9 +63,8 @@ struct AddressView: View {
                                     HighlightedTextView(caution: cautions[index])
                                 }
                             }
+                            .padding(.top, .margin16)
                         }
-                    default:
-                        EmptyView()
                     }
                 }
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin16, trailing: .margin16))
@@ -73,6 +89,21 @@ struct AddressView: View {
             }
             .disabled(disabled)
             .buttonStyle(PrimaryButtonStyle(style: .yellow))
+        }
+    }
+
+    @ViewBuilder private func row(contact: AddressViewModel.Contact) -> some View {
+        ClickableRow {
+            viewModel.address = contact.address
+        } content: {
+            if let name = contact.name {
+                VStack(spacing: 1) {
+                    Text(name).themeBody()
+                    Text(contact.address.shortened).themeSubhead2()
+                }
+            } else {
+                Text(contact.address).themeBody()
+            }
         }
     }
 

@@ -91,7 +91,7 @@ class PreSendViewModel: ObservableObject {
     }
 
     var handler: IPreSendHandler?
-    @Published var sendData: SendData?
+    @Published var sendData: ExtendedSendData?
     @Published var cautions = [CautionNew]()
 
     init(wallet: Wallet, resolvedAddress: ResolvedAddress, amount: Decimal?) {
@@ -206,7 +206,7 @@ extension PreSendViewModel {
 
         switch result {
         case let .valid(sendData):
-            self.sendData = sendData
+            self.sendData = ExtendedSendData(sendData: sendData, address: resolvedAddress.address)
             cautions = []
         case let .invalid(cautions):
             sendData = nil
@@ -231,6 +231,11 @@ extension PreSendViewModel {
 }
 
 extension PreSendViewModel {
+    struct ExtendedSendData {
+        let sendData: SendData
+        let address: String?
+    }
+
     // todo: remove this, not needed for new send
     enum Mode {
         case regular
