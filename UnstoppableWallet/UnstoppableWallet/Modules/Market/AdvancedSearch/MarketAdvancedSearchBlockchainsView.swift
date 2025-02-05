@@ -15,7 +15,7 @@ struct MarketAdvancedSearchBlockchainsView: View {
             }
             .padding(.horizontal, .margin32)
             .padding(.vertical, .margin24)
-            
+
             BottomGradientWrapper(backgroundColor: .themeLawrence) {
                 ScrollView {
                     VStack(spacing: .margin24) {
@@ -55,12 +55,12 @@ struct MarketAdvancedSearchBlockchainsView: View {
                     isPresented = false
                 }
                 .buttonStyle(PrimaryButtonStyle(style: .yellow))
-            }            
-        }        
+            }
+        }
         .background(Color.themeLawrence)
     }
 
-        func buttonTitle() -> String {
+    func buttonTitle() -> String {
         viewModel.blockchains.count > 0 ? ["button.select".localized, viewModel.blockchains.count.description].joined(separator: " ") : "button.done".localized
     }
 }

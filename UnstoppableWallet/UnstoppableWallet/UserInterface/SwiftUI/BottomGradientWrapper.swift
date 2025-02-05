@@ -5,7 +5,7 @@ struct BottomGradientWrapper<Content: View, BottomContent: View>: View {
 
     @ViewBuilder let content: Content
     @ViewBuilder let bottomContent: BottomContent
-    
+
     var body: some View {
         VStack(spacing: 0) {
             ZStack {

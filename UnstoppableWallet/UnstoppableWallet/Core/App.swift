@@ -330,7 +330,6 @@ class App {
         let tonConnectStorage = try TonConnectStorage(dbPool: dbPool)
         tonConnectManager = TonConnectManager(storage: tonConnectStorage, accountManager: accountManager)
 
-
         kitCleaner = KitCleaner(accountManager: accountManager)
 
         appManager = AppManager(

@@ -51,7 +51,7 @@ enum MarketModule {
         var title: String {
             "market.top_coins".localized("\(rawValue)")
         }
-        
+
         var description: String {
             let result = "market.advanced_search.top.m_cap".localized + " "
             switch self {

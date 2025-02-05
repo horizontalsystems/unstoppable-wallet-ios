@@ -236,7 +236,7 @@ extension PreSendViewModel {
         let address: String?
     }
 
-    // todo: remove this, not needed for new send
+    // TODO: remove this, not needed for new send
     enum Mode {
         case regular
         case prefilled(address: String, amount: Decimal?)

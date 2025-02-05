@@ -208,7 +208,7 @@ extension CoinChartService {
 
         fetchData()
     }
-    
+
     private func fetchData() {
         if chartPointsMap[periodType] != nil {
             syncState()
