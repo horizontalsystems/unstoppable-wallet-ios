@@ -235,7 +235,7 @@ class MarketAdvancedSearchViewModel: ObservableObject {
 
             return
                 inBounds(value: marketInfo.totalVolume, lower: volume.lowerBound, upper: volume.upperBound) &&
-                inCategories(marketInfo: marketInfo) && 
+                inCategories(marketInfo: marketInfo) &&
                 (!listedOnTopExchanges || marketInfo.listedOnTopExchanges == true) &&
                 (!goodCexVolume || marketInfo.solidCex == true) &&
                 (!goodDexVolume || marketInfo.solidDex == true) &&
@@ -278,11 +278,10 @@ class MarketAdvancedSearchViewModel: ObservableObject {
 
     private func inCategories(marketInfo: MarketInfo) -> Bool {
         switch categories {
-            case .any: return true
+        case .any: return true
         case let .list(array): return !Set(array).intersection(Set(marketInfo.categoryIds)).isEmpty
         }
     }
-
 
     private func filteredBySignal(marketInfo: MarketInfo) -> Bool {
         guard let signal else {
@@ -432,27 +431,27 @@ extension MarketAdvancedSearchViewModel {
 
         var id: String {
             switch self {
-                case .any: return "any"
-                case let .list(array): return array.sorted().map { $0.description }.joined(separator: "|")
+            case .any: return "any"
+            case let .list(array): return array.sorted().map(\.description).joined(separator: "|")
             }
         }
 
         var title: String {
             switch self {
-                case .any: return "selector.any".localized
-                case let .list(array): return array.count.description
+            case .any: return "selector.any".localized
+            case let .list(array): return array.count.description
             }
         }
 
         static func == (lhs: Self, rhs: Self) -> Bool {
             switch (lhs, rhs) {
-                case (.any, .any): return true
-                case (.list, .list): return lhs.id == rhs.id
-                default: return false
+            case (.any, .any): return true
+            case (.list, .list): return lhs.id == rhs.id
+            default: return false
             }
         }
 
-        func `include`(id: Int) -> Bool {
+        func include(id: Int) -> Bool {
             if case let .list(array) = self {
                 return array.firstIndex(of: id) != nil
             }

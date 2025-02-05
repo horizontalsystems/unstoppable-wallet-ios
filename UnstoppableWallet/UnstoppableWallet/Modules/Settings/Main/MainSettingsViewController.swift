@@ -83,7 +83,7 @@ class MainSettingsViewController: ThemeViewController {
 
         privacyCell.set(backgroundStyle: .lawrence)
         buildTitleValue(cell: privacyCell, image: UIImage(named: "eye_2_24"), title: "settings.privacy".localized)
-        
+
         appearanceCell.set(backgroundStyle: .lawrence)
         buildTitleValue(cell: appearanceCell, image: UIImage(named: "brush_24"), title: "appearance.title".localized)
 
@@ -330,7 +330,7 @@ class MainSettingsViewController: ThemeViewController {
                 id: "privacy",
                 height: .heightCell48,
                 action: { [weak self] in
-                    let viewController =  PrivacyPolicyView(config: .privacy).toViewController(title: "settings.privacy".localized)
+                    let viewController = PrivacyPolicyView(config: .privacy).toViewController(title: "settings.privacy".localized)
 
                     self?.navigationController?.pushViewController(viewController, animated: true)
                     stat(page: .settings, event: .open(page: .privacy))

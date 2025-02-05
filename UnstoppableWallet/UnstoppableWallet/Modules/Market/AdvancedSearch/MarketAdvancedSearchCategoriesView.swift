@@ -14,7 +14,7 @@ struct MarketAdvancedSearchCategoriesView: View {
             }
             .padding(.horizontal, .margin32)
             .padding(.vertical, .margin24)
-            
+
             BottomGradientWrapper(backgroundColor: .themeLawrence) {
                 ScrollView {
                     VStack(spacing: .margin24) {
@@ -27,12 +27,12 @@ struct MarketAdvancedSearchCategoriesView: View {
                                     viewModel.categories = .any
                                 } content: {
                                     Text("selector.any".localized).themeBody(color: .themeGray)
-                                    
+
                                     if viewModel.categories == .any {
                                         Image("check_1_20").themeIcon(color: .themeJacob)
                                     }
                                 }
-                                
+
                                 ForEach(categories) { category in
                                     ClickableRow {
                                         switch viewModel.categories {
@@ -47,7 +47,7 @@ struct MarketAdvancedSearchCategoriesView: View {
                                         }
                                     } content: {
                                         Text(category.name).themeBody()
-                                        
+
                                         if viewModel.categories.include(id: category.id) {
                                             Image("check_1_20").themeIcon(color: .themeJacob)
                                         }
@@ -71,8 +71,8 @@ struct MarketAdvancedSearchCategoriesView: View {
 
     func buttonTitle() -> String {
         switch viewModel.categories {
-            case .any: return "button.done".localized
-            case let .list(categories): return ["button.select".localized, categories.count.description].joined(separator: " ")
+        case .any: return "button.done".localized
+        case let .list(categories): return ["button.select".localized, categories.count.description].joined(separator: " ")
         }
     }
 }

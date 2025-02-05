@@ -242,7 +242,7 @@ class ChartUiView: UIView {
 
     private func updateIntervals() {
         var viewItems: [FilterView.ViewItem] = viewModel.intervals.map { .item(title: $0) }
-        if viewModel.showAll && !viewModel.intervals.isEmpty {
+        if viewModel.showAll, !viewModel.intervals.isEmpty {
             viewItems.append(.item(title: "chart.time_duration.all".localized))
         }
 

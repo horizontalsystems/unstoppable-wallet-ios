@@ -55,7 +55,7 @@ struct AddressView: View {
                         .themeListStyle(.bordered)
                         .padding(.top, .margin16)
 
-                        let cautions = viewModel.issueTypes.filter { viewModel.checkStates[$0] == .detected }.map { $0.caution }
+                        let cautions = viewModel.issueTypes.filter { viewModel.checkStates[$0] == .detected }.map(\.caution)
 
                         if !cautions.isEmpty {
                             VStack(spacing: .margin12) {
