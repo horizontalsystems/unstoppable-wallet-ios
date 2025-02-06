@@ -3,11 +3,18 @@ import Foundation
 import MarketKit
 
 class AddressViewModel: ObservableObject {
+    private let purchaseManager = App.shared.purchaseManager
     private let wallet: Wallet
     let issueTypes: [AddressSecurityIssueType]
     let contacts: [Contact]
     let recentContact: Contact?
     private var cancellables = Set<AnyCancellable>()
+
+    private var premiumEnabled: Bool {
+        didSet {
+            syncAddressState()
+        }
+    }
 
     @Published var address: String = ""
     @Published var addressResult: AddressInput.Result = .idle {
@@ -16,9 +23,9 @@ class AddressViewModel: ObservableObject {
         }
     }
 
-    @Published var state: State = .empty
+    @Published private(set) var state: State = .empty
 
-    @Published var checkStates = [AddressSecurityIssueType: CheckState]() {
+    @Published private(set) var checkStates = [AddressSecurityIssueType: CheckState]() {
         didSet {
             syncValidState()
         }
@@ -46,11 +53,19 @@ class AddressViewModel: ObservableObject {
 
         self.contacts = contacts
 
+        premiumEnabled = purchaseManager.subscription != nil
+
         defer {
             if let address {
                 self.address = address
             }
         }
+
+        purchaseManager.$subscription
+            .sink { [weak self] subscription in
+                self?.premiumEnabled = subscription != nil
+            }
+            .store(in: &cancellables)
     }
 
     private func syncAddressState() {
@@ -60,7 +75,15 @@ class AddressViewModel: ObservableObject {
         case .loading, .invalid:
             state = .invalid
         case let .valid(success):
-            check(address: success.address)
+            if premiumEnabled {
+                check(address: success.address)
+            } else {
+                for type in issueTypes {
+                    checkStates[type] = .locked
+                }
+
+                state = .valid(resolvedAddress: ResolvedAddress(address: address, issueTypes: []))
+            }
         }
     }
 
