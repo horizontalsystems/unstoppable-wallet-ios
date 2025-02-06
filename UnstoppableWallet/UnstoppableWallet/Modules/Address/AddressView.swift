@@ -7,6 +7,7 @@ struct AddressView: View {
     private var onFinish: (ResolvedAddress) -> Void
 
     @Environment(\.presentationMode) private var presentationMode
+    @State var subscriptionPresented = false
 
     init(wallet: Wallet, address: String? = nil, onFinish: @escaping (ResolvedAddress) -> Void) {
         _viewModel = StateObject(wrappedValue: AddressViewModel(wallet: wallet, address: address))
@@ -48,7 +49,7 @@ struct AddressView: View {
                         ListSection {
                             VStack(spacing: 0) {
                                 ForEach(viewModel.issueTypes) { type in
-                                    checkView(title: type.title, state: viewModel.checkStates[type] ?? .notAvailable)
+                                    checkView(title: type.checkTitle, state: viewModel.checkStates[type] ?? .notAvailable)
                                 }
                             }
                         }
@@ -90,6 +91,9 @@ struct AddressView: View {
             .disabled(disabled)
             .buttonStyle(PrimaryButtonStyle(style: .yellow))
         }
+        .sheet(isPresented: $subscriptionPresented) {
+            PurchasesView()
+        }
     }
 
     @ViewBuilder private func row(contact: AddressViewModel.Contact) -> some View {
@@ -110,8 +114,8 @@ struct AddressView: View {
     @ViewBuilder private func checkView(title: String, state: AddressViewModel.CheckState) -> some View {
         HStack(spacing: .margin8) {
             HStack(spacing: 2) {
+                Image("star_premium_20").themeIcon(color: .themeJacob)
                 Text(title).textSubhead2()
-                Image("crown_20").themeIcon(color: .themeJacob)
             }
 
             Spacer()
@@ -131,6 +135,13 @@ struct AddressView: View {
         }
         .padding(.horizontal, .margin16)
         .frame(minHeight: 40)
+        .contentShape(Rectangle())
+        .onTapGesture {
+            switch state {
+            case .locked: subscriptionPresented = true
+            default: ()
+            }
+        }
     }
 
     private func buttonState() -> (String, Bool, Bool) {

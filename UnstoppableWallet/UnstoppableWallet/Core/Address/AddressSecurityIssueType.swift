@@ -8,17 +8,31 @@ enum AddressSecurityIssueType: CaseIterable, Identifiable {
         self
     }
 
-    var title: String {
+    var checkTitle: String {
         switch self {
         case .phishing: return "send.address.phishing_check".localized
         case .sanctioned: return "send.address.blacklist_check".localized
         }
     }
 
+    var preSendTitle: String {
+        switch self {
+        case .phishing: return "send.address.phishing.pre_send.title".localized
+        case .sanctioned: return "send.address.blacklist.pre_send.title".localized
+        }
+    }
+
+    var preSendDescription: String {
+        switch self {
+        case .phishing: return "send.address.phishing.pre_send.description".localized
+        case .sanctioned: return "send.address.blacklist.pre_send.description".localized
+        }
+    }
+
     var caution: CautionNew {
         switch self {
-        case .phishing: return CautionNew(title: "send.address.phishing.title".localized, text: "send.address.phishing.description".localized, type: .error)
-        case .sanctioned: return CautionNew(title: "send.address.blacklist.title".localized, text: "send.address.blacklist.description".localized, type: .error)
+        case .phishing: return CautionNew(title: "send.address.phishing.caution.title".localized, text: "send.address.phishing.caution.description".localized, type: .error)
+        case .sanctioned: return CautionNew(title: "send.address.blacklist.caution.title".localized, text: "send.address.blacklist.caution.description".localized, type: .error)
         }
     }
 

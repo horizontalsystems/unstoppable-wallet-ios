@@ -535,20 +535,25 @@
 "send.token_syncing" = "Token Syncing";
 "send.token_not_synced" = "Token Not Synced";
 "send.insufficient_balance" = "Insufficient Balance";
+"send.send_anyway" = "Send Anyway";
 
 "send.address.enter_address" = "Enter Address";
 "send.address.invalid_address" = "Invalid Address";
 "send.address.recent" = "Recent";
 "send.address.contacts" = "Contacts";
 "send.address.checking" = "Checking";
-"send.address.phishing_check" = "Phishing Check";
-"send.address.blacklist_check" = "Blacklist Check";
 "send.address.check.clear" = "Clear";
 "send.address.check.detected" = "Detected";
-"send.address.phishing.title" = "Phishing Address Detected!";
-"send.address.phishing.description" = "The address you entered may be fraudulent. Scammers often alter the first and last characters. Verify the full address carefully before proceeding to avoid loss.";
-"send.address.blacklist.title" = "Blacklisted Address Detected!";
-"send.address.blacklist.description" = "The address you entered is flagged as blacklisted. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
+"send.address.phishing_check" = "Phishing Check";
+"send.address.phishing.caution.title" = "Phishing Address Detected!";
+"send.address.phishing.caution.description" = "The address you entered may be fraudulent. Scammers often alter the first and last characters. Verify the full address carefully before proceeding to avoid loss.";
+"send.address.phishing.pre_send.title" = "Phishing Address!";
+"send.address.phishing.pre_send.description" = "You are about to send funds to a suspicious address that may be fraudulent. Please be aware that this could result in a permanent loss of your tokens. By proceeding, you acknowledge the risks involved. Are you sure you want to continue?";
+"send.address.blacklist_check" = "Blacklist Check";
+"send.address.blacklist.caution.title" = "Blacklisted Address!";
+"send.address.blacklist.caution.description" = "The address you entered is flagged as blacklisted. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
+"send.address.blacklist.pre_send.title" = "Blacklisted Address Detected!";
+"send.address.blacklist.pre_send.description" = "You are about to send funds to an address that is blacklisted. Transactions to this address could result in loss or other risks. By proceeding, you acknowledge the potential dangers. Are you sure you want to continue?";
 
 // Donate
 
