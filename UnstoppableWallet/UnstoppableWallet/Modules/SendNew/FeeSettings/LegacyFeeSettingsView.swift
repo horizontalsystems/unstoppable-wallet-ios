@@ -34,26 +34,26 @@ struct LegacyFeeSettingsView: View {
                     helper.row(
                         title: "fee_settings.network_fee".localized,
                         feeValue: l2FeeValue,
-                        description: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized)
+                        infoDescription: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized)
                     )
                     if let l1FeeValue {
                         helper.row(
                             title: "fee_settings.l1_fee".localized,
                             feeValue: l1FeeValue,
-                            description: .init(title: "fee_settings.l1_fee".localized, description: "fee_settings.l1_fee.info".localized)
+                            infoDescription: .init(title: "fee_settings.l1_fee".localized, description: "fee_settings.l1_fee.info".localized)
                         )
                     }
                     helper.row(
                         title: "fee_settings.gas_limit".localized,
                         feeValue: gasLimitValue,
-                        description: .init(title: "fee_settings.gas_limit".localized, description: "fee_settings.gas_limit.info".localized)
+                        infoDescription: .init(title: "fee_settings.gas_limit".localized, description: "fee_settings.gas_limit.info".localized)
                     )
                 }
 
                 VStack(spacing: 0) {
                     helper.headerRow(
                         title: "fee_settings.gas_price".localized,
-                        description: .init(
+                        infoDescription: .init(
                             title: "fee_settings.gas_price".localized,
                             description: "fee_settings.gas_price.info".localized
                         )
@@ -69,7 +69,7 @@ struct LegacyFeeSettingsView: View {
                 VStack(spacing: 0) {
                     helper.headerRow(
                         title: "evm_send_settings.nonce".localized,
-                        description: .init(
+                        infoDescription: .init(
                             title: "evm_send_settings.nonce".localized,
                             description: "evm_send_settings.nonce.info".localized
                         )

@@ -13,9 +13,7 @@ struct PreSendView: View {
 
     @State private var settingsPresented = false
     @State private var confirmPresented = false
-
     @State private var addressSecurityIssueType: AddressSecurityIssueType?
-    @State private var sheetHeight: CGFloat = .zero
 
     @State private var issueTypes = [AddressSecurityIssueType]()
 
@@ -94,55 +92,22 @@ struct PreSendView: View {
                 }
             }
         }
-        .sheet(item: $addressSecurityIssueType) { issueType in
-            VStack(spacing: 0) {
-                HStack(spacing: .margin16) {
-                    Image("warning_2_24").themeIcon(color: .themeLucian)
-
-                    Text(issueType.preSendTitle).themeHeadline2()
-
-                    Button(action: {
-                        addressSecurityIssueType = nil
-                    }) {
-                        Image("close_3_24")
-                    }
-                }
-                .padding(.horizontal, .margin32)
-                .padding(.vertical, .margin24)
-
-                HighlightedTextView(text: issueType.preSendDescription, style: .alert)
-                    .padding(.horizontal, .margin16)
-
-                VStack(spacing: .margin12) {
-                    Button(action: {
-                        print("SEND")
-                        // viewModel.sendAnyway = true
+        .bottomSheetNew(item: $addressSecurityIssueType) { issueType in
+            BottomSheetView(
+                icon: .local(name: "warning_2_24", tint: .themeLucian),
+                title: issueType.preSendTitle,
+                items: [
+                    .highlightedDescription(text: issueType.preSendDescription),
+                ],
+                buttons: [
+                    .init(style: .red, title: "send.send_anyway".localized) {
                         addressSecurityIssueType = nil
                         handleNext()
-                    }) {
-                        Text("send.send_anyway".localized)
-                    }
-                    .buttonStyle(PrimaryButtonStyle(style: .red))
-
-                    Button(action: {
-                        addressSecurityIssueType = nil
-                    }) {
-                        Text("button.cancel".localized)
-                    }
-                    .buttonStyle(PrimaryButtonStyle(style: .transparent))
-                }
-                .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin16, trailing: .margin24))
-            }
-            .fixedSize(horizontal: false, vertical: true)
-            .overlay {
-                GeometryReader { geometry in
-                    Color.clear.preference(key: InnerHeightPreferenceKey.self, value: geometry.size.height)
-                }
-            }
-            .onPreferenceChange(InnerHeightPreferenceKey.self) { newHeight in
-                sheetHeight = newHeight
-            }
-            .presentationDetents([.height(sheetHeight)])
+                    },
+                    .init(style: .transparent, title: "button.cancel".localized) { addressSecurityIssueType = nil },
+                ],
+                onDismiss: { addressSecurityIssueType = nil }
+            )
         }
         .accentColor(.themeJacob)
     }
@@ -351,12 +316,5 @@ extension PreSendView {
     private enum FocusField: Int, Hashable {
         case amount
         case fiatAmount
-    }
-}
-
-struct InnerHeightPreferenceKey: PreferenceKey {
-    static let defaultValue: CGFloat = .zero
-    static func reduce(value: inout CGFloat, nextValue: () -> CGFloat) {
-        value = nextValue()
     }
 }

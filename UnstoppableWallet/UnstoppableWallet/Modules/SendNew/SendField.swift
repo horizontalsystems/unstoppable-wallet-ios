@@ -5,8 +5,8 @@ import SwiftUI
 
 enum SendField {
     case amount(title: String, token: Token, appValueType: AppValueType, currencyValue: CurrencyValue?, type: AmountType)
-    case value(title: String, description: ActionSheetView.InfoDescription?, appValue: AppValue?, currencyValue: CurrencyValue?, formatFull: Bool)
-    case doubleValue(title: String, description: ActionSheetView.InfoDescription?, value1: String, value2: String?)
+    case value(title: String, description: InfoDescription?, appValue: AppValue?, currencyValue: CurrencyValue?, formatFull: Bool)
+    case doubleValue(title: String, description: InfoDescription?, value1: String, value2: String?)
     case levelValue(title: String, value: String, level: ValueLevel)
     case address(title: String, value: String, blockchainType: BlockchainType)
     case price(title: String, tokenA: Token, tokenB: Token, amountA: Decimal, amountB: Decimal)
@@ -45,12 +45,12 @@ enum SendField {
                     }
                 }
             }
-        case let .value(title, description, appValue, currencyValue, formatFull):
-            ListRow(padding: EdgeInsets(top: .margin12, leading: description == nil ? .margin16 : 0, bottom: .margin12, trailing: .margin16)) {
-                if let description {
+        case let .value(title, infoDescription, appValue, currencyValue, formatFull):
+            ListRow(padding: EdgeInsets(top: .margin12, leading: infoDescription == nil ? .margin16 : 0, bottom: .margin12, trailing: .margin16)) {
+                if let infoDescription {
                     Text(title)
                         .textSubhead2()
-                        .modifier(Informed(description: description))
+                        .modifier(Informed(infoDescription: infoDescription))
                 } else {
                     Text(title)
                         .textSubhead2()
@@ -106,12 +106,12 @@ enum SendField {
                 }
                 .buttonStyle(SecondaryCircleButtonStyle(style: .default))
             }
-        case let .doubleValue(title, description, value1, value2):
-            ListRow(padding: EdgeInsets(top: .margin12, leading: description == nil ? .margin16 : 0, bottom: .margin12, trailing: .margin16)) {
-                if let description {
+        case let .doubleValue(title, infoDescription, value1, value2):
+            ListRow(padding: EdgeInsets(top: .margin12, leading: infoDescription == nil ? .margin16 : 0, bottom: .margin12, trailing: .margin16)) {
+                if let infoDescription {
                     Text(title)
                         .textSubhead2()
-                        .modifier(Informed(description: description))
+                        .modifier(Informed(infoDescription: infoDescription))
                 } else {
                     Text(title)
                         .textSubhead2()

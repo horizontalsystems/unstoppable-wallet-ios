@@ -2068,7 +2068,6 @@
 		ABC9A3FEF48388A60B8BACB5 /* DataSourceChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A22311B6AA64B7D93CB4 /* DataSourceChain.swift */; };
 		ABC9A400CF531FBE9FD0D7B1 /* ActionSheetAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A37BB33AB95DE917BEB6 /* ActionSheetAnimator.swift */; };
 		ABC9A4045F498EE345B998D8 /* IntegerFormAmountInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB9077A6A0ABE4909B76 /* IntegerFormAmountInputView.swift */; };
-		ABC9A40501F0D398D003078B /* ActionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A8268350993ABDAC0B4B /* ActionSheetView.swift */; };
 		ABC9A40EB6EC886116806130 /* WalletConnectSessionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC0B5943DF3B61B20BF6 /* WalletConnectSessionManager.swift */; };
 		ABC9A414F0F0AEA6E4DD4E9D /* RestorePassphraseModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A39A33712A1429D623D5 /* RestorePassphraseModule.swift */; };
 		ABC9A41B8484D568EEAD72AE /* WalletConnectChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB3C230E3289C206ED9C /* WalletConnectChain.swift */; };
@@ -2103,7 +2102,6 @@
 		ABC9A4CD35CF43C88EC13909 /* SendEip1155Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC6A0B950C0AABD5A93E /* SendEip1155Service.swift */; };
 		ABC9A4D5326B3A85888140FE /* ChartIndicatorSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ACE2CCBDF21572F5600C /* ChartIndicatorSettingsViewModel.swift */; };
 		ABC9A4DE73BE3055DD97343B /* ShimmerEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3442B9B245C00EFE5B2 /* ShimmerEffect.swift */; };
-		ABC9A4DF390C8952FC088AAC /* ActionSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A8268350993ABDAC0B4B /* ActionSheetView.swift */; };
 		ABC9A4E323FF7AAD86FA8E75 /* MarketCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A37521CD6E2CC5BA4E68 /* MarketCardView.swift */; };
 		ABC9A4F144A81832F29C1216 /* WCWalletPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE5B5F3F21C12DD17A95 /* WCWalletPayload.swift */; };
 		ABC9A4F4B7F17169DC240A98 /* WalletConnectUriHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A1C31F5343EB2BEA4540 /* WalletConnectUriHandler.swift */; };
@@ -2712,6 +2710,10 @@
 		D30C4D522D537E7B0082B487 /* RecentAddressStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D502D537E7B0082B487 /* RecentAddressStorage.swift */; };
 		D30C4D542D537E990082B487 /* RecentAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D532D537E990082B487 /* RecentAddress.swift */; };
 		D30C4D552D537E990082B487 /* RecentAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D532D537E990082B487 /* RecentAddress.swift */; };
+		D30C4D572D55FE980082B487 /* BottomSheetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D562D55FE910082B487 /* BottomSheetModifier.swift */; };
+		D30C4D582D55FE980082B487 /* BottomSheetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D562D55FE910082B487 /* BottomSheetModifier.swift */; };
+		D30C4D5A2D560D3A0082B487 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D592D560D360082B487 /* BottomSheetView.swift */; };
+		D30C4D5B2D560D3A0082B487 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D592D560D360082B487 /* BottomSheetView.swift */; };
 		D30D7E5F2CAAC89700B8CAA7 /* TonConnectEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30D7E5E2CAAC89700B8CAA7 /* TonConnectEventHandler.swift */; };
 		D30D7E602CAAC89700B8CAA7 /* TonConnectEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30D7E5E2CAAC89700B8CAA7 /* TonConnectEventHandler.swift */; };
 		D30D7E622CAACCF300B8CAA7 /* TonConnectSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30D7E612CAACCF300B8CAA7 /* TonConnectSendView.swift */; };
@@ -4364,7 +4366,6 @@
 		ABC9A806FD17A129212E3F7C /* NftAssetOverviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftAssetOverviewViewController.swift; sourceTree = "<group>"; };
 		ABC9A8080797194017F736AB /* ContactBookContactViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactBookContactViewModel.swift; sourceTree = "<group>"; };
 		ABC9A819E6708797C571CA0B /* RawFullBackup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RawFullBackup.swift; sourceTree = "<group>"; };
-		ABC9A8268350993ABDAC0B4B /* ActionSheetView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetView.swift; sourceTree = "<group>"; };
 		ABC9A82A1E9AE6CC0E24756B /* SendNftModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendNftModule.swift; sourceTree = "<group>"; };
 		ABC9A830FE79DBF62FD63CC4 /* ThemeMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeMode.swift; sourceTree = "<group>"; };
 		ABC9A85E2F420CB76C0E1CC3 /* WCSignMessageRequestService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WCSignMessageRequestService.swift; sourceTree = "<group>"; };
@@ -4628,6 +4629,8 @@
 		D30C4D482D3A2B1C0082B487 /* SendAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendAddressView.swift; sourceTree = "<group>"; };
 		D30C4D502D537E7B0082B487 /* RecentAddressStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentAddressStorage.swift; sourceTree = "<group>"; };
 		D30C4D532D537E990082B487 /* RecentAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentAddress.swift; sourceTree = "<group>"; };
+		D30C4D562D55FE910082B487 /* BottomSheetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetModifier.swift; sourceTree = "<group>"; };
+		D30C4D592D560D360082B487 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
 		D30D7E5E2CAAC89700B8CAA7 /* TonConnectEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonConnectEventHandler.swift; sourceTree = "<group>"; };
 		D30D7E612CAACCF300B8CAA7 /* TonConnectSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonConnectSendView.swift; sourceTree = "<group>"; };
 		D30D7E642CAACCFB00B8CAA7 /* TonConnectSendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonConnectSendViewModel.swift; sourceTree = "<group>"; };
@@ -5364,6 +5367,8 @@
 		11B3546A6E6F3CC013C9FF44 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				D30C4D592D560D360082B487 /* BottomSheetView.swift */,
+				D30C4D562D55FE910082B487 /* BottomSheetModifier.swift */,
 				D0A980A82B5E3C0900127AF4 /* StepChangeButtonsView.swift */,
 				11B35AA43C4832521D428799 /* ListSection.swift */,
 				11B35D0EBAF33901578520E1 /* HorizontalDivider.swift */,
@@ -7813,7 +7818,6 @@
 		ABC9A49FE1A041CAC3B6C1E9 /* Alert */ = {
 			isa = PBXGroup;
 			children = (
-				ABC9A8268350993ABDAC0B4B /* ActionSheetView.swift */,
 				ABC9A87A0C7AA22B19520502 /* AlertButtonTintColor.swift */,
 				ABC9AB43B35D4DE04BDB5734 /* AlertView.swift */,
 				ABC9A77CEB528EACD0244E73 /* ActionSheetModifier.swift */,
@@ -9864,6 +9868,7 @@
 				2FA5D6BF7186A35B9A086231 /* ContractCreationTransactionRecord.swift in Sources */,
 				2FA5D4248B5AA0F0EDF131F4 /* EvmTransactionRecord.swift in Sources */,
 				2FA5D21790195F1083F7BB21 /* EvmTransactionConverter.swift in Sources */,
+				D30C4D572D55FE980082B487 /* BottomSheetModifier.swift in Sources */,
 				11B35A4E8657330B03FB2BCF /* SwitchAccountService.swift in Sources */,
 				11B352AE20E447BA1E9E890B /* SwitchAccountViewModel.swift in Sources */,
 				11B355CA37285348558E98A9 /* SwitchAccountViewController.swift in Sources */,
@@ -9919,6 +9924,7 @@
 				D30D7E622CAACCF300B8CAA7 /* TonConnectSendView.swift in Sources */,
 				D05E969E2A2627AF002CCD71 /* TronContractCallTransactionRecord.swift in Sources */,
 				6B2907262AF0CB8A006157D6 /* WalletConnectAppShowView.swift in Sources */,
+				D30C4D5A2D560D3A0082B487 /* BottomSheetView.swift in Sources */,
 				D00DAE462B626C2900F48E1D /* GasPrice.swift in Sources */,
 				D36DE0AC272FD612000BC916 /* SwapViewController.swift in Sources */,
 				D087627729815DAE00E6FFD4 /* ChooseWatchViewModel.swift in Sources */,
@@ -10854,7 +10860,6 @@
 				11B3587280273E0804CA84F2 /* Stats.swift in Sources */,
 				ABC9AC8F6F1BD574DB5BAA20 /* RecipientRowsView.swift in Sources */,
 				ABC9AEC906C313583DBECCCA /* RecipientRowsViewModel.swift in Sources */,
-				ABC9A40501F0D398D003078B /* ActionSheetView.swift in Sources */,
 				ABC9A835B49A7BF85F87454D /* AlertButtonTintColor.swift in Sources */,
 				ABC9A6E738C4A3556AD5E767 /* AlertView.swift in Sources */,
 				ABC9AE088EAF3654EBE2E822 /* ActionSheetModifier.swift in Sources */,
@@ -11360,6 +11365,7 @@
 				2FA5D0588EFCA934B4CAC162 /* ContractCreationTransactionRecord.swift in Sources */,
 				2FA5DC0554CE24AE27663585 /* EvmTransactionRecord.swift in Sources */,
 				2FA5DE81BBA97B8B6F30A779 /* EvmTransactionConverter.swift in Sources */,
+				D30C4D582D55FE980082B487 /* BottomSheetModifier.swift in Sources */,
 				11B35286305AB7DA6114F1D0 /* SwitchAccountService.swift in Sources */,
 				11B35FE8D60BFF31C3104484 /* SwitchAccountViewModel.swift in Sources */,
 				11B351AF3AE7DC307974DD6B /* SwitchAccountViewController.swift in Sources */,
@@ -11415,6 +11421,7 @@
 				11B3580B9C21B55ACC07B043 /* AdapterManager.swift in Sources */,
 				D30D7E632CAACCF300B8CAA7 /* TonConnectSendView.swift in Sources */,
 				11B35F25D1209C6DB33ADA55 /* AdapterFactory.swift in Sources */,
+				D30C4D5B2D560D3A0082B487 /* BottomSheetView.swift in Sources */,
 				2FA5DE1250DA9D85CD9BF1A3 /* AppValue.swift in Sources */,
 				58AAA72230207B253E2153EA /* SelectorButton.swift in Sources */,
 				D36DE0E4272FD887000BC916 /* OneInchService.swift in Sources */,
@@ -12350,7 +12357,6 @@
 				11B35B1875DF852DE471C511 /* Stats.swift in Sources */,
 				ABC9A28FF8184EDA95751080 /* RecipientRowsView.swift in Sources */,
 				ABC9A6537ACEB9AF1CCF9D8C /* RecipientRowsViewModel.swift in Sources */,
-				ABC9A4DF390C8952FC088AAC /* ActionSheetView.swift in Sources */,
 				ABC9A190E478402B48410FCC /* AlertButtonTintColor.swift in Sources */,
 				ABC9AE136053B13AFDA1883E /* AlertView.swift in Sources */,
 				ABC9AAAFAC24894452DC5361 /* ActionSheetModifier.swift in Sources */,

@@ -96,7 +96,7 @@ struct CoinAnalyticsView: View {
         .sheet(item: $presentedAnalysisViewItem) { viewItem in
             CoinAnalyticsIssuesView(viewItem: viewItem, isPresented: Binding(get: { presentedAnalysisViewItem != nil }, set: { if !$0 { presentedAnalysisViewItem = nil } }))
         }
-        .bottomSheet(item: $presentedProChartType) { type in
+        .bottomSheetNew(item: $presentedProChartType) { type in
             CoinProChartView(coin: viewModel.coin, type: type, isPresented: Binding(get: { presentedProChartType != nil }, set: { if !$0 { presentedProChartType = nil } }))
         }
         .sheet(item: $presentedHolderBlockchain) { blockchain in

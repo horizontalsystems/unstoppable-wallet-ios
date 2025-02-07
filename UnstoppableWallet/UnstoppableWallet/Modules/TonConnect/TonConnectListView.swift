@@ -66,12 +66,12 @@ struct TonConnectListView: View {
             }
             .ignoresSafeArea()
         }
-        .bottomSheet(item: $tonConnectApp) { app in
-            ActionSheetView(
-                image: .trash,
+        .bottomSheetNew(item: $tonConnectApp) { app in
+            BottomSheetView(
+                icon: .trash,
                 title: "ton_connect.list.disconnect_app".localized,
                 items: [
-                    .description(text: "ton_connect.list.disconnect_app.description".localized(app.manifest.name)),
+                    .text(text: "ton_connect.list.disconnect_app.description".localized(app.manifest.name)),
                 ],
                 buttons: [
                     .init(style: .red, title: "ton_connect.list.disconnect_app.disconnect".localized) {

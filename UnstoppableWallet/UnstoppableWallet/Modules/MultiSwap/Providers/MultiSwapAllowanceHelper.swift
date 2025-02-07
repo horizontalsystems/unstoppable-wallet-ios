@@ -118,7 +118,7 @@ extension MultiSwapAllowanceHelper {
                     fields.append(
                         MultiSwapMainField(
                             title: "swap.allowance".localized,
-                            description: .init(title: "swap.allowance".localized, description: "swap.allowance.description".localized),
+                            infoDescription: .init(title: "swap.allowance".localized, description: "swap.allowance.description".localized),
                             value: "\(formatted)",
                             valueLevel: .error
                         )
