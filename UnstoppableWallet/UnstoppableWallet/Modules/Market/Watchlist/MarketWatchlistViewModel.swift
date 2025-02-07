@@ -21,7 +21,7 @@ class MarketWatchlistViewModel: ObservableObject {
         }
     }
 
-    @Published private(set) var premiumEnabled: Bool = false
+    @Published private(set) var tradeSignalsEnabled: Bool = false
     @Published var state: State = .loading
 
     @Published var sortBy: WatchlistSortBy {
@@ -46,12 +46,12 @@ class MarketWatchlistViewModel: ObservableObject {
     @Published var showSignals: Bool
 
     init() {
-        let premiumEnabled = purchaseManager.subscription != nil
+        let tradeSignalsEnabled = purchaseManager.activated(.tradeSignals)
 
         sortBy = watchlistManager.sortBy
         timePeriod = watchlistManager.timePeriod
-        showSignals = premiumEnabled && watchlistManager.showSignals
-        self.premiumEnabled = premiumEnabled
+        showSignals = tradeSignalsEnabled && watchlistManager.showSignals
+        self.tradeSignalsEnabled = tradeSignalsEnabled
 
         watchlistManager.$timePeriod
             .sink { [weak self] timePeriod in
@@ -59,17 +59,17 @@ class MarketWatchlistViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
-        purchaseManager.$subscription
+        purchaseManager.$activeFeatures
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] subscription in
-                self?.premiumEnabled = subscription != nil
+            .sink { [weak self] activeFeatures in
+                self?.tradeSignalsEnabled = activeFeatures.contains(.tradeSignals)
                 self?.syncShowSignals()
             }
             .store(in: &cancellables)
     }
 
     private func syncShowSignals() {
-        showSignals = premiumEnabled && watchlistManager.showSignals
+        showSignals = tradeSignalsEnabled && watchlistManager.showSignals
     }
 
     private func syncCoinUids() {

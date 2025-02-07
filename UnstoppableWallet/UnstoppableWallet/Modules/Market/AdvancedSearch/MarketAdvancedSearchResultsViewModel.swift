@@ -33,7 +33,7 @@ class MarketAdvancedSearchResultsViewModel: ObservableObject {
     }
 
     init(marketInfos: [MarketInfo], timePeriod: HsTimePeriod) {
-        let premiumEnabled = purchaseManager.subscription != nil
+        let premiumEnabled = purchaseManager.activated(.advancedSearch)
 
         internalMarketInfos = marketInfos
         self.timePeriod = timePeriod
@@ -41,10 +41,10 @@ class MarketAdvancedSearchResultsViewModel: ObservableObject {
         showSignals = premiumEnabled && showSignalsVar
         self.premiumEnabled = premiumEnabled
 
-        purchaseManager.$subscription
+        purchaseManager.$activeFeatures
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] subscription in
-                self?.premiumEnabled = subscription != nil
+            .sink { [weak self] activeFeatures in
+                self?.premiumEnabled = activeFeatures.contains(.advancedSearch)
                 self?.syncShowSignals()
             }
             .store(in: &cancellables)

@@ -220,7 +220,7 @@ struct MarketAdvancedSearchView: View {
     }
 
     @ViewBuilder private func premiumRow(_ view: some View) -> some View {
-        if viewModel.premiumEnabled {
+        if viewModel.advancedSearchEnabled {
             ListRow {
                 view
             }
@@ -237,7 +237,7 @@ struct MarketAdvancedSearchView: View {
         Toggle(isOn: $viewModel.listedOnTopExchanges) {
             Text("market.advanced_search.listed_on_top_exchanges".localized).themeBody()
         }
-        .disabled(!viewModel.premiumEnabled)
+        .disabled(!viewModel.advancedSearchEnabled)
         .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
     }
 
@@ -248,7 +248,7 @@ struct MarketAdvancedSearchView: View {
                 Text("market.advanced_search.overall_score_is_good_or_excellent".localized).themeSubhead2()
             }
         }
-        .disabled(!viewModel.premiumEnabled)
+        .disabled(!viewModel.advancedSearchEnabled)
         .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
     }
 
@@ -259,7 +259,7 @@ struct MarketAdvancedSearchView: View {
                 Text("market.advanced_search.overall_score_is_good_or_excellent".localized).themeSubhead2()
             }
         }
-        .disabled(!viewModel.premiumEnabled)
+        .disabled(!viewModel.advancedSearchEnabled)
         .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
     }
 
@@ -270,7 +270,7 @@ struct MarketAdvancedSearchView: View {
                 Text("market.advanced_search.overall_score_is_good_or_excellent".localized).themeSubhead2()
             }
         }
-        .disabled(!viewModel.premiumEnabled)
+        .disabled(!viewModel.advancedSearchEnabled)
         .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
     }
 
@@ -298,7 +298,7 @@ struct MarketAdvancedSearchView: View {
 
     @ViewBuilder private func signalRow() -> some View {
         ClickableRow(spacing: .margin8) {
-            guard viewModel.premiumEnabled else {
+            guard viewModel.advancedSearchEnabled else {
                 subscriptionPresented = true
                 return
             }
@@ -358,7 +358,7 @@ struct MarketAdvancedSearchView: View {
 
     @ViewBuilder private func priceChangeRow() -> some View {
         ClickableRow(spacing: .margin8) {
-            guard viewModel.premiumEnabled else {
+            guard viewModel.advancedSearchEnabled else {
                 subscriptionPresented = true
                 return
             }
@@ -401,7 +401,7 @@ struct MarketAdvancedSearchView: View {
 
     @ViewBuilder private func pricePeriodRow() -> some View {
         ClickableRow(spacing: .margin8) {
-            guard viewModel.premiumEnabled else {
+            guard viewModel.advancedSearchEnabled else {
                 subscriptionPresented = true
                 return
             }
@@ -446,7 +446,7 @@ struct MarketAdvancedSearchView: View {
         Toggle(isOn: $viewModel.outperformedBtc) {
             Text("market.advanced_search.outperformed_btc".localized).themeBody()
         }
-        .disabled(!viewModel.premiumEnabled)
+        .disabled(!viewModel.advancedSearchEnabled)
         .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
     }
 
@@ -454,7 +454,7 @@ struct MarketAdvancedSearchView: View {
         Toggle(isOn: $viewModel.outperformedEth) {
             Text("market.advanced_search.outperformed_eth".localized).themeBody()
         }
-        .disabled(!viewModel.premiumEnabled)
+        .disabled(!viewModel.advancedSearchEnabled)
         .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
     }
 
@@ -462,13 +462,13 @@ struct MarketAdvancedSearchView: View {
         Toggle(isOn: $viewModel.outperformedBnb) {
             Text("market.advanced_search.outperformed_bnb".localized).themeBody()
         }
-        .disabled(!viewModel.premiumEnabled)
+        .disabled(!viewModel.advancedSearchEnabled)
         .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
     }
 
     @ViewBuilder private func priceCloseToRow() -> some View {
         ClickableRow(spacing: .margin8) {
-            guard viewModel.premiumEnabled else {
+            guard viewModel.advancedSearchEnabled else {
                 subscriptionPresented = true
                 return
             }

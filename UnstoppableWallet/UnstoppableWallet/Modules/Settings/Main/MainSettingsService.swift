@@ -135,12 +135,30 @@ extension MainSettingsService {
         subscriptionManager.isAuthenticated
     }
 
-    var subscriptionPublisher: AnyPublisher<PurchaseManager.Subscription?, Never> {
-        purchaseManager.$subscription
+    var hasActiveSubscriptionsPublisher: AnyPublisher<Bool, Never> {
+        purchaseManager
+            .$purchasedProducts
+            .map { [weak purchaseManager] _ in purchaseManager?.hasActivePurchase ?? false }
+            .eraseToAnyPublisher()
     }
 
-    var subscription: PurchaseManager.Subscription? {
-        purchaseManager.subscription
+    var hasActiveSubscriptions: Bool {
+        purchaseManager.hasActivePurchase
+    }
+
+    var allowFreeTrialPublisher: AnyPublisher<Bool, Never> {
+        purchaseManager
+            .$purchasedProducts
+            .map(\.isEmpty)
+            .eraseToAnyPublisher()
+    }
+
+    var allowFreeTrial: Bool {
+        purchaseManager.purchasedProducts.isEmpty
+    }
+
+    func activated(_ premiumFeature: PremiumFeature) -> Bool {
+        purchaseManager.activated(premiumFeature)
     }
 
     var walletConnectState: WalletConnectState {

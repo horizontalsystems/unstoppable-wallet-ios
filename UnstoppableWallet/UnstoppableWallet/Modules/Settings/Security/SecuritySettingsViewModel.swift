@@ -49,7 +49,7 @@ class SecuritySettingsViewModel: ObservableObject {
         biometryEnabledType = biometryManager.biometryEnabledType
         balanceAutoHide = balanceHiddenManager.balanceAutoHide
 
-        premiumEnabled = purchaseManager.subscription != nil
+        premiumEnabled = purchaseManager.hasActivePurchase
 
         passcodeManager.$currentPasscodeLevel
             .sink { [weak self] in self?.currentPasscodeLevel = $0 }
@@ -66,9 +66,9 @@ class SecuritySettingsViewModel: ObservableObject {
         biometryManager.$biometryEnabledType
             .sink { [weak self] in self?.biometryEnabledType = $0 }
             .store(in: &cancellables)
-        purchaseManager.$subscription
-            .sink { [weak self] subscription in
-                self?.premiumEnabled = subscription != nil
+        purchaseManager.$purchasedProducts
+            .sink { [weak self] _ in
+                self?.premiumEnabled = self?.purchaseManager.hasActivePurchase ?? false
             }
             .store(in: &cancellables)
     }

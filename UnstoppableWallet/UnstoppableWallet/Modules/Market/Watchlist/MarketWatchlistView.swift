@@ -131,7 +131,7 @@ struct MarketWatchlistView: View {
 
     @ViewBuilder private func signalsButton() -> some View {
         Button(action: {
-            guard viewModel.premiumEnabled else {
+            guard viewModel.tradeSignalsEnabled else {
                 subscriptionPresented = true
                 return
             }

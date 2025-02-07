@@ -43,7 +43,7 @@ class MarketAdvancedSearchViewModel: ObservableObject {
     }
 
     @Published private(set) var state: State = .loading
-    @Published private(set) var premiumEnabled: Bool = false
+    @Published private(set) var advancedSearchEnabled: Bool = false
 
     @Published var top: MarketModule.Top = .default {
         didSet {
@@ -164,11 +164,11 @@ class MarketAdvancedSearchViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
-        premiumEnabled = purchaseManager.subscription != nil
-        purchaseManager.$subscription
+        advancedSearchEnabled = purchaseManager.activated(.advancedSearch)
+        purchaseManager.$activeFeatures
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] subscription in
-                self?.premiumEnabled = subscription != nil
+            .sink { [weak self] activeFeatures in
+                self?.advancedSearchEnabled = activeFeatures.contains(.advancedSearch)
             }
             .store(in: &cancellables)
 

@@ -53,7 +53,7 @@ extension TransactionInfoViewModel {
     }
 
     var hasSubscription: Bool {
-        service.subscription != nil
+        service.hasActiveSubscriptions
     }
 
     func togglePrice() {

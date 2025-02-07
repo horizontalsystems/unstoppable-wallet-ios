@@ -1,24 +1,20 @@
 import SwiftUI
 
 struct SubscribePeriodSegmentView: View {
-    let type: PurchaseManager.SubscriptionType
-
-    @Binding var selection: PurchaseManager.SubscriptionPeriod
+    @Binding var items: [PurchaseBottomSheetViewModel.Item]
+    @Binding var selection: PurchaseBottomSheetViewModel.Item?
 
     var body: some View {
         VStack(spacing: 12) {
-            ForEach(PurchaseManager.SubscriptionPeriod.allCases, id: \.self) { period in
-                let viewItem = PurchaseBottomSheetViewModel.ViewItem(type: type, period: period)
-
+            ForEach(items, id: \.self) { item in
                 segmentButton(
-                    title: viewItem.title,
-                    badge: viewItem.discountBadge,
-                    price: viewItem.price,
-                    priceDescription: viewItem.priceDescription,
-                    isSelected: selection == period,
+                    title: item.title,
+                    badge: item.discountBadge,
+                    price: item.price,
+                    priceDescription: item.priceDescription,
+                    isSelected: selection == item,
                     action: {
-                        selection = period
-                        print("TAP on \(period.rawValue)")
+                        selection = item
                     }
                 )
             }
@@ -56,6 +52,7 @@ struct SubscribePeriodSegmentView: View {
             RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous)
                 .strokeBorder(isSelected ? Color.themeJacob : Color.themeSteel20, lineWidth: 1)
         )
+        .contentShape(Rectangle())
         .onTapGesture(perform: action)
     }
 }

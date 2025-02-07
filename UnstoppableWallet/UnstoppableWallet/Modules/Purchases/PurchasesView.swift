@@ -1,55 +1,52 @@
 import SwiftUI
 
 struct PurchasesView: View {
-    @StateObject private var viewModel = PurchasesViewModel()
+    @StateObject private var viewModel: PurchasesViewModel
 
     @Environment(\.dismiss) private var dismiss
     @State private var bottomHeight: CGFloat = 0
 
     @State private var presentedInfoViewItem: PurchasesViewModel.ViewItem?
-    @State private var presentedSubscriptionType: PurchaseManager.SubscriptionType?
+    @State private var subscriptionPresented = false
     @State private var successfulSubscriptionPresented = false
+
+    init() {
+        _viewModel = StateObject(wrappedValue: PurchasesViewModel())
+    }
 
     var body: some View {
         ThemeNavigationView {
             ThemeView {
                 ZStack {
-                    VStack(spacing: 0) {
-                        Text("purchases.description".localized).textBody(color: .themeGray)
-                            .frame(maxWidth: .infinity, alignment: .center)
-                            .padding(.top, .margin16)
-                            .padding(.horizontal, .margin32)
-                            .padding(.bottom, .margin24)
-
-                        PurchaseSegmentView(selection: $viewModel.featuresType)
-                            .onChange(of: viewModel.featuresType) { newValue in
-                                viewModel.setType(newValue)
-                            }
-                            .clipShape(RoundedCorner(radius: .margin16, corners: [.topLeft, .topRight]))
-                            .padding(.horizontal, .margin16)
-
+                    VStack {
                         ThemeRadialView {
                             ScrollView {
-                                VStack(spacing: 0) {
-                                    ListSection {
-                                        ForEach(viewModel.viewItems, id: \.self) { feature in
-                                            row(
-                                                title: "purchases.\(feature.title)".localized,
-                                                description: "purchases.\(feature.title).description".localized,
-                                                image: Image(feature.iconName),
-                                                accented: feature.accented,
-                                                action: {
-                                                    presentedInfoViewItem = feature
-                                                }
-                                            )
-                                        }
-                                    }
-                                    .themeListStyle(.steel10WithBottomCorners([.bottomLeft, .bottomRight]))
-                                    .padding(.horizontal, .margin16)
+                                Image("box_2")
+                                    .padding(.vertical, .margin24)
 
-                                    walletDescription()
+                                Text(title)
+                                    .frame(maxWidth: .infinity, alignment: .center)
+                                    .multilineTextAlignment(.center)
+                                    .padding(.horizontal, 52)
+                                    .padding(.bottom, .margin24)
+
+                                ListSection {
+                                    ForEach(viewModel.viewItems, id: \.self) { feature in
+                                        row(
+                                            title: "purchases.\(feature.title)".localized,
+                                            description: "purchases.\(feature.title).description".localized,
+                                            image: Image(feature.iconName),
+                                            action: {
+                                                presentedInfoViewItem = feature
+                                            }
+                                        )
+                                    }
                                 }
-                                .padding(.bottom, .margin24)
+                                .themeListStyle(.steel10WithCorners(.allCorners))
+                                .modifier(ThemeListStyleModifier(themeListStyle: .steel10WithCorners(.allCorners), cornerRadius: .cornerRadius16))
+                                .padding(.horizontal, .margin16)
+
+                                walletDescription()
                             }
                             .safeAreaInset(edge: .bottom) {
                                 Color.clear.frame(height: bottomHeight)
@@ -59,15 +56,9 @@ struct PurchasesView: View {
 
                     VStack {
                         Spacer()
+
                         VStack(spacing: .margin8) {
                             actionButtonView()
-
-                            Button(action: {
-                                successfulSubscriptionPresented = true
-                            }) {
-                                Text("purchases.button.restore".localized)
-                            }
-                            .buttonStyle(PrimaryButtonStyle(style: .transparent))
                         }
                         .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin12, trailing: .margin24))
                         .background(
@@ -105,7 +96,7 @@ struct PurchasesView: View {
             )
         }
         .bottomSheet(
-            item: $presentedSubscriptionType,
+            isPresented: $subscriptionPresented,
             configuration: ActionSheetConfiguration(style: .sheet).set(ignoreKeyboard: true),
             ignoreSafeArea: true,
             onDismiss: {
@@ -113,25 +104,49 @@ struct PurchasesView: View {
                     successfulSubscriptionPresented = true
                 }
             }
-        ) { type in
-            PurchaseBottomSheetView(type: type, isPresented: Binding(get: { presentedSubscriptionType != nil }, set: { if !$0 { presentedSubscriptionType = nil } })) { _ in
-                viewModel.onSubscribe()
-                presentedSubscriptionType = nil
+        ) {
+            PurchaseBottomSheetView(isPresented: $subscriptionPresented) { product in
+                onSuccessfulSubscription(product: product)
             }
         }
         .sheet(isPresented: $successfulSubscriptionPresented) {
-            SuccessfulSubscriptionView(type: viewModel.featuresType) {
+            SuccessfulSubscriptionView {
                 dismiss()
             }
         }
     }
 
-    @ViewBuilder private func row(title: String, description: String, image: Image, accented: Bool, action: @escaping () -> Void) -> some View {
+    func onSuccessfulSubscription(product _: PurchaseManager.ProductData) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+            subscriptionPresented = false
+            viewModel.onSubscribe()
+        }
+    }
+
+    private var title: AttributedString {
+        let text = "premium.cell.description".localized("premium.cell.description.key".localized)
+        var attributedString = AttributedString(text)
+        attributedString.font = .headline1
+        attributedString.foregroundColor = .themeLeah
+
+        for range in text.ranges(of: "premium.cell.description.key".localized) {
+            if let lowerBound = AttributedString.Index(range.lowerBound, within: attributedString),
+               let upperBound = AttributedString.Index(range.upperBound, within: attributedString)
+            {
+                let attrRange = lowerBound ..< upperBound
+                attributedString[attrRange].foregroundColor = .themeJacob
+            }
+        }
+
+        return attributedString
+    }
+
+    @ViewBuilder private func row(title: String, description: String, image: Image, action: @escaping () -> Void) -> some View {
         ClickableRow(padding: EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16), action: action) {
             HStack(spacing: .margin16) {
                 image
                     .renderingMode(.template)
-                    .foregroundColor(accented ? .themeYellow : .themeLeah)
+                    .foregroundColor(.themeJacob)
                     .frame(width: 24, height: 24)
 
                 VStack(spacing: .heightOneDp) {
@@ -178,7 +193,7 @@ struct PurchasesView: View {
         let (title, disabled) = buttonState()
 
         Button(action: {
-            presentedSubscriptionType = viewModel.featuresType
+            subscriptionPresented = true
         }) {
             Text(title)
         }

@@ -9,8 +9,11 @@ class MainSettingsPremiumCell: UITableViewCell {
     private let cardView = CardView(insets: .zero)
 
     private let titleLabel = UILabel()
+
+    private let bottomStackView = UIStackView()
     private let titleDescription = UILabel()
     private let tryForFreeLabel = UILabel()
+
     private let boxImageView = UIImageView()
 
     private let radialBackgroundView = RadialBackgroundView(background: .themeHelsing)
@@ -52,39 +55,35 @@ class MainSettingsPremiumCell: UITableViewCell {
 
         titleLabel.setContentHuggingPriority(.required, for: .horizontal)
         titleLabel.font = .headline1
-        titleLabel.textColor = .themeLeah
+        titleLabel.textColor = .themeJacob
         titleLabel.text = "premium.cell.title".localized
 
-        cardView.contentView.addSubview(tryForFreeLabel)
-        tryForFreeLabel.snp.makeConstraints { maker in
+        cardView.contentView.addSubview(bottomStackView)
+        bottomStackView.snp.makeConstraints { maker in
             maker.bottom.equalToSuperview().inset(CGFloat.margin16)
             maker.leading.equalToSuperview().offset(CGFloat.margin16)
+            maker.trailing.equalTo(boxImageView.snp.leading).offset(-CGFloat.margin16)
         }
 
-        tryForFreeLabel.setContentHuggingPriority(.required, for: .horizontal)
-        tryForFreeLabel.font = .subhead2
-        tryForFreeLabel.textColor = .themeGreenD
-        tryForFreeLabel.text = "premium.cell.try".localized
+        bottomStackView.axis = .vertical
+        bottomStackView.spacing = CGFloat.margin4
 
-        cardView.contentView.addSubview(titleDescription)
-        titleDescription.snp.makeConstraints { maker in
-            maker.bottom.equalTo(tryForFreeLabel.snp.top).offset(-CGFloat.margin4)
-            maker.leading.equalToSuperview().offset(CGFloat.margin16)
-        }
+        bottomStackView.addArrangedSubview(titleDescription)
 
         titleDescription.setContentHuggingPriority(.required, for: .horizontal)
-        titleDescription.font = .headline2
+        titleDescription.font = .subhead1
+        titleDescription.numberOfLines = 0
         titleDescription.textColor = .themeLeah
 
-        let description = NSMutableAttributedString()
-        description.append(
-            NSAttributedString(string: "premium.cell.description1".localized + " ", attributes: [.font: UIFont.headline2, .foregroundColor: UIColor.themeLeah])
-        )
-        description.append(
-            NSAttributedString(string: "premium.cell.description2".localized, attributes: [.font: UIFont.headline2, .foregroundColor: UIColor.themeYellowD])
-        )
+        titleDescription.text = "premium.cell.description".localized("premium.cell.description.key".localized)
 
-        titleDescription.attributedText = description
+        bottomStackView.addArrangedSubview(tryForFreeLabel)
+
+        tryForFreeLabel.setContentHuggingPriority(.required, for: .horizontal)
+        tryForFreeLabel.font = .captionSB
+        tryForFreeLabel.textColor = .themeGreenD
+        tryForFreeLabel.text = "premium.cell.try".localized
+        tryForFreeLabel.isHidden = true
     }
 
     required init?(coder aDecoder: NSCoder) {
@@ -93,5 +92,7 @@ class MainSettingsPremiumCell: UITableViewCell {
 }
 
 extension MainSettingsPremiumCell {
-    func bind(onTap _: @escaping () -> Void) {}
+    func bind(tryForFree: Bool) {
+        tryForFreeLabel.isHidden = !tryForFree
+    }
 }

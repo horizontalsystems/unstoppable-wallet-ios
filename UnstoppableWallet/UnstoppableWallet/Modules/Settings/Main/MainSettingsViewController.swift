@@ -69,6 +69,8 @@ class MainSettingsViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
+        syncPremiumCell(tryForFree: viewModel.allowFreeTrial)
+
         manageAccountsCell.set(backgroundStyle: .lawrence, isFirst: true)
         syncManageAccountCell()
 
@@ -109,10 +111,11 @@ class MainSettingsViewController: ThemeViewController {
             stat(page: .settings, event: .open(page: .externalCompanyWebsite))
         }
 
+        subscribe(disposeBag, viewModel.allowFreeTrialSignal) { [weak self] in self?.syncPremiumCell(tryForFree: $0) }
         subscribe(disposeBag, viewModel.manageWalletsAlertDriver) { [weak self] in self?.syncManageAccountCell(alert: $0) }
         subscribe(disposeBag, viewModel.securityCenterAlertDriver) { [weak self] in self?.syncSecurityCell(alert: $0) }
         subscribe(disposeBag, viewModel.iCloudSyncAlertDriver) { [weak self] in self?.syncContactBookCell(alert: $0) }
-        subscribe(disposeBag, viewModel.hasSubscriptionDriver) { [weak self] in self?.syncSubscription(hasSubscription: $0) }
+        subscribe(disposeBag, viewModel.showSubscriptionDriver) { [weak self] in self?.sync(showSubscriptionCell: $0) }
 
         subscribe(disposeBag, viewModel.walletConnectCountDriver) { [weak self] tuple in
             self?.syncWalletConnectCell(text: tuple?.text, highlighted: tuple?.highlighted ?? false)
@@ -131,6 +134,10 @@ class MainSettingsViewController: ThemeViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
+    }
+
+    private func syncPremiumCell(tryForFree: Bool) {
+        premiumCell.bind(tryForFree: tryForFree)
     }
 
     private func syncManageAccountCell(alert: Bool = false) {
@@ -240,17 +247,13 @@ class MainSettingsViewController: ThemeViewController {
         UrlManager.open(url: "https://t.me/\(AppConfig.appTokenTelegramAccount)")
     }
 
-    private func syncSubscription(hasSubscription _: Bool) {
+    private func sync(showSubscriptionCell _: Bool) {
         tableView.reload()
     }
 
     private func onSubscriptionTapped() {
-        if viewModel.hasSubscription {
-            let viewController = PurchaseListView().toViewController(title: "subscription.title".localized)
-            navigationController?.pushViewController(viewController, animated: true)
-        } else {
-            present(PurchasesView().toViewController(), animated: true)
-        }
+        let viewController = PurchaseListView().toViewController(title: "subscription.title".localized)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     private var accountRows: [RowProtocol] {
@@ -422,6 +425,23 @@ class MainSettingsViewController: ThemeViewController {
         ]
     }
 
+    private func openVip(feature: PremiumFeature) {
+        guard viewModel.activated(feature) else {
+            present(PurchasesView().toViewController(), animated: true)
+            return
+        }
+
+        switch feature {
+        case .vipSupport:
+            UrlManager.open(url: "https://t.me/\(AppConfig.appTelegramAccount)")
+        case .vipClub:
+            UrlManager.open(url: "https://t.me/\(AppConfig.appTelegramAccount)")
+        default: ()
+        }
+
+        stat(page: .settings, event: .open(page: .externalTelegram))
+    }
+
     private var premiumSupportRows: [RowProtocol] {
         [
             tableView.universalRow48(
@@ -432,24 +452,9 @@ class MainSettingsViewController: ThemeViewController {
                 backgroundStyle: .borderedLawrence(.themeJacob),
                 autoDeselect: true,
                 isFirst: true,
-                action: {
-                    UrlManager.open(url: "https://t.me/\(AppConfig.appTelegramAccount)")
-
-                    stat(page: .settings, event: .open(page: .externalTelegram))
-                }
-            ),
-            tableView.universalRow48(
-                id: "club",
-                image: .local(UIImage(named: "support_24")?.withTintColor(.themeJacob)),
-                title: .body("purchases.vip_club".localized),
-                accessoryType: .disclosure,
-                backgroundStyle: .borderedLawrence(.themeJacob),
-                autoDeselect: true,
                 isLast: true,
-                action: {
-                    UrlManager.open(url: "https://t.me/\(AppConfig.appTelegramAccount)")
-
-                    stat(page: .settings, event: .open(page: .externalTelegram))
+                action: { [weak self] in
+                    self?.openVip(feature: .vipSupport)
                 }
             ),
         ]
@@ -663,19 +668,11 @@ extension MainSettingsViewController: SectionsDataSource {
             Section(id: "token", headerState: .margin(height: .margin32), rows: tokenRows),
             Section(id: "account", headerState: .margin(height: .margin32), rows: accountRows),
             Section(id: "appearance_settings", headerState: .margin(height: .margin32), rows: appearanceRows),
-        ]
-
-        if viewModel.hasSubscription, viewModel.premiumSubscription {
-            sections.append(
-                Section(
-                    id: "premium",
-                    headerState: .static(view: PremiumHeaderFooterView(), height: .margin32 + .margin24),
-                    rows: premiumSupportRows
-                )
-            )
-        }
-
-        let infoSections: [SectionProtocol] = [
+            Section(
+                id: "premium",
+                headerState: .static(view: PremiumHeaderFooterView(), height: .margin32 + .margin24),
+                rows: premiumSupportRows
+            ),
             Section(id: "about", headerState: .margin(height: .margin32), footerState: .margin(height: .margin32), rows: aboutRows),
             Section(
                 id: "social",
@@ -693,13 +690,11 @@ extension MainSettingsViewController: SectionsDataSource {
             Section(id: "footer", headerState: .margin(height: .margin32), footerState: .margin(height: .margin32), rows: footerRows),
         ]
 
-        sections.append(contentsOf: infoSections)
-
         if AppConfig.donateEnabled {
             sections.insert(Section(id: "donate", headerState: .margin(height: .margin32), rows: donateRows), at: 0)
         }
 
-        if !viewModel.hasSubscription {
+        if !viewModel.hasActiveSubscriptions {
             sections.insert(Section(id: "premium", headerState: .margin(height: .margin12), rows: premiumRows), at: 0)
         }
 
@@ -809,7 +804,7 @@ class PremiumHeaderFooterView: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func bind(iconName: String = "crown_16", text: String? = "subscription.premium.label".localized, color: UIColor = .themeJacob, backgroundColor: UIColor = .clear) {
+    func bind(iconName: String = "star_filled_16", text: String? = "subscription.premium.label".localized, color: UIColor = .themeJacob, backgroundColor: UIColor = .clear) {
         label.text = text
         label.textColor = color
 
