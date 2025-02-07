@@ -12,7 +12,9 @@ struct PurchaseListView: View {
                 if let activePurchase = viewModel.activePurchase {
                     status(purchase: activePurchase)
 
-                    manageSubscriptionView()
+                    if activePurchase.type == .subscription {
+                        manageSubscriptionView()
+                    }
                 } else {
                     noPurchaseView()
                 }

@@ -53,7 +53,7 @@ class AddressViewModel: ObservableObject {
 
         self.contacts = contacts
 
-        premiumEnabled = purchaseManager.subscription != nil
+        premiumEnabled = purchaseManager.activated(.addressChecker)
 
         defer {
             if let address {
@@ -61,9 +61,9 @@ class AddressViewModel: ObservableObject {
             }
         }
 
-        purchaseManager.$subscription
-            .sink { [weak self] subscription in
-                self?.premiumEnabled = subscription != nil
+        purchaseManager.$activeFeatures
+            .sink { [weak self] features in
+                self?.premiumEnabled = features.contains(.addressChecker)
             }
             .store(in: &cancellables)
     }
