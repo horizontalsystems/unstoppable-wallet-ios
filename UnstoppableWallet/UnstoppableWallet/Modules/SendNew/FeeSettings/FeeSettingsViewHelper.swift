@@ -49,11 +49,11 @@ class FeeSettingsViewHelper {
         )
     }
 
-    @ViewBuilder func row(title: String, feeValue: FeeSettings.FeeValue, description: ActionSheetView.InfoDescription) -> some View {
+    @ViewBuilder func row(title: String, feeValue: FeeSettings.FeeValue, infoDescription: InfoDescription) -> some View {
         HStack(spacing: .margin8) {
             Text(title)
                 .textSubhead2()
-                .modifier(Informed(description: description))
+                .modifier(Informed(infoDescription: infoDescription))
 
             Spacer()
 
@@ -74,11 +74,11 @@ class FeeSettingsViewHelper {
         .frame(height: .heightCell56)
     }
 
-    @ViewBuilder func headerRow(title: String, description: ActionSheetView.InfoDescription) -> some View {
+    @ViewBuilder func headerRow(title: String, infoDescription: InfoDescription) -> some View {
         Text(title)
             .textSubhead1()
             .frame(maxWidth: .infinity, alignment: .leading)
-            .modifier(Informed(description: description))
+            .modifier(Informed(infoDescription: infoDescription))
     }
 
     @ViewBuilder func inputNumberWithSteps(placeholder: String = "", text: Binding<String>, cautionState: Binding<FieldCautionState>, onTap: @escaping (StepChangeButtonsViewDirection) -> Void) -> some View {

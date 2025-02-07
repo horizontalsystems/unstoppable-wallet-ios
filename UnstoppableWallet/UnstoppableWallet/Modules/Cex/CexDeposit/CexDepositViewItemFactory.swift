@@ -37,7 +37,7 @@ class CexDepositViewItemFactory: IReceiveAddressViewItemFactory {
         }
 
         return .init(title: "cex_deposit.memo_warning.title".localized,
-                     description: .init(text: "cex_deposit.memo_warning.description".localized, style: .red),
+                     description: .init(text: "cex_deposit.memo_warning.description".localized, style: .alert),
                      doneButtonTitle: "button.i_understand".localized)
     }
 

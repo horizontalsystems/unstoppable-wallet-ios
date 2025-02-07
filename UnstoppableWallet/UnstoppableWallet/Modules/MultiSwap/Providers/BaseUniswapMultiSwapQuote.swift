@@ -40,7 +40,7 @@ class BaseUniswapMultiSwapQuote: BaseEvmMultiSwapQuote {
             fields.append(
                 MultiSwapMainField(
                     title: "swap.price_impact".localized,
-                    description: .init(title: "swap.price_impact".localized, description: "swap.price_impact.description".localized),
+                    infoDescription: .init(title: "swap.price_impact".localized, description: "swap.price_impact.description".localized),
                     value: "-\(priceImpact.rounded(decimal: 2))%",
                     valueLevel: BaseUniswapMultiSwapProvider.PriceImpactLevel(priceImpact: priceImpact).valueLevel
                 )

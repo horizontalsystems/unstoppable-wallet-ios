@@ -29,7 +29,7 @@ struct BitcoinFeeSettingsView: View {
                     helper.row(
                         title: "fee_settings.network_fee".localized,
                         feeValue: helper.feeAmount(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate, loading: loading, feeData: feeData),
-                        description: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized)
+                        infoDescription: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized)
                     )
                 }
 

@@ -93,13 +93,13 @@ struct PurchasesView: View {
                 }
             }
         }
-        .bottomSheet(item: $presentedInfoViewItem) { viewItem in
-            ActionSheetView(
-                image: .local(name: viewItem.iconName, tint: .warning),
+        .bottomSheetNew(item: $presentedInfoViewItem) { viewItem in
+            BottomSheetView(
+                icon: .local(name: viewItem.iconName, tint: .themeLucian),
                 title: "purchases.\(viewItem.title)".localized,
                 titleColor: .themeJacob,
                 items: [
-                    .description(text: "purchases.\(viewItem.title).info".localized),
+                    .text(text: "purchases.\(viewItem.title).info".localized),
                 ],
                 onDismiss: { presentedInfoViewItem = nil }
             )

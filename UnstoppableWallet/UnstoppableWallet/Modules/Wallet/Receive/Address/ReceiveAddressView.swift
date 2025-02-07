@@ -101,9 +101,9 @@ struct ReceiveAddressView: View {
             }
         )
         .alertButtonTint(color: .themeJacob)
-        .bottomSheet(item: $warningAlertPopup) { popup in
-            ActionSheetView(
-                image: .warning,
+        .bottomSheetNew(item: $warningAlertPopup) { popup in
+            BottomSheetView(
+                icon: .warning,
                 title: popup.title,
                 items: [
                     .highlightedDescription(text: popup.description.text, style: popup.description.style),
@@ -224,12 +224,10 @@ struct ReceiveAddressView: View {
             Text("deposit.account".localized)
                 .textSubhead2()
                 .modifier(
-                    Informed(description:
-                        ActionSheetView.InfoDescription(
-                            title: "deposit.not_active.title".localized,
-                            description: "deposit.not_active.tron_description".localized
-                        )
-                    ))
+                    Informed(infoDescription: .init(
+                        title: "deposit.not_active.title".localized,
+                        description: "deposit.not_active.tron_description".localized
+                    )))
             Spacer()
             Text("deposit.not_active".localized).textSubhead1(color: .themeYellow)
         }
@@ -240,12 +238,10 @@ struct ReceiveAddressView: View {
             Text("cex_deposit.memo".localized)
                 .textSubhead2()
                 .modifier(
-                    Informed(description:
-                        ActionSheetView.InfoDescription(
-                            title: "cex_deposit.memo_warning.title".localized,
-                            description: "cex_deposit.memo_warning.description".localized
-                        )
-                    ))
+                    Informed(infoDescription: .init(
+                        title: "cex_deposit.memo_warning.title".localized,
+                        description: "cex_deposit.memo_warning.description".localized
+                    )))
             Spacer()
             Text(memo).textSubhead1(color: .themeLeah)
             Button(action: {

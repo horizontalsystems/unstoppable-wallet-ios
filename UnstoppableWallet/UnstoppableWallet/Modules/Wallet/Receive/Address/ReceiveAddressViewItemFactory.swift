@@ -82,7 +82,7 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
         if let address = item.address as? ActivatedDepositAddress, !address.isActive {
             return .init(
                 title: "deposit.not_active.title".localized,
-                description: .init(text: "deposit.not_active.tron_description".localized, style: .yellow),
+                description: .init(text: "deposit.not_active.tron_description".localized, style: .warning),
                 doneButtonTitle: "button.i_understand".localized
             )
         }

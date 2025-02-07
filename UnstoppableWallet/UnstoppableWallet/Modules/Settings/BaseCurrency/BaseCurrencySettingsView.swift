@@ -26,44 +26,23 @@ struct BaseCurrencySettingsView: View {
             }
             .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-        .bottomSheet(item: $confirmationCurrency) { currency in
-            VStack(spacing: 0) {
-                HStack(spacing: .margin16) {
-                    Image("warning_2_24").themeIcon(color: .themeJacob)
-
-                    Text("settings.base_currency.disclaimer".localized).themeHeadline2()
-
-                    Button(action: {
-                        confirmationCurrency = nil
-                    }) {
-                        Image("close_3_24")
-                    }
-                }
-                .padding(.horizontal, .margin32)
-                .padding(.vertical, .margin24)
-
-                HighlightedTextView(text: "settings.base_currency.disclaimer.description".localized(AppConfig.appName, viewModel.popularCurrencies.map(\.code).joined(separator: ",")))
-                    .padding(.horizontal, .margin16)
-
-                VStack(spacing: .margin12) {
-                    Button(action: {
+        .bottomSheetNew(item: $confirmationCurrency) { currency in
+            BottomSheetView(
+                icon: .warning,
+                title: "settings.base_currency.disclaimer".localized,
+                items: [
+                    .highlightedDescription(text: "settings.base_currency.disclaimer.description".localized(AppConfig.appName, viewModel.popularCurrencies.map(\.code).joined(separator: ", "))),
+                ],
+                buttons: [
+                    .init(style: .yellow, title: "settings.base_currency.disclaimer.set".localized) {
                         viewModel.baseCurrency = currency
                         confirmationCurrency = nil
                         presentationMode.wrappedValue.dismiss()
-                    }) {
-                        Text("settings.base_currency.disclaimer.set".localized)
-                    }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
-
-                    Button(action: {
-                        confirmationCurrency = nil
-                    }) {
-                        Text("button.cancel".localized)
-                    }
-                    .buttonStyle(PrimaryButtonStyle(style: .transparent))
-                }
-                .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin16, trailing: .margin24))
-            }
+                    },
+                    .init(style: .transparent, title: "button.cancel".localized) { confirmationCurrency = nil },
+                ],
+                onDismiss: { confirmationCurrency = nil }
+            )
         }
         .navigationBarTitle("settings.base_currency.title".localized)
     }
