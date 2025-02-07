@@ -11,7 +11,8 @@ class MainSettingsViewModel {
 
     private let manageWalletsAlertRelay: BehaviorRelay<Bool>
     private let securityCenterAlertRelay: BehaviorRelay<Bool>
-    private let hasSubscriptionRelay: BehaviorRelay<Bool>
+    private let hasActiveSubscriptionRelay: BehaviorRelay<Bool>
+    private let allowFreeTrialRelay: BehaviorRelay<Bool>
     private let iCloudSyncAlertRelay: BehaviorRelay<Bool>
     private let walletConnectCountRelay: BehaviorRelay<(highlighted: Bool, text: String)?>
     private let baseCurrencyRelay: BehaviorRelay<String>
@@ -24,7 +25,8 @@ class MainSettingsViewModel {
 
         manageWalletsAlertRelay = BehaviorRelay(value: !service.noWalletRequiredActions)
         securityCenterAlertRelay = BehaviorRelay(value: !service.isPasscodeSet)
-        hasSubscriptionRelay = BehaviorRelay(value: service.subscription != nil)
+        hasActiveSubscriptionRelay = BehaviorRelay(value: service.hasActiveSubscriptions)
+        allowFreeTrialRelay = BehaviorRelay(value: service.allowFreeTrial)
         iCloudSyncAlertRelay = BehaviorRelay(value: service.isCloudAvailableError)
         walletConnectCountRelay = BehaviorRelay(value: Self.convert(walletConnectSessionCount: service.walletConnectSessionCount, walletConnectPendingRequestCount: service.walletConnectPendingRequestCount))
         baseCurrencyRelay = BehaviorRelay(value: service.baseCurrency.code)
@@ -43,10 +45,12 @@ class MainSettingsViewModel {
             }
             .store(in: &cancellables)
 
-        service.subscriptionPublisher
-            .sink { [weak self] subscription in
-                self?.hasSubscriptionRelay.accept(subscription != nil)
-            }
+        service.hasActiveSubscriptionsPublisher
+            .sink { [weak self] in self?.hasActiveSubscriptionRelay.accept($0) }
+            .store(in: &cancellables)
+
+        service.allowFreeTrialPublisher
+            .sink { [weak self] in self?.allowFreeTrialRelay.accept($0) }
             .store(in: &cancellables)
 
         service.iCloudAvailableErrorObservable
@@ -92,6 +96,10 @@ class MainSettingsViewModel {
 }
 
 extension MainSettingsViewModel {
+    var allowFreeTrialSignal: Driver<Bool> {
+        allowFreeTrialRelay.asDriver()
+    }
+
     var openWalletConnectSignal: Signal<WalletConnectOpenMode> {
         openWalletConnectRelay.asSignal()
     }
@@ -108,8 +116,8 @@ extension MainSettingsViewModel {
         securityCenterAlertRelay.asDriver()
     }
 
-    var hasSubscriptionDriver: Driver<Bool> {
-        hasSubscriptionRelay.asDriver()
+    var showSubscriptionDriver: Driver<Bool> {
+        hasActiveSubscriptionRelay.asDriver()
     }
 
     var iCloudSyncAlertDriver: Driver<Bool> {
@@ -144,12 +152,16 @@ extension MainSettingsViewModel {
         service.isAuthenticated
     }
 
-    var hasSubscription: Bool {
-        service.subscription != nil
+    var hasActiveSubscriptions: Bool {
+        service.hasActiveSubscriptions
     }
 
-    var premiumSubscription: Bool {
-        service.subscription?.type == .vip
+    var allowFreeTrial: Bool {
+        service.allowFreeTrial
+    }
+
+    func activated(_ premiumFeature: PremiumFeature) -> Bool {
+        service.activated(premiumFeature)
     }
 
     func onTapWalletConnect() {

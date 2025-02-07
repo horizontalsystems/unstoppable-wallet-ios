@@ -4,38 +4,29 @@ import SwiftUI
 
 struct PurchaseListView: View {
     @ObservedObject private var viewModel = PurchaseListViewModel()
-
-    @State private var presentedSubscription: PurchaseManager.Subscription?
+    @State private var purchasesPresented = false
 
     var body: some View {
         ScrollableThemeView {
-            VStack {
-                if let subscription = viewModel.subscription {
-                    ListSection {
-                        row(value: subscription.type.rawValue.uppercased()) {
-                            presentedSubscription = subscription
-                        }
-                    }
+            VStack(spacing: .margin32) {
+                if let activePurchase = viewModel.activePurchase {
+                    status(purchase: activePurchase)
 
-                    footerDescription(timestamp: subscription.timestamp)
+                    manageSubscriptionView()
                 } else {
-                    Text("subscription.no_purchases".localized)
-                        .multilineTextAlignment(.center)
-                        .textSubhead2()
-                        .padding(.horizontal, .margin32)
-                        .padding(.vertical, .margin12)
+                    noPurchaseView()
                 }
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-        .sheet(item: $presentedSubscription) { _ in
+        .sheet(isPresented: $purchasesPresented) {
             PurchasesView()
         }
         .navigationTitle("subscription.title".localized)
     }
 
     @ViewBuilder private func row(value: String, action: @escaping () -> Void) -> some View {
-        ClickableRow(padding: EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16), action: action) {
+        ClickableRow(action: action) {
             HStack(spacing: .margin8) {
                 HStack {
                     Text("subscription.plan".localized).textBody()
@@ -48,22 +39,51 @@ struct PurchaseListView: View {
         }
     }
 
-    private func footerDescription(timestamp: TimeInterval) -> some View {
-        let date = DateHelper.instance.formatShortDateOnly(date: Date(timeIntervalSince1970: timestamp))
+    @ViewBuilder private func noPurchaseView() -> some View {
+        ListSection {
+            ClickableRow {
+                purchasesPresented = true
+            } content: {
+                HStack(spacing: .margin8) {
+                    Text("subscription.get".localized).textBody()
+                    Spacer()
+                    Image.disclosureIcon
+                }
+            }
 
-        return (
-            Text("subscription.footer_description_1".localized(date)).foregroundColor(.themeGray).font(.themeSubhead2) +
-                Text("subscription.footer_description_2".localized)
-                .foregroundColor(.themeJacob)
-                .font(.themeSubhead2)
-                .underline(color: .themeJacob) +
-                Text("subscription.footer_description_3".localized).foregroundColor(.themeGray).font(.themeSubhead2)
-        )
-        .multilineTextAlignment(.leading)
-        .onTapGesture(perform: {
-            viewModel.onManageSubscriptions()
-        })
-        .padding(.horizontal, .margin32)
-        .padding(.vertical, .margin12)
+            ClickableRow {
+                viewModel.restorePurchases()
+            } content: {
+                Text("subscription.restore".localized).themeBody(color: .themeJacob)
+            }
+        }
+    }
+
+    @ViewBuilder private func status(purchase: PurchaseManager.PurchaseData) -> some View {
+        ListSection {
+            ForEach(viewModel.viewItems(purchase: purchase)) { viewItem in
+                ListRow {
+                    HStack(spacing: .margin8) {
+                        Text(viewItem.title).textSubhead2()
+                        Spacer()
+                        Text(viewItem.value).textSubhead1(color: .themeLeah)
+                    }
+                }
+            }
+        }
+    }
+
+    @ViewBuilder private func manageSubscriptionView() -> some View {
+        ListSection {
+            ClickableRow {
+                viewModel.onManageSubscriptions()
+            } content: {
+                HStack(spacing: .margin8) {
+                    Text("subscription.manage".localized).textBody()
+                    Spacer()
+                    Image.disclosureIcon
+                }
+            }
+        }
     }
 }

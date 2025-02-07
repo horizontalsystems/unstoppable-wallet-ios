@@ -3,7 +3,7 @@ import SwiftUI
 struct PremiumListSectionHeader: View {
     var body: some View {
         HStack(spacing: .margin6) {
-            Image("crown_16")
+            Image("star_filled_16")
                 .renderingMode(.template)
                 .foregroundColor(.themeJacob)
 

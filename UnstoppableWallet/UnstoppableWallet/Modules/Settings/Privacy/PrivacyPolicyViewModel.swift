@@ -14,11 +14,11 @@ class PrivacyPolicyViewModel: ObservableObject {
     init(config: Config) {
         self.config = config
 
-        premiumEnabled = purchaseManager.subscription != nil
-        purchaseManager.$subscription
+        premiumEnabled = purchaseManager.hasActivePurchase
+        purchaseManager.$purchasedProducts
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] subscription in
-                self?.premiumEnabled = subscription != nil
+            .sink { [weak self] _ in
+                self?.premiumEnabled = self?.purchaseManager.hasActivePurchase ?? false
                 self?.syncStatsEnabled()
             }
             .store(in: &cancellables)

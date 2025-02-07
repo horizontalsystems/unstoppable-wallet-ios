@@ -151,8 +151,8 @@ extension TransactionInfoService {
         balanceHiddenManager.balanceHidden
     }
 
-    var subscription: PurchaseManager.Subscription? {
-        purchaseManager.subscription
+    var hasActiveSubscriptions: Bool {
+        purchaseManager.hasActivePurchase
     }
 
     var item: Item {

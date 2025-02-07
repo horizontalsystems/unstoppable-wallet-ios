@@ -1612,13 +1612,17 @@
 
 // Settings -> Subsription
 
-"subscription.title" = "Subscription";
-"subscription.plan" = "Subscription Plan";
-"subscription.footer_description_1" = "Next payment date: %@. You can manage your subscription in the ";
-"subscription.footer_description_2" = "Manage Subscription";
-"subscription.footer_description_3" = " section.";
-"subscription.no_purchases" = "You don't have any subscriptions. Try to go and purchase new subscription.";
 "subscription.premium.label" = "Premium";
+"subscription.title" = "Subscription";
+"subscription.get" = "Get Premium";
+"subscription.restore" = "Restore Purchase";
+"subscription.type" = "Subscription Type";
+"subscription.one-time" = "One-Time";
+"subscription.price" = "Price";
+"subscription.next_payment" = "Next payment date";
+"subscription.purchase_time" = "Start date";
+"subscription.status" = "Status";
+"subscription.manage" = "Manage Subscription";
 
 // Settings -> Contacts
 
@@ -2207,8 +2211,8 @@
 // Purchases
 
 "premium.cell.title" = "Premium";
-"premium.cell.description1" = "Unleash the";
-"premium.cell.description2" = "Full Power!";
+"premium.cell.description" = "Upgrade your experience with %@ features!";
+"premium.cell.description.key" = "Premium";
 "premium.cell.try" = "Try for FREE";
 
 "purchases.title" = "Premium";
@@ -2262,17 +2266,22 @@
 "purchases.button.try" = "Try for FREE";
 "purchases.button.activated" = "Activated";
 "purchases.button.upgrade" = "Upgrade";
-"purchases.button.restore" = "Restore";
 
+"purchase.period.title" = "Select Subscription";
 "purchase.period.annually" = "Annually";
 "purchase.period.monthly" = "Monthly";
+"purchase.period.onetime" = "One-Time";
+"purchase.period.onetime.description" = "for lifetime access";
 "purchase.period.save" = "save";
 "purchase.period.year" = "year";
 "purchase.period.month" = "month";
 "purchase.period.description1" = "Enjoy the first 7 days FREE.";
 "purchase.period.description2" = "You can cancel your App Store subscription at any time.";
+"purchase.lifetime.description" = "You can purchase one-time subscriiption without any restrictions";
+
 "purchases.period.button.try" = "Get 7 days for FREE";
 "purchases.period.button.subscribe" = "Subscribe";
+"purchases.period.button.buy" = "Buy now";
 "purchases.period.button.promo" = "Add Promo Code";
 
 "purchases.promocode.title" = "Enter Promo Code";
@@ -2282,6 +2291,5 @@
 
 "purchases.successful_subscription.title" = "Premium";
 "purchases.successful_subscription.description" = "Thank you for your subscription!";
-"purchases.successful_subscription.subscribed_to_1" = "You have activated the";
-"purchases.successful_subscription.subscribed_to_2" = "plan.";
+"purchases.successful_subscription.subscribed" = "Enjoy the full power of the app.";
 "purchases.successful_subscription.button.go_app" = "Go to App";

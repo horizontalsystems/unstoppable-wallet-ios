@@ -13,7 +13,7 @@ class CoinAnalyticsViewModel: ObservableObject {
     private let purchaseManager = App.shared.purchaseManager
     private var tasks = Set<AnyTask>()
 
-    @Published private(set) var premiumEnabled: Bool = false
+    @Published private(set) var analyticsEnabled: Bool = false
     @Published private(set) var state: State = .loading
 
     private let isPurchased = false
@@ -38,11 +38,11 @@ class CoinAnalyticsViewModel: ObservableObject {
 
     init(coin: Coin) {
         self.coin = coin
-        premiumEnabled = purchaseManager.subscription != nil
-        purchaseManager.$subscription
+        analyticsEnabled = purchaseManager.activated(.tokenInsights)
+        purchaseManager.$activeFeatures
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] subscription in
-                self?.premiumEnabled = subscription != nil
+            .sink { [weak self] activeFeatures in
+                self?.analyticsEnabled = activeFeatures.contains(.tokenInsights)
             }
             .store(in: &cancellables)
     }

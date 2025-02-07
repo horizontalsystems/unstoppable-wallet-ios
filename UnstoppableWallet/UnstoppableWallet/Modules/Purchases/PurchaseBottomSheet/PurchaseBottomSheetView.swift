@@ -6,21 +6,17 @@ struct PurchaseBottomSheetView: View {
     @StateObject private var viewModel: PurchaseBottomSheetViewModel
 
     @Binding private var isPresented: Bool
-    @State private var isPresentedPromoCode: Bool = false
 
-    private let onSubscribe: (PurchaseManager.SubscriptionPeriod) -> Void
-
-    init(type: PurchaseManager.SubscriptionType, isPresented: Binding<Bool>, onSubscribe: @escaping (PurchaseManager.SubscriptionPeriod) -> Void) {
-        _viewModel = StateObject(wrappedValue: PurchaseBottomSheetViewModel(type: type, onSubscribe: onSubscribe))
-        self.onSubscribe = onSubscribe
+    init(isPresented: Binding<Bool>, onSubscribe: @escaping (PurchaseManager.ProductData) -> Void) {
+        _viewModel = StateObject(wrappedValue: PurchaseBottomSheetViewModel(onSubscribe: onSubscribe))
         _isPresented = isPresented
     }
 
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: .margin16) {
-                Image(viewModel.type.icon).themeIcon(color: .themeJacob)
-                Text(viewModel.type.rawValue.uppercased()).themeHeadline2()
+                Image("circle_clock_24").themeIcon(color: .themeJacob)
+                Text("purchase.period.title").themeHeadline2()
 
                 Button(action: {
                     isPresented = false
@@ -32,15 +28,19 @@ struct PurchaseBottomSheetView: View {
             .padding(.top, .margin24)
             .padding(.bottom, .margin12)
 
-            SubscribePeriodSegmentView(type: viewModel.type, selection: $viewModel.selectedPeriod)
-                .onChange(of: viewModel.selectedPeriod) { newValue in
-                    viewModel.set(period: newValue)
+            SubscribePeriodSegmentView(items: $viewModel.items, selection: $viewModel.selectedItem)
+                .onChange(of: viewModel.selectedItem) { newValue in
+                    if let newValue {
+                        viewModel.set(item: newValue)
+                    }
                 }
                 .padding(.top, .margin12)
                 .padding(.horizontal, .margin16)
 
-            tryFreeDescription()
-                .padding(.horizontal, .margin16)
+            subscribedDescription()
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, .margin32)
+                .padding(.vertical, .margin12)
 
             VStack(spacing: .margin12) {
                 Button(action: {
@@ -50,14 +50,14 @@ struct PurchaseBottomSheetView: View {
                         if viewModel.buttonState == .loading {
                             ProgressView()
                         }
-                        Text("purchases.period.button.try".localized)
+                        Text(buttonTitle)
                     }
                 }
                 .disabled(viewModel.buttonState == .loading)
                 .buttonStyle(PrimaryButtonStyle(style: .yellowGradient))
 
                 Button(action: {
-                    isPresentedPromoCode = true
+                    print("ABC")
                 }) {
                     Text("purchases.period.button.promo".localized)
                 }
@@ -66,26 +66,48 @@ struct PurchaseBottomSheetView: View {
             }
             .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin12, trailing: .margin24))
         }
-        .bottomSheet(
-            isPresented: $isPresentedPromoCode,
-            configuration: ActionSheetConfiguration(style: .sheet)
-                .set(corners: [.layerMinXMinYCorner, .layerMaxXMinYCorner])
-                .set(focusFirstTextField: true)
-                .set(contentBackgroundColor: .themeLawrence)
-        ) {
-            PromoCodeBottomSheetView(promo: viewModel.promoData.promocode, isPresented: Binding(get: { isPresentedPromoCode }, set: { isPresentedPromoCode = $0 })) { data in
-                viewModel.set(promoData: data)
-            }
+    }
+
+    var subscriptionState: SubscriptionState {
+        if viewModel.selectedItem?.product.type == .lifetime {
+            return .lifetime
+        } else if viewModel.allowTrialPeriod, viewModel.selectedItem?.product.hasTrialPeriod == true {
+            return .freeTrial
+        } else {
+            return .subscribe
         }
     }
 
-    private func tryFreeDescription() -> some View {
-        (
+    var buttonTitle: String {
+        switch subscriptionState {
+        case .lifetime:
+            return "purchases.period.button.buy".localized
+        case .freeTrial:
+            return "purchases.period.button.try".localized
+        case .subscribe:
+            return "purchases.period.button.subscribe".localized
+        }
+    }
+
+    @ViewBuilder private func subscribedDescription() -> some View {
+        switch subscriptionState {
+        case .lifetime:
+            Text("purchase.lifetime.description").foregroundColor(.themeGray).font(.themeSubhead2)
+        case .freeTrial:
+
             Text("purchase.period.description1".localized + " ").foregroundColor(.themeRemus).font(.themeSubhead2) +
                 Text("purchase.period.description2".localized).foregroundColor(.themeGray).font(.themeSubhead2)
-        )
-        .multilineTextAlignment(.center)
-        .padding(.horizontal, .margin16)
-        .padding(.vertical, .margin12)
+
+        case .subscribe:
+            Text("purchase.period.description2".localized).foregroundColor(.themeGray).font(.themeSubhead2)
+        }
+    }
+}
+
+extension PurchaseBottomSheetView {
+    enum SubscriptionState {
+        case lifetime
+        case freeTrial
+        case subscribe
     }
 }

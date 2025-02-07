@@ -46,7 +46,7 @@ class StatManager {
     }
 
     func logStat(eventPage: StatPage, eventSection: StatSection? = nil, event: StatEvent) {
-        guard purchaseManager.subscription == nil || allowed else { return }
+        guard purchaseManager.activated(.privacyMode) || allowed else { return }
         var parameters: [String: Any]?
 
         if let params = event.params {
@@ -73,7 +73,7 @@ class StatManager {
     }
 
     func sendStats() {
-        guard purchaseManager.subscription == nil || allowed else { return }
+        guard purchaseManager.activated(.privacyMode) || allowed else { return }
         let lastSent: Double? = userDefaultsStorage.value(for: Self.keyLastSent)
 
         if let lastSent, Date().timeIntervalSince1970 - lastSent < Self.sendThreshold {
