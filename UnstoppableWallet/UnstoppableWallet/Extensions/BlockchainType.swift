@@ -21,7 +21,6 @@ extension BlockchainType {
         .fantom,
         .base,
         .binanceSmartChain,
-        .binanceChain,
         .tron,
         .ton,
     ]
@@ -61,7 +60,6 @@ extension BlockchainType {
             .ecash,
             .litecoin,
             .dash,
-            .binanceChain,
             .gnosis,
             .fantom,
             .arbitrumOne,
@@ -152,7 +150,6 @@ extension BlockchainType {
         case .bitcoinCash: return "BCH (Legacy, CashAddress)"
         case .ecash: return "XEC"
         case .litecoin: return "LTC (BIP44, BIP49, BIP84, BIP86)"
-        case .binanceChain: return "BNB, BEP2 tokens"
         case .tron: return "TRX, TRC20 tokens"
         case .ton: return "TON"
         default: return ""

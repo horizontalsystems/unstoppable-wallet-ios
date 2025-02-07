@@ -149,18 +149,8 @@ extension AdapterManager {
                 self.evmBlockchainManager.evmKitManager(blockchainType: blockchain.type).evmKitWrapper?.evmKit.refresh()
             }
 
-            var binanceKitUpdated = false
-
-            for (wallet, adapter) in self._adapterData.adapterMap {
-                switch wallet.token.blockchainType {
-                case .binanceChain:
-                    if !binanceKitUpdated {
-                        adapter.refresh()
-                        binanceKitUpdated = true
-                    }
-                default:
-                    adapter.refresh()
-                }
+            for (_, adapter) in self._adapterData.adapterMap {
+                adapter.refresh()
             }
 
             self.tronKitManager.tronKitWrapper?.tronKit.refresh()

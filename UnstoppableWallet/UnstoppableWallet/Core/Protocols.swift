@@ -116,15 +116,6 @@ protocol IApproveDataProvider {
     func approveTransactionData(spenderAddress: EvmKit.Address, amount: BigUInt) -> TransactionData
 }
 
-protocol ISendBinanceAdapter {
-    var availableBalance: Decimal { get }
-    var availableBinanceBalance: Decimal { get }
-    func validate(address: String) throws
-    var fee: Decimal { get }
-    func sendSingle(amount: Decimal, address: String, memo: String?) -> Single<Void>
-    func send(amount: Decimal, address: String, memo: String?) async throws -> String
-}
-
 protocol ISendZcashAdapter {
     var availableBalance: Decimal { get }
     func validate(address: String, checkSendToSelf: Bool) throws -> ZcashAdapter.AddressType

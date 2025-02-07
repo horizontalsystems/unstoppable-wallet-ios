@@ -53,7 +53,7 @@ extension ProFeaturesStorage {
 }
 
 extension ProFeaturesStorage {
-    struct SessionKey: CustomStringConvertible {
+    struct SessionKey {
         private static let separator: Character = "_"
 
         let accountId: String

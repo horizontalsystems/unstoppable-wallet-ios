@@ -29,7 +29,6 @@ enum AppConfig {
         .zcash: "zs1jpd8u7zghtq5eg48l384y6fpy7cr0xmqehnw5mujpm8v2u7jr9a3j7luftqpthf6a8f720vdfyn",
         .ethereum: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .binanceSmartChain: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
-        .binanceChain: "bnb1m0ys77zwg74733f5wwyzhjme2xrdq4ee84smf4",
         .polygon: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .avalanche: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",
         .optimism: "0xA24c159C7f1E4A04dab7c364C2A8b87b3dBa4cd1",

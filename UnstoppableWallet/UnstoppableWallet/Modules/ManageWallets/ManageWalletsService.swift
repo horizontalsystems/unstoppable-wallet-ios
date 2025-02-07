@@ -159,7 +159,7 @@ class ManageWalletsService {
         }
 
         switch token.type {
-        case .eip20, .bep2: return true
+        case .eip20: return true
         default: return false
         }
     }
@@ -259,7 +259,7 @@ extension ManageWalletsService {
         }
 
         switch token.type {
-        case let .eip20(value), let .bep2(value):
+        case let .eip20(value):
             return InfoItem(token: token, type: .contractAddress(value: value, explorerUrl: token.blockchain.explorerUrl(reference: value)))
         default:
             return nil

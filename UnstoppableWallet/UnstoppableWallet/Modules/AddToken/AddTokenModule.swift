@@ -23,15 +23,6 @@ enum AddTokenModule {
             }
         }
 
-        if let blockchain = try? App.shared.marketKit.blockchain(uid: BlockchainType.binanceChain.uid), blockchain.type.supports(accountType: account.type) {
-            let service: IAddTokenBlockchainService = AddBep2TokenBlockchainService(
-                blockchain: blockchain,
-                networkManager: App.shared.networkManager
-            )
-            let item = Item(blockchain: blockchain, service: service)
-            items.append(item)
-        }
-
         if let blockchain = try? App.shared.marketKit.blockchain(uid: BlockchainType.tron.uid), blockchain.type.supports(accountType: account.type) {
             let service: IAddTokenBlockchainService = AddTronTokenBlockchainService(
                 blockchain: blockchain,

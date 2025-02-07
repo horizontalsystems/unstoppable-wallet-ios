@@ -19,7 +19,6 @@ extension KitCleaner {
             try? DashAdapter.clear(except: accountIds)
             try? EvmAdapter.clear(except: accountIds)
             try? EvmNftAdapter.clear(except: accountIds)
-            try? BinanceAdapter.clear(except: accountIds)
             try? ZcashAdapter.clear(except: accountIds)
             try? TronAdapter.clear(except: accountIds)
         }

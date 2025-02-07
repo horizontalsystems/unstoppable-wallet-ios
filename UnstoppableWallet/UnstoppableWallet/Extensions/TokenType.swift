@@ -14,17 +14,9 @@ extension TokenType {
         case .derived: return .native
         case .addressType: return .native
         case .eip20: return .eip20
-        case .bep2: return .bep2
         case .spl: return .spl
         case .jetton: return .jetton
         case .unsupported: return .unsupported
-        }
-    }
-
-    var bep2Symbol: String? {
-        switch self {
-        case let .bep2(symbol): return symbol
-        default: return nil
         }
     }
 
@@ -79,7 +71,6 @@ extension TokenType {
         switch self {
         case let .derived(derivation): return derivation.rawValue
         case let .addressType(type): return type.rawValue
-        case let .bep2(symbol): return symbol
         default: return nil
         }
     }

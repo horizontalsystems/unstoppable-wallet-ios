@@ -67,10 +67,6 @@ class TransactionInfoService {
         case let tx as BitcoinOutgoingTransactionRecord:
             tx.fee.flatMap { tokens.append($0.token) }
             tokens.append(tx.value.token)
-        case let tx as BinanceChainIncomingTransactionRecord: tokens.append(tx.value.token)
-        case let tx as BinanceChainOutgoingTransactionRecord:
-            tokens.append(tx.fee.token)
-            tokens.append(tx.value.token)
         case let tx as TonTransactionRecord:
             for action in tx.actions {
                 switch action.type {

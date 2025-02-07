@@ -871,7 +871,6 @@ enum StorageMigrator {
         case let .mrc20(address): return TokenQuery(blockchainType: .polygon, tokenType: .eip20(address: address))
         case let .optimismErc20(address): return TokenQuery(blockchainType: .optimism, tokenType: .eip20(address: address))
         case let .arbitrumOneErc20(address): return TokenQuery(blockchainType: .arbitrumOne, tokenType: .eip20(address: address))
-        case let .bep2(symbol): return symbol == "BNB" ? TokenQuery(blockchainType: .binanceChain, tokenType: .native) : TokenQuery(blockchainType: .binanceChain, tokenType: .bep2(symbol: symbol))
         default: return TokenQuery(blockchainType: .unsupported(uid: ""), tokenType: .unsupported(type: "", reference: nil))
         }
     }

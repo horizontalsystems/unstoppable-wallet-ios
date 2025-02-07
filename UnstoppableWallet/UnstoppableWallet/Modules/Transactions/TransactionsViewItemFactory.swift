@@ -317,29 +317,6 @@ class TransactionsViewItemFactory {
                 locked = lockState.locked
             }
 
-        case let record as BinanceChainIncomingTransactionRecord:
-            iconType = singleValueIconType(source: record.source, value: record.value)
-            title = "transactions.receive".localized
-            subTitle = "transactions.from".localized(mapped(address: record.from, blockchainType: item.record.source.blockchainType))
-
-            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value), type: type(value: record.value, .incoming))
-            if let currencyValue = item.currencyValue {
-                secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
-            }
-
-        case let record as BinanceChainOutgoingTransactionRecord:
-            iconType = singleValueIconType(source: record.source, value: record.value)
-            title = "transactions.send".localized
-            subTitle = "transactions.to".localized(mapped(address: record.to, blockchainType: item.record.source.blockchainType))
-
-            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value, signType: record.sentToSelf ? .never : .always), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
-
-            if let currencyValue = item.currencyValue {
-                secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
-            }
-
-            sentToSelf = record.sentToSelf
-
         case let record as TronIncomingTransactionRecord:
             iconType = singleValueIconType(source: record.source, value: record.value)
             title = "transactions.receive".localized

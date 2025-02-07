@@ -10,7 +10,6 @@ enum AppStatusModule {
             adapterManager: App.shared.adapterManager,
             logRecordManager: App.shared.logRecordManager,
             evmBlockchainManager: App.shared.evmBlockchainManager,
-            binanceKitManager: App.shared.binanceKitManager,
             marketKit: App.shared.marketKit
         )
 
