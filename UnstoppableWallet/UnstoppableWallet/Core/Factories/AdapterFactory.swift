@@ -7,7 +7,6 @@ import RxSwift
 class AdapterFactory {
     private let evmBlockchainManager: EvmBlockchainManager
     private let evmSyncSourceManager: EvmSyncSourceManager
-    private let binanceKitManager: BinanceKitManager
     private let btcBlockchainManager: BtcBlockchainManager
     private let tronKitManager: TronKitManager
     private let tonKitManager: TonKitManager
@@ -15,13 +14,12 @@ class AdapterFactory {
     private let coinManager: CoinManager
     private let evmLabelManager: EvmLabelManager
     private let spamAddressManager: SpamAddressManager
-    init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, binanceKitManager: BinanceKitManager,
+    init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager,
          btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, tonKitManager: TonKitManager,
          restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager, evmLabelManager: EvmLabelManager, spamAddressManager: SpamAddressManager)
     {
         self.evmBlockchainManager = evmBlockchainManager
         self.evmSyncSourceManager = evmSyncSourceManager
-        self.binanceKitManager = binanceKitManager
         self.btcBlockchainManager = btcBlockchainManager
         self.tronKitManager = tronKitManager
         self.tonKitManager = tonKitManager
@@ -132,12 +130,6 @@ extension AdapterFactory {
         case (.native, .zcash):
             let restoreSettings = restoreSettingsManager.settings(accountId: wallet.account.id, blockchainType: .zcash)
             return try? ZcashAdapter(wallet: wallet, restoreSettings: restoreSettings)
-
-        case (.native, .binanceChain), (.bep2, .binanceChain):
-            let query = TokenQuery(blockchainType: .binanceChain, tokenType: .native)
-            if let binanceKit = try? binanceKitManager.binanceKit(account: wallet.account), let feeToken = try? coinManager.token(query: query) {
-                return BinanceAdapter(binanceKit: binanceKit, feeToken: feeToken, wallet: wallet)
-            }
 
         case (.native, .ethereum), (.native, .binanceSmartChain), (.native, .polygon), (.native, .avalanche), (.native, .optimism), (.native, .arbitrumOne), (.native, .gnosis), (.native, .fantom), (.native, .base):
             return evmAdapter(wallet: wallet)

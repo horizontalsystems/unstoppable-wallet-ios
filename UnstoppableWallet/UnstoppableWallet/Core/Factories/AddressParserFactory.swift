@@ -1,4 +1,3 @@
-import BinanceChainKit
 import BitcoinCashKit
 import BitcoinCore
 import BitcoinKit
@@ -17,7 +16,6 @@ enum AddressParserFactory {
         .dash,
         .zcash,
         .ethereum,
-        .binanceChain,
         .tron,
     ]
 
@@ -97,12 +95,6 @@ enum AddressParserFactory {
             return handlers
         case .tron:
             return [TronAddressParser()]
-        case .binanceChain:
-            let network = BinanceChainKit.NetworkType.mainNet
-            let validator = BinanceAddressValidator(prefix: network.addressPrefix)
-
-            let binanceParserItem = BinanceAddressParserItem(parserType: .validator(validator))
-            return [binanceParserItem]
         case .zcash:
             let network = ZcashNetworkBuilder.network(for: .mainnet)
             let validator = ZcashAddressValidator(network: network)

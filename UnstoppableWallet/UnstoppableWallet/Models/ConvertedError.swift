@@ -1,4 +1,3 @@
-import BinanceChainKit
 import BitcoinCore
 import Eip20Kit
 import EvmKit
@@ -47,18 +46,6 @@ extension NetworkManager.RequestError: ConvertibleError {
     }
 }
 
-extension BinanceError: ConvertibleError {
-    var convertedError: Error {
-        if message.contains("requires non-empty memo in transfer transaction") {
-            return AppError.binance(reason: .memoRequired)
-        } else if message.contains("requires the memo contains only digits") {
-            return AppError.binance(reason: .onlyDigitsAllowed)
-        }
-
-        return self
-    }
-}
-
 extension Mnemonic.ValidationError: ConvertibleError {
     var convertedError: Error {
         switch self {
@@ -90,12 +77,6 @@ extension EvmKit.Kit.SyncError: ConvertibleError {
 }
 
 extension EvmKit.Address.ValidationError: ConvertibleError {
-    var convertedError: Error {
-        AppError.addressInvalid
-    }
-}
-
-extension BinanceChainKit.CoderError: ConvertibleError {
     var convertedError: Error {
         AppError.addressInvalid
     }

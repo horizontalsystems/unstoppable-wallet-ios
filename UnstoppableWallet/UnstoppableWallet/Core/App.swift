@@ -71,7 +71,6 @@ class App {
     let restoreStateManager: RestoreStateManager
     let evmBlockchainManager: EvmBlockchainManager
     let evmLabelManager: EvmLabelManager
-    let binanceKitManager: BinanceKitManager
     let tronAccountManager: TronAccountManager
     let tonKitManager: TonKitManager
 
@@ -214,7 +213,6 @@ class App {
         let syncerStateStorage = SyncerStateStorage(dbPool: dbPool)
         evmLabelManager = EvmLabelManager(provider: hsLabelProvider, storage: evmLabelStorage, syncerStateStorage: syncerStateStorage)
 
-        binanceKitManager = BinanceKitManager()
         let tronKitManager = TronKitManager(testNetManager: testNetManager)
         tronAccountManager = TronAccountManager(accountManager: accountManager, walletManager: walletManager, marketKit: marketKit, tronKitManager: tronKitManager, restoreStateManager: restoreStateManager)
 
@@ -266,7 +264,6 @@ class App {
         let adapterFactory = AdapterFactory(
             evmBlockchainManager: evmBlockchainManager,
             evmSyncSourceManager: evmSyncSourceManager,
-            binanceKitManager: binanceKitManager,
             btcBlockchainManager: btcBlockchainManager,
             tronKitManager: tronKitManager,
             tonKitManager: tonKitManager,

@@ -534,32 +534,6 @@ class TransactionInfoViewItemFactory {
                 ], header: .premium, footer: "tx_info.resend_description".localized))
             }
 
-        case let record as BinanceChainIncomingTransactionRecord:
-            sections.append(.init(receiveSection(source: record.source, appValue: record.value, from: record.from, rates: item.rates, balanceHidden: balanceHidden)))
-
-            if let memo = record.memo, !memo.isEmpty {
-                sections.append(.init([.memo(text: memo)]))
-            }
-
-        case let record as BinanceChainOutgoingTransactionRecord:
-            sections.append(.init(sendSection(source: record.source, appValue: record.value, to: record.to, rates: item.rates, sentToSelf: record.sentToSelf, balanceHidden: balanceHidden)))
-
-            var additionalViewItems = [TransactionInfoModule.ViewItem]()
-
-            if record.sentToSelf {
-                additionalViewItems.append(.sentToSelf)
-            }
-
-            if let memo = record.memo, !memo.isEmpty {
-                sections.append(.init([.memo(text: memo)]))
-            }
-
-            if !additionalViewItems.isEmpty {
-                sections.append(.init(additionalViewItems))
-            }
-
-            feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(appValue: record.fee, rate: _rate(record.fee)))
-
         case let record as TonTransactionRecord:
             for action in record.actions {
                 var viewItems: [TransactionInfoModule.ViewItem]

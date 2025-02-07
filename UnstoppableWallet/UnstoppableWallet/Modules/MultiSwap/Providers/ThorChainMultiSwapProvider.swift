@@ -255,8 +255,6 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
             return try BitcoinCashAdapter.firstAddress(accountType: account.type, tokenType: token.type)
         case .litecoin:
             return try LitecoinAdapter.firstAddress(accountType: account.type, tokenType: token.type)
-        case .binanceChain:
-            return try BinanceAdapter.address(accountType: account.type)
         default:
             throw SwapError.noDestinationAddress
         }
@@ -308,20 +306,6 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
                 if let tokens {
                     assets.append(contentsOf: tokens.map { Asset(id: pool.asset, token: $0) })
                 }
-            case .binanceChain:
-                let tokenType: TokenType
-
-                if assetId == "BNB" {
-                    tokenType = .native
-                } else {
-                    tokenType = .bep2(symbol: assetId)
-                }
-
-                let token = try? marketKit.token(query: TokenQuery(blockchainType: blockchainType, tokenType: tokenType))
-
-                if let token {
-                    assets.append(Asset(id: pool.asset, token: token))
-                }
             default: ()
             }
         }
@@ -331,7 +315,6 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
         switch assetBlockchainId {
         case "AVAX": return .avalanche
         case "BCH": return .bitcoinCash
-        case "BNB": return .binanceChain
         case "BSC": return .binanceSmartChain
         case "BTC": return .bitcoin
         case "ETH": return .ethereum

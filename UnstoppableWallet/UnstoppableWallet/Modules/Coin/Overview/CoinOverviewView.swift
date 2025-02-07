@@ -413,7 +413,6 @@ struct CoinOverviewView: View {
         case let .derived(derivation): return derivation.mnemonicDerivation.addressType + derivation.mnemonicDerivation.recommended
         case let .addressType(type): return type.bitcoinCashCoinType.description + type.bitcoinCashCoinType.recommended
         case let .eip20(address): return address.shortened
-        case let .bep2(symbol): return symbol
         case let .spl(address): return address.shortened
         case let .jetton(address): return address.shortened
         case let .unsupported(_, reference): return reference?.shortened
@@ -423,7 +422,6 @@ struct CoinOverviewView: View {
     private func reference(token: Token) -> String? {
         switch token.type {
         case let .eip20(address): return address
-        case let .bep2(symbol): return symbol
         case let .spl(address): return address
         case let .jetton(address): return address
         case let .unsupported(_, reference): return reference
@@ -434,7 +432,6 @@ struct CoinOverviewView: View {
     private func explorerUrl(token: Token) -> String? {
         switch token.type {
         case let .eip20(address): return token.blockchain.explorerUrl(reference: address)
-        case let .bep2(symbol): return token.blockchain.explorerUrl(reference: symbol)
         case let .spl(address): return token.blockchain.explorerUrl(reference: address)
         case let .jetton(address): return token.blockchain.explorerUrl(reference: address)
         case let .unsupported(_, reference): return token.blockchain.explorerUrl(reference: reference)

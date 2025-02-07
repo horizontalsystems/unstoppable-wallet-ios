@@ -96,7 +96,6 @@ extension UdnAddressParserItem {
         case .bitcoinCash: return "BCH"
         case .ecash: return "XEC"
         case .zcash: return "ZEC"
-        case .binanceChain: return "ETH"
         case .gnosis: return "ETH"
         case .fantom: return "ETH"
         case .tron: return "TRX"

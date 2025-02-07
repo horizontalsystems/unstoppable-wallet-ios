@@ -7,7 +7,6 @@ class MarketAdvancedSearchViewModel: ObservableObject {
     private let blockchainTypes: [BlockchainType] = [
         .ethereum,
         .binanceSmartChain,
-        .binanceChain,
         .arbitrumOne,
         .avalanche,
         .gnosis,
