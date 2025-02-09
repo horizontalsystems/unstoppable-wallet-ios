@@ -19,19 +19,21 @@ struct ChartView: UIViewRepresentable {
 }
 
 struct RateChartViewNew: UIViewRepresentable {
-    typealias UIViewType = UIView
+    typealias UIViewType = RateChartUiView
 
     let configuration: ChartConfiguration
     let trend: MovementTrend
     let data: ChartData
 
-    func makeUIView(context _: Context) -> UIView {
+    func makeUIView(context _: Context) -> RateChartUiView {
         let chartView = RateChartUiView(configuration: configuration, trend: trend, data: data)
         chartView.setContentHuggingPriority(.required, for: .vertical)
         return chartView
     }
 
-    func updateUIView(_: UIView, context _: Context) {}
+    func updateUIView(_ uiView: RateChartUiView, context _: Context) {
+        uiView.update(trend: trend, data: data)
+    }
 }
 
 class RateChartUiView: UIView {
@@ -54,6 +56,12 @@ class RateChartUiView: UIView {
             maker.edges.equalToSuperview()
             maker.height.equalTo(Self.height)
         }
+    }
+
+    func update(trend: MovementTrend, data: ChartData) {
+        chartView.setCurve(colorType: trend.chartColorType)
+        chartView.set(chartData: data, animated: false)
+        chartView.isUserInteractionEnabled = false
     }
 
     @available(*, unavailable)

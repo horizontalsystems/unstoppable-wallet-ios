@@ -26,7 +26,7 @@ struct BaseCurrencySettingsView: View {
             }
             .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-        .bottomSheetNew(item: $confirmationCurrency) { currency in
+        .bottomSheet(item: $confirmationCurrency) { currency in
             BottomSheetView(
                 icon: .warning,
                 title: "settings.base_currency.disclaimer".localized,

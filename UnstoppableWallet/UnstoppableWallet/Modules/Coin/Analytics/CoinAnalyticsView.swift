@@ -17,14 +17,15 @@ struct CoinAnalyticsView: View {
     @State private var tvlRankPresented = false
 
     @State private var indicatorDetailsShown = false
+    @State private var subscriptionPresented = false
 
     var body: some View {
         ThemeView {
             switch viewModel.state {
             case .loading:
                 ProgressView()
-            case let .loaded(viewItem):
-                content(viewItem: viewItem)
+            case let .loaded(analytics):
+                content(viewItem: viewModel.viewItem(analytics))
             case .failed:
                 SyncErrorView {
                     viewModel.load()
@@ -37,50 +38,50 @@ struct CoinAnalyticsView: View {
         ScrollView {
             VStack(spacing: .margin12) {
                 if let viewItem = viewItem.technicalAdvice {
-                    technicalAdvice(viewItem: viewItem)
+                    premium(technicalAdvice(viewItem: viewItem))
                 }
 
                 if let viewItem = viewItem.cexVolume {
                     cexVolume(viewItem: viewItem)
                 }
 
-                if let viewItem = viewItem.dexVolume {
-                    dexVolume(viewItem: viewItem)
-                }
-
                 if let viewItem = viewItem.tvl {
                     tvl(viewItem: viewItem)
                 }
 
+                if let viewItem = viewItem.dexVolume {
+                    premium(dexVolume(viewItem: viewItem))
+                }
+
                 if let viewItem = viewItem.dexLiquidity {
-                    dexLiquidity(viewItem: viewItem)
+                    premium(dexLiquidity(viewItem: viewItem))
                 }
 
                 if let viewItem = viewItem.activeAddresses {
-                    addresses(viewItem: viewItem)
+                    premium(addresses(viewItem: viewItem))
                 }
 
                 if let viewItem = viewItem.transactionCount {
-                    transactionCount(viewItem: viewItem)
+                    premium(transactionCount(viewItem: viewItem))
                 }
 
                 if let holdersViewItem = viewItem.holders {
-                    holders(viewItem: holdersViewItem, rating: viewItem.holdersRating, rank: viewItem.holdersRank)
+                    premium(holders(viewItem: holdersViewItem, rating: viewItem.holdersRating, rank: viewItem.holdersRank))
                 }
 
                 if let viewItem = viewItem.fee {
-                    fee(viewItem: viewItem)
+                    premium(fee(viewItem: viewItem))
                 }
 
                 if let viewItem = viewItem.revenue {
-                    revenue(viewItem: viewItem)
+                    premium(revenue(viewItem: viewItem))
                 }
 
                 if let viewItems = viewItem.issueBlockchains {
-                    analysis(viewItems: viewItems)
+                    premium(analysis(viewItems: viewItems))
                 }
 
-                otherData(reports: viewItem.reports, investors: viewItem.investors, treasuries: viewItem.treasuries, audits: viewItem.audits)
+                premium(otherData(reports: viewItem.reports, investors: viewItem.investors, treasuries: viewItem.treasuries, audits: viewItem.audits))
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
@@ -96,7 +97,7 @@ struct CoinAnalyticsView: View {
         .sheet(item: $presentedAnalysisViewItem) { viewItem in
             CoinAnalyticsIssuesView(viewItem: viewItem, isPresented: Binding(get: { presentedAnalysisViewItem != nil }, set: { if !$0 { presentedAnalysisViewItem = nil } }))
         }
-        .bottomSheetNew(item: $presentedProChartType) { type in
+        .bottomSheet(item: $presentedProChartType) { type in
             CoinProChartView(coin: viewModel.coin, type: type, isPresented: Binding(get: { presentedProChartType != nil }, set: { if !$0 { presentedProChartType = nil } }))
         }
         .sheet(item: $presentedHolderBlockchain) { blockchain in
@@ -107,6 +108,19 @@ struct CoinAnalyticsView: View {
                 MarketTvlView()
             }
         }
+        .sheet(isPresented: $subscriptionPresented) {
+            PurchasesView()
+        }
+    }
+
+    private func premium(_ content: some View) -> some View {
+        content
+            .onTapGesture {
+                if !viewModel.analyticsEnabled {
+                    subscriptionPresented = true
+                }
+            }
+        // .allowsHitTesting(!viewModel.analyticsEnabled)
     }
 
     @ViewBuilder private func technicalAdvice(viewItem: CoinAnalyticsViewModel.TechnicalAdviceViewItem) -> some View {
@@ -124,35 +138,39 @@ struct CoinAnalyticsView: View {
                         )
                     )
 
-                    indicatorMeter(
-                        text: viewItem.advice.title,
-                        textColor: viewItem.advice.foregroundColor,
-                        textBackground: viewItem.advice.backgroundColor,
-                        currentIndex: meterIndex(advice: viewItem.advice)
-                    )
-                    .padding(.vertical, .margin24)
+                    indicatorRow(advice: viewItem.advice)
                 }
             }
 
-            ClickableRow {
-                withAnimation {
-                    indicatorDetailsShown.toggle()
+            if viewItem.details != nil {
+                ClickableRow {
+                    withAnimation {
+                        indicatorDetailsShown.toggle()
+                    }
+                } content: {
+                    indicatorDetailsContent(details: viewItem.details)
                 }
-            } content: {
-                VStack(spacing: .margin12) {
-                    HStack(spacing: .margin8) {
-                        Text("coin_analytics.indicators.details".localized).textBody()
-                        Spacer()
-                        Image(indicatorDetailsShown ? "arrow_big_up_20" : "arrow_big_down_20").themeIcon()
-                    }
-
-                    if indicatorDetailsShown {
-                        Text(viewItem.details).themeSubhead2(color: .themeBran)
-                    }
-
-                    Text("coin_analytics.indicators.disclaimer").themeCaption()
+            } else {
+                ListRow {
+                    indicatorDetailsContent(details: nil)
                 }
             }
+        }
+    }
+
+    @ViewBuilder private func indicatorDetailsContent(details: String?) -> some View {
+        VStack(spacing: .margin12) {
+            HStack(spacing: .margin8) {
+                Text("coin_analytics.indicators.details".localized).textBody()
+                Spacer()
+                Image(indicatorDetailsShown ? "arrow_big_up_20" : "arrow_big_down_20").themeIcon()
+            }
+
+            if let details, indicatorDetailsShown {
+                Text(details).themeSubhead2(color: .themeBran)
+            }
+
+            Text("coin_analytics.indicators.disclaimer").themeCaption()
         }
     }
 
@@ -170,6 +188,7 @@ struct CoinAnalyticsView: View {
                         .listItem(text: "coin_analytics.cex_volume.info4".localized),
                     ]
                 ),
+                premium: false,
                 valueInfo: "coin_analytics.last_30d".localized,
                 chartCurveType: .bars,
                 proChartType: .cexVolume,
@@ -242,6 +261,7 @@ struct CoinAnalyticsView: View {
                         .listItem(text: "coin_analytics.project_tvl.info5".localized),
                     ]
                 ),
+                premium: false,
                 valueInfo: "coin_analytics.current".localized,
                 chartCurveType: .line,
                 proChartType: .tvl,
@@ -487,6 +507,7 @@ struct CoinAnalyticsView: View {
 
                     Image.disclosureIcon
                 }
+                .allowsHitTesting(viewModel.analyticsEnabled)
             }
 
             if let rank {
@@ -639,10 +660,10 @@ struct CoinAnalyticsView: View {
         .padding(.vertical, .margin4)
     }
 
-    @ViewBuilder private func chartRow(title: String, info: Info? = nil, valueInfo: String, chartCurveType: ChartConfiguration.CurveType, proChartType: CoinProChartModule.ProChartType, viewItem: Previewable<CoinAnalyticsViewModel.ChartViewItem>) -> some View {
+    @ViewBuilder private func chartRow(title: String, info: Info? = nil, premium: Bool = true, valueInfo: String, chartCurveType: ChartConfiguration.CurveType, proChartType: CoinProChartModule.ProChartType, viewItem: Previewable<CoinAnalyticsViewModel.ChartViewItem>) -> some View {
         ListRow {
             VStack(spacing: .margin12) {
-                cardHeader(text: title, info: info)
+                cardHeader(text: title, info: info, premium: premium)
 
                 let value: String = {
                     switch viewItem {
@@ -680,6 +701,7 @@ struct CoinAnalyticsView: View {
 
                 RateChartViewNew(configuration: chartConfiguration, trend: chartTrend, data: chartData)
                     .frame(maxWidth: .infinity)
+                    .allowsHitTesting(!premium || viewModel.analyticsEnabled)
                     .onTapGesture {
                         presentedProChartType = proChartType
                     }
@@ -730,9 +752,9 @@ struct CoinAnalyticsView: View {
         }
     }
 
-    @ViewBuilder private func cardHeader(text: String, info: Info? = nil) -> some View {
-        HStack(alignment: .top, spacing: .margin16) {
-            Text(text).themeSubhead1()
+    @ViewBuilder private func cardHeader(text: String, info: Info? = nil, premium: Bool = true) -> some View {
+        HStack(alignment: .center, spacing: .margin8) {
+            Text(text).textSubhead1()
 
             if let info {
                 Button {
@@ -743,6 +765,23 @@ struct CoinAnalyticsView: View {
                 .tappablePadding(.margin12, onTap: {
                     presentedInfo = info
                 })
+            }
+
+            Spacer()
+
+            if !viewModel.analyticsEnabled, premium {
+                Text("Premium")
+                    .textMicroSB(color: .themeClaude)
+                    .padding(.horizontal, .margin6)
+                    .padding(.vertical, .margin2)
+                    .background(
+                        LinearGradient(
+                            gradient: Gradient(colors: [Color(hex: 0xFFD000), Color(hex: 0xFFA800)]),
+                            startPoint: UnitPoint(x: -0.5181, y: 0.5),
+                            endPoint: .trailing
+                        )
+                    )
+                    .clipShape(Capsule(style: .continuous))
             }
         }
     }
@@ -768,6 +807,27 @@ struct CoinAnalyticsView: View {
                 .themeBody()
                 .padding(.horizontal, .margin16)
                 .padding(.vertical, .margin12)
+        }
+    }
+
+    @ViewBuilder private func indicatorRow(advice: Previewable<TechnicalAdvice.Advice>) -> some View {
+        switch advice {
+        case .preview:
+            indicatorMeter(
+                text: "",
+                textColor: .clear,
+                textBackground: .clear,
+                currentIndex: nil
+            )
+            .padding(.vertical, .margin24)
+        case let .regular(value: advice):
+            indicatorMeter(
+                text: advice.title,
+                textColor: advice.foregroundColor,
+                textBackground: advice.backgroundColor,
+                currentIndex: meterIndex(advice: advice)
+            )
+            .padding(.vertical, .margin24)
         }
     }
 
@@ -853,7 +913,7 @@ struct CoinAnalyticsView: View {
             let size = proxy.size
 
             ZStack(alignment: .bottom) {
-                LinearGradient(colors: currentIndex != nil ? [.themeLucian, .themeSteel20, .themeRemus] : [.themeYellow20], startPoint: .leading, endPoint: .trailing)
+                LinearGradient(colors: currentIndex != nil ? [.themeLucian, .themeSteel20, .themeRemus] : [.themeSteel20], startPoint: .leading, endPoint: .trailing)
                     .mask {
                         ZStack {
                             ForEach(0 ... 30, id: \.self) { index in

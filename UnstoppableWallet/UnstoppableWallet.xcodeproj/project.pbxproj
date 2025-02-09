@@ -2293,7 +2293,6 @@
 		ABC9AA86292CD59848A130F9 /* MacdIndicatorDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AA8F31619609907AD67E /* MacdIndicatorDataSource.swift */; };
 		ABC9AA8B7C29398895204651 /* ChartCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9F6635146BEBFB432D1 /* ChartCell.swift */; };
 		ABC9AAA26F0215D41AE50C57 /* SwapInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A90E8831B7B909124AB2 /* SwapInputCell.swift */; };
-		ABC9AAAFAC24894452DC5361 /* ActionSheetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A77CEB528EACD0244E73 /* ActionSheetModifier.swift */; };
 		ABC9AAB720B0187F782E18AB /* WalletConnectSocketConnectionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A0483AEAEB88DFBDD873 /* WalletConnectSocketConnectionService.swift */; };
 		ABC9AACB5CF2190A3D7C39AE /* WCSignMessageRequestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A50320A3CF0EC9E8ED67 /* WCSignMessageRequestViewController.swift */; };
 		ABC9AADE6C4251FCC9222125 /* ManageBarButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6CFDF38D413679D2088 /* ManageBarButtonView.swift */; };
@@ -2410,7 +2409,6 @@
 		ABC9AE014EA06F26956138FA /* SendBinanceFeeWarningViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2C2D1331E91D666AB3E /* SendBinanceFeeWarningViewModel.swift */; };
 		ABC9AE03528F37BF2C3B75DF /* IntegerAmountInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A88E126AB21F856522A7 /* IntegerAmountInputView.swift */; };
 		ABC9AE042D6A3D70CA64F959 /* ContactBookModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A5518367F0DDDB94D320 /* ContactBookModule.swift */; };
-		ABC9AE088EAF3654EBE2E822 /* ActionSheetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A77CEB528EACD0244E73 /* ActionSheetModifier.swift */; };
 		ABC9AE0D23A7B54521E77052 /* ECashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A4C563432A34A634B82A /* ECashAdapter.swift */; };
 		ABC9AE136053B13AFDA1883E /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB43B35D4DE04BDB5734 /* AlertView.swift */; };
 		ABC9AE18DE62E4DDDD44916D /* SwapInputModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AAD55B8932EE75E3C037 /* SwapInputModule.swift */; };
@@ -4354,7 +4352,6 @@
 		ABC9A7315E119F0B1581B70C /* SendEip721ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEip721ViewController.swift; sourceTree = "<group>"; };
 		ABC9A768C7AA282229C30409 /* ProposalChain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProposalChain.swift; sourceTree = "<group>"; };
 		ABC9A776346AF62265896CA1 /* CellElement.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CellElement.swift; sourceTree = "<group>"; };
-		ABC9A77CEB528EACD0244E73 /* ActionSheetModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ActionSheetModifier.swift; sourceTree = "<group>"; };
 		ABC9A791A47F4F1E71B51B3B /* TokenSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TokenSelectView.swift; sourceTree = "<group>"; };
 		ABC9A7AC6BC7EA8166F21D9A /* BackupNameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupNameView.swift; sourceTree = "<group>"; };
 		ABC9A7C3BC5FC664BBF14C4F /* SendEip721ViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEip721ViewModel.swift; sourceTree = "<group>"; };
@@ -7820,7 +7817,6 @@
 			children = (
 				ABC9A87A0C7AA22B19520502 /* AlertButtonTintColor.swift */,
 				ABC9AB43B35D4DE04BDB5734 /* AlertView.swift */,
-				ABC9A77CEB528EACD0244E73 /* ActionSheetModifier.swift */,
 				ABC9AA428B57E9309477EC96 /* TransparentFullScreenCover.swift */,
 				6B8BD39D2C11B959003ADE10 /* TextFieldAlert.swift */,
 			);
@@ -10862,7 +10858,6 @@
 				ABC9AEC906C313583DBECCCA /* RecipientRowsViewModel.swift in Sources */,
 				ABC9A835B49A7BF85F87454D /* AlertButtonTintColor.swift in Sources */,
 				ABC9A6E738C4A3556AD5E767 /* AlertView.swift in Sources */,
-				ABC9AE088EAF3654EBE2E822 /* ActionSheetModifier.swift in Sources */,
 				D3E1E8752C21859000E07052 /* PurchasesView.swift in Sources */,
 				ABC9A7908BE99782BFDC558E /* TransparentFullScreenCover.swift in Sources */,
 				11B3538BF3283868DD8D107F /* MultiSwapModule.swift in Sources */,
@@ -12359,7 +12354,6 @@
 				ABC9A6537ACEB9AF1CCF9D8C /* RecipientRowsViewModel.swift in Sources */,
 				ABC9A190E478402B48410FCC /* AlertButtonTintColor.swift in Sources */,
 				ABC9AE136053B13AFDA1883E /* AlertView.swift in Sources */,
-				ABC9AAAFAC24894452DC5361 /* ActionSheetModifier.swift in Sources */,
 				D3E1E8742C21859000E07052 /* PurchasesView.swift in Sources */,
 				ABC9AF8603F37760F2D40A6E /* TransparentFullScreenCover.swift in Sources */,
 				11B3569338D57D5CCF55E28E /* MultiSwapModule.swift in Sources */,

@@ -66,7 +66,7 @@ struct TonConnectListView: View {
             }
             .ignoresSafeArea()
         }
-        .bottomSheetNew(item: $tonConnectApp) { app in
+        .bottomSheet(item: $tonConnectApp) { app in
             BottomSheetView(
                 icon: .trash,
                 title: "ton_connect.list.disconnect_app".localized,

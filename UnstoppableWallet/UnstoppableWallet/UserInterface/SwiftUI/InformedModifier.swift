@@ -14,7 +14,7 @@ struct Informed: ViewModifier {
             }
             .padding(EdgeInsets(top: 5.5, leading: .margin16, bottom: 5.5, trailing: .margin16))
         })
-        .bottomSheetNew(isPresented: $descriptionPresented) {
+        .bottomSheet(isPresented: $descriptionPresented) {
             BottomSheetView(
                 icon: .info,
                 title: infoDescription.title,
