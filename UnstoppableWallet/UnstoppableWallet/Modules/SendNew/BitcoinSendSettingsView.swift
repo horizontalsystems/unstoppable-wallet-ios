@@ -142,7 +142,7 @@ struct BitcoinSendSettingsView: View {
                 isPresented: $inputsOutputsDescriptionPresented
             )
         }
-        .bottomSheetNew(isPresented: $chooseSortModePresented) {
+        .bottomSheet(isPresented: $chooseSortModePresented) {
             VStack(spacing: 0) {
                 HStack(spacing: .margin8) {
                     Image("arrow_medium_2_up_right_24").themeIcon(color: .gray)

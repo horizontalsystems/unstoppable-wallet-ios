@@ -84,7 +84,7 @@ struct PurchasesView: View {
                 }
             }
         }
-        .bottomSheetNew(item: $presentedInfoViewItem) { viewItem in
+        .bottomSheet(item: $presentedInfoViewItem) { viewItem in
             BottomSheetView(
                 icon: .local(name: viewItem.iconName, tint: .themeLucian),
                 title: "purchases.\(viewItem.title)".localized,
@@ -96,14 +96,15 @@ struct PurchasesView: View {
             )
         }
         .bottomSheet(
-            isPresented: $subscriptionPresented,
-            configuration: ActionSheetConfiguration(style: .sheet).set(ignoreKeyboard: true),
-            ignoreSafeArea: true,
-            onDismiss: {
-                if viewModel.subscribedSuccessful {
-                    successfulSubscriptionPresented = true
+            isPresented: Binding(
+                get: { subscriptionPresented },
+                set: {
+                    subscriptionPresented = $0
+                    if !$0, viewModel.subscribedSuccessful {
+                        successfulSubscriptionPresented = true
+                    }
                 }
-            }
+            )
         ) {
             PurchaseBottomSheetView(isPresented: $subscriptionPresented) { product in
                 onSuccessfulSubscription(product: product)

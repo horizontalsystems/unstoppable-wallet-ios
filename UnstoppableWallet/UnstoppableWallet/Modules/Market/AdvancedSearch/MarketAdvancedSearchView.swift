@@ -133,7 +133,7 @@ struct MarketAdvancedSearchView: View {
             Text(viewModel.top.title).textSubhead1(color: .themeLeah)
             Image("arrow_small_down_20").themeIcon()
         }
-        .bottomSheetNew(isPresented: $topPresented) {
+        .bottomSheet(isPresented: $topPresented) {
             VStack(spacing: 0) {
                 HStack(spacing: .margin16) {
                     Image("circle_coin_24").themeIcon(color: .themeJacob)
@@ -175,7 +175,7 @@ struct MarketAdvancedSearchView: View {
             Text(viewModel.volume.title).textSubhead1(color: color(valueFilter: viewModel.volume))
             Image("arrow_small_down_20").themeIcon()
         }
-        .bottomSheetNew(isPresented: $volumePresented) {
+        .bottomSheet(isPresented: $volumePresented) {
             VStack(spacing: 0) {
                 HStack(spacing: .margin16) {
                     Image("chart_2_24").themeIcon(color: .themeJacob)
@@ -315,7 +315,7 @@ struct MarketAdvancedSearchView: View {
 
             Image("arrow_small_down_20").themeIcon()
         }
-        .bottomSheetNew(isPresented: $signalsPresented) {
+        .bottomSheet(isPresented: $signalsPresented) {
             VStack(spacing: 0) {
                 HStack(spacing: .margin16) {
                     Image("bell_ring_24").themeIcon(color: .themeJacob)
@@ -369,7 +369,7 @@ struct MarketAdvancedSearchView: View {
             Text(viewModel.priceChange.title).textSubhead1(color: color(priceChangeFilter: viewModel.priceChange))
             Image("arrow_small_down_20").themeIcon()
         }
-        .bottomSheetNew(isPresented: $priceChangePresented) {
+        .bottomSheet(isPresented: $priceChangePresented) {
             VStack(spacing: 0) {
                 HStack(spacing: .margin16) {
                     Image("markets_24").themeIcon(color: .themeJacob)
@@ -412,7 +412,7 @@ struct MarketAdvancedSearchView: View {
             Text(viewModel.priceChangePeriod.title).textSubhead1(color: .themeLeah)
             Image("arrow_small_down_20").themeIcon()
         }
-        .bottomSheetNew(isPresented: $pricePeriodPresented) {
+        .bottomSheet(isPresented: $pricePeriodPresented) {
             VStack(spacing: 0) {
                 HStack(spacing: .margin16) {
                     Image("circle_clock_24").themeIcon(color: .themeJacob)
@@ -479,7 +479,7 @@ struct MarketAdvancedSearchView: View {
             Text(viewModel.priceCloseTo.title).textSubhead1(color: color(closeToFilter: viewModel.priceCloseTo))
             Image("arrow_small_down_20").themeIcon()
         }
-        .bottomSheetNew(isPresented: $priceCloseToPresented) {
+        .bottomSheet(isPresented: $priceCloseToPresented) {
             VStack(spacing: 0) {
                 HStack(spacing: .margin16) {
                     Image("arrow_swap_24").themeIcon(color: .themeJacob)

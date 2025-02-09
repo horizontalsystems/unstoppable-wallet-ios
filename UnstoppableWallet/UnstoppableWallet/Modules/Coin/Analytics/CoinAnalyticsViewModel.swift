@@ -16,8 +16,6 @@ class CoinAnalyticsViewModel: ObservableObject {
     @Published private(set) var analyticsEnabled: Bool = false
     @Published private(set) var state: State = .loading
 
-    private let isPurchased = false
-
     private let ratioFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
         formatter.numberStyle = .decimal
@@ -48,31 +46,51 @@ class CoinAnalyticsViewModel: ObservableObject {
     }
 
     private func handle(analytics: Analytics) async {
-        let viewItem = viewItem(analytics: analytics)
-
         await MainActor.run { [weak self] in
-            self?.state = .loaded(viewItem: viewItem)
+            self?.state = .loaded(viewItem: analytics)
         }
     }
 
-    private func handle(analyticsPreview: AnalyticsPreview) async {
-        let viewItem = previewViewItem(analyticsPreview: analyticsPreview)
+    func viewItem(_ analytics: Analytics) -> ViewItem {
+        let cexVolume = rankCardViewItem(
+            points: analytics.cexVolume?.aggregatedChartPoints.points,
+            value: analytics.cexVolume?.aggregatedChartPoints.aggregatedValue,
+            postfix: .currency,
+            rank: analytics.cexVolume?.rank30d,
+            rating: analytics.cexVolume?.rating
+        )
+        let tvl = tvlViewItem(
+            points: analytics.tvl?.chartPoints,
+            rank: analytics.tvl?.rank,
+            ratio: analytics.tvl?.ratio,
+            rating: analytics.tvl?.rating
+        )
 
-        await MainActor.run { [weak self] in
-            self?.state = .loaded(viewItem: viewItem)
+        guard analyticsEnabled else {
+            return ViewItem(
+                technicalAdvice: .init(advice: .preview, details: nil),
+                cexVolume: cexVolume,
+                dexVolume: analytics.dexVolume != nil ? .init(chart: .preview, rank: .preview, rating: .preview) : nil,
+                dexLiquidity: analytics.dexLiquidity != nil ? .init(chart: .preview, rank: .preview, rating: .preview) : nil,
+                activeAddresses: analytics.addresses != nil ? .init(chart: .preview, count30d: .preview, rank: .preview, rating: .preview) : nil,
+                transactionCount: analytics.transactions != nil ? .init(chart: .preview, volume: .preview, rank: .preview, rating: .preview) : nil,
+                holders: analytics.holders != nil ? .preview : nil,
+                holdersRank: analytics.holdersRank != nil ? .preview : nil,
+                holdersRating: analytics.holdersRating != nil ? .preview : nil,
+                tvl: tvl,
+                fee: analytics.fee != nil ? .init(value: .preview, rank: .preview, description: nil) : nil,
+                revenue: analytics.revenue != nil ? .init(value: .preview, rank: .preview, description: nil) : nil,
+                reports: analytics.reports != nil ? .preview : nil,
+                investors: analytics.fundsInvested != nil ? .preview : nil,
+                treasuries: analytics.treasuries != nil ? .preview : nil,
+                audits: analytics.audits != nil ? .preview : nil,
+                issueBlockchains: nil
+            )
         }
-    }
 
-    private func viewItem(analytics: Analytics) -> ViewItem {
-        ViewItem(
+        return ViewItem(
             technicalAdvice: viewItem(technicalAdvice: analytics.technicalAdvice),
-            cexVolume: rankCardViewItem(
-                points: analytics.cexVolume?.aggregatedChartPoints.points,
-                value: analytics.cexVolume?.aggregatedChartPoints.aggregatedValue,
-                postfix: .currency,
-                rank: analytics.cexVolume?.rank30d,
-                rating: analytics.cexVolume?.rating
-            ),
+            cexVolume: cexVolume,
             dexVolume: rankCardViewItem(
                 points: analytics.dexVolume?.aggregatedChartPoints.points,
                 value: analytics.dexVolume?.aggregatedChartPoints.aggregatedValue,
@@ -104,12 +122,7 @@ class CoinAnalyticsViewModel: ObservableObject {
             holders: holdersViewItem(holderBlockchains: analytics.holders),
             holdersRank: analytics.holdersRank.map { .regular(value: rankString(value: $0)) },
             holdersRating: analytics.holdersRating.flatMap { CoinAnalyticsModule.Rating(rawValue: $0) }.map { .regular(value: $0) },
-            tvl: tvlViewItem(
-                points: analytics.tvl?.chartPoints,
-                rank: analytics.tvl?.rank,
-                ratio: analytics.tvl?.ratio,
-                rating: analytics.tvl?.rating
-            ),
+            tvl: tvl,
             fee: valueRankViewItem(
                 value: analytics.fee?.value30d,
                 rank: analytics.fee?.rank30d,
@@ -134,28 +147,6 @@ class CoinAnalyticsViewModel: ObservableObject {
         )
     }
 
-    private func previewViewItem(analyticsPreview data: AnalyticsPreview) -> ViewItem {
-        ViewItem(
-            technicalAdvice: nil,
-            cexVolume: data.cexVolume ? RankCardViewItem(chart: .preview, rank: data.cexVolumeRank30d ? .preview : nil, rating: data.cexVolumeRating ? .preview : nil) : nil,
-            dexVolume: data.dexVolume ? RankCardViewItem(chart: .preview, rank: data.dexVolumeRank30d ? .preview : nil, rating: data.dexVolumeRating ? .preview : nil) : nil,
-            dexLiquidity: data.dexLiquidity ? RankCardViewItem(chart: .preview, rank: data.dexLiquidityRank ? .preview : nil, rating: data.dexLiquidityRating ? .preview : nil) : nil,
-            activeAddresses: data.addresses ? ActiveAddressesViewItem(chart: .preview, count30d: data.addressesCount30d ? .preview : nil, rank: data.addressesRank30d ? .preview : nil, rating: data.addressesRating ? .preview : nil) : nil,
-            transactionCount: data.transactions ? TransactionCountViewItem(chart: .preview, volume: data.transactionsVolume30d ? .preview : nil, rank: data.transactionsRank30d ? .preview : nil, rating: data.transactionsRating ? .preview : nil) : nil,
-            holders: data.holders ? .preview : nil,
-            holdersRank: data.holdersRank ? .preview : nil,
-            holdersRating: data.holdersRating ? .preview : nil,
-            tvl: data.tvl ? TvlViewItem(chart: .preview, rank: data.tvlRank ? .preview : nil, ratio: data.tvlRatio ? .preview : nil, rating: data.tvlRating ? .preview : nil) : nil,
-            fee: data.fee ? ValueRankViewItem(value: .preview, rank: data.feeRank30d ? .preview : nil, description: nil) : nil,
-            revenue: data.revenue ? ValueRankViewItem(value: .preview, rank: data.revenueRank30d ? .preview : nil, description: nil) : nil,
-            reports: data.reports ? .preview : nil,
-            investors: data.fundsInvested ? .preview : nil,
-            treasuries: data.treasuries ? .preview : nil,
-            audits: nil,
-            issueBlockchains: nil
-        )
-    }
-
     private func viewItem(technicalAdvice: TechnicalAdvice?) -> TechnicalAdviceViewItem? {
         guard let technicalAdvice, let advice = technicalAdvice.advice else {
             return nil
@@ -164,7 +155,7 @@ class CoinAnalyticsViewModel: ObservableObject {
         let details: [String?] = [technicalAdvice.mainAdvice, technicalAdvice.trendAdvice]
 
         return TechnicalAdviceViewItem(
-            advice: advice,
+            advice: .regular(value: advice),
             details: details.compactMap { $0 }.joined(separator: "\n\n")
         )
     }
@@ -363,15 +354,10 @@ extension CoinAnalyticsViewModel {
 
         state = .loading
 
-        Task { [weak self, isPurchased, marketKit, coin, currency] in
+        Task { [weak self, marketKit, coin, currency] in
             do {
-                if isPurchased {
-                    let analytics = try await marketKit.analytics(coinUid: coin.uid, currencyCode: currency.code)
-                    await self?.handle(analytics: analytics)
-                } else {
-                    let analyticsPreview = try await marketKit.analyticsPreview(coinUid: coin.uid)
-                    await self?.handle(analyticsPreview: analyticsPreview)
-                }
+                let analytics = try await marketKit.analytics(coinUid: coin.uid, currencyCode: currency.code)
+                await self?.handle(analytics: analytics)
             } catch {
                 await MainActor.run { [weak self] in
                     self?.state = .failed
@@ -385,7 +371,7 @@ extension CoinAnalyticsViewModel {
 extension CoinAnalyticsViewModel {
     enum State {
         case loading
-        case loaded(viewItem: ViewItem)
+        case loaded(viewItem: Analytics)
         case failed
     }
 
@@ -415,8 +401,8 @@ extension CoinAnalyticsViewModel {
     }
 
     struct TechnicalAdviceViewItem {
-        let advice: TechnicalAdvice.Advice
-        let details: String
+        let advice: Previewable<TechnicalAdvice.Advice>
+        let details: String?
     }
 
     struct RankCardViewItem {

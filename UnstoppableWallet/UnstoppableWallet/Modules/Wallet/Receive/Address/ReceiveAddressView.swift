@@ -101,7 +101,7 @@ struct ReceiveAddressView: View {
             }
         )
         .alertButtonTint(color: .themeJacob)
-        .bottomSheetNew(item: $warningAlertPopup) { popup in
+        .bottomSheet(item: $warningAlertPopup) { popup in
             BottomSheetView(
                 icon: .warning,
                 title: popup.title,

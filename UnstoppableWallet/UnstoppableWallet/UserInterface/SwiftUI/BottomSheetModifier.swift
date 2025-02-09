@@ -67,11 +67,11 @@ struct BooleanBottomSheetModifier<ContentView: View>: ViewModifier {
 }
 
 extension View {
-    func bottomSheetNew(isPresented: Binding<Bool>, @ViewBuilder contentView: @escaping () -> some View) -> some View {
+    func bottomSheet(isPresented: Binding<Bool>, @ViewBuilder contentView: @escaping () -> some View) -> some View {
         modifier(BooleanBottomSheetModifier(isPresented: isPresented, contentView: contentView))
     }
 
-    func bottomSheetNew<Item>(item: Binding<Item?>, @ViewBuilder contentView: @escaping (Item) -> some View) -> some View where Item: Identifiable {
+    func bottomSheet<Item>(item: Binding<Item?>, @ViewBuilder contentView: @escaping (Item) -> some View) -> some View where Item: Identifiable {
         modifier(BottomSheetModifier(item: item, contentView: contentView))
     }
 }

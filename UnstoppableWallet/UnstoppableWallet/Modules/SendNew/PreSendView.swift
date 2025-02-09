@@ -92,7 +92,7 @@ struct PreSendView: View {
                 }
             }
         }
-        .bottomSheetNew(item: $addressSecurityIssueType) { issueType in
+        .bottomSheet(item: $addressSecurityIssueType) { issueType in
             BottomSheetView(
                 icon: .local(name: "warning_2_24", tint: .themeLucian),
                 title: issueType.preSendTitle,
