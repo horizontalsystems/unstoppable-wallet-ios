@@ -67,12 +67,13 @@ struct RankView: View {
 
     @ViewBuilder private func header() -> some View {
         VStack(spacing: 0) {
-            HStack(spacing: .margin32) {
+            HStack(spacing: .margin16) {
                 VStack(spacing: .margin8) {
                     Text(viewModel.type.title.localized).themeHeadline1()
-                    Text(viewModel.type.description.localized).themeSubhead2()
+                    Text(viewModel.type.description.localized).textSubhead2()
                 }
                 .padding(.vertical, .margin12)
+                .fixedSize(horizontal: false, vertical: true)
 
                 KFImage.url(URL(string: viewModel.type.imageUid.headerImageUrl))
                     .resizable()
