@@ -531,17 +531,6 @@ class MainSettingsViewController: ThemeViewController {
                     self?.openTellFriends()
                 }
             ),
-            tableView.universalRow48(
-                id: "contact-us",
-                image: .local(UIImage(named: "mail_24")),
-                title: .body("settings.contact_us".localized),
-                accessoryType: .disclosure,
-                autoDeselect: true,
-                isLast: true,
-                action: { [weak self] in
-                    self?.handleContact()
-                }
-            ),
         ]
     }
 
@@ -619,44 +608,6 @@ class MainSettingsViewController: ThemeViewController {
         stat(page: .settings, event: .open(page: .tellFriends))
     }
 
-    private func handleEmailContact() {
-        let email = AppConfig.reportEmail
-
-        if MFMailComposeViewController.canSendMail() {
-            let controller = MFMailComposeViewController()
-            controller.setToRecipients([email])
-            controller.mailComposeDelegate = self
-
-            present(controller, animated: true)
-        } else {
-            CopyHelper.copyAndNotify(value: email)
-        }
-    }
-
-    private func handleTelegramContact() {
-        navigationController?.pushViewController(PersonalSupportModule.viewController(), animated: true)
-    }
-
-    private func handleContact() {
-        let viewController = BottomSheetModule.viewController(
-            image: .local(name: "at_24", tint: .warning),
-            title: "settings.contact.title".localized,
-            items: [],
-            buttons: [
-                .init(style: .yellow, title: "settings.contact.via_email".localized, actionType: .afterClose) { [weak self] in
-                    self?.handleEmailContact()
-                },
-                .init(style: .gray, title: "settings.contact.via_telegram".localized, actionType: .afterClose) { [weak self] in
-                    self?.handleTelegramContact()
-                },
-            ]
-        )
-
-        present(viewController, animated: true)
-
-        stat(page: .settings, event: .open(page: .contactUs))
-    }
-
     private func onTapTonConnect() {
         navigationController?.pushViewController(TonConnectListView().toViewController(title: "TON Connect"), animated: true)
     }
@@ -687,12 +638,13 @@ extension MainSettingsViewController: SectionsDataSource {
                 rows: socialRows
             ),
             Section(id: "knowledge", headerState: .margin(height: .margin32), rows: knowledgeRows),
-            Section(id: "footer", headerState: .margin(height: .margin32), footerState: .margin(height: .margin32), rows: footerRows),
         ]
 
         if AppConfig.donateEnabled {
-            sections.insert(Section(id: "donate", headerState: .margin(height: .margin32), rows: donateRows), at: 0)
+            sections.append(Section(id: "donate", headerState: .margin(height: .margin32), rows: donateRows))
         }
+
+        sections.append(Section(id: "footer", headerState: .margin(height: .margin32), footerState: .margin(height: .margin32), rows: footerRows))
 
         if !viewModel.hasActiveSubscriptions {
             sections.insert(Section(id: "premium", headerState: .margin(height: .margin12), rows: premiumRows), at: 0)
