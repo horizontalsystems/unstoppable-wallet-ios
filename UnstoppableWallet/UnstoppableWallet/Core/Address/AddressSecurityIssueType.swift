@@ -15,6 +15,13 @@ enum AddressSecurityIssueType: CaseIterable, Identifiable {
         }
     }
 
+    var clearInfo: InfoDescription {
+        switch self {
+        case .phishing: return .init(title: "send.address.phishing.clear.title".localized, description: "send.address.phishing.clear.description".localized)
+        case .sanctioned: return .init(title: "send.address.blacklist.clear.title".localized, description: "send.address.blacklist.clear.description".localized)
+        }
+    }
+
     var preSendTitle: String {
         switch self {
         case .phishing: return "send.address.phishing.pre_send.title".localized

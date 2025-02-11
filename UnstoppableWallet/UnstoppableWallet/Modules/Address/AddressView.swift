@@ -8,6 +8,7 @@ struct AddressView: View {
 
     @Environment(\.presentationMode) private var presentationMode
     @State var subscriptionPresented = false
+    @State var clearInfo: InfoDescription?
 
     init(wallet: Wallet, address: String? = nil, onFinish: @escaping (ResolvedAddress) -> Void) {
         _viewModel = StateObject(wrappedValue: AddressViewModel(wallet: wallet, address: address))
@@ -49,7 +50,7 @@ struct AddressView: View {
                         ListSection {
                             VStack(spacing: 0) {
                                 ForEach(viewModel.issueTypes) { type in
-                                    checkView(title: type.checkTitle, state: viewModel.checkStates[type] ?? .notAvailable)
+                                    checkView(title: type.checkTitle, clearInfo: type.clearInfo, state: viewModel.checkStates[type] ?? .notAvailable)
                                 }
                             }
                         }
@@ -94,6 +95,21 @@ struct AddressView: View {
         .sheet(isPresented: $subscriptionPresented) {
             PurchasesView()
         }
+        .bottomSheet(item: $clearInfo) { info in
+            BottomSheetView(
+                icon: .info,
+                title: info.title,
+                items: [
+                    .text(text: info.description),
+                ],
+                buttons: [
+                    .init(style: .yellow, title: "button.close".localized) {
+                        clearInfo = nil
+                    },
+                ],
+                onDismiss: { clearInfo = nil }
+            )
+        }
     }
 
     @ViewBuilder private func row(contact: AddressViewModel.Contact) -> some View {
@@ -111,7 +127,7 @@ struct AddressView: View {
         }
     }
 
-    @ViewBuilder private func checkView(title: String, state: AddressViewModel.CheckState) -> some View {
+    @ViewBuilder private func checkView(title: String, clearInfo: InfoDescription, state: AddressViewModel.CheckState) -> some View {
         HStack(spacing: .margin8) {
             HStack(spacing: 2) {
                 Image("star_premium_20").themeIcon(color: .themeJacob)
@@ -124,7 +140,10 @@ struct AddressView: View {
             case .checking:
                 ProgressView()
             case .clear:
-                Text("send.address.check.clear".localized).textSubhead2(color: .themeRemus)
+                HStack(spacing: .margin8) {
+                    Text("send.address.check.clear".localized).textSubhead2(color: .themeRemus)
+                    Image("circle_information_20").themeIcon()
+                }
             case .detected:
                 Text("send.address.check.detected".localized).textSubhead2(color: .themeLucian)
             case .notAvailable:
@@ -138,6 +157,7 @@ struct AddressView: View {
         .contentShape(Rectangle())
         .onTapGesture {
             switch state {
+            case .clear: self.clearInfo = clearInfo
             case .locked: subscriptionPresented = true
             default: ()
             }
