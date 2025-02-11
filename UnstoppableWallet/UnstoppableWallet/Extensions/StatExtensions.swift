@@ -55,6 +55,7 @@ extension MarketModule.Tab {
         case .pairs: return .pairs
         case .platforms: return .platforms
         case .watchlist: return .watchlist
+        case .sectors: return .sectors
         }
     }
 }

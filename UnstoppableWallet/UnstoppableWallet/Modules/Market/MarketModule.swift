@@ -77,7 +77,7 @@ enum MarketModule {
         case news
         case platforms
         case pairs
-        // case sectors
+        case sectors
 
         var title: String {
             switch self {
@@ -86,7 +86,7 @@ enum MarketModule {
             case .news: return "market.tab.news".localized
             case .platforms: return "market.tab.platforms".localized
             case .pairs: return "market.tab.pairs".localized
-                // case .sectors: return "market.tab.sectors".localized
+            case .sectors: return "market.tab.sectors".localized
             }
         }
     }
