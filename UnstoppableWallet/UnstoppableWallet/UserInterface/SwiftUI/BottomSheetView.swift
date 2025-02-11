@@ -99,6 +99,7 @@ struct BottomSheetView: View {
             Text(text)
                 .themeBody(color: .themeBran)
                 .padding(.horizontal, .margin32)
+                .padding(.bottom, .margin32)
         case let .highlightedDescription(text, style):
             HighlightedTextView(text: text, style: style)
                 .padding(.horizontal, .margin16)
