@@ -35,20 +35,25 @@ struct MarketAdvancedSearchCategoriesView: View {
 
                                 ForEach(categories) { category in
                                     ClickableRow {
+                                        guard let id = category.id else {
+                                            return
+                                        }
+
                                         switch viewModel.categories {
-                                        case .any: viewModel.categories = .list([category.id])
+                                        case .any:
+                                            viewModel.categories = .list([id])
                                         case var .list(array):
-                                            if let index = array.firstIndex(of: category.id) {
+                                            if let index = array.firstIndex(of: id) {
                                                 array.remove(at: index)
                                             } else {
-                                                array.append(category.id)
+                                                array.append(id)
                                             }
                                             viewModel.categories = array.isEmpty ? .any : .list(array)
                                         }
                                     } content: {
                                         Text(category.name).themeBody()
 
-                                        if viewModel.categories.include(id: category.id) {
+                                        if let id = category.id, viewModel.categories.include(id: id) {
                                             Image("check_1_20").themeIcon(color: .themeJacob)
                                         }
                                     }

@@ -106,6 +106,7 @@ enum StatPage: String {
     case resend
     case restoreSelect = "restore_select"
     case scanQrCode = "scan_qr_code"
+    case sector
     case security
     case send
     case sendConfirmation = "send_confirmation"
@@ -144,6 +145,7 @@ enum StatSection: String {
     case input
     case news
     case pairs
+    case sectors
     case platforms
     case popular
     case recent
@@ -188,6 +190,7 @@ enum StatEvent {
     case openPlatform(chainUid: String)
     case openReceive(token: Token)
     case openResend(chainUid: String, type: String)
+    case openSector(sectorUid: String)
     case openSend(token: Token)
     case openSendTokenList(coinUid: String?, chainUid: String?)
     case openTokenInfo(token: Token)
@@ -255,7 +258,7 @@ enum StatEvent {
         case .hideBalanceButtons: return "hide_balance_buttons"
         case .importFull: return "import_full"
         case .importWallet: return "import_wallet"
-        case .open, .openCategory, .openCoin, .openPlatform, .openReceive, .openResend, .openSend, .openSendTokenList, .openTokenPage,
+        case .open, .openCategory, .openCoin, .openPlatform, .openReceive, .openResend, .openSector, .openSend, .openSendTokenList, .openTokenPage,
              .openBlockchainSettingsBtc, .openBlockchainSettingsEvm, .openBlockchainSettingsEvmAdd: return "open_page"
         case .openTokenInfo: return "open_token_info"
         case .paste: return "paste"
@@ -342,6 +345,7 @@ enum StatEvent {
         case let .openPlatform(chainUid): return [.page: StatPage.topPlatform.rawValue, .chainUid: chainUid]
         case let .openReceive(token): return params(token: token).merging([.page: StatPage.receive.rawValue]) { $1 }
         case let .openResend(chainUid, type): return [.page: StatPage.resend.rawValue, .chainUid: chainUid, .type: type]
+        case let .openSector(sectorUid): return [.page: StatPage.sector.rawValue, .sectorUid: sectorUid]
         case let .openSend(token): return params(token: token).merging([.page: StatPage.send.rawValue]) { $1 }
         case let .openTokenPage(element):
             var params: [StatParam: Any] = [.page: StatPage.tokenPage.rawValue]
@@ -404,6 +408,7 @@ enum StatParam: String {
     case period
     case changeMode = "change_mode"
     case relativeUrl = "relative_url"
+    case sectorUid = "sector_uid"
     case shown
     case tab
     case tvlChain = "tvl_chain"
@@ -413,7 +418,7 @@ enum StatParam: String {
 
 enum StatTab: String {
     case markets, balance, transactions, settings
-    case coins, overview, news, pairs, platforms, watchlist
+    case coins, overview, news, pairs, platforms, watchlist, sectors
     case analytics
     case all, incoming, outgoing, swap, approve
 }
