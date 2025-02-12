@@ -1,5 +1,7 @@
+import MarketKit
+
 protocol IAddressSecurityChecker {
-    func check(address: Address) async throws -> Bool
+    func check(address: Address, token: Token) async throws -> Bool
 }
 
 enum AddressSecurityCheckerFactory {
@@ -7,6 +9,7 @@ enum AddressSecurityCheckerFactory {
         switch type {
         case .phishing: return SpamAddressDetector()
         case .sanctioned: return ChainalysisAddressValidator()
+        case .blacklisted: return BlacklistAddressValidator()
         }
     }
 }

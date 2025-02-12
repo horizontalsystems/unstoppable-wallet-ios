@@ -4,7 +4,7 @@ import MarketKit
 
 class AddressMultiSwapSettingsViewModel: ObservableObject {
     private let storage: MultiSwapSettingStorage
-    let blockchainType: BlockchainType
+    let token: Token
     private let initialAddress: Address?
 
     private var syncSubject = PassthroughSubject<Void, Never>()
@@ -15,11 +15,11 @@ class AddressMultiSwapSettingsViewModel: ObservableObject {
         }
     }
 
-    init(storage: MultiSwapSettingStorage, blockchainType: BlockchainType) {
+    init(storage: MultiSwapSettingStorage, token: Token) {
         self.storage = storage
-        self.blockchainType = blockchainType
+        self.token = token
 
-        initialAddress = storage.recipient(blockchainType: blockchainType)
+        initialAddress = storage.recipient(blockchainType: token.blockchainType)
         address = initialAddress?.raw
     }
 }
@@ -38,6 +38,6 @@ extension AddressMultiSwapSettingsViewModel: IMultiSwapSettingsField {
     }
 
     func onDone() {
-        storage.set(recipient: address.map { Address(raw: $0) }, blockchainType: blockchainType)
+        storage.set(recipient: address.map { Address(raw: $0) }, blockchainType: token.blockchainType)
     }
 }

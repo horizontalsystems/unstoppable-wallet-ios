@@ -2664,6 +2664,12 @@
 		D0E5E8562BE38AA2005080A4 /* TronSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5E8542BE38AA2005080A4 /* TronSendHandler.swift */; };
 		D0E659BB2B875003000D8981 /* ResendBitcoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E659BA2B875003000D8981 /* ResendBitcoinViewModel.swift */; };
 		D0E659BC2B875003000D8981 /* ResendBitcoinViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E659BA2B875003000D8981 /* ResendBitcoinViewModel.swift */; };
+		D0E6EC632D5A0069006563D1 /* Eip20AddressValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6EC622D5A0046006563D1 /* Eip20AddressValidator.swift */; };
+		D0E6EC642D5A0069006563D1 /* Eip20AddressValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6EC622D5A0046006563D1 /* Eip20AddressValidator.swift */; };
+		D0E6EC662D5B5E9A006563D1 /* HashDitAddressValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6EC652D5B5E71006563D1 /* HashDitAddressValidator.swift */; };
+		D0E6EC672D5B5E9A006563D1 /* HashDitAddressValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6EC652D5B5E71006563D1 /* HashDitAddressValidator.swift */; };
+		D0E6EC692D5B5EB4006563D1 /* BlacklistAddressValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6EC682D5B5EB4006563D1 /* BlacklistAddressValidator.swift */; };
+		D0E6EC6A2D5B5EB4006563D1 /* BlacklistAddressValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E6EC682D5B5EB4006563D1 /* BlacklistAddressValidator.swift */; };
 		D0EC34DB2A4450B100BB308B /* HCaptcha in Frameworks */ = {isa = PBXBuildFile; productRef = D0EC34DA2A4450B100BB308B /* HCaptcha */; };
 		D0EC34DD2A4450D200BB308B /* HCaptcha in Frameworks */ = {isa = PBXBuildFile; productRef = D0EC34DC2A4450D200BB308B /* HCaptcha */; };
 		D0F132A12B6B98E100C7310E /* RbfService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F132A02B6B98E100C7310E /* RbfService.swift */; };
@@ -4575,6 +4581,9 @@
 		D0E5E8512BE260C8005080A4 /* BitcoinPreSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinPreSendHandler.swift; sourceTree = "<group>"; };
 		D0E5E8542BE38AA2005080A4 /* TronSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronSendHandler.swift; sourceTree = "<group>"; };
 		D0E659BA2B875003000D8981 /* ResendBitcoinViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendBitcoinViewModel.swift; sourceTree = "<group>"; };
+		D0E6EC622D5A0046006563D1 /* Eip20AddressValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Eip20AddressValidator.swift; sourceTree = "<group>"; };
+		D0E6EC652D5B5E71006563D1 /* HashDitAddressValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HashDitAddressValidator.swift; sourceTree = "<group>"; };
+		D0E6EC682D5B5EB4006563D1 /* BlacklistAddressValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlacklistAddressValidator.swift; sourceTree = "<group>"; };
 		D0EE557D2934B0D60027AAD3 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/InfoPlist.strings"; sourceTree = "<group>"; };
 		D0EE557E2934B0D60027AAD3 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		D0F132A02B6B98E100C7310E /* RbfService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RbfService.swift; sourceTree = "<group>"; };
@@ -7082,6 +7091,9 @@
 		58AAA0C31F14444C22ACF393 /* Address */ = {
 			isa = PBXGroup;
 			children = (
+				D0E6EC682D5B5EB4006563D1 /* BlacklistAddressValidator.swift */,
+				D0E6EC652D5B5E71006563D1 /* HashDitAddressValidator.swift */,
+				D0E6EC622D5A0046006563D1 /* Eip20AddressValidator.swift */,
 				D05C8E892D22931A006EE778 /* ChainalysisAddressValidator.swift */,
 				D0F766CE2D1AD36200E409AD /* SpamAddressDetector.swift */,
 				D06F60012D195FBC0033A288 /* AddressSecurityIssueType.swift */,
@@ -9445,6 +9457,7 @@
 				D3DD67292BC3BF4700EC7F78 /* OneInchMultiSwapQuote.swift in Sources */,
 				1A564CBB4708B7DAC6D6A2AD /* BlockchainSettingsStorage.swift in Sources */,
 				1A5646E67996AB355694A35E /* EnabledWallet_v_0_13.swift in Sources */,
+				D0E6EC672D5B5E9A006563D1 /* HashDitAddressValidator.swift in Sources */,
 				1A5641F1A0F4E8FC6555D480 /* BtcBlockchainManager.swift in Sources */,
 				1A56498C73C42F16A2D96A8D /* HighlightedDescriptionView.swift in Sources */,
 				1A564FFA4566A5019E744E8E /* TransactionDataSortMode.swift in Sources */,
@@ -9696,6 +9709,7 @@
 				11B35F2474FF811217F48132 /* WalletHeaderView.swift in Sources */,
 				11B3532D03B0893AB8E46CD9 /* BalanceViewItem.swift in Sources */,
 				11B355E3AC79508BEDA18CAE /* BirthdayInputViewController.swift in Sources */,
+				D0E6EC642D5A0069006563D1 /* Eip20AddressValidator.swift in Sources */,
 				1A5643BCDAD7CB0230CBB513 /* GradientClippingView.swift in Sources */,
 				11B3558898EE33B8D6E571CE /* MnemonicPhraseCell.swift in Sources */,
 				D066A4602C6CC7E200074E35 /* WelcomeScreenViewModel.swift in Sources */,
@@ -10421,6 +10435,7 @@
 				11B35E3A0FECB153325C6C37 /* ReceiveSelectCoinViewController.swift in Sources */,
 				11B352E8A16157B7FCF354A9 /* ReceiveModule.swift in Sources */,
 				11B354ABE0DA5D0F1DC05DCC /* ReceiveService.swift in Sources */,
+				D0E6EC692D5B5EB4006563D1 /* BlacklistAddressValidator.swift in Sources */,
 				11B3594FCD35038663CD4FEF /* ReceiveViewModel.swift in Sources */,
 				11B35C78C16D1F89FBC8F222 /* ReceiveViewController.swift in Sources */,
 				11B357A607396E857705024F /* WalletTokenCell.swift in Sources */,
@@ -10928,6 +10943,7 @@
 				D3B73E272BDBC6120067429D /* IPreSendHandler.swift in Sources */,
 				D3DD67282BC3BF4700EC7F78 /* OneInchMultiSwapQuote.swift in Sources */,
 				1A56454D8C03B7B1141635DA /* EnabledWallet_v_0_13.swift in Sources */,
+				D0E6EC662D5B5E9A006563D1 /* HashDitAddressValidator.swift in Sources */,
 				1A5645DE1329BC81C1A9B711 /* BtcBlockchainManager.swift in Sources */,
 				1A564AB50152BF82514BAC3C /* HighlightedDescriptionView.swift in Sources */,
 				1A5641C097AAD5FC9D35F9EE /* TransactionDataSortMode.swift in Sources */,
@@ -11179,6 +11195,7 @@
 				11B35E8D7BC94103A4ABD91C /* WalletHeaderView.swift in Sources */,
 				11B3583C77D7B2BD613D6269 /* BalanceViewItem.swift in Sources */,
 				11B3553ED96875D0B6E5B5C4 /* BirthdayInputViewController.swift in Sources */,
+				D0E6EC632D5A0069006563D1 /* Eip20AddressValidator.swift in Sources */,
 				1A564A2FCE3C764029FECB7B /* GradientClippingView.swift in Sources */,
 				11B35E67CDA98E004C9C2011 /* MnemonicPhraseCell.swift in Sources */,
 				D066A45F2C6CC7E200074E35 /* WelcomeScreenViewModel.swift in Sources */,
@@ -11904,6 +11921,7 @@
 				11B35DFF8F15AA74356061A0 /* ReceiveSelectCoinService.swift in Sources */,
 				11B35F09A49A90BF058CA500 /* ReceiveSelectCoinViewModel.swift in Sources */,
 				11B3573B753DB244EEBAAA35 /* ReceiveSelectCoinViewController.swift in Sources */,
+				D0E6EC6A2D5B5EB4006563D1 /* BlacklistAddressValidator.swift in Sources */,
 				11B35EBE688A7C4F9B92F865 /* ReceiveModule.swift in Sources */,
 				11B352EDBB48A02E732FA0A0 /* ReceiveService.swift in Sources */,
 				11B3565617F5E45C0B86AFED /* ReceiveViewModel.swift in Sources */,

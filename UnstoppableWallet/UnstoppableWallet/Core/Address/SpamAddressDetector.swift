@@ -1,3 +1,5 @@
+import MarketKit
+
 class SpamAddressDetector {
     private let spamAddressManager: SpamAddressManager
 
@@ -7,7 +9,7 @@ class SpamAddressDetector {
 }
 
 extension SpamAddressDetector: IAddressSecurityChecker {
-    func check(address: Address) async throws -> Bool {
+    func check(address: Address, token _: Token) async throws -> Bool {
         spamAddressManager.find(address: address.raw.uppercased()) != nil
     }
 }

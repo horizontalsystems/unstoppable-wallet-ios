@@ -19,6 +19,7 @@ open_sea_api_key =
 unstoppable_domains_api_key =
 one_inch_api_key =
 chainalysis_api_key =
+hashdit_api_key =
 one_inch_commission =
 one_inch_commission_address =
 swap_enabled = true

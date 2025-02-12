@@ -50,7 +50,7 @@ extension RecipientAndSlippageMultiSwapSettingsView {
         let slippageViewModel: SlippageMultiSwapSettingsViewModel
 
         init(tokenIn: Token, storage: MultiSwapSettingStorage) {
-            addressViewModel = AddressMultiSwapSettingsViewModel(storage: storage, blockchainType: tokenIn.blockchainType)
+            addressViewModel = AddressMultiSwapSettingsViewModel(storage: storage, token: tokenIn)
             slippageViewModel = SlippageMultiSwapSettingsViewModel(storage: storage)
 
             super.init(fields: [addressViewModel, slippageViewModel])
