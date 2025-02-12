@@ -1635,6 +1635,11 @@
 "subscription.status" = "Status";
 "subscription.manage" = "Manage Subscription";
 
+// Settings -> Support
+
+"settings.vip_support.description" = "Get direct assistance from our experts. A private chat will be created in Telegram to resolve your issue, and it will be closed once the problem is solved.";
+"settings.vip_support.start_chat" = "Start Chat";
+
 // Settings -> Contacts
 
 "contacts.title" = "Contacts";

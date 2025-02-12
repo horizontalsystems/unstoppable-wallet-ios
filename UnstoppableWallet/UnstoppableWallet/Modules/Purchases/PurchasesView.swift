@@ -1,3 +1,4 @@
+import StoreKit
 import SwiftUI
 
 struct PurchasesView: View {
@@ -43,7 +44,6 @@ struct PurchasesView: View {
                                     }
                                 }
                                 .themeListStyle(.steel10WithCorners(.allCorners))
-                                .modifier(ThemeListStyleModifier(themeListStyle: .steel10WithCorners(.allCorners), cornerRadius: .cornerRadius16))
                                 .padding(.horizontal, .margin16)
 
                                 walletDescription()
@@ -86,11 +86,16 @@ struct PurchasesView: View {
         }
         .bottomSheet(item: $presentedInfoViewItem) { viewItem in
             BottomSheetView(
-                icon: .local(name: viewItem.iconName, tint: .themeLucian),
+                icon: .local(name: viewItem.iconName, tint: .themeJacob),
                 title: "purchases.\(viewItem.title)".localized,
-                titleColor: .themeJacob,
+                titleColor: .themeLeah,
                 items: [
                     .text(text: "purchases.\(viewItem.title).info".localized),
+                ],
+                buttons: [
+                    .init(style: .yellow, title: "button.close".localized) {
+                        presentedInfoViewItem = nil
+                    },
                 ],
                 onDismiss: { presentedInfoViewItem = nil }
             )

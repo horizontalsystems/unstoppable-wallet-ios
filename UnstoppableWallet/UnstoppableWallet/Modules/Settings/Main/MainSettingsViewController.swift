@@ -433,7 +433,11 @@ class MainSettingsViewController: ThemeViewController {
 
         switch feature {
         case .vipSupport:
-            UrlManager.open(url: "https://t.me/\(AppConfig.appTelegramAccount)")
+            let viewController = SupportView { telegramUrl in
+                UrlManager.open(url: telegramUrl)
+            }.toViewController().toBottomSheet
+
+            present(viewController, animated: true)
         case .vipClub:
             UrlManager.open(url: "https://t.me/\(AppConfig.appTelegramAccount)")
         default: ()
