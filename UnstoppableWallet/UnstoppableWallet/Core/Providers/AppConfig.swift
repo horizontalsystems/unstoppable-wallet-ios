@@ -175,6 +175,10 @@ enum AppConfig {
         (Bundle.main.object(forInfoDictionaryKey: "ChainalysisApiKey") as? String) ?? ""
     }
 
+    static var hashDitApiKey: String {
+        (Bundle.main.object(forInfoDictionaryKey: "HashDitApiKey") as? String) ?? ""
+    }
+
     static var swapEnabled: Bool {
         Bundle.main.object(forInfoDictionaryKey: "SwapEnabled") as? String == "true"
     }

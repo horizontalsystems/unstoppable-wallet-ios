@@ -21,7 +21,7 @@ struct SendAddressView: View {
 
     var body: some View {
         ThemeView {
-            AddressView(blockchainType: wallet.token.blockchainType, buttonTitle: "send.next_button".localized, address: address) { resolvedAddress in
+            AddressView(token: wallet.token, buttonTitle: "send.next_button".localized, address: address) { resolvedAddress in
                 self.resolvedAddress = resolvedAddress
             }
 

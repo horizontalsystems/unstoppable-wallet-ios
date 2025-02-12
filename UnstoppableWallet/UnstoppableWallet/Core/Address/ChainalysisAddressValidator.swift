@@ -1,6 +1,7 @@
 import Alamofire
 import Foundation
 import HsToolKit
+import MarketKit
 import ObjectMapper
 import RxSwift
 
@@ -18,7 +19,7 @@ class ChainalysisAddressValidator {
 }
 
 extension ChainalysisAddressValidator: IAddressSecurityChecker {
-    func check(address: Address) async throws -> Bool {
+    func check(address: Address, token _: Token) async throws -> Bool {
         let response: ChainalysisAddressValidatorResponse = try await networkManager.fetch(url: "\(baseUrl)\(address.raw)", headers: headers)
         return !response.identifications.isEmpty
     }

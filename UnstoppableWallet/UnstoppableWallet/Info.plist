@@ -142,6 +142,8 @@
 	<string>${trongrid_api_key}</string>
 	<key>ChainalysisApiKey</key>
 	<string>${chainalysis_api_key}</string>
+	<key>HashDitApiKey</key>
+	<string>${hashdit_api_key}</string>
 	<key>TwitterBearerToken</key>
 	<string>${twitter_bearer_token}</string>
 	<key>UIApplicationSceneManifest</key>

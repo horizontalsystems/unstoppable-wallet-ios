@@ -4,7 +4,7 @@ import MarketKit
 
 class AddressViewModel: ObservableObject {
     private let purchaseManager = App.shared.purchaseManager
-    let blockchainType: BlockchainType
+    let token: Token
     let issueTypes: [AddressSecurityIssueType]
     let contacts: [Contact]
     let recentContact: Contact?
@@ -31,13 +31,13 @@ class AddressViewModel: ObservableObject {
         }
     }
 
-    init(blockchainType: BlockchainType, address: String?) {
-        self.blockchainType = blockchainType
-        issueTypes = AddressSecurityIssueType.issueTypes(blockchainType: blockchainType)
+    init(token: Token, address: String?) {
+        self.token = token
+        issueTypes = AddressSecurityIssueType.issueTypes(token: token)
 
-        let contacts = App.shared.contactManager.contacts(blockchainUid: blockchainType.uid)
+        let contacts = App.shared.contactManager.contacts(blockchainUid: token.blockchainType.uid)
             .compactMap { contact -> Contact? in
-                guard let address = contact.address(blockchainUid: blockchainType.uid) else {
+                guard let address = contact.address(blockchainUid: token.blockchainType.uid) else {
                     return nil
                 }
 
@@ -45,7 +45,7 @@ class AddressViewModel: ObservableObject {
             }
             .sorted { $0.name ?? "" < $1.name ?? "" }
 
-        let recentAddress = try? App.shared.recentAddressStorage.address(blockchainUid: blockchainType.uid)
+        let recentAddress = try? App.shared.recentAddressStorage.address(blockchainUid: token.blockchainType.uid)
 
         recentContact = recentAddress.map { address in
             Contact(uid: "recent", name: contacts.first(where: { $0.address.lowercased() == address.lowercased() })?.name, address: address)
@@ -99,7 +99,7 @@ class AddressViewModel: ObservableObject {
 
             Task {
                 do {
-                    let hasIssue = try await checker.check(address: address)
+                    let hasIssue = try await checker.check(address: address, token: token)
 
                     await MainActor.run {
                         checkStates[type] = hasIssue ? .detected : .clear

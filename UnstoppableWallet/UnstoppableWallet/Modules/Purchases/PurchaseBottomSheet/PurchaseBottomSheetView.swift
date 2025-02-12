@@ -93,6 +93,7 @@ struct PurchaseBottomSheetView: View {
         switch subscriptionState {
         case .lifetime:
             Text("purchase.lifetime.description").foregroundColor(.themeGray).font(.themeSubhead2)
+
         case .freeTrial:
 
             Text("purchase.period.description1".localized + " ").foregroundColor(.themeRemus).font(.themeSubhead2) +

@@ -12,8 +12,8 @@ struct AddressView: View {
     @State var subscriptionPresented = false
     @State var clearInfo: InfoDescription?
 
-    init(blockchainType: BlockchainType, buttonTitle: String, address: String? = nil, onFinish: @escaping (ResolvedAddress) -> Void) {
-        _viewModel = StateObject(wrappedValue: AddressViewModel(blockchainType: blockchainType, address: address))
+    init(token: Token, buttonTitle: String, address: String? = nil, onFinish: @escaping (ResolvedAddress) -> Void) {
+        _viewModel = StateObject(wrappedValue: AddressViewModel(token: token, address: address))
         self.buttonTitle = buttonTitle
         self.onFinish = onFinish
     }
@@ -24,7 +24,7 @@ struct AddressView: View {
                 VStack(spacing: 0) {
                     AddressViewNew(
                         initial: .init(
-                            blockchainType: viewModel.blockchainType,
+                            blockchainType: viewModel.token.blockchainType,
                             showContacts: true
                         ),
                         text: $viewModel.address,
