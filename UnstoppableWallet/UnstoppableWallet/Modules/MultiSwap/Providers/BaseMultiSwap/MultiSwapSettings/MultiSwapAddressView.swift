@@ -4,34 +4,56 @@ import SwiftUI
 struct MultiSwapAddressView: View {
     @ObservedObject var viewModel: AddressMultiSwapSettingsViewModel
 
-    @FocusState var isAddressFocused: Bool
+    @State var addressPresented = false
 
     var body: some View {
         VStack(spacing: 0) {
-            HStack {
-                Text("swap.advanced_settings.recipient_address".localized).textSubhead1()
-                Spacer()
-            }
-            .padding(EdgeInsets(top: .margin6, leading: .margin16, bottom: .margin6, trailing: .margin16))
+            ListSection {
+                ClickableRow {
+                    addressPresented = true
+                } content: {
+                    if let address = viewModel.address {
+                        Text("swap.advanced_settings.recipient_address.to".localized).textSubhead2()
+                        Text(address)
+                            .textBody(color: .themeLeah)
+                            .multilineTextAlignment(.leading)
 
-            AddressViewNew(
-                initial: .init(
-                    blockchainType: viewModel.blockchainType,
-                    showContacts: true
-                ),
-                text: $viewModel.address,
-                result: $viewModel.addressResult
-            )
-            .focused($isAddressFocused)
-            .onChange(of: isAddressFocused) { active in
-                viewModel.changeAddressFocus(active: active)
+                        Spacer()
+
+                        Button(action: {
+                            viewModel.address = nil
+                        }, label: {
+                            Image("trash_20").renderingMode(.template)
+                        })
+                        .buttonStyle(SecondaryCircleButtonStyle(style: .default))
+                    } else {
+                        Text("swap.advanced_settings.add_recipient_address".localized)
+                            .textBody(color: .themeLeah)
+                            .multilineTextAlignment(.leading)
+
+                        Spacer()
+
+                        Image.disclosureIcon
+                    }
+                }
             }
-            .modifier(CautionBorder(cautionState: $viewModel.addressCautionState))
-            .modifier(CautionPrompt(cautionState: $viewModel.addressCautionState))
+            .themeListStyle(.lawrence)
 
             Text("swap.advanced_settings.recipient.footer".localized)
                 .themeSubhead2()
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
+        }
+        .sheet(isPresented: $addressPresented) {
+            ThemeNavigationView {
+                ThemeView {
+                    AddressView(blockchainType: viewModel.blockchainType, buttonTitle: "button.done".localized, address: viewModel.address) { resolvedAddress in
+                        viewModel.address = resolvedAddress.address
+                        addressPresented = false
+                    }
+                }
+                .navigationTitle("address.title".localized)
+                .navigationBarTitleDisplayMode(.inline)
+            }
         }
     }
 }

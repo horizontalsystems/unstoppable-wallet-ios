@@ -21,7 +21,6 @@ struct RecipientAndSlippageMultiSwapSettingsView: View {
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-        .animation(.default, value: viewModel.addressViewModel.addressCautionState)
         .animation(.default, value: viewModel.slippageViewModel.slippageCautionState)
         .navigationTitle("swap.advanced_settings".localized)
         .navigationBarTitleDisplayMode(.inline)
