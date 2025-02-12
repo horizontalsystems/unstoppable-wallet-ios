@@ -1838,6 +1838,10 @@
 		6BA8D2432D5B0D2C0093D5C2 /* MarketSectorViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA8D2412D5B0D2C0093D5C2 /* MarketSectorViewModel.swift */; };
 		6BA8D2452D5B14430093D5C2 /* SectorMarketCapFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA8D2442D5B14430093D5C2 /* SectorMarketCapFetcher.swift */; };
 		6BA8D2462D5B14430093D5C2 /* SectorMarketCapFetcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA8D2442D5B14430093D5C2 /* SectorMarketCapFetcher.swift */; };
+		6BA8D24C2D5CA7DC0093D5C2 /* SupportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA8D24B2D5CA7DC0093D5C2 /* SupportViewModel.swift */; };
+		6BA8D24D2D5CA7DC0093D5C2 /* SupportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA8D24B2D5CA7DC0093D5C2 /* SupportViewModel.swift */; };
+		6BA8D24F2D5CA7E80093D5C2 /* SupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA8D24E2D5CA7E80093D5C2 /* SupportView.swift */; };
+		6BA8D2502D5CA7E80093D5C2 /* SupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA8D24E2D5CA7E80093D5C2 /* SupportView.swift */; };
 		6BAAF3472B9B245C00EFE5B2 /* ShimmerEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3442B9B245C00EFE5B2 /* ShimmerEffect.swift */; };
 		6BAAF3492B9B245C00EFE5B2 /* SlideButtonStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3452B9B245C00EFE5B2 /* SlideButtonStyling.swift */; };
 		6BAAF34B2B9B245C00EFE5B2 /* SlideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3462B9B245C00EFE5B2 /* SlideButton.swift */; };
@@ -4175,6 +4179,8 @@
 		6BA8D23E2D5B0D1B0093D5C2 /* MarketSectorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketSectorView.swift; sourceTree = "<group>"; };
 		6BA8D2412D5B0D2C0093D5C2 /* MarketSectorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketSectorViewModel.swift; sourceTree = "<group>"; };
 		6BA8D2442D5B14430093D5C2 /* SectorMarketCapFetcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectorMarketCapFetcher.swift; sourceTree = "<group>"; };
+		6BA8D24B2D5CA7DC0093D5C2 /* SupportViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportViewModel.swift; sourceTree = "<group>"; };
+		6BA8D24E2D5CA7E80093D5C2 /* SupportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupportView.swift; sourceTree = "<group>"; };
 		6BAAF3442B9B245C00EFE5B2 /* ShimmerEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShimmerEffect.swift; sourceTree = "<group>"; };
 		6BAAF3452B9B245C00EFE5B2 /* SlideButtonStyling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideButtonStyling.swift; sourceTree = "<group>"; };
 		6BAAF3462B9B245C00EFE5B2 /* SlideButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideButton.swift; sourceTree = "<group>"; };
@@ -6162,13 +6168,14 @@
 		11B358D87B2EDEB8BE8F133B /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				11B3563CCEF5817CCA5A0C6A /* Appearance */,
 				1A564533BEABADF4DC5F8A25 /* Main */,
 				1A56463750A2B2C557B399E7 /* Security */,
 				11B35E1B51E123DEB9F71E96 /* Terms */,
 				11B3586A7D20121BC532047E /* Unlink */,
 				11B35F2DD8307A98F05D5475 /* About */,
 				11B35CF31CBB2FF04B2A75AA /* BaseCurrency */,
-				11B3563CCEF5817CCA5A0C6A /* Appearance */,
+				6BA8D2472D5CA7410093D5C2 /* Support */,
 				1A5648A0CFE0BED4703D9794 /* Privacy */,
 				11B35C3CD4FFDE56E8E30B80 /* BlockchainSettings */,
 				D06F756D2A8BA33000184227 /* Donate */,
@@ -7445,6 +7452,15 @@
 				6BA8D2412D5B0D2C0093D5C2 /* MarketSectorViewModel.swift */,
 			);
 			path = Sector;
+			sourceTree = "<group>";
+		};
+		6BA8D2472D5CA7410093D5C2 /* Support */ = {
+			isa = PBXGroup;
+			children = (
+				6BA8D24B2D5CA7DC0093D5C2 /* SupportViewModel.swift */,
+				6BA8D24E2D5CA7E80093D5C2 /* SupportView.swift */,
+			);
+			path = Support;
 			sourceTree = "<group>";
 		};
 		6BB14F782C05FAA600E879B2 /* Tvl */ = {
@@ -9648,6 +9664,7 @@
 				11B351E31777084419C3B2C0 /* CreateAccountModule.swift in Sources */,
 				11B3520EE4A357BCFDE52BAA /* CreateAccountAdvancedViewController.swift in Sources */,
 				11B3533F0C232F72DB641666 /* CreateAccountService.swift in Sources */,
+				6BA8D24D2D5CA7DC0093D5C2 /* SupportViewModel.swift in Sources */,
 				11B3598CCF5AB4D78AD4D32B /* RestoreMnemonicViewModel.swift in Sources */,
 				11B35F890BE41B1BFAC3D75E /* RestoreMnemonicService.swift in Sources */,
 				11B355836B4CFF24359C4B83 /* RestoreSelectModule.swift in Sources */,
@@ -9854,6 +9871,7 @@
 				D36DE0AC272FD612000BC916 /* SwapViewController.swift in Sources */,
 				D087627729815DAE00E6FFD4 /* ChooseWatchViewModel.swift in Sources */,
 				11B35FBC1AFDCF0DB8362C88 /* CoinAnalyticsModule.swift in Sources */,
+				6BA8D2502D5CA7E80093D5C2 /* SupportView.swift in Sources */,
 				D0118E4C2B7CC63300D55CE6 /* ResendBitcoinViewController.swift in Sources */,
 				D05C8E8A2D22931A006EE778 /* ChainalysisAddressValidator.swift in Sources */,
 				D389BC4D2C0DDCF500724504 /* MarketAdvancedSearchBlockchainsView.swift in Sources */,
@@ -11134,6 +11152,7 @@
 				11B35DA1A83CE7E402309FE7 /* CreateAccountModule.swift in Sources */,
 				11B35B7ABF2BE45FAE0461A5 /* CreateAccountAdvancedViewController.swift in Sources */,
 				11B355DB012D5856C675FE72 /* CreateAccountService.swift in Sources */,
+				6BA8D24C2D5CA7DC0093D5C2 /* SupportViewModel.swift in Sources */,
 				11B353AD1FE351B86CA538EA /* RestoreMnemonicViewModel.swift in Sources */,
 				11B35631E5455A54854A2A6F /* RestoreMnemonicService.swift in Sources */,
 				11B357F4C63379217B25AA75 /* RestoreSelectModule.swift in Sources */,
@@ -11340,6 +11359,7 @@
 				58AAA72230207B253E2153EA /* SelectorButton.swift in Sources */,
 				D36DE0E4272FD887000BC916 /* OneInchService.swift in Sources */,
 				D05E969A2A26278D002CCD71 /* TronApproveTransactionRecord.swift in Sources */,
+				6BA8D24F2D5CA7E80093D5C2 /* SupportView.swift in Sources */,
 				D05E969D2A2627AF002CCD71 /* TronContractCallTransactionRecord.swift in Sources */,
 				D05C8E8B2D22931A006EE778 /* ChainalysisAddressValidator.swift in Sources */,
 				D36DE0C9272FD864000BC916 /* UniswapProvider.swift in Sources */,
@@ -12519,7 +12539,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = UnstoppableWallet/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -12591,7 +12611,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = UnstoppableWallet/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -13208,7 +13228,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 3.1.1;
+				version = 3.2.0;
 			};
 		};
 		D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart" */ = {

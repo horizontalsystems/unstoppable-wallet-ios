@@ -100,13 +100,19 @@ class PurchaseManager: NSObject {
         activeFeatures = !purchasedProducts.isEmpty ? PremiumFeature.allCases : []
     }
 
-    private var getReceipt: String? {
-        guard let appStoreReceiptURL = Bundle.main.appStoreReceiptURL,
-              let receiptData = try? Data(contentsOf: appStoreReceiptURL)
-        else {
+    func getJws() async -> String? {
+        guard let purchase = activePurchase else {
             return nil
         }
-        return receiptData.base64EncodedString()
+
+        let result = await Transaction.currentEntitlements.first(where: {
+            switch $0 {
+            case let .verified(transaction): return transaction.productID == purchase.id
+            default: return false
+            }
+        })
+
+        return result?.jwsRepresentation
     }
 }
 

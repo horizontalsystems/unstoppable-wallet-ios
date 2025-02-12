@@ -6,6 +6,7 @@ struct PurchaseBottomSheetView: View {
     @StateObject private var viewModel: PurchaseBottomSheetViewModel
 
     @Binding private var isPresented: Bool
+    @State private var redeemSheetPresented = false
 
     init(isPresented: Binding<Bool>, onSubscribe: @escaping (PurchaseManager.ProductData) -> Void) {
         _viewModel = StateObject(wrappedValue: PurchaseBottomSheetViewModel(onSubscribe: onSubscribe))
@@ -16,7 +17,7 @@ struct PurchaseBottomSheetView: View {
         VStack(spacing: 0) {
             HStack(spacing: .margin16) {
                 Image("circle_clock_24").themeIcon(color: .themeJacob)
-                Text("purchase.period.title").themeHeadline2()
+                Text("purchase.period.title".localized).themeHeadline2()
 
                 Button(action: {
                     isPresented = false
@@ -57,7 +58,7 @@ struct PurchaseBottomSheetView: View {
                 .buttonStyle(PrimaryButtonStyle(style: .yellowGradient))
 
                 Button(action: {
-                    print("ABC")
+                    redeemSheetPresented = true
                 }) {
                     Text("purchases.period.button.promo".localized)
                 }
@@ -65,6 +66,9 @@ struct PurchaseBottomSheetView: View {
                 .buttonStyle(PrimaryButtonStyle(style: .transparent))
             }
             .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin12, trailing: .margin24))
+        }
+        .offerCodeRedemption(isPresented: $redeemSheetPresented) { result in
+            viewModel.handleRedeemCode(result: result)
         }
     }
 
@@ -95,10 +99,8 @@ struct PurchaseBottomSheetView: View {
             Text("purchase.lifetime.description").foregroundColor(.themeGray).font(.themeSubhead2)
 
         case .freeTrial:
-
             Text("purchase.period.description1".localized + " ").foregroundColor(.themeRemus).font(.themeSubhead2) +
                 Text("purchase.period.description2".localized).foregroundColor(.themeGray).font(.themeSubhead2)
-
         case .subscribe:
             Text("purchase.period.description2".localized).foregroundColor(.themeGray).font(.themeSubhead2)
         }

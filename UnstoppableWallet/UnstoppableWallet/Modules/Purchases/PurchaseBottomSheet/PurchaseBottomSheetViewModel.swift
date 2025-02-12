@@ -3,6 +3,7 @@ import Foundation
 
 class PurchaseBottomSheetViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
+    private var waitTask: Task<Void, Never>?
 
     @Published var items: [Item] = []
     @Published var selectedItem: Item?
@@ -27,8 +28,7 @@ class PurchaseBottomSheetViewModel: ObservableObject {
 
         purchaseManager.$purchaseData
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] purchases in
-                self?.allowTrialPeriod = !purchases.isEmpty
+            .sink { [weak self] in self?.handle(purchases: $0)
             }
             .store(in: &cancellables)
 
@@ -55,23 +55,52 @@ class PurchaseBottomSheetViewModel: ObservableObject {
         }
     }
 
-    func subscribe() {
-        Task {
-            await update(state: .loading)
+    private func waitTransaction() {
+        waitTask?.cancel()
+
+        waitTask = Task { [weak self] in
+            await self?.update(state: .loading)
 
             do {
-                guard let selectedItem else {
+                try await Task.sleep(nanoseconds: 5_000_000_000)
+
+                if !Task.isCancelled {
+                    await self?.update(state: .idle)
+                }
+            } catch {
+                await self?.update(state: .idle)
+            }
+        }
+    }
+
+    private func handle(purchases: [PurchaseManager.PurchaseData]) {
+        allowTrialPeriod = !purchases.isEmpty
+
+        if let purchase = purchaseManager.activePurchase, let product = purchaseManager.productData.first(where: { $0.id == purchase.id }) {
+            waitTask?.cancel()
+            waitTask = nil
+
+            onSubscribe(product)
+        }
+    }
+
+    func subscribe() {
+        Task { [weak self] in
+            await self?.update(state: .loading)
+
+            do {
+                guard let selectedItem = self?.selectedItem else {
                     return
                 }
 
-                try await purchaseManager.purchase(product: selectedItem.product)
+                try await self?.purchaseManager.purchase(product: selectedItem.product)
 
-                await update(state: .idle)
+                await self?.update(state: .idle)
 
-                onSubscribe(selectedItem.product)
+                self?.onSubscribe(selectedItem.product)
             } catch {
                 print("ERROR: \(error)") // TODO: Handle error
-                await update(state: .idle)
+                await self?.update(state: .idle)
             }
         }
     }
@@ -80,6 +109,15 @@ class PurchaseBottomSheetViewModel: ObservableObject {
 extension PurchaseBottomSheetViewModel {
     func set(item: Item) {
         selectedItem = item
+    }
+
+    func handleRedeemCode(result: Result<Void, any Error>) {
+        switch result {
+        case .success(): // wait transaction and handle it
+            waitTransaction()
+        case let .failure(error): // don't doing anything
+            print(error)
+        }
     }
 }
 

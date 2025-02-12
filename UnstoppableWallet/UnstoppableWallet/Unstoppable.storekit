@@ -34,7 +34,7 @@
     "_applicationInternalID" : "1447619907",
     "_developerTeamID" : "HC4MCAXJ66",
     "_failTransactionsEnabled" : false,
-    "_lastSynchronizedDate" : 760005547.29781604,
+    "_lastSynchronizedDate" : 761026862.16541398,
     "_locale" : "en_US",
     "_storefront" : "KAZ",
     "_storeKitErrors" : [
@@ -98,14 +98,41 @@
 
           ],
           "codeOffers" : [
-
+            {
+              "displayPrice" : "6990.0",
+              "eligibility" : [
+                "expired",
+                "existing",
+                "new"
+              ],
+              "internalID" : "0BD774B1",
+              "isStackable" : true,
+              "numberOfPeriods" : 1,
+              "paymentMode" : "payAsYouGo",
+              "referenceName" : "PROMO15",
+              "subscriptionPeriod" : "P1M"
+            },
+            {
+              "displayPrice" : "5990.0",
+              "eligibility" : [
+                "existing",
+                "expired",
+                "new"
+              ],
+              "internalID" : "A50ACEDE",
+              "isStackable" : true,
+              "numberOfPeriods" : 1,
+              "paymentMode" : "payUpFront",
+              "referenceName" : "PROMO50",
+              "subscriptionPeriod" : "P1M"
+            }
           ],
           "displayPrice" : "11990.0",
           "familyShareable" : true,
           "groupNumber" : 1,
           "internalID" : "6741198962",
           "introductoryOffer" : {
-            "internalID" : "0BBD029F",
+            "internalID" : "D9399DFE",
             "numberOfPeriods" : 1,
             "paymentMode" : "free",
             "subscriptionPeriod" : "P1W"
@@ -131,7 +158,7 @@
           "groupNumber" : 2,
           "internalID" : "6741199030",
           "introductoryOffer" : {
-            "internalID" : "EB3A1135",
+            "internalID" : "43F4CDBD",
             "numberOfPeriods" : 1,
             "paymentMode" : "free",
             "subscriptionPeriod" : "P1W"
