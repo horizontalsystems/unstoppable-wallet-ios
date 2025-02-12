@@ -657,6 +657,8 @@
 "swap.advanced_settings.recipient.footer" = "After the exchange operation, the amount will be transferred to the specified address";
 "swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Recipient Address";
+"swap.advanced_settings.recipient_address.to" = "To";
+"swap.advanced_settings.add_recipient_address" = "Add Recipient Address";
 "swap.advanced_settings.warning.unusual_slippage" = "Your transaction may be frontrun";
 "swap.advanced_settings.service_fee_description" = "A service fee for the swap action on the platform typicaly either 0.3% or 0.6%";
 "swap.advanced_settings.error.lower_slippage" = "Your transaction is likely to fail.";

@@ -1,17 +1,20 @@
 import ComponentKit
+import MarketKit
 import SwiftUI
 import ThemeKit
 
 struct AddressView: View {
     @StateObject var viewModel: AddressViewModel
-    private var onFinish: (ResolvedAddress) -> Void
+    private let buttonTitle: String
+    private let onFinish: (ResolvedAddress) -> Void
 
     @Environment(\.presentationMode) private var presentationMode
     @State var subscriptionPresented = false
     @State var clearInfo: InfoDescription?
 
-    init(wallet: Wallet, address: String? = nil, onFinish: @escaping (ResolvedAddress) -> Void) {
-        _viewModel = StateObject(wrappedValue: AddressViewModel(wallet: wallet, address: address))
+    init(blockchainType: BlockchainType, buttonTitle: String, address: String? = nil, onFinish: @escaping (ResolvedAddress) -> Void) {
+        _viewModel = StateObject(wrappedValue: AddressViewModel(blockchainType: blockchainType, address: address))
+        self.buttonTitle = buttonTitle
         self.onFinish = onFinish
     }
 
@@ -21,7 +24,7 @@ struct AddressView: View {
                 VStack(spacing: 0) {
                     AddressViewNew(
                         initial: .init(
-                            blockchainType: viewModel.token.blockchainType,
+                            blockchainType: viewModel.blockchainType,
                             showContacts: true
                         ),
                         text: $viewModel.address,
@@ -178,7 +181,7 @@ struct AddressView: View {
             title = "send.address.checking".localized
             showProgress = true
         case .valid:
-            title = "send.next_button".localized
+            title = buttonTitle
             disabled = false
         }
 

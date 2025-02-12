@@ -4,7 +4,7 @@ import MarketKit
 
 class AddressViewModel: ObservableObject {
     private let purchaseManager = App.shared.purchaseManager
-    private let wallet: Wallet
+    let blockchainType: BlockchainType
     let issueTypes: [AddressSecurityIssueType]
     let contacts: [Contact]
     let recentContact: Contact?
@@ -31,13 +31,13 @@ class AddressViewModel: ObservableObject {
         }
     }
 
-    init(wallet: Wallet, address: String?) {
-        self.wallet = wallet
-        issueTypes = AddressSecurityIssueType.issueTypes(blockchainType: wallet.token.blockchainType)
+    init(blockchainType: BlockchainType, address: String?) {
+        self.blockchainType = blockchainType
+        issueTypes = AddressSecurityIssueType.issueTypes(blockchainType: blockchainType)
 
-        let contacts = App.shared.contactManager.contacts(blockchainUid: wallet.token.blockchain.uid)
+        let contacts = App.shared.contactManager.contacts(blockchainUid: blockchainType.uid)
             .compactMap { contact -> Contact? in
-                guard let address = contact.address(blockchainUid: wallet.token.blockchain.uid) else {
+                guard let address = contact.address(blockchainUid: blockchainType.uid) else {
                     return nil
                 }
 
@@ -45,7 +45,7 @@ class AddressViewModel: ObservableObject {
             }
             .sorted { $0.name ?? "" < $1.name ?? "" }
 
-        let recentAddress = try? App.shared.recentAddressStorage.address(blockchainUid: wallet.token.blockchain.uid)
+        let recentAddress = try? App.shared.recentAddressStorage.address(blockchainUid: blockchainType.uid)
 
         recentContact = recentAddress.map { address in
             Contact(uid: "recent", name: contacts.first(where: { $0.address.lowercased() == address.lowercased() })?.name, address: address)
@@ -134,12 +134,6 @@ class AddressViewModel: ObservableObject {
 
         let resolvedAddress = ResolvedAddress(address: address, issueTypes: detectedTypes)
         state = .valid(resolvedAddress: resolvedAddress)
-    }
-}
-
-extension AddressViewModel {
-    var token: Token {
-        wallet.token
     }
 }
 
