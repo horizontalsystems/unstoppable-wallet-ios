@@ -132,7 +132,6 @@ struct SecuritySettingsView: View {
                                 Image("trash_24").themeIcon(color: .themeLucian)
                                 Text("settings_security.disable_duress_mode".localized).themeBody(color: .themeLucian)
                             }
-                            .modifier(ColoredBorder())
                         } else {
                             ClickableRow(action: {
                                 guard viewModel.premiumEnabled else {
@@ -149,9 +148,9 @@ struct SecuritySettingsView: View {
                                 Image("switch_wallet_24").themeIcon(color: .themeJacob)
                                 Text("settings_security.enable_duress_mode".localized).themeBody()
                             }
-                            .modifier(ColoredBorder())
                         }
                     }
+                    .modifier(ColoredBorder())
 
                     ListSectionFooter(text: "settings_security.duress_mode.description".localized)
                 }

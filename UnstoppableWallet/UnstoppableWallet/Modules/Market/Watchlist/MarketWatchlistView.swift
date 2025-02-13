@@ -80,14 +80,14 @@ struct MarketWatchlistView: View {
                 if viewModel.showSignals {
                     signalsButton()
                         .buttonStyle(SecondaryActiveButtonStyle(leftAccessory:
-                            .custom(icon: "crown_20", enabledColor: .themeDark, disabledColor: .themeDark)
+                            .custom(icon: "star_premium_20", enabledColor: .themeDark, disabledColor: .themeDark)
                         ))
                         .disabled(disabled)
                 } else {
                     signalsButton()
                         .buttonStyle(
                             SecondaryButtonStyle(leftAccessory:
-                                .custom(image: Image("crown_20"), pressedColor: .themeJacob, activeColor: .themeJacob, disabledColor: .themeJacob)
+                                .custom(image: Image("star_premium_20"), pressedColor: .themeJacob, activeColor: .themeJacob, disabledColor: .themeJacob)
                             ))
                         .disabled(disabled)
                 }

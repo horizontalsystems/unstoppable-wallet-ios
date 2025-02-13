@@ -1357,8 +1357,7 @@
 "settings.tell_friends" = "Tell Friends";
 "settings.contact_us" = "Contact Us";
 "settings.social_networks.label" = "Join Unstoppables";
-"settings.social_networks.footer" = "Learn and master crypto via exclusive videos. Get to know us informally. Be the first to see things we work on.";
-"settings.get_your_tokens" = "Get UWT Tokens";
+"settings.get_your_tokens" = "Get your tokens";
 
 // Settings -> Base Currency
 

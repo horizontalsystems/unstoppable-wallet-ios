@@ -126,6 +126,7 @@ enum StatPage: String {
     case transactionInfo = "transaction_info"
     case transactions
     case unlinkWallet = "unlink_wallet"
+    case vipSupport = "vip_support"
     case walletConnect = "wallet_connect"
     case walletConnectRequest = "wallet_connect_request"
     case walletConnectSession = "wallet_connect_session"
