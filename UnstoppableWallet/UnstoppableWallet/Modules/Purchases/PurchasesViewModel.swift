@@ -78,13 +78,11 @@ extension PremiumFeature {
     var iconName: String {
         switch self {
         case .vipSupport: return "support_2_24"
-        case .vipClub: return "support_24"
         case .tokenInsights: return "circle_portfolio_24"
         case .advancedSearch: return "search_discovery_24"
         case .tradeSignals: return "bell_ring_24"
-        case .txSpeedUp: return "outgoing_raw_24"
-        case .duressMode: return "switch_wallet_24"
-        case .addressPhishing: return "shield_24"
+        case .duressMode: return "duress_24"
+        case .addressPhishing: return "circle_check_24"
         case .addressChecker: return "warning_2_24"
         case .privacyMode: return "fraud_24"
         }

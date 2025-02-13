@@ -425,25 +425,18 @@ class MainSettingsViewController: ThemeViewController {
         ]
     }
 
-    private func openVip(feature: PremiumFeature) {
-        guard viewModel.activated(feature) else {
+    private func openVipSupport() {
+        guard viewModel.activated(.vipSupport) else {
             present(PurchasesView().toViewController(), animated: true)
             return
         }
 
-        switch feature {
-        case .vipSupport:
-            let viewController = SupportView { telegramUrl in
-                UrlManager.open(url: telegramUrl)
-            }.toViewController().toBottomSheet
+        let viewController = SupportView { telegramUrl in
+            UrlManager.open(url: telegramUrl)
+        }.toViewController().toBottomSheet
 
-            present(viewController, animated: true)
-        case .vipClub:
-            UrlManager.open(url: "https://t.me/\(AppConfig.appTelegramAccount)")
-        default: ()
-        }
-
-        stat(page: .settings, event: .open(page: .externalTelegram))
+        present(viewController, animated: true)
+        stat(page: .settings, event: .open(page: .vipSupport))
     }
 
     private var premiumSupportRows: [RowProtocol] {
@@ -458,7 +451,7 @@ class MainSettingsViewController: ThemeViewController {
                 isFirst: true,
                 isLast: true,
                 action: { [weak self] in
-                    self?.openVip(feature: .vipSupport)
+                    self?.openVipSupport()
                 }
             ),
         ]
@@ -542,7 +535,7 @@ class MainSettingsViewController: ThemeViewController {
         [
             tableView.universalRow48(
                 id: "donate",
-                image: .local(UIImage(named: "heart_fill_24")?.withTintColor(.themeJacob)),
+                image: .local(UIImage(named: "heart_24")?.withTintColor(.themeGray)),
                 title: .body("settings.donate.title".localized),
                 accessoryType: .disclosure,
                 autoDeselect: true,
@@ -638,7 +631,6 @@ extension MainSettingsViewController: SectionsDataSource {
                     },
                     dynamicHeight: { _ in .margin32 }
                 ),
-                footerState: tableView.sectionFooter(text: "settings.social_networks.footer".localized, topMargin: .margin12, bottomMargin: .zero),
                 rows: socialRows
             ),
             Section(id: "knowledge", headerState: .margin(height: .margin32), rows: knowledgeRows),

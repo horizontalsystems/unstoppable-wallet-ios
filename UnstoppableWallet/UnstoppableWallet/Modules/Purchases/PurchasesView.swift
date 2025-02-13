@@ -19,9 +19,9 @@ struct PurchasesView: View {
         ThemeNavigationView {
             ThemeView {
                 ZStack {
-                    VStack {
-                        ThemeRadialView {
-                            ScrollView {
+                    ThemeRadialView {
+                        ScrollView {
+                            VStack(spacing: 0) {
                                 Image("box_2")
                                     .padding(.vertical, .margin24)
 
@@ -88,7 +88,7 @@ struct PurchasesView: View {
             BottomSheetView(
                 icon: .local(name: viewItem.iconName, tint: .themeJacob),
                 title: "purchases.\(viewItem.title)".localized,
-                titleColor: .themeLeah,
+                titleColor: .themeJacob,
                 items: [
                     .text(text: "purchases.\(viewItem.title).info".localized),
                 ],

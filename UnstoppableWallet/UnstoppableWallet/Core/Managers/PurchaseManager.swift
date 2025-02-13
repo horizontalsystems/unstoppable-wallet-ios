@@ -96,8 +96,7 @@ class PurchaseManager: NSObject {
         print("PURCHASES:")
         print(purchaseData)
 
-        // found active subscripion:
-        activeFeatures = !purchasedProducts.isEmpty ? PremiumFeature.allCases : []
+        activeFeatures = activePurchase != nil ? PremiumFeature.allCases : []
     }
 
     func getJws() async -> String? {
@@ -131,6 +130,7 @@ extension PurchaseManager {
         }
     }
 
+    @MainActor
     func purchase(product: Product) async throws {
         let result = try await product.purchase()
 
@@ -332,14 +332,12 @@ extension PurchaseManager {
 }
 
 enum PremiumFeature: String, CaseIterable {
-    case vipSupport = "vip_support"
-    case vipClub = "vip_club"
     case tokenInsights = "token_insights"
     case advancedSearch = "advanced_search"
     case tradeSignals = "trade_signals"
-    case txSpeedUp = "tx_speed_up"
     case duressMode = "duress_mode"
     case addressPhishing = "address_phishing"
     case addressChecker = "address_checker"
     case privacyMode = "privacy_mode"
+    case vipSupport = "vip_support"
 }

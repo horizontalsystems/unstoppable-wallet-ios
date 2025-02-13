@@ -207,7 +207,11 @@ struct MarketAdvancedSearchView: View {
 
     @ViewBuilder private func categoriesRow() -> some View {
         ClickableRow(spacing: .margin8) {
-            categoriesPresented = true
+            if viewModel.advancedSearchEnabled {
+                categoriesPresented = true
+            } else {
+                subscriptionPresented = true
+            }
         } content: {
             Text("market.advanced_search.categories".localized).textBody()
             Spacer()
