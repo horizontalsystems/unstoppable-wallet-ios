@@ -116,7 +116,12 @@ class App {
             .appendingPathComponent("bank.sqlite")
         let dbPool = try DatabasePool(path: databaseURL.path)
 
-        try StorageMigrator.migrate(dbPool: dbPool)
+        userDefaultsStorage = UserDefaultsStorage()
+        localStorage = LocalStorage(userDefaultsStorage: userDefaultsStorage)
+        keychainStorage = KeychainStorage(service: "io.horizontalsystems.bank.dev")
+        let sharedLocalStorage = SharedLocalStorage()
+
+        try StorageMigrator.migrate(dbPool: dbPool, localStorage: localStorage)
 
         marketKit = try MarketKit.Kit.instance(
             hsApiBaseUrl: AppConfig.marketApiUrl,
@@ -124,11 +129,6 @@ class App {
             minLogLevel: .error
         )
         marketKit.sync()
-
-        userDefaultsStorage = UserDefaultsStorage()
-        localStorage = LocalStorage(userDefaultsStorage: userDefaultsStorage)
-        keychainStorage = KeychainStorage(service: "io.horizontalsystems.bank.dev")
-        let sharedLocalStorage = SharedLocalStorage()
 
         pasteboardManager = PasteboardManager()
         reachabilityManager = ReachabilityManager()
