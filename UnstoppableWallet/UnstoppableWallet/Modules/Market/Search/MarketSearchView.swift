@@ -58,7 +58,12 @@ struct MarketSearchView: View {
                 Text(coin.code).themeBody()
                 Text(coin.name).themeSubhead2()
             }
+
+            Spacer()
+
+            WatchlistView.watchButton(viewModel: watchlistViewModel, coinUid: coin.uid)
+                .contentShape(Rectangle())
+                .onTapGesture {}
         }
-        .watchlistSwipeActions(viewModel: watchlistViewModel, coinUid: coin.uid)
     }
 }
