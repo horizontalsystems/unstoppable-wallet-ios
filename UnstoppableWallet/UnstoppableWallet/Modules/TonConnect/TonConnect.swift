@@ -272,26 +272,40 @@ private extension Int {
 
 public struct SendTransactionParam: Decodable {
     let messages: [Message]
-    let validUntil: TimeInterval
+    let validUntil: TimeInterval?
     let from: TonSwift.Address?
+    let network: TonConnect.Network
 
     enum CodingKeys: String, CodingKey {
         case messages
         case validUntil = "valid_until"
         case from
         case source
+        case network
     }
 
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         messages = try container.decode([Message].self, forKey: .messages)
-        validUntil = try container.decode(TimeInterval.self, forKey: .validUntil)
+        if container.contains(.validUntil) {
+            validUntil = try container.decode(TimeInterval.self, forKey: .validUntil)
+        } else {
+            validUntil = nil
+        }
 
         if let fromValue = try? container.decode(String.self, forKey: .from) {
             from = try TonSwift.Address.parse(fromValue)
         } else {
             from = try TonSwift.Address.parse(container.decode(String.self, forKey: .source))
         }
+
+        let rawNetwork = try container.decode(String.self, forKey: .network)
+
+        guard let intNetwork = Int16(rawNetwork), let network = TonConnect.Network(rawValue: intNetwork) else {
+            throw AppError.unknownError
+        }
+
+        self.network = network
     }
 
     public struct Message: Decodable {

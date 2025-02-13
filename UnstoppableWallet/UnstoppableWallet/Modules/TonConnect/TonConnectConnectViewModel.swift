@@ -47,4 +47,10 @@ extension TonConnectConnectViewModel {
             }
         }
     }
+
+    func rejectConnection() {
+        Task {
+            try await tonConnectManager.rejectConnection(parameters: parameters)
+        }
+    }
 }

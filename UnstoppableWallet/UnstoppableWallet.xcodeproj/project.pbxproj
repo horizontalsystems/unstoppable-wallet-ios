@@ -2700,6 +2700,8 @@
 		D30C4D582D55FE980082B487 /* BottomSheetModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D562D55FE910082B487 /* BottomSheetModifier.swift */; };
 		D30C4D5A2D560D3A0082B487 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D592D560D360082B487 /* BottomSheetView.swift */; };
 		D30C4D5B2D560D3A0082B487 /* BottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D592D560D360082B487 /* BottomSheetView.swift */; };
+		D30C4D612D5CAFCB0082B487 /* TonConnectErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D5F2D5CAFCB0082B487 /* TonConnectErrorView.swift */; };
+		D30C4D632D5CAFCB0082B487 /* TonConnectErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D5F2D5CAFCB0082B487 /* TonConnectErrorView.swift */; };
 		D30D7E5F2CAAC89700B8CAA7 /* TonConnectEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30D7E5E2CAAC89700B8CAA7 /* TonConnectEventHandler.swift */; };
 		D30D7E602CAAC89700B8CAA7 /* TonConnectEventHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30D7E5E2CAAC89700B8CAA7 /* TonConnectEventHandler.swift */; };
 		D30D7E622CAACCF300B8CAA7 /* TonConnectSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30D7E612CAACCF300B8CAA7 /* TonConnectSendView.swift */; };
@@ -4604,6 +4606,7 @@
 		D30C4D532D537E990082B487 /* RecentAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentAddress.swift; sourceTree = "<group>"; };
 		D30C4D562D55FE910082B487 /* BottomSheetModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetModifier.swift; sourceTree = "<group>"; };
 		D30C4D592D560D360082B487 /* BottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomSheetView.swift; sourceTree = "<group>"; };
+		D30C4D5F2D5CAFCB0082B487 /* TonConnectErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonConnectErrorView.swift; sourceTree = "<group>"; };
 		D30D7E5E2CAAC89700B8CAA7 /* TonConnectEventHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonConnectEventHandler.swift; sourceTree = "<group>"; };
 		D30D7E612CAACCF300B8CAA7 /* TonConnectSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonConnectSendView.swift; sourceTree = "<group>"; };
 		D30D7E642CAACCFB00B8CAA7 /* TonConnectSendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonConnectSendViewModel.swift; sourceTree = "<group>"; };
@@ -8763,6 +8766,7 @@
 		D362879D2CA2B32900ADAF3B /* TonConnect */ = {
 			isa = PBXGroup;
 			children = (
+				D30C4D5F2D5CAFCB0082B487 /* TonConnectErrorView.swift */,
 				D362879E2CA2B34E00ADAF3B /* TonConnectListView.swift */,
 				D36287A12CA2B35A00ADAF3B /* TonConnectListViewModel.swift */,
 				D36287A52CA2B89200ADAF3B /* TonConnectParameters.swift */,
@@ -10050,6 +10054,7 @@
 				11B351B95F191EEA750D9955 /* BalancePrimaryValue.swift in Sources */,
 				D362879F2CA2B34E00ADAF3B /* TonConnectListView.swift in Sources */,
 				11B35C2D75133B8F13101A24 /* BalancePrimaryValueManager.swift in Sources */,
+				D30C4D632D5CAFCB0082B487 /* TonConnectErrorView.swift in Sources */,
 				11B350F9E67A095998D9462C /* BalanceConversionManager.swift in Sources */,
 				11B35D11D00301F7B67B0340 /* AppIconManager.swift in Sources */,
 				11B35B0E1435737240D26C92 /* AppIcon.swift in Sources */,
@@ -11538,6 +11543,7 @@
 				ABC9A9562DD283B6FCACBCF9 /* MarketCardTitleView.swift in Sources */,
 				D36287A02CA2B34E00ADAF3B /* TonConnectListView.swift in Sources */,
 				ABC9AC1BD5C95957726F8AE8 /* MarketCardValueView.swift in Sources */,
+				D30C4D612D5CAFCB0082B487 /* TonConnectErrorView.swift in Sources */,
 				ABC9ADE7C30F3F992FD9E1CC /* Array.swift in Sources */,
 				ABC9AE223619E13A296BED51 /* MarketCardCell.swift in Sources */,
 				11B353E7A2462E19D946E723 /* CellComponent.swift in Sources */,
@@ -13116,7 +13122,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/TonKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.14;
+				version = 1.0.15;
 			};
 		};
 		6BF66DD82BA1A73300963242 /* XCRemoteSwiftPackageReference "ObjectMapper" */ = {

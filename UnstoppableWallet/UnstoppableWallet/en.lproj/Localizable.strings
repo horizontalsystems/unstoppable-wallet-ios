@@ -1863,6 +1863,7 @@
 "ton_connect.connect.warning" = "By clicking approve, you allow this app to view your public address. This is an important security step to protect your data from potential phishing risks.";
 "ton_connect.connect.connect" = "Connect";
 "ton_connect.connect.reject" = "Reject";
+"ton_connect.invalid_transaction" = "Invalid Transaction";
 
 // App Status
 
