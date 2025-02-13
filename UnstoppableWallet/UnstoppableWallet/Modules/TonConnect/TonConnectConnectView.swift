@@ -81,6 +81,7 @@ struct TonConnectConnectView: View {
                         .disabled(viewModel.account == nil)
 
                         Button(action: {
+                            viewModel.rejectConnection()
                             presentationMode.wrappedValue.dismiss()
                         }) {
                             Text("ton_connect.connect.reject".localized)

@@ -32,12 +32,27 @@ extension TonConnectSendHandler: ISendHandler {
         var fee: Decimal?
         var transactionError: Error?
         var record: TonTransactionRecord?
+        let account = try await TonKit.Kit.account(address: transferData.sender)
 
         do {
+            var totalValue: BigUInt = 0
+
+            for message in transferData.internalMessages {
+                switch message.info {
+                case let .internalInfo(info):
+                    totalValue += info.value.coins.rawValue
+                default: ()
+                }
+            }
+
             let result = try await TonKit.Kit.emulate(transferData: transferData, contract: contract, network: TonKitManager.network)
 
             record = converter.transactionRecord(event: result.event)
             fee = TonAdapter.amount(kitAmount: result.totalFee)
+
+            guard account.balance >= totalValue + result.totalFee else {
+                throw TransactionError.insufficientTonBalance(balance: TonAdapter.amount(kitAmount: account.balance))
+            }
         } catch {
             transactionError = error
         }
@@ -305,7 +320,7 @@ extension TonConnectSendHandler {
             )
         }
 
-        let transferData = try TonKit.Kit.transferData(sender: address, payloads: payloads)
+        let transferData = try TonKit.Kit.transferData(sender: address, validUntil: request.param.validUntil, payloads: payloads)
 
         guard let baseToken = try? App.shared.coinManager.token(query: .init(blockchainType: .ton, tokenType: .native)) else {
             throw FactoryError.noBaseToken

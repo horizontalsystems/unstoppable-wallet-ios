@@ -24,19 +24,28 @@ struct TonConnectSendView: View {
                         case .syncing:
                             EmptyView()
                         case .success:
-                            Button(action: {
-                                Task {
-                                    try await sendViewModel.send()
+                            if sendViewModel.canSend, sendViewModel.handler?.expirationDuration == nil || sendViewModel.timeLeft > 0 || sendViewModel.sending {
+                                Button(action: {
+                                    Task {
+                                        try await sendViewModel.send()
 
-                                    await MainActor.run {
-                                        presentationMode.wrappedValue.dismiss()
+                                        await MainActor.run {
+                                            presentationMode.wrappedValue.dismiss()
+                                        }
                                     }
+                                }) {
+                                    Text("wallet_connect.button.confirm".localized)
                                 }
-                            }) {
-                                Text("wallet_connect.button.confirm".localized)
+                                .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                                .disabled(sendViewModel.sending)
+                            } else {
+                                Button(action: {
+                                    sendViewModel.sync()
+                                }) {
+                                    Text("send.confirmation.refresh".localized)
+                                }
+                                .buttonStyle(PrimaryButtonStyle(style: .gray))
                             }
-                            .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                            .disabled(sendViewModel.sending)
                         case .failed:
                             Button(action: {
                                 sendViewModel.sync()
@@ -60,5 +69,6 @@ struct TonConnectSendView: View {
             .navigationTitle(viewModel.appName)
             .navigationBarTitleDisplayMode(.inline)
         }
+        .interactiveDismissDisabled()
     }
 }

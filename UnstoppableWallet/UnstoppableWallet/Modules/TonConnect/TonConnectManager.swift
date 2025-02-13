@@ -20,6 +20,7 @@ class TonConnectManager {
     private let jsonDecoder = JSONDecoder()
 
     private let sendTransactionRequestSubject = PassthroughSubject<TonConnectSendTransactionRequest, Never>()
+    private let sendTransactionRequestErrorSubject = PassthroughSubject<TonConnectSendTransactionRequestError, Never>()
 
     init(storage: TonConnectStorage, accountManager: AccountManager) {
         let configuration = URLSessionConfiguration.default
@@ -35,11 +36,11 @@ class TonConnectManager {
         self.storage = storage
         self.accountManager = accountManager
 
-//        accountManager.accountDeletedPublisher
-//            .sink { [weak self] in self?.handleDeleted(account: $0) }
-//            .store(in: &cancellables)
-//
-//        syncTonConnectApps()
+        accountManager.accountDeletedPublisher
+            .sink { [weak self] in self?.handleDeleted(account: $0) }
+            .store(in: &cancellables)
+
+        syncTonConnectApps()
     }
 
     private func handleDeleted(account: Account) {
@@ -63,7 +64,7 @@ class TonConnectManager {
             tonConnectApps = []
         }
 
-//        start()
+        start()
     }
 
     public func start() {
@@ -75,7 +76,7 @@ class TonConnectManager {
             return
         }
 
-        // print("Apps: \(tonConnectApps.map { $0.manifest.name })")
+        // print("Apps: \(tonConnectApps.map(\.manifest.name))")
 
         let task = Task { [storage, tonConnectApps] in
             let ids = tonConnectApps.map(\.keyPair.publicKey.hexString).joined(separator: ",")
@@ -149,8 +150,12 @@ class TonConnectManager {
 
             switch request.method {
             case .sendTransaction:
-                if let param = request.params.first {
+                if let param = request.params.first, param.network == .mainnet, !param.messages.isEmpty {
                     sendTransactionRequestSubject.send(.init(id: request.id, param: param, app: app))
+                } else {
+                    let requestError = TonConnectSendTransactionRequestError(id: request.id, app: app)
+                    sendTransactionRequestErrorSubject.send(requestError)
+                    handle(requestError: requestError)
                 }
             case .disconnect:
                 try delete(tonConnectApp: app)
@@ -193,6 +198,8 @@ class TonConnectManager {
             body: .plainText(.init(stringLiteral: encrypted.base64EncodedString()))
         )
 
+        // print("SEND: \(String(data: encoded, encoding: .utf8) ?? "nil")")
+
         // _ = try resp.ok.body.json
     }
 
@@ -204,13 +211,25 @@ class TonConnectManager {
     private func delete(tonConnectApp: TonConnectApp) throws {
         try storage.delete(tonConnectApp: tonConnectApp)
 
-//        syncTonConnectApps()
+        syncTonConnectApps()
+    }
+
+    func handle(requestError: TonConnectSendTransactionRequestError) {
+        Task {
+            let message = TonConnect.SendTransactionResponse.error(.init(id: requestError.id, error: .init(code: .badRequest, message: "“Bad request")))
+            let sessionCrypto = try TonConnectSessionCrypto(privateKey: requestError.app.keyPair.privateKey)
+            try await send(message: message, clientId: requestError.app.clientId, sessionCrypto: sessionCrypto)
+        }
     }
 }
 
 extension TonConnectManager {
     var sendTransactionRequestPublisher: AnyPublisher<TonConnectSendTransactionRequest, Never> {
         sendTransactionRequestSubject.eraseToAnyPublisher()
+    }
+
+    var sendTransactionRequestErrorPublisher: AnyPublisher<TonConnectSendTransactionRequestError, Never> {
+        sendTransactionRequestErrorSubject.eraseToAnyPublisher()
     }
 
     func loadTonConnectConfiguration(parameters: TonConnectParameters) async throws -> TonConnectConfig {
@@ -243,7 +262,14 @@ extension TonConnectManager {
         try await send(message: message, clientId: parameters.clientId, sessionCrypto: sessionCrypto)
         try storeConnectedApp(account: account, sessionCrypto: sessionCrypto, parameters: parameters, manifest: manifest)
 
-//        syncTonConnectApps()
+        syncTonConnectApps()
+    }
+
+    func rejectConnection(parameters: TonConnectParameters) async throws {
+        let message = TonConnect.ConnectEventError(payload: .init(code: .userDeclinedTheConnection, message: "User declined the connection"))
+        let sessionCrypto = try TonConnectSessionCrypto()
+
+        try await send(message: message, clientId: parameters.clientId, sessionCrypto: sessionCrypto)
     }
 
     func disconnect(tonConnectApp: TonConnectApp) async throws {
@@ -261,7 +287,7 @@ extension TonConnectManager {
     }
 
     func reject(request: TonConnectSendTransactionRequest) async throws {
-        let message = TonConnect.SendTransactionResponse.error(.init(id: request.id, error: .init(code: .userDeclinedTransaction, message: "")))
+        let message = TonConnect.SendTransactionResponse.error(.init(id: request.id, error: .init(code: .userDeclinedTransaction, message: "“User declined the transaction")))
         let sessionCrypto = try TonConnectSessionCrypto(privateKey: request.app.keyPair.privateKey)
 
         try await send(message: message, clientId: request.app.clientId, sessionCrypto: sessionCrypto)
@@ -316,5 +342,10 @@ private extension String {
 struct TonConnectSendTransactionRequest {
     let id: String
     let param: SendTransactionParam
+    let app: TonConnectApp
+}
+
+struct TonConnectSendTransactionRequestError {
+    let id: String
     let app: TonConnectApp
 }

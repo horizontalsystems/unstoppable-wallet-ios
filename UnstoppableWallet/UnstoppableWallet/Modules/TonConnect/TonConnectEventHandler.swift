@@ -14,10 +14,20 @@ class TonConnectEventHandler {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.handle(sendTransactionRequest: $0) }
             .store(in: &cancellables)
+
+        tonConnectManager.sendTransactionRequestErrorPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.handle(sendTransactionRequestError: $0) }
+            .store(in: &cancellables)
     }
 
     private func handle(sendTransactionRequest: TonConnectSendTransactionRequest) {
         let view = TonConnectSendView(request: sendTransactionRequest)
+        parentViewController?.visibleController.present(view.toViewController(), animated: true)
+    }
+
+    private func handle(sendTransactionRequestError: TonConnectSendTransactionRequestError) {
+        let view = TonConnectErrorView(requestError: sendTransactionRequestError)
         parentViewController?.visibleController.present(view.toViewController(), animated: true)
     }
 }
