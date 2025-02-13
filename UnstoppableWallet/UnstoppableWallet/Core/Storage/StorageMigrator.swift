@@ -7,7 +7,7 @@ import RxCocoa
 import RxSwift
 
 enum StorageMigrator {
-    static func migrate(dbPool: DatabasePool) throws {
+    static func migrate(dbPool: DatabasePool, localStorage: LocalStorage) throws {
         var migrator = DatabaseMigrator()
 
         migrator.registerMigration("createAccountRecordsTable") { db in
@@ -848,6 +848,15 @@ enum StorageMigrator {
                 try state.insert(db)
             }
         }
+
+         migrator.registerMigration("remove bep2 coins") { db in
+             let hasBep2Token = try EnabledWallet.filter(EnabledWallet.Columns.tokenQueryId.like("binancecoin|%")).fetchCount(db) > 0
+
+             if hasBep2Token {
+                 localStorage.hasBep2Token = true
+                 try EnabledWallet.filter(EnabledWallet.Columns.tokenQueryId.like("binancecoin|%")).deleteAll(db)
+             }
+         }
 
         try migrator.migrate(dbPool)
     }
