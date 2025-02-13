@@ -39,7 +39,6 @@ struct MarketAdvancedSearchResultsView: View {
                                 diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod)
                             )
                         }
-                        .watchlistSwipeActions(viewModel: watchlistViewModel, coinUid: coin.uid)
                     }
                     .onChange(of: viewModel.sortBy) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
                 }
@@ -140,30 +139,35 @@ struct MarketAdvancedSearchResultsView: View {
     @ViewBuilder private func itemContent(coin: Coin?, indicatorResult: TechnicalAdvice.Advice?, marketCap: Decimal?, price: String, rank: Int?, diff: Decimal?) -> some View {
         CoinIconView(coin: coin)
 
-        VStack(spacing: 1) {
-            HStack(spacing: .margin8) {
-                Text(coin?.code ?? "CODE").textBody()
+        HStack(spacing: .margin16) {
+            VStack(spacing: 1) {
+                HStack(spacing: .margin8) {
+                    Text(coin?.code ?? "CODE").textBody()
 
-                if viewModel.showSignals, let signal = indicatorResult {
-                    MarketWatchlistSignalBadge(signal: signal)
+                    if viewModel.showSignals, let signal = indicatorResult {
+                        MarketWatchlistSignalBadge(signal: signal)
+                    }
+
+                    Spacer()
+                    Text(price).textBody()
                 }
 
-                Spacer()
-                Text(price).textBody()
+                HStack(spacing: .margin8) {
+                    HStack(spacing: .margin4) {
+                        if let rank {
+                            BadgeViewNew(text: "\(rank)")
+                        }
+
+                        if let marketCap, let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: marketCap) {
+                            Text(formatted).textSubhead2()
+                        }
+                    }
+                    Spacer()
+                    DiffText(diff)
+                }
             }
-
-            HStack(spacing: .margin8) {
-                HStack(spacing: .margin4) {
-                    if let rank {
-                        BadgeViewNew(text: "\(rank)")
-                    }
-
-                    if let marketCap, let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: marketCap) {
-                        Text(formatted).textSubhead2()
-                    }
-                }
-                Spacer()
-                DiffText(diff)
+            if let coin {
+                WatchlistView.watchButton(viewModel: watchlistViewModel, coinUid: coin.uid)
             }
         }
     }

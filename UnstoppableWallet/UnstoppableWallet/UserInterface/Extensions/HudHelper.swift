@@ -41,8 +41,8 @@ extension HudHelper {
         var icon: UIImage? {
             let image: UIImage?
             switch self {
-            case .addedToWatchlist: image = UIImage(named: "star_24")
-            case .removedFromWatchlist: image = UIImage(named: "star_off_24")
+            case .addedToWatchlist: image = UIImage(named: "heart_24")
+            case .removedFromWatchlist: image = UIImage(named: "heart_broke_24")
             case .addedToWallet: image = UIImage(named: "add_to_wallet_2_24")
             case .removedFromWallet: image = UIImage(named: "empty_wallet_24")
             case .alreadyAddedToWallet: image = UIImage(named: "warning_2_24")
