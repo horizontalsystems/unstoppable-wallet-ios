@@ -46,8 +46,8 @@
 "alert.restored" = "Restored";
 "alert.success" = "Success";
 
-"alert.added_to_watchlist" = "Added to Watchlist";
-"alert.removed_from_watchlist" = "Removed from Watchlist";
+"alert.added_to_watchlist" = "Added to Favorites";
+"alert.removed_from_watchlist" = "Removed from Favorites";
 "alert.added_to_wallet" = "Added to Wallet";
 "alert.removed_from_wallet" = "Removed from Wallet";
 "alert.already_added_to_wallet" = "Already added to Wallet";
@@ -732,7 +732,7 @@
 "market.title" = "Markets";
 "market.category.overview" = "Overview";
 "market.category.posts" = "News";
-"market.category.watchlist" = "Watchlist";
+"market.category.watchlist" = "Favorites";
 "market.total_market_cap" = "Total M.Cap";
 "market.24h_volume" = "24h Volume";
 "market.defi_cap" = "DeFi Cap";
@@ -745,7 +745,7 @@
 
 "market.tab.news" = "News";
 "market.tab.coins" = "Coins";
-"market.tab.watchlist" = "Watchlist";
+"market.tab.watchlist" = "Favorites";
 "market.tab.platforms" = "Platforms";
 "market.tab.pairs" = "Pairs";
 "market.tab.sectors" = "Sectors";
@@ -839,9 +839,9 @@
 "market_discovery.top_coins" = "TOP Coins";
 "market_discovery.not_found" = "No results found";
 
-"market_watchlist.empty.caption" = "Your watchlist is empty.";
+"market_watchlist.empty.caption" = "Your favorites are empty.";
 "market.watchlist.signals" = "Signals";
-"market.watchlist.empty" = "Your watchlist is empty";
+"market.watchlist.empty" = "Your favorites are empty";
 "market.watchlist.signals.description" = "Below signals are based on the Bollinger Bands and RSI technical price indicators over approx. the last 30 days. These signals are algorithmic and can change frequently.";
 "market.watchlist.signals.strong_buy.description" = "High confidence in price increase";
 "market.watchlist.signals.buy.description" = "Likely price increase in near future";
@@ -1425,7 +1425,7 @@
 "backup_app.backup_list.header.wallets" = "Wallets";
 "backup_app.backup_list.header.other" = "Other";
 "backup_app.backup_list.other.watch_account.title" = "Watch Wallets";
-"backup_app.backup_list.other.watchlist.title" = "Watchlist";
+"backup_app.backup_list.other.watchlist.title" = "Favorites";
 "backup_app.backup_list.other.contacts.title" = "Contacts";
 "backup_app.backup_list.other.blockchain_settings.title" = "Custom RPC";
 "backup_app.backup_list.other.app_settings.title" = "App Settings";
@@ -1610,7 +1610,7 @@
 "appearance.launch_screen.auto" = "Auto";
 "appearance.launch_screen.balance" = "Balance";
 "appearance.launch_screen.market_overview" = "Market Overview";
-"appearance.launch_screen.watchlist" = "Watchlist";
+"appearance.launch_screen.watchlist" = "Favorites";
 
 "appearance.balance_tab" = "Balance Tab";
 "appearance.hide_buttons" = "Hide Buttons";
