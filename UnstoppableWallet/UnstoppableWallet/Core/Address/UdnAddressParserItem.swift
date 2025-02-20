@@ -102,13 +102,14 @@ extension UdnAddressParserItem {
         case .solana: return "SOL"
         case .ton: return "TON"
         case .base: return "ETH"
+        case .zkSync: return "ETH"
         case let .unsupported(uid): return uid
         }
     }
 
     static func chain(token: Token) -> String? {
         switch (token.blockchainType, token.type) {
-        case (.ethereum, .eip20), (.optimism, .eip20), (.arbitrumOne, .eip20), (.gnosis, .eip20), (.fantom, .eip20), (.base, .eip20): return "ERC20"
+        case (.ethereum, .eip20), (.optimism, .eip20), (.arbitrumOne, .eip20), (.gnosis, .eip20), (.fantom, .eip20), (.base, .eip20), (.zkSync, .eip20): return "ERC20"
         case (.binanceSmartChain, .native), (.binanceSmartChain, .eip20): return "BEP20"
         case (.polygon, .native), (.polygon, .eip20): return "MATIC"
         case (.avalanche, .native), (.avalanche, .eip20): return "AVAX"
