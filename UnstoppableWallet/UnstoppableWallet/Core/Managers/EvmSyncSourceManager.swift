@@ -87,6 +87,16 @@ extension EvmSyncSourceManager {
             } else {
                 return [
                     EvmSyncSource(
+                        name: "BlockRazor",
+                        rpcSource: .http(urls: [URL(string: "https://unstoppable.bsc.blockrazor.xyz")!], auth: nil),
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                    ),
+                    EvmSyncSource(
+                        name: "48club",
+                        rpcSource: .http(urls: [URL(string: "https://unstoppable.rpc.48.club")!], auth: nil),
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                    ),
+                    EvmSyncSource(
                         name: "Binance",
                         rpcSource: .binanceSmartChainHttp(),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
