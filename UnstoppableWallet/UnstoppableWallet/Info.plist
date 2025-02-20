@@ -57,6 +57,8 @@
 	<string>$(defiyield_api_key)</string>
 	<key>DonateEnabled</key>
 	<string>${donate_enabled}</string>
+	<key>EraZkSyncApiKeys</key>
+	<string>${era_zksync_api_keys}</string>
 	<key>EtherscanApiKeys</key>
 	<string>${etherscan_api_keys}</string>
 	<key>FtmscanApiKeys</key>

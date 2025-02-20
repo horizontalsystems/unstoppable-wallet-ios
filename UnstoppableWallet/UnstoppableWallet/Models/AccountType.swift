@@ -82,6 +82,7 @@ enum AccountType {
             case (.arbitrumOne, .native), (.arbitrumOne, .eip20): return true
             case (.optimism, .native), (.optimism, .eip20): return true
             case (.base, .native), (.base, .eip20): return true
+            case (.zkSync, .native), (.zkSync, .eip20): return true
             case (.tron, .native), (.tron, .eip20): return true
             case (.ton, .native), (.ton, .jetton): return true
             default: return false
@@ -114,6 +115,7 @@ enum AccountType {
             case (.arbitrumOne, .native), (.arbitrumOne, .eip20): return true
             case (.optimism, .native), (.optimism, .eip20): return true
             case (.base, .native), (.base, .eip20): return true
+            case (.zkSync, .native), (.zkSync, .eip20): return true
             default: return false
             }
         case .tronAddress:
