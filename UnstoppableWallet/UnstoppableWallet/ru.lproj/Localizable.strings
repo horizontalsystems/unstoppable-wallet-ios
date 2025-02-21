@@ -29,7 +29,7 @@
 "button.i_understand" = "Я понимаю";
 "button.learn_more" = "Подробнее";
 "button.unlock" = "Разблокировать";
-"button.select" = "Select";
+"button.select" = "Выбрать";
 
 "alert" = "Предупреждение";
 "alert.copied" = "Скопировано";
@@ -590,7 +590,7 @@
 "swap.estimated" = "приблизительно";
 "swap.balance" = "Баланс";
 "swap.you_get" = "Вы получите";
-"swap.token" = "Select";
+"swap.token" = "Выбрать";
 "swap.advanced_settings" = "Настройки обмена";
 "swap.proceed_button" = "Далее";
 "swap.approve.title" = "Разрешение обмена";
@@ -616,7 +616,7 @@
 "swap.maximum_short" = "(макс)";
 
 "swap.rate_not_available" = "Цена недоступна";
-"swap.select" = "Select";
+"swap.select" = "Выбрать";
 "swap.quoting" = "Котировка";
 "swap.select_token_in" = "Выберите токен для обмена";
 "swap.select_token_out" = "Выберите токен для получения";
@@ -800,7 +800,7 @@
 "market.market_field.mcap" = "Цена";
 "market.market_field.vol" = "Объем";
 
-"market.tvl.market_field.value" = "USD";
+"market.tvl.market_field.value" = "долл.";
 "market.tvl.market_field.diff" = "Процент";
 
 "market.tvl.platform_field.all" = "Все";
@@ -887,7 +887,7 @@
 "market.advanced_search.outperformed_btc" = "Обошел BTC";
 "market.advanced_search.outperformed_eth" = "Обошел ETH";
 "market.advanced_search.outperformed_bnb" = "Обошел BNB";
-"market.advanced_search.price_close_to" = "Price Close To";
+"market.advanced_search.price_close_to" = "Цена близка к";
 "market.advanced_search.price_close_to_ath" = "Цена близка к ATH";
 "market.advanced_search.price_close_to_atl" = "Цена близка к ATL";
 
@@ -920,13 +920,13 @@
 
 "market.advanced_search.top.m_cap" = "M.Cap";
 "market.advanced_search.top.more_1_b" = "> $1B";
-"market.advanced_search.top.more_500_m" = "> $500M";
-"market.advanced_search.top.more_250_m" = "> $250M";
-"market.advanced_search.top.more_100_m" = "> $100M";
-"market.advanced_search.top.more_25_m" = "> $25M";
-"market.advanced_search.top.more_10_m" = "> $10M";
-"market.advanced_search.top.more_5_m" = "> $5M";
-"market.advanced_search.top.more_1_m" = "> $1M";
+"market.advanced_search.top.more_500_m" = "> $500млн";
+"market.advanced_search.top.more_250_m" = "> $250 млн";
+"market.advanced_search.top.more_100_m" = "> $100 млн";
+"market.advanced_search.top.more_25_m" = "> $25 млн";
+"market.advanced_search.top.more_10_m" = "> $10млн";
+"market.advanced_search.top.more_5_m" = "> $5млн";
+"market.advanced_search.top.more_1_m" = "> $1млн";
 
 "market.advanced_search.day" = "1 День";
 "market.advanced_search.week" = "1 Неделя";
@@ -2236,7 +2236,7 @@
 "purchases.title" = "Premium";
 "purchases.description" = "Choose the plan.";
 "purchases.type.pro" = "Pro";
-"purchases.type.vip" = "Vip";
+"purchases.type.vip" = "VIP";
 
 "purchases.token_insights" = "Token Insights";
 "purchases.token_insights.description" = "Full analytics and data about tokens.";
@@ -2283,13 +2283,13 @@
 
 "purchases.button.try" = "Try for FREE";
 "purchases.button.activated" = "Активировано";
-"purchases.button.upgrade" = "Upgrade";
+"purchases.button.upgrade" = "Обновить";
 
-"purchase.period.title" = "Select Subscription";
-"purchase.period.annually" = "Annually";
-"purchase.period.monthly" = "Monthly";
+"purchase.period.title" = "Выбрать подписку";
+"purchase.period.annually" = "Ежегодно";
+"purchase.period.monthly" = "Ежемесячно";
 "purchase.period.onetime" = "One-Time";
-"purchase.period.onetime.description" = "for lifetime access";
+"purchase.period.onetime.description" = "для пожизненного доступа";
 "purchase.period.save" = "save";
 "purchase.period.year" = "year";
 "purchase.period.month" = "month";
