@@ -2236,41 +2236,41 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "purchases.type.pro" = "Pro";
 "purchases.type.vip" = "Vip";
 
-"purchases.token_insights" = "Token Insights";
-"purchases.token_insights.description" = "Full analytics and data about tokens.";
-"purchases.token_insights.info" = "Token Insights provides a comprehensive view of a token’s activity and performance metrics. This includes trading volume, liquidity levels, holder behavior, total value locked (TVL), and transaction activity. By offering detailed analytics, the feature enables users to evaluate token potential, monitor market trends, and make data-driven investment decisions. It’s a powerful tool for those who seek to understand token ecosystems and market dynamics in-depth.";
+"purchases.token_insights" = "Token Lists";
+"purchases.token_insights.description" = "Master Token Research";
+"purchases.token_insights.info" = "Your all-in-one tool for deep analysis. Browse curated Top 250 token lists based on trading volume, exchange liquidity, holder behavior, and on-chain trends—all at a glance. Filter, analyze, and stay ahead.";
 
 "purchases.advanced_search" = "Advanced Search";
-"purchases.advanced_search.description" = "Custom filters for token searches.";
-"purchases.advanced_search.info" = "Advanced Search offers robust filtering options to find tokens based on specific criteria, such as trading volume, liquidity, security audits, and other relevant metrics. This feature streamlines the discovery process, making it easier to identify tokens that match individual preferences or investment strategies. It also includes customization options to save time and focus on what matters most to the user.";
+"purchases.advanced_search.description" = "Discover Trending Tokens";
+"purchases.advanced_search.info" = "Ditch the noise and zero in on high-potential tokens with precision. Use Advanced Search to filter through thousands of tokens by trading volume, blockchain, market cap, price trends, sector, and performance—and more. Powerful, accurate, and built for discovery.";
 
-"purchases.trade_signals" = "Trade Signals";
-"purchases.trade_signals.description" = "Signals for confident trading.";
-"purchases.trade_signals.info" = "Trade Signals provide real-time notifications about potential trading opportunities and market risks. Using advanced algorithms, this feature analyzes market conditions, trends, and indicators to highlight profitable opportunities or warn against potential losses. Ideal for active traders, it ensures users stay informed and ready to act in a fast-moving market.";
+"purchases.trade_signals" = "Watch Trends";
+"purchases.trade_signals.description" = "Trade Smarter, Profit Faster";
+"purchases.trade_signals.info" = "Never miss a trading opportunity again. Watch Trends delivers real-time alerts powered by advanced technical analysis, helping you identify trends, spot breakouts, and avoid pitfalls before they happen. Act fast, trade smart, and maximize gains.";
 
 "purchases.tx_speed_up" = "Tx Speed UP / Cancel ";
 "purchases.tx_speed_up.description" = "Speed up and cancel transactions.";
 "purchases.tx_speed_up.info" = "Tx Speed Up / Cancel provides full control over blockchain transactions. With this feature, users can accelerate pending transactions by increasing gas fees or cancel unconfirmed transactions altogether if needed. It adds a layer of flexibility and convenience to transaction management, ensuring users remain in control of their activity.";
 
 "purchases.duress_mode" = "Modo Duración";
-"purchases.duress_mode.description" = "Hides main wallets in case of coercion.";
-"purchases.duress_mode.info" = "Duress Mode is a security feature designed to protect sensitive wallets in high-risk situations. It allows users to set up a secondary wallet with a separate PIN code. When under coercion, users can safely open the alternate wallet while keeping their primary wallets hidden. This feature provides peace of mind and protection for critical assets in emergencies.";
+"purchases.duress_mode.description" = "Stay Safe Wherever You Go";
+"purchases.duress_mode.info" = "Your crypto. Your security. Duress Mode lets you create multiple alternate wallet setups, each with a separate PIN, providing a hidden escape route in high-risk situations. If forced to unlock your wallet, simply use the duress PIN to access a secondary wallet with no critical assets exposed. Your real funds stay hidden. Your security stays intact.";
 
-"purchases.address_phishing" = "Address Phishing Protection";
-"purchases.address_phishing.description" = "Additional address check for fraud prevention.";
-"purchases.address_phishing.info" = "Address Phishing Protection safeguards users from sending funds to fraudulent addresses. Before each transaction, the recipient’s address is scanned for patterns associated with phishing scams. If flagged, the feature alerts the user, reducing the risk of accidental transfers to malicious actors.";
+"purchases.address_phishing" = "Scam Protection";
+"purchases.address_phishing.description" = "Stay Secure Without the Hassle";
+"purchases.address_phishing.info" = "One wrong address, and your crypto is gone forever. Unstoppable automatically scans recipient addresses for suspicious patterns and defends against the latest phishing threats, preventing you from sending funds to a hacker. Block fraudulent transfers before they happen.";
 
-"purchases.address_checker" = "Blacklist Address Checker";
-"purchases.address_checker.description" = "Alerts if the recipient address is blacklisted.";
-"purchases.address_checker.info" = "The Blacklist Address Checker cross-references recipient addresses against databases of known high-risk or flagged addresses. It prevents transactions from being sent to entities involved in fraud, scams, or other illicit activities. This feature is essential for maintaining security and compliance during transfers.";
+"purchases.address_checker" = "Blacklist Checker";
+"purchases.address_checker.description" = "Stay Legit and Compliant";
+"purchases.address_checker.info" = "Protect yourself from risky and sanctioned entities. Blacklist Checker automatically screens recipient addresses against high-risk databases, flagging scams, frauds, and sanctioned entities before you send. If an address is blacklisted, you’ll know before making a costly mistake. Secure your transactions. Keep your crypto clean. Stay compliant.";
 
 "purchases.privacy_mode" = "Privacy Mode";
 "purchases.privacy_mode.description" = "Full disconnection from data collection.";
 "purchases.privacy_mode.info" = "Privacy Mode enhances user confidentiality by masking wallet balances, transaction history, and other sensitive details. This feature ensures that third parties cannot view or track user activity, providing a discreet and secure experience for those who value privacy.";
 
-"purchases.vip_support" = "VIP Support";
-"purchases.vip_support.description" = "Direct chat.";
-"purchases.vip_support.info" = "VIP Support connects users with a dedicated support team available for priority assistance. This feature ensures prompt responses and personalized solutions for inquiries or issues. It’s tailored for users who require expert help and faster service.";
+"purchases.vip_support" = "VIP Group";
+"purchases.vip_support.description" = "Vote on the Future of Unstoppable";
+"purchases.vip_support.info" = "Be part of the evolution. Join the VIP Group to connect directly with our team, vote on upcoming features, and get an exclusive first look at future updates. Your voice matters—help shape the next-gen crypto wallet.";
 
 "purchases.vip_club" = "VIP Club";
 "purchases.vip_club.description" = "Private chat with exclusive information.";
@@ -2293,7 +2293,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "purchase.period.month" = "month";
 "purchase.period.description1" = "Enjoy the first 7 days FREE.";
 "purchase.period.description2" = "You can cancel your App Store subscription at any time.";
-"purchase.lifetime.description" = "You can purchase one-time subscriiption without any restrictions";
+"purchase.lifetime.description" = "You can purchase a one-time subscriiption without any restrictions";
 
 "purchases.period.button.try" = "Get 7 days for FREE";
 "purchases.period.button.subscribe" = "Subscribe";
