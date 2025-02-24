@@ -463,7 +463,7 @@
 "send.confirmation.you_receive" = "You Receive";
 "send.confirmation.transfer" = "Перевод";
 "send.confirmation.to" = "Кому";
-"send.confirmation.from" = "From";
+"send.confirmation.from" = "От";
 "send.confirmation.own" = "Свой";
 "send.confirmation.contact_name" = "Имя контакта";
 "send.confirmation.domain" = "Домен";
@@ -1312,7 +1312,7 @@
 "tx_info.status.pending" = "В обработке";
 "tx_info.status.completed" = "Завершено";
 "tx_info.status.failed" = "Failed";
-"tx_info.from_hash" = "From";
+"tx_info.from_hash" = "От";
 "tx_info.transaction_id" = "ID";
 "tx_info.to_hash" = "Кому";
 "tx_info.spender" = "Покупатель";
@@ -2297,17 +2297,17 @@
 "purchase.period.description2" = "Вы можете отменить подписку App Store в любое время.";
 "purchase.lifetime.description" = "You can purchase a one-time subscriiption without any restrictions";
 
-"purchases.period.button.try" = "Get 7 days for FREE";
-"purchases.period.button.subscribe" = "Subscribe";
-"purchases.period.button.buy" = "Buy now";
-"purchases.period.button.promo" = "Add Promo Code";
+"purchases.period.button.try" = "Получите 7 дней БЕСПЛАТНО";
+"purchases.period.button.subscribe" = "Подписаться";
+"purchases.period.button.buy" = "Купить";
+"purchases.period.button.promo" = "Ввести промокод";
 
-"purchases.promocode.title" = "Enter Promo Code";
+"purchases.promocode.title" = "Введите промокод";
 "purchases.promocode.placeholder" = "";
-"purchases.promocode.button.invalid" = "Invalid Promo Code";
-"purchases.promocode.button.already_used" = "Promo Code Already Used";
+"purchases.promocode.button.invalid" = "Неверный промокод";
+"purchases.promocode.button.already_used" = "Промокод уже использован";
 
 "purchases.successful_subscription.title" = "Premium";
-"purchases.successful_subscription.description" = "Thank you for your subscription!";
-"purchases.successful_subscription.subscribed" = "Enjoy the full power of the app.";
-"purchases.successful_subscription.button.go_app" = "Go to App";
+"purchases.successful_subscription.description" = "Спасибо за подписку!";
+"purchases.successful_subscription.subscribed" = "Наслаждайтесь полным функционалом приложения.";
+"purchases.successful_subscription.button.go_app" = "Перейти в приложение";
