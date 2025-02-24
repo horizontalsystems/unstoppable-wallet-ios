@@ -526,13 +526,39 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "approve.confirmation.you_revoke" = "Revocas";
 "approve.confirmation.spender" = "Gastador";
 
-"send.enter_amount" = "Introducir cantidad";
-"send.enter_address" = "Introduce una dirección";
-"send.invalid_address" = "Dirección inválida";
+"send.enter_amount" = "Ingresar cantidad";
 "send.token_not_enabled" = "Token no habilitado";
-"send.token_syncing" = "Sincronización de tokens";
+"send.token_syncing" = "Sincronizando token";
 "send.token_not_synced" = "Token no sincronizado";
 "send.insufficient_balance" = "Saldo insuficiente";
+"send.send_anyway" = "Enviar de todos modos";
+
+"send.address.enter_address" = "Ingresar dirección";
+"send.address.invalid_address" = "Dirección inválida";
+"send.address.recent" = "Recientes";
+"send.address.contacts" = "Contactos";
+"send.address.checking" = "Verificando";
+"send.address.check.clear" = "Limpiar";
+"send.address.check.detected" = "Detectado";
+"send.address.phishing_check" = "Verificación de phishing";
+"send.address.phishing.clear.title" = "Phishing: Verificado";
+"send.address.phishing.clear.description" = "La verificación se basa en tu historial de transacciones y no se ha detectado actividad sospechosa. La dirección ingresada no ha estado involucrada en transacciones de spam conocidas asociadas con intentos de phishing.";
+"send.address.phishing.caution.title" = "¡Dirección de phishing detectada!";
+"send.address.phishing.caution.description" = "La dirección que ingresaste podría ser fraudulenta. Los estafadores suelen alterar los primeros y últimos caracteres. Verifica cuidadosamente la dirección completa antes de continuar para evitar pérdidas.";
+"send.address.phishing.pre_send.title" = "¡Dirección de phishing!";
+"send.address.phishing.pre_send.description" = "Estás a punto de enviar fondos a una dirección sospechosa que podría ser fraudulenta. Ten en cuenta que esto podría resultar en una pérdida permanente de tus tokens. Al continuar, reconoces los riesgos involucrados. ¿Estás seguro de que deseas continuar?";
+"send.address.sanction_check" = "Verificación de sanciones";
+"send.address.sanction.caution.title" = "¡Dirección sancionada!";
+"send.address.sanction.caution.description" = "La dirección que ingresaste está marcada como sancionada. Las transacciones a esta dirección podrían llevar a pérdidas u otros riesgos. Por favor, verifica los detalles del destinatario antes de continuar.";
+"send.address.sanction.pre_send.title" = "¡Dirección sancionada detectada!";
+"send.address.sanction.pre_send.description" = "Estás a punto de enviar fondos a una dirección que está sancionada. Las transacciones a esta dirección podrían resultar en pérdidas u otros riesgos. Al continuar, reconoces los peligros potenciales. ¿Estás seguro de que deseas continuar?";
+"send.address.blacklist_check" = "Verificación de lista negra";
+"send.address.blacklist.clear.title" = "Lista negra: Verificado";
+"send.address.blacklist.clear.description" = "La dirección del destinatario ha pasado la verificación a través de Chainalysis.com y no ha sido marcada. Esto significa que la dirección no ha sido detectada en ninguna lista negra conocida ni asociada con actividad sospechosa.";
+"send.address.blacklist.caution.title" = "¡Dirección en lista negra!";
+"send.address.blacklist.caution.description" = "La dirección que ingresaste está marcada como incluida en la lista negra. Las transacciones a esta dirección podrían llevar a pérdidas u otros riesgos. Por favor, verifica los detalles del destinatario antes de continuar.";
+"send.address.blacklist.pre_send.title" = "¡Dirección en lista negra detectada!";
+"send.address.blacklist.pre_send.description" = "Estás a punto de enviar fondos a una dirección que está en la lista negra. Las transacciones a esta dirección podrían resultar en pérdidas u otros riesgos. Al continuar, reconoces los peligros potenciales. ¿Estás seguro de que deseas continuar?";
 
 // Donate
 

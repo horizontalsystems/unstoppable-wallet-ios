@@ -536,18 +536,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.insufficient_balance" = "Solde insuffisant";
 "send.send_anyway" = "Envoyer quand même";
 
-"subscription.premium.label" = "Premium";
-"subscription.title" = "Abonnement";
-"subscription.get" = "Obtenir Premium";
-"subscription.restore" = "Restaurer l'achat";
-"subscription.type" = "Type d'abonnement";
-"subscription.one-time" = "Unique";
-"subscription.price" = "Prix";
-"subscription.next_payment" = "Date du prochain paiement";
-"subscription.purchase_time" = "Date de début";
-"subscription.status" = "Statut";
-"subscription.manage" = "Gérer l'abonnement";
-
 "send.address.enter_address" = "Saisir l'adresse";
 "send.address.invalid_address" = "Adresse invalide";
 "send.address.recent" = "Récent";
