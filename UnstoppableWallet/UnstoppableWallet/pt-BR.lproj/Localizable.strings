@@ -29,7 +29,7 @@
 "button.i_understand" = "Estou ciente";
 "button.learn_more" = "Saiba Mais";
 "button.unlock" = "Desbloquear";
-"button.select" = "Select";
+"button.select" = "Selecionar";
 
 "alert" = "Alerta";
 "alert.copied" = "Copiado";
@@ -415,7 +415,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Address
 
-"address.title" = "Enter Address";
+"address.title" = "Insira o Endereço";
 
 // Send
 
@@ -539,7 +539,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.insufficient_balance" = "Saldo insuficiente";
 "send.send_anyway" = "Send Anyway";
 
-"send.address.enter_address" = "Enter Address";
+"send.address.enter_address" = "Insira o Endereço";
 "send.address.invalid_address" = "Invalid Address";
 "send.address.recent" = "Recent";
 "send.address.contacts" = "Contacts";
@@ -588,7 +588,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "swap.estimated" = "estimado";
 "swap.balance" = "Saldo";
 "swap.you_get" = "Você recebe";
-"swap.token" = "Select";
+"swap.token" = "Selecionar";
 "swap.advanced_settings" = "Configurações de troca";
 "swap.proceed_button" = "Próximo";
 "swap.approve.title" = "Aprovar Troca";
@@ -614,7 +614,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "swap.maximum_short" = "(máx)";
 
 "swap.rate_not_available" = "Taxa não disponível";
-"swap.select" = "Select";
+"swap.select" = "Selecionar";
 "swap.quoting" = "Cotação";
 "swap.select_token_in" = "Selecionar Token em";
 "swap.select_token_out" = "Selecionar Token de Saída";
