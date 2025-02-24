@@ -526,6 +526,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "approve.confirmation.you_revoke" = "Vous révoquez";
 "approve.confirmation.spender" = "Dépendant";
 
+
 "send.enter_amount" = "Entrez le montant";
 "send.enter_address" = "Entrer l'adresse";
 "send.invalid_address" = "Addresse invalide";
@@ -533,6 +534,46 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.token_syncing" = "Synchronisation des token";
 "send.token_not_synced" = "Token non synchronisé";
 "send.insufficient_balance" = "Solde insuffisant";
+"send.send_anyway" = "Envoyer quand même";
+
+"subscription.premium.label" = "Premium";
+"subscription.title" = "Abonnement";
+"subscription.get" = "Obtenir Premium";
+"subscription.restore" = "Restaurer l'achat";
+"subscription.type" = "Type d'abonnement";
+"subscription.one-time" = "Unique";
+"subscription.price" = "Prix";
+"subscription.next_payment" = "Date du prochain paiement";
+"subscription.purchase_time" = "Date de début";
+"subscription.status" = "Statut";
+"subscription.manage" = "Gérer l'abonnement";
+
+"send.address.enter_address" = "Saisir l'adresse";
+"send.address.invalid_address" = "Adresse invalide";
+"send.address.recent" = "Récent";
+"send.address.contacts" = "Contacts";
+"send.address.checking" = "Vérification";
+"send.address.check.clear" = "Effacer";
+"send.address.check.detected" = "Détecté";
+"send.address.phishing_check" = "Vérification d'hameçonnage";
+"send.address.phishing.clear.title" = "Hameçonnage : RAS";
+"send.address.phishing.clear.description" = "La vérification est basée sur votre historique de transactions, et aucune activité suspecte n'a été détectée. L'adresse saisie n'a pas été impliquée dans des transactions de spam connues associées à des tentatives d'hameçonnage.";
+"send.address.phishing.caution.title" = "Adresse d'hameçonnage détectée !";
+"send.address.phishing.caution.description" = "L'adresse que vous avez saisie pourrait être frauduleuse. Les escrocs modifient souvent les premiers et derniers caractères. Vérifiez attentivement l'adresse complète avant de continuer pour éviter toute perte.";
+"send.address.phishing.pre_send.title" = "Adresse d'hameçonnage !";
+"send.address.phishing.pre_send.description" = "Vous êtes sur le point d'envoyer des fonds à une adresse suspecte qui pourrait être frauduleuse. Sachez que cela pourrait entraîner une perte permanente de vos tokens. En continuant, vous reconnaissez les risques encourus. Êtes-vous sûr de vouloir continuer ?";
+"send.address.sanction_check" = "Vérification des sanctions";
+"send.address.sanction.caution.title" = "Adresse sous sanctions !";
+"send.address.sanction.caution.description" = "L'adresse que vous avez saisie est signalée comme étant sous sanctions. Les transactions vers cette adresse pourraient entraîner des pertes ou d'autres risques. Veuillez vérifier les détails du destinataire avant de continuer.";
+"send.address.sanction.pre_send.title" = "Adresse sous sanctions détectée !";
+"send.address.sanction.pre_send.description" = "Vous êtes sur le point d'envoyer des fonds à une adresse sous sanctions. Les transactions vers cette adresse pourraient entraîner des pertes ou d'autres risques. En continuant, vous reconnaissez les dangers potentiels. Êtes-vous sûr de vouloir continuer ?";
+"send.address.blacklist_check" = "Vérification de la liste noire";
+"send.address.blacklist.clear.title" = "Liste noire : RAS";
+"send.address.blacklist.clear.description" = "L'adresse du destinataire a passé la vérification via Chainalysis.com et n'a pas été signalée. Cela signifie que l'adresse n'a pas été détectée dans des listes noires connues ni associée à des activités suspectes.";
+"send.address.blacklist.caution.title" = "Adresse sur liste noire !";
+"send.address.blacklist.caution.description" = "L'adresse que vous avez saisie est signalée comme étant sur liste noire. Les transactions vers cette adresse pourraient entraîner des pertes ou d'autres risques. Veuillez vérifier les détails du destinataire avant de continuer.";
+"send.address.blacklist.pre_send.title" = "Adresse sur liste noire détectée !";
+"send.address.blacklist.pre_send.description" = "Vous êtes sur le point d'envoyer des fonds à une adresse sur liste noire. Les transactions vers cette adresse pourraient entraîner des pertes ou d'autres risques. En continuant, vous reconnaissez les dangers potentiels. Êtes-vous sûr de vouloir continuer ?";
 
 // Donate
 
