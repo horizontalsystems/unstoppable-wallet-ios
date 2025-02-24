@@ -2231,7 +2231,7 @@
 "premium.cell.try" = "Try for FREE";
 
 "purchases.title" = "Premium";
-"purchases.description" = "Choose the plan.";
+"purchases.description" = "Choose the plan";
 "purchases.type.pro" = "Pro";
 "purchases.type.vip" = "Vip";
 
