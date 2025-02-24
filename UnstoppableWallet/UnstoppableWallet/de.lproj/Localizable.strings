@@ -104,7 +104,7 @@
 "number.quadrillion" = "%@Bill";
 
 "selector.any" = "Beliebig";
-"selector.none" = "None";
+"selector.none" = "Keins";
 
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
@@ -415,7 +415,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Address
 
-"address.title" = "Enter Address";
+"address.title" = "Adresse eingeben";
 
 // Send
 
@@ -458,10 +458,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "send.confirmation.title" = "Bestätigen";
 "send.confirmation.you_send" = "Sie Senden";
-"send.confirmation.you_receive" = "You Receive";
+"send.confirmation.you_receive" = "Sie erhalten";
 "send.confirmation.transfer" = "Überweisung";
 "send.confirmation.to" = "An";
-"send.confirmation.from" = "From";
+"send.confirmation.from" = "Von";
 "send.confirmation.own" = "Eigene";
 "send.confirmation.contact_name" = "Kontaktname";
 "send.confirmation.domain" = "Domäne";
@@ -475,7 +475,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.confirmation.replace_by_fee" = "Ersetzen durch Gebühr";
 "send.confirmation.replaced_transactions" = "Ersetzte Transaktionen";
 "send.confirmation.input" = "Eingabe";
-"send.confirmation.comment" = "Comment";
+"send.confirmation.comment" = "Kommentar";
 "send.confirmation.action" = "Action";
 "send.confirmation.status" = "Status";
 "send.confirmation.status.failed" = "Failed";
@@ -539,7 +539,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.insufficient_balance" = "Unzureichendes Guthaben";
 "send.send_anyway" = "Send Anyway";
 
-"send.address.enter_address" = "Enter Address";
+"send.address.enter_address" = "Adresse eingeben";
 "send.address.invalid_address" = "Invalid Address";
 "send.address.recent" = "Recent";
 "send.address.contacts" = "Contacts";
@@ -1310,7 +1310,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "tx_info.status.pending" = "In Bearbeitung";
 "tx_info.status.completed" = "Abgeschlossen";
 "tx_info.status.failed" = "Failed";
-"tx_info.from_hash" = "From";
+"tx_info.from_hash" = "Von";
 "tx_info.transaction_id" = "Transaktion ID";
 "tx_info.to_hash" = "An";
 "tx_info.spender" = "Spender";
