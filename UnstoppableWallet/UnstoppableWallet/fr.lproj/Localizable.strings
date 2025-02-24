@@ -29,7 +29,7 @@
 "button.i_understand" = "J’ai Compris";
 "button.learn_more" = "En savoir plus";
 "button.unlock" = "Déverrouiller";
-"button.select" = "Select";
+"button.select" = "Sélectionner";
 
 "alert" = "Alerte";
 "alert.copied" = "Copié";
@@ -537,16 +537,16 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.token_syncing" = "Synchronisation des token";
 "send.token_not_synced" = "Token non synchronisé";
 "send.insufficient_balance" = "Solde insuffisant";
-"send.send_anyway" = "Send Anyway";
+"send.send_anyway" = "Envoyer quand même";
 
 "send.address.enter_address" = "Enter Address";
-"send.address.invalid_address" = "Invalid Address";
-"send.address.recent" = "Recent";
+"send.address.invalid_address" = "Adresse invalide";
+"send.address.recent" = "Récent";
 "send.address.contacts" = "Contacts";
 "send.address.checking" = "Checking";
-"send.address.check.clear" = "Clear";
-"send.address.check.detected" = "Detected";
-"send.address.phishing_check" = "Phishing Check";
+"send.address.check.clear" = "Effacer";
+"send.address.check.detected" = "Détecté";
+"send.address.phishing_check" = "Vérification d'hameçonnage";
 "send.address.phishing.clear.title" = "Phishing: Clear";
 "send.address.phishing.clear.description" = "The verification is based on your transaction history, and no suspicious activity has been detected. The entered address has not been involved in known spam transactions associated with phishing attempts.";
 "send.address.phishing.caution.title" = "Phishing Address Detected!";
@@ -588,7 +588,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "swap.estimated" = "estimé";
 "swap.balance" = "Solde";
 "swap.you_get" = "Vous recevez";
-"swap.token" = "Select";
+"swap.token" = "Sélectionner";
 "swap.advanced_settings" = "Paramètres de swap";
 "swap.proceed_button" = "Suivant";
 "swap.approve.title" = "Swap approuvé";
@@ -614,7 +614,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "swap.maximum_short" = "(max)";
 
 "swap.rate_not_available" = "Taux non disponible";
-"swap.select" = "Select";
+"swap.select" = "Sélectionner";
 "swap.quoting" = "Quotation";
 "swap.select_token_in" = "Sélectionner le token";
 "swap.select_token_out" = "Sélectionner le token";
@@ -670,7 +670,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "swap.advanced_settings.service_fee_description" = "Des frais de service pour l'action de swap sur la plateforme sont typiques de 0,3% ou 0,6%";
 "swap.advanced_settings.error.lower_slippage" = "Votre transaction est susceptible de ne pas aboutir.";
 "swap.advanced_settings.error.higher_slippage" = "La tolérance de glissement ne peut pas être supérieure à %@%%";
-"swap.advanced_settings.error.invalid_address" = "Invalid Address";
+"swap.advanced_settings.error.invalid_address" = "Adresse invalide";
 "swap.advanced_settings.error.invalid_slippage" = "Slippage invalide";
 "swap.advanced_settings.error.invalid_deadline" = "Date limite invalide";
 
@@ -742,7 +742,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "market.global.market_cap" = "Cap Totale";
 "market.global.volume" = "Vol. 24h";
-"market.global.tvl" = "TVL";
+"market.global.tvl" = "TVL en DeFi";
 "market.global.etf" = "ETF";
 
 "market.tab.news" = "Infos";
@@ -832,7 +832,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "top_platform.total_cap" = "Cap Totale";
 
 
-"market.search.recent" = "Recent";
+"market.search.recent" = "Récent";
 "market.search.popular" = "Populaire";
 
 "market_discovery.title" = "Découverte";
@@ -963,7 +963,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "market.tvl_in_defi.title" = "TVL en DeFi";
 "market.tvl_in_defi.description" = "La valeur totale verrouillée (TVL) dans la finance décentralisée";
-"market.tvl_in_defi.tvl" = "TVL";
+"market.tvl_in_defi.tvl" = "TVL en DeFi";
 "market.tvl_in_defi.multi_chain" = "Multi-chaîne";
 "market.tvl_in_defi.filter_by_chain" = "Filtrer par chaîne";
 "market.tvl_in_defi.filter.all" = "Tout";
@@ -1855,13 +1855,13 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Ton Connect
 
 "ton_connect.list.new_connection" = "Nouvelle connexion";
-"ton_connect.list.no_connected_apps" = "No Connected Apps";
-"ton_connect.list.disconnect_app" = "Disconnect App";
-"ton_connect.list.disconnect_app.description" = "Are you sure you want to disconnect from \"%@\"?";
+"ton_connect.list.no_connected_apps" = "Aucune application connectée";
+"ton_connect.list.disconnect_app" = "Déconnecter l'application";
+"ton_connect.list.disconnect_app.description" = "Êtes-vous sûr de vouloir vous déconnecter de \"%@\" ?";
 "ton_connect.list.disconnect_app.disconnect" = "Déconnecter";
 "ton_connect.connect.url" = "URL";
-"ton_connect.connect.wallet" = "Wallet";
-"ton_connect.connect.no_eligible_wallets" = "No eligible wallets";
+"ton_connect.connect.wallet" = "Portefeuille";
+"ton_connect.connect.no_eligible_wallets" = "Aucun portefeuille éligible";
 "ton_connect.connect.warning" = "En cliquant sur accepter, vous autorisez cette application à afficher votre adresse publique. Il s'agit d'une étape importante de sécurité pour protéger vos données contre les risques potentiels d'hameçonnage.";
 "ton_connect.connect.connect" = "Connecter";
 "ton_connect.connect.reject" = "Rejeter";
@@ -2128,7 +2128,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Activate Subscription
 
 "activate_subscription.title" = "Activer";
-"activate_subscription.wallet" = "Wallet";
+"activate_subscription.wallet" = "Portefeuille";
 "activate_subscription.address" = "Adresses";
 "activate_subscription.message" = "Message à signer";
 "activate_subscription.sign" = "Signer";
@@ -2231,7 +2231,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "premium.cell.try" = "Try for FREE";
 
 "purchases.title" = "Premium";
-"purchases.description" = "Choose the plan.";
+"purchases.description" = "Choose the plan";
 "purchases.type.pro" = "Pro";
 "purchases.type.vip" = "Vip";
 
