@@ -417,7 +417,7 @@
 
 // Address
 
-"address.title" = "Enter Address";
+"address.title" = "Введите адрес";
 
 // Send
 
@@ -460,7 +460,7 @@
 
 "send.confirmation.title" = "Подтвердить";
 "send.confirmation.you_send" = "Вы отправляете";
-"send.confirmation.you_receive" = "You Receive";
+"send.confirmation.you_receive" = "Вы получите";
 "send.confirmation.transfer" = "Перевод";
 "send.confirmation.to" = "Кому";
 "send.confirmation.from" = "От";
@@ -477,10 +477,10 @@
 "send.confirmation.replace_by_fee" = "Изменить комиссию";
 "send.confirmation.replaced_transactions" = "Замененные транзакции";
 "send.confirmation.input" = "Ввод";
-"send.confirmation.comment" = "Comment";
-"send.confirmation.action" = "Action";
+"send.confirmation.comment" = "Комментарий";
+"send.confirmation.action" = "Действие";
 "send.confirmation.status" = "Статус";
-"send.confirmation.status.failed" = "Failed";
+"send.confirmation.status.failed" = "Не удалось";
 
 "send.confirmation.sync_failed" = "Ошибка синхронизации";
 "send.confirmation.invalid_data" = "Неверные данные";
@@ -539,34 +539,34 @@
 "send.token_syncing" = "Синхронизация токенов";
 "send.token_not_synced" = "Токен не синхронизирован";
 "send.insufficient_balance" = "Недостаточный баланс";
-"send.send_anyway" = "Send Anyway";
+"send.send_anyway" = "Отправить в любом случае";
 
-"send.address.enter_address" = "Enter Address";
-"send.address.invalid_address" = "Invalid Address";
-"send.address.recent" = "Recent";
-"send.address.contacts" = "Contacts";
-"send.address.checking" = "Checking";
-"send.address.check.clear" = "Clear";
-"send.address.check.detected" = "Detected";
-"send.address.phishing_check" = "Phishing Check";
-"send.address.phishing.clear.title" = "Phishing: Clear";
-"send.address.phishing.clear.description" = "The verification is based on your transaction history, and no suspicious activity has been detected. The entered address has not been involved in known spam transactions associated with phishing attempts.";
-"send.address.phishing.caution.title" = "Phishing Address Detected!";
-"send.address.phishing.caution.description" = "The address you entered may be fraudulent. Scammers often alter the first and last characters. Verify the full address carefully before proceeding to avoid loss.";
-"send.address.phishing.pre_send.title" = "Phishing Address!";
-"send.address.phishing.pre_send.description" = "You are about to send funds to a suspicious address that may be fraudulent. Please be aware that this could result in a permanent loss of your tokens. By proceeding, you acknowledge the risks involved. Are you sure you want to continue?";
-"send.address.sanction_check" = "Sanction Check";
-"send.address.sanction.caution.title" = "Sanctioned Address!";
-"send.address.sanction.caution.description" = "The address you entered is flagged as sanctioned. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
-"send.address.sanction.pre_send.title" = "Sanctioned Address Detected!";
-"send.address.sanction.pre_send.description" = "You are about to send funds to an address that is sanctioned. Transactions to this address could result in loss or other risks. By proceeding, you acknowledge the potential dangers. Are you sure you want to continue?";
-"send.address.blacklist_check" = "Blacklist Check";
-"send.address.blacklist.clear.title" = "Blacklist: Clear";
-"send.address.blacklist.clear.description" = "The recipient address has passed verification through Chainalysis.com and has not been flagged. This means the address has not been detected in any known blacklists or associated with suspicious activity.";
-"send.address.blacklist.caution.title" = "Blacklisted Address!";
-"send.address.blacklist.caution.description" = "The address you entered is flagged as blacklisted. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
-"send.address.blacklist.pre_send.title" = "Blacklisted Address Detected!";
-"send.address.blacklist.pre_send.description" = "You are about to send funds to an address that is blacklisted. Transactions to this address could result in loss or other risks. By proceeding, you acknowledge the potential dangers. Are you sure you want to continue?";
+"send.address.enter_address" = "Введите адрес";
+"send.address.invalid_address" = "Неверный адрес";
+"send.address.recent" = "Недавние";
+"send.address.contacts" = "Контакты";
+"send.address.checking" = "Проверка";
+"send.address.check.clear" = "Очистить";
+"send.address.check.detected" = "Обнаружено";
+"send.address.phishing_check" = "Проверка на фишинг";
+"send.address.phishing.clear.title" = "Фишинг: Чисто";
+"send.address.phishing.clear.description" = "Проверка основана на вашей истории транзакций, подозрительной активности не обнаружено. Введенный адрес не участвовал в известных спам-транзакциях, связанных с попытками фишинга.";
+"send.address.phishing.caution.title" = "Обнаружен фишинговый адрес!";
+"send.address.phishing.caution.description" = "Введенный вами адрес может быть мошенническим. Мошенники часто изменяют первые и последние символы. Внимательно проверьте полный адрес перед отправкой во избежание потерь.";
+"send.address.phishing.pre_send.title" = "Фишинговый адрес!";
+"send.address.phishing.pre_send.description" = "Вы собираетесь отправить средства на подозрительный адрес, который может быть мошенническим. Помните, что это может привести к безвозвратной потере ваших токенов. Продолжая, вы принимаете связанные с этим риски. Вы уверены, что хотите продолжить?";
+"send.address.sanction_check" = "Проверка санкций";
+"send.address.sanction.caution.title" = "Санкционный адрес!";
+"send.address.sanction.caution.description" = "Введенный вами адрес помечен как санкционный. Транзакции на этот адрес могут привести к потерям или другим рискам. Пожалуйста, проверьте данные получателя перед продолжением.";
+"send.address.sanction.pre_send.title" = "Обнаружен санкционный адрес!";
+"send.address.sanction.pre_send.description" = "Вы собираетесь отправить средства на адрес, который находится под санкциями. Транзакции на этот адрес могут привести к потерям или другим рискам. Продолжая, вы признаете потенциальные опасности. Вы уверены, что хотите продолжить?";
+"send.address.blacklist_check" = "Проверка черного списка";
+"send.address.blacklist.clear.title" = "Черный список: Чисто";
+"send.address.blacklist.clear.description" = "Адрес получателя прошел проверку через Chainalysis.com и не был помечен. Это означает, что адрес не обнаружен в известных черных списках и не связан с подозрительной активностью.";
+"send.address.blacklist.caution.title" = "Адрес в черном списке!";
+"send.address.blacklist.caution.description" = "Введенный вами адрес помечен как находящийся в черном списке. Транзакции на этот адрес могут привести к потерям или другим рискам. Пожалуйста, проверьте данные получателя перед продолжением.";
+"send.address.blacklist.pre_send.title" = "Обнаружен адрес из черного списка!";
+"send.address.blacklist.pre_send.description" = "Вы собираетесь отправить средства на адрес, который находится в черном списке. Транзакции на этот адрес могут привести к потерям или другим рискам. Продолжая, вы признаете потенциальные опасности. Вы уверены, что хотите продолжить?";
 
 // Donate
 
@@ -667,12 +667,12 @@
 "swap.advanced_settings.deadline_minute" = "%@ мин!";
 "swap.advanced_settings.recipient_address" = "Адрес получателя";
 "swap.advanced_settings.recipient_address.to" = "Кому";
-"swap.advanced_settings.add_recipient_address" = "Add Recipient Address";
+"swap.advanced_settings.add_recipient_address" = "Добавить адрес получателя";
 "swap.advanced_settings.warning.unusual_slippage" = "Вашу транзакцию могут вытеснить (frontrun).";
 "swap.advanced_settings.service_fee_description" = "Комиссия за услугу обмена на платформе обычно 0.3% или 0.6%!";
 "swap.advanced_settings.error.lower_slippage" = "Ваша транзакция, скорее всего, не выполнится успешно.";
 "swap.advanced_settings.error.higher_slippage" = "Допустимая величина проскальзывания не может быть больше %@%%.";
-"swap.advanced_settings.error.invalid_address" = "Invalid Address";
+"swap.advanced_settings.error.invalid_address" = "Неверный адрес";
 "swap.advanced_settings.error.invalid_slippage" = "Недействительное отклонение";
 "swap.advanced_settings.error.invalid_deadline" = "Недействительный срок выполнения";
 
@@ -834,7 +834,7 @@
 "top_platform.total_cap" = "Общая капитализация";
 
 
-"market.search.recent" = "Recent";
+"market.search.recent" = "Недавние";
 "market.search.popular" = "Популярные";
 
 "market_discovery.title" = "Токены";
@@ -1269,7 +1269,7 @@
 "transactions.pending" = "В обработке";
 "transactions.processing" = "В процессе";
 "transactions.completed" = "Завершено";
-"transactions.failed" = "Failed";
+"transactions.failed" = "Не удалось";
 
 "transactions.receive" = "Получено";
 "transactions.send" = "Отправлено";
@@ -1311,7 +1311,7 @@
 "tx_info.title_approval" = "Разрешение обмена";
 "tx_info.status.pending" = "В обработке";
 "tx_info.status.completed" = "Завершено";
-"tx_info.status.failed" = "Failed";
+"tx_info.status.failed" = "Не удалось";
 "tx_info.from_hash" = "От";
 "tx_info.transaction_id" = "ID";
 "tx_info.to_hash" = "Кому";
@@ -1430,7 +1430,7 @@
 "backup_app.backup_list.header.other" = "Другое";
 "backup_app.backup_list.other.watch_account.title" = "Просмотр кошелька";
 "backup_app.backup_list.other.watchlist.title" = "Избранное";
-"backup_app.backup_list.other.contacts.title" = "Contacts";
+"backup_app.backup_list.other.contacts.title" = "Контакты";
 "backup_app.backup_list.other.blockchain_settings.title" = "Пользовательские RPC";
 "backup_app.backup_list.other.app_settings.title" = "Настройки приложения";
 "backup_app.backup_list.other.app_settings.description" = "Язык, валюта, внешний вид ...";
@@ -1593,7 +1593,7 @@
 "settings.privacy" = "Приватность";
 "settings.privacy.description" = "%@ не собирает персональные данные, которые могут раскрывать вашу частную информацию, такую как балансы монет или адреса. Мы собираем некоторую статистику использования интерфейса исключительно для понимания нашей пользовательской базы и тенденций использования приложения. Эта функция может быть отключена по вашему желанию.";
 "settings.privacy.allow" = "Поделиться данными UI";
-"settings.privacy.allow.description" = "This setting allows you to disable UI/UX analytics and ensure complete confidentiality.";
+"settings.privacy.allow.description" = "Эта настройка позволяет отключить аналитику UI/UX и обеспечить полную конфиденциальность.";
 
 // Settings -> Appearance
 
@@ -1626,26 +1626,26 @@
 
 // Settings -> Subsription
 
-"subscription.premium.label" = "Premium";
-"subscription.title" = "Subscription";
-"subscription.get" = "Get Premium";
-"subscription.restore" = "Restore Purchase";
-"subscription.type" = "Subscription Type";
-"subscription.one-time" = "One-Time";
+"subscription.premium.label" = "Премиум";
+"subscription.title" = "Подписка";
+"subscription.get" = "Получить Премиум";
+"subscription.restore" = "Восстановить покупку";
+"subscription.type" = "Тип подписки";
+"subscription.one-time" = "Разовая";
 "subscription.price" = "Цена";
-"subscription.next_payment" = "Next payment date";
-"subscription.purchase_time" = "Start date";
+"subscription.next_payment" = "Дата следующего платежа";
+"subscription.purchase_time" = "Дата начала";
 "subscription.status" = "Статус";
-"subscription.manage" = "Manage Subscription";
+"subscription.manage" = "Управление подпиской";
 
 // Settings -> Support
 
-"settings.vip_support.description" = "Get direct assistance from our experts. A private chat will be created in Telegram to resolve your issue, and it will be closed once the problem is solved.";
-"settings.vip_support.start_chat" = "Start Chat";
+"settings.vip_support.description" = "Получите прямую помощь от нашей команды. В Telegram будет создан приватный чат для решения вашей проблемы, который будет закрыт после устранения проблемы.";
+"settings.vip_support.start_chat" = "Начать чат";
 
 // Settings -> Contacts
 
-"contacts.title" = "Contacts";
+"contacts.title" = "Контакты";
 "contacts.list.search_placeholder" = "Поиск по имени";
 "contacts.list.not_found" = "У вас нет добавленных контактов";
 "contacts.list.not_found_search" = "Ничего не найдено";
@@ -1857,17 +1857,17 @@
 // Ton Connect
 
 "ton_connect.list.new_connection" = "Новое соединение";
-"ton_connect.list.no_connected_apps" = "No Connected Apps";
-"ton_connect.list.disconnect_app" = "Disconnect App";
-"ton_connect.list.disconnect_app.description" = "Are you sure you want to disconnect from \"%@\"?";
+"ton_connect.list.no_connected_apps" = "Нет подключенных приложений";
+"ton_connect.list.disconnect_app" = "Отвязать приложение";
+"ton_connect.list.disconnect_app.description" = "Вы уверены, что хотите отключиться от \"%@\"?";
 "ton_connect.list.disconnect_app.disconnect" = "Отсоединить";
 "ton_connect.connect.url" = "URL";
-"ton_connect.connect.wallet" = "Wallet";
-"ton_connect.connect.no_eligible_wallets" = "No eligible wallets";
+"ton_connect.connect.wallet" = "Кошелек";
+"ton_connect.connect.no_eligible_wallets" = "Нет подходящих кошельков";
 "ton_connect.connect.warning" = "Нажимая \"Подтвердить\", вы разрешаете этому приложению просматривать ваш общедоступный адрес. Это важный шаг для защиты ваших данных от потенциальных рисков фишинга.";
 "ton_connect.connect.connect" = "Подключиться";
 "ton_connect.connect.reject" = "Отклонить";
-"ton_connect.invalid_transaction" = "Invalid Transaction";
+"ton_connect.invalid_transaction" = "Недействительная транзакция";
 
 // App Status
 
@@ -1890,7 +1890,7 @@
 "status_info.processing.content" = "Транзакция уже включена в блокчейн, но пока не обработана. На данном этапе транзакции считаются завершенными для небольших платежей. Что касается завершения обработки более крупных транзакций, стоит дождаться смены статуса.";
 "status_info.completed.title" = "Завершено";
 "status_info.confirmed.content" = "Транзакция завершена и считается постоянной и необратимой.";
-"status_info.failed.title" = "Failed";
+"status_info.failed.title" = "Не удалось";
 "status_info.failed.content" = "Транзакция не была обработана и передача средств не произошла. В зависимости от причины неудачи, некоторые неудачные транзакции могут использовать комиссию за транзакцию. Транзакции, которые были заменены или отменены другой транзакцией, не потребляют транзакционные сборы и также будут показаны как \"не удалось\". Приложение %@ не может показать причину неудачных транзакций, но пользователи могут посмотреть это в etherscan.io.";
 
 // Onboarding
@@ -2125,13 +2125,13 @@
 "subscription_info.info2.text" = "Найдите перспективные возможности, избегайте мошенничества и максимизируйте свою прибыль в динамичном мире криптовалют.";
 "subscription_info.info3.title" = "Персональная поддержка";
 "subscription_info.info3.text" = "Найдите перспективные возможности, избегайте мошенничества и максимизируйте свою прибыль в динамичном мире криптовалют.";
-"subscription_info.get_premium" = "Get Premium";
+"subscription_info.get_premium" = "Получить Премиум";
 "subscription_info.already_have" = "У меня уже есть премиум";
 
 // Activate Subscription
 
 "activate_subscription.title" = "Активировать";
-"activate_subscription.wallet" = "Wallet";
+"activate_subscription.wallet" = "Кошелек";
 "activate_subscription.address" = "Адрес";
 "activate_subscription.message" = "Сообщение для подписи";
 "activate_subscription.sign" = "Подписать";
@@ -2228,74 +2228,74 @@
 
 // Purchases
 
-"premium.cell.title" = "Premium";
-"premium.cell.description" = "Upgrade your experience with %@ features!";
-"premium.cell.description.key" = "Premium";
-"premium.cell.try" = "Try for FREE";
+"premium.cell.title" = "Премиум";
+"premium.cell.description" = "Улучшите возможности с функциями %@!";
+"premium.cell.description.key" = "Премиум";
+"premium.cell.try" = "Попробовать БЕСПЛАТНО";
 
-"purchases.title" = "Premium";
-"purchases.description" = "Choose the plan.";
+"purchases.title" = "Премиум";
+"purchases.description" = "Choose the plan";
 "purchases.type.pro" = "Pro";
 "purchases.type.vip" = "VIP";
 
-"purchases.token_insights" = "Token Lists";
-"purchases.token_insights.description" = "Master Token Research";
-"purchases.token_insights.info" = "Your all-in-one tool for deep analysis. Browse curated Top 250 token lists based on trading volume, exchange liquidity, holder behavior, and on-chain trends—all at a glance. Filter, analyze, and stay ahead.";
+"purchases.token_insights" = "Списки токенов";
+"purchases.token_insights.description" = "Исследование токенов";
+"purchases.token_insights.info" = "Ваш универсальный инструмент для глубокого анализа. Просматривайте подборку Top 250 токенов на основе объема торгов, ликвидности бирж, поведения держателей и трендов в сети — все в одном месте. Фильтруйте, анализируйте и оставайтесь впереди.";
 
-"purchases.advanced_search" = "Advanced Search";
-"purchases.advanced_search.description" = "Discover Trending Tokens";
-"purchases.advanced_search.info" = "Ditch the noise and zero in on high-potential tokens with precision. Use Advanced Search to filter through thousands of tokens by trading volume, blockchain, market cap, price trends, sector, and performance—and more. Powerful, accurate, and built for discovery.";
+"purchases.advanced_search" = "Расширенный поиск";
+"purchases.advanced_search.description" = "Находите популярные токены";
+"purchases.advanced_search.info" = "Отсейте шум и точно определите токены с высоким потенциалом. Используйте Расширенный поиск для фильтрации тысяч токенов по объему торгов, блокчейну, капитализации, ценовым трендам, сектору и эффективности — и не только. Мощный, точный инструмент для поиска.";
 
-"purchases.trade_signals" = "Watch Trends";
-"purchases.trade_signals.description" = "Trade Smarter, Profit Faster";
-"purchases.trade_signals.info" = "Never miss a trading opportunity again. Watch Trends delivers real-time alerts powered by advanced technical analysis, helping you identify trends, spot breakouts, and avoid pitfalls before they happen. Act fast, trade smart, and maximize gains.";
+"purchases.trade_signals" = "Отслеживание трендов";
+"purchases.trade_signals.description" = "Торгуйте умнее, получайте прибыль быстрее";
+"purchases.trade_signals.info" = "Больше не упускайте торговые возможности. Отслеживание трендов предоставляет оповещения в реальном времени на основе продвинутого технического анализа, помогая определять тренды, замечать прорывы и избегать ловушек до их появления. Действуйте быстро, торгуйте разумно и максимизируйте прибыль.";
 
-"purchases.tx_speed_up" = "Tx Speed UP / Cancel ";
-"purchases.tx_speed_up.description" = "Speed up and cancel transactions.";
-"purchases.tx_speed_up.info" = "Tx Speed Up / Cancel provides full control over blockchain transactions. With this feature, users can accelerate pending transactions by increasing gas fees or cancel unconfirmed transactions altogether if needed. It adds a layer of flexibility and convenience to transaction management, ensuring users remain in control of their activity.";
+"purchases.tx_speed_up" = "Ускорение / Отмена Tx";
+"purchases.tx_speed_up.description" = "-";
+"purchases.tx_speed_up.info" = "-";
 
 "purchases.duress_mode" = "Режим Duress";
-"purchases.duress_mode.description" = "Stay Safe Wherever You Go";
-"purchases.duress_mode.info" = "Your crypto. Your security. Duress Mode lets you create multiple alternate wallet setups, each with a separate PIN, providing a hidden escape route in high-risk situations. If forced to unlock your wallet, simply use the duress PIN to access a secondary wallet with no critical assets exposed. Your real funds stay hidden. Your security stays intact.";
+"purchases.duress_mode.description" = "Оставайтесь в безопасности везде";
+"purchases.duress_mode.info" = "Ваша крипта. Ваша безопасность. Режим принуждения позволяет создавать несколько альтернативных настроек кошелька, каждая с отдельным PIN-кодом, обеспечивая скрытый путь отхода в рискованных ситуациях. Если вас принуждают разблокировать кошелек, просто используйте PIN-код принуждения для доступа к вторичному кошельку без критически важных активов. Ваши реальные средства остаются скрытыми. Ваша безопасность остается нетронутой.";
 
-"purchases.address_phishing" = "Scam Protection";
-"purchases.address_phishing.description" = "Stay Secure Without the Hassle";
-"purchases.address_phishing.info" = "One wrong address, and your crypto is gone forever. Unstoppable automatically scans recipient addresses for suspicious patterns and defends against the latest phishing threats, preventing you from sending funds to a hacker. Block fraudulent transfers before they happen.";
+"purchases.address_phishing" = "Защита от мошенничества";
+"purchases.address_phishing.description" = "Безопасность без хлопот";
+"purchases.address_phishing.info" = "Один неверный адрес, и ваша крипта потеряна навсегда. Unstoppable автоматически сканирует адреса получателей на подозрительные шаблоны и защищает от новейших фишинговых угроз, предотвращая отправку средств хакеру. Блокируйте мошеннические переводы до их совершения.";
 
-"purchases.address_checker" = "Blacklist Checker";
-"purchases.address_checker.description" = "Stay Legit and Compliant";
-"purchases.address_checker.info" = "Protect yourself from risky and sanctioned entities. Blacklist Checker automatically screens recipient addresses against high-risk databases, flagging scams, frauds, and sanctioned entities before you send. If an address is blacklisted, you’ll know before making a costly mistake. Secure your transactions. Keep your crypto clean. Stay compliant.";
+"purchases.address_checker" = "Проверка черного списка";
+"purchases.address_checker.description" = "Оставайтесь легальными и соответствующими";
+"purchases.address_checker.info" = "Защитите себя от рискованных и санкционных организаций. Проверка черного списка автоматически проверяет адреса получателей по базам данных высокого риска, помечая мошенничество и санкционные организации до отправки. Если адрес в черном списке, вы узнаете об этом до совершения дорогостоящей ошибки. Защитите свои транзакции. Сохраняйте крипту чистой. Соблюдайте требования.";
 
-"purchases.privacy_mode" = "Privacy Mode";
-"purchases.privacy_mode.description" = "Full disconnection from data collection.";
-"purchases.privacy_mode.info" = "Privacy Mode enhances user confidentiality by masking wallet balances, transaction history, and other sensitive details. This feature ensures that third parties cannot view or track user activity, providing a discreet and secure experience for those who value privacy.";
+"purchases.privacy_mode" = "Режим приватности";
+"purchases.privacy_mode.description" = "Полное отключение от сбора данных";
+"purchases.privacy_mode.info" = "Режим приватности повышает конфиденциальность пользователя, скрывая балансы кошелька, историю транзакций и другие конфиденциальные данные. Эта функция гарантирует, что третьи стороны не могут просматривать или отслеживать активность пользователя, обеспечивая безопасный опыт для тех, кто ценит приватность.";
 
-"purchases.vip_support" = "VIP Group";
-"purchases.vip_support.description" = "Vote on the Future of Unstoppable";
-"purchases.vip_support.info" = "Be part of the evolution. Join the VIP Group to connect directly with our team, vote on upcoming features, and get an exclusive first look at future updates. Your voice matters—help shape the next-gen crypto wallet.";
+"purchases.vip_support" = "VIP группа";
+"purchases.vip_support.description" = "Голосуйте за будущее Unstoppable";
+"purchases.vip_support.info" = "Станьте частью эволюции. Присоединитесь к VIP группе для прямой связи с нашей командой, голосования за предстоящие функции и эксклюзивного предварительного просмотра будущих обновлений. Ваш голос важен — помогите формировать криптокошелек нового поколения.";
 
-"purchases.vip_club" = "VIP Club";
-"purchases.vip_club.description" = "Private chat with exclusive information.";
-"purchases.vip_club.info" = "The VIP Club offers exclusive access to a premium community of like-minded individuals. Members can participate in private discussions, gain insights from industry experts, and network with other top-tier users. This feature is perfect for those who want to stay ahead with insider knowledge and connections.";
+"purchases.vip_club" = "-";
+"purchases.vip_club.description" = "-";
+"purchases.vip_club.info" = "-";
 
-"purchases.wallet_description.title" = "Highly rated security, exceptional privacy, and a truly non-custodial wallet.";
-"purchases.wallet_description.approved" = "Approved and Audited By:";
+"purchases.wallet_description.title" = "Высоко оцененная безопасность, исключительная приватность и по-настоящему некастодиальный кошелек.";
+"purchases.wallet_description.approved" = "Одобрено и проверено:";
 
-"purchases.button.try" = "Try for FREE";
+"purchases.button.try" = "Попробовать БЕСПЛАТНО";
 "purchases.button.activated" = "Активировано";
 "purchases.button.upgrade" = "Обновить";
 
 "purchase.period.title" = "Выбрать подписку";
 "purchase.period.annually" = "Ежегодно";
 "purchase.period.monthly" = "Ежемесячно";
-"purchase.period.onetime" = "One-Time";
+"purchase.period.onetime" = "Разовая";
 "purchase.period.onetime.description" = "для пожизненного доступа";
 "purchase.period.save" = "сохранить";
 "purchase.period.year" = "год";
 "purchase.period.month" = "месяц";
 "purchase.period.description1" = "Пользуйтесь первые 7 дней БЕСПЛАТНО";
 "purchase.period.description2" = "Вы можете отменить подписку App Store в любое время.";
-"purchase.lifetime.description" = "You can purchase a one-time subscriiption without any restrictions";
+"purchase.lifetime.description" = "-";
 
 "purchases.period.button.try" = "Получите 7 дней БЕСПЛАТНО";
 "purchases.period.button.subscribe" = "Подписаться";
@@ -2307,7 +2307,7 @@
 "purchases.promocode.button.invalid" = "Неверный промокод";
 "purchases.promocode.button.already_used" = "Промокод уже использован";
 
-"purchases.successful_subscription.title" = "Premium";
+"purchases.successful_subscription.title" = "Премиум";
 "purchases.successful_subscription.description" = "Спасибо за подписку!";
 "purchases.successful_subscription.subscribed" = "Наслаждайтесь полным функционалом приложения.";
 "purchases.successful_subscription.button.go_app" = "Перейти в приложение";
