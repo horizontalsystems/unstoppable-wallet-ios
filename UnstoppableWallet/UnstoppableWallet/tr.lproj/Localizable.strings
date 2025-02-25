@@ -1864,7 +1864,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "ton_connect.list.disconnect_app.description" = "Are you sure you want to disconnect from \"%@\"?";
 "ton_connect.list.disconnect_app.disconnect" = "Bağlantıyı Kes";
 "ton_connect.connect.url" = "URL";
-"ton_connect.connect.wallet" = "Wallet";
+"ton_connect.connect.wallet" = "Cüzdanı";
 "ton_connect.connect.no_eligible_wallets" = "No eligible wallets";
 "ton_connect.connect.warning" = "Onayla butonunu tıklayarak, bu uygulamanın açık adresinizi görüntülemesine izin vermiş olursunuz. Bu, verilerinizi olası kimlik hırsızlığı risklerinden korumak için önemli bir güvenlik adımıdır.";
 "ton_connect.connect.connect" = "Bağlan";
@@ -2136,7 +2136,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Activate Subscription
 
 "activate_subscription.title" = "Aktiveet";
-"activate_subscription.wallet" = "Wallet";
+"activate_subscription.wallet" = "Cüzdanı";
 "activate_subscription.address" = "Adres";
 "activate_subscription.message" = "İmza için mesaj";
 "activate_subscription.sign" = "kaydol";
