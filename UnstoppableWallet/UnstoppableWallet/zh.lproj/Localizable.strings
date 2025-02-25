@@ -917,7 +917,7 @@
 "market.advanced_search.more_500_b" = "> 500十亿";
 
 "market.advanced_search.top.m_cap" = "M.Cap";
-"market.advanced_search.top.more_1_b" = "> $1B";
+"market.advanced_search.top.more_1_b" = "> 1B";
 "market.advanced_search.top.more_500_m" = "> $500M";
 "market.advanced_search.top.more_250_m" = "> $250M";
 "market.advanced_search.top.more_100_m" = "> $100M";
