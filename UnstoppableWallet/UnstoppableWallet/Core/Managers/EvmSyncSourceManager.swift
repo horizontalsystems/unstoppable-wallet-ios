@@ -29,6 +29,7 @@ class EvmSyncSourceManager {
         case .gnosis: return .gnosis(apiKeys: AppConfig.gnosisscanKeys)
         case .fantom: return .fantom(apiKeys: AppConfig.ftmscanKeys)
         case .base: return .basescan(apiKeys: AppConfig.basescanKeys)
+        case .zkSync: return .eraZkSync(apiKeys: AppConfig.eraZkSyncKeys)
         default: fatalError("Non-supported EVM blockchain")
         }
     }
@@ -85,6 +86,16 @@ extension EvmSyncSourceManager {
                 ]
             } else {
                 return [
+                    EvmSyncSource(
+                        name: "BlockRazor",
+                        rpcSource: .http(urls: [URL(string: "https://unstoppable.bsc.blockrazor.xyz")!], auth: nil),
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                    ),
+                    EvmSyncSource(
+                        name: "48club",
+                        rpcSource: .http(urls: [URL(string: "https://unstoppable.rpc.48.club")!], auth: nil),
+                        transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                    ),
                     EvmSyncSource(
                         name: "Binance",
                         rpcSource: .binanceSmartChainHttp(),
@@ -200,6 +211,14 @@ extension EvmSyncSourceManager {
                 EvmSyncSource(
                     name: "Omnia",
                     rpcSource: .http(urls: [URL(string: "https://endpoints.omniatech.io/v1/base/mainnet/public")!], auth: nil),
+                    transactionSource: defaultTransactionSource(blockchainType: blockchainType)
+                ),
+            ]
+        case .zkSync:
+            return [
+                EvmSyncSource(
+                    name: "ZKsync",
+                    rpcSource: .zkSyncRpcHttp(),
                     transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 ),
             ]

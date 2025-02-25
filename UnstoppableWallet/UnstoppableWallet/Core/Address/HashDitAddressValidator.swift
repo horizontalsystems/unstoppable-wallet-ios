@@ -34,7 +34,7 @@ extension HashDitAddressValidator: IAddressSecurityChecker {
 
         let response: HashDitAddressValidatorResponse = try await networkManager.fetch(url: url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
 
-        return !response.data.risk_detail.isEmpty
+        return response.data.risk_level != 0
     }
 }
 

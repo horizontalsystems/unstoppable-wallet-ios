@@ -20,6 +20,7 @@ extension BlockchainType {
         .gnosis,
         .fantom,
         .base,
+        .zkSync,
         .binanceSmartChain,
         .tron,
         .ton,
@@ -55,6 +56,7 @@ extension BlockchainType {
             .polygon,
             .base,
             .avalanche,
+            .zkSync,
             .zcash,
             .bitcoinCash,
             .ecash,
@@ -114,7 +116,7 @@ extension BlockchainType {
             }
         case .evmPrivateKey, .evmAddress:
             switch self {
-            case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .base: return true
+            case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .base, .zkSync: return true
             default: return false
             }
         case .tronAddress:
@@ -144,6 +146,7 @@ extension BlockchainType {
         case .fantom: return "FTM, ERC20 tokens"
         case .optimism: return "L2 chain"
         case .base: return "L2 chain"
+        case .zkSync: return "L2 chain"
         case .arbitrumOne: return "L2 chain"
         case .zcash: return "ZEC"
         case .dash: return "DASH"
