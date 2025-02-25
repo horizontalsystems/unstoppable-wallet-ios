@@ -7,7 +7,7 @@ import RxSwift
 
 class HashDitAddressValidator {
     static let supportedBlockchainTypes: [BlockchainType] = [.ethereum, .binanceSmartChain, .polygon]
-    private let url = "https://api.diting.pro/v2/hashdit/transaction-security"
+    private let url = "https://service.hashdit.io/v2/hashdit/transaction-security"
     private let networkManager = App.shared.networkManager
     private let evmBlockchainManager = App.shared.evmBlockchainManager
     private let headers: HTTPHeaders
@@ -34,7 +34,7 @@ extension HashDitAddressValidator: IAddressSecurityChecker {
 
         let response: HashDitAddressValidatorResponse = try await networkManager.fetch(url: url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
 
-        return response.data.risk_level != 0
+        return response.data.risk_level >= 4
     }
 }
 
