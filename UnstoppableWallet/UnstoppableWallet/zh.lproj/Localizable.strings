@@ -29,7 +29,7 @@
 "button.i_understand" = "我理解";
 "button.learn_more" = "了解更多";
 "button.unlock" = "解锁​​​​";
-"button.select" = "Select";
+"button.select" = "选择";
 
 "alert" = "警报";
 "alert.copied" = "已复制";
@@ -104,7 +104,7 @@
 "number.quadrillion" = "%@千萬億";
 
 "selector.any" = "任何";
-"selector.none" = "None";
+"selector.none" = "无动画";
 
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
@@ -415,7 +415,7 @@
 
 // Address
 
-"address.title" = "Enter Address";
+"address.title" = "输入地址";
 
 // Send
 
@@ -458,10 +458,10 @@
 
 "send.confirmation.title" = "确认";
 "send.confirmation.you_send" = "您发送";
-"send.confirmation.you_receive" = "You Receive";
+"send.confirmation.you_receive" = "您收到";
 "send.confirmation.transfer" = "转帐";
 "send.confirmation.to" = "接收人";
-"send.confirmation.from" = "From";
+"send.confirmation.from" = "来自";
 "send.confirmation.own" = "自有";
 "send.confirmation.contact_name" = "联系人姓名";
 "send.confirmation.domain" = "域名";
@@ -475,10 +475,10 @@
 "send.confirmation.replace_by_fee" = "替换交易";
 "send.confirmation.replaced_transactions" = "已替换的交易";
 "send.confirmation.input" = "输入";
-"send.confirmation.comment" = "Comment";
-"send.confirmation.action" = "Action";
+"send.confirmation.comment" = "备注";
+"send.confirmation.action" = "操作";
 "send.confirmation.status" = "状态";
-"send.confirmation.status.failed" = "Failed";
+"send.confirmation.status.failed" = "失败";
 
 "send.confirmation.sync_failed" = "同步失败";
 "send.confirmation.invalid_data" = "无效数据";
@@ -539,7 +539,7 @@
 "send.insufficient_balance" = "可用额度不足";
 "send.send_anyway" = "Send Anyway";
 
-"send.address.enter_address" = "Enter Address";
+"send.address.enter_address" = "输入地址";
 "send.address.invalid_address" = "Invalid Address";
 "send.address.recent" = "Recent";
 "send.address.contacts" = "Contacts";
@@ -588,7 +588,7 @@
 "swap.estimated" = "估计";
 "swap.balance" = "余额";
 "swap.you_get" = "您获得";
-"swap.token" = "Select";
+"swap.token" = "选择";
 "swap.advanced_settings" = "掉期设置";
 "swap.proceed_button" = "下一步";
 "swap.approve.title" = "互兑批准";
@@ -614,7 +614,7 @@
 "swap.maximum_short" = "(最大金额)";
 
 "swap.rate_not_available" = "汇率不可用";
-"swap.select" = "Select";
+"swap.select" = "选择";
 "swap.quoting" = "引述";
 "swap.select_token_in" = "选择代币输入";
 "swap.select_token_out" = "选择代币输出";
@@ -1267,7 +1267,7 @@
 "transactions.pending" = "待处理";
 "transactions.processing" = "正在处理";
 "transactions.completed" = "已完成";
-"transactions.failed" = "Failed";
+"transactions.failed" = "失败";
 
 "transactions.receive" = "接收";
 "transactions.send" = "已发送";
@@ -1309,8 +1309,8 @@
 "tx_info.title_approval" = "互兑批准";
 "tx_info.status.pending" = "待处理";
 "tx_info.status.completed" = "已完成";
-"tx_info.status.failed" = "Failed";
-"tx_info.from_hash" = "From";
+"tx_info.status.failed" = "失败";
+"tx_info.from_hash" = "来自";
 "tx_info.transaction_id" = "交易ID";
 "tx_info.to_hash" = "接收人";
 "tx_info.spender" = "消费人";
@@ -1731,7 +1731,7 @@
 "chart.about.read_less" = "关闭";
 
 "coin_page.return_of_investments" = "ROI";
-"coin_page.return_of_investments.vs" = "vs %@";
+"coin_page.return_of_investments.vs" = "对比 %@";
 
 // Create Wallet
 
@@ -1860,7 +1860,7 @@
 "ton_connect.list.disconnect_app.description" = "Are you sure you want to disconnect from \"%@\"?";
 "ton_connect.list.disconnect_app.disconnect" = "断开连接";
 "ton_connect.connect.url" = "URL";
-"ton_connect.connect.wallet" = "Wallet";
+"ton_connect.connect.wallet" = "钱包";
 "ton_connect.connect.no_eligible_wallets" = "No eligible wallets";
 "ton_connect.connect.warning" = "点击批准，表示您允许此应用查看您的公开地址。这是保护您的数据免受潜在钓鱼风险威胁的重要安全步骤。";
 "ton_connect.connect.connect" = "连接";
@@ -1888,7 +1888,7 @@
 "status_info.processing.content" = "交易已包括在区块链中，但尚未达到永久终结状态。此时，可以安全地考虑以较小金额完成的交易。对于大额支付，建议等待直至交易状态变为已完成。";
 "status_info.completed.title" = "已完成";
 "status_info.confirmed.content" = "交易已完成并被视为永久和不可逆。";
-"status_info.failed.title" = "Failed";
+"status_info.failed.title" = "失败";
 "status_info.failed.content" = "交易没有得到处理，也没有进行价值转移，根据失败的原因，有些失败的交易可能会耗费交易费用。 被另一笔交易替换或取消的交易不会消耗交易费用，也会出现为失败。 %@ 应用程序无法显示交易失败的原因。 但用户可以在公共区块探索者i上看到它。 。etherscan.io。";
 
 // Onboarding
@@ -2128,7 +2128,7 @@
 // Activate Subscription
 
 "activate_subscription.title" = "激活";
-"activate_subscription.wallet" = "Wallet";
+"activate_subscription.wallet" = "钱包";
 "activate_subscription.address" = "地址";
 "activate_subscription.message" = "待签名消息";
 "activate_subscription.sign" = "签名";
