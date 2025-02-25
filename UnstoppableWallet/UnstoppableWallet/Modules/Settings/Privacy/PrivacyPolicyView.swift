@@ -15,11 +15,11 @@ struct PrivacyPolicyView: View {
                 HighlightedTextView(text: viewModel.config.description)
 
                 VStack(spacing: 0) {
-                    PremiumListSectionHeader()
                     ListSection {
-                        premiumRow(statsRow())
+                        ListRow {
+                            statsRow()
+                        }
                     }
-                    .modifier(ColoredBorder())
                     ListSectionFooter(text: "settings.privacy.allow.description".localized)
                 }
             }
@@ -32,28 +32,13 @@ struct PrivacyPolicyView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 
-    @ViewBuilder private func premiumRow(_ view: some View) -> some View {
-        if viewModel.premiumEnabled {
-            ListRow {
-                view
-            }
-        } else {
-            ClickableRow {
-                subscriptionPresented = true
-            } content: {
-                view
-            }
-        }
-    }
-
     @ViewBuilder private func statsRow() -> some View {
         Toggle(isOn: Binding(get: { viewModel.statsEnabled }, set: { viewModel.set(allowed: $0) })) {
             HStack(spacing: .margin16) {
-                Image("share_1_24").themeIcon(color: .themeJacob)
+                Image("share_1_24").themeIcon(color: .themeGray)
                 Text("settings.privacy.allow".localized).themeBody()
             }
         }
-        .allowsHitTesting(viewModel.premiumEnabled)
         .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
     }
 }
