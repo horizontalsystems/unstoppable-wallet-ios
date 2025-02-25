@@ -29,6 +29,7 @@
 "button.i_understand" = "我理解";
 "button.learn_more" = "了解更多";
 "button.unlock" = "解锁​​​​";
+"button.select" = "选择";
 
 "alert" = "警报";
 "alert.copied" = "已复制";
@@ -103,6 +104,7 @@
 "number.quadrillion" = "%@千萬億";
 
 "selector.any" = "任何";
+"selector.none" = "无动画";
 
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
@@ -411,6 +413,10 @@
 
 "blockchain_type.recommended" = " (平均)";
 
+// Address
+
+"address.title" = "输入地址";
+
 // Send
 
 "send.title" = "发送%@";
@@ -452,10 +458,10 @@
 
 "send.confirmation.title" = "确认";
 "send.confirmation.you_send" = "您发送";
-"send.confirmation.you_receive" = "You Receive";
+"send.confirmation.you_receive" = "您收到";
 "send.confirmation.transfer" = "转帐";
 "send.confirmation.to" = "接收人";
-"send.confirmation.from" = "From";
+"send.confirmation.from" = "来自";
 "send.confirmation.own" = "自有";
 "send.confirmation.contact_name" = "联系人姓名";
 "send.confirmation.domain" = "域名";
@@ -469,10 +475,10 @@
 "send.confirmation.replace_by_fee" = "替换交易";
 "send.confirmation.replaced_transactions" = "已替换的交易";
 "send.confirmation.input" = "输入";
-"send.confirmation.comment" = "Comment";
-"send.confirmation.action" = "Action";
+"send.confirmation.comment" = "备注";
+"send.confirmation.action" = "操作";
 "send.confirmation.status" = "状态";
-"send.confirmation.status.failed" = "Failed";
+"send.confirmation.status.failed" = "失败";
 
 "send.confirmation.sync_failed" = "同步失败";
 "send.confirmation.invalid_data" = "无效数据";
@@ -527,12 +533,38 @@
 "approve.confirmation.spender" = "消费人";
 
 "send.enter_amount" = "输入金额";
-"send.enter_address" = "输入地址";
-"send.invalid_address" = "无效地址";
 "send.token_not_enabled" = "代币未启用";
 "send.token_syncing" = "代币同步";
 "send.token_not_synced" = "代币未同步";
 "send.insufficient_balance" = "可用额度不足";
+"send.send_anyway" = "Send Anyway";
+
+"send.address.enter_address" = "输入地址";
+"send.address.invalid_address" = "Invalid Address";
+"send.address.recent" = "Recent";
+"send.address.contacts" = "Contacts";
+"send.address.checking" = "Checking";
+"send.address.check.clear" = "Clear";
+"send.address.check.detected" = "Detected";
+"send.address.phishing_check" = "Phishing Check";
+"send.address.phishing.clear.title" = "Phishing: Clear";
+"send.address.phishing.clear.description" = "The verification is based on your transaction history, and no suspicious activity has been detected. The entered address has not been involved in known spam transactions associated with phishing attempts.";
+"send.address.phishing.caution.title" = "Phishing Address Detected!";
+"send.address.phishing.caution.description" = "The address you entered may be fraudulent. Scammers often alter the first and last characters. Verify the full address carefully before proceeding to avoid loss.";
+"send.address.phishing.pre_send.title" = "Phishing Address!";
+"send.address.phishing.pre_send.description" = "You are about to send funds to a suspicious address that may be fraudulent. Please be aware that this could result in a permanent loss of your tokens. By proceeding, you acknowledge the risks involved. Are you sure you want to continue?";
+"send.address.sanction_check" = "Sanction Check";
+"send.address.sanction.caution.title" = "Sanctioned Address!";
+"send.address.sanction.caution.description" = "The address you entered is flagged as sanctioned. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
+"send.address.sanction.pre_send.title" = "Sanctioned Address Detected!";
+"send.address.sanction.pre_send.description" = "You are about to send funds to an address that is sanctioned. Transactions to this address could result in loss or other risks. By proceeding, you acknowledge the potential dangers. Are you sure you want to continue?";
+"send.address.blacklist_check" = "Blacklist Check";
+"send.address.blacklist.clear.title" = "Blacklist: Clear";
+"send.address.blacklist.clear.description" = "The recipient address has passed verification through Chainalysis.com and has not been flagged. This means the address has not been detected in any known blacklists or associated with suspicious activity.";
+"send.address.blacklist.caution.title" = "Blacklisted Address!";
+"send.address.blacklist.caution.description" = "The address you entered is flagged as blacklisted. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
+"send.address.blacklist.pre_send.title" = "Blacklisted Address Detected!";
+"send.address.blacklist.pre_send.description" = "You are about to send funds to an address that is blacklisted. Transactions to this address could result in loss or other risks. By proceeding, you acknowledge the potential dangers. Are you sure you want to continue?";
 
 // Donate
 
@@ -632,11 +664,13 @@
 "swap.advanced_settings.recipient.footer" = "在兑换操作之后，金额将转移至指定地址";
 "swap.advanced_settings.deadline_minute" = "%@分钟。";
 "swap.advanced_settings.recipient_address" = "接收人地址";
+"swap.advanced_settings.recipient_address.to" = "接收人";
+"swap.advanced_settings.add_recipient_address" = "Add Recipient Address";
 "swap.advanced_settings.warning.unusual_slippage" = "您的交易可能提前完成";
 "swap.advanced_settings.service_fee_description" = "典型平台上交换动作的服务费：0.3% 或 0.6%";
 "swap.advanced_settings.error.lower_slippage" = "您的交易可能失败。";
 "swap.advanced_settings.error.higher_slippage" = "下跌容忍不得高于%@%%";
-"swap.advanced_settings.error.invalid_address" = "无效地址";
+"swap.advanced_settings.error.invalid_address" = "Invalid Address";
 "swap.advanced_settings.error.invalid_slippage" = "无效延误";
 "swap.advanced_settings.error.invalid_deadline" = "无效截止日期";
 
@@ -798,7 +832,7 @@
 "top_platform.total_cap" = "总市值";
 
 
-"market.search.recent" = "最近";
+"market.search.recent" = "Recent";
 "market.search.popular" = "流行";
 
 "market_discovery.title" = "发现";
@@ -834,6 +868,7 @@
 "market.advanced_search.choose_set" = "可选集合";
 "market.advanced_search.market_cap" = "市场价值";
 "market.advanced_search.volume" = "成交量";
+"market.advanced_search.categories" = "行业";
 
 "market.advanced_search.listed_on_top_exchanges" = "列在顶级交易所上";
 "market.advanced_search.good_cex_volume" = "良好的中心化交易所（CEX）交易量";
@@ -850,6 +885,7 @@
 "market.advanced_search.outperformed_btc" = "跑赢BTC";
 "market.advanced_search.outperformed_eth" = "跑赢ETH";
 "market.advanced_search.outperformed_bnb" = "跑赢BNB";
+"market.advanced_search.price_close_to" = "Price Close To";
 "market.advanced_search.price_close_to_ath" = "接近历史最高价";
 "market.advanced_search.price_close_to_atl" = "接近历史最低价";
 
@@ -879,6 +915,16 @@
 "market.advanced_search.more_10_b" = "> 10十亿";
 "market.advanced_search.more_50_b" = "> 50十亿";
 "market.advanced_search.more_500_b" = "> 500十亿";
+
+"market.advanced_search.top.m_cap" = "M.Cap";
+"market.advanced_search.top.more_1_b" = "> $1B";
+"market.advanced_search.top.more_500_m" = "> $500M";
+"market.advanced_search.top.more_250_m" = "> $250M";
+"market.advanced_search.top.more_100_m" = "> $100M";
+"market.advanced_search.top.more_25_m" = "> $25M";
+"market.advanced_search.top.more_10_m" = "> $10M";
+"market.advanced_search.top.more_5_m" = "> $5M";
+"market.advanced_search.top.more_1_m" = "> $1M";
 
 "market.advanced_search.day" = "1天";
 "market.advanced_search.week" = "1周";
@@ -1221,7 +1267,7 @@
 "transactions.pending" = "待处理";
 "transactions.processing" = "正在处理";
 "transactions.completed" = "已完成";
-"transactions.failed" = "Failed";
+"transactions.failed" = "失败";
 
 "transactions.receive" = "接收";
 "transactions.send" = "已发送";
@@ -1263,8 +1309,8 @@
 "tx_info.title_approval" = "互兑批准";
 "tx_info.status.pending" = "待处理";
 "tx_info.status.completed" = "已完成";
-"tx_info.status.failed" = "Failed";
-"tx_info.from_hash" = "From";
+"tx_info.status.failed" = "失败";
+"tx_info.from_hash" = "来自";
 "tx_info.transaction_id" = "交易ID";
 "tx_info.to_hash" = "接收人";
 "tx_info.spender" = "消费人";
@@ -1313,7 +1359,6 @@
 "settings.tell_friends" = "分享给好友";
 "settings.contact_us" = "联系我们";
 "settings.social_networks.label" = "Be Unstoppable";
-"settings.social_networks.footer" = "通过独家视频学习和掌握加密。非正式地了解我们。成为第一个看看我们正在工作的事情。";
 "settings.get_your_tokens" = "Get UWT Tokens";
 
 // Settings -> Base Currency
@@ -1383,7 +1428,7 @@
 "backup_app.backup_list.header.other" = "其他";
 "backup_app.backup_list.other.watch_account.title" = "观察地址";
 "backup_app.backup_list.other.watchlist.title" = "关注";
-"backup_app.backup_list.other.contacts.title" = "联系人";
+"backup_app.backup_list.other.contacts.title" = "Contacts";
 "backup_app.backup_list.other.blockchain_settings.title" = "自定义 RPC";
 "backup_app.backup_list.other.app_settings.title" = "应用设置";
 "backup_app.backup_list.other.app_settings.description" = "语言、 货币、 外观...";
@@ -1545,10 +1590,8 @@
 
 "settings.privacy" = "隐私保护";
 "settings.privacy.description" = "%@不收集暴露您私人信息的个人数据，例如币余额或地址。虽然我们收集了一些用户界面使用统计数据，但这仅用于了解我们的用户群和应用程序使用趋势。如果您希望，可以禁用此功能。";
-"settings.privacy.statement.data_usage" = "钱包没有收集任何有关用户的数据。";
-"settings.privacy.statement.data_storage" = "我们没有用户账户或存储用户数据的数据库。";
-"settings.privacy.statement.user_account" = "如果允许，钱包将与不可阻挡团队分享应用程序使用习惯。这是为了了解我们的用户正在使用哪些功能（或未使用）。作为一个关注隐私的应用程序，我们需要一种评估我们努力的方式，如果没有这个，我们就无法知道我们构建的功能是否被使用。";
 "settings.privacy.allow" = "共享界面数据";
+"settings.privacy.allow.description" = "This setting allows you to disable UI/UX analytics and ensure complete confidentiality.";
 
 // Settings -> Appearance
 
@@ -1579,9 +1622,28 @@
 
 "appearance.app_icon" = "应用图标";
 
+// Settings -> Subsription
+
+"subscription.premium.label" = "Premium";
+"subscription.title" = "Subscription";
+"subscription.get" = "Get Premium";
+"subscription.restore" = "Restore Purchase";
+"subscription.type" = "Subscription Type";
+"subscription.one-time" = "One-Time";
+"subscription.price" = "价格";
+"subscription.next_payment" = "Next payment date";
+"subscription.purchase_time" = "Start date";
+"subscription.status" = "状态";
+"subscription.manage" = "Manage Subscription";
+
+// Settings -> Support
+
+"settings.vip_support.description" = "Get direct assistance from our experts. A private chat will be created in Telegram to resolve your issue, and it will be closed once the problem is solved.";
+"settings.vip_support.start_chat" = "Start Chat";
+
 // Settings -> Contacts
 
-"contacts.title" = "联系人";
+"contacts.title" = "Contacts";
 "contacts.list.search_placeholder" = "按名字搜索";
 "contacts.list.not_found" = "您没有已添加的联系人";
 "contacts.list.not_found_search" = "未发现结果";
@@ -1669,7 +1731,7 @@
 "chart.about.read_less" = "关闭";
 
 "coin_page.return_of_investments" = "ROI";
-"coin_page.return_of_investments.vs" = "vs %@";
+"coin_page.return_of_investments.vs" = "对比 %@";
 
 // Create Wallet
 
@@ -1730,13 +1792,10 @@
 "add_token.blockchain" = "Blockchain";
 "add_token.already_added" = "该代币已在代币管理列表中";
 "add_token.invalid_contract_address" = "请输入正确的合约地址";
-"add_token.invalid_bep2_symbol" = "无效的 BEP2 符号";
 "add_token.invalid_ton_address" = "无效Ton 地址";
 "add_token.contract_address_not_found" = "在 %@ 区块链中找不到合同地址";
 "add_token.jetton_master_not_found" = "在 %@ 区块链中找不到杰顿大师";
-"add_token.bep2_symbol_not_found" = "找不到 BEP2 符号";
 "add_token.input_placeholder.contract_address" = "智能合约地址";
-"add_token.input_placeholder.bep2_symbol" = "BEP2 符号";
 "add_token.input_placeholder.jetton_master_address" = "Jetton Master 地址";
 "add_token.coin_name" = "代币图片";
 "add_token.symbol" = "标志";
@@ -1801,11 +1860,12 @@
 "ton_connect.list.disconnect_app.description" = "Are you sure you want to disconnect from \"%@\"?";
 "ton_connect.list.disconnect_app.disconnect" = "断开连接";
 "ton_connect.connect.url" = "URL";
-"ton_connect.connect.wallet" = "Wallet";
+"ton_connect.connect.wallet" = "钱包";
 "ton_connect.connect.no_eligible_wallets" = "No eligible wallets";
 "ton_connect.connect.warning" = "点击批准，表示您允许此应用查看您的公开地址。这是保护您的数据免受潜在钓鱼风险威胁的重要安全步骤。";
 "ton_connect.connect.connect" = "连接";
 "ton_connect.connect.reject" = "拒绝";
+"ton_connect.invalid_transaction" = "Invalid Transaction";
 
 // App Status
 
@@ -1828,7 +1888,7 @@
 "status_info.processing.content" = "交易已包括在区块链中，但尚未达到永久终结状态。此时，可以安全地考虑以较小金额完成的交易。对于大额支付，建议等待直至交易状态变为已完成。";
 "status_info.completed.title" = "已完成";
 "status_info.confirmed.content" = "交易已完成并被视为永久和不可逆。";
-"status_info.failed.title" = "Failed";
+"status_info.failed.title" = "失败";
 "status_info.failed.content" = "交易没有得到处理，也没有进行价值转移，根据失败的原因，有些失败的交易可能会耗费交易费用。 被另一笔交易替换或取消的交易不会消耗交易费用，也会出现为失败。 %@ 应用程序无法显示交易失败的原因。 但用户可以在公共区块探索者i上看到它。 。etherscan.io。";
 
 // Onboarding
@@ -2062,13 +2122,13 @@
 "subscription_info.info2.text" = "精彩的机会，避开Scams，最大限度地实现您在Cryptocurren动态世界中的利润。";
 "subscription_info.info3.title" = "个人支持";
 "subscription_info.info3.text" = "精彩的机会，避开Scams，最大限度地实现您在Cryptocurren动态世界中的利润。";
-"subscription_info.get_premium" = "成为付费会员";
+"subscription_info.get_premium" = "Get Premium";
 "subscription_info.already_have" = "我已经有高级版";
 
 // Activate Subscription
 
 "activate_subscription.title" = "激活";
-"activate_subscription.wallet" = "Wallet";
+"activate_subscription.wallet" = "钱包";
 "activate_subscription.address" = "地址";
 "activate_subscription.message" = "待签名消息";
 "activate_subscription.sign" = "签名";
@@ -2162,3 +2222,89 @@
 "transaction_filter.all_contacts" = "所有联系人";
 "transaction_filter.hide_suspicious_txs" = "隐藏可疑Txs";
 "transaction_filter.hide_suspicious_txs.description" = "隐藏到达的沙尘群交易，这部分解决了地址中毒攻击问题。";
+
+// Purchases
+
+"premium.cell.title" = "Premium";
+"premium.cell.description" = "Upgrade your experience with %@ features!";
+"premium.cell.description.key" = "Premium";
+"premium.cell.try" = "Try for FREE";
+
+"purchases.title" = "Premium";
+"purchases.description" = "Choose the plan";
+"purchases.type.pro" = "Pro";
+"purchases.type.vip" = "Vip";
+
+"purchases.token_insights" = "Token Lists";
+"purchases.token_insights.description" = "Master Token Research";
+"purchases.token_insights.info" = "Your all-in-one tool for deep analysis. Browse curated Top 250 token lists based on trading volume, exchange liquidity, holder behavior, and on-chain trends—all at a glance. Filter, analyze, and stay ahead.";
+
+"purchases.advanced_search" = "Advanced Search";
+"purchases.advanced_search.description" = "Discover Trending Tokens";
+"purchases.advanced_search.info" = "Ditch the noise and zero in on high-potential tokens with precision. Use Advanced Search to filter through thousands of tokens by trading volume, blockchain, market cap, price trends, sector, and performance—and more. Powerful, accurate, and built for discovery.";
+
+"purchases.trade_signals" = "Watch Trends";
+"purchases.trade_signals.description" = "Trade Smarter, Profit Faster";
+"purchases.trade_signals.info" = "Never miss a trading opportunity again. Watch Trends delivers real-time alerts powered by advanced technical analysis, helping you identify trends, spot breakouts, and avoid pitfalls before they happen. Act fast, trade smart, and maximize gains.";
+
+"purchases.tx_speed_up" = "Tx Speed UP / Cancel ";
+"purchases.tx_speed_up.description" = "Speed up and cancel transactions.";
+"purchases.tx_speed_up.info" = "Tx Speed Up / Cancel provides full control over blockchain transactions. With this feature, users can accelerate pending transactions by increasing gas fees or cancel unconfirmed transactions altogether if needed. It adds a layer of flexibility and convenience to transaction management, ensuring users remain in control of their activity.";
+
+"purchases.duress_mode" = "服用模式";
+"purchases.duress_mode.description" = "Stay Safe Wherever You Go";
+"purchases.duress_mode.info" = "Your crypto. Your security. Duress Mode lets you create multiple alternate wallet setups, each with a separate PIN, providing a hidden escape route in high-risk situations. If forced to unlock your wallet, simply use the duress PIN to access a secondary wallet with no critical assets exposed. Your real funds stay hidden. Your security stays intact.";
+
+"purchases.address_phishing" = "Scam Protection";
+"purchases.address_phishing.description" = "Stay Secure Without the Hassle";
+"purchases.address_phishing.info" = "One wrong address, and your crypto is gone forever. Unstoppable automatically scans recipient addresses for suspicious patterns and defends against the latest phishing threats, preventing you from sending funds to a hacker. Block fraudulent transfers before they happen.";
+
+"purchases.address_checker" = "Blacklist Checker";
+"purchases.address_checker.description" = "Stay Legit and Compliant";
+"purchases.address_checker.info" = "Protect yourself from risky and sanctioned entities. Blacklist Checker automatically screens recipient addresses against high-risk databases, flagging scams, frauds, and sanctioned entities before you send. If an address is blacklisted, you’ll know before making a costly mistake. Secure your transactions. Keep your crypto clean. Stay compliant.";
+
+"purchases.privacy_mode" = "Privacy Mode";
+"purchases.privacy_mode.description" = "Full disconnection from data collection.";
+"purchases.privacy_mode.info" = "Privacy Mode enhances user confidentiality by masking wallet balances, transaction history, and other sensitive details. This feature ensures that third parties cannot view or track user activity, providing a discreet and secure experience for those who value privacy.";
+
+"purchases.vip_support" = "VIP Group";
+"purchases.vip_support.description" = "Vote on the Future of Unstoppable";
+"purchases.vip_support.info" = "Be part of the evolution. Join the VIP Group to connect directly with our team, vote on upcoming features, and get an exclusive first look at future updates. Your voice matters—help shape the next-gen crypto wallet.";
+
+"purchases.vip_club" = "VIP Club";
+"purchases.vip_club.description" = "Private chat with exclusive information.";
+"purchases.vip_club.info" = "The VIP Club offers exclusive access to a premium community of like-minded individuals. Members can participate in private discussions, gain insights from industry experts, and network with other top-tier users. This feature is perfect for those who want to stay ahead with insider knowledge and connections.";
+
+"purchases.wallet_description.title" = "Highly rated security, exceptional privacy, and a truly non-custodial wallet.";
+"purchases.wallet_description.approved" = "Approved and Audited By:";
+
+"purchases.button.try" = "Try for FREE";
+"purchases.button.activated" = "已激活";
+"purchases.button.upgrade" = "Upgrade";
+
+"purchase.period.title" = "Select Subscription";
+"purchase.period.annually" = "Annually";
+"purchase.period.monthly" = "Monthly";
+"purchase.period.onetime" = "One-Time";
+"purchase.period.onetime.description" = "for lifetime access";
+"purchase.period.save" = "save";
+"purchase.period.year" = "year";
+"purchase.period.month" = "month";
+"purchase.period.description1" = "Enjoy the first 7 days FREE.";
+"purchase.period.description2" = "You can cancel your App Store subscription at any time.";
+"purchase.lifetime.description" = "You can purchase a one-time subscriiption without any restrictions";
+
+"purchases.period.button.try" = "Get 7 days for FREE";
+"purchases.period.button.subscribe" = "Subscribe";
+"purchases.period.button.buy" = "Buy now";
+"purchases.period.button.promo" = "Add Promo Code";
+
+"purchases.promocode.title" = "Enter Promo Code";
+"purchases.promocode.placeholder" = "";
+"purchases.promocode.button.invalid" = "Invalid Promo Code";
+"purchases.promocode.button.already_used" = "Promo Code Already Used";
+
+"purchases.successful_subscription.title" = "Premium";
+"purchases.successful_subscription.description" = "Thank you for your subscription!";
+"purchases.successful_subscription.subscribed" = "Enjoy the full power of the app.";
+"purchases.successful_subscription.button.go_app" = "Go to App";
