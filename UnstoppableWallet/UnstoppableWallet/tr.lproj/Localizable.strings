@@ -339,7 +339,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Token Balance Page
 "balance.token.locked" = "Kilitli";
-"balance.token.locked.info.title" = "TimeLock";
+"balance.token.locked.info.title" = "TiemLock";
 "balance.token.locked.info.description" = "Gönderici bu fonları belirtilen tarihte sona erecek şekilde bir harcama kilidiyle gönderdi.\n\nEndişelenmeyin, alınan Bitcoin'ler zaten sizindir ancak kilitleme süresi sona erene kadar bunları Bitcoin ağında harcayamazsınız.";
 "balance.token.not_relayed" = "Yayınlama";
 "balance.token.not_relayed.info.title" = "Yayın";
@@ -415,7 +415,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Address
 
-"address.title" = "Enter Address";
+"address.title" = "Adresini Giriniz";
 
 // Send
 
@@ -438,7 +438,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.error.invalid_blockchain" = "Geçersiz Blok Zinciri";
 "send.error.invalid_token" = "Geçersiz Jeton";
 "send.error.address" = "Adres";
-"send.hodler_locktime" = "TimeLock";
+"send.hodler_locktime" = "TiemLock";
 "send.hodler_locktime_hour" = "1 saat";
 "send.hodler_locktime_month" = "1 ay";
 "send.hodler_locktime_half_year" = "6 ay";
@@ -521,7 +521,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "send.stuck_warning" = "Uyarı! Takılma riski";
 
-"send.lock_time" = "TimeLock";
+"send.lock_time" = "TiemLock";
 
 "send.unspent_outputs" = "UTxOs";
 "send.unspent_outputs.description" = "Bakiyedeki fonları harcamak için UTxO'yu manuel olarak seçin";
@@ -539,7 +539,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.insufficient_balance" = "Yetersiz Bakiye";
 "send.send_anyway" = "Send Anyway";
 
-"send.address.enter_address" = "Enter Address";
+"send.address.enter_address" = "Adresini Giriniz";
 "send.address.invalid_address" = "Invalid Address";
 "send.address.recent" = "Recent";
 "send.address.contacts" = "Contacts";
@@ -1762,7 +1762,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Lock Info
 
-"lock_info.title" = "TimeLock";
+"lock_info.title" = "TiemLock";
 "lock_info.text" = "Gönderici bu fonları belirtilen tarihte sona erecek şekilde bir harcama kilidiyle gönderdi.\n\nEndişelenmeyin, alınan Bitcoin'ler zaten sizindir ancak kilitleme süresi sona erene kadar bunları Bitcoin ağında harcayamazsınız.";
 
 // Double Spend Info
