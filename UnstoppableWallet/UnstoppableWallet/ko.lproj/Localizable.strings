@@ -104,7 +104,7 @@
 "number.quadrillion" = "%@천조";
 
 "selector.any" = "어떤";
-"selector.none" = "None";
+"selector.none" = "없음";
 
 "face_id" = "페이스 ID";
 "touch_id" = "터치 ID";
@@ -413,7 +413,7 @@
 
 // Address
 
-"address.title" = "Enter Address";
+"address.title" = "주소 입력";
 
 // Send
 
@@ -537,7 +537,7 @@
 "send.insufficient_balance" = "잔액 부족";
 "send.send_anyway" = "Send Anyway";
 
-"send.address.enter_address" = "Enter Address";
+"send.address.enter_address" = "주소 입력";
 "send.address.invalid_address" = "Invalid Address";
 "send.address.recent" = "Recent";
 "send.address.contacts" = "Contacts";
