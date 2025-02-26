@@ -1622,7 +1622,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "appearance.app_icon" = "Icono de la App";
 
-/ Settings -> Subsription
+// Settings -> Subsription
 
 "subscription.premium.label" = "Premium";
 "subscription.title" = "Suscripción";
