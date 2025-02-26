@@ -415,7 +415,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // Address
 
-"address.title" = "Enter Address";
+"address.title" = "Entrer l'adresse";
 
 // Send
 
@@ -475,10 +475,10 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.confirmation.replace_by_fee" = "Remplacer par frais";
 "send.confirmation.replaced_transactions" = "Transactions remplacées";
 "send.confirmation.input" = "Entrées";
-"send.confirmation.comment" = "Comment";
+"send.confirmation.comment" = "Commentaire";
 "send.confirmation.action" = "Action";
 "send.confirmation.status" = "Statut";
-"send.confirmation.status.failed" = "Failed";
+"send.confirmation.status.failed" = "Échec";
 
 "send.confirmation.sync_failed" = "Échec de synchronisation";
 "send.confirmation.invalid_data" = "Données invalides";
@@ -539,7 +539,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.insufficient_balance" = "Solde insuffisant";
 "send.send_anyway" = "Envoyer quand même";
 
-"send.address.enter_address" = "Enter Address";
+"send.address.enter_address" = "Entrer l'adresse";
 "send.address.invalid_address" = "Adresse invalide";
 "send.address.recent" = "Récent";
 "send.address.contacts" = "Contacts";
@@ -1267,7 +1267,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "transactions.pending" = "En attente";
 "transactions.processing" = "Traitement en cours";
 "transactions.completed" = "Terminé";
-"transactions.failed" = "Failed";
+"transactions.failed" = "Échec";
 
 "transactions.receive" = "Recevoir";
 "transactions.send" = "Envoyée";
@@ -1309,7 +1309,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "tx_info.title_approval" = "Validation du remplacement";
 "tx_info.status.pending" = "En attente";
 "tx_info.status.completed" = "Terminé";
-"tx_info.status.failed" = "Failed";
+"tx_info.status.failed" = "Échec";
 "tx_info.from_hash" = "De";
 "tx_info.transaction_id" = "ID de transaction";
 "tx_info.to_hash" = "À";
@@ -1888,7 +1888,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "status_info.processing.content" = "La transaction a déjà été incluse dans la blockchain mais n'a pas été finalisée. En ce qui concerne les petits paiements, il est prudent de considérer que la transaction est terminée. Pour les paiements plus importants, il est recommandé d'attendre que le statut de la transaction passe à terminé.";
 "status_info.completed.title" = "Terminé";
 "status_info.confirmed.content" = "La transaction est terminée et considérée comme permanente et irréversible.";
-"status_info.failed.title" = "Failed";
+"status_info.failed.title" = "Échec";
 "status_info.failed.content" = "La transaction n'a pas été traitée et aucun transfert de fonds n'a eu lieu. En fonction de la raison de l'échec, certaines transactions qui ont échoué peuvent entraîner des frais de transaction. Les transactions qui ont été remplacées ou annulées par une autre transaction ne génèrent pas de frais et apparaîtront également comme ayant échoué. L'application %@ n'est pas en mesure d'indiquer la raison de l'échec des transactions, mais les utilisateurs peuvent en trouver eux-mêmes la raison sur un explorateur de blocs public, comme etherscan.io par exemple.";
 
 // Onboarding
