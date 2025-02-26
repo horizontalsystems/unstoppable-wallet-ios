@@ -43,6 +43,7 @@ extension Token {
         case .gnosis: return true
         case .fantom: return true
         case .base: return true
+        case .zkSync: return true
         default: return false
         }
     }

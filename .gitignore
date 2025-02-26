@@ -16,6 +16,7 @@ profile
 Pods/*
 !Podfile.lock
 .idea/
+.vscode/
 .DS_Store
 /.irb-history
 /screenshot_*.png

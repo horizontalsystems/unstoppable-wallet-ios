@@ -111,7 +111,7 @@ class ValueFormatter {
         return (value: value, digits: digits, suffix: suffix, tooSmall: tooSmall)
     }
 
-    private func transformedFull(value: Decimal, maxDigits: Int, minDigits: Int = 0) -> (value: Decimal, digits: Int) {
+    private func transformedFull(value: Decimal, maxDigits: Int, minDigits: Int = 0, maxFractionNonZeroDigits: Int = 8) -> (value: Decimal, digits: Int) {
         let value = abs(value)
         let digits: Int
 
@@ -121,7 +121,7 @@ class ValueFormatter {
 
         case 0 ..< 1:
             let zeroCount = fractionZeroCount(value: value, maxCount: maxDigits - 1)
-            digits = min(maxDigits, zeroCount + 4)
+            digits = min(maxDigits, zeroCount + maxFractionNonZeroDigits)
 
         case 1 ..< 1.01:
             digits = 4
@@ -256,7 +256,7 @@ extension ValueFormatter {
     }
 
     func formatFull(currency: Currency, value: Decimal, signType: SignType = .never) -> String? {
-        let (transformedValue, digits) = transformedFull(value: value, maxDigits: 18)
+        let (transformedValue, digits) = transformedFull(value: value, maxDigits: 18, maxFractionNonZeroDigits: 4)
 
         guard let string = formattedCurrency(value: transformedValue, digits: digits, code: currency.code, symbol: currency.symbol) else {
             return nil

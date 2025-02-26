@@ -3,25 +3,14 @@ import Foundation
 
 class PrivacyPolicyViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
-    private let purchaseManager = App.shared.purchaseManager
     private let statManager = App.shared.statManager
 
-    @Published private(set) var premiumEnabled: Bool = false
     @Published private(set) var statsEnabled = false
 
     let config: Config
 
     init(config: Config) {
         self.config = config
-
-        premiumEnabled = purchaseManager.activated(.privacyMode)
-        purchaseManager.$activeFeatures
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] features in
-                self?.premiumEnabled = features.contains(.privacyMode)
-                self?.syncStatsEnabled()
-            }
-            .store(in: &cancellables)
 
         statManager.allowedPublisher
             .sink { [weak self] _ in self?.syncStatsEnabled() }
@@ -31,7 +20,7 @@ class PrivacyPolicyViewModel: ObservableObject {
     }
 
     private func syncStatsEnabled() {
-        statsEnabled = statManager.allowed || !premiumEnabled
+        statsEnabled = statManager.allowed
     }
 
     func set(allowed: Bool) {
