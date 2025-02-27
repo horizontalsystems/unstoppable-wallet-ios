@@ -338,6 +338,5 @@ enum PremiumFeature: String, CaseIterable {
     case duressMode = "duress_mode"
     case addressPhishing = "address_phishing"
     case addressChecker = "address_checker"
-    case privacyMode = "privacy_mode"
     case vipSupport = "vip_support"
 }

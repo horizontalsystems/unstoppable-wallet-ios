@@ -206,7 +206,7 @@ class TransactionInfoViewController: ThemeViewController {
             height: .heightCell48,
             autoDeselect: true,
             bind: { cell in
-                cell.set(backgroundStyle: .borderedLawrence(.themeJacob), isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
+                cell.set(backgroundStyle: .lawrence, isFirst: rowInfo.isFirst, isLast: rowInfo.isLast)
             },
             action: action
         )
@@ -563,14 +563,7 @@ extension TransactionInfoViewController: SectionsDataSource {
             }
 
             let headerState: ViewState<UITableViewHeaderFooterView>
-            if let header = sectionViewItem.header {
-                switch header {
-                case .premium:
-                    headerState = .static(view: PremiumHeaderFooterView(), height: .margin48)
-                }
-            } else {
-                headerState = .margin(height: .margin12)
-            }
+            headerState = .margin(height: .margin12)
 
             return Section(
                 id: "section_\(index)",

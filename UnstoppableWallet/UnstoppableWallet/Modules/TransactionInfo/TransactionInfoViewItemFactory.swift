@@ -531,7 +531,7 @@ class TransactionInfoViewItemFactory {
                 sections.append(.init([
                     .option(option: .resend(type: .speedUp)),
                     .option(option: .resend(type: .cancel)),
-                ], header: .premium, footer: "tx_info.resend_description".localized))
+                ], footer: "tx_info.resend_description".localized))
             }
 
         case let record as TonTransactionRecord:
@@ -648,7 +648,7 @@ class TransactionInfoViewItemFactory {
             sections.append(.init([
                 .option(option: .resend(type: .speedUp)),
                 .option(option: .resend(type: .cancel)),
-            ], header: .premium, footer: "tx_info.resend_description".localized))
+            ], footer: "tx_info.resend_description".localized))
         }
 
         sections.append(.init([
