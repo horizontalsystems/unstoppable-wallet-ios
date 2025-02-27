@@ -2263,10 +2263,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "purchases.address_checker.description" = "Stay Legit and Compliant";
 "purchases.address_checker.info" = "Protect yourself from risky and sanctioned entities. Blacklist Checker automatically screens recipient addresses against high-risk databases, flagging scams, frauds, and sanctioned entities before you send. If an address is blacklisted, you’ll know before making a costly mistake. Secure your transactions. Keep your crypto clean. Stay compliant.";
 
-"purchases.privacy_mode" = "Privacy Mode";
-"purchases.privacy_mode.description" = "Full disconnection from data collection.";
-"purchases.privacy_mode.info" = "Privacy Mode enhances user confidentiality by masking wallet balances, transaction history, and other sensitive details. This feature ensures that third parties cannot view or track user activity, providing a discreet and secure experience for those who value privacy.";
-
 "purchases.vip_support" = "VIP Group";
 "purchases.vip_support.description" = "Vote on the Future of Unstoppable";
 "purchases.vip_support.info" = "Be part of the evolution. Join the VIP Group to connect directly with our team, vote on upcoming features, and get an exclusive first look at future updates. Your voice matters—help shape the next-gen crypto wallet.";
