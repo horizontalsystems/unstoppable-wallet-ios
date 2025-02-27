@@ -2242,6 +2242,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "purchases.description" = "Planı seçin";
 "purchases.type.pro" = "Pro";
 "purchases.type.vip" = "Vip";
+
 "purchases.token_insights" = "Token Listeleri";
 "purchases.token_insights.description" = "Token Araştırmalarında Uzmanlaşın";
 "purchases.token_insights.info" = "Derinlemesine analiz için hepsi bir arada aracınız. İşlem hacmi, borsa likiditesi, sahip davranışı ve zincir üstü trendlere dayalı özenle hazırlanmış En İyi 250 token listesine göz atın - hepsi tek bakışta. Filtreleyin, analiz edin ve önde kalın.";
@@ -2259,6 +2260,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "purchases.tx_speed_up.info" = "Tx Hızlandırma / İptal, blokzincir işlemleri üzerinde tam kontrol sağlar. Bu özellikle kullanıcılar, gas ücretlerini artırarak bekleyen işlemleri hızlandırabilir veya gerekirse onaylanmamış işlemleri tamamen iptal edebilir. İşlem yönetimine esneklik ve kullanım kolaylığı katarak, kullanıcıların aktiviteleri üzerinde kontrolü korumalarını sağlar.";
 
 "purchases.duress_mode" = "Zorlama Modu";
+"purchases.duress_mode.description" = "Nereye Giderseniz Gidin Güvende Kalın";
 "purchases.duress_mode.info" = "Kripto paranız. Güvenliğiniz. Zorlama Modu, her biri ayrı PIN'e sahip birden fazla alternatif cüzdan kurulumu oluşturmanıza olanak tanır ve yüksek riskli durumlarda gizli bir kaçış yolu sağlar. Cüzdanınızı açmaya zorlanırsanız, kritik varlıkları açığa çıkarmayan ikincil bir cüzdana erişmek için basitçe zorlama PIN'ini kullanın. Gerçek fonlarınız gizli kalır. Güvenliğiniz bozulmaz.";
 
 "purchases.address_phishing" = "Dolandırıcılık Koruması";
