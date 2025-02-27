@@ -84,7 +84,6 @@ extension PremiumFeature {
         case .duressMode: return "duress_24"
         case .addressPhishing: return "circle_check_24"
         case .addressChecker: return "warning_2_24"
-        case .privacyMode: return "fraud_24"
         }
     }
 

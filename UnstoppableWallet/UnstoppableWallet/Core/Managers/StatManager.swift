@@ -18,7 +18,6 @@ class StatManager {
     private let marketKit: MarketKit.Kit
     private let storage: StatStorage
     private let userDefaultsStorage: UserDefaultsStorage
-    private let purchaseManager: PurchaseManager
     private let appVersion: String
     private let appId: String?
 
@@ -34,11 +33,10 @@ class StatManager {
         allowedSubject.eraseToAnyPublisher()
     }
 
-    init(marketKit: MarketKit.Kit, storage: StatStorage, userDefaultsStorage: UserDefaultsStorage, purchaseManager: PurchaseManager) {
+    init(marketKit: MarketKit.Kit, storage: StatStorage, userDefaultsStorage: UserDefaultsStorage) {
         self.marketKit = marketKit
         self.storage = storage
         self.userDefaultsStorage = userDefaultsStorage
-        self.purchaseManager = purchaseManager
 
         appVersion = AppConfig.appVersion
         appId = AppConfig.appId
@@ -46,7 +44,7 @@ class StatManager {
     }
 
     func logStat(eventPage: StatPage, eventSection: StatSection? = nil, event: StatEvent) {
-        guard allowed || !purchaseManager.activated(.privacyMode) else { return }
+        guard allowed else { return }
         var parameters: [String: Any]?
 
         if let params = event.params {
@@ -73,7 +71,7 @@ class StatManager {
     }
 
     func sendStats() {
-        guard allowed || !purchaseManager.activated(.privacyMode) else { return }
+        guard allowed else { return }
         let lastSent: Double? = userDefaultsStorage.value(for: Self.keyLastSent)
 
         if let lastSent, Date().timeIntervalSince1970 - lastSent < Self.sendThreshold {

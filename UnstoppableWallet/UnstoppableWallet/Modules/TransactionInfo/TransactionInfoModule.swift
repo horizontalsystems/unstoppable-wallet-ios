@@ -52,17 +52,11 @@ extension TransactionInfoModule {
 
     struct SectionViewItem {
         let viewItems: [ViewItem]
-        let header: SectionHeaderViewItem?
         let footer: String?
 
-        init(_ viewItems: [ViewItem], header: SectionHeaderViewItem? = nil, footer: String? = nil) {
+        init(_ viewItems: [ViewItem], footer: String? = nil) {
             self.viewItems = viewItems
-            self.header = header
             self.footer = footer
         }
-    }
-
-    enum SectionHeaderViewItem {
-        case premium
     }
 }
