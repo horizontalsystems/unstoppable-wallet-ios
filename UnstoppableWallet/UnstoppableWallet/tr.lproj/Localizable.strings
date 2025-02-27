@@ -46,8 +46,7 @@
 "alert.restored" = "Geri yüklendi ";
 "alert.success" = "Başarılı";
 
-"alert.added_to_watchlist" = "Added To Watchlist";
-"alert.removed_from_watchlist" = "İzleme Listesinden Kaldır";
+"alert.added_to_watchlist" = "İzleme Listesine Eklendi";"alert.removed_from_watchlist" = "İzleme Listesinden Kaldır";
 "alert.added_to_wallet" = "Cüzdana Eklendi";
 "alert.removed_from_wallet" = "Cüzdandan Kaldırıldı";
 "alert.already_added_to_wallet" = "Zaten cüzdana eklendi";
