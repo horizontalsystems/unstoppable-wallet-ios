@@ -432,6 +432,7 @@
 "send.available_balance" = "Available Balance";
 "send.max_button" = "Max";
 "send.next_button" = "Next";
+"send.check_button" = "Check";
 "send.error.invalid" = "Invalid";
 "send.error.invalid_blockchain" = "Invalid Blockchain";
 "send.error.invalid_token" = "Invalid Token";

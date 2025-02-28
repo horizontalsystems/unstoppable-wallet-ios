@@ -304,7 +304,7 @@ struct PreSendView: View {
         } else if let availableBalance = viewModel.availableBalance, let amount = viewModel.amount, amount > availableBalance {
             title = "send.insufficient_balance".localized
         } else {
-            title = "send.next_button".localized
+            title = "send.check_button".localized
             disabled = viewModel.sendData == nil
         }
 
