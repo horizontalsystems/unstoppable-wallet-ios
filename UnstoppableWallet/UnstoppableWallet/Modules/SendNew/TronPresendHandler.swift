@@ -61,7 +61,7 @@ extension TronPreSendHandler: IPreSendHandler {
         }
 
         guard tronAddress != adapter.tronKitWrapper.tronKit.receiveAddress else {
-            return .invalid(cautions: [CautionNew(text: "send.address_error.own_address".localized, type: .error)])
+            return .invalid(cautions: [CautionNew(title: "send.address.invalid_address".localized, text: "send.address_error.own_address".localized(token.coin.code), type: .error)])
         }
 
         let contract = adapter.contract(amount: amountBigUInt, address: tronAddress, memo: memo)

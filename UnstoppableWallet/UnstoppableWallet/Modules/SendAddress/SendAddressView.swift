@@ -5,6 +5,7 @@ import ThemeKit
 struct SendAddressView: View {
     private let wallet: Wallet
     private let address: String?
+    private let fromAddress: String?
     private let amount: Decimal?
     private let onDismiss: (() -> Void)?
 
@@ -17,11 +18,13 @@ struct SendAddressView: View {
         self.address = address
         self.amount = amount
         self.onDismiss = onDismiss
+
+        fromAddress = App.shared.adapterManager.depositAdapter(for: wallet)?.receiveAddress.address
     }
 
     var body: some View {
         ThemeView {
-            AddressView(token: wallet.token, buttonTitle: "send.next_button".localized, address: address) { resolvedAddress in
+            AddressView(token: wallet.token, buttonTitle: "send.next_button".localized, destination: .send(fromAddress: fromAddress), address: address) { resolvedAddress in
                 self.resolvedAddress = resolvedAddress
             }
 
