@@ -503,7 +503,7 @@
 "send.confirmation.method" = "方法";
 "send.confirmation.replace_by_fee.disabled" = "已禁用";
 "send.amount_error.balance" = "余额不足";
-"send.address_error.own_address" = "无法将 TRX 转移给自己";
+"send.address_error.own_address" = "Sending %@ to your own address is not allowed. Please enter a different recipient address.";
 "send.amount_error.maximum_amount" = "最大金额 %@";
 "send.amount_error.minimum_amount" = "最小金额 %@";
 "send.amount_error.min_required_balance" = "最小要求剩余 %@";
