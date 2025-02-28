@@ -501,7 +501,7 @@
 "send.confirmation.method" = "메소드";
 "send.confirmation.replace_by_fee.disabled" = "비활성화됨";
 "send.amount_error.balance" = "잔고 부족";
-"send.address_error.own_address" = "TRX를 자신에게 전송할 수 없습니다";
+"send.address_error.own_address" = "Sending %@ to your own address is not allowed. Please enter a different recipient address.";
 "send.amount_error.maximum_amount" = "최대 %@ 금액";
 "send.amount_error.minimum_amount" = "최소 %@ 금액";
 "send.amount_error.min_required_balance" = "최소 %@ 만큼의 필요 잔여금";
