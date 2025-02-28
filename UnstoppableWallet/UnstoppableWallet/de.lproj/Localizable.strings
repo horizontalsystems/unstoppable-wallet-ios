@@ -503,7 +503,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.confirmation.method" = "Methode";
 "send.confirmation.replace_by_fee.disabled" = "Deaktiviert";
 "send.amount_error.balance" = "Nicht genügend Guthaben";
-"send.address_error.own_address" = "TRX kann nicht auf sich selbst übertragen werden";
+"send.address_error.own_address" = "Sending %@ to your own address is not allowed. Please enter a different recipient address.";
 "send.amount_error.maximum_amount" = "Maximaler Betrag %@";
 "send.amount_error.minimum_amount" = "Minimaler Betrag %@";
 "send.amount_error.min_required_balance" = "Mindestens erforderlicher Rest %@";
