@@ -503,7 +503,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.method" = "Yöntem";
 "send.confirmation.replace_by_fee.disabled" = "Etkisizleştirildi";
 "send.amount_error.balance" = "Yetersiz bakiye";
-"send.address_error.own_address" = "TRX kendinize aktarılamıyor";
+"send.address_error.own_address" = "Sending %@ to your own address is not allowed. Please enter a different recipient address.";
 "send.amount_error.maximum_amount" = "Maksimum miktar %@";
 "send.amount_error.minimum_amount" = "Minimum miktar %@";
 "send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
