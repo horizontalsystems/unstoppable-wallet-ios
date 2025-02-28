@@ -101,6 +101,7 @@ struct PurchaseBottomSheetView: View {
         case .freeTrial:
             Text("purchase.period.description1".localized + " ").foregroundColor(.themeRemus).font(.themeSubhead2) +
                 Text("purchase.period.description2".localized).foregroundColor(.themeGray).font(.themeSubhead2)
+
         case .subscribe:
             Text("purchase.period.description2".localized).foregroundColor(.themeGray).font(.themeSubhead2)
         }

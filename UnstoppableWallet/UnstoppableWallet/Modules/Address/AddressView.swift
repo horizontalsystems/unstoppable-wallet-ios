@@ -10,7 +10,7 @@ struct AddressView: View {
 
     @Environment(\.presentationMode) private var presentationMode
     @State var subscriptionPresented = false
-    @State var clearInfo: InfoDescription?
+    @State var checkDescription: InfoDescription?
 
     var borderColor: Color {
         switch viewModel.addressResult {
@@ -67,7 +67,7 @@ struct AddressView: View {
                             ListSection {
                                 VStack(spacing: 0) {
                                     ForEach(viewModel.issueTypes) { type in
-                                        checkView(title: type.checkTitle, clearInfo: type.clearInfo, state: viewModel.checkStates[type] ?? .notAvailable)
+                                        checkView(title: type.checkTitle, checkDescription: type.description, state: viewModel.checkStates[type] ?? .notAvailable)
                                     }
                                 }
                             }
@@ -113,7 +113,7 @@ struct AddressView: View {
         .sheet(isPresented: $subscriptionPresented) {
             PurchasesView()
         }
-        .bottomSheet(item: $clearInfo) { info in
+        .bottomSheet(item: $checkDescription) { info in
             BottomSheetView(
                 icon: .info,
                 title: info.title,
@@ -122,10 +122,10 @@ struct AddressView: View {
                 ],
                 buttons: [
                     .init(style: .yellow, title: "button.close".localized) {
-                        clearInfo = nil
+                        checkDescription = nil
                     },
                 ],
-                onDismiss: { clearInfo = nil }
+                onDismiss: { checkDescription = nil }
             )
         }
     }
@@ -145,9 +145,9 @@ struct AddressView: View {
         }
     }
 
-    @ViewBuilder private func checkView(title: String, clearInfo: InfoDescription, state: AddressViewModel.CheckState) -> some View {
+    @ViewBuilder private func checkView(title: String, checkDescription: InfoDescription, state: AddressViewModel.CheckState) -> some View {
         HStack(spacing: .margin8) {
-            HStack(spacing: 2) {
+            HStack(spacing: .margin8) {
                 Image("star_premium_20").themeIcon(color: .themeJacob)
                 Text(title).textSubhead2()
             }
@@ -174,9 +174,8 @@ struct AddressView: View {
         .contentShape(Rectangle())
         .onTapGesture {
             switch state {
-            case .clear: self.clearInfo = clearInfo
             case .locked: subscriptionPresented = true
-            default: ()
+            default: self.checkDescription = checkDescription
             }
         }
     }
