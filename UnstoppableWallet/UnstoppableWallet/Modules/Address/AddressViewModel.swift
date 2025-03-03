@@ -1,7 +1,6 @@
 import Combine
 import Foundation
 import MarketKit
-import SwiftUICore
 
 class AddressViewModel: ObservableObject {
     private let purchaseManager = App.shared.purchaseManager
