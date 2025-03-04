@@ -13,9 +13,7 @@ struct PreSendView: View {
 
     @State private var settingsPresented = false
     @State private var confirmPresented = false
-    @State private var addressSecurityIssueType: AddressSecurityIssueType?
-
-    @State private var issueTypes = [AddressSecurityIssueType]()
+    @State private var addressAlertPresented = false
 
     init(wallet: Wallet, resolvedAddress: ResolvedAddress, amount: Decimal? = nil, addressVisible: Bool = true, onDismiss: @escaping () -> Void) {
         _viewModel = StateObject(wrappedValue: PreSendViewModel(wallet: wallet, resolvedAddress: resolvedAddress, amount: amount))
@@ -92,21 +90,21 @@ struct PreSendView: View {
                 }
             }
         }
-        .bottomSheet(item: $addressSecurityIssueType) { issueType in
+        .bottomSheet(isPresented: $addressAlertPresented) {
             BottomSheetView(
                 icon: .local(name: "warning_2_24", tint: .themeLucian),
-                title: issueType.preSendTitle,
+                title: "send.address.risky.title".localized,
                 items: [
-                    .highlightedDescription(text: issueType.preSendDescription),
+                    .highlightedDescription(text: "send.address.risky.description".localized, style: .alert),
                 ],
                 buttons: [
-                    .init(style: .red, title: "send.send_anyway".localized) {
-                        addressSecurityIssueType = nil
-                        handleNext()
+                    .init(style: .red, title: "send.continue_anyway".localized) {
+                        addressAlertPresented = false
+                        confirmPresented = true
                     },
-                    .init(style: .transparent, title: "button.cancel".localized) { addressSecurityIssueType = nil },
+                    .init(style: .transparent, title: "button.cancel".localized) { addressAlertPresented = false },
                 ],
-                onDismiss: { addressSecurityIssueType = nil }
+                onDismiss: { addressAlertPresented = false }
             )
         }
         .accentColor(.themeJacob)
@@ -246,8 +244,11 @@ struct PreSendView: View {
         let (title, disabled, showProgress) = buttonState()
 
         Button(action: {
-            issueTypes = viewModel.resolvedAddress.issueTypes
-            handleNext()
+            if viewModel.resolvedAddress.issueTypes.isEmpty {
+                confirmPresented = true
+            } else {
+                addressAlertPresented = true
+            }
         }) {
             HStack(spacing: .margin8) {
                 if showProgress {
@@ -268,14 +269,6 @@ struct PreSendView: View {
             ForEach(cautions.indices, id: \.self) { index in
                 HighlightedTextView(caution: cautions[index])
             }
-        }
-    }
-
-    private func handleNext() {
-        if let issueType = issueTypes.popLast() {
-            addressSecurityIssueType = issueType
-        } else {
-            confirmPresented = true
         }
     }
 

@@ -25,22 +25,6 @@ enum AddressSecurityIssueType: CaseIterable, Identifiable {
         }
     }
 
-    var preSendTitle: String {
-        switch self {
-        case .phishing: return "send.address.phishing.pre_send.title".localized
-        case .sanctioned: return "send.address.sanction.pre_send.title".localized
-        case .blacklisted: return "send.address.blacklist.pre_send.title".localized
-        }
-    }
-
-    var preSendDescription: String {
-        switch self {
-        case .phishing: return "send.address.phishing.pre_send.description".localized
-        case .sanctioned: return "send.address.sanction.pre_send.description".localized
-        case .blacklisted: return "send.address.blacklist.pre_send.description".localized
-        }
-    }
-
     var caution: CautionNew {
         switch self {
         case .phishing: return CautionNew(title: "send.address.phishing.caution.title".localized, text: "send.address.phishing.caution.description".localized, type: .error)
