@@ -538,7 +538,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.token_syncing" = "Sincronización de tokens";
 "send.token_not_synced" = "Token no sincronizado";
 "send.insufficient_balance" = "Saldo insuficiente";
-"send.send_anyway" = "Send Anyway";
+"send.continue_anyway" = "Continue Anyway";
 
 "send.address.enter_address" = "Enter Address";
 "send.address.invalid_address" = "Dirección inválida";
@@ -547,24 +547,20 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.address.checking" = "Checking";
 "send.address.check.clear" = "Clear";
 "send.address.check.detected" = "Detected";
+"send.address.risky.title" = "Risky Address!";
+"send.address.risky.description" = "You are about to send funds to a high-risk address. Proceeding may result in loss of funds or other security risks. By continuing, you accept the potential dangers. Are you sure you want to proceed?";
 "send.address.phishing_check" = "Phishing Check";
-"send.address.phishing.description" = "This check reviews the sender’s transaction history for potential phishing risks.\n\n\"Clear\" means no issues detected, while \"Detected\" indicates possible phishing activity.";
+"send.address.phishing.description" = "Analyzes the provided destination address for potential phishing risks.\n\n\"Clear:\" No suspicious activity detected.\"Detected:\" t appears that someone may be trying to trick you into sending funds to an incorrect address. Do not proceed unless absolutely certain that the address is correct. Consider sending a small test transaction first.";
 "send.address.phishing.caution.title" = "Phishing Address Detected!";
 "send.address.phishing.caution.description" = "The address you entered may be fraudulent. Scammers often alter the first and last characters. Verify the full address carefully before proceeding to avoid loss.";
-"send.address.phishing.pre_send.title" = "Phishing Address!";
-"send.address.phishing.pre_send.description" = "You are about to send funds to a suspicious address that may be fraudulent. Please be aware that this could result in a permanent loss of your tokens. By proceeding, you acknowledge the risks involved. Are you sure you want to continue?";
 "send.address.sanction_check" = "Sanction Check";
-"send.address.sanction.description" = "This check ensures the recipient’s address is not under international sanctions, sourced from Chainalysis.com.\n\n\"Clear\" means no sanctions, while \"Detected\" indicates potential legal risks.";
+"send.address.sanction.description" = "Verifies whether the recipient’s address is subject to international sanctions, using data from Chainalysis.com.\n\n\"Clear:\" No sanctions detected.\"Detected:\" Potential legal risk. Transactions with this address may be restricted or illegal in certain jurisdictions.";
 "send.address.sanction.caution.title" = "Sanctioned Address!";
 "send.address.sanction.caution.description" = "The address you entered is flagged as sanctioned. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
-"send.address.sanction.pre_send.title" = "Sanctioned Address Detected!";
-"send.address.sanction.pre_send.description" = "You are about to send funds to an address that is sanctioned. Transactions to this address could result in loss or other risks. By proceeding, you acknowledge the potential dangers. Are you sure you want to continue?";
 "send.address.blacklist_check" = "Blacklist Check";
-"send.address.blacklist.description" = "This check verifies if the recipient’s address is on known blacklists, sourced from Hashdit.io and our own data.\n\n\"Clear\" means no flags, while \"Detected\" means the address is blacklisted and may pose risks.";
+"send.address.blacklist.description" = "Checks if the destination address is listed on official or unofficial blacklists.\n\n\"Clear:\" No blacklist flags.\"Detected:\" Detected: The address is blacklisted and may be associated with legal or security risks. Proceed with caution. Many crypto exchanges restrict users who deposit or withdraw funds from wallets that have interacted with blacklisted addresses. Keep that in mind.";
 "send.address.blacklist.caution.title" = "Blacklisted Address!";
 "send.address.blacklist.caution.description" = "The address you entered is flagged as blacklisted. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
-"send.address.blacklist.pre_send.title" = "Blacklisted Address Detected!";
-"send.address.blacklist.pre_send.description" = "You are about to send funds to an address that is blacklisted. Transactions to this address could result in loss or other risks. By proceeding, you acknowledge the potential dangers. Are you sure you want to continue?";
 
 // Donate
 
