@@ -13170,7 +13170,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/EvmKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.3.0;
+				version = 2.3.1;
 			};
 		};
 		D3604E4828F02A8B0066C366 /* XCRemoteSwiftPackageReference "Eip20Kit" */ = {
@@ -13218,7 +13218,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinCashKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 3.0.0;
+				version = 3.0.1;
 			};
 		};
 		D3604E6A28F02E3F0066C366 /* XCRemoteSwiftPackageReference "LitecoinKit" */ = {
@@ -13258,7 +13258,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/DashKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 3.0.0;
+				version = 3.0.1;
 			};
 		};
 		D36E0C2828D084AB00B622B9 /* XCRemoteSwiftPackageReference "CollectionViewCenteredFlowLayout" */ = {
