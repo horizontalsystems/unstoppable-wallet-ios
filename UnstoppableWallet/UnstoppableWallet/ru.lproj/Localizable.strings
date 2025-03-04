@@ -540,7 +540,7 @@
 "send.token_syncing" = "Синхронизация токенов";
 "send.token_not_synced" = "Токен не синхронизирован";
 "send.insufficient_balance" = "Недостаточный баланс";
-"send.send_anyway" = "Отправить в любом случае";
+"send.continue_anyway" = "Continue Anyway";
 
 "send.address.enter_address" = "Введите адрес";
 "send.address.invalid_address" = "Неверный адрес";
@@ -549,24 +549,20 @@
 "send.address.checking" = "Проверка";
 "send.address.check.clear" = "Очистить";
 "send.address.check.detected" = "Обнаружено";
+"send.address.risky.title" = "Risky Address!";
+"send.address.risky.description" = "You are about to send funds to a high-risk address. Proceeding may result in loss of funds or other security risks. By continuing, you accept the potential dangers. Are you sure you want to proceed?";
 "send.address.phishing_check" = "Проверка на фишинг";
-"send.address.phishing.description" = "This check reviews the sender’s transaction history for potential phishing risks.\n\n\"Clear\" means no issues detected, while \"Detected\" indicates possible phishing activity.";
+"send.address.phishing.description" = "Analyzes the provided destination address for potential phishing risks.\n\n\"Clear:\" No suspicious activity detected.\"Detected:\" t appears that someone may be trying to trick you into sending funds to an incorrect address. Do not proceed unless absolutely certain that the address is correct. Consider sending a small test transaction first.";
 "send.address.phishing.caution.title" = "Обнаружен фишинговый адрес!";
 "send.address.phishing.caution.description" = "Введенный вами адрес может быть мошенническим. Мошенники часто изменяют первые и последние символы. Внимательно проверьте полный адрес перед отправкой во избежание потерь.";
-"send.address.phishing.pre_send.title" = "Фишинговый адрес!";
-"send.address.phishing.pre_send.description" = "Вы собираетесь отправить средства на подозрительный адрес, который может быть мошенническим. Помните, что это может привести к безвозвратной потере ваших токенов. Продолжая, вы принимаете связанные с этим риски. Вы уверены, что хотите продолжить?";
 "send.address.sanction_check" = "Проверка санкций";
-"send.address.sanction.description" = "This check ensures the recipient’s address is not under international sanctions, sourced from Chainalysis.com.\n\n\"Clear\" means no sanctions, while \"Detected\" indicates potential legal risks.";
+"send.address.sanction.description" = "Verifies whether the recipient’s address is subject to international sanctions, using data from Chainalysis.com.\n\n\"Clear:\" No sanctions detected.\"Detected:\" Potential legal risk. Transactions with this address may be restricted or illegal in certain jurisdictions.";
 "send.address.sanction.caution.title" = "Санкционный адрес!";
 "send.address.sanction.caution.description" = "Введенный вами адрес помечен как санкционный. Транзакции на этот адрес могут привести к потерям или другим рискам. Пожалуйста, проверьте данные получателя перед продолжением.";
-"send.address.sanction.pre_send.title" = "Обнаружен санкционный адрес!";
-"send.address.sanction.pre_send.description" = "Вы собираетесь отправить средства на адрес, который находится под санкциями. Транзакции на этот адрес могут привести к потерям или другим рискам. Продолжая, вы признаете потенциальные опасности. Вы уверены, что хотите продолжить?";
 "send.address.blacklist_check" = "Проверка черного списка";
-"send.address.blacklist.description" = "This check verifies if the recipient’s address is on known blacklists, sourced from Hashdit.io and our own data.\n\n\"Clear\" means no flags, while \"Detected\" means the address is blacklisted and may pose risks.";
+"send.address.blacklist.description" = "Checks if the destination address is listed on official or unofficial blacklists.\n\n\"Clear:\" No blacklist flags.\"Detected:\" Detected: The address is blacklisted and may be associated with legal or security risks. Proceed with caution. Many crypto exchanges restrict users who deposit or withdraw funds from wallets that have interacted with blacklisted addresses. Keep that in mind.";
 "send.address.blacklist.caution.title" = "Адрес в черном списке!";
 "send.address.blacklist.caution.description" = "Введенный вами адрес помечен как находящийся в черном списке. Транзакции на этот адрес могут привести к потерям или другим рискам. Пожалуйста, проверьте данные получателя перед продолжением.";
-"send.address.blacklist.pre_send.title" = "Обнаружен адрес из черного списка!";
-"send.address.blacklist.pre_send.description" = "Вы собираетесь отправить средства на адрес, который находится в черном списке. Транзакции на этот адрес могут привести к потерям или другим рискам. Продолжая, вы признаете потенциальные опасности. Вы уверены, что хотите продолжить?";
 
 // Donate
 
