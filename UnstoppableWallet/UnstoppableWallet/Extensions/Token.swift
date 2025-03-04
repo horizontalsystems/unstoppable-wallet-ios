@@ -61,12 +61,10 @@ extension Token {
     }
 
     var sendToSelfAllowed: Bool {
-        guard case .native = type else { return true }
+        if case .native = type, blockchainType == .zcash { return false }
+        if blockchainType == .tron { return false }
 
-        switch blockchainType {
-        case .tron, .zcash: return false
-        default: return true
-        }
+        return true
     }
 }
 
