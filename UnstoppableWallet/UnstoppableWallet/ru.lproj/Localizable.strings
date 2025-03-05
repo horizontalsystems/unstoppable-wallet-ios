@@ -436,7 +436,7 @@
 "send.available_balance" = "Доступный баланс";
 "send.max_button" = "Макс.";
 "send.next_button" = "Далее";
-"send.check_button" = "Check";
+"send.check_button" = "Проверка";
 "send.error.invalid" = "Неверно";
 "send.error.invalid_blockchain" = "Недействительный блокчейн";
 "send.error.invalid_token" = "Недействительный токен";
@@ -506,7 +506,7 @@
 "send.confirmation.method" = "Метод";
 "send.confirmation.replace_by_fee.disabled" = "Выкл.";
 "send.amount_error.balance" = "Недостаточно средств";
-"send.address_error.own_address" = "Sending %@ to your own address is not allowed. Please enter a different recipient address.";
+"send.address_error.own_address" = "Отправка %@ на собственный адрес не разрешена. Пожалуйста, введите другой адрес получателя.";
 "send.amount_error.maximum_amount" = "Макс. сумма %@";
 "send.amount_error.minimum_amount" = "Мин. сумма %@";
 "send.amount_error.min_required_balance" = "Мин. обязательный остаток %@";
@@ -540,27 +540,27 @@
 "send.token_syncing" = "Синхронизация токенов";
 "send.token_not_synced" = "Токен не синхронизирован";
 "send.insufficient_balance" = "Недостаточный баланс";
-"send.continue_anyway" = "Continue Anyway";
+"send.continue_anyway" = "Всё равно продолжить";
 
 "send.address.enter_address" = "Введите адрес";
 "send.address.invalid_address" = "Неверный адрес";
 "send.address.recent" = "Недавние";
 "send.address.contacts" = "Контакты";
 "send.address.checking" = "Проверка";
-"send.address.check.clear" = "Очистить";
+"send.address.check.clear" = "Чисто";
 "send.address.check.detected" = "Обнаружено";
-"send.address.risky.title" = "Risky Address!";
-"send.address.risky.description" = "You are about to send funds to a high-risk address. Proceeding may result in loss of funds or other security risks. By continuing, you accept the potential dangers. Are you sure you want to proceed?";
+"send.address.risky.title" = "Рискованный адрес!";
+"send.address.risky.description" = "Вы собираетесь отправить средства на адрес с высоким уровнем риска. Продолжение может привести к потере средств или другим угрозам безопасности. Продолжая, вы принимаете потенциальные риски. Вы уверены, что хотите продолжить?";
 "send.address.phishing_check" = "Проверка на фишинг";
-"send.address.phishing.description" = "Analyzes the provided destination address for potential phishing risks.\n\n\"Clear:\" No suspicious activity detected.\"Detected:\" t appears that someone may be trying to trick you into sending funds to an incorrect address. Do not proceed unless absolutely certain that the address is correct. Consider sending a small test transaction first.";
+"send.address.phishing.description" = "Analyzes the provided destination address for potential phishing risks.\n\nClear: No suspicious activity detected.\n\nDetected: It appears that someone may be trying to trick you into sending funds to an incorrect address. Do not proceed unless absolutely certain that the address is correct. Consider sending a small test transaction first.";
 "send.address.phishing.caution.title" = "Обнаружен фишинговый адрес!";
 "send.address.phishing.caution.description" = "Введенный вами адрес может быть мошенническим. Мошенники часто изменяют первые и последние символы. Внимательно проверьте полный адрес перед отправкой во избежание потерь.";
 "send.address.sanction_check" = "Проверка санкций";
-"send.address.sanction.description" = "Verifies whether the recipient’s address is subject to international sanctions, using data from Chainalysis.com.\n\n\"Clear:\" No sanctions detected.\"Detected:\" Potential legal risk. Transactions with this address may be restricted or illegal in certain jurisdictions.";
+"send.address.sanction.description" = "Verifies whether the recipient’s address is subject to international sanctions, using data from Chainalysis.com.\n\nClear: No sanctions detected.\n\n Detected: Potential legal risk. Transactions with this address may be restricted or illegal in certain jurisdictions.";
 "send.address.sanction.caution.title" = "Санкционный адрес!";
 "send.address.sanction.caution.description" = "Введенный вами адрес помечен как санкционный. Транзакции на этот адрес могут привести к потерям или другим рискам. Пожалуйста, проверьте данные получателя перед продолжением.";
 "send.address.blacklist_check" = "Проверка черного списка";
-"send.address.blacklist.description" = "Checks if the destination address is listed on official or unofficial blacklists.\n\n\"Clear:\" No blacklist flags.\"Detected:\" Detected: The address is blacklisted and may be associated with legal or security risks. Proceed with caution. Many crypto exchanges restrict users who deposit or withdraw funds from wallets that have interacted with blacklisted addresses. Keep that in mind.";
+"send.address.blacklist.description" = "Checks if the destination address is listed on official or unofficial blacklists.\n\nClear: No blacklist flags.\n\nDetected: The address is blacklisted and may be associated with legal or security risks. Proceed with caution. Many crypto exchanges restrict users who deposit or withdraw funds from wallets that have interacted with blacklisted addresses. Keep that in mind.";
 "send.address.blacklist.caution.title" = "Адрес в черном списке!";
 "send.address.blacklist.caution.description" = "Введенный вами адрес помечен как находящийся в черном списке. Транзакции на этот адрес могут привести к потерям или другим рискам. Пожалуйста, проверьте данные получателя перед продолжением.";
 
@@ -914,7 +914,7 @@
 "market.advanced_search.more_50_b" = "> 50млрд";
 "market.advanced_search.more_500_b" = "> 500млрд";
 
-"market.advanced_search.top.m_cap" = "M.Cap";
+"market.advanced_search.top.m_cap" = "Рын.кап.";
 "market.advanced_search.top.more_1_b" = "> $1B";
 "market.advanced_search.top.more_500_m" = "> $500млн";
 "market.advanced_search.top.more_250_m" = "> $250 млн";
