@@ -550,15 +550,15 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.address.risky.title" = "Risky Address!";
 "send.address.risky.description" = "You are about to send funds to a high-risk address. Proceeding may result in loss of funds or other security risks. By continuing, you accept the potential dangers. Are you sure you want to proceed?";
 "send.address.phishing_check" = "Vérification d'hameçonnage";
-"send.address.phishing.description" = "Analyzes the provided destination address for potential phishing risks.\n\n\"Clear:\" No suspicious activity detected.\"Detected:\" t appears that someone may be trying to trick you into sending funds to an incorrect address. Do not proceed unless absolutely certain that the address is correct. Consider sending a small test transaction first.";
+"send.address.phishing.description" = "Analyzes the provided destination address for potential phishing risks.\n\nClear: No suspicious activity detected.\n\nDetected: It appears that someone may be trying to trick you into sending funds to an incorrect address. Do not proceed unless absolutely certain that the address is correct. Consider sending a small test transaction first.";
 "send.address.phishing.caution.title" = "Phishing Address Detected!";
 "send.address.phishing.caution.description" = "The address you entered may be fraudulent. Scammers often alter the first and last characters. Verify the full address carefully before proceeding to avoid loss.";
 "send.address.sanction_check" = "Sanction Check";
-"send.address.sanction.description" = "Verifies whether the recipient’s address is subject to international sanctions, using data from Chainalysis.com.\n\n\"Clear:\" No sanctions detected.\"Detected:\" Potential legal risk. Transactions with this address may be restricted or illegal in certain jurisdictions.";
+"send.address.sanction.description" = "Verifies whether the recipient’s address is subject to international sanctions, using data from Chainalysis.com.\n\nClear: No sanctions detected.\n\n Detected: Potential legal risk. Transactions with this address may be restricted or illegal in certain jurisdictions.";
 "send.address.sanction.caution.title" = "Sanctioned Address!";
 "send.address.sanction.caution.description" = "The address you entered is flagged as sanctioned. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
 "send.address.blacklist_check" = "Blacklist Check";
-"send.address.blacklist.description" = "Checks if the destination address is listed on official or unofficial blacklists.\n\n\"Clear:\" No blacklist flags.\"Detected:\" Detected: The address is blacklisted and may be associated with legal or security risks. Proceed with caution. Many crypto exchanges restrict users who deposit or withdraw funds from wallets that have interacted with blacklisted addresses. Keep that in mind.";
+"send.address.blacklist.description" = "Checks if the destination address is listed on official or unofficial blacklists.\n\nClear: No blacklist flags.\n\nDetected: The address is blacklisted and may be associated with legal or security risks. Proceed with caution. Many crypto exchanges restrict users who deposit or withdraw funds from wallets that have interacted with blacklisted addresses. Keep that in mind.";
 "send.address.blacklist.caution.title" = "Blacklisted Address!";
 "send.address.blacklist.caution.description" = "The address you entered is flagged as blacklisted. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
 
