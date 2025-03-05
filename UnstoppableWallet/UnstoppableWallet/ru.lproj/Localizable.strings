@@ -1636,8 +1636,8 @@
 
 // Settings -> Support
 
-"settings.vip_support.description" = "Получите прямую помощь от нашей команды. В Telegram будет создан приватный чат для решения вашей проблемы, который будет закрыт после устранения проблемы.";
-"settings.vip_support.start_chat" = "Начать чат";
+"settings.vip_support.description" = "Get exclusive access to our VIP Group, where premium users and the Unstoppable Wallet team collaborate. Receive direct assistance, discuss future updates, and help shape the wallet’s evolution.";
+"settings.vip_support.start_chat" = "Join VIP Group";
 
 // Settings -> Contacts
 
