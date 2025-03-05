@@ -433,6 +433,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.available_balance" = "Mevcut Bakiye";
 "send.max_button" = "Azami";
 "send.next_button" = "İleri";
+"send.check_button" = "Check";
 "send.error.invalid" = "Geçersiz";
 "send.error.invalid_blockchain" = "Geçersiz Blok Zinciri";
 "send.error.invalid_token" = "Geçersiz Jeton";
@@ -502,7 +503,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.method" = "Yöntem";
 "send.confirmation.replace_by_fee.disabled" = "Etkisizleştirildi";
 "send.amount_error.balance" = "Yetersiz bakiye";
-"send.address_error.own_address" = "TRX kendinize aktarılamıyor";
+"send.address_error.own_address" = "Sending %@ to your own address is not allowed. Please enter a different recipient address.";
 "send.amount_error.maximum_amount" = "Maksimum miktar %@";
 "send.amount_error.minimum_amount" = "Minimum miktar %@";
 "send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
@@ -536,34 +537,29 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.token_syncing" = "Token Senkronizasyonu";
 "send.token_not_synced" = "Jeton Senkronize Edilmedi";
 "send.insufficient_balance" = "Yetersiz Bakiye";
-"send.send_anyway" = "Yine de Gönder";
+"send.continue_anyway" = "Continue Anyway";
 
 "send.address.enter_address" = "Adresini Giriniz";
-"send.address.invalid_address" = "Geçersiz Adres";
-"send.address.recent" = "Son Kullanılanlar";
-"send.address.contacts" = "Kişiler";
-"send.address.checking" = "Kontrol Ediliyor";
-"send.address.check.clear" = "Temizle";
-"send.address.check.detected" = "Tespit Edildi";
-"send.address.phishing_check" = "Oltalama Kontrolü";
-"send.address.phishing.clear.title" = "Oltalama: Temiz";
-"send.address.phishing.clear.description" = "Doğrulama işlemi, işlem geçmişinize dayanmaktadır ve şüpheli bir aktivite tespit edilmemiştir. Girilen adres, oltalama girişimleriyle ilişkili bilinen spam işlemlerinde yer almamıştır.";
-"send.address.phishing.caution.title" = "Oltalama Adresi Tespit Edildi!";
-"send.address.phishing.caution.description" = "Girdiğiniz adres sahte olabilir. Dolandırıcılar genellikle ilk ve son karakterleri değiştirirler. Kayıpları önlemek için işleme devam etmeden önce tam adresi dikkatlice doğrulayın.";
-"send.address.phishing.pre_send.title" = "Oltalama Adresi!";
-"send.address.phishing.pre_send.description" = "Sahte olabilecek şüpheli bir adrese fon göndermek üzeresiniz. Bu işlemin tokenlarınızın kalıcı kaybıyla sonuçlanabileceğini lütfen unutmayın. Devam ederek, ilgili riskleri kabul etmiş olursunuz. Devam etmek istediğinizden emin misiniz?";
-"send.address.sanction_check" = "Yaptırım Kontrolü";
-"send.address.sanction.caution.title" = "Yaptırımlı Adres!";
-"send.address.sanction.caution.description" = "Girdiğiniz adres yaptırımlı olarak işaretlenmiştir. Bu adrese yapılacak işlemler kayıplara veya diğer risklere yol açabilir. Lütfen devam etmeden önce alıcının bilgilerini doğrulayın.";
-"send.address.sanction.pre_send.title" = "Yaptırımlı Adres Tespit Edildi!";
-"send.address.sanction.pre_send.description" = "Yaptırım uygulanan bir adrese fon göndermek üzeresiniz. Bu adrese yapılacak işlemler kayıplara veya diğer risklere yol açabilir. Devam ederek, potansiyel tehlikeleri kabul etmiş olursunuz. Devam etmek istediğinizden emin misiniz?";
-"send.address.blacklist_check" = "Kara Liste Kontrolü";
-"send.address.blacklist.clear.title" = "Kara Liste: Temiz";
-"send.address.blacklist.clear.description" = "Alıcı adresi Chainalysis.com üzerinden doğrulama geçmiş ve işaretlenmemiştir. Bu, adresin bilinen hiçbir kara listede tespit edilmediği veya şüpheli aktivitelerle ilişkilendirilmediği anlamına gelir.";
-"send.address.blacklist.caution.title" = "Kara Listeye Alınmış Adres!";
-"send.address.blacklist.caution.description" = "Girdiğiniz adres kara listeye alınmış olarak işaretlenmiştir. Bu adrese yapılacak işlemler kayıplara veya diğer risklere yol açabilir. Lütfen devam etmeden önce alıcının bilgilerini doğrulayın.";
-"send.address.blacklist.pre_send.title" = "Kara Listedeki Adres Tespit Edildi!";
-"send.address.blacklist.pre_send.description" = "Kara listeye alınmış bir adrese fon göndermek üzeresiniz. Bu adrese yapılacak işlemler kayıplara veya diğer risklere yol açabilir. Devam ederek, potansiyel tehlikeleri kabul etmiş olursunuz. Devam etmek istediğinizden emin misiniz?";
+"send.address.invalid_address" = "Invalid Address";
+"send.address.recent" = "Recent";
+"send.address.contacts" = "Contacts";
+"send.address.checking" = "Checking";
+"send.address.check.clear" = "Clear";
+"send.address.check.detected" = "Detected";
+"send.address.risky.title" = "Risky Address!";
+"send.address.risky.description" = "You are about to send funds to a high-risk address. Proceeding may result in loss of funds or other security risks. By continuing, you accept the potential dangers. Are you sure you want to proceed?";
+"send.address.phishing_check" = "Phishing Check";
+"send.address.phishing.description" = "Analyzes the provided destination address for potential phishing risks.\n\nClear: No suspicious activity detected.\n\nDetected: It appears that someone may be trying to trick you into sending funds to an incorrect address. Do not proceed unless absolutely certain that the address is correct. Consider sending a small test transaction first.";
+"send.address.phishing.caution.title" = "Phishing Address Detected!";
+"send.address.phishing.caution.description" = "The address you entered may be fraudulent. Scammers often alter the first and last characters. Verify the full address carefully before proceeding to avoid loss.";
+"send.address.sanction_check" = "Sanction Check";
+"send.address.sanction.description" = "Verifies whether the recipient’s address is subject to international sanctions, using data from Chainalysis.com.\n\nClear: No sanctions detected.\n\n Detected: Potential legal risk. Transactions with this address may be restricted or illegal in certain jurisdictions.";
+"send.address.sanction.caution.title" = "Sanctioned Address!";
+"send.address.sanction.caution.description" = "The address you entered is flagged as sanctioned. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
+"send.address.blacklist_check" = "Blacklist Check";
+"send.address.blacklist.description" = "Checks if the destination address is listed on official or unofficial blacklists.\n\nClear: No blacklist flags.\n\nDetected: The address is blacklisted and may be associated with legal or security risks. Proceed with caution. Many crypto exchanges restrict users who deposit or withdraw funds from wallets that have interacted with blacklisted addresses. Keep that in mind.";
+"send.address.blacklist.caution.title" = "Blacklisted Address!";
+"send.address.blacklist.caution.description" = "The address you entered is flagged as blacklisted. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
 
 // Donate
 
@@ -1641,9 +1637,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Settings -> Support
 
-"settings.vip_support.description" = "Uzmanlarımızdan doğrudan destek alın. Sorununuzu çözmek için Telegram'da özel bir sohbet oluşturulacak ve sorun çözüldükten sonra kapatılacaktır.";
-"settings.vip_support.start_chat" = "Sohbeti Başlat";
-
+"settings.vip_support.description" = "Get exclusive access to our VIP Group, where premium users and the Unstoppable Wallet team collaborate. Receive direct assistance, discuss future updates, and help shape the wallet’s evolution.";
+"settings.vip_support.start_chat" = "Join VIP Group";
 
 // Settings -> Contacts
 
@@ -2270,10 +2265,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "purchases.address_checker" = "Kara Liste Denetleyicisi";
 "purchases.address_checker.description" = "Yasal ve Uyumlu Kalın";
 "purchases.address_checker.info" = "Riskli ve yaptırımlı varlıklardan kendinizi koruyun. Kara Liste Denetleyicisi, göndermeden önce alıcı adreslerini yüksek riskli veritabanlarına karşı otomatik olarak tarar, dolandırıcılıkları, sahtekârlıkları ve yaptırım uygulanan varlıkları işaretler. Bir adres kara listeye alınmışsa, maliyetli bir hata yapmadan önce bunu bileceksiniz. İşlemlerinizi güvence altına alın. Kripto paranızı temiz tutun. Uyumlu kalın.";
-
-"purchases.privacy_mode" = "Gizlilik Modu";
-"purchases.privacy_mode.description" = "Veri toplamasından tam bağlantı kesme.";
-"purchases.privacy_mode.info" = "Gizlilik Modu, cüzdan bakiyelerini, işlem geçmişini ve diğer hassas ayrıntıları maskeleyerek kullanıcı gizliliğini artırır. Bu özellik, üçüncü tarafların kullanıcı etkinliğini görüntüleyememesini veya izleyememesini sağlayarak, gizliliğe değer verenler için ayrık ve güvenli bir deneyim sunar.";
 
 "purchases.vip_support" = "VIP Grubu";
 "purchases.vip_support.description" = "Unstoppable'ın Geleceği Hakkında Oy Verin";

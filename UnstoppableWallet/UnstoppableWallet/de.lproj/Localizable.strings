@@ -434,6 +434,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.available_balance" = "Verfügbares Guthaben";
 "send.max_button" = "Max.";
 "send.next_button" = "Weiter";
+"send.check_button" = "Prüfen";
 "send.error.invalid" = "Ungültig";
 "send.error.invalid_blockchain" = "Ungültige Blockchain";
 "send.error.invalid_token" = "Ungültiges Token";
@@ -503,7 +504,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.confirmation.method" = "Methode";
 "send.confirmation.replace_by_fee.disabled" = "Deaktiviert";
 "send.amount_error.balance" = "Nicht genügend Guthaben";
-"send.address_error.own_address" = "TRX kann nicht auf sich selbst übertragen werden";
+"send.address_error.own_address" = "Sending %@ to your own address is not allowed. Please enter a different recipient address.";
 "send.amount_error.maximum_amount" = "Maximaler Betrag %@";
 "send.amount_error.minimum_amount" = "Minimaler Betrag %@";
 "send.amount_error.min_required_balance" = "Mindestens erforderlicher Rest %@";
@@ -537,6 +538,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.token_syncing" = "Token-Synchronisation";
 "send.token_not_synced" = "Token nicht synchronisiert";
 "send.insufficient_balance" = "Unzureichendes Guthaben";
+"send.continue_anyway" = "Continue Anyway";
 "send.send_anyway" = "Trotzdem senden";
 
 "send.address.enter_address" = "Adresse eingeben";
@@ -670,7 +672,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "swap.advanced_settings.service_fee_description" = "Eine Service-Gebühr für die Swap-Aktion auf der Plattform typischerweise entweder 0,3% oder 0,6%";
 "swap.advanced_settings.error.lower_slippage" = "Ihre Transaktion wird wahrscheinlich fehlschlagen.";
 "swap.advanced_settings.error.higher_slippage" = "Die Slippage-Toleranz darf nicht mehr als %@%% betragen";
-"swap.advanced_settings.error.invalid_address" = "Invalid Address";
+"swap.advanced_settings.error.invalid_address" = "Ungültige Adresse";
 "swap.advanced_settings.error.invalid_slippage" = "Ungültige Slippage";
 "swap.advanced_settings.error.invalid_deadline" = "Ungültige Frist";
 
@@ -1428,7 +1430,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "backup_app.backup_list.header.other" = "Andere";
 "backup_app.backup_list.other.watch_account.title" = "Watch-Adresse";
 "backup_app.backup_list.other.watchlist.title" = "Merkliste";
-"backup_app.backup_list.other.contacts.title" = "Contacts";
+"backup_app.backup_list.other.contacts.title" = "Kontakte";
 "backup_app.backup_list.other.blockchain_settings.title" = "Eigener RPC";
 "backup_app.backup_list.other.app_settings.title" = "App-Einstellungen";
 "backup_app.backup_list.other.app_settings.description" = "Sprache, Währung, Erscheinung ...";
@@ -1638,12 +1640,13 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Settings -> Support
 
-"settings.vip_support.description" = "Erhalte direkte Unterstützung von unseren Experten. Ein privater Chat wird in Telegram erstellt, um dein Problem zu lösen, und wird geschlossen, sobald das Problem gelöst ist.";
-"settings.vip_support.start_chat" = "Chat starten";
+"settings.vip_support.description" = "Get exclusive access to our VIP Group, where premium users and the Unstoppable Wallet team collaborate. Receive direct assistance, discuss future updates, and help shape the wallet’s evolution.";
+"settings.vip_support.start_chat" = "Join VIP Group";
+
 
 // Settings -> Contacts
 
-"contacts.title" = "Contacts";
+"contacts.title" = "Kontakte";
 "contacts.list.search_placeholder" = "Nach Namen suchen";
 "contacts.list.not_found" = "Sie haben keinen neuen Kontakt";
 "contacts.list.not_found_search" = "Keine Ergebnisse gefunden";
@@ -2262,10 +2265,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "purchases.address_checker" = "Blacklist-Prüfer";
 "purchases.address_checker.description" = "Bleibe legitim und konform";
 "purchases.address_checker.info" = "Schütze dich vor riskanten und sanktionierten Entitäten. Der Blacklist-Prüfer überprüft automatisch Empfängeradressen gegen Hochrisiko-Datenbanken und markiert Betrug, Fälschungen und sanktionierte Entitäten, bevor du sendest. Wenn eine Adresse auf der schwarzen Liste steht, wirst du es wissen, bevor du einen kostspieligen Fehler machst. Sichere deine Transaktionen. Halte deine Krypto sauber. Bleibe konform.";
-
-"purchases.privacy_mode" = "Privatsphäre-Modus";
-"purchases.privacy_mode.description" = "Vollständige Trennung von der Datenerfassung.";
-"purchases.privacy_mode.info" = "Der Privatsphäre-Modus erhöht die Vertraulichkeit des Benutzers, indem er Wallet-Guthaben, Transaktionsverlauf und andere sensible Details verbirgt. Diese Funktion stellt sicher, dass Dritte die Benutzeraktivität nicht einsehen oder verfolgen können und bietet eine diskrete und sichere Erfahrung für diejenigen, die Privatsphäre schätzen.";
 
 "purchases.vip_support" = "VIP-Gruppe";
 "purchases.vip_support.description" = "Stimme über die Zukunft von Unstoppable ab";

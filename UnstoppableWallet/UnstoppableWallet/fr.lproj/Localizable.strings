@@ -415,7 +415,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // Address
 
-"address.title" = "Enter Address";
+"address.title" = "Entrer l'adresse";
 
 // Send
 
@@ -434,6 +434,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.available_balance" = "Solde disponible";
 "send.max_button" = "Max";
 "send.next_button" = "Suivant";
+"send.check_button" = "Check";
 "send.error.invalid" = "Invalide";
 "send.error.invalid_blockchain" = "Blockchain invalide";
 "send.error.invalid_token" = "Jeton invalide";
@@ -475,10 +476,10 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.confirmation.replace_by_fee" = "Remplacer par frais";
 "send.confirmation.replaced_transactions" = "Transactions remplacées";
 "send.confirmation.input" = "Entrées";
-"send.confirmation.comment" = "Comment";
+"send.confirmation.comment" = "Commentaire";
 "send.confirmation.action" = "Action";
 "send.confirmation.status" = "Statut";
-"send.confirmation.status.failed" = "Failed";
+"send.confirmation.status.failed" = "Échec";
 
 "send.confirmation.sync_failed" = "Échec de synchronisation";
 "send.confirmation.invalid_data" = "Données invalides";
@@ -503,7 +504,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.confirmation.method" = "Méthode";
 "send.confirmation.replace_by_fee.disabled" = "Désactivé";
 "send.amount_error.balance" = "Solde insuffisant";
-"send.address_error.own_address" = "Impossible de transférer des TRX à vous-même";
+"send.address_error.own_address" = "Sending %@ to your own address is not allowed. Please enter a different recipient address.";
 "send.amount_error.maximum_amount" = "Montant maximum %@";
 "send.amount_error.minimum_amount" = "Montant minimum %@";
 "send.amount_error.min_required_balance" = "Minimum requis %@ restant";
@@ -537,34 +538,30 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.token_syncing" = "Synchronisation des token";
 "send.token_not_synced" = "Token non synchronisé";
 "send.insufficient_balance" = "Solde insuffisant";
-"send.send_anyway" = "Envoyer quand même";
+"send.continue_anyway" = "Continue Anyway";
 
-"send.address.enter_address" = "Saisir l'adresse";
+"send.address.enter_address" = "Entrer l'adresse";
 "send.address.invalid_address" = "Adresse invalide";
 "send.address.recent" = "Récent";
 "send.address.contacts" = "Contacts";
 "send.address.checking" = "Vérification";
 "send.address.check.clear" = "Effacer";
 "send.address.check.detected" = "Détecté";
+"send.address.risky.title" = "Risky Address!";
+"send.address.risky.description" = "You are about to send funds to a high-risk address. Proceeding may result in loss of funds or other security risks. By continuing, you accept the potential dangers. Are you sure you want to proceed?";
 "send.address.phishing_check" = "Vérification d'hameçonnage";
-"send.address.phishing.clear.title" = "Hameçonnage : RAS";
-"send.address.phishing.clear.description" = "La vérification est basée sur votre historique de transactions, et aucune activité suspecte n'a été détectée. L'adresse saisie n'a pas été impliquée dans des transactions de spam connues associées à des tentatives d'hameçonnage.";
-"send.address.phishing.caution.title" = "Adresse d'hameçonnage détectée !";
-"send.address.phishing.caution.description" = "L'adresse que vous avez saisie pourrait être frauduleuse. Les escrocs modifient souvent les premiers et derniers caractères. Vérifiez attentivement l'adresse complète avant de continuer pour éviter toute perte.";
-"send.address.phishing.pre_send.title" = "Adresse d'hameçonnage !";
-"send.address.phishing.pre_send.description" = "Vous êtes sur le point d'envoyer des fonds à une adresse suspecte qui pourrait être frauduleuse. Sachez que cela pourrait entraîner une perte permanente de vos tokens. En continuant, vous reconnaissez les risques encourus. Êtes-vous sûr de vouloir continuer ?";
-"send.address.sanction_check" = "Vérification des sanctions";
-"send.address.sanction.caution.title" = "Adresse sous sanctions !";
-"send.address.sanction.caution.description" = "L'adresse que vous avez saisie est signalée comme étant sous sanctions. Les transactions vers cette adresse pourraient entraîner des pertes ou d'autres risques. Veuillez vérifier les détails du destinataire avant de continuer.";
-"send.address.sanction.pre_send.title" = "Adresse sous sanctions détectée !";
-"send.address.sanction.pre_send.description" = "Vous êtes sur le point d'envoyer des fonds à une adresse sous sanctions. Les transactions vers cette adresse pourraient entraîner des pertes ou d'autres risques. En continuant, vous reconnaissez les dangers potentiels. Êtes-vous sûr de vouloir continuer ?";
-"send.address.blacklist_check" = "Vérification de la liste noire";
-"send.address.blacklist.clear.title" = "Liste noire : RAS";
-"send.address.blacklist.clear.description" = "L'adresse du destinataire a passé la vérification via Chainalysis.com et n'a pas été signalée. Cela signifie que l'adresse n'a pas été détectée dans des listes noires connues ni associée à des activités suspectes.";
-"send.address.blacklist.caution.title" = "Adresse sur liste noire !";
-"send.address.blacklist.caution.description" = "L'adresse que vous avez saisie est signalée comme étant sur liste noire. Les transactions vers cette adresse pourraient entraîner des pertes ou d'autres risques. Veuillez vérifier les détails du destinataire avant de continuer.";
-"send.address.blacklist.pre_send.title" = "Adresse sur liste noire détectée !";
-"send.address.blacklist.pre_send.description" = "Vous êtes sur le point d'envoyer des fonds à une adresse sur liste noire. Les transactions vers cette adresse pourraient entraîner des pertes ou d'autres risques. En continuant, vous reconnaissez les dangers potentiels. Êtes-vous sûr de vouloir continuer ?";
+"send.address.phishing.description" = "Analyzes the provided destination address for potential phishing risks.\n\nClear: No suspicious activity detected.\n\nDetected: It appears that someone may be trying to trick you into sending funds to an incorrect address. Do not proceed unless absolutely certain that the address is correct. Consider sending a small test transaction first.";
+"send.address.phishing.caution.title" = "Phishing Address Detected!";
+"send.address.phishing.caution.description" = "The address you entered may be fraudulent. Scammers often alter the first and last characters. Verify the full address carefully before proceeding to avoid loss.";
+"send.address.sanction_check" = "Sanction Check";
+"send.address.sanction.description" = "Verifies whether the recipient’s address is subject to international sanctions, using data from Chainalysis.com.\n\nClear: No sanctions detected.\n\n Detected: Potential legal risk. Transactions with this address may be restricted or illegal in certain jurisdictions.";
+"send.address.sanction.caution.title" = "Sanctioned Address!";
+"send.address.sanction.caution.description" = "The address you entered is flagged as sanctioned. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
+"send.address.blacklist_check" = "Blacklist Check";
+"send.address.blacklist.description" = "Checks if the destination address is listed on official or unofficial blacklists.\n\nClear: No blacklist flags.\n\nDetected: The address is blacklisted and may be associated with legal or security risks. Proceed with caution. Many crypto exchanges restrict users who deposit or withdraw funds from wallets that have interacted with blacklisted addresses. Keep that in mind.";
+"send.address.blacklist.caution.title" = "Blacklisted Address!";
+"send.address.blacklist.caution.description" = "The address you entered is flagged as blacklisted. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
+
 
 // Donate
 
@@ -1267,7 +1264,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "transactions.pending" = "En attente";
 "transactions.processing" = "Traitement en cours";
 "transactions.completed" = "Terminé";
-"transactions.failed" = "Failed";
+"transactions.failed" = "Échec";
 
 "transactions.receive" = "Recevoir";
 "transactions.send" = "Envoyée";
@@ -1638,8 +1635,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // Settings -> Support
 
-"settings.vip_support.description" = "Obtenez une assistance directe de nos experts. Un chat privé sera créé dans Telegram pour résoudre votre problème, et il sera fermé une fois le problème résolu.";
-"settings.vip_support.start_chat" = "Démarrer le chat";
+"settings.vip_support.description" = "Get exclusive access to our VIP Group, where premium users and the Unstoppable Wallet team collaborate. Receive direct assistance, discuss future updates, and help shape the wallet’s evolution.";
+"settings.vip_support.start_chat" = "Join VIP Group";
+
 
 // Settings -> Contacts
 
@@ -1888,7 +1886,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "status_info.processing.content" = "La transaction a déjà été incluse dans la blockchain mais n'a pas été finalisée. En ce qui concerne les petits paiements, il est prudent de considérer que la transaction est terminée. Pour les paiements plus importants, il est recommandé d'attendre que le statut de la transaction passe à terminé.";
 "status_info.completed.title" = "Terminé";
 "status_info.confirmed.content" = "La transaction est terminée et considérée comme permanente et irréversible.";
-"status_info.failed.title" = "Failed";
+"status_info.failed.title" = "Échec";
 "status_info.failed.content" = "La transaction n'a pas été traitée et aucun transfert de fonds n'a eu lieu. En fonction de la raison de l'échec, certaines transactions qui ont échoué peuvent entraîner des frais de transaction. Les transactions qui ont été remplacées ou annulées par une autre transaction ne génèrent pas de frais et apparaîtront également comme ayant échoué. L'application %@ n'est pas en mesure d'indiquer la raison de l'échec des transactions, mais les utilisateurs peuvent en trouver eux-mêmes la raison sur un explorateur de blocs public, comme etherscan.io par exemple.";
 
 // Onboarding
@@ -2260,17 +2258,13 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "purchases.address_phishing.description" = "Restez en sécurité sans les tracas";
 "purchases.address_phishing.info" = "Une seule adresse erronée, et vos cryptos disparaissent à jamais. Unstoppable analyse automatiquement les adresses des destinataires à la recherche de motifs suspects et vous protège contre les dernières menaces d'hameçonnage, vous empêchant d'envoyer des fonds à un pirate informatique. Bloquez les transferts frauduleux avant qu'ils ne se produisent.";
 
+"purchases.vip_support" = "VIP Group";
+"purchases.vip_support.description" = "Vote on the Future of Unstoppable";
+"purchases.vip_support.info" = "Be part of the evolution. Join the VIP Group to connect directly with our team, vote on upcoming features, and get an exclusive first look at future updates. Your voice matters—help shape the next-gen crypto wallet.";
+
 "purchases.address_checker" = "Vérificateur de liste noire";
 "purchases.address_checker.description" = "Restez légitime et conforme";
 "purchases.address_checker.info" = "Protégez-vous des entités risquées et sanctionnées. Le Vérificateur de liste noire contrôle automatiquement les adresses des destinataires par rapport aux bases de données à haut risque, signalant les arnaques, fraudes et entités sanctionnées avant que vous n'envoyiez. Si une adresse est sur liste noire, vous le saurez avant de commettre une erreur coûteuse. Sécurisez vos transactions. Gardez vos cryptos propres. Restez conforme.";
-
-"purchases.privacy_mode" = "Mode confidentialité";
-"purchases.privacy_mode.description" = "Déconnexion complète de la collecte de données.";
-"purchases.privacy_mode.info" = "Le Mode confidentialité renforce la confidentialité de l'utilisateur en masquant les soldes du portefeuille, l'historique des transactions et d'autres détails sensibles. Cette fonctionnalité garantit que les tiers ne peuvent pas voir ni suivre l'activité de l'utilisateur, offrant une expérience discrète et sécurisée pour ceux qui valorisent la vie privée.";
-
-"purchases.vip_support" = "Groupe VIP";
-"purchases.vip_support.description" = "Votez sur l'avenir d'Unstoppable";
-"purchases.vip_support.info" = "Faites partie de l'évolution. Rejoignez le Groupe VIP pour vous connecter directement avec notre équipe, voter sur les fonctionnalités à venir et obtenir un aperçu exclusif des futures mises à jour. Votre voix compte — aidez à façonner le portefeuille crypto de nouvelle génération.";
 
 "purchases.vip_club" = "Club VIP";
 "purchases.vip_club.description" = "Chat privé avec informations exclusives.";
