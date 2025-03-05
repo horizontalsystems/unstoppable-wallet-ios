@@ -432,6 +432,7 @@
 "send.available_balance" = "Available Balance";
 "send.max_button" = "Max";
 "send.next_button" = "Next";
+"send.check_button" = "Check";
 "send.error.invalid" = "Invalid";
 "send.error.invalid_blockchain" = "Invalid Blockchain";
 "send.error.invalid_token" = "Invalid Token";
@@ -501,7 +502,7 @@
 "send.confirmation.method" = "Method";
 "send.confirmation.replace_by_fee.disabled" = "Disabled";
 "send.amount_error.balance" = "Not Enough Balance";
-"send.address_error.own_address" = "Cannot transfer TRX to yourself";
+"send.address_error.own_address" = "Sending %@ to your own address is not allowed. Please enter a different recipient address.";
 "send.amount_error.maximum_amount" = "Maximum amount %@";
 "send.amount_error.minimum_amount" = "Minimum amount %@";
 "send.amount_error.min_required_balance" = "Min. required remainder %@";
@@ -535,7 +536,7 @@
 "send.token_syncing" = "Token Syncing";
 "send.token_not_synced" = "Token Not Synced";
 "send.insufficient_balance" = "Insufficient Balance";
-"send.send_anyway" = "Send Anyway";
+"send.continue_anyway" = "Continue Anyway";
 
 "send.address.enter_address" = "Enter Address";
 "send.address.invalid_address" = "Invalid Address";
@@ -544,25 +545,20 @@
 "send.address.checking" = "Checking";
 "send.address.check.clear" = "Clear";
 "send.address.check.detected" = "Detected";
+"send.address.risky.title" = "Risky Address!";
+"send.address.risky.description" = "You are about to send funds to a high-risk address. Proceeding may result in loss of funds or other security risks. By continuing, you accept the potential dangers. Are you sure you want to proceed?";
 "send.address.phishing_check" = "Phishing Check";
-"send.address.phishing.clear.title" = "Phishing: Clear";
-"send.address.phishing.clear.description" = "The verification is based on your transaction history, and no suspicious activity has been detected. The entered address has not been involved in known spam transactions associated with phishing attempts.";
+"send.address.phishing.description" = "Analyzes the provided destination address for potential phishing risks.\n\nClear: No suspicious activity detected.\n\nDetected: It appears that someone may be trying to trick you into sending funds to an incorrect address. Do not proceed unless absolutely certain that the address is correct. Consider sending a small test transaction first.";
 "send.address.phishing.caution.title" = "Phishing Address Detected!";
 "send.address.phishing.caution.description" = "The address you entered may be fraudulent. Scammers often alter the first and last characters. Verify the full address carefully before proceeding to avoid loss.";
-"send.address.phishing.pre_send.title" = "Phishing Address!";
-"send.address.phishing.pre_send.description" = "You are about to send funds to a suspicious address that may be fraudulent. Please be aware that this could result in a permanent loss of your tokens. By proceeding, you acknowledge the risks involved. Are you sure you want to continue?";
 "send.address.sanction_check" = "Sanction Check";
+"send.address.sanction.description" = "Verifies whether the recipient’s address is subject to international sanctions, using data from Chainalysis.com.\n\nClear: No sanctions detected.\n\n Detected: Potential legal risk. Transactions with this address may be restricted or illegal in certain jurisdictions.";
 "send.address.sanction.caution.title" = "Sanctioned Address!";
 "send.address.sanction.caution.description" = "The address you entered is flagged as sanctioned. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
-"send.address.sanction.pre_send.title" = "Sanctioned Address Detected!";
-"send.address.sanction.pre_send.description" = "You are about to send funds to an address that is sanctioned. Transactions to this address could result in loss or other risks. By proceeding, you acknowledge the potential dangers. Are you sure you want to continue?";
 "send.address.blacklist_check" = "Blacklist Check";
-"send.address.blacklist.clear.title" = "Blacklist: Clear";
-"send.address.blacklist.clear.description" = "The recipient address has passed verification through Chainalysis.com and has not been flagged. This means the address has not been detected in any known blacklists or associated with suspicious activity.";
+"send.address.blacklist.description" = "Checks if the destination address is listed on official or unofficial blacklists.\n\nClear: No blacklist flags.\n\nDetected: The address is blacklisted and may be associated with legal or security risks. Proceed with caution. Many crypto exchanges restrict users who deposit or withdraw funds from wallets that have interacted with blacklisted addresses. Keep that in mind.";
 "send.address.blacklist.caution.title" = "Blacklisted Address!";
 "send.address.blacklist.caution.description" = "The address you entered is flagged as blacklisted. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
-"send.address.blacklist.pre_send.title" = "Blacklisted Address Detected!";
-"send.address.blacklist.pre_send.description" = "You are about to send funds to an address that is blacklisted. Transactions to this address could result in loss or other risks. By proceeding, you acknowledge the potential dangers. Are you sure you want to continue?";
 
 // Donate
 
@@ -1636,8 +1632,8 @@
 
 // Settings -> Support
 
-"settings.vip_support.description" = "Get direct assistance from our experts. A private chat will be created in Telegram to resolve your issue, and it will be closed once the problem is solved.";
-"settings.vip_support.start_chat" = "Start Chat";
+"settings.vip_support.description" = "Get exclusive access to our VIP Group, where premium users and the Unstoppable Wallet team collaborate. Receive direct assistance, discuss future updates, and help shape the wallet’s evolution.";
+"settings.vip_support.start_chat" = "Join VIP Group";
 
 // Settings -> Contacts
 
@@ -2260,10 +2256,6 @@
 "purchases.address_checker" = "Blacklist Checker";
 "purchases.address_checker.description" = "Stay Legit and Compliant";
 "purchases.address_checker.info" = "Protect yourself from risky and sanctioned entities. Blacklist Checker automatically screens recipient addresses against high-risk databases, flagging scams, frauds, and sanctioned entities before you send. If an address is blacklisted, you’ll know before making a costly mistake. Secure your transactions. Keep your crypto clean. Stay compliant.";
-
-"purchases.privacy_mode" = "Privacy Mode";
-"purchases.privacy_mode.description" = "Full disconnection from data collection.";
-"purchases.privacy_mode.info" = "Privacy Mode enhances user confidentiality by masking wallet balances, transaction history, and other sensitive details. This feature ensures that third parties cannot view or track user activity, providing a discreet and secure experience for those who value privacy.";
 
 "purchases.vip_support" = "VIP Group";
 "purchases.vip_support.description" = "Vote on the Future of Unstoppable";

@@ -59,6 +59,13 @@ extension Token {
     var fullBadge: String {
         (badge ?? "coin_platforms.native".localized).uppercased()
     }
+
+    var sendToSelfAllowed: Bool {
+        if case .native = type, blockchainType == .zcash { return false }
+        if blockchainType == .tron { return false }
+
+        return true
+    }
 }
 
 extension Token: Comparable {

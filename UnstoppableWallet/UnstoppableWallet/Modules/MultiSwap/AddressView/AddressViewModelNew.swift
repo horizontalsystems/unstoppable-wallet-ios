@@ -205,5 +205,12 @@ enum AddressInput {
             case let .invalid(failure): return failure.text
             }
         }
+
+        var isInvalid: Bool {
+            switch self {
+            case .invalid: return true
+            default: return false
+            }
+        }
     }
 }

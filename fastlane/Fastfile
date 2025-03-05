@@ -125,6 +125,7 @@ def apply_dev_xcconfig
   update_dev_xcconfig('chainalysis_api_key', XCCONFIG_DEV_CHAINALYSIS_API_KEY)
   update_dev_xcconfig('defiyield_api_key', XCCONFIG_DEV_DEFIYIELD_API_KEY)
   update_dev_xcconfig('etherscan_api_keys', XCCONFIG_DEV_ETHERSCAN_API_KEYS)
+  update_dev_xcconfig('era_zksync_api_keys', XCCONFIG_DEV_ERA_ZKSYNC_API_KEYS)
   update_dev_xcconfig('ftmscan_api_keys', XCCONFIG_DEV_FTMSCAN_API_KEYS)
   update_dev_xcconfig('gnosisscan_api_keys', XCCONFIG_DEV_GNOSISSCAN_API_KEYS)
   update_dev_xcconfig('hashdit_api_key', XCCONFIG_DEV_HASHDIT_API_KEY)

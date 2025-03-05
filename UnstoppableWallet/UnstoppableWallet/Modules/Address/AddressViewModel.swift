@@ -5,6 +5,7 @@ import MarketKit
 class AddressViewModel: ObservableObject {
     private let purchaseManager = App.shared.purchaseManager
     let token: Token
+    private let destination: Destination
     let issueTypes: [AddressSecurityIssueType]
     let contacts: [Contact]
     let recentContact: Contact?
@@ -31,8 +32,9 @@ class AddressViewModel: ObservableObject {
         }
     }
 
-    init(token: Token, address: String?) {
+    init(token: Token, destination: AddressViewModel.Destination, address: String?) {
         self.token = token
+        self.destination = destination
         issueTypes = AddressSecurityIssueType.issueTypes(token: token)
 
         let contacts = App.shared.contactManager.contacts(blockchainUid: token.blockchainType.uid)
@@ -72,17 +74,28 @@ class AddressViewModel: ObservableObject {
         switch addressResult {
         case .idle:
             state = .empty
-        case .loading, .invalid:
-            state = .invalid
+        case .loading:
+            state = .invalid(nil)
+        case .invalid:
+            state = .invalid(nil)
         case let .valid(success):
-            if premiumEnabled {
-                check(address: success.address)
+            if case let .send(fromAddress) = destination, fromAddress == success.address.raw, !token.sendToSelfAllowed {
+                state = .invalid(CautionNew(
+                    title: "send.address.invalid_address".localized,
+                    text: "send.address_error.own_address".localized(token.coin.code),
+                    type: .error
+                )
+                )
             } else {
-                for type in issueTypes {
-                    checkStates[type] = .locked
-                }
+                if premiumEnabled {
+                    check(address: success.address)
+                } else {
+                    for type in issueTypes {
+                        checkStates[type] = .locked
+                    }
 
-                state = .valid(resolvedAddress: ResolvedAddress(address: address, issueTypes: []))
+                    state = .valid(resolvedAddress: ResolvedAddress(address: address, issueTypes: []))
+                }
             }
         }
     }
@@ -140,7 +153,7 @@ class AddressViewModel: ObservableObject {
 extension AddressViewModel {
     enum State {
         case empty
-        case invalid
+        case invalid(CautionNew?)
         case checking
         case valid(resolvedAddress: ResolvedAddress)
     }
@@ -151,6 +164,11 @@ extension AddressViewModel {
         case detected
         case notAvailable
         case locked
+    }
+
+    enum Destination {
+        case swap
+        case send(fromAddress: String?)
     }
 
     struct Contact: Identifiable {

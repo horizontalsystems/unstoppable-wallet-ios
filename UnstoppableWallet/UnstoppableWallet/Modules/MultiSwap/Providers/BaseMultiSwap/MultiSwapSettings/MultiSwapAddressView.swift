@@ -46,7 +46,7 @@ struct MultiSwapAddressView: View {
         .sheet(isPresented: $addressPresented) {
             ThemeNavigationView {
                 ThemeView {
-                    AddressView(token: viewModel.token, buttonTitle: "button.done".localized, address: viewModel.address) { resolvedAddress in
+                    AddressView(token: viewModel.token, buttonTitle: "button.done".localized, destination: .swap, address: viewModel.address) { resolvedAddress in
                         viewModel.address = resolvedAddress.address
                         addressPresented = false
                     }

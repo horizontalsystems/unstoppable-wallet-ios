@@ -10,10 +10,17 @@ struct AddressView: View {
 
     @Environment(\.presentationMode) private var presentationMode
     @State var subscriptionPresented = false
-    @State var clearInfo: InfoDescription?
+    @State var checkDescription: InfoDescription?
 
-    init(token: Token, buttonTitle: String, address: String? = nil, onFinish: @escaping (ResolvedAddress) -> Void) {
-        _viewModel = StateObject(wrappedValue: AddressViewModel(token: token, address: address))
+    var borderColor: Color {
+        switch viewModel.addressResult {
+        case .invalid: return .themeLucian
+        default: return .themeSteel20
+        }
+    }
+
+    init(token: Token, buttonTitle: String, destination: AddressViewModel.Destination, address: String? = nil, onFinish: @escaping (ResolvedAddress) -> Void) {
+        _viewModel = StateObject(wrappedValue: AddressViewModel(token: token, destination: destination, address: address))
         self.buttonTitle = buttonTitle
         self.onFinish = onFinish
     }
@@ -28,47 +35,55 @@ struct AddressView: View {
                             showContacts: true
                         ),
                         text: $viewModel.address,
-                        result: $viewModel.addressResult
+                        result: $viewModel.addressResult,
+                        borderColor: Binding(get: { borderColor }, set: { _ in })
                     )
                     .padding(.bottom, .margin12)
 
-                    switch viewModel.state {
-                    case .empty, .invalid:
-                        if let recentContact = viewModel.recentContact {
-                            ListSectionHeader2(text: "send.address.recent".localized)
-                            ListSection {
-                                row(contact: recentContact)
-                            }
-                            .themeListStyle(.bordered)
+                    if case let .invalid(caution) = viewModel.state, let caution {
+                        VStack(spacing: .margin12) {
+                            HighlightedTextView(caution: caution)
                         }
-
-                        if !viewModel.contacts.isEmpty {
-                            ListSectionHeader2(text: "send.address.contacts".localized)
-                            ListSection {
-                                ForEach(viewModel.contacts) { row(contact: $0) }
-                            }
-                            .themeListStyle(.bordered)
-                        }
-                    case .checking, .valid:
-                        ListSection {
-                            VStack(spacing: 0) {
-                                ForEach(viewModel.issueTypes) { type in
-                                    checkView(title: type.checkTitle, clearInfo: type.clearInfo, state: viewModel.checkStates[type] ?? .notAvailable)
-                                }
-                            }
-                        }
-                        .themeListStyle(.bordered)
                         .padding(.top, .margin16)
+                    } else {
+                        switch viewModel.state {
+                        case .empty, .invalid:
+                            if let recentContact = viewModel.recentContact {
+                                ListSectionHeader2(text: "send.address.recent".localized)
+                                ListSection {
+                                    row(contact: recentContact)
+                                }
+                                .themeListStyle(.bordered)
+                            }
 
-                        let cautions = viewModel.issueTypes.filter { viewModel.checkStates[$0] == .detected }.map(\.caution)
-
-                        if !cautions.isEmpty {
-                            VStack(spacing: .margin12) {
-                                ForEach(cautions.indices, id: \.self) { index in
-                                    HighlightedTextView(caution: cautions[index])
+                            if !viewModel.contacts.isEmpty {
+                                ListSectionHeader2(text: "send.address.contacts".localized)
+                                ListSection {
+                                    ForEach(viewModel.contacts) { row(contact: $0) }
+                                }
+                                .themeListStyle(.bordered)
+                            }
+                        case .checking, .valid:
+                            ListSection {
+                                VStack(spacing: 0) {
+                                    ForEach(viewModel.issueTypes) { type in
+                                        checkView(title: type.checkTitle, checkDescription: type.description, state: viewModel.checkStates[type] ?? .notAvailable)
+                                    }
                                 }
                             }
+                            .themeListStyle(.bordered)
                             .padding(.top, .margin16)
+
+                            let cautions = viewModel.issueTypes.filter { viewModel.checkStates[$0] == .detected }.map(\.caution)
+
+                            if !cautions.isEmpty {
+                                VStack(spacing: .margin12) {
+                                    ForEach(cautions.indices, id: \.self) { index in
+                                        HighlightedTextView(caution: cautions[index])
+                                    }
+                                }
+                                .padding(.top, .margin16)
+                            }
                         }
                     }
                 }
@@ -98,7 +113,7 @@ struct AddressView: View {
         .sheet(isPresented: $subscriptionPresented) {
             PurchasesView()
         }
-        .bottomSheet(item: $clearInfo) { info in
+        .bottomSheet(item: $checkDescription) { info in
             BottomSheetView(
                 icon: .info,
                 title: info.title,
@@ -107,10 +122,10 @@ struct AddressView: View {
                 ],
                 buttons: [
                     .init(style: .yellow, title: "button.close".localized) {
-                        clearInfo = nil
+                        checkDescription = nil
                     },
                 ],
-                onDismiss: { clearInfo = nil }
+                onDismiss: { checkDescription = nil }
             )
         }
     }
@@ -130,9 +145,9 @@ struct AddressView: View {
         }
     }
 
-    @ViewBuilder private func checkView(title: String, clearInfo: InfoDescription, state: AddressViewModel.CheckState) -> some View {
+    @ViewBuilder private func checkView(title: String, checkDescription: InfoDescription, state: AddressViewModel.CheckState) -> some View {
         HStack(spacing: .margin8) {
-            HStack(spacing: 2) {
+            HStack(spacing: .margin8) {
                 Image("star_premium_20").themeIcon(color: .themeJacob)
                 Text(title).textSubhead2()
             }
@@ -145,7 +160,6 @@ struct AddressView: View {
             case .clear:
                 HStack(spacing: .margin8) {
                     Text("send.address.check.clear".localized).textSubhead2(color: .themeRemus)
-                    Image("circle_information_20").themeIcon()
                 }
             case .detected:
                 Text("send.address.check.detected".localized).textSubhead2(color: .themeLucian)
@@ -160,9 +174,8 @@ struct AddressView: View {
         .contentShape(Rectangle())
         .onTapGesture {
             switch state {
-            case .clear: self.clearInfo = clearInfo
             case .locked: subscriptionPresented = true
-            default: ()
+            default: self.checkDescription = checkDescription
             }
         }
     }

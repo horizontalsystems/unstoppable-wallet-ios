@@ -17,27 +17,11 @@ enum AddressSecurityIssueType: CaseIterable, Identifiable {
         }
     }
 
-    var clearInfo: InfoDescription {
+    var description: InfoDescription {
         switch self {
-        case .phishing: return .init(title: "send.address.phishing.clear.title".localized, description: "send.address.phishing.clear.description".localized)
-        case .sanctioned: return .init(title: "send.address.blacklist.clear.title".localized, description: "send.address.blacklist.clear.description".localized)
-        case .blacklisted: return .init(title: "send.address.blacklist.clear.title".localized, description: "send.address.blacklist.clear.description".localized)
-        }
-    }
-
-    var preSendTitle: String {
-        switch self {
-        case .phishing: return "send.address.phishing.pre_send.title".localized
-        case .sanctioned: return "send.address.sanction.pre_send.title".localized
-        case .blacklisted: return "send.address.blacklist.pre_send.title".localized
-        }
-    }
-
-    var preSendDescription: String {
-        switch self {
-        case .phishing: return "send.address.phishing.pre_send.description".localized
-        case .sanctioned: return "send.address.sanction.pre_send.description".localized
-        case .blacklisted: return "send.address.blacklist.pre_send.description".localized
+        case .phishing: return .init(title: "send.address.phishing_check".localized, description: "send.address.phishing.description".localized)
+        case .sanctioned: return .init(title: "send.address.sanction_check".localized, description: "send.address.sanction.description".localized)
+        case .blacklisted: return .init(title: "send.address.blacklist_check".localized, description: "send.address.blacklist.description".localized)
         }
     }
 
