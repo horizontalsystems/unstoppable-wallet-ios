@@ -434,7 +434,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.available_balance" = "Verfügbares Guthaben";
 "send.max_button" = "Max.";
 "send.next_button" = "Weiter";
-"send.check_button" = "Check";
+"send.check_button" = "Prüfen";
 "send.error.invalid" = "Ungültig";
 "send.error.invalid_blockchain" = "Ungültige Blockchain";
 "send.error.invalid_token" = "Ungültiges Token";
@@ -541,9 +541,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.continue_anyway" = "Continue Anyway";
 
 "send.address.enter_address" = "Adresse eingeben";
-"send.address.invalid_address" = "Invalid Address";
+"send.address.invalid_address" = "Ungültige Adresse";
 "send.address.recent" = "Recent";
-"send.address.contacts" = "Contacts";
+"send.address.contacts" = "Kontakte";
 "send.address.checking" = "Checking";
 "send.address.check.clear" = "Clear";
 "send.address.check.detected" = "Detected";
@@ -666,7 +666,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "swap.advanced_settings.service_fee_description" = "Eine Service-Gebühr für die Swap-Aktion auf der Plattform typischerweise entweder 0,3% oder 0,6%";
 "swap.advanced_settings.error.lower_slippage" = "Ihre Transaktion wird wahrscheinlich fehlschlagen.";
 "swap.advanced_settings.error.higher_slippage" = "Die Slippage-Toleranz darf nicht mehr als %@%% betragen";
-"swap.advanced_settings.error.invalid_address" = "Invalid Address";
+"swap.advanced_settings.error.invalid_address" = "Ungültige Adresse";
 "swap.advanced_settings.error.invalid_slippage" = "Ungültige Slippage";
 "swap.advanced_settings.error.invalid_deadline" = "Ungültige Frist";
 
@@ -1424,7 +1424,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "backup_app.backup_list.header.other" = "Andere";
 "backup_app.backup_list.other.watch_account.title" = "Watch-Adresse";
 "backup_app.backup_list.other.watchlist.title" = "Merkliste";
-"backup_app.backup_list.other.contacts.title" = "Contacts";
+"backup_app.backup_list.other.contacts.title" = "Kontakte";
 "backup_app.backup_list.other.blockchain_settings.title" = "Eigener RPC";
 "backup_app.backup_list.other.app_settings.title" = "App-Einstellungen";
 "backup_app.backup_list.other.app_settings.description" = "Sprache, Währung, Erscheinung ...";
@@ -1639,7 +1639,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Settings -> Contacts
 
-"contacts.title" = "Contacts";
+"contacts.title" = "Kontakte";
 "contacts.list.search_placeholder" = "Nach Namen suchen";
 "contacts.list.not_found" = "Sie haben keinen neuen Kontakt";
 "contacts.list.not_found_search" = "Keine Ergebnisse gefunden";
