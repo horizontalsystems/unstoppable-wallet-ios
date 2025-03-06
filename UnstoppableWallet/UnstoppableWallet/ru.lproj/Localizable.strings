@@ -1343,7 +1343,7 @@
 "settings.tab_bar_item" = "Настройки";
 "settings.manage_accounts" = "Кошельки";
 "settings.blockchain_settings" = "Настройки блокчейна";
-"settings.backup_manager" = "Резерв. копирования";
+"settings.backup_manager" = "Резерв.копирование";
 "settings.security" = "Безопасность";
 "settings.personal_support" = "Персональная поддержка";
 "settings.base_currency" = "Базовая валюта";
@@ -1410,7 +1410,7 @@
 
 // Settings -> Backup Manager
 
-"backup_app.backup_manager.title" = "Резерв. копирования";
+"backup_app.backup_manager.title" = "Резерв.копирование";
 "backup_app.backup_manager.restore" = "Восстановить резервную копию";
 "backup_app.backup_manager.create" = "Создать новую резерв. копию";
 
@@ -1586,7 +1586,7 @@
 
 // Settings -> Privacy
 
-"settings.privacy" = "Приватность";
+"settings.privacy" = "Конфиденциальность";
 "settings.privacy.description" = "%@ не собирает персональные данные, которые могут раскрывать вашу частную информацию, такую как балансы монет или адреса. Мы собираем некоторую статистику использования интерфейса исключительно для понимания нашей пользовательской базы и тенденций использования приложения. Эта функция может быть отключена по вашему желанию.";
 "settings.privacy.allow" = "Поделиться данными UI";
 "settings.privacy.allow.description" = "Эта настройка позволяет отключить аналитику UI/UX и обеспечить полную конфиденциальность.";
