@@ -824,7 +824,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "top_platforms.description" = "Líder de plataformas blockchain por mercado acumulado de proyectos construidos arriba.";
 
 "top_platform.title" = "Ecosistema %@";
-"top_platform.description" = "Límite de mercado de todos los protocolos en la cadena %@";
 "top_platform.total_cap" = "Capitalización Total";
 
 
@@ -939,7 +938,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.global.total_market_cap.description" = "Valor total del mercado de todas las criptomonedas";
 
 "market.global.volume_24h.title" = "Volumen de 24 horas";
-"market.global.volume_24h.description" = "El volumen de operaciones 24h del mercado de criptomonedas";
+"market.global.volume_24h.description" = "The 24-hour trading volume of the crypto market";
 
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.defi_cap.description" = "Valor total del mercado de proyectos DeFi";
