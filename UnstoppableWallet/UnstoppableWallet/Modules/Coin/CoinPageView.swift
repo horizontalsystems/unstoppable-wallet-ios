@@ -67,7 +67,7 @@ struct CoinPageView: View {
                     Button(action: {
                         viewModel.isFavorite.toggle()
                     }) {
-                        Image(viewModel.isFavorite ? "heart_filled_24" : "heart_24")
+                        Image(viewModel.isFavorite ? "heart_fill_24" : "heart_24")
                             .renderingMode(.template)
                             .foregroundColor(viewModel.isFavorite ? .themeJacob : .themeGray)
                     }
