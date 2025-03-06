@@ -824,7 +824,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "top_platforms.description" = "Üzerine kurulmuş projelerin oluşturduğu kümülatif pazarla lider blok zinciri platformları.";
 
 "top_platform.title" = "%@ Ekosistemi";
-"top_platform.description" = "%@ zincirindeki tüm protokollerin piyasa değeri";
 "top_platform.total_cap" = "Toplam Piyasa Değeri";
 
 
@@ -939,7 +938,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.global.total_market_cap.description" = "Tüm kripto paraların toplam piyasa değeri";
 
 "market.global.volume_24h.title" = "24 saat hacim";
-"market.global.volume_24h.description" = "Kripto piyasa 24 saatlik işlem hacmi";
+"market.global.volume_24h.description" = "The 24-hour trading volume of the crypto market";
 
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.defi_cap.description" = "DeFi projelerinin toplam piyasa değeri";
