@@ -824,7 +824,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "top_platforms.description" = "Les meilleures plateformes blockchain en fonction du marché cumulé des projets bâtis sur celles-ci.";
 
 "top_platform.title" = "Écosystème %@";
-"top_platform.description" = "Capitalisation boursière de tous les protocoles de la chaîne %@";
 "top_platform.total_cap" = "Cap Totale";
 
 
@@ -939,7 +938,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "market.global.total_market_cap.description" = "Valeur de marché totale de toutes les cryptomonnaies";
 
 "market.global.volume_24h.title" = "Volume des dernières 24h";
-"market.global.volume_24h.description" = "Le volume de trading de 24h du marché des cryptomonnaies";
+"market.global.volume_24h.description" = "The 24-hour trading volume of the crypto market";
 
 "market.global.defi_cap.title" = "Cap DeFi";
 "market.global.defi_cap.description" = "Valeur de marché totale des projets DeFi";
