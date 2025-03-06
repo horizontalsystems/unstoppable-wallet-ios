@@ -132,9 +132,11 @@ struct MarketSectorsView: View {
     }
 
     @ViewBuilder private func itemContent(coins: [Coin?], name: String, marketCap: String, diff: Decimal?) -> some View {
+        let coins = Array(coins.prefix(coinCount).reversed())
+
         ZStack(alignment: .leading) {
-            ForEach(Array(coins.prefix(coinCount).reversed().enumerated()), id: \.element) { index, coin in
-                icon(coin: coin)
+            ForEach(coins.indices, id: \.self) { index in
+                icon(coin: coins[index])
                     .padding(.leading, CGFloat(coinCount - 1 - index) * 22)
             }
         }

@@ -23,19 +23,10 @@ struct MarketPlatformViewNew: View {
             ThemeView {
                 switch viewModel.state {
                 case .loading:
-                    VStack(spacing: 0) {
-                        header()
-                        Spacer()
-                        ProgressView()
-                        Spacer()
-                    }
+                    ProgressView()
                 case let .loaded(marketInfos):
                     ScrollViewReader { proxy in
                         ThemeList(bottomSpacing: .margin16, invisibleTopView: true) {
-                            header()
-                                .listRowBackground(Color.clear)
-                                .listRowInsets(EdgeInsets())
-                                .listRowSeparator(.hidden)
                             chart()
                                 .listRowBackground(Color.clear)
                                 .listRowInsets(EdgeInsets())
@@ -46,15 +37,12 @@ struct MarketPlatformViewNew: View {
                         .onChange(of: viewModel.sortBy) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
                     }
                 case .failed:
-                    VStack(spacing: 0) {
-                        header()
-
-                        SyncErrorView {
-                            viewModel.sync()
-                        }
+                    SyncErrorView {
+                        viewModel.sync()
                     }
                 }
             }
+            .navigationTitle("top_platform.title".localized(viewModel.platform.blockchain.name))
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -68,22 +56,6 @@ struct MarketPlatformViewNew: View {
                     .onFirstAppear { stat(page: .globalMetricsTvlInDefi, event: .openCoin(coinUid: coin.uid)) }
             }
         }
-    }
-
-    @ViewBuilder private func header() -> some View {
-        HStack(spacing: .margin32) {
-            VStack(spacing: .margin8) {
-                Text("top_platform.title".localized(viewModel.platform.blockchain.name)).themeHeadline1()
-                Text("top_platform.description".localized(viewModel.platform.blockchain.name)).themeSubhead2()
-            }
-            .padding(.vertical, .margin12)
-
-            KFImage.url(URL(string: viewModel.platform.blockchain.type.imageUrl))
-                .resizable()
-                .frame(width: .iconSize32, height: .iconSize32)
-        }
-        .padding(.leading, .margin16)
-        .padding(.trailing, .margin16)
     }
 
     @ViewBuilder private func chart() -> some View {

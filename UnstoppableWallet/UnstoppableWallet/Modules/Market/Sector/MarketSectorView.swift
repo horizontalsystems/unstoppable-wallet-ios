@@ -8,6 +8,7 @@ struct MarketSectorView: View {
     @StateObject var watchlistViewModel: WatchlistViewModel
     @Binding var isPresented: Bool
 
+    @State private var infoPresented = false
     @State private var sortBySelectorPresented = false
     @State private var presentedCoin: Coin?
 
@@ -23,19 +24,10 @@ struct MarketSectorView: View {
             ThemeView {
                 switch viewModel.state {
                 case .loading:
-                    VStack(spacing: 0) {
-                        header()
-                        Spacer()
-                        ProgressView()
-                        Spacer()
-                    }
+                    ProgressView()
                 case let .loaded(marketInfos):
                     ScrollViewReader { proxy in
                         ThemeList(bottomSpacing: .margin16, invisibleTopView: true) {
-                            header()
-                                .listRowBackground(Color.clear)
-                                .listRowInsets(EdgeInsets())
-                                .listRowSeparator(.hidden)
                             chart()
                                 .listRowBackground(Color.clear)
                                 .listRowInsets(EdgeInsets())
@@ -46,20 +38,27 @@ struct MarketSectorView: View {
                         .onChange(of: viewModel.sortBy) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
                     }
                 case .failed:
-                    VStack(spacing: 0) {
-                        header()
-
-                        SyncErrorView {
-                            viewModel.sync()
-                        }
+                    SyncErrorView {
+                        viewModel.sync()
                     }
                 }
             }
+            .navigationTitle(viewModel.sector.name)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .navigationBarLeading) {
                     Button("button.close".localized) {
                         isPresented = false
+                    }
+                }
+
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button(action: {
+                        infoPresented = true
+                    }) {
+                        Image("circle_information_24")
+                            .renderingMode(.template)
+                            .foregroundColor(.themeJacob)
                     }
                 }
             }
@@ -67,23 +66,22 @@ struct MarketSectorView: View {
                 CoinPageView(coin: coin)
                     .onFirstAppear { stat(page: .globalMetricsTvlInDefi, event: .openCoin(coinUid: coin.uid)) }
             }
-        }
-    }
-
-    @ViewBuilder private func header() -> some View {
-        HStack(spacing: .margin32) {
-            VStack(spacing: .margin8) {
-                Text(viewModel.sector.name).themeHeadline1()
-                Text(viewModel.sectorDesctiprion).themeSubhead2()
+            .bottomSheet(isPresented: $infoPresented) {
+                BottomSheetView(
+                    icon: .info,
+                    title: viewModel.sector.name,
+                    items: [
+                        .text(text: viewModel.sectorDesctiprion),
+                    ],
+                    buttons: [
+                        .init(style: .yellow, title: "button.close".localized) {
+                            infoPresented = false
+                        },
+                    ],
+                    onDismiss: { infoPresented = false }
+                )
             }
-            .padding(.vertical, .margin12)
-
-            KFImage.url(URL(string: viewModel.sector.imageUrl))
-                .resizable()
-                .frame(width: .iconSize32, height: .iconSize32)
         }
-        .padding(.leading, .margin16)
-        .padding(.trailing, .margin16)
     }
 
     @ViewBuilder private func chart() -> some View {
