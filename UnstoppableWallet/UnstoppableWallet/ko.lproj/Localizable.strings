@@ -822,7 +822,6 @@
 "top_platforms.description" = "상위에 구축된 프로젝트들의 누적 시장을 기준으로 한 선도적인 블록체인 플랫폼.";
 
 "top_platform.title" = "%@ 생태계";
-"top_platform.description" = "%@ 체인상의 모든 프로토콜의 시가총액";
 "top_platform.total_cap" = "시가 총액";
 
 
@@ -937,7 +936,7 @@
 "market.global.total_market_cap.description" = "모든 암호화폐의 총 시장 가치\" or \"모든 가상 화폐의 총 시장 가치";
 
 "market.global.volume_24h.title" = "24시간 거래량";
-"market.global.volume_24h.description" = "암호화폐 시장의 24시간 거래량\" or \"가상 화폐 시장의 24시간 거래량";
+"market.global.volume_24h.description" = "The 24-hour trading volume of the crypto market";
 
 "market.global.defi_cap.title" = "디파이(DeFi) 시가총액";
 "market.global.defi_cap.description" = "디파이 프로젝트의 총 시장 가치";
