@@ -54,18 +54,18 @@ extension BlockchainType {
             .tron,
             .ton,
             .polygon,
+            .arbitrumOne,
+            .optimism,
             .base,
             .avalanche,
+            .gnosis,
             .zkSync,
             .zcash,
             .bitcoinCash,
-            .ecash,
             .litecoin,
             .dash,
-            .gnosis,
+            .ecash,
             .fantom,
-            .arbitrumOne,
-            .optimism,
         ]
 
         return blockchainTypes.firstIndex(of: self) ?? Int.max
