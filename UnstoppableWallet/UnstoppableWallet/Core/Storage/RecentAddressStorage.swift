@@ -13,9 +13,13 @@ class RecentAddressStorage {
     var migrator: DatabaseMigrator {
         var migrator = DatabaseMigrator()
 
-        migrator.registerMigration("Create RecentAddress") { db in
+        migrator.registerMigration("Recreate RecentAddress") { db in
+            if try db.tableExists(RecentAddress.databaseTableName) {
+                try db.drop(table: RecentAddress.databaseTableName)
+            }
+
             try db.create(table: RecentAddress.databaseTableName) { t in
-                t.column(RecentAddress.Columns.blockchainUid.name, .text).primaryKey()
+                t.column(RecentAddress.Columns.blockchainUid.name, .text).primaryKey(onConflict: .replace)
                 t.column(RecentAddress.Columns.address.name, .text).notNull()
             }
         }
