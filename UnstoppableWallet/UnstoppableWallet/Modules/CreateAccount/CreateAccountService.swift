@@ -38,8 +38,12 @@ class CreateAccountService {
             TokenQuery(blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84)), // TODO: make derivation supports accountType
             TokenQuery(blockchainType: .ethereum, tokenType: .native),
             TokenQuery(blockchainType: .binanceSmartChain, tokenType: .native),
+            TokenQuery(blockchainType: .tron, tokenType: .native),
+            TokenQuery(blockchainType: .polygon, tokenType: .native),
             TokenQuery(blockchainType: .ethereum, tokenType: .eip20(address: "0xdac17f958d2ee523a2206206994597c13d831ec7")), // USDT
-            TokenQuery(blockchainType: .binanceSmartChain, tokenType: .eip20(address: "0xe9e7cea3dedca5984780bafc599bd69add087d56")), // BUSD
+            TokenQuery(blockchainType: .binanceSmartChain, tokenType: .eip20(address: "0x55d398326f99059fF775485246999027B3197955")), // USDT
+            TokenQuery(blockchainType: .tron, tokenType: .eip20(address: "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t")), // USDT
+            TokenQuery(blockchainType: .base, tokenType: .eip20(address: "0xdac17f958d2ee523a2206206994597c13d831ec7")), // USDC
         ]
 
         var wallets = [Wallet]()

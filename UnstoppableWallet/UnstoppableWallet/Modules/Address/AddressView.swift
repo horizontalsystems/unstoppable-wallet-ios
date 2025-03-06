@@ -77,7 +77,7 @@ struct AddressView: View {
                             let cautions = viewModel.issueTypes.filter { viewModel.checkStates[$0] == .detected }.map(\.caution)
 
                             if !cautions.isEmpty {
-                                VStack(spacing: .margin12) {
+                                VStack(spacing: .margin16) {
                                     ForEach(cautions.indices, id: \.self) { index in
                                         HighlightedTextView(caution: cautions[index])
                                     }
