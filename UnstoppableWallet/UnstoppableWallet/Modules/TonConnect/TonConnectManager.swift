@@ -64,7 +64,7 @@ class TonConnectManager {
             tonConnectApps = []
         }
 
-        start()
+//        start()
     }
 
     public func start() {
