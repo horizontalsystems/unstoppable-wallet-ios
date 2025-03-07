@@ -46,20 +46,15 @@ class PurchaseManager: NSObject {
     }
 
     private func updatePurchasedProducts() async {
-        print("UPDATE PURCHASED PRODUCTS")
 
         for await verificationResult in Transaction.currentEntitlements {
-            print("HANDLE FROM UPDATE: \(verificationResult)")
             handle(verificationResult: verificationResult)
         }
-
-        print("FINISH")
     }
 
     private func observeTransactionUpdates() {
         updatesTask = Task(priority: .background) { [weak self] in
             for await verificationResult in Transaction.updates {
-                print("HANDLE FROM OBSERVE: \(verificationResult)")
                 self?.handle(verificationResult: verificationResult)
             }
 
@@ -83,7 +78,6 @@ class PurchaseManager: NSObject {
 
     private func syncProducts() {
         productData = products.compactMap { ProductData(product: $0) }
-        print("PRODUCTS:")
         print(productData)
     }
 
@@ -93,7 +87,6 @@ class PurchaseManager: NSObject {
             .compactMap { PurchaseData(transaction: $0) }
             .sorted { $0.type.order < $1.type.order }
 
-        print("PURCHASES:")
         print(purchaseData)
 
         activeFeatures = activePurchase != nil ? PremiumFeature.allCases : []
@@ -138,7 +131,6 @@ extension PurchaseManager {
         case let .success(verificationResult):
             switch verificationResult {
             case let .verified(transaction):
-                print("VERIFIED")
                 await transaction.finish()
                 await updatePurchasedProducts()
             case .unverified:
