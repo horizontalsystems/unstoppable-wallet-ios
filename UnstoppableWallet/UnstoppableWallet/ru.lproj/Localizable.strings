@@ -940,7 +940,7 @@
 "market.global.total_market_cap.description" = "Общая рыночная стоимость всех криптовалют";
 
 "market.global.volume_24h.title" = "Объем торгов (24ч)";
-"market.global.volume_24h.description" = "The 24-hour trading volume of the crypto market";
+"market.global.volume_24h.description" = "24-часовой объем крипторынка";
 
 "market.global.defi_cap.title" = "Капитализация DeFi";
 "market.global.defi_cap.description" = "Общая рыночная стоимость проектов DeFi";
