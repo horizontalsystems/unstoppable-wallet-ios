@@ -43,7 +43,7 @@ class CreateAccountService {
             TokenQuery(blockchainType: .ethereum, tokenType: .eip20(address: "0xdac17f958d2ee523a2206206994597c13d831ec7")), // USDT
             TokenQuery(blockchainType: .binanceSmartChain, tokenType: .eip20(address: "0x55d398326f99059fF775485246999027B3197955")), // USDT
             TokenQuery(blockchainType: .tron, tokenType: .eip20(address: "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t")), // USDT
-            TokenQuery(blockchainType: .base, tokenType: .eip20(address: "0xdac17f958d2ee523a2206206994597c13d831ec7")), // USDC
+            TokenQuery(blockchainType: .base, tokenType: .eip20(address: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913")), // USDC
         ]
 
         var wallets = [Wallet]()
