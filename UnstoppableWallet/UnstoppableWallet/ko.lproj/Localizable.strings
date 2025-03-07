@@ -536,29 +536,29 @@
 "send.token_syncing" = "토큰 동기화 중";
 "send.token_not_synced" = "토큰 동기화되지 않음";
 "send.insufficient_balance" = "잔액 부족";
-"send.continue_anyway" = "Continue Anyway";
+"send.continue_anyway" = "계속 진행하기";
 
 "send.address.enter_address" = "주소 입력";
-"send.address.invalid_address" = "Invalid Address";
-"send.address.recent" = "Recent";
+"send.address.invalid_address" = "유효하지 않은 주소";
+"send.address.recent" = "최근";
 "send.address.contacts" = "연락처";
-"send.address.checking" = "Checking";
-"send.address.check.clear" = "Clear";
-"send.address.check.detected" = "Detected";
-"send.address.risky.title" = "Risky Address!";
-"send.address.risky.description" = "You are about to send funds to a high-risk address. Proceeding may result in loss of funds or other security risks. By continuing, you accept the potential dangers. Are you sure you want to proceed?";
-"send.address.phishing_check" = "Phishing Check";
-"send.address.phishing.description" = "Analyzes the provided destination address for potential phishing risks.\n\nClear: No suspicious activity detected.\n\nDetected: It appears that someone may be trying to trick you into sending funds to an incorrect address. Do not proceed unless absolutely certain that the address is correct. Consider sending a small test transaction first.";
-"send.address.phishing.caution.title" = "Phishing Address Detected!";
-"send.address.phishing.caution.description" = "The address you entered may be fraudulent. Scammers often alter the first and last characters. Verify the full address carefully before proceeding to avoid loss.";
-"send.address.sanction_check" = "Sanction Check";
-"send.address.sanction.description" = "Verifies whether the recipient’s address is subject to international sanctions, using data from Chainalysis.com.\n\nClear: No sanctions detected.\n\n Detected: Potential legal risk. Transactions with this address may be restricted or illegal in certain jurisdictions.";
-"send.address.sanction.caution.title" = "Sanctioned Address!";
-"send.address.sanction.caution.description" = "The address you entered is flagged as sanctioned. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
-"send.address.blacklist_check" = "Blacklist Check";
-"send.address.blacklist.description" = "Checks if the destination address is listed on official or unofficial blacklists.\n\nClear: No blacklist flags.\n\nDetected: The address is blacklisted and may be associated with legal or security risks. Proceed with caution. Many crypto exchanges restrict users who deposit or withdraw funds from wallets that have interacted with blacklisted addresses. Keep that in mind.";
-"send.address.blacklist.caution.title" = "Blacklisted Address!";
-"send.address.blacklist.caution.description" = "The address you entered is flagged as blacklisted. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
+"send.address.checking" = "확인 중";
+"send.address.check.clear" = "안전함";
+"send.address.check.detected" = "감지됨";
+"send.address.risky.title" = "위험한 주소!";
+"send.address.risky.description" = "고위험 주소로 자금을 보내려고 합니다. 진행하면 자금 손실이나 기타 보안 위험이 발생할 수 있습니다. 계속 진행하면 잠재적 위험을 수락하는 것입니다. 정말로 진행하시겠습니까?";
+"send.address.phishing_check" = "피싱 확인";
+"send.address.phishing.description" = "제공된 목적지 주소의 잠재적 피싱 위험을 분석합니다.\n\n안전함: 의심스러운 활동이 감지되지 않았습니다.\n\n감지됨: 누군가 잘못된 주소로 자금을 보내도록 속이려는 시도가 있는 것 같습니다. 주소가 정확하다고 확신하지 않는 한 진행하지 마세요. 먼저 소액 테스트 트랜잭션을 보내는 것을 고려해 보세요.";
+"send.address.phishing.caution.title" = "피싱 주소 감지됨!";
+"send.address.phishing.caution.description" = "입력한 주소가 사기성일 수 있습니다. 사기꾼들은 종종 처음과 마지막 문자를 변경합니다. 손실을 방지하기 위해 진행하기 전에 전체 주소를 주의 깊게 확인하세요.";
+"send.address.sanction_check" = "제재 확인";
+"send.address.sanction.description" = "수신자의 주소가 Chainalysis.com의 데이터를 사용하여 국제 제재 대상인지 확인합니다.\n\n안전함: 제재가 감지되지 않았습니다.\n\n감지됨: 잠재적 법적 위험. 이 주소와의 거래는 특정 관할권에서 제한되거나 불법일 수 있습니다.";
+"send.address.sanction.caution.title" = "제재 대상 주소!";
+"send.address.sanction.caution.description" = "입력한 주소가 제재 대상으로 표시되어 있습니다. 이 주소로의 거래는 손실이나 기타 위험을 초래할 수 있습니다. 진행하기 전에 수신자 정보를 확인하세요.";
+"send.address.blacklist_check" = "블랙리스트 확인";
+"send.address.blacklist.description" = "목적지 주소가 공식 또는 비공식 블랙리스트에 등록되어 있는지 확인합니다.\n\n안전함: 블랙리스트 표시가 없습니다.\n\n감지됨: 해당 주소는 블랙리스트에 등록되어 있으며 법적 또는 보안 위험과 관련되어 있을 수 있습니다. 주의하여 진행하세요. 많은 암호화폐 거래소는 블랙리스트에 등록된 주소와 상호 작용한 지갑에서 자금을 입금하거나 출금하는 사용자를 제한합니다. 이 점을 염두에 두세요.";
+"send.address.blacklist.caution.title" = "블랙리스트 등록 주소!";
+"send.address.blacklist.caution.description" = "입력한 주소가 블랙리스트에 등록된 것으로 표시되어 있습니다. 이 주소로의 거래는 손실이나 기타 위험을 초래할 수 있습니다. 진행하기 전에 수신자 정보를 확인하세요.";
 
 // Donate
 
@@ -1619,22 +1619,22 @@
 
 // Settings -> Subsription
 
-"subscription.premium.label" = "Premium";
-"subscription.title" = "Subscription";
-"subscription.get" = "Get Premium";
-"subscription.restore" = "Restore Purchase";
-"subscription.type" = "Subscription Type";
-"subscription.one-time" = "One-Time";
+"subscription.premium.label" = "프리미엄";
+"subscription.title" = "구독";
+"subscription.get" = "프리미엄 구독하기";
+"subscription.restore" = "구매 복원";
+"subscription.type" = "구독 유형";
+"subscription.one-time" = "일회성";
 "subscription.price" = "금액";
-"subscription.next_payment" = "Next payment date";
-"subscription.purchase_time" = "Start date";
+"subscription.next_payment" = "다음 결제일";
+"subscription.purchase_time" = "시작일";
 "subscription.status" = "상태";
-"subscription.manage" = "Manage Subscription";
+"subscription.manage" = "구독 관리";
 
 // Settings -> Support
 
-"settings.vip_support.description" = "Get exclusive access to our VIP Group, where premium users and the Unstoppable Wallet team collaborate. Receive direct assistance, discuss future updates, and help shape the wallet’s evolution.";
-"settings.vip_support.start_chat" = "Join VIP Group";
+"settings.vip_support.description" = "프리미엄 사용자와 Unstoppable Wallet 팀이 협력하는 VIP 그룹에 독점 액세스하세요. 직접적인 지원을 받고, 향후 업데이트에 대해 논의하며, 지갑의 발전 방향을 함께 만들어 나가세요.";
+"settings.vip_support.start_chat" = "VIP 그룹 참여하기";
 
 // Settings -> Contacts
 
@@ -2222,82 +2222,82 @@
 
 // Purchases
 
-"premium.cell.title" = "Premium";
-"premium.cell.description" = "Upgrade your experience with %@ features!";
-"premium.cell.description.key" = "Premium";
-"premium.cell.try" = "Try for FREE";
+"premium.cell.title" = "프리미엄";
+"premium.cell.description" = "%@ 기능으로 경험을 업그레이드하세요!";
+"premium.cell.description.key" = "프리미엄";
+"premium.cell.try" = "무료로 시작하기";
 
-"purchases.title" = "Premium";
-"purchases.description" = "Choose the plan";
-"purchases.type.pro" = "Pro";
-"purchases.type.vip" = "Vip";
+"purchases.title" = "프리미엄";
+"purchases.description" = "플랜 선택하기";
+"purchases.type.pro" = "프로";
+"purchases.type.vip" = "VIP";
 
-"purchases.token_insights" = "Token Lists";
-"purchases.token_insights.description" = "Master Token Research";
-"purchases.token_insights.info" = "Your all-in-one tool for deep analysis. Browse curated Top 250 token lists based on trading volume, exchange liquidity, holder behavior, and on-chain trends—all at a glance. Filter, analyze, and stay ahead.";
+"purchases.token_insights" = "토큰 리스트";
+"purchases.token_insights.description" = "토큰 리서치 마스터";
+"purchases.token_insights.info" = "심층 분석을 위한 올인원 도구입니다. 거래량, 거래소 유동성, 보유자 행동 패턴 및 온체인 트렌드를 기반으로 엄선된 상위 250개 토큰 목록을 한눈에 살펴보세요. 필터링, 분석하고 항상 앞서 나가세요.";
 
-"purchases.advanced_search" = "Advanced Search";
-"purchases.advanced_search.description" = "Discover Trending Tokens";
-"purchases.advanced_search.info" = "Ditch the noise and zero in on high-potential tokens with precision. Use Advanced Search to filter through thousands of tokens by trading volume, blockchain, market cap, price trends, sector, and performance—and more. Powerful, accurate, and built for discovery.";
+"purchases.advanced_search" = "고급 검색";
+"purchases.advanced_search.description" = "트렌딩 토큰 발견하기";
+"purchases.advanced_search.info" = "불필요한 정보는 배제하고 높은 잠재력을 가진 토큰을 정확하게 찾아보세요. 고급 검색을 사용하여 거래량, 블록체인, 시가총액, 가격 동향, 섹터 및 성과 등 수천 개의 토큰을 필터링하세요. 강력하고 정확하며 발견을 위해 설계되었습니다.";
 
-"purchases.trade_signals" = "Watch Trends";
-"purchases.trade_signals.description" = "Trade Smarter, Profit Faster";
-"purchases.trade_signals.info" = "Never miss a trading opportunity again. Watch Trends delivers real-time alerts powered by advanced technical analysis, helping you identify trends, spot breakouts, and avoid pitfalls before they happen. Act fast, trade smart, and maximize gains.";
+"purchases.trade_signals" = "트렌드 지켜보기";
+"purchases.trade_signals.description" = "더 똑똑하게 거래하고, 더 빠르게 수익 창출";
+"purchases.trade_signals.info" = "더 이상 거래 기회를 놓치지 마세요. 트렌드 지켜보기는 고급 기술 분석을 통해 실시간 알림을 제공하여 트렌드를 식별하고, 돌파 신호를 포착하며, 발생하기 전에 위험 요소를 피할 수 있도록 도와줍니다. 신속하게 행동하고, 똑똑하게 거래하며, 수익을 최대화하세요.";
 
-"purchases.tx_speed_up" = "Tx Speed UP / Cancel ";
-"purchases.tx_speed_up.description" = "Speed up and cancel transactions.";
-"purchases.tx_speed_up.info" = "Tx Speed Up / Cancel provides full control over blockchain transactions. With this feature, users can accelerate pending transactions by increasing gas fees or cancel unconfirmed transactions altogether if needed. It adds a layer of flexibility and convenience to transaction management, ensuring users remain in control of their activity.";
+"purchases.tx_speed_up" = "트랜잭션 속도 향상 / 취소";
+"purchases.tx_speed_up.description" = "트랜잭션 속도 향상 및 취소";
+"purchases.tx_speed_up.info" = "트랜잭션 속도 향상 / 취소 기능은 블록체인 트랜잭션에 대한 완전한 제어를 제공합니다. 이 기능을 통해 사용자는 가스비를 증가시켜 대기 중인 트랜잭션 속도를 높이거나 필요한 경우 확인되지 않은 트랜잭션을 완전히 취소할 수 있습니다. 트랜잭션 관리에 유연성과 편의성을 더해 사용자가 자신의 활동을 항상 제어할 수 있도록 합니다.";
 
 "purchases.duress_mode" = "긴급 상황 모드";
-"purchases.duress_mode.description" = "Stay Safe Wherever You Go";
-"purchases.duress_mode.info" = "Your crypto. Your security. Duress Mode lets you create multiple alternate wallet setups, each with a separate PIN, providing a hidden escape route in high-risk situations. If forced to unlock your wallet, simply use the duress PIN to access a secondary wallet with no critical assets exposed. Your real funds stay hidden. Your security stays intact.";
+"purchases.duress_mode.description" = "어디서든 안전하게";
+"purchases.duress_mode.info" = "당신의 암호화폐. 당신의 보안. 긴급 상황 모드는 각각 다른 PIN을 가진 여러 개의 대체 지갑 설정을 생성할 수 있게 하여 위험한 상황에서 숨겨진 탈출 경로를 제공합니다. 지갑 잠금 해제를 강요받은 경우, 간단히 긴급 PIN을 사용하여 중요한 자산이 노출되지 않는 보조 지갑에 접근할 수 있습니다. 실제 자금은 숨겨진 채로 유지됩니다. 당신의 보안은 그대로 유지됩니다.";
 
-"purchases.address_phishing" = "Scam Protection";
-"purchases.address_phishing.description" = "Stay Secure Without the Hassle";
-"purchases.address_phishing.info" = "One wrong address, and your crypto is gone forever. Unstoppable automatically scans recipient addresses for suspicious patterns and defends against the latest phishing threats, preventing you from sending funds to a hacker. Block fraudulent transfers before they happen.";
+"purchases.address_phishing" = "사기 보호";
+"purchases.address_phishing.description" = "번거로움 없이 안전하게";
+"purchases.address_phishing.info" = "주소 하나만 잘못 입력하면 암호화폐가 영원히 사라질 수 있습니다. Unstoppable은 수신자 주소의 의심스러운 패턴을 자동으로 스캔하고 최신 피싱 위협으로부터 방어하여 해커에게 자금을 보내는 것을 방지합니다. 사기성 거래가 발생하기 전에 차단하세요.";
 
-"purchases.address_checker" = "Blacklist Checker";
-"purchases.address_checker.description" = "Stay Legit and Compliant";
-"purchases.address_checker.info" = "Protect yourself from risky and sanctioned entities. Blacklist Checker automatically screens recipient addresses against high-risk databases, flagging scams, frauds, and sanctioned entities before you send. If an address is blacklisted, you’ll know before making a costly mistake. Secure your transactions. Keep your crypto clean. Stay compliant.";
+"purchases.address_checker" = "블랙리스트 체커";
+"purchases.address_checker.description" = "합법적이고 규정을 준수하세요";
+"purchases.address_checker.info" = "위험하거나 제재 대상인 엔티티로부터 자신을 보호하세요. 블랙리스트 체커는 수신자 주소를 고위험 데이터베이스와 자동으로 대조하여 송금 전에 사기, 사기 및 제재 대상 엔티티를 표시합니다. 주소가 블랙리스트에 등록되어 있다면, 비용이 많이 드는 실수를 하기 전에 알 수 있습니다. 거래를 안전하게 하세요. 암호화폐를 깨끗하게 유지하세요. 규정을 준수하세요.";
 
-"purchases.vip_support" = "VIP Group";
-"purchases.vip_support.description" = "Vote on the Future of Unstoppable";
-"purchases.vip_support.info" = "Be part of the evolution. Join the VIP Group to connect directly with our team, vote on upcoming features, and get an exclusive first look at future updates. Your voice matters—help shape the next-gen crypto wallet.";
+"purchases.vip_support" = "VIP 그룹";
+"purchases.vip_support.description" = "Unstoppable의 미래에 투표하세요";
+"purchases.vip_support.info" = "진화의 일부가 되세요. VIP 그룹에 가입하여 우리 팀과 직접 연결하고, 다가오는 기능에 투표하며, 향후 업데이트에 대한 독점적인 선견을 얻으세요. 당신의 의견이 중요합니다—차세대 암호화폐 지갑을 함께 만들어 나가세요.";
 
-"purchases.vip_club" = "VIP Club";
-"purchases.vip_club.description" = "Private chat with exclusive information.";
-"purchases.vip_club.info" = "The VIP Club offers exclusive access to a premium community of like-minded individuals. Members can participate in private discussions, gain insights from industry experts, and network with other top-tier users. This feature is perfect for those who want to stay ahead with insider knowledge and connections.";
+"purchases.vip_club" = "VIP 클럽";
+"purchases.vip_club.description" = "독점 정보가 담긴 비공개 채팅";
+"purchases.vip_club.info" = "VIP 클럽은 뜻이 맞는 회원들로 구성된 프리미엄 커뮤니티에 독점 접근을 제공합니다. 회원들은 비공개 토론에 참여하고, 업계 전문가의 인사이트를 얻으며, 다른 최상위 사용자들과 네트워킹할 수 있습니다. 이 기능은 내부자 지식과 연결을 통해 앞서 나가고 싶은 분들에게 완벽합니다.";
 
-"purchases.wallet_description.title" = "Highly rated security, exceptional privacy, and a truly non-custodial wallet.";
-"purchases.wallet_description.approved" = "Approved and Audited By:";
+"purchases.wallet_description.title" = "높은 평가를 받는 보안, 탁월한 개인 정보 보호, 그리고 진정한 비수탁형 지갑";
+"purchases.wallet_description.approved" = "다음 기관에서 승인 및 감사:";
 
-"purchases.button.try" = "Try for FREE";
-"purchases.button.activated" = "Activated";
-"purchases.button.upgrade" = "Upgrade";
+"purchases.button.try" = "무료로 시작하기";
+"purchases.button.activated" = "활성화됨";
+"purchases.button.upgrade" = "업그레이드";
 
-"purchase.period.title" = "Select Subscription";
-"purchase.period.annually" = "Annually";
-"purchase.period.monthly" = "Monthly";
-"purchase.period.onetime" = "One-Time";
-"purchase.period.onetime.description" = "for lifetime access";
-"purchase.period.save" = "save";
-"purchase.period.year" = "year";
-"purchase.period.month" = "month";
-"purchase.period.description1" = "Enjoy the first 7 days FREE.";
-"purchase.period.description2" = "You can cancel your App Store subscription at any time.";
-"purchase.lifetime.description" = "You can purchase a one-time subscriiption without any restrictions";
+"purchase.period.title" = "구독 선택";
+"purchase.period.annually" = "연간";
+"purchase.period.monthly" = "월간";
+"purchase.period.onetime" = "일회성";
+"purchase.period.onetime.description" = "평생 이용권";
+"purchase.period.save" = "절약";
+"purchase.period.year" = "년";
+"purchase.period.month" = "월";
+"purchase.period.description1" = "첫 7일은 무료로 이용하세요.";
+"purchase.period.description2" = "App Store 구독은 언제든지 취소할 수 있습니다.";
+"purchase.lifetime.description" = "제한 없이 일회성 구독을 구매할 수 있습니다";
 
-"purchases.period.button.try" = "Get 7 days for FREE";
-"purchases.period.button.subscribe" = "Subscribe";
-"purchases.period.button.buy" = "Buy now";
-"purchases.period.button.promo" = "Add Promo Code";
+"purchases.period.button.try" = "7일 무료 체험 시작하기";
+"purchases.period.button.subscribe" = "구독하기";
+"purchases.period.button.buy" = "지금 구매하기";
+"purchases.period.button.promo" = "프로모 코드 추가";
 
-"purchases.promocode.title" = "Enter Promo Code";
+"purchases.promocode.title" = "프로모 코드 입력";
 "purchases.promocode.placeholder" = "";
-"purchases.promocode.button.invalid" = "Invalid Promo Code";
-"purchases.promocode.button.already_used" = "Promo Code Already Used";
+"purchases.promocode.button.invalid" = "유효하지 않은 프로모 코드";
+"purchases.promocode.button.already_used" = "이미 사용된 프로모 코드";
 
-"purchases.successful_subscription.title" = "Premium";
-"purchases.successful_subscription.description" = "Thank you for your subscription!";
-"purchases.successful_subscription.subscribed" = "Enjoy the full power of the app.";
-"purchases.successful_subscription.button.go_app" = "Go to App";
+"purchases.successful_subscription.title" = "프리미엄";
+"purchases.successful_subscription.description" = "구독해 주셔서 감사합니다!";
+"purchases.successful_subscription.subscribed" = "앱의 모든 기능을 마음껏 즐기세요.";
+"purchases.successful_subscription.button.go_app" = "앱으로 이동";
