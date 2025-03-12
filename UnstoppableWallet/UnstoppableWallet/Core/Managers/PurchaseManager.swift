@@ -46,7 +46,6 @@ class PurchaseManager: NSObject {
     }
 
     private func updatePurchasedProducts() async {
-
         for await verificationResult in Transaction.currentEntitlements {
             handle(verificationResult: verificationResult)
         }

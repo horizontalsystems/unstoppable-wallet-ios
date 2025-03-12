@@ -8,13 +8,13 @@ on:
 jobs:
   build_and_deploy:
     name: Build and Deploy to TestFlight
-    runs-on: macos-14
+    runs-on: macos-15
 
     steps:
-      - name: Setup Xcode to 15.2
+      - name: Setup Xcode to 16.2
         uses: maxim-lobanov/setup-xcode@v1
         with:
-          xcode-version: '15.2'
+          xcode-version: '16.2'
 
       - name: Checkout repository
         uses: actions/checkout@v4
