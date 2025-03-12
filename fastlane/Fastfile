@@ -249,54 +249,6 @@ platform :ios do
     delete_temp_keychain(keychain_name)
   end
 
-  lane :staging do
-    keychain_name = TEMP_KEYCHAIN_USER
-    keychain_password = TEMP_KEYCHAIN_PASSWORD
-    ensure_temp_keychain(keychain_name, keychain_password)
-
-    api_key = app_store_api_key
-
-    prepare_environment(false)
-    apply_prod_xcconfig('true', 'false')
-
-    match(
-      type: 'adhoc',
-      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.intent"],
-      git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
-      readonly: true,
-      keychain_name: keychain_name,
-      keychain_password: keychain_password,
-      api_key: api_key
-    )
-
-    gym(
-      workspace: "UnstoppableWallet/UnstoppableWallet.xcworkspace",
-      scheme: "Production",
-      export_method: "ad-hoc",
-      clean: true,
-      export_options: {
-        compileBitcode: false,
-        provisioningProfiles: {
-            "io.horizontalsystems.bank-wallet" => "match AdHoc io.horizontalsystems.bank-wallet",
-            "io.horizontalsystems.bank-wallet.widget" => "match AdHoc io.horizontalsystems.bank-wallet.widget",
-            "io.horizontalsystems.bank-wallet.intent" => "match AdHoc io.horizontalsystems.bank-wallet.intent"
-        },
-        iCloudContainerEnvironment: "Production"
-      }
-    )
-
-    appcenter_upload(
-      api_token: APP_CENTER_API_TOKEN,
-      owner_name: "Horizontal-Systems",
-      owner_type: "organization",
-      app_name: "Unstoppable Prod",
-      notify_testers: true,
-      release_notes: last_git_commit[:message]
-    )
-
-    delete_temp_keychain(keychain_name)
-  end
-
   lane :release do
     keychain_name = TEMP_KEYCHAIN_USER
     keychain_password = TEMP_KEYCHAIN_PASSWORD
