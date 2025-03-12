@@ -37,7 +37,8 @@ extension EvmSendHandler: ISendHandler {
                     let totalFee = stubFeeData.totalFee(gasPrice: gasPriceData.userDefined)
 
                     evmFeeData = stubFeeData
-                    transactionData = TransactionData(to: transactionData.to, value: max(0, transactionData.value - totalFee), input: transactionData.input)
+                    let value = transactionData.value > totalFee ? transactionData.value - totalFee : 0
+                    transactionData = TransactionData(to: transactionData.to, value: value, input: transactionData.input)
 
                     if transactionData.value == 0 {
                         throw AppError.ethereum(reason: .insufficientBalanceWithFee)
