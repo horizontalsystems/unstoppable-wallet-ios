@@ -2232,16 +2232,16 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "purchases.type.pro" = "Pro";
 "purchases.type.vip" = "Vip";
 
-"purchases.token_insights" = "Listas de Tokens";
-"purchases.token_insights.description" = "Domina la Investigación de Tokens";
+"purchases.token_insights" = "Analítica de Tokens";
+"purchases.token_insights.description" = "Acceso a listas top-100 según criterios clave";
 "purchases.token_insights.info" = "Tu herramienta todo en uno para análisis profundo. Navega por listas curadas de los 250 mejores tokens basados en volumen de operaciones, liquidez de intercambio, comportamiento de titulares y tendencias en cadena, todo de un vistazo. Filtra, analiza y mantente a la vanguardia.";
 
 "purchases.advanced_search" = "Búsqueda Avanzada";
-"purchases.advanced_search.description" = "Descubre Tokens en Tendencia";
+"purchases.advanced_search.description" = "Filtrado multinivel con múltiples parámetros";
 "purchases.advanced_search.info" = "Elimina el ruido y concéntrate con precisión en tokens de alto potencial. Utiliza la Búsqueda Avanzada para filtrar miles de tokens por volumen de operaciones, blockchain, capitalización de mercado, tendencias de precios, sector y rendimiento, y más. Potente, precisa y diseñada para el descubrimiento.";
 
-"purchases.trade_signals" = "Observar Tendencias";
-"purchases.trade_signals.description" = "Opera más Inteligentemente, Obtén Beneficios más Rápido";
+"purchases.trade_signals" = "Señales y Tendencias";
+"purchases.trade_signals.description" = "Monitoreo automático de tendencias del mercado para tus tokens";
 "purchases.trade_signals.info" = "No vuelvas a perder una oportunidad de trading. Observar Tendencias ofrece alertas en tiempo real impulsadas por análisis técnico avanzado, ayudándote a identificar tendencias, detectar oportunidades y evitar obstáculos antes de que ocurran. Actúa rápido, opera inteligentemente y maximiza tus ganancias.";
 
 "purchases.tx_speed_up" = "Acelerar / Cancelar Tx";
@@ -2249,19 +2249,19 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "purchases.tx_speed_up.info" = "Acelerar / Cancelar Tx proporciona control total sobre las transacciones en blockchain. Con esta función, los usuarios pueden acelerar transacciones pendientes aumentando las comisiones de gas o cancelar completamente transacciones no confirmadas si es necesario. Añade una capa de flexibilidad y comodidad a la gestión de transacciones, asegurando que los usuarios mantengan el control de su actividad.";
 
 "purchases.duress_mode" = "Modo Coacción";
-"purchases.duress_mode.description" = "Mantente Seguro Dondequiera Que Vayas";
+"purchases.duress_mode.description" = "Seguridad inteligente de fondos durante amenazas físicas";
 "purchases.duress_mode.info" = "Tu cripto. Tu seguridad. El Modo Coacción te permite crear múltiples configuraciones alternativas de cartera, cada una con un PIN separado, proporcionando una ruta de escape oculta en situaciones de alto riesgo. Si te ves obligado a desbloquear tu cartera, simplemente usa el PIN de coacción para acceder a una cartera secundaria sin exponer activos críticos. Tus fondos reales permanecen ocultos. Tu seguridad permanece intacta.";
 
 "purchases.address_phishing" = "Protección contra Estafas";
-"purchases.address_phishing.description" = "Mantente Seguro Sin Complicaciones";
+"purchases.address_phishing.description" = "Protección automática eficaz contra fraudes y ataques de phishing";
 "purchases.address_phishing.info" = "Una dirección incorrecta, y tu cripto desaparece para siempre. Unstoppable escanea automáticamente las direcciones de los destinatarios en busca de patrones sospechosos y te defiende contra las últimas amenazas de phishing, evitando que envíes fondos a un hacker. Bloquea transferencias fraudulentas antes de que ocurran.";
 
 "purchases.address_checker" = "Verificador de Lista Negra";
-"purchases.address_checker.description" = "Mantente Legítimo y Conforme";
+"purchases.address_checker.description" = "Garantía de legalidad para tus operaciones con criptomonedas";
 "purchases.address_checker.info" = "Protégete de entidades riesgosas y sancionadas. El Verificador de Lista Negra evalúa automáticamente las direcciones de los destinatarios contra bases de datos de alto riesgo, marcando estafas, fraudes y entidades sancionadas antes de que envíes. Si una dirección está en la lista negra, lo sabrás antes de cometer un error costoso. Asegura tus transacciones. Mantén tu cripto limpia. Permanece en conformidad.";
 
 "purchases.vip_support" = "Grupo VIP";
-"purchases.vip_support.description" = "Vota sobre el Futuro de Unstoppable";
+"purchases.vip_support.description" = "Acceso al equipo y voto en desarrollos futuros";
 "purchases.vip_support.info" = "Sé parte de la evolución. Únete al Grupo VIP para conectarte directamente con nuestro equipo, votar sobre próximas funciones y obtener un vistazo exclusivo a futuras actualizaciones. Tu voz importa: ayuda a dar forma a la cartera cripto de próxima generación.";
 
 "purchases.vip_club" = "Club VIP";

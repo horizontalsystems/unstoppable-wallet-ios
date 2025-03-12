@@ -2231,16 +2231,16 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "purchases.type.pro" = "Pro";
 "purchases.type.vip" = "Vip";
 
-"purchases.token_insights" = "Token-Listen";
-"purchases.token_insights.description" = "Meistere Token-Research";
+"purchases.token_insights" = "Token-Analysen";
+"purchases.token_insights.description" = "Zugriff auf Top-100 Listen nach Schlüsselkriterien";
 "purchases.token_insights.info" = "Dein All-in-One-Tool für tiefgehende Analysen. Durchsuche kuratierte Top-250-Token-Listen basierend auf Handelsvolumen, Börsen-Liquidität, Anlegerverhalten und On-Chain-Trends – alles auf einen Blick. Filtere, analysiere und bleibe einen Schritt voraus.";
 
 "purchases.advanced_search" = "Erweiterte Suche";
-"purchases.advanced_search.description" = "Entdecke Trend-Tokens";
+"purchases.advanced_search.description" = "Mehrstufige Filterung über mehrere Parameter";
 "purchases.advanced_search.info" = "Umgehe den Lärm und konzentriere dich präzise auf Tokens mit hohem Potenzial. Nutze die Erweiterte Suche, um Tausende von Tokens nach Handelsvolumen, Blockchain, Marktkapitalisierung, Preistrends, Sektor und Performance zu filtern – und mehr. Leistungsstark, präzise und für die Entdeckung konzipiert.";
 
-"purchases.trade_signals" = "Trends beobachten";
-"purchases.trade_signals.description" = "Intelligenter handeln, schneller profitieren";
+"purchases.trade_signals" = "Signale und Trends";
+"purchases.trade_signals.description" = "Automatische Überwachung von Markttrends für Ihre Tokens";
 "purchases.trade_signals.info" = "Verpasse nie wieder eine Handelschance. Trends beobachten liefert Echtzeit-Benachrichtigungen, die auf fortschrittlicher technischer Analyse basieren und dir helfen, Trends zu identifizieren, Ausbrüche zu erkennen und Fallstricke zu vermeiden, bevor sie passieren. Handle schnell, trade intelligent und maximiere deine Gewinne.";
 
 "purchases.tx_speed_up" = "Tx-Beschleunigung/Abbruch";
@@ -2248,19 +2248,19 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "purchases.tx_speed_up.info" = "Tx-Beschleunigung/Abbruch bietet volle Kontrolle über Blockchain-Transaktionen. Mit dieser Funktion können Nutzer ausstehende Transaktionen durch Erhöhung der Gas-Gebühren beschleunigen oder unbestätigte Transaktionen bei Bedarf komplett abbrechen. Es fügt dem Transaktionsmanagement eine Ebene der Flexibilität und Bequemlichkeit hinzu und stellt sicher, dass Nutzer die Kontrolle über ihre Aktivitäten behalten.";
 
 "purchases.duress_mode" = "Duress-Modus";
-"purchases.duress_mode.description" = "Bleibe sicher, wo auch immer du bist";
+"purchases.duress_mode.description" = "Intelligente Fondssicherheit bei physischen Bedrohungen";
 "purchases.duress_mode.info" = "Deine Krypto. Deine Sicherheit. Der Duress-Modus ermöglicht es dir, mehrere alternative Wallet-Einstellungen zu erstellen, jede mit einer separaten PIN, die in Hochrisikosituationen einen versteckten Ausweg bietet. Wenn du gezwungen wirst, deine Wallet zu entsperren, verwende einfach die Duress-PIN, um auf eine sekundäre Wallet zuzugreifen, ohne dass kritische Vermögenswerte offengelegt werden. Deine echten Gelder bleiben verborgen. Deine Sicherheit bleibt intakt.";
 
 "purchases.address_phishing" = "Schutz vor Betrug";
-"purchases.address_phishing.description" = "Bleibe sicher ohne Komplikationen";
+"purchases.address_phishing.description" = "Effektiver automatischer Schutz gegen Betrug und Phishing-Angriffe";
 "purchases.address_phishing.info" = "Eine falsche Adresse, und deine Krypto ist für immer verloren. Unstoppable scannt automatisch Empfängeradressen auf verdächtige Muster und schützt dich vor den neuesten Phishing-Bedrohungen, sodass du keine Gelder an Hacker sendest. Blockiere betrügerische Überweisungen, bevor sie passieren.";
 
 "purchases.address_checker" = "Blacklist-Checker";
-"purchases.address_checker.description" = "Bleibe legal und konform";
+"purchases.address_checker.description" = "Garantie der Legalität für Ihre Krypto-Transaktionen";
 "purchases.address_checker.info" = "Schütze dich vor riskanten und sanktionierten Einrichtungen. Der Blacklist-Checker überprüft automatisch Empfängeradressen anhand von Hochrisiko-Datenbanken und markiert Betrügereien, Fälschungen und sanktionierte Einrichtungen, bevor du sendest. Wenn eine Adresse auf der schwarzen Liste steht, erfährst du es, bevor du einen kostspieligen Fehler machst. Sichere deine Transaktionen. Halte deine Krypto sauber. Bleibe konform.";
 
 "purchases.vip_support" = "VIP-Gruppe";
-"purchases.vip_support.description" = "Stimme über die Zukunft von Unstoppable ab";
+"purchases.vip_support.description" = "Zugang zum Team und Mitsprache bei zukünftigen Entwicklungen";
 "purchases.vip_support.info" = "Sei Teil der Evolution. Tritt der VIP-Gruppe bei, um dich direkt mit unserem Team zu verbinden, über kommende Funktionen abzustimmen und einen exklusiven ersten Blick auf zukünftige Updates zu werfen. Deine Stimme zählt – hilf mit, die Krypto-Wallet der nächsten Generation zu gestalten.";
 
 "purchases.vip_club" = "VIP-Club";

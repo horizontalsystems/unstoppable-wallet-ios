@@ -2236,16 +2236,16 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "purchases.type.pro" = "Pro";
 "purchases.type.vip" = "Vip";
 
-"purchases.token_insights" = "Token Listeleri";
-"purchases.token_insights.description" = "Token Araştırmalarında Uzmanlaşın";
+"purchases.token_insights" = "Token Analitiği";
+"purchases.token_insights.description" = "Önemli kriterlere göre ilk 100 listelerine erişim";
 "purchases.token_insights.info" = "Derinlemesine analiz için hepsi bir arada aracınız. İşlem hacmi, borsa likiditesi, sahip davranışı ve zincir üstü trendlere dayalı özenle hazırlanmış En İyi 250 token listesine göz atın - hepsi tek bakışta. Filtreleyin, analiz edin ve önde kalın.";
 
 "purchases.advanced_search" = "Gelişmiş Arama";
-"purchases.advanced_search.description" = "Trend Token'ları Keşfedin";
+"purchases.advanced_search.description" = "Çoklu parametreler üzerinden çok seviyeli filtreleme";
 "purchases.advanced_search.info" = "Gürültüyü bırakın ve yüksek potansiyelli token'lara hassasiyetle odaklanın. Gelişmiş Arama'yı kullanarak işlem hacmi, blokzincir, piyasa değeri, fiyat trendleri, sektör ve performansa göre binlerce token'ı filtreleyebilirsiniz - ve daha fazlası. Güçlü, doğru ve keşif için tasarlanmış.";
 
-"purchases.trade_signals" = "Trendleri İzleyin";
-"purchases.trade_signals.description" = "Daha Akıllı İşlem Yapın, Daha Hızlı Kâr Edin";
+"purchases.trade_signals" = "Sinyaller ve Trendler";
+"purchases.trade_signals.description" = "Tokenleriniz için piyasa trendlerinin otomatik takibi";
 "purchases.trade_signals.info" = "Bir daha asla ticaret fırsatını kaçırmayın. Trendleri İzleyin, gelişmiş teknik analizle desteklenen gerçek zamanlı uyarılar sunar, trendleri belirlemenize, kırılmaları tespit etmenize ve gerçekleşmeden önce tuzaklardan kaçınmanıza yardımcı olur. Hızlı hareket edin, akıllı ticaret yapın ve kazançlarınızı maksimize edin.";
 
 "purchases.tx_speed_up" = "Tx Hızlandırma / İptal";
@@ -2253,7 +2253,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "purchases.tx_speed_up.info" = "Tx Hızlandırma / İptal, blokzincir işlemleri üzerinde tam kontrol sağlar. Bu özellikle kullanıcılar, gas ücretlerini artırarak bekleyen işlemleri hızlandırabilir veya gerekirse onaylanmamış işlemleri tamamen iptal edebilir. İşlem yönetimine esneklik ve kullanım kolaylığı katarak, kullanıcıların aktiviteleri üzerinde kontrolü korumalarını sağlar.";
 
 "purchases.duress_mode" = "Zorlama Modu";
-"purchases.duress_mode.description" = "Nereye Giderseniz Gidin Güvende Kalın";
+"purchases.duress_mode.description" = "Fiziksel tehditler sırasında akıllı fon güvenliği";
 "purchases.duress_mode.info" = "Kripto paranız. Güvenliğiniz. Zorlama Modu, her biri ayrı PIN'e sahip birden fazla alternatif cüzdan kurulumu oluşturmanıza olanak tanır ve yüksek riskli durumlarda gizli bir kaçış yolu sağlar. Cüzdanınızı açmaya zorlanırsanız, kritik varlıkları açığa çıkarmayan ikincil bir cüzdana erişmek için basitçe zorlama PIN'ini kullanın. Gerçek fonlarınız gizli kalır. Güvenliğiniz bozulmaz.";
 
 "purchases.address_phishing" = "Dolandırıcılık Koruması";
@@ -2261,15 +2261,15 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "purchases.address_phishing.info" = "Yanlış bir adres ve kripto paranız sonsuza dek kaybolur. Unstoppable, alıcı adreslerini şüpheli kalıplar açısından otomatik olarak tarar ve en son oltalama tehditlerine karşı savunur, fonları bir hackera göndermenizi önler. Dolandırıcılık transferlerini gerçekleşmeden önce engelleyin.";
 
 "purchases.address_checker" = "Kara Liste Denetleyicisi";
-"purchases.address_checker.description" = "Yasal ve Uyumlu Kalın";
+"purchases.address_checker.description" = "Dolandırıcılık ve oltalama saldırılarına karşı etkili otomatik koruma";
 "purchases.address_checker.info" = "Riskli ve yaptırımlı varlıklardan kendinizi koruyun. Kara Liste Denetleyicisi, göndermeden önce alıcı adreslerini yüksek riskli veritabanlarına karşı otomatik olarak tarar, dolandırıcılıkları, sahtekârlıkları ve yaptırım uygulanan varlıkları işaretler. Bir adres kara listeye alınmışsa, maliyetli bir hata yapmadan önce bunu bileceksiniz. İşlemlerinizi güvence altına alın. Kripto paranızı temiz tutun. Uyumlu kalın.";
 
 "purchases.privacy_mode" = "Gizlilik Modu";
-"purchases.privacy_mode.description" = "Veri toplamasından tam bağlantı kesme.";
+"purchases.privacy_mode.description" = "Kripto işlemlerinizin yasallığı için garanti";
 "purchases.privacy_mode.info" = "Gizlilik Modu, cüzdan bakiyelerini, işlem geçmişini ve diğer hassas ayrıntıları maskeleyerek kullanıcı gizliliğini artırır. Bu özellik, üçüncü tarafların kullanıcı etkinliğini görüntüleyememesini veya izleyememesini sağlayarak, gizliliğe değer verenler için ayrık ve güvenli bir deneyim sunar.";
 
 "purchases.vip_support" = "VIP Grubu";
-"purchases.vip_support.description" = "Unstoppable'ın Geleceği Hakkında Oy Verin";
+"purchases.vip_support.description" = "Ekibe erişim ve gelecekteki geliştirmeler için oy kullanma hakkı";
 "purchases.vip_support.info" = "Evrimin bir parçası olun. Ekibimizle doğrudan bağlantı kurmak, yaklaşan özellikler hakkında oy kullanmak ve gelecek güncellemelere özel bir ilk bakış elde etmek için VIP Grubuna katılın. Sesiniz önemli - bir sonraki nesil kripto cüzdanını şekillendirmeye yardımcı olun.";
 
 "purchases.vip_club" = "VIP Kulübü";

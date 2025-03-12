@@ -2232,16 +2232,16 @@
 "purchases.type.pro" = "프로";
 "purchases.type.vip" = "VIP";
 
-"purchases.token_insights" = "토큰 리스트";
-"purchases.token_insights.description" = "토큰 리서치 마스터";
+"purchases.token_insights" = "토큰 분석";
+"purchases.token_insights.description" = "주요 기준별 상위 100개 목록 접근";
 "purchases.token_insights.info" = "심층 분석을 위한 올인원 도구입니다. 거래량, 거래소 유동성, 보유자 행동 패턴 및 온체인 트렌드를 기반으로 엄선된 상위 250개 토큰 목록을 한눈에 살펴보세요. 필터링, 분석하고 항상 앞서 나가세요.";
 
 "purchases.advanced_search" = "고급 검색";
-"purchases.advanced_search.description" = "트렌딩 토큰 발견하기";
+"purchases.advanced_search.description" = "다양한 매개변수에 대한 다중 레벨 필터링";
 "purchases.advanced_search.info" = "불필요한 정보는 배제하고 높은 잠재력을 가진 토큰을 정확하게 찾아보세요. 고급 검색을 사용하여 거래량, 블록체인, 시가총액, 가격 동향, 섹터 및 성과 등 수천 개의 토큰을 필터링하세요. 강력하고 정확하며 발견을 위해 설계되었습니다.";
 
-"purchases.trade_signals" = "트렌드 지켜보기";
-"purchases.trade_signals.description" = "더 똑똑하게 거래하고, 더 빠르게 수익 창출";
+"purchases.trade_signals" = "신호 및 트렌드";
+"purchases.trade_signals.description" = "보유 토큰의 시장 트렌드 자동 모니터링";
 "purchases.trade_signals.info" = "더 이상 거래 기회를 놓치지 마세요. 트렌드 지켜보기는 고급 기술 분석을 통해 실시간 알림을 제공하여 트렌드를 식별하고, 돌파 신호를 포착하며, 발생하기 전에 위험 요소를 피할 수 있도록 도와줍니다. 신속하게 행동하고, 똑똑하게 거래하며, 수익을 최대화하세요.";
 
 "purchases.tx_speed_up" = "트랜잭션 속도 향상 / 취소";
@@ -2249,15 +2249,15 @@
 "purchases.tx_speed_up.info" = "트랜잭션 속도 향상 / 취소 기능은 블록체인 트랜잭션에 대한 완전한 제어를 제공합니다. 이 기능을 통해 사용자는 가스비를 증가시켜 대기 중인 트랜잭션 속도를 높이거나 필요한 경우 확인되지 않은 트랜잭션을 완전히 취소할 수 있습니다. 트랜잭션 관리에 유연성과 편의성을 더해 사용자가 자신의 활동을 항상 제어할 수 있도록 합니다.";
 
 "purchases.duress_mode" = "긴급 상황 모드";
-"purchases.duress_mode.description" = "어디서든 안전하게";
+"purchases.duress_mode.description" = "물리적 위협 상황에서 스마트 자금 보안";
 "purchases.duress_mode.info" = "당신의 암호화폐. 당신의 보안. 긴급 상황 모드는 각각 다른 PIN을 가진 여러 개의 대체 지갑 설정을 생성할 수 있게 하여 위험한 상황에서 숨겨진 탈출 경로를 제공합니다. 지갑 잠금 해제를 강요받은 경우, 간단히 긴급 PIN을 사용하여 중요한 자산이 노출되지 않는 보조 지갑에 접근할 수 있습니다. 실제 자금은 숨겨진 채로 유지됩니다. 당신의 보안은 그대로 유지됩니다.";
 
 "purchases.address_phishing" = "사기 보호";
-"purchases.address_phishing.description" = "번거로움 없이 안전하게";
+"purchases.address_phishing.description" = "사기 및 피싱 공격에 대한 효과적인 자동 보호";
 "purchases.address_phishing.info" = "주소 하나만 잘못 입력하면 암호화폐가 영원히 사라질 수 있습니다. Unstoppable은 수신자 주소의 의심스러운 패턴을 자동으로 스캔하고 최신 피싱 위협으로부터 방어하여 해커에게 자금을 보내는 것을 방지합니다. 사기성 거래가 발생하기 전에 차단하세요.";
 
 "purchases.address_checker" = "블랙리스트 체커";
-"purchases.address_checker.description" = "합법적이고 규정을 준수하세요";
+"purchases.address_checker.description" = "암호화폐 거래의 합법성 보장";
 "purchases.address_checker.info" = "위험하거나 제재 대상인 엔티티로부터 자신을 보호하세요. 블랙리스트 체커는 수신자 주소를 고위험 데이터베이스와 자동으로 대조하여 송금 전에 사기, 사기 및 제재 대상 엔티티를 표시합니다. 주소가 블랙리스트에 등록되어 있다면, 비용이 많이 드는 실수를 하기 전에 알 수 있습니다. 거래를 안전하게 하세요. 암호화폐를 깨끗하게 유지하세요. 규정을 준수하세요.";
 
 "purchases.vip_support" = "VIP 그룹";
@@ -2265,7 +2265,7 @@
 "purchases.vip_support.info" = "진화의 일부가 되세요. VIP 그룹에 가입하여 우리 팀과 직접 연결하고, 다가오는 기능에 투표하며, 향후 업데이트에 대한 독점적인 선견을 얻으세요. 당신의 의견이 중요합니다—차세대 암호화폐 지갑을 함께 만들어 나가세요.";
 
 "purchases.vip_club" = "VIP 클럽";
-"purchases.vip_club.description" = "독점 정보가 담긴 비공개 채팅";
+"purchases.vip_club.description" = "팀 접근 및 향후 개발에 대한 투표 참여";
 "purchases.vip_club.info" = "VIP 클럽은 뜻이 맞는 회원들로 구성된 프리미엄 커뮤니티에 독점 접근을 제공합니다. 회원들은 비공개 토론에 참여하고, 업계 전문가의 인사이트를 얻으며, 다른 최상위 사용자들과 네트워킹할 수 있습니다. 이 기능은 내부자 지식과 연결을 통해 앞서 나가고 싶은 분들에게 완벽합니다.";
 
 "purchases.wallet_description.title" = "높은 평가를 받는 보안, 탁월한 개인 정보 보호, 그리고 진정한 비수탁형 지갑";

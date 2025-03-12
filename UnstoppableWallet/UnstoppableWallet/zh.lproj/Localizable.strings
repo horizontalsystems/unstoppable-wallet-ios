@@ -2231,16 +2231,16 @@
 "purchases.type.pro" = "專業版";
 "purchases.type.vip" = "貴賓版";
 
-"purchases.token_insights" = "代幣列表";
-"purchases.token_insights.description" = "掌握代幣研究";
+"purchases.token_insights" = "代幣分析";
+"purchases.token_insights.description" = "按關鍵標準獲取前100名列表";
 "purchases.token_insights.info" = "您的一站式深度分析工具。瀏覽根據交易量、交易所流動性、持有者行為和鏈上趨勢策劃的前250名代幣列表—一目了然。篩選、分析並保持領先。";
 
 "purchases.advanced_search" = "進階搜尋";
-"purchases.advanced_search.description" = "發現熱門代幣";
+"purchases.advanced_search.description" = "多參數多層級篩選";
 "purchases.advanced_search.info" = "摒棄雜訊，精準鎖定高潛力代幣。使用進階搜尋功能，通過交易量、區塊鏈、市值、價格趨勢、行業和表現等條件篩選數千種代幣。強大、精準且專為發現而設計。";
 
-"purchases.trade_signals" = "觀察趨勢";
-"purchases.trade_signals.description" = "更智能交易，更快獲利";
+"purchases.trade_signals" = "信號與趨勢";
+"purchases.trade_signals.description" = "自動監控您代幣的市場趨勢";
 "purchases.trade_signals.info" = "不再錯過任何交易機會。觀察趨勢提供由先進技術分析驅動的實時警報，幫助您在趨勢發生前識別、發現突破點並避免陷阱。快速行動，智能交易，最大化收益。";
 
 "purchases.tx_speed_up" = "交易加速/取消";
@@ -2248,19 +2248,19 @@
 "purchases.tx_speed_up.info" = "交易加速/取消功能提供對區塊鏈交易的全面控制。使用此功能，用戶可以通過增加燃料費用來加速待處理交易，或在需要時完全取消未確認的交易。這為交易管理增添了靈活性和便利性，確保用戶保持對其活動的控制。";
 
 "purchases.duress_mode" = "脅迫模式";
-"purchases.duress_mode.description" = "無論身在何處都保持安全";
+"purchases.duress_mode.description" = "面對實體威脅時的智能資金安全保障";
 "purchases.duress_mode.info" = "您的加密貨幣。您的安全。脅迫模式讓您創建多個備用錢包設置，每個都有單獨的PIN碼，在高風險情況下提供隱藏的逃生路線。如果被迫解鎖您的錢包，只需使用脅迫PIN碼訪問次要錢包，不會暴露關鍵資產。您的真實資金保持隱藏。您的安全完好無損。";
 
 "purchases.address_phishing" = "詐騙防護";
-"purchases.address_phishing.description" = "無憂保持安全";
+"purchases.address_phishing.description" = "有效自動防護詐騙和釣魚攻擊";
 "purchases.address_phishing.info" = "一個錯誤的地址，您的加密貨幣將永遠消失。Unstoppable自動掃描接收地址的可疑模式，防禦最新的網絡釣魚威脅，防止您向駭客發送資金。在詐騙交易發生前阻止它們。";
 
 "purchases.address_checker" = "黑名單檢查";
-"purchases.address_checker.description" = "保持合法與合規";
+"purchases.address_checker.description" = "確保您的加密貨幣操作合法性";
 "purchases.address_checker.info" = "保護自己免受風險和受制裁實體的侵害。黑名單檢查自動對照高風險數據庫篩選接收地址，在您發送前標記詐騙、欺詐和受制裁實體。如果一個地址被列入黑名單，您將在犯下代價高昂的錯誤前知道。保護您的交易。保持您的加密貨幣清潔。保持合規。";
 
 "purchases.vip_support" = "貴賓群組";
-"purchases.vip_support.description" = "為Unstoppable的未來投票";
+"purchases.vip_support.description" = "獲取團隊聯繫並參與未來發展投票";
 "purchases.vip_support.info" = "成為進化的一部分。加入貴賓群組，直接與我們的團隊聯繫，為即將推出的功能投票，並獨家先睹未來更新。您的聲音很重要—幫助塑造下一代加密錢包。";
 
 "purchases.vip_club" = "貴賓俱樂部";
