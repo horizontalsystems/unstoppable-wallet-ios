@@ -2260,8 +2260,8 @@
 "purchases.address_checker.info" = "保護自己免受風險和受制裁實體的侵害。黑名單檢查自動對照高風險數據庫篩選接收地址，在您發送前標記詐騙、欺詐和受制裁實體。如果一個地址被列入黑名單，您將在犯下代價高昂的錯誤前知道。保護您的交易。保持您的加密貨幣清潔。保持合規。";
 
 "purchases.vip_support" = "貴賓群組";
-"purchases.vip_support.description" = "獲取團隊聯繫並參與未來發展投票";
-"purchases.vip_support.info" = "成為進化的一部分。加入貴賓群組，直接與我們的團隊聯繫，為即將推出的功能投票，並獨家先睹未來更新。您的聲音很重要—幫助塑造下一代加密錢包。";
+"purchases.vip_support.description" = "直接聯繫錢包團隊獲取快速技術支援。";
+"purchases.vip_support.info" = "成為進化的一部分。加入 VIP 群組，直接與我們的團隊連接獲取技術支援。對即將推出的功能進行投票，搶先獨家了解未來更新。您的聲音很重要——幫助塑造下一代加密貨幣錢包。";
 
 "purchases.vip_club" = "貴賓俱樂部";
 "purchases.vip_club.description" = "具有獨家信息的私人聊天";
