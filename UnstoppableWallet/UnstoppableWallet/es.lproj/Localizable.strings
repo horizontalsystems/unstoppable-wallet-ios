@@ -2261,8 +2261,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "purchases.address_checker.info" = "Protégete de entidades riesgosas y sancionadas. El Verificador de Lista Negra evalúa automáticamente las direcciones de los destinatarios contra bases de datos de alto riesgo, marcando estafas, fraudes y entidades sancionadas antes de que envíes. Si una dirección está en la lista negra, lo sabrás antes de cometer un error costoso. Asegura tus transacciones. Mantén tu cripto limpia. Permanece en conformidad.";
 
 "purchases.vip_support" = "Grupo VIP";
-"purchases.vip_support.description" = "Acceso al equipo y voto en desarrollos futuros";
-"purchases.vip_support.info" = "Sé parte de la evolución. Únete al Grupo VIP para conectarte directamente con nuestro equipo, votar sobre próximas funciones y obtener un vistazo exclusivo a futuras actualizaciones. Tu voz importa: ayuda a dar forma a la cartera cripto de próxima generación.";
+"purchases.vip_support.description" = "Accès à l'équipe du portefeuille pour un support technique rapide.";
+"purchases.vip_support.info" = "Faites partie de l'évolution. Rejoignez le Groupe VIP pour communiquer directement avec notre équipe de support technique. Votez pour les fonctionnalités à venir et obtenez un aperçu exclusif des futures mises à jour. Votre voix compte — aidez-nous à façonner le portefeuille crypto de nouvelle génération.";
 
 "purchases.vip_club" = "Club VIP";
 "purchases.vip_club.description" = "Chat privado con información exclusiva.";

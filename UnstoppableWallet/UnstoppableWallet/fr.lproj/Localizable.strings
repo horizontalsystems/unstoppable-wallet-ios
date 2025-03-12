@@ -2260,8 +2260,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "purchases.address_checker.info" = "Protégez-vous des entités risquées et sanctionnées. Le Vérificateur de liste noire contrôle automatiquement les adresses des destinataires par rapport aux bases de données à haut risque, signalant les arnaques, fraudes et entités sanctionnées avant que vous n'envoyiez. Si une adresse est sur liste noire, vous le saurez avant de commettre une erreur coûteuse. Sécurisez vos transactions. Gardez vos cryptos propres. Restez conforme.";
 
 "purchases.vip_support" = "Groupe VIP";
-"purchases.vip_support.description" = "Accès à l'équipe et vote sur les développements futurs";
-"purchases.vip_support.info" = "Faites partie de l'évolution. Rejoignez le Groupe VIP pour vous connecter directement avec notre équipe, voter sur les fonctionnalités à venir et obtenir un aperçu exclusif des futures mises à jour. Votre voix compte — aidez à façonner le portefeuille crypto de nouvelle génération.";
+"purchases.vip_support.description" = "Accès à l'équipe du portefeuille pour un support technique rapide.";
+"purchases.vip_support.info" = "Faites partie de l'évolution. Rejoignez le Groupe VIP pour communiquer directement avec notre équipe de support technique. Votez pour les fonctionnalités à venir et obtenez un aperçu exclusif des futures mises à jour. Votre voix compte — aidez-nous à façonner le portefeuille crypto de nouvelle génération.";
 
 "purchases.vip_club" = "Club VIP";
 "purchases.vip_club.description" = "Chat privé avec informations exclusives.";

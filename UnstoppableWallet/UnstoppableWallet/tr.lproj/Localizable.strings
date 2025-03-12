@@ -2269,8 +2269,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "purchases.privacy_mode.info" = "Gizlilik Modu, cüzdan bakiyelerini, işlem geçmişini ve diğer hassas ayrıntıları maskeleyerek kullanıcı gizliliğini artırır. Bu özellik, üçüncü tarafların kullanıcı etkinliğini görüntüleyememesini veya izleyememesini sağlayarak, gizliliğe değer verenler için ayrık ve güvenli bir deneyim sunar.";
 
 "purchases.vip_support" = "VIP Grubu";
-"purchases.vip_support.description" = "Ekibe erişim ve gelecekteki geliştirmeler için oy kullanma hakkı";
-"purchases.vip_support.info" = "Evrimin bir parçası olun. Ekibimizle doğrudan bağlantı kurmak, yaklaşan özellikler hakkında oy kullanmak ve gelecek güncellemelere özel bir ilk bakış elde etmek için VIP Grubuna katılın. Sesiniz önemli - bir sonraki nesil kripto cüzdanını şekillendirmeye yardımcı olun.";
+"purchases.vip_support.description" = "Hızlı teknik destek için cüzdan ekibine erişim.";
+"purchases.vip_support.info" = "Evrimin bir parçası olun. VIP Gruba katılarak teknik destek için ekibimizle doğrudan bağlantı kurun. Gelecek özelliklere oy verin ve gelecekteki güncellemelere özel bir bakış atın. Sizin sesiniz önemli—yeni nesil kripto cüzdanını şekillendirmeye yardımcı olun.";
 
 "purchases.vip_club" = "VIP Kulübü";
 "purchases.vip_club.description" = "Özel bilgilerle özel sohbet.";

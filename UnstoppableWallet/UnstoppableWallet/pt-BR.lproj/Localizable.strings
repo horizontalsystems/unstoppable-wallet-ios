@@ -2260,8 +2260,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "purchases.address_checker.info" = "Proteja-se de entidades arriscadas e sancionadas. O Verificador de Lista Negra rastreia automaticamente endereços de destinatários em bases de dados de alto risco, sinalizando golpes, fraudes e entidades sancionadas antes do envio. Se um endereço estiver na lista negra, você saberá antes de cometer um erro custoso. Proteja suas transações. Mantenha suas criptomoedas limpas. Permaneça em conformidade.";
 
 "purchases.vip_support" = "Grupo VIP";
-"purchases.vip_support.description" = "Vote no Futuro do Unstoppable";
-"purchases.vip_support.info" = "Faça parte da evolução. Junte-se ao Grupo VIP para se conectar diretamente com nossa equipe, votar em recursos futuros e ter uma exclusiva primeira visão das próximas atualizações. Sua voz importa — ajude a moldar a carteira cripto da próxima geração.";
+"purchases.vip_support.description" = "Acesso à equipe da carteira para suporte técnico rápido.";
+"purchases.vip_support.info" = "Seja parte da evolução. Junte-se ao Grupo VIP para se conectar diretamente com nossa equipe de suporte técnico. Vote nas próximas funcionalidades e tenha uma prévia exclusiva das atualizações futuras. Sua voz importa—ajude a moldar a carteira de criptomoedas de próxima geração.";
 
 "purchases.vip_club" = "Clube VIP";
 "purchases.vip_club.description" = "Chat privado com informações exclusivas.";

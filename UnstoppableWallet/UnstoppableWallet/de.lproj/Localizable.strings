@@ -2260,8 +2260,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "purchases.address_checker.info" = "Schütze dich vor riskanten und sanktionierten Einrichtungen. Der Blacklist-Checker überprüft automatisch Empfängeradressen anhand von Hochrisiko-Datenbanken und markiert Betrügereien, Fälschungen und sanktionierte Einrichtungen, bevor du sendest. Wenn eine Adresse auf der schwarzen Liste steht, erfährst du es, bevor du einen kostspieligen Fehler machst. Sichere deine Transaktionen. Halte deine Krypto sauber. Bleibe konform.";
 
 "purchases.vip_support" = "VIP-Gruppe";
-"purchases.vip_support.description" = "Zugang zum Team und Mitsprache bei zukünftigen Entwicklungen";
-"purchases.vip_support.info" = "Sei Teil der Evolution. Tritt der VIP-Gruppe bei, um dich direkt mit unserem Team zu verbinden, über kommende Funktionen abzustimmen und einen exklusiven ersten Blick auf zukünftige Updates zu werfen. Deine Stimme zählt – hilf mit, die Krypto-Wallet der nächsten Generation zu gestalten.";
+"purchases.vip_support.description" = "Direkter Zugang zum Wallet-Team für schnellen technischen Support.";
+"purchases.vip_support.info" = "Werden Sie Teil der Evolution. Treten Sie der VIP-Gruppe bei, um direkt mit unserem Team für technischen Support in Verbindung zu treten. Stimmen Sie über kommende Funktionen ab und erhalten Sie exklusive Vorabeinblicke in zukünftige Updates. Ihre Stimme zählt – helfen Sie mit, die nächste Generation der Krypto-Wallet zu gestalten.";
 
 "purchases.vip_club" = "VIP-Club";
 "purchases.vip_club.description" = "Privater Chat mit exklusiven Informationen.";
