@@ -2256,7 +2256,7 @@
 "purchases.address_checker.description" = "Guarantee of legality for your crypto operations";
 "purchases.address_checker.info" = "Protect yourself from risky and sanctioned entities. Blacklist Checker automatically screens recipient addresses against high-risk databases, flagging scams, frauds, and sanctioned entities before you send. If an address is blacklisted, you’ll know before making a costly mistake. Secure your transactions. Keep your crypto clean. Stay compliant.";
 
-"purchases.vip_support" = "VIP Group";
+"purchases.vip_support" = "VIP Support";
 "purchases.vip_support.description" = "Access to wallet team for quick tech support.";
 "purchases.vip_support.info" = "Be part of the evolution. Join the VIP Group to connect directly with our team for tech support. Vote on upcoming features, and get an exclusive first look at future updates. Your voice matters—help shape the next-gen crypto wallet.";
 
