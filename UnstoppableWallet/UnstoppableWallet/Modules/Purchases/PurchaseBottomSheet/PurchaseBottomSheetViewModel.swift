@@ -169,7 +169,7 @@ extension PurchaseBottomSheetViewModel {
                         let discountPrecentage = ((monthlyPrice - realMonthlyPrice) / monthlyPrice) * 100
                         discountBadge = ["purchase.period.save".localized.uppercased(), "\(discountPrecentage.rounded(decimal: 0))%"].joined(separator: " ")
 
-                        priceDescription = "(\([realMonthlyPrice.rounded(decimal: 2).description, period.pricePeriod].joined(separator: "/")))"
+                        priceDescription = "(\([realMonthlyPrice.rounded(decimal: 2).description, "purchase.period.month".localized].joined(separator: "/")))"
                         priceDescripionAccented = true
                     } else {
                         discountBadge = nil

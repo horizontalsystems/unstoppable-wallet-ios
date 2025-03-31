@@ -40,8 +40,8 @@ struct PurchaseBottomSheetView: View {
 
             subscribedDescription()
                 .multilineTextAlignment(.center)
+                .frame(height: 64)
                 .padding(.horizontal, .margin32)
-                .padding(.vertical, .margin12)
 
             VStack(spacing: .margin12) {
                 Button(action: {
