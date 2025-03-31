@@ -59,6 +59,12 @@ class MarketWatchlistViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
+        watchlistManager.showSignalsUpdatedPublisher
+            .sink { [weak self] in
+                self?.syncShowSignals()
+            }
+            .store(in: &cancellables)
+
         purchaseManager.$activeFeatures
             .receive(on: DispatchQueue.main)
             .sink { [weak self] activeFeatures in
