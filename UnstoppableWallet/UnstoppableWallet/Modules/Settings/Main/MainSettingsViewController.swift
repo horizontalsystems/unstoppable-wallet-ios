@@ -415,11 +415,23 @@ class MainSettingsViewController: ThemeViewController {
                 image: .local(UIImage(named: "academy_1_24")),
                 title: .body("education.title".localized),
                 accessoryType: .disclosure,
-                isLast: true,
                 action: { [weak self] in
                     self?.navigationController?.pushViewController(EducationView().toViewController(title: "education.title".localized), animated: true)
 
                     stat(page: .settings, event: .open(page: .education))
+                }
+            ),
+            tableView.universalRow48(
+                id: "quiz",
+                image: .local(UIImage(named: "question_24")),
+                title: .body("quiz.title".localized),
+                accessoryType: .disclosure,
+                autoDeselect: true,
+                isLast: true,
+                action: {
+                    UrlManager.open(url: "https://t.me/\(AppConfig.appTokenTelegramAccount)/app")
+
+                    stat(page: .settings, event: .open(page: .externalTelegram))
                 }
             ),
         ]
@@ -524,6 +536,7 @@ class MainSettingsViewController: ThemeViewController {
                 title: .body("settings.tell_friends".localized),
                 accessoryType: .disclosure,
                 autoDeselect: true,
+                isLast: true,
                 action: { [weak self] in
                     self?.openTellFriends()
                 }

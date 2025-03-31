@@ -3,24 +3,13 @@ import Foundation
 import MarketKit
 
 class MarketAdvancedSearchResultsViewModel: ObservableObject {
-    private static let showSignalKey = "advanced_search_show_signal_key"
-
     private let currencyManager = App.shared.currencyManager
     private let purchaseManager = App.shared.purchaseManager
-    private let userDefaultsStorage = App.shared.userDefaultsStorage
+    private let watchlistManager = App.shared.watchlistManager
     private var cancellables = Set<AnyCancellable>()
 
     private let internalMarketInfos: [MarketInfo]
     let timePeriod: HsTimePeriod
-
-    private var showSignalsVar: Bool {
-        get {
-            userDefaultsStorage.value(for: Self.showSignalKey) ?? false
-        }
-        set {
-            userDefaultsStorage.set(value: newValue, for: Self.showSignalKey)
-        }
-    }
 
     @Published private(set) var premiumEnabled: Bool = false
     @Published var marketInfos: [MarketInfo] = []
@@ -38,7 +27,7 @@ class MarketAdvancedSearchResultsViewModel: ObservableObject {
         internalMarketInfos = marketInfos
         self.timePeriod = timePeriod
 
-        showSignals = premiumEnabled && showSignalsVar
+        showSignals = premiumEnabled && watchlistManager.showSignals
         self.premiumEnabled = premiumEnabled
 
         purchaseManager.$activeFeatures
@@ -53,7 +42,7 @@ class MarketAdvancedSearchResultsViewModel: ObservableObject {
     }
 
     private func syncShowSignals() {
-        showSignals = premiumEnabled && showSignalsVar
+        showSignals = premiumEnabled && watchlistManager.showSignals
     }
 
     private func syncState() {
@@ -73,7 +62,7 @@ extension MarketAdvancedSearchResultsViewModel {
     func set(showSignals: Bool) {
         stat(page: .markets, section: .searchResults, event: .showSignals(shown: showSignals))
         syncState()
-        showSignalsVar = showSignals
+        watchlistManager.showSignals = showSignals
 
         self.showSignals = premiumEnabled && showSignals
     }

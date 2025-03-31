@@ -13,7 +13,8 @@ class WatchlistManager {
     private var cancellables = Set<AnyCancellable>()
 
     private let coinUidsSubject = PassthroughSubject<[String], Never>()
-
+    private let showSignalsUpdatedSubject = PassthroughSubject<(), Never>()
+    
     var coinUids: [String] {
         didSet {
             coinUidSet = Set(coinUids)
@@ -48,6 +49,7 @@ class WatchlistManager {
     var showSignals: Bool {
         didSet {
             storage.set(value: showSignals, for: keyShowSignals)
+            showSignalsUpdatedSubject.send()
             // WidgetCenter.shared.reloadTimelines(ofKind: AppWidgetConstants.watchlistWidgetKind)
         }
     }
@@ -84,6 +86,10 @@ class WatchlistManager {
 extension WatchlistManager {
     var coinUidsPublisher: AnyPublisher<[String], Never> {
         coinUidsSubject.eraseToAnyPublisher()
+    }
+
+    var showSignalsUpdatedPublisher: AnyPublisher<(), Never> {
+        showSignalsUpdatedSubject.eraseToAnyPublisher()
     }
 
     var timePeriods: [WatchlistTimePeriod] {
