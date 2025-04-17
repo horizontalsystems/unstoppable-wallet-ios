@@ -33,7 +33,7 @@ class PurchaseManager: NSObject {
         Task { [weak self] in
             let products = try await Product.products(for: Self.productIds)
             self?.products = products.sorted(by: { $0.price > $1.price })
-            print(products.sorted(by: { $0.price > $1.price }))
+            // print(products.sorted(by: { $0.price > $1.price }))
 
             self?.syncProducts()
         }
@@ -56,8 +56,6 @@ class PurchaseManager: NSObject {
             for await verificationResult in Transaction.updates {
                 self?.handle(verificationResult: verificationResult)
             }
-
-            print("FINISH 2")
         }
     }
 
@@ -77,7 +75,7 @@ class PurchaseManager: NSObject {
 
     private func syncProducts() {
         productData = products.compactMap { ProductData(product: $0) }
-        print(productData)
+        // print(productData)
     }
 
     private func syncPurchases() {
@@ -86,7 +84,7 @@ class PurchaseManager: NSObject {
             .compactMap { PurchaseData(transaction: $0) }
             .sorted { $0.type.order < $1.type.order }
 
-        print(purchaseData)
+        // print(purchaseData)
 
         activeFeatures = activePurchase != nil ? PremiumFeature.allCases : []
     }
