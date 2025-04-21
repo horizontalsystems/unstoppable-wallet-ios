@@ -10,7 +10,6 @@ class TransactionInfoService {
     private let rateService: HistoricalRateService
     private let nftMetadataService: NftMetadataService
     private let balanceHiddenManager: BalanceHiddenManager
-    private let purchaseManager = App.shared.purchaseManager
 
     private var transactionRecord: TransactionRecord
     private var rates = [RateKey: CurrencyValue]()
@@ -145,10 +144,6 @@ extension TransactionInfoService {
 
     var balanceHidden: Bool {
         balanceHiddenManager.balanceHidden
-    }
-
-    var hasActiveSubscriptions: Bool {
-        purchaseManager.hasActivePurchase
     }
 
     var item: Item {
