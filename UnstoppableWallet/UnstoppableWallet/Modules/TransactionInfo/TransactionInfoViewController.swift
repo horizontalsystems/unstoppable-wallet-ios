@@ -82,11 +82,6 @@ class TransactionInfoViewController: ThemeViewController {
     }
 
     private func openResend(type: ResendTransactionType) {
-        guard viewModel.hasSubscription else {
-            present(PurchasesView().toViewController(), animated: true)
-            return
-        }
-
         do {
             if let evmAdapter = adapter as? BaseEvmAdapter {
                 let viewController = try SendEvmConfirmationModule.resendViewController(adapter: adapter, type: type, transactionHash: viewModel.transactionHash)

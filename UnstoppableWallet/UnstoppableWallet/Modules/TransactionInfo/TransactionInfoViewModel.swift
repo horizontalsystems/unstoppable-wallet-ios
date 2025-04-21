@@ -52,10 +52,6 @@ extension TransactionInfoViewModel {
         service.item.record
     }
 
-    var hasSubscription: Bool {
-        service.hasActiveSubscriptions
-    }
-
     func togglePrice() {
         factory.priceReversed.toggle()
         reSyncServiceItem()
