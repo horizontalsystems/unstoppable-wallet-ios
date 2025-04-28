@@ -602,6 +602,39 @@ class TransactionInfoViewItemFactory {
 
             feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(appValue: $0, rate: _rate($0))) }
 
+        case let record as StellarTransactionRecord:
+            var viewItems: [TransactionInfoModule.ViewItem]
+
+            switch record.type {
+            case let .accountCreated(startingBalance, funder):
+                viewItems = receiveSection(source: record.source, appValue: startingBalance, from: funder, rates: item.rates, balanceHidden: balanceHidden)
+
+            case let .sendPayment(value, to, sentToSelf):
+                viewItems = sendSection(source: record.source, appValue: value, to: to, rates: item.rates, sentToSelf: sentToSelf, balanceHidden: balanceHidden)
+
+                if sentToSelf {
+                    viewItems.append(.sentToSelf)
+                }
+
+            case let .receivePayment(value, from):
+                viewItems = receiveSection(source: record.source, appValue: value, from: from, rates: item.rates, balanceHidden: balanceHidden)
+
+            case let .unsupported(type):
+                viewItems = [.fee(title: "Operation", value: type)]
+            }
+
+            if let memo = record.operation.memo {
+                viewItems.append(.memo(text: memo))
+            }
+
+            if !record.operation.transactionSuccessful {
+                viewItems.append(.status(status: .failed))
+            }
+
+            sections.append(.init(viewItems))
+
+            // feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(appValue: $0, rate: _rate($0))) }
+
         default: ()
         }
 

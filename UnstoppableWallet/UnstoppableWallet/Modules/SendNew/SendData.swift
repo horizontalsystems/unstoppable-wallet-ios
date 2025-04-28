@@ -12,6 +12,7 @@ enum SendData {
     case zcash(amount: Decimal, recipient: Recipient, memo: String?)
     case tron(token: Token, contract: TronKit.Contract)
     case ton(token: Token, amount: Decimal, address: FriendlyAddress, memo: String?)
+    case stellar(token: Token, amount: Decimal, accountId: String, memo: String?)
     case swap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider)
     case walletConnect(request: WalletConnectRequest)
     case tonConnect(request: TonConnectSendTransactionRequest)

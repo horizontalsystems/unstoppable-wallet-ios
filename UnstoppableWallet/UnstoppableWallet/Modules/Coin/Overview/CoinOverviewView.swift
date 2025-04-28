@@ -415,6 +415,7 @@ struct CoinOverviewView: View {
         case let .eip20(address): return address.shortened
         case let .spl(address): return address.shortened
         case let .jetton(address): return address.shortened
+        case let .stellar(_, issuer): return issuer.shortened
         case let .unsupported(_, reference): return reference?.shortened
         }
     }

@@ -1272,9 +1272,11 @@
 "transactions.contract_creation" = "Contract Creation";
 "transactions.external_call" = "External Call";
 "transactions.contract_deploy" = "Contract Deploy";
+"transactions.account_created" = "Account Created";
 
 "transactions.to" = "To %@";
 "transactions.from" = "From %@";
+"transactions.funder" = "Funder: %@";
 
 "transactions.multiple" = "Multiple";
 
@@ -2029,7 +2031,7 @@
 "watch_address.error.not_supported" = "Address format is not supported";
 "watch_address.error.non_public_key" = "Watching by private key is not allowed";
 "watch_address.error.not_supported_derived_type" = "Derived type is not supported";
-"watch_address.watch_data.placeholder" = "Enter Your EVM, TRON, TON or Public Address (Bitcoin, Litecoin, Bitcoin Cash) or Account xPubKey.";
+"watch_address.watch_data.placeholder" = "Enter Your EVM, TRON, TON, Stellar or Public Address (Bitcoin, Litecoin, Bitcoin Cash) or Account xPubKey.";
 "watch_address.choose_blockchain" = "Choose Blockchain";
 "watch_address.choose_coin" = "Choose Coin";
 

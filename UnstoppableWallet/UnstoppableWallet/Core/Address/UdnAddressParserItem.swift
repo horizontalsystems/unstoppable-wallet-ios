@@ -103,6 +103,7 @@ extension UdnAddressParserItem {
         case .ton: return "TON"
         case .base: return "ETH"
         case .zkSync: return "ETH"
+        case .stellar: return "XLM"
         case let .unsupported(uid): return uid
         }
     }

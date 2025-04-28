@@ -85,6 +85,8 @@ class WatchService {
                     accountType = try .tronAddress(address: TronKit.Address(address: address.raw))
                 case .ton:
                     accountType = .tonAddress(address: address.raw)
+                case .stellar:
+                    accountType = .stellarAccount(accountId: address.raw)
                 default: return
                 }
             }

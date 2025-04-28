@@ -63,6 +63,12 @@ class AccountStorage {
             }
 
             type = .tonAddress(address: address)
+        case .stellarAccount:
+            guard let accountId = record.dataKey else {
+                return nil
+            }
+
+            type = .stellarAccount(accountId: accountId)
         case .hdExtendedKey:
             guard let data = recoverData(id: id, typeName: typeName, keyName: .data) else {
                 return nil
@@ -138,6 +144,9 @@ class AccountStorage {
         case let .tonAddress(address):
             typeName = .tonAddress
             dataKey = address
+        case let .stellarAccount(accountId):
+            typeName = .stellarAccount
+            dataKey = accountId
         case let .hdExtendedKey(key):
             typeName = .hdExtendedKey
             dataKey = try store(data: key.serialized, id: id, typeName: typeName, keyName: .data)
@@ -270,6 +279,7 @@ extension AccountStorage {
         case evmAddress = "address"
         case tronAddress
         case tonAddress
+        case stellarAccount
         case hdExtendedKey
         case btcAddress
         case cex

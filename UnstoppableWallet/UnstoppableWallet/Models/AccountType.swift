@@ -12,6 +12,7 @@ enum AccountType {
     case evmAddress(address: EvmKit.Address)
     case tronAddress(address: TronKit.Address)
     case tonAddress(address: String)
+    case stellarAccount(accountId: String)
     case hdExtendedKey(key: HDExtendedKey)
     case btcAddress(address: String, blockchainType: BlockchainType, tokenType: TokenType)
     case cex(cexAccount: CexAccount)
@@ -48,6 +49,8 @@ enum AccountType {
             privateData = address.hex.hs.data
         case let .tonAddress(address):
             privateData = address.hs.data
+        case let .stellarAccount(accountId):
+            privateData = accountId.hs.data
         case let .hdExtendedKey(key):
             privateData = key.serialized
         case let .btcAddress(address, blockchainType, tokenType):
@@ -85,6 +88,7 @@ enum AccountType {
             case (.zkSync, .native), (.zkSync, .eip20): return true
             case (.tron, .native), (.tron, .eip20): return true
             case (.ton, .native), (.ton, .jetton): return true
+            case (.stellar, .native), (.stellar, .stellar): return true
             default: return false
             }
         case let .hdExtendedKey(key):
@@ -183,6 +187,8 @@ enum AccountType {
             return "TRON Address"
         case .tonAddress:
             return "TON Address"
+        case .stellarAccount:
+            return "Stellar Account"
         case let .hdExtendedKey(key):
             switch key {
             case .private:
@@ -217,6 +223,8 @@ enum AccountType {
             return "tron_address"
         case .tonAddress:
             return "ton_address"
+        case .stellarAccount:
+            return "stellar_account"
         case let .hdExtendedKey(key):
             switch key {
             case .private:
@@ -246,6 +254,8 @@ enum AccountType {
             return address.base58.shortened
         case let .tonAddress(address):
             return address.shortened
+        case let .stellarAccount(accountId):
+            return accountId.shortened
         case let .btcAddress(address, _, _):
             return address.shortened
         default: return description
@@ -340,6 +350,8 @@ extension AccountType {
             return address.map { AccountType.tronAddress(address: $0) }
         case .tonAddress:
             return AccountType.tonAddress(address: string)
+        case .stellarAccount:
+            return AccountType.stellarAccount(accountId: string)
         case .cex:
             guard let cexAccount = CexAccount.decode(uniqueId: string) else {
                 return nil
@@ -355,6 +367,7 @@ extension AccountType {
         case evmAddress = "evm_address"
         case tronAddress = "tron_address"
         case tonAddress = "ton_address"
+        case stellarAccount = "stellar_account"
         case hdExtendedKey = "hd_extended_key"
         case btcAddress = "btc_address_key"
         case cex
@@ -366,6 +379,7 @@ extension AccountType {
             case .evmAddress: self = .evmAddress
             case .tronAddress: self = .tronAddress
             case .tonAddress: self = .tonAddress
+            case .stellarAccount: self = .stellarAccount
             case .hdExtendedKey: self = .hdExtendedKey
             case .btcAddress: self = .btcAddress
             case .cex: self = .cex
@@ -387,6 +401,8 @@ extension AccountType: Hashable {
             return lhsAddress == rhsAddress
         case let (.tonAddress(lhsAddress), .tonAddress(rhsAddress)):
             return lhsAddress == rhsAddress
+        case let (.stellarAccount(lhsAccountId), .stellarAccount(rhsAccountId)):
+            return lhsAccountId == rhsAccountId
         case let (.hdExtendedKey(lhsKey), .hdExtendedKey(rhsKey)):
             return lhsKey == rhsKey
         case let (.btcAddress(lhsAddress, lhsBlockchainType, lhsTokenType), .btcAddress(rhsAddress, rhsBlockchainType, rhsTokenType)):
@@ -416,6 +432,9 @@ extension AccountType: Hashable {
         case let .tonAddress(address):
             hasher.combine("tonAddress")
             hasher.combine(address)
+        case let .stellarAccount(accountId):
+            hasher.combine("stellarAccount")
+            hasher.combine(accountId)
         case let .hdExtendedKey(key):
             hasher.combine("hdExtendedKey")
             hasher.combine(key)

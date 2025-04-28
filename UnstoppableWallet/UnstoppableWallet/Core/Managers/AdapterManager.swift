@@ -11,6 +11,7 @@ class AdapterManager {
     private let evmBlockchainManager: EvmBlockchainManager
     private let tronKitManager: TronKitManager
     private let tonKitManager: TonKitManager
+    private let stellarKitManager: StellarKitManager
 
     private let adapterDataReadyRelay = PublishRelay<AdapterData>()
 
@@ -19,13 +20,14 @@ class AdapterManager {
     private var _adapterData = AdapterData(adapterMap: [:], account: nil)
 
     init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager,
-         tronKitManager: TronKitManager, tonKitManager: TonKitManager, btcBlockchainManager: BtcBlockchainManager)
+         tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager, btcBlockchainManager: BtcBlockchainManager)
     {
         self.adapterFactory = adapterFactory
         self.walletManager = walletManager
         self.evmBlockchainManager = evmBlockchainManager
         self.tronKitManager = tronKitManager
         self.tonKitManager = tonKitManager
+        self.stellarKitManager = stellarKitManager
 
         walletManager.activeWalletDataUpdatedObservable
             .observeOn(SerialDispatchQueueScheduler(qos: .userInitiated))
@@ -155,6 +157,7 @@ extension AdapterManager {
 
             self.tronKitManager.tronKitWrapper?.tronKit.refresh()
             self.tonKitManager.tonKit?.sync()
+            self.stellarKitManager.stellarKit?.sync()
         }
     }
 
@@ -166,6 +169,8 @@ extension AdapterManager {
                 self.tronKitManager.tronKitWrapper?.tronKit.refresh()
             } else if wallet.token.blockchainType == .ton {
                 self.tonKitManager.tonKit?.sync()
+            } else if wallet.token.blockchainType == .stellar {
+                self.stellarKitManager.stellarKit?.sync()
             } else {
                 self._adapterData.adapterMap[wallet]?.refresh()
             }

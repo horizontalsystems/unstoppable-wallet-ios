@@ -45,6 +45,8 @@ class TransactionAdapterManager {
                 transactionsAdapter = adapterFactory.tronTransactionsAdapter(transactionSource: source)
             } else if source.blockchainType == .ton {
                 transactionsAdapter = adapterFactory.tonTransactionAdapter(transactionSource: source)
+            } else if source.blockchainType == .stellar {
+                transactionsAdapter = adapterFactory.stellarTransactionAdapter(transactionSource: source)
             } else {
                 transactionsAdapter = adapter as? ITransactionsAdapter
             }

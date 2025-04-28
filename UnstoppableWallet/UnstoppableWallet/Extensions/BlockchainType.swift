@@ -24,6 +24,7 @@ extension BlockchainType {
         .binanceSmartChain,
         .tron,
         .ton,
+        .stellar,
     ]
 
     func placeholderImageName(tokenProtocol: TokenProtocol?) -> String {
@@ -53,6 +54,7 @@ extension BlockchainType {
             .binanceSmartChain,
             .tron,
             .ton,
+            .stellar,
             .polygon,
             .arbitrumOne,
             .optimism,
@@ -80,7 +82,8 @@ extension BlockchainType {
 
     var rollupFeeContractAddress: EvmKit.Address? {
         switch self {
-        case .optimism, .base: return try? EvmKit.Address(hex: "0x420000000000000000000000000000000000000F")
+        case .optimism, .base:
+            return try? EvmKit.Address(hex: "0x420000000000000000000000000000000000000F")
         default: return nil
         }
     }
@@ -111,12 +114,16 @@ extension BlockchainType {
             switch self {
             case .bitcoin: return key.coinTypes.contains(where: { $0 == .bitcoin })
             case .litecoin: return key.coinTypes.contains(where: { $0 == .litecoin })
-            case .bitcoinCash, .ecash, .dash: return key.coinTypes.contains(where: { $0 == .bitcoin }) && key.purposes.contains(where: { $0 == .bip44 })
+            case .bitcoinCash, .ecash, .dash:
+                return key.coinTypes.contains(where: { $0 == .bitcoin })
+                    && key.purposes.contains(where: { $0 == .bip44 })
             default: return false
             }
         case .evmPrivateKey, .evmAddress:
             switch self {
-            case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .base, .zkSync: return true
+            case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne,
+                 .gnosis, .fantom, .base, .zkSync:
+                return true
             default: return false
             }
         case .tronAddress:
@@ -155,6 +162,7 @@ extension BlockchainType {
         case .litecoin: return "LTC (BIP44, BIP49, BIP84, BIP86)"
         case .tron: return "TRX, TRC20 tokens"
         case .ton: return "TON"
+        case .stellar: return "Stellar"
         default: return ""
         }
     }
@@ -188,9 +196,15 @@ extension BlockchainType {
     var defaultTokenQuery: TokenQuery {
         switch self {
         case .bitcoin, .litecoin:
-            return TokenQuery(blockchainType: self, tokenType: .derived(derivation: MnemonicDerivation.default.derivation))
+            return TokenQuery(
+                blockchainType: self,
+                tokenType: .derived(derivation: MnemonicDerivation.default.derivation)
+            )
         case .bitcoinCash:
-            return TokenQuery(blockchainType: self, tokenType: .addressType(type: BitcoinCashCoinType.default.addressType))
+            return TokenQuery(
+                blockchainType: self,
+                tokenType: .addressType(type: BitcoinCashCoinType.default.addressType)
+            )
         default:
             return TokenQuery(blockchainType: self, tokenType: .native)
         }
