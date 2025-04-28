@@ -12,6 +12,7 @@ enum WatchModule {
                 }
                 + AddressParserFactory.parserChainHandlers(blockchainType: .tron)
                 + AddressParserFactory.parserChainHandlers(blockchainType: .ton)
+                + AddressParserFactory.parserChainHandlers(blockchainType: .stellar)
         )
 
         let service = WatchService(

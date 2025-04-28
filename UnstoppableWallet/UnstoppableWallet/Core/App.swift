@@ -73,6 +73,7 @@ class App {
     let evmLabelManager: EvmLabelManager
     let tronAccountManager: TronAccountManager
     let tonKitManager: TonKitManager
+    let stellarKitManager: StellarKitManager
 
     let restoreSettingsManager: RestoreSettingsManager
     let predefinedBlockchainService: PredefinedBlockchainService
@@ -217,6 +218,7 @@ class App {
         tronAccountManager = TronAccountManager(accountManager: accountManager, walletManager: walletManager, marketKit: marketKit, tronKitManager: tronKitManager, restoreStateManager: restoreStateManager)
 
         tonKitManager = TonKitManager(restoreStateManager: restoreStateManager, marketKit: marketKit, walletManager: walletManager)
+        stellarKitManager = StellarKitManager(restoreStateManager: restoreStateManager, marketKit: marketKit, walletManager: walletManager)
 
         let restoreSettingsStorage = RestoreSettingsStorage(dbPool: dbPool)
         restoreSettingsManager = RestoreSettingsManager(storage: restoreSettingsStorage)
@@ -267,6 +269,7 @@ class App {
             btcBlockchainManager: btcBlockchainManager,
             tronKitManager: tronKitManager,
             tonKitManager: tonKitManager,
+            stellarKitManager: stellarKitManager,
             restoreSettingsManager: restoreSettingsManager,
             coinManager: coinManager,
             evmLabelManager: evmLabelManager,
@@ -278,6 +281,7 @@ class App {
             evmBlockchainManager: evmBlockchainManager,
             tronKitManager: tronKitManager,
             tonKitManager: tonKitManager,
+            stellarKitManager: stellarKitManager,
             btcBlockchainManager: btcBlockchainManager
         )
         transactionAdapterManager = TransactionAdapterManager(
@@ -349,6 +353,7 @@ class App {
             walletConnectSocketConnectionService: walletConnectSocketConnectionService,
             nftMetadataSyncer: nftMetadataSyncer,
             tonKitManager: tonKitManager,
+            stellarKitManager: stellarKitManager,
             spamAddressManager: spamAddressManager
         )
     }

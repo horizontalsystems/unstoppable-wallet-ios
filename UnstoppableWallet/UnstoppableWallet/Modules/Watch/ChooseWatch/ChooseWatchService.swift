@@ -42,6 +42,9 @@ class ChooseWatchService {
         case .tonAddress:
             tokenQueries = BlockchainType.ton.nativeTokenQueries
 
+        case .stellarAccount:
+            tokenQueries = BlockchainType.stellar.nativeTokenQueries
+
         case let .hdExtendedKey(key):
             guard case .public = key else {
                 return nil

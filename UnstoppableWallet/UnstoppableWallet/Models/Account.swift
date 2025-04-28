@@ -59,7 +59,7 @@ class Account: Identifiable {
     var canBeBackedUp: Bool {
         switch type {
         case .mnemonic: return true
-        case .hdExtendedKey, .evmAddress, .tronAddress, .tonAddress, .evmPrivateKey, .btcAddress, .cex: return false
+        case .hdExtendedKey, .evmAddress, .tronAddress, .tonAddress, .stellarAccount, .evmPrivateKey, .btcAddress, .cex: return false
         }
     }
 }

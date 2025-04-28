@@ -3,6 +3,7 @@ import EvmKit
 import MarketKit
 import RxRelay
 import RxSwift
+import StellarKit
 
 class AdapterFactory {
     private let evmBlockchainManager: EvmBlockchainManager
@@ -10,12 +11,13 @@ class AdapterFactory {
     private let btcBlockchainManager: BtcBlockchainManager
     private let tronKitManager: TronKitManager
     private let tonKitManager: TonKitManager
+    private let stellarKitManager: StellarKitManager
     private let restoreSettingsManager: RestoreSettingsManager
     private let coinManager: CoinManager
     private let evmLabelManager: EvmLabelManager
     private let spamAddressManager: SpamAddressManager
     init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager,
-         btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, tonKitManager: TonKitManager,
+         btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager,
          restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager, evmLabelManager: EvmLabelManager, spamAddressManager: SpamAddressManager)
     {
         self.evmBlockchainManager = evmBlockchainManager
@@ -23,6 +25,7 @@ class AdapterFactory {
         self.btcBlockchainManager = btcBlockchainManager
         self.tronKitManager = tronKitManager
         self.tonKitManager = tonKitManager
+        self.stellarKitManager = stellarKitManager
         self.restoreSettingsManager = restoreSettingsManager
         self.coinManager = coinManager
         self.evmLabelManager = evmLabelManager
@@ -105,6 +108,16 @@ extension AdapterFactory {
         return nil
     }
 
+    func stellarTransactionAdapter(transactionSource: TransactionSource) -> ITransactionsAdapter? {
+        let query = TokenQuery(blockchainType: .stellar, tokenType: .native)
+
+        if let stellarKit = stellarKitManager.stellarKit, let baseToken = try? coinManager.token(query: query) {
+            return StellarTransactionAdapter(stellarKit: stellarKit, source: transactionSource, baseToken: baseToken, coinManager: coinManager)
+        }
+
+        return nil
+    }
+
     func adapter(wallet: Wallet) -> IAdapter? {
         switch (wallet.token.type, wallet.token.blockchain.type) {
         case (.derived, .bitcoin):
@@ -153,6 +166,16 @@ extension AdapterFactory {
                 let tonKit = try tonKitManager.tonKit(account: wallet.account)
                 return try JettonAdapter(tonKit: tonKit, address: address)
             } catch {}
+
+        case (.native, .stellar):
+            if let stellarKit = try? stellarKitManager.stellarKit(account: wallet.account) {
+                return StellarAdapter(stellarKit: stellarKit, asset: .native)
+            }
+
+        case let (.stellar(code, issuer), .stellar):
+            if let stellarKit = try? stellarKitManager.stellarKit(account: wallet.account) {
+                return StellarAdapter(stellarKit: stellarKit, asset: .asset(code: code, issuer: issuer))
+            }
 
         default: ()
         }
