@@ -132,6 +132,11 @@ enum AccountType {
             case (.ton, .native), (.ton, .jetton): return true
             default: return false
             }
+        case .stellarAccount:
+            switch (token.blockchainType, token.type) {
+            case (.stellar, .native), (.stellar, .stellar): return true
+            default: return false
+            }
         case let .btcAddress(_, blockchainType, tokenType):
             return token.blockchainType == blockchainType && token.type == tokenType
         default:

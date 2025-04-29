@@ -130,6 +130,8 @@ extension BlockchainType {
             return self == .tron
         case .tonAddress:
             return self == .ton
+        case .stellarAccount:
+            return self == .stellar
         case let .btcAddress(_, blockchainType, _):
             return self == blockchainType
         default:
