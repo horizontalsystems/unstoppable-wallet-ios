@@ -627,10 +627,6 @@ class TransactionInfoViewItemFactory {
                 viewItems.append(.memo(text: memo))
             }
 
-            if !record.operation.transactionSuccessful {
-                viewItems.append(.status(status: .failed))
-            }
-
             sections.append(.init(viewItems))
 
             // feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(appValue: $0, rate: _rate($0))) }

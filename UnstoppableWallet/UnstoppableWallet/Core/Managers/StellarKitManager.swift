@@ -9,8 +9,7 @@ class StellarKitManager {
     private let restoreStateManager: RestoreStateManager
     private let marketKit: MarketKit.Kit
     private let walletManager: WalletManager
-    private var jettonBalanceCancellable: AnyCancellable?
-    private var eventCancellable: AnyCancellable?
+    private var addedAssetCancellable: AnyCancellable?
 
     private weak var _stellarKit: StellarKit.Kit?
     private var currentAccount: Account?
@@ -31,9 +30,11 @@ class StellarKitManager {
         let accountId: String
 
         switch account.type {
-        case let .mnemonic(words, salt, _):
+        case .mnemonic:
             let keyPair = try Self.keyPair(accountType: account.type)
             accountId = keyPair.accountId
+        case let .stellarAccount(_accountId):
+            accountId = _accountId
         default:
             throw AdapterError.unsupportedAccount
         }
@@ -50,7 +51,56 @@ class StellarKitManager {
         _stellarKit = stellarKit
         currentAccount = account
 
+        subscribe(stellarKit: stellarKit, account: account)
+
         return stellarKit
+    }
+
+    private func subscribe(stellarKit: StellarKit.Kit, account: Account) {
+        addedAssetCancellable = stellarKit.addedAssetPublisher
+            .sink { [weak self, restoreStateManager] assets in
+                let restoreState = restoreStateManager.restoreState(account: account, blockchainType: .stellar)
+
+                // print("RESTORE STATE: shouldRestore: \(restoreState.shouldRestore), initialRestored: \(restoreState.initialRestored)")
+
+                restoreStateManager.setInitialRestored(account: account, blockchainType: .stellar)
+
+                if !restoreState.initialRestored, !restoreState.shouldRestore, !account.watchAccount {
+                    return
+                }
+
+                self?.handle(assets: assets, account: account)
+            }
+    }
+
+    private func handle(assets: [StellarKit.Asset], account: Account) {
+        // print("HANDLE ASSETS: \(assets.map(\.code))")
+
+        guard !assets.isEmpty else {
+            return
+        }
+
+        let existingWallets = walletManager.activeWallets
+        let existingTokenTypes = existingWallets.map(\.token.type)
+        let newAssets = assets.filter { !existingTokenTypes.contains($0.tokenType) }
+
+        // print("NEW ASSETS: \(newAssets.map { $0.code })")
+
+        guard !newAssets.isEmpty else {
+            return
+        }
+
+        let enabledWallets = newAssets.map { asset in
+            EnabledWallet(
+                tokenQueryId: TokenQuery(blockchainType: .stellar, tokenType: asset.tokenType).id,
+                accountId: account.id,
+                coinName: asset.code,
+                coinCode: asset.code,
+                tokenDecimals: 7
+            )
+        }
+
+        walletManager.save(enabledWallets: enabledWallets)
     }
 }
 
@@ -71,6 +121,15 @@ extension StellarKitManager {
             return try WalletUtils.createKeyPair(mnemonic: words.joined(separator: " "), passphrase: salt, index: 0)
         default:
             throw AdapterError.unsupportedAccount
+        }
+    }
+}
+
+extension StellarKit.Asset {
+    var tokenType: TokenType {
+        switch self {
+        case .native: return .native
+        case let .asset(code, issuer): return .stellar(code: code, issuer: issuer)
         }
     }
 }

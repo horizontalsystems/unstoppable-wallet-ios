@@ -13361,7 +13361,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/StellarKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.1;
+				version = 1.0.3;
 			};
 		};
 		D3AF5A8729FFD85800C1399E /* XCRemoteSwiftPackageReference "RxSwift" */ = {

@@ -6,6 +6,7 @@ class TransactionContactSelectViewModel: ObservableObject {
     static let allowedBlockchainUids = EvmBlockchainManager.blockchainTypes.map(\.uid) + [
         BlockchainType.tron.uid,
         BlockchainType.ton.uid,
+        BlockchainType.stellar.uid,
         BlockchainType.zcash.uid,
     ]
     private let disposeBag = DisposeBag()
