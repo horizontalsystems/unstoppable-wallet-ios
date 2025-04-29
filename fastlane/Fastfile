@@ -7,7 +7,6 @@ APPLE_ISSUER_ID = ENV["APPLE_ISSUER_ID"]
 APPLE_KEY_ID = ENV["APPLE_KEY_ID"]
 APPLE_KEY_CONTENT = ENV["APPLE_KEY_CONTENT"]
 GIT_AUTHORIZATION = ENV["GIT_AUTHORIZATION"]
-APP_CENTER_API_TOKEN = ENV["APP_CENTER_API_TOKEN"]
 
 XCCONFIG_DEV_ARBISCAN_API_KEYS = ENV["XCCONFIG_DEV_ARBISCAN_API_KEYS"]
 XCCONFIG_DEV_BASESCAN_API_KEYS = ENV["XCCONFIG_DEV_BASESCAN_API_KEYS"]
@@ -237,13 +236,13 @@ platform :ios do
       }
     )
 
-    appcenter_upload(
-      api_token: APP_CENTER_API_TOKEN,
-      owner_name: "Horizontal-Systems",
-      owner_type: "organization",
-      app_name: "Unstoppable",
-      notify_testers: true,
-      release_notes: last_git_commit[:message]
+    pilot(
+      apple_id: "6745219334",
+      app_identifier: "io.horizontalsystems.bank-wallet.dev",
+      skip_waiting_for_build_processing: true,
+      skip_submission: true,
+      distribute_external: false,
+      notify_external_testers: false
     )
 
     delete_temp_keychain(keychain_name)
