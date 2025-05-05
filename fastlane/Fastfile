@@ -236,13 +236,11 @@ platform :ios do
       }
     )
 
-    pilot(
-      apple_id: "6745219334",
-      app_identifier: "io.horizontalsystems.bank-wallet.dev",
-      skip_waiting_for_build_processing: true,
-      skip_submission: true,
-      distribute_external: false,
-      notify_external_testers: false
+    firebase_app_distribution(
+      app: "1:407994911754:ios:8bdd4910f96ecaee69e3f3",
+      groups: "dev-testers",
+      release_notes: last_git_commit[:message],
+      service_credentials_json_data: ENV["FIREBASE_CREDENTIALS"],
     )
 
     delete_temp_keychain(keychain_name)

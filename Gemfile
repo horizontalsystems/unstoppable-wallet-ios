@@ -5,6 +5,7 @@ group :fastlane do
   gem 'fastlane'
   gem 'xcodeproj'
   gem 'xcode-install'
+  gem 'fastlane-plugin-firebase_app_distribution'
 end
 
 plugins_path = File.join(File.dirname(__FILE__), 'fastlane', 'Pluginfile')
