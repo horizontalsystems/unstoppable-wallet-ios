@@ -92,7 +92,13 @@ class MainSettingsPremiumCell: UITableViewCell {
 }
 
 extension MainSettingsPremiumCell {
-    func bind(tryForFree: Bool) {
-        tryForFreeLabel.isHidden = !tryForFree
+    func bind(offerTitle: String?) {
+        guard let title = offerTitle else {
+            tryForFreeLabel.isHidden = true
+            return
+        }
+
+        tryForFreeLabel.isHidden = false
+        tryForFreeLabel.text = title
     }
 }

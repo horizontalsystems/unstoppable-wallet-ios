@@ -2,7 +2,9 @@ import UIKit
 
 class JailbreakTestManager {
     var isJailbroken: Bool {
-        if TARGET_IPHONE_SIMULATOR != 1 {
+        #if targetEnvironment(simulator)
+            return false
+        #else
             // Check 1 : existence of files that are common for jailbroken devices
             if FileManager.default.fileExists(atPath: "/Applications/Cydia.app")
                 || FileManager.default.fileExists(atPath: "/Applications/FakeCarrier.app")
@@ -25,8 +27,6 @@ class JailbreakTestManager {
             } catch {
                 return false
             }
-        } else {
-            return false
-        }
+        #endif
     }
 }

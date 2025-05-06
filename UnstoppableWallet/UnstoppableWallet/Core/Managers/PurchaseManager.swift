@@ -2,6 +2,8 @@ import HsExtensions
 import StoreKit
 
 class PurchaseManager: NSObject {
+    private let offerUpdateQueue = DispatchQueue(label: "com.app.offerUpdate")
+
     static let productName = "premium"
     static let productIds = PurchaseType.allCases.flatMap { $0.variants.map { id(productName, $0) }}
 
@@ -16,8 +18,10 @@ class PurchaseManager: NSObject {
     @PostPublished private(set) var purchaseData = [PurchaseData]()
 
     @PostPublished private(set) var activeFeatures = [PremiumFeature]()
+    @PostPublished private(set) var usedOfferProductIds = Set<String>()
 
     private var updatesTask: Task<Void, Never>?
+    private var currentUsedOfferUpdateTask: Task<Void, Never>?
 
     override init() {
         super.init()
@@ -75,7 +79,8 @@ class PurchaseManager: NSObject {
 
     private func syncProducts() {
         productData = products.compactMap { ProductData(product: $0) }
-        // print(productData)
+        syncUsedOffers()
+        // print("productData :", productData)
     }
 
     private func syncPurchases() {
@@ -84,9 +89,29 @@ class PurchaseManager: NSObject {
             .compactMap { PurchaseData(transaction: $0) }
             .sorted { $0.type.order < $1.type.order }
 
-        // print(purchaseData)
+        // print("purchaseData :", purchaseData)
 
         activeFeatures = activePurchase != nil ? PremiumFeature.allCases : []
+
+        syncUsedOffers()
+    }
+
+    private func syncUsedOffers() {
+        currentUsedOfferUpdateTask?.cancel()
+
+        offerUpdateQueue.async { [weak self] in
+            guard let self else { return }
+
+            currentUsedOfferUpdateTask = Task(priority: .background) { [weak self] in
+                await self?.updateUsedOffers()
+            }
+
+            if let task = currentUsedOfferUpdateTask {
+                Task {
+                    await task.value
+                }
+            }
+        }
     }
 
     func getJws() async -> String? {
@@ -162,17 +187,117 @@ extension PurchaseManager {
         activePurchase != nil
     }
 
+    var introductoryOfferType: IntroductoryOfferType {
+        var offers: [IntroductoryOfferType] = []
+        for product in productData {
+            if usedOfferProductIds.contains(product.id) {
+                offers.append(.none)
+                continue
+            }
+            offers.append(IntroductoryOfferType(product.introductoryOffer))
+        }
+        return offers.sorted(by: <).first ?? .none
+    }
+
     func activated(_ premiumFeature: PremiumFeature) -> Bool {
         activeFeatures.contains(premiumFeature)
     }
 
-    func hasTrialPeriod(purchase: ProductData) -> Bool {
-        // check exists transactions:
-        if !purchaseData.isEmpty { // if has already purchased plan, don't show trial period
-            return false
+    func updateUsedOffers() async {
+        var usedOfferProductIds = Set<String>()
+        offerUpdateQueue.sync {
+            usedOfferProductIds = self.usedOfferProductIds
         }
 
-        return purchase.hasTrialPeriod
+        if productData.isEmpty {
+            return
+        }
+
+        for product in productData {
+            // if product already in list, nothing can changes
+            guard !usedOfferProductIds.contains(product.id) else {
+                continue
+            }
+
+            // there are no any introducery offers for purchases
+            guard product.type == .subscription else {
+                continue
+            }
+
+            // there are no any offers by product
+            guard product.introductoryOffer != nil else {
+                continue
+            }
+
+            let productId = product.id
+
+            // check active subscriptions
+            if let product = products.first(where: { $0.id == productId }),
+               let subscription = product.subscription,
+               await subscription.isEligibleForIntroOffer == false
+            {
+                usedOfferProductIds.insert(productId)
+                continue
+            }
+
+            // if previous was not corrected
+            if await hasUsedIntroOffer(for: productId) {
+                usedOfferProductIds.insert(productId)
+            }
+        }
+
+        offerUpdateQueue.sync {
+            // print("Used Products: \(usedOfferProductIds)")
+            self.usedOfferProductIds = usedOfferProductIds
+        }
+    }
+
+    // Check for trial offer usage history
+    private func hasUsedIntroOffer(for productId: String) async -> Bool {
+        var seenProductTypes = Set<PurchaseType>()
+
+        // Check all transactions for used trial offers
+        for await result in Transaction.all {
+            if case let .verified(transaction) = result {
+                // Get product type
+                guard let transactionPurchaseType = PurchaseType(id: transaction.productID),
+                      let productPurchaseType = PurchaseType(id: productId)
+                else {
+                    continue
+                }
+
+                // Only check transactions of the same subscription type
+                if transactionPurchaseType != productPurchaseType {
+                    continue
+                }
+
+                // Add type to the set of seen products
+                seenProductTypes.insert(transactionPurchaseType)
+
+                // Check if this was a transaction with an introductory offer
+                let wasIntroOffer: Bool
+
+                if #available(iOS 17.2, *) {
+                    wasIntroOffer = transaction.offer?.type == .introductory
+                } else {
+                    wasIntroOffer = transaction.offerType == .introductory
+                }
+
+                if wasIntroOffer {
+                    return true // Trial was already used for this product type
+                }
+            }
+        }
+
+        // Additional check: if we saw transactions of this type,
+        // but none were introOffer, this might mean the user
+        // purchased the product directly without a trial
+        if !seenProductTypes.isEmpty {
+            // In this case we consider that trial was "skipped"
+            return true
+        }
+
+        return false // No used trial periods or transactions of this type found
     }
 }
 
@@ -245,6 +370,34 @@ extension PurchaseManager {
         let expiresTimestamp: TimeInterval?
     }
 
+    struct Discount {
+        let periodCount: Int
+        let price: Decimal
+        let priceFormatted: String
+    }
+
+    enum IntroductoryOfferType: Int, Comparable {
+        public static let `default` = Self.none
+
+        case trial, discount, none
+
+        public static func == (lhs: IntroductoryOfferType, rhs: IntroductoryOfferType) -> Bool {
+            lhs.rawValue == rhs.rawValue
+        }
+
+        public static func < (lhs: IntroductoryOfferType, rhs: IntroductoryOfferType) -> Bool {
+            lhs.rawValue < rhs.rawValue
+        }
+
+        init(_ offer: Product.SubscriptionOffer?) {
+            switch offer?.paymentMode {
+            case .none: self = .none
+            case .freeTrial: self = .trial
+            default: self = .discount
+            }
+        }
+    }
+
     struct ProductData {
         let id: String
         let type: PurchaseType
@@ -259,6 +412,18 @@ extension PurchaseManager {
                 return paymentMode == .freeTrial
             }
             return false
+        }
+
+        var introductoryDiscount: Discount? {
+            if let paymentMode = introductoryOffer?.paymentMode,
+               paymentMode != .freeTrial,
+               let offerPrice = introductoryOffer?.price,
+               let offerPeriods = introductoryOffer?.periodCount,
+               let priceFormatted = introductoryOffer?.displayPrice
+            {
+                return Discount(periodCount: offerPeriods, price: offerPrice, priceFormatted: priceFormatted)
+            }
+            return nil
         }
 
         init?(product: Product) {

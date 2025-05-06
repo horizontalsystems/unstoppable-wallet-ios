@@ -146,15 +146,18 @@ extension MainSettingsService {
         purchaseManager.hasActivePurchase
     }
 
-    var allowFreeTrialPublisher: AnyPublisher<Bool, Never> {
-        purchaseManager
-            .$purchasedProducts
-            .map(\.isEmpty)
-            .eraseToAnyPublisher()
+    var allowIntoductoryPublisher: AnyPublisher<PurchaseManager.IntroductoryOfferType, Never> {
+        Publishers.CombineLatest3(
+            purchaseManager.$purchaseData,
+            purchaseManager.$productData,
+            purchaseManager.$usedOfferProductIds
+        )
+        .map { [weak purchaseManager] _, _, _ in purchaseManager?.introductoryOfferType ?? .default }
+        .eraseToAnyPublisher()
     }
 
-    var allowFreeTrial: Bool {
-        purchaseManager.purchasedProducts.isEmpty
+    var allowIntroductoryOffer: PurchaseManager.IntroductoryOfferType {
+        purchaseManager.introductoryOfferType
     }
 
     func activated(_ premiumFeature: PremiumFeature) -> Bool {
