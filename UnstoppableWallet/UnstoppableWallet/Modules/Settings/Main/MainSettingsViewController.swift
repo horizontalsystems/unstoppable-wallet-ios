@@ -69,7 +69,7 @@ class MainSettingsViewController: ThemeViewController {
             maker.edges.equalToSuperview()
         }
 
-        syncPremiumCell(tryForFree: viewModel.allowFreeTrial)
+        syncPremiumCell(offerTitle: viewModel.offerTitle)
 
         manageAccountsCell.set(backgroundStyle: .lawrence, isFirst: true)
         syncManageAccountCell()
@@ -111,7 +111,7 @@ class MainSettingsViewController: ThemeViewController {
             stat(page: .settings, event: .open(page: .externalCompanyWebsite))
         }
 
-        subscribe(disposeBag, viewModel.allowFreeTrialSignal) { [weak self] in self?.syncPremiumCell(tryForFree: $0) }
+        subscribe(disposeBag, viewModel.intoductoryTitleSignal) { [weak self] in self?.syncPremiumCell(offerTitle: $0) }
         subscribe(disposeBag, viewModel.manageWalletsAlertDriver) { [weak self] in self?.syncManageAccountCell(alert: $0) }
         subscribe(disposeBag, viewModel.securityCenterAlertDriver) { [weak self] in self?.syncSecurityCell(alert: $0) }
         subscribe(disposeBag, viewModel.iCloudSyncAlertDriver) { [weak self] in self?.syncContactBookCell(alert: $0) }
@@ -136,8 +136,9 @@ class MainSettingsViewController: ThemeViewController {
         tableView.deselectCell(withCoordinator: transitionCoordinator, animated: animated)
     }
 
-    private func syncPremiumCell(tryForFree: Bool) {
-        premiumCell.bind(tryForFree: tryForFree)
+    private func syncPremiumCell(offerTitle: String?) {
+        print("TYPE: ", offerTitle)
+        premiumCell.bind(offerTitle: offerTitle)
     }
 
     private func syncManageAccountCell(alert: Bool = false) {

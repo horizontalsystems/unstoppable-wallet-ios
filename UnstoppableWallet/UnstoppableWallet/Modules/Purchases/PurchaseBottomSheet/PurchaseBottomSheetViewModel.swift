@@ -8,7 +8,6 @@ class PurchaseBottomSheetViewModel: ObservableObject {
     @Published var items: [Item] = []
     @Published var selectedItem: Item?
 
-    @Published var allowTrialPeriod: Bool = false
     @Published var buttonState: ButtonState = .idle
 
     private let purchaseManager = App.shared.purchaseManager
@@ -24,8 +23,6 @@ class PurchaseBottomSheetViewModel: ObservableObject {
 
         updateItems(data: purchaseManager.productData)
 
-        allowTrialPeriod = purchaseManager.purchaseData.isEmpty
-
         purchaseManager.$purchaseData
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.handle(purchases: $0)
@@ -38,13 +35,23 @@ class PurchaseBottomSheetViewModel: ObservableObject {
                 self?.updateItems(data: products)
             }
             .store(in: &cancellables)
+
+        purchaseManager.$usedOfferProductIds
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.updateItems(data: self?.purchaseManager.productData ?? [])
+            }
+            .store(in: &cancellables)
     }
 
     private func updateItems(data: [PurchaseManager.ProductData]) {
         print(data)
         items = data
             .sorted { $0.order < $1.order }
-            .compactMap { Item(product: $0, monthlyPrice: monthlyPrice) }
+            .compactMap {
+                let used = purchaseManager.usedOfferProductIds.contains($0.id)
+                return Item(product: $0, offerWasUsed: used, monthlyPrice: monthlyPrice)
+            }
 
         selectedItem = selectedItem ?? items.first
     }
@@ -73,9 +80,7 @@ class PurchaseBottomSheetViewModel: ObservableObject {
         }
     }
 
-    private func handle(purchases: [PurchaseManager.PurchaseData]) {
-        allowTrialPeriod = !purchases.isEmpty
-
+    private func handle(purchases _: [PurchaseManager.PurchaseData]) {
         if let purchase = purchaseManager.activePurchase, let product = purchaseManager.productData.first(where: { $0.id == purchase.id }) {
             waitTask?.cancel()
             waitTask = nil
@@ -136,12 +141,17 @@ extension PurchaseBottomSheetViewModel {
         let priceDescription: String?
         let priceDescripionAccented: Bool
 
-        let hasTrialPeriod: Bool
+        let introductoryOfferType: PurchaseManager.IntroductoryOfferType
 
-        init?(product: PurchaseManager.ProductData, monthlyPrice: Decimal?) {
+        init?(product: PurchaseManager.ProductData, offerWasUsed: Bool, monthlyPrice: Decimal?) {
             self.product = product
             price = product.priceFormatted
-            hasTrialPeriod = product.hasTrialPeriod
+
+            if offerWasUsed {
+                introductoryOfferType = .none
+            } else {
+                introductoryOfferType = .init(product.introductoryOffer)
+            }
 
             switch product.type {
             case .lifetime:

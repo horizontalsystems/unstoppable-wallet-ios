@@ -6,7 +6,7 @@ import StellarKit
 import stellarsdk
 
 class StellarAdapter {
-    static let maxValue = Decimal(Int64.max) / 10000000
+    static let maxValue = Decimal(Int64.max) / 10_000_000
     private static let decimals = 7
 
     private let stellarKit: StellarKit.Kit

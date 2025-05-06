@@ -75,8 +75,12 @@ struct PurchaseBottomSheetView: View {
     var subscriptionState: SubscriptionState {
         if viewModel.selectedItem?.product.type == .lifetime {
             return .lifetime
-        } else if viewModel.allowTrialPeriod, viewModel.selectedItem?.product.hasTrialPeriod == true {
-            return .freeTrial
+        } else if let offerType = viewModel.selectedItem?.introductoryOfferType {
+            switch offerType {
+            case .none: return .subscribe
+            case .trial: return .freeTrial
+            case .discount: return .discount
+            }
         } else {
             return .subscribe
         }
@@ -84,7 +88,7 @@ struct PurchaseBottomSheetView: View {
 
     var buttonTitle: String {
         switch subscriptionState {
-        case .lifetime:
+        case .lifetime, .discount:
             return "purchases.period.button.buy".localized
         case .freeTrial:
             return "purchases.period.button.try".localized
@@ -102,6 +106,10 @@ struct PurchaseBottomSheetView: View {
             Text("purchase.period.description1".localized + " ").foregroundColor(.themeRemus).font(.themeSubhead2) +
                 Text("purchase.period.description2".localized).foregroundColor(.themeGray).font(.themeSubhead2)
 
+        case .discount:
+            Text("purchase.period.description1.1".localized + " ").foregroundColor(.themeRemus).font(.themeSubhead2) +
+                Text("purchase.period.description2".localized).foregroundColor(.themeGray).font(.themeSubhead2)
+
         case .subscribe:
             Text("purchase.period.description2".localized).foregroundColor(.themeGray).font(.themeSubhead2)
         }
@@ -112,6 +120,7 @@ extension PurchaseBottomSheetView {
     enum SubscriptionState {
         case lifetime
         case freeTrial
+        case discount
         case subscribe
     }
 }

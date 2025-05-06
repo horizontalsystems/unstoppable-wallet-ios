@@ -2284,6 +2284,7 @@
 "purchase.period.year" = "year";
 "purchase.period.month" = "month";
 "purchase.period.description1" = "Enjoy the first 7 days FREE.";
+"purchase.period.description1.1" = "Enjoy discount for first month.";
 "purchase.period.description2" = "You can cancel your App Store subscription at any time.";
 "purchase.lifetime.description" = "One-time payment with no renewals or additional charges.";
 

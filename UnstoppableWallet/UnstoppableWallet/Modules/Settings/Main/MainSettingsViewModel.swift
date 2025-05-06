@@ -12,7 +12,7 @@ class MainSettingsViewModel {
     private let manageWalletsAlertRelay: BehaviorRelay<Bool>
     private let securityCenterAlertRelay: BehaviorRelay<Bool>
     private let hasActiveSubscriptionRelay: BehaviorRelay<Bool>
-    private let allowFreeTrialRelay: BehaviorRelay<Bool>
+    private let intoductoryTitleRelay: BehaviorRelay<String?>
     private let iCloudSyncAlertRelay: BehaviorRelay<Bool>
     private let walletConnectCountRelay: BehaviorRelay<(highlighted: Bool, text: String)?>
     private let baseCurrencyRelay: BehaviorRelay<String>
@@ -26,7 +26,7 @@ class MainSettingsViewModel {
         manageWalletsAlertRelay = BehaviorRelay(value: !service.noWalletRequiredActions)
         securityCenterAlertRelay = BehaviorRelay(value: !service.isPasscodeSet)
         hasActiveSubscriptionRelay = BehaviorRelay(value: service.hasActiveSubscriptions)
-        allowFreeTrialRelay = BehaviorRelay(value: service.allowFreeTrial)
+        intoductoryTitleRelay = BehaviorRelay(value: service.allowIntroductoryOffer.title)
         iCloudSyncAlertRelay = BehaviorRelay(value: service.isCloudAvailableError)
         walletConnectCountRelay = BehaviorRelay(value: Self.convert(walletConnectSessionCount: service.walletConnectSessionCount, walletConnectPendingRequestCount: service.walletConnectPendingRequestCount))
         baseCurrencyRelay = BehaviorRelay(value: service.baseCurrency.code)
@@ -49,8 +49,8 @@ class MainSettingsViewModel {
             .sink { [weak self] in self?.hasActiveSubscriptionRelay.accept($0) }
             .store(in: &cancellables)
 
-        service.allowFreeTrialPublisher
-            .sink { [weak self] in self?.allowFreeTrialRelay.accept($0) }
+        service.allowIntoductoryPublisher
+            .sink { [weak self] in self?.intoductoryTitleRelay.accept($0.title) }
             .store(in: &cancellables)
 
         service.iCloudAvailableErrorObservable
@@ -96,8 +96,8 @@ class MainSettingsViewModel {
 }
 
 extension MainSettingsViewModel {
-    var allowFreeTrialSignal: Driver<Bool> {
-        allowFreeTrialRelay.asDriver()
+    var intoductoryTitleSignal: Driver<String?> {
+        intoductoryTitleRelay.asDriver()
     }
 
     var openWalletConnectSignal: Signal<WalletConnectOpenMode> {
@@ -156,8 +156,8 @@ extension MainSettingsViewModel {
         service.hasActiveSubscriptions
     }
 
-    var allowFreeTrial: Bool {
-        service.allowFreeTrial
+    var offerTitle: String? {
+        service.allowIntroductoryOffer.title
     }
 
     func activated(_ premiumFeature: PremiumFeature) -> Bool {
@@ -191,5 +191,15 @@ extension MainSettingsViewModel {
     enum WalletConnectOpenMode {
         case list
         case errorDialog(error: WalletConnectAppShowView.WalletConnectOpenError)
+    }
+}
+
+extension PurchaseManager.IntroductoryOfferType {
+    var title: String? {
+        switch self {
+        case .none: return nil
+        case .trial: return "premium.cell.try".localized
+        case .discount: return "premium.cell.discount".localized
+        }
     }
 }
