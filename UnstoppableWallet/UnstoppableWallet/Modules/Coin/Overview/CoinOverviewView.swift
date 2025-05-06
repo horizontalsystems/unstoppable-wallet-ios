@@ -425,6 +425,7 @@ struct CoinOverviewView: View {
         case let .eip20(address): return address
         case let .spl(address): return address
         case let .jetton(address): return address
+        case let .stellar(code, issuer): return [code, issuer].joined(separator: "-")
         case let .unsupported(_, reference): return reference
         default: return nil
         }
@@ -435,6 +436,7 @@ struct CoinOverviewView: View {
         case let .eip20(address): return token.blockchain.explorerUrl(reference: address)
         case let .spl(address): return token.blockchain.explorerUrl(reference: address)
         case let .jetton(address): return token.blockchain.explorerUrl(reference: address)
+        case let .stellar(code, issuer): return token.blockchain.explorerUrl(reference: [code, issuer].joined(separator: "-"))
         case let .unsupported(_, reference): return token.blockchain.explorerUrl(reference: reference)
         default: return nil
         }

@@ -95,17 +95,21 @@ struct AppValue {
     }
 
     var isMaxValue: Bool {
-        decimals.map { value.isMaxValue(decimals: $0) } ?? false
+        switch kind {
+        case let .token(token):
+            switch token.blockchain.type {
+            case .stellar: return value == StellarAdapter.maxValue
+            default: ()
+            }
+        case .stellar: return value == StellarAdapter.maxValue
+        default: ()
+        }
+
+        return decimals.map { value.isMaxValue(decimals: $0) } ?? false
     }
 
     var tokenProtocol: TokenProtocol? {
-        switch kind {
-        case let .token(token): return token.type.tokenProtocol
-        case .eip20Token: return .eip20
-        case .jetton: return .jetton
-        case .stellar: return .stellar
-        default: return nil
-        }
+        kind.tokenProtocol
     }
 
     var nftUid: NftUid? {
@@ -181,6 +185,16 @@ extension AppValue {
             case let .token(token): return token.coin
             case let .coin(coin, _): return coin
             case let .cexAsset(cexAsset): return cexAsset.coin
+            default: return nil
+            }
+        }
+
+        var tokenProtocol: TokenProtocol? {
+            switch self {
+            case let .token(token): return token.type.tokenProtocol
+            case .eip20Token: return .eip20
+            case .jetton: return .jetton
+            case .stellar: return .stellar
             default: return nil
             }
         }

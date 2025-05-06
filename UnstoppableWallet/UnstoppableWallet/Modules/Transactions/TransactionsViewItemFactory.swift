@@ -55,19 +55,21 @@ class TransactionsViewItemFactory {
         }
     }
 
-    private func singleValueIconType(source: TransactionSource, value: AppValue, nftMetadata: [NftUid: NftAssetBriefMetadata] = [:]) -> BaseTransactionsViewModel.IconType {
-        switch value.kind {
+    private func singleValueIconType(source: TransactionSource, kind: AppValue.Kind, nftMetadata: [NftUid: NftAssetBriefMetadata] = [:]) -> BaseTransactionsViewModel.IconType {
+        switch kind {
         case let .nft(nftUid, _, _):
             return .icon(
                 url: nftMetadata[nftUid]?.previewImageUrl,
                 alternativeUrl: nil,
-                placeholderImageName: "placeholder_nft_32"
+                placeholderImageName: "placeholder_nft_32",
+                type: .squircle
             )
         default:
             return .icon(
-                url: value.coin?.imageUrl,
-                alternativeUrl: value.coin?.image,
-                placeholderImageName: source.blockchainType.placeholderImageName(tokenProtocol: value.tokenProtocol)
+                url: kind.coin?.imageUrl,
+                alternativeUrl: kind.coin?.image,
+                placeholderImageName: source.blockchainType.placeholderImageName(tokenProtocol: kind.tokenProtocol),
+                type: .circle
             )
         }
     }
@@ -132,9 +134,9 @@ class TransactionsViewItemFactory {
 
     private func iconType(source: TransactionSource, incomingValues: [AppValue], outgoingValues: [AppValue], nftMetadata: [NftUid: NftAssetBriefMetadata]) -> BaseTransactionsViewModel.IconType {
         if incomingValues.count == 1, outgoingValues.isEmpty {
-            return singleValueIconType(source: source, value: incomingValues[0], nftMetadata: nftMetadata)
+            return singleValueIconType(source: source, kind: incomingValues[0].kind, nftMetadata: nftMetadata)
         } else if incomingValues.isEmpty, outgoingValues.count == 1 {
-            return singleValueIconType(source: source, value: outgoingValues[0], nftMetadata: nftMetadata)
+            return singleValueIconType(source: source, kind: outgoingValues[0].kind, nftMetadata: nftMetadata)
         } else if incomingValues.count == 1, outgoingValues.count == 1 {
             return doubleValueIconType(source: source, primaryValue: incomingValues[0], secondaryValue: outgoingValues[0], nftMetadata: nftMetadata)
         } else {
@@ -192,7 +194,7 @@ class TransactionsViewItemFactory {
 
         switch item.record {
         case let record as EvmIncomingTransactionRecord:
-            iconType = singleValueIconType(source: record.source, value: record.value)
+            iconType = singleValueIconType(source: record.source, kind: record.value.kind)
             title = "transactions.receive".localized
             subTitle = "transactions.from".localized(mapped(address: record.from, blockchainType: item.record.source.blockchainType))
 
@@ -203,7 +205,7 @@ class TransactionsViewItemFactory {
             }
 
         case let record as EvmOutgoingTransactionRecord:
-            iconType = singleValueIconType(source: record.source, value: record.value, nftMetadata: item.nftMetadata)
+            iconType = singleValueIconType(source: record.source, kind: record.value.kind, nftMetadata: item.nftMetadata)
             title = "transactions.send".localized
             subTitle = "transactions.to".localized(mapped(address: record.to, blockchainType: item.record.source.blockchainType))
 
@@ -236,7 +238,7 @@ class TransactionsViewItemFactory {
             }
 
         case let record as ApproveTransactionRecord:
-            iconType = singleValueIconType(source: record.source, value: record.value)
+            iconType = singleValueIconType(source: record.source, kind: record.value.kind)
             title = "transactions.approve".localized
             subTitle = mapped(address: record.spender, blockchainType: item.record.source.blockchainType)
 
@@ -286,7 +288,7 @@ class TransactionsViewItemFactory {
             subTitle = "---"
 
         case let record as BitcoinIncomingTransactionRecord:
-            iconType = singleValueIconType(source: record.source, value: record.value)
+            iconType = singleValueIconType(source: record.source, kind: record.value.kind)
             title = "transactions.receive".localized
             subTitle = record.from.flatMap { "transactions.from".localized(mapped(address: $0, blockchainType: item.record.source.blockchainType)) } ?? "---"
 
@@ -301,7 +303,7 @@ class TransactionsViewItemFactory {
             }
 
         case let record as BitcoinOutgoingTransactionRecord:
-            iconType = singleValueIconType(source: record.source, value: record.value)
+            iconType = singleValueIconType(source: record.source, kind: record.value.kind)
             title = "transactions.send".localized
             subTitle = record.to.flatMap { "transactions.to".localized(mapped(address: $0, blockchainType: item.record.source.blockchainType)) } ?? "---"
 
@@ -318,7 +320,7 @@ class TransactionsViewItemFactory {
             }
 
         case let record as TronIncomingTransactionRecord:
-            iconType = singleValueIconType(source: record.source, value: record.value)
+            iconType = singleValueIconType(source: record.source, kind: record.value.kind)
             title = "transactions.receive".localized
             subTitle = "transactions.from".localized(mapped(address: record.from, blockchainType: item.record.source.blockchainType))
 
@@ -329,7 +331,7 @@ class TransactionsViewItemFactory {
             }
 
         case let record as TronOutgoingTransactionRecord:
-            iconType = singleValueIconType(source: record.source, value: record.value, nftMetadata: item.nftMetadata)
+            iconType = singleValueIconType(source: record.source, kind: record.value.kind, nftMetadata: item.nftMetadata)
             title = "transactions.send".localized
             subTitle = "transactions.to".localized(mapped(address: record.to, blockchainType: item.record.source.blockchainType))
 
@@ -339,7 +341,7 @@ class TransactionsViewItemFactory {
             sentToSelf = record.sentToSelf
 
         case let record as TronApproveTransactionRecord:
-            iconType = singleValueIconType(source: record.source, value: record.value)
+            iconType = singleValueIconType(source: record.source, kind: record.value.kind)
             title = "transactions.approve".localized
             subTitle = mapped(address: record.spender, blockchainType: item.record.source.blockchainType)
 
@@ -392,7 +394,7 @@ class TransactionsViewItemFactory {
             if record.actions.count == 1, let action = record.actions.first {
                 switch action.type {
                 case let .send(value, to, _sentToSelf, _):
-                    iconType = singleValueIconType(source: record.source, value: value)
+                    iconType = singleValueIconType(source: record.source, kind: value.kind)
                     title = "transactions.send".localized
                     subTitle = "transactions.to".localized(mapped(address: to, blockchainType: item.record.source.blockchainType))
                     primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: value, signType: _sentToSelf ? .never : .always), type: type(value: value, condition: _sentToSelf, .neutral, .outgoing))
@@ -403,7 +405,7 @@ class TransactionsViewItemFactory {
 
                     sentToSelf = _sentToSelf
                 case let .receive(value, from, _):
-                    iconType = singleValueIconType(source: record.source, value: value)
+                    iconType = singleValueIconType(source: record.source, kind: value.kind)
                     title = "transactions.receive".localized
                     subTitle = "transactions.from".localized(mapped(address: from, blockchainType: item.record.source.blockchainType))
                     primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: value), type: type(value: value, .incoming))
@@ -412,7 +414,7 @@ class TransactionsViewItemFactory {
                         secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
                     }
                 case let .burn(value):
-                    iconType = singleValueIconType(source: record.source, value: value)
+                    iconType = singleValueIconType(source: record.source, kind: value.kind)
                     title = "transactions.burn".localized
                     subTitle = value.name
                     primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: value), type: type(value: value, .outgoing))
@@ -421,7 +423,7 @@ class TransactionsViewItemFactory {
                         secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
                     }
                 case let .mint(value):
-                    iconType = singleValueIconType(source: record.source, value: value)
+                    iconType = singleValueIconType(source: record.source, kind: value.kind)
                     title = "transactions.mint".localized
                     subTitle = value.name
                     primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: value), type: type(value: value, .incoming))
@@ -462,7 +464,7 @@ class TransactionsViewItemFactory {
         case let record as StellarTransactionRecord:
             switch record.type {
             case let .accountCreated(startingBalance, funder):
-                iconType = singleValueIconType(source: record.source, value: startingBalance)
+                iconType = singleValueIconType(source: record.source, kind: startingBalance.kind)
                 title = "transactions.account_created".localized
                 subTitle = "transactions.funder".localized(mapped(address: funder, blockchainType: item.record.source.blockchainType))
                 primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: startingBalance), type: type(value: startingBalance, .incoming))
@@ -471,7 +473,7 @@ class TransactionsViewItemFactory {
                     secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
                 }
             case let .sendPayment(value, to, _sentToSelf):
-                iconType = singleValueIconType(source: record.source, value: value)
+                iconType = singleValueIconType(source: record.source, kind: value.kind)
                 title = "transactions.send".localized
                 subTitle = "transactions.to".localized(mapped(address: to, blockchainType: item.record.source.blockchainType))
                 primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: value, signType: _sentToSelf ? .never : .always), type: type(value: value, condition: _sentToSelf, .neutral, .outgoing))
@@ -482,7 +484,7 @@ class TransactionsViewItemFactory {
 
                 sentToSelf = _sentToSelf
             case let .receivePayment(value, from):
-                iconType = singleValueIconType(source: record.source, value: value)
+                iconType = singleValueIconType(source: record.source, kind: value.kind)
                 title = "transactions.receive".localized
                 subTitle = "transactions.from".localized(mapped(address: from, blockchainType: item.record.source.blockchainType))
                 primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: value), type: type(value: value, .incoming))
@@ -490,9 +492,24 @@ class TransactionsViewItemFactory {
                 if let currencyValue = item.currencyValue {
                     secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
                 }
+            case let .changeTrust(value, _, trustee, _):
+                iconType = singleValueIconType(source: record.source, kind: value.kind)
+                title = "Change Trust"
+                subTitle = trustee.map { mapped(address: $0, blockchainType: item.record.source.blockchainType) } ?? ""
+
+                if value.isMaxValue {
+                    primaryValue = BaseTransactionsViewModel.Value(text: "∞ \(value.coin?.code ?? "")", type: .neutral)
+                    secondaryValue = BaseTransactionsViewModel.Value(text: "transactions.value.unlimited".localized, type: .secondary)
+                } else {
+                    primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: value, signType: .never), type: .neutral)
+
+                    if let currencyValue = item.currencyValue {
+                        secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                    }
+                }
             case let .unsupported(type):
                 iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
-                title = "transactions.ton_transaction.title".localized
+                title = "transactions.stellar_transaction.title".localized
                 subTitle = type
             }
 

@@ -4,16 +4,18 @@ import StellarKit
 
 class StellarTransactionRecord: TransactionRecord {
     let operation: TxOperation
+    let fee: AppValue?
     let type: `Type`
 
-    init(source: TransactionSource, operation: TxOperation, baseToken _: Token, type: Type) {
+    init(source: TransactionSource, operation: TxOperation, baseToken: Token, type: Type) {
         self.operation = operation
+        fee = operation.feeCharged.map { AppValue(token: baseToken, value: $0) }
         self.type = type
 
         super.init(
             source: source,
             uid: operation.id,
-            transactionHash: operation.id,
+            transactionHash: operation.transactionHash,
             transactionIndex: 0,
             blockHeight: nil,
             confirmationsThreshold: nil,
@@ -32,6 +34,7 @@ class StellarTransactionRecord: TransactionRecord {
         case let .accountCreated(startingBalance, _): return startingBalance
         case let .sendPayment(value, _, _): return value
         case let .receivePayment(value, _): return value
+        case let .changeTrust(value, _, _, _): return value
         default: return nil
         }
     }
@@ -42,6 +45,7 @@ extension StellarTransactionRecord {
         case accountCreated(startingBalance: AppValue, funder: String)
         case sendPayment(value: AppValue, to: String, sentToSelf: Bool)
         case receivePayment(value: AppValue, from: String)
+        case changeTrust(value: AppValue, trustor: String, trustee: String?, liquidityPoolId: String?)
         case unsupported(type: String)
     }
 }

@@ -214,7 +214,7 @@ extension BaseTransactionsViewModel {
     }
 
     enum IconType {
-        case icon(url: String?, alternativeUrl: String?, placeholderImageName: String)
+        case icon(url: String?, alternativeUrl: String?, placeholderImageName: String, type: TransactionImageComponent.ImageType)
         case doubleIcon(frontType: TransactionImageComponent.ImageType, frontUrl: String?, frontAlternativeUrl: String?, frontPlaceholder: String, backType: TransactionImageComponent.ImageType, backUrl: String?, backAlternativeUrl: String?, backPlaceholder: String)
         case localIcon(imageName: String?)
         case failedIcon

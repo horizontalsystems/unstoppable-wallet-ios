@@ -299,8 +299,8 @@ class TransactionInfoViewItemFactory {
     }
 
     func items(item: TransactionInfoService.Item, balanceHidden: Bool) -> [TransactionInfoModule.SectionViewItem] {
-        func _rate(_ value: AppValue) -> CurrencyValue? {
-            value.coin.flatMap { item.rates[$0] }
+        func _rate(_ coin: Coin?) -> CurrencyValue? {
+            coin.flatMap { item.rates[$0] }
         }
 
         let record = item.record
@@ -331,7 +331,7 @@ class TransactionInfoViewItemFactory {
 
         case let record as ApproveTransactionRecord:
             let appValue = record.value
-            let rate = _rate(appValue)
+            let rate = _rate(appValue.coin)
             let contactData = contactLabelService.contactData(for: record.spender)
             let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: record.spender) : nil
 
@@ -350,11 +350,11 @@ class TransactionInfoViewItemFactory {
 
         case let record as SwapTransactionRecord:
             var amountViewItems: [TransactionInfoModule.ViewItem] = [
-                amount(source: record.source, title: youPayString(status: status), subtitle: fullBadge(appValue: record.valueIn), appValue: record.valueIn, rate: _rate(record.valueIn), type: type(appValue: record.valueIn, .outgoing), balanceHidden: balanceHidden),
+                amount(source: record.source, title: youPayString(status: status), subtitle: fullBadge(appValue: record.valueIn), appValue: record.valueIn, rate: _rate(record.valueIn.coin), type: type(appValue: record.valueIn, .outgoing), balanceHidden: balanceHidden),
             ]
 
             if let valueOut = record.valueOut {
-                amountViewItems.append(amount(source: record.source, title: youGetString(status: status), subtitle: fullBadge(appValue: valueOut), appValue: valueOut, rate: _rate(valueOut), type: type(appValue: valueOut, condition: record.recipient == nil, .incoming, .outgoing), balanceHidden: balanceHidden))
+                amountViewItems.append(amount(source: record.source, title: youGetString(status: status), subtitle: fullBadge(appValue: valueOut), appValue: valueOut, rate: _rate(valueOut.coin), type: type(appValue: valueOut, condition: record.recipient == nil, .incoming, .outgoing), balanceHidden: balanceHidden))
             }
 
             sections.append(.init(amountViewItems))
@@ -380,7 +380,7 @@ class TransactionInfoViewItemFactory {
             if let valueOut = record.valueOut {
                 switch status {
                 case .pending, .processing, .completed:
-                    if let priceString = priceString(valueIn: record.valueIn, valueOut: valueOut, coinPriceIn: _rate(record.valueIn)) {
+                    if let priceString = priceString(valueIn: record.valueIn, valueOut: valueOut, coinPriceIn: _rate(record.valueIn.coin)) {
                         viewItems.append(.price(price: priceString))
                     }
                 default: ()
@@ -394,13 +394,13 @@ class TransactionInfoViewItemFactory {
 
             if let valueIn = record.valueIn {
                 amountViewItems.append(
-                    amount(source: record.source, title: youPayString(status: status), subtitle: fullBadge(appValue: valueIn), appValue: valueIn, rate: _rate(valueIn), type: type(appValue: valueIn, .outgoing), balanceHidden: balanceHidden)
+                    amount(source: record.source, title: youPayString(status: status), subtitle: fullBadge(appValue: valueIn), appValue: valueIn, rate: _rate(valueIn.coin), type: type(appValue: valueIn, .outgoing), balanceHidden: balanceHidden)
                 )
             }
 
             if let valueOut = record.valueOut {
                 amountViewItems.append(
-                    amount(source: record.source, title: youGetString(status: status), subtitle: fullBadge(appValue: valueOut), appValue: valueOut, rate: _rate(valueOut), type: type(appValue: valueOut, .incoming), balanceHidden: balanceHidden)
+                    amount(source: record.source, title: youGetString(status: status), subtitle: fullBadge(appValue: valueOut), appValue: valueOut, rate: _rate(valueOut.coin), type: type(appValue: valueOut, .incoming), balanceHidden: balanceHidden)
                 )
             }
 
@@ -415,7 +415,7 @@ class TransactionInfoViewItemFactory {
             if let valueIn = record.valueIn, let valueOut = record.valueOut {
                 switch status {
                 case .pending, .processing, .completed:
-                    if let priceString = priceString(valueIn: valueIn, valueOut: valueOut, coinPriceIn: _rate(valueIn)) {
+                    if let priceString = priceString(valueIn: valueIn, valueOut: valueOut, coinPriceIn: _rate(valueIn.coin)) {
                         viewItems.append(.price(price: priceString))
                     }
                 default: ()
@@ -458,7 +458,7 @@ class TransactionInfoViewItemFactory {
 
         case let record as TronApproveTransactionRecord:
             let appValue = record.value
-            let rate = _rate(appValue)
+            let rate = _rate(appValue.coin)
             let contactData = contactLabelService.contactData(for: record.spender)
             let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: record.spender) : nil
 
@@ -524,7 +524,7 @@ class TransactionInfoViewItemFactory {
             }
 
             if let fee = record.fee {
-                feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(appValue: fee, rate: _rate(fee)))
+                feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(appValue: fee, rate: _rate(fee.coin)))
             }
 
             if actionEnabled, record.replaceable {
@@ -565,12 +565,12 @@ class TransactionInfoViewItemFactory {
 
                 case let .swap(routerName, routerAddress, valueIn, valueOut):
                     viewItems = [
-                        amount(source: record.source, title: youPayString(status: status), subtitle: fullBadge(appValue: valueIn), appValue: valueIn, rate: _rate(valueIn), type: type(appValue: valueIn, .outgoing), balanceHidden: balanceHidden),
-                        amount(source: record.source, title: youGetString(status: status), subtitle: fullBadge(appValue: valueOut), appValue: valueOut, rate: _rate(valueOut), type: type(appValue: valueOut, .incoming), balanceHidden: balanceHidden),
+                        amount(source: record.source, title: youPayString(status: status), subtitle: fullBadge(appValue: valueIn), appValue: valueIn, rate: _rate(valueIn.coin), type: type(appValue: valueIn, .outgoing), balanceHidden: balanceHidden),
+                        amount(source: record.source, title: youGetString(status: status), subtitle: fullBadge(appValue: valueOut), appValue: valueOut, rate: _rate(valueOut.coin), type: type(appValue: valueOut, .incoming), balanceHidden: balanceHidden),
                         .service(value: routerName ?? routerAddress.shortened),
                     ]
 
-                    if let priceString = priceString(valueIn: valueIn, valueOut: valueOut, coinPriceIn: _rate(valueIn)) {
+                    if let priceString = priceString(valueIn: valueIn, valueOut: valueOut, coinPriceIn: _rate(valueIn.coin)) {
                         viewItems.append(.price(price: priceString))
                     }
 
@@ -600,7 +600,7 @@ class TransactionInfoViewItemFactory {
                 sections.append(.init(viewItems))
             }
 
-            feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(appValue: $0, rate: _rate($0))) }
+            feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(appValue: $0, rate: _rate($0.coin))) }
 
         case let record as StellarTransactionRecord:
             var viewItems: [TransactionInfoModule.ViewItem]
@@ -619,6 +619,15 @@ class TransactionInfoViewItemFactory {
             case let .receivePayment(value, from):
                 viewItems = receiveSection(source: record.source, appValue: value, from: from, rates: item.rates, balanceHidden: balanceHidden)
 
+            case let .changeTrust(value, trustor, trustee, liquidityPoolId):
+                let rate = _rate(value.coin)
+
+                viewItems = [
+                    amount(source: record.source, title: "Change Trust", subtitle: nil, appValue: value, rate: rate, type: .neutral, balanceHidden: balanceHidden),
+                ]
+
+                viewItems.append(.rate(value: rateString(currencyValue: rate, coinCode: value.coin?.code)))
+
             case let .unsupported(type):
                 viewItems = [.fee(title: "Operation", value: type)]
             }
@@ -629,7 +638,7 @@ class TransactionInfoViewItemFactory {
 
             sections.append(.init(viewItems))
 
-            // feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(appValue: $0, rate: _rate($0))) }
+            feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(appValue: $0, rate: _rate($0.coin))) }
 
         default: ()
         }
@@ -648,7 +657,7 @@ class TransactionInfoViewItemFactory {
 
             feeViewItem = .fee(
                 title: title,
-                value: feeString(appValue: appValue, rate: _rate(appValue))
+                value: feeString(appValue: appValue, rate: _rate(appValue.coin))
             )
         }
 
@@ -661,7 +670,7 @@ class TransactionInfoViewItemFactory {
 
             feeViewItem = .fee(
                 title: title,
-                value: feeString(appValue: appValue, rate: _rate(appValue))
+                value: feeString(appValue: appValue, rate: _rate(appValue.coin))
             )
         }
 
