@@ -88,7 +88,7 @@ extension StellarTransactionAdapter: ITransactionsAdapter {
     }
 
     var explorerTitle: String {
-        "stellarchain.io"
+        "stellar.expert"
     }
 
     var additionalTokenQueries: [TokenQuery] {
@@ -107,7 +107,7 @@ extension StellarTransactionAdapter: ITransactionsAdapter {
     }
 
     func explorerUrl(transactionHash: String) -> String? {
-        "https://stellarchain.io/operations/\(transactionHash)"
+        "https://stellar.expert/explorer/public/tx/\(transactionHash)"
     }
 
     func transactionsObservable(token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {

@@ -80,8 +80,8 @@ class TransactionsTableViewDataSource: NSObject {
                 component.set(progress: viewItem.progress)
 
                 switch viewItem.iconType {
-                case let .icon(url, alternativeUrl, placeholderImageName):
-                    component.setImage(url: url, alternativeUrl: alternativeUrl, placeholder: UIImage(named: placeholderImageName))
+                case let .icon(url, alternativeUrl, placeholderImageName, type):
+                    component.setImage(url: url, alternativeUrl: alternativeUrl, placeholder: UIImage(named: placeholderImageName), type: type)
                 case let .localIcon(imageName):
                     component.set(image: imageName.flatMap { UIImage(named: $0)?.withTintColor(.themeLeah) })
                 case let .doubleIcon(frontType, frontUrl, frontAlternativeUrl, frontPlaceholder, backType, backUrl, backAlternativeUrl, backPlaceholder):

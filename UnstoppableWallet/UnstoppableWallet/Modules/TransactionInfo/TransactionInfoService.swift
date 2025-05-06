@@ -80,9 +80,10 @@ class TransactionInfoService {
             case let .accountCreated(startingBalance, _): tokens.append(startingBalance.token)
             case let .sendPayment(value, _, _): tokens.append(value.token)
             case let .receivePayment(value, _): tokens.append(value.token)
+            case let .changeTrust(value, _, _, _): tokens.append(value.token)
             default: ()
             }
-        // tokens.append(tx.fee?.token)
+            tokens.append(tx.fee?.token)
         default: ()
         }
 
