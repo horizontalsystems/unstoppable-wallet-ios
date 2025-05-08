@@ -13,8 +13,8 @@ enum SendHandlerFactory {
             return TronSendHandler.instance(token: token, contract: contract)
         case let .ton(token, amount, address, memo):
             return TonSendHandler.instance(token: token, amount: amount, address: address, memo: memo)
-        case let .stellar(token, amount, accountId, memo):
-            return StellarSendHandler.instance(token: token, amount: amount, accountId: accountId, memo: memo)
+        case let .stellar(data, token, memo):
+            return StellarSendHandler.instance(data: data, token: token, memo: memo)
         case let .swap(tokenIn, tokenOut, amountIn, provider):
             return MultiSwapSendHandler.instance(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider)
         case let .walletConnect(request):

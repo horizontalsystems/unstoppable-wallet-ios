@@ -57,7 +57,8 @@ extension StellarPreSendHandler: IPreSendHandler {
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
         do {
             try StellarKit.Kit.validate(accountId: address)
-            return .valid(sendData: .stellar(token: token, amount: amount, accountId: address, memo: memo))
+            let data: StellarSendData = .payment(asset: adapter.asset, amount: amount, accountId: address)
+            return .valid(sendData: .stellar(data: data, token: token, memo: memo))
         } catch {
             return .invalid(cautions: [CautionNew(text: error.smartDescription, type: .error)])
         }

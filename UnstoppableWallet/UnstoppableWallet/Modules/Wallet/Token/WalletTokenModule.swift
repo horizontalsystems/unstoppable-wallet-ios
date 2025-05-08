@@ -34,12 +34,16 @@ enum WalletTokenModule {
     }
 
     static func cautionDataSource(wallet: Wallet) -> ISectionDataSource? {
-        guard wallet.token.blockchainType == .tron,
-              let adapter = App.shared.adapterManager.adapter(for: wallet) as? BaseTronAdapter
-        else {
+        let viewModel: ICautionDataSourceViewModel
+
+        if wallet.token.blockchainType == .tron, let adapter = App.shared.adapterManager.adapter(for: wallet) as? BaseTronAdapter {
+            viewModel = TronAccountInactiveViewModel(adapter: adapter)
+        } else if wallet.token.blockchainType == .stellar, let adapter = App.shared.adapterManager.adapter(for: wallet) as? StellarAdapter {
+            viewModel = StellarAccountCautionViewModel(adapter: adapter)
+        } else {
             return nil
         }
 
-        return CautionDataSource(viewModel: TronAccountInactiveViewModel(adapter: adapter))
+        return CautionDataSource(viewModel: viewModel)
     }
 }

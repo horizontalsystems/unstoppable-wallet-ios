@@ -498,7 +498,7 @@ class TransactionsViewItemFactory {
                 subTitle = trustee.map { mapped(address: $0, blockchainType: item.record.source.blockchainType) } ?? ""
 
                 if value.isMaxValue {
-                    primaryValue = BaseTransactionsViewModel.Value(text: "∞ \(value.coin?.code ?? "")", type: .neutral)
+                    primaryValue = BaseTransactionsViewModel.Value(text: "∞ \(value.code)", type: .neutral)
                     secondaryValue = BaseTransactionsViewModel.Value(text: "transactions.value.unlimited".localized, type: .secondary)
                 } else {
                     primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: value, signType: .never), type: .neutral)
