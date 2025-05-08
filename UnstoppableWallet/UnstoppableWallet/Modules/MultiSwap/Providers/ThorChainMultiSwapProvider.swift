@@ -144,13 +144,14 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
             var transactionError: Error?
             var satoshiPerByte: Int?
             var sendInfo: SendInfo?
+            var params: SendParameters?
 
             if let _satoshiPerByte = transactionSettings?.satoshiPerByte,
                let adapter = adapterManager.adapter(for: tokenIn) as? BitcoinBaseAdapter
             {
                 do {
                     satoshiPerByte = _satoshiPerByte
-                    let params = SendParameters(
+                    let _params = SendParameters(
                         address: swapQuote.inboundAddress,
                         value: adapter.convertToSatoshi(value: amountIn),
                         feeRate: _satoshiPerByte,
@@ -163,7 +164,8 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
                         changeToFirstInput: true
                     )
 
-                    sendInfo = try adapter.sendInfo(params: params)
+                    sendInfo = try adapter.sendInfo(params: _params)
+                    params = _params
                 } catch {
                     transactionError = error
                 }
@@ -175,6 +177,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
                 slippage: slippage,
                 satoshiPerByte: satoshiPerByte,
                 fee: sendInfo?.fee,
+                sendParameters: params,
                 transactionError: transactionError
             )
         default:
@@ -198,8 +201,37 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
         allowanceHelper.preSwapView(step: step, tokenIn: tokenIn, amount: amount, isPresented: isPresented, onSuccess: onSuccess)
     }
 
-    func swap(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, quote _: IMultiSwapConfirmationQuote) async throws {
-        try await Task.sleep(nanoseconds: 2_000_000_000) // todo
+    func swap(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, quote: IMultiSwapConfirmationQuote) async throws {
+        if let quote = quote as? ThorChainMultiSwapEvmConfirmationQuote {
+            guard let gasLimit = quote.evmFeeData?.surchargedGasLimit else {
+                throw SwapError.noGasLimit
+            }
+
+            guard let gasPrice = quote.gasPrice else {
+                throw SwapError.noGasPrice
+            }
+
+            guard let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: tokenIn.blockchainType).evmKitWrapper else {
+                throw SwapError.noEvmKitWrapper
+            }
+
+            _ = try await evmKitWrapper.send(
+                transactionData: quote.transactionData,
+                gasPrice: gasPrice,
+                gasLimit: gasLimit,
+                nonce: quote.nonce
+            )
+        } else if let quote = quote as? ThorChainMultiSwapBtcConfirmationQuote {
+            guard let adapter = adapterManager.adapter(for: tokenIn) as? BitcoinBaseAdapter else {
+                throw SwapError.noBitcoinAdapter
+            }
+
+            guard let sendParameters = quote.sendParameters else {
+                throw SwapError.noSendParameters
+            }
+
+            try adapter.send(params: sendParameters)
+        }
     }
 
     private func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> SwapQuote {
@@ -377,6 +409,11 @@ extension ThorChainMultiSwapProvider {
         case invalidTokenInType
         case noActiveAccount
         case noDestinationAddress
+        case noGasPrice
+        case noGasLimit
+        case noEvmKitWrapper
+        case noBitcoinAdapter
+        case noSendParameters
     }
 }
 

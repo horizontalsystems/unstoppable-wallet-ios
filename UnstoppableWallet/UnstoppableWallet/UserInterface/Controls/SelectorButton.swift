@@ -16,10 +16,6 @@ class SelectorButton: SecondaryButton {
         addTarget(self, action: #selector(onTap), for: .touchUpInside)
     }
 
-    public required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-
     func set(items: [String]) {
         self.items = items
 

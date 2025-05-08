@@ -21,10 +21,6 @@ class FaqCell: BaseSelectableThemeCell {
         label.textColor = .themeLeah
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-
     var title: String? {
         get { label.text }
         set { label.text = newValue }

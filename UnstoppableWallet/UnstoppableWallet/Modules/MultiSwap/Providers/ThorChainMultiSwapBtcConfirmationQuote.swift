@@ -6,12 +6,14 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
     let swapQuote: ThorChainMultiSwapProvider.SwapQuote
     let recipient: Address?
     let slippage: Decimal
+    let sendParameters: SendParameters?
     let transactionError: Error?
 
-    init(swapQuote: ThorChainMultiSwapProvider.SwapQuote, recipient: Address?, slippage: Decimal, satoshiPerByte: Int?, fee: Decimal?, transactionError: Error?) {
+    init(swapQuote: ThorChainMultiSwapProvider.SwapQuote, recipient: Address?, slippage: Decimal, satoshiPerByte: Int?, fee: Decimal?, sendParameters: SendParameters?, transactionError: Error?) {
         self.swapQuote = swapQuote
         self.recipient = recipient
         self.slippage = slippage
+        self.sendParameters = sendParameters
         self.transactionError = transactionError
 
         super.init(satoshiPerByte: satoshiPerByte, fee: fee)

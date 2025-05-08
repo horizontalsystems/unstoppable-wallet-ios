@@ -44,6 +44,7 @@ extension Token {
         case .fantom: return true
         case .base: return true
         case .zkSync: return true
+        case .bitcoin, .bitcoinCash, .litecoin: return true
         default: return false
         }
     }

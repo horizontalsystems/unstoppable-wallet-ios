@@ -25,6 +25,8 @@ extension MultiSwapViewModel {
             providers.append(OneInchMultiSwapProvider(kit: OneInchKit.Kit.instance(apiKey: apiKey), storage: storage))
         }
 
+        providers.append(ThorChainMultiSwapProvider(storage: storage))
+
         return MultiSwapViewModel(providers: providers, token: token)
     }
 }
