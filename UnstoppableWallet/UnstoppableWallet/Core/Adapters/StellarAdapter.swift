@@ -9,7 +9,7 @@ class StellarAdapter {
     static let maxValue = Decimal(Int64.max) / 10_000_000
     private static let decimals = 7
 
-    private let stellarKit: StellarKit.Kit
+    let stellarKit: StellarKit.Kit
     let asset: StellarKit.Asset
     private var cancellables = Set<AnyCancellable>()
 
@@ -34,14 +34,14 @@ class StellarAdapter {
         self.asset = asset
 
         balanceState = Self.adapterState(kitSyncState: stellarKit.syncState)
-        balanceData = BalanceData(available: stellarKit.assetBalances[asset] ?? 0)
+        balanceData = BalanceData(available: stellarKit.account?.assetBalanceMap[asset]?.balance ?? 0)
 
         stellarKit.syncStatePublisher
             .sink { [weak self] in self?.balanceState = Self.adapterState(kitSyncState: $0) }
             .store(in: &cancellables)
 
-        stellarKit.assetBalancePublisher
-            .sink { [weak self] in self?.balanceData = BalanceData(available: $0[asset] ?? 0) }
+        stellarKit.accountPublisher
+            .sink { [weak self] in self?.balanceData = BalanceData(available: $0?.assetBalanceMap[asset]?.balance ?? 0) }
             .store(in: &cancellables)
     }
 }
@@ -90,12 +90,6 @@ extension StellarAdapter: IBalanceAdapter {
 extension StellarAdapter: IDepositAdapter {
     var receiveAddress: DepositAddress {
         DepositAddress(stellarKit.receiveAddress)
-    }
-}
-
-extension StellarAdapter {
-    func paymentOperations(recipient: String, amount: Decimal) throws -> [stellarsdk.Operation] {
-        try stellarKit.paymentOperations(asset: asset, destinationAccountId: recipient, amount: amount)
     }
 }
 

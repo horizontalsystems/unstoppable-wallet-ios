@@ -353,6 +353,9 @@
 "balance.token.frozen.info.description" = "Frozen Description Text";
 "balance.token.account.inactive.title" = "Account Not Active";
 "balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens but won’t correct balances until activated.";
+"balance.token.account.stellar.inactive.description" = "New Stellar accounts require a deposit of at least 1 XLM to become active.";
+"balance.token.account.stellar.inactive_asset.title" = "Asset Not Activated";
+"balance.token.account.stellar.inactive_asset.description" = "Assets require an established trustline to become active.";
 
 // Account switcher
 

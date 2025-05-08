@@ -8,19 +8,15 @@ class StellarSendHandler {
     private let keyPair: KeyPair
     private let token: Token
     let baseToken: Token
-    private let asset: StellarKit.Asset
-    private let amount: Decimal
-    private let accountId: String
+    private let data: StellarSendData
     private let memo: String?
 
-    init(stellarKit: StellarKit.Kit, keyPair: KeyPair, token: Token, baseToken: Token, asset: StellarKit.Asset, amount: Decimal, accountId: String, memo: String?) {
+    init(stellarKit: StellarKit.Kit, keyPair: KeyPair, token: Token, baseToken: Token, data: StellarSendData, memo: String?) {
         self.stellarKit = stellarKit
         self.keyPair = keyPair
         self.token = token
         self.baseToken = baseToken
-        self.asset = asset
-        self.amount = amount
-        self.accountId = accountId
+        self.data = data
         self.memo = memo
     }
 }
@@ -34,31 +30,42 @@ extension StellarSendHandler: ISendHandler {
         var fee: Decimal?
         var transactionError: Error?
         var operations: [stellarsdk.Operation]?
-        let stellarBalance = stellarKit.assetBalances[.native] ?? 0
+        let stellarBalance = stellarKit.account?.assetBalanceMap[.native]?.balance ?? 0
 
-        var amount = amount
+        var data = data
 
         do {
             let baseFee = try await stellarKit.baseFee()
+            var totalNativeAmount: Decimal = 0
 
-            if token.type.isNative, amount == stellarBalance {
-                amount -= baseFee
+            switch data {
+            case let .payment(asset, amount, accountId):
+                var amount = amount
+
+                if asset.isNative {
+                    if amount == stellarBalance {
+                        amount -= baseFee
+                        data = .payment(asset: asset, amount: amount, accountId: accountId)
+                    }
+
+                    totalNativeAmount += amount
+                }
+
+                let operation = try stellarKit.paymentOperation(asset: asset, destinationAccountId: accountId, amount: amount)
+
+                operations = [operation]
+                fee = baseFee
+                totalNativeAmount += baseFee
+            case let .changeTrust(asset, limit):
+                let operation = try stellarKit.changeTrustOperation(asset: asset, limit: limit)
+
+                operations = [operation]
+                fee = baseFee
+                totalNativeAmount += baseFee
             }
 
-            let _operations = try stellarKit.paymentOperations(asset: asset, destinationAccountId: accountId, amount: amount)
-            let _fee = baseFee * Decimal(_operations.count)
-
-            fee = _fee
-            operations = _operations
-
-            if token.type.isNative {
-                if amount + _fee > stellarBalance {
-                    throw TransactionError.insufficientStellarBalance(balance: stellarBalance)
-                }
-            } else {
-                if stellarBalance < _fee {
-                    throw TransactionError.insufficientStellarBalance(balance: stellarBalance)
-                }
+            if stellarBalance < totalNativeAmount {
+                throw TransactionError.insufficientStellarBalance(balance: stellarBalance)
             }
         } catch {
             transactionError = error
@@ -66,8 +73,7 @@ extension StellarSendHandler: ISendHandler {
 
         return SendData(
             token: token,
-            amount: amount,
-            accountId: keyPair.accountId,
+            data: data,
             memo: memo,
             fee: fee,
             transactionError: transactionError,
@@ -89,17 +95,15 @@ extension StellarSendHandler: ISendHandler {
 extension StellarSendHandler {
     class SendData: ISendData {
         private let token: Token
-        private let amount: Decimal
-        let accountId: String
+        private let data: StellarSendData
         let memo: String?
         private let fee: Decimal?
         private let transactionError: Error?
         let operations: [stellarsdk.Operation]?
 
-        init(token: Token, amount: Decimal, accountId: String, memo: String?, fee: Decimal?, transactionError: Error?, operations: [stellarsdk.Operation]?) {
+        init(token: Token, data: StellarSendData, memo: String?, fee: Decimal?, transactionError: Error?, operations: [stellarsdk.Operation]?) {
             self.token = token
-            self.amount = amount
-            self.accountId = accountId
+            self.data = data
             self.memo = memo
             self.fee = fee
             self.transactionError = transactionError
@@ -154,20 +158,42 @@ extension StellarSendHandler {
         }
 
         func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
-            var fields: [SendField] = [
-                .amount(
-                    title: "send.confirmation.you_send".localized,
-                    token: token,
-                    appValueType: .regular(appValue: AppValue(token: token, value: amount)),
-                    currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) },
-                    type: .neutral
-                ),
-                .address(
-                    title: "send.confirmation.to".localized,
-                    value: accountId,
-                    blockchainType: .stellar
-                ),
-            ]
+            var fields = [SendField]()
+
+            switch data {
+            case let .payment(_, amount, accountId):
+                fields.append(contentsOf: [
+                    .amount(
+                        title: "send.confirmation.you_send".localized,
+                        token: token,
+                        appValueType: .regular(appValue: AppValue(token: token, value: amount)),
+                        currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) },
+                        type: .neutral
+                    ),
+                    .address(
+                        title: "send.confirmation.to".localized,
+                        value: accountId,
+                        blockchainType: .stellar
+                    ),
+                ])
+            case let .changeTrust(asset, limit):
+                let appValue = AppValue(token: token, value: limit)
+
+                fields.append(contentsOf: [
+                    .amount(
+                        title: "Change Trust",
+                        token: token,
+                        appValueType: appValue.isMaxValue ? .infinity(code: appValue.code) : .regular(appValue: appValue),
+                        currencyValue: appValue.isMaxValue ? nil : rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * limit) },
+                        type: .neutral
+                    ),
+                    .address(
+                        title: "Issuer",
+                        value: asset.issuer ?? "",
+                        blockchainType: .stellar
+                    ),
+                ])
+            }
 
             if let memo {
                 fields.append(.levelValue(title: "send.confirmation.memo".localized, value: memo, level: .regular))
@@ -214,12 +240,8 @@ extension StellarSendHandler {
 }
 
 extension StellarSendHandler {
-    static func instance(token: Token, amount: Decimal, accountId: String, memo: String?) -> StellarSendHandler? {
+    static func instance(data: StellarSendData, token: Token, memo: String?) -> StellarSendHandler? {
         guard let baseToken = try? App.shared.coinManager.token(query: .init(blockchainType: .stellar, tokenType: .native)) else {
-            return nil
-        }
-
-        guard let adapter = App.shared.adapterManager.adapter(for: token) as? StellarAdapter else {
             return nil
         }
 
@@ -236,9 +258,7 @@ extension StellarSendHandler {
             keyPair: keyPair,
             token: token,
             baseToken: baseToken,
-            asset: adapter.asset,
-            amount: amount,
-            accountId: accountId,
+            data: data,
             memo: memo
         )
     }
