@@ -52,10 +52,6 @@ class PostCell: BaseSelectableThemeCell {
         timeLabel.textColor = .themeGray50
     }
 
-    required init?(coder aDecoder: NSCoder) {
-        super.init(coder: aDecoder)
-    }
-
     func bind(header: String, title: String, body: String, time: String) {
         headerLabel.text = header
         titleLabel.text = title
