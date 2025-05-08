@@ -12550,7 +12550,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.42.1;
+				MARKETING_VERSION = 0.42.2;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OfficeMode = true;
@@ -12622,7 +12622,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.42.1;
+				MARKETING_VERSION = 0.42.2;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OfficeMode = false;
 				SDKROOT = iphoneos;
@@ -13170,7 +13170,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/EvmKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.3.2;
+				version = 2.3.3;
 			};
 		};
 		D3604E4828F02A8B0066C366 /* XCRemoteSwiftPackageReference "Eip20Kit" */ = {
