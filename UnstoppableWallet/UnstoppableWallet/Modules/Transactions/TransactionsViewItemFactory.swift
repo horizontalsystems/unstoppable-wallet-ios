@@ -472,6 +472,15 @@ class TransactionsViewItemFactory {
                 if let currencyValue = item.currencyValue {
                     secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
                 }
+            case let .accountFunded(startingBalance, account):
+                iconType = singleValueIconType(source: record.source, kind: startingBalance.kind)
+                title = "transactions.account_created".localized
+                subTitle = "transactions.account".localized(mapped(address: account, blockchainType: item.record.source.blockchainType))
+                primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: startingBalance), type: type(value: startingBalance, .outgoing))
+
+                if let currencyValue = item.currencyValue {
+                    secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+                }
             case let .sendPayment(value, to, _sentToSelf):
                 iconType = singleValueIconType(source: record.source, kind: value.kind)
                 title = "transactions.send".localized

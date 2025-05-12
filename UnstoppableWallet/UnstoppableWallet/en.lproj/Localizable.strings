@@ -1280,6 +1280,7 @@
 "transactions.to" = "To %@";
 "transactions.from" = "From %@";
 "transactions.funder" = "Funder: %@";
+"transactions.account" = "Account: %@";
 
 "transactions.multiple" = "Multiple";
 

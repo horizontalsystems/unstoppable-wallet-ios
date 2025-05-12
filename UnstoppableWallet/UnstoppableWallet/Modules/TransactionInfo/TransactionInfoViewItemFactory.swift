@@ -609,6 +609,9 @@ class TransactionInfoViewItemFactory {
             case let .accountCreated(startingBalance, funder):
                 viewItems = receiveSection(source: record.source, appValue: startingBalance, from: funder, rates: item.rates, balanceHidden: balanceHidden)
 
+            case let .accountFunded(startingBalance, account):
+                viewItems = sendSection(source: record.source, appValue: startingBalance, to: account, rates: item.rates, balanceHidden: balanceHidden)
+
             case let .sendPayment(value, to, sentToSelf):
                 viewItems = sendSection(source: record.source, appValue: value, to: to, rates: item.rates, sentToSelf: sentToSelf, balanceHidden: balanceHidden)
 

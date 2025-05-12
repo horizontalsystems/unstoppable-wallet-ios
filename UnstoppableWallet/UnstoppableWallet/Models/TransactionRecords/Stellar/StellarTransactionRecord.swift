@@ -32,6 +32,7 @@ class StellarTransactionRecord: TransactionRecord {
     override var mainValue: AppValue? {
         switch type {
         case let .accountCreated(startingBalance, _): return startingBalance
+        case let .accountFunded(startingBalance, _): return startingBalance
         case let .sendPayment(value, _, _): return value
         case let .receivePayment(value, _): return value
         case let .changeTrust(value, _, _, _): return value
@@ -43,6 +44,7 @@ class StellarTransactionRecord: TransactionRecord {
 extension StellarTransactionRecord {
     enum `Type` {
         case accountCreated(startingBalance: AppValue, funder: String)
+        case accountFunded(startingBalance: AppValue, account: String)
         case sendPayment(value: AppValue, to: String, sentToSelf: Bool)
         case receivePayment(value: AppValue, from: String)
         case changeTrust(value: AppValue, trustor: String, trustee: String?, liquidityPoolId: String?)
