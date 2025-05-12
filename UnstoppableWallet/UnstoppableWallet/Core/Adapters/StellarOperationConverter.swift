@@ -42,7 +42,7 @@ class StellarOperationConverter {
             if data.account == accountId {
                 return .accountCreated(startingBalance: AppValue(token: baseToken, value: data.startingBalance), funder: data.funder)
             } else {
-                return .sendPayment(value: AppValue(token: baseToken, value: -data.startingBalance), to: data.account, sentToSelf: false)
+                return .accountFunded(startingBalance: AppValue(token: baseToken, value: -data.startingBalance), account: data.account)
             }
         case let .payment(data):
             if data.from == accountId {

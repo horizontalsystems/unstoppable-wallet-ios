@@ -78,6 +78,7 @@ class TransactionInfoService {
         case let tx as StellarTransactionRecord:
             switch tx.type {
             case let .accountCreated(startingBalance, _): tokens.append(startingBalance.token)
+            case let .accountFunded(startingBalance, _): tokens.append(startingBalance.token)
             case let .sendPayment(value, _, _): tokens.append(value.token)
             case let .receivePayment(value, _): tokens.append(value.token)
             case let .changeTrust(value, _, _, _): tokens.append(value.token)
