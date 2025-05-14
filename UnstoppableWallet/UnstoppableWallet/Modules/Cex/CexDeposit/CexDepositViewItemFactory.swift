@@ -26,6 +26,7 @@ class CexDepositViewItemFactory: IReceiveAddressViewItemFactory {
             qrItem: qrItem,
             amount: nil,
             active: true,
+            assetActivated: true,
             memo: item.memo,
             usedAddresses: nil
         )
@@ -38,7 +39,7 @@ class CexDepositViewItemFactory: IReceiveAddressViewItemFactory {
 
         return .init(title: "cex_deposit.memo_warning.title".localized,
                      description: .init(text: "cex_deposit.memo_warning.description".localized, style: .alert),
-                     doneButtonTitle: "button.i_understand".localized)
+                     mode: .done(title: "button.i_understand".localized))
     }
 
     func actions(item _: ReceiveAddress) -> [ReceiveAddressModule.ActionType] {

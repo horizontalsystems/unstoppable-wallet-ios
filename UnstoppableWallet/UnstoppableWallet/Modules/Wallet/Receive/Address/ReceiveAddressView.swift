@@ -1,4 +1,5 @@
 import Combine
+import ComponentKit
 import SwiftUI
 
 private let qrSize: CGFloat = 203
@@ -13,6 +14,8 @@ struct ReceiveAddressView: View {
 
     @State private var shareText: String?
     @State private var inputAmountPresented: Bool = false
+
+    @State private var stellarActivatePresented: Bool = false
 
     @Environment(\.presentationMode) private var presentationMode
 
@@ -47,6 +50,9 @@ struct ReceiveAddressView: View {
                         }
                         if !viewItem.active {
                             notActive()
+                        }
+                        if !viewItem.assetActivated {
+                            inactiveStellarAsset()
                         }
                         if let memo = viewItem.memo {
                             view(memo: memo)
@@ -89,6 +95,16 @@ struct ReceiveAddressView: View {
         .sheet(item: $shareText) { shareText in
             ActivityView.view(activityItems: [shareText])
         }
+        .sheet(isPresented: $stellarActivatePresented) {
+            if let sendData = viewModel.stellarSendData {
+                ThemeNavigationView {
+                    RegularSendView(sendData: sendData) {
+                        HudHelper.instance.show(banner: .sent)
+                        stellarActivatePresented = false
+                    }
+                }
+            }
+        }
         .textFieldAlert(
             isPresented: $inputAmountPresented,
             amountChanged: viewModel.onAmountChanged(_:),
@@ -108,9 +124,7 @@ struct ReceiveAddressView: View {
                 items: [
                     .highlightedDescription(text: popup.description.text, style: popup.description.style),
                 ],
-                buttons: [
-                    .init(style: .yellow, title: popup.doneButtonTitle) { warningAlertPopup = nil },
-                ],
+                buttons: popupButtons(mode: popup.mode),
                 onDismiss: { warningAlertPopup = nil }
             )
         }
@@ -134,6 +148,23 @@ struct ReceiveAddressView: View {
             }
         }
         .accentColor(.themeJacob)
+    }
+
+    private func popupButtons(mode: ReceiveAddressModule.PopupWarningItem.Mode) -> [BottomSheetView.ButtonItem] {
+        switch mode {
+        case let .done(title):
+            return [
+                .init(style: .yellow, title: title) { warningAlertPopup = nil },
+            ]
+        case .activateStellarAsset:
+            return [
+                .init(style: .yellow, title: "deposit.activate".localized) {
+                    warningAlertPopup = nil
+                    stellarActivatePresented = true
+                },
+                .init(style: .transparent, title: "button.i_understand".localized) { warningAlertPopup = nil },
+            ]
+        }
     }
 
     @ViewBuilder private func qrView(item: ReceiveAddressModule.QrItem) -> some View {
@@ -227,6 +258,20 @@ struct ReceiveAddressView: View {
                     Informed(infoDescription: .init(
                         title: "deposit.not_active.title".localized,
                         description: "deposit.not_active.tron_description".localized
+                    )))
+            Spacer()
+            Text("deposit.not_active".localized).textSubhead1(color: .themeYellow)
+        }
+    }
+
+    @ViewBuilder func inactiveStellarAsset() -> some View {
+        ListRow {
+            Text("deposit.asset".localized)
+                .textSubhead2()
+                .modifier(
+                    Informed(infoDescription: .init(
+                        title: "deposit.stellar.inactive_asset.title".localized,
+                        description: "deposit.stellar.inactive_asset.description".localized
                     )))
             Spacer()
             Text("deposit.not_active".localized).textSubhead1(color: .themeYellow)
