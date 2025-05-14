@@ -112,7 +112,7 @@ extension AppManager {
         balanceHiddenManager.didEnterBackground()
 
         tonKitManager.tonKit?.stopListener()
-        // stellarKitManager.stellarKit?.stopListener()
+        stellarKitManager.stellarKit?.stopListener()
     }
 
     func willEnterForeground() {
@@ -134,7 +134,7 @@ extension AppManager {
         nftMetadataSyncer.sync()
 
         tonKitManager.tonKit?.startListener()
-        // stellarKitManager.stellarKit?.startListener()
+        stellarKitManager.stellarKit?.startListener()
 
         AppWidgetConstants.allKinds.forEach { WidgetCenter.shared.reloadTimelines(ofKind: $0) }
     }

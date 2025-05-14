@@ -29,7 +29,7 @@ enum ReceiveAddressModule {
     struct PopupWarningItem: Equatable, Identifiable {
         let title: String
         let description: DescriptionItem
-        let doneButtonTitle: String
+        let mode: Mode
 
         static func == (lhs: PopupWarningItem, rhs: PopupWarningItem) -> Bool {
             lhs.title == rhs.title &&
@@ -38,6 +38,11 @@ enum ReceiveAddressModule {
 
         public var id: String {
             title + description.text
+        }
+
+        enum Mode {
+            case done(title: String)
+            case activateStellarAsset
         }
     }
 
@@ -93,6 +98,7 @@ enum ReceiveAddressModule {
         let qrItem: QrItem
         let amount: String?
         let active: Bool
+        let assetActivated: Bool
         let memo: String?
         let usedAddresses: [AddressType: [UsedAddress]]?
 
@@ -103,6 +109,7 @@ enum ReceiveAddressModule {
                 qrItem: .init(address: address, uri: nil, networkName: nil),
                 amount: nil,
                 active: true,
+                assetActivated: true,
                 memo: nil,
                 usedAddresses: nil
             )

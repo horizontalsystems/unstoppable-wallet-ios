@@ -62,6 +62,11 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
             active = false
         }
 
+        var assetActivated = true
+        if let address = item.address as? StellarDepositAddress, !address.assetActivated {
+            assetActivated = false
+        }
+
         let notEmpty = item.usedAddresses?.contains { _, value in !value.isEmpty } ?? false
         return .init(
             copyValue: uri,
@@ -69,6 +74,7 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
             qrItem: qrItem,
             amount: amountString,
             active: active,
+            assetActivated: assetActivated,
             memo: nil,
             usedAddresses: notEmpty ? item.usedAddresses : nil
         )
@@ -83,9 +89,18 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
             return .init(
                 title: "deposit.not_active.title".localized,
                 description: .init(text: "deposit.not_active.tron_description".localized, style: .warning),
-                doneButtonTitle: "button.i_understand".localized
+                mode: .done(title: "button.i_understand".localized)
             )
         }
+
+        if let address = item.address as? StellarDepositAddress, !address.assetActivated {
+            return .init(
+                title: "deposit.stellar.inactive_asset.title".localized,
+                description: .init(text: "deposit.stellar.inactive_asset.description".localized, style: .warning),
+                mode: .activateStellarAsset
+            )
+        }
+
         return nil
     }
 

@@ -91,6 +91,14 @@ extension ReceiveAddressViewModel {
     var initialText: String {
         amount == 0 ? "" : amount.description
     }
+
+    var stellarSendData: SendData? {
+        guard let service = service as? ReceiveAddressService, let adapter = service.adapter as? StellarAdapter else {
+            return nil
+        }
+
+        return .stellar(data: .changeTrust(asset: adapter.asset, limit: StellarAdapter.maxValue), token: service.wallet.token, memo: nil)
+    }
 }
 
 extension ReceiveAddressViewModel {

@@ -382,6 +382,8 @@
 "deposit.qr_code_description" = "Your address for depositing %@";
 "deposit.qr_code_description.watch" = "Watch address of %@";
 "deposit.account" = "Account";
+"deposit.asset" = "Asset";
+"deposit.activate" = "Activate";
 
 "deposit.amount" = "Amount";
 "deposit.set_amount" = "Set Amount";
@@ -390,6 +392,9 @@
 "deposit.used_addresses" = "Used Addresses";
 "deposit.not_active.title" = "Not Active Address";
 "deposit.not_active.tron_description" = "Newly created accounts on the TRON blockchain are inactive and cannot be queried or explored. They need to be activated.\n\nTransferring TRX or TRC-10 tokens to an inactive account address will activate the account. Activating a new account on the Tron chain requires a fee of 1 TRX";
+"deposit.stellar.inactive_asset.title" = "Asset Not Activated";
+"deposit.stellar.inactive_asset.description" = "Assets require an established trustline to become active.";
+
 
 "deposit.used_addresses.title" = "Used Addresses";
 "deposit.used_addresses.description" = "%@ addresses change for privacy and security. Below a list of used addresses in this wallet.";

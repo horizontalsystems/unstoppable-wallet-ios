@@ -47,6 +47,7 @@ class StellarKitManager {
         )
 
         stellarKit.sync()
+        stellarKit.startListener()
 
         _stellarKit = stellarKit
         currentAccount = account

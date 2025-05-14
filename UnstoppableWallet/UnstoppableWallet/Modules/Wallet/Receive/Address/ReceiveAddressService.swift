@@ -7,7 +7,7 @@ import RxSwift
 
 class ReceiveAddressService {
     private let adapterManager: AdapterManager
-    private let wallet: Wallet
+    let wallet: Wallet
 
     private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
@@ -20,7 +20,7 @@ class ReceiveAddressService {
 
     private let stateUpdatedSubject = PassthroughSubject<DataStatus<ReceiveAddress>, Never>()
 
-    private var adapter: IDepositAdapter?
+    var adapter: IDepositAdapter?
 
     init(wallet: Wallet, adapterManager: AdapterManager) {
         self.wallet = wallet

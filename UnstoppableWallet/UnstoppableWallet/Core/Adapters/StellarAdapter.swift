@@ -28,6 +28,7 @@ class StellarAdapter {
     }
 
     private let transactionRecordsSubject = PublishSubject<[TonTransactionRecord]>()
+    private let receiveAddressSubject = PassthroughSubject<DataStatus<DepositAddress>, Never>()
 
     init?(stellarKit: StellarKit.Kit, asset: StellarKit.Asset) {
         self.stellarKit = stellarKit
@@ -41,8 +42,23 @@ class StellarAdapter {
             .store(in: &cancellables)
 
         stellarKit.accountPublisher
-            .sink { [weak self] in self?.balanceData = BalanceData(available: $0?.assetBalanceMap[asset]?.balance ?? 0) }
+            .sink { [weak self] in
+                self?.balanceData = BalanceData(available: $0?.assetBalanceMap[asset]?.balance ?? 0)
+                self?.syncReceiveAddress()
+            }
             .store(in: &cancellables)
+    }
+
+    private func syncReceiveAddress() {
+        receiveAddressSubject.send(.completed(receiveAddress))
+    }
+
+    private var assetActivated: Bool {
+        if asset.isNative {
+            return true
+        } else {
+            return stellarKit.account?.assetBalanceMap[asset] != nil
+        }
     }
 }
 
@@ -89,7 +105,11 @@ extension StellarAdapter: IBalanceAdapter {
 
 extension StellarAdapter: IDepositAdapter {
     var receiveAddress: DepositAddress {
-        DepositAddress(stellarKit.receiveAddress)
+        StellarDepositAddress(receiveAddress: stellarKit.receiveAddress, assetActivated: assetActivated)
+    }
+
+    var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {
+        receiveAddressSubject.eraseToAnyPublisher()
     }
 }
 
@@ -100,5 +120,14 @@ extension StellarAdapter {
         case .synced: return .synced
         case let .notSynced(error): return .notSynced(error: error)
         }
+    }
+}
+
+class StellarDepositAddress: DepositAddress {
+    let assetActivated: Bool
+
+    init(receiveAddress: String, assetActivated: Bool) {
+        self.assetActivated = assetActivated
+        super.init(receiveAddress)
     }
 }
