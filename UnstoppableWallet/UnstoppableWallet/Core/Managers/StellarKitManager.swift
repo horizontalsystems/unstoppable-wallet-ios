@@ -33,6 +33,9 @@ class StellarKitManager {
         case .mnemonic:
             let keyPair = try Self.keyPair(accountType: account.type)
             accountId = keyPair.accountId
+        case let .stellarSecretKey(secretSeed):
+            let keyPair = try KeyPair(secretSeed: secretSeed)
+            accountId = keyPair.accountId
         case let .stellarAccount(_accountId):
             accountId = _accountId
         default:
@@ -120,6 +123,8 @@ extension StellarKitManager {
         switch accountType {
         case let .mnemonic(words, salt, _):
             return try WalletUtils.createKeyPair(mnemonic: words.joined(separator: " "), passphrase: salt, index: 0)
+        case let .stellarSecretKey(secretSeed):
+            return try KeyPair(secretSeed: secretSeed)
         default:
             throw AdapterError.unsupportedAccount
         }

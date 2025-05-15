@@ -9,6 +9,7 @@ import TronKit
 enum AccountType {
     case mnemonic(words: [String], salt: String, bip39Compliant: Bool)
     case evmPrivateKey(data: Data)
+    case stellarSecretKey(secretSeed: String)
     case evmAddress(address: EvmKit.Address)
     case tronAddress(address: TronKit.Address)
     case tonAddress(address: String)
@@ -43,6 +44,8 @@ enum AccountType {
             privateData = description.data(using: .utf8) ?? Data() // always non-null
         case let .evmPrivateKey(data):
             privateData = data
+        case let .stellarSecretKey(secretSeed):
+            privateData = secretSeed.hs.data
         case let .evmAddress(address):
             privateData = address.hex.hs.data
         case let .tronAddress(address):
@@ -122,6 +125,11 @@ enum AccountType {
             case (.zkSync, .native), (.zkSync, .eip20): return true
             default: return false
             }
+        case .stellarSecretKey, .stellarAccount:
+            switch (token.blockchainType, token.type) {
+            case (.stellar, .native), (.stellar, .stellar): return true
+            default: return false
+            }
         case .tronAddress:
             switch (token.blockchainType, token.type) {
             case (.tron, .native), (.tron, .eip20): return true
@@ -130,11 +138,6 @@ enum AccountType {
         case .tonAddress:
             switch (token.blockchainType, token.type) {
             case (.ton, .native), (.ton, .jetton): return true
-            default: return false
-            }
-        case .stellarAccount:
-            switch (token.blockchainType, token.type) {
-            case (.stellar, .native), (.stellar, .stellar): return true
             default: return false
             }
         case let .btcAddress(_, blockchainType, tokenType):
@@ -186,6 +189,8 @@ enum AccountType {
             return salt.isEmpty ? "manage_accounts.n_words".localized(count) : "manage_accounts.n_words_with_passphrase".localized(count)
         case .evmPrivateKey:
             return "EVM Private Key"
+        case .stellarSecretKey:
+            return "Stellar Secret Key"
         case .evmAddress:
             return "EVM Address"
         case .tronAddress:
@@ -222,6 +227,8 @@ enum AccountType {
             return salt.isEmpty ? "mnemonic_\(count)" : "mnemonic_with_passphrase_\(count)"
         case .evmPrivateKey:
             return "evm_private_key"
+        case .stellarSecretKey:
+            return "stellar_secret_key"
         case .evmAddress:
             return "evm_address"
         case .tronAddress:
@@ -326,6 +333,8 @@ extension AccountType {
             return AccountType.mnemonic(words: words, salt: salt, bip39Compliant: bip39Compliant)
         case .evmPrivateKey:
             return AccountType.evmPrivateKey(data: uniqueId)
+        case .stellarSecretKey:
+            return AccountType.stellarSecretKey(secretSeed: string)
         case .hdExtendedKey:
             do {
                 return try AccountType.hdExtendedKey(key: HDExtendedKey(data: uniqueId))
@@ -369,6 +378,7 @@ extension AccountType {
     enum Abstract: String, Codable {
         case mnemonic
         case evmPrivateKey = "private_key"
+        case stellarSecretKey = "stellar_secret_key"
         case evmAddress = "evm_address"
         case tronAddress = "tron_address"
         case tonAddress = "ton_address"
@@ -381,6 +391,7 @@ extension AccountType {
             switch type {
             case .mnemonic: self = .mnemonic
             case .evmPrivateKey: self = .evmPrivateKey
+            case .stellarSecretKey: self = .stellarSecretKey
             case .evmAddress: self = .evmAddress
             case .tronAddress: self = .tronAddress
             case .tonAddress: self = .tonAddress
@@ -400,6 +411,8 @@ extension AccountType: Hashable {
             return lhsWords == rhsWords && lhsSalt == rhsSalt && lhsBip39Compliant == rhsBip39Compliant
         case let (.evmPrivateKey(lhsData), .evmPrivateKey(rhsData)):
             return lhsData == rhsData
+        case let (.stellarSecretKey(lhsSecretSeed), .stellarSecretKey(rhsSecretSeed)):
+            return lhsSecretSeed == rhsSecretSeed
         case let (.evmAddress(lhsAddress), .evmAddress(rhsAddress)):
             return lhsAddress == rhsAddress
         case let (.tronAddress(lhsAddress), .tronAddress(rhsAddress)):
@@ -428,6 +441,9 @@ extension AccountType: Hashable {
         case let .evmPrivateKey(data):
             hasher.combine("evmPrivateKey")
             hasher.combine(data)
+        case let .stellarSecretKey(secretSeed):
+            hasher.combine("stellarSecretKey")
+            hasher.combine(secretSeed)
         case let .evmAddress(address):
             hasher.combine("evmAddress")
             hasher.combine(address.raw)

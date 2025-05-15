@@ -1,6 +1,7 @@
 import EvmKit
 import Foundation
 import HdWalletKit
+import stellarsdk
 
 class RestorePrivateKeyService {
     func accountType(text: String) throws -> AccountType {
@@ -29,6 +30,11 @@ class RestorePrivateKeyService {
         do {
             let privateKey = try Signer.privateKey(string: text)
             return .evmPrivateKey(data: privateKey)
+        } catch {}
+
+        do {
+            _ = try KeyPair(secretSeed: text)
+            return .stellarSecretKey(secretSeed: text)
         } catch {}
 
         throw RestoreError.noValidKey

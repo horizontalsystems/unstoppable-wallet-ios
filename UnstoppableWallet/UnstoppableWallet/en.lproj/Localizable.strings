@@ -130,7 +130,7 @@
 "restore.restore_type.mnemonic" = "Recovery Phrase";
 "restore.restore_type.private_key" = "Private Key";
 "restore.mnemonic.placeholder" = "Enter Recovery Phrase";
-"restore.private_key.placeholder" = "Enter EVM Private Key, BIP32 Root Key or Account Extended Private Key";
+"restore.private_key.placeholder" = "Enter EVM Private Key, Stellar Secret Key, BIP32 Root Key or Account Extended Private Key";
 "restore.private_key.invalid_key" = "Invalid Key";
 "restore_error.mnemonic_word_count" = "Wrong words count. It must be between 12 and 24 words. You entered: %@";
 "restore.checksum_error" = "Invalid checksum";
@@ -219,6 +219,11 @@
 
 "evm_private_key.title" = "EVM Private Key";
 "evm_private_key.tap_to_show" = "Tap to show private key";
+
+// Stellar Secret Key
+
+"stellar_secret_key.title" = "Stellar Secret Key";
+"stellar_secret_key.tap_to_show" = "Tap to show secret key";
 
 // Extended Key
 
@@ -516,6 +521,8 @@
 "send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.amount_warning.coin_needed_for_fee" = "Consider leaving some %@ on balance to be able to pay for future transactions.";
 "send.token.insufficient_fee_alert" = "Transaction fees for transferring %@ (on %@) paid in %@. You need %@.";
+"send.stellar.no_trustline.title" = "No Asset Trustline";
+"send.stellar.no_trustline.description" = "Recipient account does not have established trustline with the asset being sent.";
 
 "send.fee_settings.amount_error.balance.title" = "Insufficient Balance";
 "send.fee_settings.amount_error.balance" = "The current %@ balance is below the amount required to process theis transaction, including transaction fee.";
@@ -1938,6 +1945,8 @@
 "private_keys.title" = "Private Keys";
 "private_keys.evm_private_key" = "EVM Private Key";
 "private_keys.evm_private_key.description" = "Grants full control over EVM-based crypto i.e. Ethereum, Binance Smart Chain, etc within the respective wallet.";
+"private_keys.stellar_secret_key" = "Stellar Secret Key";
+"private_keys.stellar_secret_key.description" = "Grants full control over Stellar assets within the respective wallet.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
 "private_keys.bip32_root_key.description" = "Grants full control over the assets on the respective wallet.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";

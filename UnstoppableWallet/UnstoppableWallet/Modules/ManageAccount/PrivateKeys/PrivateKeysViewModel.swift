@@ -8,6 +8,7 @@ class PrivateKeysViewModel {
 
     private let openUnlockRelay = PublishRelay<Void>()
     private let openEvmPrivateKeyRelay = PublishRelay<AccountType>()
+    private let openStellarSecretKeyRelay = PublishRelay<AccountType>()
     private let openBip32RootKeyRelay = PublishRelay<AccountType>()
     private let openAccountExtendedPrivateKeyRelay = PublishRelay<AccountType>()
 
@@ -27,6 +28,10 @@ extension PrivateKeysViewModel {
         openEvmPrivateKeyRelay.asSignal()
     }
 
+    var openStellarSecretKeySignal: Signal<AccountType> {
+        openStellarSecretKeyRelay.asSignal()
+    }
+
     var openBip32RootKeySignal: Signal<AccountType> {
         openBip32RootKeyRelay.asSignal()
     }
@@ -37,6 +42,10 @@ extension PrivateKeysViewModel {
 
     var showEvmPrivateKey: Bool {
         service.evmPrivateKeySupported
+    }
+
+    var showStellarSecretKey: Bool {
+        service.stellarSecretKeySupported
     }
 
     var showBip32RootKey: Bool {
@@ -50,6 +59,7 @@ extension PrivateKeysViewModel {
     func onUnlock() {
         switch unlockRequest {
         case .evmPrivateKey: openEvmPrivateKeyRelay.accept(service.accountType)
+        case .stellarSecretKey: openStellarSecretKeyRelay.accept(service.accountType)
         case .bip32RootKey: openBip32RootKeyRelay.accept(service.accountType)
         case .accountExtendedPrivateKey: openAccountExtendedPrivateKeyRelay.accept(service.accountType)
         }
@@ -61,6 +71,15 @@ extension PrivateKeysViewModel {
             openUnlockRelay.accept(())
         } else {
             openEvmPrivateKeyRelay.accept(service.accountType)
+        }
+    }
+
+    func onTapStellarSecretKey() {
+        if service.isPasscodeSet {
+            unlockRequest = .stellarSecretKey
+            openUnlockRelay.accept(())
+        } else {
+            openStellarSecretKeyRelay.accept(service.accountType)
         }
     }
 
@@ -86,6 +105,7 @@ extension PrivateKeysViewModel {
 extension PrivateKeysViewModel {
     enum UnlockRequest {
         case evmPrivateKey
+        case stellarSecretKey
         case bip32RootKey
         case accountExtendedPrivateKey
     }
