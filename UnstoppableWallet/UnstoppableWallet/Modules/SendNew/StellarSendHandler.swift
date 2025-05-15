@@ -51,7 +51,22 @@ extension StellarSendHandler: ISendHandler {
                     totalNativeAmount += amount
                 }
 
-                let operation = try stellarKit.paymentOperation(asset: asset, destinationAccountId: accountId, amount: amount)
+                let destinationAccount = try await StellarKit.Kit.account(accountId: accountId)
+                let operation: stellarsdk.Operation
+
+                if let destinationAccount {
+                    guard destinationAccount.assetBalanceMap[asset] != nil else {
+                        throw TransactionError.noTrustline
+                    }
+
+                    operation = try stellarKit.paymentOperation(asset: asset, destinationAccountId: accountId, amount: amount)
+                } else {
+                    if asset.isNative {
+                        operation = try stellarKit.createAccountOperation(destinationAccountId: accountId, amount: amount)
+                    } else {
+                        throw TransactionError.noTrustline
+                    }
+                }
 
                 operations = [operation]
                 fee = baseFee
@@ -138,6 +153,9 @@ extension StellarSendHandler {
 
                     title = "fee_settings.errors.insufficient_balance".localized
                     text = "fee_settings.errors.insufficient_balance.info".localized(balanceString ?? "")
+                case .noTrustline:
+                    title = "send.stellar.no_trustline.title".localized
+                    text = "send.stellar.no_trustline.description".localized
                 }
             } else {
                 title = "ethereum_transaction.error.title".localized
@@ -236,6 +254,7 @@ extension StellarSendHandler {
 
     enum TransactionError: Error {
         case insufficientStellarBalance(balance: Decimal)
+        case noTrustline
     }
 }
 

@@ -45,6 +45,12 @@ class AccountStorage {
             }
 
             type = .evmPrivateKey(data: data)
+        case .stellarSecretKey:
+            guard let secretSeed = record.dataKey else {
+                return nil
+            }
+
+            type = .stellarSecretKey(secretSeed: secretSeed)
         case .evmAddress:
             guard let data = recoverData(id: id, typeName: typeName, keyName: .data) else {
                 return nil
@@ -135,6 +141,9 @@ class AccountStorage {
         case let .evmPrivateKey(data):
             typeName = .evmPrivateKey
             dataKey = try store(data: data, id: id, typeName: typeName, keyName: .data)
+        case let .stellarSecretKey(secretSeed):
+            typeName = .stellarSecretKey
+            dataKey = secretSeed
         case let .evmAddress(address):
             typeName = .evmAddress
             dataKey = try store(data: address.raw, id: id, typeName: typeName, keyName: .data)
@@ -186,6 +195,8 @@ class AccountStorage {
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .salt))
         case .evmPrivateKey:
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .evmPrivateKey, keyName: .data))
+        case .stellarSecretKey:
+            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .stellarSecretKey, keyName: .data))
         case .evmAddress:
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .evmAddress, keyName: .data))
         case .tronAddress:
@@ -276,6 +287,7 @@ extension AccountStorage {
     private enum TypeName: String {
         case mnemonic
         case evmPrivateKey
+        case stellarSecretKey
         case evmAddress = "address"
         case tronAddress
         case tonAddress

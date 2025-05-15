@@ -112,6 +112,7 @@ enum StatPage: String {
     case sendConfirmation = "send_confirmation"
     case sendTokenList = "send_token_list"
     case settings
+    case stellarSecretKey = "stellar_secret_key"
     case swap
     case switchWallet = "switch_wallet"
     case tellFriends = "tell_friends"
@@ -490,6 +491,7 @@ enum StatEntity: String {
     case recoveryPhrase = "recovery_phrase"
     case session
     case status
+    case stellarSecretKey = "stellar_secret_key"
     case token
     case transactionId = "transaction_id"
     case wallet

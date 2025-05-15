@@ -151,6 +151,11 @@ class WalletViewItemFactory {
                 .receive: .enabled,
                 .swap: AppConfig.swapEnabled ? .enabled : .hidden,
             ]
+        case .stellarSecretKey:
+            return [
+                .send: .enabled,
+                .receive: .enabled,
+            ]
         case .evmAddress, .tronAddress, .tonAddress, .stellarAccount, .btcAddress: return [:]
         }
     }
