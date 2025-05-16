@@ -120,7 +120,7 @@ struct BitcoinSendSettingsView: View {
                             Toggle(isOn: $viewModel.rbfEnabled) {
                                 Text("fee_settings.replace_by_fee".localized).themeBody()
                             }
-                            .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+                            .toggleStyle(SwitchToggleStyle(tint: .themeOrange))
                         }
                     }
 

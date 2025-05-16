@@ -5,7 +5,7 @@ struct MultiSwapButtonState {
     let showProgress: Bool
     let preSwapStep: MultiSwapPreSwapStep?
 
-    init(title: String, style: PrimaryButtonStyle.Style = .gray, disabled: Bool = false, showProgress: Bool = false, preSwapStep: MultiSwapPreSwapStep? = nil) {
+    init(title: String, style: PrimaryButtonStyle.Style = .default, disabled: Bool = false, showProgress: Bool = false, preSwapStep: MultiSwapPreSwapStep? = nil) {
         self.title = title
         self.style = style
         self.disabled = disabled

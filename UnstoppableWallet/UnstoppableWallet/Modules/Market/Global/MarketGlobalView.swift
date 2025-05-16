@@ -81,7 +81,7 @@ struct MarketGlobalView: View {
                 .truncationMode(.middle)
 
             Text(amount ?? "----")
-                .textCaptionSB(color: .themeBran)
+                .textCaptionSB(color: .themeLeah)
                 .lineLimit(1)
                 .truncationMode(.middle)
                 .redacted(value: redacted)

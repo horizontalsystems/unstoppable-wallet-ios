@@ -61,7 +61,7 @@ class WalletConnectListViewController: ThemeViewController {
         bottomButtonHolder.add(to: self, under: tableView)
         bottomButtonHolder.addSubview(bottomButton)
 
-        bottomButton.set(style: .yellow)
+        bottomButton.set(style: .active)
         bottomButton.setTitle("wallet_connect_list.new_connection".localized, for: .normal)
         bottomButton.addTarget(self, action: #selector(startNewConnection), for: .touchUpInside)
 
@@ -124,7 +124,7 @@ class WalletConnectListViewController: ThemeViewController {
                 .highlightedDescription(text: newConnectionError),
             ],
             buttons: [
-                .init(style: .yellow, title: "alert.try_again".localized, actionType: .afterClose) { [weak self] in self?.startNewConnection() },
+                .init(style: .active, title: "alert.try_again".localized, actionType: .afterClose) { [weak self] in self?.startNewConnection() },
                 .init(style: .transparent, title: "button.cancel".localized),
             ]
         )

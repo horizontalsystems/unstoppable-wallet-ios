@@ -81,13 +81,13 @@ struct AddressViewNew: View {
                 axis: .vertical
             )
             .lineLimit(1 ... maxLineLimit)
-            .accentColor(.themeYellow)
+            .accentColor(.themeOrange)
         } else {
             TextField(
                 placeholder,
                 text: text
             )
-            .accentColor(.themeYellow)
+            .accentColor(.themeOrange)
         }
     }
 }

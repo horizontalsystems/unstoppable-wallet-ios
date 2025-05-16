@@ -73,12 +73,12 @@ class RestoreBinanceViewController: ThemeViewController {
 
         buttonsHolder.addSubview(connectButton)
 
-        connectButton.set(style: .yellow)
+        connectButton.set(style: .active)
         connectButton.setTitle("restore.binance.connect".localized, for: .normal)
         connectButton.addTarget(self, action: #selector(onTapConnect), for: .touchUpInside)
 
         buttonsHolder.addSubview(connectingButton)
-        connectingButton.set(style: .yellow, accessoryType: .spinner)
+        connectingButton.set(style: .active, accessoryType: .spinner)
         connectingButton.isEnabled = false
         connectingButton.setTitle("restore.binance.connecting".localized, for: .normal)
 

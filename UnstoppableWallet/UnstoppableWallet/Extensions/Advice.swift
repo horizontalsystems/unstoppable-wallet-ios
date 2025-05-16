@@ -139,7 +139,7 @@ extension TechnicalAdvice.Advice: Identifiable {
 
     var foregroundColor: Color {
         switch self {
-        case .neutral: return .themeBran
+        case .neutral: return .themeLeah
         case .buy: return .themeRemus
         case .sell: return .themeLucian
         case .strongBuy, .strongSell: return .themeTyler

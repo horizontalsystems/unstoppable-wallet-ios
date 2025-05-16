@@ -34,7 +34,7 @@ struct BaseCurrencySettingsView: View {
                     .highlightedDescription(text: "settings.base_currency.disclaimer.description".localized(AppConfig.appName, viewModel.popularCurrencies.map(\.code).joined(separator: ", "))),
                 ],
                 buttons: [
-                    .init(style: .yellow, title: "settings.base_currency.disclaimer.set".localized) {
+                    .init(style: .active, title: "settings.base_currency.disclaimer.set".localized) {
                         viewModel.baseCurrency = currency
                         confirmationCurrency = nil
                         presentationMode.wrappedValue.dismiss()

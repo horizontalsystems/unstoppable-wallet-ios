@@ -41,7 +41,7 @@ struct MarketWatchlistSignalsView: View {
                     }) {
                         Text("market.watchlist.signals.turn_on".localized)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                    .buttonStyle(PrimaryButtonStyle(style: .active))
                 }
             }
             .navigationTitle("market.watchlist.signals".localized)

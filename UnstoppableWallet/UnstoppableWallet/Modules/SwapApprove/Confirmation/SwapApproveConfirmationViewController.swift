@@ -29,7 +29,7 @@ class SwapApproveConfirmationViewController: SendEvmTransactionViewController {
 
         bottomWrapper.addSubview(approveButton)
 
-        approveButton.set(style: .yellow)
+        approveButton.set(style: .active)
         approveButton.setTitle("button.approve".localized, for: .normal)
         approveButton.addTarget(self, action: #selector(onTapApprove), for: .touchUpInside)
 

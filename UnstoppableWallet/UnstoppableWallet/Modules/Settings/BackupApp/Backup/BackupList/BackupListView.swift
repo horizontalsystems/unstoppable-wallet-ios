@@ -76,7 +76,7 @@ struct BackupListView: View {
                     }) {
                         Text("button.next".localized)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                    .buttonStyle(PrimaryButtonStyle(style: .active))
                 }
             }
             .navigationTitle("backup_app.backup_list.title".localized)

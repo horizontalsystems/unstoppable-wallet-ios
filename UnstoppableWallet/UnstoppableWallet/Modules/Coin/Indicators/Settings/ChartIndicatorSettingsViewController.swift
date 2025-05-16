@@ -60,7 +60,7 @@ class ChartIndicatorSettingsViewController: KeyboardAwareViewController {
         gradientWrapperView.add(to: self)
 
         gradientWrapperView.addSubview(applyButton)
-        applyButton.set(style: .yellow)
+        applyButton.set(style: .active)
         applyButton.setTitle("button.apply".localized, for: .normal)
         applyButton.addTarget(self, action: #selector(onTapDoneButton), for: .touchUpInside)
 

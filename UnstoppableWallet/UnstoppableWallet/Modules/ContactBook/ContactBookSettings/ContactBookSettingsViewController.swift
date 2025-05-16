@@ -81,7 +81,7 @@ class ContactBookSettingsViewController: ThemeViewController {
                 .highlightedDescription(text: "contacts.restore.overwrite_alert.description".localized),
             ],
             buttons: [
-                .init(style: .red, title: "contacts.restore.overwrite_alert.replace".localized, actionType: .afterClose) { [weak self] in
+                .init(style: .active, title: "contacts.restore.overwrite_alert.replace".localized, actionType: .afterClose) { [weak self] in
                     self?.viewModel.replace(contacts: contacts)
                 },
                 .init(style: .transparent, title: "button.cancel".localized),
@@ -106,7 +106,7 @@ class ContactBookSettingsViewController: ThemeViewController {
                 .highlightedDescription(text: "contacts.settings.merge_disclaimer".localized),
             ],
             buttons: [
-                .init(style: .yellow, title: "button.continue".localized) { [weak self] in self?.viewModel.onConfirm() },
+                .init(style: .active, title: "button.continue".localized) { [weak self] in self?.viewModel.onConfirm() },
                 .init(style: .transparent, title: "button.cancel".localized) { [weak self] in self?.bottomSelectorOnDismiss() },
             ],
             delegate: self

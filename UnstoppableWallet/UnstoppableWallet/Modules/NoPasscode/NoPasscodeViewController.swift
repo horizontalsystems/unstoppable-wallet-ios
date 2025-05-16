@@ -80,7 +80,7 @@ class NoPasscodeViewController: ThemeViewController {
                 maker.top.equalTo(containerView.snp.bottom).offset(CGFloat.margin32)
             }
 
-            understandButton.set(style: .yellow)
+            understandButton.set(style: .active)
             understandButton.setTitle("button.i_understand".localized, for: .normal)
             understandButton.addTarget(self, action: #selector(onUnderstand), for: .touchUpInside)
         case .noPasscode:

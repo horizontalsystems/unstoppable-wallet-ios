@@ -34,10 +34,10 @@ struct DebounceTextField: View {
         if #available(iOS 16.0, *) {
             TextField(label, text: $value, axis: .vertical)
                 .lineLimit(1 ... maxLineLimit)
-                .accentColor(.themeYellow)
+                .accentColor(.themeOrange)
         } else {
             TextField(label, text: $value)
-                .accentColor(.themeYellow)
+                .accentColor(.themeOrange)
         }
     }
 }

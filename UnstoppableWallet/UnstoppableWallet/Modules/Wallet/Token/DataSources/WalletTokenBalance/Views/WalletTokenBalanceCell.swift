@@ -30,7 +30,7 @@ class WalletTokenBalanceCell: UITableViewCell {
 
         stackView.addArrangedSubview(testnetImageView)
         testnetImageView.image = UIImage(named: "testnet_16")?.withRenderingMode(.alwaysTemplate)
-        testnetImageView.tintColor = .themeRed50
+        testnetImageView.tintColor = .themeRedD.withAlphaComponent(0.5)     //TODO
         testnetImageView.contentMode = .top
         testnetImageView.snp.makeConstraints { maker in
             maker.height.equalTo(CGFloat.margin12)

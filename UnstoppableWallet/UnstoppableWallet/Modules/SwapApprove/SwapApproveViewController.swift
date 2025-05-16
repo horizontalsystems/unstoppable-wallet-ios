@@ -57,7 +57,7 @@ class SwapApproveViewController: KeyboardAwareViewController {
 
         amountCautionCell.onChangeHeight = { [weak self] in self?.onChangeHeight() }
 
-        buttonCell.set(style: .yellow)
+        buttonCell.set(style: .active)
         buttonCell.title = "swap.proceed_button".localized
         buttonCell.onTap = { [weak self] in
             self?.onTapApprove()

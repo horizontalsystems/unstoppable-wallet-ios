@@ -58,7 +58,7 @@ class TermsViewController: ThemeViewController {
 
             gradientWrapperView.addSubview(agreeButton)
 
-            agreeButton.set(style: .yellow)
+            agreeButton.set(style: .active)
             agreeButton.setTitle("terms.i_agree".localized, for: .normal)
             agreeButton.addTarget(self, action: #selector(onTapAgree), for: .touchUpInside)
         }

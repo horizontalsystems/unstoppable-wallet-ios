@@ -77,7 +77,7 @@ struct TonConnectConnectView: View {
                         }) {
                             Text("ton_connect.connect.connect".localized)
                         }
-                        .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                        .buttonStyle(PrimaryButtonStyle(style: .active))
                         .disabled(viewModel.account == nil)
 
                         Button(action: {
@@ -86,7 +86,7 @@ struct TonConnectConnectView: View {
                         }) {
                             Text("ton_connect.connect.reject".localized)
                         }
-                        .buttonStyle(PrimaryButtonStyle(style: .gray))
+                        .buttonStyle(PrimaryButtonStyle(style: .default))
                     }
                 }
             }

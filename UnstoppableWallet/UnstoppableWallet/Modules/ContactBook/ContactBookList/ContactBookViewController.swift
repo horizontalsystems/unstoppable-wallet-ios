@@ -86,7 +86,7 @@ class ContactBookViewController: ThemeSearchViewController {
         // show add button on empty screen only for edit mode
         if mode.editable {
             notFoundPlaceholder.addPrimaryButton(
-                style: .yellow,
+                style: .active,
                 title: "contacts.add_new_contact".localized,
                 target: self,
                 action: #selector(onCreateContact)
@@ -166,7 +166,7 @@ class ContactBookViewController: ThemeSearchViewController {
                 .highlightedDescription(text: "contacts.update_contact.already_has_address".localized(blockchainName, old.address.shortened, new.address.shortened)),
             ],
             buttons: [
-                .init(style: .yellow, title: "contacts.update_contact.replace".localized, actionType: .afterClose) {
+                .init(style: .active, title: "contacts.update_contact.replace".localized, actionType: .afterClose) {
                     onSuccess?()
                 },
                 .init(style: .transparent, title: "button.cancel".localized),

@@ -40,7 +40,7 @@ struct HighlightedTextView: View {
                 }
             }
 
-            Text(text).themeSubhead2(color: .themeBran)
+            Text(text).themeSubhead2(color: .themeLeah)
         }
         .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
         .background(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).fill(style.color.opacity(0.2)))

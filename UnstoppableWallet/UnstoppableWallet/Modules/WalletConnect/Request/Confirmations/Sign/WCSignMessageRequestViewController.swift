@@ -45,13 +45,13 @@ class WCSignMessageRequestViewController: ThemeViewController {
         bottomWrapper.add(to: self, under: tableView)
         bottomWrapper.addSubview(signButton)
 
-        signButton.set(style: .yellow)
+        signButton.set(style: .active)
         signButton.setTitle("button.sign".localized, for: .normal)
         signButton.addTarget(self, action: #selector(onTapSign), for: .touchUpInside)
 
         bottomWrapper.addSubview(rejectButton)
 
-        rejectButton.set(style: .gray)
+        rejectButton.set(style: .default)
         rejectButton.setTitle("button.reject".localized, for: .normal)
         rejectButton.addTarget(self, action: #selector(onTapReject), for: .touchUpInside)
 

@@ -84,7 +84,7 @@ class TraitCell: UICollectionViewCell {
         }
         set {
             super.isHighlighted = newValue
-            contentView.backgroundColor = newValue ? .themeLawrencePressed : .themeLawrence
+            contentView.backgroundColor = newValue ? .themeLawrence.pressed : .themeLawrence
         }
     }
 }

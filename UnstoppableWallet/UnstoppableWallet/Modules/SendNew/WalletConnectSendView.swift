@@ -34,7 +34,7 @@ struct WalletConnectSendView: View {
                         }) {
                             Text("wallet_connect.button.confirm".localized)
                         }
-                        .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                        .buttonStyle(PrimaryButtonStyle(style: .active))
                         .disabled(sendViewModel.sending)
                     case .failed:
                         Button(action: {
@@ -42,7 +42,7 @@ struct WalletConnectSendView: View {
                         }) {
                             Text("send.confirmation.refresh".localized)
                         }
-                        .buttonStyle(PrimaryButtonStyle(style: .gray))
+                        .buttonStyle(PrimaryButtonStyle(style: .default))
                     }
 
                     Button(action: {
@@ -51,7 +51,7 @@ struct WalletConnectSendView: View {
                     }) {
                         Text("button.reject".localized)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .gray))
+                    .buttonStyle(PrimaryButtonStyle(style: .default))
                     .disabled(sendViewModel.sending)
                 }
             }

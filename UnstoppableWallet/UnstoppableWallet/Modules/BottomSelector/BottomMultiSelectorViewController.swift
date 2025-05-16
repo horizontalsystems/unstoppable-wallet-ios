@@ -61,7 +61,7 @@ class BottomMultiSelectorViewController: ThemeActionSheetController {
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
         }
 
-        doneButton.set(style: .yellow)
+        doneButton.set(style: .active)
         doneButton.setTitle("button.done".localized, for: .normal)
         doneButton.addTarget(self, action: #selector(onTapDone), for: .touchUpInside)
 

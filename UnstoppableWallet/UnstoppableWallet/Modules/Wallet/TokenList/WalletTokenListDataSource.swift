@@ -241,7 +241,7 @@ extension WalletTokenListDataSource: ISectionDataSource {
                     cell.text = "sync_error".localized
                     cell.removeAllButtons()
                     cell.addPrimaryButton(
-                        style: .yellow,
+                        style: .active,
                         title: "button.retry".localized,
                         target: self,
                         action: #selector(onTapRetry)

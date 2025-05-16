@@ -38,7 +38,7 @@ struct BackupDisclaimerView: View {
                         Text("button.next".localized)
                     }
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                .buttonStyle(PrimaryButtonStyle(style: .active))
                 .disabled(!isOn)
             }
         }

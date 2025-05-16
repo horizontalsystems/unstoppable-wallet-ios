@@ -10,7 +10,7 @@ struct SyncErrorView: View {
             }) {
                 Text("button.retry".localized)
             }
-            .buttonStyle(PrimaryButtonStyle(style: .yellow))
+            .buttonStyle(PrimaryButtonStyle(style: .active))
         }
     }
 }

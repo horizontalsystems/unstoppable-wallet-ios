@@ -51,7 +51,7 @@ struct TonConnectListView: View {
                 }) {
                     Text("ton_connect.list.new_connection".localized)
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                .buttonStyle(PrimaryButtonStyle(style: .active))
             }
         }
         .onReceive(viewModel.openCreateConnectionPublisher) { config in
@@ -74,7 +74,7 @@ struct TonConnectListView: View {
                     .text(text: "ton_connect.list.disconnect_app.description".localized(app.manifest.name)),
                 ],
                 buttons: [
-                    .init(style: .red, title: "ton_connect.list.disconnect_app.disconnect".localized) {
+                    .init(style: .active, title: "ton_connect.list.disconnect_app.disconnect".localized) {
                         viewModel.disconnect(app: app)
                         tonConnectApp = nil
                     },

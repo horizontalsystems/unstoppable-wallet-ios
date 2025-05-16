@@ -54,7 +54,7 @@ class UnlinkWatchViewController: ThemeActionSheetController {
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
         }
 
-        deleteButton.set(style: .red)
+        deleteButton.set(style: .active)
         deleteButton.setTitle("settings_manage_keys.delete.confirmation_watch.button".localized, for: .normal)
         deleteButton.addTarget(self, action: #selector(onTapDeleteButton), for: .touchUpInside)
 

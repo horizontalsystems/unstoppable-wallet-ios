@@ -68,7 +68,7 @@ struct MarketAdvancedSearchCategoriesView: View {
                 Button(buttonTitle()) {
                     isPresented = false
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                .buttonStyle(PrimaryButtonStyle(style: .active))
             }
         }
         .background(Color.themeLawrence)

@@ -43,7 +43,7 @@ struct AppearanceView: View {
                             Toggle(isOn: $viewModel.hideMarkets.animation()) {
                                 Text("appearance.hide_markets".localized).themeBody()
                             }
-                            .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+                            .toggleStyle(SwitchToggleStyle(tint: .themeOrange))
                         }
 
                         ClickableRow(spacing: .margin8) {
@@ -101,7 +101,7 @@ struct AppearanceView: View {
                             Toggle(isOn: $viewModel.hideBalanceButtons.animation()) {
                                 Text("appearance.hide_buttons".localized).themeBody()
                             }
-                            .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+                            .toggleStyle(SwitchToggleStyle(tint: .themeOrange))
                         }
 
                         ClickableRow(spacing: .margin8) {

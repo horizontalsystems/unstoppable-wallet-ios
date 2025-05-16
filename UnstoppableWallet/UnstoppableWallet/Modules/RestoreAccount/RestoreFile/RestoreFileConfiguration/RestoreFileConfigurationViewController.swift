@@ -51,7 +51,7 @@ class RestoreFileConfigurationViewController: KeyboardAwareViewController {
 
         restoreButton.setTitle("button.restore".localized, for: .normal)
         restoreButton.addTarget(self, action: #selector(onTapRestore), for: .touchUpInside)
-        restoreButton.set(style: .yellow)
+        restoreButton.set(style: .active)
 
         viewModel.showMergeAlertPublisher
             .receive(on: DispatchQueue.main)
@@ -94,7 +94,7 @@ class RestoreFileConfigurationViewController: KeyboardAwareViewController {
                 .highlightedDescription(text: "backup_app.restore.notice.description".localized),
             ],
             buttons: [
-                .init(style: .red, title: "backup_app.restore.notice.merge".localized, actionType: .afterClose) { [weak self] in
+                .init(style: .active, title: "backup_app.restore.notice.merge".localized, actionType: .afterClose) { [weak self] in
                     self?.viewModel.restore()
                 },
                 .init(style: .transparent, title: "button.cancel".localized, actionType: .afterClose),

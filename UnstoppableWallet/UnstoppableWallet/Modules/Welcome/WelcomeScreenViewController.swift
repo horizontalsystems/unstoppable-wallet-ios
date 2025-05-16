@@ -146,7 +146,7 @@ class WelcomeScreenViewController: ThemeViewController {
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin32)
         }
 
-        startButton.set(style: .yellow)
+        startButton.set(style: .active)
         startButton.setTitle("button.next".localized, for: .normal)
         startButton.addTarget(self, action: #selector(onTapStart), for: .touchUpInside)
 

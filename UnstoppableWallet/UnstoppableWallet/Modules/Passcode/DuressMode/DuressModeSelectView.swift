@@ -43,7 +43,7 @@ struct DuressModeSelectView: View {
                 }) {
                     Text("button.next".localized)
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                .buttonStyle(PrimaryButtonStyle(style: .active))
             }
         }
         .navigationTitle("enable_duress_mode.select.title".localized)

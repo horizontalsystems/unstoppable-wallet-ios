@@ -14,7 +14,7 @@ struct BadgeViewNew: View {
         HStack(spacing: .margin2) {
             Text(text.uppercased())
                 .font(.themeMicroSB)
-                .foregroundColor(.themeBran)
+                .foregroundColor(.themeLeah)
 
             if let change, change != 0 {
                 if change > 0 {
@@ -30,7 +30,7 @@ struct BadgeViewNew: View {
         }
         .padding(.horizontal, .margin6)
         .padding(.vertical, .margin2)
-        .background(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).fill(Color.themeJeremy))
+        .background(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).fill(Color.themeBlade)) //TODO: CHANGE COLOR
         .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous))
     }
 }

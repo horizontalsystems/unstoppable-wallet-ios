@@ -55,7 +55,7 @@ class ICloudBackupNameViewController: KeyboardAwareViewController {
         bottomView.add(to: self)
         bottomView.addSubview(nextButton)
 
-        nextButton.set(style: .yellow)
+        nextButton.set(style: .active)
         nextButton.setTitle("button.next".localized, for: .normal)
         nextButton.addTarget(self, action: #selector(onTapNext), for: .touchUpInside)
 

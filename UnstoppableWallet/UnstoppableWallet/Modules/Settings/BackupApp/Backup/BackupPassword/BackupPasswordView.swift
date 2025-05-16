@@ -64,7 +64,7 @@ struct BackupPasswordView: View {
                         Text("button.save".localized)
                     }
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                .buttonStyle(PrimaryButtonStyle(style: .active))
                 .disabled(viewModel.passwordButtonProcessing)
                 .animation(.default, value: viewModel.passwordButtonProcessing)
             }

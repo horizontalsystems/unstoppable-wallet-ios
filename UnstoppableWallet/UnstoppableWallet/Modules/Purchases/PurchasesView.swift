@@ -93,7 +93,7 @@ struct PurchasesView: View {
                     .text(text: "purchases.\(viewItem.title).info".localized),
                 ],
                 buttons: [
-                    .init(style: .yellow, title: "button.close".localized) {
+                    .init(style: .active, title: "button.close".localized) {
                         presentedInfoViewItem = nil
                     },
                 ],

@@ -97,7 +97,7 @@ struct BottomSheetView: View {
         switch item {
         case let .text(text):
             Text(text)
-                .themeBody(color: .themeBran)
+                .themeBody(color: .themeLeah)
                 .padding(.horizontal, .margin32)
                 .padding(.bottom, .margin32)
         case let .highlightedDescription(text, style):

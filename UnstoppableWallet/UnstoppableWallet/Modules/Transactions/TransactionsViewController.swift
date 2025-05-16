@@ -22,7 +22,7 @@ class TransactionsViewController: ThemeViewController {
 
         super.init()
 
-        tabBarItem = UITabBarItem(title: "transactions.tab_bar_item".localized, image: UIImage(named: "filled_transaction_2n_24"), tag: 0)
+        tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "filled_transaction_2n_24"), tag: 0)
         navigationItem.largeTitleDisplayMode = .never
 
         dataSource.viewController = self
@@ -37,6 +37,7 @@ class TransactionsViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = "transactions.title".localized
+        tabBarItem.title = nil
 
         let spinnerBarView = UIView(frame: CGRect(x: 0, y: 0, width: 20, height: 20))
         spinnerBarView.addSubview(syncSpinner)
@@ -53,8 +54,8 @@ class TransactionsViewController: ThemeViewController {
             make.size.equalTo(CGFloat.iconSize24)
         }
 
-        filterButton.setImage(UIImage(named: "manage_2_24")?.withTintColor(.themeJacob), for: .normal)
-        filterButton.setImage(UIImage(named: "manage_2_24")?.withTintColor(.themeYellow50), for: .highlighted)
+        filterButton.setImage(UIImage(named: "manage_2_24")?.withTintColor(.themeOrange), for: .normal)
+        filterButton.setImage(UIImage(named: "manage_2_24")?.withTintColor(.themeOrange.pressed), for: .highlighted)
         filterButton.addTarget(self, action: #selector(onTapFilter), for: .touchUpInside)
 
         filterBarView.addSubview(filterBadge)

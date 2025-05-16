@@ -76,7 +76,7 @@ class UniswapDataSource {
     }
 
     func initCells() {
-        revokeButton.set(style: .yellow)
+        revokeButton.set(style: .active)
         revokeButton.addTarget(self, action: #selector(onTapRevokeButton), for: .touchUpInside)
         buttonStackCell.add(view: revokeButton)
 
@@ -85,11 +85,11 @@ class UniswapDataSource {
 
         errorCell.set(backgroundStyle: .transparent, isFirst: true)
 
-        proceedButton.set(style: .yellow)
+        proceedButton.set(style: .active)
         proceedButton.addTarget(self, action: #selector(onTapProceedButton), for: .touchUpInside)
         buttonStackCell.add(view: proceedButton)
 
-        proceed2Button.set(style: .yellow, accessoryType: .icon(image: UIImage(named: "numbers_2_24")))
+        proceed2Button.set(style: .active, accessoryType: .icon(image: UIImage(named: "numbers_2_24")))
         proceed2Button.addTarget(self, action: #selector(onTapProceedButton), for: .touchUpInside)
         buttonStackCell.add(view: proceed2Button)
 
@@ -240,7 +240,7 @@ class UniswapDataSource {
     private func handle(approveStepState: SwapModule.ApproveStepState) {
         let isApproving = approveStepState == .approving
 
-        approve1Button.set(style: .gray, accessoryType: isApproving ? .spinner : .icon(image: UIImage(named: "numbers_1_24")))
+        approve1Button.set(style: .default, accessoryType: isApproving ? .spinner : .icon(image: UIImage(named: "numbers_1_24")))
 
         switch approveStepState {
         case .notApproved, .revokeRequired, .revoking:

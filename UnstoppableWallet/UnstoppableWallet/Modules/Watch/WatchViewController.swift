@@ -58,7 +58,7 @@ class WatchViewController: KeyboardAwareViewController {
         gradientWrapperView.add(to: self)
         gradientWrapperView.addSubview(nextButton)
 
-        nextButton.set(style: .yellow)
+        nextButton.set(style: .active)
         nextButton.setTitle("watch_address.watch".localized, for: .normal)
         nextButton.addTarget(self, action: #selector(onTapNext), for: .touchUpInside)
 

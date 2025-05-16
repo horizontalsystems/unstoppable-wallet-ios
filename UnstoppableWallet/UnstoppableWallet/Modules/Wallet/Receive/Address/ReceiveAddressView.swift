@@ -147,14 +147,14 @@ struct ReceiveAddressView: View {
                 }
             }
         }
-        .accentColor(.themeJacob)
+        .accentColor(.themeOrange)
     }
 
     private func popupButtons(mode: ReceiveAddressModule.PopupWarningItem.Mode) -> [BottomSheetView.ButtonItem] {
         switch mode {
         case let .done(title):
             return [
-                .init(style: .yellow, title: title) { warningAlertPopup = nil },
+                .init(style: .active, title: title) { warningAlertPopup = nil },
             ]
         case .activateStellarAsset:
             return [
@@ -213,7 +213,7 @@ struct ReceiveAddressView: View {
             }) {
                 Image(type.icon).renderingMode(.template)
             }
-            .buttonStyle(PrimaryCircleButtonStyle(style: .gray))
+            .buttonStyle(PrimaryCircleButtonStyle(style: .default))
 
             Text(type.title).textSubhead1()
         }
@@ -260,7 +260,7 @@ struct ReceiveAddressView: View {
                         description: "deposit.not_active.tron_description".localized
                     )))
             Spacer()
-            Text("deposit.not_active".localized).textSubhead1(color: .themeYellow)
+            Text("deposit.not_active".localized).textSubhead1(color: .themeOrange)
         }
     }
 

@@ -23,7 +23,7 @@ struct HighlightedTitledTextView: View {
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: 0, trailing: .margin16))
 
             Text(text)
-                .textBody(color: .themeBran)
+                .textBody(color: .themeLeah)
                 .font(.themeSubhead2)
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
         }

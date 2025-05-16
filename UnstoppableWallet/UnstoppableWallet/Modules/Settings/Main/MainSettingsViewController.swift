@@ -42,7 +42,7 @@ class MainSettingsViewController: ThemeViewController {
 
         super.init()
 
-        tabBarItem = UITabBarItem(title: "settings.tab_bar_item".localized, image: UIImage(named: "filled_settings_2_24"), tag: 0)
+        tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "filled_settings_2_24"), tag: 0)
     }
 
     @available(*, unavailable)
@@ -54,6 +54,8 @@ class MainSettingsViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = "settings.title".localized
+        tabBarItem.title = nil
+
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.backBarButtonItem = UIBarButtonItem(title: title, style: .plain, target: nil, action: nil)
 

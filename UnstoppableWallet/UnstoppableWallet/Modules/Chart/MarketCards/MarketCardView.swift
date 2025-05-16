@@ -82,7 +82,7 @@ class MarketCardView: UIView {
         descriptionView.font = .subhead1
 
         titleView.textColor = .themeGray
-        valueView.textColor = .themeBran
+        valueView.textColor = .themeLeah
         descriptionView.textColor = .themeGray
 
         descriptionView.setContentCompressionResistancePriority(.defaultHigh, for: .horizontal)
@@ -97,7 +97,7 @@ class MarketCardView: UIView {
     }
 
     private func updateUI() {
-        button.setBackgroundColor(color: .themeLawrencePressed, forState: .highlighted)
+        button.setBackgroundColor(color: .themeLawrence.pressed, forState: .highlighted)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -119,7 +119,7 @@ class MarketCardView: UIView {
         get { valueView.text }
         set {
             valueView.text = newValue
-            valueView.textColor = newValue == nil ? .themeGray50 : .themeBran
+            valueView.textColor = newValue == nil ? .themeGray50 : .themeLeah
         }
     }
 

@@ -53,15 +53,15 @@ struct InfoView: View {
 
     @ViewBuilder static func textView(text: String) -> some View {
         Text(text)
-            .foregroundColor(.themeBran)
+            .foregroundColor(.themeLeah)
             .font(.themeBody)
             .padding(EdgeInsets(top: .margin12, leading: .margin32, bottom: .margin12, trailing: .margin32))
     }
 
     @ViewBuilder static func listItemView(text: String) -> some View {
         HStack(alignment: .top, spacing: .margin16) {
-            Text("•").textBody(color: .themeBran)
-            Text(text).themeBody(color: .themeBran)
+            Text("•").textBody(color: .themeLeah)
+            Text(text).themeBody(color: .themeLeah)
         }
         .padding(EdgeInsets(top: .margin12, leading: .margin24, bottom: .margin12, trailing: .margin24))
     }

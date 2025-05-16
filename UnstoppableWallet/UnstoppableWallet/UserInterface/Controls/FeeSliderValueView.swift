@@ -14,7 +14,7 @@ class FeeSliderValueView: UIView {
     public required init() {
         super.init(frame: CGRect.zero)
 
-        backgroundColor = .themeClaude
+        backgroundColor = .themeBlade
         addSubview(feeRateLabel)
         feeRateLabel.snp.makeConstraints { maker in
             maker.top.equalToSuperview().offset(CGFloat.margin2x)

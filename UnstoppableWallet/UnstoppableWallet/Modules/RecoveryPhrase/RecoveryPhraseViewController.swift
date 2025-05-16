@@ -50,7 +50,7 @@ class RecoveryPhraseViewController: ThemeViewController {
 
         buttonsHolder.addSubview(copyButton)
 
-        copyButton.set(style: .yellow)
+        copyButton.set(style: .active)
         copyButton.setTitle("button.copy".localized, for: .normal)
         copyButton.addTarget(self, action: #selector(onTapCopy), for: .touchUpInside)
 

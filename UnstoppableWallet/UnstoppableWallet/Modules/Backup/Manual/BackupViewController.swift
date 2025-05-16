@@ -52,7 +52,7 @@ class BackupViewController: ThemeViewController {
         let verifyButton = PrimaryButton()
         backupButtonHolder.addSubview(verifyButton)
 
-        verifyButton.set(style: .yellow)
+        verifyButton.set(style: .active)
         verifyButton.setTitle("backup.verify".localized, for: .normal)
         verifyButton.addTarget(self, action: #selector(onTapVerify), for: .touchUpInside)
 

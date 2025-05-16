@@ -162,10 +162,10 @@ class BackupCloudPassphraseViewController: KeyboardAwareViewController {
 
     private func show(processing: Bool) {
         if processing {
-            saveButton.set(style: .yellow, accessoryType: .spinner)
+            saveButton.set(style: .active, accessoryType: .spinner)
             saveButton.isEnabled = false
         } else {
-            saveButton.set(style: .yellow)
+            saveButton.set(style: .active)
             saveButton.isEnabled = true
         }
     }

@@ -122,7 +122,7 @@ extension ChartConfiguration {
 
         trendUpColor = UIColor.themeGreenD
         trendDownColor = UIColor.themeRedD
-        pressedColor = .themeNina
+        pressedColor = .themeLeah.pressed
         outdatedColor = .themeJacob
 
         trendUpGradient = [UIColor](repeatElement(UIColor(hex: 0x13D670), count: 3))
@@ -133,13 +133,13 @@ extension ChartConfiguration {
         gradientAlphas = [0, 0, 0.3]
 
         limitLinesColor = .themeSteel20
-        limitTextColor = .themeNina
+        limitTextColor = .themeLeah.pressed
         limitTextFont = .caption
         verticalLinesColor = .themeSteel10
         volumeBarsFillColor = .themeSteel20
         timelineTextColor = .themeGray
         timelineFont = .caption
-        touchLineColor = .themeNina
+        touchLineColor = .themeLeah.pressed
         touchCircleColor = .themeLeah
 
         return self
@@ -157,7 +157,7 @@ public extension ChartIndicator.LineConfiguration {
     }
 
     static var totalAssets: Self {
-        Self(color: ChartColor(.themeNina.withAlphaComponent(0.5)), width: 1)
+        Self(color: ChartColor(.themeLeah.pressed), width: 1)
     }
 
     static var totalAssetId: String {
@@ -166,7 +166,7 @@ public extension ChartIndicator.LineConfiguration {
     }
 
     static var totalInflow: Self {
-        Self(color: ChartColor(.themeNina.withAlphaComponent(0.5)), width: 1)
+        Self(color: ChartColor(.themeLeah.pressed), width: 1)
     }
 
     static var totalInflowId: String {

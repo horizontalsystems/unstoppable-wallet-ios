@@ -156,7 +156,7 @@ extension HudHelper {
 
         config.coverBlurEffectStyle = nil
         config.coverBlurEffectIntensity = nil
-        config.coverBackgroundColor = .themeBlackTenTwenty
+        config.coverBackgroundColor = .themeAndy
 
         config.blurEffectStyle = .themeHud
         config.backgroundColor = .themeSteel30

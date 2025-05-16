@@ -45,7 +45,7 @@ class ScanQrViewController: ThemeViewController {
             maker.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(CGFloat.margin24)
         }
 
-        cancelButton.set(style: .gray)
+        cancelButton.set(style: .default)
         cancelButton.setTitle("button.cancel".localized, for: .normal)
         cancelButton.addTarget(self, action: #selector(onCancel), for: .touchUpInside)
 
@@ -58,7 +58,7 @@ class ScanQrViewController: ThemeViewController {
                 maker.bottom.equalTo(cancelButton.snp.top).offset(-CGFloat.margin16)
             }
 
-            pasteButton.set(style: .yellow)
+            pasteButton.set(style: .active)
             pasteButton.setTitle("button.paste".localized, for: .normal)
             pasteButton.addTarget(self, action: #selector(onPaste), for: .touchUpInside)
         }

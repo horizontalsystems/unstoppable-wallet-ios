@@ -71,7 +71,7 @@ struct MarketAdvancedSearchView: View {
                     switch viewModel.state {
                     case .loading:
                         Button {} label: { ProgressView() }
-                            .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                            .buttonStyle(PrimaryButtonStyle(style: .active))
                             .disabled(true)
                     case let .loaded(marketInfos):
                         Button {
@@ -79,7 +79,7 @@ struct MarketAdvancedSearchView: View {
                         } label: {
                             Text(marketInfos.isEmpty ? "market.advanced_search.empty_results".localized : "\("market.advanced_search.show_results".localized): \(marketInfos.count)")
                         }
-                        .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                        .buttonStyle(PrimaryButtonStyle(style: .active))
                         .disabled(marketInfos.isEmpty)
                     case .failed:
                         Button {
@@ -87,7 +87,7 @@ struct MarketAdvancedSearchView: View {
                         } label: {
                             Text("market.advanced_search.retry".localized)
                         }
-                        .buttonStyle(PrimaryButtonStyle(style: .gray))
+                        .buttonStyle(PrimaryButtonStyle(style: .default))
                     }
                 }
 
@@ -242,7 +242,7 @@ struct MarketAdvancedSearchView: View {
             Text("market.advanced_search.listed_on_top_exchanges".localized).themeBody()
         }
         .disabled(!viewModel.advancedSearchEnabled)
-        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+        .toggleStyle(SwitchToggleStyle(tint: .themeOrange))
     }
 
     @ViewBuilder private func goodCexVolumeRow() -> some View {
@@ -253,7 +253,7 @@ struct MarketAdvancedSearchView: View {
             }
         }
         .disabled(!viewModel.advancedSearchEnabled)
-        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+        .toggleStyle(SwitchToggleStyle(tint: .themeOrange))
     }
 
     @ViewBuilder private func goodDexVolumeRow() -> some View {
@@ -264,7 +264,7 @@ struct MarketAdvancedSearchView: View {
             }
         }
         .disabled(!viewModel.advancedSearchEnabled)
-        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+        .toggleStyle(SwitchToggleStyle(tint: .themeOrange))
     }
 
     @ViewBuilder private func goodDistributionRow() -> some View {
@@ -275,7 +275,7 @@ struct MarketAdvancedSearchView: View {
             }
         }
         .disabled(!viewModel.advancedSearchEnabled)
-        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+        .toggleStyle(SwitchToggleStyle(tint: .themeOrange))
     }
 
     @ViewBuilder private func blockchainsRow() -> some View {
@@ -451,7 +451,7 @@ struct MarketAdvancedSearchView: View {
             Text("market.advanced_search.outperformed_btc".localized).themeBody()
         }
         .disabled(!viewModel.advancedSearchEnabled)
-        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+        .toggleStyle(SwitchToggleStyle(tint: .themeOrange))
     }
 
     @ViewBuilder private func outperformedEthRow() -> some View {
@@ -459,7 +459,7 @@ struct MarketAdvancedSearchView: View {
             Text("market.advanced_search.outperformed_eth".localized).themeBody()
         }
         .disabled(!viewModel.advancedSearchEnabled)
-        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+        .toggleStyle(SwitchToggleStyle(tint: .themeOrange))
     }
 
     @ViewBuilder private func outperformedBnbRow() -> some View {
@@ -467,7 +467,7 @@ struct MarketAdvancedSearchView: View {
             Text("market.advanced_search.outperformed_bnb".localized).themeBody()
         }
         .disabled(!viewModel.advancedSearchEnabled)
-        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+        .toggleStyle(SwitchToggleStyle(tint: .themeOrange))
     }
 
     @ViewBuilder private func priceCloseToRow() -> some View {

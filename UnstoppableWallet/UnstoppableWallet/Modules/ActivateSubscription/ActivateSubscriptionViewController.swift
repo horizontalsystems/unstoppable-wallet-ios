@@ -72,22 +72,22 @@ class ActivateSubscriptionViewController: ThemeViewController {
 
         noSubscriptionsView.image = UIImage(named: "sync_error_48")?.withTintColor(.themeGray)
         noSubscriptionsView.text = "activate_subscription.no_subscriptions".localized
-        noSubscriptionsView.addPrimaryButton(style: .yellow, title: "subscription_info.get_premium".localized, target: self, action: #selector(onTapGetPremium))
+        noSubscriptionsView.addPrimaryButton(style: .active, title: "subscription_info.get_premium".localized, target: self, action: #selector(onTapGetPremium))
 
         buttonsHolder.add(to: self, under: tableView)
         buttonsHolder.addSubview(signButton)
 
-        signButton.set(style: .yellow)
+        signButton.set(style: .active)
         signButton.setTitle("activate_subscription.sign".localized, for: .normal)
         signButton.addTarget(self, action: #selector(onTapSign), for: .touchUpInside)
 
         buttonsHolder.addSubview(activatingButton)
-        activatingButton.set(style: .yellow, accessoryType: .spinner)
+        activatingButton.set(style: .active, accessoryType: .spinner)
         activatingButton.isEnabled = false
         activatingButton.setTitle("activate_subscription.activating".localized, for: .normal)
 
         buttonsHolder.addSubview(rejectButton)
-        rejectButton.set(style: .gray)
+        rejectButton.set(style: .default)
         rejectButton.setTitle("button.reject".localized, for: .normal)
         rejectButton.addTarget(self, action: #selector(onTapReject), for: .touchUpInside)
 

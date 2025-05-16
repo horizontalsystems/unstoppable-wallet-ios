@@ -36,7 +36,7 @@ struct TonConnectSendView: View {
                                 }) {
                                     Text("wallet_connect.button.confirm".localized)
                                 }
-                                .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                                .buttonStyle(PrimaryButtonStyle(style: .active))
                                 .disabled(sendViewModel.sending)
                             } else {
                                 Button(action: {
@@ -44,7 +44,7 @@ struct TonConnectSendView: View {
                                 }) {
                                     Text("send.confirmation.refresh".localized)
                                 }
-                                .buttonStyle(PrimaryButtonStyle(style: .gray))
+                                .buttonStyle(PrimaryButtonStyle(style: .default))
                             }
                         case .failed:
                             Button(action: {
@@ -52,7 +52,7 @@ struct TonConnectSendView: View {
                             }) {
                                 Text("send.confirmation.refresh".localized)
                             }
-                            .buttonStyle(PrimaryButtonStyle(style: .gray))
+                            .buttonStyle(PrimaryButtonStyle(style: .default))
                         }
 
                         Button(action: {
@@ -61,7 +61,7 @@ struct TonConnectSendView: View {
                         }) {
                             Text("button.reject".localized)
                         }
-                        .buttonStyle(PrimaryButtonStyle(style: .gray))
+                        .buttonStyle(PrimaryButtonStyle(style: .default))
                         .disabled(sendViewModel.sending)
                     }
                 }

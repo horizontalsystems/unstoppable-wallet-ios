@@ -150,13 +150,13 @@ extension MarkdownViewController {
     }
 
     static func textRow(id: String, string: String) -> RowProtocol {
-        textRow(id: id, attributedString: NSAttributedString(string: string, attributes: [.font: UIFont.body, .foregroundColor: UIColor.themeBran]))
+        textRow(id: id, attributedString: NSAttributedString(string: string, attributes: [.font: UIFont.body, .foregroundColor: UIColor.themeLeah]))
     }
 
     static func listItemRow(id: String, string: String) -> RowProtocol {
         listItemRow(
             id: id,
-            attributedString: NSAttributedString(string: string, attributes: [.font: UIFont.body, .foregroundColor: UIColor.themeBran]),
+            attributedString: NSAttributedString(string: string, attributes: [.font: UIFont.body, .foregroundColor: UIColor.themeLeah]),
             prefix: "•",
             tightTop: false,
             tightBottom: false

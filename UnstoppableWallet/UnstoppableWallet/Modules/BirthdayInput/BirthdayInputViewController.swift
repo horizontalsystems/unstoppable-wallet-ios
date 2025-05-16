@@ -68,7 +68,7 @@ class BirthdayInputViewController: KeyboardAwareViewController {
         gradientWrapperView.add(to: self)
         gradientWrapperView.addSubview(doneButton)
 
-        doneButton.set(style: .yellow)
+        doneButton.set(style: .active)
         doneButton.setTitle("button.done".localized, for: .normal)
         doneButton.addTarget(self, action: #selector(onTapDoneButton), for: .touchUpInside)
 
@@ -107,7 +107,7 @@ class BirthdayInputViewController: KeyboardAwareViewController {
                 .highlightedDescription(text: "restore_setting.download.disclaimer".localized),
             ],
             buttons: [
-                .init(style: .yellow, title: "button.continue".localized, actionType: .afterClose) { [weak self] in self?.setOldTypeActive(showKeyboard: showKeyboard) },
+                .init(style: .active, title: "button.continue".localized, actionType: .afterClose) { [weak self] in self?.setOldTypeActive(showKeyboard: showKeyboard) },
                 .init(style: .transparent, title: "button.cancel".localized),
             ]
         )
@@ -167,7 +167,7 @@ class BirthdayInputViewController: KeyboardAwareViewController {
             view.endEditing(true)
         case .old:
             walletType = .old
-            heightInputCell.textColor = .themeBran
+            heightInputCell.textColor = .themeLeah
             heightInputCell.accessoryEnabled = true
         }
     }

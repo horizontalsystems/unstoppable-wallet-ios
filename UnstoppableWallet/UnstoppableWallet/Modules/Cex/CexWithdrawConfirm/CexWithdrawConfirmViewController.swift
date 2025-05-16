@@ -50,13 +50,13 @@ class CexWithdrawConfirmViewController: ThemeViewController {
 
         buttonsHolder.addSubview(withdrawButton)
 
-        withdrawButton.set(style: .yellow)
+        withdrawButton.set(style: .active)
         withdrawButton.setTitle("cex_withdraw_confirm.withdraw".localized, for: .normal)
         withdrawButton.addTarget(self, action: #selector(onTapWithdraw), for: .touchUpInside)
 
         buttonsHolder.addSubview(withdrawingButton)
 
-        withdrawingButton.set(style: .yellow, accessoryType: .spinner)
+        withdrawingButton.set(style: .active, accessoryType: .spinner)
         withdrawingButton.isEnabled = false
         withdrawingButton.setTitle("cex_withdraw_confirm.withdraw".localized, for: .normal)
 
@@ -103,7 +103,7 @@ class CexWithdrawConfirmViewController: ThemeViewController {
                 .highlightedDescription(text: error, style: .red),
             ],
             buttons: [
-                .init(style: .yellow, title: "button.ok".localized),
+                .init(style: .active, title: "button.ok".localized),
             ]
         )
 

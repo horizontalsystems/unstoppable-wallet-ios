@@ -36,7 +36,7 @@ struct RegularSendView: View {
                         }) {
                             Text("send.confirmation.refresh".localized)
                         }
-                        .buttonStyle(PrimaryButtonStyle(style: .gray))
+                        .buttonStyle(PrimaryButtonStyle(style: .default))
                     }
                 case .failed:
                     Button(action: {
@@ -44,7 +44,7 @@ struct RegularSendView: View {
                     }) {
                         Text("send.confirmation.refresh".localized)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .gray))
+                    .buttonStyle(PrimaryButtonStyle(style: .default))
                 }
             }
         }

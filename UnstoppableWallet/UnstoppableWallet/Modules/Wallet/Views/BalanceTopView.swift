@@ -33,7 +33,7 @@ class BalanceTopView: UIView {
         }
 
         testnetImageView.image = UIImage(named: "testnet_16")?.withRenderingMode(.alwaysTemplate)
-        testnetImageView.tintColor = .themeRed50
+        testnetImageView.tintColor = .themeRedD.withAlphaComponent(0.5)
 
         let topStackView = UIStackView()
 

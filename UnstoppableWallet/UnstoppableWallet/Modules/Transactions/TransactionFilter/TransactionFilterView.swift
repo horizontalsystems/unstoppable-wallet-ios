@@ -80,7 +80,7 @@ struct TransactionFilterView: View {
                             Toggle(isOn: Binding(get: { viewModel.scamFilterEnabled }, set: { viewModel.set(scamFilterEnabled: $0) })) {
                                 Text("transaction_filter.hide_suspicious_txs".localized).textBody()
                             }
-                            .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+                            .toggleStyle(SwitchToggleStyle(tint: .themeOrange))
                         }
                     }
                     ListSectionFooter(text: "transaction_filter.hide_suspicious_txs.description".localized)

@@ -65,7 +65,7 @@ class CreateAccountAdvancedViewController: KeyboardAwareViewController {
         gradientWrapperView.add(to: self)
         gradientWrapperView.addSubview(createButton)
 
-        createButton.set(style: .yellow)
+        createButton.set(style: .active)
         createButton.setTitle("create_wallet.create".localized, for: .normal)
         createButton.addTarget(self, action: #selector(onTapCreate), for: .touchUpInside)
 

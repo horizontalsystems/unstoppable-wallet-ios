@@ -128,7 +128,7 @@ extension MultiTextMetricsView {
 
             valueLabel.setContentHuggingPriority(.required, for: .horizontal)
             valueLabel.font = MetricsView.valueFont
-            valueLabel.textColor = .themeBran
+            valueLabel.textColor = .themeLeah
 
             addSubview(valueChangeLabel)
             valueChangeLabel.snp.makeConstraints { maker in

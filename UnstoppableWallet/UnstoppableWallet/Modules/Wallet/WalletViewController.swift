@@ -43,7 +43,7 @@ class WalletViewController: ThemeViewController {
 
         super.init()
 
-        tabBarItem = UITabBarItem(title: "balance.tab_bar_item".localized, image: UIImage(named: "filled_wallet_24"), tag: 0)
+        tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "filled_wallet_24"), tag: 0)
     }
 
     @available(*, unavailable)
@@ -89,14 +89,14 @@ class WalletViewController: ThemeViewController {
         placeholderView.image = UIImage(named: "add_to_wallet_48")
 
         placeholderView.addPrimaryButton(
-            style: .yellow,
+            style: .active,
             title: "onboarding.balance.create".localized,
             target: self,
             action: #selector(onTapCreate)
         )
 
         placeholderView.addPrimaryButton(
-            style: .gray,
+            style: .default,
             title: "onboarding.balance.import".localized,
             target: self,
             action: #selector(onTapRestore)
@@ -123,7 +123,7 @@ class WalletViewController: ThemeViewController {
         failedView.image = UIImage(named: "sync_error_48")
         failedView.text = "sync_error".localized
         failedView.addPrimaryButton(
-            style: .yellow,
+            style: .active,
             title: "button.retry".localized,
             target: self,
             action: #selector(onTapRetry)

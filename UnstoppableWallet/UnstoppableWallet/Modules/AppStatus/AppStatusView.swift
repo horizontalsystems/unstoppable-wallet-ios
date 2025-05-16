@@ -15,7 +15,7 @@ struct AppStatusView: View {
                     }) {
                         Text("button.copy".localized)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                    .buttonStyle(PrimaryButtonStyle(style: .active))
 
                     Button(action: {
                         stat(page: .appStatus, event: .share(entity: .status))
@@ -23,7 +23,7 @@ struct AppStatusView: View {
                     }) {
                         Text("button.share".localized)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .gray))
+                    .buttonStyle(PrimaryButtonStyle(style: .default))
                 }
                 .sheet(item: $shareText) { shareText in
                     ActivityView(activityItems: [shareText]).ignoresSafeArea()

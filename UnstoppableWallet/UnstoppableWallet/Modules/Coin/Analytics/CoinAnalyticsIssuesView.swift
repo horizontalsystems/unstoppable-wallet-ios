@@ -97,7 +97,7 @@ extension CoinAnalyticsIssuesView {
                     case .highRisk: Image("circle_warning_24").themeIcon(color: .themeLucian)
                     case .mediumRisk: Image("circle_warning_24").themeIcon(color: .themeJacob)
                     case .attentionRequired: Image("circle_warning_24").themeIcon(color: .themeRemus)
-                    case .informational: Image("circle_warning_24").themeIcon(color: .themeLaguna)
+                    case .informational: Image("circle_warning_24").themeIcon(color: .blue) //TODO Color
                     case .regular: Image("circle_check_24").themeIcon(color: .themeLeah)
                     }
 

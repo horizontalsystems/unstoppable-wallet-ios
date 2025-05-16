@@ -57,7 +57,7 @@ struct MultiSwapApproveView: View {
                     }) {
                         Text("button.unlock".localized)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                    .buttonStyle(PrimaryButtonStyle(style: .active))
                 }
 
                 NavigationLink(

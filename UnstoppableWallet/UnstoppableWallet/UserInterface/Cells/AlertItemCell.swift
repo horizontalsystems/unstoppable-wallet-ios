@@ -22,8 +22,8 @@ class AlertItemCell: BaseThemeCell {
         button.setTitleColor(.themeJacob, for: [.highlighted, .selected])
         button.setTitleColor(.themeLeah, for: .normal)
         button.setTitleColor(.themeGray50, for: .disabled)
-        button.setBackgroundColor(color: .themeLawrencePressed, forState: .highlighted)
-        button.setBackgroundColor(color: .themeLawrencePressed, forState: [.highlighted, .selected])
+        button.setBackgroundColor(color: .themeLawrence.pressed, forState: .highlighted)
+        button.setBackgroundColor(color: .themeLawrence.pressed, forState: [.highlighted, .selected])
         button.addTarget(self, action: #selector(onTapButton), for: .touchUpInside)
     }
 

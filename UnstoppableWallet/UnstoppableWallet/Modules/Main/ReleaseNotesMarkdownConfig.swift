@@ -7,7 +7,7 @@ enum ReleaseNotesMarkdownConfig {
     private static let colors = StaticColorCollection(
         heading1: .themeJacob,
         heading2: .themeJacob,
-        body: .themeBran
+        body: .themeLeah
     )
 
     private static let paragraphStyles: StaticParagraphStyleCollection = {

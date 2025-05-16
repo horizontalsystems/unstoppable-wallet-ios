@@ -13453,7 +13453,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/ThemeKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.0.2;
+				version = 3.0.0;
 			};
 		};
 		D3C187D0290FCF3D00FE1900 /* XCRemoteSwiftPackageReference "ComponentKit" */ = {
@@ -13461,7 +13461,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/ComponentKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.0.16;
+				version = 3.0.0;
 			};
 		};
 		D3C187D3290FCF7D00FE1900 /* XCRemoteSwiftPackageReference "HUD" */ = {
@@ -13469,7 +13469,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/HUD.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.0.0;
+				version = 2.0.1;
 			};
 		};
 		D3C187D9290FCFBC00FE1900 /* XCRemoteSwiftPackageReference "SectionsTableView" */ = {

@@ -33,7 +33,7 @@ class NftAssetView: UIView {
         button.cornerRadius = .cornerRadius12
         button.layer.cornerCurve = .continuous
         button.setBackgroundColor(.themeLawrence, for: .normal)
-        button.setBackgroundColor(.themeLawrencePressed, for: .highlighted)
+        button.setBackgroundColor(.themeLawrence.pressed, for: .highlighted)
         button.addTarget(self, action: #selector(onTapButton), for: .touchUpInside)
 
         addSubview(imagePlaceholderLabel)
@@ -66,7 +66,7 @@ class NftAssetView: UIView {
             maker.height.equalTo(15)
         }
 
-        onSaleWrapper.backgroundColor = .themeLightGray
+        onSaleWrapper.backgroundColor = .themeLight
         onSaleWrapper.cornerRadius = .cornerRadius4
         onSaleWrapper.layer.cornerCurve = .continuous
 
@@ -77,7 +77,7 @@ class NftAssetView: UIView {
         }
 
         onSaleLabel.font = .microSB
-        onSaleLabel.textColor = .themeDarker
+        onSaleLabel.textColor = .themeDark
         onSaleLabel.text = "nft_collections.on_sale".localized
 
         addSubview(countWrapper)
@@ -99,7 +99,7 @@ class NftAssetView: UIView {
             maker.size.equalTo(12)
         }
 
-        countImageView.image = UIImage(named: "nft_amount_12")?.withTintColor(.themeSteelLight)
+        countImageView.image = UIImage(named: "nft_amount_12")?.withTintColor(.themeLight)
 
         countWrapper.addSubview(countLabel)
         countLabel.snp.makeConstraints { maker in
@@ -109,7 +109,7 @@ class NftAssetView: UIView {
         }
 
         countLabel.font = .microSB
-        countLabel.textColor = .themeSteelLight
+        countLabel.textColor = .themeLight
 
         addSubview(nameLabel)
         nameLabel.snp.makeConstraints { maker in

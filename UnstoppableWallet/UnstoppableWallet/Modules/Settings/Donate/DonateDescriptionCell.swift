@@ -45,7 +45,7 @@ class DonateDescriptionCell: UITableViewCell {
             maker.top.equalTo(emoji.snp.bottom).offset(DonateDescriptionCell.verticalPadding)
         }
 
-        getAddressButton.set(style: .gray)
+        getAddressButton.set(style: .default)
         getAddressButton.setTitle("donate.list.get_address".localized, for: .normal)
         getAddressButton.addTarget(self, action: #selector(onGetAddress), for: .touchUpInside)
 

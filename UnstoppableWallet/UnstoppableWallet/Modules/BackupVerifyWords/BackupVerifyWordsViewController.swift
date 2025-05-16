@@ -116,7 +116,7 @@ extension BackupVerifyWordsViewController: SectionsDataSource {
                 height: .heightCell48,
                 bind: { cell in
                     cell.set(backgroundStyle: .bordered, isFirst: true, isLast: true)
-                    cell.wrapperView.borderColor = viewItem.selected ? .themeYellow50 : .themeSteel20
+                    cell.wrapperView.borderColor = viewItem.selected ? .themeOrange.pressed : .themeSteel20
                 }
             )
 

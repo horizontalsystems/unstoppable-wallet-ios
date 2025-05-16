@@ -37,7 +37,7 @@ struct MultiSwapSendView: View {
                             }) {
                                 Text("send.confirmation.refresh".localized)
                             }
-                            .buttonStyle(PrimaryButtonStyle(style: .gray))
+                            .buttonStyle(PrimaryButtonStyle(style: .default))
                         }
 
                         let (bottomText, bottomTextColor) = bottomText()
@@ -50,7 +50,7 @@ struct MultiSwapSendView: View {
                     }) {
                         Text("send.confirmation.refresh".localized)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .gray))
+                    .buttonStyle(PrimaryButtonStyle(style: .default))
 
                     Text("swap.confirmation.quote_failed".localized).textSubhead1()
                 }

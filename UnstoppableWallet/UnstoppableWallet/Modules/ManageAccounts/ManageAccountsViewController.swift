@@ -195,7 +195,7 @@ extension ManageAccountsViewController: SectionsDataSource {
                 .secondaryCircleButton { [weak self] component in
                     component.button.set(
                         image: viewItem.alert ? UIImage(named: "warning_2_20") : UIImage(named: "more_2_20"),
-                        style: viewItem.alert ? .red : .default
+                        style: viewItem.alert ? .active : .default
                     )
                     component.onTap = {
                         self?.onTapEdit(accountId: viewItem.accountId)

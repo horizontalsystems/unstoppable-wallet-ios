@@ -39,7 +39,7 @@ struct BackupNameView: View {
                         Text("button.next".localized)
                     }
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                .buttonStyle(PrimaryButtonStyle(style: .active))
                 .disabled(viewModel.nameCautionState != .none)
             }
             .navigationTitle("backup_app.backup.name.title".localized)

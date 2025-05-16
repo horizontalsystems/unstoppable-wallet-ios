@@ -8,7 +8,7 @@ enum AcademyMarkdownConfig {
         heading1: .themeLeah,
         heading2: .themeJacob,
         heading3: .themeJacob,
-        body: .themeBran
+        body: .themeLeah
     )
 
     private static let paragraphStyles: StaticParagraphStyleCollection = {

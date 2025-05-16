@@ -54,7 +54,7 @@ struct BtcBlockchainSettingsView: View {
                 }) {
                     Text("button.save".localized)
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                .buttonStyle(PrimaryButtonStyle(style: .active))
                 .disabled(!viewModel.saveEnabled)
             }
         }

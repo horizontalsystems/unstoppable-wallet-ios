@@ -59,7 +59,7 @@ class LaunchErrorViewController: ThemeViewController {
             make.bottom.equalToSuperview()
         }
 
-        reportButton.set(style: .gray)
+        reportButton.set(style: .default)
         reportButton.setTitle("launch.failed_to_launch.report".localized, for: .normal)
         reportButton.addTarget(self, action: #selector(onTapReport), for: .touchUpInside)
     }

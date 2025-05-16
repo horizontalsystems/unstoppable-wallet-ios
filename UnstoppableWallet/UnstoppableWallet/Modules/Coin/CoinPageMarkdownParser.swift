@@ -12,7 +12,7 @@ class CoinPageMarkdownParser {
     let colors = StaticColorCollection(
         heading1: .themeLeah,
         heading2: .themeLeah,
-        heading3: .themeBran,
+        heading3: .themeLeah,   // TODO: MARKDOWN COLOR?
         body: .themeGray
     )
 

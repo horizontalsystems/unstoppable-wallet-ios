@@ -30,13 +30,13 @@ class WCSendEthereumTransactionRequestViewController: SendEvmTransactionViewCont
 
         bottomWrapper.addSubview(approveButton)
 
-        approveButton.set(style: .yellow)
+        approveButton.set(style: .active)
         approveButton.setTitle("wallet_connect.button.confirm".localized, for: .normal)
         approveButton.addTarget(self, action: #selector(onTapApprove), for: .touchUpInside)
 
         bottomWrapper.addSubview(rejectButton)
 
-        rejectButton.set(style: .gray)
+        rejectButton.set(style: .default)
         rejectButton.setTitle("button.reject".localized, for: .normal)
         rejectButton.addTarget(self, action: #selector(onTapReject), for: .touchUpInside)
 

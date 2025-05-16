@@ -23,7 +23,7 @@ struct TonConnectErrorView: View {
                     }) {
                         Text("button.close".localized)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .gray))
+                    .buttonStyle(PrimaryButtonStyle(style: .default))
                 }
             }
             .navigationTitle(requestError.app.manifest.name)

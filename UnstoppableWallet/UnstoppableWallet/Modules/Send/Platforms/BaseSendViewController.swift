@@ -119,7 +119,7 @@ class BaseSendViewController: ThemeViewController, SectionsDataSource {
             self?.reloadTable()
         }
 
-        buttonCell.set(style: .yellow)
+        buttonCell.set(style: .active)
         buttonCell.title = "send.next_button".localized
         buttonCell.onTap = { [weak self] in
             self?.didTapProceed()

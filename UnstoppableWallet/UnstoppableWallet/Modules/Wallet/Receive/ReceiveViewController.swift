@@ -85,10 +85,10 @@ class ReceiveViewController: ThemeNavigationController {
                 .description(text: "deposit.zcash.restore.description".localized),
             ],
             buttons: [
-                .init(style: .yellow, title: "deposit.zcash.restore.already_own".localized, actionType: .afterClose, action: { [weak self] in
+                .init(style: .active, title: "deposit.zcash.restore.already_own".localized, actionType: .afterClose, action: { [weak self] in
                     self?.showRestoreZcash(token: token)
                 }),
-                .init(style: .gray, title: "deposit.zcash.restore.dont_have".localized, actionType: .afterClose, action: { [weak self] in
+                .init(style: .default, title: "deposit.zcash.restore.dont_have".localized, actionType: .afterClose, action: { [weak self] in
                     self?.viewModel.onRestoreZcash(token: token, height: nil)
                 }),
             ]

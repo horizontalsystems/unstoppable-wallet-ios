@@ -167,7 +167,7 @@ struct CoinAnalyticsView: View {
             }
 
             if let details, indicatorDetailsShown {
-                Text(details).themeSubhead2(color: .themeBran)
+                Text(details).themeSubhead2(color: .themeLeah)
             }
 
             Text("coin_analytics.indicators.disclaimer").themeCaption()
@@ -771,7 +771,7 @@ struct CoinAnalyticsView: View {
 
             if !viewModel.analyticsEnabled, premium {
                 Text("Premium")
-                    .textMicroSB(color: .themeClaude)
+                    .textMicroSB(color: .themeLawrence)
                     .padding(.horizontal, .margin6)
                     .padding(.vertical, .margin2)
                     .background(

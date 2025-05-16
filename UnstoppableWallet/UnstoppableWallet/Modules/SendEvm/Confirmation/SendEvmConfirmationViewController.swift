@@ -43,7 +43,7 @@ class SendEvmConfirmationViewController: SendEvmTransactionViewController {
 
             bottomWrapper.addSubview(sendButton)
 
-            sendButton.set(style: .yellow)
+            sendButton.set(style: .active)
             sendButton.setTitle("send.confirmation.resend".localized, for: .normal)
             sendButton.addTarget(self, action: #selector(onTapSend), for: .touchUpInside)
         case .cancel:
@@ -51,7 +51,7 @@ class SendEvmConfirmationViewController: SendEvmTransactionViewController {
 
             bottomWrapper.addSubview(sendButton)
 
-            sendButton.set(style: .yellow)
+            sendButton.set(style: .active)
             sendButton.setTitle("send.confirmation.cancel".localized, for: .normal)
             sendButton.addTarget(self, action: #selector(onTapSend), for: .touchUpInside)
         }

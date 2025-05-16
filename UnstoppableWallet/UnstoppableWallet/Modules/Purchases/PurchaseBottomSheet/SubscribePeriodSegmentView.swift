@@ -27,7 +27,7 @@ struct SubscribePeriodSegmentView: View {
                 Text(title).textHeadline1()
                 if let badge {
                     Text(badge)
-                        .textMicroSB(color: .themeClaude)
+                        .textMicroSB(color: .themeLawrence)
                         .padding(.horizontal, .margin6)
                         .padding(.vertical, .margin2)
                         .background(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).fill(Color.themeRemus))

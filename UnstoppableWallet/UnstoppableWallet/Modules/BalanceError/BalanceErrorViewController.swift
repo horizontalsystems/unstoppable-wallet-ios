@@ -49,7 +49,7 @@ class BalanceErrorViewController: ThemeActionSheetController {
         }
 
         retryButton.addTarget(self, action: #selector(onTapRetry), for: .touchUpInside)
-        retryButton.set(style: .yellow)
+        retryButton.set(style: .active)
         retryButton.setTitle("button.retry".localized, for: .normal)
 
         var lastView: UIView = retryButton
@@ -64,7 +64,7 @@ class BalanceErrorViewController: ThemeActionSheetController {
             }
 
             changeSourceButton.addTarget(self, action: #selector(onTapChangeSource), for: .touchUpInside)
-            changeSourceButton.set(style: .gray)
+            changeSourceButton.set(style: .default)
             changeSourceButton.setTitle("balance_error.change_source".localized, for: .normal)
 
             lastView = changeSourceButton

@@ -41,7 +41,7 @@ class ChooseWatchViewController: CoinToggleViewController {
         gradientWrapperView.add(to: self, under: tableView)
         gradientWrapperView.addSubview(watchButton)
 
-        watchButton.set(style: .yellow)
+        watchButton.set(style: .active)
         watchButton.setTitle("watch_address.watch".localized, for: .normal)
         watchButton.addTarget(self, action: #selector(onTapWatch), for: .touchUpInside)
 

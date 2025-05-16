@@ -74,7 +74,7 @@ struct MarketSectorView: View {
                         .text(text: viewModel.sectorDesctiprion),
                     ],
                     buttons: [
-                        .init(style: .yellow, title: "button.close".localized) {
+                        .init(style: .active, title: "button.close".localized) {
                             infoPresented = false
                         },
                     ],

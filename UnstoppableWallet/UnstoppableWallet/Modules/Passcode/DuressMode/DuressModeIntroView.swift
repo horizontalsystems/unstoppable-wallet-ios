@@ -50,7 +50,7 @@ struct DuressModeIntroView: View {
                 }) {
                     Text("button.continue".localized)
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                .buttonStyle(PrimaryButtonStyle(style: .active))
             }
         }
         .navigationTitle("enable_duress_mode.intro.title".localized)

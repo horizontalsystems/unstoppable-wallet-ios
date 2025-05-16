@@ -11,7 +11,7 @@ class HighlightedDescriptionBaseView: UIView {
     public init() {
         super.init(frame: .zero)
 
-        backgroundColor = .themeYellow20
+        backgroundColor = .themeYellowD.withAlphaComponent(0.2)
         borderColor = .themeYellowD
         borderWidth = 1
         cornerRadius = .cornerRadius12
@@ -29,7 +29,7 @@ class HighlightedDescriptionBaseView: UIView {
     func set(style: Style) {
         switch style {
         case .yellow:
-            backgroundColor = .themeYellow20
+            backgroundColor = .themeYellowD.withAlphaComponent(0.2)
             borderColor = .themeYellowD
         case .red:
             backgroundColor = UIColor(hex: 0xFF4820, alpha: 0.2)
@@ -51,7 +51,7 @@ extension HighlightedDescriptionBaseView {
         var accentColor: Color {
             switch self {
             case .yellow: return .themeJacob
-            case .red: return .themeLucian
+            case .red: return .themeOrange
             }
         }
     }

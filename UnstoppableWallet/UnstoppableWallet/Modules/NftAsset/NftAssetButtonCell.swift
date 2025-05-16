@@ -30,11 +30,11 @@ class NftAssetButtonCell: UITableViewCell {
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
 
-        shareButton.set(style: .yellow)
+        shareButton.set(style: .active)
         shareButton.addTarget(self, action: #selector(onTapShareButton), for: .touchUpInside)
         shareButton.setTitle("button.share".localized, for: .normal)
 
-        saveButton.set(style: .gray)
+        saveButton.set(style: .default)
         saveButton.addTarget(self, action: #selector(onTapSaveButton), for: .touchUpInside)
         saveButton.setTitle("button.save".localized, for: .normal)
     }

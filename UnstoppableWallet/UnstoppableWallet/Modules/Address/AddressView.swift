@@ -108,7 +108,7 @@ struct AddressView: View {
                 }
             }
             .disabled(disabled)
-            .buttonStyle(PrimaryButtonStyle(style: .yellow))
+            .buttonStyle(PrimaryButtonStyle(style: .active))
         }
         .sheet(isPresented: $subscriptionPresented) {
             PurchasesView()
@@ -121,7 +121,7 @@ struct AddressView: View {
                     .text(text: info.description),
                 ],
                 buttons: [
-                    .init(style: .yellow, title: "button.close".localized) {
+                    .init(style: .active, title: "button.close".localized) {
                         checkDescription = nil
                     },
                 ],

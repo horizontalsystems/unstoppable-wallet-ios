@@ -28,13 +28,13 @@ class SwapRevokeConfirmationViewController: SendEvmTransactionViewController {
 
         bottomWrapper.addSubview(approveButton)
 
-        approveButton.set(style: .yellow)
+        approveButton.set(style: .active)
         approveButton.setTitle("button.revoke".localized, for: .normal)
         approveButton.addTarget(self, action: #selector(onTapApprove), for: .touchUpInside)
 
         bottomWrapper.addSubview(cancelButton)
 
-        cancelButton.set(style: .gray)
+        cancelButton.set(style: .default)
         cancelButton.setTitle("button.cancel".localized, for: .normal)
         cancelButton.addTarget(self, action: #selector(onTapCancel), for: .touchUpInside)
 

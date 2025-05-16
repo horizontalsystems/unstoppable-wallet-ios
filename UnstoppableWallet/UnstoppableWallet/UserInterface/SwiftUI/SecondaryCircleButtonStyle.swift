@@ -35,7 +35,7 @@ struct SecondaryCircleButtonStyle: ButtonStyle {
 
         func backgroundColor(isEnabled _: Bool, isActive: Bool, isPressed: Bool) -> Color {
             switch self {
-            case .default: return isActive ? (isPressed ? .themeYellow50 : .themeYellow) : (isPressed ? .themeSteel10 : .themeSteel20)
+            case .default: return isActive ? (isPressed ? .themeOrange.pressed : .themeYellow) : (isPressed ? .themeSteel10 : .themeSteel20)
             case .red: return isPressed ? .themeSteel10 : .themeSteel20
             case .transparent: return .clear
             }

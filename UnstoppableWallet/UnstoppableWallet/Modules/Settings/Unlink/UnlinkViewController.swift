@@ -57,7 +57,7 @@ class UnlinkViewController: ThemeActionSheetController {
             maker.bottom.equalTo(view.safeAreaLayoutGuide).inset(CGFloat.margin24)
         }
 
-        deleteButton.set(style: .red)
+        deleteButton.set(style: .active)
         deleteButton.setTitle("security_settings.delete_alert_button".localized, for: .normal)
         deleteButton.addTarget(self, action: #selector(onTapDeleteButton), for: .touchUpInside)
 

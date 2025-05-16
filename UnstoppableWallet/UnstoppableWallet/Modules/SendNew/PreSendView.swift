@@ -98,7 +98,7 @@ struct PreSendView: View {
                     .highlightedDescription(text: "send.address.risky.description".localized, style: .alert),
                 ],
                 buttons: [
-                    .init(style: .red, title: "send.continue_anyway".localized) {
+                    .init(style: .active, title: "send.continue_anyway".localized) {
                         addressAlertPresented = false
                         confirmPresented = true
                     },
@@ -107,7 +107,7 @@ struct PreSendView: View {
                 onDismiss: { addressAlertPresented = false }
             )
         }
-        .accentColor(.themeJacob)
+        .accentColor(.themeOrange)
     }
 
     @ViewBuilder private func availableBalanceView(value: String?) -> some View {
@@ -259,7 +259,7 @@ struct PreSendView: View {
             }
         }
         .disabled(disabled)
-        .buttonStyle(PrimaryButtonStyle(style: .yellow))
+        .buttonStyle(PrimaryButtonStyle(style: .active))
     }
 
     @ViewBuilder private func cautionsView() -> some View {

@@ -50,7 +50,7 @@ class ICloudBackupTermsViewController: ThemeViewController {
         gradientWrapperView.addSubview(continueButton)
 
         continueButton.isEnabled = false
-        continueButton.set(style: .yellow)
+        continueButton.set(style: .active)
         continueButton.setTitle("button.continue".localized, for: .normal)
         continueButton.addTarget(self, action: #selector(onTapContinue), for: .touchUpInside)
 

@@ -84,7 +84,7 @@ class SendEvmViewController: ThemeViewController {
 
         recipientCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
-        buttonCell.set(style: .yellow)
+        buttonCell.set(style: .active)
         buttonCell.title = "send.next_button".localized
         buttonCell.onTap = { [weak self] in
             self?.didTapProceed()

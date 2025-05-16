@@ -111,7 +111,7 @@ class ContactBookContactViewController: KeyboardAwareViewController {
                     .highlightedDescription(text: "contacts.contact.dismiss_changes.description".localized),
                 ],
                 buttons: [
-                    .init(style: .red, title: "contacts.contact.dismiss_changes.discard_changes".localized, actionType: .afterClose) { [weak self] in
+                    .init(style: .active, title: "contacts.contact.dismiss_changes.discard_changes".localized, actionType: .afterClose) { [weak self] in
                         self?.onClose()
                     },
                     .init(style: .transparent, title: "contacts.contact.dismiss_changes.keep_editing".localized),
@@ -148,7 +148,7 @@ class ContactBookContactViewController: KeyboardAwareViewController {
                 .highlightedDescription(text: "contacts.contact.delete_alert.description".localized),
             ],
             buttons: [
-                .init(style: .red, title: "contacts.contact.delete_alert.delete".localized, actionType: .afterClose) { [weak self] in
+                .init(style: .active, title: "contacts.contact.delete_alert.delete".localized, actionType: .afterClose) { [weak self] in
                     self?.acceptDeleteContact()
                 },
                 .init(style: .transparent, title: "button.cancel".localized),

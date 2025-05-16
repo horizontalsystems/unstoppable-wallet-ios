@@ -80,7 +80,7 @@ class CexWithdrawViewController: ThemeViewController, ICexWithdrawNetworkSelectD
 
         warningCell.descriptionText = "cex_withdraw.network_warning".localized
 
-        buttonCell.set(style: .yellow)
+        buttonCell.set(style: .active)
         buttonCell.title = "send.next_button".localized
         buttonCell.onTap = { [weak self] in
             self?.didTapProceed()

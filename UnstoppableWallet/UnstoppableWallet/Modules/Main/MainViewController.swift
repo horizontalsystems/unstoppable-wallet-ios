@@ -85,7 +85,7 @@ class MainViewController: ThemeTabBarController {
         var viewControllers = [UIViewController]()
         if viewModel.showMarket {
             let marketModule = marketModule ?? MarketView().toNavigationViewController()
-            marketModule.tabBarItem = UITabBarItem(title: "market.tab_bar_item".localized, image: UIImage(named: "market_2_24"), tag: 0)
+            marketModule.tabBarItem = UITabBarItem(title: nil, image: UIImage(named: "market_2_24"), tag: 0)
             self.marketModule = marketModule
 
             viewControllers.append(marketModule)

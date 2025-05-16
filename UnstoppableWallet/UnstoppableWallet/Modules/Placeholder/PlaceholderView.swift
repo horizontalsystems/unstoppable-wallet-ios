@@ -114,7 +114,7 @@ class PlaceholderView: UIView {
         text = title
 
         addPrimaryButton(
-            style: .yellow,
+            style: .active,
             title: "button.retry".localized,
             target: self,
             action: #selector(retry)

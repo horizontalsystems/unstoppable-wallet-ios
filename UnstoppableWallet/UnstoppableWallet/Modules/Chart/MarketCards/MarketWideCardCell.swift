@@ -43,7 +43,7 @@ class MarketWideCardCell: BaseSelectableThemeCell {
 
         valueLabel.setContentHuggingPriority(.required, for: .horizontal)
         valueLabel.font = .headline1
-        valueLabel.textColor = .themeBran
+        valueLabel.textColor = .themeLeah
 
         wrapperView.addSubview(valueInfoLabel)
         valueInfoLabel.snp.makeConstraints { make in

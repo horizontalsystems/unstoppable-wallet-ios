@@ -115,7 +115,7 @@ extension WalletConnectAppShowView {
                     .highlightedDescription(text: "wallet_connect.no_account.description".localized),
                 ],
                 buttons: [
-                    .init(style: .yellow, title: "button.ok".localized),
+                    .init(style: .active, title: "button.ok".localized),
                 ]
             )
         case let .nonSupportedAccountType(accountTypeDescription):
@@ -126,7 +126,7 @@ extension WalletConnectAppShowView {
                     .highlightedDescription(text: "wallet_connect.non_supported_account.description".localized(accountTypeDescription)),
                 ],
                 buttons: [
-                    .init(style: .yellow, title: "wallet_connect.non_supported_account.switch".localized, actionType: .afterClose) { [weak sourceViewController] in
+                    .init(style: .active, title: "wallet_connect.non_supported_account.switch".localized, actionType: .afterClose) { [weak sourceViewController] in
                         sourceViewController?.present(SwitchAccountModule.viewController(), animated: true)
                     },
                     .init(style: .transparent, title: "button.cancel".localized),

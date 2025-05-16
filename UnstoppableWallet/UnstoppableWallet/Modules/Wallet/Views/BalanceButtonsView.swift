@@ -51,7 +51,7 @@ class BalanceButtonsView: UIView {
             maker.edges.equalToSuperview()
         }
 
-        sendButton.set(style: .yellow)
+        sendButton.set(style: .active)
         sendButton.setTitle("balance.send".localized, for: .normal)
         sendButton.addTarget(self, action: #selector(onSend), for: .touchUpInside)
 
@@ -62,7 +62,7 @@ class BalanceButtonsView: UIView {
             maker.edges.equalToSuperview()
         }
 
-        withdrawButton.set(style: .yellow)
+        withdrawButton.set(style: .active)
         withdrawButton.setTitle("balance.withdraw".localized, for: .normal)
         withdrawButton.addTarget(self, action: #selector(onWithdraw), for: .touchUpInside)
 
@@ -71,7 +71,7 @@ class BalanceButtonsView: UIView {
             maker.width.equalTo(sendButton)
         }
 
-        receiveButton.set(style: .gray)
+        receiveButton.set(style: .default)
         receiveButton.setTitle("balance.receive".localized, for: .normal)
         receiveButton.addTarget(self, action: #selector(onReceive), for: .touchUpInside)
 
@@ -83,19 +83,19 @@ class BalanceButtonsView: UIView {
             maker.width.equalTo(withdrawButton)
         }
 
-        depositButton.set(style: .gray)
+        depositButton.set(style: .default)
         depositButton.setTitle("balance.deposit".localized, for: .normal)
         depositButton.addTarget(self, action: #selector(onDeposit), for: .touchUpInside)
 
         stackView.addArrangedSubview(receiveCircleButton)
 
-        receiveCircleButton.set(style: .gray)
+        receiveCircleButton.set(style: .leah)
         receiveCircleButton.set(image: UIImage(named: "arrow_medium_3_down_left_24"))
         receiveCircleButton.addTarget(self, action: #selector(onReceive), for: .touchUpInside)
 
         stackView.addArrangedSubview(addressButton)
 
-        addressButton.set(style: .gray)
+        addressButton.set(style: .default)
         addressButton.setTitle("balance.address".localized, for: .normal)
         addressButton.addTarget(self, action: #selector(onReceive), for: .touchUpInside)
 
@@ -106,7 +106,7 @@ class BalanceButtonsView: UIView {
             maker.edges.equalToSuperview()
         }
 
-        swapButton.set(style: .gray)
+        swapButton.set(style: .leah)
         swapButton.set(image: UIImage(named: "arrow_swap_2_24"))
         swapButton.addTarget(self, action: #selector(onSwap), for: .touchUpInside)
 
@@ -117,7 +117,7 @@ class BalanceButtonsView: UIView {
             maker.edges.equalToSuperview()
         }
 
-        chartButton.set(style: .gray)
+        chartButton.set(style: .leah)
         chartButton.set(image: UIImage(named: "chart_2_24"))
         chartButton.addTarget(self, action: #selector(onChart), for: .touchUpInside)
     }
@@ -131,8 +131,8 @@ class BalanceButtonsView: UIView {
         let buttonCount = buttons.filter { _, value in value != .hidden }.count
         let showIcons = (1 ... 2).contains(buttonCount)
 
-        sendButton.set(style: .yellow, accessoryType: showIcons ? .icon(image: UIImage(named: "arrow_medium_2_up_right_24")) : .none)
-        receiveButton.set(style: .gray, accessoryType: showIcons ? .icon(image: UIImage(named: "arrow_medium_2_down_left_24")) : .none)
+        sendButton.set(style: .active, accessoryType: showIcons ? .icon(image: UIImage(named: "arrow_medium_2_up_right_24")) : .none)
+        receiveButton.set(style: .default, accessoryType: showIcons ? .icon(image: UIImage(named: "arrow_medium_2_down_left_24")) : .none)
 
         sendButton.isEnabled = buttons[.send] == .enabled
         withdrawButton.isEnabled = buttons[.withdraw] == .enabled

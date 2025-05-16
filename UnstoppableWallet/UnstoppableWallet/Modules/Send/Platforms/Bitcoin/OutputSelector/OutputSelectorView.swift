@@ -45,7 +45,7 @@ struct OutputSelectorView: View {
                 }) {
                     Text(viewModel.buttonText)
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                .buttonStyle(PrimaryButtonStyle(style: .active))
                 .disabled(!viewModel.doneEnabled)
             }
         }

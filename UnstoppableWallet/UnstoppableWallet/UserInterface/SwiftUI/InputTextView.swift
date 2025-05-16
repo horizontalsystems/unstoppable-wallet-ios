@@ -39,7 +39,7 @@ struct InputTextView: View {
                 placeholder,
                 text: text
             )
-            .accentColor(.themeYellow)
+            .accentColor(.themeOrange)
             .frame(height: 20) // TODO: How to remove this? (When change from Secure to TextField it's change height)
         } else {
             if #available(iOS 16.0, *), multiline {
@@ -48,13 +48,13 @@ struct InputTextView: View {
                     text: text,
                     axis: .vertical
                 )
-                .accentColor(.themeYellow)
+                .accentColor(.themeOrange)
             } else {
                 TextField(
                     placeholder,
                     text: text
                 )
-                .accentColor(.themeYellow)
+                .accentColor(.themeOrange)
                 .frame(height: 20) // TODO: How to remove this? (When change from Secure to TextField it's change height)
             }
         }

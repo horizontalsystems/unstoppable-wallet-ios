@@ -309,7 +309,6 @@
 // Balance
 
 "balance.title" = "Balance";
-"balance.tab_bar_item" = "Balance";
 "balance.send" = "Send";
 "balance.withdraw" = "Withdraw";
 "balance.swap" = "Swap";
@@ -739,7 +738,6 @@
 
 // Market
 
-"market.tab_bar_item" = "Markets";
 "market.title" = "Markets";
 "market.category.overview" = "Overview";
 "market.category.posts" = "News";
@@ -1269,7 +1267,6 @@
 // Transactions
 
 "transactions.title" = "Transactions";
-"transactions.tab_bar_item" = "Transactions";
 "transactions.filter_all" = "All";
 "transactions.empty_text" = "You don't have any pending or past transactions yet";
 "transactions.pending" = "Pending";
@@ -1354,7 +1351,6 @@
 // Settings
 
 "settings.title" = "Settings";
-"settings.tab_bar_item" = "Settings";
 "settings.manage_accounts" = "Manage Wallets";
 "settings.blockchain_settings" = "Blockchain Settings";
 "settings.backup_manager" = "Backup Manager";

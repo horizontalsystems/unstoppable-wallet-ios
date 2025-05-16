@@ -82,7 +82,7 @@ class SendEip1155ViewController: KeyboardAwareViewController {
         gradientWrapperView.add(to: self)
         gradientWrapperView.addSubview(nextButton)
 
-        nextButton.set(style: .yellow)
+        nextButton.set(style: .active)
         nextButton.setTitle("button.next".localized, for: .normal)
         nextButton.addTarget(self, action: #selector(onTapNext), for: .touchUpInside)
 

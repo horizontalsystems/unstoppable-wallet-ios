@@ -84,7 +84,7 @@ class TitledHighlightedDescriptionCell: BaseThemeCell {
         titleText = caution.title
         titleColor = caution.type == .error ? .themeLucian : .themeJacob
         descriptionText = caution.text
-        contentBackgroundColor = caution.type == .error ? UIColor(hex: 0xFF4820, alpha: 0.2) : .themeYellow20
+        contentBackgroundColor = caution.type == .error ? UIColor(hex: 0xFF4820, alpha: 0.2) : .themeYellowD.withAlphaComponent(0.2)    //TODO:
         contentBorderColor = caution.type == .error ? .themeLucian : .themeJacob
     }
 

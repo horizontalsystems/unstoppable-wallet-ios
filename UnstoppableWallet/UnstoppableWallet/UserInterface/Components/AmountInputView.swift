@@ -61,7 +61,7 @@ class AmountInputView: UIView {
         secondaryButton.titleLabel?.font = .subhead2
         secondaryButton.contentHorizontalAlignment = .leading
         secondaryButton.titleEdgeInsets = UIEdgeInsets(top: 0, left: .margin16, bottom: 0, right: .margin16)
-        secondaryButton.setTitleColor(.themeBran, for: .normal)
+        secondaryButton.setTitleColor(.themeLeah, for: .normal)
         secondaryButton.setTitleColor(.themeGray50, for: .disabled)
         secondaryButton.addTarget(self, action: #selector(onTapSecondaryButton), for: .touchUpInside)
 

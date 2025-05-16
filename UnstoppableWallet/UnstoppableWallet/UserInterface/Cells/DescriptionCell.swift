@@ -21,7 +21,7 @@ class DescriptionCell: UITableViewCell {
 
         label.numberOfLines = 0
         label.font = DescriptionCell.font
-        label.textColor = .themeBran
+        label.textColor = .themeLeah
     }
 
     @available(*, unavailable)

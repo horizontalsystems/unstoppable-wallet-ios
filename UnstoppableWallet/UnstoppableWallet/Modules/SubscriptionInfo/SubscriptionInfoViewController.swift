@@ -33,7 +33,7 @@ class SubscriptionInfoViewController: ThemeViewController {
         let getPremiumButton = PrimaryButton()
         buttonsHolder.addSubview(getPremiumButton)
 
-        getPremiumButton.set(style: .yellow)
+        getPremiumButton.set(style: .active)
         getPremiumButton.setTitle("subscription_info.get_premium".localized, for: .normal)
         getPremiumButton.addTarget(self, action: #selector(onTapGetPremium), for: .touchUpInside)
 

@@ -24,7 +24,7 @@ extension BottomSheetModule {
                 .highlightedDescription(text: "copy_warning.description".localized),
             ],
             buttons: [
-                .init(style: .red, title: "copy_warning.i_will_risk_it".localized) {
+                .init(style: .active, title: "copy_warning.i_will_risk_it".localized) {
                     UIPasteboard.general.string = value
                     HudHelper.instance.show(banner: .copied)
                     onCopy?()
@@ -64,7 +64,7 @@ extension BottomSheetModule {
                 .highlightedDescription(text: description),
             ],
             buttons: [
-                .init(style: .yellow, title: "backup_prompt.backup_manual".localized, imageName: "edit_24", actionType: .afterClose) { [weak sourceViewController] in
+                .init(style: .active, title: "backup_prompt.backup_manual".localized, imageName: "edit_24", actionType: .afterClose) { [weak sourceViewController] in
                     guard let viewController = BackupModule.manualViewController(account: account) else {
                         return
                     }
@@ -72,7 +72,7 @@ extension BottomSheetModule {
                     sourceViewController?.present(viewController, animated: true)
                     stat(page: statPage, event: .open(page: .manualBackup))
                 },
-                .init(style: .gray, title: "backup_prompt.backup_cloud".localized, imageName: "icloud_24", actionType: .afterClose) { [weak sourceViewController] in
+                .init(style: .default, title: "backup_prompt.backup_cloud".localized, imageName: "icloud_24", actionType: .afterClose) { [weak sourceViewController] in
                     sourceViewController?.present(BackupModule.cloudViewController(account: account), animated: true)
                     stat(page: statPage, event: .open(page: .cloudBackup))
                 },
@@ -99,7 +99,7 @@ extension BottomSheetModule {
                 .highlightedDescription(text: "manage_account.cloud_delete_backup_recovery_phrase.description".localized),
             ],
             buttons: [
-                .init(style: .red, title: "button.delete".localized, actionType: .afterClose) {
+                .init(style: .active, title: "button.delete".localized, actionType: .afterClose) {
                     action?()
                 },
                 .init(style: .transparent, title: "button.cancel".localized),
@@ -115,7 +115,7 @@ extension BottomSheetModule {
                 .highlightedDescription(text: "manage_account.manual_backup_required.description".localized),
             ],
             buttons: [
-                .init(style: .yellow, title: "manage_account.manual_backup_required.button".localized, actionType: .afterClose) {
+                .init(style: .active, title: "manage_account.manual_backup_required.button".localized, actionType: .afterClose) {
                     action?()
                 },
                 .init(style: .transparent, title: "button.cancel".localized),
@@ -131,7 +131,7 @@ extension BottomSheetModule {
                 .highlightedDescription(text: "backup.cloud.no_access.description".localized),
             ],
             buttons: [
-                .init(style: .yellow, title: "button.ok".localized, actionType: .afterClose),
+                .init(style: .active, title: "button.ok".localized, actionType: .afterClose),
             ]
         )
     }

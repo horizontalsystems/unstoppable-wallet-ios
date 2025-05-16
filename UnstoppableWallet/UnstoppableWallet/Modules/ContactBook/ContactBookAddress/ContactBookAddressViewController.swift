@@ -78,7 +78,7 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
         if let doneButton {
             gradientWrapperView?.addSubview(doneButton)
 
-            doneButton.set(style: .yellow)
+            doneButton.set(style: .active)
             doneButton.setTitle("button.done".localized, for: .normal)
             doneButton.addTarget(self, action: #selector(onTapSaveButton), for: .touchUpInside)
         }
@@ -130,7 +130,7 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
                     .highlightedDescription(text: "contacts.contact.dismiss_changes.description".localized),
                 ],
                 buttons: [
-                    .init(style: .red, title: "contacts.contact.dismiss_changes.discard_changes".localized, actionType: .afterClose) { [weak self] in
+                    .init(style: .active, title: "contacts.contact.dismiss_changes.discard_changes".localized, actionType: .afterClose) { [weak self] in
                         self?.onClose()
                     },
                     .init(style: .transparent, title: "contacts.contact.dismiss_changes.keep_editing".localized),
@@ -157,7 +157,7 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
                 .highlightedDescription(text: "contacts.add_address.delete_alert.description".localized),
             ],
             buttons: [
-                .init(style: .red, title: "contacts.add_address.delete_alert.delete".localized, actionType: .afterClose) { [weak self] in
+                .init(style: .active, title: "contacts.add_address.delete_alert.delete".localized, actionType: .afterClose) { [weak self] in
                     self?.onUpdateAddress(nil)
                     self?.dismiss(animated: true)
                 },

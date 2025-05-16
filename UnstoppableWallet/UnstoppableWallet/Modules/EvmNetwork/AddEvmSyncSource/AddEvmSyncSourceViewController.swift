@@ -51,7 +51,7 @@ class AddEvmSyncSourceViewController: KeyboardAwareViewController {
         gradientWrapperView.add(to: self)
         gradientWrapperView.addSubview(addButton)
 
-        addButton.set(style: .yellow)
+        addButton.set(style: .active)
         addButton.setTitle("button.add".localized, for: .normal)
         addButton.addTarget(self, action: #selector(onTapAdd), for: .touchUpInside)
 

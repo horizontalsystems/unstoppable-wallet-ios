@@ -156,10 +156,10 @@ class RestorePassphraseViewController: KeyboardAwareViewController {
 
     private func show(processing: Bool) {
         if processing {
-            nextButton.set(style: .yellow, accessoryType: .spinner)
+            nextButton.set(style: .active, accessoryType: .spinner)
             nextButton.isEnabled = false
         } else {
-            nextButton.set(style: .yellow)
+            nextButton.set(style: .active)
             nextButton.isEnabled = true
         }
     }

@@ -20,15 +20,15 @@ struct PrimaryButtonStyle: ButtonStyle {
     enum Style {
         case yellow
         case yellowGradient
-        case red
-        case gray
+        case active
+        case `default`
         case transparent
 
         init(style: PrimaryButton.Style) {
             switch style {
-            case .yellow: self = .yellow
-            case .red: self = .red
-            case .gray: self = .gray
+//            case .yellow: self = .yellow    //TODO: CHANGE THIS!
+            case .active: self = .active
+            case .default: self = .default
             case .transparent: self = .transparent
             }
         }
@@ -36,16 +36,17 @@ struct PrimaryButtonStyle: ButtonStyle {
         func foregroundColor(isEnabled: Bool, isPressed: Bool) -> Color {
             switch self {
             case .yellow, .yellowGradient: return isEnabled ? .themeDark : .themeGray50
-            case .red, .gray: return isEnabled ? .themeClaude : .themeGray50
-            case .transparent: return isEnabled ? (isPressed ? .themeGray : .themeLeah) : .themeGray50
+            case .active: return isEnabled ? .themeLawrence : .themeAndy
+            case .default: return isEnabled ? .themeTyler : .themeAndy
+            case .transparent: return isEnabled ? (isPressed ? .themeGray : .themeLeah) : .themeAndy
             }
         }
 
         func backgroundColor(isEnabled: Bool, isPressed: Bool) -> Color {
             switch self {
-            case .yellow: return isEnabled ? (isPressed ? .themeYellow50 : .themeYellow) : .themeSteel20
-            case .red: return isEnabled ? (isPressed ? .themeRed50 : .themeLucian) : .themeSteel20
-            case .gray: return isEnabled ? (isPressed ? .themeNina : .themeLeah) : .themeSteel20
+            case .yellow: return isEnabled ? (isPressed ? .themeYellow.pressed : .themeYellow) : .themeSteel20
+            case .active: return isEnabled ? (isPressed ? .themeOrange.pressed : .themeOrange) : .themeBlade
+            case .default: return isEnabled ? (isPressed ? .themeLeah.pressed : .themeLeah) : .themeBlade
             case .transparent: return .clear
             default: return .clear
             }

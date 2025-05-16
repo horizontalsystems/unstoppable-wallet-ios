@@ -84,25 +84,25 @@ class WalletConnectMainViewController: ThemeViewController {
         buttonsHolder.add(to: self, under: tableView)
         buttonsHolder.addSubview(connectButton)
 
-        connectButton.set(style: .yellow)
+        connectButton.set(style: .active)
         connectButton.setTitle("button.connect".localized, for: .normal)
         connectButton.addTarget(self, action: #selector(onTapConnect), for: .touchUpInside)
 
         buttonsHolder.addSubview(reconnectButton)
 
-        reconnectButton.set(style: .yellow)
+        reconnectButton.set(style: .active)
         reconnectButton.setTitle("wallet_connect.button_reconnect".localized, for: .normal)
         reconnectButton.addTarget(self, action: #selector(onTapReconnect), for: .touchUpInside)
 
         buttonsHolder.addSubview(cancelButton)
 
-        cancelButton.set(style: .gray)
+        cancelButton.set(style: .default)
         cancelButton.setTitle("button.cancel".localized, for: .normal)
         cancelButton.addTarget(self, action: #selector(onTapCancel), for: .touchUpInside)
 
         buttonsHolder.addSubview(disconnectButton)
 
-        disconnectButton.set(style: .red)
+        disconnectButton.set(style: .active)
         disconnectButton.setTitle("wallet_connect.button_disconnect".localized, for: .normal)
         disconnectButton.addTarget(self, action: #selector(onTapDisconnect), for: .touchUpInside)
 

@@ -17,7 +17,7 @@ struct PlaceholderViewNew<Content: View>: View {
                 VStack(spacing: .margin32) {
                     ZStack {
                         Circle()
-                            .fill(Color.themeRaina)
+                            .fill(Color.themeBlade) // TODO: check
                             .frame(width: 100, height: 100)
 
                         image
