@@ -115,9 +115,9 @@
             {
               "displayPrice" : "5990.0",
               "eligibility" : [
+                "new",
                 "existing",
-                "expired",
-                "new"
+                "expired"
               ],
               "internalID" : "A50ACEDE",
               "isStackable" : true,

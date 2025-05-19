@@ -1,9 +1,12 @@
 import EvmKit
+import Foundation
 import MarketKit
 import RxRelay
 import RxSwift
 
 class ManageWalletsService {
+    private var queue = DispatchQueue(label: "\(AppConfig.label).manage-wallets-service.tokens", qos: .userInitiated)
+
     private let account: Account
     private let marketKit: MarketKit.Kit
     private let walletManager: WalletManager
@@ -45,8 +48,6 @@ class ManageWalletsService {
 
         sync(wallets: walletManager.activeWallets)
         syncTokens()
-        sortTokens()
-        syncState()
     }
 
     private func handleApproveRestoreSettings(token: Token, settings: RestoreSettings = [:]) {
@@ -96,15 +97,26 @@ class ManageWalletsService {
         }
     }
 
-    private func syncTokens() {
-        tokens = fetchTokens()
+    private func syncTokens(force: Bool = true) {
+        queue.async { [weak self] in
+            guard let self else { return }
+
+            var newTokens = fetchTokens()
+
+            if force || newTokens.count > tokens.count {
+                sort(tokens: &newTokens)
+
+                tokens = newTokens
+                syncState()
+            }
+        }
     }
 
     private func isEnabled(token: Token) -> Bool {
         wallets.contains { $0.token == token }
     }
 
-    private func sortTokens() {
+    private func sort(tokens: inout [Token]) {
         tokens.sort { lhsToken, rhsToken in
             let lhsEnabled = isEnabled(token: lhsToken)
             let rhsEnabled = isEnabled(token: rhsToken)
@@ -145,7 +157,11 @@ class ManageWalletsService {
     }
 
     private func sync(wallets: [Wallet]) {
-        self.wallets = Set(wallets)
+        queue.async { [weak self] in
+            guard let self else { return }
+
+            self.wallets = Set(wallets)
+        }
     }
 
     private func hasInfo(token: Token, enabled: Bool) -> Bool {
@@ -181,14 +197,7 @@ class ManageWalletsService {
     private func handleUpdated(wallets: [Wallet]) {
         sync(wallets: wallets)
 
-        let newTokens = fetchTokens()
-
-        if newTokens.count > tokens.count {
-            tokens = newTokens
-            sortTokens()
-        }
-
-        syncState()
+        syncTokens(force: false)
     }
 
     private func save(token: Token) {
@@ -214,8 +223,6 @@ extension ManageWalletsService {
         self.filter = filter
 
         syncTokens()
-        sortTokens()
-        syncState()
     }
 
     func enable(index: Int) {
