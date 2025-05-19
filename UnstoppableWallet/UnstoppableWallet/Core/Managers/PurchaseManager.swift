@@ -2,7 +2,8 @@ import HsExtensions
 import StoreKit
 
 class PurchaseManager: NSObject {
-    private let offerUpdateQueue = DispatchQueue(label: "com.app.offerUpdate")
+    private let offerUpdateQueue = DispatchQueue(label: "\(AppConfig.label).unstoppable-wallet.offer-update", qos: .userInitiated)
+    private let dataAccessQueue = DispatchQueue(label: "\(AppConfig.label).data-access", qos: .userInitiated)
 
     static let productName = "premium"
     static let productIds = PurchaseType.allCases.flatMap { $0.variants.map { id(productName, $0) }}
@@ -35,11 +36,15 @@ class PurchaseManager: NSObject {
 
     private func loadProducts() {
         Task { [weak self] in
+            guard let self else { return }
             let products = try await Product.products(for: Self.productIds)
-            self?.products = products.sorted(by: { $0.price > $1.price })
-            // print(products.sorted(by: { $0.price > $1.price }))
 
-            self?.syncProducts()
+            dataAccessQueue.sync {
+                self.products = products.sorted(by: { $0.price > $1.price })
+                //             print(products.sorted(by: { $0.price > $1.price }))
+
+                self.syncProducts()
+            }
         }
     }
 
@@ -68,19 +73,33 @@ class PurchaseManager: NSObject {
             return
         }
 
-        if transaction.revocationDate == nil {
-            purchasedProducts[transaction.productID] = transaction
-        } else {
-            purchasedProducts[transaction.productID] = nil
+        dataAccessQueue.sync {
+            if transaction.revocationDate == nil {
+                purchasedProducts[transaction.productID] = transaction
+            } else {
+                purchasedProducts[transaction.productID] = nil
+            }
+            syncPurchases()
         }
-
-        syncPurchases()
     }
 
     private func syncProducts() {
         productData = products.compactMap { ProductData(product: $0) }
-        syncUsedOffers()
-        // print("productData :", productData)
+        //        print(productData)
+    }
+
+    func checkTrialHistoryUsage() async -> Bool {
+        for await verificationResult in Transaction.all {
+            if case let .verified(transaction) = verificationResult {
+                if let offerType = transaction.offerType,
+                   offerType == .introductory,
+                   transaction.productID.starts(with: Self.productName)
+                {
+                    return true
+                }
+            }
+        }
+        return false
     }
 
     private func syncPurchases() {
@@ -89,7 +108,7 @@ class PurchaseManager: NSObject {
             .compactMap { PurchaseData(transaction: $0) }
             .sorted { $0.type.order < $1.type.order }
 
-        // print("purchaseData :", purchaseData)
+//        print(purchaseData)
 
         activeFeatures = activePurchase != nil ? PremiumFeature.allCases : []
 
