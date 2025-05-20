@@ -113,10 +113,11 @@ class SpamAddressManager {
         }
 
         let spamConfig = spamConfig(blockchainType: blockchainType)
+        let address = evmKitWrapper.evmKit.address
         evmKitWrapper.evmKit.allTransactionsPublisher
             .receive(on: DispatchQueue.global(qos: .userInitiated))
             .sink { [weak self] fullTransactions, _ in
-                self?.handle(fullTransactions: fullTransactions, userAddress: evmKitWrapper.evmKit.address, spamConfig: spamConfig)
+                _ = self?.handle(fullTransactions: fullTransactions, userAddress: address, spamConfig: spamConfig)
             }
             .store(in: &cancellables)
 
