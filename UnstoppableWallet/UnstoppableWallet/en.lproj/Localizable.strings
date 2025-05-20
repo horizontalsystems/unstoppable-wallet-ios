@@ -1609,7 +1609,7 @@
 
 // Settings -> Appearance
 
-"appearance.title" = "Appearance";
+"appearance.title" = "App Settings";
 
 "appearance.theme" = "Theme";
 "appearance.theme.system" = "System";
@@ -1618,7 +1618,7 @@
 
 "appearance.markets_tab" = "Markets Tab";
 "appearance.hide_markets" = "Hide Markets";
-"appearance.price_change" = "Price Change";
+"appearance.price_change" = "Price Change %";
 "appearance.price_change.24h" = "24H";
 "appearance.price_change.1d" = "Midnight UTC";
 
@@ -1629,6 +1629,7 @@
 "appearance.launch_screen.watchlist" = "Favorites";
 
 "appearance.balance_tab" = "Balance Tab";
+"appearance.balance_tab.footer" = "The “Hide Buttons” configuration hides the Send, Receive, and Swap buttons on Balance tab.";
 "appearance.hide_buttons" = "Hide Buttons";
 "appearance.balance_value" = "Balance Value";
 "appearance.balance_value.coin_fiat" = "Coin / Fiat";

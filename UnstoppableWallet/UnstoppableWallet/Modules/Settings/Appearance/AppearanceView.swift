@@ -126,6 +126,7 @@ struct AppearanceView: View {
 
                 VStack(spacing: 0) {
                     ListSectionHeader(text: "appearance.balance_tab".localized)
+
                     ListSection {
                         ListRow {
                             Toggle(isOn: $viewModel.hideBalanceButtons.animation()) {
@@ -155,6 +156,8 @@ struct AppearanceView: View {
                             }
                         )
                     }
+
+                    ListSectionFooter(text: "appearance.balance_tab.footer".localized)
                 }
 
                 VStack(spacing: 0) {
