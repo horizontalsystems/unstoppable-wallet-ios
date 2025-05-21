@@ -4,6 +4,7 @@ enum StatPage: String {
     case aboutApp = "about_app"
     case accountExtendedPrivateKey = "account_extended_private_key"
     case accountExtendedPublicKey = "account_extended_public_key"
+    case addressChecker = "address_checker"
     case addToken = "add_token"
     case advancedSearch = "advanced_search"
     case advancedSearchResults = "advanced_search_results"
@@ -199,6 +200,7 @@ enum StatEvent {
     case openTokenInfo(token: Token)
     case openTokenPage(element: WalletModule.Element)
     case paste(entity: StatEntity)
+    case recipientCheck(enabled: Bool)
     case refresh
     case rejectRequest(chainUid: String)
     case removeAmount
@@ -265,6 +267,7 @@ enum StatEvent {
              .openBlockchainSettingsBtc, .openBlockchainSettingsEvm, .openBlockchainSettingsEvmAdd: return "open_page"
         case .openTokenInfo: return "open_token_info"
         case .paste: return "paste"
+        case .recipientCheck: return "recipient_check"
         case .reconnect: return "reconnect"
         case .refresh: return "refresh"
         case .reject: return "disconnect"
@@ -359,6 +362,7 @@ enum StatEvent {
             return params
         case let .openTokenInfo(token): return params(token: token)
         case let .paste(entity): return [.entity: entity.rawValue]
+        case let .recipientCheck(enabled): return [.enabled: enabled]
         case let .removeFromWatchlist(coinUid): return [.coinUid: coinUid]
         case let .scanQr(entity): return [.entity: entity.rawValue]
         case let .select(entity): return [.entity: entity.rawValue]
@@ -401,6 +405,7 @@ enum StatParam: String {
     case currencyCode = "currency_code"
     case coinUid = "coin_uid"
     case derivation
+    case enabled
     case entity
     case field
     case hide

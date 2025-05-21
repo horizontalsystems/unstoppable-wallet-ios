@@ -4,6 +4,7 @@ import MarketKit
 
 class AddressViewModel: ObservableObject {
     private let purchaseManager = App.shared.purchaseManager
+    private let appSettingManager = App.shared.appSettingManager
     let token: Token
     private let destination: Destination
     let issueTypes: [AddressSecurityIssueType]
@@ -87,7 +88,13 @@ class AddressViewModel: ObservableObject {
                 )
                 )
             } else {
-                if premiumEnabled {
+                if !appSettingManager.recipientAddressCheck {
+                    for type in issueTypes {
+                        checkStates[type] = .disabled
+                    }
+
+                    state = .valid(resolvedAddress: ResolvedAddress(address: address, issueTypes: []))
+                } else if premiumEnabled {
                     check(address: success.address)
                 } else {
                     for type in issueTypes {
@@ -164,6 +171,7 @@ extension AddressViewModel {
         case detected
         case notAvailable
         case locked
+        case disabled
     }
 
     enum Destination {

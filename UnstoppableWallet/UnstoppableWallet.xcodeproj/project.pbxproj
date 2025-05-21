@@ -1033,7 +1033,7 @@
 		11B35C25B0DA607BFD446E9D /* AddressInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35420B8191814543CBFA8 /* AddressInputCell.swift */; };
 		11B35C25C220A84A08A3CEBA /* EvmAddressModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3564687A53021953267B3 /* EvmAddressModule.swift */; };
 		11B35C2D31DE8081AC572B27 /* BaseUniswapV2MultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358A102692DA01F91413D /* BaseUniswapV2MultiSwapProvider.swift */; };
-		11B35C2D75133B8F13101A24 /* BalancePrimaryValueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3566DC3A97A5CC3E2C729 /* BalancePrimaryValueManager.swift */; };
+		11B35C2D75133B8F13101A24 /* AppSettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3566DC3A97A5CC3E2C729 /* AppSettingManager.swift */; };
 		11B35C2EB8D6EC593915640F /* CexDepositModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35011026CE084AE40FE6F /* CexDepositModule.swift */; };
 		11B35C2F43F8135F22DD7FDF /* ActivateSubscriptionModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35997A9E413878F48313B /* ActivateSubscriptionModule.swift */; };
 		11B35C2FBF875F81E13CC575 /* CoinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3550B863970039577CD00 /* CoinService.swift */; };
@@ -1196,7 +1196,7 @@
 		11B35E2C07D04A795AD96220 /* ReceiveBitcoinCashCoinTypeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A81AD46F48B63E59ED3 /* ReceiveBitcoinCashCoinTypeViewModel.swift */; };
 		11B35E2DA9242EAAAA9D99FC /* HsLabelProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EDE31BA3EF80F78859A /* HsLabelProvider.swift */; };
 		11B35E34B9E95819B9EA1764 /* OpenSeaNftProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C1DF4F98D814CFE3951 /* OpenSeaNftProvider.swift */; };
-		11B35E37D8831B262A58D0D3 /* BalancePrimaryValueManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3566DC3A97A5CC3E2C729 /* BalancePrimaryValueManager.swift */; };
+		11B35E37D8831B262A58D0D3 /* AppSettingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3566DC3A97A5CC3E2C729 /* AppSettingManager.swift */; };
 		11B35E384019FD71D387C9A3 /* NonSpamPoolProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359FE5BB60FB12BB24F3E /* NonSpamPoolProvider.swift */; };
 		11B35E3A0FECB153325C6C37 /* ReceiveSelectCoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358B8D6DFEAEDE84D53DE /* ReceiveSelectCoinViewController.swift */; };
 		11B35E433AC4217552A8D668 /* MultiSwapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FC4CD29F471F497819B /* MultiSwapView.swift */; };
@@ -2766,6 +2766,10 @@
 		D34637F02DDB05DC00187698 /* WalletConnectViewModifierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34637EE2DDB05DC00187698 /* WalletConnectViewModifierModel.swift */; };
 		D34637F42DDB23C900187698 /* BackupRequiredViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34637F22DDB23C900187698 /* BackupRequiredViewModifier.swift */; };
 		D34637F62DDB23C900187698 /* BackupRequiredViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34637F22DDB23C900187698 /* BackupRequiredViewModifier.swift */; };
+		D34637FA2DDDD68800187698 /* AddressCheckerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34637F72DDDD68800187698 /* AddressCheckerView.swift */; };
+		D34637FB2DDDD68800187698 /* AddressCheckerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34637F82DDDD68800187698 /* AddressCheckerViewModel.swift */; };
+		D34637FC2DDDD68800187698 /* AddressCheckerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34637F72DDDD68800187698 /* AddressCheckerView.swift */; };
+		D34637FD2DDDD68800187698 /* AddressCheckerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34637F82DDDD68800187698 /* AddressCheckerViewModel.swift */; };
 		D34A29B62BFB4E3200F63036 /* WatchlistSortBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34A29B52BFB4E3200F63036 /* WatchlistSortBy.swift */; };
 		D34A29B72BFB4E3200F63036 /* WatchlistSortBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34A29B52BFB4E3200F63036 /* WatchlistSortBy.swift */; };
 		D34A29B82BFB4E3200F63036 /* WatchlistSortBy.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34A29B52BFB4E3200F63036 /* WatchlistSortBy.swift */; };
@@ -3518,7 +3522,7 @@
 		11B35665980CEA4D009A9B77 /* NftKit.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftKit.swift; sourceTree = "<group>"; };
 		11B356671FA76C7DEDA50B94 /* SwapApproveConfirmationModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapApproveConfirmationModule.swift; sourceTree = "<group>"; };
 		11B3566B18FBFBA85D98D824 /* EnabledWalletCacheManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnabledWalletCacheManager.swift; sourceTree = "<group>"; };
-		11B3566DC3A97A5CC3E2C729 /* BalancePrimaryValueManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalancePrimaryValueManager.swift; sourceTree = "<group>"; };
+		11B3566DC3A97A5CC3E2C729 /* AppSettingManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppSettingManager.swift; sourceTree = "<group>"; };
 		11B3567314F1A1DF8D1B2910 /* TransactionFilterView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionFilterView.swift; sourceTree = "<group>"; };
 		11B356861F703A5A5C6630B6 /* LitecoinAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LitecoinAdapter.swift; sourceTree = "<group>"; };
 		11B3568F6FAF721301DEC188 /* FormCautionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormCautionView.swift; sourceTree = "<group>"; };
@@ -4655,6 +4659,8 @@
 		D34637EB2DDB05D700187698 /* WalletConnectViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectViewModifier.swift; sourceTree = "<group>"; };
 		D34637EE2DDB05DC00187698 /* WalletConnectViewModifierModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectViewModifierModel.swift; sourceTree = "<group>"; };
 		D34637F22DDB23C900187698 /* BackupRequiredViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupRequiredViewModifier.swift; sourceTree = "<group>"; };
+		D34637F72DDDD68800187698 /* AddressCheckerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressCheckerView.swift; sourceTree = "<group>"; };
+		D34637F82DDDD68800187698 /* AddressCheckerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressCheckerViewModel.swift; sourceTree = "<group>"; };
 		D34A29B42BFB4AE200F63036 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AppWidget.strings; sourceTree = "<group>"; };
 		D34A29B52BFB4E3200F63036 /* WatchlistSortBy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistSortBy.swift; sourceTree = "<group>"; };
 		D34D3DDA2DBF9B7E005C9ACC /* StellarPreSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarPreSendHandler.swift; sourceTree = "<group>"; };
@@ -5483,7 +5489,7 @@
 				ABC9AC0B5943DF3B61B20BF6 /* WalletConnectSessionManager.swift */,
 				11B356D15E318829D9C7F5F1 /* EvmBlockchainManager.swift */,
 				11B35F13BAFE57D363B9684F /* EvmLabelManager.swift */,
-				11B3566DC3A97A5CC3E2C729 /* BalancePrimaryValueManager.swift */,
+				11B3566DC3A97A5CC3E2C729 /* AppSettingManager.swift */,
 				11B351609863530CA8259648 /* BalanceConversionManager.swift */,
 				11B35A309C359456D7DF1A03 /* AppIconManager.swift */,
 				11B352FBA1B29357E0120055 /* BalanceHiddenManager.swift */,
@@ -6200,6 +6206,7 @@
 		11B358D87B2EDEB8BE8F133B /* Settings */ = {
 			isa = PBXGroup;
 			children = (
+				D34637F92DDDD68800187698 /* AddressChecker */,
 				11B3563CCEF5817CCA5A0C6A /* Appearance */,
 				1A564533BEABADF4DC5F8A25 /* Main */,
 				1A56463750A2B2C557B399E7 /* Security */,
@@ -8796,6 +8803,15 @@
 			path = Volume;
 			sourceTree = "<group>";
 		};
+		D34637F92DDDD68800187698 /* AddressChecker */ = {
+			isa = PBXGroup;
+			children = (
+				D34637F72DDDD68800187698 /* AddressCheckerView.swift */,
+				D34637F82DDDD68800187698 /* AddressCheckerViewModel.swift */,
+			);
+			path = AddressChecker;
+			sourceTree = "<group>";
+		};
 		D34D3E022DD614B7005C9ACC /* StellarSecretKey */ = {
 			isa = PBXGroup;
 			children = (
@@ -10101,7 +10117,7 @@
 				11B358B0C17F5F8F7764BDBE /* CellComponent.swift in Sources */,
 				11B351B95F191EEA750D9955 /* BalancePrimaryValue.swift in Sources */,
 				D362879F2CA2B34E00ADAF3B /* TonConnectListView.swift in Sources */,
-				11B35C2D75133B8F13101A24 /* BalancePrimaryValueManager.swift in Sources */,
+				11B35C2D75133B8F13101A24 /* AppSettingManager.swift in Sources */,
 				D30C4D632D5CAFCB0082B487 /* TonConnectErrorView.swift in Sources */,
 				11B350F9E67A095998D9462C /* BalanceConversionManager.swift in Sources */,
 				11B35D11D00301F7B67B0340 /* AppIconManager.swift in Sources */,
@@ -10446,6 +10462,7 @@
 				D36287A62CA2B89200ADAF3B /* TonConnectParameters.swift in Sources */,
 				ABC9ABD7C7746ABF50DD646F /* ChartIndicatorFactory.swift in Sources */,
 				ABC9A54917CDA7F9EAE237C4 /* ChartIndicatorsModule.swift in Sources */,
+				D34637FD2DDDD68800187698 /* AddressCheckerViewModel.swift in Sources */,
 				11B3530088E70831A648EC63 /* CexDepositNetworkRaw.swift in Sources */,
 				11B3506409ACA603EE8869A6 /* CexDepositNetwork.swift in Sources */,
 				ABC9A4D5326B3A85888140FE /* ChartIndicatorSettingsViewModel.swift in Sources */,
@@ -10500,6 +10517,7 @@
 				11B358E4C529863AFFF8806F /* ReceiveAddressViewModel.swift in Sources */,
 				11B35EE923002E9FCC413422 /* ReceiveAddressViewItemFactory.swift in Sources */,
 				11B35D8E976E984302A81F8B /* ReceiveTokenViewModel.swift in Sources */,
+				D34637FC2DDDD68800187698 /* AddressCheckerView.swift in Sources */,
 				6BBB92AE2D0FD43D00112409 /* PurchaseBottomSheetView.swift in Sources */,
 				D34338E92C871344001FCAD2 /* TonTransactionAdapter.swift in Sources */,
 				11B35AC1D930F8C6ECC536FC /* RecieveSelectorViewModel.swift in Sources */,
@@ -11603,7 +11621,7 @@
 				ABC9AE223619E13A296BED51 /* MarketCardCell.swift in Sources */,
 				11B353E7A2462E19D946E723 /* CellComponent.swift in Sources */,
 				11B350E04791F74A6EE26765 /* BalancePrimaryValue.swift in Sources */,
-				11B35E37D8831B262A58D0D3 /* BalancePrimaryValueManager.swift in Sources */,
+				11B35E37D8831B262A58D0D3 /* AppSettingManager.swift in Sources */,
 				11B35D71C5893D4B1F1332B5 /* BalanceConversionManager.swift in Sources */,
 				11B35A7DFBD8FB2E663C97FE /* AppIconManager.swift in Sources */,
 				11B355A7C40EADCE1921CEF5 /* AppIcon.swift in Sources */,
@@ -11942,6 +11960,7 @@
 				D36287A72CA2B89200ADAF3B /* TonConnectParameters.swift in Sources */,
 				ABC9A4FF1E1964FB77700C4E /* ChartIndicatorFactory.swift in Sources */,
 				D0118E482B7C9A5200D55CE6 /* ResendBitcoinModule.swift in Sources */,
+				D34637FB2DDDD68800187698 /* AddressCheckerViewModel.swift in Sources */,
 				ABC9AA4B0A6C33CAD5F3B050 /* ChartIndicatorsModule.swift in Sources */,
 				11B3516F3365B8FD8C21401F /* CexDepositNetworkRaw.swift in Sources */,
 				11B358B0A260AC250BFE65DE /* CexDepositNetwork.swift in Sources */,
@@ -11996,6 +12015,7 @@
 				11B35F4294930802EC8C9CEA /* ReceiveAddressModule.swift in Sources */,
 				11B3550C46C5811A7540A934 /* ReceiveAddressService.swift in Sources */,
 				11B3543A420A23064B056925 /* ReceiveAddressViewModel.swift in Sources */,
+				D34637FA2DDDD68800187698 /* AddressCheckerView.swift in Sources */,
 				6BBB92AD2D0FD43D00112409 /* PurchaseBottomSheetView.swift in Sources */,
 				D34338E82C871344001FCAD2 /* TonTransactionAdapter.swift in Sources */,
 				11B35B0B003AA4C6F1A4CD36 /* ReceiveAddressViewItemFactory.swift in Sources */,

@@ -25,7 +25,7 @@ enum WalletModule {
             cacheManager: App.shared.enabledWalletCacheManager,
             accountRestoreWarningManager: App.shared.accountRestoreWarningManager,
             reachabilityManager: App.shared.reachabilityManager,
-            balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
+            appSettingManager: App.shared.appSettingManager,
             balanceHiddenManager: App.shared.balanceHiddenManager,
             buttonHiddenManager: App.shared.walletButtonHiddenManager,
             balanceConversionManager: App.shared.balanceConversionManager,
@@ -79,7 +79,7 @@ enum WalletModule {
             coinPriceService: coinPriceService,
             cacheManager: App.shared.enabledWalletCacheManager,
             reachabilityManager: App.shared.reachabilityManager,
-            balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
+            appSettingManager: App.shared.appSettingManager,
             balanceHiddenManager: App.shared.balanceHiddenManager,
             appManager: App.shared.appManager,
             feeCoinProvider: App.shared.feeCoinProvider,
@@ -140,7 +140,7 @@ enum WalletModule {
             coinPriceService: coinPriceService,
             cacheManager: App.shared.enabledWalletCacheManager,
             reachabilityManager: App.shared.reachabilityManager,
-            balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
+            appSettingManager: App.shared.appSettingManager,
             balanceHiddenManager: App.shared.balanceHiddenManager,
             appManager: App.shared.appManager,
             feeCoinProvider: App.shared.feeCoinProvider,
@@ -196,7 +196,7 @@ enum WalletModule {
                 coinPriceService: coinPriceService,
                 cacheManager: App.shared.enabledWalletCacheManager,
                 reachabilityManager: App.shared.reachabilityManager,
-                balancePrimaryValueManager: App.shared.balancePrimaryValueManager,
+                appSettingManager: App.shared.appSettingManager,
                 balanceHiddenManager: App.shared.balanceHiddenManager,
                 appManager: App.shared.appManager,
                 feeCoinProvider: App.shared.feeCoinProvider,
@@ -209,7 +209,7 @@ enum WalletModule {
         } else {
             service = NoAccountWalletTokenListService(
                 reachabilityManager: App.shared.reachabilityManager,
-                balancePrimaryValueManager: App.shared.balancePrimaryValueManager
+                appSettingManager: App.shared.appSettingManager
             )
         }
 

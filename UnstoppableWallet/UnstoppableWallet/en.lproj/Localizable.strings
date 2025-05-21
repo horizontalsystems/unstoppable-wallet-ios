@@ -560,6 +560,7 @@
 "send.address.checking" = "Checking";
 "send.address.check.clear" = "Clear";
 "send.address.check.detected" = "Detected";
+"send.address.check.disabled" = "Disabled";
 "send.address.risky.title" = "Risky Address!";
 "send.address.risky.description" = "You are about to send funds to a high-risk address. Proceeding may result in loss of funds or other security risks. By continuing, you accept the potential dangers. Are you sure you want to proceed?";
 "send.address.phishing_check" = "Phishing Check";
@@ -2326,3 +2327,9 @@
 "purchases.successful_subscription.description" = "Thank you for your subscription!";
 "purchases.successful_subscription.subscribed" = "Enjoy the full power of the app.";
 "purchases.successful_subscription.button.go_app" = "Go to App";
+
+// Address Checker
+
+"address_checker.title" = "Address Checker";
+"address_checker.recipient_check" = "Recipient Check";
+"address_checker.recipient_check.description" = "Checks the recipient address for risks before sending.";

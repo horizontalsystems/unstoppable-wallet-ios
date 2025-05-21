@@ -7,7 +7,7 @@ class AppearanceViewModel: ObservableObject {
     private let themeManager = App.shared.themeManager
     private let launchScreenManager = App.shared.launchScreenManager
     private let appIconManager = App.shared.appIconManager
-    private let balancePrimaryValueManager = App.shared.balancePrimaryValueManager
+    private let appSettingManager = App.shared.appSettingManager
     private let walletButtonHiddenManager = App.shared.walletButtonHiddenManager
     private let priceChangeModeManager = App.shared.priceChangeModeManager
     private let currencyManager = App.shared.currencyManager
@@ -70,11 +70,11 @@ class AppearanceViewModel: ObservableObject {
 
     @Published var balancePrimaryValue: BalancePrimaryValue {
         didSet {
-            guard balancePrimaryValueManager.balancePrimaryValue != balancePrimaryValue else {
+            guard appSettingManager.balancePrimaryValue != balancePrimaryValue else {
                 return
             }
             stat(page: .appearance, event: .selectBalanceValue(type: balancePrimaryValue.rawValue))
-            balancePrimaryValueManager.balancePrimaryValue = balancePrimaryValue
+            appSettingManager.balancePrimaryValue = balancePrimaryValue
         }
     }
 
@@ -94,7 +94,7 @@ class AppearanceViewModel: ObservableObject {
         priceChangeMode = priceChangeModeManager.priceChangeMode
         launchScreen = launchScreenManager.launchScreen
         hideBalanceButtons = walletButtonHiddenManager.buttonHidden
-        balancePrimaryValue = balancePrimaryValueManager.balancePrimaryValue
+        balancePrimaryValue = appSettingManager.balancePrimaryValue
         appIcon = appIconManager.appIcon
 
         subscribe(&cancellables, currencyManager.$baseCurrency) { [weak self] _ in self?.syncBaseCurrencyCode() }

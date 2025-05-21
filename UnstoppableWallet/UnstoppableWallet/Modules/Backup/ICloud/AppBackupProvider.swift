@@ -19,7 +19,7 @@ class AppBackupProvider {
     private let themeManager: ThemeManager
     private let launchScreenManager: LaunchScreenManager
     private let appIconManager: AppIconManager
-    private let balancePrimaryValueManager: BalancePrimaryValueManager
+    private let appSettingManager: AppSettingManager
     private let balanceConversionManager: BalanceConversionManager
     private let balanceHiddenManager: BalanceHiddenManager
     private let contactManager: ContactBookManager
@@ -40,7 +40,7 @@ class AppBackupProvider {
          themeManager: ThemeManager,
          launchScreenManager: LaunchScreenManager,
          appIconManager: AppIconManager,
-         balancePrimaryValueManager: BalancePrimaryValueManager,
+         appSettingManager: AppSettingManager,
          balanceConversionManager: BalanceConversionManager,
          balanceHiddenManager: BalanceHiddenManager,
          contactManager: ContactBookManager,
@@ -61,7 +61,7 @@ class AppBackupProvider {
         self.themeManager = themeManager
         self.launchScreenManager = launchScreenManager
         self.appIconManager = appIconManager
-        self.balancePrimaryValueManager = balancePrimaryValueManager
+        self.appSettingManager = appSettingManager
         self.balanceConversionManager = balanceConversionManager
         self.balanceHiddenManager = balanceHiddenManager
         self.contactManager = contactManager
@@ -108,7 +108,7 @@ class AppBackupProvider {
             launchScreen: launchScreenManager.launchScreen,
             conversionTokenQueryId: balanceConversionManager.conversionToken?.tokenQuery.id,
             balanceHideButtons: walletButtonHiddenManager.buttonHidden,
-            balancePrimaryValue: balancePrimaryValueManager.balancePrimaryValue,
+            balancePrimaryValue: appSettingManager.balancePrimaryValue,
             balanceAutoHide: balanceHiddenManager.balanceAutoHide,
             appIcon: appIconManager.appIcon.title
         )
@@ -213,7 +213,7 @@ extension AppBackupProvider {
         launchScreenManager.showMarket = raw.settings.showMarketTab
         launchScreenManager.launchScreen = raw.settings.launchScreen
         priceChangeModeManager.priceChangeMode = raw.settings.priceChangeMode
-        balancePrimaryValueManager.balancePrimaryValue = raw.settings.balancePrimaryValue
+        appSettingManager.balancePrimaryValue = raw.settings.balancePrimaryValue
 
         walletButtonHiddenManager.buttonHidden = raw.settings.balanceHideButtons
         balanceConversionManager.set(tokenQueryId: raw.settings.conversionTokenQueryId)
