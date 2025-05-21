@@ -1,8 +1,9 @@
 import RxRelay
 import RxSwift
 
-class BalancePrimaryValueManager {
+class AppSettingManager {
     private let keyBalancePrimaryValue = "balance-primary-value"
+    private let keyRecipientAddressCheck = "recipient-address-check"
 
     private let userDefaultsStorage: UserDefaultsStorage
 
@@ -14,6 +15,12 @@ class BalancePrimaryValueManager {
         }
     }
 
+    var recipientAddressCheck: Bool {
+        didSet {
+            userDefaultsStorage.set(value: recipientAddressCheck, for: keyRecipientAddressCheck)
+        }
+    }
+
     init(userDefaultsStorage: UserDefaultsStorage) {
         self.userDefaultsStorage = userDefaultsStorage
 
@@ -22,10 +29,12 @@ class BalancePrimaryValueManager {
         } else {
             balancePrimaryValue = .coin
         }
+
+        recipientAddressCheck = userDefaultsStorage.value(for: keyRecipientAddressCheck) ?? true
     }
 }
 
-extension BalancePrimaryValueManager {
+extension AppSettingManager {
     var balancePrimaryValueObservable: Observable<BalancePrimaryValue> {
         balancePrimaryValueRelay.asObservable()
     }

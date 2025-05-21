@@ -36,7 +36,7 @@ class App {
     let testNetManager: TestNetManager
     let deepLinkManager: DeepLinkManager
     let launchScreenManager: LaunchScreenManager
-    let balancePrimaryValueManager: BalancePrimaryValueManager
+    let appSettingManager: AppSettingManager
     let balanceHiddenManager: BalanceHiddenManager
     let balanceConversionManager: BalanceConversionManager
     let walletButtonHiddenManager: WalletButtonHiddenManager
@@ -146,7 +146,7 @@ class App {
         testNetManager = TestNetManager(userDefaultsStorage: userDefaultsStorage)
         deepLinkManager = DeepLinkManager()
         launchScreenManager = LaunchScreenManager(userDefaultsStorage: userDefaultsStorage)
-        balancePrimaryValueManager = BalancePrimaryValueManager(userDefaultsStorage: userDefaultsStorage)
+        appSettingManager = AppSettingManager(userDefaultsStorage: userDefaultsStorage)
         balanceHiddenManager = BalanceHiddenManager(userDefaultsStorage: userDefaultsStorage)
         balanceConversionManager = BalanceConversionManager(marketKit: marketKit, userDefaultsStorage: userDefaultsStorage)
         walletButtonHiddenManager = WalletButtonHiddenManager(userDefaultsStorage: userDefaultsStorage)
@@ -308,7 +308,7 @@ class App {
             themeManager: themeManager,
             launchScreenManager: launchScreenManager,
             appIconManager: appIconManager,
-            balancePrimaryValueManager: balancePrimaryValueManager,
+            appSettingManager: appSettingManager,
             balanceConversionManager: balanceConversionManager,
             balanceHiddenManager: balanceHiddenManager,
             contactManager: contactManager,

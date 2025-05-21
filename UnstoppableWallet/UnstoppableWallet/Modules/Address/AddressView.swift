@@ -167,6 +167,8 @@ struct AddressView: View {
                 Text("n/a".localized).textSubhead2()
             case .locked:
                 Image("lock_20").themeIcon()
+            case .disabled:
+                Text("send.address.check.disabled".localized).textSubhead2(color: .themeLeah)
             }
         }
         .padding(.horizontal, .margin16)

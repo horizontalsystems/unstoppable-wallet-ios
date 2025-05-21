@@ -5,7 +5,7 @@ import RxSwift
 
 class NoAccountWalletTokenListService: IWalletTokenListService {
     let reachabilityManager: IReachabilityManager
-    let balancePrimaryValueManager: BalancePrimaryValueManager
+    let appSettingManager: AppSettingManager
 
     let balanceHiddenObservable: Observable<Bool> = Observable.just(false)
     let balanceHidden: Bool = false
@@ -15,9 +15,9 @@ class NoAccountWalletTokenListService: IWalletTokenListService {
         Just(state).eraseToAnyPublisher()
     }
 
-    init(reachabilityManager: IReachabilityManager, balancePrimaryValueManager: BalancePrimaryValueManager) {
+    init(reachabilityManager: IReachabilityManager, appSettingManager: AppSettingManager) {
         self.reachabilityManager = reachabilityManager
-        self.balancePrimaryValueManager = balancePrimaryValueManager
+        self.appSettingManager = appSettingManager
     }
 }
 
@@ -27,11 +27,11 @@ extension NoAccountWalletTokenListService {
     }
 
     var balancePrimaryValueObservable: Observable<BalancePrimaryValue> {
-        balancePrimaryValueManager.balancePrimaryValueObservable
+        appSettingManager.balancePrimaryValueObservable
     }
 
     var balancePrimaryValue: BalancePrimaryValue {
-        balancePrimaryValueManager.balancePrimaryValue
+        appSettingManager.balancePrimaryValue
     }
 
     var itemUpdatedObservable: Observable<WalletTokenListService.Item> {

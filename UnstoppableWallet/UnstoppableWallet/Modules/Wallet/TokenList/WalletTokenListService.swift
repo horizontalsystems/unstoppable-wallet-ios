@@ -10,7 +10,7 @@ class WalletTokenListService: IWalletTokenListService {
     private let coinPriceService: WalletCoinPriceService
     private let cacheManager: EnabledWalletCacheManager
     private let reachabilityManager: IReachabilityManager
-    private let balancePrimaryValueManager: BalancePrimaryValueManager
+    private let appSettingManager: AppSettingManager
     private let balanceHiddenManager: BalanceHiddenManager
     private let feeCoinProvider: FeeCoinProvider
     private let account: Account
@@ -45,14 +45,14 @@ class WalletTokenListService: IWalletTokenListService {
 
     init(elementService: IWalletElementService, coinPriceService: WalletCoinPriceService,
          cacheManager: EnabledWalletCacheManager, reachabilityManager: IReachabilityManager,
-         balancePrimaryValueManager: BalancePrimaryValueManager, balanceHiddenManager: BalanceHiddenManager,
+         appSettingManager: AppSettingManager, balanceHiddenManager: BalanceHiddenManager,
          appManager: IAppManager, feeCoinProvider: FeeCoinProvider, account: Account)
     {
         self.elementService = elementService
         self.coinPriceService = coinPriceService
         self.cacheManager = cacheManager
         self.reachabilityManager = reachabilityManager
-        self.balancePrimaryValueManager = balancePrimaryValueManager
+        self.appSettingManager = appSettingManager
         self.balanceHiddenManager = balanceHiddenManager
         self.feeCoinProvider = feeCoinProvider
         self.account = account
@@ -137,11 +137,11 @@ class WalletTokenListService: IWalletTokenListService {
     }
 
     var balancePrimaryValueObservable: Observable<BalancePrimaryValue> {
-        balancePrimaryValueManager.balancePrimaryValueObservable
+        appSettingManager.balancePrimaryValueObservable
     }
 
     var balancePrimaryValue: BalancePrimaryValue {
-        balancePrimaryValueManager.balancePrimaryValue
+        appSettingManager.balancePrimaryValue
     }
 
     private var fallbackIsMainNet: Bool {

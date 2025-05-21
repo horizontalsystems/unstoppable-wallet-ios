@@ -49,6 +49,7 @@ struct MainSettingsView: View {
 
                         ListSection {
                             vipSupport()
+                            addressChecker()
                         }
                         .modifier(ThemeListStyleModifier(themeListStyle: .borderedLawrence, selected: true))
                     }
@@ -374,6 +375,19 @@ struct MainSettingsView: View {
         }) {
             Image("support_2_24").themeIcon(color: .themeJacob)
             Text("purchases.vip_support".localized).themeBody()
+            Image.disclosureIcon
+        }
+    }
+
+    @ViewBuilder private func addressChecker() -> some View {
+        NavigationRow(spacing: .margin8, destination: {
+            AddressCheckerView()
+                .onFirstAppear {
+                    stat(page: .settings, event: .open(page: .addressChecker))
+                }
+        }) {
+            Image("radar_24").themeIcon(color: .themeJacob)
+            Text("address_checker.title".localized).themeBody()
             Image.disclosureIcon
         }
     }

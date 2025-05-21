@@ -32,7 +32,7 @@ class WalletService {
     private let cacheManager: EnabledWalletCacheManager
     private let accountRestoreWarningManager: AccountRestoreWarningManager
     private let reachabilityManager: IReachabilityManager
-    private let balancePrimaryValueManager: BalancePrimaryValueManager
+    private let appSettingManager: AppSettingManager
     private let balanceHiddenManager: BalanceHiddenManager
     private let buttonHiddenManager: WalletButtonHiddenManager
     private let balanceConversionManager: BalanceConversionManager
@@ -77,7 +77,7 @@ class WalletService {
 
     init(elementServiceFactory: WalletElementServiceFactory, coinPriceService: WalletCoinPriceService, accountManager: AccountManager,
          cacheManager: EnabledWalletCacheManager, accountRestoreWarningManager: AccountRestoreWarningManager, reachabilityManager: IReachabilityManager,
-         balancePrimaryValueManager: BalancePrimaryValueManager, balanceHiddenManager: BalanceHiddenManager,
+         appSettingManager: AppSettingManager, balanceHiddenManager: BalanceHiddenManager,
          buttonHiddenManager: WalletButtonHiddenManager, balanceConversionManager: BalanceConversionManager,
          cloudAccountBackupManager: CloudBackupManager, rateAppManager: RateAppManager, appManager: IAppManager, feeCoinProvider: FeeCoinProvider,
          userDefaultsStorage: UserDefaultsStorage)
@@ -88,7 +88,7 @@ class WalletService {
         self.cacheManager = cacheManager
         self.accountRestoreWarningManager = accountRestoreWarningManager
         self.reachabilityManager = reachabilityManager
-        self.balancePrimaryValueManager = balancePrimaryValueManager
+        self.appSettingManager = appSettingManager
         self.balanceHiddenManager = balanceHiddenManager
         self.buttonHiddenManager = buttonHiddenManager
         self.balanceConversionManager = balanceConversionManager
@@ -432,11 +432,11 @@ extension WalletService {
     }
 
     var balancePrimaryValueObservable: Observable<BalancePrimaryValue> {
-        balancePrimaryValueManager.balancePrimaryValueObservable
+        appSettingManager.balancePrimaryValueObservable
     }
 
     var balancePrimaryValue: BalancePrimaryValue {
-        balancePrimaryValueManager.balancePrimaryValue
+        appSettingManager.balancePrimaryValue
     }
 
     var balanceHiddenObservable: Observable<Bool> {
