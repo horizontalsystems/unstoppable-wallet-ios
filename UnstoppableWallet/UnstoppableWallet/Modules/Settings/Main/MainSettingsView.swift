@@ -15,77 +15,85 @@ struct MainSettingsView: View {
 
     @State private var shareText: String?
 
+    @State private var currentSlideIndex: Int = 0
+    @State private var isFirstAppear = true
+
     var body: some View {
         ScrollableThemeView {
-            VStack(spacing: 0) {
-                ListSection {
-                    manageWallets()
-                    blockchainSettings()
-                    security()
-                    privacy()
-                    dAppConnection()
-                    // tonConnect()
-                }
-
-                Spacer().frame(height: .margin32)
-
-                ListSection {
-                    appSettings()
-                    subscription()
-                    contacts()
-                    backupManager()
-                }
-
-                Spacer().frame(height: .margin24)
+            VStack(spacing: .margin12) {
+                slider()
 
                 VStack(spacing: 0) {
-                    premiumHeader()
-
                     ListSection {
-                        vipSupport()
+                        manageWallets()
+                        blockchainSettings()
+                        security()
+                        privacy()
+                        dAppConnection()
+                        // tonConnect()
                     }
-                    .modifier(ThemeListStyleModifier(themeListStyle: .borderedLawrence, selected: true))
-                }
 
-                Spacer().frame(height: .margin32)
-
-                ListSection {
-                    aboutApp()
-                    rateUs()
-                    tellFriend()
-                    faq()
-                    academy()
-                }
-
-                Spacer().frame(height: .margin24)
-
-                VStack(spacing: 0) {
-                    ListSectionHeader(text: "settings.social_networks.label".localized)
-
-                    ListSection {
-                        telegram()
-                        twitter()
-                    }
-                }
-
-                if AppConfig.donateEnabled {
                     Spacer().frame(height: .margin32)
 
                     ListSection {
-                        donate()
+                        appSettings()
+                        subscription()
+                        contacts()
+                        backupManager()
+                    }
+
+                    Spacer().frame(height: .margin24)
+
+                    VStack(spacing: 0) {
+                        premiumHeader()
+
+                        ListSection {
+                            vipSupport()
+                        }
+                        .modifier(ThemeListStyleModifier(themeListStyle: .borderedLawrence, selected: true))
+                    }
+
+                    Spacer().frame(height: .margin32)
+
+                    ListSection {
+                        aboutApp()
+                        rateUs()
+                        tellFriend()
+                        faq()
+                        academy()
+                    }
+
+                    Spacer().frame(height: .margin24)
+
+                    VStack(spacing: 0) {
+                        ListSectionHeader(text: "settings.social_networks.label".localized)
+
+                        ListSection {
+                            telegram()
+                            twitter()
+                        }
+                    }
+
+                    if AppConfig.donateEnabled {
+                        Spacer().frame(height: .margin32)
+
+                        ListSection {
+                            donate()
+                        }
+                    }
+
+                    Spacer().frame(height: .margin32)
+
+                    footer()
+
+                    if viewModel.showTestSwitchers {
+                        Spacer().frame(height: .margin32)
+                        testSwitchersSection()
                     }
                 }
-
-                Spacer().frame(height: .margin32)
-
-                footer()
-
-                if viewModel.showTestSwitchers {
-                    Spacer().frame(height: .margin32)
-                    testSwitchersSection()
-                }
+                .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
             }
-            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+            .padding(EdgeInsets(top: .margin12, leading: 0, bottom: .margin32, trailing: 0))
         }
         .navigationTitle("settings.title".localized)
         .navigationBarTitleDisplayMode(.inline)
@@ -100,6 +108,81 @@ struct MainSettingsView: View {
                 stat(page: .settings, event: .open(page: .vipSupport))
             }
         }
+    }
+
+    @ViewBuilder private func slider() -> some View {
+        VStack(spacing: 0) {
+            TabView(selection: $currentSlideIndex) {
+                ForEach(0 ..< viewModel.slides.count, id: \.self) { index in
+                    ZStack {
+                        ZStack(alignment: .trailing) {
+                            switch viewModel.slides[index] {
+                            case .premium:
+                                premiumSlide()
+                                    .onTapGesture {
+                                        purchasesPresented = true
+                                    }
+                            case .miniApp:
+                                miniAppSlide()
+                                    .onTapGesture {
+                                        UrlManager.open(url: "https://t.me/\(AppConfig.appTokenTelegramAccount)/app")
+                                    }
+                            }
+                        }
+                        .frame(height: 130)
+                        .background(RoundedRectangle(cornerRadius: .cornerRadius16, style: .continuous).fill(Color.themeDarker))
+                        .clipShape(RoundedRectangle(cornerRadius: .cornerRadius16, style: .continuous))
+                    }
+                    .padding(.horizontal, .margin16)
+                    .tag(index)
+                }
+            }
+            .frame(height: 130)
+            .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+
+            HStack(spacing: .margin4) {
+                ForEach(0 ..< viewModel.slides.count, id: \.self) { index in
+                    Capsule()
+                        .fill(currentSlideIndex == index ? Color.themeJacob : Color.themeSteel20)
+                        .frame(width: 20, height: 4)
+                }
+            }
+            .frame(height: .margin32)
+        }
+        .onAppear {
+            guard !isFirstAppear else {
+                isFirstAppear = false
+                return
+            }
+
+            currentSlideIndex = (currentSlideIndex + 1) % viewModel.slides.count
+        }
+    }
+
+    @ViewBuilder private func premiumSlide() -> some View {
+        Image("premium_banner")
+
+        VStack(alignment: .leading, spacing: .margin4) {
+            Text("premium.cell.title".localized).textHeadline1(color: .themeYellow)
+            Spacer()
+            Text("premium.cell.description".localized).textSubhead1(color: .themeSteelLight)
+
+            if let introductoryOffer = viewModel.introductoryOffer {
+                Text(introductoryOffer).textCaptionSB(color: .themeGreen)
+            }
+        }
+        .padding(EdgeInsets(top: .margin16, leading: .margin16, bottom: .margin16, trailing: 138))
+    }
+
+    @ViewBuilder private func miniAppSlide() -> some View {
+        Image("mini_app_banner")
+
+        VStack(alignment: .leading, spacing: .margin4) {
+            Text("mini_app.cell.title".localized).textHeadline1(color: .themeYellow)
+            Spacer()
+            Text("mini_app.cell.description".localized).textSubhead1(color: .themeSteelLight)
+        }
+        .padding(EdgeInsets(top: .margin16, leading: .margin16, bottom: .margin16, trailing: 185))
     }
 
     @ViewBuilder private func manageWallets() -> some View {

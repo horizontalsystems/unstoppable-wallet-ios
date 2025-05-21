@@ -28,6 +28,8 @@ class MainSettingsViewModel: ObservableObject {
     @Published var securityAlert: Bool = false
     @Published var aboutAlert: Bool = false
     @Published var iCloudUnavailable: Bool = false
+    @Published var slides: [Slide] = [.premium, .miniApp]
+    @Published var introductoryOffer: String?
 
     let showTestSwitchers: Bool
 
@@ -59,15 +61,37 @@ class MainSettingsViewModel: ObservableObject {
             }
         }
 
+        subscribe(&cancellables, purchaseManager.$purchasedProducts) { [weak self] _ in self?.syncSlides() }
         subscribe(&cancellables, accountRestoreWarningManager.hasNonStandardPublisher) { [weak self] _ in self?.syncManageWalletsAlert() }
         subscribe(&cancellables, passcodeManager.$isPasscodeSet) { [weak self] _ in self?.syncSecurityAlert() }
         subscribe(&cancellables, termsManager.$termsAccepted) { [weak self] _ in self?.syncAboutAlert() }
 
+        Publishers.CombineLatest3(purchaseManager.$purchaseData, purchaseManager.$productData, purchaseManager.$usedOfferProductIds)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _, _, _ in self?.syncSlides() }
+            .store(in: &cancellables)
+
+        syncSlides()
+        syncIntroductoryOffer()
         syncManageWalletsAlert()
         syncWalletConnectSessionCount()
         syncWalletConnectPendingRequestCount()
         syncSecurityAlert()
         syncAboutAlert()
+    }
+
+    private func syncSlides() {
+        var slides: [Slide] = [.miniApp]
+
+        if !purchaseManager.hasActivePurchase {
+            slides.insert(.premium, at: 0)
+        }
+
+        self.slides = slides
+    }
+
+    private func syncIntroductoryOffer() {
+        introductoryOffer = title(introductoryOfferType: purchaseManager.introductoryOfferType)
     }
 
     private func syncManageWalletsAlert() {
@@ -88,6 +112,14 @@ class MainSettingsViewModel: ObservableObject {
 
     private func syncAboutAlert() {
         aboutAlert = !termsManager.termsAccepted
+    }
+
+    private func title(introductoryOfferType: PurchaseManager.IntroductoryOfferType) -> String? {
+        switch introductoryOfferType {
+        case .none: return nil
+        case .trial: return "premium.cell.try".localized
+        case .discount: return "premium.cell.discount".localized
+        }
     }
 }
 
@@ -112,14 +144,9 @@ extension MainSettingsViewModel {
         case nonSupportedAccountType(accountType: AccountType)
         case unBackedUpAccount(account: Account)
     }
-}
 
-extension PurchaseManager.IntroductoryOfferType {
-    var title: String? {
-        switch self {
-        case .none: return nil
-        case .trial: return "premium.cell.try".localized
-        case .discount: return "premium.cell.discount".localized
-        }
+    enum Slide {
+        case premium
+        case miniApp
     }
 }
