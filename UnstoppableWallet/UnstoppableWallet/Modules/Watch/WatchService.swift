@@ -39,7 +39,7 @@ class WatchService {
                 state = .error(error: PublicKeyResolveError.notSupportedDerivedType)
             }
         } catch {
-            state = .notReady
+            state = .error(error: ResolveError.notSupported)
         }
     }
 
@@ -145,6 +145,10 @@ extension WatchService {
             case .notReady, .error: return false
             }
         }
+    }
+
+    enum ResolveError: Error {
+        case notSupported
     }
 
     enum PublicKeyResolveError: Error, LocalizedError {
