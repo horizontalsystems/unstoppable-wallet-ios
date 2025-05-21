@@ -157,7 +157,7 @@ extension WatchViewController: SectionsDataSource {
             ),
             Section(
                 id: "watch-data-input",
-                footerState: .margin(height: .margin32),
+                footerState: tableView.sectionFooter(text: "watch_address.watch_data.description".localized),
                 rows: [
                     StaticRow(
                         cell: watchDataInputCell,
