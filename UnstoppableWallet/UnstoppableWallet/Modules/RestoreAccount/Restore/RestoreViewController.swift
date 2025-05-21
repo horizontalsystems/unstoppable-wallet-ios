@@ -111,7 +111,7 @@ class RestoreViewController: KeyboardAwareViewController {
         mnemonicCautionCell.onChangeHeight = { [weak self] in self?.reloadTable() }
 
         wordListCell.set(backgroundStyle: .lawrence, isFirst: true, isLast: false)
-        passphraseToggleCell.set(backgroundStyle: .lawrence, isFirst: false, isLast: true)
+        passphraseToggleCell.set(backgroundStyle: .lawrence, isFirst: !advanced, isLast: true)
         CellBuilderNew.buildStatic(
             cell: passphraseToggleCell,
             rootElement: .hStack(
@@ -325,7 +325,27 @@ extension RestoreViewController: SectionsDataSource {
 
         switch restoreType {
         case .mnemonic:
-            sections.append(
+            var wordlistPassphraseRows: [RowProtocol] = [
+                StaticRow(
+                    cell: passphraseToggleCell,
+                    id: "passphrase-toggle",
+                    height: .heightCell48
+                ),
+            ]
+
+            if advanced {
+                wordlistPassphraseRows.insert(StaticRow(
+                    cell: wordListCell,
+                    id: "word-list",
+                    height: .heightCell48,
+                    autoDeselect: true,
+                    action: { [weak self] in
+                        self?.openWordListSelector()
+                    }
+                ), at: 0)
+            }
+
+            sections.append(contentsOf: [
                 Section(
                     id: "mnemonic-input",
                     footerState: .margin(height: .margin32),
@@ -345,76 +365,57 @@ extension RestoreViewController: SectionsDataSource {
                             }
                         ),
                     ]
-                )
-            )
+                ),
+                Section(
+                    id: "wordlist-passphrase-toggle",
+                    footerState: .margin(height: .margin32),
+                    rows: wordlistPassphraseRows
+                ),
+                Section(
+                    id: "passphrase",
+                    footerState: inputsVisible ? .margin(height: .margin32) : .margin(height: 0),
+                    rows: [
+                        StaticRow(
+                            cell: passphraseCell,
+                            id: "passphrase",
+                            height: inputsVisible ? .heightSingleLineCell : 0
+                        ),
+                        StaticRow(
+                            cell: passphraseCautionCell,
+                            id: "passphrase-caution",
+                            dynamicHeight: { [weak self] width in
+                                self?.passphraseCautionCell.height(containerWidth: width) ?? 0
+                            }
+                        ),
+                        StaticRow(
+                            cell: passphraseDescriptionCell,
+                            id: "passphrase-description",
+                            dynamicHeight: { [weak self] width in
+                                self.flatMap { $0.inputsVisible ? $0.passphraseDescriptionCell.height(containerWidth: width) : 0 } ?? 0
+                            }
+                        ),
+                    ]
+                ),
+            ])
 
             if advanced {
-                let advancedSections: [SectionProtocol] = [
-                    Section(
-                        id: "wordlist-passphrase-toggle",
-                        footerState: .margin(height: .margin32),
-                        rows: [
-                            StaticRow(
-                                cell: wordListCell,
-                                id: "word-list",
-                                height: .heightCell48,
-                                autoDeselect: true,
-                                action: { [weak self] in
-                                    self?.openWordListSelector()
-                                }
-                            ),
-                            StaticRow(
-                                cell: passphraseToggleCell,
-                                id: "passphrase-toggle",
-                                height: .heightCell48
-                            ),
-                        ]
-                    ),
-                    Section(
-                        id: "passphrase",
-                        footerState: inputsVisible ? .margin(height: .margin32) : .margin(height: 0),
-                        rows: [
-                            StaticRow(
-                                cell: passphraseCell,
-                                id: "passphrase",
-                                height: inputsVisible ? .heightSingleLineCell : 0
-                            ),
-                            StaticRow(
-                                cell: passphraseCautionCell,
-                                id: "passphrase-caution",
-                                dynamicHeight: { [weak self] width in
-                                    self?.passphraseCautionCell.height(containerWidth: width) ?? 0
-                                }
-                            ),
-                            StaticRow(
-                                cell: passphraseDescriptionCell,
-                                id: "passphrase-description",
-                                dynamicHeight: { [weak self] width in
-                                    self.flatMap { $0.inputsVisible ? $0.passphraseDescriptionCell.height(containerWidth: width) : 0 } ?? 0
-                                }
-                            ),
-                        ]
-                    ),
-                    Section(
-                        id: "non-standard-restore",
-                        footerState: .margin(height: .margin32),
-                        rows: [
-                            tableView.universalRow48(
-                                id: "non-standard_restore",
-                                title: .body("restore.non_standard_import".localized),
-                                accessoryType: .disclosure,
-                                autoDeselect: true,
-                                isFirst: true,
-                                isLast: true,
-                                action: { [weak self] in
-                                    self?.onTapNonStandardRestore()
-                                }
-                            ),
-                        ]
-                    ),
-                ]
-
-                sections.append(contentsOf: advancedSections)
+                sections.append(Section(
+                    id: "non-standard-restore",
+                    footerState: .margin(height: .margin32),
+                    rows: [
+                        tableView.universalRow48(
+                            id: "non-standard_restore",
+                            title: .body("restore.non_standard_import".localized),
+                            accessoryType: .disclosure,
+                            autoDeselect: true,
+                            isFirst: true,
+                            isLast: true,
+                            action: { [weak self] in
+                                self?.onTapNonStandardRestore()
+                            }
+                        ),
+                    ]
+                ))
             }
         case .privateKey:
             sections.append(
