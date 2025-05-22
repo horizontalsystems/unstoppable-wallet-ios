@@ -9320,6 +9320,7 @@
 				6BDDB59F2C1AC73200DE9D56 /* XCRemoteSwiftPackageReference "TonKit" */,
 				D36287C62CA3DF7A00ADAF3B /* XCLocalSwiftPackageReference "TonConnectAPI" */,
 				D3AEB8732DB8FAA200E385C8 /* XCRemoteSwiftPackageReference "StellarKit" */,
+				6B127F9F2DDEEE9300D203CA /* XCRemoteSwiftPackageReference "swift-collections" */,
 			);
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
 			projectDirPath = "";
@@ -13162,6 +13163,14 @@
 			requirement = {
 				branch = master;
 				kind = branch;
+			};
+		};
+		6B127F9F2DDEEE9300D203CA /* XCRemoteSwiftPackageReference "swift-collections" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-collections";
+			requirement = {
+				kind = exactVersion;
+				version = 1.1.4;
 			};
 		};
 		6B423FD22913785800EE5E70 /* XCRemoteSwiftPackageReference "BitcoinCore" */ = {
