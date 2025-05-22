@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 77;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -2831,7 +2831,6 @@
 		D36287C42CA3DC8F00ADAF3B /* TonConnectSessionCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36287C32CA3DC8F00ADAF3B /* TonConnectSessionCrypto.swift */; };
 		D36287C52CA3DC8F00ADAF3B /* TonConnectSessionCrypto.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36287C32CA3DC8F00ADAF3B /* TonConnectSessionCrypto.swift */; };
 		D36287C82CA3DF7A00ADAF3B /* TonConnectAPI in Frameworks */ = {isa = PBXBuildFile; productRef = D36287C72CA3DF7A00ADAF3B /* TonConnectAPI */; };
-		D36287CA2CA3DF8600ADAF3B /* TonConnectAPI in Frameworks */ = {isa = PBXBuildFile; productRef = D36287C92CA3DF8600ADAF3B /* TonConnectAPI */; };
 		D36287CC2CA3E12100ADAF3B /* TonConnectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36287CB2CA3E12100ADAF3B /* TonConnectApp.swift */; };
 		D36287CD2CA3E12100ADAF3B /* TonConnectApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36287CB2CA3E12100ADAF3B /* TonConnectApp.swift */; };
 		D36287CF2CA408E200ADAF3B /* TonConnectStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36287CE2CA408E200ADAF3B /* TonConnectStorage.swift */; };
@@ -3127,6 +3126,8 @@
 		D3DD67382BC3CC2C00EC7F78 /* ThorChainMultiSwapBtcConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DD67362BC3CC2C00EC7F78 /* ThorChainMultiSwapBtcConfirmationQuote.swift */; };
 		D3DD673A2BC3CFF300EC7F78 /* BaseSendBtcData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DD67392BC3CFF300EC7F78 /* BaseSendBtcData.swift */; };
 		D3DD673B2BC3CFF300EC7F78 /* BaseSendBtcData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3DD67392BC3CFF300EC7F78 /* BaseSendBtcData.swift */; };
+		D3DDFA342DDF2D02003CADDF /* TonConnectAPI in Frameworks */ = {isa = PBXBuildFile; productRef = D3DDFA332DDF2D02003CADDF /* TonConnectAPI */; };
+		D3DDFA362DDF2D14003CADDF /* TonConnectAPI in Frameworks */ = {isa = PBXBuildFile; productRef = D3DDFA352DDF2D14003CADDF /* TonConnectAPI */; };
 		D3E1E8642C1C0EF400E07052 /* CoinHoldersChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1E8632C1C0EF400E07052 /* CoinHoldersChart.swift */; };
 		D3E1E8652C1C0EF400E07052 /* CoinHoldersChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1E8632C1C0EF400E07052 /* CoinHoldersChart.swift */; };
 		D3E1E8672C1C3ACF00E07052 /* CoinReportsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1E8662C1C3ACF00E07052 /* CoinReportsView.swift */; };
@@ -4819,6 +4820,7 @@
 				6BDDB59C2C1816B500DE9D56 /* TonKit in Frameworks */,
 				D38405B8218317DF007D50AD /* LocalAuthentication.framework in Frameworks */,
 				D3BF1E5E274CAF1C00229A00 /* Down in Frameworks */,
+				D3DDFA342DDF2D02003CADDF /* TonConnectAPI in Frameworks */,
 				D3604E5528F02B280066C366 /* Eip20Kit in Frameworks */,
 				D3604E4528F02A260066C366 /* EvmKit in Frameworks */,
 				D3604E9028F03DC00066C366 /* MarketKit in Frameworks */,
@@ -4854,8 +4856,8 @@
 				6B55E33B2AF26D6400616B60 /* Starscream in Frameworks */,
 				D3AF5A8929FFD85800C1399E /* RxCocoa in Frameworks */,
 				500F1D1127AA87BC002AA419 /* AlignedCollectionViewFlowLayout in Frameworks */,
+				D3DDFA362DDF2D14003CADDF /* TonConnectAPI in Frameworks */,
 				D3604E6928F02DF30066C366 /* BitcoinCashKit in Frameworks */,
-				D36287CA2CA3DF8600ADAF3B /* TonConnectAPI in Frameworks */,
 				D3993DC228F42992008720FB /* UnstoppableDomainsResolution in Frameworks */,
 				D3C187BA2907CFAB00FE1900 /* Checkpoints in Frameworks */,
 				6BDA29AD29D6F384003847ED /* ECashKit in Frameworks */,
@@ -9020,6 +9022,7 @@
 				6BBCE4A22BDA419200ABBD55 /* Web3Wallet */,
 				6BDDB59B2C1816B500DE9D56 /* TonKit */,
 				D36287C72CA3DF7A00ADAF3B /* TonConnectAPI */,
+				D3DDFA332DDF2D02003CADDF /* TonConnectAPI */,
 			);
 			productName = Wallet;
 			productReference = D38405CE218317DF007D50AD /* Unstoppable D.app */;
@@ -9080,7 +9083,7 @@
 				D08C93AE2B91E39E00A7D1D5 /* Hodler */,
 				6BBCE4A42BDA419B00ABBD55 /* Web3Wallet */,
 				6BDDB5A02C1AC73D00DE9D56 /* TonKit */,
-				D36287C92CA3DF8600ADAF3B /* TonConnectAPI */,
+				D3DDFA352DDF2D14003CADDF /* TonConnectAPI */,
 			);
 			productName = Wallet;
 			productReference = D38406BE21831B3D007D50AD /* Unstoppable.app */;
@@ -9195,7 +9198,6 @@
 				};
 			};
 			buildConfigurationList = D3285F3D20BD158E00644076 /* Build configuration list for PBXProject "UnstoppableWallet" */;
-			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -9250,8 +9252,9 @@
 				D08C93AD2B91E37E00A7D1D5 /* XCRemoteSwiftPackageReference "Hodler" */,
 				6BF66DD82BA1A73300963242 /* XCRemoteSwiftPackageReference "ObjectMapper" */,
 				6BDDB59F2C1AC73200DE9D56 /* XCRemoteSwiftPackageReference "TonKit" */,
-				D36287C62CA3DF7A00ADAF3B /* XCLocalSwiftPackageReference "TonConnectAPI" */,
+				D3DDFA322DDF2D02003CADDF /* XCRemoteSwiftPackageReference "TonConnectAPI" */,
 			);
+			preferredProjectObjectVersion = 77;
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -13061,13 +13064,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		D36287C62CA3DF7A00ADAF3B /* XCLocalSwiftPackageReference "TonConnectAPI" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = TonConnectAPI;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
 		500F1D0F27AA87BC002AA419 /* XCRemoteSwiftPackageReference "AlignedCollectionViewFlowLayout" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -13389,6 +13385,14 @@
 				version = 1.0.0;
 			};
 		};
+		D3DDFA322DDF2D02003CADDF /* XCRemoteSwiftPackageReference "TonConnectAPI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/TonConnectAPI";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.0;
+			};
+		};
 		D3E323C62AE7B8E400F73914 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
@@ -13612,11 +13616,6 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = TonConnectAPI;
 		};
-		D36287C92CA3DF8600ADAF3B /* TonConnectAPI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D36287C62CA3DF7A00ADAF3B /* XCLocalSwiftPackageReference "TonConnectAPI" */;
-			productName = TonConnectAPI;
-		};
 		D36E0C2928D084AB00B622B9 /* CollectionViewCenteredFlowLayout */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D36E0C2828D084AB00B622B9 /* XCRemoteSwiftPackageReference "CollectionViewCenteredFlowLayout" */;
@@ -13796,6 +13795,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D3C187D9290FCFBC00FE1900 /* XCRemoteSwiftPackageReference "SectionsTableView" */;
 			productName = SectionsTableView;
+		};
+		D3DDFA332DDF2D02003CADDF /* TonConnectAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3DDFA322DDF2D02003CADDF /* XCRemoteSwiftPackageReference "TonConnectAPI" */;
+			productName = TonConnectAPI;
+		};
+		D3DDFA352DDF2D14003CADDF /* TonConnectAPI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3DDFA322DDF2D02003CADDF /* XCRemoteSwiftPackageReference "TonConnectAPI" */;
+			productName = TonConnectAPI;
 		};
 		D3E323C72AE7B8E400F73914 /* KeychainAccess */ = {
 			isa = XCSwiftPackageProductDependency;
