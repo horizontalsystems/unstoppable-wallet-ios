@@ -38,8 +38,6 @@ enum WalletTokenModule {
 
         if wallet.token.blockchainType == .tron, let adapter = App.shared.adapterManager.adapter(for: wallet) as? BaseTronAdapter {
             viewModel = TronAccountInactiveViewModel(adapter: adapter)
-            // } else if wallet.token.blockchainType == .stellar, let adapter = App.shared.adapterManager.adapter(for: wallet) as? StellarAdapter {
-            // viewModel = StellarAccountCautionViewModel(adapter: adapter)
         } else {
             return nil
         }

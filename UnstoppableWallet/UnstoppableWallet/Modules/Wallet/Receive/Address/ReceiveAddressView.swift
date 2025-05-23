@@ -9,9 +9,6 @@ struct ReceiveAddressView: View {
     @StateObject var viewModel: ReceiveAddressViewModel
     var onDismiss: (() -> Void)?
 
-    @State private var hasAppeared = false
-    @State private var warningAlertPopup: ReceiveAddressModule.PopupWarningItem?
-
     @State private var shareText: String?
     @State private var inputAmountPresented: Bool = false
 
@@ -88,10 +85,6 @@ struct ReceiveAddressView: View {
                 PlaceholderViewNew(image: Image("sync_error_48"), text: "sync_error".localized)
             }
         }
-        .onChange(of: viewModel.popup) {
-            guard hasAppeared else { return }
-            warningAlertPopup = $0
-        }
         .sheet(item: $shareText) { shareText in
             ActivityView.view(activityItems: [shareText])
         }
@@ -117,7 +110,7 @@ struct ReceiveAddressView: View {
             }
         )
         .alertButtonTint(color: .themeJacob)
-        .bottomSheet(item: $warningAlertPopup) { popup in
+        .bottomSheet(item: $viewModel.popup) { popup in
             BottomSheetView(
                 icon: .warning,
                 title: popup.title,
@@ -125,13 +118,10 @@ struct ReceiveAddressView: View {
                     .highlightedDescription(text: popup.description.text, style: popup.description.style),
                 ],
                 buttons: popupButtons(mode: popup.mode),
-                onDismiss: { warningAlertPopup = nil }
+                onDismiss: { viewModel.popup = nil }
             )
         }
-        .onAppear {
-            guard !hasAppeared else { return }
-            hasAppeared = true
-
+        .onFirstAppear {
             viewModel.onFirstAppear()
         }
         .navigationTitle(viewModel.title)
@@ -154,15 +144,15 @@ struct ReceiveAddressView: View {
         switch mode {
         case let .done(title):
             return [
-                .init(style: .yellow, title: title) { warningAlertPopup = nil },
+                .init(style: .yellow, title: title) { viewModel.popup = nil },
             ]
         case .activateStellarAsset:
             return [
                 .init(style: .yellow, title: "deposit.activate".localized) {
-                    warningAlertPopup = nil
+                    viewModel.popup = nil
                     stellarActivatePresented = true
                 },
-                .init(style: .transparent, title: "button.i_understand".localized) { warningAlertPopup = nil },
+                .init(style: .transparent, title: "button.later".localized) { viewModel.popup = nil },
             ]
         }
     }
@@ -251,7 +241,7 @@ struct ReceiveAddressView: View {
     }
 
     @ViewBuilder func notActive() -> some View {
-        ListRow {
+        ListRow(padding: EdgeInsets(top: .margin12, leading: 0, bottom: .margin12, trailing: .margin16)) {
             Text("deposit.account".localized)
                 .textSubhead2()
                 .modifier(
@@ -265,16 +255,15 @@ struct ReceiveAddressView: View {
     }
 
     @ViewBuilder func inactiveStellarAsset() -> some View {
-        ListRow {
-            Text("deposit.asset".localized)
-                .textSubhead2()
-                .modifier(
-                    Informed(infoDescription: .init(
-                        title: "deposit.stellar.inactive_asset.title".localized,
-                        description: "deposit.stellar.inactive_asset.description".localized
-                    )))
+        ClickableRow(action: {
+            viewModel.showPopup()
+        }) {
+            HStack(spacing: .margin8) {
+                Text("deposit.trustline".localized).textSubhead2()
+                Image("circle_information_20").themeIcon()
+            }
             Spacer()
-            Text("deposit.not_active".localized).textSubhead1(color: .themeYellow)
+            Text("deposit.trustline.not_activated".localized).textSubhead1(color: .themeYellow)
         }
     }
 

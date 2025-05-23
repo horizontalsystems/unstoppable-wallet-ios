@@ -175,7 +175,7 @@ class ManageWalletsService {
         }
 
         switch token.type {
-        case .eip20: return true
+        case .eip20, .jetton, .stellar: return true
         default: return false
         }
     }
@@ -266,8 +266,13 @@ extension ManageWalletsService {
         }
 
         switch token.type {
-        case let .eip20(value):
-            return InfoItem(token: token, type: .contractAddress(value: value, explorerUrl: token.blockchain.explorerUrl(reference: value)))
+        case let .eip20(address):
+            return InfoItem(token: token, type: .contractAddress(value: address, explorerUrl: token.blockchain.explorerUrl(reference: address)))
+        case let .jetton(address):
+            return InfoItem(token: token, type: .contractAddress(value: address, explorerUrl: token.blockchain.explorerUrl(reference: address)))
+        case let .stellar(code, issuer):
+            let assetId = [code, issuer].joined(separator: "-")
+            return InfoItem(token: token, type: .contractAddress(value: assetId, explorerUrl: token.blockchain.explorerUrl(reference: assetId)))
         default:
             return nil
         }

@@ -30,6 +30,7 @@
 "button.learn_more" = "Learn More";
 "button.unlock" = "Unlock";
 "button.select" = "Select";
+"button.later" = "Later";
 
 "alert" = "Alert";
 "alert.copied" = "Copied";
@@ -342,6 +343,10 @@
 
 // Token Balance Page
 "balance.token.locked" = "Locked";
+"balance.token.locked.stellar.title" = "Locked Amount";
+"balance.token.locked.stellar.description" = "The Stellar network locks 1 XLM to activate the wallet and 0.5 XLM as a reserve for each token activated in your wallet.";
+"balance.token.locked.stellar.description.currently_locked" = "Currently locked:";
+"balance.token.locked.stellar.description.wallet_activation" = "Wallet activation";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "The sender sent these funds with a spending lock that will expire on the shown date. \n\nNo worries, the received Bitcoins are already yours, but until the lock period expires you cannot spend them on the Bitcoin network.";
 "balance.token.not_relayed" = "Broadcasting";
@@ -358,9 +363,6 @@
 "balance.token.frozen.info.description" = "Frozen Description Text";
 "balance.token.account.inactive.title" = "Account Not Active";
 "balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens but won’t correct balances until activated.";
-"balance.token.account.stellar.inactive.description" = "New Stellar accounts require a deposit of at least 1 XLM to become active.";
-"balance.token.account.stellar.inactive_asset.title" = "Asset Not Activated";
-"balance.token.account.stellar.inactive_asset.description" = "Assets require an established trustline to become active.";
 
 // Account switcher
 
@@ -387,7 +389,8 @@
 "deposit.qr_code_description" = "Your address for depositing %@";
 "deposit.qr_code_description.watch" = "Watch address of %@";
 "deposit.account" = "Account";
-"deposit.asset" = "Asset";
+"deposit.trustline" = "Trustline";
+"deposit.trustline.not_activated" = "Not activated";
 "deposit.activate" = "Activate";
 
 "deposit.amount" = "Amount";
@@ -397,8 +400,8 @@
 "deposit.used_addresses" = "Used Addresses";
 "deposit.not_active.title" = "Not Active Address";
 "deposit.not_active.tron_description" = "Newly created accounts on the TRON blockchain are inactive and cannot be queried or explored. They need to be activated.\n\nTransferring TRX or TRC-10 tokens to an inactive account address will activate the account. Activating a new account on the Tron chain requires a fee of 1 TRX";
-"deposit.stellar.inactive_asset.title" = "Asset Not Activated";
-"deposit.stellar.inactive_asset.description" = "Assets require an established trustline to become active.";
+"deposit.stellar.inactive_asset.title" = "Activate Token";
+"deposit.stellar.inactive_asset.description" = "To receive %@, you need to activate the token. The Stellar network requires a trustline to be established for each token. Without it, your wallet cannot receive %@ — the transaction will be rejected and the funds will not be delivered.";
 
 
 "deposit.used_addresses.title" = "Used Addresses";

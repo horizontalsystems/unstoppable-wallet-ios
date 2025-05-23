@@ -22,7 +22,7 @@ class ReceiveAddressViewModel: ObservableObject {
     private var hasAppeared = false
 
     @Published private(set) var state: DataStatus<ReceiveAddressModule.ViewItem> = .loading
-    @Published private(set) var popup: ReceiveAddressModule.PopupWarningItem?
+    @Published var popup: ReceiveAddressModule.PopupWarningItem?
     @Published private(set) var actions: [ReceiveAddressModule.ActionType] = []
     @Published private(set) var amount: Decimal = 0
 
@@ -80,6 +80,10 @@ extension ReceiveAddressViewModel {
 
     func onFirstAppear() {
         hasAppeared = true
+        syncPopup(state: service.state)
+    }
+
+    func showPopup() {
         syncPopup(state: service.state)
     }
 
