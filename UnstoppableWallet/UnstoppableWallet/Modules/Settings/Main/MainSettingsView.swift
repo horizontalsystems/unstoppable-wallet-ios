@@ -116,23 +116,9 @@ struct MainSettingsView: View {
             TabView(selection: $currentSlideIndex) {
                 ForEach(0 ..< viewModel.slides.count, id: \.self) { index in
                     ZStack {
-                        ZStack(alignment: .trailing) {
-                            switch viewModel.slides[index] {
-                            case .premium:
-                                premiumSlide()
-                                    .onTapGesture {
-                                        purchasesPresented = true
-                                    }
-                            case .miniApp:
-                                miniAppSlide()
-                                    .onTapGesture {
-                                        UrlManager.open(url: "https://t.me/\(AppConfig.appTokenTelegramAccount)/app")
-                                    }
-                            }
-                        }
-                        .frame(height: 130)
-                        .background(RoundedRectangle(cornerRadius: .cornerRadius16, style: .continuous).fill(Color.themeDarker))
-                        .clipShape(RoundedRectangle(cornerRadius: .cornerRadius16, style: .continuous))
+                        slide(slide: viewModel.slides[index])
+                            .frame(height: 130)
+                            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius16, style: .continuous))
                     }
                     .padding(.horizontal, .margin16)
                     .tag(index)
@@ -160,30 +146,61 @@ struct MainSettingsView: View {
         }
     }
 
-    @ViewBuilder private func premiumSlide() -> some View {
-        Image("premium_banner")
-
-        VStack(alignment: .leading, spacing: .margin4) {
-            Text("premium.cell.title".localized).textHeadline1(color: .themeYellow)
-            Spacer()
-            Text("premium.cell.description".localized).textSubhead1(color: .themeSteelLight)
-
-            if let introductoryOffer = viewModel.introductoryOffer {
-                Text(introductoryOffer).textCaptionSB(color: .themeGreen)
-            }
+    @ViewBuilder private func slide(slide: MainSettingsViewModel.Slide) -> some View {
+        switch slide {
+        case .premium:
+            premiumSlide()
+                .onTapGesture {
+                    purchasesPresented = true
+                }
+        case .miniApp:
+            miniAppSlide()
+                .onTapGesture {
+                    UrlManager.open(url: "https://t.me/\(AppConfig.appTokenTelegramAccount)/app")
+                }
         }
-        .padding(EdgeInsets(top: .margin16, leading: .margin16, bottom: .margin16, trailing: 138))
+    }
+
+    @ViewBuilder private func premiumSlide() -> some View {
+        ZStack(alignment: .trailing) {
+            GeometryReader { geometry in
+                Image("banner_premium")
+                    .clipped()
+                    .frame(width: geometry.size.width, alignment: .trailing)
+            }
+
+            VStack(alignment: .leading, spacing: .margin4) {
+                Text("premium.cell.title".localized).textHeadline1(color: .themeYellow)
+                Spacer()
+                Text("premium.cell.description".localized).textSubhead1(color: .themeSteelLight)
+
+                if let introductoryOffer = viewModel.introductoryOffer {
+                    Text(introductoryOffer).textCaptionSB(color: .themeGreen)
+                }
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(EdgeInsets(top: .margin16, leading: .margin16, bottom: .margin16, trailing: 138))
+        }
+        .background(Color.themeDarker)
     }
 
     @ViewBuilder private func miniAppSlide() -> some View {
-        Image("mini_app_banner")
+        ZStack(alignment: .trailing) {
+            GeometryReader { geometry in
+                Image("banner_mini_app")
+                    .clipped()
+                    .frame(width: geometry.size.width, alignment: .trailing)
+            }
 
-        VStack(alignment: .leading, spacing: .margin4) {
-            Text("mini_app.cell.title".localized).textHeadline1(color: .themeYellow)
-            Spacer()
-            Text("mini_app.cell.description".localized).textSubhead1(color: .themeSteelLight)
+            VStack(alignment: .leading, spacing: .margin4) {
+                Text("mini_app.cell.title".localized).textHeadline1(color: .themeYellow)
+                Spacer()
+                Text("mini_app.cell.description".localized).textSubhead1(color: .themeSteelLight)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .padding(EdgeInsets(top: .margin16, leading: .margin16, bottom: .margin16, trailing: 185))
         }
-        .padding(EdgeInsets(top: .margin16, leading: .margin16, bottom: .margin16, trailing: 185))
+        .background(Color.themeDarker)
     }
 
     @ViewBuilder private func manageWallets() -> some View {
