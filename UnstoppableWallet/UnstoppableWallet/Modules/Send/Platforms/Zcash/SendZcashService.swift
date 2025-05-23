@@ -119,7 +119,7 @@ extension SendZcashService: ISendService {
 
 extension SendZcashService: ISendXFeeValueService {
     var feeState: DataStatus<Decimal> {
-        .completed(adapter.fee)
+        .completed(10) // todo: remove all service
     }
 
     var feeStateObservable: Observable<DataStatus<Decimal>> {
