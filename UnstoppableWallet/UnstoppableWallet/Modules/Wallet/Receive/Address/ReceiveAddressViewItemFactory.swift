@@ -96,7 +96,7 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
         if let address = item.address as? StellarDepositAddress, !address.assetActivated {
             return .init(
                 title: "deposit.stellar.inactive_asset.title".localized,
-                description: .init(text: "deposit.stellar.inactive_asset.description".localized, style: .warning),
+                description: .init(text: "deposit.stellar.inactive_asset.description".localized(item.coinCode, item.coinCode), style: .warning),
                 mode: .activateStellarAsset
             )
         }
