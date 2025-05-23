@@ -22,6 +22,7 @@ class ZcashAdapter {
 
     private let synchronizer: Synchronizer
 
+    private var accountId: AccountUUID?
     private var zAddress: String?
     private var transactionPool: ZcashTransactionPool?
 
@@ -34,7 +35,6 @@ class ZcashAdapter {
     private var logger: HsToolKit.Logger?
 
     private(set) var network: ZcashNetwork
-    private(set) var fee: Decimal
 
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
     private let balanceStateSubject = PublishSubject<AdapterState>()
@@ -44,6 +44,7 @@ class ZcashAdapter {
 
     private var started = false
     private var lastBlockHeight: Int = 0
+    private(set) var areFundsSpendable: Bool = false
 
     private var synchronizerState: SynchronizerState? {
         didSet {
@@ -74,9 +75,6 @@ class ZcashAdapter {
         }
 
         network = ZcashNetworkBuilder.network(for: .mainnet)
-
-        // TODO: update fee settings
-        fee = network.constants.defaultFee().decimalValue.decimalValue
 
         token = wallet.token
         transactionSource = wallet.transactionSource
@@ -139,7 +137,7 @@ class ZcashAdapter {
         Task { [weak self, synchronizer] in
             do {
                 let tool = DerivationTool(networkType: .mainnet)
-                guard let unifiedSpendingKey = try? tool.deriveUnifiedSpendingKey(seed: seedData, accountIndex: 0),
+                guard let unifiedSpendingKey = try? tool.deriveUnifiedSpendingKey(seed: seedData, accountIndex: .zero),
                       let unifiedViewingKey = try? tool.deriveUnifiedFullViewingKey(from: unifiedSpendingKey)
                 else {
                     throw AppError.ZcashError.cantCreateKeys
@@ -148,17 +146,24 @@ class ZcashAdapter {
                 self?.spendingKey = unifiedSpendingKey
                 self?.viewingKey = unifiedViewingKey
 
-                let result = try await synchronizer.prepare(with: seedData, walletBirthday: walletBirthday, for: initMode)
+                let result = try await synchronizer.prepare(with: seedData, walletBirthday: walletBirthday, for: initMode, name: "", keySource: nil)
                 if case .seedRequired = result {
                     throw AppError.ZcashError.seedRequired
                 }
+
+                guard let account = try await synchronizer.listAccounts().first else {
+                    throw AppError.ZcashError.noReceiveAddress
+                }
+
                 self?.logger?.log(level: .debug, message: "Successful prepared!")
-                guard let address = try? await synchronizer.getUnifiedAddress(accountIndex: 0),
+                guard let address = try? await synchronizer.getUnifiedAddress(accountUUID: account.id),
                       let saplingAddress = try? address.saplingReceiver()
                 else {
                     throw AppError.ZcashError.noReceiveAddress
                 }
-                self?.zAddress = saplingAddress.stringEncoded
+                
+                self?.accountId = account.id
+                self?.zAddress = address.stringEncoded
                 self?.depositAddressSubject.send(.completed(DepositAddress(saplingAddress.stringEncoded)))
 
                 self?.logger?.log(level: .debug, message: "Successful get address for 0 account! \(saplingAddress.stringEncoded)")
@@ -175,8 +180,8 @@ class ZcashAdapter {
                     self?.transactionSubject.onNext(wrapped)
                 }
 
-                let shielded = await (try? synchronizer.getAccountBalance(accountIndex: 0)?.saplingBalance.total().decimalValue.decimalValue) ?? 0
-                let shieldedVerified = await (try? synchronizer.getAccountBalance(accountIndex: 0)?.saplingBalance.spendableValue.decimalValue.decimalValue) ?? 0
+                let shielded = await (try? synchronizer.getAccountsBalances()[account.id]?.saplingBalance.total().decimalValue.decimalValue) ?? 0
+                let shieldedVerified = await (try? synchronizer.getAccountsBalances()[account.id]?.saplingBalance.spendableValue.decimalValue.decimalValue) ?? 0
                 self?.balanceSubject.onNext(
                     VerifiedBalanceData(
                         fullBalance: shielded,
@@ -266,13 +271,15 @@ class ZcashAdapter {
             lastBlockHeight = max(state.latestBlockHeight, lastBlockHeight)
             logger?.log(level: .debug, message: "Update BlockHeight = \(lastBlockHeight)")
             checkFailingTransactions()
-        case let .syncing(progress):
+        case let .syncing(progress, areFundsSpendable):
             if !started {
                 started = true
             }
             logger?.log(level: .debug, message: "State: Syncing")
-            logger?.log(level: .debug, message: "State progress: \(progress)")
+            logger?.log(level: .debug, message: "State progress: \(progress) | spendable: \(areFundsSpendable)")
             lastBlockHeight = max(state.latestBlockHeight, lastBlockHeight)
+            self.areFundsSpendable = areFundsSpendable
+            
             logger?.log(level: .debug, message: "Update BlockHeight = \(lastBlockHeight)")
 
             lastBlockUpdatedSubject.onNext(())
@@ -296,11 +303,11 @@ class ZcashAdapter {
     private func sync(event: SynchronizerEvent) {
         switch event {
         case let .foundTransactions(transactions, inRange):
-            logger?.log(level: .debug, message: "found \(transactions.count) mined txs in range: \(inRange)")
+            logger?.log(level: .debug, message: "found \(transactions.count) mined txs in range: \(String(describing: inRange))")
             for overview in transactions {
                 logger?.log(level: .debug, message: "tx: v =\(overview.value.decimalValue.decimalString) : fee = \(overview.fee?.decimalString() ?? "N/A") : height = \(overview.minedHeight?.description ?? "N/A")")
             }
-            let lastBlockHeight = max(inRange.upperBound, lastBlockHeight)
+            let lastBlockHeight = max(inRange?.upperBound ?? 0, lastBlockHeight)
             Task {
                 let newTxs = await transactionPool?.sync(transactions: transactions, lastBlockHeight: lastBlockHeight) ?? []
                 transactionSubject.onNext(newTxs)
@@ -472,13 +479,20 @@ class ZcashAdapter {
     }
 
     private var _balanceData: BalanceData {
-        guard let synchronizerState else {
+        guard let synchronizerState, let accountId else {
             return BalanceData(available: 0)
         }
 
+        guard let balances = synchronizerState.accountsBalances[accountId] else {
+            return VerifiedBalanceData(fullBalance: 0, available: 0)
+        }
+
+        let full = balances.saplingBalance.total() + balances.orchardBalance.total()
+        let available = balances.saplingBalance.spendableValue + balances.orchardBalance.spendableValue
+
         return VerifiedBalanceData(
-            fullBalance: synchronizerState.accountBalance?.saplingBalance.total().decimalValue.decimalValue ?? 0,
-            available: synchronizerState.accountBalance?.saplingBalance.spendableValue.decimalValue.decimalValue ?? 0
+            fullBalance: full.decimalValue.decimalValue,
+            available: available.decimalValue.decimalValue
         )
     }
 
@@ -509,7 +523,7 @@ extension ZcashAdapter {
             outputParamsURL: outputParamsURL(uniqueId: uniqueId),
             saplingParamsSourceURL: SaplingParamsSourceURL.default,
             alias: .custom(uniqueId),
-            loggingPolicy: .default(.error)
+            loggingPolicy: .noLogging
         )
     }
 
@@ -626,12 +640,13 @@ extension ZcashAdapter: IAdapter {
         let zAddress = zAddress ?? "No Info"
         var balanceState = "No Balance Information yet"
 
-        if let status = synchronizerState {
+        if let status = synchronizerState, let accountId {
             balanceState = """
             shielded balance (BalanceData)
+                accountId: \(accountId)
                 total:  \(balanceData.balanceTotal.description)
                 verified:  \(balanceData.available)
-            unshielded balance: \(String(describing: status.accountBalance?.unshielded ?? Zatoshi(0)))
+            unshielded balance: \(String(describing: status.accountsBalances[accountId]?.unshielded ?? Zatoshi(0)))
             """
         }
         return """
@@ -734,7 +749,18 @@ extension ZcashAdapter: ISendZcashAdapter {
     }
 
     var availableBalance: Decimal {
-        max(0, balanceData.available - fee)
+        let availableBalance = max(0, balanceData.available)
+        return availableBalance
+    }
+    
+    func proposal(amount: Decimal, address: Recipient, memo: Memo?) async throws -> Proposal {
+        guard let accountId else {
+            throw AppError.ZcashError.noAccountId
+        }
+        
+        let amountInZatoshi = Zatoshi.from(decimal: amount)
+        
+        return try await synchronizer.proposeTransfer(accountUUID: accountId, recipient: address, amount: amountInZatoshi, memo: memo)
     }
 
     func validate(address: String, checkSendToSelf: Bool = true) throws -> AddressType {
@@ -756,25 +782,23 @@ extension ZcashAdapter: ISendZcashAdapter {
     }
 
     func sendSingle(amount: Decimal, address: Recipient, memo: Memo?) -> Single<Void> {
-        guard let spendingKey else {
-            return .error(AppError.ZcashError.noReceiveAddress)
+        guard let accountId else {
+            return .error(AppError.ZcashError.noAccountId)
         }
 
         return Single.create { [weak self] observer in
-            guard let self else {
-                observer(.error(AppError.unknownError))
-                return Disposables.create()
-            }
-            Task {
+            Task { [weak self] in
                 do {
-                    let pendingEntity = try await self.synchronizer.sendToAddress(
-                        spendingKey: spendingKey,
-                        zatoshi: Zatoshi.from(decimal: amount),
-                        toAddress: address,
-                        memo: memo
-                    )
-                    self.logger?.log(level: .debug, message: "Successful send TX: : \(pendingEntity.value.decimalValue.description):")
-                    self.reSyncPending()
+                    guard let proposal = try await self?.synchronizer.proposeTransfer(
+                        accountUUID: accountId,
+                        recipient: address,
+                        amount: Zatoshi.from(decimal: amount), memo: memo
+                    ) else {
+                        observer(.error(AppError.unknownError))
+                        return
+                    }
+                    
+                    try await self?.send(proposal: proposal)
                     observer(.success(()))
                 } catch {
                     observer(.error(error))
@@ -784,19 +808,52 @@ extension ZcashAdapter: ISendZcashAdapter {
         }
     }
 
-    func send(amount: Decimal, address: Recipient, memo: Memo?) async throws {
+    func send(proposal: Proposal) async throws {
         guard let spendingKey else {
             throw AppError.ZcashError.noReceiveAddress
         }
 
-        let pendingEntity = try await synchronizer.sendToAddress(
-            spendingKey: spendingKey,
-            zatoshi: Zatoshi.from(decimal: amount),
-            toAddress: address,
-            memo: memo
-        )
+        let stream = try await synchronizer.createProposedTransactions(proposal: proposal, spendingKey: spendingKey)
 
-        logger?.log(level: .debug, message: "Successful send TX: : \(pendingEntity.value.decimalValue.description):")
+        let transactionCount = proposal.transactionCount()
+        var successCount = 0
+        var iterator = stream.makeAsyncIterator()
+        
+        var txIds: [String] = []
+        var resubmitableFailure = false
+        
+        for _ in 1...transactionCount {
+            if let transactionSubmitResult = try await iterator.next() {
+                switch transactionSubmitResult {
+                case .success(txId: let id):
+                    successCount += 1
+                    txIds.append(id.toHexStringTxId())
+                    logger?.log(level: .debug, message: "-> Successful send TX: \(id.toHexStringTxId())")
+                case let .grpcFailure(txId: id, error: error):
+                    txIds.append(id.toHexStringTxId())
+                    logger?.log(level: .error, message: "-> Error with send TX: \(error.localizedDescription)")
+                    resubmitableFailure = true
+                case let .submitFailure(txId: id, code: code, description: description):
+                    txIds.append(id.toHexStringTxId())
+                    logger?.log(level: .error, message: "-> Error submit TX: \(id.toHexStringTxId()) | code: \(code) | desc: \(description)")
+                case .notAttempted(txId: let id):
+                    txIds.append(id.toHexStringTxId())
+                    logger?.log(level: .error, message: "-> notAttempted TX: \(id.toHexStringTxId())")
+                }
+            }
+        }
+        
+        if successCount == 0 {
+            if resubmitableFailure {
+                logger?.log(level: .debug, message: "Grpc Failure! \(txIds.count)")
+            } else {
+                logger?.log(level: .debug, message: "Failure sended TXs! \(txIds.count)")
+            }
+        } else if successCount == transactionCount {
+            logger?.log(level: .debug, message: "Successful sended All TXs")
+        } else {
+            logger?.log(level: .debug, message: "Partial success TXs \(txIds.count)")
+        }
 
         reSyncPending()
     }
@@ -906,4 +963,8 @@ extension WalletInitMode {
         case .restoreWallet: return "Restored Wallet"
         }
     }
+}
+
+extension Zip32AccountIndex {
+    static let zero: Self = .init(0)
 }

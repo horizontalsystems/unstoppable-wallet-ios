@@ -18,18 +18,32 @@ class ZcashPreSendHandler {
 
         adapter.balanceStateUpdatedObservable
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe { [weak self] state in
-                self?.stateSubject.send(state)
+            .subscribe { [weak self] in
+                self?.sync(state: $0)
             }
             .disposed(by: disposeBag)
 
         adapter.balanceDataUpdatedObservable
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe { [weak self, adapter] balanceData in
-                let balance = max(0, balanceData.available - adapter.fee)
-                self?.balanceSubject.send(balance)
+            .subscribe { [weak self] in
+                self?.updateBalanceSubject(balanceData: $0)
             }
             .disposed(by: disposeBag)
+    }
+    
+    private func sync(state: AdapterState) {
+        if adapter.areFundsSpendable {
+            stateSubject.send(.synced)
+            return
+        }
+
+        stateSubject.send(state)
+    }
+    
+    private func updateBalanceSubject(balanceData: BalanceData) {
+        // return all available balance
+        let balance = max(0, balanceData.available)
+        balanceSubject.send(balance)
     }
 }
 
@@ -43,7 +57,7 @@ extension ZcashPreSendHandler: IPreSendHandler {
     }
 
     var balance: Decimal {
-        max(0, adapter.balanceData.available - adapter.fee)
+        max(0, adapter.balanceData.available)
     }
 
     var balancePublisher: AnyPublisher<Decimal, Never> {

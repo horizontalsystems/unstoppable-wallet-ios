@@ -121,7 +121,7 @@ class PreSendViewModel: ObservableObject {
         if let handler {
             adapterState = handler.state
             availableBalance = handler.balance
-            hasMemo = handler.hasMemo(address: nil)
+            hasMemo = handler.hasMemo(address: resolvedAddress.address)
 
             handler.statePublisher
                 .receive(on: DispatchQueue.main)
