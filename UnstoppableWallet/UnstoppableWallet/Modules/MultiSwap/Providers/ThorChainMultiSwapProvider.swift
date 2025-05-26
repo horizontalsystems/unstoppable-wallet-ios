@@ -11,8 +11,8 @@ import SwiftUI
 class ThorChainMultiSwapProvider: IMultiSwapProvider {
     private let baseUrl = "https://thornode.ninerealms.com"
 
-//    private let networkManager = App.shared.networkManager
-    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
+    private let networkManager = App.shared.networkManager
+    // private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
     private let marketKit = App.shared.marketKit
     private let evmBlockchainManager = App.shared.evmBlockchainManager
     private let btcBlockchainManager = App.shared.btcBlockchainManager
@@ -25,6 +25,9 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
         scriptTypes: [.p2pkh, .p2wpkhSh, .p2wpkh],
         maxOutputsCountForInputs: 10
     )
+
+    private let affiliate: String? = AppConfig.thorchainAffiliate
+    private let affiliateBps: Int? = AppConfig.thorchainAffiliateBps
 
     var assets = [Asset]()
 
@@ -57,7 +60,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
         let blockchainType = tokenIn.blockchainType
 
         switch blockchainType {
-        case .avalanche, .binanceSmartChain, .ethereum:
+        case .avalanche, .base, .binanceSmartChain, .ethereum:
             guard let router = swapQuote.router else {
                 throw SwapError.noRouterAddress
             }
@@ -83,9 +86,14 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
 
     func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
         let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
+        let slippage = slippage
+
+        var memoComponents = swapQuote.memo.components(separatedBy: ":")
+        memoComponents[3] = (swapQuote.expectedAmountOut * pow(10, 8) * (1 - slippage / 100)).rounded(decimal: 0).description
+        let memo = memoComponents.joined(separator: ":")
 
         switch tokenIn.blockchainType {
-        case .avalanche, .binanceSmartChain, .ethereum:
+        case .avalanche, .base, .binanceSmartChain, .ethereum:
             guard let router = swapQuote.router else {
                 throw SwapError.noRouterAddress
             }
@@ -97,14 +105,14 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
                 transactionData = try TransactionData(
                     to: EvmKit.Address(hex: swapQuote.inboundAddress),
                     value: tokenIn.fractionalMonetaryValue(value: amountIn),
-                    input: Data(swapQuote.memo.utf8) // TODO: CHECK THIS POINT
+                    input: Data(memo.utf8) // TODO: CHECK THIS POINT
                 )
             case let .eip20(address):
                 let method = try DepositWithExpiryMethod(
                     inboundAddress: EvmKit.Address(hex: swapQuote.inboundAddress),
                     asset: EvmKit.Address(hex: address),
                     amount: tokenIn.fractionalMonetaryValue(value: amountIn),
-                    memo: swapQuote.memo,
+                    memo: memo,
                     expiry: BigUInt(UInt64(Date().timeIntervalSince1970) + 1 * 60 * 60) // TODO: CHECK THIS POINT
                 )
 
@@ -157,7 +165,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
                         feeRate: _satoshiPerByte,
                         sortType: .none,
                         rbfEnabled: true,
-                        memo: swapQuote.memo,
+                        memo: memo,
                         unspentOutputs: nil,
                         dustThreshold: swapQuote.dustThreshold,
                         utxoFilters: utxoFilters,
@@ -246,13 +254,18 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
         let amount = (amountIn * pow(10, 8)).rounded(decimal: 0)
         let destination = try resolveDestination(token: tokenOut)
 
-        let parameters: Parameters = [
+        var parameters: Parameters = [
             "from_asset": assetIn.id,
             "to_asset": assetOut.id,
             "amount": amount.description,
             "destination": destination,
-//            "tolerance_bps": slippage * 100
+            // "tolerance_bps": slippage * 100,
         ]
+
+        if let affiliate, let affiliateBps {
+            parameters["affiliate"] = affiliate
+            parameters["affiliate_bps"] = affiliateBps
+        }
 
         return try await networkManager.fetch(url: "\(baseUrl)/thorchain/quote/swap", parameters: parameters)
     }
@@ -273,7 +286,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
         }
 
         switch blockchainType {
-        case .avalanche, .binanceSmartChain, .ethereum:
+        case .avalanche, .base, .binanceSmartChain, .ethereum:
             let chain = evmBlockchainManager.chain(blockchainType: blockchainType)
 
             guard let address = account.type.evmAddress(chain: chain) else {
@@ -316,7 +329,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
             }
 
             switch blockchainType {
-            case .avalanche, .binanceSmartChain, .ethereum:
+            case .avalanche, .base, .binanceSmartChain, .ethereum:
                 let components = assetId.components(separatedBy: "-")
 
                 let tokenType: TokenType
@@ -346,6 +359,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
     private func blockchainType(assetBlockchainId: String) -> BlockchainType? {
         switch assetBlockchainId {
         case "AVAX": return .avalanche
+        case "BASE": return .base
         case "BCH": return .bitcoinCash
         case "BSC": return .binanceSmartChain
         case "BTC": return .bitcoin

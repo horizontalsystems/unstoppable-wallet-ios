@@ -138,14 +138,22 @@ enum AppConfig {
         (Bundle.main.object(forInfoDictionaryKey: "OneInchApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
 
+    static var oneInchCommissionAddress: String? {
+        (Bundle.main.object(forInfoDictionaryKey: "OneInchCommissionAddress") as? String).flatMap { $0.isEmpty ? nil : $0 }
+    }
+
     static var oneInchCommission: Decimal? {
         (Bundle.main.object(forInfoDictionaryKey: "OneInchCommission") as? String).flatMap {
             $0.isEmpty ? nil : Decimal(string: $0, locale: Locale(identifier: "en_US_POSIX"))
         }
     }
 
-    static var oneInchCommissionAddress: String? {
-        (Bundle.main.object(forInfoDictionaryKey: "OneInchCommissionAddress") as? String).flatMap { $0.isEmpty ? nil : $0 }
+    static var thorchainAffiliate: String? {
+        (Bundle.main.object(forInfoDictionaryKey: "ThorchainAffiliate") as? String).flatMap { $0.isEmpty ? nil : $0 }
+    }
+
+    static var thorchainAffiliateBps: Int? {
+        (Bundle.main.object(forInfoDictionaryKey: "ThorchainAffiliateBps") as? String).flatMap { $0.isEmpty ? nil : Int($0) }
     }
 
     static var referralAppServerUrl: String {
