@@ -23,6 +23,8 @@ chainalysis_api_key =
 hashdit_api_key =
 one_inch_commission =
 one_inch_commission_address =
+thorchain_affiliate =
+thorchain_affiliate_bps =
 swap_enabled = true
 donate_enabled = true
 

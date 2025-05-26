@@ -61,6 +61,18 @@ class ThorChainMultiSwapEvmConfirmationQuote: BaseEvmMultiSwapConfirmationQuote 
             )
         }
 
+        let minAmountOut = amountOut * (1 - slippage / 100)
+
+        fields.append(
+            .value(
+                title: "swap.confirmation.minimum_received".localized,
+                description: nil,
+                appValue: AppValue(token: tokenOut, value: minAmountOut),
+                currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: minAmountOut * $0) },
+                formatFull: true
+            )
+        )
+
         return fields
     }
 

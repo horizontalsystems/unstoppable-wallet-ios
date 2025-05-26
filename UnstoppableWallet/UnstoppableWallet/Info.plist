@@ -140,6 +140,10 @@
 	<string>${snowtrace_api_keys}</string>
 	<key>SwapEnabled</key>
 	<string>${swap_enabled}</string>
+	<key>ThorchainAffiliate</key>
+	<string>${thorchain_affiliate}</string>
+	<key>ThorchainAffiliateBps</key>
+	<string>${thorchain_affiliate_bps}</string>
 	<key>TronGridApiKey</key>
 	<string>${trongrid_api_key}</string>
 	<key>ChainalysisApiKey</key>
