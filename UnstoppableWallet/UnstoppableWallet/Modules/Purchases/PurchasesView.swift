@@ -166,7 +166,7 @@ struct PurchasesView: View {
     @ViewBuilder private func walletDescription() -> some View {
         VStack {
             Text("purchases.wallet_description.title".localized)
-                .themeHeadline2()
+                .themeHeadline2(alignment: .center)
                 .multilineTextAlignment(.center)
                 .padding(EdgeInsets(top: .margin32, leading: .margin32, bottom: .margin24, trailing: .margin32))
 

@@ -38,10 +38,13 @@ struct PurchaseBottomSheetView: View {
                 .padding(.top, .margin12)
                 .padding(.horizontal, .margin16)
 
-            subscribedDescription()
-                .multilineTextAlignment(.center)
-                .frame(height: 64)
-                .padding(.horizontal, .margin32)
+            VStack(spacing: 0) {
+                subscribedDescription().multilineTextAlignment(.center)
+                Spacer()
+            }
+            .frame(height: 64)
+            .padding(.top, .margin12)
+            .padding(.horizontal, .margin32)
 
             VStack(spacing: .margin12) {
                 Button(action: {
@@ -65,7 +68,15 @@ struct PurchaseBottomSheetView: View {
                 .disabled(viewModel.buttonState == .loading)
                 .buttonStyle(PrimaryButtonStyle(style: .transparent))
             }
-            .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin12, trailing: .margin24))
+            .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: 0, trailing: .margin24))
+
+            VStack(spacing: 0) {
+                Text(termsText())
+                    .foregroundColor(.themeGray)
+                    .font(.themeSubhead2)
+                    .multilineTextAlignment(.center)
+            }
+            .padding(EdgeInsets(top: .margin12, leading: .margin32, bottom: .margin12, trailing: .margin32))
         }
         .offerCodeRedemption(isPresented: $redeemSheetPresented) { result in
             viewModel.handleRedeemCode(result: result)
@@ -113,6 +124,37 @@ struct PurchaseBottomSheetView: View {
         case .subscribe:
             Text("purchase.period.description2".localized).foregroundColor(.themeGray).font(.themeSubhead2)
         }
+    }
+
+    private func termsText() -> AttributedString {
+        let string = "purchase.agree".localized
+        let components = string.components(separatedBy: "%@")
+
+        guard components.count == 3 else {
+            return AttributedString(string)
+        }
+
+        var result = AttributedString("")
+
+        if !components[0].isEmpty { result.append(termsTextPart(string: components[0])) }
+        result.append(termsTextPart(string: "purchase.agree.terms_of_service".localized, url: AppConfig.appleTermsOfServiceLink))
+        if !components[1].isEmpty { result.append(termsTextPart(string: components[1])) }
+        result.append(termsTextPart(string: "purchase.agree.privacy_policy".localized, url: AppConfig.privacyPolicyLink))
+        if !components[2].isEmpty { result.append(termsTextPart(string: components[2])) }
+
+        return result
+    }
+
+    private func termsTextPart(string: String, url: String? = nil) -> AttributedString {
+        var part = AttributedString(string)
+
+        if let url {
+            part.link = URL(string: url)
+            part.foregroundColor = .themeGray
+            part.underlineStyle = .single
+        }
+
+        return part
     }
 }
 
