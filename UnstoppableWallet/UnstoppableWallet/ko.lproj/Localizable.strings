@@ -2285,7 +2285,7 @@
 "purchase.period.month" = "월";
 "purchase.period.description1" = "첫 7일은 무료로 이용하세요.";
 "purchase.period.description2" = "App Store 구독은 언제든지 취소할 수 있습니다.";
-"purchase.lifetime.description" = "제한 없이 일회성 구독을 구매할 수
+"purchase.lifetime.description" = "제한 없이 일회성 구독을 구매할 수";
 "purchase.agree" = "계정을 업그레이드하면 %@ 및 %@ 에 동의하게 됩니다.";
 "purchase.agree.terms_of_service" = "이용 약관";
 "purchase.agree.privacy_policy" = "개인정보 보호정책";
