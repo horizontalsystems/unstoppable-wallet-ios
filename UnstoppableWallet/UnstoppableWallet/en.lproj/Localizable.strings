@@ -2284,7 +2284,7 @@
 "purchase.period.description2" = "You can cancel your App Store subscription at any time.";
 "purchase.lifetime.description" = "One-time payment with no renewals or additional charges.";
 "purchase.agree" = "By upgrading your account, you agree to the %@ and %@.";
-"purchase.agree.terms_of_service" = "Terms of Service";
+"purchase.agree.terms_of_service" = "Terms of Use";
 "purchase.agree.privacy_policy" = "Privacy Policy";
 
 "purchases.period.button.try" = "Get 7 days for FREE";

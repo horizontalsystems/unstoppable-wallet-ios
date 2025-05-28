@@ -2285,6 +2285,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "purchase.period.description1" = "Genieße die ersten 7 Tage KOSTENLOS.";
 "purchase.period.description2" = "Du kannst dein App Store-Abonnement jederzeit kündigen.";
 "purchase.lifetime.description" = "Du kannst ein einmaliges Abonnement ohne Einschränkungen erwerben";
+"purchase.agree" = "Mit dem Upgrade Ihres Kontos stimmen Sie den %@ und der %@ zu.";
+"purchase.agree.terms_of_service" = "Nutzungsbedingungen";
+"purchase.agree.privacy_policy" = "Datenschutzrichtlinie";
 
 "purchases.period.button.try" = "Hole dir 7 Tage KOSTENLOS";
 "purchases.period.button.subscribe" = "Abonnieren";

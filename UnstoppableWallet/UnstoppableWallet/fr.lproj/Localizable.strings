@@ -2285,6 +2285,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "purchase.period.description1" = "Profitez des 7 premiers jours GRATUITS.";
 "purchase.period.description2" = "Vous pouvez annuler votre abonnement App Store à tout moment.";
 "purchase.lifetime.description" = "Vous pouvez acheter un abonnement unique sans aucune restriction";
+"purchase.agree" = "En mettant à niveau votre compte, vous acceptez les %@ et la %@.";
+"purchase.agree.terms_of_service" = "Conditions d'utilisation";
+"purchase.agree.privacy_policy" = "Politique de confidentialité";
 
 "purchases.period.button.try" = "Obtenez 7 jours GRATUITS";
 "purchases.period.button.subscribe" = "S'abonner";
