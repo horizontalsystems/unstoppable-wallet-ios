@@ -2289,7 +2289,10 @@
 "purchase.period.month" = "месяц";
 "purchase.period.description1" = "Пользуйтесь первые 7 дней БЕСПЛАТНО.";
 "purchase.period.description2" = "Вы можете отменить подписку App Store в любое время.";
-"purchase.lifetime.description" = "-";
+"purchase.lifetime.description" = "Единовременный платёж без продлений и дополнительных сборов.";
+"purchase.agree" = "При переходе на премиум вы соглашаетесь с %@ и %@.";
+"purchase.agree.terms_of_service" = "Условиями использования";
+"purchase.agree.privacy_policy" = "Политикой конфиденциальности";
 
 "purchases.period.button.try" = "Получите 7 дней БЕСПЛАТНО";
 "purchases.period.button.subscribe" = "Подписаться";
