@@ -13,8 +13,8 @@ class WatchlistManager {
     private var cancellables = Set<AnyCancellable>()
 
     private let coinUidsSubject = PassthroughSubject<[String], Never>()
-    private let showSignalsUpdatedSubject = PassthroughSubject<(), Never>()
-    
+    private let showSignalsUpdatedSubject = PassthroughSubject<Void, Never>()
+
     var coinUids: [String] {
         didSet {
             coinUidSet = Set(coinUids)
@@ -88,7 +88,7 @@ extension WatchlistManager {
         coinUidsSubject.eraseToAnyPublisher()
     }
 
-    var showSignalsUpdatedPublisher: AnyPublisher<(), Never> {
+    var showSignalsUpdatedPublisher: AnyPublisher<Void, Never> {
         showSignalsUpdatedSubject.eraseToAnyPublisher()
     }
 

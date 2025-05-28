@@ -11,6 +11,8 @@ enum AppConfig {
     static let companyWebPageLink = "https://horizontalsystems.io"
     static let appWebPageLink = "https://unstoppable.money"
     static let analyticsLink = "https://unstoppable.money/analytics"
+    static let privacyPolicyLink = "https://unstoppable.money/privacy"
+    static let appleTermsOfServiceLink = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula"
     static let appGitHubAccount = "horizontalsystems"
     static let appGitHubRepository = "unstoppable-wallet-ios"
     static let appTwitterAccount = "unstoppablebyhs"
