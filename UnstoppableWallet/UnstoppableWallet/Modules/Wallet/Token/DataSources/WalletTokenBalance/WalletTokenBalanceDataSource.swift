@@ -340,7 +340,7 @@ extension WalletTokenBalanceDataSource: UITableViewDelegate {
                     }
                     let viewController = BottomSheetModule.description(title: viewItem.infoTitle, text: viewItem.infoDescription, buttons: [shieldButton])
                     parentViewController?.present(viewController, animated: true)
-               }
+                }
             }
         default: ()
         }

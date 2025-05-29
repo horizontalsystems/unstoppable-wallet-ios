@@ -182,7 +182,7 @@ extension PreSendViewModel {
     var token: Token {
         wallet.token
     }
-    
+
     var title: String {
         handler?.title(token.coin.code) ?? "send.send".localized
     }

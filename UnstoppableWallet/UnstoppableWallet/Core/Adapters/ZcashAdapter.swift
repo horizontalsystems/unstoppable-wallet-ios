@@ -10,7 +10,7 @@ import UIKit
 import ZcashLightClientKit
 
 class ZcashAdapter {
-    static let minimalThreshold: Decimal = 0.0002   // minimal transparent balance to shielding
+    static let minimalThreshold: Decimal = 0.0002 // minimal transparent balance to shielding
 
     private static let endPoint = "zec.rocks" // "lightwalletd.electriccoin.co"
     private let queue = DispatchQueue(label: "\(AppConfig.label).zcash-adapter", qos: .userInitiated)
@@ -163,7 +163,7 @@ class ZcashAdapter {
                 else {
                     throw AppError.ZcashError.noReceiveAddress
                 }
-                
+
                 self?.accountId = account.id
                 self?.zAddress = address.stringEncoded
                 self?.depositAddressSubject.send(.completed(DepositAddress(saplingAddress.stringEncoded)))
@@ -181,7 +181,7 @@ class ZcashAdapter {
                     self?.logger?.log(level: .debug, message: "Send to pool all transactions \(wrapped.count)")
                     self?.transactionSubject.onNext(wrapped)
                 }
-                
+
                 let accountBalances = try? await synchronizer.getAccountsBalances()[account.id]
                 let shielded = accountBalances?.saplingBalance.total().decimalValue.decimalValue ?? 0
                 let shieldedVerified = accountBalances?.saplingBalance.spendableValue.decimalValue.decimalValue ?? 0
@@ -285,7 +285,7 @@ class ZcashAdapter {
             logger?.log(level: .debug, message: "State progress: \(progress) | spendable: \(areFundsSpendable)")
             lastBlockHeight = max(state.latestBlockHeight, lastBlockHeight)
             self.areFundsSpendable = areFundsSpendable
-            
+
             logger?.log(level: .debug, message: "Update BlockHeight = \(lastBlockHeight)")
 
             lastBlockUpdatedSubject.onNext(())
@@ -770,7 +770,7 @@ extension ZcashAdapter: IDepositAdapter {
     }
 }
 
-extension ZcashAdapter: ISendZcashAdapter {    
+extension ZcashAdapter: ISendZcashAdapter {
     enum AddressType {
         case shielded
         case transparent
@@ -780,14 +780,14 @@ extension ZcashAdapter: ISendZcashAdapter {
         let availableBalance = max(0, balanceData.available)
         return availableBalance
     }
-    
+
     func sendProposal(amount: Decimal, address: Recipient, memo: Memo?) async throws -> Proposal {
         guard let accountId else {
             throw AppError.ZcashError.noAccountId
         }
-        
+
         let amountInZatoshi = Zatoshi.from(decimal: amount)
-        
+
         return try await synchronizer.proposeTransfer(accountUUID: accountId, recipient: address, amount: amountInZatoshi, memo: memo)
     }
 
@@ -795,17 +795,17 @@ extension ZcashAdapter: ISendZcashAdapter {
         guard let accountId else {
             throw AppError.ZcashError.noAccountId
         }
-        
-        let requiredMemo = try memo ?? (try Memo(string: ""))
-        
+
+        let requiredMemo = try memo ?? Memo(string: "")
+
         var transparentAddress: TransparentAddress? = nil
         switch address {
         case let .transparent(tAddress): transparentAddress = tAddress
         default: ()
         }
-        
+
         let amountInZatoshi = Zatoshi.from(decimal: amount)
-        
+
         return try await synchronizer.proposeShielding(accountUUID: accountId, shieldingThreshold: amountInZatoshi, memo: requiredMemo, transparentReceiver: transparentAddress)
     }
 
@@ -843,7 +843,7 @@ extension ZcashAdapter: ISendZcashAdapter {
                         observer(.error(AppError.unknownError))
                         return
                     }
-                    
+
                     try await self?.send(proposal: proposal)
                     observer(.success(()))
                 } catch {
@@ -864,14 +864,14 @@ extension ZcashAdapter: ISendZcashAdapter {
         let transactionCount = proposal.transactionCount()
         var successCount = 0
         var iterator = stream.makeAsyncIterator()
-        
+
         var txIds: [String] = []
         var resubmitableFailure = false
-        
-        for _ in 1...transactionCount {
+
+        for _ in 1 ... transactionCount {
             if let transactionSubmitResult = try await iterator.next() {
                 switch transactionSubmitResult {
-                case .success(txId: let id):
+                case let .success(txId: id):
                     successCount += 1
                     txIds.append(id.toHexStringTxId())
                     logger?.log(level: .debug, message: "-> Successful send TX: \(id.toHexStringTxId())")
@@ -882,13 +882,13 @@ extension ZcashAdapter: ISendZcashAdapter {
                 case let .submitFailure(txId: id, code: code, description: description):
                     txIds.append(id.toHexStringTxId())
                     logger?.log(level: .error, message: "-> Error submit TX: \(id.toHexStringTxId()) | code: \(code) | desc: \(description)")
-                case .notAttempted(txId: let id):
+                case let .notAttempted(txId: id):
                     txIds.append(id.toHexStringTxId())
                     logger?.log(level: .error, message: "-> notAttempted TX: \(id.toHexStringTxId())")
                 }
             }
         }
-        
+
         if successCount == 0 {
             if resubmitableFailure {
                 logger?.log(level: .debug, message: "Grpc Failure! \(txIds.count)")

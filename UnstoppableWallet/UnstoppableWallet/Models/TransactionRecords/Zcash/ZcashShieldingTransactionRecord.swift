@@ -32,17 +32,17 @@ class ZcashShieldingTransactionRecord: BitcoinTransactionRecord {
     override var mainValue: AppValue? {
         value
     }
-    
+
     enum Direction {
         case shield, unshield
-        
+
         init(direction: ZcashTransactionWrapper.Direction) {
             switch direction {
             case .shield: self = .shield
             case .unshield: self = .unshield
             }
         }
-        
+
         var txTitle: String {
             switch self {
             case .shield: return "transactions.shield".localized

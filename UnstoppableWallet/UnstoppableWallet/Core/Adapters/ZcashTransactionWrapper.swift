@@ -18,7 +18,7 @@ class ZcashTransactionWrapper {
     let fee: Zatoshi?
     let memo: String?
     let failed: Bool
-    
+
     var recipientAddress: String? {
         recipients
             .filter(\.hasAddress)
@@ -28,7 +28,7 @@ class ZcashTransactionWrapper {
 
     init?(accountId: AccountUUID, tx: ZcashTransaction.Overview, memo: String?, recipients: [TransactionRecipient], lastBlockHeight: Int) {
 //        ZcashTransactionWrapper.printTransaction(tx: tx, recipients: recipients)
-        
+
         raw = tx.raw
         transactionHash = tx.rawID.hs.reversedHex
         transactionIndex = tx.index ?? 0
@@ -40,21 +40,21 @@ class ZcashTransactionWrapper {
         timestamp = failed ? 0 : (tx.blockTime ?? Date().timeIntervalSince1970) // need this to update pending transactions and shows on transaction tab
         totalSpent = tx.totalSpent
         totalReceived = tx.totalReceived
-        
+
         // if sent tx with all recipients same to accountId and spent&received > 0, it means that we receive money inside account(from shield to unshield or vice versa)
         let hasSpentAndReceived = ((tx.totalSpent ?? .zero) > .zero) && ((tx.totalReceived ?? .zero) > .zero)
         let internalTransaction =
             hasSpentAndReceived &&
             recipients.count > 0 &&
-            tx.isSentTransaction && recipients.allSatisfy({ recipient in
+            tx.isSentTransaction && recipients.allSatisfy { recipient in
                 if case let .internalAccount(accountUUID) = recipient {
                     return accountUUID == accountId
                 }
                 return false
-            })
- 
+            }
+
         // if shield or only internal(expect unshield)
-        if (tx.isShielding || internalTransaction) {
+        if tx.isShielding || internalTransaction {
             shieldDirection = tx.isShielding ? .shield : .unshield
 
             if let spent = tx.totalSpent, let received = tx.totalReceived {
@@ -72,7 +72,7 @@ class ZcashTransactionWrapper {
 
         self.memo = memo
     }
-    
+
     static func printTransaction(tx: ZcashTransaction.Overview, recipients: [TransactionRecipient]) {
         print("========== TRANSACTION =============")
         print("= acc: \(tx.accountUUID.encodedString)")
@@ -94,7 +94,7 @@ class ZcashTransactionWrapper {
         print("= total Received: \((tx.totalReceived ?? .zero).decimalValue.decimalValue)")
         print("= fee: \((tx.fee ?? .zero).decimalValue.decimalValue)")
         print("-----------Recipients----------------")
-        recipients.forEach { recipient in
+        for recipient in recipients {
             switch recipient {
             case let .address(recipient): print("- Address: \(recipient.stringEncoded)")
             case let .internalAccount(accountId): print("- InternalAcc: \(accountId.encodedString)")

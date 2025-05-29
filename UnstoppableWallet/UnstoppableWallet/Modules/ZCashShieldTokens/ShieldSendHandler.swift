@@ -32,12 +32,12 @@ extension ShieldSendHandler: ISendHandler {
         guard let proposal = try await adapter.shieldProposal(amount: amountWithoutFee, address: recipient, memo: memoText) else {
             throw SendError.cantCreateProposal
         }
-        
+
         var transactionError: Error?
         if (amountWithoutFee + proposal.totalFeeRequired().decimalValue.decimalValue) > adapter.availableBalance {
             transactionError = AppError.zcash(reason: .notEnough)
         }
-        
+
         return SendData(
             token: token,
             amount: amountWithoutFee,
@@ -128,7 +128,7 @@ extension ShieldSendHandler {
             if let memo {
                 fields.append(.levelValue(title: "send.confirmation.memo".localized, value: memo, level: .regular))
             }
-            
+
             let fee = proposal.totalFeeRequired().decimalValue.decimalValue
 
             return [
@@ -144,7 +144,7 @@ extension ShieldSendHandler {
                 ],
             ]
         }
-        
+
         func caution(transactionError: Error, feeToken: Token) -> CautionNew {
             let title: String
             let text: String
@@ -188,4 +188,3 @@ extension ShieldSendHandler {
         )
     }
 }
-

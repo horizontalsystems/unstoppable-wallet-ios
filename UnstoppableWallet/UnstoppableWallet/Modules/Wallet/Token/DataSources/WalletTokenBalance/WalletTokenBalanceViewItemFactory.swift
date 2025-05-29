@@ -137,7 +137,7 @@ class WalletTokenBalanceViewItemFactory {
             .customStates
             .map {
                 let value = coinValue(value: $0.value, decimalCount: item.element.decimals, symbol: item.element.coin?.code, balanceHidden: balanceHidden, state: item.state)
-                
+
                 var action = WalletTokenBalanceViewModel.CustomStateAction.none
 
                 if let balanceData = item.balanceData as? ZCashVerifiedBalanceData, balanceData.transparent > ZcashAdapter.minimalThreshold {

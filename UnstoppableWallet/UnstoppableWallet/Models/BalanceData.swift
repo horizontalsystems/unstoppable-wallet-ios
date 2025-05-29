@@ -162,7 +162,7 @@ class VerifiedBalanceData: BalanceData {
 }
 
 class ZCashVerifiedBalanceData: VerifiedBalanceData {
-    static let empty = ZCashVerifiedBalanceData.init(fullBalance: 0, available: 0, transparent: 0)
+    static let empty = ZCashVerifiedBalanceData(fullBalance: 0, available: 0, transparent: 0)
     let transparent: Decimal
 
     override var balanceTotal: Decimal { super.balanceTotal }
@@ -205,7 +205,6 @@ class ZCashVerifiedBalanceData: VerifiedBalanceData {
         return states
     }
 }
-
 
 // TODO: implement when will be needed
 //    let staked: Decimal
