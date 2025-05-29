@@ -1,7 +1,7 @@
 import MarketKit
 
 protocol IAddressSecurityChecker {
-    func check(address: Address, token: Token) async throws -> Bool
+    func isClear(address: Address, token: Token) async throws -> Bool
 }
 
 enum AddressSecurityCheckerFactory {

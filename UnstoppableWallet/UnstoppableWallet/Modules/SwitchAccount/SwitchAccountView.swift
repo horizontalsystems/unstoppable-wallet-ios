@@ -32,7 +32,7 @@ struct SwitchAccountView: View {
                 .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin16, trailing: .margin16))
             }
         }
-        .frame(maxHeight: 600) // todo
+        .frame(maxHeight: UIScreen.main.bounds.height - 200)
     }
 
     @ViewBuilder private func section(title: String, viewItems: [SwitchAccountViewModel.ViewItem], watch: Bool) -> some View {

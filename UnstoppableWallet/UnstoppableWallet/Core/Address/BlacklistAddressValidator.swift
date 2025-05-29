@@ -8,12 +8,12 @@ class BlacklistAddressValidator {
 }
 
 extension BlacklistAddressValidator: IAddressSecurityChecker {
-    func check(address: Address, token: Token) async throws -> Bool {
-        async let hashDitResult = hashDitAddressValidator.check(address: address, token: token)
-        async let smartContractResult = eip20AddressValidator.check(address: address, token: token)
+    func isClear(address: Address, token: Token) async throws -> Bool {
+        async let hashDitResult = hashDitAddressValidator.isClear(address: address, token: token)
+        async let smartContractResult = eip20AddressValidator.isClear(address: address, token: token)
 
-        let (blacklistedInHashDit, blacklistedInSmartContract) = try await (hashDitResult, smartContractResult)
+        let (hashDitClear, smartContractClear) = try await (hashDitResult, smartContractResult)
 
-        return blacklistedInHashDit || blacklistedInSmartContract
+        return hashDitClear && smartContractClear
     }
 }

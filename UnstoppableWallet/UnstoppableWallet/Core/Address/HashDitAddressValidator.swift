@@ -21,20 +21,32 @@ class HashDitAddressValidator {
     }
 }
 
-extension HashDitAddressValidator: IAddressSecurityChecker {
-    func check(address: Address, token: Token) async throws -> Bool {
-        guard HashDitAddressValidator.supportedBlockchainTypes.contains(token.blockchainType) else {
-            return false
+extension HashDitAddressValidator {
+    func isClear(address: Address, blockchainType: BlockchainType) async throws -> Bool {
+        guard HashDitAddressValidator.supportedBlockchainTypes.contains(blockchainType) else {
+            throw CheckError.unsupportedBlockchainType
         }
 
         let parameters: [String: Any] = [
-            "chainId": evmBlockchainManager.chain(blockchainType: token.blockchainType).id,
+            "chainId": evmBlockchainManager.chain(blockchainType: blockchainType).id,
             "to": address.raw,
         ]
 
         let response: HashDitAddressValidatorResponse = try await networkManager.fetch(url: url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
 
-        return response.data.risk_level >= 4
+        return response.data.risk_level < 4
+    }
+}
+
+extension HashDitAddressValidator: IAddressSecurityChecker {
+    func isClear(address: Address, token: Token) async throws -> Bool {
+        try await isClear(address: address, blockchainType: token.blockchainType)
+    }
+}
+
+extension HashDitAddressValidator {
+    enum CheckError: Error {
+        case unsupportedBlockchainType
     }
 }
 

@@ -2,6 +2,8 @@ import HsExtensions
 import StoreKit
 
 class PurchaseManager: NSObject {
+    private let localStorage: LocalStorage
+
     private let offerUpdateQueue = DispatchQueue(label: "\(AppConfig.label).unstoppable-wallet.offer-update", qos: .userInitiated)
     private let dataAccessQueue = DispatchQueue(label: "\(AppConfig.label).data-access", qos: .userInitiated)
 
@@ -24,7 +26,9 @@ class PurchaseManager: NSObject {
     private var updatesTask: Task<Void, Never>?
     private var currentUsedOfferUpdateTask: Task<Void, Never>?
 
-    override init() {
+    init(localStorage: LocalStorage) {
+        self.localStorage = localStorage
+
         super.init()
 
         loadProducts()

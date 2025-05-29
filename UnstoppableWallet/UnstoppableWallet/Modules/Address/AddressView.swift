@@ -113,21 +113,7 @@ struct AddressView: View {
         .sheet(isPresented: $subscriptionPresented) {
             PurchasesView()
         }
-        .bottomSheet(item: $checkDescription) { info in
-            BottomSheetView(
-                icon: .info,
-                title: info.title,
-                items: [
-                    .text(text: info.description),
-                ],
-                buttons: [
-                    .init(style: .yellow, title: "button.close".localized) {
-                        checkDescription = nil
-                    },
-                ],
-                onDismiss: { checkDescription = nil }
-            )
-        }
+        .modifier(InfoBottomSheet(info: $checkDescription))
     }
 
     @ViewBuilder private func row(contact: AddressViewModel.Contact) -> some View {

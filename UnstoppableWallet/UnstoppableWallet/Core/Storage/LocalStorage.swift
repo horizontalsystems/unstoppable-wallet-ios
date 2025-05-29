@@ -17,7 +17,7 @@ class LocalStorage {
     private let keyUserChartIndicatorsSync = "user-chart-indicators"
     private let keyIndicatorsShown = "indicators-shown"
     private let keyTelegramSupportRequested = "telegram-support-requested"
-    private let keyNewSendEnabled = "new-send-enabled"
+    private let keyEmulatePurchase = "emulate-purchase"
     private let keyHasBep2Token = "has-bep2-token"
 
     private let userDefaultsStorage: UserDefaultsStorage
@@ -94,9 +94,9 @@ extension LocalStorage {
         set { userDefaultsStorage.set(value: newValue, for: keyTelegramSupportRequested) }
     }
 
-    var newSendEnabled: Bool {
-        get { userDefaultsStorage.value(for: keyNewSendEnabled) ?? false }
-        set { userDefaultsStorage.set(value: newValue, for: keyNewSendEnabled) }
+    var emulatePurchase: Bool {
+        get { userDefaultsStorage.value(for: keyEmulatePurchase) ?? false }
+        set { userDefaultsStorage.set(value: newValue, for: keyEmulatePurchase) }
     }
 
     var hasBep2Token: Bool {

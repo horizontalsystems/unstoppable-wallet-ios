@@ -22,6 +22,7 @@ enum StatPage: String {
     case blockchainSettingsEvm = "blockchain_settings_evm"
     case blockchainSettingsEvmAdd = "blockchain_settings_evm_add"
     case cexWithdrawConfirmation = "cex_withdraw_confirmation"
+    case checkAddress = "check_address"
     case cloudBackup = "cloud_backup"
     case coinAnalytics = "coin_analytics"
     case coinAnalyticsActiveAddresses = "coin_analytics_active_addresses"
