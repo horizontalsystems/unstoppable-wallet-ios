@@ -133,7 +133,7 @@ extension WalletTokenBalanceViewModel {
         case none
         case unshield(Decimal)
     }
-    
+
     struct BalanceCustomStateViewItem {
         let title: String
         let amountValue: (text: String?, dimmed: Bool)?

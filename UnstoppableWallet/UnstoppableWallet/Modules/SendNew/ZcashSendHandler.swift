@@ -31,12 +31,12 @@ extension ZcashSendHandler: ISendHandler {
             amountWithoutFee -= proposal.totalFeeRequired().decimalValue.decimalValue
         }
         let proposal = try await adapter.sendProposal(amount: amountWithoutFee, address: recipient, memo: memoText)
-        
+
         var transactionError: Error?
         if (amountWithoutFee + proposal.totalFeeRequired().decimalValue.decimalValue) > adapter.availableBalance {
             transactionError = AppError.zcash(reason: .notEnough)
         }
-        
+
         return SendData(
             token: token,
             amount: amountWithoutFee,
@@ -115,7 +115,7 @@ extension ZcashSendHandler {
             if let memo {
                 fields.append(.levelValue(title: "send.confirmation.memo".localized, value: memo, level: .regular))
             }
-            
+
             let fee = proposal.totalFeeRequired().decimalValue.decimalValue
 
             return [
@@ -131,7 +131,7 @@ extension ZcashSendHandler {
                 ],
             ]
         }
-        
+
         func caution(transactionError: Error, feeToken: Token) -> CautionNew {
             let title: String
             let text: String

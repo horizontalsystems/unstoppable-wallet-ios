@@ -113,7 +113,7 @@ extension TransactionRecipient {
         case .internalAccount: return false
         }
     }
-    
+
     var address: String? {
         switch self {
         case let .address(recipient): return recipient.stringEncoded

@@ -7,10 +7,10 @@ struct ShieldSendView: View {
     private let sendData: SendData
 
     @Environment(\.presentationMode) private var presentationMode
-    
+
     init(amount: Decimal, address: String?) {
-        let recipient = address.flatMap { try? Recipient.init($0, network: .mainnet) }
-        
+        let recipient = address.flatMap { try? Recipient($0, network: .mainnet) }
+
         sendData = .zcashShield(amount: amount, recipient: recipient, memo: nil)
     }
 

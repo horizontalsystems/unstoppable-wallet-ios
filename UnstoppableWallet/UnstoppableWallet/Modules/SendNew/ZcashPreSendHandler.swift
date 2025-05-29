@@ -30,7 +30,7 @@ class ZcashPreSendHandler {
             }
             .disposed(by: disposeBag)
     }
-    
+
     private func sync(state: AdapterState) {
         if adapter.areFundsSpendable {
             stateSubject.send(.synced)
@@ -39,7 +39,7 @@ class ZcashPreSendHandler {
 
         stateSubject.send(state)
     }
-    
+
     private func updateBalanceSubject(balanceData: BalanceData) {
         // return all available balance
         let balance = max(0, balanceData.available)
