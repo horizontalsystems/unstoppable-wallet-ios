@@ -401,9 +401,13 @@ class WalletViewController: ThemeViewController {
 
         viewItems = newViewItems
 
-        UIView.animate(withDuration: animationDuration) {
-            self.tableView.beginUpdates()
-            self.tableView.endUpdates()
+        if refreshControl.isRefreshing {
+            tableView.reloadData()
+        } else {
+            UIView.animate(withDuration: animationDuration) {
+                self.tableView.beginUpdates()
+                self.tableView.endUpdates()
+            }
         }
 
         for updateIndex in updateIndexes {
