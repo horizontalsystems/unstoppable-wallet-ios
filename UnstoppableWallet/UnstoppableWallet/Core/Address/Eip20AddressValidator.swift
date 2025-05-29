@@ -4,72 +4,101 @@ import HsToolKit
 import MarketKit
 
 class Eip20AddressValidator {
-    private let evmSyncSourceManager: EvmSyncSourceManager
+    private let evmSyncSourceManager = App.shared.evmSyncSourceManager
+    private let networkManager = App.shared.networkManager
 
-    init() {
-        evmSyncSourceManager = App.shared.evmSyncSourceManager
-    }
-
-    static func method(address: Address, contractAddress: EvmKit.Address) -> ContractMethod? {
-        guard let evmAddress = try? EvmKit.Address(hex: address.raw) else {
-            return nil
+    private static func method(coinUid: String, blockchainType: BlockchainType) -> Method? {
+        switch coinUid {
+        case "tether":
+            switch blockchainType {
+            case .ethereum: return .isBlackListed
+            default: return nil
+            }
+        case "usd-coin":
+            switch blockchainType {
+            case .ethereum, .optimism, .avalanche, .arbitrumOne, .polygon, .zkSync, .base: return .isBlacklisted
+            default: return nil
+            }
+        case "paypal-usd":
+            switch blockchainType {
+            case .ethereum: return .isFrozen
+            default: return nil
+            }
+        default: return nil
         }
-
-        if Eip20AddressValidator.IsBlacklistedMethodUSDT.contractAddresses.contains(contractAddress.eip55) {
-            return IsBlacklistedMethodUSDT(address: evmAddress)
-        }
-
-        if Eip20AddressValidator.IsBlacklistedMethodUSDC.contractAddresses.contains(contractAddress.eip55) {
-            return IsBlacklistedMethodUSDC(address: evmAddress)
-        }
-
-        if Eip20AddressValidator.IsFrozenMethodPYUSD.contractAddresses.contains(contractAddress.eip55) {
-            return IsFrozenMethodPYUSD(address: evmAddress)
-        }
-
-        return nil
-    }
-
-    static func supports(token: Token) -> Bool {
-        guard case let .eip20(addressString) = token.type,
-              let contractAddress = try? EvmKit.Address(hex: addressString)
-        else {
-            return false
-        }
-
-        return method(address: Address(raw: ""), contractAddress: contractAddress) != nil
-    }
-}
-
-extension Eip20AddressValidator: IAddressSecurityChecker {
-    func check(address: Address, token: Token) async throws -> Bool {
-        guard case let .eip20(addressString) = token.type,
-              let contractAddress = try? EvmKit.Address(hex: addressString),
-              let syncSource = evmSyncSourceManager.defaultSyncSources(blockchainType: token.blockchainType).first,
-              let method = Self.method(address: address, contractAddress: contractAddress)
-        else {
-            return false
-        }
-
-        let networkManager = NetworkManager(logger: App.shared.logger)
-        let responseData = try await EvmKit.Kit.call(
-            networkManager: networkManager,
-            rpcSource: syncSource.rpcSource,
-            contractAddress: contractAddress,
-            data: method.encodedABI(),
-            defaultBlockParameter: .latest
-        )
-
-        return responseData.contains(0x01)
     }
 }
 
 extension Eip20AddressValidator {
-    class IsBlacklistedMethodUSDT: ContractMethod {
-        static let contractAddresses = [
-            "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-        ]
+    static func supports(token: Token) -> Bool {
+        method(coinUid: token.coin.uid, blockchainType: token.blockchainType) != nil
+    }
 
+    func isClear(address: Address, coinUid: String, blockchainType: BlockchainType, contractAddress: String) async throws -> Bool {
+        guard let evmAddress = try? EvmKit.Address(hex: address.raw) else {
+            throw CheckError.invalidAddress
+        }
+
+        guard let contractAddress = try? EvmKit.Address(hex: contractAddress) else {
+            throw CheckError.invalidContractAddress
+        }
+
+        guard let syncSource = evmSyncSourceManager.defaultSyncSources(blockchainType: blockchainType).first else {
+            throw CheckError.noSyncSource
+        }
+
+        guard let method = Self.method(coinUid: coinUid, blockchainType: blockchainType) else {
+            throw CheckError.noMethod
+        }
+
+        let responseData = try await EvmKit.Kit.call(
+            networkManager: networkManager,
+            rpcSource: syncSource.rpcSource,
+            contractAddress: contractAddress,
+            data: method.contractMethod(address: evmAddress).encodedABI(),
+            defaultBlockParameter: .latest
+        )
+
+        return !responseData.contains(0x01)
+    }
+}
+
+extension Eip20AddressValidator: IAddressSecurityChecker {
+    func isClear(address: Address, token: Token) async throws -> Bool {
+        guard case let .eip20(contractAddress) = token.type else {
+            throw CheckError.invalidTokenType
+        }
+
+        return try await isClear(address: address, coinUid: token.coin.uid, blockchainType: token.blockchainType, contractAddress: contractAddress)
+    }
+}
+
+extension Eip20AddressValidator {
+    enum CheckError: Error {
+        case invalidTokenType
+        case invalidAddress
+        case invalidContractAddress
+        case noSyncSource
+        case noMethod
+    }
+
+    enum Method {
+        case isBlackListed
+        case isBlacklisted
+        case isFrozen
+
+        func contractMethod(address: EvmKit.Address) -> ContractMethod {
+            switch self {
+            case .isBlackListed: return IsBlackListedMethod(address: address)
+            case .isBlacklisted: return IsBlacklistedMethod(address: address)
+            case .isFrozen: return IsFrozenMethod(address: address)
+            }
+        }
+    }
+}
+
+extension Eip20AddressValidator {
+    class IsBlackListedMethod: ContractMethod {
         private let address: EvmKit.Address
 
         init(address: EvmKit.Address) {
@@ -85,11 +114,7 @@ extension Eip20AddressValidator {
         }
     }
 
-    class IsBlacklistedMethodUSDC: ContractMethod {
-        static let contractAddresses = [
-            "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
-        ]
-
+    class IsBlacklistedMethod: ContractMethod {
         private let address: EvmKit.Address
 
         init(address: EvmKit.Address) {
@@ -105,11 +130,7 @@ extension Eip20AddressValidator {
         }
     }
 
-    class IsFrozenMethodPYUSD: ContractMethod {
-        static let contractAddresses = [
-            "0x6c3ea9036406852006290770BEdFcAbA0e23A0e8",
-        ]
-
+    class IsFrozenMethod: ContractMethod {
         private let address: EvmKit.Address
 
         init(address: EvmKit.Address) {

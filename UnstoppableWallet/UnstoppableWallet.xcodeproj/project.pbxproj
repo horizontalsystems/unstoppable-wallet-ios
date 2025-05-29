@@ -2989,6 +2989,10 @@
 		D38406C221832757007D50AD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D3285F4C20BD158F00644076 /* Assets.xcassets */; };
 		D38406C5218327E3007D50AD /* AppIcon.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D38406C3218327B1007D50AD /* AppIcon.xcassets */; };
 		D38406C921832968007D50AD /* AppIconDev.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D38406C821832968007D50AD /* AppIconDev.xcassets */; };
+		D38955962DE5B3E70012114F /* CheckAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38955942DE5B3E70012114F /* CheckAddressViewModel.swift */; };
+		D38955972DE5B3E70012114F /* CheckAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38955952DE5B3E70012114F /* CheckAddressView.swift */; };
+		D38955982DE5B3E70012114F /* CheckAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38955942DE5B3E70012114F /* CheckAddressViewModel.swift */; };
+		D38955992DE5B3E70012114F /* CheckAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38955952DE5B3E70012114F /* CheckAddressView.swift */; };
 		D389BC462C0DCF4100724504 /* Advice.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389BC452C0DCF4100724504 /* Advice.swift */; };
 		D389BC472C0DCF4100724504 /* Advice.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389BC452C0DCF4100724504 /* Advice.swift */; };
 		D389BC492C0DDA8F00724504 /* HsTimePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = D389BC482C0DDA8F00724504 /* HsTimePeriod.swift */; };
@@ -4748,6 +4752,8 @@
 		D38406BE21831B3D007D50AD /* Unstoppable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Unstoppable.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		D38406C3218327B1007D50AD /* AppIcon.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIcon.xcassets; sourceTree = "<group>"; };
 		D38406C821832968007D50AD /* AppIconDev.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = AppIconDev.xcassets; sourceTree = "<group>"; };
+		D38955942DE5B3E70012114F /* CheckAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAddressViewModel.swift; sourceTree = "<group>"; };
+		D38955952DE5B3E70012114F /* CheckAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckAddressView.swift; sourceTree = "<group>"; };
 		D389BC452C0DCF4100724504 /* Advice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Advice.swift; sourceTree = "<group>"; };
 		D389BC482C0DDA8F00724504 /* HsTimePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HsTimePeriod.swift; sourceTree = "<group>"; };
 		D389BC4B2C0DDCF500724504 /* MarketAdvancedSearchBlockchainsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketAdvancedSearchBlockchainsView.swift; sourceTree = "<group>"; };
@@ -8688,6 +8694,8 @@
 		D30C4D3F2D392FBF0082B487 /* Address */ = {
 			isa = PBXGroup;
 			children = (
+				D38955942DE5B3E70012114F /* CheckAddressViewModel.swift */,
+				D38955952DE5B3E70012114F /* CheckAddressView.swift */,
 				D30C4D432D392FD00082B487 /* AddressViewModel.swift */,
 				D30C4D402D392FC50082B487 /* AddressView.swift */,
 			);
@@ -9805,6 +9813,7 @@
 				D003297B26CD2E89002EC21D /* TransactionDateHeaderView.swift in Sources */,
 				11B35BF47E99D33FE20AA279 /* EnabledWallet_v_0_20.swift in Sources */,
 				11B3585AC6E5D92F98A71758 /* RestoreSettingRecord.swift in Sources */,
+				D38955992DE5B3E70012114F /* CheckAddressView.swift in Sources */,
 				D3A5808C2BE4DB11003953F4 /* WalletConnectSendHandler.swift in Sources */,
 				11B357388B82489E53C13772 /* RestoreSettingsManager.swift in Sources */,
 				11B3527F2E2D46DC307E6D3D /* RestoreSettingsViewModel.swift in Sources */,
@@ -10450,6 +10459,7 @@
 				ABC9A0073333D3DEC2797D15 /* BackupCloudPassphraseViewController.swift in Sources */,
 				ABC9AE472D9105F6FDAECD42 /* BackupCloudPassphraseService.swift in Sources */,
 				ABC9ABE3189E497EC732B331 /* BackupCloudPassphraseViewModel.swift in Sources */,
+				D38955982DE5B3E70012114F /* CheckAddressViewModel.swift in Sources */,
 				D34338EC2C8714A2001FCAD2 /* TonEventConverter.swift in Sources */,
 				ABC9A2A249A94B271F56EBD0 /* BackupCryptoHelper.swift in Sources */,
 				ABC9A543EB59D153FAD103F6 /* KdfParams.swift in Sources */,
@@ -11306,6 +11316,7 @@
 				11B3524401E294D8A919186E /* EnabledWallet_v_0_20.swift in Sources */,
 				11B3512E20E90C3332EFCC1B /* RestoreSettingRecord.swift in Sources */,
 				11B3504F9DECABF08D8C82BC /* RestoreSettingsManager.swift in Sources */,
+				D38955972DE5B3E70012114F /* CheckAddressView.swift in Sources */,
 				D3A5808B2BE4DB11003953F4 /* WalletConnectSendHandler.swift in Sources */,
 				11B3588A5791AB25FA1BBEE0 /* RestoreSettingsViewModel.swift in Sources */,
 				11B35BC2641349F06DF6B6FF /* RestoreSettingsView.swift in Sources */,
@@ -11951,6 +11962,7 @@
 				ABC9A2B6F1CF39D5CE9EA489 /* BackupCloudPassphraseViewController.swift in Sources */,
 				ABC9AB308727D81FBB8EBCDD /* BackupCloudPassphraseService.swift in Sources */,
 				ABC9A191F1E62A20D2D38262 /* BackupCloudPassphraseViewModel.swift in Sources */,
+				D38955962DE5B3E70012114F /* CheckAddressViewModel.swift in Sources */,
 				D34338EB2C8714A2001FCAD2 /* TonEventConverter.swift in Sources */,
 				ABC9AB83EE3F909BD80E0539 /* BackupCryptoHelper.swift in Sources */,
 				ABC9A60BA5DF119C7FC8A859 /* KdfParams.swift in Sources */,

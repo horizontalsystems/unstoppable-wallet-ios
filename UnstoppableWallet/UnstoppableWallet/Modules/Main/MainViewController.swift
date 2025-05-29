@@ -79,7 +79,7 @@ class MainViewController: ThemeTabBarController {
 
     private func handleDoubleClick(index: Int) {
         if let viewControllers, viewControllers.count > index, let navigationController = viewControllers[index] as? UINavigationController, navigationController.topViewController is WalletViewController {
-            present(SwitchAccountView().toViewController().toBottomSheet, animated: true)
+            present(SwitchAccountView().toBottomSheetViewController().toBottomSheet, animated: true)
 
             stat(page: .main, event: .open(page: .switchWallet))
         }

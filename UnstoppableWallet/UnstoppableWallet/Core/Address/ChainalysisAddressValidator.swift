@@ -18,10 +18,16 @@ class ChainalysisAddressValidator {
     }
 }
 
-extension ChainalysisAddressValidator: IAddressSecurityChecker {
-    func check(address: Address, token _: Token) async throws -> Bool {
+extension ChainalysisAddressValidator {
+    func isClear(address: Address) async throws -> Bool {
         let response: ChainalysisAddressValidatorResponse = try await networkManager.fetch(url: "\(baseUrl)\(address.raw)", headers: headers)
-        return !response.identifications.isEmpty
+        return response.identifications.isEmpty
+    }
+}
+
+extension ChainalysisAddressValidator: IAddressSecurityChecker {
+    func isClear(address: Address, token _: Token) async throws -> Bool {
+        try await isClear(address: address)
     }
 }
 

@@ -10,6 +10,7 @@ struct MainSettingsView: View {
     @State private var purchasesPresented = false
     @State private var supportPresented = false
     @State private var donatePresented = false
+    @State private var addressCheckerPresented = false
 
     @StateObject var walletConnectViewModifierModel = WalletConnectViewModifierModel()
 
@@ -397,15 +398,28 @@ struct MainSettingsView: View {
     }
 
     @ViewBuilder private func addressChecker() -> some View {
-        NavigationRow(spacing: .margin8, destination: {
-            AddressCheckerView()
-                .onFirstAppear {
-                    stat(page: .settings, event: .open(page: .addressChecker))
-                }
+        ClickableRow(action: {
+            if viewModel.activated(premiumFeature: .addressChecker) {
+                addressCheckerPresented = true
+            } else {
+                purchasesPresented = true
+            }
         }) {
             Image("radar_24").themeIcon(color: .themeJacob)
             Text("address_checker.title".localized).themeBody()
             Image.disclosureIcon
+        }
+
+        NavigationLink(
+            isActive: $addressCheckerPresented,
+            destination: {
+                AddressCheckerView()
+                    .onFirstAppear {
+                        stat(page: .settings, event: .open(page: .addressChecker))
+                    }
+            }
+        ) {
+            EmptyView()
         }
     }
 
@@ -555,8 +569,8 @@ struct MainSettingsView: View {
     @ViewBuilder private func testSwitchersSection() -> some View {
         ListSection {
             ListRow {
-                Toggle(isOn: $viewModel.newSendEnabled) {
-                    Text("New Send").themeBody()
+                Toggle(isOn: $viewModel.emulatePurchase) {
+                    Text("Emulate Purchase").themeBody()
                 }
                 .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
             }

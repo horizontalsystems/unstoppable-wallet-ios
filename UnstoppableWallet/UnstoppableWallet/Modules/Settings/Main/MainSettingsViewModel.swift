@@ -33,9 +33,9 @@ class MainSettingsViewModel: ObservableObject {
 
     let showTestSwitchers: Bool
 
-    @Published var newSendEnabled: Bool {
+    @Published var emulatePurchase: Bool {
         didSet {
-            localStorage.newSendEnabled = newSendEnabled
+            localStorage.emulatePurchase = emulatePurchase
         }
     }
 
@@ -47,7 +47,7 @@ class MainSettingsViewModel: ObservableObject {
 
     init() {
         showTestSwitchers = Bundle.main.object(forInfoDictionaryKey: "ShowTestNetSwitcher") as? String == "true"
-        newSendEnabled = localStorage.newSendEnabled
+        emulatePurchase = localStorage.emulatePurchase
         testNetEnabled = testNetManager.testNetEnabled
 
         subscribe(MainScheduler.instance, disposeBag, backupManager.allBackedUpObservable) { [weak self] _ in self?.syncManageWalletsAlert() }
@@ -61,7 +61,6 @@ class MainSettingsViewModel: ObservableObject {
             }
         }
 
-        subscribe(&cancellables, purchaseManager.$purchasedProducts) { [weak self] _ in self?.syncSlides() }
         subscribe(&cancellables, accountRestoreWarningManager.hasNonStandardPublisher) { [weak self] _ in self?.syncManageWalletsAlert() }
         subscribe(&cancellables, passcodeManager.$isPasscodeSet) { [weak self] _ in self?.syncSecurityAlert() }
         subscribe(&cancellables, termsManager.$termsAccepted) { [weak self] _ in self?.syncAboutAlert() }

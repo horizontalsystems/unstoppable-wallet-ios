@@ -26,3 +26,26 @@ struct Informed: ViewModifier {
         }
     }
 }
+
+struct InfoBottomSheet: ViewModifier {
+    @Binding var info: InfoDescription?
+
+    func body(content: Content) -> some View {
+        content
+            .bottomSheet(item: $info) { _info in
+                BottomSheetView(
+                    icon: .info,
+                    title: _info.title,
+                    items: [
+                        .text(text: _info.description),
+                    ],
+                    buttons: [
+                        .init(style: .yellow, title: "button.close".localized) {
+                            info = nil
+                        },
+                    ],
+                    onDismiss: { info = nil }
+                )
+            }
+    }
+}

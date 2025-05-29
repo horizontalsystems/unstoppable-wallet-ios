@@ -12,6 +12,18 @@ extension View {
         return viewController
     }
 
+    func toBottomSheetViewController(title: String? = nil) -> UIViewController {
+        let viewController = UIHostingController(rootView: self)
+
+        if let title {
+            viewController.title = title
+        }
+
+        viewController.view.backgroundColor = .themeLawrence
+
+        return viewController
+    }
+
     func toNavigationViewController() -> UIViewController {
         UIHostingController(rootView: ThemeNavigationView { self })
     }

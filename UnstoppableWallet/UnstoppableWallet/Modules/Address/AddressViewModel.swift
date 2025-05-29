@@ -119,10 +119,10 @@ class AddressViewModel: ObservableObject {
 
             Task {
                 do {
-                    let hasIssue = try await checker.check(address: address, token: token)
+                    let isClear = try await checker.isClear(address: address, token: token)
 
                     await MainActor.run {
-                        checkStates[type] = hasIssue ? .detected : .clear
+                        checkStates[type] = isClear ? .clear : .detected
                     }
                 } catch {
                     await MainActor.run {

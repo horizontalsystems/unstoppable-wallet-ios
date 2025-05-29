@@ -321,7 +321,7 @@ class App {
             logger: logger
         )
 
-        purchaseManager = PurchaseManager()
+        purchaseManager = PurchaseManager(localStorage: localStorage)
 
         recentAddressStorage = try RecentAddressStorage(dbPool: dbPool)
 
