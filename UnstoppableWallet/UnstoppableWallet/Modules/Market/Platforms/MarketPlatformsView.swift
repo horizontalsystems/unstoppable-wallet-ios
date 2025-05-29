@@ -92,7 +92,7 @@ struct MarketPlatformsView: View {
 
     @ViewBuilder private func list(platforms: [TopPlatform]) -> some View {
         ScrollViewReader { proxy in
-            ThemeList(platforms, invisibleTopView: true) { platform in
+            ThemeList(platforms) { platform in
                 ClickableRow(action: {
                     presentedPlatform = platform
                 }) {

@@ -24,7 +24,7 @@ struct CoinTreasuriesView: View {
                     header()
 
                     ScrollViewReader { proxy in
-                        ThemeList(bottomSpacing: .margin32, invisibleTopView: true) {
+                        ThemeList(bottomSpacing: .margin32) {
                             list(treasuries: treasuries)
                             footer()
                                 .listRowBackground(Color.clear)

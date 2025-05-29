@@ -46,7 +46,7 @@ struct MarketPairsView: View {
 
     @ViewBuilder private func list(pairs: [MarketPair]) -> some View {
         ScrollViewReader { proxy in
-            ThemeList(pairs, invisibleTopView: true) { pair in
+            ThemeList(pairs) { pair in
                 ClickableRow(action: {
                     if let tradeUrl = pair.tradeUrl {
                         UrlManager.open(url: tradeUrl)

@@ -94,7 +94,7 @@ struct MarketSectorsView: View {
 
     @ViewBuilder private func list(sectors: [MarketSectorsViewModel.CoinSectorWithTopCoins]) -> some View {
         ScrollViewReader { proxy in
-            ThemeList(sectors, invisibleTopView: true) { sector in
+            ThemeList(sectors) { sector in
                 ClickableRow(action: {
                     presentedSector = sector.sector
                 }) {
