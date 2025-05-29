@@ -94,11 +94,11 @@ class PreSendViewModel: ObservableObject {
     @Published var sendData: ExtendedSendData?
     @Published var cautions = [CautionNew]()
 
-    init(wallet: Wallet, resolvedAddress: ResolvedAddress, amount: Decimal?) {
+    init(wallet: Wallet, handler: IPreSendHandler?, resolvedAddress: ResolvedAddress, amount: Decimal?) {
         self.wallet = wallet
+        self.handler = handler
         self.resolvedAddress = resolvedAddress
 
-        handler = SendHandlerFactory.preSendHandler(wallet: wallet)
         currency = currencyManager.baseCurrency
 
         defer {
@@ -181,6 +181,10 @@ class PreSendViewModel: ObservableObject {
 extension PreSendViewModel {
     var token: Token {
         wallet.token
+    }
+    
+    var title: String {
+        handler?.title(token.coin.code) ?? "send.send".localized
     }
 
     func syncSendData() {

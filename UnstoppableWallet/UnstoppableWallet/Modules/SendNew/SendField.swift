@@ -8,6 +8,7 @@ enum SendField {
     case value(title: String, description: InfoDescription?, appValue: AppValue?, currencyValue: CurrencyValue?, formatFull: Bool)
     case doubleValue(title: String, description: InfoDescription?, value1: String, value2: String?)
     case levelValue(title: String, value: String, level: ValueLevel)
+    case note(iconName: String?, title: String)
     case address(title: String, value: String, blockchainType: BlockchainType)
     case price(title: String, tokenA: Token, tokenB: Token, amountA: Decimal, amountB: Decimal)
     case hex(title: String, value: String)
@@ -83,6 +84,14 @@ enum SendField {
                 Text(value)
                     .textSubhead1(color: color(valueLevel: level))
                     .multilineTextAlignment(.trailing)
+            }
+        case let .note(iconName, title):
+            ListRow {
+                if let iconName {
+                    Image(iconName)
+                }
+                Text(title).textSubhead2()
+                Spacer()
             }
         case let .address(title, value, blockchainType):
             RecipientRowsView(title: title, value: value, blockchainType: blockchainType)

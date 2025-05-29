@@ -643,6 +643,20 @@ class TransactionInfoViewItemFactory {
 
             feeViewItem = record.fee.map { .fee(title: "tx_info.fee".localized, value: feeString(appValue: $0, rate: _rate($0.coin))) }
 
+        case let record as ZcashShieldingTransactionRecord:
+            sections.append(.init([.actionTitle(iconName: record.direction.txIconName, iconDimmed: false, title: record.direction.txTitle, subTitle: nil)]))
+
+            sections.append(.init(sendSection(source: record.source, appValue: record.value, to: nil, rates: item.rates, sentToSelf: true, balanceHidden: balanceHidden)))
+
+            var additionalViewItems = bitcoinViewItems(record: record, lastBlockInfo: item.lastBlockInfo)
+            additionalViewItems.insert(.sentToSelf, at: 0)
+
+            sections.append(.init(additionalViewItems))
+
+            if let fee = record.fee {
+                feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(appValue: fee, rate: _rate(fee.coin)))
+            }
+
         default: ()
         }
 

@@ -355,6 +355,11 @@
 "balance.token.processing" = "Processing";
 "balance.token.processing.info.title" = "Processing amount";
 "balance.token.processing.info.description" = "Transactions with this amount still syncing. And when they are confirmed, these tokens will be available for spending";
+"balance.token.transparent" = "Transparent";
+"balance.token.transparent.info.title" = "Transparent amount";
+"balance.token.transparent.info.description" = "Transparent balance can't be used in our wallet for now. But this money can be spend by other wallets with t-address supports";
+"balance.token.shield" = "Shield";
+
 "balance.token.staked" = "Staked";
 "balance.token.staked.info.title" = "Staked title";
 "balance.token.staked.info.description" = "Staked Description Text";
@@ -434,6 +439,7 @@
 // Send
 
 "send.title" = "Send %@";
+"send.title.shield" = "Shield %@";
 "send.send" = "Send";
 "send.no_assets" = "You have no assets to send.";
 "send.amount_placeholder" = "Amount";
@@ -494,6 +500,7 @@
 "send.confirmation.action" = "Action";
 "send.confirmation.status" = "Status";
 "send.confirmation.status.failed" = "Failed";
+"send.confirmation.send_to_own" = "Transaction will send to own address";
 
 "send.confirmation.sync_failed" = "Sync Failed";
 "send.confirmation.invalid_data" = "Invalid Data";
@@ -1287,6 +1294,9 @@
 "transactions.mint" = "Minted";
 "transactions.approve" = "Approved";
 "transactions.swap" = "Swapped";
+"transactions.shield" = "Shield";
+"transactions.unshield" = "Unshield";
+"transactions.transfer" = "Transfer";
 "transactions.contract_call" = "Contract Call";
 "transactions.contract_creation" = "Contract Creation";
 "transactions.external_call" = "External Call";

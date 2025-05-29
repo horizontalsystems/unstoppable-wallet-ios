@@ -3,6 +3,7 @@ import Foundation
 import SwiftUI
 
 protocol IPreSendHandler {
+    func title(_ code: String) -> String
     var hasSettings: Bool { get }
     var state: AdapterState { get }
     var statePublisher: AnyPublisher<AdapterState, Never> { get }
@@ -16,6 +17,10 @@ protocol IPreSendHandler {
 }
 
 extension IPreSendHandler {
+    func title(_ code: String) -> String {
+        "send.title".localized(code)
+    }
+
     var hasSettings: Bool {
         false
     }

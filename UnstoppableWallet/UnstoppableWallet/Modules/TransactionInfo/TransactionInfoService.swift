@@ -85,6 +85,7 @@ class TransactionInfoService {
             default: ()
             }
             tokens.append(tx.fee?.token)
+        case let tx as ZcashShieldingTransactionRecord: tokens.append(tx.value.token)
         default: ()
         }
 

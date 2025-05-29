@@ -521,7 +521,23 @@ class TransactionsViewItemFactory {
                 title = "transactions.stellar_transaction.title".localized
                 subTitle = type
             }
+        case let record as ZcashShieldingTransactionRecord:
+            iconType = .localIcon(imageName: record.direction.txIconName)
+            title = record.direction.txTitle
+            subTitle = "transactions.transfer".localized
 
+            primaryValue = BaseTransactionsViewModel.Value(text: coinString(from: record.value, signType: .never), type: .neutral)
+
+            if let currencyValue = item.currencyValue {
+                secondaryValue = BaseTransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+            }
+
+            doubleSpend = record.conflictingHash != nil
+            sentToSelf = true
+
+            if let lockState = item.transactionItem.lockState {
+                locked = lockState.locked
+            }
         default:
             iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
             title = "transactions.unknown_transaction.title".localized

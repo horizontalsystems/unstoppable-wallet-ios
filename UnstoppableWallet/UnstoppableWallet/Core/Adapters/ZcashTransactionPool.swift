@@ -5,10 +5,13 @@ import ZcashLightClientKit
 class ZcashTransactionPool {
     private var confirmedTransactions = Set<ZcashTransactionWrapper>()
     private var pendingTransactions = Set<ZcashTransactionWrapper>()
+
+    private let accountId: AccountUUID
     private let synchronizer: Synchronizer
     private let receiveAddress: SaplingAddress
 
-    init(receiveAddress: SaplingAddress, synchronizer: Synchronizer) {
+    init(accountId: AccountUUID, receiveAddress: SaplingAddress, synchronizer: Synchronizer) {
+        self.accountId = accountId
         self.receiveAddress = receiveAddress
         self.synchronizer = synchronizer
     }
@@ -56,11 +59,8 @@ class ZcashTransactionPool {
             .first
 
         let recipients = await synchronizer.getRecipients(for: tx)
-        let firstAddress = recipients
-            .filter(\.hasAddress)
-            .first
 
-        return ZcashTransactionWrapper(tx: tx, memo: firstMemo, recipient: firstAddress, lastBlockHeight: lastBlockHeight)
+        return ZcashTransactionWrapper(accountId: accountId, tx: tx, memo: firstMemo, recipients: recipients, lastBlockHeight: lastBlockHeight)
     }
 
     private func sync(own: inout Set<ZcashTransactionWrapper>, incoming: [ZcashTransactionWrapper]) {
@@ -111,6 +111,13 @@ extension TransactionRecipient {
         switch self {
         case .address: return true
         case .internalAccount: return false
+        }
+    }
+    
+    var address: String? {
+        switch self {
+        case let .address(recipient): return recipient.stringEncoded
+        default: return nil
         }
     }
 }

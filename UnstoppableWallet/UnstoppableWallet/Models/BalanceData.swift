@@ -161,6 +161,52 @@ class VerifiedBalanceData: BalanceData {
     }
 }
 
+class ZCashVerifiedBalanceData: VerifiedBalanceData {
+    static let empty = ZCashVerifiedBalanceData.init(fullBalance: 0, available: 0, transparent: 0)
+    let transparent: Decimal
+
+    override var balanceTotal: Decimal { super.balanceTotal }
+
+    init(fullBalance: Decimal, available: Decimal, transparent: Decimal) {
+        self.transparent = transparent
+        super.init(fullBalance: fullBalance, available: available)
+    }
+
+    enum CodingKeys: String, CodingKey {
+        case transparent
+    }
+
+    required init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        transparent = try container.decode(Decimal.self, forKey: .transparent)
+
+        try super.init(from: decoder)
+    }
+
+    override func encode(to encoder: Encoder) throws {
+        try super.encode(to: encoder)
+
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(transparent, forKey: .transparent)
+    }
+
+    override var customStates: [CustomState] {
+        var states = super.customStates
+        if transparent > ZcashAdapter.minimalThreshold {
+            states.append(
+                CustomState(
+                    title: "balance.token.transparent".localized,
+                    value: transparent,
+                    infoTitle: "balance.token.transparent.info.title".localized,
+                    infoDescription: "balance.token.transparent.info.description".localized
+                )
+            )
+        }
+        return states
+    }
+}
+
+
 // TODO: implement when will be needed
 //    let staked: Decimal
 //    let frozen: Decimal
