@@ -24,7 +24,7 @@ struct MarketAdvancedSearchResultsView: View {
                 header()
 
                 ScrollViewReader { proxy in
-                    ThemeList(viewModel.marketInfos, bottomSpacing: .margin16, invisibleTopView: true) { marketInfo in
+                    ThemeList(viewModel.marketInfos, bottomSpacing: .margin16) { marketInfo in
                         let coin = marketInfo.fullCoin.coin
 
                         ClickableRow(action: {

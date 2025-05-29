@@ -150,7 +150,6 @@ struct MarketWatchlistView: View {
         ScrollViewReader { proxy in
             ThemeList(
                 marketInfos,
-                invisibleTopView: true,
                 onMove: viewModel.sortBy == .manual ? { source, destination in
                     viewModel.move(source: source, destination: destination)
                 } : nil

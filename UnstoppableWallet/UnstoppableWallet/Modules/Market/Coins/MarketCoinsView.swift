@@ -109,7 +109,7 @@ struct MarketCoinsView: View {
 
     @ViewBuilder private func list(marketInfos: [MarketInfo]) -> some View {
         ScrollViewReader { proxy in
-            ThemeList(marketInfos, invisibleTopView: true) { marketInfo in
+            ThemeList(marketInfos) { marketInfo in
                 let coin = marketInfo.fullCoin.coin
 
                 ClickableRow(action: {

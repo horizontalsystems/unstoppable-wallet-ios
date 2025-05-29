@@ -30,7 +30,7 @@ struct MarketTvlView: View {
                 }
             case let .loaded(defiCoins):
                 ScrollViewReader { proxy in
-                    ThemeList(bottomSpacing: .margin16, invisibleTopView: true) {
+                    ThemeList(bottomSpacing: .margin16) {
                         header()
                             .listRowBackground(Color.clear)
                             .listRowInsets(EdgeInsets())

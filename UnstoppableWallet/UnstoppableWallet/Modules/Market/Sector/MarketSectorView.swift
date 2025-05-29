@@ -27,7 +27,7 @@ struct MarketSectorView: View {
                     ProgressView()
                 case let .loaded(marketInfos):
                     ScrollViewReader { proxy in
-                        ThemeList(bottomSpacing: .margin16, invisibleTopView: true) {
+                        ThemeList(bottomSpacing: .margin16) {
                             chart()
                                 .listRowBackground(Color.clear)
                                 .listRowInsets(EdgeInsets())

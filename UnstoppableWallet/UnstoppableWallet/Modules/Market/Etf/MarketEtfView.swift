@@ -29,7 +29,7 @@ struct MarketEtfView: View {
                     }
                 case let .loaded(rankedEtfs):
                     ScrollViewReader { proxy in
-                        ThemeList(bottomSpacing: .margin16, invisibleTopView: true) {
+                        ThemeList(bottomSpacing: .margin16) {
                             header()
                                 .listRowBackground(Color.clear)
                                 .listRowInsets(EdgeInsets())
