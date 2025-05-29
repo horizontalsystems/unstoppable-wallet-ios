@@ -241,6 +241,7 @@ enum WalletModule {
 
             let module = PreSendView(
                 wallet: wallet,
+                handler: SendHandlerFactory.preSendHandler(wallet: wallet),
                 resolvedAddress: .init(address: address, issueTypes: []),
                 addressVisible: false,
                 onDismiss: { viewController?.dismiss(animated: true) }

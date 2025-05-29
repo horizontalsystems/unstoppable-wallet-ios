@@ -15,8 +15,8 @@ struct PreSendView: View {
     @State private var confirmPresented = false
     @State private var addressAlertPresented = false
 
-    init(wallet: Wallet, resolvedAddress: ResolvedAddress, amount: Decimal? = nil, addressVisible: Bool = true, onDismiss: @escaping () -> Void) {
-        _viewModel = StateObject(wrappedValue: PreSendViewModel(wallet: wallet, resolvedAddress: resolvedAddress, amount: amount))
+    init(wallet: Wallet, handler: IPreSendHandler?, resolvedAddress: ResolvedAddress, amount: Decimal? = nil, addressVisible: Bool = true, onDismiss: @escaping () -> Void) {
+        _viewModel = StateObject(wrappedValue: PreSendViewModel(wallet: wallet, handler: handler, resolvedAddress: resolvedAddress, amount: amount))
         self.addressVisible = addressVisible
         self.onDismiss = onDismiss
     }
@@ -68,7 +68,7 @@ struct PreSendView: View {
                 EmptyView()
             }
         }
-        .navigationTitle("Send \(viewModel.token.coin.code)")
+        .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {

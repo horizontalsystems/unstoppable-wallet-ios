@@ -10,6 +10,8 @@ import UIKit
 import ZcashLightClientKit
 
 class ZcashAdapter {
+    static let minimalThreshold: Decimal = 0.0002   // minimal transparent balance to shielding
+
     private static let endPoint = "zec.rocks" // "lightwalletd.electriccoin.co"
     private let queue = DispatchQueue(label: "\(AppConfig.label).zcash-adapter", qos: .userInitiated)
 
@@ -49,7 +51,7 @@ class ZcashAdapter {
     private var synchronizerState: SynchronizerState? {
         didSet {
             lastBlockUpdatedSubject.onNext(())
-            balanceSubject.onNext(_balanceData)
+            balanceSubject.onNext(verifiedBalanceData)
         }
     }
 
@@ -168,7 +170,7 @@ class ZcashAdapter {
 
                 self?.logger?.log(level: .debug, message: "Successful get address for 0 account! \(saplingAddress.stringEncoded)")
 
-                let transactionPool = ZcashTransactionPool(receiveAddress: saplingAddress, synchronizer: synchronizer)
+                let transactionPool = ZcashTransactionPool(accountId: account.id, receiveAddress: saplingAddress, synchronizer: synchronizer)
                 self?.transactionPool = transactionPool
 
                 self?.logger?.log(level: .debug, message: "Starting fetch transactions.")
@@ -179,13 +181,17 @@ class ZcashAdapter {
                     self?.logger?.log(level: .debug, message: "Send to pool all transactions \(wrapped.count)")
                     self?.transactionSubject.onNext(wrapped)
                 }
+                
+                let accountBalances = try? await synchronizer.getAccountsBalances()[account.id]
+                let shielded = accountBalances?.saplingBalance.total().decimalValue.decimalValue ?? 0
+                let shieldedVerified = accountBalances?.saplingBalance.spendableValue.decimalValue.decimalValue ?? 0
+                let transparent = accountBalances?.unshielded.decimalValue.decimalValue ?? 0
 
-                let shielded = await (try? synchronizer.getAccountsBalances()[account.id]?.saplingBalance.total().decimalValue.decimalValue) ?? 0
-                let shieldedVerified = await (try? synchronizer.getAccountsBalances()[account.id]?.saplingBalance.spendableValue.decimalValue.decimalValue) ?? 0
                 self?.balanceSubject.onNext(
-                    VerifiedBalanceData(
+                    ZCashVerifiedBalanceData(
                         fullBalance: shielded,
-                        available: shieldedVerified
+                        available: shieldedVerified,
+                        transparent: transparent
                     )
                 )
                 let height = try await synchronizer.latestHeight()
@@ -349,6 +355,26 @@ class ZcashAdapter {
         let showRawTransaction = transaction.minedHeight == nil || transaction.failed
 
         // TODO: Should have it's own transactions with memo
+        if let direction = transaction.shieldDirection {
+            return ZcashShieldingTransactionRecord(
+                token: token,
+                source: transactionSource,
+                uid: transaction.transactionHash,
+                transactionHash: transaction.transactionHash,
+                transactionIndex: transaction.transactionIndex,
+                blockHeight: transaction.minedHeight,
+                confirmationsThreshold: ZcashSDK.defaultRewindDistance,
+                date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+                fee: transaction.fee?.decimalValue.decimalValue,
+                failed: transaction.failed,
+                lockInfo: nil,
+                conflictingHash: nil,
+                showRawTransaction: showRawTransaction,
+                amount: abs(transaction.value.decimalValue.decimalValue),
+                direction: .init(direction: direction),
+                memo: transaction.memo
+            )
+        }
         if !transaction.isSentTransaction {
             return BitcoinIncomingTransactionRecord(
                 token: token,
@@ -478,21 +504,23 @@ class ZcashAdapter {
             .store(in: &cancellables)
     }
 
-    private var _balanceData: BalanceData {
+    var verifiedBalanceData: ZCashVerifiedBalanceData {
         guard let synchronizerState, let accountId else {
-            return BalanceData(available: 0)
+            return .empty
         }
 
         guard let balances = synchronizerState.accountsBalances[accountId] else {
-            return VerifiedBalanceData(fullBalance: 0, available: 0)
+            return .empty
         }
 
         let full = balances.saplingBalance.total() + balances.orchardBalance.total()
         let available = balances.saplingBalance.spendableValue + balances.orchardBalance.spendableValue
 
-        return VerifiedBalanceData(
+//        print("BALANCE: t = \(balances.unshielded.decimalValue.decimalValue)")
+        return ZCashVerifiedBalanceData(
             fullBalance: full.decimalValue.decimalValue,
-            available: available.decimalValue.decimalValue
+            available: available.decimalValue.decimalValue,
+            transparent: balances.unshielded.decimalValue.decimalValue
         )
     }
 
@@ -614,7 +642,7 @@ extension ZcashAdapter: IAdapter {
     }
 
     private func sync() {
-        balanceSubject.onNext(_balanceData)
+        balanceSubject.onNext(verifiedBalanceData)
         fixPendingTransactionsIfNeeded { [weak self] in
             self?.logger?.log(level: .debug, message: "\(Date()) Try to start synchronizer :by Thread:\(Thread.current)")
             Task { [weak self] in
@@ -723,7 +751,7 @@ extension ZcashAdapter: IBalanceAdapter {
     }
 
     var balanceData: BalanceData {
-        _balanceData
+        verifiedBalanceData
     }
 
     var balanceDataUpdatedObservable: Observable<BalanceData> {
@@ -742,7 +770,7 @@ extension ZcashAdapter: IDepositAdapter {
     }
 }
 
-extension ZcashAdapter: ISendZcashAdapter {
+extension ZcashAdapter: ISendZcashAdapter {    
     enum AddressType {
         case shielded
         case transparent
@@ -753,7 +781,7 @@ extension ZcashAdapter: ISendZcashAdapter {
         return availableBalance
     }
     
-    func proposal(amount: Decimal, address: Recipient, memo: Memo?) async throws -> Proposal {
+    func sendProposal(amount: Decimal, address: Recipient, memo: Memo?) async throws -> Proposal {
         guard let accountId else {
             throw AppError.ZcashError.noAccountId
         }
@@ -761,6 +789,24 @@ extension ZcashAdapter: ISendZcashAdapter {
         let amountInZatoshi = Zatoshi.from(decimal: amount)
         
         return try await synchronizer.proposeTransfer(accountUUID: accountId, recipient: address, amount: amountInZatoshi, memo: memo)
+    }
+
+    func shieldProposal(amount: Decimal, address: Recipient?, memo: Memo?) async throws -> Proposal? {
+        guard let accountId else {
+            throw AppError.ZcashError.noAccountId
+        }
+        
+        let requiredMemo = try memo ?? (try Memo(string: ""))
+        
+        var transparentAddress: TransparentAddress? = nil
+        switch address {
+        case let .transparent(tAddress): transparentAddress = tAddress
+        default: ()
+        }
+        
+        let amountInZatoshi = Zatoshi.from(decimal: amount)
+        
+        return try await synchronizer.proposeShielding(accountUUID: accountId, shieldingThreshold: amountInZatoshi, memo: requiredMemo, transparentReceiver: transparentAddress)
     }
 
     func validate(address: String, checkSendToSelf: Bool = true) throws -> AddressType {

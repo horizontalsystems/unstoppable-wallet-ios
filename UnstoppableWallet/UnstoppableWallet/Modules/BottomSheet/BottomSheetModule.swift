@@ -81,13 +81,14 @@ extension BottomSheetModule {
         )
     }
 
-    static func description(title: String, text: String) -> UIViewController {
+    static func description(title: String, text: String, buttons: [Button] = []) -> UIViewController {
         viewController(
             image: .local(name: "circle_information_20", tint: .gray),
             title: title,
             items: [
                 .description(text: text),
-            ]
+            ],
+            buttons: buttons
         )
     }
 

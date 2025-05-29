@@ -137,11 +137,19 @@ class WalletTokenBalanceViewItemFactory {
             .customStates
             .map {
                 let value = coinValue(value: $0.value, decimalCount: item.element.decimals, symbol: item.element.coin?.code, balanceHidden: balanceHidden, state: item.state)
+                
+                var action = WalletTokenBalanceViewModel.CustomStateAction.none
+
+                if let balanceData = item.balanceData as? ZCashVerifiedBalanceData, balanceData.transparent > ZcashAdapter.minimalThreshold {
+                    action = .unshield(balanceData.transparent)
+                }
+
                 return .init(
                     title: $0.title,
                     amountValue: value,
                     infoTitle: $0.infoTitle,
-                    infoDescription: $0.infoDescription
+                    infoDescription: $0.infoDescription,
+                    action: action
                 )
             }
     }

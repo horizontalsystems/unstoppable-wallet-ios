@@ -129,11 +129,17 @@ extension WalletTokenBalanceViewModel {
 }
 
 extension WalletTokenBalanceViewModel {
+    enum CustomStateAction {
+        case none
+        case unshield(Decimal)
+    }
+    
     struct BalanceCustomStateViewItem {
         let title: String
         let amountValue: (text: String?, dimmed: Bool)?
         let infoTitle: String
         let infoDescription: String
+        let action: CustomStateAction
     }
 
     struct ViewItem {

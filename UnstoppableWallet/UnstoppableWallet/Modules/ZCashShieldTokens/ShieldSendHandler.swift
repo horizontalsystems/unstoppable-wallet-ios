@@ -2,14 +2,14 @@ import Foundation
 import MarketKit
 import ZcashLightClientKit
 
-class ZcashSendHandler {
+class ShieldSendHandler {
     private let token: Token
     private let amount: Decimal
-    private let recipient: Recipient
+    private let recipient: Recipient?
     private let memo: String?
-    private var adapter: ISendZcashAdapter
+    private var adapter: ZcashAdapter
 
-    init(token: Token, amount: Decimal, recipient: Recipient, memo: String?, adapter: ISendZcashAdapter) {
+    init(token: Token, amount: Decimal, recipient: Recipient?, memo: String?, adapter: ZcashAdapter) {
         self.token = token
         self.amount = amount
         self.recipient = recipient
@@ -18,7 +18,7 @@ class ZcashSendHandler {
     }
 }
 
-extension ZcashSendHandler: ISendHandler {
+extension ShieldSendHandler: ISendHandler {
     var baseToken: Token {
         token
     }
@@ -26,11 +26,12 @@ extension ZcashSendHandler: ISendHandler {
     func sendData(transactionSettings _: TransactionSettings?) async throws -> ISendData {
         let memoText = memo.flatMap { try? Memo(string: $0) }
         var amountWithoutFee: Decimal = amount
-        if adapter.availableBalance == amount {
-            let proposal = try await adapter.sendProposal(amount: amount, address: recipient, memo: memoText)
+        if adapter.availableBalance == amount, let proposal = try await adapter.shieldProposal(amount: amount, address: recipient, memo: memoText) {
             amountWithoutFee -= proposal.totalFeeRequired().decimalValue.decimalValue
         }
-        let proposal = try await adapter.sendProposal(amount: amountWithoutFee, address: recipient, memo: memoText)
+        guard let proposal = try await adapter.shieldProposal(amount: amountWithoutFee, address: recipient, memo: memoText) else {
+            throw SendError.cantCreateProposal
+        }
         
         var transactionError: Error?
         if (amountWithoutFee + proposal.totalFeeRequired().decimalValue.decimalValue) > adapter.availableBalance {
@@ -56,16 +57,23 @@ extension ZcashSendHandler: ISendHandler {
     }
 }
 
-extension ZcashSendHandler {
+extension ShieldSendHandler {
+    enum SendError: Error {
+        case invalidData
+        case cantCreateProposal
+    }
+}
+
+extension ShieldSendHandler {
     class SendData: ISendData {
         private let token: Token
         let amount: Decimal
-        let recipient: Recipient
+        let recipient: Recipient?
         let memo: String?
         var transactionError: Error?
         let proposal: Proposal
 
-        init(token: Token, amount: Decimal, recipient: Recipient, memo: String?, transactionError: Error?, proposal: Proposal) {
+        init(token: Token, amount: Decimal, recipient: Recipient?, memo: String?, transactionError: Error?, proposal: Proposal) {
             self.token = token
             self.amount = amount
             self.recipient = recipient
@@ -105,12 +113,17 @@ extension ZcashSendHandler {
                     currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) },
                     type: .neutral
                 ),
-                .address(
-                    title: "send.confirmation.to".localized,
-                    value: recipient.stringEncoded,
-                    blockchainType: .zcash
-                ),
+                .note(iconName: "arrow_return_24", title: "send.confirmation.send_to_own".localized),
             ]
+            if let recipient {
+                fields.append(
+                    .address(
+                        title: "send.confirmation.from".localized,
+                        value: recipient.stringEncoded,
+                        blockchainType: .zcash
+                    )
+                )
+            }
 
             if let memo {
                 fields.append(.levelValue(title: "send.confirmation.memo".localized, value: memo, level: .regular))
@@ -156,23 +169,17 @@ extension ZcashSendHandler {
     }
 }
 
-extension ZcashSendHandler {
-    enum SendError: Error {
-        case invalidData
-    }
-}
-
-extension ZcashSendHandler {
-    static func instance(amount: Decimal, recipient: Recipient, memo: String?) -> ZcashSendHandler? {
+extension ShieldSendHandler {
+    static func instance(amount: Decimal, recipient: Recipient?, memo: String?) -> ShieldSendHandler? {
         guard let token = try? App.shared.coinManager.token(query: .init(blockchainType: .zcash, tokenType: .native)) else {
             return nil
         }
 
-        guard let adapter = App.shared.adapterManager.adapter(for: token) as? ISendZcashAdapter else {
+        guard let adapter = App.shared.adapterManager.adapter(for: token) as? ZcashAdapter else {
             return nil
         }
 
-        return ZcashSendHandler(
+        return ShieldSendHandler(
             token: token,
             amount: amount,
             recipient: recipient,
@@ -181,3 +188,4 @@ extension ZcashSendHandler {
         )
     }
 }
+

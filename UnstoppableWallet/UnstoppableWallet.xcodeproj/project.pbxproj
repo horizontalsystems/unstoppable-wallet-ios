@@ -1900,6 +1900,12 @@
 		6BE8A07F2ADE2F950012DE7F /* CurrencyValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE8A07D2ADE2F950012DE7F /* CurrencyValue.swift */; };
 		6BE8A0812ADE2FAB0012DE7F /* CurrencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE8A0802ADE2FAB0012DE7F /* CurrencyManager.swift */; };
 		6BE8A0822ADE2FAB0012DE7F /* CurrencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE8A0802ADE2FAB0012DE7F /* CurrencyManager.swift */; };
+		6BEA17732DE5918D00BF73DD /* ShieldSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA17722DE5918500BF73DD /* ShieldSendHandler.swift */; };
+		6BEA17742DE5918D00BF73DD /* ShieldSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA17722DE5918500BF73DD /* ShieldSendHandler.swift */; };
+		6BEA17772DE5C59E00BF73DD /* ZcashShieldingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA17762DE5C59200BF73DD /* ZcashShieldingTransactionRecord.swift */; };
+		6BEA17782DE5C59E00BF73DD /* ZcashShieldingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA17762DE5C59200BF73DD /* ZcashShieldingTransactionRecord.swift */; };
+		6BEA177A2DE8319D00BF73DD /* ShieldSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA17792DE8319600BF73DD /* ShieldSendView.swift */; };
+		6BEA177B2DE8319D00BF73DD /* ShieldSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA17792DE8319600BF73DD /* ShieldSendView.swift */; };
 		6BFA4E032D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA4E022D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift */; };
 		6BFA4E042D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA4E022D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift */; };
 		ABC9A001F335B695CD066218 /* NftAssetModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD35D41AEEBD38AA08B5 /* NftAssetModule.swift */; };
@@ -4227,6 +4233,9 @@
 		6BE8A07A2ADE2F8D0012DE7F /* Currency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		6BE8A07D2ADE2F950012DE7F /* CurrencyValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyValue.swift; sourceTree = "<group>"; };
 		6BE8A0802ADE2FAB0012DE7F /* CurrencyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyManager.swift; sourceTree = "<group>"; };
+		6BEA17722DE5918500BF73DD /* ShieldSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldSendHandler.swift; sourceTree = "<group>"; };
+		6BEA17762DE5C59200BF73DD /* ZcashShieldingTransactionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashShieldingTransactionRecord.swift; sourceTree = "<group>"; };
+		6BEA17792DE8319600BF73DD /* ShieldSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldSendView.swift; sourceTree = "<group>"; };
 		6BFA4E022D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketAdvancedSearchCategoriesView.swift; sourceTree = "<group>"; };
 		ABC9A021D71EDD24DFB6BA62 /* CoinProChartModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinProChartModule.swift; sourceTree = "<group>"; };
 		ABC9A02C808FCE6082E3F97A /* DebounceTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebounceTextField.swift; sourceTree = "<group>"; };
@@ -5568,6 +5577,7 @@
 		11B354AB3C3435F2D5F39EE6 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				6BEA17682DE5838E00BF73DD /* ZCashShieldTokens */,
 				D34D3E022DD614B7005C9ACC /* StellarSecretKey */,
 				D30C4D462D3A2AF20082B487 /* SendAddress */,
 				D30C4D3F2D392FBF0082B487 /* Address */,
@@ -7576,6 +7586,23 @@
 			path = Manual;
 			sourceTree = "<group>";
 		};
+		6BEA17682DE5838E00BF73DD /* ZCashShieldTokens */ = {
+			isa = PBXGroup;
+			children = (
+				6BEA17792DE8319600BF73DD /* ShieldSendView.swift */,
+				6BEA17722DE5918500BF73DD /* ShieldSendHandler.swift */,
+			);
+			path = ZCashShieldTokens;
+			sourceTree = "<group>";
+		};
+		6BEA17752DE5B9D500BF73DD /* Zcash */ = {
+			isa = PBXGroup;
+			children = (
+				6BEA17762DE5C59200BF73DD /* ZcashShieldingTransactionRecord.swift */,
+			);
+			path = Zcash;
+			sourceTree = "<group>";
+		};
 		95AD93BB0A2D5F5C4A435252 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -8429,6 +8456,7 @@
 		D008CA58267C8DB300001E0A /* TransactionRecords */ = {
 			isa = PBXGroup;
 			children = (
+				6BEA17752DE5B9D500BF73DD /* Zcash */,
 				D04D98E9268055A2001A3135 /* TransactionRecord.swift */,
 				D04D98EE2680620F001A3135 /* Evm */,
 				D04D98ED268061EF001A3135 /* Bitcoin */,
@@ -9469,6 +9497,7 @@
 				1A564975B127F4EA2FCF61EB /* BitcoinBaseAdapter.swift in Sources */,
 				1A56475828E9121D78E02D67 /* BitcoinCashAdapter.swift in Sources */,
 				11B352E00B6E0DF4F6D42486 /* DashAdapter.swift in Sources */,
+				6BEA177B2DE8319D00BF73DD /* ShieldSendView.swift in Sources */,
 				11B359F074038D1507C23747 /* EnabledWallet.swift in Sources */,
 				11B358B0576F63BE43947DD5 /* Account.swift in Sources */,
 				11B35BEB439509EACB41AB06 /* AccountType.swift in Sources */,
@@ -10143,6 +10172,7 @@
 				11B35858954659DEE0C44618 /* TransactionsViewItemFactory.swift in Sources */,
 				11B35C4D4120D85CD32CAD0F /* TransactionsViewController.swift in Sources */,
 				D09200BD293F21520091981A /* RestoreMnemonicNonStandardViewModel.swift in Sources */,
+				6BEA17782DE5C59E00BF73DD /* ZcashShieldingTransactionRecord.swift in Sources */,
 				D0E5E8562BE38AA2005080A4 /* TronSendHandler.swift in Sources */,
 				11B35A82220538FEE57546FB /* TransactionTypeFilter.swift in Sources */,
 				11B35D7520519FBE9A899C2D /* TransactionSource.swift in Sources */,
@@ -10687,6 +10717,7 @@
 				11B35DDE363387B6E7A1D3B9 /* TabButtonStyle.swift in Sources */,
 				D3DD67202BC3BD1200EC7F78 /* BaseUniswapMultiSwapQuote.swift in Sources */,
 				11B35BF002B002DE7B20DB0C /* SharedLocalStorage.swift in Sources */,
+				6BEA17732DE5918D00BF73DD /* ShieldSendHandler.swift in Sources */,
 				D350DDB52AE27E3B00CF1989 /* AppWidget.intentdefinition in Sources */,
 				11B359A79743E965870AE8B6 /* AppWidgetConstants.swift in Sources */,
 				6BBB92BB2D11648E00112409 /* PromoCodeBottomSheetViewModel.swift in Sources */,
@@ -10967,6 +10998,7 @@
 				6B146A972A52A69400648C10 /* ChartIndicatorSettingsViewController.swift in Sources */,
 				11B3507DDEBA587C023CE898 /* DashAdapter.swift in Sources */,
 				11B3577193A4BD719E12CE2E /* EnabledWallet.swift in Sources */,
+				6BEA177A2DE8319D00BF73DD /* ShieldSendView.swift in Sources */,
 				11B3588E8DA44A45661351D7 /* Account.swift in Sources */,
 				11B35A91D104DA35C08032B2 /* AccountType.swift in Sources */,
 				11B35068E05BC58C6C9A93D7 /* AccountManager.swift in Sources */,
@@ -11641,6 +11673,7 @@
 				1A564B1C354CEC471841AEB9 /* ReachabilityViewModel.swift in Sources */,
 				1A564E69BA99DF8CD4562902 /* PlaceholderViewModule.swift in Sources */,
 				ABC9A91D03FB46F6AD21EEF4 /* WalletConnectSocketConnectionService.swift in Sources */,
+				6BEA17772DE5C59E00BF73DD /* ZcashShieldingTransactionRecord.swift in Sources */,
 				11B3564FBC180A0E6D30BCFA /* TransactionsModule.swift in Sources */,
 				D0E5E8552BE38AA2005080A4 /* TronSendHandler.swift in Sources */,
 				11B3501BA3EA411F93E9C694 /* TransactionsService.swift in Sources */,
@@ -12185,6 +12218,7 @@
 				11B35916211F5D5EA0DBD207 /* CoinPageViewModel.swift in Sources */,
 				D3DD671F2BC3BD1200EC7F78 /* BaseUniswapMultiSwapQuote.swift in Sources */,
 				11B3522207EA307D94070776 /* CoinPageView.swift in Sources */,
+				6BEA17742DE5918D00BF73DD /* ShieldSendHandler.swift in Sources */,
 				11B3550A6826CF513B1A77F0 /* TabHeaderView.swift in Sources */,
 				11B3551F51D987A150C3BC26 /* TabButtonStyle.swift in Sources */,
 				6BBB92BA2D11648E00112409 /* PromoCodeBottomSheetViewModel.swift in Sources */,
