@@ -10,7 +10,7 @@ import UIKit
 import ZcashLightClientKit
 
 class ZcashAdapter {
-    static let minimalThreshold: Decimal = 0.0002 // minimal transparent balance to shielding
+    static let minimalThreshold: Decimal = 0.0004 // minimal transparent balance to shielding
 
     private static let endPoint = "zec.rocks" // "lightwalletd.electriccoin.co"
     private let queue = DispatchQueue(label: "\(AppConfig.label).zcash-adapter", qos: .userInitiated)
@@ -777,8 +777,7 @@ extension ZcashAdapter: ISendZcashAdapter {
     }
 
     var availableBalance: Decimal {
-        let availableBalance = max(0, balanceData.available)
-        return availableBalance
+        max(0, balanceData.available)
     }
 
     func sendProposal(amount: Decimal, address: Recipient, memo: Memo?) async throws -> Proposal {
@@ -791,7 +790,7 @@ extension ZcashAdapter: ISendZcashAdapter {
         return try await synchronizer.proposeTransfer(accountUUID: accountId, recipient: address, amount: amountInZatoshi, memo: memo)
     }
 
-    func shieldProposal(amount: Decimal, address: Recipient?, memo: Memo?) async throws -> Proposal? {
+    func shieldProposal(threshold: Decimal, address: Recipient?, memo: Memo?) async throws -> Proposal? {
         guard let accountId else {
             throw AppError.ZcashError.noAccountId
         }
@@ -804,7 +803,7 @@ extension ZcashAdapter: ISendZcashAdapter {
         default: ()
         }
 
-        let amountInZatoshi = Zatoshi.from(decimal: amount)
+        let amountInZatoshi = Zatoshi.from(decimal: threshold)
 
         return try await synchronizer.proposeShielding(accountUUID: accountId, shieldingThreshold: amountInZatoshi, memo: requiredMemo, transparentReceiver: transparentAddress)
     }
