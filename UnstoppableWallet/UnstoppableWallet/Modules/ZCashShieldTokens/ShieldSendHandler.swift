@@ -25,22 +25,20 @@ extension ShieldSendHandler: ISendHandler {
 
     func sendData(transactionSettings _: TransactionSettings?) async throws -> ISendData {
         let memoText = memo.flatMap { try? Memo(string: $0) }
-        var amountWithoutFee: Decimal = amount
-        if adapter.availableBalance == amount, let proposal = try await adapter.shieldProposal(amount: amount, address: recipient, memo: memoText) {
-            amountWithoutFee -= proposal.totalFeeRequired().decimalValue.decimalValue
-        }
-        guard let proposal = try await adapter.shieldProposal(amount: amountWithoutFee, address: recipient, memo: memoText) else {
+
+        guard let proposal = try await adapter.shieldProposal(threshold: ZcashAdapter.minimalThreshold, address: recipient, memo: memoText) else {
             throw SendError.cantCreateProposal
         }
 
         var transactionError: Error?
-        if (amountWithoutFee + proposal.totalFeeRequired().decimalValue.decimalValue) > adapter.availableBalance {
+        let fee = proposal.totalFeeRequired().decimalValue.decimalValue
+        if ZcashAdapter.minimalThreshold >= adapter.verifiedBalanceData.transparent {
             transactionError = AppError.zcash(reason: .notEnough)
         }
 
         return SendData(
             token: token,
-            amount: amountWithoutFee,
+            amount: amount - fee,
             recipient: recipient,
             memo: memo,
             transactionError: transactionError,
