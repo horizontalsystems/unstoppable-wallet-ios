@@ -674,6 +674,8 @@
 "swap.liquidity_fee" = "Liquidity Fee";
 "swap.outbound_fee" = "Outbound Fee";
 "swap.total_fee" = "Total Fee";
+"swap.thorchain.slip_protection" = "Slip protection unavailable";
+"swap.thorchain.slip_protection.description" = "Minimum slippage to enable slip protection for this swap is %@.";
 
 // Swap Advanced Settings
 

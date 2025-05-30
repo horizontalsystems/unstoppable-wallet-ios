@@ -85,12 +85,13 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
     }
 
     func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
-        let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
         let slippage = slippage
 
-        var memoComponents = swapQuote.memo.components(separatedBy: ":")
-        memoComponents[3] = (swapQuote.expectedAmountOut * pow(10, 8) * (1 - slippage / 100)).rounded(decimal: 0).description
-        let memo = memoComponents.joined(separator: ":")
+        let slippageSwapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
+
+        let swapQuote = slippageSwapQuote.slipProtectionThreshold > slippage ?
+            slippageSwapQuote :
+            try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage)
 
         switch tokenIn.blockchainType {
         case .avalanche, .base, .binanceSmartChain, .ethereum:
@@ -105,14 +106,14 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
                 transactionData = try TransactionData(
                     to: EvmKit.Address(hex: swapQuote.inboundAddress),
                     value: tokenIn.fractionalMonetaryValue(value: amountIn),
-                    input: Data(memo.utf8) // TODO: CHECK THIS POINT
+                    input: Data(swapQuote.memo.utf8) // TODO: CHECK THIS POINT
                 )
             case let .eip20(address):
                 let method = try DepositWithExpiryMethod(
                     inboundAddress: EvmKit.Address(hex: swapQuote.inboundAddress),
                     asset: EvmKit.Address(hex: address),
                     amount: tokenIn.fractionalMonetaryValue(value: amountIn),
-                    memo: memo,
+                    memo: swapQuote.memo,
                     expiry: BigUInt(UInt64(Date().timeIntervalSince1970) + 1 * 60 * 60) // TODO: CHECK THIS POINT
                 )
 
@@ -165,7 +166,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
                         feeRate: _satoshiPerByte,
                         sortType: .none,
                         rbfEnabled: true,
-                        memo: memo,
+                        memo: swapQuote.memo,
                         unspentOutputs: nil,
                         dustThreshold: swapQuote.dustThreshold,
                         utxoFilters: utxoFilters,
@@ -242,7 +243,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    private func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> SwapQuote {
+    private func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil) async throws -> SwapQuote {
         guard let assetIn = assets.first(where: { $0.token == tokenIn }) else {
             throw SwapError.unsupportedTokenIn
         }
@@ -259,8 +260,11 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
             "to_asset": assetOut.id,
             "amount": amount.description,
             "destination": destination,
-            // "tolerance_bps": slippage * 100,
         ]
+
+        if let slippage {
+            parameters["tolerance_bps"] = Int((slippage * 100).rounded(decimal: 0).description)
+        }
 
         if let affiliate, let affiliateBps {
             parameters["affiliate"] = affiliate
@@ -399,6 +403,7 @@ extension ThorChainMultiSwapProvider {
         let affiliateFee: Decimal
         let outboundFee: Decimal
         let liquidityFee: Decimal
+        let totalFee: Decimal
 
         let dustThreshold: Int
 
@@ -411,8 +416,14 @@ extension ThorChainMultiSwapProvider {
             affiliateFee = try map.value("fees.affiliate", using: Transform.stringToDecimalTransform) / pow(10, 8)
             outboundFee = try map.value("fees.outbound", using: Transform.stringToDecimalTransform) / pow(10, 8)
             liquidityFee = try map.value("fees.liquidity", using: Transform.stringToDecimalTransform) / pow(10, 8)
+            totalFee = try map.value("fees.total", using: Transform.stringToDecimalTransform) / pow(10, 8)
 
             dustThreshold = try map.value("dust_threshold", using: Transform.stringToIntTransform)
+        }
+
+        var slipProtectionThreshold: Decimal {
+            let totalValue = expectedAmountOut + totalFee
+            return 100 - (expectedAmountOut * 100 / totalValue)
         }
     }
 
