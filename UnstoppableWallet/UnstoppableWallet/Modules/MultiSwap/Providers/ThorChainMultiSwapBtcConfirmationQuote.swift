@@ -38,15 +38,19 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
             cautions.append(caution(transactionError: transactionError, feeToken: baseToken))
         }
 
-        switch MultiSwapSlippage.validate(slippage: slippage) {
-        case .none: ()
-        case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
+        // switch MultiSwapSlippage.validate(slippage: slippage) {
+        // case .none: ()
+        // case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
+        // }
+
+        if swapQuote.slipProtectionThreshold > slippage {
+            cautions.append(CautionNew(title: "swap.thorchain.slip_protection".localized, text: "swap.thorchain.slip_protection.description".localized("\(swapQuote.slipProtectionThreshold.rounded(decimal: 2).description)%"), type: .warning))
         }
 
         return cautions
     }
 
-    func priceSectionFields(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, baseToken _: MarketKit.Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate _: Decimal?) -> [SendField] {
+    func priceSectionFields(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, baseToken _: MarketKit.Token, currency: Currency, tokenInRate _: Decimal?, tokenOutRate: Decimal?, baseTokenRate _: Decimal?) -> [SendField] {
         var fields = [SendField]()
 
         if let recipient {
@@ -59,12 +63,26 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
             )
         }
 
-        if slippage != MultiSwapSlippage.default {
+        if swapQuote.slipProtectionThreshold <= slippage {
+            if slippage != MultiSwapSlippage.default {
+                fields.append(
+                    .levelValue(
+                        title: "swap.slippage".localized,
+                        value: "\(slippage.description)%",
+                        level: MultiSwapSlippage.validate(slippage: slippage).valueLevel
+                    )
+                )
+            }
+
+            let minAmountOut = amountOut * (1 - slippage / 100)
+
             fields.append(
-                .levelValue(
-                    title: "swap.slippage".localized,
-                    value: "\(slippage.description)%",
-                    level: MultiSwapSlippage.validate(slippage: slippage).valueLevel
+                .value(
+                    title: "swap.confirmation.minimum_received".localized,
+                    description: nil,
+                    appValue: AppValue(token: tokenOut, value: minAmountOut),
+                    currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: minAmountOut * $0) },
+                    formatFull: true
                 )
             )
         }

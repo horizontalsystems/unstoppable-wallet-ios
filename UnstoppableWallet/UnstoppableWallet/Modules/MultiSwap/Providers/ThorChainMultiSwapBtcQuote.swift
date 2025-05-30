@@ -53,9 +53,13 @@ class ThorChainMultiSwapBtcQuote: IMultiSwapQuote {
     func cautions() -> [CautionNew] {
         var cautions = [CautionNew]()
 
-        switch MultiSwapSlippage.validate(slippage: slippage) {
-        case .none: ()
-        case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
+        // switch MultiSwapSlippage.validate(slippage: slippage) {
+        // case .none: ()
+        // case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
+        // }
+
+        if swapQuote.slipProtectionThreshold > slippage {
+            cautions.append(CautionNew(title: "swap.thorchain.slip_protection".localized, text: "swap.thorchain.slip_protection.description".localized("\(swapQuote.slipProtectionThreshold.rounded(decimal: 2).description)%"), type: .warning))
         }
 
         return cautions
