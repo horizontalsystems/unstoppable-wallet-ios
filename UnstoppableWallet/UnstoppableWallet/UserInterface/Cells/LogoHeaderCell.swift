@@ -1,5 +1,5 @@
+import Kingfisher
 import SnapKit
-
 import UIKit
 
 class LogoHeaderCell: UITableViewCell {

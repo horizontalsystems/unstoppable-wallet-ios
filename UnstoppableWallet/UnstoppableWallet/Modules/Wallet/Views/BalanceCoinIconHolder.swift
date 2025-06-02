@@ -1,7 +1,4 @@
-
-import HUD
 import MarketKit
-
 import UIKit
 
 class BalanceCoinIconHolder: UIView {

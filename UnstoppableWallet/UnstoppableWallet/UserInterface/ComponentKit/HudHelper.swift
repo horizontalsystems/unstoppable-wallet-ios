@@ -1,4 +1,3 @@
-import HUD
 import UIKit
 
 public class HudHelper {

@@ -1,4 +1,3 @@
-import HUD
 import UIKit
 
 class AdditionalDataWithErrorView: UIView {

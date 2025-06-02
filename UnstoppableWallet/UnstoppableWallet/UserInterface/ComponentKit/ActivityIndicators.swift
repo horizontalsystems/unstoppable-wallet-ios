@@ -1,5 +1,3 @@
-import HUD
-import ThemeKit
 import UIKit
 
 public enum ActivityIndicatorStyle {

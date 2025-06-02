@@ -1,6 +1,4 @@
-
 import Foundation
-import HUD
 import UIKit
 
 class SwapPriceCell: BaseThemeCell {
