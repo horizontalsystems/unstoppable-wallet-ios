@@ -1,6 +1,5 @@
 import RxSwift
 import SnapKit
-import ThemeKit
 import UIKit
 
 class SendMemoInputCell: UITableViewCell {

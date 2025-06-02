@@ -1,8 +1,7 @@
-import ComponentKit
+
 import RxCocoa
 import RxSwift
 import SectionsTableView
-import ThemeKit
 import UIKit
 
 class SendBitcoinViewController: BaseSendViewController {

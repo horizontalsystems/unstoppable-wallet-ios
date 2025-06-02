@@ -2,7 +2,7 @@ import BigInt
 import EvmKit
 import HsExtensions
 import MarketKit
-import ThemeKit
+
 import UIKit
 
 enum SwapApproveConfirmationModule {

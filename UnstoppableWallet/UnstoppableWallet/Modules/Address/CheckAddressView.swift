@@ -1,6 +1,5 @@
 import MarketKit
 import SwiftUI
-import ThemeKit
 
 struct CheckAddressView: View {
     @StateObject var viewModel = CheckAddressViewModel()

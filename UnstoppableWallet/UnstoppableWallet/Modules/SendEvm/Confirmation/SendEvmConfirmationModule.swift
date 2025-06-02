@@ -2,7 +2,7 @@ import EvmKit
 import Foundation
 import HsExtensions
 import MarketKit
-import ThemeKit
+
 import UIKit
 
 struct SendEvmData {

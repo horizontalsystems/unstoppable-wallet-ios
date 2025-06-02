@@ -1,6 +1,8 @@
 import Foundation
 
 extension TimeInterval {
+    static let themeAnimationDuration: TimeInterval = 0.3
+
     var approximateHoursOrMinutes: String {
         let seconds = Int(self)
         let hours = seconds / 3600

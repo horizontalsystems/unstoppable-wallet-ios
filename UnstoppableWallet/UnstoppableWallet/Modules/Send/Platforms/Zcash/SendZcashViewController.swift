@@ -1,6 +1,5 @@
 import SectionsTableView
 import SnapKit
-import ThemeKit
 import UIKit
 
 class SendZcashViewController: BaseSendViewController {

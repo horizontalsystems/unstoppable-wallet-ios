@@ -1,7 +1,7 @@
 import EvmKit
 import RxSwift
 import SectionsTableView
-import ThemeKit
+
 import UIKit
 
 class SwapApproveViewController: KeyboardAwareViewController {

@@ -1,6 +1,5 @@
 import MarketKit
 import SwiftUI
-import ThemeKit
 
 struct MarketGlobalView: View {
     @ObservedObject var viewModel: MarketGlobalViewModel

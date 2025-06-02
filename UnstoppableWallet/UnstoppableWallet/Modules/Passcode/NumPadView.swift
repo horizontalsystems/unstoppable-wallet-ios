@@ -1,5 +1,4 @@
 import SwiftUI
-import ThemeKit
 
 struct NumPadView: View {
     @Binding var digits: [Int]

@@ -1,5 +1,4 @@
 import SwiftUI
-import ThemeKit
 
 struct HorizontalDivider: View {
     private let color: Color

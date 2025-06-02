@@ -1,7 +1,6 @@
 import MarketKit
 import RxRelay
 import RxSwift
-import ThemeKit
 
 class SwapSelectProviderService {
     private let dexManager: ISwapDexManager

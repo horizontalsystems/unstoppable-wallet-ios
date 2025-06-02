@@ -1,8 +1,7 @@
 import Chart
-import ComponentKit
+
 import HUD
 import SnapKit
-import ThemeKit
 import UIKit
 
 class MarketCardCell: UITableViewCell {

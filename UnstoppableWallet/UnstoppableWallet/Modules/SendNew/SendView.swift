@@ -1,4 +1,4 @@
-import ComponentKit
+
 import Kingfisher
 import MarketKit
 import SwiftUI
@@ -53,7 +53,7 @@ struct SendView: View {
             }
         }
         .onReceive(viewModel.errorSubject) { error in
-            HudHelper.instance.showError(subtitle: error)
+            HudHelper.instance.show(banner: .error(string: error))
         }
         .accentColor(.themeJacob)
     }

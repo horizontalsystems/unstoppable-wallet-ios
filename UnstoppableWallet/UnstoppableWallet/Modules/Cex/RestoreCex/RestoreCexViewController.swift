@@ -1,7 +1,6 @@
-import ComponentKit
+
 import Foundation
 import SectionsTableView
-import ThemeKit
 import UIKit
 
 class RestoreCexViewController: ThemeViewController {

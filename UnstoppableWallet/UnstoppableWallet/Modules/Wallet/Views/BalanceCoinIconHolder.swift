@@ -1,7 +1,7 @@
-import ComponentKit
+
 import HUD
 import MarketKit
-import ThemeKit
+
 import UIKit
 
 class BalanceCoinIconHolder: UIView {

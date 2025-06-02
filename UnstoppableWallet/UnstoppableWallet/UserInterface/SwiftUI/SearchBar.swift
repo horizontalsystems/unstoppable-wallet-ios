@@ -1,5 +1,4 @@
 import SwiftUI
-import ThemeKit
 
 struct SearchBar: View {
     @Binding var text: String

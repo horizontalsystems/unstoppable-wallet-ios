@@ -1,5 +1,4 @@
 import SwiftUI
-import ThemeKit
 
 struct BackupDisclaimerView: View {
     @ObservedObject var viewModel: BackupAppViewModel

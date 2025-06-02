@@ -1,7 +1,7 @@
-import ComponentKit
+
 import HUD
 import RxSwift
-import ThemeKit
+
 import UIKit
 
 class SwapSwitchCell: UITableViewCell {

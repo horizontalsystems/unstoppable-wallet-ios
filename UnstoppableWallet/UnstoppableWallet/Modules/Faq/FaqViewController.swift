@@ -1,9 +1,8 @@
-import ComponentKit
+
 import HUD
 import RxSwift
 import SectionsTableView
 import SnapKit
-import ThemeKit
 import UIKit
 
 class FaqViewController: ThemeViewController {

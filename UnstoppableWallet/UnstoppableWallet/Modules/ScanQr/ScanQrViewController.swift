@@ -1,7 +1,6 @@
-import ComponentKit
+
 import SnapKit
 import SwiftUI
-import ThemeKit
 import UIKit
 
 class ScanQrViewController: ThemeViewController {

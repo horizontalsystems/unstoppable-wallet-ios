@@ -1,5 +1,4 @@
 import SwiftUI
-import ThemeKit
 
 struct InputTextView: View {
     var placeholder: String = ""

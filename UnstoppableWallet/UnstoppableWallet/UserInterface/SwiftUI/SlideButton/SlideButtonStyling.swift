@@ -1,5 +1,4 @@
 import SwiftUI
-import ThemeKit
 
 public struct SlideButtonStyling {
     public init(

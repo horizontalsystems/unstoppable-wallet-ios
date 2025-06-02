@@ -1,11 +1,11 @@
 import Alamofire
 import Combine
-import ComponentKit
+
 import MarketKit
 import RxSwift
 import SectionsTableView
 import SnapKit
-import ThemeKit
+
 import UIKit
 
 class CoinSelectViewController: ThemeSearchViewController {

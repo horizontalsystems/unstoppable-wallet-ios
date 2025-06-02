@@ -1,5 +1,4 @@
 import Combine
-import ComponentKit
 
 class WatchlistViewModel: ObservableObject {
     private let watchlistManager = App.shared.watchlistManager

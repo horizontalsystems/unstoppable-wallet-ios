@@ -1,4 +1,4 @@
-import ComponentKit
+
 import UIKit
 
 class BorderedEmptyCell: EmptyCell {

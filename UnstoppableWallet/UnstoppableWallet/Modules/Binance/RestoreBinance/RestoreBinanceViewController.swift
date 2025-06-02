@@ -1,9 +1,8 @@
 import Combine
-import ComponentKit
+
 import HUD
 import SectionsTableView
 import SnapKit
-import ThemeKit
 import UIKit
 
 class RestoreBinanceViewController: ThemeViewController {
@@ -113,7 +112,7 @@ class RestoreBinanceViewController: ThemeViewController {
 
         viewModel.errorPublisher
             .receive(on: DispatchQueue.main)
-            .sink { text in HudHelper.instance.showErrorBanner(title: text) }
+            .sink { text in HudHelper.instance.show(banner: .error(string: text)) }
             .store(in: &cancellables)
 
         viewModel.successPublisher

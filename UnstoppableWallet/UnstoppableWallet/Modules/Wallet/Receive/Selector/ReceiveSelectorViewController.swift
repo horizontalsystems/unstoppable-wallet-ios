@@ -1,7 +1,7 @@
 import Foundation
 import MarketKit
 import SectionsTableView
-import ThemeKit
+
 import UIKit
 
 class ReceiveSelectorViewController<ViewModel: IReceiveSelectorViewModel>: ThemeViewController {

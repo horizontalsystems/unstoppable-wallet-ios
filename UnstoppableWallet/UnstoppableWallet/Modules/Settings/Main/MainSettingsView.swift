@@ -1,7 +1,6 @@
 import Kingfisher
 import MessageUI
 import SwiftUI
-import ThemeKit
 
 struct MainSettingsView: View {
     @StateObject var viewModel = MainSettingsViewModel()

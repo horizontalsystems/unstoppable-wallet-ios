@@ -1,5 +1,4 @@
 import Combine
-import ComponentKit
 
 class CreateDuressPasscodeViewModel: SetPasscodeViewModel {
     private let accountIds: [String]

@@ -1,5 +1,4 @@
 import SwiftUI
-import ThemeKit
 
 struct BadgeViewNew: View {
     private let style: Style

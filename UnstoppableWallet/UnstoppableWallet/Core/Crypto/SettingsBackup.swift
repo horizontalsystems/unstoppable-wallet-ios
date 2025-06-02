@@ -1,6 +1,5 @@
 import Chart
 import Foundation
-import ThemeKit
 
 class SettingsBackup: Codable {
     var evmSyncSources: EvmSyncSourceManager.SyncSourceBackup

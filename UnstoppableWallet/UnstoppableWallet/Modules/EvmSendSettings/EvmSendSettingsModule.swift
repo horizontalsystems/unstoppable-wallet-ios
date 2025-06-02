@@ -1,7 +1,7 @@
 import EvmKit
 import MarketKit
 import SectionsTableView
-import ThemeKit
+
 import UIKit
 
 enum EvmSendSettingsModule {

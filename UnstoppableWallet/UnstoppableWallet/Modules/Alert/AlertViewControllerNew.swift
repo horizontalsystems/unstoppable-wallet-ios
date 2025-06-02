@@ -1,5 +1,4 @@
 import SectionsTableView
-import ThemeKit
 import UIKit
 
 class AlertViewControllerNew: ThemeActionSheetController {

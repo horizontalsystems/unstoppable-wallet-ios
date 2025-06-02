@@ -1,7 +1,7 @@
 import Combine
-import ComponentKit
+
 import MarketKit
-import ThemeKit
+
 import UIKit
 
 class WalletTokenViewController: ThemeViewController {

@@ -1,5 +1,5 @@
 import Chart
-import ThemeKit
+
 import UIKit
 
 extension ChartConfiguration {

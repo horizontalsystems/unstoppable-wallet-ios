@@ -1,7 +1,7 @@
-import ComponentKit
+
 import Foundation
 import RxSwift
-import ThemeKit
+
 import UIKit
 
 class WCSignEthereumTransactionRequestViewController: SendEvmTransactionViewController {

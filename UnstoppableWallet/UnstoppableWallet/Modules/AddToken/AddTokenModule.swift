@@ -1,7 +1,6 @@
 import EvmKit
 import Foundation
 import MarketKit
-import ThemeKit
 import UIKit
 
 enum AddTokenModule {

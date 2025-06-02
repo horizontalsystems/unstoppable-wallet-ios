@@ -1,6 +1,6 @@
 import RxSwift
 import SnapKit
-import ThemeKit
+
 import UIKit
 
 class FormAmountInputView: UIView {

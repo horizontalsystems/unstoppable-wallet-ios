@@ -1,5 +1,4 @@
 import SwiftUI
-import ThemeKit
 
 struct BackupTypeView: View {
     @StateObject var viewModel: BackupAppViewModel

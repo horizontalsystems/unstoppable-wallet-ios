@@ -1,7 +1,6 @@
 import Foundation
 import Hodler
 import SwiftUI
-import ThemeKit
 
 struct BitcoinSendSettingsView: View {
     @StateObject var viewModel: BitcoinSendSettingsViewModel

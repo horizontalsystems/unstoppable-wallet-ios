@@ -1,7 +1,7 @@
 import MarketKit
 import RxCocoa
 import RxSwift
-import ThemeKit
+
 import UIKit
 
 class RestoreSettingsView {
