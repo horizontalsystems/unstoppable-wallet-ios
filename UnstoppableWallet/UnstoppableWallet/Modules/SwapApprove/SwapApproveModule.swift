@@ -1,7 +1,7 @@
 import BigInt
 import EvmKit
 import HsExtensions
-import ThemeKit
+
 import UIKit
 
 enum SwapApproveModule {

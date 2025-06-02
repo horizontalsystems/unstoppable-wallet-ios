@@ -1,6 +1,5 @@
 import Kingfisher
 import SnapKit
-import ThemeKit
 import UIKit
 
 class MarkdownImageCell: UITableViewCell {

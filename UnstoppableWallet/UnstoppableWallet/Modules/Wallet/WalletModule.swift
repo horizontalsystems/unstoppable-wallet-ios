@@ -1,7 +1,7 @@
 import MarketKit
 import RxSwift
 import SwiftUI
-import ThemeKit
+
 import UIKit
 
 enum WalletModule {

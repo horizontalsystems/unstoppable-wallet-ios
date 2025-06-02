@@ -1,6 +1,6 @@
 import EvmKit
 import OneInchKit
-import ThemeKit
+
 import UIKit
 
 enum SwapConfirmationModule {

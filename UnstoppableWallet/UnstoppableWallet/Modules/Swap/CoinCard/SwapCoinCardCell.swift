@@ -1,7 +1,7 @@
-import ComponentKit
+
 import MarketKit
 import RxSwift
-import ThemeKit
+
 import UIKit
 
 class SwapCoinCardCell: UITableViewCell {

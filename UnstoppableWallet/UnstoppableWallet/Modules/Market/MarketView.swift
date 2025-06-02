@@ -1,7 +1,6 @@
 import Kingfisher
 import MarketKit
 import SwiftUI
-import ThemeKit
 
 struct MarketView: View {
     @StateObject var searchViewModel: MarketSearchViewModel

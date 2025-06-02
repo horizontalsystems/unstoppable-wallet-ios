@@ -1,5 +1,4 @@
 import SnapKit
-import ThemeKit
 import UIKit
 
 class MarkdownHeader3Cell: UITableViewCell {

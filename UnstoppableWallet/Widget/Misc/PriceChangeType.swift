@@ -1,5 +1,4 @@
 import SwiftUI
-import ThemeKit
 
 enum PriceChangeType {
     case up, down, unknown

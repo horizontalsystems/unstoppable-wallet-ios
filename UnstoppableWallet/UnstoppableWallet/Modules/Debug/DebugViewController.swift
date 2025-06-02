@@ -1,4 +1,3 @@
-import ThemeKit
 import UIKit
 
 class DebugViewController: ThemeViewController {

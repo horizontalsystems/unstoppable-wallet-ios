@@ -1,5 +1,4 @@
 import SwiftUI
-import ThemeKit
 
 extension View {
     func textBody(color: Color = .themeLeah) -> some View {

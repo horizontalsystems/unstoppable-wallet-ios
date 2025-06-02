@@ -1,7 +1,7 @@
-import ComponentKit
+
 import RxSwift
 import SnapKit
-import ThemeKit
+
 import UIKit
 
 class PlaceholderView: UIView {

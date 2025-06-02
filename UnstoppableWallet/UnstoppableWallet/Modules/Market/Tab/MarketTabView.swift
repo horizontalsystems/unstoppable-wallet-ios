@@ -1,5 +1,4 @@
 import SwiftUI
-import ThemeKit
 
 struct MarketTabView: View {
     @StateObject var viewModel: MarketTabViewModel

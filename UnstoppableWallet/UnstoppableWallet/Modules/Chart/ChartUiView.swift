@@ -1,9 +1,8 @@
 import Chart
-import ComponentKit
+
 import HUD
 import RxSwift
 import SnapKit
-import ThemeKit
 import UIKit
 
 class ChartUiView: UIView {

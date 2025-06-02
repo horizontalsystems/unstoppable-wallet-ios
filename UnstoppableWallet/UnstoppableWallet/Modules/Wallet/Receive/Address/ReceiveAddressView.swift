@@ -1,5 +1,5 @@
 import Combine
-import ComponentKit
+
 import SwiftUI
 
 private let qrSize: CGFloat = 203

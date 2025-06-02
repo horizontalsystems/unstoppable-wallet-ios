@@ -3,7 +3,7 @@ import RxCocoa
 import RxSwift
 import SectionsTableView
 import SnapKit
-import ThemeKit
+
 import UIKit
 
 class SendEvmViewController: ThemeViewController {

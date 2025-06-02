@@ -1,5 +1,5 @@
-import ComponentKit
-import ThemeKit
+
+
 import UIKit
 
 class AlertItemCell: BaseThemeCell {

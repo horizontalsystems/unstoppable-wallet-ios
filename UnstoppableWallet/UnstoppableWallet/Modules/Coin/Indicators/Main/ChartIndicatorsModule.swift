@@ -1,6 +1,5 @@
 import Foundation
 import SwiftUI
-import ThemeKit
 import UIKit
 
 class ChartIndicatorRouter {

@@ -1,6 +1,5 @@
 import Kingfisher
 import SwiftUI
-import ThemeKit
 
 struct AppearanceView: View {
     @StateObject var viewModel = AppearanceViewModel()

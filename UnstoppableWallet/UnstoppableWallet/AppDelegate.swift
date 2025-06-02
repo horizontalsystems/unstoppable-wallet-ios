@@ -1,4 +1,3 @@
-import ThemeKit
 import UIKit
 
 @main

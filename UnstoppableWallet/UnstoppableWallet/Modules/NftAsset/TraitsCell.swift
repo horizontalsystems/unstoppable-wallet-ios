@@ -1,6 +1,5 @@
 import AlignedCollectionViewFlowLayout
-import ComponentKit
-import ThemeKit
+
 import UIKit
 
 class TraitsCell: UITableViewCell {

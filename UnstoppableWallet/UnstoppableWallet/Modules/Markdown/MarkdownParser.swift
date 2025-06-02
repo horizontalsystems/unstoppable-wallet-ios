@@ -1,5 +1,4 @@
 import Down
-import ThemeKit
 import UIKit
 
 class MarkdownParser {

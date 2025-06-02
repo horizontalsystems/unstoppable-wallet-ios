@@ -1,6 +1,6 @@
 import Combine
 import HsExtensions
-import ThemeKit
+
 import UIKit
 
 class ThemeSearchViewController: KeyboardAwareViewController {

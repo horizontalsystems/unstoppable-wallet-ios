@@ -1,7 +1,7 @@
 import Combine
-import ComponentKit
+
 import SnapKit
-import ThemeKit
+
 import UIKit
 
 class UnspentOutputsCell: BaseSelectableThemeCell {

@@ -1,6 +1,5 @@
-import ComponentKit
+
 import SwiftUI
-import ThemeKit
 
 struct SendAddressView: View {
     private let wallet: Wallet

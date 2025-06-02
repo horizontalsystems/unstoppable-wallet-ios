@@ -1,6 +1,5 @@
 import MarketKit
 import RxCocoa
-import ThemeKit
 import UIKit
 
 protocol ITitledCautionViewModel {

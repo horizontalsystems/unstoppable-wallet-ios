@@ -1,9 +1,8 @@
 import Chart
 import Combine
-import ComponentKit
+
 import SectionsTableView
 import SnapKit
-import ThemeKit
 import UIKit
 
 class ChartIndicatorsViewController: ThemeViewController {

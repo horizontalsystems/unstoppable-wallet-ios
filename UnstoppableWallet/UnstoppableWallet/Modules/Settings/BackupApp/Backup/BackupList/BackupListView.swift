@@ -1,5 +1,4 @@
 import SwiftUI
-import ThemeKit
 
 struct BackupListView: View {
     @ObservedObject var viewModel: BackupAppViewModel

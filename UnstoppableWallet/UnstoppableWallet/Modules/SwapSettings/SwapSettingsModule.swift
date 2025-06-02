@@ -1,6 +1,6 @@
 import EvmKit
 import SectionsTableView
-import ThemeKit
+
 import UIKit
 
 protocol ISwapSettingsDataSource: AnyObject {

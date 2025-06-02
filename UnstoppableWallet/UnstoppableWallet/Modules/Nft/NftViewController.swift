@@ -1,10 +1,9 @@
-import ComponentKit
+
 import Foundation
 import Kingfisher
 import RxCocoa
 import RxSwift
 import SectionsTableView
-import ThemeKit
 import UIKit
 
 class NftViewController: ThemeViewController {

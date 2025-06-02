@@ -1,7 +1,6 @@
-import ComponentKit
+
 import Kingfisher
 import SwiftUI
-import ThemeKit
 
 struct PreSendView: View {
     @StateObject var viewModel: PreSendViewModel

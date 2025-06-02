@@ -1,5 +1,4 @@
 import SwiftUI
-import ThemeKit
 
 struct EducationView: View {
     @StateObject var viewModel = EducationViewModel()

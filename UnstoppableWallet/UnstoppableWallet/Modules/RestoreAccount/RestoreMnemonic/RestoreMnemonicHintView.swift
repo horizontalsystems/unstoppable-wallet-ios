@@ -1,7 +1,7 @@
 import AlignedCollectionViewFlowLayout
-import ComponentKit
+
 import SnapKit
-import ThemeKit
+
 import UIKit
 
 class RestoreMnemonicHintView: UIView {

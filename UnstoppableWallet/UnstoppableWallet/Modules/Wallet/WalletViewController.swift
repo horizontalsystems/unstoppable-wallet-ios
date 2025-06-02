@@ -1,5 +1,5 @@
 import Combine
-import ComponentKit
+
 import DeepDiff
 import HUD
 import MarketKit
@@ -7,7 +7,7 @@ import RxCocoa
 import RxSwift
 import SectionsTableView
 import SwiftUI
-import ThemeKit
+
 import UIKit
 
 class WalletViewController: ThemeViewController {

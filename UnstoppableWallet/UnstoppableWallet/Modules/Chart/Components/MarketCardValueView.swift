@@ -1,7 +1,6 @@
 import Chart
-import ComponentKit
+
 import SnapKit
-import ThemeKit
 import UIKit
 
 class MarketCardValueView: UIView {

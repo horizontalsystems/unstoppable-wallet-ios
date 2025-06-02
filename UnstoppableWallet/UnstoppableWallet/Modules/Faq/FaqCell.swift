@@ -1,5 +1,4 @@
-import ComponentKit
-import ThemeKit
+
 import UIKit
 
 class FaqCell: BaseSelectableThemeCell {

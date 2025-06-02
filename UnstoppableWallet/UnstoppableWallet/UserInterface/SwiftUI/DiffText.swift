@@ -1,6 +1,5 @@
 import Foundation
 import SwiftUI
-import ThemeKit
 
 struct DiffText: View {
     private let diff: Diff?

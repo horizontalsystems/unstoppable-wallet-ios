@@ -2,7 +2,7 @@ import BigInt
 import EvmKit
 import RxCocoa
 import RxSwift
-import ThemeKit
+
 import UIKit
 
 enum EvmFeeModule {

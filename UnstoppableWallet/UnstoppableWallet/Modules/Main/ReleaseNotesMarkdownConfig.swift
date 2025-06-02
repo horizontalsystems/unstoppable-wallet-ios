@@ -1,6 +1,5 @@
 import Down
 import Foundation
-import ThemeKit
 import UIKit
 
 enum ReleaseNotesMarkdownConfig {

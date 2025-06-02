@@ -1,6 +1,6 @@
 import Foundation
 import MarketKit
-import ThemeKit
+
 import UIKit
 
 enum AddEvmSyncSourceModule {

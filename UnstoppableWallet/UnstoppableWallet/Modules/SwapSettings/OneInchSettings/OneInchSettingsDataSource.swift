@@ -1,8 +1,8 @@
-import ComponentKit
+
 import RxCocoa
 import RxSwift
 import SectionsTableView
-import ThemeKit
+
 import UIKit
 
 class OneInchSettingsDataSource: ISwapSettingsDataSource {

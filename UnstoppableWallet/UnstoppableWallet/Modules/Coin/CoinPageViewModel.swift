@@ -1,5 +1,5 @@
 import Combine
-import ComponentKit
+
 import MarketKit
 
 class CoinPageViewModel: ObservableObject {

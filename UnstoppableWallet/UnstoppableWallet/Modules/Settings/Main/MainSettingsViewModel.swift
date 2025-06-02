@@ -2,7 +2,6 @@ import Combine
 import Foundation
 import MarketKit
 import RxSwift
-import ThemeKit
 
 class MainSettingsViewModel: ObservableObject {
     private let disposeBag = DisposeBag()
