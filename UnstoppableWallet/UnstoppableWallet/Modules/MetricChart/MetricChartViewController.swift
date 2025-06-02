@@ -1,10 +1,7 @@
 import Chart
-
-import HUD
 import RxSwift
 import SectionsTableView
 import SnapKit
-
 import UIKit
 
 class MetricChartViewController: ThemeActionSheetController {

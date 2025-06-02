@@ -1,6 +1,5 @@
 import SkeletonView
 import SnapKit
-import ThemeKit
 import UIKit
 
 open class BaseThemeCell: UITableViewCell {

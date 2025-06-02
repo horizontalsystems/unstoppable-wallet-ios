@@ -1,8 +1,5 @@
-
-import HUD
 import RxSwift
 import SnapKit
-
 import UIKit
 
 class TransactionsViewController: ThemeViewController {

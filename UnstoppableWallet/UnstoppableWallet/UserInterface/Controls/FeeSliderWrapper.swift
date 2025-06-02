@@ -1,5 +1,3 @@
-
-import HUD
 import UIKit
 
 class FeeSliderWrapper: UIView {

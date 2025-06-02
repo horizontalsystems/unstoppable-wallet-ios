@@ -1,10 +1,7 @@
-
-import HUD
 import RxCocoa
 import RxSwift
 import SectionsTableView
 import SnapKit
-
 import UIKit
 
 class NftCollectionOverviewViewController: ThemeViewController {

@@ -1,7 +1,6 @@
-
+import Kingfisher
 import MarketKit
 import SectionsTableView
-
 import UIKit
 
 enum CellComponent {

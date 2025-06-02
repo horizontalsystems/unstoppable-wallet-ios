@@ -1,5 +1,4 @@
 import SnapKit
-import ThemeKit
 import UIKit
 
 open class BottomDescriptionView: UIView {
