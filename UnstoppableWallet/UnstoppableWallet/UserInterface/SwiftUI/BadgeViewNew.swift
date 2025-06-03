@@ -57,8 +57,8 @@ extension BadgeViewNew {
 
         var backgroundColor: Color {
             switch self {
-            case .small: return .themeJeremy
-            case .medium: return .themeLucian
+            case .small: return .themeBlade
+            case .medium: return .themeBlade
             }
         }
     }

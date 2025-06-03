@@ -49,13 +49,13 @@ struct SecondaryButtonStyle: ButtonStyle {
 
         func foregroundColor(isEnabled: Bool, isPressed: Bool) -> Color {
             switch self {
-            case .default, .transparent: return isEnabled ? (isPressed ? .themeGray : .themeLeah) : .themeGray50
+            case .default, .transparent: return isEnabled ? (isPressed ? .themeGray : .themeLeah) : .themeAndy
             }
         }
 
         func backgroundColor(isEnabled: Bool, isPressed: Bool) -> Color {
             switch self {
-            case .default: return isEnabled ? (isPressed ? .themeSteel10 : .themeSteel20) : .themeSteel20
+            case .default: return isEnabled ? (isPressed ? .themeBlade : .themeBlade) : .themeBlade
             case .transparent: return .clear
             }
         }
@@ -64,7 +64,7 @@ struct SecondaryButtonStyle: ButtonStyle {
     enum Accessory {
         static let pressedColor = Color.themeGray
         static let enabledColor = Color.themeGray
-        static let disabledColor = Color.themeGray50
+        static let disabledColor = Color.themeAndy
 
         case none
         case dropDown

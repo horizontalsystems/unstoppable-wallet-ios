@@ -14,7 +14,7 @@ class BorderedEmptyCell: EmptyCell {
             maker.height.equalTo(CGFloat.heightOnePixel)
         }
 
-        topBorder.backgroundColor = .themeSteel20
+        topBorder.backgroundColor = .themeBlade
         topBorder.isHidden = true
 
         contentView.addSubview(bottomBorder)
@@ -23,7 +23,7 @@ class BorderedEmptyCell: EmptyCell {
             maker.height.equalTo(CGFloat.heightOnePixel)
         }
 
-        bottomBorder.backgroundColor = .themeSteel20
+        bottomBorder.backgroundColor = .themeBlade
         bottomBorder.isHidden = true
     }
 

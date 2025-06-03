@@ -38,8 +38,7 @@ class TransactionsTableViewDataSource: NSObject {
     private func color(valueType: BaseTransactionsViewModel.ValueType) -> UIColor {
         switch valueType {
         case .incoming: return .themeRemus
-        case .outgoing: return .themeLucian
-        case .neutral: return .themeLeah
+        case .neutral, .outgoing: return .themeLeah
         case .secondary: return .themeGray
         }
     }

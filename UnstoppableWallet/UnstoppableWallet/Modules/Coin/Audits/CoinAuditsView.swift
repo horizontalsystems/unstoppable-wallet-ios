@@ -23,7 +23,7 @@ struct CoinAuditsView: View {
                                 HStack(spacing: .margin16) {
                                     KFImage.url(viewItem.logoUrl.flatMap { URL(string: $0) })
                                         .resizable()
-                                        .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeSteel20) }
+                                        .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeBlade) }
                                         .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
                                         .frame(width: .iconSize32, height: .iconSize32)
 

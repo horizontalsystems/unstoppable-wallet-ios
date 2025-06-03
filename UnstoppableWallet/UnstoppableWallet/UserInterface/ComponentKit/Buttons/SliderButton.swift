@@ -30,7 +30,7 @@ open class SliderButton: UIView {
     public init() {
         super.init(frame: .zero)
 
-        backgroundColor = .themeSteel20
+        backgroundColor = .themeBlade
         cornerRadius = Self.height / 2
 
         snp.makeConstraints { make in
@@ -124,8 +124,8 @@ open class SliderButton: UIView {
     }
 
     private func syncState() {
-        fillView.backgroundColor = isEnabled ? .themeYellowD.withAlphaComponent(0.5) : .themeSteel10
-        circleView.backgroundColor = isEnabled ? .themeYellowD : .themeSteel20
+        fillView.backgroundColor = isEnabled ? .themeYellowD.withAlphaComponent(0.5) : .themeBlade
+        circleView.backgroundColor = isEnabled ? .themeYellowD : .themeBlade
         slideImageView.image = slideImageView.image?.withTintColor(isEnabled ? .themeDark : .themeGray50)
         label.textColor = isEnabled ? .themeGray : .themeGray50
 

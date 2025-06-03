@@ -67,7 +67,7 @@ struct CoinMarketsView: View {
         KFImage.url(viewItem.marketImageUrl.flatMap { URL(string: $0) })
             .resizable()
             .placeholder {
-                RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).fill(Color.themeSteel20)
+                RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).fill(Color.themeBlade)
             }
             .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous))
             .frame(width: .iconSize32, height: .iconSize32)

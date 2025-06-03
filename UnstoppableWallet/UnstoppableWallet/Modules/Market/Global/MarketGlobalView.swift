@@ -96,7 +96,7 @@ struct MarketGlobalView: View {
 
     @ViewBuilder private func divider() -> some View {
         Rectangle()
-            .fill(Color.themeSteel20)
+            .fill(Color.themeBlade)
             .frame(width: .heightOneDp)
     }
 }

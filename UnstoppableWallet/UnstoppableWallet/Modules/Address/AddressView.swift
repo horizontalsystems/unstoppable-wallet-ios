@@ -14,7 +14,7 @@ struct AddressView: View {
     var borderColor: Color {
         switch viewModel.addressResult {
         case .invalid: return .themeLucian
-        default: return .themeSteel20
+        default: return .themeBlade
         }
     }
 

@@ -179,7 +179,7 @@ struct BitcoinSendSettingsView: View {
                             }
                         }
                     }
-                    .overlay(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).stroke(Color.themeSteel20, lineWidth: .heightOneDp))
+                    .overlay(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).stroke(Color.themeBlade, lineWidth: .heightOneDp))
                 }
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin24, trailing: .margin16))
             }

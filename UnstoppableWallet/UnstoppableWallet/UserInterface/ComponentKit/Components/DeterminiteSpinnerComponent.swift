@@ -10,7 +10,7 @@ public class DeterminiteSpinnerComponent: UIView {
             strokeLineWidth: 2,
             radius: (size - 2) / 2,
             strokeColor: .themeGray,
-            donutColor: .themeSteel10,
+            donutColor: .themeBlade,
             duration: 2
         )
 

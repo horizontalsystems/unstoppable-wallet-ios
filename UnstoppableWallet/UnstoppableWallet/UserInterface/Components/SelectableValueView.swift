@@ -34,7 +34,7 @@ class SelectableValueView: UIView {
             maker.height.equalTo(CGFloat.heightOnePixel)
         }
 
-        lineView.backgroundColor = .themeSteel20
+        lineView.backgroundColor = .themeBlade
 
         titleLabel.text = title
         titleLabel.font = UIFont.subhead2

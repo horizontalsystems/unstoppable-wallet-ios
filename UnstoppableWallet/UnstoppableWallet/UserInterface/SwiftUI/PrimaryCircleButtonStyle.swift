@@ -32,17 +32,17 @@ struct PrimaryCircleButtonStyle: ButtonStyle {
 
         func foregroundColor(isEnabled: Bool, isPressed: Bool) -> Color {
             switch self {
-            case .yellow: return isEnabled ? .themeDark : .themeGray50
-            case .red, .gray: return isEnabled ? .themeClaude : .themeGray50
-            case .transparent: return isEnabled ? (isPressed ? .themeGray : .themeLeah) : .themeGray50
+            case .yellow: return isEnabled ? .themeDark : .themeAndy
+            case .red, .gray: return isEnabled ? .themeClaude : .themeAndy
+            case .transparent: return isEnabled ? (isPressed ? .themeGray : .themeLeah) : .themeAndy
             }
         }
 
         func backgroundColor(isEnabled: Bool, isPressed: Bool) -> Color {
             switch self {
-            case .yellow: return isEnabled ? (isPressed ? .themeYellow50 : .themeYellow) : .themeSteel20
-            case .red: return isEnabled ? (isPressed ? .themeRed50 : .themeLucian) : .themeSteel20
-            case .gray: return isEnabled ? (isPressed ? .themeNina : .themeLeah) : .themeSteel20
+            case .yellow: return isEnabled ? (isPressed ? .themeYellow50 : .themeYellow) : .themeBlade
+            case .red: return isEnabled ? (isPressed ? .themeRed50 : .themeLucian) : .themeBlade
+            case .gray: return isEnabled ? (isPressed ? .themeNina : .themeLeah) : .themeBlade
             case .transparent: return .clear
             }
         }

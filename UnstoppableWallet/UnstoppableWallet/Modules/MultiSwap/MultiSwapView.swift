@@ -173,7 +173,7 @@ struct MultiSwapView: View {
                                     .frame(maxWidth: .infinity)
 
                                     RoundedRectangle(cornerRadius: 0.5, style: .continuous)
-                                        .fill(Color.themeSteel20)
+                                        .fill(Color.themeBlade)
                                         .frame(width: 1)
                                         .frame(maxHeight: .infinity)
                                 }
@@ -191,7 +191,7 @@ struct MultiSwapView: View {
                             .frame(maxWidth: .infinity)
 
                             RoundedRectangle(cornerRadius: 0.5, style: .continuous)
-                                .fill(Color.themeSteel20)
+                                .fill(Color.themeBlade)
                                 .frame(width: 1)
                                 .frame(maxHeight: .infinity)
 
@@ -224,7 +224,7 @@ struct MultiSwapView: View {
     @ViewBuilder private func boxSeparatorView() -> some View {
         HStack(spacing: 0) {
             Rectangle()
-                .fill(Color.themeSteel20)
+                .fill(Color.themeBlade)
                 .frame(height: .heightOneDp)
                 .frame(maxWidth: .infinity)
 
@@ -236,7 +236,7 @@ struct MultiSwapView: View {
             .buttonStyle(SecondaryCircleButtonStyle(style: .default))
 
             Rectangle()
-                .fill(Color.themeSteel20)
+                .fill(Color.themeBlade)
                 .frame(height: .heightOneDp)
                 .frame(maxWidth: .infinity)
         }

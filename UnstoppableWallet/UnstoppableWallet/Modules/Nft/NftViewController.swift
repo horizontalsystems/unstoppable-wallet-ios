@@ -134,7 +134,7 @@ extension NftViewController: SectionsDataSource {
                 .image32 { (component: ImageComponent) in
                     component.imageView.cornerRadius = .cornerRadius4
                     component.imageView.layer.cornerCurve = .continuous
-                    component.imageView.backgroundColor = .themeSteel20
+                    component.imageView.backgroundColor = .themeBlade
                     component.imageView.kf.setImage(
                         with: viewItem.imageUrl.flatMap { URL(string: $0) },
                         options: [.onlyLoadFirstFrame]

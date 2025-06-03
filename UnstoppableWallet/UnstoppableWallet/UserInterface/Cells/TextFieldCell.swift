@@ -17,7 +17,7 @@ class TextFieldCell: UITableViewCell {
         wrapperView.layer.cornerRadius = .cornerRadius8
         wrapperView.layer.cornerCurve = .continuous
         wrapperView.layer.borderWidth = .heightOneDp
-        wrapperView.layer.borderColor = UIColor.themeSteel20.cgColor
+        wrapperView.layer.borderColor = UIColor.themeBlade.cgColor
 
         contentView.addSubview(wrapperView)
         wrapperView.snp.makeConstraints { maker in
@@ -83,7 +83,7 @@ extension TextFieldCell {
         if let cautionType {
             borderColor = cautionType.borderColor
         } else {
-            borderColor = .themeSteel20
+            borderColor = .themeBlade
         }
 
         wrapperView.layer.borderColor = borderColor.cgColor

@@ -96,7 +96,7 @@ class MarketCardView: UIView {
     }
 
     private func updateUI() {
-        button.setBackgroundColor(color: .themeLawrencePressed, forState: .highlighted)
+        button.setBackgroundColor(color: .themeLawrence.pressed, forState: .highlighted)
     }
 
     override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {

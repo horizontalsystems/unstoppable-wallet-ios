@@ -50,7 +50,7 @@ class AmountInputView: UIView {
             maker.height.equalTo(CGFloat.heightOnePixel)
         }
 
-        separatorView.backgroundColor = .themeSteel20
+        separatorView.backgroundColor = .themeBlade
 
         addSubview(secondaryButton)
         secondaryButton.snp.makeConstraints { maker in

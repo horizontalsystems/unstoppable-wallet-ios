@@ -5,7 +5,7 @@ struct InputTextRow<Content: View>: View {
     let vertical: CGFloat
     @Binding var borderColor: Color
 
-    init(vertical: CGFloat = 12, borderColor: Binding<Color> = .constant(Color.themeSteel20), @ViewBuilder content: () -> Content) {
+    init(vertical: CGFloat = 12, borderColor: Binding<Color> = .constant(Color.themeBlade), @ViewBuilder content: () -> Content) {
         self.content = content()
         self.vertical = vertical
         _borderColor = borderColor

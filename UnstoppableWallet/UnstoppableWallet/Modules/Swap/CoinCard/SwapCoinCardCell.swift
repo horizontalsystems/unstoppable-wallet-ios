@@ -99,7 +99,7 @@ class SwapCoinCardCell: UITableViewCell {
         amountInputWrapper.layer.cornerRadius = AmountInputCell.cornerRadius
         amountInputWrapper.layer.cornerCurve = .continuous
         amountInputWrapper.layer.borderWidth = .heightOnePixel
-        amountInputWrapper.layer.borderColor = UIColor.themeSteel20.cgColor
+        amountInputWrapper.layer.borderColor = UIColor.themeBlade.cgColor
 
         amountInputWrapper.addSubview(formAmountInput)
         formAmountInput.snp.makeConstraints { maker in

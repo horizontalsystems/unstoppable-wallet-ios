@@ -22,7 +22,7 @@ class FormValidatedView: UIView {
         wrapperView.layer.cornerRadius = InputView.cornerRadius
         wrapperView.layer.cornerCurve = .continuous
         wrapperView.layer.borderWidth = CGFloat.heightOneDp
-        wrapperView.layer.borderColor = UIColor.themeSteel20.cgColor
+        wrapperView.layer.borderColor = UIColor.themeBlade.cgColor
 
         wrapperView.addSubview(contentView)
         contentView.snp.makeConstraints { maker in
@@ -47,7 +47,7 @@ extension FormValidatedView {
         if let cautionType {
             borderColor = cautionType.borderColor
         } else {
-            borderColor = .themeSteel20
+            borderColor = .themeBlade
         }
 
         wrapperView.layer.borderColor = borderColor.cgColor

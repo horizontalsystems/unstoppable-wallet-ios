@@ -36,7 +36,7 @@ struct CoinIconView: View {
                 if let placeholderImage {
                     placeholderImage
                 } else {
-                    Circle().fill(Color.themeSteel20)
+                    Circle().fill(Color.themeBlade)
                 }
             }
     }

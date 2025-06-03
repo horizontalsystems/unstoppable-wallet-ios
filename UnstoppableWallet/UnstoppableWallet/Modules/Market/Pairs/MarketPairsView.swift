@@ -133,7 +133,7 @@ struct MarketPairsView: View {
             } else {
                 KFImage.url(URL(string: ticker.fiatImageUrl))
                     .resizable()
-                    .placeholder { Circle().fill(Color.themeSteel20) }
+                    .placeholder { Circle().fill(Color.themeBlade) }
                     .clipShape(Circle())
                     .frame(width: .iconSize32, height: .iconSize32)
             }

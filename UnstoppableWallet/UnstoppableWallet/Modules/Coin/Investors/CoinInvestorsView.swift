@@ -55,7 +55,7 @@ struct CoinInvestorsView: View {
                                     HStack(spacing: .margin16) {
                                         KFImage.url(URL(string: fund.logoUrl))
                                             .resizable()
-                                            .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeSteel20) }
+                                            .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeBlade) }
                                             .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
                                             .frame(width: .iconSize32, height: .iconSize32)
 

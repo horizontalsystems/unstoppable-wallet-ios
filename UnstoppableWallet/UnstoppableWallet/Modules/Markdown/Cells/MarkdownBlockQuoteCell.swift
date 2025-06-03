@@ -20,7 +20,7 @@ class MarkdownBlockQuoteCell: UITableViewCell {
             maker.edges.equalToSuperview() // constraints are set in bind method
         }
 
-        wrapperView.backgroundColor = .themeSteel10
+        wrapperView.backgroundColor = .themeBlade
 
         wrapperView.addSubview(textView)
         textView.snp.makeConstraints { maker in

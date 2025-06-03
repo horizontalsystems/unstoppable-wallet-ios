@@ -28,7 +28,7 @@ class RestoreMnemonicHintView: UIView {
             maker.height.equalTo(CGFloat.heightOneDp)
         }
 
-        separator.backgroundColor = .themeSteel10
+        separator.backgroundColor = .themeBlade
 
         addSubview(emptyView)
         emptyView.snp.makeConstraints { maker in

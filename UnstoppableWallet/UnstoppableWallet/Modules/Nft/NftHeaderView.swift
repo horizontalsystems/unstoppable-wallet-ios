@@ -40,7 +40,7 @@ class NftHeaderView: UITableViewHeaderFooterView {
             maker.height.equalTo(CGFloat.heightOneDp)
         }
 
-        separatorView.backgroundColor = .themeSteel10
+        separatorView.backgroundColor = .themeBlade
 
         let selectorWrapperView = UIView()
 

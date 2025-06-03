@@ -26,7 +26,7 @@ struct TonConnectListView: View {
                                             }) {
                                                 KFImage.url(app.manifest.iconUrl)
                                                     .resizable()
-                                                    .placeholder { RoundedRectangle(cornerRadius: .cornerRadius4).fill(Color.themeSteel20) }
+                                                    .placeholder { RoundedRectangle(cornerRadius: .cornerRadius4).fill(Color.themeBlade) }
                                                     .clipShape(RoundedRectangle(cornerRadius: .cornerRadius4))
                                                     .frame(width: .iconSize32, height: .iconSize32)
 

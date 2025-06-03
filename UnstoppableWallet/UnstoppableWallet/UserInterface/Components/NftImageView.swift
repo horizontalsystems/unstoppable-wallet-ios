@@ -20,7 +20,7 @@ class NftImageView: UIView {
         }
 
         imageView.contentMode = .scaleAspectFit
-        imageView.backgroundColor = .themeSteel10
+        imageView.backgroundColor = .themeBlade
 
         addSubview(webView)
         webView.snp.makeConstraints { maker in

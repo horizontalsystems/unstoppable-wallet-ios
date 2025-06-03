@@ -10,7 +10,7 @@ class TextInputCell: UITableViewCell {
     private let textViewEdgeInsets = UIEdgeInsets(top: .margin12, left: .margin12, bottom: .margin48, right: .margin12)
     let textViewFont: UIFont = .body
     let textViewTextColor: UIColor = .themeLeah
-    private let textViewBorderColor: UIColor = .themeSteel20
+    private let textViewBorderColor: UIColor = .themeBlade
 
     let textView = UITextView()
     private let borderView = UIView()

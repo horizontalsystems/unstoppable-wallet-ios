@@ -156,7 +156,7 @@ public class CellBuilderNew {
                         lastMargin = nil
                     }
 
-//                    view.backgroundColor = .themeSteel10
+//                    view.backgroundColor = .themeBlade
                     component.stackView.addArrangedSubview(view)
                     lastView = view
                 }

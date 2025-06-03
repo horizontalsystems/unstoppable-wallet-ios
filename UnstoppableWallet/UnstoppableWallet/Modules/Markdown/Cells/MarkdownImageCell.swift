@@ -20,7 +20,7 @@ class MarkdownImageCell: UITableViewCell {
 
         placeholderImageView.image = UIImage(named: "image_placeholder_48")
         placeholderImageView.contentMode = .center
-        placeholderImageView.backgroundColor = .themeSteel20
+        placeholderImageView.backgroundColor = .themeBlade
 
         contentView.addSubview(markdownImageView)
         markdownImageView.snp.makeConstraints { maker in

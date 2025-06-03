@@ -24,7 +24,7 @@ class FeeSlider: UISlider {
             maker.height.equalTo(4)
             maker.centerY.equalToSuperview().offset(1)
         }
-        slideBar.backgroundColor = .themeSteel20
+        slideBar.backgroundColor = .themeBlade
         slideBar.isUserInteractionEnabled = false
         slideBar.cornerRadius = .cornerRadius05x
         slideBar.clipsToBounds = true

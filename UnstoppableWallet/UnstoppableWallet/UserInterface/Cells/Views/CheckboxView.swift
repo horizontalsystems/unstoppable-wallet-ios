@@ -27,7 +27,7 @@ class CheckboxView: UIView {
         }
 
         checkBoxView.layer.cornerRadius = .cornerRadius12
-        checkBoxView.layer.backgroundColor = UIColor.themeSteel20.cgColor
+        checkBoxView.layer.backgroundColor = UIColor.themeBlade.cgColor
 
         checkBoxView.addSubview(checkBoxImageView)
         checkBoxImageView.snp.makeConstraints { maker in
@@ -69,7 +69,7 @@ class CheckboxView: UIView {
         get { !checkBoxImageView.isHidden }
         set {
             checkBoxImageView.isHidden = !newValue
-            checkBoxView.layer.backgroundColor = newValue ? UIColor.themeYellowD.cgColor : UIColor.themeSteel20.cgColor
+            checkBoxView.layer.backgroundColor = newValue ? UIColor.themeYellowD.cgColor : UIColor.themeBlade.cgColor
         }
     }
 }

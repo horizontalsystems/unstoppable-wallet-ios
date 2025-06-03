@@ -21,7 +21,7 @@ class BrandFooterView: UIView {
             maker.height.equalTo(CGFloat.heightOneDp)
         }
 
-        separatorView.backgroundColor = .themeSteel10
+        separatorView.backgroundColor = .themeBlade
 
         addSubview(label)
         label.snp.makeConstraints { maker in

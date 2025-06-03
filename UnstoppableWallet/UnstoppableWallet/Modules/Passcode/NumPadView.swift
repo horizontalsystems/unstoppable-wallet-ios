@@ -66,10 +66,10 @@ struct NumPadView: View {
 
         func makeBody(configuration: Configuration) -> some View {
             configuration.label
-                .foregroundColor(isEnabled ? .themeLeah : .themeSteel20)
-                .background(configuration.isPressed ? Color.themeSteel20 : Color.themeTyler)
+                .foregroundColor(isEnabled ? .themeLeah : .themeBlade)
+                .background(configuration.isPressed ? Color.themeBlade : Color.themeTyler)
                 .clipShape(Circle())
-                .overlay(Circle().stroke(Color.themeSteel20, lineWidth: .heightOneDp))
+                .overlay(Circle().stroke(Color.themeBlade, lineWidth: .heightOneDp))
                 .animation(.easeOut(duration: 0.1), value: configuration.isPressed)
         }
     }

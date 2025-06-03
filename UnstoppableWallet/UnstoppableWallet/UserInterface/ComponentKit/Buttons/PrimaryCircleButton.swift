@@ -11,7 +11,7 @@ open class PrimaryCircleButton: UIButton {
 
         cornerRadius = Self.size / 2
 
-        setBackgroundColor(.themeSteel20, for: .disabled)
+        setBackgroundColor(.themeBlade, for: .disabled)
 
         snp.makeConstraints { maker in
             maker.size.equalTo(Self.size)
@@ -31,7 +31,7 @@ open class PrimaryCircleButton: UIButton {
             setImage(image?.withTintColor(.themeClaude), for: .normal)
             setImage(image?.withTintColor(.themeClaude), for: .highlighted)
         }
-        setImage(image?.withTintColor(.themeSteel20), for: .disabled)
+        setImage(image?.withTintColor(.themeAndy), for: .disabled)
     }
 
     public func set(style: Style) {
