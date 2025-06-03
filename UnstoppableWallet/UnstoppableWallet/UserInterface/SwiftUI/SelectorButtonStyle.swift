@@ -31,7 +31,7 @@ struct SelectorButtonStyle: ButtonStyle {
         .padding(.leading, .margin16)
         .padding(.trailing, .margin12)
         .frame(height: 28)
-        .background(isEnabled ? (configuration.isPressed ? Color.themeSteel10 : Color.themeSteel20) : Color.themeSteel20)
+        .background(isEnabled ? (configuration.isPressed ? Color.themeBlade : Color.themeBlade) : Color.themeBlade)
         .clipShape(Capsule(style: .continuous))
         .animation(.easeOut(duration: 0.2), value: configuration.isPressed)
     }

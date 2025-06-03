@@ -41,7 +41,7 @@ class ReleaseNotesViewController: MarkdownViewController {
             maker.height.equalTo(1)
         }
 
-        separator.backgroundColor = .themeSteel10
+        separator.backgroundColor = .themeBlade
 
         let twitterButton = UIButton()
         bottomHolder.addSubview(twitterButton)

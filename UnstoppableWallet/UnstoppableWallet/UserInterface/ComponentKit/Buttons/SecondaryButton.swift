@@ -37,9 +37,9 @@ open class SecondaryButton: UIButton {
 
         switch style {
         case .default:
-            setBackgroundColor(.themeSteel20, for: .normal)
-            setBackgroundColor(.themeSteel10, for: .highlighted)
-            setBackgroundColor(.themeSteel20, for: .disabled)
+            setBackgroundColor(.themeBlade, for: .normal)
+            setBackgroundColor(.themeBlade, for: .highlighted)
+            setBackgroundColor(.themeBlade, for: .disabled)
             setBackgroundColor(.themeYellowD, for: .selected)
             setBackgroundColor(.themeYellow50, for: [.selected, .highlighted])
         case .transparent:
@@ -60,19 +60,19 @@ open class SecondaryButton: UIButton {
         case .default, .transparent:
             setTitleColor(.themeLeah, for: .normal)
             setTitleColor(.themeGray, for: .highlighted)
-            setTitleColor(.themeGray50, for: .disabled)
+            setTitleColor(.themeAndy, for: .disabled)
             setTitleColor(.themeDark, for: .selected)
             setTitleColor(.themeDark, for: [.selected, .highlighted])
         case .transparent2:
             setTitleColor(.themeGray, for: .normal)
             setTitleColor(.themeGray50, for: .highlighted)
-            setTitleColor(.themeGray50, for: .disabled)
+            setTitleColor(.themeAndy, for: .disabled)
             setTitleColor(.themeLeah, for: .selected)
             setTitleColor(.themeGray, for: [.selected, .highlighted])
         case .tab:
             setTitleColor(.themeGray, for: .normal)
             setTitleColor(.themeGray, for: .highlighted)
-            setTitleColor(.themeGray50, for: .disabled)
+            setTitleColor(.themeAndy, for: .disabled)
             setTitleColor(.themeLeah, for: .selected)
             setTitleColor(.themeLeah, for: [.selected, .highlighted])
         }
@@ -86,13 +86,13 @@ open class SecondaryButton: UIButton {
             case .default, .transparent, .tab:
                 setImage(image.withTintColor(.themeGray), for: .normal)
                 setImage(image.withTintColor(.themeGray), for: .highlighted)
-                setImage(image.withTintColor(.themeGray50), for: .disabled)
+                setImage(image.withTintColor(.themeAndy), for: .disabled)
                 setImage(image.withTintColor(.themeDark), for: .selected)
                 setImage(image.withTintColor(.themeDark), for: [.selected, .highlighted])
             case .transparent2:
                 setImage(image.withTintColor(.themeGray), for: .normal)
                 setImage(image.withTintColor(.themeGray50), for: .highlighted)
-                setImage(image.withTintColor(.themeGray50), for: .disabled)
+                setImage(image.withTintColor(.themeAndy), for: .disabled)
                 setImage(image.withTintColor(.themeGray), for: .selected)
                 setImage(image.withTintColor(.themeGray50), for: [.selected, .highlighted])
             }

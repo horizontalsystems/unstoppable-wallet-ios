@@ -130,7 +130,7 @@ struct MainSettingsView: View {
             HStack(spacing: .margin4) {
                 ForEach(0 ..< viewModel.slides.count, id: \.self) { index in
                     Capsule()
-                        .fill(currentSlideIndex == index ? Color.themeJacob : Color.themeSteel20)
+                        .fill(currentSlideIndex == index ? Color.themeJacob : Color.themeBlade)
                         .frame(width: 20, height: 4)
                 }
             }
@@ -172,7 +172,7 @@ struct MainSettingsView: View {
             VStack(alignment: .leading, spacing: .margin4) {
                 Text("premium.cell.title".localized).textHeadline1(color: .themeYellow)
                 Spacer()
-                Text("premium.cell.description".localized).textSubhead1(color: .themeSteelLight)
+                Text("premium.cell.description".localized).textSubhead1(color: .themeLight)
 
                 if let introductoryOffer = viewModel.introductoryOffer {
                     Text(introductoryOffer).textCaptionSB(color: .themeGreen)
@@ -195,7 +195,7 @@ struct MainSettingsView: View {
             VStack(alignment: .leading, spacing: .margin4) {
                 Text("mini_app.cell.title".localized).textHeadline1(color: .themeYellow)
                 Spacer()
-                Text("mini_app.cell.description".localized).textSubhead1(color: .themeSteelLight)
+                Text("mini_app.cell.description".localized).textSubhead1(color: .themeLight)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(EdgeInsets(top: .margin16, leading: .margin16, bottom: .margin16, trailing: 185))

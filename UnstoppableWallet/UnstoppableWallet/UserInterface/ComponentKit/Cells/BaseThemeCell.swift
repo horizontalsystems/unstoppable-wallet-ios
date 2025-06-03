@@ -48,7 +48,7 @@ open class BaseThemeCell: UITableViewCell {
         stackView.insetsLayoutMarginsFromSafeArea = false
 
         wrapperView.borderWidth = .heightOneDp
-        topSeparatorView.backgroundColor = .themeSteel10
+        topSeparatorView.backgroundColor = .themeBlade
     }
 
     @available(*, unavailable)
@@ -92,7 +92,7 @@ open class BaseThemeCell: UITableViewCell {
             wrapperView.backgroundColor = .themeLawrence
             wrapperView.borderColor = .clear
         case .bordered, .externalBorderOnly, .borderedLawrence:
-            var borderColor = UIColor.themeSteel20
+            var borderColor = UIColor.themeBlade
 
             var borders: UIRectEdge = [.left, .right]
             if isFirst || isLast {
@@ -134,7 +134,7 @@ open class BaseThemeCell: UITableViewCell {
 
             topSeparatorView.isHidden = true
             wrapperView.backgroundColor = .clear
-            wrapperView.borderColor = .themeSteel10
+            wrapperView.borderColor = .themeBlade
             wrapperView.borderWidth = .heightOneDp
             wrapperView.borders = borders
         }

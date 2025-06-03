@@ -140,7 +140,7 @@ struct MarketPlatformsView: View {
     @ViewBuilder private func itemContent(imageUrl: URL?, name: String, marketCap: String, protocolsCount: Int?, rank: Int?, rankChange: Int?, diff: Decimal?) -> some View {
         KFImage.url(imageUrl)
             .resizable()
-            .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeSteel20) }
+            .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeBlade) }
             .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
             .frame(width: .iconSize32, height: .iconSize32)
 

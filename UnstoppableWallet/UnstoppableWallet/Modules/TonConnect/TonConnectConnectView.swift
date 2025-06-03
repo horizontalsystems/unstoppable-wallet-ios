@@ -20,7 +20,7 @@ struct TonConnectConnectView: View {
                             HStack(spacing: .margin16) {
                                 KFImage.url(viewModel.manifest.iconUrl)
                                     .resizable()
-                                    .placeholder { RoundedRectangle(cornerRadius: .cornerRadius16).fill(Color.themeSteel20) }
+                                    .placeholder { RoundedRectangle(cornerRadius: .cornerRadius16).fill(Color.themeBlade) }
                                     .clipShape(RoundedRectangle(cornerRadius: .cornerRadius16))
                                     .frame(width: 72, height: 72)
 

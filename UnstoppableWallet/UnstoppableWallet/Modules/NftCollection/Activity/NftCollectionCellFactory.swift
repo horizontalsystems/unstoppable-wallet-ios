@@ -31,7 +31,7 @@ class NftCollectionCellFactory: NftAssetCellFactory {
             component.setImage(urlString: viewItem.imageUrl, placeholder: nil)
             component.imageView.cornerRadius = .cornerRadius4
             component.imageView.layer.cornerCurve = .continuous
-            component.imageView.backgroundColor = .themeSteel20
+            component.imageView.backgroundColor = .themeBlade
             component.imageView.contentMode = .scaleAspectFill
         }
     }

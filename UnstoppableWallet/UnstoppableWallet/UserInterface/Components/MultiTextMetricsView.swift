@@ -30,7 +30,7 @@ class MultiTextMetricsView: UIView {
             maker.height.equalTo(CGFloat.heightOnePixel)
         }
 
-        separator.backgroundColor = .themeSteel10
+        separator.backgroundColor = .themeBlade
 
         addSubview(metricsStackView)
         metricsStackView.snp.makeConstraints { maker in

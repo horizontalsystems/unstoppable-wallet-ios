@@ -492,7 +492,7 @@ struct CoinAnalyticsView: View {
                     HStack(spacing: .margin16) {
                         KFImage.url(item.blockchain.flatMap { URL(string: $0.type.imageUrl) })
                             .resizable()
-                            .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeSteel20) }
+                            .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeBlade) }
                             .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
                             .frame(width: .iconSize32, height: .iconSize32)
 
@@ -621,7 +621,7 @@ struct CoinAnalyticsView: View {
                     HStack(spacing: .margin16) {
                         KFImage.url(URL(string: viewItem.blockchain.type.imageUrl))
                             .resizable()
-                            .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeSteel20) }
+                            .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeBlade) }
                             .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
                             .frame(width: .iconSize32, height: .iconSize32)
 
@@ -913,7 +913,7 @@ struct CoinAnalyticsView: View {
             let size = proxy.size
 
             ZStack(alignment: .bottom) {
-                LinearGradient(colors: currentIndex != nil ? [.themeLucian, .themeSteel20, .themeRemus] : [.themeSteel20], startPoint: .leading, endPoint: .trailing)
+                LinearGradient(colors: currentIndex != nil ? [.themeLucian, .themeBlade, .themeRemus] : [.themeBlade], startPoint: .leading, endPoint: .trailing)
                     .mask {
                         ZStack {
                             ForEach(0 ... 30, id: \.self) { index in
@@ -932,7 +932,7 @@ struct CoinAnalyticsView: View {
                         ZStack {
                             Circle()
                                 .trim(from: 0.5, to: 1.0)
-                                .stroke(Color.themeSteel20, lineWidth: 2)
+                                .stroke(Color.themeBlade, lineWidth: 2)
                                 .offset(y: (size.height / 2) - 4)
                                 .frame(width: 180, height: 180)
                         }

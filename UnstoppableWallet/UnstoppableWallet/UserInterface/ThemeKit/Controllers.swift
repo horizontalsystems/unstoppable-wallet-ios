@@ -25,7 +25,7 @@ open class ThemeNavigationController: UINavigationController {
 
     private func commonInit() {
         navigationBar.prefersLargeTitles = true
-        navigationBar.tintColor = .themeJacob
+        navigationBar.tintColor = .themeGray
     }
 
     deinit {
@@ -78,14 +78,8 @@ open class ThemeTabBarController: UITabBarController {
     override open func viewDidLoad() {
         super.viewDidLoad()
 
-        tabBar.shadowImage = UIImage()
-        let separator = UIView(frame: CGRect(x: 0, y: 0, width: 10000, height: 1 / UIScreen.main.scale))
-        separator.backgroundColor = .themeSteel20
-        tabBar.addSubview(separator)
-
-        tabBar.barTintColor = .clear
-
-        tabBar.tintColor = .themeJacob
+        tabBar.barTintColor = .themeBlade
+        tabBar.tintColor = .themeYellowD
         tabBar.unselectedItemTintColor = .themeGray
 
         updateUITheme()
@@ -108,7 +102,9 @@ open class ThemeTabBarController: UITabBarController {
     }
 
     private func updateUITheme() {
-        tabBar.backgroundImage = UIImage(color: .themeNavigationBarBackground)
+        tabBar.isTranslucent = true
+        tabBar.backgroundImage = UIImage(color: .themeTabBarBackground)
+        tabBar.backgroundColor = .themeTabBarBackground
     }
 }
 

@@ -50,7 +50,7 @@ struct SubscribePeriodSegmentView: View {
         .padding(.vertical, .margin12)
         .overlay(
             RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous)
-                .strokeBorder(isSelected ? Color.themeJacob : Color.themeSteel20, lineWidth: 1)
+                .strokeBorder(isSelected ? Color.themeJacob : Color.themeBlade, lineWidth: 1)
         )
         .contentShape(Rectangle())
         .onTapGesture(perform: action)

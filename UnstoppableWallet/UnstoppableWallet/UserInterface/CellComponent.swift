@@ -375,8 +375,7 @@ enum AmountType {
     var textColor: UIColor {
         switch self {
         case .incoming: return .themeRemus
-        case .outgoing: return .themeLucian
-        case .neutral: return .themeLeah
+        case .neutral, .outgoing: return .themeLeah
         case .secondary: return .themeGray
         }
     }

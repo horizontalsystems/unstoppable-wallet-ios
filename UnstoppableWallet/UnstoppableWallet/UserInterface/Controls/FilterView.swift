@@ -66,7 +66,7 @@ class FilterView: UIView {
                 maker.height.equalTo(CGFloat.heightOneDp)
             }
 
-            separator.backgroundColor = UIColor.themeSteel10
+            separator.backgroundColor = UIColor.themeBlade
         }
 
         collectionView.addSubview(selectedView)

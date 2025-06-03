@@ -25,7 +25,7 @@ class SendAvailableBalanceCell: UITableViewCell {
 
         wrapperView.clipsToBounds = true
         wrapperView.cornerRadius = .cornerRadius12
-        wrapperView.layer.borderColor = UIColor.themeSteel20.cgColor
+        wrapperView.layer.borderColor = UIColor.themeBlade.cgColor
         wrapperView.layer.borderWidth = .heightOneDp
         wrapperView.snp.makeConstraints { maker in
             maker.top.bottom.equalToSuperview()

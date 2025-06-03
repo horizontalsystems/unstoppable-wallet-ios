@@ -41,7 +41,7 @@ struct OutputSelectorView2: View {
                     .themeListStyle(.transparent)
                 }
 
-                HorizontalDivider(color: .themeSteel10, height: .heightOneDp)
+                HorizontalDivider(color: .themeBlade, height: .heightOneDp)
 
                 HStack {
                     Button(action: {

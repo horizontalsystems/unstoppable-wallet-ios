@@ -204,7 +204,7 @@ struct MarketTvlView: View {
     @ViewBuilder private func itemContent(imageUrl: URL?, code: String, platform: String, rank: Int?, tvl: Decimal?, diff: DiffText.Diff?) -> some View {
         KFImage.url(imageUrl)
             .resizable()
-            .placeholder { Circle().fill(Color.themeSteel20) }
+            .placeholder { Circle().fill(Color.themeBlade) }
             .clipShape(Circle())
             .frame(width: .iconSize32, height: .iconSize32)
 

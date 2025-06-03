@@ -8,7 +8,7 @@ public class TransactionImageComponent: UIView {
         strokeLineWidth: 2,
         radius: 21,
         strokeColor: .themeGray,
-        donutColor: .themeSteel10,
+        donutColor: .themeBlade,
         duration: 2
     )
 

@@ -208,7 +208,7 @@ struct CoinOverviewView: View {
                     }
                 }
             }
-            .background(Color.themeSteel10)
+            .background(Color.themeBlade)
         }
     }
 
@@ -249,7 +249,7 @@ struct CoinOverviewView: View {
     @ViewBuilder private func tokenRowContent(token: Token, walletTokens: [Token]) -> some View {
         KFImage.url(URL(string: token.blockchainType.imageUrl))
             .resizable()
-            .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeSteel20) }
+            .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeBlade) }
             .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
             .frame(width: .iconSize32, height: .iconSize32)
 

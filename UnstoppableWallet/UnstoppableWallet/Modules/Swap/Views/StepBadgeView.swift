@@ -25,7 +25,7 @@ class StepBadgeView: UIView {
     }
 
     func set(active: Bool) {
-        backgroundColor = active ? .themeBran : .themeSteel20
+        backgroundColor = active ? .themeBran : .themeBlade
         label.textColor = active ? .themeClaude : .themeGray
     }
 

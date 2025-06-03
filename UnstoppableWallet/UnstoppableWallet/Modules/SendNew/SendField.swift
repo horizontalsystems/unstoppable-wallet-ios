@@ -188,8 +188,7 @@ enum SendField {
         var color: Color {
             switch self {
             case .incoming: return .themeRemus
-            case .outgoing: return .themeLucian
-            case .neutral: return .themeLeah
+            case .neutral, .outgoing: return .themeLeah
             }
         }
     }

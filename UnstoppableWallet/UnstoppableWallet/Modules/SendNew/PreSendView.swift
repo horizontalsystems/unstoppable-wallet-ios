@@ -168,7 +168,7 @@ struct PreSendView: View {
                                 .frame(maxWidth: .infinity)
 
                                 RoundedRectangle(cornerRadius: 0.5, style: .continuous)
-                                    .fill(Color.themeSteel20)
+                                    .fill(Color.themeBlade)
                                     .frame(width: 1)
                                     .frame(maxHeight: .infinity)
                             }
@@ -186,7 +186,7 @@ struct PreSendView: View {
                         .frame(maxWidth: .infinity)
 
                         RoundedRectangle(cornerRadius: 0.5, style: .continuous)
-                            .fill(Color.themeSteel20)
+                            .fill(Color.themeBlade)
                             .frame(width: 1)
                             .frame(maxHeight: .infinity)
 

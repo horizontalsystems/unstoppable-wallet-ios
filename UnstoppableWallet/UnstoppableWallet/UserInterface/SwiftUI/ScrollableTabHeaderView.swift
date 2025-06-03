@@ -9,7 +9,7 @@ struct ScrollableTabHeaderView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             Rectangle()
-                .fill(Color.themeSteel10)
+                .fill(Color.themeBlade)
                 .frame(maxWidth: .infinity)
                 .frame(height: 1)
 

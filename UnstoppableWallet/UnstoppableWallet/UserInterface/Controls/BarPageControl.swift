@@ -53,7 +53,7 @@ class BarPageControl: UIView {
 
     private func updateBackgrounds() {
         for (index, view) in barViews.enumerated() {
-            view.backgroundColor = index == currentPage ? .themeJacob : .themeSteel20
+            view.backgroundColor = index == currentPage ? .themeJacob : .themeBlade
         }
     }
 }

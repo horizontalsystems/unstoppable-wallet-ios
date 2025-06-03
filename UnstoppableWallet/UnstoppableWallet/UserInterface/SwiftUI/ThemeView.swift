@@ -71,6 +71,6 @@ struct ThemeNavigationView<Content: View>: View {
             content
         }
         .navigationViewStyle(StackNavigationViewStyle())
-        .accentColor(.themeJacob)
+        .accentColor(.themeGray)
     }
 }

@@ -82,7 +82,7 @@ struct RankView: View {
             .padding(.leading, .margin16)
 
             Rectangle()
-                .fill(Color.themeSteel10)
+                .fill(Color.themeBlade)
                 .frame(height: .heightOneDp)
                 .frame(maxWidth: .infinity)
         }

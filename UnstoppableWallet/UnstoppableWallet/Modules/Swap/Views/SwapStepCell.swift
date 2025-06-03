@@ -31,7 +31,7 @@ class SwapStepCell: UITableViewCell {
             maker.height.equalTo(CGFloat.margin2)
         }
 
-        separatorView.backgroundColor = .themeSteel20
+        separatorView.backgroundColor = .themeBlade
         separatorView.clipsToBounds = true
         separatorView.layer.cornerRadius = 1
 

@@ -29,7 +29,7 @@ class WalletHeaderView: UITableViewHeaderFooterView {
             make.height.equalTo(CGFloat.heightOneDp)
         }
 
-        separatorView.backgroundColor = .themeSteel20
+        separatorView.backgroundColor = .themeBlade
 
         addSubview(sortByButton)
         sortByButton.snp.makeConstraints { maker in

@@ -221,7 +221,7 @@ extension HudHelper {
         config.coverBackgroundColor = .themeBlackTenTwenty
 
         config.blurEffectStyle = .themeHud
-        config.backgroundColor = .themeSteel30
+        config.backgroundColor = .themeAndy
         config.blurEffectIntensity = 0.4
 
         config.cornerRadius = 28

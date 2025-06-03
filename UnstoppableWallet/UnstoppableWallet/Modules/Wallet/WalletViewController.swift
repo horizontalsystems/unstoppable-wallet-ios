@@ -272,7 +272,7 @@ class WalletViewController: ThemeViewController {
         default:
             placeholderView.isHidden = true
             navigationItem.leftBarButtonItem = UIBarButtonItem(image: UIImage(named: "switch_wallet_24"), style: .plain, target: self, action: #selector(onTapSwitchWallet))
-            navigationItem.leftBarButtonItem?.tintColor = .themeJacob
+            navigationItem.leftBarButtonItem?.tintColor = .themeGray
         }
 
         switch state {

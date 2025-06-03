@@ -12,7 +12,7 @@ struct MultiSwapCircularProgressView: View {
         ZStack {
             Circle()
                 .stroke(
-                    Color.themeSteel20,
+                    Color.themeBlade,
                     lineWidth: 1.5
                 )
             Circle()

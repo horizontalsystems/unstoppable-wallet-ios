@@ -15,7 +15,7 @@ class InfoSeparatorHeaderView: UITableViewHeaderFooterView {
             maker.height.equalTo(CGFloat.heightOnePixel)
         }
 
-        separator.backgroundColor = .themeSteel20
+        separator.backgroundColor = .themeBlade
     }
 
     @available(*, unavailable)

@@ -8,7 +8,7 @@ struct CheckBoxUiView: View {
     var body: some View {
         ZStack {
             Circle()
-                .fill(checked ? Color.themeYellow : Color.themeSteel20)
+                .fill(checked ? Color.themeYellow : Color.themeBlade)
                 .frame(width: size, height: size)
 
             Image("check_2_24")

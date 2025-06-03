@@ -29,11 +29,11 @@ open class BaseSelectableThemeCell: BaseThemeCell {
 
         switch backgroundStyle {
         case .lawrence, .bordered, .externalBorderOnly, .borderedLawrence:
-            selectView.backgroundColor = .themeLawrencePressed
+            selectView.backgroundColor = .themeLawrence.pressed
             selectView.layer.cornerRadius = wrapperView.cornerRadius
             selectView.layer.maskedCorners = corners(isFirst: isFirst, isLast: isLast)
         case .transparent:
-            selectView.backgroundColor = .themeLawrencePressed
+            selectView.backgroundColor = .themeLawrence.pressed
             selectView.layer.cornerRadius = 0
             selectView.layer.maskedCorners = []
         }

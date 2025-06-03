@@ -21,7 +21,7 @@ class SwapInputAccessoryView: UIView {
             maker.leading.top.trailing.equalToSuperview()
             maker.height.equalTo(CGFloat.heightOneDp)
         }
-        separatorView.backgroundColor = .themeSteel20
+        separatorView.backgroundColor = .themeBlade
 
         addSubview(autocompleteView)
         autocompleteView.snp.makeConstraints { maker in

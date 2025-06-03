@@ -17,7 +17,7 @@ open class PrimaryButton: UIButton {
         layer.cornerCurve = .continuous
 
         titleLabel?.font = .headline2
-        setTitleColor(.themeGray50, for: .disabled)
+        setTitleColor(.themeAndy, for: .disabled)
 
         snp.makeConstraints { make in
             make.height.equalTo(Self.height)
@@ -44,15 +44,15 @@ open class PrimaryButton: UIButton {
         case .yellow:
             setBackgroundColor(.themeYellowD, for: .normal)
             setBackgroundColor(.themeYellow50, for: .highlighted)
-            setBackgroundColor(.themeSteel20, for: .disabled)
+            setBackgroundColor(.themeBlade, for: .disabled)
         case .red:
             setBackgroundColor(.themeLucian, for: .normal)
             setBackgroundColor(.themeRed50, for: .highlighted)
-            setBackgroundColor(.themeSteel20, for: .disabled)
+            setBackgroundColor(.themeBlade, for: .disabled)
         case .gray:
             setBackgroundColor(.themeLeah, for: .normal)
             setBackgroundColor(.themeNina, for: .highlighted)
-            setBackgroundColor(.themeSteel20, for: .disabled)
+            setBackgroundColor(.themeBlade, for: .disabled)
         case .transparent:
             setBackgroundColor(.clear, for: .normal)
             setBackgroundColor(.clear, for: .highlighted)
@@ -63,15 +63,15 @@ open class PrimaryButton: UIButton {
         case .yellow:
             setTitleColor(.themeDark, for: .normal)
             setTitleColor(.themeDark, for: .highlighted)
-            setTitleColor(.themeGray50, for: .disabled)
+            setTitleColor(.themeAndy, for: .disabled)
         case .red, .gray:
             setTitleColor(.themeClaude, for: .normal)
             setTitleColor(.themeClaude, for: .highlighted)
-            setTitleColor(.themeGray50, for: .disabled)
+            setTitleColor(.themeAndy, for: .disabled)
         case .transparent:
             setTitleColor(.themeLeah, for: .normal)
             setTitleColor(.themeGray, for: .highlighted)
-            setTitleColor(.themeGray50, for: .disabled)
+            setTitleColor(.themeAndy, for: .disabled)
         }
 
         switch accessoryType {
@@ -80,15 +80,15 @@ open class PrimaryButton: UIButton {
             case .yellow:
                 setImage(image?.withTintColor(.themeDark), for: .normal)
                 setImage(image?.withTintColor(.themeDark), for: .highlighted)
-                setImage(image?.withTintColor(.themeGray50), for: .disabled)
+                setImage(image?.withTintColor(.themeAndy), for: .disabled)
             case .red, .gray:
                 setImage(image?.withTintColor(.themeClaude), for: .normal)
                 setImage(image?.withTintColor(.themeClaude), for: .highlighted)
-                setImage(image?.withTintColor(.themeGray50), for: .disabled)
+                setImage(image?.withTintColor(.themeAndy), for: .disabled)
             case .transparent:
                 setImage(image?.withTintColor(.themeLeah), for: .normal)
                 setImage(image?.withTintColor(.themeGray), for: .highlighted)
-                setImage(image?.withTintColor(.themeGray50), for: .disabled)
+                setImage(image?.withTintColor(.themeAndy), for: .disabled)
             }
 
             let verticalPadding = (height - CGFloat.iconSize24) / 2

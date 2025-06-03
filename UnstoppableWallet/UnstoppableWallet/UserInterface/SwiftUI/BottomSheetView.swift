@@ -86,7 +86,7 @@ struct BottomSheetView: View {
                     if let placeholder {
                         Image(placeholder)
                     } else {
-                        RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).fill(Color.themeSteel20)
+                        RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).fill(Color.themeBlade)
                     }
                 }
                 .frame(width: .iconSize24, height: .iconSize24)

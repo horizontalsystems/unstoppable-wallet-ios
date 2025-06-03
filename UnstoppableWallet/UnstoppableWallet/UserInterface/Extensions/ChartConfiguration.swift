@@ -117,7 +117,7 @@ extension ChartConfiguration {
     }
 
     @discardableResult private func applyColors(trendIgnore _: Bool = false) -> Self {
-        borderColor = .themeSteel20
+        borderColor = .themeBlade
         backgroundColor = .clear
 
         trendUpColor = UIColor.themeGreenD
@@ -132,11 +132,11 @@ extension ChartConfiguration {
         gradientLocations = [0, 0.05, 1]
         gradientAlphas = [0, 0, 0.3]
 
-        limitLinesColor = .themeSteel20
+        limitLinesColor = .themeBlade
         limitTextColor = .themeNina
         limitTextFont = .caption
-        verticalLinesColor = .themeSteel10
-        volumeBarsFillColor = .themeSteel20
+        verticalLinesColor = .themeBlade
+        volumeBarsFillColor = .themeBlade
         timelineTextColor = .themeGray
         timelineFont = .caption
         touchLineColor = .themeNina

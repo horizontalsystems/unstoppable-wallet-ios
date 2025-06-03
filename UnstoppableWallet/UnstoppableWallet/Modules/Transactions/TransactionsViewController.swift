@@ -50,8 +50,9 @@ class TransactionsViewController: ThemeViewController {
             make.size.equalTo(CGFloat.iconSize24)
         }
 
-        filterButton.setImage(UIImage(named: "manage_2_24")?.withTintColor(.themeJacob), for: .normal)
-        filterButton.setImage(UIImage(named: "manage_2_24")?.withTintColor(.themeYellow50), for: .highlighted)
+        filterButton.setImage(UIImage(named: "manage_2_24")?.withTintColor(.themeGray), for: .normal)
+        filterButton.setImage(UIImage(named: "manage_2_24")?.withTintColor(.themeGray.pressed), for: .highlighted)
+        filterButton.setImage(UIImage(named: "manage_2_24")?.withTintColor(.themeAndy), for: .disabled)
         filterButton.addTarget(self, action: #selector(onTapFilter), for: .touchUpInside)
 
         filterBarView.addSubview(filterBadge)

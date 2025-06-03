@@ -149,7 +149,7 @@ extension TechnicalAdvice.Advice: Identifiable {
 
     var backgroundColor: Color {
         switch self {
-        case .neutral: return .themeSteel20
+        case .neutral: return .themeBlade
         case .buy: return .themeGreen.opacity(0.2)
         case .sell: return .themeRed.opacity(0.2)
         case .strongBuy: return .themeRemus
