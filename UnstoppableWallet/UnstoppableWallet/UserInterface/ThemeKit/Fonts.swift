@@ -25,7 +25,6 @@ public extension Font {
     static let themeCaptionSB: Font = .manRopeFont(size: 12, weight: .semibold)
     static let themeMicro: Font = .manRopeFont(size: 10, weight: .regular)
     static let themeMicroSB: Font = .manRopeFont(size: 10, weight: .semibold)
-
 }
 
 public extension UIFont {

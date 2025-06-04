@@ -10,10 +10,11 @@ class MainViewController: ThemeTabBarController {
 
     private var marketModule: UIViewController?
     private let balanceModule = ThemeNavigationController(rootViewController: WalletModule.viewController())
-    private let transactionsModule = ThemeNavigationController(rootViewController: TransactionsModule.viewController())
+    private let transactionsModule = MainTransactionsView().toNavigationViewController()
     private let settingsModule = MainSettingsView().toNavigationViewController()
 
     private let settingsTabBarItem = UITabBarItem(title: "settings.tab_bar_item".localized, image: UIImage(named: "filled_settings_2_24"), tag: 0)
+    private let transactionsTabBarItem = UITabBarItem(title: "transactions.tab_bar_item".localized, image: UIImage(named: "filled_transaction_2n_24"), tag: 0)
 
     private var showAlerts = [() -> Void]()
 
@@ -28,6 +29,7 @@ class MainViewController: ThemeTabBarController {
         selectedIndex = MainModule.Tab.allCases.firstIndex(of: viewModel.initialTab) ?? 0
 
         settingsModule.tabBarItem = settingsTabBarItem
+        transactionsModule.tabBarItem = transactionsTabBarItem
     }
 
     @available(*, unavailable)
@@ -106,7 +108,7 @@ class MainViewController: ThemeTabBarController {
     }
 
     private func syncTransactionsTab(enabled: Bool) {
-        transactionsModule.viewControllers.first?.tabBarItem.isEnabled = enabled
+        transactionsTabBarItem.isEnabled = enabled
     }
 
     private func setSettingsBadge(visible: Bool, count: Int = 0) {
