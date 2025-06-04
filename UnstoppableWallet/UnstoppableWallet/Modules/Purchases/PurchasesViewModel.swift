@@ -12,17 +12,8 @@ class PurchasesViewModel: ObservableObject {
 
     var subscribedSuccessful = false
 
-    @Published private(set) var products: [Product]
-
     init() {
-        products = purchaseManager.products
         viewItems = PremiumFeature.allCases.map(\.viewItem)
-
-        purchaseManager.$products
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.products = $0 }
-            .store(in: &cancellables)
-
         syncButtonState()
     }
 
@@ -31,7 +22,7 @@ class PurchasesViewModel: ObservableObject {
     }
 
     private func syncButtonState() {
-        if purchaseManager.purchasedProducts.isEmpty {
+        if case .trial = purchaseManager.introductoryOfferType {
             buttonState = .tryForFree
             return
         }

@@ -18,6 +18,8 @@ class LocalStorage {
     private let keyIndicatorsShown = "indicators-shown"
     private let keyTelegramSupportRequested = "telegram-support-requested"
     private let keyEmulatePurchase = "emulate-purchase"
+    private let keyPurchaseData = "emulate-purchase-data"
+    private let keyPurchaseCancelled = "emulate-purchase-cancelled"
     private let keyHasBep2Token = "has-bep2-token"
 
     private let userDefaultsStorage: UserDefaultsStorage
@@ -97,6 +99,31 @@ extension LocalStorage {
     var emulatePurchase: Bool {
         get { userDefaultsStorage.value(for: keyEmulatePurchase) ?? false }
         set { userDefaultsStorage.set(value: newValue, for: keyEmulatePurchase) }
+    }
+
+    var purchase: PurchaseManager.PurchaseData? {
+        get {
+            if let data: Data = userDefaultsStorage.value(for: keyPurchaseData) {
+                return try? JSONDecoder().decode(PurchaseManager.PurchaseData.self, from: data)
+            }
+            return nil
+        }
+        set {
+            guard let newValue else {
+                userDefaultsStorage.set(value: newValue, for: keyPurchaseData)
+                return
+            }
+            if let encodedData = try? JSONEncoder().encode(newValue) {
+                userDefaultsStorage.set(value: encodedData, for: keyPurchaseData)
+            } else {
+                print("Can't encode test data for Purchase!!!")
+            }
+        }
+    }
+
+    var purchaseCancelled: Bool {
+        get { userDefaultsStorage.value(for: keyPurchaseCancelled) ?? false }
+        set { userDefaultsStorage.set(value: newValue, for: keyPurchaseCancelled) }
     }
 
     var hasBep2Token: Bool {

@@ -2,6 +2,7 @@ import Combine
 import StoreKit
 
 class PurchaseListViewModel: ObservableObject {
+    private let localStorage = App.shared.localStorage
     private let purchaseManager = App.shared.purchaseManager
     private var cancellables = Set<AnyCancellable>()
 
@@ -77,6 +78,24 @@ extension PurchaseListViewModel {
 
     func restorePurchases() {
         purchaseManager.restorePurchases()
+    }
+
+    var emulatePurchase: Bool {
+        localStorage.emulatePurchase
+    }
+
+    func debugCancelSubscription() {
+        localStorage.purchaseCancelled = true
+        localStorage.purchase = nil
+
+        purchaseManager.loadPurchases()
+    }
+
+    func debugClearSubsctiption() {
+        localStorage.purchaseCancelled = false
+        localStorage.purchase = nil
+
+        purchaseManager.loadPurchases()
     }
 }
 
