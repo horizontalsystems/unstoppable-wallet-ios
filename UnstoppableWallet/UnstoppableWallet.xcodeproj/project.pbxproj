@@ -3346,6 +3346,18 @@
 		D3E1E8782C21859900E07052 /* PurchasesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E1E8762C21859900E07052 /* PurchasesViewModel.swift */; };
 		D3E323C82AE7B8E400F73914 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = D3E323C72AE7B8E400F73914 /* KeychainAccess */; };
 		D3E323CA2AE7B8F400F73914 /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = D3E323C92AE7B8F400F73914 /* KeychainAccess */; };
+		D3E36B4F2DE9CCA7007F99CA /* TransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B4E2DE9CCA2007F99CA /* TransactionsView.swift */; };
+		D3E36B502DE9CCA7007F99CA /* TransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B4E2DE9CCA2007F99CA /* TransactionsView.swift */; };
+		D3E36B522DEDB831007F99CA /* MainTransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B512DEDB82F007F99CA /* MainTransactionsView.swift */; };
+		D3E36B532DEDB831007F99CA /* MainTransactionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B512DEDB82F007F99CA /* MainTransactionsView.swift */; };
+		D3E36B582DEDB840007F99CA /* TransactionsViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B572DEDB840007F99CA /* TransactionsViewModelNew.swift */; };
+		D3E36B592DEDB840007F99CA /* TransactionsViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B572DEDB840007F99CA /* TransactionsViewModelNew.swift */; };
+		D3E36B5B2DEDBDFA007F99CA /* TransactionsViewItemFactoryNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B5A2DEDBDFA007F99CA /* TransactionsViewItemFactoryNew.swift */; };
+		D3E36B5C2DEDBDFA007F99CA /* TransactionsViewItemFactoryNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B5A2DEDBDFA007F99CA /* TransactionsViewItemFactoryNew.swift */; };
+		D3E36B7B2DF1B5F5007F99CA /* DeterminiteSpinnerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B7A2DF1B5F4007F99CA /* DeterminiteSpinnerStyle.swift */; };
+		D3E36B7C2DF1B5F5007F99CA /* DeterminiteSpinnerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B7A2DF1B5F4007F99CA /* DeterminiteSpinnerStyle.swift */; };
+		D3E36B7E2DF1B5FE007F99CA /* SpinningModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B7D2DF1B5FD007F99CA /* SpinningModifier.swift */; };
+		D3E36B7F2DF1B5FE007F99CA /* SpinningModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B7D2DF1B5FD007F99CA /* SpinningModifier.swift */; };
 		D3E41E082C244CE200499F50 /* TonSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D3E41E072C244CE200499F50 /* TonSwift */; };
 		D3E41E0A2C25850000499F50 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E41E092C25850000499F50 /* MailView.swift */; };
 		D3E41E0B2C25850000499F50 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E41E092C25850000499F50 /* MailView.swift */; };
@@ -5054,6 +5066,12 @@
 		D3E1E8732C21859000E07052 /* PurchasesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasesView.swift; sourceTree = "<group>"; };
 		D3E1E8762C21859900E07052 /* PurchasesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchasesViewModel.swift; sourceTree = "<group>"; };
 		D3E1E8792C21869100E07052 /* Unstoppable.storekit */ = {isa = PBXFileReference; lastKnownFileType = text; path = Unstoppable.storekit; sourceTree = "<group>"; };
+		D3E36B4E2DE9CCA2007F99CA /* TransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsView.swift; sourceTree = "<group>"; };
+		D3E36B512DEDB82F007F99CA /* MainTransactionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTransactionsView.swift; sourceTree = "<group>"; };
+		D3E36B572DEDB840007F99CA /* TransactionsViewModelNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewModelNew.swift; sourceTree = "<group>"; };
+		D3E36B5A2DEDBDFA007F99CA /* TransactionsViewItemFactoryNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewItemFactoryNew.swift; sourceTree = "<group>"; };
+		D3E36B7A2DF1B5F4007F99CA /* DeterminiteSpinnerStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeterminiteSpinnerStyle.swift; sourceTree = "<group>"; };
+		D3E36B7D2DF1B5FD007F99CA /* SpinningModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinningModifier.swift; sourceTree = "<group>"; };
 		D3E41E092C25850000499F50 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		D3F9B0242BE38AF1009FFA95 /* RegularSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularSendView.swift; sourceTree = "<group>"; };
 		D3F9B02A2BE3A9A1009FFA95 /* MultiSwapSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSwapSendView.swift; sourceTree = "<group>"; };
@@ -5623,6 +5641,8 @@
 		11B3546A6E6F3CC013C9FF44 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				D3E36B7D2DF1B5FD007F99CA /* SpinningModifier.swift */,
+				D3E36B7A2DF1B5F4007F99CA /* DeterminiteSpinnerStyle.swift */,
 				D30C4D592D560D360082B487 /* BottomSheetView.swift */,
 				D30C4D562D55FE910082B487 /* BottomSheetModifier.swift */,
 				D0A980A82B5E3C0900127AF4 /* StepChangeButtonsView.swift */,
@@ -9016,9 +9036,13 @@
 		D0F7675026BA8E2900093AFF /* Transactions */ = {
 			isa = PBXGroup;
 			children = (
+				D3E36B5A2DEDBDFA007F99CA /* TransactionsViewItemFactoryNew.swift */,
+				D3E36B572DEDB840007F99CA /* TransactionsViewModelNew.swift */,
+				D3E36B512DEDB82F007F99CA /* MainTransactionsView.swift */,
 				11B352AC7A92FAAE88974D89 /* Pool */,
 				2FA5D41B732B26A1CB46E2BB /* Views */,
 				11B35828C8D50D0A5B915B2A /* TransactionsModule.swift */,
+				D3E36B4E2DE9CCA2007F99CA /* TransactionsView.swift */,
 				11B352C2F20DB6266112BE68 /* TransactionsService.swift */,
 				11B350CCAA0C9F2F5279F680 /* TransactionsViewController.swift */,
 				2FA5D6FADA5ECA61D3011CDE /* HistoricalRateService.swift */,
@@ -10146,6 +10170,7 @@
 				11B3507F17791BC895872490 /* BrandFooterView.swift in Sources */,
 				6B5F338A2D07FDF3001E23A4 /* EnabledWallet_v_0_40.swift in Sources */,
 				D08D16852C2165490086E5A5 /* TonSendHandler.swift in Sources */,
+				D3E36B7E2DF1B5FE007F99CA /* SpinningModifier.swift in Sources */,
 				6BCD53152A161F4800993F20 /* BackupViewModel.swift in Sources */,
 				11B35D10A6A15EFA47FCE6D0 /* TextCell.swift in Sources */,
 				6BCD53012A161F4100993F20 /* BackupCloudModule.swift in Sources */,
@@ -10291,6 +10316,7 @@
 				D3DB51A02BD6854A0091BBDB /* MarketSearchView.swift in Sources */,
 				D36DE100272FD92F000BC916 /* SwapSelectProviderViewModel.swift in Sources */,
 				58AAAAEDC64AE5716BC07673 /* SwapSlippageViewModel.swift in Sources */,
+				D3E36B4F2DE9CCA7007F99CA /* TransactionsView.swift in Sources */,
 				58AAA56C780EF5C92C1D1A32 /* AddressResolutionProvider.swift in Sources */,
 				58AAA3762D78142A83A22F50 /* SwapViewModel.swift in Sources */,
 				58AAA8395FE1310712EAA82C /* OneInchFeeService.swift in Sources */,
@@ -10332,6 +10358,7 @@
 				58AAAA7B0493F3790D49AA14 /* SwapAllowanceViewModel.swift in Sources */,
 				58AAA188EBE3E1CC463D8D9F /* SwapAllowanceCell.swift in Sources */,
 				58AAAE7CA65D1A4906C5E65E /* SwapSwitchCell.swift in Sources */,
+				D3E36B7C2DF1B5F5007F99CA /* DeterminiteSpinnerStyle.swift in Sources */,
 				58AAA3692F9336D6AD79367F /* StepBadgeView.swift in Sources */,
 				58AAA8A8CC9A2EC2D939CFC1 /* SwapStepCell.swift in Sources */,
 				11B354B5E42290EE934C428E /* String.swift in Sources */,
@@ -10544,6 +10571,7 @@
 				D362879F2CA2B34E00ADAF3B /* TonConnectListView.swift in Sources */,
 				11B35C2D75133B8F13101A24 /* AppSettingManager.swift in Sources */,
 				D30C4D632D5CAFCB0082B487 /* TonConnectErrorView.swift in Sources */,
+				D3E36B522DEDB831007F99CA /* MainTransactionsView.swift in Sources */,
 				11B350F9E67A095998D9462C /* BalanceConversionManager.swift in Sources */,
 				11B35D11D00301F7B67B0340 /* AppIconManager.swift in Sources */,
 				11B35B0E1435737240D26C92 /* AppIcon.swift in Sources */,
@@ -10671,6 +10699,7 @@
 				11B359BA446B27E6D369B35E /* RestoreModule.swift in Sources */,
 				11B35907781848EB0C20759A /* RestoreViewController.swift in Sources */,
 				D090AF62297D725D00699916 /* TransparentIconButtonView.swift in Sources */,
+				D3E36B5C2DEDBDFA007F99CA /* TransactionsViewItemFactoryNew.swift in Sources */,
 				11B356D4E85B0A0133F6870C /* RestorePrivateKeyService.swift in Sources */,
 				11B3529D506ADAEB715BF0D1 /* RestorePrivateKeyViewModel.swift in Sources */,
 				11B35A5C28DF128893703B6C /* RestoreViewModel.swift in Sources */,
@@ -11005,6 +11034,7 @@
 				D3D13A602C0D9DCB002484BC /* MarketAdvancedSearchViewModel.swift in Sources */,
 				ABC9AAE6886B6AB060FD9E99 /* DonateAddressViewModel.swift in Sources */,
 				ABC9A728EEF4A054C7B8722B /* DonateAddressModule.swift in Sources */,
+				D3E36B592DEDB840007F99CA /* TransactionsViewModelNew.swift in Sources */,
 				11B35ACD13702502B1ED3362 /* HighlightedTextView.swift in Sources */,
 				11B35F134E5EF8572BF330CB /* NavigationRow.swift in Sources */,
 				11B35FA70EB07440E1576A56 /* RowButtonStyle.swift in Sources */,
@@ -11692,6 +11722,7 @@
 				58AAA2EBAFC1C443C48BA857 /* CoinChartFactory.swift in Sources */,
 				6B5F33892D07FDF3001E23A4 /* EnabledWallet_v_0_40.swift in Sources */,
 				D08D16842C2165490086E5A5 /* TonSendHandler.swift in Sources */,
+				D3E36B7F2DF1B5FE007F99CA /* SpinningModifier.swift in Sources */,
 				11B35085F61E874613B2B882 /* CoinInvestorsViewModel.swift in Sources */,
 				6BCD53142A161F4800993F20 /* BackupViewModel.swift in Sources */,
 				11B35D7420EF4FB9C4DDF0B9 /* BrandFooterView.swift in Sources */,
@@ -11837,6 +11868,7 @@
 				D0D5BCBC2976CB9F00587FDB /* PasswordInputView.swift in Sources */,
 				D3DB519F2BD6854A0091BBDB /* MarketSearchView.swift in Sources */,
 				58AAA10B748931BA5FA867DA /* SwapViewModel.swift in Sources */,
+				D3E36B502DE9CCA7007F99CA /* TransactionsView.swift in Sources */,
 				58AAA9475B1C057E82B25C76 /* OneInchFeeService.swift in Sources */,
 				58AAA6371183D7FB9606FEDA /* OneInchSendEvmTransactionService.swift in Sources */,
 				11B35299107843A4663542F9 /* WalletAdapterService.swift in Sources */,
@@ -11878,6 +11910,7 @@
 				58AAADC5D50DBAEA6C8DE2C6 /* SwapAllowanceViewModel.swift in Sources */,
 				58AAA744C065C62FC7D1D58F /* SwapAllowanceCell.swift in Sources */,
 				6BAAF3492B9B245C00EFE5B2 /* SlideButtonStyling.swift in Sources */,
+				D3E36B7B2DF1B5F5007F99CA /* DeterminiteSpinnerStyle.swift in Sources */,
 				58AAAEEA99ACF936862312B2 /* SwapSwitchCell.swift in Sources */,
 				58AAA9E3B53672B3C37B727E /* StepBadgeView.swift in Sources */,
 				58AAAA3E05FEB10822DFC8EE /* SwapStepCell.swift in Sources */,
@@ -12090,6 +12123,7 @@
 				D36287A02CA2B34E00ADAF3B /* TonConnectListView.swift in Sources */,
 				ABC9AC1BD5C95957726F8AE8 /* MarketCardValueView.swift in Sources */,
 				D30C4D612D5CAFCB0082B487 /* TonConnectErrorView.swift in Sources */,
+				D3E36B532DEDB831007F99CA /* MainTransactionsView.swift in Sources */,
 				ABC9ADE7C30F3F992FD9E1CC /* Array.swift in Sources */,
 				ABC9AE223619E13A296BED51 /* MarketCardCell.swift in Sources */,
 				11B353E7A2462E19D946E723 /* CellComponent.swift in Sources */,
@@ -12217,6 +12251,7 @@
 				ABC9AE2C026D04B679644279 /* IntegerAmountInputCell.swift in Sources */,
 				ABC9ADD1A3E8C0B54E0B5014 /* IntegerAmountInputView.swift in Sources */,
 				ABC9A4045F498EE345B998D8 /* IntegerFormAmountInputView.swift in Sources */,
+				D3E36B5B2DEDBDFA007F99CA /* TransactionsViewItemFactoryNew.swift in Sources */,
 				11B35EB5359DB0EA8058A75C /* RestoreModule.swift in Sources */,
 				11B354FE5CD0F5658C7CCC69 /* RestoreViewController.swift in Sources */,
 				D090AF61297D725D00699916 /* TransparentIconButtonView.swift in Sources */,
@@ -12551,6 +12586,7 @@
 				D3D13A5F2C0D9DCB002484BC /* MarketAdvancedSearchViewModel.swift in Sources */,
 				ABC9AEB71EB75575A97408BC /* DonateDescriptionDataSource.swift in Sources */,
 				ABC9AC692F695C5F81E0453D /* DonateAddressViewController.swift in Sources */,
+				D3E36B582DEDB840007F99CA /* TransactionsViewModelNew.swift in Sources */,
 				ABC9A994D6AC5771ED49EFD1 /* DonateAddressViewModel.swift in Sources */,
 				ABC9A140CD70E91A1F4A3A5B /* DonateAddressModule.swift in Sources */,
 				11B353FD73E7731A9BC50C4E /* HighlightedTextView.swift in Sources */,

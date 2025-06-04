@@ -197,7 +197,7 @@ extension BaseTransactionsViewModel {
         }
     }
 
-    struct ViewItem {
+    struct ViewItem: Identifiable {
         let uid: String
         let date: Date
         let iconType: IconType
@@ -211,6 +211,10 @@ extension BaseTransactionsViewModel {
         let sentToSelf: Bool
         let locked: Bool?
         let spam: Bool
+
+        var id: String {
+            uid
+        }
     }
 
     enum IconType {

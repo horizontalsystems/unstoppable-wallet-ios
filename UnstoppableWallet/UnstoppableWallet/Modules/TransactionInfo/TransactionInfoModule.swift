@@ -1,4 +1,5 @@
 import MarketKit
+import SwiftUI
 import UIKit
 
 enum TransactionInfoModule {
@@ -59,4 +60,20 @@ extension TransactionInfoModule {
             self.footer = footer
         }
     }
+}
+
+struct TransactionInfoView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    private let transactionRecord: TransactionRecord
+
+    init(transactionRecord: TransactionRecord) {
+        self.transactionRecord = transactionRecord
+    }
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        ThemeNavigationController(rootViewController: TransactionInfoModule.instance(transactionRecord: transactionRecord) ?? UIViewController())
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }
