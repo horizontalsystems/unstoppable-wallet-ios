@@ -181,5 +181,11 @@
 	<string>${wallet_connect_v2_project_key}</string>
 	<key>ReferralAppServerUrl</key>
 	<string>${referral_app_server_url}</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Manrope-Medium.ttf</string>
+		<string>Manrope-Regular.ttf</string>
+		<string>Manrope-SemiBold.ttf</string>
+	</array>
 </dict>
 </plist>
