@@ -1,5 +1,6 @@
 import MarketKit
 import RxSwift
+import SwiftUI
 import UIKit
 
 enum TransactionsModule {
@@ -59,7 +60,7 @@ struct TransactionItem: Comparable {
 struct TransactionFilter: Equatable {
     private(set) var blockchain: Blockchain?
     private(set) var token: Token?
-    private(set) var contact: Contact?
+    var contact: Contact?
     var scamFilterEnabled: Bool
 
     init() {
@@ -103,10 +104,6 @@ struct TransactionFilter: Equatable {
         blockchain = token?.blockchain
 
         updateContact()
-    }
-
-    mutating func set(contact: Contact?) {
-        self.contact = contact
     }
 
     mutating func reset() {

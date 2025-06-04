@@ -49,6 +49,12 @@ class TransactionRecord {
     }
 }
 
+extension TransactionRecord: Identifiable {
+    var id: String {
+        uid
+    }
+}
+
 extension TransactionRecord: Comparable {
     public static func < (lhs: TransactionRecord, rhs: TransactionRecord) -> Bool {
         guard lhs.date == rhs.date else {

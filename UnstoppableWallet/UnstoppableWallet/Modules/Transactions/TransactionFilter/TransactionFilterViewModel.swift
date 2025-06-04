@@ -2,7 +2,7 @@ import Combine
 import MarketKit
 
 class TransactionFilterViewModel: ObservableObject {
-    private let service: TransactionsService
+    private let transactionsViewModel: TransactionsViewModelNew
     private var cancellables = Set<AnyCancellable>()
 
     @Published var blockchain: Blockchain?
@@ -12,16 +12,16 @@ class TransactionFilterViewModel: ObservableObject {
     @Published var scamFilterEnabled: Bool
     @Published var resetEnabled: Bool
 
-    init(service: TransactionsService) {
-        self.service = service
+    init(transactionsViewModel: TransactionsViewModelNew) {
+        self.transactionsViewModel = transactionsViewModel
 
-        blockchain = service.transactionFilter.blockchain
-        token = service.transactionFilter.token
-        contact = service.transactionFilter.contact
-        scamFilterEnabled = service.transactionFilter.scamFilterEnabled
-        resetEnabled = service.transactionFilter.hasChanges
+        blockchain = transactionsViewModel.transactionFilter.blockchain
+        token = transactionsViewModel.transactionFilter.token
+        contact = transactionsViewModel.transactionFilter.contact
+        scamFilterEnabled = transactionsViewModel.transactionFilter.scamFilterEnabled
+        resetEnabled = transactionsViewModel.transactionFilter.hasChanges
 
-        service.$transactionFilter
+        transactionsViewModel.$transactionFilter
             .sink { [weak self] filter in
                 self?.blockchain = filter.blockchain
                 self?.token = filter.token
@@ -33,32 +33,22 @@ class TransactionFilterViewModel: ObservableObject {
     }
 
     func set(blockchain: Blockchain?) {
-        var newFilter = service.transactionFilter
-        newFilter.set(blockchain: blockchain)
-        service.transactionFilter = newFilter
+        transactionsViewModel.transactionFilter.set(blockchain: blockchain)
     }
 
     func set(token: Token?) {
-        var newFilter = service.transactionFilter
-        newFilter.set(token: token)
-        service.transactionFilter = newFilter
+        transactionsViewModel.transactionFilter.set(token: token)
     }
 
     func set(contact: Contact?) {
-        var newFilter = service.transactionFilter
-        newFilter.set(contact: contact)
-        service.transactionFilter = newFilter
+        transactionsViewModel.transactionFilter.contact = contact
     }
 
     func set(scamFilterEnabled: Bool) {
-        var newFilter = service.transactionFilter
-        newFilter.scamFilterEnabled = scamFilterEnabled
-        service.transactionFilter = newFilter
+        transactionsViewModel.transactionFilter.scamFilterEnabled = scamFilterEnabled
     }
 
     func reset() {
-        var newFilter = service.transactionFilter
-        newFilter.reset()
-        service.transactionFilter = newFilter
+        transactionsViewModel.transactionFilter.reset()
     }
 }
