@@ -15,6 +15,10 @@ struct PurchaseListView: View {
                     if activePurchase.type == .subscription {
                         manageSubscriptionView()
                     }
+
+                    if viewModel.emulatePurchase {
+                        debugActionsSubscriptionView()
+                    }
                 } else {
                     noPurchaseView()
                 }
@@ -84,6 +88,27 @@ struct PurchaseListView: View {
                     Text("subscription.manage".localized).textBody()
                     Spacer()
                     Image.disclosureIcon
+                }
+            }
+        }
+    }
+
+    @ViewBuilder private func debugActionsSubscriptionView() -> some View {
+        ListSection {
+            ClickableRow {
+                viewModel.debugCancelSubscription()
+            } content: {
+                HStack(spacing: .margin8) {
+                    Text("Cancel Subscription").textBody()
+                    Spacer()
+                }
+            }
+            ClickableRow {
+                viewModel.debugClearSubsctiption()
+            } content: {
+                HStack(spacing: .margin8) {
+                    Text("Clear Subscriptions".localized).textBody()
+                    Spacer()
                 }
             }
         }

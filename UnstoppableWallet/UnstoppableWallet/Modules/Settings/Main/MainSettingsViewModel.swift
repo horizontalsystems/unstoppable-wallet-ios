@@ -35,6 +35,7 @@ class MainSettingsViewModel: ObservableObject {
     @Published var emulatePurchase: Bool {
         didSet {
             localStorage.emulatePurchase = emulatePurchase
+            purchaseManager.loadPurchases()
         }
     }
 
@@ -64,10 +65,17 @@ class MainSettingsViewModel: ObservableObject {
         subscribe(&cancellables, passcodeManager.$isPasscodeSet) { [weak self] _ in self?.syncSecurityAlert() }
         subscribe(&cancellables, termsManager.$termsAccepted) { [weak self] _ in self?.syncAboutAlert() }
 
-        Publishers.CombineLatest3(purchaseManager.$purchaseData, purchaseManager.$productData, purchaseManager.$usedOfferProductIds)
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _, _, _ in self?.syncSlides() }
-            .store(in: &cancellables)
+        Publishers.Merge3(
+            purchaseManager.$purchaseData.map { _ in () },
+            purchaseManager.$productData.map { _ in () },
+            purchaseManager.$usedOfferProductIds.map { _ in () }
+        )
+        .receive(on: DispatchQueue.main)
+        .sink { [weak self] in
+            self?.syncIntroductoryOffer()
+            self?.syncSlides()
+        }
+        .store(in: &cancellables)
 
         syncSlides()
         syncIntroductoryOffer()
@@ -89,7 +97,7 @@ class MainSettingsViewModel: ObservableObject {
     }
 
     private func syncIntroductoryOffer() {
-        introductoryOffer = title(introductoryOfferType: purchaseManager.introductoryOfferType)
+        introductoryOffer = purchaseManager.introductoryOfferType.title
     }
 
     private func syncManageWalletsAlert() {
@@ -110,14 +118,6 @@ class MainSettingsViewModel: ObservableObject {
 
     private func syncAboutAlert() {
         aboutAlert = !termsManager.termsAccepted
-    }
-
-    private func title(introductoryOfferType: PurchaseManager.IntroductoryOfferType) -> String? {
-        switch introductoryOfferType {
-        case .none: return nil
-        case .trial: return "premium.cell.try".localized
-        case .discount: return "premium.cell.discount".localized
-        }
     }
 }
 

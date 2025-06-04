@@ -53,6 +53,12 @@ class PurchaseManager: NSObject {
     }
 
     func loadPurchases() {
+        if localStorage.emulatePurchase {
+            dataAccessQueue.sync { [weak self] in
+                self?.syncPurchases()
+            }
+        }
+
         Task { [weak self] in
             await self?.updatePurchasedProducts()
         }
@@ -92,7 +98,7 @@ class PurchaseManager: NSObject {
         //        print(productData)
     }
 
-    func checkTrialHistoryUsage() async -> Bool {
+    private func checkTrialHistoryUsage() async -> Bool {
         for await verificationResult in Transaction.all {
             if case let .verified(transaction) = verificationResult {
                 if let offerType = transaction.offerType,
@@ -107,11 +113,14 @@ class PurchaseManager: NSObject {
     }
 
     private func syncPurchases() {
-        purchaseData = purchasedProducts
-            .values
-            .compactMap { PurchaseData(transaction: $0) }
-            .sorted { $0.type.order < $1.type.order }
-
+        if localStorage.emulatePurchase {
+            purchaseData = [localStorage.purchase].compactMap { $0 }
+        } else {
+            purchaseData = purchasedProducts
+                .values
+                .compactMap { PurchaseData(transaction: $0) }
+                .sorted { $0.type.order < $1.type.order }
+        }
 //        print(purchaseData)
 
         activeFeatures = activePurchase != nil ? PremiumFeature.allCases : []
@@ -170,6 +179,16 @@ extension PurchaseManager {
 
     @MainActor
     func purchase(product: Product) async throws {
+        guard !localStorage.emulatePurchase else { // emulate subscription
+            localStorage.purchaseCancelled = false
+            localStorage.purchase = PurchaseData(product: product)
+
+            dataAccessQueue.sync { [weak self] in
+                self?.syncPurchases()
+            }
+            return
+        }
+
         let result = try await product.purchase()
 
         switch result {
@@ -198,7 +217,12 @@ extension PurchaseManager {
 
 extension PurchaseManager {
     var activePurchase: PurchaseData? {
-        purchaseData.first {
+        var purchases = purchaseData
+        if localStorage.emulatePurchase { // emulate purchase from localStorage
+            purchases = [localStorage.purchase].compactMap { $0 }
+        }
+
+        return purchases.first {
             if let expiresTimestamp = $0.expires, let timestamp = expiresTimestamp.expiresTimestamp {
                 return timestamp > Date().timeIntervalSince1970
             }
@@ -212,6 +236,11 @@ extension PurchaseManager {
 
     var introductoryOfferType: IntroductoryOfferType {
         var offers: [IntroductoryOfferType] = []
+
+        if localStorage.emulatePurchase {
+            return localStorage.purchaseCancelled ? .none : .trial
+        }
+
         for product in productData {
             if usedOfferProductIds.contains(product.id) {
                 offers.append(.none)
@@ -226,7 +255,7 @@ extension PurchaseManager {
         activeFeatures.contains(premiumFeature)
     }
 
-    func updateUsedOffers() async {
+    private func updateUsedOffers() async {
         var usedOfferProductIds = Set<String>()
         offerUpdateQueue.sync {
             usedOfferProductIds = self.usedOfferProductIds
@@ -236,36 +265,40 @@ extension PurchaseManager {
             return
         }
 
-        for product in productData {
-            // if product already in list, nothing can changes
-            guard !usedOfferProductIds.contains(product.id) else {
-                continue
-            }
+        if localStorage.emulatePurchase { // if emulate and cancelled - all product must ignore trial period
+            usedOfferProductIds = localStorage.purchaseCancelled ? Set(products.map(\.id)) : Set()
+        } else {
+            for product in productData {
+                // if product already in list, nothing can changes
+                guard !usedOfferProductIds.contains(product.id) else {
+                    continue
+                }
 
-            // there are no any introducery offers for purchases
-            guard product.type == .subscription else {
-                continue
-            }
+                // there are no any introducery offers for purchases
+                guard product.type == .subscription else {
+                    continue
+                }
 
-            // there are no any offers by product
-            guard product.introductoryOffer != nil else {
-                continue
-            }
+                // there are no any offers by product
+                guard product.introductoryOffer != nil else {
+                    continue
+                }
 
-            let productId = product.id
+                let productId = product.id
 
-            // check active subscriptions
-            if let product = products.first(where: { $0.id == productId }),
-               let subscription = product.subscription,
-               await subscription.isEligibleForIntroOffer == false
-            {
-                usedOfferProductIds.insert(productId)
-                continue
-            }
+                // check active subscriptions
+                if let product = products.first(where: { $0.id == productId }),
+                   let subscription = product.subscription,
+                   await subscription.isEligibleForIntroOffer == false
+                {
+                    usedOfferProductIds.insert(productId)
+                    continue
+                }
 
-            // if previous was not corrected
-            if await hasUsedIntroOffer(for: productId) {
-                usedOfferProductIds.insert(productId)
+                // if previous was not corrected
+                if await hasUsedIntroOffer(for: productId) {
+                    usedOfferProductIds.insert(productId)
+                }
             }
         }
 
@@ -335,7 +368,7 @@ extension PurchaseManager: SKPaymentTransactionObserver {
 }
 
 extension PurchaseManager {
-    enum PurchaseType: String, CaseIterable {
+    enum PurchaseType: String, Codable, CaseIterable {
         case lifetime
         case subscription
 
@@ -364,7 +397,7 @@ extension PurchaseManager {
         }
     }
 
-    enum SubscriptionPeriod: String, CaseIterable {
+    enum SubscriptionPeriod: String, Codable, CaseIterable {
         case monthly = "1m"
         case annually = "1y"
 
@@ -388,7 +421,7 @@ extension PurchaseManager {
         case userCancelled
     }
 
-    struct ExpiresData {
+    struct ExpiresData: Codable {
         let period: SubscriptionPeriod
         let expiresTimestamp: TimeInterval?
     }
@@ -417,6 +450,14 @@ extension PurchaseManager {
             case .none: self = .none
             case .freeTrial: self = .trial
             default: self = .discount
+            }
+        }
+
+        var title: String? {
+            switch self {
+            case .none: return nil
+            case .trial: return "premium.cell.try".localized
+            case .discount: return "premium.cell.discount".localized
             }
         }
     }
@@ -470,14 +511,14 @@ extension PurchaseManager {
         }
     }
 
-    struct PurchaseData {
+    struct PurchaseData: Codable {
         let id: String
         let type: PurchaseType
         let purchaseDate: TimeInterval
-        let offerType: Transaction.OfferType?
+        let offerType: Int?
         let expires: ExpiresData?
 
-        init(id: String, type: PurchaseType, purchaseDate: TimeInterval, offerType: Transaction.OfferType?, expiresTimestamp: ExpiresData? = nil) {
+        init(id: String, type: PurchaseType, purchaseDate: TimeInterval, offerType: Int?, expiresTimestamp: ExpiresData? = nil) {
             self.id = id
             self.type = type
             self.purchaseDate = purchaseDate
@@ -494,15 +535,44 @@ extension PurchaseManager {
             self.type = type
             purchaseDate = transaction.purchaseDate.timeIntervalSince1970
             if #available(iOS 17.2, *) {
-                offerType = transaction.offer?.type
+                offerType = transaction.offer?.type.rawValue
             } else {
-                offerType = transaction.offerType
+                offerType = transaction.offerType?.rawValue
             }
 
             if let expiresTimestamp = transaction.expirationDate?.timeIntervalSince1970, let period = SubscriptionPeriod(id: id) {
                 expires = ExpiresData(period: period, expiresTimestamp: expiresTimestamp)
             } else {
                 expires = nil
+            }
+        }
+
+        init?(product: Product) {
+            id = product.id
+
+            guard let type = PurchaseType(id: id) else {
+                return nil
+            }
+            self.type = type
+            purchaseDate = Date().timeIntervalSince1970
+            offerType = nil
+
+            let purchaseType = PurchaseType(id: product.id) ?? .lifetime
+            switch purchaseType {
+            case .lifetime:
+                expires = nil
+            case .subscription:
+                if let subscriptionPeriod = SubscriptionPeriod(id: product.id) {
+                    let week = 60 * 5
+                    let expireInterval: TimeInterval
+                    switch subscriptionPeriod {
+                    case .annually: expireInterval = Date().timeIntervalSince1970 + TimeInterval(12 * week)
+                    case .monthly: expireInterval = Date().timeIntervalSince1970 + TimeInterval(week)
+                    }
+                    expires = ExpiresData(period: subscriptionPeriod, expiresTimestamp: expireInterval)
+                } else {
+                    expires = nil
+                }
             }
         }
     }
