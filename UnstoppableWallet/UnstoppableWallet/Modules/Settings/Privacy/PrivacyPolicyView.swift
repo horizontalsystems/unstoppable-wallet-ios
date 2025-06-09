@@ -3,8 +3,6 @@ import SwiftUI
 struct PrivacyPolicyView: View {
     @StateObject var viewModel: PrivacyPolicyViewModel
 
-    @State var subscriptionPresented = false
-
     init(config: PrivacyPolicyViewModel.Config) {
         _viewModel = StateObject(wrappedValue: PrivacyPolicyViewModel(config: config))
     }
@@ -24,9 +22,6 @@ struct PrivacyPolicyView: View {
                 }
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
-            .sheet(isPresented: $subscriptionPresented) {
-                PurchasesView()
-            }
         }
         .navigationTitle("settings.privacy".localized)
         .navigationBarTitleDisplayMode(.inline)

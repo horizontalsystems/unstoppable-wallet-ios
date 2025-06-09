@@ -151,6 +151,7 @@ struct MainSettingsView: View {
         case .premium:
             premiumSlide()
                 .onTapGesture {
+                    stat(page: .settings, event: .openPremium(from: .banner))
                     purchasesPresented = true
                 }
         case .miniApp:
@@ -387,6 +388,7 @@ struct MainSettingsView: View {
             if viewModel.activated(premiumFeature: .vipSupport) {
                 supportPresented = true
             } else {
+                stat(page: .settings, event: .openPremium(from: .vipSupport))
                 purchasesPresented = true
             }
         }) {
@@ -401,6 +403,7 @@ struct MainSettingsView: View {
             if viewModel.activated(premiumFeature: .addressChecker) {
                 addressCheckerPresented = true
             } else {
+                stat(page: .settings, event: .openPremium(from: .addressChecker))
                 purchasesPresented = true
             }
         }) {

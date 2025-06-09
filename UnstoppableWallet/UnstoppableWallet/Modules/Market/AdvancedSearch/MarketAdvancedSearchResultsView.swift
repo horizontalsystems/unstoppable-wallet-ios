@@ -122,6 +122,7 @@ struct MarketAdvancedSearchResultsView: View {
     @ViewBuilder private func signalsButton() -> some View {
         Button(action: {
             guard viewModel.premiumEnabled else {
+                stat(page: .advancedSearchResults, event: .openPremium(from: .tradingSignal))
                 subscriptionPresented = true
                 return
             }

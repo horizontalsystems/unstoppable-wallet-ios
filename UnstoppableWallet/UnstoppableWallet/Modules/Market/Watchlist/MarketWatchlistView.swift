@@ -132,6 +132,7 @@ struct MarketWatchlistView: View {
     @ViewBuilder private func signalsButton() -> some View {
         Button(action: {
             guard viewModel.tradeSignalsEnabled else {
+                stat(page: .watchlist, event: .openPremium(from: .tradingSignal))
                 subscriptionPresented = true
                 return
             }
