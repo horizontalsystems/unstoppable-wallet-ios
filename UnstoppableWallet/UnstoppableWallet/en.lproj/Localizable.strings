@@ -311,7 +311,6 @@
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Syncing... %@";
 "balance.synced_through" = "until %@";
-"balance.invalid_api_key" = "Invalid API Key";
 "balance.empty.description" = "You haven't added any coins to this wallet.";
 "balance.sort.header" = "Sort by";
 "balance.sort.valueHighToLow" = "Balance";

@@ -12,7 +12,7 @@ class WalletTokenService {
 
 extension WalletTokenService {
     var coinName: String {
-        wallet.coin.name
+        wallet.coin.code
     }
 
     var badge: String? {

@@ -7,7 +7,7 @@ class WalletTokenBalanceService {
     private let disposeBag = DisposeBag()
 
     private let coinPriceService: WalletCoinPriceService
-    private let elementService: IWalletElementService
+    private let walletService: WalletService
     private let cloudAccountBackupManager: CloudBackupManager
     private let balanceHiddenManager: BalanceHiddenManager
     private let reachabilityManager: IReachabilityManager
@@ -21,13 +21,13 @@ class WalletTokenBalanceService {
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).wallet-token-balance-service", qos: .userInitiated)
 
-    init(coinPriceService: WalletCoinPriceService, elementService: IWalletElementService,
+    init(coinPriceService: WalletCoinPriceService, walletService: WalletService,
          appManager: IAppManager, cloudAccountBackupManager: CloudBackupManager,
          balanceHiddenManager: BalanceHiddenManager, reachabilityManager: IReachabilityManager,
          account: Account, wallet: Wallet)
     {
         self.coinPriceService = coinPriceService
-        self.elementService = elementService
+        self.walletService = walletService
         self.cloudAccountBackupManager = cloudAccountBackupManager
         self.balanceHiddenManager = balanceHiddenManager
         self.reachabilityManager = reachabilityManager
@@ -43,7 +43,7 @@ class WalletTokenBalanceService {
             self?.balanceHiddenSubject.send($0)
         }
 
-        elementService.delegate = self
+        walletService.delegate = self
         coinPriceService.delegate = self
         coinPriceService.set(coinUids: Set([wallet.priceCoinUid].compactMap { $0 }))
         sync()
@@ -60,10 +60,10 @@ class WalletTokenBalanceService {
 
         let item = BalanceItem(
             wallet: wallet,
-            isMainNet: elementService.isMainNet(wallet: wallet) ?? fallbackIsMainNet,
+            isMainNet: walletService.isMainNet(wallet: wallet) ?? fallbackIsMainNet,
             watchAccount: account.watchAccount,
-            balanceData: elementService.balanceData(wallet: wallet) ?? fallbackBalanceData,
-            state: elementService.state(wallet: wallet) ?? fallbackAdapterState
+            balanceData: walletService.balanceData(wallet: wallet) ?? fallbackBalanceData,
+            state: walletService.state(wallet: wallet) ?? fallbackAdapterState
         )
 
         if let priceCoinUid = wallet.priceCoinUid {
@@ -131,14 +131,14 @@ extension WalletTokenBalanceService {
     }
 }
 
-extension WalletTokenBalanceService: IWalletElementServiceDelegate {
-    func didUpdate(elementState _: WalletModule.ElementState, elementService _: IWalletElementService) {
+extension WalletTokenBalanceService: IWalletServiceDelegate {
+    func didUpdateWallets(walletService _: WalletService) {}
+
+    func didUpdate(wallets _: [Wallet], walletService _: WalletService) {
         queue.async { [weak self] in
             self?._sync()
         }
     }
-
-    func didUpdateElements(elementService _: IWalletElementService) {}
 
     func didUpdate(isMainNet: Bool, wallet: Wallet) {
         guard wallet == self.wallet else {

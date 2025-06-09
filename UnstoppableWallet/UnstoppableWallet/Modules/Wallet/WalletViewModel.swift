@@ -7,7 +7,7 @@ import RxRelay
 import RxSwift
 
 class WalletViewModel {
-    private let service: WalletService
+    private let service: WalletServiceOld
     private let eventHandler: IEventHandler
     private let factory: WalletViewItemFactory
     private let accountRestoreWarningFactory: AccountRestoreWarningFactory
@@ -17,7 +17,7 @@ class WalletViewModel {
     private let titleRelay = BehaviorRelay<String?>(value: nil)
     private let showWarningRelay = BehaviorRelay<CancellableTitledCaution?>(value: nil)
     private let openReceiveRelay = PublishRelay<Void>()
-    private let openElementRelay = PublishRelay<Wallet>()
+    private let openWalletRelay = PublishRelay<Wallet>()
     private let openBackupRequiredRelay = PublishRelay<Account>()
     private let noConnectionErrorRelay = PublishRelay<Void>()
     private let openSyncErrorRelay = PublishRelay<(Wallet, Error)>()
@@ -34,7 +34,7 @@ class WalletViewModel {
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).wallet-view-model", qos: .userInitiated)
 
-    init(service: WalletService, eventHandler: IEventHandler, factory: WalletViewItemFactory, accountRestoreWarningFactory: AccountRestoreWarningFactory) {
+    init(service: WalletServiceOld, eventHandler: IEventHandler, factory: WalletViewItemFactory, accountRestoreWarningFactory: AccountRestoreWarningFactory) {
         self.service = service
         self.eventHandler = eventHandler
         self.factory = factory
@@ -61,27 +61,21 @@ class WalletViewModel {
         _sync(serviceState: service.state)
     }
 
-    private func sync(serviceState: WalletService.State) {
+    private func sync(serviceState: WalletServiceOld.State) {
         queue.async {
             self._sync(serviceState: serviceState)
         }
     }
 
-    private func _sync(serviceState _: WalletService.State) {
+    private func _sync(serviceState _: WalletServiceOld.State) {
         switch service.state {
         case .noAccount: state = .noAccount
-        case .loading: state = .loading
-        case let .loaded(items):
+        case let .regular(items):
             state = .list(viewItems: items.map { _viewItem(item: $0) })
-        case let .failed(reason):
-            switch reason {
-            case .syncFailed: state = .syncFailed
-            case .invalidApiKey: state = .invalidApiKey
-            }
         }
 
         switch service.state {
-        case .loaded: qrScanVisible = !service.watchAccount
+        case .regular: qrScanVisible = !service.watchAccount
         default: qrScanVisible = false
         }
     }
@@ -112,7 +106,7 @@ class WalletViewModel {
         sync(serviceState: service.state)
     }
 
-    private func sync(totalItem: WalletService.TotalItem?) {
+    private func sync(totalItem: WalletServiceOld.TotalItem?) {
         headerViewItem = totalItem.map { factory.headerViewItem(totalItem: $0, balanceHidden: service.balanceHidden, buttonHidden: service.buttonHidden, account: service.activeAccount) }
     }
 
@@ -124,7 +118,7 @@ class WalletViewModel {
         }
     }
 
-    private func syncUpdated(item: WalletService.Item) {
+    private func syncUpdated(item: WalletServiceOld.Item) {
         queue.async {
             guard case var .list(viewItems) = self.state else {
                 return
@@ -139,7 +133,7 @@ class WalletViewModel {
         }
     }
 
-    private func _viewItem(item: WalletService.Item) -> BalanceViewItem {
+    private func _viewItem(item: WalletServiceOld.Item) -> BalanceViewItem {
         factory.viewItem(
             item: item,
             balancePrimaryValue: service.balancePrimaryValue,
@@ -161,8 +155,8 @@ extension WalletViewModel {
         openReceiveRelay.asSignal()
     }
 
-    var openElementSignal: Signal<Wallet> {
-        openElementRelay.asSignal()
+    var openWalletSignal: Signal<Wallet> {
+        openWalletRelay.asSignal()
     }
 
     var openBackupRequiredSignal: Signal<Account> {
@@ -236,7 +230,7 @@ extension WalletViewModel {
     }
 
     func onTap(wallet: Wallet) {
-        openElementRelay.accept(wallet)
+        openWalletRelay.accept(wallet)
     }
 
     func onTapReceive() {
@@ -305,17 +299,11 @@ extension WalletViewModel {
     enum State: CustomStringConvertible {
         case list(viewItems: [BalanceViewItem])
         case noAccount
-        case loading
-        case syncFailed
-        case invalidApiKey
 
         var description: String {
             switch self {
             case let .list(viewItems): return "list: \(viewItems.count) view items"
             case .noAccount: return "noAccount"
-            case .loading: return "loading"
-            case .syncFailed: return "syncFailed"
-            case .invalidApiKey: return "invalidApiKey"
             }
         }
     }

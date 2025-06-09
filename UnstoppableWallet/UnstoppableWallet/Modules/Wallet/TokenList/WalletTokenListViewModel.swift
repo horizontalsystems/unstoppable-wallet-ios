@@ -66,17 +66,11 @@ class WalletTokenListViewModel {
     private func _sync(serviceState _: WalletTokenListService.State) {
         switch service.state {
         case .noAccount: state = .noAccount
-        case .loading: state = .loading
         case let .loaded(items):
             if items.isEmpty {
                 state = .empty
             } else {
                 state = .list(viewItems: items.compactMap { _viewItem(item: $0) })
-            }
-        case let .failed(reason):
-            switch reason {
-            case .syncFailed: state = .syncFailed
-            case .invalidApiKey: state = .invalidApiKey
             }
         }
     }
@@ -176,18 +170,12 @@ extension WalletTokenListViewModel {
         case list(viewItems: [BalanceViewItem])
         case noAccount
         case empty
-        case loading
-        case syncFailed
-        case invalidApiKey
 
         var description: String {
             switch self {
             case let .list(viewItems): return "list: \(viewItems.count) view items"
             case .noAccount: return "noAccount"
             case .empty: return "empty"
-            case .loading: return "loading"
-            case .syncFailed: return "syncFailed"
-            case .invalidApiKey: return "invalidApiKey"
             }
         }
     }

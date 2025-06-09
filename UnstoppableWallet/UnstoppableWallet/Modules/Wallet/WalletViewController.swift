@@ -19,11 +19,6 @@ class WalletViewController: ThemeViewController {
 
     private let placeholderView = PlaceholderView(layoutType: .bottom)
 
-    private let spinner = HUDActivityView.create(with: .medium24)
-
-    private let failedView = PlaceholderView()
-    private let invalidApiKeyView = PlaceholderView()
-
     private var viewItems = [BalanceViewItem]()
     private var headerViewItem: WalletModule.HeaderViewItem?
 
@@ -106,38 +101,10 @@ class WalletViewController: ThemeViewController {
             action: #selector(onTapWatch)
         )
 
-        view.addSubview(spinner)
-        spinner.snp.makeConstraints { make in
-            make.center.equalToSuperview()
-        }
-        spinner.startAnimating()
-
-        view.addSubview(failedView)
-        failedView.snp.makeConstraints { maker in
-            maker.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-
-        failedView.image = UIImage(named: "sync_error_48")
-        failedView.text = "sync_error".localized
-        failedView.addPrimaryButton(
-            style: .yellow,
-            title: "button.retry".localized,
-            target: self,
-            action: #selector(onTapRetry)
-        )
-
-        view.addSubview(invalidApiKeyView)
-        invalidApiKeyView.snp.makeConstraints { maker in
-            maker.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-
-        invalidApiKeyView.image = UIImage(named: "not_available_48")
-        invalidApiKeyView.text = "balance.invalid_api_key".localized
-
         subscribe(disposeBag, viewModel.titleDriver) { [weak self] in self?.navigationItem.title = $0 }
         subscribe(disposeBag, viewModel.showWarningDriver) { [weak self] in self?.sync(warning: $0) }
         subscribe(disposeBag, viewModel.openReceiveSignal) { [weak self] in self?.openReceive() }
-        subscribe(disposeBag, viewModel.openElementSignal) { [weak self] in self?.open(wallet: $0) }
+        subscribe(disposeBag, viewModel.openWalletSignal) { [weak self] in self?.open(wallet: $0) }
         subscribe(disposeBag, viewModel.openBackupRequiredSignal) { [weak self] in self?.openBackupRequired(account: $0) }
         subscribe(disposeBag, viewModel.noConnectionErrorSignal) { HudHelper.instance.show(banner: .noInternet) }
         subscribe(disposeBag, viewModel.openSyncErrorSignal) { [weak self] in self?.openSyncError(wallet: $0, error: $1) }
@@ -276,11 +243,6 @@ class WalletViewController: ThemeViewController {
         }
 
         switch state {
-        case .loading: spinner.isHidden = false
-        default: spinner.isHidden = true
-        }
-
-        switch state {
         case let .list(viewItems):
             if isLoaded {
                 handle(newViewItems: viewItems)
@@ -290,16 +252,6 @@ class WalletViewController: ThemeViewController {
             tableView.isHidden = false
         default:
             tableView.isHidden = true
-        }
-
-        switch state {
-        case .syncFailed: failedView.isHidden = false
-        default: failedView.isHidden = true
-        }
-
-        switch state {
-        case .invalidApiKey: invalidApiKeyView.isHidden = false
-        default: invalidApiKeyView.isHidden = true
         }
     }
 

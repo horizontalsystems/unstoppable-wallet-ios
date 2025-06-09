@@ -38,11 +38,8 @@ class WalletTokenListDataSource: NSObject {
 
     private func sync(state: WalletTokenListViewModel.State) {
         switch state {
-        case .loading: customCell = .spinner
         case let .list(viewItems): customCell = viewItems.isEmpty ? .noResults : .none
         case .empty, .noAccount: customCell = .empty
-        case .syncFailed: customCell = .failed
-        case .invalidApiKey: customCell = .invalidApiKey
         }
 
         switch state {

@@ -13,7 +13,7 @@ class WalletTokenListViewItemFactory {
             isMainNet: item.isMainNet,
             coin: stateAwareCoin(coin: item.wallet.coin, state: state),
             placeholderIconName: item.wallet.token.placeholderImageName,
-            name: item.wallet.coin.name,
+            name: item.wallet.coin.code,
             blockchainBadge: item.wallet.badge,
             syncSpinnerProgress: syncSpinnerProgress(state: state),
             indefiniteSearchCircle: indefiniteSearchCircle(state: state),
