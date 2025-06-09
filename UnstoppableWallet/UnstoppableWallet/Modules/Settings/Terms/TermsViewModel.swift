@@ -3,7 +3,7 @@ import RxRelay
 import RxSwift
 
 class TermsViewModel {
-    private let termCount = 5
+    private let termCount = 2
 
     private let service: TermsService
 
