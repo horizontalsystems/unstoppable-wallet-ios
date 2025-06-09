@@ -6,6 +6,7 @@ import MarketKit
 class MarketPlatformViewModel: ObservableObject {
     private let marketKit = App.shared.marketKit
     private let currencyManager = App.shared.currencyManager
+    private let priceChangeModeManager = App.shared.priceChangeModeManager
 
     let platform: TopPlatform
 
@@ -20,22 +21,41 @@ class MarketPlatformViewModel: ObservableObject {
 
     @Published var state: State = .loading
 
-    var sortBy: MarketModule.SortBy = .highestCap {
+    var sortBy: MarketModule.SortBy = .gainers {
         didSet {
             stat(page: .topPlatform, event: .switchSortType(sortType: sortBy.statSortType))
             syncState()
         }
     }
 
+    var timePeriod: HsTimePeriod {
+        didSet {
+            stat(page: .markets, section: .platforms, event: .switchPeriod(period: timePeriod.statPeriod))
+            syncState()
+        }
+    }
+
     init(platform: TopPlatform) {
         self.platform = platform
+        timePeriod = priceChangeModeManager.day1Period
+
         currencyManager.$baseCurrency
             .sink { [weak self] _ in
                 self?.sync()
             }
             .store(in: &cancellables)
 
+        priceChangeModeManager.$priceChangeMode
+            .sink { [weak self] _ in
+                self?.syncPeriod()
+            }
+            .store(in: &cancellables)
+
         sync()
+    }
+
+    private func syncPeriod() {
+        timePeriod = priceChangeModeManager.convert(period: timePeriod)
     }
 
     private func syncState() {
@@ -43,7 +63,7 @@ class MarketPlatformViewModel: ObservableObject {
         case .loading:
             state = .loading
         case let .loaded(marketInfos):
-            state = .loaded(marketInfos: marketInfos.sorted(sortBy: sortBy, timePeriod: .day1))
+            state = .loaded(marketInfos: marketInfos.sorted(sortBy: sortBy, timePeriod: timePeriod))
         case let .failed(error):
             state = .failed(error: error)
         }
@@ -57,6 +77,10 @@ extension MarketPlatformViewModel {
 
     var sortBys: [MarketModule.SortBy] {
         [.highestCap, .lowestCap, .gainers, .losers]
+    }
+
+    var timePeriods: [HsTimePeriod] {
+        [priceChangeModeManager.day1Period, .week1, .month1, .month3]
     }
 
     func sync() {
