@@ -117,6 +117,7 @@ struct SecuritySettingsView: View {
                         if viewModel.isDuressPasscodeSet {
                             ClickableRow(action: {
                                 guard viewModel.premiumEnabled else {
+                                    stat(page: .security, event: .openPremium(from: .duressMode))
                                     subscriptionPresented = true
                                     return
                                 }
@@ -135,6 +136,7 @@ struct SecuritySettingsView: View {
                         } else {
                             ClickableRow(action: {
                                 guard viewModel.premiumEnabled else {
+                                    stat(page: .security, event: .openPremium(from: .duressMode))
                                     subscriptionPresented = true
                                     return
                                 }

@@ -100,6 +100,8 @@ enum StatPage: String {
     case privacy
     case privateKeys = "private_keys"
     case publicKeys = "public_keys"
+    case purchaseList = "purchase_list"
+    case purchaseSelector = "purchase_selector"
     case rateUs = "rate_us"
     case receive
     case receiveTokenList = "receive_token_list"
@@ -192,6 +194,7 @@ enum StatEvent {
     case openCategory(categoryUid: String)
     case openCoin(coinUid: String)
     case openPlatform(chainUid: String)
+    case openPremium(from: StatPremiumTrigger)
     case openReceive(token: Token)
     case openResend(chainUid: String, type: String)
     case openSector(sectorUid: String)
@@ -218,6 +221,8 @@ enum StatEvent {
     case share(entity: StatEntity)
     case showMarketsTab(shown: Bool)
     case showSignals(shown: Bool)
+    case subscribe
+    case subscribePremium(from: StatPremiumTrigger)
     case switchBaseCurrency(code: String)
     case switchBtcSource(chainUid: String, type: BtcRestoreMode)
     case switchChartPeriod(period: StatPeriod)
@@ -266,6 +271,7 @@ enum StatEvent {
         case .importWallet: return "import_wallet"
         case .open, .openCategory, .openCoin, .openPlatform, .openReceive, .openResend, .openSector, .openSend, .openSendTokenList, .openTokenPage,
              .openBlockchainSettingsBtc, .openBlockchainSettingsEvm, .openBlockchainSettingsEvmAdd: return "open_page"
+        case .openPremium: return "open_premium_from"
         case .openTokenInfo: return "open_token_info"
         case .paste: return "paste"
         case .recipientCheck: return "recipient_check"
@@ -288,6 +294,8 @@ enum StatEvent {
         case .share: return "share"
         case .showMarketsTab: return "show_markets_tab"
         case .showSignals: return "show_signals"
+        case .subscribe: return "subscribe"
+        case .subscribePremium: return "subscribe_premium_from"
         case .switchBaseCurrency: return "switch_base_currency"
         case .switchBtcSource: return "switch_btc_source"
         case .switchChartPeriod: return "switch_chart_period"
@@ -338,6 +346,7 @@ enum StatEvent {
         case let .openBlockchainSettingsEvmAdd(chainUid: chainUid): return [.page: StatPage.blockchainSettingsEvmAdd.rawValue, .chainUid: chainUid]
         case let .openCategory(categoryUid): return [.page: StatPage.coinCategory.rawValue, .categoryUid: categoryUid]
         case let .openCoin(coinUid): return [.page: StatPage.coinPage.rawValue, .coinUid: coinUid]
+        case let .openPremium(trigger): return [.trigger: trigger.rawValue].merging(trialExpired) { $1 }
         case let .openSendTokenList(coinUid, chainUid):
             var params: [StatParam: Any] = [.page: StatPage.sendTokenList.rawValue]
             params[.coinUid] = coinUid
@@ -368,6 +377,7 @@ enum StatEvent {
         case let .share(entity): return [.entity: entity.rawValue]
         case let .showMarketsTab(shown): return [.shown: shown]
         case let .showSignals(shown): return [.shown: shown]
+        case let .subscribePremium(trigger): return [.trigger: trigger.rawValue].merging(trialExpired) { $1 }
         case let .switchBaseCurrency(code: code): return [.currencyCode: code]
         case let .switchBtcSource(chainUid, type): return [.chainUid: chainUid, .type: type.rawValue]
         case let .switchChartPeriod(period): return [.period: period.rawValue]
@@ -395,6 +405,14 @@ enum StatEvent {
         params[.bitcoinCashCoinType] = token.type.bitcoinCashCoinType?.rawValue
         return params
     }
+
+    private var trialExpired: [StatParam: Any] {
+        var params: [StatParam: Any] = [:]
+        if App.shared.purchaseManager.introductoryOfferType == .none {
+            params[.status] = "trial_expired"
+        }
+        return params
+    }
 }
 
 enum StatParam: String {
@@ -418,10 +436,42 @@ enum StatParam: String {
     case relativeUrl = "relative_url"
     case sectorUid = "sector_uid"
     case shown
+    case status
     case tab
+    case trigger
     case tvlChain = "tvl_chain"
     case type
     case walletType = "wallet_type"
+}
+
+enum StatPremiumTrigger: String {
+    case tradingAssistant = "trading_assistant"
+    case dexVolume = "dex_volume"
+    case dexLiquidity = "dex_liquidity"
+    case transactionCount = "transaction_count"
+    case activeAddresses = "active_addresses"
+    case holders
+    case projectFee = "project_fee"
+    case projectRevenue = "project_revenue"
+    case issueBlockchains = "issue_blockchains"
+    case other
+    case banner
+    case getPremium = "get_premium"
+    case duressMode = "duress_mode"
+    case vipSupport = "vip_support"
+    case addressChecker = "address_checker"
+    case sectors
+    case priceChange = "price_change"
+    case pricePeriod = "price_period"
+    case tradingSignal = "trading_signal"
+    case priceCloseTo = "price_close_to"
+    case outperformedBtc = "outperformed_btc"
+    case outperformedEth = "outperformed_eth"
+    case outperformedBnb = "outperformed_bnb"
+    case goodCexVolume = "good_cex_volume"
+    case goodDexVolume = "good_dex_volume"
+    case goodDistribution = "good_distribution"
+    case listedOnTopExchanges = "listed_on_top_exchanges"
 }
 
 enum StatTab: String {

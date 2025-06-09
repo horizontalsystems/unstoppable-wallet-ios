@@ -48,6 +48,7 @@ struct PurchaseListView: View {
     @ViewBuilder private func noPurchaseView() -> some View {
         ListSection {
             ClickableRow {
+                stat(page: .purchaseList, event: .openPremium(from: .getPremium))
                 purchasesPresented = true
             } content: {
                 HStack(spacing: .margin8) {

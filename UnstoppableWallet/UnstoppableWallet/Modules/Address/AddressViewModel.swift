@@ -6,7 +6,7 @@ class AddressViewModel: ObservableObject {
     private let purchaseManager = App.shared.purchaseManager
     private let appSettingManager = App.shared.appSettingManager
     let token: Token
-    private let destination: Destination
+    let destination: Destination
     let issueTypes: [AddressSecurityIssueType]
     let contacts: [Contact]
     let recentContact: Contact?
@@ -177,6 +177,13 @@ extension AddressViewModel {
     enum Destination {
         case swap
         case send(fromAddress: String?)
+
+        var sourceStatPage: StatPage {
+            switch self {
+            case .swap: return .send
+            default: return .swap
+            }
+        }
     }
 
     struct Contact: Identifiable {

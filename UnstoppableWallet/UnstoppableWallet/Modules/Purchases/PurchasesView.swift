@@ -106,6 +106,7 @@ struct PurchasesView: View {
                 set: {
                     subscriptionPresented = $0
                     if !$0, viewModel.subscribedSuccessful {
+                        stat(page: .purchaseSelector, event: .subscribe)
                         successfulSubscriptionPresented = true
                     }
                 }

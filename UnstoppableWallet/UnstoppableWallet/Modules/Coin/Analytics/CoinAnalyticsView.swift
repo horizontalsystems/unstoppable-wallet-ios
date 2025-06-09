@@ -38,7 +38,7 @@ struct CoinAnalyticsView: View {
         ScrollView {
             VStack(spacing: .margin12) {
                 if let viewItem = viewItem.technicalAdvice {
-                    premium(technicalAdvice(viewItem: viewItem))
+                    premium(technicalAdvice(viewItem: viewItem), statTrigger: .tradingAssistant)
                 }
 
                 if let viewItem = viewItem.cexVolume {
@@ -50,38 +50,38 @@ struct CoinAnalyticsView: View {
                 }
 
                 if let viewItem = viewItem.dexVolume {
-                    premium(dexVolume(viewItem: viewItem))
+                    premium(dexVolume(viewItem: viewItem), statTrigger: .dexVolume)
                 }
 
                 if let viewItem = viewItem.dexLiquidity {
-                    premium(dexLiquidity(viewItem: viewItem))
+                    premium(dexLiquidity(viewItem: viewItem), statTrigger: .dexLiquidity)
                 }
 
                 if let viewItem = viewItem.activeAddresses {
-                    premium(addresses(viewItem: viewItem))
+                    premium(addresses(viewItem: viewItem), statTrigger: .activeAddresses)
                 }
 
                 if let viewItem = viewItem.transactionCount {
-                    premium(transactionCount(viewItem: viewItem))
+                    premium(transactionCount(viewItem: viewItem), statTrigger: .transactionCount)
                 }
 
                 if let holdersViewItem = viewItem.holders {
-                    premium(holders(viewItem: holdersViewItem, rating: viewItem.holdersRating, rank: viewItem.holdersRank))
+                    premium(holders(viewItem: holdersViewItem, rating: viewItem.holdersRating, rank: viewItem.holdersRank), statTrigger: .holders)
                 }
 
                 if let viewItem = viewItem.fee {
-                    premium(fee(viewItem: viewItem))
+                    premium(fee(viewItem: viewItem), statTrigger: .projectFee)
                 }
 
                 if let viewItem = viewItem.revenue {
-                    premium(revenue(viewItem: viewItem))
+                    premium(revenue(viewItem: viewItem), statTrigger: .projectRevenue)
                 }
 
                 if let viewItems = viewItem.issueBlockchains {
-                    premium(analysis(viewItems: viewItems))
+                    premium(analysis(viewItems: viewItems), statTrigger: .issueBlockchains)
                 }
 
-                premium(otherData(reports: viewItem.reports, investors: viewItem.investors, treasuries: viewItem.treasuries, audits: viewItem.audits))
+                premium(otherData(reports: viewItem.reports, investors: viewItem.investors, treasuries: viewItem.treasuries, audits: viewItem.audits), statTrigger: .other)
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
@@ -113,10 +113,11 @@ struct CoinAnalyticsView: View {
         }
     }
 
-    private func premium(_ content: some View) -> some View {
+    private func premium(_ content: some View, statTrigger: StatPremiumTrigger) -> some View {
         content
             .onTapGesture {
                 if !viewModel.analyticsEnabled {
+                    stat(page: .coinAnalytics, event: .openPremium(from: statTrigger))
                     subscriptionPresented = true
                 }
             }

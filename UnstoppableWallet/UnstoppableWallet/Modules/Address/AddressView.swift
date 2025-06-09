@@ -161,7 +161,9 @@ struct AddressView: View {
         .contentShape(Rectangle())
         .onTapGesture {
             switch state {
-            case .locked: subscriptionPresented = true
+            case .locked:
+                stat(page: viewModel.destination.sourceStatPage, event: .openPremium(from: .addressChecker))
+                subscriptionPresented = true
             default: self.checkDescription = checkDescription
             }
         }

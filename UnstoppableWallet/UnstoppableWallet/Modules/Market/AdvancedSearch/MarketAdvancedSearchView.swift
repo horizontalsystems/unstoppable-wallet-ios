@@ -48,19 +48,19 @@ struct MarketAdvancedSearchView: View {
 
                             VStack(spacing: 0) {
                                 ListSection {
-                                    premiumRow(outperformedBtcRow())
-                                    premiumRow(outperformedEthRow())
-                                    premiumRow(outperformedBnbRow())
+                                    premiumRow(outperformedBtcRow(), statPremiumKey: .outperformedBtc)
+                                    premiumRow(outperformedEthRow(), statPremiumKey: .outperformedEth)
+                                    premiumRow(outperformedBnbRow(), statPremiumKey: .outperformedBnb)
                                 }
                                 .modifier(ColoredBorder())
                             }
 
                             VStack(spacing: 0) {
                                 ListSection {
-                                    premiumRow(goodCexVolumeRow())
-                                    premiumRow(goodDexVolumeRow())
-                                    premiumRow(goodDistributionRow())
-                                    premiumRow(listedOnTopExchangesRow())
+                                    premiumRow(goodCexVolumeRow(), statPremiumKey: .goodCexVolume)
+                                    premiumRow(goodDexVolumeRow(), statPremiumKey: .goodDexVolume)
+                                    premiumRow(goodDistributionRow(), statPremiumKey: .goodDistribution)
+                                    premiumRow(listedOnTopExchangesRow(), statPremiumKey: .listedOnTopExchanges)
                                 }
                                 .modifier(ColoredBorder())
                             }
@@ -210,6 +210,7 @@ struct MarketAdvancedSearchView: View {
             if viewModel.advancedSearchEnabled {
                 categoriesPresented = true
             } else {
+                stat(page: .advancedSearch, event: .openPremium(from: .sectors))
                 subscriptionPresented = true
             }
         } content: {
@@ -223,13 +224,14 @@ struct MarketAdvancedSearchView: View {
         }
     }
 
-    @ViewBuilder private func premiumRow(_ view: some View) -> some View {
+    @ViewBuilder private func premiumRow(_ view: some View, statPremiumKey: StatPremiumTrigger) -> some View {
         if viewModel.advancedSearchEnabled {
             ListRow {
                 view
             }
         } else {
             ClickableRow {
+                stat(page: .advancedSearch, event: .openPremium(from: statPremiumKey))
                 subscriptionPresented = true
             } content: {
                 view
@@ -303,6 +305,7 @@ struct MarketAdvancedSearchView: View {
     @ViewBuilder private func signalRow() -> some View {
         ClickableRow(spacing: .margin8) {
             guard viewModel.advancedSearchEnabled else {
+                stat(page: .advancedSearch, event: .openPremium(from: .tradingSignal))
                 subscriptionPresented = true
                 return
             }
@@ -363,6 +366,7 @@ struct MarketAdvancedSearchView: View {
     @ViewBuilder private func priceChangeRow() -> some View {
         ClickableRow(spacing: .margin8) {
             guard viewModel.advancedSearchEnabled else {
+                stat(page: .advancedSearch, event: .openPremium(from: .priceChange))
                 subscriptionPresented = true
                 return
             }
@@ -406,6 +410,7 @@ struct MarketAdvancedSearchView: View {
     @ViewBuilder private func pricePeriodRow() -> some View {
         ClickableRow(spacing: .margin8) {
             guard viewModel.advancedSearchEnabled else {
+                stat(page: .advancedSearch, event: .openPremium(from: .pricePeriod))
                 subscriptionPresented = true
                 return
             }
@@ -473,6 +478,7 @@ struct MarketAdvancedSearchView: View {
     @ViewBuilder private func priceCloseToRow() -> some View {
         ClickableRow(spacing: .margin8) {
             guard viewModel.advancedSearchEnabled else {
+                stat(page: .advancedSearch, event: .openPremium(from: .priceCloseTo))
                 subscriptionPresented = true
                 return
             }
