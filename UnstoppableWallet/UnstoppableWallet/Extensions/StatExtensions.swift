@@ -12,6 +12,8 @@ extension HsTimePeriod {
         case .month6: return .month6
         case .year1: return .year1
         case .year2: return .year2
+        case .year3: return .year3
+        case .year4: return .year4
         case .year5: return .year5
         }
     }

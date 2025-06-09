@@ -13,24 +13,28 @@ class CoinMarketsViewModel: ObservableObject {
 
     @Published private(set) var state: State = .loading
 
-    private var filterType: FilterType = .all {
+    @Published var verifiedFilter: VerifiedFilter = .all {
         didSet {
-            syncFilterTypeInfo()
-
             DispatchQueue.global().async { [weak self] in
                 self?.syncState()
             }
 
-            stat(page: .coinMarkets, event: .switchFilterType(type: filterType.rawValue))
+            stat(page: .coinMarkets, event: .switchFilterType(type: verifiedFilter.rawValue))
         }
     }
 
-    @Published var filterTypeInfo = SelectorButtonInfo(text: "", count: 0, selectedIndex: 0)
+    @Published var marketTypeFilter: MarketTypeFilter = .all {
+        didSet {
+            DispatchQueue.global().async { [weak self] in
+                self?.syncState()
+            }
+
+            stat(page: .coinMarkets, event: .switchFilterType(type: verifiedFilter.rawValue))
+        }
+    }
 
     init(coinUid: String) {
         self.coinUid = coinUid
-
-        syncFilterTypeInfo()
     }
 
     private func syncTickers() {
@@ -58,13 +62,20 @@ class CoinMarketsViewModel: ObservableObject {
             return
         }
 
-        let filteredTickers: [MarketTicker]
+        let filteredTickers = tickers.filter { ticker in
+            let satisfyVerified = verifiedFilter == .all ? true : ticker.verified
 
-        switch filterType {
-        case .all:
-            filteredTickers = tickers
-        case .verified:
-            filteredTickers = tickers.filter(\.verified)
+            let satisfyMarketType: Bool
+            switch marketTypeFilter {
+            case .all:
+                satisfyMarketType = true
+            case .cex:
+                satisfyMarketType = ticker.centralized
+            case .dex:
+                satisfyMarketType = !ticker.centralized
+            }
+
+            return satisfyVerified && satisfyMarketType
         }
 
         let sortedTickers = filteredTickers.sorted { $0.fiatVolume > $1.fiatVolume }
@@ -86,20 +97,17 @@ class CoinMarketsViewModel: ObservableObject {
             verified: ticker.verified
         )
     }
-
-    private func syncFilterTypeInfo() {
-        let text: String
-
-        switch filterType {
-        case .all: text = "coin_markets.filter.all".localized
-        case .verified: text = "coin_markets.filter.verified".localized
-        }
-
-        filterTypeInfo = SelectorButtonInfo(text: text, count: FilterType.allCases.count, selectedIndex: FilterType.allCases.firstIndex(of: filterType) ?? 0)
-    }
 }
 
 extension CoinMarketsViewModel {
+    var marketTypeFilters: [MarketTypeFilter] {
+        MarketTypeFilter.allCases
+    }
+
+    var verifiedFilterActivated: Bool {
+        verifiedFilter == .verified
+    }
+
     func load() {
         syncTickers()
     }
@@ -109,10 +117,10 @@ extension CoinMarketsViewModel {
     }
 
     func switchFilterType() {
-        let allCases = FilterType.allCases
-        let currentIndex = allCases.firstIndex(of: filterType) ?? 0
+        let allCases = VerifiedFilter.allCases
+        let currentIndex = allCases.firstIndex(of: verifiedFilter) ?? 0
         let newIndex = (currentIndex + 1) % allCases.count
-        filterType = allCases[newIndex]
+        verifiedFilter = allCases[newIndex]
     }
 }
 
@@ -123,9 +131,27 @@ extension CoinMarketsViewModel {
         case failed(error: String)
     }
 
-    private enum FilterType: String, CaseIterable {
+    enum VerifiedFilter: String, CaseIterable {
         case all
         case verified
+
+        var title: String {
+            "coin_markets.filter.verified".localized
+        }
+    }
+
+    enum MarketTypeFilter: String, CaseIterable {
+        case all
+        case cex
+        case dex
+
+        var title: String {
+            switch self {
+            case .all: return "coin_markets.filter.all".localized
+            case .cex: return "coin_markets.filter.cex".localized
+            case .dex: return "coin_markets.filter.dex".localized
+            }
+        }
     }
 
     struct ViewItem: Hashable {

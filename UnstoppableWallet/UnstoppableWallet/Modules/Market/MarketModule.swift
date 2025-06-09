@@ -103,7 +103,10 @@ extension MarketKit.MarketInfo {
         case .month3: return priceChange90d
         case .month6: return priceChange200d
         case .year1: return priceChange1y
-        default: return nil
+        case .year2: return priceChange2y
+        case .year3: return priceChange3y
+        case .year4: return priceChange4y
+        case .year5: return priceChange5y
         }
     }
 
