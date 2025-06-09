@@ -224,6 +224,7 @@ enum StatEvent {
     case switchChartPeriod(period: StatPeriod)
     case switchEvmSource(chainUid: String, name: String)
     case switchField(field: StatField)
+    case switchMarketTypeFilter(type: String)
     case switchFilterType(type: String)
     case switchLanguage(language: String)
     case switchMarketTop(marketTop: StatMarketTop)
@@ -294,6 +295,7 @@ enum StatEvent {
         case .switchEvmSource: return "switch_evm_source"
         case .switchField: return "switch_field"
         case .switchFilterType: return "switch_filter_type"
+        case .switchMarketTypeFilter: return "switch_market_type_filter"
         case .switchLanguage: return "switch_language"
         case .switchMarketTop: return "switch_market_top"
         case .switchPeriod: return "switch_period"
@@ -376,6 +378,7 @@ enum StatEvent {
         case let .switchEvmSource(chainUid, name): return [.chainUid: chainUid, .type: name]
         case let .switchField(field): return [.field: field.rawValue]
         case let .switchFilterType(type): return [.type: type]
+        case let .switchMarketTypeFilter(type): return [.type: type]
         case let .switchLanguage(language): return [.language: language]
         case let .switchMarketTop(marketTop): return [.marketTop: marketTop.rawValue]
         case let .switchPeriod(period): return [.period: period.rawValue]
@@ -461,6 +464,8 @@ enum StatPeriod: String {
     case month6 = "6m"
     case year1 = "1y"
     case year2 = "2y"
+    case year3 = "3y"
+    case year4 = "4y"
     case year5 = "5y"
     case all
 }

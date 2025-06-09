@@ -362,7 +362,7 @@ extension MarketAdvancedSearchViewModel {
     }
 
     var priceChangePeriods: [HsTimePeriod] {
-        [priceChangeModeManager.day1Period, .week1, .week2, .month1, .month6, .year1]
+        [priceChangeModeManager.day1Period, .week1, .month1, .month3, .month6, .year1, .year2, .year3, .year4, .year5]
     }
 
     func syncMarketInfos() {

@@ -5,6 +5,8 @@ import SwiftUI
 struct CoinMarketsView: View {
     @ObservedObject var viewModel: CoinMarketsViewModel
 
+    @State var marketTypePresented: Bool = false
+
     var body: some View {
         ThemeView {
             switch viewModel.state {
@@ -22,19 +24,47 @@ struct CoinMarketsView: View {
                 }
             }
         }
+        .alert(
+            isPresented: $marketTypePresented,
+            title: viewModel.marketTypeFilter.title,
+            viewItems: viewModel.marketTypeFilters.map { .init(text: $0.title, selected: viewModel.marketTypeFilter == $0) },
+            onTap: { index in
+                guard let index else {
+                    return
+                }
+
+                viewModel.marketTypeFilter = viewModel.marketTypeFilters[index]
+            }
+        )
     }
 
     @ViewBuilder private func list(viewItems: [CoinMarketsViewModel.ViewItem]) -> some View {
         VStack(spacing: 0) {
             HStack {
+                Button(action: {
+                    marketTypePresented = true
+                }) {
+                    Text(viewModel.marketTypeFilter.title)
+                }
+                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
+
                 Spacer()
 
-                Button(action: {
-                    viewModel.switchFilterType()
-                }) {
-                    Text(viewModel.filterTypeInfo.text)
+                if viewModel.verifiedFilterActivated {
+                    Button(action: {
+                        viewModel.switchFilterType()
+                    }) {
+                        Text(viewModel.verifiedFilter.title)
+                    }
+                    .buttonStyle(SecondaryActiveButtonStyle())
+                } else {
+                    Button(action: {
+                        viewModel.switchFilterType()
+                    }) {
+                        Text(viewModel.verifiedFilter.title)
+                    }
+                    .buttonStyle(SecondaryButtonStyle())
                 }
-                .buttonStyle(SelectorButtonStyle(count: viewModel.filterTypeInfo.count, selectedIndex: viewModel.filterTypeInfo.selectedIndex))
             }
             .padding(.horizontal, .margin16)
             .padding(.vertical, .margin8)
@@ -54,7 +84,12 @@ struct CoinMarketsView: View {
                         }
                     }
                 }
-                .onChange(of: viewModel.filterTypeInfo) { _ in
+                .onChange(of: viewModel.verifiedFilter) { _ in
+                    withAnimation {
+                        proxy.scrollTo(viewItems.first!)
+                    }
+                }
+                .onChange(of: viewModel.marketTypeFilter) { _ in
                     withAnimation {
                         proxy.scrollTo(viewItems.first!)
                     }
