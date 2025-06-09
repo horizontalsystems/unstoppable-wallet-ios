@@ -127,7 +127,7 @@ class BalanceButtonsView: UIView {
         fatalError("not implemented")
     }
 
-    func bind(buttons: [WalletModule.Button: ButtonState], sendAction: (() -> Void)?, withdrawAction: (() -> Void)?, receiveAction: (() -> Void)?, depositAction: (() -> Void)?, swapAction: (() -> Void)?, chartAction: (() -> Void)?) {
+    func bind(buttons: [WalletModule.Button: ButtonState], sendAction: (() -> Void)?, receiveAction: (() -> Void)?, swapAction: (() -> Void)?, chartAction: (() -> Void)?) {
         let buttonCount = buttons.filter { _, value in value != .hidden }.count
         let showIcons = (1 ... 2).contains(buttonCount)
 
@@ -135,27 +135,23 @@ class BalanceButtonsView: UIView {
         receiveButton.set(style: .gray, accessoryType: showIcons ? .icon(image: UIImage(named: "arrow_medium_2_down_left_24")) : .none)
 
         sendButton.isEnabled = buttons[.send] == .enabled
-        withdrawButton.isEnabled = buttons[.withdraw] == .enabled
         receiveButton.isEnabled = buttons[.receive] == .enabled
         receiveCircleButton.isEnabled = buttons[.receive] == .enabled
-        depositButton.isEnabled = buttons[.deposit] == .enabled
         addressButton.isEnabled = buttons[.address] == .enabled
         swapButton.isEnabled = buttons[.swap] == .enabled
         chartButton.isEnabled = buttons[.chart] == .enabled
 
         sendButtonWrapper.isHidden = (buttons[.send] ?? .hidden) == .hidden
-        withdrawButtonWrapper.isHidden = (buttons[.withdraw] ?? .hidden) == .hidden
+        withdrawButtonWrapper.isHidden = true
         receiveButton.isHidden = (buttons[.receive] ?? .hidden) == .hidden || buttonCount > 3
         receiveCircleButton.isHidden = (buttons[.receive] ?? .hidden) == .hidden || buttonCount <= 3
-        depositButtonWrapper.isHidden = (buttons[.deposit] ?? .hidden) == .hidden
+        depositButtonWrapper.isHidden = true
         addressButton.isHidden = (buttons[.address] ?? .hidden) == .hidden
         swapButtonWrapper.isHidden = (buttons[.swap] ?? .hidden) == .hidden
         chartButtonWrapper.isHidden = (buttons[.chart] ?? .hidden) == .hidden
 
         onTapSend = sendAction
-        onTapWithdraw = withdrawAction
         onTapReceive = receiveAction
-        onTapDeposit = depositAction
         onTapSwap = swapAction
         onTapChart = chartAction
     }

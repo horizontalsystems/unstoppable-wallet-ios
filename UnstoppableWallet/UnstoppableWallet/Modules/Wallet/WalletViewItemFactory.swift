@@ -11,10 +11,10 @@ class WalletViewItemFactory {
 
         return BalanceTopViewItem(
             isMainNet: item.isMainNet,
-            coin: stateAwareCoin(coin: item.element.coin, state: state),
-            placeholderIconName: item.element.wallet?.token.placeholderImageName,
-            name: item.element.name,
-            blockchainBadge: item.element.wallet?.badge,
+            coin: stateAwareCoin(coin: item.wallet.coin, state: state),
+            placeholderIconName: item.wallet.token.placeholderImageName,
+            name: item.wallet.coin.name,
+            blockchainBadge: item.wallet.badge,
             syncSpinnerProgress: syncSpinnerProgress(state: state),
             indefiniteSearchCircle: indefiniteSearchCircle(state: state),
             failedImageViewVisible: failedImageViewVisible(state: state),
@@ -101,7 +101,7 @@ class WalletViewItemFactory {
 
     private func primaryValue(item: WalletService.Item, balancePrimaryValue: BalancePrimaryValue) -> (text: String?, dimmed: Bool) {
         switch balancePrimaryValue {
-        case .coin: return coinValue(value: item.balanceData.balanceTotal, decimalCount: item.element.decimals, state: item.state)
+        case .coin: return coinValue(value: item.balanceData.balanceTotal, decimalCount: item.wallet.decimals, state: item.state)
         case .currency: return currencyValue(value: item.balanceData.balanceTotal, state: item.state, priceItem: item.priceItem)
         }
     }
@@ -109,7 +109,7 @@ class WalletViewItemFactory {
     private func secondaryValue(item: WalletService.Item, balancePrimaryValue: BalancePrimaryValue) -> (text: String?, dimmed: Bool) {
         switch balancePrimaryValue {
         case .coin: return currencyValue(value: item.balanceData.balanceTotal, state: item.state, priceItem: item.priceItem)
-        case .currency: return coinValue(value: item.balanceData.balanceTotal, decimalCount: item.element.decimals, state: item.state)
+        case .currency: return coinValue(value: item.balanceData.balanceTotal, decimalCount: item.wallet.decimals, state: item.state)
         }
     }
 
@@ -139,12 +139,6 @@ class WalletViewItemFactory {
             return [:]
         }
         switch account.type {
-        case let .cex(cexAccount):
-            let withdrawalEnabled = cexAccount.cex.withdrawalAllowed ? ButtonState.enabled : .disabled
-            return [
-                .deposit: .enabled,
-                .withdraw: withdrawalEnabled,
-            ]
         case .evmPrivateKey, .hdExtendedKey, .mnemonic:
             return [
                 .send: .enabled,
@@ -164,7 +158,7 @@ class WalletViewItemFactory {
 extension WalletViewItemFactory {
     func viewItem(item: WalletService.Item, balancePrimaryValue: BalancePrimaryValue, balanceHidden: Bool) -> BalanceViewItem {
         BalanceViewItem(
-            element: item.element,
+            wallet: item.wallet,
             topViewItem: topViewItem(item: item, balancePrimaryValue: balancePrimaryValue, balanceHidden: balanceHidden)
         )
     }

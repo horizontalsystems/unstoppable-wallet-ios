@@ -106,12 +106,6 @@ extension ReceiveAddressViewModel {
 }
 
 extension ReceiveAddressViewModel {
-    static func instance(cexAsset: CexAsset, network: CexDepositNetwork?, provider: ICexDepositProvider) -> ReceiveAddressViewModel {
-        let service = CexDepositService(cexAsset: cexAsset, network: network, provider: provider)
-        let viewItemFactory = CexDepositViewItemFactory()
-        return ReceiveAddressViewModel(service: service, viewItemFactory: viewItemFactory, decimalParser: AmountDecimalParser())
-    }
-
     static func instance(wallet: Wallet) -> ReceiveAddressViewModel {
         let service = ReceiveAddressService(wallet: wallet, adapterManager: App.shared.adapterManager)
         let depositViewItemFactory = ReceiveAddressViewItemFactory()

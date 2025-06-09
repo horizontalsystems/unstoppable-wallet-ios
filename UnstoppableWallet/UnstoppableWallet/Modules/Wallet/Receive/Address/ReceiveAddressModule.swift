@@ -59,8 +59,8 @@ enum ReceiveAddressModule {
         var title: String {
             switch self {
             case .amount: return "deposit.set_amount".localized
-            case .share: return "cex_deposit.share_address".localized
-            case .copy: return "cex_deposit.copy_address".localized
+            case .share: return "deposit.share_address".localized
+            case .copy: return "deposit.copy_address".localized
             }
         }
 

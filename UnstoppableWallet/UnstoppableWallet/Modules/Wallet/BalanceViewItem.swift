@@ -3,7 +3,7 @@ import Foundation
 import MarketKit
 
 struct BalanceViewItem {
-    let element: WalletModule.Element
+    let wallet: Wallet
     let topViewItem: BalanceTopViewItem
 }
 
@@ -83,8 +83,8 @@ extension BalanceSecondaryAmountViewItem: Equatable {
 }
 
 extension BalanceViewItem: DiffAware {
-    public var diffId: WalletModule.Element {
-        element
+    public var diffId: Wallet {
+        wallet
     }
 
     static func compareContent(_ a: BalanceViewItem, _ b: BalanceViewItem) -> Bool {

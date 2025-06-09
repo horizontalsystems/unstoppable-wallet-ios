@@ -16,13 +16,6 @@ struct ReceiveAddressView: View {
 
     @Environment(\.presentationMode) private var presentationMode
 
-    init(cexAsset: CexAsset, network: CexDepositNetwork?, provider: ICexDepositProvider) {
-        _viewModel = StateObject(wrappedValue: ReceiveAddressViewModel.instance(
-            cexAsset: cexAsset, network: network, provider: provider
-        )
-        )
-    }
-
     init(wallet: Wallet, onDismiss: (() -> Void)? = nil) {
         self.onDismiss = onDismiss
 
@@ -269,12 +262,12 @@ struct ReceiveAddressView: View {
 
     @ViewBuilder func view(memo: String) -> some View {
         ListRow {
-            Text("cex_deposit.memo".localized)
+            Text("deposit.memo".localized)
                 .textSubhead2()
                 .modifier(
                     Informed(infoDescription: .init(
-                        title: "cex_deposit.memo_warning.title".localized,
-                        description: "cex_deposit.memo_warning.description".localized
+                        title: "deposit.memo_warning.title".localized,
+                        description: "deposit.memo_warning.description".localized
                     )))
             Spacer()
             Text(memo).textSubhead1(color: .themeLeah)

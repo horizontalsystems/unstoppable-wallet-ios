@@ -21,7 +21,6 @@ enum StatPage: String {
     case blockchainSettingsBtc = "blockchain_settings_btc"
     case blockchainSettingsEvm = "blockchain_settings_evm"
     case blockchainSettingsEvmAdd = "blockchain_settings_evm_add"
-    case cexWithdrawConfirmation = "cex_withdraw_confirmation"
     case checkAddress = "check_address"
     case cloudBackup = "cloud_backup"
     case coinAnalytics = "coin_analytics"
@@ -199,7 +198,7 @@ enum StatEvent {
     case openSend(token: Token)
     case openSendTokenList(coinUid: String?, chainUid: String?)
     case openTokenInfo(token: Token)
-    case openTokenPage(element: WalletModule.Element)
+    case openTokenPage(wallet: Wallet)
     case paste(entity: StatEntity)
     case recipientCheck(enabled: Bool)
     case refresh
@@ -356,12 +355,9 @@ enum StatEvent {
         case let .openResend(chainUid, type): return [.page: StatPage.resend.rawValue, .chainUid: chainUid, .type: type]
         case let .openSector(sectorUid): return [.page: StatPage.sector.rawValue, .sectorUid: sectorUid]
         case let .openSend(token): return params(token: token).merging([.page: StatPage.send.rawValue]) { $1 }
-        case let .openTokenPage(element):
+        case let .openTokenPage(wallet):
             var params: [StatParam: Any] = [.page: StatPage.tokenPage.rawValue]
-            switch element {
-            case let .wallet(wallet): params.merge(self.params(token: wallet.token)) { $1 }
-            case let .cexAsset(cexAsset): params[.assetId] = cexAsset.id
-            }
+            params.merge(self.params(token: wallet.token)) { $1 }
             return params
         case let .openTokenInfo(token): return params(token: token)
         case let .paste(entity): return [.entity: entity.rawValue]

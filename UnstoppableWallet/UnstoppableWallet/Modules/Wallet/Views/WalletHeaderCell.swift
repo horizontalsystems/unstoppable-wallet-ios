@@ -50,9 +50,7 @@ class WalletHeaderCell: UITableViewCell {
         buttonsView.bind(
             buttons: viewItem.buttons,
             sendAction: actions[.send],
-            withdrawAction: actions[.withdraw],
             receiveAction: actions[.receive],
-            depositAction: actions[.deposit],
             swapAction: actions[.swap],
             chartAction: actions[.chart]
         )

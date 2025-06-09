@@ -35,13 +35,8 @@ extension RestorePassphraseService {
             if walletBackup.version == 2 { // in 2th version we use enabled_wallets and just restore wallet.
                 appBackupProvider.restore(raws: [rawBackup])
             }
-            switch rawBackup.account.type {
-            case .cex:
-                appBackupProvider.restore(raws: [rawBackup])
-                return .success(rawBackup.account.type)
-            default:
-                return .restoredAccount(rawBackup)
-            }
+
+            return .restoredAccount(rawBackup)
         case let .full(fullBackup):
             let rawBackup = try appBackupProvider.decrypt(fullBackup: fullBackup, passphrase: passphrase)
             return .restoredFullBackup(rawBackup)

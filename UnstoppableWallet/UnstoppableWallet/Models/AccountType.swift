@@ -16,7 +16,6 @@ enum AccountType: Identifiable {
     case stellarAccount(accountId: String)
     case hdExtendedKey(key: HDExtendedKey)
     case btcAddress(address: String, blockchainType: BlockchainType, tokenType: TokenType)
-    case cex(cexAccount: CexAccount)
 
     var id: Self {
         self
@@ -62,8 +61,6 @@ enum AccountType: Identifiable {
             privateData = key.serialized
         case let .btcAddress(address, blockchainType, tokenType):
             privateData = "\(address)&\(blockchainType.uid)|\(tokenType.id)".data(using: .utf8) ?? Data()
-        case let .cex(cexAccount):
-            privateData = cexAccount.uniqueId.data(using: .utf8) ?? Data() // always non-null
         }
 
         if hashed {
@@ -172,20 +169,6 @@ enum AccountType: Identifiable {
         }
     }
 
-    var supportsNft: Bool {
-        switch self {
-        case .cex: return false
-        default: return true
-        }
-    }
-
-    var withdrawalAllowed: Bool {
-        switch self {
-        case let .cex(cexAccount: account): return account.cex.withdrawalAllowed
-        default: return true
-        }
-    }
-
     var description: String {
         switch self {
         case let .mnemonic(words, salt, _):
@@ -219,8 +202,6 @@ enum AccountType: Identifiable {
             }
         case .btcAddress:
             return "BTC Address"
-        case let .cex(cexAccount):
-            return cexAccount.cex.title
         }
     }
 
@@ -257,8 +238,6 @@ enum AccountType: Identifiable {
             }
         case .btcAddress:
             return "btc_address"
-        case .cex:
-            return "cex"
         }
     }
 
@@ -370,12 +349,6 @@ extension AccountType {
             return AccountType.tonAddress(address: string)
         case .stellarAccount:
             return AccountType.stellarAccount(accountId: string)
-        case .cex:
-            guard let cexAccount = CexAccount.decode(uniqueId: string) else {
-                return nil
-            }
-
-            return .cex(cexAccount: cexAccount)
         }
     }
 
@@ -389,7 +362,6 @@ extension AccountType {
         case stellarAccount = "stellar_account"
         case hdExtendedKey = "hd_extended_key"
         case btcAddress = "btc_address_key"
-        case cex
 
         init(_ type: AccountType) {
             switch type {
@@ -402,7 +374,6 @@ extension AccountType {
             case .stellarAccount: self = .stellarAccount
             case .hdExtendedKey: self = .hdExtendedKey
             case .btcAddress: self = .btcAddress
-            case .cex: self = .cex
             }
         }
     }
@@ -429,8 +400,6 @@ extension AccountType: Hashable {
             return lhsKey == rhsKey
         case let (.btcAddress(lhsAddress, lhsBlockchainType, lhsTokenType), .btcAddress(rhsAddress, rhsBlockchainType, rhsTokenType)):
             return lhsAddress == rhsAddress && lhsBlockchainType == rhsBlockchainType && lhsTokenType == rhsTokenType
-        case let (.cex(lhsCexAccount), .cex(rhsCexAccount)):
-            return lhsCexAccount == rhsCexAccount
         default: return false
         }
     }
@@ -468,9 +437,6 @@ extension AccountType: Hashable {
             hasher.combine(address)
             hasher.combine(blockchainType)
             hasher.combine(tokenType)
-        case let .cex(cexAccount):
-            hasher.combine("cex")
-            hasher.combine(cexAccount)
         }
     }
 }

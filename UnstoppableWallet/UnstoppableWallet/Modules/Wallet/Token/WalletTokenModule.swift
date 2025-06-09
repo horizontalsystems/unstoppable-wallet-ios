@@ -1,10 +1,9 @@
 import MarketKit
-
 import UIKit
 
 enum WalletTokenModule {
-    static func viewController(element: WalletModule.Element) -> UIViewController? {
-        let service = WalletTokenService(element: element)
+    static func viewController(wallet: Wallet) -> UIViewController? {
+        let service = WalletTokenService(wallet: wallet)
         let viewModel = WalletTokenViewModel(service: service)
 
         let dataSourceChain = DataSourceChain()
@@ -14,21 +13,19 @@ enum WalletTokenModule {
             dataSource: dataSourceChain
         )
 
-        guard let tokenBalanceDataSource = WalletTokenBalanceModule.dataSource(element: element) else {
+        guard let tokenBalanceDataSource = WalletTokenBalanceModule.dataSource(wallet: wallet) else {
             return nil
         }
         tokenBalanceDataSource.parentViewController = viewController
         dataSourceChain.append(source: tokenBalanceDataSource)
 
-        if let wallet = element.wallet {
-            if let cautionDataSource = cautionDataSource(wallet: wallet) {
-                dataSourceChain.append(source: cautionDataSource)
-            }
-
-            let transactionsDataSource = TransactionsModule.dataSource(token: wallet.token, statPage: .tokenPage)
-            transactionsDataSource.viewController = viewController
-            dataSourceChain.append(source: transactionsDataSource)
+        if let cautionDataSource = cautionDataSource(wallet: wallet) {
+            dataSourceChain.append(source: cautionDataSource)
         }
+
+        let transactionsDataSource = TransactionsModule.dataSource(token: wallet.token, statPage: .tokenPage)
+        transactionsDataSource.viewController = viewController
+        dataSourceChain.append(source: transactionsDataSource)
 
         return viewController
     }

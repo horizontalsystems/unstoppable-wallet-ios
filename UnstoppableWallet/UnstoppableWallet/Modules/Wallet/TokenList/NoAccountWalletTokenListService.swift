@@ -38,7 +38,7 @@ extension NoAccountWalletTokenListService {
         .never()
     }
 
-    func item(element _: WalletModule.Element) -> WalletTokenListService.Item? {
+    func item(wallet _: Wallet) -> WalletTokenListService.Item? {
         nil
     }
 }

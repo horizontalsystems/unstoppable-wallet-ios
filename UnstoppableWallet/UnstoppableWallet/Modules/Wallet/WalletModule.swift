@@ -14,8 +14,7 @@ enum WalletModule {
 
         let elementServiceFactory = WalletElementServiceFactory(
             adapterManager: App.shared.adapterManager,
-            walletManager: App.shared.walletManager,
-            cexAssetManager: App.shared.cexAssetManager
+            walletManager: App.shared.walletManager
         )
 
         let service = WalletService(
@@ -146,7 +145,7 @@ enum WalletModule {
             feeCoinProvider: App.shared.feeCoinProvider,
             account: account
         )
-        service.elementFilter = { element in element.wallet?.token.swappable ?? false }
+        service.walletFilter = { wallet in wallet.token.swappable }
 
         elementService.delegate = service
         coinPriceService.delegate = service
@@ -176,7 +175,7 @@ enum WalletModule {
 
     static func donateTokenListViewController() -> UIViewController {
         let service: IWalletTokenListService
-        if let account = App.shared.accountManager.activeAccount, !account.watchAccount, !account.cexAccount {
+        if let account = App.shared.accountManager.activeAccount, !account.watchAccount {
             let coinPriceService = WalletCoinPriceService(
                 currencyManager: App.shared.currencyManager,
                 priceChangeModeManager: App.shared.priceChangeModeManager,
@@ -259,13 +258,13 @@ enum WalletModule {
 extension WalletModule {
     enum ElementState: CustomStringConvertible {
         case loading
-        case loaded(elements: [Element])
+        case loaded(wallets: [Wallet])
         case failed(reason: FailureReason)
 
         var description: String {
             switch self {
             case .loading: return "loading"
-            case let .loaded(elements): return "loaded: \(elements.count) elements"
+            case let .loaded(wallets): return "loaded: \(wallets.count) elements"
             case .failed: return "failed"
             }
         }
@@ -276,75 +275,9 @@ extension WalletModule {
         case invalidApiKey
     }
 
-    enum Element: Hashable {
-        case wallet(wallet: Wallet)
-        case cexAsset(cexAsset: CexAsset)
-
-        var name: String {
-            switch self {
-            case let .wallet(wallet): return wallet.coin.code
-            case let .cexAsset(cexAsset): return cexAsset.coinCode
-            }
-        }
-
-        var coin: Coin? {
-            switch self {
-            case let .wallet(wallet): return wallet.coin
-            case let .cexAsset(cexAsset): return cexAsset.coin
-            }
-        }
-
-        var wallet: Wallet? {
-            switch self {
-            case let .wallet(wallet): return wallet
-            default: return nil
-            }
-        }
-
-        var cexAsset: CexAsset? {
-            switch self {
-            case let .cexAsset(cexAsset): return cexAsset
-            default: return nil
-            }
-        }
-
-        var decimals: Int {
-            switch self {
-            case let .wallet(wallet): return wallet.decimals
-            case .cexAsset: return 8 // TODO: how many decimals for coin???
-            }
-        }
-
-        var priceCoinUid: String? {
-            switch self {
-            case let .wallet(wallet): return wallet.token.isCustom ? nil : wallet.coin.uid
-            case let .cexAsset(cexAsset): return cexAsset.coin?.uid
-            }
-        }
-
-        func hash(into hasher: inout Hasher) {
-            switch self {
-            case let .wallet(wallet):
-                hasher.combine(wallet)
-            case let .cexAsset(cexAsset):
-                hasher.combine(cexAsset)
-            }
-        }
-
-        static func == (lhs: Element, rhs: Element) -> Bool {
-            switch (lhs, rhs) {
-            case let (.wallet(lhsWallet), .wallet(rhsWallet)): return lhsWallet == rhsWallet
-            case let (.cexAsset(lhsCexAsset), .cexAsset(rhsCexAsset)): return lhsCexAsset == rhsCexAsset
-            default: return false
-            }
-        }
-    }
-
     enum Button: CaseIterable {
         case send
-        case withdraw
         case receive
-        case deposit
         case address
         case swap
         case chart

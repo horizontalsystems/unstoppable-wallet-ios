@@ -8,19 +8,19 @@ import RxSwift
 protocol IWalletElementService: AnyObject {
     var delegate: IWalletElementServiceDelegate? { get set }
     var state: WalletModule.ElementState { get }
-    func isMainNet(element: WalletModule.Element) -> Bool?
-    func balanceData(element: WalletModule.Element) -> BalanceData?
-    func state(element: WalletModule.Element) -> AdapterState?
+    func isMainNet(wallet: Wallet) -> Bool?
+    func balanceData(wallet: Wallet) -> BalanceData?
+    func state(wallet: Wallet) -> AdapterState?
     func refresh()
-    func disable(element: WalletModule.Element)
+    func disable(wallet: Wallet)
 }
 
 protocol IWalletElementServiceDelegate: AnyObject {
     func didUpdate(elementState: WalletModule.ElementState, elementService: IWalletElementService)
     func didUpdateElements(elementService: IWalletElementService)
-    func didUpdate(isMainNet: Bool, element: WalletModule.Element)
-    func didUpdate(balanceData: BalanceData, element: WalletModule.Element)
-    func didUpdate(state: AdapterState, element: WalletModule.Element)
+    func didUpdate(isMainNet: Bool, wallet: Wallet)
+    func didUpdate(balanceData: BalanceData, wallet: Wallet)
+    func didUpdate(state: AdapterState, wallet: Wallet)
 }
 
 class WalletService {
@@ -157,19 +157,19 @@ class WalletService {
         switch elementState {
         case .loading:
             internalState = .loading
-        case let .loaded(elements):
+        case let .loaded(wallets):
             let cacheContainer = activeAccount.map { cacheManager.cacheContainer(accountId: $0.id) }
-            let priceItemMap = coinPriceService.itemMap(coinUids: elements.compactMap(\.priceCoinUid))
+            let priceItemMap = coinPriceService.itemMap(coinUids: wallets.compactMap(\.priceCoinUid))
 
-            let items: [Item] = elements.map { element in
+            let items: [Item] = wallets.map { wallet in
                 let item = Item(
-                    element: element,
-                    isMainNet: elementService.isMainNet(element: element) ?? fallbackIsMainNet,
-                    balanceData: elementService.balanceData(element: element) ?? _cachedBalanceData(element: element, cacheContainer: cacheContainer) ?? fallbackBalanceData,
-                    state: elementService.state(element: element) ?? fallbackAdapterState
+                    wallet: wallet,
+                    isMainNet: elementService.isMainNet(wallet: wallet) ?? fallbackIsMainNet,
+                    balanceData: elementService.balanceData(wallet: wallet) ?? _cachedBalanceData(wallet: wallet, cacheContainer: cacheContainer) ?? fallbackBalanceData,
+                    state: elementService.state(wallet: wallet) ?? fallbackAdapterState
                 )
 
-                if let priceCoinUid = element.priceCoinUid {
+                if let priceCoinUid = wallet.priceCoinUid {
                     item.priceItem = priceItemMap[priceCoinUid]
                 }
 
@@ -180,8 +180,8 @@ class WalletService {
             _syncTotalItem()
 
             coinPriceService.set(
-                coinUids: Set(elements.compactMap(\.priceCoinUid)),
-                feeCoinUids: Set(elements.compactMap(\.wallet).compactMap { feeCoinProvider.feeToken(token: $0.token) }.map(\.coin.uid)),
+                coinUids: Set(wallets.compactMap(\.priceCoinUid)),
+                feeCoinUids: Set(wallets.compactMap { feeCoinProvider.feeToken(token: $0.token) }.map(\.coin.uid)),
                 conversionCoinUids: Set(balanceConversionManager.conversionTokens.map(\.coin.uid))
             )
         case let .failed(reason):
@@ -189,19 +189,16 @@ class WalletService {
         }
     }
 
-    private func _cachedBalanceData(element: WalletModule.Element, cacheContainer: EnabledWalletCacheManager.CacheContainer?) -> BalanceData? {
-        switch element {
-        case let .wallet(wallet): return cacheContainer?.balanceData(wallet: wallet)
-        default: return nil
-        }
+    private func _cachedBalanceData(wallet: Wallet, cacheContainer: EnabledWalletCacheManager.CacheContainer?) -> BalanceData? {
+        cacheContainer?.balanceData(wallet: wallet)
     }
 
     private func _sorted(items: [Item]) -> [Item] {
         sorter.sort(items: items, sortType: sortType)
     }
 
-    private func _item(element: WalletModule.Element, items: [Item]) -> Item? {
-        items.first { $0.element == element }
+    private func _item(wallet: Wallet, items: [Item]) -> Item? {
+        items.first { $0.wallet == wallet }
     }
 
     private func handleUpdated(activeAccount: Account?) {
@@ -307,15 +304,13 @@ extension WalletService: IWalletElementServiceDelegate {
             var balanceDataMap = [Wallet: BalanceData]()
 
             for item in items {
-                let balanceData = elementService.balanceData(element: item.element) ?? self.fallbackBalanceData
+                let balanceData = elementService.balanceData(wallet: item.wallet) ?? self.fallbackBalanceData
 
-                item.isMainNet = elementService.isMainNet(element: item.element) ?? self.fallbackIsMainNet
+                item.isMainNet = elementService.isMainNet(wallet: item.wallet) ?? self.fallbackIsMainNet
                 item.balanceData = balanceData
-                item.state = elementService.state(element: item.element) ?? self.fallbackAdapterState
+                item.state = elementService.state(wallet: item.wallet) ?? self.fallbackAdapterState
 
-                if let wallet = item.element.wallet {
-                    balanceDataMap[wallet] = balanceData
-                }
+                balanceDataMap[item.wallet] = balanceData
             }
 
             self.internalState = .loaded(items: self._sorted(items: items))
@@ -327,9 +322,9 @@ extension WalletService: IWalletElementServiceDelegate {
         }
     }
 
-    func didUpdate(isMainNet: Bool, element: WalletModule.Element) {
+    func didUpdate(isMainNet: Bool, wallet: Wallet) {
         queue.async {
-            guard case let .loaded(items) = self.internalState, let item = self._item(element: element, items: items) else {
+            guard case let .loaded(items) = self.internalState, let item = self._item(wallet: wallet, items: items) else {
                 return
             }
 
@@ -339,9 +334,9 @@ extension WalletService: IWalletElementServiceDelegate {
         }
     }
 
-    func didUpdate(balanceData: BalanceData, element: WalletModule.Element) {
+    func didUpdate(balanceData: BalanceData, wallet: Wallet) {
         queue.async {
-            guard case let .loaded(items) = self.internalState, let item = self._item(element: element, items: items) else {
+            guard case let .loaded(items) = self.internalState, let item = self._item(wallet: wallet, items: items) else {
                 return
             }
 
@@ -355,15 +350,13 @@ extension WalletService: IWalletElementServiceDelegate {
 
             self._syncTotalItem()
 
-            if let wallet = element.wallet {
-                self.cacheManager.set(balanceData: balanceData, wallet: wallet)
-            }
+            self.cacheManager.set(balanceData: balanceData, wallet: wallet)
         }
     }
 
-    func didUpdate(state: AdapterState, element: WalletModule.Element) {
+    func didUpdate(state: AdapterState, wallet: Wallet) {
         queue.async {
-            guard case let .loaded(items) = self.internalState, let item = self._item(element: element, items: items) else {
+            guard case let .loaded(items) = self.internalState, let item = self._item(wallet: wallet, items: items) else {
                 return
             }
 
@@ -386,7 +379,7 @@ extension WalletService: IWalletElementServiceDelegate {
 extension WalletService: IWalletCoinPriceServiceDelegate {
     private func _handleUpdated(priceItemMap: [String: WalletCoinPriceService.Item], items: [Item]) {
         for item in items {
-            if let priceCoinUid = item.element.priceCoinUid {
+            if let priceCoinUid = item.wallet.priceCoinUid {
                 item.priceItem = priceItemMap[priceCoinUid]
             }
         }
@@ -405,7 +398,7 @@ extension WalletService: IWalletCoinPriceServiceDelegate {
             if let itemsMap {
                 _itemsMap = itemsMap
             } else {
-                let coinUids = Array(Set(items.compactMap(\.element.priceCoinUid)))
+                let coinUids = Array(Set(items.compactMap(\.wallet.priceCoinUid)))
                 _itemsMap = self.coinPriceService.itemMap(coinUids: coinUids)
             }
 
@@ -455,12 +448,8 @@ extension WalletService {
         accountManager.activeAccount?.watchAccount ?? false
     }
 
-    var cexAccount: Bool {
-        accountManager.activeAccount?.cexAccount ?? false
-    }
-
     var withdrawalAllowed: Bool {
-        accountManager.activeAccount?.type.withdrawalAllowed ?? false
+        accountManager.activeAccount != nil
     }
 
     var lastCreatedAccount: Account? {
@@ -479,13 +468,13 @@ extension WalletService {
         reachabilityManager.isReachable
     }
 
-    func item(element: WalletModule.Element) -> Item? {
+    func item(wallet: Wallet) -> Item? {
         queue.sync {
             guard case let .loaded(items) = internalState else {
                 return nil
             }
 
-            return _item(element: element, items: items)
+            return _item(wallet: wallet, items: items)
         }
     }
 
@@ -513,8 +502,8 @@ extension WalletService {
         }
     }
 
-    func disable(element: WalletModule.Element) {
-        elementService?.disable(element: element)
+    func disable(wallet: Wallet) {
+        elementService?.disable(wallet: wallet)
     }
 
     func isCloudBackedUp(account: Account) -> Bool {
@@ -549,14 +538,14 @@ extension WalletService {
     }
 
     class Item {
-        let element: WalletModule.Element
+        let wallet: Wallet
         var isMainNet: Bool
         var balanceData: BalanceData
         var state: AdapterState
         var priceItem: WalletCoinPriceService.Item?
 
-        init(element: WalletModule.Element, isMainNet: Bool, balanceData: BalanceData, state: AdapterState) {
-            self.element = element
+        init(wallet: Wallet, isMainNet: Bool, balanceData: BalanceData, state: AdapterState) {
+            self.wallet = wallet
             self.isMainNet = isMainNet
             self.balanceData = balanceData
             self.state = state

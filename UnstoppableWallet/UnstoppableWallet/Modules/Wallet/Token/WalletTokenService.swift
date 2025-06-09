@@ -3,19 +3,19 @@ import Foundation
 import MarketKit
 
 class WalletTokenService {
-    private let element: WalletModule.Element
+    private let wallet: Wallet
 
-    init(element: WalletModule.Element) {
-        self.element = element
+    init(wallet: Wallet) {
+        self.wallet = wallet
     }
 }
 
 extension WalletTokenService {
     var coinName: String {
-        element.name
+        wallet.coin.name
     }
 
     var badge: String? {
-        element.wallet?.badge
+        wallet.badge
     }
 }

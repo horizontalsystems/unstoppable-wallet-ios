@@ -156,36 +156,32 @@ extension AppBackupProvider {
         accountManager.save(accounts: updated.map(\.account))
 
         for raw in updated {
-            switch raw.account.type {
-            case .cex: ()
-            default:
-                let wallets = raw.enabledWallets.compactMap { (wallet: WalletBackup.EnabledWallet) -> EnabledWallet? in
-                    guard let tokenQuery = TokenQuery(id: wallet.tokenQueryId),
-                          BlockchainType.supported.contains(tokenQuery.blockchainType)
-                    else {
-                        return nil
-                    }
-
-                    if !wallet.settings.isEmpty {
-                        var restoreSettings = [RestoreSettingType: String]()
-                        for (key, value) in wallet.settings {
-                            if let key = RestoreSettingType(rawValue: key) {
-                                restoreSettings[key] = value
-                            }
-                        }
-                        restoreSettingsManager.save(settings: restoreSettings, account: raw.account, blockchainType: tokenQuery.blockchainType)
-                    }
-
-                    return EnabledWallet(
-                        tokenQueryId: wallet.tokenQueryId,
-                        accountId: raw.account.id,
-                        coinName: wallet.coinName,
-                        coinCode: wallet.coinCode,
-                        tokenDecimals: wallet.tokenDecimals
-                    )
+            let wallets = raw.enabledWallets.compactMap { (wallet: WalletBackup.EnabledWallet) -> EnabledWallet? in
+                guard let tokenQuery = TokenQuery(id: wallet.tokenQueryId),
+                      BlockchainType.supported.contains(tokenQuery.blockchainType)
+                else {
+                    return nil
                 }
-                walletManager.save(enabledWallets: wallets)
+
+                if !wallet.settings.isEmpty {
+                    var restoreSettings = [RestoreSettingType: String]()
+                    for (key, value) in wallet.settings {
+                        if let key = RestoreSettingType(rawValue: key) {
+                            restoreSettings[key] = value
+                        }
+                    }
+                    restoreSettingsManager.save(settings: restoreSettings, account: raw.account, blockchainType: tokenQuery.blockchainType)
+                }
+
+                return EnabledWallet(
+                    tokenQueryId: wallet.tokenQueryId,
+                    accountId: raw.account.id,
+                    coinName: wallet.coinName,
+                    coinCode: wallet.coinCode,
+                    tokenDecimals: wallet.tokenDecimals
+                )
             }
+            walletManager.save(enabledWallets: wallets)
         }
     }
 

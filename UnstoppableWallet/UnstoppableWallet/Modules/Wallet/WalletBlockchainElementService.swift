@@ -43,48 +43,32 @@ class WalletBlockchainElementService {
     }
 
     private func handleUpdated(wallets: [Wallet]) {
-        delegate?.didUpdate(elementState: .loaded(elements: filtered(wallets).map { .wallet(wallet: $0) }), elementService: self)
+        delegate?.didUpdate(elementState: .loaded(wallets: filtered(wallets)), elementService: self)
     }
 }
 
 extension WalletBlockchainElementService: IWalletElementService {
     var state: WalletModule.ElementState {
-        .loaded(elements: filtered(walletManager.activeWallets).map { .wallet(wallet: $0) })
+        .loaded(wallets: filtered(walletManager.activeWallets))
     }
 
-    func isMainNet(element: WalletModule.Element) -> Bool? {
-        guard let wallet = element.wallet else {
-            return nil
-        }
-
-        return adapterService.isMainNet(wallet: wallet)
+    func isMainNet(wallet: Wallet) -> Bool? {
+        adapterService.isMainNet(wallet: wallet)
     }
 
-    func balanceData(element: WalletModule.Element) -> BalanceData? {
-        guard let wallet = element.wallet else {
-            return nil
-        }
-
-        return adapterService.balanceData(wallet: wallet)
+    func balanceData(wallet: Wallet) -> BalanceData? {
+        adapterService.balanceData(wallet: wallet)
     }
 
-    func state(element: WalletModule.Element) -> AdapterState? {
-        guard let wallet = element.wallet else {
-            return nil
-        }
-
-        return adapterService.state(wallet: wallet)
+    func state(wallet: Wallet) -> AdapterState? {
+        adapterService.state(wallet: wallet)
     }
 
     func refresh() {
         adapterService.refresh()
     }
 
-    func disable(element: WalletModule.Element) {
-        guard let wallet = element.wallet else {
-            return
-        }
-
+    func disable(wallet: Wallet) {
         walletManager.delete(wallets: [wallet])
     }
 }
@@ -95,14 +79,14 @@ extension WalletBlockchainElementService: IWalletAdapterServiceDelegate {
     }
 
     func didUpdate(isMainNet: Bool, wallet: Wallet) {
-        delegate?.didUpdate(isMainNet: isMainNet, element: .wallet(wallet: wallet))
+        delegate?.didUpdate(isMainNet: isMainNet, wallet: wallet)
     }
 
     func didUpdate(balanceData: BalanceData, wallet: Wallet) {
-        delegate?.didUpdate(balanceData: balanceData, element: .wallet(wallet: wallet))
+        delegate?.didUpdate(balanceData: balanceData, wallet: wallet)
     }
 
     func didUpdate(state: AdapterState, wallet: Wallet) {
-        delegate?.didUpdate(state: state, element: .wallet(wallet: wallet))
+        delegate?.didUpdate(state: state, wallet: wallet)
     }
 }

@@ -12,21 +12,15 @@ class WalletTokenBalanceViewItemFactory {
 
         var buttons = [WalletModule.Button: ButtonState]()
 
-        switch item.element {
-        case let .wallet(wallet):
-            if item.watchAccount {
-                buttons[.address] = .enabled
-            } else {
-                buttons[.send] = .enabled
-                buttons[.receive] = .enabled
+        if item.watchAccount {
+            buttons[.address] = .enabled
+        } else {
+            buttons[.send] = .enabled
+            buttons[.receive] = .enabled
 
-                if AppConfig.swapEnabled, wallet.token.swappable {
-                    buttons[.swap] = .enabled
-                }
+            if AppConfig.swapEnabled, item.wallet.token.swappable {
+                buttons[.swap] = .enabled
             }
-        case let .cexAsset(cexAsset):
-            buttons[.withdraw] = cexAsset.withdrawEnabled ? .enabled : .disabled
-            buttons[.deposit] = cexAsset.depositEnabled ? .enabled : .disabled
         }
 
         buttons[.chart] = item.priceItem != nil ? .enabled : .disabled
@@ -39,8 +33,8 @@ class WalletTokenBalanceViewItemFactory {
 
         return WalletTokenBalanceViewModel.ViewItem(
             isMainNet: item.isMainNet,
-            coin: stateAwareCoin(coin: item.element.coin, state: state),
-            placeholderIconName: item.element.wallet?.token.placeholderImageName,
+            coin: stateAwareCoin(coin: item.wallet.coin, state: state),
+            placeholderIconName: item.wallet.token.placeholderImageName,
             syncSpinnerProgress: syncSpinnerProgress(state: state),
             indefiniteSearchCircle: indefiniteSearchCircle(state: state),
             failedImageViewVisible: failedImageViewVisible(state: state),
@@ -104,7 +98,7 @@ class WalletTokenBalanceViewItemFactory {
     }
 
     private func balanceValue(item: WalletTokenBalanceService.BalanceItem, balanceHidden: Bool) -> (text: String?, dimmed: Bool) {
-        coinValue(value: item.balanceData.balanceTotal, decimalCount: item.element.decimals, symbol: item.element.coin?.code, balanceHidden: balanceHidden, state: item.state)
+        coinValue(value: item.balanceData.balanceTotal, decimalCount: item.wallet.decimals, symbol: item.wallet.coin.code, balanceHidden: balanceHidden, state: item.state)
     }
 
     private func secondaryValue(item: WalletTokenBalanceService.BalanceItem, balanceHidden: Bool) -> (text: String?, dimmed: Bool) {
@@ -136,7 +130,7 @@ class WalletTokenBalanceViewItemFactory {
         item.balanceData
             .customStates
             .map {
-                let value = coinValue(value: $0.value, decimalCount: item.element.decimals, symbol: item.element.coin?.code, balanceHidden: balanceHidden, state: item.state)
+                let value = coinValue(value: $0.value, decimalCount: item.wallet.decimals, symbol: item.wallet.coin.code, balanceHidden: balanceHidden, state: item.state)
 
                 var action = WalletTokenBalanceViewModel.CustomStateAction.none
 

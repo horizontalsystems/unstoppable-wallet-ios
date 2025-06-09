@@ -17,7 +17,7 @@ protocol IWalletTokenListService {
     var balancePrimaryValue: BalancePrimaryValue { get }
     var itemUpdatedObservable: Observable<WalletTokenListService.Item> { get }
 
-    func item(element: WalletModule.Element) -> WalletTokenListService.Item?
+    func item(wallet: Wallet) -> WalletTokenListService.Item?
 }
 
 class WalletTokenListViewModel {
@@ -91,7 +91,7 @@ class WalletTokenListViewModel {
                 return
             }
 
-            guard let index = viewItems.firstIndex(where: { $0.element == item.element }) else {
+            guard let index = viewItems.firstIndex(where: { $0.wallet == item.wallet }) else {
                 return
             }
 
@@ -104,7 +104,7 @@ class WalletTokenListViewModel {
 
     private func _viewItem(item: WalletTokenListService.Item) -> BalanceViewItem? {
         if let filter, !filter.isEmpty {
-            if !(item.element.name.localizedCaseInsensitiveContains(filter) || (item.element.coin?.name.localizedCaseInsensitiveContains(filter) ?? false)) {
+            if !(item.wallet.coin.name.localizedCaseInsensitiveContains(filter) || (item.wallet.coin.name.localizedCaseInsensitiveContains(filter))) {
                 return nil
             }
         }
@@ -139,21 +139,17 @@ extension WalletTokenListViewModel {
         openSyncErrorRelay.asSignal()
     }
 
-    func onTapFailedIcon(element: WalletModule.Element) {
+    func onTapFailedIcon(wallet: Wallet) {
         guard service.isReachable else {
             noConnectionErrorRelay.accept(())
             return
         }
 
-        guard let item = service.item(element: element) else {
+        guard let item = service.item(wallet: wallet) else {
             return
         }
 
         guard case let .notSynced(error) = item.state else {
-            return
-        }
-
-        guard let wallet = element.wallet else {
             return
         }
 
@@ -162,12 +158,10 @@ extension WalletTokenListViewModel {
 
     func didSelect(item: BalanceViewItem) {
         if item.topViewItem.failedImageViewVisible {
-            onTapFailedIcon(element: item.element)
+            onTapFailedIcon(wallet: item.wallet)
             return
         }
-        if let wallet = item.element.wallet {
-            selectWalletRelay.accept(wallet)
-        }
+        selectWalletRelay.accept(item.wallet)
     }
 
     func onUpdate(filter: String) {

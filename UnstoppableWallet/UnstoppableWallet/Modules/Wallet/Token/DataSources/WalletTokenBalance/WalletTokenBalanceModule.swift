@@ -1,7 +1,7 @@
 import Foundation
 
 enum WalletTokenBalanceModule {
-    static func dataSource(element: WalletModule.Element) -> WalletTokenBalanceDataSource? {
+    static func dataSource(wallet: Wallet) -> WalletTokenBalanceDataSource? {
         guard let account = App.shared.accountManager.activeAccount else {
             return nil
         }
@@ -14,8 +14,7 @@ enum WalletTokenBalanceModule {
 
         let elementServiceFactory = WalletElementServiceFactory(
             adapterManager: App.shared.adapterManager,
-            walletManager: App.shared.walletManager,
-            cexAssetManager: App.shared.cexAssetManager
+            walletManager: App.shared.walletManager
         )
 
         let elementService = elementServiceFactory.elementService(account: account)
@@ -28,7 +27,7 @@ enum WalletTokenBalanceModule {
             balanceHiddenManager: App.shared.balanceHiddenManager,
             reachabilityManager: App.shared.reachabilityManager,
             account: account,
-            element: element
+            wallet: wallet
         )
 
         let factory = WalletTokenBalanceViewItemFactory()

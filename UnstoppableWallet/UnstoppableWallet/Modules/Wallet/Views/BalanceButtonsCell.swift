@@ -31,9 +31,7 @@ class BalanceButtonsCell: UITableViewCell {
         buttonsView.bind(
             buttons: buttons,
             sendAction: actions[.send],
-            withdrawAction: actions[.withdraw],
             receiveAction: actions[.receive],
-            depositAction: actions[.deposit],
             swapAction: actions[.swap],
             chartAction: actions[.chart]
         )
