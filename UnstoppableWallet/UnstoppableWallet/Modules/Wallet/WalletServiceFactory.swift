@@ -1,6 +1,6 @@
 import HsToolKit
 
-struct WalletElementServiceFactory {
+struct WalletServiceFactory {
     private let adapterManager: AdapterManager
     private let walletManager: WalletManager
 
@@ -9,15 +9,15 @@ struct WalletElementServiceFactory {
         self.walletManager = walletManager
     }
 
-    func elementService(account: Account) -> IWalletElementService {
+    func walletService(account: Account) -> WalletService {
         let adapterService = WalletAdapterService(account: account, adapterManager: adapterManager)
-        let elementService = WalletBlockchainElementService(
+        let service = WalletService(
             account: account,
             adapterService: adapterService,
             walletManager: walletManager
         )
-        adapterService.delegate = elementService
+        adapterService.delegate = service
 
-        return elementService
+        return service
     }
 }

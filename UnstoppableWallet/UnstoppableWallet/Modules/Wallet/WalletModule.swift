@@ -12,13 +12,13 @@ enum WalletModule {
             marketKit: App.shared.marketKit
         )
 
-        let elementServiceFactory = WalletElementServiceFactory(
+        let walletServiceFactory = WalletServiceFactory(
             adapterManager: App.shared.adapterManager,
             walletManager: App.shared.walletManager
         )
 
-        let service = WalletService(
-            elementServiceFactory: elementServiceFactory,
+        let service = WalletServiceOld(
+            walletServiceFactory: walletServiceFactory,
             coinPriceService: coinPriceService,
             accountManager: App.shared.accountManager,
             cacheManager: App.shared.enabledWalletCacheManager,
@@ -64,17 +64,17 @@ enum WalletModule {
         )
 
         let adapterService = WalletAdapterService(account: account, adapterManager: App.shared.adapterManager)
-        let elementService = WalletBlockchainElementService(
+        let walletService = WalletService(
             account: account,
             adapterService: adapterService,
             walletManager: App.shared.walletManager,
             allowedBlockchainTypes: allowedBlockchainTypes,
             allowedTokenTypes: allowedTokenTypes
         )
-        adapterService.delegate = elementService
+        adapterService.delegate = walletService
 
         let service = WalletTokenListService(
-            elementService: elementService,
+            walletService: walletService,
             coinPriceService: coinPriceService,
             cacheManager: App.shared.enabledWalletCacheManager,
             reachabilityManager: App.shared.reachabilityManager,
@@ -84,7 +84,7 @@ enum WalletModule {
             feeCoinProvider: App.shared.feeCoinProvider,
             account: account
         )
-        elementService.delegate = service
+        walletService.delegate = service
         coinPriceService.delegate = service
 
         let viewModel = WalletTokenListViewModel(
@@ -127,15 +127,15 @@ enum WalletModule {
         )
 
         let adapterService = WalletAdapterService(account: account, adapterManager: App.shared.adapterManager)
-        let elementService = WalletBlockchainElementService(
+        let walletService = WalletService(
             account: account,
             adapterService: adapterService,
             walletManager: App.shared.walletManager
         )
-        adapterService.delegate = elementService
+        adapterService.delegate = walletService
 
         let service = WalletTokenListService(
-            elementService: elementService,
+            walletService: walletService,
             coinPriceService: coinPriceService,
             cacheManager: App.shared.enabledWalletCacheManager,
             reachabilityManager: App.shared.reachabilityManager,
@@ -147,7 +147,7 @@ enum WalletModule {
         )
         service.walletFilter = { wallet in wallet.token.swappable }
 
-        elementService.delegate = service
+        walletService.delegate = service
         coinPriceService.delegate = service
 
         let viewModel = WalletTokenListViewModel(
@@ -183,15 +183,15 @@ enum WalletModule {
             )
 
             let adapterService = WalletAdapterService(account: account, adapterManager: App.shared.adapterManager)
-            let elementService = WalletBlockchainElementService(
+            let walletService = WalletService(
                 account: account,
                 adapterService: adapterService,
                 walletManager: App.shared.walletManager
             )
-            adapterService.delegate = elementService
+            adapterService.delegate = walletService
 
             let tokenListService = WalletTokenListService(
-                elementService: elementService,
+                walletService: walletService,
                 coinPriceService: coinPriceService,
                 cacheManager: App.shared.enabledWalletCacheManager,
                 reachabilityManager: App.shared.reachabilityManager,
@@ -201,7 +201,7 @@ enum WalletModule {
                 feeCoinProvider: App.shared.feeCoinProvider,
                 account: account
             )
-            elementService.delegate = tokenListService
+            walletService.delegate = tokenListService
             coinPriceService.delegate = tokenListService
 
             service = tokenListService
@@ -256,25 +256,6 @@ enum WalletModule {
 }
 
 extension WalletModule {
-    enum ElementState: CustomStringConvertible {
-        case loading
-        case loaded(wallets: [Wallet])
-        case failed(reason: FailureReason)
-
-        var description: String {
-            switch self {
-            case .loading: return "loading"
-            case let .loaded(wallets): return "loaded: \(wallets.count) elements"
-            case .failed: return "failed"
-            }
-        }
-    }
-
-    enum FailureReason: Error {
-        case syncFailed
-        case invalidApiKey
-    }
-
     enum Button: CaseIterable {
         case send
         case receive

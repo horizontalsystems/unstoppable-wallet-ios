@@ -6,7 +6,7 @@ import RxRelay
 import RxSwift
 
 class WalletTokenListService: IWalletTokenListService {
-    private let elementService: IWalletElementService
+    private let walletService: WalletService
     private let coinPriceService: WalletCoinPriceService
     private let cacheManager: EnabledWalletCacheManager
     private let reachabilityManager: IReachabilityManager
@@ -20,18 +20,13 @@ class WalletTokenListService: IWalletTokenListService {
 
     var walletFilter: ((Wallet) -> Bool)?
 
-    private var internalState: State = .loading {
+    private var internalState: State = .noAccount {
         didSet {
-            switch internalState {
-            case let .loaded(items):
-                state = .loaded(items: items)
-            default:
-                state = internalState
-            }
+            state = internalState
         }
     }
 
-    var state: State = .loading {
+    var state: State = .noAccount {
         didSet {
             stateUpdatedSubject.send(state)
         }
@@ -43,12 +38,12 @@ class WalletTokenListService: IWalletTokenListService {
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).wallet-token-list-service", qos: .userInitiated)
 
-    init(elementService: IWalletElementService, coinPriceService: WalletCoinPriceService,
+    init(walletService: WalletService, coinPriceService: WalletCoinPriceService,
          cacheManager: EnabledWalletCacheManager, reachabilityManager: IReachabilityManager,
          appSettingManager: AppSettingManager, balanceHiddenManager: BalanceHiddenManager,
          appManager: IAppManager, feeCoinProvider: FeeCoinProvider, account: Account)
     {
-        self.elementService = elementService
+        self.walletService = walletService
         self.coinPriceService = coinPriceService
         self.cacheManager = cacheManager
         self.reachabilityManager = reachabilityManager
@@ -57,50 +52,43 @@ class WalletTokenListService: IWalletTokenListService {
         self.feeCoinProvider = feeCoinProvider
         self.account = account
 
-        self.elementService.delegate = self
+        self.walletService.delegate = self
 
         subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in
             self?.coinPriceService.refresh()
         }
 
         queue.async {
-            self.sync(elementState: elementService.state, elementService: elementService)
+            self.sync(wallets: walletService.wallets, walletService: walletService)
         }
     }
 
-    private func sync(elementState: WalletModule.ElementState, elementService: IWalletElementService) {
-        switch elementState {
-        case .loading:
-            internalState = .loading
-        case let .loaded(wallets):
-            let cacheContainer = cacheManager.cacheContainer(accountId: account.id)
-            let priceItemMap = coinPriceService.itemMap(coinUids: wallets.compactMap(\.priceCoinUid))
+    private func sync(wallets: [Wallet], walletService: WalletService) {
+        let cacheContainer = cacheManager.cacheContainer(accountId: account.id)
+        let priceItemMap = coinPriceService.itemMap(coinUids: wallets.compactMap(\.priceCoinUid))
 
-            let items: [Item] = wallets.filter { walletFilter?($0) ?? true }
-                .map { wallet in
-                    let item = Item(
-                        wallet: wallet,
-                        isMainNet: elementService.isMainNet(wallet: wallet) ?? fallbackIsMainNet,
-                        balanceData: elementService.balanceData(wallet: wallet) ?? _cachedBalanceData(wallet: wallet, cacheContainer: cacheContainer) ?? fallbackBalanceData,
-                        state: elementService.state(wallet: wallet) ?? fallbackAdapterState
-                    )
+        let items: [Item] = wallets.filter { walletFilter?($0) ?? true }
+            .map { wallet in
+                let item = Item(
+                    wallet: wallet,
+                    isMainNet: walletService.isMainNet(wallet: wallet) ?? fallbackIsMainNet,
+                    balanceData: walletService.balanceData(wallet: wallet) ?? _cachedBalanceData(wallet: wallet, cacheContainer: cacheContainer) ?? fallbackBalanceData,
+                    state: walletService.state(wallet: wallet) ?? fallbackAdapterState
+                )
 
-                    if let priceCoinUid = wallet.priceCoinUid {
-                        item.priceItem = priceItemMap[priceCoinUid]
-                    }
-
-                    return item
+                if let priceCoinUid = wallet.priceCoinUid {
+                    item.priceItem = priceItemMap[priceCoinUid]
                 }
 
-            internalState = .loaded(items: sorter.sort(items: items, sortType: .balance))
+                return item
+            }
 
-            let coinUids = Set(wallets.compactMap(\.priceCoinUid))
-            let feeCoinUids = Set(wallets.compactMap { feeCoinProvider.feeToken(token: $0.token) }.map(\.coin.uid))
+        internalState = .loaded(items: sorter.sort(items: items, sortType: .balance))
 
-            coinPriceService.set(coinUids: coinUids.union(feeCoinUids))
-        case let .failed(reason):
-            internalState = .failed(reason: reason)
-        }
+        let coinUids = Set(wallets.compactMap(\.priceCoinUid))
+        let feeCoinUids = Set(wallets.compactMap { feeCoinProvider.feeToken(token: $0.token) }.map(\.coin.uid))
+
+        coinPriceService.set(coinUids: coinUids.union(feeCoinUids))
     }
 
     private func _cachedBalanceData(wallet: Wallet, cacheContainer: EnabledWalletCacheManager.CacheContainer?) -> BalanceData? {
@@ -150,14 +138,8 @@ class WalletTokenListService: IWalletTokenListService {
     }
 }
 
-extension WalletTokenListService: IWalletElementServiceDelegate {
-    func didUpdate(elementState: WalletModule.ElementState, elementService: IWalletElementService) {
-        queue.async {
-            self.sync(elementState: elementState, elementService: elementService)
-        }
-    }
-
-    func didUpdateElements(elementService: IWalletElementService) {
+extension WalletTokenListService: IWalletServiceDelegate {
+    func didUpdateWallets(walletService: WalletService) {
         queue.async {
             guard case let .loaded(items) = self.internalState else {
                 return
@@ -166,11 +148,11 @@ extension WalletTokenListService: IWalletElementServiceDelegate {
             var balanceDataMap = [Wallet: BalanceData]()
 
             for item in items {
-                let balanceData = elementService.balanceData(wallet: item.wallet) ?? self.fallbackBalanceData
+                let balanceData = walletService.balanceData(wallet: item.wallet) ?? self.fallbackBalanceData
 
-                item.isMainNet = elementService.isMainNet(wallet: item.wallet) ?? self.fallbackIsMainNet
+                item.isMainNet = walletService.isMainNet(wallet: item.wallet) ?? self.fallbackIsMainNet
                 item.balanceData = balanceData
-                item.state = elementService.state(wallet: item.wallet) ?? self.fallbackAdapterState
+                item.state = walletService.state(wallet: item.wallet) ?? self.fallbackAdapterState
 
                 balanceDataMap[item.wallet] = balanceData
             }
@@ -180,6 +162,12 @@ extension WalletTokenListService: IWalletElementServiceDelegate {
             if !balanceDataMap.isEmpty {
                 self.cacheManager.set(balanceDataMap: balanceDataMap)
             }
+        }
+    }
+
+    func didUpdate(wallets: [Wallet], walletService: WalletService) {
+        queue.async {
+            self.sync(wallets: wallets, walletService: walletService)
         }
     }
 
@@ -283,16 +271,12 @@ extension WalletTokenListService {
 extension WalletTokenListService {
     enum State: CustomStringConvertible {
         case noAccount
-        case loading
         case loaded(items: [Item])
-        case failed(reason: WalletModule.FailureReason)
 
         var description: String {
             switch self {
             case .noAccount: return "noAccount"
-            case .loading: return "loading"
             case let .loaded(items): return "loaded: \(items.count) items"
-            case .failed: return "failed"
             }
         }
     }

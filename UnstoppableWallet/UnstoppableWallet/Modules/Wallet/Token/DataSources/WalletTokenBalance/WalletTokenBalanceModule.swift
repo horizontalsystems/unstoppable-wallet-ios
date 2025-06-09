@@ -12,16 +12,16 @@ enum WalletTokenBalanceModule {
             marketKit: App.shared.marketKit
         )
 
-        let elementServiceFactory = WalletElementServiceFactory(
+        let walletServiceFactory = WalletServiceFactory(
             adapterManager: App.shared.adapterManager,
             walletManager: App.shared.walletManager
         )
 
-        let elementService = elementServiceFactory.elementService(account: account)
+        let walletService = walletServiceFactory.walletService(account: account)
 
         let tokenBalanceService = WalletTokenBalanceService(
             coinPriceService: coinPriceService,
-            elementService: elementService,
+            walletService: walletService,
             appManager: App.shared.appManager,
             cloudAccountBackupManager: App.shared.cloudBackupManager,
             balanceHiddenManager: App.shared.balanceHiddenManager,

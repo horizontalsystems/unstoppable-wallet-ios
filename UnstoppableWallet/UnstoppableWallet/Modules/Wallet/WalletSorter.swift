@@ -47,7 +47,7 @@ protocol ISortableWalletItem {
     var diff: Decimal? { get }
 }
 
-extension WalletService.Item: ISortableWalletItem {
+extension WalletServiceOld.Item: ISortableWalletItem {
     var balance: Decimal {
         balanceData.available
     }
