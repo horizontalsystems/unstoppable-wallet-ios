@@ -77,7 +77,7 @@ struct PreSendView: View {
                     }) {
                         Image("settings_24")
                             .renderingMode(.template)
-                            .foregroundColor(.themeJacob)
+                            .foregroundColor(.themeGray)
                     }
                 }
             }

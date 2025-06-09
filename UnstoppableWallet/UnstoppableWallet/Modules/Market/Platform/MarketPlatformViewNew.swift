@@ -9,6 +9,7 @@ struct MarketPlatformViewNew: View {
     @Binding var isPresented: Bool
 
     @State private var sortBySelectorPresented = false
+    @State private var timePeriodSelectorPresented = false
     @State private var presentedCoin: Coin?
 
     init(isPresented: Binding<Bool>, platform: TopPlatform) {
@@ -76,6 +77,14 @@ struct MarketPlatformViewNew: View {
                 }
                 .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
                 .disabled(disabled)
+
+                Button(action: {
+                    timePeriodSelectorPresented = true
+                }) {
+                    Text(viewModel.timePeriod.shortTitle)
+                }
+                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
+                .disabled(disabled)
             }
             .padding(.horizontal, .margin16)
             .padding(.vertical, .margin8)
@@ -90,6 +99,18 @@ struct MarketPlatformViewNew: View {
                 }
 
                 viewModel.sortBy = viewModel.sortBys[index]
+            }
+        )
+        .alert(
+            isPresented: $timePeriodSelectorPresented,
+            title: "market.time_period.title".localized,
+            viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
+            onTap: { index in
+                guard let index else {
+                    return
+                }
+
+                viewModel.timePeriod = viewModel.timePeriods[index]
             }
         )
     }
@@ -107,7 +128,7 @@ struct MarketPlatformViewNew: View {
                         marketCap: marketInfo.marketCap,
                         price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
                         rank: marketInfo.marketCapRank,
-                        diff: marketInfo.priceChange24h
+                        diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod)
                     )
                 }
                 .watchlistSwipeActions(viewModel: watchlistViewModel, coinUid: coin.uid)
