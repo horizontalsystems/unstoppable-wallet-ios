@@ -13,7 +13,7 @@ class WalletTokenBalanceService {
     private let reachabilityManager: IReachabilityManager
 
     private let account: Account
-    let element: WalletModule.Element
+    let wallet: Wallet
 
     @PostPublished private(set) var item: BalanceItem?
     private let itemUpdatedSubject = PassthroughSubject<Void, Never>()
@@ -24,7 +24,7 @@ class WalletTokenBalanceService {
     init(coinPriceService: WalletCoinPriceService, elementService: IWalletElementService,
          appManager: IAppManager, cloudAccountBackupManager: CloudBackupManager,
          balanceHiddenManager: BalanceHiddenManager, reachabilityManager: IReachabilityManager,
-         account: Account, element: WalletModule.Element)
+         account: Account, wallet: Wallet)
     {
         self.coinPriceService = coinPriceService
         self.elementService = elementService
@@ -33,7 +33,7 @@ class WalletTokenBalanceService {
         self.reachabilityManager = reachabilityManager
 
         self.account = account
-        self.element = element
+        self.wallet = wallet
 
         subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in
             self?.coinPriceService.refresh()
@@ -45,7 +45,7 @@ class WalletTokenBalanceService {
 
         elementService.delegate = self
         coinPriceService.delegate = self
-        coinPriceService.set(coinUids: Set([element.priceCoinUid].compactMap { $0 }))
+        coinPriceService.set(coinUids: Set([wallet.priceCoinUid].compactMap { $0 }))
         sync()
     }
 
@@ -56,17 +56,17 @@ class WalletTokenBalanceService {
     }
 
     private func _sync() {
-        let priceItemMap = coinPriceService.itemMap(coinUids: [element.priceCoinUid].compactMap { $0 })
+        let priceItemMap = coinPriceService.itemMap(coinUids: [wallet.priceCoinUid].compactMap { $0 })
 
         let item = BalanceItem(
-            element: element,
-            isMainNet: elementService.isMainNet(element: element) ?? fallbackIsMainNet,
+            wallet: wallet,
+            isMainNet: elementService.isMainNet(wallet: wallet) ?? fallbackIsMainNet,
             watchAccount: account.watchAccount,
-            balanceData: elementService.balanceData(element: element) ?? fallbackBalanceData,
-            state: elementService.state(element: element) ?? fallbackAdapterState
+            balanceData: elementService.balanceData(wallet: wallet) ?? fallbackBalanceData,
+            state: elementService.state(wallet: wallet) ?? fallbackAdapterState
         )
 
-        if let priceCoinUid = element.priceCoinUid {
+        if let priceCoinUid = wallet.priceCoinUid {
             item.priceItem = priceItemMap[priceCoinUid]
         }
 
@@ -114,15 +114,15 @@ extension WalletTokenBalanceService {
 
 extension WalletTokenBalanceService {
     class BalanceItem {
-        let element: WalletModule.Element
+        let wallet: Wallet
         var isMainNet: Bool
         var watchAccount: Bool
         var balanceData: BalanceData
         var state: AdapterState
         var priceItem: WalletCoinPriceService.Item?
 
-        init(element: WalletModule.Element, isMainNet: Bool, watchAccount: Bool, balanceData: BalanceData, state: AdapterState) {
-            self.element = element
+        init(wallet: Wallet, isMainNet: Bool, watchAccount: Bool, balanceData: BalanceData, state: AdapterState) {
+            self.wallet = wallet
             self.isMainNet = isMainNet
             self.watchAccount = watchAccount
             self.balanceData = balanceData
@@ -140,8 +140,8 @@ extension WalletTokenBalanceService: IWalletElementServiceDelegate {
 
     func didUpdateElements(elementService _: IWalletElementService) {}
 
-    func didUpdate(isMainNet: Bool, element: WalletModule.Element) {
-        guard element == self.element else {
+    func didUpdate(isMainNet: Bool, wallet: Wallet) {
+        guard wallet == self.wallet else {
             return
         }
         queue.async { [weak self] in
@@ -150,8 +150,8 @@ extension WalletTokenBalanceService: IWalletElementServiceDelegate {
         }
     }
 
-    func didUpdate(balanceData: BalanceData, element: WalletModule.Element) {
-        guard element == self.element else {
+    func didUpdate(balanceData: BalanceData, wallet: Wallet) {
+        guard wallet == self.wallet else {
             return
         }
         queue.async { [weak self] in
@@ -160,8 +160,8 @@ extension WalletTokenBalanceService: IWalletElementServiceDelegate {
         }
     }
 
-    func didUpdate(state: AdapterState, element: WalletModule.Element) {
-        guard element == self.element else {
+    func didUpdate(state: AdapterState, wallet: Wallet) {
+        guard wallet == self.wallet else {
             return
         }
         queue.async { [weak self] in
@@ -174,7 +174,7 @@ extension WalletTokenBalanceService: IWalletElementServiceDelegate {
 extension WalletTokenBalanceService: IWalletCoinPriceServiceDelegate {
     private func _handleUpdated(priceItemMap: [String: WalletCoinPriceService.Item], items _: [BalanceItem]) {
         queue.async { [weak self] in
-            if let priceCoinUid = self?.element.priceCoinUid {
+            if let priceCoinUid = self?.wallet.priceCoinUid {
                 self?.item?.priceItem = priceItemMap[priceCoinUid]
                 self?.itemUpdatedSubject.send()
             }

@@ -27,7 +27,7 @@ class ChooseWatchService {
         let tokenQueries: [TokenQuery]
 
         switch accountType {
-        case .mnemonic, .evmPrivateKey, .stellarSecretKey, .cex:
+        case .mnemonic, .evmPrivateKey, .stellarSecretKey:
             return nil
 
         case .evmAddress:

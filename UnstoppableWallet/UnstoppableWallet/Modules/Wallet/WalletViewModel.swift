@@ -17,7 +17,7 @@ class WalletViewModel {
     private let titleRelay = BehaviorRelay<String?>(value: nil)
     private let showWarningRelay = BehaviorRelay<CancellableTitledCaution?>(value: nil)
     private let openReceiveRelay = PublishRelay<Void>()
-    private let openElementRelay = PublishRelay<WalletModule.Element>()
+    private let openElementRelay = PublishRelay<Wallet>()
     private let openBackupRequiredRelay = PublishRelay<Account>()
     private let noConnectionErrorRelay = PublishRelay<Void>()
     private let openSyncErrorRelay = PublishRelay<(Wallet, Error)>()
@@ -88,10 +88,10 @@ class WalletViewModel {
 
     private func sync(activeAccount: Account?) {
         titleRelay.accept(activeAccount?.name)
-        nftVisible = activeAccount?.type.supportsNft ?? false
+        nftVisible = activeAccount != nil
 
         controlViewItem = activeAccount.map {
-            ControlViewItem(watchVisible: $0.watchAccount, coinManagerVisible: !$0.cexAccount)
+            ControlViewItem(watchVisible: $0.watchAccount, coinManagerVisible: true)
         }
 
         if let account = activeAccount {
@@ -130,7 +130,7 @@ class WalletViewModel {
                 return
             }
 
-            guard let index = viewItems.firstIndex(where: { $0.element == item.element }) else {
+            guard let index = viewItems.firstIndex(where: { $0.wallet == item.wallet }) else {
                 return
             }
 
@@ -161,7 +161,7 @@ extension WalletViewModel {
         openReceiveRelay.asSignal()
     }
 
-    var openElementSignal: Signal<WalletModule.Element> {
+    var openElementSignal: Signal<Wallet> {
         openElementRelay.asSignal()
     }
 
@@ -202,10 +202,6 @@ extension WalletViewModel {
         }
     }
 
-    var swipeActionsEnabled: Bool {
-        !service.cexAccount
-    }
-
     var lastCreatedAccount: Account? {
         service.lastCreatedAccount
     }
@@ -239,8 +235,8 @@ extension WalletViewModel {
         stat(page: .balance, event: .toggleConversionCoin)
     }
 
-    func onTap(element: WalletModule.Element) {
-        openElementRelay.accept(element)
+    func onTap(wallet: Wallet) {
+        openElementRelay.accept(wallet)
     }
 
     func onTapReceive() {
@@ -254,21 +250,17 @@ extension WalletViewModel {
         }
     }
 
-    func onTapFailedIcon(element: WalletModule.Element) {
+    func onTapFailedIcon(wallet: Wallet) {
         guard service.isReachable else {
             noConnectionErrorRelay.accept(())
             return
         }
 
-        guard let item = service.item(element: element) else {
+        guard let item = service.item(wallet: wallet) else {
             return
         }
 
         guard case let .notSynced(error) = item.state else {
-            return
-        }
-
-        guard let wallet = element.wallet else {
             return
         }
 
@@ -287,8 +279,8 @@ extension WalletViewModel {
         service.refresh()
     }
 
-    func onDisable(element: WalletModule.Element) {
-        service.disable(element: element)
+    func onDisable(wallet: Wallet) {
+        service.disable(wallet: wallet)
     }
 
     func onCloseWarning() {

@@ -166,9 +166,6 @@ class RestoreTypeViewController: ThemeViewController {
             viaPush = false
             viewController = documentPicker
             stat(page: isWallet ? .importWallet : .importFull, event: .open(page: isWallet ? .importWalletFromFiles : .importFullFromFiles))
-        case .cex:
-            viewController = RestoreCexViewController(returnViewController: returnViewController)
-            stat(page: .importWallet, event: .open(page: .importWalletFromExchangeWallet))
         }
 
         if viaPush {

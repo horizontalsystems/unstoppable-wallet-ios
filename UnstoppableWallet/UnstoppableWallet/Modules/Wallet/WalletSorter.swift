@@ -53,7 +53,7 @@ extension WalletService.Item: ISortableWalletItem {
     }
 
     var name: String {
-        element.name
+        wallet.coin.name
     }
 
     var diff: Decimal? {
@@ -67,7 +67,7 @@ extension WalletTokenListService.Item: ISortableWalletItem {
     }
 
     var name: String {
-        element.name
+        wallet.coin.name
     }
 
     var diff: Decimal? {

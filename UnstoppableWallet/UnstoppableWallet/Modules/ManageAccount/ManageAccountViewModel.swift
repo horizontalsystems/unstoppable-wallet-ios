@@ -75,7 +75,6 @@ class ManageAccountViewModel {
             case .private: keyActions.append(contentsOf: [.privateKeys, .publicKeys])
             case .public: keyActions.append(contentsOf: [.publicKeys])
             }
-        case .cex: ()
         }
 
         var sections = [KeyActionSection]()

@@ -74,8 +74,8 @@ extension WalletTokenBalanceViewModel {
         openSyncErrorSubject.eraseToAnyPublisher()
     }
 
-    var element: WalletModule.Element {
-        service.element
+    var wallet: Wallet {
+        service.wallet
     }
 
     func onTapAmount() {
@@ -86,24 +86,19 @@ extension WalletTokenBalanceViewModel {
     }
 
     func onTapReceive() {
-        switch service.element {
-        case let .wallet(wallet):
-            if wallet.account.backedUp || service.isCloudBackedUp() {
-                openReceiveSubject.send(wallet)
-            } else {
-                openBackupRequiredSubject.send(wallet)
-            }
-        case .cexAsset:
-            ()
+        if wallet.account.backedUp || service.isCloudBackedUp() {
+            openReceiveSubject.send(wallet)
+        } else {
+            openBackupRequiredSubject.send(wallet)
         }
     }
 
     func onTapChart() {
-        guard let coin = service.element.coin, let item = service.item, item.priceItem != nil else {
+        guard let item = service.item, item.priceItem != nil else {
             return
         }
 
-        openCoinPageSubject.send(coin)
+        openCoinPageSubject.send(service.wallet.coin)
     }
 
     func onTapFailedIcon() {
@@ -117,10 +112,6 @@ extension WalletTokenBalanceViewModel {
         }
 
         guard case let .notSynced(error) = item.state else {
-            return
-        }
-
-        guard let wallet = element.wallet else {
             return
         }
 

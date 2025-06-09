@@ -123,7 +123,7 @@ class WalletTokenListDataSource: NSObject {
             animated: animated,
             duration: animationDuration,
             onTapError: { [weak self] in
-                self?.viewModel.onTapFailedIcon(element: viewItem.element)
+                self?.viewModel.onTapFailedIcon(wallet: viewItem.wallet)
             }
         )
     }

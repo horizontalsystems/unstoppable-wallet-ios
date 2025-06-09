@@ -11,10 +11,10 @@ class WalletTokenListViewItemFactory {
 
         return BalanceTopViewItem(
             isMainNet: item.isMainNet,
-            coin: stateAwareCoin(coin: item.element.coin, state: state),
-            placeholderIconName: item.element.wallet?.token.placeholderImageName,
-            name: item.element.name,
-            blockchainBadge: item.element.wallet?.badge,
+            coin: stateAwareCoin(coin: item.wallet.coin, state: state),
+            placeholderIconName: item.wallet.token.placeholderImageName,
+            name: item.wallet.coin.name,
+            blockchainBadge: item.wallet.badge,
             syncSpinnerProgress: syncSpinnerProgress(state: state),
             indefiniteSearchCircle: indefiniteSearchCircle(state: state),
             failedImageViewVisible: failedImageViewVisible(state: state),
@@ -36,7 +36,7 @@ class WalletTokenListViewItemFactory {
             ))
         } else {
             return .amount(viewItem: BalanceSecondaryAmountViewItem(
-                descriptionValue: (text: item.element.coin?.name, dimmed: false),
+                descriptionValue: (text: item.wallet.coin.name, dimmed: false),
                 secondaryValue: secondaryValue(item: item, balancePrimaryValue: balancePrimaryValue, balanceHidden: balanceHidden, expanded: true),
                 diff: nil
             ))
@@ -80,7 +80,7 @@ class WalletTokenListViewItemFactory {
 
     private func primaryValue(item: WalletTokenListService.Item, balancePrimaryValue: BalancePrimaryValue, balanceHidden: Bool) -> (text: String?, dimmed: Bool) {
         switch balancePrimaryValue {
-        case .coin: return coinValue(value: item.balanceData.balanceTotal, decimalCount: item.element.decimals, state: item.state, balanceHidden: balanceHidden)
+        case .coin: return coinValue(value: item.balanceData.balanceTotal, decimalCount: item.wallet.decimals, state: item.state, balanceHidden: balanceHidden)
         case .currency: return currencyValue(value: item.balanceData.balanceTotal, state: item.state, priceItem: item.priceItem, balanceHidden: balanceHidden)
         }
     }
@@ -88,7 +88,7 @@ class WalletTokenListViewItemFactory {
     private func secondaryValue(item: WalletTokenListService.Item, balancePrimaryValue: BalancePrimaryValue, balanceHidden: Bool, expanded _: Bool) -> (text: String?, dimmed: Bool) {
         switch balancePrimaryValue {
         case .coin: return currencyValue(value: item.balanceData.balanceTotal, state: item.state, priceItem: item.priceItem, balanceHidden: balanceHidden)
-        case .currency: return coinValue(value: item.balanceData.balanceTotal, decimalCount: item.element.decimals, state: item.state, balanceHidden: balanceHidden)
+        case .currency: return coinValue(value: item.balanceData.balanceTotal, decimalCount: item.wallet.decimals, state: item.state, balanceHidden: balanceHidden)
         }
     }
 
@@ -117,7 +117,7 @@ class WalletTokenListViewItemFactory {
 extension WalletTokenListViewItemFactory {
     func viewItem(item: WalletTokenListService.Item, balancePrimaryValue: BalancePrimaryValue, balanceHidden: Bool) -> BalanceViewItem {
         BalanceViewItem(
-            element: item.element,
+            wallet: item.wallet,
             topViewItem: topViewItem(item: item, balancePrimaryValue: balancePrimaryValue, balanceHidden: balanceHidden)
         )
     }

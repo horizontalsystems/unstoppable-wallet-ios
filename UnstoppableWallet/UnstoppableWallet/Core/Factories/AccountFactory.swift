@@ -17,18 +17,6 @@ extension AccountFactory {
         return "Wallet \(order)"
     }
 
-    func nextAccountName(cex: Cex) -> String {
-        let cexAccounts = accountManager.accounts.filter { account in
-            switch account.type {
-            case let .cex(cexAccount): return cexAccount.cex == cex
-            default: return false
-            }
-        }
-        let order = cexAccounts.count + 1
-
-        return "\(cex.title)\(order == 1 ? "" : " \(order)")"
-    }
-
     var nextWatchAccountName: String {
         let watchAccounts = accountManager.accounts.filter(\.watchAccount)
         let order = watchAccounts.count + 1

@@ -137,7 +137,7 @@ class WalletViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.titleDriver) { [weak self] in self?.navigationItem.title = $0 }
         subscribe(disposeBag, viewModel.showWarningDriver) { [weak self] in self?.sync(warning: $0) }
         subscribe(disposeBag, viewModel.openReceiveSignal) { [weak self] in self?.openReceive() }
-        subscribe(disposeBag, viewModel.openElementSignal) { [weak self] in self?.open(element: $0) }
+        subscribe(disposeBag, viewModel.openElementSignal) { [weak self] in self?.open(wallet: $0) }
         subscribe(disposeBag, viewModel.openBackupRequiredSignal) { [weak self] in self?.openBackupRequired(account: $0) }
         subscribe(disposeBag, viewModel.noConnectionErrorSignal) { HudHelper.instance.show(banner: .noInternet) }
         subscribe(disposeBag, viewModel.openSyncErrorSignal) { [weak self] in self?.openSyncError(wallet: $0, error: $1) }
@@ -418,7 +418,7 @@ class WalletViewController: ThemeViewController {
         cell.bind(
             viewItem: viewItem,
             onTapError: { [weak self] in
-                self?.viewModel.onTapFailedIcon(element: viewItem.element)
+                self?.viewModel.onTapFailedIcon(wallet: viewItem.wallet)
             }
         )
     }
@@ -447,19 +447,12 @@ class WalletViewController: ThemeViewController {
         }
     }
 
-    private func open(element: WalletModule.Element) {
-        if let viewController = WalletTokenModule.viewController(element: element) {
+    private func open(wallet: Wallet) {
+        if let viewController = WalletTokenModule.viewController(wallet: wallet) {
             navigationController?.pushViewController(viewController, animated: true)
 
-            stat(page: .balance, event: .openTokenPage(element: element))
+            stat(page: .balance, event: .openTokenPage(wallet: wallet))
         }
-    }
-
-    private func openDeposit(cexAsset: CexAsset) {
-        guard let viewController = CexDepositModule.viewController(cexAsset: cexAsset) else {
-            return
-        }
-        present(ThemeNavigationController(rootViewController: viewController), animated: true)
     }
 
     private func openBackupRequired(account: Account) {
@@ -512,7 +505,7 @@ class WalletViewController: ThemeViewController {
             return
         }
 
-        let element = viewItems[index].element
+        let wallet = viewItems[index].wallet
 
         viewItems.remove(at: index)
 
@@ -524,27 +517,14 @@ class WalletViewController: ThemeViewController {
         }
         tableView.endUpdates()
 
-        viewModel.onDisable(element: element)
+        viewModel.onDisable(wallet: wallet)
 
-        if let token = element.wallet?.token {
-            stat(page: .balance, event: .disableToken(token: token))
-        }
+        stat(page: .balance, event: .disableToken(token: wallet.token))
     }
 
     private func bindHeaderActions(cell: WalletHeaderCell) {
         cell.onTapAmount = { [weak self] in self?.viewModel.onTapTotalAmount() }
         cell.onTapConvertedAmount = { [weak self] in self?.viewModel.onTapConvertedTotalAmount() }
-        // Cex actions
-        cell.actions[.deposit] = { [weak self] in
-            if let viewController = CexCoinSelectModule.viewController(mode: .deposit) {
-                self?.present(viewController, animated: true)
-            }
-        }
-        cell.actions[.withdraw] = { [weak self] in
-            if let viewController = CexCoinSelectModule.viewController(mode: .withdraw) {
-                self?.present(viewController, animated: true)
-            }
-        }
         // Decentralized actions
         cell.actions[.send] = { [weak self] in
             guard let viewController = WalletModule.sendTokenListViewController() else {
@@ -723,7 +703,7 @@ extension WalletViewController: UITableViewDelegate {
                 return
             }
 
-            viewModel.onTap(element: viewItems[indexPath.item].element)
+            viewModel.onTap(wallet: viewItems[indexPath.item].wallet)
         }
     }
 
@@ -733,10 +713,6 @@ extension WalletViewController: UITableViewDelegate {
             return nil
         default:
             if viewItems.isEmpty {
-                return nil
-            }
-
-            guard viewModel.swipeActionsEnabled else {
                 return nil
             }
 

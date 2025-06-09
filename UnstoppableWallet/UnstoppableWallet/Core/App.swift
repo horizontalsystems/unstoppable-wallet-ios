@@ -63,7 +63,6 @@ class App {
     let walletManager: WalletManager
     let coinManager: CoinManager
     let passcodeLockManager: PasscodeLockManager
-    let cexAssetManager: CexAssetManager
 
     let btcBlockchainManager: BtcBlockchainManager
     let evmSyncSourceManager: EvmSyncSourceManager
@@ -188,9 +187,6 @@ class App {
         walletManager = WalletManager(accountManager: accountManager, storage: walletStorage)
         coinManager = CoinManager(marketKit: marketKit, walletManager: walletManager)
         passcodeLockManager = PasscodeLockManager(accountManager: accountManager, walletManager: walletManager)
-
-        let cexAssetRecordStorage = CexAssetRecordStorage(dbPool: dbPool)
-        cexAssetManager = CexAssetManager(accountManager: accountManager, marketKit: marketKit, storage: cexAssetRecordStorage)
 
         let blockchainSettingRecordStorage = try BlockchainSettingRecordStorage(dbPool: dbPool)
         let blockchainSettingsStorage = BlockchainSettingsStorage(storage: blockchainSettingRecordStorage)

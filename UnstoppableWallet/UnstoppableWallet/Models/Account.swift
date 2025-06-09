@@ -33,13 +33,6 @@ class Account: Identifiable {
         }
     }
 
-    var cexAccount: Bool {
-        switch type {
-        case .cex: return true
-        default: return false
-        }
-    }
-
     var nonStandard: Bool {
         guard case let .mnemonic(_, _, bip39Compliant) = type else {
             return false

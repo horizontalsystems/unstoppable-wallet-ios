@@ -18,7 +18,7 @@ class WalletTokenListService: IWalletTokenListService {
     private let sorter = WalletSorter()
     private let disposeBag = DisposeBag()
 
-    var elementFilter: ((WalletModule.Element) -> Bool)?
+    var walletFilter: ((Wallet) -> Bool)?
 
     private var internalState: State = .loading {
         didSet {
@@ -72,20 +72,20 @@ class WalletTokenListService: IWalletTokenListService {
         switch elementState {
         case .loading:
             internalState = .loading
-        case let .loaded(elements):
+        case let .loaded(wallets):
             let cacheContainer = cacheManager.cacheContainer(accountId: account.id)
-            let priceItemMap = coinPriceService.itemMap(coinUids: elements.compactMap(\.priceCoinUid))
+            let priceItemMap = coinPriceService.itemMap(coinUids: wallets.compactMap(\.priceCoinUid))
 
-            let items: [Item] = elements.filter { elementFilter?($0) ?? true }
-                .map { element in
+            let items: [Item] = wallets.filter { walletFilter?($0) ?? true }
+                .map { wallet in
                     let item = Item(
-                        element: element,
-                        isMainNet: elementService.isMainNet(element: element) ?? fallbackIsMainNet,
-                        balanceData: elementService.balanceData(element: element) ?? _cachedBalanceData(element: element, cacheContainer: cacheContainer) ?? fallbackBalanceData,
-                        state: elementService.state(element: element) ?? fallbackAdapterState
+                        wallet: wallet,
+                        isMainNet: elementService.isMainNet(wallet: wallet) ?? fallbackIsMainNet,
+                        balanceData: elementService.balanceData(wallet: wallet) ?? _cachedBalanceData(wallet: wallet, cacheContainer: cacheContainer) ?? fallbackBalanceData,
+                        state: elementService.state(wallet: wallet) ?? fallbackAdapterState
                     )
 
-                    if let priceCoinUid = element.priceCoinUid {
+                    if let priceCoinUid = wallet.priceCoinUid {
                         item.priceItem = priceItemMap[priceCoinUid]
                     }
 
@@ -94,12 +94,8 @@ class WalletTokenListService: IWalletTokenListService {
 
             internalState = .loaded(items: sorter.sort(items: items, sortType: .balance))
 
-            let coinUids = Set(elements.compactMap(\.priceCoinUid))
-            let feeCoinUids = Set(elements.compactMap(\.wallet)
-                .compactMap {
-                    feeCoinProvider.feeToken(token: $0.token)
-                }
-                .map(\.coin.uid))
+            let coinUids = Set(wallets.compactMap(\.priceCoinUid))
+            let feeCoinUids = Set(wallets.compactMap { feeCoinProvider.feeToken(token: $0.token) }.map(\.coin.uid))
 
             coinPriceService.set(coinUids: coinUids.union(feeCoinUids))
         case let .failed(reason):
@@ -107,20 +103,17 @@ class WalletTokenListService: IWalletTokenListService {
         }
     }
 
-    private func _cachedBalanceData(element: WalletModule.Element, cacheContainer: EnabledWalletCacheManager.CacheContainer?) -> BalanceData? {
-        switch element {
-        case let .wallet(wallet): return cacheContainer?.balanceData(wallet: wallet)
-        default: return nil
-        }
+    private func _cachedBalanceData(wallet: Wallet, cacheContainer: EnabledWalletCacheManager.CacheContainer?) -> BalanceData? {
+        cacheContainer?.balanceData(wallet: wallet)
     }
 
     private func _sorted(items: [Item]) -> [Item] {
         sorter.sort(items: items, sortType: .balance)
     }
 
-    private func _item(element: WalletModule.Element, items: [Item]) -> Item? {
+    private func _item(wallet: Wallet, items: [Item]) -> Item? {
         items.first {
-            $0.element == element
+            $0.wallet == wallet
         }
     }
 
@@ -173,15 +166,13 @@ extension WalletTokenListService: IWalletElementServiceDelegate {
             var balanceDataMap = [Wallet: BalanceData]()
 
             for item in items {
-                let balanceData = elementService.balanceData(element: item.element) ?? self.fallbackBalanceData
+                let balanceData = elementService.balanceData(wallet: item.wallet) ?? self.fallbackBalanceData
 
-                item.isMainNet = elementService.isMainNet(element: item.element) ?? self.fallbackIsMainNet
+                item.isMainNet = elementService.isMainNet(wallet: item.wallet) ?? self.fallbackIsMainNet
                 item.balanceData = balanceData
-                item.state = elementService.state(element: item.element) ?? self.fallbackAdapterState
+                item.state = elementService.state(wallet: item.wallet) ?? self.fallbackAdapterState
 
-                if let wallet = item.element.wallet {
-                    balanceDataMap[wallet] = balanceData
-                }
+                balanceDataMap[item.wallet] = balanceData
             }
 
             self.internalState = .loaded(items: self._sorted(items: items))
@@ -192,9 +183,9 @@ extension WalletTokenListService: IWalletElementServiceDelegate {
         }
     }
 
-    func didUpdate(isMainNet: Bool, element: WalletModule.Element) {
+    func didUpdate(isMainNet: Bool, wallet: Wallet) {
         queue.async {
-            guard case let .loaded(items) = self.internalState, let item = self._item(element: element, items: items) else {
+            guard case let .loaded(items) = self.internalState, let item = self._item(wallet: wallet, items: items) else {
                 return
             }
 
@@ -204,9 +195,9 @@ extension WalletTokenListService: IWalletElementServiceDelegate {
         }
     }
 
-    func didUpdate(balanceData: BalanceData, element: WalletModule.Element) {
+    func didUpdate(balanceData: BalanceData, wallet: Wallet) {
         queue.async {
-            guard case let .loaded(items) = self.internalState, let item = self._item(element: element, items: items) else {
+            guard case let .loaded(items) = self.internalState, let item = self._item(wallet: wallet, items: items) else {
                 return
             }
 
@@ -218,15 +209,13 @@ extension WalletTokenListService: IWalletElementServiceDelegate {
                 self.itemUpdatedRelay.accept(item)
             }
 
-            if let wallet = element.wallet {
-                self.cacheManager.set(balanceData: balanceData, wallet: wallet)
-            }
+            self.cacheManager.set(balanceData: balanceData, wallet: wallet)
         }
     }
 
-    func didUpdate(state: AdapterState, element: WalletModule.Element) {
+    func didUpdate(state: AdapterState, wallet: Wallet) {
         queue.async {
-            guard case let .loaded(items) = self.internalState, let item = self._item(element: element, items: items) else {
+            guard case let .loaded(items) = self.internalState, let item = self._item(wallet: wallet, items: items) else {
                 return
             }
 
@@ -244,7 +233,7 @@ extension WalletTokenListService: IWalletElementServiceDelegate {
 extension WalletTokenListService: IWalletCoinPriceServiceDelegate {
     private func _handleUpdated(priceItemMap: [String: WalletCoinPriceService.Item], items: [Item]) {
         for item in items {
-            if let priceCoinUid = item.element.priceCoinUid {
+            if let priceCoinUid = item.wallet.priceCoinUid {
                 item.priceItem = priceItemMap[priceCoinUid]
             }
         }
@@ -262,7 +251,7 @@ extension WalletTokenListService: IWalletCoinPriceServiceDelegate {
             if let itemsMap {
                 _itemsMap = itemsMap
             } else {
-                let coinUids = Array(Set(items.compactMap(\.element.priceCoinUid)))
+                let coinUids = Array(Set(items.compactMap(\.wallet.priceCoinUid)))
                 _itemsMap = self.coinPriceService.itemMap(coinUids: coinUids)
             }
 
@@ -280,13 +269,13 @@ extension WalletTokenListService {
         reachabilityManager.isReachable
     }
 
-    func item(element: WalletModule.Element) -> Item? {
+    func item(wallet: Wallet) -> Item? {
         queue.sync {
             guard case let .loaded(items) = internalState else {
                 return nil
             }
 
-            return _item(element: element, items: items)
+            return _item(wallet: wallet, items: items)
         }
     }
 }
@@ -309,14 +298,14 @@ extension WalletTokenListService {
     }
 
     class Item {
-        let element: WalletModule.Element
+        let wallet: Wallet
         var isMainNet: Bool
         var balanceData: BalanceData
         var state: AdapterState
         var priceItem: WalletCoinPriceService.Item?
 
-        init(element: WalletModule.Element, isMainNet: Bool, balanceData: BalanceData, state: AdapterState) {
-            self.element = element
+        init(wallet: Wallet, isMainNet: Bool, balanceData: BalanceData, state: AdapterState) {
+            self.wallet = wallet
             self.isMainNet = isMainNet
             self.balanceData = balanceData
             self.state = state

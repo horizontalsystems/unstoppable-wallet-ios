@@ -98,18 +98,6 @@ class AccountStorage {
             }
 
             type = .btcAddress(address: address, blockchainType: BlockchainType(uid: blockchainTypeUid), tokenType: tokenType)
-        case .cex:
-            guard let data = recoverData(id: id, typeName: typeName, keyName: .data) else {
-                return nil
-            }
-
-            let uniqueId = String(decoding: data, as: UTF8.self)
-
-            guard let cexAccount = CexAccount.decode(uniqueId: uniqueId) else {
-                return nil
-            }
-
-            type = .cex(cexAccount: cexAccount)
         }
 
         return Account(
@@ -159,11 +147,6 @@ class AccountStorage {
         case let .hdExtendedKey(key):
             typeName = .hdExtendedKey
             dataKey = try store(data: key.serialized, id: id, typeName: typeName, keyName: .data)
-        case let .cex(cexAccount):
-            typeName = .cex
-            if let data = cexAccount.uniqueId.data(using: .utf8) {
-                dataKey = try store(data: data, id: id, typeName: typeName, keyName: .data)
-            }
         case let .btcAddress(address, blockchainType, tokenType):
             typeName = .btcAddress
             wordsKey = address
@@ -205,8 +188,6 @@ class AccountStorage {
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .hdExtendedKey, keyName: .data))
         case .btcAddress:
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .btcAddress, keyName: .data))
-        case .cex:
-            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .cex, keyName: .data))
         default:
             ()
         }
@@ -294,7 +275,6 @@ extension AccountStorage {
         case stellarAccount
         case hdExtendedKey
         case btcAddress
-        case cex
     }
 
     private enum KeyName: String {

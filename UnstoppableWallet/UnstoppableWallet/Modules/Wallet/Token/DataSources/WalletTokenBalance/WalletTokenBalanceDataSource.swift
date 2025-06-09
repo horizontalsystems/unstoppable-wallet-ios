@@ -153,36 +153,23 @@ class WalletTokenBalanceDataSource: NSObject {
     }
 
     private func bindActions(cell: BalanceButtonsCell) {
-        switch viewModel.element {
-        case let .cexAsset(cexAsset):
-            cell.actions[.deposit] = { [weak self] in
-                if let viewController = CexDepositModule.viewController(cexAsset: cexAsset) {
-                    let navigationController = ThemeNavigationController(rootViewController: viewController)
-                    self?.parentViewController?.present(navigationController, animated: true)
-                }
-            }
-            cell.actions[.withdraw] = { [weak self] in
-                if let viewController = CexWithdrawModule.viewController(cexAsset: cexAsset) {
-                    let navigationController = ThemeNavigationController(rootViewController: viewController)
-                    self?.parentViewController?.present(navigationController, animated: true)
-                }
-            }
-        case let .wallet(wallet):
-            cell.actions[.send] = { [weak self] in
-                let module = SendAddressView(wallet: wallet).toNavigationViewController()
+        let wallet = viewModel.wallet
 
-                self?.parentViewController?.present(module, animated: true)
-                stat(page: .tokenPage, event: .openSend(token: wallet.token))
-            }
-            cell.actions[.swap] = { [weak self] in
-                let viewController = MultiSwapView(token: wallet.token).toViewController()
-                self?.parentViewController?.present(viewController, animated: true)
-                stat(page: .tokenPage, event: .open(page: .swap))
-            }
-            cell.actions[.receive] = { [weak self] in
-                self?.viewModel.onTapReceive()
-            }
+        cell.actions[.send] = { [weak self] in
+            let module = SendAddressView(wallet: wallet).toNavigationViewController()
+
+            self?.parentViewController?.present(module, animated: true)
+            stat(page: .tokenPage, event: .openSend(token: wallet.token))
         }
+        cell.actions[.swap] = { [weak self] in
+            let viewController = MultiSwapView(token: wallet.token).toViewController()
+            self?.parentViewController?.present(viewController, animated: true)
+            stat(page: .tokenPage, event: .open(page: .swap))
+        }
+        cell.actions[.receive] = { [weak self] in
+            self?.viewModel.onTapReceive()
+        }
+
         cell.actions[.chart] = { [weak self] in
             self?.viewModel.onTapChart()
         }

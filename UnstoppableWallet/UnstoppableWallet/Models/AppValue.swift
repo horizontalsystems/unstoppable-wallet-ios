@@ -37,11 +37,6 @@ struct AppValue {
         self.value = value
     }
 
-    init(cexAsset: CexAsset, value: Decimal) {
-        kind = .cexAsset(cexAsset: cexAsset)
-        self.value = value
-    }
-
     init(value: Decimal) {
         kind = .raw
         self.value = value
@@ -63,7 +58,6 @@ struct AppValue {
         case let .jetton(jetton): return jetton.name
         case let .stellar(asset): return asset.code
         case let .nft(nftUid, tokenName, _): return tokenName.map { "\($0) #\(nftUid.tokenId)" } ?? "#\(nftUid.tokenId)"
-        case let .cexAsset(cexAsset): return cexAsset.coinName
         case .raw: return ""
         }
     }
@@ -76,7 +70,6 @@ struct AppValue {
         case let .jetton(jetton): return jetton.symbol
         case let .stellar(asset): return asset.code
         case let .nft(_, _, tokenSymbol): return tokenSymbol ?? "NFT"
-        case let .cexAsset(cexAsset): return cexAsset.coinCode
         case .raw: return ""
         }
     }
@@ -89,7 +82,6 @@ struct AppValue {
         case let .jetton(jetton): return jetton.decimals
         case .stellar: return 7
         case .nft: return nil
-        case .cexAsset: return CexAsset.decimals
         case .raw: return nil
         }
     }
@@ -143,7 +135,6 @@ struct AppValue {
         case let .jetton(jetton): return ValueFormatter.instance.formatFull(value: value, decimalCount: jetton.decimals, symbol: code, signType: signType)
         case .stellar: return ValueFormatter.instance.formatFull(value: value, decimalCount: 7, symbol: code, signType: signType)
         case .nft: return "\(value.sign == .plus ? "+" : "")\(value) \(code)"
-        case .cexAsset: return ValueFormatter.instance.formatFull(value: value, decimalCount: CexAsset.decimals, symbol: code, signType: signType)
         case .raw: return nil
         }
     }
@@ -156,7 +147,6 @@ struct AppValue {
         case let .jetton(jetton): return ValueFormatter.instance.formatShort(value: value, decimalCount: jetton.decimals, symbol: code, signType: signType)
         case .stellar: return ValueFormatter.instance.formatShort(value: value, decimalCount: 7, symbol: code, signType: signType)
         case .nft: return "\(value.sign == .plus ? "+" : "")\(value) \(code)"
-        case .cexAsset: return ValueFormatter.instance.formatShort(value: value, decimalCount: CexAsset.decimals, symbol: code, signType: signType)
         case .raw: return nil
         }
     }
@@ -170,7 +160,6 @@ extension AppValue {
         case jetton(jetton: Jetton)
         case stellar(asset: Asset)
         case nft(nftUid: NftUid, tokenName: String?, tokenSymbol: String?)
-        case cexAsset(cexAsset: CexAsset)
         case raw
 
         var token: Token? {
@@ -184,7 +173,6 @@ extension AppValue {
             switch self {
             case let .token(token): return token.coin
             case let .coin(coin, _): return coin
-            case let .cexAsset(cexAsset): return cexAsset.coin
             default: return nil
             }
         }
@@ -207,7 +195,6 @@ extension AppValue {
             case let (.jetton(lhsJetton), .jetton(rhsJetton)): return lhsJetton == rhsJetton
             case let (.stellar(lhsAsset), .stellar(rhsAsset)): return lhsAsset == rhsAsset
             case let (.nft(lhsNftUid, _, _), .nft(rhsNftUid, _, _)): return lhsNftUid == rhsNftUid
-            case let (.cexAsset(lhsCexAsset), .cexAsset(rhsCexAsset)): return lhsCexAsset == rhsCexAsset
             case (.raw, .raw): return true
             default: return false
             }

@@ -20,6 +20,5 @@ extension RestoreTypeModule {
         case recoveryOrPrivateKey
         case cloudRestore
         case fileRestore
-        case cex
     }
 }
