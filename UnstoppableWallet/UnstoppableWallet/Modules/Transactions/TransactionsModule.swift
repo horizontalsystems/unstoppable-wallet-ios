@@ -70,6 +70,13 @@ struct TransactionFilter: Equatable {
         scamFilterEnabled = true
     }
 
+    init(token: Token) {
+        blockchain = token.blockchain
+        self.token = token
+        contact = nil
+        scamFilterEnabled = true
+    }
+
     var hasChanges: Bool {
         blockchain != nil || token != nil || contact != nil || !scamFilterEnabled
     }

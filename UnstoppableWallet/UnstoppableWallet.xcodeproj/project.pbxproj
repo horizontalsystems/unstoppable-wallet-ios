@@ -3358,6 +3358,30 @@
 		D3E36B7C2DF1B5F5007F99CA /* DeterminiteSpinnerStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B7A2DF1B5F4007F99CA /* DeterminiteSpinnerStyle.swift */; };
 		D3E36B7E2DF1B5FE007F99CA /* SpinningModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B7D2DF1B5FD007F99CA /* SpinningModifier.swift */; };
 		D3E36B7F2DF1B5FE007F99CA /* SpinningModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B7D2DF1B5FD007F99CA /* SpinningModifier.swift */; };
+		D3E36B872DF6E1E2007F99CA /* WalletTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B862DF6E1DF007F99CA /* WalletTokenView.swift */; };
+		D3E36B882DF6E1E2007F99CA /* WalletTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B862DF6E1DF007F99CA /* WalletTokenView.swift */; };
+		D3E36B8A2DF6E1EB007F99CA /* WalletTokenViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B892DF6E1E8007F99CA /* WalletTokenViewModelNew.swift */; };
+		D3E36B8B2DF6E1EB007F99CA /* WalletTokenViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B892DF6E1E8007F99CA /* WalletTokenViewModelNew.swift */; };
+		D3E36B8D2DF94B73007F99CA /* StellarWalletTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B8C2DF94B72007F99CA /* StellarWalletTokenView.swift */; };
+		D3E36B8E2DF94B73007F99CA /* StellarWalletTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B8C2DF94B72007F99CA /* StellarWalletTokenView.swift */; };
+		D3E36B902DF94B7E007F99CA /* StellarWalletTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B8F2DF94B7D007F99CA /* StellarWalletTokenViewModel.swift */; };
+		D3E36B912DF94B7E007F99CA /* StellarWalletTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B8F2DF94B7D007F99CA /* StellarWalletTokenViewModel.swift */; };
+		D3E36B942DF96088007F99CA /* BitcoinWalletTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B922DF96088007F99CA /* BitcoinWalletTokenViewModel.swift */; };
+		D3E36B952DF96088007F99CA /* BitcoinWalletTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B932DF96088007F99CA /* BitcoinWalletTokenView.swift */; };
+		D3E36B962DF96088007F99CA /* BitcoinWalletTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B922DF96088007F99CA /* BitcoinWalletTokenViewModel.swift */; };
+		D3E36B972DF96088007F99CA /* BitcoinWalletTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B932DF96088007F99CA /* BitcoinWalletTokenView.swift */; };
+		D3E36B9A2DF9831B007F99CA /* ZcashWalletTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B992DF9831B007F99CA /* ZcashWalletTokenView.swift */; };
+		D3E36B9B2DF9831B007F99CA /* ZcashWalletTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B982DF9831B007F99CA /* ZcashWalletTokenViewModel.swift */; };
+		D3E36B9C2DF9831B007F99CA /* ZcashWalletTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B992DF9831B007F99CA /* ZcashWalletTokenView.swift */; };
+		D3E36B9D2DF9831B007F99CA /* ZcashWalletTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B982DF9831B007F99CA /* ZcashWalletTokenViewModel.swift */; };
+		D3E36BA02DF98B91007F99CA /* TronWalletTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B9F2DF98B91007F99CA /* TronWalletTokenView.swift */; };
+		D3E36BA12DF98B91007F99CA /* TronWalletTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B9E2DF98B91007F99CA /* TronWalletTokenViewModel.swift */; };
+		D3E36BA22DF98B91007F99CA /* TronWalletTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B9F2DF98B91007F99CA /* TronWalletTokenView.swift */; };
+		D3E36BA32DF98B91007F99CA /* TronWalletTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B9E2DF98B91007F99CA /* TronWalletTokenViewModel.swift */; };
+		D3E36BA52DF99DAD007F99CA /* BalanceErrorViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BA42DF99D9F007F99CA /* BalanceErrorViewModifier.swift */; };
+		D3E36BA62DF99DAD007F99CA /* BalanceErrorViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BA42DF99D9F007F99CA /* BalanceErrorViewModifier.swift */; };
+		D3E36BA82DF99F3D007F99CA /* BalanceErrorViewModifierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BA72DF99F3D007F99CA /* BalanceErrorViewModifierModel.swift */; };
+		D3E36BA92DF99F3D007F99CA /* BalanceErrorViewModifierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BA72DF99F3D007F99CA /* BalanceErrorViewModifierModel.swift */; };
 		D3E41E082C244CE200499F50 /* TonSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D3E41E072C244CE200499F50 /* TonSwift */; };
 		D3E41E0A2C25850000499F50 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E41E092C25850000499F50 /* MailView.swift */; };
 		D3E41E0B2C25850000499F50 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E41E092C25850000499F50 /* MailView.swift */; };
@@ -5072,6 +5096,18 @@
 		D3E36B5A2DEDBDFA007F99CA /* TransactionsViewItemFactoryNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionsViewItemFactoryNew.swift; sourceTree = "<group>"; };
 		D3E36B7A2DF1B5F4007F99CA /* DeterminiteSpinnerStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeterminiteSpinnerStyle.swift; sourceTree = "<group>"; };
 		D3E36B7D2DF1B5FD007F99CA /* SpinningModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpinningModifier.swift; sourceTree = "<group>"; };
+		D3E36B862DF6E1DF007F99CA /* WalletTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTokenView.swift; sourceTree = "<group>"; };
+		D3E36B892DF6E1E8007F99CA /* WalletTokenViewModelNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTokenViewModelNew.swift; sourceTree = "<group>"; };
+		D3E36B8C2DF94B72007F99CA /* StellarWalletTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarWalletTokenView.swift; sourceTree = "<group>"; };
+		D3E36B8F2DF94B7D007F99CA /* StellarWalletTokenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarWalletTokenViewModel.swift; sourceTree = "<group>"; };
+		D3E36B922DF96088007F99CA /* BitcoinWalletTokenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinWalletTokenViewModel.swift; sourceTree = "<group>"; };
+		D3E36B932DF96088007F99CA /* BitcoinWalletTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinWalletTokenView.swift; sourceTree = "<group>"; };
+		D3E36B982DF9831B007F99CA /* ZcashWalletTokenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashWalletTokenViewModel.swift; sourceTree = "<group>"; };
+		D3E36B992DF9831B007F99CA /* ZcashWalletTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashWalletTokenView.swift; sourceTree = "<group>"; };
+		D3E36B9E2DF98B91007F99CA /* TronWalletTokenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronWalletTokenViewModel.swift; sourceTree = "<group>"; };
+		D3E36B9F2DF98B91007F99CA /* TronWalletTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronWalletTokenView.swift; sourceTree = "<group>"; };
+		D3E36BA42DF99D9F007F99CA /* BalanceErrorViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceErrorViewModifier.swift; sourceTree = "<group>"; };
+		D3E36BA72DF99F3D007F99CA /* BalanceErrorViewModifierModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceErrorViewModifierModel.swift; sourceTree = "<group>"; };
 		D3E41E092C25850000499F50 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		D3F9B0242BE38AF1009FFA95 /* RegularSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularSendView.swift; sourceTree = "<group>"; };
 		D3F9B02A2BE3A9A1009FFA95 /* MultiSwapSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSwapSendView.swift; sourceTree = "<group>"; };
@@ -7004,6 +7040,8 @@
 		1A5643FB455E8D8D220E775E /* BalanceError */ = {
 			isa = PBXGroup;
 			children = (
+				D3E36BA72DF99F3D007F99CA /* BalanceErrorViewModifierModel.swift */,
+				D3E36BA42DF99D9F007F99CA /* BalanceErrorViewModifier.swift */,
 				1A564AB0B646F7A92DD188F2 /* BalanceErrorModule.swift */,
 				1A5646B5D68A302515565030 /* BalanceErrorService.swift */,
 				1A564702FB246F315983743E /* BalanceErrorViewModel.swift */,
@@ -8054,6 +8092,16 @@
 		ABC9A15DEE3E0185266FF14F /* Token */ = {
 			isa = PBXGroup;
 			children = (
+				D3E36B9E2DF98B91007F99CA /* TronWalletTokenViewModel.swift */,
+				D3E36B9F2DF98B91007F99CA /* TronWalletTokenView.swift */,
+				D3E36B982DF9831B007F99CA /* ZcashWalletTokenViewModel.swift */,
+				D3E36B992DF9831B007F99CA /* ZcashWalletTokenView.swift */,
+				D3E36B922DF96088007F99CA /* BitcoinWalletTokenViewModel.swift */,
+				D3E36B932DF96088007F99CA /* BitcoinWalletTokenView.swift */,
+				D3E36B8F2DF94B7D007F99CA /* StellarWalletTokenViewModel.swift */,
+				D3E36B8C2DF94B72007F99CA /* StellarWalletTokenView.swift */,
+				D3E36B892DF6E1E8007F99CA /* WalletTokenViewModelNew.swift */,
+				D3E36B862DF6E1DF007F99CA /* WalletTokenView.swift */,
 				ABC9A64A66778C137FA9642C /* WalletTokenViewController.swift */,
 				ABC9A4B75DFB58AC56FEF798 /* WalletTokenModule.swift */,
 				ABC9A8D48B40400D645C5496 /* WalletTokenViewModel.swift */,
@@ -9922,6 +9970,7 @@
 				D05F132F2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift in Sources */,
 				11B355B7E336EB3AED69FA38 /* AddressParserFactory.swift in Sources */,
 				11B35D4E566D1F5D24825050 /* FeeRateProviderFactory.swift in Sources */,
+				D3E36B9C2DF9831B007F99CA /* ZcashWalletTokenView.swift in Sources */,
 				3AF9F61B253EF555000626A8 /* ZcashTransactionPool.swift in Sources */,
 				D36DE0D0272FD864000BC916 /* UniswapDataSource.swift in Sources */,
 				D003297726CD2C67002EC21D /* TransactionLockInfo.swift in Sources */,
@@ -9952,6 +10001,7 @@
 				3A73FC6A258B1AD200FE4D34 /* MarketModule.swift in Sources */,
 				2FA5DA5C9188AA17B01953E7 /* SelectableValueView.swift in Sources */,
 				11B35E8777FC5A18BD07CF60 /* AccountRecord_v_0_10.swift in Sources */,
+				D3E36BA32DF98B91007F99CA /* TronWalletTokenViewModel.swift in Sources */,
 				11B357975E11BDDCEAA491B4 /* EnabledWallet_v_0_10.swift in Sources */,
 				1A564512989CEBC48ABCB94E /* ConvertedError.swift in Sources */,
 				58AAA34F0F6195DF86596A41 /* ChartConfiguration.swift in Sources */,
@@ -10111,6 +10161,7 @@
 				58AAA431B5939F7961B65CCF /* CALayer.swift in Sources */,
 				11B3534554BA9D9AF8D334D3 /* InputStateWrapperView.swift in Sources */,
 				11B35C1743DC5866EBD16A90 /* Address.swift in Sources */,
+				D3E36B9D2DF9831B007F99CA /* ZcashWalletTokenViewModel.swift in Sources */,
 				11B3518B594ECB199242C5CB /* InputView.swift in Sources */,
 				11B351FF652F0F7BCEB682A9 /* InputCell.swift in Sources */,
 				11B3547B32F2E3458065F2EB /* AmountInputView.swift in Sources */,
@@ -10165,6 +10216,7 @@
 				58AAA691DC0544582BABF263 /* CoinChartService.swift in Sources */,
 				58AAABED534A95A11B332D44 /* CoinChartViewModel.swift in Sources */,
 				D3833B002BF335D100ACECFB /* MarketNewsViewModel.swift in Sources */,
+				D3E36B972DF96088007F99CA /* BitcoinWalletTokenView.swift in Sources */,
 				58AAAA71882CB345D56BBA00 /* CoinChartFactory.swift in Sources */,
 				11B351856787DD75A41861B6 /* CoinInvestorsViewModel.swift in Sources */,
 				11B3507F17791BC895872490 /* BrandFooterView.swift in Sources */,
@@ -10232,6 +10284,7 @@
 				11B352DF096B6CFD050D500D /* CoinRecord_v19.swift in Sources */,
 				11B354EFE4620A8E65D44335 /* WalletViewModel.swift in Sources */,
 				11B35E5DDFA437BD43717962 /* WalletViewController.swift in Sources */,
+				D3E36BA92DF99F3D007F99CA /* BalanceErrorViewModifierModel.swift in Sources */,
 				11B352C447693BA4688A9673 /* WalletModule.swift in Sources */,
 				11B35A5CCED22BDE4C93CE23 /* WalletService.swift in Sources */,
 				11B350B3D287EE732007892B /* WalletCoinPriceService.swift in Sources */,
@@ -10409,6 +10462,7 @@
 				58AAAB9E86439B6DE1D22538 /* EvmAddressParserItem.swift in Sources */,
 				58AAA13C1DC5FA79BCA1D732 /* UdnAddressParserItem.swift in Sources */,
 				11B35A342F02B58443E7CBCB /* MultiSelectorViewController.swift in Sources */,
+				D3E36B912DF94B7E007F99CA /* StellarWalletTokenViewModel.swift in Sources */,
 				58AAAD15C27B67A91EA11F76 /* AddressUriParser.swift in Sources */,
 				58AAADF2D5D8237E54675A23 /* AddressService.swift in Sources */,
 				2FA5DC6DC976D88C1E578403 /* UnknownSwapTransactionRecord.swift in Sources */,
@@ -10541,6 +10595,7 @@
 				ABC9A6BC79804B3D3AAFA8F1 /* SendZcashService.swift in Sources */,
 				ABC9A55FD66CB6374F2D520D /* SendZcashViewController.swift in Sources */,
 				ABC9A852D667D38030B7EF39 /* SendConfirmationModule.swift in Sources */,
+				D3E36B8E2DF94B73007F99CA /* StellarWalletTokenView.swift in Sources */,
 				D3A12E962CC8C5B6008D5F99 /* EducationViewModel.swift in Sources */,
 				D34338E62C8703F6001FCAD2 /* TonKitManager.swift in Sources */,
 				ABC9A4BD4CA7A7872CE6167E /* BaseSendViewController.swift in Sources */,
@@ -10642,6 +10697,7 @@
 				D36287C52CA3DC8F00ADAF3B /* TonConnectSessionCrypto.swift in Sources */,
 				6BCD53032A161F4100993F20 /* ICloudBackupTermsViewModel.swift in Sources */,
 				11B35052C5059CDD8E4BA940 /* BackupMnemonicWordCell.swift in Sources */,
+				D3E36B882DF6E1E2007F99CA /* WalletTokenView.swift in Sources */,
 				11B35DF1D8B5125CF13A1812 /* RestoreMnemonicHintView.swift in Sources */,
 				11B35C8A1082D0A8F0B354B1 /* RestoreMnemonicHintCell.swift in Sources */,
 				D3402AF22BF5D59D003BF6F8 /* WatchlistModifier.swift in Sources */,
@@ -10747,6 +10803,7 @@
 				D30C4D442D392FD50082B487 /* AddressViewModel.swift in Sources */,
 				6B5A13F82DF97B5E006E609C /* PerformanceDataManager.swift in Sources */,
 				11B3588C582E45D149BB42BB /* Token.swift in Sources */,
+				D3E36BA22DF98B91007F99CA /* TronWalletTokenView.swift in Sources */,
 				11B35FC689D745FFBB3684C4 /* TokenType.swift in Sources */,
 				11B354F237E59C24ED8F3759 /* TokenQuery.swift in Sources */,
 				11B35D106185086B3BEC5119 /* Blockchain.swift in Sources */,
@@ -10925,6 +10982,7 @@
 				D0532CC52B149E450015DF40 /* WatchService.swift in Sources */,
 				D3C598782C16FE6400789D69 /* TappablePadding.swift in Sources */,
 				D30C4D422D392FCB0082B487 /* AddressView.swift in Sources */,
+				D3E36B962DF96088007F99CA /* BitcoinWalletTokenViewModel.swift in Sources */,
 				D3DB51AC2BD787A00091BBDB /* MarketCoinsViewModel.swift in Sources */,
 				D34D3DDF2DBF9B7E005C9ACC /* StellarPreSendHandler.swift in Sources */,
 				D36287B92CA2D17F00ADAF3B /* TonConnectConfig.swift in Sources */,
@@ -11145,6 +11203,7 @@
 				ABC9AEF231332C7B8756E8A9 /* BackupListView.swift in Sources */,
 				ABC9A8AC5E635D9CB1704568 /* BackupDisclaimerView.swift in Sources */,
 				ABC9A437473D0E77F9DBEB42 /* RestoreAppViewModel.swift in Sources */,
+				D3E36BA52DF99DAD007F99CA /* BalanceErrorViewModifier.swift in Sources */,
 				ABC9AE7DA8EFD812710C7BE4 /* RestorePassphraseViewModel.swift in Sources */,
 				D3384D222BFF0CCA00515664 /* MarketVolumeView.swift in Sources */,
 				ABC9A93E05AAF5D98C1DF4D6 /* RestorePassphraseService.swift in Sources */,
@@ -11345,6 +11404,7 @@
 				11B35A4428B94FF4E4F01AA9 /* SendData.swift in Sources */,
 				11B358C4D4C466ACCEF0E4C7 /* MultiSwapMainField.swift in Sources */,
 				11B353D4BC292465358979D3 /* ValueLevel.swift in Sources */,
+				D3E36B8A2DF6E1EB007F99CA /* WalletTokenViewModelNew.swift in Sources */,
 				11B350CE805774C98948353C /* SendField.swift in Sources */,
 				11B359BACF4B66607F50944D /* MultiSwapPreSwapStep.swift in Sources */,
 				11B358B7A012C6F4922DC092 /* SendHandlerFactory.swift in Sources */,
@@ -11474,6 +11534,7 @@
 				11B3519B8645E4788A70E0A4 /* FeeRateProviderFactory.swift in Sources */,
 				3AF9F61A253EF555000626A8 /* ZcashTransactionPool.swift in Sources */,
 				D05F132E2A31FE0D00C3193F /* AddTronTokenBlockchainService.swift in Sources */,
+				D3E36B9A2DF9831B007F99CA /* ZcashWalletTokenView.swift in Sources */,
 				2FA5DD18B3869199E0BEF72A /* KitCleaner.swift in Sources */,
 				D36DE0C3272FD864000BC916 /* UniswapModule.swift in Sources */,
 				2FA5DDDD98533BAFCF3819C8 /* TimeInterval.swift in Sources */,
@@ -11504,6 +11565,7 @@
 				2FA5DCD660736071655E8059 /* SelectableValueView.swift in Sources */,
 				3A73FC69258B1AD100FE4D34 /* MarketModule.swift in Sources */,
 				D36DE0B3272FD689000BC916 /* SwapProviderManager.swift in Sources */,
+				D3E36BA12DF98B91007F99CA /* TronWalletTokenViewModel.swift in Sources */,
 				11B35EA38C735462E57135E0 /* AccountRecord_v_0_10.swift in Sources */,
 				11B3512E66B939A93AE62F37 /* EnabledWallet_v_0_10.swift in Sources */,
 				1A564665243CEEBF646D1328 /* ConvertedError.swift in Sources */,
@@ -11663,6 +11725,7 @@
 				11B356E87B4A9AACBFEC7506 /* Address.swift in Sources */,
 				D36DE0DB272FD887000BC916 /* OneInchTradeService.swift in Sources */,
 				11B35F9E1AF528B31C6F383C /* InputView.swift in Sources */,
+				D3E36B9B2DF9831B007F99CA /* ZcashWalletTokenViewModel.swift in Sources */,
 				11B35A2D7A19F6302DBC16D0 /* InputCell.swift in Sources */,
 				11B357EA92E2E9C39DEF08B0 /* AmountInputView.swift in Sources */,
 				11B35FF65FCE441A69822E1C /* InputPrefixWrapperView.swift in Sources */,
@@ -11717,6 +11780,7 @@
 				D36DE0EF272FD89B000BC916 /* SwapSettingsViewController.swift in Sources */,
 				58AAAB32C3D3DCBD004513C7 /* CoinChartViewModel.swift in Sources */,
 				D36DE0C6272FD864000BC916 /* UniswapViewModel.swift in Sources */,
+				D3E36B952DF96088007F99CA /* BitcoinWalletTokenView.swift in Sources */,
 				D3833AFF2BF335D100ACECFB /* MarketNewsViewModel.swift in Sources */,
 				D36DE0D8272FD887000BC916 /* OneInchDataSource.swift in Sources */,
 				58AAA2EBAFC1C443C48BA857 /* CoinChartFactory.swift in Sources */,
@@ -11784,6 +11848,7 @@
 				11B3547989E25AB98B7C22DD /* WalletViewModel.swift in Sources */,
 				11B35DE8053A86FB32D05AF3 /* WalletViewController.swift in Sources */,
 				11B353FCF929C0CF960C96FA /* WalletModule.swift in Sources */,
+				D3E36BA82DF99F3D007F99CA /* BalanceErrorViewModifierModel.swift in Sources */,
 				11B35897566548048FCEC11E /* WalletService.swift in Sources */,
 				6B29071F2AF0CB8A006157D6 /* WalletConnectAppShowService.swift in Sources */,
 				11B3511037E26318792E7DF3 /* WalletCoinPriceService.swift in Sources */,
@@ -11961,6 +12026,7 @@
 				6BCD53042A161F4100993F20 /* ICloudBackupTermsViewController.swift in Sources */,
 				11B35E99BBF6DCCA72BDA4D1 /* CoinTreasuriesViewModel.swift in Sources */,
 				D054DAE32BE5123F0040B7C9 /* InitialTransactionSettings.swift in Sources */,
+				D3E36B902DF94B7E007F99CA /* StellarWalletTokenViewModel.swift in Sources */,
 				11B35EBC08855AC0CDC0AF09 /* PostCell.swift in Sources */,
 				6BA5117D2BCFA06F00CB5A54 /* FirstAppearModifier.swift in Sources */,
 				11B35D16F2F7B8E11A771B18 /* FavoriteCoinRecord_v_0_38.swift in Sources */,
@@ -12093,6 +12159,7 @@
 				ABC9A0A3A52AD41643D67D3D /* SingleLineFormTextView.swift in Sources */,
 				ABC9AC839A67BDEABD24CD7A /* SendMemoInputCell.swift in Sources */,
 				ABC9ACADCCE9CEB2588D91D5 /* SendMemoInputViewModel.swift in Sources */,
+				D3E36B8D2DF94B73007F99CA /* StellarWalletTokenView.swift in Sources */,
 				D3A12E972CC8C5B6008D5F99 /* EducationViewModel.swift in Sources */,
 				D34338E52C8703F6001FCAD2 /* TonKitManager.swift in Sources */,
 				ABC9AEC9C350F3CD059C9716 /* SendMemoInputService.swift in Sources */,
@@ -12194,6 +12261,7 @@
 				D36287C42CA3DC8F00ADAF3B /* TonConnectSessionCrypto.swift in Sources */,
 				11B35F6CD2706B10781456E8 /* ExtendedKeyViewModel.swift in Sources */,
 				6BCD53022A161F4100993F20 /* ICloudBackupTermsViewModel.swift in Sources */,
+				D3E36B872DF6E1E2007F99CA /* WalletTokenView.swift in Sources */,
 				11B35066480B6EB9F124EBC0 /* ExtendedKeyService.swift in Sources */,
 				11B359601D8967EEE00B5991 /* BackupMnemonicWordsCell.swift in Sources */,
 				D3402AF12BF5D59D003BF6F8 /* WatchlistModifier.swift in Sources */,
@@ -12299,6 +12367,7 @@
 				D30C4D452D392FD50082B487 /* AddressViewModel.swift in Sources */,
 				6B5A13F92DF97B5E006E609C /* PerformanceDataManager.swift in Sources */,
 				11B3589541E87A032D9D2D50 /* BottomSingleSelectorViewController.swift in Sources */,
+				D3E36BA02DF98B91007F99CA /* TronWalletTokenView.swift in Sources */,
 				11B359752E118A95F4705B95 /* TokenProtocol.swift in Sources */,
 				11B35DDD77B56489D1EB72C5 /* Token.swift in Sources */,
 				11B35C7BB534F9FFE5B6B3A6 /* TokenType.swift in Sources */,
@@ -12477,6 +12546,7 @@
 				11B35444DADD43277D30DFE6 /* AmountData.swift in Sources */,
 				D3C598772C16FE6400789D69 /* TappablePadding.swift in Sources */,
 				D30C4D412D392FCB0082B487 /* AddressView.swift in Sources */,
+				D3E36B942DF96088007F99CA /* BitcoinWalletTokenViewModel.swift in Sources */,
 				D3DB51AB2BD787A00091BBDB /* MarketCoinsViewModel.swift in Sources */,
 				D009290D2B15EB2500C0861C /* ChooseWatchService.swift in Sources */,
 				D34D3DDD2DBF9B7E005C9ACC /* StellarPreSendHandler.swift in Sources */,
@@ -12697,6 +12767,7 @@
 				ABC9AC763748CC31D45FB6BD /* BackupAppViewModel.swift in Sources */,
 				ABC9A04FAB83D7A8D251DA90 /* BackupPasswordView.swift in Sources */,
 				D0F9F5172B99857700C3190A /* FeeSettings.swift in Sources */,
+				D3E36BA62DF99DAD007F99CA /* BalanceErrorViewModifier.swift in Sources */,
 				ABC9A0CE0155F89F12350DFC /* BackupListView.swift in Sources */,
 				D3384D212BFF0CCA00515664 /* MarketVolumeView.swift in Sources */,
 				ABC9A4465982823773CE1B50 /* BackupDisclaimerView.swift in Sources */,
@@ -12897,6 +12968,7 @@
 				11B3546D0D2F891FC9AE372C /* IMultiSwapQuote.swift in Sources */,
 				11B3584A053BC5DAE6E434F8 /* IMultiSwapConfirmationQuote.swift in Sources */,
 				11B3557AF8D64E9897965526 /* ISendData.swift in Sources */,
+				D3E36B8B2DF6E1EB007F99CA /* WalletTokenViewModelNew.swift in Sources */,
 				11B3594FF624369050E43F8F /* SendData.swift in Sources */,
 				11B35504619FDE878D865781 /* MultiSwapMainField.swift in Sources */,
 				11B359528BEC580E0BE7E7D3 /* ValueLevel.swift in Sources */,

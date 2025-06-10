@@ -31,14 +31,14 @@ class TonAdapter {
         self.tonKit = tonKit
 
         balanceState = Self.adapterState(kitSyncState: tonKit.syncState)
-        balanceData = BalanceData(available: Self.amount(kitAmount: tonKit.account?.balance))
+        balanceData = BalanceData(balance: Self.amount(kitAmount: tonKit.account?.balance))
 
         tonKit.syncStatePublisher
             .sink { [weak self] in self?.balanceState = Self.adapterState(kitSyncState: $0) }
             .store(in: &cancellables)
 
         tonKit.accountPublisher
-            .sink { [weak self] in self?.balanceData = BalanceData(available: Self.amount(kitAmount: $0?.balance)) }
+            .sink { [weak self] in self?.balanceData = BalanceData(balance: Self.amount(kitAmount: $0?.balance)) }
             .store(in: &cancellables)
     }
 }

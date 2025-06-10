@@ -6,16 +6,8 @@ import UIKit
 
 enum WalletModule {
     static func viewController() -> UIViewController {
-        let coinPriceService = WalletCoinPriceService(
-            currencyManager: App.shared.currencyManager,
-            priceChangeModeManager: App.shared.priceChangeModeManager,
-            marketKit: App.shared.marketKit
-        )
-
-        let walletServiceFactory = WalletServiceFactory(
-            adapterManager: App.shared.adapterManager,
-            walletManager: App.shared.walletManager
-        )
+        let coinPriceService = WalletCoinPriceService()
+        let walletServiceFactory = WalletServiceFactory()
 
         let service = WalletServiceOld(
             walletServiceFactory: walletServiceFactory,
@@ -57,11 +49,7 @@ enum WalletModule {
             return nil
         }
 
-        let coinPriceService = WalletCoinPriceService(
-            currencyManager: App.shared.currencyManager,
-            priceChangeModeManager: App.shared.priceChangeModeManager,
-            marketKit: App.shared.marketKit
-        )
+        let coinPriceService = WalletCoinPriceService()
 
         let adapterService = WalletAdapterService(account: account, adapterManager: App.shared.adapterManager)
         let walletService = WalletService(
@@ -120,11 +108,7 @@ enum WalletModule {
             return nil
         }
 
-        let coinPriceService = WalletCoinPriceService(
-            currencyManager: App.shared.currencyManager,
-            priceChangeModeManager: App.shared.priceChangeModeManager,
-            marketKit: App.shared.marketKit
-        )
+        let coinPriceService = WalletCoinPriceService()
 
         let adapterService = WalletAdapterService(account: account, adapterManager: App.shared.adapterManager)
         let walletService = WalletService(
@@ -176,11 +160,7 @@ enum WalletModule {
     static func donateTokenListViewController() -> UIViewController {
         let service: IWalletTokenListService
         if let account = App.shared.accountManager.activeAccount, !account.watchAccount {
-            let coinPriceService = WalletCoinPriceService(
-                currencyManager: App.shared.currencyManager,
-                priceChangeModeManager: App.shared.priceChangeModeManager,
-                marketKit: App.shared.marketKit
-            )
+            let coinPriceService = WalletCoinPriceService()
 
             let adapterService = WalletAdapterService(account: account, adapterManager: App.shared.adapterManager)
             let walletService = WalletService(
@@ -308,4 +288,39 @@ struct DonateTokenListView: UIViewControllerRepresentable {
     }
 
     func updateUIViewController(_: UIViewController, context _: Context) {}
+}
+
+enum WalletButton {
+    case send
+    case receive
+    case address
+    case swap
+    case chart
+
+    var title: String {
+        switch self {
+        case .send: return "balance.send".localized
+        case .receive: return "balance.receive".localized
+        case .address: return "balance.address".localized
+        case .swap: return "balance.swap".localized
+        case .chart: return "balance.chart".localized
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .send: return "arrow_medium_2_up_right_24"
+        case .receive: return "arrow_medium_2_down_left_24"
+        case .address: return "arrow_medium_2_down_left_24"
+        case .swap: return "arrow_swap_2_24"
+        case .chart: return "chart_2_24"
+        }
+    }
+
+    var accent: Bool {
+        switch self {
+        case .send: return true
+        default: return false
+        }
+    }
 }

@@ -20,7 +20,7 @@ class EnabledWalletCache_v_0_36: Record {
     }
 
     var balanceData: BalanceData {
-        BalanceData(available: balance)
+        BalanceData(balance: balance)
     }
 
     override class var databaseTableName: String {

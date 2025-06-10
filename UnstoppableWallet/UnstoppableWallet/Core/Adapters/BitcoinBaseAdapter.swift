@@ -13,9 +13,10 @@ class BitcoinBaseAdapter {
 
     var coinRate: Decimal { 100_000_000 } // pow(10, 8)
 
+    private let bitcoinBalanceDataSubject = PublishSubject<BitcoinBalanceData>()
+
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
     private let balanceStateSubject = PublishSubject<AdapterState>()
-    private let balanceSubject = PublishSubject<BalanceData>()
     private let syncMode: BitcoinCore.SyncMode
     let transactionRecordsSubject = PublishSubject<[BitcoinTransactionRecord]>()
 
@@ -143,8 +144,8 @@ class BitcoinBaseAdapter {
         }
     }
 
-    private func balanceData(balanceInfo: BalanceInfo) -> BalanceData {
-        LockedBalanceData(
+    private func bitcoinBalanceData(balanceInfo: BalanceInfo) -> BitcoinBalanceData {
+        BitcoinBalanceData(
             available: Decimal(balanceInfo.spendable) / coinRate,
             locked: Decimal(balanceInfo.unspendableTimeLocked) / coinRate,
             notRelayed: Decimal(balanceInfo.unspendableNotRelayed) / coinRate
@@ -216,7 +217,7 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
     func transactionsDeleted(hashes _: [String]) {}
 
     func balanceUpdated(balance: BalanceInfo) {
-        balanceSubject.onNext(balanceData(balanceInfo: balance))
+        bitcoinBalanceDataSubject.onNext(bitcoinBalanceData(balanceInfo: balance))
     }
 
     func lastBlockInfoUpdated(lastBlockInfo _: BlockInfo) {
@@ -269,15 +270,23 @@ extension BitcoinBaseAdapter: IBalanceAdapter {
     }
 
     var balanceData: BalanceData {
-        balanceData(balanceInfo: abstractKit.balance)
+        bitcoinBalanceData.balanceData
     }
 
     var balanceDataUpdatedObservable: Observable<BalanceData> {
-        balanceSubject.asObservable()
+        bitcoinBalanceDataSubject.map(\.balanceData).asObservable()
     }
 }
 
 extension BitcoinBaseAdapter {
+    var bitcoinBalanceData: BitcoinBalanceData {
+        bitcoinBalanceData(balanceInfo: abstractKit.balance)
+    }
+
+    var bitcoinBalanceDataObservable: Observable<BitcoinBalanceData> {
+        bitcoinBalanceDataSubject.asObservable()
+    }
+
     func availableBalance(params: SendParameters) -> Decimal {
         let amount = (try? abstractKit.maxSpendableValue(params: params)) ?? 0
         return Decimal(amount) / coinRate
@@ -438,6 +447,18 @@ extension BitcoinBaseAdapter: IDepositAdapter {
             let url = explorerUrl(address: $0.address).flatMap { URL(string: $0) }
             return UsedAddress(index: $0.index, address: $0.address, explorerUrl: url)
         }.sorted { $0.index < $1.index }
+    }
+}
+
+extension BitcoinBaseAdapter {
+    struct BitcoinBalanceData {
+        let available: Decimal
+        let locked: Decimal
+        let notRelayed: Decimal
+
+        var balanceData: BalanceData {
+            BalanceData(total: available + locked + notRelayed, available: available)
+        }
     }
 }
 

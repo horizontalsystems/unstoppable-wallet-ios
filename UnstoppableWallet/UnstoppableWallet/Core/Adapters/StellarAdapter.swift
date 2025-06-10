@@ -65,17 +65,9 @@ class StellarAdapter {
         let balance = account?.assetBalanceMap[asset]?.balance ?? 0
 
         if asset.isNative {
-            return StellarBalanceData(
-                balance: balance,
-                locked: account?.lockedBalance ?? 0,
-                assets: account
-                    .map { Array($0.assetBalanceMap.keys)
-                        .filter { !$0.isNative }
-                        .map(\.code).sorted()
-                    } ?? []
-            )
+            return BalanceData(total: balance, available: balance - (account?.lockedBalance ?? 0))
         } else {
-            return BalanceData(available: balance)
+            return BalanceData(balance: balance)
         }
     }
 }
@@ -147,65 +139,5 @@ class StellarDepositAddress: DepositAddress {
     init(receiveAddress: String, assetActivated: Bool) {
         self.assetActivated = assetActivated
         super.init(receiveAddress)
-    }
-}
-
-class StellarBalanceData: BalanceData {
-    let locked: Decimal
-    let assets: [String]
-
-    init(balance: Decimal, locked: Decimal, assets: [String]) {
-        self.locked = locked
-        self.assets = assets
-        super.init(available: balance - locked)
-    }
-
-    enum CodingKeys: String, CodingKey {
-        case locked, assets
-    }
-
-    required init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        locked = try container.decode(Decimal.self, forKey: .locked)
-        assets = try container.decode([String].self, forKey: .assets)
-
-        try super.init(from: decoder)
-    }
-
-    override func encode(to encoder: Encoder) throws {
-        try super.encode(to: encoder)
-
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(locked, forKey: .locked)
-        try container.encode(assets, forKey: .assets)
-    }
-
-    override var balanceTotal: Decimal {
-        super.balanceTotal + locked
-    }
-
-    override var customStates: [CustomState] {
-        var states = super.customStates
-        if !locked.isZero {
-            var description = "\("balance.token.locked.stellar.description".localized)\n\n\("balance.token.locked.stellar.description.currently_locked".localized)\n • 1 XLM - \("balance.token.locked.stellar.description.wallet_activation".localized)"
-
-            for asset in assets {
-                description += "\n • 0.5 XLM - \(asset)"
-            }
-
-            states.append(
-                CustomState(
-                    title: "balance.token.locked".localized,
-                    value: locked,
-                    infoTitle: "balance.token.locked.stellar.title".localized,
-                    infoDescription: description
-                )
-            )
-        }
-        return states
-    }
-
-    static func == (lhs: StellarBalanceData, rhs: StellarBalanceData) -> Bool {
-        lhs.available == rhs.available && lhs.locked == rhs.locked
     }
 }

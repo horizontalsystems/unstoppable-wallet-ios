@@ -6,17 +6,8 @@ enum WalletTokenBalanceModule {
             return nil
         }
 
-        let coinPriceService = WalletCoinPriceService(
-            currencyManager: App.shared.currencyManager,
-            priceChangeModeManager: App.shared.priceChangeModeManager,
-            marketKit: App.shared.marketKit
-        )
-
-        let walletServiceFactory = WalletServiceFactory(
-            adapterManager: App.shared.adapterManager,
-            walletManager: App.shared.walletManager
-        )
-
+        let coinPriceService = WalletCoinPriceService()
+        let walletServiceFactory = WalletServiceFactory()
         let walletService = walletServiceFactory.walletService(account: account)
 
         let tokenBalanceService = WalletTokenBalanceService(
