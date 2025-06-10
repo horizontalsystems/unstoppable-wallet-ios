@@ -23,11 +23,6 @@ struct MultiSwapApproveView: View {
                 BottomGradientWrapper {
                     ScrollView {
                         VStack(spacing: .margin12) {
-                            Text("swap.unlock.subtitle".localized)
-                                .themeHeadline1()
-                                .padding(.horizontal, .margin16)
-                                .padding(.bottom, .margin12)
-
                             ListSection {
                                 ClickableRow(action: {
                                     viewModel.set(unlimitedAmount: false)
@@ -55,7 +50,7 @@ struct MultiSwapApproveView: View {
                     Button(action: {
                         unlockPresented = true
                     }) {
-                        Text("button.unlock".localized)
+                        Text("swap.approve".localized)
                     }
                     .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 }

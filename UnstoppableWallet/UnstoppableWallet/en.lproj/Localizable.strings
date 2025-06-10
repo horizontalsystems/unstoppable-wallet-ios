@@ -640,15 +640,14 @@
 "swap.allowance" = "Allowance";
 "swap.allowance.description" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
 "swap.pending_allowance" = "Pending Allowance";
-"swap.unlock" = "Unlock";
-"swap.unlocking" = "Unlocking";
+"swap.approve" = "Approve";
+"swap.approving" = "Approving";
 "swap.allowance_error" = "Allowance Error";
 "swap.revoke" = "Revoke";
 "swap.revoking" = "Revoking";
 "swap.revoke_warning" = "You can exchange %@, or you need to revoke and approve the new amount";
 
-"swap.unlock.title" = "Unlock Access";
-"swap.unlock.subtitle" = "Allow access to the following amount";
+"swap.unlock.title" = "Approve";
 "swap.unlock.description" = "Grant permission to a smart contract for token trading on your behalf, specifying the allowed amount. No impact on your balance, but incurs a small fee for approval.\n\nPre-approving a higher amount for future trades is cost-effective compared to on-demand approvals.";
 "swap.unlock.unlimited" = "Unlimited";
 

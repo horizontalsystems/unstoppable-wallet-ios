@@ -296,6 +296,7 @@ class MultiSwapViewModel: ObservableObject {
 
         defer {
             internalTokenIn = token
+            internalTokenOut = MultiSwapDefaultTokenResolver.default(for: token)
         }
 
         currencyManager.$baseCurrency.sink { [weak self] in self?.currency = $0 }.store(in: &cancellables)
@@ -356,7 +357,7 @@ class MultiSwapViewModel: ObservableObject {
     }
 
     func syncPriceImpact() {
-        guard let fiatAmountIn, let fiatAmountOut else {
+        guard let fiatAmountIn, let fiatAmountOut, fiatAmountIn != 0 else {
             priceImpact = nil
             return
         }
