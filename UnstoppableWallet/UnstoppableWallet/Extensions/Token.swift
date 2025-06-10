@@ -33,20 +33,7 @@ extension Token {
     }
 
     var swappable: Bool {
-        switch blockchainType {
-        case .ethereum: return true
-        case .binanceSmartChain: return true
-        case .polygon: return true
-        case .avalanche: return true
-        case .optimism: return true
-        case .arbitrumOne: return true
-        case .gnosis: return true
-        case .fantom: return true
-        case .base: return true
-        case .zkSync: return true
-        case .bitcoin, .bitcoinCash, .litecoin: return true
-        default: return false
-        }
+        BlockchainType.swappable.contains(blockchainType)
     }
 
     var badge: String? {
