@@ -37,6 +37,10 @@ extension View {
         foregroundColor(color).font(.themeMicroSB)
     }
 
+    func textTitle2R(color: Color = .themeLeah) -> some View {
+        foregroundColor(color).font(.themeTitle2R)
+    }
+
     func themeBody(color: Color = .themeLeah, alignment: Alignment = .leading) -> some View {
         textBody(color: color).frame(maxWidth: .infinity, alignment: alignment)
     }
@@ -67,5 +71,9 @@ extension View {
 
     func themeMicro(color: Color = .themeGray, alignment: Alignment = .leading) -> some View {
         textMicro(color: color).frame(maxWidth: .infinity, alignment: alignment)
+    }
+
+    func themeTitle2R(color: Color = .themeLeah, alignment: Alignment = .leading) -> some View {
+        textTitle2R(color: color).frame(maxWidth: .infinity, alignment: alignment)
     }
 }

@@ -32,7 +32,7 @@ extension ShieldSendHandler: ISendHandler {
 
         var transactionError: Error?
         let fee = proposal.totalFeeRequired().decimalValue.decimalValue
-        if ZcashAdapter.minimalThreshold >= adapter.verifiedBalanceData.transparent {
+        if ZcashAdapter.minimalThreshold >= adapter.zcashBalanceData.transparent {
             transactionError = AppError.zcash(reason: .notEnough)
         }
 

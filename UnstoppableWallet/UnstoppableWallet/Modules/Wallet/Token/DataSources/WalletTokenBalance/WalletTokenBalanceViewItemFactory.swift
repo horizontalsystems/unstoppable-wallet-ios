@@ -98,11 +98,11 @@ class WalletTokenBalanceViewItemFactory {
     }
 
     private func balanceValue(item: WalletTokenBalanceService.BalanceItem, balanceHidden: Bool) -> (text: String?, dimmed: Bool) {
-        coinValue(value: item.balanceData.balanceTotal, decimalCount: item.wallet.decimals, symbol: item.wallet.coin.code, balanceHidden: balanceHidden, state: item.state)
+        coinValue(value: item.balanceData.total, decimalCount: item.wallet.decimals, symbol: item.wallet.coin.code, balanceHidden: balanceHidden, state: item.state)
     }
 
     private func secondaryValue(item: WalletTokenBalanceService.BalanceItem, balanceHidden: Bool) -> (text: String?, dimmed: Bool) {
-        currencyValue(value: item.balanceData.balanceTotal, balanceHidden: balanceHidden, state: item.state, priceItem: item.priceItem)
+        currencyValue(value: item.balanceData.total, balanceHidden: balanceHidden, state: item.state, priceItem: item.priceItem)
     }
 
     private func coinValue(value: Decimal, decimalCount: Int, symbol: String? = nil, balanceHidden: Bool, state: AdapterState) -> (text: String?, dimmed: Bool) {
@@ -126,25 +126,26 @@ class WalletTokenBalanceViewItemFactory {
         )
     }
 
-    private func customStates(item: WalletTokenBalanceService.BalanceItem, balanceHidden: Bool) -> [WalletTokenBalanceViewModel.BalanceCustomStateViewItem] {
-        item.balanceData
-            .customStates
-            .map {
-                let value = coinValue(value: $0.value, decimalCount: item.wallet.decimals, symbol: item.wallet.coin.code, balanceHidden: balanceHidden, state: item.state)
+    private func customStates(item _: WalletTokenBalanceService.BalanceItem, balanceHidden _: Bool) -> [WalletTokenBalanceViewModel.BalanceCustomStateViewItem] {
+        []
+        // item.balanceData
+        //     .customStates
+        //     .map {
+        //         let value = coinValue(value: $0.value, decimalCount: item.wallet.decimals, symbol: item.wallet.coin.code, balanceHidden: balanceHidden, state: item.state)
 
-                var action = WalletTokenBalanceViewModel.CustomStateAction.none
+        //         var action = WalletTokenBalanceViewModel.CustomStateAction.none
 
-                if let balanceData = item.balanceData as? ZCashVerifiedBalanceData, balanceData.transparent > ZcashAdapter.minimalThreshold {
-                    action = .unshield(balanceData.transparent)
-                }
+        //         if let balanceData = item.balanceData as? ZCashVerifiedBalanceData, balanceData.transparent > ZcashAdapter.minimalThreshold {
+        //             action = .unshield(balanceData.transparent)
+        //         }
 
-                return .init(
-                    title: $0.title,
-                    amountValue: value,
-                    infoTitle: $0.infoTitle,
-                    infoDescription: $0.infoDescription,
-                    action: action
-                )
-            }
+        //         return .init(
+        //             title: $0.title,
+        //             amountValue: value,
+        //             infoTitle: $0.infoTitle,
+        //             infoDescription: $0.infoDescription,
+        //             action: action
+        //         )
+        //     }
     }
 }

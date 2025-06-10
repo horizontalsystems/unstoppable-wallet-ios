@@ -44,7 +44,7 @@ class BaseTronAdapter {
     }
 
     func balanceData(balance: BigUInt?) -> BalanceData {
-        BalanceData(available: balanceDecimal(kitBalance: balance, decimals: decimals))
+        BalanceData(balance: balanceDecimal(kitBalance: balance, decimals: decimals))
     }
 
     func accountActive(address: TronKit.Address) async -> Bool {

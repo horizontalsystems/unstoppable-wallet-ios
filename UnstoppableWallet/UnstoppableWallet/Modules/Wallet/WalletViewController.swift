@@ -400,11 +400,10 @@ class WalletViewController: ThemeViewController {
     }
 
     private func open(wallet: Wallet) {
-        if let viewController = WalletTokenModule.viewController(wallet: wallet) {
-            navigationController?.pushViewController(viewController, animated: true)
+        let viewController = WalletTokenModule.view(wallet: wallet).toViewController()
+        navigationController?.pushViewController(viewController, animated: true)
 
-            stat(page: .balance, event: .openTokenPage(wallet: wallet))
-        }
+        stat(page: .balance, event: .openTokenPage(wallet: wallet))
     }
 
     private func openBackupRequired(account: Account) {

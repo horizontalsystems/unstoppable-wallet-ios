@@ -299,6 +299,7 @@
 "balance.receive" = "Receive";
 "balance.deposit" = "Deposit";
 "balance.address" = "Address";
+"balance.chart" = "Chart";
 "balance.rate_per_coin" = "%@ per %@";
 "balance.syncing" = "Syncing...";
 "balance.searching" = "Searching transactions...";

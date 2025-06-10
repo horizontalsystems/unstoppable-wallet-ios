@@ -78,7 +78,7 @@ class WalletTokenBalanceService {
     }
 
     private var fallbackBalanceData: BalanceData {
-        BalanceData(available: 0)
+        BalanceData(balance: 0)
     }
 
     private var fallbackAdapterState: AdapterState {

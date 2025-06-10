@@ -49,7 +49,9 @@ struct WalletConnectViewModifier: ViewModifier {
                         onDismiss: { viewModel.walletConnectNotSupportedAccountType = nil }
                     )
                 }
-                .modifier(BackupRequiredViewModifier(account: $viewModel.walletConnectBackupRequiredAccount, statPage: statPage))
+                .modifier(BackupRequiredViewModifier(account: $viewModel.walletConnectBackupRequiredAccount, statPage: statPage) { account in
+                    "wallet_connect.unbackuped_account.description".localized(account.name)
+                })
 
             NavigationLink(
                 isActive: $viewModel.walletConnectPresented,

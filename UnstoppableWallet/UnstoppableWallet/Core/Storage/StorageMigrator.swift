@@ -742,17 +742,6 @@ enum StorageMigrator {
             }
         }
 
-        migrator.registerMigration("Update EnabledWalletCache fields") { db in
-            try db.drop(table: EnabledWalletCache_v_0_36.databaseTableName)
-            try db.create(table: EnabledWalletCache.databaseTableName) { t in
-                t.column(EnabledWalletCache.Columns.tokenQueryId.name, .text).notNull()
-                t.column(EnabledWalletCache.Columns.accountId.name, .text).notNull()
-                t.column(EnabledWalletCache.Columns.balances.name, .text).notNull()
-
-                t.primaryKey([EnabledWalletCache.Columns.tokenQueryId.name, EnabledWalletCache.Columns.accountId.name], onConflict: .replace)
-            }
-        }
-
         migrator.registerMigration("Add level and fileBackedUp to AccountRecord") { db in
             try db.alter(table: AccountRecord.databaseTableName) { t in
                 t.add(column: AccountRecord.Columns.level.name, .integer).defaults(to: 0)
@@ -838,6 +827,18 @@ enum StorageMigrator {
             if hasBep2Token {
                 localStorage.hasBep2Token = true
                 try EnabledWallet.filter(EnabledWallet.Columns.tokenQueryId.like("binancecoin|%")).deleteAll(db)
+            }
+        }
+
+        migrator.registerMigration("Update EnabledWalletCache scheme") { db in
+            try db.drop(table: EnabledWalletCache.databaseTableName)
+            try db.create(table: EnabledWalletCache.databaseTableName) { t in
+                t.column(EnabledWalletCache.Columns.tokenQueryId.name, .text).notNull()
+                t.column(EnabledWalletCache.Columns.accountId.name, .text).notNull()
+                t.column(EnabledWalletCache.Columns.total.name, .text).notNull()
+                t.column(EnabledWalletCache.Columns.available.name, .text).notNull()
+
+                t.primaryKey([EnabledWalletCache.Columns.tokenQueryId.name, EnabledWalletCache.Columns.accountId.name], onConflict: .replace)
             }
         }
 

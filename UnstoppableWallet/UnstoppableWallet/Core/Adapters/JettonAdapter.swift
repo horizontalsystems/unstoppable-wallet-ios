@@ -105,11 +105,11 @@ extension JettonAdapter: IBalanceAdapter {
     }
 
     var balanceData: BalanceData {
-        BalanceData(available: Self.amount(jettonBalance: jettonBalance))
+        BalanceData(balance: Self.amount(jettonBalance: jettonBalance))
     }
 
     var balanceDataUpdatedObservable: Observable<BalanceData> {
-        jettonBalanceSubject.map { BalanceData(available: Self.amount(jettonBalance: $0)) }
+        jettonBalanceSubject.map { BalanceData(balance: Self.amount(jettonBalance: $0)) }
     }
 }
 

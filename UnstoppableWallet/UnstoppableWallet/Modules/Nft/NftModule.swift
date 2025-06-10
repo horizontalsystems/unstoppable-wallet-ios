@@ -2,11 +2,7 @@ import UIKit
 
 enum NftModule {
     static func viewController() -> UIViewController? {
-        let coinPriceService = WalletCoinPriceService(
-            currencyManager: App.shared.currencyManager,
-            priceChangeModeManager: App.shared.priceChangeModeManager,
-            marketKit: App.shared.marketKit
-        )
+        let coinPriceService = WalletCoinPriceService()
 
         guard let account = App.shared.accountManager.activeAccount else {
             return nil

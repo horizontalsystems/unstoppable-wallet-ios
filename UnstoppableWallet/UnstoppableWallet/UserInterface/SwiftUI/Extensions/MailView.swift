@@ -3,6 +3,7 @@ import SwiftUI
 
 struct MailView: UIViewControllerRepresentable {
     let recipient: String
+    let body: String
     @Binding var isPresented: Bool
 
     class Coordinator: NSObject, MFMailComposeViewControllerDelegate {
@@ -25,6 +26,7 @@ struct MailView: UIViewControllerRepresentable {
         let viewController = MFMailComposeViewController()
         viewController.mailComposeDelegate = context.coordinator
         viewController.setToRecipients([recipient])
+        viewController.setMessageBody(body, isHTML: false)
         return viewController
     }
 

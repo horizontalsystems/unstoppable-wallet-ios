@@ -107,9 +107,9 @@ struct TransactionsView: View {
         @ViewBuilder private func iconView(viewItem: TransactionsViewModelNew.ViewItem) -> some View {
             ZStack {
                 if let progress = viewItem.progress {
-                    ProgressView(value: max(0.2, progress))
+                    ProgressView(value: max(0.1, progress))
                         .progressViewStyle(DeterminiteSpinnerStyle())
-                        .frame(width: 44, height: 44, alignment: .center)
+                        .frame(maxWidth: .infinity, maxHeight: .infinity)
                         .spinning()
                 }
 
@@ -150,11 +150,10 @@ struct TransactionsView: View {
                     }
                     .frame(width: .iconSize32, height: 36)
                 case .failedIcon:
-                    Image("warning_2_20")
-                        .themeIcon(color: .themeLucian)
+                    Image("warning_2_20").themeIcon(color: .themeLucian)
                 }
             }
-            .frame(width: 44)
+            .frame(width: 44, height: 44)
         }
 
         private func color(valueType: TransactionsViewModelNew.ValueType) -> Color {

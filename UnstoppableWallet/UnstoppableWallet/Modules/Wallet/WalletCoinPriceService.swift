@@ -9,9 +9,9 @@ protocol IWalletCoinPriceServiceDelegate: AnyObject {
 class WalletCoinPriceService {
     weak var delegate: IWalletCoinPriceServiceDelegate?
 
-    private let currencyManager: CurrencyManager
-    private let priceChangeModeManager: PriceChangeModeManager
-    private let marketKit: MarketKit.Kit
+    private let currencyManager = App.shared.currencyManager
+    private let priceChangeModeManager = App.shared.priceChangeModeManager
+    private let marketKit = App.shared.marketKit
     private var cancellables = Set<AnyCancellable>()
     private var coinPriceCancellables = Set<AnyCancellable>()
 
@@ -20,11 +20,7 @@ class WalletCoinPriceService {
     private var feeCoinUids = Set<String>()
     private var conversionCoinUids = Set<String>()
 
-    init(currencyManager: CurrencyManager, priceChangeModeManager: PriceChangeModeManager, marketKit: MarketKit.Kit) {
-        self.currencyManager = currencyManager
-        self.marketKit = marketKit
-        self.priceChangeModeManager = priceChangeModeManager
-
+    init() {
         currency = currencyManager.baseCurrency
 
         currencyManager.$baseCurrency

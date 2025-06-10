@@ -215,7 +215,7 @@ class WalletServiceOld {
 
         for item in items {
             if let rateItem = item.priceItem {
-                total += item.balanceData.balanceTotal * rateItem.price.value
+                total += item.balanceData.total * rateItem.price.value
 
                 if rateItem.expired {
                     expired = true
@@ -250,7 +250,7 @@ class WalletServiceOld {
     }
 
     private var fallbackBalanceData: BalanceData {
-        BalanceData(available: 0)
+        BalanceData(balance: 0)
     }
 
     private var fallbackAdapterState: AdapterState {

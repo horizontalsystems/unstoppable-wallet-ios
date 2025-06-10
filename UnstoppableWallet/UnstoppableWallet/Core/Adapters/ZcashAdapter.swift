@@ -48,10 +48,16 @@ class ZcashAdapter {
     private var lastBlockHeight: Int = 0
     private(set) var areFundsSpendable: Bool = false
 
+    @PostPublished var zcashBalanceData: ZcashBalanceData = .empty {
+        didSet {
+            balanceSubject.onNext(zcashBalanceData.balanceData)
+        }
+    }
+
     private var synchronizerState: SynchronizerState? {
         didSet {
             lastBlockUpdatedSubject.onNext(())
-            balanceSubject.onNext(verifiedBalanceData)
+            syncZcashBalanceData()
         }
     }
 
@@ -187,13 +193,12 @@ class ZcashAdapter {
                 let shieldedVerified = accountBalances?.saplingBalance.spendableValue.decimalValue.decimalValue ?? 0
                 let transparent = accountBalances?.unshielded.decimalValue.decimalValue ?? 0
 
-                self?.balanceSubject.onNext(
-                    ZCashVerifiedBalanceData(
-                        fullBalance: shielded,
-                        available: shieldedVerified,
-                        transparent: transparent
-                    )
+                self?.zcashBalanceData = ZcashBalanceData(
+                    fullBalance: shielded,
+                    available: shieldedVerified,
+                    transparent: transparent
                 )
+
                 let height = try await synchronizer.latestHeight()
                 self?.lastBlockHeight = height
 
@@ -504,20 +509,17 @@ class ZcashAdapter {
             .store(in: &cancellables)
     }
 
-    var verifiedBalanceData: ZCashVerifiedBalanceData {
-        guard let synchronizerState, let accountId else {
-            return .empty
-        }
-
-        guard let balances = synchronizerState.accountsBalances[accountId] else {
-            return .empty
+    private func syncZcashBalanceData() {
+        guard let synchronizerState, let accountId, let balances = synchronizerState.accountsBalances[accountId] else {
+            zcashBalanceData = .empty
+            return
         }
 
         let full = balances.saplingBalance.total() + balances.orchardBalance.total()
         let available = balances.saplingBalance.spendableValue + balances.orchardBalance.spendableValue
 
 //        print("BALANCE: t = \(balances.unshielded.decimalValue.decimalValue)")
-        return ZCashVerifiedBalanceData(
+        zcashBalanceData = ZcashBalanceData(
             fullBalance: full.decimalValue.decimalValue,
             available: available.decimalValue.decimalValue,
             transparent: balances.unshielded.decimalValue.decimalValue
@@ -642,7 +644,8 @@ extension ZcashAdapter: IAdapter {
     }
 
     private func sync() {
-        balanceSubject.onNext(verifiedBalanceData)
+        syncZcashBalanceData()
+
         fixPendingTransactionsIfNeeded { [weak self] in
             self?.logger?.log(level: .debug, message: "\(Date()) Try to start synchronizer :by Thread:\(Thread.current)")
             Task { [weak self] in
@@ -672,7 +675,7 @@ extension ZcashAdapter: IAdapter {
             balanceState = """
             shielded balance (BalanceData)
                 accountId: \(accountId)
-                total:  \(balanceData.balanceTotal.description)
+                total:  \(balanceData.total.description)
                 verified:  \(balanceData.available)
             unshielded balance: \(String(describing: status.accountsBalances[accountId]?.unshielded ?? Zatoshi(0)))
             """
@@ -751,7 +754,7 @@ extension ZcashAdapter: IBalanceAdapter {
     }
 
     var balanceData: BalanceData {
-        verifiedBalanceData
+        zcashBalanceData.balanceData
     }
 
     var balanceDataUpdatedObservable: Observable<BalanceData> {
@@ -905,6 +908,24 @@ extension ZcashAdapter: ISendZcashAdapter {
 
     func recipient(from stringEncodedAddress: String) -> ZcashLightClientKit.Recipient? {
         try? Recipient(stringEncodedAddress, network: network.networkType)
+    }
+}
+
+extension ZcashAdapter {
+    struct ZcashBalanceData {
+        let fullBalance: Decimal
+        let available: Decimal
+        let transparent: Decimal
+
+        static let empty = ZcashBalanceData(fullBalance: 0, available: 0, transparent: 0)
+
+        var balanceData: BalanceData {
+            BalanceData(balance: available)
+        }
+
+        var processing: Decimal {
+            fullBalance - available
+        }
     }
 }
 

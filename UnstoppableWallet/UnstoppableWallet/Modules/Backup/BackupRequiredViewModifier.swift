@@ -3,6 +3,7 @@ import SwiftUI
 struct BackupRequiredViewModifier: ViewModifier {
     @Binding var account: Account?
     let statPage: StatPage
+    let description: (Account) -> String
 
     @State private var manualBackupAccount: Account?
     @State private var cloudBackupAccount: Account?
@@ -14,7 +15,7 @@ struct BackupRequiredViewModifier: ViewModifier {
                     icon: .warning,
                     title: "backup_prompt.backup_required".localized,
                     items: [
-                        .highlightedDescription(text: "wallet_connect.unbackuped_account.description".localized(account.name)),
+                        .highlightedDescription(text: description(account)),
                     ],
                     buttons: [
                         .init(style: .yellow, title: "backup_prompt.backup_manual".localized, icon: "edit_24") {

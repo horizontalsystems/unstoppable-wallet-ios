@@ -2,6 +2,37 @@ import Kingfisher
 import MarketKit
 import SwiftUI
 
+struct BalanceCoinIconView: View {
+    let coin: Coin
+    let state: AdapterState
+    let placeholderImage: String?
+    let onTapFailed: () -> Void
+
+    var body: some View {
+        ZStack {
+            switch state {
+            case let .syncing(progress, _), let .customSyncing(_, _, progress):
+                ProgressView(value: max(0.1, Float(progress ?? 10) / 100))
+                    .progressViewStyle(DeterminiteSpinnerStyle())
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                    .spinning()
+            default:
+                EmptyView()
+            }
+
+            switch state {
+            case .notSynced:
+                Image("warning_2_20")
+                    .themeIcon(color: .themeLucian)
+                    .onTapGesture(perform: onTapFailed)
+            default:
+                CoinIconView(coin: coin, placeholderImage: placeholderImage)
+            }
+        }
+        .frame(width: 44, height: 44)
+    }
+}
+
 struct CoinIconView: View {
     let coin: Coin?
     let placeholderImage: String?

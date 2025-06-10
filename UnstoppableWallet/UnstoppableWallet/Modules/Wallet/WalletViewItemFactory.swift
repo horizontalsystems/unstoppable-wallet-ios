@@ -101,15 +101,15 @@ class WalletViewItemFactory {
 
     private func primaryValue(item: WalletServiceOld.Item, balancePrimaryValue: BalancePrimaryValue) -> (text: String?, dimmed: Bool) {
         switch balancePrimaryValue {
-        case .coin: return coinValue(value: item.balanceData.balanceTotal, decimalCount: item.wallet.decimals, state: item.state)
-        case .currency: return currencyValue(value: item.balanceData.balanceTotal, state: item.state, priceItem: item.priceItem)
+        case .coin: return coinValue(value: item.balanceData.total, decimalCount: item.wallet.decimals, state: item.state)
+        case .currency: return currencyValue(value: item.balanceData.total, state: item.state, priceItem: item.priceItem)
         }
     }
 
     private func secondaryValue(item: WalletServiceOld.Item, balancePrimaryValue: BalancePrimaryValue) -> (text: String?, dimmed: Bool) {
         switch balancePrimaryValue {
-        case .coin: return currencyValue(value: item.balanceData.balanceTotal, state: item.state, priceItem: item.priceItem)
-        case .currency: return coinValue(value: item.balanceData.balanceTotal, decimalCount: item.wallet.decimals, state: item.state)
+        case .coin: return currencyValue(value: item.balanceData.total, state: item.state, priceItem: item.priceItem)
+        case .currency: return coinValue(value: item.balanceData.total, decimalCount: item.wallet.decimals, state: item.state)
         }
     }
 
