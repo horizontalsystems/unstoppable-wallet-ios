@@ -2207,7 +2207,8 @@
 // Purchases
 
 "premium.cell.title" = "Premium";
-"premium.cell.description" = "Upgrade your experience with Premium features!";
+"premium.cell.description" = "Upgrade your experience with %@ features!";
+"premium.cell.description.key" = "Premium";
 "premium.cell.try" = "Try for FREE";
 
 "mini_app.cell.title" = "MiniApp";

@@ -173,7 +173,7 @@ struct MainSettingsView: View {
             VStack(alignment: .leading, spacing: .margin4) {
                 Text("premium.cell.title".localized).textHeadline1(color: .themeYellow)
                 Spacer()
-                Text("premium.cell.description".localized).textSubhead1(color: .themeLight)
+                Text("premium.cell.description".localized("premium.cell.description.key".localized)).textSubhead1(color: .themeLight)
 
                 if let introductoryOffer = viewModel.introductoryOffer {
                     Text(introductoryOffer).textCaptionSB(color: .themeGreen)
