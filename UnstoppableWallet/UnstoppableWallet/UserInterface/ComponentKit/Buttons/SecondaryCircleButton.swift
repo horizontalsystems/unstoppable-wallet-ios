@@ -34,7 +34,7 @@ open class SecondaryCircleButton: UIButton {
         switch style {
         case .default:
             setImage(image?.withTintColor(.themeLeah), for: .normal)
-            setImage(image?.withTintColor(.themeGray), for: .highlighted)
+            setImage(image?.withTintColor(.themeLeah.pressed), for: .highlighted)
             setImage(image?.withTintColor(.themeAndy), for: .disabled)
             setImage(image?.withTintColor(.themeJacob), for: .selected)
             setImage(image?.withTintColor(.themeYellow50), for: [.selected, .highlighted])

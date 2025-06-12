@@ -42,6 +42,7 @@ class ManageAccountsViewController: ThemeViewController {
 
         if viewModel.isDoneVisible {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(onTapDoneButton))
+            navigationItem.rightBarButtonItem?.tintColor = .themeJacob
         }
 
         view.addSubview(tableView)

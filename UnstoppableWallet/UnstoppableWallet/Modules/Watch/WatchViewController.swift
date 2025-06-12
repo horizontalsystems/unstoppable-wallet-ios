@@ -45,7 +45,7 @@ class WatchViewController: KeyboardAwareViewController {
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onTapClose))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "watch_address.watch".localized, style: .done, target: self, action: #selector(onTapNext))
-
+        navigationItem.rightBarButtonItem?.tintColor = .themeJacob
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()

@@ -79,7 +79,7 @@ open class ThemeTabBarController: UITabBarController {
         super.viewDidLoad()
 
         tabBar.barTintColor = .themeBlade
-        tabBar.tintColor = .themeYellowD
+        tabBar.tintColor = .themeJacob
         tabBar.unselectedItemTintColor = .themeGray
 
         updateUITheme()

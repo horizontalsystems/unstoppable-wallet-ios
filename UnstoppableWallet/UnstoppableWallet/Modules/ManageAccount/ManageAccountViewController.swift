@@ -40,6 +40,7 @@ class ManageAccountViewController: KeyboardAwareViewController {
         title = viewModel.accountName
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.save".localized, style: .done, target: self, action: #selector(onTapSave))
+        navigationItem.rightBarButtonItem?.tintColor = .themeJacob
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.largeTitleDisplayMode = .never
 

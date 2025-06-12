@@ -104,5 +104,6 @@ struct TransactionFilterView: View {
                 }
             }
         }
+        .accentColor(Color.themeJacob)
     }
 }

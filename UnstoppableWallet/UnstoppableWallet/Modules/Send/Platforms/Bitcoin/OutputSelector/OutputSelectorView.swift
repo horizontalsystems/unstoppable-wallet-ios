@@ -66,6 +66,7 @@ struct OutputSelectorView: View {
                 .disabled(!viewModel.doneEnabled)
             }
         }
+        .accentColor(Color.themeJacob)
     }
 
     @ViewBuilder func amount(subtitle: String?, viewItem: AmountOutputSelectorViewModel.ViewItem?) -> some View {

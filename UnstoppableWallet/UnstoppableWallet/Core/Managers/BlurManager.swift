@@ -45,7 +45,7 @@ class BlurManager {
 
         logoTitleLabel.numberOfLines = 0
         logoTitleLabel.textAlignment = .center
-        logoTitleLabel.font = .title2
+        logoTitleLabel.font = .systemFont(ofSize: 34, weight: .bold)
         logoTitleLabel.textColor = .themeLeah
         logoTitleLabel.text = AppConfig.appName
     }

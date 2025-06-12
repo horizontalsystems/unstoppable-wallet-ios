@@ -36,6 +36,7 @@ class EvmNetworkViewController: ThemeViewController {
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(onTapDone))
+        navigationItem.rightBarButtonItem?.tintColor = .themeJacob
 
         iconImageView.snp.makeConstraints { make in
             make.size.equalTo(CGFloat.iconSize24)

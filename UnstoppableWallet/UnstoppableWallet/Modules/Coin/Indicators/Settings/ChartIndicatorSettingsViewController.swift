@@ -43,6 +43,7 @@ class ChartIndicatorSettingsViewController: KeyboardAwareViewController {
 
         title = viewModel.title
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.reset".localized, style: .plain, target: self, action: #selector(didTapReset))
+        navigationItem.rightBarButtonItem?.tintColor = .themeJacob
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
 
         view.addSubview(tableView)

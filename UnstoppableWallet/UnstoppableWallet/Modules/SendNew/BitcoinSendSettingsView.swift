@@ -191,6 +191,7 @@ struct BitcoinSendSettingsView: View {
                 Button("button.reset".localized) {
                     viewModel.reset()
                 }
+                .foregroundStyle(viewModel.resetEnabled ? Color.themeJacob : Color.themeGray)
                 .disabled(!viewModel.resetEnabled)
             }
 
