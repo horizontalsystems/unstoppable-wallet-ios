@@ -97,6 +97,7 @@ enum StatPage: String {
     case news
     case newWallet = "new_wallet"
     case newWalletAdvanced = "new_wallet_advanced"
+    case performance = "performance_selector"
     case privacy
     case privateKeys = "private_keys"
     case publicKeys = "public_keys"
@@ -461,6 +462,8 @@ enum StatPremiumTrigger: String {
     case vipSupport = "vip_support"
     case addressChecker = "address_checker"
     case sectors
+    case periodChange = "period_change"
+    case tokenChange = "token_change"
     case priceChange = "price_change"
     case pricePeriod = "price_period"
     case tradingSignal = "trading_signal"
