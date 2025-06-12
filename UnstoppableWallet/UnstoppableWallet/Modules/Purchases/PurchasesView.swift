@@ -43,8 +43,9 @@ struct PurchasesView: View {
                                         )
                                     }
                                 }
-                                .themeListStyle(.steel10WithCorners(.allCorners))
+                                .themeListStyle(.lawrence)
                                 .padding(.horizontal, .margin16)
+                                .padding(.vertical, .margin4)
 
                                 walletDescription()
                             }
