@@ -34,6 +34,7 @@ class RestoreSelectViewController: CoinToggleViewController {
 
         title = "restore_select.title".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.import".localized, style: .done, target: self, action: #selector(onTapRightBarButton))
+        navigationItem.rightBarButtonItem?.tintColor = .themeJacob
 
         blockchainTokensView.onOpenController = { [weak self] controller in
             self?.open(controller: controller)

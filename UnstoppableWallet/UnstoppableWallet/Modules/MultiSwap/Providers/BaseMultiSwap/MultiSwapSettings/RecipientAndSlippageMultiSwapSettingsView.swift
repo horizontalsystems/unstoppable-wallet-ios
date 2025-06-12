@@ -41,6 +41,7 @@ struct RecipientAndSlippageMultiSwapSettingsView: View {
                 .disabled(!viewModel.doneEnabled)
             }
         }
+        .accentColor(Color.themeJacob)
     }
 }
 

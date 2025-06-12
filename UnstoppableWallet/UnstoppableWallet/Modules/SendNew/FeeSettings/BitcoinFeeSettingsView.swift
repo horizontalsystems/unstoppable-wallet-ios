@@ -73,7 +73,9 @@ struct BitcoinFeeSettingsView: View {
             ToolbarItem(placement: .navigationBarLeading) {
                 Button("button.reset".localized) {
                     viewModel.onReset()
-                }.disabled(!viewModel.resetEnabled)
+                }
+                .foregroundStyle(viewModel.resetEnabled ? Color.themeJacob : Color.themeGray)
+                .disabled(!viewModel.resetEnabled)
             }
             ToolbarItem(placement: .confirmationAction) {
                 Button("button.done".localized) {

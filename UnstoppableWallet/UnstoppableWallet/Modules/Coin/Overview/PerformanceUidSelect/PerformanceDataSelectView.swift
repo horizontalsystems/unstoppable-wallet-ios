@@ -112,6 +112,7 @@ struct PerformanceDataSelectView: View {
                         .disabled(viewModel.selectedCoins.count != viewModel.coinCount)
                     }
                 }
+                .accentColor(Color.themeJacob)
             }
         }
         .sheet(isPresented: $subscriptionPresented) {

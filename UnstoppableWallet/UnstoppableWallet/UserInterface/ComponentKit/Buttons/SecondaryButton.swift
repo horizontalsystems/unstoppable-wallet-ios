@@ -84,14 +84,14 @@ open class SecondaryButton: UIButton {
         if let image {
             switch style {
             case .default, .transparent, .tab:
-                setImage(image.withTintColor(.themeGray), for: .normal)
-                setImage(image.withTintColor(.themeGray), for: .highlighted)
+                setImage(image.withTintColor(.themeLeah), for: .normal)
+                setImage(image.withTintColor(.themeLeah.pressed), for: .highlighted)
                 setImage(image.withTintColor(.themeAndy), for: .disabled)
                 setImage(image.withTintColor(.themeDark), for: .selected)
                 setImage(image.withTintColor(.themeDark), for: [.selected, .highlighted])
             case .transparent2:
-                setImage(image.withTintColor(.themeGray), for: .normal)
-                setImage(image.withTintColor(.themeGray50), for: .highlighted)
+                setImage(image.withTintColor(.themeLeah), for: .normal)
+                setImage(image.withTintColor(.themeLeah.pressed), for: .highlighted)
                 setImage(image.withTintColor(.themeAndy), for: .disabled)
                 setImage(image.withTintColor(.themeGray), for: .selected)
                 setImage(image.withTintColor(.themeGray50), for: [.selected, .highlighted])

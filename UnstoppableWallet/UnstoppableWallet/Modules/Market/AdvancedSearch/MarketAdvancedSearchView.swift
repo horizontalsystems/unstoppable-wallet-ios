@@ -109,6 +109,7 @@ struct MarketAdvancedSearchView: View {
                     Button("market.advanced_search.reset_all".localized) {
                         viewModel.reset()
                     }
+                    .foregroundStyle(viewModel.canReset ? Color.themeJacob : Color.themeGray)
                     .disabled(!viewModel.canReset)
                 }
 

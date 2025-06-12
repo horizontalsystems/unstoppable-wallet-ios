@@ -62,8 +62,8 @@ struct SecondaryButtonStyle: ButtonStyle {
     }
 
     enum Accessory {
-        static let pressedColor = Color.themeGray
-        static let enabledColor = Color.themeGray
+        static let pressedColor = Color.themeLeah.pressed
+        static let enabledColor = Color.themeLeah
         static let disabledColor = Color.themeAndy
 
         case none

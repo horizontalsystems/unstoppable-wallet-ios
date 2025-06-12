@@ -47,6 +47,7 @@ class CreateAccountAdvancedViewController: KeyboardAwareViewController {
 
         title = "create_wallet.advanced_setup".localized
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "create_wallet.create".localized, style: .done, target: self, action: #selector(onTapCreate))
+        navigationItem.rightBarButtonItem?.tintColor = .themeJacob
         navigationItem.largeTitleDisplayMode = .never
 
         view.addSubview(tableView)

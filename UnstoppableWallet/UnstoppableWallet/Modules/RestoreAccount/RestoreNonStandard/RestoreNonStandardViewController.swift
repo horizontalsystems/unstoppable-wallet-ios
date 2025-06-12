@@ -56,7 +56,7 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
 
         navigationItem.largeTitleDisplayMode = .never
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.next".localized, style: .done, target: self, action: #selector(onTapNext))
-
+        navigationItem.rightBarButtonItem?.tintColor = .themeJacob
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()

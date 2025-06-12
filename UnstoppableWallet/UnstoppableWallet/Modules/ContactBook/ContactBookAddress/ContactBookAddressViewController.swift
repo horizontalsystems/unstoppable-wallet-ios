@@ -59,6 +59,8 @@ class ContactBookAddressViewController: KeyboardAwareViewController {
         navigationItem.largeTitleDisplayMode = .never
 
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .done, target: self, action: #selector(onTapSaveButton))
+        navigationItem.rightBarButtonItem?.tintColor = .themeJacob
+
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "button.cancel".localized, style: .plain, target: self, action: #selector(onCloseConfirmation))
 
         view.addSubview(tableView)
