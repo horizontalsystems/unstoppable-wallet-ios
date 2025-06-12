@@ -793,6 +793,8 @@
 "market.time_period.6m.short" = "6M";
 "market.time_period.1y.short" = "1Y";
 "market.time_period.2y.short" = "2Y";
+"market.time_period.3y.short" = "3Y";
+"market.time_period.4y.short" = "4Y";
 "market.time_period.5y.short" = "5Y";
 
 "market.project_has_no_coin" = "This project doesn’t have a coin";
@@ -1008,6 +1010,7 @@
 "coin_overview.genesis_date" = "Inception Date";
 "coin_overview.trading_volume" = "Trading Volume";
 
+"coin.overview.roi.header" = "Relative Change vs %@";
 "coin_overview.roi.hour24" = "24 Hours";
 "coin_overview.roi.day1" = "1 Day";
 "coin_overview.roi.day7" = "1 Week";
@@ -1028,6 +1031,13 @@
 "coin_overview.guide" = "Guide";
 "coin_overview.website" = "Website";
 "coin_overview.whitepaper" = "Whitepaper";
+
+// Coin Page -> Analytics -> Select Performance
+
+"coin_overview.performance.select_coins.title" = "Select Coins";
+"coin_overview.performance.period" = "Period %d";
+"coin_overview.performance.assets" = "Selected Assets";
+"coin_overview.performance.only_3" = "Choose only 3 assets";
 
 // Coin Page -> Analytics
 "technical_advice.over.bought" = "overbought";
@@ -1749,8 +1759,7 @@
 "chart.about.read_more" = "Read More";
 "chart.about.read_less" = "Read Less";
 
-"coin_page.return_of_investments" = "ROI";
-"coin_page.return_of_investments.vs" = "vs %@";
+"coin_page.return_of_investments" = "VS";
 
 // Create Wallet
 

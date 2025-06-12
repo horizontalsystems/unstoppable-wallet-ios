@@ -11,7 +11,10 @@ class CoinOverviewViewModel: ObservableObject {
     private let currencyManager = App.shared.currencyManager
     private let languageManager = LanguageManager.shared
     private let walletManager = App.shared.walletManager
+    private let performanceDataManager = App.shared.performanceDataManager
+
     private var tasks = Set<AnyTask>()
+    private var cancellables: [AnyCancellable] = []
     private var disposeBag = DisposeBag()
 
     @Published private(set) var state: State = .loading
@@ -26,6 +29,14 @@ class CoinOverviewViewModel: ObservableObject {
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] in self?.walletData = $0 })
             .disposed(by: disposeBag)
+
+        performanceDataManager
+            .updatedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.load()
+            }
+            .store(in: &cancellables)
     }
 }
 
@@ -34,14 +45,25 @@ extension CoinOverviewViewModel {
         currencyManager.baseCurrency
     }
 
+    var performanceCoins: [PerformanceCoin] {
+        performanceDataManager.coins
+    }
+
+    var performancePeriods: [HsTimePeriod] {
+        performanceDataManager.periods
+    }
+
     func load() {
         tasks = Set()
 
         state = .loading
 
+        let uids = performanceCoins.map(\.uid)
+        let periods = performancePeriods
+
         Task { [weak self, marketKit, coinUid, currencyManager, languageManager] in
             do {
-                let overview = try await marketKit.marketInfoOverview(coinUid: coinUid, currencyCode: currencyManager.baseCurrency.code, languageCode: languageManager.currentLanguage)
+                let overview = try await marketKit.marketInfoOverview(coinUid: coinUid, roiUids: uids, roiPeriods: periods, currencyCode: currencyManager.baseCurrency.code, languageCode: languageManager.currentLanguage)
 
                 await MainActor.run { [weak self] in
                     self?.state = .loaded(overview: overview)
@@ -88,4 +110,11 @@ extension CoinOverviewViewModel {
         case loaded(overview: MarketInfoOverview)
         case failed
     }
+}
+
+extension PerformanceRow {
+    static let gold = PerformanceCoin(uid: "tether-gold", code: "Gold")
+    static let sp500 = PerformanceCoin(uid: "snp", code: "SP500")
+    static let defaultCoins = [Self.gold, Self.sp500, PerformanceCoin(uid: "bitcoin", code: "BTC")]
+    static let defaultPeriods: [HsTimePeriod] = [.month6, .year1]
 }

@@ -40,6 +40,7 @@ public extension CGFloat {
     static let heightOnePixel: CGFloat = 1 / UIScreen.main.scale
     static let heightOneDp: CGFloat = 1
     static let heightSingleLineCell: CGFloat = 44
+    static let heightGrid38: CGFloat = 38
     static let heightCell48: CGFloat = 48
     static let heightCell56: CGFloat = 56
     static let heightDoubleLineCell: CGFloat = 62

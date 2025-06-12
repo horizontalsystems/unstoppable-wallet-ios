@@ -109,6 +109,8 @@ class App {
 
     let appEventHandler = EventHandler()
 
+    let performanceDataManager: PerformanceDataManager
+
     init() throws {
         let databaseURL = try FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -327,6 +329,8 @@ class App {
         tonConnectManager = TonConnectManager(storage: tonConnectStorage, accountManager: accountManager)
 
         kitCleaner = KitCleaner(accountManager: accountManager)
+
+        performanceDataManager = PerformanceDataManager(userDefaultsStorage: userDefaultsStorage)
 
         appManager = AppManager(
             accountManager: accountManager,

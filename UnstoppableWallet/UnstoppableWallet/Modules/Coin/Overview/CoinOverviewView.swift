@@ -8,6 +8,7 @@ struct CoinOverviewView: View {
     private let markdownParser = CoinPageMarkdownParser()
 
     @State private var chartIndicatorsShown = false
+    @State private var performanceSelectorPresented = false
     @State private var tokensExpanded = false
 
     @Environment(\.openURL) private var openURL
@@ -32,6 +33,13 @@ struct CoinOverviewView: View {
                     stat(page: .coinOverview, event: .open(page: .indicators))
                 }
         }
+        .sheet(isPresented: $performanceSelectorPresented) {
+            PerformanceDataSelectView(isPresented: $performanceSelectorPresented)
+                .ignoresSafeArea()
+                .onFirstAppear {
+                    stat(page: .coinOverview, event: .open(page: .performance))
+                }
+        }
     }
 
     @ViewBuilder private func content(overview: MarketInfoOverview) -> some View {
@@ -46,7 +54,10 @@ struct CoinOverviewView: View {
                 VStack(spacing: .margin24) {
                     indicators()
                     marketInfo(overview: overview)
-                    performance(rows: overview.performance)
+                    VStack(spacing: .margin12) {
+                        header(text: "coin.overview.roi.header".localized(coin.code.uppercased()))
+                        performance(rows: overview.performance)
+                    }
 
                     if !overview.fullCoin.tokens.isEmpty {
                         VStack(spacing: .margin12) {
@@ -175,40 +186,64 @@ struct CoinOverviewView: View {
     }
 
     @ViewBuilder private func performance(rows: [PerformanceRow]) -> some View {
-        let periods: [HsTimePeriod] = [.week1, .month1]
+        let periods = viewModel.performancePeriods
 
         ListSection {
-            LazyVGrid(columns: [GridItem(.flexible(), spacing: .heightOneDp)] + periods.map { _ in GridItem(.flexible(), spacing: .heightOneDp) }, spacing: .heightOneDp) {
-                Text("coin_page.return_of_investments".localized)
-                    .textBody()
-                    .padding(.vertical, .margin12)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .background(Color.themeLawrence)
-
-                ForEach(periods) { period in
-                    Text(period.title)
-                        .textCaption(color: .themeLeah)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
-                        .background(Color.themeLawrence)
-                }
-
-                ForEach(rows.indices, id: \.self) { index in
-                    let row = rows[index]
-
-                    Text("coin_page.return_of_investments.vs".localized(row.base.rawValue.uppercased()))
+            VStack(spacing: 0) {
+                LazyVGrid(columns: [GridItem(.flexible(), spacing: .heightOneDp)] + periods.map { _ in GridItem(.flexible(), spacing: .heightOneDp) }, spacing: .heightOneDp) {
+                    Text("coin_page.return_of_investments".localized)
                         .textCaption()
-                        .padding(.vertical, .margin12)
-                        .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        .frame(maxWidth: .infinity)
+                        .frame(height: .heightGrid38)
                         .background(Color.themeLawrence)
 
                     ForEach(periods) { period in
-                        DiffText(row.changes[period], font: .themeCaption)
-                            .frame(maxWidth: .infinity, maxHeight: .infinity)
+                        Text(period.title)
+                            .textCaption()
+                            .frame(maxWidth: .infinity)
+                            .frame(height: .heightGrid38)
                             .background(Color.themeLawrence)
+                    }
+
+                    let performanceData = viewModel.performanceCoins.compactMap { coin in
+                        if let matchingRow = rows.first(where: { $0.baseUid == coin.uid }) {
+                            return (coin: coin, row: matchingRow)
+                        }
+                        return nil
+                    }
+
+                    ForEach(performanceData.indices, id: \.self) { index in
+                        let data = performanceData[index]
+
+                        Text(data.coin.code.uppercased())
+                            .textCaptionSB(color: .themeLeah)
+                            .frame(maxWidth: .infinity)
+                            .frame(height: .heightGrid38)
+                            .background(Color.themeLawrence)
+
+                        ForEach(periods) { period in
+                            DiffText(data.row.changes[period], font: .themeCaption)
+                                .frame(maxWidth: .infinity)
+                                .frame(height: .heightGrid38)
+                                .background(Color.themeLawrence)
+                        }
+                    }
+                }
+                .background(Color.themeBlade)
+
+                HorizontalDivider()
+
+                ClickableRow(action: {
+                    performanceSelectorPresented = true
+                }) {
+                    HStack(spacing: .margin8) {
+                        Text("coin_overview.performance.select_coins.title".localized).textSubhead2(color: .themeLeah)
+                        Spacer()
+
+                        Image.disclosureIcon
                     }
                 }
             }
-            .background(Color.themeBlade)
         }
     }
 
