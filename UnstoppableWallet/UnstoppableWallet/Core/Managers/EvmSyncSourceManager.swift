@@ -204,13 +204,13 @@ extension EvmSyncSourceManager {
                     transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 ),
                 EvmSyncSource(
-                    name: "LlamaNodes",
-                    rpcSource: .http(urls: [URL(string: "https://base.llamarpc.com")!], auth: nil),
+                    name: "dRPC",
+                    rpcSource: .http(urls: [URL(string: "https://base.drpc.org")!], auth: nil),
                     transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 ),
                 EvmSyncSource(
-                    name: "Omnia",
-                    rpcSource: .http(urls: [URL(string: "https://endpoints.omniatech.io/v1/base/mainnet/public")!], auth: nil),
+                    name: "Public node",
+                    rpcSource: .http(urls: [URL(string: "https://base-rpc.publicnode.com")!], auth: nil),
                     transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                 ),
             ]
