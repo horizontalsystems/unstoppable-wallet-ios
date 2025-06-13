@@ -35,6 +35,7 @@ class MainSettingsViewModel: ObservableObject {
     @Published var emulatePurchase: Bool {
         didSet {
             localStorage.emulatePurchase = emulatePurchase
+            purchaseManager.loadProducts()
             purchaseManager.loadPurchases()
         }
     }

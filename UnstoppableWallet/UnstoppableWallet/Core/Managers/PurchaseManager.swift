@@ -38,7 +38,7 @@ class PurchaseManager: NSObject {
         SKPaymentQueue.default().add(self)
     }
 
-    private func loadProducts() {
+    func loadProducts() {
         Task { [weak self] in
             guard let self else { return }
             let products = try await Product.products(for: Self.productIds)
@@ -94,6 +94,10 @@ class PurchaseManager: NSObject {
     }
 
     private func syncProducts() {
+        guard !localStorage.emulatePurchase else {
+            productData = ProductData.testProducts
+            return
+        }
         productData = products.compactMap { ProductData(product: $0) }
         //        print(productData)
     }
@@ -170,15 +174,6 @@ extension PurchaseManager {
     }
 
     func purchase(product: ProductData) async throws {
-        if let product = products.first(where: { $0.id == product.id }) {
-            try await purchase(product: product)
-        } else {
-            throw SubscribeError.cantFoundProduct
-        }
-    }
-
-    @MainActor
-    func purchase(product: Product) async throws {
         guard !localStorage.emulatePurchase else { // emulate subscription
             localStorage.purchaseCancelled = false
             localStorage.purchase = PurchaseData(product: product)
@@ -189,6 +184,15 @@ extension PurchaseManager {
             return
         }
 
+        if let product = products.first(where: { $0.id == product.id }) {
+            try await purchase(product: product)
+        } else {
+            throw SubscribeError.cantFoundProduct
+        }
+    }
+
+    @MainActor
+    private func purchase(product: Product) async throws {
         let result = try await product.purchase()
 
         switch result {
@@ -266,7 +270,7 @@ extension PurchaseManager {
         }
 
         if localStorage.emulatePurchase { // if emulate and cancelled - all product must ignore trial period
-            usedOfferProductIds = localStorage.purchaseCancelled ? Set(products.map(\.id)) : Set()
+            usedOfferProductIds = localStorage.purchaseCancelled ? Set(productData.map(\.id)) : Set()
         } else {
             for product in productData {
                 // if product already in list, nothing can changes
@@ -489,6 +493,15 @@ extension PurchaseManager {
             }
             return nil
         }
+        
+        init(id: String, type: PurchaseType, period: SubscriptionPeriod?, price: Decimal, priceFormatted: String, introductoryOffer: Product.SubscriptionOffer?) {
+            self.id = id
+            self.type = type
+            self.period = period
+            self.price = price
+            self.priceFormatted = priceFormatted
+            self.introductoryOffer = introductoryOffer
+        }
 
         init?(product: Product) {
             id = product.id
@@ -547,7 +560,7 @@ extension PurchaseManager {
             }
         }
 
-        init?(product: Product) {
+        init?(product: ProductData) {
             id = product.id
 
             guard let type = PurchaseType(id: id) else {
@@ -586,4 +599,14 @@ enum PremiumFeature: String, CaseIterable {
     case addressPhishing = "address_phishing"
     case addressChecker = "address_checker"
     case vipSupport = "vip_support"
+}
+
+
+// test data for emulate purchases
+extension PurchaseManager.ProductData {
+    static var testProducts: [PurchaseManager.ProductData] { [
+        PurchaseManager.ProductData(id: "premium_1m", type: .subscription, period: .monthly, price: 0.99, priceFormatted: "0.99$", introductoryOffer: nil),
+        PurchaseManager.ProductData(id: "premium_1y", type: .subscription, period: .annually, price: 10.99, priceFormatted: "10.99$", introductoryOffer: nil),
+        PurchaseManager.ProductData(id: "premium_lifetime", type: .lifetime, period: nil, price: 100, priceFormatted: "100$", introductoryOffer: nil)
+    ] }
 }
