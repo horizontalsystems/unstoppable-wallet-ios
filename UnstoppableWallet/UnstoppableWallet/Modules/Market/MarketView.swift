@@ -42,7 +42,7 @@ struct MarketView: View {
                     stat(page: .markets, event: .open(page: .advancedSearch))
                     advancedSearchPresented = true
                 }) {
-                    Image("search_24")
+                    Image("manage_2_24")
                         .renderingMode(.template)
                         .foregroundColor(.themeGray)
                 }
