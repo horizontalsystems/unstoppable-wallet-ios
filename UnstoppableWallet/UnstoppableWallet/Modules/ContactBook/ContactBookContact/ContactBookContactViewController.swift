@@ -96,6 +96,7 @@ class ContactBookContactViewController: KeyboardAwareViewController {
 
     private func handleChangeContact() {
         navigationItem.rightBarButtonItem?.isEnabled = contactWasChanged
+        navigationItem.rightBarButtonItem?.tintColor = contactWasChanged ? .themeJacob : .themeGray
         isModalInPresentation = contactWasChanged
     }
 

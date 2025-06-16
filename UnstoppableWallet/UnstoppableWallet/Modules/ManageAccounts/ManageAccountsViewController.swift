@@ -80,9 +80,9 @@ class ManageAccountsViewController: ThemeViewController {
         ]))
 
         watchCell.set(backgroundStyle: .lawrence, isLast: true)
-        CellBuilder.build(cell: watchCell, elements: [.image20, .text])
+        CellBuilder.build(cell: watchCell, elements: [.image24, .text])
         watchCell.bind(index: 0, block: { (component: ImageComponent) in
-            component.imageView.image = UIImage(named: "eye_20")?.withTintColor(.themeJacob)
+            component.imageView.image = UIImage(named: "binocule_24")?.withTintColor(.themeJacob)
         })
         watchCell.bind(index: 1, block: { (component: TextComponent) in
             component.font = .body

@@ -59,7 +59,10 @@ class ManageAccountViewController: KeyboardAwareViewController {
         nameCell.autocapitalizationType = .words
         nameCell.onChangeText = { [weak self] in self?.viewModel.onChange(name: $0) }
 
-        subscribe(disposeBag, viewModel.saveEnabledDriver) { [weak self] in self?.navigationItem.rightBarButtonItem?.isEnabled = $0 }
+        subscribe(disposeBag, viewModel.saveEnabledDriver) { [weak self] in
+            self?.navigationItem.rightBarButtonItem?.isEnabled = $0
+            self?.navigationItem.rightBarButtonItem?.tintColor = $0 ? .themeJacob : .themeGray
+        }
         subscribe(disposeBag, viewModel.keyActionsDriver) { [weak self] in
             self?.keyActions = $0
             self?.reloadTable()
