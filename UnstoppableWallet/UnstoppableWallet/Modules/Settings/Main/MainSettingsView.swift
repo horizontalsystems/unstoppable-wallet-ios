@@ -400,12 +400,7 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func addressChecker() -> some View {
         ClickableRow(action: {
-            if viewModel.activated(premiumFeature: .addressChecker) {
-                addressCheckerPresented = true
-            } else {
-                stat(page: .settings, event: .openPremium(from: .addressChecker))
-                purchasesPresented = true
-            }
+            addressCheckerPresented = true
         }) {
             Image("radar_24").themeIcon(color: .themeJacob)
             Text("address_checker.title".localized).themeBody()

@@ -493,7 +493,7 @@ extension PurchaseManager {
             }
             return nil
         }
-        
+
         init(id: String, type: PurchaseType, period: SubscriptionPeriod?, price: Decimal, priceFormatted: String, introductoryOffer: Product.SubscriptionOffer?) {
             self.id = id
             self.type = type
@@ -601,12 +601,11 @@ enum PremiumFeature: String, CaseIterable {
     case vipSupport = "vip_support"
 }
 
-
 // test data for emulate purchases
 extension PurchaseManager.ProductData {
     static var testProducts: [PurchaseManager.ProductData] { [
         PurchaseManager.ProductData(id: "premium_1m", type: .subscription, period: .monthly, price: 0.99, priceFormatted: "0.99$", introductoryOffer: nil),
         PurchaseManager.ProductData(id: "premium_1y", type: .subscription, period: .annually, price: 10.99, priceFormatted: "10.99$", introductoryOffer: nil),
-        PurchaseManager.ProductData(id: "premium_lifetime", type: .lifetime, period: nil, price: 100, priceFormatted: "100$", introductoryOffer: nil)
+        PurchaseManager.ProductData(id: "premium_lifetime", type: .lifetime, period: nil, price: 100, priceFormatted: "100$", introductoryOffer: nil),
     ] }
 }

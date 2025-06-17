@@ -3,16 +3,25 @@ import SwiftUI
 struct AddressCheckerView: View {
     @StateObject var viewModel = AddressCheckerViewModel()
 
+    @State private var purchasesPresented = false
+
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
                 VStack(spacing: 0) {
                     ListSection {
-                        ListRow {
-                            Toggle(isOn: $viewModel.recipientAddressCheck.animation()) {
-                                Text("address_checker.recipient_check".localized).themeBody()
+                        if viewModel.activated {
+                            ListRow {
+                                switchContent()
                             }
-                            .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+                        } else {
+                            ClickableRow(action: {
+                                stat(page: .addressChecker, event: .openPremium(from: .disableAddressChecker))
+                                purchasesPresented = true
+                            }) {
+                                switchContent()
+                                    .allowsHitTesting(false)
+                            }
                         }
                     }
 
@@ -21,15 +30,22 @@ struct AddressCheckerView: View {
 
                 VStack(spacing: 0) {
                     ListSection {
-                        NavigationRow(spacing: .margin8, destination: {
-                            CheckAddressView()
-                                .onFirstAppear {
-                                    stat(page: .addressChecker, event: .open(page: .checkAddress))
-                                }
-                        }) {
-                            Text("address_checker.check_address".localized).textBody()
-                            Spacer()
-                            Image.disclosureIcon
+                        if viewModel.activated {
+                            NavigationRow(spacing: .margin8, destination: {
+                                CheckAddressView()
+                                    .onFirstAppear {
+                                        stat(page: .addressChecker, event: .open(page: .checkAddress))
+                                    }
+                            }) {
+                                addressContent()
+                            }
+                        } else {
+                            ClickableRow(action: {
+                                stat(page: .addressChecker, event: .openPremium(from: .addressChecker))
+                                purchasesPresented = true
+                            }) {
+                                addressContent()
+                            }
                         }
                     }
 
@@ -40,5 +56,23 @@ struct AddressCheckerView: View {
         }
         .navigationTitle("address_checker.title".localized)
         .navigationBarTitleDisplayMode(.inline)
+        .sheet(isPresented: $purchasesPresented) {
+            PurchasesView()
+        }
+    }
+
+    @ViewBuilder
+    private func switchContent() -> some View {
+        Toggle(isOn: $viewModel.recipientAddressCheck.animation()) {
+            Text("address_checker.recipient_check".localized).themeBody()
+        }
+        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+    }
+
+    @ViewBuilder
+    private func addressContent() -> some View {
+        Text("address_checker.check_address".localized).textBody()
+        Spacer()
+        Image.disclosureIcon
     }
 }

@@ -115,6 +115,6 @@ extension CoinOverviewViewModel {
 extension PerformanceRow {
     static let gold = PerformanceCoin(uid: "tether-gold", code: "Gold")
     static let sp500 = PerformanceCoin(uid: "snp", code: "SP500")
-    static let defaultCoins = [Self.gold, Self.sp500, PerformanceCoin(uid: "bitcoin", code: "BTC")]
+    static let defaultCoins = [PerformanceCoin(uid: "bitcoin", code: "BTC"), PerformanceCoin(uid: "tether", code: "USDT"), Self.sp500]
     static let defaultPeriods: [HsTimePeriod] = [.month6, .year1]
 }
