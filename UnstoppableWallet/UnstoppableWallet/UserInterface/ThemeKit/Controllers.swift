@@ -128,6 +128,7 @@ open class ThemeViewController: UIViewController {
         super.viewDidLoad()
 
         view.backgroundColor = .themeTyler
+        navigationItem.largeTitleDisplayMode = .never
     }
 
     override open var preferredStatusBarStyle: UIStatusBarStyle {
