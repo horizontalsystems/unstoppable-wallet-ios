@@ -14045,14 +14045,6 @@
 				version = 1.0.0;
 			};
 		};
-		D3DDFA322DDF2D02003CADDF /* XCRemoteSwiftPackageReference "TonConnectAPI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/TonConnectAPI";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.0;
-			};
-		};
 		D3E323C62AE7B8E400F73914 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";

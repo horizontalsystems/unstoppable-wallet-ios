@@ -461,6 +461,7 @@ enum StatPremiumTrigger: String {
     case duressMode = "duress_mode"
     case vipSupport = "vip_support"
     case addressChecker = "address_checker"
+    case disableAddressChecker = "disable_address_checker"
     case sectors
     case periodChange = "period_change"
     case tokenChange = "token_change"
