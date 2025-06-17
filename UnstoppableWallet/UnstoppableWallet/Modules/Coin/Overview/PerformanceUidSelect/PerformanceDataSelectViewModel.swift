@@ -7,9 +7,9 @@ import MarketKit
 class PerformanceDataSelectViewModel: ObservableObject {
     let coinCount = 3
 
-    private let marketKit = App.shared.marketKit
-    private let performanceDataManager = App.shared.performanceDataManager
-    private let purchaseManager = App.shared.purchaseManager
+    private let marketKit = Core.shared.marketKit
+    private let performanceDataManager = Core.shared.performanceDataManager
+    private let purchaseManager = Core.shared.purchaseManager
 
     private var tasks = Set<AnyTask>()
     private var cancellables: [AnyCancellable] = []

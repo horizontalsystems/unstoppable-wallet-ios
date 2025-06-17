@@ -3,17 +3,17 @@ import UIKit
 enum LaunchModule {
     static func viewController() -> UIViewController {
         let service = LaunchService(
-            accountManager: App.shared.accountManager,
-            passcodeManager: App.shared.passcodeManager,
-            passcodeLockManager: App.shared.passcodeLockManager,
-            localStorage: App.shared.localStorage
+            accountManager: Core.shared.accountManager,
+            passcodeManager: Core.shared.passcodeManager,
+            passcodeLockManager: Core.shared.passcodeLockManager,
+            localStorage: Core.shared.localStorage
         )
 
         switch service.launchMode {
         case .passcodeNotSet: return NoPasscodeViewController(mode: .noPasscode)
         case .cannotCheckPasscode: return NoPasscodeViewController(mode: .cannotCheckPasscode)
-        case .intro: return WelcomeScreenViewController.instance()
-        case .unlock: return UnlockModule.appUnlockView(appStart: true).toViewController()
+        case .intro: return WelcomeScreenViewController.instance(onFinish: {})
+        case .unlock: return AppUnlockView().toViewController()
         case .main: return MainModule.instance()
         }
     }

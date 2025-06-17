@@ -10,11 +10,13 @@ class MainViewController: ThemeTabBarController {
 
     private var marketModule: UIViewController?
     private let balanceModule = ThemeNavigationController(rootViewController: WalletModule.viewController())
-    private let transactionsModule = MainTransactionsView().toNavigationViewController()
+    // private let walletModule = WalletView().toViewController()
+    // private let transactionsModule = MainTransactionsView().toNavigationViewController()
     private let settingsModule = MainSettingsView().toNavigationViewController()
 
-    private let settingsTabBarItem = UITabBarItem(title: "settings.tab_bar_item".localized, image: UIImage(named: "filled_settings_2_24"), tag: 0)
+    private let walletTabBarItem = UITabBarItem(title: "balance.tab_bar_item".localized, image: UIImage(named: "filled_wallet_24"), tag: 0)
     private let transactionsTabBarItem = UITabBarItem(title: "transactions.tab_bar_item".localized, image: UIImage(named: "filled_transaction_2n_24"), tag: 0)
+    private let settingsTabBarItem = UITabBarItem(title: "settings.tab_bar_item".localized, image: UIImage(named: "filled_settings_2_24"), tag: 0)
 
     private var showAlerts = [() -> Void]()
 
@@ -28,8 +30,9 @@ class MainViewController: ThemeTabBarController {
 
         selectedIndex = MainModule.Tab.allCases.firstIndex(of: viewModel.initialTab) ?? 0
 
+        // walletModule.tabBarItem = walletTabBarItem
+        // transactionsModule.tabBarItem = transactionsTabBarItem
         settingsModule.tabBarItem = settingsTabBarItem
-        transactionsModule.tabBarItem = transactionsTabBarItem
     }
 
     @available(*, unavailable)
@@ -100,7 +103,8 @@ class MainViewController: ThemeTabBarController {
 
         viewControllers.append(contentsOf: [
             balanceModule,
-            transactionsModule,
+            // walletModule,
+            // transactionsModule,
             settingsModule,
         ])
 

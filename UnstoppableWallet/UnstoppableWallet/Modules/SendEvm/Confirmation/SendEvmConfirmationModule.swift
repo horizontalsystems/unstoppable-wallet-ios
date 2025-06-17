@@ -85,9 +85,9 @@ enum SendEvmConfirmationModule {
 
         guard let coinServiceFactory = EvmCoinServiceFactory(
             blockchainType: evmKitWrapper.blockchainType,
-            marketKit: App.shared.marketKit,
-            currencyManager: App.shared.currencyManager,
-            coinManager: App.shared.coinManager
+            marketKit: Core.shared.marketKit,
+            currencyManager: Core.shared.currencyManager,
+            coinManager: Core.shared.coinManager
         ) else {
             return nil
         }
@@ -98,9 +98,9 @@ enum SendEvmConfirmationModule {
             return nil
         }
 
-        let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: App.shared.evmLabelManager)
-        let contactLabelService = ContactLabelService(contactManager: App.shared.contactManager, blockchainType: evmKitWrapper.blockchainType)
-        let viewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager, contactLabelService: contactLabelService)
+        let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: Core.shared.evmLabelManager)
+        let contactLabelService = ContactLabelService(contactManager: Core.shared.contactManager, blockchainType: evmKitWrapper.blockchainType)
+        let viewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: Core.shared.evmLabelManager, contactLabelService: contactLabelService)
         let controller = SendEvmConfirmationViewController(mode: .send, transactionViewModel: viewModel, settingsViewModel: settingsViewModel)
 
         return controller
@@ -124,9 +124,9 @@ enum SendEvmConfirmationModule {
         let evmKitWrapper = adapter.evmKitWrapper
         guard let coinServiceFactory = EvmCoinServiceFactory(
             blockchainType: evmKitWrapper.blockchainType,
-            marketKit: App.shared.marketKit,
-            currencyManager: App.shared.currencyManager,
-            coinManager: App.shared.coinManager
+            marketKit: Core.shared.marketKit,
+            currencyManager: Core.shared.currencyManager,
+            coinManager: Core.shared.coinManager
         ) else {
             throw CreateModuleError.cantCreateFeeRateProvider
         }
@@ -151,9 +151,9 @@ enum SendEvmConfirmationModule {
             throw CreateModuleError.cantCreateFeeSettingsModule
         }
 
-        let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: App.shared.evmLabelManager)
-        let contactLabelService = ContactLabelService(contactManager: App.shared.contactManager, blockchainType: evmKitWrapper.blockchainType)
-        let viewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager, contactLabelService: contactLabelService)
+        let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: Core.shared.evmLabelManager)
+        let contactLabelService = ContactLabelService(contactManager: Core.shared.contactManager, blockchainType: evmKitWrapper.blockchainType)
+        let viewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: Core.shared.evmLabelManager, contactLabelService: contactLabelService)
 
         let mode: SendEvmConfirmationViewController.Mode
         switch type {

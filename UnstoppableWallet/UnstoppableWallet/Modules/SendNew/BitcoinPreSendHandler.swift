@@ -71,7 +71,7 @@ class BitcoinPreSendHandler {
         self.adapter = adapter
 
         let blockchainType = token.blockchainType
-        blockchainManager = App.shared.btcBlockchainManager
+        blockchainManager = Core.shared.btcBlockchainManager
 
         defaultSortMode = blockchainManager.transactionSortMode(blockchainType: blockchainType)
         sortMode = defaultSortMode

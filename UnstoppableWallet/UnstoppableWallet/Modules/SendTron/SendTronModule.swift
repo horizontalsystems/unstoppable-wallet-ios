@@ -9,8 +9,8 @@ enum SendTronModule {
 
         let addressService = AddressService(
             mode: .parsers(AddressParserFactory.parser(blockchainType: .tron, tokenType: token.type), addressParserChain),
-            marketKit: App.shared.marketKit,
-            contactBookManager: App.shared.contactManager,
+            marketKit: Core.shared.marketKit,
+            contactBookManager: Core.shared.contactManager,
             blockchainType: .tron
         )
         let memoService = SendMemoInputService(maxSymbols: 120)
@@ -22,12 +22,12 @@ enum SendTronModule {
             addressService: addressService,
             memoService: memoService
         )
-        let switchService = AmountTypeSwitchService(userDefaultsStorage: App.shared.userDefaultsStorage)
-        let fiatService = FiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
+        let switchService = AmountTypeSwitchService(userDefaultsStorage: Core.shared.userDefaultsStorage)
+        let fiatService = FiatService(switchService: switchService, currencyManager: Core.shared.currencyManager, marketKit: Core.shared.marketKit)
 
         switchService.add(toggleAllowedObservable: fiatService.toggleAvailableObservable)
 
-        let coinService = CoinService(token: token, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
+        let coinService = CoinService(token: token, currencyManager: Core.shared.currencyManager, marketKit: Core.shared.marketKit)
 
         let viewModel = SendTronViewModel(service: service)
         let availableBalanceViewModel = SendAvailableBalanceViewModel(service: service, coinService: coinService, switchService: switchService)

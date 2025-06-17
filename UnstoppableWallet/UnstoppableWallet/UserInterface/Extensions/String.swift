@@ -21,6 +21,8 @@ extension String {
 
         return String(prefix(extraPrefix + 4)) + "..." + String(suffix(4))
     }
+
+    static let placeholder = "----"
 }
 
 extension String: Identifiable {

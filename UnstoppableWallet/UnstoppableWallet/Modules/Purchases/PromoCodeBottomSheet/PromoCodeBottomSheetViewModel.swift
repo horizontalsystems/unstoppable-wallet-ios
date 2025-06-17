@@ -2,7 +2,7 @@
 // import UIKit
 //
 // class PromoCodeBottomSheetViewModel: ObservableObject {
-//    private let purchaseManager = App.shared.purchaseManager
+//    private let purchaseManager = Core.shared.purchaseManager
 //
 //    private let initialPromo: String
 //    private let onApplyPromo: (PurchaseManager.PromoData) -> Void

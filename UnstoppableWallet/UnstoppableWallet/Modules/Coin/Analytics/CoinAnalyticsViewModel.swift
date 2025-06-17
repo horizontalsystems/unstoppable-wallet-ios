@@ -8,9 +8,9 @@ class CoinAnalyticsViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     let coin: Coin
-    private let marketKit = App.shared.marketKit
-    private let currencyManager = App.shared.currencyManager
-    private let purchaseManager = App.shared.purchaseManager
+    private let marketKit = Core.shared.marketKit
+    private let currencyManager = Core.shared.currencyManager
+    private let purchaseManager = Core.shared.purchaseManager
     private var tasks = Set<AnyTask>()
 
     @Published private(set) var analyticsEnabled: Bool = false

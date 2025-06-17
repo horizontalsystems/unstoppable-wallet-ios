@@ -11,7 +11,7 @@ class MultiSwapRevokeViewModel: ObservableObject {
     init(token: Token, spenderAddress: EvmKit.Address) {
         self.token = token
         self.spenderAddress = spenderAddress
-        approveDataProvider = App.shared.adapterManager.adapter(for: token) as? IApproveDataProvider
+        approveDataProvider = Core.shared.adapterManager.adapter(for: token) as? IApproveDataProvider
     }
 }
 

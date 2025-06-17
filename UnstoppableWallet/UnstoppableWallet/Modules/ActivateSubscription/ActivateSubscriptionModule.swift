@@ -5,9 +5,9 @@ import UIKit
 enum ActivateSubscriptionModule {
     static func viewController() -> UIViewController {
         let service = ActivateSubscriptionService(
-            marketKit: App.shared.marketKit,
-            subscriptionManager: App.shared.subscriptionManager,
-            accountManager: App.shared.accountManager
+            marketKit: Core.shared.marketKit,
+            subscriptionManager: Core.shared.subscriptionManager,
+            accountManager: Core.shared.accountManager
         )
 
         let viewModel = ActivateSubscriptionViewModel(service: service)

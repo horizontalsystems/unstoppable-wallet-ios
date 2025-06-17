@@ -142,7 +142,7 @@ extension BitcoinSendHandler {
 
 extension BitcoinSendHandler {
     static func instance(token: Token, params: SendParameters) -> BitcoinSendHandler? {
-        guard let adapter = App.shared.adapterManager.adapter(for: token) as? BitcoinBaseAdapter else {
+        guard let adapter = Core.shared.adapterManager.adapter(for: token) as? BitcoinBaseAdapter else {
             return nil
         }
 

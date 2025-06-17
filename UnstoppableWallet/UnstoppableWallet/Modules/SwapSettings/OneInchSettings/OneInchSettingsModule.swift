@@ -4,7 +4,7 @@ import UIKit
 
 enum OneInchSettingsModule {
     static func dataSource(tradeService: OneInchTradeService) -> ISwapSettingsDataSource? {
-        guard let ethereumToken = try? App.shared.marketKit.token(query: TokenQuery(blockchainType: .ethereum, tokenType: .native)) else {
+        guard let ethereumToken = try? Core.shared.marketKit.token(query: TokenQuery(blockchainType: .ethereum, tokenType: .native)) else {
             return nil
         }
         let token = tradeService.tokenIn
@@ -19,14 +19,14 @@ enum OneInchSettingsModule {
             .append(handler: evmAddressParserItem)
             .append(handler: udnAddressParserItem)
 
-        if let httpSyncSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
+        if let httpSyncSource = Core.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
            let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: evmAddressParserItem)
         {
             addressParserChain.append(handler: ensAddressParserItem)
         }
 
         let addressUriParser = AddressParserFactory.parser(blockchainType: ethereumToken.blockchainType, tokenType: nil)
-        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: App.shared.marketKit, contactBookManager: App.shared.contactManager, blockchainType: blockchainType, initialAddress: tradeService.settings.recipient)
+        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: Core.shared.marketKit, contactBookManager: Core.shared.contactManager, blockchainType: blockchainType, initialAddress: tradeService.settings.recipient)
 
         let service = OneInchSettingsService(settings: tradeService.settings, addressService: addressService)
         let viewModel = OneInchSettingsViewModel(service: service, tradeService: tradeService)

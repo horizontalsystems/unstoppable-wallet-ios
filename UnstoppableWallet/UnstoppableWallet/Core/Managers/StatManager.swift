@@ -6,7 +6,7 @@ import MarketKit
 
 func stat(page: StatPage, section: StatSection? = nil, event: StatEvent) {
     // print("PAGE: \(page)\(section.map { ", SECTION: \($0)" } ?? ""), event: \(event.name)\(event.params.map { ", PARAMS: \($0)" } ?? "")")
-    App.shared.statManager.logStat(eventPage: page, eventSection: section, event: event)
+    Core.shared.statManager.logStat(eventPage: page, eventSection: section, event: event)
 }
 
 class StatManager {

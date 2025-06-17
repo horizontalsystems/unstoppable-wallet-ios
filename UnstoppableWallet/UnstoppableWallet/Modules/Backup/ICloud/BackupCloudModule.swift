@@ -5,7 +5,7 @@ enum BackupCloudModule {
     static let minimumPassphraseLength = 8
 
     static func backupTerms(account: Account) -> UIViewController {
-        let service = ICloudBackupTermsService(cloudAccountBackupManager: App.shared.cloudBackupManager, account: account)
+        let service = ICloudBackupTermsService(cloudAccountBackupManager: Core.shared.cloudBackupManager, account: account)
         let viewModel = ICloudBackupTermsViewModel(service: service)
         let controller = ICloudBackupTermsViewController(viewModel: viewModel)
 
@@ -13,7 +13,7 @@ enum BackupCloudModule {
     }
 
     static func backupName(account: Account) -> UIViewController {
-        let service = ICloudBackupNameService(iCloudManager: App.shared.cloudBackupManager, account: account)
+        let service = ICloudBackupNameService(iCloudManager: Core.shared.cloudBackupManager, account: account)
         let viewModel = ICloudBackupNameViewModel(service: service)
         let controller = ICloudBackupNameViewController(viewModel: viewModel)
 
@@ -21,7 +21,7 @@ enum BackupCloudModule {
     }
 
     static func backupPassword(account: Account, name: String) -> UIViewController {
-        let service = BackupCloudPassphraseService(iCloudManager: App.shared.cloudBackupManager, account: account, name: name)
+        let service = BackupCloudPassphraseService(iCloudManager: Core.shared.cloudBackupManager, account: account, name: name)
         let viewModel = BackupCloudPassphraseViewModel(service: service)
         let controller = BackupCloudPassphraseViewController(viewModel: viewModel)
 

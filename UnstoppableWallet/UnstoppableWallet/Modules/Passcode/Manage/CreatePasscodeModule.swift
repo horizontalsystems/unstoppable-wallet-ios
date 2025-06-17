@@ -3,7 +3,7 @@ import SwiftUI
 enum CreatePasscodeModule {
     static func createPasscodeView(reason: CreatePasscodeReason, showParentSheet: Binding<Bool>, onCreate: @escaping () -> Void, onCancel: @escaping () -> Void) -> some View {
         let viewModel = CreatePasscodeViewModel(
-            passcodeManager: App.shared.passcodeManager,
+            passcodeManager: Core.shared.passcodeManager,
             reason: reason,
             onCreate: onCreate,
             onCancel: onCancel
@@ -15,8 +15,8 @@ enum CreatePasscodeModule {
     static func createDuressPasscodeView(accountIds: [String], showParentSheet: Binding<Bool>) -> some View {
         let viewModel = CreateDuressPasscodeViewModel(
             accountIds: accountIds,
-            accountManager: App.shared.accountManager,
-            passcodeManager: App.shared.passcodeManager
+            accountManager: Core.shared.accountManager,
+            passcodeManager: Core.shared.passcodeManager
         )
 
         return SetPasscodeView(viewModel: viewModel, showParentSheet: showParentSheet)

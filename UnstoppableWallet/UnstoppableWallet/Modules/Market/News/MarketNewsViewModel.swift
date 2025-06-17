@@ -4,8 +4,8 @@ import HsExtensions
 import MarketKit
 
 class MarketNewsViewModel: ObservableObject {
-    private let marketKit = App.shared.marketKit
-    private let appManager = App.shared.appManager
+    private let marketKit = Core.shared.marketKit
+    private let appManager = Core.shared.appManager
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 

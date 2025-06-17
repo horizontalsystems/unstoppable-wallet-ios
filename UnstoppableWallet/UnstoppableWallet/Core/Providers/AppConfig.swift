@@ -72,10 +72,6 @@ enum AppConfig {
         (Bundle.main.object(forInfoDictionaryKey: "MarketApiUrl") as? String) ?? ""
     }
 
-    static var officeMode: Bool {
-        Bundle.main.object(forInfoDictionaryKey: "OfficeMode") as? String == "true"
-    }
-
     static var etherscanKeys: [String] {
         ((Bundle.main.object(forInfoDictionaryKey: "EtherscanApiKeys") as? String) ?? "").components(separatedBy: ",")
     }

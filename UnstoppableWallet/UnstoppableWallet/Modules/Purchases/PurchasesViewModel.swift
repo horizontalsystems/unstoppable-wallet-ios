@@ -4,7 +4,7 @@ import StoreKit
 class PurchasesViewModel: ObservableObject {
     let approvedIcons: [String] = ["bitcoin", "wallet_scrutiny", "certik"]
 
-    let purchaseManager = App.shared.purchaseManager
+    let purchaseManager = Core.shared.purchaseManager
     private var cancellables = Set<AnyCancellable>()
 
     @Published private(set) var viewItems: [ViewItem]

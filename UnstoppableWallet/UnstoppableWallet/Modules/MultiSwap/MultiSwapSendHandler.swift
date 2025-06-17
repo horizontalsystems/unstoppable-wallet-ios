@@ -5,10 +5,10 @@ import Foundation
 import MarketKit
 
 class MultiSwapSendHandler {
-    private let currencyManager = App.shared.currencyManager
-    private let marketKit = App.shared.marketKit
-    private let accountManager = App.shared.accountManager
-    private let walletManager = App.shared.walletManager
+    private let currencyManager = Core.shared.currencyManager
+    private let marketKit = Core.shared.marketKit
+    private let accountManager = Core.shared.accountManager
+    private let walletManager = Core.shared.walletManager
 
     let baseToken: Token
     let tokenIn: Token
@@ -166,7 +166,7 @@ extension MultiSwapSendHandler {
         case .native, .derived, .addressType:
             baseToken = tokenIn
         case .eip20, .spl, .jetton, .stellar:
-            baseToken = try? App.shared.marketKit.token(query: TokenQuery(blockchainType: tokenIn.blockchainType, tokenType: .native))
+            baseToken = try? Core.shared.marketKit.token(query: TokenQuery(blockchainType: tokenIn.blockchainType, tokenType: .native))
         case .unsupported:
             baseToken = nil
         }

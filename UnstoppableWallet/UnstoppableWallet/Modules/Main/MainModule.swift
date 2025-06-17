@@ -7,34 +7,29 @@ enum MainModule {
 
     static func instance(presetTab: Tab? = nil) -> UIViewController {
         let service = MainService(
-            localStorage: App.shared.localStorage,
-            userDefaultsStorage: App.shared.userDefaultsStorage,
-            launchScreenManager: App.shared.launchScreenManager,
-            accountManager: App.shared.accountManager,
-            walletManager: App.shared.walletManager,
-            appManager: App.shared.appManager,
-            passcodeManager: App.shared.passcodeManager,
-            lockManager: App.shared.lockManager,
+            localStorage: Core.shared.localStorage,
+            userDefaultsStorage: Core.shared.userDefaultsStorage,
+            launchScreenManager: Core.shared.launchScreenManager,
+            accountManager: Core.shared.accountManager,
+            walletManager: Core.shared.walletManager,
+            appManager: Core.shared.appManager,
+            passcodeManager: Core.shared.passcodeManager,
+            lockManager: Core.shared.lockManager,
             presetTab: presetTab
         )
         let badgeService = MainBadgeService(
-            backupManager: App.shared.backupManager,
-            accountRestoreWarningManager: App.shared.accountRestoreWarningManager,
-            passcodeManager: App.shared.passcodeManager,
-            termsManager: App.shared.termsManager,
-            walletConnectSessionManager: App.shared.walletConnectSessionManager,
-            contactBookManager: App.shared.contactManager
+            backupManager: Core.shared.backupManager,
+            accountRestoreWarningManager: Core.shared.accountRestoreWarningManager,
+            passcodeManager: Core.shared.passcodeManager,
+            termsManager: Core.shared.termsManager,
+            walletConnectSessionManager: Core.shared.walletConnectSessionManager,
+            contactBookManager: Core.shared.contactManager
         )
-        let releaseNotesService = ReleaseNotesService(
-            appVersionManager: App.shared.appVersionManager
-        )
-        let jailbreakService = JailbreakService(
-            localStorage: App.shared.localStorage,
-            jailbreakTestManager: JailbreakTestManager()
-        )
-        let deepLinkService = DeepLinkService(deepLinkManager: App.shared.deepLinkManager)
+        let releaseNotesService = ReleaseNotesService()
+        let jailbreakService = JailbreakService()
+        let deepLinkService = DeepLinkService(deepLinkManager: Core.shared.deepLinkManager)
 
-        let eventHandler = App.shared.appEventHandler
+        let eventHandler = Core.shared.appEventHandler
         let viewModel = MainViewModel(
             service: service,
             badgeService: badgeService,
@@ -58,7 +53,7 @@ enum MainModule {
         eventHandler.append(handler: sendAddressHandler)
         eventHandler.append(handler: telegramUserHandler)
 
-        App.shared.lockDelegate.viewController = viewController
+        // Core.shared.lockDelegate.viewController = viewController
 
         return viewController
     }

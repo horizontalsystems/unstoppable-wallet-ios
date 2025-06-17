@@ -38,16 +38,15 @@ class WalletManager {
     }
 
     private func _reloadWallets() {
-        guard let activeAccount = accountManager.activeAccount else {
+        if let activeAccount = accountManager.activeAccount {
+            do {
+                cachedActiveWalletData = try WalletData(wallets: storage.wallets(account: activeAccount), account: activeAccount)
+            } catch {
+                // todo
+                cachedActiveWalletData = WalletData(wallets: [], account: activeAccount)
+            }
+        } else {
             cachedActiveWalletData = WalletData(wallets: [], account: nil)
-            return
-        }
-
-        do {
-            cachedActiveWalletData = try WalletData(wallets: storage.wallets(account: activeAccount), account: activeAccount)
-        } catch {
-            // todo
-            cachedActiveWalletData = WalletData(wallets: [], account: activeAccount)
         }
 
         activeWalletDataRelay.accept(cachedActiveWalletData)

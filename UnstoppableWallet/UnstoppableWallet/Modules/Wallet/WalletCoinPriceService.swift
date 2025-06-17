@@ -9,9 +9,9 @@ protocol IWalletCoinPriceServiceDelegate: AnyObject {
 class WalletCoinPriceService {
     weak var delegate: IWalletCoinPriceServiceDelegate?
 
-    private let currencyManager = App.shared.currencyManager
-    private let priceChangeModeManager = App.shared.priceChangeModeManager
-    private let marketKit = App.shared.marketKit
+    private let currencyManager = Core.shared.currencyManager
+    private let priceChangeModeManager = Core.shared.priceChangeModeManager
+    private let marketKit = Core.shared.marketKit
     private var cancellables = Set<AnyCancellable>()
     private var coinPriceCancellables = Set<AnyCancellable>()
 
@@ -119,7 +119,7 @@ extension WalletCoinPriceService {
 }
 
 extension WalletCoinPriceService {
-    struct Item {
+    struct Item: Equatable {
         let price: CurrencyValue
         let diff: Decimal?
         let expired: Bool

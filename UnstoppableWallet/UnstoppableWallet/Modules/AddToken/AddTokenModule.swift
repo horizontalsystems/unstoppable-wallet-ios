@@ -5,41 +5,41 @@ import UIKit
 
 enum AddTokenModule {
     static func viewController() -> UIViewController? {
-        guard let account = App.shared.accountManager.activeAccount else {
+        guard let account = Core.shared.accountManager.activeAccount else {
             return nil
         }
 
         var items = [Item]()
 
-        for blockchain in App.shared.evmBlockchainManager.allBlockchains {
+        for blockchain in Core.shared.evmBlockchainManager.allBlockchains {
             if let service: IAddTokenBlockchainService = AddEvmTokenBlockchainService(
                 blockchain: blockchain,
-                networkManager: App.shared.networkManager,
-                evmSyncSourceManager: App.shared.evmSyncSourceManager
+                networkManager: Core.shared.networkManager,
+                evmSyncSourceManager: Core.shared.evmSyncSourceManager
             ) {
                 let item = Item(blockchain: blockchain, service: service)
                 items.append(item)
             }
         }
 
-        if let blockchain = try? App.shared.marketKit.blockchain(uid: BlockchainType.tron.uid), blockchain.type.supports(accountType: account.type) {
+        if let blockchain = try? Core.shared.marketKit.blockchain(uid: BlockchainType.tron.uid), blockchain.type.supports(accountType: account.type) {
             let service: IAddTokenBlockchainService = AddTronTokenBlockchainService(
                 blockchain: blockchain,
-                networkManager: App.shared.networkManager,
-                network: App.shared.testNetManager.testNetEnabled ? .nileTestnet : .mainNet
+                networkManager: Core.shared.networkManager,
+                network: Core.shared.testNetManager.testNetEnabled ? .nileTestnet : .mainNet
             )
 
             let item = Item(blockchain: blockchain, service: service)
             items.append(item)
         }
 
-        if let blockchain = try? App.shared.marketKit.blockchain(uid: BlockchainType.ton.uid), blockchain.type.supports(accountType: account.type) {
+        if let blockchain = try? Core.shared.marketKit.blockchain(uid: BlockchainType.ton.uid), blockchain.type.supports(accountType: account.type) {
             let service: IAddTokenBlockchainService = AddJettonBlockchainService(blockchain: blockchain)
             let item = Item(blockchain: blockchain, service: service)
             items.append(item)
         }
 
-        let service = AddTokenService(account: account, items: items, coinManager: App.shared.coinManager, walletManager: App.shared.walletManager)
+        let service = AddTokenService(account: account, items: items, coinManager: Core.shared.coinManager, walletManager: Core.shared.walletManager)
         let viewModel = AddTokenViewModel(service: service)
         let viewController = AddTokenViewController(viewModel: viewModel)
 

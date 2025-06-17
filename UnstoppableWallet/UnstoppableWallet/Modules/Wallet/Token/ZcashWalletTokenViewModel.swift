@@ -3,7 +3,7 @@ import Foundation
 import RxSwift
 
 class ZcashWalletTokenViewModel: ObservableObject {
-    private let balanceHiddenManager = App.shared.balanceHiddenManager
+    private let balanceHiddenManager = Core.shared.balanceHiddenManager
     private let adapter: ZcashAdapter
 
     private var cancellables = Set<AnyCancellable>()

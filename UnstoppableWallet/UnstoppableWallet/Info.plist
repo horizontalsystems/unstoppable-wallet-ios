@@ -114,8 +114,6 @@
 		<string>CoinPriceListIntent</string>
 		<string>SingleCoinPriceIntent</string>
 	</array>
-	<key>OfficeMode</key>
-	<string>${OfficeMode}</string>
 	<key>OneInchApiKey</key>
 	<string>${one_inch_api_key}</string>
 	<key>OneInchCommission</key>

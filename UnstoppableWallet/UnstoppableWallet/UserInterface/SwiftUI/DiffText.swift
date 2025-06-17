@@ -4,26 +4,30 @@ import SwiftUI
 struct DiffText: View {
     private let diff: Diff?
     private let font: Font
+    private let expired: Bool
 
-    init(_ diff: Diff?, font: Font = .themeSubhead2) {
+    init(_ diff: Diff?, font: Font = .themeSubhead2, expired: Bool = false) {
         self.diff = diff
         self.font = font
+        self.expired = expired
     }
 
-    init(_ diff: Decimal?, font: Font = .themeSubhead2) {
+    init(_ diff: Decimal?, font: Font = .themeSubhead2, expired: Bool = false) {
         self.diff = diff.map { .percent(value: $0) }
         self.font = font
+        self.expired = expired
     }
 
-    init(_ change: Decimal?, currency: Currency, font: Font = .themeSubhead2) {
+    init(_ change: Decimal?, currency: Currency, font: Font = .themeSubhead2, expired: Bool = false) {
         diff = change.map { .change(value: $0, currency: currency) }
         self.font = font
+        self.expired = expired
     }
 
     var body: some View {
         if let (text, value) = resolved {
             Text(text)
-                .foregroundColor(value == 0 ? .themeGray : (value.isSignMinus ? .themeLucian : .themeRemus))
+                .foregroundColor(expired ? .themeGray50 : (value == 0 ? .themeGray : (value.isSignMinus ? .themeLucian : .themeRemus)))
                 .font(font)
                 .lineLimit(1)
                 .truncationMode(.middle)

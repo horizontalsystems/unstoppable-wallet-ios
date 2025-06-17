@@ -11,19 +11,19 @@ enum SendNftModule {
             .append(handler: evmAddressParserItem)
             .append(handler: udnAddressParserItem)
 
-        if let httpSyncSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
+        if let httpSyncSource = Core.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
            let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: evmAddressParserItem)
         {
             addressParserChain.append(handler: ensAddressParserItem)
         }
 
         let addressUriParser = AddressParserFactory.parser(blockchainType: blockchainType, tokenType: nil)
-        return AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: App.shared.marketKit, contactBookManager: App.shared.contactManager, blockchainType: blockchainType)
+        return AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: Core.shared.marketKit, contactBookManager: Core.shared.contactManager, blockchainType: blockchainType)
     }
 
     private static func eip721ViewController(evmKitWrapper: EvmKitWrapper, nftUid: NftUid, adapter: INftAdapter) -> UIViewController {
         let addressService = addressService(blockchainType: nftUid.blockchainType)
-        let service = SendEip721Service(nftUid: nftUid, adapter: adapter, addressService: addressService, nftMetadataManager: App.shared.nftMetadataManager)
+        let service = SendEip721Service(nftUid: nftUid, adapter: adapter, addressService: addressService, nftMetadataManager: Core.shared.nftMetadataManager)
 
         let recipientAddressViewModel = RecipientAddressViewModel(service: addressService, handlerDelegate: nil)
         let viewModel = SendEip721ViewModel(service: service)
@@ -33,7 +33,7 @@ enum SendNftModule {
 
     private static func eip1155ViewController(evmKitWrapper: EvmKitWrapper, nftUid: NftUid, balance: Int, adapter: INftAdapter) -> UIViewController {
         let addressService = addressService(blockchainType: nftUid.blockchainType)
-        let service = SendEip1155Service(nftUid: nftUid, balance: balance, adapter: adapter, addressService: addressService, nftMetadataManager: App.shared.nftMetadataManager)
+        let service = SendEip1155Service(nftUid: nftUid, balance: balance, adapter: adapter, addressService: addressService, nftMetadataManager: Core.shared.nftMetadataManager)
 
         let viewModel = SendEip1155ViewModel(service: service)
         let availableBalanceViewModel = SendEip1155AvailableBalanceViewModel(service: service)
@@ -45,13 +45,13 @@ enum SendNftModule {
     }
 
     static func viewController(nftUid: NftUid) -> UIViewController? {
-        guard let account = App.shared.accountManager.activeAccount, !account.watchAccount else {
+        guard let account = Core.shared.accountManager.activeAccount, !account.watchAccount else {
             return nil
         }
 
         let nftKey = NftKey(account: account, blockchainType: nftUid.blockchainType)
 
-        guard let adapter = App.shared.nftAdapterManager.adapter(nftKey: nftKey) else {
+        guard let adapter = Core.shared.nftAdapterManager.adapter(nftKey: nftKey) else {
             return nil
         }
 
@@ -59,7 +59,7 @@ enum SendNftModule {
             return nil
         }
 
-        let evmBlockchainManager = App.shared.evmBlockchainManager
+        let evmBlockchainManager = Core.shared.evmBlockchainManager
         guard let evmKitWrapper = try? evmBlockchainManager
             .evmKitManager(blockchainType: nftUid.blockchainType)
             .evmKitWrapper(account: account, blockchainType: nftUid.blockchainType)

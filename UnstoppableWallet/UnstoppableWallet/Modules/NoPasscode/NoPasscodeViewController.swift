@@ -1,6 +1,4 @@
-
 import SnapKit
-
 import UIKit
 
 class NoPasscodeViewController: ThemeViewController {

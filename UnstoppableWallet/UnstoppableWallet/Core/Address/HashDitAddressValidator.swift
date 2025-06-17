@@ -8,8 +8,8 @@ import RxSwift
 class HashDitAddressValidator {
     static let supportedBlockchainTypes: [BlockchainType] = [.ethereum, .binanceSmartChain, .polygon]
     private let url = "https://service.hashdit.io/v2/hashdit/transaction-security"
-    private let networkManager = App.shared.networkManager
-    private let evmBlockchainManager = App.shared.evmBlockchainManager
+    private let networkManager = Core.shared.networkManager
+    private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let headers: HTTPHeaders
 
     init() {

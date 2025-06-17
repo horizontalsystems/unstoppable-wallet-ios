@@ -42,8 +42,8 @@ struct MarketTvlView: View {
 
                         list(defiCoins: defiCoins)
                     }
-                    .onChange(of: viewModel.platforms) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
-                    .onChange(of: viewModel.sortOrder) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
+                    .onChange(of: viewModel.platforms) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
+                    .onChange(of: viewModel.sortOrder) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
                 }
             case .failed:
                 VStack(spacing: 0) {

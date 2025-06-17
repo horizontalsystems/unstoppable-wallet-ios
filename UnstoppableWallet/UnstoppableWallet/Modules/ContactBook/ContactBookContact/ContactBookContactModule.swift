@@ -9,21 +9,21 @@ enum ContactBookContactModule {
         switch mode {
         case .new:
             service = ContactBookContactService(
-                contactManager: App.shared.contactManager,
-                marketKit: App.shared.marketKit,
+                contactManager: Core.shared.contactManager,
+                marketKit: Core.shared.marketKit,
                 contact: nil
             )
         case let .exist(uid, newAddresses):
             service = ContactBookContactService(
-                contactManager: App.shared.contactManager,
-                marketKit: App.shared.marketKit,
-                contact: App.shared.contactManager.all?.first(where: { $0.uid == uid }),
+                contactManager: Core.shared.contactManager,
+                marketKit: Core.shared.marketKit,
+                contact: Core.shared.contactManager.all?.first(where: { $0.uid == uid }),
                 newAddresses: newAddresses
             )
         case let .add(address):
             service = ContactBookContactService(
-                contactManager: App.shared.contactManager,
-                marketKit: App.shared.marketKit,
+                contactManager: Core.shared.contactManager,
+                marketKit: Core.shared.marketKit,
                 contact: nil,
                 newAddresses: [address]
             )

@@ -11,7 +11,7 @@ class EvmTransactionService: ITransactionService {
     private let blockchainType: BlockchainType
     private let chain: Chain
     private let rpcSource: RpcSource
-    private let networkManager = App.shared.networkManager
+    private let networkManager = Core.shared.networkManager
 
     private let updateSubject = PassthroughSubject<Void, Never>()
 
@@ -73,11 +73,11 @@ class EvmTransactionService: ITransactionService {
     }
 
     init?(blockchainType: BlockchainType, userAddress: EvmKit.Address, initialTransactionSettings: InitialTransactionSettings?) {
-        guard let rpcSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: blockchainType)?.rpcSource else {
+        guard let rpcSource = Core.shared.evmSyncSourceManager.httpSyncSource(blockchainType: blockchainType)?.rpcSource else {
             return nil
         }
 
-        chain = App.shared.evmBlockchainManager.chain(blockchainType: blockchainType)
+        chain = Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType)
         self.blockchainType = blockchainType
         self.userAddress = userAddress
         self.rpcSource = rpcSource

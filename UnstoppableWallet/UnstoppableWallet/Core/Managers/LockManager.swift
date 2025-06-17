@@ -10,7 +10,7 @@ class LockManager {
     private let userDefaultsStorage: UserDefaultsStorage
     private let delegate: LockDelegate
 
-    private(set) var isLocked: Bool
+    @DistinctPublished private(set) var isLocked: Bool
 
     var autoLockPeriod: AutoLockPeriod {
         didSet {
@@ -53,7 +53,7 @@ extension LockManager {
         lock()
     }
 
-    func lock() {
+    private func lock() {
         guard passcodeManager.isPasscodeSet else {
             return
         }
@@ -62,7 +62,7 @@ extension LockManager {
         delegate.onLock()
     }
 
-    func onUnlock() {
+    func unlock() {
         isLocked = false
     }
 }

@@ -2,21 +2,21 @@ import MarketKit
 
 enum NftCollectionOverviewModule {
     static func viewController(blockchainType: BlockchainType, providerCollectionUid: String) -> NftCollectionOverviewViewController? {
-        guard let baseToken = try? App.shared.marketKit.token(query: TokenQuery(blockchainType: blockchainType, tokenType: .native)) else {
+        guard let baseToken = try? Core.shared.marketKit.token(query: TokenQuery(blockchainType: blockchainType, tokenType: .native)) else {
             return nil
         }
 
         let coinService = CoinService(
             token: baseToken,
-            currencyManager: App.shared.currencyManager,
-            marketKit: App.shared.marketKit
+            currencyManager: Core.shared.currencyManager,
+            marketKit: Core.shared.marketKit
         )
 
         let service = NftCollectionOverviewService(
             blockchainType: blockchainType,
             providerCollectionUid: providerCollectionUid,
-            nftMetadataManager: App.shared.nftMetadataManager,
-            marketKit: App.shared.marketKit
+            nftMetadataManager: Core.shared.nftMetadataManager,
+            marketKit: Core.shared.marketKit
         )
 
         let viewModel = NftCollectionOverviewViewModel(service: service, coinService: coinService)

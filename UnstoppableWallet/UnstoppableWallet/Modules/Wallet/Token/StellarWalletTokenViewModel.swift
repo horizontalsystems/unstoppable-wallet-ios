@@ -4,7 +4,7 @@ import RxSwift
 import StellarKit
 
 class StellarWalletTokenViewModel: ObservableObject {
-    private let balanceHiddenManager = App.shared.balanceHiddenManager
+    private let balanceHiddenManager = Core.shared.balanceHiddenManager
     private let stellarKit: StellarKit.Kit
     private let asset: Asset
 

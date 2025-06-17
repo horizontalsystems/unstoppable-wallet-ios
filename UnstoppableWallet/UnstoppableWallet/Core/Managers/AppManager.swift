@@ -11,9 +11,7 @@ class AppManager {
     private let lockManager: LockManager
     private let keychainManager: KeychainManager
     private let passcodeLockManager: PasscodeLockManager
-    private let blurManager: BlurManager
     private let kitCleaner: KitCleaner
-    private let debugBackgroundLogger: DebugLogger?
     private let appVersionManager: AppVersionManager
     private let rateAppManager: RateAppManager
     private let logRecordManager: LogRecordManager
@@ -27,14 +25,17 @@ class AppManager {
     private let stellarKitManager: StellarKitManager
     private let spamAddressManager: SpamAddressManager
 
-    private let didBecomeActiveSubject = PublishSubject<Void>()
+    private let didBecomeActiveSubjectOld = PublishSubject<Void>()
     private let willEnterForegroundSubjectOld = PublishSubject<Void>()
+
+    private let didBecomeActiveSubject = PassthroughSubject<Void, Never>()
+    private let willResignActiveSubject = PassthroughSubject<Void, Never>()
     private let didEnterBackgroundSubject = PassthroughSubject<Void, Never>()
     private let willEnterForegroundSubject = PassthroughSubject<Void, Never>()
 
     init(accountManager: AccountManager, walletManager: WalletManager, adapterManager: AdapterManager, lockManager: LockManager,
-         keychainManager: KeychainManager, passcodeLockManager: PasscodeLockManager, blurManager: BlurManager,
-         kitCleaner: KitCleaner, debugLogger: DebugLogger?,
+         keychainManager: KeychainManager, passcodeLockManager: PasscodeLockManager,
+         kitCleaner: KitCleaner,
          appVersionManager: AppVersionManager, rateAppManager: RateAppManager,
          logRecordManager: LogRecordManager,
          deepLinkManager: DeepLinkManager, evmLabelManager: EvmLabelManager, balanceHiddenManager: BalanceHiddenManager, statManager: StatManager,
@@ -47,9 +48,7 @@ class AppManager {
         self.lockManager = lockManager
         self.keychainManager = keychainManager
         self.passcodeLockManager = passcodeLockManager
-        self.blurManager = blurManager
         self.kitCleaner = kitCleaner
-        debugBackgroundLogger = debugLogger
         self.appVersionManager = appVersionManager
         self.rateAppManager = rateAppManager
         self.logRecordManager = logRecordManager
@@ -74,10 +73,8 @@ class AppManager {
 extension AppManager {
     func didFinishLaunching() {
         warmUp()
-        debugBackgroundLogger?.logFinishLaunching()
 
         keychainManager.handleLaunch()
-        passcodeLockManager.handleLaunch()
         accountManager.handleLaunch()
         walletManager.preloadWallets()
         kitCleaner.clear()
@@ -90,21 +87,20 @@ extension AppManager {
     }
 
     func willResignActive() {
-        blurManager.willResignActive()
+        willResignActiveSubject.send()
+
         rateAppManager.onResignActive()
     }
 
     func didBecomeActive() {
-        didBecomeActiveSubject.onNext(())
+        didBecomeActiveSubject.send()
+        didBecomeActiveSubjectOld.onNext(())
 
-        blurManager.didBecomeActive()
         rateAppManager.onBecomeActive()
         logRecordManager.onBecomeActive()
     }
 
     func didEnterBackground() {
-        debugBackgroundLogger?.logEnterBackground()
-
         didEnterBackgroundSubject.send()
 
         lockManager.didEnterBackground()
@@ -118,11 +114,8 @@ extension AppManager {
     func willEnterForeground() {
         accountManager.handleForeground()
 
-        blurManager.willEnterForeground()
-        debugBackgroundLogger?.logEnterForeground()
-
-        willEnterForegroundSubjectOld.onNext(())
         willEnterForegroundSubject.send()
+        willEnterForegroundSubjectOld.onNext(())
 
         passcodeLockManager.handleForeground()
         lockManager.willEnterForeground()
@@ -139,16 +132,20 @@ extension AppManager {
         AppWidgetConstants.allKinds.forEach { WidgetCenter.shared.reloadTimelines(ofKind: $0) }
     }
 
-    func willTerminate() {
-        debugBackgroundLogger?.logTerminate()
-    }
-
     func didReceive(url: URL) -> Bool {
         deepLinkManager.handle(url: url)
     }
 }
 
 extension AppManager {
+    var didBecomeActivePublisher: AnyPublisher<Void, Never> {
+        didBecomeActiveSubject.eraseToAnyPublisher()
+    }
+
+    var willResignActivePublisher: AnyPublisher<Void, Never> {
+        willResignActiveSubject.eraseToAnyPublisher()
+    }
+
     var didEnterBackgroundPublisher: AnyPublisher<Void, Never> {
         didEnterBackgroundSubject.eraseToAnyPublisher()
     }
@@ -160,7 +157,7 @@ extension AppManager {
 
 extension AppManager: IAppManager {
     var didBecomeActiveObservable: Observable<Void> {
-        didBecomeActiveSubject.asObservable()
+        didBecomeActiveSubjectOld.asObservable()
     }
 
     var willEnterForegroundObservable: Observable<Void> {

@@ -14,14 +14,14 @@ enum ResendBitcoinModule {
     static func resendViewController(adapter: ITransactionsAdapter, type: ResendTransactionType, transactionRecord: BitcoinTransactionRecord) throws -> UIViewController {
         guard let adapter = adapter as? BitcoinBaseAdapter,
               let (originalSize, feeRange) = replacementInfo(adapter: adapter, transactionHash: transactionRecord.transactionHash, type: type),
-              let feeRateProvider = App.shared.feeRateProviderFactory.provider(blockchainType: adapter.token.blockchainType)
+              let feeRateProvider = Core.shared.feeRateProviderFactory.provider(blockchainType: adapter.token.blockchainType)
         else {
             throw CreateModuleError.unableToReplace
         }
 
         let token = adapter.token
-        let currency = App.shared.currencyManager.baseCurrency
-        let price = App.shared.marketKit.coinPrice(coinUid: token.coin.uid, currencyCode: currency.code)
+        let currency = Core.shared.currencyManager.baseCurrency
+        let price = Core.shared.marketKit.coinPrice(coinUid: token.coin.uid, currencyCode: currency.code)
 
         let service = ResendBitcoinService(
             transactionRecord: transactionRecord,
@@ -33,9 +33,9 @@ enum ResendBitcoinModule {
             token: token,
             currency: currency,
             price: price?.value,
-            logger: App.shared.logger
+            logger: Core.shared.logger
         )
-        let contactLabelService = ContactLabelService(contactManager: App.shared.contactManager, blockchainType: token.blockchainType)
+        let contactLabelService = ContactLabelService(contactManager: Core.shared.contactManager, blockchainType: token.blockchainType)
         let viewModel = ResendBitcoinViewModel(service: service, contactLabelService: contactLabelService)
 
         return ResendBitcoinViewController(viewModel: viewModel)

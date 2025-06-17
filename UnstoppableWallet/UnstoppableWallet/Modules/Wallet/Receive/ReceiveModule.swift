@@ -1,25 +1,21 @@
 import MarketKit
-
+import SwiftUI
 import UIKit
 
 enum ReceiveModule {
-    static func viewController() -> UIViewController? {
-        guard let account = App.shared.accountManager.activeAccount else {
-            return nil
-        }
-
+    static func viewController(account: Account) -> UIViewController {
         let service = ReceiveService(
             account: account,
-            walletManager: App.shared.walletManager,
-            marketKit: App.shared.marketKit,
-            restoreSettingsService: RestoreSettingsService(manager: App.shared.restoreSettingsManager)
+            walletManager: Core.shared.walletManager,
+            marketKit: Core.shared.marketKit,
+            restoreSettingsService: RestoreSettingsService(manager: Core.shared.restoreSettingsManager)
         )
 
         let viewModel = ReceiveViewModel(service: service)
 
         let coinProvider = CoinProvider(
-            marketKit: App.shared.marketKit,
-            walletManager: App.shared.walletManager,
+            marketKit: Core.shared.marketKit,
+            walletManager: Core.shared.walletManager,
             accountType: account.type
         )
 
@@ -57,4 +53,16 @@ enum ReceiveModule {
 
         return viewController
     }
+}
+
+struct ReceiveView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    let account: Account
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        ReceiveModule.viewController(account: account)
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

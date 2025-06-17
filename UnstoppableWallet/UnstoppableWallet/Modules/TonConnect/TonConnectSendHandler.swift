@@ -5,7 +5,7 @@ import TonKit
 import TonSwift
 
 class TonConnectSendHandler {
-    private let tonConnectManager = App.shared.tonConnectManager
+    private let tonConnectManager = Core.shared.tonConnectManager
     private let request: TonConnectSendTransactionRequest
     private let transferData: TransferData
     private let contract: WalletContract
@@ -303,7 +303,7 @@ extension TonConnectSendHandler {
 
 extension TonConnectSendHandler {
     static func instance(request: TonConnectSendTransactionRequest) throws -> TonConnectSendHandler {
-        guard let account = App.shared.accountManager.account(id: request.app.accountId) else {
+        guard let account = Core.shared.accountManager.account(id: request.app.accountId) else {
             throw FactoryError.noAccount
         }
 
@@ -322,7 +322,7 @@ extension TonConnectSendHandler {
 
         let transferData = try TonKit.Kit.transferData(sender: address, validUntil: request.param.validUntil, payloads: payloads)
 
-        guard let baseToken = try? App.shared.coinManager.token(query: .init(blockchainType: .ton, tokenType: .native)) else {
+        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: .ton, tokenType: .native)) else {
             throw FactoryError.noBaseToken
         }
 
@@ -334,7 +334,7 @@ extension TonConnectSendHandler {
             contract: contract,
             secretKey: secretKey,
             baseToken: baseToken,
-            converter: TonEventConverter(address: address, source: transactionSource, baseToken: baseToken, coinManager: App.shared.coinManager)
+            converter: TonEventConverter(address: address, source: transactionSource, baseToken: baseToken, coinManager: Core.shared.coinManager)
         )
     }
 }

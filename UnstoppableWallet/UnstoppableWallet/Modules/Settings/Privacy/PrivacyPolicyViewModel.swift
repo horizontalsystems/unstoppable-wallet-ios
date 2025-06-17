@@ -3,7 +3,7 @@ import Foundation
 
 class PrivacyPolicyViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
-    private let statManager = App.shared.statManager
+    private let statManager = Core.shared.statManager
 
     @Published private(set) var statsEnabled = false
 

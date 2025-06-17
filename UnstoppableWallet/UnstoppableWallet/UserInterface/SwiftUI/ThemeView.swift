@@ -1,13 +1,41 @@
 import SwiftUI
 
 struct ThemeView<Content: View>: View {
-    @ViewBuilder let content: Content
+    private let isRoot: Bool
+    private let content: Content
+
+    init(isRoot: Bool = false, @ViewBuilder content: () -> Content) {
+        self.isRoot = isRoot
+        self.content = content()
+    }
 
     var body: some View {
         ZStack {
             Color.themeTyler.ignoresSafeArea()
-            content
+
+            VStack(spacing: 0) {
+                Rectangle()
+                    .frame(height: 0)
+                    .background(Color.themeTyler)
+                    // .background(Color.green.opacity(0.8))
+                    .zIndex(100)
+
+                content
+
+                if isRoot {
+                    Rectangle()
+                        .frame(height: 0)
+                        .background(Color.themeBlade)
+                    // .background(Color.red.opacity(0.8))
+                }
+            }
         }
+        .toolbarBackground(.hidden, for: .navigationBar)
+        .navigationBarTitleDisplayMode(.inline)
+
+        // ZStack {
+        // Color.themeTyler.ignoresSafeArea()
+        // }
     }
 }
 
@@ -52,10 +80,16 @@ struct ThemeRadialView<Content: View>: View {
 }
 
 struct ScrollableThemeView<Content: View>: View {
-    @ViewBuilder let content: Content
+    private let isRoot: Bool
+    private let content: Content
+
+    init(isRoot: Bool = false, @ViewBuilder content: () -> Content) {
+        self.isRoot = isRoot
+        self.content = content()
+    }
 
     var body: some View {
-        ThemeView {
+        ThemeView(isRoot: isRoot) {
             ScrollView {
                 content
             }
@@ -71,6 +105,30 @@ struct ThemeNavigationView<Content: View>: View {
             content
         }
         .navigationViewStyle(StackNavigationViewStyle())
+        .accentColor(.themeGray)
+    }
+}
+
+struct ThemeNavigationStack<Content: View>: View {
+    let path: Binding<NavigationPath>
+    @ViewBuilder let content: Content
+
+    var body: some View {
+        NavigationStack(path: path) {
+            content
+        }
+        .accentColor(.themeGray)
+    }
+}
+
+struct ThemeNavigationStack2<Content: View>: View {
+    // let path: Binding<NavigationPath>
+    @ViewBuilder let content: Content
+
+    var body: some View {
+        NavigationStack {
+            content
+        }
         .accentColor(.themeGray)
     }
 }

@@ -52,7 +52,7 @@ enum ContactBookModule {
 
 extension ContactBookModule {
     static func viewController(mode: Mode, presented: Bool = false) -> UIViewController? {
-        let service = ContactBookService(marketKit: App.shared.marketKit, contactManager: App.shared.contactManager, blockchainType: mode.blockchainType)
+        let service = ContactBookService(marketKit: Core.shared.marketKit, contactManager: Core.shared.contactManager, blockchainType: mode.blockchainType)
         let viewModel = ContactBookViewModel(service: service)
 
         let viewController = ContactBookViewController(viewModel: viewModel, mode: mode, presented: presented)
@@ -65,7 +65,7 @@ extension ContactBookModule {
 
     static func showAddition(contactAddress: ContactAddress, parentViewController: UIViewController?, statPage: StatPage, statSection: StatSection? = nil) {
         // if all contacts has address for blockchain just show add-new controller
-        if App.shared.contactManager.all?.isEmpty ?? true, let controller = showAddContact(mode: .new, contactAddress: contactAddress, statPage: statPage, statSection: statSection) {
+        if Core.shared.contactManager.all?.isEmpty ?? true, let controller = showAddContact(mode: .new, contactAddress: contactAddress, statPage: statPage, statSection: statSection) {
             parentViewController?.present(controller, animated: true)
             return
         }

@@ -1,67 +1,29 @@
+import HsExtensions
 import LocalAuthentication
-import UIKit
 
 class PasscodeLockManager {
     private let accountManager: AccountManager
     private let walletManager: WalletManager
 
-    private(set) var state: PasscodeLockState = .passcodeSet
+    @DistinctPublished private(set) var state: PasscodeLockState = .passcodeSet {
+        didSet {
+            switch state {
+            case .passcodeNotSet: onSecureStorageInvalidation()
+            default: ()
+            }
+        }
+    }
 
     init(accountManager: AccountManager, walletManager: WalletManager) {
         self.accountManager = accountManager
         self.walletManager = walletManager
+
+        state = resolveState()
     }
 
     private func onSecureStorageInvalidation() {
         accountManager.clear()
         walletManager.clearWallets()
-    }
-
-    private func onPasscodeSet() {
-        show(viewController: LaunchModule.viewController())
-    }
-
-    private func onPasscodeNotSet() {
-        show(viewController: NoPasscodeViewController(mode: .noPasscode))
-    }
-
-    private func onCannotCheckPasscode() {
-        show(viewController: NoPasscodeViewController(mode: .cannotCheckPasscode))
-    }
-
-    private func show(viewController: UIViewController) {
-        UIWindow.keyWindow?.set(newRootController: viewController)
-    }
-}
-
-extension PasscodeLockManager {
-    func handleLaunch() {
-        state = resolveState()
-
-        switch state {
-        case .passcodeNotSet: onSecureStorageInvalidation()
-        default: ()
-        }
-    }
-
-    func handleForeground() {
-        let oldState = state
-
-        state = resolveState()
-
-        guard state != oldState else {
-            return
-        }
-
-        switch state {
-        case .passcodeSet:
-            onPasscodeSet()
-        case .passcodeNotSet:
-            onPasscodeNotSet()
-            onSecureStorageInvalidation()
-        case .unknown:
-            onCannotCheckPasscode()
-        }
     }
 
     private func resolveState() -> PasscodeLockState {
@@ -79,5 +41,11 @@ extension PasscodeLockManager {
         }
 
         return .unknown
+    }
+}
+
+extension PasscodeLockManager {
+    func handleForeground() {
+        state = resolveState()
     }
 }

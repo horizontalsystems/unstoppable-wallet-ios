@@ -2,7 +2,7 @@ import MarketKit
 import UIKit
 
 class TransactionsViewItemFactoryNew {
-    private let evmLabelManager = App.shared.evmLabelManager
+    private let evmLabelManager = Core.shared.evmLabelManager
     private let contactLabelService: TransactionsContactLabelService
 
     init(contactLabelService: TransactionsContactLabelService) {

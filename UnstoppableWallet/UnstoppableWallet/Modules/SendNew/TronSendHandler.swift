@@ -126,11 +126,11 @@ extension TronSendHandler {
 
 extension TronSendHandler {
     static func instance(token: Token, contract: Contract) -> TronSendHandler? {
-        guard let baseToken = try? App.shared.coinManager.token(query: .init(blockchainType: .tron, tokenType: .native)) else {
+        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: .tron, tokenType: .native)) else {
             return nil
         }
 
-        guard let adapter = App.shared.adapterManager.adapter(for: token) as? ISendTronAdapter else {
+        guard let adapter = Core.shared.adapterManager.adapter(for: token) as? ISendTronAdapter else {
             return nil
         }
 

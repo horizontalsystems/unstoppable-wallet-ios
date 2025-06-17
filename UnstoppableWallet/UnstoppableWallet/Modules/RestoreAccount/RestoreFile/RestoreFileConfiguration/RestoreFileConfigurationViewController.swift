@@ -75,7 +75,7 @@ class RestoreFileConfigurationViewController: KeyboardAwareViewController {
     }
 
     private func finish(success: Bool) {
-        UIWindow.keyWindow?.set(newRootController: MainModule.instance(presetTab: .balance))
+        // UIWindow.keyWindow?.set(newRootController: MainModule.instance(presetTab: .balance))
 
         if success {
             HudHelper.instance.show(banner: .done)

@@ -3,14 +3,14 @@ import SwiftUI
 enum AppStatusModule {
     static func view() -> some View {
         let viewModel = AppStatusViewModel(
-            systemInfoManager: App.shared.systemInfoManager,
-            appVersionStorage: App.shared.appVersionStorage,
-            accountManager: App.shared.accountManager,
-            walletManager: App.shared.walletManager,
-            adapterManager: App.shared.adapterManager,
-            logRecordManager: App.shared.logRecordManager,
-            evmBlockchainManager: App.shared.evmBlockchainManager,
-            marketKit: App.shared.marketKit
+            systemInfoManager: Core.shared.systemInfoManager,
+            appVersionStorage: Core.shared.appVersionStorage,
+            accountManager: Core.shared.accountManager,
+            walletManager: Core.shared.walletManager,
+            adapterManager: Core.shared.adapterManager,
+            logRecordManager: Core.shared.logRecordManager,
+            evmBlockchainManager: Core.shared.evmBlockchainManager,
+            marketKit: Core.shared.marketKit
         )
 
         return AppStatusView(viewModel: viewModel)

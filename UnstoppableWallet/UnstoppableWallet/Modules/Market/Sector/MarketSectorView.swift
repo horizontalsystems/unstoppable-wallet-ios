@@ -36,7 +36,7 @@ struct MarketSectorView: View {
 
                             list(marketInfos: marketInfos)
                         }
-                        .onChange(of: viewModel.sortBy) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
+                        .onChange(of: viewModel.sortBy) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
                     }
                 case .failed:
                     SyncErrorView {

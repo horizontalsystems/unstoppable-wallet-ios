@@ -1,4 +1,5 @@
 import Combine
+import HsExtensions
 
 class AccountManager {
     private let passcodeManager: PasscodeManager
@@ -9,9 +10,10 @@ class AccountManager {
     private let accountsSubject = PassthroughSubject<[Account], Never>()
     private let accountUpdatedSubject = PassthroughSubject<Account, Never>()
     private let accountDeletedSubject = PassthroughSubject<Account, Never>()
-    private let accountsLostSubject = CurrentValueSubject<Bool, Never>(false)
 
     private var lastCreatedAccount: Account?
+
+    @PostPublished var accountsLost = false
 
     init(passcodeManager: PasscodeManager, accountStorage: AccountStorage, activeAccountStorage: ActiveAccountStorage) {
         self.passcodeManager = passcodeManager
@@ -57,7 +59,7 @@ class AccountManager {
         }
 
         if storage.allAccounts.isEmpty {
-            accountsLostSubject.send(true)
+            accountsLost = true
         }
     }
 }
@@ -77,10 +79,6 @@ extension AccountManager {
 
     var accountDeletedPublisher: AnyPublisher<Account, Never> {
         accountDeletedSubject.eraseToAnyPublisher()
-    }
-
-    var accountsLostPublisher: AnyPublisher<Bool, Never> {
-        accountsLostSubject.eraseToAnyPublisher()
     }
 
     var currentLevel: Int {

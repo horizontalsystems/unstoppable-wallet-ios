@@ -185,7 +185,7 @@ struct SecuritySettingsView: View {
             }
             .sheet(item: $unlockReason) { reason in
                 ThemeNavigationView {
-                    UnlockModule.moduleUnlockView {
+                    ModuleUnlockView {
                         switch reason {
                         case .changePasscode:
                             DispatchQueue.main.async {

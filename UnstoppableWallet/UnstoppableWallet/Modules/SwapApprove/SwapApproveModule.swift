@@ -6,14 +6,14 @@ import UIKit
 
 enum SwapApproveModule {
     static func instance(data: SwapAllowanceService.ApproveData, delegate: ISwapApproveDelegate) -> UIViewController? {
-        guard let eip20Adapter = App.shared.adapterManager.adapter(for: data.token) as? Eip20Adapter else {
+        guard let eip20Adapter = Core.shared.adapterManager.adapter(for: data.token) as? Eip20Adapter else {
             return nil
         }
 
         let coinService = CoinService(
             token: data.token,
-            currencyManager: App.shared.currencyManager,
-            marketKit: App.shared.marketKit
+            currencyManager: Core.shared.currencyManager,
+            marketKit: Core.shared.marketKit
         )
 
         let service = SwapApproveService(

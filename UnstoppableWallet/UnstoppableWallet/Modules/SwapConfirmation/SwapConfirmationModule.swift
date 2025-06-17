@@ -5,15 +5,15 @@ import UIKit
 
 enum SwapConfirmationModule {
     static func viewController(sendData: SendEvmData, dex: SwapModule.Dex) -> UIViewController? {
-        guard let evmKitWrapper = App.shared.evmBlockchainManager.evmKitManager(blockchainType: dex.blockchainType).evmKitWrapper else {
+        guard let evmKitWrapper = Core.shared.evmBlockchainManager.evmKitManager(blockchainType: dex.blockchainType).evmKitWrapper else {
             return nil
         }
 
         guard let coinServiceFactory = EvmCoinServiceFactory(
             blockchainType: dex.blockchainType,
-            marketKit: App.shared.marketKit,
-            currencyManager: App.shared.currencyManager,
-            coinManager: App.shared.coinManager
+            marketKit: Core.shared.marketKit,
+            currencyManager: Core.shared.currencyManager,
+            coinManager: Core.shared.coinManager
         ) else {
             return nil
         }
@@ -24,21 +24,21 @@ enum SwapConfirmationModule {
             return nil
         }
 
-        let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: App.shared.evmLabelManager)
-        let contactLabelService = ContactLabelService(contactManager: App.shared.contactManager, blockchainType: evmKitWrapper.blockchainType)
-        let viewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager, contactLabelService: contactLabelService)
+        let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: Core.shared.evmLabelManager)
+        let contactLabelService = ContactLabelService(contactManager: Core.shared.contactManager, blockchainType: evmKitWrapper.blockchainType)
+        let viewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: Core.shared.evmLabelManager, contactLabelService: contactLabelService)
 
         return SwapConfirmationViewController(transactionViewModel: viewModel, settingsViewModel: settingsViewModel)
     }
 
     static func viewController(parameters: OneInchSwapParameters, dex: SwapModule.Dex) -> UIViewController? {
-        guard let evmKitWrapper = App.shared.evmBlockchainManager.evmKitManager(blockchainType: dex.blockchainType).evmKitWrapper else {
+        guard let evmKitWrapper = Core.shared.evmBlockchainManager.evmKitManager(blockchainType: dex.blockchainType).evmKitWrapper else {
             return nil
         }
 
         let evmKit = evmKitWrapper.evmKit
         guard let apiKey = AppConfig.oneInchApiKey,
-              let rpcSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: dex.blockchainType)?.rpcSource
+              let rpcSource = Core.shared.evmSyncSourceManager.httpSyncSource(blockchainType: dex.blockchainType)?.rpcSource
         else {
             return nil
         }
@@ -48,9 +48,9 @@ enum SwapConfirmationModule {
 
         guard let coinServiceFactory = EvmCoinServiceFactory(
             blockchainType: dex.blockchainType,
-            marketKit: App.shared.marketKit,
-            currencyManager: App.shared.currencyManager,
-            coinManager: App.shared.coinManager
+            marketKit: Core.shared.marketKit,
+            currencyManager: Core.shared.currencyManager,
+            coinManager: Core.shared.coinManager
         ) else {
             return nil
         }
@@ -79,8 +79,8 @@ enum SwapConfirmationModule {
         }
 
         let transactionSettings = OneInchSendEvmTransactionService(evmKitWrapper: evmKitWrapper, oneInchFeeService: feeService, settingsService: settingsService)
-        let contactLabelService = ContactLabelService(contactManager: App.shared.contactManager, blockchainType: evmKitWrapper.blockchainType)
-        let transactionViewModel = SendEvmTransactionViewModel(service: transactionSettings, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager, contactLabelService: contactLabelService)
+        let contactLabelService = ContactLabelService(contactManager: Core.shared.contactManager, blockchainType: evmKitWrapper.blockchainType)
+        let transactionViewModel = SendEvmTransactionViewModel(service: transactionSettings, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: Core.shared.evmLabelManager, contactLabelService: contactLabelService)
 
         return SwapConfirmationViewController(transactionViewModel: transactionViewModel, settingsViewModel: settingsViewModel)
     }

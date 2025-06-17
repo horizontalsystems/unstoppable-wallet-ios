@@ -65,7 +65,7 @@ enum AddressParserFactory {
                     blockchainType: blockchainType
                 )
                 handlers.append(udnAddressParserItem)
-                if let httpSyncSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
+                if let httpSyncSource = Core.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
                    let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: bitcoinTypeParserItem)
                 {
                     handlers.append(ensAddressParserItem)
@@ -85,7 +85,7 @@ enum AddressParserFactory {
                 )
                 handlers.append(udnAddressParserItem)
 
-                if let httpSyncSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
+                if let httpSyncSource = Core.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
                    let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: evmAddressParserItem)
                 {
                     handlers.append(ensAddressParserItem)

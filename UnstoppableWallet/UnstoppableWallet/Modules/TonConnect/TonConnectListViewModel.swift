@@ -2,8 +2,8 @@ import Combine
 import Foundation
 
 class TonConnectListViewModel: ObservableObject {
-    private let tonConnectManager = App.shared.tonConnectManager
-    private let accountManager = App.shared.accountManager
+    private let tonConnectManager = Core.shared.tonConnectManager
+    private let accountManager = Core.shared.accountManager
     private var cancellables = Set<AnyCancellable>()
 
     private let openCreateConnectionSubject = PassthroughSubject<TonConnectConfig, Never>()

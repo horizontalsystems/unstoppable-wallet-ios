@@ -54,25 +54,29 @@ struct WalletTokenView<AdditionalContent: View>: View {
         .modifier(BalanceErrorViewModifier(viewModel: balanceErrorViewModifierModel))
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbarRole(.editor)
     }
 
     @ViewBuilder private func topView() -> some View {
         VStack(spacing: .margin24) {
             VStack(spacing: 6) {
                 BalanceCoinIconView(coin: viewModel.wallet.coin, state: viewModel.state, placeholderImage: viewModel.wallet.token.placeholderImageName) {
-                    handleTapOnFailedIcon()
+                    balanceErrorViewModifierModel.handle(wallet: viewModel.wallet, state: viewModel.state)
                 }
 
                 let (primaryText, primaryDimmed) = primaryValue
                 Text(primaryText)
                     .textTitle2R(color: primaryDimmed ? .themeGray : .themeLeah)
+                    .multilineTextAlignment(.center)
                     .onTapGesture {
                         viewModel.onTapAmount()
                         HapticGenerator.instance.notification(.feedback(.soft))
                     }
 
                 let (secondaryText, secondaryDimmed) = secondaryValue
-                Text(secondaryText).textBody(color: secondaryDimmed ? .themeGray50 : .themeGray)
+                Text(secondaryText)
+                    .textBody(color: secondaryDimmed ? .themeGray50 : .themeGray)
+                    .multilineTextAlignment(.center)
             }
 
             let buttons = viewModel.buttons
@@ -96,6 +100,7 @@ struct WalletTokenView<AdditionalContent: View>: View {
                 case .receive, .address: viewModel.onTapReceive()
                 case .swap: return swapPresented = true
                 case .chart: return chartPresented = true
+                default: ()
                 }
             }) {
                 Image(button.icon).renderingMode(.template)
@@ -105,19 +110,6 @@ struct WalletTokenView<AdditionalContent: View>: View {
 
             Text(button.title).textSubhead1()
         }
-    }
-
-    private func handleTapOnFailedIcon() {
-        if !viewModel.isReachable {
-            HudHelper.instance.show(banner: .noInternet)
-            return
-        }
-
-        guard case let .notSynced(error) = viewModel.state else {
-            return
-        }
-
-        balanceErrorViewModifierModel.handle(wallet: viewModel.wallet, error: error)
     }
 
     private var primaryValue: (String, Bool) {

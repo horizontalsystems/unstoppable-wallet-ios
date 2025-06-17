@@ -5,8 +5,8 @@ import MarketKit
 class MarketSearchViewModel: ObservableObject {
     private let keyRecentCoinUids = "market-recent-coin-uids"
 
-    private let marketKit = App.shared.marketKit
-    private let userDefaultsStorage = App.shared.userDefaultsStorage
+    private let marketKit = Core.shared.marketKit
+    private let userDefaultsStorage = Core.shared.userDefaultsStorage
 
     @Published private(set) var state: State = .placeholder(recentFullCoins: [], popularFullCoins: [])
     @Published var searchText: String = "" {

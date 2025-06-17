@@ -2,7 +2,7 @@ import Combine
 
 class WalletConnectSendViewModel: ObservableObject {
     private let request: WalletConnectRequest
-    private let signService: IWalletConnectSignService = App.shared.walletConnectSessionManager.service
+    private let signService: IWalletConnectSignService = Core.shared.walletConnectSessionManager.service
 
     init(request: WalletConnectRequest) {
         self.request = request

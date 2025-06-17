@@ -169,11 +169,11 @@ extension ShieldSendHandler {
 
 extension ShieldSendHandler {
     static func instance(amount: Decimal, recipient: Recipient?, memo: String?) -> ShieldSendHandler? {
-        guard let token = try? App.shared.coinManager.token(query: .init(blockchainType: .zcash, tokenType: .native)) else {
+        guard let token = try? Core.shared.coinManager.token(query: .init(blockchainType: .zcash, tokenType: .native)) else {
             return nil
         }
 
-        guard let adapter = App.shared.adapterManager.adapter(for: token) as? ZcashAdapter else {
+        guard let adapter = Core.shared.adapterManager.adapter(for: token) as? ZcashAdapter else {
             return nil
         }
 

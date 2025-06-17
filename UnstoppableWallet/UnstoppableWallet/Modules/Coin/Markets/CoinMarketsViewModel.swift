@@ -5,8 +5,8 @@ import MarketKit
 
 class CoinMarketsViewModel: ObservableObject {
     private let coinUid: String
-    private let marketKit = App.shared.marketKit
-    private let currency = App.shared.currencyManager.baseCurrency
+    private let marketKit = Core.shared.marketKit
+    private let currency = Core.shared.currencyManager.baseCurrency
     private var tasks = Set<AnyTask>()
 
     private var tickers: [MarketTicker]?

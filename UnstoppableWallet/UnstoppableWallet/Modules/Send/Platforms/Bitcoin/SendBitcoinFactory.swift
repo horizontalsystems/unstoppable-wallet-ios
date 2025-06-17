@@ -106,7 +106,7 @@ class SendBitcoinFactory: BaseSendFactory {
 
         viewItems.append(SendConfirmationFeeViewItem(appValue: feeAppValue, currencyValue: feeCurrencyValue))
 
-        if !App.shared.btcBlockchainManager.transactionRbfEnabled(blockchainType: token.blockchainType) {
+        if !Core.shared.btcBlockchainManager.transactionRbfEnabled(blockchainType: token.blockchainType) {
             viewItems.append(SendConfirmationDisabledRbfViewItem())
         }
 
@@ -123,7 +123,7 @@ extension SendBitcoinFactory: ISendConfirmationFactory {
         let items = try items()
 
         let service = SendConfirmationService(sendService: adapterService, logger: logger, token: token, items: items)
-        let contactLabelService = ContactLabelService(contactManager: App.shared.contactManager, blockchainType: token.blockchainType)
+        let contactLabelService = ContactLabelService(contactManager: Core.shared.contactManager, blockchainType: token.blockchainType)
         let viewModel = SendConfirmationViewModel(service: service, contactLabelService: contactLabelService)
         let viewController = SendConfirmationViewController(viewModel: viewModel)
 
@@ -166,8 +166,8 @@ extension SendBitcoinFactory: ISendOutputSelectorFactory {
         let feeViewModel = SendFeeViewModel(service: feeService)
         let amountViewModel = AmountOutputSelectorViewModel(fiatService: fiatService)
 
-        let switchService = AmountTypeSwitchService(userDefaultsStorage: App.shared.userDefaultsStorage)
-        let outputSelectorFiatService = BaseFiatService(switchService: switchService, currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit)
+        let switchService = AmountTypeSwitchService(userDefaultsStorage: Core.shared.userDefaultsStorage)
+        let outputSelectorFiatService = BaseFiatService(switchService: switchService, currencyManager: Core.shared.currencyManager, marketKit: Core.shared.marketKit)
         outputSelectorFiatService.set(token: token)
 
         let viewModel = OutputSelectorViewModel(adapterService: adapterService, fiatService: outputSelectorFiatService)

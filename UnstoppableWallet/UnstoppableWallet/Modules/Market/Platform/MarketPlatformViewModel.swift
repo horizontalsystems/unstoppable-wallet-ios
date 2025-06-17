@@ -4,9 +4,9 @@ import HsExtensions
 import MarketKit
 
 class MarketPlatformViewModel: ObservableObject {
-    private let marketKit = App.shared.marketKit
-    private let currencyManager = App.shared.currencyManager
-    private let priceChangeModeManager = App.shared.priceChangeModeManager
+    private let marketKit = Core.shared.marketKit
+    private let currencyManager = Core.shared.currencyManager
+    private let priceChangeModeManager = Core.shared.priceChangeModeManager
 
     let platform: TopPlatform
 

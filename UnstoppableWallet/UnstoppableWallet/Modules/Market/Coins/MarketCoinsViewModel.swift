@@ -4,10 +4,10 @@ import HsExtensions
 import MarketKit
 
 class MarketCoinsViewModel: ObservableObject {
-    private let marketKit = App.shared.marketKit
-    private let currencyManager = App.shared.currencyManager
-    private let appManager = App.shared.appManager
-    private let priceChangeModeManager = App.shared.priceChangeModeManager
+    private let marketKit = Core.shared.marketKit
+    private let currencyManager = Core.shared.currencyManager
+    private let appManager = Core.shared.appManager
+    private let priceChangeModeManager = Core.shared.priceChangeModeManager
 
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()

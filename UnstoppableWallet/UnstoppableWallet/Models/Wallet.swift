@@ -33,6 +33,12 @@ struct Wallet {
     }
 }
 
+extension Wallet: Identifiable {
+    var id: String {
+        token.coin.uid + token.blockchainType.uid
+    }
+}
+
 extension Wallet: Hashable {
     public static func == (lhs: Wallet, rhs: Wallet) -> Bool {
         lhs.token == rhs.token && lhs.account == rhs.account

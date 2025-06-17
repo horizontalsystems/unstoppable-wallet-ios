@@ -6,8 +6,8 @@ class TonConnectConnectViewModel: ObservableObject {
     let manifest: TonConnectManifest
     let returnDeepLink: String?
 
-    private let tonConnectManager = App.shared.tonConnectManager
-    private let accountManager = App.shared.accountManager
+    private let tonConnectManager = Core.shared.tonConnectManager
+    private let accountManager = Core.shared.accountManager
 
     let eligibleAccounts: [Account]
     @Published var account: Account?

@@ -12,7 +12,7 @@ class ChartIndicatorRouter {
     }
 
     func viewController() -> UIViewController {
-        let service = ChartIndicatorsService(repository: repository, chartPointFetcher: fetcher, subscriptionManager: App.shared.subscriptionManager)
+        let service = ChartIndicatorsService(repository: repository, chartPointFetcher: fetcher, subscriptionManager: Core.shared.subscriptionManager)
         let viewModel = ChartIndicatorsViewModel(service: service)
 
         return ThemeNavigationController(rootViewController: ChartIndicatorsViewController(viewModel: viewModel))
@@ -21,7 +21,7 @@ class ChartIndicatorRouter {
 
 enum ChartIndicatorsModule {
     static func view(repository: IChartIndicatorsRepository, fetcher: IChartPointFetcher) -> some View {
-        let service = ChartIndicatorsService(repository: repository, chartPointFetcher: fetcher, subscriptionManager: App.shared.subscriptionManager)
+        let service = ChartIndicatorsService(repository: repository, chartPointFetcher: fetcher, subscriptionManager: Core.shared.subscriptionManager)
         let viewModel = ChartIndicatorsViewModel(service: service)
 
         return ChartIndicatorsView(viewModel: viewModel)

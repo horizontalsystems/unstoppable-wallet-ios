@@ -6,7 +6,7 @@ class MetricChartFactory {
     private static let noChangesLimitPercent: Decimal = 0.2
 
     private let dateFormatter = DateFormatter()
-    private let currencyManager = App.shared.currencyManager
+    private let currencyManager = Core.shared.currencyManager
     private let hardcodedRightMode: String?
 
     init(currentLocale: Locale, hardcodedRightMode: String? = nil) {

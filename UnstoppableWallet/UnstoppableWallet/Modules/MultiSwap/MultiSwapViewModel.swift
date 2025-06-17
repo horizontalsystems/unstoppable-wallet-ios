@@ -17,10 +17,10 @@ class MultiSwapViewModel: ObservableObject {
     private var balanceDisposeBag = DisposeBag()
 
     private let providers: [IMultiSwapProvider]
-    private let currencyManager = App.shared.currencyManager
-    private let marketKit = App.shared.marketKit
-    private let walletManager = App.shared.walletManager
-    private let adapterManager = App.shared.adapterManager
+    private let currencyManager = Core.shared.currencyManager
+    private let marketKit = Core.shared.marketKit
+    private let walletManager = Core.shared.walletManager
+    private let adapterManager = Core.shared.adapterManager
     private let decimalParser = AmountDecimalParser()
 
     @Published var currency: Currency

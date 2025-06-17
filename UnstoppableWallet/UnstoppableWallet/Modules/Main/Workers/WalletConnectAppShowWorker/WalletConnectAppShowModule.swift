@@ -3,16 +3,16 @@ import UIKit
 enum WalletConnectAppShowModule {
     static func handler(parentViewController: UIViewController? = nil) -> IEventHandler {
         let walletConnectWorkerService = WalletConnectAppShowService(
-            walletConnectManager: App.shared.walletConnectSessionManager,
-            cloudAccountBackupManager: App.shared.cloudBackupManager,
-            accountManager: App.shared.accountManager,
-            lockManager: App.shared.lockManager
+            walletConnectManager: Core.shared.walletConnectSessionManager,
+            cloudAccountBackupManager: Core.shared.cloudBackupManager,
+            accountManager: Core.shared.accountManager,
+            lockManager: Core.shared.lockManager
         )
         let walletConnectWorkerViewModel = WalletConnectAppShowViewModel(service: walletConnectWorkerService)
 
         let viewController = WalletConnectAppShowView(
             viewModel: walletConnectWorkerViewModel,
-            requestViewFactory: App.shared.walletConnectRequestHandler
+            requestViewFactory: Core.shared.walletConnectRequestHandler
         )
         viewController.parentViewController = parentViewController
 

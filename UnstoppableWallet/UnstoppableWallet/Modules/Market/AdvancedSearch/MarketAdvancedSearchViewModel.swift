@@ -26,10 +26,10 @@ class MarketAdvancedSearchViewModel: ObservableObject {
     ]
     private let allTimeDeltaPercent: Decimal = 10
 
-    private let marketKit = App.shared.marketKit
-    private let currencyManager = App.shared.currencyManager
-    private let priceChangeModeManager = App.shared.priceChangeModeManager
-    private let purchaseManager = App.shared.purchaseManager
+    private let marketKit = Core.shared.marketKit
+    private let currencyManager = Core.shared.currencyManager
+    private let priceChangeModeManager = Core.shared.priceChangeModeManager
+    private let purchaseManager = Core.shared.purchaseManager
 
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()

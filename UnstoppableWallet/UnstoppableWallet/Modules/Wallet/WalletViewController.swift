@@ -393,8 +393,8 @@ class WalletViewController: ThemeViewController {
     }
 
     private func openReceive() {
-        if let viewController = ReceiveModule.viewController() {
-            present(viewController, animated: true)
+        if let account = Core.shared.accountManager.activeAccount {
+            present(ReceiveModule.viewController(account: account), animated: true)
             stat(page: .balance, event: .open(page: .receiveTokenList))
         }
     }
@@ -424,9 +424,8 @@ class WalletViewController: ThemeViewController {
     }
 
     private func openManageWallets() {
-        if let module = ManageWalletsModule.viewController() {
-            present(module, animated: true)
-
+        if let account = Core.shared.accountManager.activeAccount {
+            present(ManageWalletsModule.viewController(account: account), animated: true)
             stat(page: .balance, event: .open(page: .coinManager))
         }
     }

@@ -128,9 +128,9 @@ struct MarketCoinsView: View {
             .refreshable {
                 await viewModel.refresh()
             }
-            .onChange(of: viewModel.sortBy) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
-            .onChange(of: viewModel.top) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
-            .onChange(of: viewModel.timePeriod) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
+            .onChange(of: viewModel.sortBy) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
+            .onChange(of: viewModel.top) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
+            .onChange(of: viewModel.timePeriod) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
         }
     }
 

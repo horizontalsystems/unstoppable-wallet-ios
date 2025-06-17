@@ -10,7 +10,7 @@ class PurchaseBottomSheetViewModel: ObservableObject {
 
     @Published var buttonState: ButtonState = .idle
 
-    private let purchaseManager = App.shared.purchaseManager
+    private let purchaseManager = Core.shared.purchaseManager
 
     private let onSubscribe: (PurchaseManager.ProductData) -> Void
 

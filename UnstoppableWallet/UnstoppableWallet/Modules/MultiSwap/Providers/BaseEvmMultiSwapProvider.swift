@@ -4,8 +4,8 @@ import MarketKit
 import SwiftUI
 
 class BaseEvmMultiSwapProvider: IMultiSwapProvider {
-    private let adapterManager = App.shared.adapterManager
-    let evmBlockchainManager = App.shared.evmBlockchainManager
+    private let adapterManager = Core.shared.adapterManager
+    let evmBlockchainManager = Core.shared.evmBlockchainManager
     let storage: MultiSwapSettingStorage
     private let allowanceHelper = MultiSwapAllowanceHelper()
 

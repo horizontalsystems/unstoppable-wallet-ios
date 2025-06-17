@@ -2,7 +2,7 @@ import Foundation
 
 enum WalletTokenBalanceModule {
     static func dataSource(wallet: Wallet) -> WalletTokenBalanceDataSource? {
-        guard let account = App.shared.accountManager.activeAccount else {
+        guard let account = Core.shared.accountManager.activeAccount else {
             return nil
         }
 
@@ -13,10 +13,10 @@ enum WalletTokenBalanceModule {
         let tokenBalanceService = WalletTokenBalanceService(
             coinPriceService: coinPriceService,
             walletService: walletService,
-            appManager: App.shared.appManager,
-            cloudAccountBackupManager: App.shared.cloudBackupManager,
-            balanceHiddenManager: App.shared.balanceHiddenManager,
-            reachabilityManager: App.shared.reachabilityManager,
+            appManager: Core.shared.appManager,
+            cloudAccountBackupManager: Core.shared.cloudBackupManager,
+            balanceHiddenManager: Core.shared.balanceHiddenManager,
+            reachabilityManager: Core.shared.reachabilityManager,
             account: account,
             wallet: wallet
         )

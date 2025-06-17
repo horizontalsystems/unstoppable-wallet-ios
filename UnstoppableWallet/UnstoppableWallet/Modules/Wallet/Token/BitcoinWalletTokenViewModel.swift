@@ -3,7 +3,7 @@ import Foundation
 import RxSwift
 
 class BitcoinWalletTokenViewModel: ObservableObject {
-    private let balanceHiddenManager = App.shared.balanceHiddenManager
+    private let balanceHiddenManager = Core.shared.balanceHiddenManager
     private let adapter: BitcoinBaseAdapter
     private let disposeBag = DisposeBag()
 

@@ -1,13 +1,6 @@
-import RxSwift
-
 class JailbreakService {
-    private let localStorage: LocalStorage
-    private let jailbreakTestManager: JailbreakTestManager
-
-    init(localStorage: LocalStorage, jailbreakTestManager: JailbreakTestManager) {
-        self.localStorage = localStorage
-        self.jailbreakTestManager = jailbreakTestManager
-    }
+    private let localStorage = Core.shared.localStorage
+    private let jailbreakTestManager = JailbreakTestManager()
 
     var needToShowAlert: Bool {
         !localStorage.jailbreakShownOnce && jailbreakTestManager.isJailbroken

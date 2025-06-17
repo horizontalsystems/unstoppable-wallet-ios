@@ -5,7 +5,7 @@ class SecuritySettingsViewModel: ObservableObject {
     private let biometryManager: BiometryManager
     private let lockManager: LockManager
     private let balanceHiddenManager: BalanceHiddenManager
-    private let purchaseManager = App.shared.purchaseManager
+    private let purchaseManager = Core.shared.purchaseManager
     private var cancellables = Set<AnyCancellable>()
 
     @Published var currentPasscodeLevel: Int

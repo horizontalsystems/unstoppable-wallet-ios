@@ -2,7 +2,7 @@ import Combine
 import UIKit
 
 class TonConnectEventHandler {
-    private let tonConnectManager = App.shared.tonConnectManager
+    private let tonConnectManager = Core.shared.tonConnectManager
     private var cancellables = Set<AnyCancellable>()
 
     private weak var parentViewController: UIViewController?

@@ -4,7 +4,7 @@ import HsExtensions
 import ObjectMapper
 
 class EducationViewModel: ObservableObject {
-    private let networkManager = App.shared.networkManager
+    private let networkManager = Core.shared.networkManager
     private let languageManager = LanguageManager.shared
     private var tasks = Set<AnyTask>()
 

@@ -18,7 +18,7 @@ struct SendAddressView: View {
         self.amount = amount
         self.onDismiss = onDismiss
 
-        fromAddress = App.shared.adapterManager.depositAdapter(for: wallet)?.receiveAddress.address
+        fromAddress = Core.shared.adapterManager.depositAdapter(for: wallet)?.receiveAddress.address
     }
 
     var body: some View {

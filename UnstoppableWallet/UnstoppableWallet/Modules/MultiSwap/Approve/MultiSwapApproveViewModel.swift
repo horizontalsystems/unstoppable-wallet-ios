@@ -16,7 +16,7 @@ class MultiSwapApproveViewModel: ObservableObject {
         self.token = token
         self.amount = amount
         self.spenderAddress = spenderAddress
-        approveDataProvider = App.shared.adapterManager.adapter(for: token) as? IApproveDataProvider
+        approveDataProvider = Core.shared.adapterManager.adapter(for: token) as? IApproveDataProvider
     }
 }
 

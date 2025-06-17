@@ -8,7 +8,6 @@ struct MarketView: View {
     @StateObject var watchlistViewModel: WatchlistViewModel
 
     @FocusState var searchFocused: Bool
-    @State private var advancedSearchPresented = false
 
     init() {
         _searchViewModel = StateObject(wrappedValue: MarketSearchViewModel())
@@ -17,7 +16,7 @@ struct MarketView: View {
     }
 
     var body: some View {
-        ThemeView {
+        ThemeView(isRoot: true) {
             VStack(spacing: 0) {
                 SearchBarWithCancel(text: $searchViewModel.searchText, prompt: "placeholder.search".localized, focused: $searchFocused)
 
@@ -33,23 +32,6 @@ struct MarketView: View {
                     }
                 }
             }
-        }
-        .navigationTitle("market.title".localized)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    stat(page: .markets, event: .open(page: .advancedSearch))
-                    advancedSearchPresented = true
-                }) {
-                    Image("manage_2_24")
-                        .renderingMode(.template)
-                        .foregroundColor(.themeGray)
-                }
-            }
-        }
-        .sheet(isPresented: $advancedSearchPresented) {
-            MarketAdvancedSearchView(isPresented: $advancedSearchPresented)
         }
     }
 }

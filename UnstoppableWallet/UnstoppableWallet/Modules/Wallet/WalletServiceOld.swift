@@ -95,13 +95,13 @@ class WalletServiceOld {
             .sink { [weak self] in self?.handleDeleted(account: $0) }
             .store(in: &cancellables)
 
-        accountManager.accountsLostPublisher
-            .sink { [weak self] isAccountsLost in
-                if isAccountsLost {
-                    self?.accountsLostRelay.accept(())
-                }
-            }
-            .store(in: &cancellables)
+        // accountManager.accountsLostPublisher
+        //     .sink { [weak self] isAccountsLost in
+        //         if isAccountsLost {
+        //             self?.accountsLostRelay.accept(())
+        //         }
+        //     }
+        //     .store(in: &cancellables)
 
         subscribe(disposeBag, appManager.willEnterForegroundObservable) { [weak self] in
             self?.coinPriceService.refresh()

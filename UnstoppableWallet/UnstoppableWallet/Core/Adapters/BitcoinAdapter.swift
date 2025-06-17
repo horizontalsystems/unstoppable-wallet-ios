@@ -9,7 +9,7 @@ class BitcoinAdapter: BitcoinBaseAdapter {
     private let bitcoinKit: BitcoinKit.Kit
 
     init(wallet: Wallet, syncMode: BitcoinCore.SyncMode) throws {
-        let logger = App.shared.logger.scoped(with: "BitcoinKit")
+        let logger = Core.shared.logger.scoped(with: "BitcoinKit")
 
         switch wallet.account.type {
         case .mnemonic:

@@ -4,12 +4,12 @@ import HsExtensions
 import MarketKit
 
 class MarketWatchlistViewModel: ObservableObject {
-    private let marketKit = App.shared.marketKit
-    private let currencyManager = App.shared.currencyManager
-    private let watchlistManager = App.shared.watchlistManager
-    private let userDefaultsStorage = App.shared.userDefaultsStorage
-    private let appManager = App.shared.appManager
-    private let purchaseManager = App.shared.purchaseManager
+    private let marketKit = Core.shared.marketKit
+    private let currencyManager = Core.shared.currencyManager
+    private let watchlistManager = Core.shared.watchlistManager
+    private let userDefaultsStorage = Core.shared.userDefaultsStorage
+    private let appManager = Core.shared.appManager
+    private let purchaseManager = Core.shared.purchaseManager
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 

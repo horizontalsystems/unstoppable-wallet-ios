@@ -5,22 +5,22 @@ import UIKit
 enum WCSendEthereumTransactionRequestModule {
     static func viewController(request: WalletConnectRequest) -> UIViewController? {
         guard let payload = request.payload as? WCEthereumTransactionPayload,
-              let account = App.shared.accountManager.activeAccount,
-              let evmKitWrapper = App.shared.walletConnectManager.evmKitWrapper(chainId: request.chain.id, account: account)
+              let account = Core.shared.accountManager.activeAccount,
+              let evmKitWrapper = Core.shared.walletConnectManager.evmKitWrapper(chainId: request.chain.id, account: account)
         else {
             return nil
         }
 
         guard let coinServiceFactory = EvmCoinServiceFactory(
             blockchainType: evmKitWrapper.blockchainType,
-            marketKit: App.shared.marketKit,
-            currencyManager: App.shared.currencyManager,
-            coinManager: App.shared.coinManager
+            marketKit: Core.shared.marketKit,
+            currencyManager: Core.shared.currencyManager,
+            coinManager: Core.shared.coinManager
         ) else {
             return nil
         }
 
-        let signService = App.shared.walletConnectSessionManager.service
+        let signService = Core.shared.walletConnectSessionManager.service
         guard let service = WCSendEthereumTransactionRequestService(request: request, baseService: signService) else {
             return nil
         }
@@ -35,9 +35,9 @@ enum WCSendEthereumTransactionRequestModule {
             return nil
         }
 
-        let sendService = SendEvmTransactionService(sendData: sendEvmData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: App.shared.evmLabelManager)
-        let contactLabelService = ContactLabelService(contactManager: App.shared.contactManager, blockchainType: evmKitWrapper.blockchainType)
-        let transactionViewModel = SendEvmTransactionViewModel(service: sendService, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager, contactLabelService: contactLabelService)
+        let sendService = SendEvmTransactionService(sendData: sendEvmData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: Core.shared.evmLabelManager)
+        let contactLabelService = ContactLabelService(contactManager: Core.shared.contactManager, blockchainType: evmKitWrapper.blockchainType)
+        let transactionViewModel = SendEvmTransactionViewModel(service: sendService, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: Core.shared.evmLabelManager, contactLabelService: contactLabelService)
         let viewModel = WCSendEthereumTransactionRequestViewModel(service: service)
 
         return WCSendEthereumTransactionRequestViewController(viewModel: viewModel, transactionViewModel: transactionViewModel, settingsViewModel: settingsViewModel)

@@ -3,8 +3,8 @@ import Combine
 class MarketTabViewModel: ObservableObject {
     private let keyTab = "market-tab"
 
-    private let userDefaultsStorage = App.shared.userDefaultsStorage
-    private let launchScreenManager = App.shared.launchScreenManager
+    private let userDefaultsStorage = Core.shared.userDefaultsStorage
+    private let launchScreenManager = Core.shared.launchScreenManager
 
     @Published var currentTab: MarketModule.Tab {
         didSet {

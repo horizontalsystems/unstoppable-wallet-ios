@@ -3,8 +3,8 @@ import Foundation
 import MarketKit
 
 class AddressViewModel: ObservableObject {
-    private let purchaseManager = App.shared.purchaseManager
-    private let appSettingManager = App.shared.appSettingManager
+    private let purchaseManager = Core.shared.purchaseManager
+    private let appSettingManager = Core.shared.appSettingManager
     let token: Token
     let destination: Destination
     let issueTypes: [AddressSecurityIssueType]
@@ -38,7 +38,7 @@ class AddressViewModel: ObservableObject {
         self.destination = destination
         issueTypes = AddressSecurityIssueType.issueTypes(token: token)
 
-        let contacts = App.shared.contactManager.contacts(blockchainUid: token.blockchainType.uid)
+        let contacts = Core.shared.contactManager.contacts(blockchainUid: token.blockchainType.uid)
             .compactMap { contact -> Contact? in
                 guard let address = contact.address(blockchainUid: token.blockchainType.uid) else {
                     return nil
@@ -48,7 +48,7 @@ class AddressViewModel: ObservableObject {
             }
             .sorted { $0.name ?? "" < $1.name ?? "" }
 
-        let recentAddress = try? App.shared.recentAddressStorage.address(blockchainUid: token.blockchainType.uid)
+        let recentAddress = try? Core.shared.recentAddressStorage.address(blockchainUid: token.blockchainType.uid)
 
         recentContact = recentAddress.map { address in
             Contact(uid: "recent", name: contacts.first(where: { $0.address.lowercased() == address.lowercased() })?.name, address: address)

@@ -1,7 +1,7 @@
 import Combine
 
 class WatchlistViewModel: ObservableObject {
-    private let watchlistManager = App.shared.watchlistManager
+    private let watchlistManager = Core.shared.watchlistManager
     private let page: StatPage
     private let section: StatSection?
     private var cancellables = Set<AnyCancellable>()

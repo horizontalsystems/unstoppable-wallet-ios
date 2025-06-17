@@ -127,11 +127,11 @@ extension MainService {
         }
     }
 
-    func setMainShownOnce() {
-        DispatchQueue.global(qos: .background).async { [weak self] in
-            self?.localStorage.mainShownOnce = true
-        }
-    }
+    // func setMainShownOnce() {
+    //     DispatchQueue.global(qos: .background).async { [weak self] in
+    //         self?.localStorage.mainShownOnce = true
+    //     }
+    // }
 
     func set(tab: MainModule.Tab) {
         userDefaultsStorage.set(value: tab.rawValue, for: keyTab)

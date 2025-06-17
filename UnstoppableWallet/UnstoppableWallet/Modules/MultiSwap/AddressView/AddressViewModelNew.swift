@@ -11,7 +11,7 @@ class AddressViewModelNew: ObservableObject {
     private let parserChain: AddressParserChain
 
     let blockchainType: BlockchainType?
-    private let contactBookManager: ContactBookManager = App.shared.contactManager
+    private let contactBookManager: ContactBookManager = Core.shared.contactManager
     private let showContacts: Bool
 
     private var expectedTextValue: String? = nil

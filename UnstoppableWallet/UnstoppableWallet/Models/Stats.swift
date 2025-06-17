@@ -409,7 +409,7 @@ enum StatEvent {
 
     private var trialExpired: [StatParam: Any] {
         var params: [StatParam: Any] = [:]
-        if App.shared.purchaseManager.introductoryOfferType == .none {
+        if Core.shared.purchaseManager.introductoryOfferType == .none {
             params[.status] = "trial_expired"
         }
         return params

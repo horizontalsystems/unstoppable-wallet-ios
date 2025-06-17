@@ -7,10 +7,10 @@ enum NftAssetOverviewModule {
         let service = NftAssetOverviewService(
             providerCollectionUid: providerCollectionUid,
             nftUid: nftUid,
-            accountManager: App.shared.accountManager,
-            nftAdapterManager: App.shared.nftAdapterManager,
-            nftMetadataManager: App.shared.nftMetadataManager,
-            marketKit: App.shared.marketKit,
+            accountManager: Core.shared.accountManager,
+            nftAdapterManager: Core.shared.nftAdapterManager,
+            nftMetadataManager: Core.shared.nftMetadataManager,
+            marketKit: Core.shared.marketKit,
             coinPriceService: coinPriceService
         )
 

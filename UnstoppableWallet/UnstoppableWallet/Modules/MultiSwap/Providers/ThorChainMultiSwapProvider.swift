@@ -11,13 +11,13 @@ import SwiftUI
 class ThorChainMultiSwapProvider: IMultiSwapProvider {
     private let baseUrl = "https://thornode.ninerealms.com"
 
-    private let networkManager = App.shared.networkManager
+    private let networkManager = Core.shared.networkManager
     // private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
-    private let marketKit = App.shared.marketKit
-    private let evmBlockchainManager = App.shared.evmBlockchainManager
-    private let btcBlockchainManager = App.shared.btcBlockchainManager
-    private let accountManager = App.shared.accountManager
-    private let adapterManager = App.shared.adapterManager
+    private let marketKit = Core.shared.marketKit
+    private let evmBlockchainManager = Core.shared.evmBlockchainManager
+    private let btcBlockchainManager = Core.shared.btcBlockchainManager
+    private let accountManager = Core.shared.accountManager
+    private let adapterManager = Core.shared.adapterManager
     private let storage: MultiSwapSettingStorage
     private let allowanceHelper = MultiSwapAllowanceHelper()
     private let evmFeeEstimator = EvmFeeEstimator()

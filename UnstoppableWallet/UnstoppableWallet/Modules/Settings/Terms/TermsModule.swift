@@ -4,7 +4,7 @@ import UIKit
 
 enum TermsModule {
     static func viewController(sourceViewController: UIViewController? = nil, moduleToOpen: UIViewController? = nil) -> UIViewController {
-        let service = TermsService(termsManager: App.shared.termsManager)
+        let service = TermsService(termsManager: Core.shared.termsManager)
         let viewModel = TermsViewModel(service: service)
         let viewController = TermsViewController(viewModel: viewModel, sourceViewController: sourceViewController, moduleToOpen: moduleToOpen)
 

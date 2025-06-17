@@ -4,7 +4,7 @@ class SpamAddressDetector {
     private let spamAddressManager: SpamAddressManager
 
     init() {
-        spamAddressManager = App.shared.spamAddressManager
+        spamAddressManager = Core.shared.spamAddressManager
     }
 }
 
