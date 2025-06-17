@@ -30,6 +30,7 @@
 "button.learn_more" = "자세히 보기";
 "button.unlock" = "잠금 해제";
 "button.select" = "Select";
+"button.later" = "나중에";
 
 "alert" = "알림";
 "alert.copied" = "복사됨";
@@ -150,12 +151,10 @@
 "restore_type.recovery.title" = "복구 문구에서";
 "restore_type.cloud.title" = "아이클라우드에서";
 "restore_type.file.title" = "파일에서";
-"restore_type.cex.title" = "거래소 지갑에서";
 
 "restore_type.recovery.description" = "이 문구는 복구 문구 또는 개인 키를 사용하여 가져올 수 있습니다.";
 "restore_type.cloud.description" = "키체인의 백업 파일에서 가져옵니다.";
 "restore_type.file.description" = "로컬 폴더에서 백업 파일을 가져오십시오.";
-"restore_type.cex.description" = "중앙집중형 거래소의 지갑에 연결하세요.";
 
 // Restore Cloud
 
@@ -169,22 +168,6 @@
 "restore.cloud.password.title" = "암호를 입력하세요";
 "restore.cloud.password.placeholder" = "백업 비밀번호";
 "restore.cloud.password.description" = "백업을 가져오기 위해 비밀번호를 입력하세요";
-
-// Restore Cex
-
-"restore.cex.title" = "CEX를 선택하세요";
-"restore.cex.description" = "연결하고자 하는 중앙 집중식 거래소를 선택하십시오.";
-
-// Restore Binance
-
-"restore.binance.description" = "거래소를 연결하려면 API 키 및 API 비밀 키를 제공해주세요.";
-"restore.binance.api_key" = "API 키";
-"restore.binance.secret_key" = "비밀 키";
-"restore.binance.connect" = "연결";
-"restore.binance.connecting" = "연결 중...";
-"restore.binance.get_api_keys" = "API 키 가져오기";
-"restore.binance.failed_to_connect" = "API 키 연결 실패";
-"restore.binance.invalid_qr_code" = "잘못된 QR 코드";
 
 // Coin Settings
 
@@ -219,6 +202,11 @@
 
 "evm_private_key.title" = "EVM 개인 키";
 "evm_private_key.tap_to_show" = "개인 키 보기";
+
+// Stellar Secret Key
+
+"stellar_secret_key.title" = "Stellar Secret Key";
+"stellar_secret_key.tap_to_show" = "Tap to show secret key";
 
 // Extended Key
 
@@ -323,7 +311,6 @@
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "동기화 중... %@";
 "balance.synced_through" = "%@ 까지";
-"balance.invalid_api_key" = "유효하지 않은 API 키";
 "balance.empty.description" = "이 지갑에 코인을 넣지 않았습니다.";
 "balance.sort.header" = "정렬 기준";
 "balance.sort.valueHighToLow" = "잔액";
@@ -337,6 +324,10 @@
 
 // Token Balance Page
 "balance.token.locked" = "잠김";
+"balance.token.locked.stellar.title" = "Locked Amount";
+"balance.token.locked.stellar.description" = "The Stellar network locks 1 XLM to activate the wallet and 0.5 XLM as a reserve for each token activated in your wallet.";
+"balance.token.locked.stellar.description.currently_locked" = "Currently locked:";
+"balance.token.locked.stellar.description.wallet_activation" = "Wallet activation";
 "balance.token.locked.info.title" = "시간 자물쇠";
 "balance.token.locked.info.description" = "발송자는 이러한 자금들을 표시된 날짜에 만료가 되는 잠금 지출과 함께 보냈습니다.\n\n걱정 하지마십시오, 수신된 비트코인은 이미 귀하의 것입니다 하지만 잠금 기간이 만료될때 까지 비트코인 네트워크에서 사용하실 수 없습니다.";
 "balance.token.not_relayed" = "방송";
@@ -345,6 +336,11 @@
 "balance.token.processing" = "처리 중";
 "balance.token.processing.info.title" = "처리 중인 금액";
 "balance.token.processing.info.description" = "이 금액의 거래가 여전히 동기화 중입니다. 거래가 확인되면 이 토큰들은 사용할 수 있게 됩니다.";
+"balance.token.transparent" = "Transparent";
+"balance.token.transparent.info.title" = "Transparent amount";
+"balance.token.transparent.info.description" = "Transparent balance can't be used in our wallet for now. But this money can be spend by other wallets with t-address supports";
+"balance.token.shield" = "Shield";
+
 "balance.token.staked" = "판돈";
 "balance.token.staked.info.title" = "스테이크 타이틀";
 "balance.token.staked.info.description" = "측설 설명 텍스트";
@@ -379,14 +375,27 @@
 "deposit.qr_code_description" = "입금 주소: %@";
 "deposit.qr_code_description.watch" = "%@의 시계 주소";
 "deposit.account" = "계정";
+"deposit.trustline" = "Trustline";
+"deposit.trustline.not_activated" = "Not activated";
+"deposit.activate" = "활성화";
 
 "deposit.amount" = "양";
 "deposit.set_amount" = "금액 설정";
 "deposit.enter_amount" = "금액 입력";
+
+"deposit.memo" = "Memo (Tag)";
+"deposit.copy_address" = "복사";
+"deposit.share_address" = "공유";
+"deposit.memo_warning.title" = "중요";
+"deposit.memo_warning.description" = "자산을 수령하기 위해서는 메모(태그)와 주소 모두가 필요합니다. 그렇지 않으면 자금이 손실될 수 있습니다.";
+
 "deposit.not_active" = "비활성화됨";
 "deposit.used_addresses" = "사용된 주소들";
 "deposit.not_active.title" = "비활성 주소";
 "deposit.not_active.tron_description" = "TRON 블록체인에 새로 생성된 계정은 비활성화되어 있어서 조회하거나 탐색할 수 없습니다. 이 계정은 활성화되어야 합니다.\n\n비활성화된 계정 주소로 TRX 또는 TRC-10 토큰을 전송하면 계정이 활성화됩니다. 새로운 TRON 체인 계정을 활성화하려면 1 TRX의 수수료가 필요합니다.";
+"deposit.stellar.inactive_asset.title" = "Activate Token";
+"deposit.stellar.inactive_asset.description" = "To receive %@, you need to activate the token. The Stellar network requires a trustline to be established for each token. Without it, your wallet cannot receive %@ — the transaction will be rejected and the funds will not be delivered.";
+
 
 "deposit.used_addresses.title" = "사용된 주소들";
 "deposit.used_addresses.description" = "%@ 주소는 개인 정보 보호와 보안을 위해 변경됩니다. 이 지갑에서 사용된 주소 목록은 아래와 같습니다.";
@@ -418,6 +427,7 @@
 // Send
 
 "send.title" = "전송 %@";
+"send.title.shield" = "Shield %@";
 "send.send" = "전송";
 "send.no_assets" = "자산을 보낼 수 없습니다.";
 "send.amount_placeholder" = "양";
@@ -478,6 +488,7 @@
 "send.confirmation.action" = "Action";
 "send.confirmation.status" = "상태";
 "send.confirmation.status.failed" = "실패";
+"send.confirmation.send_to_own" = "Transaction will send to own address";
 
 "send.confirmation.sync_failed" = "동기화 실패";
 "send.confirmation.invalid_data" = "유효하지 않은 데이터";
@@ -508,6 +519,8 @@
 "send.amount_error.min_required_balance" = "최소 %@ 만큼의 필요 잔여금";
 "send.amount_warning.coin_needed_for_fee" = "향후 거래에 대해 지불할 수 있도록 일부 %@를 잔액으로 남겨두는 것이 좋습니다.";
 "send.token.insufficient_fee_alert" = "%@ (%@) 에 대한 거래 수수료는 %@로 지불되었습니다. 귀하는 %@가 필요합니다.";
+"send.stellar.no_trustline.title" = "No Asset Trustline";
+"send.stellar.no_trustline.description" = "Recipient account does not have established trustline with the asset being sent.";
 
 "send.fee_settings.amount_error.balance.title" = "잔액 부족";
 "send.fee_settings.amount_error.balance" = "현재 %@ 잔액은 거래 수수료를 포함하여이 거래를 처리하는 데 필요한 금액보다 적습니다.";
@@ -536,29 +549,30 @@
 "send.token_syncing" = "토큰 동기화 중";
 "send.token_not_synced" = "토큰 동기화되지 않음";
 "send.insufficient_balance" = "잔액 부족";
-"send.continue_anyway" = "계속 진행하기";
+"send.continue_anyway" = "Continue Anyway";
 
 "send.address.enter_address" = "주소 입력";
-"send.address.invalid_address" = "유효하지 않은 주소";
-"send.address.recent" = "최근";
+"send.address.invalid_address" = "Invalid Address";
+"send.address.recent" = "Recent";
 "send.address.contacts" = "연락처";
-"send.address.checking" = "확인 중";
-"send.address.check.clear" = "안전함";
-"send.address.check.detected" = "감지됨";
-"send.address.risky.title" = "위험한 주소!";
-"send.address.risky.description" = "고위험 주소로 자금을 보내려고 합니다. 진행하면 자금 손실이나 기타 보안 위험이 발생할 수 있습니다. 계속 진행하면 잠재적 위험을 수락하는 것입니다. 정말로 진행하시겠습니까?";
-"send.address.phishing_check" = "피싱 확인";
-"send.address.phishing.description" = "제공된 목적지 주소의 잠재적 피싱 위험을 분석합니다.\n\n안전함: 의심스러운 활동이 감지되지 않았습니다.\n\n감지됨: 누군가 잘못된 주소로 자금을 보내도록 속이려는 시도가 있는 것 같습니다. 주소가 정확하다고 확신하지 않는 한 진행하지 마세요. 먼저 소액 테스트 트랜잭션을 보내는 것을 고려해 보세요.";
-"send.address.phishing.caution.title" = "피싱 주소 감지됨!";
-"send.address.phishing.caution.description" = "입력한 주소가 사기성일 수 있습니다. 사기꾼들은 종종 처음과 마지막 문자를 변경합니다. 손실을 방지하기 위해 진행하기 전에 전체 주소를 주의 깊게 확인하세요.";
-"send.address.sanction_check" = "제재 확인";
-"send.address.sanction.description" = "수신자의 주소가 Chainalysis.com의 데이터를 사용하여 국제 제재 대상인지 확인합니다.\n\n안전함: 제재가 감지되지 않았습니다.\n\n감지됨: 잠재적 법적 위험. 이 주소와의 거래는 특정 관할권에서 제한되거나 불법일 수 있습니다.";
-"send.address.sanction.caution.title" = "제재 대상 주소!";
-"send.address.sanction.caution.description" = "입력한 주소가 제재 대상으로 표시되어 있습니다. 이 주소로의 거래는 손실이나 기타 위험을 초래할 수 있습니다. 진행하기 전에 수신자 정보를 확인하세요.";
-"send.address.blacklist_check" = "블랙리스트 확인";
-"send.address.blacklist.description" = "목적지 주소가 공식 또는 비공식 블랙리스트에 등록되어 있는지 확인합니다.\n\n안전함: 블랙리스트 표시가 없습니다.\n\n감지됨: 해당 주소는 블랙리스트에 등록되어 있으며 법적 또는 보안 위험과 관련되어 있을 수 있습니다. 주의하여 진행하세요. 많은 암호화폐 거래소는 블랙리스트에 등록된 주소와 상호 작용한 지갑에서 자금을 입금하거나 출금하는 사용자를 제한합니다. 이 점을 염두에 두세요.";
-"send.address.blacklist.caution.title" = "블랙리스트 등록 주소!";
-"send.address.blacklist.caution.description" = "입력한 주소가 블랙리스트에 등록된 것으로 표시되어 있습니다. 이 주소로의 거래는 손실이나 기타 위험을 초래할 수 있습니다. 진행하기 전에 수신자 정보를 확인하세요.";
+"send.address.checking" = "Checking";
+"send.address.check.clear" = "Clear";
+"send.address.check.detected" = "Detected";
+"send.address.check.disabled" = "비활성화됨";
+"send.address.risky.title" = "Risky Address!";
+"send.address.risky.description" = "You are about to send funds to a high-risk address. Proceeding may result in loss of funds or other security risks. By continuing, you accept the potential dangers. Are you sure you want to proceed?";
+"send.address.phishing_check" = "Phishing Check";
+"send.address.phishing.description" = "Analyzes the provided destination address for potential phishing risks.\n\nClear: No suspicious activity detected.\n\nDetected: It appears that someone may be trying to trick you into sending funds to an incorrect address. Do not proceed unless absolutely certain that the address is correct. Consider sending a small test transaction first.";
+"send.address.phishing.caution.title" = "Phishing Address Detected!";
+"send.address.phishing.caution.description" = "The address you entered may be fraudulent. Scammers often alter the first and last characters. Verify the full address carefully before proceeding to avoid loss.";
+"send.address.sanction_check" = "Sanction Check";
+"send.address.sanction.description" = "Verifies whether the recipient’s address is subject to international sanctions, using data from Chainalysis.com.\n\nClear: No sanctions detected.\n\n Detected: Potential legal risk. Transactions with this address may be restricted or illegal in certain jurisdictions.";
+"send.address.sanction.caution.title" = "Sanctioned Address!";
+"send.address.sanction.caution.description" = "The address you entered is flagged as sanctioned. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
+"send.address.blacklist_check" = "Blacklist Check";
+"send.address.blacklist.description" = "Checks if the destination address is listed on official or unofficial blacklists.\n\nClear: No blacklist flags.\n\nDetected: The address is blacklisted and may be associated with legal or security risks. Proceed with caution. Many crypto exchanges restrict users who deposit or withdraw funds from wallets that have interacted with blacklisted addresses. Keep that in mind.";
+"send.address.blacklist.caution.title" = "Blacklisted Address!";
+"send.address.blacklist.caution.description" = "The address you entered is flagged as blacklisted. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
 
 // Donate
 
@@ -626,15 +640,14 @@
 "swap.allowance" = "허용량";
 "swap.allowance.description" = "토큰 스왑을 실행할 때 거래소가 사용자 대신 소비할 수 있는 금액입니다. 실제 스왑 거래가 발생하기 전에 충분한 할당을 설정하는 이전 거래가 필요합니다.";
 "swap.pending_allowance" = "보류 중인 허용량";
-"swap.unlock" = "잠금 해제";
-"swap.unlocking" = "잠금 해제";
+"swap.approve" = "승인";
+"swap.approving" = "승인 중";
 "swap.allowance_error" = "허용량 오류";
 "swap.revoke" = "취소";
 "swap.revoking" = "철회";
 "swap.revoke_warning" = "%@을(를) 교환하거나 새 금액을 취소하고 승인해야 합니다.";
 
-"swap.unlock.title" = "액세스 잠금 해제";
-"swap.unlock.subtitle" = "다음 금액에 대한 액세스 허용";
+"swap.unlock.title" = "승인";
 "swap.unlock.description" = "스마트 계약에 토큰 거래 권한을 부여하여 지정된 허용 금액을 설정합니다. 귀하의 잔액에 영향을 주지 않지만 승인을 위한 소액 수수료가 발생합니다. \n\n미래 거래를 위해 미리 더 높은 금액을 승인하는 것은 요청에 따른 승인보다 비용 효율적입니다.";
 "swap.unlock.unlimited" = "무제한";
 
@@ -648,6 +661,8 @@
 "swap.liquidity_fee" = "유동성 수수료";
 "swap.outbound_fee" = "송금 수수료";
 "swap.total_fee" = "총 수수료";
+"swap.thorchain.slip_protection" = "Slip protection unavailable";
+"swap.thorchain.slip_protection.description" = "Minimum slippage to enable slip protection for this swap is %@.";
 
 // Swap Advanced Settings
 
@@ -767,6 +782,8 @@
 "market.time_period.6m" = "6 개월";
 "market.time_period.1y" = "일년";
 "market.time_period.2y" = "2 년";
+"market.time_period.3y" = "3 Years";
+"market.time_period.4y" = "4 Years";
 "market.time_period.5y" = "5 년";
 "market.time_period.1d.short" = "1하루";
 "market.time_period.1w.short" = "1주일";
@@ -776,6 +793,8 @@
 "market.time_period.6m.short" = "6개월";
 "market.time_period.1y.short" = "1년";
 "market.time_period.2y.short" = "2년";
+"market.time_period.3y.short" = "3Y";
+"market.time_period.4y.short" = "4Y";
 "market.time_period.5y.short" = "5년";
 
 "market.project_has_no_coin" = "이 프로젝트는 코인이 없습니다";
@@ -822,7 +841,6 @@
 "top_platforms.description" = "상위에 구축된 프로젝트들의 누적 시장을 기준으로 한 선도적인 블록체인 플랫폼.";
 
 "top_platform.title" = "%@ 생태계";
-"top_platform.description" = "%@ 체인상의 모든 프로토콜의 시가총액";
 "top_platform.total_cap" = "시가 총액";
 
 
@@ -937,7 +955,7 @@
 "market.global.total_market_cap.description" = "모든 암호화폐의 총 시장 가치\" or \"모든 가상 화폐의 총 시장 가치";
 
 "market.global.volume_24h.title" = "24시간 거래량";
-"market.global.volume_24h.description" = "암호화폐 시장의 24시간 거래량\" or \"가상 화폐 시장의 24시간 거래량";
+"market.global.volume_24h.description" = "The 24-hour trading volume of the crypto market";
 
 "market.global.defi_cap.title" = "디파이(DeFi) 시가총액";
 "market.global.defi_cap.description" = "디파이 프로젝트의 총 시장 가치";
@@ -993,6 +1011,7 @@
 "coin_overview.genesis_date" = "창립일";
 "coin_overview.trading_volume" = "거래량";
 
+"coin.overview.roi.header" = "Relative Change vs %@";
 "coin_overview.roi.hour24" = "24 시간";
 "coin_overview.roi.day1" = "1 일";
 "coin_overview.roi.day7" = "1일주";
@@ -1013,6 +1032,13 @@
 "coin_overview.guide" = "가이드";
 "coin_overview.website" = "웹사이트";
 "coin_overview.whitepaper" = "백서";
+
+// Coin Page -> Analytics -> Select Performance
+
+"coin_overview.performance.select_coins.title" = "Select Coins";
+"coin_overview.performance.period" = "Period %d";
+"coin_overview.performance.assets" = "Selected Assets";
+"coin_overview.performance.only_3" = "Choose only 3 assets";
 
 // Coin Page -> Analytics
 "technical_advice.over.bought" = "과매수";
@@ -1217,6 +1243,8 @@
 "coin_markets.empty" = "데이터 없음";
 "coin_markets.filter.all" = "전체";
 "coin_markets.filter.verified" = "확인";
+"coin_markets.filter.cex" = "CEX";
+"coin_markets.filter.dex" = "DEX";
 "coin_markets.verified" = "확인";
 
 // Coin Page -> Tweets
@@ -1270,13 +1298,19 @@
 "transactions.mint" = "민트";
 "transactions.approve" = "승인됨";
 "transactions.swap" = "스왑됨";
+"transactions.shield" = "Shield";
+"transactions.unshield" = "Unshield";
+"transactions.transfer" = "전송";
 "transactions.contract_call" = "계약 콜";
 "transactions.contract_creation" = "계약 생성";
 "transactions.external_call" = "외부 콜";
 "transactions.contract_deploy" = "계약 배포";
+"transactions.account_created" = "Account Created";
 
 "transactions.to" = "%@에게";
 "transactions.from" = "%@부터";
+"transactions.funder" = "Funder: %@";
+"transactions.account" = "Account: %@";
 
 "transactions.multiple" = "다수";
 
@@ -1295,6 +1329,7 @@
 "transactions.unknown_transaction.description" = "트랜잭션을 구문 분석할 수 없습니다";
 
 "transactions.ton_transaction.title" = "Ton 거래";
+"transactions.stellar_transaction.title" = "Stellar Transaction";
 "transactions.contract" = "계약";
 
 // Transaction Info
@@ -1355,6 +1390,8 @@
 "settings.contact_us" = "문의하기";
 "settings.social_networks.label" = "Be Unstoppable";
 "settings.get_your_tokens" = "Get UWT Tokens";
+"settings.dapp_connection" = "DApp Connection";
+"settings.app_settings" = "앱 설정";
 
 // Settings -> Base Currency
 
@@ -1392,10 +1429,7 @@
 "terms.i_agree" = "동의함";
 
 "terms.item.1" = "지갑별 복구 문구를 안전하게 백업합니다. 앱이 오작동하는 경우 자금에 다시 액세스할 수 있는 유일한 방법입니다.";
-"terms.item.2" = "지갑 복구 문구는 설정 중에 장치에서 임의로 생성되며 다른 곳에 저장되지 않습니다.";
-"terms.item.3" = "스마트폰에서 잠금 해제 PIN(코드)을 비활성화하면 앱에서 모든 지갑이 삭제됩니다. 자금에 대한 액세스를 복원하려면 복구 문구가 필요합니다.";
-"terms.item.4" = "탈옥(루팅), 오래된 OS 사용, 출처를 알 수 없는 앱 설치 등은 자금의 안전을 위협할 수 있습니다.";
-"terms.item.5" = "이 앱을 구동하는 코드에 발견되지 않은 소프트웨어 문제가 있을 수 있으며 이로 인해 앱이 오작동할 수 있습니다.";
+"terms.item.2" = "스마트폰에서 잠금 해제 PIN(코드)을 비활성화하면 앱에서 모든 지갑이 삭제됩니다. 자금에 대한 액세스를 복원하려면 복구 문구가 필요합니다.";
 
 // Settings -> Tell Friends
 
@@ -1590,7 +1624,7 @@
 
 // Settings -> Appearance
 
-"appearance.title" = "모양";
+"appearance.title" = "앱 설정";
 
 "appearance.theme" = "테마";
 "appearance.theme.system" = "시스템";
@@ -1610,6 +1644,7 @@
 "appearance.launch_screen.watchlist" = "관심 목록";
 
 "appearance.balance_tab" = "잔고 탭";
+"appearance.balance_tab.footer" = "The “Hide Buttons” configuration hides the Send, Receive, and Swap buttons on Balance tab.";
 "appearance.hide_buttons" = "숨김 버튼";
 "appearance.balance_value" = "균형 가치";
 "appearance.balance_value.coin_fiat" = "코인/피아트";
@@ -1619,22 +1654,22 @@
 
 // Settings -> Subsription
 
-"subscription.premium.label" = "프리미엄";
-"subscription.title" = "구독";
-"subscription.get" = "프리미엄 구독하기";
-"subscription.restore" = "구매 복원";
-"subscription.type" = "구독 유형";
-"subscription.one-time" = "일회성";
+"subscription.premium.label" = "Premium";
+"subscription.title" = "Subscription";
+"subscription.get" = "Get Premium";
+"subscription.restore" = "Restore Purchase";
+"subscription.type" = "Subscription Type";
+"subscription.one-time" = "One-Time";
 "subscription.price" = "금액";
-"subscription.next_payment" = "다음 결제일";
-"subscription.purchase_time" = "시작일";
+"subscription.next_payment" = "Next payment date";
+"subscription.purchase_time" = "Start date";
 "subscription.status" = "상태";
-"subscription.manage" = "구독 관리";
+"subscription.manage" = "Manage Subscription";
 
 // Settings -> Support
 
-"settings.vip_support.description" = "프리미엄 사용자와 Unstoppable Wallet 팀이 협력하는 VIP 그룹에 독점 액세스하세요. 직접적인 지원을 받고, 향후 업데이트에 대해 논의하며, 지갑의 발전 방향을 함께 만들어 나가세요.";
-"settings.vip_support.start_chat" = "VIP 그룹 참여하기";
+"settings.vip_support.description" = "Get exclusive access to our VIP Group, where premium users and the Unstoppable Wallet team collaborate. Receive direct assistance, discuss future updates, and help shape the wallet’s evolution.";
+"settings.vip_support.start_chat" = "Join VIP Group";
 
 // Settings -> Contacts
 
@@ -1728,7 +1763,6 @@
 "chart.about.read_less" = "덜 읽기";
 
 "coin_page.return_of_investments" = "ROI";
-"coin_page.return_of_investments.vs" = "대 %@";
 
 // Create Wallet
 
@@ -1782,6 +1816,7 @@
 // Education
 
 "education.title" = "Education";
+"quiz.title" = "Crypto Quiz";
 
 // Add Token
 
@@ -1929,6 +1964,8 @@
 "private_keys.title" = "개인 암호";
 "private_keys.evm_private_key" = "EVM 개인 키";
 "private_keys.evm_private_key.description" = "각 지갑 내에서 EVM 기반 암호화, 즉 이더리움, 바이낸스 스마트 체인 등에 대한 완전한 제어 권한을 부여합니다.";
+"private_keys.stellar_secret_key" = "Stellar Secret Key";
+"private_keys.stellar_secret_key.description" = "Grants full control over Stellar assets within the respective wallet.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
 "private_keys.bip32_root_key.description" = "각 지갑의 자산에 대한 모든 권한을 부여합니다.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
@@ -2033,6 +2070,7 @@
 "watch_address.error.non_public_key" = "개인 키로 감시하는 것은 허용되지 않습니다";
 "watch_address.error.not_supported_derived_type" = "파생된 유형은 지원되지 않습니다";
 "watch_address.watch_data.placeholder" = "귀하의 EVM, TRON, TON 또는 공용 주소 (비트코인, 라이트코인, 비트코인 캐시) 또는 계정 xPubKey을 입력하십시오.";
+"watch_address.watch_data.description" = "We support addresses from Bitcoin, Ethereum, TON, and many other blockchains.";
 "watch_address.choose_blockchain" = "블록체인 선택";
 "watch_address.choose_coin" = "코인 선택";
 
@@ -2149,57 +2187,6 @@
 "tron.send.resources_consumed.info" = "Bandwidth 은 블록체인 데이터베이스에 저장된 트랜잭션 바이트 크기를 측정하는 단위입니다. 거래가 클수록 대역폭 자원이 더 많이 사용됩니다.\n\nEnergy 는 TRON 가상 머신이 TRON 네트워크에서 특정 작업을 수행하기 위해 필요한 계산 양을 측정하는 단위입니다. \n\n스마트 계약 트랜잭션은 실행에 계산 자원이 필요하기 때문에 각 스마트 계약 트랜잭션에는 energy 수수료를 지불해야합니다.";
 "tron.send.activation_fee.info" = "TRX나 TRC-10 토큰을 비활성화된 계정 주소로 이전하면 해당 계정이 활성화됩니다.";
 
-// Cex Coin Select
-
-"cex_coin_select.title" = "코인 선택";
-"cex_coin_select.withdraw" = "빼다";
-"cex_coin_select.withdraw.empty" = "당신은 인출할 자산이 없습니다.";
-"cex_coin_select.search_placeholder" = "코인 코드 또는 이름";
-"cex_coin_select.suspended" = "중단됨";
-
-// Cex Deposit Network Select
-
-"cex_deposit_network_select.title" = "네트워크 선택하기";
-"cex_deposit_network_select.description" = "네트워크를 선택하고 입금할 주소를 받으세요.";
-
-// Cex Deposit
-
-"cex_deposit.title" = "침전 %@";
-"cex_deposit.address" = "주소";
-
-"cex_deposit.network" = "회로망";
-"cex_deposit.memo" = "Memo (Tag)";
-"cex_deposit.min_amount" = "최소  금액";
-"cex_deposit.warning_memo" = "필요한 메모 (태그)를 제공하고 호환되는 네트워크 토큰만 보내십시오. 그렇지 않으면 소멸됩니다.";
-"cex_deposit.copy_address" = "복사";
-"cex_deposit.share_address" = "공유";
-"cex_deposit.failed" = "입금 주소를 불러오지 못했습니다. 다시 시도해주세요.";
-"cex_deposit.memo_warning.title" = "중요";
-"cex_deposit.memo_warning.description" = "자산을 수령하기 위해서는 메모(태그)와 주소 모두가 필요합니다. 그렇지 않으면 자금이 손실될 수 있습니다.";
-
-// Cex Widthdraw
-
-"cex_withdraw.network" = "회로망";
-"cex_withdraw.network_warning" = "출금 주소와 입금 플랫폼이 일치하는지 확인하고 지원하는 자산이어야 합니다. 그렇지 않으면 자산이 손실될 수 있습니다.";
-"cex_withdraw.fee" = "수수료";
-"cex_withdraw.fee_from_amount" = "금액에 대한 수수료";
-"cex_withdraw.error.insufficient_funds" = "잔액이 충분하지 않습니다";
-"cex_withdraw.error.max_amount_violated" = "최대 인출 가능액은 %@입니다.";
-"cex_withdraw.error.min_amount_violated" = "최소 인출 금액은 %@입니다.";
-"cex_withdraw.address_required" = "주소가 필요합니다.";
-
-// Cex Withdraw Network Select
-
-"cex_withdraw_network_select.title" = "회로망";
-"cex_withdraw_network_select.description" = "인출 주소가 네트워크와 일치하고, 입금 플랫폼이 해당 네트워크를 지원하는지 확인하세요.";
-
-// Cex Withdraw Confirm
-
-"cex_withdraw_confirm.you_withdraw" = "출금하셨습니다";
-"cex_withdraw_confirm.network" = "회로망";
-"cex_withdraw_confirm.withdraw" = "빼다";
-"cex_withdraw_confirm.withdraw_failed" = "출금 실패";
-
 // No Passcode
 
 "no_passcode.info_text" = "이 앱은 전화에 패스코드(화면 잠금)가 활성화되어 있어야 합니다.\n\niOS 설정에서 활성화할 수 있습니다.\n\nOS 수준에서 PIN을 비활성화하면 전화의 안전한 저장소의 보안 조치로 이전에 저장된 데이터가 무효화됩니다. 지갑 키를 복원하여 지갑으로 돌아가야 합니다.";
@@ -2222,82 +2209,103 @@
 
 // Purchases
 
-"premium.cell.title" = "프리미엄";
-"premium.cell.description" = "%@ 기능으로 경험을 업그레이드하세요!";
-"premium.cell.description.key" = "프리미엄";
-"premium.cell.try" = "무료로 시작하기";
+"premium.cell.title" = "Premium";
+"premium.cell.description" = "Upgrade your experience with %@ features!";
+"premium.cell.description.key" = "Premium";
+"premium.cell.try" = "Try for FREE";
 
-"purchases.title" = "프리미엄";
-"purchases.description" = "플랜 선택하기";
-"purchases.type.pro" = "프로";
-"purchases.type.vip" = "VIP";
+"mini_app.cell.title" = "MiniApp";
+"mini_app.cell.description" = "Pass tests, complete tasks, and earn tokens!";
 
-"purchases.token_insights" = "토큰 분석";
+"purchases.title" = "Premium";
+"purchases.description" = "Choose the plan";
+"purchases.type.pro" = "Pro";
+"purchases.type.vip" = "Vip";
+
+"purchases.token_insights" = "분석";
 "purchases.token_insights.description" = "주요 기준별 상위 100개 목록 접근";
-"purchases.token_insights.info" = "심층 분석을 위한 올인원 도구입니다. 거래량, 거래소 유동성, 보유자 행동 패턴 및 온체인 트렌드를 기반으로 엄선된 상위 250개 토큰 목록을 한눈에 살펴보세요. 필터링, 분석하고 항상 앞서 나가세요.";
+"purchases.token_insights.info" = "Your all-in-one tool for deep analysis. Browse curated Top 250 token lists based on trading volume, exchange liquidity, holder behavior, and on-chain trends—all at a glance. Filter, analyze, and stay ahead.";
 
-"purchases.advanced_search" = "고급 검색";
+"purchases.advanced_search" = "Advanced Search";
 "purchases.advanced_search.description" = "다양한 매개변수에 대한 다중 레벨 필터링";
-"purchases.advanced_search.info" = "불필요한 정보는 배제하고 높은 잠재력을 가진 토큰을 정확하게 찾아보세요. 고급 검색을 사용하여 거래량, 블록체인, 시가총액, 가격 동향, 섹터 및 성과 등 수천 개의 토큰을 필터링하세요. 강력하고 정확하며 발견을 위해 설계되었습니다.";
+"purchases.advanced_search.info" = "Ditch the noise and zero in on high-potential tokens with precision. Use Advanced Search to filter through thousands of tokens by trading volume, blockchain, market cap, price trends, sector, and performance—and more. Powerful, accurate, and built for discovery.";
 
 "purchases.trade_signals" = "신호 및 트렌드";
 "purchases.trade_signals.description" = "보유 토큰의 시장 트렌드 자동 모니터링";
-"purchases.trade_signals.info" = "더 이상 거래 기회를 놓치지 마세요. 트렌드 지켜보기는 고급 기술 분석을 통해 실시간 알림을 제공하여 트렌드를 식별하고, 돌파 신호를 포착하며, 발생하기 전에 위험 요소를 피할 수 있도록 도와줍니다. 신속하게 행동하고, 똑똑하게 거래하며, 수익을 최대화하세요.";
+"purchases.trade_signals.info" = "Never miss a trading opportunity again. Watch Trends delivers real-time alerts powered by advanced technical analysis, helping you identify trends, spot breakouts, and avoid pitfalls before they happen. Act fast, trade smart, and maximize gains.";
 
-"purchases.tx_speed_up" = "트랜잭션 속도 향상 / 취소";
-"purchases.tx_speed_up.description" = "트랜잭션 속도 향상 및 취소";
-"purchases.tx_speed_up.info" = "트랜잭션 속도 향상 / 취소 기능은 블록체인 트랜잭션에 대한 완전한 제어를 제공합니다. 이 기능을 통해 사용자는 가스비를 증가시켜 대기 중인 트랜잭션 속도를 높이거나 필요한 경우 확인되지 않은 트랜잭션을 완전히 취소할 수 있습니다. 트랜잭션 관리에 유연성과 편의성을 더해 사용자가 자신의 활동을 항상 제어할 수 있도록 합니다.";
+"purchases.tx_speed_up" = "Tx Speed UP / Cancel ";
+"purchases.tx_speed_up.description" = "Speed up and cancel transactions.";
+"purchases.tx_speed_up.info" = "Tx Speed Up / Cancel provides full control over blockchain transactions. With this feature, users can accelerate pending transactions by increasing gas fees or cancel unconfirmed transactions altogether if needed. It adds a layer of flexibility and convenience to transaction management, ensuring users remain in control of their activity.";
 
 "purchases.duress_mode" = "긴급 상황 모드";
 "purchases.duress_mode.description" = "물리적 위협 상황에서 스마트 자금 보안";
-"purchases.duress_mode.info" = "당신의 암호화폐. 당신의 보안. 긴급 상황 모드는 각각 다른 PIN을 가진 여러 개의 대체 지갑 설정을 생성할 수 있게 하여 위험한 상황에서 숨겨진 탈출 경로를 제공합니다. 지갑 잠금 해제를 강요받은 경우, 간단히 긴급 PIN을 사용하여 중요한 자산이 노출되지 않는 보조 지갑에 접근할 수 있습니다. 실제 자금은 숨겨진 채로 유지됩니다. 당신의 보안은 그대로 유지됩니다.";
+"purchases.duress_mode.info" = "Your crypto. Your security. Duress Mode lets you create multiple alternate wallet setups, each with a separate PIN, providing a hidden escape route in high-risk situations. If forced to unlock your wallet, simply use the duress PIN to access a secondary wallet with no critical assets exposed. Your real funds stay hidden. Your security stays intact.";
 
-"purchases.address_phishing" = "사기 보호";
+"purchases.address_phishing" = "Scam Protection";
 "purchases.address_phishing.description" = "사기 및 피싱 공격에 대한 효과적인 자동 보호";
-"purchases.address_phishing.info" = "주소 하나만 잘못 입력하면 암호화폐가 영원히 사라질 수 있습니다. Unstoppable은 수신자 주소의 의심스러운 패턴을 자동으로 스캔하고 최신 피싱 위협으로부터 방어하여 해커에게 자금을 보내는 것을 방지합니다. 사기성 거래가 발생하기 전에 차단하세요.";
+"purchases.address_phishing.info" = "One wrong address, and your crypto is gone forever. Unstoppable automatically scans recipient addresses for suspicious patterns and defends against the latest phishing threats, preventing you from sending funds to a hacker. Block fraudulent transfers before they happen.";
 
-"purchases.address_checker" = "블랙리스트 체커";
+"purchases.address_checker" = "Blacklist Checker";
 "purchases.address_checker.description" = "암호화폐 거래의 합법성 보장";
-"purchases.address_checker.info" = "위험하거나 제재 대상인 엔티티로부터 자신을 보호하세요. 블랙리스트 체커는 수신자 주소를 고위험 데이터베이스와 자동으로 대조하여 송금 전에 사기, 사기 및 제재 대상 엔티티를 표시합니다. 주소가 블랙리스트에 등록되어 있다면, 비용이 많이 드는 실수를 하기 전에 알 수 있습니다. 거래를 안전하게 하세요. 암호화폐를 깨끗하게 유지하세요. 규정을 준수하세요.";
+"purchases.address_checker.info" = "Protect yourself from risky and sanctioned entities. Blacklist Checker automatically screens recipient addresses against high-risk databases, flagging scams, frauds, and sanctioned entities before you send. If an address is blacklisted, you’ll know before making a costly mistake. Secure your transactions. Keep your crypto clean. Stay compliant.";
 
 "purchases.vip_support" = "VIP 그룹";
 "purchases.vip_support.description" = "지갑 팀에 접근하여 신속한 기술 지원을 받으세요.";
 "purchases.vip_support.info" = "진화의 일원이 되세요. VIP 그룹에 가입하여 기술 지원을 위해 저희 팀과 직접 연결하세요. 예정된 기능에 투표하고, 향후 업데이트에 대한 독점 미리보기를 받으세요. 당신의 의견이 중요합니다—차세대 암호화폐 지갑을 함께 만들어 나가세요.";
 
-"purchases.vip_club" = "VIP 클럽";
-"purchases.vip_club.description" = "팀 접근 및 향후 개발에 대한 투표 참여";
-"purchases.vip_club.info" = "VIP 클럽은 뜻이 맞는 회원들로 구성된 프리미엄 커뮤니티에 독점 접근을 제공합니다. 회원들은 비공개 토론에 참여하고, 업계 전문가의 인사이트를 얻으며, 다른 최상위 사용자들과 네트워킹할 수 있습니다. 이 기능은 내부자 지식과 연결을 통해 앞서 나가고 싶은 분들에게 완벽합니다.";
+"purchases.vip_club" = "VIP Club";
+"purchases.vip_club.description" = "Private chat with exclusive information.";
+"purchases.vip_club.info" = "The VIP Club offers exclusive access to a premium community of like-minded individuals. Members can participate in private discussions, gain insights from industry experts, and network with other top-tier users. This feature is perfect for those who want to stay ahead with insider knowledge and connections.";
 
-"purchases.wallet_description.title" = "높은 평가를 받는 보안, 탁월한 개인 정보 보호, 그리고 진정한 비수탁형 지갑";
-"purchases.wallet_description.approved" = "다음 기관에서 승인 및 감사:";
+"purchases.wallet_description.title" = "Highly rated security, exceptional privacy, and a truly non-custodial wallet.";
+"purchases.wallet_description.approved" = "Approved and Audited By:";
 
-"purchases.button.try" = "무료로 시작하기";
-"purchases.button.activated" = "활성화됨";
-"purchases.button.upgrade" = "업그레이드";
+"purchases.button.try" = "Try for FREE";
+"purchases.button.activated" = "Activated";
+"purchases.button.upgrade" = "Upgrade";
 
-"purchase.period.title" = "구독 선택";
-"purchase.period.annually" = "연간";
-"purchase.period.monthly" = "월간";
-"purchase.period.onetime" = "일회성";
-"purchase.period.onetime.description" = "평생 이용권";
-"purchase.period.save" = "절약";
-"purchase.period.year" = "년";
-"purchase.period.month" = "월";
-"purchase.period.description1" = "첫 7일은 무료로 이용하세요.";
-"purchase.period.description2" = "App Store 구독은 언제든지 취소할 수 있습니다.";
+"purchase.period.title" = "Select Subscription";
+"purchase.period.annually" = "Annually";
+"purchase.period.monthly" = "Monthly";
+"purchase.period.onetime" = "One-Time";
+"purchase.period.onetime.description" = "for lifetime access";
+"purchase.period.save" = "save";
+"purchase.period.year" = "year";
+"purchase.period.month" = "month";
+"purchase.period.description1" = "Enjoy the first 7 days FREE.";
+"purchase.period.description1.1" = "Enjoy discount for first month.";
+"purchase.period.description2" = "You can cancel your App Store subscription at any time.";
 "purchase.lifetime.description" = "제한 없이 일회성 구독을 구매할 수 있습니다";
 
-"purchases.period.button.try" = "7일 무료 체험 시작하기";
-"purchases.period.button.subscribe" = "구독하기";
-"purchases.period.button.buy" = "지금 구매하기";
-"purchases.period.button.promo" = "프로모 코드 추가";
+"purchases.period.button.try" = "Get 7 days for FREE";
+"purchases.period.button.subscribe" = "Subscribe";
+"purchases.period.button.buy" = "Buy now";
+"purchases.period.button.promo" = "Add Promo Code";
 
-"purchases.promocode.title" = "프로모 코드 입력";
+"purchases.promocode.title" = "Enter Promo Code";
 "purchases.promocode.placeholder" = "";
-"purchases.promocode.button.invalid" = "유효하지 않은 프로모 코드";
-"purchases.promocode.button.already_used" = "이미 사용된 프로모 코드";
+"purchases.promocode.button.invalid" = "Invalid Promo Code";
+"purchases.promocode.button.already_used" = "Promo Code Already Used";
 
-"purchases.successful_subscription.title" = "프리미엄";
-"purchases.successful_subscription.description" = "구독해 주셔서 감사합니다!";
-"purchases.successful_subscription.subscribed" = "앱의 모든 기능을 마음껏 즐기세요.";
-"purchases.successful_subscription.button.go_app" = "앱으로 이동";
+"purchases.successful_subscription.title" = "Premium";
+"purchases.successful_subscription.description" = "Thank you for your subscription!";
+"purchases.successful_subscription.subscribed" = "Enjoy the full power of the app.";
+"purchases.successful_subscription.button.go_app" = "Go to App";
+
+// Address Checker
+
+"address_checker.title" = "Address Checker";
+"address_checker.recipient_check" = "Recipient Check";
+"address_checker.recipient_check.description" = "Checks the recipient address for risks before sending.";
+"address_checker.check_address" = "Check Address";
+"address_checker.check_address.description" = "Allows you to check an address against sanctions and blacklist databases.";
+
+// Check Address
+
+"check_address.sanctions_check" = "Sanctions Check";
+"check_address.coin_blacklist_check" = "%@ Blacklist Check";
+"check_address.on_blockchain" = "on %@";
+"check_address.chainalysis.description" = "Chainalysis is a blockchain analysis platform that provides tools for tracking, investigating, and assessing the risk of cryptocurrency addresses. It helps identify addresses associated with sanctions, fraud, and other illicit activities.";
+"check_address.hashdit.description" = "HashDit is a security platform that allows users to check wallet addresses for risks such as sanctions and blacklist status. It helps users avoid interacting with potentially malicious or blocked addresses.";
+"check_address.coin_blacklist.description" = "Allows you to verify whether a wallet address is blacklisted by %@ (%@). If an address is blacklisted, any %@ tokens associated with it may be frozen, making them inaccessible and non-transferable. This check helps users avoid interacting with high-risk or restricted addresses.";
