@@ -1,13 +1,12 @@
 import SwiftUI
 
 struct MainTransactionsView: View {
-    @StateObject var transactionsViewModel = TransactionsViewModelNew()
+    @ObservedObject var transactionsViewModel: TransactionsViewModelNew
 
     @State var presentedTransactionRecord: TransactionRecord?
-    @State var transactionFilterPresented = false
 
     var body: some View {
-        ThemeView {
+        ThemeView(isRoot: true) {
             VStack(spacing: 0) {
                 ScrollableTabHeaderView(
                     tabs: TransactionTypeFilter.allCases.map(\.title),
@@ -34,38 +33,5 @@ struct MainTransactionsView: View {
         .sheet(item: $presentedTransactionRecord) { record in
             TransactionInfoView(transactionRecord: record).ignoresSafeArea()
         }
-        .sheet(isPresented: $transactionFilterPresented) {
-            TransactionFilterView(transactionsViewModel: transactionsViewModel)
-        }
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                if transactionsViewModel.syncing {
-                    ProgressView()
-                }
-            }
-
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button(action: {
-                    transactionFilterPresented = true
-                }) {
-                    ZStack {
-                        Image("manage_2_24").themeIcon(color: .themeGray)
-
-                        if transactionsViewModel.transactionFilter.hasChanges {
-                            VStack {
-                                HStack {
-                                    Spacer()
-                                    Circle().fill(Color.red).frame(width: 8, height: 8)
-                                }
-                                Spacer()
-                            }
-                        }
-                    }
-                    .frame(width: 28, height: 28)
-                }
-            }
-        }
-        .navigationTitle("transactions.title".localized)
-        .navigationBarTitleDisplayMode(.inline)
     }
 }

@@ -16,7 +16,7 @@ enum WatchModule {
         )
 
         let service = WatchService(
-            accountFactory: App.shared.accountFactory,
+            accountFactory: Core.shared.accountFactory,
             addressParserChain: addressParserChain,
             uriParser: AddressParserFactory.parser(blockchainType: nil, tokenType: nil)
         )
@@ -30,11 +30,11 @@ enum WatchModule {
         let service = ChooseWatchService(
             accountType: accountType,
             accountName: name,
-            accountFactory: App.shared.accountFactory,
-            accountManager: App.shared.accountManager,
-            walletManager: App.shared.walletManager,
-            marketKit: App.shared.marketKit,
-            evmBlockchainManager: App.shared.evmBlockchainManager
+            accountFactory: Core.shared.accountFactory,
+            accountManager: Core.shared.accountManager,
+            walletManager: Core.shared.walletManager,
+            marketKit: Core.shared.marketKit,
+            evmBlockchainManager: Core.shared.evmBlockchainManager
         )
 
         if case let .coins(tokens) = service.items, tokens.count <= 1 {
@@ -50,11 +50,11 @@ enum WatchModule {
         let service = ChooseWatchService(
             accountType: accountType,
             accountName: name,
-            accountFactory: App.shared.accountFactory,
-            accountManager: App.shared.accountManager,
-            walletManager: App.shared.walletManager,
-            marketKit: App.shared.marketKit,
-            evmBlockchainManager: App.shared.evmBlockchainManager
+            accountFactory: Core.shared.accountFactory,
+            accountManager: Core.shared.accountManager,
+            walletManager: Core.shared.walletManager,
+            marketKit: Core.shared.marketKit,
+            evmBlockchainManager: Core.shared.evmBlockchainManager
         )
 
         if case let .coins(tokens) = service.items, tokens.count <= 1 {

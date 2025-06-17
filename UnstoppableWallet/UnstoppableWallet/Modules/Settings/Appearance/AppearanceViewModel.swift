@@ -3,13 +3,13 @@ import MarketKit
 import SwiftUI
 
 class AppearanceViewModel: ObservableObject {
-    private let themeManager = App.shared.themeManager
-    private let launchScreenManager = App.shared.launchScreenManager
-    private let appIconManager = App.shared.appIconManager
-    private let appSettingManager = App.shared.appSettingManager
-    private let walletButtonHiddenManager = App.shared.walletButtonHiddenManager
-    private let priceChangeModeManager = App.shared.priceChangeModeManager
-    private let currencyManager = App.shared.currencyManager
+    private let themeManager = Core.shared.themeManager
+    private let launchScreenManager = Core.shared.launchScreenManager
+    private let appIconManager = Core.shared.appIconManager
+    private let appSettingManager = Core.shared.appSettingManager
+    private let walletButtonHiddenManager = Core.shared.walletButtonHiddenManager
+    private let priceChangeModeManager = Core.shared.priceChangeModeManager
+    private let currencyManager = Core.shared.currencyManager
 
     private var cancellables = Set<AnyCancellable>()
 

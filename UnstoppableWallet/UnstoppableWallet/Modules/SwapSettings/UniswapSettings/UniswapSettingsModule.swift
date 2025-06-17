@@ -9,7 +9,7 @@ protocol ISwapSettingProvider: AnyObject {
 
 enum UniswapSettingsModule {
     static func dataSource(settingProvider: ISwapSettingProvider, showDeadline: Bool) -> ISwapSettingsDataSource? {
-        guard let ethereumToken = try? App.shared.marketKit.token(query: TokenQuery(blockchainType: .ethereum, tokenType: .native)) else {
+        guard let ethereumToken = try? Core.shared.marketKit.token(query: TokenQuery(blockchainType: .ethereum, tokenType: .native)) else {
             return nil
         }
         let token = settingProvider.tokenIn
@@ -23,14 +23,14 @@ enum UniswapSettingsModule {
             .append(handler: evmAddressParserItem)
             .append(handler: udnAddressParserItem)
 
-        if let httpSyncSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
+        if let httpSyncSource = Core.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
            let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: evmAddressParserItem)
         {
             addressParserChain.append(handler: ensAddressParserItem)
         }
 
         let addressUriParser = AddressParserFactory.parser(blockchainType: ethereumToken.blockchainType, tokenType: nil)
-        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: App.shared.marketKit, contactBookManager: App.shared.contactManager, blockchainType: blockchainType, initialAddress: settingProvider.settings.recipient)
+        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: Core.shared.marketKit, contactBookManager: Core.shared.contactManager, blockchainType: blockchainType, initialAddress: settingProvider.settings.recipient)
 
         let service = UniswapSettingsService(tradeOptions: settingProvider.settings, addressService: addressService)
         let viewModel = UniswapSettingsViewModel(service: service, settingProvider: settingProvider)

@@ -6,7 +6,7 @@ enum RestoreNonStandardModule {
         let mnemonicService = RestoreMnemonicNonStandardService(languageManager: LanguageManager.shared)
         let mnemonicViewModel = RestoreMnemonicNonStandardViewModel(service: mnemonicService)
 
-        let service = RestoreService(accountFactory: App.shared.accountFactory)
+        let service = RestoreService(accountFactory: Core.shared.accountFactory)
         let viewModel = RestoreNonStandardViewModel(service: service, mnemonicViewModel: mnemonicViewModel)
 
         let viewController = RestoreNonStandardViewController(

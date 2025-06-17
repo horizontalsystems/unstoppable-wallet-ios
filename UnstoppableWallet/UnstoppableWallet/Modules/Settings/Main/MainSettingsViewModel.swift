@@ -7,19 +7,19 @@ class MainSettingsViewModel: ObservableObject {
     private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
 
-    private let backupManager = App.shared.backupManager
-    private let cloudBackupManager = App.shared.cloudBackupManager
-    private let accountRestoreWarningManager = App.shared.accountRestoreWarningManager
-    private let accountManager = App.shared.accountManager
-    private let contactManager = App.shared.contactManager
-    private let passcodeManager = App.shared.passcodeManager
-    private let termsManager = App.shared.termsManager
-    private let systemInfoManager = App.shared.systemInfoManager
-    private let walletConnectSessionManager = App.shared.walletConnectSessionManager
-    private let rateAppManager = App.shared.rateAppManager
-    private let localStorage = App.shared.localStorage
-    private let testNetManager = App.shared.testNetManager
-    private let purchaseManager = App.shared.purchaseManager
+    private let backupManager = Core.shared.backupManager
+    private let cloudBackupManager = Core.shared.cloudBackupManager
+    private let accountRestoreWarningManager = Core.shared.accountRestoreWarningManager
+    private let accountManager = Core.shared.accountManager
+    private let contactManager = Core.shared.contactManager
+    private let passcodeManager = Core.shared.passcodeManager
+    private let termsManager = Core.shared.termsManager
+    private let systemInfoManager = Core.shared.systemInfoManager
+    private let walletConnectSessionManager = Core.shared.walletConnectSessionManager
+    private let rateAppManager = Core.shared.rateAppManager
+    private let localStorage = Core.shared.localStorage
+    private let testNetManager = Core.shared.testNetManager
+    private let purchaseManager = Core.shared.purchaseManager
 
     @Published var manageWalletsAlert: Bool = false
     @Published var walletConnectSessionCount: Int = 0

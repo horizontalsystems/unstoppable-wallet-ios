@@ -3,7 +3,7 @@ import UIKit
 
 enum SwapSelectProviderModule {
     static func viewController(dexManager: ISwapDexManager) -> UIViewController {
-        let service = SwapSelectProviderService(dexManager: dexManager, evmBlockchainManager: App.shared.evmBlockchainManager)
+        let service = SwapSelectProviderService(dexManager: dexManager, evmBlockchainManager: Core.shared.evmBlockchainManager)
 
         let viewModel = SwapSelectProviderViewModel(service: service)
 

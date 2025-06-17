@@ -260,15 +260,15 @@ extension StellarSendHandler {
 
 extension StellarSendHandler {
     static func instance(data: StellarSendData, token: Token, memo: String?) -> StellarSendHandler? {
-        guard let baseToken = try? App.shared.coinManager.token(query: .init(blockchainType: .stellar, tokenType: .native)) else {
+        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: .stellar, tokenType: .native)) else {
             return nil
         }
 
-        guard let stellarKit = App.shared.stellarKitManager.stellarKit else {
+        guard let stellarKit = Core.shared.stellarKitManager.stellarKit else {
             return nil
         }
 
-        guard let account = App.shared.accountManager.activeAccount, let keyPair = try? StellarKitManager.keyPair(accountType: account.type) else {
+        guard let account = Core.shared.accountManager.activeAccount, let keyPair = try? StellarKitManager.keyPair(accountType: account.type) else {
             return nil
         }
 

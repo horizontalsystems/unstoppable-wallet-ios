@@ -4,8 +4,8 @@ import RxSwift
 
 class RecipientRowsViewModel: ObservableObject {
     let disposeBag = DisposeBag()
-    let evmLabelManager = App.shared.evmLabelManager
-    let manager = App.shared.contactManager
+    let evmLabelManager = Core.shared.evmLabelManager
+    let manager = Core.shared.contactManager
 
     let address: String
     let label: String?
@@ -18,7 +18,7 @@ class RecipientRowsViewModel: ObservableObject {
         self.blockchainType = blockchainType
         label = evmLabelManager.addressLabel(address: address)
 
-        subscribe(disposeBag, App.shared.contactManager.stateObservable) { [weak self] _ in self?.sync() }
+        subscribe(disposeBag, Core.shared.contactManager.stateObservable) { [weak self] _ in self?.sync() }
         sync()
     }
 

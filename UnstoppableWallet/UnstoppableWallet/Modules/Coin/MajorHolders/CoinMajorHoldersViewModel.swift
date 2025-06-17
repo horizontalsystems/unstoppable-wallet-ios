@@ -6,8 +6,8 @@ import MarketKit
 class CoinMajorHoldersViewModel: ObservableObject {
     let coin: Coin
     let blockchain: Blockchain
-    private let marketKit = App.shared.marketKit
-    private let evmLabelManager = App.shared.evmLabelManager
+    private let marketKit = Core.shared.marketKit
+    private let evmLabelManager = Core.shared.evmLabelManager
     private let addressLabelMap: [String: String]
     private var tasks = Set<AnyTask>()
 

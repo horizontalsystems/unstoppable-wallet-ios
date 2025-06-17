@@ -1,5 +1,6 @@
 import Combine
 import HsExtensions
+import SwiftUI
 import UIKit
 
 public class ThemeManager {
@@ -65,4 +66,15 @@ public enum ThemeMode: String {
     case light
     case dark
     case system
+
+    var colorScheme: ColorScheme? {
+        switch self {
+        case .system:
+            return nil
+        case .light:
+            return .light
+        case .dark:
+            return .dark
+        }
+    }
 }

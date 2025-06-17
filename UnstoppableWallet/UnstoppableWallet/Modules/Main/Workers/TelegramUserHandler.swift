@@ -6,7 +6,7 @@ import UIKit
 class TelegramUserHandler {
     private let disposeBag = DisposeBag()
     private let parentViewController: UIViewController?
-    private let marketKit = App.shared.marketKit
+    private let marketKit = Core.shared.marketKit
     private let baseUrl = AppConfig.referralAppServerUrl
 
     init(parentViewController: UIViewController?) {
@@ -27,7 +27,7 @@ extension TelegramUserHandler: IEventHandler {
                 return
             }
 
-            let _: EmptyResponse = try await App.shared.networkManager.fetch(url: url)
+            let _: EmptyResponse = try await Core.shared.networkManager.fetch(url: url)
         }
     }
 }

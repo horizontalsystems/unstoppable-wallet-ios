@@ -36,7 +36,7 @@ struct TransactionsView: View {
                     .padding(.bottom, .margin12)
                     .frame(maxWidth: .infinity)
                     .listRowInsets(EdgeInsets())
-                    .background(Color.themeTyler)
+                    .background(Color.themeLawrence)
             }
         }
     }

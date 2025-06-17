@@ -2,8 +2,8 @@ import Combine
 import StoreKit
 
 class PurchaseListViewModel: ObservableObject {
-    private let localStorage = App.shared.localStorage
-    private let purchaseManager = App.shared.purchaseManager
+    private let localStorage = Core.shared.localStorage
+    private let purchaseManager = Core.shared.purchaseManager
     private var cancellables = Set<AnyCancellable>()
 
     @Published var activePurchase: PurchaseManager.PurchaseData?

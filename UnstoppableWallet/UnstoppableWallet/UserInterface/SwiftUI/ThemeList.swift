@@ -1,7 +1,7 @@
 import SwiftUI
 import UIKit
 
-let themeListTopViewId = "theme_list_top_view_id"
+let THEME_LIST_TOP_VIEW_ID = "theme_list_top_view_id"
 
 struct ThemeList<Content: View>: View {
     private let content: () -> Content
@@ -36,7 +36,7 @@ struct ThemeList<Content: View>: View {
     @ViewBuilder private func list() -> some View {
         List {
             Color.clear
-                .id(themeListTopViewId)
+                .id(THEME_LIST_TOP_VIEW_ID)
                 .frame(height: 0)
                 .listRowBackground(Color.clear)
                 .listRowInsets(EdgeInsets())
@@ -54,7 +54,7 @@ struct ThemeList<Content: View>: View {
         }
         .environment(\.defaultMinListRowHeight, 0)
         .listStyle(.plain)
-        .themeListStyle(.transparent)
+        .themeListStyle(.lawrence)
     }
 }
 

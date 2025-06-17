@@ -108,11 +108,11 @@ extension EvmSendHandler {
 
 extension EvmSendHandler {
     static func instance(blockchainType: BlockchainType, transactionData: TransactionData) -> EvmSendHandler? {
-        guard let baseToken = try? App.shared.coinManager.token(query: .init(blockchainType: blockchainType, tokenType: .native)) else {
+        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: blockchainType, tokenType: .native)) else {
             return nil
         }
 
-        guard let evmKitWrapper = App.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
+        guard let evmKitWrapper = Core.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
             return nil
         }
 

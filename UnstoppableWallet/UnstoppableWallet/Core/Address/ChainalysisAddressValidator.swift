@@ -7,7 +7,7 @@ import RxSwift
 
 class ChainalysisAddressValidator {
     private let baseUrl = "https://public.chainalysis.com/api/v1/address/"
-    private let networkManager = App.shared.networkManager
+    private let networkManager = Core.shared.networkManager
     private let headers: HTTPHeaders
 
     init() {

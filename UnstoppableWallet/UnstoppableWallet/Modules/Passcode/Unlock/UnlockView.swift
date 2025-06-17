@@ -1,6 +1,14 @@
 import LocalAuthentication
 import SwiftUI
 
+struct AppUnlockView: View {
+    @StateObject private var viewModel = AppUnlockViewModel(biometryAllowed: true)
+
+    var body: some View {
+        UnlockView(viewModel: viewModel)
+    }
+}
+
 struct UnlockView: View {
     @ObservedObject var viewModel: BaseUnlockViewModel
 
@@ -25,15 +33,8 @@ struct UnlockView: View {
         .onAppear {
             viewModel.onAppear()
         }
-        .onDisappear {
-            viewModel.onDisappear()
-        }
-        .onReceive(viewModel.finishSubject) { reloadApp in
-            if reloadApp {
-                UIWindow.keyWindow?.set(newRootController: MainModule.instance())
-            } else {
-                presentationMode.wrappedValue.dismiss()
-            }
+        .onReceive(viewModel.finishSubject) {
+            presentationMode.wrappedValue.dismiss()
         }
         .onReceive(viewModel.unlockWithBiometrySubject) {
             unlockWithBiometry()
@@ -45,11 +46,7 @@ struct UnlockView: View {
         localAuthenticationContext.evaluatePolicy(.deviceOwnerAuthenticationWithBiometrics, localizedReason: "unlock.biometry_reason".localized) { success, _ in
             if success {
                 DispatchQueue.main.async {
-                    let shouldDismiss = viewModel.onBiometryUnlock()
-
-                    if shouldDismiss {
-                        presentationMode.wrappedValue.dismiss()
-                    }
+                    viewModel.onBiometryUnlock()
                 }
             }
         }

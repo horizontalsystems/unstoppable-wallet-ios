@@ -14,11 +14,11 @@ enum RestoreSelectModule {
             statPage: statPage,
             isManualBackedUp: isManualBackedUp,
             isFileBackedUp: isFileBackedUp,
-            accountFactory: App.shared.accountFactory,
-            accountManager: App.shared.accountManager,
-            walletManager: App.shared.walletManager,
-            restoreStateManager: App.shared.restoreStateManager,
-            marketKit: App.shared.marketKit,
+            accountFactory: Core.shared.accountFactory,
+            accountManager: Core.shared.accountManager,
+            walletManager: Core.shared.walletManager,
+            restoreStateManager: Core.shared.restoreStateManager,
+            marketKit: Core.shared.marketKit,
             blockchainTokensService: blockchainTokensService,
             restoreSettingsService: restoreSettingsService
         )

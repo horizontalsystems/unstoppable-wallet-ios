@@ -13,7 +13,7 @@ class DashAdapter: BitcoinBaseAdapter {
     private let dashKit: DashKit.Kit
 
     init(wallet: Wallet, syncMode: BitcoinCore.SyncMode) throws {
-        let logger = App.shared.logger.scoped(with: "DashKit")
+        let logger = Core.shared.logger.scoped(with: "DashKit")
 
         switch wallet.account.type {
         case .mnemonic:

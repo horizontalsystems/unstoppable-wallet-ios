@@ -12,7 +12,7 @@ class ECashAdapter: BitcoinBaseAdapter {
     private let eCashKit: ECashKit.Kit
 
     init(wallet: Wallet, syncMode: BitcoinCore.SyncMode) throws {
-        let logger = App.shared.logger.scoped(with: "ECashKit")
+        let logger = Core.shared.logger.scoped(with: "ECashKit")
 
         switch wallet.account.type {
         case .mnemonic:

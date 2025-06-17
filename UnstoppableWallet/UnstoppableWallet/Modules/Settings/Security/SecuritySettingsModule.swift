@@ -3,10 +3,10 @@ import SwiftUI
 enum SecuritySettingsModule {
     static func view() -> some View {
         let viewModel = SecuritySettingsViewModel(
-            passcodeManager: App.shared.passcodeManager,
-            biometryManager: App.shared.biometryManager,
-            lockManager: App.shared.lockManager,
-            balanceHiddenManager: App.shared.balanceHiddenManager
+            passcodeManager: Core.shared.passcodeManager,
+            biometryManager: Core.shared.biometryManager,
+            lockManager: Core.shared.lockManager,
+            balanceHiddenManager: Core.shared.balanceHiddenManager
         )
 
         return SecuritySettingsView(viewModel: viewModel)

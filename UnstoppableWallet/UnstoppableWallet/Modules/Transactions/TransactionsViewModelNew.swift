@@ -5,12 +5,12 @@ import RxSwift
 class TransactionsViewModelNew: ObservableObject {
     private static let pageLimit = 20
 
-    private let walletManager = App.shared.walletManager
-    private let adapterManager = App.shared.transactionAdapterManager
-    private let balanceHiddenManager = App.shared.balanceHiddenManager
-    private let contactLabelService = TransactionsContactLabelService(contactManager: App.shared.contactManager)
-    private let rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager)
-    private let nftMetadataService = NftMetadataService(nftMetadataManager: App.shared.nftMetadataManager)
+    private let walletManager = Core.shared.walletManager
+    private let adapterManager = Core.shared.transactionAdapterManager
+    private let balanceHiddenManager = Core.shared.balanceHiddenManager
+    private let contactLabelService = TransactionsContactLabelService(contactManager: Core.shared.contactManager)
+    private let rateService = HistoricalRateService(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager)
+    private let nftMetadataService = NftMetadataService(nftMetadataManager: Core.shared.nftMetadataManager)
     private let viewItemFactory: TransactionsViewItemFactoryNew
     private let poolGroupFactory = PoolGroupFactory()
 

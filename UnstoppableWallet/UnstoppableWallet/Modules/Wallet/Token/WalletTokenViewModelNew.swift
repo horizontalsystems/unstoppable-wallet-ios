@@ -6,10 +6,9 @@ import RxSwift
 class WalletTokenViewModelNew: ObservableObject {
     private let coinPriceService = WalletCoinPriceService()
     private let walletService: WalletService
-    private let cloudBackupManager = App.shared.cloudBackupManager
-    private let balanceHiddenManager = App.shared.balanceHiddenManager
-    private let reachabilityManager = App.shared.reachabilityManager
-    private let appManager = App.shared.appManager
+    private let cloudBackupManager = Core.shared.cloudBackupManager
+    private let balanceHiddenManager = Core.shared.balanceHiddenManager
+    private let appManager = Core.shared.appManager
 
     private let disposeBag = DisposeBag()
 
@@ -117,10 +116,6 @@ extension WalletTokenViewModelNew {
         } else {
             return [.send, .receive] + (AppConfig.swapEnabled && wallet.token.swappable ? [.swap] : []) + [.chart]
         }
-    }
-
-    var isReachable: Bool {
-        reachabilityManager.isReachable
     }
 
     func onTapReceive() {

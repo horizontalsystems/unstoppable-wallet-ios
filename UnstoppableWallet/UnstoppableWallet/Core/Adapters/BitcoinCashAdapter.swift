@@ -20,7 +20,7 @@ class BitcoinCashAdapter: BitcoinBaseAdapter {
         }
 
         let networkType: BitcoinCashKit.Kit.NetworkType = .mainNet(coinType: kitCoinType)
-        let logger = App.shared.logger.scoped(with: "BitcoinCashKit")
+        let logger = Core.shared.logger.scoped(with: "BitcoinCashKit")
 
         switch wallet.account.type {
         case .mnemonic:

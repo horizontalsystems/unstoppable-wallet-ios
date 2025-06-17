@@ -5,7 +5,7 @@ import UIKit
 enum NftActivityModule {
     static func viewController(eventListType: NftEventListType, defaultEventType: NftEventMetadata.EventType? = .sale) -> NftActivityViewController {
         let coinPriceService = WalletCoinPriceService()
-        let service = NftActivityService(eventListType: eventListType, defaultEventType: defaultEventType, nftMetadataManager: App.shared.nftMetadataManager, coinPriceService: coinPriceService)
+        let service = NftActivityService(eventListType: eventListType, defaultEventType: defaultEventType, nftMetadataManager: Core.shared.nftMetadataManager, coinPriceService: coinPriceService)
         let viewModel = NftActivityViewModel(service: service)
 
         let cellFactory: INftActivityCellFactory

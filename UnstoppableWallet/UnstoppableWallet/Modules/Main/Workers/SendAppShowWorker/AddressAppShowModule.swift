@@ -5,7 +5,7 @@ import UIKit
 class AddressAppShowModule {
     private let disposeBag = DisposeBag()
     private let parentViewController: UIViewController?
-    private let marketKit = App.shared.marketKit
+    private let marketKit = Core.shared.marketKit
 
     init(parentViewController: UIViewController?) {
         self.parentViewController = parentViewController

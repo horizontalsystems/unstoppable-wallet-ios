@@ -4,11 +4,11 @@ import Foundation
 
 class BackupAppViewModel: ObservableObject {
     static let backupNamePrefix = "App Backup"
-    private let accountManager = App.shared.accountManager
-    private let contactManager = App.shared.contactManager
-    private let cloudBackupManager = App.shared.cloudBackupManager
-    private let watchlistManager = App.shared.watchlistManager
-    private let evmSyncSourceManager = App.shared.evmSyncSourceManager
+    private let accountManager = Core.shared.accountManager
+    private let contactManager = Core.shared.contactManager
+    private let cloudBackupManager = Core.shared.cloudBackupManager
+    private let watchlistManager = Core.shared.watchlistManager
+    private let evmSyncSourceManager = Core.shared.evmSyncSourceManager
 
     private var cancellables = Set<AnyCancellable>()
 

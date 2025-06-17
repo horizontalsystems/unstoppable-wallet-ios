@@ -18,12 +18,12 @@ class TransactionContactSelectViewModel: ObservableObject {
     init(transactionFilterViewModel: TransactionFilterViewModel) {
         self.transactionFilterViewModel = transactionFilterViewModel
 
-        subscribe(disposeBag, App.shared.contactManager.stateObservable) { [weak self] _ in self?.sync() }
+        subscribe(disposeBag, Core.shared.contactManager.stateObservable) { [weak self] _ in self?.sync() }
         sync()
     }
 
     private func sync() {
-        let allContacts = App.shared.contactManager.all ?? []
+        let allContacts = Core.shared.contactManager.all ?? []
         var suitableBlockchainUids = Self.allowedBlockchainUids
 
         if let selectedBlockchain = transactionFilterViewModel.blockchain {
@@ -38,7 +38,7 @@ class TransactionContactSelectViewModel: ObservableObject {
     }
 
     var allowedBlockchainsForContact: [Blockchain] {
-        (try? App.shared.marketKit.blockchains(uids: Self.allowedBlockchainUids)) ?? []
+        (try? Core.shared.marketKit.blockchains(uids: Self.allowedBlockchainUids)) ?? []
     }
 
     var currentContact: Contact? {

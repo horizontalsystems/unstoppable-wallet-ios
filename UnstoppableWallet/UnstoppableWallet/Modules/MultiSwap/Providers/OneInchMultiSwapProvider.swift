@@ -8,7 +8,7 @@ import SwiftUI
 
 class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     private let kit: OneInchKit.Kit
-    private let networkManager = App.shared.networkManager
+    private let networkManager = Core.shared.networkManager
     private let evmFeeEstimator = EvmFeeEstimator()
     private let commission: Decimal? = AppConfig.oneInchCommission
     private let commissionAddress: String? = AppConfig.oneInchCommissionAddress

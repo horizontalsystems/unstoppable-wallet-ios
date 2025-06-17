@@ -3,9 +3,9 @@ import Foundation
 import MarketKit
 
 class MarketAdvancedSearchResultsViewModel: ObservableObject {
-    private let currencyManager = App.shared.currencyManager
-    private let purchaseManager = App.shared.purchaseManager
-    private let watchlistManager = App.shared.watchlistManager
+    private let currencyManager = Core.shared.currencyManager
+    private let purchaseManager = Core.shared.purchaseManager
+    private let watchlistManager = Core.shared.watchlistManager
     private var cancellables = Set<AnyCancellable>()
 
     private let internalMarketInfos: [MarketInfo]

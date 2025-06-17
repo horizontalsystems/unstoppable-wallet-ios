@@ -9,7 +9,7 @@ enum RestoreModule {
         let privateKeyService = RestorePrivateKeyService()
         let privateKeyViewModel = RestorePrivateKeyViewModel(service: privateKeyService)
 
-        let service = RestoreService(accountFactory: App.shared.accountFactory)
+        let service = RestoreService(accountFactory: Core.shared.accountFactory)
         let viewModel = RestoreViewModel(service: service, mnemonicViewModel: mnemonicViewModel, privateKeyViewModel: privateKeyViewModel)
 
         let viewController = RestoreViewController(

@@ -5,7 +5,7 @@ import MarketKit
 class WalletConnectSendHandler {
     private let request: WalletConnectRequest
     private let payload: WCEthereumTransactionPayload
-    private let signService: IWalletConnectSignService = App.shared.walletConnectSessionManager.service
+    private let signService: IWalletConnectSignService = Core.shared.walletConnectSessionManager.service
 
     let baseToken: Token
     private let transactionData: TransactionData
@@ -116,13 +116,13 @@ extension WalletConnectSendHandler {
 extension WalletConnectSendHandler {
     static func instance(request: WalletConnectRequest) -> WalletConnectSendHandler? {
         guard let payload = request.payload as? WCEthereumTransactionPayload,
-              let account = App.shared.accountManager.activeAccount,
-              let evmKitWrapper = App.shared.walletConnectManager.evmKitWrapper(chainId: request.chain.id, account: account)
+              let account = Core.shared.accountManager.activeAccount,
+              let evmKitWrapper = Core.shared.walletConnectManager.evmKitWrapper(chainId: request.chain.id, account: account)
         else {
             return nil
         }
 
-        guard let baseToken = try? App.shared.coinManager.token(query: .init(blockchainType: evmKitWrapper.blockchainType, tokenType: .native)) else {
+        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: evmKitWrapper.blockchainType, tokenType: .native)) else {
             return nil
         }
 

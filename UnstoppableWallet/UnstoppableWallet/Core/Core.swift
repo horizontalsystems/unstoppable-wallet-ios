@@ -3,14 +3,14 @@ import GRDB
 import HsToolKit
 import MarketKit
 
-class App {
-    static var instance: App?
+class Core {
+    static var instance: Core?
 
     static func initApp() throws {
-        instance = try App()
+        instance = try Core()
     }
 
-    static var shared: App {
+    static var shared: Core {
         instance!
     }
 
@@ -28,7 +28,6 @@ class App {
     let lockDelegate: LockDelegate
     let lockManager: LockManager
     let lockoutManager: LockoutManager
-    let blurManager: BlurManager
     let keychainManager: KeychainManager
     let themeManager: ThemeManager
     let systemInfoManager: SystemInfoManager
@@ -46,7 +45,6 @@ class App {
 
     let logRecordManager: LogRecordManager
     let logger: Logger
-    var debugLogger: DebugLogger?
 
     let currencyManager: CurrencyManager
     let networkManager: NetworkManager
@@ -139,7 +137,6 @@ class App {
         lockDelegate = LockDelegate()
         lockManager = LockManager(passcodeManager: passcodeManager, userDefaultsStorage: userDefaultsStorage, delegate: lockDelegate)
         lockoutManager = LockoutManager(keychainStorage: keychainStorage)
-        blurManager = BlurManager(lockManager: lockManager)
         keychainManager = KeychainManager(storage: keychainStorage, userDefaultsStorage: userDefaultsStorage)
         themeManager = ThemeManager.shared
         systemInfoManager = SystemInfoManager()
@@ -159,10 +156,6 @@ class App {
         let logRecordStorage = LogRecordStorage(dbPool: dbPool)
         logRecordManager = LogRecordManager(storage: logRecordStorage)
         logger = Logger(minLogLevel: .error, storage: logRecordManager)
-
-        if AppConfig.officeMode {
-            debugLogger = DebugLogger(localStorage: localStorage, dateProvider: CurrentDateProvider())
-        }
 
         currencyManager = CurrencyManager(storage: sharedLocalStorage)
         networkManager = NetworkManager(logger: logger)
@@ -339,9 +332,7 @@ class App {
             lockManager: lockManager,
             keychainManager: keychainManager,
             passcodeLockManager: passcodeLockManager,
-            blurManager: blurManager,
             kitCleaner: kitCleaner,
-            debugLogger: debugLogger,
             appVersionManager: appVersionManager,
             rateAppManager: rateAppManager,
             logRecordManager: logRecordManager,

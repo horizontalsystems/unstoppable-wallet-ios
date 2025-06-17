@@ -5,8 +5,8 @@ import SwiftUI
 import UniswapKit
 
 class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
-    let marketKit = App.shared.marketKit
-    let evmSyncSourceManager = App.shared.evmSyncSourceManager
+    let marketKit = Core.shared.marketKit
+    let evmSyncSourceManager = Core.shared.evmSyncSourceManager
     let evmFeeEstimator = EvmFeeEstimator()
 
     override func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> IMultiSwapQuote {

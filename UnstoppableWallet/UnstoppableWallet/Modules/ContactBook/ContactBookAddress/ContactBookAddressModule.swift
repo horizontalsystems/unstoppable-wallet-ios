@@ -7,11 +7,11 @@ enum ContactBookAddressModule {
         let service: ContactBookAddressService
         let addressService: AddressService
         if let currentAddress {
-            guard let blockchain = try? App.shared.marketKit.blockchain(uid: currentAddress.blockchainUid) else {
+            guard let blockchain = try? Core.shared.marketKit.blockchain(uid: currentAddress.blockchainUid) else {
                 return nil
             }
-            addressService = AddressService(mode: .blockchainType, marketKit: App.shared.marketKit, contactBookManager: nil, blockchainType: blockchain.type)
-            service = ContactBookAddressService(marketKit: App.shared.marketKit, addressService: addressService, contactBookManager: App.shared.contactManager, currentContactUid: contactUid, mode: .edit(currentAddress), blockchain: blockchain)
+            addressService = AddressService(mode: .blockchainType, marketKit: Core.shared.marketKit, contactBookManager: nil, blockchainType: blockchain.type)
+            service = ContactBookAddressService(marketKit: Core.shared.marketKit, addressService: addressService, contactBookManager: Core.shared.contactManager, currentContactUid: contactUid, mode: .edit(currentAddress), blockchain: blockchain)
         } else {
             let blockchainUids = BlockchainType
                 .supported
@@ -20,14 +20,14 @@ enum ContactBookAddressModule {
                     !existAddresses.contains(where: { address in address.blockchainUid == uid })
                 }
 
-            let allBlockchains = ((try? App.shared.marketKit.blockchains(uids: blockchainUids)) ?? [])
+            let allBlockchains = ((try? Core.shared.marketKit.blockchains(uids: blockchainUids)) ?? [])
                 .sorted { $0.type.order < $1.type.order }
 
             guard let firstBlockchain = allBlockchains.first else {
                 return nil
             }
-            addressService = AddressService(mode: .blockchainType, marketKit: App.shared.marketKit, contactBookManager: nil, blockchainType: firstBlockchain.type)
-            service = ContactBookAddressService(marketKit: App.shared.marketKit, addressService: addressService, contactBookManager: App.shared.contactManager, currentContactUid: contactUid, mode: .create(existAddresses), blockchain: firstBlockchain)
+            addressService = AddressService(mode: .blockchainType, marketKit: Core.shared.marketKit, contactBookManager: nil, blockchainType: firstBlockchain.type)
+            service = ContactBookAddressService(marketKit: Core.shared.marketKit, addressService: addressService, contactBookManager: Core.shared.contactManager, currentContactUid: contactUid, mode: .create(existAddresses), blockchain: firstBlockchain)
         }
 
         let viewModel = ContactBookAddressViewModel(service: service)

@@ -4,8 +4,8 @@ import HsToolKit
 import MarketKit
 
 class Eip20AddressValidator {
-    private let evmSyncSourceManager = App.shared.evmSyncSourceManager
-    private let networkManager = App.shared.networkManager
+    private let evmSyncSourceManager = Core.shared.evmSyncSourceManager
+    private let networkManager = Core.shared.networkManager
 
     private static func method(coinUid: String, blockchainType: BlockchainType) -> Method? {
         switch coinUid {

@@ -26,7 +26,7 @@ enum ChartIndicatorSettingsModule {
         default: return nil
         }
 
-        let viewModel = ChartIndicatorSettingsViewModel(dataSource: dataSource, subscriptionManager: App.shared.subscriptionManager)
+        let viewModel = ChartIndicatorSettingsViewModel(dataSource: dataSource, subscriptionManager: Core.shared.subscriptionManager)
         let viewController = ChartIndicatorSettingsViewController(viewModel: viewModel, onComplete: onComplete)
 
         return viewController

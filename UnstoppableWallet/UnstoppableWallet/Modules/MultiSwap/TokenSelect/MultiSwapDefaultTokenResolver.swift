@@ -6,7 +6,7 @@ enum MultiSwapDefaultTokenResolver {
             return nil
         }
 
-        let marketKit = App.shared.marketKit
+        let marketKit = Core.shared.marketKit
 
         if token.type == .native { // found usd-stablecoin for selected blockchain if it's possible
             let fullCoin: FullCoin?

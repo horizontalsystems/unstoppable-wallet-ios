@@ -31,8 +31,8 @@ struct CoinTreasuriesView: View {
                                 .listRowInsets(EdgeInsets())
                                 .listRowSeparator(.hidden)
                         }
-                        .onChange(of: viewModel.filter) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
-                        .onChange(of: viewModel.sortOrder) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
+                        .onChange(of: viewModel.filter) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
+                        .onChange(of: viewModel.sortOrder) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
                     }
                 }
             case .failed:

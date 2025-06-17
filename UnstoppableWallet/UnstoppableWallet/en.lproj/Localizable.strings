@@ -300,6 +300,7 @@
 "balance.deposit" = "Deposit";
 "balance.address" = "Address";
 "balance.chart" = "Chart";
+"balance.scan" = "Scan";
 "balance.rate_per_coin" = "%@ per %@";
 "balance.syncing" = "Syncing...";
 "balance.searching" = "Searching transactions...";

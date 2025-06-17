@@ -1,8 +1,8 @@
 import Combine
 
 class WalletConnectViewModifierModel: ObservableObject {
-    private let accountManager = App.shared.accountManager
-    private let cloudBackupManager = App.shared.cloudBackupManager
+    private let accountManager = Core.shared.accountManager
+    private let cloudBackupManager = Core.shared.cloudBackupManager
 
     @Published var walletConnectNoAccountPresented = false
     @Published var walletConnectNotSupportedAccountType: AccountType?

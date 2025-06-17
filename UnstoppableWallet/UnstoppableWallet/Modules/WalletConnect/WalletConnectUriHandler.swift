@@ -5,12 +5,12 @@ import WalletConnectUtils
 
 enum WalletConnectUriHandler {
     public static func validate(uri: String) throws {
-        _ = try App.shared.walletConnectSessionManager.service.validate(uri: uri)
+        _ = try Core.shared.walletConnectSessionManager.service.validate(uri: uri)
     }
 
     public static func pair(uri: String) async throws {
-        let uri = try App.shared.walletConnectSessionManager.service.validate(uri: uri)
-        try await App.shared.walletConnectSessionManager.service.pair(uri: uri)
+        let uri = try Core.shared.walletConnectSessionManager.service.validate(uri: uri)
+        try await Core.shared.walletConnectSessionManager.service.pair(uri: uri)
     }
 }
 

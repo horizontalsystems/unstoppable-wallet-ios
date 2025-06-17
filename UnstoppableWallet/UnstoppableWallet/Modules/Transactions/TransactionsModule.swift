@@ -5,19 +5,19 @@ import UIKit
 
 enum TransactionsModule {
     static func viewController() -> UIViewController {
-        let rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager)
-        let nftMetadataService = NftMetadataService(nftMetadataManager: App.shared.nftMetadataManager)
+        let rateService = HistoricalRateService(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager)
+        let nftMetadataService = NftMetadataService(nftMetadataManager: Core.shared.nftMetadataManager)
 
         let service = TransactionsService(
-            walletManager: App.shared.walletManager,
-            adapterManager: App.shared.transactionAdapterManager,
+            walletManager: Core.shared.walletManager,
+            adapterManager: Core.shared.transactionAdapterManager,
             rateService: rateService,
             nftMetadataService: nftMetadataService,
-            balanceHiddenManager: App.shared.balanceHiddenManager
+            balanceHiddenManager: Core.shared.balanceHiddenManager
         )
 
-        let contactLabelService = TransactionsContactLabelService(contactManager: App.shared.contactManager)
-        let viewItemFactory = TransactionsViewItemFactory(evmLabelManager: App.shared.evmLabelManager, contactLabelService: contactLabelService)
+        let contactLabelService = TransactionsContactLabelService(contactManager: Core.shared.contactManager)
+        let viewItemFactory = TransactionsViewItemFactory(evmLabelManager: Core.shared.evmLabelManager, contactLabelService: contactLabelService)
         let viewModel = TransactionsViewModel(service: service, contactLabelService: contactLabelService, factory: viewItemFactory)
         let dataSource = TransactionsTableViewDataSource(viewModel: viewModel, statPage: .transactions)
 
@@ -25,18 +25,18 @@ enum TransactionsModule {
     }
 
     static func dataSource(token: Token, statPage: StatPage) -> TransactionsTableViewDataSource {
-        let rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager)
-        let nftMetadataService = NftMetadataService(nftMetadataManager: App.shared.nftMetadataManager)
+        let rateService = HistoricalRateService(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager)
+        let nftMetadataService = NftMetadataService(nftMetadataManager: Core.shared.nftMetadataManager)
 
         let service = TokenTransactionsService(
             token: token,
-            adapterManager: App.shared.transactionAdapterManager,
+            adapterManager: Core.shared.transactionAdapterManager,
             rateService: rateService,
             nftMetadataService: nftMetadataService
         )
 
-        let contactLabelService = TransactionsContactLabelService(contactManager: App.shared.contactManager)
-        let viewItemFactory = TransactionsViewItemFactory(evmLabelManager: App.shared.evmLabelManager, contactLabelService: contactLabelService)
+        let contactLabelService = TransactionsContactLabelService(contactManager: Core.shared.contactManager)
+        let viewItemFactory = TransactionsViewItemFactory(evmLabelManager: Core.shared.evmLabelManager, contactLabelService: contactLabelService)
         let viewModel = BaseTransactionsViewModel(service: service, contactLabelService: contactLabelService, factory: viewItemFactory)
 
         return TransactionsTableViewDataSource(viewModel: viewModel, statPage: statPage)

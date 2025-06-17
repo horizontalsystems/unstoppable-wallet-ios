@@ -7,11 +7,11 @@ import RxSwift
 
 class CoinOverviewViewModel: ObservableObject {
     private let coinUid: String
-    private let marketKit = App.shared.marketKit
-    private let currencyManager = App.shared.currencyManager
+    private let marketKit = Core.shared.marketKit
+    private let currencyManager = Core.shared.currencyManager
     private let languageManager = LanguageManager.shared
-    private let walletManager = App.shared.walletManager
-    private let performanceDataManager = App.shared.performanceDataManager
+    private let walletManager = Core.shared.walletManager
+    private let performanceDataManager = Core.shared.performanceDataManager
 
     private var tasks = Set<AnyTask>()
     private var cancellables: [AnyCancellable] = []

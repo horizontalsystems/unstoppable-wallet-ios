@@ -2,8 +2,8 @@ import Combine
 import StoreKit
 
 class SupportViewModel: ObservableObject {
-    let purchaseManager = App.shared.purchaseManager
-    let marketKit = App.shared.marketKit
+    let purchaseManager = Core.shared.purchaseManager
+    let marketKit = Core.shared.marketKit
 
     private var cancellables = Set<AnyCancellable>()
     @Published var buttonState: ButtonState = .idle

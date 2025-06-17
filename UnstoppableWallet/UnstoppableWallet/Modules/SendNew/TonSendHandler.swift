@@ -227,19 +227,19 @@ extension TonSendHandler {
 
 extension TonSendHandler {
     static func instance(token: Token, amount: Decimal, address: FriendlyAddress, memo: String?) -> TonSendHandler? {
-        guard let baseToken = try? App.shared.coinManager.token(query: .init(blockchainType: .ton, tokenType: .native)) else {
+        guard let baseToken = try? Core.shared.coinManager.token(query: .init(blockchainType: .ton, tokenType: .native)) else {
             return nil
         }
 
-        guard let adapter = App.shared.adapterManager.adapter(for: token) as? ISendTonAdapter & IBalanceAdapter else {
+        guard let adapter = Core.shared.adapterManager.adapter(for: token) as? ISendTonAdapter & IBalanceAdapter else {
             return nil
         }
 
-        guard let tonKit = App.shared.tonKitManager.tonKit else {
+        guard let tonKit = Core.shared.tonKitManager.tonKit else {
             return nil
         }
 
-        guard let account = App.shared.accountManager.activeAccount, let (publicKey, secretKey) = try? TonKitManager.keyPair(accountType: account.type) else {
+        guard let account = Core.shared.accountManager.activeAccount, let (publicKey, secretKey) = try? TonKitManager.keyPair(accountType: account.type) else {
             return nil
         }
 

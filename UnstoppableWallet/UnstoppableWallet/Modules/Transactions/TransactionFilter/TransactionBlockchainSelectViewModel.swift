@@ -3,7 +3,7 @@ import MarketKit
 
 class TransactionBlockchainSelectViewModel: ObservableObject {
     private let transactionFilterViewModel: TransactionFilterViewModel
-    private let walletManager = App.shared.walletManager
+    private let walletManager = Core.shared.walletManager
 
     let blockchains: [Blockchain]
 

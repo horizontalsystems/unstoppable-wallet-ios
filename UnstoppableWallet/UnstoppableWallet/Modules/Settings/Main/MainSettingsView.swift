@@ -19,7 +19,7 @@ struct MainSettingsView: View {
     @State private var isFirstAppear = true
 
     var body: some View {
-        ScrollableThemeView {
+        ScrollableThemeView(isRoot: true) {
             VStack(spacing: .margin12) {
                 slider()
 
@@ -96,8 +96,6 @@ struct MainSettingsView: View {
             }
             .padding(EdgeInsets(top: .margin12, leading: 0, bottom: .margin32, trailing: 0))
         }
-        .navigationTitle("settings.title".localized)
-        .navigationBarTitleDisplayMode(.inline)
         .sheet(isPresented: $purchasesPresented) {
             PurchasesView()
         }

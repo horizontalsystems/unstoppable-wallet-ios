@@ -1,7 +1,7 @@
 import Combine
 
 class SwitchAccountViewModel: ObservableObject {
-    private let accountManager = App.shared.accountManager
+    private let accountManager = Core.shared.accountManager
 
     let regularViewItems: [ViewItem]
     let watchViewItems: [ViewItem]

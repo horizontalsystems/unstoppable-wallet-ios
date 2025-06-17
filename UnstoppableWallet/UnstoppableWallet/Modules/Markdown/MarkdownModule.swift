@@ -3,7 +3,7 @@ import UIKit
 
 enum MarkdownModule {
     static func viewController(url: URL, handleRelativeUrl: Bool = true) -> UIViewController {
-        let provider = MarkdownPlainContentProvider(url: url, networkManager: App.shared.networkManager)
+        let provider = MarkdownPlainContentProvider(url: url, networkManager: Core.shared.networkManager)
         let service = MarkdownService(provider: provider)
         let parser = MarkdownParser()
         let viewModel = MarkdownViewModel(service: service, parser: parser, parserConfig: AcademyMarkdownConfig.config)
@@ -12,7 +12,7 @@ enum MarkdownModule {
     }
 
     static func gitReleaseNotesMarkdownViewController(url: URL, presented: Bool, closeHandler: (() -> Void)? = nil) -> UIViewController {
-        let provider = MarkdownGitReleaseContentProvider(url: url, networkManager: App.shared.networkManager)
+        let provider = MarkdownGitReleaseContentProvider(url: url, networkManager: Core.shared.networkManager)
         let service = MarkdownService(provider: provider)
         let parser = MarkdownParser()
         let viewModel = MarkdownViewModel(service: service, parser: parser, parserConfig: ReleaseNotesMarkdownConfig.config)
@@ -47,7 +47,13 @@ struct ReleaseNotesView: UIViewControllerRepresentable {
     let presented: Bool
 
     func makeUIViewController(context _: Context) -> UIViewController {
-        MarkdownModule.gitReleaseNotesMarkdownViewController(url: url, presented: presented)
+        let vc = MarkdownModule.gitReleaseNotesMarkdownViewController(url: url, presented: presented)
+
+        if presented {
+            return ThemeNavigationController(rootViewController: vc)
+        } else {
+            return vc
+        }
     }
 
     func updateUIViewController(_: UIViewController, context _: Context) {}

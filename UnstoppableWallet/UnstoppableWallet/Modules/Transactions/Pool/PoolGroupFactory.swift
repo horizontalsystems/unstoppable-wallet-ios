@@ -16,7 +16,7 @@ class PoolGroupFactory {
                 }
 
                 let poolSource: PoolSource
-                if App.shared.evmBlockchainManager.allBlockchains.contains(where: { $0 == wallet.token.blockchain }) || wallet.token.blockchainType == .tron || wallet.token.blockchainType == .ton || wallet.token.blockchainType == .stellar {
+                if Core.shared.evmBlockchainManager.allBlockchains.contains(where: { $0 == wallet.token.blockchain }) || wallet.token.blockchainType == .tron || wallet.token.blockchainType == .ton || wallet.token.blockchainType == .stellar {
                     poolSource = PoolSource(
                         token: nil,
                         blockchainType: wallet.token.blockchainType,
@@ -36,7 +36,7 @@ class PoolGroupFactory {
             }
 
             return poolSources.compactMap { poolSource in
-                if let adapter = App.shared.transactionAdapterManager.adapter(for: poolSource.transactionSource) {
+                if let adapter = Core.shared.transactionAdapterManager.adapter(for: poolSource.transactionSource) {
                     return PoolProvider(adapter: adapter, source: poolSource)
                 } else {
                     return nil
@@ -49,7 +49,7 @@ class PoolGroupFactory {
             if contact != nil, address == nil {
                 return []
             }
-            if App.shared.evmBlockchainManager.allBlockchains.contains(where: { $0.type == blockchainType }) || blockchainType == .tron || blockchainType == .ton || blockchainType == .stellar {
+            if Core.shared.evmBlockchainManager.allBlockchains.contains(where: { $0.type == blockchainType }) || blockchainType == .tron || blockchainType == .ton || blockchainType == .stellar {
                 let poolSource = PoolSource(
                     token: nil,
                     blockchainType: blockchainType,
@@ -57,7 +57,7 @@ class PoolGroupFactory {
                     address: address
                 )
 
-                if let adapter = App.shared.transactionAdapterManager.adapter(for: poolSource.transactionSource) {
+                if let adapter = Core.shared.transactionAdapterManager.adapter(for: poolSource.transactionSource) {
                     let provider = PoolProvider(adapter: adapter, source: poolSource)
                     return [provider]
                 }
@@ -75,7 +75,7 @@ class PoolGroupFactory {
                         address: address
                     )
 
-                    if let adapter = App.shared.transactionAdapterManager.adapter(for: poolSource.transactionSource) {
+                    if let adapter = Core.shared.transactionAdapterManager.adapter(for: poolSource.transactionSource) {
                         let provider = PoolProvider(adapter: adapter, source: poolSource)
                         providers.append(provider)
                     }
@@ -97,7 +97,7 @@ class PoolGroupFactory {
                 address: address
             )
 
-            if let adapter = App.shared.transactionAdapterManager.adapter(for: poolSource.transactionSource) {
+            if let adapter = Core.shared.transactionAdapterManager.adapter(for: poolSource.transactionSource) {
                 let provider = PoolProvider(adapter: adapter, source: poolSource)
                 return [provider]
             }

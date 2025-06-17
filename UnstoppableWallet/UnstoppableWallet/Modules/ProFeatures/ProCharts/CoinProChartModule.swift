@@ -5,7 +5,7 @@ import UIKit
 
 enum CoinProChartModule {
     static func viewController(coin: Coin, type: ProChartType) -> UIViewController {
-        let chartFetcher = ProChartFetcher(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, coin: coin, type: type)
+        let chartFetcher = ProChartFetcher(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager, coin: coin, type: type)
 
         let chartService = MetricChartService(
             chartFetcher: chartFetcher,

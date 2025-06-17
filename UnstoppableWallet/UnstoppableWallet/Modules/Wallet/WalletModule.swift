@@ -12,31 +12,31 @@ enum WalletModule {
         let service = WalletServiceOld(
             walletServiceFactory: walletServiceFactory,
             coinPriceService: coinPriceService,
-            accountManager: App.shared.accountManager,
-            cacheManager: App.shared.enabledWalletCacheManager,
-            accountRestoreWarningManager: App.shared.accountRestoreWarningManager,
-            reachabilityManager: App.shared.reachabilityManager,
-            appSettingManager: App.shared.appSettingManager,
-            balanceHiddenManager: App.shared.balanceHiddenManager,
-            buttonHiddenManager: App.shared.walletButtonHiddenManager,
-            balanceConversionManager: App.shared.balanceConversionManager,
-            cloudAccountBackupManager: App.shared.cloudBackupManager,
-            rateAppManager: App.shared.rateAppManager,
-            appManager: App.shared.appManager,
-            feeCoinProvider: App.shared.feeCoinProvider,
-            userDefaultsStorage: App.shared.userDefaultsStorage
+            accountManager: Core.shared.accountManager,
+            cacheManager: Core.shared.enabledWalletCacheManager,
+            accountRestoreWarningManager: Core.shared.accountRestoreWarningManager,
+            reachabilityManager: Core.shared.reachabilityManager,
+            appSettingManager: Core.shared.appSettingManager,
+            balanceHiddenManager: Core.shared.balanceHiddenManager,
+            buttonHiddenManager: Core.shared.walletButtonHiddenManager,
+            balanceConversionManager: Core.shared.balanceConversionManager,
+            cloudAccountBackupManager: Core.shared.cloudBackupManager,
+            rateAppManager: Core.shared.rateAppManager,
+            appManager: Core.shared.appManager,
+            feeCoinProvider: Core.shared.feeCoinProvider,
+            userDefaultsStorage: Core.shared.userDefaultsStorage
         )
 
         coinPriceService.delegate = service
 
         let accountRestoreWarningFactory = AccountRestoreWarningFactory(
-            userDefaultsStorage: App.shared.userDefaultsStorage,
+            userDefaultsStorage: Core.shared.userDefaultsStorage,
             languageManager: LanguageManager.shared
         )
 
         let viewModel = WalletViewModel(
             service: service,
-            eventHandler: App.shared.appEventHandler,
+            eventHandler: Core.shared.appEventHandler,
             factory: WalletViewItemFactory(),
             accountRestoreWarningFactory: accountRestoreWarningFactory
         )
@@ -45,17 +45,17 @@ enum WalletModule {
     }
 
     static func sendTokenListViewController(allowedBlockchainTypes: [BlockchainType]? = nil, allowedTokenTypes: [TokenType]? = nil, address: String? = nil, amount: Decimal? = nil) -> UIViewController? {
-        guard let account = App.shared.accountManager.activeAccount else {
+        guard let account = Core.shared.accountManager.activeAccount else {
             return nil
         }
 
         let coinPriceService = WalletCoinPriceService()
 
-        let adapterService = WalletAdapterService(account: account, adapterManager: App.shared.adapterManager)
+        let adapterService = WalletAdapterService(account: account, adapterManager: Core.shared.adapterManager)
         let walletService = WalletService(
             account: account,
             adapterService: adapterService,
-            walletManager: App.shared.walletManager,
+            walletManager: Core.shared.walletManager,
             allowedBlockchainTypes: allowedBlockchainTypes,
             allowedTokenTypes: allowedTokenTypes
         )
@@ -64,12 +64,12 @@ enum WalletModule {
         let service = WalletTokenListService(
             walletService: walletService,
             coinPriceService: coinPriceService,
-            cacheManager: App.shared.enabledWalletCacheManager,
-            reachabilityManager: App.shared.reachabilityManager,
-            appSettingManager: App.shared.appSettingManager,
-            balanceHiddenManager: App.shared.balanceHiddenManager,
-            appManager: App.shared.appManager,
-            feeCoinProvider: App.shared.feeCoinProvider,
+            cacheManager: Core.shared.enabledWalletCacheManager,
+            reachabilityManager: Core.shared.reachabilityManager,
+            appSettingManager: Core.shared.appSettingManager,
+            balanceHiddenManager: Core.shared.balanceHiddenManager,
+            appManager: Core.shared.appManager,
+            feeCoinProvider: Core.shared.feeCoinProvider,
             account: account
         )
         walletService.delegate = service
@@ -104,29 +104,29 @@ enum WalletModule {
     }
 
     static func swapTokenListViewController() -> UIViewController? {
-        guard let account = App.shared.accountManager.activeAccount else {
+        guard let account = Core.shared.accountManager.activeAccount else {
             return nil
         }
 
         let coinPriceService = WalletCoinPriceService()
 
-        let adapterService = WalletAdapterService(account: account, adapterManager: App.shared.adapterManager)
+        let adapterService = WalletAdapterService(account: account, adapterManager: Core.shared.adapterManager)
         let walletService = WalletService(
             account: account,
             adapterService: adapterService,
-            walletManager: App.shared.walletManager
+            walletManager: Core.shared.walletManager
         )
         adapterService.delegate = walletService
 
         let service = WalletTokenListService(
             walletService: walletService,
             coinPriceService: coinPriceService,
-            cacheManager: App.shared.enabledWalletCacheManager,
-            reachabilityManager: App.shared.reachabilityManager,
-            appSettingManager: App.shared.appSettingManager,
-            balanceHiddenManager: App.shared.balanceHiddenManager,
-            appManager: App.shared.appManager,
-            feeCoinProvider: App.shared.feeCoinProvider,
+            cacheManager: Core.shared.enabledWalletCacheManager,
+            reachabilityManager: Core.shared.reachabilityManager,
+            appSettingManager: Core.shared.appSettingManager,
+            balanceHiddenManager: Core.shared.balanceHiddenManager,
+            appManager: Core.shared.appManager,
+            feeCoinProvider: Core.shared.feeCoinProvider,
             account: account
         )
         service.walletFilter = { wallet in wallet.token.swappable }
@@ -159,26 +159,26 @@ enum WalletModule {
 
     static func donateTokenListViewController() -> UIViewController {
         let service: IWalletTokenListService
-        if let account = App.shared.accountManager.activeAccount, !account.watchAccount {
+        if let account = Core.shared.accountManager.activeAccount, !account.watchAccount {
             let coinPriceService = WalletCoinPriceService()
 
-            let adapterService = WalletAdapterService(account: account, adapterManager: App.shared.adapterManager)
+            let adapterService = WalletAdapterService(account: account, adapterManager: Core.shared.adapterManager)
             let walletService = WalletService(
                 account: account,
                 adapterService: adapterService,
-                walletManager: App.shared.walletManager
+                walletManager: Core.shared.walletManager
             )
             adapterService.delegate = walletService
 
             let tokenListService = WalletTokenListService(
                 walletService: walletService,
                 coinPriceService: coinPriceService,
-                cacheManager: App.shared.enabledWalletCacheManager,
-                reachabilityManager: App.shared.reachabilityManager,
-                appSettingManager: App.shared.appSettingManager,
-                balanceHiddenManager: App.shared.balanceHiddenManager,
-                appManager: App.shared.appManager,
-                feeCoinProvider: App.shared.feeCoinProvider,
+                cacheManager: Core.shared.enabledWalletCacheManager,
+                reachabilityManager: Core.shared.reachabilityManager,
+                appSettingManager: Core.shared.appSettingManager,
+                balanceHiddenManager: Core.shared.balanceHiddenManager,
+                appManager: Core.shared.appManager,
+                feeCoinProvider: Core.shared.feeCoinProvider,
                 account: account
             )
             walletService.delegate = tokenListService
@@ -187,8 +187,8 @@ enum WalletModule {
             service = tokenListService
         } else {
             service = NoAccountWalletTokenListService(
-                reachabilityManager: App.shared.reachabilityManager,
-                appSettingManager: App.shared.appSettingManager
+                reachabilityManager: Core.shared.reachabilityManager,
+                appSettingManager: Core.shared.appSettingManager
             )
         }
 
@@ -296,6 +296,7 @@ enum WalletButton {
     case address
     case swap
     case chart
+    case scan
 
     var title: String {
         switch self {
@@ -304,6 +305,7 @@ enum WalletButton {
         case .address: return "balance.address".localized
         case .swap: return "balance.swap".localized
         case .chart: return "balance.chart".localized
+        case .scan: return "balance.scan".localized
         }
     }
 
@@ -314,12 +316,13 @@ enum WalletButton {
         case .address: return "arrow_medium_2_down_left_24"
         case .swap: return "arrow_swap_2_24"
         case .chart: return "chart_2_24"
+        case .scan: return "chart_2_24"
         }
     }
 
     var accent: Bool {
         switch self {
-        case .send: return true
+        case .receive: return true
         default: return false
         }
     }

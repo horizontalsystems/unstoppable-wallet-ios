@@ -3,8 +3,8 @@ import UIKit
 
 enum PersonalSupportModule {
     static func viewController() -> UIViewController {
-        let localStorage = App.shared.localStorage
-        let service = PersonalSupportService(marketKit: App.shared.marketKit, localStorage: localStorage)
+        let localStorage = Core.shared.localStorage
+        let service = PersonalSupportService(marketKit: Core.shared.marketKit, localStorage: localStorage)
         let viewModel = PersonalSupportViewModel(service: service)
         return PersonalSupportViewController(viewModel: viewModel)
     }

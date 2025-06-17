@@ -30,22 +30,17 @@ class BaseUnlockViewModel: ObservableObject {
 
     @Published var shakeTrigger: Int = 0
 
-    let finishSubject = PassthroughSubject<Bool, Never>()
+    let finishSubject = PassthroughSubject<Void, Never>()
     let unlockWithBiometrySubject = PassthroughSubject<Void, Never>()
 
-    let passcodeManager: PasscodeManager
-    private let biometryManager: BiometryManager
-    private let lockoutManager: LockoutManager
-    private let blurManager: BlurManager
+    let passcodeManager = Core.shared.passcodeManager
+    private let biometryManager = Core.shared.biometryManager
+    private let lockoutManager = Core.shared.lockoutManager
     private let biometryAllowed: Bool
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
 
-    init(passcodeManager: PasscodeManager, biometryManager: BiometryManager, lockoutManager: LockoutManager, blurManager: BlurManager, biometryAllowed: Bool) {
-        self.passcodeManager = passcodeManager
-        self.biometryManager = biometryManager
-        self.lockoutManager = lockoutManager
-        self.blurManager = blurManager
+    init(biometryAllowed: Bool) {
         self.biometryAllowed = biometryAllowed
 
         biometryType = biometryManager.biometryType
@@ -79,9 +74,12 @@ class BaseUnlockViewModel: ObservableObject {
         resolvedBiometryType = biometryEnabledType.isEnabled && biometryAllowed && !lockoutState.isAttempted ? biometryType : nil
     }
 
-    func isValid(passcode _: String) -> Bool { false }
+    private func isValid(passcode: String) -> Bool {
+        passcodeManager.isValid(passcode: passcode)
+    }
+
     func onEnterValid(passcode _: String) {}
-    func onBiometryUnlock() -> Bool { false }
+    func onBiometryUnlock() {}
 
     private func handleEntered(passcode: String) {
         if isValid(passcode: passcode) {
@@ -106,14 +104,8 @@ class BaseUnlockViewModel: ObservableObject {
     }
 
     func onAppear() {
-        blurManager.isEnabled = false
-
         if resolvedBiometryType != nil, biometryEnabledType.isAuto {
             unlockWithBiometrySubject.send()
         }
-    }
-
-    func onDisappear() {
-        blurManager.isEnabled = true
     }
 }

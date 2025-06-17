@@ -9,12 +9,12 @@ class UniswapV3Module {
     private let service: UniswapV3Service
 
     init?(dex: SwapModule.Dex, dataSourceState: SwapModule.DataSourceState) {
-        guard let evmKit = App.shared.evmBlockchainManager.evmKitManager(blockchainType: dex.blockchainType).evmKitWrapper?.evmKit else {
+        guard let evmKit = Core.shared.evmBlockchainManager.evmKitManager(blockchainType: dex.blockchainType).evmKitWrapper?.evmKit else {
             return nil
         }
 
         guard let swapKit = try? UniswapKit.KitV3.instance(dexType: dex.provider.dexType),
-              let rpcSource = App.shared.evmSyncSourceManager.httpSyncSource(blockchainType: dex.blockchainType)?.rpcSource
+              let rpcSource = Core.shared.evmSyncSourceManager.httpSyncSource(blockchainType: dex.blockchainType)?.rpcSource
         else {
             return nil
         }
@@ -28,12 +28,12 @@ class UniswapV3Module {
         )
         allowanceService = SwapAllowanceService(
             spenderAddress: uniswapRepository.routerAddress,
-            adapterManager: App.shared.adapterManager,
+            adapterManager: Core.shared.adapterManager,
             evmKit: evmKit
         )
         pendingAllowanceService = SwapPendingAllowanceService(
             spenderAddress: uniswapRepository.routerAddress,
-            adapterManager: App.shared.adapterManager,
+            adapterManager: Core.shared.adapterManager,
             allowanceService: allowanceService
         )
         service = UniswapV3Service(
@@ -41,7 +41,7 @@ class UniswapV3Module {
             tradeService: tradeService,
             allowanceService: allowanceService,
             pendingAllowanceService: pendingAllowanceService,
-            adapterManager: App.shared.adapterManager
+            adapterManager: Core.shared.adapterManager
         )
     }
 }
@@ -52,10 +52,10 @@ extension UniswapV3Module: ISwapProvider {
         let viewModel = UniswapV3ViewModel(
             service: service,
             tradeService: tradeService,
-            switchService: AmountTypeSwitchService(userDefaultsStorage: App.shared.userDefaultsStorage, useLocalStorage: false),
+            switchService: AmountTypeSwitchService(userDefaultsStorage: Core.shared.userDefaultsStorage, useLocalStorage: false),
             allowanceService: allowanceService,
             pendingAllowanceService: pendingAllowanceService,
-            currencyManager: App.shared.currencyManager,
+            currencyManager: Core.shared.currencyManager,
             viewItemHelper: SwapViewItemHelper()
         )
 

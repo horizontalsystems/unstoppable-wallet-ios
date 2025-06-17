@@ -75,7 +75,7 @@ class ZcashAdapter {
     private(set) var syncing: Bool = true
 
     init(wallet: Wallet, restoreSettings: RestoreSettings) throws {
-        logger = App.shared.logger.scoped(with: "ZCashKit")
+        logger = Core.shared.logger.scoped(with: "ZCashKit")
 //        logger = HsToolKit.Logger(minLogLevel: .debug)
 
         guard let seed = wallet.account.type.mnemonicSeed else {
@@ -456,7 +456,7 @@ class ZcashAdapter {
     func fixPendingTransactionsIfNeeded(completion: (() -> Void)? = nil) {
         // check if we need to perform the fix or leave
         // get all the pending transactions
-        guard !App.shared.localStorage.zcashAlwaysPendingRewind else {
+        guard !Core.shared.localStorage.zcashAlwaysPendingRewind else {
             completion?()
             return
         }
@@ -465,7 +465,7 @@ class ZcashAdapter {
             let txs = await synchronizer.transactions.filter { overview in overview.minedHeight == nil }
             // fetch the first one that's reported to be unmined
             guard let firstUnmined = txs.filter({ $0.minedHeight == nil }).first else {
-                App.shared.localStorage.zcashAlwaysPendingRewind = true
+                Core.shared.localStorage.zcashAlwaysPendingRewind = true
                 completion?()
                 return
             }
@@ -480,7 +480,7 @@ class ZcashAdapter {
             .sink(receiveCompletion: { result in
                       switch result {
                       case .finished:
-                          App.shared.localStorage.zcashAlwaysPendingRewind = true
+                          Core.shared.localStorage.zcashAlwaysPendingRewind = true
                           completion?()
                       case .failure:
                           self.rewindQuick()
@@ -496,7 +496,7 @@ class ZcashAdapter {
             .sink(receiveCompletion: { [weak self] result in
                       switch result {
                       case .finished:
-                          App.shared.localStorage.zcashAlwaysPendingRewind = true
+                          Core.shared.localStorage.zcashAlwaysPendingRewind = true
                           self?.logger?.log(level: .debug, message: "rewind Successful")
                           completion?()
                       case let .failure(error):

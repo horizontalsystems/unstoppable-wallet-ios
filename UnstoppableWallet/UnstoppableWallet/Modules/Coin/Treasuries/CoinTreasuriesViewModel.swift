@@ -5,8 +5,8 @@ import MarketKit
 
 class CoinTreasuriesViewModel: ObservableObject {
     private let coin: Coin
-    private let marketKit = App.shared.marketKit
-    private let currencyManager = App.shared.currencyManager
+    private let marketKit = Core.shared.marketKit
+    private let currencyManager = Core.shared.currencyManager
     private var tasks = Set<AnyTask>()
 
     private var internalState: State = .loading {

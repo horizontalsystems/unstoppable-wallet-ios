@@ -3,7 +3,7 @@ import UIKit
 
 enum EvmPrivateKeyModule {
     static func viewController(accountType: AccountType) -> UIViewController? {
-        guard let service = EvmPrivateKeyService(accountType: accountType, evmBlockchainManager: App.shared.evmBlockchainManager) else {
+        guard let service = EvmPrivateKeyService(accountType: accountType, evmBlockchainManager: Core.shared.evmBlockchainManager) else {
             return nil
         }
 

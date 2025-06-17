@@ -1,10 +1,22 @@
-
 import SnapKit
-
+import SwiftUI
 import UIKit
+
+struct WelcomeScreenView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    let onFinish: () -> Void
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        WelcomeScreenViewController.instance(onFinish: onFinish)
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
+}
 
 class WelcomeScreenViewController: ThemeViewController {
     private let viewModel: WelcomeScreenViewModel
+    private let onFinish: () -> Void
     private let scrollView = UIScrollView()
     private var textViews = [WelcomeTextView]()
     private let pageControl: BarPageControl
@@ -20,8 +32,9 @@ class WelcomeScreenViewController: ThemeViewController {
         Slide(title: "intro.stay_private.title".localized, description: "intro.stay_private.description".localized, image: "Intro - Stay Private"),
     ]
 
-    init(viewModel: WelcomeScreenViewModel) {
+    init(viewModel: WelcomeScreenViewModel, onFinish: @escaping () -> Void) {
         self.viewModel = viewModel
+        self.onFinish = onFinish
         pageControl = BarPageControl(barCount: slides.count)
 
         super.init()
@@ -220,7 +233,7 @@ class WelcomeScreenViewController: ThemeViewController {
         if pageControl.currentPage < pageControl.numberOfPages - 1 {
             scrollView.setContentOffset(CGPoint(x: scrollView.width * CGFloat(pageControl.currentPage + 1), y: 0), animated: true)
         } else {
-            UIWindow.keyWindow?.set(newRootController: MainModule.instance())
+            onFinish()
         }
     }
 }
@@ -255,12 +268,12 @@ extension WelcomeScreenViewController: UIScrollViewDelegate {
 }
 
 extension WelcomeScreenViewController {
-    static func instance() -> UIViewController {
+    static func instance(onFinish: @escaping () -> Void) -> UIViewController {
         let eventHandler = EventHandler()
-        let deepLinkService = DeepLinkService(deepLinkManager: App.shared.deepLinkManager)
+        let deepLinkService = DeepLinkService(deepLinkManager: Core.shared.deepLinkManager)
         let viewModel = WelcomeScreenViewModel(deepLinkService: deepLinkService, eventHandler: eventHandler)
 
-        let viewController = WelcomeScreenViewController(viewModel: viewModel)
+        let viewController = WelcomeScreenViewController(viewModel: viewModel, onFinish: onFinish)
         let telegramUserHandler = TelegramUserHandler.handler(parentViewController: viewController)
 
         eventHandler.append(handler: telegramUserHandler)

@@ -4,8 +4,8 @@ import HsExtensions
 import MarketKit
 
 class RankViewModel: ObservableObject {
-    private let marketKit = App.shared.marketKit
-    private let currencyManager = App.shared.currencyManager
+    private let marketKit = Core.shared.marketKit
+    private let currencyManager = Core.shared.currencyManager
     let type: RankType
 
     private var cancellables = Set<AnyCancellable>()

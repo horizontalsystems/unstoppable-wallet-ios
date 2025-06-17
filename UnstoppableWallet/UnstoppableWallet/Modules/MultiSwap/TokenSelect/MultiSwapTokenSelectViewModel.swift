@@ -7,11 +7,11 @@ import MarketKit
 class MultiSwapTokenSelectViewModel: ObservableObject {
     private var syncTask: AnyTask?
 
-    private let marketKit = App.shared.marketKit
-    private let accountManager = App.shared.accountManager
-    private let adapterManager = App.shared.adapterManager
-    private let currencyManager = App.shared.currencyManager
-    private let walletManager = App.shared.walletManager
+    private let marketKit = Core.shared.marketKit
+    private let accountManager = Core.shared.accountManager
+    private let adapterManager = Core.shared.adapterManager
+    private let currencyManager = Core.shared.currencyManager
+    private let walletManager = Core.shared.walletManager
 
     private let token: Token?
 

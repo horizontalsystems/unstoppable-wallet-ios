@@ -65,7 +65,7 @@ class BackupManagerViewController: ThemeViewController {
     }
 
     private func onUnlock() {
-        let viewController = UnlockModule.moduleUnlockView { [weak self] in
+        let viewController = ModuleUnlockView { [weak self] in
             self?.viewModel.unlock()
         }.toNavigationViewController()
 

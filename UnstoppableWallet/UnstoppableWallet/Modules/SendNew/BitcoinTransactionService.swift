@@ -35,7 +35,7 @@ class BitcoinTransactionService: ITransactionService {
 
     init(blockchainType: BlockchainType) {
         self.blockchainType = blockchainType
-        feeRateProvider = App.shared.feeRateProviderFactory.provider(blockchainType: blockchainType)
+        feeRateProvider = Core.shared.feeRateProviderFactory.provider(blockchainType: blockchainType)
     }
 
     private func validate() {

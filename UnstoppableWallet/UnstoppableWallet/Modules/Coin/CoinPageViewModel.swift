@@ -4,7 +4,7 @@ import MarketKit
 
 class CoinPageViewModel: ObservableObject {
     let coin: Coin
-    private let watchlistManager = App.shared.watchlistManager
+    private let watchlistManager = Core.shared.watchlistManager
 
     @Published var isFavorite: Bool {
         didSet {

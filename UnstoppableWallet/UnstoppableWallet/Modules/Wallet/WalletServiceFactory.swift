@@ -1,8 +1,8 @@
 import HsToolKit
 
 struct WalletServiceFactory {
-    private let adapterManager = App.shared.adapterManager
-    private let walletManager = App.shared.walletManager
+    private let adapterManager = Core.shared.adapterManager
+    private let walletManager = Core.shared.walletManager
 
     func walletService(account: Account) -> WalletService {
         let adapterService = WalletAdapterService(account: account, adapterManager: adapterManager)

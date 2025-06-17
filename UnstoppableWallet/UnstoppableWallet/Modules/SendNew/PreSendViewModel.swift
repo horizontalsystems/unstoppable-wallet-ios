@@ -5,10 +5,10 @@ import MarketKit
 class PreSendViewModel: ObservableObject {
     private let wallet: Wallet
     let resolvedAddress: ResolvedAddress
-    private let currencyManager = App.shared.currencyManager
-    private let marketKit = App.shared.marketKit
-    private let walletManager = App.shared.walletManager
-    private let adapterManager = App.shared.adapterManager
+    private let currencyManager = Core.shared.currencyManager
+    private let marketKit = Core.shared.marketKit
+    private let walletManager = Core.shared.walletManager
+    private let adapterManager = Core.shared.adapterManager
     private let decimalParser = AmountDecimalParser()
 
     private var cancellables = Set<AnyCancellable>()

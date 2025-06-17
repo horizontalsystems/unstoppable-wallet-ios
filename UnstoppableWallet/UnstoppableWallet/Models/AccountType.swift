@@ -279,7 +279,7 @@ enum AccountType: Identifiable {
                 return nil
             }
 
-            guard let privateKey = try? Signer.privateKey(seed: mnemonicSeed, chain: App.shared.evmBlockchainManager.chain(blockchainType: .ethereum)) else {
+            guard let privateKey = try? Signer.privateKey(seed: mnemonicSeed, chain: Core.shared.evmBlockchainManager.chain(blockchainType: .ethereum)) else {
                 return nil
             }
 

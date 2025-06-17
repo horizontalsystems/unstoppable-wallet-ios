@@ -4,15 +4,15 @@ import UIKit
 
 enum TransactionInfoModule {
     static func instance(transactionRecord: TransactionRecord) -> UIViewController? {
-        guard let adapter = App.shared.transactionAdapterManager.adapter(for: transactionRecord.source) else {
+        guard let adapter = Core.shared.transactionAdapterManager.adapter(for: transactionRecord.source) else {
             return nil
         }
-        let rateService = HistoricalRateService(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager)
-        let nftMetadataService = NftMetadataService(nftMetadataManager: App.shared.nftMetadataManager)
+        let rateService = HistoricalRateService(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager)
+        let nftMetadataService = NftMetadataService(nftMetadataManager: Core.shared.nftMetadataManager)
 
-        let service = TransactionInfoService(transactionRecord: transactionRecord, adapter: adapter, currencyManager: App.shared.currencyManager, rateService: rateService, nftMetadataService: nftMetadataService, balanceHiddenManager: App.shared.balanceHiddenManager)
-        let contactLabelService = ContactLabelService(contactManager: App.shared.contactManager, blockchainType: transactionRecord.source.blockchainType)
-        let factory = TransactionInfoViewItemFactory(evmLabelManager: App.shared.evmLabelManager, contactLabelService: contactLabelService, actionEnabled: transactionRecord.source.blockchainType.resendable)
+        let service = TransactionInfoService(transactionRecord: transactionRecord, adapter: adapter, currencyManager: Core.shared.currencyManager, rateService: rateService, nftMetadataService: nftMetadataService, balanceHiddenManager: Core.shared.balanceHiddenManager)
+        let contactLabelService = ContactLabelService(contactManager: Core.shared.contactManager, blockchainType: transactionRecord.source.blockchainType)
+        let factory = TransactionInfoViewItemFactory(evmLabelManager: Core.shared.evmLabelManager, contactLabelService: contactLabelService, actionEnabled: transactionRecord.source.blockchainType.resendable)
         let viewModel = TransactionInfoViewModel(service: service, factory: factory, contactLabelService: contactLabelService)
         let viewController = TransactionInfoViewController(adapter: adapter, viewModel: viewModel, pageTitle: "tx_info.title".localized, urlManager: UrlManager(inApp: true))
 

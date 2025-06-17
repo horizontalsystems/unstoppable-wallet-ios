@@ -107,7 +107,7 @@ extension ReceiveAddressViewModel {
 
 extension ReceiveAddressViewModel {
     static func instance(wallet: Wallet) -> ReceiveAddressViewModel {
-        let service = ReceiveAddressService(wallet: wallet, adapterManager: App.shared.adapterManager)
+        let service = ReceiveAddressService(wallet: wallet, adapterManager: Core.shared.adapterManager)
         let depositViewItemFactory = ReceiveAddressViewItemFactory()
 
         return ReceiveAddressViewModel(service: service, viewItemFactory: depositViewItemFactory, decimalParser: AmountDecimalParser())

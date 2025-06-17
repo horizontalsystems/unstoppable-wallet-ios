@@ -4,12 +4,12 @@ import UIKit
 enum CreateAccountModule {
     static func viewController(advanced: Bool = false, sourceViewController: UIViewController? = nil, listener: ICreateAccountListener? = nil) -> UIViewController {
         let service = CreateAccountService(
-            accountFactory: App.shared.accountFactory,
-            predefinedBlockchainService: App.shared.predefinedBlockchainService,
+            accountFactory: Core.shared.accountFactory,
+            predefinedBlockchainService: Core.shared.predefinedBlockchainService,
             languageManager: LanguageManager.shared,
-            accountManager: App.shared.accountManager,
-            walletManager: App.shared.walletManager,
-            marketKit: App.shared.marketKit
+            accountManager: Core.shared.accountManager,
+            walletManager: Core.shared.walletManager,
+            marketKit: Core.shared.marketKit
         )
         let viewModel = CreateAccountViewModel(service: service)
 
@@ -20,7 +20,7 @@ enum CreateAccountModule {
 
             let module = ThemeNavigationController(rootViewController: viewController)
 
-            if App.shared.termsManager.termsAccepted {
+            if Core.shared.termsManager.termsAccepted {
                 return module
             } else {
                 return TermsModule.viewController(sourceViewController: sourceViewController, moduleToOpen: module)

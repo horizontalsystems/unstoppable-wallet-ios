@@ -3,11 +3,11 @@ import UIKit
 
 enum RestoreTypeModule {
     static func viewController(type: BackupModule.Source.Abstract, sourceViewController: UIViewController? = nil, returnViewController: UIViewController? = nil) -> UIViewController {
-        let viewModel = RestoreTypeViewModel(cloudAccountBackupManager: App.shared.cloudBackupManager, sourceType: type)
+        let viewModel = RestoreTypeViewModel(cloudAccountBackupManager: Core.shared.cloudBackupManager, sourceType: type)
         let viewController = RestoreTypeViewController(viewModel: viewModel, returnViewController: returnViewController)
         let module = ThemeNavigationController(rootViewController: viewController)
 
-        if App.shared.termsManager.termsAccepted {
+        if Core.shared.termsManager.termsAccepted {
             return module
         } else {
             return TermsModule.viewController(sourceViewController: sourceViewController, moduleToOpen: module)

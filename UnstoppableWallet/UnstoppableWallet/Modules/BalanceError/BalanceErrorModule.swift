@@ -5,9 +5,9 @@ enum BalanceErrorModule {
         let service = BalanceErrorService(
             wallet: wallet,
             error: error,
-            adapterManager: App.shared.adapterManager,
-            btcBlockchainManager: App.shared.btcBlockchainManager,
-            evmBlockchainManager: App.shared.evmBlockchainManager
+            adapterManager: Core.shared.adapterManager,
+            btcBlockchainManager: Core.shared.btcBlockchainManager,
+            evmBlockchainManager: Core.shared.evmBlockchainManager
         )
         let viewModel = BalanceErrorViewModel(service: service)
         let viewController = BalanceErrorViewController(viewModel: viewModel, sourceViewController: sourceViewController)

@@ -4,12 +4,12 @@ import UIKit
 enum RestorePassphraseModule {
     static func viewController(item: BackupModule.NamedSource, statPage: StatPage, returnViewController: UIViewController?) -> UIViewController {
         let service = RestorePassphraseService(
-            iCloudManager: App.shared.cloudBackupManager,
-            appBackupProvider: App.shared.appBackupProvider,
-            accountFactory: App.shared.accountFactory,
-            accountManager: App.shared.accountManager,
-            walletManager: App.shared.walletManager,
-            restoreSettingsManager: App.shared.restoreSettingsManager,
+            iCloudManager: Core.shared.cloudBackupManager,
+            appBackupProvider: Core.shared.appBackupProvider,
+            accountFactory: Core.shared.accountFactory,
+            accountManager: Core.shared.accountManager,
+            walletManager: Core.shared.walletManager,
+            restoreSettingsManager: Core.shared.restoreSettingsManager,
             restoredBackup: item
         )
         let viewModel = RestorePassphraseViewModel(service: service)

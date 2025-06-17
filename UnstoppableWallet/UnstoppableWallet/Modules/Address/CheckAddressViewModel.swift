@@ -5,7 +5,7 @@ import MarketKit
 class CheckAddressViewModel: ObservableObject {
     private static let coinUids = ["tether", "usd-coin", "paypal-usd"]
 
-    private let marketKit = App.shared.marketKit
+    private let marketKit = Core.shared.marketKit
     private let chainalysisValidator = ChainalysisAddressValidator()
     private let hashDitValidator = HashDitAddressValidator()
     private let eip20Validator = Eip20AddressValidator()

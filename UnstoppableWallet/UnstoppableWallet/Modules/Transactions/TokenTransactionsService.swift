@@ -13,7 +13,7 @@ class TokenTransactionsService: BaseTransactionsService {
         super.init(
             rateService: rateService,
             nftMetadataService: nftMetadataService,
-            balanceHiddenManager: App.shared.balanceHiddenManager
+            balanceHiddenManager: Core.shared.balanceHiddenManager
         )
 
         subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] _ in self?.sync() }

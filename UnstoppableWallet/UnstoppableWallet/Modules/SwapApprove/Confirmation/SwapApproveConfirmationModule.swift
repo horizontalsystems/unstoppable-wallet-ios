@@ -7,15 +7,15 @@ import UIKit
 
 enum SwapApproveConfirmationModule {
     static func viewController(sendData: SendEvmData, blockchainType: BlockchainType, revokeAllowance: Bool = false, delegate: ISwapApproveDelegate?) throws -> UIViewController {
-        guard let evmKitWrapper = App.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
+        guard let evmKitWrapper = Core.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
             throw CreateError.noEvmKit
         }
 
         guard let coinServiceFactory = EvmCoinServiceFactory(
             blockchainType: blockchainType,
-            marketKit: App.shared.marketKit,
-            currencyManager: App.shared.currencyManager,
-            coinManager: App.shared.coinManager
+            marketKit: Core.shared.marketKit,
+            currencyManager: Core.shared.currencyManager,
+            coinManager: Core.shared.coinManager
         ) else {
             throw CreateError.cantFoundBaseToken
         }
@@ -26,9 +26,9 @@ enum SwapApproveConfirmationModule {
             throw CreateError.wrongGasPriceService
         }
 
-        let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: App.shared.evmLabelManager)
-        let contactLabelService = ContactLabelService(contactManager: App.shared.contactManager, blockchainType: evmKitWrapper.blockchainType)
-        let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: App.shared.evmLabelManager, contactLabelService: contactLabelService)
+        let service = SendEvmTransactionService(sendData: sendData, evmKitWrapper: evmKitWrapper, settingsService: settingsService, evmLabelManager: Core.shared.evmLabelManager)
+        let contactLabelService = ContactLabelService(contactManager: Core.shared.contactManager, blockchainType: evmKitWrapper.blockchainType)
+        let transactionViewModel = SendEvmTransactionViewModel(service: service, coinServiceFactory: coinServiceFactory, cautionsFactory: SendEvmCautionsFactory(), evmLabelManager: Core.shared.evmLabelManager, contactLabelService: contactLabelService)
 
         if revokeAllowance {
             return SwapRevokeConfirmationViewController(transactionViewModel: transactionViewModel, settingsViewModel: settingsViewModel, delegate: delegate)
@@ -37,7 +37,7 @@ enum SwapApproveConfirmationModule {
     }
 
     static func revokeViewController(data: SwapAllowanceService.ApproveData, delegate: ISwapApproveDelegate) -> UIViewController? {
-        guard let eip20Adapter = App.shared.adapterManager.adapter(for: data.token) as? Eip20Adapter else {
+        guard let eip20Adapter = Core.shared.adapterManager.adapter(for: data.token) as? Eip20Adapter else {
             return nil
         }
 

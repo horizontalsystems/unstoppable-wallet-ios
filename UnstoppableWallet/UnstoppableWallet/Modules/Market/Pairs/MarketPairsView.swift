@@ -69,7 +69,7 @@ struct MarketPairsView: View {
             .refreshable {
                 await viewModel.refresh()
             }
-            .onChange(of: viewModel.volumeSortOrder) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
+            .onChange(of: viewModel.volumeSortOrder) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
         }
     }
 

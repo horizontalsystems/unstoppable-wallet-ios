@@ -26,11 +26,7 @@ class ManageWalletsService {
         }
     }
 
-    init?(marketKit: MarketKit.Kit, walletManager: WalletManager, accountManager: AccountManager, restoreSettingsService: RestoreSettingsService) {
-        guard let account = accountManager.activeAccount else {
-            return nil
-        }
-
+    init(account: Account, marketKit: MarketKit.Kit, walletManager: WalletManager, accountManager _: AccountManager, restoreSettingsService: RestoreSettingsService) {
         self.account = account
         self.marketKit = marketKit
         self.walletManager = walletManager

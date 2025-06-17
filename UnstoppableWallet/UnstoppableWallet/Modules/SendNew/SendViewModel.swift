@@ -4,9 +4,9 @@ import HsExtensions
 import MarketKit
 
 class SendViewModel: ObservableObject {
-    private let currencyManager = App.shared.currencyManager
-    private let marketKit = App.shared.marketKit
-    private let recentAddressStorage = App.shared.recentAddressStorage
+    private let currencyManager = Core.shared.currencyManager
+    private let marketKit = Core.shared.marketKit
+    private let recentAddressStorage = Core.shared.recentAddressStorage
 
     private var syncTask: AnyTask?
     private var timer: AnyCancellable?

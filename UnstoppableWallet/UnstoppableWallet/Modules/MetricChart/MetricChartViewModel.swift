@@ -145,7 +145,7 @@ extension MetricChartViewModel: IChartViewTouchDelegate {
 
 extension MetricChartViewModel {
     static func instance(type: MarketGlobalModule.MetricsType) -> MetricChartViewModel {
-        let fetcher = MarketGlobalFetcher(currencyManager: App.shared.currencyManager, marketKit: App.shared.marketKit, metricsType: type)
+        let fetcher = MarketGlobalFetcher(currencyManager: Core.shared.currencyManager, marketKit: Core.shared.marketKit, metricsType: type)
         let service = MetricChartService(
             chartFetcher: fetcher,
             interval: .byPeriod(.day1),
@@ -157,7 +157,7 @@ extension MetricChartViewModel {
     }
 
     static var etfInstance: MetricChartViewModel {
-        let fetcher = MarketEtfFetcher(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager)
+        let fetcher = MarketEtfFetcher(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager)
         let service = MetricChartService(
             chartFetcher: fetcher,
             interval: .byPeriod(.day1),
@@ -169,21 +169,21 @@ extension MetricChartViewModel {
     }
 
     static func platformInstance(platform: TopPlatform) -> MetricChartViewModel {
-        let marketCapFetcher = TopPlatformMarketCapFetcher(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, topPlatform: platform)
+        let marketCapFetcher = TopPlatformMarketCapFetcher(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager, topPlatform: platform)
         let chartService = MetricChartService(chartFetcher: marketCapFetcher, interval: .byPeriod(.week1), statPage: .topPlatform)
         let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale, hardcodedRightMode: "top_platform.total_cap".localized)
         return MetricChartViewModel(service: chartService, factory: factory)
     }
 
     static func sectorInstance(sector: CoinCategory) -> MetricChartViewModel {
-        let marketCapFetcher = SectorMarketCapFetcher(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, sector: sector)
+        let marketCapFetcher = SectorMarketCapFetcher(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager, sector: sector)
         let chartService = MetricChartService(chartFetcher: marketCapFetcher, interval: .byPeriod(.day1), statPage: .sector)
         let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale, hardcodedRightMode: "top_platform.total_cap".localized)
         return MetricChartViewModel(service: chartService, factory: factory)
     }
 
     static func instance(coin: Coin, type: CoinProChartModule.ProChartType) -> MetricChartViewModel {
-        let chartFetcher = ProChartFetcher(marketKit: App.shared.marketKit, currencyManager: App.shared.currencyManager, coin: coin, type: type)
+        let chartFetcher = ProChartFetcher(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager, coin: coin, type: type)
 
         let chartService = MetricChartService(
             chartFetcher: chartFetcher,

@@ -164,11 +164,11 @@ extension ZcashSendHandler {
 
 extension ZcashSendHandler {
     static func instance(amount: Decimal, recipient: Recipient, memo: String?) -> ZcashSendHandler? {
-        guard let token = try? App.shared.coinManager.token(query: .init(blockchainType: .zcash, tokenType: .native)) else {
+        guard let token = try? Core.shared.coinManager.token(query: .init(blockchainType: .zcash, tokenType: .native)) else {
             return nil
         }
 
-        guard let adapter = App.shared.adapterManager.adapter(for: token) as? ISendZcashAdapter else {
+        guard let adapter = Core.shared.adapterManager.adapter(for: token) as? ISendZcashAdapter else {
             return nil
         }
 

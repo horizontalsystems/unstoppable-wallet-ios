@@ -20,9 +20,9 @@ class OutputSelectorViewModel2: ObservableObject {
     init(handler: BitcoinPreSendHandler) {
         self.handler = handler
 
-        let currency = App.shared.currencyManager.baseCurrency
-        rate = App.shared.marketKit.coinPrice(coinUid: handler.token.coin.uid, currencyCode: currency.code)?.value
-        rateCancellable = App.shared.marketKit.coinPricePublisher(coinUid: handler.token.coin.uid, currencyCode: currency.code)
+        let currency = Core.shared.currencyManager.baseCurrency
+        rate = Core.shared.marketKit.coinPrice(coinUid: handler.token.coin.uid, currencyCode: currency.code)?.value
+        rateCancellable = Core.shared.marketKit.coinPricePublisher(coinUid: handler.token.coin.uid, currencyCode: currency.code)
             .receive(on: DispatchQueue.main)
             .sink { [weak self] price in
                 self?.rate = price.value
@@ -50,7 +50,7 @@ class OutputSelectorViewModel2: ObservableObject {
 
         let appValue = appValue(satoshiValue: handler.availableBalance)
         let currencyValue = rate.flatMap {
-            CurrencyValue(currency: App.shared.currencyManager.baseCurrency, value: appValue.value * $0)
+            CurrencyValue(currency: Core.shared.currencyManager.baseCurrency, value: appValue.value * $0)
         }
 
         availableBalanceCoinValue = appValue.formattedFull() ?? "n/a".localized
@@ -60,7 +60,7 @@ class OutputSelectorViewModel2: ObservableObject {
     private func viewItem(unspentOutput: UnspentOutputInfo) -> OutputViewItem {
         let appValue = appValue(satoshiValue: unspentOutput.value)
         let currencyValue = rate.flatMap {
-            CurrencyValue(currency: App.shared.currencyManager.baseCurrency, value: appValue.value * $0)
+            CurrencyValue(currency: Core.shared.currencyManager.baseCurrency, value: appValue.value * $0)
         }
 
         return OutputViewItem(

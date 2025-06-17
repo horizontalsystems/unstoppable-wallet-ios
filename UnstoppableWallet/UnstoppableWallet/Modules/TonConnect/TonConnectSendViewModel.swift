@@ -1,7 +1,7 @@
 import Combine
 
 class TonConnectSendViewModel: ObservableObject {
-    private let tonConnectManager = App.shared.tonConnectManager
+    private let tonConnectManager = Core.shared.tonConnectManager
     private let request: TonConnectSendTransactionRequest
 
     init(request: TonConnectSendTransactionRequest) {

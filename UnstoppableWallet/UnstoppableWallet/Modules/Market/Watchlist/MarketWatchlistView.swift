@@ -185,9 +185,9 @@ struct MarketWatchlistView: View {
             .animation(.default, value: editMode)
             .onChange(of: viewModel.sortBy) { _ in
                 editMode = .inactive
-                withAnimation { proxy.scrollTo(themeListTopViewId) }
+                withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) }
             }
-            .onChange(of: viewModel.timePeriod) { _ in withAnimation { proxy.scrollTo(themeListTopViewId) } }
+            .onChange(of: viewModel.timePeriod) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
         }
     }
 

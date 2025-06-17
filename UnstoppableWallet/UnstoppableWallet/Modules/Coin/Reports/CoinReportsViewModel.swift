@@ -5,7 +5,7 @@ import MarketKit
 
 class CoinReportsViewModel: ObservableObject {
     private let coinUid: String
-    private let marketKit = App.shared.marketKit
+    private let marketKit = Core.shared.marketKit
     private var tasks = Set<AnyTask>()
 
     @Published private(set) var state: State = .loading

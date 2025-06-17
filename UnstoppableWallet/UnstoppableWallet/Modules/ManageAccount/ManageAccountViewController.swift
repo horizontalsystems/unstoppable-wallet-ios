@@ -105,7 +105,7 @@ class ManageAccountViewController: KeyboardAwareViewController {
     }
 
     private func openUnlock() {
-        let viewController = UnlockModule.moduleUnlockView { [weak self] in
+        let viewController = ModuleUnlockView { [weak self] in
             self?.viewModel.onUnlock()
         }.toNavigationViewController()
 

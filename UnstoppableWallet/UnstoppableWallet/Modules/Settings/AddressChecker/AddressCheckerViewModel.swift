@@ -2,8 +2,8 @@ import Combine
 import Foundation
 
 class AddressCheckerViewModel: ObservableObject {
-    private let appSettingManager = App.shared.appSettingManager
-    private let purchaseManager = App.shared.purchaseManager
+    private let appSettingManager = Core.shared.appSettingManager
+    private let purchaseManager = Core.shared.purchaseManager
     private var cancellables = Set<AnyCancellable>()
 
     @Published var activated = false

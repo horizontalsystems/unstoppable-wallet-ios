@@ -7,23 +7,23 @@ import WalletConnectUtils
 
 enum WalletConnectMainModule {
     static func viewController(session: WalletConnectSign.Session? = nil, proposal: WalletConnectSign.Session.Proposal? = nil, sourceViewController: UIViewController?) -> UIViewController? {
-        guard let account = App.shared.accountManager.activeAccount else {
+        guard let account = Core.shared.accountManager.activeAccount else {
             return nil
         }
 
-        let service = App.shared.walletConnectSessionManager.service
+        let service = Core.shared.walletConnectSessionManager.service
 
         let chain = ProposalChain()
-        let supportedMethods = App.shared.walletConnectRequestHandler.supportedMethods
-        chain.append(handler: Eip155ProposalHandler(evmBlockchainManager: App.shared.evmBlockchainManager, account: account, supportedMethods: supportedMethods))
+        let supportedMethods = Core.shared.walletConnectRequestHandler.supportedMethods
+        chain.append(handler: Eip155ProposalHandler(evmBlockchainManager: Core.shared.evmBlockchainManager, account: account, supportedMethods: supportedMethods))
 
         let mainService = WalletConnectMainService(
             session: session,
             proposal: proposal,
             service: service,
-            manager: App.shared.walletConnectManager,
-            reachabilityManager: App.shared.reachabilityManager,
-            accountManager: App.shared.accountManager,
+            manager: Core.shared.walletConnectManager,
+            reachabilityManager: Core.shared.reachabilityManager,
+            accountManager: Core.shared.accountManager,
             proposalHandler: chain,
             proposalValidator: ProposalValidator()
         )
@@ -35,17 +35,17 @@ enum WalletConnectMainModule {
         let viewModel = WalletConnectMainViewModel(service: service)
         let viewController = WalletConnectMainViewController(
             viewModel: viewModel,
-            requestViewFactory: App.shared.walletConnectRequestHandler,
+            requestViewFactory: Core.shared.walletConnectRequestHandler,
             sourceViewController: sourceViewController
         )
 
         let pendingRequestService = WalletConnectMainPendingRequestService(
             service: service,
-            accountManager: App.shared.accountManager,
-            sessionManager: App.shared.walletConnectSessionManager,
-            requestHandler: App.shared.walletConnectRequestHandler,
-            evmBlockchainManager: App.shared.evmBlockchainManager,
-            signService: App.shared.walletConnectSessionManager.service
+            accountManager: Core.shared.accountManager,
+            sessionManager: Core.shared.walletConnectSessionManager,
+            requestHandler: Core.shared.walletConnectRequestHandler,
+            evmBlockchainManager: Core.shared.evmBlockchainManager,
+            signService: Core.shared.walletConnectSessionManager.service
         )
         let pendingRequestViewModel = WalletConnectMainPendingRequestViewModel(service: pendingRequestService)
         viewController.pendingRequestViewModel = pendingRequestViewModel

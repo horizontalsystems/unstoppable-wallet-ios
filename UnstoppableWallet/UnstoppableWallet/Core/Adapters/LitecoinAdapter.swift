@@ -10,7 +10,7 @@ class LitecoinAdapter: BitcoinBaseAdapter {
     private let litecoinKit: LitecoinKit.Kit
 
     init(wallet: Wallet, syncMode: BitcoinCore.SyncMode) throws {
-        let logger = App.shared.logger.scoped(with: "LitecoinKit")
+        let logger = Core.shared.logger.scoped(with: "LitecoinKit")
 
         let hasher: (Data) -> Data = { data in
             let params = LitecoinKit.Kit.defaultScryptParams

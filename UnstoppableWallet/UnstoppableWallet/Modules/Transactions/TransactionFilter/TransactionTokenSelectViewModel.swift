@@ -3,9 +3,9 @@ import MarketKit
 
 class TransactionTokenSelectViewModel: ObservableObject {
     private let transactionFilterViewModel: TransactionFilterViewModel
-    private let walletManager = App.shared.walletManager
-    private let transactionAdapterManager = App.shared.transactionAdapterManager
-    private let marketKit = App.shared.marketKit
+    private let walletManager = Core.shared.walletManager
+    private let transactionAdapterManager = Core.shared.transactionAdapterManager
+    private let marketKit = Core.shared.marketKit
 
     let tokens: [Token]
 

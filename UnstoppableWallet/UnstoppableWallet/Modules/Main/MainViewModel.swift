@@ -117,7 +117,7 @@ extension MainViewModel {
     }
 
     func onLoad() {
-        service.setMainShownOnce()
+        // service.setMainShownOnce()
     }
 
     func onSuccessJailbreakAlert() {
