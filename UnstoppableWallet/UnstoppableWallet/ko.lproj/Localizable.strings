@@ -2265,18 +2265,20 @@
 "purchases.button.activated" = "Activated";
 "purchases.button.upgrade" = "Upgrade";
 
-"purchase.period.title" = "Select Subscription";
-"purchase.period.annually" = "Annually";
-"purchase.period.monthly" = "Monthly";
-"purchase.period.onetime" = "One-Time";
-"purchase.period.onetime.description" = "for lifetime access";
-"purchase.period.save" = "save";
-"purchase.period.year" = "year";
-"purchase.period.month" = "month";
-"purchase.period.description1" = "Enjoy the first 7 days FREE.";
-"purchase.period.description1.1" = "Enjoy discount for first month.";
-"purchase.period.description2" = "You can cancel your App Store subscription at any time.";
-"purchase.lifetime.description" = "제한 없이 일회성 구독을 구매할 수 있습니다";
+"purchase.period.title" = "구독 선택";
+"purchase.period.annually" = "연간";
+"purchase.period.monthly" = "월간";
+"purchase.period.onetime" = "일회성";
+"purchase.period.onetime.description" = "평생 이용권";
+"purchase.period.save" = "절약";
+"purchase.period.year" = "년";
+"purchase.period.month" = "월";
+"purchase.period.description1" = "첫 7일은 무료로 이용하세요.";
+"purchase.period.description2" = "App Store 구독은 언제든지 취소할 수 있습니다.";
+"purchase.lifetime.description" = "제한 없이 일회성 구독을 구매할 수";
+"purchase.agree" = "계정을 업그레이드하면 %@ 및 %@ 에 동의하게 됩니다.";
+"purchase.agree.terms_of_service" = "이용 약관";
+"purchase.agree.privacy_policy" = "개인정보 보호정책";
 
 "purchases.period.button.try" = "Get 7 days for FREE";
 "purchases.period.button.subscribe" = "Subscribe";

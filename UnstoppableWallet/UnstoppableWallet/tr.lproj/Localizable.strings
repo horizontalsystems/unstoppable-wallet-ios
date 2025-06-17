@@ -2284,6 +2284,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "purchase.period.description1.1" = "Enjoy discount for first month.";
 "purchase.period.description2" = "You can cancel your App Store subscription at any time.";
 "purchase.lifetime.description" = "Kısıtlama olmadan tek seferlik abonelik satın alabilirsiniz";
+"purchase.agree" = "Hesabınızı yükselterek %@ ve %@ nı kabul etmiş olursunuz.";
+"purchase.agree.terms_of_service" = "Kullanım Şartları";
+"purchase.agree.privacy_policy" = "Gizlilik Politikası";
 
 "purchases.period.button.try" = "Get 7 days for FREE";
 "purchases.period.button.subscribe" = "Subscribe";

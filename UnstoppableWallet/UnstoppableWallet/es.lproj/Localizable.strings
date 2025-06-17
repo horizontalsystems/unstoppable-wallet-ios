@@ -2277,6 +2277,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "purchase.period.description1.1" = "Enjoy discount for first month.";
 "purchase.period.description2" = "You can cancel your App Store subscription at any time.";
 "purchase.lifetime.description" = "Puedes adquirir una suscripción de pago único sin restricciones";
+"purchase.agree" = "Al actualizar tu cuenta, aceptas los %@ y la %@.";
+"purchase.agree.terms_of_service" = "Términos de uso";
+"purchase.agree.privacy_policy" = "Política de privacidad";
 
 "purchases.period.button.try" = "Get 7 days for FREE";
 "purchases.period.button.subscribe" = "Subscribe";

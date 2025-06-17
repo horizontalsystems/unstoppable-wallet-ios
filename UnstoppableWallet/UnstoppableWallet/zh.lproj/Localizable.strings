@@ -2276,6 +2276,9 @@
 "purchase.period.description1.1" = "Enjoy discount for first month.";
 "purchase.period.description2" = "You can cancel your App Store subscription at any time.";
 "purchase.lifetime.description" = "您可以購買無任何限制的一次性訂閱";
+"purchase.agree" = "通过升级账户，您同意 %@ 和 %@。";
+"purchase.agree.terms_of_service" = "使用条款";
+"purchase.agree.privacy_policy" = "隐私政策";
 
 "purchases.period.button.try" = "Get 7 days for FREE";
 "purchases.period.button.subscribe" = "Subscribe";
