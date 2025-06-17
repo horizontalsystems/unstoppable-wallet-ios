@@ -30,6 +30,7 @@
 "button.learn_more" = "Подробнее";
 "button.unlock" = "Разблокировать";
 "button.select" = "Выбрать";
+"button.later" = "Позже";
 
 "alert" = "Предупреждение";
 "alert.copied" = "Скопировано";
@@ -154,12 +155,10 @@
 "restore_type.recovery.title" = "Фраза восстановления";
 "restore_type.cloud.title" = "iCloud";
 "restore_type.file.title" = "из файлов";
-"restore_type.cex.title" = "с кошелька биржи";
 
 "restore_type.recovery.description" = "Импорт с помощью фразы восстановления или приватного ключа.";
 "restore_type.cloud.description" = "Импорт из файла резервной копии в вашем keychain.";
 "restore_type.file.description" = "Импортируйте файл резервной копии из локальной папки.";
-"restore_type.cex.description" = "Подключиться к кошельку на централизованной бирже.";
 
 // Restore Cloud
 
@@ -173,22 +172,6 @@
 "restore.cloud.password.title" = "Введите пароль";
 "restore.cloud.password.placeholder" = "Пароль резервной копии";
 "restore.cloud.password.description" = "Введите пароль для импорта резервной копии";
-
-// Restore Cex
-
-"restore.cex.title" = "Выберите CEX";
-"restore.cex.description" = "Выберите централизованную биржу, к которой вы хотите подключиться.";
-
-// Restore Binance
-
-"restore.binance.description" = "Пожалуйста, предоставьте API ключ и секрет API, чтобы связать вашу биржу.";
-"restore.binance.api_key" = "API ключ";
-"restore.binance.secret_key" = "Секретный ключ";
-"restore.binance.connect" = "Подключиться";
-"restore.binance.connecting" = "Подключение...";
-"restore.binance.get_api_keys" = "Получить API ключ";
-"restore.binance.failed_to_connect" = "Не удалось подключиться к твоему API ключу";
-"restore.binance.invalid_qr_code" = "Недопустимый QR-код";
 
 // Coin Settings
 
@@ -223,6 +206,11 @@
 
 "evm_private_key.title" = "Приватный ключ EVM";
 "evm_private_key.tap_to_show" = "Нажмите, чтобы показать приватный ключ";
+
+// Stellar Secret Key
+
+"stellar_secret_key.title" = "Stellar Secret Key";
+"stellar_secret_key.tap_to_show" = "Нажмите, чтобы показать секретный ключ";
 
 // Extended Key
 
@@ -327,7 +315,6 @@
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Идет синхронизация... %@";
 "balance.synced_through" = "до %@";
-"balance.invalid_api_key" = "Недействительный ключ API";
 "balance.empty.description" = "Вы еще не добавили токены в этот кошелек.";
 "balance.sort.header" = "Сортировка";
 "balance.sort.valueHighToLow" = "Баланс";
@@ -341,6 +328,10 @@
 
 // Token Balance Page
 "balance.token.locked" = "Заблокировано";
+"balance.token.locked.stellar.title" = "Заблокированная сумма";
+"balance.token.locked.stellar.description" = "Сеть Stellar блокирует 1 XLM для активации кошелька и 0,5 XLM в качестве резерва для каждого активированного в кошельке токена.";
+"balance.token.locked.stellar.description.currently_locked" = "В данный момент заблокировано:";
+"balance.token.locked.stellar.description.wallet_activation" = "Активация кошелька:";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "Отправитель отправил эти средства с временной блокировкой, которая истекает в указанную дату.\n\nНе волнуйтесь, полученные биткоины уже принадлежат вам, но до истечения срока блокировки вы не сможете потратить их в сети Bitcoin.";
 "balance.token.not_relayed" = "Трансляция";
@@ -349,6 +340,11 @@
 "balance.token.processing" = "В процессе";
 "balance.token.processing.info.title" = "Обрабатываемая сумма";
 "balance.token.processing.info.description" = "Транзакции с этой суммой все еще синхронизируются. Когда они будут подтверждены, эти токены будут доступны для траты";
+"balance.token.transparent" = "Transparent";
+"balance.token.transparent.info.title" = "Transparent amount";
+"balance.token.transparent.info.description" = "Прозрачный баланс в данный момент недоступен для использования в нашем кошельке. Однако эти средства могут быть потрачены через другие кошельки, поддерживающие адреса формата t-address.";
+"balance.token.shield" = "Shield";
+
 "balance.token.staked" = "Staked";
 "balance.token.staked.info.title" = "Staked title";
 "balance.token.staked.info.description" = "Staked Description Text";
@@ -383,14 +379,27 @@
 "deposit.qr_code_description" = "Ваш адрес для депозита %@";
 "deposit.qr_code_description.watch" = "Отслеживаемый адрес %@";
 "deposit.account" = "Аккаунт";
+"deposit.trustline" = "Trustline";
+"deposit.trustline.not_activated" = "Не активировано";
+"deposit.activate" = "Активировать";
 
 "deposit.amount" = "Сумма";
 "deposit.set_amount" = "Установить сумму";
 "deposit.enter_amount" = "Введите сумму";
+
+"deposit.memo" = "Memo (Tag)";
+"deposit.copy_address" = "Копировать";
+"deposit.share_address" = "Поделиться";
+"deposit.memo_warning.title" = "Важно";
+"deposit.memo_warning.description" = "Для получения активов необходимы memo(tag) и адрес. В противном случае Ваши средства будут утеряны.";
+
 "deposit.not_active" = "Не активен";
 "deposit.used_addresses" = "Использованные адреса";
 "deposit.not_active.title" = "Неактивный адрес";
 "deposit.not_active.tron_description" = "Недавно созданные учетные записи в блокчейне TRON неактивны и не могут быть запрошены или изучены. Они должны быть активированы.\n\nАктивация новой учетной записи в цепочке Tron требует комиссию в размере 1 TRX. Для активации достаточно просто перевести токены TRX или TRC-10 на неактивный адрес аккаунта";
+"deposit.stellar.inactive_asset.title" = "Активировать токен";
+"deposit.stellar.inactive_asset.description" = "Чтобы получить %@, необходимо активировать токен. Сеть Stellar требует установить доверительную линию (trustline) для каждого токена. Без этого ваш кошелёк не сможет принять %@ — транзакция будет отклонена, и средства не будут доставлены.";
+
 
 "deposit.used_addresses.title" = "Использованные адреса";
 "deposit.used_addresses.description" = "%@ адресов изменены для повышения конфиденциальности и безопасности. Ниже приведен список использованных адресов в этом кошельке.";
@@ -422,6 +431,7 @@
 // Send
 
 "send.title" = "Отправить %@";
+"send.title.shield" = "Shield %@";
 "send.send" = "Отправить";
 "send.no_assets" = "У вас нет активов для отправки.";
 "send.amount_placeholder" = "Сумма";
@@ -482,6 +492,7 @@
 "send.confirmation.action" = "Действие";
 "send.confirmation.status" = "Статус";
 "send.confirmation.status.failed" = "Не удалось";
+"send.confirmation.send_to_own" = "Транзакция будет отправлена на собственный адрес";
 
 "send.confirmation.sync_failed" = "Ошибка синхронизации";
 "send.confirmation.invalid_data" = "Неверные данные";
@@ -512,6 +523,8 @@
 "send.amount_error.min_required_balance" = "Мин. обязательный остаток %@";
 "send.amount_warning.coin_needed_for_fee" = "Рассмотрите возможность оставить %@ на балансе, чтобы иметь возможность оплачивать будущие транзакции.";
 "send.token.insufficient_fee_alert" = "Комиссии за транзакцию %@ (%@) взимаются в %@. Вам нужно %@.";
+"send.stellar.no_trustline.title" = "No Asset Trustline";
+"send.stellar.no_trustline.description" = "Recipient account does not have established trustline with the asset being sent.";
 
 "send.fee_settings.amount_error.balance.title" = "Недостаточный баланс";
 "send.fee_settings.amount_error.balance" = "Текущий баланс %@ ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
@@ -549,6 +562,7 @@
 "send.address.checking" = "Проверка";
 "send.address.check.clear" = "Чисто";
 "send.address.check.detected" = "Обнаружено";
+"send.address.check.disabled" = "Выкл.";
 "send.address.risky.title" = "Рискованный адрес!";
 "send.address.risky.description" = "Вы собираетесь отправить средства на адрес с высоким уровнем риска. Продолжение может привести к потере средств или другим угрозам безопасности. Продолжая, вы принимаете потенциальные риски. Вы уверены, что хотите продолжить?";
 "send.address.phishing_check" = "Phishing Check";
@@ -630,15 +644,14 @@
 "swap.allowance" = "Разрешение";
 "swap.allowance.description" = "Сумма, которую биржа может потратить от имени пользователя при выполнении обмена токенов. Для осуществления фактической операции обмена необходимо предварительно установить достаточное разрешение для последующей транзакции.";
 "swap.pending_allowance" = "Ожидающие разрешения";
-"swap.unlock" = "Разблокировать";
-"swap.unlocking" = "Разблокировка";
+"swap.approve" = "Разрешить";
+"swap.approving" = "Разрешение";
 "swap.allowance_error" = "Ошибка разрешения";
 "swap.revoke" = "Отменить";
 "swap.revoking" = "Отмена";
 "swap.revoke_warning" = "Вы можете обменять %@, или вы должны отменить и разрешить новую сумму";
 
-"swap.unlock.title" = "Открыть доступ";
-"swap.unlock.subtitle" = "Разрешить доступ к следующей сумме";
+"swap.unlock.title" = "Разрешить";
 "swap.unlock.description" = "Предоставьте разрешение смарт-контракту на торговлю токенами от вашего имени, указав разрешенную сумму. Это не влияет на ваш баланс, но влечет за собой небольшую комиссию за разрешение.\n\nПредварительное разрешение более высокой суммы для будущих сделок экономически выгоднее по сравнению с разрешением по запросу.";
 "swap.unlock.unlimited" = "Безлимит";
 
@@ -652,6 +665,8 @@
 "swap.liquidity_fee" = "Плата за ликвидность";
 "swap.outbound_fee" = "Исходящая комиссия";
 "swap.total_fee" = "Итоговая комиссия";
+"swap.thorchain.slip_protection" = "Slip protection unavailable";
+"swap.thorchain.slip_protection.description" = "Minimum slippage to enable slip protection for this swap is %@.";
 
 // Swap Advanced Settings
 
@@ -771,6 +786,8 @@
 "market.time_period.6m" = "6 Месяцев";
 "market.time_period.1y" = "1 Год";
 "market.time_period.2y" = "2 Года";
+"market.time_period.3y" = "3 Года";
+"market.time_period.4y" = "4 Года";
 "market.time_period.5y" = "5 Лет";
 "market.time_period.1d.short" = "1Д";
 "market.time_period.1w.short" = "1Н";
@@ -780,6 +797,8 @@
 "market.time_period.6m.short" = "6M";
 "market.time_period.1y.short" = "1Г";
 "market.time_period.2y.short" = "2Г";
+"market.time_period.3y.short" = "3Г";
+"market.time_period.4y.short" = "4Г";
 "market.time_period.5y.short" = "5Г";
 
 "market.project_has_no_coin" = "У этого проекта нет токена";
@@ -826,7 +845,6 @@
 "top_platforms.description" = "Лучшие ведущие блокчейн-платформы кумулятивного рынка проектов";
 
 "top_platform.title" = "%@ Экосистема";
-"top_platform.description" = "Капитализация рынка всех протоколов на блокчейне %@ ";
 "top_platform.total_cap" = "Общ. кап.";
 
 
@@ -996,6 +1014,7 @@
 "coin_overview.genesis_date" = "Дата старта";
 "coin_overview.trading_volume" = "Объем торговли";
 
+"coin.overview.roi.header" = "Относительное изменение по сравнению с %@";
 "coin_overview.roi.hour24" = "24 Часа";
 "coin_overview.roi.day1" = "1 День";
 "coin_overview.roi.day7" = "1 Неделя";
@@ -1016,6 +1035,13 @@
 "coin_overview.guide" = "Руководство";
 "coin_overview.website" = "Веб-сайт";
 "coin_overview.whitepaper" = "Тех. описание (whitepaper)";
+
+// Coin Page -> Analytics -> Select Performance
+
+"coin_overview.performance.select_coins.title" = "Выберите монеты";
+"coin_overview.performance.period" = "Период %d";
+"coin_overview.performance.assets" = "Выбранные активы";
+"coin_overview.performance.only_3" = "Выберите не более 3 активов";
 
 // Coin Page -> Analytics
 "technical_advice.over.bought" = "перекупленный";
@@ -1220,6 +1246,8 @@
 "coin_markets.empty" = "Нет доступных данных";
 "coin_markets.filter.all" = "Все";
 "coin_markets.filter.verified" = "Подтверждено";
+"coin_markets.filter.cex" = "CEX";
+"coin_markets.filter.dex" = "DEX";
 "coin_markets.verified" = "Подтверждено";
 
 // Coin Page -> Tweets
@@ -1273,13 +1301,19 @@
 "transactions.mint" = "Минт";
 "transactions.approve" = "Разрешено";
 "transactions.swap" = "Обмен выполнен";
+"transactions.shield" = "Shield";
+"transactions.unshield" = "Unshield";
+"transactions.transfer" = "Перевод";
 "transactions.contract_call" = "Вызов контракта";
 "transactions.contract_creation" = "Создание контракта";
 "transactions.external_call" = "Внешний вызов";
 "transactions.contract_deploy" = "Развертывание контракта";
+"transactions.account_created" = "Аккаунт создан";
 
 "transactions.to" = "Кому %@";
 "transactions.from" = "От %@";
+"transactions.funder" = "Funder: %@";
+"transactions.account" = "Аккаунт: %@";
 
 "transactions.multiple" = "Множество";
 
@@ -1298,6 +1332,7 @@
 "transactions.unknown_transaction.description" = "Транзакция не может быть обработана";
 
 "transactions.ton_transaction.title" = "Ton транзакция";
+"transactions.stellar_transaction.title" = "Спонсор: %@";
 "transactions.contract" = "Контракт";
 
 // Transaction Info
@@ -1343,7 +1378,7 @@
 "settings.tab_bar_item" = "Настройки";
 "settings.manage_accounts" = "Кошельки";
 "settings.blockchain_settings" = "Настройки блокчейна";
-"settings.backup_manager" = "Резерв. копирования";
+"settings.backup_manager" = "Резерв.копирование";
 "settings.security" = "Безопасность";
 "settings.personal_support" = "Персональная поддержка";
 "settings.base_currency" = "Базовая валюта";
@@ -1358,6 +1393,8 @@
 "settings.contact_us" = "Свяжитесь с нами";
 "settings.social_networks.label" = "Be Unstoppable";
 "settings.get_your_tokens" = "Get UWT Tokens";
+"settings.dapp_connection" = "Подключение к DApp";
+"settings.app_settings" = "Настройки приложения";
 
 // Settings -> Base Currency
 
@@ -1395,10 +1432,7 @@
 "terms.i_agree" = "Я принимаю";
 
 "terms.item.1" = "Безопасное резервное копирование фраз для каждого кошелька. Это единственный способ восстановить доступ к средствам, если приложение не работает.";
-"terms.item.2" = "Фразы восстановления кошелька генерируются случайным образом на устройстве во время установки и не хранятся в другом месте.";
-"terms.item.3" = "Отключение PIN-кода разблокировки на смартфоне удаляет все кошельки из приложения. Для восстановления доступа к средствам потребуется восстановление фраз.";
-"terms.item.4" = "Jailbreaking (rooting), использование устаревших ОС и установка приложений из неизвестных источников могут поставить под угрозу безопасность средств.";
-"terms.item.5" = "В процессе работы кода могут возникнуть проблемы с программным обеспечением, что может привести к сбоям приложения.";
+"terms.item.2" = "Отключение PIN-кода разблокировки на смартфоне удаляет все кошельки из приложения. Для восстановления доступа к средствам потребуется восстановление фраз.";
 
 // Settings -> Tell Friends
 
@@ -1410,7 +1444,7 @@
 
 // Settings -> Backup Manager
 
-"backup_app.backup_manager.title" = "Резерв. копирования";
+"backup_app.backup_manager.title" = "Резерв.копирование";
 "backup_app.backup_manager.restore" = "Восстановить резервную копию";
 "backup_app.backup_manager.create" = "Создать новую резерв. копию";
 
@@ -1586,14 +1620,14 @@
 
 // Settings -> Privacy
 
-"settings.privacy" = "Приватность";
+"settings.privacy" = "Конфиденциальность";
 "settings.privacy.description" = "%@ не собирает персональные данные, которые могут раскрывать вашу частную информацию, такую как балансы монет или адреса. Мы собираем некоторую статистику использования интерфейса исключительно для понимания нашей пользовательской базы и тенденций использования приложения. Эта функция может быть отключена по вашему желанию.";
 "settings.privacy.allow" = "Поделиться данными UI";
 "settings.privacy.allow.description" = "Эта настройка позволяет отключить аналитику UI/UX и обеспечить полную конфиденциальность.";
 
 // Settings -> Appearance
 
-"appearance.title" = "Оформление";
+"appearance.title" = "Настройки приложения";
 
 "appearance.theme" = "Тема";
 "appearance.theme.system" = "Системная";
@@ -1613,6 +1647,7 @@
 "appearance.launch_screen.watchlist" = "Избранное";
 
 "appearance.balance_tab" = "Вкладка баланс";
+"appearance.balance_tab.footer" = "Настройка «Скрыть кнопки» убирает кнопки Отправить, Получить и Обмен на вкладке баланса.";
 "appearance.hide_buttons" = "Скрыть кнопки";
 "appearance.balance_value" = "Значение баланса";
 "appearance.balance_value.coin_fiat" = "Монета / Фиат";
@@ -1729,7 +1764,6 @@
 "chart.about.read_less" = "Скрыть";
 
 "coin_page.return_of_investments" = "ROI";
-"coin_page.return_of_investments.vs" = "vs %@";
 
 // Create Wallet
 
@@ -1783,6 +1817,7 @@
 // Education
 
 "education.title" = "Знания";
+"quiz.title" = "Криптотест";
 
 // Add Token
 
@@ -1930,6 +1965,8 @@
 "private_keys.title" = "Приватные ключи";
 "private_keys.evm_private_key" = "Приватный ключ EVM";
 "private_keys.evm_private_key.description" = "Предоставляет полный контроль над криптовалютами на базе EVM, т.е. Ethereum, Binance Smart Chain и т.д. в пределах соответствующего кошелька.";
+"private_keys.stellar_secret_key" = "Stellar Secret Key";
+"private_keys.stellar_secret_key.description" = "Предоставляет полный контроль над активами Stellar в данном кошельке.";
 "private_keys.bip32_root_key" = "BIP32 Root ключ";
 "private_keys.bip32_root_key.description" = "Предоставляет полный контроль над активами на соответствующем кошельке.";
 "private_keys.account_extended_private_key" = "Расширенный приватный ключ аккаунта";
@@ -2035,6 +2072,7 @@
 "watch_address.error.non_public_key" = "Просмотр по приватному ключу не разрешён";
 "watch_address.error.not_supported_derived_type" = "Неподдерживаемый тип";
 "watch_address.watch_data.placeholder" = "Введите ваш EVM, TRON, TON или публичный адрес (Bitcoin, Litecoin, Bitcoin Cash) или Account xPubKey.";
+"watch_address.watch_data.description" = "Мы поддерживаем адреса: Bitcoin, Ethereum, TON и многих других блокчейнов.";
 "watch_address.choose_blockchain" = "Выбрать блокчейн";
 "watch_address.choose_coin" = "Выберите токен";
 
@@ -2151,57 +2189,6 @@
 "tron.send.resources_consumed.info" = "Bandwidth - это единица, которая измеряет размер байт транзакции, хранящихся в базе данных блокчейна. Чем больше транзакция, тем больше bandwidth будет потребляться.\n\nEnergy — это единица, измеряющая количество вычислений, требуемых виртуальной машиной TRON для выполнения конкретных операций в сети TRON.\n\nПоскольку транзакции смарт-контракта требуют выполнения вычислительных ресурсов, каждая сделка по контракту требует оплаты energy комиссии.";
 "tron.send.activation_fee.info" = "Передача токенов TRX или TRC-10 на адрес неактивного аккаунта активирует его.";
 
-// Cex Coin Select
-
-"cex_coin_select.title" = "Выберите токен";
-"cex_coin_select.withdraw" = "Вывод средств";
-"cex_coin_select.withdraw.empty" = "У вас нет активов для вывода.";
-"cex_coin_select.search_placeholder" = "Код или имя";
-"cex_coin_select.suspended" = "Приостановлено";
-
-// Cex Deposit Network Select
-
-"cex_deposit_network_select.title" = "Выберите сеть";
-"cex_deposit_network_select.description" = "Выберите сеть и получите адрес для пополнения.";
-
-// Cex Deposit
-
-"cex_deposit.title" = "Депозит %@";
-"cex_deposit.address" = "Адрес";
-
-"cex_deposit.network" = "Сеть";
-"cex_deposit.memo" = "Memo (Tag)";
-"cex_deposit.min_amount" = "Мин. сумма";
-"cex_deposit.warning_memo" = "Укажите необходимое мемо (тэг) и отправьте только токены, совместимые с сетью. Другие токены будут потеряны.";
-"cex_deposit.copy_address" = "Копировать";
-"cex_deposit.share_address" = "Поделиться";
-"cex_deposit.failed" = "Не удалось загрузить адрес депозита. Повторите попытку.";
-"cex_deposit.memo_warning.title" = "Важно";
-"cex_deposit.memo_warning.description" = "Для получения активов необходимы memo(tag) и адрес. В противном случае Ваши средства будут утеряны.";
-
-// Cex Widthdraw
-
-"cex_withdraw.network" = "Сеть";
-"cex_withdraw.network_warning" = "Убедитесь, что сеть совпадает с адресом снятия, а платформа депозита поддерживает его, или активы могут быть потеряны.";
-"cex_withdraw.fee" = "Комиссия";
-"cex_withdraw.fee_from_amount" = "Комиссия от суммы";
-"cex_withdraw.error.insufficient_funds" = "Недостаточно доступных средств";
-"cex_withdraw.error.max_amount_violated" = "Макс.сумма вывода: %@";
-"cex_withdraw.error.min_amount_violated" = "Мин. сумма, которую вы можете вывести - %@";
-"cex_withdraw.address_required" = "Адрес обязателен";
-
-// Cex Withdraw Network Select
-
-"cex_withdraw_network_select.title" = "Сеть";
-"cex_withdraw_network_select.description" = "Убедитесь, что сеть совпадает с адресом снятия и платформа депозита поддерживает его.";
-
-// Cex Withdraw Confirm
-
-"cex_withdraw_confirm.you_withdraw" = "Вывод средств";
-"cex_withdraw_confirm.network" = "Сеть";
-"cex_withdraw_confirm.withdraw" = "Вывод средств";
-"cex_withdraw_confirm.withdraw_failed" = "Вывод средств не выполнен";
-
 // No Passcode
 
 "no_passcode.info_text" = "Это приложение требует, чтобы на телефоне был включен пароль (блокировка экрана).\n\nВы можете включить его в настройках iOS.\n\nОбратите внимание, что если вы отключили PIN-код на уровне операционной системы, меры безопасности для безопасного хранения данных на вашем телефоне сделали ранее сохраненные данные недействительными. Вам нужно будет восстановить ключи вашего кошелька, чтобы вернуться к вашему кошельку.";
@@ -2229,6 +2216,9 @@
 "premium.cell.description.key" = "Премиум";
 "premium.cell.try" = "Попробовать БЕСПЛАТНО";
 
+"mini_app.cell.title" = "Мини Апп";
+"mini_app.cell.description" = "Проходите тесты, выполняйте задания и зарабатывайте токены!";
+
 "purchases.title" = "Премиум";
 "purchases.description" = "Выберите план";
 "purchases.type.pro" = "Pro";
@@ -2254,11 +2244,11 @@
 "purchases.duress_mode.description" = "Умная безопасность средств при физической угрозе";
 "purchases.duress_mode.info" = "Ваша криптовалюта. Ваша безопасность. Инновационный режим принуждения — это ваша невидимая страховка в критических ситуациях. Создавайте несколько версий вашего кошелька, каждую с уникальным PIN-кодом, обеспечивая себе секретный запасной выход при возникновении угрозы. Столкнулись с принуждением разблокировать ваш кошелек? Просто введите специальный PIN-код и получите доступ к запасному кошельку, оставляя ваши основные активы полностью защищенными и невидимыми. Ваши реальные средства в безопасности. Ваше спокойствие — бесценно.";
 
-"purchases.address_phishing" = "Scam-защита";
+"purchases.address_phishing" = "Защита от мошенничества";
 "purchases.address_phishing.description" = "Эффективная авто-защита против скам и фишинг-атак";
 "purchases.address_phishing.info" = "Один неверный адрес, и ваша крипта потеряна навсегда. Unstoppable автоматически проверяет адреса получателей на подозрительные шаблоны и защищает от новейших фишинговых угроз, предотвращая отправку средств хакерам. Блокируйте мошеннические переводы до того, как они произойдут.";
 
-"purchases.address_checker" = "Blacklist проверка";
+"purchases.address_checker" = "Проверка по черным спискам";
 "purchases.address_checker.description" = "Гарантия легальности ваших крипто-операций";
 "purchases.address_checker.info" = "Защитите себя от рисковых и санкционированных контрагентов. Blacklist Checker автоматически проверяет адреса получателей по базам высокого риска, выявляя мошеннические схемы, fraudulent-транзакции и санкционированные объекты еще до отправки средств. 
 
@@ -2288,6 +2278,7 @@
 "purchase.period.year" = "год";
 "purchase.period.month" = "месяц";
 "purchase.period.description1" = "Пользуйтесь первые 7 дней БЕСПЛАТНО";
+"purchase.period.description1.1" = "Скидка на первый месяц.";
 "purchase.period.description2" = "Вы можете отменить подписку App Store в любое время.";
 "purchase.lifetime.description" = "-";
 
@@ -2305,3 +2296,20 @@
 "purchases.successful_subscription.description" = "Спасибо за подписку!";
 "purchases.successful_subscription.subscribed" = "Наслаждайтесь полным функционалом приложения.";
 "purchases.successful_subscription.button.go_app" = "Перейти в приложение";
+
+// Address Checker
+
+"address_checker.title" = "Проверка адреса";
+"address_checker.recipient_check" = "Recipient Check";
+"address_checker.recipient_check.description" = "Проверяет адрес получателя на наличие рисков перед отправкой.";
+"address_checker.check_address" = "Проверить адрес";
+"address_checker.check_address.description" = "Позволяет проверить адрес на наличие санкций и в базах черных списков.";
+
+// Check Address
+
+"check_address.sanctions_check" = "Sanction Check";
+"check_address.coin_blacklist_check" = "%@ Blacklist Check";
+"check_address.on_blockchain" = "on %@";
+"check_address.chainalysis.description" = "Chainalysis — это аналитическая платформа для блокчейна, предоставляющая инструменты для отслеживания, расследования и оценки рисков криптовалютных адресов. Помогает выявлять адреса, связанные с санкциями, мошенничеством и другими противоправными действиями.";
+"check_address.hashdit.description" = "HashDit — это платформа безопасности, позволяющая проверять криптовалютные адреса на предмет рисков, включая санкции и наличие в черных списках. Помогает пользователям избегать взаимодействия с потенциально вредоносными или заблокированными адресами.";
+"check_address.coin_blacklist.description" = "Allows you to verify whether a wallet address is blacklisted by %@ (%@). If an address is blacklisted, any %@ tokens associated with it may be frozen, making them inaccessible and non-transferable. This check helps users avoid interacting with high-risk or restricted addresses.";
