@@ -210,7 +210,7 @@
 // Stellar Secret Key
 
 "stellar_secret_key.title" = "Stellar Secret Key";
-"stellar_secret_key.tap_to_show" = "Tap to show secret key";
+"stellar_secret_key.tap_to_show" = "Нажмите, чтобы показать секретный ключ";
 
 // Extended Key
 
@@ -328,10 +328,10 @@
 
 // Token Balance Page
 "balance.token.locked" = "Заблокировано";
-"balance.token.locked.stellar.title" = "Locked Amount";
-"balance.token.locked.stellar.description" = "The Stellar network locks 1 XLM to activate the wallet and 0.5 XLM as a reserve for each token activated in your wallet.";
-"balance.token.locked.stellar.description.currently_locked" = "Currently locked:";
-"balance.token.locked.stellar.description.wallet_activation" = "Wallet activation";
+"balance.token.locked.stellar.title" = "Заблокированная сумма";
+"balance.token.locked.stellar.description" = "Сеть Stellar блокирует 1 XLM для активации кошелька и 0,5 XLM в качестве резерва для каждого активированного в кошельке токена.";
+"balance.token.locked.stellar.description.currently_locked" = "В данный момент заблокировано:";
+"balance.token.locked.stellar.description.wallet_activation" = "Активация кошелька:";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "Отправитель отправил эти средства с временной блокировкой, которая истекает в указанную дату.\n\nНе волнуйтесь, полученные биткоины уже принадлежат вам, но до истечения срока блокировки вы не сможете потратить их в сети Bitcoin.";
 "balance.token.not_relayed" = "Трансляция";
@@ -2216,7 +2216,7 @@
 "premium.cell.description.key" = "Премиум";
 "premium.cell.try" = "Попробовать БЕСПЛАТНО";
 
-"mini_app.cell.title" = "MiniApp";
+"mini_app.cell.title" = "Мини Апп";
 "mini_app.cell.description" = "Pass tests, complete tasks, and earn tokens!";
 
 "purchases.title" = "Премиум";
@@ -2307,7 +2307,7 @@
 
 // Check Address
 
-"check_address.sanctions_check" = "Sanctions Check";
+"check_address.sanctions_check" = "Sanction Check";
 "check_address.coin_blacklist_check" = "%@ Blacklist Check";
 "check_address.on_blockchain" = "on %@";
 "check_address.chainalysis.description" = "Chainalysis is a blockchain analysis platform that provides tools for tracking, investigating, and assessing the risk of cryptocurrency addresses. It helps identify addresses associated with sanctions, fraud, and other illicit activities.";
