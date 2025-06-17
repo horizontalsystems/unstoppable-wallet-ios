@@ -2281,6 +2281,9 @@
 "purchase.period.description1.1" = "Скидка на первый месяц.";
 "purchase.period.description2" = "Вы можете отменить подписку App Store в любое время.";
 "purchase.lifetime.description" = "-";
+"purchase.agree" = "By upgrading your account, you agree to the %@ and %@.";
+"purchase.agree.terms_of_service" = "Terms of Use";
+"purchase.agree.privacy_policy" = "Privacy Policy";
 
 "purchases.period.button.try" = "Получите 7 дней БЕСПЛАТНО";
 "purchases.period.button.subscribe" = "Подписаться";
