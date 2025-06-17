@@ -208,7 +208,7 @@
 // Stellar Secret Key
 
 "stellar_secret_key.title" = "Stellar Secret Key";
-"stellar_secret_key.tap_to_show" = "Tap to show secret key";
+"stellar_secret_key.tap_to_show" = "點擊以顯示私密金鑰";
 
 // Extended Key
 
@@ -326,10 +326,10 @@
 
 // Token Balance Page
 "balance.token.locked" = "锁住";
-"balance.token.locked.stellar.title" = "Locked Amount";
-"balance.token.locked.stellar.description" = "The Stellar network locks 1 XLM to activate the wallet and 0.5 XLM as a reserve for each token activated in your wallet.";
-"balance.token.locked.stellar.description.currently_locked" = "Currently locked:";
-"balance.token.locked.stellar.description.wallet_activation" = "Wallet activation";
+"balance.token.locked.stellar.title" = "鎖定金額";
+"balance.token.locked.stellar.description" = "Stellar 網路會鎖定 1 XLM 以啟用錢包，並為您啟用的每個代幣額外保留 0.5 XLM 作為儲備金。";
+"balance.token.locked.stellar.description.currently_locked" = "當前鎖定：";
+"balance.token.locked.stellar.description.wallet_activation" = "錢包啟用";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "汇款人通过将在所显示日期失效的消费锁定汇出这些资金。\n\n无需担心，收到的比特币已经属于您，但在锁定期限结束前，您无法在比特币网络上消费它们。";
 "balance.token.not_relayed" = "广播";
@@ -338,10 +338,10 @@
 "balance.token.processing" = "正在处理";
 "balance.token.processing.info.title" = "处理金额";
 "balance.token.processing.info.description" = "此金额的交易仍然在同步。当它们被确认时，这些代币将用于支出";
-"balance.token.transparent" = "Transparent";
-"balance.token.transparent.info.title" = "Transparent amount";
-"balance.token.transparent.info.description" = "Transparent balance can't be used in our wallet for now. But this money can be spend by other wallets with t-address supports";
-"balance.token.shield" = "Shield";
+"balance.token.transparent" = "透明";
+"balance.token.transparent.info.title" = "透明金額";
+"balance.token.transparent.info.description" = "透明餘額目前無法在我們的錢包中使用。但其他支援 t-address 的錢包可以花費這些資金。";
+"balance.token.shield" = "屏蔽";
 
 "balance.token.staked" = "已关注";
 "balance.token.staked.info.title" = "关注的标题";
@@ -377,8 +377,8 @@
 "deposit.qr_code_description" = "您存放 %@ 的地址";
 "deposit.qr_code_description.watch" = "观看 %@ 的地址";
 "deposit.account" = "账户";
-"deposit.trustline" = "Trustline";
-"deposit.trustline.not_activated" = "Not activated";
+"deposit.trustline" = "信任線";
+"deposit.trustline.not_activated" = "尚未啟用";
 "deposit.activate" = "激活";
 
 "deposit.amount" = "金额";
@@ -395,7 +395,7 @@
 "deposit.used_addresses" = "已使用地址";
 "deposit.not_active.title" = "未激活的地址";
 "deposit.not_active.tron_description" = "新创建的 TRON 区块链上的帐户是不活动的，无法查询或探索。它们需要激活。\n\n正在将TRX或 TRC-10令牌传输到一个不活动的帐户地址将激活该帐户。 激活Tron链上的一个新帐户需要1TRX";
-"deposit.stellar.inactive_asset.title" = "Activate Token";
+"deposit.stellar.inactive_asset.title" = "啟用代幣";
 "deposit.stellar.inactive_asset.description" = "To receive %@, you need to activate the token. The Stellar network requires a trustline to be established for each token. Without it, your wallet cannot receive %@ — the transaction will be rejected and the funds will not be delivered.";
 
 
@@ -522,7 +522,7 @@
 "send.amount_warning.coin_needed_for_fee" = "考虑留下%@作为余额以便能够支付未来的交易。";
 "send.token.insufficient_fee_alert" = "%@（%@）的交易费用以%@支付。您需要%@。";
 "send.stellar.no_trustline.title" = "No Asset Trustline";
-"send.stellar.no_trustline.description" = "Recipient account does not have established trustline with the asset being sent.";
+"send.stellar.no_trustline.description" = "收款帳戶尚未與所發送資產建立信任線。";
 
 "send.fee_settings.amount_error.balance.title" = "可用额度不足";
 "send.fee_settings.amount_error.balance" = "當前%@餘額低於處理此交易所需的金額，包括交易費用。";
@@ -663,8 +663,8 @@
 "swap.liquidity_fee" = "流动性费用";
 "swap.outbound_fee" = "出站费";
 "swap.total_fee" = "总费用";
-"swap.thorchain.slip_protection" = "Slip protection unavailable";
-"swap.thorchain.slip_protection.description" = "Minimum slippage to enable slip protection for this swap is %@.";
+"swap.thorchain.slip_protection" = "滑價保護無法使用";
+"swap.thorchain.slip_protection.description" = "啟用此交易滑價保護的最低滑價為 %@。";
 
 // Swap Advanced Settings
 
@@ -1299,7 +1299,7 @@
 "transactions.mint" = "薄荷绿";
 "transactions.approve" = "批准";
 "transactions.swap" = "已交换";
-"transactions.shield" = "Shield";
+"transactions.shield" = "屏蔽";
 "transactions.unshield" = "Unshield";
 "transactions.transfer" = "转帐";
 "transactions.contract_call" = "合约调用";
@@ -1310,7 +1310,7 @@
 
 "transactions.to" = "接收人%@";
 "transactions.from" = "发送人%@";
-"transactions.funder" = "Funder: %@";
+"transactions.funder" = "資助者：%@";
 "transactions.account" = "Account: %@";
 
 "transactions.multiple" = "多种";
@@ -1964,7 +1964,7 @@
 "private_keys.evm_private_key" = "EVM 私钥";
 "private_keys.evm_private_key.description" = "授予对基于加密货币的EVM的完全控制，即在相应钱包内的以太坊、币安智能链等。";
 "private_keys.stellar_secret_key" = "Stellar Secret Key";
-"private_keys.stellar_secret_key.description" = "Grants full control over Stellar assets within the respective wallet.";
+"private_keys.stellar_secret_key.description" = "授予錢包內 Stellar 資產的完整控制權。";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
 "private_keys.bip32_root_key.description" = "授予对相应钱包上的资产的完全控制。";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
@@ -2069,7 +2069,7 @@
 "watch_address.error.non_public_key" = "不允许使用私钥进行观察";
 "watch_address.error.not_supported_derived_type" = "不支持的派生类型";
 "watch_address.watch_data.placeholder" = "输入您的EVM, TRON, TON或公共地址 (Bitcoin, Litecoin, 比特币现金) 或账户 xPubkey 。";
-"watch_address.watch_data.description" = "We support addresses from Bitcoin, Ethereum, TON, and many other blockchains.";
+"watch_address.watch_data.description" = "我們支援 Bitcoin、Ethereum、TON 及多個其他區塊鏈的地址。";
 "watch_address.choose_blockchain" = "选择区块链";
 "watch_address.choose_coin" = "选择代币";
 
@@ -2214,7 +2214,7 @@
 "premium.cell.try" = "Try for FREE";
 
 "mini_app.cell.title" = "MiniApp";
-"mini_app.cell.description" = "Pass tests, complete tasks, and earn tokens!";
+"mini_app.cell.description" = "通過測驗、完成任務並獲取代幣！";
 
 "purchases.title" = "Premium";
 "purchases.description" = "Choose the plan";
@@ -2273,7 +2273,7 @@
 "purchase.period.year" = "year";
 "purchase.period.month" = "month";
 "purchase.period.description1" = "Enjoy the first 7 days FREE.";
-"purchase.period.description1.1" = "Enjoy discount for first month.";
+"purchase.period.description1.1" = "首月享有優惠折扣。";
 "purchase.period.description2" = "You can cancel your App Store subscription at any time.";
 "purchase.lifetime.description" = "您可以購買無任何限制的一次性訂閱";
 "purchase.agree" = "通过升级账户，您同意 %@ 和 %@。";
@@ -2297,11 +2297,11 @@
 
 // Address Checker
 
-"address_checker.title" = "Address Checker";
-"address_checker.recipient_check" = "Recipient Check";
-"address_checker.recipient_check.description" = "Checks the recipient address for risks before sending.";
-"address_checker.check_address" = "Check Address";
-"address_checker.check_address.description" = "Allows you to check an address against sanctions and blacklist databases.";
+"address_checker.title" = "地址檢查工具";
+"address_checker.recipient_check" = "收款人檢查";
+"address_checker.recipient_check.description" = "在發送前檢查收款地址是否存在風險。";
+"address_checker.check_address" = "地址檢查";
+"address_checker.check_address.description" = "允許您檢查地址是否列入制裁與黑名單資料庫。";
 
 // Check Address
 
