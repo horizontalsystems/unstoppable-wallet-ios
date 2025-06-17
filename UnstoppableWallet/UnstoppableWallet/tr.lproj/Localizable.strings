@@ -207,8 +207,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Stellar Secret Key
 
-"stellar_secret_key.title" = "Stellar Secret Key";
-"stellar_secret_key.tap_to_show" = "Tap to show secret key";
+"stellar_secret_key.title" = "Stellar Gizli Anahtarı";
+"stellar_secret_key.tap_to_show" = "Gizli anahtarı göstermek için dokunun";
 
 // Extended Key
 
@@ -326,10 +326,10 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Token Balance Page
 "balance.token.locked" = "Kilitli";
-"balance.token.locked.stellar.title" = "Locked Amount";
-"balance.token.locked.stellar.description" = "The Stellar network locks 1 XLM to activate the wallet and 0.5 XLM as a reserve for each token activated in your wallet.";
-"balance.token.locked.stellar.description.currently_locked" = "Currently locked:";
-"balance.token.locked.stellar.description.wallet_activation" = "Wallet activation";
+"balance.token.locked.stellar.title" = "Kilitli Tutar";
+"balance.token.locked.stellar.description" = "Stellar ağı, cüzdanı etkinleştirmek için 1 XLM ve cüzdanınızda etkinleştirilen her token için 0.5 XLM rezerv olarak kilitler.";
+"balance.token.locked.stellar.description.currently_locked" = "Şu anda kilitli olan tutar:";
+"balance.token.locked.stellar.description.wallet_activation" = "Cüzdan aktivasyonu";
 "balance.token.locked.info.title" = "TiemLock";
 "balance.token.locked.info.description" = "Gönderici bu fonları belirtilen tarihte sona erecek şekilde bir harcama kilidiyle gönderdi.\n\nEndişelenmeyin, alınan Bitcoin'ler zaten sizindir ancak kilitleme süresi sona erene kadar bunları Bitcoin ağında harcayamazsınız.";
 "balance.token.not_relayed" = "Yayınlama";
@@ -338,9 +338,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.token.processing" = "İşleniyor";
 "balance.token.processing.info.title" = "İşlem Sayısı";
 "balance.token.processing.info.description" = "Bu tutardaki işlemler hâlâ senkronize ediliyor. Ve onaylandığında, bu tokenler harcama için kullanılabilir";
-"balance.token.transparent" = "Transparent";
-"balance.token.transparent.info.title" = "Transparent amount";
-"balance.token.transparent.info.description" = "Transparent balance can't be used in our wallet for now. But this money can be spend by other wallets with t-address supports";
+"balance.token.transparent" = "Şeffaf";
+"balance.token.transparent.info.title" = "Şeffaf tutar";
+"balance.token.transparent.info.description" = "Şeffaf bakiye şu anda cüzdanımızda kullanılamaz. Ancak bu tutar, t-adreslerini destekleyen diğer cüzdanlar tarafından harcanabilir";
 "balance.token.shield" = "Shield";
 
 "balance.token.staked" = "Staked";
@@ -378,7 +378,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "deposit.qr_code_description.watch" = "%@ adresini izle";
 "deposit.account" = "Account";
 "deposit.trustline" = "Trustline";
-"deposit.trustline.not_activated" = "Not activated";
+"deposit.trustline.not_activated" = "Aktif değil";
 "deposit.activate" = "Aktiveet";
 
 "deposit.amount" = "Tutar";
@@ -395,8 +395,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "deposit.used_addresses" = "Kullanılan Adresler";
 "deposit.not_active.title" = "Aktif Adres Değil";
 "deposit.not_active.tron_description" = "TRON blok zincirinde yeni oluşturulan hesaplar etkin değildir ve sorgulanamaz veya araştırılamaz. Etkinleştirilmeleri gerekiyor.\n\nTRX veya TRC-10 jetonlarını etkin olmayan bir hesap adresine aktarmak, hesabı etkinleştirir. Tron zincirinde yeni bir hesabın etkinleştirilmesi 1 TRX ücret gerektirir";
-"deposit.stellar.inactive_asset.title" = "Activate Token";
-"deposit.stellar.inactive_asset.description" = "To receive %@, you need to activate the token. The Stellar network requires a trustline to be established for each token. Without it, your wallet cannot receive %@ — the transaction will be rejected and the funds will not be delivered.";
+"deposit.stellar.inactive_asset.title" = "Token’i Aktive Et";
+"deposit.stellar.inactive_asset.description" = "%@ almak için token’i aktive etmeniz gerekiyor. Stellar ağı, her bir token için trustline kurulmasını gerektirir. Bu kurulmazsa, cüzdan %@ alamaz — işlem reddedilir ve fonlar teslim edilmez.";
 
 
 "deposit.used_addresses.title" = "Kullanılan Adresler";
@@ -490,7 +490,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.action" = "Action";
 "send.confirmation.status" = "Durum";
 "send.confirmation.status.failed" = "Failed";
-"send.confirmation.send_to_own" = "Transaction will send to own address";
+"send.confirmation.send_to_own" = "İşlem kendi adresinize gönderilecek";
 
 "send.confirmation.sync_failed" = "Senkronizasyon Başarısız";
 "send.confirmation.invalid_data" = "Geçersiz Veri";
@@ -521,8 +521,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
 "send.amount_warning.coin_needed_for_fee" = "Gelecekteki işlemler için ödeme yapabilmek için bakiyenizde biraz %@ bırakmayı göz önünde bulundurun.";
 "send.token.insufficient_fee_alert" = "%@ (%@) için ișlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
-"send.stellar.no_trustline.title" = "No Asset Trustline";
-"send.stellar.no_trustline.description" = "Recipient account does not have established trustline with the asset being sent.";
+"send.stellar.no_trustline.title" = "Varlık Trustline'ı Yok";
+"send.stellar.no_trustline.description" = "Alıcının hesabında gönderilen varlık için trustline kurulmamış.";
 
 "send.fee_settings.amount_error.balance.title" = "Yetersiz Bakiye";
 "send.fee_settings.amount_error.balance" = "Mevcut %@ bakiyesi, işlem ücreti dahil bu işlemi gerçekleştirmek için gereken miktarın altında.";
@@ -663,8 +663,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.liquidity_fee" = "Likidite Ücreti";
 "swap.outbound_fee" = "Dışa Çıkış Ücreti";
 "swap.total_fee" = "Toplam Ücret";
-"swap.thorchain.slip_protection" = "Slip protection unavailable";
-"swap.thorchain.slip_protection.description" = "Minimum slippage to enable slip protection for this swap is %@.";
+"swap.thorchain.slip_protection" = "Slippage koruması kullanılamıyor";
+"swap.thorchain.slip_protection.description" = "Bu takas için slippage korumasını etkinleştirmek için gerekli minimum slippage: %@.";
 
 // Swap Advanced Settings
 
@@ -784,8 +784,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.time_period.6m" = "6 Ay";
 "market.time_period.1y" = "1 Yıl";
 "market.time_period.2y" = "2 Yıl";
-"market.time_period.3y" = "3 Years";
-"market.time_period.4y" = "4 Years";
+"market.time_period.3y" = "3 Yıl";
+"market.time_period.4y" = "4 Yıl";
 "market.time_period.5y" = "5 Yıl";
 "market.time_period.1d.short" = "1G";
 "market.time_period.1w.short" = "1H";
@@ -1012,7 +1012,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_overview.genesis_date" = "Başlangıç ​​tarihi";
 "coin_overview.trading_volume" = "İşlem Hacmi";
 
-"coin.overview.roi.header" = "Relative Change vs %@";
+"coin.overview.roi.header" = "%@'ya Göre Göreceli Değişim";
 "coin_overview.roi.hour24" = "24 Saat";
 "coin_overview.roi.day1" = "1 Gün";
 "coin_overview.roi.day7" = "1 Hafta";
@@ -1036,10 +1036,10 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Coin Page -> Analytics -> Select Performance
 
-"coin_overview.performance.select_coins.title" = "Select Coins";
-"coin_overview.performance.period" = "Period %d";
-"coin_overview.performance.assets" = "Selected Assets";
-"coin_overview.performance.only_3" = "Choose only 3 assets";
+"coin_overview.performance.select_coins.title" = "Coinleri Seç";
+"coin_overview.performance.period" = "Dönem %d";
+"coin_overview.performance.assets" = "Seçilen Varlıklar";
+"coin_overview.performance.only_3" = "En fazla 3 varlık seçebilirsiniz";
 
 // Coin Page -> Analytics
 "technical_advice.over.bought" = "aşırı alım";
@@ -1306,12 +1306,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "transactions.contract_creation" = "Sözleşme Oluşturma";
 "transactions.external_call" = "Harici Çağrı";
 "transactions.contract_deploy" = "Sözleşme Dağıtımı";
-"transactions.account_created" = "Account Created";
+"transactions.account_created" = "Hesap Oluşturuldu";
 
 "transactions.to" = "%@ kişisine";
 "transactions.from" = "%@ kişisinden";
-"transactions.funder" = "Funder: %@";
-"transactions.account" = "Account: %@";
+"transactions.funder" = "Fonlayan: %@";
+"transactions.account" = "Hesap: %@";
 
 "transactions.multiple" = "Çoklu";
 
@@ -1330,7 +1330,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "transactions.unknown_transaction.description" = "İşlem çözümlenemiyor";
 
 "transactions.ton_transaction.title" = "Ton İşlemi";
-"transactions.stellar_transaction.title" = "Stellar Transaction";
+"transactions.stellar_transaction.title" = "Stellar İşlemi";
 "transactions.contract" = "Sözleşme";
 
 // Transaction Info
@@ -1395,7 +1395,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings.contact_us" = "Bize Ulaşın";
 "settings.social_networks.label" = "Be Unstoppable";
 "settings.get_your_tokens" = "Get UWT Tokens";
-"settings.dapp_connection" = "DApp Connection";
+"settings.dapp_connection" = "DApp Bağlantısı";
 "settings.app_settings" = "Uygulama Ayarları";
 
 // Settings -> Base Currency
@@ -1649,7 +1649,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "appearance.launch_screen.watchlist" = "İzleme Listesi";
 
 "appearance.balance_tab" = "Bakiye Sekmesi";
-"appearance.balance_tab.footer" = "The “Hide Buttons” configuration hides the Send, Receive, and Swap buttons on Balance tab.";
+"appearance.balance_tab.footer" = "“Butonları Gizle” ayarı, Bakiye sekmesindeki Gönder, Al ve Takas butonlarını gizler.";
 "appearance.hide_buttons" = "Düğmeleri Gizle";
 "appearance.balance_value" = "Bakiye değeri";
 "appearance.balance_value.coin_fiat" = "Coin/Fiat";
@@ -1967,8 +1967,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "private_keys.title" = "Özel Anahtar";
 "private_keys.evm_private_key" = "EVM Özel anahtar";
 "private_keys.evm_private_key.description" = "Ilgili cüzdan içinde EVM tabanlı kripto, yani Ethereum, Binance Smart Chain vb. Üzerinde tam kontrol sağlar.";
-"private_keys.stellar_secret_key" = "Stellar Secret Key";
-"private_keys.stellar_secret_key.description" = "Grants full control over Stellar assets within the respective wallet.";
+"private_keys.stellar_secret_key" = "Stellar Gizli Anahtarı";
+"private_keys.stellar_secret_key.description" = "İlgili cüzdandaki Stellar varlıkları üzerinde tam kontrol sağlar.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
 "private_keys.bip32_root_key.description" = "İlgili cüzdandaki varlıklar üzerinde tam kontrol sağlar.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
@@ -2073,7 +2073,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "watch_address.error.non_public_key" = "Özel anahtarla izlemeye izin verilmiyor";
 "watch_address.error.not_supported_derived_type" = "Türetilmiş tür desteklenmiyor";
 "watch_address.watch_data.placeholder" = "EVM, TRON, TON veya Genel Adresinizi (Bitcoin, Litecoin, Bitcoin Cash) veya Hesap xPub Anahtarınızı Girin.";
-"watch_address.watch_data.description" = "We support addresses from Bitcoin, Ethereum, TON, and many other blockchains.";
+"watch_address.watch_data.description" = "Bitcoin, Ethereum, TON ve birçok diğer blokzincir ağına ait adresleri destekliyoruz.";
 "watch_address.choose_blockchain" = "Blockchain Seç";
 "watch_address.choose_coin" = "Kripto Parayı Seç";
 
@@ -2222,7 +2222,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "premium.cell.try" = "Try for FREE";
 
 "mini_app.cell.title" = "MiniApp";
-"mini_app.cell.description" = "Pass tests, complete tasks, and earn tokens!";
+"mini_app.cell.description" = "Testleri geçin, görevleri tamamlayın ve token kazanın!";
 
 "purchases.title" = "Premium";
 "purchases.description" = "Choose the plan";
@@ -2281,7 +2281,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "purchase.period.year" = "year";
 "purchase.period.month" = "month";
 "purchase.period.description1" = "Enjoy the first 7 days FREE.";
-"purchase.period.description1.1" = "Enjoy discount for first month.";
+"purchase.period.description1.1" = "İlk ay indiriminden yararlanın.";
 "purchase.period.description2" = "You can cancel your App Store subscription at any time.";
 "purchase.lifetime.description" = "Kısıtlama olmadan tek seferlik abonelik satın alabilirsiniz";
 "purchase.agree" = "Hesabınızı yükselterek %@ ve %@ nı kabul etmiş olursunuz.";
@@ -2305,17 +2305,17 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Address Checker
 
-"address_checker.title" = "Address Checker";
-"address_checker.recipient_check" = "Recipient Check";
-"address_checker.recipient_check.description" = "Checks the recipient address for risks before sending.";
-"address_checker.check_address" = "Check Address";
-"address_checker.check_address.description" = "Allows you to check an address against sanctions and blacklist databases.";
+"address_checker.title" = "Adres Kontrol Aracı";
+"address_checker.recipient_check" = "Alıcı Kontrolü";
+"address_checker.recipient_check.description" = "Göndermeden önce alıcı adresini risklere karşı kontrol eder.";
+"address_checker.check_address" = "Adresi Kontrol Et";
+"address_checker.check_address.description" = "Bir adresi yaptırımlar ve kara liste veritabanlarına karşı kontrol etmenizi sağlar.";
 
 // Check Address
 
 "check_address.sanctions_check" = "Sanctions Check";
 "check_address.coin_blacklist_check" = "%@ Blacklist Check";
-"check_address.on_blockchain" = "on %@";
-"check_address.chainalysis.description" = "Chainalysis is a blockchain analysis platform that provides tools for tracking, investigating, and assessing the risk of cryptocurrency addresses. It helps identify addresses associated with sanctions, fraud, and other illicit activities.";
-"check_address.hashdit.description" = "HashDit is a security platform that allows users to check wallet addresses for risks such as sanctions and blacklist status. It helps users avoid interacting with potentially malicious or blocked addresses.";
-"check_address.coin_blacklist.description" = "Allows you to verify whether a wallet address is blacklisted by %@ (%@). If an address is blacklisted, any %@ tokens associated with it may be frozen, making them inaccessible and non-transferable. This check helps users avoid interacting with high-risk or restricted addresses.";
+"check_address.on_blockchain" = "%@ üzerinde";
+"check_address.chainalysis.description" = "Chainalysis, kripto para adreslerini izleme, araştırma ve risk değerlendirmesi için araçlar sağlayan bir blockchain analiz platformudur. Yaptırımlar, dolandırıcılık ve diğer yasa dışı faaliyetlerle ilişkili adresleri belirlemeye yardımcı olur.";
+"check_address.hashdit.description" = "HashDit, kullanıcıların cüzdan adreslerini yaptırımlar ve kara liste durumu gibi riskler açısından kontrol etmesini sağlayan bir güvenlik platformudur. Kullanıcıların kötü niyetli veya engellenmiş adreslerle etkileşimini önlemeye yardımcı olur.";
+"check_address.coin_blacklist.description" = "Bir cüzdan adresinin %@ (%@) tarafından kara listeye alınıp alınmadığını doğrulamanıza olanak tanır. Eğer bir adres kara listedeyse, ilgili %@ tokenleri dondurulabilir; bu durumda bunlara erişilemez ve transfer edilemez. Bu kontrol, kullanıcıların yüksek riskli veya kısıtlanmış adreslerle etkileşime girmesini önlemeye yardımcı olur.";
