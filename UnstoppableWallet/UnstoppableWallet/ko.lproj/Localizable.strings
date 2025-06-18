@@ -206,7 +206,7 @@
 // Stellar Secret Key
 
 "stellar_secret_key.title" = "Stellar Secret Key";
-"stellar_secret_key.tap_to_show" = "点击以显示私钥";
+"stellar_secret_key.tap_to_show" = "탭하여 비밀 키 표시";
 
 // Extended Key
 
@@ -324,10 +324,10 @@
 
 // Token Balance Page
 "balance.token.locked" = "잠김";
-"balance.token.locked.stellar.title" = "锁定金额";
-"balance.token.locked.stellar.description" = "Stellar 网络会锁定 1 XLM 用于激活钱包，并为您启用的每个代币额外保留 0.5 XLM 作为储备金。";
-"balance.token.locked.stellar.description.currently_locked" = "当前已锁定：";
-"balance.token.locked.stellar.description.wallet_activation" = "钱包激活";
+"balance.token.locked.stellar.title" = "잠긴 금액";
+"balance.token.locked.stellar.description" = "Stellar 네트워크는 지갑을 활성화하기 위해 1 XLM을 잠그며, 지갑에서 활성화된 각 토큰마다 0.5 XLM을 예치금으로 잠급니다.";
+"balance.token.locked.stellar.description.currently_locked" = "현재 잠긴 금액:";
+"balance.token.locked.stellar.description.wallet_activation" = "지갑 활성화";
 "balance.token.locked.info.title" = "시간 자물쇠";
 "balance.token.locked.info.description" = "발송자는 이러한 자금들을 표시된 날짜에 만료가 되는 잠금 지출과 함께 보냈습니다.\n\n걱정 하지마십시오, 수신된 비트코인은 이미 귀하의 것입니다 하지만 잠금 기간이 만료될때 까지 비트코인 네트워크에서 사용하실 수 없습니다.";
 "balance.token.not_relayed" = "방송";
@@ -339,7 +339,7 @@
 "balance.token.transparent" = "透明";
 "balance.token.transparent.info.title" = "透明金额";
 "balance.token.transparent.info.description" = "透明余额目前无法在本钱包中使用，但支持 t-address 的其他钱包可以花费这笔资金。";
-"balance.token.shield" = "隐私（Shield）";
+"balance.token.shield" = "차폐(Shield)";
 
 "balance.token.staked" = "판돈";
 "balance.token.staked.info.title" = "스테이크 타이틀";
@@ -375,8 +375,8 @@
 "deposit.qr_code_description" = "입금 주소: %@";
 "deposit.qr_code_description.watch" = "%@의 시계 주소";
 "deposit.account" = "계정";
-"deposit.trustline" = "信任线";
-"deposit.trustline.not_activated" = "未激活";
+"deposit.trustline" = "신뢰 라인";
+"deposit.trustline.not_activated" = "미활성화됨";
 "deposit.activate" = "활성화";
 
 "deposit.amount" = "양";
@@ -393,8 +393,8 @@
 "deposit.used_addresses" = "사용된 주소들";
 "deposit.not_active.title" = "비활성 주소";
 "deposit.not_active.tron_description" = "TRON 블록체인에 새로 생성된 계정은 비활성화되어 있어서 조회하거나 탐색할 수 없습니다. 이 계정은 활성화되어야 합니다.\n\n비활성화된 계정 주소로 TRX 또는 TRC-10 토큰을 전송하면 계정이 활성화됩니다. 새로운 TRON 체인 계정을 활성화하려면 1 TRX의 수수료가 필요합니다.";
-"deposit.stellar.inactive_asset.title" = "激活代币";
-"deposit.stellar.inactive_asset.description" = "若要接收 %@，需先激活该代币。Stellar 网络要求为每个代币建立信任线；若未建立，您的钱包将无法接收 %@，交易会被拒绝且资金无法到账。";
+"deposit.stellar.inactive_asset.title" = "토큰 활성화";
+"deposit.stellar.inactive_asset.description" = "%@을(를) 수신하려면 해당 토큰을 활성화해야 합니다. Stellar 네트워크는 각 토큰마다 신뢰 라인을 설정해야 하며, 설정되지 않으면 %@을 받을 수 없습니다. 거래는 거부되고 자금은 전달되지 않습니다.";
 
 
 "deposit.used_addresses.title" = "사용된 주소들";
@@ -427,7 +427,7 @@
 // Send
 
 "send.title" = "전송 %@";
-"send.title.shield" = "隐私（Shield）%@";
+"send.title.shield" = "차폐(Shield)%@";
 "send.send" = "전송";
 "send.no_assets" = "자산을 보낼 수 없습니다.";
 "send.amount_placeholder" = "양";
@@ -519,8 +519,8 @@
 "send.amount_error.min_required_balance" = "최소 %@ 만큼의 필요 잔여금";
 "send.amount_warning.coin_needed_for_fee" = "향후 거래에 대해 지불할 수 있도록 일부 %@를 잔액으로 남겨두는 것이 좋습니다.";
 "send.token.insufficient_fee_alert" = "%@ (%@) 에 대한 거래 수수료는 %@로 지불되었습니다. 귀하는 %@가 필요합니다.";
-"send.stellar.no_trustline.title" = "缺少资产信任线";
-"send.stellar.no_trustline.description" = "Recipient account does not have established trustline with the asset being sent.";
+"send.stellar.no_trustline.title" = "자산에 대한 신뢰 라인 없음";
+"send.stellar.no_trustline.description" = "수신 계정이 전송하려는 자산에 대해 신뢰 라인을 설정하지 않았습니다.";
 
 "send.fee_settings.amount_error.balance.title" = "잔액 부족";
 "send.fee_settings.amount_error.balance" = "현재 %@ 잔액은 거래 수수료를 포함하여이 거래를 처리하는 데 필요한 금액보다 적습니다.";
@@ -661,8 +661,8 @@
 "swap.liquidity_fee" = "유동성 수수료";
 "swap.outbound_fee" = "송금 수수료";
 "swap.total_fee" = "총 수수료";
-"swap.thorchain.slip_protection" = "Slip protection unavailable";
-"swap.thorchain.slip_protection.description" = "Minimum slippage to enable slip protection for this swap is %@.";
+"swap.thorchain.slip_protection" = "슬리피지 보호를 사용할 수 없습니다";
+"swap.thorchain.slip_protection.description" = "이 스왑에서 슬리피지 보호를 활성화하려면 최소 슬리피지는 %@이어야 합니다.";
 
 // Swap Advanced Settings
 
@@ -782,8 +782,8 @@
 "market.time_period.6m" = "6 개월";
 "market.time_period.1y" = "일년";
 "market.time_period.2y" = "2 년";
-"market.time_period.3y" = "3 Years";
-"market.time_period.4y" = "4 Years";
+"market.time_period.3y" = "3년";
+"market.time_period.4y" = "4년";
 "market.time_period.5y" = "5 년";
 "market.time_period.1d.short" = "1하루";
 "market.time_period.1w.short" = "1주일";
@@ -793,8 +793,8 @@
 "market.time_period.6m.short" = "6개월";
 "market.time_period.1y.short" = "1년";
 "market.time_period.2y.short" = "2년";
-"market.time_period.3y.short" = "3Y";
-"market.time_period.4y.short" = "4Y";
+"market.time_period.3y.short" = "3년";
+"market.time_period.4y.short" = "4년";
 "market.time_period.5y.short" = "5년";
 
 "market.project_has_no_coin" = "이 프로젝트는 코인이 없습니다";
@@ -1011,7 +1011,7 @@
 "coin_overview.genesis_date" = "창립일";
 "coin_overview.trading_volume" = "거래량";
 
-"coin.overview.roi.header" = "Relative Change vs %@";
+"coin.overview.roi.header" = "%@ 대비 상대 변화";
 "coin_overview.roi.hour24" = "24 시간";
 "coin_overview.roi.day1" = "1 일";
 "coin_overview.roi.day7" = "1일주";
@@ -1035,10 +1035,10 @@
 
 // Coin Page -> Analytics -> Select Performance
 
-"coin_overview.performance.select_coins.title" = "Select Coins";
+"coin_overview.performance.select_coins.title" = "코인 선택";
 "coin_overview.performance.period" = "Period %d";
-"coin_overview.performance.assets" = "Selected Assets";
-"coin_overview.performance.only_3" = "Choose only 3 assets";
+"coin_overview.performance.assets" = "선택한 자산";
+"coin_overview.performance.only_3" = "자산은 최대 3개까지만 선택 가능합니다";
 
 // Coin Page -> Analytics
 "technical_advice.over.bought" = "과매수";
@@ -1298,7 +1298,7 @@
 "transactions.mint" = "민트";
 "transactions.approve" = "승인됨";
 "transactions.swap" = "스왑됨";
-"transactions.shield" = "隐私（Shield）";
+"transactions.shield" = "차폐(Shield)";
 "transactions.unshield" = "Unshield";
 "transactions.transfer" = "전송";
 "transactions.contract_call" = "계약 콜";
@@ -1309,7 +1309,7 @@
 
 "transactions.to" = "%@에게";
 "transactions.from" = "%@부터";
-"transactions.funder" = "Funder: %@";
+"transactions.funder" = "자금 제공자: %@";
 "transactions.account" = "Account: %@";
 
 "transactions.multiple" = "다수";
@@ -1644,7 +1644,7 @@
 "appearance.launch_screen.watchlist" = "관심 목록";
 
 "appearance.balance_tab" = "잔고 탭";
-"appearance.balance_tab.footer" = "The “Hide Buttons” configuration hides the Send, Receive, and Swap buttons on Balance tab.";
+"appearance.balance_tab.footer" = "\"버튼 숨기기\" 설정을 활성화하면 잔액 탭에서 보내기, 받기, 스왑 버튼이 숨겨집니다.";
 "appearance.hide_buttons" = "숨김 버튼";
 "appearance.balance_value" = "균형 가치";
 "appearance.balance_value.coin_fiat" = "코인/피아트";
@@ -1965,7 +1965,7 @@
 "private_keys.evm_private_key" = "EVM 개인 키";
 "private_keys.evm_private_key.description" = "각 지갑 내에서 EVM 기반 암호화, 즉 이더리움, 바이낸스 스마트 체인 등에 대한 완전한 제어 권한을 부여합니다.";
 "private_keys.stellar_secret_key" = "Stellar Secret Key";
-"private_keys.stellar_secret_key.description" = "Grants full control over Stellar assets within the respective wallet.";
+"private_keys.stellar_secret_key.description" = "해당 지갑 내 Stellar 자산에 대한 완전한 제어 권한을 부여합니다.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
 "private_keys.bip32_root_key.description" = "각 지갑의 자산에 대한 모든 권한을 부여합니다.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
@@ -2215,7 +2215,7 @@
 "premium.cell.try" = "Try for FREE";
 
 "mini_app.cell.title" = "MiniApp";
-"mini_app.cell.description" = "Pass tests, complete tasks, and earn tokens!";
+"mini_app.cell.description" = "테스트를 통과하고 과제를 완료하여 토큰을 획득하세요!";
 
 "purchases.title" = "Premium";
 "purchases.description" = "Choose the plan";
@@ -2274,7 +2274,7 @@
 "purchase.period.year" = "year";
 "purchase.period.month" = "month";
 "purchase.period.description1" = "Enjoy the first 7 days FREE.";
-"purchase.period.description1.1" = "Enjoy discount for first month.";
+"purchase.period.description1.1" = "첫 달 할인 혜택을 누려보세요.";
 "purchase.period.description2" = "You can cancel your App Store subscription at any time.";
 "purchase.lifetime.description" = "제한 없이 일회성 구독을 구매할 수";
 "purchase.agree" = "계정을 업그레이드하면 %@ 및 %@ 에 동의하게 됩니다.";
@@ -2298,17 +2298,17 @@
 
 // Address Checker
 
-"address_checker.title" = "Address Checker";
-"address_checker.recipient_check" = "Recipient Check";
-"address_checker.recipient_check.description" = "Checks the recipient address for risks before sending.";
-"address_checker.check_address" = "Check Address";
-"address_checker.check_address.description" = "Allows you to check an address against sanctions and blacklist databases.";
+"address_checker.title" = "주소 확인 도구";
+"address_checker.recipient_check" = "수신자 확인";
+"address_checker.recipient_check.description" = "전송 전에 수신 주소의 위험 여부를 확인합니다.";
+"address_checker.check_address" = "주소 확인";
+"address_checker.check_address.description" = "允许您检查地址是否存在制裁或被列入黑名单。";
 
 // Check Address
 
 "check_address.sanctions_check" = "Sanctions Check";
 "check_address.coin_blacklist_check" = "%@ Blacklist Check";
 "check_address.on_blockchain" = "on %@";
-"check_address.chainalysis.description" = "Chainalysis is a blockchain analysis platform that provides tools for tracking, investigating, and assessing the risk of cryptocurrency addresses. It helps identify addresses associated with sanctions, fraud, and other illicit activities.";
-"check_address.hashdit.description" = "HashDit is a security platform that allows users to check wallet addresses for risks such as sanctions and blacklist status. It helps users avoid interacting with potentially malicious or blocked addresses.";
+"check_address.chainalysis.description" = "Chainalysis는 암호화폐 주소를 추적, 조사하고 위험을 평가할 수 있는 도구를 제공하는 블록체인 분석 플랫폼입니다. 이 플랫폼은 제재, 사기, 기타 불법 활동과 관련된 주소를 식별하는 데 도움을 줍니다.";
+"check_address.hashdit.description" = "HashDit는 사용자들이 지갑 주소에 대한 제재나 블랙리스트 위험을 확인할 수 있도록 해주는 보안 플랫폼입니다. 사용자가 악의적이거나 차단된 주소와의 상호작용을 피하도록 도와줍니다.";
 "check_address.coin_blacklist.description" = "Allows you to verify whether a wallet address is blacklisted by %@ (%@). If an address is blacklisted, any %@ tokens associated with it may be frozen, making them inaccessible and non-transferable. This check helps users avoid interacting with high-risk or restricted addresses.";
