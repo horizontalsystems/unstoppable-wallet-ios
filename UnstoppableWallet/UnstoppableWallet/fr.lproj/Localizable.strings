@@ -2068,8 +2068,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "watch_address.error.not_supported" = "Le format de l'adresse n'est pas pris en charge";
 "watch_address.error.non_public_key" = "La surveillance par clé privée n'est pas autorisée";
 "watch_address.error.not_supported_derived_type" = "Le type dérivé n'est pas pris en charge";
-"watch_address.watch_data.placeholder" = "Entrez votre EVM, TRON, TON ou adresse publique (Bitcoin, Litecoin, Bitcoin Cash) ou votre compte xPubKey.";
-"watch_address.watch_data.description" = "Nous prenons en charge les adresses de Bitcoin, Ethereum, TON et de nombreuses autres blockchains.";
+"watch_address.watch_data.placeholder" = "Paste your public address or XPUB";
+"watch_address.watch_data.description" = "Supports addresses from EVM, Tron, TON, Stellar, Bitcoin-family(BTC, LTC, BCH, Dash) and XPUB keys.";
 "watch_address.choose_blockchain" = "Choisir la blockchain";
 "watch_address.choose_coin" = "Choisir la pièce";
 
