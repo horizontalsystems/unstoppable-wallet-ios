@@ -206,7 +206,7 @@
 // Stellar Secret Key
 
 "stellar_secret_key.title" = "Stellar Secret Key";
-"stellar_secret_key.tap_to_show" = "Tap to show secret key";
+"stellar_secret_key.tap_to_show" = "点击以显示私钥";
 
 // Extended Key
 
@@ -324,10 +324,10 @@
 
 // Token Balance Page
 "balance.token.locked" = "잠김";
-"balance.token.locked.stellar.title" = "Locked Amount";
-"balance.token.locked.stellar.description" = "The Stellar network locks 1 XLM to activate the wallet and 0.5 XLM as a reserve for each token activated in your wallet.";
-"balance.token.locked.stellar.description.currently_locked" = "Currently locked:";
-"balance.token.locked.stellar.description.wallet_activation" = "Wallet activation";
+"balance.token.locked.stellar.title" = "锁定金额";
+"balance.token.locked.stellar.description" = "Stellar 网络会锁定 1 XLM 用于激活钱包，并为您启用的每个代币额外保留 0.5 XLM 作为储备金。";
+"balance.token.locked.stellar.description.currently_locked" = "当前已锁定：";
+"balance.token.locked.stellar.description.wallet_activation" = "钱包激活";
 "balance.token.locked.info.title" = "시간 자물쇠";
 "balance.token.locked.info.description" = "발송자는 이러한 자금들을 표시된 날짜에 만료가 되는 잠금 지출과 함께 보냈습니다.\n\n걱정 하지마십시오, 수신된 비트코인은 이미 귀하의 것입니다 하지만 잠금 기간이 만료될때 까지 비트코인 네트워크에서 사용하실 수 없습니다.";
 "balance.token.not_relayed" = "방송";
@@ -336,10 +336,10 @@
 "balance.token.processing" = "처리 중";
 "balance.token.processing.info.title" = "처리 중인 금액";
 "balance.token.processing.info.description" = "이 금액의 거래가 여전히 동기화 중입니다. 거래가 확인되면 이 토큰들은 사용할 수 있게 됩니다.";
-"balance.token.transparent" = "Transparent";
-"balance.token.transparent.info.title" = "Transparent amount";
-"balance.token.transparent.info.description" = "Transparent balance can't be used in our wallet for now. But this money can be spend by other wallets with t-address supports";
-"balance.token.shield" = "Shield";
+"balance.token.transparent" = "透明";
+"balance.token.transparent.info.title" = "透明金额";
+"balance.token.transparent.info.description" = "透明余额目前无法在本钱包中使用，但支持 t-address 的其他钱包可以花费这笔资金。";
+"balance.token.shield" = "隐私（Shield）";
 
 "balance.token.staked" = "판돈";
 "balance.token.staked.info.title" = "스테이크 타이틀";
@@ -375,8 +375,8 @@
 "deposit.qr_code_description" = "입금 주소: %@";
 "deposit.qr_code_description.watch" = "%@의 시계 주소";
 "deposit.account" = "계정";
-"deposit.trustline" = "Trustline";
-"deposit.trustline.not_activated" = "Not activated";
+"deposit.trustline" = "信任线";
+"deposit.trustline.not_activated" = "未激活";
 "deposit.activate" = "활성화";
 
 "deposit.amount" = "양";
@@ -393,8 +393,8 @@
 "deposit.used_addresses" = "사용된 주소들";
 "deposit.not_active.title" = "비활성 주소";
 "deposit.not_active.tron_description" = "TRON 블록체인에 새로 생성된 계정은 비활성화되어 있어서 조회하거나 탐색할 수 없습니다. 이 계정은 활성화되어야 합니다.\n\n비활성화된 계정 주소로 TRX 또는 TRC-10 토큰을 전송하면 계정이 활성화됩니다. 새로운 TRON 체인 계정을 활성화하려면 1 TRX의 수수료가 필요합니다.";
-"deposit.stellar.inactive_asset.title" = "Activate Token";
-"deposit.stellar.inactive_asset.description" = "To receive %@, you need to activate the token. The Stellar network requires a trustline to be established for each token. Without it, your wallet cannot receive %@ — the transaction will be rejected and the funds will not be delivered.";
+"deposit.stellar.inactive_asset.title" = "激活代币";
+"deposit.stellar.inactive_asset.description" = "若要接收 %@，需先激活该代币。Stellar 网络要求为每个代币建立信任线；若未建立，您的钱包将无法接收 %@，交易会被拒绝且资金无法到账。";
 
 
 "deposit.used_addresses.title" = "사용된 주소들";
@@ -427,7 +427,7 @@
 // Send
 
 "send.title" = "전송 %@";
-"send.title.shield" = "Shield %@";
+"send.title.shield" = "隐私（Shield）%@";
 "send.send" = "전송";
 "send.no_assets" = "자산을 보낼 수 없습니다.";
 "send.amount_placeholder" = "양";
@@ -488,7 +488,7 @@
 "send.confirmation.action" = "Action";
 "send.confirmation.status" = "상태";
 "send.confirmation.status.failed" = "실패";
-"send.confirmation.send_to_own" = "Transaction will send to own address";
+"send.confirmation.send_to_own" = "交易将发送至自己的地址";
 
 "send.confirmation.sync_failed" = "동기화 실패";
 "send.confirmation.invalid_data" = "유효하지 않은 데이터";
@@ -519,7 +519,7 @@
 "send.amount_error.min_required_balance" = "최소 %@ 만큼의 필요 잔여금";
 "send.amount_warning.coin_needed_for_fee" = "향후 거래에 대해 지불할 수 있도록 일부 %@를 잔액으로 남겨두는 것이 좋습니다.";
 "send.token.insufficient_fee_alert" = "%@ (%@) 에 대한 거래 수수료는 %@로 지불되었습니다. 귀하는 %@가 필요합니다.";
-"send.stellar.no_trustline.title" = "No Asset Trustline";
+"send.stellar.no_trustline.title" = "缺少资产信任线";
 "send.stellar.no_trustline.description" = "Recipient account does not have established trustline with the asset being sent.";
 
 "send.fee_settings.amount_error.balance.title" = "잔액 부족";
@@ -1298,7 +1298,7 @@
 "transactions.mint" = "민트";
 "transactions.approve" = "승인됨";
 "transactions.swap" = "스왑됨";
-"transactions.shield" = "Shield";
+"transactions.shield" = "隐私（Shield）";
 "transactions.unshield" = "Unshield";
 "transactions.transfer" = "전송";
 "transactions.contract_call" = "계약 콜";
