@@ -396,7 +396,7 @@
 "deposit.not_active.title" = "未激活的地址";
 "deposit.not_active.tron_description" = "新创建的 TRON 区块链上的帐户是不活动的，无法查询或探索。它们需要激活。\n\n正在将TRX或 TRC-10令牌传输到一个不活动的帐户地址将激活该帐户。 激活Tron链上的一个新帐户需要1TRX";
 "deposit.stellar.inactive_asset.title" = "啟用代幣";
-"deposit.stellar.inactive_asset.description" = "To receive %@, you need to activate the token. The Stellar network requires a trustline to be established for each token. Without it, your wallet cannot receive %@ — the transaction will be rejected and the funds will not be delivered.";
+"deposit.stellar.inactive_asset.description" = "若要接收 %@，需先激活该代币。Stellar 网络要求为每个代币建立信任线；若未建立，您的钱包将无法接收 %@，交易会被拒绝且资金无法到账。";
 
 
 "deposit.used_addresses.title" = "已使用地址";
@@ -490,7 +490,7 @@
 "send.confirmation.action" = "操作";
 "send.confirmation.status" = "状态";
 "send.confirmation.status.failed" = "失败";
-"send.confirmation.send_to_own" = "Transaction will send to own address";
+"send.confirmation.send_to_own" = "交易将发送至自己的地址";
 
 "send.confirmation.sync_failed" = "同步失败";
 "send.confirmation.invalid_data" = "无效数据";
@@ -521,7 +521,7 @@
 "send.amount_error.min_required_balance" = "最小要求剩余 %@";
 "send.amount_warning.coin_needed_for_fee" = "考虑留下%@作为余额以便能够支付未来的交易。";
 "send.token.insufficient_fee_alert" = "%@（%@）的交易费用以%@支付。您需要%@。";
-"send.stellar.no_trustline.title" = "No Asset Trustline";
+"send.stellar.no_trustline.title" = "缺少资产信任线";
 "send.stellar.no_trustline.description" = "收款帳戶尚未與所發送資產建立信任線。";
 
 "send.fee_settings.amount_error.balance.title" = "可用额度不足";
@@ -784,8 +784,8 @@
 "market.time_period.6m" = "6月";
 "market.time_period.1y" = "1年";
 "market.time_period.2y" = "2 年";
-"market.time_period.3y" = "3 Years";
-"market.time_period.4y" = "4 Years";
+"market.time_period.3y" = "3 年";
+"market.time_period.4y" = "4 年";
 "market.time_period.5y" = "5 年";
 "market.time_period.1d.short" = "1天";
 "market.time_period.1w.short" = "1周";
@@ -795,8 +795,8 @@
 "market.time_period.6m.short" = "6个月";
 "market.time_period.1y.short" = "1年";
 "market.time_period.2y.short" = "2年";
-"market.time_period.3y.short" = "3Y";
-"market.time_period.4y.short" = "4Y";
+"market.time_period.3y.short" = "3年";
+"market.time_period.4y.short" = "3年";
 "market.time_period.5y.short" = "5年";
 
 "market.project_has_no_coin" = "此项目没有硬币";
@@ -1012,7 +1012,7 @@
 "coin_overview.genesis_date" = "起始日期";
 "coin_overview.trading_volume" = "成交量";
 
-"coin.overview.roi.header" = "Relative Change vs %@";
+"coin.overview.roi.header" = "相对于 %@ 的变动";
 "coin_overview.roi.hour24" = "24 小时";
 "coin_overview.roi.day1" = "1天";
 "coin_overview.roi.day7" = "1周";
@@ -1036,10 +1036,10 @@
 
 // Coin Page -> Analytics -> Select Performance
 
-"coin_overview.performance.select_coins.title" = "Select Coins";
+"coin_overview.performance.select_coins.title" = "选择币种";
 "coin_overview.performance.period" = "Period %d";
-"coin_overview.performance.assets" = "Selected Assets";
-"coin_overview.performance.only_3" = "Choose only 3 assets";
+"coin_overview.performance.assets" = "已选资产";
+"coin_overview.performance.only_3" = "最多选择 3 种资产";
 
 // Coin Page -> Analytics
 "technical_advice.over.bought" = "已购买过期的";
@@ -1645,7 +1645,7 @@
 "appearance.launch_screen.watchlist" = "关注";
 
 "appearance.balance_tab" = "余额标签";
-"appearance.balance_tab.footer" = "The “Hide Buttons” configuration hides the Send, Receive, and Swap buttons on Balance tab.";
+"appearance.balance_tab.footer" = "启用“隐藏按钮”设置后，将隐藏余额页面中的发送、接收和兑换按钮。";
 "appearance.hide_buttons" = "隐藏按钮";
 "appearance.balance_value" = "余额值";
 "appearance.balance_value.coin_fiat" = "加密货币 / 法定货币";
@@ -2308,6 +2308,6 @@
 "check_address.sanctions_check" = "Sanctions Check";
 "check_address.coin_blacklist_check" = "%@ Blacklist Check";
 "check_address.on_blockchain" = "on %@";
-"check_address.chainalysis.description" = "Chainalysis is a blockchain analysis platform that provides tools for tracking, investigating, and assessing the risk of cryptocurrency addresses. It helps identify addresses associated with sanctions, fraud, and other illicit activities.";
-"check_address.hashdit.description" = "HashDit is a security platform that allows users to check wallet addresses for risks such as sanctions and blacklist status. It helps users avoid interacting with potentially malicious or blocked addresses.";
+"check_address.chainalysis.description" = "Chainalysis 是一家区块链分析平台，提供追踪、调查和评估加密地址风险的工具，可识别与制裁、欺诈及其他非法活动相关的地址。";
+"check_address.hashdit.description" = "HashDit 是一款安全平台，帮助用户检查钱包地址是否存在制裁或黑名单等风险，避免与潜在恶意或受限地址交互。";
 "check_address.coin_blacklist.description" = "Allows you to verify whether a wallet address is blacklisted by %@ (%@). If an address is blacklisted, any %@ tokens associated with it may be frozen, making them inaccessible and non-transferable. This check helps users avoid interacting with high-risk or restricted addresses.";
