@@ -2072,8 +2072,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "watch_address.error.not_supported" = "Adres formatı desteklenmiyor";
 "watch_address.error.non_public_key" = "Özel anahtarla izlemeye izin verilmiyor";
 "watch_address.error.not_supported_derived_type" = "Türetilmiş tür desteklenmiyor";
-"watch_address.watch_data.placeholder" = "EVM, TRON, TON veya Genel Adresinizi (Bitcoin, Litecoin, Bitcoin Cash) veya Hesap xPub Anahtarınızı Girin.";
-"watch_address.watch_data.description" = "Bitcoin, Ethereum, TON ve birçok diğer blokzincir ağına ait adresleri destekliyoruz.";
+"watch_address.watch_data.placeholder" = "Paste your public address or XPUB";
+"watch_address.watch_data.description" = "Supports addresses from EVM, Tron, TON, Stellar, Bitcoin-family(BTC, LTC, BCH, Dash) and XPUB keys.";
 "watch_address.choose_blockchain" = "Blockchain Seç";
 "watch_address.choose_coin" = "Kripto Parayı Seç";
 
