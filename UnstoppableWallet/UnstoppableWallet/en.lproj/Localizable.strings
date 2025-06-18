@@ -2066,8 +2066,8 @@
 "watch_address.error.not_supported" = "Address format is not supported";
 "watch_address.error.non_public_key" = "Watching by private key is not allowed";
 "watch_address.error.not_supported_derived_type" = "Derived type is not supported";
-"watch_address.watch_data.placeholder" = "Paste your public address";
-"watch_address.watch_data.description" = "We support addresses from Bitcoin, Ethereum, TON, and many other blockchains.";
+"watch_address.watch_data.placeholder" = "Paste your public address or XPUB";
+"watch_address.watch_data.description" = "Supports addresses from EVM, Tron, TON, Stellar, Bitcoin-family(BTC, LTC, BCH, Dash) and XPUB keys.";
 "watch_address.choose_blockchain" = "Choose Blockchain";
 "watch_address.choose_coin" = "Choose Coin";
 
