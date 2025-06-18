@@ -2071,8 +2071,8 @@
 "watch_address.error.not_supported" = "Формат адреса не поддерживается";
 "watch_address.error.non_public_key" = "Просмотр по приватному ключу не разрешён";
 "watch_address.error.not_supported_derived_type" = "Неподдерживаемый тип";
-"watch_address.watch_data.placeholder" = "Введите ваш EVM, TRON, TON или публичный адрес (Bitcoin, Litecoin, Bitcoin Cash) или Account xPubKey.";
-"watch_address.watch_data.description" = "Мы поддерживаем адреса: Bitcoin, Ethereum, TON и многих других блокчейнов.";
+"watch_address.watch_data.placeholder" = "Paste your public address or XPUB";
+"watch_address.watch_data.description" = "Supports addresses from EVM, Tron, TON, Stellar, Bitcoin-family(BTC, LTC, BCH, Dash) and XPUB keys.";
 "watch_address.choose_blockchain" = "Выбрать блокчейн";
 "watch_address.choose_coin" = "Выберите токен";
 
