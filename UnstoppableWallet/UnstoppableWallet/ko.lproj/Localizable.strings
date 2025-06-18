@@ -2069,8 +2069,8 @@
 "watch_address.error.not_supported" = "주소 형식은 지원되지 않습니다";
 "watch_address.error.non_public_key" = "개인 키로 감시하는 것은 허용되지 않습니다";
 "watch_address.error.not_supported_derived_type" = "파생된 유형은 지원되지 않습니다";
-"watch_address.watch_data.placeholder" = "귀하의 EVM, TRON, TON 또는 공용 주소 (비트코인, 라이트코인, 비트코인 캐시) 또는 계정 xPubKey을 입력하십시오.";
-"watch_address.watch_data.description" = "We support addresses from Bitcoin, Ethereum, TON, and many other blockchains.";
+"watch_address.watch_data.placeholder" = "Paste your public address or XPUB";
+"watch_address.watch_data.description" = "Supports addresses from EVM, Tron, TON, Stellar, Bitcoin-family(BTC, LTC, BCH, Dash) and XPUB keys.";
 "watch_address.choose_blockchain" = "블록체인 선택";
 "watch_address.choose_coin" = "코인 선택";
 
