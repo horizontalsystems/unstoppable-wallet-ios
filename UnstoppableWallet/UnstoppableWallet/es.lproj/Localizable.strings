@@ -2069,8 +2069,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "watch_address.error.not_supported" = "El formato de dirección no está soportado";
 "watch_address.error.non_public_key" = "No se permite la visualización por clave privada";
 "watch_address.error.not_supported_derived_type" = "El tipo derivado no está soportado";
-"watch_address.watch_data.placeholder" = "Introduzca su EVM, TRON, TON o Dirección Pública (Bitcoin, Litecoin, Bitcoin Cash) o Cuenta xPubKey.";
-"watch_address.watch_data.description" = "Soportamos direcciones de Bitcoin, Ethereum, TON y muchas otras blockchains.";
+"watch_address.watch_data.placeholder" = "Paste your public address or XPUB";
+"watch_address.watch_data.description" = "Supports addresses from EVM, Tron, TON, Stellar, Bitcoin-family(BTC, LTC, BCH, Dash) and XPUB keys.";
 "watch_address.choose_blockchain" = "Elegir Blockchain";
 "watch_address.choose_coin" = "Elegir moneda";
 
