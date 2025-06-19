@@ -350,7 +350,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.token.frozen.info.title" = "Titre gelé";
 "balance.token.frozen.info.description" = "Texte de description gelé";
 "balance.token.account.inactive.title" = "Compte non actif";
-"balance.token.account.inactive.description" = "Les nouveaux portefeuilles TRON nécessitent un dépôt d'au moins 1 TRX pour devenir actifs. Les portefeuilles inactifs peuvent recevoir et détenir des jetons, mais les soldes ne seront pas corrigés tant qu'ils ne seront pas activés.";
+"balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens, but balances won’t update until activated.";
 
 // Account switcher
 
