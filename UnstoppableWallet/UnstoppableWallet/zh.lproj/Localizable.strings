@@ -207,7 +207,7 @@
 
 // Stellar Secret Key
 
-"stellar_secret_key.title" = "Stellar Secret Key";
+"stellar_secret_key.title" = "Stellar 私钥";
 "stellar_secret_key.tap_to_show" = "點擊以顯示私密金鑰";
 
 // Extended Key
@@ -350,7 +350,7 @@
 "balance.token.frozen.info.title" = "冰冻标题";
 "balance.token.frozen.info.description" = "冻结描述文本";
 "balance.token.account.inactive.title" = "帐户未激活";
-"balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens, but balances won’t update until activated.";
+"balance.token.account.inactive.description" = "新创建的 TRON 钱包需要至少存入 1 TRX 才能激活。未激活的钱包可以接收和持有代币，但余额不会更新，直到被激活为止。";
 
 // Account switcher
 
@@ -429,7 +429,7 @@
 // Send
 
 "send.title" = "发送%@";
-"send.title.shield" = "Shield %@";
+"send.title.shield" = "已屏蔽 %@（或：屏蔽 %@)";
 "send.send" = "发送​​";
 "send.no_assets" = "您没有要发送的资产。";
 "send.amount_placeholder" = "金额";
@@ -1037,7 +1037,7 @@
 // Coin Page -> Analytics -> Select Performance
 
 "coin_overview.performance.select_coins.title" = "选择币种";
-"coin_overview.performance.period" = "Period %d";
+"coin_overview.performance.period" = "周期 %d";
 "coin_overview.performance.assets" = "已选资产";
 "coin_overview.performance.only_3" = "最多选择 3 种资产";
 
@@ -1300,18 +1300,18 @@
 "transactions.approve" = "批准";
 "transactions.swap" = "已交换";
 "transactions.shield" = "屏蔽";
-"transactions.unshield" = "Unshield";
+"transactions.unshield" = "取消屏蔽";
 "transactions.transfer" = "转帐";
 "transactions.contract_call" = "合约调用";
 "transactions.contract_creation" = "合约创建";
 "transactions.external_call" = "外部呼叫";
 "transactions.contract_deploy" = "合约部署";
-"transactions.account_created" = "Account Created";
+"transactions.account_created" = "账户已创建";
 
 "transactions.to" = "接收人%@";
 "transactions.from" = "发送人%@";
 "transactions.funder" = "資助者：%@";
-"transactions.account" = "Account: %@";
+"transactions.account" = "账户 %@";
 
 "transactions.multiple" = "多种";
 
@@ -1330,7 +1330,7 @@
 "transactions.unknown_transaction.description" = "无法解析交易";
 
 "transactions.ton_transaction.title" = "Ton 交易";
-"transactions.stellar_transaction.title" = "Stellar Transaction";
+"transactions.stellar_transaction.title" = "Stellar 交易";
 "transactions.contract" = "合同";
 
 // Transaction Info
@@ -1391,7 +1391,7 @@
 "settings.contact_us" = "联系我们";
 "settings.social_networks.label" = "Be Unstoppable";
 "settings.get_your_tokens" = "Get UWT Tokens";
-"settings.dapp_connection" = "DApp Connection";
+"settings.dapp_connection" = "dApp 连接";
 "settings.app_settings" = "应用设置";
 
 // Settings -> Base Currency
@@ -1815,7 +1815,7 @@
 // Education
 
 "education.title" = "Education";
-"quiz.title" = "Crypto Quiz";
+"quiz.title" = "加密问答";
 
 // Add Token
 
@@ -1963,7 +1963,7 @@
 "private_keys.title" = "私钥";
 "private_keys.evm_private_key" = "EVM 私钥";
 "private_keys.evm_private_key.description" = "授予对基于加密货币的EVM的完全控制，即在相应钱包内的以太坊、币安智能链等。";
-"private_keys.stellar_secret_key" = "Stellar Secret Key";
+"private_keys.stellar_secret_key" = "Stellar 私钥";
 "private_keys.stellar_secret_key.description" = "授予錢包內 Stellar 資產的完整控制權。";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
 "private_keys.bip32_root_key.description" = "授予对相应钱包上的资产的完全控制。";
@@ -2068,8 +2068,8 @@
 "watch_address.error.not_supported" = "不支持的地址格式";
 "watch_address.error.non_public_key" = "不允许使用私钥进行观察";
 "watch_address.error.not_supported_derived_type" = "不支持的派生类型";
-"watch_address.watch_data.placeholder" = "Paste your public address or XPUB";
-"watch_address.watch_data.description" = "Supports addresses from EVM, Tron, TON, Stellar, Bitcoin-family(BTC, LTC, BCH, Dash) and XPUB keys.";
+"watch_address.watch_data.placeholder" = "粘贴您的公开地址或 XPUB";
+"watch_address.watch_data.description" = "支持来自 EVM、Tron、TON、Stellar、比特币系列（BTC、LTC、BCH、Dash）以及 XPUB 的地址。";
 "watch_address.choose_blockchain" = "选择区块链";
 "watch_address.choose_coin" = "选择代币";
 
@@ -2213,7 +2213,7 @@
 "premium.cell.description.key" = "Premium";
 "premium.cell.try" = "Try for FREE";
 
-"mini_app.cell.title" = "MiniApp";
+"mini_app.cell.title" = "小程序";
 "mini_app.cell.description" = "通過測驗、完成任務並獲取代幣！";
 
 "purchases.title" = "Premium";
@@ -2305,9 +2305,9 @@
 
 // Check Address
 
-"check_address.sanctions_check" = "Sanctions Check";
-"check_address.coin_blacklist_check" = "%@ Blacklist Check";
-"check_address.on_blockchain" = "on %@";
+"check_address.sanctions_check" = "制裁检查";
+"check_address.coin_blacklist_check" = "%@ 黑名单检查";
+"check_address.on_blockchain" = "基于 %@";
 "check_address.chainalysis.description" = "Chainalysis 是一家区块链分析平台，提供追踪、调查和评估加密地址风险的工具，可识别与制裁、欺诈及其他非法活动相关的地址。";
 "check_address.hashdit.description" = "HashDit 是一款安全平台，帮助用户检查钱包地址是否存在制裁或黑名单等风险，避免与潜在恶意或受限地址交互。";
-"check_address.coin_blacklist.description" = "Allows you to verify whether a wallet address is blacklisted by %@ (%@). If an address is blacklisted, any %@ tokens associated with it may be frozen, making them inaccessible and non-transferable. This check helps users avoid interacting with high-risk or restricted addresses.";
+"check_address.coin_blacklist.description" = "该功能可用于验证某个钱包地址是否被 %@（%@）列入黑名单。如果地址被列入黑名单，相关联的 %@ 代币可能会被冻结，无法访问或转账。此检查可帮助用户避免与高风险或受限地址进行交互。";
