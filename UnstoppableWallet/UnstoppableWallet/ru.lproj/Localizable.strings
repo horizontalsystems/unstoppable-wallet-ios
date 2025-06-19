@@ -209,7 +209,7 @@
 
 // Stellar Secret Key
 
-"stellar_secret_key.title" = "Stellar Secret Key";
+"stellar_secret_key.title" = "Секретный ключ Stellar";
 "stellar_secret_key.tap_to_show" = "Нажмите, чтобы показать секретный ключ";
 
 // Extended Key
@@ -341,7 +341,7 @@
 "balance.token.processing.info.title" = "Обрабатываемая сумма";
 "balance.token.processing.info.description" = "Транзакции с этой суммой все еще синхронизируются. Когда они будут подтверждены, эти токены будут доступны для траты";
 "balance.token.transparent" = "Transparent";
-"balance.token.transparent.info.title" = "Transparent amount";
+"balance.token.transparent.info.title" = "Transparent сумма";
 "balance.token.transparent.info.description" = "Прозрачный баланс в данный момент недоступен для использования в нашем кошельке. Однако эти средства могут быть потрачены через другие кошельки, поддерживающие адреса формата t-address.";
 "balance.token.shield" = "Shield";
 
@@ -352,7 +352,7 @@
 "balance.token.frozen.info.title" = "Frozen title";
 "balance.token.frozen.info.description" = "Frozen Description Text";
 "balance.token.account.inactive.title" = "Аккаунт не активен";
-"balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens, but balances won’t update until activated.";
+"balance.token.account.inactive.description" = "Новые кошельки TRON требуют депозита не менее 1 TRX для активации. Неактивные кошельки могут хранить и получать токены, но балансы не будут отображаться до активации.";
 
 // Account switcher
 
@@ -523,8 +523,8 @@
 "send.amount_error.min_required_balance" = "Мин. обязательный остаток %@";
 "send.amount_warning.coin_needed_for_fee" = "Рассмотрите возможность оставить %@ на балансе, чтобы иметь возможность оплачивать будущие транзакции.";
 "send.token.insufficient_fee_alert" = "Комиссии за транзакцию %@ (%@) взимаются в %@. Вам нужно %@.";
-"send.stellar.no_trustline.title" = "No Asset Trustline";
-"send.stellar.no_trustline.description" = "Recipient account does not have established trustline with the asset being sent.";
+"send.stellar.no_trustline.title" = "Нет trustline для актива";
+"send.stellar.no_trustline.description" = "У аккаунта получателя не установлен trustline для отправляемого актива.";
 
 "send.fee_settings.amount_error.balance.title" = "Недостаточный баланс";
 "send.fee_settings.amount_error.balance" = "Текущий баланс %@ ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
@@ -665,8 +665,8 @@
 "swap.liquidity_fee" = "Плата за ликвидность";
 "swap.outbound_fee" = "Исходящая комиссия";
 "swap.total_fee" = "Итоговая комиссия";
-"swap.thorchain.slip_protection" = "Slip protection unavailable";
-"swap.thorchain.slip_protection.description" = "Minimum slippage to enable slip protection for this swap is %@.";
+"swap.thorchain.slip_protection" = "Защита от проскальзывания (slippage) недоступна";
+"swap.thorchain.slip_protection.description" = "Минимальное проскальзывание (slippage) для активации защиты при этом обмене - %@.";
 
 // Swap Advanced Settings
 
@@ -1965,7 +1965,7 @@
 "private_keys.title" = "Приватные ключи";
 "private_keys.evm_private_key" = "Приватный ключ EVM";
 "private_keys.evm_private_key.description" = "Предоставляет полный контроль над криптовалютами на базе EVM, т.е. Ethereum, Binance Smart Chain и т.д. в пределах соответствующего кошелька.";
-"private_keys.stellar_secret_key" = "Stellar Secret Key";
+"private_keys.stellar_secret_key" = "Секретный ключ Stellar";
 "private_keys.stellar_secret_key.description" = "Предоставляет полный контроль над активами Stellar в данном кошельке.";
 "private_keys.bip32_root_key" = "BIP32 Root ключ";
 "private_keys.bip32_root_key.description" = "Предоставляет полный контроль над активами на соответствующем кошельке.";
@@ -2071,8 +2071,8 @@
 "watch_address.error.not_supported" = "Формат адреса не поддерживается";
 "watch_address.error.non_public_key" = "Просмотр по приватному ключу не разрешён";
 "watch_address.error.not_supported_derived_type" = "Неподдерживаемый тип";
-"watch_address.watch_data.placeholder" = "Paste your public address or XPUB";
-"watch_address.watch_data.description" = "Supports addresses from EVM, Tron, TON, Stellar, Bitcoin-family(BTC, LTC, BCH, Dash) and XPUB keys.";
+"watch_address.watch_data.placeholder" = "Вставьте свой публичный адрес или XPUB";
+"watch_address.watch_data.description" = "Поддерживаются адреса из сетей EVM, Tron, TON, Stellar, Bitcoin-семейства (BTC, LTC, BCH, Dash) и XPUB-ключи.";
 "watch_address.choose_blockchain" = "Выбрать блокчейн";
 "watch_address.choose_coin" = "Выберите токен";
 
@@ -2281,9 +2281,9 @@
 "purchase.period.description1.1" = "Скидка на первый месяц.";
 "purchase.period.description2" = "Вы можете отменить подписку App Store в любое время.";
 "purchase.lifetime.description" = "-";
-"purchase.agree" = "By upgrading your account, you agree to the %@ and %@.";
-"purchase.agree.terms_of_service" = "Terms of Use";
-"purchase.agree.privacy_policy" = "Privacy Policy";
+"purchase.agree" = "Оформляя подписку, вы соглашаетесь с %@ и %@.";
+"purchase.agree.terms_of_service" = "Условия использования";
+"purchase.agree.privacy_policy" = "Политика конфиденциальности";
 
 "purchases.period.button.try" = "Получите 7 дней БЕСПЛАТНО";
 "purchases.period.button.subscribe" = "Подписаться";
@@ -2303,7 +2303,7 @@
 // Address Checker
 
 "address_checker.title" = "Проверка адреса";
-"address_checker.recipient_check" = "Recipient Check";
+"address_checker.recipient_check" = "Проверка получателя";
 "address_checker.recipient_check.description" = "Проверяет адрес получателя на наличие рисков перед отправкой.";
 "address_checker.check_address" = "Проверить адрес";
 "address_checker.check_address.description" = "Позволяет проверить адрес на наличие санкций и в базах черных списков.";
@@ -2312,7 +2312,7 @@
 
 "check_address.sanctions_check" = "Sanction Check";
 "check_address.coin_blacklist_check" = "%@ Blacklist Check";
-"check_address.on_blockchain" = "on %@";
+"check_address.on_blockchain" = "на %@";
 "check_address.chainalysis.description" = "Chainalysis — это аналитическая платформа для блокчейна, предоставляющая инструменты для отслеживания, расследования и оценки рисков криптовалютных адресов. Помогает выявлять адреса, связанные с санкциями, мошенничеством и другими противоправными действиями.";
 "check_address.hashdit.description" = "HashDit — это платформа безопасности, позволяющая проверять криптовалютные адреса на предмет рисков, включая санкции и наличие в черных списках. Помогает пользователям избегать взаимодействия с потенциально вредоносными или заблокированными адресами.";
-"check_address.coin_blacklist.description" = "Allows you to verify whether a wallet address is blacklisted by %@ (%@). If an address is blacklisted, any %@ tokens associated with it may be frozen, making them inaccessible and non-transferable. This check helps users avoid interacting with high-risk or restricted addresses.";
+"check_address.coin_blacklist.description" = "Позволяет проверить, занесён ли криптовалютный адрес в чёрный список %@ (%@). Если адрес находится в списке, все связанные с ним токены %@ могут быть заморожены, сделав их недоступными и непереводимыми. Эта проверка помогает избежать взаимодействия с адресами с высоким уровнем риска или ограничениями.";
