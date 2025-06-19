@@ -350,7 +350,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.token.frozen.info.title" = "Tempo de congelamento";
 "balance.token.frozen.info.description" = "Texto de Descrição Congelada";
 "balance.token.account.inactive.title" = "Conta Não Ativa";
-"balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens, but balances won’t update until activated.";
+"balance.token.account.inactive.description" = "Novas carteiras TRON exigem um depósito mínimo de 1 TRX para serem ativadas. Carteiras inativas podem armazenar e receber tokens, mas os saldos não serão atualizados até que a ativação ocorra.";
 
 // Account switcher
 
@@ -663,7 +663,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "swap.liquidity_fee" = "Taxa de Liquidez";
 "swap.outbound_fee" = "Taxa de Saída";
 "swap.total_fee" = "Total de tarifas";
-"swap.thorchain.slip_protection" = "Slip protection unavailable";
+"swap.thorchain.slip_protection" = "Proteção contra slippage indisponível";
 "swap.thorchain.slip_protection.description" = "O slippage mínimo para habilitar a proteção nesta troca é de %@.";
 
 // Swap Advanced Settings
@@ -2068,8 +2068,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "watch_address.error.not_supported" = "Formato de endereço não suportado";
 "watch_address.error.non_public_key" = "Não é permitido observar por chave privada";
 "watch_address.error.not_supported_derived_type" = "Tipo derivado não suportado";
-"watch_address.watch_data.placeholder" = "Paste your public address or XPUB";
-"watch_address.watch_data.description" = "Supports addresses from EVM, Tron, TON, Stellar, Bitcoin-family(BTC, LTC, BCH, Dash) and XPUB keys.";
+"watch_address.watch_data.placeholder" = "Cole seu endereço público ou chave XPUB";
+"watch_address.watch_data.description" = "Compatível com endereços das redes EVM, Tron, TON, Stellar, da família Bitcoin (BTC, LTC, BCH, Dash) e com chaves XPUB.";
 "watch_address.choose_blockchain" = "Escolha Blockchain";
 "watch_address.choose_coin" = "Escolher Moedas";
 
