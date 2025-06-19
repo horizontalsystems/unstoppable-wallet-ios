@@ -207,8 +207,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Stellar Secret Key
 
-"stellar_secret_key.title" = "Stellar Secret Key";
-"stellar_secret_key.tap_to_show" = "Tap to show secret key";
+"stellar_secret_key.title" = "Clave secreta de Stellar";
+"stellar_secret_key.tap_to_show" = "Toca para mostrar la clave secreta";
 
 // Extended Key
 
@@ -326,10 +326,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Token Balance Page
 "balance.token.locked" = "Bloqueado";
-"balance.token.locked.stellar.title" = "Locked Amount";
-"balance.token.locked.stellar.description" = "The Stellar network locks 1 XLM to activate the wallet and 0.5 XLM as a reserve for each token activated in your wallet.";
-"balance.token.locked.stellar.description.currently_locked" = "Currently locked:";
-"balance.token.locked.stellar.description.wallet_activation" = "Wallet activation";
+"balance.token.locked.stellar.title" = "Monto bloqueado";
+"balance.token.locked.stellar.description" = "La red Stellar bloquea 1 XLM para activar la billetera y 0.5 XLM como reserva por cada token activado en tu billetera.";
+"balance.token.locked.stellar.description.currently_locked" = "Actualmente bloqueado:";
+"balance.token.locked.stellar.description.wallet_activation" = "Activación de la billetera";
 "balance.token.locked.info.title" = "Timelock";
 "balance.token.locked.info.description" = "El remitente envió estos fondos con un bloqueo del gasto que expirará en la fecha mostrada.\n\nNo te preocupes, los Bitcoins recibidos ya son tuyos, pero hasta que el período de bloqueo expire, no puedes gastarlos en la red Bitcoin.";
 "balance.token.not_relayed" = "Transmisión";
@@ -338,10 +338,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.token.processing" = "Procesando";
 "balance.token.processing.info.title" = "Detenido";
 "balance.token.processing.info.description" = "Transacciones con esta cantidad todavía sincronizadas. Y cuando se confirmen, estos tokens estarán disponibles para gastos";
-"balance.token.transparent" = "Transparent";
-"balance.token.transparent.info.title" = "Transparent amount";
-"balance.token.transparent.info.description" = "Transparent balance can't be used in our wallet for now. But this money can be spend by other wallets with t-address supports";
-"balance.token.shield" = "Shield";
+"balance.token.transparent" = "Transparente";
+"balance.token.transparent.info.title" = "Monto transparente";
+"balance.token.transparent.info.description" = "Por ahora, el saldo transparente no se puede utilizar en nuestra billetera. Sin embargo, estos fondos pueden ser gastados desde otras billeteras que soportan direcciones t.";
+"balance.token.shield" = "Blindado";
 
 "balance.token.staked" = "Llevado";
 "balance.token.staked.info.title" = "Título tomado";
@@ -350,7 +350,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.token.frozen.info.title" = "Título congelado";
 "balance.token.frozen.info.description" = "Texto de descripción congelada";
 "balance.token.account.inactive.title" = "Cuenta No Activa";
-"balance.token.account.inactive.description" = "Las nuevas billeteras TRON requieren un depósito de al menos 1 TRX para activarse. Las billeteras inactivas pueden mantener y recibir tokens, pero no corregirán los saldos hasta que se activen.";
+"balance.token.account.inactive.description" = "Las nuevas billeteras TRON requieren un depósito de al menos 1 TRX para activarse. Las billeteras inactivas pueden recibir y almacenar tokens, pero los saldos no se actualizan hasta que se activen.";
 
 // Account switcher
 
@@ -378,7 +378,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "deposit.qr_code_description.watch" = "Ver dirección de %@";
 "deposit.account" = "Account";
 "deposit.trustline" = "Trustline";
-"deposit.trustline.not_activated" = "Not activated";
+"deposit.trustline.not_activated" = "No activada";
 "deposit.activate" = "Activar";
 
 "deposit.amount" = "Importe";
@@ -395,8 +395,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "deposit.used_addresses" = "Direcciones Utilizadas";
 "deposit.not_active.title" = "Dirección no activa";
 "deposit.not_active.tron_description" = "Las cuentas recién creadas en la cadena de bloques TRON están inactivas y no se pueden consultar ni explorar. Necesitan ser activadas.\n\nPara activar una cuenta inactiva, transfiera tokens TRX o TRC-10 a su dirección. Para activar una nueva cuenta en la cadena Tron, se requiere una cuota de 1 TRX";
-"deposit.stellar.inactive_asset.title" = "Activate Token";
-"deposit.stellar.inactive_asset.description" = "To receive %@, you need to activate the token. The Stellar network requires a trustline to be established for each token. Without it, your wallet cannot receive %@ — the transaction will be rejected and the funds will not be delivered.";
+"deposit.stellar.inactive_asset.title" = "Activar token";
+"deposit.stellar.inactive_asset.description" = "Para recibir %@, debes activar el token. La red Stellar requiere que se establezca una línea de confianza para cada token. Sin ella, tu billetera no podrá recibir %@ — la transacción será rechazada y los fondos no se entregarán.";
 
 
 "deposit.used_addresses.title" = "Direcciones Utilizadas";
@@ -490,7 +490,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.confirmation.action" = "Action";
 "send.confirmation.status" = "Estado";
 "send.confirmation.status.failed" = "Failed";
-"send.confirmation.send_to_own" = "Transaction will send to own address";
+"send.confirmation.send_to_own" = "La transacción se enviará a la propia dirección";
 
 "send.confirmation.sync_failed" = "Error de sincronización";
 "send.confirmation.invalid_data" = "Datos no válidos";
@@ -521,8 +521,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.amount_error.min_required_balance" = "Min. requerido restante %@";
 "send.amount_warning.coin_needed_for_fee" = "Considere dejar algún %@ en el saldo para poder pagar futuras transacciones.";
 "send.token.insufficient_fee_alert" = "Las comisiones de transacción para %@ (%@) pagado en %@. Es necesario %@.";
-"send.stellar.no_trustline.title" = "No Asset Trustline";
-"send.stellar.no_trustline.description" = "Recipient account does not have established trustline with the asset being sent.";
+"send.stellar.no_trustline.title" = "Sin línea de confianza para el activo";
+"send.stellar.no_trustline.description" = "La cuenta del destinatario no tiene establecida una línea de confianza para el activo enviado.";
 
 "send.fee_settings.amount_error.balance.title" = "Saldo insuficiente";
 "send.fee_settings.amount_error.balance" = "El saldo actual de %@ es inferior al monto requerido para procesar esta transacción, incluida la tarifa de transacción.";
@@ -663,8 +663,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.liquidity_fee" = "Tarifa de liquidez";
 "swap.outbound_fee" = "Tarifa de salida";
 "swap.total_fee" = "Tarifa Total";
-"swap.thorchain.slip_protection" = "Slip protection unavailable";
-"swap.thorchain.slip_protection.description" = "Minimum slippage to enable slip protection for this swap is %@.";
+"swap.thorchain.slip_protection" = "Protección contra deslizamiento no disponible";
+"swap.thorchain.slip_protection.description" = "El deslizamiento mínimo para habilitar la protección contra deslizamiento en este intercambio es de %@.";
 
 // Swap Advanced Settings
 
@@ -784,8 +784,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.time_period.6m" = "6 Meses";
 "market.time_period.1y" = "1 Año";
 "market.time_period.2y" = "2 Años";
-"market.time_period.3y" = "3 Years";
-"market.time_period.4y" = "4 Years";
+"market.time_period.3y" = "3 Años";
+"market.time_period.4y" = "4 Años";
 "market.time_period.5y" = "5 Años";
 "market.time_period.1d.short" = "1D";
 "market.time_period.1w.short" = "1S";
@@ -795,8 +795,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.time_period.6m.short" = "6M";
 "market.time_period.1y.short" = "1A";
 "market.time_period.2y.short" = "2A";
-"market.time_period.3y.short" = "3Y";
-"market.time_period.4y.short" = "4Y";
+"market.time_period.3y.short" = "3A";
+"market.time_period.4y.short" = "4A";
 "market.time_period.5y.short" = "5A";
 
 "market.project_has_no_coin" = "Este proyecto no tiene una moneda";
@@ -1012,7 +1012,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_overview.genesis_date" = "Fecha de inicio";
 "coin_overview.trading_volume" = "Volumen de Comercio";
 
-"coin.overview.roi.header" = "Relative Change vs %@";
+"coin.overview.roi.header" = "Variación relativa frente a %@";
 "coin_overview.roi.hour24" = "24 Horas";
 "coin_overview.roi.day1" = "1 Día";
 "coin_overview.roi.day7" = "1 Semana";
@@ -1036,10 +1036,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Coin Page -> Analytics -> Select Performance
 
-"coin_overview.performance.select_coins.title" = "Select Coins";
-"coin_overview.performance.period" = "Period %d";
-"coin_overview.performance.assets" = "Selected Assets";
-"coin_overview.performance.only_3" = "Choose only 3 assets";
+"coin_overview.performance.select_coins.title" = "Seleccionar monedas";
+"coin_overview.performance.period" = "Período %d";
+"coin_overview.performance.assets" = "Activos seleccionados";
+"coin_overview.performance.only_3" = "Selecciona solo 3 activos";
 
 // Coin Page -> Analytics
 "technical_advice.over.bought" = "sobrecomprado";
@@ -1299,19 +1299,19 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "transactions.mint" = "Mint";
 "transactions.approve" = "Aprobar";
 "transactions.swap" = "Cambiado";
-"transactions.shield" = "Shield";
-"transactions.unshield" = "Unshield";
+"transactions.shield" = "Blindado";
+"transactions.unshield" = "Financiador: %@";
 "transactions.transfer" = "Transferencia";
 "transactions.contract_call" = "Llamada de Contrato";
 "transactions.contract_creation" = "Creación de Contrato";
 "transactions.external_call" = "Llamada externa";
 "transactions.contract_deploy" = "Despliegue del contrato";
-"transactions.account_created" = "Account Created";
+"transactions.account_created" = "Cuenta Creada";
 
 "transactions.to" = "A %@";
 "transactions.from" = "Desde %@";
 "transactions.funder" = "Funder: %@";
-"transactions.account" = "Account: %@";
+"transactions.account" = "Cuenta: %@";
 
 "transactions.multiple" = "Múltiples";
 
@@ -1330,7 +1330,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "transactions.unknown_transaction.description" = "La transacción no se puede analizar";
 
 "transactions.ton_transaction.title" = "Transacción Ton";
-"transactions.stellar_transaction.title" = "Stellar Transaction";
+"transactions.stellar_transaction.title" = "Transacción Stellar";
 "transactions.contract" = "Contrato";
 
 // Transaction Info
@@ -1391,7 +1391,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.contact_us" = "Contáctenos";
 "settings.social_networks.label" = "Be Unstoppable";
 "settings.get_your_tokens" = "Get UWT Tokens";
-"settings.dapp_connection" = "DApp Connection";
+"settings.dapp_connection" = "Conexión DApp";
 "settings.app_settings" = "Ajustes de app";
 
 // Settings -> Base Currency
@@ -1646,7 +1646,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "appearance.launch_screen.watchlist" = "Lista de Seguimiento";
 
 "appearance.balance_tab" = "Balance Tab";
-"appearance.balance_tab.footer" = "The “Hide Buttons” configuration hides the Send, Receive, and Swap buttons on Balance tab.";
+"appearance.balance_tab.footer" = "La configuración \"Ocultar botones\" oculta los botones de Enviar, Recibir e Intercambiar en la pestaña de Saldo.";
 "appearance.hide_buttons" = "Ocultar Botones";
 "appearance.balance_value" = "Valor de Saldo";
 "appearance.balance_value.coin_fiat" = "Moneda / Fiat";
@@ -1816,7 +1816,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Education
 
 "education.title" = "Education";
-"quiz.title" = "Crypto Quiz";
+"quiz.title" = "Cuestionario de Cripto";
 
 // Add Token
 
@@ -1964,8 +1964,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "private_keys.title" = "Claves privadas";
 "private_keys.evm_private_key" = "Clave Privada EVM";
 "private_keys.evm_private_key.description" = "Otorga un control total sobre criptomonedas basadas en Ethereum, Binance Smart Chain, etc dentro de cada monedero correspondiente.";
-"private_keys.stellar_secret_key" = "Stellar Secret Key";
-"private_keys.stellar_secret_key.description" = "Grants full control over Stellar assets within the respective wallet.";
+"private_keys.stellar_secret_key" = "Clave secreta de Stellar";
+"private_keys.stellar_secret_key.description" = "Otorga control total sobre los activos Stellar dentro de la billetera correspondiente.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
 "private_keys.bip32_root_key.description" = "Otorga total control sobre los activos de la respectiva cartera.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
@@ -2069,8 +2069,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "watch_address.error.not_supported" = "El formato de dirección no está soportado";
 "watch_address.error.non_public_key" = "No se permite la visualización por clave privada";
 "watch_address.error.not_supported_derived_type" = "El tipo derivado no está soportado";
-"watch_address.watch_data.placeholder" = "Introduzca su EVM, TRON, TON o Dirección Pública (Bitcoin, Litecoin, Bitcoin Cash) o Cuenta xPubKey.";
-"watch_address.watch_data.description" = "We support addresses from Bitcoin, Ethereum, TON, and many other blockchains.";
+"watch_address.watch_data.placeholder" = "Pega tu dirección pública o clave XPUB";
+"watch_address.watch_data.description" = "Compatible con direcciones de EVM, Tron, TON, Stellar, la familia Bitcoin (BTC, LTC, BCH, Dash) y claves XPUB.";
 "watch_address.choose_blockchain" = "Elegir Blockchain";
 "watch_address.choose_coin" = "Elegir moneda";
 
@@ -2215,7 +2215,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "premium.cell.try" = "Try for FREE";
 
 "mini_app.cell.title" = "MiniApp";
-"mini_app.cell.description" = "Pass tests, complete tasks, and earn tokens!";
+"mini_app.cell.description" = "Supera pruebas, completa tareas y gana tokens.";
 
 "purchases.title" = "Premium";
 "purchases.description" = "Choose the plan";
@@ -2274,7 +2274,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "purchase.period.year" = "year";
 "purchase.period.month" = "month";
 "purchase.period.description1" = "Enjoy the first 7 days FREE.";
-"purchase.period.description1.1" = "Enjoy discount for first month.";
+"purchase.period.description1.1" = "Disfruta de un descuento durante el primer mes.";
 "purchase.period.description2" = "You can cancel your App Store subscription at any time.";
 "purchase.lifetime.description" = "Puedes adquirir una suscripción de pago único sin restricciones";
 "purchase.agree" = "Al actualizar tu cuenta, aceptas los %@ y la %@.";
@@ -2298,17 +2298,17 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Address Checker
 
-"address_checker.title" = "Address Checker";
-"address_checker.recipient_check" = "Recipient Check";
-"address_checker.recipient_check.description" = "Checks the recipient address for risks before sending.";
-"address_checker.check_address" = "Check Address";
-"address_checker.check_address.description" = "Allows you to check an address against sanctions and blacklist databases.";
+"address_checker.title" = "Verificador de direcciones";
+"address_checker.recipient_check" = "Verificación de destinatario";
+"address_checker.recipient_check.description" = "Verifica la dirección del destinatario en busca de riesgos antes de enviar.";
+"address_checker.check_address" = "Verificar dirección";
+"address_checker.check_address.description" = "Permite verificar una dirección contra bases de datos de sanciones y listas negras.";
 
 // Check Address
 
 "check_address.sanctions_check" = "Sanctions Check";
 "check_address.coin_blacklist_check" = "%@ Blacklist Check";
-"check_address.on_blockchain" = "on %@";
-"check_address.chainalysis.description" = "Chainalysis is a blockchain analysis platform that provides tools for tracking, investigating, and assessing the risk of cryptocurrency addresses. It helps identify addresses associated with sanctions, fraud, and other illicit activities.";
-"check_address.hashdit.description" = "HashDit is a security platform that allows users to check wallet addresses for risks such as sanctions and blacklist status. It helps users avoid interacting with potentially malicious or blocked addresses.";
-"check_address.coin_blacklist.description" = "Allows you to verify whether a wallet address is blacklisted by %@ (%@). If an address is blacklisted, any %@ tokens associated with it may be frozen, making them inaccessible and non-transferable. This check helps users avoid interacting with high-risk or restricted addresses.";
+"check_address.on_blockchain" = "en %@";
+"check_address.chainalysis.description" = "Chainalysis es una plataforma de análisis blockchain que proporciona herramientas para rastrear, investigar y evaluar el riesgo de direcciones de criptomonedas. Ayuda a identificar direcciones asociadas a sanciones, fraudes y otras actividades ilícitas.";
+"check_address.hashdit.description" = "HashDit es una plataforma de seguridad que permite a los usuarios verificar direcciones de billeteras para detectar riesgos como sanciones o inclusión en listas negras. Ayuda a los usuarios a evitar interactuar con direcciones potencialmente maliciosas o bloqueadas.";
+"check_address.coin_blacklist.description" = "Permite verificar si una dirección de billetera está incluida en la lista negra por %@ (%@). Si una dirección está en la lista negra, los tokens %@ asociados a ella pueden ser congelados, quedando inaccesibles e intransferibles. Esta verificación ayuda a los usuarios a evitar interactuar con direcciones de alto riesgo o restringidas.";
