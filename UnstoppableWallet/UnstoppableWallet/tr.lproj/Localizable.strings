@@ -350,7 +350,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.token.frozen.info.title" = "Frozen title";
 "balance.token.frozen.info.description" = "Frozen Description Text";
 "balance.token.account.inactive.title" = "Hesap aktif değil";
-"balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens, but balances won’t update until activated.";
+"balance.token.account.inactive.description" = "Yeni TRON cüzdanlarının aktif hale gelmesi için en az 1 TRX yatırılması gerekir. Aktif olmayan cüzdanlar token tutabilir ve alabilir, ancak bakiyeler aktive edilene kadar güncellenmez.";
 
 // Account switcher
 
@@ -2072,8 +2072,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "watch_address.error.not_supported" = "Adres formatı desteklenmiyor";
 "watch_address.error.non_public_key" = "Özel anahtarla izlemeye izin verilmiyor";
 "watch_address.error.not_supported_derived_type" = "Türetilmiş tür desteklenmiyor";
-"watch_address.watch_data.placeholder" = "Paste your public address or XPUB";
-"watch_address.watch_data.description" = "Supports addresses from EVM, Tron, TON, Stellar, Bitcoin-family(BTC, LTC, BCH, Dash) and XPUB keys.";
+"watch_address.watch_data.placeholder" = "Genel adresinizi veya XPUB anahtarınızı yapıştırın";
+"watch_address.watch_data.description" = "EVM, Tron, TON, Stellar, Bitcoin ailesi (BTC, LTC, BCH, Dash) ve XPUB anahtarlarını destekler.";
 "watch_address.choose_blockchain" = "Blockchain Seç";
 "watch_address.choose_coin" = "Kripto Parayı Seç";
 
