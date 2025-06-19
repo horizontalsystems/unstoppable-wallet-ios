@@ -348,7 +348,7 @@
 "balance.token.frozen.info.title" = "겨울왕국 제목";
 "balance.token.frozen.info.description" = "고정된 설명 텍스트";
 "balance.token.account.inactive.title" = "계정이 활성화되지 않음";
-"balance.token.account.inactive.description" = "새로운 TRON 지갑은 활성화되기 위해 최소 1 TRX의 입금이 필요합니다. 비활성 지갑은 토큰을 보유하고 받을 수는 있지만, 활성화될 때까지 잔액이 정확히 표시되지 않습니다.";
+"balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens, but balances won’t update until activated.";
 
 // Account switcher
 
