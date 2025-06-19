@@ -205,7 +205,7 @@
 
 // Stellar Secret Key
 
-"stellar_secret_key.title" = "Stellar Secret Key";
+"stellar_secret_key.title" = "Stellar 비밀 키";
 "stellar_secret_key.tap_to_show" = "탭하여 비밀 키 표시";
 
 // Extended Key
@@ -348,7 +348,7 @@
 "balance.token.frozen.info.title" = "겨울왕국 제목";
 "balance.token.frozen.info.description" = "고정된 설명 텍스트";
 "balance.token.account.inactive.title" = "계정이 활성화되지 않음";
-"balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens, but balances won’t update until activated.";
+"balance.token.account.inactive.description" = "새로운 TRON 지갑은 활성화를 위해 최소 1 TRX의 입금이 필요합니다. 비활성 지갑도 토큰을 보관하고 수신할 수 있지만, 활성화 전까지 잔액은 업데이트되지 않습니다.";
 
 // Account switcher
 
@@ -1036,7 +1036,7 @@
 // Coin Page -> Analytics -> Select Performance
 
 "coin_overview.performance.select_coins.title" = "코인 선택";
-"coin_overview.performance.period" = "Period %d";
+"coin_overview.performance.period" = "기간 %d";
 "coin_overview.performance.assets" = "선택한 자산";
 "coin_overview.performance.only_3" = "자산은 최대 3개까지만 선택 가능합니다";
 
@@ -1299,18 +1299,18 @@
 "transactions.approve" = "승인됨";
 "transactions.swap" = "스왑됨";
 "transactions.shield" = "차폐(Shield)";
-"transactions.unshield" = "Unshield";
+"transactions.unshield" = "차폐 해제";
 "transactions.transfer" = "전송";
 "transactions.contract_call" = "계약 콜";
 "transactions.contract_creation" = "계약 생성";
 "transactions.external_call" = "외부 콜";
 "transactions.contract_deploy" = "계약 배포";
-"transactions.account_created" = "Account Created";
+"transactions.account_created" = "계정 생성됨";
 
 "transactions.to" = "%@에게";
 "transactions.from" = "%@부터";
 "transactions.funder" = "자금 제공자: %@";
-"transactions.account" = "Account: %@";
+"transactions.account" = "계정: %@";
 
 "transactions.multiple" = "다수";
 
@@ -1329,7 +1329,7 @@
 "transactions.unknown_transaction.description" = "트랜잭션을 구문 분석할 수 없습니다";
 
 "transactions.ton_transaction.title" = "Ton 거래";
-"transactions.stellar_transaction.title" = "Stellar Transaction";
+"transactions.stellar_transaction.title" = "Stellar 트랜잭션";
 "transactions.contract" = "계약";
 
 // Transaction Info
@@ -1390,7 +1390,7 @@
 "settings.contact_us" = "문의하기";
 "settings.social_networks.label" = "Be Unstoppable";
 "settings.get_your_tokens" = "Get UWT Tokens";
-"settings.dapp_connection" = "DApp Connection";
+"settings.dapp_connection" = "디앱 연결";
 "settings.app_settings" = "앱 설정";
 
 // Settings -> Base Currency
@@ -1816,7 +1816,7 @@
 // Education
 
 "education.title" = "Education";
-"quiz.title" = "Crypto Quiz";
+"quiz.title" = "암호화폐 퀴즈";
 
 // Add Token
 
@@ -1964,7 +1964,7 @@
 "private_keys.title" = "개인 암호";
 "private_keys.evm_private_key" = "EVM 개인 키";
 "private_keys.evm_private_key.description" = "각 지갑 내에서 EVM 기반 암호화, 즉 이더리움, 바이낸스 스마트 체인 등에 대한 완전한 제어 권한을 부여합니다.";
-"private_keys.stellar_secret_key" = "Stellar Secret Key";
+"private_keys.stellar_secret_key" = "Stellar 비밀 키";
 "private_keys.stellar_secret_key.description" = "해당 지갑 내 Stellar 자산에 대한 완전한 제어 권한을 부여합니다.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
 "private_keys.bip32_root_key.description" = "각 지갑의 자산에 대한 모든 권한을 부여합니다.";
@@ -2069,8 +2069,8 @@
 "watch_address.error.not_supported" = "주소 형식은 지원되지 않습니다";
 "watch_address.error.non_public_key" = "개인 키로 감시하는 것은 허용되지 않습니다";
 "watch_address.error.not_supported_derived_type" = "파생된 유형은 지원되지 않습니다";
-"watch_address.watch_data.placeholder" = "Paste your public address or XPUB";
-"watch_address.watch_data.description" = "Supports addresses from EVM, Tron, TON, Stellar, Bitcoin-family(BTC, LTC, BCH, Dash) and XPUB keys.";
+"watch_address.watch_data.placeholder" = "공개 주소 또는 XPUB를 붙여넣으세요";
+"watch_address.watch_data.description" = "EVM, Tron, TON, Stellar, Bitcoin 계열(BTC, LTC, BCH, Dash) 및 XPUB 키의 주소를 지원합니다.";
 "watch_address.choose_blockchain" = "블록체인 선택";
 "watch_address.choose_coin" = "코인 선택";
 
@@ -2214,7 +2214,7 @@
 "premium.cell.description.key" = "Premium";
 "premium.cell.try" = "Try for FREE";
 
-"mini_app.cell.title" = "MiniApp";
+"mini_app.cell.title" = "미니앱";
 "mini_app.cell.description" = "테스트를 통과하고 과제를 완료하여 토큰을 획득하세요!";
 
 "purchases.title" = "Premium";
@@ -2306,9 +2306,9 @@
 
 // Check Address
 
-"check_address.sanctions_check" = "Sanctions Check";
-"check_address.coin_blacklist_check" = "%@ Blacklist Check";
-"check_address.on_blockchain" = "on %@";
+"check_address.sanctions_check" = "제재 목록 확인";
+"check_address.coin_blacklist_check" = "%@ 블랙리스트 확인";
+"check_address.on_blockchain" = "%@ 기준";
 "check_address.chainalysis.description" = "Chainalysis는 암호화폐 주소를 추적, 조사하고 위험을 평가할 수 있는 도구를 제공하는 블록체인 분석 플랫폼입니다. 이 플랫폼은 제재, 사기, 기타 불법 활동과 관련된 주소를 식별하는 데 도움을 줍니다.";
 "check_address.hashdit.description" = "HashDit는 사용자들이 지갑 주소에 대한 제재나 블랙리스트 위험을 확인할 수 있도록 해주는 보안 플랫폼입니다. 사용자가 악의적이거나 차단된 주소와의 상호작용을 피하도록 도와줍니다.";
-"check_address.coin_blacklist.description" = "Allows you to verify whether a wallet address is blacklisted by %@ (%@). If an address is blacklisted, any %@ tokens associated with it may be frozen, making them inaccessible and non-transferable. This check helps users avoid interacting with high-risk or restricted addresses.";
+"check_address.coin_blacklist.description" = "이 기능을 통해 지갑 주소가 %@에 의해 블랙리스트에 등록되어 있는지 확인할 수 있습니다 (%@ 기준). 주소가 블랙리스트에 포함된 경우, 해당 주소와 연결된 %@ 토큰은 동결되어 사용할 수 없고, 전송도 불가능할 수 있습니다. 이 검사는 사용자가 위험하거나 제한된 주소와 상호작용하지 않도록 도와줍니다.";
