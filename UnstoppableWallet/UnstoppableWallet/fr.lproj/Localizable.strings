@@ -350,7 +350,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.token.frozen.info.title" = "Titre gelé";
 "balance.token.frozen.info.description" = "Texte de description gelé";
 "balance.token.account.inactive.title" = "Compte non actif";
-"balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens, but balances won’t update until activated.";
+"balance.token.account.inactive.description" = "Supports addresses from EVM, Tron, TON, Stellar, Bitcoin-family(BTC, LTC, BCH, Dash), and XPUB keys.";
 
 // Account switcher
 
@@ -2068,8 +2068,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "watch_address.error.not_supported" = "Le format de l'adresse n'est pas pris en charge";
 "watch_address.error.non_public_key" = "La surveillance par clé privée n'est pas autorisée";
 "watch_address.error.not_supported_derived_type" = "Le type dérivé n'est pas pris en charge";
-"watch_address.watch_data.placeholder" = "Paste your public address or XPUB";
-"watch_address.watch_data.description" = "Supports addresses from EVM, Tron, TON, Stellar, Bitcoin-family(BTC, LTC, BCH, Dash) and XPUB keys.";
+"watch_address.watch_data.placeholder" = "Collez votre adresse publique ou votre clé XPUB";
+"watch_address.watch_data.description" = "Compatible avec les adresses des réseaux EVM, Tron, TON, Stellar, la famille Bitcoin (BTC, LTC, BCH, Dash) et les clés XPUB.";
 "watch_address.choose_blockchain" = "Choisir la blockchain";
 "watch_address.choose_coin" = "Choisir la pièce";
 
