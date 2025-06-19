@@ -350,7 +350,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.token.frozen.info.title" = "Título congelado";
 "balance.token.frozen.info.description" = "Texto de descripción congelada";
 "balance.token.account.inactive.title" = "Cuenta No Activa";
-"balance.token.account.inactive.description" = "Las nuevas billeteras TRON requieren un depósito de al menos 1 TRX para activarse. Las billeteras inactivas pueden mantener y recibir tokens, pero no corregirán los saldos hasta que se activen.";
+"balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens, but balances won’t update until activated.";
 
 // Account switcher
 
