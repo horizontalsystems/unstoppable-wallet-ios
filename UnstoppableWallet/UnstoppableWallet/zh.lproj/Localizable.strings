@@ -350,7 +350,7 @@
 "balance.token.frozen.info.title" = "冰冻标题";
 "balance.token.frozen.info.description" = "冻结描述文本";
 "balance.token.account.inactive.title" = "帐户未激活";
-"balance.token.account.inactive.description" = "新的TRON钱包需要至少1TRX的存款才能激活。 非活动钱包可以持有并接收代币，但在激活之前不会纠正余额。";
+"balance.token.account.inactive.description" = "New TRON wallets require a deposit of at least 1 TRX to become active. Inactive wallets can hold and receive tokens, but balances won’t update until activated.";
 
 // Account switcher
 
