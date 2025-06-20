@@ -69,21 +69,22 @@ extension BlockchainType {
             .ethereum,
             .binanceSmartChain,
             .tron,
-            .ton,
-            .stellar,
             .polygon,
+            .stellar,
             .arbitrumOne,
             .optimism,
             .base,
             .avalanche,
-            .gnosis,
-            .zkSync,
             .zcash,
+            .zkSync,
+            .ton,
+            .gnosis,
             .bitcoinCash,
             .litecoin,
             .dash,
-            .ecash,
             .fantom,
+            .ecash,
+
         ]
 
         return blockchainTypes.firstIndex(of: self) ?? Int.max
