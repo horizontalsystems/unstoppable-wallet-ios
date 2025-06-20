@@ -75,13 +75,13 @@ struct MainSettingsView: View {
                         }
                     }
 
-//                    if AppConfig.donateEnabled {
-                    Spacer().frame(height: .margin32)
+                    if AppConfig.donateEnabled {
+                        Spacer().frame(height: .margin32)
 
-                    ListSection {
-                        donate()
+                        ListSection {
+                            donate()
+                        }
                     }
-//                    }
 
                     Spacer().frame(height: .margin32)
 
