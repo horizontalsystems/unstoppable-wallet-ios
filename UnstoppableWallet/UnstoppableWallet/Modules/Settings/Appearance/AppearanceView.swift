@@ -4,6 +4,8 @@ import SwiftUI
 struct AppearanceView: View {
     @StateObject var viewModel = AppearanceViewModel()
 
+    @Environment(\.openURL) private var openURL
+
     @State private var themeSelectorPresented = false
     @State private var priceChangeSelectorPresented = false
     @State private var launchScreenSelectorPresented = false
@@ -36,11 +38,10 @@ struct AppearanceView: View {
                 }
 
                 ListSection {
-                    NavigationRow(spacing: .margin8, destination: {
-                        LanguageSettingsModule.view()
-                            .onFirstAppear {
-                                stat(page: .appearance, event: .open(page: .language))
-                            }
+                    ClickableRow(spacing: .margin8, action: {
+                        if let url = URL(string: UIApplication.openSettingsURLString) {
+                            openURL(url)
+                        }
                     }) {
                         Text("settings.language".localized).textBody()
                         Spacer()
