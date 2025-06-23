@@ -43,6 +43,10 @@ class WalletViewModelNew: WalletListViewModel {
         }
     }
 
+    override var conversionCoinUids: Set<String> {
+        Set(balanceConversionManager.conversionTokens.map(\.coin.uid))
+    }
+
     override func _syncTotalItem() {
         var total: Decimal = 0
         var expired = false

@@ -13,7 +13,7 @@ class LanguageManager {
     }
 
     init() {
-        currentLanguage = LanguageManager.storedCurrentLanguage ?? LanguageManager.preferredLanguage ?? LanguageManager.fallbackLanguage
+        currentLanguage = LanguageManager.preferredLanguage ?? LanguageManager.fallbackLanguage
     }
 
     var currentLanguageDisplayName: String? {
