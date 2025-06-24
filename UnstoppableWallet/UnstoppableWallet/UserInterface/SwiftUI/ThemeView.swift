@@ -110,25 +110,31 @@ struct ThemeNavigationView<Content: View>: View {
 }
 
 struct ThemeNavigationStack<Content: View>: View {
-    let path: Binding<NavigationPath>
-    @ViewBuilder let content: Content
+    private let content: Content
+    private let path: Binding<NavigationPath>?
 
-    var body: some View {
-        NavigationStack(path: path) {
-            content
-        }
-        .accentColor(.themeGray)
+    init(@ViewBuilder content: () -> Content) {
+        self.content = content()
+        path = nil
     }
-}
 
-struct ThemeNavigationStack2<Content: View>: View {
-    // let path: Binding<NavigationPath>
-    @ViewBuilder let content: Content
+    init(path: Binding<NavigationPath>, @ViewBuilder content: () -> Content) {
+        self.content = content()
+        self.path = path
+    }
 
     var body: some View {
-        NavigationStack {
-            content
+        Group {
+            if let path {
+                NavigationStack(path: path) {
+                    content
+                }
+            } else {
+                NavigationStack {
+                    content
+                }
+            }
         }
-        .accentColor(.themeGray)
+        .tint(.themeGray)
     }
 }

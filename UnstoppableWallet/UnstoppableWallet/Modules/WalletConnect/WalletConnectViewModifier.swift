@@ -2,7 +2,6 @@ import SwiftUI
 
 struct WalletConnectViewModifier: ViewModifier {
     @ObservedObject var viewModel: WalletConnectViewModifierModel
-    let statPage: StatPage
 
     @State private var switchAccountPresented = false
 
@@ -49,7 +48,7 @@ struct WalletConnectViewModifier: ViewModifier {
                         onDismiss: { viewModel.walletConnectNotSupportedAccountType = nil }
                     )
                 }
-                .modifier(BackupRequiredViewModifier(account: $viewModel.walletConnectBackupRequiredAccount, statPage: statPage) { account in
+                .modifier(BackupRequiredViewModifier.backupPrompt(account: $viewModel.walletConnectBackupRequiredAccount) { account in
                     "wallet_connect.unbackuped_account.description".localized(account.name)
                 })
 

@@ -3400,6 +3400,22 @@
 		D3E36BDF2E0567D3007F99CA /* CoverView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BDD2E0567D0007F99CA /* CoverView.swift */; };
 		D3E36BE12E05887B007F99CA /* MainBadgeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BE02E05887B007F99CA /* MainBadgeViewModel.swift */; };
 		D3E36BE22E05887B007F99CA /* MainBadgeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BE02E05887B007F99CA /* MainBadgeViewModel.swift */; };
+		D3E36BE42E097761007F99CA /* CreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BE32E09775A007F99CA /* CreateAccountView.swift */; };
+		D3E36BE52E097761007F99CA /* CreateAccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BE32E09775A007F99CA /* CreateAccountView.swift */; };
+		D3E36BE72E097768007F99CA /* CreateAccountViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BE62E097768007F99CA /* CreateAccountViewModelNew.swift */; };
+		D3E36BE82E097768007F99CA /* CreateAccountViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BE62E097768007F99CA /* CreateAccountViewModelNew.swift */; };
+		D3E36BEA2E0A8488007F99CA /* ManageAccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BE92E0A8482007F99CA /* ManageAccountsView.swift */; };
+		D3E36BEB2E0A8488007F99CA /* ManageAccountsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BE92E0A8482007F99CA /* ManageAccountsView.swift */; };
+		D3E36BED2E0A8496007F99CA /* ManageAccountsViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BEC2E0A848F007F99CA /* ManageAccountsViewModelNew.swift */; };
+		D3E36BEE2E0A8496007F99CA /* ManageAccountsViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BEC2E0A848F007F99CA /* ManageAccountsViewModelNew.swift */; };
+		D3E36BF02E0BCEBE007F99CA /* TermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BEF2E0BCEBB007F99CA /* TermsView.swift */; };
+		D3E36BF12E0BCEBE007F99CA /* TermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BEF2E0BCEBB007F99CA /* TermsView.swift */; };
+		D3E36BF32E0BCED1007F99CA /* TermsViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BF22E0BCED1007F99CA /* TermsViewModelNew.swift */; };
+		D3E36BF42E0BCED1007F99CA /* TermsViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BF22E0BCED1007F99CA /* TermsViewModelNew.swift */; };
+		D3E36BF62E0BF5F6007F99CA /* CreateAccountViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BF52E0BF5F4007F99CA /* CreateAccountViewModifier.swift */; };
+		D3E36BF72E0BF5F6007F99CA /* CreateAccountViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BF52E0BF5F4007F99CA /* CreateAccountViewModifier.swift */; };
+		D3E36BF92E0BF5F9007F99CA /* CreateAccountViewModifierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BF82E0BF5F9007F99CA /* CreateAccountViewModifierModel.swift */; };
+		D3E36BFA2E0BF5F9007F99CA /* CreateAccountViewModifierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BF82E0BF5F9007F99CA /* CreateAccountViewModifierModel.swift */; };
 		D3E41E082C244CE200499F50 /* TonSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D3E41E072C244CE200499F50 /* TonSwift */; };
 		D3E41E0A2C25850000499F50 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E41E092C25850000499F50 /* MailView.swift */; };
 		D3E41E0B2C25850000499F50 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E41E092C25850000499F50 /* MailView.swift */; };
@@ -5135,6 +5151,14 @@
 		D3E36BDA2E04296B007F99CA /* NoPasscodeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoPasscodeView.swift; sourceTree = "<group>"; };
 		D3E36BDD2E0567D0007F99CA /* CoverView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoverView.swift; sourceTree = "<group>"; };
 		D3E36BE02E05887B007F99CA /* MainBadgeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainBadgeViewModel.swift; sourceTree = "<group>"; };
+		D3E36BE32E09775A007F99CA /* CreateAccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountView.swift; sourceTree = "<group>"; };
+		D3E36BE62E097768007F99CA /* CreateAccountViewModelNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModelNew.swift; sourceTree = "<group>"; };
+		D3E36BE92E0A8482007F99CA /* ManageAccountsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageAccountsView.swift; sourceTree = "<group>"; };
+		D3E36BEC2E0A848F007F99CA /* ManageAccountsViewModelNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageAccountsViewModelNew.swift; sourceTree = "<group>"; };
+		D3E36BEF2E0BCEBB007F99CA /* TermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsView.swift; sourceTree = "<group>"; };
+		D3E36BF22E0BCED1007F99CA /* TermsViewModelNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewModelNew.swift; sourceTree = "<group>"; };
+		D3E36BF52E0BF5F4007F99CA /* CreateAccountViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModifier.swift; sourceTree = "<group>"; };
+		D3E36BF82E0BF5F9007F99CA /* CreateAccountViewModifierModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModifierModel.swift; sourceTree = "<group>"; };
 		D3E41E092C25850000499F50 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		D3F9B0242BE38AF1009FFA95 /* RegularSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularSendView.swift; sourceTree = "<group>"; };
 		D3F9B02A2BE3A9A1009FFA95 /* MultiSwapSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSwapSendView.swift; sourceTree = "<group>"; };
@@ -6298,6 +6322,8 @@
 		11B356E7705CB0B09907CAE5 /* ManageAccounts */ = {
 			isa = PBXGroup;
 			children = (
+				D3E36BEC2E0A848F007F99CA /* ManageAccountsViewModelNew.swift */,
+				D3E36BE92E0A8482007F99CA /* ManageAccountsView.swift */,
 				11B359F01A63378AFAAEE113 /* ManageAccountsModule.swift */,
 				11B350911E00460DA8925165 /* ManageAccountsService.swift */,
 				11B35A8342513D5834B2145A /* ManageAccountsViewModel.swift */,
@@ -6453,6 +6479,10 @@
 		11B3581D97669C8038485FAE /* CreateAccount */ = {
 			isa = PBXGroup;
 			children = (
+				D3E36BF82E0BF5F9007F99CA /* CreateAccountViewModifierModel.swift */,
+				D3E36BF52E0BF5F4007F99CA /* CreateAccountViewModifier.swift */,
+				D3E36BE62E097768007F99CA /* CreateAccountViewModelNew.swift */,
+				D3E36BE32E09775A007F99CA /* CreateAccountView.swift */,
 				11B358145A0D9F93ACBC0301 /* CreateAccountModule.swift */,
 				11B3592A5323E54639864FC7 /* CreateAccountService.swift */,
 				11B35B56BE1EA9891306D6EB /* CreateAccountViewModel.swift */,
@@ -6906,6 +6936,8 @@
 		11B35E1B51E123DEB9F71E96 /* Terms */ = {
 			isa = PBXGroup;
 			children = (
+				D3E36BF22E0BCED1007F99CA /* TermsViewModelNew.swift */,
+				D3E36BEF2E0BCEBB007F99CA /* TermsView.swift */,
 				11B35B462980B0617E11FB05 /* TermsModule.swift */,
 				11B351DAF31FBE0834EBC066 /* TermsService.swift */,
 				11B353010933750F8F920E1E /* TermsViewModel.swift */,
@@ -9933,6 +9965,7 @@
 				D384058B218317DF007D50AD /* LanguageManager.swift in Sources */,
 				D384058C218317DF007D50AD /* LocalStorage.swift in Sources */,
 				D023D26B2A24CD16004F65B0 /* BaseTronAdapter.swift in Sources */,
+				D3E36BFA2E0BF5F9007F99CA /* CreateAccountViewModifierModel.swift in Sources */,
 				D384058F218317DF007D50AD /* SecuritySettingsModule.swift in Sources */,
 				D0DEFF052BD1253C004C9DF0 /* BitcoinFeeSettingsViewModel.swift in Sources */,
 				D3840592218317DF007D50AD /* SecuritySettingsViewModel.swift in Sources */,
@@ -10093,6 +10126,7 @@
 				11B35E65714776557A46B9D3 /* MarkdownHeader3Cell.swift in Sources */,
 				D3E36BDF2E0567D3007F99CA /* CoverView.swift in Sources */,
 				11B35983B0C3D4EFC115043A /* MarkdownImageCell.swift in Sources */,
+				D3E36BE52E097761007F99CA /* CreateAccountView.swift in Sources */,
 				11B35F9F489F4B358FCCE893 /* MarkdownParser.swift in Sources */,
 				11B35A52C122A756C0A43604 /* PrimaryButtonCell.swift in Sources */,
 				11B351D834D8858391B32866 /* HighlightedDescriptionCell.swift in Sources */,
@@ -10131,6 +10165,7 @@
 				58AAAAD2D124AA0323629B0E /* SwapApproveModule.swift in Sources */,
 				58AAAFDBA357FC699C07C334 /* AdditionalDataWithErrorView.swift in Sources */,
 				D3B73E2B2BDBC61D0067429D /* EvmPreSendHandler.swift in Sources */,
+				D3E36BEE2E0A8496007F99CA /* ManageAccountsViewModelNew.swift in Sources */,
 				58AAA9053CD38F13CD944E2A /* SwapApproveAmountView.swift in Sources */,
 				58AAAFE644C1B236B9714B47 /* CoinSelectViewModel.swift in Sources */,
 				50701ACF25B041E600EDE51B /* JailbreakTestManager.swift in Sources */,
@@ -10348,6 +10383,7 @@
 				58AAA4B64068280C684EE5C1 /* MetricChartModule.swift in Sources */,
 				6BB14F7C2C05FBAD00E879B2 /* MarketTvlViewModel.swift in Sources */,
 				58AAA48ED47FD19F368385FA /* MetricChartViewController.swift in Sources */,
+				D3E36BEB2E0A8488007F99CA /* ManageAccountsView.swift in Sources */,
 				58AAAE020611495B6294ED96 /* MarketGlobalModule.swift in Sources */,
 				D3DB51B32BD912A00091BBDB /* MarketInfo.swift in Sources */,
 				11B3598D4F303310AC88FE90 /* BaseCurrencySettingsModule.swift in Sources */,
@@ -11113,6 +11149,7 @@
 				6B1D8E582DEADF7F00A52B01 /* SpinnerComponent.swift in Sources */,
 				6B1D8E592DEADF7F00A52B01 /* SubtitleHeaderFooterView.swift in Sources */,
 				6B1D8E5A2DEADF7F00A52B01 /* SecondaryCircleButton.swift in Sources */,
+				D3E36BF62E0BF5F6007F99CA /* CreateAccountViewModifier.swift in Sources */,
 				6B1D8E5B2DEADF7F00A52B01 /* SwitchComponent.swift in Sources */,
 				6B1D8E5C2DEADF7F00A52B01 /* BadgeComponent.swift in Sources */,
 				6B1D8E5D2DEADF7F00A52B01 /* BottomDescriptionHeaderFooterView.swift in Sources */,
@@ -11175,6 +11212,7 @@
 				6B6E13E72DEDABDE007F4A39 /* DimCoverView.swift in Sources */,
 				6B6E13E82DEDABDE007F4A39 /* HUDTheme.swift in Sources */,
 				6B6E13E92DEDABDE007F4A39 /* HUDWindow.swift in Sources */,
+				D3E36BF12E0BCEBE007F99CA /* TermsView.swift in Sources */,
 				6B6E13EA2DEDABDE007F4A39 /* ActionTimer.swift in Sources */,
 				6B6E13EB2DEDABDE007F4A39 /* TopHUDContentView.swift in Sources */,
 				6B6E13EC2DEDABDE007F4A39 /* HUDContainerView.swift in Sources */,
@@ -11223,6 +11261,7 @@
 				11B358D35D2270FD78C6EF82 /* AutoLockPeriod.swift in Sources */,
 				ABC9AF95141EA649524FBF88 /* CheckboxStyle.swift in Sources */,
 				ABC9A79CFCEBAC442A1B791D /* BackupAppModule.swift in Sources */,
+				D3E36BE82E097768007F99CA /* CreateAccountViewModelNew.swift in Sources */,
 				ABC9A09E0B614E5B4E32B7F9 /* InputTextView.swift in Sources */,
 				ABC9ABE3F52BF2307533D8FB /* InputTextRow.swift in Sources */,
 				ABC9A36D3A4EEABF6EA6DBA0 /* Shake.swift in Sources */,
@@ -11233,6 +11272,7 @@
 				11B356562D2B4F5BCAB4FC80 /* AboutView.swift in Sources */,
 				11B35E98AE2272A7E37C41C5 /* AboutViewModel.swift in Sources */,
 				ABC9A346AC191059BAFAB977 /* BackupNameView.swift in Sources */,
+				D3E36BF42E0BCED1007F99CA /* TermsViewModelNew.swift in Sources */,
 				ABC9A2D3D28955B8AD82AFC3 /* BackupTypeView.swift in Sources */,
 				ABC9AD1F6A6A7C97E4120F2F /* BackupAppViewModel.swift in Sources */,
 				ABC9A7EF7780159AC6B946FC /* BackupPasswordView.swift in Sources */,
@@ -11506,6 +11546,7 @@
 				D384067B21831B3D007D50AD /* LocalStorage.swift in Sources */,
 				D384067E21831B3D007D50AD /* SecuritySettingsModule.swift in Sources */,
 				D023D26A2A24CD16004F65B0 /* BaseTronAdapter.swift in Sources */,
+				D3E36BF92E0BF5F9007F99CA /* CreateAccountViewModifierModel.swift in Sources */,
 				D384068121831B3D007D50AD /* SecuritySettingsViewModel.swift in Sources */,
 				D0DEFF042BD1253C004C9DF0 /* BitcoinFeeSettingsViewModel.swift in Sources */,
 				D384068221831B3D007D50AD /* BitcoinAdapter.swift in Sources */,
@@ -11666,6 +11707,7 @@
 				11B35AACC2CDF424714B33D3 /* NSAttributedString.swift in Sources */,
 				D3E36BDE2E0567D3007F99CA /* CoverView.swift in Sources */,
 				11B35DDB41FFB254E91B6019 /* MarkdownTextCell.swift in Sources */,
+				D3E36BE42E097761007F99CA /* CreateAccountView.swift in Sources */,
 				11B352FA9E8AA06F3DB87C3E /* MarkdownHeader3Cell.swift in Sources */,
 				11B352E503309454C976ED03 /* MarkdownImageCell.swift in Sources */,
 				11B3533E67189A921FCF1537 /* MarkdownParser.swift in Sources */,
@@ -11704,6 +11746,7 @@
 				58AAA64C3C4E4FA0E4213000 /* SwapApproveModule.swift in Sources */,
 				58AAAAC61D3D8AD1AC4BEEAE /* AdditionalDataWithErrorView.swift in Sources */,
 				D3B73E2A2BDBC61D0067429D /* EvmPreSendHandler.swift in Sources */,
+				D3E36BED2E0A8496007F99CA /* ManageAccountsViewModelNew.swift in Sources */,
 				58AAACD7A57AA93736CDB54D /* SwapApproveAmountView.swift in Sources */,
 				58AAA29F80AC65D37BD1D289 /* CoinSelectViewModel.swift in Sources */,
 				50701ACE25B041E600EDE51B /* JailbreakTestManager.swift in Sources */,
@@ -11921,6 +11964,7 @@
 				58AAAAE64799E5DD40D4C54A /* MetricChartModule.swift in Sources */,
 				58AAA0CA81351C80C4F2E168 /* MetricChartViewController.swift in Sources */,
 				6BB14F7B2C05FBAC00E879B2 /* MarketTvlViewModel.swift in Sources */,
+				D3E36BEA2E0A8488007F99CA /* ManageAccountsView.swift in Sources */,
 				58AAA4109DE36F8934808DE0 /* MarketGlobalModule.swift in Sources */,
 				11B352840E06275F96EFFCDB /* BaseCurrencySettingsModule.swift in Sources */,
 				D3DB51B22BD912A00091BBDB /* MarketInfo.swift in Sources */,
@@ -12686,6 +12730,7 @@
 				6B1D8ED02DEADF7F00A52B01 /* SpinnerComponent.swift in Sources */,
 				6B1D8ED12DEADF7F00A52B01 /* SubtitleHeaderFooterView.swift in Sources */,
 				6B1D8ED22DEADF7F00A52B01 /* SecondaryCircleButton.swift in Sources */,
+				D3E36BF72E0BF5F6007F99CA /* CreateAccountViewModifier.swift in Sources */,
 				6B1D8ED32DEADF7F00A52B01 /* SwitchComponent.swift in Sources */,
 				6B1D8ED42DEADF7F00A52B01 /* BadgeComponent.swift in Sources */,
 				6B1D8ED52DEADF7F00A52B01 /* BottomDescriptionHeaderFooterView.swift in Sources */,
@@ -12748,6 +12793,7 @@
 				6B6E14012DEDABDE007F4A39 /* DimCoverView.swift in Sources */,
 				6B6E14022DEDABDE007F4A39 /* HUDTheme.swift in Sources */,
 				6B6E14032DEDABDE007F4A39 /* HUDWindow.swift in Sources */,
+				D3E36BF02E0BCEBE007F99CA /* TermsView.swift in Sources */,
 				6B6E14042DEDABDE007F4A39 /* ActionTimer.swift in Sources */,
 				6B6E14052DEDABDE007F4A39 /* TopHUDContentView.swift in Sources */,
 				6B6E14062DEDABDE007F4A39 /* HUDContainerView.swift in Sources */,
@@ -12796,6 +12842,7 @@
 				11B3586F6BFCA16BDFD5921D /* DuressModeModule.swift in Sources */,
 				11B353577381981235B90A82 /* ThemeListStyle.swift in Sources */,
 				11B354DC983042AD922339A6 /* DuressModeSelectView.swift in Sources */,
+				D3E36BE72E097768007F99CA /* CreateAccountViewModelNew.swift in Sources */,
 				11B3511DAD3881FDE2419A64 /* AutoLockPeriod.swift in Sources */,
 				ABC9A2035980B70E1C0790A8 /* CheckboxStyle.swift in Sources */,
 				ABC9A99A45187C36D48840F8 /* BackupAppModule.swift in Sources */,
@@ -12806,6 +12853,7 @@
 				ABC9A12A4D114A2E4F4C711A /* ActivityView.swift in Sources */,
 				11B355901DFF6BAE9130D60E /* AppStatusView.swift in Sources */,
 				11B354865DA8CA6A1442D577 /* AppStatusViewModel.swift in Sources */,
+				D3E36BF32E0BCED1007F99CA /* TermsViewModelNew.swift in Sources */,
 				11B3575F30FFFDFB4F0AF174 /* AboutView.swift in Sources */,
 				11B35D55957E21D3388880CF /* AboutViewModel.swift in Sources */,
 				ABC9AB215D081976FC2E294F /* BackupNameView.swift in Sources */,

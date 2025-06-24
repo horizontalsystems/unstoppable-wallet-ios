@@ -12,6 +12,8 @@ struct MainView: View {
     @State private var manageAccountsPresented = false
     @State private var transactionFilterPresented = false
 
+    @State private var backupAccount: Account?
+
     var body: some View {
         ThemeNavigationStack(path: $path) {
             TabView(selection: $viewModel.selectedTab) {
@@ -64,14 +66,14 @@ struct MainView: View {
             MarketAdvancedSearchView(isPresented: $advancedSearchPresented)
         }
         .sheet(isPresented: $manageAccountsPresented) {
-            // TODO: handle ICreateAccountListener logic -> switch ManageAccounts to SwiftUI
-            ThemeNavigationView {
-                ManageAccountsView(mode: .switcher)
-                    .navigationTitle("settings_manage_keys.title".localized)
-                    .ignoresSafeArea()
-                    .onFirstAppear {
-                        stat(page: .balance, event: .open(page: .manageWallets))
-                    }
+            ThemeNavigationStack {
+                ManageAccountsView(isPresented: $manageAccountsPresented) { account in
+                    manageAccountsPresented = false
+                    backupAccount = account
+                }
+                .onFirstAppear {
+                    stat(page: .balance, event: .open(page: .manageWallets))
+                }
             }
         }
         .sheet(isPresented: $transactionFilterPresented) {
@@ -105,6 +107,7 @@ struct MainView: View {
                 onDismiss: { viewModel.accountsLostPresented = false }
             )
         }
+        .modifier(BackupRequiredViewModifier.backupPromptAfterCreate(account: $backupAccount))
     }
 
     @ToolbarContentBuilder func toolbar() -> some ToolbarContent {

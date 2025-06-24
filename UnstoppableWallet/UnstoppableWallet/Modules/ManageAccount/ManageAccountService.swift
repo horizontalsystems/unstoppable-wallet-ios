@@ -28,11 +28,7 @@ class ManageAccountService {
 
     private var newName: String
 
-    init?(accountId: String, accountManager: AccountManager, cloudBackupManager: CloudBackupManager, passcodeManager: PasscodeManager) {
-        guard let account = accountManager.account(id: accountId) else {
-            return nil
-        }
-
+    init(account: Account, accountManager: AccountManager, cloudBackupManager: CloudBackupManager, passcodeManager: PasscodeManager) {
         self.account = account
         self.accountManager = accountManager
         self.cloudBackupManager = cloudBackupManager

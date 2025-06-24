@@ -16,7 +16,7 @@ extension ManageAccountsModule {
     }
 }
 
-struct ManageAccountsView: UIViewControllerRepresentable {
+struct ManageAccountsView2: UIViewControllerRepresentable {
     typealias UIViewControllerType = UIViewController
 
     private let mode: ManageAccountsModule.Mode

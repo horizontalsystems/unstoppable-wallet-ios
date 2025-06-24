@@ -38,6 +38,7 @@ struct InputTextView: View {
                 placeholder,
                 text: text
             )
+            .textContentType(.oneTimeCode) // the only way to disable strong password suggestions
             .accentColor(.themeYellow)
             .frame(height: 20) // TODO: How to remove this? (When change from Secure to TextField it's change height)
         } else {
