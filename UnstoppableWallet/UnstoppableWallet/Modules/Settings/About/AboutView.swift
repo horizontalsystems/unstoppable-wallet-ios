@@ -74,8 +74,7 @@ struct AboutView: View {
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             .sheet(isPresented: $termsPresented) {
-                TermsModule.view()
-                    .ignoresSafeArea()
+                TermsView(isPresented: $termsPresented)
             }
             .sheet(item: $linkUrl) { url in
                 SFSafariView(url: url)

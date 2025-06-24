@@ -204,12 +204,29 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func manageWallets() -> some View {
         NavigationRow(spacing: .margin8, destination: {
-            ManageAccountsView(mode: .manage)
+            ManageAccountsView2(mode: .manage)
                 .navigationTitle("settings_manage_keys.title".localized)
                 .ignoresSafeArea()
                 .onFirstAppear {
                     stat(page: .settings, event: .open(page: .manageWallets))
                 }
+        }) {
+            HStack(spacing: .margin16) {
+                Image("wallet_24").themeIcon()
+                Text("settings.manage_accounts".localized).textBody()
+            }
+
+            Spacer()
+
+            if viewModel.manageWalletsAlert {
+                Image.warningIcon
+            }
+
+            Image.disclosureIcon
+        }
+
+        NavigationRow(spacing: .margin8, destination: {
+            ManageAccountsView()
         }) {
             HStack(spacing: .margin16) {
                 Image("wallet_24").themeIcon()
@@ -293,7 +310,7 @@ struct MainSettingsView: View {
 
             Image.disclosureIcon
         }
-        .modifier(WalletConnectViewModifier(viewModel: walletConnectViewModifierModel, statPage: .settings))
+        .modifier(WalletConnectViewModifier(viewModel: walletConnectViewModifierModel))
     }
 
     @ViewBuilder private func tonConnect() -> some View {

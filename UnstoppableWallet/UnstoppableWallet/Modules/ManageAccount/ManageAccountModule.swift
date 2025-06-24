@@ -1,16 +1,14 @@
-
+import SwiftUI
 import UIKit
 
 enum ManageAccountModule {
-    static func viewController(accountId: String, sourceViewController: ManageAccountsViewController) -> UIViewController? {
-        guard let service = ManageAccountService(
-            accountId: accountId,
+    static func viewController(account: Account) -> UIViewController {
+        let service = ManageAccountService(
+            account: account,
             accountManager: Core.shared.accountManager,
             cloudBackupManager: Core.shared.cloudBackupManager,
             passcodeManager: Core.shared.passcodeManager
-        ) else {
-            return nil
-        }
+        )
 
         let accountRestoreWarningFactory = AccountRestoreWarningFactory(
             userDefaultsStorage: Core.shared.userDefaultsStorage,
@@ -20,8 +18,24 @@ enum ManageAccountModule {
             service: service,
             accountRestoreWarningFactory: accountRestoreWarningFactory
         )
-        let viewController = ManageAccountViewController(viewModel: viewModel, sourceViewController: sourceViewController)
+        let viewController = ManageAccountViewController(viewModel: viewModel)
 
         return ThemeNavigationController(rootViewController: viewController)
     }
+}
+
+struct ManageAccountView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    private let account: Account
+
+    init(account: Account) {
+        self.account = account
+    }
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        ManageAccountModule.viewController(account: account)
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

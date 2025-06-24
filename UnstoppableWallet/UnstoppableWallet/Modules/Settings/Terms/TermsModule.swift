@@ -12,11 +12,11 @@ enum TermsModule {
     }
 
     static func view() -> some View {
-        TermsView()
+        TermsView2()
     }
 }
 
-struct TermsView: UIViewControllerRepresentable {
+struct TermsView2: UIViewControllerRepresentable {
     typealias UIViewControllerType = UIViewController
 
     func makeUIViewController(context _: Context) -> UIViewController {

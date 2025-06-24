@@ -126,12 +126,12 @@ class ManageAccountsViewController: ThemeViewController {
     }
 
     private func onTapEdit(accountId: String) {
-        guard let viewController = ManageAccountModule.viewController(accountId: accountId, sourceViewController: self) else {
-            return
-        }
+        // guard let viewController = ManageAccountModule.viewController(accountId: accountId, sourceViewController: self) else {
+        //     return
+        // }
 
-        present(viewController, animated: true)
-        stat(page: .manageWallets, event: .open(page: .manageWallet))
+        // present(viewController, animated: true)
+        // stat(page: .manageWallets, event: .open(page: .manageWallet))
     }
 
     private func sync(viewState: ManageAccountsViewModel.ViewState) {

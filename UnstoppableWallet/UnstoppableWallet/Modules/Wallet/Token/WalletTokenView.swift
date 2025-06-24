@@ -48,7 +48,7 @@ struct WalletTokenView<AdditionalContent: View>: View {
         .sheet(isPresented: $chartPresented) {
             CoinPageView(coin: viewModel.wallet.coin)
         }
-        .modifier(BackupRequiredViewModifier(account: $viewModel.backupRequiredAccount, statPage: .tokenPage) { account in
+        .modifier(BackupRequiredViewModifier.backupPrompt(account: $viewModel.backupRequiredAccount) { account in
             "receive_alert.not_backed_up_description".localized(account.name, viewModel.wallet.coin.name)
         })
         .modifier(BalanceErrorViewModifier(viewModel: balanceErrorViewModifierModel))

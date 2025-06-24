@@ -18,11 +18,8 @@ class ManageAccountViewController: KeyboardAwareViewController {
     private var keyActions: [ManageAccountViewModel.KeyActionSection] = []
     private var isLoaded = false
 
-    private weak var sourceViewController: ManageAccountsViewController?
-
-    init(viewModel: ManageAccountViewModel, sourceViewController: ManageAccountsViewController) {
+    init(viewModel: ManageAccountViewModel) {
         self.viewModel = viewModel
-        self.sourceViewController = sourceViewController
 
         super.init(scrollViews: [tableView])
 
@@ -80,11 +77,7 @@ class ManageAccountViewController: KeyboardAwareViewController {
         subscribe(disposeBag, viewModel.confirmDeleteCloudBackupSignal) { [weak self] in self?.confirmDeleteCloudBackup(manualBackedUp: $0) }
         subscribe(disposeBag, viewModel.cloudBackupDeletedSignal) { [weak self] in self?.cloudBackupDeleted($0) }
         subscribe(disposeBag, viewModel.openUnlinkSignal) { [weak self] in self?.openUnlink(account: $0) }
-        subscribe(disposeBag, viewModel.finishSignal) { [weak self] in
-            self?.dismiss(animated: true) { [weak self] in
-                self?.sourceViewController?.handleDismiss()
-            }
-        }
+        subscribe(disposeBag, viewModel.finishSignal) { [weak self] in self?.dismiss(animated: true) }
 
         tableView.buildSections()
 
