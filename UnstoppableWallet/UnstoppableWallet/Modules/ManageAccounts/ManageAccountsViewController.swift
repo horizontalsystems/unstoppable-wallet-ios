@@ -120,9 +120,9 @@ class ManageAccountsViewController: ThemeViewController {
     }
 
     private func onTapWatch() {
-        let viewController = WatchModule.viewController(sourceViewController: createAccountListener)
-        present(viewController, animated: true)
-        stat(page: .manageWallets, event: .open(page: .watchWallet))
+        // let viewController = WatchModule.viewController(sourceViewController: createAccountListener)
+        // present(viewController, animated: true)
+        // stat(page: .manageWallets, event: .open(page: .watchWallet))
     }
 
     private func onTapEdit(accountId _: String) {

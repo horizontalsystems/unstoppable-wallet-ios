@@ -13,6 +13,7 @@ struct WalletView: View {
     @State private var sendTokenListPresented = false
     @State private var swapPresented = false
     @State private var scanPresented = false
+    @State private var watchPresented = false
 
     var body: some View {
         ThemeView(isRoot: true) {
@@ -54,7 +55,7 @@ struct WalletView: View {
                         .buttonStyle(PrimaryButtonStyle(style: .gray))
 
                         Button(action: {
-                            // todo
+                            watchPresented = true
                         }) {
                             Text("onboarding.balance.watch".localized)
                         }
@@ -98,6 +99,12 @@ struct WalletView: View {
         }
         .sheet(item: $viewModel.receiveAccount) { account in
             ReceiveView(account: account).ignoresSafeArea()
+        }
+        .sheet(isPresented: $watchPresented) {
+            WatchView {
+                watchPresented = false
+            }
+            .ignoresSafeArea()
         }
         .modifier(CreateAccountViewModifier(viewModel: createAccountViewModifierModel))
         .modifier(RestoreAccountViewModifier(viewModel: restoreAccountViewModifierModel))

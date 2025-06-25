@@ -68,6 +68,16 @@ struct ManageAccountsView: View {
             ManageAccountView(account: account)
                 .ignoresSafeArea()
         }
+        .sheet(isPresented: $watchPresented) {
+            WatchView {
+                if isPresented {
+                    isPresented = false
+                } else {
+                    watchPresented = false
+                }
+            }
+            .ignoresSafeArea()
+        }
         .modifier(CreateAccountViewModifier(viewModel: createAccountViewModifierModel, onCreate: onCreate))
         .modifier(RestoreAccountViewModifier(viewModel: restoreAccountViewModifierModel, onRestore: isPresented ? { isPresented = false } : nil))
         .navigationBarTitle("settings_manage_keys.title".localized)
