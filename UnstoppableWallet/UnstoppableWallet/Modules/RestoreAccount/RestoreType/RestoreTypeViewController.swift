@@ -11,11 +11,12 @@ class RestoreTypeViewController: ThemeViewController {
     private var cancellables = Set<AnyCancellable>()
 
     private let tableView = SectionsTableView(style: .grouped)
-    private weak var returnViewController: UIViewController?
 
-    init(viewModel: RestoreTypeViewModel, returnViewController: UIViewController?) {
+    private let onRestore: () -> Void
+
+    init(viewModel: RestoreTypeViewModel, onRestore: @escaping () -> Void) {
         self.viewModel = viewModel
-        self.returnViewController = returnViewController
+        self.onRestore = onRestore
 
         super.init()
     }
@@ -150,10 +151,10 @@ class RestoreTypeViewController: ThemeViewController {
 
         switch type {
         case .recoveryOrPrivateKey:
-            viewController = RestoreModule.viewController(sourceViewController: self, returnViewController: returnViewController)
+            viewController = RestoreModule.viewController(onRestore: onRestore)
             stat(page: .importWallet, event: .open(page: .importWalletFromKey))
         case .cloudRestore:
-            viewController = RestoreCloudModule.viewController(sourceType: viewModel.sourceType, returnViewController: returnViewController)
+            viewController = RestoreCloudModule.viewController(sourceType: viewModel.sourceType, onRestore: onRestore)
             stat(page: isWallet ? .importWallet : .importFull, event: .open(page: isWallet ? .importWalletFromCloud : .importFullFromCloud))
         case .fileRestore:
             let documentPicker: UIDocumentPickerViewController
@@ -178,7 +179,7 @@ class RestoreTypeViewController: ThemeViewController {
     private func show(source: BackupModule.NamedSource) {
         let isWallet = viewModel.sourceType == .wallet
 
-        let viewController = RestorePassphraseModule.viewController(item: source, statPage: isWallet ? .importWalletFromFiles : .importFullFromFiles, returnViewController: returnViewController)
+        let viewController = RestorePassphraseModule.viewController(item: source, statPage: isWallet ? .importWalletFromFiles : .importFullFromFiles, onRestore: onRestore)
         navigationController?.pushViewController(viewController, animated: true)
     }
 

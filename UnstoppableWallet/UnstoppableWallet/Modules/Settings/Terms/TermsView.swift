@@ -6,11 +6,11 @@ struct TermsView: View {
     @StateObject private var viewModel = TermsViewModelNew()
 
     @Binding var isPresented: Bool
-    let onAccept: (() -> ())?
+    let onAccept: (() -> Void)?
 
     @State private var checkedIndices = Set<Int>()
 
-    init(isPresented: Binding<Bool>, onAccept: (() -> ())? = nil) {
+    init(isPresented: Binding<Bool>, onAccept: (() -> Void)? = nil) {
         _isPresented = isPresented
         self.onAccept = onAccept
     }

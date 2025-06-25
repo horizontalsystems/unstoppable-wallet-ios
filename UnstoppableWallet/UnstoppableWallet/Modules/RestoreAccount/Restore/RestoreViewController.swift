@@ -37,14 +37,14 @@ class RestoreViewController: KeyboardAwareViewController {
     private var inputsVisible = false
     private var isLoaded = false
 
-    private weak var returnViewController: UIViewController?
+    private let onRestore: () -> Void
 
-    init(advanced: Bool, viewModel: RestoreViewModel, mnemonicViewModel: RestoreMnemonicViewModel, privateKeyViewModel: RestorePrivateKeyViewModel, returnViewController: UIViewController?) {
+    init(advanced: Bool, viewModel: RestoreViewModel, mnemonicViewModel: RestoreMnemonicViewModel, privateKeyViewModel: RestorePrivateKeyViewModel, onRestore: @escaping () -> Void) {
         self.advanced = advanced
         self.viewModel = viewModel
         self.mnemonicViewModel = mnemonicViewModel
         self.privateKeyViewModel = privateKeyViewModel
-        self.returnViewController = returnViewController
+        self.onRestore = onRestore
 
         mnemonicInputCell = MnemonicInputCell(statPage: advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey, statEntity: .recoveryPhrase)
         privateKeyInputCell = TextInputCell(statPage: advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey, statEntity: .key)
@@ -195,7 +195,7 @@ class RestoreViewController: KeyboardAwareViewController {
     }
 
     @objc private func onTapAdvanced() {
-        let module = RestoreModule.viewController(advanced: true, returnViewController: returnViewController)
+        let module = RestoreModule.viewController(advanced: true, onRestore: onRestore)
         navigationController?.pushViewController(module, animated: true)
     }
 
@@ -236,7 +236,7 @@ class RestoreViewController: KeyboardAwareViewController {
     }
 
     private func openSelectCoins(accountName: String, accountType: AccountType) {
-        let viewController = RestoreSelectModule.viewController(accountName: accountName, accountType: accountType, statPage: advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey, returnViewController: returnViewController)
+        let viewController = RestoreSelectModule.viewController(accountName: accountName, accountType: accountType, statPage: advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey, onRestore: onRestore)
         navigationController?.pushViewController(viewController, animated: true)
     }
 
@@ -275,7 +275,7 @@ class RestoreViewController: KeyboardAwareViewController {
     }
 
     private func onTapNonStandardRestore() {
-        let viewController = RestoreNonStandardModule.viewController(sourceViewController: self, returnViewController: returnViewController)
+        let viewController = RestoreNonStandardModule.viewController(onRestore: onRestore)
         navigationController?.pushViewController(viewController, animated: true)
         stat(page: .importWalletFromKeyAdvanced, event: .open(page: .importWalletNonStandard))
     }

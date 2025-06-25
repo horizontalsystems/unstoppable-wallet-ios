@@ -173,10 +173,10 @@ class WalletViewController: ThemeViewController {
     }
 
     @objc func onTapRestore() {
-        let viewController = RestoreTypeModule.viewController(type: .wallet, sourceViewController: self)
-        present(viewController, animated: true)
+        // let viewController = RestoreTypeModule.viewController(type: .wallet, sourceViewController: self)
+        // present(viewController, animated: true)
 
-        stat(page: .balance, event: .open(page: .importWallet))
+        // stat(page: .balance, event: .open(page: .importWallet))
     }
 
     @objc func onTapWatch() {

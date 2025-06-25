@@ -2,7 +2,7 @@ import Foundation
 import UIKit
 
 enum RestorePassphraseModule {
-    static func viewController(item: BackupModule.NamedSource, statPage: StatPage, returnViewController: UIViewController?) -> UIViewController {
+    static func viewController(item: BackupModule.NamedSource, statPage: StatPage, onRestore: @escaping () -> Void) -> UIViewController {
         let service = RestorePassphraseService(
             iCloudManager: Core.shared.cloudBackupManager,
             appBackupProvider: Core.shared.appBackupProvider,
@@ -13,7 +13,7 @@ enum RestorePassphraseModule {
             restoredBackup: item
         )
         let viewModel = RestorePassphraseViewModel(service: service)
-        let controller = RestorePassphraseViewController(viewModel: viewModel, statPage: statPage, returnViewController: returnViewController)
+        let controller = RestorePassphraseViewController(viewModel: viewModel, statPage: statPage, onRestore: onRestore)
 
         return controller
     }

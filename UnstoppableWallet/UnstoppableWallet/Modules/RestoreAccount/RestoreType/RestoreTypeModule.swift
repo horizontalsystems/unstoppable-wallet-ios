@@ -1,17 +1,11 @@
-
+import SwiftUI
 import UIKit
 
 enum RestoreTypeModule {
-    static func viewController(type: BackupModule.Source.Abstract, sourceViewController: UIViewController? = nil, returnViewController: UIViewController? = nil) -> UIViewController {
+    static func viewController(type: BackupModule.Source.Abstract, onRestore: @escaping () -> Void) -> UIViewController {
         let viewModel = RestoreTypeViewModel(cloudAccountBackupManager: Core.shared.cloudBackupManager, sourceType: type)
-        let viewController = RestoreTypeViewController(viewModel: viewModel, returnViewController: returnViewController)
-        let module = ThemeNavigationController(rootViewController: viewController)
-
-        if Core.shared.termsManager.termsAccepted {
-            return module
-        } else {
-            return TermsModule.viewController(sourceViewController: sourceViewController, moduleToOpen: module)
-        }
+        let viewController = RestoreTypeViewController(viewModel: viewModel, onRestore: onRestore)
+        return ThemeNavigationController(rootViewController: viewController)
     }
 }
 
@@ -21,4 +15,17 @@ extension RestoreTypeModule {
         case cloudRestore
         case fileRestore
     }
+}
+
+struct RestoreTypeView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    let type: BackupModule.Source.Abstract
+    let onRestore: () -> Void
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        RestoreTypeModule.viewController(type: type, onRestore: onRestore)
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

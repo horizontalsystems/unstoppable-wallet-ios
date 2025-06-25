@@ -11,13 +11,13 @@ class RestoreSelectViewController: CoinToggleViewController {
     private let blockchainTokensView: BlockchainTokensView
     private let restoreSettingsView: RestoreSettingsView
 
-    private weak var returnViewController: UIViewController?
+    private let onRestore: () -> Void
 
-    init(viewModel: RestoreSelectViewModel, blockchainTokensView: BlockchainTokensView, restoreSettingsView: RestoreSettingsView, returnViewController: UIViewController?) {
+    init(viewModel: RestoreSelectViewModel, blockchainTokensView: BlockchainTokensView, restoreSettingsView: RestoreSettingsView, onRestore: @escaping () -> Void) {
         self.viewModel = viewModel
         self.blockchainTokensView = blockchainTokensView
         self.restoreSettingsView = restoreSettingsView
-        self.returnViewController = returnViewController
+        self.onRestore = onRestore
 
         super.init(viewModel: viewModel)
     }
@@ -47,7 +47,7 @@ class RestoreSelectViewController: CoinToggleViewController {
         subscribe(disposeBag, viewModel.disableBlockchainSignal) { [weak self] in self?.setToggle(on: false, uid: $0) }
         subscribe(disposeBag, viewModel.successSignal) { [weak self] in
             HudHelper.instance.show(banner: .imported)
-            (self?.returnViewController ?? self)?.dismiss(animated: true)
+            self?.onRestore()
         }
     }
 

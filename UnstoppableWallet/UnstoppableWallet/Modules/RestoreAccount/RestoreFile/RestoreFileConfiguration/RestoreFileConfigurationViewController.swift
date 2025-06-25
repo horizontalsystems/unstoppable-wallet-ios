@@ -9,16 +9,16 @@ class RestoreFileConfigurationViewController: KeyboardAwareViewController {
     private let viewModel: RestoreFileConfigurationViewModel
     private var cancellables = Set<AnyCancellable>()
 
-    private weak var returnViewController: UIViewController?
+    private let onRestore: () -> Void
 
     private let tableView = SectionsTableView(style: .grouped)
 
     private let gradientWrapperView = BottomGradientHolder()
     private let restoreButton = PrimaryButton()
 
-    init(viewModel: RestoreFileConfigurationViewModel, returnViewController: UIViewController?) {
+    init(viewModel: RestoreFileConfigurationViewModel, onRestore: @escaping () -> Void) {
         self.viewModel = viewModel
-        self.returnViewController = returnViewController
+        self.onRestore = onRestore
 
         super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
     }
@@ -71,7 +71,7 @@ class RestoreFileConfigurationViewController: KeyboardAwareViewController {
     }
 
     @objc private func onCancel() {
-        (returnViewController ?? self)?.dismiss(animated: true)
+        dismiss(animated: true)
     }
 
     private func finish(success: Bool) {
@@ -79,6 +79,7 @@ class RestoreFileConfigurationViewController: KeyboardAwareViewController {
 
         if success {
             HudHelper.instance.show(banner: .done)
+            onRestore()
         }
     }
 

@@ -114,9 +114,9 @@ class ManageAccountsViewController: ThemeViewController {
     }
 
     private func onTapRestore() {
-        let viewController = RestoreTypeModule.viewController(type: .wallet, sourceViewController: self, returnViewController: createAccountListener)
-        present(viewController, animated: true)
-        stat(page: .manageWallets, event: .open(page: .importWallet))
+        // let viewController = RestoreTypeModule.viewController(type: .wallet, sourceViewController: self, returnViewController: createAccountListener)
+        // present(viewController, animated: true)
+        // stat(page: .manageWallets, event: .open(page: .importWallet))
     }
 
     private func onTapWatch() {
@@ -125,7 +125,7 @@ class ManageAccountsViewController: ThemeViewController {
         stat(page: .manageWallets, event: .open(page: .watchWallet))
     }
 
-    private func onTapEdit(accountId: String) {
+    private func onTapEdit(accountId _: String) {
         // guard let viewController = ManageAccountModule.viewController(accountId: accountId, sourceViewController: self) else {
         //     return
         // }
