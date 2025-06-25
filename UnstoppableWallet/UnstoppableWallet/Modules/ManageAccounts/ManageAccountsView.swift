@@ -2,16 +2,16 @@ import SwiftUI
 
 struct ManageAccountsView: View {
     @StateObject private var viewModel = ManageAccountsViewModelNew()
-    @StateObject var createAccountViewModifierModel = CreateAccountViewModifierModel()
+    @StateObject var createAccountViewModifierModel = TermsAcceptedViewModifierModel()
+    @StateObject var restoreAccountViewModifierModel = TermsAcceptedViewModifierModel()
 
     @Binding private var isPresented: Bool
     private let onCreate: ((Account) -> Void)?
 
-    @State private var restorePresented = false
     @State private var watchPresented = false
     @State private var presentedAccount: Account?
 
-    init(isPresented: (Binding<Bool>)? = nil, onCreate: ((Account) -> Void)? = nil) {
+    init(isPresented: Binding<Bool>? = nil, onCreate: ((Account) -> Void)? = nil) {
         _isPresented = isPresented ?? .constant(false)
         self.onCreate = onCreate
     }
@@ -44,7 +44,7 @@ struct ManageAccountsView: View {
                     }
 
                     ClickableRow(action: {
-                        restorePresented = true
+                        restoreAccountViewModifierModel.handle()
                     }) {
                         Image("download_24").themeIcon(color: .themeJacob)
                         Text("onboarding.balance.import".localized).themeBody(color: .themeJacob)
@@ -69,6 +69,7 @@ struct ManageAccountsView: View {
                 .ignoresSafeArea()
         }
         .modifier(CreateAccountViewModifier(viewModel: createAccountViewModifierModel, onCreate: onCreate))
+        .modifier(RestoreAccountViewModifier(viewModel: restoreAccountViewModifierModel, onRestore: isPresented ? { isPresented = false } : nil))
         .navigationBarTitle("settings_manage_keys.title".localized)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {

@@ -3414,8 +3414,10 @@
 		D3E36BF42E0BCED1007F99CA /* TermsViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BF22E0BCED1007F99CA /* TermsViewModelNew.swift */; };
 		D3E36BF62E0BF5F6007F99CA /* CreateAccountViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BF52E0BF5F4007F99CA /* CreateAccountViewModifier.swift */; };
 		D3E36BF72E0BF5F6007F99CA /* CreateAccountViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BF52E0BF5F4007F99CA /* CreateAccountViewModifier.swift */; };
-		D3E36BF92E0BF5F9007F99CA /* CreateAccountViewModifierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BF82E0BF5F9007F99CA /* CreateAccountViewModifierModel.swift */; };
-		D3E36BFA2E0BF5F9007F99CA /* CreateAccountViewModifierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BF82E0BF5F9007F99CA /* CreateAccountViewModifierModel.swift */; };
+		D3E36BFD2E0C01F8007F99CA /* RestoreAccountViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BFC2E0C01F8007F99CA /* RestoreAccountViewModifier.swift */; };
+		D3E36BFF2E0C01F8007F99CA /* RestoreAccountViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BFC2E0C01F8007F99CA /* RestoreAccountViewModifier.swift */; };
+		D3E36C022E0C026E007F99CA /* TermsAcceptedViewModifierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36C012E0C026E007F99CA /* TermsAcceptedViewModifierModel.swift */; };
+		D3E36C032E0C026E007F99CA /* TermsAcceptedViewModifierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36C012E0C026E007F99CA /* TermsAcceptedViewModifierModel.swift */; };
 		D3E41E082C244CE200499F50 /* TonSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D3E41E072C244CE200499F50 /* TonSwift */; };
 		D3E41E0A2C25850000499F50 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E41E092C25850000499F50 /* MailView.swift */; };
 		D3E41E0B2C25850000499F50 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E41E092C25850000499F50 /* MailView.swift */; };
@@ -5158,7 +5160,8 @@
 		D3E36BEF2E0BCEBB007F99CA /* TermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsView.swift; sourceTree = "<group>"; };
 		D3E36BF22E0BCED1007F99CA /* TermsViewModelNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewModelNew.swift; sourceTree = "<group>"; };
 		D3E36BF52E0BF5F4007F99CA /* CreateAccountViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModifier.swift; sourceTree = "<group>"; };
-		D3E36BF82E0BF5F9007F99CA /* CreateAccountViewModifierModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModifierModel.swift; sourceTree = "<group>"; };
+		D3E36BFC2E0C01F8007F99CA /* RestoreAccountViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAccountViewModifier.swift; sourceTree = "<group>"; };
+		D3E36C012E0C026E007F99CA /* TermsAcceptedViewModifierModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAcceptedViewModifierModel.swift; sourceTree = "<group>"; };
 		D3E41E092C25850000499F50 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		D3F9B0242BE38AF1009FFA95 /* RegularSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularSendView.swift; sourceTree = "<group>"; };
 		D3F9B02A2BE3A9A1009FFA95 /* MultiSwapSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSwapSendView.swift; sourceTree = "<group>"; };
@@ -6479,7 +6482,6 @@
 		11B3581D97669C8038485FAE /* CreateAccount */ = {
 			isa = PBXGroup;
 			children = (
-				D3E36BF82E0BF5F9007F99CA /* CreateAccountViewModifierModel.swift */,
 				D3E36BF52E0BF5F4007F99CA /* CreateAccountViewModifier.swift */,
 				D3E36BE62E097768007F99CA /* CreateAccountViewModelNew.swift */,
 				D3E36BE32E09775A007F99CA /* CreateAccountView.swift */,
@@ -6936,6 +6938,7 @@
 		11B35E1B51E123DEB9F71E96 /* Terms */ = {
 			isa = PBXGroup;
 			children = (
+				D3E36C012E0C026E007F99CA /* TermsAcceptedViewModifierModel.swift */,
 				D3E36BF22E0BCED1007F99CA /* TermsViewModelNew.swift */,
 				D3E36BEF2E0BCEBB007F99CA /* TermsView.swift */,
 				11B35B462980B0617E11FB05 /* TermsModule.swift */,
@@ -7095,6 +7098,7 @@
 		11B35FEAD9772F1E11F3D767 /* RestoreAccount */ = {
 			isa = PBXGroup;
 			children = (
+				D3E36BFC2E0C01F8007F99CA /* RestoreAccountViewModifier.swift */,
 				11B35DF404FD931B249CCD2F /* RestoreMnemonic */,
 				11B35EA7836A26C7CFFA03A3 /* RestoreSelect */,
 				11B35BFC241C777F3CA3F372 /* Restore */,
@@ -9965,7 +9969,6 @@
 				D384058B218317DF007D50AD /* LanguageManager.swift in Sources */,
 				D384058C218317DF007D50AD /* LocalStorage.swift in Sources */,
 				D023D26B2A24CD16004F65B0 /* BaseTronAdapter.swift in Sources */,
-				D3E36BFA2E0BF5F9007F99CA /* CreateAccountViewModifierModel.swift in Sources */,
 				D384058F218317DF007D50AD /* SecuritySettingsModule.swift in Sources */,
 				D0DEFF052BD1253C004C9DF0 /* BitcoinFeeSettingsViewModel.swift in Sources */,
 				D3840592218317DF007D50AD /* SecuritySettingsViewModel.swift in Sources */,
@@ -10394,6 +10397,7 @@
 				D05E96A72A2627E5002CCD71 /* TronOutgoingTransactionRecord.swift in Sources */,
 				58AAA097F8417B30693547FE /* CoinPageMarkdownParser.swift in Sources */,
 				1A564BB34D0EAA2E8BE8B498 /* DeepLinkManager.swift in Sources */,
+				D3E36C032E0C026E007F99CA /* TermsAcceptedViewModifierModel.swift in Sources */,
 				1A564FEF3AEC87712186DD28 /* DeepLinkService.swift in Sources */,
 				D36DE0B4272FD689000BC916 /* SwapProviderManager.swift in Sources */,
 				11B357118379A537844A83D0 /* EvmSyncSource.swift in Sources */,
@@ -10480,6 +10484,7 @@
 				11B354B5E42290EE934C428E /* String.swift in Sources */,
 				11B350462257FD424088A52E /* DonutChartView.swift in Sources */,
 				D36DE0FA272FD92F000BC916 /* SwapSelectProviderModule.swift in Sources */,
+				D3E36BFF2E0C01F8007F99CA /* RestoreAccountViewModifier.swift in Sources */,
 				11B35EB8131AC568D9FEB466 /* CoinAuditsViewModel.swift in Sources */,
 				11B35BA5459F842283AB58C2 /* CoinAuditsView.swift in Sources */,
 				2FA5D095A83D18DE2E21B580 /* EvmTransactionsAdapter.swift in Sources */,
@@ -11546,7 +11551,6 @@
 				D384067B21831B3D007D50AD /* LocalStorage.swift in Sources */,
 				D384067E21831B3D007D50AD /* SecuritySettingsModule.swift in Sources */,
 				D023D26A2A24CD16004F65B0 /* BaseTronAdapter.swift in Sources */,
-				D3E36BF92E0BF5F9007F99CA /* CreateAccountViewModifierModel.swift in Sources */,
 				D384068121831B3D007D50AD /* SecuritySettingsViewModel.swift in Sources */,
 				D0DEFF042BD1253C004C9DF0 /* BitcoinFeeSettingsViewModel.swift in Sources */,
 				D384068221831B3D007D50AD /* BitcoinAdapter.swift in Sources */,
@@ -11975,6 +11979,7 @@
 				D3833AFC2BF335C700ACECFB /* MarketNewsView.swift in Sources */,
 				D05E96A62A2627E5002CCD71 /* TronOutgoingTransactionRecord.swift in Sources */,
 				1A5640D6FDF86EDB54213F9B /* DeepLinkManager.swift in Sources */,
+				D3E36C022E0C026E007F99CA /* TermsAcceptedViewModifierModel.swift in Sources */,
 				D36DE0EC272FD89B000BC916 /* SwapSettingsModule.swift in Sources */,
 				1A564032D3C011BCAA7D44A8 /* DeepLinkService.swift in Sources */,
 				11B35804545D048C0EDB8089 /* EvmSyncSource.swift in Sources */,
@@ -12061,6 +12066,7 @@
 				58AAAA3E05FEB10822DFC8EE /* SwapStepCell.swift in Sources */,
 				D023D2712A25CF61004F65B0 /* TronAdapter.swift in Sources */,
 				11B3517B2CB1A05BA5FEDB1F /* String.swift in Sources */,
+				D3E36BFD2E0C01F8007F99CA /* RestoreAccountViewModifier.swift in Sources */,
 				6B2907232AF0CB8A006157D6 /* WalletConnectAppShowViewModel.swift in Sources */,
 				11B35A66D997F86423C2F5A0 /* DonutChartView.swift in Sources */,
 				D003297626CD2C67002EC21D /* TransactionLockInfo.swift in Sources */,

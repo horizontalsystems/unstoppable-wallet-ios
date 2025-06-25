@@ -3,7 +3,8 @@ import SwiftUI
 struct WalletView: View {
     @ObservedObject var viewModel: WalletViewModelNew
     @StateObject var balanceErrorViewModifierModel = BalanceErrorViewModifierModel()
-    @StateObject var createAccountViewModifierModel = CreateAccountViewModifierModel()
+    @StateObject var createAccountViewModifierModel = TermsAcceptedViewModifierModel()
+    @StateObject var restoreAccountViewModifierModel = TermsAcceptedViewModifierModel()
 
     @Binding var path: NavigationPath
 
@@ -46,7 +47,7 @@ struct WalletView: View {
                         .buttonStyle(PrimaryButtonStyle(style: .yellow))
 
                         Button(action: {
-                            // todo
+                            restoreAccountViewModifierModel.handle()
                         }) {
                             Text("onboarding.balance.import".localized)
                         }
@@ -99,6 +100,7 @@ struct WalletView: View {
             ReceiveView(account: account).ignoresSafeArea()
         }
         .modifier(CreateAccountViewModifier(viewModel: createAccountViewModifierModel))
+        .modifier(RestoreAccountViewModifier(viewModel: restoreAccountViewModifierModel))
         .modifier(BackupRequiredViewModifier.backupPrompt(account: $viewModel.backupRequiredAccount) { account in
             "receive_alert.any_coins.not_backed_up_description".localized(account.name)
         })

@@ -34,12 +34,12 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
     private var inputsVisible = false
     private var isLoaded = false
 
-    private weak var returnViewController: UIViewController?
+    private let onRestore: () -> Void
 
-    init(viewModel: RestoreNonStandardViewModel, mnemonicViewModel: RestoreMnemonicNonStandardViewModel, returnViewController: UIViewController?) {
+    init(viewModel: RestoreNonStandardViewModel, mnemonicViewModel: RestoreMnemonicNonStandardViewModel, onRestore: @escaping () -> Void) {
         self.viewModel = viewModel
         self.mnemonicViewModel = mnemonicViewModel
-        self.returnViewController = returnViewController
+        self.onRestore = onRestore
 
         super.init(scrollViews: [tableView], accessoryView: hintView)
     }
@@ -195,7 +195,7 @@ class RestoreNonStandardViewController: KeyboardAwareViewController {
     }
 
     private func openSelectCoins(accountName: String, accountType: AccountType) {
-        let viewController = RestoreSelectModule.viewController(accountName: accountName, accountType: accountType, statPage: .importWalletNonStandard, returnViewController: returnViewController)
+        let viewController = RestoreSelectModule.viewController(accountName: accountName, accountType: accountType, statPage: .importWalletNonStandard, onRestore: onRestore)
         navigationController?.pushViewController(viewController, animated: true)
     }
 

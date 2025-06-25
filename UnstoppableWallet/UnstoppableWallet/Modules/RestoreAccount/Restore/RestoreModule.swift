@@ -2,7 +2,7 @@
 import UIKit
 
 enum RestoreModule {
-    static func viewController(advanced: Bool = false, sourceViewController _: UIViewController? = nil, returnViewController: UIViewController? = nil) -> UIViewController {
+    static func viewController(advanced: Bool = false, onRestore: @escaping () -> Void) -> UIViewController {
         let mnemonicService = RestoreMnemonicService(languageManager: LanguageManager.shared)
         let mnemonicViewModel = RestoreMnemonicViewModel(service: mnemonicService)
 
@@ -17,7 +17,7 @@ enum RestoreModule {
             viewModel: viewModel,
             mnemonicViewModel: mnemonicViewModel,
             privateKeyViewModel: privateKeyViewModel,
-            returnViewController: returnViewController
+            onRestore: onRestore
         )
 
         return viewController

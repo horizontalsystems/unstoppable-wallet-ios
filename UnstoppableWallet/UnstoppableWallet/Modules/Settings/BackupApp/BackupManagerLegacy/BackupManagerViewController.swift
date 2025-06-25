@@ -59,9 +59,9 @@ class BackupManagerViewController: ThemeViewController {
     }
 
     private func onRestore() {
-        let viewController = RestoreTypeModule.viewController(type: .full, sourceViewController: self)
-        stat(page: .backupManager, event: .open(page: .importFull))
-        present(viewController, animated: true)
+        // let viewController = RestoreTypeModule.viewController(type: .full, sourceViewController: self)
+        // stat(page: .backupManager, event: .open(page: .importFull))
+        // present(viewController, animated: true)
     }
 
     private func onUnlock() {

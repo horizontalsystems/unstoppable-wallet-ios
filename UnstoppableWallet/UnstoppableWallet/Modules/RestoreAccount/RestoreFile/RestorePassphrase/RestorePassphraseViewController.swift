@@ -11,7 +11,7 @@ class RestorePassphraseViewController: KeyboardAwareViewController {
     private let statPage: StatPage
     private var cancellables = Set<AnyCancellable>()
 
-    private weak var returnViewController: UIViewController?
+    private let onRestore: () -> Void
 
     private let tableView = SectionsTableView(style: .grouped)
 
@@ -24,10 +24,10 @@ class RestorePassphraseViewController: KeyboardAwareViewController {
     private var keyboardShown = false
     private var isLoaded = false
 
-    init(viewModel: RestorePassphraseViewModel, statPage: StatPage, returnViewController: UIViewController?) {
+    init(viewModel: RestorePassphraseViewModel, statPage: StatPage, onRestore: @escaping () -> Void) {
         self.viewModel = viewModel
         self.statPage = statPage
-        self.returnViewController = returnViewController
+        self.onRestore = onRestore
 
         super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
     }
@@ -172,7 +172,8 @@ class RestorePassphraseViewController: KeyboardAwareViewController {
         HudHelper.instance.show(banner: .imported)
 
         stat(page: statPage, event: .importWallet(walletType: accountType.statDescription))
-        (returnViewController ?? self)?.dismiss(animated: true)
+
+        onRestore()
     }
 
     private func openSelectCoins(accountName: String, accountType: AccountType, isManualBackedUp: Bool, isFileBackedUp: Bool) {
@@ -182,13 +183,13 @@ class RestorePassphraseViewController: KeyboardAwareViewController {
             statPage: statPage,
             isManualBackedUp: isManualBackedUp,
             isFileBackedUp: isFileBackedUp,
-            returnViewController: returnViewController
+            onRestore: onRestore
         )
         navigationController?.pushViewController(viewController, animated: true)
     }
 
     private func openConfiguration(rawBackup: RawFullBackup) {
-        let viewController = RestoreFileConfigurationModule.viewController(rawBackup: rawBackup, statPage: statPage, returnViewController: returnViewController)
+        let viewController = RestoreFileConfigurationModule.viewController(rawBackup: rawBackup, statPage: statPage, onRestore: onRestore)
         navigationController?.pushViewController(viewController, animated: true)
     }
 }

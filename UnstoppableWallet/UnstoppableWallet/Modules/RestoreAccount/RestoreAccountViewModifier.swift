@@ -1,14 +1,12 @@
 import SwiftUI
 
-struct CreateAccountViewModifier: ViewModifier {
+struct RestoreAccountViewModifier: ViewModifier {
     @ObservedObject var viewModel: TermsAcceptedViewModifierModel
-    var onCreate: ((Account) -> Void)?
+    var onRestore: (() -> Void)?
 
-    @State private var backupAccount: Account?
-
-    init(viewModel: TermsAcceptedViewModifierModel, onCreate: ((Account) -> Void)? = nil) {
+    init(viewModel: TermsAcceptedViewModifierModel, onRestore: (() -> Void)? = nil) {
         self.viewModel = viewModel
-        self.onCreate = onCreate
+        self.onRestore = onRestore
     }
 
     func body(content: Content) -> some View {
@@ -19,15 +17,14 @@ struct CreateAccountViewModifier: ViewModifier {
                 }
             }
             .sheet(isPresented: $viewModel.modulePresented) {
-                CreateAccountView(isPresented: $viewModel.modulePresented) { account in
-                    if let onCreate {
-                        onCreate(account)
+                RestoreTypeView(type: .wallet) {
+                    if let onRestore {
+                        onRestore()
                     } else {
                         viewModel.modulePresented = false
-                        backupAccount = account
                     }
                 }
+                .ignoresSafeArea()
             }
-            .modifier(BackupRequiredViewModifier.backupPromptAfterCreate(account: $backupAccount))
     }
 }

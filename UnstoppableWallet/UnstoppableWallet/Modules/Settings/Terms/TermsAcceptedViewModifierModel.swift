@@ -1,14 +1,14 @@
 import Combine
 
-class CreateAccountViewModifierModel: ObservableObject {
+class TermsAcceptedViewModifierModel: ObservableObject {
     private let termsManager = Core.shared.termsManager
 
     @Published var termsPresented = false
-    @Published var createPresented = false
+    @Published var modulePresented = false
 
     func handle() {
         if termsManager.termsAccepted {
-            createPresented = true
+            modulePresented = true
         } else {
             termsPresented = true
         }
