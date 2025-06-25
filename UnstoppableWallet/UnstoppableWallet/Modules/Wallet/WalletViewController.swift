@@ -180,10 +180,10 @@ class WalletViewController: ThemeViewController {
     }
 
     @objc func onTapWatch() {
-        let viewController = WatchModule.viewController()
-        present(viewController, animated: true)
+        // let viewController = WatchModule.viewController()
+        // present(viewController, animated: true)
 
-        stat(page: .balance, event: .open(page: .watchWallet))
+        // stat(page: .balance, event: .open(page: .watchWallet))
     }
 
     @objc func onRefresh() {

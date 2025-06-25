@@ -1,9 +1,9 @@
 import MarketKit
-
+import SwiftUI
 import UIKit
 
 enum WatchModule {
-    static func viewController(sourceViewController: UIViewController? = nil) -> UIViewController {
+    static func viewController(onWatch: @escaping () -> Void) -> UIViewController {
         let addressParserChain = AddressParserChain()
         addressParserChain.append(handlers:
             AddressParserFactory.parserChainHandlers(blockchainType: .ethereum, withEns: true)
@@ -21,12 +21,12 @@ enum WatchModule {
             uriParser: AddressParserFactory.parser(blockchainType: nil, tokenType: nil)
         )
         let viewModel = WatchViewModel(service: service)
-        let viewController = WatchViewController(viewModel: viewModel, sourceViewController: sourceViewController)
+        let viewController = WatchViewController(viewModel: viewModel, onWatch: onWatch)
 
         return ThemeNavigationController(rootViewController: viewController)
     }
 
-    static func viewController(sourceViewController: UIViewController? = nil, accountType: AccountType, name: String) -> UIViewController? {
+    static func viewController(onWatch: @escaping () -> Void, accountType: AccountType, name: String) -> UIViewController? {
         let service = ChooseWatchService(
             accountType: accountType,
             accountName: name,
@@ -42,7 +42,7 @@ enum WatchModule {
         } else {
             let viewModel = ChooseWatchViewModel(service: service)
 
-            return ChooseWatchViewController(viewModel: viewModel, sourceViewController: sourceViewController)
+            return ChooseWatchViewController(viewModel: viewModel, onWatch: onWatch)
         }
     }
 
@@ -68,4 +68,16 @@ extension WatchModule {
         case coins(tokens: [Token])
         case blockchains(blockchains: [Blockchain])
     }
+}
+
+struct WatchView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    let onWatch: () -> Void
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        WatchModule.viewController(onWatch: onWatch)
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

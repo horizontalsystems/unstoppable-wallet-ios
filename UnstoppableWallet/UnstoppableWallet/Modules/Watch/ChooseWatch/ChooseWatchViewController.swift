@@ -12,11 +12,11 @@ class ChooseWatchViewController: CoinToggleViewController {
     private let gradientWrapperView = BottomGradientHolder()
     private let watchButton = PrimaryButton()
 
-    private weak var sourceViewController: UIViewController?
+    private let onWatch: () -> Void
 
-    init(viewModel: ChooseWatchViewModel, sourceViewController: UIViewController?) {
+    init(viewModel: ChooseWatchViewModel, onWatch: @escaping () -> Void) {
         self.viewModel = viewModel
-        self.sourceViewController = sourceViewController
+        self.onWatch = onWatch
 
         super.init(viewModel: viewModel)
     }
@@ -50,7 +50,7 @@ class ChooseWatchViewController: CoinToggleViewController {
         }
         subscribe(disposeBag, viewModel.watchSignal) { [weak self] in
             HudHelper.instance.show(banner: .walletAdded)
-            (self?.sourceViewController ?? self)?.dismiss(animated: true)
+            self?.onWatch()
         }
         subscribe(disposeBag, viewModel.watchEnabledDriver) { [weak self] enabled in
             self?.watchButton.isEnabled = enabled

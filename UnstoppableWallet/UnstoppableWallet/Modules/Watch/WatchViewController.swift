@@ -23,11 +23,11 @@ class WatchViewController: KeyboardAwareViewController {
 
     private var isLoaded = false
 
-    private weak var sourceViewController: UIViewController?
+    private let onWatch: () -> Void
 
-    init(viewModel: WatchViewModel, sourceViewController: UIViewController?) {
+    init(viewModel: WatchViewModel, onWatch: @escaping () -> Void) {
         self.viewModel = viewModel
-        self.sourceViewController = sourceViewController
+        self.onWatch = onWatch
 
         super.init(scrollViews: [tableView], accessoryView: gradientWrapperView)
     }
@@ -125,10 +125,10 @@ class WatchViewController: KeyboardAwareViewController {
     }
 
     private func proceedToNextPage(accountType: AccountType, name: String) {
-        guard let viewController = WatchModule.viewController(sourceViewController: sourceViewController, accountType: accountType, name: name) else {
+        guard let viewController = WatchModule.viewController(onWatch: onWatch, accountType: accountType, name: name) else {
             WatchModule.watch(accountType: accountType, name: name)
             HudHelper.instance.show(banner: .walletAdded)
-            (sourceViewController ?? self)?.dismiss(animated: true)
+            onWatch()
             return
         }
 
