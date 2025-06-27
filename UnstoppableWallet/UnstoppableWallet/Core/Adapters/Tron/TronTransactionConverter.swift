@@ -49,39 +49,39 @@ class TronTransactionConverter {
         return AppValue(value: convertAmount(amount: value, decimals: 0, sign: sign))
     }
 
-    private func transferEvents(incomingTrc20Transfers: [Trc20TransferEvent]) -> [TronContractCallTransactionRecord.TransferEvent] {
+    private func transferEvents(incomingTrc20Transfers: [Trc20TransferEvent]) -> [TransferEvent] {
         incomingTrc20Transfers.map { transfer in
-            TronContractCallTransactionRecord.TransferEvent(
+            TransferEvent(
                 address: transfer.from.base58,
                 value: eip20Value(tokenAddress: transfer.contractAddress, value: transfer.value, sign: .plus, tokenInfo: transfer.tokenInfo)
             )
         }
     }
 
-    private func transferEvents(outgoingTrc20Transfers: [Trc20TransferEvent]) -> [TronContractCallTransactionRecord.TransferEvent] {
+    private func transferEvents(outgoingTrc20Transfers: [Trc20TransferEvent]) -> [TransferEvent] {
         outgoingTrc20Transfers.map { transfer in
-            TronContractCallTransactionRecord.TransferEvent(
+            TransferEvent(
                 address: transfer.to.base58,
                 value: eip20Value(tokenAddress: transfer.contractAddress, value: transfer.value, sign: .minus, tokenInfo: transfer.tokenInfo)
             )
         }
     }
 
-    private func transferEvents(internalTransactions: [InternalTransaction]) -> [TronContractCallTransactionRecord.TransferEvent] {
+    private func transferEvents(internalTransactions: [InternalTransaction]) -> [TransferEvent] {
         internalTransactions.map { internalTransaction in
-            TronContractCallTransactionRecord.TransferEvent(
+            TransferEvent(
                 address: internalTransaction.from.base58,
                 value: baseAppValue(value: internalTransaction.value, sign: .plus)
             )
         }
     }
 
-    private func transferEvents(contractAddress: TronKit.Address, value: Int) -> [TronContractCallTransactionRecord.TransferEvent] {
+    private func transferEvents(contractAddress: TronKit.Address, value: Int) -> [TransferEvent] {
         guard value != 0 else {
             return []
         }
 
-        let event = TronContractCallTransactionRecord.TransferEvent(
+        let event = TransferEvent(
             address: contractAddress.base58,
             value: baseAppValue(value: value, sign: .minus)
         )
@@ -99,13 +99,16 @@ extension TronTransactionConverter {
             switch decoration.contract {
             case let transfer as TransferContract:
                 if transfer.ownerAddress != tronKit.address {
+                    let appValue = baseAppValue(value: transfer.amount, sign: .plus)
+                    let spam = SpamManager.isSpam(events: [.init(address: transfer.ownerAddress.base58, value: appValue)])
+
                     return TronIncomingTransactionRecord(
                         source: source,
                         transaction: transaction,
                         baseToken: baseToken,
                         from: transfer.ownerAddress.base58,
-                        value: baseAppValue(value: transfer.amount, sign: .plus),
-                        spam: transfer.amount < 10
+                        value: appValue,
+                        spam: spam
                     )
                 } else {
                     return TronOutgoingTransactionRecord(
@@ -155,6 +158,9 @@ extension TronTransactionConverter {
             let incomingTrc20Transfers = trc0Transfers.filter { $0.to == address && $0.from != address }
             let outgoingTrc20Transfers = trc0Transfers.filter { $0.from == address }
 
+            let incomingEvents = transferEvents(internalTransactions: internalTransactions) + transferEvents(incomingTrc20Transfers: incomingTrc20Transfers)
+            let outgoingEvents = transferEvents(outgoingTrc20Transfers: outgoingTrc20Transfers)
+
             if decoration.fromAddress == address, let contractAddress = decoration.toAddress {
                 let value = decoration.value ?? 0
 
@@ -164,16 +170,19 @@ extension TronTransactionConverter {
                     baseToken: baseToken,
                     contractAddress: contractAddress.base58,
                     method: decoration.data.flatMap { evmLabelManager.methodLabel(input: $0) },
-                    incomingEvents: transferEvents(internalTransactions: internalTransactions) + transferEvents(incomingTrc20Transfers: incomingTrc20Transfers),
-                    outgoingEvents: transferEvents(contractAddress: contractAddress, value: value) + transferEvents(outgoingTrc20Transfers: outgoingTrc20Transfers)
+                    incomingEvents: incomingEvents,
+                    outgoingEvents: transferEvents(contractAddress: contractAddress, value: value) + outgoingEvents
                 )
             } else if decoration.fromAddress != address, decoration.toAddress != address {
+                let spam = SpamManager.isSpam(events: incomingEvents + outgoingEvents)
+
                 return TronExternalContractCallTransactionRecord(
                     source: source,
                     transaction: transaction,
                     baseToken: baseToken,
-                    incomingEvents: transferEvents(internalTransactions: internalTransactions) + transferEvents(incomingTrc20Transfers: incomingTrc20Transfers),
-                    outgoingEvents: transferEvents(outgoingTrc20Transfers: outgoingTrc20Transfers)
+                    incomingEvents: incomingEvents,
+                    outgoingEvents: outgoingEvents,
+                    spam: spam
                 )
             }
 

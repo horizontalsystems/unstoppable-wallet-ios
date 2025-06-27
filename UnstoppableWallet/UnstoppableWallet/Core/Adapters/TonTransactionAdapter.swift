@@ -123,14 +123,14 @@ extension TonTransactionAdapter: ITransactionsAdapter {
             }
     }
 
-    func transactionsSingle(from: TransactionRecord?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(paginationData: String?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
         let tagQuery = tagQuery(token: token, filter: filter, address: address)
 
         return Single.create { [tonKit, converter] observer in
             Task { [tonKit, converter] in
-                let beforeLt = (from as? TonTransactionRecord).map(\.lt)
+                let lt = paginationData.flatMap { Int64($0) }
 
-                let events = tonKit.events(tagQuery: tagQuery, beforeLt: beforeLt, limit: limit)
+                let events = tonKit.events(tagQuery: tagQuery, lt: lt, descending: true, limit: limit)
                 let records = events.map { converter.transactionRecord(event: $0) }
 
                 observer(.success(records))
@@ -138,6 +138,10 @@ extension TonTransactionAdapter: ITransactionsAdapter {
 
             return Disposables.create()
         }
+    }
+
+    func allTransactionsAfter(paginationData _: String?) -> Single<[TransactionRecord]> {
+        Single.just([])
     }
 
     func rawTransaction(hash _: String) -> String? {

@@ -24,6 +24,7 @@ class TonTransactionRecord: TransactionRecord {
             confirmationsThreshold: nil,
             date: Date(timeIntervalSince1970: TimeInterval(event.timestamp)),
             failed: false,
+            paginationRaw: lt.description,
             spam: event.isScam
         )
     }

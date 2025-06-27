@@ -106,21 +106,25 @@ class ZcashTransactionWrapper {
 
 extension ZcashTransactionWrapper: Comparable {
     public static func < (lhs: ZcashTransactionWrapper, rhs: ZcashTransactionWrapper) -> Bool {
-        if lhs.timestamp != rhs.timestamp {
+        guard lhs.timestamp == rhs.timestamp else {
             return lhs.timestamp > rhs.timestamp
-        } else {
+        }
+        guard lhs.transactionIndex == rhs.transactionIndex else {
             return lhs.transactionIndex > rhs.transactionIndex
         }
+
+        return lhs.transactionHash > rhs.transactionHash
     }
 
     public static func == (lhs: ZcashTransactionWrapper, rhs: ZcashTransactionWrapper) -> Bool {
-        lhs.transactionHash == rhs.transactionHash
+        lhs.transactionHash == rhs.transactionHash && lhs.transactionIndex == rhs.transactionIndex
     }
 }
 
 extension ZcashTransactionWrapper: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(transactionHash)
+        hasher.combine(transactionIndex)
     }
 }
 

@@ -118,14 +118,30 @@ extension StellarTransactionAdapter: ITransactionsAdapter {
             }
     }
 
-    func transactionsSingle(from: TransactionRecord?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(paginationData: String?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
         let tagQuery = tagQuery(token: token, filter: filter, address: address)
+        let pagingToken = paginationData
 
         return Single.create { [stellarKit, converter] observer in
             Task { [stellarKit, converter] in
-                let pagingToken = (from as? StellarTransactionRecord).map(\.operation.pagingToken)
 
-                let operations = stellarKit.operations(tagQuery: tagQuery, pagingToken: pagingToken, limit: limit)
+                let operations = stellarKit.operations(tagQuery: tagQuery, pagingToken: pagingToken, descending: true, limit: limit)
+                let records = operations.map { converter.transactionRecord(operation: $0) }
+
+                observer(.success(records))
+            }
+
+            return Disposables.create()
+        }
+    }
+
+    func allTransactionsAfter(paginationData: String?) -> Single<[TransactionRecord]> {
+        let pagingToken = paginationData
+
+        return Single.create { [stellarKit, converter] observer in
+            Task { [stellarKit, converter] in
+
+                let operations = stellarKit.operations(tagQuery: .init(), pagingToken: pagingToken, descending: false, limit: nil)
                 let records = operations.map { converter.transactionRecord(operation: $0) }
 
                 observer(.success(records))

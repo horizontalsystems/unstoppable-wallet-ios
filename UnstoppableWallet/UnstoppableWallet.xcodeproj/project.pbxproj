@@ -1685,6 +1685,10 @@
 		58AAAFD1F07293D4691F2294 /* MetricChartFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC7C8A0B2AECDD436A14 /* MetricChartFactory.swift */; };
 		58AAAFDBA357FC699C07C334 /* AdditionalDataWithErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8483BC1E85730F04CA3 /* AdditionalDataWithErrorView.swift */; };
 		58AAAFE644C1B236B9714B47 /* CoinSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB692B7C326319D186E4 /* CoinSelectViewModel.swift */; };
+		6B0B6E752E092C0600A0F0C9 /* SpamManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0B6E742E092C0200A0F0C9 /* SpamManager.swift */; };
+		6B0B6E762E092C0600A0F0C9 /* SpamManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0B6E742E092C0200A0F0C9 /* SpamManager.swift */; };
+		6B0B6E7C2E09508600A0F0C9 /* TransferEventFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0B6E7B2E09507E00A0F0C9 /* TransferEventFactory.swift */; };
+		6B0B6E7D2E09508600A0F0C9 /* TransferEventFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0B6E7B2E09507E00A0F0C9 /* TransferEventFactory.swift */; };
 		6B146A972A52A69400648C10 /* ChartIndicatorSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B146A932A52A69400648C10 /* ChartIndicatorSettingsViewController.swift */; };
 		6B146A982A52A69400648C10 /* ChartIndicatorSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B146A932A52A69400648C10 /* ChartIndicatorSettingsViewController.swift */; };
 		6B146A9B2A52A69400648C10 /* ChartIndicatorSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B146A952A52A69400648C10 /* ChartIndicatorSettingsModule.swift */; };
@@ -2684,8 +2688,6 @@
 		D02447DA2C09FA5200A04BBC /* CoinTreasuriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02447D82C09FA5200A04BBC /* CoinTreasuriesView.swift */; };
 		D02C85A82D1A93A60096A84D /* SpamAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02C85A72D1A93A60096A84D /* SpamAddress.swift */; };
 		D02C85A92D1A93A60096A84D /* SpamAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02C85A72D1A93A60096A84D /* SpamAddress.swift */; };
-		D02C85AB2D1A94410096A84D /* SpamAddressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02C85AA2D1A94410096A84D /* SpamAddressManager.swift */; };
-		D02C85AC2D1A94410096A84D /* SpamAddressManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02C85AA2D1A94410096A84D /* SpamAddressManager.swift */; };
 		D02C85AE2D1A969C0096A84D /* SpamAddressStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02C85AD2D1A969C0096A84D /* SpamAddressStorage.swift */; };
 		D02C85AF2D1A969C0096A84D /* SpamAddressStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02C85AD2D1A969C0096A84D /* SpamAddressStorage.swift */; };
 		D033289F2BF6199600BBB364 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D033289E2BF6199600BBB364 /* InfoView.swift */; };
@@ -4379,6 +4381,8 @@
 		58AAAFBDA192A490C33DBB95 /* UITextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
 		58AAAFF25BF263B5EC4188F7 /* SwapDeadlineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapDeadlineViewModel.swift; sourceTree = "<group>"; };
 		58AAAFF6E494F623AD62AF95 /* UniswapSettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniswapSettingsService.swift; sourceTree = "<group>"; };
+		6B0B6E742E092C0200A0F0C9 /* SpamManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamManager.swift; sourceTree = "<group>"; };
+		6B0B6E7B2E09507E00A0F0C9 /* TransferEventFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferEventFactory.swift; sourceTree = "<group>"; };
 		6B146A932A52A69400648C10 /* ChartIndicatorSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartIndicatorSettingsViewController.swift; sourceTree = "<group>"; };
 		6B146A952A52A69400648C10 /* ChartIndicatorSettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartIndicatorSettingsModule.swift; sourceTree = "<group>"; };
 		6B1D8CD82DE98F2600A52B01 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -4831,7 +4835,6 @@
 		D023D2702A25CF61004F65B0 /* TronAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronAdapter.swift; sourceTree = "<group>"; };
 		D02447D82C09FA5200A04BBC /* CoinTreasuriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTreasuriesView.swift; sourceTree = "<group>"; };
 		D02C85A72D1A93A60096A84D /* SpamAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamAddress.swift; sourceTree = "<group>"; };
-		D02C85AA2D1A94410096A84D /* SpamAddressManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamAddressManager.swift; sourceTree = "<group>"; };
 		D02C85AD2D1A969C0096A84D /* SpamAddressStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamAddressStorage.swift; sourceTree = "<group>"; };
 		D033289E2BF6199600BBB364 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		D03F74812BF76D0A004FBCFA /* GasPriceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasPriceData.swift; sourceTree = "<group>"; };
@@ -5817,8 +5820,8 @@
 		11B35480153660045A6CF9AC /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				6B0B6E732E092BF700A0F0C9 /* Spam */,
 				D3AEB8782DB8FB8A00E385C8 /* StellarKitManager.swift */,
-				D02C85AA2D1A94410096A84D /* SpamAddressManager.swift */,
 				6BE8A0802ADE2FAB0012DE7F /* CurrencyManager.swift */,
 				1A564BB88BF3ED779F8C21DC /* BlurManager.swift */,
 				11B35C4FFB99D10A8F343E9C /* LanguageManager.swift */,
@@ -7666,6 +7669,15 @@
 				58AAAAD2AA132E9B13726D8B /* MetricChartViewController.swift */,
 			);
 			path = MetricChart;
+			sourceTree = "<group>";
+		};
+		6B0B6E732E092BF700A0F0C9 /* Spam */ = {
+			isa = PBXGroup;
+			children = (
+				6B0B6E7B2E09507E00A0F0C9 /* TransferEventFactory.swift */,
+				6B0B6E742E092C0200A0F0C9 /* SpamManager.swift */,
+			);
+			path = Spam;
 			sourceTree = "<group>";
 		};
 		6B146A922A52A69400648C10 /* Settings */ = {
@@ -10621,6 +10633,7 @@
 				11B350ADB6D0D0C3E97F73D6 /* NftCollectionViewController.swift in Sources */,
 				D07157E22A2DDA17006F141F /* SendTronViewModel.swift in Sources */,
 				11B35E4E9EA0B6F6A1157E17 /* NftCollectionService.swift in Sources */,
+				6B0B6E7C2E09508600A0F0C9 /* TransferEventFactory.swift in Sources */,
 				11B35AB1A8FB2E49C98FCBEB /* NftCollectionViewModel.swift in Sources */,
 				D0D5BCC12976D3B300587FDB /* PsswordInputCell.swift in Sources */,
 				11B35633B952154A098532A4 /* NftCollectionModule.swift in Sources */,
@@ -11003,6 +11016,7 @@
 				11B35D5C090A1C74C49A8405 /* ActivateSubscriptionModule.swift in Sources */,
 				11B351BB835C2EE7144D8D7E /* ActivateSubscriptionViewController.swift in Sources */,
 				11B358B55D517A8999843B5F /* ActivateSubscriptionViewModel.swift in Sources */,
+				6B0B6E762E092C0600A0F0C9 /* SpamManager.swift in Sources */,
 				11B35F8BF4BD6481E6AF72AF /* TestNetManager.swift in Sources */,
 				ABC9A0073333D3DEC2797D15 /* BackupCloudPassphraseViewController.swift in Sources */,
 				ABC9AE472D9105F6FDAECD42 /* BackupCloudPassphraseService.swift in Sources */,
@@ -11402,7 +11416,6 @@
 				D3AEB8872DBA123D00E385C8 /* StellarOperationConverter.swift in Sources */,
 				11B35A4F4A98537CE99B5221 /* TransactionTokenSelectView.swift in Sources */,
 				11B35ACE7B126DCF9F7F1A19 /* SearchBar.swift in Sources */,
-				D02C85AB2D1A94410096A84D /* SpamAddressManager.swift in Sources */,
 				11B3546CB3C043D22A5F7A88 /* TransactionsViewModel.swift in Sources */,
 				11B35071705455BC25C214D2 /* TonAdapter.swift in Sources */,
 				11B35C60FE9B94994FCCB0CB /* TonTransactionRecord.swift in Sources */,
@@ -12203,6 +12216,7 @@
 				11B35727A4950C1E066F2244 /* LogRecordStorage.swift in Sources */,
 				11B35262B98EA59CDA12DF97 /* WalletConnectSessionStorage.swift in Sources */,
 				11B350ACC851B0F8C911AC3E /* ActiveAccountStorage.swift in Sources */,
+				6B0B6E7D2E09508600A0F0C9 /* TransferEventFactory.swift in Sources */,
 				11B35A2DC1B9521150F81EA6 /* RestoreSettingsStorage.swift in Sources */,
 				11B35D5B873123BC2D3909EF /* AppVersionRecordStorage.swift in Sources */,
 				11B3564706CBCF6F6A30FF65 /* EnabledWalletCacheStorage.swift in Sources */,
@@ -12585,6 +12599,7 @@
 				11B35C2F43F8135F22DD7FDF /* ActivateSubscriptionModule.swift in Sources */,
 				11B356655BCF0A3919AD5120 /* ActivateSubscriptionViewController.swift in Sources */,
 				11B356D9DACA3E988BEDB3B4 /* ActivateSubscriptionViewModel.swift in Sources */,
+				6B0B6E752E092C0600A0F0C9 /* SpamManager.swift in Sources */,
 				11B35357032B368120BA1C06 /* TestNetManager.swift in Sources */,
 				ABC9A2B6F1CF39D5CE9EA489 /* BackupCloudPassphraseViewController.swift in Sources */,
 				ABC9AB308727D81FBB8EBCDD /* BackupCloudPassphraseService.swift in Sources */,
@@ -12984,7 +12999,6 @@
 				D3AEB8862DBA123D00E385C8 /* StellarOperationConverter.swift in Sources */,
 				11B355A6A5AD88A48B9641CE /* TransactionFilterViewModel.swift in Sources */,
 				11B35E02FF7E8A48B9B69ABB /* TransactionBlockchainSelectView.swift in Sources */,
-				D02C85AC2D1A94410096A84D /* SpamAddressManager.swift in Sources */,
 				11B355FC0E3DE029EB3F95D5 /* TransactionTokenSelectView.swift in Sources */,
 				11B358781EBEFCE7CED000F0 /* SearchBar.swift in Sources */,
 				11B358D91C9D8102C46B97ED /* TransactionsViewModel.swift in Sources */,
@@ -13960,7 +13974,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinCore.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 3.0.5;
+				version = 3.1.0;
 			};
 		};
 		6B55461F2A6E73190054B524 /* XCRemoteSwiftPackageReference "UIExtensions" */ = {
@@ -14000,7 +14014,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/TonKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.15;
+				version = 1.1.0;
 			};
 		};
 		6BF66DD82BA1A73300963242 /* XCRemoteSwiftPackageReference "ObjectMapper" */ = {
@@ -14016,7 +14030,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/TronKit.Swift.git";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.6;
+				version = 1.1.0;
 			};
 		};
 		D08C93AD2B91E37E00A7D1D5 /* XCRemoteSwiftPackageReference "Hodler" */ = {
@@ -14136,7 +14150,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/DashKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 3.0.2;
+				version = 3.1.0;
 			};
 		};
 		D36E0C2828D084AB00B622B9 /* XCRemoteSwiftPackageReference "CollectionViewCenteredFlowLayout" */ = {
@@ -14176,7 +14190,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/StellarKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.8;
+				version = 1.1.0;
 			};
 		};
 		D3AF5A8729FFD85800C1399E /* XCRemoteSwiftPackageReference "RxSwift" */ = {

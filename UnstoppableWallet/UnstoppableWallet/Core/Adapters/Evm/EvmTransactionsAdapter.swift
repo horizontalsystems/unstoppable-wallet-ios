@@ -13,9 +13,9 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
     private let evmTransactionSource: EvmKit.TransactionSource
     private let transactionConverter: EvmTransactionConverter
 
-    init(evmKitWrapper: EvmKitWrapper, source: TransactionSource, baseToken: MarketKit.Token, evmTransactionSource: EvmKit.TransactionSource, coinManager: CoinManager, evmLabelManager: EvmLabelManager, spamAddressManager: SpamAddressManager) {
+    init(evmKitWrapper: EvmKitWrapper, source: TransactionSource, baseToken: MarketKit.Token, evmTransactionSource: EvmKit.TransactionSource, coinManager: CoinManager, evmLabelManager: EvmLabelManager) {
         self.evmTransactionSource = evmTransactionSource
-        transactionConverter = EvmTransactionConverter(source: source, baseToken: baseToken, coinManager: coinManager, blockchainType: evmKitWrapper.blockchainType, userAddress: evmKitWrapper.evmKit.address, evmLabelManager: evmLabelManager, spamAddressManager: spamAddressManager)
+        transactionConverter = EvmTransactionConverter(source: source, baseToken: baseToken, coinManager: coinManager, blockchainType: evmKitWrapper.blockchainType, userAddress: evmKitWrapper.evmKit.address, evmLabelManager: evmLabelManager)
 
         super.init(evmKitWrapper: evmKitWrapper, decimals: EvmAdapter.decimals)
     }
@@ -96,11 +96,20 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
         }
     }
 
-    func transactionsSingle(from: TransactionRecord?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
-        evmKit.transactionsSingle(tagQueries: [tagQuery(token: token, filter: filter, address: address?.lowercased())], fromHash: from.flatMap(\.transactionHash.hs.hexData), limit: limit)
+    func transactionsSingle(paginationData: String?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
+        let hash = paginationData?.hs.hexData
+        return evmKit.transactionsSingle(tagQueries: [tagQuery(token: token, filter: filter, address: address?.lowercased())], fromHash: hash, limit: limit)
             .map { [weak self] transactions -> [TransactionRecord] in
                 transactions.compactMap { self?.transactionConverter.transactionRecord(fromTransaction: $0) }
             }
+    }
+
+    func allTransactionsAfter(paginationData: String?) -> Single<[TransactionRecord]> {
+        let hash = paginationData?.hs.hexData
+        let transactions = evmKit.allTransactionsAfter(transactionHash: hash)
+        let records = transactions.compactMap { transactionConverter.transactionRecord(fromTransaction: $0) }
+
+        return Single.just(records)
     }
 
     func rawTransaction(hash _: String) -> String? {

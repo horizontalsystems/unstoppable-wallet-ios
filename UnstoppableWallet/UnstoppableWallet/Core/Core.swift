@@ -96,7 +96,7 @@ class Core {
     let statManager: StatManager
 
     let tonConnectManager: TonConnectManager
-    let spamAddressManager: SpamAddressManager
+    let spamManager: SpamManager
 
     let purchaseManager: PurchaseManager
 
@@ -193,11 +193,8 @@ class Core {
         let restoreStateStorage = RestoreStateStorage(dbPool: dbPool)
         restoreStateManager = RestoreStateManager(storage: restoreStateStorage)
 
-        let spamAddressStorage = try SpamAddressStorage(dbPool: dbPool)
-        spamAddressManager = SpamAddressManager(storage: spamAddressStorage, marketKit: marketKit, coinManager: coinManager)
-
         let evmAccountManagerFactory = EvmAccountManagerFactory(accountManager: accountManager, walletManager: walletManager, restoreStateManager: restoreStateManager, marketKit: marketKit)
-        evmBlockchainManager = EvmBlockchainManager(syncSourceManager: evmSyncSourceManager, testNetManager: testNetManager, marketKit: marketKit, accountManagerFactory: evmAccountManagerFactory, spamAddressManager: spamAddressManager)
+        evmBlockchainManager = EvmBlockchainManager(syncSourceManager: evmSyncSourceManager, testNetManager: testNetManager, marketKit: marketKit, accountManagerFactory: evmAccountManagerFactory)
 
         let hsLabelProvider = HsLabelProvider(networkManager: networkManager)
         let evmLabelStorage = EvmLabelStorage(dbPool: dbPool)
@@ -262,8 +259,7 @@ class Core {
             stellarKitManager: stellarKitManager,
             restoreSettingsManager: restoreSettingsManager,
             coinManager: coinManager,
-            evmLabelManager: evmLabelManager,
-            spamAddressManager: spamAddressManager
+            evmLabelManager: evmLabelManager
         )
         adapterManager = AdapterManager(
             adapterFactory: adapterFactory,
@@ -279,6 +275,9 @@ class Core {
             evmBlockchainManager: evmBlockchainManager,
             adapterFactory: adapterFactory
         )
+
+        let spamAddressStorage = try SpamAddressStorage(dbPool: dbPool)
+        spamManager = SpamManager(storage: spamAddressStorage, accountManager: accountManager, transactionAdapterManager: transactionAdapterManager)
 
         rateAppManager = RateAppManager(walletManager: walletManager, adapterManager: adapterManager, localStorage: localStorage)
 
@@ -343,8 +342,7 @@ class Core {
             walletConnectSocketConnectionService: walletConnectSocketConnectionService,
             nftMetadataSyncer: nftMetadataSyncer,
             tonKitManager: tonKitManager,
-            stellarKitManager: stellarKitManager,
-            spamAddressManager: spamAddressManager
+            stellarKitManager: stellarKitManager
         )
     }
 

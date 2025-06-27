@@ -12,16 +12,14 @@ class EvmTransactionConverter {
     private let blockchainType: BlockchainType
     private let userAddress: EvmKit.Address
     private let evmLabelManager: EvmLabelManager
-    private let spamAddressManager: SpamAddressManager
     private let source: TransactionSource
     private let baseToken: MarketKit.Token
 
-    init(source: TransactionSource, baseToken: MarketKit.Token, coinManager: CoinManager, blockchainType: BlockchainType, userAddress: EvmKit.Address, evmLabelManager: EvmLabelManager, spamAddressManager: SpamAddressManager) {
+    init(source: TransactionSource, baseToken: MarketKit.Token, coinManager: CoinManager, blockchainType: BlockchainType, userAddress: EvmKit.Address, evmLabelManager: EvmLabelManager) {
         self.coinManager = coinManager
         self.blockchainType = blockchainType
         self.userAddress = userAddress
         self.evmLabelManager = evmLabelManager
-        self.spamAddressManager = spamAddressManager
         self.source = source
         self.baseToken = baseToken
     }
@@ -81,27 +79,27 @@ class EvmTransactionConverter {
         }
     }
 
-    private func transferEvents(incomingEip20Transfers: [TransferEventInstance]) -> [ContractCallTransactionRecord.TransferEvent] {
+    private func transferEvents(incomingEip20Transfers: [TransferEventInstance]) -> [TransferEvent] {
         incomingEip20Transfers.map { transfer in
-            ContractCallTransactionRecord.TransferEvent(
+            TransferEvent(
                 address: transfer.from.eip55,
                 value: eip20Value(tokenAddress: transfer.contractAddress, value: transfer.value, sign: .plus, tokenInfo: transfer.tokenInfo)
             )
         }
     }
 
-    private func transferEvents(outgoingEip20Transfers: [TransferEventInstance]) -> [ContractCallTransactionRecord.TransferEvent] {
+    private func transferEvents(outgoingEip20Transfers: [TransferEventInstance]) -> [TransferEvent] {
         outgoingEip20Transfers.map { transfer in
-            ContractCallTransactionRecord.TransferEvent(
+            TransferEvent(
                 address: transfer.to.eip55,
                 value: eip20Value(tokenAddress: transfer.contractAddress, value: transfer.value, sign: .minus, tokenInfo: transfer.tokenInfo)
             )
         }
     }
 
-    private func transferEvents(incomingEip721Transfers: [Eip721TransferEventInstance]) -> [ContractCallTransactionRecord.TransferEvent] {
+    private func transferEvents(incomingEip721Transfers: [Eip721TransferEventInstance]) -> [TransferEvent] {
         incomingEip721Transfers.map { transfer in
-            ContractCallTransactionRecord.TransferEvent(
+            TransferEvent(
                 address: transfer.from.eip55,
                 value: AppValue(
                     nftUid: .evm(blockchainType: source.blockchainType, contractAddress: transfer.contractAddress.hex, tokenId: transfer.tokenId.description),
@@ -113,9 +111,9 @@ class EvmTransactionConverter {
         }
     }
 
-    private func transferEvents(outgoingEip721Transfers: [Eip721TransferEventInstance]) -> [ContractCallTransactionRecord.TransferEvent] {
+    private func transferEvents(outgoingEip721Transfers: [Eip721TransferEventInstance]) -> [TransferEvent] {
         outgoingEip721Transfers.map { transfer in
-            ContractCallTransactionRecord.TransferEvent(
+            TransferEvent(
                 address: transfer.to.eip55,
                 value: AppValue(
                     nftUid: .evm(blockchainType: source.blockchainType, contractAddress: transfer.contractAddress.hex, tokenId: transfer.tokenId.description),
@@ -127,9 +125,9 @@ class EvmTransactionConverter {
         }
     }
 
-    private func transferEvents(incomingEip1155Transfers: [Eip1155TransferEventInstance]) -> [ContractCallTransactionRecord.TransferEvent] {
+    private func transferEvents(incomingEip1155Transfers: [Eip1155TransferEventInstance]) -> [TransferEvent] {
         incomingEip1155Transfers.map { transfer in
-            ContractCallTransactionRecord.TransferEvent(
+            TransferEvent(
                 address: transfer.from.eip55,
                 value: AppValue(
                     nftUid: .evm(blockchainType: source.blockchainType, contractAddress: transfer.contractAddress.hex, tokenId: transfer.tokenId.description),
@@ -141,9 +139,9 @@ class EvmTransactionConverter {
         }
     }
 
-    private func transferEvents(outgoingEip1155Transfers: [Eip1155TransferEventInstance]) -> [ContractCallTransactionRecord.TransferEvent] {
+    private func transferEvents(outgoingEip1155Transfers: [Eip1155TransferEventInstance]) -> [TransferEvent] {
         outgoingEip1155Transfers.map { transfer in
-            ContractCallTransactionRecord.TransferEvent(
+            TransferEvent(
                 address: transfer.to.eip55,
                 value: AppValue(
                     nftUid: .evm(blockchainType: source.blockchainType, contractAddress: transfer.contractAddress.hex, tokenId: transfer.tokenId.description),
@@ -155,21 +153,21 @@ class EvmTransactionConverter {
         }
     }
 
-    private func transferEvents(internalTransactions: [InternalTransaction]) -> [ContractCallTransactionRecord.TransferEvent] {
+    private func transferEvents(internalTransactions: [InternalTransaction]) -> [TransferEvent] {
         internalTransactions.map { internalTransaction in
-            ContractCallTransactionRecord.TransferEvent(
+            TransferEvent(
                 address: internalTransaction.from.eip55,
                 value: baseAppValue(value: internalTransaction.value, sign: .plus)
             )
         }
     }
 
-    private func transferEvents(contractAddress: EvmKit.Address, value: BigUInt) -> [ContractCallTransactionRecord.TransferEvent] {
+    private func transferEvents(contractAddress: EvmKit.Address, value: BigUInt) -> [TransferEvent] {
         guard value != 0 else {
             return []
         }
 
-        let event = ContractCallTransactionRecord.TransferEvent(
+        let event = TransferEvent(
             address: contractAddress.eip55,
             value: baseAppValue(value: value, sign: .minus)
         )
@@ -181,7 +179,6 @@ class EvmTransactionConverter {
 extension EvmTransactionConverter {
     func transactionRecord(fromTransaction fullTransaction: FullTransaction) -> EvmTransactionRecord {
         let transaction = fullTransaction.transaction
-        let spam = spamAddressManager.isSpam(transactionHash: transaction.hash)
 
         switch fullTransaction.decoration {
         case is ContractCreationDecoration:
@@ -192,12 +189,15 @@ extension EvmTransactionConverter {
             )
 
         case let decoration as IncomingDecoration:
+            let appValue = baseAppValue(value: decoration.value, sign: .plus)
+            let spam = SpamManager.isSpam(events: [.init(address: decoration.from.eip55, value: appValue)])
+
             return EvmIncomingTransactionRecord(
                 source: source,
                 transaction: transaction,
                 baseToken: baseToken,
                 from: decoration.from.eip55,
-                value: baseAppValue(value: decoration.value, sign: .plus),
+                value: appValue,
                 spam: spam
             )
 
@@ -318,6 +318,9 @@ extension EvmTransactionConverter {
             let incomingEip1155Transfers = eip1155Transfers.filter { $0.to == userAddress && $0.from != userAddress }
             let outgoingEip1155Transfers = eip1155Transfers.filter { $0.from == userAddress }
 
+            let incomingEvents = transferEvents(internalTransactions: internalTransactions) + transferEvents(incomingEip20Transfers: incomingEip20Transfers) + transferEvents(incomingEip721Transfers: incomingEip721Transfers) + transferEvents(incomingEip1155Transfers: incomingEip1155Transfers)
+            let outgoingEvents = transferEvents(outgoingEip20Transfers: outgoingEip20Transfers) + transferEvents(outgoingEip721Transfers: outgoingEip721Transfers) + transferEvents(outgoingEip1155Transfers: outgoingEip1155Transfers)
+
             if transaction.from == userAddress, let contractAddress = transaction.to, let value = transaction.value {
                 return ContractCallTransactionRecord(
                     source: source,
@@ -325,20 +328,18 @@ extension EvmTransactionConverter {
                     baseToken: baseToken,
                     contractAddress: contractAddress.eip55,
                     method: transaction.input.flatMap { evmLabelManager.methodLabel(input: $0) },
-                    incomingEvents: transferEvents(internalTransactions: internalTransactions) + transferEvents(incomingEip20Transfers: incomingEip20Transfers) +
-                        transferEvents(incomingEip721Transfers: incomingEip721Transfers) + transferEvents(incomingEip1155Transfers: incomingEip1155Transfers),
-                    outgoingEvents: transferEvents(contractAddress: contractAddress, value: value) + transferEvents(outgoingEip20Transfers: outgoingEip20Transfers) +
-                        transferEvents(outgoingEip721Transfers: outgoingEip721Transfers) + transferEvents(outgoingEip1155Transfers: outgoingEip1155Transfers)
+                    incomingEvents: incomingEvents,
+                    outgoingEvents: transferEvents(contractAddress: contractAddress, value: value) + outgoingEvents
                 )
             } else if transaction.from != userAddress, transaction.to != userAddress {
+                let spam = SpamManager.isSpam(events: incomingEvents + outgoingEvents)
+
                 return ExternalContractCallTransactionRecord(
                     source: source,
                     transaction: transaction,
                     baseToken: baseToken,
-                    incomingEvents: transferEvents(internalTransactions: internalTransactions) + transferEvents(incomingEip20Transfers: incomingEip20Transfers) +
-                        transferEvents(incomingEip721Transfers: incomingEip721Transfers) + transferEvents(incomingEip1155Transfers: incomingEip1155Transfers),
-                    outgoingEvents: transferEvents(outgoingEip20Transfers: outgoingEip20Transfers) +
-                        transferEvents(outgoingEip721Transfers: outgoingEip721Transfers) + transferEvents(outgoingEip1155Transfers: outgoingEip1155Transfers),
+                    incomingEvents: incomingEvents,
+                    outgoingEvents: outgoingEvents,
                     spam: spam
                 )
             }

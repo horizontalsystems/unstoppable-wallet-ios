@@ -62,7 +62,8 @@ protocol ITransactionsAdapter {
     var additionalTokenQueries: [TokenQuery] { get }
     func explorerUrl(transactionHash: String) -> String?
     func transactionsObservable(token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]>
-    func transactionsSingle(from: TransactionRecord?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]>
+    func transactionsSingle(paginationData: String?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]>
+    func allTransactionsAfter(paginationData: String?) -> Single<[TransactionRecord]>
     func rawTransaction(hash: String) -> String?
 }
 
