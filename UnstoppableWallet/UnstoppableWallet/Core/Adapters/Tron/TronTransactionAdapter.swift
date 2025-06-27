@@ -98,9 +98,15 @@ extension TronTransactionsAdapter: ITransactionsAdapter {
             }
     }
 
-    func transactionsSingle(from: TransactionRecord?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(paginationData: String?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
         let address = address.flatMap { try? TronKit.Address(address: $0) }?.hex
-        let transactions = tronKit.transactions(tagQueries: [tagQuery(token: token, filter: filter, address: address)], fromHash: from.flatMap(\.transactionHash.hs.hexData), limit: limit)
+        let transactions = tronKit.transactions(tagQueries: [tagQuery(token: token, filter: filter, address: address)], hash: paginationData?.hs.hexData, descending: true, limit: limit)
+
+        return Single.just(transactions.compactMap { transactionConverter.transactionRecord(fromTransaction: $0) })
+    }
+
+    func allTransactionsAfter(paginationData: String?) -> Single<[TransactionRecord]> {
+        let transactions = tronKit.transactions(tagQueries: [], hash: paginationData?.hs.hexData, descending: false, limit: nil)
 
         return Single.just(transactions.compactMap { transactionConverter.transactionRecord(fromTransaction: $0) })
     }

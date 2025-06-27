@@ -92,17 +92,21 @@ extension ZcashTransactionPool {
         transactions(filter: .all, address: nil)
     }
 
-    func transactionsSingle(from: TransactionRecord?, filter: TransactionTypeFilter, address: String?, limit: Int) -> RxSwift.Single<[ZcashTransactionWrapper]> {
-        let transactions = transactions(filter: filter, address: address)
+    func transactionsSingle(paginationData: String?, filter: TransactionTypeFilter, descending: Bool, address: String? = nil, limit: Int?) -> RxSwift.Single<[ZcashTransactionWrapper]> {
+        let transactions = transactions(filter: filter, address: address).sorted(by: descending ? (<) : (>))
 
-        guard let transaction = from else {
-            return Single.just(Array(transactions.prefix(limit)))
+        var limited: [ZcashTransactionWrapper]
+        if let data = paginationData, let index = transactions.firstIndex(where: { $0.transactionHash == data }) {
+            limited = Array(transactions.suffix(from: index + 1))
+        } else {
+            limited = transactions
         }
 
-        if let index = transactions.firstIndex(where: { $0.transactionHash == transaction.transactionHash }) {
-            return Single.just(Array(transactions.suffix(from: index + 1).prefix(limit)))
+        if let limit {
+            limited = Array(limited.prefix(limit))
         }
-        return Single.just([])
+
+        return .just(limited)
     }
 }
 

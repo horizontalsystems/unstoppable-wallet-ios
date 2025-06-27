@@ -5,12 +5,12 @@ import MarketKit
 public class SpamScanState: Record {
     let blockchainTypeUid: String
     let accountUid: String
-    let lastTransactionHash: Data
+    let lastPaginationData: String
 
-    init(blockchainTypeUid: String, accountUid: String, lastTransactionHash: Data) {
+    init(blockchainTypeUid: String, accountUid: String, lastPaginationData: String) {
         self.blockchainTypeUid = blockchainTypeUid
         self.accountUid = accountUid
-        self.lastTransactionHash = lastTransactionHash
+        self.lastPaginationData = lastPaginationData
 
         super.init()
     }
@@ -22,13 +22,13 @@ public class SpamScanState: Record {
     enum Columns: String, ColumnExpression, CaseIterable {
         case blockchainTypeUid
         case accountUid
-        case lastTransactionHash
+        case lastPaginationData
     }
 
     required init(row: Row) throws {
         blockchainTypeUid = row[Columns.blockchainTypeUid]
         accountUid = row[Columns.accountUid]
-        lastTransactionHash = row[Columns.lastTransactionHash]
+        lastPaginationData = row[Columns.lastPaginationData]
 
         try super.init(row: row)
     }
@@ -36,6 +36,6 @@ public class SpamScanState: Record {
     override public func encode(to container: inout PersistenceContainer) throws {
         container[Columns.blockchainTypeUid] = blockchainTypeUid
         container[Columns.accountUid] = accountUid
-        container[Columns.lastTransactionHash] = lastTransactionHash
+        container[Columns.lastPaginationData] = lastPaginationData
     }
 }

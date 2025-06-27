@@ -28,7 +28,19 @@ class SpamAddressStorage {
             try db.create(table: SpamScanState.databaseTableName) { t in
                 t.column(SpamScanState.Columns.blockchainTypeUid.name, .text).notNull()
                 t.column(SpamScanState.Columns.accountUid.name, .text).notNull()
-                t.column(SpamScanState.Columns.lastTransactionHash.name, .blob).notNull()
+                t.column("lastTransactionHash", .blob).notNull()
+
+                t.primaryKey([SpamScanState.Columns.blockchainTypeUid.name, SpamScanState.Columns.accountUid.name], onConflict: .ignore)
+            }
+        }
+
+        migrator.registerMigration("recreate SpamScanState") { db in
+            try db.execute(sql: "DROP TABLE IF EXISTS \(SpamScanState.databaseTableName)")
+
+            try db.create(table: SpamScanState.databaseTableName) { t in
+                t.column(SpamScanState.Columns.blockchainTypeUid.name, .text).notNull()
+                t.column(SpamScanState.Columns.accountUid.name, .text).notNull()
+                t.column(SpamScanState.Columns.lastPaginationData.name, .text).notNull()
 
                 t.primaryKey([SpamScanState.Columns.blockchainTypeUid.name, SpamScanState.Columns.accountUid.name], onConflict: .ignore)
             }

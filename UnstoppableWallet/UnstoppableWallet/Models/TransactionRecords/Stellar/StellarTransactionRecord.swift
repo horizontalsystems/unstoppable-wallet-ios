@@ -7,7 +7,7 @@ class StellarTransactionRecord: TransactionRecord {
     let fee: AppValue?
     let type: `Type`
 
-    init(source: TransactionSource, operation: TxOperation, baseToken: Token, type: Type) {
+    init(source: TransactionSource, operation: TxOperation, baseToken: Token, type: Type, spam: Bool) {
         self.operation = operation
         fee = operation.feeCharged.map { AppValue(token: baseToken, value: $0) }
         self.type = type
@@ -21,7 +21,8 @@ class StellarTransactionRecord: TransactionRecord {
             confirmationsThreshold: nil,
             date: operation.createdAt,
             failed: !operation.transactionSuccessful,
-            spam: false
+            paginationRaw: operation.pagingToken,
+            spam: spam
         )
     }
 
@@ -49,5 +50,14 @@ extension StellarTransactionRecord {
         case receivePayment(value: AppValue, from: String)
         case changeTrust(value: AppValue, trustor: String, trustee: String?, liquidityPoolId: String?)
         case unsupported(type: String)
+    }
+}
+
+extension StellarTransactionRecord {
+    static func doubtfulEvents(type: Type) -> [TransferEvent] {
+        switch type {
+        case let .receivePayment(value: value, from: from): return [.init(address: from, value: value)]
+        default: return []
+        }
     }
 }

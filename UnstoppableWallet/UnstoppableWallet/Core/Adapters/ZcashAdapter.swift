@@ -737,8 +737,14 @@ extension ZcashAdapter: ITransactionsAdapter {
             .filter { !$0.isEmpty }
     }
 
-    func transactionsSingle(from: TransactionRecord?, token _: Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
-        transactionPool?.transactionsSingle(from: from, filter: filter, address: address, limit: limit).map { [weak self] txs in
+    func transactionsSingle(paginationData: String?, token _: Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
+        transactionPool?.transactionsSingle(paginationData: paginationData, filter: filter, descending: true, address: address, limit: limit).map { [weak self] txs in
+            txs.compactMap { self?.transactionRecord(fromTransaction: $0) }
+        } ?? .just([])
+    }
+
+    func allTransactionsAfter(paginationData: String?) -> Single<[TransactionRecord]> {
+        transactionPool?.transactionsSingle(paginationData: paginationData, filter: .all, descending: false, address: nil, limit: nil).map { [weak self] txs in
             txs.compactMap { self?.transactionRecord(fromTransaction: $0) }
         } ?? .just([])
     }

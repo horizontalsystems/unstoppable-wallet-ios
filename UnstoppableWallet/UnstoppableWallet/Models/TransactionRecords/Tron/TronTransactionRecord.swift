@@ -70,10 +70,3 @@ class TronTransactionRecord: TransactionRecord {
         return .pending
     }
 }
-
-extension TronTransactionRecord {
-    struct TransferEvent {
-        let address: String
-        let value: AppValue
-    }
-}

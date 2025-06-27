@@ -56,10 +56,3 @@ class EvmTransactionRecord: TransactionRecord {
         return (resultIncoming, resultOutgoing)
     }
 }
-
-extension EvmTransactionRecord {
-    struct TransferEvent {
-        let address: String
-        let value: AppValue
-    }
-}

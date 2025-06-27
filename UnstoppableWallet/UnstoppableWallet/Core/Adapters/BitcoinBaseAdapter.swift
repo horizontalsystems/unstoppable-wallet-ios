@@ -393,7 +393,7 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
             .filter { !$0.isEmpty }
     }
 
-    func transactionsSingle(from: TransactionRecord?, token _: Token?, filter: TransactionTypeFilter, address _: String?, limit: Int) -> Single<[TransactionRecord]> {
+    func transactionsSingle(paginationData: String?, token _: Token?, filter: TransactionTypeFilter, address _: String?, limit: Int) -> Single<[TransactionRecord]> {
         let bitcoinFilter: TransactionFilterType?
         switch filter {
         case .all: bitcoinFilter = nil
@@ -402,7 +402,16 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
         default: return Single.just([])
         }
 
-        let transactions = abstractKit.transactions(fromUid: from?.uid, type: bitcoinFilter, limit: limit)
+        let transactions = abstractKit.transactions(fromUid: paginationData, type: bitcoinFilter, descending: true, limit: limit)
+            .map {
+                transactionRecord(fromTransaction: $0)
+            }
+
+        return Single.just(transactions)
+    }
+
+    func allTransactionsAfter(paginationData: String?) -> Single<[TransactionRecord]> {
+        let transactions = abstractKit.transactions(fromUid: paginationData, type: nil, descending: false, limit: nil)
             .map {
                 transactionRecord(fromTransaction: $0)
             }

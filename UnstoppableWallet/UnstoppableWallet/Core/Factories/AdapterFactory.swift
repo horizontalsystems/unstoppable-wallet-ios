@@ -15,10 +15,10 @@ class AdapterFactory {
     private let restoreSettingsManager: RestoreSettingsManager
     private let coinManager: CoinManager
     private let evmLabelManager: EvmLabelManager
-    private let spamAddressManager: SpamAddressManager
+
     init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager,
          btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager,
-         restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager, evmLabelManager: EvmLabelManager, spamAddressManager: SpamAddressManager)
+         restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager, evmLabelManager: EvmLabelManager)
     {
         self.evmBlockchainManager = evmBlockchainManager
         self.evmSyncSourceManager = evmSyncSourceManager
@@ -29,7 +29,6 @@ class AdapterFactory {
         self.restoreSettingsManager = restoreSettingsManager
         self.coinManager = coinManager
         self.evmLabelManager = evmLabelManager
-        self.spamAddressManager = spamAddressManager
     }
 
     private func evmAdapter(wallet: Wallet) -> IAdapter? {
@@ -54,7 +53,7 @@ class AdapterFactory {
             return nil
         }
 
-        return try? Eip20Adapter(evmKitWrapper: evmKitWrapper, contractAddress: address, wallet: wallet, baseToken: baseToken, coinManager: coinManager, evmLabelManager: evmLabelManager, spamAddressManager: spamAddressManager)
+        return try? Eip20Adapter(evmKitWrapper: evmKitWrapper, contractAddress: address, wallet: wallet, baseToken: baseToken, coinManager: coinManager, evmLabelManager: evmLabelManager)
     }
 
     private func tronAdapter(wallet: Wallet) -> IAdapter? {
@@ -82,7 +81,7 @@ extension AdapterFactory {
            let baseToken = evmBlockchainManager.baseToken(blockchainType: blockchainType)
         {
             let syncSource = evmSyncSourceManager.syncSource(blockchainType: blockchainType)
-            return EvmTransactionsAdapter(evmKitWrapper: evmKitWrapper, source: transactionSource, baseToken: baseToken, evmTransactionSource: syncSource.transactionSource, coinManager: coinManager, evmLabelManager: evmLabelManager, spamAddressManager: spamAddressManager)
+            return EvmTransactionsAdapter(evmKitWrapper: evmKitWrapper, source: transactionSource, baseToken: baseToken, evmTransactionSource: syncSource.transactionSource, coinManager: coinManager, evmLabelManager: evmLabelManager)
         }
 
         return nil

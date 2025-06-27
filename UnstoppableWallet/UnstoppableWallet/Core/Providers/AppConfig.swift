@@ -44,12 +44,14 @@ enum AppConfig {
         .solana: "5gattKnvu5f1NDHBuZ6VfDXjRrJa9UcAArkZ3ys3e82F",
     ]
     static var spamCoinValueLimits: [String: Decimal] = [
-        "tether": 0.01,
-        "usd-coin": 0.01,
-        "dai": 0.01,
-        "binance-usd": 0.01,
-        "binance-peg-busd": 0.01,
-        "stasis-eurs": 0.01,
+        "XLM": 0.01,
+        "USDT": 0.01,
+        "USDC": 0.01,
+        "USDD": 0.01,
+        "DAI": 0.01,
+        "BUSD": 0.01,
+        "EURS": 0.01,
+        "BSC-USD": 0.01,
     ]
 
     static var appVersion: String {

@@ -207,3 +207,8 @@ extension AppValue: Equatable {
         lhs.kind == rhs.kind && lhs.value == rhs.value
     }
 }
+
+struct TransferEvent {
+    let address: String
+    let value: AppValue
+}

@@ -51,7 +51,7 @@ extension PoolProvider: IPoolProvider {
     }
 
     func recordsSingle(from: TransactionRecord?, limit: Int) -> Single<[TransactionRecord]> {
-        adapter.transactionsSingle(from: from, token: source.token, filter: source.filter, address: source.address, limit: limit)
+        adapter.transactionsSingle(paginationData: from?.paginationRaw, token: source.token, filter: source.filter, address: source.address, limit: limit)
     }
 
     func recordsObservable() -> Observable<[TransactionRecord]> {

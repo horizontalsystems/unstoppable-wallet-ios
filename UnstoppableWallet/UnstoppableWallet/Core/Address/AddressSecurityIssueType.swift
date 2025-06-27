@@ -1,5 +1,7 @@
 import MarketKit
 
+private let fishingBlockchainSupports = EvmBlockchainManager.blockchainTypes + [.stellar, .tron]
+
 enum AddressSecurityIssueType: CaseIterable, Identifiable {
     case phishing
     case blacklisted
@@ -35,7 +37,7 @@ enum AddressSecurityIssueType: CaseIterable, Identifiable {
 
     func supports(token: Token) -> Bool {
         switch self {
-        case .phishing: return EvmBlockchainManager.blockchainTypes.contains(token.blockchainType)
+        case .phishing: return fishingBlockchainSupports.contains(token.blockchainType)
         case .blacklisted: return HashDitAddressValidator.supportedBlockchainTypes.contains(token.blockchainType) || Eip20AddressValidator.supports(token: token)
         case .sanctioned: return true
         }
