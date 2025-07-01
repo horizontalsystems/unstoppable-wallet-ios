@@ -18,9 +18,9 @@ extension DeepLinkManager {
         newSchemeRelay.asObservable()
     }
 
-    func handle(url: URL) -> Bool {
+    func handle(url: URL) {
         guard let urlComponents = URLComponents(url: url, resolvingAgainstBaseURL: true) else {
-            return false
+            return
         }
 
         let scheme = urlComponents.scheme
@@ -32,7 +32,7 @@ extension DeepLinkManager {
            let uri = queryItems?.first(where: { $0.name == "uri" })?.value
         {
             newSchemeRelay.accept(.walletConnect(url: uri))
-            return true
+            return
         }
 
         if (scheme == DeepLinkManager.deepLinkScheme && (host == Self.tonDeepLinkHost || host == Self.tonUniversalHost)) ||
@@ -40,7 +40,7 @@ extension DeepLinkManager {
             let parameters = try? TonConnectManager.parseParameters(queryItems: queryItems)
         {
             newSchemeRelay.accept(.tonConnect(parameters: parameters))
-            return true
+            return
         }
 
         if scheme == Self.tonDeepLinkScheme {
@@ -48,7 +48,7 @@ extension DeepLinkManager {
             do {
                 let address = try parser.parse(url: url.absoluteString)
                 newSchemeRelay.accept(.transfer(addressUri: address))
-                return true
+                return
             } catch {
                 HudHelper.instance.show(banner: .error(string: error.localizedDescription))
             }
@@ -58,7 +58,7 @@ extension DeepLinkManager {
             let uid = path.replacingOccurrences(of: "/", with: "")
 
             newSchemeRelay.accept(.coin(uid: uid))
-            return true
+            return
         }
 
         if (scheme == DeepLinkManager.deepLinkScheme && host == "referral") || (scheme == "https" && host == DeepLinkManager.deepLinkScheme && path == "/referral") {
@@ -66,14 +66,12 @@ extension DeepLinkManager {
                   let userId = queryItems[0].value,
                   let referralCode = queryItems[1].value
             else {
-                return false
+                return
             }
 
             newSchemeRelay.accept(.referral(telegramUserId: userId, referralCode: referralCode))
-            return true
+            return
         }
-
-        return false
     }
 
     func setDeepLinkShown() {

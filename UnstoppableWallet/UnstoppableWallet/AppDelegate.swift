@@ -10,15 +10,9 @@ class AppDelegate: NSObject, UIApplicationDelegate {
         return true
     }
 
-    func application(_: UIApplication, open url: URL, options _: [UIApplication.OpenURLOptionsKey: Any]) -> Bool {
-        Core.instance?.appManager.didReceive(url: url) ?? false
-    }
-
-    func application(_: UIApplication, continue userActivity: NSUserActivity, restorationHandler _: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
-        if userActivity.activityType == NSUserActivityTypeBrowsingWeb, let url = userActivity.webpageURL {
-            return Core.instance?.appManager.didReceive(url: url) ?? false
-        }
-
-        return false
+    func application(_: UIApplication, configurationForConnecting connectingSceneSession: UISceneSession, options _: UIScene.ConnectionOptions) -> UISceneConfiguration {
+        let sceneConfig = UISceneConfiguration(name: nil, sessionRole: connectingSceneSession.role)
+        sceneConfig.delegateClass = AppSceneDelegate.self
+        return sceneConfig
     }
 }

@@ -11,6 +11,7 @@ class AppManager {
     private let lockManager: LockManager
     private let keychainManager: KeychainManager
     private let passcodeLockManager: PasscodeLockManager
+    private let coverManager: CoverManager
     private let kitCleaner: KitCleaner
     private let appVersionManager: AppVersionManager
     private let rateAppManager: RateAppManager
@@ -34,7 +35,7 @@ class AppManager {
 
     init(accountManager: AccountManager, walletManager: WalletManager, adapterManager: AdapterManager, lockManager: LockManager,
          keychainManager: KeychainManager, passcodeLockManager: PasscodeLockManager,
-         kitCleaner: KitCleaner,
+         kitCleaner: KitCleaner, coverManager: CoverManager,
          appVersionManager: AppVersionManager, rateAppManager: RateAppManager,
          logRecordManager: LogRecordManager,
          deepLinkManager: DeepLinkManager, evmLabelManager: EvmLabelManager, balanceHiddenManager: BalanceHiddenManager, statManager: StatManager,
@@ -48,6 +49,7 @@ class AppManager {
         self.keychainManager = keychainManager
         self.passcodeLockManager = passcodeLockManager
         self.kitCleaner = kitCleaner
+        self.coverManager = coverManager
         self.appVersionManager = appVersionManager
         self.rateAppManager = rateAppManager
         self.logRecordManager = logRecordManager
@@ -87,6 +89,7 @@ extension AppManager {
     func willResignActive() {
         willResignActiveSubject.send()
 
+        coverManager.willResignActive()
         rateAppManager.onResignActive()
     }
 
@@ -94,6 +97,7 @@ extension AppManager {
         didBecomeActiveSubject.send()
         didBecomeActiveSubjectOld.onNext(())
 
+        coverManager.didBecomeActive()
         rateAppManager.onBecomeActive()
         logRecordManager.onBecomeActive()
     }
@@ -115,6 +119,7 @@ extension AppManager {
         willEnterForegroundSubject.send()
         willEnterForegroundSubjectOld.onNext(())
 
+        coverManager.willEnterForeground()
         passcodeLockManager.handleForeground()
         lockManager.willEnterForeground()
         adapterManager.refresh()
@@ -130,7 +135,7 @@ extension AppManager {
         AppWidgetConstants.allKinds.forEach { WidgetCenter.shared.reloadTimelines(ofKind: $0) }
     }
 
-    func didReceive(url: URL) -> Bool {
+    func didReceive(url: URL) {
         deepLinkManager.handle(url: url)
     }
 }
