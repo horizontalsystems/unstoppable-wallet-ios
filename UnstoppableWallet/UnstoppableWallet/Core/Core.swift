@@ -20,12 +20,12 @@ class Core {
     let localStorage: LocalStorage
     let keychainStorage: KeychainStorage
 
+    let coverManager: CoverManager
     let pasteboardManager: PasteboardManager
     let reachabilityManager: ReachabilityManager
     let appIconManager: AppIconManager
     let biometryManager: BiometryManager
     let passcodeManager: PasscodeManager
-    let lockDelegate: LockDelegate
     let lockManager: LockManager
     let lockoutManager: LockoutManager
     let keychainManager: KeychainManager
@@ -134,9 +134,9 @@ class Core {
         appIconManager = AppIconManager()
         biometryManager = BiometryManager(userDefaultsStorage: userDefaultsStorage)
         passcodeManager = PasscodeManager(biometryManager: biometryManager, keychainStorage: keychainStorage)
-        lockDelegate = LockDelegate()
-        lockManager = LockManager(passcodeManager: passcodeManager, userDefaultsStorage: userDefaultsStorage, delegate: lockDelegate)
+        lockManager = LockManager(passcodeManager: passcodeManager, userDefaultsStorage: userDefaultsStorage)
         lockoutManager = LockoutManager(keychainStorage: keychainStorage)
+        coverManager = CoverManager(lockManager: lockManager)
         keychainManager = KeychainManager(storage: keychainStorage, userDefaultsStorage: userDefaultsStorage)
         themeManager = ThemeManager.shared
         systemInfoManager = SystemInfoManager()
@@ -332,6 +332,7 @@ class Core {
             keychainManager: keychainManager,
             passcodeLockManager: passcodeLockManager,
             kitCleaner: kitCleaner,
+            coverManager: coverManager,
             appVersionManager: appVersionManager,
             rateAppManager: rateAppManager,
             logRecordManager: logRecordManager,

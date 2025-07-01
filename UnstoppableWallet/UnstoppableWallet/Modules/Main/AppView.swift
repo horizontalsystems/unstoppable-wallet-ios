@@ -15,10 +15,6 @@ struct AppView: View {
                             viewModel.handleIntroFinish()
                         }
                         .ignoresSafeArea()
-                    } else if viewModel.locked {
-                        AppUnlockView()
-                    } else if viewModel.coverVisible {
-                        CoverView()
                     }
                 }
             case .passcodeNotSet:

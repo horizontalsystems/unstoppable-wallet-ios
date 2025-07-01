@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import HsExtensions
+import SwiftUI
 
 class LockManager {
     private let lastExitDateKey = "last_exit_date_key"
@@ -8,9 +9,16 @@ class LockManager {
 
     private let passcodeManager: PasscodeManager
     private let userDefaultsStorage: UserDefaultsStorage
-    private let delegate: LockDelegate
 
     @DistinctPublished private(set) var isLocked: Bool
+
+    var windowScene: UIWindowScene? {
+        didSet {
+            lock()
+        }
+    }
+
+    private var window: UIWindow?
 
     var autoLockPeriod: AutoLockPeriod {
         didSet {
@@ -18,10 +26,9 @@ class LockManager {
         }
     }
 
-    init(passcodeManager: PasscodeManager, userDefaultsStorage: UserDefaultsStorage, delegate: LockDelegate) {
+    init(passcodeManager: PasscodeManager, userDefaultsStorage: UserDefaultsStorage) {
         self.passcodeManager = passcodeManager
         self.userDefaultsStorage = userDefaultsStorage
-        self.delegate = delegate
 
         isLocked = passcodeManager.isPasscodeSet
         let autoLockPeriodRaw: String? = userDefaultsStorage.value(for: autoLockPeriodKey)
@@ -59,10 +66,32 @@ extension LockManager {
         }
 
         isLocked = true
-        delegate.onLock()
+
+        guard let windowScene, window == nil else {
+            return
+        }
+
+        let window = UIWindow(windowScene: windowScene)
+        window.windowLevel = UIWindow.Level.alert - 1
+        window.isHidden = false
+
+        let hostingController = UIHostingController(rootView: AppUnlockView())
+        window.rootViewController = hostingController
+
+        self.window = window
     }
 
     func unlock() {
         isLocked = false
+
+        guard window != nil else {
+            return
+        }
+
+        UIView.animate(withDuration: 0.15, animations: {
+            self.window?.alpha = 0
+        }) { _ in
+            self.window = nil
+        }
     }
 }
