@@ -46,7 +46,7 @@ class TransactionsViewModelNew: ObservableObject {
 
     private var __syncing: Bool = false {
         didSet {
-            guard __syncing != syncing else {
+            guard __syncing != oldValue else {
                 return
             }
 
