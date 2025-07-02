@@ -29,10 +29,7 @@ enum WalletModule {
 
         coinPriceService.delegate = service
 
-        let accountRestoreWarningFactory = AccountRestoreWarningFactory(
-            userDefaultsStorage: Core.shared.userDefaultsStorage,
-            languageManager: LanguageManager.shared
-        )
+        let accountRestoreWarningFactory = AccountRestoreWarningFactory()
 
         let viewModel = WalletViewModel(
             service: service,

@@ -64,14 +64,21 @@ struct MarkdownView: UIViewControllerRepresentable {
 
     private let url: URL
     private let handleRelativeUrl: Bool
+    private let navigation: Bool
 
-    init(url: URL, handleRelativeUrl: Bool = true) {
+    init(url: URL, handleRelativeUrl: Bool = true, navigation: Bool = false) {
         self.url = url
         self.handleRelativeUrl = handleRelativeUrl
+        self.navigation = navigation
     }
 
     func makeUIViewController(context _: Context) -> UIViewController {
-        MarkdownModule.viewController(url: url, handleRelativeUrl: handleRelativeUrl)
+        let module = MarkdownModule.viewController(url: url, handleRelativeUrl: handleRelativeUrl)
+        if navigation {
+            return ThemeNavigationController(rootViewController: module)
+        } else {
+            return module
+        }
     }
 
     func updateUIViewController(_: UIViewController, context _: Context) {}

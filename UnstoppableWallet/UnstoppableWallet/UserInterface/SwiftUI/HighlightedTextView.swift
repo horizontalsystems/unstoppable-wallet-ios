@@ -4,6 +4,7 @@ struct HighlightedTextView: View {
     private let title: String?
     private let text: String
     private let style: Style
+    private var onClose: (() -> Void)?
 
     init(title: String? = nil, text: String, style: Style = .warning) {
         self.title = title
@@ -11,7 +12,7 @@ struct HighlightedTextView: View {
         self.style = style
     }
 
-    init(caution: CautionNew) {
+    init(caution: CautionNew, onClose: (() -> Void)? = nil) {
         title = caution.title
         text = caution.text
 
@@ -19,6 +20,8 @@ struct HighlightedTextView: View {
         case .warning: style = .warning
         case .error: style = .alert
         }
+
+        self.onClose = onClose
     }
 
     init(title: String? = nil, text: String, style: HighlightedDescriptionBaseView.Style) {
@@ -37,6 +40,13 @@ struct HighlightedTextView: View {
                 HStack(spacing: .margin12) {
                     Image("warning_2_20").themeIcon(color: style.color)
                     Text(title).themeSubhead1(color: style.color)
+
+                    if let onClose {
+                        Image("close_1_20")
+                            .themeIcon(color: style.color)
+                            .padding(.margin4)
+                            .onTapGesture(perform: onClose)
+                    }
                 }
             }
 

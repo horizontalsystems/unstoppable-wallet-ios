@@ -5,6 +5,7 @@ struct WalletView: View {
     @StateObject var balanceErrorViewModifierModel = BalanceErrorViewModifierModel()
     @StateObject var createAccountViewModifierModel = TermsAcceptedViewModifierModel()
     @StateObject var restoreAccountViewModifierModel = TermsAcceptedViewModifierModel()
+    @StateObject var accountWarningViewModel = AccountWarningViewModel(canIgnore: true)
 
     @Binding var path: NavigationPath
 
@@ -25,6 +26,13 @@ struct WalletView: View {
                             .listRowInsets(EdgeInsets())
                             .listRowSeparator(.hidden)
 
+                        AccountWarningView(viewModel: accountWarningViewModel)
+                            .listRowBackground(Color.clear)
+                            .listRowInsets(EdgeInsets())
+                            .listRowSeparator(.hidden)
+                            .padding(.horizontal, .margin16)
+                            .padding(.bottom, .margin16)
+
                         Section {
                             itemsView()
                         } header: {
@@ -32,6 +40,7 @@ struct WalletView: View {
                         }
                     }
                     .animation(.default, value: viewModel.items)
+                    .animation(.default, value: accountWarningViewModel.item)
                     .refreshable {
                         await viewModel.refresh()
                     }
@@ -105,6 +114,9 @@ struct WalletView: View {
                 watchPresented = false
             }
             .ignoresSafeArea()
+        }
+        .sheet(item: $accountWarningViewModel.presentedUrl) { url in
+            MarkdownView(url: url, navigation: true).ignoresSafeArea()
         }
         .modifier(CreateAccountViewModifier(viewModel: createAccountViewModifierModel))
         .modifier(RestoreAccountViewModifier(viewModel: restoreAccountViewModifierModel))
