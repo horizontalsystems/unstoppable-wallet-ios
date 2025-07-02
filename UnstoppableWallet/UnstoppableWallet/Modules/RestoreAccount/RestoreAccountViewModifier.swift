@@ -2,10 +2,12 @@ import SwiftUI
 
 struct RestoreAccountViewModifier: ViewModifier {
     @ObservedObject var viewModel: TermsAcceptedViewModifierModel
-    var onRestore: (() -> Void)?
+    private var type: BackupModule.Source.Abstract
+    private var onRestore: (() -> Void)?
 
-    init(viewModel: TermsAcceptedViewModifierModel, onRestore: (() -> Void)? = nil) {
+    init(viewModel: TermsAcceptedViewModifierModel, type: BackupModule.Source.Abstract, onRestore: (() -> Void)? = nil) {
         self.viewModel = viewModel
+        self.type = type
         self.onRestore = onRestore
     }
 
@@ -17,7 +19,7 @@ struct RestoreAccountViewModifier: ViewModifier {
                 }
             }
             .sheet(isPresented: $viewModel.modulePresented) {
-                RestoreTypeView(type: .wallet) {
+                RestoreTypeView(type: type) {
                     if let onRestore {
                         onRestore()
                     } else {

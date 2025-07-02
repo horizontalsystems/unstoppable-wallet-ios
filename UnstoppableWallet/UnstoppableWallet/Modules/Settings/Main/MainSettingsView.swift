@@ -355,8 +355,6 @@ struct MainSettingsView: View {
     @ViewBuilder private func backupManager() -> some View {
         NavigationRow(destination: {
             BackupManagerView()
-                .navigationTitle("backup_app.backup_manager.title".localized)
-                .ignoresSafeArea()
                 .onFirstAppear {
                     stat(page: .settings, event: .open(page: .backupManager))
                 }

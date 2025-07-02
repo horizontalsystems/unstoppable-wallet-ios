@@ -2,7 +2,7 @@ import SwiftUI
 
 struct BackupNameView: View {
     @ObservedObject var viewModel: BackupAppViewModel
-    var onDismiss: (() -> Void)?
+    @Binding var isPresented: Bool
 
     var body: some View {
         ThemeView {
@@ -29,7 +29,7 @@ struct BackupNameView: View {
                 }
             } bottomContent: {
                 NavigationLink(
-                    destination: BackupPasswordView(viewModel: viewModel, onDismiss: onDismiss),
+                    destination: BackupPasswordView(viewModel: viewModel, isPresented: $isPresented),
                     isActive: $viewModel.passwordPushed
                 ) {
                     Button(action: {
@@ -45,7 +45,7 @@ struct BackupNameView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button("button.cancel".localized) {
-                    onDismiss?()
+                    isPresented = false
                 }
             }
         }
