@@ -29,7 +29,6 @@ class WalletTokenListViewModel {
     let title: String
     let emptyText: String
 
-    private let showWarningRelay = BehaviorRelay<CancellableTitledCaution?>(value: nil)
     private let noConnectionErrorRelay = PublishRelay<Void>()
     private let selectWalletRelay = PublishRelay<Wallet>()
     private let openSyncErrorRelay = PublishRelay<(Wallet, Error)>()
@@ -117,10 +116,6 @@ class WalletTokenListViewModel {
 }
 
 extension WalletTokenListViewModel {
-    var showWarningDriver: Driver<CancellableTitledCaution?> {
-        showWarningRelay.asDriver()
-    }
-
     var noConnectionErrorSignal: Signal<Void> {
         noConnectionErrorRelay.asSignal()
     }

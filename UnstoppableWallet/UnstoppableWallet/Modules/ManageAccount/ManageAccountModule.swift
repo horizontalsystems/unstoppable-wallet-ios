@@ -10,10 +10,8 @@ enum ManageAccountModule {
             passcodeManager: Core.shared.passcodeManager
         )
 
-        let accountRestoreWarningFactory = AccountRestoreWarningFactory(
-            userDefaultsStorage: Core.shared.userDefaultsStorage,
-            languageManager: LanguageManager.shared
-        )
+        let accountRestoreWarningFactory = AccountRestoreWarningFactory()
+
         let viewModel = ManageAccountViewModel(
             service: service,
             accountRestoreWarningFactory: accountRestoreWarningFactory
