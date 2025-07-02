@@ -1,17 +1,12 @@
 import SwiftUI
 
 struct BackupTypeView: View {
-    @StateObject var viewModel: BackupAppViewModel
-    var onDismiss: (() -> Void)?
+    @StateObject private var viewModel = BackupAppViewModel()
+    @Binding var isPresented: Bool
 
     @State var cloudNavigationPushed = false
     @State var localNavigationPushed = false
     @State var cloudAlertPresented = false
-
-    init(onDismiss: (() -> Void)?) {
-        self.onDismiss = onDismiss
-        _viewModel = StateObject(wrappedValue: BackupAppViewModel())
-    }
 
     var body: some View {
         ScrollableThemeView {
@@ -58,7 +53,7 @@ struct BackupTypeView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             Button("button.cancel".localized) {
-                onDismiss?()
+                isPresented = false
             }
         }
     }
@@ -79,7 +74,7 @@ struct BackupTypeView: View {
         if isAvailable.wrappedValue {
             NavigationRow(
                 destination: {
-                    BackupListView(viewModel: viewModel, onDismiss: onDismiss)
+                    BackupListView(viewModel: viewModel, isPresented: $isPresented)
                         .onFirstAppear { stat(page: .exportFull, event: .open(page: statPage)) }
                 },
                 isActive: isActive

@@ -79,7 +79,7 @@ struct ManageAccountsView: View {
             .ignoresSafeArea()
         }
         .modifier(CreateAccountViewModifier(viewModel: createAccountViewModifierModel, onCreate: onCreate))
-        .modifier(RestoreAccountViewModifier(viewModel: restoreAccountViewModifierModel, onRestore: isPresented ? { isPresented = false } : nil))
+        .modifier(RestoreAccountViewModifier(viewModel: restoreAccountViewModifierModel, type: .wallet, onRestore: isPresented ? { isPresented = false } : nil))
         .navigationBarTitle("settings_manage_keys.title".localized)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {

@@ -2,9 +2,9 @@ import SwiftUI
 
 struct BackupDisclaimerView: View {
     @ObservedObject var viewModel: BackupAppViewModel
-    var onDismiss: (() -> Void)?
+    @Binding var isPresented: Bool
 
-    @State var isOn: Bool = false
+    @State private var isOn: Bool = false
 
     var body: some View {
         let backupDisclaimer = (viewModel.destination ?? .local).backupDisclaimer
@@ -30,7 +30,7 @@ struct BackupDisclaimerView: View {
                 }
             } bottomContent: {
                 NavigationLink(
-                    destination: BackupNameView(viewModel: viewModel, onDismiss: onDismiss),
+                    destination: BackupNameView(viewModel: viewModel, isPresented: $isPresented),
                     isActive: $viewModel.namePushed
                 ) {
                     Button(action: { viewModel.namePushed = true }) {
@@ -45,7 +45,7 @@ struct BackupDisclaimerView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("button.cancel".localized) {
-                    onDismiss?()
+                    isPresented = false
                 }
             }
         }

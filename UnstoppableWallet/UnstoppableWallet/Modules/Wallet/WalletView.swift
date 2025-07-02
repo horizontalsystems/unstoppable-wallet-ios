@@ -119,7 +119,7 @@ struct WalletView: View {
             MarkdownView(url: url, navigation: true).ignoresSafeArea()
         }
         .modifier(CreateAccountViewModifier(viewModel: createAccountViewModifierModel))
-        .modifier(RestoreAccountViewModifier(viewModel: restoreAccountViewModifierModel))
+        .modifier(RestoreAccountViewModifier(viewModel: restoreAccountViewModifierModel, type: .wallet))
         .modifier(BackupRequiredViewModifier.backupPrompt(account: $viewModel.backupRequiredAccount) { account in
             "receive_alert.any_coins.not_backed_up_description".localized(account.name)
         })

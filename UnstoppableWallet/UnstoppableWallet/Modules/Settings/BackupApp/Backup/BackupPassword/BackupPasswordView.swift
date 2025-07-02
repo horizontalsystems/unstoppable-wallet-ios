@@ -1,9 +1,8 @@
-
 import SwiftUI
 
 struct BackupPasswordView: View {
     @ObservedObject var viewModel: BackupAppViewModel
-    var onDismiss: (() -> Void)?
+    @Binding var isPresented: Bool
 
     @State var secureLock = true
 
@@ -72,7 +71,7 @@ struct BackupPasswordView: View {
                     if success {
                         stat(page: .exportFullToFiles, event: .exportFull)
 
-                        onDismiss?()
+                        isPresented = false
                         showDone()
                     }
                     if let error {
@@ -86,13 +85,13 @@ struct BackupPasswordView: View {
                 }
             }
             .onReceive(viewModel.dismissPublisher) {
-                onDismiss?()
+                isPresented = false
             }
             .navigationBarTitle("backup_app.backup.password.title".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button("button.cancel".localized) {
-                    onDismiss?()
+                    isPresented = false
                 }
                 .disabled(viewModel.passwordButtonProcessing)
             }
