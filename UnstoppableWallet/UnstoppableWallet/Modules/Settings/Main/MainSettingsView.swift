@@ -10,6 +10,7 @@ struct MainSettingsView: View {
     @State private var supportPresented = false
     @State private var donatePresented = false
     @State private var addressCheckerPresented = false
+    @State private var walletConnectPresented = false
 
     @StateObject var walletConnectViewModifierModel = WalletConnectViewModifierModel()
 
@@ -168,13 +169,16 @@ struct MainSettingsView: View {
                     .frame(width: geometry.size.width, alignment: .trailing)
             }
 
-            VStack(alignment: .leading, spacing: .margin4) {
+            VStack(alignment: .leading, spacing: .margin2) {
                 Text("premium.cell.title".localized).textHeadline1(color: .themeYellow)
-                Spacer()
-                Text("premium.cell.description".localized("premium.cell.description.key".localized)).textSubhead1(color: .themeLight)
+                Spacer(minLength: 0)
 
-                if let introductoryOffer = viewModel.introductoryOffer {
-                    Text(introductoryOffer).textCaptionSB(color: .themeGreen)
+                VStack(alignment: .leading, spacing: .margin4) {
+                    Text("premium.cell.description".localized("premium.cell.description.key".localized)).textSubhead1(color: .themeLight)
+
+                    if let introductoryOffer = viewModel.introductoryOffer {
+                        Text(introductoryOffer).textCaptionSB(color: .themeGreen)
+                    }
                 }
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -193,7 +197,7 @@ struct MainSettingsView: View {
 
             VStack(alignment: .leading, spacing: .margin4) {
                 Text("mini_app.cell.title".localized).textHeadline1(color: .themeYellow)
-                Spacer()
+                Spacer(minLength: 0)
                 Text("mini_app.cell.description".localized).textSubhead1(color: .themeLight)
             }
             .frame(maxWidth: .infinity, alignment: .leading)
@@ -271,7 +275,9 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func dAppConnection() -> some View {
         ClickableRow(spacing: .margin8) {
-            walletConnectViewModifierModel.handle()
+            walletConnectViewModifierModel.handle {
+                walletConnectPresented = true
+            }
         } content: {
             HStack(spacing: .margin16) {
                 Image("wallet_connect_24").themeIcon()
@@ -289,6 +295,14 @@ struct MainSettingsView: View {
             Image.disclosureIcon
         }
         .modifier(WalletConnectViewModifier(viewModel: walletConnectViewModifierModel))
+        .navigationDestination(isPresented: $walletConnectPresented) {
+            WalletConnectListView()
+                .navigationTitle("wallet_connect_list.title".localized)
+                .ignoresSafeArea()
+                .onFirstAppear {
+                    stat(page: .settings, event: .open(page: .walletConnect))
+                }
+        }
     }
 
     @ViewBuilder private func tonConnect() -> some View {

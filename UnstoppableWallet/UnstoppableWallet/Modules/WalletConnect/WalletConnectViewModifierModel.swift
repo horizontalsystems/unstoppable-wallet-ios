@@ -7,9 +7,8 @@ class WalletConnectViewModifierModel: ObservableObject {
     @Published var walletConnectNoAccountPresented = false
     @Published var walletConnectNotSupportedAccountType: AccountType?
     @Published var walletConnectBackupRequiredAccount: Account?
-    @Published var walletConnectPresented = false
 
-    func handle() {
+    func handle(onSuccess: () -> Void) {
         guard let activeAccount = accountManager.activeAccount else {
             walletConnectNoAccountPresented = true
             return
@@ -25,6 +24,6 @@ class WalletConnectViewModifierModel: ObservableObject {
             return
         }
 
-        walletConnectPresented = true
+        onSuccess()
     }
 }
