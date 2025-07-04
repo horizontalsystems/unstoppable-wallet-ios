@@ -111,7 +111,7 @@ struct ReceiveAddressView: View {
                     .highlightedDescription(text: popup.description.text, style: popup.description.style),
                 ],
                 buttons: popupButtons(mode: popup.mode),
-                onDismiss: { viewModel.popup = nil }
+                isPresented: Binding(get: { viewModel.popup != nil }, set: { if !$0 { viewModel.popup = nil } })
             )
         }
         .onFirstAppear {

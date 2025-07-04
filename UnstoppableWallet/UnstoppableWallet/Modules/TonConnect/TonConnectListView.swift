@@ -79,7 +79,7 @@ struct TonConnectListView: View {
                         tonConnectApp = nil
                     },
                 ],
-                onDismiss: { tonConnectApp = nil }
+                isPresented: Binding(get: { tonConnectApp != nil }, set: { if !$0 { tonConnectApp = nil } })
             )
         }
         .navigationTitle("TON Connect")

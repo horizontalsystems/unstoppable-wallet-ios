@@ -1,3 +1,4 @@
+import SwiftUI
 import UIKit
 
 enum PrivateKeysModule {
@@ -6,4 +7,20 @@ enum PrivateKeysModule {
         let viewModel = PrivateKeysViewModel(service: service)
         return PrivateKeysViewController(viewModel: viewModel)
     }
+}
+
+struct PrivateKeysView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    private let account: Account
+
+    init(account: Account) {
+        self.account = account
+    }
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        PrivateKeysModule.viewController(account: account)
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

@@ -104,7 +104,7 @@ struct MainView: View {
                         viewModel.accountsLostPresented = false
                     },
                 ],
-                onDismiss: { viewModel.accountsLostPresented = false }
+                isPresented: $viewModel.accountsLostPresented
             )
         }
         .modifier(BackupRequiredViewModifier.backupPromptAfterCreate(account: $backupAccount))

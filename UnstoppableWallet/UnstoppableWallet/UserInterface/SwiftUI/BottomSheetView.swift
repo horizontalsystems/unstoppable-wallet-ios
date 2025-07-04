@@ -10,41 +10,21 @@ struct BottomSheetView: View {
     private let items: [Item]
     private let buttons: [ButtonItem]
 
-    var onDismiss: (() -> Void)?
+    @Binding private var isPresented: Bool
 
-    init(icon: Icon? = nil, title: String, titleColor: Color = .themeLeah, subtitle: String? = nil, items: [Item] = [], buttons: [ButtonItem] = [], onDismiss: (() -> Void)?) {
+    init(icon: Icon? = nil, title: String, titleColor: Color = .themeLeah, subtitle: String? = nil, items: [Item] = [], buttons: [ButtonItem] = [], isPresented: Binding<Bool>) {
         self.icon = icon
         self.title = title
         self.titleColor = titleColor
         self.subtitle = subtitle
         self.items = items
         self.buttons = buttons
-        self.onDismiss = onDismiss
+        _isPresented = isPresented
     }
 
     var body: some View {
         VStack(spacing: 0) {
-            HStack(spacing: .margin16) {
-                if let icon {
-                    iconView(icon: icon)
-                }
-
-                VStack(spacing: 1) {
-                    if let subtitle {
-                        Text(title).themeBody(color: titleColor)
-                        Text(subtitle).themeSubhead2()
-                    } else {
-                        Text(title).themeHeadline2(color: titleColor)
-                    }
-                }
-
-                Button(
-                    action: { onDismiss?() },
-                    label: { Image("close_3_24") }
-                )
-            }
-            .padding(.horizontal, .margin32)
-            .padding(.vertical, .margin24)
+            TitleView(icon: icon, title: title, titleColor: titleColor, subtitle: subtitle, isPresented: $isPresented)
 
             VStack(spacing: .margin24) {
                 if !items.isEmpty {
@@ -66,31 +46,6 @@ struct BottomSheetView: View {
             }
         }
         .padding(.bottom, .margin24)
-    }
-
-    @ViewBuilder private func iconView(icon: Icon) -> some View {
-        switch icon {
-        case let .local(name, tint):
-            if let tint {
-                Image(name)
-                    .themeIcon(color: tint)
-                    .frame(width: .iconSize24, height: .iconSize24)
-            } else {
-                Image(name)
-                    .frame(width: .iconSize24, height: .iconSize24)
-            }
-        case let .remote(url: url, placeholder: placeholder):
-            KFImage.url(URL(string: url))
-                .resizable()
-                .placeholder {
-                    if let placeholder {
-                        Image(placeholder)
-                    } else {
-                        RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).fill(Color.themeBlade)
-                    }
-                }
-                .frame(width: .iconSize24, height: .iconSize24)
-        }
     }
 
     @ViewBuilder private func itemView(item: Item) -> some View {
@@ -120,6 +75,74 @@ struct BottomSheetView: View {
             }
         )
         .buttonStyle(PrimaryButtonStyle(style: item.style))
+    }
+}
+
+extension BottomSheetView {
+    struct TitleView: View {
+        private let icon: Icon?
+        private let title: String
+        private let titleColor: Color
+        private let subtitle: String?
+
+        @Binding private var isPresented: Bool
+
+        init(icon: Icon? = nil, title: String, titleColor: Color = .themeLeah, subtitle: String? = nil, isPresented: Binding<Bool>) {
+            self.icon = icon
+            self.title = title
+            self.titleColor = titleColor
+            self.subtitle = subtitle
+            _isPresented = isPresented
+        }
+
+        var body: some View {
+            HStack(spacing: .margin16) {
+                if let icon {
+                    iconView(icon: icon)
+                }
+
+                VStack(spacing: 1) {
+                    if let subtitle {
+                        Text(title).themeBody(color: titleColor)
+                        Text(subtitle).themeSubhead2()
+                    } else {
+                        Text(title).themeHeadline2(color: titleColor)
+                    }
+                }
+
+                Button(
+                    action: { isPresented = false },
+                    label: { Image("close_3_24") }
+                )
+            }
+            .padding(.horizontal, .margin32)
+            .padding(.vertical, .margin24)
+        }
+
+        @ViewBuilder private func iconView(icon: Icon) -> some View {
+            switch icon {
+            case let .local(name, tint):
+                if let tint {
+                    Image(name)
+                        .themeIcon(color: tint)
+                        .frame(width: .iconSize24, height: .iconSize24)
+                } else {
+                    Image(name)
+                        .frame(width: .iconSize24, height: .iconSize24)
+                }
+            case let .remote(url: url, placeholder: placeholder):
+                KFImage.url(URL(string: url))
+                    .resizable()
+                    .placeholder {
+                        if let placeholder {
+                            Image(placeholder)
+                        } else {
+                            RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).fill(Color.themeBlade)
+                        }
+                    }
+                    .frame(width: .iconSize24, height: .iconSize24)
+            }
+        }
     }
 }
 

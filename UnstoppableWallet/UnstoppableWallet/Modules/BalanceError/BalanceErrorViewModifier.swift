@@ -16,7 +16,7 @@ struct BalanceErrorViewModifier: ViewModifier {
                     icon: .local(name: "warning_2_24", tint: .themeLucian),
                     title: "balance_error.sync_error".localized,
                     buttons: buttons(item: item),
-                    onDismiss: { viewModel.item = nil }
+                    isPresented: Binding(get: { viewModel.item != nil }, set: { if !$0 { viewModel.item = nil } })
                 )
             }
             .sheet(item: $presentedBtcBlockchain) { blockchain in

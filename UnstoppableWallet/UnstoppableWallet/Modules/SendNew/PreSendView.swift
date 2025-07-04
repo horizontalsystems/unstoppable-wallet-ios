@@ -103,7 +103,7 @@ struct PreSendView: View {
                     },
                     .init(style: .transparent, title: "button.cancel".localized) { addressAlertPresented = false },
                 ],
-                onDismiss: { addressAlertPresented = false }
+                isPresented: $addressAlertPresented
             )
         }
         .accentColor(.themeJacob)

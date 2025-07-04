@@ -65,8 +65,7 @@ struct ManageAccountsView: View {
                 isPresented = false
             }
         }) { account in
-            ManageAccountView(account: account)
-                .ignoresSafeArea()
+            ManageAccountView(account: account, isPresented: Binding(get: { presentedAccount != nil }, set: { if !$0 { presentedAccount = nil } }))
         }
         .sheet(isPresented: $watchPresented) {
             WatchView {

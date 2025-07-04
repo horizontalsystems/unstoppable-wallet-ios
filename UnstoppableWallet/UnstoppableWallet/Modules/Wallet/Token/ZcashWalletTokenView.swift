@@ -61,7 +61,7 @@ struct ZcashWalletTokenView: View {
                         transparentPresented = false
                     },
                 ],
-                onDismiss: { transparentPresented = false }
+                isPresented: $transparentPresented
             )
         }
         .sheet(isPresented: $shieldPresented) {

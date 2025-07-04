@@ -32,7 +32,7 @@ struct BackupRequiredViewModifier: ViewModifier {
                             self.account = nil
                         },
                     ],
-                    onDismiss: { self.account = nil }
+                    isPresented: Binding(get: { self.account != nil }, set: { if !$0 { self.account = nil } })
                 )
             }
             .sheet(item: $manualBackupAccount) { account in
