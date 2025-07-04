@@ -8,6 +8,7 @@ struct ManageAccountView: View {
     @Binding var isPresented: Bool
 
     @State private var unlinkPresented = false
+    @State private var unlinkWatchPresented = false
     @State private var recoveryPhrasePresented = false
     @State private var presentedBackupReason: BackupReason?
     @State private var cloudBackupPresented = false
@@ -138,7 +139,11 @@ struct ManageAccountView: View {
 
                     ListSection {
                         ClickableRow(action: {
-                            unlinkPresented = true
+                            if viewModel.account.watchAccount {
+                                unlinkWatchPresented = true
+                            } else {
+                                unlinkPresented = true
+                            }
                         }) {
                             Image("trash_24").themeIcon(color: .themeLucian)
                             Text("manage_account.unlink".localized).themeBody(color: .themeLucian)
@@ -171,10 +176,23 @@ struct ManageAccountView: View {
             }
             .bottomSheet(isPresented: $unlinkPresented) {
                 UnlinkView(isPresented: $unlinkPresented) {
-                    viewModel.deleteAccount()
-                    HudHelper.instance.show(banner: .deleted)
-                    isPresented = false
+                    unlink()
                 }
+            }
+            .bottomSheet(isPresented: $unlinkWatchPresented) {
+                BottomSheetView(
+                    icon: .warning,
+                    title: "settings_manage_keys.delete.title".localized,
+                    items: [
+                        .highlightedDescription(text: "settings_manage_keys.delete.confirmation_watch".localized, style: .warning),
+                    ],
+                    buttons: [
+                        .init(style: .red, title: "settings_manage_keys.delete.confirmation_watch.button".localized) {
+                            unlink()
+                        },
+                    ],
+                    isPresented: $unlinkWatchPresented
+                )
             }
             .bottomSheet(isPresented: $confirmDeleteCloudBackupPresented) {
                 BottomSheetView(
@@ -261,6 +279,12 @@ struct ManageAccountView: View {
         } catch {
             HudHelper.instance.show(banner: .error(string: "backup.cloud.cant_delete_file".localized))
         }
+    }
+
+    private func unlink() {
+        viewModel.deleteAccount()
+        HudHelper.instance.show(banner: .deleted)
+        isPresented = false
     }
 }
 
