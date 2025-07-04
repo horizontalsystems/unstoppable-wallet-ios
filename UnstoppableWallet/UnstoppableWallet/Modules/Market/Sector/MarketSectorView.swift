@@ -79,7 +79,7 @@ struct MarketSectorView: View {
                             infoPresented = false
                         },
                     ],
-                    onDismiss: { infoPresented = false }
+                    isPresented: $infoPresented
                 )
             }
         }

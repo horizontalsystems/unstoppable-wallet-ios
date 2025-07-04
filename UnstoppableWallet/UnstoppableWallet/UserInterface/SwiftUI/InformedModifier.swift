@@ -21,7 +21,7 @@ struct Informed: ViewModifier {
                 items: [
                     .text(text: infoDescription.description),
                 ],
-                onDismiss: { descriptionPresented = false }
+                isPresented: $descriptionPresented
             )
         }
     }
@@ -44,7 +44,7 @@ struct InfoBottomSheet: ViewModifier {
                             info = nil
                         },
                     ],
-                    onDismiss: { info = nil }
+                    isPresented: Binding(get: { info != nil }, set: { if !$0 { info = nil } })
                 )
             }
     }

@@ -98,7 +98,7 @@ struct PurchasesView: View {
                         presentedInfoViewItem = nil
                     },
                 ],
-                onDismiss: { presentedInfoViewItem = nil }
+                isPresented: Binding(get: { presentedInfoViewItem != nil }, set: { if !$0 { presentedInfoViewItem = nil } })
             )
         }
         .bottomSheet(

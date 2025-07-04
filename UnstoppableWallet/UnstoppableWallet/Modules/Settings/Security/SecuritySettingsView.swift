@@ -2,9 +2,9 @@ import SwiftUI
 
 struct SecuritySettingsView: View {
     @ObservedObject var viewModel: SecuritySettingsViewModel
+    @StateObject var unlockViewModifierModel = UnlockViewModifierModel()
 
     @State var createPasscodeReason: CreatePasscodeModule.CreatePasscodeReason?
-    @State var unlockReason: UnlockReason?
 
     @State var biometryEnabledTypePresented = false
     @State var editPasscodePresented = false
@@ -18,14 +18,18 @@ struct SecuritySettingsView: View {
                 ListSection {
                     if viewModel.isPasscodeSet {
                         ClickableRow(action: {
-                            unlockReason = .changePasscode
+                            unlockViewModifierModel.handle {
+                                editPasscodePresented = true
+                            }
                         }) {
                             Image("dialpad_alt_2_24").themeIcon(color: .themeJacob)
                             Text("settings_security.edit_passcode".localized).themeBody(color: .themeJacob)
                         }
 
                         ClickableRow(action: {
-                            unlockReason = .disablePasscode
+                            unlockViewModifierModel.handle {
+                                viewModel.removePasscode()
+                            }
                         }) {
                             Image("trash_24").themeIcon(color: .themeLucian)
                             Text("settings_security.disable_passcode".localized).themeBody(color: .themeLucian)
@@ -121,14 +125,19 @@ struct SecuritySettingsView: View {
                                     subscriptionPresented = true
                                     return
                                 }
-                                unlockReason = .changeDuressPasscode
+                                unlockViewModifierModel.handle {
+                                    editDuressPasscodePresented = true
+                                }
+
                             }) {
                                 Image("switch_wallet_24").themeIcon(color: .themeJacob)
                                 Text("settings_security.edit_duress_passcode".localized).themeBody()
                             }
 
                             ClickableRow(action: {
-                                unlockReason = .disableDuressMode
+                                unlockViewModifierModel.handle {
+                                    viewModel.removeDuressPasscode()
+                                }
                             }) {
                                 Image("trash_24").themeIcon(color: .themeLucian)
                                 Text("settings_security.disable_duress_mode".localized).themeBody(color: .themeLucian)
@@ -142,7 +151,9 @@ struct SecuritySettingsView: View {
                                 }
 
                                 if viewModel.isPasscodeSet {
-                                    unlockReason = .enableDuressMode
+                                    unlockViewModifierModel.handle {
+                                        createDuressPasscodePresented = true
+                                    }
                                 } else {
                                     createPasscodeReason = .duress
                                 }
@@ -183,30 +194,6 @@ struct SecuritySettingsView: View {
                 }
                 .interactiveDismiss(canDismissSheet: false)
             }
-            .sheet(item: $unlockReason) { reason in
-                ThemeNavigationView {
-                    ModuleUnlockView {
-                        switch reason {
-                        case .changePasscode:
-                            DispatchQueue.main.async {
-                                editPasscodePresented = true
-                            }
-                        case .disablePasscode:
-                            viewModel.removePasscode()
-                        case .enableDuressMode:
-                            DispatchQueue.main.async {
-                                createDuressPasscodePresented = true
-                            }
-                        case .changeDuressPasscode:
-                            DispatchQueue.main.async {
-                                editDuressPasscodePresented = true
-                            }
-                        case .disableDuressMode:
-                            viewModel.removeDuressPasscode()
-                        }
-                    }
-                }
-            }
             .sheet(isPresented: $editPasscodePresented) {
                 ThemeNavigationView { EditPasscodeModule.editPasscodeView(showParentSheet: $editPasscodePresented) }
             }
@@ -219,21 +206,10 @@ struct SecuritySettingsView: View {
             .sheet(isPresented: $subscriptionPresented) {
                 PurchasesView()
             }
+            .modifier(UnlockViewModifier(viewModel: unlockViewModifierModel))
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
         .navigationTitle("settings_security.title".localized)
-    }
-
-    enum UnlockReason: Identifiable {
-        case changePasscode
-        case disablePasscode
-        case enableDuressMode
-        case changeDuressPasscode
-        case disableDuressMode
-
-        var id: Self {
-            self
-        }
     }
 
     private struct AutoLockView: View {

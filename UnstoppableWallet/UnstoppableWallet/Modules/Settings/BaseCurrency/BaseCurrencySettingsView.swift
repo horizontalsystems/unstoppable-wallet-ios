@@ -41,7 +41,7 @@ struct BaseCurrencySettingsView: View {
                     },
                     .init(style: .transparent, title: "button.cancel".localized) { confirmationCurrency = nil },
                 ],
-                onDismiss: { confirmationCurrency = nil }
+                isPresented: Binding(get: { confirmationCurrency != nil }, set: { if !$0 { confirmationCurrency = nil } })
             )
         }
         .navigationBarTitle("settings.base_currency.title".localized)

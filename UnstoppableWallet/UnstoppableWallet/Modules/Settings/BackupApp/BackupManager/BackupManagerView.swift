@@ -1,11 +1,10 @@
 import SwiftUI
 
 struct BackupManagerView: View {
-    @StateObject private var viewModel = BackupManagerViewModel()
     @StateObject var restoreAccountViewModifierModel = TermsAcceptedViewModifierModel()
+    @StateObject var unlockViewModifierModel = UnlockViewModifierModel()
 
     @State private var backupPresented = false
-    @State private var unlockPresented = false
 
     var body: some View {
         ScrollableThemeView {
@@ -19,9 +18,7 @@ struct BackupManagerView: View {
                     }
 
                     ClickableRow(action: {
-                        if viewModel.unlockRequired {
-                            unlockPresented = true
-                        } else {
+                        unlockViewModifierModel.handle {
                             backupPresented = true
                         }
                     }) {
@@ -38,15 +35,7 @@ struct BackupManagerView: View {
                 BackupTypeView(isPresented: $backupPresented)
             }
         }
-        .sheet(isPresented: $unlockPresented) {
-            ThemeNavigationStack {
-                ModuleUnlockView {
-                    DispatchQueue.main.async {
-                        backupPresented = true
-                    }
-                }
-            }
-        }
         .modifier(RestoreAccountViewModifier(viewModel: restoreAccountViewModifierModel, type: .full))
+        .modifier(UnlockViewModifier(viewModel: unlockViewModifierModel))
     }
 }

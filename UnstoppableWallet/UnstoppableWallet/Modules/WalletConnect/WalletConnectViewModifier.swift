@@ -22,7 +22,7 @@ struct WalletConnectViewModifier: ViewModifier {
                             viewModel.walletConnectNoAccountPresented = false
                         },
                     ],
-                    onDismiss: { viewModel.walletConnectNoAccountPresented = false }
+                    isPresented: $viewModel.walletConnectNoAccountPresented
                 )
             }
             .bottomSheet(item: $viewModel.walletConnectNotSupportedAccountType) { accountType in
@@ -44,7 +44,7 @@ struct WalletConnectViewModifier: ViewModifier {
                             viewModel.walletConnectNotSupportedAccountType = nil
                         },
                     ],
-                    onDismiss: { viewModel.walletConnectNotSupportedAccountType = nil }
+                    isPresented: Binding(get: { viewModel.walletConnectNotSupportedAccountType != nil }, set: { if !$0 { viewModel.walletConnectNotSupportedAccountType = nil } })
                 )
             }
             .modifier(BackupRequiredViewModifier.backupPrompt(account: $viewModel.walletConnectBackupRequiredAccount) { account in

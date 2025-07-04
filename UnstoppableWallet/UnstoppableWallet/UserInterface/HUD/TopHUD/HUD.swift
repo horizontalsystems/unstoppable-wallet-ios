@@ -84,7 +84,16 @@ extension HUD: HUDViewRouterInterface {
         presenter.view = view
         interactor.delegate = presenter
 
-        let window = HUDWindow(frame: UIScreen.main.bounds, rootController: view)
+        // let window = HUDWindow(frame: UIScreen.main.bounds, rootController: view)
+
+        let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene
+        let window = UIWindow(windowScene: scene!)
+        window.frame = UIScreen.main.bounds
+        window.backgroundColor = .clear
+        window.rootViewController = view
+        window.isHidden = false
+        window.windowLevel = .normal
+
         view.window = window
 
         view.place()
