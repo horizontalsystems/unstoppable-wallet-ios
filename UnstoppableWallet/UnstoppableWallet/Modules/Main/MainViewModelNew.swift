@@ -12,6 +12,7 @@ class MainViewModelNew: ObservableObject {
 
     private let releaseNotesService = ReleaseNotesService()
     private let jailbreakService = JailbreakService()
+    private let deepLinkService = DeepLinkService(deepLinkManager: Core.shared.deepLinkManager)
 
     private var cancellables = Set<AnyCancellable>()
     private let disposeBag = DisposeBag()
@@ -41,6 +42,14 @@ class MainViewModelNew: ObservableObject {
     @Published var releaseNotesUrl: URL? {
         didSet {
             if releaseNotesUrl == nil {
+                handleNextAlert()
+            }
+        }
+    }
+
+    @Published var deepLink: DeepLinkManager.DeepLink? {
+        didSet {
+            if deepLink == nil {
                 handleNextAlert()
             }
         }
@@ -110,10 +119,10 @@ extension MainViewModelNew {
         } else if accountManager.accountsLost {
             accountsLostPresented = true
             accountManager.accountsLost = false
+        } else if let deepLink = deepLinkService.deepLink {
+            self.deepLink = deepLink
+            //     handleDeepLink(deepLink: deepLink)
         }
-        // else if let deepLink = deepLinkService.deepLink {
-        //     handleDeepLink(deepLink: deepLink)
-        // }
     }
 }
 

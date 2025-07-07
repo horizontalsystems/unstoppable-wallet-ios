@@ -199,7 +199,7 @@ class WalletConnectMainViewController: ThemeViewController {
     }
 
     private func close() {
-        sourceViewController?.dismiss(animated: true)
+        dismiss(animated: true)
     }
 
     // pending requests section

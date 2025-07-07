@@ -9,7 +9,6 @@ class WalletConnectMainService {
     private let disposeBag = DisposeBag()
 
     private let service: WalletConnectService
-    private let manager: WalletConnectManager
     private let reachabilityManager: IReachabilityManager
     private let accountManager: AccountManager
     private let proposalHandler: IProposalHandler
@@ -40,11 +39,10 @@ class WalletConnectMainService {
         }
     }
 
-    init(session: WalletConnectSign.Session? = nil, proposal: WalletConnectSign.Session.Proposal? = nil, service: WalletConnectService, manager: WalletConnectManager, reachabilityManager: IReachabilityManager, accountManager: AccountManager, proposalHandler: IProposalHandler, proposalValidator: ProposalValidator) {
+    init(session: WalletConnectSign.Session? = nil, proposal: WalletConnectSign.Session.Proposal? = nil, service: WalletConnectService, reachabilityManager: IReachabilityManager, accountManager: AccountManager, proposalHandler: IProposalHandler, proposalValidator: ProposalValidator) {
         self.session = session
         self.proposal = proposal
         self.service = service
-        self.manager = manager
         self.reachabilityManager = reachabilityManager
         self.accountManager = accountManager
         self.proposalHandler = proposalHandler
@@ -220,7 +218,7 @@ extension WalletConnectMainService {
             return
         }
 
-        guard manager.activeAccount != nil else {
+        guard accountManager.activeAccount != nil else {
             state = .invalid(error: WalletConnectMainModule.SessionError.noSuitableAccount)
             return
         }

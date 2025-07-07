@@ -1,20 +1,23 @@
 import Combine
-import RxCocoa
-import RxSwift
+import Foundation
 import WalletConnectUtils
+import Web3Wallet
 
-enum WalletConnectUriHandler {
-    public static func validate(uri: String) throws {
-        _ = try Core.shared.walletConnectSessionManager.service.validate(uri: uri)
+enum WalletConnectUriHelper {
+    public static func pair(uri: String) async throws {
+        let uri = try validate(uri: uri)
+        try await Web3Wallet.instance.pair(uri: uri)
     }
 
-    public static func pair(uri: String) async throws {
-        let uri = try Core.shared.walletConnectSessionManager.service.validate(uri: uri)
-        try await Core.shared.walletConnectSessionManager.service.pair(uri: uri)
+    public static func validate(uri: String) throws -> WalletConnectUtils.WalletConnectURI {
+        guard let uri = try? WalletConnectUtils.WalletConnectURI(uriString: uri) else {
+            throw WalletConnectUriHelper.ConnectionError.wrongUri
+        }
+        return uri
     }
 }
 
-extension WalletConnectUriHandler {
+extension WalletConnectUriHelper {
     static func uriVersion(uri: String) -> Int? {
         if uri.contains("@1?") {
             return 1
@@ -26,8 +29,16 @@ extension WalletConnectUriHandler {
     }
 }
 
-extension WalletConnectUriHandler {
-    enum ConnectionError: Error {
+extension WalletConnectUriHelper {
+    enum ConnectionError: Error, LocalizedError {
         case wrongUri
+        case walletConnectDontRespond
+
+        public var errorDescription: String? {
+            switch self {
+            case .wrongUri: return "wallet_connect.error.invalid_url".localized
+            case .walletConnectDontRespond: return "alert.try_again".localized
+            }
+        }
     }
 }

@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUICore
 
 import UIKit
 import WalletConnectSign
@@ -35,15 +36,25 @@ class WCEthereumTransactionPayload: WCRequestPayload {
 class WCSendEthereumTransactionPayload: WCEthereumTransactionPayload {
     override class var method: String { "eth_sendTransaction" }
     override class var name: String { "Approve Transaction" }
+
     override class func module(request: WalletConnectRequest) -> UIViewController? {
         WalletConnectSendView(request: request).toNavigationViewController()
+    }
+
+    class func view(request: WalletConnectRequest) -> some View {
+        WCSendEthereumTransactionRequestView(request: request)
     }
 }
 
 class WCSignEthereumTransactionPayload: WCEthereumTransactionPayload {
     override class var method: String { "eth_signTransaction" }
     override class var name: String { "Sign Transaction" }
+
     override class func module(request: WalletConnectRequest) -> UIViewController? {
         WCSignEthereumTransactionRequestModule.viewController(request: request).map { ThemeNavigationController(rootViewController: $0) }
+    }
+
+    class func view(request: WalletConnectRequest) -> some View {
+        WCSignEthereumTransactionRequestView(request: request)
     }
 }

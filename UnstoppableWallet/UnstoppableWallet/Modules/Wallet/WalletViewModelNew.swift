@@ -132,10 +132,10 @@ extension WalletViewModelNew {
         try? await Task.sleep(nanoseconds: 1_000_000_000)
     }
 
-    func process(scanned _: String) {
-        // Task { [eventHandler] in
-        //     try await eventHandler.handle(source: StatPage.balance, event: scanned.trimmingCharacters(in: .whitespacesAndNewlines), eventType: [.walletConnectUri, .address])
-        // }
+    func process(scanned: String) {
+        Task { [eventHandler] in
+            try await eventHandler.handle(source: StatPage.balance, event: scanned.trimmingCharacters(in: .whitespacesAndNewlines), eventType: [.walletConnectUri, .address])
+        }
     }
 }
 

@@ -105,7 +105,7 @@ class Core {
     let kitCleaner: KitCleaner
     let appManager: AppManager
 
-    let appEventHandler = EventHandler()
+    let appEventHandler: EventHandler
 
     let performanceDataManager: PerformanceDataManager
 
@@ -224,7 +224,6 @@ class Core {
         nftMetadataSyncer = NftMetadataSyncer(nftAdapterManager: nftAdapterManager, nftMetadataManager: nftMetadataManager, nftStorage: nftStorage)
 
         walletConnectRequestHandler = WalletConnectRequestChain.instance(evmBlockchainManager: evmBlockchainManager, accountManager: accountManager)
-        walletConnectManager = WalletConnectManager(accountManager: accountManager, evmBlockchainManager: evmBlockchainManager)
 
         let walletClientInfo = WalletConnectClientInfo(
             projectId: AppConfig.walletConnectV2ProjectKey ?? "c4f79cc821944d9680842e34466bfb",
@@ -249,6 +248,8 @@ class Core {
             requestHandler: walletConnectRequestHandler,
             currentDateProvider: CurrentDateProvider()
         )
+
+        walletConnectManager = WalletConnectManager(walletConnectSessionManager: walletConnectSessionManager)
 
         let adapterFactory = AdapterFactory(
             evmBlockchainManager: evmBlockchainManager,
@@ -323,6 +324,26 @@ class Core {
         kitCleaner = KitCleaner(accountManager: accountManager)
 
         performanceDataManager = PerformanceDataManager(userDefaultsStorage: userDefaultsStorage)
+
+        appEventHandler = EventHandler(deepLinkManager: deepLinkManager)
+
+        let walletConnectHandler = WalletConnectHandlerModule.handler(
+            walletConnectManager: walletConnectSessionManager,
+            walletConnectRequestHandler: walletConnectRequestHandler,
+            cloudAccountBackupManager: cloudBackupManager,
+            accountManager: accountManager,
+            lockManager: lockManager
+        )
+        let widgetCoinHandler = WidgetCoinEventHandler(marketKit: marketKit)
+        let sendAddressHandler = AddressEventHandler(marketKit: marketKit)
+        let telegramUserHandler = TelegramUserHandler(marketKit: marketKit)
+        let tonConnectHandler = TonConnectEventHandler(tonConnectManager: tonConnectManager)
+
+        appEventHandler.append(handler: walletConnectHandler)
+        // eventHandler.append(handler: tonConnectHandler)
+        appEventHandler.append(handler: widgetCoinHandler)
+        appEventHandler.append(handler: sendAddressHandler)
+        appEventHandler.append(handler: telegramUserHandler)
 
         appManager = AppManager(
             accountManager: accountManager,

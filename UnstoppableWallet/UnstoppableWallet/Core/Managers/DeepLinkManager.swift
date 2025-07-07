@@ -1,8 +1,6 @@
 import BigInt
-
+import Combine
 import Foundation
-import RxRelay
-import RxSwift
 
 class DeepLinkManager {
     static let deepLinkScheme = "unstoppable.money"
@@ -10,12 +8,12 @@ class DeepLinkManager {
     static let tonUniversalHost = "ton-connect"
     static let tonDeepLinkHost = "tc"
 
-    private let newSchemeRelay = BehaviorRelay<DeepLink?>(value: nil)
+    private let newSchemeSubject = CurrentValueSubject<DeepLink?, Never>(nil)
 }
 
 extension DeepLinkManager {
-    var newSchemeObservable: Observable<DeepLink?> {
-        newSchemeRelay.asObservable()
+    var newSchemePublisher: AnyPublisher<DeepLink?, Never> {
+        newSchemeSubject.eraseToAnyPublisher()
     }
 
     func handle(url: URL) {
@@ -31,7 +29,7 @@ extension DeepLinkManager {
         if (scheme == DeepLinkManager.deepLinkScheme && host == "wc") || (scheme == "https" && host == DeepLinkManager.deepLinkScheme && path == "/wc"),
            let uri = queryItems?.first(where: { $0.name == "uri" })?.value
         {
-            newSchemeRelay.accept(.walletConnect(url: uri))
+            newSchemeSubject.send(.walletConnect(url: uri))
             return
         }
 
@@ -39,7 +37,7 @@ extension DeepLinkManager {
             (scheme == "https" && host == Self.deepLinkScheme && path == "/\(Self.tonUniversalHost)"),
             let parameters = try? TonConnectManager.parseParameters(queryItems: queryItems)
         {
-            newSchemeRelay.accept(.tonConnect(parameters: parameters))
+            newSchemeSubject.send(.tonConnect(parameters: parameters))
             return
         }
 
@@ -47,7 +45,7 @@ extension DeepLinkManager {
             let parser = AddressParserFactory.parser(blockchainType: .ton, tokenType: nil)
             do {
                 let address = try parser.parse(url: url.absoluteString)
-                newSchemeRelay.accept(.transfer(addressUri: address))
+                newSchemeSubject.send(.transfer(addressUri: address))
                 return
             } catch {
                 HudHelper.instance.show(banner: .error(string: error.localizedDescription))
@@ -57,7 +55,7 @@ extension DeepLinkManager {
         if scheme == DeepLinkManager.deepLinkScheme, host == "coin" {
             let uid = path.replacingOccurrences(of: "/", with: "")
 
-            newSchemeRelay.accept(.coin(uid: uid))
+            newSchemeSubject.send(.coin(uid: uid))
             return
         }
 
@@ -69,13 +67,13 @@ extension DeepLinkManager {
                 return
             }
 
-            newSchemeRelay.accept(.referral(telegramUserId: userId, referralCode: referralCode))
+            newSchemeSubject.send(.referral(telegramUserId: userId, referralCode: referralCode))
             return
         }
     }
 
     func setDeepLinkShown() {
-        newSchemeRelay.accept(nil)
+        newSchemeSubject.send(nil)
     }
 }
 

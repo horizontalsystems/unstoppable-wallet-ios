@@ -1,12 +1,13 @@
 import EvmKit
 import MarketKit
+import SwiftUI
 import UIKit
 
 enum WCSignEthereumTransactionRequestModule {
     static func viewController(request: WalletConnectRequest) -> UIViewController? {
         guard let payload = request.payload as? WCSignEthereumTransactionPayload,
               let account = Core.shared.accountManager.activeAccount,
-              let evmKitWrapper = Core.shared.walletConnectManager.evmKitWrapper(chainId: request.chain.id, account: account)
+              let evmKitWrapper = Core.shared.evmBlockchainManager.kitWrapper(chainId: request.chain.id, account: account)
         else {
             return nil
         }
@@ -40,4 +41,23 @@ enum WCSignEthereumTransactionRequestModule {
 
         return WCSignEthereumTransactionRequestViewController(viewModel: viewModel, transactionViewModel: transactionViewModel, settingsViewModel: settingsViewModel)
     }
+}
+
+struct WCSignEthereumTransactionRequestView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    let request: WalletConnectRequest
+
+    init(request: WalletConnectRequest) {
+        self.request = request
+    }
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        let controller = WCSignEthereumTransactionRequestModule.viewController(request: request) ??
+            ErrorViewController(text: AppError.unknownError.localizedDescription)
+
+        return ThemeNavigationController(rootViewController: controller)
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

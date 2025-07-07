@@ -269,12 +269,12 @@ extension WelcomeScreenViewController: UIScrollViewDelegate {
 
 extension WelcomeScreenViewController {
     static func instance(onFinish: @escaping () -> Void) -> UIViewController {
-        let eventHandler = EventHandler()
+        let eventHandler = EventHandler(deepLinkManager: Core.shared.deepLinkManager)
         let deepLinkService = DeepLinkService(deepLinkManager: Core.shared.deepLinkManager)
         let viewModel = WelcomeScreenViewModel(deepLinkService: deepLinkService, eventHandler: eventHandler)
 
         let viewController = WelcomeScreenViewController(viewModel: viewModel, onFinish: onFinish)
-        let telegramUserHandler = TelegramUserHandler.handler(parentViewController: viewController)
+        let telegramUserHandler = TelegramUserHandler(marketKit: Core.shared.marketKit)
 
         eventHandler.append(handler: telegramUserHandler)
 

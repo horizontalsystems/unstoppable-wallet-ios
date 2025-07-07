@@ -67,6 +67,8 @@ public class HudHelper {
 
 extension HudHelper {
     enum BannerType {
+        static let waitingForSessionKey = "waiting_for_session"
+
         case addedToWatchlist
         case removedFromWatchlist
         case addedToWallet
@@ -206,6 +208,13 @@ extension HudHelper {
             default: return true
             }
         }
+
+        var tag: String {
+            switch self {
+            case .waitingForSession: return Self.waitingForSessionKey
+            default: return ""
+            }
+        }
     }
 
     func show(banner: BannerType) {
@@ -230,6 +239,7 @@ extension HudHelper {
             icon: banner.icon,
             iconColor: banner.color,
             title: banner.title,
+            tag: banner.tag,
             showingTime: banner.showingTime,
             isLoading: banner.isLoading
         )

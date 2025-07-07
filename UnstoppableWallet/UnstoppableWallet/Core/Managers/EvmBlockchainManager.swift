@@ -119,4 +119,12 @@ extension EvmBlockchainManager {
     func evmAccountManager(blockchainType: BlockchainType) -> EvmAccountManager {
         evmManagers(blockchainType: blockchainType).1
     }
+
+    func kitWrapper(chainId: Int, account: Account) -> EvmKitWrapper? {
+        guard let blockchainType = blockchain(chainId: chainId)?.type else {
+            return nil
+        }
+
+        return try? evmKitManager(blockchainType: blockchainType).evmKitWrapper(account: account, blockchainType: blockchainType)
+    }
 }

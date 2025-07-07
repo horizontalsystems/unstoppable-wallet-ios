@@ -1,14 +1,16 @@
+import Combine
 import MarketKit
 import RxSwift
 import UIKit
 
-class AddressAppShowModule {
+class AddressEventHandler {
     private let disposeBag = DisposeBag()
-    private let parentViewController: UIViewController?
-    private let marketKit = Core.shared.marketKit
+    private let marketKit: MarketKit.Kit
 
-    init(parentViewController: UIViewController?) {
-        self.parentViewController = parentViewController
+    private var signalSubject = PassthroughSubject<EventHandlerSignal, Never>()
+
+    init(marketKit: MarketKit.Kit) {
+        self.marketKit = marketKit
     }
 
     private func uri(text: String) -> AddressUri? {
@@ -28,7 +30,7 @@ class AddressAppShowModule {
         }
     }
 
-    private func showSendTokenList(source: StatPage, eventType: EventHandler.EventType, uri: AddressUri, allowedBlockchainTypes: [BlockchainType]? = nil) {
+    private func handlerResult(source: StatPage, eventType: EventHandler.EventType, uri: AddressUri, allowedBlockchainTypes: [BlockchainType]? = nil) -> EventHandlerSignal {
         let allowedBlockchainTypes = allowedBlockchainTypes ?? uri.allowedBlockchainTypes
 
         var allowedTokenType: TokenType?
@@ -50,19 +52,22 @@ class AddressAppShowModule {
         let event = StatEvent.openSendTokenList(coinUid: token?.coin.uid, chainUid: token?.blockchain.uid)
         stat(page: source, section: eventType.contains(.address) ? .qrScan : .deepLink, event: event)
 
-        guard let viewController = WalletModule.sendTokenListViewController(
-            allowedBlockchainTypes: allowedBlockchainTypes,
-            allowedTokenTypes: allowedTokenType.map { [$0] },
-            address: uri.address,
-            amount: uri.amount
-        ) else {
-            return
-        }
-        parentViewController?.visibleController.present(viewController, animated: true)
+        return .sendPage(
+            .init(
+                allowedBlockchainTypes: allowedBlockchainTypes,
+                allowedTokenTypes: allowedTokenType.map { [$0] },
+                address: uri.address,
+                amount: uri.amount
+            )
+        )
     }
 }
 
-extension AddressAppShowModule: IEventHandler {
+extension AddressEventHandler: IEventHandler {
+    var signal: AnyPublisher<EventHandlerSignal, Never> {
+        signalSubject.eraseToAnyPublisher()
+    }
+
     @MainActor
     func handle(source: StatPage, event: Any, eventType: EventHandler.EventType) async throws {
         // check if we parse deeplink with transfer address
@@ -71,9 +76,10 @@ extension AddressAppShowModule: IEventHandler {
                 guard case let .transfer(parsed) = event else {
                     throw EventHandler.HandleError.noSuitableHandler
                 }
-                showSendTokenList(source: source, eventType: eventType, uri: parsed)
-            } else {
+                signalSubject.send(handlerResult(source: source, eventType: eventType, uri: parsed))
                 return
+            } else {
+                throw EventHandler.HandleError.noSuitableHandler
             }
         }
 
@@ -84,7 +90,8 @@ extension AddressAppShowModule: IEventHandler {
             }
 
             if let parsed = uri(text: text.trimmingCharacters(in: .whitespacesAndNewlines)) {
-                showSendTokenList(source: source, eventType: eventType, uri: parsed)
+                signalSubject.send(handlerResult(source: source, eventType: eventType, uri: parsed))
+                return
             } else {
                 let disposeBag = DisposeBag()
                 let chain = AddressParserFactory.parserChain(blockchainType: nil, withEns: false)
@@ -104,14 +111,11 @@ extension AddressAppShowModule: IEventHandler {
                 }
                 var uri = AddressUri(scheme: "")
                 uri.address = text
-                showSendTokenList(source: source, eventType: eventType, uri: uri, allowedBlockchainTypes: types)
+                signalSubject.send(handlerResult(source: source, eventType: eventType, uri: uri, allowedBlockchainTypes: types))
+                return
             }
         }
-    }
-}
 
-extension AddressAppShowModule {
-    static func handler(parentViewController: UIViewController? = nil) -> IEventHandler {
-        AddressAppShowModule(parentViewController: parentViewController)
+        throw EventHandler.HandleError.noSuitableHandler
     }
 }

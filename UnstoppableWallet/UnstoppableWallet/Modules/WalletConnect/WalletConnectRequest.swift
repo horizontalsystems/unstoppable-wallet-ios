@@ -3,7 +3,7 @@ import Foundation
 
 import BigInt
 
-class WalletConnectRequest {
+class WalletConnectRequest: Identifiable {
     let id: Int
     let chain: Chain
     let payload: WCRequestPayload

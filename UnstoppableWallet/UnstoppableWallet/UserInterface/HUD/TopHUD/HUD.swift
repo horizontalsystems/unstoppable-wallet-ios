@@ -18,6 +18,7 @@ public class HUD {
     var view: HUDView?
 
     public var animated: Bool = true
+    private(set) var tag: String = ""
 
     init(config: HUDConfig? = nil, keyboardNotifications: HUDKeyboardHelper = .shared) {
         self.config = config ?? HUDConfig()
@@ -103,6 +104,7 @@ extension HUD: HUDViewRouterInterface {
 
     public func show(config: HUDConfig, viewItem: ViewItem, statusBarStyle: UIStatusBarStyle? = nil, forced: Bool = false) {
         self.config = config
+        tag = viewItem.tag
         let showBlock = { [weak self] in
             let contentView = TopHUDContentView()
             contentView.title = viewItem.title
@@ -150,10 +152,13 @@ public extension HUD {
         let showingTime: TimeInterval?
         let isLoading: Bool
 
-        public init(icon: UIImage?, iconColor: UIColor, title: String?, showingTime: TimeInterval? = 2, isLoading: Bool = false) {
+        let tag: String
+
+        public init(icon: UIImage?, iconColor: UIColor, title: String?, tag: String = "", showingTime: TimeInterval? = 2, isLoading: Bool = false) {
             self.icon = icon
             self.iconColor = iconColor
             self.title = title
+            self.tag = tag
             self.showingTime = showingTime
             self.isLoading = isLoading
         }
