@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUICore
 
 import UIKit
 import WalletConnectSign
@@ -22,6 +23,10 @@ class WCSignMessagePayload: WCRequestPayload {
 
     class func module(request: WalletConnectRequest) -> UIViewController? {
         WCSignMessageRequestModule.viewController(request: request).map { ThemeNavigationController(rootViewController: $0) }
+    }
+
+    class func view(request: WalletConnectRequest) -> some View {
+        WCSignMessageRequestView(request: request)
     }
 }
 

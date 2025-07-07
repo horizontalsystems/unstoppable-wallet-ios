@@ -99,9 +99,10 @@ class WalletConnectListViewController: ThemeViewController {
     }
 
     private func show(session: WalletConnectSign.Session) {
-        guard let viewController = WalletConnectMainModule.viewController(session: session, sourceViewController: self) else {
+        guard let account = Core.shared.accountManager.activeAccount else {
             return
         }
+        let viewController = WalletConnectMainModule.viewController(account: account, session: session, sourceViewController: self)
 
         stat(page: .walletConnect, event: .open(page: .walletConnectSession))
         navigationController?.present(viewController, animated: true)

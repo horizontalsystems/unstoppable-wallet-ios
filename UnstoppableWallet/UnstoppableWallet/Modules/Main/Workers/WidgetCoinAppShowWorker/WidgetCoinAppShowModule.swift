@@ -1,17 +1,23 @@
+import Combine
+import MarketKit
 import UIKit
 
-class WidgetCoinAppShowModule {
-    private let parentViewController: UIViewController?
-    private let marketKit = Core.shared.marketKit
+class WidgetCoinEventHandler {
+    private let marketKit: MarketKit.Kit
 
-    init(parentViewController: UIViewController?) {
-        self.parentViewController = parentViewController
+    private var signalSubject = PassthroughSubject<EventHandlerSignal, Never>()
+
+    init(marketKit: MarketKit.Kit) {
+        self.marketKit = marketKit
     }
 }
 
-extension WidgetCoinAppShowModule: IEventHandler {
-    @MainActor
-    func handle(source _: StatPage, event: Any, eventType: EventHandler.EventType) async throws {
+extension WidgetCoinEventHandler: IEventHandler {
+    var signal: AnyPublisher<EventHandlerSignal, Never> {
+        signalSubject.eraseToAnyPublisher()
+    }
+
+    @MainActor func handle(source _: StatPage, event: Any, eventType: EventHandler.EventType) async throws {
         guard eventType.contains(.deepLink) else {
             throw EventHandler.HandleError.noSuitableHandler
         }
@@ -32,15 +38,7 @@ extension WidgetCoinAppShowModule: IEventHandler {
             throw EventHandler.HandleError.noSuitableHandler
         }
 
-        let viewController = CoinPageView(coin: coin).toViewController()
-        parentViewController?.visibleController.present(viewController, animated: true)
-
         stat(page: .widget, event: .openCoin(coinUid: coinUid))
-    }
-}
-
-extension WidgetCoinAppShowModule {
-    static func handler(parentViewController: UIViewController? = nil) -> IEventHandler {
-        WidgetCoinAppShowModule(parentViewController: parentViewController)
+        signalSubject.send(.coinPage(coin))
     }
 }

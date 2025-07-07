@@ -4,13 +4,11 @@ import RxSwift
 import UIKit
 
 class TelegramUserHandler {
-    private let disposeBag = DisposeBag()
-    private let parentViewController: UIViewController?
-    private let marketKit = Core.shared.marketKit
+    private let marketKit: MarketKit.Kit
     private let baseUrl = AppConfig.referralAppServerUrl
 
-    init(parentViewController: UIViewController?) {
-        self.parentViewController = parentViewController
+    init(marketKit: MarketKit.Kit) {
+        self.marketKit = marketKit
     }
 }
 
@@ -24,17 +22,13 @@ extension TelegramUserHandler: IEventHandler {
             let urlString = "\(baseUrl)/v1/tasks/registerApp?userId=\(userId)&referralCode=\(referralCode)"
             print("Requesting: \(urlString)")
             guard let url = URL(string: urlString) else {
-                return
+                throw EventHandler.HandleError.noSuitableHandler
             }
 
             let _: EmptyResponse = try await Core.shared.networkManager.fetch(url: url)
+            return
         }
-    }
-}
-
-extension TelegramUserHandler {
-    static func handler(parentViewController: UIViewController? = nil) -> IEventHandler {
-        TelegramUserHandler(parentViewController: parentViewController)
+        throw EventHandler.HandleError.noSuitableHandler
     }
 }
 

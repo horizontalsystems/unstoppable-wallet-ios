@@ -1,4 +1,5 @@
 import Foundation
+import SwiftUICore
 import UIKit
 import WalletConnectSign
 

@@ -277,6 +277,21 @@ extension WalletModule {
     }
 }
 
+struct ChooseSendTokenListView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    let allowedBlockchainTypes: [BlockchainType]?
+    let allowedTokenTypes: [TokenType]?
+    let address: String?
+    let amount: Decimal?
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        WalletModule.sendTokenListViewController(allowedBlockchainTypes: allowedBlockchainTypes, allowedTokenTypes: allowedTokenTypes, address: address, amount: amount) ?? UIViewController()
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
+}
+
 struct DonateTokenListView: UIViewControllerRepresentable {
     typealias UIViewControllerType = UIViewController
 

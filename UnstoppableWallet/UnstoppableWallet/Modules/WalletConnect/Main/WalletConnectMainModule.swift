@@ -1,16 +1,13 @@
 import MarketKit
 import RxSwift
+import SwiftUI
 
 import UIKit
 import WalletConnectSign
 import WalletConnectUtils
 
 enum WalletConnectMainModule {
-    static func viewController(session: WalletConnectSign.Session? = nil, proposal: WalletConnectSign.Session.Proposal? = nil, sourceViewController: UIViewController?) -> UIViewController? {
-        guard let account = Core.shared.accountManager.activeAccount else {
-            return nil
-        }
-
+    static func viewController(account: Account, session: WalletConnectSign.Session? = nil, proposal: WalletConnectSign.Session.Proposal? = nil, sourceViewController: UIViewController?) -> UIViewController {
         let service = Core.shared.walletConnectSessionManager.service
 
         let chain = ProposalChain()
@@ -21,7 +18,6 @@ enum WalletConnectMainModule {
             session: session,
             proposal: proposal,
             service: service,
-            manager: Core.shared.walletConnectManager,
             reachabilityManager: Core.shared.reachabilityManager,
             accountManager: Core.shared.accountManager,
             proposalHandler: chain,
@@ -31,7 +27,7 @@ enum WalletConnectMainModule {
         return viewController(service: mainService, sourceViewController: sourceViewController)
     }
 
-    static func viewController(service: WalletConnectMainService, sourceViewController: UIViewController?) -> UIViewController? {
+    static func viewController(service: WalletConnectMainService, sourceViewController: UIViewController?) -> UIViewController {
         let viewModel = WalletConnectMainViewModel(service: service)
         let viewController = WalletConnectMainViewController(
             viewModel: viewModel,
@@ -52,6 +48,20 @@ enum WalletConnectMainModule {
 
         return ThemeNavigationController(rootViewController: viewController)
     }
+}
+
+struct WalletConnectMainView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    let account: Account
+    let session: WalletConnectSign.Session?
+    let proposal: WalletConnectSign.Session.Proposal?
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        WalletConnectMainModule.viewController(account: account, session: session, proposal: proposal, sourceViewController: nil)
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }
 
 extension WalletConnectMainModule {

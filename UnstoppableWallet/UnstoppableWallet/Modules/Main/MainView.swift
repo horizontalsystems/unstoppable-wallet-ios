@@ -108,6 +108,7 @@ struct MainView: View {
             )
         }
         .modifier(BackupRequiredViewModifier.backupPromptAfterCreate(account: $backupAccount))
+        .modifier(DeepLinkViewModifier())
     }
 
     @ToolbarContentBuilder func toolbar() -> some ToolbarContent {

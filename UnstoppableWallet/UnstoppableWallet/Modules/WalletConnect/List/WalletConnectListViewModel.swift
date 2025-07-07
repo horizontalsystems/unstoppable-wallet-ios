@@ -139,11 +139,3 @@ extension WalletConnectListViewModel {
         }
     }
 }
-
-extension WalletConnectUriHandler.ConnectionError: LocalizedError {
-    var errorDescription: String? {
-        switch self {
-        case .wrongUri: return "wallet_connect.error.invalid_url".localized
-        }
-    }
-}

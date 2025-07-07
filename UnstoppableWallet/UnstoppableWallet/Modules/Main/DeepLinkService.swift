@@ -1,17 +1,14 @@
-import RxSwift
+import Combine
+import Foundation
 
 class DeepLinkService {
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
     private let deepLinkManager: DeepLinkManager
 
     private(set) var deepLink: DeepLinkManager.DeepLink?
 
     init(deepLinkManager: DeepLinkManager) {
         self.deepLinkManager = deepLinkManager
-
-        subscribe(disposeBag, deepLinkManager.newSchemeObservable) { deepLink in
-            self.deepLink = deepLink
-        }
     }
 
     func setDeepLinkShown() {

@@ -210,12 +210,6 @@ extension WalletConnectService {
     }
 
     // works with dApp
-    public func validate(uri: String) throws -> WalletConnectUtils.WalletConnectURI {
-        guard let uri = try? WalletConnectUtils.WalletConnectURI(uriString: uri) else {
-            throw WalletConnectUriHandler.ConnectionError.wrongUri
-        }
-        return uri
-    }
 
     public func pair(uri: WalletConnectUtils.WalletConnectURI) async throws {
         Task.init {

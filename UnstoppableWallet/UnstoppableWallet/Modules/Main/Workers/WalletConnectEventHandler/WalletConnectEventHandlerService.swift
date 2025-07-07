@@ -3,7 +3,7 @@ import Foundation
 import RxSwift
 import WalletConnectSign
 
-class WalletConnectAppShowService {
+class WalletConnectEventHandlerService {
     private var disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
     private let walletConnectManager: WalletConnectSessionManager
@@ -35,7 +35,7 @@ class WalletConnectAppShowService {
     }
 }
 
-extension WalletConnectAppShowService {
+extension WalletConnectEventHandlerService {
     var activeAccount: Account? {
         accountManager.activeAccount
     }
@@ -57,6 +57,6 @@ extension WalletConnectAppShowService {
     }
 
     func validate(uri: String) throws {
-        try walletConnectManager.validate(uri: uri)
+        _ = try WalletConnectUriHelper.validate(uri: uri)
     }
 }

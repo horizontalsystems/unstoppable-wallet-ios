@@ -135,10 +135,6 @@ class WalletConnectSessionManager {
 }
 
 extension WalletConnectSessionManager {
-    public func validate(uri: String) throws {
-        _ = try service.validate(uri: uri)
-    }
-
     public var sessions: [WalletConnectSign.Session] {
         guard let accountId = accountManager.activeAccount?.id else {
             return []
