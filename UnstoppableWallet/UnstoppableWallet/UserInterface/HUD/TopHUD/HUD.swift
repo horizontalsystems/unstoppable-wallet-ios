@@ -44,29 +44,31 @@ public class HUD {
             view.containerView.setContent(content: content, preferredSize: config.preferredSize, maxSize: maxSize, exact: config.exactSize)
             view.adjustPlace()
         } else { // if it's no view, create new and show
-            let coverWindow = DimHUDWindow(frame: UIScreen.main.bounds, config: config)
-            coverWindow.set(transparent: config.userInteractionEnabled)
+            if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+                let coverWindow = DimHUDWindow(windowScene: scene, config: config)
+                coverWindow.set(transparent: config.userInteractionEnabled)
 
-            coverWindow.onTap = { [weak self] in
-                if let weakSelf = self {
-                    onTapCoverView?(weakSelf)
+                coverWindow.onTap = { [weak self] in
+                    if let weakSelf = self {
+                        onTapCoverView?(weakSelf)
+                    }
                 }
-            }
 
-            let containerView = HUDContainerView(withModel: config)
-            containerView.onTapContainer = { [weak self] in
-                if let weakSelf = self {
-                    onTapHUD?(weakSelf)
+                let containerView = HUDContainerView(withModel: config)
+                containerView.onTapContainer = { [weak self] in
+                    if let weakSelf = self {
+                        onTapHUD?(weakSelf)
+                    }
                 }
-            }
-            containerView.isHidden = true
-            containerView.setContent(content: content, preferredSize: config.preferredSize, maxSize: maxSize, exact: config.exactSize)
+                containerView.isHidden = true
+                containerView.setContent(content: content, preferredSize: config.preferredSize, maxSize: maxSize, exact: config.exactSize)
 
-            view = HUD.create(config: config, router: self, backgroundWindow: coverWindow, containerView: containerView, statusBarStyle: statusBarStyle)
-            view?.keyboardNotificationHandler = keyboardNotificationHandler
+                view = HUD.create(config: config, router: self, backgroundWindow: coverWindow, containerView: containerView, statusBarStyle: statusBarStyle)
+                view?.keyboardNotificationHandler = keyboardNotificationHandler
 
-            if content.actions.firstIndex(where: { $0.type == .show }) == nil {
-                show()
+                if content.actions.firstIndex(where: { $0.type == .show }) == nil {
+                    show()
+                }
             }
         }
         view?.presenter.addActionTimers(content.actions)
@@ -85,17 +87,10 @@ extension HUD: HUDViewRouterInterface {
         presenter.view = view
         interactor.delegate = presenter
 
-        // let window = HUDWindow(frame: UIScreen.main.bounds, rootController: view)
-
-        let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene
-        let window = UIWindow(windowScene: scene!)
-        window.frame = UIScreen.main.bounds
-        window.backgroundColor = .clear
-        window.rootViewController = view
-        window.isHidden = false
-        window.windowLevel = .normal
-
-        view.window = window
+        if let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene {
+            let window = HUDWindow(windowScene: scene, rootController: view)
+            view.window = window
+        }
 
         view.place()
 

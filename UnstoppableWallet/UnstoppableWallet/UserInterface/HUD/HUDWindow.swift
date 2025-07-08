@@ -14,6 +14,17 @@ class HUDWindow: ThemeWindow {
     init(frame: CGRect, rootController: UIViewController, level: UIWindow.Level = UIWindow.Level.normal, cornerRadius _: CGFloat = 0) {
         super.init(frame: frame)
 
+        commonInit(rootController: rootController, level: level, cornerRadius: cornerRadius)
+    }
+
+    init(windowScene: UIWindowScene, rootController: UIViewController, level: UIWindow.Level = UIWindow.Level.normal, cornerRadius _: CGFloat = 0) {
+        super.init(windowScene: windowScene)
+        frame = UIScreen.main.bounds
+
+        commonInit(rootController: rootController, level: level, cornerRadius: cornerRadius)
+    }
+
+    private func commonInit(rootController: UIViewController, level: UIWindow.Level = UIWindow.Level.normal, cornerRadius _: CGFloat = 0) {
         isHidden = false
         windowLevel = level
 //        layer.cornerRadius = cornerRadius
@@ -26,9 +37,9 @@ class HUDWindow: ThemeWindow {
         fatalError()
     }
 
-    deinit {
+//    deinit {
 //        print("deinit HUDWindow \(self)")
-    }
+//    }
 
     override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
         if transparent {

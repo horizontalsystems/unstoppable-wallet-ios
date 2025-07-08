@@ -9,6 +9,11 @@ class BackgroundHUDWindow: HUDWindow {
         super.init(frame: frame, rootController: rootController, level: level, cornerRadius: cornerRadius)
     }
 
+    init(windowScene: UIWindowScene, rootController: UIViewController, coverView: CoverViewInterface, level: UIWindow.Level = UIWindow.Level.normal, cornerRadius: CGFloat = 0) {
+        self.coverView = coverView
+        super.init(windowScene: windowScene, rootController: rootController, level: level, cornerRadius: cornerRadius)
+    }
+
     @available(*, unavailable)
     required init?(coder _: NSCoder) {
         fatalError()
