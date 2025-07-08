@@ -9,6 +9,18 @@ open class ThemeWindow: UIWindow {
 
         update(themeMode: ThemeManager.shared.themeMode)
 
+        commonInit()
+    }
+
+    override public init(windowScene: UIWindowScene) {
+        super.init(windowScene: windowScene)
+
+        commonInit()
+    }
+
+    private func commonInit() {
+        update(themeMode: ThemeManager.shared.themeMode)
+
         ThemeManager.shared.$themeMode
             .sink { [weak self] themeMode in
                 self?.update(themeMode: themeMode)
