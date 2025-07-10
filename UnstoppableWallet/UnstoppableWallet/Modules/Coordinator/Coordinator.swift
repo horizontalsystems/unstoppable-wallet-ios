@@ -87,4 +87,19 @@ extension Coordinator {
             }
         }
     }
+
+    func presentBalanceError(wallet: Wallet, state: AdapterState) {
+        if !Core.shared.reachabilityManager.isReachable {
+            HudHelper.instance.show(banner: .noInternet)
+            return
+        }
+
+        guard case let .notSynced(error) = state else {
+            return
+        }
+
+        present(type: .bottomSheet) { isPresented in
+            BalanceErrorBottomView(wallet: wallet, error: error, isPresented: isPresented)
+        }
+    }
 }

@@ -3376,10 +3376,10 @@
 		D3E36BA12DF98B91007F99CA /* TronWalletTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B9E2DF98B91007F99CA /* TronWalletTokenViewModel.swift */; };
 		D3E36BA22DF98B91007F99CA /* TronWalletTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B9F2DF98B91007F99CA /* TronWalletTokenView.swift */; };
 		D3E36BA32DF98B91007F99CA /* TronWalletTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36B9E2DF98B91007F99CA /* TronWalletTokenViewModel.swift */; };
-		D3E36BA52DF99DAD007F99CA /* BalanceErrorViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BA42DF99D9F007F99CA /* BalanceErrorViewModifier.swift */; };
-		D3E36BA62DF99DAD007F99CA /* BalanceErrorViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BA42DF99D9F007F99CA /* BalanceErrorViewModifier.swift */; };
-		D3E36BA82DF99F3D007F99CA /* BalanceErrorViewModifierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BA72DF99F3D007F99CA /* BalanceErrorViewModifierModel.swift */; };
-		D3E36BA92DF99F3D007F99CA /* BalanceErrorViewModifierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BA72DF99F3D007F99CA /* BalanceErrorViewModifierModel.swift */; };
+		D3E36BA52DF99DAD007F99CA /* BalanceErrorBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BA42DF99D9F007F99CA /* BalanceErrorBottomView.swift */; };
+		D3E36BA62DF99DAD007F99CA /* BalanceErrorBottomView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BA42DF99D9F007F99CA /* BalanceErrorBottomView.swift */; };
+		D3E36BA82DF99F3D007F99CA /* BalanceErrorBottomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BA72DF99F3D007F99CA /* BalanceErrorBottomViewModel.swift */; };
+		D3E36BA92DF99F3D007F99CA /* BalanceErrorBottomViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BA72DF99F3D007F99CA /* BalanceErrorBottomViewModel.swift */; };
 		D3E36BB42DFAEC43007F99CA /* WalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BB32DFAEC40007F99CA /* WalletView.swift */; };
 		D3E36BB52DFAEC43007F99CA /* WalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BB32DFAEC40007F99CA /* WalletView.swift */; };
 		D3E36BB72DFAEC4D007F99CA /* WalletViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BB62DFAEC49007F99CA /* WalletViewModelNew.swift */; };
@@ -5142,8 +5142,8 @@
 		D3E36B992DF9831B007F99CA /* ZcashWalletTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashWalletTokenView.swift; sourceTree = "<group>"; };
 		D3E36B9E2DF98B91007F99CA /* TronWalletTokenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronWalletTokenViewModel.swift; sourceTree = "<group>"; };
 		D3E36B9F2DF98B91007F99CA /* TronWalletTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronWalletTokenView.swift; sourceTree = "<group>"; };
-		D3E36BA42DF99D9F007F99CA /* BalanceErrorViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceErrorViewModifier.swift; sourceTree = "<group>"; };
-		D3E36BA72DF99F3D007F99CA /* BalanceErrorViewModifierModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceErrorViewModifierModel.swift; sourceTree = "<group>"; };
+		D3E36BA42DF99D9F007F99CA /* BalanceErrorBottomView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceErrorBottomView.swift; sourceTree = "<group>"; };
+		D3E36BA72DF99F3D007F99CA /* BalanceErrorBottomViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BalanceErrorBottomViewModel.swift; sourceTree = "<group>"; };
 		D3E36BB32DFAEC40007F99CA /* WalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletView.swift; sourceTree = "<group>"; };
 		D3E36BB62DFAEC49007F99CA /* WalletViewModelNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletViewModelNew.swift; sourceTree = "<group>"; };
 		D3E36BBC2E003888007F99CA /* SendTokenListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTokenListView.swift; sourceTree = "<group>"; };
@@ -7105,8 +7105,8 @@
 		1A5643FB455E8D8D220E775E /* BalanceError */ = {
 			isa = PBXGroup;
 			children = (
-				D3E36BA72DF99F3D007F99CA /* BalanceErrorViewModifierModel.swift */,
-				D3E36BA42DF99D9F007F99CA /* BalanceErrorViewModifier.swift */,
+				D3E36BA72DF99F3D007F99CA /* BalanceErrorBottomViewModel.swift */,
+				D3E36BA42DF99D9F007F99CA /* BalanceErrorBottomView.swift */,
 				1A564AB0B646F7A92DD188F2 /* BalanceErrorModule.swift */,
 				1A5646B5D68A302515565030 /* BalanceErrorService.swift */,
 				1A564702FB246F315983743E /* BalanceErrorViewModel.swift */,
@@ -10376,7 +10376,7 @@
 				11B352DF096B6CFD050D500D /* CoinRecord_v19.swift in Sources */,
 				11B354EFE4620A8E65D44335 /* WalletViewModel.swift in Sources */,
 				11B35E5DDFA437BD43717962 /* WalletViewController.swift in Sources */,
-				D3E36BA92DF99F3D007F99CA /* BalanceErrorViewModifierModel.swift in Sources */,
+				D3E36BA92DF99F3D007F99CA /* BalanceErrorBottomViewModel.swift in Sources */,
 				11B352C447693BA4688A9673 /* WalletModule.swift in Sources */,
 				11B35A5CCED22BDE4C93CE23 /* WalletService.swift in Sources */,
 				11B350B3D287EE732007892B /* WalletCoinPriceService.swift in Sources */,
@@ -11319,7 +11319,7 @@
 				ABC9AEF231332C7B8756E8A9 /* BackupListView.swift in Sources */,
 				ABC9A8AC5E635D9CB1704568 /* BackupDisclaimerView.swift in Sources */,
 				ABC9A437473D0E77F9DBEB42 /* RestoreAppViewModel.swift in Sources */,
-				D3E36BA52DF99DAD007F99CA /* BalanceErrorViewModifier.swift in Sources */,
+				D3E36BA52DF99DAD007F99CA /* BalanceErrorBottomView.swift in Sources */,
 				ABC9AE7DA8EFD812710C7BE4 /* RestorePassphraseViewModel.swift in Sources */,
 				D3384D222BFF0CCA00515664 /* MarketVolumeView.swift in Sources */,
 				ABC9A93E05AAF5D98C1DF4D6 /* RestorePassphraseService.swift in Sources */,
@@ -11957,7 +11957,7 @@
 				11B3547989E25AB98B7C22DD /* WalletViewModel.swift in Sources */,
 				11B35DE8053A86FB32D05AF3 /* WalletViewController.swift in Sources */,
 				11B353FCF929C0CF960C96FA /* WalletModule.swift in Sources */,
-				D3E36BA82DF99F3D007F99CA /* BalanceErrorViewModifierModel.swift in Sources */,
+				D3E36BA82DF99F3D007F99CA /* BalanceErrorBottomViewModel.swift in Sources */,
 				11B35897566548048FCEC11E /* WalletService.swift in Sources */,
 				6B29071F2AF0CB8A006157D6 /* WalletConnectEventHandlerService.swift in Sources */,
 				11B3511037E26318792E7DF3 /* WalletCoinPriceService.swift in Sources */,
@@ -12900,7 +12900,7 @@
 				ABC9AC763748CC31D45FB6BD /* BackupAppViewModel.swift in Sources */,
 				ABC9A04FAB83D7A8D251DA90 /* BackupPasswordView.swift in Sources */,
 				D0F9F5172B99857700C3190A /* FeeSettings.swift in Sources */,
-				D3E36BA62DF99DAD007F99CA /* BalanceErrorViewModifier.swift in Sources */,
+				D3E36BA62DF99DAD007F99CA /* BalanceErrorBottomView.swift in Sources */,
 				ABC9A0CE0155F89F12350DFC /* BackupListView.swift in Sources */,
 				D3384D212BFF0CCA00515664 /* MarketVolumeView.swift in Sources */,
 				ABC9A4465982823773CE1B50 /* BackupDisclaimerView.swift in Sources */,

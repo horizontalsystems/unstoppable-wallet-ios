@@ -2,7 +2,6 @@ import SwiftUI
 
 struct SendTokenListView: View {
     @StateObject private var viewModel = SendTokenListViewModel()
-    @StateObject private var balanceErrorViewModifierModel = BalanceErrorViewModifierModel()
 
     @State private var path = NavigationPath()
     @State private var searchText = ""
@@ -27,7 +26,7 @@ struct SendTokenListView: View {
                                 WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, subtitleMode: .coinName) {
                                     path.append(item.wallet)
                                 } failedAction: {
-                                    balanceErrorViewModifierModel.handle(wallet: item.wallet, state: item.state)
+                                    Coordinator.shared.presentBalanceError(wallet: item.wallet, state: item.state)
                                 }
 
                                 HorizontalDivider()
@@ -42,7 +41,6 @@ struct SendTokenListView: View {
             .navigationDestination(for: Wallet.self) { wallet in
                 SendAddressView(wallet: wallet)
             }
-            .modifier(BalanceErrorViewModifier(viewModel: balanceErrorViewModifierModel))
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("button.cancel".localized) {
