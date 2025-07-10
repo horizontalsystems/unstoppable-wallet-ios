@@ -2,7 +2,6 @@ import SwiftUI
 
 struct WalletView: View {
     @ObservedObject var viewModel: WalletViewModelNew
-    @StateObject var balanceErrorViewModifierModel = BalanceErrorViewModifierModel()
     @StateObject var accountWarningViewModel = AccountWarningViewModel(canIgnore: true)
 
     @Binding var path: NavigationPath
@@ -105,7 +104,6 @@ struct WalletView: View {
         .sheet(item: $accountWarningViewModel.presentedUrl) { url in
             MarkdownView(url: url, navigation: true).ignoresSafeArea()
         }
-        .modifier(BalanceErrorViewModifier(viewModel: balanceErrorViewModifierModel))
     }
 
     @ViewBuilder private func topView() -> some View {
@@ -156,7 +154,7 @@ struct WalletView: View {
                 WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, subtitleMode: .price) {
                     path.append(item.wallet)
                 } failedAction: {
-                    balanceErrorViewModifierModel.handle(wallet: item.wallet, state: item.state)
+                    Coordinator.shared.presentBalanceError(wallet: item.wallet, state: item.state)
                 }
                 .swipeActions {
                     Button {

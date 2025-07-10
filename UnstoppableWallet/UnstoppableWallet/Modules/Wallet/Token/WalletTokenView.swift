@@ -3,7 +3,6 @@ import SwiftUI
 struct WalletTokenView<AdditionalContent: View>: View {
     @StateObject var viewModel: WalletTokenViewModelNew
     @StateObject var transactionsViewModel: TransactionsViewModelNew
-    @StateObject var balanceErrorViewModifierModel = BalanceErrorViewModifierModel()
 
     @State var presentedTransactionRecord: TransactionRecord?
     @State var sendPresented = false
@@ -40,8 +39,6 @@ struct WalletTokenView<AdditionalContent: View>: View {
                 ReceiveAddressView(wallet: viewModel.wallet)
             }
         }
-        .modifier(BalanceErrorViewModifier(viewModel: balanceErrorViewModifierModel))
-        .modifier(BalanceErrorViewModifier(viewModel: balanceErrorViewModifierModel))
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
         .toolbarRole(.editor)
@@ -51,7 +48,7 @@ struct WalletTokenView<AdditionalContent: View>: View {
         VStack(spacing: .margin24) {
             VStack(spacing: 6) {
                 BalanceCoinIconView(coin: viewModel.wallet.coin, state: viewModel.state, placeholderImage: viewModel.wallet.token.placeholderImageName) {
-                    balanceErrorViewModifierModel.handle(wallet: viewModel.wallet, state: viewModel.state)
+                    Coordinator.shared.presentBalanceError(wallet: viewModel.wallet, state: viewModel.state)
                 }
 
                 let (primaryText, primaryDimmed) = primaryValue

@@ -1,24 +1,15 @@
 import Combine
 import MarketKit
 
-class BalanceErrorViewModifierModel: ObservableObject {
+class BalanceErrorBottomViewModel: ObservableObject {
     private let adapterManager = Core.shared.adapterManager
     private let btcBlockchainManager = Core.shared.btcBlockchainManager
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let reachabilityManager = Core.shared.reachabilityManager
 
-    @Published var item: Item?
+    let item: Item
 
-    func handle(wallet: Wallet, state: AdapterState) {
-        if !reachabilityManager.isReachable {
-            HudHelper.instance.show(banner: .noInternet)
-            return
-        }
-
-        guard case let .notSynced(error) = state else {
-            return
-        }
-
+    init(wallet: Wallet, error: Error) {
         var sourceType: SourceType?
 
         if let blockchain = btcBlockchainManager.blockchain(token: wallet.token) {
@@ -35,7 +26,7 @@ class BalanceErrorViewModifierModel: ObservableObject {
     }
 }
 
-extension BalanceErrorViewModifierModel {
+extension BalanceErrorBottomViewModel {
     struct Item: Identifiable {
         let wallet: Wallet
         let error: String
