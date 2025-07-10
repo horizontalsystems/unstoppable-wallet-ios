@@ -106,6 +106,24 @@ open class ThemeTabBarController: UITabBarController {
         tabBar.backgroundImage = UIImage(color: .themeTabBarBackground)
         tabBar.backgroundColor = .themeTabBarBackground
     }
+
+    static func find(viewController: UIViewController?) -> UITabBarController? {
+        guard let viewController else {
+            return nil
+        }
+
+        if let tabBarController = viewController as? UITabBarController {
+            return tabBarController
+        }
+
+        for child in viewController.children {
+            if let tabBarController = find(viewController: child) {
+                return tabBarController
+            }
+        }
+
+        return nil
+    }
 }
 
 open class ThemeViewController: UIViewController {
