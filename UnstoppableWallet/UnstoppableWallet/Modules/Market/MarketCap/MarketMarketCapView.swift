@@ -8,8 +8,6 @@ struct MarketMarketCapView: View {
     @StateObject var watchlistViewModel: WatchlistViewModel
     @Binding var isPresented: Bool
 
-    @State private var presentedCoin: Coin?
-
     init(isPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: MarketMarketCapViewModel())
         _chartViewModel = StateObject(wrappedValue: MetricChartViewModel.instance(type: .totalMarketCap))
@@ -18,7 +16,7 @@ struct MarketMarketCapView: View {
     }
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ThemeView {
                 switch viewModel.state {
                 case .loading:
@@ -62,10 +60,6 @@ struct MarketMarketCapView: View {
                         isPresented = false
                     }
                 }
-            }
-            .sheet(item: $presentedCoin) { coin in
-                CoinPageView(coin: coin)
-                    .onFirstAppear { stat(page: .globalMetricsMarketCap, event: .openCoin(coinUid: coin.uid)) }
             }
         }
     }
@@ -115,7 +109,7 @@ struct MarketMarketCapView: View {
                 let coin = marketInfo.fullCoin.coin
 
                 ClickableRow(action: {
-                    presentedCoin = coin
+                    Coordinator.shared.presentCoinPage(coin: coin, page: .globalMetricsMarketCap)
                 }) {
                     itemContent(
                         coin: coin,

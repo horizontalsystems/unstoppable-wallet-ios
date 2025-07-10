@@ -20,7 +20,7 @@ struct BalanceErrorViewModifier: ViewModifier {
                 )
             }
             .sheet(item: $presentedBtcBlockchain) { blockchain in
-                ThemeNavigationView { BtcBlockchainSettingsModule.view(blockchain: blockchain) }
+                ThemeNavigationStack { BtcBlockchainSettingsModule.view(blockchain: blockchain) }
             }
             .sheet(item: $presentedEvmBlockchain) { blockchain in
                 EvmNetworkView(blockchain: blockchain).ignoresSafeArea()

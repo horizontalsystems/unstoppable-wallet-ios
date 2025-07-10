@@ -79,7 +79,7 @@ extension EducationView {
                                         let item = section.items[index]
 
                                         NavigationRow {
-                                            ThemeNavigationView {
+                                            ThemeNavigationStack {
                                                 MarkdownView(url: item.url).ignoresSafeArea()
                                             }
                                             .ignoresSafeArea()

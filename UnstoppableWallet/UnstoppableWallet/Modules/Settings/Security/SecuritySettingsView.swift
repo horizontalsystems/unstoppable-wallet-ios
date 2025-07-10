@@ -10,7 +10,6 @@ struct SecuritySettingsView: View {
     @State var editPasscodePresented = false
     @State var createDuressPasscodePresented = false
     @State var editDuressPasscodePresented = false
-    @State var subscriptionPresented = false
 
     var body: some View {
         ScrollableThemeView {
@@ -121,8 +120,8 @@ struct SecuritySettingsView: View {
                         if viewModel.isDuressPasscodeSet {
                             ClickableRow(action: {
                                 guard viewModel.premiumEnabled else {
+                                    Coordinator.shared.presentPurchases()
                                     stat(page: .security, event: .openPremium(from: .duressMode))
-                                    subscriptionPresented = true
                                     return
                                 }
                                 unlockViewModifierModel.handle {
@@ -145,8 +144,8 @@ struct SecuritySettingsView: View {
                         } else {
                             ClickableRow(action: {
                                 guard viewModel.premiumEnabled else {
+                                    Coordinator.shared.presentPurchases()
                                     stat(page: .security, event: .openPremium(from: .duressMode))
-                                    subscriptionPresented = true
                                     return
                                 }
 
@@ -169,7 +168,7 @@ struct SecuritySettingsView: View {
                 }
             }
             .sheet(item: $createPasscodeReason) { reason in
-                ThemeNavigationView {
+                ThemeNavigationStack {
                     CreatePasscodeModule.createPasscodeView(
                         reason: reason,
                         showParentSheet: Binding(get: { createPasscodeReason != nil }, set: { if !$0 { createPasscodeReason = nil } }),
@@ -195,16 +194,13 @@ struct SecuritySettingsView: View {
                 .interactiveDismiss(canDismissSheet: false)
             }
             .sheet(isPresented: $editPasscodePresented) {
-                ThemeNavigationView { EditPasscodeModule.editPasscodeView(showParentSheet: $editPasscodePresented) }
+                ThemeNavigationStack { EditPasscodeModule.editPasscodeView(showParentSheet: $editPasscodePresented) }
             }
             .sheet(isPresented: $createDuressPasscodePresented) {
-                ThemeNavigationView { DuressModeModule.view(showParentSheet: $createDuressPasscodePresented) }
+                ThemeNavigationStack { DuressModeModule.view(showParentSheet: $createDuressPasscodePresented) }
             }
             .sheet(isPresented: $editDuressPasscodePresented) {
-                ThemeNavigationView { EditPasscodeModule.editDuressPasscodeView(showParentSheet: $editDuressPasscodePresented) }
-            }
-            .sheet(isPresented: $subscriptionPresented) {
-                PurchasesView()
+                ThemeNavigationStack { EditPasscodeModule.editDuressPasscodeView(showParentSheet: $editDuressPasscodePresented) }
             }
             .modifier(UnlockViewModifier(viewModel: unlockViewModifierModel))
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))

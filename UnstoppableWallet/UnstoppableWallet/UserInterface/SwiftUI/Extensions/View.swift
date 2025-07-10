@@ -25,7 +25,7 @@ extension View {
     }
 
     func toNavigationViewController() -> UIViewController {
-        UIHostingController(rootView: ThemeNavigationView { self })
+        UIHostingController(rootView: ThemeNavigationStack { self })
     }
 }
 

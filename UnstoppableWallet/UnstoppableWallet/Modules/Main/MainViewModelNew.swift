@@ -12,14 +12,11 @@ class MainViewModelNew: ObservableObject {
 
     private let releaseNotesService = ReleaseNotesService()
     private let jailbreakService = JailbreakService()
-    private let deepLinkService = DeepLinkService(deepLinkManager: Core.shared.deepLinkManager)
 
     private var cancellables = Set<AnyCancellable>()
     private let disposeBag = DisposeBag()
 
     @Published private(set) var showMarket: Bool
-    @Published var switchAccountPresented = false
-    @Published var accountsLostPresented = false
 
     @Published var selectedTab: Tab = .wallet {
         didSet {
@@ -30,35 +27,15 @@ class MainViewModelNew: ObservableObject {
 
                 if currentTimestamp - lastTimeStamp < 0.3 {
                     if accountManager.accounts.count > 1 {
-                        switchAccountPresented = true
+                        Coordinator.shared.present(type: .bottomSheet) { _ in
+                            SwitchAccountView()
+                        }
+
+                        stat(page: .main, event: .open(page: .switchWallet))
                     }
                 } else {
                     lastTimeStamp = currentTimestamp
                 }
-            }
-        }
-    }
-
-    @Published var releaseNotesUrl: URL? {
-        didSet {
-            if releaseNotesUrl == nil {
-                handleNextAlert()
-            }
-        }
-    }
-
-    @Published var deepLink: DeepLinkManager.DeepLink? {
-        didSet {
-            if deepLink == nil {
-                handleNextAlert()
-            }
-        }
-    }
-
-    @Published var jailbreakPresented = false {
-        didSet {
-            if !jailbreakPresented {
-                handleNextAlert()
             }
         }
     }
@@ -106,22 +83,36 @@ class MainViewModelNew: ObservableObject {
 }
 
 extension MainViewModelNew {
+    var lastCreatedAccount: Account? {
+        accountManager.popLastCreatedAccount()
+    }
+
     func handleNextAlert() {
         guard !lockManager.isLocked else {
             return
         }
 
         if let releaseNotesUrl = releaseNotesService.releaseNotesUrl {
-            self.releaseNotesUrl = releaseNotesUrl
-        } else if jailbreakService.needToShowAlert {
-            jailbreakPresented = true
-            jailbreakService.setAlertShown()
+            Coordinator.shared.present { _ in
+                MarkdownModule.gitReleaseNotesMarkdownView(url: releaseNotesUrl, presented: true).ignoresSafeArea()
+            } onDismiss: { [weak self] in
+                self?.handleNextAlert()
+            }
+            stat(page: .main, event: .open(page: .whatsNews))
         } else if accountManager.accountsLost {
-            accountsLostPresented = true
-            accountManager.accountsLost = false
-        } else if let deepLink = deepLinkService.deepLink {
-            self.deepLink = deepLink
-            //     handleDeepLink(deepLink: deepLink)
+            Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                AccountsLostView(isPresented: isPresented)
+            } onDismiss: { [weak self] in
+                self?.accountManager.accountsLost = false
+            }
+        } else if jailbreakService.needToShowAlert {
+            Coordinator.shared.present { isPresented in
+                JailbreakView(isPresented: isPresented)
+            } onDismiss: { [weak self] in
+                self?.handleNextAlert()
+            }
+
+            jailbreakService.setAlertShown()
         }
     }
 }

@@ -6,15 +6,12 @@ struct MainSettingsView: View {
     @StateObject var viewModel = MainSettingsViewModel()
 
     @State private var manageWalletsPresented = false
-    @State private var purchasesPresented = false
     @State private var supportPresented = false
     @State private var donatePresented = false
     @State private var addressCheckerPresented = false
     @State private var walletConnectPresented = false
 
     @StateObject var walletConnectViewModifierModel = WalletConnectViewModifierModel()
-
-    @State private var shareText: String?
 
     @State private var currentSlideIndex: Int = 0
     @State private var isFirstAppear = true
@@ -97,9 +94,6 @@ struct MainSettingsView: View {
             }
             .padding(EdgeInsets(top: .margin12, leading: 0, bottom: .margin32, trailing: 0))
         }
-        .sheet(isPresented: $purchasesPresented) {
-            PurchasesView()
-        }
         .bottomSheet(isPresented: $supportPresented) {
             SupportView { telegramUrl in
                 UrlManager.open(url: telegramUrl)
@@ -150,8 +144,8 @@ struct MainSettingsView: View {
         case .premium:
             premiumSlide()
                 .onTapGesture {
+                    Coordinator.shared.presentPurchases()
                     stat(page: .settings, event: .openPremium(from: .banner))
-                    purchasesPresented = true
                 }
         case .miniApp:
             miniAppSlide()
@@ -393,8 +387,8 @@ struct MainSettingsView: View {
             if viewModel.activated(premiumFeature: .vipSupport) {
                 supportPresented = true
             } else {
+                Coordinator.shared.presentPurchases()
                 stat(page: .settings, event: .openPremium(from: .vipSupport))
-                purchasesPresented = true
             }
         }) {
             Image("support_2_24").themeIcon(color: .themeJacob)
@@ -460,15 +454,14 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func tellFriend() -> some View {
         ClickableRow(action: {
-            shareText = "settings_tell_friends.text".localized + "\n" + AppConfig.appWebPageLink
+            Coordinator.shared.present { _ in
+                ActivityView(activityItems: ["settings_tell_friends.text".localized + "\n" + AppConfig.appWebPageLink])
+            }
             stat(page: .settings, event: .open(page: .tellFriends))
         }) {
             Image("share_1_24").themeIcon()
             Text("settings.tell_friends".localized).themeBody()
             Image.disclosureIcon
-        }
-        .sheet(item: $shareText) { shareText in
-            ActivityView.view(activityItems: [shareText])
         }
     }
 

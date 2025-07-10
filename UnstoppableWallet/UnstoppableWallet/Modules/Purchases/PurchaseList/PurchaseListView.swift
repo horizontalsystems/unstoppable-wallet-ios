@@ -4,7 +4,6 @@ import SwiftUI
 
 struct PurchaseListView: View {
     @ObservedObject private var viewModel = PurchaseListViewModel()
-    @State private var purchasesPresented = false
 
     var body: some View {
         ScrollableThemeView {
@@ -24,9 +23,6 @@ struct PurchaseListView: View {
                 }
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
-        }
-        .sheet(isPresented: $purchasesPresented) {
-            PurchasesView()
         }
         .navigationTitle("subscription.title".localized)
     }
@@ -48,8 +44,8 @@ struct PurchaseListView: View {
     @ViewBuilder private func noPurchaseView() -> some View {
         ListSection {
             ClickableRow {
+                Coordinator.shared.presentPurchases()
                 stat(page: .purchaseList, event: .openPremium(from: .getPremium))
-                purchasesPresented = true
             } content: {
                 HStack(spacing: .margin8) {
                     Text("subscription.get".localized).textBody()

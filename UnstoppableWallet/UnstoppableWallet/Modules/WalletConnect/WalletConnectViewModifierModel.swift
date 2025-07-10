@@ -6,7 +6,6 @@ class WalletConnectViewModifierModel: ObservableObject {
 
     @Published var walletConnectNoAccountPresented = false
     @Published var walletConnectNotSupportedAccountType: AccountType?
-    @Published var walletConnectBackupRequiredAccount: Account?
 
     func handle(onSuccess: () -> Void) {
         guard let activeAccount = accountManager.activeAccount else {
@@ -20,7 +19,16 @@ class WalletConnectViewModifierModel: ObservableObject {
         }
 
         if !activeAccount.backedUp, !cloudBackupManager.backedUp(uniqueId: activeAccount.type.uniqueId()) {
-            walletConnectBackupRequiredAccount = activeAccount
+            Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                BackupRequiredView.prompt(
+                    account: activeAccount,
+                    description: "wallet_connect.unbackuped_account.description".localized(activeAccount.name),
+                    isPresented: isPresented
+                )
+            }
+
+            stat(page: .walletConnect, event: .open(page: .backupRequired))
+
             return
         }
 

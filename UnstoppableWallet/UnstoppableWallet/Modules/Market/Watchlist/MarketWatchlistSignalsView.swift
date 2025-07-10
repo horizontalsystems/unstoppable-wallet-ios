@@ -8,7 +8,7 @@ struct MarketWatchlistSignalsView: View {
     @State private var maxBadgeWidth: CGFloat = .zero
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ThemeView {
                 BottomGradientWrapper {
                     ScrollView {

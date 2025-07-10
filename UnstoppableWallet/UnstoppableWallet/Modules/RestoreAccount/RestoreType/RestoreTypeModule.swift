@@ -17,7 +17,24 @@ extension RestoreTypeModule {
     }
 }
 
-struct RestoreTypeView: UIViewControllerRepresentable {
+struct RestoreTypeView: View {
+    let type: BackupModule.Source.Abstract
+    var onRestore: (() -> Void)? = nil
+    @Binding var isPresented: Bool
+
+    var body: some View {
+        RestoreTypeViewOld(type: type) {
+            if let onRestore {
+                onRestore()
+            } else {
+                isPresented = false
+            }
+        }
+        .ignoresSafeArea()
+    }
+}
+
+struct RestoreTypeViewOld: UIViewControllerRepresentable {
     typealias UIViewControllerType = UIViewController
 
     let type: BackupModule.Source.Abstract

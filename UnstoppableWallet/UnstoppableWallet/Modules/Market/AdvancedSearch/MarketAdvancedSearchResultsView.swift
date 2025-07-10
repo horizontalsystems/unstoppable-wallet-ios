@@ -8,9 +8,7 @@ struct MarketAdvancedSearchResultsView: View {
     @Binding var isParentPresented: Bool
 
     @State private var sortBySelectorPresented = false
-    @State private var presentedCoin: Coin?
     @State private var signalsPresented = false
-    @State private var subscriptionPresented = false
 
     init(marketInfos: [MarketInfo], timePeriod: HsTimePeriod, isParentPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: MarketAdvancedSearchResultsViewModel(marketInfos: marketInfos, timePeriod: timePeriod))
@@ -28,7 +26,7 @@ struct MarketAdvancedSearchResultsView: View {
                         let coin = marketInfo.fullCoin.coin
 
                         ClickableRow(action: {
-                            presentedCoin = coin
+                            Coordinator.shared.presentCoinPage(coin: coin, page: .advancedSearchResults)
                         }) {
                             itemContent(
                                 coin: coin,
@@ -53,10 +51,6 @@ struct MarketAdvancedSearchResultsView: View {
                 }
             }
         }
-        .sheet(item: $presentedCoin) { coin in
-            CoinPageView(coin: coin).ignoresSafeArea()
-                .onFirstAppear { stat(page: .advancedSearchResults, event: .openCoin(coinUid: coin.uid)) }
-        }
         .alert(
             isPresented: $sortBySelectorPresented,
             title: "market.sort_by.title".localized,
@@ -73,9 +67,6 @@ struct MarketAdvancedSearchResultsView: View {
             MarketWatchlistSignalsView(setShowSignals: { [weak viewModel] in
                 viewModel?.set(showSignals: $0)
             }, isPresented: $signalsPresented)
-        }
-        .sheet(isPresented: $subscriptionPresented) {
-            PurchasesView()
         }
     }
 
@@ -122,8 +113,8 @@ struct MarketAdvancedSearchResultsView: View {
     @ViewBuilder private func signalsButton() -> some View {
         Button(action: {
             guard viewModel.premiumEnabled else {
+                Coordinator.shared.presentPurchases()
                 stat(page: .advancedSearchResults, event: .openPremium(from: .tradingSignal))
-                subscriptionPresented = true
                 return
             }
 

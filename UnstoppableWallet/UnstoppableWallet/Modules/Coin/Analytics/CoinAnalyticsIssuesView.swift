@@ -11,7 +11,7 @@ struct CoinAnalyticsIssuesView: View {
     @State private var generalExpandedIndices = Set<Int>()
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ThemeView {
                 VStack(spacing: 0) {
                     TabHeaderView(

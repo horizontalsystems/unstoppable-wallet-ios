@@ -8,7 +8,7 @@ struct TonConnectErrorView: View {
     @Environment(\.presentationMode) private var presentationMode
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ThemeView {
                 BottomGradientWrapper {
                     VStack {

@@ -18,7 +18,7 @@ struct MultiSwapTokenSelectView: View {
     }
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ThemeView {
                 VStack(spacing: 0) {
                     SearchBar(text: $viewModel.searchText, prompt: "placeholder.search".localized)

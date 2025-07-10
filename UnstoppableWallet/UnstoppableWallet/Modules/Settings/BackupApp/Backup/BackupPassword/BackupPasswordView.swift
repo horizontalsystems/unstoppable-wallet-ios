@@ -66,24 +66,6 @@ struct BackupPasswordView: View {
                 .disabled(viewModel.passwordButtonProcessing)
                 .animation(.default, value: viewModel.passwordButtonProcessing)
             }
-            .sheet(item: $viewModel.sharePresented) { url in
-                let completion: UIActivityViewController.CompletionWithItemsHandler = { _, success, _, error in
-                    if success {
-                        stat(page: .exportFullToFiles, event: .exportFull)
-
-                        isPresented = false
-                        showDone()
-                    }
-                    if let error {
-                        show(error: error)
-                    }
-                }
-                if #available(iOS 16, *) {
-                    ActivityView(activityItems: [url], completionWithItemsHandler: completion).presentationDetents([.medium, .large])
-                } else {
-                    ActivityView(activityItems: [url], completionWithItemsHandler: completion)
-                }
-            }
             .onReceive(viewModel.dismissPublisher) {
                 isPresented = false
             }
@@ -96,15 +78,5 @@ struct BackupPasswordView: View {
                 .disabled(viewModel.passwordButtonProcessing)
             }
         }
-    }
-
-    @MainActor
-    private func show(error: Error) {
-        HudHelper.instance.show(banner: .error(string: error.localizedDescription))
-    }
-
-    @MainActor
-    func showDone() {
-        HudHelper.instance.show(banner: .done)
     }
 }

@@ -5,7 +5,7 @@ struct InfoView: View {
     @Binding var isPresented: Bool
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ScrollableThemeView {
                 VStack(alignment: .leading, spacing: 0) {
                     ForEach(items) { item in

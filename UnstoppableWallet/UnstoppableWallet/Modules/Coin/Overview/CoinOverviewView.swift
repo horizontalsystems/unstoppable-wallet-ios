@@ -339,7 +339,7 @@ struct CoinOverviewView: View {
         ListSection {
             if let guideUrl {
                 NavigationRow {
-                    ThemeNavigationView {
+                    ThemeNavigationStack {
                         MarkdownView(url: guideUrl).ignoresSafeArea()
                     }
                     .onFirstAppear {

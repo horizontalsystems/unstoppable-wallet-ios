@@ -97,18 +97,6 @@ struct ScrollableThemeView<Content: View>: View {
     }
 }
 
-struct ThemeNavigationView<Content: View>: View {
-    @ViewBuilder let content: Content
-
-    var body: some View {
-        NavigationView {
-            content
-        }
-        .navigationViewStyle(StackNavigationViewStyle())
-        .accentColor(.themeGray)
-    }
-}
-
 struct ThemeNavigationStack<Content: View>: View {
     private let content: Content
     private let path: Binding<NavigationPath>?

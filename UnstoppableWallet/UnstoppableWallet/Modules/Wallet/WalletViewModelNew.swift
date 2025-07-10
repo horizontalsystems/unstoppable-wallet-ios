@@ -14,9 +14,6 @@ class WalletViewModelNew: WalletListViewModel {
     @Published private(set) var buttonHidden: Bool
     @Published private(set) var totalItem: TotalItem
 
-    @Published var backupRequiredAccount: Account?
-    @Published var receiveAccount: Account?
-
     override init() {
         buttonHidden = walletButtonHiddenManager.buttonHidden
         totalItem = .init(currencyValue: .init(currency: .init(code: "", symbol: "", decimal: 0), value: 0), expired: false, convertedValue: nil, convertedValueExpired: false)
@@ -115,9 +112,20 @@ extension WalletViewModelNew {
         }
 
         if account.backedUp || cloudBackupManager.backedUp(uniqueId: account.type.uniqueId()) {
-            receiveAccount = account
+            Coordinator.shared.present { _ in
+                ReceiveView(account: account).ignoresSafeArea()
+            }
+            stat(page: .balance, event: .open(page: .receiveTokenList))
         } else {
-            backupRequiredAccount = account
+            Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                BackupRequiredView.prompt(
+                    account: account,
+                    description: "receive_alert.any_coins.not_backed_up_description".localized(account.name),
+                    isPresented: isPresented
+                )
+            }
+
+            stat(page: .balance, event: .open(page: .backupRequired))
         }
     }
 

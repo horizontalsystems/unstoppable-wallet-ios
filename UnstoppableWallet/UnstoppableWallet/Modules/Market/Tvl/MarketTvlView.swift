@@ -10,7 +10,6 @@ struct MarketTvlView: View {
     @Environment(\.presentationMode) private var presentationMode
 
     @State private var filterBySelectorPresented = false
-    @State private var presentedCoin: Coin?
 
     init() {
         _viewModel = StateObject(wrappedValue: MarketTvlViewModel())
@@ -19,56 +18,54 @@ struct MarketTvlView: View {
     }
 
     var body: some View {
-        ThemeView {
-            switch viewModel.state {
-            case .loading:
-                VStack(spacing: 0) {
-                    header()
-                    Spacer()
-                    ProgressView()
-                    Spacer()
-                }
-            case let .loaded(defiCoins):
-                ScrollViewReader { proxy in
-                    ThemeList(bottomSpacing: .margin16) {
+        ThemeNavigationStack {
+            ThemeView {
+                switch viewModel.state {
+                case .loading:
+                    VStack(spacing: 0) {
                         header()
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
-                        chart()
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
-
-                        list(defiCoins: defiCoins)
+                        Spacer()
+                        ProgressView()
+                        Spacer()
                     }
-                    .onChange(of: viewModel.platforms) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
-                    .onChange(of: viewModel.sortOrder) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
-                }
-            case .failed:
-                VStack(spacing: 0) {
-                    header()
+                case let .loaded(defiCoins):
+                    ScrollViewReader { proxy in
+                        ThemeList(bottomSpacing: .margin16) {
+                            header()
+                                .listRowBackground(Color.clear)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
+                            chart()
+                                .listRowBackground(Color.clear)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
 
-                    SyncErrorView {
-                        viewModel.sync()
+                            list(defiCoins: defiCoins)
+                        }
+                        .onChange(of: viewModel.platforms) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
+                        .onChange(of: viewModel.sortOrder) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
+                    }
+                case .failed:
+                    VStack(spacing: 0) {
+                        header()
+
+                        SyncErrorView {
+                            viewModel.sync()
+                        }
                     }
                 }
             }
-        }
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("button.close".localized) {
-                    presentationMode.wrappedValue.dismiss()
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("button.close".localized) {
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 }
             }
-        }
-        .onReceive(chartViewModel.$periodType) { periodType in
-            viewModel.timePeriod = HsTimePeriod(periodType) ?? .day1
-        }
-        .sheet(item: $presentedCoin) { coin in
-            CoinPageView(coin: coin)
-                .onFirstAppear { stat(page: .globalMetricsTvlInDefi, event: .openCoin(coinUid: coin.uid)) }
+            .onReceive(chartViewModel.$periodType) { periodType in
+                viewModel.timePeriod = HsTimePeriod(periodType) ?? .day1
+            }
         }
     }
 
@@ -159,7 +156,7 @@ struct MarketTvlView: View {
                     let coin = fullCoin.coin
 
                     ClickableRow(action: {
-                        presentedCoin = coin
+                        Coordinator.shared.presentCoinPage(coin: coin, page: .marketTvl)
                     }) {
                         itemContent(
                             coin: coin,

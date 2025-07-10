@@ -3,8 +3,6 @@ import SwiftUI
 struct AppStatusView: View {
     let viewModel: AppStatusViewModel
 
-    @State private var shareText: String?
-
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
@@ -18,15 +16,14 @@ struct AppStatusView: View {
                     .buttonStyle(PrimaryButtonStyle(style: .yellow))
 
                     Button(action: {
+                        Coordinator.shared.present { _ in
+                            ActivityView(activityItems: [viewModel.rawStatus])
+                        }
                         stat(page: .appStatus, event: .share(entity: .status))
-                        shareText = viewModel.rawStatus
                     }) {
                         Text("button.share".localized)
                     }
                     .buttonStyle(PrimaryButtonStyle(style: .gray))
-                }
-                .sheet(item: $shareText) { shareText in
-                    ActivityView(activityItems: [shareText]).ignoresSafeArea()
                 }
 
                 ForEach(viewModel.sections, id: \.title) { section in

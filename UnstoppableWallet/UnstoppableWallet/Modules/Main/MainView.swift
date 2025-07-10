@@ -10,10 +10,6 @@ struct MainView: View {
 
     @State private var path = NavigationPath()
 
-    @State private var advancedSearchPresented = false
-    @State private var manageAccountsPresented = false
-    @State private var transactionFilterPresented = false
-
     @State private var backupAccount: Account?
 
     var body: some View {
@@ -69,53 +65,8 @@ struct MainView: View {
         .onAppear {
             viewModel.handleNextAlert()
         }
-        .sheet(isPresented: $advancedSearchPresented) {
-            MarketAdvancedSearchView(isPresented: $advancedSearchPresented)
-        }
-        .sheet(isPresented: $manageAccountsPresented) {
-            ThemeNavigationStack {
-                ManageAccountsView(isPresented: $manageAccountsPresented) { account in
-                    manageAccountsPresented = false
-                    backupAccount = account
-                }
-                .onFirstAppear {
-                    stat(page: .balance, event: .open(page: .manageWallets))
-                }
-            }
-        }
-        .sheet(isPresented: $transactionFilterPresented) {
-            TransactionFilterView(transactionsViewModel: transactionsViewModel)
-        }
-        .sheet(item: $viewModel.releaseNotesUrl) { url in
-            MarkdownModule.gitReleaseNotesMarkdownView(url: url, presented: true)
-                .onFirstAppear {
-                    stat(page: .main, event: .open(page: .whatsNews))
-                }
-                .ignoresSafeArea()
-        }
-        .sheet(isPresented: $viewModel.jailbreakPresented) {
-            JailbreakView(isPresented: $viewModel.jailbreakPresented)
-        }
-        .bottomSheet(isPresented: $viewModel.switchAccountPresented) {
-            SwitchAccountView()
-        }
-        .bottomSheet(isPresented: $viewModel.accountsLostPresented) {
-            BottomSheetView(
-                icon: .warning,
-                title: "lost_accounts.warning_title".localized,
-                items: [
-                    .text(text: "lost_accounts.warning_message".localized),
-                ],
-                buttons: [
-                    .init(style: .yellow, title: "button.ok".localized) {
-                        viewModel.accountsLostPresented = false
-                    },
-                ],
-                isPresented: $viewModel.accountsLostPresented
-            )
-        }
-        .modifier(BackupRequiredViewModifier.backupPromptAfterCreate(account: $backupAccount))
         .modifier(DeepLinkViewModifier())
+        .modifier(CoordinatorViewModifier())
     }
 
     private func calculateTabFrames() {
@@ -129,7 +80,9 @@ struct MainView: View {
         case .markets:
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
-                    advancedSearchPresented = true
+                    Coordinator.shared.present { isPresented in
+                        MarketAdvancedSearchView(isPresented: isPresented)
+                    }
                     stat(page: .markets, event: .open(page: .advancedSearch))
                 }) {
                     Image("manage_2_24")
@@ -141,7 +94,10 @@ struct MainView: View {
             if walletViewModel.account != nil {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button(action: {
-                        manageAccountsPresented = true
+                        Coordinator.shared.present { isPresented in
+                            ThemeNavigationStack { ManageAccountsView(isPresented: isPresented) }
+                        }
+                        stat(page: .balance, event: .open(page: .manageWallets))
                     }) {
                         Image("switch_wallet_24")
                             .renderingMode(.template)
@@ -158,7 +114,10 @@ struct MainView: View {
 
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
-                    transactionFilterPresented = true
+                    Coordinator.shared.present { _ in
+                        TransactionFilterView(transactionsViewModel: transactionsViewModel)
+                    }
+                    stat(page: .transactions, event: .open(page: .transactionFilter))
                 }) {
                     ZStack {
                         Image("manage_2_24").themeIcon(color: .themeGray)
@@ -192,5 +151,25 @@ struct MainView: View {
         case .settings:
             return "settings.title".localized
         }
+    }
+}
+
+struct AccountsLostView: View {
+    @Binding var isPresented: Bool
+
+    var body: some View {
+        BottomSheetView(
+            icon: .warning,
+            title: "lost_accounts.warning_title".localized,
+            items: [
+                .text(text: "lost_accounts.warning_message".localized),
+            ],
+            buttons: [
+                .init(style: .yellow, title: "button.ok".localized) {
+                    isPresented = false
+                },
+            ],
+            isPresented: $isPresented
+        )
     }
 }

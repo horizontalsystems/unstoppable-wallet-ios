@@ -13,7 +13,7 @@ struct TransactionFilterView: View {
     }
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ScrollableThemeView {
                 VStack(spacing: .margin32) {
                     ListSection {
@@ -34,7 +34,7 @@ struct TransactionFilterView: View {
                         }
                     }
                     .sheet(isPresented: $blockchainSelectPresented) {
-                        ThemeNavigationView { TransactionBlockchainSelectView(transactionFilterViewModel: viewModel) }
+                        ThemeNavigationStack { TransactionBlockchainSelectView(transactionFilterViewModel: viewModel) }
                     }
 
                     ListSection {
@@ -55,7 +55,7 @@ struct TransactionFilterView: View {
                         }
                     }
                     .sheet(isPresented: $tokenSelectPresented) {
-                        ThemeNavigationView { TransactionTokenSelectView(transactionFilterViewModel: viewModel) }
+                        ThemeNavigationStack { TransactionTokenSelectView(transactionFilterViewModel: viewModel) }
                     }
 
                     ListSection {
@@ -76,7 +76,7 @@ struct TransactionFilterView: View {
                         }
                     }
                     .sheet(isPresented: $contactSelectPresented) {
-                        ThemeNavigationView { TransactionContactSelectView(transactionFilterViewModel: viewModel) }
+                        ThemeNavigationStack { TransactionContactSelectView(transactionFilterViewModel: viewModel) }
                     }
 
                     VStack(spacing: 0) {

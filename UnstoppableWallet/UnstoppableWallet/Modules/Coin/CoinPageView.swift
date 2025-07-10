@@ -9,7 +9,7 @@ struct CoinPageView: View {
     @StateObject private var analyticsViewModel: CoinAnalyticsViewModel
     @StateObject private var marketsViewModel: CoinMarketsViewModel
 
-    @Environment(\.presentationMode) private var presentationMode
+    @Environment(\.dismiss) private var dismiss
 
     @State private var currentTab: Tab = .overview
     @State private var loadedTabs = [Tab]()
@@ -23,7 +23,7 @@ struct CoinPageView: View {
     }
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ThemeView {
                 VStack(spacing: 0) {
                     TabHeaderView(
@@ -59,7 +59,7 @@ struct CoinPageView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("button.close".localized) {
-                        presentationMode.wrappedValue.dismiss()
+                        dismiss()
                     }
                 }
 

@@ -65,7 +65,7 @@ struct ZcashWalletTokenView: View {
             )
         }
         .sheet(isPresented: $shieldPresented) {
-            ThemeNavigationView {
+            ThemeNavigationStack {
                 ShieldSendView(amount: viewModel.zcashBalanceData.transparent, address: nil)
             }
         }

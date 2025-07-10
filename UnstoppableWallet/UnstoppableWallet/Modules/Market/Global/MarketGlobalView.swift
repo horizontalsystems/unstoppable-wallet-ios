@@ -4,11 +4,6 @@ import SwiftUI
 struct MarketGlobalView: View {
     @ObservedObject var viewModel: MarketGlobalViewModel
 
-    @State private var marketCapPresented = false
-    @State private var volumePresented = false
-    @State private var etfPresented = false
-    @State private var tvlPresented = false
-
     var body: some View {
         ZStack {
             HStack(spacing: 0) {
@@ -18,7 +13,10 @@ struct MarketGlobalView: View {
                     diff: viewModel.marketGlobal?.marketCapChange.map { .percent(value: $0) },
                     redacted: viewModel.marketGlobal
                 ) {
-                    marketCapPresented = true
+                    Coordinator.shared.present { isPresented in
+                        MarketMarketCapView(isPresented: isPresented)
+                    }
+                    stat(page: .markets, event: .open(page: .globalMetricsMarketCap))
                 }
                 divider()
                 itemView(
@@ -27,7 +25,10 @@ struct MarketGlobalView: View {
                     diff: viewModel.marketGlobal?.volumeChange.map { .percent(value: $0) },
                     redacted: viewModel.marketGlobal
                 ) {
-                    volumePresented = true
+                    Coordinator.shared.present { isPresented in
+                        MarketVolumeView(isPresented: isPresented)
+                    }
+                    stat(page: .markets, event: .open(page: .globalMetricsVolume))
                 }
                 divider()
                 itemView(
@@ -36,7 +37,10 @@ struct MarketGlobalView: View {
                     diff: viewModel.marketGlobal?.tvlChange.map { .percent(value: $0) },
                     redacted: viewModel.marketGlobal
                 ) {
-                    tvlPresented = true
+                    Coordinator.shared.present { _ in
+                        MarketTvlView()
+                    }
+                    stat(page: .markets, event: .open(page: .globalMetricsTvlInDefi))
                 }
                 divider()
                 itemView(
@@ -45,7 +49,10 @@ struct MarketGlobalView: View {
                     diff: viewModel.marketGlobal?.etfDailyInflow.map { .change(value: $0, currency: viewModel.currency) },
                     redacted: viewModel.marketGlobal
                 ) {
-                    etfPresented = true
+                    Coordinator.shared.present { isPresented in
+                        MarketEtfView(isPresented: isPresented)
+                    }
+                    stat(page: .markets, event: .open(page: .globalMetricsEtf))
                 }
             }
             .fixedSize(horizontal: false, vertical: true)
@@ -54,22 +61,6 @@ struct MarketGlobalView: View {
         .padding(.horizontal, .margin16)
         .padding(.vertical, .margin8)
         .animation(.default, value: viewModel.marketGlobal == nil)
-        .sheet(isPresented: $tvlPresented) {
-            ThemeNavigationView { MarketTvlView() }
-                .onFirstAppear { stat(page: .markets, event: .open(page: .globalMetricsTvlInDefi)) }
-        }
-        .sheet(isPresented: $marketCapPresented) {
-            MarketMarketCapView(isPresented: $marketCapPresented)
-                .onFirstAppear { stat(page: .markets, event: .open(page: .globalMetricsMarketCap)) }
-        }
-        .sheet(isPresented: $volumePresented) {
-            MarketVolumeView(isPresented: $volumePresented)
-                .onFirstAppear { stat(page: .markets, event: .open(page: .globalMetricsVolume)) }
-        }
-        .sheet(isPresented: $etfPresented) {
-            MarketEtfView(isPresented: $etfPresented)
-                .onFirstAppear { stat(page: .markets, event: .open(page: .globalMetricsEtf)) }
-        }
     }
 
     @ViewBuilder private func itemView(title: String, amount: String?, diff: DiffText.Diff?, redacted: Any?, onTap: @escaping () -> Void) -> some View {

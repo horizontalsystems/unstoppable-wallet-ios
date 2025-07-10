@@ -9,15 +9,13 @@ struct PerformanceDataSelectView: View {
     @State var timePeriodSelectorPresented = false
     @State var selectedPeriod: Int?
 
-    @State var subscriptionPresented = false
-
     init(isPresented: Binding<Bool>) {
         _viewModel = .init(wrappedValue: PerformanceDataSelectViewModel())
         _isPresented = isPresented
     }
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ThemeView {
                 VStack(spacing: 0) {
                     SearchBar(text: $viewModel.searchText, prompt: "placeholder.search".localized)
@@ -28,7 +26,7 @@ struct PerformanceDataSelectView: View {
                             Spacer()
                             Button(action: {
                                 guard viewModel.premiumEnabled else {
-                                    subscriptionPresented = true
+                                    Coordinator.shared.presentPurchases()
                                     stat(page: .performance, event: .openPremium(from: .periodChange))
                                     return
                                 }
@@ -45,7 +43,7 @@ struct PerformanceDataSelectView: View {
                             Spacer()
                             Button(action: {
                                 guard viewModel.premiumEnabled else {
-                                    subscriptionPresented = true
+                                    Coordinator.shared.presentPurchases()
                                     stat(page: .performance, event: .openPremium(from: .periodChange))
                                     return
                                 }
@@ -72,7 +70,7 @@ struct PerformanceDataSelectView: View {
                     ThemeList(viewModel.items, bottomSpacing: .margin16) { item in
                         ClickableRow(action: {
                             guard viewModel.premiumEnabled else {
-                                subscriptionPresented = true
+                                Coordinator.shared.presentPurchases()
                                 stat(page: .performance, event: .openPremium(from: .tokenChange))
                                 return
                             }
@@ -114,9 +112,6 @@ struct PerformanceDataSelectView: View {
                 }
                 .accentColor(Color.themeJacob)
             }
-        }
-        .sheet(isPresented: $subscriptionPresented) {
-            PurchasesView()
         }
         .alert(
             isPresented: $timePeriodSelectorPresented,

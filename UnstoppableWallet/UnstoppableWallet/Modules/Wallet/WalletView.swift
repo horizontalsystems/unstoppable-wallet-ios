@@ -3,18 +3,12 @@ import SwiftUI
 struct WalletView: View {
     @ObservedObject var viewModel: WalletViewModelNew
     @StateObject var balanceErrorViewModifierModel = BalanceErrorViewModifierModel()
-    @StateObject var createAccountViewModifierModel = TermsAcceptedViewModifierModel()
-    @StateObject var restoreAccountViewModifierModel = TermsAcceptedViewModifierModel()
     @StateObject var accountWarningViewModel = AccountWarningViewModel(canIgnore: true)
 
     @Binding var path: NavigationPath
 
-    @State private var manageWaletsAccount: Account?
     @State private var sortTypePresented = false
-    @State private var sendTokenListPresented = false
-    @State private var swapPresented = false
     @State private var scanPresented = false
-    @State private var watchPresented = false
 
     var body: some View {
         ThemeView(isRoot: true) {
@@ -50,21 +44,32 @@ struct WalletView: View {
                 PlaceholderViewNew(image: Image("add_to_wallet_48"), layoutType: .bottom) {
                     VStack(spacing: .margin16) {
                         Button(action: {
-                            createAccountViewModifierModel.handle()
+                            Coordinator.shared.presentAfterAcceptTerms { isPresented in
+                                CreateAccountView(isPresented: isPresented)
+                            } onPresent: {
+                                stat(page: .balance, event: .open(page: .newWallet))
+                            }
                         }) {
                             Text("onboarding.balance.create".localized)
                         }
                         .buttonStyle(PrimaryButtonStyle(style: .yellow))
 
                         Button(action: {
-                            restoreAccountViewModifierModel.handle()
+                            Coordinator.shared.presentAfterAcceptTerms { isPresented in
+                                RestoreTypeView(type: .wallet, isPresented: isPresented)
+                            } onPresent: {
+                                stat(page: .balance, event: .open(page: .importWallet))
+                            }
                         }) {
                             Text("onboarding.balance.import".localized)
                         }
                         .buttonStyle(PrimaryButtonStyle(style: .gray))
 
                         Button(action: {
-                            watchPresented = true
+                            Coordinator.shared.present { isPresented in
+                                WatchView(isPresented: isPresented)
+                            }
+                            stat(page: .balance, event: .open(page: .watchWallet))
                         }) {
                             Text("onboarding.balance.watch".localized)
                         }
@@ -91,38 +96,15 @@ struct WalletView: View {
                 viewModel.sortType = WalletModule.SortType.allCases[index]
             }
         )
-        .sheet(item: $manageWaletsAccount) { account in
-            ManageWalletsView(account: account).ignoresSafeArea()
-        }
-        .sheet(isPresented: $sendTokenListPresented) {
-            SendTokenListView(isPresented: $sendTokenListPresented)
-        }
-        .sheet(isPresented: $swapPresented) {
-            MultiSwapView()
-        }
         .sheet(isPresented: $scanPresented) {
             ScanQrViewNew(reportAfterDismiss: true, pasteEnabled: true) { text in
                 viewModel.process(scanned: text)
             }
             .ignoresSafeArea()
         }
-        .sheet(item: $viewModel.receiveAccount) { account in
-            ReceiveView(account: account).ignoresSafeArea()
-        }
-        .sheet(isPresented: $watchPresented) {
-            WatchView {
-                watchPresented = false
-            }
-            .ignoresSafeArea()
-        }
         .sheet(item: $accountWarningViewModel.presentedUrl) { url in
             MarkdownView(url: url, navigation: true).ignoresSafeArea()
         }
-        .modifier(CreateAccountViewModifier(viewModel: createAccountViewModifierModel))
-        .modifier(RestoreAccountViewModifier(viewModel: restoreAccountViewModifierModel, type: .wallet))
-        .modifier(BackupRequiredViewModifier.backupPrompt(account: $viewModel.backupRequiredAccount) { account in
-            "receive_alert.any_coins.not_backed_up_description".localized(account.name)
-        })
         .modifier(BalanceErrorViewModifier(viewModel: balanceErrorViewModifierModel))
     }
 
@@ -203,7 +185,12 @@ struct WalletView: View {
             .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
 
             Button(action: {
-                manageWaletsAccount = viewModel.account
+                if let account = viewModel.account {
+                    Coordinator.shared.present { _ in
+                        ManageWalletsView(account: account).ignoresSafeArea()
+                    }
+                    stat(page: .balance, event: .open(page: .coinManager))
+                }
             }) {
                 Image("manage_2_20").renderingMode(.template)
             }
@@ -222,9 +209,17 @@ struct WalletView: View {
         VStack(spacing: .margin8) {
             Button(action: {
                 switch button {
-                case .send: sendTokenListPresented = true
+                case .send:
+                    Coordinator.shared.present { isPresented in
+                        SendTokenListView(isPresented: isPresented)
+                    }
+                    stat(page: .balance, event: .open(page: .sendTokenList))
                 case .receive: viewModel.onTapReceive()
-                case .swap: swapPresented = true
+                case .swap:
+                    Coordinator.shared.present { _ in
+                        MultiSwapView()
+                    }
+                    stat(page: .balance, event: .open(page: .swap))
                 case .scan: scanPresented = true
                 default: ()
                 }

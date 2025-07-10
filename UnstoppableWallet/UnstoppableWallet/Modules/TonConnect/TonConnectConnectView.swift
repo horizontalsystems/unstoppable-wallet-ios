@@ -12,7 +12,7 @@ struct TonConnectConnectView: View {
     }
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ThemeView {
                 BottomGradientWrapper {
                     ScrollView {

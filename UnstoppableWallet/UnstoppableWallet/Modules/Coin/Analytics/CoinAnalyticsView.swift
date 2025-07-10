@@ -17,7 +17,6 @@ struct CoinAnalyticsView: View {
     @State private var tvlRankPresented = false
 
     @State private var indicatorDetailsShown = false
-    @State private var subscriptionPresented = false
 
     var body: some View {
         ThemeView {
@@ -104,12 +103,7 @@ struct CoinAnalyticsView: View {
             CoinMajorHoldersView(coin: viewModel.coin, blockchain: blockchain, isPresented: Binding(get: { presentedHolderBlockchain != nil }, set: { if !$0 { presentedHolderBlockchain = nil } }))
         }
         .sheet(isPresented: $tvlRankPresented) {
-            ThemeNavigationView {
-                MarketTvlView()
-            }
-        }
-        .sheet(isPresented: $subscriptionPresented) {
-            PurchasesView()
+            MarketTvlView()
         }
     }
 
@@ -117,8 +111,8 @@ struct CoinAnalyticsView: View {
         content
             .onTapGesture {
                 if !viewModel.analyticsEnabled {
+                    Coordinator.shared.presentPurchases()
                     stat(page: .coinAnalytics, event: .openPremium(from: statTrigger))
-                    subscriptionPresented = true
                 }
             }
         // .allowsHitTesting(!viewModel.analyticsEnabled)

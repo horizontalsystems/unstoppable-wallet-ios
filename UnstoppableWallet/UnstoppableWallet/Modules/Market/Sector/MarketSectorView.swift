@@ -11,7 +11,6 @@ struct MarketSectorView: View {
     @State private var infoPresented = false
     @State private var sortBySelectorPresented = false
     @State private var timePeriodSelectorPresented = false
-    @State private var presentedCoin: Coin?
 
     init(isPresented: Binding<Bool>, sector: CoinCategory) {
         _viewModel = StateObject(wrappedValue: MarketSectorViewModel(sector: sector))
@@ -21,7 +20,7 @@ struct MarketSectorView: View {
     }
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ThemeView {
                 switch viewModel.state {
                 case .loading:
@@ -62,10 +61,6 @@ struct MarketSectorView: View {
                             .foregroundColor(.themeGray)
                     }
                 }
-            }
-            .sheet(item: $presentedCoin) { coin in
-                CoinPageView(coin: coin)
-                    .onFirstAppear { stat(page: .globalMetricsTvlInDefi, event: .openCoin(coinUid: coin.uid)) }
             }
             .bottomSheet(isPresented: $infoPresented) {
                 BottomSheetView(
@@ -147,7 +142,7 @@ struct MarketSectorView: View {
                 let coin = marketInfo.fullCoin.coin
 
                 ClickableRow(action: {
-                    presentedCoin = coin
+                    Coordinator.shared.presentCoinPage(coin: coin, page: .marketSector)
                 }) {
                     itemContent(
                         coin: coin,

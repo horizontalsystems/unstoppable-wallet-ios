@@ -8,7 +8,6 @@ struct RankView: View {
 
     @Environment(\.presentationMode) private var presentationMode
 
-    @State private var presentedCoin: Coin?
     @State private var timePeriodSelectorPresented = false
 
     init(type: RankViewModel.RankType) {
@@ -17,7 +16,7 @@ struct RankView: View {
     }
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ThemeView {
                 switch viewModel.state {
                 case .loading:
@@ -57,10 +56,6 @@ struct RankView: View {
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
-            }
-            .sheet(item: $presentedCoin) { coin in
-                CoinPageView(coin: coin)
-                    .onFirstAppear { stat(page: viewModel.type.statRankType, event: .openCoin(coinUid: coin.uid)) }
             }
         }
     }
@@ -132,7 +127,7 @@ struct RankView: View {
                 let coin = item.coin
 
                 ClickableRow(action: {
-                    presentedCoin = item.coin
+                    Coordinator.shared.presentCoinPage(coin: coin, page: viewModel.type.statRankType)
                 }) {
                     itemContent(
                         index: item.index,
