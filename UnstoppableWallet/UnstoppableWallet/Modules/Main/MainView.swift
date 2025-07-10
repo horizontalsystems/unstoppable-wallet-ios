@@ -6,6 +6,8 @@ struct MainView: View {
     @StateObject var walletViewModel = WalletViewModelNew()
     @StateObject var transactionsViewModel = TransactionsViewModelNew()
 
+    @StateObject private var frameCalculator = TabBarFrameCalculator()
+
     @State private var path = NavigationPath()
 
     @State private var advancedSearchPresented = false
@@ -22,7 +24,6 @@ struct MainView: View {
                         MarketView()
                             .tabItem {
                                 Image("market_2_24").renderingMode(.template)
-                                Text("market.tab_bar_item".localized)
                             }
                             .tag(MainViewModelNew.Tab.markets)
                     }
@@ -30,26 +31,25 @@ struct MainView: View {
                     WalletView(viewModel: walletViewModel, path: $path)
                         .tabItem {
                             Image("filled_wallet_24").renderingMode(.template)
-                            Text("balance.tab_bar_item".localized)
                         }
                         .tag(MainViewModelNew.Tab.wallet)
 
                     MainTransactionsView(transactionsViewModel: transactionsViewModel)
                         .tabItem {
                             Image("filled_transaction_2n_24").renderingMode(.template)
-                            Text("transactions.tab_bar_item".localized)
                         }
                         .tag(MainViewModelNew.Tab.transactions)
 
                     MainSettingsView()
                         .tabItem {
                             Image("filled_settings_2_24").renderingMode(.template)
-                            Text("settings.tab_bar_item".localized)
                         }
                         .tag(MainViewModelNew.Tab.settings)
-                        .badge(badgeViewModel.badge)
                 }
                 .toolbarBackground(.hidden, for: .tabBar)
+            }
+            .onAppear {
+                calculateTabFrames()
             }
             .navigationDestination(for: Wallet.self) { wallet in
                 WalletTokenModule.view(wallet: wallet)
@@ -58,6 +58,13 @@ struct MainView: View {
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbar() }
+            .overlay(
+                TabBarBadgeOverlay(
+                    frameCalculator: frameCalculator,
+                    badgeText: badgeViewModel.badge,
+                    targetTabIndex: .last
+                )
+            )
         }
         .onAppear {
             viewModel.handleNextAlert()
@@ -109,6 +116,12 @@ struct MainView: View {
         }
         .modifier(BackupRequiredViewModifier.backupPromptAfterCreate(account: $backupAccount))
         .modifier(DeepLinkViewModifier())
+    }
+
+    private func calculateTabFrames() {
+        DispatchQueue.main.async {
+            frameCalculator.calculateFrames()
+        }
     }
 
     @ToolbarContentBuilder func toolbar() -> some ToolbarContent {
