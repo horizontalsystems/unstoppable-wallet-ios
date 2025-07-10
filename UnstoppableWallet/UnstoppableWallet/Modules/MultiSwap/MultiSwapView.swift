@@ -7,19 +7,15 @@ struct MultiSwapView: View {
     @StateObject var viewModel: MultiSwapViewModel
 
     @Environment(\.presentationMode) private var presentationMode
-    @State private var selectTokenInPresented: Bool
-    @State private var selectTokenOutPresented = false
-    @State private var quotesPresented = false
     @State private var sendPresented = false
-    @State private var settingsPresented = false
-    @State private var preSwapStep: MultiSwapPreSwapStep?
-    @State private var presentedSettingId: String?
 
     @FocusState var isInputActive: Bool
 
+    @State private var shouldPresentTokenIn: Bool
+
     init(token: Token? = nil) {
         _viewModel = StateObject(wrappedValue: MultiSwapViewModel.instance(token: token))
-        _selectTokenInPresented = State(initialValue: token == nil)
+        shouldPresentTokenIn = token == nil
     }
 
     var body: some View {
@@ -42,32 +38,6 @@ struct MultiSwapView: View {
                         }
                     }
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
-                    .sheet(isPresented: $quotesPresented, onDismiss: { viewModel.autoQuoteIfRequired() }) {
-                        MultiSwapQuotesView(viewModel: viewModel, isPresented: $quotesPresented)
-                    }
-                    .sheet(item: $preSwapStep, onDismiss: { viewModel.autoQuoteIfRequired() }) { step in
-                        if let currentQuote = viewModel.currentQuote,
-                           let tokenIn = viewModel.tokenIn,
-                           let tokenOut = viewModel.tokenOut,
-                           let amount = viewModel.amountIn
-                        {
-                            let isPresented = Binding<Bool>(get: {
-                                preSwapStep?.id == step.id
-                            }, set: { newValue in
-                                if !newValue { preSwapStep = nil }
-                            })
-
-                            currentQuote.provider.preSwapView(
-                                step: step,
-                                tokenIn: tokenIn,
-                                tokenOut: tokenOut,
-                                amount: amount,
-                                isPresented: isPresented
-                            ) {
-                                viewModel.syncQuotes()
-                            }
-                        }
-                    }
                 }
 
                 NavigationLink(
@@ -110,6 +80,12 @@ struct MultiSwapView: View {
                         presentationMode.wrappedValue.dismiss()
                     }
                 }
+            }
+        }
+        .onAppear {
+            if shouldPresentTokenIn {
+                presentTokenIn()
+                shouldPresentTokenIn = false
             }
         }
     }
@@ -213,10 +189,7 @@ struct MultiSwapView: View {
             Spacer()
 
             selectorButton(token: viewModel.tokenIn) {
-                selectTokenInPresented = true
-            }
-            .sheet(isPresented: $selectTokenInPresented) {
-                MultiSwapTokenSelectView(title: "swap.you_pay".localized, currentToken: $viewModel.tokenIn, otherToken: viewModel.tokenOut, isPresented: $selectTokenInPresented)
+                presentTokenIn()
             }
         }
     }
@@ -289,10 +262,14 @@ struct MultiSwapView: View {
             Spacer()
 
             selectorButton(token: viewModel.tokenOut) {
-                selectTokenOutPresented = true
-            }
-            .sheet(isPresented: $selectTokenOutPresented) {
-                MultiSwapTokenSelectView(title: "swap.you_get".localized, currentToken: $viewModel.tokenOut, otherToken: viewModel.tokenIn, isPresented: $selectTokenOutPresented)
+                Coordinator.shared.present { isPresented in
+                    MultiSwapTokenSelectView(
+                        title: "swap.you_get".localized,
+                        currentToken: $viewModel.tokenOut,
+                        otherToken: viewModel.tokenIn,
+                        isPresented: isPresented
+                    )
+                }
             }
         }
     }
@@ -331,7 +308,26 @@ struct MultiSwapView: View {
             viewModel.stopAutoQuoting()
 
             if let preSwapStep {
-                self.preSwapStep = preSwapStep
+                if let currentQuote = viewModel.currentQuote,
+                   let tokenIn = viewModel.tokenIn,
+                   let tokenOut = viewModel.tokenOut,
+                   let amount = viewModel.amountIn
+                {
+                    Coordinator.shared.present { isPresented in
+                        currentQuote.provider.preSwapView(
+                            step: preSwapStep,
+                            tokenIn: tokenIn,
+                            tokenOut: tokenOut,
+                            amount: amount,
+                            isPresented: isPresented
+                        ) {
+                            viewModel.syncQuotes()
+                        }
+
+                    } onDismiss: {
+                        viewModel.autoQuoteIfRequired()
+                    }
+                }
             } else {
                 sendPresented = true
             }
@@ -384,11 +380,6 @@ struct MultiSwapView: View {
             }
         }
         .themeListStyle(.bordered)
-        .sheet(item: $presentedSettingId) { settingId in
-            if let currentQuote = viewModel.currentQuote {
-                currentQuote.provider.settingView(settingId: settingId)
-            }
-        }
     }
 
     @ViewBuilder private func quoteCautionsView(currentQuote: MultiSwapViewModel.Quote) -> some View {
@@ -405,7 +396,12 @@ struct MultiSwapView: View {
         HStack(spacing: .margin8) {
             Button(action: {
                 viewModel.stopAutoQuoting()
-                quotesPresented = true
+
+                Coordinator.shared.present { isPresented in
+                    MultiSwapQuotesView(viewModel: viewModel, isPresented: isPresented)
+                } onDismiss: {
+                    viewModel.autoQuoteIfRequired()
+                }
             }) {
                 HStack(spacing: .margin8) {
                     Image(currentQuote.provider.icon)
@@ -422,7 +418,14 @@ struct MultiSwapView: View {
 
             Button(action: {
                 viewModel.stopAutoQuoting()
-                settingsPresented = true
+
+                Coordinator.shared.present { _ in
+                    currentQuote.provider.settingsView(tokenIn: tokenIn, tokenOut: tokenOut) {
+                        viewModel.syncQuotes()
+                    }
+                } onDismiss: {
+                    viewModel.autoQuoteIfRequired()
+                }
             }) {
                 if currentQuote.quote.settingsModified {
                     Image("manage_2_20").themeIcon(color: .themeJacob)
@@ -434,11 +437,6 @@ struct MultiSwapView: View {
         }
         .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin12))
         .frame(minHeight: 40)
-        .sheet(isPresented: $settingsPresented, onDismiss: { viewModel.autoQuoteIfRequired() }) {
-            currentQuote.provider.settingsView(tokenIn: tokenIn, tokenOut: tokenOut) {
-                viewModel.syncQuotes()
-            }
-        }
     }
 
     @ViewBuilder private func priceView(value: String) -> some View {
@@ -483,7 +481,11 @@ struct MultiSwapView: View {
 
             if let settingId = field.settingId {
                 Button(action: {
-                    presentedSettingId = settingId
+                    if let currentQuote = viewModel.currentQuote {
+                        Coordinator.shared.present { _ in
+                            currentQuote.provider.settingView(settingId: settingId)
+                        }
+                    }
                 }) {
                     if field.modified {
                         Image("edit2_20").themeIcon(color: .themeJacob)
@@ -549,5 +551,16 @@ struct MultiSwapView: View {
         }
 
         return (title, style, disabled, showProgress, preSwapStep)
+    }
+
+    func presentTokenIn() {
+        Coordinator.shared.present { isPresented in
+            MultiSwapTokenSelectView(
+                title: "swap.you_pay".localized,
+                currentToken: $viewModel.tokenIn,
+                otherToken: viewModel.tokenOut,
+                isPresented: isPresented
+            )
+        }
     }
 }

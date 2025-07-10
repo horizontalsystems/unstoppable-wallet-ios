@@ -3,8 +3,6 @@ import SwiftUI
 struct BackupManagerView: View {
     @StateObject var unlockViewModifierModel = UnlockViewModifierModel()
 
-    @State private var backupPresented = false
-
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
@@ -22,7 +20,11 @@ struct BackupManagerView: View {
 
                     ClickableRow(action: {
                         unlockViewModifierModel.handle {
-                            backupPresented = true
+                            Coordinator.shared.present { isPresented in
+                                ThemeNavigationStack {
+                                    BackupTypeView(isPresented: isPresented)
+                                }
+                            }
                         }
                     }) {
                         Image("plus_24").themeIcon(color: .themeJacob)
@@ -33,11 +35,6 @@ struct BackupManagerView: View {
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
         .navigationTitle("backup_app.backup_manager.title".localized)
-        .sheet(isPresented: $backupPresented) {
-            ThemeNavigationStack {
-                BackupTypeView(isPresented: $backupPresented)
-            }
-        }
         .modifier(UnlockViewModifier(viewModel: unlockViewModifierModel))
     }
 }

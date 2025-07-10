@@ -25,6 +25,7 @@ struct SendTokenListView: View {
 
                                 WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, subtitleMode: .coinName) {
                                     path.append(item.wallet)
+                                    stat(page: .sendTokenList, event: .openSend(token: item.wallet.token))
                                 } failedAction: {
                                     Coordinator.shared.presentBalanceError(wallet: item.wallet, state: item.state)
                                 }
@@ -39,7 +40,7 @@ struct SendTokenListView: View {
                 }
             }
             .navigationDestination(for: Wallet.self) { wallet in
-                SendAddressView(wallet: wallet)
+                SendAddressView(wallet: wallet, isPresented: $isPresented)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {

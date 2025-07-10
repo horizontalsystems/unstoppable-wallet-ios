@@ -4,13 +4,22 @@ import SwiftUI
 struct MultiSwapAddressView: View {
     @ObservedObject var viewModel: AddressMultiSwapSettingsViewModel
 
-    @State var addressPresented = false
-
     var body: some View {
         VStack(spacing: 0) {
             ListSection {
                 ClickableRow {
-                    addressPresented = true
+                    Coordinator.shared.present { isPresented in
+                        ThemeNavigationStack {
+                            ThemeView {
+                                AddressView(token: viewModel.token, buttonTitle: "button.done".localized, destination: .swap, address: viewModel.address) { resolvedAddress in
+                                    viewModel.address = resolvedAddress.address
+                                    isPresented.wrappedValue = false
+                                }
+                            }
+                            .navigationTitle("address.title".localized)
+                            .navigationBarTitleDisplayMode(.inline)
+                        }
+                    }
                 } content: {
                     if let address = viewModel.address {
                         Text("swap.advanced_settings.recipient_address.to".localized).textSubhead2()
@@ -42,18 +51,6 @@ struct MultiSwapAddressView: View {
             Text("swap.advanced_settings.recipient.footer".localized)
                 .themeSubhead2()
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin12, trailing: .margin16))
-        }
-        .sheet(isPresented: $addressPresented) {
-            ThemeNavigationStack {
-                ThemeView {
-                    AddressView(token: viewModel.token, buttonTitle: "button.done".localized, destination: .swap, address: viewModel.address) { resolvedAddress in
-                        viewModel.address = resolvedAddress.address
-                        addressPresented = false
-                    }
-                }
-                .navigationTitle("address.title".localized)
-                .navigationBarTitleDisplayMode(.inline)
-            }
         }
     }
 }

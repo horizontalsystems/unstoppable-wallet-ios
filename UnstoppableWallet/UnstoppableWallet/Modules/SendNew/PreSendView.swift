@@ -10,9 +10,7 @@ struct PreSendView: View {
     @Environment(\.presentationMode) private var presentationMode
     @FocusState private var focusField: FocusField?
 
-    @State private var settingsPresented = false
     @State private var confirmPresented = false
-    @State private var addressAlertPresented = false
 
     init(wallet: Wallet, handler: IPreSendHandler?, resolvedAddress: ResolvedAddress, amount: Decimal? = nil, addressVisible: Bool = true, onDismiss: @escaping () -> Void) {
         _viewModel = StateObject(wrappedValue: PreSendViewModel(wallet: wallet, handler: handler, resolvedAddress: resolvedAddress, amount: amount))
@@ -73,7 +71,13 @@ struct PreSendView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 if let handler = viewModel.handler, handler.hasSettings {
                     Button(action: {
-                        settingsPresented = true
+                        if let handler = viewModel.handler {
+                            Coordinator.shared.present { _ in
+                                handler.settingsView {
+                                    viewModel.syncSendData()
+                                }
+                            }
+                        }
                     }) {
                         Image("settings_24")
                             .renderingMode(.template)
@@ -81,30 +85,6 @@ struct PreSendView: View {
                     }
                 }
             }
-        }
-        .sheet(isPresented: $settingsPresented) {
-            if let handler = viewModel.handler {
-                handler.settingsView {
-                    viewModel.syncSendData()
-                }
-            }
-        }
-        .bottomSheet(isPresented: $addressAlertPresented) {
-            BottomSheetView(
-                icon: .local(name: "warning_2_24", tint: .themeLucian),
-                title: "send.address.risky.title".localized,
-                items: [
-                    .highlightedDescription(text: "send.address.risky.description".localized, style: .alert),
-                ],
-                buttons: [
-                    .init(style: .red, title: "send.continue_anyway".localized) {
-                        addressAlertPresented = false
-                        confirmPresented = true
-                    },
-                    .init(style: .transparent, title: "button.cancel".localized) { addressAlertPresented = false },
-                ],
-                isPresented: $addressAlertPresented
-            )
         }
         .accentColor(.themeJacob)
     }
@@ -246,7 +226,23 @@ struct PreSendView: View {
             if viewModel.resolvedAddress.issueTypes.isEmpty {
                 confirmPresented = true
             } else {
-                addressAlertPresented = true
+                Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                    BottomSheetView(
+                        icon: .local(name: "warning_2_24", tint: .themeLucian),
+                        title: "send.address.risky.title".localized,
+                        items: [
+                            .highlightedDescription(text: "send.address.risky.description".localized, style: .alert),
+                        ],
+                        buttons: [
+                            .init(style: .red, title: "send.continue_anyway".localized) {
+                                isPresented.wrappedValue = false
+                                confirmPresented = true
+                            },
+                            .init(style: .transparent, title: "button.cancel".localized) { isPresented.wrappedValue = false },
+                        ],
+                        isPresented: isPresented
+                    )
+                }
             }
         }) {
             HStack(spacing: .margin8) {

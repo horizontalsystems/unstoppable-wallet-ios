@@ -59,18 +59,6 @@ struct AddressViewNew: View {
                 }
             )
         }
-        .sheet(isPresented: $viewModel.qrScanPresented) {
-            ScanQrViewNew(pasteEnabled: true) {
-                viewModel.didFetch(qrText: $0)
-            }
-            .ignoresSafeArea()
-        }
-        .sheet(isPresented: $viewModel.contactsPresented) {
-            if let blockchainType = viewModel.blockchainType {
-                ContactBookView(mode: .select(blockchainType, viewModel), presented: true)
-                    .ignoresSafeArea()
-            }
-        }
     }
 
     @ViewBuilder func textField(placeholder: String, text: Binding<String>) -> some View {

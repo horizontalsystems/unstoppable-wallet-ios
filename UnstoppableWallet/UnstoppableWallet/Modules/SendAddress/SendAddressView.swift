@@ -6,16 +6,16 @@ struct SendAddressView: View {
     private let address: String?
     private let fromAddress: String?
     private let amount: Decimal?
+    @Binding var isPresented: Bool
     private let onDismiss: (() -> Void)?
-
-    @Environment(\.presentationMode) private var presentationMode
 
     @State private var resolvedAddress: ResolvedAddress?
 
-    init(wallet: Wallet, address: String? = nil, amount: Decimal? = nil, onDismiss: (() -> Void)? = nil) {
+    init(wallet: Wallet, address: String? = nil, amount: Decimal? = nil, isPresented: Binding<Bool>, onDismiss: (() -> Void)? = nil) {
         self.wallet = wallet
         self.address = address
         self.amount = amount
+        _isPresented = isPresented
         self.onDismiss = onDismiss
 
         fromAddress = Core.shared.adapterManager.depositAdapter(for: wallet)?.receiveAddress.address
@@ -43,7 +43,7 @@ struct SendAddressView: View {
                             if let onDismiss {
                                 onDismiss()
                             } else {
-                                presentationMode.wrappedValue.dismiss()
+                                isPresented = false
                             }
                         }
                         .toolbarRole(.editor)
@@ -55,12 +55,12 @@ struct SendAddressView: View {
         }
         .navigationTitle("address.title".localized)
         .navigationBarTitleDisplayMode(.inline)
-        // .toolbar {
-        //     ToolbarItem(placement: .navigationBarTrailing) {
-        //         Button("button.cancel".localized) {
-        //             presentationMode.wrappedValue.dismiss()
-        //         }
-        //     }
-        // }
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("button.cancel".localized) {
+                    isPresented = false
+                }
+            }
+        }
     }
 }

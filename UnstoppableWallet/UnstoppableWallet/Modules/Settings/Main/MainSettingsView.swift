@@ -7,7 +7,6 @@ struct MainSettingsView: View {
 
     @State private var manageWalletsPresented = false
     @State private var supportPresented = false
-    @State private var donatePresented = false
     @State private var addressCheckerPresented = false
     @State private var walletConnectPresented = false
 
@@ -523,18 +522,14 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func donate() -> some View {
         ClickableRow(action: {
-            donatePresented = true
+            Coordinator.shared.present { _ in
+                DonateTokenListView().ignoresSafeArea()
+            }
+            stat(page: .settings, event: .open(page: .donate))
         }) {
             Image("heart_24").themeIcon()
             Text("settings.donate.title".localized).themeBody()
             Image.disclosureIcon
-        }
-        .sheet(isPresented: $donatePresented) {
-            DonateTokenListView()
-                .ignoresSafeArea()
-                .onFirstAppear {
-                    stat(page: .settings, event: .open(page: .donate))
-                }
         }
     }
 

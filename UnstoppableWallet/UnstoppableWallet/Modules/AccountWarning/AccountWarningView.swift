@@ -9,7 +9,11 @@ struct AccountWarningView: View {
                 viewModel.onIgnore()
             } : nil)
                 .onTapGesture {
-                    viewModel.presentedUrl = item.url
+                    if let url = item.url {
+                        Coordinator.shared.present { _ in
+                            MarkdownView(url: url, navigation: true).ignoresSafeArea()
+                        }
+                    }
                 }
         }
     }

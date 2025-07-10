@@ -4,9 +4,6 @@ struct WalletTokenView<AdditionalContent: View>: View {
     @StateObject var viewModel: WalletTokenViewModelNew
     @StateObject var transactionsViewModel: TransactionsViewModelNew
 
-    @State var presentedTransactionRecord: TransactionRecord?
-    @State var sendPresented = false
-
     private let additionalContent: () -> AdditionalContent
 
     init(wallet: Wallet, @ViewBuilder additionalContent: @escaping () -> AdditionalContent = { EmptyView() }) {
@@ -23,20 +20,7 @@ struct WalletTokenView<AdditionalContent: View>: View {
                     .listRowInsets(EdgeInsets())
                     .listRowSeparator(.hidden)
 
-                TransactionsView(viewModel: transactionsViewModel, presentedTransactionRecord: $presentedTransactionRecord)
-            }
-        }
-        .sheet(item: $presentedTransactionRecord) { record in
-            TransactionInfoView(transactionRecord: record).ignoresSafeArea()
-        }
-        .sheet(isPresented: $sendPresented) {
-            ThemeNavigationStack {
-                SendAddressView(wallet: viewModel.wallet)
-            }
-        }
-        .sheet(isPresented: $viewModel.receivePresented) {
-            ThemeNavigationStack {
-                ReceiveAddressView(wallet: viewModel.wallet)
+                TransactionsView(viewModel: transactionsViewModel, statPage: .tokenPage)
             }
         }
         .navigationTitle(viewModel.title)
@@ -83,7 +67,13 @@ struct WalletTokenView<AdditionalContent: View>: View {
         VStack(spacing: .margin8) {
             Button(action: {
                 switch button {
-                case .send: sendPresented = true
+                case .send:
+                    Coordinator.shared.present { isPresented in
+                        ThemeNavigationStack {
+                            SendAddressView(wallet: viewModel.wallet, isPresented: isPresented)
+                        }
+                    }
+                    stat(page: .tokenPage, event: .openSend(token: viewModel.wallet.token))
                 case .receive, .address: viewModel.onTapReceive()
                 case .swap:
                     Coordinator.shared.present { _ in

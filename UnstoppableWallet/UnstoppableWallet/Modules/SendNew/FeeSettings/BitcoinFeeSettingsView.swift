@@ -8,7 +8,6 @@ struct BitcoinFeeSettingsView: View {
     private var feeToken: Token
     private var currency: Currency
     @Binding private var feeTokenRate: Decimal?
-    @State private var feeRateInfoPresented: Bool = false
 
     private var helper = FeeSettingsViewHelper()
     @Environment(\.presentationMode) private var presentationMode
@@ -35,7 +34,15 @@ struct BitcoinFeeSettingsView: View {
 
                 VStack(spacing: 0) {
                     Button(action: {
-                        feeRateInfoPresented = true
+                        Coordinator.shared.present { isPresented in
+                            InfoView(
+                                items: [
+                                    .header1(text: "send.fee_info.title".localized),
+                                    .text(text: "send.fee_info.description".localized),
+                                ],
+                                isPresented: isPresented
+                            )
+                        }
                     }, label: {
                         HStack(spacing: .margin8) {
                             HStack(spacing: .margin8) {
@@ -82,15 +89,6 @@ struct BitcoinFeeSettingsView: View {
                     presentationMode.wrappedValue.dismiss()
                 }
             }
-        }
-        .sheet(isPresented: $feeRateInfoPresented) {
-            InfoView(
-                items: [
-                    .header1(text: "send.fee_info.title".localized),
-                    .text(text: "send.fee_info.description".localized),
-                ],
-                isPresented: $feeRateInfoPresented
-            )
         }
     }
 }

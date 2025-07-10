@@ -8,7 +8,6 @@ class AccountWarningViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     @Published private(set) var item: Item?
-    @Published var presentedUrl: URL?
 
     private let predefinedAccount: Account?
     private let canIgnore: Bool
