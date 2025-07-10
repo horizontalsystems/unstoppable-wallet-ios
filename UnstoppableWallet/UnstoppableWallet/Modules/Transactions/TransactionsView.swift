@@ -2,7 +2,7 @@ import SwiftUI
 
 struct TransactionsView: View {
     @ObservedObject var viewModel: TransactionsViewModelNew
-    @Binding var presentedTransactionRecord: TransactionRecord?
+    let statPage: StatPage
 
     var body: some View {
         ForEach(viewModel.sections) { section in
@@ -14,8 +14,12 @@ struct TransactionsView: View {
                         }
 
                         ItemView(viewItem: viewItem) {
-                            // viewModel.onTap(section: section, viewItem: viewItem)
-                            presentedTransactionRecord = viewModel.record(id: viewItem.id)
+                            if let record = viewModel.record(id: viewItem.id) {
+                                Coordinator.shared.present { _ in
+                                    TransactionInfoView(transactionRecord: record).ignoresSafeArea()
+                                }
+                                stat(page: statPage, event: .open(page: .transactionInfo))
+                            }
                         }
                         .onAppear {
                             viewModel.onDisplay(section: section, viewItem: viewItem)

@@ -7,7 +7,6 @@ struct WalletView: View {
     @Binding var path: NavigationPath
 
     @State private var sortTypePresented = false
-    @State private var scanPresented = false
 
     var body: some View {
         ThemeView(isRoot: true) {
@@ -95,15 +94,6 @@ struct WalletView: View {
                 viewModel.sortType = WalletModule.SortType.allCases[index]
             }
         )
-        .sheet(isPresented: $scanPresented) {
-            ScanQrViewNew(reportAfterDismiss: true, pasteEnabled: true) { text in
-                viewModel.process(scanned: text)
-            }
-            .ignoresSafeArea()
-        }
-        .sheet(item: $accountWarningViewModel.presentedUrl) { url in
-            MarkdownView(url: url, navigation: true).ignoresSafeArea()
-        }
     }
 
     @ViewBuilder private func topView() -> some View {
@@ -218,7 +208,14 @@ struct WalletView: View {
                         MultiSwapView()
                     }
                     stat(page: .balance, event: .open(page: .swap))
-                case .scan: scanPresented = true
+                case .scan:
+                    Coordinator.shared.present { _ in
+                        ScanQrViewNew(reportAfterDismiss: true, pasteEnabled: true) { text in
+                            viewModel.process(scanned: text)
+                        }
+                        .ignoresSafeArea()
+                    }
+                    stat(page: .balance, event: .open(page: .scanQrCode))
                 default: ()
                 }
             }) {

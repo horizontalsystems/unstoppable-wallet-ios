@@ -32,9 +32,6 @@ class AddressViewModelNew: ObservableObject {
 
     @Published var checkingState: RightChecking.State = .idle
 
-    @Published var contactsPresented = false
-    @Published var qrScanPresented = false
-
     init(initial: AddressInput.Initial) {
         addressUriParser = AddressParserFactory.parser(blockchainType: initial.blockchainType, tokenType: nil)
         parserChain = AddressParserFactory.parserChain(blockchainType: initial.blockchainType)
@@ -140,8 +137,20 @@ extension AddressViewModelNew {
     func onTap(index: Int) {
         let updatedIndex = index - (showContacts ? 1 : 0)
         switch updatedIndex {
-        case -1: contactsPresented = true
-        case 0: qrScanPresented = true
+        case -1:
+            if let blockchainType {
+                Coordinator.shared.present { _ in
+                    ContactBookView(mode: .select(blockchainType, self), presented: true)
+                        .ignoresSafeArea()
+                }
+            }
+        case 0:
+            Coordinator.shared.present { _ in
+                ScanQrViewNew(pasteEnabled: true) { [weak self] in
+                    self?.didFetch(qrText: $0)
+                }
+                .ignoresSafeArea()
+            }
         case 1:
             if let text = UIPasteboard.general.string?.replacingOccurrences(of: "\n", with: " ") {
                 self.text = text.trimmingCharacters(in: .whitespacesAndNewlines)

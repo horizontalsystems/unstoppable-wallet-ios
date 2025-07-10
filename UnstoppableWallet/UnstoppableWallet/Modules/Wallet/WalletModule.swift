@@ -41,7 +41,7 @@ enum WalletModule {
         return WalletViewController(viewModel: viewModel)
     }
 
-    static func sendTokenListViewController(allowedBlockchainTypes: [BlockchainType]? = nil, allowedTokenTypes: [TokenType]? = nil, address: String? = nil, amount: Decimal? = nil) -> UIViewController? {
+    static func sendTokenListViewController(allowedBlockchainTypes: [BlockchainType]? = nil, allowedTokenTypes: [TokenType]? = nil, address _: String? = nil, amount _: Decimal? = nil) -> UIViewController? {
         guard let account = Core.shared.accountManager.activeAccount else {
             return nil
         }
@@ -86,15 +86,15 @@ enum WalletModule {
 
         let viewController = WalletTokenListViewController(viewModel: viewModel, dataSource: dataSourceChain)
         dataSource.viewController = viewController
-        dataSource.onSelectWallet = { [weak viewController] wallet in
-            let module = SendAddressView(
-                wallet: wallet,
-                address: address,
-                amount: amount,
-                onDismiss: { viewController?.dismiss(animated: true) }
-            ).toViewController()
+        dataSource.onSelectWallet = { [weak viewController] _ in
+            // let module = SendAddressView(
+            //     wallet: wallet,
+            //     address: address,
+            //     amount: amount,
+            //     onDismiss: { viewController?.dismiss(animated: true) }
+            // ).toViewController()
 
-            viewController?.navigationController?.pushViewController(module, animated: true)
+            // viewController?.navigationController?.pushViewController(module, animated: true)
         }
 
         return ThemeNavigationController(rootViewController: viewController)

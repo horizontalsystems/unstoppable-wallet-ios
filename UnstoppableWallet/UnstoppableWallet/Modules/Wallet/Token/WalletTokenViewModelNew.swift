@@ -20,8 +20,6 @@ class WalletTokenViewModelNew: ObservableObject {
     @Published var state: AdapterState
     @Published var priceItem: WalletCoinPriceService.Item?
 
-    @Published var receivePresented = false
-
     init(wallet: Wallet) {
         self.wallet = wallet
         walletService = WalletServiceFactory().walletService(account: wallet.account)
@@ -119,7 +117,13 @@ extension WalletTokenViewModelNew {
 
     func onTapReceive() {
         if wallet.account.backedUp || cloudBackupManager.backedUp(uniqueId: wallet.account.type.uniqueId()) {
-            receivePresented = true
+            Coordinator.shared.present { [wallet] _ in
+                ThemeNavigationStack {
+                    ReceiveAddressView(wallet: wallet)
+                }
+            }
+
+            stat(page: .tokenPage, event: .openReceive(token: wallet.token))
         } else {
             let wallet = wallet
 

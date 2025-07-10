@@ -156,10 +156,10 @@ class WalletTokenBalanceDataSource: NSObject {
         let wallet = viewModel.wallet
 
         cell.actions[.send] = { [weak self] in
-            let module = SendAddressView(wallet: wallet).toNavigationViewController()
+            // let module = SendAddressView(wallet: wallet).toNavigationViewController()
 
-            self?.parentViewController?.present(module, animated: true)
-            stat(page: .tokenPage, event: .openSend(token: wallet.token))
+            // self?.parentViewController?.present(module, animated: true)
+            // stat(page: .tokenPage, event: .openSend(token: wallet.token))
         }
         cell.actions[.swap] = { [weak self] in
             let viewController = MultiSwapView(token: wallet.token).toViewController()
@@ -184,10 +184,10 @@ class WalletTokenBalanceDataSource: NSObject {
         parentViewController?.present(viewController, animated: true)
     }
 
-    private func openReceive(wallet: Wallet) {
-        let view = ReceiveAddressView(wallet: wallet)
-        parentViewController?.present(view.toNavigationViewController(), animated: true)
-        stat(page: .tokenPage, event: .openReceive(token: wallet.token))
+    private func openReceive(wallet _: Wallet) {
+        // let view = ReceiveAddressView(wallet: wallet)
+        // parentViewController?.present(view.toNavigationViewController(), animated: true)
+        // stat(page: .tokenPage, event: .openReceive(token: wallet.token))
     }
 
     private func openCoinPage(coin: Coin) {

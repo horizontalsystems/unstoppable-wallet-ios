@@ -155,9 +155,6 @@ struct ManageAccountView: View {
             .onTapGesture {
                 isNameFocused = false
             }
-            .sheet(item: $accountWarningViewModel.presentedUrl) { url in
-                MarkdownView(url: url, navigation: true).ignoresSafeArea()
-            }
             .sheet(item: $presentedBackupReason) { reason in
                 BackupView(account: viewModel.account) {
                     onBackup(reason: reason)

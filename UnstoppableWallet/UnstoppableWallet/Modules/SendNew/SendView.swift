@@ -6,8 +6,6 @@ import SwiftUI
 struct SendView: View {
     @ObservedObject var viewModel: SendViewModel
 
-    @State private var feeSettingsPresented = false
-
     var body: some View {
         ZStack {
             if let handler = viewModel.handler {
@@ -29,22 +27,19 @@ struct SendView: View {
                 Text("No Handler")
             }
         }
-        .sheet(isPresented: $feeSettingsPresented) {
-            if let transactionService = viewModel.transactionService, let feeToken = viewModel.handler?.baseToken {
-                transactionService.settingsView(
-                    feeData: Binding<FeeData?>(get: { viewModel.state.data?.feeData }, set: { _ in }),
-                    loading: Binding<Bool>(get: { viewModel.state.isSyncing }, set: { _ in }),
-                    feeToken: feeToken,
-                    currency: viewModel.currency,
-                    feeTokenRate: Binding<Decimal?>(get: { viewModel.rates[feeToken.coin.uid] }, set: { _ in })
-                )
-            }
-        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                if viewModel.transactionService != nil {
+                if let transactionService = viewModel.transactionService, let feeToken = viewModel.handler?.baseToken {
                     Button(action: {
-                        feeSettingsPresented = true
+                        Coordinator.shared.present { _ in
+                            transactionService.settingsView(
+                                feeData: Binding<FeeData?>(get: { viewModel.state.data?.feeData }, set: { _ in }),
+                                loading: Binding<Bool>(get: { viewModel.state.isSyncing }, set: { _ in }),
+                                feeToken: feeToken,
+                                currency: viewModel.currency,
+                                feeTokenRate: Binding<Decimal?>(get: { viewModel.rates[feeToken.coin.uid] }, set: { _ in })
+                            )
+                        }
                     }) {
                         Image("manage_2_20").renderingMode(.template)
                     }
