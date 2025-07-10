@@ -20,7 +20,6 @@ class WalletTokenViewModelNew: ObservableObject {
     @Published var state: AdapterState
     @Published var priceItem: WalletCoinPriceService.Item?
 
-    @Published var backupRequiredAccount: Account?
     @Published var receivePresented = false
 
     init(wallet: Wallet) {
@@ -122,7 +121,17 @@ extension WalletTokenViewModelNew {
         if wallet.account.backedUp || cloudBackupManager.backedUp(uniqueId: wallet.account.type.uniqueId()) {
             receivePresented = true
         } else {
-            backupRequiredAccount = wallet.account
+            let wallet = wallet
+
+            Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                BackupRequiredView.prompt(
+                    account: wallet.account,
+                    description: "receive_alert.not_backed_up_description".localized(wallet.account.name, wallet.coin.name),
+                    isPresented: isPresented
+                )
+            }
+
+            stat(page: .tokenPage, event: .open(page: .backupRequired))
         }
     }
 

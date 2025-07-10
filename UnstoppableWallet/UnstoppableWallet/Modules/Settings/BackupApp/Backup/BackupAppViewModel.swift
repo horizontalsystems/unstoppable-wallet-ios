@@ -86,7 +86,6 @@ class BackupAppViewModel: ObservableObject {
     @Published var passwordButtonProcessing = false
 
     private var dismissSubject = PassthroughSubject<Void, Never>()
-    @Published var sharePresented: URL?
 
     init() {
         cloudAvailable = cloudBackupManager.iCloudUrl != nil
@@ -229,6 +228,11 @@ extension BackupAppViewModel {
     }
 
     @MainActor
+    func showDone() {
+        HudHelper.instance.show(banner: .done)
+    }
+
+    @MainActor
     private func show(error: Error) {
         HudHelper.instance.show(banner: .error(string: error.localizedDescription))
     }
@@ -259,7 +263,24 @@ extension BackupAppViewModel {
             case .local:
                 do {
                     let url = try cloudBackupManager.file(accountIds: selectedIds, passphrase: password, name: name)
-                    sharePresented = url
+
+                    Coordinator.shared.present { _ in
+                        ActivityView(activityItems: [url], completionWithItemsHandler: { _, success, _, error in
+                            Task { [weak self] in
+                                if success {
+                                    stat(page: .exportFullToFiles, event: .exportFull)
+
+                                    await self?.showDone()
+                                    self?.dismissSubject.send()
+                                }
+
+                                if let error {
+                                    await self?.show(error: error)
+                                }
+                            }
+                        })
+                    }
+
                     passwordButtonProcessing = false
                 } catch {
                     passwordButtonProcessing = false

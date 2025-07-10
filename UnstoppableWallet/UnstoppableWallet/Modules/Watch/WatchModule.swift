@@ -70,7 +70,23 @@ extension WatchModule {
     }
 }
 
-struct WatchView: UIViewControllerRepresentable {
+struct WatchView: View {
+    @Binding var isPresented: Bool
+    var onWatch: (() -> Void)? = nil
+
+    var body: some View {
+        WatchViewOld {
+            if let onWatch {
+                onWatch()
+            } else {
+                isPresented = false
+            }
+        }
+        .ignoresSafeArea()
+    }
+}
+
+struct WatchViewOld: UIViewControllerRepresentable {
     typealias UIViewControllerType = UIViewController
 
     let onWatch: () -> Void

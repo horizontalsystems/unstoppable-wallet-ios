@@ -9,7 +9,6 @@ struct ReceiveAddressView: View {
     @StateObject var viewModel: ReceiveAddressViewModel
     var onDismiss: (() -> Void)?
 
-    @State private var shareText: String?
     @State private var inputAmountPresented: Bool = false
 
     @State private var stellarActivatePresented: Bool = false
@@ -78,12 +77,9 @@ struct ReceiveAddressView: View {
                 PlaceholderViewNew(image: Image("sync_error_48"), text: "sync_error".localized)
             }
         }
-        .sheet(item: $shareText) { shareText in
-            ActivityView.view(activityItems: [shareText])
-        }
         .sheet(isPresented: $stellarActivatePresented) {
             if let sendData = viewModel.stellarSendData {
-                ThemeNavigationView {
+                ThemeNavigationStack {
                     RegularSendView(sendData: sendData) {
                         HudHelper.instance.show(banner: .sent)
                         stellarActivatePresented = false
@@ -210,7 +206,9 @@ struct ReceiveAddressView: View {
         case .amount:
             inputAmountPresented = true
         case .share:
-            shareText = data.copyValue
+            Coordinator.shared.present { _ in
+                ActivityView(activityItems: [data.copyValue])
+            }
             stat(page: .receive, event: .share(entity: .receiveAddress))
         case .copy:
             CopyHelper.copyAndNotify(value: data.copyValue)

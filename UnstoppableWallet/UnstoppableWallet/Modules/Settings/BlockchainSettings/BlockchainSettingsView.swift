@@ -24,7 +24,7 @@ struct BlockchainSettingsView: View {
                         }
                     }
                     .sheet(item: $btcSheetBlockchain) { blockchain in
-                        ThemeNavigationView { BtcBlockchainSettingsModule.view(blockchain: blockchain) }
+                        ThemeNavigationStack { BtcBlockchainSettingsModule.view(blockchain: blockchain) }
                     }
                 }
 

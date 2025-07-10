@@ -11,7 +11,6 @@ class DeepLinkViewModifierModel: ObservableObject {
     let walletConnectViewModifierModel = WalletConnectViewModifierModel()
     let walletConnectManager = Core.shared.walletConnectManager
 
-    @Published var presentedCoin: Coin?
     @Published var presentedSendPage: EventHandler.SendParams?
     @Published var presentedTonConnect: EventHandler.TonConnectParams?
     @Published var presentedProposal: EventHandler.WalletConnectProposalParams?
@@ -51,7 +50,7 @@ class DeepLinkViewModifierModel: ObservableObject {
 
     @MainActor private func handle(signal: EventHandlerSignal) throws {
         switch signal {
-        case let .coinPage(coin): presentedCoin = coin
+        case let .coinPage(coin): Coordinator.shared.presentCoinPage(coin: coin, page: .deepLink)
         case let .sendPage(params): presentedSendPage = params
 
         case let .walletConnectHandleUrl(url):

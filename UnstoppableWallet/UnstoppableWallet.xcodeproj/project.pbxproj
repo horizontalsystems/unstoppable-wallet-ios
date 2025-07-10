@@ -2924,8 +2924,8 @@
 		D34637ED2DDB05D700187698 /* WalletConnectViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34637EB2DDB05D700187698 /* WalletConnectViewModifier.swift */; };
 		D34637EF2DDB05DC00187698 /* WalletConnectViewModifierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34637EE2DDB05DC00187698 /* WalletConnectViewModifierModel.swift */; };
 		D34637F02DDB05DC00187698 /* WalletConnectViewModifierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34637EE2DDB05DC00187698 /* WalletConnectViewModifierModel.swift */; };
-		D34637F42DDB23C900187698 /* BackupRequiredViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34637F22DDB23C900187698 /* BackupRequiredViewModifier.swift */; };
-		D34637F62DDB23C900187698 /* BackupRequiredViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34637F22DDB23C900187698 /* BackupRequiredViewModifier.swift */; };
+		D34637F42DDB23C900187698 /* BackupRequiredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34637F22DDB23C900187698 /* BackupRequiredView.swift */; };
+		D34637F62DDB23C900187698 /* BackupRequiredView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34637F22DDB23C900187698 /* BackupRequiredView.swift */; };
 		D34637FA2DDDD68800187698 /* AddressCheckerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34637F72DDDD68800187698 /* AddressCheckerView.swift */; };
 		D34637FB2DDDD68800187698 /* AddressCheckerViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34637F82DDDD68800187698 /* AddressCheckerViewModel.swift */; };
 		D34637FC2DDDD68800187698 /* AddressCheckerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34637F72DDDD68800187698 /* AddressCheckerView.swift */; };
@@ -2962,6 +2962,10 @@
 		D34DB19A2E17D64300DD30D3 /* ListSectionFooter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352970EA9924258E5BB75 /* ListSectionFooter.swift */; };
 		D34DB19B2E17D69B00DD30D3 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352972B14FA6EBEFD6904 /* Text.swift */; };
 		D34DB19C2E17D69B00DD30D3 /* Text.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B352972B14FA6EBEFD6904 /* Text.swift */; };
+		D34DB1A22E1BEBF400DD30D3 /* CoordinatorViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DB1A12E1BEBEB00DD30D3 /* CoordinatorViewModifier.swift */; };
+		D34DB1A32E1BEBF400DD30D3 /* CoordinatorViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DB1A12E1BEBEB00DD30D3 /* CoordinatorViewModifier.swift */; };
+		D34DB1A82E1BEC1800DD30D3 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DB1A72E1BEC1800DD30D3 /* Coordinator.swift */; };
+		D34DB1A92E1BEC1800DD30D3 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DB1A72E1BEC1800DD30D3 /* Coordinator.swift */; };
 		D350DDB02AE2526E00CF1989 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D350DDAF2AE2526E00CF1989 /* Localizable.xcstrings */; };
 		D350DDB12AE2526E00CF1989 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D350DDAF2AE2526E00CF1989 /* Localizable.xcstrings */; };
 		D350DDB22AE27E3B00CF1989 /* AppWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D350DDB92AE27E3B00CF1989 /* AppWidget.intentdefinition */; };
@@ -3418,12 +3422,6 @@
 		D3E36BF12E0BCEBE007F99CA /* TermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BEF2E0BCEBB007F99CA /* TermsView.swift */; };
 		D3E36BF32E0BCED1007F99CA /* TermsViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BF22E0BCED1007F99CA /* TermsViewModelNew.swift */; };
 		D3E36BF42E0BCED1007F99CA /* TermsViewModelNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BF22E0BCED1007F99CA /* TermsViewModelNew.swift */; };
-		D3E36BF62E0BF5F6007F99CA /* CreateAccountViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BF52E0BF5F4007F99CA /* CreateAccountViewModifier.swift */; };
-		D3E36BF72E0BF5F6007F99CA /* CreateAccountViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BF52E0BF5F4007F99CA /* CreateAccountViewModifier.swift */; };
-		D3E36BFD2E0C01F8007F99CA /* RestoreAccountViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BFC2E0C01F8007F99CA /* RestoreAccountViewModifier.swift */; };
-		D3E36BFF2E0C01F8007F99CA /* RestoreAccountViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36BFC2E0C01F8007F99CA /* RestoreAccountViewModifier.swift */; };
-		D3E36C022E0C026E007F99CA /* TermsAcceptedViewModifierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36C012E0C026E007F99CA /* TermsAcceptedViewModifierModel.swift */; };
-		D3E36C032E0C026E007F99CA /* TermsAcceptedViewModifierModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E36C012E0C026E007F99CA /* TermsAcceptedViewModifierModel.swift */; };
 		D3E41E082C244CE200499F50 /* TonSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D3E41E072C244CE200499F50 /* TonSwift */; };
 		D3E41E0A2C25850000499F50 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E41E092C25850000499F50 /* MailView.swift */; };
 		D3E41E0B2C25850000499F50 /* MailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3E41E092C25850000499F50 /* MailView.swift */; };
@@ -4958,7 +4956,7 @@
 		D34637E82DD7493A00187698 /* SwitchAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwitchAccountViewModel.swift; sourceTree = "<group>"; };
 		D34637EB2DDB05D700187698 /* WalletConnectViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectViewModifier.swift; sourceTree = "<group>"; };
 		D34637EE2DDB05DC00187698 /* WalletConnectViewModifierModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectViewModifierModel.swift; sourceTree = "<group>"; };
-		D34637F22DDB23C900187698 /* BackupRequiredViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupRequiredViewModifier.swift; sourceTree = "<group>"; };
+		D34637F22DDB23C900187698 /* BackupRequiredView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupRequiredView.swift; sourceTree = "<group>"; };
 		D34637F72DDDD68800187698 /* AddressCheckerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressCheckerView.swift; sourceTree = "<group>"; };
 		D34637F82DDDD68800187698 /* AddressCheckerViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressCheckerViewModel.swift; sourceTree = "<group>"; };
 		D34A29B42BFB4AE200F63036 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/AppWidget.strings; sourceTree = "<group>"; };
@@ -4974,6 +4972,8 @@
 		D34DB18E2E167EBD00DD30D3 /* ManageAccountViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageAccountViewModel.swift; sourceTree = "<group>"; };
 		D34DB1912E169E2F00DD30D3 /* UnlockViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockViewModifier.swift; sourceTree = "<group>"; };
 		D34DB1942E169E3800DD30D3 /* UnlockViewModifierModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnlockViewModifierModel.swift; sourceTree = "<group>"; };
+		D34DB1A12E1BEBEB00DD30D3 /* CoordinatorViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorViewModifier.swift; sourceTree = "<group>"; };
+		D34DB1A72E1BEC1800DD30D3 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		D34E941B21F86C3500AD8E90 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D34E941C21F86C3500AD8E90 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D350DDAF2AE2526E00CF1989 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -5165,9 +5165,6 @@
 		D3E36BEC2E0A848F007F99CA /* ManageAccountsViewModelNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ManageAccountsViewModelNew.swift; sourceTree = "<group>"; };
 		D3E36BEF2E0BCEBB007F99CA /* TermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsView.swift; sourceTree = "<group>"; };
 		D3E36BF22E0BCED1007F99CA /* TermsViewModelNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsViewModelNew.swift; sourceTree = "<group>"; };
-		D3E36BF52E0BF5F4007F99CA /* CreateAccountViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateAccountViewModifier.swift; sourceTree = "<group>"; };
-		D3E36BFC2E0C01F8007F99CA /* RestoreAccountViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreAccountViewModifier.swift; sourceTree = "<group>"; };
-		D3E36C012E0C026E007F99CA /* TermsAcceptedViewModifierModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsAcceptedViewModifierModel.swift; sourceTree = "<group>"; };
 		D3E41E092C25850000499F50 /* MailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MailView.swift; sourceTree = "<group>"; };
 		D3F9B0242BE38AF1009FFA95 /* RegularSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularSendView.swift; sourceTree = "<group>"; };
 		D3F9B02A2BE3A9A1009FFA95 /* MultiSwapSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSwapSendView.swift; sourceTree = "<group>"; };
@@ -5922,6 +5919,7 @@
 		11B354AB3C3435F2D5F39EE6 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				D34DB1A02E1BEBE300DD30D3 /* Coordinator */,
 				D34DB1772E13FE3B00DD30D3 /* AccountWarning */,
 				6BEA17682DE5838E00BF73DD /* ZCashShieldTokens */,
 				D34D3E022DD614B7005C9ACC /* StellarSecretKey */,
@@ -6492,7 +6490,6 @@
 		11B3581D97669C8038485FAE /* CreateAccount */ = {
 			isa = PBXGroup;
 			children = (
-				D3E36BF52E0BF5F4007F99CA /* CreateAccountViewModifier.swift */,
 				D3E36BE62E097768007F99CA /* CreateAccountViewModelNew.swift */,
 				D3E36BE32E09775A007F99CA /* CreateAccountView.swift */,
 				11B358145A0D9F93ACBC0301 /* CreateAccountModule.swift */,
@@ -6632,7 +6629,7 @@
 				6BCD52F62A161F4100993F20 /* ICloud */,
 				6BCD530E2A161F4800993F20 /* Manual */,
 				11B358967A086CFE9DBB152B /* BackupModule.swift */,
-				D34637F22DDB23C900187698 /* BackupRequiredViewModifier.swift */,
+				D34637F22DDB23C900187698 /* BackupRequiredView.swift */,
 			);
 			path = Backup;
 			sourceTree = "<group>";
@@ -6933,7 +6930,6 @@
 		11B35E1B51E123DEB9F71E96 /* Terms */ = {
 			isa = PBXGroup;
 			children = (
-				D3E36C012E0C026E007F99CA /* TermsAcceptedViewModifierModel.swift */,
 				D3E36BF22E0BCED1007F99CA /* TermsViewModelNew.swift */,
 				D3E36BEF2E0BCEBB007F99CA /* TermsView.swift */,
 				11B35B462980B0617E11FB05 /* TermsModule.swift */,
@@ -7093,7 +7089,6 @@
 		11B35FEAD9772F1E11F3D767 /* RestoreAccount */ = {
 			isa = PBXGroup;
 			children = (
-				D3E36BFC2E0C01F8007F99CA /* RestoreAccountViewModifier.swift */,
 				11B35DF404FD931B249CCD2F /* RestoreMnemonic */,
 				11B35EA7836A26C7CFFA03A3 /* RestoreSelect */,
 				11B35BFC241C777F3CA3F372 /* Restore */,
@@ -9373,6 +9368,15 @@
 			path = AccountWarning;
 			sourceTree = "<group>";
 		};
+		D34DB1A02E1BEBE300DD30D3 /* Coordinator */ = {
+			isa = PBXGroup;
+			children = (
+				D34DB1A72E1BEC1800DD30D3 /* Coordinator.swift */,
+				D34DB1A12E1BEBEB00DD30D3 /* CoordinatorViewModifier.swift */,
+			);
+			path = Coordinator;
+			sourceTree = "<group>";
+		};
 		D362879D2CA2B32900ADAF3B /* TonConnect */ = {
 			isa = PBXGroup;
 			children = (
@@ -10421,7 +10425,6 @@
 				D05E96A72A2627E5002CCD71 /* TronOutgoingTransactionRecord.swift in Sources */,
 				58AAA097F8417B30693547FE /* CoinPageMarkdownParser.swift in Sources */,
 				1A564BB34D0EAA2E8BE8B498 /* DeepLinkManager.swift in Sources */,
-				D3E36C032E0C026E007F99CA /* TermsAcceptedViewModifierModel.swift in Sources */,
 				1A564FEF3AEC87712186DD28 /* DeepLinkService.swift in Sources */,
 				D36DE0B4272FD689000BC916 /* SwapProviderManager.swift in Sources */,
 				11B357118379A537844A83D0 /* EvmSyncSource.swift in Sources */,
@@ -10508,7 +10511,6 @@
 				11B354B5E42290EE934C428E /* String.swift in Sources */,
 				11B350462257FD424088A52E /* DonutChartView.swift in Sources */,
 				D36DE0FA272FD92F000BC916 /* SwapSelectProviderModule.swift in Sources */,
-				D3E36BFF2E0C01F8007F99CA /* RestoreAccountViewModifier.swift in Sources */,
 				11B35EB8131AC568D9FEB466 /* CoinAuditsViewModel.swift in Sources */,
 				11B35BA5459F842283AB58C2 /* CoinAuditsView.swift in Sources */,
 				2FA5D095A83D18DE2E21B580 /* EvmTransactionsAdapter.swift in Sources */,
@@ -11186,7 +11188,6 @@
 				6B1D8E582DEADF7F00A52B01 /* SpinnerComponent.swift in Sources */,
 				6B1D8E592DEADF7F00A52B01 /* SubtitleHeaderFooterView.swift in Sources */,
 				6B1D8E5A2DEADF7F00A52B01 /* SecondaryCircleButton.swift in Sources */,
-				D3E36BF62E0BF5F6007F99CA /* CreateAccountViewModifier.swift in Sources */,
 				6B1D8E5B2DEADF7F00A52B01 /* SwitchComponent.swift in Sources */,
 				6B1D8E5C2DEADF7F00A52B01 /* BadgeComponent.swift in Sources */,
 				6B1D8E5D2DEADF7F00A52B01 /* BottomDescriptionHeaderFooterView.swift in Sources */,
@@ -11284,10 +11285,11 @@
 				11B35353A5C1E254839CD61B /* InteractiveDismiss.swift in Sources */,
 				11B3553AD73FD1179249F277 /* SecondaryButtonStyle.swift in Sources */,
 				11B3523E8B466F259DB32E37 /* SecondaryCircleButtonStyle.swift in Sources */,
-				D34637F62DDB23C900187698 /* BackupRequiredViewModifier.swift in Sources */,
+				D34637F62DDB23C900187698 /* BackupRequiredView.swift in Sources */,
 				ABC9AD46006A85E907826E2B /* EnabledWalletCache_v_0_36.swift in Sources */,
 				11B35309CE9FBDA200067C4F /* ActiveAccount_v_0_36.swift in Sources */,
 				11B357FF80E87451A99BEE4A /* AccountRecord_v_0_36.swift in Sources */,
+				D34DB1A32E1BEBF400DD30D3 /* CoordinatorViewModifier.swift in Sources */,
 				11B35DF625EA2A1412C2D984 /* DuressModeIntroView.swift in Sources */,
 				11B35A48CF68A2A45E1A429E /* PageDescription.swift in Sources */,
 				D3AEB8832DBA06D400E385C8 /* StellarTransactionRecord.swift in Sources */,
@@ -11330,6 +11332,7 @@
 				ABC9ACEB81BCB00435B35F64 /* RestoreFileHelper.swift in Sources */,
 				11B35538EF749777CF7B2E8B /* ChartUiView.swift in Sources */,
 				11B35FA1970606C12E57C2EA /* ChartView.swift in Sources */,
+				D34DB1A92E1BEC1800DD30D3 /* Coordinator.swift in Sources */,
 				11B3596AE38880C5899769D5 /* CoinOverviewView.swift in Sources */,
 				11B357BA09F0FA21477F0A59 /* CoinOverviewViewModel.swift in Sources */,
 				ABC9AE262936C29D89DC61C8 /* BackupManagerView.swift in Sources */,
@@ -12003,7 +12006,6 @@
 				D3833AFC2BF335C700ACECFB /* MarketNewsView.swift in Sources */,
 				D05E96A62A2627E5002CCD71 /* TronOutgoingTransactionRecord.swift in Sources */,
 				1A5640D6FDF86EDB54213F9B /* DeepLinkManager.swift in Sources */,
-				D3E36C022E0C026E007F99CA /* TermsAcceptedViewModifierModel.swift in Sources */,
 				D36DE0EC272FD89B000BC916 /* SwapSettingsModule.swift in Sources */,
 				1A564032D3C011BCAA7D44A8 /* DeepLinkService.swift in Sources */,
 				11B35804545D048C0EDB8089 /* EvmSyncSource.swift in Sources */,
@@ -12090,7 +12092,6 @@
 				58AAAA3E05FEB10822DFC8EE /* SwapStepCell.swift in Sources */,
 				D023D2712A25CF61004F65B0 /* TronAdapter.swift in Sources */,
 				11B3517B2CB1A05BA5FEDB1F /* String.swift in Sources */,
-				D3E36BFD2E0C01F8007F99CA /* RestoreAccountViewModifier.swift in Sources */,
 				6B2907232AF0CB8A006157D6 /* WalletConnectEventHandlerModel.swift in Sources */,
 				11B35A66D997F86423C2F5A0 /* DonutChartView.swift in Sources */,
 				D003297626CD2C67002EC21D /* TransactionLockInfo.swift in Sources */,
@@ -12768,7 +12769,6 @@
 				6B1D8ED02DEADF7F00A52B01 /* SpinnerComponent.swift in Sources */,
 				6B1D8ED12DEADF7F00A52B01 /* SubtitleHeaderFooterView.swift in Sources */,
 				6B1D8ED22DEADF7F00A52B01 /* SecondaryCircleButton.swift in Sources */,
-				D3E36BF72E0BF5F6007F99CA /* CreateAccountViewModifier.swift in Sources */,
 				6B1D8ED32DEADF7F00A52B01 /* SwitchComponent.swift in Sources */,
 				6B1D8ED42DEADF7F00A52B01 /* BadgeComponent.swift in Sources */,
 				6B1D8ED52DEADF7F00A52B01 /* BottomDescriptionHeaderFooterView.swift in Sources */,
@@ -12866,10 +12866,11 @@
 				11B3568483AFF7864F050E0F /* LockManager.swift in Sources */,
 				11B35787F5BA973364784F3B /* LockoutManager.swift in Sources */,
 				11B35951600F986F1C424E24 /* PasscodeManager.swift in Sources */,
-				D34637F42DDB23C900187698 /* BackupRequiredViewModifier.swift in Sources */,
+				D34637F42DDB23C900187698 /* BackupRequiredView.swift in Sources */,
 				11B350A27335B798701EE7B3 /* InteractiveDismiss.swift in Sources */,
 				11B35DDBD7EC98FAE5794F76 /* SecondaryButtonStyle.swift in Sources */,
 				11B35224D7A5A864C1C6F167 /* SecondaryCircleButtonStyle.swift in Sources */,
+				D34DB1A22E1BEBF400DD30D3 /* CoordinatorViewModifier.swift in Sources */,
 				ABC9AB2E235EA006E2DAD8DD /* EnabledWalletCache_v_0_36.swift in Sources */,
 				11B35AB1D397D409EA179917 /* ActiveAccount_v_0_36.swift in Sources */,
 				D3AEB8842DBA06D400E385C8 /* StellarTransactionRecord.swift in Sources */,
@@ -12912,6 +12913,7 @@
 				ABC9A2F6D2A2AAFA31C64BAB /* RestoreFileConfigurationViewModel.swift in Sources */,
 				ABC9A37FB71FA7DA14553EFC /* RawFullBackup.swift in Sources */,
 				ABC9A0C5DE01B3C50D4C7FF2 /* RestoreFileConfigurationViewController.swift in Sources */,
+				D34DB1A82E1BEC1800DD30D3 /* Coordinator.swift in Sources */,
 				ABC9A3231731F39ECA5B90ED /* RestoreFileHelper.swift in Sources */,
 				11B356DF455592656B742485 /* ChartUiView.swift in Sources */,
 				11B35FB362526C723329C9ED /* ChartView.swift in Sources */,

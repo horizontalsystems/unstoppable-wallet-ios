@@ -14,7 +14,7 @@ struct TonConnectSendView: View {
     }
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ThemeView {
                 BottomGradientWrapper {
                     SendView(viewModel: sendViewModel)

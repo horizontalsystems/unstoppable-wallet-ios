@@ -47,6 +47,7 @@ enum StatPage: String {
     case contactNew = "contact_new"
     case contacts
     case contactUs = "contact_us"
+    case deepLink = "deep_link"
     case donate
     case donateAddressList = "donate_address_list"
     case doubleSpend = "double_spend"
@@ -94,6 +95,8 @@ enum StatPage: String {
     case marketOverview = "market_overview"
     case markets
     case marketSearch = "market_search"
+    case marketSector = "market_sector"
+    case marketTvl = "market_tvl"
     case news
     case newWallet = "new_wallet"
     case newWalletAdvanced = "new_wallet_advanced"
@@ -189,6 +192,7 @@ enum StatEvent {
     case importWallet(walletType: String)
     case importFull
     case open(page: StatPage)
+    case openArticle(relativeUrl: String)
     case openBlockchainSettingsBtc(chainUid: String)
     case openBlockchainSettingsEvm(chainUid: String)
     case openBlockchainSettingsEvmAdd(chainUid: String)
@@ -213,7 +217,6 @@ enum StatEvent {
     case scanQr(entity: StatEntity)
     case select(entity: StatEntity)
     case selectAppIcon(iconUid: String)
-    case openArticle(relativeUrl: String)
     case selectBalanceConversion(coinUid: String)
     case selectBalanceValue(type: String)
     case selectLaunchScreen(type: String)

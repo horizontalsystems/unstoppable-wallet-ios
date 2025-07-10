@@ -8,7 +8,6 @@ struct AddressView: View {
     private let onFinish: (ResolvedAddress) -> Void
 
     @Environment(\.presentationMode) private var presentationMode
-    @State var subscriptionPresented = false
     @State var checkDescription: InfoDescription?
 
     var borderColor: Color {
@@ -109,9 +108,6 @@ struct AddressView: View {
             .disabled(disabled)
             .buttonStyle(PrimaryButtonStyle(style: .yellow))
         }
-        .sheet(isPresented: $subscriptionPresented) {
-            PurchasesView()
-        }
         .modifier(InfoBottomSheet(info: $checkDescription))
     }
 
@@ -162,8 +158,8 @@ struct AddressView: View {
         .onTapGesture {
             switch state {
             case .locked:
+                Coordinator.shared.presentPurchases()
                 stat(page: viewModel.destination.sourceStatPage, event: .openPremium(from: .addressChecker))
-                subscriptionPresented = true
             default: self.checkDescription = checkDescription
             }
         }

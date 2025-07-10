@@ -47,8 +47,5 @@ struct WalletConnectViewModifier: ViewModifier {
                     isPresented: Binding(get: { viewModel.walletConnectNotSupportedAccountType != nil }, set: { if !$0 { viewModel.walletConnectNotSupportedAccountType = nil } })
                 )
             }
-            .modifier(BackupRequiredViewModifier.backupPrompt(account: $viewModel.walletConnectBackupRequiredAccount) { account in
-                "wallet_connect.unbackuped_account.description".localized(account.name)
-            })
     }
 }

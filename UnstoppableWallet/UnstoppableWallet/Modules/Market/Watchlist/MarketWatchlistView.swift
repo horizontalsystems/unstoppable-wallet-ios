@@ -7,9 +7,7 @@ struct MarketWatchlistView: View {
 
     @State private var sortBySelectorPresented = false
     @State private var timePeriodSelectorPresented = false
-    @State private var presentedCoin: Coin?
     @State private var signalsPresented = false
-    @State private var subscriptionPresented = false
 
     @State private var editMode: EditMode = .inactive
 
@@ -37,10 +35,6 @@ struct MarketWatchlistView: View {
                     }
                 }
             }
-        }
-        .sheet(item: $presentedCoin) { coin in
-            CoinPageView(coin: coin)
-                .onFirstAppear { stat(page: .markets, section: .watchlist, event: .openCoin(coinUid: coin.uid)) }
         }
     }
 
@@ -124,16 +118,13 @@ struct MarketWatchlistView: View {
                 viewModel?.set(showSignals: $0)
             }, isPresented: $signalsPresented)
         }
-        .sheet(isPresented: $subscriptionPresented) {
-            PurchasesView()
-        }
     }
 
     @ViewBuilder private func signalsButton() -> some View {
         Button(action: {
             guard viewModel.tradeSignalsEnabled else {
+                Coordinator.shared.presentPurchases()
                 stat(page: .watchlist, event: .openPremium(from: .tradingSignal))
-                subscriptionPresented = true
                 return
             }
 
@@ -158,7 +149,7 @@ struct MarketWatchlistView: View {
                 let coin = marketInfo.fullCoin.coin
 
                 ClickableRow(action: {
-                    presentedCoin = coin
+                    Coordinator.shared.presentCoinPage(coin: coin, page: .markets, section: .watchlist)
                 }) {
                     itemContent(
                         coin: coin,

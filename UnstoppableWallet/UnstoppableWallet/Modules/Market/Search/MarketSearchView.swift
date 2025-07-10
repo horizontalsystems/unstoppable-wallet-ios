@@ -6,8 +6,6 @@ struct MarketSearchView: View {
     @ObservedObject var viewModel: MarketSearchViewModel
     @ObservedObject var watchlistViewModel: WatchlistViewModel
 
-    @State private var presentedCoin: Coin?
-
     var body: some View {
         ThemeView {
             switch viewModel.state {
@@ -39,9 +37,6 @@ struct MarketSearchView: View {
                 }
             }
         }
-        .sheet(item: $presentedCoin) { coin in
-            CoinPageView(coin: coin)
-        }
     }
 
     @ViewBuilder private func itemContent(fullCoin: FullCoin) -> some View {
@@ -49,7 +44,7 @@ struct MarketSearchView: View {
 
         ClickableRow(action: {
             viewModel.handleOpen(coinUid: coin.uid)
-            presentedCoin = coin
+            Coordinator.shared.presentCoinPage(coin: coin, page: .marketSearch)
         }) {
             CoinIconView(coin: coin)
 

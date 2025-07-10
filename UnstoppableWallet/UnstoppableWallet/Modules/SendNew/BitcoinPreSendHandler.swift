@@ -136,7 +136,7 @@ extension BitcoinPreSendHandler: IPreSendHandler {
     }
 
     func settingsView(onChangeSettings: @escaping () -> Void) -> AnyView {
-        let view = ThemeNavigationView {
+        let view = ThemeNavigationStack {
             BitcoinSendSettingsView(handler: self, onChangeSettings: onChangeSettings)
         }
 

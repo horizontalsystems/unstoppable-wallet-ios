@@ -128,7 +128,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     }
 
     override func settingsView(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
-        let view = ThemeNavigationView {
+        let view = ThemeNavigationStack {
             RecipientAndSlippageMultiSwapSettingsView(tokenIn: tokenIn, storage: storage, onChangeSettings: onChangeSettings)
         }
 

@@ -13,11 +13,10 @@ struct MarketAdvancedSearchView: View {
     @State var priceCloseToPresented = false
     @State var priceChangePresented = false
     @State var pricePeriodPresented = false
-    @State var subscriptionPresented = false
     @State var resultsPresented = false
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ThemeView {
                 BottomGradientWrapper {
                     ScrollView {
@@ -119,9 +118,6 @@ struct MarketAdvancedSearchView: View {
                     }
                 }
             }
-            .sheet(isPresented: $subscriptionPresented) {
-                PurchasesView()
-            }
         }
     }
 
@@ -211,8 +207,8 @@ struct MarketAdvancedSearchView: View {
             if viewModel.advancedSearchEnabled {
                 categoriesPresented = true
             } else {
+                Coordinator.shared.presentPurchases()
                 stat(page: .advancedSearch, event: .openPremium(from: .sectors))
-                subscriptionPresented = true
             }
         } content: {
             Text("market.advanced_search.categories".localized).textBody()
@@ -232,8 +228,8 @@ struct MarketAdvancedSearchView: View {
             }
         } else {
             ClickableRow {
+                Coordinator.shared.presentPurchases()
                 stat(page: .advancedSearch, event: .openPremium(from: statPremiumKey))
-                subscriptionPresented = true
             } content: {
                 view
             }
@@ -306,8 +302,8 @@ struct MarketAdvancedSearchView: View {
     @ViewBuilder private func signalRow() -> some View {
         ClickableRow(spacing: .margin8) {
             guard viewModel.advancedSearchEnabled else {
+                Coordinator.shared.presentPurchases()
                 stat(page: .advancedSearch, event: .openPremium(from: .tradingSignal))
-                subscriptionPresented = true
                 return
             }
             signalsPresented = true
@@ -367,8 +363,8 @@ struct MarketAdvancedSearchView: View {
     @ViewBuilder private func priceChangeRow() -> some View {
         ClickableRow(spacing: .margin8) {
             guard viewModel.advancedSearchEnabled else {
+                Coordinator.shared.presentPurchases()
                 stat(page: .advancedSearch, event: .openPremium(from: .priceChange))
-                subscriptionPresented = true
                 return
             }
             priceChangePresented = true
@@ -411,8 +407,8 @@ struct MarketAdvancedSearchView: View {
     @ViewBuilder private func pricePeriodRow() -> some View {
         ClickableRow(spacing: .margin8) {
             guard viewModel.advancedSearchEnabled else {
+                Coordinator.shared.presentPurchases()
                 stat(page: .advancedSearch, event: .openPremium(from: .pricePeriod))
-                subscriptionPresented = true
                 return
             }
             pricePeriodPresented = true
@@ -479,8 +475,8 @@ struct MarketAdvancedSearchView: View {
     @ViewBuilder private func priceCloseToRow() -> some View {
         ClickableRow(spacing: .margin8) {
             guard viewModel.advancedSearchEnabled else {
+                Coordinator.shared.presentPurchases()
                 stat(page: .advancedSearch, event: .openPremium(from: .priceCloseTo))
-                subscriptionPresented = true
                 return
             }
             priceCloseToPresented = true

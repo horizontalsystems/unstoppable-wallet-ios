@@ -162,7 +162,7 @@ class EvmTransactionService: ITransactionService {
                 currency: currency,
                 feeTokenRate: feeTokenRate
             )
-            return AnyView(ThemeNavigationView { view })
+            return AnyView(ThemeNavigationStack { view })
         } else {
             let view = LegacyFeeSettingsView(
                 service: self,
@@ -173,7 +173,7 @@ class EvmTransactionService: ITransactionService {
                 currency: currency,
                 feeTokenRate: feeTokenRate
             )
-            return AnyView(ThemeNavigationView { view })
+            return AnyView(ThemeNavigationStack { view })
         }
     }
 

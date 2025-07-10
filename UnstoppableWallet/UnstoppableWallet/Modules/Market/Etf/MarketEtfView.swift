@@ -17,7 +17,7 @@ struct MarketEtfView: View {
     }
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ThemeView {
                 switch viewModel.state {
                 case .loading:

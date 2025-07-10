@@ -5,9 +5,6 @@ struct DeepLinkViewModifier: ViewModifier {
 
     func body(content: Content) -> some View {
         content
-            .sheet(item: $viewModel.presentedCoin) { coin in
-                CoinPageView(coin: coin)
-            }
             .sheet(item: $viewModel.presentedSendPage) { params in
                 ChooseSendTokenListView(
                     allowedBlockchainTypes: params.allowedBlockchainTypes,

@@ -5,7 +5,7 @@ struct MultiSwapQuotesView: View {
     @Binding var isPresented: Bool
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ScrollableThemeView {
                 VStack {
                     ForEach(viewModel.quotes, id: \.provider.id) { (quote: MultiSwapViewModel.Quote) in

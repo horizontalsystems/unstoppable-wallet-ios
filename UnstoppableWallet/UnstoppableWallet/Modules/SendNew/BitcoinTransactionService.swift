@@ -73,7 +73,7 @@ class BitcoinTransactionService: ITransactionService {
             feeTokenRate: feeTokenRate
         )
 
-        return AnyView(ThemeNavigationView { view })
+        return AnyView(ThemeNavigationStack { view })
     }
 
     func set(satoshiPerByte: Int) {

@@ -10,7 +10,6 @@ struct MarketPlatformViewNew: View {
 
     @State private var sortBySelectorPresented = false
     @State private var timePeriodSelectorPresented = false
-    @State private var presentedCoin: Coin?
 
     init(isPresented: Binding<Bool>, platform: TopPlatform) {
         _viewModel = StateObject(wrappedValue: MarketPlatformViewModel(platform: platform))
@@ -20,7 +19,7 @@ struct MarketPlatformViewNew: View {
     }
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ThemeView {
                 switch viewModel.state {
                 case .loading:
@@ -51,10 +50,6 @@ struct MarketPlatformViewNew: View {
                         isPresented = false
                     }
                 }
-            }
-            .sheet(item: $presentedCoin) { coin in
-                CoinPageView(coin: coin)
-                    .onFirstAppear { stat(page: .globalMetricsTvlInDefi, event: .openCoin(coinUid: coin.uid)) }
             }
         }
     }
@@ -121,7 +116,7 @@ struct MarketPlatformViewNew: View {
                 let coin = marketInfo.fullCoin.coin
 
                 ClickableRow(action: {
-                    presentedCoin = coin
+                    Coordinator.shared.presentCoinPage(coin: coin, page: .globalMetricsTvlInDefi)
                 }) {
                     itemContent(
                         coin: coin,

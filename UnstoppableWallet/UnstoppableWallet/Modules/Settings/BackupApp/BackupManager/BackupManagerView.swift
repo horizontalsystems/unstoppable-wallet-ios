@@ -1,7 +1,6 @@
 import SwiftUI
 
 struct BackupManagerView: View {
-    @StateObject var restoreAccountViewModifierModel = TermsAcceptedViewModifierModel()
     @StateObject var unlockViewModifierModel = UnlockViewModifierModel()
 
     @State private var backupPresented = false
@@ -11,7 +10,11 @@ struct BackupManagerView: View {
             VStack(spacing: .margin24) {
                 ListSection {
                     ClickableRow(action: {
-                        restoreAccountViewModifierModel.handle()
+                        Coordinator.shared.presentAfterAcceptTerms { isPresented in
+                            RestoreTypeView(type: .full, isPresented: isPresented)
+                        } onPresent: {
+                            stat(page: .backupManager, event: .open(page: .importWallet))
+                        }
                     }) {
                         Image("download_24").themeIcon(color: .themeJacob)
                         Text("backup_app.backup_manager.restore".localized).themeBody(color: .themeJacob)
@@ -35,7 +38,6 @@ struct BackupManagerView: View {
                 BackupTypeView(isPresented: $backupPresented)
             }
         }
-        .modifier(RestoreAccountViewModifier(viewModel: restoreAccountViewModifierModel, type: .full))
         .modifier(UnlockViewModifier(viewModel: unlockViewModifierModel))
     }
 }

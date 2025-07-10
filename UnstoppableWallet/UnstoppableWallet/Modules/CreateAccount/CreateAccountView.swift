@@ -5,7 +5,7 @@ struct CreateAccountView: View {
     @StateObject private var viewModel = CreateAccountViewModelNew()
 
     @Binding var isPresented: Bool
-    let onCreate: (Account) -> Void
+    var onCreate: (() -> Void)? = nil
 
     @State private var wordCountPresented = false
     @State private var secureLock = true
@@ -182,7 +182,15 @@ struct CreateAccountView: View {
 
             HudHelper.instance.show(banner: .created)
 
-            onCreate(account)
+            if let onCreate {
+                onCreate()
+            } else {
+                isPresented = false
+            }
+
+            Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                BackupRequiredView.afterCreate(account: account, isPresented: isPresented)
+            }
         } catch {
             if case CreateAccountViewModelNew.CreateError.emptyPassphrase = error {
                 passphraseCaution = .caution(Caution(text: "create_wallet.error.empty_passphrase".localized, type: .error))

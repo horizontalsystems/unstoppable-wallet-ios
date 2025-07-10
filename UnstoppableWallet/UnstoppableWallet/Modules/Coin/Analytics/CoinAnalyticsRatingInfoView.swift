@@ -8,7 +8,7 @@ struct CoinAnalyticsRatingInfoView: View {
     @Binding var isPresented: Bool
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ScrollableThemeView {
                 VStack(spacing: .margin12) {
                     VStack(alignment: .leading, spacing: 0) {

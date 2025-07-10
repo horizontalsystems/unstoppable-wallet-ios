@@ -12,7 +12,7 @@ struct SuccessfulSubscriptionView: View {
     }
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ThemeView {
                 ThemeRadialView {
                     VStack(spacing: 0) {

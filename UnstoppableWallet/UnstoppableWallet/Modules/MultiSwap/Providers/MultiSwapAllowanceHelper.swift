@@ -11,10 +11,10 @@ class MultiSwapAllowanceHelper {
         case let unlockStep as UnlockStep:
             if unlockStep.isRevoke {
                 let view = MultiSwapRevokeView(tokenIn: tokenIn, spenderAddress: unlockStep.spenderAddress, isPresented: isPresented, onSuccess: onSuccess)
-                return AnyView(ThemeNavigationView { view })
+                return AnyView(ThemeNavigationStack { view })
             } else {
                 let view = MultiSwapApproveView(tokenIn: tokenIn, amount: amount, spenderAddress: unlockStep.spenderAddress, isPresented: isPresented, onSuccess: onSuccess)
-                return AnyView(ThemeNavigationView { view })
+                return AnyView(ThemeNavigationStack { view })
             }
         default:
             return AnyView(Text("Invalid Pre Swap Step"))

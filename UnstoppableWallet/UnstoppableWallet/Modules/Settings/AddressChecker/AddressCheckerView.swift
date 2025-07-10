@@ -3,8 +3,6 @@ import SwiftUI
 struct AddressCheckerView: View {
     @StateObject var viewModel = AddressCheckerViewModel()
 
-    @State private var purchasesPresented = false
-
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
@@ -16,8 +14,8 @@ struct AddressCheckerView: View {
                             }
                         } else {
                             ClickableRow(action: {
+                                Coordinator.shared.presentPurchases()
                                 stat(page: .addressChecker, event: .openPremium(from: .disableAddressChecker))
-                                purchasesPresented = true
                             }) {
                                 switchContent()
                                     .allowsHitTesting(false)
@@ -41,8 +39,8 @@ struct AddressCheckerView: View {
                             }
                         } else {
                             ClickableRow(action: {
+                                Coordinator.shared.presentPurchases()
                                 stat(page: .addressChecker, event: .openPremium(from: .addressChecker))
-                                purchasesPresented = true
                             }) {
                                 addressContent()
                             }
@@ -56,9 +54,6 @@ struct AddressCheckerView: View {
         }
         .navigationTitle("address_checker.title".localized)
         .navigationBarTitleDisplayMode(.inline)
-        .sheet(isPresented: $purchasesPresented) {
-            PurchasesView()
-        }
     }
 
     @ViewBuilder

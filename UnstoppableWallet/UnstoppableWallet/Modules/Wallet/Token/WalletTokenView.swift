@@ -7,8 +7,6 @@ struct WalletTokenView<AdditionalContent: View>: View {
 
     @State var presentedTransactionRecord: TransactionRecord?
     @State var sendPresented = false
-    @State var swapPresented = false
-    @State var chartPresented = false
 
     private let additionalContent: () -> AdditionalContent
 
@@ -33,24 +31,16 @@ struct WalletTokenView<AdditionalContent: View>: View {
             TransactionInfoView(transactionRecord: record).ignoresSafeArea()
         }
         .sheet(isPresented: $sendPresented) {
-            ThemeNavigationView {
+            ThemeNavigationStack {
                 SendAddressView(wallet: viewModel.wallet)
             }
         }
         .sheet(isPresented: $viewModel.receivePresented) {
-            ThemeNavigationView {
+            ThemeNavigationStack {
                 ReceiveAddressView(wallet: viewModel.wallet)
             }
         }
-        .sheet(isPresented: $swapPresented) {
-            MultiSwapView(token: viewModel.wallet.token)
-        }
-        .sheet(isPresented: $chartPresented) {
-            CoinPageView(coin: viewModel.wallet.coin)
-        }
-        .modifier(BackupRequiredViewModifier.backupPrompt(account: $viewModel.backupRequiredAccount) { account in
-            "receive_alert.not_backed_up_description".localized(account.name, viewModel.wallet.coin.name)
-        })
+        .modifier(BalanceErrorViewModifier(viewModel: balanceErrorViewModifierModel))
         .modifier(BalanceErrorViewModifier(viewModel: balanceErrorViewModifierModel))
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
@@ -98,8 +88,12 @@ struct WalletTokenView<AdditionalContent: View>: View {
                 switch button {
                 case .send: sendPresented = true
                 case .receive, .address: viewModel.onTapReceive()
-                case .swap: return swapPresented = true
-                case .chart: return chartPresented = true
+                case .swap:
+                    Coordinator.shared.present { _ in
+                        MultiSwapView(token: viewModel.wallet.token)
+                    }
+                    stat(page: .tokenPage, event: .open(page: .swap))
+                case .chart: Coordinator.shared.presentCoinPage(coin: viewModel.wallet.coin, page: .tokenPage)
                 default: ()
                 }
             }) {

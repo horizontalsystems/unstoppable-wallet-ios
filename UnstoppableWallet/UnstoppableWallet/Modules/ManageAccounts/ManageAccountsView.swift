@@ -2,18 +2,13 @@ import SwiftUI
 
 struct ManageAccountsView: View {
     @StateObject private var viewModel = ManageAccountsViewModelNew()
-    @StateObject var createAccountViewModifierModel = TermsAcceptedViewModifierModel()
-    @StateObject var restoreAccountViewModifierModel = TermsAcceptedViewModifierModel()
 
     @Binding private var isPresented: Bool
-    private let onCreate: ((Account) -> Void)?
 
-    @State private var watchPresented = false
     @State private var presentedAccount: Account?
 
-    init(isPresented: Binding<Bool>? = nil, onCreate: ((Account) -> Void)? = nil) {
+    init(isPresented: Binding<Bool>? = nil) {
         _isPresented = isPresented ?? .constant(false)
-        self.onCreate = onCreate
     }
 
     var body: some View {
@@ -37,21 +32,35 @@ struct ManageAccountsView: View {
 
                 ListSection {
                     ClickableRow(action: {
-                        createAccountViewModifierModel.handle()
+                        let onCreate = isPresented ? { isPresented = false } : nil
+                        Coordinator.shared.presentAfterAcceptTerms { isPresented in
+                            CreateAccountView(isPresented: isPresented, onCreate: onCreate)
+                        } onPresent: {
+                            stat(page: .manageWallets, event: .open(page: .newWallet))
+                        }
                     }) {
                         Image("plus_24").themeIcon(color: .themeJacob)
                         Text("onboarding.balance.create".localized).themeBody(color: .themeJacob)
                     }
 
                     ClickableRow(action: {
-                        restoreAccountViewModifierModel.handle()
+                        let onRestore = isPresented ? { isPresented = false } : nil
+                        Coordinator.shared.presentAfterAcceptTerms { isPresented in
+                            RestoreTypeView(type: .wallet, onRestore: onRestore, isPresented: isPresented)
+                        } onPresent: {
+                            stat(page: .manageWallets, event: .open(page: .importWallet))
+                        }
                     }) {
                         Image("download_24").themeIcon(color: .themeJacob)
                         Text("onboarding.balance.import".localized).themeBody(color: .themeJacob)
                     }
 
                     ClickableRow(action: {
-                        watchPresented = true
+                        let onWatch = isPresented ? { isPresented = false } : nil
+                        Coordinator.shared.present { isPresented in
+                            WatchView(isPresented: isPresented, onWatch: onWatch)
+                        }
+                        stat(page: .manageWallets, event: .open(page: .watchWallet))
                     }) {
                         Image("binocule_24").themeIcon(color: .themeJacob)
                         Text("onboarding.balance.watch".localized).themeBody(color: .themeJacob)
@@ -67,18 +76,6 @@ struct ManageAccountsView: View {
         }) { account in
             ManageAccountView(account: account, isPresented: Binding(get: { presentedAccount != nil }, set: { if !$0 { presentedAccount = nil } }))
         }
-        .sheet(isPresented: $watchPresented) {
-            WatchView {
-                if isPresented {
-                    isPresented = false
-                } else {
-                    watchPresented = false
-                }
-            }
-            .ignoresSafeArea()
-        }
-        .modifier(CreateAccountViewModifier(viewModel: createAccountViewModifierModel, onCreate: onCreate))
-        .modifier(RestoreAccountViewModifier(viewModel: restoreAccountViewModifierModel, type: .wallet, onRestore: isPresented ? { isPresented = false } : nil))
         .navigationBarTitle("settings_manage_keys.title".localized)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {

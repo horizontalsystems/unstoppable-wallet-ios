@@ -16,7 +16,7 @@ struct PurchasesView: View {
     }
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ThemeView {
                 ZStack {
                     ThemeRadialView {

@@ -23,7 +23,7 @@ struct MultiSwapView: View {
     }
 
     var body: some View {
-        ThemeNavigationView {
+        ThemeNavigationStack {
             ThemeView {
                 ScrollView {
                     VStack(spacing: .margin12) {
