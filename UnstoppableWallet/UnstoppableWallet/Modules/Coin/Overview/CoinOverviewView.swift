@@ -7,8 +7,6 @@ struct CoinOverviewView: View {
     @ObservedObject var chartViewModel: CoinChartViewModel
     private let markdownParser = CoinPageMarkdownParser()
 
-    @State private var chartIndicatorsShown = false
-    @State private var performanceSelectorPresented = false
     @State private var tokensExpanded = false
 
     @Environment(\.openURL) private var openURL
@@ -25,20 +23,6 @@ struct CoinOverviewView: View {
                     viewModel.load()
                 }
             }
-        }
-        .sheet(isPresented: $chartIndicatorsShown) {
-            ChartIndicatorsModule.view(repository: chartViewModel.service.indicatorRepository, fetcher: chartViewModel.service)
-                .ignoresSafeArea()
-                .onFirstAppear {
-                    stat(page: .coinOverview, event: .open(page: .indicators))
-                }
-        }
-        .sheet(isPresented: $performanceSelectorPresented) {
-            PerformanceDataSelectView(isPresented: $performanceSelectorPresented)
-                .ignoresSafeArea()
-                .onFirstAppear {
-                    stat(page: .coinOverview, event: .open(page: .performance))
-                }
         }
     }
 
@@ -132,7 +116,12 @@ struct CoinOverviewView: View {
                 .buttonStyle(SecondaryButtonStyle(style: .default))
 
                 Button(action: {
-                    chartIndicatorsShown = true
+                    Coordinator.shared.present { _ in
+                        ChartIndicatorsModule.view(repository: chartViewModel.service.indicatorRepository, fetcher: chartViewModel.service)
+                            .ignoresSafeArea()
+                    }
+
+                    stat(page: .coinOverview, event: .open(page: .indicators))
                 }) {
                     Image("setting_20").renderingMode(.template)
                 }
@@ -234,7 +223,10 @@ struct CoinOverviewView: View {
                 HorizontalDivider()
 
                 ClickableRow(action: {
-                    performanceSelectorPresented = true
+                    Coordinator.shared.present { isPresented in
+                        PerformanceDataSelectView(isPresented: isPresented).ignoresSafeArea()
+                    }
+                    stat(page: .coinOverview, event: .open(page: .performance))
                 }) {
                     HStack(spacing: .margin8) {
                         Text("coin_overview.performance.select_coins.title".localized).textSubhead2(color: .themeLeah)
