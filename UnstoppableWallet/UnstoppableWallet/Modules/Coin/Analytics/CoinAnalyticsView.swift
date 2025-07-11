@@ -8,14 +8,6 @@ struct CoinAnalyticsView: View {
 
     @ObservedObject var viewModel: CoinAnalyticsViewModel
 
-    @State private var presentedInfo: Info?
-    @State private var presentedRatingType: RatingType?
-    @State private var presentedRankType: RankViewModel.RankType?
-    @State private var presentedAnalysisViewItem: CoinAnalyticsViewModel.IssueBlockchainViewItem?
-    @State private var presentedProChartType: CoinProChartModule.ProChartType?
-    @State private var presentedHolderBlockchain: Blockchain?
-    @State private var tvlRankPresented = false
-
     @State private var indicatorDetailsShown = false
 
     var body: some View {
@@ -84,27 +76,6 @@ struct CoinAnalyticsView: View {
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-        .sheet(item: $presentedInfo) { info in
-            InfoView(items: info.items, isPresented: Binding(get: { presentedInfo != nil }, set: { if !$0 { presentedInfo = nil } }))
-        }
-        .sheet(item: $presentedRatingType) { type in
-            CoinAnalyticsRatingInfoView(title: type.title, description: type.description, scores: type.scores, isPresented: Binding(get: { presentedRatingType != nil }, set: { if !$0 { presentedRatingType = nil } }))
-        }
-        .sheet(item: $presentedRankType) { type in
-            RankView(type: type)
-        }
-        .sheet(item: $presentedAnalysisViewItem) { viewItem in
-            CoinAnalyticsIssuesView(viewItem: viewItem, isPresented: Binding(get: { presentedAnalysisViewItem != nil }, set: { if !$0 { presentedAnalysisViewItem = nil } }))
-        }
-        .bottomSheet(item: $presentedProChartType) { type in
-            CoinProChartView(coin: viewModel.coin, type: type, isPresented: Binding(get: { presentedProChartType != nil }, set: { if !$0 { presentedProChartType = nil } }))
-        }
-        .sheet(item: $presentedHolderBlockchain) { blockchain in
-            CoinMajorHoldersView(coin: viewModel.coin, blockchain: blockchain, isPresented: Binding(get: { presentedHolderBlockchain != nil }, set: { if !$0 { presentedHolderBlockchain = nil } }))
-        }
-        .sheet(isPresented: $tvlRankPresented) {
-            MarketTvlView()
-        }
     }
 
     private func premium(_ content: some View, statTrigger: StatPremiumTrigger) -> some View {
@@ -116,6 +87,12 @@ struct CoinAnalyticsView: View {
                 }
             }
         // .allowsHitTesting(!viewModel.analyticsEnabled)
+    }
+
+    private func set(rankType: RankViewModel.RankType) {
+        Coordinator.shared.present { _ in
+            RankView(type: rankType)
+        }
     }
 
     @ViewBuilder private func technicalAdvice(viewItem: CoinAnalyticsViewModel.TechnicalAdviceViewItem) -> some View {
@@ -198,7 +175,7 @@ struct CoinAnalyticsView: View {
                 previewableRow(
                     title: "coin_analytics.30_day_rank".localized,
                     value: rank,
-                    action: rank.previewableValue { _ in { presentedRankType = .cexVolume }}
+                    action: rank.previewableValue { _ in { set(rankType: .cexVolume) }}
                 )
             }
         }
@@ -235,7 +212,7 @@ struct CoinAnalyticsView: View {
                 previewableRow(
                     title: "coin_analytics.30_day_rank".localized,
                     value: rank,
-                    action: rank.previewableValue { _ in { presentedRankType = .dexVolume }}
+                    action: rank.previewableValue { _ in { set(rankType: .dexVolume) }}
                 )
             }
         }
@@ -271,7 +248,13 @@ struct CoinAnalyticsView: View {
                 previewableRow(
                     title: "coin_analytics.rank".localized,
                     value: rank,
-                    action: rank.previewableValue { _ in { tvlRankPresented = true }}
+                    action: rank.previewableValue {
+                        _ in {
+                            Coordinator.shared.present { _ in
+                                MarketTvlView()
+                            }
+                        }
+                    }
                 )
             }
 
@@ -311,7 +294,7 @@ struct CoinAnalyticsView: View {
                 previewableRow(
                     title: "coin_analytics.rank".localized,
                     value: rank,
-                    action: rank.previewableValue { _ in { presentedRankType = .dexLiquidity }}
+                    action: rank.previewableValue { _ in { set(rankType: .dexLiquidity) }}
                 )
             }
         }
@@ -353,7 +336,7 @@ struct CoinAnalyticsView: View {
                 previewableRow(
                     title: "coin_analytics.30_day_rank".localized,
                     value: rank,
-                    action: rank.previewableValue { _ in { presentedRankType = .address }}
+                    action: rank.previewableValue { _ in { set(rankType: .address) }}
                 )
             }
         }
@@ -395,7 +378,7 @@ struct CoinAnalyticsView: View {
                 previewableRow(
                     title: "coin_analytics.30_day_rank".localized,
                     value: rank,
-                    action: rank.previewableValue { _ in { presentedRankType = .txCount }}
+                    action: rank.previewableValue { _ in { set(rankType: .txCount) }}
                 )
             }
         }
@@ -482,7 +465,13 @@ struct CoinAnalyticsView: View {
 
             ForEach(blockchainItems) { item in
                 ClickableRow(spacing: .margin8) {
-                    presentedHolderBlockchain = item.blockchain
+                    guard let blockchain = item.blockchain else {
+                        return
+                    }
+
+                    Coordinator.shared.present { isPresented in
+                        CoinMajorHoldersView(coin: viewModel.coin, blockchain: blockchain, isPresented: isPresented)
+                    }
                 } content: {
                     HStack(spacing: .margin16) {
                         KFImage.url(item.blockchain.flatMap { URL(string: $0.type.imageUrl) })
@@ -509,7 +498,7 @@ struct CoinAnalyticsView: View {
                 previewableRow(
                     title: "coin_analytics.holders_rank".localized,
                     value: rank,
-                    action: rank.previewableValue { _ in { presentedRankType = .holders }}
+                    action: rank.previewableValue { _ in { set(rankType: .holders) }}
                 )
             }
         }
@@ -609,7 +598,9 @@ struct CoinAnalyticsView: View {
 
     @ViewBuilder private func analysisRow(viewItem: CoinAnalyticsViewModel.IssueBlockchainViewItem) -> some View {
         ClickableRow {
-            presentedAnalysisViewItem = viewItem
+            Coordinator.shared.present { isPresented in
+                CoinAnalyticsIssuesView(viewItem: viewItem, isPresented: isPresented)
+            }
         } content: {
             VStack(spacing: .margin12) {
                 HStack(spacing: .margin8) {
@@ -698,7 +689,9 @@ struct CoinAnalyticsView: View {
                     .frame(maxWidth: .infinity)
                     .allowsHitTesting(!premium || viewModel.analyticsEnabled)
                     .onTapGesture {
-                        presentedProChartType = proChartType
+                        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                            CoinProChartView(coin: viewModel.coin, type: proChartType, isPresented: isPresented)
+                        }
                     }
             }
         }
@@ -733,7 +726,7 @@ struct CoinAnalyticsView: View {
                     previewableRow(
                         title: "coin_analytics.30_day_rank".localized,
                         value: rank,
-                        action: rank.previewableValue { _ in { presentedRankType = rankType }}
+                        action: rank.previewableValue { _ in { set(rankType: rankType) }}
                     )
                 }
             }
@@ -753,12 +746,16 @@ struct CoinAnalyticsView: View {
 
             if let info {
                 Button {
-                    presentedInfo = info
+                    Coordinator.shared.present { isPresented in
+                        InfoView(items: info.items, isPresented: isPresented)
+                    }
                 } label: {
                     Image("circle_information_20").themeIcon()
                 }
                 .tappablePadding(.margin12, onTap: {
-                    presentedInfo = info
+                    Coordinator.shared.present { isPresented in
+                        InfoView(items: info.items, isPresented: isPresented)
+                    }
                 })
             }
 
@@ -828,7 +825,9 @@ struct CoinAnalyticsView: View {
 
     @ViewBuilder private func ratingRow(rating: Previewable<CoinAnalyticsModule.Rating>, type: RatingType) -> some View {
         ClickableRow(spacing: .margin8) {
-            presentedRatingType = type
+            Coordinator.shared.present { isPresented in
+                CoinAnalyticsRatingInfoView(title: type.title, description: type.description, scores: type.scores, isPresented: isPresented)
+            }
         } content: {
             Text("coin_analytics.overall_score".localized).textSubhead2()
             Image("circle_information_20").themeIcon()
