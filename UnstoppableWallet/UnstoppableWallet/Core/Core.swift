@@ -109,6 +109,8 @@ class Core {
 
     let performanceDataManager: PerformanceDataManager
 
+    private let deepLinkViewManager: DeepLinkViewManager
+
     init() throws {
         let databaseURL = try FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -326,6 +328,13 @@ class Core {
         performanceDataManager = PerformanceDataManager(userDefaultsStorage: userDefaultsStorage)
 
         appEventHandler = EventHandler(deepLinkManager: deepLinkManager)
+
+        deepLinkViewManager = DeepLinkViewManager(
+            eventHandler: appEventHandler,
+            walletConnectManager: walletConnectManager,
+            accountManager: accountManager,
+            cloudBackupManager: cloudBackupManager
+        )
 
         let walletConnectHandler = WalletConnectHandlerModule.handler(
             walletConnectManager: walletConnectSessionManager,

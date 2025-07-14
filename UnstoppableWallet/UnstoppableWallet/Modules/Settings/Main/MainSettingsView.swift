@@ -11,7 +11,10 @@ struct MainSettingsView: View {
     @State private var addressCheckerPresented = false
     @State private var walletConnectPresented = false
 
-    @StateObject var walletConnectViewModifierModel = WalletConnectViewModifierModel()
+    @StateObject var walletConnectVerificationModel = WalletConnectVerificationModel(
+        accountManager: Core.shared.accountManager,
+        cloudBackupManager: Core.shared.cloudBackupManager
+    )
 
     @State private var currentSlideIndex: Int = 0
     @State private var isFirstAppear = true
@@ -269,7 +272,7 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func dAppConnection() -> some View {
         ClickableRow(spacing: .margin8) {
-            walletConnectViewModifierModel.handle {
+            walletConnectVerificationModel.handle {
                 walletConnectPresented = true
             }
         } content: {
@@ -288,7 +291,6 @@ struct MainSettingsView: View {
 
             Image.disclosureIcon
         }
-        .modifier(WalletConnectViewModifier(viewModel: walletConnectViewModifierModel))
         .navigationDestination(isPresented: $walletConnectPresented) {
             WalletConnectListView()
                 .navigationTitle("wallet_connect_list.title".localized)

@@ -4,19 +4,20 @@ import MarketKit
 import SwiftUI
 import WalletConnectSign
 
-class DeepLinkViewModifierModel: ObservableObject {
+class DeepLinkViewManager {
     private var cancellables = Set<AnyCancellable>()
 
-    private let eventHandler = Core.shared.appEventHandler
-    let walletConnectViewModifierModel = WalletConnectViewModifierModel()
-    let walletConnectManager = Core.shared.walletConnectManager
+    let walletConnectVerificationModel: WalletConnectVerificationModel
 
-    @Published var presentedSendPage: EventHandler.SendParams?
-    @Published var presentedTonConnect: EventHandler.TonConnectParams?
-    @Published var presentedProposal: EventHandler.WalletConnectProposalParams?
-    @Published var presentedWalletConnectRequest: WalletConnectRequest?
+    private let eventHandler: EventHandler
+    private let walletConnectManager: WalletConnectManager
 
-    init() {
+    init(eventHandler: EventHandler, walletConnectManager: WalletConnectManager, accountManager: AccountManager, cloudBackupManager: CloudBackupManager) {
+        self.eventHandler = eventHandler
+        self.walletConnectManager = walletConnectManager
+
+        walletConnectVerificationModel = WalletConnectVerificationModel(accountManager: accountManager, cloudBackupManager: cloudBackupManager)
+
         eventHandler.signal
             .subscribe(on: DispatchQueue.global(qos: .userInitiated))
             .receive(on: DispatchQueue.global(qos: .userInitiated))
@@ -51,29 +52,51 @@ class DeepLinkViewModifierModel: ObservableObject {
     @MainActor private func handle(signal: EventHandlerSignal) throws {
         switch signal {
         case let .coinPage(coin): Coordinator.shared.presentCoinPage(coin: coin, page: .deepLink)
-        case let .sendPage(params): presentedSendPage = params
-
+        case let .sendPage(params):
+            Coordinator.shared.present { _ in
+                ChooseSendTokenListView(
+                    allowedBlockchainTypes: params.allowedBlockchainTypes,
+                    allowedTokenTypes: params.allowedTokenTypes,
+                    address: params.address, amount: params.amount
+                )
+                .ignoresSafeArea()
+            }
         case let .walletConnectHandleUrl(url):
-            walletConnectViewModifierModel.handle { [weak self] in
+            walletConnectVerificationModel.handle { [weak self] in
                 self?.handleWalletConnect(url: url)
             }
 
         case let .walletConnectProposal(proposal): ()
             guard let account = Core.shared.accountManager.activeAccount else {
-                walletConnectViewModifierModel.handle(onSuccess: {}) // just show - No Account
+                walletConnectVerificationModel.handle(onSuccess: {}) // just show - No Account
                 return
             }
 
-            presentedProposal = .init(proposal: proposal, account: account)
+            Coordinator.shared.present { _ in
+                WalletConnectMainView(account: account, session: nil, proposal: proposal)
+                    .ignoresSafeArea()
+            }
         case let .walletConnectRequest(request):
             switch request.payload {
             case is WCSignEthereumTransactionPayload,
                  is WCSendEthereumTransactionPayload,
-                 is WCSignMessagePayload: presentedWalletConnectRequest = request
+                 is WCSignMessagePayload:
+                Coordinator.shared.present { _ in
+                    switch request.payload {
+                    case is WCSignEthereumTransactionPayload: WCSignEthereumTransactionPayload.view(request: request)
+                    case is WCSendEthereumTransactionPayload: WCSendEthereumTransactionPayload.view(request: request)
+                    case is WCSignMessagePayload: WCSignMessagePayload.view(request: request)
+                    default: EmptyView()
+                    }
+                }
+
             default: ()
             }
 
-        case let .tonConnect(params): presentedTonConnect = params
+        case let .tonConnect(params):
+            Coordinator.shared.present { _ in
+                TonConnectConnectView(config: params.config, returnDeepLink: params.returnDeepLink)
+            }
         case .tonConnectRequest: () // TODO: make
         case .tonConnectRequestFailed: () // TODO: make
 

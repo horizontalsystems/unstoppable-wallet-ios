@@ -65,7 +65,6 @@ struct MainView: View {
         .onAppear {
             viewModel.handleNextAlert()
         }
-        .modifier(DeepLinkViewModifier())
         .modifier(CoordinatorViewModifier())
     }
 
