@@ -7,7 +7,6 @@ struct BitcoinSendSettingsView: View {
     var onChangeSettings: () -> Void
 
     @State private var chooseUtxos: Bool = false
-    @State private var chooseLockPeriodPresented: Bool = false
 
     @Environment(\.presentationMode) private var presentationMode
 
@@ -87,7 +86,22 @@ struct BitcoinSendSettingsView: View {
                                 Spacer()
 
                                 Button(action: {
-                                    chooseLockPeriodPresented = true
+                                    Coordinator.shared.present(type: .alert) { isPresented in
+                                        OptionAlertView(
+                                            title: "fee_settings.time_lock".localized,
+                                            viewItems: [.init(text: "send.hodler_locktime_off".localized)] +
+                                                HodlerPlugin.LockTimeInterval.allCases.map {
+                                                    AlertViewItem(text: HodlerPlugin.LockTimeInterval.title(lockTimeInterval: $0))
+                                                },
+                                            onSelect: { index in
+                                                switch index {
+                                                case 0: viewModel.lockTimeInterval = nil
+                                                default: viewModel.lockTimeInterval = HodlerPlugin.LockTimeInterval.allCases[index - 1]
+                                                }
+                                            },
+                                            isPresented: isPresented
+                                        )
+                                    }
                                 }) {
                                     HStack(spacing: .margin8) {
                                         if let interval = viewModel.lockTimeInterval {
@@ -99,27 +113,6 @@ struct BitcoinSendSettingsView: View {
                                 }
                                 .buttonStyle(SecondaryButtonStyle(rightAccessory: .dropDown))
                             }
-                            .alert(
-                                isPresented: $chooseLockPeriodPresented,
-                                title: "fee_settings.time_lock".localized,
-                                viewItems: [.init(text: "send.hodler_locktime_off".localized)] +
-                                    HodlerPlugin.LockTimeInterval.allCases.map {
-                                        AlertViewItem(text: HodlerPlugin.LockTimeInterval.title(lockTimeInterval: $0))
-                                    },
-                                onTap: { index in
-                                    guard let index else {
-                                        return
-                                    }
-                                    switch index {
-                                    case 0: viewModel.lockTimeInterval = nil
-                                    case 1: viewModel.lockTimeInterval = .hour
-                                    case 2: viewModel.lockTimeInterval = .month
-                                    case 3: viewModel.lockTimeInterval = .halfYear
-                                    case 4: viewModel.lockTimeInterval = .year
-                                    default: ()
-                                    }
-                                }
-                            )
                         }
                     }
 

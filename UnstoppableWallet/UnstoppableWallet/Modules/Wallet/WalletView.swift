@@ -6,8 +6,6 @@ struct WalletView: View {
 
     @Binding var path: NavigationPath
 
-    @State private var sortTypePresented = false
-
     var body: some View {
         ThemeView(isRoot: true) {
             if viewModel.account != nil {
@@ -82,18 +80,6 @@ struct WalletView: View {
         .onDisappear {
             viewModel.onDisappear()
         }
-        .alert(
-            isPresented: $sortTypePresented,
-            title: "balance.sort.header".localized,
-            viewItems: WalletModule.SortType.allCases.map { .init(text: $0.title, selected: viewModel.sortType == $0) },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
-
-                viewModel.sortType = WalletModule.SortType.allCases[index]
-            }
-        )
     }
 
     @ViewBuilder private func topView() -> some View {
@@ -166,7 +152,16 @@ struct WalletView: View {
     @ViewBuilder private func headerView() -> some View {
         HStack(spacing: .margin8) {
             Button(action: {
-                sortTypePresented = true
+                Coordinator.shared.present(type: .alert) { isPresented in
+                    OptionAlertView(
+                        title: "balance.sort.header".localized,
+                        viewItems: WalletModule.SortType.allCases.map { .init(text: $0.title, selected: viewModel.sortType == $0) },
+                        onSelect: { index in
+                            viewModel.sortType = WalletModule.SortType.allCases[index]
+                        },
+                        isPresented: isPresented
+                    )
+                }
             }) {
                 Text(viewModel.sortType.title)
             }

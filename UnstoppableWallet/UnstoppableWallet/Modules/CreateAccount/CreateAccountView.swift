@@ -7,7 +7,6 @@ struct CreateAccountView: View {
     @Binding var isPresented: Bool
     var onCreate: (() -> Void)? = nil
 
-    @State private var wordCountPresented = false
     @State private var secureLock = true
     @State private var passphraseCaution: CautionState = .none
     @State private var passphraseConfirmationCaution: CautionState = .none
@@ -47,7 +46,18 @@ struct CreateAccountView: View {
                             if viewModel.advanced {
                                 ListSection {
                                     ClickableRow(spacing: .margin8, action: {
-                                        wordCountPresented = true
+                                        Coordinator.shared.present(type: .alert) { isPresented in
+                                            OptionAlertView(
+                                                title: "create_wallet.phrase_count".localized,
+                                                viewItems: Mnemonic.WordCount.allCases.map {
+                                                    .init(text: title(wordCount: $0), selected: $0 == viewModel.wordCount)
+                                                },
+                                                onSelect: { index in
+                                                    viewModel.wordCount = Mnemonic.WordCount.allCases[index]
+                                                },
+                                                isPresented: isPresented
+                                            )
+                                        }
                                     }) {
                                         HStack(spacing: .margin16) {
                                             Image("key_24")
@@ -60,19 +70,6 @@ struct CreateAccountView: View {
                                         Image("arrow_small_down_20").themeIcon()
                                     }
                                 }
-                                .alert(
-                                    isPresented: $wordCountPresented,
-                                    title: "create_wallet.phrase_count".localized,
-                                    viewItems: Mnemonic.WordCount.allCases.map {
-                                        .init(text: title(wordCount: $0), selected: $0 == viewModel.wordCount)
-                                    },
-                                    onTap: { index in
-                                        guard let index else {
-                                            return
-                                        }
-                                        viewModel.wordCount = Mnemonic.WordCount.allCases[index]
-                                    }
-                                )
 
                                 ListSection {
                                     ListRow {

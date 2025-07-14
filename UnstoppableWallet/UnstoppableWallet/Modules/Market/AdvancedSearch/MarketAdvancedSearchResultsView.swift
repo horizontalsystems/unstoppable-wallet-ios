@@ -7,8 +7,6 @@ struct MarketAdvancedSearchResultsView: View {
     @StateObject var watchlistViewModel: WatchlistViewModel
     @Binding var isParentPresented: Bool
 
-    @State private var sortBySelectorPresented = false
-
     init(marketInfos: [MarketInfo], timePeriod: HsTimePeriod, isParentPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: MarketAdvancedSearchResultsViewModel(marketInfos: marketInfos, timePeriod: timePeriod))
         _watchlistViewModel = StateObject(wrappedValue: WatchlistViewModel(page: .advancedSearchResults))
@@ -50,25 +48,22 @@ struct MarketAdvancedSearchResultsView: View {
                 }
             }
         }
-        .alert(
-            isPresented: $sortBySelectorPresented,
-            title: "market.sort_by.title".localized,
-            viewItems: viewModel.sortBys.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
-
-                viewModel.sortBy = viewModel.sortBys[index]
-            }
-        )
     }
 
     @ViewBuilder private func header() -> some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 Button(action: {
-                    sortBySelectorPresented = true
+                    Coordinator.shared.present(type: .alert) { isPresented in
+                        OptionAlertView(
+                            title: "market.sort_by.title".localized,
+                            viewItems: viewModel.sortBys.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
+                            onSelect: { index in
+                                viewModel.sortBy = viewModel.sortBys[index]
+                            },
+                            isPresented: isPresented
+                        )
+                    }
                 }) {
                     Text(viewModel.sortBy.title)
                 }
@@ -90,18 +85,6 @@ struct MarketAdvancedSearchResultsView: View {
             .padding(.horizontal, .margin16)
             .padding(.vertical, .margin8)
         }
-        .alert(
-            isPresented: $sortBySelectorPresented,
-            title: "market.sort_by.title".localized,
-            viewItems: viewModel.sortBys.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
-
-                viewModel.sortBy = viewModel.sortBys[index]
-            }
-        )
     }
 
     @ViewBuilder private func signalsButton() -> some View {

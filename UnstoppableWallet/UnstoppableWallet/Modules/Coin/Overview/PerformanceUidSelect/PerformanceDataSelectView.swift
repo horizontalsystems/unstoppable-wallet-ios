@@ -6,8 +6,6 @@ struct PerformanceDataSelectView: View {
     @StateObject private var viewModel: PerformanceDataSelectViewModel
 
     @Binding var isPresented: Bool
-    @State var timePeriodSelectorPresented = false
-    @State var selectedPeriod: Int?
 
     init(isPresented: Binding<Bool>) {
         _viewModel = .init(wrappedValue: PerformanceDataSelectViewModel())
@@ -30,8 +28,7 @@ struct PerformanceDataSelectView: View {
                                     stat(page: .performance, event: .openPremium(from: .periodChange))
                                     return
                                 }
-                                selectedPeriod = 1
-                                timePeriodSelectorPresented = true
+                                presentTimePeriodSelector(period: 1)
                             }) {
                                 Text(viewModel.firstPeriod.shortTitle)
                             }
@@ -47,8 +44,7 @@ struct PerformanceDataSelectView: View {
                                     stat(page: .performance, event: .openPremium(from: .periodChange))
                                     return
                                 }
-                                selectedPeriod = 2
-                                timePeriodSelectorPresented = true
+                                presentTimePeriodSelector(period: 2)
                             }) {
                                 Text(viewModel.secondPeriod.shortTitle)
                             }
@@ -113,24 +109,25 @@ struct PerformanceDataSelectView: View {
                 .accentColor(Color.themeJacob)
             }
         }
-        .alert(
-            isPresented: $timePeriodSelectorPresented,
-            title: "coin_overview.performance.period".localized(selectedPeriod ?? 0),
-            viewItems: viewModel.timePeriods.map {
-                let selected = selectedPeriod == 1 ? viewModel.firstPeriod : viewModel.secondPeriod
-                return .init(text: $0.title, selected: selected == $0)
-            },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
+    }
 
-                if selectedPeriod == 1 {
-                    viewModel.setFirst(period: viewModel.timePeriods[index])
-                } else {
-                    viewModel.setSecond(period: viewModel.timePeriods[index])
-                }
-            }
-        )
+    private func presentTimePeriodSelector(period: Int) {
+        Coordinator.shared.present(type: .alert) { isPresented in
+            OptionAlertView(
+                title: "coin_overview.performance.period".localized(period ?? 0),
+                viewItems: viewModel.timePeriods.map {
+                    let selected = period == 1 ? viewModel.firstPeriod : viewModel.secondPeriod
+                    return .init(text: $0.title, selected: selected == $0)
+                },
+                onSelect: { index in
+                    if period == 1 {
+                        viewModel.setFirst(period: viewModel.timePeriods[index])
+                    } else {
+                        viewModel.setSecond(period: viewModel.timePeriods[index])
+                    }
+                },
+                isPresented: isPresented
+            )
+        }
     }
 }

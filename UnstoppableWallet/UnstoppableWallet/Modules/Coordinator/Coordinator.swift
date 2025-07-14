@@ -19,8 +19,16 @@ class Coordinator: ObservableObject {
         return routeStack[level]
     }
 
-    func hasRoute(at level: Int) -> Bool {
-        level < routeStack.count
+    func hasSheet(at level: Int) -> Bool {
+        level < routeStack.count && routeStack[level].type == .sheet
+    }
+
+    func hasBottomSheet(at level: Int) -> Bool {
+        level < routeStack.count && routeStack[level].type == .bottomSheet
+    }
+
+    func hasAlert(at level: Int) -> Bool {
+        level < routeStack.count && routeStack[level].type == .alert
     }
 
     func onRouteDismissed(at level: Int) {
@@ -56,6 +64,7 @@ extension Coordinator {
     enum RouteType {
         case sheet
         case bottomSheet
+        case alert
     }
 }
 

@@ -5,8 +5,6 @@ import SwiftUI
 struct CoinTreasuriesView: View {
     @StateObject var viewModel: CoinTreasuriesViewModel
 
-    @State private var filterSelectorPresented = false
-
     init(coin: Coin) {
         _viewModel = StateObject(wrappedValue: CoinTreasuriesViewModel(coin: coin))
     }
@@ -51,25 +49,22 @@ struct CoinTreasuriesView: View {
         HStack {
             HStack {
                 Button(action: {
-                    filterSelectorPresented = true
+                    Coordinator.shared.present(type: .alert) { isPresented in
+                        OptionAlertView(
+                            title: "coin_analytics.treasuries.filters".localized,
+                            viewItems: CoinTreasuriesViewModel.Filter.allCases.map { .init(text: $0.title, selected: viewModel.filter == $0) },
+                            onSelect: { index in
+                                viewModel.filter = CoinTreasuriesViewModel.Filter.allCases[index]
+                            },
+                            isPresented: isPresented
+                        )
+                    }
                 }) {
                     Text(viewModel.filter.title)
                 }
                 .buttonStyle(SecondaryButtonStyle(style: .transparent, rightAccessory: .dropDown))
                 .disabled(disabled)
             }
-            .alert(
-                isPresented: $filterSelectorPresented,
-                title: "coin_analytics.treasuries.filters".localized,
-                viewItems: CoinTreasuriesViewModel.Filter.allCases.map { .init(text: $0.title, selected: viewModel.filter == $0) },
-                onTap: { index in
-                    guard let index else {
-                        return
-                    }
-
-                    viewModel.filter = CoinTreasuriesViewModel.Filter.allCases[index]
-                }
-            )
 
             Spacer()
 
