@@ -6,7 +6,6 @@ struct MainSettingsView: View {
     @StateObject var viewModel = MainSettingsViewModel()
 
     @State private var manageWalletsPresented = false
-    @State private var supportPresented = false
     @State private var addressCheckerPresented = false
     @State private var walletConnectPresented = false
 
@@ -92,14 +91,6 @@ struct MainSettingsView: View {
                 .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
             }
             .padding(EdgeInsets(top: .margin12, leading: 0, bottom: .margin32, trailing: 0))
-        }
-        .bottomSheet(isPresented: $supportPresented) {
-            SupportView { telegramUrl in
-                UrlManager.open(url: telegramUrl)
-            }
-            .onFirstAppear {
-                stat(page: .settings, event: .open(page: .vipSupport))
-            }
         }
     }
 
@@ -384,7 +375,13 @@ struct MainSettingsView: View {
     @ViewBuilder private func vipSupport() -> some View {
         ClickableRow(action: {
             if viewModel.activated(premiumFeature: .vipSupport) {
-                supportPresented = true
+                Coordinator.shared.present(type: .bottomSheet) { _ in
+                    SupportView { telegramUrl in
+                        UrlManager.open(url: telegramUrl)
+                    }
+                }
+
+                stat(page: .settings, event: .open(page: .vipSupport))
             } else {
                 Coordinator.shared.presentPurchases()
                 stat(page: .settings, event: .openPremium(from: .vipSupport))

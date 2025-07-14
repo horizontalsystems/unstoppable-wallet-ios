@@ -22,9 +22,10 @@ class ReceiveAddressViewModel: ObservableObject {
     private var hasAppeared = false
 
     @Published private(set) var state: DataStatus<ReceiveAddressModule.ViewItem> = .loading
-    @Published var popup: ReceiveAddressModule.PopupWarningItem?
     @Published private(set) var actions: [ReceiveAddressModule.ActionType] = []
     @Published private(set) var amount: Decimal = 0
+
+    private let popupSubject = PassthroughSubject<ReceiveAddressModule.PopupWarningItem, Never>()
 
     private var amountFieldChangedSuccessSubject = PassthroughSubject<Bool, Never>()
     var amountFieldChangedSuccessPublisher: AnyPublisher<Bool, Never> {
@@ -50,9 +51,8 @@ class ReceiveAddressViewModel: ObservableObject {
     }
 
     private func syncPopup(state: DataStatus<ReceiveAddress>) {
-        if hasAppeared, let item = state.data {
-            let popup = viewItemFactory.popup(item: item)
-            self.popup = popup
+        if hasAppeared, let item = state.data, let popup = viewItemFactory.popup(item: item) {
+            popupSubject.send(popup)
         }
     }
 
@@ -64,6 +64,10 @@ class ReceiveAddressViewModel: ObservableObject {
 }
 
 extension ReceiveAddressViewModel {
+    var popupPublisher: AnyPublisher<ReceiveAddressModule.PopupWarningItem, Never> {
+        popupSubject.eraseToAnyPublisher()
+    }
+
     var title: String {
         service.title
     }

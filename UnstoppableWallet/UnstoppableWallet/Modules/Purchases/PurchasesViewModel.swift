@@ -10,8 +10,6 @@ class PurchasesViewModel: ObservableObject {
     @Published private(set) var viewItems: [ViewItem]
     @Published var buttonState: ButtonState = .tryForFree
 
-    var subscribedSuccessful = false
-
     init() {
         viewItems = PremiumFeature.allCases.map(\.viewItem)
         syncButtonState()
@@ -28,10 +26,6 @@ class PurchasesViewModel: ObservableObject {
         }
 
         buttonState = purchaseManager.hasActivePurchase ? .activated : .upgrade
-    }
-
-    func onSubscribe() {
-        subscribedSuccessful = true
     }
 }
 

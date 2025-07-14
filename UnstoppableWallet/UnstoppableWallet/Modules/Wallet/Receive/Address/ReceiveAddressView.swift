@@ -87,19 +87,21 @@ struct ReceiveAddressView: View {
             }
         )
         .alertButtonTint(color: .themeJacob)
-        .bottomSheet(item: $viewModel.popup) { popup in
-            BottomSheetView(
-                icon: .warning,
-                title: popup.title,
-                items: [
-                    .highlightedDescription(text: popup.description.text, style: popup.description.style),
-                ],
-                buttons: popupButtons(mode: popup.mode),
-                isPresented: Binding(get: { viewModel.popup != nil }, set: { if !$0 { viewModel.popup = nil } })
-            )
-        }
         .onFirstAppear {
             viewModel.onFirstAppear()
+        }
+        .onReceive(viewModel.popupPublisher) { popup in
+            Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                BottomSheetView(
+                    icon: .warning,
+                    title: popup.title,
+                    items: [
+                        .highlightedDescription(text: popup.description.text, style: popup.description.style),
+                    ],
+                    buttons: popupButtons(mode: popup.mode, isPresented: isPresented),
+                    isPresented: isPresented
+                )
+            }
         }
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
@@ -115,33 +117,6 @@ struct ReceiveAddressView: View {
             }
         }
         .accentColor(.themeJacob)
-    }
-
-    private func popupButtons(mode: ReceiveAddressModule.PopupWarningItem.Mode) -> [BottomSheetView.ButtonItem] {
-        switch mode {
-        case let .done(title):
-            return [
-                .init(style: .yellow, title: title) { viewModel.popup = nil },
-            ]
-        case .activateStellarAsset:
-            return [
-                .init(style: .yellow, title: "deposit.activate".localized) {
-                    viewModel.popup = nil
-
-                    Coordinator.shared.present { isPresented in
-                        if let sendData = viewModel.stellarSendData {
-                            ThemeNavigationStack {
-                                RegularSendView(sendData: sendData) {
-                                    HudHelper.instance.show(banner: .sent)
-                                    isPresented.wrappedValue = false
-                                }
-                            }
-                        }
-                    }
-                },
-                .init(style: .transparent, title: "button.later".localized) { viewModel.popup = nil },
-            ]
-        }
     }
 
     @ViewBuilder private func qrView(item: ReceiveAddressModule.QrItem) -> some View {
@@ -273,6 +248,37 @@ struct ReceiveAddressView: View {
                 Image("copy_20").renderingMode(.template)
             })
             .buttonStyle(SecondaryCircleButtonStyle(style: .default))
+        }
+    }
+
+    private func popupButtons(mode: ReceiveAddressModule.PopupWarningItem.Mode, isPresented: Binding<Bool>) -> [BottomSheetView.ButtonItem] {
+        switch mode {
+        case let .done(title):
+            return [
+                .init(style: .yellow, title: title) {
+                    isPresented.wrappedValue = false
+                },
+            ]
+        case .activateStellarAsset:
+            return [
+                .init(style: .yellow, title: "deposit.activate".localized) {
+                    isPresented.wrappedValue = false
+
+                    Coordinator.shared.present { isPresented in
+                        if let sendData = viewModel.stellarSendData {
+                            ThemeNavigationStack {
+                                RegularSendView(sendData: sendData) {
+                                    HudHelper.instance.show(banner: .sent)
+                                    isPresented.wrappedValue = false
+                                }
+                            }
+                        }
+                    }
+                },
+                .init(style: .transparent, title: "button.later".localized) {
+                    isPresented.wrappedValue = false
+                },
+            ]
         }
     }
 }

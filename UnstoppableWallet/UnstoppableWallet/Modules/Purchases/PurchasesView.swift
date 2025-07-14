@@ -7,9 +7,6 @@ struct PurchasesView: View {
 
     @State private var bottomHeight: CGFloat = 0
 
-    @State private var presentedInfoViewItem: PurchasesViewModel.ViewItem?
-    @State private var subscriptionPresented = false
-
     var body: some View {
         ThemeNavigationStack {
             ThemeView {
@@ -33,7 +30,9 @@ struct PurchasesView: View {
                                             description: "purchases.\(feature.title).description".localized,
                                             image: Image(feature.iconName),
                                             action: {
-                                                presentedInfoViewItem = feature
+                                                Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                                                    infoView(viewItem: feature, isPresented: isPresented)
+                                                }
                                             }
                                         )
                                     }
@@ -79,47 +78,6 @@ struct PurchasesView: View {
                     }
                 }
             }
-        }
-        .bottomSheet(item: $presentedInfoViewItem) { viewItem in
-            BottomSheetView(
-                icon: .local(name: viewItem.iconName, tint: .themeJacob),
-                title: "purchases.\(viewItem.title)".localized,
-                titleColor: .themeJacob,
-                items: [
-                    .text(text: "purchases.\(viewItem.title).info".localized),
-                ],
-                buttons: [
-                    .init(style: .yellow, title: "button.close".localized) {
-                        presentedInfoViewItem = nil
-                    },
-                ],
-                isPresented: Binding(get: { presentedInfoViewItem != nil }, set: { if !$0 { presentedInfoViewItem = nil } })
-            )
-        }
-        .bottomSheet(
-            isPresented: Binding(
-                get: { subscriptionPresented },
-                set: {
-                    subscriptionPresented = $0
-                    if !$0, viewModel.subscribedSuccessful {
-                        Coordinator.shared.present { _ in
-                            SuccessfulSubscriptionView(purchasesPresented: $isPresented)
-                        }
-                        stat(page: .purchaseSelector, event: .subscribe)
-                    }
-                }
-            )
-        ) {
-            PurchaseBottomSheetView(isPresented: $subscriptionPresented) { product in
-                onSuccessfulSubscription(product: product)
-            }
-        }
-    }
-
-    func onSuccessfulSubscription(product _: PurchaseManager.ProductData) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
-            subscriptionPresented = false
-            viewModel.onSubscribe()
         }
     }
 
@@ -193,12 +151,41 @@ struct PurchasesView: View {
         let (title, disabled) = buttonState()
 
         Button(action: {
-            subscriptionPresented = true
+            Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                PurchaseBottomSheetView(isPresented: isPresented) { _ in
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
+                        isPresented.wrappedValue = false
+
+                        Coordinator.shared.present { _ in
+                            SuccessfulSubscriptionView(purchasesPresented: $isPresented)
+                        }
+                    }
+
+                    stat(page: .purchaseSelector, event: .subscribe)
+                }
+            }
         }) {
             Text(title)
         }
         .disabled(disabled)
         .buttonStyle(PrimaryButtonStyle(style: .yellowGradient))
+    }
+
+    @ViewBuilder private func infoView(viewItem: PurchasesViewModel.ViewItem, isPresented: Binding<Bool>) -> some View {
+        BottomSheetView(
+            icon: .local(name: viewItem.iconName, tint: .themeJacob),
+            title: "purchases.\(viewItem.title)".localized,
+            titleColor: .themeJacob,
+            items: [
+                .text(text: "purchases.\(viewItem.title).info".localized),
+            ],
+            buttons: [
+                .init(style: .yellow, title: "button.close".localized) {
+                    isPresented.wrappedValue = false
+                },
+            ],
+            isPresented: isPresented
+        )
     }
 
     private func buttonState() -> (String, Bool) {
