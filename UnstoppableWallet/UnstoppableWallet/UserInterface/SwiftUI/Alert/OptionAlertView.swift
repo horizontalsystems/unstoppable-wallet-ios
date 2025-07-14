@@ -1,15 +1,14 @@
 import SwiftUI
 
-struct ButtonsAlertView: View {
+struct OptionAlertView: View {
+    let title: String
+    let viewItems: [AlertViewItem]
+    let onSelect: (Int) -> Void
+    @Binding var isPresented: Bool
+
     @State private var opacity: CGFloat = 0
     @State private var backgroundOpacity: CGFloat = 0
     @State private var scale: CGFloat = 0.8
-
-    @Environment(\.dismiss) private var dismiss
-
-    let title: String
-    let buttons: [AlertViewItem]
-    let onTap: ((Int?) -> Void)?
 
     var body: some View {
         GeometryReader { proxy in
@@ -37,17 +36,17 @@ struct ButtonsAlertView: View {
                 .padding(.horizontal, .margin16)
                 .padding(.vertical, .margin12)
 
-            ForEach(Array(buttons.enumerated()), id: \.offset) { index, button in
+            ForEach(Array(viewItems.enumerated()), id: \.offset) { index, viewItem in
                 ListRow {
                     Button(action: {
                         animate(isShown: false) {
-                            onTap?(index)
+                            onSelect(index)
                         }
                     }, label: {
-                        view(item: button)
+                        view(viewItem: viewItem)
                             .frame(maxWidth: .infinity)
                     })
-                    .disabled(button.disabled)
+                    .disabled(viewItem.disabled)
                 }
             }
         }
@@ -55,13 +54,13 @@ struct ButtonsAlertView: View {
         .cornerRadius(.cornerRadius16)
     }
 
-    private func view(item: AlertViewItem) -> some View {
+    private func view(viewItem: AlertViewItem) -> some View {
         HStack {
             VStack(spacing: 1) {
-                Text(item.text)
-                    .textBody(color: item.selected ? .themeJacob : .themeLeah)
+                Text(viewItem.text)
+                    .textBody(color: viewItem.selected ? .themeJacob : .themeLeah)
 
-                if let description = item.description {
+                if let description = viewItem.description {
                     Text(description)
                         .textSubhead1()
                 }
@@ -74,9 +73,7 @@ struct ButtonsAlertView: View {
             .opacity(0.5)
             .opacity(backgroundOpacity)
             .onTapGesture {
-                animate(isShown: false) {
-                    onTap?(nil)
-                }
+                animate(isShown: false)
             }
     }
 
@@ -85,7 +82,7 @@ struct ButtonsAlertView: View {
         case true:
             opacity = 0
 
-            withAnimation(.easeIn(duration: 0.2)) {
+            withAnimation(.easeOut(duration: 0.2)) {
                 opacity = 1
                 backgroundOpacity = 1
                 scale = 1
@@ -103,16 +100,8 @@ struct ButtonsAlertView: View {
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 0.2) {
                 completion?()
-                dismiss()
+                isPresented = false
             }
-        }
-    }
-}
-
-extension View {
-    func alert(isPresented: Binding<Bool>, title: String, viewItems: [AlertViewItem], onTap: ((Int?) -> Void)? = nil) -> some View {
-        transparentFullScreenCover(isPresented: isPresented) {
-            ButtonsAlertView(title: title, buttons: viewItems, onTap: onTap)
         }
     }
 }

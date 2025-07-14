@@ -6,10 +6,6 @@ struct MarketCoinsView: View {
     @ObservedObject var viewModel: MarketCoinsViewModel
     @ObservedObject var watchlistViewModel: WatchlistViewModel
 
-    @State private var sortBySelectorPresented = false
-    @State private var topSelectorPresented = false
-    @State private var timePeriodSelectorPresented = false
-
     var body: some View {
         ThemeView {
             switch viewModel.state {
@@ -37,7 +33,16 @@ struct MarketCoinsView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 Button(action: {
-                    sortBySelectorPresented = true
+                    Coordinator.shared.present(type: .alert) { isPresented in
+                        OptionAlertView(
+                            title: "market.sort_by.title".localized,
+                            viewItems: viewModel.sortBys.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
+                            onSelect: { index in
+                                viewModel.sortBy = viewModel.sortBys[index]
+                            },
+                            isPresented: isPresented
+                        )
+                    }
                 }) {
                     Text(viewModel.sortBy.title)
                 }
@@ -45,7 +50,16 @@ struct MarketCoinsView: View {
                 .disabled(disabled)
 
                 Button(action: {
-                    topSelectorPresented = true
+                    Coordinator.shared.present(type: .alert) { isPresented in
+                        OptionAlertView(
+                            title: "market.top_coins.title".localized,
+                            viewItems: viewModel.tops.map { .init(text: $0.title, selected: viewModel.top == $0) },
+                            onSelect: { index in
+                                viewModel.top = viewModel.tops[index]
+                            },
+                            isPresented: isPresented
+                        )
+                    }
                 }) {
                     Text(viewModel.top.title)
                 }
@@ -53,7 +67,16 @@ struct MarketCoinsView: View {
                 .disabled(disabled)
 
                 Button(action: {
-                    timePeriodSelectorPresented = true
+                    Coordinator.shared.present(type: .alert) { isPresented in
+                        OptionAlertView(
+                            title: "market.time_period.title".localized,
+                            viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
+                            onSelect: { index in
+                                viewModel.timePeriod = viewModel.timePeriods[index]
+                            },
+                            isPresented: isPresented
+                        )
+                    }
                 }) {
                     Text(viewModel.timePeriod.shortTitle)
                 }
@@ -63,42 +86,6 @@ struct MarketCoinsView: View {
             .padding(.horizontal, .margin16)
             .padding(.vertical, .margin8)
         }
-        .alert(
-            isPresented: $sortBySelectorPresented,
-            title: "market.sort_by.title".localized,
-            viewItems: viewModel.sortBys.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
-
-                viewModel.sortBy = viewModel.sortBys[index]
-            }
-        )
-        .alert(
-            isPresented: $topSelectorPresented,
-            title: "market.top_coins.title".localized,
-            viewItems: viewModel.tops.map { .init(text: $0.title, selected: viewModel.top == $0) },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
-
-                viewModel.top = viewModel.tops[index]
-            }
-        )
-        .alert(
-            isPresented: $timePeriodSelectorPresented,
-            title: "market.time_period.title".localized,
-            viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
-
-                viewModel.timePeriod = viewModel.timePeriods[index]
-            }
-        )
     }
 
     @ViewBuilder private func list(marketInfos: [MarketInfo]) -> some View {

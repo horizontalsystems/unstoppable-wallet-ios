@@ -5,8 +5,6 @@ struct RecipientRowsView: View {
     let title: String
     @StateObject var viewModel: RecipientRowsViewModel
 
-    @State private var chooseTypePresented: Bool = false
-
     init(title: String, value: String, blockchainType: BlockchainType) {
         self.title = title
         _viewModel = StateObject(wrappedValue: RecipientRowsViewModel(address: value, blockchainType: blockchainType))
@@ -40,7 +38,23 @@ struct RecipientRowsView: View {
                     if viewModel.emptyContacts {
                         presentAddContact(type: .create)
                     } else {
-                        chooseTypePresented = true
+                        Coordinator.shared.present(type: .alert) { isPresented in
+                            OptionAlertView(
+                                title: "contacts.add_address.title".localized,
+                                viewItems: [
+                                    .init(text: "contacts.add_address.create_new".localized),
+                                    .init(text: "contacts.add_address.add_to_contact".localized),
+                                ],
+                                onSelect: { index in
+                                    switch index {
+                                    case 0: presentAddContact(type: .create)
+                                    case 1: presentAddContact(type: .add)
+                                    default: ()
+                                    }
+                                },
+                                isPresented: isPresented
+                            )
+                        }
                     }
                 }) {
                     Image("user_plus_20").renderingMode(.template)
@@ -55,20 +69,6 @@ struct RecipientRowsView: View {
             }
             .buttonStyle(SecondaryCircleButtonStyle(style: .default))
         }
-        .alert(isPresented: $chooseTypePresented, title: "contacts.add_address.title".localized, viewItems: [
-            .init(text: "contacts.add_address.create_new".localized),
-            .init(text: "contacts.add_address.add_to_contact".localized),
-        ], onTap: { index in
-            guard let index else {
-                return
-            }
-
-            switch index {
-            case 0: presentAddContact(type: .create)
-            case 1: presentAddContact(type: .add)
-            default: ()
-            }
-        })
     }
 
     @ViewBuilder

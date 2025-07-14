@@ -9,8 +9,6 @@ struct MarketTvlView: View {
 
     @Environment(\.presentationMode) private var presentationMode
 
-    @State private var filterBySelectorPresented = false
-
     init() {
         _viewModel = StateObject(wrappedValue: MarketTvlViewModel())
         _chartViewModel = StateObject(wrappedValue: MetricChartViewModel.instance(type: .tvlInDefi))
@@ -96,7 +94,16 @@ struct MarketTvlView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 Button(action: {
-                    filterBySelectorPresented = true
+                    Coordinator.shared.present(type: .alert) { isPresented in
+                        OptionAlertView(
+                            title: "market.tvl_in_defi.filter_by_chain".localized,
+                            viewItems: MarketTvlViewModel.Platforms.allCases.map { .init(text: $0.title, selected: viewModel.platforms == $0) },
+                            onSelect: { index in
+                                viewModel.platforms = MarketTvlViewModel.Platforms.allCases[index]
+                            },
+                            isPresented: isPresented
+                        )
+                    }
                 }) {
                     Text(viewModel.platforms.title)
                 }
@@ -120,18 +127,6 @@ struct MarketTvlView: View {
             .padding(.horizontal, .margin16)
             .padding(.vertical, .margin8)
         }
-        .alert(
-            isPresented: $filterBySelectorPresented,
-            title: "market.tvl_in_defi.filter_by_chain".localized,
-            viewItems: MarketTvlViewModel.Platforms.allCases.map { .init(text: $0.title, selected: viewModel.platforms == $0) },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
-
-                viewModel.platforms = MarketTvlViewModel.Platforms.allCases[index]
-            }
-        )
     }
 
     @ViewBuilder private func list(defiCoins: [DefiCoin]) -> some View {

@@ -7,9 +7,6 @@ struct MarketEtfView: View {
     @StateObject var chartViewModel: MetricChartViewModel
     @Binding var isPresented: Bool
 
-    @State private var sortBySelectorPresented = false
-    @State private var timePeriodSelectorPresented = false
-
     init(isPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: MarketEtfViewModel())
         _chartViewModel = StateObject(wrappedValue: MetricChartViewModel.etfInstance)
@@ -93,7 +90,16 @@ struct MarketEtfView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 Button(action: {
-                    sortBySelectorPresented = true
+                    Coordinator.shared.present(type: .alert) { isPresented in
+                        OptionAlertView(
+                            title: "market.sort_by.title".localized,
+                            viewItems: MarketEtfViewModel.SortBy.allCases.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
+                            onSelect: { index in
+                                viewModel.sortBy = MarketEtfViewModel.SortBy.allCases[index]
+                            },
+                            isPresented: isPresented
+                        )
+                    }
                 }) {
                     Text(viewModel.sortBy.title)
                 }
@@ -101,7 +107,16 @@ struct MarketEtfView: View {
                 .disabled(disabled)
 
                 Button(action: {
-                    timePeriodSelectorPresented = true
+                    Coordinator.shared.present(type: .alert) { isPresented in
+                        OptionAlertView(
+                            title: "market.time_period.title".localized,
+                            viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
+                            onSelect: { index in
+                                viewModel.timePeriod = viewModel.timePeriods[index]
+                            },
+                            isPresented: isPresented
+                        )
+                    }
                 }) {
                     Text(viewModel.timePeriod.shortTitle)
                 }
@@ -111,30 +126,6 @@ struct MarketEtfView: View {
             .padding(.horizontal, .margin16)
             .padding(.vertical, .margin8)
         }
-        .alert(
-            isPresented: $sortBySelectorPresented,
-            title: "market.sort_by.title".localized,
-            viewItems: MarketEtfViewModel.SortBy.allCases.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
-
-                viewModel.sortBy = MarketEtfViewModel.SortBy.allCases[index]
-            }
-        )
-        .alert(
-            isPresented: $timePeriodSelectorPresented,
-            title: "market.time_period.title".localized,
-            viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
-
-                viewModel.timePeriod = viewModel.timePeriods[index]
-            }
-        )
     }
 
     @ViewBuilder private func list(rankedEtfs: [RankedEtf]) -> some View {

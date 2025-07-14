@@ -6,35 +6,27 @@ struct AppearanceView: View {
 
     @Environment(\.openURL) private var openURL
 
-    @State private var themeSelectorPresented = false
-    @State private var priceChangeSelectorPresented = false
-    @State private var launchScreenSelectorPresented = false
-    @State private var balanceValueSelectorPresented = false
-
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
                 ListSection {
                     ClickableRow(spacing: .margin8) {
-                        themeSelectorPresented = true
+                        Coordinator.shared.present(type: .alert) { isPresented in
+                            OptionAlertView(
+                                title: "appearance.theme".localized,
+                                viewItems: viewModel.themeModes.map { .init(text: title(themeMode: $0), selected: viewModel.themeMode == $0) },
+                                onSelect: { index in
+                                    viewModel.themeMode = viewModel.themeModes[index]
+                                },
+                                isPresented: isPresented
+                            )
+                        }
                     } content: {
                         Text("appearance.theme".localized).textBody()
                         Spacer()
                         Text(title(themeMode: viewModel.themeMode)).textSubhead1()
                         Image("arrow_small_down_20").themeIcon()
                     }
-                    .alert(
-                        isPresented: $themeSelectorPresented,
-                        title: "appearance.theme".localized,
-                        viewItems: viewModel.themeModes.map { .init(text: title(themeMode: $0), selected: viewModel.themeMode == $0) },
-                        onTap: { index in
-                            guard let index else {
-                                return
-                            }
-
-                            viewModel.themeMode = viewModel.themeModes[index]
-                        }
-                    )
                 }
 
                 ListSection {
@@ -77,50 +69,44 @@ struct AppearanceView: View {
                         }
 
                         ClickableRow(spacing: .margin8) {
-                            priceChangeSelectorPresented = true
+                            Coordinator.shared.present(type: .alert) { isPresented in
+                                OptionAlertView(
+                                    title: "appearance.price_change".localized,
+                                    viewItems: PriceChangeMode.allCases.map { .init(text: title(priceChangeMode: $0), selected: viewModel.priceChangeMode == $0) },
+                                    onSelect: { index in
+                                        viewModel.priceChangeMode = PriceChangeMode.allCases[index]
+                                    },
+                                    isPresented: isPresented
+                                )
+                            }
                         } content: {
                             Text("appearance.price_change".localized).textBody()
                             Spacer()
                             Text(title(priceChangeMode: viewModel.priceChangeMode)).textSubhead1()
                             Image("arrow_small_down_20").themeIcon()
                         }
-                        .alert(
-                            isPresented: $priceChangeSelectorPresented,
-                            title: "appearance.price_change".localized,
-                            viewItems: PriceChangeMode.allCases.map { .init(text: title(priceChangeMode: $0), selected: viewModel.priceChangeMode == $0) },
-                            onTap: { index in
-                                guard let index else {
-                                    return
-                                }
-
-                                viewModel.priceChangeMode = PriceChangeMode.allCases[index]
-                            }
-                        )
                     }
                 }
 
                 if !viewModel.hideMarkets {
                     ListSection {
                         ClickableRow(spacing: .margin8) {
-                            launchScreenSelectorPresented = true
+                            Coordinator.shared.present(type: .alert) { isPresented in
+                                OptionAlertView(
+                                    title: "appearance.launch_screen".localized,
+                                    viewItems: LaunchScreen.allCases.map { .init(text: $0.title, selected: viewModel.launchScreen == $0) },
+                                    onSelect: { index in
+                                        viewModel.launchScreen = LaunchScreen.allCases[index]
+                                    },
+                                    isPresented: isPresented
+                                )
+                            }
                         } content: {
                             Text("appearance.launch_screen".localized).textBody()
                             Spacer()
                             Text(viewModel.launchScreen.title).textSubhead1()
                             Image("arrow_small_down_20").themeIcon()
                         }
-                        .alert(
-                            isPresented: $launchScreenSelectorPresented,
-                            title: "appearance.launch_screen".localized,
-                            viewItems: LaunchScreen.allCases.map { .init(text: $0.title, selected: viewModel.launchScreen == $0) },
-                            onTap: { index in
-                                guard let index else {
-                                    return
-                                }
-
-                                viewModel.launchScreen = LaunchScreen.allCases[index]
-                            }
-                        )
                     }
                 }
 
@@ -136,25 +122,22 @@ struct AppearanceView: View {
                         }
 
                         ClickableRow(spacing: .margin8) {
-                            balanceValueSelectorPresented = true
+                            Coordinator.shared.present(type: .alert) { isPresented in
+                                OptionAlertView(
+                                    title: "appearance.balance_value".localized,
+                                    viewItems: BalancePrimaryValue.allCases.map { .init(text: title(balancePrimaryValue: $0), selected: viewModel.balancePrimaryValue == $0) },
+                                    onSelect: { index in
+                                        viewModel.balancePrimaryValue = BalancePrimaryValue.allCases[index]
+                                    },
+                                    isPresented: isPresented
+                                )
+                            }
                         } content: {
                             Text("appearance.balance_value".localized).textBody()
                             Spacer()
                             Text(title(balancePrimaryValue: viewModel.balancePrimaryValue)).textSubhead1()
                             Image("arrow_small_down_20").themeIcon()
                         }
-                        .alert(
-                            isPresented: $balanceValueSelectorPresented,
-                            title: "appearance.balance_value".localized,
-                            viewItems: BalancePrimaryValue.allCases.map { .init(text: title(balancePrimaryValue: $0), selected: viewModel.balancePrimaryValue == $0) },
-                            onTap: { index in
-                                guard let index else {
-                                    return
-                                }
-
-                                viewModel.balancePrimaryValue = BalancePrimaryValue.allCases[index]
-                            }
-                        )
                     }
 
                     ListSectionFooter(text: "appearance.balance_tab.footer".localized)

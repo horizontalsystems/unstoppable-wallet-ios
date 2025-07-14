@@ -2319,7 +2319,6 @@
 		ABC9A6C591067D34C6DF2673 /* SlideButtonStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3452B9B245C00EFE5B2 /* SlideButtonStyling.swift */; };
 		ABC9A6C99739F0AC308F0574 /* TransactionContactSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6359DA9DA078C8F92CB /* TransactionContactSelectViewModel.swift */; };
 		ABC9A6D1C4EF73D4A8D6F3BD /* CoinProChartModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A021D71EDD24DFB6BA62 /* CoinProChartModule.swift */; };
-		ABC9A6E738C4A3556AD5E767 /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB43B35D4DE04BDB5734 /* AlertView.swift */; };
 		ABC9A6E939BDC0269313A66D /* SendModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD1F2311CC6425CF9D90 /* SendModule.swift */; };
 		ABC9A6EFD77E59AA6B4C5070 /* RestorePassphraseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE5CAD06644F52170C72 /* RestorePassphraseService.swift */; };
 		ABC9A6F265D51BD94CB43209 /* WCWalletHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9BCCCE1CF80E10A174C /* WCWalletHandler.swift */; };
@@ -2550,7 +2549,6 @@
 		ABC9AE03528F37BF2C3B75DF /* IntegerAmountInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A88E126AB21F856522A7 /* IntegerAmountInputView.swift */; };
 		ABC9AE042D6A3D70CA64F959 /* ContactBookModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A5518367F0DDDB94D320 /* ContactBookModule.swift */; };
 		ABC9AE0D23A7B54521E77052 /* ECashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A4C563432A34A634B82A /* ECashAdapter.swift */; };
-		ABC9AE136053B13AFDA1883E /* AlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB43B35D4DE04BDB5734 /* AlertView.swift */; };
 		ABC9AE18DE62E4DDDD44916D /* SwapInputModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AAD55B8932EE75E3C037 /* SwapInputModule.swift */; };
 		ABC9AE1E60CABA0101D62738 /* FullCoin.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9B35C58F6525F3B2D5C /* FullCoin.swift */; };
 		ABC9AE2131780654A7139081 /* RestorePassphraseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A0547CBE2B5A3E38891E /* RestorePassphraseViewController.swift */; };
@@ -2960,6 +2958,8 @@
 		D34DB1A92E1BEC1800DD30D3 /* Coordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DB1A72E1BEC1800DD30D3 /* Coordinator.swift */; };
 		D34DB1AB2E24E59000DD30D3 /* CloudNotAvailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DB1AA2E24E58700DD30D3 /* CloudNotAvailableView.swift */; };
 		D34DB1AC2E24E59000DD30D3 /* CloudNotAvailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DB1AA2E24E58700DD30D3 /* CloudNotAvailableView.swift */; };
+		D34DB1AE2E25207F00DD30D3 /* OptionAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DB1AD2E25207800DD30D3 /* OptionAlertView.swift */; };
+		D34DB1AF2E25207F00DD30D3 /* OptionAlertView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D34DB1AD2E25207800DD30D3 /* OptionAlertView.swift */; };
 		D350DDB02AE2526E00CF1989 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D350DDAF2AE2526E00CF1989 /* Localizable.xcstrings */; };
 		D350DDB12AE2526E00CF1989 /* Localizable.xcstrings in Resources */ = {isa = PBXBuildFile; fileRef = D350DDAF2AE2526E00CF1989 /* Localizable.xcstrings */; };
 		D350DDB22AE27E3B00CF1989 /* AppWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D350DDB92AE27E3B00CF1989 /* AppWidget.intentdefinition */; };
@@ -4711,7 +4711,6 @@
 		ABC9AB2ED4E48D4FCEDBE769 /* ContactBookContactModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactBookContactModule.swift; sourceTree = "<group>"; };
 		ABC9AB3C230E3289C206ED9C /* WalletConnectChain.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectChain.swift; sourceTree = "<group>"; };
 		ABC9AB3EC7A1FB0D6C9F7F89 /* ChartIndicatorsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartIndicatorsModule.swift; sourceTree = "<group>"; };
-		ABC9AB43B35D4DE04BDB5734 /* AlertView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertView.swift; sourceTree = "<group>"; };
 		ABC9AB612DE3C8AA3A1EEAC7 /* SendEip1155AvailableBalanceViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEip1155AvailableBalanceViewModel.swift; sourceTree = "<group>"; };
 		ABC9AB61774389A4773BE18C /* RestoreFileHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreFileHelper.swift; sourceTree = "<group>"; };
 		ABC9AB61EA3B39D8BDB1EEDE /* AppBackupProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppBackupProvider.swift; sourceTree = "<group>"; };
@@ -4965,6 +4964,7 @@
 		D34DB1A12E1BEBEB00DD30D3 /* CoordinatorViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoordinatorViewModifier.swift; sourceTree = "<group>"; };
 		D34DB1A72E1BEC1800DD30D3 /* Coordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Coordinator.swift; sourceTree = "<group>"; };
 		D34DB1AA2E24E58700DD30D3 /* CloudNotAvailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudNotAvailableView.swift; sourceTree = "<group>"; };
+		D34DB1AD2E25207800DD30D3 /* OptionAlertView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionAlertView.swift; sourceTree = "<group>"; };
 		D34E941B21F86C3500AD8E90 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D34E941C21F86C3500AD8E90 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D350DDAF2AE2526E00CF1989 /* Localizable.xcstrings */ = {isa = PBXFileReference; lastKnownFileType = text.json.xcstrings; path = Localizable.xcstrings; sourceTree = "<group>"; };
@@ -8362,8 +8362,8 @@
 		ABC9A49FE1A041CAC3B6C1E9 /* Alert */ = {
 			isa = PBXGroup;
 			children = (
+				D34DB1AD2E25207800DD30D3 /* OptionAlertView.swift */,
 				ABC9A87A0C7AA22B19520502 /* AlertButtonTintColor.swift */,
-				ABC9AB43B35D4DE04BDB5734 /* AlertView.swift */,
 				ABC9AA428B57E9309477EC96 /* TransparentFullScreenCover.swift */,
 				6B8BD39D2C11B959003ADE10 /* TextFieldAlert.swift */,
 			);
@@ -11136,6 +11136,7 @@
 				11B3584DD056BEACA3760A78 /* ListSection.swift in Sources */,
 				11B35EEE72F3A78415A2A552 /* HorizontalDivider.swift in Sources */,
 				11B35AA627F0357B3FB5F9E8 /* ListRow.swift in Sources */,
+				D34DB1AE2E25207F00DD30D3 /* OptionAlertView.swift in Sources */,
 				11B35608F7D19B3E6318CB22 /* Text.swift in Sources */,
 				6B1D8E392DEADF7F00A52B01 /* PrimaryCircleButton.swift in Sources */,
 				6B1D8E3A2DEADF7F00A52B01 /* BaseSelectableThemeCell.swift in Sources */,
@@ -11528,7 +11529,6 @@
 				ABC9AC8F6F1BD574DB5BAA20 /* RecipientRowsView.swift in Sources */,
 				ABC9AEC906C313583DBECCCA /* RecipientRowsViewModel.swift in Sources */,
 				ABC9A835B49A7BF85F87454D /* AlertButtonTintColor.swift in Sources */,
-				ABC9A6E738C4A3556AD5E767 /* AlertView.swift in Sources */,
 				D3E1E8752C21859000E07052 /* PurchasesView.swift in Sources */,
 				6B5A13F22DF93DD3006E609C /* PerformanceDataSelectView.swift in Sources */,
 				ABC9A7908BE99782BFDC558E /* TransparentFullScreenCover.swift in Sources */,
@@ -12714,6 +12714,7 @@
 				11B356757D1E8F12B4FE981B /* TransactionsTableViewDataSource.swift in Sources */,
 				ABC9A2CA505DB49DE0FB28DD /* WalletTokenBalanceCustomAmountCell.swift in Sources */,
 				11B35A80AB419A754EF9955A /* ListSection.swift in Sources */,
+				D34DB1AF2E25207F00DD30D3 /* OptionAlertView.swift in Sources */,
 				11B35F91E53BA1F835DD4B4F /* HorizontalDivider.swift in Sources */,
 				6B1D8EB12DEADF7F00A52B01 /* PrimaryCircleButton.swift in Sources */,
 				6B1D8EB22DEADF7F00A52B01 /* BaseSelectableThemeCell.swift in Sources */,
@@ -13106,7 +13107,6 @@
 				ABC9A28FF8184EDA95751080 /* RecipientRowsView.swift in Sources */,
 				ABC9A6537ACEB9AF1CCF9D8C /* RecipientRowsViewModel.swift in Sources */,
 				ABC9A190E478402B48410FCC /* AlertButtonTintColor.swift in Sources */,
-				ABC9AE136053B13AFDA1883E /* AlertView.swift in Sources */,
 				D3E1E8742C21859000E07052 /* PurchasesView.swift in Sources */,
 				6B5A13F32DF93DD3006E609C /* PerformanceDataSelectView.swift in Sources */,
 				ABC9AF8603F37760F2D40A6E /* TransparentFullScreenCover.swift in Sources */,

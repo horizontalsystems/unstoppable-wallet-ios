@@ -48,7 +48,7 @@ private struct FullScreenCoverBackgroundRemovalView: UIViewRepresentable {
 }
 
 extension View {
-    func transparentFullScreenCover(isPresented: Binding<Bool>, content: @escaping () -> some View) -> some View {
+    func transparentFullScreenCover(isPresented: Binding<Bool>, @ViewBuilder content: @escaping () -> some View) -> some View {
         modifier(TransparentFullScreenModifier(isPresented: isPresented, fullScreenContent: content))
     }
 }

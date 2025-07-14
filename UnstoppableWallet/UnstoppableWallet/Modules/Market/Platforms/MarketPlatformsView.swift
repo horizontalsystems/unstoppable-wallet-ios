@@ -5,9 +5,6 @@ import SwiftUI
 struct MarketPlatformsView: View {
     @ObservedObject var viewModel: MarketPlatformsViewModel
 
-    @State private var sortBySelectorPresented = false
-    @State private var timePeriodSelectorPresented = false
-
     var body: some View {
         ThemeView {
             switch viewModel.state {
@@ -35,7 +32,16 @@ struct MarketPlatformsView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 Button(action: {
-                    sortBySelectorPresented = true
+                    Coordinator.shared.present(type: .alert) { isPresented in
+                        OptionAlertView(
+                            title: "market.sort_by.title".localized,
+                            viewItems: viewModel.sortBys.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
+                            onSelect: { index in
+                                viewModel.sortBy = viewModel.sortBys[index]
+                            },
+                            isPresented: isPresented
+                        )
+                    }
                 }) {
                     Text(viewModel.sortBy.title)
                 }
@@ -43,7 +49,16 @@ struct MarketPlatformsView: View {
                 .disabled(disabled)
 
                 Button(action: {
-                    timePeriodSelectorPresented = true
+                    Coordinator.shared.present(type: .alert) { isPresented in
+                        OptionAlertView(
+                            title: "market.time_period.title".localized,
+                            viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
+                            onSelect: { index in
+                                viewModel.timePeriod = viewModel.timePeriods[index]
+                            },
+                            isPresented: isPresented
+                        )
+                    }
                 }) {
                     Text(viewModel.timePeriod.shortTitle)
                 }
@@ -53,30 +68,6 @@ struct MarketPlatformsView: View {
             .padding(.horizontal, .margin16)
             .padding(.vertical, .margin8)
         }
-        .alert(
-            isPresented: $sortBySelectorPresented,
-            title: "market.sort_by.title".localized,
-            viewItems: viewModel.sortBys.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
-
-                viewModel.sortBy = viewModel.sortBys[index]
-            }
-        )
-        .alert(
-            isPresented: $timePeriodSelectorPresented,
-            title: "market.time_period.title".localized,
-            viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
-
-                viewModel.timePeriod = viewModel.timePeriods[index]
-            }
-        )
     }
 
     @ViewBuilder private func list(platforms: [TopPlatform]) -> some View {

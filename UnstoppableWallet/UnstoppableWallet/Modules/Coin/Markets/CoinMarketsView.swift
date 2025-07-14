@@ -5,8 +5,6 @@ import SwiftUI
 struct CoinMarketsView: View {
     @ObservedObject var viewModel: CoinMarketsViewModel
 
-    @State var marketTypePresented: Bool = false
-
     var body: some View {
         ThemeView {
             switch viewModel.state {
@@ -24,25 +22,22 @@ struct CoinMarketsView: View {
                 }
             }
         }
-        .alert(
-            isPresented: $marketTypePresented,
-            title: viewModel.marketTypeFilter.title,
-            viewItems: viewModel.marketTypeFilters.map { .init(text: $0.title, selected: viewModel.marketTypeFilter == $0) },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
-
-                viewModel.marketTypeFilter = viewModel.marketTypeFilters[index]
-            }
-        )
     }
 
     @ViewBuilder private func list(viewItems: [CoinMarketsViewModel.ViewItem]) -> some View {
         VStack(spacing: 0) {
             HStack {
                 Button(action: {
-                    marketTypePresented = true
+                    Coordinator.shared.present(type: .alert) { isPresented in
+                        OptionAlertView(
+                            title: viewModel.marketTypeFilter.title,
+                            viewItems: viewModel.marketTypeFilters.map { .init(text: $0.title, selected: viewModel.marketTypeFilter == $0) },
+                            onSelect: { index in
+                                viewModel.marketTypeFilter = viewModel.marketTypeFilters[index]
+                            },
+                            isPresented: isPresented
+                        )
+                    }
                 }) {
                     Text(viewModel.marketTypeFilter.title)
                 }

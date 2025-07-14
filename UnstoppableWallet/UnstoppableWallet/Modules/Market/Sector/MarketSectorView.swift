@@ -9,8 +9,6 @@ struct MarketSectorView: View {
     @Binding var isPresented: Bool
 
     @State private var infoPresented = false
-    @State private var sortBySelectorPresented = false
-    @State private var timePeriodSelectorPresented = false
 
     init(isPresented: Binding<Bool>, sector: CoinCategory) {
         _viewModel = StateObject(wrappedValue: MarketSectorViewModel(sector: sector))
@@ -92,7 +90,16 @@ struct MarketSectorView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 Button(action: {
-                    sortBySelectorPresented = true
+                    Coordinator.shared.present(type: .alert) { isPresented in
+                        OptionAlertView(
+                            title: "market.sort_by.title".localized,
+                            viewItems: viewModel.sortBys.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
+                            onSelect: { index in
+                                viewModel.sortBy = viewModel.sortBys[index]
+                            },
+                            isPresented: isPresented
+                        )
+                    }
                 }) {
                     Text(viewModel.sortBy.title)
                 }
@@ -100,7 +107,16 @@ struct MarketSectorView: View {
                 .disabled(disabled)
 
                 Button(action: {
-                    timePeriodSelectorPresented = true
+                    Coordinator.shared.present(type: .alert) { isPresented in
+                        OptionAlertView(
+                            title: "market.time_period.title".localized,
+                            viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
+                            onSelect: { index in
+                                viewModel.timePeriod = viewModel.timePeriods[index]
+                            },
+                            isPresented: isPresented
+                        )
+                    }
                 }) {
                     Text(viewModel.timePeriod.shortTitle)
                 }
@@ -110,30 +126,6 @@ struct MarketSectorView: View {
             .padding(.horizontal, .margin16)
             .padding(.vertical, .margin8)
         }
-        .alert(
-            isPresented: $sortBySelectorPresented,
-            title: "market.sort_by.title".localized,
-            viewItems: viewModel.sortBys.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
-
-                viewModel.sortBy = viewModel.sortBys[index]
-            }
-        )
-        .alert(
-            isPresented: $timePeriodSelectorPresented,
-            title: "market.time_period.title".localized,
-            viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
-
-                viewModel.timePeriod = viewModel.timePeriods[index]
-            }
-        )
     }
 
     @ViewBuilder private func list(marketInfos: [MarketInfo]) -> some View {

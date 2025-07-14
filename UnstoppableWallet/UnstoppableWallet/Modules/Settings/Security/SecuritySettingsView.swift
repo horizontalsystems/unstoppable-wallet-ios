@@ -3,8 +3,6 @@ import SwiftUI
 struct SecuritySettingsView: View {
     @ObservedObject var viewModel: SecuritySettingsViewModel
 
-    @State var biometryEnabledTypePresented = false
-
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin32) {
@@ -59,7 +57,18 @@ struct SecuritySettingsView: View {
                 if let biometryType = viewModel.biometryType {
                     ListSection {
                         ClickableRow(spacing: .margin8, action: {
-                            biometryEnabledTypePresented = true
+                            Coordinator.shared.present(type: .alert) { isPresented in
+                                OptionAlertView(
+                                    title: biometryType.title,
+                                    viewItems: BiometryManager.BiometryEnabledType.allCases.map {
+                                        .init(text: $0.title, description: $0.description, selected: $0 == viewModel.biometryEnabledType)
+                                    },
+                                    onSelect: { index in
+                                        viewModel.biometryEnabledType = BiometryManager.BiometryEnabledType.allCases[index]
+                                    },
+                                    isPresented: isPresented
+                                )
+                            }
                         }) {
                             HStack(spacing: .margin16) {
                                 Image(biometryType.iconName)
@@ -77,20 +86,6 @@ struct SecuritySettingsView: View {
                             }
                         }
                     }
-                    .alert(
-                        isPresented: $biometryEnabledTypePresented,
-                        title: biometryType.title,
-                        viewItems: BiometryManager.BiometryEnabledType.allCases.map {
-                            .init(text: $0.title, description: $0.description, selected: $0 == viewModel.biometryEnabledType)
-                        },
-                        onTap: { index in
-                            let all = BiometryManager.BiometryEnabledType.allCases
-                            guard let index, index < all.count else {
-                                return
-                            }
-                            viewModel.biometryEnabledType = all[index]
-                        }
-                    )
                 }
 
                 VStack(spacing: 0) {

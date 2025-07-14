@@ -5,9 +5,6 @@ import SwiftUI
 struct MarketWatchlistView: View {
     @ObservedObject var viewModel: MarketWatchlistViewModel
 
-    @State private var sortBySelectorPresented = false
-    @State private var timePeriodSelectorPresented = false
-
     @State private var editMode: EditMode = .inactive
 
     var body: some View {
@@ -41,7 +38,16 @@ struct MarketWatchlistView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 Button(action: {
-                    sortBySelectorPresented = true
+                    Coordinator.shared.present(type: .alert) { isPresented in
+                        OptionAlertView(
+                            title: "market.sort_by.title".localized,
+                            viewItems: WatchlistSortBy.allCases.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
+                            onSelect: { index in
+                                viewModel.sortBy = WatchlistSortBy.allCases[index]
+                            },
+                            isPresented: isPresented
+                        )
+                    }
                 }) {
                     Text(viewModel.sortBy.title)
                 }
@@ -63,7 +69,16 @@ struct MarketWatchlistView: View {
                 }
 
                 Button(action: {
-                    timePeriodSelectorPresented = true
+                    Coordinator.shared.present(type: .alert) { isPresented in
+                        OptionAlertView(
+                            title: "market.time_period.title".localized,
+                            viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
+                            onSelect: { index in
+                                viewModel.timePeriod = viewModel.timePeriods[index]
+                            },
+                            isPresented: isPresented
+                        )
+                    }
                 }) {
                     Text(viewModel.timePeriod.shortTitle)
                 }
@@ -88,30 +103,6 @@ struct MarketWatchlistView: View {
             .padding(.horizontal, .margin16)
             .padding(.vertical, .margin8)
         }
-        .alert(
-            isPresented: $sortBySelectorPresented,
-            title: "market.sort_by.title".localized,
-            viewItems: WatchlistSortBy.allCases.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
-
-                viewModel.sortBy = WatchlistSortBy.allCases[index]
-            }
-        )
-        .alert(
-            isPresented: $timePeriodSelectorPresented,
-            title: "market.time_period.title".localized,
-            viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
-
-                viewModel.timePeriod = viewModel.timePeriods[index]
-            }
-        )
     }
 
     @ViewBuilder private func signalsButton() -> some View {

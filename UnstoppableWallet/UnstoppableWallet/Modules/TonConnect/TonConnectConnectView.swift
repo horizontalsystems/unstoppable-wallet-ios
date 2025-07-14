@@ -5,8 +5,6 @@ struct TonConnectConnectView: View {
     @StateObject private var viewModel: TonConnectConnectViewModel
     @Environment(\.presentationMode) private var presentationMode
 
-    @State private var selectAccountPresented = false
-
     init(config: TonConnectConfig, returnDeepLink: String? = nil) {
         _viewModel = StateObject(wrappedValue: TonConnectConnectViewModel(config: config, returnDeepLink: returnDeepLink))
     }
@@ -36,7 +34,16 @@ struct TonConnectConnectView: View {
 
                                 if let account = viewModel.account {
                                     ClickableRow {
-                                        selectAccountPresented = true
+                                        Coordinator.shared.present(type: .alert) { isPresented in
+                                            OptionAlertView(
+                                                title: "ton_connect.connect.wallet".localized,
+                                                viewItems: viewModel.eligibleAccounts.map { .init(text: $0.name, selected: viewModel.account == $0) },
+                                                onSelect: { index in
+                                                    viewModel.account = viewModel.eligibleAccounts[index]
+                                                },
+                                                isPresented: isPresented
+                                            )
+                                        }
                                     } content: {
                                         Text("ton_connect.connect.wallet".localized).textSubhead2()
                                         Spacer()
@@ -45,18 +52,6 @@ struct TonConnectConnectView: View {
                                             Image("arrow_small_down_20").themeIcon()
                                         }
                                     }
-                                    .alert(
-                                        isPresented: $selectAccountPresented,
-                                        title: "ton_connect.connect.wallet".localized,
-                                        viewItems: viewModel.eligibleAccounts.map { .init(text: $0.name, selected: viewModel.account == $0) },
-                                        onTap: { index in
-                                            guard let index else {
-                                                return
-                                            }
-
-                                            viewModel.account = viewModel.eligibleAccounts[index]
-                                        }
-                                    )
                                 } else {
                                     ListRow {
                                         Text("ton_connect.connect.wallet".localized).textSubhead2()

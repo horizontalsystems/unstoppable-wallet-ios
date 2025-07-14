@@ -8,8 +8,6 @@ struct RankView: View {
 
     @Environment(\.presentationMode) private var presentationMode
 
-    @State private var timePeriodSelectorPresented = false
-
     init(type: RankViewModel.RankType) {
         _viewModel = StateObject(wrappedValue: RankViewModel(type: type))
         _watchlistViewModel = StateObject(wrappedValue: WatchlistViewModel(page: type.statRankType))
@@ -96,7 +94,16 @@ struct RankView: View {
 
                 if viewModel.timePeriods.count > 1 {
                     Button(action: {
-                        timePeriodSelectorPresented = true
+                        Coordinator.shared.present(type: .alert) { isPresented in
+                            OptionAlertView(
+                                title: "market.time_period.title".localized,
+                                viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
+                                onSelect: { index in
+                                    viewModel.timePeriod = viewModel.timePeriods[index]
+                                },
+                                isPresented: isPresented
+                            )
+                        }
                     }) {
                         Text(viewModel.timePeriod.shortTitle)
                     }
@@ -107,18 +114,6 @@ struct RankView: View {
             .padding(.horizontal, .margin16)
             .padding(.vertical, .margin8)
         }
-        .alert(
-            isPresented: $timePeriodSelectorPresented,
-            title: "market.time_period.title".localized,
-            viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
-            onTap: { index in
-                guard let index else {
-                    return
-                }
-
-                viewModel.timePeriod = viewModel.timePeriods[index]
-            }
-        )
     }
 
     @ViewBuilder private func list(items: [RankViewModel.Item]) -> some View {
