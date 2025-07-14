@@ -148,25 +148,4 @@ extension EventHandler {
             [config.id, returnDeepLink].compactMap { $0 }.joined()
         }
     }
-
-    struct WalletConnectProposalParams: Identifiable {
-        let proposal: WalletConnectSign.Session.Proposal
-        let account: Account
-
-        var id: String {
-            [proposal.id, account.id].joined()
-        }
-    }
-
-    enum WalletConnectParams: Identifiable {
-        case proposal(WalletConnectSign.Session.Proposal, Account)
-        case request(WalletConnectRequest)
-
-        var id: String {
-            switch self {
-            case let .proposal(proposal, account): [proposal.id, account.id].joined()
-            case let .request(request): request.id.description
-            }
-        }
-    }
 }
