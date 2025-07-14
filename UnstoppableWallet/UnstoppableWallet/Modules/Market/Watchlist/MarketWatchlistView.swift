@@ -7,7 +7,6 @@ struct MarketWatchlistView: View {
 
     @State private var sortBySelectorPresented = false
     @State private var timePeriodSelectorPresented = false
-    @State private var signalsPresented = false
 
     @State private var editMode: EditMode = .inactive
 
@@ -113,11 +112,6 @@ struct MarketWatchlistView: View {
                 viewModel.timePeriod = viewModel.timePeriods[index]
             }
         )
-        .sheet(isPresented: $signalsPresented) {
-            MarketWatchlistSignalsView(setShowSignals: { [weak viewModel] in
-                viewModel?.set(showSignals: $0)
-            }, isPresented: $signalsPresented)
-        }
     }
 
     @ViewBuilder private func signalsButton() -> some View {
@@ -131,7 +125,11 @@ struct MarketWatchlistView: View {
             if viewModel.showSignals {
                 viewModel.set(showSignals: false)
             } else {
-                signalsPresented = true
+                Coordinator.shared.present { isPresented in
+                    MarketWatchlistSignalsView(setShowSignals: { [weak viewModel] in
+                        viewModel?.set(showSignals: $0)
+                    }, isPresented: isPresented)
+                }
             }
         }) {
             Text("market.watchlist.signals".localized)

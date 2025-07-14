@@ -8,7 +8,6 @@ struct MarketAdvancedSearchResultsView: View {
     @Binding var isParentPresented: Bool
 
     @State private var sortBySelectorPresented = false
-    @State private var signalsPresented = false
 
     init(marketInfos: [MarketInfo], timePeriod: HsTimePeriod, isParentPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: MarketAdvancedSearchResultsViewModel(marketInfos: marketInfos, timePeriod: timePeriod))
@@ -63,11 +62,6 @@ struct MarketAdvancedSearchResultsView: View {
                 viewModel.sortBy = viewModel.sortBys[index]
             }
         )
-        .sheet(isPresented: $signalsPresented) {
-            MarketWatchlistSignalsView(setShowSignals: { [weak viewModel] in
-                viewModel?.set(showSignals: $0)
-            }, isPresented: $signalsPresented)
-        }
     }
 
     @ViewBuilder private func header() -> some View {
@@ -121,7 +115,11 @@ struct MarketAdvancedSearchResultsView: View {
             if viewModel.showSignals {
                 viewModel.set(showSignals: false)
             } else {
-                signalsPresented = true
+                Coordinator.shared.present { isPresented in
+                    MarketWatchlistSignalsView(setShowSignals: { [weak viewModel] in
+                        viewModel?.set(showSignals: $0)
+                    }, isPresented: isPresented)
+                }
             }
         }) {
             Text("market.watchlist.signals".localized)

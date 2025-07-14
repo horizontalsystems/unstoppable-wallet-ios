@@ -10,8 +10,6 @@ struct MarketSectorsView: View {
     @State private var sortBySelectorPresented = false
     @State private var timePeriodSelectorPresented = false
 
-    @State private var presentedSector: CoinCategory?
-
     var body: some View {
         ThemeView {
             switch viewModel.state {
@@ -32,15 +30,6 @@ struct MarketSectorsView: View {
                     }
                 }
             }
-        }
-        .sheet(item: $presentedSector) { sector in
-            let isPresented = Binding<Bool>(
-                get: { presentedSector != nil },
-                set: { newValue in if !newValue { presentedSector = nil }}
-            )
-
-            MarketSectorView(isPresented: isPresented, sector: sector).ignoresSafeArea()
-                .onFirstAppear { stat(page: .markets, section: .sectors, event: .openSector(sectorUid: sector.uid)) }
         }
     }
 
@@ -96,7 +85,11 @@ struct MarketSectorsView: View {
         ScrollViewReader { proxy in
             ThemeList(sectors) { sector in
                 ClickableRow(action: {
-                    presentedSector = sector.sector
+                    Coordinator.shared.present { isPresented in
+                        MarketSectorView(isPresented: isPresented, sector: sector.sector).ignoresSafeArea()
+                    }
+
+                    stat(page: .markets, section: .sectors, event: .openSector(sectorUid: sector.sector.uid))
                 }) {
                     itemContent(
                         coins: sector.topCoins,

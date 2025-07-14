@@ -4,10 +4,6 @@ import SwiftUI
 struct TonConnectListView: View {
     @StateObject private var viewModel = TonConnectListViewModel()
 
-    @State private var qrScanPresented = false
-    @State private var connectConfig: TonConnectConfig?
-    @State private var tonConnectApp: TonConnectApp?
-
     var body: some View {
         ThemeView {
             BottomGradientWrapper {
@@ -22,7 +18,22 @@ struct TonConnectListView: View {
                                     ListSection {
                                         ForEach(item.apps) { app in
                                             ClickableRow(action: {
-                                                tonConnectApp = app
+                                                Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                                                    BottomSheetView(
+                                                        icon: .trash,
+                                                        title: "ton_connect.list.disconnect_app".localized,
+                                                        items: [
+                                                            .text(text: "ton_connect.list.disconnect_app.description".localized(app.manifest.name)),
+                                                        ],
+                                                        buttons: [
+                                                            .init(style: .red, title: "ton_connect.list.disconnect_app.disconnect".localized) {
+                                                                viewModel.disconnect(app: app)
+//                                                                tonConnectApp = nil
+                                                            },
+                                                        ],
+                                                        isPresented: isPresented
+                                                    )
+                                                }
                                             }) {
                                                 KFImage.url(app.manifest.iconUrl)
                                                     .resizable()
@@ -47,7 +58,12 @@ struct TonConnectListView: View {
                 }
             } bottomContent: {
                 Button(action: {
-                    qrScanPresented = true
+                    Coordinator.shared.present { _ in
+                        ScanQrViewNew(reportAfterDismiss: true, pasteEnabled: true) { deeplink in
+                            viewModel.handle(deeplink: deeplink)
+                        }
+                        .ignoresSafeArea()
+                    }
                 }) {
                     Text("ton_connect.list.new_connection".localized)
                 }
@@ -55,32 +71,9 @@ struct TonConnectListView: View {
             }
         }
         .onReceive(viewModel.openCreateConnectionPublisher) { config in
-            connectConfig = config
-        }
-        .sheet(item: $connectConfig) { config in
-            TonConnectConnectView(config: config)
-        }
-        .sheet(isPresented: $qrScanPresented) {
-            ScanQrViewNew(reportAfterDismiss: true, pasteEnabled: true) { deeplink in
-                viewModel.handle(deeplink: deeplink)
+            Coordinator.shared.present { _ in
+                TonConnectConnectView(config: config)
             }
-            .ignoresSafeArea()
-        }
-        .bottomSheet(item: $tonConnectApp) { app in
-            BottomSheetView(
-                icon: .trash,
-                title: "ton_connect.list.disconnect_app".localized,
-                items: [
-                    .text(text: "ton_connect.list.disconnect_app.description".localized(app.manifest.name)),
-                ],
-                buttons: [
-                    .init(style: .red, title: "ton_connect.list.disconnect_app.disconnect".localized) {
-                        viewModel.disconnect(app: app)
-                        tonConnectApp = nil
-                    },
-                ],
-                isPresented: Binding(get: { tonConnectApp != nil }, set: { if !$0 { tonConnectApp = nil } })
-            )
         }
         .navigationTitle("TON Connect")
         .navigationBarTitleDisplayMode(.inline)
