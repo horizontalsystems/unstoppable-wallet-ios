@@ -7,8 +7,6 @@ struct MarketAdvancedSearchView: View {
 
     @State var topPresented = false
     @State var volumePresented = false
-    @State var categoriesPresented = false
-    @State var blockchainsPresented = false
     @State var signalsPresented = false
     @State var priceCloseToPresented = false
     @State var priceChangePresented = false
@@ -205,7 +203,9 @@ struct MarketAdvancedSearchView: View {
     @ViewBuilder private func categoriesRow() -> some View {
         ClickableRow(spacing: .margin8) {
             if viewModel.advancedSearchEnabled {
-                categoriesPresented = true
+                Coordinator.shared.present { isPresented in
+                    MarketAdvancedSearchCategoriesView(viewModel: viewModel, isPresented: isPresented)
+                }
             } else {
                 Coordinator.shared.presentPurchases()
                 stat(page: .advancedSearch, event: .openPremium(from: .sectors))
@@ -215,9 +215,6 @@ struct MarketAdvancedSearchView: View {
             Spacer()
             Text(viewModel.categories.title).textSubhead1(color: color(categoriesFilter: viewModel.categories))
             Image("arrow_small_down_20").themeIcon()
-        }
-        .sheet(isPresented: $categoriesPresented) {
-            MarketAdvancedSearchCategoriesView(viewModel: viewModel, isPresented: $categoriesPresented)
         }
     }
 
@@ -279,7 +276,9 @@ struct MarketAdvancedSearchView: View {
 
     @ViewBuilder private func blockchainsRow() -> some View {
         ClickableRow(spacing: .margin8) {
-            blockchainsPresented = true
+            Coordinator.shared.present { isPresented in
+                MarketAdvancedSearchBlockchainsView(viewModel: viewModel, isPresented: isPresented)
+            }
         } content: {
             Text("market.advanced_search.blockchains".localized).textBody()
             Spacer()
@@ -293,9 +292,6 @@ struct MarketAdvancedSearchView: View {
             }
 
             Image("arrow_small_down_20").themeIcon()
-        }
-        .sheet(isPresented: $blockchainsPresented) {
-            MarketAdvancedSearchBlockchainsView(viewModel: viewModel, isPresented: $blockchainsPresented)
         }
     }
 

@@ -8,8 +8,6 @@ struct MarketPlatformsView: View {
     @State private var sortBySelectorPresented = false
     @State private var timePeriodSelectorPresented = false
 
-    @State private var presentedPlatform: TopPlatform?
-
     var body: some View {
         ThemeView {
             switch viewModel.state {
@@ -30,15 +28,6 @@ struct MarketPlatformsView: View {
                     }
                 }
             }
-        }
-        .sheet(item: $presentedPlatform) { platform in
-            let isPresented = Binding<Bool>(
-                get: { presentedPlatform != nil },
-                set: { newValue in if !newValue { presentedPlatform = nil }}
-            )
-
-            MarketPlatformViewNew(isPresented: isPresented, platform: platform).ignoresSafeArea()
-                .onFirstAppear { stat(page: .markets, section: .platforms, event: .openPlatform(chainUid: platform.blockchain.uid)) }
         }
     }
 
@@ -94,7 +83,12 @@ struct MarketPlatformsView: View {
         ScrollViewReader { proxy in
             ThemeList(platforms) { platform in
                 ClickableRow(action: {
-                    presentedPlatform = platform
+                    Coordinator.shared.present { isPresented in
+                        MarketPlatformViewNew(isPresented: isPresented, platform: platform)
+                            .ignoresSafeArea()
+                    }
+
+                    stat(page: .markets, section: .platforms, event: .openPlatform(chainUid: platform.blockchain.uid))
                 }) {
                     let blockchain = platform.blockchain
 
