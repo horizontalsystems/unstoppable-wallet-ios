@@ -3,11 +3,11 @@ import SwiftUI
 
 struct TransactionBlockchainSelectView: View {
     @ObservedObject var viewModel: TransactionBlockchainSelectViewModel
+    @Binding var isPresented: Bool
 
-    @Environment(\.presentationMode) private var presentationMode
-
-    init(transactionFilterViewModel: TransactionFilterViewModel) {
+    init(transactionFilterViewModel: TransactionFilterViewModel, isPresented: Binding<Bool>) {
         _viewModel = ObservedObject(wrappedValue: TransactionBlockchainSelectViewModel(transactionFilterViewModel: transactionFilterViewModel))
+        _isPresented = isPresented
     }
 
     var body: some View {
@@ -15,7 +15,7 @@ struct TransactionBlockchainSelectView: View {
             ListSection {
                 ClickableRow(action: {
                     viewModel.set(currentBlockchain: nil)
-                    presentationMode.wrappedValue.dismiss()
+                    isPresented = false
                 }) {
                     Image("blocks_24").themeIcon()
                     Text("transaction_filter.all_blockchains").themeBody()
@@ -28,7 +28,7 @@ struct TransactionBlockchainSelectView: View {
                 ForEach(viewModel.blockchains, id: \.uid) { blockchain in
                     ClickableRow(action: {
                         viewModel.set(currentBlockchain: blockchain)
-                        presentationMode.wrappedValue.dismiss()
+                        isPresented = false
                     }) {
                         KFImage.url(URL(string: blockchain.type.imageUrl))
                             .resizable()
@@ -49,7 +49,7 @@ struct TransactionBlockchainSelectView: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             Button("button.cancel".localized) {
-                presentationMode.wrappedValue.dismiss()
+                isPresented = false
             }
         }
     }

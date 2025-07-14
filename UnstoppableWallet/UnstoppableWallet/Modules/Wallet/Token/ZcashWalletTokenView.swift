@@ -7,7 +7,6 @@ struct ZcashWalletTokenView: View {
 
     @State var info: InfoDescription?
     @State var transparentPresented = false
-    @State var shieldPresented = false
 
     init(wallet: Wallet, adapter: ZcashAdapter) {
         _viewModel = StateObject(wrappedValue: ZcashWalletTokenViewModel(adapter: adapter))
@@ -55,7 +54,12 @@ struct ZcashWalletTokenView: View {
                 buttons: [
                     .init(style: .yellow, title: "balance.token.shield".localized) {
                         transparentPresented = false
-                        shieldPresented = true
+
+                        Coordinator.shared.present { _ in
+                            ThemeNavigationStack {
+                                ShieldSendView(amount: viewModel.zcashBalanceData.transparent, address: nil)
+                            }
+                        }
                     },
                     .init(style: .transparent, title: "button.close".localized) {
                         transparentPresented = false
@@ -63,11 +67,6 @@ struct ZcashWalletTokenView: View {
                 ],
                 isPresented: $transparentPresented
             )
-        }
-        .sheet(isPresented: $shieldPresented) {
-            ThemeNavigationStack {
-                ShieldSendView(amount: viewModel.zcashBalanceData.transparent, address: nil)
-            }
         }
     }
 

@@ -61,8 +61,8 @@ extension Coordinator {
 
 extension Coordinator {
     func presentPurchases() {
-        present { _ in
-            PurchasesView()
+        present { isPresented in
+            PurchasesView(isPresented: isPresented)
         }
     }
 
@@ -100,6 +100,39 @@ extension Coordinator {
 
         present(type: .bottomSheet) { isPresented in
             BalanceErrorBottomView(wallet: wallet, error: error, isPresented: isPresented)
+        }
+    }
+
+    func presentAfterUnlock(@ViewBuilder content: @escaping (Binding<Bool>) -> some View, onDismiss: (() -> Void)? = nil, onPresent: (() -> Void)? = nil) {
+        performAfterUnlock {
+            Coordinator.shared.present(content: content, onDismiss: onDismiss)
+            onPresent?()
+        }
+    }
+
+    func performAfterUnlock(onUnlock: @escaping () -> Void) {
+        if Core.shared.passcodeManager.isPasscodeSet {
+            Coordinator.shared.present { _ in
+                ThemeNavigationStack {
+                    ModuleUnlockView {
+                        DispatchQueue.main.async {
+                            onUnlock()
+                        }
+                    }
+                }
+            }
+        } else {
+            onUnlock()
+        }
+    }
+
+    func present(url: URL?) {
+        guard let url else {
+            return
+        }
+
+        present { _ in
+            SFSafariView(url: url).ignoresSafeArea()
         }
     }
 }

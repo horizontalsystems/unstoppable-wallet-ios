@@ -11,8 +11,6 @@ struct ReceiveAddressView: View {
 
     @State private var inputAmountPresented: Bool = false
 
-    @State private var stellarActivatePresented: Bool = false
-
     @Environment(\.presentationMode) private var presentationMode
 
     init(wallet: Wallet, onDismiss: (() -> Void)? = nil) {
@@ -77,16 +75,6 @@ struct ReceiveAddressView: View {
                 PlaceholderViewNew(image: Image("sync_error_48"), text: "sync_error".localized)
             }
         }
-        .sheet(isPresented: $stellarActivatePresented) {
-            if let sendData = viewModel.stellarSendData {
-                ThemeNavigationStack {
-                    RegularSendView(sendData: sendData) {
-                        HudHelper.instance.show(banner: .sent)
-                        stellarActivatePresented = false
-                    }
-                }
-            }
-        }
         .textFieldAlert(
             isPresented: $inputAmountPresented,
             amountChanged: viewModel.onAmountChanged(_:),
@@ -139,7 +127,17 @@ struct ReceiveAddressView: View {
             return [
                 .init(style: .yellow, title: "deposit.activate".localized) {
                     viewModel.popup = nil
-                    stellarActivatePresented = true
+
+                    Coordinator.shared.present { isPresented in
+                        if let sendData = viewModel.stellarSendData {
+                            ThemeNavigationStack {
+                                RegularSendView(sendData: sendData) {
+                                    HudHelper.instance.show(banner: .sent)
+                                    isPresented.wrappedValue = false
+                                }
+                            }
+                        }
+                    }
                 },
                 .init(style: .transparent, title: "button.later".localized) { viewModel.popup = nil },
             ]

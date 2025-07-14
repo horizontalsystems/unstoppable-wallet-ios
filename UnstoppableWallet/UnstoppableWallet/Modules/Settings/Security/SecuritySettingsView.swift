@@ -2,14 +2,8 @@ import SwiftUI
 
 struct SecuritySettingsView: View {
     @ObservedObject var viewModel: SecuritySettingsViewModel
-    @StateObject var unlockViewModifierModel = UnlockViewModifierModel()
-
-    @State var createPasscodeReason: CreatePasscodeModule.CreatePasscodeReason?
 
     @State var biometryEnabledTypePresented = false
-    @State var editPasscodePresented = false
-    @State var createDuressPasscodePresented = false
-    @State var editDuressPasscodePresented = false
 
     var body: some View {
         ScrollableThemeView {
@@ -17,8 +11,8 @@ struct SecuritySettingsView: View {
                 ListSection {
                     if viewModel.isPasscodeSet {
                         ClickableRow(action: {
-                            unlockViewModifierModel.handle {
-                                editPasscodePresented = true
+                            Coordinator.shared.presentAfterUnlock { isPresented in
+                                ThemeNavigationStack { EditPasscodeModule.editPasscodeView(showParentSheet: isPresented) }
                             }
                         }) {
                             Image("dialpad_alt_2_24").themeIcon(color: .themeJacob)
@@ -26,7 +20,7 @@ struct SecuritySettingsView: View {
                         }
 
                         ClickableRow(action: {
-                            unlockViewModifierModel.handle {
+                            Coordinator.shared.performAfterUnlock {
                                 viewModel.removePasscode()
                             }
                         }) {
@@ -35,7 +29,7 @@ struct SecuritySettingsView: View {
                         }
                     } else {
                         ClickableRow(action: {
-                            createPasscodeReason = .regular
+                            presentCreatePasscode(reason: .regular)
                         }) {
                             Image("dialpad_alt_2_24").themeIcon(color: .themeJacob)
                             Text("settings_security.enable_passcode".localized).themeBody(color: .themeJacob)
@@ -79,7 +73,7 @@ struct SecuritySettingsView: View {
                         }
                         .onChange(of: viewModel.biometryEnabledType) { type in
                             if !viewModel.isPasscodeSet, type.isEnabled {
-                                createPasscodeReason = .biometry(enabledType: type, type: biometryType)
+                                presentCreatePasscode(reason: .biometry(enabledType: type, type: biometryType))
                             }
                         }
                     }
@@ -124,17 +118,16 @@ struct SecuritySettingsView: View {
                                     stat(page: .security, event: .openPremium(from: .duressMode))
                                     return
                                 }
-                                unlockViewModifierModel.handle {
-                                    editDuressPasscodePresented = true
+                                Coordinator.shared.presentAfterUnlock { isPresented in
+                                    ThemeNavigationStack { EditPasscodeModule.editDuressPasscodeView(showParentSheet: isPresented) }
                                 }
-
                             }) {
                                 Image("switch_wallet_24").themeIcon(color: .themeJacob)
                                 Text("settings_security.edit_duress_passcode".localized).themeBody()
                             }
 
                             ClickableRow(action: {
-                                unlockViewModifierModel.handle {
+                                Coordinator.shared.performAfterUnlock {
                                     viewModel.removeDuressPasscode()
                                 }
                             }) {
@@ -150,11 +143,11 @@ struct SecuritySettingsView: View {
                                 }
 
                                 if viewModel.isPasscodeSet {
-                                    unlockViewModifierModel.handle {
-                                        createDuressPasscodePresented = true
+                                    Coordinator.shared.performAfterUnlock {
+                                        presentCreateDuressPasscode()
                                     }
                                 } else {
-                                    createPasscodeReason = .duress
+                                    presentCreatePasscode(reason: .duress)
                                 }
                             }) {
                                 Image("switch_wallet_24").themeIcon(color: .themeJacob)
@@ -167,45 +160,42 @@ struct SecuritySettingsView: View {
                     ListSectionFooter(text: "settings_security.duress_mode.description".localized)
                 }
             }
-            .sheet(item: $createPasscodeReason) { reason in
-                ThemeNavigationStack {
-                    CreatePasscodeModule.createPasscodeView(
-                        reason: reason,
-                        showParentSheet: Binding(get: { createPasscodeReason != nil }, set: { if !$0 { createPasscodeReason = nil } }),
-                        onCreate: {
-                            switch reason {
-                            case let .biometry(enabledType, _):
-                                viewModel.set(biometryEnabledType: enabledType)
-                            case .duress:
-                                DispatchQueue.main.async {
-                                    createDuressPasscodePresented = true
-                                }
-                            default: ()
-                            }
-                        },
-                        onCancel: {
-                            switch reason {
-                            case .biometry: viewModel.biometryEnabledType = .off
-                            default: ()
-                            }
-                        }
-                    )
-                }
-                .interactiveDismiss(canDismissSheet: false)
-            }
-            .sheet(isPresented: $editPasscodePresented) {
-                ThemeNavigationStack { EditPasscodeModule.editPasscodeView(showParentSheet: $editPasscodePresented) }
-            }
-            .sheet(isPresented: $createDuressPasscodePresented) {
-                ThemeNavigationStack { DuressModeModule.view(showParentSheet: $createDuressPasscodePresented) }
-            }
-            .sheet(isPresented: $editDuressPasscodePresented) {
-                ThemeNavigationStack { EditPasscodeModule.editDuressPasscodeView(showParentSheet: $editDuressPasscodePresented) }
-            }
-            .modifier(UnlockViewModifier(viewModel: unlockViewModifierModel))
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
         .navigationTitle("settings_security.title".localized)
+    }
+
+    private func presentCreatePasscode(reason: CreatePasscodeModule.CreatePasscodeReason) {
+        Coordinator.shared.present { isPresented in
+            ThemeNavigationStack {
+                CreatePasscodeModule.createPasscodeView(
+                    reason: reason,
+                    showParentSheet: isPresented,
+                    onCreate: {
+                        switch reason {
+                        case let .biometry(enabledType, _):
+                            viewModel.set(biometryEnabledType: enabledType)
+                        case .duress:
+                            presentCreateDuressPasscode()
+                        default: ()
+                        }
+                    },
+                    onCancel: {
+                        switch reason {
+                        case .biometry: viewModel.biometryEnabledType = .off
+                        default: ()
+                        }
+                    }
+                )
+            }
+            .interactiveDismiss(canDismissSheet: false)
+        }
+    }
+
+    private func presentCreateDuressPasscode() {
+        Coordinator.shared.present { isPresented in
+            ThemeNavigationStack { DuressModeModule.view(showParentSheet: isPresented) }
+        }
     }
 
     private struct AutoLockView: View {

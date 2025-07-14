@@ -1,15 +1,7 @@
 import SwiftUI
 
 struct SuccessfulSubscriptionView: View {
-    @StateObject private var viewModel: PurchasesViewModel
-
-    let onDismissPurchases: () -> Void
-
-    init(onDismissPurchases: @escaping () -> Void) {
-        self.onDismissPurchases = onDismissPurchases
-
-        _viewModel = StateObject(wrappedValue: PurchasesViewModel())
-    }
+    @Binding var purchasesPresented: Bool
 
     var body: some View {
         ThemeNavigationStack {
@@ -30,7 +22,7 @@ struct SuccessfulSubscriptionView: View {
 
                         VStack(spacing: .margin8) {
                             Button(action: {
-                                onDismissPurchases()
+                                purchasesPresented = false
                             }) {
                                 Text("purchases.successful_subscription.button.go_app".localized)
                             }
@@ -44,7 +36,7 @@ struct SuccessfulSubscriptionView: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button("button.close".localized) {
-                            onDismissPurchases()
+                            purchasesPresented = false
                         }
                     }
                 }

@@ -2,18 +2,13 @@ import StoreKit
 import SwiftUI
 
 struct PurchasesView: View {
-    @StateObject private var viewModel: PurchasesViewModel
+    @StateObject private var viewModel = PurchasesViewModel()
+    @Binding var isPresented: Bool
 
-    @Environment(\.dismiss) private var dismiss
     @State private var bottomHeight: CGFloat = 0
 
     @State private var presentedInfoViewItem: PurchasesViewModel.ViewItem?
     @State private var subscriptionPresented = false
-    @State private var successfulSubscriptionPresented = false
-
-    init() {
-        _viewModel = StateObject(wrappedValue: PurchasesViewModel())
-    }
 
     var body: some View {
         ThemeNavigationStack {
@@ -79,7 +74,7 @@ struct PurchasesView: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button("button.close".localized) {
-                            dismiss()
+                            isPresented = false
                         }
                     }
                 }
@@ -107,19 +102,16 @@ struct PurchasesView: View {
                 set: {
                     subscriptionPresented = $0
                     if !$0, viewModel.subscribedSuccessful {
+                        Coordinator.shared.present { _ in
+                            SuccessfulSubscriptionView(purchasesPresented: $isPresented)
+                        }
                         stat(page: .purchaseSelector, event: .subscribe)
-                        successfulSubscriptionPresented = true
                     }
                 }
             )
         ) {
             PurchaseBottomSheetView(isPresented: $subscriptionPresented) { product in
                 onSuccessfulSubscription(product: product)
-            }
-        }
-        .sheet(isPresented: $successfulSubscriptionPresented) {
-            SuccessfulSubscriptionView {
-                dismiss()
             }
         }
     }
