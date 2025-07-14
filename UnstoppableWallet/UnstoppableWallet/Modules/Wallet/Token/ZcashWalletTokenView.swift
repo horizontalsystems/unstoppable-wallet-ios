@@ -5,7 +5,6 @@ struct ZcashWalletTokenView: View {
 
     private let wallet: Wallet
 
-    @State var info: InfoDescription?
     @State var transparentPresented = false
 
     init(wallet: Wallet, adapter: ZcashAdapter) {
@@ -26,7 +25,10 @@ struct ZcashWalletTokenView: View {
                                 title: "balance.token.processing".localized,
                                 amount: processing
                             ) {
-                                info = .init(title: "balance.token.processing.info.title".localized, description: "balance.token.processing.info.description".localized)
+                                Coordinator.shared.present(info: .init(
+                                    title: "balance.token.processing.info.title".localized,
+                                    description: "balance.token.processing.info.description".localized
+                                ))
                             }
                         }
 
@@ -43,7 +45,6 @@ struct ZcashWalletTokenView: View {
                 .themeListStyle(.bordered)
             }
         }
-        .modifier(InfoBottomSheet(info: $info))
         .bottomSheet(isPresented: $transparentPresented) {
             BottomSheetView(
                 icon: .info,

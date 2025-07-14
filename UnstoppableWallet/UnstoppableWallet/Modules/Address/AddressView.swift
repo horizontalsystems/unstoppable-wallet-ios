@@ -8,7 +8,6 @@ struct AddressView: View {
     private let onFinish: (ResolvedAddress) -> Void
 
     @Environment(\.presentationMode) private var presentationMode
-    @State var checkDescription: InfoDescription?
 
     var borderColor: Color {
         switch viewModel.addressResult {
@@ -108,7 +107,6 @@ struct AddressView: View {
             .disabled(disabled)
             .buttonStyle(PrimaryButtonStyle(style: .yellow))
         }
-        .modifier(InfoBottomSheet(info: $checkDescription))
     }
 
     @ViewBuilder private func row(contact: AddressViewModel.Contact) -> some View {
@@ -160,7 +158,8 @@ struct AddressView: View {
             case .locked:
                 Coordinator.shared.presentPurchases()
                 stat(page: viewModel.destination.sourceStatPage, event: .openPremium(from: .addressChecker))
-            default: self.checkDescription = checkDescription
+            default:
+                Coordinator.shared.present(info: checkDescription)
             }
         }
     }

@@ -6,8 +6,6 @@ struct StellarWalletTokenView: View {
 
     private let wallet: Wallet
 
-    @State var info: InfoDescription?
-
     init(wallet: Wallet, stellarKit: StellarKit.Kit, asset: Asset) {
         _viewModel = StateObject(wrappedValue: StellarWalletTokenViewModel(stellarKit: stellarKit, asset: asset))
         self.wallet = wallet
@@ -24,7 +22,7 @@ struct StellarWalletTokenView: View {
                             description += "\n • 0.5 XLM - \(asset)"
                         }
 
-                        info = .init(title: "balance.token.locked.stellar.title".localized, description: description)
+                        Coordinator.shared.present(info: .init(title: "balance.token.locked.stellar.title".localized, description: description))
                     }) {
                         HStack(spacing: .margin4) {
                             Text("balance.token.locked".localized).textCaptionSB()
@@ -37,7 +35,6 @@ struct StellarWalletTokenView: View {
                     }
                 }
                 .themeListStyle(.bordered)
-                .modifier(InfoBottomSheet(info: $info))
             }
         }
     }
