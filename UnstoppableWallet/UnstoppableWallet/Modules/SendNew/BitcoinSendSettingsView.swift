@@ -7,7 +7,6 @@ struct BitcoinSendSettingsView: View {
     var onChangeSettings: () -> Void
 
     @State private var chooseUtxos: Bool = false
-    @State private var chooseSortModePresented: Bool = false
     @State private var chooseLockPeriodPresented: Bool = false
 
     @Environment(\.presentationMode) private var presentationMode
@@ -67,7 +66,9 @@ struct BitcoinSendSettingsView: View {
                                 Spacer()
 
                                 Button(action: {
-                                    chooseSortModePresented = true
+                                    Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                                        sortModeView(isPresented: isPresented)
+                                    }
                                 }) {
                                     Text(viewModel.sortMode.title)
                                 }
@@ -139,49 +140,6 @@ struct BitcoinSendSettingsView: View {
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-        .bottomSheet(isPresented: $chooseSortModePresented) {
-            VStack(spacing: 0) {
-                HStack(spacing: .margin8) {
-                    Image("arrow_medium_2_up_right_24").themeIcon(color: .gray)
-
-                    Text("fee_settings.transaction_settings".localized).themeHeadline2()
-
-                    Button(action: {
-                        chooseSortModePresented = false
-                    }) {
-                        Image("close_3_24")
-                    }
-                }
-                .padding(EdgeInsets(top: .margin24, leading: .margin32, bottom: .margin12, trailing: .margin32))
-
-                VStack(spacing: 0) {
-                    ListSection {
-                        ForEach(TransactionDataSortMode.allCases) { sortMode in
-                            ClickableRow(action: {
-                                if viewModel.sortMode != sortMode {
-                                    viewModel.sortMode = sortMode
-                                }
-
-                                chooseSortModePresented = false
-                            }) {
-                                VStack(alignment: .leading, spacing: 1) {
-                                    Text(sortMode.title).textBody()
-                                    Text(sortMode.description).textSubhead2()
-                                }
-
-                                Spacer()
-
-                                if viewModel.sortMode == sortMode {
-                                    Image.checkIcon
-                                }
-                            }
-                        }
-                    }
-                    .overlay(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).stroke(Color.themeBlade, lineWidth: .heightOneDp))
-                }
-                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin24, trailing: .margin16))
-            }
-        }
         .navigationTitle("fee_settings".localized)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
@@ -199,6 +157,43 @@ struct BitcoinSendSettingsView: View {
                     presentationMode.wrappedValue.dismiss()
                 }
             }
+        }
+    }
+
+    @ViewBuilder private func sortModeView(isPresented: Binding<Bool>) -> some View {
+        VStack(spacing: 0) {
+            BottomSheetView.TitleView(
+                icon: .local(name: "arrow_medium_2_up_right_24", tint: .gray),
+                title: "fee_settings.transaction_settings".localized,
+                isPresented: isPresented
+            )
+
+            VStack(spacing: 0) {
+                ListSection {
+                    ForEach(TransactionDataSortMode.allCases) { sortMode in
+                        ClickableRow(action: {
+                            if viewModel.sortMode != sortMode {
+                                viewModel.sortMode = sortMode
+                            }
+
+                            isPresented.wrappedValue = false
+                        }) {
+                            VStack(alignment: .leading, spacing: 1) {
+                                Text(sortMode.title).textBody()
+                                Text(sortMode.description).textSubhead2()
+                            }
+
+                            Spacer()
+
+                            if viewModel.sortMode == sortMode {
+                                Image.checkIcon
+                            }
+                        }
+                    }
+                }
+                .overlay(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).stroke(Color.themeBlade, lineWidth: .heightOneDp))
+            }
+            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin24, trailing: .margin16))
         }
     }
 }

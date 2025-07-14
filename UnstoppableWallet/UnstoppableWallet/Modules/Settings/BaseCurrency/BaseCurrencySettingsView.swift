@@ -4,7 +4,6 @@ struct BaseCurrencySettingsView: View {
     @ObservedObject var viewModel: BaseCurrencySettingsViewModel
 
     @Environment(\.presentationMode) private var presentationMode
-    @State var confirmationCurrency: Currency?
 
     var body: some View {
         ScrollableThemeView {
@@ -26,24 +25,6 @@ struct BaseCurrencySettingsView: View {
             }
             .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-        .bottomSheet(item: $confirmationCurrency) { currency in
-            BottomSheetView(
-                icon: .warning,
-                title: "settings.base_currency.disclaimer".localized,
-                items: [
-                    .highlightedDescription(text: "settings.base_currency.disclaimer.description".localized(AppConfig.appName, viewModel.popularCurrencies.map(\.code).joined(separator: ", "))),
-                ],
-                buttons: [
-                    .init(style: .yellow, title: "settings.base_currency.disclaimer.set".localized) {
-                        viewModel.baseCurrency = currency
-                        confirmationCurrency = nil
-                        presentationMode.wrappedValue.dismiss()
-                    },
-                    .init(style: .transparent, title: "button.cancel".localized) { confirmationCurrency = nil },
-                ],
-                isPresented: Binding(get: { confirmationCurrency != nil }, set: { if !$0 { confirmationCurrency = nil } })
-            )
-        }
         .navigationBarTitle("settings.base_currency.title".localized)
     }
 
@@ -52,7 +33,9 @@ struct BaseCurrencySettingsView: View {
             if viewModel.baseCurrency == currency {
                 presentationMode.wrappedValue.dismiss()
             } else if showConfirmation {
-                confirmationCurrency = currency
+                Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                    confirmView(currency: currency, isPresented: isPresented)
+                }
             } else {
                 viewModel.baseCurrency = currency
                 presentationMode.wrappedValue.dismiss()
@@ -69,5 +52,26 @@ struct BaseCurrencySettingsView: View {
                 Image.checkIcon
             }
         }
+    }
+
+    @ViewBuilder private func confirmView(currency: Currency, isPresented: Binding<Bool>) -> some View {
+        BottomSheetView(
+            icon: .warning,
+            title: "settings.base_currency.disclaimer".localized,
+            items: [
+                .highlightedDescription(text: "settings.base_currency.disclaimer.description".localized(AppConfig.appName, viewModel.popularCurrencies.map(\.code).joined(separator: ", "))),
+            ],
+            buttons: [
+                .init(style: .yellow, title: "settings.base_currency.disclaimer.set".localized) {
+                    viewModel.baseCurrency = currency
+                    isPresented.wrappedValue = false
+                    presentationMode.wrappedValue.dismiss()
+                },
+                .init(style: .transparent, title: "button.cancel".localized) {
+                    isPresented.wrappedValue = false
+                },
+            ],
+            isPresented: isPresented
+        )
     }
 }
