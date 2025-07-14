@@ -5,8 +5,6 @@ struct BitcoinWalletTokenView: View {
 
     private let wallet: Wallet
 
-    @State var info: InfoDescription?
-
     init(wallet: Wallet, adapter: BitcoinBaseAdapter) {
         _viewModel = StateObject(wrappedValue: BitcoinWalletTokenViewModel(adapter: adapter))
         self.wallet = wallet
@@ -38,14 +36,13 @@ struct BitcoinWalletTokenView: View {
                     }
                 }
                 .themeListStyle(.bordered)
-                .modifier(InfoBottomSheet(info: $info))
             }
         }
     }
 
     @ViewBuilder private func infoView(title: String, info: InfoDescription, amount: Decimal) -> some View {
         ClickableRow(action: {
-            self.info = info
+            Coordinator.shared.present(info: info)
         }) {
             HStack(spacing: .margin4) {
                 Text(title).textCaptionSB()

@@ -6,8 +6,6 @@ struct CheckAddressView: View {
 
     @Environment(\.presentationMode) private var presentationMode
 
-    @State var info: InfoDescription?
-
     var borderColor: Color {
         switch viewModel.addressResult {
         case .invalid: return .themeLucian
@@ -41,7 +39,7 @@ struct CheckAddressView: View {
                 VStack(spacing: .margin24) {
                     ListSection {
                         ClickableRow(spacing: .margin8, action: {
-                            info = .init(title: "Chainalysis.com", description: "check_address.chainalysis.description".localized)
+                            Coordinator.shared.present(info: .init(title: "Chainalysis.com", description: "check_address.chainalysis.description".localized))
                         }) {
                             HStack(spacing: .margin16) {
                                 Image("chainalysis_32")
@@ -57,7 +55,7 @@ struct CheckAddressView: View {
 
                     ListSection {
                         ClickableRow(spacing: .margin8, action: {
-                            info = .init(title: "Hashdit.io", description: "check_address.hashdit.description".localized)
+                            Coordinator.shared.present(info: .init(title: "Hashdit.io", description: "check_address.hashdit.description".localized))
                         }) {
                             HStack(spacing: .margin16) {
                                 Image("hashdit_32")
@@ -78,10 +76,10 @@ struct CheckAddressView: View {
                     ForEach(viewModel.contractFullCoins) { fullCoin in
                         ListSection {
                             ClickableRow(spacing: .margin8, action: {
-                                info = .init(
+                                Coordinator.shared.present(info: .init(
                                     title: "check_address.coin_blacklist_check".localized(fullCoin.coin.code),
                                     description: "check_address.coin_blacklist.description".localized(fullCoin.coin.name, fullCoin.coin.code, fullCoin.coin.code)
-                                )
+                                ))
                             }) {
                                 HStack(spacing: .margin16) {
                                     CoinIconView(coin: fullCoin.coin)
@@ -103,7 +101,6 @@ struct CheckAddressView: View {
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-        .modifier(InfoBottomSheet(info: $info))
         .navigationTitle("address.title".localized)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {

@@ -6,11 +6,7 @@ struct ManageAccountView: View {
 
     @Binding var isPresented: Bool
 
-    @State private var unlinkPresented = false
-    @State private var unlinkWatchPresented = false
     @State private var recoveryPhrasePresented = false
-    @State private var confirmDeleteCloudBackupPresented = false
-    @State private var confirmDeleteCloudBackupAfterManualBackupPresented = false
     @FocusState private var isNameFocused: Bool
 
     init(account: Account, isPresented: Binding<Bool>) {
@@ -109,9 +105,13 @@ struct ManageAccountView: View {
                             if viewModel.isCloudBackedUp {
                                 ClickableRow {
                                     if viewModel.account.backedUp {
-                                        confirmDeleteCloudBackupPresented = true
+                                        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                                            confirmDeleteCloudBackupView(isPresented: isPresented)
+                                        }
                                     } else {
-                                        confirmDeleteCloudBackupAfterManualBackupPresented = true
+                                        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                                            confirmDeleteCloudBackupAfterManualBackupView(isPresented: isPresented)
+                                        }
                                     }
                                 } content: {
                                     Image("no_internet_24").themeIcon(color: .themeLucian)
@@ -140,9 +140,15 @@ struct ManageAccountView: View {
                     ListSection {
                         ClickableRow(action: {
                             if viewModel.account.watchAccount {
-                                unlinkWatchPresented = true
+                                Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                                    confirmUnlinkWatchView(isPresented: isPresented)
+                                }
                             } else {
-                                unlinkPresented = true
+                                Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                                    UnlinkView(isPresented: isPresented) {
+                                        unlink()
+                                    }
+                                }
                             }
                         }) {
                             Image("trash_24").themeIcon(color: .themeLucian)
@@ -154,67 +160,6 @@ struct ManageAccountView: View {
             }
             .onTapGesture {
                 isNameFocused = false
-            }
-            .bottomSheet(isPresented: $unlinkPresented) {
-                UnlinkView(isPresented: $unlinkPresented) {
-                    unlink()
-                }
-            }
-            .bottomSheet(isPresented: $unlinkWatchPresented) {
-                BottomSheetView(
-                    icon: .warning,
-                    title: "settings_manage_keys.delete.title".localized,
-                    items: [
-                        .highlightedDescription(text: "settings_manage_keys.delete.confirmation_watch".localized, style: .warning),
-                    ],
-                    buttons: [
-                        .init(style: .red, title: "settings_manage_keys.delete.confirmation_watch.button".localized) {
-                            unlink()
-                        },
-                    ],
-                    isPresented: $unlinkWatchPresented
-                )
-            }
-            .bottomSheet(isPresented: $confirmDeleteCloudBackupPresented) {
-                BottomSheetView(
-                    icon: .trash,
-                    title: "manage_account.cloud_delete_backup_recovery_phrase".localized,
-                    items: [
-                        .highlightedDescription(text: "manage_account.cloud_delete_backup_recovery_phrase.description".localized, style: .warning),
-                    ],
-                    buttons: [
-                        .init(style: .red, title: "button.delete".localized) {
-                            confirmDeleteCloudBackupPresented = false
-                            deleteCloudBackup()
-                        },
-                        .init(style: .transparent, title: "button.cancel".localized) {
-                            confirmDeleteCloudBackupPresented = false
-                        },
-                    ],
-                    isPresented: $confirmDeleteCloudBackupPresented
-                )
-            }
-            .bottomSheet(isPresented: $confirmDeleteCloudBackupAfterManualBackupPresented) {
-                BottomSheetView(
-                    icon: .warning,
-                    title: "manage_account.manual_backup_required".localized,
-                    items: [
-                        .highlightedDescription(text: "manage_account.manual_backup_required.description".localized, style: .warning),
-                    ],
-                    buttons: [
-                        .init(style: .yellow, title: "manage_account.manual_backup_required.button".localized) {
-                            confirmDeleteCloudBackupAfterManualBackupPresented = false
-
-                            Coordinator.shared.performAfterUnlock {
-                                presentBackup(reason: .deleteCloudBackup)
-                            }
-                        },
-                        .init(style: .transparent, title: "button.cancel".localized) {
-                            confirmDeleteCloudBackupAfterManualBackupPresented = false
-                        },
-                    ],
-                    isPresented: $confirmDeleteCloudBackupAfterManualBackupPresented
-                )
             }
             .navigationDestination(isPresented: $recoveryPhrasePresented) {
                 RecoveryPhraseView(account: viewModel.account)
@@ -242,6 +187,65 @@ struct ManageAccountView: View {
                 }
             }
         }
+    }
+
+    @ViewBuilder private func confirmUnlinkWatchView(isPresented: Binding<Bool>) -> some View {
+        BottomSheetView(
+            icon: .warning,
+            title: "settings_manage_keys.delete.title".localized,
+            items: [
+                .highlightedDescription(text: "settings_manage_keys.delete.confirmation_watch".localized, style: .warning),
+            ],
+            buttons: [
+                .init(style: .red, title: "settings_manage_keys.delete.confirmation_watch.button".localized) {
+                    unlink()
+                },
+            ],
+            isPresented: isPresented
+        )
+    }
+
+    @ViewBuilder private func confirmDeleteCloudBackupView(isPresented: Binding<Bool>) -> some View {
+        BottomSheetView(
+            icon: .trash,
+            title: "manage_account.cloud_delete_backup_recovery_phrase".localized,
+            items: [
+                .highlightedDescription(text: "manage_account.cloud_delete_backup_recovery_phrase.description".localized, style: .warning),
+            ],
+            buttons: [
+                .init(style: .red, title: "button.delete".localized) {
+                    isPresented.wrappedValue = false
+                    deleteCloudBackup()
+                },
+                .init(style: .transparent, title: "button.cancel".localized) {
+                    isPresented.wrappedValue = false
+                },
+            ],
+            isPresented: isPresented
+        )
+    }
+
+    @ViewBuilder private func confirmDeleteCloudBackupAfterManualBackupView(isPresented: Binding<Bool>) -> some View {
+        BottomSheetView(
+            icon: .warning,
+            title: "manage_account.manual_backup_required".localized,
+            items: [
+                .highlightedDescription(text: "manage_account.manual_backup_required.description".localized, style: .warning),
+            ],
+            buttons: [
+                .init(style: .yellow, title: "manage_account.manual_backup_required.button".localized) {
+                    isPresented.wrappedValue = false
+
+                    Coordinator.shared.performAfterUnlock {
+                        presentBackup(reason: .deleteCloudBackup)
+                    }
+                },
+                .init(style: .transparent, title: "button.cancel".localized) {
+                    isPresented.wrappedValue = false
+                },
+            ],
+            isPresented: isPresented
+        )
     }
 
     private func presentBackup(reason: BackupReason) {

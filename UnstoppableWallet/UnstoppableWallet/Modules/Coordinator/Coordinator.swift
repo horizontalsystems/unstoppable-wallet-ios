@@ -135,4 +135,22 @@ extension Coordinator {
             SFSafariView(url: url).ignoresSafeArea()
         }
     }
+
+    func present(info: InfoDescription) {
+        present(type: .bottomSheet) { isPresented in
+            BottomSheetView(
+                icon: .info,
+                title: info.title,
+                items: [
+                    .text(text: info.description),
+                ],
+                buttons: [
+                    .init(style: .yellow, title: "button.close".localized) {
+                        isPresented.wrappedValue = false
+                    },
+                ],
+                isPresented: isPresented
+            )
+        }
+    }
 }
