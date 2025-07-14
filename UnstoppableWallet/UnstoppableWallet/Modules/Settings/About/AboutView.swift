@@ -3,9 +3,6 @@ import SwiftUI
 struct AboutView: View {
     @ObservedObject var viewModel: AboutViewModel
 
-    @State private var termsPresented = false
-    @State private var linkUrl: URL?
-
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin32) {
@@ -38,8 +35,10 @@ struct AboutView: View {
                     }
 
                     ClickableRow(action: {
+                        Coordinator.shared.present { isPresented in
+                            TermsView(isPresented: isPresented)
+                        }
                         stat(page: .aboutApp, event: .open(page: .terms))
-                        termsPresented = true
                     }) {
                         Image("unordered_24").themeIcon()
                         Text("terms.title".localized).themeBody()
@@ -54,8 +53,8 @@ struct AboutView: View {
 
                 ListSection {
                     ClickableRow(action: {
+                        Coordinator.shared.present(url: URL(string: "https://github.com/\(AppConfig.appGitHubAccount)/\(AppConfig.appGitHubRepository)"))
                         stat(page: .aboutApp, event: .open(page: .externalGithub))
-                        linkUrl = URL(string: "https://github.com/\(AppConfig.appGitHubAccount)/\(AppConfig.appGitHubRepository)")
                     }) {
                         Image("github_24").themeIcon()
                         Text("GitHub").themeBody()
@@ -63,8 +62,8 @@ struct AboutView: View {
                     }
 
                     ClickableRow(action: {
+                        Coordinator.shared.present(url: URL(string: AppConfig.appWebPageLink))
                         stat(page: .aboutApp, event: .open(page: .externalWebsite))
-                        linkUrl = URL(string: AppConfig.appWebPageLink)
                     }) {
                         Image("globe_24").themeIcon()
                         Text("settings.about_app.website".localized).themeBody()
@@ -73,13 +72,6 @@ struct AboutView: View {
                 }
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
-            .sheet(isPresented: $termsPresented) {
-                TermsView(isPresented: $termsPresented)
-            }
-            .sheet(item: $linkUrl) { url in
-                SFSafariView(url: url)
-                    .ignoresSafeArea()
-            }
         }
         .navigationTitle("settings.about_app.title".localized)
         .navigationBarTitleDisplayMode(.inline)

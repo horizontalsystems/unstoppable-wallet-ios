@@ -6,7 +6,6 @@ struct BackupTypeView: View {
 
     @State var cloudNavigationPushed = false
     @State var localNavigationPushed = false
-    @State var cloudAlertPresented = false
 
     var body: some View {
         ScrollableThemeView {
@@ -22,17 +21,12 @@ struct BackupTypeView: View {
                         if viewModel.cloudAvailable {
                             viewModel.destination = .cloud
                         } else {
-                            cloudAlertPresented = true
+                            Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                                CloudNotAvailableView(isPresented: isPresented)
+                            }
                         }
                     }
                     .frame(minHeight: 106)
-                }
-                .sheet(isPresented: $cloudAlertPresented) {
-                    if #available(iOS 16, *) {
-                        ViewWrapper(BottomSheetModule.cloudNotAvailableController()).presentationDetents([.medium])
-                    } else {
-                        ViewWrapper(BottomSheetModule.cloudNotAvailableController())
-                    }
                 }
 
                 ListSection {

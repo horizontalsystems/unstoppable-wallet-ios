@@ -6,7 +6,6 @@ struct RecipientRowsView: View {
     @StateObject var viewModel: RecipientRowsViewModel
 
     @State private var chooseTypePresented: Bool = false
-    @State private var addAddressType: RecipientRowsViewModel.AddAddressType? = nil
 
     init(title: String, value: String, blockchainType: BlockchainType) {
         self.title = title
@@ -39,7 +38,7 @@ struct RecipientRowsView: View {
             if viewModel.name == nil, viewModel.label == nil {
                 Button(action: {
                     if viewModel.emptyContacts {
-                        addAddressType = .create
+                        presentAddContact(type: .create)
                     } else {
                         chooseTypePresented = true
                     }
@@ -63,23 +62,13 @@ struct RecipientRowsView: View {
             guard let index else {
                 return
             }
+
             switch index {
-            case 0: addAddressType = .create
-            case 1: addAddressType = .add
+            case 0: presentAddContact(type: .create)
+            case 1: presentAddContact(type: .add)
             default: ()
             }
         })
-        .sheet(item: $addAddressType) { addType in
-            let address = ContactAddress(blockchainUid: viewModel.blockchainType.uid, address: viewModel.address)
-            switch addType {
-            case .create:
-                ContactBookContactView(mode: .add(address), onUpdateContact: nil)
-                    .ignoresSafeArea()
-            case .add:
-                ContactBookView(mode: .addToContact(address), presented: true)
-                    .ignoresSafeArea()
-            }
-        }
     }
 
     @ViewBuilder
@@ -89,5 +78,20 @@ struct RecipientRowsView: View {
         Text(name)
             .textSubhead1(color: .themeLeah)
             .multilineTextAlignment(.trailing)
+    }
+
+    private func presentAddContact(type: RecipientRowsViewModel.AddAddressType) {
+        let address = ContactAddress(blockchainUid: viewModel.blockchainType.uid, address: viewModel.address)
+
+        Coordinator.shared.present { _ in
+            switch type {
+            case .create:
+                ContactBookContactView(mode: .add(address), onUpdateContact: nil)
+                    .ignoresSafeArea()
+            case .add:
+                ContactBookView(mode: .addToContact(address), presented: true)
+                    .ignoresSafeArea()
+            }
+        }
     }
 }

@@ -2,14 +2,11 @@ import SwiftUI
 
 struct TransactionFilterView: View {
     @StateObject var viewModel: TransactionFilterViewModel
+    @Binding var isPresented: Bool
 
-    @Environment(\.presentationMode) private var presentationMode
-    @State private var blockchainSelectPresented = false
-    @State private var tokenSelectPresented = false
-    @State private var contactSelectPresented = false
-
-    init(transactionsViewModel: TransactionsViewModelNew) {
+    init(transactionsViewModel: TransactionsViewModelNew, isPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: TransactionFilterViewModel(transactionsViewModel: transactionsViewModel))
+        _isPresented = isPresented
     }
 
     var body: some View {
@@ -18,7 +15,9 @@ struct TransactionFilterView: View {
                 VStack(spacing: .margin32) {
                     ListSection {
                         ClickableRow(spacing: .margin8, action: {
-                            blockchainSelectPresented = true
+                            Coordinator.shared.present { isPresented in
+                                ThemeNavigationStack { TransactionBlockchainSelectView(transactionFilterViewModel: viewModel, isPresented: isPresented) }
+                            }
                         }) {
                             Text("transaction_filter.blockchain".localized).textBody()
 
@@ -33,13 +32,12 @@ struct TransactionFilterView: View {
                             Image("arrow_small_down_20").themeIcon()
                         }
                     }
-                    .sheet(isPresented: $blockchainSelectPresented) {
-                        ThemeNavigationStack { TransactionBlockchainSelectView(transactionFilterViewModel: viewModel) }
-                    }
 
                     ListSection {
                         ClickableRow(spacing: .margin8, action: {
-                            tokenSelectPresented = true
+                            Coordinator.shared.present { isPresented in
+                                ThemeNavigationStack { TransactionTokenSelectView(transactionFilterViewModel: viewModel, isPresented: isPresented) }
+                            }
                         }) {
                             Text("transaction_filter.coin".localized).textBody()
 
@@ -54,13 +52,12 @@ struct TransactionFilterView: View {
                             Image("arrow_small_down_20").themeIcon()
                         }
                     }
-                    .sheet(isPresented: $tokenSelectPresented) {
-                        ThemeNavigationStack { TransactionTokenSelectView(transactionFilterViewModel: viewModel) }
-                    }
 
                     ListSection {
                         ClickableRow(spacing: .margin8, action: {
-                            contactSelectPresented = true
+                            Coordinator.shared.present { isPresented in
+                                ThemeNavigationStack { TransactionContactSelectView(transactionFilterViewModel: viewModel, isPresented: isPresented) }
+                            }
                         }) {
                             Text("transaction_filter.contact".localized).textBody()
 
@@ -74,9 +71,6 @@ struct TransactionFilterView: View {
 
                             Image("arrow_small_down_20").themeIcon()
                         }
-                    }
-                    .sheet(isPresented: $contactSelectPresented) {
-                        ThemeNavigationStack { TransactionContactSelectView(transactionFilterViewModel: viewModel) }
                     }
 
                     VStack(spacing: 0) {
@@ -105,7 +99,7 @@ struct TransactionFilterView: View {
 
                 ToolbarItem(placement: .confirmationAction) {
                     Button("button.done".localized) {
-                        presentationMode.wrappedValue.dismiss()
+                        isPresented = false
                     }
                 }
             }

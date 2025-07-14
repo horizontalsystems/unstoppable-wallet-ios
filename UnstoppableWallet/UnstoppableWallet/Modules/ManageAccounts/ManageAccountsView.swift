@@ -5,8 +5,6 @@ struct ManageAccountsView: View {
 
     @Binding private var isPresented: Bool
 
-    @State private var presentedAccount: Account?
-
     init(isPresented: Binding<Bool>? = nil) {
         _isPresented = isPresented ?? .constant(false)
     }
@@ -69,13 +67,6 @@ struct ManageAccountsView: View {
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-        .sheet(item: $presentedAccount, onDismiss: {
-            if !viewModel.hasAccounts {
-                isPresented = false
-            }
-        }) { account in
-            ManageAccountView(account: account, isPresented: Binding(get: { presentedAccount != nil }, set: { if !$0 { presentedAccount = nil } }))
-        }
         .navigationBarTitle("settings_manage_keys.title".localized)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
@@ -114,7 +105,13 @@ struct ManageAccountsView: View {
             let alert = item.account.nonStandard || item.account.nonRecommended || !item.account.backedUp
 
             Button(action: {
-                presentedAccount = item.account
+                Coordinator.shared.present { isPresented in
+                    ManageAccountView(account: item.account, isPresented: isPresented)
+                } onDismiss: {
+                    if !viewModel.hasAccounts {
+                        isPresented = false
+                    }
+                }
             }) {
                 Image(alert ? "warning_2_20" : "more_2_20").themeIcon(color: alert ? .themeLucian : .themeGray)
             }

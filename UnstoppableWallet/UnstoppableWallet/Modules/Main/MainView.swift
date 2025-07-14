@@ -114,8 +114,8 @@ struct MainView: View {
 
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button(action: {
-                    Coordinator.shared.present { _ in
-                        TransactionFilterView(transactionsViewModel: transactionsViewModel)
+                    Coordinator.shared.present { isPresented in
+                        TransactionFilterView(transactionsViewModel: transactionsViewModel, isPresented: isPresented)
                     }
                     stat(page: .transactions, event: .open(page: .transactionFilter))
                 }) {

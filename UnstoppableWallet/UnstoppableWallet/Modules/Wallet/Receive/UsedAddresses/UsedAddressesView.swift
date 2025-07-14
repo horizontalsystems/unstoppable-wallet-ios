@@ -8,7 +8,6 @@ struct UsedAddressesView: View {
     @State private var currentTabIndex: Int = ReceiveAddressModule.AddressType.external.rawValue
 
     @Environment(\.presentationMode) private var presentationMode
-    @State private var linkUrl: URL?
 
     var body: some View {
         ScrollableThemeView {
@@ -32,7 +31,9 @@ struct UsedAddressesView: View {
                                         .frame(width: width(index: addresses.last?.index ?? 0 + 1), alignment: .leading)
                                     Text(address.address).textSubhead2(color: .themeLeah)
                                     Spacer()
-                                    Button(action: { linkUrl = address.explorerUrl }) {
+                                    Button(action: {
+                                        Coordinator.shared.present(url: address.explorerUrl)
+                                    }) {
                                         Image("globe_20").renderingMode(.template)
                                     }
                                     .buttonStyle(SecondaryCircleButtonStyle(style: .default))
@@ -48,10 +49,6 @@ struct UsedAddressesView: View {
                 }
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
-            .sheet(item: $linkUrl) { url in
-                SFSafariView(url: url)
-                    .ignoresSafeArea()
-            }
         }
         .navigationTitle("deposit.used_addresses.title".localized)
         .navigationBarTitleDisplayMode(.inline)

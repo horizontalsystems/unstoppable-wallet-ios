@@ -3,15 +3,12 @@ import SwiftUI
 struct ManageAccountView: View {
     @StateObject private var viewModel: ManageAccountViewModel
     @StateObject private var accountWarningViewModel: AccountWarningViewModel
-    @StateObject private var unlockViewModifierModel = UnlockViewModifierModel()
 
     @Binding var isPresented: Bool
 
     @State private var unlinkPresented = false
     @State private var unlinkWatchPresented = false
     @State private var recoveryPhrasePresented = false
-    @State private var presentedBackupReason: BackupReason?
-    @State private var cloudBackupPresented = false
     @State private var confirmDeleteCloudBackupPresented = false
     @State private var confirmDeleteCloudBackupAfterManualBackupPresented = false
     @FocusState private var isNameFocused: Bool
@@ -46,7 +43,7 @@ struct ManageAccountView: View {
                         ListSection {
                             if viewModel.recoveryPhraseVisible {
                                 ClickableRow(action: {
-                                    unlockViewModifierModel.handle {
+                                    Coordinator.shared.performAfterUnlock {
                                         recoveryPhrasePresented = true
                                     }
                                 }) {
@@ -93,8 +90,8 @@ struct ManageAccountView: View {
                     ) {
                         if viewModel.account.canBeBackedUp {
                             ClickableRow {
-                                unlockViewModifierModel.handle {
-                                    presentedBackupReason = .manual
+                                Coordinator.shared.performAfterUnlock {
+                                    presentBackup(reason: .manual)
                                 }
                             } content: {
                                 Image("edit_24").themeIcon(color: .themeJacob)
@@ -122,8 +119,11 @@ struct ManageAccountView: View {
                                 }
                             } else {
                                 ClickableRow {
-                                    unlockViewModifierModel.handle {
-                                        cloudBackupPresented = true
+                                    Coordinator.shared.presentAfterUnlock { _ in
+                                        ICloudBackupTermsView(account: viewModel.account)
+                                            .ignoresSafeArea()
+                                    } onPresent: {
+                                        stat(page: .manageWallet, event: .open(page: .cloudBackup))
                                     }
                                 } content: {
                                     Image("icloud_24").themeIcon(color: .themeJacob)
@@ -154,22 +154,6 @@ struct ManageAccountView: View {
             }
             .onTapGesture {
                 isNameFocused = false
-            }
-            .sheet(item: $presentedBackupReason) { reason in
-                BackupView(account: viewModel.account) {
-                    onBackup(reason: reason)
-                }
-                .ignoresSafeArea()
-                .onFirstAppear {
-                    stat(page: .manageWallet, event: .open(page: .manualBackup))
-                }
-            }
-            .sheet(isPresented: $cloudBackupPresented) {
-                ICloudBackupTermsView(account: viewModel.account)
-                    .ignoresSafeArea()
-                    .onFirstAppear {
-                        stat(page: .manageWallet, event: .open(page: .cloudBackup))
-                    }
             }
             .bottomSheet(isPresented: $unlinkPresented) {
                 UnlinkView(isPresented: $unlinkPresented) {
@@ -221,8 +205,8 @@ struct ManageAccountView: View {
                         .init(style: .yellow, title: "manage_account.manual_backup_required.button".localized) {
                             confirmDeleteCloudBackupAfterManualBackupPresented = false
 
-                            unlockViewModifierModel.handle {
-                                presentedBackupReason = .deleteCloudBackup
+                            Coordinator.shared.performAfterUnlock {
+                                presentBackup(reason: .deleteCloudBackup)
                             }
                         },
                         .init(style: .transparent, title: "button.cancel".localized) {
@@ -232,7 +216,6 @@ struct ManageAccountView: View {
                     isPresented: $confirmDeleteCloudBackupAfterManualBackupPresented
                 )
             }
-            .modifier(UnlockViewModifier(viewModel: unlockViewModifierModel))
             .navigationDestination(isPresented: $recoveryPhrasePresented) {
                 RecoveryPhraseView(account: viewModel.account)
                     .navigationTitle("recovery_phrase.title".localized)
@@ -261,11 +244,17 @@ struct ManageAccountView: View {
         }
     }
 
-    private func onBackup(reason: BackupReason) {
-        switch reason {
-        case .deleteCloudBackup: deleteCloudBackup()
-        default: ()
+    private func presentBackup(reason: BackupReason) {
+        Coordinator.shared.present { _ in
+            BackupView(account: viewModel.account) {
+                switch reason {
+                case .deleteCloudBackup: deleteCloudBackup()
+                default: ()
+                }
+            }
+            .ignoresSafeArea()
         }
+        stat(page: .manageWallet, event: .open(page: .manualBackup))
     }
 
     private func deleteCloudBackup() {

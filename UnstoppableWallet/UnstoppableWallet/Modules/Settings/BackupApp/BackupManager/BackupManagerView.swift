@@ -1,8 +1,6 @@
 import SwiftUI
 
 struct BackupManagerView: View {
-    @StateObject var unlockViewModifierModel = UnlockViewModifierModel()
-
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
@@ -19,11 +17,9 @@ struct BackupManagerView: View {
                     }
 
                     ClickableRow(action: {
-                        unlockViewModifierModel.handle {
-                            Coordinator.shared.present { isPresented in
-                                ThemeNavigationStack {
-                                    BackupTypeView(isPresented: isPresented)
-                                }
+                        Coordinator.shared.presentAfterUnlock { isPresented in
+                            ThemeNavigationStack {
+                                BackupTypeView(isPresented: isPresented)
                             }
                         }
                     }) {
@@ -35,6 +31,5 @@ struct BackupManagerView: View {
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
         .navigationTitle("backup_app.backup_manager.title".localized)
-        .modifier(UnlockViewModifier(viewModel: unlockViewModifierModel))
     }
 }

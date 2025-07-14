@@ -4,12 +4,13 @@ import SwiftUI
 
 struct TransactionContactSelectView: View {
     @ObservedObject var viewModel: TransactionContactSelectViewModel
+    @Binding var isPresented: Bool
 
-    @Environment(\.presentationMode) private var presentationMode
     @State private var searchText: String = ""
 
-    init(transactionFilterViewModel: TransactionFilterViewModel) {
+    init(transactionFilterViewModel: TransactionFilterViewModel, isPresented: Binding<Bool>) {
         _viewModel = ObservedObject(wrappedValue: TransactionContactSelectViewModel(transactionFilterViewModel: transactionFilterViewModel))
+        _isPresented = isPresented
     }
 
     var body: some View {
@@ -30,7 +31,7 @@ struct TransactionContactSelectView: View {
                         ListSection {
                             ClickableRow(action: {
                                 viewModel.set(currentContact: nil)
-                                presentationMode.wrappedValue.dismiss()
+                                isPresented = false
                             }) {
                                 Image("paper_contract_24").themeIcon()
                                 Text("transaction_filter.all_contacts").themeBody()
@@ -43,7 +44,7 @@ struct TransactionContactSelectView: View {
                             ForEach(searchResults, id: \.self) { contact in
                                 ClickableRow(action: {
                                     viewModel.set(currentContact: contact)
-                                    presentationMode.wrappedValue.dismiss()
+                                    isPresented = false
                                 }) {
                                     Image("user_24").themeIcon()
 
@@ -67,7 +68,7 @@ struct TransactionContactSelectView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 Button("button.cancel".localized) {
-                    presentationMode.wrappedValue.dismiss()
+                    isPresented = false
                 }
             }
         }
