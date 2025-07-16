@@ -1,47 +1,4 @@
 import MarketKit
-import RxSwift
-import SwiftUI
-import UIKit
-
-enum TransactionsModule {
-    static func viewController() -> UIViewController {
-        let rateService = HistoricalRateService(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager)
-        let nftMetadataService = NftMetadataService(nftMetadataManager: Core.shared.nftMetadataManager)
-
-        let service = TransactionsService(
-            walletManager: Core.shared.walletManager,
-            adapterManager: Core.shared.transactionAdapterManager,
-            rateService: rateService,
-            nftMetadataService: nftMetadataService,
-            balanceHiddenManager: Core.shared.balanceHiddenManager
-        )
-
-        let contactLabelService = TransactionsContactLabelService(contactManager: Core.shared.contactManager)
-        let viewItemFactory = TransactionsViewItemFactory(evmLabelManager: Core.shared.evmLabelManager, contactLabelService: contactLabelService)
-        let viewModel = TransactionsViewModel(service: service, contactLabelService: contactLabelService, factory: viewItemFactory)
-        let dataSource = TransactionsTableViewDataSource(viewModel: viewModel, statPage: .transactions)
-
-        return TransactionsViewController(viewModel: viewModel, dataSource: dataSource)
-    }
-
-    static func dataSource(token: Token, statPage: StatPage) -> TransactionsTableViewDataSource {
-        let rateService = HistoricalRateService(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager)
-        let nftMetadataService = NftMetadataService(nftMetadataManager: Core.shared.nftMetadataManager)
-
-        let service = TokenTransactionsService(
-            token: token,
-            adapterManager: Core.shared.transactionAdapterManager,
-            rateService: rateService,
-            nftMetadataService: nftMetadataService
-        )
-
-        let contactLabelService = TransactionsContactLabelService(contactManager: Core.shared.contactManager)
-        let viewItemFactory = TransactionsViewItemFactory(evmLabelManager: Core.shared.evmLabelManager, contactLabelService: contactLabelService)
-        let viewModel = BaseTransactionsViewModel(service: service, contactLabelService: contactLabelService, factory: viewItemFactory)
-
-        return TransactionsTableViewDataSource(viewModel: viewModel, statPage: statPage)
-    }
-}
 
 struct TransactionItem: Comparable {
     var record: TransactionRecord

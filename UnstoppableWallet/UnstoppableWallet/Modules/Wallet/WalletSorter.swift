@@ -17,7 +17,7 @@ class WalletSorter {
         return lhsHasPrice
     }
 
-    func sort<Item: ISortableWalletItem>(items: [Item], sortType: WalletModule.SortType) -> [Item] {
+    func sort<Item: ISortableWalletItem>(items: [Item], sortType: SortType) -> [Item] {
         switch sortType {
         case .balance:
             let nonZeroItems = items.filter { !$0.balance.isZero }
@@ -40,37 +40,25 @@ class WalletSorter {
     }
 }
 
+extension WalletSorter {
+    enum SortType: String, CaseIterable {
+        case balance
+        case name
+        case percentGrowth
+
+        var title: String {
+            switch self {
+            case .balance: return "balance.sort.valueHighToLow".localized
+            case .name: return "balance.sort.az".localized
+            case .percentGrowth: return "balance.sort.price_change".localized
+            }
+        }
+    }
+}
+
 protocol ISortableWalletItem {
     var balance: Decimal { get }
     var priceItem: WalletCoinPriceService.Item? { get }
     var name: String { get }
     var diff: Decimal? { get }
-}
-
-extension WalletServiceOld.Item: ISortableWalletItem {
-    var balance: Decimal {
-        balanceData.available
-    }
-
-    var name: String {
-        wallet.coin.name
-    }
-
-    var diff: Decimal? {
-        priceItem?.diff
-    }
-}
-
-extension WalletTokenListService.Item: ISortableWalletItem {
-    var balance: Decimal {
-        balanceData.available
-    }
-
-    var name: String {
-        wallet.coin.name
-    }
-
-    var diff: Decimal? {
-        priceItem?.diff
-    }
 }

@@ -2,7 +2,7 @@ import HdWalletKit
 import SwiftUI
 
 struct CreateAccountView: View {
-    @StateObject private var viewModel = CreateAccountViewModelNew()
+    @StateObject private var viewModel = CreateAccountViewModel()
 
     @Binding var isPresented: Bool
     var onCreate: (() -> Void)? = nil
@@ -189,9 +189,9 @@ struct CreateAccountView: View {
                 BackupRequiredView.afterCreate(account: account, isPresented: isPresented)
             }
         } catch {
-            if case CreateAccountViewModelNew.CreateError.emptyPassphrase = error {
+            if case CreateAccountViewModel.CreateError.emptyPassphrase = error {
                 passphraseCaution = .caution(Caution(text: "create_wallet.error.empty_passphrase".localized, type: .error))
-            } else if case CreateAccountViewModelNew.CreateError.invalidConfirmation = error {
+            } else if case CreateAccountViewModel.CreateError.invalidConfirmation = error {
                 passphraseConfirmationCaution = .caution(Caution(text: "create_wallet.error.invalid_confirmation".localized, type: .error))
             } else {
                 HudHelper.instance.show(banner: .error(string: error.smartDescription))

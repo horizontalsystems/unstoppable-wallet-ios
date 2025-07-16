@@ -4,7 +4,7 @@ struct TransactionFilterView: View {
     @StateObject var viewModel: TransactionFilterViewModel
     @Binding var isPresented: Bool
 
-    init(transactionsViewModel: TransactionsViewModelNew, isPresented: Binding<Bool>) {
+    init(transactionsViewModel: TransactionsViewModel, isPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: TransactionFilterViewModel(transactionsViewModel: transactionsViewModel))
         _isPresented = isPresented
     }

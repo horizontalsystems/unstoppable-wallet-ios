@@ -3,7 +3,7 @@ import SwiftUI
 struct TermsView: View {
     private let termCount = 2
 
-    @StateObject private var viewModel = TermsViewModelNew()
+    @StateObject private var viewModel = TermsViewModel()
 
     @Binding var isPresented: Bool
     let onAccept: (() -> Void)?

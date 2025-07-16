@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct MainTransactionsView: View {
-    @ObservedObject var transactionsViewModel: TransactionsViewModelNew
+    @ObservedObject var transactionsViewModel: TransactionsViewModel
 
     var body: some View {
         ThemeView(isRoot: true) {

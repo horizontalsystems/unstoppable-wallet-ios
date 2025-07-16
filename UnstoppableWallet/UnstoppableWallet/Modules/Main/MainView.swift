@@ -1,10 +1,10 @@
 import SwiftUI
 
 struct MainView: View {
-    @StateObject var viewModel = MainViewModelNew()
+    @StateObject var viewModel = MainViewModel()
     @StateObject var badgeViewModel = MainBadgeViewModel()
-    @StateObject var walletViewModel = WalletViewModelNew()
-    @StateObject var transactionsViewModel = TransactionsViewModelNew()
+    @StateObject var walletViewModel = WalletViewModel()
+    @StateObject var transactionsViewModel = TransactionsViewModel()
 
     @StateObject private var frameCalculator = TabBarFrameCalculator()
 
@@ -21,26 +21,26 @@ struct MainView: View {
                             .tabItem {
                                 Image("market_2_24").renderingMode(.template)
                             }
-                            .tag(MainViewModelNew.Tab.markets)
+                            .tag(MainViewModel.Tab.markets)
                     }
 
                     WalletView(viewModel: walletViewModel, path: $path)
                         .tabItem {
                             Image("filled_wallet_24").renderingMode(.template)
                         }
-                        .tag(MainViewModelNew.Tab.wallet)
+                        .tag(MainViewModel.Tab.wallet)
 
                     MainTransactionsView(transactionsViewModel: transactionsViewModel)
                         .tabItem {
                             Image("filled_transaction_2n_24").renderingMode(.template)
                         }
-                        .tag(MainViewModelNew.Tab.transactions)
+                        .tag(MainViewModel.Tab.transactions)
 
                     MainSettingsView()
                         .tabItem {
                             Image("filled_settings_2_24").renderingMode(.template)
                         }
-                        .tag(MainViewModelNew.Tab.settings)
+                        .tag(MainViewModel.Tab.settings)
                 }
                 .toolbarBackground(.hidden, for: .tabBar)
             }
