@@ -1251,7 +1251,7 @@
 		11B35FFD159D864F6D914F08 /* AppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357511F8F17D8221B64E2 /* AppearanceView.swift */; };
 		11B35FFE6FBDA949184E2BF2 /* AmountInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F2BE131B969BBEABDB9 /* AmountInputViewModel.swift */; };
 		1A564001701A1E77AF7A651B /* BalanceErrorModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564AB0B646F7A92DD188F2 /* BalanceErrorModule.swift */; };
-		1A564032D3C011BCAA7D44A8 /* DeepLinkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DEB9782FF55EFFD8CCA /* DeepLinkService.swift */; };
+		1A564032D3C011BCAA7D44A8 /* DeepLinkStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DEB9782FF55EFFD8CCA /* DeepLinkStorage.swift */; };
 		1A56404471A7270782D6619F /* AppVersion_v_0_20.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646C5FEE5A60A658B0180 /* AppVersion_v_0_20.swift */; };
 		1A564058DB366C810AC3C47A /* TitledHighlightedDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CB28708314AE0A69424 /* TitledHighlightedDescriptionView.swift */; };
 		1A56405DB1540DEC70FD5CFA /* HighlightedDescriptionBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BCC9DD29DB5455669A5 /* HighlightedDescriptionBaseView.swift */; };
@@ -1358,7 +1358,7 @@
 		1A564EE727CD892E7F2E5715 /* ScanQrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A144576DB93334E1682 /* ScanQrViewController.swift */; };
 		1A564F382602A283C370E7FB /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56489DE231CDDCA75CAEB3 /* AppError.swift */; };
 		1A564F73B7FE144D39DEA34F /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56447C12D91108517ED217 /* UIDevice.swift */; };
-		1A564FEF3AEC87712186DD28 /* DeepLinkService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DEB9782FF55EFFD8CCA /* DeepLinkService.swift */; };
+		1A564FEF3AEC87712186DD28 /* DeepLinkStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DEB9782FF55EFFD8CCA /* DeepLinkStorage.swift */; };
 		1A564FFA4566A5019E744E8E /* TransactionDataSortMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564E6A6B7E18C287A1D77D /* TransactionDataSortMode.swift */; };
 		2FA5D01A5570C6DE5D07E2C4 /* EvmFeeViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DCD7797C13645F3D5F8A /* EvmFeeViewItemFactory.swift */; };
 		2FA5D01D1C1E23AC162B267B /* NonceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5DCB378763D65D51DBE19 /* NonceViewModel.swift */; };
@@ -2065,6 +2065,8 @@
 		6BEF095B2E1E7AB9004F4514 /* TabBarBadgeOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF09592E1E7AB8004F4514 /* TabBarBadgeOverlay.swift */; };
 		6BEF095D2E1E7ADA004F4514 /* TabBarFrameCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF095C2E1E7AD5004F4514 /* TabBarFrameCalculator.swift */; };
 		6BEF095E2E1E7ADA004F4514 /* TabBarFrameCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF095C2E1E7AD5004F4514 /* TabBarFrameCalculator.swift */; };
+		6BEF09602E252519004F4514 /* StartScreenAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF095F2E25250B004F4514 /* StartScreenAlertManager.swift */; };
+		6BEF09612E252519004F4514 /* StartScreenAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF095F2E25250B004F4514 /* StartScreenAlertManager.swift */; };
 		6BFA4E032D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA4E022D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift */; };
 		6BFA4E042D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA4E022D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift */; };
 		ABC9A001F335B695CD066218 /* NftAssetModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD35D41AEEBD38AA08B5 /* NftAssetModule.swift */; };
@@ -2716,8 +2718,6 @@
 		D06669032A31B559004B048D /* TronRecipientAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */; };
 		D066A45C2C6CB2E100074E35 /* TelegramUserHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D066A45B2C6CB2E100074E35 /* TelegramUserHandler.swift */; };
 		D066A45D2C6CB2E100074E35 /* TelegramUserHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D066A45B2C6CB2E100074E35 /* TelegramUserHandler.swift */; };
-		D066A45F2C6CC7E200074E35 /* WelcomeScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D066A45E2C6CC7E200074E35 /* WelcomeScreenViewModel.swift */; };
-		D066A4602C6CC7E200074E35 /* WelcomeScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D066A45E2C6CC7E200074E35 /* WelcomeScreenViewModel.swift */; };
 		D06A171B2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06A171A2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift */; };
 		D06A171C2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06A171A2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift */; };
 		D06B302C2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */; };
@@ -4200,7 +4200,7 @@
 		1A564D2011D7A4E80B2B7B92 /* JailbreakTestManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JailbreakTestManager.swift; sourceTree = "<group>"; };
 		1A564D5E55767404ED6C88E0 /* Decimal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Decimal.swift; sourceTree = "<group>"; };
 		1A564D8AD6D160F27C021F48 /* ReachabilityService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReachabilityService.swift; sourceTree = "<group>"; };
-		1A564DEB9782FF55EFFD8CCA /* DeepLinkService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkService.swift; sourceTree = "<group>"; };
+		1A564DEB9782FF55EFFD8CCA /* DeepLinkStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeepLinkStorage.swift; sourceTree = "<group>"; };
 		1A564E6A6B7E18C287A1D77D /* TransactionDataSortMode.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionDataSortMode.swift; sourceTree = "<group>"; };
 		1A564E86CCEAD0F9956664D4 /* ThemeActionSheetController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeActionSheetController.swift; sourceTree = "<group>"; };
 		1A564EA6F1CCDF88F78351F8 /* ThemeSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThemeSearchViewController.swift; sourceTree = "<group>"; };
@@ -4521,6 +4521,7 @@
 		6BEF09552E128486004F4514 /* DeepLinkViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkViewManager.swift; sourceTree = "<group>"; };
 		6BEF09592E1E7AB8004F4514 /* TabBarBadgeOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarBadgeOverlay.swift; sourceTree = "<group>"; };
 		6BEF095C2E1E7AD5004F4514 /* TabBarFrameCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarFrameCalculator.swift; sourceTree = "<group>"; };
+		6BEF095F2E25250B004F4514 /* StartScreenAlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenAlertManager.swift; sourceTree = "<group>"; };
 		6BFA4E022D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketAdvancedSearchCategoriesView.swift; sourceTree = "<group>"; };
 		ABC9A021D71EDD24DFB6BA62 /* CoinProChartModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinProChartModule.swift; sourceTree = "<group>"; };
 		ABC9A02C808FCE6082E3F97A /* DebounceTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebounceTextField.swift; sourceTree = "<group>"; };
@@ -4845,7 +4846,6 @@
 		D061A5312AA846FA009AAD57 /* SecuritySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsView.swift; sourceTree = "<group>"; };
 		D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronRecipientAddressViewModel.swift; sourceTree = "<group>"; };
 		D066A45B2C6CB2E100074E35 /* TelegramUserHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelegramUserHandler.swift; sourceTree = "<group>"; };
-		D066A45E2C6CC7E200074E35 /* WelcomeScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeScreenViewModel.swift; sourceTree = "<group>"; };
 		D06A171A2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeSettingsViewHelper.swift; sourceTree = "<group>"; };
 		D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyFeeSettingsViewModel.swift; sourceTree = "<group>"; };
 		D06F60012D195FBC0033A288 /* AddressSecurityIssueType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSecurityIssueType.swift; sourceTree = "<group>"; };
@@ -6072,6 +6072,7 @@
 		11B35597F6C8570E3C7ABFBF /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				6BEF095F2E25250B004F4514 /* StartScreenAlertManager.swift */,
 				6BEF09582E1E7AA9004F4514 /* TabBarBadge */,
 				6BEF09512E128439004F4514 /* Deeplink */,
 				D3E36BE02E05887B007F99CA /* MainBadgeViewModel.swift */,
@@ -6089,7 +6090,7 @@
 				11B35747FAD8381F2AD48276 /* MainViewModel.swift */,
 				D3B62A8820CA40DC005A9F80 /* MainViewController.swift */,
 				1A56469A2F3EAAEDECFB4034 /* JailbreakService.swift */,
-				1A564DEB9782FF55EFFD8CCA /* DeepLinkService.swift */,
+				1A564DEB9782FF55EFFD8CCA /* DeepLinkStorage.swift */,
 				1A56432704A2E7A9BE78497B /* ReleaseNotesMarkdownConfig.swift */,
 			);
 			path = Main;
@@ -7310,7 +7311,6 @@
 			children = (
 				3C7B956E27165EB2D682C2D7 /* WelcomeScreenViewController.swift */,
 				11B35A05B93CB243B6404C4A /* WelcomeTextView.swift */,
-				D066A45E2C6CC7E200074E35 /* WelcomeScreenViewModel.swift */,
 			);
 			path = Welcome;
 			sourceTree = "<group>";
@@ -10380,7 +10380,6 @@
 				D0E6EC642D5A0069006563D1 /* Eip20AddressValidator.swift in Sources */,
 				1A5643BCDAD7CB0230CBB513 /* GradientClippingView.swift in Sources */,
 				11B3558898EE33B8D6E571CE /* MnemonicPhraseCell.swift in Sources */,
-				D066A4602C6CC7E200074E35 /* WelcomeScreenViewModel.swift in Sources */,
 				11B35A33CB6CA5C4A25ECFC9 /* MnemonicWordCell.swift in Sources */,
 				1A564B1D457A23C7732B76DF /* ReleaseNotesService.swift in Sources */,
 				D3E36BD52E04254E007F99CA /* AppView.swift in Sources */,
@@ -10412,7 +10411,7 @@
 				D05E96A72A2627E5002CCD71 /* TronOutgoingTransactionRecord.swift in Sources */,
 				58AAA097F8417B30693547FE /* CoinPageMarkdownParser.swift in Sources */,
 				1A564BB34D0EAA2E8BE8B498 /* DeepLinkManager.swift in Sources */,
-				1A564FEF3AEC87712186DD28 /* DeepLinkService.swift in Sources */,
+				1A564FEF3AEC87712186DD28 /* DeepLinkStorage.swift in Sources */,
 				D36DE0B4272FD689000BC916 /* SwapProviderManager.swift in Sources */,
 				11B357118379A537844A83D0 /* EvmSyncSource.swift in Sources */,
 				11B354CAD4BC4FAB3889838D /* EvmSyncSourceManager.swift in Sources */,
@@ -11182,6 +11181,7 @@
 				D3F9B0322BE3B39D009FFA95 /* EvmDecoration.swift in Sources */,
 				11B3501EA3658BFDC67DEB1F /* ThemeView.swift in Sources */,
 				ABC9A097A0BDD99777D5374D /* DonateDescriptionCell.swift in Sources */,
+				6BEF09602E252519004F4514 /* StartScreenAlertManager.swift in Sources */,
 				ABC9A02C18AACAA8CC930665 /* WalletTokenListDataSource.swift in Sources */,
 				ABC9A096B05E5491A40A327C /* DonateDescriptionDataSource.swift in Sources */,
 				ABC9AE9A8BECB2CE0EEF8271 /* DonateAddressViewController.swift in Sources */,
@@ -11958,7 +11958,6 @@
 				D0E6EC632D5A0069006563D1 /* Eip20AddressValidator.swift in Sources */,
 				1A564A2FCE3C764029FECB7B /* GradientClippingView.swift in Sources */,
 				11B35E67CDA98E004C9C2011 /* MnemonicPhraseCell.swift in Sources */,
-				D066A45F2C6CC7E200074E35 /* WelcomeScreenViewModel.swift in Sources */,
 				11B35C22A15045197D511BB2 /* MnemonicWordCell.swift in Sources */,
 				1A564C10B9782D53375736C8 /* ReleaseNotesService.swift in Sources */,
 				D3E36BD62E04254E007F99CA /* AppView.swift in Sources */,
@@ -11991,7 +11990,7 @@
 				D05E96A62A2627E5002CCD71 /* TronOutgoingTransactionRecord.swift in Sources */,
 				1A5640D6FDF86EDB54213F9B /* DeepLinkManager.swift in Sources */,
 				D36DE0EC272FD89B000BC916 /* SwapSettingsModule.swift in Sources */,
-				1A564032D3C011BCAA7D44A8 /* DeepLinkService.swift in Sources */,
+				1A564032D3C011BCAA7D44A8 /* DeepLinkStorage.swift in Sources */,
 				11B35804545D048C0EDB8089 /* EvmSyncSource.swift in Sources */,
 				11B352F14D96C26D946E3877 /* EvmSyncSourceManager.swift in Sources */,
 				D02C85A92D1A93A60096A84D /* SpamAddress.swift in Sources */,
@@ -12760,6 +12759,7 @@
 				D3F9B0312BE3B39D009FFA95 /* EvmDecoration.swift in Sources */,
 				11B35EECB57465598F305C5B /* ListRow.swift in Sources */,
 				11B3538D0F8C037E40623A81 /* Text.swift in Sources */,
+				6BEF09612E252519004F4514 /* StartScreenAlertManager.swift in Sources */,
 				11B35503B3E84FEFCDF1AFED /* ThemeView.swift in Sources */,
 				ABC9A005F31836B4EBAB1C97 /* DonateDescriptionCell.swift in Sources */,
 				ABC9AD85EF6798DF4302FD0E /* WalletTokenListDataSource.swift in Sources */,

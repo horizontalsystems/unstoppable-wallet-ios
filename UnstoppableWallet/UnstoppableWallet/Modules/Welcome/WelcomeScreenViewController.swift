@@ -15,7 +15,6 @@ struct WelcomeScreenView: UIViewControllerRepresentable {
 }
 
 class WelcomeScreenViewController: ThemeViewController {
-    private let viewModel: WelcomeScreenViewModel
     private let onFinish: () -> Void
     private let scrollView = UIScrollView()
     private var textViews = [WelcomeTextView]()
@@ -32,8 +31,7 @@ class WelcomeScreenViewController: ThemeViewController {
         Slide(title: "intro.stay_private.title".localized, description: "intro.stay_private.description".localized, image: "Intro - Stay Private"),
     ]
 
-    init(viewModel: WelcomeScreenViewModel, onFinish: @escaping () -> Void) {
-        self.viewModel = viewModel
+    init(onFinish: @escaping () -> Void) {
         self.onFinish = onFinish
         pageControl = BarPageControl(barCount: slides.count)
 
@@ -206,12 +204,6 @@ class WelcomeScreenViewController: ThemeViewController {
         logoTitleLabel.font = .title2
         logoTitleLabel.textColor = .themeLeah
         logoTitleLabel.text = AppConfig.appName
-
-        NotificationCenter.default.addObserver(self, selector: #selector(appDidBecomeActive), name: UIApplication.didBecomeActiveNotification, object: nil)
-    }
-
-    @objc func appDidBecomeActive() {
-        viewModel.handleDeepLink()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -226,7 +218,6 @@ class WelcomeScreenViewController: ThemeViewController {
                 self?.logoWrapperView.removeFromSuperview()
             })
         })
-        viewModel.handleDeepLink()
     }
 
     @objc private func onTapStart() {
@@ -269,15 +260,7 @@ extension WelcomeScreenViewController: UIScrollViewDelegate {
 
 extension WelcomeScreenViewController {
     static func instance(onFinish: @escaping () -> Void) -> UIViewController {
-        let eventHandler = EventHandler(deepLinkManager: Core.shared.deepLinkManager)
-        let deepLinkService = DeepLinkService(deepLinkManager: Core.shared.deepLinkManager)
-        let viewModel = WelcomeScreenViewModel(deepLinkService: deepLinkService, eventHandler: eventHandler)
-
-        let viewController = WelcomeScreenViewController(viewModel: viewModel, onFinish: onFinish)
-        let telegramUserHandler = TelegramUserHandler(marketKit: Core.shared.marketKit)
-
-        eventHandler.append(handler: telegramUserHandler)
-
+        let viewController = WelcomeScreenViewController(onFinish: onFinish)
         return viewController
     }
 }

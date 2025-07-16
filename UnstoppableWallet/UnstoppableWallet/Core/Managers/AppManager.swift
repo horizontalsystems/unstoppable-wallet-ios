@@ -16,7 +16,7 @@ class AppManager {
     private let appVersionManager: AppVersionManager
     private let rateAppManager: RateAppManager
     private let logRecordManager: LogRecordManager
-    private let deepLinkManager: DeepLinkManager
+    private let deeplinkStorage: DeeplinkStorage
     private let evmLabelManager: EvmLabelManager
     private let balanceHiddenManager: BalanceHiddenManager
     private let statManager: StatManager
@@ -37,8 +37,8 @@ class AppManager {
          keychainManager: KeychainManager, passcodeLockManager: PasscodeLockManager,
          kitCleaner: KitCleaner, coverManager: CoverManager,
          appVersionManager: AppVersionManager, rateAppManager: RateAppManager,
-         logRecordManager: LogRecordManager,
-         deepLinkManager: DeepLinkManager, evmLabelManager: EvmLabelManager, balanceHiddenManager: BalanceHiddenManager, statManager: StatManager,
+         logRecordManager: LogRecordManager, deeplinkStorage: DeeplinkStorage,
+         evmLabelManager: EvmLabelManager, balanceHiddenManager: BalanceHiddenManager, statManager: StatManager,
          walletConnectSocketConnectionService: WalletConnectSocketConnectionService, nftMetadataSyncer: NftMetadataSyncer, tonKitManager: TonKitManager,
          stellarKitManager: StellarKitManager)
     {
@@ -53,7 +53,7 @@ class AppManager {
         self.appVersionManager = appVersionManager
         self.rateAppManager = rateAppManager
         self.logRecordManager = logRecordManager
-        self.deepLinkManager = deepLinkManager
+        self.deeplinkStorage = deeplinkStorage
         self.evmLabelManager = evmLabelManager
         self.balanceHiddenManager = balanceHiddenManager
         self.statManager = statManager
@@ -136,7 +136,7 @@ extension AppManager {
     }
 
     func didReceive(url: URL) {
-        deepLinkManager.handle(url: url)
+        deeplinkStorage.deepLinkUrl = url
     }
 }
 

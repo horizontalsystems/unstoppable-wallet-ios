@@ -25,9 +25,8 @@ enum MainModule {
             walletConnectSessionManager: Core.shared.walletConnectSessionManager,
             contactBookManager: Core.shared.contactManager
         )
-        let releaseNotesService = ReleaseNotesService()
-        let jailbreakService = JailbreakService()
-        let deepLinkService = DeepLinkService(deepLinkManager: Core.shared.deepLinkManager)
+        let releaseNotesService = Core.shared.releaseNotesService
+        let jailbreakService = JailbreakService(localStorage: Core.shared.localStorage)
 
         let eventHandler = Core.shared.appEventHandler
         let viewModel = MainViewModel(
@@ -35,7 +34,6 @@ enum MainModule {
             badgeService: badgeService,
             releaseNotesService: releaseNotesService,
             jailbreakService: jailbreakService,
-            deepLinkService: deepLinkService,
             eventHandler: eventHandler
         )
 

@@ -52,13 +52,12 @@ class AddressEventHandler {
         let event = StatEvent.openSendTokenList(coinUid: token?.coin.uid, chainUid: token?.blockchain.uid)
         stat(page: source, section: eventType.contains(.address) ? .qrScan : .deepLink, event: event)
 
-        return .sendPage(
-            .init(
-                allowedBlockchainTypes: allowedBlockchainTypes,
-                allowedTokenTypes: allowedTokenType.map { [$0] },
-                address: uri.address,
-                amount: uri.amount
-            )
+        return .sendPage(.init(
+            blockchainTypes: allowedBlockchainTypes,
+            tokenTypes: allowedTokenType.map { [$0] },
+            address: uri.address,
+            amount: uri.amount
+        )
         )
     }
 }

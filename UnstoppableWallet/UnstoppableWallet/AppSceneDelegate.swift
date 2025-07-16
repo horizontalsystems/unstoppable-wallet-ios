@@ -36,16 +36,4 @@ class AppSceneDelegate: NSObject, UIWindowSceneDelegate {
     func sceneWillResignActive(_: UIScene) {
         Core.shared.appManager.willResignActive()
     }
-
-    func scene(_: UIScene, openURLContexts URLContexts: Set<UIOpenURLContext>) {
-        for context in URLContexts {
-            Core.instance?.appManager.didReceive(url: context.url)
-        }
-    }
-
-    func scene(_: UIScene, continue userActivity: NSUserActivity) {
-        if userActivity.activityType == NSUserActivityTypeBrowsingWeb, let url = userActivity.webpageURL {
-            Core.instance?.appManager.didReceive(url: url)
-        }
-    }
 }
