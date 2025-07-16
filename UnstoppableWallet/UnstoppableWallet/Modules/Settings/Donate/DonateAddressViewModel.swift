@@ -1,12 +1,11 @@
 import Foundation
 import MarketKit
 
-class DonateAddressViewModel {
-    typealias ViewItem = (String, BlockchainType, String)
+class DonateAddressViewModel: ObservableObject {
+    private let marketKit = Core.shared.marketKit
+    @Published var viewItems: [ViewItem]
 
-    let viewItems: [ViewItem]
-
-    init(marketKit: MarketKit.Kit) {
+    init() {
         guard let blockchains = try? marketKit.allBlockchains() else {
             viewItems = []
             return
@@ -15,10 +14,22 @@ class DonateAddressViewModel {
         var viewItems = [ViewItem]()
         for (type, address) in AppConfig.donationAddresses {
             if let blockchain = blockchains.first(where: { $0.type == type }) {
-                viewItems.append((blockchain.name, type, address))
+                viewItems.append(.init(name: blockchain.name, type: type, address: address))
             }
         }
 
         self.viewItems = viewItems
+    }
+}
+
+extension DonateAddressViewModel {
+    struct ViewItem: Identifiable {
+        let name: String
+        let type: BlockchainType
+        let address: String
+
+        var id: String {
+            name + type.uid + address
+        }
     }
 }

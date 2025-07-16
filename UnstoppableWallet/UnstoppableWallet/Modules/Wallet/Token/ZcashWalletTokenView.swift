@@ -5,8 +5,6 @@ struct ZcashWalletTokenView: View {
 
     private let wallet: Wallet
 
-    @State var transparentPresented = false
-
     init(wallet: Wallet, adapter: ZcashAdapter) {
         _viewModel = StateObject(wrappedValue: ZcashWalletTokenViewModel(adapter: adapter))
         self.wallet = wallet
@@ -37,37 +35,36 @@ struct ZcashWalletTokenView: View {
                                 title: "balance.token.transparent".localized,
                                 amount: transparent
                             ) {
-                                transparentPresented = true
+                                Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                                    BottomSheetView(
+                                        icon: .info,
+                                        title: "balance.token.transparent.info.title".localized,
+                                        items: [
+                                            .text(text: "balance.token.transparent.info.description".localized),
+                                        ],
+                                        buttons: [
+                                            .init(style: .yellow, title: "balance.token.shield".localized) {
+                                                isPresented.wrappedValue = false
+
+                                                Coordinator.shared.present { _ in
+                                                    ThemeNavigationStack {
+                                                        ShieldSendView(amount: viewModel.zcashBalanceData.transparent, address: nil)
+                                                    }
+                                                }
+                                            },
+                                            .init(style: .transparent, title: "button.close".localized) {
+                                                isPresented.wrappedValue = false
+                                            },
+                                        ],
+                                        isPresented: isPresented
+                                    )
+                                }
                             }
                         }
                     }
                 }
                 .themeListStyle(.bordered)
             }
-        }
-        .bottomSheet(isPresented: $transparentPresented) {
-            BottomSheetView(
-                icon: .info,
-                title: "balance.token.transparent.info.title".localized,
-                items: [
-                    .text(text: "balance.token.transparent.info.description".localized),
-                ],
-                buttons: [
-                    .init(style: .yellow, title: "balance.token.shield".localized) {
-                        transparentPresented = false
-
-                        Coordinator.shared.present { _ in
-                            ThemeNavigationStack {
-                                ShieldSendView(amount: viewModel.zcashBalanceData.transparent, address: nil)
-                            }
-                        }
-                    },
-                    .init(style: .transparent, title: "button.close".localized) {
-                        transparentPresented = false
-                    },
-                ],
-                isPresented: $transparentPresented
-            )
         }
     }
 

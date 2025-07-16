@@ -86,6 +86,7 @@ struct PreSendView: View {
                 }
             }
         }
+        .toolbarRole(.editor)
         .accentColor(.themeJacob)
     }
 

@@ -35,7 +35,7 @@ struct Wallet {
 
 extension Wallet: Identifiable {
     var id: String {
-        token.coin.uid + token.blockchainType.uid
+        token.coin.uid + token.blockchainType.uid + token.type.id
     }
 }
 
