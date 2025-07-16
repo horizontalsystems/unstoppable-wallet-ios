@@ -23,6 +23,9 @@ struct AppView: View {
                 NoPasscodeView(mode: .cannotCheckPasscode)
             }
         }
+        .onOpenURL(perform: { (url: URL) in
+            Core.instance?.appManager.didReceive(url: url)
+        })
         .preferredColorScheme(viewModel.themeMode.colorScheme)
     }
 }

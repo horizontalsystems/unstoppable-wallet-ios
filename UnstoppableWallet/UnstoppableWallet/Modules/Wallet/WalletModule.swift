@@ -41,65 +41,6 @@ enum WalletModule {
         return WalletViewController(viewModel: viewModel)
     }
 
-    static func sendTokenListViewController(allowedBlockchainTypes: [BlockchainType]? = nil, allowedTokenTypes: [TokenType]? = nil, address _: String? = nil, amount _: Decimal? = nil) -> UIViewController? {
-        guard let account = Core.shared.accountManager.activeAccount else {
-            return nil
-        }
-
-        let coinPriceService = WalletCoinPriceService()
-
-        let adapterService = WalletAdapterService(account: account, adapterManager: Core.shared.adapterManager)
-        let walletService = WalletService(
-            account: account,
-            adapterService: adapterService,
-            walletManager: Core.shared.walletManager,
-            allowedBlockchainTypes: allowedBlockchainTypes,
-            allowedTokenTypes: allowedTokenTypes
-        )
-        adapterService.delegate = walletService
-
-        let service = WalletTokenListService(
-            walletService: walletService,
-            coinPriceService: coinPriceService,
-            cacheManager: Core.shared.enabledWalletCacheManager,
-            reachabilityManager: Core.shared.reachabilityManager,
-            appSettingManager: Core.shared.appSettingManager,
-            balanceHiddenManager: Core.shared.balanceHiddenManager,
-            appManager: Core.shared.appManager,
-            feeCoinProvider: Core.shared.feeCoinProvider,
-            account: account
-        )
-        walletService.delegate = service
-        coinPriceService.delegate = service
-
-        let viewModel = WalletTokenListViewModel(
-            service: service,
-            factory: WalletTokenListViewItemFactory(),
-            title: "send.send".localized,
-            emptyText: "send.no_assets".localized
-        )
-
-        let dataSourceChain = DataSourceChain()
-        let dataSource = WalletTokenListDataSource(viewModel: viewModel)
-        dataSource.delegate = dataSourceChain
-        dataSourceChain.append(source: dataSource)
-
-        let viewController = WalletTokenListViewController(viewModel: viewModel, dataSource: dataSourceChain)
-        dataSource.viewController = viewController
-        dataSource.onSelectWallet = { [weak viewController] _ in
-            // let module = SendAddressView(
-            //     wallet: wallet,
-            //     address: address,
-            //     amount: amount,
-            //     onDismiss: { viewController?.dismiss(animated: true) }
-            // ).toViewController()
-
-            // viewController?.navigationController?.pushViewController(module, animated: true)
-        }
-
-        return ThemeNavigationController(rootViewController: viewController)
-    }
-
     static func swapTokenListViewController() -> UIViewController? {
         guard let account = Core.shared.accountManager.activeAccount else {
             return nil
@@ -275,21 +216,6 @@ extension WalletModule {
             self.buttons = buttons
         }
     }
-}
-
-struct ChooseSendTokenListView: UIViewControllerRepresentable {
-    typealias UIViewControllerType = UIViewController
-
-    let allowedBlockchainTypes: [BlockchainType]?
-    let allowedTokenTypes: [TokenType]?
-    let address: String?
-    let amount: Decimal?
-
-    func makeUIViewController(context _: Context) -> UIViewController {
-        WalletModule.sendTokenListViewController(allowedBlockchainTypes: allowedBlockchainTypes, allowedTokenTypes: allowedTokenTypes, address: address, amount: amount) ?? UIViewController()
-    }
-
-    func updateUIViewController(_: UIViewController, context _: Context) {}
 }
 
 struct DonateTokenListView: UIViewControllerRepresentable {

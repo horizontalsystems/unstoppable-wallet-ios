@@ -11,7 +11,7 @@ protocol IEventHandler {
 
 enum EventHandlerSignal {
     case coinPage(Coin)
-    case sendPage(EventHandler.SendParams)
+    case sendPage(SendTokenListViewModel.SendOptions)
     case tonConnect(EventHandler.TonConnectParams)
     case walletConnectHandleUrl(String)
 
@@ -131,15 +131,6 @@ extension EventHandler.HandleError: LocalizedError {
 }
 
 extension EventHandler {
-    struct SendParams: Identifiable {
-        let id = UUID()
-
-        let allowedBlockchainTypes: [BlockchainType]?
-        let allowedTokenTypes: [TokenType]?
-        let address: String?
-        let amount: Decimal?
-    }
-
     struct TonConnectParams: Identifiable {
         let config: TonConnectConfig
         let returnDeepLink: String?

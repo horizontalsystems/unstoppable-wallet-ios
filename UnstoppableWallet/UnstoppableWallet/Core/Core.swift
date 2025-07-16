@@ -33,6 +33,7 @@ class Core {
     let systemInfoManager: SystemInfoManager
     let testNetManager: TestNetManager
     let deepLinkManager: DeepLinkManager
+    let deeplinkStorage: DeeplinkStorage
     let launchScreenManager: LaunchScreenManager
     let appSettingManager: AppSettingManager
     let balanceHiddenManager: BalanceHiddenManager
@@ -108,7 +109,9 @@ class Core {
     let appEventHandler: EventHandler
 
     let performanceDataManager: PerformanceDataManager
+    let releaseNotesService: ReleaseNotesService
 
+    private let startScreenAlertManager: StartScreenAlertManager
     private let deepLinkViewManager: DeepLinkViewManager
 
     init() throws {
@@ -144,6 +147,7 @@ class Core {
         systemInfoManager = SystemInfoManager()
         testNetManager = TestNetManager(userDefaultsStorage: userDefaultsStorage)
         deepLinkManager = DeepLinkManager()
+        deeplinkStorage = DeeplinkStorage()
         launchScreenManager = LaunchScreenManager(userDefaultsStorage: userDefaultsStorage)
         appSettingManager = AppSettingManager(userDefaultsStorage: userDefaultsStorage)
         balanceHiddenManager = BalanceHiddenManager(userDefaultsStorage: userDefaultsStorage)
@@ -326,6 +330,7 @@ class Core {
         kitCleaner = KitCleaner(accountManager: accountManager)
 
         performanceDataManager = PerformanceDataManager(userDefaultsStorage: userDefaultsStorage)
+        releaseNotesService = ReleaseNotesService(appVersionManager: appVersionManager)
 
         appEventHandler = EventHandler(deepLinkManager: deepLinkManager)
 
@@ -334,6 +339,15 @@ class Core {
             walletConnectManager: walletConnectManager,
             accountManager: accountManager,
             cloudBackupManager: cloudBackupManager
+        )
+
+        startScreenAlertManager = StartScreenAlertManager(
+            accountManager: accountManager,
+            lockManager: lockManager,
+            jailbreakService: JailbreakService(localStorage: localStorage),
+            releaseNotesService: releaseNotesService,
+            deeplinkManager: deepLinkManager,
+            deeplinkStorage: deeplinkStorage
         )
 
         let walletConnectHandler = WalletConnectHandlerModule.handler(
@@ -366,7 +380,7 @@ class Core {
             appVersionManager: appVersionManager,
             rateAppManager: rateAppManager,
             logRecordManager: logRecordManager,
-            deepLinkManager: deepLinkManager,
+            deeplinkStorage: deeplinkStorage,
             evmLabelManager: evmLabelManager,
             balanceHiddenManager: balanceHiddenManager,
             statManager: statManager,

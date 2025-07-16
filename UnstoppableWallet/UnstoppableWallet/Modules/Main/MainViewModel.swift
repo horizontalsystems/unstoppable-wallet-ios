@@ -8,7 +8,7 @@ class MainViewModel {
     private let badgeService: MainBadgeService
     private let releaseNotesService: ReleaseNotesService
     private let jailbreakService: JailbreakService
-    private let deepLinkService: DeepLinkService
+//    private let deepLinkService: DeepLinkService
     private let eventHandler: IEventHandler
     private let disposeBag = DisposeBag()
 
@@ -20,12 +20,12 @@ class MainViewModel {
     private let showJailbreakRelay = PublishRelay<Void>()
     private let showEventRelay = PublishRelay<Any>()
 
-    init(service: MainService, badgeService: MainBadgeService, releaseNotesService: ReleaseNotesService, jailbreakService: JailbreakService, deepLinkService: DeepLinkService, eventHandler: IEventHandler) {
+    init(service: MainService, badgeService: MainBadgeService, releaseNotesService: ReleaseNotesService, jailbreakService: JailbreakService, /* deepLinkService: DeepLinkService, */ eventHandler: IEventHandler) {
         self.service = service
         self.badgeService = badgeService
         self.releaseNotesService = releaseNotesService
         self.jailbreakService = jailbreakService
-        self.deepLinkService = deepLinkService
+//        self.deepLinkService = deepLinkService
         self.eventHandler = eventHandler
 
         subscribe(disposeBag, service.hasAccountsObservable) { [weak self] in self?.sync(hasAccounts: $0) }
@@ -54,7 +54,7 @@ class MainViewModel {
     }
 
     private func handleDeepLink(deepLink: DeepLinkManager.DeepLink) {
-        deepLinkService.setDeepLinkShown()
+//        deepLinkService.setDeepLinkShown()
         Task {
             do {
                 try await eventHandler.handle(source: .main, event: deepLink, eventType: .deepLink)
@@ -69,9 +69,10 @@ class MainViewModel {
             showReleaseNotesRelay.accept(releaseNotesUrl)
         } else if jailbreakService.needToShowAlert {
             showJailbreakRelay.accept(())
-        } else if let deepLink = deepLinkService.deepLink {
-            handleDeepLink(deepLink: deepLink)
         }
+//        } else if let deepLink = deepLinkService.deepLink {
+//            handleDeepLink(deepLink: deepLink)
+//        }
     }
 }
 

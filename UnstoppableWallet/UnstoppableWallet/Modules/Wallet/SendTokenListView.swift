@@ -1,12 +1,17 @@
 import SwiftUI
 
 struct SendTokenListView: View {
-    @StateObject private var viewModel = SendTokenListViewModel()
+    @StateObject private var viewModel: SendTokenListViewModel
 
     @State private var path = NavigationPath()
     @State private var searchText = ""
 
     @Binding var isPresented: Bool
+
+    init(options: SendTokenListViewModel.SendOptions = .init(), isPresented: Binding<Bool>) {
+        _viewModel = .init(wrappedValue: SendTokenListViewModel(options: options))
+        _isPresented = isPresented
+    }
 
     var body: some View {
         ThemeNavigationStack(path: $path) {
@@ -40,7 +45,7 @@ struct SendTokenListView: View {
                 }
             }
             .navigationDestination(for: Wallet.self) { wallet in
-                SendAddressView(wallet: wallet, isPresented: $isPresented)
+                SendAddressView(wallet: wallet, address: viewModel.options.address, amount: viewModel.options.amount, isPresented: $isPresented)
             }
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
@@ -58,9 +63,9 @@ struct SendTokenListView: View {
         let text = searchText.trimmingCharacters(in: .whitespaces)
 
         if text.isEmpty {
-            return viewModel.items
+            return viewModel.itemsWithOptions
         } else {
-            return viewModel.items.filter { item in
+            return viewModel.itemsWithOptions.filter { item in
                 item.wallet.token.coin.name.localizedCaseInsensitiveContains(text) || item.wallet.token.coin.code.localizedCaseInsensitiveContains(text)
             }
         }

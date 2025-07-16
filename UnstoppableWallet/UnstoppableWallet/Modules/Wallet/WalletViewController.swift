@@ -477,10 +477,10 @@ class WalletViewController: ThemeViewController {
         cell.onTapConvertedAmount = { [weak self] in self?.viewModel.onTapConvertedTotalAmount() }
         // Decentralized actions
         cell.actions[.send] = { [weak self] in
-            guard let viewController = WalletModule.sendTokenListViewController() else {
-                return
-            }
-            self?.present(viewController, animated: true)
+//            guard let viewController = WalletModule.sendTokenListViewController() else {
+//                return
+//            }
+//            self?.present(viewController, animated: true)
 
             stat(page: .balance, event: .open(page: .sendTokenList))
         }

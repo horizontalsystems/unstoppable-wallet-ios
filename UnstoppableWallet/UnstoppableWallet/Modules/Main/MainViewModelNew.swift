@@ -8,12 +8,7 @@ class MainViewModelNew: ObservableObject {
     private let launchScreenManager = Core.shared.launchScreenManager
     private let userDefaultsStorage = Core.shared.userDefaultsStorage
     private let accountManager = Core.shared.accountManager
-    private let lockManager = Core.shared.lockManager
 
-    private let releaseNotesService = ReleaseNotesService()
-    private let jailbreakService = JailbreakService()
-
-    private var cancellables = Set<AnyCancellable>()
     private let disposeBag = DisposeBag()
 
     @Published private(set) var showMarket: Bool
@@ -50,16 +45,6 @@ class MainViewModelNew: ObservableObject {
             .subscribe(onNext: { [weak self] in self?.showMarket = $0 })
             .disposed(by: disposeBag)
 
-        lockManager.$isLocked
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in self?.handleNextAlert() }
-            .store(in: &cancellables)
-
-        accountManager.$accountsLost
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in self?.handleNextAlert() }
-            .store(in: &cancellables)
-
         selectedTab = initialTab
     }
 
@@ -85,35 +70,6 @@ class MainViewModelNew: ObservableObject {
 extension MainViewModelNew {
     var lastCreatedAccount: Account? {
         accountManager.popLastCreatedAccount()
-    }
-
-    func handleNextAlert() {
-        guard !lockManager.isLocked else {
-            return
-        }
-
-        if let releaseNotesUrl = releaseNotesService.releaseNotesUrl {
-            Coordinator.shared.present { _ in
-                MarkdownModule.gitReleaseNotesMarkdownView(url: releaseNotesUrl, presented: true).ignoresSafeArea()
-            } onDismiss: { [weak self] in
-                self?.handleNextAlert()
-            }
-            stat(page: .main, event: .open(page: .whatsNews))
-        } else if accountManager.accountsLost {
-            Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                AccountsLostView(isPresented: isPresented)
-            } onDismiss: { [weak self] in
-                self?.accountManager.accountsLost = false
-            }
-        } else if jailbreakService.needToShowAlert {
-            Coordinator.shared.present { isPresented in
-                JailbreakView(isPresented: isPresented)
-            } onDismiss: { [weak self] in
-                self?.handleNextAlert()
-            }
-
-            jailbreakService.setAlertShown()
-        }
     }
 }
 

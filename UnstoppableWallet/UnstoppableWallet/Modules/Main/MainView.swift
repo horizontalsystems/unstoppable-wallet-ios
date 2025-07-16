@@ -62,9 +62,6 @@ struct MainView: View {
                 )
             )
         }
-        .onAppear {
-            viewModel.handleNextAlert()
-        }
         .modifier(CoordinatorViewModifier())
     }
 

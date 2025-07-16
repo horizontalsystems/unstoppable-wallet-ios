@@ -52,14 +52,9 @@ class DeepLinkViewManager {
     @MainActor private func handle(signal: EventHandlerSignal) throws {
         switch signal {
         case let .coinPage(coin): Coordinator.shared.presentCoinPage(coin: coin, page: .deepLink)
-        case let .sendPage(params):
-            Coordinator.shared.present { _ in
-                ChooseSendTokenListView(
-                    allowedBlockchainTypes: params.allowedBlockchainTypes,
-                    allowedTokenTypes: params.allowedTokenTypes,
-                    address: params.address, amount: params.amount
-                )
-                .ignoresSafeArea()
+        case let .sendPage(options):
+            Coordinator.shared.present { isPresented in
+                SendTokenListView(options: options, isPresented: isPresented)
             }
         case let .walletConnectHandleUrl(url):
             walletConnectVerificationModel.handle { [weak self] in
