@@ -522,8 +522,8 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func donate() -> some View {
         ClickableRow(action: {
-            Coordinator.shared.present { _ in
-                DonateTokenListView().ignoresSafeArea()
+            Coordinator.shared.present { isPresented in
+                DonateTokenListView(isPresented: isPresented)
             }
             stat(page: .settings, event: .open(page: .donate))
         }) {

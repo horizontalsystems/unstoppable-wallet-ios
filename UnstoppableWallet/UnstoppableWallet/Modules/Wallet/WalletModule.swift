@@ -94,83 +94,83 @@ enum WalletModule {
 
         return ThemeNavigationController(rootViewController: viewController)
     }
-
-    static func donateTokenListViewController() -> UIViewController {
-        let service: IWalletTokenListService
-        if let account = Core.shared.accountManager.activeAccount, !account.watchAccount {
-            let coinPriceService = WalletCoinPriceService()
-
-            let adapterService = WalletAdapterService(account: account, adapterManager: Core.shared.adapterManager)
-            let walletService = WalletService(
-                account: account,
-                adapterService: adapterService,
-                walletManager: Core.shared.walletManager
-            )
-            adapterService.delegate = walletService
-
-            let tokenListService = WalletTokenListService(
-                walletService: walletService,
-                coinPriceService: coinPriceService,
-                cacheManager: Core.shared.enabledWalletCacheManager,
-                reachabilityManager: Core.shared.reachabilityManager,
-                appSettingManager: Core.shared.appSettingManager,
-                balanceHiddenManager: Core.shared.balanceHiddenManager,
-                appManager: Core.shared.appManager,
-                feeCoinProvider: Core.shared.feeCoinProvider,
-                account: account
-            )
-            walletService.delegate = tokenListService
-            coinPriceService.delegate = tokenListService
-
-            service = tokenListService
-        } else {
-            service = NoAccountWalletTokenListService(
-                reachabilityManager: Core.shared.reachabilityManager,
-                appSettingManager: Core.shared.appSettingManager
-            )
-        }
-
-        let viewModel = WalletTokenListViewModel(
-            service: service,
-            factory: WalletTokenListViewItemFactory(),
-            title: "donate.list.title".localized,
-            emptyText: "donate.no_assets".localized
-        )
-
-        let dataSourceChain = DataSourceChain()
-        let descriptionDataSource = DonateDescriptionDataSource()
-        descriptionDataSource.delegate = dataSourceChain
-        dataSourceChain.append(source: descriptionDataSource)
-
-        let dataSource = WalletTokenListDataSource(viewModel: viewModel)
-        dataSource.delegate = dataSourceChain
-        dataSourceChain.append(source: dataSource)
-
-        let viewController = WalletTokenListViewController(viewModel: viewModel, dataSource: dataSourceChain)
-        viewController.hideSearchBar = true
-
-        descriptionDataSource.viewController = viewController
-        dataSource.viewController = viewController
-        dataSource.onSelectWallet = { [weak viewController] wallet in
-            guard let address = AppConfig.donationAddresses.first(where: { $0.key == wallet.token.blockchainType })?.value else {
-                return
-            }
-
-            let module = PreSendView(
-                wallet: wallet,
-                handler: SendHandlerFactory.preSendHandler(wallet: wallet),
-                resolvedAddress: .init(address: address, issueTypes: []),
-                addressVisible: false,
-                onDismiss: { viewController?.dismiss(animated: true) }
-            )
-            .toViewController()
-
-            viewController?.navigationController?.pushViewController(module, animated: true)
-            stat(page: .donate, event: .openSend(token: wallet.token))
-        }
-
-        return ThemeNavigationController(rootViewController: viewController)
-    }
+//
+//    static func donateTokenListViewController() -> UIViewController {
+//        let service: IWalletTokenListService
+//        if let account = Core.shared.accountManager.activeAccount, !account.watchAccount {
+//            let coinPriceService = WalletCoinPriceService()
+//
+//            let adapterService = WalletAdapterService(account: account, adapterManager: Core.shared.adapterManager)
+//            let walletService = WalletService(
+//                account: account,
+//                adapterService: adapterService,
+//                walletManager: Core.shared.walletManager
+//            )
+//            adapterService.delegate = walletService
+//
+//            let tokenListService = WalletTokenListService(
+//                walletService: walletService,
+//                coinPriceService: coinPriceService,
+//                cacheManager: Core.shared.enabledWalletCacheManager,
+//                reachabilityManager: Core.shared.reachabilityManager,
+//                appSettingManager: Core.shared.appSettingManager,
+//                balanceHiddenManager: Core.shared.balanceHiddenManager,
+//                appManager: Core.shared.appManager,
+//                feeCoinProvider: Core.shared.feeCoinProvider,
+//                account: account
+//            )
+//            walletService.delegate = tokenListService
+//            coinPriceService.delegate = tokenListService
+//
+//            service = tokenListService
+//        } else {
+//            service = NoAccountWalletTokenListService(
+//                reachabilityManager: Core.shared.reachabilityManager,
+//                appSettingManager: Core.shared.appSettingManager
+//            )
+//        }
+//
+//        let viewModel = WalletTokenListViewModel(
+//            service: service,
+//            factory: WalletTokenListViewItemFactory(),
+//            title: "donate.list.title".localized,
+//            emptyText: "donate.no_assets".localized
+//        )
+//
+//        let dataSourceChain = DataSourceChain()
+//        let descriptionDataSource = DonateDescriptionDataSource()
+//        descriptionDataSource.delegate = dataSourceChain
+//        dataSourceChain.append(source: descriptionDataSource)
+//
+//        let dataSource = WalletTokenListDataSource(viewModel: viewModel)
+//        dataSource.delegate = dataSourceChain
+//        dataSourceChain.append(source: dataSource)
+//
+//        let viewController = WalletTokenListViewController(viewModel: viewModel, dataSource: dataSourceChain)
+//        viewController.hideSearchBar = true
+//
+//        descriptionDataSource.viewController = viewController
+//        dataSource.viewController = viewController
+//        dataSource.onSelectWallet = { [weak viewController] wallet in
+//            guard let address = AppConfig.donationAddresses.first(where: { $0.key == wallet.token.blockchainType })?.value else {
+//                return
+//            }
+//
+//            let module = PreSendView(
+//                wallet: wallet,
+//                handler: SendHandlerFactory.preSendHandler(wallet: wallet),
+//                resolvedAddress: .init(address: address, issueTypes: []),
+//                addressVisible: false,
+//                onDismiss: { viewController?.dismiss(animated: true) }
+//            )
+//            .toViewController()
+//
+//            viewController?.navigationController?.pushViewController(module, animated: true)
+//            stat(page: .donate, event: .openSend(token: wallet.token))
+//        }
+//
+//        return ThemeNavigationController(rootViewController: viewController)
+//    }
 }
 
 extension WalletModule {
@@ -216,16 +216,6 @@ extension WalletModule {
             self.buttons = buttons
         }
     }
-}
-
-struct DonateTokenListView: UIViewControllerRepresentable {
-    typealias UIViewControllerType = UIViewController
-
-    func makeUIViewController(context _: Context) -> UIViewController {
-        WalletModule.donateTokenListViewController()
-    }
-
-    func updateUIViewController(_: UIViewController, context _: Context) {}
 }
 
 enum WalletButton {
