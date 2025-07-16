@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ManageAccountsView: View {
-    @StateObject private var viewModel = ManageAccountsViewModelNew()
+    @StateObject private var viewModel = ManageAccountsViewModel()
 
     @Binding private var isPresented: Bool
 
@@ -81,7 +81,7 @@ struct ManageAccountsView: View {
         }
     }
 
-    @ViewBuilder private func itemView(item: ManageAccountsViewModelNew.Item, watch: Bool) -> some View {
+    @ViewBuilder private func itemView(item: ManageAccountsViewModel.Item, watch: Bool) -> some View {
         ClickableRow(action: {
             viewModel.set(activeAccountId: item.account.id)
 
@@ -119,7 +119,7 @@ struct ManageAccountsView: View {
         }
     }
 
-    private func alertSubtitle(item: ManageAccountsViewModelNew.Item) -> String? {
+    private func alertSubtitle(item: ManageAccountsViewModel.Item) -> String? {
         if item.account.nonStandard {
             return "manage_accounts.migration_required".localized
         } else if !(item.account.backedUp || item.cloudBackedUp) {

@@ -2,7 +2,7 @@ import Combine
 import MarketKit
 
 class TransactionFilterViewModel: ObservableObject {
-    private let transactionsViewModel: TransactionsViewModelNew
+    private let transactionsViewModel: TransactionsViewModel
     private var cancellables = Set<AnyCancellable>()
 
     @Published var blockchain: Blockchain?
@@ -12,7 +12,7 @@ class TransactionFilterViewModel: ObservableObject {
     @Published var scamFilterEnabled: Bool
     @Published var resetEnabled: Bool
 
-    init(transactionsViewModel: TransactionsViewModelNew) {
+    init(transactionsViewModel: TransactionsViewModel) {
         self.transactionsViewModel = transactionsViewModel
 
         blockchain = transactionsViewModel.transactionFilter.blockchain

@@ -1,105 +1,58 @@
-import RxCocoa
-import RxRelay
-import RxSwift
+import Combine
 
-class ManageAccountsViewModel {
-    private let service: ManageAccountsService
-    private let mode: ManageAccountsModule.Mode
-    private let disposeBag = DisposeBag()
+class ManageAccountsViewModel: ObservableObject {
+    private let accountManager = Core.shared.accountManager
+    private let cloudBackupManager = Core.shared.cloudBackupManager
+    private var cancellables = Set<AnyCancellable>()
 
-    private let viewStateRelay = BehaviorRelay<ViewState>(value: ViewState.empty)
-    private let finishRelay = PublishRelay<Void>()
+    @Published private(set) var regularItems = [Item]()
+    @Published private(set) var watchItems = [Item]()
 
-    init(service: ManageAccountsService, mode: ManageAccountsModule.Mode) {
-        self.service = service
-        self.mode = mode
+    init() {
+        accountManager.activeAccountPublisher
+            .sink { [weak self] _ in self?.syncItems() }
+            .store(in: &cancellables)
 
-        subscribe(disposeBag, service.itemsObservable) { [weak self] in self?.sync(items: $0) }
+        accountManager.accountsPublisher
+            .sink { [weak self] _ in self?.syncItems() }
+            .store(in: &cancellables)
 
-        sync(items: service.items)
+        cloudBackupManager.$oneWalletItems
+            .sink { [weak self] _ in self?.syncItems() }
+            .store(in: &cancellables)
+
+        syncItems()
     }
 
-    private func sync(items: [ManageAccountsService.Item]) {
+    private func syncItems() {
+        let activeAccount = accountManager.activeAccount
+
+        let items = accountManager.accounts.map { account in
+            let cloudBackedUp = cloudBackupManager.backedUp(uniqueId: account.type.uniqueId())
+            return Item(account: account, cloudBackedUp: cloudBackedUp, isActive: account == activeAccount)
+        }
+
         let sortedItems = items.sorted { $0.account.name.lowercased() < $1.account.name.lowercased() }
 
-        let viewState = ViewState(
-            regularViewItems: sortedItems.filter { !$0.account.watchAccount }.map { viewItem(item: $0) },
-            watchViewItems: sortedItems.filter(\.account.watchAccount).map { viewItem(item: $0) }
-        )
-
-        viewStateRelay.accept(viewState)
-    }
-
-    private func viewItem(item: ManageAccountsService.Item) -> ViewItem {
-        var alertSubtitle: String?
-        if item.account.nonStandard {
-            alertSubtitle = "manage_accounts.migration_required".localized
-        } else if item.hasAlertDescription {
-            alertSubtitle = "manage_accounts.backup_required".localized
-        }
-
-        let showAlert = item.account.nonStandard || item.account.nonRecommended || item.hasAlert
-        return ViewItem(
-            accountId: item.account.id,
-            title: item.account.name,
-            subtitle: alertSubtitle ?? item.account.type.detailedDescription,
-            isSubtitleWarning: alertSubtitle != nil,
-            selected: item.isActive,
-            alert: showAlert,
-            watchAccount: item.account.watchAccount
-        )
+        regularItems = sortedItems.filter { !$0.account.watchAccount }
+        watchItems = sortedItems.filter(\.account.watchAccount)
     }
 }
 
 extension ManageAccountsViewModel {
-    var viewStateDriver: Driver<ViewState> {
-        viewStateRelay.asDriver()
+    var hasAccounts: Bool {
+        !accountManager.accounts.isEmpty
     }
 
-    var finishSignal: Signal<Void> {
-        finishRelay.asSignal()
-    }
-
-    var isDoneVisible: Bool {
-        mode == .switcher
-    }
-
-    var lastCreatedAccount: Account? {
-        service.lastCreatedAccount
-    }
-
-    var shouldClose: Bool {
-        mode == .switcher && !service.hasAccounts
-    }
-
-    func onSelect(accountId: String) {
-        service.set(activeAccountId: accountId)
-
-        if mode == .switcher {
-            finishRelay.accept(())
-        }
-
-        stat(page: .manageWallets, event: .select(entity: .wallet))
+    func set(activeAccountId: String) {
+        accountManager.set(activeAccountId: activeAccountId)
     }
 }
 
 extension ManageAccountsViewModel {
-    struct ViewState {
-        let regularViewItems: [ViewItem]
-        let watchViewItems: [ViewItem]
-
-        static var empty: ViewState {
-            ViewState(regularViewItems: [], watchViewItems: [])
-        }
-    }
-
-    struct ViewItem {
-        let accountId: String
-        let title: String
-        let subtitle: String
-        let isSubtitleWarning: Bool
-        let selected: Bool
-        let alert: Bool
-        let watchAccount: Bool
+    struct Item {
+        let account: Account
+        let cloudBackedUp: Bool
+        let isActive: Bool
     }
 }

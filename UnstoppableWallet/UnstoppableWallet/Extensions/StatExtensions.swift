@@ -38,17 +38,6 @@ extension HsPeriodType {
     }
 }
 
-extension MainModule.Tab {
-    var statTab: StatTab {
-        switch self {
-        case .markets: return .markets
-        case .balance: return .balance
-        case .transactions: return .transactions
-        case .settings: return .settings
-        }
-    }
-}
-
 extension MarketModule.Tab {
     var statTab: StatTab {
         switch self {
@@ -70,16 +59,6 @@ extension TransactionTypeFilter {
         case .outgoing: return .outgoing
         case .swap: return .swap
         case .approve: return .approve
-        }
-    }
-}
-
-extension WalletModule.SortType {
-    var statSortType: StatSortType {
-        switch self {
-        case .balance: return .balance
-        case .name: return .name
-        case .percentGrowth: return .priceChange
         }
     }
 }

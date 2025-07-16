@@ -1,14 +1,14 @@
 import SwiftUI
 
 struct WalletTokenView<AdditionalContent: View>: View {
-    @StateObject var viewModel: WalletTokenViewModelNew
-    @StateObject var transactionsViewModel: TransactionsViewModelNew
+    @StateObject var viewModel: WalletTokenViewModel
+    @StateObject var transactionsViewModel: TransactionsViewModel
 
     private let additionalContent: () -> AdditionalContent
 
     init(wallet: Wallet, @ViewBuilder additionalContent: @escaping () -> AdditionalContent = { EmptyView() }) {
-        _viewModel = StateObject(wrappedValue: WalletTokenViewModelNew(wallet: wallet))
-        _transactionsViewModel = StateObject(wrappedValue: TransactionsViewModelNew(transactionFilter: .init(token: wallet.token)))
+        _viewModel = StateObject(wrappedValue: WalletTokenViewModel(wallet: wallet))
+        _transactionsViewModel = StateObject(wrappedValue: TransactionsViewModel(transactionFilter: .init(token: wallet.token)))
         self.additionalContent = additionalContent
     }
 

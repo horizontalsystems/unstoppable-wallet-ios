@@ -23,7 +23,7 @@ class WalletListViewModel: ObservableObject {
     @Published private(set) var balancePrimaryValue: BalancePrimaryValue
     @Published private(set) var balanceHidden: Bool
 
-    @Published var sortType: WalletModule.SortType {
+    @Published var sortType: WalletSorter.SortType {
         didSet {
             handleUpdateSortType()
             userDefaultsStorage.set(value: sortType.rawValue, for: keySortType)
@@ -38,7 +38,7 @@ class WalletListViewModel: ObservableObject {
     let queue = DispatchQueue(label: "\(AppConfig.label).wallet-list-view-model", qos: .userInitiated)
 
     init() {
-        if let rawValue: String = userDefaultsStorage.value(for: keySortType), let sortType = WalletModule.SortType(rawValue: rawValue) {
+        if let rawValue: String = userDefaultsStorage.value(for: keySortType), let sortType = WalletSorter.SortType(rawValue: rawValue) {
             self.sortType = sortType
         } else {
             sortType = .balance

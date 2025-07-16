@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct WalletView: View {
-    @ObservedObject var viewModel: WalletViewModelNew
+    @ObservedObject var viewModel: WalletViewModel
     @StateObject var accountWarningViewModel = AccountWarningViewModel(canIgnore: true)
 
     @Binding var path: NavigationPath
@@ -155,9 +155,9 @@ struct WalletView: View {
                 Coordinator.shared.present(type: .alert) { isPresented in
                     OptionAlertView(
                         title: "balance.sort.header".localized,
-                        viewItems: WalletModule.SortType.allCases.map { .init(text: $0.title, selected: viewModel.sortType == $0) },
+                        viewItems: WalletSorter.SortType.allCases.map { .init(text: $0.title, selected: viewModel.sortType == $0) },
                         onSelect: { index in
-                            viewModel.sortType = WalletModule.SortType.allCases[index]
+                            viewModel.sortType = WalletSorter.SortType.allCases[index]
                         },
                         isPresented: isPresented
                     )

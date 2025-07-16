@@ -1,148 +1,96 @@
+import Combine
 import HdWalletKit
-import RxCocoa
-import RxRelay
-import RxSwift
+import MarketKit
 
-class CreateAccountViewModel {
-    private let service: CreateAccountService
-    private let disposeBag = DisposeBag()
+class CreateAccountViewModel: ObservableObject {
+    private static let defaultWordCount: Mnemonic.WordCount = .twelve
 
-    private let wordCountRelay = BehaviorRelay<String>(value: "")
-    private let passphraseCautionRelay = BehaviorRelay<Caution?>(value: nil)
-    private let passphraseConfirmationCautionRelay = BehaviorRelay<Caution?>(value: nil)
-    private let clearInputsRelay = PublishRelay<Void>()
-    private let showErrorRelay = PublishRelay<String>()
-    private let finishRelay = PublishRelay<Void>()
+    private let accountFactory = Core.shared.accountFactory
+    private let accountManager = Core.shared.accountManager
+    private let walletManager = Core.shared.walletManager
+    private let marketKit = Core.shared.marketKit
+    private let predefinedBlockchainService = Core.shared.predefinedBlockchainService
 
-    init(service: CreateAccountService) {
-        self.service = service
+    let defaultAccountName: String
 
-        subscribe(disposeBag, service.wordCountObservable) { [weak self] in self?.sync(wordCount: $0) }
+    @Published var name: String = ""
+    @Published var advanced = false
+    @Published var wordCount: Mnemonic.WordCount = CreateAccountViewModel.defaultWordCount
+    @Published var passphraseEnabled = false
 
-        sync(wordCount: service.wordCount)
+    @Published var passphrase = ""
+    @Published var passphraseConfirmation = ""
+
+    init() {
+        defaultAccountName = accountFactory.nextAccountName
     }
 
-    private func sync(wordCount: Mnemonic.WordCount) {
-        wordCountRelay.accept("create_wallet.n_words".localized("\(wordCount.rawValue)"))
-    }
+    private func activateDefaultWallets(account: Account) throws {
+        let tokenQueries = [
+            TokenQuery(blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84)), // TODO: make derivation supports accountType
+            TokenQuery(blockchainType: .ethereum, tokenType: .native),
+            TokenQuery(blockchainType: .binanceSmartChain, tokenType: .native),
+            TokenQuery(blockchainType: .tron, tokenType: .native),
+            TokenQuery(blockchainType: .polygon, tokenType: .native),
+            TokenQuery(blockchainType: .ethereum, tokenType: .eip20(address: "0xdac17f958d2ee523a2206206994597c13d831ec7")), // USDT
+            TokenQuery(blockchainType: .binanceSmartChain, tokenType: .eip20(address: "0x55d398326f99059fF775485246999027B3197955")), // USDT
+            TokenQuery(blockchainType: .tron, tokenType: .eip20(address: "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t")), // USDT
+            TokenQuery(blockchainType: .base, tokenType: .eip20(address: "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913")), // USDC
+        ]
 
-    private func clearInputs() {
-        clearInputsRelay.accept(())
-        clearCautions()
+        var wallets = [Wallet]()
 
-        service.passphrase = ""
-        service.passphraseConfirmation = ""
-    }
-
-    private func clearCautions() {
-        if passphraseCautionRelay.value != nil {
-            passphraseCautionRelay.accept(nil)
+        for token in try marketKit.tokens(queries: tokenQueries) {
+            predefinedBlockchainService.prepareNew(account: account, blockchainType: token.blockchainType)
+            wallets.append(Wallet(token: token, account: account))
         }
 
-        if passphraseConfirmationCautionRelay.value != nil {
-            passphraseConfirmationCautionRelay.accept(nil)
-        }
+        walletManager.save(wallets: wallets)
     }
 }
 
 extension CreateAccountViewModel {
-    var wordCountDriver: Driver<String> {
-        wordCountRelay.asDriver()
-    }
-
-    var inputsVisibleDriver: Driver<Bool> {
-        service.passphraseEnabledObservable.asDriver(onErrorJustReturn: false)
-    }
-
-    var passphraseCautionDriver: Driver<Caution?> {
-        passphraseCautionRelay.asDriver()
-    }
-
-    var passphraseConfirmationCautionDriver: Driver<Caution?> {
-        passphraseConfirmationCautionRelay.asDriver()
-    }
-
-    var clearInputsSignal: Signal<Void> {
-        clearInputsRelay.asSignal()
-    }
-
-    var showErrorSignal: Signal<String> {
-        showErrorRelay.asSignal()
-    }
-
-    var finishSignal: Signal<Void> {
-        finishRelay.asSignal()
-    }
-
-    var namePlaceholder: String {
-        service.defaultAccountName
-    }
-
-    var wordCountViewItems: [AlertViewItem] {
-        Mnemonic.WordCount.allCases.map { wordCount in
-            let title: String
-            switch wordCount {
-            case .twelve: title = "create_wallet.12_words".localized
-            default: title = "create_wallet.n_words".localized("\(wordCount.rawValue)")
+    func createAccount() throws -> Account {
+        if passphraseEnabled {
+            guard !passphrase.isEmpty else {
+                throw CreateError.emptyPassphrase
             }
 
-            return AlertViewItem(text: title, selected: wordCount == service.wordCount)
-        }
-    }
-
-    func onChange(name: String) {
-        service.name = name
-    }
-
-    func onSelectWordCount(index: Int) {
-        service.set(wordCount: Mnemonic.WordCount.allCases[index])
-    }
-
-    func onTogglePassphrase(isOn: Bool) {
-        service.set(passphraseEnabled: isOn)
-        clearInputs()
-    }
-
-    func onChange(passphrase: String) {
-        service.passphrase = passphrase
-        clearCautions()
-    }
-
-    func onChange(passphraseConfirmation: String) {
-        service.passphraseConfirmation = passphraseConfirmation
-        clearCautions()
-    }
-
-    func validatePassphrase(text: String?) -> Bool {
-        let validated = service.validate(text: text)
-        if !validated {
-            passphraseCautionRelay.accept(Caution(text: "create_wallet.error.forbidden_symbols".localized, type: .warning))
-        }
-        return validated
-    }
-
-    func validatePassphraseConfirmation(text: String?) -> Bool {
-        let validated = service.validate(text: text)
-        if !validated {
-            passphraseConfirmationCautionRelay.accept(Caution(text: "create_wallet.error.forbidden_symbols".localized, type: .warning))
-        }
-        return validated
-    }
-
-    func onTapCreate(advanced: Bool) {
-        passphraseCautionRelay.accept(nil)
-        passphraseConfirmationCautionRelay.accept(nil)
-        do {
-            try service.createAccount(advanced: advanced)
-            finishRelay.accept(())
-        } catch {
-            if case CreateAccountService.CreateError.emptyPassphrase = error {
-                passphraseCautionRelay.accept(Caution(text: "create_wallet.error.empty_passphrase".localized, type: .error))
-            } else if case CreateAccountService.CreateError.invalidConfirmation = error {
-                passphraseConfirmationCautionRelay.accept(Caution(text: "create_wallet.error.invalid_confirmation".localized, type: .error))
-            } else {
-                showErrorRelay.accept(error.smartDescription)
+            guard passphrase == passphraseConfirmation else {
+                throw CreateError.invalidConfirmation
             }
         }
+
+        let wordCount = advanced ? wordCount : Self.defaultWordCount
+
+        let words = try Mnemonic.generate(wordCount: wordCount, language: .english)
+        let accountType: AccountType = .mnemonic(words: words, salt: passphrase, bip39Compliant: true)
+
+        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+
+        let account = accountFactory.account(
+            type: accountType,
+            origin: .created,
+            backedUp: false,
+            fileBackedUp: false,
+            name: trimmedName.isEmpty ? defaultAccountName : trimmedName
+        )
+
+        accountManager.save(account: account)
+
+        try? activateDefaultWallets(account: account)
+
+        accountManager.set(lastCreatedAccount: account)
+
+        stat(page: advanced ? .newWalletAdvanced : .newWallet, event: .createWallet(walletType: accountType.statDescription))
+
+        return account
+    }
+}
+
+extension CreateAccountViewModel {
+    enum CreateError: Error {
+        case emptyPassphrase
+        case invalidConfirmation
     }
 }

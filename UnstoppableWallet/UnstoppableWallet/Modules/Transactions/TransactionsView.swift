@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct TransactionsView: View {
-    @ObservedObject var viewModel: TransactionsViewModelNew
+    @ObservedObject var viewModel: TransactionsViewModel
     let statPage: StatPage
 
     var body: some View {
@@ -46,7 +46,7 @@ struct TransactionsView: View {
     }
 
     struct ItemView: View, Equatable {
-        let viewItem: TransactionsViewModelNew.ViewItem
+        let viewItem: TransactionsViewModel.ViewItem
         let action: () -> Void
 
         var body: some View {
@@ -108,7 +108,7 @@ struct TransactionsView: View {
             }
         }
 
-        @ViewBuilder private func iconView(viewItem: TransactionsViewModelNew.ViewItem) -> some View {
+        @ViewBuilder private func iconView(viewItem: TransactionsViewModel.ViewItem) -> some View {
             ZStack {
                 if let progress = viewItem.progress {
                     ProgressView(value: max(0.1, progress))
@@ -160,7 +160,7 @@ struct TransactionsView: View {
             .frame(width: 44, height: 44)
         }
 
-        private func color(valueType: TransactionsViewModelNew.ValueType) -> Color {
+        private func color(valueType: TransactionsViewModel.ValueType) -> Color {
             switch valueType {
             case .incoming: return .themeRemus
             case .outgoing, .neutral: return .themeLeah

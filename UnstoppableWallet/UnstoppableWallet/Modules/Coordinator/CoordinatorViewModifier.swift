@@ -88,12 +88,3 @@ struct CoordinatorViewModifier: ViewModifier {
             }
     }
 }
-
-extension Binding where Value: ExpressibleByNilLiteral {
-    var isPresented: Binding<Bool> {
-        Binding<Bool>(
-            get: { self.wrappedValue != nil },
-            set: { if !$0 { self.wrappedValue = nil } }
-        )
-    }
-}
