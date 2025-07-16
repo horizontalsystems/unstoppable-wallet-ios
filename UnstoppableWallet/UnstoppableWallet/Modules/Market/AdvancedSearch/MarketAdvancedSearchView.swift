@@ -5,12 +5,6 @@ struct MarketAdvancedSearchView: View {
     @StateObject var viewModel = MarketAdvancedSearchViewModel()
     @Binding var isPresented: Bool
 
-    @State var topPresented = false
-    @State var volumePresented = false
-    @State var signalsPresented = false
-    @State var priceCloseToPresented = false
-    @State var priceChangePresented = false
-    @State var pricePeriodPresented = false
     @State var resultsPresented = false
 
     var body: some View {
@@ -121,28 +115,12 @@ struct MarketAdvancedSearchView: View {
 
     @ViewBuilder private func topRow() -> some View {
         ClickableRow(spacing: .margin8) {
-            topPresented = true
-        } content: {
-            Text("market.advanced_search.choose_set".localized).textBody()
-            Spacer()
-            Text(viewModel.top.title).textSubhead1(color: .themeLeah)
-            Image("arrow_small_down_20").themeIcon()
-        }
-        .bottomSheet(isPresented: $topPresented) {
-            VStack(spacing: 0) {
-                HStack(spacing: .margin16) {
-                    Image("circle_coin_24").themeIcon(color: .themeJacob)
-                    Text("market.advanced_search.choose_set".localized).themeHeadline2()
-                    Button(action: { topPresented = false }) { Image("close_3_24").themeIcon() }
-                }
-                .padding(.horizontal, .margin32)
-                .padding(.vertical, .margin24)
-
+            Coordinator.shared.present(type: .bottomSheet) { isPresented in
                 ListSection {
                     ForEach(viewModel.tops) { top in
                         ClickableRow {
                             viewModel.top = top
-                            topPresented = false
+                            isPresented.wrappedValue = false
                         } content: {
                             VStack(spacing: 1) {
                                 Text(top.title).themeBody()
@@ -156,35 +134,24 @@ struct MarketAdvancedSearchView: View {
                     }
                 }
                 .themeListStyle(.bordered)
-                .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin24, trailing: .margin16))
+                .modifier(AdvancedSearchHeaderModifier(imageName: "circle_coin_24", title: "market.advanced_search.choose_set", isPresented: isPresented))
             }
+        } content: {
+            Text("market.advanced_search.choose_set".localized).textBody()
+            Spacer()
+            Text(viewModel.top.title).textSubhead1(color: .themeLeah)
+            Image("arrow_small_down_20").themeIcon()
         }
     }
 
     @ViewBuilder private func volumeRow() -> some View {
         ClickableRow(spacing: .margin8) {
-            volumePresented = true
-        } content: {
-            Text("market.advanced_search.volume".localized).textBody()
-            Spacer()
-            Text(viewModel.volume.title).textSubhead1(color: color(valueFilter: viewModel.volume))
-            Image("arrow_small_down_20").themeIcon()
-        }
-        .bottomSheet(isPresented: $volumePresented) {
-            VStack(spacing: 0) {
-                HStack(spacing: .margin16) {
-                    Image("chart_2_24").themeIcon(color: .themeJacob)
-                    Text("market.advanced_search.volume".localized).themeHeadline2()
-                    Button(action: { volumePresented = false }) { Image("close_3_24").themeIcon() }
-                }
-                .padding(.horizontal, .margin32)
-                .padding(.vertical, .margin24)
-
+            Coordinator.shared.present(type: .bottomSheet) { isPresented in
                 ListSection {
                     ForEach(viewModel.valueFilters) { filter in
                         ClickableRow {
                             viewModel.volume = filter
-                            volumePresented = false
+                            isPresented.wrappedValue = false
                         } content: {
                             Text(filter.title).themeBody(color: color(valueFilter: filter))
 
@@ -195,8 +162,13 @@ struct MarketAdvancedSearchView: View {
                     }
                 }
                 .themeListStyle(.bordered)
-                .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin24, trailing: .margin16))
+                .modifier(AdvancedSearchHeaderModifier(imageName: "chart_2_24", title: "market.advanced_search.volume", isPresented: isPresented))
             }
+        } content: {
+            Text("market.advanced_search.volume".localized).textBody()
+            Spacer()
+            Text(viewModel.volume.title).textSubhead1(color: color(valueFilter: viewModel.volume))
+            Image("arrow_small_down_20").themeIcon()
         }
     }
 
@@ -302,7 +274,35 @@ struct MarketAdvancedSearchView: View {
                 stat(page: .advancedSearch, event: .openPremium(from: .tradingSignal))
                 return
             }
-            signalsPresented = true
+            Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                ListSection {
+                    ClickableRow {
+                        viewModel.signal = nil
+                        isPresented.wrappedValue = false
+                    } content: {
+                        Text("selector.any".localized).themeBody(color: .themeGray)
+
+                        if viewModel.signal == nil {
+                            Image("check_1_20").themeIcon(color: .themeJacob)
+                        }
+                    }
+
+                    ForEach(viewModel.signals) { signal in
+                        ClickableRow {
+                            viewModel.signal = signal
+                            isPresented.wrappedValue = false
+                        } content: {
+                            Text(signal.title).themeBody()
+
+                            if viewModel.signal == signal {
+                                Image("check_1_20").themeIcon(color: .themeJacob)
+                            }
+                        }
+                    }
+                }
+                .themeListStyle(.bordered)
+                .modifier(AdvancedSearchHeaderModifier(imageName: "bell_ring_24", title: "market.advanced_search.signal", isPresented: isPresented))
+            }
         } content: {
             Text("market.advanced_search.signal".localized).textBody()
             Spacer()
@@ -315,45 +315,6 @@ struct MarketAdvancedSearchView: View {
 
             Image("arrow_small_down_20").themeIcon()
         }
-        .bottomSheet(isPresented: $signalsPresented) {
-            VStack(spacing: 0) {
-                HStack(spacing: .margin16) {
-                    Image("bell_ring_24").themeIcon(color: .themeJacob)
-                    Text("market.advanced_search.signal".localized).themeHeadline2()
-                    Button(action: { signalsPresented = false }) { Image("close_3_24").themeIcon() }
-                }
-                .padding(.horizontal, .margin32)
-                .padding(.vertical, .margin24)
-
-                ListSection {
-                    ClickableRow {
-                        viewModel.signal = nil
-                        signalsPresented = false
-                    } content: {
-                        Text("selector.any".localized).themeBody(color: .themeGray)
-
-                        if viewModel.signal == nil {
-                            Image("check_1_20").themeIcon(color: .themeJacob)
-                        }
-                    }
-
-                    ForEach(viewModel.signals) { signal in
-                        ClickableRow {
-                            viewModel.signal = signal
-                            signalsPresented = false
-                        } content: {
-                            Text(signal.title).themeBody()
-
-                            if viewModel.signal == signal {
-                                Image("check_1_20").themeIcon(color: .themeJacob)
-                            }
-                        }
-                    }
-                }
-                .themeListStyle(.bordered)
-                .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin24, trailing: .margin16))
-            }
-        }
     }
 
     @ViewBuilder private func priceChangeRow() -> some View {
@@ -363,28 +324,12 @@ struct MarketAdvancedSearchView: View {
                 stat(page: .advancedSearch, event: .openPremium(from: .priceChange))
                 return
             }
-            priceChangePresented = true
-        } content: {
-            Text("market.advanced_search.price_change".localized).textBody()
-            Spacer()
-            Text(viewModel.priceChange.title).textSubhead1(color: color(priceChangeFilter: viewModel.priceChange))
-            Image("arrow_small_down_20").themeIcon()
-        }
-        .bottomSheet(isPresented: $priceChangePresented) {
-            VStack(spacing: 0) {
-                HStack(spacing: .margin16) {
-                    Image("markets_24").themeIcon(color: .themeJacob)
-                    Text("market.advanced_search.price_change".localized).themeHeadline2()
-                    Button(action: { priceChangePresented = false }) { Image("close_3_24").themeIcon() }
-                }
-                .padding(.horizontal, .margin32)
-                .padding(.vertical, .margin24)
-
+            Coordinator.shared.present(type: .bottomSheet) { isPresented in
                 ListSection {
                     ForEach(MarketAdvancedSearchViewModel.PriceChangeFilter.allCases) { filter in
                         ClickableRow {
                             viewModel.priceChange = filter
-                            priceChangePresented = false
+                            isPresented.wrappedValue = false
                         } content: {
                             Text(filter.title).themeBody(color: color(priceChangeFilter: filter))
 
@@ -395,8 +340,13 @@ struct MarketAdvancedSearchView: View {
                     }
                 }
                 .themeListStyle(.bordered)
-                .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin24, trailing: .margin16))
+                .modifier(AdvancedSearchHeaderModifier(imageName: "markets_24", title: "market.advanced_search.price_change", isPresented: isPresented))
             }
+        } content: {
+            Text("market.advanced_search.price_change".localized).textBody()
+            Spacer()
+            Text(viewModel.priceChange.title).textSubhead1(color: color(priceChangeFilter: viewModel.priceChange))
+            Image("arrow_small_down_20").themeIcon()
         }
     }
 
@@ -407,28 +357,12 @@ struct MarketAdvancedSearchView: View {
                 stat(page: .advancedSearch, event: .openPremium(from: .pricePeriod))
                 return
             }
-            pricePeriodPresented = true
-        } content: {
-            Text("market.advanced_search.price_period".localized).textBody()
-            Spacer()
-            Text(viewModel.priceChangePeriod.title).textSubhead1(color: .themeLeah)
-            Image("arrow_small_down_20").themeIcon()
-        }
-        .bottomSheet(isPresented: $pricePeriodPresented) {
-            VStack(spacing: 0) {
-                HStack(spacing: .margin16) {
-                    Image("circle_clock_24").themeIcon(color: .themeJacob)
-                    Text("market.advanced_search.price_period".localized).themeHeadline2()
-                    Button(action: { pricePeriodPresented = false }) { Image("close_3_24").themeIcon() }
-                }
-                .padding(.horizontal, .margin32)
-                .padding(.vertical, .margin24)
-
+            Coordinator.shared.present(type: .bottomSheet) { isPresented in
                 ListSection {
                     ForEach(viewModel.priceChangePeriods) { period in
                         ClickableRow {
                             viewModel.priceChangePeriod = period
-                            pricePeriodPresented = false
+                            isPresented.wrappedValue = false
                         } content: {
                             Text(period.title).themeBody()
 
@@ -439,8 +373,13 @@ struct MarketAdvancedSearchView: View {
                     }
                 }
                 .themeListStyle(.bordered)
-                .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin24, trailing: .margin16))
+                .modifier(AdvancedSearchHeaderModifier(imageName: "circle_clock_24", title: "market.advanced_search.price_period", isPresented: isPresented))
             }
+        } content: {
+            Text("market.advanced_search.price_period".localized).textBody()
+            Spacer()
+            Text(viewModel.priceChangePeriod.title).textSubhead1(color: .themeLeah)
+            Image("arrow_small_down_20").themeIcon()
         }
     }
 
@@ -475,28 +414,12 @@ struct MarketAdvancedSearchView: View {
                 stat(page: .advancedSearch, event: .openPremium(from: .priceCloseTo))
                 return
             }
-            priceCloseToPresented = true
-        } content: {
-            Text("market.advanced_search.price_close_to".localized).textBody()
-            Spacer()
-            Text(viewModel.priceCloseTo.title).textSubhead1(color: color(closeToFilter: viewModel.priceCloseTo))
-            Image("arrow_small_down_20").themeIcon()
-        }
-        .bottomSheet(isPresented: $priceCloseToPresented) {
-            VStack(spacing: 0) {
-                HStack(spacing: .margin16) {
-                    Image("arrow_swap_24").themeIcon(color: .themeJacob)
-                    Text("market.advanced_search.price_close_to".localized).themeHeadline2()
-                    Button(action: { priceCloseToPresented = false }) { Image("close_3_24").themeIcon() }
-                }
-                .padding(.horizontal, .margin32)
-                .padding(.vertical, .margin24)
-
+            Coordinator.shared.present(type: .bottomSheet) { isPresented in
                 ListSection {
                     ForEach(MarketAdvancedSearchViewModel.PriceCloseToFilter.allCases) { closeTo in
                         ClickableRow {
                             viewModel.priceCloseTo = closeTo
-                            priceCloseToPresented = false
+                            isPresented.wrappedValue = false
                         } content: {
                             Text(closeTo.title).themeBody(color: color(closeToFilter: closeTo))
 
@@ -507,8 +430,13 @@ struct MarketAdvancedSearchView: View {
                     }
                 }
                 .themeListStyle(.bordered)
-                .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin24, trailing: .margin16))
+                .modifier(AdvancedSearchHeaderModifier(imageName: "arrow_swap_24", title: "market.advanced_search.price_close_to", isPresented: isPresented))
             }
+        } content: {
+            Text("market.advanced_search.price_close_to".localized).textBody()
+            Spacer()
+            Text(viewModel.priceCloseTo.title).textSubhead1(color: color(closeToFilter: viewModel.priceCloseTo))
+            Image("arrow_small_down_20").themeIcon()
         }
     }
 
@@ -538,6 +466,27 @@ struct MarketAdvancedSearchView: View {
         case .none: return .themeGray
         case .plus10, .plus25, .plus50, .plus100: return .themeRemus
         case .minus10, .minus25, .minus50, .minus75: return .themeLucian
+        }
+    }
+}
+
+private struct AdvancedSearchHeaderModifier: ViewModifier {
+    let imageName: String
+    let title: String
+    let isPresented: Binding<Bool>
+
+    func body(content: Content) -> some View {
+        VStack(spacing: 0) {
+            HStack(spacing: .margin16) {
+                Image(imageName).themeIcon(color: .themeJacob)
+                Text(title.localized).themeHeadline2()
+                Button(action: { isPresented.wrappedValue = false }) { Image("close_3_24").themeIcon() }
+            }
+            .padding(.horizontal, .margin32)
+            .padding(.vertical, .margin24)
+
+            content
+                .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin24, trailing: .margin16))
         }
     }
 }

@@ -8,8 +8,6 @@ struct MarketSectorView: View {
     @StateObject var watchlistViewModel: WatchlistViewModel
     @Binding var isPresented: Bool
 
-    @State private var infoPresented = false
-
     init(isPresented: Binding<Bool>, sector: CoinCategory) {
         _viewModel = StateObject(wrappedValue: MarketSectorViewModel(sector: sector))
         _chartViewModel = StateObject(wrappedValue: MetricChartViewModel.sectorInstance(sector: sector))
@@ -52,28 +50,13 @@ struct MarketSectorView: View {
 
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button(action: {
-                        infoPresented = true
+                        Coordinator.shared.present(info: .init(title: viewModel.sector.name, description: viewModel.sectorDesctiprion))
                     }) {
                         Image("circle_information_24")
                             .renderingMode(.template)
                             .foregroundColor(.themeGray)
                     }
                 }
-            }
-            .bottomSheet(isPresented: $infoPresented) {
-                BottomSheetView(
-                    icon: .info,
-                    title: viewModel.sector.name,
-                    items: [
-                        .text(text: viewModel.sectorDesctiprion),
-                    ],
-                    buttons: [
-                        .init(style: .yellow, title: "button.close".localized) {
-                            infoPresented = false
-                        },
-                    ],
-                    isPresented: $infoPresented
-                )
             }
         }
     }

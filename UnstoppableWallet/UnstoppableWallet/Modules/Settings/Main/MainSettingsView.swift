@@ -333,6 +333,7 @@ struct MainSettingsView: View {
     @ViewBuilder private func contacts() -> some View {
         NavigationRow(spacing: .margin8, destination: {
             ContactBookView(mode: .edit)
+                .ignoresSafeArea()
                 .onFirstAppear {
                     stat(page: .settings, event: .open(page: .contacts))
                 }

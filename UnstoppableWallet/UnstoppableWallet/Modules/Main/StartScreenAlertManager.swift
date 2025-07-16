@@ -39,6 +39,8 @@ class StartScreenAlertManager {
                 self?.handleNextAlert()
             }
             .store(in: &cancellables)
+
+        handleNextAlert()
     }
 
     func handleNextAlert() {
