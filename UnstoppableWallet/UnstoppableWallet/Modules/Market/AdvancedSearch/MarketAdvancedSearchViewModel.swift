@@ -5,24 +5,26 @@ import MarketKit
 
 class MarketAdvancedSearchViewModel: ObservableObject {
     private let blockchainTypes: [BlockchainType] = [
-        .ethereum,
-        .binanceSmartChain,
         .arbitrumOne,
         .avalanche,
-        .gnosis,
+        .base,
+        .binanceSmartChain,
+        .ethereum,
         .fantom,
+        .gnosis,
         .unsupported(uid: "harmony"),
         .unsupported(uid: "huobi-token"),
         .unsupported(uid: "iotex"),
         .unsupported(uid: "moonriver"),
         .unsupported(uid: "okex-chain"),
         .optimism,
-        .base,
         .polygon,
         .unsupported(uid: "solana"),
         .unsupported(uid: "sora"),
+        .stellar,
         .unsupported(uid: "tomochain"),
         .unsupported(uid: "xdai"),
+        .zkSync,
     ]
     private let allTimeDeltaPercent: Decimal = 10
 
