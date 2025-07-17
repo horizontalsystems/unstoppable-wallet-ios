@@ -899,6 +899,8 @@
 "market.advanced_search.outperformed_btc" = "Outperformed BTC";
 "market.advanced_search.outperformed_eth" = "Outperformed ETH";
 "market.advanced_search.outperformed_bnb" = "Outperformed BNB";
+"market.advanced_search.outperformed_sp500" = "Outperformed S&P500";
+"market.advanced_search.outperformed_gold" = "Outperformed GOLD";
 "market.advanced_search.price_close_to" = "Price Close To";
 "market.advanced_search.price_close_to_ath" = "ATH(All Time High)";
 "market.advanced_search.price_close_to_atl" = "ATL(All Time Low)";

@@ -42,6 +42,8 @@ struct MarketAdvancedSearchView: View {
                                     premiumRow(outperformedBtcRow(), statPremiumKey: .outperformedBtc)
                                     premiumRow(outperformedEthRow(), statPremiumKey: .outperformedEth)
                                     premiumRow(outperformedBnbRow(), statPremiumKey: .outperformedBnb)
+                                    premiumRow(outperformedSp500Row(), statPremiumKey: .outperformedSp500)
+                                    premiumRow(outperformedGoldRow(), statPremiumKey: .outperformedGold)
                                 }
                                 .modifier(ColoredBorder())
                             }
@@ -402,6 +404,22 @@ struct MarketAdvancedSearchView: View {
     @ViewBuilder private func outperformedBnbRow() -> some View {
         Toggle(isOn: $viewModel.outperformedBnb) {
             Text("market.advanced_search.outperformed_bnb".localized).themeBody()
+        }
+        .disabled(!viewModel.advancedSearchEnabled)
+        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+    }
+
+    @ViewBuilder private func outperformedSp500Row() -> some View {
+        Toggle(isOn: $viewModel.outperformedSp500) {
+            Text("market.advanced_search.outperformed_sp500".localized).themeBody()
+        }
+        .disabled(!viewModel.advancedSearchEnabled)
+        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+    }
+
+    @ViewBuilder private func outperformedGoldRow() -> some View {
+        Toggle(isOn: $viewModel.outperformedGold) {
+            Text("market.advanced_search.outperformed_gold".localized).themeBody()
         }
         .disabled(!viewModel.advancedSearchEnabled)
         .toggleStyle(SwitchToggleStyle(tint: .themeYellow))

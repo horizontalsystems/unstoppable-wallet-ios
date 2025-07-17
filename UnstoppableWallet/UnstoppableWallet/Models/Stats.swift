@@ -475,6 +475,8 @@ enum StatPremiumTrigger: String {
     case outperformedBtc = "outperformed_btc"
     case outperformedEth = "outperformed_eth"
     case outperformedBnb = "outperformed_bnb"
+    case outperformedSp500 = "outperformed_sp500"
+    case outperformedGold = "outperformed_gold"
     case goodCexVolume = "good_cex_volume"
     case goodDexVolume = "good_dex_volume"
     case goodDistribution = "good_distribution"
