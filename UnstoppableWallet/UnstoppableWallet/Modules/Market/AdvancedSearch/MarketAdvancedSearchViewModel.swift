@@ -41,6 +41,8 @@ class MarketAdvancedSearchViewModel: ObservableObject {
         }
     }
 
+    private var stockInfos: [StockInfo] = []
+
     @Published private(set) var state: State = .loading
     @Published private(set) var advancedSearchEnabled: Bool = false
 
@@ -139,6 +141,18 @@ class MarketAdvancedSearchViewModel: ObservableObject {
         }
     }
 
+    @Published var outperformedSp500 = false {
+        didSet {
+            syncState()
+        }
+    }
+
+    @Published var outperformedGold = false {
+        didSet {
+            syncState()
+        }
+    }
+
     @Published var canReset = false
 
     let allBlockchains: [Blockchain]
@@ -225,6 +239,8 @@ class MarketAdvancedSearchViewModel: ObservableObject {
             || outperformedBtc != false
             || outperformedEth != false
             || outperformedBnb != false
+            || outperformedSp500 != false
+            || outperformedGold != false
             || priceCloseTo != .none
     }
 
@@ -245,6 +261,8 @@ class MarketAdvancedSearchViewModel: ObservableObject {
                 (!outperformedBtc || outperformed(value: priceChangeValue, coinUid: "bitcoin")) &&
                 (!outperformedEth || outperformed(value: priceChangeValue, coinUid: "ethereum")) &&
                 (!outperformedBnb || outperformed(value: priceChangeValue, coinUid: "binancecoin")) &&
+                (!outperformedSp500 || outperformedStocks(value: priceChangeValue, uid: PerformanceRow.sp500.uid)) &&
+                (!outperformedGold || outperformedStocks(value: priceChangeValue, uid: PerformanceRow.gold.uid)) &&
                 closedToAllTime(closedTo: priceCloseTo, ath: marketInfo.athPercentage, atl: marketInfo.atlPercentage)
         }
     }
@@ -307,6 +325,21 @@ class MarketAdvancedSearchViewModel: ObservableObject {
         }
 
         return value > priceChangeValue
+    }
+
+    private func outperformedStocks(value: Decimal?, uid: String) -> Bool {
+        guard let stockInfo = stockInfo(uid: uid),
+              let value,
+              let priceChangeValue = stockInfo.priceChangeValue(timePeriod: priceChangePeriod)
+        else {
+            return false
+        }
+
+        return value > priceChangeValue
+    }
+
+    private func stockInfo(uid: String) -> StockInfo? {
+        stockInfos.first(where: { $0.uid == uid })
     }
 
     private func marketInfo(coinUid: String) -> MarketInfo? {
@@ -376,8 +409,11 @@ extension MarketAdvancedSearchViewModel {
             do {
                 let marketInfos = try await marketKit.advancedMarketInfos(top: top.rawValue, currencyCode: currencyManager.baseCurrency.code)
 
+                let stockInfos = try await marketKit.stocks(currencyCode: currencyManager.baseCurrency.code)
+
                 await MainActor.run { [weak self] in
                     self?.internalState = .loaded(marketInfos: marketInfos)
+                    self?.stockInfos = stockInfos
                 }
             } catch {
                 await MainActor.run { [weak self] in
@@ -404,6 +440,8 @@ extension MarketAdvancedSearchViewModel {
         outperformedBtc = false
         outperformedEth = false
         outperformedBnb = false
+        outperformedSp500 = false
+        outperformedGold = false
         priceCloseTo = .none
 
         syncStateEnabled = true

@@ -121,6 +121,25 @@ extension MarketKit.MarketInfo {
     }
 }
 
+extension StockInfo {
+    func priceChangeValue(timePeriod: HsTimePeriod) -> Decimal? {
+        switch timePeriod {
+        case .hour24: return priceChange1d
+        case .day1: return priceChange1d
+        case .week1: return priceChange7d
+        case .week2: return priceChange14d
+        case .month1: return priceChange30d
+        case .month3: return priceChange90d
+        case .month6: return priceChange200d
+        case .year1: return priceChange1y
+        case .year2: return priceChange2y
+        case .year3: return priceChange3y
+        case .year4: return priceChange4y
+        case .year5: return priceChange5y
+        }
+    }
+}
+
 extension MarketKit.DefiCoin {
     func tvlChangeValue(timePeriod: HsTimePeriod) -> Decimal? {
         switch timePeriod {
