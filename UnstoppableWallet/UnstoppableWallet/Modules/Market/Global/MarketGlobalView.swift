@@ -50,7 +50,7 @@ struct MarketGlobalView: View {
                     redacted: viewModel.marketGlobal
                 ) {
                     Coordinator.shared.present { isPresented in
-                        MarketEtfView(isPresented: isPresented)
+                        MarketEtfTabView(isPresented: isPresented)
                     }
                     stat(page: .markets, event: .open(page: .globalMetricsEtf))
                 }

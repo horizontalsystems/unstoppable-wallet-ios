@@ -964,8 +964,8 @@
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.defi_cap.description" = "Total market value of DeFi projects";
 
-"market.etf.title" = "Total Net Inflow";
-"market.etf.description" = "The net inflow of an ETF equals its cash inflows minus outflows.";
+"market.etf.title" = "%@ ETF";
+"market.etf.description" = "The net inflow of all %@ ETFs, including spot and futures-based funds.";
 "market.etf.total_net_assets" = "Total Net Assets";
 "market.etf.sort_by.highest_assets" = "Highest Assets";
 "market.etf.sort_by.lowest_assets" = "Lowest Assets";

@@ -6,12 +6,14 @@ import MarketKit
 class MarketEtfFetcher {
     private let marketKit: MarketKit.Kit
     private let currencyManager: CurrencyManager
+    private let category: EtfCategory
 
     private let needUpdateSubject = PassthroughSubject<Void, Never>()
 
-    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager) {
+    init(marketKit: MarketKit.Kit, currencyManager: CurrencyManager, category: EtfCategory) {
         self.marketKit = marketKit
         self.currencyManager = currencyManager
+        self.category = category
     }
 }
 
@@ -27,7 +29,7 @@ extension MarketEtfFetcher: IMetricChartFetcher {
     var intervals: [HsPeriodType] { [] }
 
     func fetch(interval _: HsPeriodType) async throws -> MetricChartModule.ItemData {
-        let points = try await marketKit.etfPoints(currencyCode: currencyManager.baseCurrency.code)
+        let points = try await marketKit.etfPoints(category: category.rawValue, currencyCode: currencyManager.baseCurrency.code)
 
         var items = [MetricChartModule.Item]()
         var totalInflow = [Decimal]()
@@ -45,5 +47,12 @@ extension MarketEtfFetcher: IMetricChartFetcher {
             ],
             type: .etf
         )
+    }
+}
+
+extension MarketEtfFetcher {
+    public enum EtfCategory: String, CaseIterable {
+        case btc
+        case eth
     }
 }

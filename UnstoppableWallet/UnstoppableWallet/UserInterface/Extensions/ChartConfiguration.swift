@@ -96,6 +96,8 @@ extension ChartConfiguration {
 
         indicatorHeight = 0
         timelineHeight = 0
+        
+        redrawOnResize = true
 
         clearGradients()
 

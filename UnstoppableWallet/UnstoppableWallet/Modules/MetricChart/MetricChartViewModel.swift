@@ -156,8 +156,8 @@ extension MetricChartViewModel {
         return MetricChartViewModel(service: service, factory: factory)
     }
 
-    static var etfInstance: MetricChartViewModel {
-        let fetcher = MarketEtfFetcher(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager)
+    static func etfInstance(category: MarketEtfFetcher.EtfCategory) -> MetricChartViewModel {
+        let fetcher = MarketEtfFetcher(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager, category: category)
         let service = MetricChartService(
             chartFetcher: fetcher,
             interval: .byPeriod(.day1),
