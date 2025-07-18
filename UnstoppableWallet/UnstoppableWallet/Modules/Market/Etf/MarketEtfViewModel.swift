@@ -9,6 +9,8 @@ class MarketEtfViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
+    
+    let category: MarketEtfFetcher.EtfCategory
 
     private var internalState: State = .loading {
         didSet {
@@ -32,7 +34,9 @@ class MarketEtfViewModel: ObservableObject {
         }
     }
 
-    init() {
+    init(category: MarketEtfFetcher.EtfCategory) {
+        self.category = category
+
         currencyManager.$baseCurrency
             .sink { [weak self] _ in
                 self?.sync()
@@ -69,10 +73,12 @@ extension MarketEtfViewModel {
         if case .failed = internalState {
             internalState = .loading
         }
+        
+        let category = category
 
         Task { [weak self, marketKit, currency] in
             do {
-                let etfs = try await marketKit.etfs(currencyCode: currency.code)
+                let etfs = try await marketKit.etfs(category: category.rawValue, currencyCode: currency.code)
                 let sortedEtfs = etfs.sorted { $0.totalAssets ?? 0 > $1.totalAssets ?? 0 }
                 let rankedEtfs = sortedEtfs.enumerated().map { RankedEtf(etf: $1, rank: $0 + 1) }
 
@@ -123,6 +129,22 @@ extension MarketEtfViewModel {
             case let .period(timePeriod): return timePeriod.shortTitle
             case .all: return "market.etf.period.all".localized
             }
+        }
+    }
+}
+
+extension MarketEtfFetcher.EtfCategory {
+    var title: String {
+        switch self {
+        case .btc: return "Bitcoin"
+        case .eth: return "Ethereum"
+        }
+    }
+
+    var icon: String {
+        switch self {
+        case .btc: return "bitcoin"
+        case .eth: return "ethereum"
         }
     }
 }

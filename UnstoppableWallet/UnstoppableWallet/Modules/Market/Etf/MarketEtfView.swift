@@ -3,60 +3,48 @@ import MarketKit
 import SwiftUI
 
 struct MarketEtfView: View {
-    @StateObject var viewModel: MarketEtfViewModel
-    @StateObject var chartViewModel: MetricChartViewModel
-    @Binding var isPresented: Bool
-
-    init(isPresented: Binding<Bool>) {
-        _viewModel = StateObject(wrappedValue: MarketEtfViewModel())
-        _chartViewModel = StateObject(wrappedValue: MetricChartViewModel.etfInstance)
-        _isPresented = isPresented
+    @ObservedObject var viewModel: MarketEtfViewModel
+    @ObservedObject var chartViewModel: MetricChartViewModel
+    
+    init(category: MarketEtfFetcher.EtfCategory, factory: MarketEtfViewModelFactory) {
+        viewModel = factory.getViewModel(for: category)
+        chartViewModel = factory.getChartViewModel(for: category)
     }
 
     var body: some View {
-        ThemeNavigationStack {
-            ThemeView {
-                switch viewModel.state {
-                case .loading:
-                    VStack(spacing: 0) {
-                        header()
-                        Spacer()
-                        ProgressView()
-                        Spacer()
-                    }
-                case let .loaded(rankedEtfs):
-                    ScrollViewReader { proxy in
-                        ThemeList(bottomSpacing: .margin16) {
-                            header()
-                                .listRowBackground(Color.clear)
-                                .listRowInsets(EdgeInsets())
-                                .listRowSeparator(.hidden)
-
-                            chart()
-                                .listRowBackground(Color.clear)
-                                .listRowInsets(EdgeInsets())
-                                .listRowSeparator(.hidden)
-
-                            list(rankedEtfs: rankedEtfs)
-                        }
-                        .onChange(of: viewModel.sortBy) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
-                        .onChange(of: viewModel.timePeriod) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
-                    }
-                case .failed:
-                    VStack(spacing: 0) {
-                        header()
-
-                        SyncErrorView {
-                            viewModel.sync()
-                        }
-                    }
+        VStack {
+        switch viewModel.state {
+            case .loading:
+                VStack(spacing: 0) {
+                    header()
+                    Spacer()
+                    ProgressView()
+                    Spacer()
                 }
-            }
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("button.close".localized) {
-                        isPresented = false
+            case let .loaded(rankedEtfs):
+                ScrollViewReader { proxy in
+                    ThemeList(bottomSpacing: .margin16) {
+                        header()
+                            .listRowBackground(Color.clear)
+                            .listRowInsets(EdgeInsets())
+                            .listRowSeparator(.hidden)
+
+                        chart()
+                            .listRowBackground(Color.clear)
+                            .listRowInsets(EdgeInsets())
+                            .listRowSeparator(.hidden)
+
+                        list(rankedEtfs: rankedEtfs)
+                    }
+                    .onChange(of: viewModel.sortBy) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
+                    .onChange(of: viewModel.timePeriod) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
+                }
+            case .failed:
+                VStack(spacing: 0) {
+                    header()
+
+                    SyncErrorView {
+                        viewModel.sync()
                     }
                 }
             }
@@ -66,12 +54,13 @@ struct MarketEtfView: View {
     @ViewBuilder private func header() -> some View {
         HStack(spacing: .margin32) {
             VStack(spacing: .margin8) {
-                Text("market.etf.title".localized).themeHeadline1()
-                Text("market.etf.description".localized).themeSubhead2()
+                Text("market.etf.title".localized(viewModel.category.title)).themeHeadline1()
+                Text("market.etf.description".localized(viewModel.category.title)).themeSubhead2()
             }
             .padding(.vertical, .margin12)
 
-            KFImage.url(URL(string: "ETF_bitcoin".headerImageUrl))
+            
+            KFImage.url(URL(string: "ETF_\(viewModel.category.icon)".headerImageUrl))
                 .resizable()
                 .frame(width: 76, height: 108)
         }
