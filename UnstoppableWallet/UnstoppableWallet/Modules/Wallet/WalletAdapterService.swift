@@ -23,14 +23,16 @@ class WalletAdapterService {
     init(account: Account, adapterManager: AdapterManager) {
         self.account = account
         self.adapterManager = adapterManager
-
-        subscribe(disposeBag, adapterManager.adapterDataReadyObservable) { [weak self] adapterData in
-            guard adapterData.account == self?.account else {
-                return
-            }
-
-            self?.handleAdaptersReady(adapterMap: adapterData.adapterMap)
-        }
+        
+        adapterManager.adapterDataReadyObservable
+            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+            .subscribe(onNext: { [weak self] adapterData in
+                guard adapterData.account == self?.account else {
+                    return
+                }
+                self?.handleAdaptersReady(adapterMap: adapterData.adapterMap)
+            })
+            .disposed(by: disposeBag)
 
         adapterMap = adapterManager.adapterData.adapterMap.compactMapValues { $0 as? IBalanceAdapter }
         subscribeToAdapters()
