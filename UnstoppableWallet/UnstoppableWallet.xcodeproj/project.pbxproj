@@ -13554,7 +13554,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/BitcoinCore.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 3.1.0;
+				version = 3.1.1;
 			};
 		};
 		6B55461F2A6E73190054B524 /* XCRemoteSwiftPackageReference "UIExtensions" */ = {
@@ -13650,7 +13650,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/Eip20Kit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.0.3;
+				version = 2.0.4;
 			};
 		};
 		D3604E4B28F02AB40066C366 /* XCRemoteSwiftPackageReference "NftKit" */ = {
