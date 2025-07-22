@@ -1757,6 +1757,10 @@
 		6B4587492E28F62D008F87E7 /* MarketEtfTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4587472E28F621008F87E7 /* MarketEtfTabView.swift */; };
 		6B45874E2E290298008F87E7 /* MarketEtfViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B45874D2E290296008F87E7 /* MarketEtfViewModelFactory.swift */; };
 		6B45874F2E290298008F87E7 /* MarketEtfViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B45874D2E290296008F87E7 /* MarketEtfViewModelFactory.swift */; };
+		6B4587512E2F44AB008F87E7 /* CurrencyValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4587502E2F44A2008F87E7 /* CurrencyValueFormatter.swift */; };
+		6B4587522E2F44AB008F87E7 /* CurrencyValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4587502E2F44A2008F87E7 /* CurrencyValueFormatter.swift */; };
+		6B4587542E2F476D008F87E7 /* AmountRoundingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4587532E2F475E008F87E7 /* AmountRoundingManager.swift */; };
+		6B4587552E2F476D008F87E7 /* AmountRoundingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4587532E2F475E008F87E7 /* AmountRoundingManager.swift */; };
 		6B55E33B2AF26D6400616B60 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 6B55E33A2AF26D6400616B60 /* Starscream */; };
 		6B55E33D2AF26D7A00616B60 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 6B55E33C2AF26D7A00616B60 /* Starscream */; };
 		6B5A13D72DF0414B006E609C /* Manrope-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6B5A13D52DF0414B006E609C /* Manrope-Regular.ttf */; };
@@ -4261,6 +4265,8 @@
 		6B4587442E27B209008F87E7 /* DonateAddressesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DonateAddressesView.swift; sourceTree = "<group>"; };
 		6B4587472E28F621008F87E7 /* MarketEtfTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketEtfTabView.swift; sourceTree = "<group>"; };
 		6B45874D2E290296008F87E7 /* MarketEtfViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketEtfViewModelFactory.swift; sourceTree = "<group>"; };
+		6B4587502E2F44A2008F87E7 /* CurrencyValueFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyValueFormatter.swift; sourceTree = "<group>"; };
+		6B4587532E2F475E008F87E7 /* AmountRoundingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountRoundingManager.swift; sourceTree = "<group>"; };
 		6B5A13D42DF0414B006E609C /* Manrope-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Manrope-Medium.ttf"; sourceTree = "<group>"; };
 		6B5A13D52DF0414B006E609C /* Manrope-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Manrope-Regular.ttf"; sourceTree = "<group>"; };
 		6B5A13D62DF0414B006E609C /* Manrope-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Manrope-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -5444,6 +5450,7 @@
 		11B3537337963E192F823FF5 /* UserInterface */ = {
 			isa = PBXGroup;
 			children = (
+				6B4587502E2F44A2008F87E7 /* CurrencyValueFormatter.swift */,
 				6B6E13C62DEDABBB007F4A39 /* HUD */,
 				6B1D8D242DE9D9AF00A52B01 /* ComponentKit */,
 				6B1D8CA92DE971B900A52B01 /* ThemeKit */,
@@ -5604,6 +5611,7 @@
 		11B35480153660045A6CF9AC /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				6B4587532E2F475E008F87E7 /* AmountRoundingManager.swift */,
 				6B0B6E732E092BF700A0F0C9 /* Spam */,
 				D3AEB8782DB8FB8A00E385C8 /* StellarKitManager.swift */,
 				6BE8A0802ADE2FAB0012DE7F /* CurrencyManager.swift */,
@@ -9787,6 +9795,7 @@
 				11B3556C12B91FD86A72A193 /* LitecoinAdapter.swift in Sources */,
 				D3447DEB25E38300009928D9 /* WalletConnectManager.swift in Sources */,
 				11B35854532EEA0AE6AC2010 /* RateAppManager.swift in Sources */,
+				6B4587522E2F44AB008F87E7 /* CurrencyValueFormatter.swift in Sources */,
 				D36287AF2CA2BC9900ADAF3B /* TonConnectManifest.swift in Sources */,
 				58AAA393DF93EFFA5047589B /* FeeSlider.swift in Sources */,
 				58AAA1283FC7F83F62FC5961 /* FeeSliderValueView.swift in Sources */,
@@ -10456,6 +10465,7 @@
 				11B35052C5059CDD8E4BA940 /* BackupMnemonicWordCell.swift in Sources */,
 				D3E36B882DF6E1E2007F99CA /* WalletTokenView.swift in Sources */,
 				11B35DF1D8B5125CF13A1812 /* RestoreMnemonicHintView.swift in Sources */,
+				6B4587552E2F476D008F87E7 /* AmountRoundingManager.swift in Sources */,
 				D3E36BC12E003892007F99CA /* WalletListViewModel.swift in Sources */,
 				11B35C8A1082D0A8F0B354B1 /* RestoreMnemonicHintCell.swift in Sources */,
 				D3402AF22BF5D59D003BF6F8 /* WatchlistModifier.swift in Sources */,
@@ -11302,6 +11312,7 @@
 				11B354B8BD1C3C036F6DE16A /* LitecoinAdapter.swift in Sources */,
 				D3447DEA25E38300009928D9 /* WalletConnectManager.swift in Sources */,
 				11B35883290BAA462C0B8F9D /* RateAppManager.swift in Sources */,
+				6B4587512E2F44AB008F87E7 /* CurrencyValueFormatter.swift in Sources */,
 				D36287B02CA2BC9900ADAF3B /* TonConnectManifest.swift in Sources */,
 				58AAA3A5967BAB513DD4B33F /* FeeSlider.swift in Sources */,
 				58AAAA534E94A3276B7F7EF2 /* FeeSliderValueView.swift in Sources */,
@@ -11971,6 +11982,7 @@
 				6BCD53022A161F4100993F20 /* ICloudBackupTermsViewModel.swift in Sources */,
 				D3E36B872DF6E1E2007F99CA /* WalletTokenView.swift in Sources */,
 				11B35066480B6EB9F124EBC0 /* ExtendedKeyService.swift in Sources */,
+				6B4587542E2F476D008F87E7 /* AmountRoundingManager.swift in Sources */,
 				D3E36BC02E003892007F99CA /* WalletListViewModel.swift in Sources */,
 				11B359601D8967EEE00B5991 /* BackupMnemonicWordsCell.swift in Sources */,
 				D3402AF12BF5D59D003BF6F8 /* WatchlistModifier.swift in Sources */,

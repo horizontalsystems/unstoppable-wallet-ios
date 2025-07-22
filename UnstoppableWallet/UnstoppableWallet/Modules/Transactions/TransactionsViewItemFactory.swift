@@ -3,6 +3,7 @@ import UIKit
 
 class TransactionsViewItemFactory {
     private let evmLabelManager = Core.shared.evmLabelManager
+    private let amountRoundingManager = Core.shared.amountRoundingManager
     private let contactLabelService: TransactionsContactLabelService
 
     init(contactLabelService: TransactionsContactLabelService) {
@@ -24,7 +25,7 @@ class TransactionsViewItemFactory {
     }
 
     private func coinString(from appValue: AppValue, signType: ValueFormatter.SignType = .always) -> String {
-        guard let value = appValue.formattedShort(signType: signType) else {
+        guard let value = appValue.formattedWith(rounding: amountRoundingManager.useAmountRounding, signType: signType) else {
             return "n/a".localized
         }
 
@@ -32,7 +33,7 @@ class TransactionsViewItemFactory {
     }
 
     private func currencyString(from currencyValue: CurrencyValue) -> String {
-        ValueFormatter.instance.formatShort(currencyValue: currencyValue) ?? ""
+        ValueFormatter.instance.formatWith(rounding: amountRoundingManager.useAmountRounding, currencyValue: currencyValue) ?? ""
     }
 
     private func type(value: AppValue, condition: Bool = true, _ trueType: TransactionsViewModel.ValueType, _ falseType: TransactionsViewModel.ValueType? = nil) -> TransactionsViewModel.ValueType {

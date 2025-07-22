@@ -15,6 +15,7 @@ class WalletListViewModel: ObservableObject {
     private let cacheManager = Core.shared.enabledWalletCacheManager
     private let feeCoinProvider = Core.shared.feeCoinProvider
     private let appSettingManager = Core.shared.appSettingManager
+    private let amountRoundingManager = Core.shared.amountRoundingManager
 
     let disposeBag = DisposeBag()
     var cancellables = Set<AnyCancellable>()
@@ -22,6 +23,7 @@ class WalletListViewModel: ObservableObject {
     @Published private(set) var account: Account?
     @Published private(set) var balancePrimaryValue: BalancePrimaryValue
     @Published private(set) var balanceHidden: Bool
+    @Published private(set) var amountRounding: Bool
 
     @Published var sortType: WalletSorter.SortType {
         didSet {
@@ -47,6 +49,7 @@ class WalletListViewModel: ObservableObject {
         account = accountManager.activeAccount
         balancePrimaryValue = appSettingManager.balancePrimaryValue
         balanceHidden = balanceHiddenManager.balanceHidden
+        amountRounding = amountRoundingManager.useAmountRounding
 
         coinPriceService.delegate = self
 
@@ -73,6 +76,13 @@ class WalletListViewModel: ObservableObject {
                 self?.balanceHidden = $0
             })
             .disposed(by: disposeBag)
+
+        amountRoundingManager.amountRoundingPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.amountRounding = $0
+            }
+            .store(in: &cancellables)
 
         _syncWalletService()
     }

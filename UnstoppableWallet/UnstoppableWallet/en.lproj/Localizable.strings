@@ -1648,6 +1648,7 @@
 
 "appearance.balance_tab" = "Balance Tab";
 "appearance.balance_tab.footer" = "The “Hide Buttons” configuration hides the Send, Receive, and Swap buttons on Balance tab.";
+"appearance.amount_rounding" = "Amount Rounding";
 "appearance.hide_buttons" = "Hide Buttons";
 "appearance.balance_value" = "Balance Value";
 "appearance.balance_value.coin_fiat" = "Coin / Fiat";

@@ -196,6 +196,20 @@ class ValueFormatter {
 }
 
 extension ValueFormatter {
+    func formatWith(rounding: Bool, currencyValue: CurrencyValue) -> String? {
+        if rounding {
+            return formatShort(currencyValue: currencyValue)
+        }
+        return formatFull(currencyValue: currencyValue)
+    }
+
+    func formatWith(rounding: Bool, value: Decimal, decimalCount: Int, symbol: String? = nil, signType: SignType = .never) -> String? {
+        if rounding {
+            return formatShort(value: value, decimalCount: decimalCount, symbol: symbol, signType: signType)
+        }
+        return formatFull(value: value, decimalCount: decimalCount, symbol: symbol, signType: signType)
+    }
+
     func formatShort(value: Decimal) -> String? {
         let (transformedValue, digits, suffix, tooSmall) = transformedShort(value: value)
 
