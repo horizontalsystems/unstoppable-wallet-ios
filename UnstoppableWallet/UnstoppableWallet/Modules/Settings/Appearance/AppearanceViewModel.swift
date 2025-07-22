@@ -10,6 +10,7 @@ class AppearanceViewModel: ObservableObject {
     private let walletButtonHiddenManager = Core.shared.walletButtonHiddenManager
     private let priceChangeModeManager = Core.shared.priceChangeModeManager
     private let currencyManager = Core.shared.currencyManager
+    private let amountRoundingManager = Core.shared.amountRoundingManager
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -57,6 +58,16 @@ class AppearanceViewModel: ObservableObject {
         }
     }
 
+    @Published var useAmountRounding: Bool {
+        didSet {
+            guard amountRoundingManager.useAmountRounding != useAmountRounding else {
+                return
+            }
+            stat(page: .appearance, event: .amountRounding(use: useAmountRounding))
+            amountRoundingManager.useAmountRounding = useAmountRounding
+        }
+    }
+
     @Published var hideBalanceButtons: Bool {
         didSet {
             guard walletButtonHiddenManager.buttonHidden != hideBalanceButtons else {
@@ -92,6 +103,7 @@ class AppearanceViewModel: ObservableObject {
         hideMarkets = !launchScreenManager.showMarket
         priceChangeMode = priceChangeModeManager.priceChangeMode
         launchScreen = launchScreenManager.launchScreen
+        useAmountRounding = amountRoundingManager.useAmountRounding
         hideBalanceButtons = walletButtonHiddenManager.buttonHidden
         balancePrimaryValue = appSettingManager.balancePrimaryValue
         appIcon = appIconManager.appIcon

@@ -4,6 +4,7 @@ struct WalletListItemView: View, Equatable {
     let item: WalletListViewModel.Item
     let balancePrimaryValue: BalancePrimaryValue
     let balanceHidden: Bool
+    let amountRounding: Bool
     let subtitleMode: SubtitleMode
     let action: () -> Void
     let failedAction: () -> Void
@@ -124,7 +125,7 @@ struct WalletListItemView: View, Equatable {
 
     private func coinValue(value: Decimal, decimalCount: Int, symbol: String? = nil, state: AdapterState, expanded _: Bool = false) -> (text: String, dimmed: Bool) {
         (
-            text: ValueFormatter.instance.formatShort(value: value, decimalCount: decimalCount, symbol: symbol) ?? String.placeholder,
+            text: ValueFormatter.instance.formatWith(rounding: amountRounding, value: value, decimalCount: decimalCount, symbol: symbol) ?? String.placeholder,
             dimmed: state != .synced
         )
     }
@@ -138,13 +139,16 @@ struct WalletListItemView: View, Equatable {
         let currencyValue = CurrencyValue(currency: price.currency, value: value * price.value)
 
         return (
-            text: ValueFormatter.instance.formatShort(currencyValue: currencyValue) ?? String.placeholder,
+            text: ValueFormatter.instance.formatWith(rounding: amountRounding, currencyValue: currencyValue) ?? String.placeholder,
             dimmed: state != .synced || priceItem.expired
         )
     }
 
     static func == (lhs: WalletListItemView, rhs: WalletListItemView) -> Bool {
-        lhs.item == rhs.item && lhs.balancePrimaryValue == rhs.balancePrimaryValue && lhs.balanceHidden == rhs.balanceHidden
+        lhs.item == rhs.item &&
+            lhs.balancePrimaryValue == rhs.balancePrimaryValue &&
+            lhs.balanceHidden == rhs.balanceHidden &&
+            lhs.amountRounding == rhs.amountRounding
     }
 
     enum SubtitleMode {

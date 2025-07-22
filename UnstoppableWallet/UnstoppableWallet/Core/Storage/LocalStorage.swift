@@ -21,6 +21,7 @@ class LocalStorage {
     private let keyPurchaseData = "emulate-purchase-data"
     private let keyPurchaseCancelled = "emulate-purchase-cancelled"
     private let keyHasBep2Token = "has-bep2-token"
+    private let keyAmountRounding = "amount-rounding"
 
     private let userDefaultsStorage: UserDefaultsStorage
 
@@ -129,6 +130,11 @@ extension LocalStorage {
     var hasBep2Token: Bool {
         get { userDefaultsStorage.value(for: keyHasBep2Token) ?? false }
         set { userDefaultsStorage.set(value: newValue, for: keyHasBep2Token) }
+    }
+
+    var useAmountRounding: Bool {
+        get { userDefaultsStorage.value(for: keyAmountRounding) ?? true }
+        set { userDefaultsStorage.set(value: newValue, for: keyAmountRounding) }
     }
 }
 

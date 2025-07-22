@@ -5,7 +5,7 @@ import SwiftUI
 struct MarketEtfView: View {
     @ObservedObject var viewModel: MarketEtfViewModel
     @ObservedObject var chartViewModel: MetricChartViewModel
-    
+
     init(category: MarketEtfFetcher.EtfCategory, factory: MarketEtfViewModelFactory) {
         viewModel = factory.getViewModel(for: category)
         chartViewModel = factory.getChartViewModel(for: category)
@@ -13,7 +13,7 @@ struct MarketEtfView: View {
 
     var body: some View {
         VStack {
-        switch viewModel.state {
+            switch viewModel.state {
             case .loading:
                 VStack(spacing: 0) {
                     header()
@@ -59,7 +59,6 @@ struct MarketEtfView: View {
             }
             .padding(.vertical, .margin12)
 
-            
             KFImage.url(URL(string: "ETF_\(viewModel.category.icon)".headerImageUrl))
                 .resizable()
                 .frame(width: 76, height: 108)

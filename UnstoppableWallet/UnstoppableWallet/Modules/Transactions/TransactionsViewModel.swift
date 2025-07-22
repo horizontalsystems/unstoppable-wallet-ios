@@ -8,6 +8,7 @@ class TransactionsViewModel: ObservableObject {
     private let walletManager = Core.shared.walletManager
     private let adapterManager = Core.shared.transactionAdapterManager
     private let balanceHiddenManager = Core.shared.balanceHiddenManager
+    private let amountRoundingManager = Core.shared.amountRoundingManager
     private let contactLabelService = TransactionsContactLabelService(contactManager: Core.shared.contactManager)
     private let rateService = HistoricalRateService(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager)
     private let nftMetadataService = NftMetadataService(nftMetadataManager: Core.shared.nftMetadataManager)
@@ -16,6 +17,7 @@ class TransactionsViewModel: ObservableObject {
 
     private let disposeBag = DisposeBag()
     private var __poolGroupDisposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     @Published private(set) var syncing: Bool = false
     @Published private(set) var sections: [Section] = []
@@ -86,6 +88,11 @@ class TransactionsViewModel: ObservableObject {
         subscribe(disposeBag, nftMetadataService.assetsBriefMetadataObservable) { [weak self] in self?.handle(assetsBriefMetadata: $0) }
         subscribe(disposeBag, contactLabelService.stateObservable) { [weak self] _ in self?.reportItemData() }
         subscribe(disposeBag, balanceHiddenManager.balanceHiddenObservable) { [weak self] _ in self?.reportItemData() }
+        amountRoundingManager
+            .amountRoundingPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.reportItemData() }
+            .store(in: &cancellables)
 
         __syncPoolGroup()
     }

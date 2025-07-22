@@ -23,7 +23,7 @@ class WalletAdapterService {
     init(account: Account, adapterManager: AdapterManager) {
         self.account = account
         self.adapterManager = adapterManager
-        
+
         adapterManager.adapterDataReadyObservable
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onNext: { [weak self] adapterData in

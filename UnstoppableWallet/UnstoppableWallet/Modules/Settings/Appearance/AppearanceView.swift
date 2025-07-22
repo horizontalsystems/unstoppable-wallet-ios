@@ -110,6 +110,15 @@ struct AppearanceView: View {
                     }
                 }
 
+                ListSection {
+                    ListRow {
+                        Toggle(isOn: $viewModel.useAmountRounding.animation()) {
+                            Text("appearance.amount_rounding".localized).themeBody()
+                        }
+                        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+                    }
+                }
+
                 VStack(spacing: 0) {
                     ListSectionHeader(text: "appearance.balance_tab".localized)
 

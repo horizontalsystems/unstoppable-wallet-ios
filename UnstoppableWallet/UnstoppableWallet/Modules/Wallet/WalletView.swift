@@ -127,7 +127,7 @@ struct WalletView: View {
                     HorizontalDivider()
                 }
 
-                WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, subtitleMode: .price) {
+                WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, amountRounding: viewModel.amountRounding, subtitleMode: .price) {
                     path.append(item.wallet)
                 } failedAction: {
                     Coordinator.shared.presentBalanceError(wallet: item.wallet, state: item.state)
@@ -228,7 +228,7 @@ struct WalletView: View {
         }
 
         return (
-            ValueFormatter.instance.formatShort(currencyValue: viewModel.totalItem.currencyValue) ?? String.placeholder,
+            ValueFormatter.instance.formatWith(rounding: viewModel.amountRounding, currencyValue: viewModel.totalItem.currencyValue) ?? String.placeholder,
             viewModel.totalItem.expired
         )
     }
@@ -239,7 +239,7 @@ struct WalletView: View {
         }
 
         return (
-            viewModel.totalItem.convertedValue.flatMap { $0.formattedShort() }.map { "≈ \($0)" } ?? String.placeholder,
+            viewModel.totalItem.convertedValue.flatMap { $0.formattedWith(rounding: viewModel.amountRounding) }.map { "≈ \($0)" } ?? String.placeholder,
             viewModel.totalItem.convertedValueExpired
         )
     }

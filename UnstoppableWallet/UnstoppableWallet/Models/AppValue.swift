@@ -127,6 +127,13 @@ struct AppValue {
         "∞ \(code)"
     }
 
+    func formattedWith(rounding: Bool, signType: ValueFormatter.SignType = .never) -> String? {
+        if rounding {
+            return formattedShort(signType: signType)
+        }
+        return formattedFull(signType: signType)
+    }
+
     func formattedFull(signType: ValueFormatter.SignType = .never) -> String? {
         switch kind {
         case let .token(token): return ValueFormatter.instance.formatFull(value: value, decimalCount: token.decimals, symbol: code, signType: signType)

@@ -9,7 +9,7 @@ class MarketEtfViewModel: ObservableObject {
 
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
-    
+
     let category: MarketEtfFetcher.EtfCategory
 
     private var internalState: State = .loading {
@@ -73,7 +73,7 @@ extension MarketEtfViewModel {
         if case .failed = internalState {
             internalState = .loading
         }
-        
+
         let category = category
 
         Task { [weak self, marketKit, currency] in

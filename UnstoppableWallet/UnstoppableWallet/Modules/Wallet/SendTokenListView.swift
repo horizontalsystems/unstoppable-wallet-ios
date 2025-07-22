@@ -28,7 +28,7 @@ struct SendTokenListView: View {
                                     HorizontalDivider()
                                 }
 
-                                WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, subtitleMode: .coinName) {
+                                WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, amountRounding: viewModel.amountRounding, subtitleMode: .coinName) {
                                     path.append(item.wallet)
                                     stat(page: .sendTokenList, event: .openSend(token: item.wallet.token))
                                 } failedAction: {

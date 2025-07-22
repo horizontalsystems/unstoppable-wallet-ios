@@ -62,6 +62,7 @@ class Core {
     let walletManager: WalletManager
     let coinManager: CoinManager
     let passcodeLockManager: PasscodeLockManager
+    let amountRoundingManager: AmountRoundingManager
 
     let btcBlockchainManager: BtcBlockchainManager
     let evmSyncSourceManager: EvmSyncSourceManager
@@ -113,6 +114,8 @@ class Core {
 
     private let startScreenAlertManager: StartScreenAlertManager
     private let deepLinkViewManager: DeepLinkViewManager
+
+    let valueFormatter: CurrencyValueFormatter
 
     init() throws {
         let databaseURL = try FileManager.default
@@ -188,6 +191,7 @@ class Core {
         walletManager = WalletManager(accountManager: accountManager, storage: walletStorage)
         coinManager = CoinManager(marketKit: marketKit, walletManager: walletManager)
         passcodeLockManager = PasscodeLockManager(accountManager: accountManager, walletManager: walletManager)
+        amountRoundingManager = AmountRoundingManager(storage: localStorage)
 
         let blockchainSettingRecordStorage = try BlockchainSettingRecordStorage(dbPool: dbPool)
         let blockchainSettingsStorage = BlockchainSettingsStorage(storage: blockchainSettingRecordStorage)
@@ -349,6 +353,8 @@ class Core {
             deeplinkManager: deepLinkManager,
             deeplinkStorage: deeplinkStorage
         )
+
+        valueFormatter = CurrencyValueFormatter(amountRoundingManager: amountRoundingManager)
 
         let walletConnectHandler = WalletConnectHandlerModule.handler(
             walletConnectManager: walletConnectSessionManager,
