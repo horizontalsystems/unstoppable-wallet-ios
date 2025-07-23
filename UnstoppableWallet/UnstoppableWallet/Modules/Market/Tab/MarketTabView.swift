@@ -6,6 +6,7 @@ struct MarketTabView: View {
 
     @StateObject var coinsViewModel: MarketCoinsViewModel
     @StateObject var marketWatchlistViewModel: MarketWatchlistViewModel
+    @StateObject var vaultsViewModel: MarketVaultsViewModel
     @StateObject var newsViewModel: MarketNewsViewModel
     @StateObject var platformsViewModel: MarketPlatformsViewModel
     @StateObject var pairsViewModel: MarketPairsViewModel
@@ -19,6 +20,7 @@ struct MarketTabView: View {
 
         _coinsViewModel = StateObject(wrappedValue: MarketCoinsViewModel())
         _marketWatchlistViewModel = StateObject(wrappedValue: MarketWatchlistViewModel())
+        _vaultsViewModel = StateObject(wrappedValue: MarketVaultsViewModel())
         _newsViewModel = StateObject(wrappedValue: MarketNewsViewModel())
         _platformsViewModel = StateObject(wrappedValue: MarketPlatformsViewModel())
         _pairsViewModel = StateObject(wrappedValue: MarketPairsViewModel())
@@ -28,7 +30,12 @@ struct MarketTabView: View {
     var body: some View {
         VStack(spacing: 0) {
             ScrollableTabHeaderView(
-                tabs: MarketModule.Tab.allCases.map(\.title),
+                tabs: MarketModule.Tab.allCases.map {
+                    ScrollableTabHeaderView.Tab(
+                        title: $0.title,
+                        highlighted: $0 == MarketModule.Tab.vaults
+                    )
+                },
                 currentTabIndex: Binding(
                     get: {
                         MarketModule.Tab.allCases.firstIndex(of: viewModel.currentTab) ?? 0
@@ -43,6 +50,7 @@ struct MarketTabView: View {
                 switch viewModel.currentTab {
                 case .coins: MarketCoinsView(viewModel: coinsViewModel, watchlistViewModel: watchlistViewModel)
                 case .watchlist: MarketWatchlistView(viewModel: marketWatchlistViewModel)
+                case .vaults: MarketVaultsView(viewModel: vaultsViewModel)
                 case .news: MarketNewsView(viewModel: newsViewModel)
                 case .platforms: MarketPlatformsView(viewModel: platformsViewModel)
                 case .pairs: MarketPairsView(viewModel: pairsViewModel)
@@ -70,6 +78,7 @@ struct MarketTabView: View {
         switch tab {
         case .coins: coinsViewModel.load()
         case .watchlist: marketWatchlistViewModel.load()
+        case .vaults: vaultsViewModel.load()
         case .news: newsViewModel.load()
         case .platforms: platformsViewModel.load()
         case .pairs: pairsViewModel.load()

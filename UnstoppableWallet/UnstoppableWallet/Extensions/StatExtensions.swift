@@ -47,6 +47,7 @@ extension MarketModule.Tab {
         case .platforms: return .platforms
         case .watchlist: return .watchlist
         case .sectors: return .sectors
+        case .vaults: return .vaults
         }
     }
 }
@@ -209,6 +210,15 @@ extension LinkType {
         case .telegram: return .externalTelegram
         case .reddit: return .externalReddit
         case .github: return .externalGithub
+        }
+    }
+}
+
+extension MarketVaultsViewModel.SortBy {
+    var statSortType: StatSortType {
+        switch self {
+        case .highestApy: return .highestApy
+        case .highestTvl: return .highestTvl
         }
     }
 }

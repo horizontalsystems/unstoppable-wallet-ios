@@ -61,6 +61,7 @@ enum StatPage: String {
     case externalCoinWebsite = "external_coin_website"
     case externalCoinWhitePaper = "external_coin_white_paper"
     case externalCompanyWebsite = "external_company_website"
+    case externalDapp = "external_dapp"
     case externalGithub = "external_github"
     case externalMarketPair = "external_market_pair"
     case externalNews = "external_news"
@@ -135,6 +136,8 @@ enum StatPage: String {
     case transactionInfo = "transaction_info"
     case transactions
     case unlinkWallet = "unlink_wallet"
+    case vault
+    case vaults
     case vipSupport = "vip_support"
     case walletConnect = "wallet_connect"
     case walletConnectRequest = "wallet_connect_request"
@@ -166,6 +169,7 @@ enum StatSection: String {
     case topLosers = "top_losers"
     case topPlatforms = "top_platforms"
     case qrScan = "qr_scan"
+    case vaults
     case watchlist
 }
 
@@ -229,6 +233,7 @@ enum StatEvent {
     case subscribe
     case subscribePremium(from: StatPremiumTrigger)
     case switchBaseCurrency(code: String)
+    case switchBlockchains(uids: [String])
     case switchBtcSource(chainUid: String, type: BtcRestoreMode)
     case switchChartPeriod(period: StatPeriod)
     case switchEvmSource(chainUid: String, name: String)
@@ -303,6 +308,7 @@ enum StatEvent {
         case .subscribe: return "subscribe"
         case .subscribePremium: return "subscribe_premium_from"
         case .switchBaseCurrency: return "switch_base_currency"
+        case .switchBlockchains: return "switch_blockchains"
         case .switchBtcSource: return "switch_btc_source"
         case .switchChartPeriod: return "switch_chart_period"
         case .switchEvmSource: return "switch_evm_source"
@@ -385,7 +391,8 @@ enum StatEvent {
         case let .showMarketsTab(shown): return [.shown: shown]
         case let .showSignals(shown): return [.shown: shown]
         case let .subscribePremium(trigger): return [.trigger: trigger.rawValue].merging(trialExpired) { $1 }
-        case let .switchBaseCurrency(code: code): return [.currencyCode: code]
+        case let .switchBaseCurrency(code): return [.currencyCode: code]
+        case let .switchBlockchains(uids): return [.uids: uids]
         case let .switchBtcSource(chainUid, type): return [.chainUid: chainUid, .type: type.rawValue]
         case let .switchChartPeriod(period): return [.period: period.rawValue]
         case let .switchEvmSource(chainUid, name): return [.chainUid: chainUid, .type: name]
@@ -449,47 +456,54 @@ enum StatParam: String {
     case tvlChain = "tvl_chain"
     case type
     case use
+    case uids
     case walletType = "wallet_type"
 }
 
 enum StatPremiumTrigger: String {
-    case tradingAssistant = "trading_assistant"
-    case dexVolume = "dex_volume"
-    case dexLiquidity = "dex_liquidity"
-    case transactionCount = "transaction_count"
     case activeAddresses = "active_addresses"
-    case holders
-    case projectFee = "project_fee"
-    case projectRevenue = "project_revenue"
-    case issueBlockchains = "issue_blockchains"
-    case other
-    case banner
-    case getPremium = "get_premium"
-    case duressMode = "duress_mode"
-    case vipSupport = "vip_support"
     case addressChecker = "address_checker"
+    case banner
+    case blockchains
+    case dexLiquidity = "dex_liquidity"
+    case dexVolume = "dex_volume"
     case disableAddressChecker = "disable_address_checker"
-    case sectors
-    case periodChange = "period_change"
-    case tokenChange = "token_change"
-    case priceChange = "price_change"
-    case pricePeriod = "price_period"
-    case tradingSignal = "trading_signal"
-    case priceCloseTo = "price_close_to"
-    case outperformedBtc = "outperformed_btc"
-    case outperformedEth = "outperformed_eth"
-    case outperformedBnb = "outperformed_bnb"
-    case outperformedSp500 = "outperformed_sp500"
-    case outperformedGold = "outperformed_gold"
+    case duressMode = "duress_mode"
+    case filter
+    case getPremium = "get_premium"
     case goodCexVolume = "good_cex_volume"
     case goodDexVolume = "good_dex_volume"
     case goodDistribution = "good_distribution"
+    case holders
+    case issueBlockchains = "issue_blockchains"
     case listedOnTopExchanges = "listed_on_top_exchanges"
+    case other
+    case outperformedBnb = "outperformed_bnb"
+    case outperformedBtc = "outperformed_btc"
+    case outperformedEth = "outperformed_eth"
+    case outperformedGold = "outperformed_gold"
+    case outperformedSp500 = "outperformed_sp500"
+    case periodChange = "period_change"
+    case priceChange = "price_change"
+    case priceCloseTo = "price_close_to"
+    case pricePeriod = "price_period"
+    case projectFee = "project_fee"
+    case projectRevenue = "project_revenue"
+    case sectors
+    case sortBy = "sort_by"
+    case timePeriod = "time_period"
+    case tokenChange = "token_change"
+    case tradingAssistant = "trading_assistant"
+    case tradingSignal = "trading_signal"
+    case transactionCount = "transaction_count"
+    case unlock
+    case vault
+    case vipSupport = "vip_support"
 }
 
 enum StatTab: String {
     case markets, balance, transactions, settings
-    case coins, overview, news, pairs, platforms, watchlist, sectors
+    case coins, overview, news, pairs, platforms, watchlist, sectors, vaults
     case analytics
     case all, incoming, outgoing, swap, approve
 }
@@ -511,6 +525,9 @@ enum StatSortType: String {
     case lowestAssets = "lowest_assets"
     case inflow
     case outflow
+
+    case highestApy = "highest_apy"
+    case highestTvl = "highest_tvl"
 }
 
 enum StatPeriod: String {
