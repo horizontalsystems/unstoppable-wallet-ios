@@ -47,12 +47,14 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>ChainalysisApiKey</key>
+	<string>${chainalysis_api_key}</string>
 	<key>DefaultPassphrase</key>
 	<string>${default_passphrase}</string>
-	<key>DefaultWords</key>
-	<string>${default_words}</string>
 	<key>DefaultWatchAddress</key>
 	<string>${default_watch_address}</string>
+	<key>DefaultWords</key>
+	<string>${default_words}</string>
 	<key>DefiYieldApiKey</key>
 	<string>$(defiyield_api_key)</string>
 	<key>DonateEnabled</key>
@@ -65,6 +67,8 @@
 	<string>${ftmscan_api_keys}</string>
 	<key>GnosisscanApiKeys</key>
 	<string>${gnosisscan_api_keys}</string>
+	<key>HashDitApiKey</key>
+	<string>${hashdit_api_key}</string>
 	<key>HsProviderApiKey</key>
 	<string>$(hs_provider_api_key)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
@@ -128,6 +132,8 @@
 	<string>${polygonscan_api_keys}</string>
 	<key>PrivateCloudContainerId</key>
 	<string>${private_cloud_container_id}</string>
+	<key>ReferralAppServerUrl</key>
+	<string>${referral_app_server_url}</string>
 	<key>SharedCloudContainerId</key>
 	<string>${shared_cloud_container_id}</string>
 	<key>ShowBuildNumber</key>
@@ -144,12 +150,14 @@
 	<string>${thorchain_affiliate_bps}</string>
 	<key>TronGridApiKey</key>
 	<string>${trongrid_api_key}</string>
-	<key>ChainalysisApiKey</key>
-	<string>${chainalysis_api_key}</string>
-	<key>HashDitApiKey</key>
-	<string>${hashdit_api_key}</string>
 	<key>TwitterBearerToken</key>
 	<string>${twitter_bearer_token}</string>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Manrope-Medium.ttf</string>
+		<string>Manrope-Regular.ttf</string>
+		<string>Manrope-SemiBold.ttf</string>
+	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>
@@ -159,6 +167,8 @@
 	</dict>
 	<key>UIBackgroundModes</key>
 	<array/>
+	<key>UIDesignRequiresCompatibility</key>
+	<true/>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>UIRequiredDeviceCapabilities</key>
@@ -177,13 +187,5 @@
 	<string>${unstoppable_domains_api_key}</string>
 	<key>WallectConnectV2ProjectKey</key>
 	<string>${wallet_connect_v2_project_key}</string>
-	<key>ReferralAppServerUrl</key>
-	<string>${referral_app_server_url}</string>
-	<key>UIAppFonts</key>
-	<array>
-		<string>Manrope-Medium.ttf</string>
-		<string>Manrope-Regular.ttf</string>
-		<string>Manrope-SemiBold.ttf</string>
-	</array>
 </dict>
 </plist>

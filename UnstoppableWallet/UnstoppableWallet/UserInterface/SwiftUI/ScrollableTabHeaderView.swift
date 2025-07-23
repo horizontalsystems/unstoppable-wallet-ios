@@ -1,10 +1,20 @@
 import SwiftUI
 
 struct ScrollableTabHeaderView: View {
-    let tabs: [String]
+    private let tabs: [Tab]
 
     @Binding var currentTabIndex: Int
     @Namespace var menuItemTransition
+
+    init(tabs: [Tab], currentTabIndex: Binding<Int>) {
+        self.tabs = tabs
+        _currentTabIndex = currentTabIndex
+    }
+
+    init(tabs: [String], currentTabIndex: Binding<Int>) {
+        self.tabs = tabs.map { Tab(title: $0, highlighted: false) }
+        _currentTabIndex = currentTabIndex
+    }
 
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -17,7 +27,7 @@ struct ScrollableTabHeaderView: View {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: .margin8) {
                         ForEach(tabs.indices, id: \.self) { index in
-                            item(title: tabs[index], isActive: index == currentTabIndex, namespace: menuItemTransition)
+                            item(tab: tabs[index], isActive: index == currentTabIndex, namespace: menuItemTransition)
                                 .onTapGesture {
                                     withAnimation(.spring().speed(1.5)) {
                                         currentTabIndex = index
@@ -40,9 +50,9 @@ struct ScrollableTabHeaderView: View {
         .animation(.spring().speed(1.5), value: currentTabIndex)
     }
 
-    @ViewBuilder private func item(title: String, isActive: Bool, namespace: Namespace.ID) -> some View {
+    @ViewBuilder private func item(tab: Tab, isActive: Bool, namespace: Namespace.ID) -> some View {
         if isActive {
-            Text(title)
+            Text(tab.title)
                 .font(.themeSubhead1)
                 .foregroundColor(.themeLeah)
                 .contentShape(Rectangle())
@@ -56,13 +66,20 @@ struct ScrollableTabHeaderView: View {
                         .matchedGeometryEffect(id: "highlightmenuitem", in: namespace)
                 }
         } else {
-            Text(title)
+            Text(tab.title)
                 .font(.themeSubhead1)
-                .foregroundColor(.themeGray)
+                .foregroundColor(tab.highlighted ? .themeJacob : .themeGray)
                 .contentShape(Rectangle())
                 .padding(.horizontal, .margin12)
                 .frame(height: 44)
         }
+    }
+}
+
+extension ScrollableTabHeaderView {
+    struct Tab {
+        let title: String
+        let highlighted: Bool
     }
 }
 

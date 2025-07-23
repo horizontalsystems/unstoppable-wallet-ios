@@ -182,6 +182,13 @@ extension MetricChartViewModel {
         return MetricChartViewModel(service: chartService, factory: factory)
     }
 
+    static func vaultInstance(vault: Vault) -> MetricChartViewModel {
+        let marketCapFetcher = VaultChartFetcher(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager, vault: vault)
+        let chartService = MetricChartService(chartFetcher: marketCapFetcher, interval: .byPeriod(.week1), statPage: .vault)
+        let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale, hardcodedRightMode: "market.vault.apy".localized)
+        return MetricChartViewModel(service: chartService, factory: factory)
+    }
+
     static func instance(coin: Coin, type: CoinProChartModule.ProChartType) -> MetricChartViewModel {
         let chartFetcher = ProChartFetcher(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager, coin: coin, type: type)
 
