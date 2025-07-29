@@ -114,6 +114,8 @@ class Core {
 
     private let startScreenAlertManager: StartScreenAlertManager
     private let deepLinkViewManager: DeepLinkViewManager
+    
+    let merkleTransactionHashManager: MerkleTransactionHashManager
 
     let valueFormatter: CurrencyValueFormatter
 
@@ -167,7 +169,7 @@ class Core {
         logger = Logger(minLogLevel: .error, storage: logRecordManager)
 
         currencyManager = CurrencyManager(storage: sharedLocalStorage)
-        networkManager = NetworkManager(logger: logger)
+        networkManager = NetworkManager(logger: Logger.init(minLogLevel: .debug))
         termsManager = TermsManager(userDefaultsStorage: userDefaultsStorage)
 
         watchlistManager = WatchlistManager(storage: sharedLocalStorage, priceChangeModeManager: priceChangeModeManager)
@@ -203,6 +205,9 @@ class Core {
         let restoreStateStorage = RestoreStateStorage(dbPool: dbPool)
         restoreStateManager = RestoreStateManager(storage: restoreStateStorage)
 
+        let merkleTransactionHashStorage = MerkleTransactionHashStorage(dbPool: dbPool)
+        merkleTransactionHashManager = MerkleTransactionHashManager(storage: merkleTransactionHashStorage, logger: .init(minLogLevel: .debug))
+        
         let evmAccountManagerFactory = EvmAccountManagerFactory(accountManager: accountManager, walletManager: walletManager, restoreStateManager: restoreStateManager, marketKit: marketKit)
         evmBlockchainManager = EvmBlockchainManager(syncSourceManager: evmSyncSourceManager, testNetManager: testNetManager, marketKit: marketKit, accountManagerFactory: evmAccountManagerFactory)
 
