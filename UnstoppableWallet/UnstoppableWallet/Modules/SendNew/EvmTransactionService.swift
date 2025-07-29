@@ -7,7 +7,7 @@ class EvmTransactionService: ITransactionService {
     private static let tipsSafeRangeBounds = RangeBounds(lower: .factor(0.9), upper: .factor(1.5))
     private static let legacyGasPriceSafeRangeBounds = RangeBounds(lower: .factor(0.9), upper: .factor(1.5))
 
-    private let userAddress: EvmKit.Address
+    private let evmKit: EvmKit.Kit
     private let blockchainType: BlockchainType
     private let chain: Chain
     private let rpcSource: RpcSource
@@ -72,14 +72,14 @@ class EvmTransactionService: ITransactionService {
         )
     }
 
-    init?(blockchainType: BlockchainType, userAddress: EvmKit.Address, initialTransactionSettings: InitialTransactionSettings?) {
+    init?(blockchainType: BlockchainType, evmKit: EvmKit.Kit, initialTransactionSettings: InitialTransactionSettings?) {
         guard let rpcSource = Core.shared.evmSyncSourceManager.httpSyncSource(blockchainType: blockchainType)?.rpcSource else {
             return nil
         }
 
         chain = Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType)
         self.blockchainType = blockchainType
-        self.userAddress = userAddress
+        self.evmKit = evmKit
         self.rpcSource = rpcSource
 
         if case let .evm(gasPrice, nonce) = initialTransactionSettings {
@@ -144,8 +144,8 @@ class EvmTransactionService: ITransactionService {
             gasPrice = recommendedGasPrice
         }
 
-        minimumNonce = try await EvmKit.Kit.nonceSingle(networkManager: networkManager, rpcSource: rpcSource, userAddress: userAddress, defaultBlockParameter: .latest)
-        nextNonce = try await EvmKit.Kit.nonceSingle(networkManager: networkManager, rpcSource: rpcSource, userAddress: userAddress, defaultBlockParameter: .pending)
+        minimumNonce = try await evmKit.nonce(defaultBlockParameter: .latest)
+        nextNonce = try await evmKit.nonce(defaultBlockParameter: .pending)
         if usingRecommendedNonce {
             nonce = nextNonce
         }
