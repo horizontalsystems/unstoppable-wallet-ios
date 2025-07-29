@@ -152,6 +152,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
             transactionData: quote.swap.transactionData,
             gasPrice: quote.swap.transaction.gasPrice,
             gasLimit: gasLimit,
+            privateSend: true,
             nonce: quote.nonce
         )
     }

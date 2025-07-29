@@ -228,6 +228,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
                 transactionData: quote.transactionData,
                 gasPrice: gasPrice,
                 gasLimit: gasLimit,
+                privateSend: false,
                 nonce: quote.nonce
             )
         } else if let quote = quote as? ThorChainMultiSwapBtcConfirmationQuote {

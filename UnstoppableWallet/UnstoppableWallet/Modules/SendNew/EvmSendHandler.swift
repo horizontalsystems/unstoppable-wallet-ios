@@ -92,6 +92,7 @@ extension EvmSendHandler: ISendHandler {
             transactionData: transactionData,
             gasPrice: gasPrice,
             gasLimit: gasLimit,
+            privateSend: true,
             nonce: data.nonce
         )
     }

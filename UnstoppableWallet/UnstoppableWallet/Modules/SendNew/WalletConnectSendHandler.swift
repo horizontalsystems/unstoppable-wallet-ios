@@ -97,6 +97,7 @@ extension WalletConnectSendHandler: ISendHandler {
             transactionData: transactionData,
             gasPrice: gasPrice,
             gasLimit: gasLimit,
+            privateSend: false,
             nonce: data.nonce
         )
 
