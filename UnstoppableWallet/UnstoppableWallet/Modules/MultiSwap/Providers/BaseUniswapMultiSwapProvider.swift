@@ -76,6 +76,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
             transactionData: transactionData,
             gasPrice: gasPrice,
             gasLimit: gasLimit,
+            privateSend: true,
             nonce: quote.nonce
         )
     }

@@ -1975,7 +1975,18 @@
 		6BDDB59C2C1816B500DE9D56 /* TonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDDB59B2C1816B500DE9D56 /* TonKit */; };
 		6BDDB5A12C1AC73D00DE9D56 /* TonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDDB5A02C1AC73D00DE9D56 /* TonKit */; };
 		6BDFC0892E3CDC1C00CC28DD /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDFC0882E3CDC1300CC28DD /* SubscriptionView.swift */; };
-		6BDFC08A2E3CDC1C00CC28DD /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDFC0882E3CDC1300CC28DD /* SubscriptionView.swift */; };
+		6BE57E732E339C3A003C4C01 /* MerkleTransactionAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57E722E339C32003C4C01 /* MerkleTransactionAdapter.swift */; };
+		6BE57E742E339C3A003C4C01 /* MerkleTransactionAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57E722E339C32003C4C01 /* MerkleTransactionAdapter.swift */; };
+		6BE57E782E339D17003C4C01 /* MerlkeTransactionHashStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57E772E339D17003C4C01 /* MerlkeTransactionHashStorage.swift */; };
+		6BE57E792E339D17003C4C01 /* MerkleRpcBlockchain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57E762E339D17003C4C01 /* MerkleRpcBlockchain.swift */; };
+		6BE57E7A2E339D17003C4C01 /* MerlkeTransactionHashStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57E772E339D17003C4C01 /* MerlkeTransactionHashStorage.swift */; };
+		6BE57E7B2E339D17003C4C01 /* MerkleRpcBlockchain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57E762E339D17003C4C01 /* MerkleRpcBlockchain.swift */; };
+		6BE57E7D2E339D4A003C4C01 /* MerkleTransactionSyncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57E7C2E339D4A003C4C01 /* MerkleTransactionSyncer.swift */; };
+		6BE57E7E2E339D4A003C4C01 /* MerkleTransactionSyncer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57E7C2E339D4A003C4C01 /* MerkleTransactionSyncer.swift */; };
+		6BE57E802E33A0A6003C4C01 /* MerkleTransactionHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57E7F2E33A0A6003C4C01 /* MerkleTransactionHash.swift */; };
+		6BE57E812E33A0A6003C4C01 /* MerkleTransactionHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57E7F2E33A0A6003C4C01 /* MerkleTransactionHash.swift */; };
+		6BE57E832E3739E0003C4C01 /* MerkleTransactionHashManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57E822E3739D8003C4C01 /* MerkleTransactionHashManager.swift */; };
+		6BE57E842E3739E0003C4C01 /* MerkleTransactionHashManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57E822E3739D8003C4C01 /* MerkleTransactionHashManager.swift */; };
 		6BE8A07B2ADE2F8D0012DE7F /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE8A07A2ADE2F8D0012DE7F /* Currency.swift */; };
 		6BE8A07C2ADE2F8D0012DE7F /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE8A07A2ADE2F8D0012DE7F /* Currency.swift */; };
 		6BE8A07E2ADE2F950012DE7F /* CurrencyValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE8A07D2ADE2F950012DE7F /* CurrencyValue.swift */; };
@@ -4379,6 +4390,12 @@
 		6BCD53182A161F9100993F20 /* BackupService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupService.swift; sourceTree = "<group>"; };
 		6BCD531B2A16203F00993F20 /* CloudBackupManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudBackupManager.swift; sourceTree = "<group>"; };
 		6BDFC0882E3CDC1300CC28DD /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
+		6BE57E722E339C32003C4C01 /* MerkleTransactionAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleTransactionAdapter.swift; sourceTree = "<group>"; };
+		6BE57E762E339D17003C4C01 /* MerkleRpcBlockchain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleRpcBlockchain.swift; sourceTree = "<group>"; };
+		6BE57E772E339D17003C4C01 /* MerlkeTransactionHashStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerlkeTransactionHashStorage.swift; sourceTree = "<group>"; };
+		6BE57E7C2E339D4A003C4C01 /* MerkleTransactionSyncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleTransactionSyncer.swift; sourceTree = "<group>"; };
+		6BE57E7F2E33A0A6003C4C01 /* MerkleTransactionHash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleTransactionHash.swift; sourceTree = "<group>"; };
+		6BE57E822E3739D8003C4C01 /* MerkleTransactionHashManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleTransactionHashManager.swift; sourceTree = "<group>"; };
 		6BE8A07A2ADE2F8D0012DE7F /* Currency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		6BE8A07D2ADE2F950012DE7F /* CurrencyValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyValue.swift; sourceTree = "<group>"; };
 		6BE8A0802ADE2FAB0012DE7F /* CurrencyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyManager.swift; sourceTree = "<group>"; };
@@ -7848,6 +7865,19 @@
 			path = Manual;
 			sourceTree = "<group>";
 		};
+		6BE57E752E339CB5003C4C01 /* Merkle */ = {
+			isa = PBXGroup;
+			children = (
+				6BE57E822E3739D8003C4C01 /* MerkleTransactionHashManager.swift */,
+				6BE57E7F2E33A0A6003C4C01 /* MerkleTransactionHash.swift */,
+				6BE57E7C2E339D4A003C4C01 /* MerkleTransactionSyncer.swift */,
+				6BE57E762E339D17003C4C01 /* MerkleRpcBlockchain.swift */,
+				6BE57E772E339D17003C4C01 /* MerlkeTransactionHashStorage.swift */,
+				6BE57E722E339C32003C4C01 /* MerkleTransactionAdapter.swift */,
+			);
+			path = Merkle;
+			sourceTree = "<group>";
+		};
 		6BEA17682DE5838E00BF73DD /* ZCashShieldTokens */ = {
 			isa = PBXGroup;
 			children = (
@@ -8804,6 +8834,7 @@
 		D05E96AB2A287155002CCD71 /* Evm */ = {
 			isa = PBXGroup;
 			children = (
+				6BE57E752E339CB5003C4C01 /* Merkle */,
 				58AAA656A81B2C12F618FB44 /* BaseEvmAdapter.swift */,
 				11B352D314A298B6B832F309 /* EvmAdapter.swift */,
 				58AAA312DD0792117182B64E /* Eip20Adapter.swift */,
@@ -10376,6 +10407,7 @@
 				6BCD53072A161F4100993F20 /* ICloudBackupTermsService.swift in Sources */,
 				ABC9AE3D64AF3981A68D9913 /* SendConfirmationViewModel.swift in Sources */,
 				D30D7E652CAACCFB00B8CAA7 /* TonConnectSendViewModel.swift in Sources */,
+				6BE57E7E2E339D4A003C4C01 /* MerkleTransactionSyncer.swift in Sources */,
 				6B5A13EC2DF7F77F006E609C /* MultiSwapDefaultTokenResolver.swift in Sources */,
 				D36287CF2CA408E200ADAF3B /* TonConnectStorage.swift in Sources */,
 				11B35DBC25EF36ABA6E13857 /* SectionsTableView.swift in Sources */,
@@ -10535,6 +10567,8 @@
 				11B35317F0BD30311142EA5D /* EvmPrivateKeyModule.swift in Sources */,
 				11B35EB226E9B03410E6E383 /* EvmPrivateKeyViewModel.swift in Sources */,
 				11B35653622A466CE9E6FA71 /* EvmPrivateKeyViewController.swift in Sources */,
+				6BE57E782E339D17003C4C01 /* MerlkeTransactionHashStorage.swift in Sources */,
+				6BE57E792E339D17003C4C01 /* MerkleRpcBlockchain.swift in Sources */,
 				11B3503F5875A29E6949B13C /* EvmPrivateKeyService.swift in Sources */,
 				D36287CC2CA3E12100ADAF3B /* TonConnectApp.swift in Sources */,
 				11B35F4CF3289335EF9004F1 /* ExtendedKeyViewController.swift in Sources */,
@@ -10574,6 +10608,7 @@
 				11B35D3102B803096B6EE5B6 /* NftMetadataManager.swift in Sources */,
 				11B35E34B9E95819B9EA1764 /* OpenSeaNftProvider.swift in Sources */,
 				11B35D80781966668550C8B9 /* NftMetadataSyncer.swift in Sources */,
+				6BE57E832E3739E0003C4C01 /* MerkleTransactionHashManager.swift in Sources */,
 				11B352AA36A25DF590166418 /* NftAddressMetadata.swift in Sources */,
 				11B3512244F96B6AE1399C9C /* NftUid.swift in Sources */,
 				11B35BF6FA6731E9CC002AA3 /* NftAssetMetadata.swift in Sources */,
@@ -10717,6 +10752,7 @@
 				D3C845AA2C1B08E3004F9DD9 /* CoinMajorHoldersViewModel.swift in Sources */,
 				2FA5D707CD9B268FA3CA8D8F /* TimeLockViewModel.swift in Sources */,
 				2FA5D06916F84E180B2AF357 /* InputOutputOrderService.swift in Sources */,
+				6BE57E732E339C3A003C4C01 /* MerkleTransactionAdapter.swift in Sources */,
 				2FA5DBD4F56DCAE4CDCAAB61 /* InputOutputOrderDataSource.swift in Sources */,
 				2FA5D10288617C877FDA2522 /* InputOutputOrderViewModel.swift in Sources */,
 				2FA5D7FD72BD25A4BE7F92D2 /* FeeRateDataSource.swift in Sources */,
@@ -11145,6 +11181,7 @@
 				ABC9AFFAC86660ECAD968B2C /* ActionSheetConfiguration.swift in Sources */,
 				D3DD671D2BC3BB9300EC7F78 /* BaseEvmMultiSwapQuote.swift in Sources */,
 				ABC9A5EBD9EAC91EB97C199C /* ActionSheetControllerNew.swift in Sources */,
+				6BE57E812E33A0A6003C4C01 /* MerkleTransactionHash.swift in Sources */,
 				11B35BFCE745A340714F1DE7 /* BadgeViewNew.swift in Sources */,
 				11B3523804E0F4F1DA8A1D9E /* BaseCurrencySettingsViewModel.swift in Sources */,
 				11B35F18FEEEAA9EC6043CA6 /* BaseCurrencySettingsView.swift in Sources */,
@@ -11906,6 +11943,7 @@
 				11B3581F4D975FC21B9A25F2 /* BtcBlockchainSettingsModule.swift in Sources */,
 				11B359131D838F3191A8C520 /* BtcBlockchainSettingsViewModel.swift in Sources */,
 				D30D7E662CAACCFB00B8CAA7 /* TonConnectSendViewModel.swift in Sources */,
+				6BE57E7D2E339D4A003C4C01 /* MerkleTransactionSyncer.swift in Sources */,
 				6B5A13ED2DF7F77F006E609C /* MultiSwapDefaultTokenResolver.swift in Sources */,
 				D36287D02CA408E200ADAF3B /* TonConnectStorage.swift in Sources */,
 				11B35D2C28E3116F58A543E2 /* BtcBlockchainSettingsService.swift in Sources */,
@@ -12065,6 +12103,8 @@
 				11B354FF8C01ADB837FBAC82 /* RecoveryPhraseViewController.swift in Sources */,
 				11B356DC58C5312D5034D30E /* RecoveryPhraseViewModel.swift in Sources */,
 				11B35C3418D6E7D94CB5C2AF /* RecoveryPhraseService.swift in Sources */,
+				6BE57E7A2E339D17003C4C01 /* MerlkeTransactionHashStorage.swift in Sources */,
+				6BE57E7B2E339D17003C4C01 /* MerkleRpcBlockchain.swift in Sources */,
 				11B3585E88319E5BBBB9CD3F /* EvmPrivateKeyModule.swift in Sources */,
 				D36287CD2CA3E12100ADAF3B /* TonConnectApp.swift in Sources */,
 				11B35FF02BADC6D832836C44 /* EvmPrivateKeyViewModel.swift in Sources */,
@@ -12104,6 +12144,7 @@
 				11B351F991634E3E6A0846EF /* NftHeaderView.swift in Sources */,
 				11B35F2F1770FB757E6FDCD8 /* NftRecord.swift in Sources */,
 				11B35AD7B59F0150C7B064D3 /* EvmNftRecord.swift in Sources */,
+				6BE57E842E3739E0003C4C01 /* MerkleTransactionHashManager.swift in Sources */,
 				11B358E7A9BC36B1B562A5B4 /* NftMetadataManager.swift in Sources */,
 				11B353CE5AFDEB1F3BBF73F9 /* OpenSeaNftProvider.swift in Sources */,
 				11B35B11E8F3DA194D632310 /* NftMetadataSyncer.swift in Sources */,
@@ -12247,6 +12288,7 @@
 				2FA5D10D571F6D9E3BECAF9E /* DropDownListCell.swift in Sources */,
 				D3C845A92C1B08E3004F9DD9 /* CoinMajorHoldersViewModel.swift in Sources */,
 				2FA5D62A6A421EEDFE784615 /* TimeLockViewModel.swift in Sources */,
+				6BE57E742E339C3A003C4C01 /* MerkleTransactionAdapter.swift in Sources */,
 				2FA5DDD1C1B4F6A483D9F089 /* InputOutputOrderService.swift in Sources */,
 				2FA5D715FCD64E7FD500BC27 /* InputOutputOrderDataSource.swift in Sources */,
 				2FA5D75976344172376327E2 /* InputOutputOrderViewModel.swift in Sources */,
@@ -12675,6 +12717,7 @@
 				ABC9AD04E4D3706E01B72D8D /* ActionStyleNew.swift in Sources */,
 				ABC9AC786F40F51F2108048F /* ActionSheetModule.swift in Sources */,
 				D3DD671C2BC3BB9300EC7F78 /* BaseEvmMultiSwapQuote.swift in Sources */,
+				6BE57E802E33A0A6003C4C01 /* MerkleTransactionHash.swift in Sources */,
 				ABC9A3103BC1D3CC7E9D80BD /* ActionSheetTapView.swift in Sources */,
 				ABC9A331A15BAB3C3B88D808 /* ActionSheetConfiguration.swift in Sources */,
 				ABC9AE558CE5912B5C15B6EB /* ActionSheetControllerNew.swift in Sources */,
