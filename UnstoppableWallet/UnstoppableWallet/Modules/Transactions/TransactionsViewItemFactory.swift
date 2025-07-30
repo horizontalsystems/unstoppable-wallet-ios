@@ -520,6 +520,7 @@ class TransactionsViewItemFactory {
                 title = "transactions.stellar_transaction.title".localized
                 subTitle = type
             }
+
         case let record as ZcashShieldingTransactionRecord:
             iconType = .localIcon(imageName: record.direction.txIconName)
             title = record.direction.txTitle
@@ -537,6 +538,7 @@ class TransactionsViewItemFactory {
             if let lockState = item.transactionItem.lockState {
                 locked = lockState.locked
             }
+
         default:
             iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
             title = "transactions.unknown_transaction.title".localized

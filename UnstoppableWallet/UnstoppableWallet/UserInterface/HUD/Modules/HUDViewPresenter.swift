@@ -33,7 +33,7 @@ class HUDViewPresenter: HUDViewPresenterInterface, HUDViewInteractorDelegate, Co
         }
     }
 
-    func showContainerView(animated: Bool = true, completion: (() -> Void)? = nil) {
+    func showContainerView(animated _: Bool = true, completion: (() -> Void)? = nil) {
         var style: HUDBannerStyle?
         if case let .banner(bannerStyle) = config.style {
             style = bannerStyle

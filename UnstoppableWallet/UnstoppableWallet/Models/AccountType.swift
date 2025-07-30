@@ -80,6 +80,7 @@ enum AccountType: Identifiable {
             case (.litecoin, .derived): return true
             case (.dash, .native): return true
             case (.zcash, .native): return true
+            case (.monero, .native): return true
             case (.ethereum, .native), (.ethereum, .eip20): return true
             case (.binanceSmartChain, .native), (.binanceSmartChain, .eip20): return true
             case (.polygon, .native), (.polygon, .eip20): return true
