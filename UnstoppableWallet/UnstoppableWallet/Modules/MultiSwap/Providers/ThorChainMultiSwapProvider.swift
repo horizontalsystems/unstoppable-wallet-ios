@@ -332,6 +332,8 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
                 continue
             }
 
+            var tokenQueries: [TokenQuery] = []
+
             switch blockchainType {
             case .avalanche, .base, .binanceSmartChain, .ethereum:
                 let components = assetId.components(separatedBy: "-")
@@ -344,18 +346,22 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
                     tokenType = .native
                 }
 
-                let token = try? marketKit.token(query: TokenQuery(blockchainType: blockchainType, tokenType: tokenType))
+                tokenQueries = [TokenQuery(blockchainType: blockchainType, tokenType: tokenType)]
 
-                if let token {
-                    assets.append(Asset(id: pool.asset, token: token))
-                }
-            case .bitcoinCash, .bitcoin, .litecoin:
-                let tokens = try? marketKit.tokens(queries: blockchainType.nativeTokenQueries)
+            case .bitcoinCash, .bitcoin:
+                tokenQueries = blockchainType.nativeTokenQueries
 
-                if let tokens {
-                    assets.append(contentsOf: tokens.map { Asset(id: pool.asset, token: $0) })
+            case .litecoin:
+                let supportedDerivations: [TokenType.Derivation] = [.bip44, .bip49, .bip84]
+                tokenQueries = supportedDerivations.map {
+                    TokenQuery(blockchainType: .litecoin, tokenType: .derived(derivation: $0))
                 }
+
             default: ()
+            }
+
+            if let tokens = try? marketKit.tokens(queries: tokenQueries) {
+                assets.append(contentsOf: tokens.map { Asset(id: pool.asset, token: $0) })
             }
         }
     }
