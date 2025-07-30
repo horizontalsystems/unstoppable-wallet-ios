@@ -33,7 +33,15 @@ extension Token {
     }
 
     var swappable: Bool {
-        BlockchainType.swappable.contains(blockchainType)
+        if case .litecoin = blockchainType {
+            if case .derived(let derivation) = type, derivation == .bip86 {
+                return false
+            } else {
+                return true
+            }
+        } else {
+            return BlockchainType.swappable.contains(blockchainType)
+        }
     }
 
     var badge: String? {

@@ -62,7 +62,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                 if filter.isEmpty {
                     let enabledTokens = wallets
                         .map(\.token)
-                        .filter { BlockchainType.swappable.contains($0.blockchainType) }
+                        .filter { $0.swappable }
                         .sorted { lhsToken, rhsToken in
                             if let token {
                                 let lhsSameBlockchain = lhsToken.blockchainType == token.blockchainType
