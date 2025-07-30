@@ -143,6 +143,10 @@ extension AdapterFactory {
             let restoreSettings = restoreSettingsManager.settings(accountId: wallet.account.id, blockchainType: .zcash)
             return try? ZcashAdapter(wallet: wallet, restoreSettings: restoreSettings)
 
+        case (.native, .monero):
+            let restoreSettings = restoreSettingsManager.settings(accountId: wallet.account.id, blockchainType: .monero)
+            return try? MoneroAdapter(wallet: wallet, restoreSettings: restoreSettings)
+
         case (.native, .ethereum), (.native, .binanceSmartChain), (.native, .polygon), (.native, .avalanche), (.native, .optimism), (.native, .arbitrumOne), (.native, .gnosis), (.native, .fantom), (.native, .base), (.native, .zkSync):
             return evmAdapter(wallet: wallet)
 

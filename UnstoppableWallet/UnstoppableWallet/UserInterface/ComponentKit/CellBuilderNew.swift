@@ -176,7 +176,6 @@ public class CellBuilderNew {
         case let .hStack(elements, _): return stackComponent(axis: .horizontal, elements: elements)
         case let .vStack(elements, _): return stackComponent(axis: .vertical, elements: elements)
         case let .vStackCentered(elements, _): return stackComponent(axis: .vertical, elements: elements, centered: true)
-
         case .text: return TextComponent()
         case .textButton: return TextButtonComponent()
         case .image16: return ImageComponent(size: .iconSize16)
@@ -196,7 +195,6 @@ public class CellBuilderNew {
         case .determiniteSpinner20: return DeterminiteSpinnerComponent(size: .iconSize20)
         case .determiniteSpinner24: return DeterminiteSpinnerComponent(size: .iconSize24)
         case .determiniteSpinner48: return DeterminiteSpinnerComponent(size: .iconSize48)
-
         default: return nil
         }
     }
@@ -250,7 +248,6 @@ public extension CellBuilderNew {
             case let .hStack(elements, _): return "hStack[\(elements.map(\.id).joined(separator: "-"))]"
             case let .vStack(elements, _): return "vStack[\(elements.map(\.id).joined(separator: "-"))]"
             case let .vStackCentered(elements, _): return "vStackCentered[\(elements.map(\.id).joined(separator: "-"))]"
-
             case let .margin(value): return "margin\(value)"
             case .margin0: return "margin0"
             case .margin4: return "margin4"
@@ -259,7 +256,6 @@ public extension CellBuilderNew {
             case .margin16: return "margin16"
             case .margin24: return "margin24"
             case .margin32: return "margin32"
-
             case .text: return "text"
             case .textButton: return "textButton"
             case .image16: return "image16"

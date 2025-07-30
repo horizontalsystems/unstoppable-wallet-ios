@@ -104,6 +104,7 @@ extension UdnAddressParserItem {
         case .base: return "ETH"
         case .zkSync: return "ETH"
         case .stellar: return "XLM"
+        case .monero: return "XMR"
         case let .unsupported(uid): return uid
         }
     }

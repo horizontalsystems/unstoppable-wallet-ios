@@ -60,7 +60,6 @@ class DeepLinkViewManager {
             walletConnectVerificationModel.handle { [weak self] in
                 self?.handleWalletConnect(url: url)
             }
-
         case let .walletConnectProposal(proposal): ()
             guard let account = Core.shared.accountManager.activeAccount else {
                 walletConnectVerificationModel.handle(onSuccess: {}) // just show - No Account
@@ -87,14 +86,12 @@ class DeepLinkViewManager {
 
             default: ()
             }
-
         case let .tonConnect(params):
             Coordinator.shared.present { _ in
                 TonConnectConnectView(config: params.config, returnDeepLink: params.returnDeepLink)
             }
         case .tonConnectRequest: () // TODO: make
         case .tonConnectRequestFailed: () // TODO: make
-
         case .handled: ()
         case let .fail(error): show(error: error)
         }

@@ -106,6 +106,8 @@ enum AddressParserFactory {
             return [TonAddressParserItem()]
         case .stellar:
             return [StellarAddressParserItem()]
+        case .monero:
+            return []
         case .unsupported: return []
         }
     }

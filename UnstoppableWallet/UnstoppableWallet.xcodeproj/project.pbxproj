@@ -2659,6 +2659,10 @@
 		D092C58C2C12DE3D0060D915 /* PriceChangeManager+HsTimePeriod.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092C58A2C12DE3D0060D915 /* PriceChangeManager+HsTimePeriod.swift */; };
 		D092C58D2C12DE800060D915 /* PriceChangeMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D4D2C07020300515664 /* PriceChangeMode.swift */; };
 		D092C58E2C12DE810060D915 /* PriceChangeMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D4D2C07020300515664 /* PriceChangeMode.swift */; };
+		D092D63D2E3116780039BDB4 /* MoneroKit in Frameworks */ = {isa = PBXBuildFile; productRef = D092D63C2E3116780039BDB4 /* MoneroKit */; };
+		D092D63F2E3116A90039BDB4 /* MoneroKit in Frameworks */ = {isa = PBXBuildFile; productRef = D092D63E2E3116A90039BDB4 /* MoneroKit */; };
+		D092D6412E31172E0039BDB4 /* MoneroAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092D6402E3117280039BDB4 /* MoneroAdapter.swift */; };
+		D092D6422E31172E0039BDB4 /* MoneroAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092D6402E3117280039BDB4 /* MoneroAdapter.swift */; };
 		D09C5C632C076C0E00E6909E /* CoinIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09C5C622C076C0E00E6909E /* CoinIconView.swift */; };
 		D09C5C642C076C0E00E6909E /* CoinIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09C5C622C076C0E00E6909E /* CoinIconView.swift */; };
 		D09D768C2A2E066E004311E6 /* SendTronConfirmationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D768B2A2E066E004311E6 /* SendTronConfirmationModule.swift */; };
@@ -4698,6 +4702,7 @@
 		D09200C0293F21710091981A /* RestoreNonStandardViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreNonStandardViewModel.swift; sourceTree = "<group>"; };
 		D09200C1293F21720091981A /* RestoreNonStandardModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreNonStandardModule.swift; sourceTree = "<group>"; };
 		D092C58A2C12DE3D0060D915 /* PriceChangeManager+HsTimePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PriceChangeManager+HsTimePeriod.swift"; sourceTree = "<group>"; };
+		D092D6402E3117280039BDB4 /* MoneroAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroAdapter.swift; sourceTree = "<group>"; };
 		D09C5C622C076C0E00E6909E /* CoinIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinIconView.swift; sourceTree = "<group>"; };
 		D09D768B2A2E066E004311E6 /* SendTronConfirmationModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationModule.swift; sourceTree = "<group>"; };
 		D09D768D2A2E06D6004311E6 /* SendTronConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationViewController.swift; sourceTree = "<group>"; };
@@ -5011,6 +5016,7 @@
 				D3AEB8752DB8FAA200E385C8 /* StellarKit in Frameworks */,
 				6BDA29AB29D6F37C003847ED /* ECashKit in Frameworks */,
 				D36287C82CA3DF7A00ADAF3B /* TonConnectAPI in Frameworks */,
+				D092D63D2E3116780039BDB4 /* MoneroKit in Frameworks */,
 				D3604E8C28F03DBF0066C366 /* BitcoinCashKit in Frameworks */,
 				D3E41E082C244CE200499F50 /* TonSwift in Frameworks */,
 				D3993DC428F429AA008720FB /* UnstoppableDomainsResolution in Frameworks */,
@@ -5061,6 +5067,7 @@
 				D3AF5A8929FFD85800C1399E /* RxCocoa in Frameworks */,
 				500F1D1127AA87BC002AA419 /* AlignedCollectionViewFlowLayout in Frameworks */,
 				D3AEB8772DB8FAB600E385C8 /* StellarKit in Frameworks */,
+				D092D63F2E3116A90039BDB4 /* MoneroKit in Frameworks */,
 				D3DDFA362DDF2D14003CADDF /* TonConnectAPI in Frameworks */,
 				D3604E6928F02DF30066C366 /* BitcoinCashKit in Frameworks */,
 				D3993DC228F42992008720FB /* UnstoppableDomainsResolution in Frameworks */,
@@ -6721,6 +6728,7 @@
 				D3AEB87B2DB8FE7A00E385C8 /* StellarAdapter.swift */,
 				D3AEB87E2DBA063200E385C8 /* StellarTransactionAdapter.swift */,
 				D3AEB8852DBA123D00E385C8 /* StellarOperationConverter.swift */,
+				D092D6402E3117280039BDB4 /* MoneroAdapter.swift */,
 			);
 			path = Adapters;
 			sourceTree = "<group>";
@@ -9375,6 +9383,7 @@
 				D3DDFA332DDF2D02003CADDF /* TonConnectAPI */,
 				6B6D3F2C2DED72BF00AB2915 /* SkeletonView */,
 				6B6E14252DEDB57B007F4A39 /* Kingfisher */,
+				D092D63C2E3116780039BDB4 /* MoneroKit */,
 			);
 			productName = Wallet;
 			productReference = D38405CE218317DF007D50AD /* Unstoppable D.app */;
@@ -9436,6 +9445,7 @@
 				D3DDFA352DDF2D14003CADDF /* TonConnectAPI */,
 				6B6D3F2A2DED72B700AB2915 /* SkeletonView */,
 				6B6E14272DEDB58A007F4A39 /* Kingfisher */,
+				D092D63E2E3116A90039BDB4 /* MoneroKit */,
 			);
 			productName = Wallet;
 			productReference = D38406BE21831B3D007D50AD /* Unstoppable.app */;
@@ -9613,6 +9623,7 @@
 				6B1D8DF32DEACF6A00A52B01 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 				6B1D8DF42DEACFA200A52B01 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				6B1D8DF62DEAD10900A52B01 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				D092D63B2E3116780039BDB4 /* XCRemoteSwiftPackageReference "MoneroKit.Swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
@@ -10743,6 +10754,7 @@
 				11B35F8BF4BD6481E6AF72AF /* TestNetManager.swift in Sources */,
 				ABC9A0073333D3DEC2797D15 /* BackupCloudPassphraseViewController.swift in Sources */,
 				ABC9AE472D9105F6FDAECD42 /* BackupCloudPassphraseService.swift in Sources */,
+				D092D6412E31172E0039BDB4 /* MoneroAdapter.swift in Sources */,
 				ABC9ABE3189E497EC732B331 /* BackupCloudPassphraseViewModel.swift in Sources */,
 				D38955982DE5B3E70012114F /* CheckAddressViewModel.swift in Sources */,
 				D34338EC2C8714A2001FCAD2 /* TonEventConverter.swift in Sources */,
@@ -12265,6 +12277,7 @@
 				6B0B6E752E092C0600A0F0C9 /* SpamManager.swift in Sources */,
 				11B35357032B368120BA1C06 /* TestNetManager.swift in Sources */,
 				ABC9A2B6F1CF39D5CE9EA489 /* BackupCloudPassphraseViewController.swift in Sources */,
+				D092D6422E31172E0039BDB4 /* MoneroAdapter.swift in Sources */,
 				ABC9AB308727D81FBB8EBCDD /* BackupCloudPassphraseService.swift in Sources */,
 				ABC9A191F1E62A20D2D38262 /* BackupCloudPassphraseViewModel.swift in Sources */,
 				D38955962DE5B3E70012114F /* CheckAddressViewModel.swift in Sources */,
@@ -13679,6 +13692,14 @@
 				version = 2.0.2;
 			};
 		};
+		D092D63B2E3116780039BDB4 /* XCRemoteSwiftPackageReference "MoneroKit.Swift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/MoneroKit.Swift.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		D0EC34D92A4450B100BB308B /* XCRemoteSwiftPackageReference "HCaptcha-ios-sdk" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/HCaptcha-ios-sdk.git";
@@ -13764,7 +13785,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 3.6.1;
+				version = 3.6.2;
 			};
 		};
 		D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart" */ = {
@@ -14054,6 +14075,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D08C93AD2B91E37E00A7D1D5 /* XCRemoteSwiftPackageReference "Hodler" */;
 			productName = Hodler;
+		};
+		D092D63C2E3116780039BDB4 /* MoneroKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D092D63B2E3116780039BDB4 /* XCRemoteSwiftPackageReference "MoneroKit.Swift" */;
+			productName = MoneroKit;
+		};
+		D092D63E2E3116A90039BDB4 /* MoneroKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D092D63B2E3116780039BDB4 /* XCRemoteSwiftPackageReference "MoneroKit.Swift" */;
+			productName = MoneroKit;
 		};
 		D0EC34DA2A4450B100BB308B /* HCaptcha */ = {
 			isa = XCSwiftPackageProductDependency;
