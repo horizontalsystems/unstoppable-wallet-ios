@@ -676,7 +676,7 @@ extension NftAssetOverviewViewController: SectionsDataSource {
                 sections.append(contentsOf: linksSections(links: viewItem.links))
             }
 
-            sections.append(poweredBySection(text: "Powered by OpenSea API"))
+            sections.append(poweredBySection(text: "powered_by".localized("OpenSea API")))
         }
 
         return sections

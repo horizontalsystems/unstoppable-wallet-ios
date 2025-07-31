@@ -110,20 +110,20 @@ class MoneroAdapter {
         }
 
         switch kit.walletStatus {
-            case .ok, .unknown:
-                if let daemonHeight = kit.daemonHeight, let lastBlockHeight = kit.lastBlockHeight {
-                    if daemonHeight > lastBlockHeight {
-                        return .syncing(progress: lastBlockHeight * 100 / daemonHeight, lastBlockDate: nil)
-                    } else {
-                        return .synced
-                    }
+        case .ok, .unknown:
+            if let daemonHeight = kit.daemonHeight, let lastBlockHeight = kit.lastBlockHeight {
+                if daemonHeight > lastBlockHeight {
+                    return .syncing(progress: lastBlockHeight * 100 / daemonHeight, lastBlockDate: nil)
                 } else {
-                    return .syncing(progress: 0, lastBlockDate: nil)
+                    return .synced
                 }
-            case .error(let error):
-                return .notSynced(error: error ?? AppError.unknownError)
-            case .critical(let error):
-                return .notSynced(error: error ?? AppError.unknownError)
+            } else {
+                return .syncing(progress: 0, lastBlockDate: nil)
+            }
+        case let .error(error):
+            return .notSynced(error: error ?? AppError.unknownError)
+        case let .critical(error):
+            return .notSynced(error: error ?? AppError.unknownError)
         }
     }
 
@@ -172,7 +172,7 @@ extension MoneroAdapter: MoneroKitDelegate {
         moneroBalanceDataSubject.onNext(moneroBalanceData(balanceInfo: balanceInfo))
     }
 
-    func walletStatusDidChange(status: MoneroKit.WalletStatus) {
+    func walletStatusDidChange(status _: MoneroKit.WalletStatus) {
         balanceState = adapterStateFromKit()
     }
 

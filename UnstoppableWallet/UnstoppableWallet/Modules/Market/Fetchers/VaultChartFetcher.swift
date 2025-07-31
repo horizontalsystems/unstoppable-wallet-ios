@@ -30,7 +30,7 @@ extension VaultChartFetcher: IMetricChartFetcher {
 
         let vault = try await marketKit.vault(address: vault.address, currencyCode: currencyManager.baseCurrency.code, timePeriod: interval)
 
-        let points = vault.apyChart ?? []
+        let points = vault.chart ?? []
 
         let items = points.map { point -> MetricChartModule.Item in
             MetricChartModule.Item(value: point.apy, timestamp: point.timestamp)

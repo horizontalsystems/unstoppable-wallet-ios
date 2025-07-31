@@ -53,7 +53,7 @@ struct MarketVaultView: View {
 
                     HorizontalDivider()
 
-                    Text("@vault.fyi")
+                    Text("powered_by".localized("Vaults.fyi"))
                         .textCaption()
                         .padding(EdgeInsets(top: .margin12, leading: .margin24, bottom: .margin32, trailing: .margin24))
                 }
