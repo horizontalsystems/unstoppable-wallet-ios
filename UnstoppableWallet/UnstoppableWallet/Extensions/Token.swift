@@ -40,7 +40,7 @@ extension Token {
         switch type {
         case let .derived(derivation): return derivation.mnemonicDerivation.rawValue.uppercased()
         case let .addressType(type): return type.bitcoinCashCoinType.title.uppercased()
-        default: return protocolName?.uppercased()
+        default: return protocolName
         }
     }
 

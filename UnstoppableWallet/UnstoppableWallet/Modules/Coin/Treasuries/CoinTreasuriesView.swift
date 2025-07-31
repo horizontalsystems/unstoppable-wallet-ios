@@ -95,7 +95,7 @@ struct CoinTreasuriesView: View {
     }
 
     @ViewBuilder private func footer() -> some View {
-        Text("Powered by Bitcointreasuries.net")
+        Text("powered_by".localized("Bitcointreasuries.net"))
             .textCaption(color: .themeGray)
             .padding(.top, .margin12)
             .padding(.horizontal, .margin24)

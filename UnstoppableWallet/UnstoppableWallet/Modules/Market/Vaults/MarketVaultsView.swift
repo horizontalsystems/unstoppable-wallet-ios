@@ -32,18 +32,24 @@ struct MarketVaultsView: View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
                 Button(action: {
-                    guard viewModel.premiumEnabled else {
-                        Coordinator.shared.presentPurchases()
-                        stat(page: .vaults, event: .openPremium(from: .filter))
-                        return
-                    }
-
                     Coordinator.shared.present(type: .alert) { isPresented in
                         OptionAlertView(
                             title: "market.vaults.filter".localized,
                             viewItems: MarketVaultsViewModel.Filter.allCases.map { .init(text: $0.title, selected: viewModel.filter == $0) },
                             onSelect: { index in
-                                viewModel.filter = MarketVaultsViewModel.Filter.allCases[index]
+                                let filter = MarketVaultsViewModel.Filter.allCases[index]
+
+                                guard viewModel.filter != filter else {
+                                    return
+                                }
+
+                                guard viewModel.premiumEnabled else {
+                                    Coordinator.shared.presentPurchases()
+                                    stat(page: .vaults, event: .openPremium(from: .filter))
+                                    return
+                                }
+
+                                viewModel.filter = filter
                             },
                             isPresented: isPresented
                         )
@@ -55,18 +61,24 @@ struct MarketVaultsView: View {
                 .disabled(disabled)
 
                 Button(action: {
-                    guard viewModel.premiumEnabled else {
-                        Coordinator.shared.presentPurchases()
-                        stat(page: .vaults, event: .openPremium(from: .sortBy))
-                        return
-                    }
-
                     Coordinator.shared.present(type: .alert) { isPresented in
                         OptionAlertView(
                             title: "market.sort_by.title".localized,
                             viewItems: MarketVaultsViewModel.SortBy.allCases.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
                             onSelect: { index in
-                                viewModel.sortBy = MarketVaultsViewModel.SortBy.allCases[index]
+                                let sortBy = MarketVaultsViewModel.SortBy.allCases[index]
+
+                                guard viewModel.sortBy != sortBy else {
+                                    return
+                                }
+
+                                guard viewModel.premiumEnabled else {
+                                    Coordinator.shared.presentPurchases()
+                                    stat(page: .vaults, event: .openPremium(from: .sortBy))
+                                    return
+                                }
+
+                                viewModel.sortBy = sortBy
                             },
                             isPresented: isPresented
                         )
@@ -78,18 +90,24 @@ struct MarketVaultsView: View {
                 .disabled(disabled)
 
                 Button(action: {
-                    guard viewModel.premiumEnabled else {
-                        Coordinator.shared.presentPurchases()
-                        stat(page: .vaults, event: .openPremium(from: .timePeriod))
-                        return
-                    }
-
                     Coordinator.shared.present(type: .alert) { isPresented in
                         OptionAlertView(
                             title: "market.time_period.title".localized,
                             viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
                             onSelect: { index in
-                                viewModel.timePeriod = viewModel.timePeriods[index]
+                                let timePeriod = viewModel.timePeriods[index]
+
+                                guard viewModel.timePeriod != timePeriod else {
+                                    return
+                                }
+
+                                guard viewModel.premiumEnabled else {
+                                    Coordinator.shared.presentPurchases()
+                                    stat(page: .vaults, event: .openPremium(from: .timePeriod))
+                                    return
+                                }
+
+                                viewModel.timePeriod = timePeriod
                             },
                             isPresented: isPresented
                         )
@@ -101,12 +119,6 @@ struct MarketVaultsView: View {
                 .disabled(disabled)
 
                 Button(action: {
-                    guard viewModel.premiumEnabled else {
-                        Coordinator.shared.presentPurchases()
-                        stat(page: .vaults, event: .openPremium(from: .blockchains))
-                        return
-                    }
-
                     Coordinator.shared.present { isPresented in
                         BlockchainsView(viewModel: viewModel, isPresented: isPresented)
                     }
@@ -284,6 +296,12 @@ extension MarketVaultsView {
 
                         ForEach(viewModel.allBlockchains, id: \.self) { blockchain in
                             ClickableRow(action: {
+                                guard viewModel.premiumEnabled else {
+                                    Coordinator.shared.presentPurchases()
+                                    stat(page: .vaults, event: .openPremium(from: .blockchains))
+                                    return
+                                }
+
                                 if viewModel.blockchains.contains(blockchain) {
                                     viewModel.blockchains.remove(blockchain)
                                 } else {

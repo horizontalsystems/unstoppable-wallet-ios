@@ -13,7 +13,7 @@ struct BadgeViewNew: View {
 
     var body: some View {
         HStack(spacing: .margin2) {
-            Text(text.uppercased())
+            Text(text)
                 .font(style.font)
                 .foregroundColor(style.foregroundColor)
 

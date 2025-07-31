@@ -60,7 +60,7 @@ struct CoinAuditsView: View {
 
                     VStack(spacing: .margin12) {
                         HorizontalDivider()
-                        Text("Powered by Defiyield.app").textCaption()
+                        Text("powered_by".localized("Defiyield.app")).textCaption()
                     }
                 }
                 .padding(EdgeInsets(top: .margin12, leading: 0, bottom: .margin32, trailing: 0))

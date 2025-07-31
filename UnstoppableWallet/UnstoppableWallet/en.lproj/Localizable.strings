@@ -117,6 +117,8 @@
 "auto_lock.minute30" = "30 minutes";
 "auto_lock.hour1" = "1 hour";
 
+"powered_by" = "Powered by %@";
+
 // Access Camera
 
 "access_camera.message" = "Access to your camera for this app was denied, you can go to settings and allow access";
@@ -1266,7 +1268,6 @@
 "coin_analytics.30_day_volume" = "30-Day Volume";
 
 "coin_analytics.analysis.title" = "Smart Contract Analysis";
-"coin_analytics.analysis.footer" = "Powered by De.Fi";
 "coin_analytics.analysis.high_risk_items" = "High Risk Items";
 "coin_analytics.analysis.medium_risk_items" = "Medium Risk Items";
 "coin_analytics.analysis.attention_required" = "Attention Required";

@@ -532,7 +532,7 @@ struct CoinAnalyticsView: View {
                 }
             }
 
-            Text("coin_analytics.analysis.footer".localized)
+            Text("powered_by".localized("De.Fi"))
                 .themeSubhead2()
                 .padding(.horizontal, .margin16)
                 .padding(.vertical, .margin12)

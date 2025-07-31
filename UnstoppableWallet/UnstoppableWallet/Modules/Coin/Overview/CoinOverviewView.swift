@@ -68,7 +68,7 @@ struct CoinOverviewView: View {
 
                 HorizontalDivider()
 
-                Text("Powered by CoinGecko API")
+                Text("powered_by".localized("CoinGecko API"))
                     .textCaption()
                     .padding(EdgeInsets(top: .margin12, leading: .margin24, bottom: .margin32, trailing: .margin24))
             }
