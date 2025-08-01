@@ -6,7 +6,7 @@ import MoneroKit
 import RxSwift
 
 class MoneroAdapter {
-    private static let networkType: MoneroKit.NetworkType = .mainnet
+    static let networkType: MoneroKit.NetworkType = .mainnet
     static let confirmationsThreshold = 1
     static let txStatusConfirmationsThreshold = 3
 
@@ -100,22 +100,20 @@ class MoneroAdapter {
     private func moneroBalanceData(balanceInfo: BalanceInfo) -> MoneroBalanceData {
         MoneroBalanceData(
             all: Decimal(balanceInfo.all) / coinRate,
-            unspendable: Decimal(balanceInfo.unspendable) / coinRate
+            unlocked: Decimal(balanceInfo.unlocked) / coinRate
         )
     }
 
     private func adapterStateFromKit() -> AdapterState {
-        if kit.isSynchronized {
-            return .synced
-        }
-
         switch kit.walletStatus {
         case .ok, .unknown:
             if let daemonHeight = kit.daemonHeight, let lastBlockHeight = kit.lastBlockHeight {
-                if daemonHeight > lastBlockHeight {
-                    return .syncing(progress: lastBlockHeight * 100 / daemonHeight, lastBlockDate: nil)
-                } else {
+                if daemonHeight <= lastBlockHeight, kit.isSynchronized {
                     return .synced
+                } else if daemonHeight == 0 {
+                    return .syncing(progress: 0, lastBlockDate: nil)
+                } else {
+                    return .syncing(progress: lastBlockHeight * 100 / daemonHeight, lastBlockDate: nil)
                 }
             } else {
                 return .syncing(progress: 0, lastBlockDate: nil)
@@ -226,19 +224,16 @@ extension MoneroAdapter {
         0.0
     }
 
-    func validate(address: String) -> Bool {
-        kit.validate(address: address)
+    func estimateFee(amount: Decimal, address: String, priority: SendPriority) throws -> Decimal {
+        let fee = try kit.estimateFee(amount: convertToPiconero(value: amount), address: address, priority: priority)
+        return Decimal(fee) / coinRate
     }
 
-    func estimateFee(amount: Int) throws -> Int {
-        Int(kit.estimateFee(amount: amount))
+    func send(to address: String, amount: Decimal, priority: SendPriority) throws {
+        _ = try kit.send(to: address, amount: convertToPiconero(value: amount), priority: priority)
     }
 
-    func send(to address: String, amount: Int) throws {
-        _ = try kit.send(to: address, amount: amount)
-    }
-
-    func convertToSatoshi(value: Decimal) -> Int {
+    func convertToPiconero(value: Decimal) -> Int {
         let coinValue: Decimal = value * coinRate
         let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: Int16(truncatingIfNeeded: 0), raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
         return NSDecimalNumber(decimal: coinValue).rounding(accordingToBehavior: handler).intValue
@@ -320,10 +315,55 @@ extension MoneroAdapter: IDepositAdapter {
 extension MoneroAdapter {
     struct MoneroBalanceData {
         let all: Decimal
-        let unspendable: Decimal
+        let unlocked: Decimal
 
         var balanceData: BalanceData {
-            BalanceData(total: all, available: all - unspendable)
+            BalanceData(total: all, available: unlocked)
+        }
+    }
+}
+
+extension SendPriority {
+    static func from(string: String) -> SendPriority? {
+        switch string {
+        case SendPriority.default.description:
+            return SendPriority.default
+        case SendPriority.low.description:
+            return SendPriority.low
+        case SendPriority.medium.description:
+            return SendPriority.medium
+        case SendPriority.high.description:
+            return SendPriority.high
+        case SendPriority.last.description:
+            return SendPriority.last
+        default:
+            return nil
+        }
+    }
+
+    var description: String {
+        switch self {
+        case .default:
+            return "monero.priority.default".localized()
+        case .low:
+            return "monero.priority.low".localized()
+        case .medium:
+            return "monero.priority.medium".localized()
+        case .high:
+            return "monero.priority.high".localized()
+        case .last:
+            return "monero.priority.last".localized()
+        }
+    }
+
+    var level: ValueLevel {
+        switch self {
+        case .low, .high:
+            return .warning
+        case .medium, .default:
+            return .regular
+        case .last:
+            return .error
         }
     }
 }

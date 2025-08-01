@@ -13,6 +13,10 @@ enum TransactionServiceFactory {
             return BitcoinTransactionService(blockchainType: blockchainType)
         }
 
+        if blockchainType == .monero {
+            return MoneroTransactionService()
+        }
+
         return nil
     }
 }
