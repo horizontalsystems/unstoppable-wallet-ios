@@ -2541,6 +2541,18 @@
 		D0118E492B7C9A5200D55CE6 /* ResendBitcoinModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0118E472B7C9A5200D55CE6 /* ResendBitcoinModule.swift */; };
 		D0118E4B2B7CC63300D55CE6 /* ResendBitcoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0118E4A2B7CC63300D55CE6 /* ResendBitcoinViewController.swift */; };
 		D0118E4C2B7CC63300D55CE6 /* ResendBitcoinViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0118E4A2B7CC63300D55CE6 /* ResendBitcoinViewController.swift */; };
+		D011A48C2E3A551A004F58DC /* MoneroAddressParserItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011A48B2E3A5511004F58DC /* MoneroAddressParserItem.swift */; };
+		D011A48D2E3A551A004F58DC /* MoneroAddressParserItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011A48B2E3A5511004F58DC /* MoneroAddressParserItem.swift */; };
+		D011A48F2E3A5C1B004F58DC /* MoneroPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011A48E2E3A5C13004F58DC /* MoneroPreSendHandler.swift */; };
+		D011A4902E3A5C1B004F58DC /* MoneroPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011A48E2E3A5C13004F58DC /* MoneroPreSendHandler.swift */; };
+		D011A4922E3A5C24004F58DC /* MoneroSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011A4912E3A5C20004F58DC /* MoneroSendHandler.swift */; };
+		D011A4932E3A5C24004F58DC /* MoneroSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011A4912E3A5C20004F58DC /* MoneroSendHandler.swift */; };
+		D011A4952E3B5D4F004F58DC /* MoneroFeeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011A4942E3B5D47004F58DC /* MoneroFeeSettingsView.swift */; };
+		D011A4962E3B5D4F004F58DC /* MoneroFeeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011A4942E3B5D47004F58DC /* MoneroFeeSettingsView.swift */; };
+		D011A4982E3B5D6F004F58DC /* MoneroFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011A4972E3B5D67004F58DC /* MoneroFeeSettingsViewModel.swift */; };
+		D011A4992E3B5D6F004F58DC /* MoneroFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011A4972E3B5D67004F58DC /* MoneroFeeSettingsViewModel.swift */; };
+		D011A49B2E3B8276004F58DC /* MoneroTransactionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011A49A2E3B826D004F58DC /* MoneroTransactionService.swift */; };
+		D011A49C2E3B8276004F58DC /* MoneroTransactionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D011A49A2E3B826D004F58DC /* MoneroTransactionService.swift */; };
 		D01513D12D1EA6A400FD9816 /* SpamScanState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01513D02D1EA6A400FD9816 /* SpamScanState.swift */; };
 		D01513D22D1EA6A400FD9816 /* SpamScanState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01513D02D1EA6A400FD9816 /* SpamScanState.swift */; };
 		D01517EE2B10A69E00FECCBC /* WatchModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D01517ED2B10A69E00FECCBC /* WatchModule.swift */; };
@@ -4647,6 +4659,12 @@
 		D00DAE442B626C2900F48E1D /* GasPrice.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasPrice.swift; sourceTree = "<group>"; };
 		D0118E472B7C9A5200D55CE6 /* ResendBitcoinModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendBitcoinModule.swift; sourceTree = "<group>"; };
 		D0118E4A2B7CC63300D55CE6 /* ResendBitcoinViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendBitcoinViewController.swift; sourceTree = "<group>"; };
+		D011A48B2E3A5511004F58DC /* MoneroAddressParserItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroAddressParserItem.swift; sourceTree = "<group>"; };
+		D011A48E2E3A5C13004F58DC /* MoneroPreSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroPreSendHandler.swift; sourceTree = "<group>"; };
+		D011A4912E3A5C20004F58DC /* MoneroSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroSendHandler.swift; sourceTree = "<group>"; };
+		D011A4942E3B5D47004F58DC /* MoneroFeeSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroFeeSettingsView.swift; sourceTree = "<group>"; };
+		D011A4972E3B5D67004F58DC /* MoneroFeeSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroFeeSettingsViewModel.swift; sourceTree = "<group>"; };
+		D011A49A2E3B826D004F58DC /* MoneroTransactionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroTransactionService.swift; sourceTree = "<group>"; };
 		D01513D02D1EA6A400FD9816 /* SpamScanState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamScanState.swift; sourceTree = "<group>"; };
 		D01517ED2B10A69E00FECCBC /* WatchModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchModule.swift; sourceTree = "<group>"; };
 		D023D2662A24BBC6004F65B0 /* TronAddressParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronAddressParser.swift; sourceTree = "<group>"; };
@@ -7166,6 +7184,7 @@
 		58AAA0C31F14444C22ACF393 /* Address */ = {
 			isa = PBXGroup;
 			children = (
+				D011A48B2E3A5511004F58DC /* MoneroAddressParserItem.swift */,
 				D0E6EC682D5B5EB4006563D1 /* BlacklistAddressValidator.swift */,
 				D0E6EC652D5B5E71006563D1 /* HashDitAddressValidator.swift */,
 				D0E6EC622D5A0046006563D1 /* Eip20AddressValidator.swift */,
@@ -8854,6 +8873,8 @@
 				D0A980AE2B60E73F00127AF4 /* LegacyFeeSettingsView.swift */,
 				D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */,
 				D0F9F5162B99857700C3190A /* FeeSettings.swift */,
+				D011A4942E3B5D47004F58DC /* MoneroFeeSettingsView.swift */,
+				D011A4972E3B5D67004F58DC /* MoneroFeeSettingsViewModel.swift */,
 			);
 			path = FeeSettings;
 			sourceTree = "<group>";
@@ -8977,6 +8998,9 @@
 				D08D16832C2165490086E5A5 /* TonSendHandler.swift */,
 				D34D3DDA2DBF9B7E005C9ACC /* StellarPreSendHandler.swift */,
 				D34D3DDB2DBF9B7E005C9ACC /* StellarSendHandler.swift */,
+				D011A4912E3A5C20004F58DC /* MoneroSendHandler.swift */,
+				D011A48E2E3A5C13004F58DC /* MoneroPreSendHandler.swift */,
+				D011A49A2E3B826D004F58DC /* MoneroTransactionService.swift */,
 			);
 			path = SendNew;
 			sourceTree = "<group>";
@@ -9791,6 +9815,7 @@
 				11B35BCD6D0462E31D7EBA06 /* BackupManager.swift in Sources */,
 				11B358D1687049E5DACEBC96 /* AppManager.swift in Sources */,
 				D31C4760238BF176008CB818 /* MnemonicDerivation.swift in Sources */,
+				D011A4902E3A5C1B004F58DC /* MoneroPreSendHandler.swift in Sources */,
 				11B356C6FEEFD7A1B854FB46 /* AccountRecord.swift in Sources */,
 				11B3513C8E7B2C3651F00F8F /* AccountStorage.swift in Sources */,
 				1A564C756284485E93C0F78D /* AdapterState.swift in Sources */,
@@ -9947,6 +9972,7 @@
 				1A5647072B937BE4B69FFA1D /* SendEthereumErrorCell.swift in Sources */,
 				58AAAAE261DEB08128441641 /* AmountDecimalParser.swift in Sources */,
 				11B35DDFAF0532881A4F68B0 /* AdditionalDataCellNew.swift in Sources */,
+				D011A48C2E3A551A004F58DC /* MoneroAddressParserItem.swift in Sources */,
 				11B35D93B238BA992173E123 /* StackViewCell.swift in Sources */,
 				1A5643CFF5657C9C6B7DBA19 /* ThemeSearchViewController.swift in Sources */,
 				D05E96942A261DC1002CCD71 /* TronTransactionConverter.swift in Sources */,
@@ -9991,6 +10017,7 @@
 				58AAA431B5939F7961B65CCF /* CALayer.swift in Sources */,
 				11B3534554BA9D9AF8D334D3 /* InputStateWrapperView.swift in Sources */,
 				11B35C1743DC5866EBD16A90 /* Address.swift in Sources */,
+				D011A4922E3A5C24004F58DC /* MoneroSendHandler.swift in Sources */,
 				D3E36B9D2DF9831B007F99CA /* ZcashWalletTokenViewModel.swift in Sources */,
 				11B3518B594ECB199242C5CB /* InputView.swift in Sources */,
 				11B351FF652F0F7BCEB682A9 /* InputCell.swift in Sources */,
@@ -10114,6 +10141,7 @@
 				D3E36BD52E04254E007F99CA /* AppView.swift in Sources */,
 				1A5642F3BA1892109A596B61 /* MarkdownContentProvider.swift in Sources */,
 				1A5645DA5F609D469D12A6E1 /* AppVersionRecord.swift in Sources */,
+				D011A49B2E3B8276004F58DC /* MoneroTransactionService.swift in Sources */,
 				1A56404471A7270782D6619F /* AppVersion_v_0_20.swift in Sources */,
 				1A564D86E3D7E200D9B81592 /* AppVersionStorage.swift in Sources */,
 				D389BC4A2C0DDA8F00724504 /* HsTimePeriod.swift in Sources */,
@@ -10645,6 +10673,7 @@
 				D05E96AA2A28657F002CCD71 /* TronAccountManager.swift in Sources */,
 				2FA5D61F4FA6E818D25C4A96 /* EvmSendSettingsViewModel.swift in Sources */,
 				2FA5D201AED8FB83968A5220 /* StepperAmountInputView.swift in Sources */,
+				D011A4952E3B5D4F004F58DC /* MoneroFeeSettingsView.swift in Sources */,
 				2FA5D069D16C6119C970EDF1 /* StepperAmountInputCell.swift in Sources */,
 				D3833ADB2BEE1A8300ACECFB /* MarketWatchlistViewModel.swift in Sources */,
 				2FA5D4341C017BB619D745A2 /* EvmCommonGasDataService.swift in Sources */,
@@ -10778,6 +10807,7 @@
 				11B351B0C0F37424A3840737 /* ContactBookManager.swift in Sources */,
 				11B3555F968EFA0AF7D1DF46 /* WalletServiceFactory.swift in Sources */,
 				11B35DAC8D4C5DA2EC6D6E74 /* PasteInputView.swift in Sources */,
+				D011A4982E3B5D6F004F58DC /* MoneroFeeSettingsViewModel.swift in Sources */,
 				11B350A24C41C436EA7DC598 /* PasteInputCell.swift in Sources */,
 				D311DA262BD23C890013DB8F /* ScrollableTabHeaderView.swift in Sources */,
 				D3384D1E2BFF0CB800515664 /* MarketMarketCapViewModel.swift in Sources */,
@@ -11314,6 +11344,7 @@
 				11B35590A4DA4BCFB3D38DDF /* AppManager.swift in Sources */,
 				D31C4761238BF176008CB818 /* MnemonicDerivation.swift in Sources */,
 				11B3597622438E522E0F7AE1 /* AccountRecord.swift in Sources */,
+				D011A48F2E3A5C1B004F58DC /* MoneroPreSendHandler.swift in Sources */,
 				11B35262A6D3AB8C41E2E245 /* AccountStorage.swift in Sources */,
 				1A56416B9DC6DA281AD34575 /* AdapterState.swift in Sources */,
 				1A564D53F049C4784CAC814D /* BtcRestoreMode.swift in Sources */,
@@ -11470,6 +11501,7 @@
 				58AAA0642CB9B7B19C6235B5 /* AmountDecimalParser.swift in Sources */,
 				11B357BF378060E7E35F7052 /* AdditionalDataCellNew.swift in Sources */,
 				11B3580E4A964C65BF8EDDE9 /* StackViewCell.swift in Sources */,
+				D011A48D2E3A551A004F58DC /* MoneroAddressParserItem.swift in Sources */,
 				D05E96932A261DC1002CCD71 /* TronTransactionConverter.swift in Sources */,
 				1A564ABF3417C13718D78F57 /* ThemeSearchViewController.swift in Sources */,
 				1A564BA5366D4F0B921F5EE8 /* ThemeActionSheetController.swift in Sources */,
@@ -11514,6 +11546,7 @@
 				11B356E87B4A9AACBFEC7506 /* Address.swift in Sources */,
 				D36DE0DB272FD887000BC916 /* OneInchTradeService.swift in Sources */,
 				11B35F9E1AF528B31C6F383C /* InputView.swift in Sources */,
+				D011A4932E3A5C24004F58DC /* MoneroSendHandler.swift in Sources */,
 				D3E36B9B2DF9831B007F99CA /* ZcashWalletTokenViewModel.swift in Sources */,
 				11B35A2D7A19F6302DBC16D0 /* InputCell.swift in Sources */,
 				11B357EA92E2E9C39DEF08B0 /* AmountInputView.swift in Sources */,
@@ -11637,6 +11670,7 @@
 				D3E36BD62E04254E007F99CA /* AppView.swift in Sources */,
 				1A56451ADE50B86E21814347 /* MarkdownContentProvider.swift in Sources */,
 				1A5643813B0713460096F6D1 /* AppVersionRecord.swift in Sources */,
+				D011A49C2E3B8276004F58DC /* MoneroTransactionService.swift in Sources */,
 				1A5645D6AC7D344E6D3D0CAF /* AppVersion_v_0_20.swift in Sources */,
 				1A564699CFB7CCE8BD3E5245 /* AppVersionStorage.swift in Sources */,
 				11B35C59583AFCDFD828B9D1 /* TextFieldStackView.swift in Sources */,
@@ -12168,6 +12202,7 @@
 				D03F74822BF76D0A004FBCFA /* GasPriceData.swift in Sources */,
 				D05E96A92A28657F002CCD71 /* TronAccountManager.swift in Sources */,
 				2FA5DBD32AA258A75A2FDD95 /* EvmSendSettingsService.swift in Sources */,
+				D011A4962E3B5D4F004F58DC /* MoneroFeeSettingsView.swift in Sources */,
 				2FA5D7C86A2A55B906953B76 /* EvmSendSettingsViewController.swift in Sources */,
 				2FA5DE6911CB4127CAB11F35 /* EvmSendSettingsViewModel.swift in Sources */,
 				D3833ADA2BEE1A8300ACECFB /* MarketWatchlistViewModel.swift in Sources */,
@@ -12301,6 +12336,7 @@
 				ABC9A324BB7E7FF8758A92C3 /* RestoreCloudViewController.swift in Sources */,
 				11B359E7632FC042278ED912 /* ContactBookManager.swift in Sources */,
 				11B35EBB5EE2A4AE7332F86F /* WalletServiceFactory.swift in Sources */,
+				D011A4992E3B5D6F004F58DC /* MoneroFeeSettingsViewModel.swift in Sources */,
 				11B352346D3565C7D6395D21 /* PasteInputView.swift in Sources */,
 				11B3555865BB7F4661A80DE1 /* PasteInputCell.swift in Sources */,
 				D311DA252BD23C890013DB8F /* ScrollableTabHeaderView.swift in Sources */,
