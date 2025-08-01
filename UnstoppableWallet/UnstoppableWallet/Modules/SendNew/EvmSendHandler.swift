@@ -1,6 +1,7 @@
 import EvmKit
 import Foundation
 import MarketKit
+import SwiftUI
 
 class EvmSendHandler {
     let baseToken: Token
@@ -9,10 +10,16 @@ class EvmSendHandler {
     private let decorator = EvmDecorator()
     private let evmFeeEstimator = EvmFeeEstimator()
 
+    @State private var useMevProtection: Bool?
+
     init(baseToken: Token, transactionData: TransactionData, evmKitWrapper: EvmKitWrapper) {
         self.baseToken = baseToken
         self.transactionData = transactionData
         self.evmKitWrapper = evmKitWrapper
+
+        if evmKitWrapper.mevProtectionEnabled {
+            useMevProtection = true
+        }
     }
 }
 
@@ -67,7 +74,8 @@ extension EvmSendHandler: ISendHandler {
             transactionError: transactionError,
             gasPrice: gasPriceData?.userDefined,
             evmFeeData: evmFeeData,
-            nonce: transactionSettings?.nonce
+            nonce: transactionSettings?.nonce,
+            useMevProtection: $useMevProtection
         )
     }
 

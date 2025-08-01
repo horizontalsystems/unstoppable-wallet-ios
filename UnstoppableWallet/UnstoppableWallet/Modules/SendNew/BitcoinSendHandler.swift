@@ -104,7 +104,7 @@ extension BitcoinSendHandler {
             return cautions
         }
 
-        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
+        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
             guard let toAddress = params.address, let value = params.value else {
                 return []
             }
@@ -113,7 +113,7 @@ extension BitcoinSendHandler {
             let appValue = AppValue(token: baseToken, value: -decimalValue)
             let rate = rates[baseToken.coin.uid]
 
-            return [
+            return [.init(
                 [
                     .amount(
                         title: "send.confirmation.you_send".localized,
@@ -127,9 +127,10 @@ extension BitcoinSendHandler {
                         value: toAddress,
                         blockchainType: baseToken.blockchainType
                     ),
-                ],
-                feeFields(feeToken: baseToken, currency: currency, feeTokenRate: rate),
-            ]
+                ]),
+            .init(
+                feeFields(feeToken: baseToken, currency: currency, feeTokenRate: rate)
+            )]
         }
     }
 }

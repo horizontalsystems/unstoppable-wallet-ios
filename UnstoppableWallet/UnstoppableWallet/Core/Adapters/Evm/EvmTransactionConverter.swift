@@ -179,13 +179,15 @@ class EvmTransactionConverter {
 extension EvmTransactionConverter {
     func transactionRecord(fromTransaction fullTransaction: FullTransaction) -> EvmTransactionRecord {
         let transaction = fullTransaction.transaction
+        let protected = MerkleTransactionAdapter.isProtected(transaction: fullTransaction)
 
         switch fullTransaction.decoration {
         case is ContractCreationDecoration:
             return ContractCreationTransactionRecord(
                 source: source,
                 transaction: transaction,
-                baseToken: baseToken
+                baseToken: baseToken,
+                protected: protected
             )
 
         case let decoration as IncomingDecoration:
@@ -208,7 +210,8 @@ extension EvmTransactionConverter {
                 baseToken: baseToken,
                 to: decoration.to.eip55,
                 value: baseAppValue(value: decoration.value, sign: .minus),
-                sentToSelf: decoration.sentToSelf
+                sentToSelf: decoration.sentToSelf,
+                protected: protected
             )
 
         case let decoration as OutgoingEip20Decoration:
@@ -218,7 +221,8 @@ extension EvmTransactionConverter {
                 baseToken: baseToken,
                 to: decoration.to.eip55,
                 value: eip20Value(tokenAddress: decoration.contractAddress, value: decoration.value, sign: .minus, tokenInfo: decoration.tokenInfo),
-                sentToSelf: decoration.sentToSelf
+                sentToSelf: decoration.sentToSelf,
+                protected: protected
             )
 
         case let decoration as ApproveEip20Decoration:
@@ -227,7 +231,8 @@ extension EvmTransactionConverter {
                 transaction: transaction,
                 baseToken: baseToken,
                 spender: decoration.spender.eip55,
-                value: eip20Value(tokenAddress: decoration.contractAddress, value: decoration.value, sign: .plus, tokenInfo: nil)
+                value: eip20Value(tokenAddress: decoration.contractAddress, value: decoration.value, sign: .plus, tokenInfo: nil),
+                protected: protected
             )
 
         case let decoration as SwapDecoration:
@@ -238,7 +243,8 @@ extension EvmTransactionConverter {
                 exchangeAddress: decoration.contractAddress.eip55,
                 amountIn: convertToAmount(token: decoration.tokenIn, amount: decoration.amountIn, sign: .minus),
                 amountOut: convertToAmount(token: decoration.tokenOut, amount: decoration.amountOut, sign: .plus),
-                recipient: decoration.recipient?.eip55
+                recipient: decoration.recipient?.eip55,
+                protected: protected
             )
 
         case let decoration as OneInchSwapDecoration:
@@ -249,7 +255,8 @@ extension EvmTransactionConverter {
                 exchangeAddress: decoration.contractAddress.eip55,
                 amountIn: .exact(value: convertToAppValue(token: decoration.tokenIn, value: decoration.amountIn, sign: .minus)),
                 amountOut: convertToAmount(token: decoration.tokenOut, amount: decoration.amountOut, sign: .plus),
-                recipient: decoration.recipient?.eip55
+                recipient: decoration.recipient?.eip55,
+                protected: protected
             )
 
         case let decoration as OneInchUnoswapDecoration:
@@ -260,7 +267,8 @@ extension EvmTransactionConverter {
                 exchangeAddress: decoration.contractAddress.eip55,
                 amountIn: .exact(value: convertToAppValue(token: decoration.tokenIn, value: decoration.amountIn, sign: .minus)),
                 amountOut: decoration.tokenOut.map { convertToAmount(token: $0, amount: decoration.amountOut, sign: .plus) },
-                recipient: nil
+                recipient: nil,
+                protected: protected
             )
 
         case let decoration as OneInchUnknownSwapDecoration:
@@ -270,7 +278,8 @@ extension EvmTransactionConverter {
                 baseToken: baseToken,
                 exchangeAddress: decoration.contractAddress.eip55,
                 valueIn: decoration.tokenAmountIn.map { convertToAppValue(token: $0.token, value: $0.value, sign: .minus) },
-                valueOut: decoration.tokenAmountOut.map { convertToAppValue(token: $0.token, value: $0.value, sign: .plus) }
+                valueOut: decoration.tokenAmountOut.map { convertToAppValue(token: $0.token, value: $0.value, sign: .plus) },
+                protected: protected
             )
 
         case let decoration as Eip721SafeTransferFromDecoration:
@@ -285,7 +294,8 @@ extension EvmTransactionConverter {
                     tokenSymbol: decoration.tokenInfo?.tokenSymbol,
                     value: convertAmount(amount: 1, decimals: 0, sign: .minus)
                 ),
-                sentToSelf: decoration.sentToSelf
+                sentToSelf: decoration.sentToSelf,
+                protected: protected
             )
 
         case let decoration as Eip1155SafeTransferFromDecoration:
@@ -300,7 +310,8 @@ extension EvmTransactionConverter {
                     tokenSymbol: decoration.tokenInfo?.tokenSymbol,
                     value: convertAmount(amount: decoration.value, decimals: 0, sign: .minus)
                 ),
-                sentToSelf: decoration.sentToSelf
+                sentToSelf: decoration.sentToSelf,
+                protected: protected
             )
 
         case let decoration as UnknownTransactionDecoration:
@@ -329,7 +340,7 @@ extension EvmTransactionConverter {
                     contractAddress: contractAddress.eip55,
                     method: transaction.input.flatMap { evmLabelManager.methodLabel(input: $0) },
                     incomingEvents: incomingEvents,
-                    outgoingEvents: transferEvents(contractAddress: contractAddress, value: value) + outgoingEvents
+                    outgoingEvents: transferEvents(contractAddress: contractAddress, value: value) + outgoingEvents, protected: protected
                 )
             } else if transaction.from != userAddress, transaction.to != userAddress {
                 let spam = SpamManager.isSpam(events: incomingEvents + outgoingEvents)
@@ -340,7 +351,8 @@ extension EvmTransactionConverter {
                     baseToken: baseToken,
                     incomingEvents: incomingEvents,
                     outgoingEvents: outgoingEvents,
-                    spam: spam
+                    spam: spam,
+                    protected: protected
                 )
             }
 
@@ -351,7 +363,8 @@ extension EvmTransactionConverter {
             source: source,
             transaction: transaction,
             baseToken: baseToken,
-            ownTransaction: transaction.from == userAddress
+            ownTransaction: transaction.from == userAddress,
+            protected: protected
         )
     }
 }

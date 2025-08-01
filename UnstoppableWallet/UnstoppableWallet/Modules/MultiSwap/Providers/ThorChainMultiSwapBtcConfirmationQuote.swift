@@ -90,8 +90,8 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
         return fields
     }
 
-    func otherSections(tokenIn _: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate _: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [[SendField]] {
-        var sections = [[SendField]]()
+    func otherSections(tokenIn _: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate _: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendDataSection] {
+        var sections = [SendDataSection]()
 
         var feeFields = super.feeFields(feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate)
 
@@ -134,7 +134,7 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
         }
 
         if !feeFields.isEmpty {
-            sections.append(feeFields)
+            sections.append(.init(feeFields))
         }
 
         if let tokenOutRate,
@@ -146,13 +146,13 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
 
             if let formatted = ValueFormatter.instance.formatFull(currencyValue: currencyValue) {
                 sections.append(
-                    [
+                    .init([
                         .levelValue(
                             title: "swap.total_fee".localized,
                             value: formatted,
                             level: .regular
                         ),
-                    ]
+                    ])
                 )
             }
         }

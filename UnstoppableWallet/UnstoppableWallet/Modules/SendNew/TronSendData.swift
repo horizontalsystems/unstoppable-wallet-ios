@@ -99,7 +99,7 @@ class TronSendData: ISendData {
         return viewItems
     }
 
-    private func decorationSections(currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
+    private func decorationSections(currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
         guard let decoration else {
             return []
         }
@@ -130,10 +130,10 @@ class TronSendData: ISendData {
         }
     }
 
-    private func sendFields(to: TronKit.Address, value: Decimal, currency: Currency, rate: Decimal?) -> [[SendField]] {
+    private func sendFields(to: TronKit.Address, value: Decimal, currency: Currency, rate: Decimal?) -> [SendDataSection] {
         let appValue = AppValue(token: token, value: Decimal(sign: .plus, exponent: value.exponent, significand: value.significand))
 
-        return [[
+        return [.init([
             .amount(
                 title: "send.confirmation.you_send".localized,
                 token: token,
@@ -146,7 +146,7 @@ class TronSendData: ISendData {
                 value: to.base58,
                 blockchainType: token.blockchainType
             ),
-        ]]
+        ])]
     }
 
     func caution(transactionError: Error, feeToken: Token) -> CautionNew {
@@ -184,10 +184,10 @@ class TronSendData: ISendData {
         return cautions
     }
 
-    func sections(baseToken _: Token, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
+    func sections(baseToken _: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
         var sections = decorationSections(currency: currency, rates: rates)
 
-        sections.append(feeFields(currency: currency, feeTokenRate: rates[baseToken.coin.uid]))
+        sections.append(.init(feeFields(currency: currency, feeTokenRate: rates[baseToken.coin.uid])))
 
         return sections
     }

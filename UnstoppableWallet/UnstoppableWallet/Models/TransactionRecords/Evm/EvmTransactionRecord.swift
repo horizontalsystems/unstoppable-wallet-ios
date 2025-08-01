@@ -5,12 +5,14 @@ import MarketKit
 class EvmTransactionRecord: TransactionRecord {
     let transaction: Transaction
     let ownTransaction: Bool
+    let protected: Bool
     let fee: AppValue?
 
-    init(source: TransactionSource, transaction: Transaction, baseToken: Token, ownTransaction: Bool, spam: Bool = false) {
+    init(source: TransactionSource, transaction: Transaction, baseToken: Token, ownTransaction: Bool, protected: Bool, spam: Bool = false) {
         self.transaction = transaction
         let txHash = transaction.hash.hs.hexString
         self.ownTransaction = ownTransaction
+        self.protected = protected
 
         if let feeAmount = transaction.gasUsed ?? transaction.gasLimit, let gasPrice = transaction.gasPrice {
             let feeDecimal = Decimal(sign: .plus, exponent: -baseToken.decimals, significand: Decimal(feeAmount) * Decimal(gasPrice))

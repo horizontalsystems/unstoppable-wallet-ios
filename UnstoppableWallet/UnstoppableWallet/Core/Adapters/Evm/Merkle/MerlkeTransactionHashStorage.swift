@@ -21,7 +21,7 @@ extension MerkleTransactionHashStorage {
             try hash.save(db)
         }
     }
-    
+
     @discardableResult func delete(hash: MerkleTransactionHash) throws -> Bool {
         try dbPool.write { db in
             try MerkleTransactionHash
@@ -29,11 +29,11 @@ extension MerkleTransactionHashStorage {
                 .deleteAll(db) > 0
         }
     }
-    
+
     private func mapKey(hash: MerkleTransactionHash) -> [String: any DatabaseValueConvertible] {
         [
             MerkleTransactionHash.Columns.transactionHash.name: hash.transactionHash,
-            MerkleTransactionHash.Columns.chainId.name: hash.chainId
+            MerkleTransactionHash.Columns.chainId.name: hash.chainId,
         ]
     }
 

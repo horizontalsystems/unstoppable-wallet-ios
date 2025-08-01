@@ -104,18 +104,20 @@ class EvmKitManager {
 
             nftKit = kit
         }
-        
+
         var merkleTransactionAdapter: MerkleTransactionAdapter?
         if signer != nil,
-            let merkleAdapter = MerkleTransactionAdapter(
+           let merkleAdapter = MerkleTransactionAdapter(
+               transactionManager: evmKit.transactionManager,
                address: address,
                chain: chain,
                logger: .init(minLogLevel: .debug)
-            ) {
-
+           )
+        {
             evmKit.add(nonceProvider: merkleAdapter.blockchain)
             evmKit.add(transactionSyncer: merkleAdapter.syncer)
-            
+            evmKit.add(extraDecorator: merkleAdapter.syncer)
+
             merkleTransactionAdapter = merkleAdapter
 
             print("EVM_WRAPPER: created with MerkleTxAdapter: \(merkleAdapter)")
@@ -182,7 +184,11 @@ class EvmKitWrapper {
         self.signer = signer
     }
 
-    func sendSingle(transactionData: TransactionData, gasPrice: GasPrice, gasLimit: Int, nonce: Int? = nil) -> Single<FullTransaction> {
+    var mevProtectionEnabled: Bool {
+        merkleTransactionAdapter != nil
+    }
+
+    func sendSingle(transactionData: TransactionData, gasPrice: GasPrice, gasLimit: Int, privateSend _: Bool, nonce: Int? = nil) -> Single<FullTransaction> {
         guard let signer else {
             return Single.error(SignerError.signerNotSupported)
         }
@@ -202,6 +208,14 @@ class EvmKitWrapper {
             }
     }
 
+    func sendCancel(hash: Data) async throws -> Bool {
+        guard let merkleTransactionAdapter else {
+            throw MerkleAdapterError.MerkleAdapterNotSupported
+        }
+
+        return try await merkleTransactionAdapter.cancel(hash: hash)
+    }
+
     func send(transactionData: TransactionData, gasPrice: GasPrice, gasLimit: Int, privateSend: Bool, nonce: Int? = nil) async throws -> FullTransaction {
         guard let signer else {
             throw SignerError.signerNotSupported
@@ -209,18 +223,11 @@ class EvmKitWrapper {
 
         let rawTransaction = try await evmKit.fetchRawTransaction(transactionData: transactionData, gasPrice: gasPrice, gasLimit: gasLimit, nonce: nonce)
         let signature = try signer.signature(rawTransaction: rawTransaction)
-        
+
         guard privateSend, let merkleTransactionAdapter else {
             return try await evmKit.send(rawTransaction: rawTransaction, signature: signature)
         }
-        let transaction = try await merkleTransactionAdapter.send(rawTransaction: rawTransaction, signature: signature)
-        let fullTransactions = evmKit.transactionManager.handle(transactions: [transaction])
-        
-        guard let fullTransaction = fullTransactions.first else {
-            throw DecorationError.cantCreateDecoration
-        }
-
-        return fullTransaction
+        return try await merkleTransactionAdapter.send(rawTransaction: rawTransaction, signature: signature)
     }
 }
 
@@ -234,7 +241,11 @@ extension EvmKitWrapper {
     enum SignerError: Error {
         case signerNotSupported
     }
-    
+
+    enum MerkleAdapterError: Error {
+        case MerkleAdapterNotSupported
+    }
+
     public enum DecorationError: Error {
         case cantCreateDecoration
     }

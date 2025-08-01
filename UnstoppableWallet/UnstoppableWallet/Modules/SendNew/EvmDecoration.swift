@@ -14,7 +14,7 @@ struct EvmDecoration {
         }
     }
 
-    func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
+    func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
         switch type {
         case let .outgoingEvm(to, value):
             return outgoingSections(token: baseToken, to: to, value: value, currency: currency, rates: rates)
@@ -27,9 +27,9 @@ struct EvmDecoration {
         }
     }
 
-    private func outgoingSections(token: Token, to: EvmKit.Address, value: Decimal, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
+    private func outgoingSections(token: Token, to: EvmKit.Address, value: Decimal, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
         [
-            [
+            .init([
                 amountField(
                     title: "send.confirmation.you_send".localized,
                     token: token,
@@ -43,11 +43,11 @@ struct EvmDecoration {
                     value: to.eip55,
                     blockchainType: token.blockchainType
                 ),
-            ],
+            ]),
         ]
     }
 
-    private func approveSections(token: Token, spender: EvmKit.Address, value: Decimal, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
+    private func approveSections(token: Token, spender: EvmKit.Address, value: Decimal, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
         let isRevokeAllowance = value == 0 // Check approved new value or revoked last allowance
 
         let amountField: SendField
@@ -72,18 +72,18 @@ struct EvmDecoration {
         }
 
         return [
-            [
+            .init([
                 amountField,
                 .address(
                     title: "approve.confirmation.spender".localized,
                     value: spender.eip55,
                     blockchainType: token.blockchainType
                 ),
-            ],
+            ]),
         ]
     }
 
-    private func unknownSections(baseToken: Token, to: EvmKit.Address, value: Decimal, input: Data, method: String?, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
+    private func unknownSections(baseToken: Token, to: EvmKit.Address, value: Decimal, input: Data, method: String?, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
         var fields: [SendField] = [
             amountField(
                 title: "send.confirmation.transfer".localized,
@@ -105,7 +105,7 @@ struct EvmDecoration {
             fields.append(.levelValue(title: "send.confirmation.method".localized, value: method, level: .regular))
         }
 
-        return [fields]
+        return [.init(fields)]
     }
 
     private func amountField(title: String, token: Token, value: Decimal, currency: Currency, rate: Decimal?, type: SendField.AmountType) -> SendField {
