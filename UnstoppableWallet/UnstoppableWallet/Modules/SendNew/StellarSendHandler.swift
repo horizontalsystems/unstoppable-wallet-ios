@@ -175,7 +175,7 @@ extension StellarSendHandler {
             return cautions
         }
 
-        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
+        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
             var fields = [SendField]()
 
             switch data {
@@ -218,8 +218,8 @@ extension StellarSendHandler {
             }
 
             return [
-                fields,
-                feeFields(currency: currency, feeToken: baseToken, feeTokenRate: rates[token.coin.uid]),
+                .init(fields),
+                .init(feeFields(currency: currency, feeToken: baseToken, feeTokenRate: rates[token.coin.uid])),
             ]
         }
 

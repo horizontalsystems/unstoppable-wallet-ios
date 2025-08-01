@@ -22,19 +22,19 @@ class BaseEvmMultiSwapConfirmationQuote: BaseSendEvmData, IMultiSwapConfirmation
         []
     }
 
-    func otherSections(tokenIn: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [[SendField]] {
-        var sections = [[SendField]]()
+    func otherSections(tokenIn: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendDataSection] {
+        var sections = [SendDataSection]()
 
         if let nonce {
             sections.append(
-                [
+                .init([
                     .levelValue(title: "send.confirmation.nonce".localized, value: String(nonce), level: .regular),
-                ]
+                ])
             )
         }
 
         let additionalFeeFields = additionalFeeFields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
-        sections.append(feeFields(feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate) + additionalFeeFields)
+        sections.append(.init(feeFields(feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate) + additionalFeeFields))
 
         return sections
     }

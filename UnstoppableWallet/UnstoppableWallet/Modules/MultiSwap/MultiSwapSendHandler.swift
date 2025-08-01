@@ -42,7 +42,14 @@ extension MultiSwapSendHandler: ISendHandler {
             transactionSettings: transactionSettings
         )
 
-        return SendData(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote)
+        let otherSections = provider.otherSections(
+            tokenIn: tokenIn,
+            tokenOut: tokenOut,
+            amountIn: amountIn,
+            transactionSettings: transactionSettings
+        )
+
+        return SendData(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote, otherSections: otherSections)
     }
 
     func send(data: ISendData) async throws {
@@ -65,12 +72,14 @@ extension MultiSwapSendHandler {
         let tokenOut: Token
         let amountIn: Decimal
         let quote: IMultiSwapConfirmationQuote
+        let otherSections: [SendDataSection]
 
-        init(tokenIn: Token, tokenOut: Token, amountIn: Decimal, quote: IMultiSwapConfirmationQuote) {
+        init(tokenIn: Token, tokenOut: Token, amountIn: Decimal, quote: IMultiSwapConfirmationQuote, otherSections: [SendDataSection]) {
             self.tokenIn = tokenIn
             self.tokenOut = tokenOut
             self.amountIn = amountIn
             self.quote = quote
+            self.otherSections = otherSections
         }
 
         var feeData: FeeData? {
@@ -93,9 +102,9 @@ extension MultiSwapSendHandler {
             quote.cautions(baseToken: baseToken)
         }
 
-        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
-            var sections: [[SendField]] = [
-                [
+        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
+            var sections: [SendDataSection] = [
+                .init([
                     .amount(
                         title: "swap.you_pay".localized,
                         token: tokenIn,
@@ -110,7 +119,7 @@ extension MultiSwapSendHandler {
                         currencyValue: rates[tokenOut.coin.uid].map { CurrencyValue(currency: currency, value: quote.amountOut * $0) },
                         type: .incoming
                     ),
-                ],
+                ]),
             ]
 
             var priceSection: [SendField] = [
@@ -137,7 +146,7 @@ extension MultiSwapSendHandler {
                 priceSection.append(contentsOf: priceSectionFields)
             }
 
-            sections.append(priceSection)
+            sections.append(.init(priceSection))
 
             sections.append(contentsOf: quote.otherSections(
                 tokenIn: tokenIn,
@@ -148,6 +157,8 @@ extension MultiSwapSendHandler {
                 tokenOutRate: rates[tokenOut.coin.uid],
                 baseTokenRate: rates[baseToken.coin.uid]
             ))
+
+            sections.append(contentsOf: otherSections)
 
             return sections
         }

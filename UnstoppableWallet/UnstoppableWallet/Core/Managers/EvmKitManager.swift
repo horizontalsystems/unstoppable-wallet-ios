@@ -105,13 +105,36 @@ class EvmKitManager {
             nftKit = kit
         }
 
+        var merkleTransactionAdapter: MerkleTransactionAdapter?
+        if signer != nil,
+           let merkleAdapter = MerkleTransactionAdapter(
+               transactionManager: evmKit.transactionManager,
+               address: address,
+               chain: chain,
+               walletId: account.id,
+               logger: nil
+           )
+        {
+            evmKit.add(nonceProvider: merkleAdapter.blockchain)
+            evmKit.add(transactionSyncer: merkleAdapter.syncer)
+            evmKit.add(extraDecorator: merkleAdapter.syncer)
+
+            merkleTransactionAdapter = merkleAdapter
+        }
+
         UniswapKit.Kit.addDecorators(to: evmKit)
         try? KitV3.addDecorators(to: evmKit)
         OneInchKit.Kit.addDecorators(to: evmKit)
 
         evmKit.start()
 
-        let wrapper = EvmKitWrapper(blockchainType: blockchainType, evmKit: evmKit, nftKit: nftKit, signer: signer)
+        let wrapper = EvmKitWrapper(
+            blockchainType: blockchainType,
+            evmKit: evmKit,
+            nftKit: nftKit,
+            merkleTransactionAdapter: merkleTransactionAdapter,
+            signer: signer
+        )
 
         _evmKitWrapper = wrapper
         currentAccount = account
@@ -148,16 +171,22 @@ class EvmKitWrapper {
     let blockchainType: BlockchainType
     let evmKit: EvmKit.Kit
     let nftKit: NftKit.Kit?
+    let merkleTransactionAdapter: MerkleTransactionAdapter?
     let signer: Signer?
 
-    init(blockchainType: BlockchainType, evmKit: EvmKit.Kit, nftKit: NftKit.Kit?, signer: Signer?) {
+    init(blockchainType: BlockchainType, evmKit: EvmKit.Kit, nftKit: NftKit.Kit?, merkleTransactionAdapter: MerkleTransactionAdapter?, signer: Signer?) {
         self.blockchainType = blockchainType
         self.evmKit = evmKit
         self.nftKit = nftKit
+        self.merkleTransactionAdapter = merkleTransactionAdapter
         self.signer = signer
     }
 
-    func sendSingle(transactionData: TransactionData, gasPrice: GasPrice, gasLimit: Int, nonce: Int? = nil) -> Single<FullTransaction> {
+    var mevProtectionEnabled: Bool {
+        merkleTransactionAdapter != nil
+    }
+
+    func sendSingle(transactionData: TransactionData, gasPrice: GasPrice, gasLimit: Int, privateSend _: Bool, nonce: Int? = nil) -> Single<FullTransaction> {
         guard let signer else {
             return Single.error(SignerError.signerNotSupported)
         }
@@ -177,14 +206,26 @@ class EvmKitWrapper {
             }
     }
 
-    func send(transactionData: TransactionData, gasPrice: GasPrice, gasLimit: Int, nonce: Int? = nil) async throws -> FullTransaction {
+    func sendCancel(hash: Data) async throws -> Bool {
+        guard let merkleTransactionAdapter else {
+            throw MerkleAdapterError.MerkleAdapterNotSupported
+        }
+
+        return try await merkleTransactionAdapter.cancel(hash: hash)
+    }
+
+    func send(transactionData: TransactionData, gasPrice: GasPrice, gasLimit: Int, privateSend: Bool, nonce: Int? = nil) async throws -> FullTransaction {
         guard let signer else {
             throw SignerError.signerNotSupported
         }
 
         let rawTransaction = try await evmKit.fetchRawTransaction(transactionData: transactionData, gasPrice: gasPrice, gasLimit: gasLimit, nonce: nonce)
         let signature = try signer.signature(rawTransaction: rawTransaction)
-        return try await evmKit.send(rawTransaction: rawTransaction, signature: signature)
+
+        guard privateSend, let merkleTransactionAdapter else {
+            return try await evmKit.send(rawTransaction: rawTransaction, signature: signature)
+        }
+        return try await merkleTransactionAdapter.send(rawTransaction: rawTransaction, signature: signature)
     }
 }
 
@@ -197,5 +238,13 @@ extension EvmKitManager {
 extension EvmKitWrapper {
     enum SignerError: Error {
         case signerNotSupported
+    }
+
+    enum MerkleAdapterError: Error {
+        case MerkleAdapterNotSupported
+    }
+
+    public enum DecorationError: Error {
+        case cantCreateDecoration
     }
 }

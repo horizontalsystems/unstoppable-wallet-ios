@@ -69,9 +69,9 @@ extension Coordinator {
 }
 
 extension Coordinator {
-    func presentPurchases() {
+    func presentPurchases(onSuccess: (() -> Void)? = nil) {
         present { isPresented in
-            PurchasesView(isPresented: isPresented)
+            PurchasesView(isPresented: isPresented, onSuccess: onSuccess)
         }
     }
 

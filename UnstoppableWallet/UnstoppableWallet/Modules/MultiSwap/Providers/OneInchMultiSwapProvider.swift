@@ -144,11 +144,8 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
             throw SwapError.noGasLimit
         }
 
-        guard let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: tokenIn.blockchainType).evmKitWrapper else {
-            throw SwapError.noEvmKitWrapper
-        }
-
-        _ = try await evmKitWrapper.send(
+        try await super.send(
+            blockchainType: tokenIn.blockchainType,
             transactionData: quote.swap.transactionData,
             gasPrice: quote.swap.transaction.gasPrice,
             gasLimit: gasLimit,
