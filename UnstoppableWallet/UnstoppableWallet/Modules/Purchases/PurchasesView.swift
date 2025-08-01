@@ -7,6 +7,8 @@ struct PurchasesView: View {
 
     @State private var bottomHeight: CGFloat = 0
 
+    var onSuccess: (() -> Void)?
+
     var body: some View {
         ThemeNavigationStack {
             ThemeView {
@@ -161,6 +163,7 @@ struct PurchasesView: View {
                         }
                     }
 
+                    onSuccess?()
                     stat(page: .purchaseSelector, event: .subscribe)
                 }
             }

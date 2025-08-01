@@ -82,7 +82,7 @@ class ThorChainMultiSwapEvmConfirmationQuote: BaseEvmMultiSwapConfirmationQuote 
         return fields
     }
 
-    override func otherSections(tokenIn: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [[SendField]] {
+    override func otherSections(tokenIn: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendDataSection] {
         var sections = super.otherSections(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
 
         if let tokenOutRate, let evmFeeData,
@@ -94,13 +94,13 @@ class ThorChainMultiSwapEvmConfirmationQuote: BaseEvmMultiSwapConfirmationQuote 
 
             if let formatted = ValueFormatter.instance.formatFull(currencyValue: currencyValue) {
                 sections.append(
-                    [
+                    .init([
                         .levelValue(
                             title: "swap.total_fee".localized,
                             value: formatted,
                             level: .regular
                         ),
-                    ]
+                    ])
                 )
             }
         }

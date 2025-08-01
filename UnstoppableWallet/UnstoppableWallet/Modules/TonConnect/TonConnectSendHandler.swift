@@ -146,8 +146,8 @@ extension TonConnectSendHandler {
             return cautions
         }
 
-        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
-            var sections = [[SendField]]()
+        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
+            var sections = [SendDataSection]()
 
             if let record {
                 for action in record.actions {
@@ -253,11 +253,11 @@ extension TonConnectSendHandler {
                     default: ()
                     }
 
-                    sections.append(fields)
+                    sections.append(.init(fields))
                 }
             }
 
-            sections.append(feeFields(currency: currency, feeToken: baseToken, feeTokenRate: rates[baseToken.coin.uid]))
+            sections.append(.init(feeFields(currency: currency, feeToken: baseToken, feeTokenRate: rates[baseToken.coin.uid])))
 
             return sections
         }

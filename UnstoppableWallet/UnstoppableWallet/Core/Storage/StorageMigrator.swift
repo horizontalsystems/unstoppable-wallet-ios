@@ -841,7 +841,7 @@ enum StorageMigrator {
                 t.primaryKey([EnabledWalletCache.Columns.tokenQueryId.name, EnabledWalletCache.Columns.accountId.name], onConflict: .replace)
             }
         }
-        
+
         migrator.registerMigration("create MerkleTransactionHash") { db in
             try db.create(table: MerkleTransactionHash.databaseTableName) { t in
                 t.column(MerkleTransactionHash.Columns.transactionHash.name, .blob)
@@ -849,7 +849,7 @@ enum StorageMigrator {
 
                 t.primaryKey([
                     MerkleTransactionHash.Columns.transactionHash.name,
-                    MerkleTransactionHash.Columns.chainId.name
+                    MerkleTransactionHash.Columns.chainId.name,
                 ], onConflict: .replace)
             }
         }
