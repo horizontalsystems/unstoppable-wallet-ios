@@ -5,9 +5,12 @@ import SwiftUI
 
 class BaseEvmMultiSwapProvider: IMultiSwapProvider {
     private let adapterManager = Core.shared.adapterManager
+    private let localStorage = Core.shared.localStorage
     let evmBlockchainManager = Core.shared.evmBlockchainManager
     let storage: MultiSwapSettingStorage
     private let allowanceHelper = MultiSwapAllowanceHelper()
+
+    @Published private var useMevProtection: Bool = false
 
     init(storage: MultiSwapSettingStorage) {
         self.storage = storage
@@ -37,6 +40,48 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         fatalError("Must be implemented in subclass")
     }
 
+    func otherSections(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: TransactionSettings?) -> [SendDataSection] {
+        let allowMevProtection = MerkleTransactionAdapter.allowProtection(chain: evmBlockchainManager.chain(blockchainType: tokenIn.blockchainType))
+
+        print("BASE_EVM_PROVIDER: Make Other Sections.")
+        guard allowMevProtection else {
+            print("BASE_EVM_PROVIDER: useMevProtection = false. Don't Show")
+            useMevProtection = false
+            return []
+        }
+
+        useMevProtection = localStorage.useMevProtection
+        print("BASE_EVM_PROVIDER: set useMevProtection = \(useMevProtection). Show")
+
+        let binding = Binding<Bool>(
+            get: { [weak self] in
+                if Core.shared.purchaseManager.activated(.vipSupport) {
+                    self?.useMevProtection ?? false
+                } else {
+                    false
+                }
+            },
+            set: { [weak self] newValue in
+                let successBlock = { [weak self] in
+                    self?.useMevProtection = newValue
+                    self?.localStorage.useMevProtection = newValue
+                    print("BASE_EVM_PROVIDER: set useMevProtection = \(newValue). Update")
+                }
+
+                guard Core.shared.purchaseManager.activated(.vipSupport) else {
+                    Coordinator.shared.presentPurchases(onSuccess: successBlock)
+                    return
+                }
+
+                successBlock()
+            }
+        )
+
+        return [.init([
+            .mevProtection(isOn: binding),
+        ], isList: false)]
+    }
+
     func settingsView(tokenIn _: Token, tokenOut _: Token, onChangeSettings _: @escaping () -> Void) -> AnyView {
         fatalError("settingsView(tokenIn:tokenOut:onChangeSettings:) has not been implemented")
     }
@@ -53,6 +98,20 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         fatalError("Must be implemented in subclass")
     }
 
+    func send(blockchainType: BlockchainType, transactionData: TransactionData, gasPrice: GasPrice, gasLimit: Int, nonce: Int? = nil) async throws {
+        guard let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
+            throw SwapError.noEvmKitWrapper
+        }
+
+        _ = try await evmKitWrapper.send(
+            transactionData: transactionData,
+            gasPrice: gasPrice,
+            gasLimit: gasLimit,
+            privateSend: useMevProtection,
+            nonce: nonce
+        )
+    }
+
     func spenderAddress(chain _: Chain) throws -> EvmKit.Address {
         fatalError("Must be implemented in subclass")
     }
@@ -66,5 +125,11 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         } catch {
             return .unknown
         }
+    }
+}
+
+extension BaseEvmMultiSwapProvider {
+    enum SwapError: Error {
+        case noEvmKitWrapper
     }
 }

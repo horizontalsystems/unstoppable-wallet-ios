@@ -1,5 +1,5 @@
-import GRDB
 import Foundation
+import GRDB
 
 class MerkleTransactionHash: Record {
     let transactionHash: Data

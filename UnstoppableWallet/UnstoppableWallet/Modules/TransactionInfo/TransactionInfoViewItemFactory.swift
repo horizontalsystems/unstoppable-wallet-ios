@@ -699,7 +699,7 @@ class TransactionInfoViewItemFactory {
 
         sections.append(.init(transactionViewItems))
 
-        if actionEnabled, let evmRecord = record as? EvmTransactionRecord, evmRecord.ownTransaction, status.isPending {
+        if actionEnabled, let evmRecord = record as? EvmTransactionRecord, evmRecord.ownTransaction, status.isPending, !evmRecord.protected {
             sections.append(.init([
                 .option(option: .resend(type: .speedUp)),
                 .option(option: .resend(type: .cancel)),

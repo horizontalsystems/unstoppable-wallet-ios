@@ -18,6 +18,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
     private let btcBlockchainManager = Core.shared.btcBlockchainManager
     private let accountManager = Core.shared.accountManager
     private let adapterManager = Core.shared.adapterManager
+    private let localStorage = Core.shared.localStorage
     private let storage: MultiSwapSettingStorage
     private let allowanceHelper = MultiSwapAllowanceHelper()
     private let evmFeeEstimator = EvmFeeEstimator()
@@ -30,6 +31,8 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
     private let affiliateBps: Int? = AppConfig.thorchainAffiliateBps
 
     var assets = [Asset]()
+
+    @Published private var useMevProtection: Bool = false
 
     init(storage: MultiSwapSettingStorage) {
         self.storage = storage
@@ -194,6 +197,48 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
+    func otherSections(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: TransactionSettings?) -> [SendDataSection] {
+        let allowMevProtection = MerkleTransactionAdapter.allowProtection(chain: evmBlockchainManager.chain(blockchainType: tokenIn.blockchainType))
+
+        print("BASE_EVM_PROVIDER: Make Other Sections.")
+        guard allowMevProtection else {
+            print("BASE_EVM_PROVIDER: useMevProtection = false. Don't Show")
+            useMevProtection = false
+            return []
+        }
+
+        useMevProtection = localStorage.useMevProtection
+        print("BASE_EVM_PROVIDER: set useMevProtection = \(useMevProtection). Show")
+
+        let binding = Binding<Bool>(
+            get: { [weak self] in
+                if Core.shared.purchaseManager.activated(.vipSupport) {
+                    self?.useMevProtection ?? false
+                } else {
+                    false
+                }
+            },
+            set: { [weak self] newValue in
+                let successBlock = { [weak self] in
+                    self?.useMevProtection = newValue
+                    self?.localStorage.useMevProtection = newValue
+                    print("BASE_EVM_PROVIDER: set useMevProtection = \(newValue). Update")
+                }
+
+                guard Core.shared.purchaseManager.activated(.vipSupport) else {
+                    Coordinator.shared.presentPurchases(onSuccess: successBlock)
+                    return
+                }
+
+                successBlock()
+            }
+        )
+
+        return [.init([
+            .mevProtection(isOn: binding),
+        ], isList: false)]
+    }
+
     func settingsView(tokenIn: Token, tokenOut _: Token, onChangeSettings: @escaping () -> Void) -> AnyView {
         let view = ThemeNavigationStack {
             RecipientAndSlippageMultiSwapSettingsView(tokenIn: tokenIn, storage: storage, onChangeSettings: onChangeSettings)
@@ -228,7 +273,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
                 transactionData: quote.transactionData,
                 gasPrice: gasPrice,
                 gasLimit: gasLimit,
-                privateSend: false,
+                privateSend: useMevProtection,
                 nonce: quote.nonce
             )
         } else if let quote = quote as? ThorChainMultiSwapBtcConfirmationQuote {

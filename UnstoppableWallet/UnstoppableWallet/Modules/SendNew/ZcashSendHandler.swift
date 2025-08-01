@@ -96,7 +96,7 @@ extension ZcashSendHandler {
             return cautions
         }
 
-        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
+        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
             var fields: [SendField] = [
                 .amount(
                     title: "send.confirmation.you_send".localized,
@@ -119,8 +119,8 @@ extension ZcashSendHandler {
             let fee = proposal.totalFeeRequired().decimalValue.decimalValue
 
             return [
-                fields,
-                [
+                .init(fields),
+                .init([
                     .value(
                         title: "fee_settings.network_fee".localized,
                         description: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized),
@@ -128,7 +128,7 @@ extension ZcashSendHandler {
                         currencyValue: rates[baseToken.coin.uid].map { CurrencyValue(currency: currency, value: fee * $0) },
                         formatFull: true
                     ),
-                ],
+                ]),
             ]
         }
 

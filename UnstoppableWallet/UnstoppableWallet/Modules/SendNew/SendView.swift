@@ -62,10 +62,16 @@ struct SendView: View {
                     ForEach(sections.indices, id: \.self) { sectionIndex in
                         let section = sections[sectionIndex]
 
-                        if !section.isEmpty {
-                            ListSection {
-                                ForEach(section.indices, id: \.self) { index in
-                                    section[index].listRow
+                        if !section.fields.isEmpty {
+                            if section.isList {
+                                ListSection {
+                                    ForEach(section.fields.indices, id: \.self) { index in
+                                        section.fields[index].listRow
+                                    }
+                                }
+                            } else {
+                                ForEach(section.fields.indices, id: \.self) { index in
+                                    section.fields[index].listRow
                                 }
                             }
                         }
