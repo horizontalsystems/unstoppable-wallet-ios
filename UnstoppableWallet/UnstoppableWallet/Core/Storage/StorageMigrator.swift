@@ -842,18 +842,6 @@ enum StorageMigrator {
             }
         }
 
-        migrator.registerMigration("create MerkleTransactionHash") { db in
-            try db.create(table: MerkleTransactionHash.databaseTableName) { t in
-                t.column(MerkleTransactionHash.Columns.transactionHash.name, .blob)
-                t.column(MerkleTransactionHash.Columns.chainId.name, .integer)
-
-                t.primaryKey([
-                    MerkleTransactionHash.Columns.transactionHash.name,
-                    MerkleTransactionHash.Columns.chainId.name,
-                ], onConflict: .replace)
-            }
-        }
-
         try migrator.migrate(dbPool)
     }
 

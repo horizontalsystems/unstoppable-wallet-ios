@@ -111,6 +111,7 @@ class EvmKitManager {
                transactionManager: evmKit.transactionManager,
                address: address,
                chain: chain,
+               walletId: account.id,
                logger: .init(minLogLevel: .debug)
            )
         {
@@ -119,9 +120,6 @@ class EvmKitManager {
             evmKit.add(extraDecorator: merkleAdapter.syncer)
 
             merkleTransactionAdapter = merkleAdapter
-
-            print("EVM_WRAPPER: created with MerkleTxAdapter: \(merkleAdapter)")
-            print("== ChainId: \(chain.id)")
         }
 
         UniswapKit.Kit.addDecorators(to: evmKit)

@@ -1,5 +1,6 @@
 import EvmKit
 import Foundation
+import GRDB
 import HsToolKit
 import MarketKit
 
@@ -15,11 +16,13 @@ class MerkleTransactionAdapter {
 
     static let protectedKey = "protected"
 
+    let merkleTransactionHashManager: MerkleTransactionHashManager
     let blockchain: MerkleRpcBlockchain
     let syncer: MerkleTransactionSyncer
+
     let transactionManager: TransactionManager
 
-    init?(transactionManager: TransactionManager, address: EvmKit.Address, chain: Chain, logger: Logger?) {
+    init?(transactionManager: TransactionManager, address: EvmKit.Address, chain: Chain, walletId: String, logger: Logger?) {
         guard let blockchainPath = Self.blockchainPath[chain] else {
             return nil
         }
@@ -41,25 +44,30 @@ class MerkleTransactionAdapter {
 
         let transactionBuilder = TransactionBuilder(chain: chain, address: address)
 
-        blockchain = MerkleRpcBlockchain(
-            address: address,
-            chain: chain,
-            manager: Core.shared.merkleTransactionHashManager,
-            syncer: rpcSyncer,
-            transactionBuilder: transactionBuilder
-        )
+        do {
+            let uniqueId = "\(walletId)-\(chain.id)"
+            let merkleTransactionHashStorage = try MerkleTransactionHashStorage(databaseDirectoryUrl: Self.dataDirectoryUrl(), databaseFileName: "hash-\(uniqueId)")
 
-        syncer = MerkleTransactionSyncer(
-            manager: Core.shared.merkleTransactionHashManager,
-            blockchain: blockchain,
-            logger: logger
-        )
+            merkleTransactionHashManager = MerkleTransactionHashManager(storage: merkleTransactionHashStorage, logger: .init(minLogLevel: .debug))
 
-        syncer.transactionFetcher = transactionManager
-    }
+            blockchain = MerkleRpcBlockchain(
+                address: address,
+                manager: merkleTransactionHashManager,
+                syncer: rpcSyncer,
+                transactionBuilder: transactionBuilder
+            )
 
-    deinit {
-        print("Deinit MerkleTransactionAdapter!!!")
+            syncer = MerkleTransactionSyncer(
+                manager: merkleTransactionHashManager,
+                blockchain: blockchain,
+                logger: logger
+            )
+
+            syncer.transactionFetcher = transactionManager
+        } catch {
+            logger?.log(level: .error, message: "Can't create Adapter because: \(error)")
+            return nil
+        }
     }
 }
 
@@ -76,6 +84,18 @@ extension MerkleTransactionAdapter {
 }
 
 extension MerkleTransactionAdapter {
+    private static func dataDirectoryUrl() throws -> URL {
+        let fileManager = FileManager.default
+
+        let url = try fileManager
+            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            .appendingPathComponent("merkle-mev-protection", isDirectory: true)
+
+        try fileManager.createDirectory(at: url, withIntermediateDirectories: true)
+
+        return url
+    }
+
     static func isProtected(transaction: FullTransaction) -> Bool {
         (transaction.extra[protectedKey] as? Bool) ?? false
     }
