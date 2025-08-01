@@ -18,10 +18,6 @@ class MerkleTransactionSyncer {
 
     weak var transactionFetcher: ITransactionFetcher?
 
-    deinit {
-        print("Deinit MerkleTransactionSyncer!!!")
-    }
-
     private func convert(tx: RpcTransaction) -> Transaction {
         Transaction(
             hash: tx.hash,
@@ -66,13 +62,13 @@ class MerkleTransactionSyncer {
 
     private func handleTransaction(hash: MerkleTransactionHash) async throws -> HandleTransactionResult {
         if let tx = try await blockchain.transaction(transactionHash: hash.transactionHash) {
-            return .transaction(convert(tx: tx))
+            return .update(convert(tx: tx))
         }
 
         // merkle don't returns transaction. This is failed(cancelled)
         if let tx = transactionFetcher?.fullTransaction(hash: hash.transactionHash) {
             logger?.log(level: .debug, message: "Did Fail transaction with \(hash.transactionHash.hs.hexString)")
-            return .transaction(fail(tx: tx.transaction))
+            return .fail(fail(tx: tx.transaction))
         }
 
         // if there is no tx in Db, just clear hash
@@ -82,24 +78,30 @@ class MerkleTransactionSyncer {
 
 extension MerkleTransactionSyncer: ITransactionSyncer {
     func transactions() async throws -> ([Transaction], Bool) {
-        guard manager.hasMerkleTransactions(chainId: blockchain.chain.id),
-              let hashes = try? manager.hashes(chainId: blockchain.chain.id)
+        guard manager.hasMerkleTransactions(),
+              let hashes = try? manager.hashes()
         else {
             return ([], false)
         }
 
-        var transactions: [Transaction] = []
+        var allTransactions: [Transaction] = []
+        var failedTransactions: [Transaction] = []
         var removeUnused: [MerkleTransactionHash] = []
+
         for hash in hashes {
             let transactionResult = try await handleTransaction(hash: hash)
             switch transactionResult {
-            case let .transaction(tx): transactions.append(tx)
+            case let .update(tx): allTransactions.append(tx)
+            case let .fail(tx): failedTransactions.append(tx)
             case let .toRemove(hash): removeUnused.append(hash)
             }
         }
 
-        manager.handle(transactions: transactions, removeUnused: removeUnused, chainId: blockchain.chain.id)
-        return (transactions, false)
+        allTransactions.append(contentsOf: failedTransactions)
+        manager.handle(transactions: allTransactions, removeUnused: removeUnused)
+
+        // we need to update only failed transactions
+        return (failedTransactions, false)
     }
 }
 
@@ -107,13 +109,13 @@ extension MerkleTransactionSyncer: IExtraDecorator {
     func extra(hash: Data) -> [String: Any] {
         logger?.log(level: .debug, message: "Ask about MEV protection! \(hash.hs.hexString)")
 
-        guard manager.hasMerkleTransactions(chainId: blockchain.chain.id) else {
+        guard manager.hasMerkleTransactions() else {
             return [:]
         }
 
         // if db has one of internal tx hashes, it's protected transaction
         do {
-            let hashes = try manager.hashes(chainId: blockchain.chain.id)
+            let hashes = try manager.hashes()
 
             guard hashes.map(\.transactionHash).contains(hash) else {
                 return [:]
@@ -128,7 +130,8 @@ extension MerkleTransactionSyncer: IExtraDecorator {
 
 extension MerkleTransactionSyncer {
     enum HandleTransactionResult {
-        case transaction(Transaction)
+        case update(Transaction)
+        case fail(Transaction)
         case toRemove(MerkleTransactionHash)
     }
 }

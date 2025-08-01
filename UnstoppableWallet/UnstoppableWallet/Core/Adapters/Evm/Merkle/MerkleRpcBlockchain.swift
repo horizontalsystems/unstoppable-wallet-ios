@@ -5,29 +5,22 @@ import MarketKit
 
 public class MerkleRpcBlockchain {
     private let address: EvmKit.Address
-    let chain: Chain
     private let syncer: IRpcSyncer
     private let manager: MerkleTransactionHashManager
     private let transactionBuilder: TransactionBuilder
     private var logger: Logger?
 
     init(address: EvmKit.Address,
-         chain: Chain,
          manager: MerkleTransactionHashManager,
          syncer: IRpcSyncer,
          transactionBuilder: TransactionBuilder,
          logger: Logger? = nil)
     {
         self.address = address
-        self.chain = chain
         self.manager = manager
         self.syncer = syncer
         self.transactionBuilder = transactionBuilder
         self.logger = logger
-    }
-
-    deinit {
-        print("Deinit MerkleRpcBlockchain!!!")
     }
 }
 
@@ -48,7 +41,7 @@ extension MerkleRpcBlockchain: INonceProvider {
         let encoded = transactionBuilder.encode(rawTransaction: rawTransaction, signature: signature)
 
         let txHash = try await syncer.fetch(rpc: SendRawTransactionJsonRpc(signedTransaction: encoded))
-        try manager.save(hash: MerkleTransactionHash(transactionHash: txHash, chainId: chain.id))
+        try manager.save(hash: MerkleTransactionHash(transactionHash: txHash))
 
         logger?.log(level: .debug, message: "Send with txHASH: \(txHash.hs.hexString)")
 
@@ -69,11 +62,5 @@ extension MerkleRpcBlockchain: INonceProvider {
         let transaction: RpcTransaction? = try await syncer.fetch(rpc: MerkleGetTransactionByHashJsonRpc(transactionHash: transactionHash))
         logger?.log(level: .debug, message: "Found Transaction -: \(transaction?.description ?? "nil")")
         return transaction
-    }
-}
-
-public extension MerkleRpcBlockchain {
-    enum MerkleError: Error {
-        case unsupportedChain
     }
 }
