@@ -188,6 +188,10 @@ enum AppConfig {
         (Bundle.main.object(forInfoDictionaryKey: "ChainalysisApiKey") as? String) ?? ""
     }
 
+    static var merkleApiPath: String {
+        (Bundle.main.object(forInfoDictionaryKey: "MerkleApiPath") as? String) ?? ""
+    }
+
     static var hashDitApiKey: String {
         (Bundle.main.object(forInfoDictionaryKey: "HashDitApiKey") as? String) ?? ""
     }

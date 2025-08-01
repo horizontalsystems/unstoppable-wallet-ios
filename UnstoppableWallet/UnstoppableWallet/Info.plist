@@ -49,6 +49,8 @@
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ChainalysisApiKey</key>
 	<string>${chainalysis_api_key}</string>
+	<key>MerkleApiPath</key>
+	<string>${merkle_api_path}</string>
 	<key>DefaultPassphrase</key>
 	<string>${default_passphrase}</string>
 	<key>DefaultWatchAddress</key>

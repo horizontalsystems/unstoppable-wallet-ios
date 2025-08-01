@@ -20,6 +20,7 @@ open_sea_api_key =
 unstoppable_domains_api_key =
 one_inch_api_key =
 chainalysis_api_key =
+merkle_api_path =
 hashdit_api_key =
 one_inch_commission =
 one_inch_commission_address =
