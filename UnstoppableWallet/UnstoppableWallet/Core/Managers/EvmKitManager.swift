@@ -112,7 +112,7 @@ class EvmKitManager {
                address: address,
                chain: chain,
                walletId: account.id,
-               logger: .init(minLogLevel: .debug)
+               logger: nil
            )
         {
             evmKit.add(nonceProvider: merkleAdapter.blockchain)

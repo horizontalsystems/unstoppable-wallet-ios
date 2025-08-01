@@ -151,7 +151,7 @@ extension MoneroSendHandler {
             ]
         }
 
-        func sections(baseToken _: Token, currency: Currency, rates: [String: Decimal]) -> [[SendField]] {
+        func sections(baseToken _: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
             var fields = [SendField]()
             let rate = rates[token.coin.uid]
 
@@ -175,7 +175,7 @@ extension MoneroSendHandler {
                 ),
             ])
 
-            return [fields, feeFields(feeToken: token, currency: currency, feeTokenRate: rate)]
+            return [.init(fields), .init(feeFields(feeToken: token, currency: currency, feeTokenRate: rate))]
         }
     }
 }

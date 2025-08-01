@@ -167,7 +167,7 @@ class Core {
         logger = Logger(minLogLevel: .error, storage: logRecordManager)
 
         currencyManager = CurrencyManager(storage: sharedLocalStorage)
-        networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
+        networkManager = NetworkManager(logger: logger)
         termsManager = TermsManager(userDefaultsStorage: userDefaultsStorage)
 
         watchlistManager = WatchlistManager(storage: sharedLocalStorage, priceChangeModeManager: priceChangeModeManager)
