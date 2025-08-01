@@ -12,7 +12,6 @@ class MerkleTransactionAdapter {
     ]
 
     static let baseUrl: URL = .init(string: "https://mempool.merkle.io/rpc/")!
-    static let apiPath: String = "pk_mbs_5f012edb2cf20a96b49429a3ed285a45"
 
     static let protectedKey = "protected"
 
@@ -29,7 +28,7 @@ class MerkleTransactionAdapter {
 
         self.transactionManager = transactionManager
 
-        let url = Self.baseUrl.appending(path: blockchainPath).appending(path: Self.apiPath)
+        let url = Self.baseUrl.appending(path: blockchainPath).appending(path: AppConfig.merkleApiPath)
         let rpcProvider = NodeApiProvider(
             networkManager: Core.shared.networkManager,
             urls: [url],
@@ -48,7 +47,7 @@ class MerkleTransactionAdapter {
             let uniqueId = "\(walletId)-\(chain.id)"
             let merkleTransactionHashStorage = try MerkleTransactionHashStorage(databaseDirectoryUrl: Self.dataDirectoryUrl(), databaseFileName: "hash-\(uniqueId)")
 
-            merkleTransactionHashManager = MerkleTransactionHashManager(storage: merkleTransactionHashStorage, logger: .init(minLogLevel: .debug))
+            merkleTransactionHashManager = MerkleTransactionHashManager(storage: merkleTransactionHashStorage, logger: logger)
 
             blockchain = MerkleRpcBlockchain(
                 address: address,
