@@ -1,5 +1,5 @@
-import Foundation
 import EvmKit
+import Foundation
 import HsToolKit
 import MarketKit
 
@@ -16,8 +16,8 @@ public class MerkleRpcBlockchain {
          manager: MerkleTransactionHashManager,
          syncer: IRpcSyncer,
          transactionBuilder: TransactionBuilder,
-         logger: Logger? = nil
-    ) {
+         logger: Logger? = nil)
+    {
         self.address = address
         self.chain = chain
         self.manager = manager
@@ -25,21 +25,13 @@ public class MerkleRpcBlockchain {
         self.transactionBuilder = transactionBuilder
         self.logger = logger
     }
-    
+
     deinit {
         print("Deinit MerkleRpcBlockchain!!!")
     }
 }
 
 extension MerkleRpcBlockchain: INonceProvider {
-    public func start() {
-        syncer.start()
-    }
-    
-    public func stop() {
-        syncer.stop()
-    }
-
     public func nonce(defaultBlockParameter: DefaultBlockParameter = .pending) async throws -> Int {
         // sync only if needed pending/ because others will be same with main blockchain
         guard defaultBlockParameter.raw == DefaultBlockParameter.pending.raw else {
@@ -65,16 +57,23 @@ extension MerkleRpcBlockchain: INonceProvider {
         return tx
     }
 
-    public func transaction(transactionHash: Data) async throws -> RpcTransaction {
-        let transaction: RpcTransaction = try await syncer.fetch(rpc: GetTransactionByHashJsonRpc(transactionHash: transactionHash))
-        logger?.log(level: .debug, message: "Transaction -: \(transaction.description)")
+    public func cancel(hash: Data) async throws -> Bool {
+        logger?.log(level: .debug, message: "Send Cancel txHASH: \(hash.hs.hexString)")
 
+        let success = try await syncer.fetch(rpc: CancelTransactionJsonRpc(hash: hash))
+        logger?.log(level: .debug, message: "Cancel result : \(hash.hs.hexString) | \(success)")
+        return success
+    }
+
+    public func transaction(transactionHash: Data) async throws -> RpcTransaction? {
+        let transaction: RpcTransaction? = try await syncer.fetch(rpc: MerkleGetTransactionByHashJsonRpc(transactionHash: transactionHash))
+        logger?.log(level: .debug, message: "Found Transaction -: \(transaction?.description ?? "nil")")
         return transaction
     }
 }
 
-extension MerkleRpcBlockchain {
-    public enum MerkleError: Error {
+public extension MerkleRpcBlockchain {
+    enum MerkleError: Error {
         case unsupportedChain
     }
 }

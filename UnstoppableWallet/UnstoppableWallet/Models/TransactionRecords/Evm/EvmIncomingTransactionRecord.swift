@@ -10,7 +10,7 @@ class EvmIncomingTransactionRecord: EvmTransactionRecord {
         self.from = from
         self.value = value
 
-        super.init(source: source, transaction: transaction, baseToken: baseToken, ownTransaction: false, spam: spam)
+        super.init(source: source, transaction: transaction, baseToken: baseToken, ownTransaction: false, protected: false, spam: spam)
     }
 
     override var mainValue: AppValue? {

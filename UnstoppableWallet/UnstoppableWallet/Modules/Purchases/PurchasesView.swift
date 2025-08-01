@@ -6,6 +6,8 @@ struct PurchasesView: View {
     @StateObject private var viewModel = PurchasesViewModel()
     @Binding var isPresented: Bool
 
+    var onSuccess: (() -> Void)?
+
     var body: some View {
         ThemeNavigationStack {
             ThemeView {
