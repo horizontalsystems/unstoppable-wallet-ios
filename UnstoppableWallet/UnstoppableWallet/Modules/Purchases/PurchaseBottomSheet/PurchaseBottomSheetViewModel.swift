@@ -46,7 +46,7 @@ class PurchaseBottomSheetViewModel: ObservableObject {
     }
 
     private func updateItems(data: [PurchaseManager.ProductData]) {
-        print(data)
+//        print(data)
         items = data
             .sorted { $0.order < $1.order }
             .compactMap {

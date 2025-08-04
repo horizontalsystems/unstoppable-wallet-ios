@@ -75,6 +75,23 @@ extension Coordinator {
         }
     }
 
+    func presentAfterPurchase(premiumFeature: PremiumFeature, @ViewBuilder content: @escaping (Binding<Bool>) -> some View, onDismiss: (() -> Void)? = nil, onPresent: (() -> Void)? = nil) {
+        performAfterPurchase(premiumFeature: premiumFeature) {
+            Coordinator.shared.present(content: content, onDismiss: onDismiss)
+            onPresent?()
+        }
+    }
+
+    func performAfterPurchase(premiumFeature: PremiumFeature, onPurchase: @escaping () -> Void) {
+        if !Core.shared.purchaseManager.activated(premiumFeature) {
+            present { isPresented in
+                PurchasesView(isPresented: isPresented, onSuccess: onPurchase)
+            }
+        } else {
+            onPurchase()
+        }
+    }
+
     func presentCoinPage(coin: Coin, page: StatPage, section: StatSection? = nil) {
         present { _ in
             CoinPageView(coin: coin)

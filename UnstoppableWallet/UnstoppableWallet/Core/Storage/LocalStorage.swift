@@ -141,7 +141,6 @@ extension LocalStorage {
     var useMevProtection: Bool {
         get { userDefaultsStorage.value(for: keyUseMevProtection) ?? false }
         set {
-            print("SET keyUseMevProtection \(newValue) ")
             userDefaultsStorage.set(value: newValue, for: keyUseMevProtection)
         }
     }
