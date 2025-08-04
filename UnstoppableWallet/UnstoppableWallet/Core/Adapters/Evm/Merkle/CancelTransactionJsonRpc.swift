@@ -11,9 +11,7 @@ public class CancelTransactionJsonRpc: JsonRpc<Bool> {
     }
 
     override public func parse(result: Any) throws -> Bool {
-        print("Result of Cancelling: \(result)")
         guard let value = result as? Bool else {
-            print("Invalid Parsing!!!")
             throw JsonRpcResponse.ResponseError.invalidResult(value: result)
         }
 

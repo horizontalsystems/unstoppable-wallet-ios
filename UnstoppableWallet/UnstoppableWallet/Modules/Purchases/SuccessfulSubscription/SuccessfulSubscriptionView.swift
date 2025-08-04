@@ -3,6 +3,8 @@ import SwiftUI
 struct SuccessfulSubscriptionView: View {
     @StateObject var viewModel: PurchasesViewModel
     @Binding var isPresented: Bool
+    
+    var onSuccess: (() -> Void)?
 
     var body: some View {
         ThemeRadialView {
@@ -20,6 +22,7 @@ struct SuccessfulSubscriptionView: View {
 
                 VStack(spacing: .margin8) {
                     Button(action: {
+                        onSuccess?()
                         isPresented = false
                     }) {
                         Text("purchases.successful_subscription.button.go_app".localized)
