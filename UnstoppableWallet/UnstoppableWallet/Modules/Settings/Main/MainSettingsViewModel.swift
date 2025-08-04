@@ -130,10 +130,6 @@ extension MainSettingsViewModel {
     func rateApp() {
         rateAppManager.forceShow()
     }
-
-    func activated(premiumFeature: PremiumFeature) -> Bool {
-        purchaseManager.activated(premiumFeature)
-    }
 }
 
 extension MainSettingsViewModel {

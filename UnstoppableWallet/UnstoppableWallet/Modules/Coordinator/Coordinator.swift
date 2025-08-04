@@ -69,24 +69,32 @@ extension Coordinator {
 }
 
 extension Coordinator {
-    func presentPurchases(onSuccess: (() -> Void)? = nil) {
+    func presentPurchase(page: StatPage, trigger: StatPremiumTrigger) {
         present { isPresented in
-            PurchasesView(isPresented: isPresented, onSuccess: onSuccess)
+            PurchasesView(isPresented: isPresented)
         }
+
+        stat(page: page, event: .openPremium(from: trigger))
     }
 
-    func presentAfterPurchase(premiumFeature: PremiumFeature, @ViewBuilder content: @escaping (Binding<Bool>) -> some View, onDismiss: (() -> Void)? = nil, onPresent: (() -> Void)? = nil) {
-        performAfterPurchase(premiumFeature: premiumFeature) {
+    func presentAfterPurchase(premiumFeature: PremiumFeature, page: StatPage, trigger: StatPremiumTrigger, @ViewBuilder content: @escaping (Binding<Bool>) -> some View, onDismiss: (() -> Void)? = nil, onPresent: (() -> Void)? = nil) {
+        performAfterPurchase(premiumFeature: premiumFeature, page: page, trigger: trigger) {
             Coordinator.shared.present(content: content, onDismiss: onDismiss)
             onPresent?()
         }
     }
 
-    func performAfterPurchase(premiumFeature: PremiumFeature, onPurchase: @escaping () -> Void) {
+    func performAfterPurchase(premiumFeature: PremiumFeature, page: StatPage, trigger: StatPremiumTrigger, onPurchase: @escaping () -> Void) {
         if !Core.shared.purchaseManager.activated(premiumFeature) {
             present { isPresented in
-                PurchasesView(isPresented: isPresented, onSuccess: onPurchase)
+                PurchasesView(isPresented: isPresented)
+            } onDismiss: {
+                if Core.shared.purchaseManager.activated(premiumFeature) {
+                    onPurchase()
+                }
             }
+
+            stat(page: page, event: .openPremium(from: trigger))
         } else {
             onPurchase()
         }

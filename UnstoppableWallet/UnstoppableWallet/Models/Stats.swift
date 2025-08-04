@@ -477,6 +477,7 @@ enum StatPremiumTrigger: String {
     case holders
     case issueBlockchains = "issue_blockchains"
     case listedOnTopExchanges = "listed_on_top_exchanges"
+    case mevProtection = "mev_protection"
     case other
     case outperformedBnb = "outperformed_bnb"
     case outperformedBtc = "outperformed_btc"

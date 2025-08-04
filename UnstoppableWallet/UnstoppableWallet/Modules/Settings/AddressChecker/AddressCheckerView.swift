@@ -14,8 +14,7 @@ struct AddressCheckerView: View {
                             }
                         } else {
                             ClickableRow(action: {
-                                Coordinator.shared.presentPurchases()
-                                stat(page: .addressChecker, event: .openPremium(from: .disableAddressChecker))
+                                Coordinator.shared.presentPurchase(page: .addressChecker, trigger: .disableAddressChecker)
                             }) {
                                 switchContent()
                                     .allowsHitTesting(false)
@@ -39,8 +38,7 @@ struct AddressCheckerView: View {
                             }
                         } else {
                             ClickableRow(action: {
-                                Coordinator.shared.presentPurchases()
-                                stat(page: .addressChecker, event: .openPremium(from: .addressChecker))
+                                Coordinator.shared.presentPurchase(page: .addressChecker, trigger: .addressChecker)
                             }) {
                                 addressContent()
                             }

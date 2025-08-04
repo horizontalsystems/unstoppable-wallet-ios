@@ -89,19 +89,15 @@ struct MarketAdvancedSearchResultsView: View {
 
     @ViewBuilder private func signalsButton() -> some View {
         Button(action: {
-            guard viewModel.premiumEnabled else {
-                Coordinator.shared.presentPurchases()
-                stat(page: .advancedSearchResults, event: .openPremium(from: .tradingSignal))
-                return
-            }
-
-            if viewModel.showSignals {
-                viewModel.set(showSignals: false)
-            } else {
-                Coordinator.shared.present { isPresented in
-                    MarketWatchlistSignalsView(setShowSignals: { [weak viewModel] in
-                        viewModel?.set(showSignals: $0)
-                    }, isPresented: isPresented)
+            Coordinator.shared.performAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearchResults, trigger: .tradingSignal) {
+                if viewModel.showSignals {
+                    viewModel.set(showSignals: false)
+                } else {
+                    Coordinator.shared.present { isPresented in
+                        MarketWatchlistSignalsView(setShowSignals: { [weak viewModel] in
+                            viewModel?.set(showSignals: $0)
+                        }, isPresented: isPresented)
+                    }
                 }
             }
         }) {

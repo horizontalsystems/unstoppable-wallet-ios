@@ -4,8 +4,6 @@ struct SuccessfulSubscriptionView: View {
     @StateObject var viewModel: PurchasesViewModel
     @Binding var isPresented: Bool
 
-    var onSuccess: (() -> Void)?
-
     var body: some View {
         ThemeRadialView {
             VStack(spacing: 0) {
@@ -22,7 +20,6 @@ struct SuccessfulSubscriptionView: View {
 
                 VStack(spacing: .margin8) {
                     Button(action: {
-                        onSuccess?()
                         isPresented = false
                     }) {
                         Text("purchases.successful_subscription.button.go_app".localized)
@@ -32,7 +29,6 @@ struct SuccessfulSubscriptionView: View {
             }
             .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin12, trailing: .margin24))
         }
-        .interactiveDismissDisabled(true)
     }
 
     private func activatedDescription() -> some View {

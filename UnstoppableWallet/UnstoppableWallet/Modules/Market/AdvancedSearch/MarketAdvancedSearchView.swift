@@ -176,13 +176,8 @@ struct MarketAdvancedSearchView: View {
 
     @ViewBuilder private func categoriesRow() -> some View {
         ClickableRow(spacing: .margin8) {
-            if viewModel.advancedSearchEnabled {
-                Coordinator.shared.present { isPresented in
-                    MarketAdvancedSearchCategoriesView(viewModel: viewModel, isPresented: isPresented)
-                }
-            } else {
-                Coordinator.shared.presentPurchases()
-                stat(page: .advancedSearch, event: .openPremium(from: .sectors))
+            Coordinator.shared.presentAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: .sectors) { isPresented in
+                MarketAdvancedSearchCategoriesView(viewModel: viewModel, isPresented: isPresented)
             }
         } content: {
             Text("market.advanced_search.categories".localized).textBody()
@@ -199,8 +194,7 @@ struct MarketAdvancedSearchView: View {
             }
         } else {
             ClickableRow {
-                Coordinator.shared.presentPurchases()
-                stat(page: .advancedSearch, event: .openPremium(from: statPremiumKey))
+                Coordinator.shared.presentPurchase(page: .advancedSearch, trigger: statPremiumKey)
             } content: {
                 view
             }
@@ -271,39 +265,36 @@ struct MarketAdvancedSearchView: View {
 
     @ViewBuilder private func signalRow() -> some View {
         ClickableRow(spacing: .margin8) {
-            guard viewModel.advancedSearchEnabled else {
-                Coordinator.shared.presentPurchases()
-                stat(page: .advancedSearch, event: .openPremium(from: .tradingSignal))
-                return
-            }
-            Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                ListSection {
-                    ClickableRow {
-                        viewModel.signal = nil
-                        isPresented.wrappedValue = false
-                    } content: {
-                        Text("selector.any".localized).themeBody(color: .themeGray)
-
-                        if viewModel.signal == nil {
-                            Image("check_1_20").themeIcon(color: .themeJacob)
-                        }
-                    }
-
-                    ForEach(viewModel.signals) { signal in
+            Coordinator.shared.performAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: .tradingSignal) {
+                Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                    ListSection {
                         ClickableRow {
-                            viewModel.signal = signal
+                            viewModel.signal = nil
                             isPresented.wrappedValue = false
                         } content: {
-                            Text(signal.title).themeBody()
+                            Text("selector.any".localized).themeBody(color: .themeGray)
 
-                            if viewModel.signal == signal {
+                            if viewModel.signal == nil {
                                 Image("check_1_20").themeIcon(color: .themeJacob)
                             }
                         }
+
+                        ForEach(viewModel.signals) { signal in
+                            ClickableRow {
+                                viewModel.signal = signal
+                                isPresented.wrappedValue = false
+                            } content: {
+                                Text(signal.title).themeBody()
+
+                                if viewModel.signal == signal {
+                                    Image("check_1_20").themeIcon(color: .themeJacob)
+                                }
+                            }
+                        }
                     }
+                    .themeListStyle(.bordered)
+                    .modifier(AdvancedSearchHeaderModifier(imageName: "bell_ring_24", title: "market.advanced_search.signal", isPresented: isPresented))
                 }
-                .themeListStyle(.bordered)
-                .modifier(AdvancedSearchHeaderModifier(imageName: "bell_ring_24", title: "market.advanced_search.signal", isPresented: isPresented))
             }
         } content: {
             Text("market.advanced_search.signal".localized).textBody()
@@ -321,28 +312,25 @@ struct MarketAdvancedSearchView: View {
 
     @ViewBuilder private func priceChangeRow() -> some View {
         ClickableRow(spacing: .margin8) {
-            guard viewModel.advancedSearchEnabled else {
-                Coordinator.shared.presentPurchases()
-                stat(page: .advancedSearch, event: .openPremium(from: .priceChange))
-                return
-            }
-            Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                ListSection {
-                    ForEach(MarketAdvancedSearchViewModel.PriceChangeFilter.allCases) { filter in
-                        ClickableRow {
-                            viewModel.priceChange = filter
-                            isPresented.wrappedValue = false
-                        } content: {
-                            Text(filter.title).themeBody(color: color(priceChangeFilter: filter))
+            Coordinator.shared.performAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: .priceChange) {
+                Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                    ListSection {
+                        ForEach(MarketAdvancedSearchViewModel.PriceChangeFilter.allCases) { filter in
+                            ClickableRow {
+                                viewModel.priceChange = filter
+                                isPresented.wrappedValue = false
+                            } content: {
+                                Text(filter.title).themeBody(color: color(priceChangeFilter: filter))
 
-                            if viewModel.priceChange == filter {
-                                Image("check_1_20").themeIcon(color: .themeJacob)
+                                if viewModel.priceChange == filter {
+                                    Image("check_1_20").themeIcon(color: .themeJacob)
+                                }
                             }
                         }
                     }
+                    .themeListStyle(.bordered)
+                    .modifier(AdvancedSearchHeaderModifier(imageName: "markets_24", title: "market.advanced_search.price_change", isPresented: isPresented))
                 }
-                .themeListStyle(.bordered)
-                .modifier(AdvancedSearchHeaderModifier(imageName: "markets_24", title: "market.advanced_search.price_change", isPresented: isPresented))
             }
         } content: {
             Text("market.advanced_search.price_change".localized).textBody()
@@ -354,28 +342,25 @@ struct MarketAdvancedSearchView: View {
 
     @ViewBuilder private func pricePeriodRow() -> some View {
         ClickableRow(spacing: .margin8) {
-            guard viewModel.advancedSearchEnabled else {
-                Coordinator.shared.presentPurchases()
-                stat(page: .advancedSearch, event: .openPremium(from: .pricePeriod))
-                return
-            }
-            Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                ListSection {
-                    ForEach(viewModel.priceChangePeriods) { period in
-                        ClickableRow {
-                            viewModel.priceChangePeriod = period
-                            isPresented.wrappedValue = false
-                        } content: {
-                            Text(period.title).themeBody()
+            Coordinator.shared.performAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: .pricePeriod) {
+                Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                    ListSection {
+                        ForEach(viewModel.priceChangePeriods) { period in
+                            ClickableRow {
+                                viewModel.priceChangePeriod = period
+                                isPresented.wrappedValue = false
+                            } content: {
+                                Text(period.title).themeBody()
 
-                            if viewModel.priceChangePeriod == period {
-                                Image("check_1_20").themeIcon(color: .themeJacob)
+                                if viewModel.priceChangePeriod == period {
+                                    Image("check_1_20").themeIcon(color: .themeJacob)
+                                }
                             }
                         }
                     }
+                    .themeListStyle(.bordered)
+                    .modifier(AdvancedSearchHeaderModifier(imageName: "circle_clock_24", title: "market.advanced_search.price_period", isPresented: isPresented))
                 }
-                .themeListStyle(.bordered)
-                .modifier(AdvancedSearchHeaderModifier(imageName: "circle_clock_24", title: "market.advanced_search.price_period", isPresented: isPresented))
             }
         } content: {
             Text("market.advanced_search.price_period".localized).textBody()
@@ -427,28 +412,25 @@ struct MarketAdvancedSearchView: View {
 
     @ViewBuilder private func priceCloseToRow() -> some View {
         ClickableRow(spacing: .margin8) {
-            guard viewModel.advancedSearchEnabled else {
-                Coordinator.shared.presentPurchases()
-                stat(page: .advancedSearch, event: .openPremium(from: .priceCloseTo))
-                return
-            }
-            Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                ListSection {
-                    ForEach(MarketAdvancedSearchViewModel.PriceCloseToFilter.allCases) { closeTo in
-                        ClickableRow {
-                            viewModel.priceCloseTo = closeTo
-                            isPresented.wrappedValue = false
-                        } content: {
-                            Text(closeTo.title).themeBody(color: color(closeToFilter: closeTo))
+            Coordinator.shared.performAfterPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: .priceCloseTo) {
+                Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                    ListSection {
+                        ForEach(MarketAdvancedSearchViewModel.PriceCloseToFilter.allCases) { closeTo in
+                            ClickableRow {
+                                viewModel.priceCloseTo = closeTo
+                                isPresented.wrappedValue = false
+                            } content: {
+                                Text(closeTo.title).themeBody(color: color(closeToFilter: closeTo))
 
-                            if viewModel.priceCloseTo == closeTo {
-                                Image("check_1_20").themeIcon(color: .themeJacob)
+                                if viewModel.priceCloseTo == closeTo {
+                                    Image("check_1_20").themeIcon(color: .themeJacob)
+                                }
                             }
                         }
                     }
+                    .themeListStyle(.bordered)
+                    .modifier(AdvancedSearchHeaderModifier(imageName: "arrow_swap_24", title: "market.advanced_search.price_close_to", isPresented: isPresented))
                 }
-                .themeListStyle(.bordered)
-                .modifier(AdvancedSearchHeaderModifier(imageName: "arrow_swap_24", title: "market.advanced_search.price_close_to", isPresented: isPresented))
             }
         } content: {
             Text("market.advanced_search.price_close_to".localized).textBody()

@@ -64,7 +64,7 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
                     self?.localStorage.useMevProtection = newValue
                 }
 
-                Coordinator.shared.performAfterPurchase(premiumFeature: .vipSupport) {
+                Coordinator.shared.performAfterPurchase(premiumFeature: .vipSupport, page: .swap, trigger: .mevProtection) {
                     successBlock()
                 }
             }

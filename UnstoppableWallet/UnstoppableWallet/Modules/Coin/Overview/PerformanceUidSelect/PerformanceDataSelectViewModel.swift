@@ -9,7 +9,6 @@ class PerformanceDataSelectViewModel: ObservableObject {
 
     private let marketKit = Core.shared.marketKit
     private let performanceDataManager = Core.shared.performanceDataManager
-    private let purchaseManager = Core.shared.purchaseManager
 
     private var tasks = Set<AnyTask>()
     private var cancellables: [AnyCancellable] = []
@@ -34,8 +33,6 @@ class PerformanceDataSelectViewModel: ObservableObject {
     @Published private(set) var firstPeriod: HsTimePeriod
     @Published private(set) var secondPeriod: HsTimePeriod
 
-    private(set) var premiumEnabled: Bool
-
     init() {
         selectedCoins = Set(performanceDataManager.coins)
         let periods = performanceDataManager.periods
@@ -46,13 +43,6 @@ class PerformanceDataSelectViewModel: ObservableObject {
             firstPeriod = PerformanceRow.defaultPeriods[0]
             secondPeriod = PerformanceRow.defaultPeriods[1]
         }
-
-        premiumEnabled = purchaseManager.activated(.tokenInsights)
-        purchaseManager.$activeFeatures
-            .sink { [weak self] features in
-                self?.premiumEnabled = features.contains(.tokenInsights)
-            }
-            .store(in: &cancellables)
 
         load()
     }

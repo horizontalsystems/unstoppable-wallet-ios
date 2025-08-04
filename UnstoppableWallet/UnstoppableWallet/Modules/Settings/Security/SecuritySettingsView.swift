@@ -108,13 +108,10 @@ struct SecuritySettingsView: View {
                     ListSection {
                         if viewModel.isDuressPasscodeSet {
                             ClickableRow(action: {
-                                guard viewModel.premiumEnabled else {
-                                    Coordinator.shared.presentPurchases()
-                                    stat(page: .security, event: .openPremium(from: .duressMode))
-                                    return
-                                }
-                                Coordinator.shared.presentAfterUnlock { isPresented in
-                                    ThemeNavigationStack { EditPasscodeModule.editDuressPasscodeView(showParentSheet: isPresented) }
+                                Coordinator.shared.performAfterPurchase(premiumFeature: .duressMode, page: .security, trigger: .duressMode) {
+                                    Coordinator.shared.presentAfterUnlock { isPresented in
+                                        ThemeNavigationStack { EditPasscodeModule.editDuressPasscodeView(showParentSheet: isPresented) }
+                                    }
                                 }
                             }) {
                                 Image("switch_wallet_24").themeIcon(color: .themeJacob)
@@ -131,18 +128,14 @@ struct SecuritySettingsView: View {
                             }
                         } else {
                             ClickableRow(action: {
-                                guard viewModel.premiumEnabled else {
-                                    Coordinator.shared.presentPurchases()
-                                    stat(page: .security, event: .openPremium(from: .duressMode))
-                                    return
-                                }
-
-                                if viewModel.isPasscodeSet {
-                                    Coordinator.shared.performAfterUnlock {
-                                        presentCreateDuressPasscode()
+                                Coordinator.shared.performAfterPurchase(premiumFeature: .duressMode, page: .security, trigger: .duressMode) {
+                                    if viewModel.isPasscodeSet {
+                                        Coordinator.shared.performAfterUnlock {
+                                            presentCreateDuressPasscode()
+                                        }
+                                    } else {
+                                        presentCreatePasscode(reason: .duress)
                                     }
-                                } else {
-                                    presentCreatePasscode(reason: .duress)
                                 }
                             }) {
                                 Image("switch_wallet_24").themeIcon(color: .themeJacob)

@@ -8,10 +8,10 @@ class MarketAdvancedSearchResultsViewModel: ObservableObject {
     private let watchlistManager = Core.shared.watchlistManager
     private var cancellables = Set<AnyCancellable>()
 
+    private var premiumEnabled: Bool = false
     private let internalMarketInfos: [MarketInfo]
     let timePeriod: HsTimePeriod
 
-    @Published private(set) var premiumEnabled: Bool = false
     @Published var marketInfos: [MarketInfo] = []
     @Published var showSignals: Bool = false
 
