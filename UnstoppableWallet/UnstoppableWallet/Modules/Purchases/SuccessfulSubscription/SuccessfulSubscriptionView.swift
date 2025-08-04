@@ -1,46 +1,33 @@
 import SwiftUI
 
 struct SuccessfulSubscriptionView: View {
-    @Binding var purchasesPresented: Bool
+    @StateObject var viewModel: PurchasesViewModel
+    @Binding var isPresented: Bool
 
     var body: some View {
-        ThemeNavigationStack {
-            ThemeView {
-                ThemeRadialView {
-                    VStack(spacing: 0) {
-                        Image("box_2")
-                            .padding(.vertical, .margin24)
+        ThemeRadialView {
+            VStack(spacing: 0) {
+                Image("box_2")
 
-                        Text("purchases.successful_subscription.description".localized)
-                            .textHeadline1(color: .themeLeah)
-                            .multilineTextAlignment(.center)
-                            .padding(.top, .margin24)
-                            .padding(.horizontal, 52)
+                Text("purchases.successful_subscription.description".localized)
+                    .textHeadline1(color: .themeLeah)
+                    .multilineTextAlignment(.center)
+                    .padding(.top, .margin24)
+                    .padding(.horizontal, 52)
 
-                        activatedDescription()
-                        Spacer()
+                activatedDescription()
+                Spacer()
 
-                        VStack(spacing: .margin8) {
-                            Button(action: {
-                                purchasesPresented = false
-                            }) {
-                                Text("purchases.successful_subscription.button.go_app".localized)
-                            }
-                            .buttonStyle(PrimaryButtonStyle(style: .yellowGradient))
-                        }
+                VStack(spacing: .margin8) {
+                    Button(action: {
+                        isPresented = false
+                    }) {
+                        Text("purchases.successful_subscription.button.go_app".localized)
                     }
-                    .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin12, trailing: .margin24))
-                }
-                .navigationTitle("purchases.successful_subscription.title".localized)
-                .navigationBarTitleDisplayMode(.inline)
-                .toolbar {
-                    ToolbarItem(placement: .navigationBarTrailing) {
-                        Button("button.close".localized) {
-                            purchasesPresented = false
-                        }
-                    }
+                    .buttonStyle(PrimaryButtonStyle(style: .yellowGradient))
                 }
             }
+            .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: .margin12, trailing: .margin24))
         }
         .interactiveDismissDisabled(true)
     }

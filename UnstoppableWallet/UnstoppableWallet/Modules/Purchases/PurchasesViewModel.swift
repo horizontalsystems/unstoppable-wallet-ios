@@ -8,7 +8,9 @@ class PurchasesViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     @Published private(set) var viewItems: [ViewItem]
+
     @Published var buttonState: ButtonState = .tryForFree
+    @Published var isSubscriptionSuccessful = false
 
     init() {
         viewItems = PremiumFeature.allCases.map(\.viewItem)
@@ -26,6 +28,14 @@ class PurchasesViewModel: ObservableObject {
         }
 
         buttonState = purchaseManager.hasActivePurchase ? .activated : .upgrade
+    }
+}
+
+extension PurchasesViewModel {
+    func didSubscribeSuccessful() {
+        DispatchQueue.main.async { [weak self] in
+            self?.isSubscriptionSuccessful = true
+        }
     }
 }
 
