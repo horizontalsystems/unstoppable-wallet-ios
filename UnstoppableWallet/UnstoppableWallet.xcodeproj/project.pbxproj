@@ -1974,11 +1974,11 @@
 		6BDA29AD29D6F384003847ED /* ECashKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDA29AC29D6F384003847ED /* ECashKit */; };
 		6BDDB59C2C1816B500DE9D56 /* TonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDDB59B2C1816B500DE9D56 /* TonKit */; };
 		6BDDB5A12C1AC73D00DE9D56 /* TonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDDB5A02C1AC73D00DE9D56 /* TonKit */; };
-		6BDFC0892E3CDC1C00CC28DD /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDFC0882E3CDC1300CC28DD /* SubscriptionView.swift */; };
 		6BDFC0832E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDFC0822E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift */; };
 		6BDFC0842E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDFC0822E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift */; };
 		6BDFC0862E3C8F1900CC28DD /* MerkleGetTransactionByHashJsonRpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDFC0852E3C8F0700CC28DD /* MerkleGetTransactionByHashJsonRpc.swift */; };
 		6BDFC0872E3C8F1900CC28DD /* MerkleGetTransactionByHashJsonRpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDFC0852E3C8F0700CC28DD /* MerkleGetTransactionByHashJsonRpc.swift */; };
+		6BDFC0892E3CDC1C00CC28DD /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDFC0882E3CDC1300CC28DD /* SubscriptionView.swift */; };
 		6BE57E732E339C3A003C4C01 /* MerkleTransactionAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57E722E339C32003C4C01 /* MerkleTransactionAdapter.swift */; };
 		6BE57E742E339C3A003C4C01 /* MerkleTransactionAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57E722E339C32003C4C01 /* MerkleTransactionAdapter.swift */; };
 		6BE57E782E339D17003C4C01 /* MerlkeTransactionHashStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57E772E339D17003C4C01 /* MerlkeTransactionHashStorage.swift */; };
@@ -4393,9 +4393,9 @@
 		6BCD53112A161F4800993F20 /* BackupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupViewController.swift; sourceTree = "<group>"; };
 		6BCD53182A161F9100993F20 /* BackupService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupService.swift; sourceTree = "<group>"; };
 		6BCD531B2A16203F00993F20 /* CloudBackupManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudBackupManager.swift; sourceTree = "<group>"; };
-		6BDFC0882E3CDC1300CC28DD /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
 		6BDFC0822E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelTransactionJsonRpc.swift; sourceTree = "<group>"; };
 		6BDFC0852E3C8F0700CC28DD /* MerkleGetTransactionByHashJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleGetTransactionByHashJsonRpc.swift; sourceTree = "<group>"; };
+		6BDFC0882E3CDC1300CC28DD /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
 		6BE57E722E339C32003C4C01 /* MerkleTransactionAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleTransactionAdapter.swift; sourceTree = "<group>"; };
 		6BE57E762E339D17003C4C01 /* MerkleRpcBlockchain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleRpcBlockchain.swift; sourceTree = "<group>"; };
 		6BE57E772E339D17003C4C01 /* MerlkeTransactionHashStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerlkeTransactionHashStorage.swift; sourceTree = "<group>"; };
@@ -11423,7 +11423,6 @@
 				58AAAD33B32694AFA2E954D6 /* GradientLayer.swift in Sources */,
 				58AAAF6248682EE23B3C3D5A /* DebugLogger.swift in Sources */,
 				1A5644CF2BEC2E7C6227BDC7 /* AppStatusModule.swift in Sources */,
-				6BDFC08A2E3CDC1C00CC28DD /* SubscriptionView.swift in Sources */,
 				D05E96902A261D82002CCD71 /* TronTransactionAdapter.swift in Sources */,
 				D05E96A32A2627DA002CCD71 /* TronIncomingTransactionRecord.swift in Sources */,
 				11B35D51B52EF0000711CE05 /* MultiTextMetricsView.swift in Sources */,
