@@ -200,15 +200,12 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
     func otherSections(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: TransactionSettings?) -> [SendDataSection] {
         let allowMevProtection = MerkleTransactionAdapter.allowProtection(chain: evmBlockchainManager.chain(blockchainType: tokenIn.blockchainType))
 
-        print("BASE_EVM_PROVIDER: Make Other Sections.")
         guard allowMevProtection else {
-            print("BASE_EVM_PROVIDER: useMevProtection = false. Don't Show")
             useMevProtection = false
             return []
         }
 
         useMevProtection = localStorage.useMevProtection
-        print("BASE_EVM_PROVIDER: set useMevProtection = \(useMevProtection). Show")
 
         let binding = Binding<Bool>(
             get: { [weak self] in
@@ -222,11 +219,10 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
                 let successBlock = { [weak self] in
                     self?.useMevProtection = newValue
                     self?.localStorage.useMevProtection = newValue
-                    print("BASE_EVM_PROVIDER: set useMevProtection = \(newValue). Update")
                 }
 
                 guard Core.shared.purchaseManager.activated(.vipSupport) else {
-                    Coordinator.shared.presentPurchases(onSuccess: successBlock)
+                    // Coordinator.shared.presentPurchases(onSuccess: successBlock)
                     return
                 }
 

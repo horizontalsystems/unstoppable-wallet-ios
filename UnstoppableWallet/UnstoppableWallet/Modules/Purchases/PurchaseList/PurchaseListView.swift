@@ -44,8 +44,7 @@ struct PurchaseListView: View {
     @ViewBuilder private func noPurchaseView() -> some View {
         ListSection {
             ClickableRow {
-                Coordinator.shared.presentPurchases()
-                stat(page: .purchaseList, event: .openPremium(from: .getPremium))
+                Coordinator.shared.presentPurchase(page: .purchaseList, trigger: .getPremium)
             } content: {
                 HStack(spacing: .margin8) {
                     Text("subscription.get".localized).textBody()

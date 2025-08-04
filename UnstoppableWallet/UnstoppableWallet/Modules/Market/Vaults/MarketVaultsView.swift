@@ -43,13 +43,9 @@ struct MarketVaultsView: View {
                                     return
                                 }
 
-                                guard viewModel.premiumEnabled else {
-                                    Coordinator.shared.presentPurchases()
-                                    stat(page: .vaults, event: .openPremium(from: .filter))
-                                    return
+                                Coordinator.shared.performAfterPurchase(premiumFeature: .tokenInsights, page: .vaults, trigger: .filter) {
+                                    viewModel.filter = filter
                                 }
-
-                                viewModel.filter = filter
                             },
                             isPresented: isPresented
                         )
@@ -72,13 +68,9 @@ struct MarketVaultsView: View {
                                     return
                                 }
 
-                                guard viewModel.premiumEnabled else {
-                                    Coordinator.shared.presentPurchases()
-                                    stat(page: .vaults, event: .openPremium(from: .sortBy))
-                                    return
+                                Coordinator.shared.performAfterPurchase(premiumFeature: .tokenInsights, page: .vaults, trigger: .sortBy) {
+                                    viewModel.sortBy = sortBy
                                 }
-
-                                viewModel.sortBy = sortBy
                             },
                             isPresented: isPresented
                         )
@@ -101,13 +93,9 @@ struct MarketVaultsView: View {
                                     return
                                 }
 
-                                guard viewModel.premiumEnabled else {
-                                    Coordinator.shared.presentPurchases()
-                                    stat(page: .vaults, event: .openPremium(from: .timePeriod))
-                                    return
+                                Coordinator.shared.performAfterPurchase(premiumFeature: .tokenInsights, page: .vaults, trigger: .timePeriod) {
+                                    viewModel.timePeriod = timePeriod
                                 }
-
-                                viewModel.timePeriod = timePeriod
                             },
                             isPresented: isPresented
                         )
@@ -139,11 +127,7 @@ struct MarketVaultsView: View {
                 if viewModel.premiumEnabled {
                     ListForEach(vaults) { vault in
                         ClickableRow(action: {
-                            Coordinator.shared.present { isPresented in
-                                MarketVaultView(vault: vault, blockchain: viewModel.blockchainMap[vault.chain], isPresented: isPresented)
-                            }
-
-                            stat(page: .markets, section: .vaults, event: .open(page: .vault))
+                            open(vault: vault)
                         }) {
                             itemContent(vault: vault)
                         }
@@ -151,8 +135,7 @@ struct MarketVaultsView: View {
                 } else {
                     ListForEach(Array(vaults.prefix(7))) { vault in
                         ClickableRow(action: {
-                            Coordinator.shared.presentPurchases()
-                            stat(page: .vaults, event: .openPremium(from: .vault))
+                            open(vault: vault)
                         }) {
                             itemContent(vault: vault)
                         }
@@ -177,8 +160,7 @@ struct MarketVaultsView: View {
                                 .padding(.horizontal, .margin24)
 
                             Button(action: {
-                                Coordinator.shared.presentPurchases()
-                                stat(page: .vaults, event: .openPremium(from: .unlock))
+                                Coordinator.shared.presentPurchase(page: .vaults, trigger: .unlock)
                             }) {
                                 Text("market.vaults.premium.unlock".localized)
                             }
@@ -264,6 +246,14 @@ struct MarketVaultsView: View {
         }
     }
 
+    private func open(vault: Vault) {
+        Coordinator.shared.presentAfterPurchase(premiumFeature: .tokenInsights, page: .vaults, trigger: .vault) { isPresented in
+            MarketVaultView(vault: vault, blockchain: viewModel.blockchainMap[vault.chain], isPresented: isPresented)
+        } onPresent: {
+            stat(page: .markets, section: .vaults, event: .open(page: .vault))
+        }
+    }
+
     private var blockchainsTitle: String {
         if viewModel.blockchains.isEmpty {
             return "market.vaults.chains.all_chains".localized
@@ -296,16 +286,12 @@ extension MarketVaultsView {
 
                         ForEach(viewModel.allBlockchains, id: \.self) { blockchain in
                             ClickableRow(action: {
-                                guard viewModel.premiumEnabled else {
-                                    Coordinator.shared.presentPurchases()
-                                    stat(page: .vaults, event: .openPremium(from: .blockchains))
-                                    return
-                                }
-
-                                if viewModel.blockchains.contains(blockchain) {
-                                    viewModel.blockchains.remove(blockchain)
-                                } else {
-                                    viewModel.blockchains.insert(blockchain)
+                                Coordinator.shared.performAfterPurchase(premiumFeature: .tokenInsights, page: .vaults, trigger: .blockchains) {
+                                    if viewModel.blockchains.contains(blockchain) {
+                                        viewModel.blockchains.remove(blockchain)
+                                    } else {
+                                        viewModel.blockchains.insert(blockchain)
+                                    }
                                 }
                             }) {
                                 KFImage.url(URL(string: blockchain.type.imageUrl))

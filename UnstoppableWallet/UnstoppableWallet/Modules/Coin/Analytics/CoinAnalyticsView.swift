@@ -82,8 +82,7 @@ struct CoinAnalyticsView: View {
         content
             .onTapGesture {
                 if !viewModel.analyticsEnabled {
-                    Coordinator.shared.presentPurchases()
-                    stat(page: .coinAnalytics, event: .openPremium(from: statTrigger))
+                    Coordinator.shared.presentPurchase(page: .coinAnalytics, trigger: statTrigger)
                 }
             }
         // .allowsHitTesting(!viewModel.analyticsEnabled)

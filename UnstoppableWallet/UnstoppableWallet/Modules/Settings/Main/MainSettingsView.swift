@@ -137,8 +137,7 @@ struct MainSettingsView: View {
         case .premium:
             premiumSlide()
                 .onTapGesture {
-                    Coordinator.shared.presentPurchases()
-                    stat(page: .settings, event: .openPremium(from: .banner))
+                    Coordinator.shared.presentPurchase(page: .settings, trigger: .banner)
                 }
         case .miniApp:
             miniAppSlide()
@@ -377,7 +376,7 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func vipSupport() -> some View {
         ClickableRow(action: {
-            if viewModel.activated(premiumFeature: .vipSupport) {
+            Coordinator.shared.performAfterPurchase(premiumFeature: .vipSupport, page: .settings, trigger: .vipSupport) {
                 Coordinator.shared.present(type: .bottomSheet) { _ in
                     SupportView { telegramUrl in
                         UrlManager.open(url: telegramUrl)
@@ -385,9 +384,6 @@ struct MainSettingsView: View {
                 }
 
                 stat(page: .settings, event: .open(page: .vipSupport))
-            } else {
-                Coordinator.shared.presentPurchases()
-                stat(page: .settings, event: .openPremium(from: .vipSupport))
             }
         }) {
             Image("support_2_24").themeIcon(color: .themeJacob)

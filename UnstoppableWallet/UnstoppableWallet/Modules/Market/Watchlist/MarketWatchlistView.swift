@@ -107,19 +107,15 @@ struct MarketWatchlistView: View {
 
     @ViewBuilder private func signalsButton() -> some View {
         Button(action: {
-            guard viewModel.tradeSignalsEnabled else {
-                Coordinator.shared.presentPurchases()
-                stat(page: .watchlist, event: .openPremium(from: .tradingSignal))
-                return
-            }
-
-            if viewModel.showSignals {
-                viewModel.set(showSignals: false)
-            } else {
-                Coordinator.shared.present { isPresented in
-                    MarketWatchlistSignalsView(setShowSignals: { [weak viewModel] in
-                        viewModel?.set(showSignals: $0)
-                    }, isPresented: isPresented)
+            Coordinator.shared.performAfterPurchase(premiumFeature: .tradeSignals, page: .watchlist, trigger: .tradingSignal) {
+                if viewModel.showSignals {
+                    viewModel.set(showSignals: false)
+                } else {
+                    Coordinator.shared.present { isPresented in
+                        MarketWatchlistSignalsView(setShowSignals: { [weak viewModel] in
+                            viewModel?.set(showSignals: $0)
+                        }, isPresented: isPresented)
+                    }
                 }
             }
         }) {

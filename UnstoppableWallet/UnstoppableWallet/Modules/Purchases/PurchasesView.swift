@@ -6,8 +6,6 @@ struct PurchasesView: View {
     @StateObject private var viewModel = PurchasesViewModel()
     @Binding var isPresented: Bool
 
-    var onSuccess: (() -> Void)?
-
     var body: some View {
         ThemeNavigationStack {
             ThemeView {
@@ -15,7 +13,7 @@ struct PurchasesView: View {
                     .opacity(viewModel.isSubscriptionSuccessful ? 0 : 1)
                     .scaleEffect(viewModel.isSubscriptionSuccessful ? Self.startScale : 1.0)
                     .overlay(
-                        SuccessfulSubscriptionView(viewModel: viewModel, isPresented: $isPresented, onSuccess: onSuccess)
+                        SuccessfulSubscriptionView(viewModel: viewModel, isPresented: $isPresented)
                             .opacity(viewModel.isSubscriptionSuccessful ? 1 : 0)
                             .scaleEffect(viewModel.isSubscriptionSuccessful ? 1.0 : Self.startScale)
                     )
@@ -26,9 +24,6 @@ struct PurchasesView: View {
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
                     Button("button.close".localized) {
-                        if viewModel.isSubscriptionSuccessful {
-                            onSuccess?()
-                        }
                         isPresented = false
                     }
                 }
