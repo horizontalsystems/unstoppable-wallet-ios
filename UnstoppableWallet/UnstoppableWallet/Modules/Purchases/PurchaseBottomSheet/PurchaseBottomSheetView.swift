@@ -78,6 +78,9 @@ struct PurchaseBottomSheetView: View {
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin32, bottom: .margin12, trailing: .margin32))
         }
+        .onReceive(viewModel.finishPublisher) {
+            isPresented = false
+        }
         .offerCodeRedemption(isPresented: $redeemSheetPresented) { result in
             viewModel.handleRedeemCode(result: result)
         }

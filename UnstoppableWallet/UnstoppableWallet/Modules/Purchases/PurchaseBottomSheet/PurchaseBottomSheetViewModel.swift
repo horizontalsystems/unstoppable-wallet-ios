@@ -12,6 +12,7 @@ class PurchaseBottomSheetViewModel: ObservableObject {
 
     private let purchaseManager = Core.shared.purchaseManager
 
+    private let finishSubject = PassthroughSubject<Void, Never>()
     private let onSubscribe: (PurchaseManager.ProductData) -> Void
 
     private var monthlyPrice: Decimal? {
@@ -80,12 +81,20 @@ class PurchaseBottomSheetViewModel: ObservableObject {
         }
     }
 
+    @MainActor
+    private func handleSuccessSubscription(_ product: PurchaseManager.ProductData) async {
+        onSubscribe(product)
+        finishSubject.send()
+    }
+
     private func handle(purchases _: [PurchaseManager.PurchaseData]) {
         if let purchase = purchaseManager.activePurchase, let product = purchaseManager.productData.first(where: { $0.id == purchase.id }) {
             waitTask?.cancel()
             waitTask = nil
 
-            onSubscribe(product)
+            Task {
+                await handleSuccessSubscription(product)
+            }
         }
     }
 
@@ -101,8 +110,7 @@ class PurchaseBottomSheetViewModel: ObservableObject {
                 try await self?.purchaseManager.purchase(product: selectedItem.product)
 
                 await self?.update(state: .idle)
-
-                self?.onSubscribe(selectedItem.product)
+                await self?.handleSuccessSubscription(selectedItem.product)
             } catch {
                 print("ERROR: \(error)") // TODO: Handle error
                 await self?.update(state: .idle)
@@ -112,6 +120,10 @@ class PurchaseBottomSheetViewModel: ObservableObject {
 }
 
 extension PurchaseBottomSheetViewModel {
+    var finishPublisher: AnyPublisher<Void, Never> {
+        finishSubject.eraseToAnyPublisher()
+    }
+
     func set(item: Item) {
         selectedItem = item
     }
