@@ -107,13 +107,19 @@ class MoneroAdapter {
     private func adapterStateFromKit() -> AdapterState {
         switch kit.walletStatus {
         case .ok, .unknown:
-            if let daemonHeight = kit.daemonHeight, let lastBlockHeight = kit.lastBlockHeight {
-                if daemonHeight <= lastBlockHeight, kit.isSynchronized {
+            let syncState = kit.syncState
+            if let syncStartBlockHeight = syncState.syncStartBlockHeight,
+               let daemonHeight = syncState.daemonHeight,
+               let walletBlockHeight = syncState.walletBlockHeight
+            {
+                if daemonHeight <= walletBlockHeight, syncState.isSynchronized {
                     return .synced
                 } else if daemonHeight == 0 {
                     return .syncing(progress: 0, lastBlockDate: nil)
                 } else {
-                    return .syncing(progress: lastBlockHeight * 100 / daemonHeight, lastBlockDate: nil)
+                    let numberOfBlocksToSync = Int(daemonHeight) - Int(syncStartBlockHeight)
+                    let numberOfBlocksToSynced = Int(walletBlockHeight) - Int(syncStartBlockHeight)
+                    return .syncing(progress: numberOfBlocksToSynced * 100 / numberOfBlocksToSync, lastBlockDate: nil)
                 }
             } else {
                 return .syncing(progress: 0, lastBlockDate: nil)
@@ -166,19 +172,16 @@ extension MoneroAdapter: IAdapter {
 }
 
 extension MoneroAdapter: MoneroKitDelegate {
+    func syncStateDidChange(state _: MoneroKit.SyncState) {
+        balanceState = adapterStateFromKit()
+        lastBlockUpdatedSubject.onNext(())
+    }
+
     func balanceDidChange(balanceInfo: MoneroKit.BalanceInfo) {
         moneroBalanceDataSubject.onNext(moneroBalanceData(balanceInfo: balanceInfo))
     }
 
     func walletStatusDidChange(status _: MoneroKit.WalletStatus) {
-        balanceState = adapterStateFromKit()
-    }
-
-    func syncStateDidChange(isSynchronized _: Bool) {
-        balanceState = adapterStateFromKit()
-    }
-
-    func lastBlockHeightDidChange(height _: UInt64) {
         balanceState = adapterStateFromKit()
         lastBlockUpdatedSubject.onNext(())
     }
@@ -246,7 +249,7 @@ extension MoneroAdapter: ITransactionsAdapter {
     }
 
     var lastBlockInfo: LastBlockInfo? {
-        kit.lastBlockHeight.map { LastBlockInfo(height: $0, timestamp: nil) }
+        LastBlockInfo(height: Int(kit.syncState.walletBlockHeight ?? 0), timestamp: nil)
     }
 
     var syncingObservable: Observable<Void> {
