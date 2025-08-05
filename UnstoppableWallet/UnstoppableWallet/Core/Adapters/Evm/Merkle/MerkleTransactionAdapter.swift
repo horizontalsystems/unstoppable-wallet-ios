@@ -12,7 +12,7 @@ class MerkleTransactionAdapter {
     ]
 
     static let baseUrl: URL = .init(string: "https://mempool.merkle.io/rpc/")!
-
+    static let sourceTag = "unstoppable-wallet-ios"
     static let protectedKey = "protected"
 
     let merkleTransactionHashManager: MerkleTransactionHashManager
@@ -72,7 +72,7 @@ class MerkleTransactionAdapter {
 
 extension MerkleTransactionAdapter {
     func send(rawTransaction: RawTransaction, signature: Signature) async throws -> FullTransaction {
-        let transaction = try await blockchain.send(rawTransaction: rawTransaction, signature: signature)
+        let transaction = try await blockchain.send(rawTransaction: rawTransaction, signature: signature, sourceTag: Self.sourceTag)
         let fullTransactions = transactionManager.handle(transactions: [transaction])
         return fullTransactions[0]
     }
