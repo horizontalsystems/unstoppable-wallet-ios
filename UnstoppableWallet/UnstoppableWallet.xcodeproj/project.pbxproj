@@ -1793,6 +1793,8 @@
 		6B5F5E162C0DDD7500E03EB2 /* RankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F5E142C0DDD7100E03EB2 /* RankView.swift */; };
 		6B5F5E182C0DDD8700E03EB2 /* RankViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F5E172C0DDD8700E03EB2 /* RankViewModel.swift */; };
 		6B5F5E192C0DDD8700E03EB2 /* RankViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F5E172C0DDD8700E03EB2 /* RankViewModel.swift */; };
+		6B5FD7D22E40DCD800FEF510 /* MarketVaultChartFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FD7D12E40DCCC00FEF510 /* MarketVaultChartFactory.swift */; };
+		6B5FD7D32E40DCD800FEF510 /* MarketVaultChartFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FD7D12E40DCCC00FEF510 /* MarketVaultChartFactory.swift */; };
 		6B67F0F22D1C06F2003452DC /* SuccessfulSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B67F0F12D1C06F2003452DC /* SuccessfulSubscriptionView.swift */; };
 		6B67F0F32D1C06F2003452DC /* SuccessfulSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B67F0F12D1C06F2003452DC /* SuccessfulSubscriptionView.swift */; };
 		6B6D3F292DED72AE00AB2915 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 6B6D3F282DED72AE00AB2915 /* SkeletonView */; };
@@ -4318,6 +4320,7 @@
 		6B5F5E102C0C660900E03EB2 /* MarketPlatformViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPlatformViewModel.swift; sourceTree = "<group>"; };
 		6B5F5E142C0DDD7100E03EB2 /* RankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankView.swift; sourceTree = "<group>"; };
 		6B5F5E172C0DDD8700E03EB2 /* RankViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewModel.swift; sourceTree = "<group>"; };
+		6B5FD7D12E40DCCC00FEF510 /* MarketVaultChartFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketVaultChartFactory.swift; sourceTree = "<group>"; };
 		6B67F0F12D1C06F2003452DC /* SuccessfulSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessfulSubscriptionView.swift; sourceTree = "<group>"; };
 		6B6E138E2DED8159007F4A39 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		6B6E13912DED8176007F4A39 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
@@ -9293,6 +9296,7 @@
 		D3AFAACA2E2F902E004AB074 /* Vault */ = {
 			isa = PBXGroup;
 			children = (
+				6B5FD7D12E40DCCC00FEF510 /* MarketVaultChartFactory.swift */,
 				D3AFAAC82E2F902E004AB074 /* MarketVaultView.swift */,
 				D3AFAAC92E2F902E004AB074 /* MarketVaultViewModel.swift */,
 			);
@@ -10174,6 +10178,7 @@
 				11B35E165D6681B849F9A934 /* TextFieldStackView.swift in Sources */,
 				11B3560586CBAB617211F003 /* Caution.swift in Sources */,
 				11B359413C92A83580A130B3 /* MnemonicInputCell.swift in Sources */,
+				6B5FD7D32E40DCD800FEF510 /* MarketVaultChartFactory.swift in Sources */,
 				D36DE0BE272FD864000BC916 /* SwapViewItemHelper.swift in Sources */,
 				11B35124A95011BC659DCD5A /* TextFieldCell.swift in Sources */,
 				58AAAE6CFB04C47AC24A69D7 /* MarketGlobalFetcher.swift in Sources */,
@@ -11967,6 +11972,7 @@
 				11B35355FF6481B50773C868 /* NftCollectionOverviewService.swift in Sources */,
 				D0D5BCC02976D3B300587FDB /* PsswordInputCell.swift in Sources */,
 				11B357A9F8949912C12A17D7 /* NftCollectionOverviewViewModel.swift in Sources */,
+				6B5FD7D22E40DCD800FEF510 /* MarketVaultChartFactory.swift in Sources */,
 				11B35E79C4795DD87198ACB7 /* NftCollectionOverviewModule.swift in Sources */,
 				11B3596F09D52300F7F0067D /* NftCollectionOverviewViewController.swift in Sources */,
 				11B3562466F0ADD109244158 /* NftCollectionAssetsModule.swift in Sources */,

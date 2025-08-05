@@ -3,7 +3,7 @@ import SwiftUI
 struct SuccessfulSubscriptionView: View {
     @StateObject var viewModel: PurchasesViewModel
     @Binding var isPresented: Bool
-    
+
     var onSuccess: (() -> Void)?
 
     var body: some View {

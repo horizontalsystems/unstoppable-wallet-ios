@@ -8,7 +8,7 @@ import RxSwift
 
 class MetricChartViewModel: ObservableObject {
     private let service: MetricChartService
-    private let factory: MetricChartFactory
+    private let factory: IMetricChartFactory
     private var cancellables = Set<AnyCancellable>()
 
     private let pointSelectedItemRelay = BehaviorRelay<ChartModule.SelectedPointViewItem?>(value: nil)
@@ -20,7 +20,7 @@ class MetricChartViewModel: ObservableObject {
 
     @Published var periodType: HsPeriodType
 
-    init(service: MetricChartService, factory: MetricChartFactory) {
+    init(service: MetricChartService, factory: IMetricChartFactory) {
         self.service = service
         self.factory = factory
         periodType = service.interval
@@ -185,7 +185,7 @@ extension MetricChartViewModel {
     static func vaultInstance(vault: Vault) -> MetricChartViewModel {
         let marketCapFetcher = VaultChartFetcher(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager, vault: vault)
         let chartService = MetricChartService(chartFetcher: marketCapFetcher, interval: .byPeriod(.week1), statPage: .vault)
-        let factory = MetricChartFactory(currentLocale: LanguageManager.shared.currentLocale, hardcodedRightMode: "market.vault.apy".localized)
+        let factory = MarketVaultChartFactory(currentLocale: LanguageManager.shared.currentLocale)
         return MetricChartViewModel(service: chartService, factory: factory)
     }
 

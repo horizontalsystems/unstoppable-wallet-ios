@@ -1,3 +1,4 @@
+import Chart
 import Combine
 import Foundation
 import MarketKit
@@ -32,10 +33,12 @@ extension VaultChartFetcher: IMetricChartFetcher {
 
         let points = vault.chart ?? []
 
+        var tvlBars = [Decimal]()
         let items = points.map { point -> MetricChartModule.Item in
-            MetricChartModule.Item(value: point.apy, timestamp: point.timestamp)
+            tvlBars.append(point.tvl)
+            return MetricChartModule.Item(value: point.apy, timestamp: point.timestamp)
         }
 
-        return MetricChartModule.ItemData(items: items, type: .regular)
+        return MetricChartModule.ItemData(items: items, indicators: [ChartData.volume: tvlBars], type: .regular)
     }
 }

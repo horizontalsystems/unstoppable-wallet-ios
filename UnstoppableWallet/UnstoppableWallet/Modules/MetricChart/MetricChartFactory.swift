@@ -2,6 +2,11 @@ import Chart
 import Foundation
 import MarketKit
 
+protocol IMetricChartFactory {
+    func convert(itemData: MetricChartModule.ItemData, valueType: MetricChartModule.ValueType) -> ChartModule.ViewItem?
+    func selectedPointViewItem(chartItem: ChartItem, firstChartItem _: ChartItem?, valueType: MetricChartModule.ValueType) -> ChartModule.SelectedPointViewItem?
+}
+
 class MetricChartFactory {
     private static let noChangesLimitPercent: Decimal = 0.2
 
@@ -14,7 +19,7 @@ class MetricChartFactory {
         self.hardcodedRightMode = hardcodedRightMode
     }
 
-    private static func format(value: Decimal?, valueType: MetricChartModule.ValueType, exactlyValue: Bool = false) -> String? {
+    static func format(value: Decimal?, valueType: MetricChartModule.ValueType, exactlyValue: Bool = false) -> String? {
         guard let value else {
             return nil
         }
@@ -48,7 +53,7 @@ class MetricChartFactory {
     }
 }
 
-extension MetricChartFactory {
+extension MetricChartFactory: IMetricChartFactory {
     func convert(itemData: MetricChartModule.ItemData, valueType: MetricChartModule.ValueType) -> ChartModule.ViewItem? {
         guard let firstItem = itemData.items.first, let lastItem = itemData.items.last else {
             return nil
@@ -63,15 +68,6 @@ extension MetricChartFactory {
         } else {
             startTimestamp = firstItem.timestamp
             endTimestamp = lastItem.timestamp
-        }
-
-        let values = itemData.items.map(\.value)
-        var min = values.min()
-        var max = values.max()
-
-        if let minValue = min, let maxValue = max, minValue == maxValue {
-            min = minValue * (1 - Self.noChangesLimitPercent)
-            max = maxValue * (1 + Self.noChangesLimitPercent)
         }
 
         let chartTrend: MovementTrend
