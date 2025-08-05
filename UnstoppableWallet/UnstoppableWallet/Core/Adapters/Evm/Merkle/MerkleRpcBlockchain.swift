@@ -37,10 +37,10 @@ extension MerkleRpcBlockchain: INonceProvider {
         return nonce
     }
 
-    public func send(rawTransaction: RawTransaction, signature: Signature) async throws -> Transaction {
+    public func send(rawTransaction: RawTransaction, signature: Signature, sourceTag: String) async throws -> Transaction {
         let encoded = transactionBuilder.encode(rawTransaction: rawTransaction, signature: signature)
 
-        let txHash = try await syncer.fetch(rpc: SendRawTransactionJsonRpc(signedTransaction: encoded))
+        let txHash = try await syncer.fetch(rpc: MerkleSendRawTransactionJsonRpc(signedTransaction: encoded, sourceTag: sourceTag))
         try manager.save(hash: MerkleTransactionHash(transactionHash: txHash))
 
         logger?.log(level: .debug, message: "Send with txHASH: \(txHash.hs.hexString)")

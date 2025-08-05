@@ -1795,6 +1795,8 @@
 		6B5F5E192C0DDD8700E03EB2 /* RankViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F5E172C0DDD8700E03EB2 /* RankViewModel.swift */; };
 		6B5FD7D22E40DCD800FEF510 /* MarketVaultChartFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FD7D12E40DCCC00FEF510 /* MarketVaultChartFactory.swift */; };
 		6B5FD7D32E40DCD800FEF510 /* MarketVaultChartFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FD7D12E40DCCC00FEF510 /* MarketVaultChartFactory.swift */; };
+		6B5FD7D52E42005D00FEF510 /* MerkleSendRawTransactionJsonRpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FD7D42E42004D00FEF510 /* MerkleSendRawTransactionJsonRpc.swift */; };
+		6B5FD7D62E42005D00FEF510 /* MerkleSendRawTransactionJsonRpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FD7D42E42004D00FEF510 /* MerkleSendRawTransactionJsonRpc.swift */; };
 		6B67F0F22D1C06F2003452DC /* SuccessfulSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B67F0F12D1C06F2003452DC /* SuccessfulSubscriptionView.swift */; };
 		6B67F0F32D1C06F2003452DC /* SuccessfulSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B67F0F12D1C06F2003452DC /* SuccessfulSubscriptionView.swift */; };
 		6B6D3F292DED72AE00AB2915 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 6B6D3F282DED72AE00AB2915 /* SkeletonView */; };
@@ -4321,6 +4323,7 @@
 		6B5F5E142C0DDD7100E03EB2 /* RankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankView.swift; sourceTree = "<group>"; };
 		6B5F5E172C0DDD8700E03EB2 /* RankViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewModel.swift; sourceTree = "<group>"; };
 		6B5FD7D12E40DCCC00FEF510 /* MarketVaultChartFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketVaultChartFactory.swift; sourceTree = "<group>"; };
+		6B5FD7D42E42004D00FEF510 /* MerkleSendRawTransactionJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleSendRawTransactionJsonRpc.swift; sourceTree = "<group>"; };
 		6B67F0F12D1C06F2003452DC /* SuccessfulSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessfulSubscriptionView.swift; sourceTree = "<group>"; };
 		6B6E138E2DED8159007F4A39 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		6B6E13912DED8176007F4A39 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
@@ -7870,6 +7873,7 @@
 		6BE57E752E339CB5003C4C01 /* Merkle */ = {
 			isa = PBXGroup;
 			children = (
+				6B5FD7D42E42004D00FEF510 /* MerkleSendRawTransactionJsonRpc.swift */,
 				6BDFC0852E3C8F0700CC28DD /* MerkleGetTransactionByHashJsonRpc.swift */,
 				6BDFC0822E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift */,
 				6BE57E822E3739D8003C4C01 /* MerkleTransactionHashManager.swift */,
@@ -9947,6 +9951,7 @@
 				1A5644271F4CD209136352EE /* FilterHeaderView.swift in Sources */,
 				D3DD67322BC3C5D000EC7F78 /* ThorChainMultiSwapEvmConfirmationQuote.swift in Sources */,
 				D3DD673B2BC3CFF300EC7F78 /* BaseSendBtcData.swift in Sources */,
+				6B5FD7D62E42005D00FEF510 /* MerkleSendRawTransactionJsonRpc.swift in Sources */,
 				11B352CBDFAABC82F02F66E9 /* MarkdownHeader1Cell.swift in Sources */,
 				11B3520F7C6CEAF1710AAD45 /* MarkdownTextView.swift in Sources */,
 				11B35CD742378BF04CDB73F0 /* NSAttributedString.swift in Sources */,
@@ -11580,6 +11585,7 @@
 				11B35FC32C9A93D4427E6A65 /* BitcoinCashCoinType.swift in Sources */,
 				1A564AC9AA4084E742D979B2 /* ButtonState.swift in Sources */,
 				58AAA7C644D47F3B57DF97E0 /* CALayer.swift in Sources */,
+				6B5FD7D52E42005D00FEF510 /* MerkleSendRawTransactionJsonRpc.swift in Sources */,
 				11B3581F7CCCEE9F956266E8 /* InputStateWrapperView.swift in Sources */,
 				11B356E87B4A9AACBFEC7506 /* Address.swift in Sources */,
 				D36DE0DB272FD887000BC916 /* OneInchTradeService.swift in Sources */,
