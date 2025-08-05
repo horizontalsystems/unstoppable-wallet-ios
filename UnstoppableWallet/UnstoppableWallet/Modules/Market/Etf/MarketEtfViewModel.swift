@@ -136,8 +136,8 @@ extension MarketEtfViewModel {
 extension MarketEtfFetcher.EtfCategory {
     var title: String {
         switch self {
-        case .btc: return "Bitcoin"
-        case .eth: return "Ethereum"
+        case .btc: return "Bitcoin ETF"
+        case .eth: return "Ethereum ETF"
         }
     }
 
