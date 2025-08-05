@@ -52,12 +52,9 @@ struct MarketEtfView: View {
     }
 
     @ViewBuilder private func header() -> some View {
-        HStack(spacing: .margin32) {
-            VStack(spacing: .margin8) {
-                Text("market.etf.title".localized(viewModel.category.title)).themeHeadline1()
-                Text("market.etf.description".localized(viewModel.category.title)).themeSubhead2()
-            }
-            .padding(.vertical, .margin12)
+        HStack(alignment: .top, spacing: .margin32) {
+            Text("market.etf.description".localized(viewModel.category.title)).themeSubhead2()
+                .padding(.top, .margin24)
 
             KFImage.url(URL(string: "ETF_\(viewModel.category.icon)".headerImageUrl))
                 .resizable()
