@@ -83,5 +83,14 @@ extension MainViewModel {
         var id: String {
             rawValue
         }
+
+        var image: String {
+            switch self {
+            case .markets: return "market_2_24"
+            case .wallet: return "filled_wallet_24"
+            case .transactions: return "filled_transaction_2n_24"
+            case .settings: return "filled_settings_2_24"
+            }
+        }
     }
 }

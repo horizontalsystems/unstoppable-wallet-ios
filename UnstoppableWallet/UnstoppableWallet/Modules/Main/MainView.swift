@@ -6,46 +6,64 @@ struct MainView: View {
     @StateObject var walletViewModel = WalletViewModel()
     @StateObject var transactionsViewModel = TransactionsViewModel()
 
-    @StateObject private var frameCalculator = TabBarFrameCalculator()
-
     @State private var path = NavigationPath()
 
     @State private var backupAccount: Account?
 
     var body: some View {
         ThemeNavigationStack(path: $path) {
-            TabView(selection: $viewModel.selectedTab) {
-                Group {
-                    if viewModel.showMarket {
-                        MarketView()
+            VStack(spacing: 0) {
+                TabView(selection: $viewModel.selectedTab) {
+                    Group {
+                        if viewModel.showMarket {
+                            MarketView()
+                                .tabItem {
+                                    Image("market_2_24").renderingMode(.template)
+                                }
+                                .tag(MainViewModel.Tab.markets)
+                        }
+
+                        WalletView(viewModel: walletViewModel, path: $path)
                             .tabItem {
-                                Image("market_2_24").renderingMode(.template)
+                                Image("filled_wallet_24").renderingMode(.template)
                             }
-                            .tag(MainViewModel.Tab.markets)
+                            .tag(MainViewModel.Tab.wallet)
+
+                        MainTransactionsView(transactionsViewModel: transactionsViewModel)
+                            .tabItem {
+                                Image("filled_transaction_2n_24").renderingMode(.template)
+                            }
+                            .tag(MainViewModel.Tab.transactions)
+
+                        MainSettingsView()
+                            .tabItem {
+                                Image("filled_settings_2_24").renderingMode(.template)
+                            }
+                            .tag(MainViewModel.Tab.settings)
                     }
-
-                    WalletView(viewModel: walletViewModel, path: $path)
-                        .tabItem {
-                            Image("filled_wallet_24").renderingMode(.template)
-                        }
-                        .tag(MainViewModel.Tab.wallet)
-
-                    MainTransactionsView(transactionsViewModel: transactionsViewModel)
-                        .tabItem {
-                            Image("filled_transaction_2n_24").renderingMode(.template)
-                        }
-                        .tag(MainViewModel.Tab.transactions)
-
-                    MainSettingsView()
-                        .tabItem {
-                            Image("filled_settings_2_24").renderingMode(.template)
-                        }
-                        .tag(MainViewModel.Tab.settings)
+                    .toolbar(.hidden, for: .tabBar)
                 }
-                .toolbarBackground(.hidden, for: .tabBar)
-            }
-            .onAppear {
-                calculateTabFrames()
+
+                HStack(spacing: 0) {
+                    ForEach(MainViewModel.Tab.allCases, id: \.self) { tab in
+                        ZStack {
+                            Image(tab.image).themeIcon(color: viewModel.selectedTab == tab ? .themeJacob : .themeGray)
+
+                            if tab == MainViewModel.Tab.settings, let badge = badgeViewModel.badge {
+                                BadgeView(badge: badge)
+                                    .offset(x: 12, y: -12)
+                            }
+                        }
+                        .padding(.vertical, .margin16)
+                        .frame(maxWidth: .infinity)
+                        .contentShape(Rectangle())
+                        .onTapGesture {
+                            viewModel.selectedTab = tab
+                        }
+                    }
+                }
+                .padding(.horizontal, .margin16)
+                .background(Color.themeBlade)
             }
             .navigationDestination(for: Wallet.self) { wallet in
                 WalletTokenModule.view(wallet: wallet)
@@ -54,21 +72,8 @@ struct MainView: View {
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbar() }
-            .overlay(
-                TabBarBadgeOverlay(
-                    frameCalculator: frameCalculator,
-                    badgeText: badgeViewModel.badge,
-                    targetTabIndex: .last
-                )
-            )
         }
         .modifier(CoordinatorViewModifier())
-    }
-
-    private func calculateTabFrames() {
-        DispatchQueue.main.async {
-            frameCalculator.calculateFrames()
-        }
     }
 
     @ToolbarContentBuilder func toolbar() -> some ToolbarContent {
@@ -146,6 +151,30 @@ struct MainView: View {
             return "transactions.title".localized
         case .settings:
             return "settings.title".localized
+        }
+    }
+}
+
+extension MainView {
+    struct BadgeView: View {
+        private let emptyBadgeSize: CGFloat = 10
+
+        let badge: String
+
+        var body: some View {
+            if badge.isEmpty {
+                Circle()
+                    .foregroundStyle(Color.themeRed)
+                    .frame(width: emptyBadgeSize, height: emptyBadgeSize)
+            } else {
+                Text(badge)
+                    .font(.themeMicro)
+                    .foregroundStyle(Color.white)
+                    .padding(.horizontal, 6)
+                    .padding(.vertical, 2)
+                    .background(Color.themeRed)
+                    .clipShape(Capsule())
+            }
         }
     }
 }

@@ -1,13 +1,7 @@
 import SwiftUI
 
 struct ThemeView<Content: View>: View {
-    private let isRoot: Bool
-    private let content: Content
-
-    init(isRoot: Bool = false, @ViewBuilder content: () -> Content) {
-        self.isRoot = isRoot
-        self.content = content()
-    }
+    @ViewBuilder let content: Content
 
     var body: some View {
         ZStack {
@@ -17,25 +11,13 @@ struct ThemeView<Content: View>: View {
                 Rectangle()
                     .frame(height: 0)
                     .background(Color.themeTyler)
-                    // .background(Color.green.opacity(0.8))
                     .zIndex(100)
 
                 content
-
-                if isRoot {
-                    Rectangle()
-                        .frame(height: 0)
-                        .background(Color.themeBlade)
-                    // .background(Color.red.opacity(0.8))
-                }
             }
         }
         .toolbarBackground(.hidden, for: .navigationBar)
         .navigationBarTitleDisplayMode(.inline)
-
-        // ZStack {
-        // Color.themeTyler.ignoresSafeArea()
-        // }
     }
 }
 
@@ -80,16 +62,10 @@ struct ThemeRadialView<Content: View>: View {
 }
 
 struct ScrollableThemeView<Content: View>: View {
-    private let isRoot: Bool
-    private let content: Content
-
-    init(isRoot: Bool = false, @ViewBuilder content: () -> Content) {
-        self.isRoot = isRoot
-        self.content = content()
-    }
+    @ViewBuilder let content: Content
 
     var body: some View {
-        ThemeView(isRoot: isRoot) {
+        ThemeView {
             ScrollView {
                 content
             }
