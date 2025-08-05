@@ -2005,10 +2005,6 @@
 		6BEA177B2DE8319D00BF73DD /* ShieldSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA17792DE8319600BF73DD /* ShieldSendView.swift */; };
 		6BEF09562E12848E004F4514 /* DeepLinkViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF09552E128486004F4514 /* DeepLinkViewManager.swift */; };
 		6BEF09572E12848E004F4514 /* DeepLinkViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF09552E128486004F4514 /* DeepLinkViewManager.swift */; };
-		6BEF095A2E1E7AB9004F4514 /* TabBarBadgeOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF09592E1E7AB8004F4514 /* TabBarBadgeOverlay.swift */; };
-		6BEF095B2E1E7AB9004F4514 /* TabBarBadgeOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF09592E1E7AB8004F4514 /* TabBarBadgeOverlay.swift */; };
-		6BEF095D2E1E7ADA004F4514 /* TabBarFrameCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF095C2E1E7AD5004F4514 /* TabBarFrameCalculator.swift */; };
-		6BEF095E2E1E7ADA004F4514 /* TabBarFrameCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF095C2E1E7AD5004F4514 /* TabBarFrameCalculator.swift */; };
 		6BEF09602E252519004F4514 /* StartScreenAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF095F2E25250B004F4514 /* StartScreenAlertManager.swift */; };
 		6BEF09612E252519004F4514 /* StartScreenAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF095F2E25250B004F4514 /* StartScreenAlertManager.swift */; };
 		6BFA4E032D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA4E022D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift */; };
@@ -4409,8 +4405,6 @@
 		6BEA17762DE5C59200BF73DD /* ZcashShieldingTransactionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashShieldingTransactionRecord.swift; sourceTree = "<group>"; };
 		6BEA17792DE8319600BF73DD /* ShieldSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldSendView.swift; sourceTree = "<group>"; };
 		6BEF09552E128486004F4514 /* DeepLinkViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkViewManager.swift; sourceTree = "<group>"; };
-		6BEF09592E1E7AB8004F4514 /* TabBarBadgeOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarBadgeOverlay.swift; sourceTree = "<group>"; };
-		6BEF095C2E1E7AD5004F4514 /* TabBarFrameCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabBarFrameCalculator.swift; sourceTree = "<group>"; };
 		6BEF095F2E25250B004F4514 /* StartScreenAlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenAlertManager.swift; sourceTree = "<group>"; };
 		6BFA4E022D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketAdvancedSearchCategoriesView.swift; sourceTree = "<group>"; };
 		ABC9A021D71EDD24DFB6BA62 /* CoinProChartModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinProChartModule.swift; sourceTree = "<group>"; };
@@ -5935,7 +5929,6 @@
 			isa = PBXGroup;
 			children = (
 				6BEF095F2E25250B004F4514 /* StartScreenAlertManager.swift */,
-				6BEF09582E1E7AA9004F4514 /* TabBarBadge */,
 				6BEF09512E128439004F4514 /* Deeplink */,
 				D3E36BE02E05887B007F99CA /* MainBadgeViewModel.swift */,
 				D3E36BDD2E0567D0007F99CA /* CoverView.swift */,
@@ -7909,15 +7902,6 @@
 				6BEF09552E128486004F4514 /* DeepLinkViewManager.swift */,
 			);
 			path = Deeplink;
-			sourceTree = "<group>";
-		};
-		6BEF09582E1E7AA9004F4514 /* TabBarBadge */ = {
-			isa = PBXGroup;
-			children = (
-				6BEF095C2E1E7AD5004F4514 /* TabBarFrameCalculator.swift */,
-				6BEF09592E1E7AB8004F4514 /* TabBarBadgeOverlay.swift */,
-			);
-			path = TabBarBadge;
 			sourceTree = "<group>";
 		};
 		95AD93BB0A2D5F5C4A435252 /* Frameworks */ = {
@@ -9964,7 +9948,6 @@
 				11B35CD742378BF04CDB73F0 /* NSAttributedString.swift in Sources */,
 				11B35E24FD61B2799C191811 /* MarkdownTextCell.swift in Sources */,
 				11B35E65714776557A46B9D3 /* MarkdownHeader3Cell.swift in Sources */,
-				6BEF095B2E1E7AB9004F4514 /* TabBarBadgeOverlay.swift in Sources */,
 				D3E36BDF2E0567D3007F99CA /* CoverView.swift in Sources */,
 				11B35983B0C3D4EFC115043A /* MarkdownImageCell.swift in Sources */,
 				D3E36BE52E097761007F99CA /* CreateAccountView.swift in Sources */,
@@ -10169,7 +10152,6 @@
 				11B3570F40DFF864DC9436F6 /* RestoreSettingsView.swift in Sources */,
 				11B357605EA9962F5D51DCD1 /* RestoreSettingsService.swift in Sources */,
 				11B352095498FB15A2A6E210 /* AccountRecord_v_0_20.swift in Sources */,
-				6BEF095D2E1E7ADA004F4514 /* TabBarFrameCalculator.swift in Sources */,
 				11B352DF096B6CFD050D500D /* CoinRecord_v19.swift in Sources */,
 				D3E36BA92DF99F3D007F99CA /* BalanceErrorBottomViewModel.swift in Sources */,
 				11B352C447693BA4688A9673 /* WalletButton.swift in Sources */,
@@ -11501,7 +11483,6 @@
 				11B35CC9464E639F3A086B29 /* MarkdownHeader1Cell.swift in Sources */,
 				11B353198C1F47A679D3CAAC /* MarkdownTextView.swift in Sources */,
 				11B35AACC2CDF424714B33D3 /* NSAttributedString.swift in Sources */,
-				6BEF095A2E1E7AB9004F4514 /* TabBarBadgeOverlay.swift in Sources */,
 				D3E36BDE2E0567D3007F99CA /* CoverView.swift in Sources */,
 				11B35DDB41FFB254E91B6019 /* MarkdownTextCell.swift in Sources */,
 				D3E36BE42E097761007F99CA /* CreateAccountView.swift in Sources */,
@@ -11706,7 +11687,6 @@
 				11B35960AA711C4D5947BFE7 /* RestoreSettingsService.swift in Sources */,
 				11B35AF765474AEE15CA4240 /* AccountRecord_v_0_20.swift in Sources */,
 				11B35E8BF94FD52708DBB0E1 /* CoinRecord_v19.swift in Sources */,
-				6BEF095E2E1E7ADA004F4514 /* TabBarFrameCalculator.swift in Sources */,
 				11B353FCF929C0CF960C96FA /* WalletButton.swift in Sources */,
 				D3E36BA82DF99F3D007F99CA /* BalanceErrorBottomViewModel.swift in Sources */,
 				6B29071F2AF0CB8A006157D6 /* WalletConnectEventHandlerService.swift in Sources */,

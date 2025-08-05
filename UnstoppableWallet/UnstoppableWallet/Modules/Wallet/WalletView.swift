@@ -7,7 +7,7 @@ struct WalletView: View {
     @Binding var path: NavigationPath
 
     var body: some View {
-        ThemeView(isRoot: true) {
+        ThemeView {
             if viewModel.account != nil {
                 ScrollViewReader { proxy in
                     ThemeList(bottomSpacing: .margin16) {

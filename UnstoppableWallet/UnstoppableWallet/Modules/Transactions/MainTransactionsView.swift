@@ -4,7 +4,7 @@ struct MainTransactionsView: View {
     @ObservedObject var transactionsViewModel: TransactionsViewModel
 
     var body: some View {
-        ThemeView(isRoot: true) {
+        ThemeView {
             VStack(spacing: 0) {
                 ScrollableTabHeaderView(
                     tabs: TransactionTypeFilter.allCases.map(\.title),

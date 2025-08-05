@@ -18,7 +18,7 @@ struct MainSettingsView: View {
     @State private var isFirstAppear = true
 
     var body: some View {
-        ScrollableThemeView(isRoot: true) {
+        ScrollableThemeView {
             VStack(spacing: .margin12) {
                 slider()
 

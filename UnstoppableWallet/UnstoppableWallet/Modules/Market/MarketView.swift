@@ -16,7 +16,7 @@ struct MarketView: View {
     }
 
     var body: some View {
-        ThemeView(isRoot: true) {
+        ThemeView {
             VStack(spacing: 0) {
                 SearchBarWithCancel(text: $searchViewModel.searchText, prompt: "placeholder.search".localized, focused: $searchFocused)
 
