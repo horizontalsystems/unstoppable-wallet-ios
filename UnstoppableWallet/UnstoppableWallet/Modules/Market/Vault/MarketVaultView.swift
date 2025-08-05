@@ -92,7 +92,7 @@ struct MarketVaultView: View {
     }
 
     @ViewBuilder private func chart() -> some View {
-        ChartView(viewModel: chartViewModel, configuration: .baseChart)
+        ChartView(viewModel: chartViewModel, configuration: .chartWithIndicatorArea)
             .frame(maxWidth: .infinity)
             .onFirstAppear {
                 chartViewModel.start()

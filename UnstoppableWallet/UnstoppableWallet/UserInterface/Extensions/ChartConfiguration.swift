@@ -7,8 +7,8 @@ extension ChartConfiguration {
         ChartConfiguration().applyColors().applyBase()
     }
 
-    static var coinChart: ChartConfiguration {
-        baseChart.applyVolume()
+    static var chartWithIndicatorArea: ChartConfiguration {
+        baseChart.applyIndicatorArea()
     }
 
     static var marketCapChart: ChartConfiguration {
@@ -24,7 +24,7 @@ extension ChartConfiguration {
     }
 
     static var volumeBarChart: ChartConfiguration {
-        baseBarChart.applyVolume()
+        baseBarChart.applyIndicatorArea()
     }
 
     static var smallPreviewChart: ChartConfiguration {
@@ -111,7 +111,7 @@ extension ChartConfiguration {
         return self
     }
 
-    @discardableResult private func applyVolume() -> Self {
+    @discardableResult private func applyIndicatorArea() -> Self {
         indicatorHeight = 44
         showIndicatorArea = true
 
