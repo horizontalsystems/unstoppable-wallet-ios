@@ -7,8 +7,7 @@ import RxSwift
 
 class MoneroAdapter {
     static let networkType: MoneroKit.NetworkType = .mainnet
-    static let confirmationsThreshold = 1
-    static let txStatusConfirmationsThreshold = 3
+    static let confirmationsThreshold = Int(Kit.confirmationsThreshold)
 
     var coinRate: Decimal { 1_000_000_000_000 } // pow(10, 12)
 
@@ -53,6 +52,8 @@ class MoneroAdapter {
     }
 
     func transactionRecord(fromTransaction transaction: TransactionInfo) -> BitcoinTransactionRecord {
+        let blockHeight = transaction.blockHeight > 0 ? Int(transaction.blockHeight) : nil
+
         switch transaction.type {
         case .outgoing, .sentToSelf:
             return BitcoinOutgoingTransactionRecord(
@@ -61,7 +62,7 @@ class MoneroAdapter {
                 uid: transaction.uid,
                 transactionHash: transaction.hash,
                 transactionIndex: 0,
-                blockHeight: Int(transaction.blockHeight),
+                blockHeight: blockHeight,
                 confirmationsThreshold: Self.confirmationsThreshold,
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
                 fee: Decimal(transaction.fee) / coinRate,
@@ -82,7 +83,7 @@ class MoneroAdapter {
                 uid: transaction.uid,
                 transactionHash: transaction.hash,
                 transactionIndex: 0,
-                blockHeight: Int(transaction.blockHeight),
+                blockHeight: blockHeight,
                 confirmationsThreshold: Self.confirmationsThreshold,
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
                 fee: Decimal(transaction.fee) / coinRate,
@@ -227,19 +228,25 @@ extension MoneroAdapter {
         0.0
     }
 
-    func estimateFee(amount: Decimal, address: String, priority: SendPriority) throws -> Decimal {
-        let fee = try kit.estimateFee(amount: convertToPiconero(value: amount), address: address, priority: priority)
+    func estimateFee(amount: MoneroSendAmount, address: String, priority: SendPriority) throws -> Decimal {
+        let fee = try kit.estimateFee(address: address, amount: convertToPiconero(amount: amount), priority: priority)
         return Decimal(fee) / coinRate
     }
 
-    func send(to address: String, amount: Decimal, priority: SendPriority) throws {
-        _ = try kit.send(to: address, amount: convertToPiconero(value: amount), priority: priority)
+    func send(to address: String, amount: MoneroSendAmount, priority: SendPriority) throws {
+        _ = try kit.send(to: address, amount: convertToPiconero(amount: amount), priority: priority)
     }
 
-    func convertToPiconero(value: Decimal) -> Int {
-        let coinValue: Decimal = value * coinRate
-        let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: Int16(truncatingIfNeeded: 0), raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
-        return NSDecimalNumber(decimal: coinValue).rounding(accordingToBehavior: handler).intValue
+    func convertToPiconero(amount: MoneroSendAmount) -> SendAmount {
+        switch amount {
+        case .all:
+            return .all
+        case let .value(value):
+            let coinValue: Decimal = value * coinRate
+            let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: Int16(truncatingIfNeeded: 0), raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
+            let piconeroValue = NSDecimalNumber(decimal: coinValue).rounding(accordingToBehavior: handler).intValue
+            return .value(piconeroValue)
+        }
     }
 }
 
@@ -322,6 +329,18 @@ extension MoneroAdapter {
 
         var balanceData: BalanceData {
             BalanceData(total: all, available: unlocked)
+        }
+    }
+}
+
+enum MoneroSendAmount {
+    case value(Decimal)
+    case all(Decimal)
+
+    var value: Decimal {
+        switch self {
+        case let .all(value): return value
+        case let .value(value): return value
         }
     }
 }

@@ -60,6 +60,13 @@ extension MoneroPreSendHandler: IPreSendHandler {
             return .invalid(cautions: [CautionNew(text: "send.address.invalid_address".localized, type: .error)])
         }
 
-        return .valid(sendData: .monero(token: token, amount: amount, address: address))
+        let moneroAmount: MoneroSendAmount
+        if amount == adapter.balanceData.available {
+            moneroAmount = .all(amount)
+        } else {
+            moneroAmount = .value(amount)
+        }
+
+        return .valid(sendData: .monero(token: token, amount: moneroAmount, address: address))
     }
 }
