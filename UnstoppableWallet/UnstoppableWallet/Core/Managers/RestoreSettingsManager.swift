@@ -1,4 +1,5 @@
 import MarketKit
+import MoneroKit
 import ZcashLightClientKit
 
 class RestoreSettingsManager {
@@ -54,7 +55,7 @@ enum RestoreSettingType: String {
         case .birthdayHeight:
             switch blockchainType {
             case .zcash: return "\(ZcashAdapter.newBirthdayHeight(network: ZcashNetworkBuilder.network(for: .mainnet)))"
-            case .monero: return "3462432"
+            case .monero: return "\(MoneroKit.Kit.lastBirthdayHeight)"
             default: return nil
             }
         }

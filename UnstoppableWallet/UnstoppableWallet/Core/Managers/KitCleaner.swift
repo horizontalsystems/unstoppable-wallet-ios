@@ -21,6 +21,7 @@ extension KitCleaner {
             try? EvmNftAdapter.clear(except: accountIds)
             try? ZcashAdapter.clear(except: accountIds)
             try? TronAdapter.clear(except: accountIds)
+            try? MoneroAdapter.clear(except: accountIds)
         }
     }
 }
