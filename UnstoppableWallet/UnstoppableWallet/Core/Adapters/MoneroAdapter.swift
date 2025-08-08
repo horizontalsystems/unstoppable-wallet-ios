@@ -33,12 +33,16 @@ class MoneroAdapter {
     init(wallet: Wallet, restoreSettings: RestoreSettings) throws {
         switch wallet.account.type {
         case let .mnemonic(words, passphrase, _):
+            let logger = Core.shared.logger.scoped(with: "MoneroKit")
+
             kit = try MoneroKit.Kit(
                 mnemonic: .bip39(seed: words, passphrase: passphrase),
                 restoreHeight: UInt64(restoreSettings.birthdayHeight ?? 0),
                 walletId: wallet.account.id,
                 daemonAddress: daemonAddress,
-                networkType: Self.networkType
+                networkType: Self.networkType,
+                logger: logger,
+                moneroCoreLogLevel: 4
             )
         default:
             throw AdapterError.unsupportedAccount
@@ -119,8 +123,12 @@ class MoneroAdapter {
                     return .syncing(progress: 0, lastBlockDate: nil)
                 } else {
                     let numberOfBlocksToSync = Int(daemonHeight) - Int(syncStartBlockHeight)
-                    let numberOfBlocksToSynced = Int(walletBlockHeight) - Int(syncStartBlockHeight)
-                    return .syncing(progress: numberOfBlocksToSynced * 100 / numberOfBlocksToSync, lastBlockDate: nil)
+                    let numberOfBlocksSynced = Int(walletBlockHeight) - Int(syncStartBlockHeight)
+                    if numberOfBlocksToSync == 0 {
+                        return .syncing(progress: 100, lastBlockDate: nil)
+                    }
+
+                    return .syncing(progress: numberOfBlocksSynced * 100 / numberOfBlocksToSync, lastBlockDate: nil)
                 }
             } else {
                 return .syncing(progress: 0, lastBlockDate: nil)
@@ -330,6 +338,12 @@ extension MoneroAdapter {
         var balanceData: BalanceData {
             BalanceData(total: all, available: unlocked)
         }
+    }
+}
+
+extension MoneroAdapter {
+    static func clear(except excludedWalletIds: [String]) throws {
+        try Kit.removeAll(except: excludedWalletIds)
     }
 }
 

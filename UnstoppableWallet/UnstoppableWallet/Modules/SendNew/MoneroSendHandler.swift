@@ -96,17 +96,17 @@ extension MoneroSendHandler {
             let title: String
             let text: String
 
-            if let moneroError = transactionError as? MoneroSendHandler.TransactionError {
+            if let moneroError = transactionError as? MoneroCoreError {
                 switch moneroError {
-                case let .insufficientMoneroBalance(balance):
-                    let appValue = AppValue(token: feeToken, value: balance)
+                case let .insufficientFunds(balance):
+                    let appValue = AppValue(token: feeToken, value: Decimal(string: balance) ?? 0)
                     let balanceString = appValue.formattedShort()
 
                     title = "fee_settings.errors.insufficient_balance".localized
                     text = "fee_settings.errors.insufficient_balance.info".localized(balanceString ?? "")
-                case .noTrustline:
-                    title = "send.monero.no_trustline.title".localized
-                    text = "send.monero.no_trustline.description".localized
+                default:
+                    title = "ethereum_transaction.error.title".localized
+                    text = transactionError.convertedError.smartDescription
                 }
             } else {
                 title = "ethereum_transaction.error.title".localized

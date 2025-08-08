@@ -13785,7 +13785,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MoneroKit.Swift.git";
 			requirement = {
 				kind = exactVersion;
-				version = 0.1.1;
+				version = 0.1.2;
 			};
 		};
 		D0EC34D92A4450B100BB308B /* XCRemoteSwiftPackageReference "HCaptcha-ios-sdk" */ = {
