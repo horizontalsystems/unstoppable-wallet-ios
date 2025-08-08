@@ -16,30 +16,12 @@ struct MainView: View {
                 TabView(selection: $viewModel.selectedTab) {
                     Group {
                         if viewModel.showMarket {
-                            MarketView()
-                                .tabItem {
-                                    Image("market_2_24").renderingMode(.template)
-                                }
-                                .tag(MainViewModel.Tab.markets)
+                            MarketView().tag(MainViewModel.Tab.markets)
                         }
 
-                        WalletView(viewModel: walletViewModel, path: $path)
-                            .tabItem {
-                                Image("filled_wallet_24").renderingMode(.template)
-                            }
-                            .tag(MainViewModel.Tab.wallet)
-
-                        MainTransactionsView(transactionsViewModel: transactionsViewModel)
-                            .tabItem {
-                                Image("filled_transaction_2n_24").renderingMode(.template)
-                            }
-                            .tag(MainViewModel.Tab.transactions)
-
-                        MainSettingsView()
-                            .tabItem {
-                                Image("filled_settings_2_24").renderingMode(.template)
-                            }
-                            .tag(MainViewModel.Tab.settings)
+                        WalletView(viewModel: walletViewModel, path: $path).tag(MainViewModel.Tab.wallet)
+                        MainTransactionsView(transactionsViewModel: transactionsViewModel).tag(MainViewModel.Tab.transactions)
+                        MainSettingsView().tag(MainViewModel.Tab.settings)
                     }
                     .toolbar(.hidden, for: .tabBar)
                 }
@@ -47,7 +29,7 @@ struct MainView: View {
                 HStack(spacing: 0) {
                     ForEach(MainViewModel.Tab.allCases, id: \.self) { tab in
                         ZStack {
-                            Image(tab.image).themeIcon(color: viewModel.selectedTab == tab ? .themeJacob : .themeGray)
+                            Image(tab.image).icon(color: viewModel.selectedTab == tab ? .themeJacob : .themeGray)
 
                             if tab == MainViewModel.Tab.settings, let badge = badgeViewModel.badge {
                                 BadgeView(badge: badge)
@@ -100,7 +82,7 @@ struct MainView: View {
                         }
                         stat(page: .balance, event: .open(page: .manageWallets))
                     }) {
-                        Image("switch_wallet_24")
+                        Image("wallet_change")
                             .renderingMode(.template)
                             .foregroundColor(.themeGray)
                     }
@@ -146,7 +128,7 @@ struct MainView: View {
         case .markets:
             return "market.title".localized
         case .wallet:
-            return walletViewModel.account?.name ?? AppConfig.appName
+            return walletViewModel.account?.name ?? "balance.title".localized
         case .transactions:
             return "transactions.title".localized
         case .settings:
@@ -170,7 +152,7 @@ extension MainView {
                 Text(badge)
                     .font(.themeMicro)
                     .foregroundStyle(Color.white)
-                    .padding(.horizontal, 6)
+                    .padding(.horizontal, 2)
                     .padding(.vertical, 2)
                     .background(Color.themeRed)
                     .clipShape(Capsule())

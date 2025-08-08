@@ -27,6 +27,10 @@ extension View {
     func toNavigationViewController() -> UIViewController {
         UIHostingController(rootView: ThemeNavigationStack { self })
     }
+
+    func frame(size: CGFloat) -> some View {
+        frame(width: size, height: size)
+    }
 }
 
 extension UIView {

@@ -7,12 +7,12 @@ struct DeterminiteSpinnerStyle: ProgressViewStyle {
         ZStack {
             Circle()
                 .inset(by: strokeWidth / 2)
-                .stroke(Color.themeSteel.opacity(0.1), style: StrokeStyle(lineWidth: strokeWidth, lineCap: .round))
+                .stroke(Color.themeAndy, style: StrokeStyle(lineWidth: strokeWidth, lineCap: .round))
 
             Circle()
                 .inset(by: strokeWidth / 2)
                 .trim(from: 0.0, to: CGFloat(configuration.fractionCompleted ?? 0))
-                .stroke(Color.themeGray, style: StrokeStyle(lineWidth: strokeWidth, lineCap: .round))
+                .stroke(Color.themeLeah, style: StrokeStyle(lineWidth: strokeWidth, lineCap: .round))
                 .rotationEffect(.degrees(-90))
                 .animation(.linear, value: configuration.fractionCompleted)
         }

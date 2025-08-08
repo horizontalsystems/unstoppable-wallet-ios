@@ -10,100 +10,82 @@ struct WalletListItemView: View, Equatable {
     let failedAction: () -> Void
 
     var body: some View {
-        ClickableRow(padding: EdgeInsets(top: .margin12, leading: 10, bottom: .margin12, trailing: .margin16), action: action) {
-            HStack(spacing: 10) {
+        Cell(
+            left: {
                 BalanceCoinIconView(coin: item.wallet.coin, state: item.state, placeholderImage: item.wallet.token.placeholderImageName) {
                     failedAction()
                 }
-
-                VStack(spacing: 1) {
-                    HStack(spacing: .margin8) {
-                        Text(item.wallet.coin.code)
-                            .textBody()
-                            .lineLimit(1)
-                            .truncationMode(.middle)
-
-                        if let badge = item.wallet.badge {
-                            BadgeViewNew(text: badge)
-                        }
-
-                        Spacer()
-
-                        let (primaryText, primaryDimmed) = primaryValue
-                        Text(primaryText)
-                            .textBody(color: primaryDimmed ? .themeGray : .themeLeah)
-                            .lineLimit(1)
-                            .truncationMode(.middle)
-                    }
-
-                    bottomView()
-                }
-            }
-        }
+            },
+            middle: {
+                MultiText(
+                    title: item.wallet.coin.code,
+                    badge: item.wallet.badge,
+                    subtitle: subtitle,
+                    subtitle2: subtitle2
+                )
+            },
+            right: {
+                RightMultiText(
+                    title: primaryValue,
+                    subtitle: secondary
+                )
+            },
+            action: action
+        )
     }
 
-    @ViewBuilder private func bottomView() -> some View {
+    private var subtitle: CustomStringConvertible {
         switch item.state {
-        case let .syncing(progress, lastBlockDate):
-            HStack(spacing: .margin8) {
-                bottomText(text: progress.map { "balance.syncing_percent".localized("\($0)%") } ?? "balance.syncing".localized)
-                Spacer()
-
-                if let lastBlockDate {
-                    bottomText(text: "balance.synced_through".localized(DateHelper.instance.formatSyncedThroughDate(from: lastBlockDate)))
-                }
-            }
-        case let .customSyncing(main, secondary, _):
-            HStack(spacing: .margin8) {
-                bottomText(text: main)
-                Spacer()
-
-                if let secondary {
-                    bottomText(text: secondary)
-                }
-            }
+        case let .syncing(progress, _):
+            return progress.map { "balance.syncing_percent".localized("\($0)%") } ?? "balance.syncing".localized
+        case let .customSyncing(main, _, _):
+            return main
         case .stopped:
-            bottomText(text: "balance.stopped".localized)
+            return "balance.stopped".localized
         default:
-            HStack(spacing: .margin8) {
-                switch subtitleMode {
-                case .price:
-                    if let priceItem = item.priceItem {
-                        HStack(spacing: .margin4) {
-                            bottomText(
-                                text: ValueFormatter.instance.formatFull(currencyValue: priceItem.price) ?? String.placeholder,
-                                dimmed: priceItem.expired
-                            )
-
-                            if let diff = priceItem.diff {
-                                DiffText(diff, expired: priceItem.expired)
-                            }
-                        }
-                    } else {
-                        bottomText(text: "n/a".localized)
-                    }
-                case .coinName:
-                    bottomText(text: item.wallet.coin.name)
+            switch subtitleMode {
+            case .price:
+                if let priceItem = item.priceItem {
+                    return ComponentText(text: ValueFormatter.instance.formatFull(currencyValue: priceItem.price) ?? String.placeholder, dimmed: priceItem.expired)
+                } else {
+                    return "n/a".localized
                 }
-
-                Spacer()
-
-                let (secondaryText, secondaryDimmed) = secondaryValue
-                bottomText(text: secondaryText, dimmed: secondaryDimmed)
+            case .coinName:
+                return item.wallet.coin.name
             }
         }
     }
 
-    @ViewBuilder private func bottomText(text: String, dimmed: Bool = false) -> some View {
-        Text(text)
-            .textSubhead2(color: dimmed ? .themeGray50 : .themeGray)
-            .lineLimit(1)
-            .truncationMode(.middle)
+    private var subtitle2: CustomStringConvertible? {
+        switch item.state {
+        case .synced, .notSynced:
+            switch subtitleMode {
+            case .price:
+                return item.priceItem.map { Diff.text(diff: $0.diff, expired: $0.expired) }
+            default:
+                return nil
+            }
+        default:
+            return nil
+        }
     }
 
-    private var primaryValue: (String, Bool) {
+    private var secondary: CustomStringConvertible? {
+        switch item.state {
+        case let .syncing(_, lastBlockDate):
+            return lastBlockDate.map { "balance.synced_through".localized(DateHelper.instance.formatSyncedThroughDate(from: $0)) } ?? secondaryValue
+        case let .customSyncing(_, secondary, _):
+            return secondary
+        case .stopped:
+            return nil
+        default:
+            return secondaryValue
+        }
+    }
+
+    private var primaryValue: CustomStringConvertible {
         if balanceHidden {
-            return (BalanceHiddenManager.placeholder, false)
+            return BalanceHiddenManager.placeholder
         }
 
         switch balancePrimaryValue {
@@ -112,9 +94,9 @@ struct WalletListItemView: View, Equatable {
         }
     }
 
-    private var secondaryValue: (String, Bool) {
+    private var secondaryValue: CustomStringConvertible {
         if balanceHidden {
-            return (BalanceHiddenManager.placeholder, false)
+            return BalanceHiddenManager.placeholder
         }
 
         switch balancePrimaryValue {
@@ -123,22 +105,22 @@ struct WalletListItemView: View, Equatable {
         }
     }
 
-    private func coinValue(value: Decimal, decimalCount: Int, symbol: String? = nil, state: AdapterState, expanded _: Bool = false) -> (text: String, dimmed: Bool) {
-        (
+    private func coinValue(value: Decimal, decimalCount: Int, symbol: String? = nil, state: AdapterState, expanded _: Bool = false) -> CustomStringConvertible {
+        ComponentText(
             text: ValueFormatter.instance.formatWith(rounding: amountRounding, value: value, decimalCount: decimalCount, symbol: symbol) ?? String.placeholder,
             dimmed: state != .synced
         )
     }
 
-    private func currencyValue(value: Decimal, state: AdapterState, priceItem: WalletCoinPriceService.Item?, expanded _: Bool = false) -> (text: String, dimmed: Bool) {
+    private func currencyValue(value: Decimal, state: AdapterState, priceItem: WalletCoinPriceService.Item?, expanded _: Bool = false) -> CustomStringConvertible {
         guard let priceItem else {
-            return (text: String.placeholder, dimmed: true)
+            return ComponentText(text: String.placeholder, dimmed: true)
         }
 
         let price = priceItem.price
         let currencyValue = CurrencyValue(currency: price.currency, value: value * price.value)
 
-        return (
+        return ComponentText(
             text: ValueFormatter.instance.formatWith(rounding: amountRounding, currencyValue: currencyValue) ?? String.placeholder,
             dimmed: state != .synced || priceItem.expired
         )

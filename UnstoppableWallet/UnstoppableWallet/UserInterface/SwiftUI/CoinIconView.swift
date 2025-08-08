@@ -9,27 +9,31 @@ struct BalanceCoinIconView: View {
     let onTapFailed: () -> Void
 
     var body: some View {
-        ZStack {
-            switch state {
-            case let .syncing(progress, _), let .customSyncing(_, _, progress):
-                ProgressView(value: max(0.1, Float(progress ?? 10) / 100))
-                    .progressViewStyle(DeterminiteSpinnerStyle())
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                    .spinning()
-            default:
-                EmptyView()
-            }
-
+        Group {
             switch state {
             case .notSynced:
-                Image("warning_2_20")
-                    .themeIcon(color: .themeLucian)
-                    .onTapGesture(perform: onTapFailed)
+                ZStack {
+                    Circle().fill(Color.themeBlade)
+                    Image("warning_filled").themeIcon(color: .themeLucian)
+                }
+                .frame(size: .iconSize32)
+                .onTapGesture(perform: onTapFailed)
             default:
                 CoinIconView(coin: coin, placeholderImage: placeholderImage)
+                    .opacity(state.syncing ? 0.5 : 1)
+                    .overlay {
+                        switch state {
+                        case let .syncing(progress, _), let .customSyncing(_, _, progress):
+                            ProgressView(value: max(0.1, Float(progress ?? 10) / 100))
+                                .progressViewStyle(DeterminiteSpinnerStyle())
+                                .frame(width: 36, height: 36)
+                                .spinning()
+                        default:
+                            EmptyView()
+                        }
+                    }
             }
         }
-        .frame(width: 44, height: 44)
     }
 }
 

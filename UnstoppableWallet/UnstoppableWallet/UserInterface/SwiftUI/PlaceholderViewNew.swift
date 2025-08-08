@@ -18,16 +18,11 @@ struct PlaceholderViewNew<Content: View>: View {
     var body: some View {
         GeometryReader { proxy in
             ZStack {
-                VStack(spacing: .margin32) {
+                VStack(spacing: .margin24) {
                     ZStack {
-                        Circle()
-                            .fill(Color.themeBlade)
-                            .frame(width: 100, height: 100)
-
-                        image
-                            .renderingMode(.template)
-                            .foregroundColor(.themeGray)
+                        image.icon(size: .iconSize72)
                     }
+                    .padding(.margin16)
 
                     if let text {
                         Text(text)
@@ -63,11 +58,13 @@ struct PlaceholderViewNew<Content: View>: View {
 extension PlaceholderViewNew {
     enum LayoutType {
         case upperMiddle
+        case middle
         case bottom
 
         var multiplier: CGFloat {
             switch self {
             case .upperMiddle: return -0.15
+            case .middle: return 0
             case .bottom: return 0.5
             }
         }

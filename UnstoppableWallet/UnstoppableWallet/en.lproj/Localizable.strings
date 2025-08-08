@@ -293,14 +293,13 @@
 
 // Balance
 
-"balance.title" = "Balance";
+"balance.title" = "Wallet";
 "balance.tab_bar_item" = "Balance";
 "balance.send" = "Send";
 "balance.withdraw" = "Withdraw";
 "balance.swap" = "Swap";
 "balance.receive" = "Receive";
 "balance.deposit" = "Deposit";
-"balance.address" = "Address";
 "balance.chart" = "Chart";
 "balance.scan" = "Scan";
 "balance.rate_per_coin" = "%@ per %@";

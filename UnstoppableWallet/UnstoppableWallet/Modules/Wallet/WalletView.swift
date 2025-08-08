@@ -7,69 +7,64 @@ struct WalletView: View {
     @Binding var path: NavigationPath
 
     var body: some View {
-        ThemeView {
-            if viewModel.account != nil {
-                ScrollViewReader { proxy in
-                    ThemeList(bottomSpacing: .margin16) {
-                        topView()
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
+        Group {
+            if let account = viewModel.account {
+                ThemeView(background: .themeLawrence) {
+                    ScrollViewReader { proxy in
+                        ThemeList(bottomSpacing: .margin16) {
+                            topView()
+                                .listRowBackground(Color.themeTyler)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
 
-                        AccountWarningView(viewModel: accountWarningViewModel)
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
-                            .padding(.horizontal, .margin16)
-                            .padding(.bottom, .margin16)
+                            AccountWarningView(viewModel: accountWarningViewModel)
+                                .listRowBackground(Color.clear)
+                                .listRowInsets(EdgeInsets())
+                                .listRowSeparator(.hidden)
+                                .padding(.horizontal, .margin16)
+                                .padding(.bottom, .margin16)
 
-                        Section {
-                            itemsView()
-                        } header: {
-                            headerView()
+                            Section {
+                                itemsView()
+                            } header: {
+                                headerView(account: account)
+                            }
                         }
+                        .animation(.default, value: viewModel.items)
+                        .animation(.default, value: accountWarningViewModel.item)
+                        .refreshable {
+                            await viewModel.refresh()
+                        }
+                        .onChange(of: viewModel.sortType) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
                     }
-                    .animation(.default, value: viewModel.items)
-                    .animation(.default, value: accountWarningViewModel.item)
-                    .refreshable {
-                        await viewModel.refresh()
-                    }
-                    .onChange(of: viewModel.sortType) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
                 }
             } else {
-                PlaceholderViewNew(image: Image("add_to_wallet_48"), layoutType: .bottom) {
-                    VStack(spacing: .margin16) {
-                        Button(action: {
-                            Coordinator.shared.presentAfterAcceptTerms { isPresented in
-                                CreateAccountView(isPresented: isPresented)
-                            } onPresent: {
-                                stat(page: .balance, event: .open(page: .newWallet))
+                ThemeView {
+                    PlaceholderViewNew(image: Image("wallet_add"), layoutType: .middle) {
+                        VStack(spacing: .margin12) {
+                            ThemeButton(text: "onboarding.balance.create".localized) {
+                                Coordinator.shared.presentAfterAcceptTerms { isPresented in
+                                    CreateAccountView(isPresented: isPresented)
+                                } onPresent: {
+                                    stat(page: .balance, event: .open(page: .newWallet))
+                                }
                             }
-                        }) {
-                            Text("onboarding.balance.create".localized)
-                        }
-                        .buttonStyle(PrimaryButtonStyle(style: .yellow))
 
-                        Button(action: {
-                            Coordinator.shared.presentAfterAcceptTerms { isPresented in
-                                RestoreTypeView(type: .wallet, isPresented: isPresented)
-                            } onPresent: {
-                                stat(page: .balance, event: .open(page: .importWallet))
+                            ThemeButton(text: "onboarding.balance.import".localized, style: .secondary) {
+                                Coordinator.shared.presentAfterAcceptTerms { isPresented in
+                                    RestoreTypeView(type: .wallet, isPresented: isPresented)
+                                } onPresent: {
+                                    stat(page: .balance, event: .open(page: .importWallet))
+                                }
                             }
-                        }) {
-                            Text("onboarding.balance.import".localized)
-                        }
-                        .buttonStyle(PrimaryButtonStyle(style: .gray))
 
-                        Button(action: {
-                            Coordinator.shared.present { isPresented in
-                                WatchView(isPresented: isPresented)
+                            ThemeButton(text: "onboarding.balance.watch".localized, style: .secondary, mode: .transparent) {
+                                Coordinator.shared.present { isPresented in
+                                    WatchView(isPresented: isPresented)
+                                }
+                                stat(page: .balance, event: .open(page: .watchWallet))
                             }
-                            stat(page: .balance, event: .open(page: .watchWallet))
-                        }) {
-                            Text("onboarding.balance.watch".localized)
                         }
-                        .buttonStyle(PrimaryButtonStyle(style: .transparent))
                     }
                 }
             }
@@ -83,37 +78,33 @@ struct WalletView: View {
     }
 
     @ViewBuilder private func topView() -> some View {
-        VStack(spacing: .margin24) {
-            VStack(spacing: 0) {
-                let (primaryText, primaryDimmed) = primaryValue
-                Text(primaryText)
-                    .textTitle2R(color: primaryDimmed ? .themeGray : .themeLeah)
-                    .multilineTextAlignment(.center)
+        VStack(alignment: .leading, spacing: .margin24) {
+            VStack(alignment: .leading, spacing: 0) {
+                ThemeText(primaryValue, style: .title2)
                     .onTapGesture {
                         viewModel.onTapAmount()
                         HapticGenerator.instance.notification(.feedback(.soft))
                     }
 
-                let (secondaryText, secondaryDimmed) = secondaryValue
-                Text(secondaryText)
-                    .textBody(color: secondaryDimmed ? .themeGray50 : .themeGray)
-                    .multilineTextAlignment(.center)
+                ThemeText(secondaryValue, style: .body, colorStyle: .secondary)
                     .onTapGesture {
                         viewModel.onTapConvertedAmount()
                         HapticGenerator.instance.notification(.feedback(.soft))
                     }
             }
-            .frame(maxWidth: .infinity)
 
             if !viewModel.buttonHidden, let account = viewModel.account, !account.watchAccount {
                 let buttons = viewModel.buttons
 
-                LazyVGrid(columns: buttons.map { _ in GridItem(.flexible(), alignment: .top) }, spacing: .margin16) {
+                HStack(spacing: 0) {
                     ForEach(buttons, id: \.self) { button in
                         buttonView(button: button)
+
+                        if button != buttons.last {
+                            Spacer()
+                        }
                     }
                 }
-                .padding(.top, .margin4)
             }
         }
         .padding(.vertical, .margin24)
@@ -136,9 +127,9 @@ struct WalletView: View {
                     Button {
                         viewModel.onDisable(wallet: item.wallet)
                     } label: {
-                        Image("circle_minus_shifted_24").renderingMode(.template)
+                        Image(uiImage: UIImage(named: "trash")!.withTintColor(UIColor(Color.themeLeah), renderingMode: .alwaysOriginal))
                     }
-                    .tint(.themeGray)
+                    .tint(.themeBlade)
                 }
 
                 HorizontalDivider()
@@ -149,9 +140,9 @@ struct WalletView: View {
         }
     }
 
-    @ViewBuilder private func headerView() -> some View {
-        HStack(spacing: .margin8) {
-            Button(action: {
+    @ViewBuilder private func headerView(account: Account) -> some View {
+        ListHeader {
+            DropdownButton(text: viewModel.sortType.title) {
                 Coordinator.shared.present(type: .alert) { isPresented in
                     OptionAlertView(
                         title: "balance.sort.header".localized,
@@ -162,85 +153,71 @@ struct WalletView: View {
                         isPresented: isPresented
                     )
                 }
-            }) {
-                Text(viewModel.sortType.title)
             }
-            .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
 
-            Button(action: {
+            IconButton(icon: "manage", style: .secondary, size: .small) {
                 if let account = viewModel.account {
                     Coordinator.shared.present { _ in
                         ManageWalletsView(account: account).ignoresSafeArea()
                     }
                     stat(page: .balance, event: .open(page: .coinManager))
                 }
-            }) {
-                Image("manage_2_20").renderingMode(.template)
             }
-            .buttonStyle(SecondaryCircleButtonStyle(style: .default))
 
             Spacer()
+
+            if account.watchAccount {
+                Image("binocular").icon(size: .iconSize20)
+            }
         }
-        .padding(.horizontal, .margin16)
-        .frame(maxWidth: .infinity)
-        .frame(height: .heightCell48)
-        .listRowInsets(EdgeInsets())
-        .background(Color.themeLawrence)
     }
 
     @ViewBuilder private func buttonView(button: WalletButton) -> some View {
-        VStack(spacing: .margin8) {
-            Button(action: {
-                switch button {
-                case .send:
-                    Coordinator.shared.present { isPresented in
-                        SendTokenListView(isPresented: isPresented)
-                    }
-                    stat(page: .balance, event: .open(page: .sendTokenList))
-                case .receive: viewModel.onTapReceive()
-                case .swap:
-                    Coordinator.shared.present { _ in
-                        MultiSwapView()
-                    }
-                    stat(page: .balance, event: .open(page: .swap))
-                case .scan:
-                    Coordinator.shared.present { _ in
-                        ScanQrViewNew(reportAfterDismiss: true, pasteEnabled: true) { text in
-                            viewModel.process(scanned: text)
-                        }
-                        .ignoresSafeArea()
-                    }
-                    stat(page: .balance, event: .open(page: .scanQrCode))
-                default: ()
+        WalletButtonView(icon: button.icon, title: button.title, accent: button.accent) {
+            switch button {
+            case .send:
+                Coordinator.shared.present { isPresented in
+                    SendTokenListView(isPresented: isPresented)
                 }
-            }) {
-                Image(button.icon).renderingMode(.template)
+                stat(page: .balance, event: .open(page: .sendTokenList))
+            case .receive: viewModel.onTapReceive()
+            case .swap:
+                Coordinator.shared.present { _ in
+                    MultiSwapView()
+                }
+                stat(page: .balance, event: .open(page: .swap))
+            case .scan:
+                Coordinator.shared.present { _ in
+                    ScanQrViewNew(reportAfterDismiss: true, pasteEnabled: true) { text in
+                        viewModel.process(scanned: text)
+                    }
+                    .ignoresSafeArea()
+                }
+                stat(page: .balance, event: .open(page: .scanQrCode))
+            default: ()
             }
-            .buttonStyle(PrimaryCircleButtonStyle(style: button.accent ? .yellow : .gray))
-
-            Text(button.title).textSubhead1()
         }
     }
 
-    private var primaryValue: (String, Bool) {
+    private var primaryValue: CustomStringConvertible {
         if viewModel.balanceHidden {
-            return (BalanceHiddenManager.placeholder, false)
+            return BalanceHiddenManager.placeholder
         }
 
-        return (
-            ValueFormatter.instance.formatWith(rounding: viewModel.amountRounding, currencyValue: viewModel.totalItem.currencyValue) ?? String.placeholder,
-            viewModel.totalItem.expired
+        return ComponentText(
+            text: ValueFormatter.instance.formatWith(rounding: viewModel.amountRounding, currencyValue: viewModel.totalItem.currencyValue) ?? String.placeholder,
+            dimmed: viewModel.totalItem.expired
         )
     }
 
-    private var secondaryValue: (String, Bool) {
+    private var secondaryValue: CustomStringConvertible {
         if viewModel.balanceHidden {
-            return (BalanceHiddenManager.placeholder, false)
+            return BalanceHiddenManager.placeholder
         }
 
-        return (
-            viewModel.totalItem.convertedValue.flatMap { $0.formattedWith(rounding: viewModel.amountRounding) }.map { "≈ \($0)" } ?? String.placeholder,
-            viewModel.totalItem.convertedValueExpired
+        return ComponentText(
+            text: viewModel.totalItem.convertedValue.flatMap { $0.formattedWith(rounding: viewModel.amountRounding) }.map { "≈ \($0)" } ?? String.placeholder,
+            dimmed: viewModel.totalItem.convertedValueExpired
         )
     }
 }
