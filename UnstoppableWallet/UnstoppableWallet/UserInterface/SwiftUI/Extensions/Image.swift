@@ -5,6 +5,17 @@ extension Image {
         renderingMode(.template).foregroundColor(color)
     }
 
+    func icon(size: CGFloat = .iconSize24, color: Color = .themeGray) -> some View {
+        resizable()
+            .foregroundColor(color)
+            .frame(size: size)
+    }
+
+    func buttonIcon(size: CGFloat = .iconSize24) -> some View {
+        resizable()
+            .frame(size: size)
+    }
+
     static var disclosureIcon: some View {
         Image("arrow_big_forward_20").themeIcon()
     }

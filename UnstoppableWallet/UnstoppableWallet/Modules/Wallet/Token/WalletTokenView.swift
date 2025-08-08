@@ -13,10 +13,10 @@ struct WalletTokenView<AdditionalContent: View>: View {
     }
 
     var body: some View {
-        ThemeView {
+        ThemeView(background: .themeLawrence) {
             ThemeList(bottomSpacing: .margin16) {
                 topView()
-                    .listRowBackground(Color.clear)
+                    .listRowBackground(Color.themeTyler)
                     .listRowInsets(EdgeInsets())
                     .listRowSeparator(.hidden)
 
@@ -29,83 +29,75 @@ struct WalletTokenView<AdditionalContent: View>: View {
     }
 
     @ViewBuilder private func topView() -> some View {
-        VStack(spacing: .margin24) {
-            VStack(spacing: 6) {
+        VStack(alignment: .leading, spacing: .margin24) {
+            VStack(alignment: .leading, spacing: 0) {
                 BalanceCoinIconView(coin: viewModel.wallet.coin, state: viewModel.state, placeholderImage: viewModel.wallet.token.placeholderImageName) {
                     Coordinator.shared.presentBalanceError(wallet: viewModel.wallet, state: viewModel.state)
                 }
 
-                let (primaryText, primaryDimmed) = primaryValue
-                Text(primaryText)
-                    .textTitle2R(color: primaryDimmed ? .themeGray : .themeLeah)
-                    .multilineTextAlignment(.center)
+                ThemeText(primaryValue, style: .title2)
                     .onTapGesture {
                         viewModel.onTapAmount()
                         HapticGenerator.instance.notification(.feedback(.soft))
                     }
 
-                let (secondaryText, secondaryDimmed) = secondaryValue
-                Text(secondaryText)
-                    .textBody(color: secondaryDimmed ? .themeGray50 : .themeGray)
-                    .multilineTextAlignment(.center)
+                ThemeText(secondaryValue, style: .body, colorStyle: .secondary)
             }
 
             let buttons = viewModel.buttons
 
-            LazyVGrid(columns: buttons.map { _ in GridItem(.flexible(), alignment: .top) }, spacing: .margin16) {
+            HStack(spacing: 0) {
                 ForEach(buttons, id: \.self) { button in
                     buttonView(button: button)
+
+                    if button != buttons.last {
+                        Spacer()
+                    }
                 }
             }
 
             additionalContent()
         }
-        .padding(EdgeInsets(top: 10, leading: .margin16, bottom: .margin12, trailing: .margin16))
+        .padding(.vertical, .margin24)
+        .padding(.horizontal, .margin16)
     }
 
     @ViewBuilder private func buttonView(button: WalletButton) -> some View {
-        VStack(spacing: .margin8) {
-            Button(action: {
-                switch button {
-                case .send:
-                    Coordinator.shared.present { isPresented in
-                        ThemeNavigationStack {
-                            SendAddressView(wallet: viewModel.wallet, isPresented: isPresented)
-                        }
+        WalletButtonView(icon: button.icon, title: button.title, accent: button.accent) {
+            switch button {
+            case .send:
+                Coordinator.shared.present { isPresented in
+                    ThemeNavigationStack {
+                        SendAddressView(wallet: viewModel.wallet, isPresented: isPresented)
                     }
-                    stat(page: .tokenPage, event: .openSend(token: viewModel.wallet.token))
-                case .receive, .address: viewModel.onTapReceive()
-                case .swap:
-                    Coordinator.shared.present { _ in
-                        MultiSwapView(token: viewModel.wallet.token)
-                    }
-                    stat(page: .tokenPage, event: .open(page: .swap))
-                case .chart: Coordinator.shared.presentCoinPage(coin: viewModel.wallet.coin, page: .tokenPage)
-                default: ()
                 }
-            }) {
-                Image(button.icon).renderingMode(.template)
+                stat(page: .tokenPage, event: .openSend(token: viewModel.wallet.token))
+            case .receive: viewModel.onTapReceive()
+            case .swap:
+                Coordinator.shared.present { _ in
+                    MultiSwapView(token: viewModel.wallet.token)
+                }
+                stat(page: .tokenPage, event: .open(page: .swap))
+            case .chart: Coordinator.shared.presentCoinPage(coin: viewModel.wallet.coin, page: .tokenPage)
+            default: ()
             }
-            .buttonStyle(PrimaryCircleButtonStyle(style: button.accent ? .yellow : .gray))
-            .disabled(button == .chart && viewModel.priceItem == nil)
-
-            Text(button.title).textSubhead1()
         }
+        .disabled(button == .chart && viewModel.priceItem == nil)
     }
 
-    private var primaryValue: (String, Bool) {
+    private var primaryValue: CustomStringConvertible {
         if viewModel.balanceHidden {
-            return (BalanceHiddenManager.placeholder, false)
+            return BalanceHiddenManager.placeholder
         }
 
         if let formatted = ValueFormatter.instance.formatFull(value: viewModel.balanceData.total, decimalCount: viewModel.wallet.decimals, symbol: viewModel.wallet.coin.code) {
-            return (formatted, viewModel.state != .synced)
+            return ComponentText(text: formatted, dimmed: viewModel.state != .synced)
         }
 
-        return ("----", false)
+        return "----"
     }
 
-    private var secondaryValue: (String, Bool) {
+    private var secondaryValue: CustomStringConvertible {
         switch viewModel.state {
         case let .syncing(progress, lastBlockDate):
             var text = ""
@@ -119,29 +111,28 @@ struct WalletTokenView<AdditionalContent: View>: View {
                 text += " - " + "balance.synced_through".localized(syncedUntil)
             }
 
-            return (text: text, dimmed: false)
+            return text
         case let .customSyncing(main, secondary, _):
-            let text = [main, secondary].compactMap { $0 }.joined(separator: " - ")
-            return (text: text, dimmed: false)
+            return [main, secondary].compactMap { $0 }.joined(separator: " - ")
         case .stopped:
-            return (text: "balance.stopped".localized, dimmed: false)
+            return "balance.stopped".localized
         default: ()
             if viewModel.balanceHidden {
-                return (BalanceHiddenManager.placeholder, false)
+                return BalanceHiddenManager.placeholder
             }
 
             guard let priceItem = viewModel.priceItem else {
-                return (text: "----", dimmed: true)
+                return ComponentText(text: "----", dimmed: true)
             }
 
             let price = priceItem.price
             let currencyValue = CurrencyValue(currency: price.currency, value: viewModel.balanceData.total * price.value)
 
             if let formatted = ValueFormatter.instance.formatFull(currencyValue: currencyValue) {
-                return (formatted, viewModel.state != .synced || priceItem.expired)
+                return ComponentText(text: formatted, dimmed: viewModel.state != .synced || priceItem.expired)
             }
 
-            return ("----", false)
+            return "----"
         }
     }
 }

@@ -28,6 +28,7 @@ public extension CGFloat {
     static let margin4: CGFloat = 4
     static let margin6: CGFloat = 6
     static let margin8: CGFloat = 8
+    static let margin10: CGFloat = 10
     static let margin12: CGFloat = 12
     static let margin16: CGFloat = 16
     static let margin24: CGFloat = 24
@@ -52,4 +53,8 @@ public extension CGFloat {
     static let iconSize24: CGFloat = 24
     static let iconSize32: CGFloat = 32
     static let iconSize48: CGFloat = 48
+    static let iconSize72: CGFloat = 72
+
+    static let buttonSize56: CGFloat = 56
+    static let buttonSize32: CGFloat = 32
 }

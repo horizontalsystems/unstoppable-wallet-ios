@@ -1,11 +1,17 @@
 import SwiftUI
 
 struct ThemeView<Content: View>: View {
-    @ViewBuilder let content: Content
+    private let background: Color
+    private let content: Content
+
+    init(background: Color = .themeTyler, @ViewBuilder content: () -> Content) {
+        self.background = background
+        self.content = content()
+    }
 
     var body: some View {
         ZStack {
-            Color.themeTyler.ignoresSafeArea()
+            background.ignoresSafeArea()
 
             VStack(spacing: 0) {
                 Rectangle()

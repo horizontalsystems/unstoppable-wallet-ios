@@ -109,9 +109,9 @@ extension WalletTokenViewModel {
 
     var buttons: [WalletButton] {
         if wallet.account.watchAccount {
-            return [.address, .chart]
+            return [.chart]
         } else {
-            return [.send, .receive] + (AppConfig.swapEnabled && wallet.token.swappable ? [.swap] : []) + [.chart]
+            return [.receive, .send] + (AppConfig.swapEnabled && wallet.token.swappable ? [.swap] : []) + [.chart]
         }
     }
 

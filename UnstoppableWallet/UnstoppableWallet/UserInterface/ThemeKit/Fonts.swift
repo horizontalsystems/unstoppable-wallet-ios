@@ -2,7 +2,7 @@ import SwiftUI
 import UIKit
 
 public extension Font {
-    private static func manRopeFont(size: CGFloat, weight: Font.Weight) -> Font {
+    static func manRopeFont(size: CGFloat, weight: Font.Weight) -> Font {
         switch weight {
         case .regular: return Font.custom("Manrope-Regular", size: size)
         case .medium: return Font.custom("Manrope-Medium", size: size)
