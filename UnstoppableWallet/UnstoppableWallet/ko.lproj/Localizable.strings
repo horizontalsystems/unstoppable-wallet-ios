@@ -117,6 +117,8 @@
 "auto_lock.minute30" = "30분";
 "auto_lock.hour1" = "1시간";
 
+"powered_by" = "Powered by %@";
+
 // Access Camera
 
 "access_camera.message" = "%@이 QR코드를 스캔하기 위해선 카메라에 대한 접근이 필요합니다. \n\n설정 -> %@으로 가서 카메라 접근을 허용해 주세요.";
@@ -291,14 +293,15 @@
 
 // Balance
 
-"balance.title" = "잔액";
+"balance.title" = "지갑";
 "balance.tab_bar_item" = "잔액";
 "balance.send" = "전송";
 "balance.withdraw" = "빼다";
 "balance.swap" = "스왑";
 "balance.receive" = "수령";
 "balance.deposit" = "수신";
-"balance.address" = "주소";
+"balance.chart" = "Chart";
+"balance.scan" = "Scan";
 "balance.rate_per_coin" = "%@ 당 %@";
 "balance.syncing" = "동기화 중입니다...";
 "balance.searching" = "거래 검색 중...";
@@ -757,6 +760,7 @@
 "market.tab.news" = "뉴스";
 "market.tab.coins" = "코인";
 "market.tab.watchlist" = "관심 목록";
+"market.tab.vaults" = "Earn";
 "market.tab.platforms" = "플랫폼";
 "market.tab.pairs" = "쌍";
 "market.tab.sectors" = "부문";
@@ -897,6 +901,8 @@
 "market.advanced_search.outperformed_btc" = "BTC를 능가했습니다";
 "market.advanced_search.outperformed_eth" = "ETH를 능가했습니다";
 "market.advanced_search.outperformed_bnb" = "BNB를 능가했습니다";
+"market.advanced_search.outperformed_sp500" = "Outperformed S&P500";
+"market.advanced_search.outperformed_gold" = "Outperformed GOLD";
 "market.advanced_search.price_close_to" = "Price Close To";
 "market.advanced_search.price_close_to_ath" = "최고가에 가까운 가격";
 "market.advanced_search.price_close_to_atl" = "Price Close to ATL";
@@ -990,6 +996,38 @@
 "market.signal.neutral" = "중립적";
 "market.signal.sell" = "매도";
 "market.signal.strong_sell" = "강력한 매도";
+
+// Market Vaults
+
+"market.vaults.apy" = "APY %@";
+"market.vaults.tvl" = "TVL: %@";
+"market.vaults.premium.description" = "Want to unlock more earning opportunities?";
+"market.vaults.premium.unlock" = "Unlock Premium";
+
+"market.vaults.filter" = "필터";
+"market.vaults.filter.all_assets" = "All Assets";
+"market.vaults.filter.eth_yield" = "ETH Yield";
+"market.vaults.filter.usd_yield" = "USD Yield";
+
+"market.vaults.sort.highest_apy" = "Highest APY";
+"market.vaults.sort.highest_tvl" = "Highest TVL";
+"market.vaults.sort.highest_apy.short" = "APY";
+"market.vaults.sort.highest_tvl.short" = "TVL";
+
+"market.vaults.chains.title" = "블록체인";
+"market.vaults.chains.any" = "어떤";
+"market.vaults.chains.all_chains" = "All Chains";
+"market.vaults.chains.n_chains" = "%@ Chains";
+
+// Market Vault
+
+"market.vault.apy" = "APY";
+"market.vault.tvl" = "TVL";
+"market.vault.network" = "회로망";
+"market.vault.protocol" = "Protocol";
+"market.vault.underlying_token" = "Underlying Token";
+"market.vault.hoders" = "소유주";
+"market.vault.open_dapp" = "Open DApp";
 
 // Coin Page
 
@@ -1230,7 +1268,6 @@
 "coin_analytics.30_day_volume" = "30일 거래량";
 
 "coin_analytics.analysis.title" = "스마트 계약 분석";
-"coin_analytics.analysis.footer" = "De.Fi에 의해 구동됨";
 "coin_analytics.analysis.high_risk_items" = "고위험 품목";
 "coin_analytics.analysis.medium_risk_items" = "중위험 품목";
 "coin_analytics.analysis.attention_required" = "주의 필요";
@@ -1645,6 +1682,7 @@
 
 "appearance.balance_tab" = "잔고 탭";
 "appearance.balance_tab.footer" = "\"버튼 숨기기\" 설정을 활성화하면 잔액 탭에서 보내기, 받기, 스왑 버튼이 숨겨집니다.";
+"appearance.amount_rounding" = "Amount Rounding";
 "appearance.hide_buttons" = "숨김 버튼";
 "appearance.balance_value" = "균형 가치";
 "appearance.balance_value.coin_fiat" = "코인/피아트";
@@ -2312,3 +2350,12 @@
 "check_address.chainalysis.description" = "Chainalysis는 암호화폐 주소를 추적, 조사하고 위험을 평가할 수 있는 도구를 제공하는 블록체인 분석 플랫폼입니다. 이 플랫폼은 제재, 사기, 기타 불법 활동과 관련된 주소를 식별하는 데 도움을 줍니다.";
 "check_address.hashdit.description" = "HashDit는 사용자들이 지갑 주소에 대한 제재나 블랙리스트 위험을 확인할 수 있도록 해주는 보안 플랫폼입니다. 사용자가 악의적이거나 차단된 주소와의 상호작용을 피하도록 도와줍니다.";
 "check_address.coin_blacklist.description" = "이 기능을 통해 지갑 주소가 %@에 의해 블랙리스트에 등록되어 있는지 확인할 수 있습니다 (%@ 기준). 주소가 블랙리스트에 포함된 경우, 해당 주소와 연결된 %@ 토큰은 동결되어 사용할 수 없고, 전송도 불가능할 수 있습니다. 이 검사는 사용자가 위험하거나 제한된 주소와 상호작용하지 않도록 도와줍니다.";
+
+// Monero
+
+"monero.priority" = "Send Priority";
+"monero.priority.default" = "Default";
+"monero.priority.low" = "Low";
+"monero.priority.medium" = "Medium";
+"monero.priority.high" = "High";
+"monero.priority.last" = "Last";
