@@ -117,6 +117,8 @@
 "auto_lock.minute30" = "30 minutos";
 "auto_lock.hour1" = "1 hora";
 
+"powered_by" = "Powered by %@";
+
 // Access Camera
 
 "access_camera.message" = "%@ necesita acceso a tu cámara para escanear el código QR.
@@ -293,14 +295,15 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Balance
 
-"balance.title" = "Saldo";
+"balance.title" = "Cartera";
 "balance.tab_bar_item" = "Saldo";
 "balance.send" = "Enviar";
 "balance.withdraw" = "Retirar";
 "balance.swap" = "Permutar";
 "balance.receive" = "Recibir";
 "balance.deposit" = "Recibir";
-"balance.address" = "Dirección";
+"balance.chart" = "Chart";
+"balance.scan" = "Scan";
 "balance.rate_per_coin" = "%@ por %@";
 "balance.syncing" = "Sincronizando...";
 "balance.searching" = "Buscando transacciones…";
@@ -759,6 +762,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.tab.news" = "Noticias";
 "market.tab.coins" = "Monedas";
 "market.tab.watchlist" = "Lista de Seguimiento";
+"market.tab.vaults" = "Earn";
 "market.tab.platforms" = "Plataformas";
 "market.tab.pairs" = "Pares";
 "market.tab.sectors" = "Sectores";
@@ -899,6 +903,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.advanced_search.outperformed_btc" = "BTC superado";
 "market.advanced_search.outperformed_eth" = "ETH superado";
 "market.advanced_search.outperformed_bnb" = "BNB superado";
+"market.advanced_search.outperformed_sp500" = "Outperformed S&P500";
+"market.advanced_search.outperformed_gold" = "Outperformed GOLD";
 "market.advanced_search.price_close_to" = "Price Close To";
 "market.advanced_search.price_close_to_ath" = "Precio cercano a ATH";
 "market.advanced_search.price_close_to_atl" = "Precio cercano a ATL";
@@ -992,6 +998,38 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.signal.neutral" = "Neutral";
 "market.signal.sell" = "Vender";
 "market.signal.strong_sell" = "Vender fuerte";
+
+// Market Vaults
+
+"market.vaults.apy" = "APY %@";
+"market.vaults.tvl" = "TVL: %@";
+"market.vaults.premium.description" = "Want to unlock more earning opportunities?";
+"market.vaults.premium.unlock" = "Unlock Premium";
+
+"market.vaults.filter" = "Filtro";
+"market.vaults.filter.all_assets" = "All Assets";
+"market.vaults.filter.eth_yield" = "ETH Yield";
+"market.vaults.filter.usd_yield" = "USD Yield";
+
+"market.vaults.sort.highest_apy" = "Highest APY";
+"market.vaults.sort.highest_tvl" = "Highest TVL";
+"market.vaults.sort.highest_apy.short" = "APY";
+"market.vaults.sort.highest_tvl.short" = "TVL";
+
+"market.vaults.chains.title" = "Blockchains";
+"market.vaults.chains.any" = "Cualquier";
+"market.vaults.chains.all_chains" = "All Chains";
+"market.vaults.chains.n_chains" = "%@ Chains";
+
+// Market Vault
+
+"market.vault.apy" = "APY";
+"market.vault.tvl" = "TVL";
+"market.vault.network" = "La red";
+"market.vault.protocol" = "Protocol";
+"market.vault.underlying_token" = "Underlying Token";
+"market.vault.hoders" = "Titulares";
+"market.vault.open_dapp" = "Open DApp";
 
 // Coin Page
 
@@ -1231,7 +1269,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_analytics.30_day_volume" = "Volumen de 30 días";
 
 "coin_analytics.analysis.title" = "Análisis de contratos inteligente";
-"coin_analytics.analysis.footer" = "Desarrollado por De.Fi";
 "coin_analytics.analysis.high_risk_items" = "Elementos de Alto Riesgo";
 "coin_analytics.analysis.medium_risk_items" = "Elementos de Riesgo Medio";
 "coin_analytics.analysis.attention_required" = "Atención Requerida";
@@ -1647,6 +1684,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "appearance.balance_tab" = "Balance Tab";
 "appearance.balance_tab.footer" = "La configuración \"Ocultar botones\" oculta los botones de Enviar, Recibir e Intercambiar en la pestaña de Saldo.";
+"appearance.amount_rounding" = "Amount Rounding";
 "appearance.hide_buttons" = "Ocultar Botones";
 "appearance.balance_value" = "Valor de Saldo";
 "appearance.balance_value.coin_fiat" = "Moneda / Fiat";
@@ -2312,3 +2350,12 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "check_address.chainalysis.description" = "Chainalysis es una plataforma de análisis blockchain que proporciona herramientas para rastrear, investigar y evaluar el riesgo de direcciones de criptomonedas. Ayuda a identificar direcciones asociadas a sanciones, fraudes y otras actividades ilícitas.";
 "check_address.hashdit.description" = "HashDit es una plataforma de seguridad que permite a los usuarios verificar direcciones de billeteras para detectar riesgos como sanciones o inclusión en listas negras. Ayuda a los usuarios a evitar interactuar con direcciones potencialmente maliciosas o bloqueadas.";
 "check_address.coin_blacklist.description" = "Permite verificar si una dirección de billetera está incluida en la lista negra por %@ (%@). Si una dirección está en la lista negra, los tokens %@ asociados a ella pueden ser congelados, quedando inaccesibles e intransferibles. Esta verificación ayuda a los usuarios a evitar interactuar con direcciones de alto riesgo o restringidas.";
+
+// Monero
+
+"monero.priority" = "Send Priority";
+"monero.priority.default" = "Default";
+"monero.priority.low" = "Low";
+"monero.priority.medium" = "Medium";
+"monero.priority.high" = "High";
+"monero.priority.last" = "Last";
