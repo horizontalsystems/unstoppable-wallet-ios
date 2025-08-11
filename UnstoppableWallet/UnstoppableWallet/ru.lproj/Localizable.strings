@@ -117,6 +117,8 @@
 "auto_lock.minute30" = "30 минут";
 "auto_lock.hour1" = "1 час";
 
+"powered_by" = "Powered by %@";
+
 // Access Camera
 
 "access_camera.message" = "%@ требуется доступ к вашей камере для сканирования QR-кода.
@@ -295,14 +297,15 @@
 
 // Balance
 
-"balance.title" = "Баланс";
+"balance.title" = "Кошелек";
 "balance.tab_bar_item" = "Баланс";
 "balance.send" = "Отправить";
 "balance.withdraw" = "Вывод средств";
 "balance.swap" = "Обмен";
 "balance.receive" = "Получить";
 "balance.deposit" = "Пополнение";
-"balance.address" = "Адрес";
+"balance.chart" = "Chart";
+"balance.scan" = "Scan";
 "balance.rate_per_coin" = "%@ за %@";
 "balance.syncing" = "Идет синхронизация...";
 "balance.searching" = "Поиск транзакций...";
@@ -761,6 +764,7 @@
 "market.tab.news" = "Новости";
 "market.tab.coins" = "Монеты";
 "market.tab.watchlist" = "Избранное";
+"market.tab.vaults" = "Earn";
 "market.tab.platforms" = "Платформы";
 "market.tab.pairs" = "Пары";
 "market.tab.sectors" = "Секторы";
@@ -901,6 +905,8 @@
 "market.advanced_search.outperformed_btc" = "Обошел BTC";
 "market.advanced_search.outperformed_eth" = "Обошел ETH";
 "market.advanced_search.outperformed_bnb" = "Обошел BNB";
+"market.advanced_search.outperformed_sp500" = "Outperformed S&P500";
+"market.advanced_search.outperformed_gold" = "Outperformed GOLD";
 "market.advanced_search.price_close_to" = "Цена близка к";
 "market.advanced_search.price_close_to_ath" = "Цена близка к ATH";
 "market.advanced_search.price_close_to_atl" = "Цена близка к ATL";
@@ -994,6 +1000,38 @@
 "market.signal.neutral" = "Нейтрально";
 "market.signal.sell" = "Продавать";
 "market.signal.strong_sell" = "Активно продавать";
+
+// Market Vaults
+
+"market.vaults.apy" = "APY %@";
+"market.vaults.tvl" = "TVL: %@";
+"market.vaults.premium.description" = "Want to unlock more earning opportunities?";
+"market.vaults.premium.unlock" = "Unlock Premium";
+
+"market.vaults.filter" = "Фильтр";
+"market.vaults.filter.all_assets" = "All Assets";
+"market.vaults.filter.eth_yield" = "ETH Yield";
+"market.vaults.filter.usd_yield" = "USD Yield";
+
+"market.vaults.sort.highest_apy" = "Highest APY";
+"market.vaults.sort.highest_tvl" = "Highest TVL";
+"market.vaults.sort.highest_apy.short" = "APY";
+"market.vaults.sort.highest_tvl.short" = "TVL";
+
+"market.vaults.chains.title" = "Блокчейны";
+"market.vaults.chains.any" = "Любое";
+"market.vaults.chains.all_chains" = "All Chains";
+"market.vaults.chains.n_chains" = "%@ Chains";
+
+// Market Vault
+
+"market.vault.apy" = "APY";
+"market.vault.tvl" = "TVL";
+"market.vault.network" = "Сеть";
+"market.vault.protocol" = "Protocol";
+"market.vault.underlying_token" = "Underlying Token";
+"market.vault.hoders" = "Держатели";
+"market.vault.open_dapp" = "Open DApp";
 
 // Coin Page
 
@@ -1233,7 +1271,6 @@
 "coin_analytics.30_day_volume" = "Объем за 30д";
 
 "coin_analytics.analysis.title" = "Анализ смарт-контрактов";
-"coin_analytics.analysis.footer" = "При поддержке De.Fi";
 "coin_analytics.analysis.high_risk_items" = "Элементы высокого риска";
 "coin_analytics.analysis.medium_risk_items" = "Элементы среднего риска";
 "coin_analytics.analysis.attention_required" = "Требуется внимание";
@@ -1648,6 +1685,7 @@
 
 "appearance.balance_tab" = "Вкладка баланс";
 "appearance.balance_tab.footer" = "Настройка «Скрыть кнопки» убирает кнопки Отправить, Получить и Обмен на вкладке баланса.";
+"appearance.amount_rounding" = "Amount Rounding";
 "appearance.hide_buttons" = "Скрыть кнопки";
 "appearance.balance_value" = "Значение баланса";
 "appearance.balance_value.coin_fiat" = "Монета / Фиат";
@@ -2316,3 +2354,12 @@
 "check_address.chainalysis.description" = "Chainalysis — это аналитическая платформа для блокчейна, предоставляющая инструменты для отслеживания, расследования и оценки рисков криптовалютных адресов. Помогает выявлять адреса, связанные с санкциями, мошенничеством и другими противоправными действиями.";
 "check_address.hashdit.description" = "HashDit — это платформа безопасности, позволяющая проверять криптовалютные адреса на предмет рисков, включая санкции и наличие в черных списках. Помогает пользователям избегать взаимодействия с потенциально вредоносными или заблокированными адресами.";
 "check_address.coin_blacklist.description" = "Позволяет проверить, занесён ли криптовалютный адрес в чёрный список %@ (%@). Если адрес находится в списке, все связанные с ним токены %@ могут быть заморожены, сделав их недоступными и непереводимыми. Эта проверка помогает избежать взаимодействия с адресами с высоким уровнем риска или ограничениями.";
+
+// Monero
+
+"monero.priority" = "Send Priority";
+"monero.priority.default" = "Default";
+"monero.priority.low" = "Low";
+"monero.priority.medium" = "Medium";
+"monero.priority.high" = "High";
+"monero.priority.last" = "Last";
