@@ -117,6 +117,8 @@
 "auto_lock.minute30" = "30 分钟";
 "auto_lock.hour1" = "1 小时";
 
+"powered_by" = "Powered by %@";
+
 // Access Camera
 
 "access_camera.message" = "%@ 需要访问您的相机以扫描二维码。
@@ -293,14 +295,15 @@
 
 // Balance
 
-"balance.title" = "余额";
+"balance.title" = "钱包";
 "balance.tab_bar_item" = "余额";
 "balance.send" = "发送​​";
 "balance.withdraw" = "提取";
 "balance.swap" = "掉期交易";
 "balance.receive" = "接收";
 "balance.deposit" = "接收";
-"balance.address" = "地址";
+"balance.chart" = "Chart";
+"balance.scan" = "Scan";
 "balance.rate_per_coin" = "%@ / %@";
 "balance.syncing" = "正在同步...";
 "balance.searching" = "正在搜索交易…...";
@@ -759,6 +762,7 @@
 "market.tab.news" = "发现";
 "market.tab.coins" = "币";
 "market.tab.watchlist" = "关注";
+"market.tab.vaults" = "Earn";
 "market.tab.platforms" = "平台";
 "market.tab.pairs" = "配对标点";
 "market.tab.sectors" = "行业";
@@ -899,6 +903,8 @@
 "market.advanced_search.outperformed_btc" = "跑赢BTC";
 "market.advanced_search.outperformed_eth" = "跑赢ETH";
 "market.advanced_search.outperformed_bnb" = "跑赢BNB";
+"market.advanced_search.outperformed_sp500" = "Outperformed S&P500";
+"market.advanced_search.outperformed_gold" = "Outperformed GOLD";
 "market.advanced_search.price_close_to" = "Price Close To";
 "market.advanced_search.price_close_to_ath" = "接近历史最高价";
 "market.advanced_search.price_close_to_atl" = "接近历史最低价";
@@ -992,6 +998,38 @@
 "market.signal.neutral" = "中性";
 "market.signal.sell" = "出售";
 "market.signal.strong_sell" = "强烈建议卖出";
+
+// Market Vaults
+
+"market.vaults.apy" = "APY %@";
+"market.vaults.tvl" = "TVL: %@";
+"market.vaults.premium.description" = "Want to unlock more earning opportunities?";
+"market.vaults.premium.unlock" = "Unlock Premium";
+
+"market.vaults.filter" = "筛选器";
+"market.vaults.filter.all_assets" = "All Assets";
+"market.vaults.filter.eth_yield" = "ETH Yield";
+"market.vaults.filter.usd_yield" = "USD Yield";
+
+"market.vaults.sort.highest_apy" = "Highest APY";
+"market.vaults.sort.highest_tvl" = "Highest TVL";
+"market.vaults.sort.highest_apy.short" = "APY";
+"market.vaults.sort.highest_tvl.short" = "TVL";
+
+"market.vaults.chains.title" = "区块链";
+"market.vaults.chains.any" = "任何";
+"market.vaults.chains.all_chains" = "All Chains";
+"market.vaults.chains.n_chains" = "%@ Chains";
+
+// Market Vault
+
+"market.vault.apy" = "APY";
+"market.vault.tvl" = "TVL";
+"market.vault.network" = "網絡";
+"market.vault.protocol" = "Protocol";
+"market.vault.underlying_token" = "Underlying Token";
+"market.vault.hoders" = "持有者";
+"market.vault.open_dapp" = "Open DApp";
 
 // Coin Page
 
@@ -1231,7 +1269,6 @@
 "coin_analytics.30_day_volume" = "30天交易量";
 
 "coin_analytics.analysis.title" = "智能合约分析";
-"coin_analytics.analysis.footer" = "由 De.Fi 支持";
 "coin_analytics.analysis.high_risk_items" = "高风险项目";
 "coin_analytics.analysis.medium_risk_items" = "中等风险项目";
 "coin_analytics.analysis.attention_required" = "需要注意";
@@ -1646,6 +1683,7 @@
 
 "appearance.balance_tab" = "余额标签";
 "appearance.balance_tab.footer" = "启用“隐藏按钮”设置后，将隐藏余额页面中的发送、接收和兑换按钮。";
+"appearance.amount_rounding" = "Amount Rounding";
 "appearance.hide_buttons" = "隐藏按钮";
 "appearance.balance_value" = "余额值";
 "appearance.balance_value.coin_fiat" = "加密货币 / 法定货币";
@@ -2311,3 +2349,12 @@
 "check_address.chainalysis.description" = "Chainalysis 是一家区块链分析平台，提供追踪、调查和评估加密地址风险的工具，可识别与制裁、欺诈及其他非法活动相关的地址。";
 "check_address.hashdit.description" = "HashDit 是一款安全平台，帮助用户检查钱包地址是否存在制裁或黑名单等风险，避免与潜在恶意或受限地址交互。";
 "check_address.coin_blacklist.description" = "该功能可用于验证某个钱包地址是否被 %@（%@）列入黑名单。如果地址被列入黑名单，相关联的 %@ 代币可能会被冻结，无法访问或转账。此检查可帮助用户避免与高风险或受限地址进行交互。";
+
+// Monero
+
+"monero.priority" = "Send Priority";
+"monero.priority.default" = "Default";
+"monero.priority.low" = "Low";
+"monero.priority.medium" = "Medium";
+"monero.priority.high" = "High";
+"monero.priority.last" = "Last";
