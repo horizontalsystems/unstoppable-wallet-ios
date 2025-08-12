@@ -119,6 +119,8 @@
 
 "powered_by" = "Powered by %@";
 
+"filter.all" = "전체";
+
 // Access Camera
 
 "access_camera.message" = "%@이 QR코드를 스캔하기 위해선 카메라에 대한 접근이 필요합니다. \n\n설정 -> %@으로 가서 카메라 접근을 허용해 주세요.";
