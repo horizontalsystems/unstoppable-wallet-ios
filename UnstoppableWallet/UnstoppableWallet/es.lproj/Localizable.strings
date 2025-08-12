@@ -119,6 +119,8 @@
 
 "powered_by" = "Powered by %@";
 
+"filter.all" = "Todo";
+
 // Access Camera
 
 "access_camera.message" = "%@ necesita acceso a tu cámara para escanear el código QR.
