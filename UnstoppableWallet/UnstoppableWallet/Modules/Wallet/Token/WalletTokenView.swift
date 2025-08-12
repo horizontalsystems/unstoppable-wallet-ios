@@ -19,9 +19,11 @@ struct WalletTokenView<AdditionalContent: View>: View {
                     .listRowBackground(Color.themeTyler)
                     .listRowInsets(EdgeInsets())
                     .listRowSeparator(.hidden)
+                    .themeListTopView()
 
                 TransactionsView(viewModel: transactionsViewModel, statPage: .tokenPage)
             }
+            .themeListScrollHeader()
         }
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
@@ -118,7 +120,7 @@ struct WalletTokenView<AdditionalContent: View>: View {
             return "balance.stopped".localized
         default: ()
             if viewModel.balanceHidden {
-                return BalanceHiddenManager.placeholder
+                return " "
             }
 
             guard let priceItem = viewModel.priceItem else {

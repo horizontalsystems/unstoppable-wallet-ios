@@ -17,61 +17,49 @@ struct ScrollableTabHeaderView: View {
     }
 
     var body: some View {
-        ZStack(alignment: .bottom) {
-            Rectangle()
-                .fill(Color.themeBlade)
-                .frame(maxWidth: .infinity)
-                .frame(height: 1)
-
-            ScrollViewReader { proxy in
-                ScrollView(.horizontal, showsIndicators: false) {
-                    HStack(spacing: .margin8) {
-                        ForEach(tabs.indices, id: \.self) { index in
-                            item(tab: tabs[index], isActive: index == currentTabIndex, namespace: menuItemTransition)
-                                .onTapGesture {
-                                    withAnimation(.spring().speed(1.5)) {
-                                        currentTabIndex = index
-                                    }
+        ScrollViewReader { proxy in
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: .margin8) {
+                    ForEach(tabs.indices, id: \.self) { index in
+                        item(tab: tabs[index], isActive: index == currentTabIndex, namespace: menuItemTransition)
+                            .onTapGesture {
+                                withAnimation(.spring().speed(1.5)) {
+                                    currentTabIndex = index
                                 }
-                        }
-                    }
-                    .padding(.horizontal, .margin12)
-                }
-                .onChange(of: currentTabIndex) { index in
-                    withAnimation(.spring().speed(1.5)) {
-                        proxy.scrollTo(index, anchor: .center)
+                            }
                     }
                 }
-                .onFirstAppear {
-                    proxy.scrollTo(currentTabIndex, anchor: .center)
+                .padding(.horizontal, .margin12)
+            }
+            .onChange(of: currentTabIndex) { index in
+                withAnimation(.spring().speed(1.5)) {
+                    proxy.scrollTo(index, anchor: .center)
                 }
             }
+            .onFirstAppear {
+                proxy.scrollTo(currentTabIndex, anchor: .center)
+            }
         }
+        .background(Color.themeTyler)
         .animation(.spring().speed(1.5), value: currentTabIndex)
     }
 
     @ViewBuilder private func item(tab: Tab, isActive: Bool, namespace: Namespace.ID) -> some View {
-        if isActive {
-            Text(tab.title)
-                .font(.themeSubhead1)
-                .foregroundColor(.themeLeah)
-                .contentShape(Rectangle())
-                .padding(.horizontal, .margin12)
-                .frame(height: 44)
-                .overlay(alignment: .bottom) {
-                    RoundedRectangle(cornerRadius: 2, style: .continuous)
-                        .fill(Color.themeJacob)
-                        .frame(height: 4)
-                        .offset(x: 0, y: 2)
-                        .matchedGeometryEffect(id: "highlightmenuitem", in: namespace)
-                }
-        } else {
-            Text(tab.title)
-                .font(.themeSubhead1)
-                .foregroundColor(tab.highlighted ? .themeJacob : .themeGray)
-                .contentShape(Rectangle())
-                .padding(.horizontal, .margin12)
-                .frame(height: 44)
+        ThemeText(
+            tab.title,
+            style: isActive || tab.highlighted ? .subheadSB : .subhead,
+            colorStyle: isActive ? .primary : (tab.highlighted ? .yellow : .secondary)
+        )
+        .contentShape(Rectangle())
+        .padding(.horizontal, .margin12)
+        .frame(height: 52)
+        .overlay(alignment: .bottom) {
+            if isActive {
+                Rectangle()
+                    .fill(Color.themeJacob)
+                    .frame(height: 2)
+                    .matchedGeometryEffect(id: "highlightmenuitem", in: namespace)
+            }
         }
     }
 }

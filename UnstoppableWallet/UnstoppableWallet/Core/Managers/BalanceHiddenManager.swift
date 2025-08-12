@@ -2,7 +2,7 @@ import RxRelay
 import RxSwift
 
 class BalanceHiddenManager {
-    static let placeholder = "*****"
+    static let placeholder = "------"
     private let keyBalanceHidden = "wallet-balance-hidden"
     private let keyBalanceAutoHide = "wallet-balance-auto-hide"
 
