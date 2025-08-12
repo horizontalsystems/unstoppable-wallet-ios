@@ -23,8 +23,10 @@ struct Cell<Left: View, Middle: View, Right: View>: View {
 
     var body: some View {
         if let action {
-            Button(action: action) { content() }
-                .buttonStyle(CellButtonStyle())
+            Button(action: action) {
+                content()
+            }
+            .buttonStyle(CellButtonStyle())
         } else {
             content()
         }

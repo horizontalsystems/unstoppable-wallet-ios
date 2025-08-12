@@ -16,6 +16,7 @@ struct WalletView: View {
                                 .listRowBackground(Color.themeTyler)
                                 .listRowInsets(EdgeInsets())
                                 .listRowSeparator(.hidden)
+                                .themeListTopView()
 
                             AccountWarningView(viewModel: accountWarningViewModel)
                                 .listRowBackground(Color.clear)
@@ -36,6 +37,7 @@ struct WalletView: View {
                             await viewModel.refresh()
                         }
                         .onChange(of: viewModel.sortType) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
+                        .themeListScrollHeader()
                     }
                 }
             } else {
@@ -212,7 +214,7 @@ struct WalletView: View {
 
     private var secondaryValue: CustomStringConvertible {
         if viewModel.balanceHidden {
-            return BalanceHiddenManager.placeholder
+            return " "
         }
 
         return ComponentText(

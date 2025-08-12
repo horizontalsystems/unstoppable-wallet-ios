@@ -119,6 +119,8 @@
 
 "powered_by" = "Powered by %@";
 
+"filter.all" = "All";
+
 // Access Camera
 
 "access_camera.message" = "Access to your camera for this app was denied, you can go to settings and allow access";

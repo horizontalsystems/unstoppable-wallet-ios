@@ -42,7 +42,9 @@ struct WalletListItemView: View, Equatable {
             return main
         case .stopped:
             return "balance.stopped".localized
-        default:
+        case .notSynced:
+            return "balance_error.sync_error".localized
+        case .synced:
             switch subtitleMode {
             case .price:
                 if let priceItem = item.priceItem {
@@ -58,7 +60,7 @@ struct WalletListItemView: View, Equatable {
 
     private var subtitle2: CustomStringConvertible? {
         switch item.state {
-        case .synced, .notSynced:
+        case .synced:
             switch subtitleMode {
             case .price:
                 return item.priceItem.map { Diff.text(diff: $0.diff, expired: $0.expired) }
@@ -94,9 +96,9 @@ struct WalletListItemView: View, Equatable {
         }
     }
 
-    private var secondaryValue: CustomStringConvertible {
+    private var secondaryValue: CustomStringConvertible? {
         if balanceHidden {
-            return BalanceHiddenManager.placeholder
+            return nil
         }
 
         switch balancePrimaryValue {

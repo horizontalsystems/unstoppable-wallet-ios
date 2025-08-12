@@ -3177,6 +3177,8 @@
 		D3AFAB122E460207004AB074 /* DropdownButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAB102E460204004AB074 /* DropdownButton.swift */; };
 		D3AFAB142E460328004AB074 /* CellButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAB132E460321004AB074 /* CellButtonStyle.swift */; };
 		D3AFAB152E460328004AB074 /* CellButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAB132E460321004AB074 /* CellButtonStyle.swift */; };
+		D3AFAB1A2E4A0D7B004AB074 /* ScrollHeaderModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAB192E4A0D7A004AB074 /* ScrollHeaderModifier.swift */; };
+		D3AFAB1B2E4A0D7B004AB074 /* ScrollHeaderModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAB192E4A0D7A004AB074 /* ScrollHeaderModifier.swift */; };
 		D3B73E272BDBC6120067429D /* IPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B73E262BDBC6120067429D /* IPreSendHandler.swift */; };
 		D3B73E282BDBC6120067429D /* IPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B73E262BDBC6120067429D /* IPreSendHandler.swift */; };
 		D3B73E2A2BDBC61D0067429D /* EvmPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B73E292BDBC61D0067429D /* EvmPreSendHandler.swift */; };
@@ -4991,6 +4993,7 @@
 		D3AFAB0D2E4601FD004AB074 /* IconButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IconButton.swift; sourceTree = "<group>"; };
 		D3AFAB102E460204004AB074 /* DropdownButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropdownButton.swift; sourceTree = "<group>"; };
 		D3AFAB132E460321004AB074 /* CellButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CellButtonStyle.swift; sourceTree = "<group>"; };
+		D3AFAB192E4A0D7A004AB074 /* ScrollHeaderModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrollHeaderModifier.swift; sourceTree = "<group>"; };
 		D3B476A321D0D64E008B0C3E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D3B476A421D0D64E008B0C3E /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		D3B476A521D0D659008B0C3E /* zh */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = zh; path = zh.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -5633,6 +5636,7 @@
 		11B3546A6E6F3CC013C9FF44 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				D3AFAB192E4A0D7A004AB074 /* ScrollHeaderModifier.swift */,
 				D3AFAB132E460321004AB074 /* CellButtonStyle.swift */,
 				D3AFAB102E460204004AB074 /* DropdownButton.swift */,
 				D3AFAB0D2E4601FD004AB074 /* IconButton.swift */,
@@ -10938,6 +10942,7 @@
 				ABC9AADE6C4251FCC9222125 /* ManageBarButtonView.swift in Sources */,
 				D3833AF62BF20B8D00ACECFB /* MarketPairsViewModel.swift in Sources */,
 				ABC9AB11FDD018A96BB86557 /* BottomGradientHolder.swift in Sources */,
+				D3AFAB1A2E4A0D7B004AB074 /* ScrollHeaderModifier.swift in Sources */,
 				11B35311CEEC40EA3089293D /* SubscriptionInfoViewController.swift in Sources */,
 				11B35A5DA8197D193B7CF8D9 /* AmountData.swift in Sources */,
 				D0532CC52B149E450015DF40 /* WatchService.swift in Sources */,
@@ -11547,6 +11552,7 @@
 				1A564D3DB55C8CB8B5AED664 /* BalanceErrorViewModel.swift in Sources */,
 				D36DE0DE272FD887000BC916 /* OneInchViewModel.swift in Sources */,
 				D36287A32CA2B35A00ADAF3B /* TonConnectListViewModel.swift in Sources */,
+				D3AFAB1B2E4A0D7B004AB074 /* ScrollHeaderModifier.swift in Sources */,
 				1A5649926B0064083045BEEB /* BalanceErrorService.swift in Sources */,
 				1A564001701A1E77AF7A651B /* BalanceErrorModule.swift in Sources */,
 				D34D3E052DD614B7005C9ACC /* StellarSecretKeyViewController.swift in Sources */,

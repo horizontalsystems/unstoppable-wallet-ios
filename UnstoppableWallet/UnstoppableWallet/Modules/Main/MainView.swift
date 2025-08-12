@@ -47,6 +47,7 @@ struct MainView: View {
                 .padding(.horizontal, .margin16)
                 .background(Color.themeBlade)
             }
+            .ignoresSafeArea(.keyboard)
             .navigationDestination(for: Wallet.self) { wallet in
                 WalletTokenModule.view(wallet: wallet)
             }
@@ -83,8 +84,22 @@ struct MainView: View {
                         stat(page: .balance, event: .open(page: .manageWallets))
                     }) {
                         Image("wallet_change")
-                            .renderingMode(.template)
-                            .foregroundColor(.themeGray)
+                    }
+                }
+
+                if walletViewModel.buttonHidden {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button(action: {
+                            Coordinator.shared.present { _ in
+                                ScanQrViewNew(reportAfterDismiss: true, pasteEnabled: true) { text in
+                                    walletViewModel.process(scanned: text)
+                                }
+                                .ignoresSafeArea()
+                            }
+                            stat(page: .balance, event: .open(page: .scanQrCode))
+                        }) {
+                            Image("scan")
+                        }
                     }
                 }
             }
