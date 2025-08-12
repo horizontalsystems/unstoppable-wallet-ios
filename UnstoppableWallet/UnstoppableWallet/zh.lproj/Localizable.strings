@@ -119,6 +119,8 @@
 
 "powered_by" = "Powered by %@";
 
+"filter.all" = "所有";
+
 // Access Camera
 
 "access_camera.message" = "%@ 需要访问您的相机以扫描二维码。
