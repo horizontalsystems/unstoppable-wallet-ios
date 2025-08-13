@@ -1,6 +1,6 @@
 import Foundation
 
-class BalanceData: Equatable {
+struct BalanceData: Hashable {
     let total: Decimal
     let available: Decimal
 
@@ -12,9 +12,5 @@ class BalanceData: Equatable {
     init(total: Decimal, available: Decimal) {
         self.total = total
         self.available = available
-    }
-
-    static func == (lhs: BalanceData, rhs: BalanceData) -> Bool {
-        lhs.available == rhs.available && lhs.total == rhs.total
     }
 }

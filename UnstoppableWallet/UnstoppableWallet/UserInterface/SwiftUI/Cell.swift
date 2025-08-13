@@ -29,6 +29,7 @@ struct Cell<Left: View, Middle: View, Right: View>: View {
             .buttonStyle(CellButtonStyle())
         } else {
             content()
+                .background(Color.themeLawrence)
         }
     }
 

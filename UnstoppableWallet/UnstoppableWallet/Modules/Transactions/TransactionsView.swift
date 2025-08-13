@@ -7,29 +7,18 @@ struct TransactionsView: View {
     var body: some View {
         ForEach(viewModel.sections) { section in
             Section {
-                ForEach(section.viewItems) { viewItem in
-                    VStack(spacing: 0) {
-                        if section.viewItems.first?.id == viewItem.id {
-                            HorizontalDivider()
-                        }
-
-                        ItemView(viewItem: viewItem) {
-                            if let record = viewModel.record(id: viewItem.id) {
-                                Coordinator.shared.present { _ in
-                                    TransactionInfoView(transactionRecord: record).ignoresSafeArea()
-                                }
-                                stat(page: statPage, event: .open(page: .transactionInfo))
+                ListForEach(section.viewItems) { viewItem in
+                    ItemView(viewItem: viewItem) {
+                        if let record = viewModel.record(id: viewItem.id) {
+                            Coordinator.shared.present { _ in
+                                TransactionInfoView(transactionRecord: record).ignoresSafeArea()
                             }
+                            stat(page: statPage, event: .open(page: .transactionInfo))
                         }
-                        .onAppear {
-                            viewModel.onDisplay(section: section, viewItem: viewItem)
-                        }
-
-                        HorizontalDivider()
                     }
-                    .listRowBackground(Color.clear)
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
+                    .onAppear {
+                        viewModel.onDisplay(section: section, viewItem: viewItem)
+                    }
                 }
             } header: {
                 Text(section.title)

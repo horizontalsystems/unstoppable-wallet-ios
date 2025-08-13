@@ -6,7 +6,7 @@ struct BalanceErrorBottomView: View {
     @StateObject var viewModel: BalanceErrorBottomViewModel
     @Binding var isPresented: Bool
 
-    init(wallet: Wallet, error: Error, isPresented: Binding<Bool>) {
+    init(wallet: Wallet, error: String, isPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: BalanceErrorBottomViewModel(wallet: wallet, error: error))
         _isPresented = isPresented
     }

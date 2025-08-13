@@ -110,7 +110,7 @@ struct CoinMarketsView: View {
                     .lineLimit(1)
 
                 if viewItem.verified {
-                    BadgeViewNew(text: "coin_markets.verified".localized)
+                    BadgeViewNew("coin_markets.verified".localized)
                 }
 
                 Spacer()

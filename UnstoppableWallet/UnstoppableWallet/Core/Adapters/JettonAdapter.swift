@@ -50,7 +50,7 @@ class JettonAdapter {
         switch kitSyncState {
         case .syncing: return .syncing(progress: nil, lastBlockDate: nil)
         case .synced: return .synced
-        case let .notSynced(error): return .notSynced(error: error)
+        case let .notSynced(error): return .notSynced(error: error.localizedDescription)
         }
     }
 

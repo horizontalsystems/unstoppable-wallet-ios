@@ -9,7 +9,7 @@ class BalanceErrorBottomViewModel: ObservableObject {
 
     let item: Item
 
-    init(wallet: Wallet, error: Error) {
+    init(wallet: Wallet, error: String) {
         var sourceType: SourceType?
 
         if let blockchain = btcBlockchainManager.blockchain(token: wallet.token) {
@@ -18,7 +18,7 @@ class BalanceErrorBottomViewModel: ObservableObject {
             sourceType = .evm(blockchain: blockchain)
         }
 
-        item = Item(wallet: wallet, error: error.localizedDescription, sourceType: sourceType)
+        item = Item(wallet: wallet, error: error, sourceType: sourceType)
     }
 
     func refresh(wallet: Wallet) {

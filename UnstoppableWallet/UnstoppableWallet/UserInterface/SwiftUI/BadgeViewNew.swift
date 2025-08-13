@@ -1,65 +1,59 @@
 import SwiftUI
 
 struct BadgeViewNew: View {
-    private let style: Style
     private let text: String
     private let change: Int?
+    private let mode: Mode
+    private let colorStyle: ColorStyle
 
-    init(style: Style = .small, text: String, change: Int? = nil) {
-        self.style = style
-        self.text = text
-        self.change = change
+    init(_ text: CustomStringConvertible, change: Int? = nil, mode: BadgeViewNew.Mode? = nil, colorStyle: ColorStyle? = nil) {
+        if let componentBadge = text as? ComponentBadge {
+            self.text = componentBadge.text
+            self.change = change ?? componentBadge.change
+            self.mode = mode ?? componentBadge.mode ?? .solid
+            self.colorStyle = colorStyle ?? componentBadge.colorStyle ?? .primary
+        } else {
+            self.text = text.description
+            self.change = change
+            self.mode = mode ?? .solid
+            self.colorStyle = colorStyle ?? .primary
+        }
     }
 
     var body: some View {
+        switch mode {
+        case .solid:
+            content().background(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).fill(Color.themeBlade))
+        case .transparent:
+            content().background(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).stroke(colorStyle.color(), lineWidth: .heightOneDp))
+        }
+    }
+
+    @ViewBuilder func content() -> some View {
         HStack(spacing: .margin2) {
-            Text(text)
-                .font(style.font)
-                .foregroundColor(style.foregroundColor)
+            ThemeText(text, style: .microSB, colorStyle: colorStyle)
 
             if let change, change != 0 {
                 if change > 0 {
                     Text(verbatim: "↑\(change)")
-                        .font(style.font)
-                        .foregroundColor(.themeRemus)
+                        .font(TextStyle.microSB.font)
+                        .foregroundColor(ColorStyle.green.color())
                 } else {
                     Text(verbatim: "↓\(abs(change))")
-                        .font(style.font)
-                        .foregroundColor(.themeLucian)
+                        .font(TextStyle.microSB.font)
+                        .foregroundColor(ColorStyle.red.color())
                 }
             }
         }
         .padding(.horizontal, .margin6)
         .padding(.vertical, .margin2)
-        .background(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).fill(style.backgroundColor))
         .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous))
     }
 }
 
 extension BadgeViewNew {
-    enum Style {
-        case small
-        case medium
-
-        var font: Font {
-            switch self {
-            case .small: return .themeMicroSB
-            case .medium: return .themeCaptionSB
-            }
-        }
-
-        var foregroundColor: Color {
-            switch self {
-            case .small: return .themeBran
-            case .medium: return .white
-            }
-        }
-
-        var backgroundColor: Color {
-            switch self {
-            case .small: return .themeBlade
-            case .medium: return .themeBlade
-            }
-        }
+    enum Mode {
+        case solid
+        case transparent
     }
 }

@@ -212,7 +212,7 @@ struct MarketTvlView: View {
             HStack(spacing: .margin8) {
                 HStack(spacing: .margin4) {
                     if let rank {
-                        BadgeViewNew(text: "\(rank)")
+                        BadgeViewNew("\(rank)")
                     }
                     Text(platform).textSubhead2()
                 }
@@ -237,7 +237,7 @@ struct MarketTvlView: View {
             HStack(spacing: .margin8) {
                 HStack(spacing: .margin4) {
                     if let rank {
-                        BadgeViewNew(text: "\(rank)")
+                        BadgeViewNew("\(rank)")
                     }
                     Text(platform).textSubhead2()
                 }

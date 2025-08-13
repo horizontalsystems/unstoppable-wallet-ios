@@ -162,7 +162,7 @@ struct MarketMarketCapView: View {
             HStack(spacing: .margin8) {
                 HStack(spacing: .margin4) {
                     if let rank {
-                        BadgeViewNew(text: "\(rank)")
+                        BadgeViewNew("\(rank)")
                     }
 
                     if let marketCap, let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: marketCap) {

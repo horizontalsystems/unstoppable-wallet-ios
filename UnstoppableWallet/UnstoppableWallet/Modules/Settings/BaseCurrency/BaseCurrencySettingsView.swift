@@ -8,7 +8,7 @@ struct BaseCurrencySettingsView: View {
     var body: some View {
         ScrollableThemeView {
             ListSection {
-                ForEach(viewModel.popularCurrencies) { currency in
+                ForEach(viewModel.popularCurrencies, id: \.self) { currency in
                     row(currency: currency, showConfirmation: false)
                 }
             }
@@ -18,7 +18,7 @@ struct BaseCurrencySettingsView: View {
                 ListSectionHeader(text: "settings.base_currency.other".localized)
 
                 ListSection {
-                    ForEach(viewModel.otherCurrencies) { currency in
+                    ForEach(viewModel.otherCurrencies, id: \.self) { currency in
                         row(currency: currency, showConfirmation: true)
                     }
                 }

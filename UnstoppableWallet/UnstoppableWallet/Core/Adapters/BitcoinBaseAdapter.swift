@@ -38,7 +38,7 @@ class BitcoinBaseAdapter {
         transactionSource = wallet.transactionSource
         self.syncMode = syncMode
 
-        balanceState = .notSynced(error: AppError.unknownError)
+        balanceState = .notSynced(error: AppError.unknownError.localizedDescription)
     }
 
     func transactionRecord(fromTransaction transaction: TransactionInfo) -> BitcoinTransactionRecord {
@@ -239,7 +239,7 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
                 return
             }
 
-            balanceState = .notSynced(error: converted)
+            balanceState = .notSynced(error: converted.localizedDescription)
         case let .syncing(progress):
             let newProgress = Int(progress * 100)
             let newDate = showSyncedUntil

@@ -2792,8 +2792,6 @@
 		D31C4764238BF176008CB818 /* FeeRateState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C475A238BF175008CB818 /* FeeRateState.swift */; };
 		D3384D092BFCB43800515664 /* MarketWatchlistSignalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D082BFCB43800515664 /* MarketWatchlistSignalsView.swift */; };
 		D3384D0A2BFCB43800515664 /* MarketWatchlistSignalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D082BFCB43800515664 /* MarketWatchlistSignalsView.swift */; };
-		D3384D0C2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D0B2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift */; };
-		D3384D0D2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D0B2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift */; };
 		D3384D102BFDCBDE00515664 /* MarketEtfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D0F2BFDCBDE00515664 /* MarketEtfView.swift */; };
 		D3384D112BFDCBDE00515664 /* MarketEtfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D0F2BFDCBDE00515664 /* MarketEtfView.swift */; };
 		D3384D132BFDCBE700515664 /* MarketEtfViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D122BFDCBE700515664 /* MarketEtfViewModel.swift */; };
@@ -3157,8 +3155,8 @@
 		D3AFAAF42E45FE4A004AB074 /* Diff.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAAF22E45FE48004AB074 /* Diff.swift */; };
 		D3AFAAF62E45FEEA004AB074 /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAAF52E45FEE7004AB074 /* TextStyle.swift */; };
 		D3AFAAF72E45FEEA004AB074 /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAAF52E45FEE7004AB074 /* TextStyle.swift */; };
-		D3AFAAF92E45FEF5004AB074 /* TextColorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAAF82E45FEF0004AB074 /* TextColorStyle.swift */; };
-		D3AFAAFA2E45FEF5004AB074 /* TextColorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAAF82E45FEF0004AB074 /* TextColorStyle.swift */; };
+		D3AFAAF92E45FEF5004AB074 /* ColorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAAF82E45FEF0004AB074 /* ColorStyle.swift */; };
+		D3AFAAFA2E45FEF5004AB074 /* ColorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAAF82E45FEF0004AB074 /* ColorStyle.swift */; };
 		D3AFAAFC2E45FF06004AB074 /* ThemeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAAFB2E45FF04004AB074 /* ThemeText.swift */; };
 		D3AFAAFD2E45FF06004AB074 /* ThemeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAAFB2E45FF04004AB074 /* ThemeText.swift */; };
 		D3AFAAFF2E45FF12004AB074 /* Cell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAAFE2E45FF11004AB074 /* Cell.swift */; };
@@ -3179,6 +3177,14 @@
 		D3AFAB152E460328004AB074 /* CellButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAB132E460321004AB074 /* CellButtonStyle.swift */; };
 		D3AFAB1A2E4A0D7B004AB074 /* ScrollHeaderModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAB192E4A0D7A004AB074 /* ScrollHeaderModifier.swift */; };
 		D3AFAB1B2E4A0D7B004AB074 /* ScrollHeaderModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAB192E4A0D7A004AB074 /* ScrollHeaderModifier.swift */; };
+		D3AFAB1C2E4C8C89004AB074 /* ColorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAAF82E45FEF0004AB074 /* ColorStyle.swift */; };
+		D3AFAB1D2E4C8C89004AB074 /* ColorStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAAF82E45FEF0004AB074 /* ColorStyle.swift */; };
+		D3AFAB1E2E4C8C8E004AB074 /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAAF52E45FEE7004AB074 /* TextStyle.swift */; };
+		D3AFAB1F2E4C8C8E004AB074 /* TextStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAAF52E45FEE7004AB074 /* TextStyle.swift */; };
+		D3AFAB202E4C8CCA004AB074 /* ThemeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAAFB2E45FF04004AB074 /* ThemeText.swift */; };
+		D3AFAB212E4C8CCA004AB074 /* ThemeText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAAFB2E45FF04004AB074 /* ThemeText.swift */; };
+		D3AFAB222E4C8D35004AB074 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAB012E45FF2B004AB074 /* Component.swift */; };
+		D3AFAB232E4C8D35004AB074 /* Component.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AFAB012E45FF2B004AB074 /* Component.swift */; };
 		D3B73E272BDBC6120067429D /* IPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B73E262BDBC6120067429D /* IPreSendHandler.swift */; };
 		D3B73E282BDBC6120067429D /* IPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B73E262BDBC6120067429D /* IPreSendHandler.swift */; };
 		D3B73E2A2BDBC61D0067429D /* EvmPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B73E292BDBC61D0067429D /* EvmPreSendHandler.swift */; };
@@ -4833,7 +4839,6 @@
 		D3373D9420BEC7B30082BC4A /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		D3373DB120C52F640082BC4A /* LaunchScreen.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LaunchScreen.xib; sourceTree = "<group>"; };
 		D3384D082BFCB43800515664 /* MarketWatchlistSignalsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketWatchlistSignalsView.swift; sourceTree = "<group>"; };
-		D3384D0B2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketWatchlistSignalBadge.swift; sourceTree = "<group>"; };
 		D3384D0F2BFDCBDE00515664 /* MarketEtfView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketEtfView.swift; sourceTree = "<group>"; };
 		D3384D122BFDCBE700515664 /* MarketEtfViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketEtfViewModel.swift; sourceTree = "<group>"; };
 		D3384D152BFDEF6800515664 /* Etf.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Etf.swift; sourceTree = "<group>"; };
@@ -4983,7 +4988,7 @@
 		D3AFAAEF2E420726004AB074 /* WalletButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletButtonView.swift; sourceTree = "<group>"; };
 		D3AFAAF22E45FE48004AB074 /* Diff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Diff.swift; sourceTree = "<group>"; };
 		D3AFAAF52E45FEE7004AB074 /* TextStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextStyle.swift; sourceTree = "<group>"; };
-		D3AFAAF82E45FEF0004AB074 /* TextColorStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextColorStyle.swift; sourceTree = "<group>"; };
+		D3AFAAF82E45FEF0004AB074 /* ColorStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorStyle.swift; sourceTree = "<group>"; };
 		D3AFAAFB2E45FF04004AB074 /* ThemeText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeText.swift; sourceTree = "<group>"; };
 		D3AFAAFE2E45FF11004AB074 /* Cell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Cell.swift; sourceTree = "<group>"; };
 		D3AFAB012E45FF2B004AB074 /* Component.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Component.swift; sourceTree = "<group>"; };
@@ -5646,7 +5651,7 @@
 				D3AFAB012E45FF2B004AB074 /* Component.swift */,
 				D3AFAAFE2E45FF11004AB074 /* Cell.swift */,
 				D3AFAAFB2E45FF04004AB074 /* ThemeText.swift */,
-				D3AFAAF82E45FEF0004AB074 /* TextColorStyle.swift */,
+				D3AFAAF82E45FEF0004AB074 /* ColorStyle.swift */,
 				D3AFAAF52E45FEE7004AB074 /* TextStyle.swift */,
 				D3AFAAF22E45FE48004AB074 /* Diff.swift */,
 				D3AFAAEF2E420726004AB074 /* WalletButtonView.swift */,
@@ -9260,7 +9265,6 @@
 				D3833AD62BEE1A7900ACECFB /* MarketWatchlistView.swift */,
 				D3833AD92BEE1A8300ACECFB /* MarketWatchlistViewModel.swift */,
 				D3384D082BFCB43800515664 /* MarketWatchlistSignalsView.swift */,
-				D3384D0B2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift */,
 			);
 			path = Watchlist;
 			sourceTree = "<group>";
@@ -9904,7 +9908,6 @@
 				11B358B0576F63BE43947DD5 /* Account.swift in Sources */,
 				11B35BEB439509EACB41AB06 /* AccountType.swift in Sources */,
 				11B35F663F7E12BFDDE3C88B /* AccountManager.swift in Sources */,
-				D3384D0D2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift in Sources */,
 				11B353AA4AFFB020A68E09B6 /* AccountFactory.swift in Sources */,
 				3C7B9BAF807355796DCA80C4 /* WelcomeScreenViewController.swift in Sources */,
 				11B35BCD6D0462E31D7EBA06 /* BackupManager.swift in Sources */,
@@ -10304,7 +10307,7 @@
 				D086A9172BF4D08400462024 /* SendParameters.swift in Sources */,
 				D36DE0E2272FD887000BC916 /* OneInchProvider.swift in Sources */,
 				D3DB51A02BD6854A0091BBDB /* MarketSearchView.swift in Sources */,
-				D3AFAAF92E45FEF5004AB074 /* TextColorStyle.swift in Sources */,
+				D3AFAAF92E45FEF5004AB074 /* ColorStyle.swift in Sources */,
 				D36DE100272FD92F000BC916 /* SwapSelectProviderViewModel.swift in Sources */,
 				58AAAAEDC64AE5716BC07673 /* SwapSlippageViewModel.swift in Sources */,
 				D3E36B4F2DE9CCA7007F99CA /* TransactionsView.swift in Sources */,
@@ -11458,7 +11461,6 @@
 				11B35068E05BC58C6C9A93D7 /* AccountManager.swift in Sources */,
 				11B35C8621E221DA1F157A5B /* AccountFactory.swift in Sources */,
 				3C7B9F51D15FBB02710E5EEB /* WelcomeScreenViewController.swift in Sources */,
-				D3384D0C2BFCB8F000515664 /* MarketWatchlistSignalBadge.swift in Sources */,
 				11B35BC6DFCA197FA842873B /* BackupManager.swift in Sources */,
 				11B35590A4DA4BCFB3D38DDF /* AppManager.swift in Sources */,
 				D31C4761238BF176008CB818 /* MnemonicDerivation.swift in Sources */,
@@ -11704,7 +11706,7 @@
 				11B35F6FDB8640381081A06C /* FormAmountInputView.swift in Sources */,
 				6B1D8D162DE98F2600A52B01 /* Colors.swift in Sources */,
 				6B1D8D172DE98F2600A52B01 /* UIKeyboardAppearance.swift in Sources */,
-				D3AFAAFA2E45FEF5004AB074 /* TextColorStyle.swift in Sources */,
+				D3AFAAFA2E45FEF5004AB074 /* ColorStyle.swift in Sources */,
 				6B1D8D182DE98F2600A52B01 /* Controllers.swift in Sources */,
 				6B1D8D1A2DE98F2600A52B01 /* ITheme.swift in Sources */,
 				6B1D8D1B2DE98F2600A52B01 /* Fonts.swift in Sources */,
@@ -12974,6 +12976,8 @@
 				11B35CB0098E9628FE81AC39 /* TopCoinsWidget.swift in Sources */,
 				11B3538FA5A4953A7C9AC9E6 /* SingleCoinPriceWidget.swift in Sources */,
 				6B6E13C02DED8B78007F4A39 /* UIRectEdge.swift in Sources */,
+				D3AFAB1F2E4C8C8E004AB074 /* TextStyle.swift in Sources */,
+				D3AFAB212E4C8CCA004AB074 /* ThemeText.swift in Sources */,
 				11B358D519ACFE88A7823C7E /* ApiProvider.swift in Sources */,
 				11B358587D9C3A1F10EC15A6 /* PriceChangeType.swift in Sources */,
 				D36E50822BF7534900C361BD /* WatchlistManager.swift in Sources */,
@@ -12986,6 +12990,7 @@
 				6B6E139E2DED8A4B007F4A39 /* CornerPath.swift in Sources */,
 				D34A29B92BFB4E3200F63036 /* WatchlistSortBy.swift in Sources */,
 				6B1D8CE82DE98F2600A52B01 /* Colors.swift in Sources */,
+				D3AFAB1D2E4C8C89004AB074 /* ColorStyle.swift in Sources */,
 				6B1D8CE92DE98F2600A52B01 /* UIKeyboardAppearance.swift in Sources */,
 				6B1D8CEA2DE98F2600A52B01 /* Controllers.swift in Sources */,
 				6B1D8CEC2DE98F2600A52B01 /* ITheme.swift in Sources */,
@@ -13003,6 +13008,7 @@
 				6B1D8E902DEADF7F00A52B01 /* TopDescriptionHeaderFooterView.swift in Sources */,
 				6B1D8E912DEADF7F00A52B01 /* EmptyCell.swift in Sources */,
 				6B6D3F312DED757F00AB2915 /* LanguageManager.swift in Sources */,
+				D3AFAB232E4C8D35004AB074 /* Component.swift in Sources */,
 				6B1D8E942DEADF7F00A52B01 /* ComponentKit.swift in Sources */,
 				6B1D8E972DEADF7F00A52B01 /* CardView.swift in Sources */,
 				6B1D8E9D2DEADF7F00A52B01 /* BadgeView.swift in Sources */,
@@ -13059,6 +13065,8 @@
 				11B352F16ADEABF640D2B9FD /* TopCoinsWidget.swift in Sources */,
 				11B354D628AADF3AFD9123E1 /* SingleCoinPriceWidget.swift in Sources */,
 				6B6E13BF2DED8B78007F4A39 /* UIRectEdge.swift in Sources */,
+				D3AFAB1E2E4C8C8E004AB074 /* TextStyle.swift in Sources */,
+				D3AFAB202E4C8CCA004AB074 /* ThemeText.swift in Sources */,
 				11B353FCD118CAB48511CF12 /* ApiProvider.swift in Sources */,
 				11B35F0D313E455BCF24C42B /* PriceChangeType.swift in Sources */,
 				D36E50812BF7534700C361BD /* WatchlistManager.swift in Sources */,
@@ -13071,6 +13079,7 @@
 				6B6E139D2DED8A4B007F4A39 /* CornerPath.swift in Sources */,
 				D34A29B72BFB4E3200F63036 /* WatchlistSortBy.swift in Sources */,
 				6B1D8D062DE98F2600A52B01 /* Colors.swift in Sources */,
+				D3AFAB1C2E4C8C89004AB074 /* ColorStyle.swift in Sources */,
 				6B1D8D072DE98F2600A52B01 /* UIKeyboardAppearance.swift in Sources */,
 				6B1D8D082DE98F2600A52B01 /* Controllers.swift in Sources */,
 				6B1D8D0A2DE98F2600A52B01 /* ITheme.swift in Sources */,
@@ -13088,6 +13097,7 @@
 				6B1D8E682DEADF7F00A52B01 /* TopDescriptionHeaderFooterView.swift in Sources */,
 				6B1D8E692DEADF7F00A52B01 /* EmptyCell.swift in Sources */,
 				6B6D3F302DED757F00AB2915 /* LanguageManager.swift in Sources */,
+				D3AFAB222E4C8D35004AB074 /* Component.swift in Sources */,
 				6B1D8E6C2DEADF7F00A52B01 /* ComponentKit.swift in Sources */,
 				6B1D8E6F2DEADF7F00A52B01 /* CardView.swift in Sources */,
 				6B1D8E752DEADF7F00A52B01 /* BadgeView.swift in Sources */,

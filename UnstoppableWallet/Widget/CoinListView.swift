@@ -112,7 +112,7 @@ struct CoinListView: View {
                 HStack(spacing: .margin16) {
                     HStack(spacing: .margin4) {
                         if let rank = item.rank {
-                            BadgeViewNew(text: rank)
+                            BadgeViewNew(rank)
                         }
 
                         if let marketCap = item.marketCap {

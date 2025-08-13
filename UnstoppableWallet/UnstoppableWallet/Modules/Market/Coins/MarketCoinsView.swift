@@ -7,7 +7,7 @@ struct MarketCoinsView: View {
     @ObservedObject var watchlistViewModel: WatchlistViewModel
 
     var body: some View {
-        ThemeView {
+        ThemeView(background: .themeLawrence) {
             switch viewModel.state {
             case .loading:
                 VStack(spacing: 0) {
@@ -30,61 +30,48 @@ struct MarketCoinsView: View {
     }
 
     @ViewBuilder private func header(disabled: Bool = false) -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                Button(action: {
-                    Coordinator.shared.present(type: .alert) { isPresented in
-                        OptionAlertView(
-                            title: "market.sort_by.title".localized,
-                            viewItems: viewModel.sortBys.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
-                            onSelect: { index in
-                                viewModel.sortBy = viewModel.sortBys[index]
-                            },
-                            isPresented: isPresented
-                        )
-                    }
-                }) {
-                    Text(viewModel.sortBy.title)
+        ListHeader(scrollable: true) {
+            DropdownButton(text: viewModel.sortBy.title) {
+                Coordinator.shared.present(type: .alert) { isPresented in
+                    OptionAlertView(
+                        title: "market.sort_by.title".localized,
+                        viewItems: viewModel.sortBys.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
+                        onSelect: { index in
+                            viewModel.sortBy = viewModel.sortBys[index]
+                        },
+                        isPresented: isPresented
+                    )
                 }
-                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
-                .disabled(disabled)
-
-                Button(action: {
-                    Coordinator.shared.present(type: .alert) { isPresented in
-                        OptionAlertView(
-                            title: "market.top_coins.title".localized,
-                            viewItems: viewModel.tops.map { .init(text: $0.title, selected: viewModel.top == $0) },
-                            onSelect: { index in
-                                viewModel.top = viewModel.tops[index]
-                            },
-                            isPresented: isPresented
-                        )
-                    }
-                }) {
-                    Text(viewModel.top.title)
-                }
-                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
-                .disabled(disabled)
-
-                Button(action: {
-                    Coordinator.shared.present(type: .alert) { isPresented in
-                        OptionAlertView(
-                            title: "market.time_period.title".localized,
-                            viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
-                            onSelect: { index in
-                                viewModel.timePeriod = viewModel.timePeriods[index]
-                            },
-                            isPresented: isPresented
-                        )
-                    }
-                }) {
-                    Text(viewModel.timePeriod.shortTitle)
-                }
-                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
-                .disabled(disabled)
             }
-            .padding(.horizontal, .margin16)
-            .padding(.vertical, .margin8)
+            .disabled(disabled)
+
+            DropdownButton(text: viewModel.top.title) {
+                Coordinator.shared.present(type: .alert) { isPresented in
+                    OptionAlertView(
+                        title: "market.top_coins.title".localized,
+                        viewItems: viewModel.tops.map { .init(text: $0.title, selected: viewModel.top == $0) },
+                        onSelect: { index in
+                            viewModel.top = viewModel.tops[index]
+                        },
+                        isPresented: isPresented
+                    )
+                }
+            }
+            .disabled(disabled)
+
+            DropdownButton(text: viewModel.timePeriod.shortTitle) {
+                Coordinator.shared.present(type: .alert) { isPresented in
+                    OptionAlertView(
+                        title: "market.time_period.title".localized,
+                        viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
+                        onSelect: { index in
+                            viewModel.timePeriod = viewModel.timePeriods[index]
+                        },
+                        isPresented: isPresented
+                    )
+                }
+            }
+            .disabled(disabled)
         }
     }
 
@@ -93,16 +80,14 @@ struct MarketCoinsView: View {
             ThemeList(marketInfos) { marketInfo in
                 let coin = marketInfo.fullCoin.coin
 
-                ClickableRow(action: {
+                cell(
+                    coin: coin,
+                    marketCap: marketInfo.marketCap,
+                    price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
+                    rank: marketInfo.marketCapRank,
+                    diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod)
+                ) {
                     Coordinator.shared.presentCoinPage(coin: coin, page: .markets, section: .coins)
-                }) {
-                    itemContent(
-                        coin: coin,
-                        marketCap: marketInfo.marketCap,
-                        price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
-                        rank: marketInfo.marketCapRank,
-                        diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod)
-                    )
                 }
                 .watchlistSwipeActions(viewModel: watchlistViewModel, coinUid: coin.uid)
             }
@@ -117,43 +102,37 @@ struct MarketCoinsView: View {
 
     @ViewBuilder private func loadingList() -> some View {
         ThemeList(Array(0 ... 10)) { index in
-            ListRow {
-                itemContent(
-                    coin: nil,
-                    marketCap: 123_456,
-                    price: "$123.45",
-                    rank: 12,
-                    diff: index % 2 == 0 ? 12.34 : -12.34
-                )
-                .redacted()
-            }
+            cell(
+                coin: nil,
+                marketCap: 123_456,
+                price: "$123.45",
+                rank: 12,
+                diff: index % 2 == 0 ? 12.34 : -12.34
+            )
+            .redacted()
         }
         .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
     }
 
-    @ViewBuilder private func itemContent(coin: Coin?, marketCap: Decimal?, price: String, rank: Int?, diff: Decimal?) -> some View {
-        CoinIconView(coin: coin)
-
-        VStack(spacing: 1) {
-            HStack(spacing: .margin8) {
-                Text(coin?.code ?? "CODE").textBody()
-                Spacer()
-                Text(price).textBody()
-            }
-
-            HStack(spacing: .margin8) {
-                HStack(spacing: .margin4) {
-                    if let rank {
-                        BadgeViewNew(text: "\(rank)")
-                    }
-
-                    if let marketCap, let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: marketCap) {
-                        Text(formatted).textSubhead2()
-                    }
-                }
-                Spacer()
-                DiffText(diff)
-            }
-        }
+    @ViewBuilder private func cell(coin: Coin?, marketCap: Decimal?, price: String, rank: Int?, diff: Decimal?, action: (() -> Void)? = nil) -> some View {
+        Cell(
+            left: {
+                CoinIconView(coin: coin)
+            },
+            middle: {
+                MultiText(
+                    title: coin?.code ?? "CODE",
+                    subtitleBadge: rank.map { "\($0)" },
+                    subtitle: marketCap.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) }
+                )
+            },
+            right: {
+                RightMultiText(
+                    title: price,
+                    subtitle: Diff.text(diff: diff)
+                )
+            },
+            action: action
+        )
     }
 }

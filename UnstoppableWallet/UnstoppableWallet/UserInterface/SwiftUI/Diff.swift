@@ -5,7 +5,7 @@ enum Diff {
     case percent(value: Decimal)
     case change(value: Decimal, currency: Currency)
 
-    static func text(diff: Decimal?, expired: Bool) -> CustomStringConvertible {
+    static func text(diff: Decimal?, expired: Bool = false) -> CustomStringConvertible {
         text(diff: diff.map { .percent(value: $0) }, expired: expired)
     }
 

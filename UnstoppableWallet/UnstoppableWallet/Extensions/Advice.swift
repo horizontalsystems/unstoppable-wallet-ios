@@ -137,24 +137,12 @@ extension TechnicalAdvice.Advice: Identifiable {
         }
     }
 
-    var foregroundColor: Color {
+    var colorStyle: ColorStyle {
         switch self {
-        case .neutral: return .themeBran
-        case .buy: return .themeRemus
-        case .sell: return .themeLucian
-        case .strongBuy, .strongSell: return .themeTyler
-        case .overbought, .oversold: return .themeJacob
-        }
-    }
-
-    var backgroundColor: Color {
-        switch self {
-        case .neutral: return .themeBlade
-        case .buy: return .themeGreen.opacity(0.2)
-        case .sell: return .themeRed.opacity(0.2)
-        case .strongBuy: return .themeRemus
-        case .strongSell: return .themeLucian
-        case .overbought, .oversold: return .themeYellow20
+        case .neutral: return .secondary
+        case .buy, .strongBuy: return .green
+        case .sell, .strongSell: return .red
+        case .overbought, .oversold: return .yellow
         }
     }
 }

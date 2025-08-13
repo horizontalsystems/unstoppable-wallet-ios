@@ -6,7 +6,7 @@ struct MarketPairsView: View {
     @ObservedObject var viewModel: MarketPairsViewModel
 
     var body: some View {
-        ThemeView {
+        ThemeView(background: .themeLawrence) {
             switch viewModel.state {
             case .loading:
                 VStack(spacing: 0) {
@@ -29,43 +29,34 @@ struct MarketPairsView: View {
     }
 
     @ViewBuilder private func header(disabled: Bool = false) -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                Button(action: {
-                    viewModel.volumeSortOrder.toggle()
-                }) {
-                    Text("market.pairs.volume".localized)
-                }
-                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .custom(image: volumeSortIcon())))
-                .disabled(disabled)
+        ListHeader(scrollable: true) {
+            DropdownButton(text: "market.pairs.volume".localized) {
+                viewModel.volumeSortOrder.toggle()
             }
-            .padding(.horizontal, .margin16)
-            .padding(.vertical, .margin8)
+            .disabled(disabled)
         }
     }
 
     @ViewBuilder private func list(pairs: [MarketPair]) -> some View {
         ScrollViewReader { proxy in
             ThemeList(pairs) { pair in
-                ClickableRow(action: {
-                    if let tradeUrl = pair.tradeUrl {
-                        UrlManager.open(url: tradeUrl)
-                        stat(page: .markets, section: .pairs, event: .open(page: .externalMarketPair))
+                cell(
+                    baseCoin: pair.baseCoin,
+                    targetCoin: pair.targetCoin,
+                    base: pair.base,
+                    target: pair.target,
+                    volume: pair.volume.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
+                    marketName: pair.marketName,
+                    rank: pair.rank,
+                    price: pair.price.flatMap { ValueFormatter.instance.formatShort(value: $0, decimalCount: 8, symbol: pair.target) } ?? "n/a".localized,
+                    action: {
+                        if let tradeUrl = pair.tradeUrl {
+                            UrlManager.open(url: tradeUrl)
+                            stat(page: .markets, section: .pairs, event: .open(page: .externalMarketPair))
+                        }
                     }
-                }) {
-                    itemContent(
-                        baseCoin: pair.baseCoin,
-                        targetCoin: pair.targetCoin,
-                        base: pair.base,
-                        target: pair.target,
-                        volume: pair.volume.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
-                        marketName: pair.marketName,
-                        rank: pair.rank,
-                        price: pair.price.flatMap { ValueFormatter.instance.formatShort(value: $0, decimalCount: 8, symbol: pair.target) } ?? "n/a".localized
-                    )
-                }
+                )
             }
-            .themeListStyle(.transparent)
             .refreshable {
                 await viewModel.refresh()
             }
@@ -75,51 +66,50 @@ struct MarketPairsView: View {
 
     @ViewBuilder private func loadingList() -> some View {
         ThemeList(Array(0 ... 10)) { _ in
-            ListRow {
-                itemContent(
-                    baseCoin: nil,
-                    targetCoin: nil,
-                    base: "CODE",
-                    target: "CODE",
-                    volume: "$123.4 B",
-                    marketName: "Market Name",
-                    rank: 12,
-                    price: "123 CODE"
-                )
-                .redacted()
-            }
+            cell(
+                baseCoin: nil,
+                targetCoin: nil,
+                base: "CODE",
+                target: "CODE",
+                volume: "$123.4 B",
+                marketName: "Market Name",
+                rank: 12,
+                price: "123 CODE"
+            )
+            .redacted()
         }
-        .themeListStyle(.transparent)
         .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
     }
 
-    @ViewBuilder private func itemContent(baseCoin: Coin?, targetCoin: Coin?, base: String, target: String, volume: String, marketName: String, rank: Int, price: String) -> some View {
-        ZStack(alignment: .leading) {
-            HStack {
-                Spacer()
-                icon(coin: targetCoin, ticker: target)
-            }
+    @ViewBuilder private func cell(baseCoin: Coin?, targetCoin: Coin?, base: String, target: String, volume: String, marketName: String, rank: Int, price: String, action: (() -> Void)? = nil) -> some View {
+        Cell(
+            left: {
+                ZStack(alignment: .leading) {
+                    HStack {
+                        Spacer()
+                        icon(coin: targetCoin, ticker: target)
+                    }
 
-            icon(coin: baseCoin, ticker: base)
-        }
-        .frame(width: 52)
-
-        VStack(spacing: 1) {
-            HStack(spacing: .margin8) {
-                Text("\(base) / \(target)").textBody()
-                Spacer()
-                Text(volume).textBody()
-            }
-
-            HStack(spacing: .margin8) {
-                HStack(spacing: .margin4) {
-                    BadgeViewNew(text: "\(rank)")
-                    Text(marketName).textSubhead2()
+                    icon(coin: baseCoin, ticker: base)
                 }
-                Spacer()
-                Text(price).textSubhead2()
-            }
-        }
+                .frame(width: 52)
+
+            },
+            middle: {
+                MultiText(
+                    title: "\(base) / \(target)",
+                    subtitleBadge: "\(rank)",
+                    subtitle: marketName
+                )
+            },
+            right: {
+                RightMultiText(
+                    title: volume,
+                    subtitle: price
+                )
+            },
+            action: action
+        )
     }
 
     @ViewBuilder private func icon(coin: Coin?, ticker: String) -> some View {
