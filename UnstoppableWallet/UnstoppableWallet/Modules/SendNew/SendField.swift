@@ -216,3 +216,29 @@ enum SendField {
         }
     }
 }
+
+extension SendField {
+    static func recipient(_ recipient: String, blockchainType: BlockchainType) -> Self {
+        .address(
+            title: "swap.recipient".localized,
+            value: recipient,
+            blockchainType: blockchainType
+        )
+    }
+
+    static func priceImpact(_ priceImpact: Decimal) -> Self {
+        .levelValue(
+            title: "swap.price_impact".localized,
+            value: "\(priceImpact.rounded(decimal: 2))%",
+            level: BaseUniswapMultiSwapProvider.PriceImpactLevel(priceImpact: priceImpact).valueLevel
+        )
+    }
+    
+    static func slippage(_ slippage: Decimal) -> Self {
+        .levelValue(
+            title: "swap.slippage".localized,
+            value: "\(slippage.description)%",
+            level: MultiSwapSlippage.validate(slippage: slippage).valueLevel
+        )
+    }
+}

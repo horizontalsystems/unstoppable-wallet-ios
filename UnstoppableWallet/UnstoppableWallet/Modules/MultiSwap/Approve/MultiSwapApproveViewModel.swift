@@ -7,12 +7,12 @@ import MarketKit
 class MultiSwapApproveViewModel: ObservableObject {
     let token: Token
     let amount: Decimal
-    private let spenderAddress: EvmKit.Address
+    private let spenderAddress: Address
     private let approveDataProvider: IApproveDataProvider?
 
     @Published var unlimitedAmount = false
 
-    init(token: Token, amount: Decimal, spenderAddress: EvmKit.Address) {
+    init(token: Token, amount: Decimal, spenderAddress: Address) {
         self.token = token
         self.amount = amount
         self.spenderAddress = spenderAddress
@@ -23,7 +23,7 @@ class MultiSwapApproveViewModel: ObservableObject {
 extension MultiSwapApproveViewModel {
     var transactionData: TransactionData? {
         let amount = unlimitedAmount ? .init(2).power(256) - 1 : token.fractionalMonetaryValue(value: amount)
-        return approveDataProvider?.approveTransactionData(spenderAddress: spenderAddress, amount: amount)
+        return try? approveDataProvider?.approveTransactionData(spenderAddress: spenderAddress, amount: amount)
     }
 
     func set(unlimitedAmount: Bool) {

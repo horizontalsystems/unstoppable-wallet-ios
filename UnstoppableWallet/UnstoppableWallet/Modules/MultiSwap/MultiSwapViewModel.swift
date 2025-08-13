@@ -413,7 +413,7 @@ class MultiSwapViewModel: ObservableObject {
                                 timeoutTask.cancel()
                             }
                         } catch {
-//                            print("QUOTE ERROR: \(provider.id): \(error)")
+                            print("QUOTE ERROR: \(provider.id): \(error)")
                             return nil
                         }
                     }

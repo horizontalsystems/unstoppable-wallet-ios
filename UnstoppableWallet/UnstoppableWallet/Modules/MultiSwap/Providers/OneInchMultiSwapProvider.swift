@@ -49,7 +49,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         let addressFrom = try address(token: tokenIn)
         let addressTo = try address(token: tokenOut)
 
-        guard let amount = rawAmount(amount: amountIn, token: tokenIn) else {
+        guard let amount = tokenIn.rawAmount(amountIn) else {
             throw SwapError.invalidAmountIn
         }
 
@@ -81,7 +81,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
             throw SwapError.noGasPriceData
         }
 
-        guard let amount = rawAmount(amount: amountIn, token: tokenIn) else {
+        guard let amount = tokenIn.rawAmount(amountIn) else {
             throw SwapError.invalidAmountIn
         }
 
@@ -163,11 +163,6 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         case let .eip20(address): return try EvmKit.Address(hex: address)
         default: throw SwapError.invalidAddress
         }
-    }
-
-    private func rawAmount(amount: Decimal, token: MarketKit.Token) -> BigUInt? {
-        let rawAmountString = (amount * pow(10, token.decimals)).hs.roundedString(decimal: 0)
-        return BigUInt(rawAmountString)
     }
 
     private var slippage: Decimal {

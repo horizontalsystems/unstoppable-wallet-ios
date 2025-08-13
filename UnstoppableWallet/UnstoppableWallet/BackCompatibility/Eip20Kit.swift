@@ -29,28 +29,6 @@ public extension Eip20Kit.Kit {
         transactionsPublisher.asObservable()
     }
 
-    func allowanceSingle(spenderAddress: EvmKit.Address, defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<String> {
-        Single<String>.create { [weak self] observer in
-            guard let strongSelf = self else {
-                observer(.error(DisposedError()))
-                return Disposables.create()
-            }
-
-            let task = Task {
-                do {
-                    let result = try await strongSelf.allowance(spenderAddress: spenderAddress, defaultBlockParameter: defaultBlockParameter)
-                    observer(.success(result))
-                } catch {
-                    observer(.error(error))
-                }
-            }
-
-            return Disposables.create {
-                task.cancel()
-            }
-        }
-    }
-
     static func tokenInfoSingle(networkManager: NetworkManager, rpcSource: RpcSource, contractAddress: EvmKit.Address) -> Single<TokenInfo> {
         Single<TokenInfo>.create { observer in
             let task = Task {

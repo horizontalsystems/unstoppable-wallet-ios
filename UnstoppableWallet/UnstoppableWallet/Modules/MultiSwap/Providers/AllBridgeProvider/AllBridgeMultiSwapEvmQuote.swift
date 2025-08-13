@@ -1,15 +1,16 @@
 import EvmKit
 import Foundation
 import MarketKit
-import OneInchKit
 
-class OneInchMultiSwapQuote: BaseEvmMultiSwapQuote {
-    let quote: OneInchKit.Quote
+class AllBridgeMultiSwapEvmQuote: BaseEvmMultiSwapQuote {
+    let expectedAmountOut: Decimal
+    let crosschain: Bool
     let recipient: Address?
     let slippage: Decimal
 
-    init(quote: OneInchKit.Quote, recipient: Address?, slippage: Decimal, allowanceState: MultiSwapAllowanceHelper.AllowanceState) {
-        self.quote = quote
+    init(expectedAmountOut: Decimal, crosschain: Bool, recipient: Address?, slippage: Decimal, allowanceState: MultiSwapAllowanceHelper.AllowanceState) {
+        self.expectedAmountOut = expectedAmountOut
+        self.crosschain = crosschain
         self.recipient = recipient
         self.slippage = slippage
 
@@ -17,7 +18,7 @@ class OneInchMultiSwapQuote: BaseEvmMultiSwapQuote {
     }
 
     override var amountOut: Decimal {
-        quote.amountOut ?? 0
+        expectedAmountOut
     }
 
     override var settingsModified: Bool {
@@ -31,7 +32,7 @@ class OneInchMultiSwapQuote: BaseEvmMultiSwapQuote {
             fields.append(.recipient(recipient.title))
         }
 
-        if slippage != MultiSwapSlippage.default {
+        if !crosschain, slippage != MultiSwapSlippage.default {
             fields.append(.slippage(slippage))
         }
 
@@ -41,9 +42,8 @@ class OneInchMultiSwapQuote: BaseEvmMultiSwapQuote {
     override func cautions() -> [CautionNew] {
         var cautions = super.cautions()
 
-        switch MultiSwapSlippage.validate(slippage: slippage) {
-        case .none: ()
-        case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
+        if crosschain {
+            cautions.append(CautionNew(title: "swap.allbridge.slip_protection".localized, text: "swap.allbridge.slip_protection.description", type: .warning))
         }
 
         return cautions

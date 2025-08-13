@@ -29,19 +29,21 @@ extension BlockchainType {
     ]
 
     static let swappable: [BlockchainType] = [
-        .ethereum,
-        .binanceSmartChain,
-        .polygon,
-        .avalanche,
-        .optimism,
         .arbitrumOne,
-        .gnosis,
-        .fantom,
+        .avalanche,
         .base,
-        .zkSync,
+        .binanceSmartChain,
         .bitcoin,
         .bitcoinCash,
+        .ethereum,
+        .fantom,
+        .gnosis,
         .litecoin,
+        .optimism,
+        .polygon,
+        .stellar,
+        .tron,
+        .zkSync,
     ]
 
     func placeholderImageName(tokenProtocol: TokenProtocol?) -> String {
@@ -152,8 +154,13 @@ extension BlockchainType {
             return self == .ton
         case let .btcAddress(_, blockchainType, _):
             return self == blockchainType
-        default:
-            return false
+        }
+    }
+    
+    var isEvm: Bool {
+        switch self {
+        case .arbitrumOne, .avalanche, .base, .binanceSmartChain, .ethereum, .fantom, .gnosis, .optimism, .polygon, .zkSync: return true
+        default: return false
         }
     }
 

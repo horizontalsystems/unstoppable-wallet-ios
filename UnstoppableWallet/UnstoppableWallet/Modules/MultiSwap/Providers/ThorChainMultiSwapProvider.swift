@@ -68,13 +68,11 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
                 throw SwapError.noRouterAddress
             }
 
-            let spenderAddress = try EvmKit.Address(hex: router)
-
             return await ThorChainMultiSwapEvmQuote(
                 swapQuote: swapQuote,
                 recipient: storage.recipient(blockchainType: blockchainType),
                 slippage: slippage,
-                allowanceState: allowanceHelper.allowanceState(spenderAddress: spenderAddress, token: tokenIn, amount: amountIn)
+                allowanceState: allowanceHelper.allowanceState(spenderAddress: .init(raw: router), token: tokenIn, amount: amountIn)
             )
         case .bitcoin, .bitcoinCash, .litecoin:
             return ThorChainMultiSwapBtcQuote(
@@ -317,38 +315,11 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
     }
 
     private func resolveDestination(token: Token) throws -> String {
-        let blockchainType = token.blockchainType
-
-        if let recipient = storage.recipient(blockchainType: blockchainType) {
+        if let recipient = storage.recipient(blockchainType: token.blockchainType) {
             return recipient.raw
         }
-
-        if let depositAdapter = adapterManager.adapter(for: token) as? IDepositAdapter {
-            return depositAdapter.receiveAddress.address
-        }
-
-        guard let account = accountManager.activeAccount else {
-            throw SwapError.noActiveAccount
-        }
-
-        switch blockchainType {
-        case .avalanche, .base, .binanceSmartChain, .ethereum:
-            let chain = evmBlockchainManager.chain(blockchainType: blockchainType)
-
-            guard let address = account.type.evmAddress(chain: chain) else {
-                throw SwapError.noDestinationAddress
-            }
-
-            return address.eip55
-        case .bitcoin:
-            return try BitcoinAdapter.firstAddress(accountType: account.type, tokenType: token.type)
-        case .bitcoinCash:
-            return try BitcoinCashAdapter.firstAddress(accountType: account.type, tokenType: token.type)
-        case .litecoin:
-            return try LitecoinAdapter.firstAddress(accountType: account.type, tokenType: token.type)
-        default:
-            throw SwapError.noDestinationAddress
-        }
+        
+        return try DestinationHelper.resolveDestination(token: token)
     }
 
     private func syncPools() {
@@ -480,7 +451,6 @@ extension ThorChainMultiSwapProvider {
         case unsupportedTokenOut
         case noRouterAddress
         case invalidTokenInType
-        case noActiveAccount
         case noDestinationAddress
         case noGasPrice
         case noGasLimit

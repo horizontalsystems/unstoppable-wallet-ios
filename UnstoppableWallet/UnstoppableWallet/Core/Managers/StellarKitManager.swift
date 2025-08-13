@@ -27,20 +27,7 @@ class StellarKitManager {
             return _stellarKit
         }
 
-        let accountId: String
-
-        switch account.type {
-        case .mnemonic:
-            let keyPair = try Self.keyPair(accountType: account.type)
-            accountId = keyPair.accountId
-        case let .stellarSecretKey(secretSeed):
-            let keyPair = try KeyPair(secretSeed: secretSeed)
-            accountId = keyPair.accountId
-        case let .stellarAccount(_accountId):
-            accountId = _accountId
-        default:
-            throw AdapterError.unsupportedAccount
-        }
+        let accountId = try Self.accountId(accountType: account.type)
 
         let stellarKit = try StellarKit.Kit.instance(
             accountId: accountId,
@@ -128,6 +115,22 @@ extension StellarKitManager {
         default:
             throw AdapterError.unsupportedAccount
         }
+    }
+    
+    static func accountId(accountType: AccountType) throws -> String {
+        switch accountType {
+        case .mnemonic:
+            let keyPair = try Self.keyPair(accountType: accountType)
+            return keyPair.accountId
+        case let .stellarSecretKey(secretSeed):
+            let keyPair = try KeyPair(secretSeed: secretSeed)
+            return keyPair.accountId
+        case let .stellarAccount(_accountId):
+            return _accountId
+        default:
+            throw AdapterError.unsupportedAccount
+        }
+
     }
 }
 

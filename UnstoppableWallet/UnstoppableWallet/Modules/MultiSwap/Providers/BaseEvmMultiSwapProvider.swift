@@ -114,7 +114,7 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
             let chain = evmBlockchainManager.chain(blockchainType: token.blockchainType)
             let spenderAddress = try spenderAddress(chain: chain)
 
-            return await allowanceHelper.allowanceState(spenderAddress: spenderAddress, token: token, amount: amount)
+            return await allowanceHelper.allowanceState(spenderAddress: .init(raw: spenderAddress.eip55), token: token, amount: amount)
         } catch {
             return .unknown
         }

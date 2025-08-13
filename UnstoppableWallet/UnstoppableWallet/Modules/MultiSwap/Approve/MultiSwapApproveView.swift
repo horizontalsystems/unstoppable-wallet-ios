@@ -11,7 +11,7 @@ struct MultiSwapApproveView: View {
     @State private var unlockPresented = false
     @Environment(\.dismiss) private var dismiss
 
-    init(tokenIn: Token, amount: Decimal, spenderAddress: EvmKit.Address, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) {
+    init(tokenIn: Token, amount: Decimal, spenderAddress: Address, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) {
         _viewModel = .init(wrappedValue: MultiSwapApproveViewModel(token: tokenIn, amount: amount, spenderAddress: spenderAddress))
         _isPresented = isPresented
         self.onSuccess = onSuccess

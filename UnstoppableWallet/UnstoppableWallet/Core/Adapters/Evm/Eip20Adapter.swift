@@ -68,37 +68,37 @@ extension Eip20Adapter: ISendEthereumAdapter {
     }
 }
 
-extension Eip20Adapter: IErc20Adapter {
+extension Eip20Adapter: IAllowanceAdapter {
     var pendingTransactions: [TransactionRecord] {
         eip20Kit.pendingTransactions().map { transactionConverter.transactionRecord(fromTransaction: $0) }
     }
 
-    func allowanceSingle(spenderAddress: EvmKit.Address, defaultBlockParameter: DefaultBlockParameter = .latest) -> Single<Decimal> {
-        let decimals = decimals
-
-        return eip20Kit.allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: defaultBlockParameter)
-            .map { allowanceString in
-                if let significand = Decimal(string: allowanceString) {
-                    return Decimal(sign: .plus, exponent: -decimals, significand: significand)
-                }
-
-                return 0
-            }
-    }
-
-    func allowance(spenderAddress: EvmKit.Address, defaultBlockParameter: DefaultBlockParameter) async throws -> Decimal {
-        let allowanceString = try await eip20Kit.allowance(spenderAddress: spenderAddress, defaultBlockParameter: defaultBlockParameter)
-
+    func allowance(spenderAddress: Address, defaultBlockParameter: BlockParameter) async throws -> Decimal {
+        let address = try EvmKit.Address(hex: spenderAddress.raw)
+        let allowanceString = try await eip20Kit.allowance(spenderAddress: address, defaultBlockParameter: .init(defaultBlockParameter))
+        
         guard let significand = Decimal(string: allowanceString) else {
             return 0
         }
-
+        
         return Decimal(sign: .plus, exponent: -decimals, significand: significand)
     }
 }
 
 extension Eip20Adapter: IApproveDataProvider {
-    func approveTransactionData(spenderAddress: EvmKit.Address, amount: BigUInt) -> TransactionData {
-        eip20Kit.approveTransactionData(spenderAddress: spenderAddress, amount: amount)
+    func approveTransactionData(spenderAddress: Address, amount: BigUInt) throws -> TransactionData {
+        let address = try EvmKit.Address(hex: spenderAddress.raw)
+        return eip20Kit.approveTransactionData(spenderAddress: address, amount: amount)
+    }
+}
+
+extension DefaultBlockParameter {
+    init(_ blockParameter: BlockParameter) {
+        switch blockParameter {
+        case .pending: self = .pending
+        case .latest: self = .latest
+        case .earliest: self = .earliest
+        case let .blockNumber(value): self = .blockNumber(value: value)
+        }
     }
 }

@@ -48,25 +48,13 @@ class BaseUniswapMultiSwapQuote: BaseEvmMultiSwapQuote {
         }
 
         if let recipient {
-            fields.append(
-                MultiSwapMainField(
-                    title: "swap.recipient".localized,
-                    value: recipient.title,
-                    valueLevel: .regular
-                )
-            )
+            fields.append(.recipient(recipient.title))
         }
 
         let slippage = tradeOptions.allowedSlippage
 
         if slippage != MultiSwapSlippage.default {
-            fields.append(
-                MultiSwapMainField(
-                    title: "swap.slippage".localized,
-                    value: "\(slippage.description)%",
-                    valueLevel: MultiSwapSlippage.validate(slippage: slippage).valueLevel
-                )
-            )
+            fields.append(.slippage(slippage))
         }
 
         return fields

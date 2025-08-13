@@ -71,7 +71,7 @@ extension SwapPendingAllowanceService {
     }
 
     func syncAllowance() {
-        guard let token, let adapter = adapterManager.adapter(for: token) as? IErc20Adapter else {
+        guard let token, let adapter = adapterManager.adapter(for: token) as? IAllowanceAdapter else {
             return
         }
 

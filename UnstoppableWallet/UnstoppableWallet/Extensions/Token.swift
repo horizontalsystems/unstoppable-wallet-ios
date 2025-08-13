@@ -81,4 +81,13 @@ extension Token {
     func fractionalMonetaryValue(value: Decimal) -> BigUInt {
         BigUInt(value.hs.roundedString(decimal: decimals)) ?? 0
     }
+    
+    func rawAmountString(_ amount: Decimal) -> String {
+        (amount * pow(10, decimals)).hs.roundedString(decimal: 0)
+    }
+
+    func rawAmount(_ amount: Decimal) -> BigUInt? {
+        return BigUInt(rawAmountString(amount))
+    }
+
 }
