@@ -5,10 +5,10 @@ import MarketKit
 
 class MultiSwapRevokeViewModel: ObservableObject {
     let token: Token
-    private let spenderAddress: EvmKit.Address
+    private let spenderAddress: Address
     private let approveDataProvider: IApproveDataProvider?
 
-    init(token: Token, spenderAddress: EvmKit.Address) {
+    init(token: Token, spenderAddress: Address) {
         self.token = token
         self.spenderAddress = spenderAddress
         approveDataProvider = Core.shared.adapterManager.adapter(for: token) as? IApproveDataProvider
@@ -17,6 +17,6 @@ class MultiSwapRevokeViewModel: ObservableObject {
 
 extension MultiSwapRevokeViewModel {
     var transactionData: TransactionData? {
-        approveDataProvider?.approveTransactionData(spenderAddress: spenderAddress, amount: 0)
+        try? approveDataProvider?.approveTransactionData(spenderAddress: spenderAddress, amount: 0)
     }
 }

@@ -79,6 +79,17 @@ extension TronKitManager {
             try _tronKitWrapper(account: account)
         }
     }
+    
+    func address(type: AccountType) throws -> String {
+        switch type {
+        case let .tronAddress(address: address): return address.base58
+        default:
+            guard let seed = type.mnemonicSeed else {
+                throw KitWrapperError.mnemonicNoSeed
+            }
+            return try Signer.address(seed: seed).base58
+        }
+    }
 }
 
 class TronKitWrapper {

@@ -11,7 +11,7 @@ struct MultiSwapRevokeView: View {
     @State private var unlockPresented = false
     @Environment(\.dismiss) private var dismiss
 
-    init(tokenIn: Token, spenderAddress: EvmKit.Address, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) {
+    init(tokenIn: Token, spenderAddress: Address, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) {
         _viewModel = .init(wrappedValue: MultiSwapRevokeViewModel(token: tokenIn, spenderAddress: spenderAddress))
         _isPresented = isPresented
         self.onSuccess = onSuccess

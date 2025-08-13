@@ -21,12 +21,12 @@ class MultiSwapAllowanceHelper {
         }
     }
 
-    func allowanceState(spenderAddress: EvmKit.Address, token: Token, amount: Decimal) async -> AllowanceState {
+    func allowanceState(spenderAddress: Address, token: Token, amount: Decimal) async -> AllowanceState {
         if token.type.isNative {
             return .notRequired
         }
 
-        guard let adapter = adapterManager.adapter(for: token) as? IErc20Adapter else {
+        guard let adapter = adapterManager.adapter(for: token) as? IAllowanceAdapter else {
             return .unknown
         }
 
@@ -39,25 +39,30 @@ class MultiSwapAllowanceHelper {
                 }
             }
 
-            let allowance = try await adapter.allowance(spenderAddress: spenderAddress, defaultBlockParameter: .latest)
-
-            if amount <= allowance {
-                return .allowed
-            } else {
-                return .notEnough(
-                    appValue: AppValue(token: token, value: allowance),
-                    spenderAddress: spenderAddress,
-                    revokeRequired: allowance > 0 && mustBeRevoked(token: token)
-                )
+            do {
+                let allowance = try await adapter.allowance(spenderAddress: spenderAddress, defaultBlockParameter: .latest)
+                print("allowance: =", allowance)
+                if amount <= allowance {
+                    return .allowed
+                } else {
+                    return .notEnough(
+                        appValue: AppValue(token: token, value: allowance),
+                        spenderAddress: spenderAddress,
+                        revokeRequired: allowance > 0 && mustBeRevoked(token: token)
+                    )
+                }
+            } catch {
+                print(":! ", error)
+                throw error
             }
         } catch {
             return .unknown
         }
     }
 
-    private func pendingAllowance(pendingTransactions: [TransactionRecord], spenderAddress: EvmKit.Address) -> Decimal? {
+    private func pendingAllowance(pendingTransactions: [TransactionRecord], spenderAddress: Address) -> Decimal? {
         for transaction in pendingTransactions {
-            if let record = transaction as? ApproveTransactionRecord, record.spender == spenderAddress.eip55 {
+            if let record = transaction as? ApproveTransactionRecord, record.spender == spenderAddress.raw {
                 return record.value.value
             }
         }
@@ -81,7 +86,7 @@ extension MultiSwapAllowanceHelper {
         case notRequired
         case pendingAllowance(appValue: AppValue)
         case pendingRevoke
-        case notEnough(appValue: AppValue, spenderAddress: EvmKit.Address, revokeRequired: Bool)
+        case notEnough(appValue: AppValue, spenderAddress: Address, revokeRequired: Bool)
         case allowed
         case unknown
 
@@ -142,10 +147,10 @@ extension MultiSwapAllowanceHelper {
     }
 
     class UnlockStep: MultiSwapPreSwapStep {
-        let spenderAddress: EvmKit.Address
+        let spenderAddress: Address
         let isRevoke: Bool
 
-        init(spenderAddress: EvmKit.Address, isRevoke: Bool) {
+        init(spenderAddress: Address, isRevoke: Bool) {
             self.spenderAddress = spenderAddress
             self.isRevoke = isRevoke
         }

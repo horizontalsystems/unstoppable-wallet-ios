@@ -26,6 +26,7 @@ extension MultiSwapViewModel {
         }
 
         providers.append(ThorChainMultiSwapProvider(storage: storage))
+        providers.append(AllBridgeMultiSwapProvider(storage: storage))
 
         return MultiSwapViewModel(providers: providers, token: token)
     }

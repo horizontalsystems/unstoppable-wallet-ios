@@ -4,4 +4,7 @@
    <FileRef
       location = "container:UnstoppableWallet.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "absolute:/Users/ant013/Ios/HorizontalSystems/TronKit.Swift">
+   </FileRef>
 </Workspace>

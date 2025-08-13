@@ -39,35 +39,17 @@ class BaseUniswapMultiSwapConfirmationQuote: BaseEvmMultiSwapConfirmationQuote {
         var fields = super.priceSectionFields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
 
         if let priceImpact = quote.trade.priceImpact, BaseUniswapMultiSwapProvider.PriceImpactLevel(priceImpact: priceImpact) != .negligible {
-            fields.append(
-                .levelValue(
-                    title: "swap.price_impact".localized,
-                    value: "\(priceImpact.rounded(decimal: 2))%",
-                    level: BaseUniswapMultiSwapProvider.PriceImpactLevel(priceImpact: priceImpact).valueLevel
-                )
-            )
+            fields.append(.priceImpact(priceImpact))
         }
 
         if let recipient = quote.recipient {
-            fields.append(
-                .address(
-                    title: "swap.recipient".localized,
-                    value: recipient.title,
-                    blockchainType: tokenOut.blockchainType
-                )
-            )
+            fields.append(.recipient(recipient.title, blockchainType: tokenOut.blockchainType))
         }
 
         let slippage = quote.tradeOptions.allowedSlippage
 
         if slippage != MultiSwapSlippage.default {
-            fields.append(
-                .levelValue(
-                    title: "swap.slippage".localized,
-                    value: "\(slippage.description)%",
-                    level: MultiSwapSlippage.validate(slippage: slippage).valueLevel
-                )
-            )
+            fields.append(.slippage(slippage))
         }
 
         let minAmountOut = amountOut * (1 - slippage / 100)

@@ -1,19 +1,21 @@
 import Foundation
 import MarketKit
 
-class ThorChainMultiSwapBtcQuote: IMultiSwapQuote {
-    let swapQuote: ThorChainMultiSwapProvider.SwapQuote
+class AllBridgeMultiSwapBtcQuote: IMultiSwapQuote {
+    let expectedAmountOut: Decimal
+    let crosschain: Bool
     let recipient: Address?
     let slippage: Decimal
 
-    init(swapQuote: ThorChainMultiSwapProvider.SwapQuote, recipient: Address?, slippage: Decimal) {
-        self.swapQuote = swapQuote
+    init(expectedAmountOut: Decimal, crosschain: Bool, recipient: Address?, slippage: Decimal) {
+        self.expectedAmountOut = expectedAmountOut
+        self.crosschain = crosschain
         self.recipient = recipient
         self.slippage = slippage
     }
 
     var amountOut: Decimal {
-        swapQuote.expectedAmountOut
+        expectedAmountOut
     }
 
     var customButtonState: MultiSwapButtonState? {
@@ -41,13 +43,8 @@ class ThorChainMultiSwapBtcQuote: IMultiSwapQuote {
     func cautions() -> [CautionNew] {
         var cautions = [CautionNew]()
 
-        // switch MultiSwapSlippage.validate(slippage: slippage) {
-        // case .none: ()
-        // case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
-        // }
-
-        if swapQuote.slipProtectionThreshold > slippage {
-            cautions.append(CautionNew(title: "swap.thorchain.slip_protection".localized, text: "swap.thorchain.slip_protection.description".localized("\(swapQuote.slipProtectionThreshold.rounded(decimal: 2).description)%"), type: .warning))
+        if crosschain {
+            cautions.append(CautionNew(title: "swap.allbridge.slip_protection".localized, text: "swap.allbridge.slip_protection.description", type: .warning))
         }
 
         return cautions

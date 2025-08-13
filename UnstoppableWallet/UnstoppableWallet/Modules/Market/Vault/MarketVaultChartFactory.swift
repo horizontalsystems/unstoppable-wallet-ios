@@ -34,7 +34,7 @@ extension MarketVaultChartFactory: IMetricChartFactory {
         var valueDiff: ValueDiff?
 
         value = MetricChartFactory.format(value: lastItem.value, valueType: valueType)
-        let diff = (lastItem.value - firstItem.value) / firstItem.value * 100
+        let diff = lastItem.value - firstItem.value
 
         let valueString = ValueFormatter.instance.format(percentValue: diff, signType: .always)
         valueDiff = valueString.map { ValueDiff(value: $0, trend: .neutral) }

@@ -8,8 +8,12 @@ import TronKit
 class Trc20Adapter: BaseTronAdapter {
     private let contractAddress: TronKit.Address
 
-    init(tronKitWrapper: TronKitWrapper, contractAddress: String, wallet: Wallet) throws {
+    private let transactionConverter: TronTransactionConverter
+
+    init(tronKitWrapper: TronKitWrapper, contractAddress: String, wallet: Wallet, baseToken: Token, coinManager: CoinManager, evmLabelManager: EvmLabelManager) throws {
         self.contractAddress = try TronKit.Address(address: contractAddress)
+
+        transactionConverter = TronTransactionConverter(source: wallet.transactionSource, baseToken: baseToken, coinManager: coinManager, tronKitWrapper: tronKitWrapper, evmLabelManager: evmLabelManager)
 
         super.init(tronKitWrapper: tronKitWrapper, decimals: wallet.decimals)
     }
@@ -55,5 +59,22 @@ extension Trc20Adapter: IBalanceAdapter {
 extension Trc20Adapter: ISendTronAdapter {
     func contract(amount: BigUInt, address: TronKit.Address, memo _: String?) -> Contract {
         tronKit.transferTrc20TriggerSmartContract(contractAddress: contractAddress, toAddress: address, amount: amount)
+    }
+}
+
+extension Trc20Adapter: IAllowanceAdapter {
+    var pendingTransactions: [TransactionRecord] {
+        tronKit.pendingTransactions().map { transactionConverter.transactionRecord(fromTransaction: $0) }
+    }
+
+    func allowance(spenderAddress: Address, defaultBlockParameter: BlockParameter) async throws -> Decimal {
+        let spenderAddress = try TronKit.Address(address: spenderAddress.raw)
+        let allowanceString = try await tronKit.allowance(contractAddress: contractAddress, spenderAddress: spenderAddress)
+        
+        guard let significand = Decimal(string: allowanceString) else {
+            return 0
+        }
+        
+        return Decimal(sign: .plus, exponent: -decimals, significand: significand)
     }
 }

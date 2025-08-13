@@ -106,14 +106,20 @@ protocol ISendTonAdapter {
     func transferData(recipient: FriendlyAddress, amount: TonAdapter.SendAmount, comment: String?) throws -> TransferData
 }
 
-protocol IErc20Adapter {
+protocol IAllowanceAdapter {
     var pendingTransactions: [TransactionRecord] { get }
-    func allowanceSingle(spenderAddress: EvmKit.Address, defaultBlockParameter: DefaultBlockParameter) -> Single<Decimal>
-    func allowance(spenderAddress: EvmKit.Address, defaultBlockParameter: DefaultBlockParameter) async throws -> Decimal
+    func allowance(spenderAddress: Address, defaultBlockParameter: BlockParameter) async throws -> Decimal
+}
+
+enum BlockParameter {
+    case blockNumber(value: Int)
+    case earliest
+    case latest
+    case pending
 }
 
 protocol IApproveDataProvider {
-    func approveTransactionData(spenderAddress: EvmKit.Address, amount: BigUInt) -> TransactionData
+    func approveTransactionData(spenderAddress: Address, amount: BigUInt) throws -> TransactionData
 }
 
 protocol ISendZcashAdapter {

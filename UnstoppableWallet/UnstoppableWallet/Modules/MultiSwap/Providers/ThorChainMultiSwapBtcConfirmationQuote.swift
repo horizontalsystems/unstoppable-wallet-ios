@@ -54,24 +54,12 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
         var fields = [SendField]()
 
         if let recipient {
-            fields.append(
-                .address(
-                    title: "swap.recipient".localized,
-                    value: recipient.title,
-                    blockchainType: tokenOut.blockchainType
-                )
-            )
+            fields.append(.recipient(recipient.title, blockchainType: tokenOut.blockchainType))
         }
 
         if swapQuote.slipProtectionThreshold <= slippage {
             if slippage != MultiSwapSlippage.default {
-                fields.append(
-                    .levelValue(
-                        title: "swap.slippage".localized,
-                        value: "\(slippage.description)%",
-                        level: MultiSwapSlippage.validate(slippage: slippage).valueLevel
-                    )
-                )
+                fields.append(.slippage(slippage))
             }
 
             let minAmountOut = amountOut * (1 - slippage / 100)

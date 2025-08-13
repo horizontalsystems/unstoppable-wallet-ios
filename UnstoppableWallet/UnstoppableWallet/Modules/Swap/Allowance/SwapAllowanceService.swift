@@ -3,6 +3,7 @@ import Foundation
 import MarketKit
 import RxRelay
 import RxSwift
+import Combine
 
 class SwapAllowanceService {
     private let spenderAddress: EvmKit.Address
@@ -11,7 +12,7 @@ class SwapAllowanceService {
     private var token: Token?
 
     private let disposeBag = DisposeBag()
-    private var allowanceDisposeBag = DisposeBag()
+    private var allowanceTask: Task<Void, Never>?
 
     private let stateRelay = PublishRelay<State?>()
     private(set) var state: State? {
@@ -35,9 +36,9 @@ class SwapAllowanceService {
     }
 
     private func sync() {
-        allowanceDisposeBag = DisposeBag()
-
-        guard let token, let adapter = adapterManager.adapter(for: token) as? IErc20Adapter else {
+        allowanceTask?.cancel()
+        
+        guard let token, let adapter = adapterManager.adapter(for: token) as? IAllowanceAdapter else {
             state = nil
             return
         }
@@ -48,15 +49,24 @@ class SwapAllowanceService {
             state = .loading
         }
 
-        adapter
-            .allowanceSingle(spenderAddress: spenderAddress, defaultBlockParameter: .latest)
-            .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe(onSuccess: { [weak self] allowance in
-                self?.state = .ready(allowance: AppValue(token: token, value: allowance))
-            }, onError: { [weak self] error in
-                self?.state = .notReady(error: error)
-            })
-            .disposed(by: allowanceDisposeBag)
+        let address = Address(raw: spenderAddress.hex) // todo
+        allowanceTask = Task { [weak self] in
+            do {
+                let allowance = try await adapter.allowance(spenderAddress: address, defaultBlockParameter: .latest)
+                
+                guard !Task.isCancelled else { return }
+                
+                await MainActor.run { [weak self] in
+                    self?.state = .ready(allowance: AppValue(token: token, value: allowance))
+                }
+            } catch {
+                guard !Task.isCancelled else { return }
+                
+                await MainActor.run { [weak self] in
+                    self?.state = .notReady(error: error)
+                }
+            }
+        }
     }
 }
 

@@ -8,7 +8,7 @@ class TronAccountManager {
     private let accountManager: AccountManager
     private let walletManager: WalletManager
     private let marketKit: MarketKit.Kit
-    private let tronKitManager: TronKitManager
+    let tronKitManager: TronKitManager
     private let restoreStateManager: RestoreStateManager
 
     private let disposeBag = DisposeBag()
@@ -182,6 +182,12 @@ class TronAccountManager {
         }
 
         walletManager.save(enabledWallets: enabledWallets)
+    }
+}
+
+extension TronAccountManager {
+    func address(type: AccountType) throws -> String {
+        try tronKitManager.address(type: type)
     }
 }
 
