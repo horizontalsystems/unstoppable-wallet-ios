@@ -58,7 +58,7 @@ struct MarketWatchlistSignalsView: View {
 
     @ViewBuilder private func row(signal: TechnicalAdvice.Advice) -> some View {
         ListRow {
-            MarketWatchlistSignalBadge(signal: signal)
+            BadgeViewNew(signal.title, mode: .transparent, colorStyle: signal.colorStyle)
                 .background(
                     GeometryReader { geometry in
                         Color.clear.preference(key: MaxWidthPreferenceKey.self, value: geometry.size.width)

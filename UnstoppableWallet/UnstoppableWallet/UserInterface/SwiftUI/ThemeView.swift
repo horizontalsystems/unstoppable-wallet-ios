@@ -68,10 +68,11 @@ struct ThemeRadialView<Content: View>: View {
 }
 
 struct ScrollableThemeView<Content: View>: View {
+    var background: Color = .themeTyler
     @ViewBuilder let content: Content
 
     var body: some View {
-        ThemeView {
+        ThemeView(background: background) {
             ScrollView {
                 content
             }

@@ -165,7 +165,7 @@ struct CoinOverviewView: View {
             Text(title).textSubhead2()
 
             if let badge {
-                BadgeViewNew(text: badge)
+                BadgeViewNew(badge)
             }
 
             Spacer()

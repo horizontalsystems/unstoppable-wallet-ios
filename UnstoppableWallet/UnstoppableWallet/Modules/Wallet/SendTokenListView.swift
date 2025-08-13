@@ -43,25 +43,12 @@ struct SendTokenListView: View {
 
                     let items = filteredItems
 
-                    ThemeList(bottomSpacing: .margin16) {
-                        ForEach(items) { item in
-                            VStack(spacing: 0) {
-                                if items.first?.id == item.id {
-                                    HorizontalDivider()
-                                }
-
-                                WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, amountRounding: viewModel.amountRounding, subtitleMode: .coinName) {
-                                    path.append(item.wallet)
-                                    stat(page: .sendTokenList, event: .openSend(token: item.wallet.token))
-                                } failedAction: {
-                                    Coordinator.shared.presentBalanceError(wallet: item.wallet, state: item.state)
-                                }
-
-                                HorizontalDivider()
-                            }
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
+                    ThemeList(items, bottomSpacing: .margin16) { item in
+                        WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, amountRounding: viewModel.amountRounding, subtitleMode: .coinName) {
+                            path.append(item.wallet)
+                            stat(page: .sendTokenList, event: .openSend(token: item.wallet.token))
+                        } failedAction: {
+                            Coordinator.shared.presentBalanceError(wallet: item.wallet, state: item.state)
                         }
                     }
                     .safeAreaInset(edge: .bottom) {

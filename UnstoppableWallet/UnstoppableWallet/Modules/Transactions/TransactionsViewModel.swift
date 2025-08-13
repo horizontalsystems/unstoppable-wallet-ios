@@ -480,7 +480,7 @@ extension TransactionsViewModel {
         var viewItems: [ViewItem]
     }
 
-    struct ViewItem: Identifiable, Equatable {
+    struct ViewItem: Hashable {
         var id: String
         let date: Date
         let iconType: IconType
@@ -495,14 +495,14 @@ extension TransactionsViewModel {
         let spam: Bool
     }
 
-    enum IconType: Equatable {
+    enum IconType: Hashable {
         case icon(url: String?, alternativeUrl: String?, placeholderImageName: String, type: IconView.IconType)
         case doubleIcon(frontType: IconView.IconType, frontUrl: String?, frontAlternativeUrl: String?, frontPlaceholder: String, backType: IconView.IconType, backUrl: String?, backAlternativeUrl: String?, backPlaceholder: String)
         case localIcon(imageName: String?)
         case failedIcon
     }
 
-    struct Value: Equatable {
+    struct Value: Hashable {
         let text: String
         let type: ValueType
     }

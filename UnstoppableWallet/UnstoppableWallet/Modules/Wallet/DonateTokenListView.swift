@@ -39,28 +39,17 @@ struct DonateTokenListView: View {
 
                         let items = viewModel.items
 
-                        ForEach(items) { item in
-                            VStack(spacing: 0) {
-                                if items.first?.id == item.id {
-                                    HorizontalDivider()
+                        ListForEach(items) { item in
+                            WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, amountRounding: viewModel.amountRounding, subtitleMode: .coinName) {
+                                guard let address = AppConfig.donationAddresses.first(where: { $0.key == item.wallet.token.blockchainType })?.value else {
+                                    return
                                 }
 
-                                WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, amountRounding: viewModel.amountRounding, subtitleMode: .coinName) {
-                                    guard let address = AppConfig.donationAddresses.first(where: { $0.key == item.wallet.token.blockchainType })?.value else {
-                                        return
-                                    }
-
-                                    path.append(DestinationData(wallet: item.wallet, address: address))
-                                    stat(page: .sendTokenList, event: .openSend(token: item.wallet.token))
-                                } failedAction: {
-                                    Coordinator.shared.presentBalanceError(wallet: item.wallet, state: item.state)
-                                }
-
-                                HorizontalDivider()
+                                path.append(DestinationData(wallet: item.wallet, address: address))
+                                stat(page: .sendTokenList, event: .openSend(token: item.wallet.token))
+                            } failedAction: {
+                                Coordinator.shared.presentBalanceError(wallet: item.wallet, state: item.state)
                             }
-                            .listRowBackground(Color.clear)
-                            .listRowInsets(EdgeInsets())
-                            .listRowSeparator(.hidden)
                         }
                     }
                 }

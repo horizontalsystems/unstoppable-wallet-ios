@@ -119,7 +119,7 @@ extension WalletCoinPriceService {
 }
 
 extension WalletCoinPriceService {
-    struct Item: Equatable {
+    struct Item: Hashable {
         let price: CurrencyValue
         let diff: Decimal?
         let expired: Bool

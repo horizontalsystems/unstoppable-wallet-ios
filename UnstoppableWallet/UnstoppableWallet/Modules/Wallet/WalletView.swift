@@ -114,31 +114,20 @@ struct WalletView: View {
     }
 
     @ViewBuilder private func itemsView() -> some View {
-        ForEach(viewModel.items) { item in
-            VStack(spacing: 0) {
-                if viewModel.items.first?.id == item.id {
-                    HorizontalDivider()
-                }
-
-                WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, amountRounding: viewModel.amountRounding, subtitleMode: .price) {
-                    path.append(item.wallet)
-                } failedAction: {
-                    Coordinator.shared.presentBalanceError(wallet: item.wallet, state: item.state)
-                }
-                .swipeActions {
-                    Button {
-                        viewModel.onDisable(wallet: item.wallet)
-                    } label: {
-                        Image(uiImage: UIImage(named: "trash")!.withTintColor(UIColor(Color.themeLeah), renderingMode: .alwaysOriginal))
-                    }
-                    .tint(.themeBlade)
-                }
-
-                HorizontalDivider()
+        ListForEach(viewModel.items) { item in
+            WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, amountRounding: viewModel.amountRounding, subtitleMode: .price) {
+                path.append(item.wallet)
+            } failedAction: {
+                Coordinator.shared.presentBalanceError(wallet: item.wallet, state: item.state)
             }
-            .listRowBackground(Color.clear)
-            .listRowInsets(EdgeInsets())
-            .listRowSeparator(.hidden)
+            .swipeActions {
+                Button {
+                    viewModel.onDisable(wallet: item.wallet)
+                } label: {
+                    Image(uiImage: UIImage(named: "trash")!.withTintColor(UIColor(Color.themeLeah), renderingMode: .alwaysOriginal))
+                }
+                .tint(.themeBlade)
+            }
         }
     }
 

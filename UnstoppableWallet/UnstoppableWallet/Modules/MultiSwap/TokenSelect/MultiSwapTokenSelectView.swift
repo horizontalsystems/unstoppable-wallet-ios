@@ -35,7 +35,7 @@ struct MultiSwapTokenSelectView: View {
                                     Text(item.token.coin.code).textBody()
 
                                     if let badge = item.token.badge {
-                                        BadgeViewNew(text: badge)
+                                        BadgeViewNew(badge)
                                     }
 
                                     if let balance = item.balance {

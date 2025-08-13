@@ -307,16 +307,12 @@ extension WalletListViewModel: IWalletCoinPriceServiceDelegate {
 }
 
 extension WalletListViewModel {
-    struct Item: Identifiable, Equatable, ISortableWalletItem {
+    struct Item: Hashable, ISortableWalletItem {
         let wallet: Wallet
         var isMainNet: Bool
         var balanceData: BalanceData
         var state: AdapterState
         var priceItem: WalletCoinPriceService.Item?
-
-        var id: String {
-            wallet.id
-        }
 
         var balance: Decimal {
             balanceData.available

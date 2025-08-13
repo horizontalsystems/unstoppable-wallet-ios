@@ -6,7 +6,7 @@ struct MarketVaultsView: View {
     @ObservedObject var viewModel: MarketVaultsViewModel
 
     var body: some View {
-        ThemeView {
+        ThemeView(background: .themeLawrence) {
             switch viewModel.state {
             case .loading:
                 VStack(spacing: 0) {
@@ -29,95 +29,79 @@ struct MarketVaultsView: View {
     }
 
     @ViewBuilder private func header(disabled: Bool = false) -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                Button(action: {
-                    Coordinator.shared.present(type: .alert) { isPresented in
-                        OptionAlertView(
-                            title: "market.vaults.filter".localized,
-                            viewItems: MarketVaultsViewModel.Filter.allCases.map { .init(text: $0.title, selected: viewModel.filter == $0) },
-                            onSelect: { index in
-                                let filter = MarketVaultsViewModel.Filter.allCases[index]
+        ListHeader(scrollable: true) {
+            DropdownButton(text: viewModel.filter.title) {
+                Coordinator.shared.present(type: .alert) { isPresented in
+                    OptionAlertView(
+                        title: "market.vaults.filter".localized,
+                        viewItems: MarketVaultsViewModel.Filter.allCases.map { .init(text: $0.title, selected: viewModel.filter == $0) },
+                        onSelect: { index in
+                            let filter = MarketVaultsViewModel.Filter.allCases[index]
 
-                                guard viewModel.filter != filter else {
-                                    return
-                                }
+                            guard viewModel.filter != filter else {
+                                return
+                            }
 
-                                Coordinator.shared.performAfterPurchase(premiumFeature: .tokenInsights, page: .vaults, trigger: .filter) {
-                                    viewModel.filter = filter
-                                }
-                            },
-                            isPresented: isPresented
-                        )
-                    }
-                }) {
-                    Text(viewModel.filter.title)
+                            Coordinator.shared.performAfterPurchase(premiumFeature: .tokenInsights, page: .vaults, trigger: .filter) {
+                                viewModel.filter = filter
+                            }
+                        },
+                        isPresented: isPresented
+                    )
                 }
-                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
-                .disabled(disabled)
-
-                Button(action: {
-                    Coordinator.shared.present(type: .alert) { isPresented in
-                        OptionAlertView(
-                            title: "market.sort_by.title".localized,
-                            viewItems: MarketVaultsViewModel.SortBy.allCases.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
-                            onSelect: { index in
-                                let sortBy = MarketVaultsViewModel.SortBy.allCases[index]
-
-                                guard viewModel.sortBy != sortBy else {
-                                    return
-                                }
-
-                                Coordinator.shared.performAfterPurchase(premiumFeature: .tokenInsights, page: .vaults, trigger: .sortBy) {
-                                    viewModel.sortBy = sortBy
-                                }
-                            },
-                            isPresented: isPresented
-                        )
-                    }
-                }) {
-                    Text(viewModel.sortBy.shortTitle)
-                }
-                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
-                .disabled(disabled)
-
-                Button(action: {
-                    Coordinator.shared.present(type: .alert) { isPresented in
-                        OptionAlertView(
-                            title: "market.time_period.title".localized,
-                            viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
-                            onSelect: { index in
-                                let timePeriod = viewModel.timePeriods[index]
-
-                                guard viewModel.timePeriod != timePeriod else {
-                                    return
-                                }
-
-                                Coordinator.shared.performAfterPurchase(premiumFeature: .tokenInsights, page: .vaults, trigger: .timePeriod) {
-                                    viewModel.timePeriod = timePeriod
-                                }
-                            },
-                            isPresented: isPresented
-                        )
-                    }
-                }) {
-                    Text(viewModel.timePeriod.shortTitle)
-                }
-                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
-                .disabled(disabled)
-
-                Button(action: {
-                    Coordinator.shared.present { isPresented in
-                        BlockchainsView(viewModel: viewModel, isPresented: isPresented)
-                    }
-                }) {
-                    Text(blockchainsTitle)
-                }
-                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
-                .disabled(disabled)
             }
-            .padding(.horizontal, .margin16)
-            .padding(.vertical, .margin8)
+            .disabled(disabled)
+
+            DropdownButton(text: viewModel.sortBy.shortTitle) {
+                Coordinator.shared.present(type: .alert) { isPresented in
+                    OptionAlertView(
+                        title: "market.sort_by.title".localized,
+                        viewItems: MarketVaultsViewModel.SortBy.allCases.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
+                        onSelect: { index in
+                            let sortBy = MarketVaultsViewModel.SortBy.allCases[index]
+
+                            guard viewModel.sortBy != sortBy else {
+                                return
+                            }
+
+                            Coordinator.shared.performAfterPurchase(premiumFeature: .tokenInsights, page: .vaults, trigger: .sortBy) {
+                                viewModel.sortBy = sortBy
+                            }
+                        },
+                        isPresented: isPresented
+                    )
+                }
+            }
+            .disabled(disabled)
+
+            DropdownButton(text: viewModel.timePeriod.shortTitle) {
+                Coordinator.shared.present(type: .alert) { isPresented in
+                    OptionAlertView(
+                        title: "market.time_period.title".localized,
+                        viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
+                        onSelect: { index in
+                            let timePeriod = viewModel.timePeriods[index]
+
+                            guard viewModel.timePeriod != timePeriod else {
+                                return
+                            }
+
+                            Coordinator.shared.performAfterPurchase(premiumFeature: .tokenInsights, page: .vaults, trigger: .timePeriod) {
+                                viewModel.timePeriod = timePeriod
+                            }
+                        },
+                        isPresented: isPresented
+                    )
+                }
+            }
+            .disabled(disabled)
+
+            DropdownButton(text: blockchainsTitle) {
+                Coordinator.shared.present { isPresented in
+                    BlockchainsView(viewModel: viewModel, isPresented: isPresented)
+                }
+            }
+            .disabled(disabled)
         }
     }
 
@@ -126,27 +110,21 @@ struct MarketVaultsView: View {
             ThemeList {
                 if viewModel.premiumEnabled {
                     ListForEach(vaults) { vault in
-                        ClickableRow(action: {
+                        cell(vault: vault) {
                             open(vault: vault)
-                        }) {
-                            itemContent(vault: vault)
                         }
                     }
                 } else {
                     ListForEach(Array(vaults.prefix(7))) { vault in
-                        ClickableRow(action: {
+                        cell(vault: vault) {
                             open(vault: vault)
-                        }) {
-                            itemContent(vault: vault)
                         }
                     }
 
                     ZStack {
                         ListSection {
                             ForEach(Array(vaults.dropFirst(7).prefix(6)), id: \.self) { vault in
-                                ListRow {
-                                    itemContent(vault: vault)
-                                }
+                                cell(vault: vault)
                             }
                         }
                         .blur(radius: 5)
@@ -175,7 +153,6 @@ struct MarketVaultsView: View {
                     .listRowSeparator(.hidden)
                 }
             }
-            .themeListStyle(.transparent)
             .refreshable {
                 await viewModel.refresh()
             }
@@ -187,63 +164,55 @@ struct MarketVaultsView: View {
 
     @ViewBuilder private func loadingList() -> some View {
         ThemeList(Array(0 ... 10)) { _ in
-            ListRow {
-                itemContent(
-                    imageUrl: nil,
-                    assetSymbol: "USDC",
-                    name: "Savings USDC",
-                    chain: "Ethereum",
-                    apy: 2.34,
-                    tvl: 123_123_000_000
-                )
-                .redacted()
-            }
+            cell(
+                imageUrl: nil,
+                assetSymbol: "USDC",
+                name: "Savings USDC",
+                chain: "Ethereum",
+                apy: 2.34,
+                tvl: 123_123_000_000
+            )
+            .redacted()
         }
-        .themeListStyle(.transparent)
         .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
     }
 
-    @ViewBuilder private func itemContent(vault: Vault) -> some View {
-        itemContent(
+    @ViewBuilder private func cell(vault: Vault, action: (() -> Void)? = nil) -> some View {
+        cell(
             imageUrl: URL(string: vault.protocolLogo),
             assetSymbol: vault.assetSymbol,
             name: vault.name,
             chain: viewModel.blockchainMap[vault.chain]?.name,
             apy: vault.apy[viewModel.timePeriod],
-            tvl: vault.tvl
+            tvl: vault.tvl,
+            action: action
         )
     }
 
-    @ViewBuilder private func itemContent(imageUrl: URL?, assetSymbol: String, name: String, chain: String?, apy: Decimal?, tvl: Decimal) -> some View {
-        KFImage.url(imageUrl)
-            .resizable()
-            .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeBlade) }
-            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
-            .frame(width: .iconSize32, height: .iconSize32)
-
-        VStack(spacing: 1) {
-            HStack(spacing: .margin8) {
-                Text(assetSymbol).textBody()
-
-                if let chain {
-                    BadgeViewNew(text: chain)
-                }
-
-                Spacer()
-
-                if let apy, let formatted = ValueFormatter.instance.format(percentValue: apy) {
-                    Text("market.vaults.apy".localized(formatted)).textBody(color: .themeRemus)
-                }
-            }
-
-            HStack(spacing: .margin8) {
-                Text(name).textSubhead2()
-                Spacer()
-                if let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: tvl) {
-                    Text("market.vaults.tvl".localized(formatted)).textSubhead2()
-                }
-            }
-        }
+    @ViewBuilder private func cell(imageUrl: URL?, assetSymbol: String, name: String, chain: String?, apy: Decimal?, tvl: Decimal, action: (() -> Void)? = nil) -> some View {
+        Cell(
+            left: {
+                KFImage.url(imageUrl)
+                    .resizable()
+                    .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeBlade) }
+                    .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
+                    .frame(width: .iconSize32, height: .iconSize32)
+            },
+            middle: {
+                MultiText(
+                    title: assetSymbol,
+                    badge: chain,
+                    subtitle: name
+                )
+            },
+            right: {
+                RightMultiText(
+                    title: apy.flatMap { ValueFormatter.instance.format(percentValue: $0) }.map { ComponentText(text: "market.vaults.apy".localized($0), colorStyle: .green) },
+                    subtitle: ValueFormatter.instance.formatShort(currency: viewModel.currency, value: tvl).map { "market.vaults.tvl".localized($0) }
+                )
+            },
+            action: action
+        )
     }
 
     private func open(vault: Vault) {
@@ -272,43 +241,54 @@ extension MarketVaultsView {
 
         var body: some View {
             ThemeNavigationStack {
-                ScrollableThemeView {
-                    ListSection {
-                        ClickableRow(action: {
-                            viewModel.blockchains = []
-                        }) {
-                            Text("market.vaults.chains.any").themeBody()
-
-                            if viewModel.blockchains.isEmpty {
-                                Image.checkIcon
-                            }
-                        }
-
-                        ForEach(viewModel.allBlockchains, id: \.self) { blockchain in
-                            ClickableRow(action: {
-                                Coordinator.shared.performAfterPurchase(premiumFeature: .tokenInsights, page: .vaults, trigger: .blockchains) {
-                                    if viewModel.blockchains.contains(blockchain) {
-                                        viewModel.blockchains.remove(blockchain)
-                                    } else {
-                                        viewModel.blockchains.insert(blockchain)
-                                    }
-                                }
-                            }) {
-                                KFImage.url(URL(string: blockchain.type.imageUrl))
-                                    .resizable()
-                                    .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeBlade) }
-                                    .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
-                                    .frame(width: .iconSize32, height: .iconSize32)
-
-                                Text(blockchain.name).themeBody()
-
-                                if viewModel.blockchains.contains(blockchain) {
+                ThemeView(background: .themeLawrence) {
+                    ThemeList(bottomSpacing: .margin16) {
+                        Cell(
+                            middle: {
+                                MultiText(title: "market.vaults.chains.any".localized)
+                            },
+                            right: {
+                                if viewModel.blockchains.isEmpty {
                                     Image.checkIcon
                                 }
+                            },
+                            action: {
+                                viewModel.blockchains = []
                             }
+                        )
+                        .listRowBackground(Color.clear)
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
+
+                        ListForEach(viewModel.allBlockchains) { blockchain in
+                            Cell(
+                                left: {
+                                    KFImage.url(URL(string: blockchain.type.imageUrl))
+                                        .resizable()
+                                        .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeBlade) }
+                                        .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
+                                        .frame(width: .iconSize32, height: .iconSize32)
+                                },
+                                middle: {
+                                    MultiText(title: blockchain.name)
+                                },
+                                right: {
+                                    if viewModel.blockchains.contains(blockchain) {
+                                        Image.checkIcon
+                                    }
+                                },
+                                action: {
+                                    Coordinator.shared.performAfterPurchase(premiumFeature: .tokenInsights, page: .vaults, trigger: .blockchains) {
+                                        if viewModel.blockchains.contains(blockchain) {
+                                            viewModel.blockchains.remove(blockchain)
+                                        } else {
+                                            viewModel.blockchains.insert(blockchain)
+                                        }
+                                    }
+                                }
+                            )
                         }
                     }
-                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                 }
                 .navigationTitle("market.vaults.chains.title".localized)
                 .toolbar {

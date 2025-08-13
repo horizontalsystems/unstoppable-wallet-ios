@@ -174,7 +174,7 @@ struct MarketEtfView: View {
 
             HStack(spacing: .margin8) {
                 HStack(spacing: .margin4) {
-                    BadgeViewNew(text: "\(rank)")
+                    BadgeViewNew("\(rank)")
                     Text(name).textSubhead2()
                 }
                 Spacer()

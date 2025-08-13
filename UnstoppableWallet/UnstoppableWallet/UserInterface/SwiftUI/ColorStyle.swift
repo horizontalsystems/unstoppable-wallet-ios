@@ -1,13 +1,13 @@
 import SwiftUI
 
-enum TextColorStyle {
+enum ColorStyle {
     case primary
     case secondary
     case red
     case green
     case yellow
 
-    func color(dimmed: Bool) -> Color {
+    func color(dimmed: Bool = false) -> Color {
         switch self {
         case .primary: return dimmed ? .themeAndy : .themeLeah
         case .secondary: return dimmed ? .themeAndy : .themeGray

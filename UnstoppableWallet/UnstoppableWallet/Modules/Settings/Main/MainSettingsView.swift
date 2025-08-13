@@ -273,7 +273,7 @@ struct MainSettingsView: View {
             Spacer()
 
             if viewModel.walletConnectPendingRequestCount > 0 {
-                BadgeViewNew(style: .medium, text: "\(viewModel.walletConnectPendingRequestCount)")
+                BadgeViewNew("\(viewModel.walletConnectPendingRequestCount)") // todo: use different badge
             } else if viewModel.walletConnectSessionCount > 0 {
                 Text("\(viewModel.walletConnectSessionCount)").textSubhead1()
             }

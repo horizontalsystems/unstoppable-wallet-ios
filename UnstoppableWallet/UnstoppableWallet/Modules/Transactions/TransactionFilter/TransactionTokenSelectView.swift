@@ -44,7 +44,7 @@ struct TransactionTokenSelectView: View {
                                         Text(token.coin.code).textBody()
 
                                         if let badge = token.badge {
-                                            BadgeViewNew(text: badge)
+                                            BadgeViewNew(badge)
                                         }
                                     }
                                     .frame(maxWidth: .infinity, alignment: .leading)

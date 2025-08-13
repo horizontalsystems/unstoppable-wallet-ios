@@ -114,7 +114,7 @@ struct MarketAdvancedSearchResultsView: View {
                     Text(coin?.code ?? "CODE").textBody()
 
                     if viewModel.showSignals, let signal = indicatorResult {
-                        MarketWatchlistSignalBadge(signal: signal)
+                        BadgeViewNew(signal.title, mode: .transparent, colorStyle: signal.colorStyle)
                     }
 
                     Spacer()
@@ -124,7 +124,7 @@ struct MarketAdvancedSearchResultsView: View {
                 HStack(spacing: .margin8) {
                     HStack(spacing: .margin4) {
                         if let rank {
-                            BadgeViewNew(text: "\(rank)")
+                            BadgeViewNew("\(rank)")
                         }
 
                         if let marketCap, let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: marketCap) {

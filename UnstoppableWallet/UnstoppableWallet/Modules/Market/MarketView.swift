@@ -17,20 +17,19 @@ struct MarketView: View {
 
     var body: some View {
         ThemeView {
-            VStack(spacing: 0) {
-                SearchBarWithCancel(text: $searchViewModel.searchText, prompt: "placeholder.search".localized, focused: $searchFocused)
-
-                ZStack {
-                    VStack(spacing: 0) {
-                        MarketGlobalView(viewModel: globalViewModel)
-                        MarketTabView(watchlistViewModel: watchlistViewModel)
-                    }
-
-                    if searchFocused {
-                        MarketSearchView(viewModel: searchViewModel, watchlistViewModel: watchlistViewModel)
-                            .onFirstAppear { stat(page: .markets, event: .open(page: .marketSearch)) }
-                    }
+            ZStack {
+                VStack(spacing: 0) {
+                    MarketGlobalView(viewModel: globalViewModel)
+                    MarketTabView(watchlistViewModel: watchlistViewModel)
                 }
+
+                if searchFocused {
+                    MarketSearchView(viewModel: searchViewModel, watchlistViewModel: watchlistViewModel)
+                        .onFirstAppear { stat(page: .markets, event: .open(page: .marketSearch)) }
+                }
+            }
+            .safeAreaInset(edge: .bottom) {
+                BottomSearchBar(text: $searchViewModel.searchText, prompt: "placeholder.search".localized, focused: $searchFocused)
             }
         }
     }

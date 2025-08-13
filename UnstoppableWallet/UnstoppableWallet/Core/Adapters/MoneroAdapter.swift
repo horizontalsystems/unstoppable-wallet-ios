@@ -51,7 +51,7 @@ class MoneroAdapter {
         token = wallet.token
         transactionSource = wallet.transactionSource
 
-        balanceState = .notSynced(error: AppError.unknownError)
+        balanceState = .notSynced(error: AppError.unknownError.localizedDescription)
         kit.delegate = self
     }
 
@@ -134,9 +134,9 @@ class MoneroAdapter {
                 return .syncing(progress: 0, lastBlockDate: nil)
             }
         case let .error(error):
-            return .notSynced(error: error ?? AppError.unknownError)
+            return .notSynced(error: (error ?? AppError.unknownError).localizedDescription)
         case let .critical(error):
-            return .notSynced(error: error ?? AppError.unknownError)
+            return .notSynced(error: (error ?? AppError.unknownError).localizedDescription)
         }
     }
 

@@ -994,7 +994,7 @@ enum ZCashAdapterState: Equatable {
         case let .downloadingBlocks(progress, _):
             let percentValue = ValueFormatter.instance.format(percentValue: Decimal(Double(progress * 100)), signType: .never)
             return .customSyncing(main: "balance.downloading_blocks".localized, secondary: percentValue, progress: Int(progress * 100))
-        case let .notSynced(error): return .notSynced(error: error)
+        case let .notSynced(error): return .notSynced(error: error.localizedDescription)
         }
     }
 

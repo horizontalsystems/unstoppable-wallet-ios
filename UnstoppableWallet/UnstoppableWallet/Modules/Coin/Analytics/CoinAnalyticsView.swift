@@ -804,18 +804,12 @@ struct CoinAnalyticsView: View {
     @ViewBuilder private func indicatorRow(advice: Previewable<TechnicalAdvice.Advice>) -> some View {
         switch advice {
         case .preview:
-            indicatorMeter(
-                text: "",
-                textColor: .clear,
-                textBackground: .clear,
-                currentIndex: nil
-            )
-            .padding(.vertical, .margin24)
+            indicatorMeter()
+                .padding(.vertical, .margin24)
         case let .regular(value: advice):
             indicatorMeter(
                 text: advice.title,
-                textColor: advice.foregroundColor,
-                textBackground: advice.backgroundColor,
+                colorStyle: advice.colorStyle,
                 currentIndex: meterIndex(advice: advice)
             )
             .padding(.vertical, .margin24)
@@ -901,7 +895,7 @@ struct CoinAnalyticsView: View {
         }
     }
 
-    @ViewBuilder private func indicatorMeter(text: String, textColor: Color, textBackground: Color, currentIndex: Int? = nil) -> some View {
+    @ViewBuilder private func indicatorMeter(text: String? = nil, colorStyle: ColorStyle? = nil, currentIndex: Int? = nil) -> some View {
         GeometryReader { proxy in
             let size = proxy.size
 
@@ -942,12 +936,10 @@ struct CoinAnalyticsView: View {
                     .frame(width: size.width, height: size.height, alignment: .bottom)
                 }
 
-                Text(text)
-                    .textCaptionSB(color: textColor)
-                    .padding(.horizontal, .margin16)
-                    .padding(.vertical, .margin8)
-                    .background(Capsule(style: .continuous).fill(textBackground))
-                    .padding(.bottom, .margin8)
+                if let text {
+                    BadgeViewNew(text, mode: .transparent, colorStyle: colorStyle)
+                        .padding(.bottom, .margin8)
+                }
             }
         }
         .frame(width: 240, height: 126)
