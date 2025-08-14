@@ -9,15 +9,17 @@ class AllBridgeMultiSwapTronConfirmationQuote: IMultiSwapConfirmationQuote {
     let recipient: Address?
     let crosschain: Bool
     let slippage: Decimal
+    let createdTransaction: CreatedTransactionResponse
     let fees: [Fee]
     let transactionError: Error?
 
-    init(amountIn: Decimal, expectedAmountOut: Decimal, recipient: Address?, crosschain: Bool, slippage: Decimal, fees: [Fee], transactionError: Error?) {
+    init(amountIn: Decimal, expectedAmountOut: Decimal, recipient: Address?, crosschain: Bool, slippage: Decimal, createdTransaction: CreatedTransactionResponse, fees: [Fee], transactionError: Error?) {
         self.amountIn = amountIn
         self.expectedAmountOut = expectedAmountOut
         self.recipient = recipient
         self.crosschain = crosschain
         self.slippage = slippage
+        self.createdTransaction = createdTransaction
         self.fees = fees
         self.transactionError = transactionError
     }

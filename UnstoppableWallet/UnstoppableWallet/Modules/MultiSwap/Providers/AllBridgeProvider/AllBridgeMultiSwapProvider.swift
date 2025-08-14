@@ -363,7 +363,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 nonce: transactionSettings?.nonce
             )
         } else if tokenIn.blockchainType == .tron {
-            let tronResponse: TronKit.CreatedTransactionResponse = try await transactionData(
+            let createdTransaction: TronKit.CreatedTransactionResponse = try await transactionData(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
                 crosschain: crosschain,
@@ -380,7 +380,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                     let tronKit = tronKitWrapper.tronKit
                     let trxBalance = tronKit.trxBalance
 
-                    let _fees = try await tronKit.estimateFee(createdTransaction: tronResponse)
+                    let _fees = try await tronKit.estimateFee(createdTransaction: createdTransaction)
                     let _totalFees = _fees.calculateTotalFees()
 
                     var totalAmount = 0
@@ -411,6 +411,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 recipient: storage.recipient(blockchainType: tokenIn.blockchainType),
                 crosschain: crosschain,
                 slippage: slippage,
+                createdTransaction: createdTransaction,
                 fees: fees,
                 transactionError: transactionError
             )
@@ -506,7 +507,19 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                     nonce: quote.nonce
                 )
             } catch {
-                print("ERR: \(error)")
+                logger?.log(level: .error, message: "AllBridge SendEVM Error: \(error)")
+                throw error
+            }
+        } else if let quote = quote as? AllBridgeMultiSwapTronConfirmationQuote {
+            guard let tronKitWrapper = tronKitManager.tronKitWrapper else {
+                throw SwapError.noEvmKitWrapper
+            }
+
+            do {
+                _ = try await tronKitWrapper.send(createdTranaction: quote.createdTransaction)
+            } catch {
+                logger?.log(level: .error, message: "AllBridge SendEVM Error: \(error)")
+
                 throw error
             }
         }

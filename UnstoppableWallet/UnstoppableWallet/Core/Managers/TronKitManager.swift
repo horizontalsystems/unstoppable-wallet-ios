@@ -108,6 +108,14 @@ class TronKitWrapper {
 
         return try await tronKit.send(contract: contract, signer: signer, feeLimit: feeLimit)
     }
+
+    func send(createdTranaction: CreatedTransactionResponse) async throws {
+        guard let signer else {
+            throw SignerError.signerNotSupported
+        }
+
+        try await tronKit.send(createdTransaction: createdTranaction, signer: signer)
+    }
 }
 
 extension TronKitManager {
