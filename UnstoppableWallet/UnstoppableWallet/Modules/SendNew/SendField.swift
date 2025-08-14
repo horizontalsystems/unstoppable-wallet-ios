@@ -233,7 +233,7 @@ extension SendField {
             level: BaseUniswapMultiSwapProvider.PriceImpactLevel(priceImpact: priceImpact).valueLevel
         )
     }
-    
+
     static func slippage(_ slippage: Decimal) -> Self {
         .levelValue(
             title: "swap.slippage".localized,

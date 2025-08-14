@@ -116,7 +116,7 @@ extension StellarKitManager {
             throw AdapterError.unsupportedAccount
         }
     }
-    
+
     static func accountId(accountType: AccountType) throws -> String {
         switch accountType {
         case .mnemonic:
@@ -130,7 +130,6 @@ extension StellarKitManager {
         default:
             throw AdapterError.unsupportedAccount
         }
-
     }
 }
 

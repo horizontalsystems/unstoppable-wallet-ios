@@ -1,7 +1,7 @@
 import Foundation
 import MarketKit
 
-class AllBridgeMultiSwapBtcQuote: IMultiSwapQuote {
+class AllBridgeMultiSwapStellarQuote: IMultiSwapQuote {
     let expectedAmountOut: Decimal
     let crosschain: Bool
     let recipient: Address?
@@ -44,7 +44,7 @@ class AllBridgeMultiSwapBtcQuote: IMultiSwapQuote {
         var cautions = [CautionNew]()
 
         if crosschain {
-            cautions.append(CautionNew(title: "swap.allbridge.slip_protection".localized, text: "swap.allbridge.slip_protection.description", type: .warning))
+            cautions.append(CautionNew(title: "swap.allbridge.slip_protection".localized, text: "swap.allbridge.slip_protection.description".localized, type: .warning))
         }
 
         return cautions

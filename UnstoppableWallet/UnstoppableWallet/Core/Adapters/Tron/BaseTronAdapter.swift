@@ -82,3 +82,21 @@ extension BaseTronAdapter: IDepositAdapter {
         )
     }
 }
+
+public extension Array where Array.Element == Fee {
+    func calculateTotalFees() -> Int {
+        var totalFees = 0
+        for fee in self {
+            switch fee {
+            case let .bandwidth(points, price):
+                totalFees += points * price
+            case let .energy(required, price):
+                totalFees += required * price
+            case let .accountActivation(amount):
+                totalFees += amount
+            }
+        }
+
+        return totalFees
+    }
+}

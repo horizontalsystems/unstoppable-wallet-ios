@@ -67,14 +67,14 @@ extension Trc20Adapter: IAllowanceAdapter {
         tronKit.pendingTransactions().map { transactionConverter.transactionRecord(fromTransaction: $0) }
     }
 
-    func allowance(spenderAddress: Address, defaultBlockParameter: BlockParameter) async throws -> Decimal {
+    func allowance(spenderAddress: Address, defaultBlockParameter _: BlockParameter) async throws -> Decimal {
         let spenderAddress = try TronKit.Address(address: spenderAddress.raw)
         let allowanceString = try await tronKit.allowance(contractAddress: contractAddress, spenderAddress: spenderAddress)
-        
+
         guard let significand = Decimal(string: allowanceString) else {
             return 0
         }
-        
+
         return Decimal(sign: .plus, exponent: -decimals, significand: significand)
     }
 }

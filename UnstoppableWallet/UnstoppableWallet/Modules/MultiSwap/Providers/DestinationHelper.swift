@@ -1,24 +1,24 @@
 import MarketKit
 
-struct DestinationHelper {
+enum DestinationHelper {
     static func resolveDestination(token: Token) throws -> String {
         let blockchainType = token.blockchainType
-        
+
         if let depositAdapter = Core.shared.adapterManager.adapter(for: token) as? IDepositAdapter {
             return depositAdapter.receiveAddress.address
         }
-        
+
         guard let account = Core.shared.accountManager.activeAccount else {
             throw SwapError.noActiveAccount
         }
-        
+
         if blockchainType.isEvm {
             let chain = Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType)
-            
+
             guard let address = account.type.evmAddress(chain: chain) else {
                 throw SwapError.noDestinationAddress
             }
-            
+
             return address.eip55
         }
 
@@ -44,5 +44,4 @@ extension DestinationHelper {
         case noActiveAccount
         case noDestinationAddress
     }
-
 }
