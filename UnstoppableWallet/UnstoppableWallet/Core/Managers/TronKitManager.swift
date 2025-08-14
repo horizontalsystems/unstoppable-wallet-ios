@@ -79,7 +79,7 @@ extension TronKitManager {
             try _tronKitWrapper(account: account)
         }
     }
-    
+
     func address(type: AccountType) throws -> String {
         switch type {
         case let .tronAddress(address: address): return address.base58

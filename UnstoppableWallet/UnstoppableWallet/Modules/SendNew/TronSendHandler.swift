@@ -16,22 +16,6 @@ class TronSendHandler {
         self.contract = contract
         self.tronKitWrapper = tronKitWrapper
     }
-
-    private func calculateTotalFees(fees: [Fee]) -> Int {
-        var totalFees = 0
-        for fee in fees {
-            switch fee {
-            case let .bandwidth(points, price):
-                totalFees += points * price
-            case let .energy(required, price):
-                totalFees += required * price
-            case let .accountActivation(amount):
-                totalFees += amount
-            }
-        }
-
-        return totalFees
-    }
 }
 
 extension TronSendHandler: ISendHandler {
@@ -50,7 +34,7 @@ extension TronSendHandler: ISendHandler {
 
         do {
             let _fees = try await tronKit.estimateFee(contract: contract)
-            let _totalFees = calculateTotalFees(fees: _fees)
+            let _totalFees = _fees.calculateTotalFees()
 
             var totalAmount = 0
             if let transfer = contract as? TransferContract {

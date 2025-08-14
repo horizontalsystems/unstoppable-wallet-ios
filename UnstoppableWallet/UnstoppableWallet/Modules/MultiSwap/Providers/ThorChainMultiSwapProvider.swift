@@ -318,7 +318,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
         if let recipient = storage.recipient(blockchainType: token.blockchainType) {
             return recipient.raw
         }
-        
+
         return try DestinationHelper.resolveDestination(token: token)
     }
 

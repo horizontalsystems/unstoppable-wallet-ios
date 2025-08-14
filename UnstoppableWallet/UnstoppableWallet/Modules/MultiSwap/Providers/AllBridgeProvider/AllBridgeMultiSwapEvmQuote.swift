@@ -43,7 +43,7 @@ class AllBridgeMultiSwapEvmQuote: BaseEvmMultiSwapQuote {
         var cautions = super.cautions()
 
         if crosschain {
-            cautions.append(CautionNew(title: "swap.allbridge.slip_protection".localized, text: "swap.allbridge.slip_protection.description", type: .warning))
+            cautions.append(CautionNew(title: "swap.allbridge.slip_protection".localized, text: "swap.allbridge.slip_protection.description".localized, type: .warning))
         }
 
         return cautions

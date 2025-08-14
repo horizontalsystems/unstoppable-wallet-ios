@@ -68,7 +68,8 @@ class AdapterFactory {
 
     private func trc20Adapter(address: String, wallet: Wallet) -> IAdapter? {
         guard let tronKitWrapper = try? tronKitManager.tronKitWrapper(account: wallet.account),
-              let baseToken = try? coinManager.token(query: .init(blockchainType: .tron, tokenType: .native)) else {
+              let baseToken = try? coinManager.token(query: .init(blockchainType: .tron, tokenType: .native))
+        else {
             return nil
         }
 

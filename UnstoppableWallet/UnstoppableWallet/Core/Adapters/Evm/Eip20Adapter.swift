@@ -76,11 +76,11 @@ extension Eip20Adapter: IAllowanceAdapter {
     func allowance(spenderAddress: Address, defaultBlockParameter: BlockParameter) async throws -> Decimal {
         let address = try EvmKit.Address(hex: spenderAddress.raw)
         let allowanceString = try await eip20Kit.allowance(spenderAddress: address, defaultBlockParameter: .init(defaultBlockParameter))
-        
+
         guard let significand = Decimal(string: allowanceString) else {
             return 0
         }
-        
+
         return Decimal(sign: .plus, exponent: -decimals, significand: significand)
     }
 }

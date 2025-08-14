@@ -1,9 +1,9 @@
+import Combine
 import EvmKit
 import Foundation
 import MarketKit
 import RxRelay
 import RxSwift
-import Combine
 
 class SwapAllowanceService {
     private let spenderAddress: EvmKit.Address
@@ -37,7 +37,7 @@ class SwapAllowanceService {
 
     private func sync() {
         allowanceTask?.cancel()
-        
+
         guard let token, let adapter = adapterManager.adapter(for: token) as? IAllowanceAdapter else {
             state = nil
             return
@@ -53,15 +53,15 @@ class SwapAllowanceService {
         allowanceTask = Task { [weak self] in
             do {
                 let allowance = try await adapter.allowance(spenderAddress: address, defaultBlockParameter: .latest)
-                
+
                 guard !Task.isCancelled else { return }
-                
+
                 await MainActor.run { [weak self] in
                     self?.state = .ready(allowance: AppValue(token: token, value: allowance))
                 }
             } catch {
                 guard !Task.isCancelled else { return }
-                
+
                 await MainActor.run { [weak self] in
                     self?.state = .notReady(error: error)
                 }

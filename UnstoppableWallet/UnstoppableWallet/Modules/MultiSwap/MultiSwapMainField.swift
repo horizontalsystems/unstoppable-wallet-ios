@@ -23,14 +23,14 @@ struct MultiSwapMainField: Identifiable {
 }
 
 extension MultiSwapMainField {
-    static func recipient(_ recipient: String, level: ValueLevel = .regular) -> Self {
+    static func recipient(_ recipient: String, level _: ValueLevel = .regular) -> Self {
         .init(
             title: "swap.recipient".localized,
             value: recipient,
             valueLevel: .regular
         )
     }
-    
+
     static func slippage(_ slippage: Decimal) -> Self {
         .init(
             title: "swap.slippage".localized,

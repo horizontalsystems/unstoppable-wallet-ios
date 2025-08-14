@@ -669,7 +669,7 @@
 "swap.thorchain.slip_protection" = "Slip protection unavailable";
 "swap.thorchain.slip_protection.description" = "Minimum slippage to enable slip protection for this swap is %@.";
 "swap.allbridge.slip_protection" = "No Slippage Control";
-"swap.allbridge.slip_protection.description"; = "Cross-chain swaps depend on third-party liquidity and delays, which may affect the final amount.";
+"swap.allbridge.slip_protection.description" = "Cross-chain swaps depend on third-party liquidity and delays, which may affect the final amount.";
 
 // Swap Advanced Settings
 
