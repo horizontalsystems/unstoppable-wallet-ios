@@ -2360,3 +2360,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "monero.priority.medium" = "Moyenne";
 "monero.priority.high" = "Rapide";
 "monero.priority.last" = "Dernier";
+
+// MEV Protection
+
+"mev_protection.title" = "MEV Protection";
+"mev_protection.description" = "So-called front-running bots watch every trade, trying to make you overpay. This feature blocks them.";
