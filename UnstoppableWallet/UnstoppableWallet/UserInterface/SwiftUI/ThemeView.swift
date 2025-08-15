@@ -1,17 +1,12 @@
 import SwiftUI
 
 struct ThemeView<Content: View>: View {
-    private let background: Color
-    private let content: Content
-
-    init(background: Color = .themeTyler, @ViewBuilder content: () -> Content) {
-        self.background = background
-        self.content = content()
-    }
+    var style: ViewStyle = .regular
+    @ViewBuilder let content: Content
 
     var body: some View {
         ZStack {
-            background.ignoresSafeArea()
+            style.background.ignoresSafeArea()
 
             VStack(spacing: 0) {
                 Rectangle()
@@ -24,6 +19,31 @@ struct ThemeView<Content: View>: View {
         }
         .toolbarBackground(.hidden, for: .navigationBar)
         .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+enum ViewStyle {
+    case regular
+    case list
+
+    var background: Color {
+        switch self {
+        case .regular: return .themeTyler
+        case .list: return .themeLawrence
+        }
+    }
+}
+
+struct ScrollableThemeView<Content: View>: View {
+    var style: ViewStyle = .regular
+    @ViewBuilder let content: Content
+
+    var body: some View {
+        ThemeView(style: style) {
+            ScrollView {
+                content
+            }
+        }
     }
 }
 
@@ -61,19 +81,6 @@ struct ThemeRadialView<Content: View>: View {
                         .offset(x: viewSize.width / 2, y: deltaHeight + circleDiameter / 2)
                 }
 
-                content
-            }
-        }
-    }
-}
-
-struct ScrollableThemeView<Content: View>: View {
-    var background: Color = .themeTyler
-    @ViewBuilder let content: Content
-
-    var body: some View {
-        ThemeView(background: background) {
-            ScrollView {
                 content
             }
         }

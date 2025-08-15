@@ -13,7 +13,7 @@ struct MarketEtfTabView: View {
 
     var body: some View {
         ThemeNavigationStack {
-            ThemeView {
+            ThemeView(style: .list) {
                 TabHeaderView(
                     tabs: MarketEtfFetcher.EtfCategory.allCases.map(\.title),
                     currentTabIndex: Binding(
@@ -26,15 +26,12 @@ struct MarketEtfTabView: View {
                     )
                 )
 
-                VStack {
-                    MarketEtfView(category: currentTab, factory: viewModelFactory)
-                        .id(currentTab)
-                }
-                .frame(maxHeight: .infinity)
+                MarketEtfView(category: currentTab, factory: viewModelFactory)
+                    .id(currentTab)
+                    .frame(maxHeight: .infinity)
             }
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .cancellationAction) {
                     Button("button.close".localized) {
                         isPresented = false
                     }

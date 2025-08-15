@@ -7,7 +7,7 @@ struct MarketSearchView: View {
     @ObservedObject var watchlistViewModel: WatchlistViewModel
 
     var body: some View {
-        ThemeView(background: .themeLawrence) {
+        ThemeView(style: .list) {
             switch viewModel.state {
             case let .placeholder(recentFullCoins, popularFullCoins):
                 ThemeList {

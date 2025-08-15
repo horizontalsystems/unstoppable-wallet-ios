@@ -71,7 +71,7 @@ struct MarketNewsView: View {
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-        .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
+        .scrollDisabled(true)
     }
 
     @ViewBuilder private func itemContent(source: String, title: String, body: String, ago: String) -> some View {

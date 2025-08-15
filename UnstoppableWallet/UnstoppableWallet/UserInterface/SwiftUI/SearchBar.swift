@@ -38,7 +38,11 @@ struct BottomSearchBar: View {
             }
             .animation(.easeOut(duration: 0.2), value: cancelVisible)
         }
-        .padding(EdgeInsets(top: .margin8, leading: .margin24, bottom: .margin16, trailing: .margin24))
+        .padding(EdgeInsets(top: .margin16, leading: .margin24, bottom: .margin16, trailing: .margin24))
+        .contentShape(Rectangle())
+        .onTapGesture {
+            focused = true
+        }
         .onChange(of: focused) { focused in
             cancelVisible = focused
         }

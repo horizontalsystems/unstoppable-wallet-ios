@@ -8,7 +8,7 @@ struct MarketWatchlistView: View {
     @State private var editMode: EditMode = .inactive
 
     var body: some View {
-        ThemeView(background: .themeLawrence) {
+        ThemeView(style: .list) {
             switch viewModel.state {
             case .loading:
                 VStack(spacing: 0) {
@@ -147,7 +147,7 @@ struct MarketWatchlistView: View {
             )
             .redacted()
         }
-        .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
+        .scrollDisabled(true)
     }
 
     @ViewBuilder private func cell(coin: Coin?, marketCap: Decimal?, price: String, rank: Int?, diff: Decimal?, signal: TechnicalAdvice.Advice?, action: (() -> Void)? = nil) -> some View {

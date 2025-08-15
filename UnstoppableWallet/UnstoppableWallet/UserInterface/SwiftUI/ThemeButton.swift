@@ -2,6 +2,7 @@ import SwiftUI
 
 struct ThemeButton: View {
     let text: String
+    var icon: String? = nil
     var style: ThemeButton.Style = .primary
     var mode: ThemeButton.Mode = .solid
     var size: ThemeButton.Size = .medium
@@ -9,9 +10,15 @@ struct ThemeButton: View {
 
     var body: some View {
         Button(action: action) {
-            Text(text)
-                .font(size.textStyle.font)
-                .offset(x: 0, y: size == .small ? -1 : 0)
+            HStack(spacing: size.iconSpacing) {
+                if let icon {
+                    Image(icon).buttonIcon(size: size.iconSize)
+                }
+
+                Text(text)
+                    .font(size.textStyle.font)
+            }
+            .offset(x: 0, y: size == .small ? -1 : 0)
         }
         .buttonStyle(ThemeButtonStyle(style: style, mode: mode, size: size))
     }
@@ -70,6 +77,13 @@ extension ThemeButton {
             switch self {
             case .medium: return .iconSize24
             case .small: return .iconSize20
+            }
+        }
+
+        var iconSpacing: CGFloat {
+            switch self {
+            case .medium: return .margin8
+            case .small: return .margin4
             }
         }
 

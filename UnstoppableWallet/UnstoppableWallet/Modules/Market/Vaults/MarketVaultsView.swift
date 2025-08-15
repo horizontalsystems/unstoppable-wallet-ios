@@ -6,7 +6,7 @@ struct MarketVaultsView: View {
     @ObservedObject var viewModel: MarketVaultsViewModel
 
     var body: some View {
-        ThemeView(background: .themeLawrence) {
+        ThemeView(style: .list) {
             switch viewModel.state {
             case .loading:
                 VStack(spacing: 0) {
@@ -174,7 +174,7 @@ struct MarketVaultsView: View {
             )
             .redacted()
         }
-        .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
+        .scrollDisabled(true)
     }
 
     @ViewBuilder private func cell(vault: Vault, action: (() -> Void)? = nil) -> some View {
@@ -241,7 +241,7 @@ extension MarketVaultsView {
 
         var body: some View {
             ThemeNavigationStack {
-                ThemeView(background: .themeLawrence) {
+                ThemeView(style: .list) {
                     ThemeList(bottomSpacing: .margin16) {
                         Cell(
                             middle: {

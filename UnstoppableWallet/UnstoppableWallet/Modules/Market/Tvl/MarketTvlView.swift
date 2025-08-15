@@ -17,24 +17,21 @@ struct MarketTvlView: View {
 
     var body: some View {
         ThemeNavigationStack {
-            ThemeView {
+            ThemeView(style: .list) {
                 switch viewModel.state {
                 case .loading:
-                    VStack(spacing: 0) {
-                        header()
-                        Spacer()
-                        ProgressView()
-                        Spacer()
-                    }
+                    loadingList()
                 case let .loaded(defiCoins):
                     ScrollViewReader { proxy in
                         ThemeList(bottomSpacing: .margin16) {
                             header()
-                                .listRowBackground(Color.clear)
+                                .listRowBackground(Color.themeTyler)
                                 .listRowInsets(EdgeInsets())
                                 .listRowSeparator(.hidden)
+                                .themeListTopView()
+
                             chart()
-                                .listRowBackground(Color.clear)
+                                .listRowBackground(Color.themeTyler)
                                 .listRowInsets(EdgeInsets())
                                 .listRowSeparator(.hidden)
 
@@ -42,6 +39,7 @@ struct MarketTvlView: View {
                         }
                         .onChange(of: viewModel.platforms) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
                         .onChange(of: viewModel.sortOrder) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
+                        .themeListScrollHeader()
                     }
                 case .failed:
                     VStack(spacing: 0) {
@@ -53,9 +51,8 @@ struct MarketTvlView: View {
                     }
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .cancellationAction) {
                     Button("button.close".localized) {
                         presentationMode.wrappedValue.dismiss()
                     }
@@ -91,41 +88,30 @@ struct MarketTvlView: View {
     }
 
     @ViewBuilder private func listHeader(disabled: Bool = false) -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                Button(action: {
-                    Coordinator.shared.present(type: .alert) { isPresented in
-                        OptionAlertView(
-                            title: "market.tvl_in_defi.filter_by_chain".localized,
-                            viewItems: MarketTvlViewModel.Platforms.allCases.map { .init(text: $0.title, selected: viewModel.platforms == $0) },
-                            onSelect: { index in
-                                viewModel.platforms = MarketTvlViewModel.Platforms.allCases[index]
-                            },
-                            isPresented: isPresented
-                        )
-                    }
-                }) {
-                    Text(viewModel.platforms.title)
+        ListHeader(scrollable: true) {
+            DropdownButton(text: viewModel.platforms.title) {
+                Coordinator.shared.present(type: .alert) { isPresented in
+                    OptionAlertView(
+                        title: "market.tvl_in_defi.filter_by_chain".localized,
+                        viewItems: MarketTvlViewModel.Platforms.allCases.map { .init(text: $0.title, selected: viewModel.platforms == $0) },
+                        onSelect: { index in
+                            viewModel.platforms = MarketTvlViewModel.Platforms.allCases[index]
+                        },
+                        isPresented: isPresented
+                    )
                 }
-                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
-                .disabled(disabled)
-
-                Button(action: {
-                    viewModel.sortOrder.toggle()
-                }) {
-                    Text("market.tvl_in_defi.tvl".localized)
-                }
-                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .custom(image: sortIcon())))
-
-                Button(action: {
-                    viewModel.diffType.toggle()
-                }) {
-                    diffIcon().themeIcon(color: .themeLeah)
-                }
-                .buttonStyle(SecondaryCircleButtonStyle(style: .default))
             }
-            .padding(.horizontal, .margin16)
-            .padding(.vertical, .margin8)
+            .disabled(disabled)
+
+            ThemeButton(text: "market.tvl_in_defi.tvl".localized, icon: sortIcon, style: .secondary, size: .small) {
+                viewModel.sortOrder.toggle()
+            }
+            .disabled(disabled)
+
+            IconButton(icon: diffIcon, style: .secondary, size: .small) {
+                viewModel.diffType.toggle()
+            }
+            .disabled(disabled)
         }
     }
 
@@ -133,49 +119,58 @@ struct MarketTvlView: View {
         Section {
             ListForEach(defiCoins) { defiCoin in
                 let platform = defiCoin.chains.count == 1 ? defiCoin.chains[0] : "market.tvl_in_defi.multi_chain".localized
-                let values: (Decimal?, DiffText.Diff?) = viewModel.values(defiCoin: defiCoin)
+                let values: (Decimal?, Diff?) = viewModel.values(defiCoin: defiCoin)
 
                 switch defiCoin.type {
                 case let .defiCoin(name, url):
-                    ListRow {
-                        itemContent(
-                            imageUrl: URL(string: url),
-                            code: name,
-                            platform: platform,
-                            rank: defiCoin.tvlRank,
-                            tvl: values.0,
-                            diff: values.1
-                        )
-                    }
+                    cell(
+                        imageUrl: URL(string: url),
+                        code: name,
+                        platform: platform,
+                        rank: defiCoin.tvlRank,
+                        tvl: values.0,
+                        diff: values.1
+                    )
                 case let .fullCoin(fullCoin):
                     let coin = fullCoin.coin
 
-                    ClickableRow(action: {
-                        Coordinator.shared.presentCoinPage(coin: coin, page: .marketTvl)
-                    }) {
-                        itemContent(
-                            coin: coin,
-                            platform: platform,
-                            rank: defiCoin.tvlRank,
-                            tvl: values.0,
-                            diff: values.1
-                        )
-                    }
+                    cell(
+                        coin: coin,
+                        platform: platform,
+                        rank: defiCoin.tvlRank,
+                        tvl: values.0,
+                        diff: values.1,
+                        action: {
+                            Coordinator.shared.presentCoinPage(coin: coin, page: .marketTvl)
+                        }
+                    )
                     .watchlistSwipeActions(viewModel: watchlistViewModel, coinUid: coin.uid)
                 }
             }
         } header: {
             listHeader()
-                .listRowInsets(EdgeInsets())
-                .background(Color.themeTyler)
         }
     }
 
     @ViewBuilder private func loadingList() -> some View {
-        Section {
-            ListForEach(Array(0 ... 10)) { index in
-                ListRow {
-                    itemContent(
+        ThemeList(bottomSpacing: .margin16) {
+            header()
+                .listRowBackground(Color.themeTyler)
+                .listRowInsets(EdgeInsets())
+                .listRowSeparator(.hidden)
+
+            ZStack {
+                ProgressView()
+            }
+            .frame(height: 277) // TODO: use real chart height (after migrating to Swift Charts)
+            .frame(maxWidth: .infinity)
+            .listRowBackground(Color.themeTyler)
+            .listRowInsets(EdgeInsets())
+            .listRowSeparator(.hidden)
+
+            Section {
+                ListForEach(Array(0 ... 10)) { index in
+                    cell(
                         imageUrl: nil,
                         code: "CODE",
                         platform: "market.global.tvl_in_defi.multi_chain".localized,
@@ -185,79 +180,73 @@ struct MarketTvlView: View {
                     )
                     .redacted()
                 }
-            }
-        } header: {
-            listHeader(disabled: true)
-                .listRowInsets(EdgeInsets())
-                .background(Color.themeTyler)
-        }
-    }
-
-    @ViewBuilder private func itemContent(imageUrl: URL?, code: String, platform: String, rank: Int?, tvl: Decimal?, diff: DiffText.Diff?) -> some View {
-        KFImage.url(imageUrl)
-            .resizable()
-            .placeholder { Circle().fill(Color.themeBlade) }
-            .clipShape(Circle())
-            .frame(width: .iconSize32, height: .iconSize32)
-
-        VStack(spacing: 1) {
-            HStack(spacing: .margin8) {
-                Text(code).textBody()
-                Spacer()
-                if let tvl, let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: tvl) {
-                    Text(formatted).textBody()
-                }
-            }
-
-            HStack(spacing: .margin8) {
-                HStack(spacing: .margin4) {
-                    if let rank {
-                        BadgeViewNew("\(rank)")
-                    }
-                    Text(platform).textSubhead2()
-                }
-                Spacer()
-                DiffText(diff)
+            } header: {
+                listHeader(disabled: true)
             }
         }
+        .scrollDisabled(true)
     }
 
-    @ViewBuilder private func itemContent(coin: Coin?, platform: String, rank: Int?, tvl: Decimal?, diff: DiffText.Diff?) -> some View {
-        CoinIconView(coin: coin)
+    @ViewBuilder private func cell(imageUrl: URL?, code: String, platform: String, rank: Int?, tvl: Decimal?, diff: Diff?, action: (() -> Void)? = nil) -> some View {
+        Cell(
+            left: {
+                KFImage.url(imageUrl)
+                    .resizable()
+                    .placeholder { Circle().fill(Color.themeBlade) }
+                    .clipShape(Circle())
+                    .frame(width: .iconSize32, height: .iconSize32)
 
-        VStack(spacing: 1) {
-            HStack(spacing: .margin8) {
-                Text(coin?.code ?? "CODE").textBody()
-                Spacer()
-                if let tvl, let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: tvl) {
-                    Text(formatted).textBody()
-                }
-            }
-
-            HStack(spacing: .margin8) {
-                HStack(spacing: .margin4) {
-                    if let rank {
-                        BadgeViewNew("\(rank)")
-                    }
-                    Text(platform).textSubhead2()
-                }
-                Spacer()
-                DiffText(diff)
-            }
-        }
+            },
+            middle: {
+                MultiText(
+                    title: code,
+                    subtitleBadge: rank.map { "\($0)" },
+                    subtitle: platform
+                )
+            },
+            right: {
+                RightMultiText(
+                    title: tvl.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) },
+                    subtitle: Diff.text(diff: diff)
+                )
+            },
+            action: action
+        )
     }
 
-    private func sortIcon() -> Image {
+    @ViewBuilder private func cell(coin: Coin?, platform: String, rank: Int?, tvl: Decimal?, diff: Diff?, action: (() -> Void)? = nil) -> some View {
+        Cell(
+            left: {
+                CoinIconView(coin: coin)
+            },
+            middle: {
+                MultiText(
+                    title: coin?.code ?? "CODE",
+                    subtitleBadge: rank.map { "\($0)" },
+                    subtitle: platform
+                )
+            },
+            right: {
+                RightMultiText(
+                    title: tvl.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) },
+                    subtitle: Diff.text(diff: diff)
+                )
+            },
+            action: action
+        )
+    }
+
+    private var sortIcon: String {
         switch viewModel.sortOrder {
-        case .asc: return Image("arrow_medium_2_up_20")
-        case .desc: return Image("arrow_medium_2_down_20")
+        case .asc: return "arrow_m_up"
+        case .desc: return "arrow_m_down"
         }
     }
 
-    private func diffIcon() -> Image {
+    private var diffIcon: String {
         switch viewModel.diffType {
-        case .percent: return Image("percent_20")
-        case .currencyValue: return Image("usd_20")
+        case .percent: return "percent"
+        case .currencyValue: return "usd"
         }
     }
 }

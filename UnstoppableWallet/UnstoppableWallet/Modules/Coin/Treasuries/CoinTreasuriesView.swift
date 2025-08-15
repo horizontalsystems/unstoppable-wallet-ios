@@ -115,7 +115,7 @@ struct CoinTreasuriesView: View {
                 .redacted()
             }
         }
-        .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
+        .scrollDisabled(true)
     }
 
     @ViewBuilder private func itemContent(imageUrl: URL?, fund: String, amount: String, country: String, amountInCurrency: String) -> some View {

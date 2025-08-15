@@ -109,9 +109,9 @@ extension MarketTvlViewModel {
         .store(in: &tasks)
     }
 
-    func values(defiCoin: DefiCoin) -> (Decimal?, DiffText.Diff?) {
+    func values(defiCoin: DefiCoin) -> (Decimal?, Diff?) {
         var tvl: Decimal?
-        let diff: DiffText.Diff?
+        let diff: Diff?
 
         switch platforms {
         case .all:

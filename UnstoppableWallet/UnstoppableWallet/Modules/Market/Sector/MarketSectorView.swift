@@ -150,7 +150,7 @@ struct MarketSectorView: View {
                     .redacted()
                 }
             }
-            .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
+            .scrollDisabled(true)
         } header: {
             listHeader(disabled: true)
                 .listRowInsets(EdgeInsets())
