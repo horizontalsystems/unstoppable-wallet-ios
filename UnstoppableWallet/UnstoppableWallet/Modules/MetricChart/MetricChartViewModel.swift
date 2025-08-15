@@ -148,7 +148,7 @@ extension MetricChartViewModel {
         let fetcher = MarketGlobalFetcher(currencyManager: Core.shared.currencyManager, marketKit: Core.shared.marketKit, metricsType: type)
         let service = MetricChartService(
             chartFetcher: fetcher,
-            interval: .byPeriod(.day1),
+            interval: .byPeriod(.week1),
             statPage: type.statPage
         )
 
@@ -160,7 +160,7 @@ extension MetricChartViewModel {
         let fetcher = MarketEtfFetcher(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager, category: category)
         let service = MetricChartService(
             chartFetcher: fetcher,
-            interval: .byPeriod(.day1),
+            interval: .byPeriod(.week1),
             statPage: StatPage.globalMetricsEtf
         )
 
