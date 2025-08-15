@@ -26,10 +26,16 @@ extension MarketEtfFetcher: IMetricChartFetcher {
         Empty().eraseToAnyPublisher()
     }
 
-    var intervals: [HsPeriodType] { [] }
+    var intervals: [HsPeriodType] {
+        [HsTimePeriod.month1, .month3, .month6, .year1].periodTypes
+    }
 
-    func fetch(interval _: HsPeriodType) async throws -> MetricChartModule.ItemData {
-        let points = try await marketKit.etfPoints(category: category.rawValue, currencyCode: currencyManager.baseCurrency.code)
+    func fetch(interval: HsPeriodType) async throws -> MetricChartModule.ItemData {
+        guard case let .byPeriod(timePeriod) = interval else {
+            throw MetricChartModule.FetchError.onlyHsTimePeriod
+        }
+
+        let points = try await marketKit.etfPoints(category: category.rawValue, currencyCode: currencyManager.baseCurrency.code, timePeriod: timePeriod)
 
         var items = [MetricChartModule.Item]()
         var totalInflow = [Decimal]()
