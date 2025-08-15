@@ -2360,3 +2360,8 @@
 "monero.priority.medium" = "中";
 "monero.priority.high" = "高";
 "monero.priority.last" = "最低";
+
+// MEV Protection
+
+"mev_protection.title" = "MEV Protection";
+"mev_protection.description" = "So-called front-running bots watch every trade, trying to make you overpay. This feature blocks them.";
