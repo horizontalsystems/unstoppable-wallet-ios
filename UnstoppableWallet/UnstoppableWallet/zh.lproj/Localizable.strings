@@ -117,6 +117,10 @@
 "auto_lock.minute30" = "30 分钟";
 "auto_lock.hour1" = "1 小时";
 
+"powered_by" = "由 %@ 提供支持";
+
+"filter.all" = "所有";
+
 // Access Camera
 
 "access_camera.message" = "%@ 需要访问您的相机以扫描二维码。
@@ -293,14 +297,15 @@
 
 // Balance
 
-"balance.title" = "余额";
+"balance.title" = "钱包";
 "balance.tab_bar_item" = "余额";
 "balance.send" = "发送​​";
 "balance.withdraw" = "提取";
 "balance.swap" = "掉期交易";
 "balance.receive" = "接收";
 "balance.deposit" = "接收";
-"balance.address" = "地址";
+"balance.chart" = "图表";
+"balance.scan" = "扫描";
 "balance.rate_per_coin" = "%@ / %@";
 "balance.syncing" = "正在同步...";
 "balance.searching" = "正在搜索交易…...";
@@ -444,7 +449,7 @@
 "send.available_balance" = "可用余额";
 "send.max_button" = "最多";
 "send.next_button" = "下一步";
-"send.check_button" = "Check";
+"send.check_button" = "检查";
 "send.error.invalid" = "无效";
 "send.error.invalid_blockchain" = "无效的区块链";
 "send.error.invalid_token" = "无效代币";
@@ -515,7 +520,7 @@
 "send.confirmation.method" = "方法";
 "send.confirmation.replace_by_fee.disabled" = "已禁用";
 "send.amount_error.balance" = "余额不足";
-"send.address_error.own_address" = "Sending %@ to your own address is not allowed. Please enter a different recipient address.";
+"send.address_error.own_address" = "不允许将 %@ 发送到您自己的地址。请输入其他收款地址。";
 "send.amount_error.maximum_amount" = "最大金额 %@";
 "send.amount_error.minimum_amount" = "最小金额 %@";
 "send.amount_error.min_required_balance" = "最小要求剩余 %@";
@@ -551,30 +556,30 @@
 "send.token_syncing" = "代币同步";
 "send.token_not_synced" = "代币未同步";
 "send.insufficient_balance" = "可用额度不足";
-"send.continue_anyway" = "Continue Anyway";
+"send.continue_anyway" = "仍要继续";
 
 "send.address.enter_address" = "输入地址";
-"send.address.invalid_address" = "Invalid Address";
-"send.address.recent" = "Recent";
-"send.address.contacts" = "Contacts";
-"send.address.checking" = "Checking";
-"send.address.check.clear" = "Clear";
-"send.address.check.detected" = "Detected";
+"send.address.invalid_address" = "地址无效";
+"send.address.recent" = "最近使用";
+"send.address.contacts" = "联系人";
+"send.address.checking" = "正在检查";
+"send.address.check.clear" = "清除";
+"send.address.check.detected" = "已检测到";
 "send.address.check.disabled" = "已禁用";
-"send.address.risky.title" = "Risky Address!";
-"send.address.risky.description" = "You are about to send funds to a high-risk address. Proceeding may result in loss of funds or other security risks. By continuing, you accept the potential dangers. Are you sure you want to proceed?";
-"send.address.phishing_check" = "Phishing Check";
-"send.address.phishing.description" = "Analyzes the provided destination address for potential phishing risks.\n\nClear: No suspicious activity detected.\n\nDetected: It appears that someone may be trying to trick you into sending funds to an incorrect address. Do not proceed unless absolutely certain that the address is correct. Consider sending a small test transaction first.";
-"send.address.phishing.caution.title" = "Phishing Address Detected!";
-"send.address.phishing.caution.description" = "The address you entered may be fraudulent. Scammers often alter the first and last characters. Verify the full address carefully before proceeding to avoid loss.";
-"send.address.sanction_check" = "Sanction Check";
-"send.address.sanction.description" = "Verifies whether the recipient’s address is subject to international sanctions, using data from Chainalysis.com.\n\nClear: No sanctions detected.\n\n Detected: Potential legal risk. Transactions with this address may be restricted or illegal in certain jurisdictions.";
-"send.address.sanction.caution.title" = "Sanctioned Address!";
-"send.address.sanction.caution.description" = "The address you entered is flagged as sanctioned. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
-"send.address.blacklist_check" = "Blacklist Check";
-"send.address.blacklist.description" = "Checks if the destination address is listed on official or unofficial blacklists.\n\nClear: No blacklist flags.\n\nDetected: The address is blacklisted and may be associated with legal or security risks. Proceed with caution. Many crypto exchanges restrict users who deposit or withdraw funds from wallets that have interacted with blacklisted addresses. Keep that in mind.";
-"send.address.blacklist.caution.title" = "Blacklisted Address!";
-"send.address.blacklist.caution.description" = "The address you entered is flagged as blacklisted. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
+"send.address.risky.title" = "风险地址";
+"send.address.risky.description" = "您即将向高风险地址发送资金。继续操作可能导致资金损失或其他安全风险。继续即表示您接受这些潜在风险。确定要继续吗？";
+"send.address.phishing_check" = "钓鱼检测";
+"send.address.phishing.description" = "分析所提供的收款地址是否存在潜在的钓鱼风险。\n\n安全：未发现可疑活动。\n\n已检测到：该地址可能有人试图诱骗您将资金发送到错误地址。除非完全确认地址无误，否则请勿继续。建议您先尝试发送一笔小额测试交易。";
+"send.address.phishing.caution.title" = "已检测到钓鱼地址！";
+"send.address.phishing.caution.description" = "您输入的地址可能存在欺诈风险。骗子常常篡改地址的首尾字符。请在继续之前仔细核对完整地址，以避免资金损失。";
+"send.address.sanction_check" = "制裁检查";
+"send.address.sanction.description" = "核实收款地址是否受到国际制裁，数据来源：Chainalysis.com。\n\n安全：未检测到制裁。\n\n已检测到：存在潜在法律风险。在某些司法管辖区，与该地址的交易可能受限或违法。";
+"send.address.sanction.caution.title" = "受制裁地址！";
+"send.address.sanction.caution.description" = "您输入的地址已被标记为受制裁。向该地址转账可能导致资金损失或其他风险。请在继续之前核实收款人信息。";
+"send.address.blacklist_check" = "黑名单检查";
+"send.address.blacklist.description" = "检查目标地址是否被列入官方或非官方黑名单。\n\n安全：未发现黑名单标记。\n\n已检测到：该地址已被列入黑名单，可能涉及法律或安全风险。请谨慎操作。许多交易所会限制与黑名单地址有过往来记录的钱包用户的充值和提现，请注意。";
+"send.address.blacklist.caution.title" = "黑名单地址！";
+"send.address.blacklist.caution.description" = "您输入的地址已被标记为黑名单地址。向该地址转账可能导致资金损失或其他风险。请在继续之前仔细核实收款人信息。";
 
 // Donate
 
@@ -676,12 +681,12 @@
 "swap.advanced_settings.deadline_minute" = "%@分钟。";
 "swap.advanced_settings.recipient_address" = "接收人地址";
 "swap.advanced_settings.recipient_address.to" = "接收人";
-"swap.advanced_settings.add_recipient_address" = "Add Recipient Address";
+"swap.advanced_settings.add_recipient_address" = "添加收款地址";
 "swap.advanced_settings.warning.unusual_slippage" = "您的交易可能提前完成";
 "swap.advanced_settings.service_fee_description" = "典型平台上交换动作的服务费：0.3% 或 0.6%";
 "swap.advanced_settings.error.lower_slippage" = "您的交易可能失败。";
 "swap.advanced_settings.error.higher_slippage" = "下跌容忍不得高于%@%%";
-"swap.advanced_settings.error.invalid_address" = "Invalid Address";
+"swap.advanced_settings.error.invalid_address" = "地址无效";
 "swap.advanced_settings.error.invalid_slippage" = "无效延误";
 "swap.advanced_settings.error.invalid_deadline" = "无效截止日期";
 
@@ -759,6 +764,7 @@
 "market.tab.news" = "发现";
 "market.tab.coins" = "币";
 "market.tab.watchlist" = "关注";
+"market.tab.vaults" = "赚取";
 "market.tab.platforms" = "平台";
 "market.tab.pairs" = "配对标点";
 "market.tab.sectors" = "行业";
@@ -846,7 +852,7 @@
 "top_platform.total_cap" = "总市值";
 
 
-"market.search.recent" = "Recent";
+"market.search.recent" = "最近使用";
 "market.search.popular" = "流行";
 
 "market_discovery.title" = "发现";
@@ -899,7 +905,9 @@
 "market.advanced_search.outperformed_btc" = "跑赢BTC";
 "market.advanced_search.outperformed_eth" = "跑赢ETH";
 "market.advanced_search.outperformed_bnb" = "跑赢BNB";
-"market.advanced_search.price_close_to" = "Price Close To";
+"market.advanced_search.outperformed_sp500" = "表现优于标普500";
+"market.advanced_search.outperformed_gold" = "表现优于黄金";
+"market.advanced_search.price_close_to" = "關閉價格";
 "market.advanced_search.price_close_to_ath" = "接近历史最高价";
 "market.advanced_search.price_close_to_atl" = "接近历史最低价";
 
@@ -930,7 +938,7 @@
 "market.advanced_search.more_50_b" = "> 50十亿";
 "market.advanced_search.more_500_b" = "> 500十亿";
 
-"market.advanced_search.top.m_cap" = "M.Cap";
+"market.advanced_search.top.m_cap" = "市值";
 "market.advanced_search.top.more_1_b" = "> 1B";
 "market.advanced_search.top.more_500_m" = "> $500M";
 "market.advanced_search.top.more_250_m" = "> $250M";
@@ -957,7 +965,7 @@
 "market.global.total_market_cap.description" = "所有加密货币的总市场价值";
 
 "market.global.volume_24h.title" = "24h成交量";
-"market.global.volume_24h.description" = "The 24-hour trading volume of the crypto market";
+"market.global.volume_24h.description" = "加密货币市场的 24 小时交易量";
 
 "market.global.defi_cap.title" = "DeFi市场价值";
 "market.global.defi_cap.description" = "去中心化金融（DeFi）项目的总市场价值";
@@ -992,6 +1000,38 @@
 "market.signal.neutral" = "中性";
 "market.signal.sell" = "出售";
 "market.signal.strong_sell" = "强烈建议卖出";
+
+// Market Vaults
+
+"market.vaults.apy" = "APY %@";
+"market.vaults.tvl" = "TVL: %@";
+"market.vaults.premium.description" = "在这里探索最优质的 DeFi 质押回报，一站尽览。";
+"market.vaults.premium.unlock" = "解锁高级版";
+
+"market.vaults.filter" = "筛选器";
+"market.vaults.filter.all_assets" = "全部资产";
+"market.vaults.filter.eth_yield" = "ETH 收益";
+"market.vaults.filter.usd_yield" = "USD 收益";
+
+"market.vaults.sort.highest_apy" = "最高年化收益率 (APY)";
+"market.vaults.sort.highest_tvl" = "最高总锁仓量 (TVL)";
+"market.vaults.sort.highest_apy.short" = "APY";
+"market.vaults.sort.highest_tvl.short" = "TVL";
+
+"market.vaults.chains.title" = "区块链";
+"market.vaults.chains.any" = "任何";
+"market.vaults.chains.all_chains" = "全部链";
+"market.vaults.chains.n_chains" = "%@ 条链";
+
+// Market Vault
+
+"market.vault.apy" = "APY";
+"market.vault.tvl" = "TVL";
+"market.vault.network" = "網絡";
+"market.vault.protocol" = "协议";
+"market.vault.underlying_token" = "底层代币";
+"market.vault.hoders" = "持有者";
+"market.vault.open_dapp" = "打开 DApp";
 
 // Coin Page
 
@@ -1231,7 +1271,6 @@
 "coin_analytics.30_day_volume" = "30天交易量";
 
 "coin_analytics.analysis.title" = "智能合约分析";
-"coin_analytics.analysis.footer" = "由 De.Fi 支持";
 "coin_analytics.analysis.high_risk_items" = "高风险项目";
 "coin_analytics.analysis.medium_risk_items" = "中等风险项目";
 "coin_analytics.analysis.attention_required" = "需要注意";
@@ -1458,7 +1497,7 @@
 "backup_app.backup_list.header.other" = "其他";
 "backup_app.backup_list.other.watch_account.title" = "观察地址";
 "backup_app.backup_list.other.watchlist.title" = "关注";
-"backup_app.backup_list.other.contacts.title" = "Contacts";
+"backup_app.backup_list.other.contacts.title" = "联系人";
 "backup_app.backup_list.other.blockchain_settings.title" = "自定义 RPC";
 "backup_app.backup_list.other.app_settings.title" = "应用设置";
 "backup_app.backup_list.other.app_settings.description" = "语言、 货币、 外观...";
@@ -1621,7 +1660,7 @@
 "settings.privacy" = "隐私保护";
 "settings.privacy.description" = "%@不收集暴露您私人信息的个人数据，例如币余额或地址。虽然我们收集了一些用户界面使用统计数据，但这仅用于了解我们的用户群和应用程序使用趋势。如果您希望，可以禁用此功能。";
 "settings.privacy.allow" = "共享界面数据";
-"settings.privacy.allow.description" = "This setting allows you to disable UI/UX analytics and ensure complete confidentiality.";
+"settings.privacy.allow.description" = "此設置允許您禁用UI/UX分析並確保完全的隱私性。";
 
 // Settings -> Appearance
 
@@ -1646,6 +1685,7 @@
 
 "appearance.balance_tab" = "余额标签";
 "appearance.balance_tab.footer" = "启用“隐藏按钮”设置后，将隐藏余额页面中的发送、接收和兑换按钮。";
+"appearance.amount_rounding" = "金额取整";
 "appearance.hide_buttons" = "隐藏按钮";
 "appearance.balance_value" = "余额值";
 "appearance.balance_value.coin_fiat" = "加密货币 / 法定货币";
@@ -1655,26 +1695,26 @@
 
 // Settings -> Subsription
 
-"subscription.premium.label" = "Premium";
-"subscription.title" = "Subscription";
-"subscription.get" = "Get Premium";
-"subscription.restore" = "Restore Purchase";
-"subscription.type" = "Subscription Type";
-"subscription.one-time" = "One-Time";
+"subscription.premium.label" = "高級版";
+"subscription.title" = "訂閱";
+"subscription.get" = "成为付费会员";
+"subscription.restore" = "恢復購買";
+"subscription.type" = "订阅类型";
+"subscription.one-time" = "一次性";
 "subscription.price" = "价格";
-"subscription.next_payment" = "Next payment date";
-"subscription.purchase_time" = "Start date";
+"subscription.next_payment" = "下次付款日期";
+"subscription.purchase_time" = "开始日期";
 "subscription.status" = "状态";
-"subscription.manage" = "Manage Subscription";
+"subscription.manage" = "管理訂閱";
 
 // Settings -> Support
 
-"settings.vip_support.description" = "Get exclusive access to our VIP Group, where premium users and the Unstoppable Wallet team collaborate. Receive direct assistance, discuss future updates, and help shape the wallet’s evolution.";
-"settings.vip_support.start_chat" = "Join VIP Group";
+"settings.vip_support.description" = "獲得專屬訪問我們的貴賓群組的權限，高級用戶和Unstoppable錢包團隊在此協作。接收直接協助、討論未來更新，並幫助塑造錢包的發展。";
+"settings.vip_support.start_chat" = "加入貴賓群組";
 
 // Settings -> Contacts
 
-"contacts.title" = "Contacts";
+"contacts.title" = "联系人";
 "contacts.list.search_placeholder" = "按名字搜索";
 "contacts.list.not_found" = "您没有已添加的联系人";
 "contacts.list.not_found_search" = "未发现结果";
@@ -1886,17 +1926,17 @@
 // Ton Connect
 
 "ton_connect.list.new_connection" = "新连接";
-"ton_connect.list.no_connected_apps" = "No Connected Apps";
-"ton_connect.list.disconnect_app" = "Disconnect App";
-"ton_connect.list.disconnect_app.description" = "Are you sure you want to disconnect from \"%@\"?";
+"ton_connect.list.no_connected_apps" = "没有已连接的应用";
+"ton_connect.list.disconnect_app" = "断开应用连接";
+"ton_connect.list.disconnect_app.description" = "您确定要断开与\"%@\"的连接吗？";
 "ton_connect.list.disconnect_app.disconnect" = "断开连接";
 "ton_connect.connect.url" = "URL";
 "ton_connect.connect.wallet" = "钱包";
-"ton_connect.connect.no_eligible_wallets" = "No eligible wallets";
+"ton_connect.connect.no_eligible_wallets" = "没有符合条件的钱包";
 "ton_connect.connect.warning" = "点击批准，表示您允许此应用查看您的公开地址。这是保护您的数据免受潜在钓鱼风险威胁的重要安全步骤。";
 "ton_connect.connect.connect" = "连接";
 "ton_connect.connect.reject" = "拒绝";
-"ton_connect.invalid_transaction" = "Invalid Transaction";
+"ton_connect.invalid_transaction" = "无效交易";
 
 // App Status
 
@@ -2156,7 +2196,7 @@
 "subscription_info.info2.text" = "精彩的机会，避开Scams，最大限度地实现您在Cryptocurren动态世界中的利润。";
 "subscription_info.info3.title" = "个人支持";
 "subscription_info.info3.text" = "精彩的机会，避开Scams，最大限度地实现您在Cryptocurren动态世界中的利润。";
-"subscription_info.get_premium" = "Get Premium";
+"subscription_info.get_premium" = "成为付费会员";
 "subscription_info.already_have" = "我已经有高级版";
 
 // Activate Subscription
@@ -2208,92 +2248,92 @@
 
 // Purchases
 
-"premium.cell.title" = "Premium";
-"premium.cell.description" = "Upgrade your experience with %@ features!";
-"premium.cell.description.key" = "Premium";
-"premium.cell.try" = "Try for FREE";
+"premium.cell.title" = "高級版";
+"premium.cell.description" = "使用 %@ 功能升级您的体验！";
+"premium.cell.description.key" = "高級版";
+"premium.cell.try" = "免費試用";
 
 "mini_app.cell.title" = "小程序";
 "mini_app.cell.description" = "通過測驗、完成任務並獲取代幣！";
 
-"purchases.title" = "Premium";
-"purchases.description" = "Choose the plan";
-"purchases.type.pro" = "Pro";
-"purchases.type.vip" = "Vip";
+"purchases.title" = "高級版";
+"purchases.description" = "選擇方案";
+"purchases.type.pro" = "专业版";
+"purchases.type.vip" = "尊享版 / VIP";
 
 "purchases.token_insights" = "分析";
 "purchases.token_insights.description" = "按關鍵標準獲取前100名列表";
-"purchases.token_insights.info" = "Your all-in-one tool for deep analysis. Browse curated Top 250 token lists based on trading volume, exchange liquidity, holder behavior, and on-chain trends—all at a glance. Filter, analyze, and stay ahead.";
+"purchases.token_insights.info" = "您的一站式深度分析工具。瀏覽根據交易量、交易所流動性、持有者行為和鏈上趨勢策劃的前250名代幣列表—一目了然。篩選、分析並保持領先。";
 
-"purchases.advanced_search" = "Advanced Search";
+"purchases.advanced_search" = "進階搜尋";
 "purchases.advanced_search.description" = "多參數多層級篩選";
-"purchases.advanced_search.info" = "Ditch the noise and zero in on high-potential tokens with precision. Use Advanced Search to filter through thousands of tokens by trading volume, blockchain, market cap, price trends, sector, and performance—and more. Powerful, accurate, and built for discovery.";
+"purchases.advanced_search.info" = "摒棄雜訊，精準鎖定高潛力代幣。使用進階搜尋功能，通過交易量、區塊鏈、市值、價格趨勢、行業和表現等條件篩選數千種代幣。強大、精準且專為發現而設計。";
 
 "purchases.trade_signals" = "信號與趨勢";
 "purchases.trade_signals.description" = "自動監控您代幣的市場趨勢";
-"purchases.trade_signals.info" = "Never miss a trading opportunity again. Watch Trends delivers real-time alerts powered by advanced technical analysis, helping you identify trends, spot breakouts, and avoid pitfalls before they happen. Act fast, trade smart, and maximize gains.";
+"purchases.trade_signals.info" = "不再錯過任何交易機會。觀察趨勢提供由先進技術分析驅動的實時警報，幫助您在趨勢發生前識別、發現突破點並避免陷阱。快速行動，智能交易，最大化收益。";
 
-"purchases.tx_speed_up" = "Tx Speed UP / Cancel ";
-"purchases.tx_speed_up.description" = "Speed up and cancel transactions.";
-"purchases.tx_speed_up.info" = "Tx Speed Up / Cancel provides full control over blockchain transactions. With this feature, users can accelerate pending transactions by increasing gas fees or cancel unconfirmed transactions altogether if needed. It adds a layer of flexibility and convenience to transaction management, ensuring users remain in control of their activity.";
+"purchases.tx_speed_up" = "加速交易 / 取消交易";
+"purchases.tx_speed_up.description" = "加速和取消交易";
+"purchases.tx_speed_up.info" = "“加速/取消交易” 功能让您全面掌控区块链交易。通过提高 Gas 费用，用户可以加快待处理交易的确认；如有需要，还可直接取消尚未确认的交易。该功能为交易管理增加了一层灵活性和便利性，确保用户始终掌控自己的操作。";
 
 "purchases.duress_mode" = "服用模式";
 "purchases.duress_mode.description" = "面對實體威脅時的智能資金安全保障";
-"purchases.duress_mode.info" = "Your crypto. Your security. Duress Mode lets you create multiple alternate wallet setups, each with a separate PIN, providing a hidden escape route in high-risk situations. If forced to unlock your wallet, simply use the duress PIN to access a secondary wallet with no critical assets exposed. Your real funds stay hidden. Your security stays intact.";
+"purchases.duress_mode.info" = "您的加密貨幣。您的安全。脅迫模式讓您創建多個備用錢包設置，每個都有單獨的PIN碼，在高風險情況下提供隱藏的逃生路線。如果被迫解鎖您的錢包，只需使用脅迫PIN碼訪問次要錢包，不會暴露關鍵資產。您的真實資金保持隱藏。您的安全完好無損。";
 
-"purchases.address_phishing" = "Scam Protection";
+"purchases.address_phishing" = "詐騙防護";
 "purchases.address_phishing.description" = "有效自動防護詐騙和釣魚攻擊";
-"purchases.address_phishing.info" = "One wrong address, and your crypto is gone forever. Unstoppable automatically scans recipient addresses for suspicious patterns and defends against the latest phishing threats, preventing you from sending funds to a hacker. Block fraudulent transfers before they happen.";
+"purchases.address_phishing.info" = "只要输错 - 个地址，您的加密资产就可能永远丢失。Unstoppable 会自动扫描收款地址中的可疑特征，并防御最新的钓鱼攻击，防止您将资金发送给黑客。提前阻止欺诈性转账，保障您的资产安全。";
 
-"purchases.address_checker" = "Blacklist Checker";
+"purchases.address_checker" = "黑名單檢查";
 "purchases.address_checker.description" = "確保您的加密貨幣操作合法性";
-"purchases.address_checker.info" = "Protect yourself from risky and sanctioned entities. Blacklist Checker automatically screens recipient addresses against high-risk databases, flagging scams, frauds, and sanctioned entities before you send. If an address is blacklisted, you’ll know before making a costly mistake. Secure your transactions. Keep your crypto clean. Stay compliant.";
+"purchases.address_checker.info" = "保護自己免受風險和受制裁實體的侵害。黑名單檢查自動對照高風險數據庫篩選接收地址，在您發送前標記詐騙、欺詐和受制裁實體。如果一個地址被列入黑名單，您將在犯下代價高昂的錯誤前知道。保護您的交易。保持您的加密貨幣清潔。保持合規。";
 
 "purchases.vip_support" = "貴賓群組";
 "purchases.vip_support.description" = "直接聯繫錢包團隊獲取快速技術支援。";
 "purchases.vip_support.info" = "成為進化的一部分。加入 VIP 群組，直接與我們的團隊連接獲取技術支援。對即將推出的功能進行投票，搶先獨家了解未來更新。您的聲音很重要——幫助塑造下一代加密貨幣錢包。";
 
-"purchases.vip_club" = "VIP Club";
-"purchases.vip_club.description" = "Private chat with exclusive information.";
-"purchases.vip_club.info" = "The VIP Club offers exclusive access to a premium community of like-minded individuals. Members can participate in private discussions, gain insights from industry experts, and network with other top-tier users. This feature is perfect for those who want to stay ahead with insider knowledge and connections.";
+"purchases.vip_club" = "VIP俱乐部";
+"purchases.vip_club.description" = "专属私密聊天";
+"purchases.vip_club.info" = "VIP 俱乐部为您提供进入高端社区的专属通道。会员可参与私密讨论，获取行业专家的见解，并与顶级用户建立人脉。对于希望凭借内部资讯与人脉保持领先的人来说，这是理想选择。";
 
-"purchases.wallet_description.title" = "Highly rated security, exceptional privacy, and a truly non-custodial wallet.";
-"purchases.wallet_description.approved" = "Approved and Audited By:";
+"purchases.wallet_description.title" = "高評價的安全性、卓越的隱私性和真正的非託管錢包。";
+"purchases.wallet_description.approved" = "經以下機構批准和審核：";
 
-"purchases.button.try" = "Try for FREE";
+"purchases.button.try" = "免費試用";
 "purchases.button.activated" = "已激活";
-"purchases.button.upgrade" = "Upgrade";
+"purchases.button.upgrade" = "升級";
 
-"purchase.period.title" = "Select Subscription";
-"purchase.period.annually" = "Annually";
-"purchase.period.monthly" = "Monthly";
-"purchase.period.onetime" = "One-Time";
-"purchase.period.onetime.description" = "for lifetime access";
-"purchase.period.save" = "save";
-"purchase.period.year" = "year";
-"purchase.period.month" = "month";
-"purchase.period.description1" = "Enjoy the first 7 days FREE.";
+"purchase.period.title" = "選擇訂閱";
+"purchase.period.annually" = "年度";
+"purchase.period.monthly" = "月度";
+"purchase.period.onetime" = "一次性";
+"purchase.period.onetime.description" = "终身访问";
+"purchase.period.save" = "保存";
+"purchase.period.year" = "年";
+"purchase.period.month" = "月";
+"purchase.period.description1" = "畅享前 7 天免费体验";
 "purchase.period.description1.1" = "首月享有優惠折扣。";
-"purchase.period.description2" = "You can cancel your App Store subscription at any time.";
+"purchase.period.description2" = "您可随时在 App Store 取消订阅";
 "purchase.lifetime.description" = "您可以購買無任何限制的一次性訂閱";
 "purchase.agree" = "通过升级账户，您同意 %@ 和 %@。";
 "purchase.agree.terms_of_service" = "使用条款";
 "purchase.agree.privacy_policy" = "隐私政策";
 
-"purchases.period.button.try" = "Get 7 days for FREE";
-"purchases.period.button.subscribe" = "Subscribe";
-"purchases.period.button.buy" = "Buy now";
-"purchases.period.button.promo" = "Add Promo Code";
+"purchases.period.button.try" = "获取 7 天免费试用";
+"purchases.period.button.subscribe" = "訂閱";
+"purchases.period.button.buy" = "立即购买";
+"purchases.period.button.promo" = "添加優惠碼";
 
-"purchases.promocode.title" = "Enter Promo Code";
+"purchases.promocode.title" = "输入优惠码";
 "purchases.promocode.placeholder" = "";
-"purchases.promocode.button.invalid" = "Invalid Promo Code";
-"purchases.promocode.button.already_used" = "Promo Code Already Used";
+"purchases.promocode.button.invalid" = "无效的优惠码";
+"purchases.promocode.button.already_used" = "优惠码已被使用";
 
-"purchases.successful_subscription.title" = "Premium";
-"purchases.successful_subscription.description" = "Thank you for your subscription!";
-"purchases.successful_subscription.subscribed" = "Enjoy the full power of the app.";
-"purchases.successful_subscription.button.go_app" = "Go to App";
+"purchases.successful_subscription.title" = "高級版";
+"purchases.successful_subscription.description" = "感謝您的訂閱！";
+"purchases.successful_subscription.subscribed" = "盡享應用程式的全部功能。";
+"purchases.successful_subscription.button.go_app" = "前往應用程式";
 
 // Address Checker
 
@@ -2311,3 +2351,12 @@
 "check_address.chainalysis.description" = "Chainalysis 是一家区块链分析平台，提供追踪、调查和评估加密地址风险的工具，可识别与制裁、欺诈及其他非法活动相关的地址。";
 "check_address.hashdit.description" = "HashDit 是一款安全平台，帮助用户检查钱包地址是否存在制裁或黑名单等风险，避免与潜在恶意或受限地址交互。";
 "check_address.coin_blacklist.description" = "该功能可用于验证某个钱包地址是否被 %@（%@）列入黑名单。如果地址被列入黑名单，相关联的 %@ 代币可能会被冻结，无法访问或转账。此检查可帮助用户避免与高风险或受限地址进行交互。";
+
+// Monero
+
+"monero.priority" = "发送优先级";
+"monero.priority.default" = "默认";
+"monero.priority.low" = "低";
+"monero.priority.medium" = "中";
+"monero.priority.high" = "高";
+"monero.priority.last" = "最低";

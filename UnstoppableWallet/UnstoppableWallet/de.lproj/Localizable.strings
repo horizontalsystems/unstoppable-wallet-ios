@@ -117,6 +117,10 @@
 "auto_lock.minute30" = "30 Minuten";
 "auto_lock.hour1" = "1 Stunde";
 
+"powered_by" = "Angetrieben von %@";
+
+"filter.all" = "Alle";
+
 // Access Camera
 
 "access_camera.message" = "%@ benötigt Zugriff auf Ihre Kamera, um den QR-Code zu scannen.
@@ -293,14 +297,15 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Balance
 
-"balance.title" = "Guthaben";
+"balance.title" = "Wallet";
 "balance.tab_bar_item" = "Guthaben";
 "balance.send" = "Senden";
 "balance.withdraw" = "Abheben";
 "balance.swap" = "Swap";
 "balance.receive" = "Empfangen";
 "balance.deposit" = "Anfordern";
-"balance.address" = "Adresse";
+"balance.chart" = "Diagramm";
+"balance.scan" = "Zur scannende QR-Code";
 "balance.rate_per_coin" = "%@ pro %@";
 "balance.syncing" = "Synchronisieren...";
 "balance.searching" = "Transaktionen werden gesucht...";
@@ -515,7 +520,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.confirmation.method" = "Methode";
 "send.confirmation.replace_by_fee.disabled" = "Deaktiviert";
 "send.amount_error.balance" = "Nicht genügend Guthaben";
-"send.address_error.own_address" = "Sending %@ to your own address is not allowed. Please enter a different recipient address.";
+"send.address_error.own_address" = "Das Senden von %@ an die eigene Adresse ist nicht erlaubt. Bitte geben Sie eine andere Empfängeradresse ein.";
 "send.amount_error.maximum_amount" = "Maximaler Betrag %@";
 "send.amount_error.minimum_amount" = "Minimaler Betrag %@";
 "send.amount_error.min_required_balance" = "Mindestens erforderlicher Rest %@";
@@ -555,10 +560,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "send.address.enter_address" = "Adresse eingeben";
 "send.address.invalid_address" = "Ungültige Adresse";
-"send.address.recent" = "Recent";
+"send.address.recent" = "Neueste";
 "send.address.contacts" = "Kontakte";
-"send.address.checking" = "Checking";
-"send.address.check.clear" = "Clear";
+"send.address.checking" = "Prüfung";
+"send.address.check.clear" = "Löschen";
 "send.address.check.detected" = "Erkannt";
 "send.address.check.disabled" = "Deaktiviert";
 "send.address.risky.title" = "Risikoreiche Adresse!";
@@ -759,6 +764,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.tab.news" = "Nachrichten";
 "market.tab.coins" = "Münzen";
 "market.tab.watchlist" = "Merkliste";
+"market.tab.vaults" = "Verdienen";
 "market.tab.platforms" = "Plattformen";
 "market.tab.pairs" = "Paare";
 "market.tab.sectors" = "Sektoren";
@@ -846,7 +852,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "top_platform.total_cap" = "Total Cap";
 
 
-"market.search.recent" = "Recent";
+"market.search.recent" = "Neueste";
 "market.search.popular" = "Beliebt";
 
 "market_discovery.title" = "Discovey";
@@ -899,6 +905,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.advanced_search.outperformed_btc" = "Übertraf BTC";
 "market.advanced_search.outperformed_eth" = "Übertraf ETH";
 "market.advanced_search.outperformed_bnb" = "Übertraf BNB";
+"market.advanced_search.outperformed_sp500" = "Besser als S&P500 abgeschnitten";
+"market.advanced_search.outperformed_gold" = "Besser als Gold abgeschnitten";
 "market.advanced_search.price_close_to" = "Preis nahe bei";
 "market.advanced_search.price_close_to_ath" = "Preis nahe an ATH";
 "market.advanced_search.price_close_to_atl" = "Preis nahe zum ATL";
@@ -992,6 +1000,38 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "market.signal.neutral" = "Neutral";
 "market.signal.sell" = "Verkaufen";
 "market.signal.strong_sell" = "Starker Verkauf";
+
+// Market Vaults
+
+"market.vaults.apy" = "APY %@";
+"market.vaults.tvl" = "TVL: %@";
+"market.vaults.premium.description" = "Entdecken Sie die besten DeFi-Staking-Erträge – alles an einem Ort.";
+"market.vaults.premium.unlock" = "Premium freischalten";
+
+"market.vaults.filter" = "Filtern";
+"market.vaults.filter.all_assets" = "Alle Assets";
+"market.vaults.filter.eth_yield" = "ETH-Rendite";
+"market.vaults.filter.usd_yield" = "USD-Rendite";
+
+"market.vaults.sort.highest_apy" = "Höchster APY";
+"market.vaults.sort.highest_tvl" = "Höchstes TVL";
+"market.vaults.sort.highest_apy.short" = "APY";
+"market.vaults.sort.highest_tvl.short" = "TVL";
+
+"market.vaults.chains.title" = "Blockchains";
+"market.vaults.chains.any" = "Beliebig";
+"market.vaults.chains.all_chains" = "Alle Chains";
+"market.vaults.chains.n_chains" = "%@ Chains";
+
+// Market Vault
+
+"market.vault.apy" = "APY";
+"market.vault.tvl" = "TVL";
+"market.vault.network" = "Netzwerk";
+"market.vault.protocol" = "Protokoll";
+"market.vault.underlying_token" = "Zugrunde liegender Token";
+"market.vault.hoders" = "Halter";
+"market.vault.open_dapp" = "DApp öffnen";
 
 // Coin Page
 
@@ -1231,7 +1271,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_analytics.30_day_volume" = "30-Tage Lautstärke";
 
 "coin_analytics.analysis.title" = "Analyse von Smart Contracts";
-"coin_analytics.analysis.footer" = "Powered by De.Fi";
 "coin_analytics.analysis.high_risk_items" = "Hochrisiko-Positionen";
 "coin_analytics.analysis.medium_risk_items" = "Mittlere Risiko-Positionen";
 "coin_analytics.analysis.attention_required" = "Aufmerksamkeit erforderlich";
@@ -1621,7 +1660,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings.privacy" = "Privatsphäre";
 "settings.privacy.description" = "%@ sammelt keine persönlichen Daten, die Ihre privaten Informationen offen legen, z.B. Münzsalden oder Adressen. Während wir einige UI-Nutzungsstatistiken sammeln, dient es allein dazu, unsere Benutzer- und App-Nutzungstrends zu verstehen. Dies kann deaktiviert werden, wenn Sie es wünschen.";
 "settings.privacy.allow" = "UI-Daten teilen";
-"settings.privacy.allow.description" = "This setting allows you to disable UI/UX analytics and ensure complete confidentiality.";
+"settings.privacy.allow.description" = "Diese Einstellung ermöglicht es Ihnen, UI/UX-Analysen zu deaktivieren und vollständige Vertraulichkeit zu gewährleisten.";
 
 // Settings -> Appearance
 
@@ -1646,6 +1685,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "appearance.balance_tab" = "Balance Tab";
 "appearance.balance_tab.footer" = "Die Konfiguration „Buttons ausblenden“ versteckt die Schaltflächen Senden, Empfangen und Swap auf der Saldo-Seite.";
+"appearance.amount_rounding" = "Betragsrundung";
 "appearance.hide_buttons" = "Schaltflächen ausblenden";
 "appearance.balance_value" = "Saldo Wert";
 "appearance.balance_value.coin_fiat" = "Münze / Fiat";
@@ -1655,22 +1695,22 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Settings -> Subsription
 
-"subscription.premium.label" = "Premium";
-"subscription.title" = "Subscription";
-"subscription.get" = "Get Premium";
-"subscription.restore" = "Restore Purchase";
-"subscription.type" = "Subscription Type";
-"subscription.one-time" = "One-Time";
+"subscription.premium.label" = "Prämie";
+"subscription.title" = "Abonnement";
+"subscription.get" = "Premium erhalten";
+"subscription.restore" = "Kauf wiederherstellen";
+"subscription.type" = "Abonnementtyp";
+"subscription.one-time" = "Einmalig";
 "subscription.price" = "Preis";
-"subscription.next_payment" = "Next payment date";
-"subscription.purchase_time" = "Start date";
+"subscription.next_payment" = "Nächstes Zahlungsdatum";
+"subscription.purchase_time" = "Startdatum";
 "subscription.status" = "Status";
-"subscription.manage" = "Manage Subscription";
+"subscription.manage" = "Abonnement verwalten";
 
 // Settings -> Support
 
-"settings.vip_support.description" = "Get exclusive access to our VIP Group, where premium users and the Unstoppable Wallet team collaborate. Receive direct assistance, discuss future updates, and help shape the wallet’s evolution.";
-"settings.vip_support.start_chat" = "Join VIP Group";
+"settings.vip_support.description" = "Erhalten Sie exklusiven Zugang zu unserer VIP-Gruppe, in der Premium-Nutzer und das Unstoppable Wallet-Team zusammenarbeiten. Erhalten Sie direkte Unterstützung, diskutieren Sie zukünftige Updates und helfen Sie, die Entwicklung der Wallet mitzugestalten.";
+"settings.vip_support.start_chat" = "VIP-Gruppe beitreten";
 
 // Settings -> Contacts
 
@@ -1886,17 +1926,17 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Ton Connect
 
 "ton_connect.list.new_connection" = "Neue Verbindung";
-"ton_connect.list.no_connected_apps" = "No Connected Apps";
-"ton_connect.list.disconnect_app" = "Disconnect App";
-"ton_connect.list.disconnect_app.description" = "Are you sure you want to disconnect from \"%@\"?";
+"ton_connect.list.no_connected_apps" = "Keine verbundenen Apps";
+"ton_connect.list.disconnect_app" = "App trennen";
+"ton_connect.list.disconnect_app.description" = "Möchten Sie die Verbindung zu „%@\" wirklich trennen?";
 "ton_connect.list.disconnect_app.disconnect" = "Verbindung trennen";
 "ton_connect.connect.url" = "URL";
 "ton_connect.connect.wallet" = "Wallet";
-"ton_connect.connect.no_eligible_wallets" = "No eligible wallets";
+"ton_connect.connect.no_eligible_wallets" = "Keine geeigneten Wallets";
 "ton_connect.connect.warning" = "Indem Sie auf \"Genehmigen\" klicken, erlauben Sie dieser App, Ihre öffentliche Adresse anzuzeigen. Dies ist ein wichtiger Sicherheitsschritt, um Ihre Daten vor potenziellen Phishing-Risiken zu schützen.";
 "ton_connect.connect.connect" = "Verbinden";
 "ton_connect.connect.reject" = "Verwerfen";
-"ton_connect.invalid_transaction" = "Invalid Transaction";
+"ton_connect.invalid_transaction" = "Ungültige Transaktion";
 
 // App Status
 
@@ -2156,7 +2196,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "subscription_info.info2.text" = "Erkennen Sie lukrative Chancen, vermeiden Sie Betrügereien und maximieren Sie Ihre Gewinne in der dynamischen Welt der Kryptowährung.";
 "subscription_info.info3.title" = "Persönlicher Support";
 "subscription_info.info3.text" = "Erkennen Sie lukrative Chancen, vermeiden Sie Betrügereien und maximieren Sie Ihre Gewinne in der dynamischen Welt der Kryptowährung.";
-"subscription_info.get_premium" = "Get Premium";
+"subscription_info.get_premium" = "Premium erhalten";
 "subscription_info.already_have" = "Ich habe bereits Premium";
 
 // Activate Subscription
@@ -2208,92 +2248,92 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Purchases
 
-"premium.cell.title" = "Premium";
-"premium.cell.description" = "Upgrade your experience with %@ features!";
-"premium.cell.description.key" = "Premium";
-"premium.cell.try" = "Try for FREE";
+"premium.cell.title" = "Prämie";
+"premium.cell.description" = "Erweitern Sie Ihr Erlebnis mit %@ Funktionen!";
+"premium.cell.description.key" = "Prämie";
+"premium.cell.try" = "Kostenlos ausprobieren";
 
 "mini_app.cell.title" = "MiniApp";
 "mini_app.cell.description" = "Führe Tests durch, erledige Aufgaben und verdiene Token!";
 
-"purchases.title" = "Premium";
-"purchases.description" = "Choose the plan";
+"purchases.title" = "Prämie";
+"purchases.description" = "Plan auswählen";
 "purchases.type.pro" = "Pro";
-"purchases.type.vip" = "Vip";
+"purchases.type.vip" = "VIP";
 
 "purchases.token_insights" = "Analytik";
 "purchases.token_insights.description" = "Zugriff auf Top-100 Listen nach Schlüsselkriterien";
-"purchases.token_insights.info" = "Your all-in-one tool for deep analysis. Browse curated Top 250 token lists based on trading volume, exchange liquidity, holder behavior, and on-chain trends—all at a glance. Filter, analyze, and stay ahead.";
+"purchases.token_insights.info" = "Ihr All-in-One-Tool für tiefgehende Analysen. Durchsuchen Sie kuratierte Top-250-Token-Listen basierend auf Handelsvolumen, Börsen-Liquidität, Halterverhalten und On-Chain-Trends – alles auf einen Blick. Filtern, analysieren und bleiben Sie voraus.";
 
-"purchases.advanced_search" = "Advanced Search";
+"purchases.advanced_search" = "Erweiterte Suche";
 "purchases.advanced_search.description" = "Mehrstufige Filterung über mehrere Parameter";
-"purchases.advanced_search.info" = "Ditch the noise and zero in on high-potential tokens with precision. Use Advanced Search to filter through thousands of tokens by trading volume, blockchain, market cap, price trends, sector, and performance—and more. Powerful, accurate, and built for discovery.";
+"purchases.advanced_search.info" = "Lassen Sie den Lärm hinter sich und konzentrieren Sie sich präzise auf Token mit hohem Potenzial. Nutzen Sie die Erweiterte Suche, um Tausende von Token nach Handelsvolumen, Blockchain, Marktkapitalisierung, Preistrends, Sektor und Performance zu filtern – und mehr. Leistungsstark, präzise und für Entdeckungen konzipiert.";
 
 "purchases.trade_signals" = "Signale und Trends";
 "purchases.trade_signals.description" = "Automatische Überwachung von Markttrends für Ihre Tokens";
-"purchases.trade_signals.info" = "Never miss a trading opportunity again. Watch Trends delivers real-time alerts powered by advanced technical analysis, helping you identify trends, spot breakouts, and avoid pitfalls before they happen. Act fast, trade smart, and maximize gains.";
+"purchases.trade_signals.info" = "Verpassen Sie nie wieder eine Handelsgelegenheit. Watch Trends liefert Echtzeit-Benachrichtigungen, unterstützt durch fortschrittliche technische Analyse, die Ihnen hilft, Trends zu identifizieren, Ausbrüche zu erkennen und Fallstricke zu vermeiden, bevor sie passieren. Handeln Sie schnell, traden Sie smart und maximieren Sie Ihre Gewinne.";
 
-"purchases.tx_speed_up" = "Tx Speed UP / Cancel ";
-"purchases.tx_speed_up.description" = "Speed up and cancel transactions.";
-"purchases.tx_speed_up.info" = "Tx Speed Up / Cancel provides full control over blockchain transactions. With this feature, users can accelerate pending transactions by increasing gas fees or cancel unconfirmed transactions altogether if needed. It adds a layer of flexibility and convenience to transaction management, ensuring users remain in control of their activity.";
+"purchases.tx_speed_up" = "Transaktion beschleunigen / abbrechen";
+"purchases.tx_speed_up.description" = "Transaktionen beschleunigen und abbrechen.";
+"purchases.tx_speed_up.info" = "„Transaktion beschleunigen / abbrechen“ bietet volle Kontrolle über Blockchain-Transaktionen. Mit dieser Funktion können Benutzer ausstehende Transaktionen beschleunigen, indem sie die Gasgebühren erhöhen, oder unbestätigte Transaktionen bei Bedarf vollständig stornieren. Dadurch erhalten sie mehr Flexibilität und Komfort im Transaktionsmanagement und behalten jederzeit die volle Kontrolle über ihre Aktivitäten.";
 
 "purchases.duress_mode" = "Duress-Modus";
 "purchases.duress_mode.description" = "Intelligente Fondssicherheit bei physischen Bedrohungen";
-"purchases.duress_mode.info" = "Your crypto. Your security. Duress Mode lets you create multiple alternate wallet setups, each with a separate PIN, providing a hidden escape route in high-risk situations. If forced to unlock your wallet, simply use the duress PIN to access a secondary wallet with no critical assets exposed. Your real funds stay hidden. Your security stays intact.";
+"purchases.duress_mode.info" = "Ihre Krypto. Ihre Sicherheit. Der Notfallmodus ermöglicht es Ihnen, mehrere alternative Wallet-Konfigurationen zu erstellen, jede mit einer separaten PIN, und bietet so einen versteckten Ausweg in Hochrisikosituationen. Wenn Sie gezwungen werden, Ihre Wallet zu entsperren, verwenden Sie einfach die Notfall-PIN, um auf eine sekundäre Wallet zuzugreifen, ohne dass kritische Vermögenswerte preisgegeben werden. Ihre tatsächlichen Gelder bleiben verborgen. Ihre Sicherheit bleibt intakt.";
 
-"purchases.address_phishing" = "Scam Protection";
+"purchases.address_phishing" = "Betrugsschutz";
 "purchases.address_phishing.description" = "Effektiver automatischer Schutz gegen Betrug und Phishing-Angriffe";
-"purchases.address_phishing.info" = "One wrong address, and your crypto is gone forever. Unstoppable automatically scans recipient addresses for suspicious patterns and defends against the latest phishing threats, preventing you from sending funds to a hacker. Block fraudulent transfers before they happen.";
+"purchases.address_phishing.info" = "Eine falsche Adresse, und Ihre Kryptowährung ist für immer verloren. Unstoppable scannt automatisch Empfängeradressen auf verdächtige Muster und schützt vor den neuesten Phishing-Bedrohungen, um zu verhindern, dass Sie Gelder an einen Hacker senden. Blockieren Sie betrügerische Überweisungen, bevor sie passieren.";
 
-"purchases.address_checker" = "Blacklist Checker";
+"purchases.address_checker" = "SchwarzListen-Prüfer";
 "purchases.address_checker.description" = "Garantie der Legalität für Ihre Krypto-Transaktionen";
-"purchases.address_checker.info" = "Protect yourself from risky and sanctioned entities. Blacklist Checker automatically screens recipient addresses against high-risk databases, flagging scams, frauds, and sanctioned entities before you send. If an address is blacklisted, you’ll know before making a costly mistake. Secure your transactions. Keep your crypto clean. Stay compliant.";
+"purchases.address_checker.info" = "Schützen Sie sich vor risikoreichen und sanktionierten Entitäten. Der Schwarzlisten-Prüfer überprüft automatisch Empfängeradressen gegen Hochrisiko-Datenbanken und markiert Betrug, Fälschungen und sanktionierte Entitäten, bevor Sie senden. Wenn eine Adresse auf der Schwarzliste steht, erfahren Sie es, bevor Sie einen kostspieligen Fehler machen. Sichern Sie Ihre Transaktionen. Halten Sie Ihre Kryptowährung sauber. Bleiben Sie konform.";
 
 "purchases.vip_support" = "VIP-Gruppe";
 "purchases.vip_support.description" = "Direkter Zugang zum Wallet-Team für schnellen technischen Support.";
 "purchases.vip_support.info" = "Werden Sie Teil der Evolution. Treten Sie der VIP-Gruppe bei, um direkt mit unserem Team für technischen Support in Verbindung zu treten. Stimmen Sie über kommende Funktionen ab und erhalten Sie exklusive Vorabeinblicke in zukünftige Updates. Ihre Stimme zählt – helfen Sie mit, die nächste Generation der Krypto-Wallet zu gestalten.";
 
-"purchases.vip_club" = "VIP Club";
-"purchases.vip_club.description" = "Private chat with exclusive information.";
-"purchases.vip_club.info" = "The VIP Club offers exclusive access to a premium community of like-minded individuals. Members can participate in private discussions, gain insights from industry experts, and network with other top-tier users. This feature is perfect for those who want to stay ahead with insider knowledge and connections.";
+"purchases.vip_club" = "VIP-Club";
+"purchases.vip_club.description" = "Privater Chat mit exklusiven Informationen.";
+"purchases.vip_club.info" = "Der VIP-Club bietet exklusiven Zugang zu einer Premium-Community von Gleichgesinnten. Mitglieder können an privaten Diskussionen teilnehmen, Einblicke von Branchenexperten gewinnen und sich mit anderen Top-Nutzern vernetzen. Diese Funktion ist ideal für alle, die mit Insiderwissen und wertvollen Kontakten immer einen Schritt voraus sein möchten.";
 
-"purchases.wallet_description.title" = "Highly rated security, exceptional privacy, and a truly non-custodial wallet.";
-"purchases.wallet_description.approved" = "Approved and Audited By:";
+"purchases.wallet_description.title" = "Hochbewertete Sicherheit, außergewöhnliche Privatsphäre und eine wirklich nicht-verwaltete Wallet.";
+"purchases.wallet_description.approved" = "Genehmigt und geprüft von:";
 
-"purchases.button.try" = "Try for FREE";
+"purchases.button.try" = "Kostenlos ausprobieren";
 "purchases.button.activated" = "Aktiviert";
 "purchases.button.upgrade" = "Upgrade";
 
-"purchase.period.title" = "Select Subscription";
-"purchase.period.annually" = "Annually";
-"purchase.period.monthly" = "Monthly";
-"purchase.period.onetime" = "One-Time";
-"purchase.period.onetime.description" = "for lifetime access";
-"purchase.period.save" = "save";
-"purchase.period.year" = "year";
-"purchase.period.month" = "month";
-"purchase.period.description1" = "Enjoy the first 7 days FREE.";
+"purchase.period.title" = "Abonnement auswählen";
+"purchase.period.annually" = "Jährlich";
+"purchase.period.monthly" = "Monatlich";
+"purchase.period.onetime" = "Einmalig";
+"purchase.period.onetime.description" = "für lebenslangen Zugang";
+"purchase.period.save" = "speichern";
+"purchase.period.year" = "jahr";
+"purchase.period.month" = "monate";
+"purchase.period.description1" = "Genießen Sie die ersten 7 Tage kostenlos.";
 "purchase.period.description1.1" = "Rabatt im ersten Monat genießen.";
-"purchase.period.description2" = "You can cancel your App Store subscription at any time.";
+"purchase.period.description2" = "Sie können Ihr App-Store-Abonnement jederzeit kündigen.";
 "purchase.lifetime.description" = "Du kannst ein einmaliges Abonnement ohne Einschränkungen erwerben";
 "purchase.agree" = "Mit dem Upgrade Ihres Kontos stimmen Sie den %@ und der %@ zu.";
 "purchase.agree.terms_of_service" = "Nutzungsbedingungen";
 "purchase.agree.privacy_policy" = "Datenschutzrichtlinie";
 
-"purchases.period.button.try" = "Get 7 days for FREE";
-"purchases.period.button.subscribe" = "Subscribe";
-"purchases.period.button.buy" = "Buy now";
-"purchases.period.button.promo" = "Add Promo Code";
+"purchases.period.button.try" = "7 Tage kostenlos erhalten";
+"purchases.period.button.subscribe" = "Abonnieren";
+"purchases.period.button.buy" = "Jetzt kaufen";
+"purchases.period.button.promo" = "Promo-Code hinzufügen";
 
-"purchases.promocode.title" = "Enter Promo Code";
+"purchases.promocode.title" = "Promo-Code eingeben";
 "purchases.promocode.placeholder" = "";
-"purchases.promocode.button.invalid" = "Invalid Promo Code";
-"purchases.promocode.button.already_used" = "Promo Code Already Used";
+"purchases.promocode.button.invalid" = "Ungültiger Promo-Code";
+"purchases.promocode.button.already_used" = "Promo-Code bereits verwendet";
 
-"purchases.successful_subscription.title" = "Premium";
-"purchases.successful_subscription.description" = "Thank you for your subscription!";
-"purchases.successful_subscription.subscribed" = "Enjoy the full power of the app.";
-"purchases.successful_subscription.button.go_app" = "Go to App";
+"purchases.successful_subscription.title" = "Prämie";
+"purchases.successful_subscription.description" = "Vielen Dank für Ihr Abonnement!";
+"purchases.successful_subscription.subscribed" = "Genießen Sie die volle Leistung der App.";
+"purchases.successful_subscription.button.go_app" = "Zur App";
 
 // Address Checker
 
@@ -2311,3 +2351,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "check_address.chainalysis.description" = "Chainalysis ist eine Blockchain-Analyseplattform, die Werkzeuge zum Nachverfolgen, Untersuchen und Bewerten von Risiken bei Krypto-Adressen bereitstellt. Sie hilft dabei, Adressen zu identifizieren, die mit Sanktionen, Betrug oder anderen illegalen Aktivitäten in Verbindung stehen.";
 "check_address.hashdit.description" = "HashDit ist eine Sicherheitsplattform, die es Nutzern ermöglicht, Wallet-Adressen auf Risiken wie Sanktionen und Blacklist-Status zu überprüfen. Sie hilft, Interaktionen mit potenziell böswilligen oder gesperrten Adressen zu vermeiden.";
 "check_address.coin_blacklist.description" = "Ermöglicht die Überprüfung, ob eine Wallet-Adresse von %@ (%@) auf eine Blacklist gesetzt wurde. Falls eine Adresse gelistet ist, können alle damit verbundenen %@-Token eingefroren werden, wodurch sie weder zugänglich noch übertragbar sind. Diese Prüfung hilft Nutzern, den Kontakt mit risikobehafteten oder eingeschränkten Adressen zu vermeiden.";
+
+// Monero
+
+"monero.priority" = "Sendepriorität";
+"monero.priority.default" = "Standard";
+"monero.priority.low" = "Niedrig";
+"monero.priority.medium" = "Mittel";
+"monero.priority.high" = "Hoch";
+"monero.priority.last" = "Zuletzt";
