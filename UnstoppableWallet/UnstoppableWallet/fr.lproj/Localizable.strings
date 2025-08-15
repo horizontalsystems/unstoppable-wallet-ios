@@ -305,7 +305,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.receive" = "Recevoir";
 "balance.deposit" = "Recevoir";
 "balance.chart" = "Graphique";
-"balance.scan" = "Scan";
+"balance.scan" = "Scanner";
 "balance.rate_per_coin" = "%@ par %@";
 "balance.syncing" = "Synchronisation...";
 "balance.searching" = "Recherche des transactions…...";
@@ -577,8 +577,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.address.sanction.caution.title" = "Adresse sanctionnée !";
 "send.address.sanction.caution.description" = "L’adresse saisie est signalée comme sanctionnée. Les transactions vers cette adresse peuvent entraîner une perte ou d’autres risques. Veuillez vérifier les informations du destinataire avant de continuer.";
 "send.address.blacklist_check" = "Vérification Liste Noire";
-"send.address.blacklist.description" = "Checks if the destination address is listed on official or unofficial blacklists.\n\nClear: No blacklist flags.\n\nDetected: The address is blacklisted and may be associated with legal or security risks. Proceed with caution. Many crypto exchanges restrict users who deposit or withdraw funds from wallets that have interacted with blacklisted addresses. Keep that in mind.";
-"send.address.blacklist.caution.title" = "Blacklisted Address!";
+"send.address.blacklist.description" = "Vérifie si l’adresse de destination figure sur des listes noires officielles ou non officielles.\n\nAucun risque : aucune alerte de liste noire.\n\nAlerte : l’adresse est inscrite sur une liste noire et peut être associée à des risques juridiques ou de sécurité. Avancez avec prudence. De nombreux exchanges crypto restreignent les utilisateurs qui déposent ou retirent des fonds depuis des portefeuilles ayant interagi avec des adresses sur liste noire. Gardez cela à l’esprit.";
+"send.address.blacklist.caution.title" = "Adresse sur liste noire!";
 "send.address.blacklist.caution.description" = "L'adresse que vous avez saisie est signalée comme étant sur liste noire. Les transactions vers cette adresse pourraient entraîner des pertes ou d'autres risques. Veuillez vérifier les informations du destinataire avant de continuer.";
 
 // Donate
@@ -681,7 +681,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Adresse du destinataire";
 "swap.advanced_settings.recipient_address.to" = "À";
-"swap.advanced_settings.add_recipient_address" = "Add Recipient Address";
+"swap.advanced_settings.add_recipient_address" = "Ajouter une adresse de destinataire";
 "swap.advanced_settings.warning.unusual_slippage" = "Votre transaction peut être frontrun";
 "swap.advanced_settings.service_fee_description" = "Des frais de service pour l'action de swap sur la plateforme sont typiques de 0,3% ou 0,6%";
 "swap.advanced_settings.error.lower_slippage" = "Votre transaction est susceptible de ne pas aboutir.";
@@ -764,7 +764,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "market.tab.news" = "Infos";
 "market.tab.coins" = "Pièces";
 "market.tab.watchlist" = "Liste de suivi";
-"market.tab.vaults" = "Earn";
+"market.tab.vaults" = "Gagner";
 "market.tab.platforms" = "Platformes";
 "market.tab.pairs" = "Paires";
 "market.tab.sectors" = "Secteurs";
@@ -905,9 +905,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "market.advanced_search.outperformed_btc" = "A surpassé BTC";
 "market.advanced_search.outperformed_eth" = "A surpassé ETH";
 "market.advanced_search.outperformed_bnb" = "A surpassé BNB";
-"market.advanced_search.outperformed_sp500" = "Outperformed S&P500";
-"market.advanced_search.outperformed_gold" = "Outperformed GOLD";
-"market.advanced_search.price_close_to" = "Price Close To";
+"market.advanced_search.outperformed_sp500" = "A surperformé le S&P500";
+"market.advanced_search.outperformed_gold" = "A surperformé l’or";
+"market.advanced_search.price_close_to" = "Prix proche de";
 "market.advanced_search.price_close_to_ath" = "Prix proche d'ATH";
 "market.advanced_search.price_close_to_atl" = "Prix proche d'ATL";
 
@@ -1005,7 +1005,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "market.vaults.apy" = "APY %@";
 "market.vaults.tvl" = "TVL: %@";
-"market.vaults.premium.description" = "Explore the best DeFi staking returns, all in one place.";
+"market.vaults.premium.description" = "Découvrez les meilleurs rendements de staking DeFi, réunis en un seul endroit.";
 "market.vaults.premium.unlock" = "Débloquer Premium";
 
 "market.vaults.filter" = "Filtre";
@@ -1660,7 +1660,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "settings.privacy" = "Confidentialité";
 "settings.privacy.description" = "%@ ne collecte pas de données personnelles exposant vos informations privées, telles que les soldes de coins ou les adresses. Bien que nous recueillions certaines statistiques d'utilisation de l'interface utilisateur, cela sert uniquement à comprendre notre base d'utilisateurs et les tendances d'utilisation de l'application. Cela peut être désactivé si vous le souhaitez.";
 "settings.privacy.allow" = "Partager les données UI";
-"settings.privacy.allow.description" = "This setting allows you to disable UI/UX analytics and ensure complete confidentiality.";
+"settings.privacy.allow.description" = "Ce paramètre vous permet de désactiver les analyses d'interface utilisateur et de garantir une confidentialité totale.";
 
 // Settings -> Appearance
 
@@ -1685,7 +1685,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "appearance.balance_tab" = "Balance Tab";
 "appearance.balance_tab.footer" = "La configuration « Masquer les boutons » masque les boutons Envoyer, Recevoir et Échanger dans l’onglet Solde.";
-"appearance.amount_rounding" = "Amount Rounding";
+"appearance.amount_rounding" = "Arrondi du montant";
 "appearance.hide_buttons" = "Masquer les boutons";
 "appearance.balance_value" = "Valeur du solde";
 "appearance.balance_value.coin_fiat" = "Pièce / Fiat";
@@ -1699,17 +1699,17 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "subscription.title" = "Abonnement";
 "subscription.get" = "Devenez Premium";
 "subscription.restore" = "Restaurer l'achat";
-"subscription.type" = "Subscription Type";
-"subscription.one-time" = "One-Time";
+"subscription.type" = "Type d’abonnement";
+"subscription.one-time" = "Paiement unique";
 "subscription.price" = "Prix";
-"subscription.next_payment" = "Next payment date";
-"subscription.purchase_time" = "Start date";
+"subscription.next_payment" = "Date du prochain paiement";
+"subscription.purchase_time" = "Date de début";
 "subscription.status" = "Statut";
 "subscription.manage" = "Gérer l'abonnement";
 
 // Settings -> Support
 
-"settings.vip_support.description" = "Get exclusive access to our VIP Group, where premium users and the Unstoppable Wallet team collaborate. Receive direct assistance, discuss future updates, and help shape the wallet’s evolution.";
+"settings.vip_support.description" = "Accédez en exclusivité à notre Groupe VIP, où les utilisateurs premium collaborent avec l’équipe d’Unstoppable Wallet. Recevez une assistance directe, discutez des futures mises à jour et contribuez à façonner l’évolution du portefeuille.";
 "settings.vip_support.start_chat" = "Rejoindre le Groupe VIP";
 
 // Settings -> Contacts
@@ -1936,7 +1936,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "ton_connect.connect.warning" = "En cliquant sur accepter, vous autorisez cette application à afficher votre adresse publique. Il s'agit d'une étape importante de sécurité pour protéger vos données contre les risques potentiels d'hameçonnage.";
 "ton_connect.connect.connect" = "Connecter";
 "ton_connect.connect.reject" = "Rejeter";
-"ton_connect.invalid_transaction" = "Invalid Transaction";
+"ton_connect.invalid_transaction" = "Transaction invalide";
 
 // App Status
 
@@ -2251,19 +2251,19 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "premium.cell.title" = "Premium";
 "premium.cell.description" = "Améliorez votre expérience avec les fonctionnalités %@ !";
 "premium.cell.description.key" = "Premium";
-"premium.cell.try" = "Try for FREE";
+"premium.cell.try" = "Essayer gratuitement";
 
 "mini_app.cell.title" = "MiniApp";
 "mini_app.cell.description" = "Passez des tests, accomplissez des tâches et gagnez des jetons!";
 
 "purchases.title" = "Premium";
-"purchases.description" = "Choose the plan";
+"purchases.description" = "Choisissez l’offre";
 "purchases.type.pro" = "Pro";
 "purchases.type.vip" = "Vip";
 
 "purchases.token_insights" = "Analyses";
 "purchases.token_insights.description" = "Accès aux listes top-100 selon des critères clés";
-"purchases.token_insights.info" = "Your all-in-one tool for deep analysis. Browse curated Top 250 token lists based on trading volume, exchange liquidity, holder behavior, and on-chain trends—all at a glance. Filter, analyze, and stay ahead.";
+"purchases.token_insights.info" = "Votre outil tout-en-un pour une analyse approfondie. Parcourez des listes sélectionnées des 250 principaux tokens selon le volume d’échange, la liquidité sur les plateformes, le comportement des détenteurs et les tendances on-chain - le tout en un coup d’œil. Filtrez, analysez et gardez une longueur d’avance.";
 
 "purchases.advanced_search" = "Recherche Avancée";
 "purchases.advanced_search.description" = "Filtrage multi-niveaux sur plusieurs paramètres";
@@ -2300,14 +2300,14 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "purchases.wallet_description.title" = "Sécurité hautement évaluée, confidentialité exceptionnelle et un portefeuille véritablement non-custodial.";
 "purchases.wallet_description.approved" = "Approuvé et audité par :";
 
-"purchases.button.try" = "Try for FREE";
+"purchases.button.try" = "Essayer gratuitement";
 "purchases.button.activated" = "Activé";
 "purchases.button.upgrade" = "Mettre à niveau";
 
 "purchase.period.title" = "Sélectionner l'abonnement";
 "purchase.period.annually" = "Annuellement";
 "purchase.period.monthly" = "Mensuellement";
-"purchase.period.onetime" = "One-Time";
+"purchase.period.onetime" = "Paiement unique";
 "purchase.period.onetime.description" = "pour un accès à vie";
 "purchase.period.save" = "sauvegarder";
 "purchase.period.year" = "année";
