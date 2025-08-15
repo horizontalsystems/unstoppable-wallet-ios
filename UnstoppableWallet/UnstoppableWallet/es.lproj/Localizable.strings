@@ -117,7 +117,7 @@
 "auto_lock.minute30" = "30 minutos";
 "auto_lock.hour1" = "1 hora";
 
-"powered_by" = "Powered by %@";
+"powered_by" = "Con tecnología de %@";
 
 "filter.all" = "Todo";
 
@@ -304,8 +304,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.swap" = "Permutar";
 "balance.receive" = "Recibir";
 "balance.deposit" = "Recibir";
-"balance.chart" = "Chart";
-"balance.scan" = "Scan";
+"balance.chart" = "Gráfico";
+"balance.scan" = "Escanear";
 "balance.rate_per_coin" = "%@ por %@";
 "balance.syncing" = "Sincronizando...";
 "balance.searching" = "Buscando transacciones…";
@@ -429,12 +429,12 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Address
 
-"address.title" = "Enter Address";
+"address.title" = "Ingresar dirección";
 
 // Send
 
 "send.title" = "Enviar %@";
-"send.title.shield" = "Shield %@";
+"send.title.shield" = "Proteger %@";
 "send.send" = "Enviar";
 "send.no_assets" = "No tiene activos para enviar.";
 "send.amount_placeholder" = "Importe";
@@ -449,7 +449,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.available_balance" = "Saldo disponible";
 "send.max_button" = "Máx.";
 "send.next_button" = "Siguiente";
-"send.check_button" = "Check";
+"send.check_button" = "Verificar";
 "send.error.invalid" = "Inválido";
 "send.error.invalid_blockchain" = "Blockchain inválido";
 "send.error.invalid_token" = "Token inválido";
@@ -474,7 +474,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "send.confirmation.title" = "Confirmar";
 "send.confirmation.you_send" = "Usted envía";
-"send.confirmation.you_receive" = "You Receive";
+"send.confirmation.you_receive" = "Recibirás";
 "send.confirmation.transfer" = "Transferencia";
 "send.confirmation.to" = "Para";
 "send.confirmation.from" = "Desde";
@@ -491,10 +491,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.confirmation.replace_by_fee" = "Reemplazar por tarifa";
 "send.confirmation.replaced_transactions" = "Transacciones Reemplazadas";
 "send.confirmation.input" = "Entrada";
-"send.confirmation.comment" = "Comment";
-"send.confirmation.action" = "Action";
+"send.confirmation.comment" = "Comentario";
+"send.confirmation.action" = "Acción";
 "send.confirmation.status" = "Estado";
-"send.confirmation.status.failed" = "Failed";
+"send.confirmation.status.failed" = "Falló";
 "send.confirmation.send_to_own" = "La transacción se enviará a la propia dirección";
 
 "send.confirmation.sync_failed" = "Error de sincronización";
@@ -520,7 +520,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.confirmation.method" = "Método";
 "send.confirmation.replace_by_fee.disabled" = "Desabilitado";
 "send.amount_error.balance" = "Saldo insuficiente";
-"send.address_error.own_address" = "Sending %@ to your own address is not allowed. Please enter a different recipient address.";
+"send.address_error.own_address" = "No está permitido enviar %@ a tu propia dirección. Ingresa una dirección de destinatario diferente.";
 "send.amount_error.maximum_amount" = "Monto máximo %@";
 "send.amount_error.minimum_amount" = "Monto mínimo %@";
 "send.amount_error.min_required_balance" = "Min. requerido restante %@";
@@ -556,30 +556,30 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.token_syncing" = "Sincronización de tokens";
 "send.token_not_synced" = "Token no sincronizado";
 "send.insufficient_balance" = "Saldo insuficiente";
-"send.continue_anyway" = "Continue Anyway";
+"send.continue_anyway" = "Continuar de todos modos";
 
-"send.address.enter_address" = "Enter Address";
+"send.address.enter_address" = "Ingresar dirección";
 "send.address.invalid_address" = "Dirección inválida";
-"send.address.recent" = "Recent";
-"send.address.contacts" = "Contacts";
-"send.address.checking" = "Checking";
-"send.address.check.clear" = "Clear";
-"send.address.check.detected" = "Detected";
+"send.address.recent" = "Reciente";
+"send.address.contacts" = "Contactos";
+"send.address.checking" = "Verificando";
+"send.address.check.clear" = "Sin alertas";
+"send.address.check.detected" = "Detectado";
 "send.address.check.disabled" = "Desabilitado";
-"send.address.risky.title" = "Risky Address!";
-"send.address.risky.description" = "You are about to send funds to a high-risk address. Proceeding may result in loss of funds or other security risks. By continuing, you accept the potential dangers. Are you sure you want to proceed?";
+"send.address.risky.title" = "¡Dirección de alto riesgo!";
+"send.address.risky.description" = "Estás a punto de enviar fondos a una dirección considerada de alto riesgo. Continuar podría resultar en la pérdida de fondos u otros riesgos de seguridad. Al continuar, aceptas los posibles peligros. ¿Seguro que deseas proceder?";
 "send.address.phishing_check" = "Phishing Check";
-"send.address.phishing.description" = "Analyzes the provided destination address for potential phishing risks.\n\nClear: No suspicious activity detected.\n\nDetected: It appears that someone may be trying to trick you into sending funds to an incorrect address. Do not proceed unless absolutely certain that the address is correct. Consider sending a small test transaction first.";
-"send.address.phishing.caution.title" = "Phishing Address Detected!";
-"send.address.phishing.caution.description" = "The address you entered may be fraudulent. Scammers often alter the first and last characters. Verify the full address carefully before proceeding to avoid loss.";
-"send.address.sanction_check" = "Sanction Check";
-"send.address.sanction.description" = "Verifies whether the recipient’s address is subject to international sanctions, using data from Chainalysis.com.\n\nClear: No sanctions detected.\n\n Detected: Potential legal risk. Transactions with this address may be restricted or illegal in certain jurisdictions.";
-"send.address.sanction.caution.title" = "Sanctioned Address!";
-"send.address.sanction.caution.description" = "The address you entered is flagged as sanctioned. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
-"send.address.blacklist_check" = "Blacklist Check";
-"send.address.blacklist.description" = "Checks if the destination address is listed on official or unofficial blacklists.\n\nClear: No blacklist flags.\n\nDetected: The address is blacklisted and may be associated with legal or security risks. Proceed with caution. Many crypto exchanges restrict users who deposit or withdraw funds from wallets that have interacted with blacklisted addresses. Keep that in mind.";
-"send.address.blacklist.caution.title" = "Blacklisted Address!";
-"send.address.blacklist.caution.description" = "The address you entered is flagged as blacklisted. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
+"send.address.phishing.description" = "Analiza la dirección de destino indicada en busca de posibles riesgos de phishing.\n\nSin alertas: No se detectó actividad sospechosa.\n\nDetectado: Parece que alguien podría estar intentando engañarte para que envíes fondos a una dirección incorrecta. No continúes a menos que tengas absoluta certeza de que la dirección es correcta. Considera enviar primero una transacción de prueba con un monto pequeño.";
+"send.address.phishing.caution.title" = "¡Dirección de Phishing Detectada!";
+"send.address.phishing.caution.description" = "La dirección que ingresaste puede ser fraudulenta. Los estafadores a menudo alteran los primeros y últimos caracteres. Verifica cuidadosamente la dirección completa antes de proceder para evitar pérdidas.";
+"send.address.sanction_check" = "Verificación de sanciones";
+"send.address.sanction.description" = "Verifica si la dirección del destinatario está sujeta a sanciones internacionales, utilizando datos de Chainalysis.com.\n\nSin alertas: No se detectaron sanciones.\n\nDetectado: Riesgo legal potencial. Las transacciones con esta dirección pueden estar restringidas o ser ilegales en ciertas jurisdicciones.";
+"send.address.sanction.caution.title" = "¡Dirección sancionada!";
+"send.address.sanction.caution.description" = "La dirección que ingresaste está marcada como sancionada. Las transacciones hacia esta dirección podrían ocasionar pérdida de fondos u otros riesgos. Verifica los datos del destinatario antes de continuar.";
+"send.address.blacklist_check" = "Verificación de Lista Negra";
+"send.address.blacklist.description" = "Verifica si la dirección de destino está incluida en listas negras oficiales o no oficiales.\n\nSin alertas: No hay registros en listas negras.\n\nDetectado: La dirección está en una lista negra y puede estar asociada con riesgos legales o de seguridad. Procede con precaución. Muchas casas de cambio restringen a los usuarios que depositan o retiran fondos desde wallets que han interactuado con direcciones en listas negras. Tenlo en cuenta.";
+"send.address.blacklist.caution.title" = "¡Dirección en lista negra!";
+"send.address.blacklist.caution.description" = "La dirección que ingresaste está marcada como incluida en lista negra. Las transacciones a esta dirección podrían conducir a pérdidas u otros riesgos. Por favor, verifica los detalles del destinatario antes de proceder.";
 
 // Donate
 
@@ -681,7 +681,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Dirección del destinatario";
 "swap.advanced_settings.recipient_address.to" = "Para";
-"swap.advanced_settings.add_recipient_address" = "Add Recipient Address";
+"swap.advanced_settings.add_recipient_address" = "Agregar dirección del destinatario";
 "swap.advanced_settings.warning.unusual_slippage" = "Su transacción puede ser anticipada";
 "swap.advanced_settings.service_fee_description" = "Tasa de servicio para la acción de intercambio en la plataforma típicamente de 0,3% o 0,6%";
 "swap.advanced_settings.error.lower_slippage" = "Es probable que su transacción falle.";
@@ -764,7 +764,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.tab.news" = "Noticias";
 "market.tab.coins" = "Monedas";
 "market.tab.watchlist" = "Lista de Seguimiento";
-"market.tab.vaults" = "Earn";
+"market.tab.vaults" = "Ganar";
 "market.tab.platforms" = "Plataformas";
 "market.tab.pairs" = "Pares";
 "market.tab.sectors" = "Sectores";
@@ -852,7 +852,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "top_platform.total_cap" = "Capitalización Total";
 
 
-"market.search.recent" = "Recent";
+"market.search.recent" = "Reciente";
 "market.search.popular" = "Popular";
 
 "market_discovery.title" = "Descubrimiento";
@@ -905,9 +905,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.advanced_search.outperformed_btc" = "BTC superado";
 "market.advanced_search.outperformed_eth" = "ETH superado";
 "market.advanced_search.outperformed_bnb" = "BNB superado";
-"market.advanced_search.outperformed_sp500" = "Outperformed S&P500";
-"market.advanced_search.outperformed_gold" = "Outperformed GOLD";
-"market.advanced_search.price_close_to" = "Price Close To";
+"market.advanced_search.outperformed_sp500" = "Superó al S&P500";
+"market.advanced_search.outperformed_gold" = "Superó al oro";
+"market.advanced_search.price_close_to" = "Precio cercano a";
 "market.advanced_search.price_close_to_ath" = "Precio cercano a ATH";
 "market.advanced_search.price_close_to_atl" = "Precio cercano a ATL";
 
@@ -965,7 +965,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "market.global.total_market_cap.description" = "Valor total del mercado de todas las criptomonedas";
 
 "market.global.volume_24h.title" = "Volumen de 24 horas";
-"market.global.volume_24h.description" = "The 24-hour trading volume of the crypto market";
+"market.global.volume_24h.description" = "El volumen de operaciones 24h del mercado de criptomonedas";
 
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.defi_cap.description" = "Valor total del mercado de proyectos DeFi";
@@ -1005,33 +1005,33 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "market.vaults.apy" = "APY %@";
 "market.vaults.tvl" = "TVL: %@";
-"market.vaults.premium.description" = "Explore the best DeFi staking returns, all in one place.";
-"market.vaults.premium.unlock" = "Unlock Premium";
+"market.vaults.premium.description" = "Explora los mejores rendimientos de staking DeFi, todo en un solo lugar.";
+"market.vaults.premium.unlock" = "Desbloquear Premium";
 
 "market.vaults.filter" = "Filtro";
-"market.vaults.filter.all_assets" = "All Assets";
-"market.vaults.filter.eth_yield" = "ETH Yield";
-"market.vaults.filter.usd_yield" = "USD Yield";
+"market.vaults.filter.all_assets" = "Todos los activos";
+"market.vaults.filter.eth_yield" = "Rendimiento en ETH";
+"market.vaults.filter.usd_yield" = "Rendimiento en USD";
 
-"market.vaults.sort.highest_apy" = "Highest APY";
-"market.vaults.sort.highest_tvl" = "Highest TVL";
+"market.vaults.sort.highest_apy" = "Mayor APY";
+"market.vaults.sort.highest_tvl" = "Mayor TVL";
 "market.vaults.sort.highest_apy.short" = "APY";
 "market.vaults.sort.highest_tvl.short" = "TVL";
 
 "market.vaults.chains.title" = "Blockchains";
 "market.vaults.chains.any" = "Cualquier";
-"market.vaults.chains.all_chains" = "All Chains";
-"market.vaults.chains.n_chains" = "%@ Chains";
+"market.vaults.chains.all_chains" = "Todas las cadenas";
+"market.vaults.chains.n_chains" = "%@ Cadenas";
 
 // Market Vault
 
 "market.vault.apy" = "APY";
 "market.vault.tvl" = "TVL";
 "market.vault.network" = "La red";
-"market.vault.protocol" = "Protocol";
-"market.vault.underlying_token" = "Underlying Token";
+"market.vault.protocol" = "Protocolo";
+"market.vault.underlying_token" = "Token subyacente";
 "market.vault.hoders" = "Titulares";
-"market.vault.open_dapp" = "Open DApp";
+"market.vault.open_dapp" = "Abrir DApp";
 
 // Coin Page
 
@@ -1330,7 +1330,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "transactions.pending" = "Pendiente";
 "transactions.processing" = "Procesando";
 "transactions.completed" = "Finalizado";
-"transactions.failed" = "Failed";
+"transactions.failed" = "Falló";
 
 "transactions.receive" = "Recibir";
 "transactions.send" = "Enviado";
@@ -1349,7 +1349,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "transactions.to" = "A %@";
 "transactions.from" = "Desde %@";
-"transactions.funder" = "Funder: %@";
+"transactions.funder" = "Financiador: %@";
 "transactions.account" = "Cuenta: %@";
 
 "transactions.multiple" = "Múltiples";
@@ -1379,7 +1379,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "tx_info.title_approval" = "Aprobación de intercambio";
 "tx_info.status.pending" = "Pendiente";
 "tx_info.status.completed" = "Finalizado";
-"tx_info.status.failed" = "Failed";
+"tx_info.status.failed" = "Falló";
 "tx_info.from_hash" = "Desde";
 "tx_info.transaction_id" = "Identificación de la transacción";
 "tx_info.to_hash" = "Para";
@@ -1498,7 +1498,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "backup_app.backup_list.header.other" = "Otro";
 "backup_app.backup_list.other.watch_account.title" = "Ver carteras";
 "backup_app.backup_list.other.watchlist.title" = "Lista de Seguimiento";
-"backup_app.backup_list.other.contacts.title" = "Contacts";
+"backup_app.backup_list.other.contacts.title" = "Contactos";
 "backup_app.backup_list.other.blockchain_settings.title" = "RPC personalizado";
 "backup_app.backup_list.other.app_settings.title" = "Ajustes de app";
 "backup_app.backup_list.other.app_settings.description" = "Idioma, moneda, Apariencia ...";
@@ -1684,9 +1684,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "appearance.launch_screen.market_overview" = "Visión General del Mercado";
 "appearance.launch_screen.watchlist" = "Lista de Seguimiento";
 
-"appearance.balance_tab" = "Balance Tab";
+"appearance.balance_tab" = "Pestaña de saldo";
 "appearance.balance_tab.footer" = "La configuración \"Ocultar botones\" oculta los botones de Enviar, Recibir e Intercambiar en la pestaña de Saldo.";
-"appearance.amount_rounding" = "Amount Rounding";
+"appearance.amount_rounding" = "Redondeo de montos";
 "appearance.hide_buttons" = "Ocultar Botones";
 "appearance.balance_value" = "Valor de Saldo";
 "appearance.balance_value.coin_fiat" = "Moneda / Fiat";
@@ -1700,11 +1700,11 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "subscription.title" = "Suscripción";
 "subscription.get" = "Hazte usuario Premium";
 "subscription.restore" = "Restaurar Compra";
-"subscription.type" = "Subscription Type";
-"subscription.one-time" = "One-Time";
+"subscription.type" = "Tipo de suscripción";
+"subscription.one-time" = "Única vez";
 "subscription.price" = "Precio";
-"subscription.next_payment" = "Next payment date";
-"subscription.purchase_time" = "Start date";
+"subscription.next_payment" = "Próxima fecha de pago";
+"subscription.purchase_time" = "Fecha de inicio";
 "subscription.status" = "Estado";
 "subscription.manage" = "Gestionar Suscripción";
 
@@ -1715,7 +1715,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Settings -> Contacts
 
-"contacts.title" = "Contacts";
+"contacts.title" = "Contactos";
 "contacts.list.search_placeholder" = "Buscar por nombre";
 "contacts.list.not_found" = "No tienes un contacto añadido";
 "contacts.list.not_found_search" = "No se han encontrado resultados";
@@ -1919,7 +1919,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "wallet_connect.non_supported_account.switch" = "Cambiar";
 
 "wallet_connect.pending_requests_title" = "Solicitudes Pendientes";
-"wallet_connect.paired_dapps.title" = "Paired dApps";
+"wallet_connect.paired_dapps.title" = "dApps vinculadas";
 "wallet_connect.paired_dapps.cant_disconnect" = "No se puede desconectar";
 "wallet_connect.paired_dapps.disconnect_all" = "Borrar todo";
 "wallet_connect.pending_requests.nonactive_footer" = "Para abrir una solicitud debe activar la cartera deseada";
@@ -1927,17 +1927,17 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Ton Connect
 
 "ton_connect.list.new_connection" = "Nueva Conexión";
-"ton_connect.list.no_connected_apps" = "No Connected Apps";
-"ton_connect.list.disconnect_app" = "Disconnect App";
-"ton_connect.list.disconnect_app.description" = "Are you sure you want to disconnect from \"%@\"?";
+"ton_connect.list.no_connected_apps" = "Sin aplicaciones conectadas";
+"ton_connect.list.disconnect_app" = "Desconectar aplicación";
+"ton_connect.list.disconnect_app.description" = "¿Seguro que deseas desconectarte de \"%@\"?";
 "ton_connect.list.disconnect_app.disconnect" = "Desconectar";
 "ton_connect.connect.url" = "URL";
 "ton_connect.connect.wallet" = "Cartera";
-"ton_connect.connect.no_eligible_wallets" = "No eligible wallets";
+"ton_connect.connect.no_eligible_wallets" = "No hay wallets disponibles";
 "ton_connect.connect.warning" = "Al hacer clic en aprobar, usted puede permitir que esta aplicación vea su dirección pública. Esto es un paso importante de seguridad para proteger sus datos de posibles riesgos de phishing.";
 "ton_connect.connect.connect" = "Conectar";
 "ton_connect.connect.reject" = "Rechazar";
-"ton_connect.invalid_transaction" = "Invalid Transaction";
+"ton_connect.invalid_transaction" = "Transacción no válida";
 
 // App Status
 
@@ -1960,7 +1960,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "status_info.processing.content" = "La transacción ha sido incluida en el blockchain pero todavía no ha alcanzado la finalidad permanente. En este punto, es posible considerar que la transacción fue completada para pagos más pequeños. Para pagos más grandes se recomienda esperar hasta que el estado cambie a completar.";
 "status_info.completed.title" = "Finalizado";
 "status_info.confirmed.content" = "La transacción se completó y se considera permanente e irreversible.";
-"status_info.failed.title" = "Failed";
+"status_info.failed.title" = "Falló";
 "status_info.failed.content" = "La transacción no se procesó y no hubo transferencia de valor. Dependiendo de la razón del fracaso, algunas transacciones fallidas pueden consumir comisiones de transacción. Las transacciones que fueron reemplazadas o canceladas por otra transacción no consumen comisiones de transacción y también aparecerán como fallidas. La aplicación %@ no puede mostrar la razón de las transacciones fallidas, pero los usuarios son capaces de buscarlo ellos mismos en un explorador público de bloques i. e. etherscan.io.";
 
 // Onboarding
@@ -2250,7 +2250,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 // Purchases
 
 "premium.cell.title" = "Premium";
-"premium.cell.description" = "Upgrade your experience with %@ features!";
+"premium.cell.description" = "Mejora tu experiencia con las funciones de %@";
 "premium.cell.description.key" = "Premium";
 "premium.cell.try" = "Prueba GRATIS";
 
@@ -2258,9 +2258,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "mini_app.cell.description" = "Supera pruebas, completa tareas y gana tokens.";
 
 "purchases.title" = "Premium";
-"purchases.description" = "Choose the plan";
+"purchases.description" = "Elige el plan";
 "purchases.type.pro" = "Pro";
-"purchases.type.vip" = "Vip";
+"purchases.type.vip" = "VIP";
 
 "purchases.token_insights" = "Estadísticas";
 "purchases.token_insights.description" = "Acceso a listas top-100 según criterios clave";
@@ -2274,15 +2274,15 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "purchases.trade_signals.description" = "Monitoreo automático de tendencias del mercado para tus tokens";
 "purchases.trade_signals.info" = "Nunca más pierdas una oportunidad de trading. Observador de Tendencias ofrece alertas en tiempo real impulsadas por análisis técnico avanzado, ayudándote a identificar tendencias, detectar breakouts y evitar obstáculos antes de que ocurran. Actúa rápido, opera con inteligencia y maximiza las ganancias.";
 
-"purchases.tx_speed_up" = "Tx Speed UP / Cancel ";
-"purchases.tx_speed_up.description" = "Speed up and cancel transactions.";
-"purchases.tx_speed_up.info" = "Tx Speed Up / Cancel provides full control over blockchain transactions. With this feature, users can accelerate pending transactions by increasing gas fees or cancel unconfirmed transactions altogether if needed. It adds a layer of flexibility and convenience to transaction management, ensuring users remain in control of their activity.";
+"purchases.tx_speed_up" = "Acelerar / Cancelar transacción";
+"purchases.tx_speed_up.description" = "Acelera o cancela transacciones.";
+"purchases.tx_speed_up.info" = "La función Acelerar / Cancelar brinda control total sobre las transacciones en blockchain. Con ella, los usuarios pueden acelerar operaciones pendientes aumentando la comisión de gas, o cancelar aquellas que aún no se han confirmado. Esto añade flexibilidad y comodidad en la gestión de transacciones, asegurando que el usuario mantenga siempre el control de su actividad.";
 
 "purchases.duress_mode" = "Modo Duración";
 "purchases.duress_mode.description" = "Seguridad inteligente de fondos durante amenazas físicas";
-"purchases.duress_mode.info" = "Your crypto. Your security. Duress Mode lets you create multiple alternate wallet setups, each with a separate PIN, providing a hidden escape route in high-risk situations. If forced to unlock your wallet, simply use the duress PIN to access a secondary wallet with no critical assets exposed. Your real funds stay hidden. Your security stays intact.";
+"purchases.duress_mode.info" = "Tu cripto. Tu seguridad. El Modo Coacción te permite crear múltiples configuraciones alternativas de wallet, cada una con un PIN distinto, proporcionando una vía de escape oculta en situaciones de alto riesgo. Si te obligan a desbloquear tu wallet, simplemente usa el PIN de coacción para acceder a una wallet secundaria sin exponer activos críticos. Tus fondos reales permanecen ocultos. Tu seguridad permanece intacta.";
 
-"purchases.address_phishing" = "Scam Protection";
+"purchases.address_phishing" = "Protección contra estafas";
 "purchases.address_phishing.description" = "Protección automática eficaz contra fraudes y ataques de phishing";
 "purchases.address_phishing.info" = "Una dirección incorrecta, y tu cripto se pierde para siempre. Unstoppable escanea automáticamente las direcciones de destinatarios en busca de patrones sospechosos y te defiende contra las últimas amenazas de phishing, evitando que envíes fondos a un hacker. Bloquea transferencias fraudulentas antes de que ocurran.";
 
@@ -2294,9 +2294,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "purchases.vip_support.description" = "Accès à l'équipe du portefeuille pour un support technique rapide.";
 "purchases.vip_support.info" = "Faites partie de l'évolution. Rejoignez le Groupe VIP pour communiquer directement avec notre équipe de support technique. Votez pour les fonctionnalités à venir et obtenez un aperçu exclusif des futures mises à jour. Votre voix compte — aidez-nous à façonner le portefeuille crypto de nouvelle génération.";
 
-"purchases.vip_club" = "VIP Club";
-"purchases.vip_club.description" = "Private chat with exclusive information.";
-"purchases.vip_club.info" = "The VIP Club offers exclusive access to a premium community of like-minded individuals. Members can participate in private discussions, gain insights from industry experts, and network with other top-tier users. This feature is perfect for those who want to stay ahead with insider knowledge and connections.";
+"purchases.vip_club" = "Club VIP";
+"purchases.vip_club.description" = "Chat privado con información exclusiva.";
+"purchases.vip_club.info" = "El Club VIP ofrece acceso exclusivo a una comunidad premium de usuarios con intereses afines. Los miembros pueden participar en discusiones privadas, recibir información de expertos de la industria y establecer contactos con otros usuarios de alto nivel. Esta función es ideal para quienes desean mantenerse a la vanguardia con conocimientos e información privilegiada.";
 
 "purchases.wallet_description.title" = "Seguridad altamente valorada, privacidad excepcional y una cartera verdaderamente no custodial.";
 "purchases.wallet_description.approved" = "Aprobado y Auditado Por:";
@@ -2308,28 +2308,28 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "purchase.period.title" = "Seleccionar Suscripción";
 "purchase.period.annually" = "Anual";
 "purchase.period.monthly" = "Mensual";
-"purchase.period.onetime" = "One-Time";
-"purchase.period.onetime.description" = "for lifetime access";
-"purchase.period.save" = "save";
-"purchase.period.year" = "year";
-"purchase.period.month" = "month";
-"purchase.period.description1" = "Enjoy the first 7 days FREE.";
+"purchase.period.onetime" = "Única vez";
+"purchase.period.onetime.description" = "con acceso de por vida";
+"purchase.period.save" = "ahorrar";
+"purchase.period.year" = "año";
+"purchase.period.month" = "mes";
+"purchase.period.description1" = "Disfruta los primeros 7 días GRATIS.";
 "purchase.period.description1.1" = "Disfruta de un descuento durante el primer mes.";
-"purchase.period.description2" = "You can cancel your App Store subscription at any time.";
+"purchase.period.description2" = "Puedes cancelar tu suscripción de App Store en cualquier momento.";
 "purchase.lifetime.description" = "Puedes adquirir una suscripción de pago único sin restricciones";
 "purchase.agree" = "Al actualizar tu cuenta, aceptas los %@ y la %@.";
 "purchase.agree.terms_of_service" = "Términos de uso";
 "purchase.agree.privacy_policy" = "Política de privacidad";
 
-"purchases.period.button.try" = "Get 7 days for FREE";
-"purchases.period.button.subscribe" = "Subscribe";
-"purchases.period.button.buy" = "Buy now";
-"purchases.period.button.promo" = "Add Promo Code";
+"purchases.period.button.try" = "Obtén 7 días GRATIS";
+"purchases.period.button.subscribe" = "Suscribirse";
+"purchases.period.button.buy" = "Comprar ahora";
+"purchases.period.button.promo" = "Añadir código promocional";
 
-"purchases.promocode.title" = "Enter Promo Code";
+"purchases.promocode.title" = "Ingresar código promocional";
 "purchases.promocode.placeholder" = "";
-"purchases.promocode.button.invalid" = "Invalid Promo Code";
-"purchases.promocode.button.already_used" = "Promo Code Already Used";
+"purchases.promocode.button.invalid" = "Código promocional no válido";
+"purchases.promocode.button.already_used" = "Código promocional ya utilizado";
 
 "purchases.successful_subscription.title" = "Premium";
 "purchases.successful_subscription.description" = "¡Gracias por tu suscripción!";
@@ -2346,7 +2346,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Check Address
 
-"check_address.sanctions_check" = "Sanctions Check";
+"check_address.sanctions_check" = "Verificación de sanciones";
 "check_address.coin_blacklist_check" = "%@ Blacklist Check";
 "check_address.on_blockchain" = "en %@";
 "check_address.chainalysis.description" = "Chainalysis es una plataforma de análisis blockchain que proporciona herramientas para rastrear, investigar y evaluar el riesgo de direcciones de criptomonedas. Ayuda a identificar direcciones asociadas a sanciones, fraudes y otras actividades ilícitas.";
@@ -2355,9 +2355,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Monero
 
-"monero.priority" = "Send Priority";
-"monero.priority.default" = "Default";
-"monero.priority.low" = "Low";
-"monero.priority.medium" = "Medium";
+"monero.priority" = "Prioridad de envío";
+"monero.priority.default" = "Predefinido";
+"monero.priority.low" = "Lento";
+"monero.priority.medium" = "Medio";
 "monero.priority.high" = "Rápido";
-"monero.priority.last" = "Last";
+"monero.priority.last" = "Última";
