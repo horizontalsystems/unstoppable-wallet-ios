@@ -1005,7 +1005,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "market.vaults.apy" = "APY %@";
 "market.vaults.tvl" = "TVL: %@";
-"market.vaults.premium.description" = "Vous voulez débloquer plus d’opportunités de gains ?";
+"market.vaults.premium.description" = "Explore the best DeFi staking returns, all in one place.";
 "market.vaults.premium.unlock" = "Débloquer Premium";
 
 "market.vaults.filter" = "Filtre";
