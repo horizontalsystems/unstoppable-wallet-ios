@@ -29,7 +29,7 @@
 "button.i_understand" = "Anlıyorum";
 "button.learn_more" = "Daha fazla bilgi edin";
 "button.unlock" = "Kilidi Aç";
-"button.select" = "Select";
+"button.select" = "Seç";
 "button.later" = "Sonra";
 
 "alert" = "Uyarı";
@@ -603,7 +603,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.estimated" = "tahmini";
 "swap.balance" = "Bakiye";
 "swap.you_get" = "Kazandığınız";
-"swap.token" = "Select";
+"swap.token" = "Seç";
 "swap.advanced_settings" = "Swap Ayarları";
 "swap.proceed_button" = "İleri";
 "swap.approve.title" = "Takas Onayı";
@@ -629,7 +629,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.maximum_short" = "(azami)";
 
 "swap.rate_not_available" = "Oran mevcut değil";
-"swap.select" = "Select";
+"swap.select" = "Seç";
 "swap.quoting" = "Alıntı";
 "swap.select_token_in" = "Girdi olarak jeton seçin";
 "swap.select_token_out" = "Çıktı olarak jeton seçin";
