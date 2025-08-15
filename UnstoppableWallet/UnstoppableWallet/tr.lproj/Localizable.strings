@@ -1005,7 +1005,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "market.vaults.apy" = "APY %@";
 "market.vaults.tvl" = "TVL: %@";
-"market.vaults.premium.description" = "Want to unlock more earning opportunities?";
+"market.vaults.premium.description" = "Explore the best DeFi staking returns, all in one place.";
 "market.vaults.premium.unlock" = "Unlock Premium";
 
 "market.vaults.filter" = "Filtre";
@@ -2287,15 +2287,15 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "purchases.duress_mode" = "Duress Modu";
 "purchases.duress_mode.description" = "Fiziksel tehditler sırasında akıllı fon güvenliği";
-"purchases.duress_mode.info" = "Your crypto. Your security. Duress Mode lets you create multiple alternate wallet setups, each with a separate PIN, providing a hidden escape route in high-risk situations. If forced to unlock your wallet, simply use the duress PIN to access a secondary wallet with no critical assets exposed. Your real funds stay hidden. Your security stays intact.";
+"purchases.duress_mode.info" = "Sizin kripto paranız. Sizin güvenliğiniz. Baskı Modu, her biri ayrı PIN ile birden fazla alternatif cüzdan kurulumu oluşturmanıza olanak tanır ve yüksek riskli durumlarda gizli bir kaçış yolu sağlar. Cüzdanınızın kilidini açmaya zorlanırsanız, kritik varlıklarınızı ifşa etmeden ikincil bir cüzdana erişmek için baskı PIN'ini kullanmanız yeterlidir. Gerçek fonlarınız gizli kalır. Güvenliğiniz bozulmaz.";
 
-"purchases.address_phishing" = "Scam Protection";
+"purchases.address_phishing" = "Dolandırıcılık Koruması";
 "purchases.address_phishing.description" = "Zahmet Çekmeden Güvende Kalın";
-"purchases.address_phishing.info" = "One wrong address, and your crypto is gone forever. Unstoppable automatically scans recipient addresses for suspicious patterns and defends against the latest phishing threats, preventing you from sending funds to a hacker. Block fraudulent transfers before they happen.";
+"purchases.address_phishing.info" = "Yanlış bir adres ve kripto paranız sonsuza dek kaybolabilir. Unstoppable, alıcı adresleri şüpheli kalıplar için otomatik olarak tarar ve en son oltalama tehditlerine karşı savunma sağlayarak fonlarınızı bir bilgisayar korsanına göndermenizi önler. Gerçekleşmeden önce sahte transferleri engelleyin.";
 
-"purchases.address_checker" = "Blacklist Checker";
+"purchases.address_checker" = "Kara Liste Kontrolcüsü";
 "purchases.address_checker.description" = "Dolandırıcılık ve oltalama saldırılarına karşı etkili otomatik koruma";
-"purchases.address_checker.info" = "Protect yourself from risky and sanctioned entities. Blacklist Checker automatically screens recipient addresses against high-risk databases, flagging scams, frauds, and sanctioned entities before you send. If an address is blacklisted, you’ll know before making a costly mistake. Secure your transactions. Keep your crypto clean. Stay compliant.";
+"purchases.address_checker.info" = "Kendinizi riskli ve yaptırım uygulanan kuruluşlardan koruyun. Kara Liste Kontrolcüsü, göndermeden önce alıcı adresleri yüksek riskli veritabanlarına karşı otomatik olarak tarar ve dolandırıcılık, sahtekarlık ve yaptırım uygulanan kuruluşları işaretler. Bir adres kara listeye alınmışsa, maliyetli bir hata yapmadan önce bileceksiniz. İşlemlerinizi güvence altına alın. Kripto paranızı temiz tutun. Uyumlu kalın.";
 
 "purchases.vip_support" = "VIP Grubu";
 "purchases.vip_support.description" = "Hızlı teknik destek için cüzdan ekibine erişim.";
@@ -2329,7 +2329,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "purchase.agree.privacy_policy" = "Gizlilik Politikası";
 
 "purchases.period.button.try" = "Get 7 days for FREE";
-"purchases.period.button.subscribe" = "Subscribe";
+"purchases.period.button.subscribe" = "Abone Ol";
 "purchases.period.button.buy" = "Buy now";
 "purchases.period.button.promo" = "Add Promo Code";
 
