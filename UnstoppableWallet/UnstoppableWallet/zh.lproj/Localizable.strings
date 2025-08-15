@@ -2363,5 +2363,5 @@
 
 // MEV Protection
 
-"mev_protection.title" = "MEV Protection";
-"mev_protection.description" = "So-called front-running bots watch every trade, trying to make you overpay. This feature blocks them.";
+"mev_protection.title" = "MEV 保护";
+"mev_protection.description" = "所谓的「抢跑机器人」会监控每一笔交易，企图让您多付费用。此功能可阻止它们。";
