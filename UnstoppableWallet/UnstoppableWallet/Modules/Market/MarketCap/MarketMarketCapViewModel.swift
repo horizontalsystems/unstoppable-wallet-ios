@@ -6,6 +6,7 @@ import MarketKit
 class MarketMarketCapViewModel: ObservableObject {
     private let marketKit = Core.shared.marketKit
     private let currencyManager = Core.shared.currencyManager
+    private let priceChangeModeManager = Core.shared.priceChangeModeManager
 
     private var cancellables = Set<AnyCancellable>()
     private var tasks = Set<AnyTask>()
@@ -57,6 +58,10 @@ class MarketMarketCapViewModel: ObservableObject {
 extension MarketMarketCapViewModel {
     var currency: Currency {
         currencyManager.baseCurrency
+    }
+
+    var timePeriod: HsTimePeriod {
+        priceChangeModeManager.day1Period
     }
 
     func sync() {

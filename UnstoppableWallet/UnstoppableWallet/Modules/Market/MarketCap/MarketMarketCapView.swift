@@ -103,7 +103,7 @@ struct MarketMarketCapView: View {
                     marketCap: marketInfo.marketCap,
                     price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
                     rank: marketInfo.marketCapRank,
-                    diff: marketInfo.priceChangeValue(timePeriod: HsTimePeriod.day1),
+                    diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod),
                     action: {
                         Coordinator.shared.presentCoinPage(coin: coin, page: .globalMetricsMarketCap)
                     }
