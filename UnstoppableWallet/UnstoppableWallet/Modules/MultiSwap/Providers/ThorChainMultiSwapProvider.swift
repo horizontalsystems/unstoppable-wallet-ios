@@ -198,7 +198,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
     }
 
     func otherSections(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: TransactionSettings?) -> [SendDataSection] {
-        let allowMevProtection = MerkleTransactionAdapter.allowProtection(chain: evmBlockchainManager.chain(blockchainType: tokenIn.blockchainType))
+        let allowMevProtection = EvmBlockchainManager.blockchainTypes.contains(tokenIn.blockchainType) && MerkleTransactionAdapter.allowProtection(chain: evmBlockchainManager.chain(blockchainType: tokenIn.blockchainType))
 
         guard allowMevProtection else {
             useMevProtection = false
