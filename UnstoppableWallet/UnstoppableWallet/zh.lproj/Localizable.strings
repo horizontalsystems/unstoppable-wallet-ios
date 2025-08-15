@@ -1005,7 +1005,7 @@
 
 "market.vaults.apy" = "APY %@";
 "market.vaults.tvl" = "TVL: %@";
-"market.vaults.premium.description" = "Explore the best DeFi staking returns, all in one place.";
+"market.vaults.premium.description" = "在这里探索最优质的 DeFi 质押回报，一站尽览。";
 "market.vaults.premium.unlock" = "解锁高级版";
 
 "market.vaults.filter" = "筛选器";
