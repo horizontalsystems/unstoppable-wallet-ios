@@ -8,8 +8,8 @@ struct RecipientAndSlippageMultiSwapSettingsView: View {
 
     @Environment(\.presentationMode) private var presentationMode
 
-    init(tokenIn: Token, storage: MultiSwapSettingStorage, onChangeSettings: @escaping () -> Void) {
-        _viewModel = .init(wrappedValue: ViewModel(tokenIn: tokenIn, storage: storage))
+    init(tokenOut: Token, storage: MultiSwapSettingStorage, onChangeSettings: @escaping () -> Void) {
+        _viewModel = .init(wrappedValue: ViewModel(tokenOut: tokenOut, storage: storage))
         self.onChangeSettings = onChangeSettings
     }
 
@@ -50,8 +50,8 @@ extension RecipientAndSlippageMultiSwapSettingsView {
         let addressViewModel: AddressMultiSwapSettingsViewModel
         let slippageViewModel: SlippageMultiSwapSettingsViewModel
 
-        init(tokenIn: Token, storage: MultiSwapSettingStorage) {
-            addressViewModel = AddressMultiSwapSettingsViewModel(storage: storage, token: tokenIn)
+        init(tokenOut: Token, storage: MultiSwapSettingStorage) {
+            addressViewModel = AddressMultiSwapSettingsViewModel(storage: storage, token: tokenOut)
             slippageViewModel = SlippageMultiSwapSettingsViewModel(storage: storage)
 
             super.init(fields: [addressViewModel, slippageViewModel])
