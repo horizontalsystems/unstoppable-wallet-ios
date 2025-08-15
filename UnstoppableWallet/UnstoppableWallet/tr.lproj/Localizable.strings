@@ -117,7 +117,7 @@
 "auto_lock.minute30" = "30 dakika";
 "auto_lock.hour1" = "1 saat";
 
-"powered_by" = "Powered by %@";
+"powered_by" = "%@ tarafından destekleniyor";
 
 "filter.all" = "Hepsi";
 
@@ -905,8 +905,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.advanced_search.outperformed_btc" = "BTC'yi Geride Bıraktı";
 "market.advanced_search.outperformed_eth" = "ETH'yi Geride Bıraktı";
 "market.advanced_search.outperformed_bnb" = "BNB'yi Geride Bıraktı";
-"market.advanced_search.outperformed_sp500" = "Outperformed S&P500";
-"market.advanced_search.outperformed_gold" = "Outperformed GOLD";
+"market.advanced_search.outperformed_sp500" = "S&P500’ü geride bıraktı";
+"market.advanced_search.outperformed_gold" = "Altını geride bıraktı";
 "market.advanced_search.price_close_to" = "Price Close To";
 "market.advanced_search.price_close_to_ath" = "ATH'ye Yakın Fiyat";
 "market.advanced_search.price_close_to_atl" = "ATL'ye Yakın Fiyat";
@@ -965,7 +965,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.global.total_market_cap.description" = "Tüm kripto paraların toplam piyasa değeri";
 
 "market.global.volume_24h.title" = "24 saat hacim";
-"market.global.volume_24h.description" = "The 24-hour trading volume of the crypto market";
+"market.global.volume_24h.description" = "Kripto piyasasının 24 saatlik işlem hacmi";
 
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.defi_cap.description" = "DeFi projelerinin toplam piyasa değeri";
@@ -1005,16 +1005,16 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "market.vaults.apy" = "APY %@";
 "market.vaults.tvl" = "TVL: %@";
-"market.vaults.premium.description" = "Explore the best DeFi staking returns, all in one place.";
-"market.vaults.premium.unlock" = "Unlock Premium";
+"market.vaults.premium.description" = "Tüm en iyi DeFi staking getirilerini tek bir yerde keşfedin.";
+"market.vaults.premium.unlock" = "Premium’un kilidini aç";
 
 "market.vaults.filter" = "Filtre";
-"market.vaults.filter.all_assets" = "All Assets";
-"market.vaults.filter.eth_yield" = "ETH Yield";
-"market.vaults.filter.usd_yield" = "USD Yield";
+"market.vaults.filter.all_assets" = "Tüm Varlıklar";
+"market.vaults.filter.eth_yield" = "ETH Getirisi";
+"market.vaults.filter.usd_yield" = "USD Getirisi";
 
-"market.vaults.sort.highest_apy" = "Highest APY";
-"market.vaults.sort.highest_tvl" = "Highest TVL";
+"market.vaults.sort.highest_apy" = "En Yüksek APY";
+"market.vaults.sort.highest_tvl" = "En Yüksek TVL";
 "market.vaults.sort.highest_apy.short" = "APY";
 "market.vaults.sort.highest_tvl.short" = "TVL";
 
@@ -1702,7 +1702,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "subscription.premium.label" = "Premium";
 "subscription.title" = "Subscription";
 "subscription.get" = "Get Premium";
-"subscription.restore" = "Restore Purchase";
+"subscription.restore" = "Satın Almayı Geri Yükle";
 "subscription.type" = "Subscription Type";
 "subscription.one-time" = "One-Time";
 "subscription.price" = "Fiyat";
@@ -1714,7 +1714,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Settings -> Support
 
 "settings.vip_support.description" = "Get exclusive access to our VIP Group, where premium users and the Unstoppable Wallet team collaborate. Receive direct assistance, discuss future updates, and help shape the wallet’s evolution.";
-"settings.vip_support.start_chat" = "Join VIP Group";
+"settings.vip_support.start_chat" = "VIP Gruba Katılın";
 
 // Settings -> Contacts
 
@@ -2265,21 +2265,21 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "mini_app.cell.description" = "Testleri geçin, görevleri tamamlayın ve token kazanın!";
 
 "purchases.title" = "Premium";
-"purchases.description" = "Choose the plan";
+"purchases.description" = "Planı seçin";
 "purchases.type.pro" = "Pro";
 "purchases.type.vip" = "Vip";
 
 "purchases.token_insights" = "Analitik";
 "purchases.token_insights.description" = "Önemli kriterlere göre ilk 100 listelerine erişim";
-"purchases.token_insights.info" = "Your all-in-one tool for deep analysis. Browse curated Top 250 token lists based on trading volume, exchange liquidity, holder behavior, and on-chain trends—all at a glance. Filter, analyze, and stay ahead.";
+"purchases.token_insights.info" = "Derinlemesine analiz için tek araçınız. İşlem hacmi, borsa likiditesi, yatırımcı davranışı ve zincir üstü trendlere dayalı olarak düzenlenmiş En İyi 250 token listesine göz atın—hepsi tek bir bakışta. Filtreleyin, analiz edin ve öne geçin.";
 
-"purchases.advanced_search" = "Advanced Search";
+"purchases.advanced_search" = "Gelişmiş Arama";
 "purchases.advanced_search.description" = "Çoklu parametreler üzerinden çok seviyeli filtreleme";
-"purchases.advanced_search.info" = "Ditch the noise and zero in on high-potential tokens with precision. Use Advanced Search to filter through thousands of tokens by trading volume, blockchain, market cap, price trends, sector, and performance—and more. Powerful, accurate, and built for discovery.";
+"purchases.advanced_search.info" = "Gereksiz detayları bırakın ve yüksek potansiyelli tokenlere hassasiyetle odaklanın. Gelişmiş Arama'yı kullanarak binlerce tokeni işlem hacmi, blok zinciri, piyasa değeri, fiyat trendleri, sektör ve performansa göre filtreleyebilirsiniz—ve daha fazlası. Güçlü, doğru ve keşif için tasarlanmış.";
 
 "purchases.trade_signals" = "Sinyaller ve Trendler";
 "purchases.trade_signals.description" = "Tokenleriniz için piyasa trendlerinin otomatik takibi";
-"purchases.trade_signals.info" = "Never miss a trading opportunity again. Watch Trends delivers real-time alerts powered by advanced technical analysis, helping you identify trends, spot breakouts, and avoid pitfalls before they happen. Act fast, trade smart, and maximize gains.";
+"purchases.trade_signals.info" = "Bir daha hiçbir ticaret fırsatını kaçırmayın. Trendleri İzleyin, gelişmiş teknik analize dayalı gerçek zamanlı uyarılar sunarak trendleri belirlemenize, ani yükselişleri tespit etmenize ve sorunları önceden fark etmenize yardımcı olur. Hızlı hareket edin, akıllı ticaret yapın ve kazançlarınızı maksimize edin.";
 
 "purchases.tx_speed_up" = "Tx Speed UP / Cancel ";
 "purchases.tx_speed_up.description" = "Speed up and cancel transactions.";
@@ -2305,7 +2305,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "purchases.vip_club.description" = "Private chat with exclusive information.";
 "purchases.vip_club.info" = "The VIP Club offers exclusive access to a premium community of like-minded individuals. Members can participate in private discussions, gain insights from industry experts, and network with other top-tier users. This feature is perfect for those who want to stay ahead with insider knowledge and connections.";
 
-"purchases.wallet_description.title" = "Highly rated security, exceptional privacy, and a truly non-custodial wallet.";
+"purchases.wallet_description.title" = "Yüksek güvenlik derecesi, olağanüstü gizlilik ve gerçek anlamda emanet edilmeyen bir cüzdan.";
 "purchases.wallet_description.approved" = "Approved and Audited By:";
 
 "purchases.button.try" = "Try for FREE";
@@ -2368,3 +2368,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "monero.priority.medium" = "Medium";
 "monero.priority.high" = "High";
 "monero.priority.last" = "Last";
+
+// MEV Protection
+
+"mev_protection.title" = "MEV Protection";
+"mev_protection.description" = "So-called front-running bots watch every trade, trying to make you overpay. This feature blocks them.";
