@@ -2363,5 +2363,5 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // MEV Protection
 
-"mev_protection.title" = "MEV Protection";
-"mev_protection.description" = "So-called front-running bots watch every trade, trying to make you overpay. This feature blocks them.";
+"mev_protection.title" = "Proteção MEV";
+"mev_protection.description" = "Os chamados bots de front-running monitoram cada negociação, tentando fazê-lo pagar mais caro. Esse recurso os bloqueia.";
