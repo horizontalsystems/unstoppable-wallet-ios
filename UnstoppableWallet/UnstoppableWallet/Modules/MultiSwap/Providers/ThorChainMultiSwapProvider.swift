@@ -235,9 +235,9 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
         ], isList: false)]
     }
 
-    func settingsView(tokenIn: Token, tokenOut _: Token, onChangeSettings: @escaping () -> Void) -> AnyView {
+    func settingsView(tokenIn _: Token, tokenOut: Token, onChangeSettings: @escaping () -> Void) -> AnyView {
         let view = ThemeNavigationStack {
-            RecipientAndSlippageMultiSwapSettingsView(tokenIn: tokenIn, storage: storage, onChangeSettings: onChangeSettings)
+            RecipientAndSlippageMultiSwapSettingsView(tokenOut: tokenOut, storage: storage, onChangeSettings: onChangeSettings)
         }
 
         return AnyView(view)
