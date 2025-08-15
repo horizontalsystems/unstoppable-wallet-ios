@@ -29,7 +29,7 @@
 "button.i_understand" = "이해합니다";
 "button.learn_more" = "자세히 보기";
 "button.unlock" = "잠금 해제";
-"button.select" = "Select";
+"button.select" = "선택";
 "button.later" = "나중에";
 
 "alert" = "알림";
@@ -601,7 +601,7 @@
 "swap.estimated" = "예상";
 "swap.balance" = "잔액";
 "swap.you_get" = "얻기";
-"swap.token" = "Select";
+"swap.token" = "선택";
 "swap.advanced_settings" = "스왑 설정";
 "swap.proceed_button" = "다음";
 "swap.approve.title" = "스왑 승인";
@@ -627,7 +627,7 @@
 "swap.maximum_short" = "(최대)";
 
 "swap.rate_not_available" = "가격이 제공되지 않습니다";
-"swap.select" = "Select";
+"swap.select" = "선택";
 "swap.quoting" = "견적";
 "swap.select_token_in" = "토큰 인 선택";
 "swap.select_token_out" = "토큰 아웃 선택";
