@@ -129,14 +129,14 @@ enum SendField {
                     ListRow {
                         Image("shield_24").themeIcon(color: .themeJacob)
                         Toggle(isOn: isOn) {
-                            Text("Mev Protection".localized).themeBody()
+                            Text("mev_protection.title".localized).themeBody()
                         }
                         .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
                     }
                 }
                 .modifier(ThemeListStyleModifier(themeListStyle: .borderedLawrence, selected: true))
 
-                ListSectionFooter(text: "settings_security.balance_auto_hide.description".localized)
+                ListSectionFooter(text: "mev_protection.description".localized)
             }
         case let .doubleValue(title, infoDescription, value1, value2):
             ListRow(padding: EdgeInsets(top: .margin12, leading: infoDescription == nil ? .margin16 : 0, bottom: .margin12, trailing: .margin16)) {
