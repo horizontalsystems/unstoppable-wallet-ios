@@ -113,7 +113,7 @@ class MoneroAdapter {
         let state = kit.walletState
 
         switch state.status {
-            case .ok, .unknown:
+        case .ok, .unknown:
             let restoreHeight = Int(kit.restoreHeight)
             if let daemonHeight = state.daemonHeight,
                let walletBlockHeight = state.walletBlockHeight
