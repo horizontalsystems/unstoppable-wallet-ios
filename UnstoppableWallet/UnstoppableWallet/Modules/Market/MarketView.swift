@@ -28,7 +28,7 @@ struct MarketView: View {
                         .onFirstAppear { stat(page: .markets, event: .open(page: .marketSearch)) }
                 }
             }
-            .safeAreaInset(edge: .bottom) {
+            .safeAreaInset(edge: .bottom, spacing: 0) {
                 BottomSearchBar(text: $searchViewModel.searchText, prompt: "placeholder.search".localized, focused: $searchFocused)
             }
         }

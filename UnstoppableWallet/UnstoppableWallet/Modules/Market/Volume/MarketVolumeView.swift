@@ -17,31 +17,28 @@ struct MarketVolumeView: View {
 
     var body: some View {
         ThemeNavigationStack {
-            ThemeView {
+            ThemeView(style: .list) {
                 switch viewModel.state {
                 case .loading:
-                    VStack(spacing: 0) {
-                        header()
-                        Spacer()
-                        ProgressView()
-                        Spacer()
-                    }
+                    loadingList()
                 case let .loaded(marketInfos):
                     ScrollViewReader { proxy in
                         ThemeList(bottomSpacing: .margin16) {
                             header()
-                                .listRowBackground(Color.clear)
+                                .listRowBackground(Color.themeTyler)
                                 .listRowInsets(EdgeInsets())
                                 .listRowSeparator(.hidden)
+                                .themeListTopView()
 
                             chart()
-                                .listRowBackground(Color.clear)
+                                .listRowBackground(Color.themeTyler)
                                 .listRowInsets(EdgeInsets())
                                 .listRowSeparator(.hidden)
 
                             list(marketInfos: marketInfos)
                         }
                         .onChange(of: viewModel.sortOrder) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
+                        .themeListScrollHeader()
                     }
                 case .failed:
                     VStack(spacing: 0) {
@@ -53,9 +50,8 @@ struct MarketVolumeView: View {
                     }
                 }
             }
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .cancellationAction) {
                     Button("button.close".localized) {
                         isPresented = false
                     }
@@ -88,18 +84,11 @@ struct MarketVolumeView: View {
     }
 
     @ViewBuilder private func listHeader(disabled: Bool = false) -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                Button(action: {
-                    viewModel.sortOrder.toggle()
-                }) {
-                    Text("market.volume.volume".localized)
-                }
-                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .custom(image: sortIcon())))
-                .disabled(disabled)
+        ListHeader(scrollable: true) {
+            ThemeButton(text: "market.volume.volume".localized, icon: sortIcon, style: .secondary, size: .small) {
+                viewModel.sortOrder.toggle()
             }
-            .padding(.horizontal, .margin16)
-            .padding(.vertical, .margin8)
+            .disabled(disabled)
         }
     }
 
@@ -108,31 +97,42 @@ struct MarketVolumeView: View {
             ListForEach(marketInfos) { marketInfo in
                 let coin = marketInfo.fullCoin.coin
 
-                ClickableRow(action: {
-                    Coordinator.shared.presentCoinPage(coin: coin, page: .globalMetricsVolume)
-                }) {
-                    itemContent(
-                        coin: coin,
-                        volume: marketInfo.totalVolume,
-                        price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
-                        rank: marketInfo.marketCapRank,
-                        diff: marketInfo.priceChangeValue(timePeriod: HsTimePeriod.day1)
-                    )
-                }
+                cell(
+                    coin: coin,
+                    volume: marketInfo.totalVolume,
+                    price: marketInfo.price.flatMap { ValueFormatter.instance.formatFull(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
+                    rank: marketInfo.marketCapRank,
+                    diff: marketInfo.priceChangeValue(timePeriod: HsTimePeriod.day1),
+                    action: {
+                        Coordinator.shared.presentCoinPage(coin: coin, page: .globalMetricsVolume)
+                    }
+                )
                 .watchlistSwipeActions(viewModel: watchlistViewModel, coinUid: coin.uid)
             }
         } header: {
             listHeader()
-                .listRowInsets(EdgeInsets())
-                .background(Color.themeTyler)
         }
     }
 
     @ViewBuilder private func loadingList() -> some View {
-        Section {
-            ListForEach(Array(0 ... 10)) { index in
-                ListRow {
-                    itemContent(
+        ThemeList(bottomSpacing: .margin16) {
+            header()
+                .listRowBackground(Color.themeTyler)
+                .listRowInsets(EdgeInsets())
+                .listRowSeparator(.hidden)
+
+            ZStack {
+                ProgressView()
+            }
+            .frame(height: 277) // TODO: use real chart height (after migrating to Swift Charts)
+            .frame(maxWidth: .infinity)
+            .listRowBackground(Color.themeTyler)
+            .listRowInsets(EdgeInsets())
+            .listRowSeparator(.hidden)
+
+            Section {
+                ListForEach(Array(0 ... 10)) { index in
+                    cell(
                         coin: nil,
                         volume: 123_456,
                         price: "$123.45",
@@ -141,44 +141,39 @@ struct MarketVolumeView: View {
                     )
                     .redacted()
                 }
-            }
-        } header: {
-            listHeader(disabled: true)
-                .listRowInsets(EdgeInsets())
-                .background(Color.themeTyler)
-        }
-    }
-
-    @ViewBuilder private func itemContent(coin: Coin?, volume: Decimal?, price: String, rank: Int?, diff: Decimal?) -> some View {
-        CoinIconView(coin: coin)
-
-        VStack(spacing: 1) {
-            HStack(spacing: .margin8) {
-                Text(coin?.code ?? "CODE").textBody()
-                Spacer()
-                Text(price).textBody()
-            }
-
-            HStack(spacing: .margin8) {
-                HStack(spacing: .margin4) {
-                    if let rank {
-                        BadgeViewNew("\(rank)")
-                    }
-
-                    if let volume, let formatted = ValueFormatter.instance.formatShort(currency: viewModel.currency, value: volume) {
-                        Text(formatted).textSubhead2()
-                    }
-                }
-                Spacer()
-                DiffText(diff)
+            } header: {
+                listHeader(disabled: true)
             }
         }
+        .scrollDisabled(true)
     }
 
-    private func sortIcon() -> Image {
+    @ViewBuilder private func cell(coin: Coin?, volume: Decimal?, price: String, rank: Int?, diff: Decimal?, action: (() -> Void)? = nil) -> some View {
+        Cell(
+            left: {
+                CoinIconView(coin: coin)
+            },
+            middle: {
+                MultiText(
+                    title: coin?.code ?? "CODE",
+                    subtitleBadge: rank.map { "\($0)" },
+                    subtitle: volume.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) }
+                )
+            },
+            right: {
+                RightMultiText(
+                    title: price,
+                    subtitle: Diff.text(diff: diff)
+                )
+            },
+            action: action
+        )
+    }
+
+    private var sortIcon: String {
         switch viewModel.sortOrder {
-        case .asc: return Image("arrow_medium_2_up_20")
-        case .desc: return Image("arrow_medium_2_down_20")
+        case .asc: return "arrow_m_up"
+        case .desc: return "arrow_m_down"
         }
     }
 }

@@ -19,7 +19,7 @@ struct SendTokenListView: View {
 
     var body: some View {
         ThemeNavigationStack(path: $path) {
-            ThemeView(background: .themeLawrence) {
+            ThemeView(style: .list) {
                 VStack(spacing: 0) {
                     ScrollableTabHeaderView(
                         tabs: ["filter.all".localized] + blockchains.map(\.name),
@@ -43,7 +43,7 @@ struct SendTokenListView: View {
 
                     let items = filteredItems
 
-                    ThemeList(items, bottomSpacing: .margin16) { item in
+                    ThemeList(items) { item in
                         WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, amountRounding: viewModel.amountRounding, subtitleMode: .coinName) {
                             path.append(item.wallet)
                             stat(page: .sendTokenList, event: .openSend(token: item.wallet.token))

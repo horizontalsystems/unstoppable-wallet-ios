@@ -7,7 +7,7 @@ struct MarketCoinsView: View {
     @ObservedObject var watchlistViewModel: WatchlistViewModel
 
     var body: some View {
-        ThemeView(background: .themeLawrence) {
+        ThemeView(style: .list) {
             switch viewModel.state {
             case .loading:
                 VStack(spacing: 0) {
@@ -111,7 +111,7 @@ struct MarketCoinsView: View {
             )
             .redacted()
         }
-        .simultaneousGesture(DragGesture(minimumDistance: 0), including: .all)
+        .scrollDisabled(true)
     }
 
     @ViewBuilder private func cell(coin: Coin?, marketCap: Decimal?, price: String, rank: Int?, diff: Decimal?, action: (() -> Void)? = nil) -> some View {

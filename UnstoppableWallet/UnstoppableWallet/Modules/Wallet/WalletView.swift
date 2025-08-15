@@ -9,7 +9,7 @@ struct WalletView: View {
     var body: some View {
         Group {
             if let account = viewModel.account {
-                ThemeView(background: .themeLawrence) {
+                ThemeView(style: .list) {
                     ScrollViewReader { proxy in
                         ThemeList(bottomSpacing: .margin16) {
                             topView()

@@ -13,7 +13,7 @@ struct WalletTokenView<AdditionalContent: View>: View {
     }
 
     var body: some View {
-        ThemeView(background: .themeLawrence) {
+        ThemeView(style: .list) {
             ThemeList(bottomSpacing: .margin16) {
                 topView()
                     .listRowBackground(Color.themeTyler)

@@ -15,22 +15,18 @@ struct MarketEtfView: View {
         VStack {
             switch viewModel.state {
             case .loading:
-                VStack(spacing: 0) {
-                    header()
-                    Spacer()
-                    ProgressView()
-                    Spacer()
-                }
+                loadingList()
             case let .loaded(rankedEtfs):
                 ScrollViewReader { proxy in
                     ThemeList(bottomSpacing: .margin16) {
                         header()
-                            .listRowBackground(Color.clear)
+                            .listRowBackground(Color.themeTyler)
                             .listRowInsets(EdgeInsets())
                             .listRowSeparator(.hidden)
+                            .themeListTopView()
 
                         chart()
-                            .listRowBackground(Color.clear)
+                            .listRowBackground(Color.themeTyler)
                             .listRowInsets(EdgeInsets())
                             .listRowSeparator(.hidden)
 
@@ -38,6 +34,7 @@ struct MarketEtfView: View {
                     }
                     .onChange(of: viewModel.sortBy) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
                     .onChange(of: viewModel.timePeriod) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
+                    .themeListScrollHeader()
                 }
             case .failed:
                 VStack(spacing: 0) {
@@ -72,44 +69,34 @@ struct MarketEtfView: View {
     }
 
     @ViewBuilder private func listHeader(disabled: Bool = false) -> some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack {
-                Button(action: {
-                    Coordinator.shared.present(type: .alert) { isPresented in
-                        OptionAlertView(
-                            title: "market.sort_by.title".localized,
-                            viewItems: MarketEtfViewModel.SortBy.allCases.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
-                            onSelect: { index in
-                                viewModel.sortBy = MarketEtfViewModel.SortBy.allCases[index]
-                            },
-                            isPresented: isPresented
-                        )
-                    }
-                }) {
-                    Text(viewModel.sortBy.title)
+        ListHeader(scrollable: true) {
+            DropdownButton(text: viewModel.sortBy.title) {
+                Coordinator.shared.present(type: .alert) { isPresented in
+                    OptionAlertView(
+                        title: "market.sort_by.title".localized,
+                        viewItems: MarketEtfViewModel.SortBy.allCases.map { .init(text: $0.title, selected: viewModel.sortBy == $0) },
+                        onSelect: { index in
+                            viewModel.sortBy = MarketEtfViewModel.SortBy.allCases[index]
+                        },
+                        isPresented: isPresented
+                    )
                 }
-                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
-                .disabled(disabled)
-
-                Button(action: {
-                    Coordinator.shared.present(type: .alert) { isPresented in
-                        OptionAlertView(
-                            title: "market.time_period.title".localized,
-                            viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
-                            onSelect: { index in
-                                viewModel.timePeriod = viewModel.timePeriods[index]
-                            },
-                            isPresented: isPresented
-                        )
-                    }
-                }) {
-                    Text(viewModel.timePeriod.shortTitle)
-                }
-                .buttonStyle(SecondaryButtonStyle(style: .default, rightAccessory: .dropDown))
-                .disabled(disabled)
             }
-            .padding(.horizontal, .margin16)
-            .padding(.vertical, .margin8)
+            .disabled(disabled)
+
+            DropdownButton(text: viewModel.timePeriod.shortTitle) {
+                Coordinator.shared.present(type: .alert) { isPresented in
+                    OptionAlertView(
+                        title: "market.time_period.title".localized,
+                        viewItems: viewModel.timePeriods.map { .init(text: $0.title, selected: viewModel.timePeriod == $0) },
+                        onSelect: { index in
+                            viewModel.timePeriod = viewModel.timePeriods[index]
+                        },
+                        isPresented: isPresented
+                    )
+                }
+            }
+            .disabled(disabled)
         }
     }
 
@@ -118,29 +105,39 @@ struct MarketEtfView: View {
             ListForEach(rankedEtfs) { rankedEtf in
                 let etf = rankedEtf.etf
 
-                ListRow {
-                    itemContent(
-                        imageUrl: URL(string: etf.imageUrl),
-                        ticker: etf.ticker,
-                        name: etf.name,
-                        rank: rankedEtf.rank,
-                        totalAssets: etf.totalAssets,
-                        change: etf.inflow(timePeriod: viewModel.timePeriod)
-                    )
-                }
+                cell(
+                    imageUrl: URL(string: etf.imageUrl),
+                    ticker: etf.ticker,
+                    name: etf.name,
+                    rank: rankedEtf.rank,
+                    totalAssets: etf.totalAssets,
+                    change: etf.inflow(timePeriod: viewModel.timePeriod)
+                )
             }
         } header: {
             listHeader()
-                .listRowInsets(EdgeInsets())
-                .background(Color.themeTyler)
         }
     }
 
     @ViewBuilder private func loadingList() -> some View {
-        Section {
-            ListForEach(Array(0 ... 10)) { index in
-                ListRow {
-                    itemContent(
+        ThemeList(bottomSpacing: .margin16) {
+            header()
+                .listRowBackground(Color.themeTyler)
+                .listRowInsets(EdgeInsets())
+                .listRowSeparator(.hidden)
+
+            ZStack {
+                ProgressView()
+            }
+            .frame(height: 277) // TODO: use real chart height (after migrating to Swift Charts)
+            .frame(maxWidth: .infinity)
+            .listRowBackground(Color.themeTyler)
+            .listRowInsets(EdgeInsets())
+            .listRowSeparator(.hidden)
+
+            Section {
+                ListForEach(Array(0 ... 10)) { index in
+                    cell(
                         imageUrl: nil,
                         ticker: "ABCD",
                         name: "Ticker Name",
@@ -150,36 +147,36 @@ struct MarketEtfView: View {
                     )
                     .redacted()
                 }
+            } header: {
+                listHeader(disabled: true)
             }
-        } header: {
-            listHeader()
-                .listRowInsets(EdgeInsets())
-                .background(Color.themeTyler)
         }
+        .scrollDisabled(true)
     }
 
-    @ViewBuilder private func itemContent(imageUrl: URL?, ticker: String, name: String, rank: Int, totalAssets: Decimal?, change: Decimal?) -> some View {
-        KFImage.url(imageUrl)
-            .resizable()
-            .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeBlade) }
-            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
-            .frame(width: .iconSize32, height: .iconSize32)
+    @ViewBuilder private func cell(imageUrl: URL?, ticker: String, name: String, rank: Int, totalAssets: Decimal?, change: Decimal?) -> some View {
+        Cell(
+            left: {
+                KFImage.url(imageUrl)
+                    .resizable()
+                    .placeholder { RoundedRectangle(cornerRadius: .cornerRadius8).fill(Color.themeBlade) }
+                    .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8))
+                    .frame(width: .iconSize32, height: .iconSize32)
 
-        VStack(spacing: 1) {
-            HStack(spacing: .margin8) {
-                Text(ticker).textBody()
-                Spacer()
-                Text(totalAssets.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) } ?? "n/a".localized).textBody()
+            },
+            middle: {
+                MultiText(
+                    title: ticker,
+                    subtitleBadge: "\(rank)",
+                    subtitle: name
+                )
+            },
+            right: {
+                RightMultiText(
+                    title: totalAssets.flatMap { ValueFormatter.instance.formatShort(currency: viewModel.currency, value: $0) } ?? "n/a".localized,
+                    subtitle: Diff.text(diff: change.map { Diff.change(value: $0, currency: viewModel.currency) })
+                )
             }
-
-            HStack(spacing: .margin8) {
-                HStack(spacing: .margin4) {
-                    BadgeViewNew("\(rank)")
-                    Text(name).textSubhead2()
-                }
-                Spacer()
-                DiffText(change, currency: viewModel.currency)
-            }
-        }
+        )
     }
 }
