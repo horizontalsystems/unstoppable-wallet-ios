@@ -2049,20 +2049,20 @@
 
 // Monero Node
 
-"monero_network.node" = "Node";
+"monero_network.node" = "节点";
 "monero_network.added" = "已添加";
 "monero_network.add_new" = "添加新的";
-"monero_network.description" = "Choose the node Unstoppable app should use for synchronizing wallet(s).";
+"monero_network.description" = "选择 Unstoppable 应用用于同步钱包的节点。";
 
 // Add RPC Source
 
-"add_monero_node.title" = "Add Node";
+"add_monero_node.title" = "添加节点";
 "add_monero_node.name" = "名称";
-"add_monero_node.node_url" = "Node URL";
-"add_monero_node.login" = "Login";
+"add_monero_node.node_url" = "节点 URL";
+"add_monero_node.login" = "登录";
 "add_monero_node.password" = "密码";
-"add_monero_node.warning.url_exists" = "Node with this URL already exists";
-"add_monero_node.error.invalid_url" = "The entered URL is invalid. Valid url must have https scheme";
+"add_monero_node.warning.url_exists" = "已存在相同 URL 的节点";
+"add_monero_node.error.invalid_url" = "输入的 URL 无效。有效的 URL 必须使用 https 协议";
 
 
 // Send Settings
