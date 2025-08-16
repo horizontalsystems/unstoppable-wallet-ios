@@ -22,6 +22,20 @@ struct BlockchainSettingsView: View {
                             )
                         }
                     }
+
+                    if let item = viewModel.moneroItem {
+                        ClickableRow(action: {
+                            Coordinator.shared.present { _ in
+                                MoneroNetworkView(blockchain: item.blockchain).ignoresSafeArea()
+                            }
+                            stat(page: .blockchainSettings, event: .openBlockchainSettingsEvm(chainUid: item.blockchain.uid))
+                        }) {
+                            ItemView(
+                                blockchain: item.blockchain,
+                                value: item.node.name
+                            )
+                        }
+                    }
                 }
 
                 ListSection {

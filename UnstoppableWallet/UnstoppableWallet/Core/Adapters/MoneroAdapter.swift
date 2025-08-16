@@ -12,7 +12,6 @@ class MoneroAdapter {
     var coinRate: Decimal { 1_000_000_000_000 } // pow(10, 12)
 
     private let kit: MoneroKit.Kit
-    private let daemonAddress: String = "xmr-node.cakewallet.com:18081"
     private let moneroBalanceDataSubject = PublishSubject<MoneroBalanceData>()
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
     private let balanceStateSubject = PublishSubject<AdapterState>()
@@ -30,7 +29,7 @@ class MoneroAdapter {
     let token: Token
     private let transactionSource: TransactionSource
 
-    init(wallet: Wallet, restoreSettings: RestoreSettings) throws {
+    init(wallet: Wallet, restoreSettings: RestoreSettings, node: Node) throws {
         switch wallet.account.type {
         case let .mnemonic(words, passphrase, _):
             let logger = Core.shared.logger.scoped(with: "MoneroKit")
@@ -39,10 +38,9 @@ class MoneroAdapter {
                 mnemonic: .bip39(seed: words, passphrase: passphrase),
                 restoreHeight: UInt64(restoreSettings.birthdayHeight ?? 0),
                 walletId: wallet.account.id,
-                daemonAddress: daemonAddress,
+                node: node,
                 networkType: Self.networkType,
-                logger: logger,
-                moneroCoreLogLevel: 4
+                logger: logger
             )
         default:
             throw AdapterError.unsupportedAccount
@@ -300,7 +298,7 @@ extension MoneroAdapter: ITransactionsAdapter {
         default: return Single.just([])
         }
 
-        let transactions = kit.transactions(fromUid: paginationData, type: bitcoinFilter, limit: limit).map {
+        let transactions = kit.transactions(fromHash: paginationData, descending: true, type: bitcoinFilter, limit: limit).map {
             transactionRecord(fromTransaction: $0)
         }
 
