@@ -2051,6 +2051,24 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "add_evm_sync_source.warning.url_exists" = "Bu URL'ye sahip RPC kaynak zaten var";
 "add_evm_sync_source.error.invalid_url" = "Girilen Url geçersiz. Geçerli url aşağıdaki şemalardan birine sahip olmalıdır: http, https, ws, wss";
 
+// Monero Node
+
+"monero_network.node" = "Node";
+"monero_network.added" = "Eklendi";
+"monero_network.add_new" = "Yeni ekle";
+"monero_network.description" = "Unstoppable uygulamasının cüzdan(lar)ı senkronize etmek için kullanacağı node’u seçin.";
+
+// Add RPC Source
+
+"add_monero_node.title" = "Node Ekle";
+"add_monero_node.name" = "İsim";
+"add_monero_node.node_url" = "Node URL’si";
+"add_monero_node.login" = "Giriş";
+"add_monero_node.password" = "Şifre";
+"add_monero_node.warning.url_exists" = "Bu URL’ye sahip bir node zaten mevcut";
+"add_monero_node.error.invalid_url" = "Girilen URL geçersiz. Geçerli bir URL, https şemasına sahip olmalıdır";
+
+
 // Send Settings
 
 "evm_send_settings.nonce" = "İşlem Nonce";

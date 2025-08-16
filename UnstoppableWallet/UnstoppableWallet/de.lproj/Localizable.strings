@@ -2047,6 +2047,24 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "add_evm_sync_source.warning.url_exists" = "RPC-Quelle mit dieser URL existiert bereits";
 "add_evm_sync_source.error.invalid_url" = "Die eingegebene URL ist ungültig. Gültige URL muss eines der folgenden Schemata haben: http, https, ws, wss";
 
+// Monero Node
+
+"monero_network.node" = "Knoten";
+"monero_network.added" = "Hinzugefügt";
+"monero_network.add_new" = "Neu hinzufügen";
+"monero_network.description" = "Wählen Sie den Knoten aus, den die Unstoppable-App zur Synchronisierung der Wallet(s) verwenden soll.";
+
+// Add RPC Source
+
+"add_monero_node.title" = "Knoten hinzufügen";
+"add_monero_node.name" = "Name";
+"add_monero_node.node_url" = "Knoten-URL";
+"add_monero_node.login" = "Anmelden";
+"add_monero_node.password" = "Passwort";
+"add_monero_node.warning.url_exists" = "Ein Knoten mit dieser URL existiert bereits";
+"add_monero_node.error.invalid_url" = "Die eingegebene URL ist ungültig. Eine gültige URL muss das HTTPS-Schema verwenden";
+
+
 // Send Settings
 
 "evm_send_settings.nonce" = "Transaktion Nonce";

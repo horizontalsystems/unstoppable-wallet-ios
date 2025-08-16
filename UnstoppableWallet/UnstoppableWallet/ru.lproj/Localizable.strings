@@ -1008,7 +1008,7 @@
 "market.vaults.apy" = "APY %@";
 "market.vaults.tvl" = "TVL: %@";
 "market.vaults.premium.description" = "Исследуйте лучшие доходности от DeFi-стейкинга - всё в одном месте.";
-"market.vaults.premium.unlock" = "Unlock Premium";
+"market.vaults.premium.unlock" = "Подпишитесь";
 
 "market.vaults.filter" = "Фильтр";
 "market.vaults.filter.all_assets" = "Все активы";
@@ -2048,6 +2048,24 @@
 "add_evm_sync_source.basic_auth" = "Базовая авторизация (опц.)";
 "add_evm_sync_source.warning.url_exists" = "RPC Источник с таким URL уже существует";
 "add_evm_sync_source.error.invalid_url" = "Введенный URL-адрес неверен. Допустимый url должен иметь одну из следующих схем: https, wss";
+
+// Monero Node
+
+"monero_network.node" = "Node";
+"monero_network.added" = "Добавлен";
+"monero_network.add_new" = "Добавить новый";
+"monero_network.description" = "Выберите ноду, которую приложение Unstoppable будет использовать для синхронизации кошелька(ов).";
+
+// Add RPC Source
+
+"add_monero_node.title" = "Добавить ноду";
+"add_monero_node.name" = "Название";
+"add_monero_node.node_url" = "URL ноды";
+"add_monero_node.login" = "Логин";
+"add_monero_node.password" = "Пароль";
+"add_monero_node.warning.url_exists" = "Нода с таким URL уже существует";
+"add_monero_node.error.invalid_url" = "Введённый URL недействителен. Корректный URL должен использовать схему https";
+
 
 // Send Settings
 

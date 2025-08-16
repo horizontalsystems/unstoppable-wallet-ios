@@ -2048,6 +2048,24 @@
 "add_evm_sync_source.warning.url_exists" = "이 URL이 있는 RPC 소스가 이미 존재합니다.";
 "add_evm_sync_source.error.invalid_url" = "입력한 URL이 잘못되었습니다. 유효한 URL은 http, https, ws, wss 스키마 중 하나여야 합니다.";
 
+// Monero Node
+
+"monero_network.node" = "노드";
+"monero_network.added" = "추가됨";
+"monero_network.add_new" = "신규로 추가";
+"monero_network.description" = "Unstoppable 앱이 지갑 동기화에 사용할 노드를 선택하세요.";
+
+// Add RPC Source
+
+"add_monero_node.title" = "노드 추가";
+"add_monero_node.name" = "이름";
+"add_monero_node.node_url" = "노드 URL";
+"add_monero_node.login" = "로그인";
+"add_monero_node.password" = "비밀번호";
+"add_monero_node.warning.url_exists" = "이 URL의 노드는 이미 존재합니다";
+"add_monero_node.error.invalid_url" = "입력한 URL이 잘못되었습니다. 유효한 URL은 https 스킴을 포함해야 합니다";
+
+
 // Send Settings
 
 "evm_send_settings.nonce" = "트랜잭션 Nonce";
