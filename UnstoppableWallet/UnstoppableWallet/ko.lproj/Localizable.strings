@@ -2048,6 +2048,24 @@
 "add_evm_sync_source.warning.url_exists" = "이 URL이 있는 RPC 소스가 이미 존재합니다.";
 "add_evm_sync_source.error.invalid_url" = "입력한 URL이 잘못되었습니다. 유효한 URL은 http, https, ws, wss 스키마 중 하나여야 합니다.";
 
+// Monero Node
+
+"monero_network.node" = "Node";
+"monero_network.added" = "추가됨";
+"monero_network.add_new" = "신규로 추가";
+"monero_network.description" = "Choose the node Unstoppable app should use for synchronizing wallet(s).";
+
+// Add RPC Source
+
+"add_monero_node.title" = "Add Node";
+"add_monero_node.name" = "이름";
+"add_monero_node.node_url" = "Node URL";
+"add_monero_node.login" = "Login";
+"add_monero_node.password" = "비밀번호";
+"add_monero_node.warning.url_exists" = "Node with this URL already exists";
+"add_monero_node.error.invalid_url" = "The entered URL is invalid. Valid url must have https scheme";
+
+
 // Send Settings
 
 "evm_send_settings.nonce" = "트랜잭션 Nonce";
