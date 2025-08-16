@@ -2050,20 +2050,20 @@
 
 // Monero Node
 
-"monero_network.node" = "Node";
+"monero_network.node" = "노드";
 "monero_network.added" = "추가됨";
 "monero_network.add_new" = "신규로 추가";
-"monero_network.description" = "Choose the node Unstoppable app should use for synchronizing wallet(s).";
+"monero_network.description" = "Unstoppable 앱이 지갑 동기화에 사용할 노드를 선택하세요.";
 
 // Add RPC Source
 
-"add_monero_node.title" = "Add Node";
+"add_monero_node.title" = "노드 추가";
 "add_monero_node.name" = "이름";
-"add_monero_node.node_url" = "Node URL";
-"add_monero_node.login" = "Login";
+"add_monero_node.node_url" = "노드 URL";
+"add_monero_node.login" = "로그인";
 "add_monero_node.password" = "비밀번호";
-"add_monero_node.warning.url_exists" = "Node with this URL already exists";
-"add_monero_node.error.invalid_url" = "The entered URL is invalid. Valid url must have https scheme";
+"add_monero_node.warning.url_exists" = "이 URL의 노드는 이미 존재합니다";
+"add_monero_node.error.invalid_url" = "입력한 URL이 잘못되었습니다. 유효한 URL은 https 스킴을 포함해야 합니다";
 
 
 // Send Settings
