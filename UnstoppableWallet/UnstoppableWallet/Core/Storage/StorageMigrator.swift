@@ -842,6 +842,18 @@ enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Create MoneroNodeRecord") { db in
+            try db.create(table: MoneroNodeRecord.databaseTableName) { t in
+                t.column(MoneroNodeRecord.Columns.blockchainTypeUid.name, .text).notNull()
+                t.column(MoneroNodeRecord.Columns.url.name, .text).notNull()
+                t.column(MoneroNodeRecord.Columns.isTrusted.name, .text).notNull()
+                t.column(MoneroNodeRecord.Columns.login.name, .text)
+                t.column(MoneroNodeRecord.Columns.password.name, .text)
+
+                t.primaryKey([MoneroNodeRecord.Columns.blockchainTypeUid.name, MoneroNodeRecord.Columns.url.name], onConflict: .replace)
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 

@@ -9,6 +9,7 @@ class AppBackupProvider {
     private let walletManager: WalletManager
     private let watchlistManager: WatchlistManager
     private let evmSyncSourceManager: EvmSyncSourceManager
+    private let moneroNodeManager: MoneroNodeManager // TODO: Add monero nodes to backup
     private let btcBlockchainManager: BtcBlockchainManager
     private let restoreSettingsManager: RestoreSettingsManager
     private let chartRepository: ChartIndicatorsRepository
@@ -30,6 +31,7 @@ class AppBackupProvider {
          walletManager: WalletManager,
          watchlistManager: WatchlistManager,
          evmSyncSourceManager: EvmSyncSourceManager,
+         moneroNodeManager: MoneroNodeManager,
          btcBlockchainManager: BtcBlockchainManager,
          restoreSettingsManager: RestoreSettingsManager,
          chartRepository: ChartIndicatorsRepository,
@@ -51,6 +53,7 @@ class AppBackupProvider {
         self.walletManager = walletManager
         self.watchlistManager = watchlistManager
         self.evmSyncSourceManager = evmSyncSourceManager
+        self.moneroNodeManager = moneroNodeManager
         self.btcBlockchainManager = btcBlockchainManager
         self.restoreSettingsManager = restoreSettingsManager
         self.chartRepository = chartRepository

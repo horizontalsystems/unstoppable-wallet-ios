@@ -12,6 +12,7 @@ class AdapterManager {
     private let tronKitManager: TronKitManager
     private let tonKitManager: TonKitManager
     private let stellarKitManager: StellarKitManager
+    private let moneroNodeManager: MoneroNodeManager
 
     private let adapterDataReadyRelay = PublishRelay<AdapterData>()
 
@@ -20,7 +21,7 @@ class AdapterManager {
     private var _adapterData = AdapterData(adapterMap: [:], account: nil)
 
     init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager,
-         tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager, btcBlockchainManager: BtcBlockchainManager)
+         tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager, btcBlockchainManager: BtcBlockchainManager, moneroNodeManager: MoneroNodeManager)
     {
         self.adapterFactory = adapterFactory
         self.walletManager = walletManager
@@ -28,6 +29,7 @@ class AdapterManager {
         self.tronKitManager = tronKitManager
         self.tonKitManager = tonKitManager
         self.stellarKitManager = stellarKitManager
+        self.moneroNodeManager = moneroNodeManager
 
         walletManager.activeWalletDataUpdatedObservable
             .observeOn(SerialDispatchQueueScheduler(qos: .userInitiated))
@@ -40,6 +42,7 @@ class AdapterManager {
             subscribe(disposeBag, evmBlockchainManager.evmKitManager(blockchainType: blockchain.type).evmKitUpdatedObservable) { [weak self] in self?.handleUpdatedEvmKit(blockchain: blockchain) }
         }
         subscribe(disposeBag, btcBlockchainManager.restoreModeUpdatedObservable) { [weak self] in self?.handleUpdatedRestoreMode(blockchainType: $0) }
+        subscribe(disposeBag, moneroNodeManager.nodeObservable) { [weak self] in self?.handleUpdatedMoneroNode(blockchainType: $0) }
     }
 
     private func initAdapters(wallets: [Wallet], account: Account?) {
@@ -94,6 +97,14 @@ class AdapterManager {
 
         refreshAdapters(wallets: wallets.filter {
             $0.token.blockchain.type == blockchainType && $0.account.origin == .restored
+        })
+    }
+
+    private func handleUpdatedMoneroNode(blockchainType: BlockchainType) {
+        let wallets = queue.sync { _adapterData.adapterMap.keys }
+
+        refreshAdapters(wallets: wallets.filter {
+            $0.token.blockchain.type == blockchainType
         })
     }
 

@@ -8,6 +8,7 @@ import StellarKit
 class AdapterFactory {
     private let evmBlockchainManager: EvmBlockchainManager
     private let evmSyncSourceManager: EvmSyncSourceManager
+    private let moneroNodeManager: MoneroNodeManager
     private let btcBlockchainManager: BtcBlockchainManager
     private let tronKitManager: TronKitManager
     private let tonKitManager: TonKitManager
@@ -16,12 +17,13 @@ class AdapterFactory {
     private let coinManager: CoinManager
     private let evmLabelManager: EvmLabelManager
 
-    init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager,
+    init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager,
          btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager,
          restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager, evmLabelManager: EvmLabelManager)
     {
         self.evmBlockchainManager = evmBlockchainManager
         self.evmSyncSourceManager = evmSyncSourceManager
+        self.moneroNodeManager = moneroNodeManager
         self.btcBlockchainManager = btcBlockchainManager
         self.tronKitManager = tronKitManager
         self.tonKitManager = tonKitManager
@@ -145,7 +147,8 @@ extension AdapterFactory {
 
         case (.native, .monero):
             let restoreSettings = restoreSettingsManager.settings(accountId: wallet.account.id, blockchainType: .monero)
-            return try? MoneroAdapter(wallet: wallet, restoreSettings: restoreSettings)
+            let moneroNode = moneroNodeManager.node(blockchainType: .monero)
+            return try? MoneroAdapter(wallet: wallet, restoreSettings: restoreSettings, node: moneroNode.node)
 
         case (.native, .ethereum), (.native, .binanceSmartChain), (.native, .polygon), (.native, .avalanche), (.native, .optimism), (.native, .arbitrumOne), (.native, .gnosis), (.native, .fantom), (.native, .base), (.native, .zkSync):
             return evmAdapter(wallet: wallet)

@@ -66,6 +66,7 @@ class Core {
 
     let btcBlockchainManager: BtcBlockchainManager
     let evmSyncSourceManager: EvmSyncSourceManager
+    let moneroNodeManager: MoneroNodeManager
     let restoreStateManager: RestoreStateManager
     let evmBlockchainManager: EvmBlockchainManager
     let evmLabelManager: EvmLabelManager
@@ -200,6 +201,9 @@ class Core {
         let evmSyncSourceStorage = EvmSyncSourceStorage(dbPool: dbPool)
         evmSyncSourceManager = EvmSyncSourceManager(testNetManager: testNetManager, blockchainSettingsStorage: blockchainSettingsStorage, evmSyncSourceStorage: evmSyncSourceStorage)
 
+        let moneroNodeStorage = MoneroNodeStorage(dbPool: dbPool)
+        moneroNodeManager = MoneroNodeManager(blockchainSettingsStorage: blockchainSettingsStorage, moneroNodeStorage: moneroNodeStorage)
+
         let restoreStateStorage = RestoreStateStorage(dbPool: dbPool)
         restoreStateManager = RestoreStateManager(storage: restoreStateStorage)
 
@@ -264,6 +268,7 @@ class Core {
         let adapterFactory = AdapterFactory(
             evmBlockchainManager: evmBlockchainManager,
             evmSyncSourceManager: evmSyncSourceManager,
+            moneroNodeManager: moneroNodeManager,
             btcBlockchainManager: btcBlockchainManager,
             tronKitManager: tronKitManager,
             tonKitManager: tonKitManager,
@@ -279,7 +284,8 @@ class Core {
             tronKitManager: tronKitManager,
             tonKitManager: tonKitManager,
             stellarKitManager: stellarKitManager,
-            btcBlockchainManager: btcBlockchainManager
+            btcBlockchainManager: btcBlockchainManager,
+            moneroNodeManager: moneroNodeManager
         )
         transactionAdapterManager = TransactionAdapterManager(
             adapterManager: adapterManager,
@@ -299,6 +305,7 @@ class Core {
             walletManager: walletManager,
             watchlistManager: watchlistManager,
             evmSyncSourceManager: evmSyncSourceManager,
+            moneroNodeManager: moneroNodeManager,
             btcBlockchainManager: btcBlockchainManager,
             restoreSettingsManager: restoreSettingsManager,
             chartRepository: chartRepository,
