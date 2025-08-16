@@ -2049,20 +2049,20 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Monero Node
 
-"monero_network.node" = "Node";
+"monero_network.node" = "Nó";
 "monero_network.added" = "Adicionado";
 "monero_network.add_new" = "Adicionar novo";
-"monero_network.description" = "Choose the node Unstoppable app should use for synchronizing wallet(s).";
+"monero_network.description" = "Escolha o nó que o app Unstoppable deve usar para sincronizar a(s) carteira(s).";
 
 // Add RPC Source
 
-"add_monero_node.title" = "Add Node";
+"add_monero_node.title" = "Adicionar Nó";
 "add_monero_node.name" = "Nome";
-"add_monero_node.node_url" = "Node URL";
+"add_monero_node.node_url" = "URL do Nó";
 "add_monero_node.login" = "Login";
 "add_monero_node.password" = "Senha";
-"add_monero_node.warning.url_exists" = "Node with this URL already exists";
-"add_monero_node.error.invalid_url" = "The entered URL is invalid. Valid url must have https scheme";
+"add_monero_node.warning.url_exists" = "Já existe um nó com essa URL";
+"add_monero_node.error.invalid_url" = "A URL inserida é inválida. A URL válida deve usar o esquema https";
 
 
 // Send Settings
