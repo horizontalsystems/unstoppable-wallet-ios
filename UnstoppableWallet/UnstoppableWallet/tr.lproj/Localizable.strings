@@ -29,7 +29,7 @@
 "button.i_understand" = "Anlıyorum";
 "button.learn_more" = "Daha fazla bilgi edin";
 "button.unlock" = "Kilidi Aç";
-"button.select" = "Select";
+"button.select" = "Seç";
 "button.later" = "Sonra";
 
 "alert" = "Uyarı";
@@ -117,7 +117,7 @@
 "auto_lock.minute30" = "30 dakika";
 "auto_lock.hour1" = "1 saat";
 
-"powered_by" = "Powered by %@";
+"powered_by" = "%@ tarafından destekleniyor";
 
 "filter.all" = "Hepsi";
 
@@ -304,8 +304,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.swap" = "Takas";
 "balance.receive" = "Al";
 "balance.deposit" = "Al";
-"balance.chart" = "Chart";
-"balance.scan" = "Scan";
+"balance.chart" = "Grafik";
+"balance.scan" = "Tara";
 "balance.rate_per_coin" = "%@ = 1 %@";
 "balance.syncing" = "Eşitleniyor...";
 "balance.searching" = "İşlemler aranıyor ...";
@@ -449,7 +449,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.available_balance" = "Mevcut Bakiye";
 "send.max_button" = "Azami";
 "send.next_button" = "İleri";
-"send.check_button" = "Check";
+"send.check_button" = "Kontrol etme";
 "send.error.invalid" = "Geçersiz";
 "send.error.invalid_blockchain" = "Geçersiz Blok Zinciri";
 "send.error.invalid_token" = "Geçersiz Jeton";
@@ -474,10 +474,10 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "send.confirmation.title" = "Onayla";
 "send.confirmation.you_send" = "Gönderdiğiniz";
-"send.confirmation.you_receive" = "You Receive";
+"send.confirmation.you_receive" = "Alacağınız";
 "send.confirmation.transfer" = "Aktar";
 "send.confirmation.to" = "Alan";
-"send.confirmation.from" = "From";
+"send.confirmation.from" = "Gönderen";
 "send.confirmation.own" = "Kendi";
 "send.confirmation.contact_name" = "Kişi Adı";
 "send.confirmation.domain" = "Alan adı";
@@ -491,10 +491,10 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.replace_by_fee" = "Ücretle Değiştir";
 "send.confirmation.replaced_transactions" = "Değiştirilmiş İşlemler";
 "send.confirmation.input" = "Giriş";
-"send.confirmation.comment" = "Comment";
-"send.confirmation.action" = "Action";
+"send.confirmation.comment" = "Yorum";
+"send.confirmation.action" = "İşlem";
 "send.confirmation.status" = "Durum";
-"send.confirmation.status.failed" = "Failed";
+"send.confirmation.status.failed" = "Başarısız";
 "send.confirmation.send_to_own" = "İşlem kendi adresinize gönderilecek";
 
 "send.confirmation.sync_failed" = "Senkronizasyon Başarısız";
@@ -520,7 +520,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.method" = "Yöntem";
 "send.confirmation.replace_by_fee.disabled" = "Etkisizleştirildi";
 "send.amount_error.balance" = "Yetersiz bakiye";
-"send.address_error.own_address" = "Sending %@ to your own address is not allowed. Please enter a different recipient address.";
+"send.address_error.own_address" = "%@’ı kendi adresinize göndermenize izin verilmiyor. Lütfen farklı bir alıcı adresi girin.";
 "send.amount_error.maximum_amount" = "Maksimum miktar %@";
 "send.amount_error.minimum_amount" = "Minimum miktar %@";
 "send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
@@ -556,30 +556,30 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.token_syncing" = "Token Senkronizasyonu";
 "send.token_not_synced" = "Jeton Senkronize Edilmedi";
 "send.insufficient_balance" = "Yetersiz Bakiye";
-"send.continue_anyway" = "Continue Anyway";
+"send.continue_anyway" = "Yine de Devam Et";
 
 "send.address.enter_address" = "Adresini Giriniz";
-"send.address.invalid_address" = "Invalid Address";
-"send.address.recent" = "Recent";
-"send.address.contacts" = "Contacts";
-"send.address.checking" = "Checking";
-"send.address.check.clear" = "Clear";
-"send.address.check.detected" = "Detected";
+"send.address.invalid_address" = "Geçersiz adres";
+"send.address.recent" = "Son İşlemler";
+"send.address.contacts" = "Kişiler";
+"send.address.checking" = "Kontrol ediliyor";
+"send.address.check.clear" = "Temizle";
+"send.address.check.detected" = "Tespit Edildi";
 "send.address.check.disabled" = "Etkisizleştirildi";
-"send.address.risky.title" = "Risky Address!";
-"send.address.risky.description" = "You are about to send funds to a high-risk address. Proceeding may result in loss of funds or other security risks. By continuing, you accept the potential dangers. Are you sure you want to proceed?";
+"send.address.risky.title" = "Riskli Adres!";
+"send.address.risky.description" = "Yüksek riskli bir adrese fon göndermek üzeresiniz. Devam etmek, para kaybına veya diğer güvenlik risklerine yol açabilir. Devam ederek potansiyel tehlikeleri kabul etmiş olursunuz. Devam etmek istediğinizden emin misiniz?";
 "send.address.phishing_check" = "Phishing Check";
-"send.address.phishing.description" = "Analyzes the provided destination address for potential phishing risks.\n\nClear: No suspicious activity detected.\n\nDetected: It appears that someone may be trying to trick you into sending funds to an incorrect address. Do not proceed unless absolutely certain that the address is correct. Consider sending a small test transaction first.";
-"send.address.phishing.caution.title" = "Phishing Address Detected!";
-"send.address.phishing.caution.description" = "The address you entered may be fraudulent. Scammers often alter the first and last characters. Verify the full address carefully before proceeding to avoid loss.";
+"send.address.phishing.description" = "Girilen hedef adresi olası phishing (oltalama) riskleri açısından analiz eder.\n\nTemiz: Şüpheli bir etkinlik tespit edilmedi.\n\nTespit edildi: Görünüşe göre biri sizi yanlış adrese fon göndermeye ikna etmeye çalışıyor olabilir. Adresin doğruluğundan kesin olarak emin olmadıkça devam etmeyin. Öncelikle küçük bir test işlemi göndermeyi düşünün.";
+"send.address.phishing.caution.title" = "Oltalama Adresi Tespit Edildi!";
+"send.address.phishing.caution.description" = "Girdiğiniz adres sahte olabilir. Dolandırıcılar genellikle ilk ve son karakterleri değiştirirler. Kayıpları önlemek için devam etmeden önce tam adresi dikkatlice doğrulayın.";
 "send.address.sanction_check" = "Sanction Check";
-"send.address.sanction.description" = "Verifies whether the recipient’s address is subject to international sanctions, using data from Chainalysis.com.\n\nClear: No sanctions detected.\n\n Detected: Potential legal risk. Transactions with this address may be restricted or illegal in certain jurisdictions.";
-"send.address.sanction.caution.title" = "Sanctioned Address!";
-"send.address.sanction.caution.description" = "The address you entered is flagged as sanctioned. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
-"send.address.blacklist_check" = "Blacklist Check";
-"send.address.blacklist.description" = "Checks if the destination address is listed on official or unofficial blacklists.\n\nClear: No blacklist flags.\n\nDetected: The address is blacklisted and may be associated with legal or security risks. Proceed with caution. Many crypto exchanges restrict users who deposit or withdraw funds from wallets that have interacted with blacklisted addresses. Keep that in mind.";
-"send.address.blacklist.caution.title" = "Blacklisted Address!";
-"send.address.blacklist.caution.description" = "The address you entered is flagged as blacklisted. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
+"send.address.sanction.description" = "Alıcının adresinin uluslararası yaptırımlara tabi olup olmadığını Chainalysis.com verileriyle doğrular.\n\nTemiz: Herhangi bir yaptırım tespit edilmedi.\n\nTespit edildi: Olası yasal risk. Bu adrese yapılan işlemler bazı yargı bölgelerinde kısıtlanabilir veya yasa dışı olabilir.";
+"send.address.sanction.caution.title" = "Yaptırım Uygulanan Adres!";
+"send.address.sanction.caution.description" = "Girdiğiniz adres yaptırım listesine alınmış. Bu adrese yapılacak işlemler kayıp ya da başka risklere yol açabilir. Devam etmeden önce alıcı bilgilerini mutlaka doğrulayın.";
+"send.address.blacklist_check" = "Kara Liste Kontrolü";
+"send.address.blacklist.description" = "Hedef adresin resmi veya gayriresmî kara listelerde yer alıp almadığını kontrol eder.\n\nTemiz: Kara liste işareti yok.\n\nTespit edildi: Adres kara listede ve yasal veya güvenlik riskleriyle ilişkili olabilir. Dikkatli ilerleyin. Birçok kripto borsası, kara listedeki adreslerle etkileşimde bulunan cüzdanlardan para yatıran veya çeken kullanıcıları kısıtlamaktadır. Bunu aklınızda bulundurun.";
+"send.address.blacklist.caution.title" = "Kara Listeye Alınmış Adres!";
+"send.address.blacklist.caution.description" = "Girdiğiniz adres kara listeye alınmış olarak işaretlenmiştir. Bu adrese yapılan işlemler kayıplara veya diğer risklere yol açabilir. Lütfen devam etmeden önce alıcının bilgilerini doğrulayın.";
 
 // Donate
 
@@ -603,7 +603,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.estimated" = "tahmini";
 "swap.balance" = "Bakiye";
 "swap.you_get" = "Kazandığınız";
-"swap.token" = "Select";
+"swap.token" = "Seç";
 "swap.advanced_settings" = "Swap Ayarları";
 "swap.proceed_button" = "İleri";
 "swap.approve.title" = "Takas Onayı";
@@ -629,7 +629,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.maximum_short" = "(azami)";
 
 "swap.rate_not_available" = "Oran mevcut değil";
-"swap.select" = "Select";
+"swap.select" = "Seç";
 "swap.quoting" = "Alıntı";
 "swap.select_token_in" = "Girdi olarak jeton seçin";
 "swap.select_token_out" = "Çıktı olarak jeton seçin";
@@ -681,12 +681,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.advanced_settings.deadline_minute" = "%@ dk";
 "swap.advanced_settings.recipient_address" = "Alıcı Adresi";
 "swap.advanced_settings.recipient_address.to" = "Alan";
-"swap.advanced_settings.add_recipient_address" = "Add Recipient Address";
+"swap.advanced_settings.add_recipient_address" = "Alıcı Adresi Ekle";
 "swap.advanced_settings.warning.unusual_slippage" = "İşleminiz varlık fiyatını etkileyebilir";
 "swap.advanced_settings.service_fee_description" = "Platformdaki takas işlemi için bir hizmet ücreti genellikle %0,3 veya %0,6'dır";
 "swap.advanced_settings.error.lower_slippage" = "İşleminizin başarısız olması muhtemeldir.";
 "swap.advanced_settings.error.higher_slippage" = "Slipaj Toleransı %@%% üzerinde olamaz";
-"swap.advanced_settings.error.invalid_address" = "Invalid Address";
+"swap.advanced_settings.error.invalid_address" = "Geçersiz adres";
 "swap.advanced_settings.error.invalid_slippage" = "Geçersiz Kayma";
 "swap.advanced_settings.error.invalid_deadline" = "Geçersiz Son Tarih";
 
@@ -764,7 +764,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.tab.news" = "Haberler";
 "market.tab.coins" = "Coin'ler";
 "market.tab.watchlist" = "İzleme Listesi";
-"market.tab.vaults" = "Earn";
+"market.tab.vaults" = "Kazanç";
 "market.tab.platforms" = "Platformlar";
 "market.tab.pairs" = "Çiftler";
 "market.tab.sectors" = "Sektörler";
@@ -852,7 +852,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "top_platform.total_cap" = "Toplam Piyasa Değeri";
 
 
-"market.search.recent" = "Recent";
+"market.search.recent" = "Son İşlemler";
 "market.search.popular" = "Popüler";
 
 "market_discovery.title" = "Keşif";
@@ -905,9 +905,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.advanced_search.outperformed_btc" = "BTC'yi Geride Bıraktı";
 "market.advanced_search.outperformed_eth" = "ETH'yi Geride Bıraktı";
 "market.advanced_search.outperformed_bnb" = "BNB'yi Geride Bıraktı";
-"market.advanced_search.outperformed_sp500" = "Outperformed S&P500";
-"market.advanced_search.outperformed_gold" = "Outperformed GOLD";
-"market.advanced_search.price_close_to" = "Price Close To";
+"market.advanced_search.outperformed_sp500" = "S&P500’ü geride bıraktı";
+"market.advanced_search.outperformed_gold" = "Altını geride bıraktı";
+"market.advanced_search.price_close_to" = "Kapanış fiyatı";
 "market.advanced_search.price_close_to_ath" = "ATH'ye Yakın Fiyat";
 "market.advanced_search.price_close_to_atl" = "ATL'ye Yakın Fiyat";
 
@@ -965,7 +965,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "market.global.total_market_cap.description" = "Tüm kripto paraların toplam piyasa değeri";
 
 "market.global.volume_24h.title" = "24 saat hacim";
-"market.global.volume_24h.description" = "The 24-hour trading volume of the crypto market";
+"market.global.volume_24h.description" = "Kripto piyasasının 24 saatlik işlem hacmi";
 
 "market.global.defi_cap.title" = "DeFi Cap";
 "market.global.defi_cap.description" = "DeFi projelerinin toplam piyasa değeri";
@@ -1005,33 +1005,33 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "market.vaults.apy" = "APY %@";
 "market.vaults.tvl" = "TVL: %@";
-"market.vaults.premium.description" = "Explore the best DeFi staking returns, all in one place.";
-"market.vaults.premium.unlock" = "Unlock Premium";
+"market.vaults.premium.description" = "Tüm en iyi DeFi staking getirilerini tek bir yerde keşfedin.";
+"market.vaults.premium.unlock" = "Premium’un kilidini aç";
 
 "market.vaults.filter" = "Filtre";
-"market.vaults.filter.all_assets" = "All Assets";
-"market.vaults.filter.eth_yield" = "ETH Yield";
-"market.vaults.filter.usd_yield" = "USD Yield";
+"market.vaults.filter.all_assets" = "Tüm Varlıklar";
+"market.vaults.filter.eth_yield" = "ETH Getirisi";
+"market.vaults.filter.usd_yield" = "USD Getirisi";
 
-"market.vaults.sort.highest_apy" = "Highest APY";
-"market.vaults.sort.highest_tvl" = "Highest TVL";
+"market.vaults.sort.highest_apy" = "En Yüksek APY";
+"market.vaults.sort.highest_tvl" = "En Yüksek TVL";
 "market.vaults.sort.highest_apy.short" = "APY";
 "market.vaults.sort.highest_tvl.short" = "TVL";
 
 "market.vaults.chains.title" = "Blockchain'ler";
 "market.vaults.chains.any" = "Herhangi";
-"market.vaults.chains.all_chains" = "All Chains";
-"market.vaults.chains.n_chains" = "%@ Chains";
+"market.vaults.chains.all_chains" = "Tüm Ağlar";
+"market.vaults.chains.n_chains" = "%@ Ağları";
 
 // Market Vault
 
 "market.vault.apy" = "APY";
 "market.vault.tvl" = "TVL";
 "market.vault.network" = "Ağ";
-"market.vault.protocol" = "Protocol";
-"market.vault.underlying_token" = "Underlying Token";
+"market.vault.protocol" = "Protokol";
+"market.vault.underlying_token" = "Temel Token";
 "market.vault.hoders" = "Sahipler";
-"market.vault.open_dapp" = "Open DApp";
+"market.vault.open_dapp" = "DApp Aç";
 
 // Coin Page
 
@@ -1330,7 +1330,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "transactions.pending" = "Bekleyen";
 "transactions.processing" = "İşleniyor";
 "transactions.completed" = "Tamamlandı";
-"transactions.failed" = "Failed";
+"transactions.failed" = "Başarısız";
 
 "transactions.receive" = "Al";
 "transactions.send" = "Gönderildi";
@@ -1379,8 +1379,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "tx_info.title_approval" = "Swap Onaylama";
 "tx_info.status.pending" = "Bekleyen";
 "tx_info.status.completed" = "Tamamlandı";
-"tx_info.status.failed" = "Failed";
-"tx_info.from_hash" = "From";
+"tx_info.status.failed" = "Başarısız";
+"tx_info.from_hash" = "Gönderen";
 "tx_info.transaction_id" = "İşlem ID'si";
 "tx_info.to_hash" = "Alan";
 "tx_info.spender" = "Harcayan";
@@ -1501,7 +1501,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "backup_app.backup_list.header.other" = "Diğer";
 "backup_app.backup_list.other.watch_account.title" = "Cüzdan İzle";
 "backup_app.backup_list.other.watchlist.title" = "İzleme Listesi";
-"backup_app.backup_list.other.contacts.title" = "Contacts";
+"backup_app.backup_list.other.contacts.title" = "Kişiler";
 "backup_app.backup_list.other.blockchain_settings.title" = "Özel RPC";
 "backup_app.backup_list.other.app_settings.title" = "Uygulama Ayarları";
 "backup_app.backup_list.other.app_settings.description" = "Dil, Para Birimi, Görünüm ...";
@@ -1664,7 +1664,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "settings.privacy" = "Gizlilik";
 "settings.privacy.description" = "%@, coin bakiyelerinizi veya adreslerinizi açığa çıkaran kişisel verileri toplamaz. Biraz kullanıcı arayüzü kullanım istatistikleri topluyoruz, ancak bunlar yalnızca kullanıcı tabanımızı ve uygulama kullanım eğilimlerini anlamak içindir. İsterseniz bunu devre dışı bırakabilirsiniz.";
 "settings.privacy.allow" = "UI Verilerini Paylaş";
-"settings.privacy.allow.description" = "This setting allows you to disable UI/UX analytics and ensure complete confidentiality.";
+"settings.privacy.allow.description" = "Bu ayar, UI/UX analizlerini devre dışı bırakmanıza ve tam gizlilik sağlamanıza olanak tanır.";
 
 // Settings -> Appearance
 
@@ -1689,7 +1689,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "appearance.balance_tab" = "Bakiye Sekmesi";
 "appearance.balance_tab.footer" = "“Butonları Gizle” ayarı, Bakiye sekmesindeki Gönder, Al ve Takas butonlarını gizler.";
-"appearance.amount_rounding" = "Amount Rounding";
+"appearance.amount_rounding" = "Tutar Yuvarlama";
 "appearance.hide_buttons" = "Düğmeleri Gizle";
 "appearance.balance_value" = "Bakiye değeri";
 "appearance.balance_value.coin_fiat" = "Coin/Fiat";
@@ -1700,25 +1700,25 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Settings -> Subsription
 
 "subscription.premium.label" = "Premium";
-"subscription.title" = "Subscription";
-"subscription.get" = "Get Premium";
-"subscription.restore" = "Restore Purchase";
-"subscription.type" = "Subscription Type";
-"subscription.one-time" = "One-Time";
+"subscription.title" = "Abonelik";
+"subscription.get" = "Premium’a Geç";
+"subscription.restore" = "Satın Almayı Geri Yükle";
+"subscription.type" = "Abonelik Türü";
+"subscription.one-time" = "Tek Seferlik";
 "subscription.price" = "Fiyat";
-"subscription.next_payment" = "Next payment date";
-"subscription.purchase_time" = "Start date";
+"subscription.next_payment" = "Sonraki Ödeme Tarihi";
+"subscription.purchase_time" = "Başlangıç Tarihi";
 "subscription.status" = "Durum";
-"subscription.manage" = "Manage Subscription";
+"subscription.manage" = "Aboneliği Yönet";
 
 // Settings -> Support
 
-"settings.vip_support.description" = "Get exclusive access to our VIP Group, where premium users and the Unstoppable Wallet team collaborate. Receive direct assistance, discuss future updates, and help shape the wallet’s evolution.";
-"settings.vip_support.start_chat" = "Join VIP Group";
+"settings.vip_support.description" = "Premium kullanıcıların ve Unstoppable Wallet ekibinin bir araya geldiği VIP Grubumuza özel erişim kazanın. Doğrudan destek alın, gelecek güncellemeleri tartışın ve cüzdanın gelişimine katkıda bulunun.";
+"settings.vip_support.start_chat" = "VIP Gruba Katılın";
 
 // Settings -> Contacts
 
-"contacts.title" = "Contacts";
+"contacts.title" = "Kişiler";
 "contacts.list.search_placeholder" = "İsme göre ara";
 "contacts.list.not_found" = "Eklenmiş bir kişiniz yok";
 "contacts.list.not_found_search" = "Sonuç bulunamadı";
@@ -1930,13 +1930,13 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Ton Connect
 
 "ton_connect.list.new_connection" = "Yeni bağlantı";
-"ton_connect.list.no_connected_apps" = "No Connected Apps";
-"ton_connect.list.disconnect_app" = "Disconnect App";
-"ton_connect.list.disconnect_app.description" = "Are you sure you want to disconnect from \"%@\"?";
+"ton_connect.list.no_connected_apps" = "Bağlı Uygulama Yok";
+"ton_connect.list.disconnect_app" = "Uygulamayı Bağlantıdan Çıkar";
+"ton_connect.list.disconnect_app.description" = "\"%@\" uygulamasının bağlantısını kesmek istediğinizden emin misiniz?";
 "ton_connect.list.disconnect_app.disconnect" = "Bağlantıyı Kes";
 "ton_connect.connect.url" = "URL";
 "ton_connect.connect.wallet" = "Cüzdanı";
-"ton_connect.connect.no_eligible_wallets" = "No eligible wallets";
+"ton_connect.connect.no_eligible_wallets" = "Uygun cüzdan bulunamadı";
 "ton_connect.connect.warning" = "Onayla butonunu tıklayarak, bu uygulamanın açık adresinizi görüntülemesine izin vermiş olursunuz. Bu, verilerinizi olası kimlik hırsızlığı risklerinden korumak için önemli bir güvenlik adımıdır.";
 "ton_connect.connect.connect" = "Bağlan";
 "ton_connect.connect.reject" = "Reddet";
@@ -1963,7 +1963,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "status_info.processing.content" = "İşlem blok zincirine dahil edildi ama kalıcı bir sonuca ulaşmadı. Bu noktada, küçük ödemeler için işlemin tamamlandığını düşünebilirsiniz. Daha büyük ödemeler için ise, işlem durumu tamamlandı olarak değişene kadar beklemeniz önerilir.";
 "status_info.completed.title" = "Tamamlandı";
 "status_info.confirmed.content" = "İşlem tamamlandı ve bunun kalıcı ve tersine çevrilemez olduğu kabul edilir.";
-"status_info.failed.title" = "Failed";
+"status_info.failed.title" = "Başarısız";
 "status_info.failed.content" = "İşlem gerçekleşmedi ve herhangi bir değer transferi yapılmadı. Başarısız olma nedenine bağlı olarak, bazı başarısız işlemler, işlem ücreti tüketebilir. Başka bir işlemle değiştirilen veya iptal edilen işlemler, işlem ücretini tüketmez ve başarısız olarak görüntülenir. %@ uygulaması başarısız işlemlerin nedenini gösteremez, ancak kullanıcılar bunu örneğin etherscan.io gibi herkese açık bir blok gezgininde kendileri arayabilirler.";
 
 // Onboarding
@@ -2204,7 +2204,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 ";
 "subscription_info.info3.text" = "Kripto Para Dünyasının Dinamik Ortamında Karlı Fırsatları Keşfedin, Dolandırıcılıklardan Kaçının ve Karlarınızı Maksimize Edin.";
-"subscription_info.get_premium" = "Get Premium";
+"subscription_info.get_premium" = "Premium’a Geç";
 "subscription_info.already_have" = "I already have Premium";
 
 // Activate Subscription
@@ -2265,25 +2265,25 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "mini_app.cell.description" = "Testleri geçin, görevleri tamamlayın ve token kazanın!";
 
 "purchases.title" = "Premium";
-"purchases.description" = "Choose the plan";
+"purchases.description" = "Planı seçin";
 "purchases.type.pro" = "Pro";
 "purchases.type.vip" = "Vip";
 
 "purchases.token_insights" = "Analitik";
 "purchases.token_insights.description" = "Önemli kriterlere göre ilk 100 listelerine erişim";
-"purchases.token_insights.info" = "Your all-in-one tool for deep analysis. Browse curated Top 250 token lists based on trading volume, exchange liquidity, holder behavior, and on-chain trends—all at a glance. Filter, analyze, and stay ahead.";
+"purchases.token_insights.info" = "Derinlemesine analiz için tek araçınız. İşlem hacmi, borsa likiditesi, yatırımcı davranışı ve zincir üstü trendlere dayalı olarak düzenlenmiş En İyi 250 token listesine göz atın—hepsi tek bir bakışta. Filtreleyin, analiz edin ve öne geçin.";
 
-"purchases.advanced_search" = "Advanced Search";
+"purchases.advanced_search" = "Gelişmiş Arama";
 "purchases.advanced_search.description" = "Çoklu parametreler üzerinden çok seviyeli filtreleme";
-"purchases.advanced_search.info" = "Ditch the noise and zero in on high-potential tokens with precision. Use Advanced Search to filter through thousands of tokens by trading volume, blockchain, market cap, price trends, sector, and performance—and more. Powerful, accurate, and built for discovery.";
+"purchases.advanced_search.info" = "Gereksiz detayları bırakın ve yüksek potansiyelli tokenlere hassasiyetle odaklanın. Gelişmiş Arama'yı kullanarak binlerce tokeni işlem hacmi, blok zinciri, piyasa değeri, fiyat trendleri, sektör ve performansa göre filtreleyebilirsiniz—ve daha fazlası. Güçlü, doğru ve keşif için tasarlanmış.";
 
 "purchases.trade_signals" = "Sinyaller ve Trendler";
 "purchases.trade_signals.description" = "Tokenleriniz için piyasa trendlerinin otomatik takibi";
-"purchases.trade_signals.info" = "Never miss a trading opportunity again. Watch Trends delivers real-time alerts powered by advanced technical analysis, helping you identify trends, spot breakouts, and avoid pitfalls before they happen. Act fast, trade smart, and maximize gains.";
+"purchases.trade_signals.info" = "Bir daha hiçbir ticaret fırsatını kaçırmayın. Trendleri İzleyin, gelişmiş teknik analize dayalı gerçek zamanlı uyarılar sunarak trendleri belirlemenize, ani yükselişleri tespit etmenize ve sorunları önceden fark etmenize yardımcı olur. Hızlı hareket edin, akıllı ticaret yapın ve kazançlarınızı maksimize edin.";
 
-"purchases.tx_speed_up" = "Tx Speed UP / Cancel ";
-"purchases.tx_speed_up.description" = "Speed up and cancel transactions.";
-"purchases.tx_speed_up.info" = "Tx Speed Up / Cancel provides full control over blockchain transactions. With this feature, users can accelerate pending transactions by increasing gas fees or cancel unconfirmed transactions altogether if needed. It adds a layer of flexibility and convenience to transaction management, ensuring users remain in control of their activity.";
+"purchases.tx_speed_up" = "İşlemi Hızlandır / İptal Et";
+"purchases.tx_speed_up.description" = "İşlemleri hızlandırın veya iptal edin.";
+"purchases.tx_speed_up.info" = "“İşlemi Hızlandır / İptal Et” özelliği, blockchain işlemleri üzerinde tam kontrol sağlar. Kullanıcılar bu özellik sayesinde bekleyen işlemleri gas ücretini artırarak hızlandırabilir veya henüz onaylanmamış işlemleri tamamen iptal edebilir. Bu, işlem yönetimine esneklik ve kolaylık kazandırır, böylece kullanıcılar kendi aktiviteleri üzerinde kontrolü sürdürür.";
 
 "purchases.duress_mode" = "Duress Modu";
 "purchases.duress_mode.description" = "Fiziksel tehditler sırasında akıllı fon güvenliği";
@@ -2301,47 +2301,47 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "purchases.vip_support.description" = "Hızlı teknik destek için cüzdan ekibine erişim.";
 "purchases.vip_support.info" = "Evrimin bir parçası olun. VIP Gruba katılarak teknik destek için ekibimizle doğrudan bağlantı kurun. Gelecek özelliklere oy verin ve gelecekteki güncellemelere özel bir bakış atın. Sizin sesiniz önemli—yeni nesil kripto cüzdanını şekillendirmeye yardımcı olun.";
 
-"purchases.vip_club" = "VIP Club";
-"purchases.vip_club.description" = "Private chat with exclusive information.";
-"purchases.vip_club.info" = "The VIP Club offers exclusive access to a premium community of like-minded individuals. Members can participate in private discussions, gain insights from industry experts, and network with other top-tier users. This feature is perfect for those who want to stay ahead with insider knowledge and connections.";
+"purchases.vip_club" = "VIP Kulüp";
+"purchases.vip_club.description" = "Özel bilgiler içeren özel sohbet.";
+"purchases.vip_club.info" = "VIP Kulüp, benzer düşünce yapısına sahip seçkin bir topluluğa özel erişim sunar. Üyeler özel tartışmalara katılabilir, sektör uzmanlarından içgörüler edinebilir ve üst düzey kullanıcılarla bağlantı kurabilir. Bu özellik, içeriden bilgi ve bağlantılarla bir adım önde olmak isteyenler için idealdir.";
 
-"purchases.wallet_description.title" = "Highly rated security, exceptional privacy, and a truly non-custodial wallet.";
-"purchases.wallet_description.approved" = "Approved and Audited By:";
+"purchases.wallet_description.title" = "Yüksek güvenlik derecesi, olağanüstü gizlilik ve gerçek anlamda emanet edilmeyen bir cüzdan.";
+"purchases.wallet_description.approved" = "Tarafından Onaylanmış ve Denetlenmiş:";
 
 "purchases.button.try" = "Try for FREE";
 "purchases.button.activated" = "Activated";
-"purchases.button.upgrade" = "Upgrade";
+"purchases.button.upgrade" = "Yükselt";
 
-"purchase.period.title" = "Select Subscription";
-"purchase.period.annually" = "Annually";
-"purchase.period.monthly" = "Monthly";
-"purchase.period.onetime" = "One-Time";
-"purchase.period.onetime.description" = "for lifetime access";
-"purchase.period.save" = "save";
-"purchase.period.year" = "year";
-"purchase.period.month" = "month";
-"purchase.period.description1" = "Enjoy the first 7 days FREE.";
+"purchase.period.title" = "Abonelik Seçin";
+"purchase.period.annually" = "Yıllık";
+"purchase.period.monthly" = "Aylık";
+"purchase.period.onetime" = "Tek Seferlik";
+"purchase.period.onetime.description" = "ömür boyu erişim için";
+"purchase.period.save" = "kaydet";
+"purchase.period.year" = "yıl";
+"purchase.period.month" = "ay";
+"purchase.period.description1" = "İlk 7 günü ÜCRETSİZ deneyin.";
 "purchase.period.description1.1" = "İlk ay indiriminden yararlanın.";
-"purchase.period.description2" = "You can cancel your App Store subscription at any time.";
+"purchase.period.description2" = "App Store aboneliğinizi dilediğiniz zaman iptal edebilirsiniz.";
 "purchase.lifetime.description" = "Kısıtlama olmadan tek seferlik abonelik satın alabilirsiniz";
 "purchase.agree" = "Hesabınızı yükselterek %@ ve %@ nı kabul etmiş olursunuz.";
 "purchase.agree.terms_of_service" = "Kullanım Şartları";
 "purchase.agree.privacy_policy" = "Gizlilik Politikası";
 
-"purchases.period.button.try" = "Get 7 days for FREE";
+"purchases.period.button.try" = "7 gün ÜCRETSİZ alın";
 "purchases.period.button.subscribe" = "Abone Ol";
-"purchases.period.button.buy" = "Buy now";
-"purchases.period.button.promo" = "Add Promo Code";
+"purchases.period.button.buy" = "Hemen satın al";
+"purchases.period.button.promo" = "Promosyon Kodu Ekle";
 
-"purchases.promocode.title" = "Enter Promo Code";
+"purchases.promocode.title" = "Promosyon Kodunu Girin";
 "purchases.promocode.placeholder" = "";
-"purchases.promocode.button.invalid" = "Invalid Promo Code";
-"purchases.promocode.button.already_used" = "Promo Code Already Used";
+"purchases.promocode.button.invalid" = "Geçersiz Promosyon Kodu";
+"purchases.promocode.button.already_used" = "Promosyon Kodu Zaten Kullanılmış";
 
 "purchases.successful_subscription.title" = "Premium";
-"purchases.successful_subscription.description" = "Thank you for your subscription!";
-"purchases.successful_subscription.subscribed" = "Enjoy the full power of the app.";
-"purchases.successful_subscription.button.go_app" = "Go to App";
+"purchases.successful_subscription.description" = "Aboneliğiniz için teşekkürler!";
+"purchases.successful_subscription.subscribed" = "Uygulamanın tüm gücünün keyfini çıkarın.";
+"purchases.successful_subscription.button.go_app" = "Uygulamaya Git";
 
 // Address Checker
 
@@ -2362,9 +2362,14 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Monero
 
-"monero.priority" = "Send Priority";
-"monero.priority.default" = "Default";
-"monero.priority.low" = "Low";
-"monero.priority.medium" = "Medium";
-"monero.priority.high" = "High";
-"monero.priority.last" = "Last";
+"monero.priority" = "Gönderim Önceliği";
+"monero.priority.default" = "Varsayılan";
+"monero.priority.low" = "Düşük";
+"monero.priority.medium" = "Orta";
+"monero.priority.high" = "Yüksek";
+"monero.priority.last" = "Son";
+
+// MEV Protection
+
+"mev_protection.title" = "MEV Koruması";
+"mev_protection.description" = "Sözde front-running botları her işlemi izleyerek sizi fazla ödemeye zorlamaya çalışır. Bu özellik onları engeller.";

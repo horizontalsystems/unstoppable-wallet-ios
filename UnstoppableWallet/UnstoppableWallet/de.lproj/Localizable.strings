@@ -2360,3 +2360,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "monero.priority.medium" = "Mittel";
 "monero.priority.high" = "Hoch";
 "monero.priority.last" = "Zuletzt";
+
+// MEV Protection
+
+"mev_protection.title" = "MEV-Schutz";
+"mev_protection.description" = "Sogenannte Front-Running-Bots überwachen jede Transaktion und versuchen, Sie zum Überzahlen zu bringen. Diese Funktion blockiert sie.";

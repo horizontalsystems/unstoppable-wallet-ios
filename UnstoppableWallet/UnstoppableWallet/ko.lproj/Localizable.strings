@@ -2361,3 +2361,8 @@
 "monero.priority.medium" = "보통";
 "monero.priority.high" = "높음";
 "monero.priority.last" = "마지막";
+
+// MEV Protection
+
+"mev_protection.title" = "MEV 보호";
+"mev_protection.description" = "일명 프런트러닝 봇은 모든 거래를 감시하며 사용자가 더 많은 수수료를 내도록 유도합니다. 이 기능은 그런 봇을 차단합니다.";

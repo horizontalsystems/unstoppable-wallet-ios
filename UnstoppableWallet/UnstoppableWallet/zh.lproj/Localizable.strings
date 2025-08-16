@@ -2360,3 +2360,8 @@
 "monero.priority.medium" = "中";
 "monero.priority.high" = "高";
 "monero.priority.last" = "最低";
+
+// MEV Protection
+
+"mev_protection.title" = "MEV 保护";
+"mev_protection.description" = "所谓的「抢跑机器人」会监控每一笔交易，企图让您多付费用。此功能可阻止它们。";

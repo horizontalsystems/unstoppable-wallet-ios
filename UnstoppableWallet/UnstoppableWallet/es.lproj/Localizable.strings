@@ -2361,3 +2361,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "monero.priority.medium" = "Medio";
 "monero.priority.high" = "Rápido";
 "monero.priority.last" = "Última";
+
+// MEV Protection
+
+"mev_protection.title" = "Protección MEV";
+"mev_protection.description" = "Los llamados bots de front-running vigilan cada operación, intentando que pagues de más. Esta función los bloquea.";

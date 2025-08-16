@@ -117,7 +117,7 @@
 "auto_lock.minute30" = "30 Minutos";
 "auto_lock.hour1" = "1 hora";
 
-"powered_by" = "Powered by %@";
+"powered_by" = "Impulsionado por %@";
 
 "filter.all" = "Todos";
 
@@ -764,7 +764,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "market.tab.news" = "Notícias";
 "market.tab.coins" = "Moedas";
 "market.tab.watchlist" = "Lista de observação";
-"market.tab.vaults" = "Earn";
+"market.tab.vaults" = "Ganhar";
 "market.tab.platforms" = "Plataformas";
 "market.tab.pairs" = "Pares";
 "market.tab.sectors" = "Setores";
@@ -905,8 +905,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "market.advanced_search.outperformed_btc" = "BTC superado";
 "market.advanced_search.outperformed_eth" = "ETH superado";
 "market.advanced_search.outperformed_bnb" = "BNB superado";
-"market.advanced_search.outperformed_sp500" = "Outperformed S&P500";
-"market.advanced_search.outperformed_gold" = "Outperformed GOLD";
+"market.advanced_search.outperformed_sp500" = "Superou o S&P500";
+"market.advanced_search.outperformed_gold" = "Superou o OURO";
 "market.advanced_search.price_close_to" = "Preço Próximo a";
 "market.advanced_search.price_close_to_ath" = "Preço próximo a ATH";
 "market.advanced_search.price_close_to_atl" = "Preço próximo a ATL";
@@ -965,7 +965,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "market.global.total_market_cap.description" = "Valor total de mercado de todas as criptomoedas";
 
 "market.global.volume_24h.title" = "Volume em 24h";
-"market.global.volume_24h.description" = "The 24-hour trading volume of the crypto market";
+"market.global.volume_24h.description" = "Volume de negociação de 24h do mercado cripto";
 
 "market.global.defi_cap.title" = "Mercado de DeFi";
 "market.global.defi_cap.description" = "Valor total de mercado de projetos DeFi";
@@ -1005,33 +1005,33 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "market.vaults.apy" = "APY %@";
 "market.vaults.tvl" = "TVL: %@";
-"market.vaults.premium.description" = "Explore the best DeFi staking returns, all in one place.";
-"market.vaults.premium.unlock" = "Unlock Premium";
+"market.vaults.premium.description" = "Explore os melhores retornos de staking em DeFi, todos em um só lugar.";
+"market.vaults.premium.unlock" = "Desbloquear Premium";
 
 "market.vaults.filter" = "Filtro";
-"market.vaults.filter.all_assets" = "All Assets";
-"market.vaults.filter.eth_yield" = "ETH Yield";
-"market.vaults.filter.usd_yield" = "USD Yield";
+"market.vaults.filter.all_assets" = "Todos os Ativos";
+"market.vaults.filter.eth_yield" = "Rendimento em ETH";
+"market.vaults.filter.usd_yield" = "Rendimento em USD";
 
-"market.vaults.sort.highest_apy" = "Highest APY";
-"market.vaults.sort.highest_tvl" = "Highest TVL";
+"market.vaults.sort.highest_apy" = "Maior APY";
+"market.vaults.sort.highest_tvl" = "Maior TVL";
 "market.vaults.sort.highest_apy.short" = "APY";
 "market.vaults.sort.highest_tvl.short" = "TVL";
 
 "market.vaults.chains.title" = "Blockchains";
 "market.vaults.chains.any" = "Qualquer";
-"market.vaults.chains.all_chains" = "All Chains";
-"market.vaults.chains.n_chains" = "%@ Chains";
+"market.vaults.chains.all_chains" = "Todas as Redes";
+"market.vaults.chains.n_chains" = "%@ Redes";
 
 // Market Vault
 
 "market.vault.apy" = "APY";
 "market.vault.tvl" = "TVL";
 "market.vault.network" = "Rede";
-"market.vault.protocol" = "Protocol";
-"market.vault.underlying_token" = "Underlying Token";
+"market.vault.protocol" = "Protocolo";
+"market.vault.underlying_token" = "Token Subjacente";
 "market.vault.hoders" = "Detentores";
-"market.vault.open_dapp" = "Open DApp";
+"market.vault.open_dapp" = "Abrir DApp";
 
 // Coin Page
 
@@ -1685,7 +1685,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "appearance.balance_tab" = "Aba de Saldo";
 "appearance.balance_tab.footer" = "A configuração “Ocultar Botões” esconde os botões Enviar, Receber e Swap na aba de Saldo.";
-"appearance.amount_rounding" = "Amount Rounding";
+"appearance.amount_rounding" = "Arredondamento de Valores";
 "appearance.hide_buttons" = "Ocultar Botões";
 "appearance.balance_value" = "Valor Patrimonial";
 "appearance.balance_value.coin_fiat" = "Criptomoeda/Moeda Fiat";
@@ -1855,7 +1855,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Education
 
 "education.title" = "Education";
-"quiz.title" = "Crypto Quiz";
+"quiz.title" = "Quiz Cripto";
 
 // Add Token
 
@@ -2354,9 +2354,14 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Monero
 
-"monero.priority" = "Send Priority";
-"monero.priority.default" = "Default";
-"monero.priority.low" = "Low";
-"monero.priority.medium" = "Medium";
-"monero.priority.high" = "High";
-"monero.priority.last" = "Last";
+"monero.priority" = "Prioridade de Envio";
+"monero.priority.default" = "Padrão";
+"monero.priority.low" = "Baixa";
+"monero.priority.medium" = "Média";
+"monero.priority.high" = "Alta";
+"monero.priority.last" = "Última";
+
+// MEV Protection
+
+"mev_protection.title" = "Proteção MEV";
+"mev_protection.description" = "Os chamados bots de front-running monitoram cada negociação, tentando fazê-lo pagar mais caro. Esse recurso os bloqueia.";
