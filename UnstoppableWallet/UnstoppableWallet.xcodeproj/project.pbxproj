@@ -2668,6 +2668,7 @@
 		D0709C252E50A9180012C0E7 /* AddMoneroNodeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0709C0E2E50A9180012C0E7 /* AddMoneroNodeModule.swift */; };
 		D0709C262E50A9180012C0E7 /* MoneroNetworkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0709C162E50A9180012C0E7 /* MoneroNetworkViewModel.swift */; };
 		D0709C272E50A9180012C0E7 /* AddMoneroNodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0709C112E50A9180012C0E7 /* AddMoneroNodeViewModel.swift */; };
+		D0709C282E51BC0E0012C0E7 /* SubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDFC0882E3CDC1300CC28DD /* SubscriptionView.swift */; };
 		D07157DB2A2DD968006F141F /* SendTronModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DA2A2DD968006F141F /* SendTronModule.swift */; };
 		D07157DC2A2DD968006F141F /* SendTronModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DA2A2DD968006F141F /* SendTronModule.swift */; };
 		D07157DE2A2DDA09006F141F /* SendTronService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157DD2A2DDA09006F141F /* SendTronService.swift */; };
@@ -11620,6 +11621,7 @@
 				11B35C16BE16B6AEEA0690EC /* AlertModule.swift in Sources */,
 				11B3557E460F3BA25ED9F6CC /* AlertPresenter.swift in Sources */,
 				11B35E81542268ACDC17502A /* AlertRouter.swift in Sources */,
+				D0709C282E51BC0E0012C0E7 /* SubscriptionView.swift in Sources */,
 				11B35FC5D80CC1D4854DBC94 /* BottomSheetTitleView.swift in Sources */,
 				1A564F382602A283C370E7FB /* AppError.swift in Sources */,
 				D36DE0F9272FD92F000BC916 /* SwapSelectProviderModule.swift in Sources */,
