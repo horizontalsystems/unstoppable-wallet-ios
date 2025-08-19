@@ -38,7 +38,7 @@ enum BackupAppModule {
 }
 
 extension BackupAppModule {
-    static func items(watchAccountCount: Int, watchlistCount: Int, contactAddressCount: Int, blockchainSourcesCount: Int) -> [BackupAppModule.Item] {
+    static func items(watchAccountCount: Int, watchlistCount: Int, contactAddressCount: Int, customEvmSyncSources: Int, customMoneroNodes: Int) -> [BackupAppModule.Item] {
         var items = [Item]()
 
         if watchAccountCount != 0 {
@@ -62,10 +62,16 @@ extension BackupAppModule {
             ))
         }
 
-        if blockchainSourcesCount != 0 {
+        if customEvmSyncSources != 0 {
             items.append(BackupAppModule.Item(
-                title: "backup_app.backup_list.other.blockchain_settings.title".localized,
-                value: blockchainSourcesCount.description
+                title: "backup_app.backup_list.other.custom_evm_sync_sources.title".localized,
+                value: customEvmSyncSources.description
+            ))
+        }
+        if customMoneroNodes != 0 {
+            items.append(BackupAppModule.Item(
+                title: "backup_app.backup_list.other.custom_monero_nodes.title".localized,
+                value: customMoneroNodes.description
             ))
         }
         items.append(BackupAppModule.Item(

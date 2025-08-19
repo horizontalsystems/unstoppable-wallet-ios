@@ -9,6 +9,7 @@ class BackupAppViewModel: ObservableObject {
     private let cloudBackupManager = Core.shared.cloudBackupManager
     private let watchlistManager = Core.shared.watchlistManager
     private let evmSyncSourceManager = Core.shared.evmSyncSourceManager
+    private let moneroNodeManager = Core.shared.moneroNodeManager
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -150,7 +151,8 @@ extension BackupAppViewModel {
             watchAccountCount: accounts(watch: true).count,
             watchlistCount: watchlistManager.coinUids.count,
             contactAddressCount: contacts.count,
-            blockchainSourcesCount: evmSyncSourceManager.customSyncSources(blockchainType: nil).count
+            customEvmSyncSources: evmSyncSourceManager.customSyncSources(blockchainType: nil).count,
+            customMoneroNodes: moneroNodeManager.customNodes(blockchainType: nil).count
         )
     }
 

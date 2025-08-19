@@ -58,10 +58,10 @@ extension MoneroNodeManager {
                     name: "stackwallet.com",
                     node: .init(url: URL(string: "monero.stackwallet.com:18081")!, isTrusted: false)
                 ),
-                    MoneroNode(
-                        name: "hashvault.pro",
-                        node: .init(url: URL(string: "nodes.hashvault.pro:18081")!, isTrusted: false)
-                    )
+                MoneroNode(
+                    name: "hashvault.pro",
+                    node: .init(url: URL(string: "nodes.hashvault.pro:18081")!, isTrusted: false)
+                ),
             ]
         default:
             return []

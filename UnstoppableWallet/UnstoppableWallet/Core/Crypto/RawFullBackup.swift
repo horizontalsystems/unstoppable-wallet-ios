@@ -6,6 +6,7 @@ struct RawFullBackup {
     let contacts: [BackupContact]
     let settings: SettingsBackup
     let customSyncSources: [EvmSyncSourceRecord]
+    let customMoneroNodes: [MoneroNodeRecord]
 }
 
 struct RawWalletBackup {
