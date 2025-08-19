@@ -2120,6 +2120,7 @@
 // Watch Address
 
 "watch_address.title" = "Watch Wallet";
+"watch_address.name" = "Name";
 "watch_address.watch" = "Watch";
 "watch_address.address" = "Address";
 "watch_address.error.not_supported" = "Address format is not supported";
