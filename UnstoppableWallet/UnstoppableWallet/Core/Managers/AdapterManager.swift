@@ -39,7 +39,9 @@ class AdapterManager {
             .disposed(by: disposeBag)
 
         for blockchain in evmBlockchainManager.allBlockchains {
-            subscribe(disposeBag, evmBlockchainManager.evmKitManager(blockchainType: blockchain.type).evmKitUpdatedObservable) { [weak self] in self?.handleUpdatedEvmKit(blockchain: blockchain) }
+            if let manager = try? evmBlockchainManager.evmKitManager(blockchainType: blockchain.type) {
+                subscribe(disposeBag, manager.evmKitUpdatedObservable) { [weak self] in self?.handleUpdatedEvmKit(blockchain: blockchain) }
+            }
         }
         subscribe(disposeBag, btcBlockchainManager.restoreModeUpdatedObservable) { [weak self] in self?.handleUpdatedRestoreMode(blockchainType: $0) }
         subscribe(disposeBag, moneroNodeManager.nodeObservable) { [weak self] in self?.handleUpdatedMoneroNode(blockchainType: $0) }
@@ -159,7 +161,7 @@ extension AdapterManager {
     func refresh() {
         queue.async {
             for blockchain in self.evmBlockchainManager.allBlockchains {
-                self.evmBlockchainManager.evmKitManager(blockchainType: blockchain.type).evmKitWrapper?.evmKit.refresh()
+                try? self.evmBlockchainManager.evmKitManager(blockchainType: blockchain.type).evmKitWrapper?.evmKit.refresh()
             }
 
             for (_, adapter) in self._adapterData.adapterMap {
@@ -175,7 +177,7 @@ extension AdapterManager {
     func refresh(wallet: Wallet) {
         queue.async {
             if let blockchainType = self.evmBlockchainManager.blockchain(token: wallet.token)?.type {
-                self.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper?.evmKit.refresh()
+                try? self.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper?.evmKit.refresh()
             } else if wallet.token.blockchainType == .tron {
                 self.tronKitManager.tronKitWrapper?.tronKit.refresh()
             } else if wallet.token.blockchainType == .ton {

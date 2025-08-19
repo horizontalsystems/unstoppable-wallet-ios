@@ -8,7 +8,8 @@ class EvmAddressService {
         switch accountType {
         case .mnemonic:
             guard let seed = accountType.mnemonicSeed,
-                  let address = try? Signer.address(seed: seed, chain: evmBlockchainManager.chain(blockchainType: .ethereum)).eip55
+                  let chain = try? evmBlockchainManager.chain(blockchainType: .ethereum),
+                  let address = try? Signer.address(seed: seed, chain: chain).eip55
             else {
                 return nil
             }

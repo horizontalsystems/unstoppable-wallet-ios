@@ -22,7 +22,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
         var evmFeeData: EvmFeeData?
         var transactionError: Error?
 
-        if let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, let gasPriceData {
+        if let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, let gasPriceData {
             do {
                 let evmKit = evmKitWrapper.evmKit
                 let transactionData = try transactionData(receiveAddress: evmKit.receiveAddress, chain: evmKit.chain, trade: quote.trade, tradeOptions: quote.tradeOptions)
@@ -91,7 +91,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
 
     private func internalQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> BaseUniswapMultiSwapQuote {
         let blockchainType = tokenIn.blockchainType
-        let chain = evmBlockchainManager.chain(blockchainType: blockchainType)
+        let chain = try evmBlockchainManager.chain(blockchainType: blockchainType)
 
         let kitTokenIn = try kitToken(chain: chain, token: tokenIn)
         let kitTokenOut = try kitToken(chain: chain, token: tokenOut)

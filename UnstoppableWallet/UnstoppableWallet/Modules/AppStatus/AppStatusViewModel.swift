@@ -79,7 +79,7 @@ class AppStatusViewModel {
         }
 
         for blockchain in evmBlockchainManager.allBlockchains {
-            if let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: blockchain.type).evmKitWrapper {
+            if let evmKitWrapper = try? evmBlockchainManager.evmKitManager(blockchainType: blockchain.type).evmKitWrapper {
                 blockchainBlocks.append(block(blockchain: blockchain.name, statusInfo: evmKitWrapper.evmKit.statusInfo()))
             }
         }

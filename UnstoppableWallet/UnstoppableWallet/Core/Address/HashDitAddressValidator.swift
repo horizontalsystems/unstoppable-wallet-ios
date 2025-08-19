@@ -27,7 +27,7 @@ extension HashDitAddressValidator {
             throw CheckError.unsupportedBlockchainType
         }
 
-        let parameters: [String: Any] = [
+        let parameters: [String: Any] = try [
             "chainId": evmBlockchainManager.chain(blockchainType: blockchainType).id,
             "to": address.raw,
         ]

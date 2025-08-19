@@ -44,7 +44,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
 
     override func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> IMultiSwapQuote {
         let blockchainType = tokenIn.blockchainType
-        let chain = evmBlockchainManager.chain(blockchainType: blockchainType)
+        let chain = try evmBlockchainManager.chain(blockchainType: blockchainType)
 
         let addressFrom = try address(token: tokenIn)
         let addressTo = try address(token: tokenOut)
@@ -73,7 +73,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     override func confirmationQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
         let blockchainType = tokenIn.blockchainType
 
-        guard let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
+        guard let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
             throw SwapError.noEvmKitWrapper
         }
 

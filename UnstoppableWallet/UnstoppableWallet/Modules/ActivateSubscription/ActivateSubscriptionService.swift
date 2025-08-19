@@ -27,7 +27,9 @@ class ActivateSubscriptionService {
 
     private func fetchSubscriptions() {
         let addressItems: [AddressItem] = accountManager.accounts.compactMap { account in
-            guard let address = account.type.evmAddress(chain: Core.shared.evmBlockchainManager.chain(blockchainType: .ethereum)) else {
+            guard let chain = try? Core.shared.evmBlockchainManager.chain(blockchainType: .ethereum),
+                  let address = account.type.evmAddress(chain: chain)
+            else {
                 return nil
             }
 
