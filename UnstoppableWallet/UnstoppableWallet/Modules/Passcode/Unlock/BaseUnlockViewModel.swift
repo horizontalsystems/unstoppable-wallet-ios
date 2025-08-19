@@ -74,7 +74,7 @@ class BaseUnlockViewModel: ObservableObject {
         resolvedBiometryType = biometryEnabledType.isEnabled && biometryAllowed && !lockoutState.isAttempted ? biometryType : nil
     }
 
-    func isValid(passcode: String) -> Bool { false }
+    func isValid(passcode _: String) -> Bool { false }
     func onEnterValid(passcode _: String) {}
     func onBiometryUnlock() {}
 

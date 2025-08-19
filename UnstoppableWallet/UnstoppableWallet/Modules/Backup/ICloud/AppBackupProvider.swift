@@ -94,9 +94,10 @@ class AppBackupProvider {
             }
     }
 
-    private func settings(evmSyncSources: EvmSyncSourceManager.SyncSourceBackup) -> SettingsBackup {
+    private func settings(evmSyncSources: EvmSyncSourceManager.SyncSourceBackup, moneroNodes: MoneroNodeManager.NodeBackup) -> SettingsBackup {
         SettingsBackup(
             evmSyncSources: evmSyncSources,
+            moneroNodes: moneroNodes,
             btcModes: btcBlockchainManager.backup,
             remoteContactsSync: localStorage.remoteContactsSync,
             swapProviders: swapProviders,
@@ -130,15 +131,15 @@ class AppBackupProvider {
             .compactMap { accountManager.account(id: $0) }
             .compactMap { RawWalletBackup(account: $0, enabledWallets: enabledWallets(account: $0)) }
 
-        let custom = evmSyncSourceManager.customSources
-        let selected = evmSyncSourceManager.selectedSources
-        let syncSources = EvmSyncSourceManager.SyncSourceBackup(selected: selected, custom: [])
+        let syncSources = EvmSyncSourceManager.SyncSourceBackup(selected: evmSyncSourceManager.selectedSources, custom: [])
+        let moneroNodes = MoneroNodeManager.NodeBackup(selected: moneroNodeManager.selectedNodes, custom: [])
         return RawFullBackup(
             accounts: accounts,
             watchlistIds: watchlistManager.coinUids,
             contacts: contactManager.backupContactBook?.contacts ?? [],
-            settings: settings(evmSyncSources: syncSources),
-            customSyncSources: custom
+            settings: settings(evmSyncSources: syncSources, moneroNodes: moneroNodes),
+            customSyncSources: evmSyncSourceManager.customSources,
+            customMoneroNodes: moneroNodeManager.customNodeRecords,
         )
     }
 }
@@ -199,6 +200,7 @@ extension AppBackupProvider {
         }
 
         evmSyncSourceManager.restore(selected: raw.settings.evmSyncSources.selected, custom: raw.customSyncSources)
+        moneroNodeManager.restore(selected: raw.settings.moneroNodes.selected, custom: raw.customMoneroNodes)
         btcBlockchainManager.restore(backup: raw.settings.btcModes)
         chartRepository.restore(backup: raw.settings.chartIndicators)
         localStorage.restore(backup: raw.settings)
@@ -248,13 +250,15 @@ extension AppBackupProvider {
         let contacts = try fullBackup.contacts.map { try ContactBookManager.decrypt(crypto: $0, passphrase: passphrase) }
 
         let customSources = try evmSyncSourceManager.decrypt(sources: fullBackup.settings.evmSyncSources.custom, passphrase: passphrase)
+        let customMoneroNodes = try moneroNodeManager.decrypt(nodes: fullBackup.settings.moneroNodes.custom, passphrase: passphrase)
 
         return RawFullBackup(
             accounts: wallets,
             watchlistIds: fullBackup.watchlistIds,
             contacts: contacts ?? [],
             settings: fullBackup.settings,
-            customSyncSources: customSources
+            customSyncSources: customSources,
+            customMoneroNodes: customMoneroNodes
         )
     }
 
@@ -265,14 +269,19 @@ extension AppBackupProvider {
         }
 
         let contacts = try ContactBookManager.encrypt(contacts: raw.contacts, passphrase: passphrase)
-        let custom = try evmSyncSourceManager.encrypt(sources: raw.customSyncSources, passphrase: passphrase)
+        let customEvmSyncSource = try evmSyncSourceManager.encrypt(sources: raw.customSyncSources, passphrase: passphrase)
+        let customMoneroNode = try moneroNodeManager.encrypt(nodes: raw.customMoneroNodes, passphrase: passphrase)
+        let settingsBackup = settings(
+            evmSyncSources: .init(selected: raw.settings.evmSyncSources.selected, custom: customEvmSyncSource),
+            moneroNodes: .init(selected: raw.settings.moneroNodes.selected, custom: customMoneroNode)
+        )
 
         return FullBackup(
             id: UUID().uuidString,
             wallets: wallets,
             watchlistIds: raw.watchlistIds,
             contacts: contacts,
-            settings: settings(evmSyncSources: .init(selected: raw.settings.evmSyncSources.selected, custom: custom)),
+            settings: settingsBackup,
             version: AppBackupProvider.version,
             timestamp: Date().timeIntervalSince1970.rounded()
         )

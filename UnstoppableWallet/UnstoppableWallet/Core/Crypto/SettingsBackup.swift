@@ -2,7 +2,8 @@ import Chart
 import Foundation
 
 class SettingsBackup: Codable {
-    var evmSyncSources: EvmSyncSourceManager.SyncSourceBackup
+    let evmSyncSources: EvmSyncSourceManager.SyncSourceBackup
+    var moneroNodes: MoneroNodeManager.NodeBackup
     let btcModes: [BtcBlockchainManager.BtcRestoreModeBackup]
 
     let remoteContactsSync: Bool?
@@ -24,6 +25,7 @@ class SettingsBackup: Codable {
 
     enum CodingKeys: String, CodingKey {
         case evmSyncSources = "evm_sync_sources"
+        case moneroNodes = "monero_nodes"
         case btcModes = "btc_modes"
         case remoteContactsSync = "contacts_sync"
         case swapProviders = "swap_providers"
@@ -44,6 +46,7 @@ class SettingsBackup: Codable {
 
     init(
         evmSyncSources: EvmSyncSourceManager.SyncSourceBackup,
+        moneroNodes: MoneroNodeManager.NodeBackup,
         btcModes: [BtcBlockchainManager.BtcRestoreModeBackup],
         remoteContactsSync: Bool?,
         swapProviders: [DefaultProvider],
@@ -62,6 +65,7 @@ class SettingsBackup: Codable {
         appIcon: String
     ) {
         self.evmSyncSources = evmSyncSources
+        self.moneroNodes = moneroNodes
         self.btcModes = btcModes
         self.remoteContactsSync = remoteContactsSync
         self.swapProviders = swapProviders
@@ -83,6 +87,7 @@ class SettingsBackup: Codable {
     required init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         evmSyncSources = try container.decode(EvmSyncSourceManager.SyncSourceBackup.self, forKey: .evmSyncSources)
+        moneroNodes = (try? container.decode(MoneroNodeManager.NodeBackup.self, forKey: .moneroNodes)) ?? .init(selected: [], custom: [])
         btcModes = try container.decode([BtcBlockchainManager.BtcRestoreModeBackup].self, forKey: .btcModes)
         remoteContactsSync = try? container.decode(Bool.self, forKey: .remoteContactsSync)
         swapProviders = try container.decode([DefaultProvider].self, forKey: .swapProviders)

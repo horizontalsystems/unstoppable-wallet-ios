@@ -62,7 +62,8 @@ extension RestoreFileConfigurationViewModel {
             watchAccountCount: watchAccounts.count,
             watchlistCount: rawBackup.watchlistIds.count,
             contactAddressCount: contactAddressCount,
-            blockchainSourcesCount: rawBackup.customSyncSources.count
+            customEvmSyncSources: rawBackup.customSyncSources.count,
+            customMoneroNodes: rawBackup.customMoneroNodes.count
         )
     }
 
