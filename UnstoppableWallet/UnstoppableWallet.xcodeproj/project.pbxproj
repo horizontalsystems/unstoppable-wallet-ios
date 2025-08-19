@@ -13975,7 +13975,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MoneroKit.Swift.git";
 			requirement = {
 				kind = exactVersion;
-				version = 0.1.4;
+				version = 0.1.5;
 			};
 		};
 		D0EC34D92A4450B100BB308B /* XCRemoteSwiftPackageReference "HCaptcha-ios-sdk" */ = {
@@ -14183,7 +14183,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/Checkpoints";
 			requirement = {
 				kind = exactVersion;
-				version = 1.0.22;
+				version = 1.0.23;
 			};
 		};
 		D3C187D9290FCFBC00FE1900 /* XCRemoteSwiftPackageReference "SectionsTableView" */ = {
