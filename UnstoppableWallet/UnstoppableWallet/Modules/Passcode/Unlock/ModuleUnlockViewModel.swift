@@ -10,6 +10,10 @@ class ModuleUnlockViewModel: BaseUnlockViewModel {
         super.init(biometryAllowed: biometryAllowed)
     }
 
+    override func isValid(passcode: String) -> Bool {
+        passcodeManager.isValid(passcode: passcode)
+    }
+
     override func onEnterValid(passcode _: String) {
         onUnlock()
         finishSubject.send()

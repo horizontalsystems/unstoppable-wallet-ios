@@ -31,7 +31,6 @@ struct WalletView: View {
                                 headerView(account: account)
                             }
                         }
-                        .animation(.default, value: viewModel.items)
                         .animation(.default, value: accountWarningViewModel.item)
                         .refreshable {
                             await viewModel.refresh()
