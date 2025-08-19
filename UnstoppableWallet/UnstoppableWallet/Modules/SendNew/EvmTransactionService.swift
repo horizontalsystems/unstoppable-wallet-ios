@@ -73,11 +73,13 @@ class EvmTransactionService: ITransactionService {
     }
 
     init?(blockchainType: BlockchainType, evmKit: EvmKit.Kit, initialTransactionSettings: InitialTransactionSettings?) {
-        guard let rpcSource = Core.shared.evmSyncSourceManager.httpSyncSource(blockchainType: blockchainType)?.rpcSource else {
+        guard let chain = try? Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType),
+              let rpcSource = Core.shared.evmSyncSourceManager.httpSyncSource(blockchainType: blockchainType)?.rpcSource
+        else {
             return nil
         }
 
-        chain = Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType)
+        self.chain = chain
         self.blockchainType = blockchainType
         self.evmKit = evmKit
         self.rpcSource = rpcSource

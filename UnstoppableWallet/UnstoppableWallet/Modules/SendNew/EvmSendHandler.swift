@@ -121,7 +121,7 @@ extension EvmSendHandler {
             return nil
         }
 
-        guard let evmKitWrapper = Core.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
+        guard let evmKitWrapper = try? Core.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
             return nil
         }
 

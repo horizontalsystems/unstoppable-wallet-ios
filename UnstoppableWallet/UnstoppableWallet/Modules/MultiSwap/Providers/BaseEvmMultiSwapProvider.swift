@@ -41,9 +41,7 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
     }
 
     func otherSections(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: TransactionSettings?) -> [SendDataSection] {
-        let allowMevProtection = MerkleTransactionAdapter.allowProtection(chain: evmBlockchainManager.chain(blockchainType: tokenIn.blockchainType))
-
-        guard allowMevProtection else {
+        guard MerkleTransactionAdapter.allowProtection(blockchainType: tokenIn.blockchainType) else {
             useMevProtection = false
             return []
         }
@@ -92,7 +90,7 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
     }
 
     func send(blockchainType: BlockchainType, transactionData: TransactionData, gasPrice: GasPrice, gasLimit: Int, nonce: Int? = nil) async throws {
-        guard let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
+        guard let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
             throw SwapError.noEvmKitWrapper
         }
 
@@ -111,7 +109,7 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
 
     func allowanceState(token: Token, amount: Decimal) async -> MultiSwapAllowanceHelper.AllowanceState {
         do {
-            let chain = evmBlockchainManager.chain(blockchainType: token.blockchainType)
+            let chain = try evmBlockchainManager.chain(blockchainType: token.blockchainType)
             let spenderAddress = try spenderAddress(chain: chain)
 
             return await allowanceHelper.allowanceState(spenderAddress: .init(raw: spenderAddress.eip55), token: token, amount: amount)

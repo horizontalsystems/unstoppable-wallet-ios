@@ -13,8 +13,7 @@ enum DestinationHelper {
         }
 
         if blockchainType.isEvm {
-            let chain = Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType)
-
+            let chain = try Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType)
             guard let address = account.type.evmAddress(chain: chain) else {
                 throw SwapError.noDestinationAddress
             }

@@ -237,12 +237,15 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 allowanceState: state
             )
         } else if tokenIn.blockchainType == .tron {
-            return await AllBridgeMultiSwapEvmQuote(
+            let state = await allowanceHelper.allowanceState(spenderAddress: .init(raw: bridgeAddress), token: tokenIn, amount: amountIn)
+            logger?.log(level: .debug, message: "AllBridge: Allowance = \(state)")
+
+            return AllBridgeMultiSwapEvmQuote(
                 expectedAmountOut: amountOut,
                 crosschain: crosschain,
                 recipient: storage.recipient(blockchainType: tokenOut.blockchainType),
                 slippage: slippage,
-                allowanceState: allowanceHelper.allowanceState(spenderAddress: .init(raw: bridgeAddress), token: tokenIn, amount: amountIn)
+                allowanceState: state
             )
         } else if tokenIn.blockchainType == .stellar {
             return AllBridgeMultiSwapStellarQuote(
@@ -333,7 +336,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
             var transactionError: Error?
             var insufficientFeeBalance = false
 
-            if let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, let gasPriceData {
+            if let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, let gasPriceData {
                 do {
                     evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPriceData: gasPriceData)
 
@@ -415,18 +418,13 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 fees: fees,
                 transactionError: transactionError
             )
-        }
+        } else if tokenIn.blockchainType == .stellar {}
 
         throw SwapError.convertionError
     }
 
     func otherSections(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: TransactionSettings?) -> [SendDataSection] {
-        var allowMevProtection = false
-        if tokenIn.blockchainType.isEvm {
-            allowMevProtection = MerkleTransactionAdapter.allowProtection(chain: evmBlockchainManager.chain(blockchainType: tokenIn.blockchainType))
-        }
-
-        guard allowMevProtection else {
+        guard MerkleTransactionAdapter.allowProtection(blockchainType: tokenIn.blockchainType) else {
             useMevProtection = false
             return []
         }
@@ -494,7 +492,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 throw SwapError.noGasPrice
             }
 
-            guard let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: tokenIn.blockchainType).evmKitWrapper else {
+            guard let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: tokenIn.blockchainType).evmKitWrapper else {
                 throw SwapError.noEvmKitWrapper
             }
 
@@ -538,14 +536,9 @@ extension AllBridgeMultiSwapProvider {
         case lessThanRequireFee
         case convertionError
         case invalidAmount
-//        case noRouterAddress
-//        case invalidTokenInType
-//        case noDestinationAddress
         case noGasPrice
         case noGasLimit
         case noEvmKitWrapper
-//        case noBitcoinAdapter
-//        case noSendParameters
     }
 
     struct AbToken: ImmutableMappable {
@@ -563,11 +556,7 @@ extension AllBridgeMultiSwapProvider {
             decimals = try map.value("decimals")
             tokenAddress = try map.value("tokenAddress")
             originTokenAddress = try? map.value("originTokenAddress")
-//            confirmations = try? map.value("confirmations")
             chainSymbol = try map.value("chainSymbol")
-//            chainId = try? map.value("chainId")
-//            chainType = try map.value("chainType")
-//            chainName = try map.value("chainName")
             bridgeAddress = try map.value("bridgeAddress")
         }
     }

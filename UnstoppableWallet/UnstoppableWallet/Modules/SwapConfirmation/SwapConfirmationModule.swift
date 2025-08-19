@@ -5,7 +5,7 @@ import UIKit
 
 enum SwapConfirmationModule {
     static func viewController(sendData: SendEvmData, dex: SwapModule.Dex) -> UIViewController? {
-        guard let evmKitWrapper = Core.shared.evmBlockchainManager.evmKitManager(blockchainType: dex.blockchainType).evmKitWrapper else {
+        guard let evmKitWrapper = try? Core.shared.evmBlockchainManager.evmKitManager(blockchainType: dex.blockchainType).evmKitWrapper else {
             return nil
         }
 
@@ -32,7 +32,7 @@ enum SwapConfirmationModule {
     }
 
     static func viewController(parameters: OneInchSwapParameters, dex: SwapModule.Dex) -> UIViewController? {
-        guard let evmKitWrapper = Core.shared.evmBlockchainManager.evmKitManager(blockchainType: dex.blockchainType).evmKitWrapper else {
+        guard let evmKitWrapper = try? Core.shared.evmBlockchainManager.evmKitManager(blockchainType: dex.blockchainType).evmKitWrapper else {
             return nil
         }
 

@@ -7,7 +7,7 @@ import UIKit
 
 enum SwapApproveConfirmationModule {
     static func viewController(sendData: SendEvmData, blockchainType: BlockchainType, revokeAllowance: Bool = false, delegate: ISwapApproveDelegate?) throws -> UIViewController {
-        guard let evmKitWrapper = Core.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
+        guard let evmKitWrapper = try? Core.shared.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
             throw CreateError.noEvmKit
         }
 

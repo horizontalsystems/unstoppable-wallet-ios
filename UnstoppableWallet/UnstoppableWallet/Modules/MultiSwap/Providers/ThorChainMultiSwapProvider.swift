@@ -132,7 +132,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
             var evmFeeData: EvmFeeData?
             var transactionError: Error?
 
-            if let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, let gasPriceData {
+            if let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, let gasPriceData {
                 do {
                     evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPriceData: gasPriceData)
                 } catch {
@@ -196,9 +196,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
     }
 
     func otherSections(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: TransactionSettings?) -> [SendDataSection] {
-        let allowMevProtection = EvmBlockchainManager.blockchainTypes.contains(tokenIn.blockchainType) && MerkleTransactionAdapter.allowProtection(chain: evmBlockchainManager.chain(blockchainType: tokenIn.blockchainType))
-
-        guard allowMevProtection else {
+        guard MerkleTransactionAdapter.allowProtection(blockchainType: tokenIn.blockchainType) else {
             useMevProtection = false
             return []
         }
@@ -259,7 +257,7 @@ class ThorChainMultiSwapProvider: IMultiSwapProvider {
                 throw SwapError.noGasPrice
             }
 
-            guard let evmKitWrapper = evmBlockchainManager.evmKitManager(blockchainType: tokenIn.blockchainType).evmKitWrapper else {
+            guard let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: tokenIn.blockchainType).evmKitWrapper else {
                 throw SwapError.noEvmKitWrapper
             }
 
