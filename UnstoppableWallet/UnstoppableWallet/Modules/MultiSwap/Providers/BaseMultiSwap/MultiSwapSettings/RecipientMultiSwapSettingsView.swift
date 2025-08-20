@@ -8,8 +8,8 @@ struct RecipientMultiSwapSettingsView: View {
 
     @Environment(\.presentationMode) private var presentationMode
 
-    init(tokenIn: Token, storage: MultiSwapSettingStorage, onChangeSettings: @escaping () -> Void) {
-        _viewModel = .init(wrappedValue: ViewModel(tokenIn: tokenIn, storage: storage))
+    init(tokenOut: Token, storage: MultiSwapSettingStorage, onChangeSettings: @escaping () -> Void) {
+        _viewModel = .init(wrappedValue: ViewModel(tokenOut: tokenOut, storage: storage))
         self.onChangeSettings = onChangeSettings
     }
 
@@ -47,8 +47,8 @@ extension RecipientMultiSwapSettingsView {
     class ViewModel: BaseMultiSwapSettingsViewModel {
         let addressViewModel: AddressMultiSwapSettingsViewModel
 
-        init(tokenIn: Token, storage: MultiSwapSettingStorage) {
-            addressViewModel = AddressMultiSwapSettingsViewModel(storage: storage, token: tokenIn)
+        init(tokenOut: Token, storage: MultiSwapSettingStorage) {
+            addressViewModel = AddressMultiSwapSettingsViewModel(storage: storage, token: tokenOut)
 
             super.init(fields: [addressViewModel])
         }

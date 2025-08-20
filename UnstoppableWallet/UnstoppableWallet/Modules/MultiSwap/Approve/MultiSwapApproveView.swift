@@ -19,7 +19,7 @@ struct MultiSwapApproveView: View {
 
     var body: some View {
         ThemeView {
-            if let transactionData = viewModel.transactionData {
+            if let sendData = viewModel.sendData {
                 BottomGradientWrapper {
                     ScrollView {
                         VStack(spacing: .margin12) {
@@ -58,7 +58,7 @@ struct MultiSwapApproveView: View {
                 NavigationLink(
                     isActive: $unlockPresented,
                     destination: {
-                        RegularSendView(sendData: .evm(blockchainType: viewModel.token.blockchainType, transactionData: transactionData)) {
+                        RegularSendView(sendData: sendData) {
                             onSuccess()
                             isPresented = false
                         }

@@ -86,9 +86,11 @@ extension Eip20Adapter: IAllowanceAdapter {
 }
 
 extension Eip20Adapter: IApproveDataProvider {
-    func approveTransactionData(spenderAddress: Address, amount: BigUInt) throws -> TransactionData {
+    func approveSendData(token: Token, spenderAddress: Address, amount: BigUInt) throws -> SendData {
         let address = try EvmKit.Address(hex: spenderAddress.raw)
-        return eip20Kit.approveTransactionData(spenderAddress: address, amount: amount)
+        let transactionData = eip20Kit.approveTransactionData(spenderAddress: address, amount: amount)
+
+        return .evm(blockchainType: token.blockchainType, transactionData: transactionData)
     }
 }
 

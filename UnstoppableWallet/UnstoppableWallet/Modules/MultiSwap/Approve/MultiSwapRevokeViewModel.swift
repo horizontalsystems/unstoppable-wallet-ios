@@ -16,7 +16,7 @@ class MultiSwapRevokeViewModel: ObservableObject {
 }
 
 extension MultiSwapRevokeViewModel {
-    var transactionData: TransactionData? {
-        try? approveDataProvider?.approveTransactionData(spenderAddress: spenderAddress, amount: 0)
+    var sendData: SendData? {
+        try? approveDataProvider?.approveSendData(token: token, spenderAddress: spenderAddress, amount: 0)
     }
 }

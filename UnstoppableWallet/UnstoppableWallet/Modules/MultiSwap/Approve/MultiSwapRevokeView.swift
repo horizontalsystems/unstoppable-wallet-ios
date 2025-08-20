@@ -18,8 +18,8 @@ struct MultiSwapRevokeView: View {
     }
 
     var body: some View {
-        if let transactionData = viewModel.transactionData {
-            RegularSendView(sendData: .evm(blockchainType: viewModel.token.blockchainType, transactionData: transactionData)) {
+        if let sendData = viewModel.sendData {
+            RegularSendView(sendData: sendData) {
                 onSuccess()
                 isPresented = false
             }

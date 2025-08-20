@@ -119,7 +119,7 @@ enum BlockParameter {
 }
 
 protocol IApproveDataProvider {
-    func approveTransactionData(spenderAddress: Address, amount: BigUInt) throws -> TransactionData
+    func approveSendData(token: MarketKit.Token, spenderAddress: Address, amount: BigUInt) throws -> SendData
 }
 
 protocol ISendZcashAdapter {
