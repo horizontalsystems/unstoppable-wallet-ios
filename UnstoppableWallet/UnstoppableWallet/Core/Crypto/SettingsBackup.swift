@@ -90,7 +90,7 @@ class SettingsBackup: Codable {
         moneroNodes = (try? container.decode(MoneroNodeManager.NodeBackup.self, forKey: .moneroNodes)) ?? .init(selected: [], custom: [])
         btcModes = try container.decode([BtcBlockchainManager.BtcRestoreModeBackup].self, forKey: .btcModes)
         remoteContactsSync = try? container.decode(Bool.self, forKey: .remoteContactsSync)
-        swapProviders = try container.decode([DefaultProvider].self, forKey: .swapProviders)
+        swapProviders = (try? container.decode([DefaultProvider].self, forKey: .swapProviders)) ?? []
         chartIndicators = try container.decode(ChartIndicatorsRepository.BackupIndicators.self, forKey: .chartIndicators)
         indicatorsShown = try container.decode(Bool.self, forKey: .indicatorsShown)
         currentLanguage = try container.decode(String.self, forKey: .currentLanguage)
