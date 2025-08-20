@@ -75,6 +75,10 @@
 	<string>$(hs_provider_api_key)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
+	<key>MayaAffiliate</key>
+	<string>${maya_affiliate}</string>
+	<key>MayaAffiliateBps</key>
+	<string>${maya_affiliate_bps}</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>googlechrome</string>

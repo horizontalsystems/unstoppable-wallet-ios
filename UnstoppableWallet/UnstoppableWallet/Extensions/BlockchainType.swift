@@ -35,6 +35,7 @@ extension BlockchainType {
         .binanceSmartChain,
         .bitcoin,
         .bitcoinCash,
+        .dash,
         .ethereum,
         .fantom,
         .gnosis,
@@ -44,6 +45,7 @@ extension BlockchainType {
         .stellar,
         .tron,
         .zkSync,
+        // .zcash,
     ]
 
     func placeholderImageName(tokenProtocol: TokenProtocol?) -> String {
