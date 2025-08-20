@@ -244,7 +244,7 @@
 		11B35328067C30C80DF244DF /* BackupVerifyWordsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3576FCFC9394BA37975FC /* BackupVerifyWordsViewModel.swift */; };
 		11B35328EA42C49649B1E3F6 /* SyncMode_v_0_24.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CB98A27269A510F40EE /* SyncMode_v_0_24.swift */; };
 		11B3532F1BE8F0D1A6B43A33 /* EvmSyncSourceStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3564E87C69B2989E6A3D2 /* EvmSyncSourceStorage.swift */; };
-		11B35337D37FD03982571DF0 /* ThorChainMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B323F0836767BA0565F /* ThorChainMultiSwapProvider.swift */; };
+		11B35337D37FD03982571DF0 /* BaseThorChainMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B323F0836767BA0565F /* BaseThorChainMultiSwapProvider.swift */; };
 		11B3533941A80D693369E9C0 /* BrandFooterCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B355DF40EB498107EDAA4A /* BrandFooterCell.swift */; };
 		11B3533E67189A921FCF1537 /* MarkdownParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3543968337A40168D3EB0 /* MarkdownParser.swift */; };
 		11B3533FFB85258ED5A90401 /* FormValidatedView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35614A0EE4AC0FAD9F83A /* FormValidatedView.swift */; };
@@ -532,7 +532,7 @@
 		11B357605EA9962F5D51DCD1 /* RestoreSettingsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3532946EA785A7C65D193 /* RestoreSettingsService.swift */; };
 		11B35763508EBED0F4ED302A /* NftAssetRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359852B313E849499BC19 /* NftAssetRecord.swift */; };
 		11B35768B8651AFA005DDFAB /* CoinTreasury.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35185ECC372A193D00A00 /* CoinTreasury.swift */; };
-		11B357696EB7DB1895BF9F23 /* ThorChainMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B323F0836767BA0565F /* ThorChainMultiSwapProvider.swift */; };
+		11B357696EB7DB1895BF9F23 /* BaseThorChainMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B323F0836767BA0565F /* BaseThorChainMultiSwapProvider.swift */; };
 		11B3577193A4BD719E12CE2E /* EnabledWallet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BDC2E3F845A52C442AD /* EnabledWallet.swift */; };
 		11B35772618CDA2F19CCDB2C /* IMultiSwapConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35293738048B01671B637 /* IMultiSwapConfirmationQuote.swift */; };
 		11B357740CC018527301C4AE /* AppStatusView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357C16B28B535457F6E34 /* AppStatusView.swift */; };
@@ -3424,6 +3424,10 @@
 		D3FBC7122E534C11001083D8 /* WatchSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FBC7102E534C0D001083D8 /* WatchSelectView.swift */; };
 		D3FBC7142E55AB0C001083D8 /* LargeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FBC7132E55AB00001083D8 /* LargeTextField.swift */; };
 		D3FBC7152E55AB0C001083D8 /* LargeTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FBC7132E55AB00001083D8 /* LargeTextField.swift */; };
+		D3FBC71B2E55E93C001083D8 /* ThorChainMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FBC71A2E55E93C001083D8 /* ThorChainMultiSwapProvider.swift */; };
+		D3FBC71C2E55E93C001083D8 /* ThorChainMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FBC71A2E55E93C001083D8 /* ThorChainMultiSwapProvider.swift */; };
+		D3FBC71E2E55E947001083D8 /* MayaMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FBC71D2E55E947001083D8 /* MayaMultiSwapProvider.swift */; };
+		D3FBC71F2E55E947001083D8 /* MayaMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FBC71D2E55E947001083D8 /* MayaMultiSwapProvider.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -3925,7 +3929,7 @@
 		11B35B2C6C103AFF4CCC6E91 /* CoinRecord_v19.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinRecord_v19.swift; sourceTree = "<group>"; };
 		11B35B2E73D0FA19CBC3B674 /* SharedLocalStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SharedLocalStorage.swift; sourceTree = "<group>"; };
 		11B35B31362C98B401A8F9A1 /* SendEvmTransactionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendEvmTransactionViewController.swift; sourceTree = "<group>"; };
-		11B35B323F0836767BA0565F /* ThorChainMultiSwapProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ThorChainMultiSwapProvider.swift; sourceTree = "<group>"; };
+		11B35B323F0836767BA0565F /* BaseThorChainMultiSwapProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseThorChainMultiSwapProvider.swift; sourceTree = "<group>"; };
 		11B35B451378835F7F060012 /* NftPriceRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftPriceRecord.swift; sourceTree = "<group>"; };
 		11B35B51E484CA62EC57790E /* ModuleUnlockViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleUnlockViewModel.swift; sourceTree = "<group>"; };
 		11B35B5570E7513DF2A455BB /* PasscodeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasscodeManager.swift; sourceTree = "<group>"; };
@@ -5146,6 +5150,8 @@
 		D3FBC70D2E533F74001083D8 /* WatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchView.swift; sourceTree = "<group>"; };
 		D3FBC7102E534C0D001083D8 /* WatchSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSelectView.swift; sourceTree = "<group>"; };
 		D3FBC7132E55AB00001083D8 /* LargeTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeTextField.swift; sourceTree = "<group>"; };
+		D3FBC71A2E55E93C001083D8 /* ThorChainMultiSwapProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThorChainMultiSwapProvider.swift; sourceTree = "<group>"; };
+		D3FBC71D2E55E947001083D8 /* MayaMultiSwapProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MayaMultiSwapProvider.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -6309,6 +6315,7 @@
 		11B35733E1033052E6CA46C3 /* Providers */ = {
 			isa = PBXGroup;
 			children = (
+				D3FBC7192E55E918001083D8 /* ThorChain */,
 				6BF655842E49BF400055A9D5 /* AllBridgeProvider */,
 				6B5FD7D72E42166C00FEF510 /* DestinationHelper.swift */,
 				11B350E65AAA33943BAD2F1D /* UniswapV2MultiSwapProvider.swift */,
@@ -6322,7 +6329,6 @@
 				11B35872F09BBF1A59575DBA /* QuickSwapMultiSwapProvider.swift */,
 				ABC9A2F6BA4469E528E98387 /* BaseMultiSwap */,
 				11B35EF841FD4B3D13058F76 /* OneInchMultiSwapProvider.swift */,
-				11B35B323F0836767BA0565F /* ThorChainMultiSwapProvider.swift */,
 				11B35914D68AEC1242C482FA /* MultiSwapAllowanceHelper.swift */,
 				D3DD671B2BC3BB9300EC7F78 /* BaseEvmMultiSwapQuote.swift */,
 				D3DD671E2BC3BD1200EC7F78 /* BaseUniswapMultiSwapQuote.swift */,
@@ -6330,10 +6336,6 @@
 				D3DD67242BC3BEC100EC7F78 /* BaseUniswapMultiSwapConfirmationQuote.swift */,
 				D3DD67272BC3BF4700EC7F78 /* OneInchMultiSwapQuote.swift */,
 				D3DD672A2BC3BF5200EC7F78 /* OneInchMultiSwapConfirmationQuote.swift */,
-				D3DD672D2BC3C5C400EC7F78 /* ThorChainMultiSwapEvmQuote.swift */,
-				D3DD67302BC3C5D000EC7F78 /* ThorChainMultiSwapEvmConfirmationQuote.swift */,
-				D3DD67332BC3CC2100EC7F78 /* ThorChainMultiSwapBtcQuote.swift */,
-				D3DD67362BC3CC2C00EC7F78 /* ThorChainMultiSwapBtcConfirmationQuote.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -9531,6 +9533,20 @@
 			path = Tab;
 			sourceTree = "<group>";
 		};
+		D3FBC7192E55E918001083D8 /* ThorChain */ = {
+			isa = PBXGroup;
+			children = (
+				D3FBC71D2E55E947001083D8 /* MayaMultiSwapProvider.swift */,
+				D3FBC71A2E55E93C001083D8 /* ThorChainMultiSwapProvider.swift */,
+				11B35B323F0836767BA0565F /* BaseThorChainMultiSwapProvider.swift */,
+				D3DD672D2BC3C5C400EC7F78 /* ThorChainMultiSwapEvmQuote.swift */,
+				D3DD67302BC3C5D000EC7F78 /* ThorChainMultiSwapEvmConfirmationQuote.swift */,
+				D3DD67332BC3CC2100EC7F78 /* ThorChainMultiSwapBtcQuote.swift */,
+				D3DD67362BC3CC2C00EC7F78 /* ThorChainMultiSwapBtcConfirmationQuote.swift */,
+			);
+			path = ThorChain;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -10429,6 +10445,7 @@
 				2FA5D21790195F1083F7BB21 /* EvmTransactionConverter.swift in Sources */,
 				D30C4D572D55FE980082B487 /* BottomSheetModifier.swift in Sources */,
 				D36287BE2CA3D7B100ADAF3B /* TonConnect+Encodable.swift in Sources */,
+				D3FBC71C2E55E93C001083D8 /* ThorChainMultiSwapProvider.swift in Sources */,
 				58AAA1AAD335F236D130FCBB /* SwapConfirmationModule.swift in Sources */,
 				58AAAA3F2EF03D83A5500228 /* SwapConfirmationViewController.swift in Sources */,
 				58AAA3A6458CB87F359F6366 /* SwapConfirmationAmountCell.swift in Sources */,
@@ -11439,7 +11456,7 @@
 				ABC9A8A507E8AF95CB00379A /* MultiSwapApproveViewModel.swift in Sources */,
 				ABC9A2F69C11C20F72C2FF63 /* Binding.swift in Sources */,
 				ABC9AC741B546BC96F2E8F3A /* ErrorViewController.swift in Sources */,
-				11B35337D37FD03982571DF0 /* ThorChainMultiSwapProvider.swift in Sources */,
+				11B35337D37FD03982571DF0 /* BaseThorChainMultiSwapProvider.swift in Sources */,
 				ABC9AE635D02A4E6DA719787 /* TransactionContactSelectView.swift in Sources */,
 				ABC9AD02AD6340C230AC4F9D /* TransactionContactSelectViewModel.swift in Sources */,
 				D0A690292BFF50D900E59296 /* TronSendData.swift in Sources */,
@@ -11462,6 +11479,7 @@
 				11B350CE805774C98948353C /* SendField.swift in Sources */,
 				11B359BACF4B66607F50944D /* MultiSwapPreSwapStep.swift in Sources */,
 				11B358B7A012C6F4922DC092 /* SendHandlerFactory.swift in Sources */,
+				D3FBC71F2E55E947001083D8 /* MayaMultiSwapProvider.swift in Sources */,
 				11B357012D58588855E42A38 /* FeeData.swift in Sources */,
 				11B3571B3D4FB354893F5AA3 /* ITransactionService.swift in Sources */,
 				D3E1E8652C1C0EF400E07052 /* CoinHoldersChart.swift in Sources */,
@@ -11998,6 +12016,7 @@
 				6B146A9B2A52A69400648C10 /* ChartIndicatorSettingsModule.swift in Sources */,
 				2FA5D89EECB981FAA8B179C3 /* TransactionInfoViewModel.swift in Sources */,
 				D36DE0BD272FD864000BC916 /* SwapViewItemHelper.swift in Sources */,
+				D3FBC71B2E55E93C001083D8 /* ThorChainMultiSwapProvider.swift in Sources */,
 				58AAA7E6994159CD5FFDB31E /* InputBadgeWrapperView.swift in Sources */,
 				58AAA88F6D5F5509E7FAB02D /* Global.swift in Sources */,
 				58AAABC21BB15CAC923A13CB /* CoinCardModule.swift in Sources */,
@@ -13011,7 +13030,7 @@
 				ABC9A62E858360A9964084D2 /* Binding.swift in Sources */,
 				ABC9AAF24F259B71E59C247D /* ErrorViewController.swift in Sources */,
 				D0A690282BFF50D900E59296 /* TronSendData.swift in Sources */,
-				11B357696EB7DB1895BF9F23 /* ThorChainMultiSwapProvider.swift in Sources */,
+				11B357696EB7DB1895BF9F23 /* BaseThorChainMultiSwapProvider.swift in Sources */,
 				ABC9A5B9D81C00155732363C /* TransactionContactSelectView.swift in Sources */,
 				ABC9A6C99739F0AC308F0574 /* TransactionContactSelectViewModel.swift in Sources */,
 				ABC9A9873160D2EAFD4D6D2A /* TransactionBlockchainSelectViewModel.swift in Sources */,
@@ -13031,6 +13050,7 @@
 				11B35504619FDE878D865781 /* MultiSwapMainField.swift in Sources */,
 				11B359528BEC580E0BE7E7D3 /* ValueLevel.swift in Sources */,
 				11B35DB4C3EAB5B4B9ABF904 /* SendField.swift in Sources */,
+				D3FBC71E2E55E947001083D8 /* MayaMultiSwapProvider.swift in Sources */,
 				11B35A3C2C4CC7A834D56517 /* MultiSwapPreSwapStep.swift in Sources */,
 				D3E1E8642C1C0EF400E07052 /* CoinHoldersChart.swift in Sources */,
 				11B358D01760F90518DA612F /* SendHandlerFactory.swift in Sources */,
