@@ -21,9 +21,9 @@ class MultiSwapApproveViewModel: ObservableObject {
 }
 
 extension MultiSwapApproveViewModel {
-    var transactionData: TransactionData? {
+    var sendData: SendData? {
         let amount = unlimitedAmount ? .init(2).power(256) - 1 : token.fractionalMonetaryValue(value: amount)
-        return try? approveDataProvider?.approveTransactionData(spenderAddress: spenderAddress, amount: amount)
+        return try? approveDataProvider?.approveSendData(token: token, spenderAddress: spenderAddress, amount: amount)
     }
 
     func set(unlimitedAmount: Bool) {

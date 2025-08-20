@@ -17,6 +17,11 @@ class Trc20Adapter: BaseTronAdapter {
 
         super.init(tronKitWrapper: tronKitWrapper, decimals: wallet.decimals)
     }
+
+    func approveTrc20TriggerSmartContract(spenderAddress: Address, amount: BigUInt) throws -> TriggerSmartContract {
+        let spender = try TronKit.Address(address: spenderAddress.raw)
+        return tronKit.approveTrc20TriggerSmartContract(contractAddress: contractAddress, spender: spender, amount: amount)
+    }
 }
 
 // IAdapter
@@ -76,5 +81,14 @@ extension Trc20Adapter: IAllowanceAdapter {
         }
 
         return Decimal(sign: .plus, exponent: -decimals, significand: significand)
+    }
+}
+
+extension Trc20Adapter: IApproveDataProvider {
+    func approveSendData(token: Token, spenderAddress: Address, amount: BigUInt) throws -> SendData {
+        let spender = try TronKit.Address(address: spenderAddress.raw)
+        let contract = try approveTrc20TriggerSmartContract(spenderAddress: spenderAddress, amount: amount)
+
+        return .tron(token: token, contract: contract)
     }
 }

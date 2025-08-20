@@ -5,6 +5,7 @@ import Foundation
 import HsToolKit
 import MarketKit
 import ObjectMapper
+import StellarKit
 import SwiftUI
 import TronKit
 
@@ -58,6 +59,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
     private let networkManager: NetworkManager
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let tronKitManager = Core.shared.tronAccountManager.tronKitManager
+    private let stellarKitManager = Core.shared.stellarKitManager
     private let localStorage = Core.shared.localStorage
     private let evmFeeEstimator = EvmFeeEstimator()
     private let logger: Logger?
@@ -259,7 +261,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         throw SwapError.unsupportedTokenIn
     }
 
-    func transactionData<T: ImmutableMappable>(tokenIn: Token, tokenOut: Token, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> T {
+    private func transactionParameters(tokenIn: Token, tokenOut: Token, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) throws -> Parameters {
         guard let abTokenIn = tokenPairs[tokenIn] else {
             throw SwapError.unsupportedTokenIn
         }
@@ -287,17 +289,30 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
             "destinationToken": abTokenOut.tokenAddress,
         ]
 
-        let path: String
         if crosschain {
-            path = "bridge"
             parameters["messenger"] = "ALLBRIDGE"
             parameters["feePaymentMethod"] = feePaymentMethod.rawValue
         } else {
-            path = "swap"
             parameters["minimumReceiveAmount"] = amountOutMinInt.description
         }
 
+        return parameters
+    }
+
+    func fetchTransactionData<T: ImmutableMappable>(tokenIn: Token, tokenOut: Token, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> T {
+        let parameters = try transactionParameters(tokenIn: tokenIn, tokenOut: tokenOut, crosschain: crosschain, amountIn: amountIn, expectedAmountOutMin: expectedAmountOutMin)
+
+        let path = crosschain ? "bridge" : "swap"
+
         return try await networkManager.fetch(url: "\(baseUrl)/raw/\(path)", parameters: parameters)
+    }
+
+    func fetchStellarData(tokenIn: Token, tokenOut: Token, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> Data {
+        let parameters = try transactionParameters(tokenIn: tokenIn, tokenOut: tokenOut, crosschain: crosschain, amountIn: amountIn, expectedAmountOutMin: expectedAmountOutMin)
+
+        let path = crosschain ? "bridge" : "swap"
+
+        return try await networkManager.fetchData(url: "\(baseUrl)/raw/\(path)", parameters: parameters)
     }
 
     func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
@@ -311,7 +326,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
 //        let bridgeAddress = abTokenIn.bridgeAddress
 
         if tokenIn.blockchainType.isEvm {
-            let evmResponse: EvmSwapResponse = try await transactionData(
+            let evmResponse: EvmSwapResponse = try await fetchTransactionData(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
                 crosschain: crosschain,
@@ -366,7 +381,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 nonce: transactionSettings?.nonce
             )
         } else if tokenIn.blockchainType == .tron {
-            let createdTransaction: TronKit.CreatedTransactionResponse = try await transactionData(
+            let createdTransaction: TronKit.CreatedTransactionResponse = try await fetchTransactionData(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
                 crosschain: crosschain,
@@ -418,7 +433,52 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 fees: fees,
                 transactionError: transactionError
             )
-        } else if tokenIn.blockchainType == .stellar {}
+        } else if tokenIn.blockchainType == .stellar {
+            let transactionEnvelopeData: Data = try await fetchStellarData(
+                tokenIn: tokenIn,
+                tokenOut: tokenOut,
+                crosschain: crosschain,
+                amountIn: amountIn,
+                expectedAmountOutMin: amountOut
+            )
+
+            let transactionEnvelope = String(data: transactionEnvelopeData, encoding: .utf8) ?? transactionEnvelopeData.base64EncodedString()
+
+            var fee: Decimal?
+            var transactionError: Error?
+
+            do {
+                if let stellarKit = stellarKitManager.stellarKit,
+                   let baseToken = try marketKit.token(query: .init(blockchainType: .stellar, tokenType: .native))
+                {
+                    let stellarBalance = stellarKitManager.stellarKit?.account?.assetBalanceMap[.native]?.balance ?? 0
+
+                    let estimatedInt = try stellarKit.estimateFee(transactionEnvelope: transactionEnvelope)
+                    let estimated = Decimal(estimatedInt) / pow(10, baseToken.decimals)
+
+                    fee = estimated
+                    if stellarBalance < estimated {
+                        throw StellarSendHandler.TransactionError.insufficientStellarBalance(balance: stellarBalance)
+                    }
+
+                    logger?.log(level: .debug, message: "AllBridge: StellarFee: \(estimated.description) | stellarBalance: \(stellarBalance.description)")
+                }
+            } catch {
+                logger?.log(level: .error, message: "AllBridge: error = \(error)")
+                transactionError = error
+            }
+
+            return AllBridgeMultiSwapStellarConfirmationQuote(
+                amountIn: amountIn,
+                expectedAmountOut: amountOut,
+                recipient: storage.recipient(blockchainType: tokenIn.blockchainType),
+                crosschain: crosschain,
+                slippage: slippage,
+                transactionEnvelope: transactionEnvelope,
+                fee: fee,
+                transactionError: transactionError
+            )
+        }
 
         throw SwapError.convertionError
     }
@@ -463,13 +523,13 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         let crosschain = tokenIn.blockchainType != tokenOut.blockchainType
         if !crosschain {
             let view = ThemeNavigationStack {
-                RecipientAndSlippageMultiSwapSettingsView(tokenIn: tokenOut, storage: storage, onChangeSettings: onChangeSettings)
+                RecipientAndSlippageMultiSwapSettingsView(tokenOut: tokenOut, storage: storage, onChangeSettings: onChangeSettings)
             }
             return AnyView(view)
         }
 
         let view = ThemeNavigationStack {
-            RecipientMultiSwapSettingsView(tokenIn: tokenOut, storage: storage, onChangeSettings: onChangeSettings)
+            RecipientMultiSwapSettingsView(tokenOut: tokenOut, storage: storage, onChangeSettings: onChangeSettings)
         }
         return AnyView(view)
     }
@@ -516,7 +576,23 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
             do {
                 _ = try await tronKitWrapper.send(createdTranaction: quote.createdTransaction)
             } catch {
-                logger?.log(level: .error, message: "AllBridge SendEVM Error: \(error)")
+                logger?.log(level: .error, message: "AllBridge SendTron Error: \(error)")
+
+                throw error
+            }
+        } else if let quote = quote as? AllBridgeMultiSwapStellarConfirmationQuote {
+            guard let stellarKit = stellarKitManager.stellarKit else {
+                throw SwapError.noStellarKit
+            }
+
+            guard let account = Core.shared.accountManager.activeAccount, let keyPair = try? StellarKitManager.keyPair(accountType: account.type) else {
+                throw SwapError.noStellarKit
+            }
+
+            do {
+                _ = try await StellarKit.Kit.send(transactionEnvelope: quote.transactionEnvelope, keyPair: keyPair, testNet: false)
+            } catch {
+                logger?.log(level: .error, message: "AllBridge SendStellar Error: \(error)")
 
                 throw error
             }
@@ -539,6 +615,7 @@ extension AllBridgeMultiSwapProvider {
         case noGasPrice
         case noGasLimit
         case noEvmKitWrapper
+        case noStellarKit
     }
 
     struct AbToken: ImmutableMappable {
@@ -612,6 +689,14 @@ extension AllBridgeMultiSwapProvider {
             to = try map.value("to")
             value = try? map.value("value")
             data = try map.value("data")
+        }
+    }
+
+    struct StellarSwapResponse: ImmutableMappable {
+        let transactionEnvelope: String
+
+        init(map: Map) throws {
+            transactionEnvelope = try map.value("from")
         }
     }
 }

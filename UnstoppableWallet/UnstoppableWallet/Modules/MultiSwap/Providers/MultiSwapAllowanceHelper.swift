@@ -5,6 +5,10 @@ import SwiftUI
 
 class MultiSwapAllowanceHelper {
     private let adapterManager = Core.shared.adapterManager
+    private let addressesForRevoke: [BlockchainType: String] = [
+        .ethereum: "0xdac17f958d2ee523a2206206994597c13d831ec7",
+        .tron: "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t",
+    ]
 
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
         switch step {
@@ -39,21 +43,15 @@ class MultiSwapAllowanceHelper {
                 }
             }
 
-            do {
-                let allowance = try await adapter.allowance(spenderAddress: spenderAddress, defaultBlockParameter: .latest)
-                print("allowance: =", allowance)
-                if amount <= allowance {
-                    return .allowed
-                } else {
-                    return .notEnough(
-                        appValue: AppValue(token: token, value: allowance),
-                        spenderAddress: spenderAddress,
-                        revokeRequired: allowance > 0 && mustBeRevoked(token: token)
-                    )
-                }
-            } catch {
-                print(":! ", error)
-                throw error
+            let allowance = try await adapter.allowance(spenderAddress: spenderAddress, defaultBlockParameter: .latest)
+            if amount <= allowance {
+                return .allowed
+            } else {
+                return .notEnough(
+                    appValue: AppValue(token: token, value: allowance),
+                    spenderAddress: spenderAddress,
+                    revokeRequired: allowance > 0 && mustBeRevoked(token: token)
+                )
             }
         } catch {
             return .unknown
@@ -71,10 +69,10 @@ class MultiSwapAllowanceHelper {
     }
 
     private func mustBeRevoked(token: Token) -> Bool {
-        let addressesForRevoke = ["0xdac17f958d2ee523a2206206994597c13d831ec7"]
-
-        if case .ethereum = token.blockchainType, case let .eip20(address) = token.type, addressesForRevoke.contains(address.lowercased()) {
-            return true
+        for (blockchainType, addressToRevoke) in addressesForRevoke {
+            if blockchainType == token.blockchainType, case let .eip20(address) = token.type, address.lowercased() == addressToRevoke {
+                return true
+            }
         }
 
         return false
@@ -156,7 +154,7 @@ extension MultiSwapAllowanceHelper {
         }
 
         override var id: String {
-            "evm_unlock"
+            "eip20_unlock"
         }
     }
 }

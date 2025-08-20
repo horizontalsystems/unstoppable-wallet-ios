@@ -1962,6 +1962,8 @@
 		6BBB92BB2D11648E00112409 /* PromoCodeBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBB92B92D11648E00112409 /* PromoCodeBottomSheetViewModel.swift */; };
 		6BBCE4A32BDA419200ABBD55 /* Web3Wallet in Frameworks */ = {isa = PBXBuildFile; productRef = 6BBCE4A22BDA419200ABBD55 /* Web3Wallet */; };
 		6BBCE4A52BDA419B00ABBD55 /* Web3Wallet in Frameworks */ = {isa = PBXBuildFile; productRef = 6BBCE4A42BDA419B00ABBD55 /* Web3Wallet */; };
+		6BBD462D2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBD462C2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift */; };
+		6BBD462E2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBD462C2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift */; };
 		6BCD53002A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
 		6BCD53012A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
 		6BCD53022A161F4100993F20 /* ICloudBackupTermsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F92A161F4100993F20 /* ICloudBackupTermsViewModel.swift */; };
@@ -4458,6 +4460,7 @@
 		6BBB92B22D10142900112409 /* PurchaseBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		6BBB92B62D11646600112409 /* PromoCodeBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCodeBottomSheetView.swift; sourceTree = "<group>"; };
 		6BBB92B92D11648E00112409 /* PromoCodeBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCodeBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		6BBD462C2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBridgeMultiSwapStellarConfirmationQuote.swift; sourceTree = "<group>"; };
 		6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupCloudModule.swift; sourceTree = "<group>"; };
 		6BCD52F92A161F4100993F20 /* ICloudBackupTermsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewModel.swift; sourceTree = "<group>"; };
 		6BCD52FA2A161F4100993F20 /* ICloudBackupTermsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewController.swift; sourceTree = "<group>"; };
@@ -8038,6 +8041,7 @@
 			children = (
 				6BF655882E49E61A0055A9D5 /* AllBridgeMultiSwapEvmConfirmationQuote.swift */,
 				6B71E9C12E4DB9FC0097E234 /* AllBridgeMultiSwapTronConfirmationQuote.swift */,
+				6BBD462C2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift */,
 				6BF655852E49BF6C0055A9D5 /* AllBridgeMultiSwapBtcQuote.swift */,
 				6B5FD7DA2E43161F00FEF510 /* AllBridgeMultiSwapProvider.swift */,
 				6B5FD7DD2E44788000FEF510 /* AllBridgeMultiSwapEvmQuote.swift */,
@@ -10222,6 +10226,7 @@
 				11B35B501A30615698B04C96 /* AddEvmTokenBlockchainService.swift in Sources */,
 				11B35E57C6406D2249A23E6F /* SendEvmTransactionService.swift in Sources */,
 				11B352AB213E0F3C147EAEE9 /* SendEvmTransactionViewController.swift in Sources */,
+				6BBD462E2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift in Sources */,
 				D06669032A31B559004B048D /* TronRecipientAddressViewModel.swift in Sources */,
 				11B350B7D3DDBEE4F5B6E914 /* SendEvmTransactionViewModel.swift in Sources */,
 				11B354A6D78AA69DC3B8E496 /* SwapApproveConfirmationViewController.swift in Sources */,
@@ -12540,6 +12545,7 @@
 				D34338EE2C885895001FCAD2 /* JettonAdapter.swift in Sources */,
 				11B35521FDF21F9B1667AF72 /* Eip20Kit.swift in Sources */,
 				11B355734D16C412220BBEBD /* NftKit.swift in Sources */,
+				6BBD462D2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift in Sources */,
 				11B352309B81355B88BF6B66 /* OneInchKit.swift in Sources */,
 				D3833AD72BEE1A7900ACECFB /* MarketWatchlistView.swift in Sources */,
 				D3384D1A2BFF0CAF00515664 /* MarketMarketCapView.swift in Sources */,
@@ -13983,7 +13989,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/TronKit.Swift.git";
 			requirement = {
 				kind = exactVersion;
-				version = 1.1.0;
+				version = 1.2.0;
 			};
 		};
 		D08C93AD2B91E37E00A7D1D5 /* XCRemoteSwiftPackageReference "Hodler" */ = {
@@ -14151,7 +14157,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/StellarKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 1.1.0;
+				version = 1.2.0;
 			};
 		};
 		D3AF5A8729FFD85800C1399E /* XCRemoteSwiftPackageReference "RxSwift" */ = {
