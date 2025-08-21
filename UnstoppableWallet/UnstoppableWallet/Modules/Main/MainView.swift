@@ -27,7 +27,7 @@ struct MainView: View {
                 }
 
                 HStack(spacing: 0) {
-                    ForEach(MainViewModel.Tab.allCases, id: \.self) { tab in
+                    ForEach(viewModel.tabs, id: \.self) { tab in
                         ZStack {
                             Image(tab.image).icon(color: viewModel.selectedTab == tab ? .themeJacob : .themeGray)
 
