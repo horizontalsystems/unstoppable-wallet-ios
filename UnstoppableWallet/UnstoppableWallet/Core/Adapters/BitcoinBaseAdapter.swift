@@ -454,7 +454,7 @@ extension BitcoinBaseAdapter: IDepositAdapter {
     func usedAddresses(change: Bool) -> [UsedAddress] {
         abstractKit.usedAddresses(change: change).map {
             let url = explorerUrl(address: $0.address).flatMap { URL(string: $0) }
-            return UsedAddress(index: $0.index, address: $0.address, explorerUrl: url)
+            return UsedAddress(index: $0.index, address: $0.address, explorerUrl: url, transactionsCount: nil)
         }.sorted { $0.index < $1.index }
     }
 }
@@ -483,11 +483,13 @@ public struct UsedAddress: Hashable {
     let index: Int
     let address: String
     let explorerUrl: URL?
+    let transactionsCount: Int?
 
     public func hash(into hasher: inout Hasher) {
         hasher.combine(index)
         hasher.combine(address)
         hasher.combine(explorerUrl?.absoluteString)
+        hasher.combine(transactionsCount)
     }
 }
 

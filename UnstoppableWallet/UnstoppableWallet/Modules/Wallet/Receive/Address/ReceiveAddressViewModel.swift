@@ -1,9 +1,11 @@
 import Combine
 import Foundation
+import MarketKit
 
 protocol IReceiveAddressService {
     var title: String { get }
     var coinName: String { get }
+    var coinType: BlockchainType { get }
     var state: DataStatus<ReceiveAddress> { get }
     var statusUpdatedPublisher: AnyPublisher<DataStatus<ReceiveAddress>, Never> { get }
 }
@@ -74,6 +76,18 @@ extension ReceiveAddressViewModel {
 
     var coinName: String {
         service.coinName
+    }
+
+    var usedAddressesTitle: String {
+        service.coinType == .monero ? "deposit.subaddresses.title".localized : "deposit.used_addresses.title".localized
+    }
+
+    var usedAddressesDescription: String {
+        service.coinType == .monero ? "deposit.subaddresses.description".localized : "deposit.used_addresses.description".localized(coinName)
+    }
+
+    var hasChangeAddresses: Bool {
+        !(service.coinType == .monero)
     }
 
     func set(amount: String) {

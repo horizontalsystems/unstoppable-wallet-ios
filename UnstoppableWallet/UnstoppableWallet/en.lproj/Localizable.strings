@@ -395,7 +395,6 @@
 "deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";
 
 "deposit.not_active" = "Not active";
-"deposit.used_addresses" = "Used Addresses";
 "deposit.not_active.title" = "Not Active Address";
 "deposit.not_active.tron_description" = "Newly created accounts on the TRON blockchain are inactive and cannot be queried or explored. They need to be activated.\n\nTransferring TRX or TRC-10 tokens to an inactive account address will activate the account. Activating a new account on the Tron chain requires a fee of 1 TRX";
 "deposit.stellar.inactive_asset.title" = "Activate Token";
@@ -407,6 +406,10 @@
 
 "receive_used_addresses.external" = "Receive Addresses";
 "receive_used_addresses.change" = "Change Addresses";
+
+"deposit.subaddresses.title" = "Subaddresses";
+"deposit.subaddresses.description" = "Subaddresses let you use multiple unique addresses within one wallet for convenience and enhanced privacy.";
+"deposit.subaddresses.transactions_count" = "Transactions: %@";
 
 "deposit.zcash.restore.description" = "Have you previously owned any ZEC coins?";
 "deposit.zcash.restore.already_own" = "Yes, I already own";

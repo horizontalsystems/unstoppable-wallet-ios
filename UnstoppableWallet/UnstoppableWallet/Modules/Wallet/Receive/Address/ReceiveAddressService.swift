@@ -95,6 +95,10 @@ extension ReceiveAddressService: IReceiveAddressService {
         wallet.coin.name
     }
 
+    var coinType: MarketKit.BlockchainType {
+        wallet.token.blockchainType
+    }
+
     var statusUpdatedPublisher: AnyPublisher<DataStatus<ReceiveAddress>, Never> {
         stateUpdatedSubject.eraseToAnyPublisher()
     }
