@@ -54,7 +54,6 @@ class StartScreenAlertManager {
             } onDismiss: { [weak self] in
                 self?.handleNextAlert()
             }
-            stat(page: .main, event: .open(page: .whatsNews))
         } else if accountManager.accountsLost {
             Coordinator.shared.present(type: .bottomSheet) { isPresented in
                 AccountsLostView(isPresented: isPresented)
