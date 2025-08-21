@@ -71,6 +71,10 @@ extension MainViewModel {
     var lastCreatedAccount: Account? {
         accountManager.popLastCreatedAccount()
     }
+
+    var tabs: [Tab] {
+        (showMarket ? [.markets] : []) + [.wallet, .transactions, .settings]
+    }
 }
 
 extension MainViewModel {
