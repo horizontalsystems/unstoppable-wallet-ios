@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import HdWalletKit
 import HsToolKit
@@ -16,6 +17,7 @@ class MoneroAdapter {
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
     private let balanceStateSubject = PublishSubject<AdapterState>()
     let transactionRecordsSubject = PublishSubject<[BitcoinTransactionRecord]>()
+    private let depositAddressSubject = PassthroughSubject<DataStatus<DepositAddress>, Never>()
 
     private(set) var balanceState: AdapterState {
         didSet {
@@ -36,6 +38,7 @@ class MoneroAdapter {
 
             kit = try MoneroKit.Kit(
                 mnemonic: .bip39(seed: words, passphrase: passphrase),
+                account: 0,
                 restoreHeight: UInt64(restoreSettings.birthdayHeight ?? 0),
                 walletId: wallet.account.id,
                 node: node,
@@ -180,6 +183,10 @@ extension MoneroAdapter: IAdapter {
 }
 
 extension MoneroAdapter: MoneroKitDelegate {
+    func subAddressesUpdated(subaddresses _: [MoneroKit.SubAddress]) {
+        depositAddressSubject.send(.completed(receiveAddress))
+    }
+
     func balanceDidChange(balanceInfo: MoneroKit.BalanceInfo) {
         moneroBalanceDataSubject.onNext(moneroBalanceData(balanceInfo: balanceInfo))
     }
@@ -315,12 +322,15 @@ extension MoneroAdapter: IDepositAdapter {
         DepositAddress(kit.receiveAddress)
     }
 
-    func usedAddresses(change _: Bool) -> [UsedAddress] {
-        []
-//        kit.usedAddresses(change: change).map {
-//            let url = explorerUrl(address: $0.address).flatMap { URL(string: $0) }
-//            return UsedAddress(index: $0.index, address: $0.address, explorerUrl: url)
-//        }.sorted { $0.index < $1.index }
+    var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {
+        depositAddressSubject.eraseToAnyPublisher()
+    }
+
+    func usedAddresses(change: Bool) -> [UsedAddress] {
+        if change { return [] }
+        return kit.usedAddresses.map {
+            UsedAddress(index: $0.index, address: $0.address, explorerUrl: nil, transactionsCount: $0.transactionsCount)
+        }
     }
 }
 

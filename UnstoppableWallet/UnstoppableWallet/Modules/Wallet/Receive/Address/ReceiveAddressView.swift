@@ -49,11 +49,14 @@ struct ReceiveAddressView: View {
                             NavigationRow(destination: {
                                 UsedAddressesView(
                                     coinName: viewModel.coinName,
+                                    title: viewModel.usedAddressesTitle,
+                                    description: viewModel.usedAddressesDescription,
+                                    hasChangeAddresses: viewModel.hasChangeAddresses,
                                     usedAddresses: usedAddresses,
                                     onDismiss: onDismiss ?? { presentationMode.wrappedValue.dismiss() }
                                 )
                             }) {
-                                Text("deposit.used_addresses".localized).themeSubhead2()
+                                Text(viewModel.usedAddressesTitle).themeSubhead2()
                                 Image.disclosureIcon
                             }
                         }
