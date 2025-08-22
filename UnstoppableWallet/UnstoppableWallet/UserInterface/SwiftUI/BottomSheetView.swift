@@ -152,7 +152,7 @@ extension BottomSheetView {
         case remote(url: String, placeholder: String?)
 
         static let warning: Self = .local(name: "warning_2_24", tint: .themeJacob)
-        static let info: Self = .local(name: "circle_information_24", tint: .themeGray)
+        static let info: Self = .local(name: "information", tint: .themeGray)
         static let trash: Self = .local(name: "trash_24", tint: .themeLucian)
     }
 
