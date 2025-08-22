@@ -69,7 +69,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
     private var tokenPairs: [Token: AbToken] = [:]
     @Published private var useMevProtection: Bool = false
 
-    init(storage: MultiSwapSettingStorage, logger: Logger? = Logger(minLogLevel: .debug)) {
+    init(storage: MultiSwapSettingStorage, logger: Logger? = nil) {
         self.storage = storage
         self.logger = logger
         networkManager = NetworkManager(logger: logger)
@@ -316,14 +316,9 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
     }
 
     func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
-        guard let abTokenIn = tokenPairs[tokenIn] else {
-            throw SwapError.unsupportedTokenIn
-        }
-
         let crosschain = tokenIn.blockchainType != tokenOut.blockchainType
 
         let amountOut = try await estimateAmountOut(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
-//        let bridgeAddress = abTokenIn.bridgeAddress
 
         if tokenIn.blockchainType.isEvm {
             let evmResponse: EvmSwapResponse = try await fetchTransactionData(
@@ -505,12 +500,9 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                     self?.localStorage.useMevProtection = newValue
                 }
 
-                guard Core.shared.purchaseManager.activated(.vipSupport) else {
-                    // Coordinator.shared.presentPurchases(onSuccess: successBlock)
-                    return
+                Coordinator.shared.performAfterPurchase(premiumFeature: .vipSupport, page: .swap, trigger: .mevProtection) {
+                    successBlock()
                 }
-
-                successBlock()
             }
         )
 
@@ -581,10 +573,6 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 throw error
             }
         } else if let quote = quote as? AllBridgeMultiSwapStellarConfirmationQuote {
-            guard let stellarKit = stellarKitManager.stellarKit else {
-                throw SwapError.noStellarKit
-            }
-
             guard let account = Core.shared.accountManager.activeAccount, let keyPair = try? StellarKitManager.keyPair(accountType: account.type) else {
                 throw SwapError.noStellarKit
             }

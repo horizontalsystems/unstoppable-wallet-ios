@@ -442,7 +442,7 @@
 "send.address_placeholder" = "Address";
 "send.address_or_domain_placeholder" = "Address or Domain";
 "send.fee" = "Fee";
-"send.network_fee" = "Network Fee";
+"send.network_fee" = "Fee";
 "send.estimated_fee" = "Estimated Fee";
 "send.max_fee" = "Max Fee";
 "send.duration.hours" = "%d h.";
@@ -2090,7 +2090,7 @@
 "fee_settings.time_lock" = "Time Lock";
 "fee_settings.time_lock.description" = "TimeLock works only for sending to BIP44 addresses (starting with 1)";
 
-"fee_settings.network_fee" = "Network Fee";
+"fee_settings.network_fee" = "Fee";
 "fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
 "fee_settings.l1_fee" = "L1 Fee";
 "fee_settings.l1_fee.info" = "The estimated cost of sending given transaction on layer 1 network.";

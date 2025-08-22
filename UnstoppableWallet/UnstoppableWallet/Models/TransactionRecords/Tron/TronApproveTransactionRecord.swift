@@ -2,7 +2,7 @@ import Foundation
 import MarketKit
 import TronKit
 
-class TronApproveTransactionRecord: TronTransactionRecord {
+class TronApproveTransactionRecord: TronTransactionRecord, IApproveTransaction {
     let spender: String
     let value: AppValue
 

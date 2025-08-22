@@ -8,14 +8,10 @@ class EvmSendData: BaseSendEvmData, ISendData {
     let transactionData: TransactionData?
     let transactionError: Error?
 
-    @Binding var useMevProtection: Bool?
-
-    init(decoration: EvmDecoration, transactionData: TransactionData?, transactionError: Error?, gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?, useMevProtection: Binding<Bool?>) {
+    init(decoration: EvmDecoration, transactionData: TransactionData?, transactionError: Error?, gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?) {
         self.decoration = decoration
         self.transactionData = transactionData
         self.transactionError = transactionError
-
-        _useMevProtection = useMevProtection
 
         super.init(gasPrice: gasPrice, evmFeeData: evmFeeData, nonce: nonce)
     }

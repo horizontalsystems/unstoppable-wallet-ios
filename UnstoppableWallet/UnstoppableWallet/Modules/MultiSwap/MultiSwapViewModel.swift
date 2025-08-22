@@ -61,14 +61,16 @@ class MultiSwapViewModel: ObservableObject {
                 availableBalance = adapter.balanceData.available
 
                 adapter.balanceStateUpdatedObservable
-                    .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                    .observeOn(MainScheduler.instance)
                     .subscribe { [weak self] state in
                         self?.adapterState = state
                     }
                     .disposed(by: balanceDisposeBag)
 
                 adapter.balanceDataUpdatedObservable
-                    .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                    .observeOn(MainScheduler.instance)
                     .subscribe { [weak self] balanceData in
                         self?.availableBalance = balanceData.available
                     }

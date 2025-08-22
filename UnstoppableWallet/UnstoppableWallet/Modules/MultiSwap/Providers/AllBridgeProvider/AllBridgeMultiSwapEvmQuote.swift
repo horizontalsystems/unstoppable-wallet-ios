@@ -26,7 +26,7 @@ class AllBridgeMultiSwapEvmQuote: BaseEvmMultiSwapQuote {
     }
 
     override func fields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?) -> [MultiSwapMainField] {
-        var fields = super.fields(tokenIn: tokenIn, tokenOut: tokenOut, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate)
+        var fields = [MultiSwapMainField]()
 
         if let recipient {
             fields.append(.recipient(recipient.title))
@@ -36,13 +36,14 @@ class AllBridgeMultiSwapEvmQuote: BaseEvmMultiSwapQuote {
             fields.append(.slippage(slippage))
         }
 
+        fields.append(contentsOf: super.fields(tokenIn: tokenIn, tokenOut: tokenOut, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate))
         return fields
     }
 
     override func cautions() -> [CautionNew] {
         var cautions = super.cautions()
 
-        if crosschain {
+        if crosschain, cautions.isEmpty {
             cautions.append(CautionNew(title: "swap.allbridge.slip_protection".localized, text: "swap.allbridge.slip_protection.description".localized, type: .warning))
         }
 
