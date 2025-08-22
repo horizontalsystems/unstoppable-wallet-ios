@@ -2,16 +2,16 @@ import Kingfisher
 import MarketKit
 import SwiftUI
 
-struct MarketSectorView: View {
-    @StateObject var viewModel: MarketSectorViewModel
+struct MarketPlatformView: View {
+    @StateObject var viewModel: MarketPlatformViewModel
     @StateObject var chartViewModel: MetricChartViewModel
     @StateObject var watchlistViewModel: WatchlistViewModel
     @Binding var isPresented: Bool
 
-    init(isPresented: Binding<Bool>, sector: CoinCategory) {
-        _viewModel = StateObject(wrappedValue: MarketSectorViewModel(sector: sector))
-        _chartViewModel = StateObject(wrappedValue: MetricChartViewModel.sectorInstance(sector: sector))
-        _watchlistViewModel = StateObject(wrappedValue: WatchlistViewModel(page: .sector))
+    init(isPresented: Binding<Bool>, platform: TopPlatform) {
+        _viewModel = StateObject(wrappedValue: MarketPlatformViewModel(platform: platform))
+        _chartViewModel = StateObject(wrappedValue: MetricChartViewModel.platformInstance(platform: platform))
+        _watchlistViewModel = StateObject(wrappedValue: WatchlistViewModel(page: .topPlatform))
         _isPresented = isPresented
     }
 
@@ -41,19 +41,11 @@ struct MarketSectorView: View {
                     }
                 }
             }
-            .navigationTitle(viewModel.sector.name)
+            .navigationTitle("top_platform.title".localized(viewModel.platform.blockchain.name))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("button.close".localized) {
                         isPresented = false
-                    }
-                }
-
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button(action: {
-                        Coordinator.shared.present(info: .init(title: viewModel.sector.name, description: viewModel.sectorDesctiprion))
-                    }) {
-                        Image("information").icon()
                     }
                 }
             }
@@ -112,7 +104,7 @@ struct MarketSectorView: View {
                     rank: marketInfo.marketCapRank,
                     diff: marketInfo.priceChangeValue(timePeriod: viewModel.timePeriod),
                     action: {
-                        Coordinator.shared.presentCoinPage(coin: coin, page: .marketSector)
+                        Coordinator.shared.presentCoinPage(coin: coin, page: .globalMetricsTvlInDefi)
                     }
                 )
                 .watchlistSwipeActions(viewModel: watchlistViewModel, coinUid: coin.uid)

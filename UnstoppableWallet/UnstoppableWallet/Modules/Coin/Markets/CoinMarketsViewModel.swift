@@ -134,10 +134,6 @@ extension CoinMarketsViewModel {
     enum VerifiedFilter: String, CaseIterable {
         case all
         case verified
-
-        var title: String {
-            "coin_markets.filter.verified".localized
-        }
     }
 
     enum MarketTypeFilter: String, CaseIterable {

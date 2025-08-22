@@ -75,7 +75,7 @@ struct MarketPlatformsView: View {
                     diff: platform.changes[viewModel.timePeriod],
                     action: {
                         Coordinator.shared.present { isPresented in
-                            MarketPlatformViewNew(isPresented: isPresented, platform: platform)
+                            MarketPlatformView(isPresented: isPresented, platform: platform)
                                 .ignoresSafeArea()
                         }
 
