@@ -72,8 +72,7 @@ extension WalletConnectSendHandler: ISendHandler {
             transactionError: transactionError,
             gasPrice: gasPriceData?.userDefined,
             evmFeeData: evmFeeData,
-            nonce: transactionSettings?.nonce,
-            useMevProtection: .constant(nil)
+            nonce: transactionSettings?.nonce
         )
     }
 

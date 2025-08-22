@@ -2,7 +2,7 @@ import EvmKit
 import Foundation
 import MarketKit
 
-class ApproveTransactionRecord: EvmTransactionRecord {
+class ApproveTransactionRecord: EvmTransactionRecord, IApproveTransaction {
     let spender: String
     let value: AppValue
 
@@ -16,4 +16,9 @@ class ApproveTransactionRecord: EvmTransactionRecord {
     override var mainValue: AppValue? {
         value
     }
+}
+
+protocol IApproveTransaction {
+    var spender: String { get }
+    var value: AppValue { get }
 }

@@ -60,7 +60,7 @@ class MultiSwapAllowanceHelper {
 
     private func pendingAllowance(pendingTransactions: [TransactionRecord], spenderAddress: Address) -> Decimal? {
         for transaction in pendingTransactions {
-            if let record = transaction as? ApproveTransactionRecord, record.spender == spenderAddress.raw {
+            if let record = transaction as? IApproveTransaction, record.spender.lowercased() == spenderAddress.raw.lowercased() {
                 return record.value.value
             }
         }
@@ -70,7 +70,7 @@ class MultiSwapAllowanceHelper {
 
     private func mustBeRevoked(token: Token) -> Bool {
         for (blockchainType, addressToRevoke) in addressesForRevoke {
-            if blockchainType == token.blockchainType, case let .eip20(address) = token.type, address.lowercased() == addressToRevoke {
+            if blockchainType == token.blockchainType, case let .eip20(address) = token.type, address.lowercased() == addressToRevoke.lowercased() {
                 return true
             }
         }

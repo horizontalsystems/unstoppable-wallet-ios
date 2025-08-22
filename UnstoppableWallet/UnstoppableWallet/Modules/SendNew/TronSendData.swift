@@ -125,6 +125,14 @@ class TronSendData: ISendData {
                 rate: rates[token.coin.uid]
             )
 
+        case let decoration as ApproveEip20Decoration:
+            return approveFields(
+                spender: decoration.spender,
+                value: decoration.value,
+                contractAddress: decoration.contractAddress,
+                currency: currency,
+                rates: rates
+            )
         default:
             return []
         }
@@ -147,6 +155,57 @@ class TronSendData: ISendData {
                 blockchainType: token.blockchainType
             ),
         ])]
+    }
+
+    private func approveFields(spender: TronKit.Address, value: BigUInt, contractAddress: TronKit.Address, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
+        guard
+            let coinServiceFactory = EvmCoinServiceFactory(
+                blockchainType: .tron,
+                marketKit: Core.shared.marketKit,
+                currencyManager: Core.shared.currencyManager,
+                coinManager: Core.shared.coinManager
+            ),
+            let coinService = coinServiceFactory.coinService(contractAddress: contractAddress),
+            let value = value.toDecimal(decimals: coinService.token.decimals)
+        else {
+            return []
+        }
+
+        let isRevokeAllowance = value == 0 // Check approved new value or revoked last allowance
+        let approveValue = AppValue(token: coinService.token, value: value)
+
+        var fields: [SendField] = []
+        if isRevokeAllowance {
+            fields.append(
+                .amount(
+                    title: "approve.confirmation.you_revoke".localized,
+                    token: coinService.token,
+                    appValueType: .withoutAmount(code: coinService.token.coin.code),
+                    currencyValue: nil,
+                    type: .neutral
+                )
+            )
+        } else {
+            fields.append(
+                .amount(
+                    title: "approve.confirmation.you_approve".localized,
+                    token: coinService.token,
+                    appValueType: approveValue.isMaxValue ? .infinity(code: approveValue.code) : .regular(appValue: approveValue),
+                    currencyValue: approveValue.isMaxValue ? nil : rates[contractAddress.base58].map { CurrencyValue(currency: currency, value: $0 * value) },
+                    type: .neutral
+                )
+            )
+        }
+
+        fields.append(
+            .address(
+                title: "approve.confirmation.spender".localized,
+                value: spender.base58,
+                blockchainType: coinService.token.blockchainType
+            )
+        )
+
+        return [.init(fields)]
     }
 
     func caution(transactionError: Error, feeToken: Token) -> CautionNew {

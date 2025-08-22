@@ -14009,7 +14009,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/TronKit.Swift.git";
 			requirement = {
 				kind = exactVersion;
-				version = 1.2.0;
+				version = 1.2.1;
 			};
 		};
 		D08C93AD2B91E37E00A7D1D5 /* XCRemoteSwiftPackageReference "Hodler" */ = {

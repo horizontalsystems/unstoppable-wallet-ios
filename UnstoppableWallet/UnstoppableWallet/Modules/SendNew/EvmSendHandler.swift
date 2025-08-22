@@ -10,16 +10,10 @@ class EvmSendHandler {
     private let decorator = EvmDecorator()
     private let evmFeeEstimator = EvmFeeEstimator()
 
-    @State private var useMevProtection: Bool?
-
     init(baseToken: Token, transactionData: TransactionData, evmKitWrapper: EvmKitWrapper) {
         self.baseToken = baseToken
         self.transactionData = transactionData
         self.evmKitWrapper = evmKitWrapper
-
-        if evmKitWrapper.mevProtectionEnabled {
-            useMevProtection = true
-        }
     }
 }
 
@@ -74,8 +68,7 @@ extension EvmSendHandler: ISendHandler {
             transactionError: transactionError,
             gasPrice: gasPriceData?.userDefined,
             evmFeeData: evmFeeData,
-            nonce: transactionSettings?.nonce,
-            useMevProtection: $useMevProtection
+            nonce: transactionSettings?.nonce
         )
     }
 
@@ -100,7 +93,7 @@ extension EvmSendHandler: ISendHandler {
             transactionData: transactionData,
             gasPrice: gasPrice,
             gasLimit: gasLimit,
-            privateSend: true,
+            privateSend: false,
             nonce: data.nonce
         )
     }
