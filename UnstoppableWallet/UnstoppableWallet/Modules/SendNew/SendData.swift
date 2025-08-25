@@ -18,7 +18,7 @@ enum SendData {
     case swap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider)
     case walletConnect(request: WalletConnectRequest)
     case tonConnect(request: TonConnectSendTransactionRequest)
-    case monero(token: Token, amount: MoneroSendAmount, address: String)
+    case monero(token: Token, amount: MoneroSendAmount, address: String, memo: String?)
 }
 
 enum StellarSendData {

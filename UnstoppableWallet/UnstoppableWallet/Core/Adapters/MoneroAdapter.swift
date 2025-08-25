@@ -78,7 +78,7 @@ class MoneroAdapter {
                 amount: Decimal(transaction.amount) / coinRate,
                 to: transaction.recipientAddress,
                 sentToSelf: transaction.type == TransactionType.sentToSelf,
-                memo: nil,
+                memo: transaction.memo,
                 replaceable: false
             )
         case .incoming:
@@ -98,7 +98,7 @@ class MoneroAdapter {
                 showRawTransaction: false,
                 amount: Decimal(transaction.amount) / coinRate,
                 from: nil,
-                memo: nil
+                memo: transaction.memo
             )
         }
     }
@@ -242,8 +242,8 @@ extension MoneroAdapter {
         return Decimal(fee) / coinRate
     }
 
-    func send(to address: String, amount: MoneroSendAmount, priority: SendPriority) throws {
-        _ = try kit.send(to: address, amount: convertToPiconero(amount: amount), priority: priority)
+    func send(to address: String, amount: MoneroSendAmount, priority: SendPriority, memo: String?) throws {
+        _ = try kit.send(to: address, amount: convertToPiconero(amount: amount), priority: priority, memo: memo)
     }
 
     func convertToPiconero(amount: MoneroSendAmount) -> SendAmount {

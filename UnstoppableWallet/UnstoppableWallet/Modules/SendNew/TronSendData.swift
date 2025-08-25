@@ -133,6 +133,7 @@ class TronSendData: ISendData {
                 currency: currency,
                 rates: rates
             )
+
         default:
             return []
         }
