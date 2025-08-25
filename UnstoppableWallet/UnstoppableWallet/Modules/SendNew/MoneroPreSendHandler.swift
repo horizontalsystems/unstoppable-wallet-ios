@@ -52,10 +52,10 @@ extension MoneroPreSendHandler: IPreSendHandler {
     }
 
     func hasMemo(address _: String?) -> Bool {
-        false
+        true
     }
 
-    func sendData(amount: Decimal, address: String, memo _: String?) -> SendDataResult {
+    func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
         if !MoneroKit.Kit.isValid(address: address, networkType: MoneroAdapter.networkType) {
             return .invalid(cautions: [CautionNew(text: "send.address.invalid_address".localized, type: .error)])
         }
@@ -67,6 +67,6 @@ extension MoneroPreSendHandler: IPreSendHandler {
             moneroAmount = .value(amount)
         }
 
-        return .valid(sendData: .monero(token: token, amount: moneroAmount, address: address))
+        return .valid(sendData: .monero(token: token, amount: moneroAmount, address: address, memo: memo))
     }
 }

@@ -7,12 +7,14 @@ class MoneroSendHandler {
     private let adapter: MoneroAdapter
     private let amount: MoneroSendAmount
     private let address: String
+    private let memo: String?
 
-    init(token: Token, adapter: MoneroAdapter, amount: MoneroSendAmount, address: String) {
+    init(token: Token, adapter: MoneroAdapter, amount: MoneroSendAmount, address: String, memo: String?) {
         self.token = token
         self.adapter = adapter
         self.amount = amount
         self.address = address
+        self.memo = memo
     }
 }
 
@@ -44,6 +46,7 @@ extension MoneroSendHandler: ISendHandler {
             amount: amount,
             address: address,
             priority: priority ?? .default,
+            memo: memo,
             transactionError: transactionError,
             fee: feeData
         )
@@ -54,7 +57,7 @@ extension MoneroSendHandler: ISendHandler {
             throw SendError.invalidData
         }
 
-        try adapter.send(to: data.address, amount: data.amount, priority: data.priority)
+        try adapter.send(to: data.address, amount: data.amount, priority: data.priority, memo: data.memo)
     }
 }
 
@@ -64,14 +67,16 @@ extension MoneroSendHandler {
         let amount: MoneroSendAmount
         let address: String
         let priority: SendPriority
+        let memo: String?
         let transactionError: Error?
         let fee: BitcoinFeeData?
 
-        init(token: Token, amount: MoneroSendAmount, address: String, priority: SendPriority, transactionError: Error?, fee: BitcoinFeeData?) {
+        init(token: Token, amount: MoneroSendAmount, address: String, priority: SendPriority, memo: String?, transactionError: Error?, fee: BitcoinFeeData?) {
             self.token = token
             self.amount = amount
             self.address = address
             self.priority = priority
+            self.memo = memo
             self.transactionError = transactionError
             self.fee = fee
         }
@@ -195,6 +200,10 @@ extension MoneroSendHandler {
                 ),
             ])
 
+            if let memo {
+                fields.append(.levelValue(title: "send.confirmation.memo".localized, value: memo, level: .regular))
+            }
+
             return [.init(fields), .init(feeFields(feeToken: token, currency: currency, feeTokenRate: rate))]
         }
     }
@@ -213,7 +222,7 @@ extension MoneroSendHandler {
 }
 
 extension MoneroSendHandler {
-    static func instance(token: Token, amount: MoneroSendAmount, address: String) -> MoneroSendHandler? {
+    static func instance(token: Token, amount: MoneroSendAmount, address: String, memo: String?) -> MoneroSendHandler? {
         guard let adapter = Core.shared.adapterManager.adapter(for: token) as? MoneroAdapter else {
             return nil
         }
@@ -222,7 +231,8 @@ extension MoneroSendHandler {
             token: token,
             adapter: adapter,
             amount: amount,
-            address: address
+            address: address,
+            memo: memo
         )
     }
 }

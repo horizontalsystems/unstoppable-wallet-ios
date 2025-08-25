@@ -17,8 +17,8 @@ enum SendHandlerFactory {
             return TonSendHandler.instance(token: token, amount: amount, address: address, memo: memo)
         case let .stellar(data, token, memo):
             return StellarSendHandler.instance(data: data, token: token, memo: memo)
-        case let .monero(token, amount, address):
-            return MoneroSendHandler.instance(token: token, amount: amount, address: address)
+        case let .monero(token, amount, address, memo):
+            return MoneroSendHandler.instance(token: token, amount: amount, address: address, memo: memo)
         case let .swap(tokenIn, tokenOut, amountIn, provider):
             return MultiSwapSendHandler.instance(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider)
         case let .walletConnect(request):
