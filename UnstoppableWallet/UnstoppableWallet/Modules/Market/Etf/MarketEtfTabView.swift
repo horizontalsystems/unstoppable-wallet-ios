@@ -15,7 +15,7 @@ struct MarketEtfTabView: View {
         ThemeNavigationStack {
             ThemeView(style: .list) {
                 TabHeaderView(
-                    tabs: MarketEtfFetcher.EtfCategory.allCases.map(\.title),
+                    tabs: MarketEtfFetcher.EtfCategory.allCases.map { "market.etf.title".localized($0.title) },
                     currentTabIndex: Binding(
                         get: {
                             MarketEtfFetcher.EtfCategory.allCases.firstIndex(of: currentTab) ?? 0
@@ -25,6 +25,9 @@ struct MarketEtfTabView: View {
                         }
                     )
                 )
+
+                Divider()
+                    .background(Color.themeSteel.opacity(0.1))
 
                 MarketEtfView(category: currentTab, factory: viewModelFactory)
                     .id(currentTab)
