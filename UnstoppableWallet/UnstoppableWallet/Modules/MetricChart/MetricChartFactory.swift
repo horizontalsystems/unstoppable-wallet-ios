@@ -90,20 +90,17 @@ extension MetricChartFactory: IMetricChartFactory {
                 rightSideMode = .dominance(value: last, diff: (last - first) / first * 100)
             }
         case .etf:
-            if let last = itemData.indicators[MarketGlobalModule.totalInflow]?.last { // etf chart
-                value = Self.format(value: last, valueType: valueType)
+            if let last = itemData.indicators[MarketGlobalModule.totalAssets]?.last { // etf chart
+                value = ValueFormatter.instance.formatShort(currency: currencyManager.baseCurrency, value: last)
+            }
+            if let last = itemData.indicators[MarketGlobalModule.dailyInflow]?.last { // etf chart
+                let diffString = ValueFormatter.instance.formatShort(currency: currencyManager.baseCurrency, value: last, signType: .always)
+                valueDiff = diffString.map { ValueDiff(value: $0, trend: lastItem.value.isSignMinus ? .down : .up) }
             }
 
-            let valueString = ValueFormatter.instance.formatShort(currency: currencyManager.baseCurrency, value: lastItem.value, signType: .always)
-            valueDiff = valueString.map { ValueDiff(value: $0, trend: lastItem.value.isSignMinus ? .down : .up) }
             chartTrend = .neutral
 
-            if let last = itemData.indicators[MarketGlobalModule.totalAssets]?.last {
-                rightSideMode = .custom(
-                    title: "market.etf.total_net_assets".localized,
-                    value: ValueFormatter.instance.formatShort(currency: currencyManager.baseCurrency, value: last)
-                )
-            }
+            rightSideMode = .none
         case let .aggregated(aggregatedValue):
             value = Self.format(value: aggregatedValue, valueType: valueType)
             chartTrend = .neutral
@@ -139,12 +136,12 @@ extension MetricChartFactory: IMetricChartFactory {
             )
             indicators.append(totalIndicator)
         }
-        if let totalInflow = itemData.indicators[MarketGlobalModule.totalInflow] {
+        if let dailyInflow = itemData.indicators[MarketGlobalModule.dailyInflow] {
             let totalIndicator = PrecalculatedIndicator(
-                id: MarketGlobalModule.totalInflow,
+                id: MarketGlobalModule.dailyInflow,
                 enabled: false,
-                values: totalInflow,
-                configuration: ChartIndicator.LineConfiguration.totalInflow
+                values: dailyInflow,
+                configuration: ChartIndicator.LineConfiguration.dailyInflow
             )
             indicators.append(totalIndicator)
         }
@@ -173,17 +170,16 @@ extension MetricChartFactory: IMetricChartFactory {
 
         if let dominance = chartItem.indicators[ChartIndicator.LineConfiguration.dominanceId] {
             rightSideMode = .dominance(value: dominance, diff: nil)
-        } else if let totalAssets = chartItem.indicators[ChartIndicator.LineConfiguration.totalAssetId] {
-            let value = ValueFormatter.instance.formatShort(currency: currencyManager.baseCurrency, value: totalAssets)
-            rightSideMode = .custom(title: "market.etf.total_net_assets".localized, value: value)
         } else if let volume = chartItem.indicators[ChartData.volume] {
             rightSideMode = .volume(value: Self.format(value: volume, valueType: valueType))
         }
 
         // if etf chart
-        if let totalInflow = chartItem.indicators[ChartIndicator.LineConfiguration.totalInflowId] {
-            let formattedValue = ValueFormatter.instance.formatShort(currency: currencyManager.baseCurrency, value: totalInflow)
-            let diffString = ValueFormatter.instance.formatShort(currency: currencyManager.baseCurrency, value: value, signType: .always)
+        if let totalAsset = chartItem.indicators[ChartIndicator.LineConfiguration.totalAssetId] {
+            let formattedValue = ValueFormatter.instance.formatShort(currency: currencyManager.baseCurrency, value: totalAsset)
+
+            let dailyInflow = chartItem.indicators[ChartIndicator.LineConfiguration.dailyInflowId]
+            let diffString = dailyInflow.flatMap { ValueFormatter.instance.formatShort(currency: currencyManager.baseCurrency, value: $0, signType: .always) }
             let diff = diffString.map { ValueDiff(value: $0, trend: value.isSignMinus ? .down : .up) }
 
             return ChartModule.SelectedPointViewItem(

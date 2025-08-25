@@ -167,12 +167,12 @@ public extension ChartIndicator.LineConfiguration {
         return indicator.json
     }
 
-    static var totalInflow: Self {
+    static var dailyInflow: Self {
         Self(color: ChartColor(.themeNina.withAlphaComponent(0.5)), width: 1)
     }
 
-    static var totalInflowId: String {
-        let indicator = PrecalculatedIndicator(id: MarketGlobalModule.totalInflow, enabled: false, values: [], configuration: totalAssets)
+    static var dailyInflowId: String {
+        let indicator = PrecalculatedIndicator(id: MarketGlobalModule.dailyInflow, enabled: false, values: [], configuration: dailyInflow)
         return indicator.json
     }
 }
