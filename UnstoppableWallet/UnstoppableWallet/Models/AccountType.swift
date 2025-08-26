@@ -240,20 +240,33 @@ enum AccountType: Identifiable {
         }
     }
 
-    var detailedDescription: String {
+    var watchAddress: String? {
         switch self {
         case let .evmAddress(address):
-            return address.eip55.shortened
+            return address.eip55
         case let .tronAddress(address):
-            return address.base58.shortened
+            return address.base58
         case let .tonAddress(address):
-            return address.shortened
+            return address
         case let .stellarAccount(accountId):
-            return accountId.shortened
+            return accountId
+        case let .hdExtendedKey(key):
+            switch key {
+            case .private: return nil
+            case let .public(publicKey):
+                switch key.derivedType {
+                case .account: return publicKey.extended()
+                default: return nil
+                }
+            }
         case let .btcAddress(address, _, _):
-            return address.shortened
-        default: return description
+            return address
+        default: return nil
         }
+    }
+
+    var detailedDescription: String {
+        watchAddress?.shortened ?? description
     }
 
     func evmAddress(chain: Chain) -> EvmKit.Address? {
