@@ -40,7 +40,7 @@ class CheckAddressViewModel: ObservableObject {
                     return nil
                 }
 
-                return FullCoin(coin: fullCoin.coin, tokens: fullCoin.tokens.filter { Eip20AddressValidator.supports(token: $0) }.sorted())
+                return FullCoin(coin: fullCoin.coin, tokens: fullCoin.tokens.filter { Eip20AddressValidator.supports(token: $0) }.ordered())
             }
         } catch {
             contractFullCoins = []

@@ -121,11 +121,7 @@ extension TechnicalAdvice {
     }
 }
 
-extension TechnicalAdvice.Advice: Identifiable {
-    public var id: Self {
-        self
-    }
-
+extension TechnicalAdvice.Advice {
     var title: String {
         switch self {
         case .oversold, .overbought: return "market.signal.risky".localized

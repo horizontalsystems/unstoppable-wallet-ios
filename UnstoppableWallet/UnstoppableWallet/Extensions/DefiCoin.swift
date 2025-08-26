@@ -9,13 +9,3 @@ extension DefiCoin {
         }
     }
 }
-
-extension DefiCoin: Hashable {
-    public static func == (lhs: DefiCoin, rhs: DefiCoin) -> Bool {
-        lhs.uid == rhs.uid
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(uid)
-    }
-}

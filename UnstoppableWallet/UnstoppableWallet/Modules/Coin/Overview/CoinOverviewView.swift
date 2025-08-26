@@ -241,7 +241,7 @@ struct CoinOverviewView: View {
 
     @ViewBuilder private func tokens(tokens: [Token]) -> some View {
         let shouldTrim = tokens.count > 4
-        let sortedTokens = tokens.sorted()
+        let sortedTokens = tokens.ordered()
         let walletTokens = viewModel.walletData.wallets.map(\.token)
         let trimmedTokens = !shouldTrim || tokensExpanded ? sortedTokens : Array(sortedTokens.prefix(3))
 

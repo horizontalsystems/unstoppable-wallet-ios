@@ -25,7 +25,7 @@ extension BlockchainTokensService {
     }
 
     func approveTokens(blockchain: Blockchain, tokens: [Token], enabledTokens: [Token], allowEmpty: Bool = false) {
-        let request = Request(blockchain: blockchain, tokens: tokens.sorted(), enabledTokens: enabledTokens, allowEmpty: allowEmpty)
+        let request = Request(blockchain: blockchain, tokens: tokens.ordered(), enabledTokens: enabledTokens, allowEmpty: allowEmpty)
 
         currentRequest = request
         requestRelay.accept(request)

@@ -373,7 +373,7 @@ class Core {
         let widgetCoinHandler = WidgetCoinEventHandler(marketKit: marketKit)
         let sendAddressHandler = AddressEventHandler(marketKit: marketKit)
         let telegramUserHandler = TelegramUserHandler(marketKit: marketKit)
-        let tonConnectHandler = TonConnectEventHandler(tonConnectManager: tonConnectManager)
+        // let tonConnectHandler = TonConnectEventHandler(tonConnectManager: tonConnectManager)
 
         appEventHandler.append(handler: walletConnectHandler)
         // eventHandler.append(handler: tonConnectHandler)

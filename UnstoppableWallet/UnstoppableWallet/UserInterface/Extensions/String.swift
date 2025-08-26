@@ -24,9 +24,3 @@ extension String {
 
     static let placeholder = "----"
 }
-
-extension String: Identifiable {
-    public var id: String {
-        self
-    }
-}

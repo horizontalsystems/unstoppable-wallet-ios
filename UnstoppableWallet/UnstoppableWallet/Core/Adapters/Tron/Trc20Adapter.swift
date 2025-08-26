@@ -86,9 +86,7 @@ extension Trc20Adapter: IAllowanceAdapter {
 
 extension Trc20Adapter: IApproveDataProvider {
     func approveSendData(token: Token, spenderAddress: Address, amount: BigUInt) throws -> SendData {
-        let spender = try TronKit.Address(address: spenderAddress.raw)
         let contract = try approveTrc20TriggerSmartContract(spenderAddress: spenderAddress, amount: amount)
-
         return .tron(token: token, contract: contract)
     }
 }

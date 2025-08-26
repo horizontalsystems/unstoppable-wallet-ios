@@ -19,57 +19,50 @@ struct MultiSwapApproveView: View {
 
     var body: some View {
         ThemeView {
-            if let sendData = viewModel.sendData {
-                BottomGradientWrapper {
-                    ScrollView {
-                        VStack(spacing: .margin12) {
-                            ListSection {
-                                ClickableRow(action: {
-                                    viewModel.set(unlimitedAmount: false)
-                                }) {
-                                    let appValue = AppValue(token: viewModel.token, value: viewModel.amount)
-                                    let amountString = appValue.formattedFull() ?? ""
-                                    row(text: amountString, selected: !viewModel.unlimitedAmount)
-                                }
-                                ClickableRow(action: {
-                                    viewModel.set(unlimitedAmount: true)
-                                }) {
-                                    row(text: "swap.unlock.unlimited".localized, selected: viewModel.unlimitedAmount)
-                                }
+            BottomGradientWrapper {
+                ScrollView {
+                    VStack(spacing: .margin12) {
+                        ListSection {
+                            ClickableRow(action: {
+                                viewModel.set(unlimitedAmount: false)
+                            }) {
+                                let appValue = AppValue(token: viewModel.token, value: viewModel.amount)
+                                let amountString = appValue.formattedFull() ?? ""
+                                row(text: amountString, selected: !viewModel.unlimitedAmount)
                             }
-
-                            Text("swap.unlock.description".localized)
-                                .themeSubhead2()
-                                .padding(.horizontal, .margin16)
-
-                            Spacer()
+                            ClickableRow(action: {
+                                viewModel.set(unlimitedAmount: true)
+                            }) {
+                                row(text: "swap.unlock.unlimited".localized, selected: viewModel.unlimitedAmount)
+                            }
                         }
-                        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
-                    }
-                } bottomContent: {
-                    Button(action: {
-                        unlockPresented = true
-                    }) {
-                        Text("swap.approve".localized)
-                    }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                }
 
-                NavigationLink(
-                    isActive: $unlockPresented,
-                    destination: {
-                        RegularSendView(sendData: sendData) {
-                            onSuccess()
-                            isPresented = false
-                        }
+                        Text("swap.unlock.description".localized)
+                            .themeSubhead2()
+                            .padding(.horizontal, .margin16)
+
+                        Spacer()
                     }
-                ) {
-                    EmptyView()
+                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                 }
+            } bottomContent: {
+                Button(action: {
+                    unlockPresented = true
+                }) {
+                    Text("swap.approve".localized)
+                }
+                .buttonStyle(PrimaryButtonStyle(style: .yellow))
             }
         }
         .navigationTitle("swap.unlock.title".localized)
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(isPresented: $unlockPresented) {
+            if let sendData = viewModel.sendData {
+                RegularSendView(sendData: sendData) {
+                    onSuccess()
+                    isPresented = false
+                }
+            }
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("button.cancel".localized) {

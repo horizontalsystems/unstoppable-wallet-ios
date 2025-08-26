@@ -19,8 +19,6 @@ enum SendModule {
             return SendModule.viewController(token: token, mode: mode, adapter: adapter)
         case let adapter as ISendZcashAdapter:
             return SendModule.viewController(token: token, mode: mode, adapter: adapter)
-        case let adapter as ISendEthereumAdapter:
-            return nil
         case let adapter as ISendTronAdapter:
             return SendTronModule.viewController(token: token, mode: mode, adapter: adapter)
         default: return nil

@@ -49,24 +49,18 @@ struct PreSendView: View {
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin16, trailing: .margin16))
                 .animation(.linear, value: viewModel.hasMemo)
             }
-
-            NavigationLink(
-                isActive: $confirmPresented,
-                destination: {
-                    if let sendData = viewModel.sendData {
-                        RegularSendView(sendData: sendData.sendData, address: sendData.address) {
-                            HudHelper.instance.show(banner: .sent)
-                            onDismiss()
-                        }
-                        .toolbarRole(.editor)
-                    }
-                }
-            ) {
-                EmptyView()
-            }
         }
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(isPresented: $confirmPresented) {
+            if let sendData = viewModel.sendData {
+                RegularSendView(sendData: sendData.sendData, address: sendData.address) {
+                    HudHelper.instance.show(banner: .sent)
+                    onDismiss()
+                }
+                .toolbarRole(.editor)
+            }
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 if let handler = viewModel.handler, handler.hasSettings {

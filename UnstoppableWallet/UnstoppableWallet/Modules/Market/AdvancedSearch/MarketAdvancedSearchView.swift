@@ -83,20 +83,13 @@ struct MarketAdvancedSearchView: View {
                         .buttonStyle(PrimaryButtonStyle(style: .gray))
                     }
                 }
-
-                NavigationLink(
-                    isActive: $resultsPresented,
-                    destination: {
-                        if case let .loaded(marketInfos) = viewModel.state {
-                            MarketAdvancedSearchResultsView(marketInfos: marketInfos, timePeriod: viewModel.priceChangePeriod, isParentPresented: $isPresented)
-                        }
-                    }
-                ) {
-                    EmptyView()
-                }
             }
             .navigationTitle("market.advanced_search.title".localized)
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(isPresented: $resultsPresented) {
+                if case let .loaded(marketInfos) = viewModel.state {
+                    MarketAdvancedSearchResultsView(marketInfos: marketInfos, timePeriod: viewModel.priceChangePeriod, isParentPresented: $isPresented)
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("market.advanced_search.reset_all".localized) {

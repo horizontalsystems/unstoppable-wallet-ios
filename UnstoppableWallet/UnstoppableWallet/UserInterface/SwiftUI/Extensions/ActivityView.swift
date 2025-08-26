@@ -25,9 +25,3 @@ struct ActivityViewInternal: UIViewControllerRepresentable {
 
     func updateUIViewController(_: UIActivityViewController, context _: UIViewControllerRepresentableContext<ActivityViewInternal>) {}
 }
-
-extension URL: Identifiable {
-    public var id: String {
-        absoluteString
-    }
-}

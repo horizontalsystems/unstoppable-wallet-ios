@@ -17,9 +17,3 @@ extension Blockchain {
         return explorerUrl.replacingOccurrences(of: "$ref", with: reference)
     }
 }
-
-extension Blockchain: Identifiable {
-    public var id: String {
-        uid
-    }
-}
