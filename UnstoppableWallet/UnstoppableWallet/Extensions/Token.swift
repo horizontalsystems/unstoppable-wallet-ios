@@ -56,16 +56,18 @@ extension Token {
     }
 }
 
-extension Token: Comparable {
-    public static func < (lhs: Token, rhs: Token) -> Bool {
-        let lhsTypeOrder = lhs.type.order
-        let rhsTypeOrder = rhs.type.order
+extension Array where Array.Element == Token {
+    func ordered() -> [Token] {
+        sorted { lhs, rhs in
+            let lhsTypeOrder = lhs.type.order
+            let rhsTypeOrder = rhs.type.order
 
-        guard lhsTypeOrder == rhsTypeOrder else {
-            return lhsTypeOrder < rhsTypeOrder
+            guard lhsTypeOrder == rhsTypeOrder else {
+                return lhsTypeOrder < rhsTypeOrder
+            }
+
+            return lhs.blockchainType.order < rhs.blockchainType.order
         }
-
-        return lhs.blockchainType.order < rhs.blockchainType.order
     }
 }
 

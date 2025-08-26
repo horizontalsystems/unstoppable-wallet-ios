@@ -105,7 +105,7 @@ struct PerformanceDataSelectView: View {
     private func presentTimePeriodSelector(period: Int) {
         Coordinator.shared.present(type: .alert) { isPresented in
             OptionAlertView(
-                title: "coin_overview.performance.period".localized(period ?? 0),
+                title: "coin_overview.performance.period".localized(period),
                 viewItems: viewModel.timePeriods.map {
                     let selected = period == 1 ? viewModel.firstPeriod : viewModel.secondPeriod
                     return .init(text: $0.title, selected: selected == $0)

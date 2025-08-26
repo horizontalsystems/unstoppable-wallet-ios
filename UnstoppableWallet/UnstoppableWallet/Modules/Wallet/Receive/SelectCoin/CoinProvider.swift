@@ -23,7 +23,7 @@ class CoinProvider {
 
     private var nativeFullCoins: [FullCoin] {
         do {
-            let blockchainTypes = BlockchainType.supported.sorted()
+            let blockchainTypes = BlockchainType.supported.ordered()
             let queries = blockchainTypes.map(\.nativeTokenQueries).flatMap { $0 }
             let coinUids = try marketKit
                 .tokens(queries: queries)

@@ -29,19 +29,17 @@ struct BackupDisclaimerView: View {
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                 }
             } bottomContent: {
-                NavigationLink(
-                    destination: BackupNameView(viewModel: viewModel, isPresented: $isPresented),
-                    isActive: $viewModel.namePushed
-                ) {
-                    Button(action: { viewModel.namePushed = true }) {
-                        Text("button.next".localized)
-                    }
+                Button(action: { viewModel.namePushed = true }) {
+                    Text("button.next".localized)
                 }
                 .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 .disabled(!isOn)
             }
         }
         .navigationBarTitle(backupDisclaimer.title)
+        .navigationDestination(isPresented: $viewModel.namePushed) {
+            BackupNameView(viewModel: viewModel, isPresented: $isPresented)
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("button.cancel".localized) {
@@ -49,5 +47,6 @@ struct BackupDisclaimerView: View {
                 }
             }
         }
+        .toolbarRole(.editor)
     }
 }

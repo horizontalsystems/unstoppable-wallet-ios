@@ -26,35 +26,30 @@ struct SendAddressView: View {
             AddressView(token: wallet.token, buttonTitle: "send.next_button".localized, destination: .send(fromAddress: fromAddress), address: address) { resolvedAddress in
                 self.resolvedAddress = resolvedAddress
             }
-
-            NavigationLink(
-                isActive: Binding(
-                    get: {
-                        resolvedAddress != nil
-                    }, set: { active in
-                        if !active {
-                            resolvedAddress = nil
-                        }
-                    }
-                ),
-                destination: {
-                    if let resolvedAddress, let handler = SendHandlerFactory.preSendHandler(wallet: wallet) {
-                        PreSendView(wallet: wallet, handler: handler, resolvedAddress: resolvedAddress, amount: amount) {
-                            if let onDismiss {
-                                onDismiss()
-                            } else {
-                                isPresented = false
-                            }
-                        }
-                        .toolbarRole(.editor)
-                    }
-                }
-            ) {
-                EmptyView()
-            }
         }
         .navigationTitle("address.title".localized)
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(
+            isPresented: Binding(
+                get: {
+                    resolvedAddress != nil
+                }, set: { active in
+                    if !active {
+                        resolvedAddress = nil
+                    }
+                }
+            )
+        ) {
+            if let resolvedAddress, let handler = SendHandlerFactory.preSendHandler(wallet: wallet) {
+                PreSendView(wallet: wallet, handler: handler, resolvedAddress: resolvedAddress, amount: amount) {
+                    if let onDismiss {
+                        onDismiss()
+                    } else {
+                        isPresented = false
+                    }
+                }
+                .toolbarRole(.editor)
+            }
+        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Button("button.cancel".localized) {

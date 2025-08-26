@@ -28,26 +28,25 @@ struct BackupNameView: View {
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                 }
             } bottomContent: {
-                NavigationLink(
-                    destination: BackupPasswordView(viewModel: viewModel, isPresented: $isPresented),
-                    isActive: $viewModel.passwordPushed
-                ) {
-                    Button(action: {
-                        viewModel.passwordPushed = true
-                    }) {
-                        Text("button.next".localized)
-                    }
+                Button(action: {
+                    viewModel.passwordPushed = true
+                }) {
+                    Text("button.next".localized)
                 }
                 .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 .disabled(viewModel.nameCautionState != .none)
             }
             .navigationTitle("backup_app.backup.name.title".localized)
             .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(isPresented: $viewModel.passwordPushed) {
+                BackupPasswordView(viewModel: viewModel, isPresented: $isPresented)
+            }
             .toolbar {
                 Button("button.cancel".localized) {
                     isPresented = false
                 }
             }
+            .toolbarRole(.editor)
         }
     }
 }

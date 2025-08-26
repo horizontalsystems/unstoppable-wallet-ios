@@ -37,8 +37,6 @@ class AllBridgeMultiSwapTronConfirmationQuote: IMultiSwapConfirmationQuote {
     }
 
     func cautions(baseToken: Token) -> [CautionNew] {
-        var cautions = [CautionNew]()
-
         if let transactionError {
             return [caution(transactionError: transactionError, feeToken: baseToken)]
         }
@@ -51,7 +49,7 @@ class AllBridgeMultiSwapTronConfirmationQuote: IMultiSwapConfirmationQuote {
             )]
         }
 
-        return cautions
+        return []
     }
 
     func priceSectionFields(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, baseToken _: MarketKit.Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate _: Decimal?) -> [SendField] {

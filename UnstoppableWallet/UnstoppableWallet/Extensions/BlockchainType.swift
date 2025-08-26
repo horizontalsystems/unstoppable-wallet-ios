@@ -269,8 +269,10 @@ extension BlockchainType {
     }
 }
 
-extension BlockchainType: Comparable {
-    public static func < (lhs: BlockchainType, rhs: BlockchainType) -> Bool {
-        lhs.order < rhs.order
+extension Array where Array.Element == BlockchainType {
+    func ordered() -> [BlockchainType] {
+        sorted { lhs, rhs in
+            lhs.order < rhs.order
+        }
     }
 }

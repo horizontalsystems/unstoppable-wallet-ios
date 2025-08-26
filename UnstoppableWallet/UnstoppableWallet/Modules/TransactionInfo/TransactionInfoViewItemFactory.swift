@@ -622,7 +622,7 @@ class TransactionInfoViewItemFactory {
             case let .receivePayment(value, from):
                 viewItems = receiveSection(source: record.source, appValue: value, from: from, rates: item.rates, balanceHidden: balanceHidden)
 
-            case let .changeTrust(value, trustor, trustee, liquidityPoolId):
+            case let .changeTrust(value, _, _, _):
                 let rate = _rate(value.coin)
 
                 viewItems = [

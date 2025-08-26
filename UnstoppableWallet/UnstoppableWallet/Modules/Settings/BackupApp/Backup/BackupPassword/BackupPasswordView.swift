@@ -77,6 +77,7 @@ struct BackupPasswordView: View {
                 }
                 .disabled(viewModel.passwordButtonProcessing)
             }
+            .toolbarRole(.editor)
         }
     }
 }

@@ -39,35 +39,28 @@ struct MultiSwapView: View {
                     }
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                 }
-
-                NavigationLink(
-                    isActive: $sendPresented,
-                    destination: {
-                        if let tokenIn = viewModel.tokenIn,
-                           let tokenOut = viewModel.tokenOut,
-                           let amountIn = viewModel.amountIn,
-                           let currentQuote = viewModel.currentQuote
-                        {
-                            MultiSwapSendView(
-                                tokenIn: tokenIn,
-                                tokenOut: tokenOut,
-                                amountIn: amountIn,
-                                provider: currentQuote.provider,
-                                swapPresentationMode: presentationMode
-                            )
-                        }
-                    }
-                ) {
-                    EmptyView()
-                }
-                .onChange(of: sendPresented) { presented in
-                    if !presented {
-                        viewModel.autoQuoteIfRequired()
-                    }
-                }
             }
             .navigationTitle("swap.title".localized)
-            .navigationBarTitleDisplayMode(.inline)
+            .navigationDestination(isPresented: $sendPresented) {
+                if let tokenIn = viewModel.tokenIn,
+                   let tokenOut = viewModel.tokenOut,
+                   let amountIn = viewModel.amountIn,
+                   let currentQuote = viewModel.currentQuote
+                {
+                    MultiSwapSendView(
+                        tokenIn: tokenIn,
+                        tokenOut: tokenOut,
+                        amountIn: amountIn,
+                        provider: currentQuote.provider,
+                        swapPresentationMode: presentationMode
+                    )
+                }
+            }
+            .onChange(of: sendPresented) { presented in
+                if !presented {
+                    viewModel.autoQuoteIfRequired()
+                }
+            }
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
                     if let nextQuoteTime = viewModel.nextQuoteTime {

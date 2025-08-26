@@ -3,6 +3,8 @@ import SwiftUI
 struct AddressCheckerView: View {
     @StateObject var viewModel = AddressCheckerViewModel()
 
+    @State private var checkAddressPresented = false
+
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
@@ -27,21 +29,14 @@ struct AddressCheckerView: View {
 
                 VStack(spacing: 0) {
                     ListSection {
-                        if viewModel.activated {
-                            NavigationRow(spacing: .margin8, destination: {
-                                CheckAddressView()
-                                    .onFirstAppear {
-                                        stat(page: .addressChecker, event: .open(page: .checkAddress))
-                                    }
-                            }) {
-                                addressContent()
-                            }
-                        } else {
-                            ClickableRow(action: {
+                        ClickableRow(action: {
+                            if viewModel.activated {
+                                checkAddressPresented = true
+                            } else {
                                 Coordinator.shared.presentPurchase(page: .addressChecker, trigger: .addressChecker)
-                            }) {
-                                addressContent()
                             }
+                        }) {
+                            addressContent()
                         }
                     }
 
@@ -51,7 +46,12 @@ struct AddressCheckerView: View {
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
         .navigationTitle("address_checker.title".localized)
-        .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(isPresented: $checkAddressPresented) {
+            CheckAddressView()
+                .onFirstAppear {
+                    stat(page: .addressChecker, event: .open(page: .checkAddress))
+                }
+        }
     }
 
     @ViewBuilder

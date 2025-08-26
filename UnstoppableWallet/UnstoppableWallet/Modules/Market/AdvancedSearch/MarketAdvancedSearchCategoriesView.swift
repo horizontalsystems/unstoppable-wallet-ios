@@ -81,5 +81,3 @@ struct MarketAdvancedSearchCategoriesView: View {
         }
     }
 }
-
-extension CoinCategory: Identifiable {}

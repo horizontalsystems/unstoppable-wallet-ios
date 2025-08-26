@@ -95,6 +95,12 @@ struct MainSettingsView: View {
             }
             .padding(EdgeInsets(top: .margin12, leading: 0, bottom: .margin32, trailing: 0))
         }
+        .navigationDestination(isPresented: $addressCheckerPresented) {
+            AddressCheckerView()
+                .onFirstAppear {
+                    stat(page: .settings, event: .open(page: .addressChecker))
+                }
+        }
     }
 
     @ViewBuilder private func slider() -> some View {
@@ -399,18 +405,6 @@ struct MainSettingsView: View {
             Image("radar_24").themeIcon(color: .themeJacob)
             Text("address_checker.title".localized).themeBody()
             Image.disclosureIcon
-        }
-
-        NavigationLink(
-            isActive: $addressCheckerPresented,
-            destination: {
-                AddressCheckerView()
-                    .onFirstAppear {
-                        stat(page: .settings, event: .open(page: .addressChecker))
-                    }
-            }
-        ) {
-            EmptyView()
         }
     }
 

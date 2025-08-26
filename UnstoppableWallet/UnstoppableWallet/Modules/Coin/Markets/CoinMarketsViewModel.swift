@@ -50,11 +50,15 @@ class CoinMarketsViewModel: ObservableObject {
                 self?.tickers = tickers
                 self?.syncState()
             } catch {
-                DispatchQueue.main.async { [weak self] in
-                    self?.state = .failed(error: error.smartDescription)
-                }
+                self?.handle(error: error)
             }
         }.store(in: &tasks)
+    }
+
+    private func handle(error: Error) {
+        DispatchQueue.main.async { [weak self] in
+            self?.state = .failed(error: error.smartDescription)
+        }
     }
 
     private func syncState() {
