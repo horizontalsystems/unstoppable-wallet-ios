@@ -12,7 +12,7 @@ struct WalletView: View {
                 ThemeView(style: .list) {
                     ScrollViewReader { proxy in
                         ThemeList(bottomSpacing: .margin16) {
-                            topView()
+                            topView(account: account)
                                 .listRowBackground(Color.themeTyler)
                                 .listRowInsets(EdgeInsets())
                                 .listRowSeparator(.hidden)
@@ -79,8 +79,8 @@ struct WalletView: View {
         }
     }
 
-    @ViewBuilder private func topView() -> some View {
-        VStack(alignment: .leading, spacing: .margin24) {
+    @ViewBuilder private func topView(account: Account) -> some View {
+        VStack(alignment: .leading, spacing: 0) {
             VStack(alignment: .leading, spacing: 0) {
                 ThemeText(primaryValue, style: .title2)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -96,8 +96,24 @@ struct WalletView: View {
                         HapticGenerator.instance.notification(.feedback(.soft))
                     }
             }
+            .padding(.vertical, 24)
+            .padding(.horizontal, 16)
 
-            if !viewModel.buttonHidden, let account = viewModel.account, !account.watchAccount {
+            if account.watchAccount, let address = account.type.watchAddress {
+                Cell(
+                    left: {
+                        Image("binocular").icon(size: 24)
+                    },
+                    middle: {
+                        MiddleTextIcon(text: "balance.watch_wallet".localized)
+                    },
+                    right: {
+                        RightButtonText(text: address.shortened, icon: "copy_filled") {
+                            CopyHelper.copyAndNotify(value: address)
+                        }
+                    },
+                )
+            } else if !viewModel.buttonHidden {
                 let buttons = viewModel.buttons
 
                 HStack(spacing: 0) {
@@ -109,10 +125,10 @@ struct WalletView: View {
                         }
                     }
                 }
+                .padding(.bottom, 24)
+                .padding(.horizontal, 16)
             }
         }
-        .padding(.vertical, .margin24)
-        .padding(.horizontal, .margin16)
     }
 
     @ViewBuilder private func itemsView() -> some View {
@@ -133,7 +149,7 @@ struct WalletView: View {
         }
     }
 
-    @ViewBuilder private func headerView(account: Account) -> some View {
+    @ViewBuilder private func headerView(account _: Account) -> some View {
         ListHeader {
             DropdownButton(text: viewModel.sortType.title) {
                 Coordinator.shared.present(type: .alert) { isPresented in
@@ -159,14 +175,8 @@ struct WalletView: View {
 
             Spacer()
 
-            HStack(spacing: .margin12) {
-                if !viewModel.isReachable {
-                    ThemeText("alert.no_internet".localized, style: .subheadSB, colorStyle: .red)
-                }
-
-                if account.watchAccount {
-                    Image("binocular").icon(size: .iconSize20)
-                }
+            if !viewModel.isReachable {
+                ThemeText("alert.no_internet".localized, style: .subheadSB, colorStyle: .red)
             }
         }
     }

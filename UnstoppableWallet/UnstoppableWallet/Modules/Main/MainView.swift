@@ -29,7 +29,7 @@ struct MainView: View {
                 HStack(spacing: 0) {
                     ForEach(viewModel.tabs, id: \.self) { tab in
                         ZStack {
-                            Image(tab.image).icon(color: viewModel.selectedTab == tab ? .themeJacob : .themeGray)
+                            Image(tab.image).icon(colorStyle: viewModel.selectedTab == tab ? .yellow : .secondary)
 
                             if tab == MainViewModel.Tab.settings, let badge = badgeViewModel.badge {
                                 BadgeView(badge: badge)

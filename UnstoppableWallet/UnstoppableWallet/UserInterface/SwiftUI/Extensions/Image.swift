@@ -5,9 +5,9 @@ extension Image {
         renderingMode(.template).foregroundColor(color)
     }
 
-    func icon(size: CGFloat = .iconSize24, color: Color = .themeGray) -> some View {
+    func icon(size: CGFloat = .iconSize24, colorStyle: ColorStyle = .secondary) -> some View {
         resizable()
-            .foregroundColor(color)
+            .foregroundColor(colorStyle.color)
             .frame(size: size)
     }
 

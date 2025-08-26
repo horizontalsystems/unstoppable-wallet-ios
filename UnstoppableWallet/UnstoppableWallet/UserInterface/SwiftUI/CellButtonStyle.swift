@@ -11,7 +11,7 @@ struct CellButtonStyle: ButtonStyle {
         let isPressed: Bool
 
         func body(content: Content) -> some View {
-            content.background(isPressed ? Color.themeBlade : Color.themeLawrence)
+            content.background(isPressed ? Color.themeBlade : Color.clear)
         }
     }
 }

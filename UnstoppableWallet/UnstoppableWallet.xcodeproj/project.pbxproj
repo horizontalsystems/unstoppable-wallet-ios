@@ -3042,6 +3042,8 @@
 		D371A2392E5C36EE00D7D7F6 /* BaseWalletTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D371A2372E5C36EE00D7D7F6 /* BaseWalletTokenView.swift */; };
 		D371A23B2E5C36F900D7D7F6 /* WalletTokenTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D371A23A2E5C36F900D7D7F6 /* WalletTokenTopView.swift */; };
 		D371A23C2E5C36F900D7D7F6 /* WalletTokenTopView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D371A23A2E5C36F900D7D7F6 /* WalletTokenTopView.swift */; };
+		D371A2412E5DB32900D7D7F6 /* RightButtonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D371A2402E5DB32900D7D7F6 /* RightButtonText.swift */; };
+		D371A2422E5DB32900D7D7F6 /* RightButtonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = D371A2402E5DB32900D7D7F6 /* RightButtonText.swift */; };
 		D3833AD72BEE1A7900ACECFB /* MarketWatchlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833AD62BEE1A7900ACECFB /* MarketWatchlistView.swift */; };
 		D3833AD82BEE1A7900ACECFB /* MarketWatchlistView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833AD62BEE1A7900ACECFB /* MarketWatchlistView.swift */; };
 		D3833ADA2BEE1A8300ACECFB /* MarketWatchlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3833AD92BEE1A8300ACECFB /* MarketWatchlistViewModel.swift */; };
@@ -5000,6 +5002,7 @@
 		D371A2312E589A7200D7D7F6 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
 		D371A2372E5C36EE00D7D7F6 /* BaseWalletTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseWalletTokenView.swift; sourceTree = "<group>"; };
 		D371A23A2E5C36F900D7D7F6 /* WalletTokenTopView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletTokenTopView.swift; sourceTree = "<group>"; };
+		D371A2402E5DB32900D7D7F6 /* RightButtonText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightButtonText.swift; sourceTree = "<group>"; };
 		D3833AD62BEE1A7900ACECFB /* MarketWatchlistView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketWatchlistView.swift; sourceTree = "<group>"; };
 		D3833AD92BEE1A8300ACECFB /* MarketWatchlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketWatchlistViewModel.swift; sourceTree = "<group>"; };
 		D3833ADD2BEE3FE000ACECFB /* MarketPlatformsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPlatformsView.swift; sourceTree = "<group>"; };
@@ -5714,6 +5717,7 @@
 		11B3546A6E6F3CC013C9FF44 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				D371A2402E5DB32900D7D7F6 /* RightButtonText.swift */,
 				D371A2312E589A7200D7D7F6 /* ErrorMessage.swift */,
 				D371A22E2E588E9C00D7D7F6 /* RightTextIcon.swift */,
 				D371A22B2E588DB800D7D7F6 /* MiddleTextIcon.swift */,
@@ -10947,6 +10951,7 @@
 				2FA5D5268D73DCC5651C09AF /* LegacyEvmFeeViewModel.swift in Sources */,
 				2FA5D50BFA714AAF76AC536B /* Eip1559GasPriceService.swift in Sources */,
 				11B35963D09A27ACE74B3A52 /* PublicKeysModule.swift in Sources */,
+				D371A2422E5DB32900D7D7F6 /* RightButtonText.swift in Sources */,
 				11B35B1F63DBDEEF57043C97 /* PublicKeysService.swift in Sources */,
 				D0E5E8532BE260C8005080A4 /* BitcoinPreSendHandler.swift in Sources */,
 				D3E36BCA2E028D55007F99CA /* UnstoppableApp.swift in Sources */,
@@ -12523,6 +12528,7 @@
 				11B35E70BF95197591A052EF /* PublicKeysService.swift in Sources */,
 				D0E5E8522BE260C8005080A4 /* BitcoinPreSendHandler.swift in Sources */,
 				D3E36BC92E028D55007F99CA /* UnstoppableApp.swift in Sources */,
+				D371A2412E5DB32900D7D7F6 /* RightButtonText.swift in Sources */,
 				11B35281808DE30B8D717B73 /* PublicKeysViewModel.swift in Sources */,
 				11B3550E1FD46B02F0154CBC /* PublicKeysViewController.swift in Sources */,
 				6BAAF3472B9B245C00EFE5B2 /* ShimmerEffect.swift in Sources */,

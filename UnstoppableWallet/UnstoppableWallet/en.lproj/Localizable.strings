@@ -312,6 +312,7 @@
 "balance.downloading_blocks" = "Downloading Blocks";
 "balance.scanning_blocks" = "Scanning Blocks";
 "balance.enhancing_transactions" = "Enhancing Transactions";
+"balance.watch_wallet" = "Watch Wallet";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Syncing... %@";
