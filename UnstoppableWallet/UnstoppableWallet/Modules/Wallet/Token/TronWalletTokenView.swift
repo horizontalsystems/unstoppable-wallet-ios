@@ -11,12 +11,23 @@ struct TronWalletTokenView: View {
     }
 
     var body: some View {
-        WalletTokenView(wallet: wallet) {
-            if !viewModel.accountActive {
-                HighlightedTextView(
-                    title: "balance.token.account.inactive.title".localized,
-                    text: "balance.token.account.inactive.description".localized
-                )
+        BaseWalletTokenView(wallet: wallet) { walletTokenViewModel, transactionsViewModel in
+            if viewModel.accountActive {
+                ThemeList(bottomSpacing: .margin16) {
+                    WalletTokenTopView(viewModel: walletTokenViewModel).themeListTopView()
+                    TransactionsView(viewModel: transactionsViewModel, statPage: .tokenPage)
+                }
+                .themeListScrollHeader()
+            } else {
+                VStack(spacing: 0) {
+                    WalletTokenTopView(viewModel: walletTokenViewModel)
+
+                    PlaceholderViewNew(
+                        icon: "warning_filled",
+                        title: "balance.token.account.inactive.title".localized,
+                        subtitle: "balance.token.account.inactive.description".localized
+                    )
+                }
             }
         }
     }

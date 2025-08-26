@@ -11,12 +11,14 @@ struct BitcoinWalletTokenView: View {
     }
 
     var body: some View {
-        WalletTokenView(wallet: wallet) {
-            let locked = viewModel.bitcoinBalanceData.locked
-            let notRelayed = viewModel.bitcoinBalanceData.notRelayed
+        BaseWalletTokenView(wallet: wallet) { walletTokenViewModel, transactionsViewModel in
+            ThemeList(bottomSpacing: .margin16) {
+                WalletTokenTopView(viewModel: walletTokenViewModel).themeListTopView()
 
-            if locked != 0 || notRelayed != 0 {
-                ListSection {
+                let locked = viewModel.bitcoinBalanceData.locked
+                let notRelayed = viewModel.bitcoinBalanceData.notRelayed
+
+                if locked != 0 || notRelayed != 0 {
                     VStack(spacing: 0) {
                         if locked != 0 {
                             infoView(
@@ -24,6 +26,8 @@ struct BitcoinWalletTokenView: View {
                                 info: .init(title: "balance.token.locked.info.title".localized, description: "balance.token.locked.info.description".localized),
                                 amount: locked
                             )
+
+                            HorizontalDivider()
                         }
 
                         if notRelayed != 0 {
@@ -32,27 +36,38 @@ struct BitcoinWalletTokenView: View {
                                 info: .init(title: "balance.token.not_relayed.info.title".localized, description: "balance.token.not_relayed.info.description".localized),
                                 amount: notRelayed
                             )
+
+                            HorizontalDivider()
                         }
                     }
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
                 }
-                .themeListStyle(.bordered)
+
+                TransactionsView(viewModel: transactionsViewModel, statPage: .tokenPage)
             }
+            .themeListScrollHeader()
         }
     }
 
     @ViewBuilder private func infoView(title: String, info: InfoDescription, amount: Decimal) -> some View {
-        ClickableRow(action: {
-            Coordinator.shared.present(info: info)
-        }) {
-            HStack(spacing: .margin4) {
-                Text(title).textCaptionSB()
-                Image("circle_information_20").themeIcon()
+        Cell(
+            middle: {
+                MiddleTextIcon(text: title, icon: "information")
+            },
+            right: {
+                RightTextIcon(
+                    text: ComponentText(
+                        text: viewModel.balanceHidden ? BalanceHiddenManager.placeholder : formatted(amount: amount),
+                        colorStyle: .primary
+                    )
+                )
+            },
+            action: {
+                Coordinator.shared.present(info: info)
             }
-
-            Spacer()
-
-            Text(viewModel.balanceHidden ? BalanceHiddenManager.placeholder : formatted(amount: amount)).textSubhead2(color: .themeLeah)
-        }
+        )
     }
 
     private func formatted(amount: Decimal) -> String {

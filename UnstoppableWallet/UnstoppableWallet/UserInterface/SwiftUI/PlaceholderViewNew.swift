@@ -1,39 +1,20 @@
 import SwiftUI
 
 struct PlaceholderViewNew<Content: View>: View {
-    let image: Image
-    let text: String?
-    let layoutType: LayoutType
-    let additionalContent: Content
+    let icon: String
+    var title: String?
+    var subtitle: String?
+    var layoutType: LayoutType = .upperMiddle
+    @ViewBuilder var additionalContent: Content
 
     @State private var contentHeight: CGFloat = 0
-
-    init(image: Image, text: String? = nil, layoutType: LayoutType = .upperMiddle, @ViewBuilder additionalContent: () -> Content) {
-        self.image = image
-        self.text = text
-        self.layoutType = layoutType
-        self.additionalContent = additionalContent()
-    }
 
     var body: some View {
         GeometryReader { proxy in
             ZStack {
-                VStack(spacing: .margin24) {
-                    ZStack {
-                        image.icon(size: .iconSize72)
-                    }
-                    .padding(.margin16)
-
-                    if let text {
-                        Text(text)
-                            .font(.themeSubhead2)
-                            .foregroundColor(.themeGray)
-                            .multilineTextAlignment(.center)
-                    }
-
+                ErrorMessage(icon: icon, title: title, subtitle: subtitle) {
                     additionalContent
                 }
-                .frame(width: 264)
                 .background(
                     GeometryReader { contentProxy in
                         Color.clear
@@ -59,20 +40,18 @@ extension PlaceholderViewNew {
     enum LayoutType {
         case upperMiddle
         case middle
-        case bottom
 
         var multiplier: CGFloat {
             switch self {
             case .upperMiddle: return -0.15
             case .middle: return 0
-            case .bottom: return 0.5
             }
         }
     }
 }
 
 extension PlaceholderViewNew where Content == EmptyView {
-    init(image: Image, text: String) {
-        self.init(image: image, text: text, additionalContent: { EmptyView() })
+    init(icon: String, title: String? = nil, subtitle: String? = nil) {
+        self.init(icon: icon, title: title, subtitle: subtitle, additionalContent: { EmptyView() })
     }
 }

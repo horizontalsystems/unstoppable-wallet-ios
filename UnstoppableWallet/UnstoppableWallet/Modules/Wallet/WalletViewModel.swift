@@ -10,13 +10,16 @@ class WalletViewModel: WalletListViewModel {
     private let appManager = Core.shared.appManager
     private let eventHandler = Core.shared.appEventHandler
     private let rateAppManager = Core.shared.rateAppManager
+    private let reachabilityManager = Core.shared.reachabilityManager
 
     @Published private(set) var buttonHidden: Bool
     @Published private(set) var totalItem: TotalItem
+    @Published private(set) var isReachable: Bool
 
     override init() {
         buttonHidden = walletButtonHiddenManager.buttonHidden
         totalItem = .init(currencyValue: .init(currency: .init(code: "", symbol: "", decimal: 0), value: 0), expired: false, convertedValue: nil, convertedValueExpired: false)
+        isReachable = reachabilityManager.isReachable
 
         super.init()
 
@@ -25,6 +28,7 @@ class WalletViewModel: WalletListViewModel {
         }
 
         balanceConversionManager.$conversionToken.sink { [weak self] _ in self?.syncTotalItem() }.store(in: &cancellables)
+        reachabilityManager.$isReachable.sink { [weak self] in self?.isReachable = $0 }.store(in: &cancellables)
 
         walletButtonHiddenManager.buttonHiddenObservable
             .observeOn(MainScheduler.instance)

@@ -8,7 +8,7 @@ struct TonConnectListView: View {
         ThemeView {
             BottomGradientWrapper {
                 if viewModel.items.isEmpty {
-                    PlaceholderViewNew(image: Image("no_data_48"), text: "ton_connect.list.no_connected_apps".localized)
+                    PlaceholderViewNew(icon: "no_data_48", subtitle: "ton_connect.list.no_connected_apps".localized)
                 } else {
                     ScrollView {
                         VStack(spacing: .margin24) {

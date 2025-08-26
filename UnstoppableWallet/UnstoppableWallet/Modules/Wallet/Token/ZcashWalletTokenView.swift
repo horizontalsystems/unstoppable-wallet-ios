@@ -11,12 +11,14 @@ struct ZcashWalletTokenView: View {
     }
 
     var body: some View {
-        WalletTokenView(wallet: wallet) {
-            let processing = viewModel.zcashBalanceData.processing
-            let transparent = viewModel.zcashBalanceData.transparent
+        BaseWalletTokenView(wallet: wallet) { walletTokenViewModel, transactionsViewModel in
+            ThemeList(bottomSpacing: .margin16) {
+                WalletTokenTopView(viewModel: walletTokenViewModel).themeListTopView()
 
-            if processing != 0 || transparent > ZcashAdapter.minimalThreshold {
-                ListSection {
+                let processing = viewModel.zcashBalanceData.processing
+                let transparent = viewModel.zcashBalanceData.transparent
+
+                if processing != 0 || transparent > ZcashAdapter.minimalThreshold {
                     VStack(spacing: 0) {
                         if processing != 0 {
                             infoView(
@@ -28,6 +30,8 @@ struct ZcashWalletTokenView: View {
                                     description: "balance.token.processing.info.description".localized
                                 ))
                             }
+
+                            HorizontalDivider()
                         }
 
                         if transparent > ZcashAdapter.minimalThreshold {
@@ -60,25 +64,36 @@ struct ZcashWalletTokenView: View {
                                     )
                                 }
                             }
+
+                            HorizontalDivider()
                         }
                     }
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
                 }
-                .themeListStyle(.bordered)
+
+                TransactionsView(viewModel: transactionsViewModel, statPage: .tokenPage)
             }
+            .themeListScrollHeader()
         }
     }
 
     @ViewBuilder private func infoView(title: String, amount: Decimal, action: @escaping () -> Void) -> some View {
-        ClickableRow(action: action) {
-            HStack(spacing: .margin4) {
-                Text(title).textCaptionSB()
-                Image("circle_information_20").themeIcon()
-            }
-
-            Spacer()
-
-            Text(viewModel.balanceHidden ? BalanceHiddenManager.placeholder : formatted(amount: amount)).textSubhead2(color: .themeLeah)
-        }
+        Cell(
+            middle: {
+                MiddleTextIcon(text: title, icon: "information")
+            },
+            right: {
+                RightTextIcon(
+                    text: ComponentText(
+                        text: viewModel.balanceHidden ? BalanceHiddenManager.placeholder : formatted(amount: amount),
+                        colorStyle: .primary
+                    )
+                )
+            },
+            action: action
+        )
     }
 
     private func formatted(amount: Decimal) -> String {

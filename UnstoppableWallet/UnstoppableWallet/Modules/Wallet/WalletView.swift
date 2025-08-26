@@ -19,11 +19,12 @@ struct WalletView: View {
                                 .themeListTopView()
 
                             AccountWarningView(viewModel: accountWarningViewModel)
-                                .listRowBackground(Color.clear)
+                                .listRowBackground(Color.themeTyler)
                                 .listRowInsets(EdgeInsets())
                                 .listRowSeparator(.hidden)
                                 .padding(.horizontal, .margin16)
-                                .padding(.bottom, .margin16)
+                                .padding(.top, .margin8)
+                                .padding(.bottom, .margin12)
 
                             Section {
                                 itemsView()
@@ -41,7 +42,7 @@ struct WalletView: View {
                 }
             } else {
                 ThemeView {
-                    PlaceholderViewNew(image: Image("wallet_add"), layoutType: .middle) {
+                    PlaceholderViewNew(icon: "wallet_add", layoutType: .middle) {
                         VStack(spacing: .margin12) {
                             ThemeButton(text: "onboarding.balance.create".localized) {
                                 Coordinator.shared.presentAfterAcceptTerms { isPresented in
@@ -82,6 +83,8 @@ struct WalletView: View {
         VStack(alignment: .leading, spacing: .margin24) {
             VStack(alignment: .leading, spacing: 0) {
                 ThemeText(primaryValue, style: .title2)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .contentShape(Rectangle())
                     .onTapGesture {
                         viewModel.onTapAmount()
                         HapticGenerator.instance.notification(.feedback(.soft))
@@ -156,8 +159,14 @@ struct WalletView: View {
 
             Spacer()
 
-            if account.watchAccount {
-                Image("binocular").icon(size: .iconSize20)
+            HStack(spacing: .margin12) {
+                if !viewModel.isReachable {
+                    ThemeText("alert.no_internet".localized, style: .subheadSB, colorStyle: .red)
+                }
+
+                if account.watchAccount {
+                    Image("binocular").icon(size: .iconSize20)
+                }
             }
         }
     }
