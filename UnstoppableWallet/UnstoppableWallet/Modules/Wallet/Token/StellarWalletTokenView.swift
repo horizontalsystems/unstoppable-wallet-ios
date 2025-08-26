@@ -12,30 +12,45 @@ struct StellarWalletTokenView: View {
     }
 
     var body: some View {
-        WalletTokenView(wallet: wallet) {
-            if let lockInfo = viewModel.lockInfo {
-                ListSection {
-                    ClickableRow(action: {
-                        var description = "\("balance.token.locked.stellar.description".localized)\n\n\("balance.token.locked.stellar.description.currently_locked".localized)\n • 1 XLM - \("balance.token.locked.stellar.description.wallet_activation".localized)"
+        BaseWalletTokenView(wallet: wallet) { walletTokenViewModel, transactionsViewModel in
+            ThemeList(bottomSpacing: .margin16) {
+                WalletTokenTopView(viewModel: walletTokenViewModel).themeListTopView()
 
-                        for asset in lockInfo.assets {
-                            description += "\n • 0.5 XLM - \(asset)"
-                        }
+                if let lockInfo = viewModel.lockInfo {
+                    VStack(spacing: 0) {
+                        Cell(
+                            middle: {
+                                MiddleTextIcon(text: "balance.token.locked".localized, icon: "information")
+                            },
+                            right: {
+                                RightTextIcon(
+                                    text: ComponentText(
+                                        text: viewModel.balanceHidden ? BalanceHiddenManager.placeholder : formatted(amount: lockInfo.amount),
+                                        colorStyle: .primary
+                                    )
+                                )
+                            },
+                            action: {
+                                var description = "\("balance.token.locked.stellar.description".localized)\n\n\("balance.token.locked.stellar.description.currently_locked".localized)\n • 1 XLM - \("balance.token.locked.stellar.description.wallet_activation".localized)"
 
-                        Coordinator.shared.present(info: .init(title: "balance.token.locked.stellar.title".localized, description: description))
-                    }) {
-                        HStack(spacing: .margin4) {
-                            Text("balance.token.locked".localized).textCaptionSB()
-                            Image("circle_information_20").themeIcon()
-                        }
+                                for asset in lockInfo.assets {
+                                    description += "\n • 0.5 XLM - \(asset)"
+                                }
 
-                        Spacer()
+                                Coordinator.shared.present(info: .init(title: "balance.token.locked.stellar.title".localized, description: description))
+                            }
+                        )
 
-                        Text(viewModel.balanceHidden ? BalanceHiddenManager.placeholder : formatted(amount: lockInfo.amount)).textSubhead2(color: .themeLeah)
+                        HorizontalDivider()
                     }
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
                 }
-                .themeListStyle(.bordered)
+
+                TransactionsView(viewModel: transactionsViewModel, statPage: .tokenPage)
             }
+            .themeListScrollHeader()
         }
     }
 

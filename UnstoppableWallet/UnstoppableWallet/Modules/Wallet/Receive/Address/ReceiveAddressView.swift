@@ -75,7 +75,7 @@ struct ReceiveAddressView: View {
 
                 Spacer()
             case .failed:
-                PlaceholderViewNew(image: Image("sync_error_48"), text: "sync_error".localized)
+                PlaceholderViewNew(icon: "sync_error_48", subtitle: "sync_error".localized)
             }
         }
         .textFieldAlert(
