@@ -57,7 +57,7 @@ struct SendTokenListView: View {
                 }
             }
             .navigationDestination(for: Wallet.self) { wallet in
-                SendAddressView(wallet: wallet, address: viewModel.options.address, amount: viewModel.options.amount, isPresented: $isPresented)
+                SendAddressView(wallet: wallet, address: viewModel.options.address, amount: viewModel.options.amount, memo: viewModel.options.memo, isPresented: $isPresented)
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {

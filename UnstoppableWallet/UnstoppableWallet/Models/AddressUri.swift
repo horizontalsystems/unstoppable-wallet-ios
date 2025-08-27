@@ -28,6 +28,10 @@ struct AddressUri: Equatable {
         value(field: .amount) ?? value(field: .value) ?? value(field: .txAmount)
     }
 
+    var memo: String? {
+        value(field: .txDescription)
+    }
+
     static func == (lhs: AddressUri, rhs: AddressUri) -> Bool {
         lhs.address == rhs.address &&
             lhs.parameters == rhs.parameters &&
@@ -40,6 +44,7 @@ extension AddressUri {
         case amount
         case value
         case txAmount = "tx_amount"
+        case txDescription = "tx_description"
         case label
         case message
         case blockchainUid = "blockchain_uid"

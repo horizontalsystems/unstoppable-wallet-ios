@@ -31,12 +31,14 @@ extension SendTokenListViewModel {
         let tokenTypes: [TokenType]?
         let address: String?
         let amount: Decimal?
+        let memo: String?
 
-        init(blockchainTypes: [BlockchainType]? = nil, tokenTypes: [TokenType]? = nil, address: String? = nil, amount: Decimal? = nil) {
+        init(blockchainTypes: [BlockchainType]? = nil, tokenTypes: [TokenType]? = nil, address: String? = nil, amount: Decimal? = nil, memo: String? = nil) {
             self.blockchainTypes = blockchainTypes
             self.tokenTypes = tokenTypes
             self.address = address
             self.amount = amount
+            self.memo = memo
         }
 
         var id: String {
@@ -44,6 +46,7 @@ extension SendTokenListViewModel {
             identifiers.append(contentsOf: tokenTypes.map { $0.map(\.id) } ?? [])
             identifiers.append(address ?? "")
             identifiers.append(amount?.description ?? "")
+            identifiers.append(memo ?? "")
 
             return identifiers.joined(separator: "_")
         }
