@@ -58,4 +58,11 @@ extension PrivateKeysService {
         default: return false
         }
     }
+
+    var moneroPrivateKeySupported: Bool {
+        switch account.type {
+        case .mnemonic: return true
+        default: return false
+        }
+    }
 }

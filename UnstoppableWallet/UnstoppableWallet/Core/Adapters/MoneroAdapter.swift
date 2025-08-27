@@ -349,6 +349,14 @@ extension MoneroAdapter {
     static func clear(except excludedWalletIds: [String]) throws {
         try Kit.removeAll(except: excludedWalletIds)
     }
+
+    static func key(accountType: AccountType, privateKey: Bool, spendKey: Bool) -> String {
+        guard case let .mnemonic(words, passphrase, _) = accountType else {
+            return ""
+        }
+
+        return (try? Kit.key(mnemonic: .bip39(seed: words, passphrase: passphrase), privateKey: privateKey, spendKey: spendKey)) ?? ""
+    }
 }
 
 enum MoneroSendAmount {

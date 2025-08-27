@@ -11,6 +11,7 @@ class PrivateKeysViewModel {
     private let openStellarSecretKeyRelay = PublishRelay<AccountType>()
     private let openBip32RootKeyRelay = PublishRelay<AccountType>()
     private let openAccountExtendedPrivateKeyRelay = PublishRelay<AccountType>()
+    private let openMoneroPrivateKeyRelay = PublishRelay<AccountType>()
 
     private var unlockRequest: UnlockRequest = .evmPrivateKey
 
@@ -40,6 +41,10 @@ extension PrivateKeysViewModel {
         openAccountExtendedPrivateKeyRelay.asSignal()
     }
 
+    var openMoneroPrivateKeySignal: Signal<AccountType> {
+        openMoneroPrivateKeyRelay.asSignal()
+    }
+
     var showEvmPrivateKey: Bool {
         service.evmPrivateKeySupported
     }
@@ -56,12 +61,17 @@ extension PrivateKeysViewModel {
         service.accountExtendedPrivateKeySupported
     }
 
+    var showMoneroPrivateKey: Bool {
+        service.moneroPrivateKeySupported
+    }
+
     func onUnlock() {
         switch unlockRequest {
         case .evmPrivateKey: openEvmPrivateKeyRelay.accept(service.accountType)
         case .stellarSecretKey: openStellarSecretKeyRelay.accept(service.accountType)
         case .bip32RootKey: openBip32RootKeyRelay.accept(service.accountType)
         case .accountExtendedPrivateKey: openAccountExtendedPrivateKeyRelay.accept(service.accountType)
+        case .moneroPrivateKey: openMoneroPrivateKeyRelay.accept(service.accountType)
         }
     }
 
@@ -100,6 +110,15 @@ extension PrivateKeysViewModel {
             openAccountExtendedPrivateKeyRelay.accept(service.accountType)
         }
     }
+
+    func onTapMoneroPrivateKey() {
+        if service.isPasscodeSet {
+            unlockRequest = .moneroPrivateKey
+            openUnlockRelay.accept(())
+        } else {
+            openMoneroPrivateKeyRelay.accept(service.accountType)
+        }
+    }
 }
 
 extension PrivateKeysViewModel {
@@ -108,5 +127,6 @@ extension PrivateKeysViewModel {
         case stellarSecretKey
         case bip32RootKey
         case accountExtendedPrivateKey
+        case moneroPrivateKey
     }
 }

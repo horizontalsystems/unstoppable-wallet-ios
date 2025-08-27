@@ -100,6 +100,8 @@ enum StatPage: String {
     case marketSearch = "market_search"
     case marketSector = "market_sector"
     case marketTvl = "market_tvl"
+    case moneroPrivateKeys = "monero_private_keys"
+    case moneroPublicKeys = "monero_public_keys"
     case news
     case newWallet = "new_wallet"
     case newWalletAdvanced = "new_wallet_advanced"
@@ -597,4 +599,6 @@ enum StatEntity: String {
     case wallet
     case walletConnectPair = "wallet_connect_pair"
     case walletName = "wallet_name"
+    case moneroKey = "monero_key"
+    case moneroKeyType = "monero_key_type"
 }
