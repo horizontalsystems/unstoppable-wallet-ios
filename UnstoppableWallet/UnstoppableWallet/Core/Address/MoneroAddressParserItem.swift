@@ -4,7 +4,7 @@ import MoneroKit
 import RxSwift
 
 class MoneroAddressParserItem: IAddressParserItem {
-    var blockchainType: BlockchainType { .zcash }
+    var blockchainType: BlockchainType { .monero }
 
     func handle(address: String) -> Single<Address> {
         if MoneroKit.Kit.isValid(address: address, networkType: MoneroAdapter.networkType) {

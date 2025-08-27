@@ -41,7 +41,10 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
             addressUri.parameters[.blockchainUid] = item.token.blockchainType.uid
             switch item.token.type {
             case .addressType, .derived: ()
-            default: addressUri.parameters[.tokenUid] = item.token.type.id
+            default:
+                if item.token.blockchainType != .monero {
+                    addressUri.parameters[.tokenUid] = item.token.type.id
+                }
             }
 
             uri = parser.uri(addressUri)

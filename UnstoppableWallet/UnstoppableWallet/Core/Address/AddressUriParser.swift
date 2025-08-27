@@ -174,6 +174,7 @@ extension BlockchainType {
         case .ethereum: return "ethereum"
         case .tron: return "tron"
         case .ton: return "toncoin"
+        case .monero: return "monero"
         default: return nil
         }
     }
@@ -193,6 +194,7 @@ extension BlockchainType {
         case .ethereum: return true
         case .tron: return true
         case .ton: return true
+        case .monero: return true
         default: return false
         }
     }
