@@ -63,6 +63,15 @@ class PublicKeysViewController: ThemeViewController {
         navigationController?.pushViewController(viewController, animated: true)
         stat(page: .publicKeys, event: .open(page: .accountExtendedPublicKey))
     }
+
+    private func openMoneroPublicKey() {
+        guard let viewController = MoneroKeyViewController.instance(accountType: viewModel.accountType, mode: .publicKeys) else {
+            return
+        }
+
+        navigationController?.pushViewController(viewController, animated: true)
+        stat(page: .privateKeys, event: .open(page: .moneroPublicKeys))
+    }
 }
 
 extension PublicKeysViewController: SectionsDataSource {
@@ -108,6 +117,26 @@ extension PublicKeysViewController: SectionsDataSource {
                             isLast: true
                         ) { [weak self] in
                             self?.openAccountExtendedPublicKey()
+                        },
+                    ]
+                )
+            )
+        }
+
+        if viewModel.showMoneroPublicKey {
+            sections.append(
+                Section(
+                    id: "monero-public-key",
+                    footerState: tableView.sectionFooter(text: "public_keys.monero_public_key.description".localized),
+                    rows: [
+                        tableView.universalRow48(
+                            id: "monero-public-key",
+                            title: .body("public_keys.monero_public_key".localized),
+                            accessoryType: .disclosure,
+                            isFirst: true,
+                            isLast: true
+                        ) { [weak self] in
+                            self?.openMoneroPublicKey()
                         },
                     ]
                 )

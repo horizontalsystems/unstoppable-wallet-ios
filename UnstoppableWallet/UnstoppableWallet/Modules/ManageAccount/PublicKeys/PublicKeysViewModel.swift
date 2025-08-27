@@ -20,4 +20,8 @@ extension PublicKeysViewModel {
     var showAccountExtendedPublicKey: Bool {
         service.accountExtendedPublicKeySupported
     }
+
+    var showMoneroPublicKey: Bool {
+        service.moneroPublicKeySupported
+    }
 }

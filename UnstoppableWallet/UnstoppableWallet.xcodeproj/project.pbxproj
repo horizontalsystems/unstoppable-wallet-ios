@@ -2777,6 +2777,10 @@
 		D0F132A82B6B990500C7310E /* RbfDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F132A62B6B990500C7310E /* RbfDataSource.swift */; };
 		D0F766CF2D1AD36200E409AD /* SpamAddressDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F766CE2D1AD36200E409AD /* SpamAddressDetector.swift */; };
 		D0F766D02D1AD36200E409AD /* SpamAddressDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F766CE2D1AD36200E409AD /* SpamAddressDetector.swift */; };
+		D0F7D1112E5C67B800A91833 /* MoneroKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F7D10C2E5C67B800A91833 /* MoneroKeyViewController.swift */; };
+		D0F7D1132E5C67B800A91833 /* MoneroKeyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F7D10E2E5C67B800A91833 /* MoneroKeyViewModel.swift */; };
+		D0F7D1152E5C67B800A91833 /* MoneroKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F7D10C2E5C67B800A91833 /* MoneroKeyViewController.swift */; };
+		D0F7D1172E5C67B800A91833 /* MoneroKeyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F7D10E2E5C67B800A91833 /* MoneroKeyViewModel.swift */; };
 		D0F9F5172B99857700C3190A /* FeeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F9F5162B99857700C3190A /* FeeSettings.swift */; };
 		D0F9F5182B99857700C3190A /* FeeSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0F9F5162B99857700C3190A /* FeeSettings.swift */; };
 		D30C4D412D392FCB0082B487 /* AddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D30C4D402D392FC50082B487 /* AddressView.swift */; };
@@ -4865,6 +4869,8 @@
 		D0F132A32B6B98F500C7310E /* RbfViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RbfViewModel.swift; sourceTree = "<group>"; };
 		D0F132A62B6B990500C7310E /* RbfDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RbfDataSource.swift; sourceTree = "<group>"; };
 		D0F766CE2D1AD36200E409AD /* SpamAddressDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamAddressDetector.swift; sourceTree = "<group>"; };
+		D0F7D10C2E5C67B800A91833 /* MoneroKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroKeyViewController.swift; sourceTree = "<group>"; };
+		D0F7D10E2E5C67B800A91833 /* MoneroKeyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroKeyViewModel.swift; sourceTree = "<group>"; };
 		D0F9F5162B99857700C3190A /* FeeSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeSettings.swift; sourceTree = "<group>"; };
 		D30C4D402D392FC50082B487 /* AddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressView.swift; sourceTree = "<group>"; };
 		D30C4D432D392FD00082B487 /* AddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressViewModel.swift; sourceTree = "<group>"; };
@@ -6830,6 +6836,7 @@
 				11B35E3B4B57BBF6370636E6 /* PublicKeys */,
 				11B35DC1E21C6740F9C49143 /* PrivateKeys */,
 				11B35F4E2A9971622A652405 /* EvmAddress */,
+				D0F7D10B2E5C66FF00A91833 /* MoneroKey */,
 			);
 			path = ManageAccount;
 			sourceTree = "<group>";
@@ -9113,6 +9120,15 @@
 			path = Transactions;
 			sourceTree = "<group>";
 		};
+		D0F7D10B2E5C66FF00A91833 /* MoneroKey */ = {
+			isa = PBXGroup;
+			children = (
+				D0F7D10C2E5C67B800A91833 /* MoneroKeyViewController.swift */,
+				D0F7D10E2E5C67B800A91833 /* MoneroKeyViewModel.swift */,
+			);
+			path = MoneroKey;
+			sourceTree = "<group>";
+		};
 		D30C4D3F2D392FBF0082B487 /* Address */ = {
 			isa = PBXGroup;
 			children = (
@@ -10834,6 +10850,8 @@
 				D090AF62297D725D00699916 /* TransparentIconButtonView.swift in Sources */,
 				D3E36B5C2DEDBDFA007F99CA /* TransactionsViewItemFactory.swift in Sources */,
 				11B356D4E85B0A0133F6870C /* RestorePrivateKeyService.swift in Sources */,
+				D0F7D1152E5C67B800A91833 /* MoneroKeyViewController.swift in Sources */,
+				D0F7D1172E5C67B800A91833 /* MoneroKeyViewModel.swift in Sources */,
 				11B3529D506ADAEB715BF0D1 /* RestorePrivateKeyViewModel.swift in Sources */,
 				11B35A5C28DF128893703B6C /* RestoreViewModel.swift in Sources */,
 				11B35FF072E32C5D4028D0F6 /* TextInputCell.swift in Sources */,
@@ -12405,6 +12423,8 @@
 				ABC9A4045F498EE345B998D8 /* IntegerFormAmountInputView.swift in Sources */,
 				D3E36B5B2DEDBDFA007F99CA /* TransactionsViewItemFactory.swift in Sources */,
 				11B35EB5359DB0EA8058A75C /* RestoreModule.swift in Sources */,
+				D0F7D1112E5C67B800A91833 /* MoneroKeyViewController.swift in Sources */,
+				D0F7D1132E5C67B800A91833 /* MoneroKeyViewModel.swift in Sources */,
 				11B354FE5CD0F5658C7CCC69 /* RestoreViewController.swift in Sources */,
 				D090AF61297D725D00699916 /* TransparentIconButtonView.swift in Sources */,
 				11B35A79476177D3BE7DE477 /* RestorePrivateKeyService.swift in Sources */,
@@ -14025,7 +14045,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MoneroKit.Swift.git";
 			requirement = {
 				kind = exactVersion;
-				version = 0.1.7;
+				version = 0.1.8;
 			};
 		};
 		D0EC34D92A4450B100BB308B /* XCRemoteSwiftPackageReference "HCaptcha-ios-sdk" */ = {

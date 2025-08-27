@@ -24,4 +24,11 @@ extension PublicKeysService {
         default: return false
         }
     }
+
+    var moneroPublicKeySupported: Bool {
+        switch account.type {
+        case .mnemonic: return true
+        default: return false
+        }
+    }
 }

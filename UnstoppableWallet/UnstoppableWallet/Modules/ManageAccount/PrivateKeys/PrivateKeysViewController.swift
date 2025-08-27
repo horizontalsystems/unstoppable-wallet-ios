@@ -45,6 +45,7 @@ class PrivateKeysViewController: ThemeViewController {
         subscribe(disposeBag, viewModel.openStellarSecretKeySignal) { [weak self] in self?.openStellarSecretKey(accountType: $0) }
         subscribe(disposeBag, viewModel.openBip32RootKeySignal) { [weak self] in self?.openBip32RootKey(accountType: $0) }
         subscribe(disposeBag, viewModel.openAccountExtendedPrivateKeySignal) { [weak self] in self?.openAccountExtendedPrivateKey(accountType: $0) }
+        subscribe(disposeBag, viewModel.openMoneroPrivateKeySignal) { [weak self] in self?.openMoneroPrivateKey(accountType: $0) }
 
         tableView.buildSections()
     }
@@ -94,6 +95,15 @@ class PrivateKeysViewController: ThemeViewController {
         let viewController = ExtendedKeyModule.viewController(mode: .accountExtendedPrivateKey, accountType: accountType)
         navigationController?.pushViewController(viewController, animated: true)
         stat(page: .privateKeys, event: .open(page: .accountExtendedPrivateKey))
+    }
+
+    private func openMoneroPrivateKey(accountType: AccountType) {
+        guard let viewController = MoneroKeyViewController.instance(accountType: accountType, mode: .privateKeys) else {
+            return
+        }
+
+        navigationController?.pushViewController(viewController, animated: true)
+        stat(page: .privateKeys, event: .open(page: .moneroPrivateKeys))
     }
 }
 
@@ -180,6 +190,26 @@ extension PrivateKeysViewController: SectionsDataSource {
                             isLast: true
                         ) { [weak self] in
                             self?.viewModel.onTapAccountExtendedPrivateKey()
+                        },
+                    ]
+                )
+            )
+        }
+
+        if viewModel.showMoneroPrivateKey {
+            sections.append(
+                Section(
+                    id: "monero-private-key",
+                    footerState: tableView.sectionFooter(text: "private_keys.monero_private_key.description".localized),
+                    rows: [
+                        tableView.universalRow48(
+                            id: "monero-private-key",
+                            title: .body("private_keys.monero_private_key".localized),
+                            accessoryType: .disclosure,
+                            isFirst: true,
+                            isLast: true
+                        ) { [weak self] in
+                            self?.viewModel.onTapMoneroPrivateKey()
                         },
                     ]
                 )
