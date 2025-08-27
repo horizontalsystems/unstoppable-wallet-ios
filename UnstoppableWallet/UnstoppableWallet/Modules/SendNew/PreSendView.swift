@@ -12,8 +12,8 @@ struct PreSendView: View {
 
     @State private var confirmPresented = false
 
-    init(wallet: Wallet, handler: IPreSendHandler?, resolvedAddress: ResolvedAddress, amount: Decimal? = nil, addressVisible: Bool = true, onDismiss: @escaping () -> Void) {
-        _viewModel = StateObject(wrappedValue: PreSendViewModel(wallet: wallet, handler: handler, resolvedAddress: resolvedAddress, amount: amount))
+    init(wallet: Wallet, handler: IPreSendHandler?, resolvedAddress: ResolvedAddress, amount: Decimal? = nil, memo: String? = nil, addressVisible: Bool = true, onDismiss: @escaping () -> Void) {
+        _viewModel = StateObject(wrappedValue: PreSendViewModel(wallet: wallet, handler: handler, resolvedAddress: resolvedAddress, amount: amount, memo: memo))
         self.addressVisible = addressVisible
         self.onDismiss = onDismiss
     }

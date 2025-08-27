@@ -56,7 +56,8 @@ class AddressEventHandler {
             blockchainTypes: allowedBlockchainTypes,
             tokenTypes: allowedTokenType.map { [$0] },
             address: uri.address,
-            amount: uri.amount
+            amount: uri.amount,
+            memo: uri.memo
         )
         )
     }
