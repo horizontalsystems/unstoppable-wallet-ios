@@ -19,18 +19,18 @@ class WalletConnectRequest: Identifiable {
     }
 
     struct Chain {
-        let id: Int
+        let id: String
         let chainName: String?
         let address: String?
 
-        init(id: Int, chainName: String? = nil, address: String? = nil) {
+        init(id: String, chainName: String? = nil, address: String? = nil) {
             self.id = id
             self.chainName = chainName
             self.address = address
         }
 
         var description: String {
-            chainName ?? id.description
+            chainName ?? id
         }
     }
 }

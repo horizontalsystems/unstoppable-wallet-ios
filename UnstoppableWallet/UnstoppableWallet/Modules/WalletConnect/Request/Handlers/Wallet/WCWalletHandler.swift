@@ -29,6 +29,8 @@ class WCWalletHandler<Payload: WCWalletPayload>: WalletConnectRequestHandler {
 }
 
 extension WCWalletHandler: IWalletConnectRequestHandler {
+    var namespace: String { Eip155ProposalHandler.namespace }
+
     func handle(session: Session, request: Request) -> WalletConnectRequestChain.RequestResult {
         guard request.method == Payload.method else {
             return .unsuccessful(error: WCRequestPayload.ParsingError.cantParseRequest)

@@ -455,6 +455,7 @@
 "send.network_fee" = "Fee";
 "send.estimated_fee" = "Estimated Fee";
 "send.max_fee" = "Max Fee";
+"send.max_fee.info" = "The maximum cost of sending given transaction on the network.";
 "send.duration.hours" = "%d h.";
 "send.duration.minutes" = "%d min.";
 "send.available_balance" = "Available Balance";
@@ -507,6 +508,8 @@
 "send.confirmation.status" = "Status";
 "send.confirmation.status.failed" = "Failed";
 "send.confirmation.send_to_own" = "Transaction will send to own address";
+"send.confirmation.operation" = "Operation";
+"send.confirmation.transaction_xdr" = "Transaction XDR";
 
 "send.confirmation.sync_failed" = "Sync Failed";
 "send.confirmation.invalid_data" = "Invalid Data";
@@ -1917,6 +1920,8 @@
 "wallet_connect.sign.domain" = "Domain";
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Message to sign";
+
+"wallet_connect.send.transaction" = "Send Tranasction";
 
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "No active sessions";

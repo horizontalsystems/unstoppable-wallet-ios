@@ -32,7 +32,7 @@ struct WalletConnectSendView: View {
                                 }
                             }
                         }) {
-                            Text("wallet_connect.button.confirm".localized)
+                            Text(viewModel.sendButtonTitle(sending: sendViewModel.sending))
                         }
                         .buttonStyle(PrimaryButtonStyle(style: .yellow))
                         .disabled(sendViewModel.sending)
@@ -56,7 +56,7 @@ struct WalletConnectSendView: View {
                 }
             }
         }
-        .navigationTitle(viewModel.dAppName)
+        .navigationTitle(viewModel.payloadTitle)
         .navigationBarTitleDisplayMode(.inline)
     }
 }

@@ -52,7 +52,7 @@ class WalletConnectMainViewModel {
         )
     }
 
-    private func sync(state: WalletConnectMainModule.State? = nil, connectionState: WalletConnectMainModule.ConnectionState? = nil, allowedBlockchains: [WalletConnectMainModule.BlockchainItem]? = nil) {
+    private func sync(state: WalletConnectMainModule.State? = nil, connectionState: WalletConnectMainModule.ConnectionState? = nil, allowedBlockchains: [WalletConnectMainModule.BlockchainProposal]? = nil) {
         let state = state ?? service.state
         let connectionState = connectionState ?? service.connectionState
         let allowedBlockchains = allowedBlockchains ?? service.allowedBlockchains
@@ -78,11 +78,11 @@ class WalletConnectMainViewModel {
         closeVisibleRelay.accept(state == .ready)
 
         let blockchains = allowedBlockchains
-            .map { item in
+            .map { blockchain in
                 BlockchainViewItem(
-                    chainId: item.chainId,
-                    chainTitle: item.blockchain.name,
-                    address: item.address.shortened
+                    chainId: blockchain.item.chainId,
+                    chainTitle: blockchain.item.blockchain.name,
+                    address: blockchain.item.address.shortened
                 )
             }
 
@@ -210,7 +210,7 @@ extension WalletConnectMainViewModel {
     }
 
     struct BlockchainViewItem {
-        let chainId: Int
+        let chainId: String
         let chainTitle: String?
         let address: String
     }

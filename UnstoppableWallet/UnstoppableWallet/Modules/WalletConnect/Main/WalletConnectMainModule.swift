@@ -14,14 +14,15 @@ enum WalletConnectMainModule {
         let supportedMethods = Core.shared.walletConnectRequestHandler.supportedMethods
         chain.append(handler: Eip155ProposalHandler(evmBlockchainManager: Core.shared.evmBlockchainManager, account: account, supportedMethods: supportedMethods))
 
+        chain.append(handler: StellarProposalHandler(stellarKitManager: Core.shared.stellarKitManager, account: account, supportedMethods: supportedMethods))
+
         let mainService = WalletConnectMainService(
             session: session,
             proposal: proposal,
             service: service,
             reachabilityManager: Core.shared.reachabilityManager,
             accountManager: Core.shared.accountManager,
-            proposalHandler: chain,
-            proposalValidator: ProposalValidator()
+            proposalHandler: chain
         )
 
         return viewController(service: mainService, sourceViewController: sourceViewController)
@@ -72,15 +73,16 @@ extension WalletConnectMainModule {
         let icons: [String]
     }
 
-    struct BlockchainSet {
-        static var empty: BlockchainSet = .init(items: [], methods: Set(), events: Set())
-
-        var items: [BlockchainItem]
+    struct BlockchainProposal {
+        let item: BlockchainItem
         var methods: Set<String>
         var events: Set<String>
 
         mutating func formUnion(_ set: Self) {
-            items.append(contentsOf: set.items)
+            guard item.namespace == set.item.namespace else {
+                return
+            }
+
             methods.formUnion(set.methods)
             events.formUnion(set.events)
         }
@@ -88,20 +90,21 @@ extension WalletConnectMainModule {
 
     struct BlockchainItem: Hashable {
         let namespace: String
-        let chainId: Int
+        let chainId: String
         let blockchain: MarketKit.Blockchain
         let address: String
 
         func hash(into hasher: inout Hasher) {
+            hasher.combine(namespace)
             hasher.combine(chainId)
         }
 
         static func == (lhs: BlockchainItem, rhs: BlockchainItem) -> Bool {
-            lhs.chainId == rhs.chainId
+            lhs.namespace == rhs.namespace && lhs.chainId == rhs.chainId
         }
 
         func equal(blockchain: WalletConnectSign.Blockchain) -> Bool {
-            namespace == blockchain.namespace && chainId.description == blockchain.reference
+            namespace == blockchain.namespace && chainId == blockchain.reference
         }
     }
 

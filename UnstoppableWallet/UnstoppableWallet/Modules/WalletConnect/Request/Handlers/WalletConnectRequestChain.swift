@@ -3,8 +3,9 @@ import UIKit
 import WalletConnectSign
 
 protocol IWalletConnectRequestHandler {
-    func handle(session: Session, request: Request) -> WalletConnectRequestChain.RequestResult
+    var namespace: String { get }
     var supportedMethods: [String] { get }
+    func handle(session: Session, request: Request) -> WalletConnectRequestChain.RequestResult
     func name(by method: String) -> String?
 }
 
@@ -18,9 +19,19 @@ class WalletConnectRequestChain {
     func append(handler: IWalletConnectRequestHandler) {
         handlers.append(handler)
     }
+
+    func supportedMethodsBy(namespace: String) -> [String] {
+        handlers.filter { handler in
+            handler.namespace == namespace
+        }.reduce(into: []) {
+            $0.append(contentsOf: $1.supportedMethods)
+        }
+    }
 }
 
 extension WalletConnectRequestChain: IWalletConnectRequestHandler {
+    var namespace: String { "" }
+
     func handle(session: Session, request: Request) -> WalletConnectRequestChain.RequestResult {
         var lastError: Error?
         for handler in handlers {
@@ -96,7 +107,7 @@ extension WalletConnectRequestChain {
 }
 
 extension WalletConnectRequestChain {
-    static func instance(evmBlockchainManager: EvmBlockchainManager, accountManager: AccountManager) -> WalletConnectRequestChain {
+    static func instance(evmBlockchainManager: EvmBlockchainManager, stellarKitManager: StellarKitManager, accountManager: AccountManager) -> WalletConnectRequestChain {
         let chain = WalletConnectRequestChain()
         let factory = Eip155RequestFactory(
             evmBlockchainManager: evmBlockchainManager,
@@ -122,6 +133,17 @@ extension WalletConnectRequestChain {
         chain.append(handler: signEthereumHandler)
         chain.append(handler: addChainHandler)
         chain.append(handler: switchChainHandler)
+
+        let stellarFactory = StellarRequestFactory(
+            stellarKitManager: stellarKitManager,
+            accountManager: accountManager
+        )
+
+        let sendStellarHandler = WCStellarTransactionHandler<WCSendStellarTransactionPayload>(requestFactory: stellarFactory)
+        let signStellarHandler = WCStellarSignHandler<WCStellarSignPayload>(requestFactory: stellarFactory)
+
+        chain.append(handler: sendStellarHandler)
+        chain.append(handler: signStellarHandler)
 
         return chain
     }
