@@ -1,23 +1,23 @@
 import Foundation
+import StellarKit
 import WalletConnectSign
 
-class Eip155ProposalHandler {
-    static let namespace = "eip155"
+class StellarProposalHandler {
+    static let namespace = "stellar"
+    private static let reference = "pubnet"
 
     static let supportedEvents = [
         "connect",
         "disconnect",
         "message",
-        "chainChanged",
-        "accountsChanged",
     ]
 
-    private let evmBlockchainManager: EvmBlockchainManager
+    private let stellarKitManager: StellarKitManager
     private let account: Account
     private let supportedMethods: [String]
 
-    init(evmBlockchainManager: EvmBlockchainManager, account: Account, supportedMethods: [String]) {
-        self.evmBlockchainManager = evmBlockchainManager
+    init(stellarKitManager: StellarKitManager, account: Account, supportedMethods: [String]) {
+        self.stellarKitManager = stellarKitManager
         self.account = account
         self.supportedMethods = supportedMethods
     }
@@ -28,18 +28,16 @@ class Eip155ProposalHandler {
         var events = Set<String>()
 
         for blockchain in namespace.chains ?? [] {
-            guard blockchain.namespace == Eip155ProposalHandler.namespace,
-                  let chainId = Int(blockchain.reference),
-                  let evmBlockchain = evmBlockchainManager.blockchain(chainId: chainId)
+            guard
+                blockchain.namespace == Self.namespace,
+                blockchain.reference == Self.reference,
+                let stellarBlockchain = stellarKitManager.blockchain
             else {
-                // can't get blockchain by chainId, or can't parse chainId
+                // can't use another namespace
                 continue
             }
-
-            guard let chain = try? evmBlockchainManager.chain(blockchainType: evmBlockchain.type),
-                  let address = try? WalletConnectManager.evmAddress(account: account, chain: chain)
-            else {
-                // can't get address for chain
+            guard let address = try? WalletConnectManager.stellarAddress(account: account) else {
+//                 can't get address for account
                 continue
             }
 
@@ -47,8 +45,8 @@ class Eip155ProposalHandler {
                 WalletConnectMainModule.BlockchainItem(
                     namespace: blockchain.namespace,
                     chainId: blockchain.reference,
-                    blockchain: evmBlockchain,
-                    address: address.eip55
+                    blockchain: stellarBlockchain,
+                    address: address
                 )
             )
         }
@@ -69,7 +67,7 @@ class Eip155ProposalHandler {
     }
 }
 
-extension Eip155ProposalHandler: IProposalHandler {
+extension StellarProposalHandler: IProposalHandler {
     func handle(provider: INamespaceProvider) -> [WalletConnectMainModule.BlockchainProposal] {
         var proposals = [WalletConnectMainModule.BlockchainProposal]()
 

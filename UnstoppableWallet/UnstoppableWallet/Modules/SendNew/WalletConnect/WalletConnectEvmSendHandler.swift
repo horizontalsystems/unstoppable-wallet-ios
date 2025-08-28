@@ -2,7 +2,7 @@ import EvmKit
 import Foundation
 import MarketKit
 
-class WalletConnectSendHandler {
+class WalletConnectEvmSendHandler {
     private let request: WalletConnectRequest
     private let payload: WCEthereumTransactionPayload
     private let signService: IWalletConnectSignService = Core.shared.walletConnectSessionManager.service
@@ -22,7 +22,7 @@ class WalletConnectSendHandler {
     }
 }
 
-extension WalletConnectSendHandler: ISendHandler {
+extension WalletConnectEvmSendHandler: ISendHandler {
     var syncingText: String? {
         nil
     }
@@ -105,7 +105,7 @@ extension WalletConnectSendHandler: ISendHandler {
     }
 }
 
-extension WalletConnectSendHandler {
+extension WalletConnectEvmSendHandler {
     enum SendError: Error {
         case invalidData
         case noGasPrice
@@ -114,11 +114,12 @@ extension WalletConnectSendHandler {
     }
 }
 
-extension WalletConnectSendHandler {
-    static func instance(request: WalletConnectRequest) -> WalletConnectSendHandler? {
+extension WalletConnectEvmSendHandler {
+    static func instance(request: WalletConnectRequest) -> WalletConnectEvmSendHandler? {
         guard let payload = request.payload as? WCEthereumTransactionPayload,
               let account = Core.shared.accountManager.activeAccount,
-              let evmKitWrapper = Core.shared.evmBlockchainManager.kitWrapper(chainId: request.chain.id, account: account)
+              let chainId = Int(request.chain.id),
+              let evmKitWrapper = Core.shared.evmBlockchainManager.kitWrapper(chainId: chainId, account: account)
         else {
             return nil
         }
@@ -133,7 +134,7 @@ extension WalletConnectSendHandler {
             input: payload.transaction.data
         )
 
-        return WalletConnectSendHandler(
+        return WalletConnectEvmSendHandler(
             request: request,
             payload: payload,
             baseToken: baseToken,

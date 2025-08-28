@@ -12,7 +12,6 @@ class WalletConnectMainService {
     private let reachabilityManager: IReachabilityManager
     private let accountManager: AccountManager
     private let proposalHandler: IProposalHandler
-    private let proposalValidator: ProposalValidator
 
     private var proposal: WalletConnectSign.Session.Proposal?
     private(set) var session: WalletConnectSign.Session? {
@@ -26,11 +25,9 @@ class WalletConnectMainService {
     private let errorRelay = PublishRelay<Error>()
     private let sessionUpdatedRelay = PublishRelay<WalletConnectSign.Session?>()
 
-    private let allowedBlockchainsRelay = PublishRelay<[WalletConnectMainModule.BlockchainItem]>()
+    private let allowedBlockchainsRelay = PublishRelay<[WalletConnectMainModule.BlockchainProposal]>()
 
-    private var blockchains = WalletConnectMainModule.BlockchainSet.empty
-    private var methods = Set<String>()
-    private var events = Set<String>()
+    private var blockchains = [WalletConnectMainModule.BlockchainProposal]()
 
     private let stateRelay = PublishRelay<WalletConnectMainModule.State>()
     private(set) var state: WalletConnectMainModule.State = .idle {
@@ -39,14 +36,13 @@ class WalletConnectMainService {
         }
     }
 
-    init(session: WalletConnectSign.Session? = nil, proposal: WalletConnectSign.Session.Proposal? = nil, service: WalletConnectService, reachabilityManager: IReachabilityManager, accountManager: AccountManager, proposalHandler: IProposalHandler, proposalValidator: ProposalValidator) {
+    init(session: WalletConnectSign.Session? = nil, proposal: WalletConnectSign.Session.Proposal? = nil, service: WalletConnectService, reachabilityManager: IReachabilityManager, accountManager: AccountManager, proposalHandler: IProposalHandler) {
         self.session = session
         self.proposal = proposal
         self.service = service
         self.reachabilityManager = reachabilityManager
         self.accountManager = accountManager
         self.proposalHandler = proposalHandler
-        self.proposalValidator = proposalValidator
 
         subscribe(disposeBag, service.receiveProposalObservable) { [weak self] in
             self?.proposal = $0
@@ -76,12 +72,12 @@ class WalletConnectMainService {
     private func sync(proposal: WalletConnectSign.Session.Proposal) {
         do {
             let blockchains = proposalHandler.handle(provider: proposal)
-            try proposalValidator.validate(namespaces: proposal.requiredNamespaces, set: blockchains)
+            try ProposalValidator.validate(namespaces: proposal.requiredNamespaces, blockchains: blockchains)
 
             self.blockchains = blockchains
             allowedBlockchainsRelay.accept(allowedBlockchains)
 
-            guard !blockchains.items.isEmpty else {
+            guard !blockchains.isEmpty else {
                 state = .invalid(error: WalletConnectMainModule.SessionError.noAnySupportedChainId)
                 return
             }
@@ -96,7 +92,7 @@ class WalletConnectMainService {
     private func didReceive(session: WalletConnectSign.Session) {
         do {
             let blockchains = proposalHandler.handle(provider: session)
-            try proposalValidator.validate(namespaces: session.proposalNamespaces, set: blockchains)
+            try ProposalValidator.validate(namespaces: session.proposalNamespaces, blockchains: blockchains)
 
             self.blockchains = blockchains
             allowedBlockchainsRelay.accept(allowedBlockchains)
@@ -143,9 +139,9 @@ extension WalletConnectMainService {
         return nil
     }
 
-    var allowedBlockchains: [WalletConnectMainModule.BlockchainItem] {
-        blockchains.items.sorted { blockchain, blockchain2 in
-            blockchain.chainId < blockchain2.chainId
+    var allowedBlockchains: [WalletConnectMainModule.BlockchainProposal] {
+        blockchains.sorted { blockchain, blockchain2 in
+            blockchain.item.chainId < blockchain2.item.chainId
         }
     }
 
@@ -193,7 +189,7 @@ extension WalletConnectMainService {
         errorRelay.asObservable()
     }
 
-    var allowedBlockchainsObservable: Observable<[WalletConnectMainModule.BlockchainItem]> {
+    var allowedBlockchainsObservable: Observable<[WalletConnectMainModule.BlockchainProposal]> {
         allowedBlockchainsRelay.asObservable()
     }
 
@@ -223,23 +219,9 @@ extension WalletConnectMainService {
             return
         }
 
-        // TODO: check
-        let accounts: [WalletConnectUtils.Account] = blockchains.items.compactMap { item in
-            Blockchain(
-                namespace: item.namespace,
-                reference: item.chainId.description
-            )
-            .flatMap { chain in
-                WalletConnectUtils.Account(
-                    blockchain: chain,
-                    address: item.address
-                )
-            }
-        }
-
         Task { [weak self, service, blockchains] in
             do {
-                try await service.approve(proposal: proposal, accounts: accounts, methods: blockchains.methods, events: blockchains.events)
+                try await service.approve(proposal: proposal, blockchains: blockchains)
             } catch {
                 self?.errorRelay.accept(error)
             }

@@ -5,7 +5,8 @@ import UIKit
 enum WCSignMessageRequestModule {
     static func viewController(request: WalletConnectRequest) -> UIViewController? {
         guard let account = Core.shared.accountManager.activeAccount,
-              let evmWrapper = Core.shared.evmBlockchainManager.kitWrapper(chainId: request.chain.id, account: account),
+              let chainId = Int(request.chain.id),
+              let evmWrapper = Core.shared.evmBlockchainManager.kitWrapper(chainId: chainId, account: account),
               let signer = evmWrapper.signer
         else {
             return nil

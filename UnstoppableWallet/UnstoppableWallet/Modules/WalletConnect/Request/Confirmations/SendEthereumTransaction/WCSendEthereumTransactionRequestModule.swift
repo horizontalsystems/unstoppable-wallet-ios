@@ -7,7 +7,8 @@ enum WCSendEthereumTransactionRequestModule {
     static func viewController(request: WalletConnectRequest) -> UIViewController? {
         guard let payload = request.payload as? WCEthereumTransactionPayload,
               let account = Core.shared.accountManager.activeAccount,
-              let evmKitWrapper = Core.shared.evmBlockchainManager.kitWrapper(chainId: request.chain.id, account: account)
+              let chainId = Int(request.chain.id),
+              let evmKitWrapper = Core.shared.evmBlockchainManager.kitWrapper(chainId: chainId, account: account)
         else {
             return nil
         }

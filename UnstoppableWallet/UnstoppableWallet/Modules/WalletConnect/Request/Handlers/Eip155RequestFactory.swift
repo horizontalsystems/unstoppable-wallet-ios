@@ -31,7 +31,7 @@ extension Eip155RequestFactory {
             throw WalletConnectRequest.CreationError.cantCreateAddress
         }
 
-        let chain = WalletConnectRequest.Chain(id: chainId, chainName: blockchain.name, address: address.eip55)
+        let chain = WalletConnectRequest.Chain(id: request.chainId.reference, chainName: blockchain.name, address: address.eip55)
 
         return WalletConnectRequest(
             id: request.id.intValue,

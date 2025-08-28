@@ -1,18 +1,19 @@
 import Foundation
+import SwiftUI
 import UIKit
 import WalletConnectSign
 
-class WCSignMessageHandler<Payload: WCSignMessagePayload>: WalletConnectRequestHandler {
+class WCStellarTransactionHandler<Payload: WCStellarTransactionPayload>: WalletConnectRequestHandler {
     override var method: String { Payload.method }
-    let requestFactory: Eip155RequestFactory
+    let requestFactory: StellarRequestFactory
 
-    init(requestFactory: Eip155RequestFactory) {
+    init(requestFactory: StellarRequestFactory) {
         self.requestFactory = requestFactory
     }
 }
 
-extension WCSignMessageHandler: IWalletConnectRequestHandler {
-    var namespace: String { Eip155ProposalHandler.namespace }
+extension WCStellarTransactionHandler: IWalletConnectRequestHandler {
+    var namespace: String { StellarProposalHandler.namespace }
 
     func handle(session: Session, request: Request) -> WalletConnectRequestChain.RequestResult {
         guard request.method == Payload.method else {
@@ -33,9 +34,9 @@ extension WCSignMessageHandler: IWalletConnectRequestHandler {
     }
 }
 
-extension WCSignMessageHandler: IWalletConnectRequestViewFactory {
+extension WCStellarTransactionHandler: IWalletConnectRequestViewFactory {
     func viewController(request: WalletConnectRequest) -> WalletConnectRequestChain.ViewFactoryResult {
-        guard request.payload is WCSignMessagePayload else {
+        guard request.payload is Payload else {
             return .unsuccessful(error: WalletConnectRequestChain.ViewFactoryError.cantRecognizeHandler)
         }
 

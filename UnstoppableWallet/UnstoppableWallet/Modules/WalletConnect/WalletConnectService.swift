@@ -222,16 +222,20 @@ extension WalletConnectService {
         }
     }
 
-    public func approve(proposal: WalletConnectSign.Session.Proposal, accounts: [WalletConnectUtils.Account], methods: Set<String>, events: Set<String>) async throws {
+    public func approve(proposal: WalletConnectSign.Session.Proposal, blockchains: [WalletConnectMainModule.BlockchainProposal]) async throws {
         logger?.debug("[WALLET] Approve Session: \(proposal.id)")
+
+        var namespaces = [String: SessionNamespace]()
+
+        for (namespace, blockchains) in ProposalValidator.separateByNamespace(blockchains: blockchains) {
+            if let sessionNamespace = ProposalValidator.convertToSessionNamespace(blockchains: blockchains) {
+                namespaces[namespace] = sessionNamespace
+            }
+        }
+
         Task { [logger] in
             do {
-                let eip155 = WalletConnectSign.SessionNamespace(
-                    accounts: accounts,
-                    methods: methods,
-                    events: events
-                )
-                _ = try await Web3Wallet.instance.approve(proposalId: proposal.id, namespaces: ["eip155": eip155])
+                _ = try await Web3Wallet.instance.approve(proposalId: proposal.id, namespaces: namespaces)
             } catch {
                 logger?.error("WC v2 can't approve proposal, cause: \(error.localizedDescription)")
                 throw error
@@ -265,11 +269,24 @@ extension WalletConnectService {
         sessionRequestReceivedRelay.asObservable()
     }
 
-    public func sign(request: WalletConnectSign.Request, result: Data) {
-        let result = AnyCodable(result.hs.hexString) // Signer.signEth(request: request)
+    public func sign(request: WalletConnectSign.Request, result: Any) {
+        let anyCodable: AnyCodable
+        switch result {
+        case let data as Data:
+            anyCodable = AnyCodable(data.hs.hexString)
+        case let dictionary as [String: Any]:
+            anyCodable = AnyCodable(any: dictionary)
+        case let res as AnyCodable:
+            anyCodable = res
+        case let string as String:
+            anyCodable = AnyCodable(string)
+        default:
+            anyCodable = AnyCodable(any: result)
+        }
+
         Task { [weak self] in
             do {
-                try await Sign.instance.respond(topic: request.topic, requestId: request.id, response: .response(result))
+                try await Sign.instance.respond(topic: request.topic, requestId: request.id, response: .response(anyCodable))
                 stat(page: .walletConnectRequest, event: .approveRequest(chainUid: request.chainId.absoluteString))
                 self?.pendingRequestsUpdatedRelay.accept(())
             }
@@ -311,7 +328,7 @@ extension WalletConnectSign.Session: Hashable {
 }
 
 extension WalletConnectService: IWalletConnectSignService {
-    func approveRequest(id: Int, result: Data) {
+    func approveRequest(id: Int, result: Any) {
         guard let request = pendingRequests.first(where: { $0.id.intValue == id }) else {
             return
         }

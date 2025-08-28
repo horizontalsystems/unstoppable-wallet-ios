@@ -1,6 +1,7 @@
 import Combine
 import EvmKit
 import Foundation
+import StellarKit
 import Web3Wallet
 
 class WalletConnectManager {
@@ -86,5 +87,9 @@ extension WalletConnectManager {
             return address
         }
         throw AdapterError.unsupportedAccount
+    }
+
+    static func stellarAddress(account: Account) throws -> String {
+        try StellarKitManager.accountId(accountType: account.type)
     }
 }

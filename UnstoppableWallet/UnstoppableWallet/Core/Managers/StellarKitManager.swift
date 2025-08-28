@@ -103,6 +103,10 @@ extension StellarKitManager {
     func stellarKit(account: Account) throws -> StellarKit.Kit {
         try queue.sync { try _stellarKit(account: account) }
     }
+
+    var blockchain: Blockchain? {
+        try? marketKit.blockchain(uid: BlockchainType.stellar.uid)
+    }
 }
 
 extension StellarKitManager {
