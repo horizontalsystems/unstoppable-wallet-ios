@@ -8,6 +8,10 @@ enum ColorStyle {
     case green
     case yellow
 
+    init(diff: Decimal) {
+        self = diff == 0 ? .secondary : (diff.isSignMinus ? .red : .green)
+    }
+
     var color: Color {
         color()
     }

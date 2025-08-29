@@ -33,11 +33,14 @@ extension MarketVaultChartFactory: IMetricChartFactory {
         var value: String?
         var valueDiff: ValueDiff?
 
-        value = MetricChartFactory.format(value: lastItem.value, valueType: valueType)
+        value = MetricChartFactory.format(value: lastItem.value, valueType: valueType).map {
+            ["market.vault.apy".localized, $0].joined(separator: " ")
+        }
         let diff = lastItem.value - firstItem.value
+        let trend: MovementTrend = firstItem.value <= lastItem.value ? .up : .down
 
         let valueString = ValueFormatter.instance.format(percentValue: diff, signType: .always)
-        valueDiff = valueString.map { ValueDiff(value: $0, trend: .neutral) }
+        valueDiff = valueString.map { ValueDiff(value: $0, trend: trend) }
 
         var chartItems = [ChartItem]()
         for index in 0 ..< itemData.items.count {
@@ -52,10 +55,10 @@ extension MarketVaultChartFactory: IMetricChartFactory {
         return ChartModule.ViewItem(
             value: value,
             valueDescription: nil,
-            rightSideMode: .custom(title: "market.vault.apy".localized, value: nil),
+            rightSideMode: .none,
             chartData: ChartData(items: chartItems, startWindow: startTimestamp, endWindow: endTimestamp),
             indicators: [],
-            chartTrend: .neutral,
+            chartTrend: trend,
             chartDiff: valueDiff,
             limitFormatter: { value in MetricChartFactory.format(value: value, valueType: valueType) }
         )
