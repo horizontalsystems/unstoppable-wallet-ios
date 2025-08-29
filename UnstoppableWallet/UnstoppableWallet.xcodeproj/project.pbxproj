@@ -1920,14 +1920,10 @@
 		6B93AFA12E5D92F800A55120 /* WCStellarTransactionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AF9F2E5D92EF00A55120 /* WCStellarTransactionHandler.swift */; };
 		6B93AFA32E5D937A00A55120 /* StellarRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AFA22E5D937A00A55120 /* StellarRequestFactory.swift */; };
 		6B93AFA42E5D937A00A55120 /* StellarRequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AFA22E5D937A00A55120 /* StellarRequestFactory.swift */; };
-		6B93AFA62E5ED61000A55120 /* WCStellarSignMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AFA52E5ED61000A55120 /* WCStellarSignMessageHandler.swift */; };
-		6B93AFA72E5ED61000A55120 /* WCStellarSignMessageHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AFA52E5ED61000A55120 /* WCStellarSignMessageHandler.swift */; };
-		6B93AFA92E5ED63B00A55120 /* WCStellarSignPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AFA82E5ED63B00A55120 /* WCStellarSignPayload.swift */; };
-		6B93AFAA2E5ED63B00A55120 /* WCStellarSignPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AFA82E5ED63B00A55120 /* WCStellarSignPayload.swift */; };
 		6B93AFAD2E5EF3E000A55120 /* WalletConnectEvmSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AFAC2E5EF3D900A55120 /* WalletConnectEvmSendHandler.swift */; };
 		6B93AFAE2E5EF3E000A55120 /* WalletConnectEvmSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AFAC2E5EF3D900A55120 /* WalletConnectEvmSendHandler.swift */; };
-		6B93AFB02E5EF40100A55120 /* WalletConnectStellarSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AFAF2E5EF3FA00A55120 /* WalletConnectStellarSendHandler.swift */; };
-		6B93AFB12E5EF40100A55120 /* WalletConnectStellarSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AFAF2E5EF3FA00A55120 /* WalletConnectStellarSendHandler.swift */; };
+		6B93AFB02E5EF40100A55120 /* WalletConnectStellarTransactionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AFAF2E5EF3FA00A55120 /* WalletConnectStellarTransactionHandler.swift */; };
+		6B93AFB12E5EF40100A55120 /* WalletConnectStellarTransactionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AFAF2E5EF3FA00A55120 /* WalletConnectStellarTransactionHandler.swift */; };
 		6BA5117D2BCFA06F00CB5A54 /* FirstAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5117C2BCFA06F00CB5A54 /* FirstAppearModifier.swift */; };
 		6BA5117E2BCFA06F00CB5A54 /* FirstAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5117C2BCFA06F00CB5A54 /* FirstAppearModifier.swift */; };
 		6BA8D2372D5A1DB00093D5C2 /* MarketSectorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA8D2332D5A1DB00093D5C2 /* MarketSectorsView.swift */; };
@@ -4464,10 +4460,8 @@
 		6B93AF9C2E5D927A00A55120 /* WCStellarTransactionPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCStellarTransactionPayload.swift; sourceTree = "<group>"; };
 		6B93AF9F2E5D92EF00A55120 /* WCStellarTransactionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCStellarTransactionHandler.swift; sourceTree = "<group>"; };
 		6B93AFA22E5D937A00A55120 /* StellarRequestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarRequestFactory.swift; sourceTree = "<group>"; };
-		6B93AFA52E5ED61000A55120 /* WCStellarSignMessageHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCStellarSignMessageHandler.swift; sourceTree = "<group>"; };
-		6B93AFA82E5ED63B00A55120 /* WCStellarSignPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCStellarSignPayload.swift; sourceTree = "<group>"; };
 		6B93AFAC2E5EF3D900A55120 /* WalletConnectEvmSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectEvmSendHandler.swift; sourceTree = "<group>"; };
-		6B93AFAF2E5EF3FA00A55120 /* WalletConnectStellarSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectStellarSendHandler.swift; sourceTree = "<group>"; };
+		6B93AFAF2E5EF3FA00A55120 /* WalletConnectStellarTransactionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectStellarTransactionHandler.swift; sourceTree = "<group>"; };
 		6BA5117C2BCFA06F00CB5A54 /* FirstAppearModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstAppearModifier.swift; sourceTree = "<group>"; };
 		6BA8D2332D5A1DB00093D5C2 /* MarketSectorsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketSectorsView.swift; sourceTree = "<group>"; };
 		6BA8D2342D5A1DB00093D5C2 /* MarketSectorsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketSectorsViewModel.swift; sourceTree = "<group>"; };
@@ -7931,8 +7925,6 @@
 		6B93AF9B2E5D924E00A55120 /* Stellar */ = {
 			isa = PBXGroup;
 			children = (
-				6B93AFA52E5ED61000A55120 /* WCStellarSignMessageHandler.swift */,
-				6B93AFA82E5ED63B00A55120 /* WCStellarSignPayload.swift */,
 				6B93AF9F2E5D92EF00A55120 /* WCStellarTransactionHandler.swift */,
 				6B93AF9C2E5D927A00A55120 /* WCStellarTransactionPayload.swift */,
 			);
@@ -7942,7 +7934,7 @@
 		6B93AFAB2E5EF33800A55120 /* WalletConnect */ = {
 			isa = PBXGroup;
 			children = (
-				6B93AFAF2E5EF3FA00A55120 /* WalletConnectStellarSendHandler.swift */,
+				6B93AFAF2E5EF3FA00A55120 /* WalletConnectStellarTransactionHandler.swift */,
 				6B93AFAC2E5EF3D900A55120 /* WalletConnectEvmSendHandler.swift */,
 				D3F9B0362BE3B5AA009FFA95 /* WalletConnectSendView.swift */,
 				D3F9B0392BE3BB36009FFA95 /* WalletConnectSendViewModel.swift */,
@@ -10029,7 +10021,6 @@
 				D384058B218317DF007D50AD /* LanguageManager.swift in Sources */,
 				D384058C218317DF007D50AD /* LocalStorage.swift in Sources */,
 				D023D26B2A24CD16004F65B0 /* BaseTronAdapter.swift in Sources */,
-				6B93AFA72E5ED61000A55120 /* WCStellarSignMessageHandler.swift in Sources */,
 				D384058F218317DF007D50AD /* SecuritySettingsModule.swift in Sources */,
 				D0DEFF052BD1253C004C9DF0 /* BitcoinFeeSettingsViewModel.swift in Sources */,
 				D3840592218317DF007D50AD /* SecuritySettingsViewModel.swift in Sources */,
@@ -10596,7 +10587,6 @@
 				11B35EE0660C0CE24235E4DF /* NftDatabaseStorage.swift in Sources */,
 				11B359F28FAF97AD4F7F6424 /* NftPriceRecord.swift in Sources */,
 				D3A580952BE8AA80003953F4 /* BitcoinSendSettingsView.swift in Sources */,
-				6B93AFAA2E5ED63B00A55120 /* WCStellarSignPayload.swift in Sources */,
 				11B35D24B98C73BD43CCD80B /* NftAssetRecord.swift in Sources */,
 				11B351767B71D6C42A23C518 /* NftCollectionRecord.swift in Sources */,
 				11B35C8D53F838E7E5CA6EEC /* NftStorage.swift in Sources */,
@@ -11079,7 +11069,7 @@
 				ABC9A4686BB11B772E834BCD /* UniswapV3Service.swift in Sources */,
 				ABC9AAEF5D444F5BCB9D0CE2 /* UniswapV3ViewModel.swift in Sources */,
 				ABC9AC011EA9D58866999D88 /* UniswapV3DataSource.swift in Sources */,
-				6B93AFB12E5EF40100A55120 /* WalletConnectStellarSendHandler.swift in Sources */,
+				6B93AFB12E5EF40100A55120 /* WalletConnectStellarTransactionHandler.swift in Sources */,
 				6BA8D2432D5B0D2C0093D5C2 /* MarketSectorViewModel.swift in Sources */,
 				ABC9A739B2E6FC4DFBD3ABC9 /* UniswapV3Module.swift in Sources */,
 				11B350E27D539D814BAAECC7 /* SubscriptionManager.swift in Sources */,
@@ -11610,7 +11600,6 @@
 				D384067B21831B3D007D50AD /* LocalStorage.swift in Sources */,
 				D384067E21831B3D007D50AD /* SecuritySettingsModule.swift in Sources */,
 				D023D26A2A24CD16004F65B0 /* BaseTronAdapter.swift in Sources */,
-				6B93AFA62E5ED61000A55120 /* WCStellarSignMessageHandler.swift in Sources */,
 				D384068121831B3D007D50AD /* SecuritySettingsViewModel.swift in Sources */,
 				D0DEFF042BD1253C004C9DF0 /* BitcoinFeeSettingsViewModel.swift in Sources */,
 				D384068221831B3D007D50AD /* BitcoinAdapter.swift in Sources */,
@@ -12177,7 +12166,6 @@
 				1A5643C73BEDA01E4E378BEF /* ZcashAddressParserItem.swift in Sources */,
 				D3DD67252BC3BEC100EC7F78 /* BaseUniswapMultiSwapConfirmationQuote.swift in Sources */,
 				11B35837076F6B350DFA89E7 /* NftDatabaseStorage.swift in Sources */,
-				6B93AFA92E5ED63B00A55120 /* WCStellarSignPayload.swift in Sources */,
 				11B357AE8B51E09D0EB60D87 /* NftPriceRecord.swift in Sources */,
 				11B35763508EBED0F4ED302A /* NftAssetRecord.swift in Sources */,
 				11B35040917F10257C949596 /* NftCollectionRecord.swift in Sources */,
@@ -12660,7 +12648,7 @@
 				D0F132A12B6B98E100C7310E /* RbfService.swift in Sources */,
 				ABC9A69C4D41D6E8B5DFBA97 /* UniswapV3DataSource.swift in Sources */,
 				6BA8D2422D5B0D2C0093D5C2 /* MarketSectorViewModel.swift in Sources */,
-				6B93AFB02E5EF40100A55120 /* WalletConnectStellarSendHandler.swift in Sources */,
+				6B93AFB02E5EF40100A55120 /* WalletConnectStellarTransactionHandler.swift in Sources */,
 				ABC9A767A49B686B3A3AC154 /* UniswapV3Module.swift in Sources */,
 				11B35B3134F108B2DB60D80B /* SubscriptionManager.swift in Sources */,
 				11B35953182487E864EB4946 /* ActivateSubscriptionService.swift in Sources */,
