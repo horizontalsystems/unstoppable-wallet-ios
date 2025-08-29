@@ -11,7 +11,7 @@ enum Diff {
 
     static func text(diff: Diff?, expired: Bool = false) -> CustomStringConvertible {
         if let (text, value) = resolved(diff: diff) {
-            return ComponentText(text: text, colorStyle: value == 0 ? .secondary : (value.isSignMinus ? .red : .green), dimmed: expired)
+            return ComponentText(text: text, colorStyle: .init(diff: value), dimmed: expired)
         } else {
             return "----"
         }

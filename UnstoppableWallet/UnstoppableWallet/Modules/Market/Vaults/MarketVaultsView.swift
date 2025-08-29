@@ -207,7 +207,11 @@ struct MarketVaultsView: View {
             },
             right: {
                 RightMultiText(
-                    title: apy.flatMap { ValueFormatter.instance.format(percentValue: $0) }.map { ComponentText(text: "market.vaults.apy".localized($0), colorStyle: .green) },
+                    title: apy.flatMap { apy in
+                        ValueFormatter.instance.format(percentValue: apy, signType: .auto).map {
+                            ComponentText(text: "market.vaults.apy".localized($0), colorStyle: .init(diff: apy))
+                        }
+                    },
                     subtitle: ValueFormatter.instance.formatShort(currency: viewModel.currency, value: tvl).map { "market.vaults.tvl".localized($0) }
                 )
             },
