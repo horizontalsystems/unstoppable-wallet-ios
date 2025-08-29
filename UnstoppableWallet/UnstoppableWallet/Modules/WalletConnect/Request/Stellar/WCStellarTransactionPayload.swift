@@ -45,3 +45,18 @@ class WCSendStellarTransactionPayload: WCStellarTransactionPayload {
         }
     }
 }
+
+class WCSignStellarTransactionPayload: WCStellarTransactionPayload {
+    override class var method: String { "stellar_signXDR" }
+    override class var name: String { "Sign Request" }
+
+    override class func module(request: WalletConnectRequest) -> UIViewController? {
+        WalletConnectSendView(request: request).toNavigationViewController()
+    }
+
+    class func view(request: WalletConnectRequest) -> some View {
+        ThemeNavigationStack {
+            WalletConnectSendView(request: request)
+        }
+    }
+}

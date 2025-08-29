@@ -11,6 +11,7 @@ class WalletConnectSendViewModel: ObservableObject {
     var payloadTitle: String {
         switch request.payload {
         case is WCSendStellarTransactionPayload: return "wallet_connect.send.transaction".localized
+        case is WCSignStellarTransactionPayload: return "wallet_connect.sign.request_title".localized
         default: return request.payload.dAppName
         }
     }
@@ -19,6 +20,10 @@ class WalletConnectSendViewModel: ObservableObject {
         switch request.payload {
         case is WCSendStellarTransactionPayload:
             return sending ? "send.confirmation.sending".localized : "button.send".localized
+
+        case is WCSignStellarTransactionPayload:
+            return "button.sign".localized
+
         default: return "wallet_connect.button.confirm".localized
         }
     }

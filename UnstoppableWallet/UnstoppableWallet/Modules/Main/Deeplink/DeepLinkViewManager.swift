@@ -75,12 +75,14 @@ class DeepLinkViewManager {
             case is WCSignEthereumTransactionPayload,
                  is WCSendEthereumTransactionPayload,
                  is WCSendStellarTransactionPayload,
+                 is WCSignStellarTransactionPayload,
                  is WCSignMessagePayload:
                 Coordinator.shared.present { _ in
                     switch request.payload {
                     case is WCSignEthereumTransactionPayload: WCSignEthereumTransactionPayload.view(request: request)
                     case is WCSendEthereumTransactionPayload: WCSendEthereumTransactionPayload.view(request: request)
                     case is WCSendStellarTransactionPayload: WCSendStellarTransactionPayload.view(request: request)
+                    case is WCSignStellarTransactionPayload: WCSignStellarTransactionPayload.view(request: request)
                     case is WCSignMessagePayload: WCSignMessagePayload.view(request: request)
                     default: EmptyView()
                     }

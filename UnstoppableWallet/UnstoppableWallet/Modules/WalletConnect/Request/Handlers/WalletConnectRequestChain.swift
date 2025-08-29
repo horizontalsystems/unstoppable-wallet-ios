@@ -140,7 +140,7 @@ extension WalletConnectRequestChain {
         )
 
         let sendStellarHandler = WCStellarTransactionHandler<WCSendStellarTransactionPayload>(requestFactory: stellarFactory)
-        let signStellarHandler = WCStellarSignHandler<WCStellarSignPayload>(requestFactory: stellarFactory)
+        let signStellarHandler = WCStellarTransactionHandler<WCSignStellarTransactionPayload>(requestFactory: stellarFactory)
 
         chain.append(handler: sendStellarHandler)
         chain.append(handler: signStellarHandler)
