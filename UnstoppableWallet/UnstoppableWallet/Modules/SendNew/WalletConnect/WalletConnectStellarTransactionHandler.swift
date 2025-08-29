@@ -251,7 +251,7 @@ extension WalletConnectStellarTransactionHandler {
     static func instance(request: WalletConnectRequest) -> WalletConnectStellarTransactionHandler? {
         guard let payload = request.payload as? WCStellarTransactionPayload,
               let account = Core.shared.accountManager.activeAccount,
-              let stellarKit = Core.shared.stellarKitManager.stellarKit,
+              let stellarKit = try? Core.shared.stellarKitManager.stellarKit(account: account),
               let keyPair = try? StellarKitManager.keyPair(accountType: account.type)
         else {
             return nil
