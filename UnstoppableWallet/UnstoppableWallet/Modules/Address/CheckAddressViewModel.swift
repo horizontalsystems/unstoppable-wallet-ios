@@ -6,9 +6,9 @@ class CheckAddressViewModel: ObservableObject {
     private static let coinUids = ["tether", "usd-coin", "paypal-usd"]
 
     private let marketKit = Core.shared.marketKit
+    private let contractAddressValidator = Core.shared.contractAddressValidator
     private let chainalysisValidator = ChainalysisAddressValidator()
     private let hashDitValidator = HashDitAddressValidator()
-    private let eip20Validator = Eip20AddressValidator()
     private var cancellables = Set<AnyCancellable>()
 
     let hashDitBlockchains: [Blockchain]
@@ -35,12 +35,12 @@ class CheckAddressViewModel: ObservableObject {
 
         do {
             let fullCoins = try marketKit.fullCoins(coinUids: Self.coinUids)
-            contractFullCoins = Self.coinUids.compactMap { uid in
+            contractFullCoins = Self.coinUids.compactMap { [contractAddressValidator] uid in
                 guard let fullCoin = fullCoins.first(where: { $0.coin.uid == uid }) else {
                     return nil
                 }
 
-                return FullCoin(coin: fullCoin.coin, tokens: fullCoin.tokens.filter { Eip20AddressValidator.supports(token: $0) }.ordered())
+                return FullCoin(coin: fullCoin.coin, tokens: fullCoin.tokens.filter { contractAddressValidator.supports(token: $0) }.ordered())
             }
         } catch {
             contractFullCoins = []
@@ -82,10 +82,10 @@ class CheckAddressViewModel: ObservableObject {
             switch type {
             case .chainalysis:
                 canCheck = true
-            case .hashdit, .contract:
-                if let addressBlockchainType = address.blockchainType, EvmBlockchainManager.blockchainTypes.contains(addressBlockchainType) {
-                    canCheck = true
-                }
+            case .hashdit:
+                canCheck = address.blockchainType.map { EvmBlockchainManager.blockchainTypes.contains($0) } ?? false
+            case .contract:
+                canCheck = address.blockchainType.map { contractAddressValidator.canCheck(blockchainType: $0) } ?? false
             }
 
             guard canCheck else {
@@ -95,7 +95,7 @@ class CheckAddressViewModel: ObservableObject {
 
             checkStates[type] = .checking
 
-            Task { [weak self, chainalysisValidator, hashDitValidator, eip20Validator] in
+            Task { [weak self, chainalysisValidator, hashDitValidator, contractAddressValidator] in
                 do {
                     let isClear: Bool
 
@@ -105,7 +105,7 @@ class CheckAddressViewModel: ObservableObject {
                     case let .hashdit(blockchainType):
                         isClear = try await hashDitValidator.isClear(address: address, blockchainType: blockchainType)
                     case let .contract(token):
-                        isClear = try await eip20Validator.isClear(address: address, token: token)
+                        isClear = try await contractAddressValidator.isClear(address: address, token: token)
                     }
 
                     await MainActor.run { [weak self] in
