@@ -5,7 +5,7 @@ import RxRelay
 import RxSwift
 
 class MoneroNetworkViewModel {
-    private let service: MoneroNetworkService
+    let service: MoneroNetworkService
     private let disposeBag = DisposeBag()
 
     private let stateRelay = BehaviorRelay<State>(value: State(defaultViewItems: [], customViewItems: []))
@@ -56,14 +56,6 @@ extension MoneroNetworkViewModel {
 
     var blockchainType: BlockchainType {
         service.blockchain.type
-    }
-
-    func onSelectDefault(index: Int) {
-        service.setDefault(index: index)
-    }
-
-    func onSelectCustom(index: Int) {
-        service.setCustom(index: index)
     }
 
     func onRemoveCustom(index: Int) {

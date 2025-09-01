@@ -132,7 +132,6 @@ extension MoneroKeyViewController: SectionsDataSource {
 
     func buildSections() -> [SectionProtocol] {
         let key = viewModel.key
-        let keyType = viewModel.keyType
         let showingPrivateKeys = viewModel.showingPrivateKeys
         let visible = showingPrivateKeys ? visible : true
         let tapToShowText = "monero_private_key.tap_to_show".localized
@@ -194,9 +193,6 @@ extension MoneroKeyViewController: SectionsDataSource {
 
 extension MoneroKeyViewController {
     static func instance(accountType: AccountType, mode: MoneroKeyViewModel.Mode) -> UIViewController? {
-//        let wallet = Core.shared.walletManager.wallets(account: )
-//        let adapter = Core.shared.adapterManager.adapter(for: accountType) as? MoneroAdapter,
-//
         guard let viewModel = MoneroKeyViewModel(accountType: accountType, mode: mode) else {
             return nil
         }

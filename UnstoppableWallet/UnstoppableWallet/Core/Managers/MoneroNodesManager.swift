@@ -15,18 +15,34 @@ class MoneroNodeManager {
         self.blockchainSettingsStorage = blockchainSettingsStorage
         self.moneroNodeStorage = moneroNodeStorage
     }
-}
 
-extension MoneroNodeManager {
-    var nodeObservable: Observable<BlockchainType> {
-        nodeRelay.asObservable()
+    private func saveCurrent(nodeUrl: URL, blockchainType: BlockchainType) {
+        blockchainSettingsStorage.save(moneroNodeUrl: nodeUrl.absoluteString, blockchainType: blockchainType)
+        nodeRelay.accept(blockchainType)
     }
 
-    var nodesUpdatedObservable: Observable<BlockchainType> {
-        nodeUpdatedRelay.asObservable()
+    private func saveNode(blockchainType: BlockchainType, url: URL, isTrusted: Bool, login: String? = nil, password: String? = nil) {
+        let defaultNodes = defaultNodes(blockchainType: blockchainType)
+        if let defaultNode = defaultNodes.first(where: { $0.node.url.absoluteString == url.absoluteString }),
+           defaultNode.node.isTrusted == isTrusted, defaultNode.node.login == login, defaultNode.node.password == password
+        {
+            try? moneroNodeStorage.delete(blockchainTypeUid: blockchainType.uid, url: url.absoluteString)
+        } else {
+            let record = MoneroNodeRecord(
+                blockchainTypeUid: blockchainType.uid,
+                url: url.absoluteString,
+                isTrusted: isTrusted,
+                login: login,
+                password: password
+            )
+
+            try? moneroNodeStorage.save(record: record)
+        }
+
+        nodeUpdatedRelay.accept(blockchainType)
     }
 
-    func defaultNodes(blockchainType: BlockchainType) -> [MoneroNode] {
+    private func defaultNodes(blockchainType: BlockchainType) -> [MoneroNode] {
         switch blockchainType {
         case .monero:
             return [
@@ -67,6 +83,16 @@ extension MoneroNodeManager {
             return []
         }
     }
+}
+
+extension MoneroNodeManager {
+    var nodeObservable: Observable<BlockchainType> {
+        nodeRelay.asObservable()
+    }
+
+    var nodesUpdatedObservable: Observable<BlockchainType> {
+        nodeUpdatedRelay.asObservable()
+    }
 
     func customNodes(blockchainType: BlockchainType?) -> [MoneroNode] {
         do {
@@ -92,8 +118,34 @@ extension MoneroNodeManager {
         }
     }
 
+    func defaultAndCustomNodes(blockchainType: BlockchainType) -> ([MoneroNode], [MoneroNode]) {
+        var defaultNodes = defaultNodes(blockchainType: blockchainType)
+        var customNodes = customNodes(blockchainType: blockchainType)
+
+        for (index, defaultNode) in defaultNodes.enumerated() {
+            if let customNodeIndex = customNodes.firstIndex(where: { $0.node.url.absoluteString == defaultNode.node.url.absoluteString }) {
+                let customNode = customNodes[customNodeIndex]
+
+                defaultNodes[index] = MoneroNode(
+                    name: defaultNode.name,
+                    node: .init(
+                        url: defaultNode.node.url,
+                        isTrusted: customNode.node.isTrusted,
+                        login: customNode.node.login,
+                        password: customNode.node.password
+                    )
+                )
+
+                customNodes.remove(at: customNodeIndex)
+            }
+        }
+
+        return (defaultNodes, customNodes)
+    }
+
     func allNodes(blockchainType: BlockchainType) -> [MoneroNode] {
-        defaultNodes(blockchainType: blockchainType) + customNodes(blockchainType: blockchainType)
+        let (defaultNodes, customNodes) = defaultAndCustomNodes(blockchainType: blockchainType)
+        return defaultNodes + customNodes
     }
 
     func node(blockchainType: BlockchainType) -> MoneroNode {
@@ -108,24 +160,16 @@ extension MoneroNodeManager {
         return nodes[0]
     }
 
-    func saveCurrent(node: MoneroNode, blockchainType: BlockchainType) {
-        blockchainSettingsStorage.save(moneroNodeUrl: node.node.url.absoluteString, blockchainType: blockchainType)
-        nodeRelay.accept(blockchainType)
+    func setCurrent(node: MoneroNode, blockchainType: BlockchainType) {
+        saveNode(blockchainType: blockchainType, url: node.node.url, isTrusted: node.node.isTrusted)
+        saveCurrent(nodeUrl: node.node.url, blockchainType: blockchainType)
     }
 
-    func saveNode(blockchainType: BlockchainType, url: URL, isTrusted: Bool, login: String? = nil, password: String? = nil) {
-        let record = MoneroNodeRecord(
-            blockchainTypeUid: blockchainType.uid,
-            url: url.absoluteString,
-            isTrusted: isTrusted,
-            login: login,
-            password: password
-        )
-
-        try? moneroNodeStorage.save(record: record)
+    func addNew(blockchainType: BlockchainType, url: URL, isTrusted: Bool, login: String? = nil, password: String? = nil) {
+        saveNode(blockchainType: blockchainType, url: url, isTrusted: isTrusted, login: login, password: password)
 
         if let node = customNodes(blockchainType: blockchainType).first(where: { $0.node.url == url }) {
-            saveCurrent(node: node, blockchainType: blockchainType)
+            saveCurrent(nodeUrl: node.node.url, blockchainType: blockchainType)
         }
 
         nodeUpdatedRelay.accept(blockchainType)
@@ -208,12 +252,12 @@ extension MoneroNodeManager {
             if let moneroNode = allNodes(blockchainType: blockchainType)
                 .first(where: { $0.node.url.absoluteString == node.url })
             {
-                saveCurrent(node: moneroNode, blockchainType: blockchainType)
+                saveCurrent(nodeUrl: moneroNode.node.url, blockchainType: blockchainType)
             }
         }
 
         for blockchainType in blockchainTypes {
-            nodeUpdatedRelay.accept(blockchainType)
+            nodeRelay.accept(blockchainType)
         }
     }
 }

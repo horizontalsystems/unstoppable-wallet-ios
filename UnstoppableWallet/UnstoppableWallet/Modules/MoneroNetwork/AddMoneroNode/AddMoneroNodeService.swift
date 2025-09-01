@@ -50,7 +50,7 @@ extension AddMoneroNodeService {
         let password = password.isEmpty ? nil : password
 
         stat(page: .blockchainSettingsMoneroAdd, event: .addMoneroNode(chainUid: blockchainType.uid))
-        moneroNodeManager.saveNode(blockchainType: blockchainType, url: url, isTrusted: false, login: login, password: password)
+        moneroNodeManager.addNew(blockchainType: blockchainType, url: url, isTrusted: true, login: login, password: password)
     }
 }
 

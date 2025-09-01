@@ -13,6 +13,6 @@ class MoneroNode {
 
 extension MoneroNode: Equatable {
     static func == (lhs: MoneroNode, rhs: MoneroNode) -> Bool {
-        lhs.node.url == rhs.node.url
+        lhs.node.url == rhs.node.url && lhs.node.isTrusted == rhs.node.isTrusted
     }
 }

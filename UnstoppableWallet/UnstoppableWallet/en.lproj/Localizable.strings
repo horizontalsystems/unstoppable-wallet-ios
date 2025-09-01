@@ -2076,6 +2076,9 @@
 "monero_network.added" = "Added";
 "monero_network.add_new" = "Add New";
 "monero_network.description" = "Choose the node Unstoppable app should use for synchronizing wallet(s).";
+"monero_network.settings.title" = "Node Preferences";
+"monero_network.settings.description" = "Trusted node — the wallet trusts the selected node and uses its data without extra verification. \n\nOn → transactions instantly appear as Pending when broadcast (faster sync, but lower privacy and reliance on the node).\n\nOff → transactions are shown only after confirmations from the network (slower, but safer and more private).";
+"monero_network.settings.trust" = "Trust";
 
 // Add RPC Source
 

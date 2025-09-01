@@ -83,6 +83,13 @@ class MoneroNetworkViewController: ThemeViewController {
         let module = AddMoneroNodeModule.viewController(blockchainType: viewModel.blockchainType)
         present(module, animated: true)
     }
+
+    private func showSettings(nodeType: MoneroNetworkSettingsViewModel.NodeType, index: Int) {
+        let viewModel = MoneroNetworkSettingsViewModel(service: viewModel.service, nodeType: nodeType, index: index)
+        let viewController = MoneroNetworkSettingsViewController(viewModel: viewModel).toBottomSheet
+
+        present(viewController, animated: true)
+    }
 }
 
 extension MoneroNetworkViewController: SectionsDataSource {
@@ -131,7 +138,7 @@ extension MoneroNetworkViewController: SectionsDataSource {
                         isFirst: index == 0,
                         isLast: index == defaultViewItems.count - 1,
                         action: { [weak self] in
-                            self?.viewModel.onSelectDefault(index: index)
+                            self?.showSettings(nodeType: .predefined, index: index)
                         }
                     )
                 }
@@ -154,7 +161,7 @@ extension MoneroNetworkViewController: SectionsDataSource {
                             isFirst: index == 0,
                             isLast: index == customViewItems.count - 1,
                             action: { [weak self] in
-                                self?.viewModel.onSelectCustom(index: index)
+                                self?.showSettings(nodeType: .custom, index: index)
                             }
                         )
                     }
