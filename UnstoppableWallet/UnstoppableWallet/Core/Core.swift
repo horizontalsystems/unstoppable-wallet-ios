@@ -116,6 +116,8 @@ class Core {
     private let startScreenAlertManager: StartScreenAlertManager
     private let deepLinkViewManager: DeepLinkViewManager
 
+    let contractAddressValidator = ContractAddressValidatorChain()
+
     let valueFormatter: CurrencyValueFormatter
 
     init() throws {
@@ -360,6 +362,14 @@ class Core {
             deeplinkManager: deepLinkManager,
             deeplinkStorage: deeplinkStorage
         )
+
+        contractAddressValidator.append(validator:
+            Eip20AddressValidator(
+                evmSyncSourceManager: evmSyncSourceManager,
+                networkManager: networkManager
+            )
+        )
+        contractAddressValidator.append(validator: Trc20AddressValidator(networkManager: networkManager))
 
         valueFormatter = CurrencyValueFormatter(amountRoundingManager: amountRoundingManager)
 

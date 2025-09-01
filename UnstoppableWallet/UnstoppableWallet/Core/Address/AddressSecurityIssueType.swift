@@ -38,7 +38,7 @@ enum AddressSecurityIssueType: CaseIterable, Identifiable {
     func supports(token: Token) -> Bool {
         switch self {
         case .phishing: return fishingBlockchainSupports.contains(token.blockchainType)
-        case .blacklisted: return HashDitAddressValidator.supportedBlockchainTypes.contains(token.blockchainType) || Eip20AddressValidator.supports(token: token)
+        case .blacklisted: return HashDitAddressValidator.supportedBlockchainTypes.contains(token.blockchainType) || Core.shared.contractAddressValidator.supports(token: token)
         case .sanctioned: return true
         }
     }

@@ -86,7 +86,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
     }
 
     var icon: String {
-        "thorchain_32"
+        "allbridge_32"
     }
 
     private func syncPools() {
