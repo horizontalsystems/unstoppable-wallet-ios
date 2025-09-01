@@ -2652,6 +2652,10 @@
 		D06669032A31B559004B048D /* TronRecipientAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */; };
 		D066A45C2C6CB2E100074E35 /* TelegramUserHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D066A45B2C6CB2E100074E35 /* TelegramUserHandler.swift */; };
 		D066A45D2C6CB2E100074E35 /* TelegramUserHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D066A45B2C6CB2E100074E35 /* TelegramUserHandler.swift */; };
+		D066CC2E2E60579D0086DD12 /* MoneroNetworkSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D066CC2D2E60579D0086DD12 /* MoneroNetworkSettingsViewController.swift */; };
+		D066CC2F2E60579D0086DD12 /* MoneroNetworkSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D066CC2D2E60579D0086DD12 /* MoneroNetworkSettingsViewController.swift */; };
+		D066CC342E61B2390086DD12 /* MoneroNetworkSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D066CC332E61B2320086DD12 /* MoneroNetworkSettingsViewModel.swift */; };
+		D066CC352E61B2390086DD12 /* MoneroNetworkSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D066CC332E61B2320086DD12 /* MoneroNetworkSettingsViewModel.swift */; };
 		D06A171B2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06A171A2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift */; };
 		D06A171C2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06A171A2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift */; };
 		D06B302C2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */; };
@@ -4822,6 +4826,8 @@
 		D061A5312AA846FA009AAD57 /* SecuritySettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecuritySettingsView.swift; sourceTree = "<group>"; };
 		D06669012A31B559004B048D /* TronRecipientAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronRecipientAddressViewModel.swift; sourceTree = "<group>"; };
 		D066A45B2C6CB2E100074E35 /* TelegramUserHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TelegramUserHandler.swift; sourceTree = "<group>"; };
+		D066CC2D2E60579D0086DD12 /* MoneroNetworkSettingsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroNetworkSettingsViewController.swift; sourceTree = "<group>"; };
+		D066CC332E61B2320086DD12 /* MoneroNetworkSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroNetworkSettingsViewModel.swift; sourceTree = "<group>"; };
 		D06A171A2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeSettingsViewHelper.swift; sourceTree = "<group>"; };
 		D06B302B2B6A120E0012A161 /* LegacyFeeSettingsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyFeeSettingsViewModel.swift; sourceTree = "<group>"; };
 		D06F60012D195FBC0033A288 /* AddressSecurityIssueType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSecurityIssueType.swift; sourceTree = "<group>"; };
@@ -9049,6 +9055,8 @@
 				D0709C142E50A9180012C0E7 /* MoneroNetworkService.swift */,
 				D0709C152E50A9180012C0E7 /* MoneroNetworkViewController.swift */,
 				D0709C162E50A9180012C0E7 /* MoneroNetworkViewModel.swift */,
+				D066CC2D2E60579D0086DD12 /* MoneroNetworkSettingsViewController.swift */,
+				D066CC332E61B2320086DD12 /* MoneroNetworkSettingsViewModel.swift */,
 			);
 			path = MoneroNetwork;
 			sourceTree = "<group>";
@@ -10164,6 +10172,7 @@
 				11B35191E1A9626DF75D6A51 /* MarkdownViewModel.swift in Sources */,
 				11B35D19D00091E903B04472 /* MarkdownViewController.swift in Sources */,
 				D34D3E092DD614B7005C9ACC /* StellarSecretKeyViewController.swift in Sources */,
+				D066CC2F2E60579D0086DD12 /* MoneroNetworkSettingsViewController.swift in Sources */,
 				11B35D270BF38B1478789B5E /* MarkdownService.swift in Sources */,
 				11B353917D2223D2B275429A /* Error.swift in Sources */,
 				D36DE0F7272FD92F000BC916 /* SwapSelectProviderViewController.swift in Sources */,
@@ -10376,6 +10385,7 @@
 				11B3534EF58DAC9E15DC49A5 /* BackupVerifyWordsViewController.swift in Sources */,
 				11B35E08C957B79CF373E9FB /* BackupVerifyWordsModule.swift in Sources */,
 				11B35F79E8B3DED443D2825A /* BottomMultiSelectorViewController.swift in Sources */,
+				D066CC352E61B2390086DD12 /* MoneroNetworkSettingsViewModel.swift in Sources */,
 				11B35E6A50BCA039A62EBEC7 /* ManageWalletsModule.swift in Sources */,
 				11B35DC1BFA21858AA46A1C4 /* ManageWalletsService.swift in Sources */,
 				11B35183F103B22537F9F9DF /* ManageWalletsViewModel.swift in Sources */,
@@ -11743,6 +11753,7 @@
 				1A5649926B0064083045BEEB /* BalanceErrorService.swift in Sources */,
 				1A564001701A1E77AF7A651B /* BalanceErrorModule.swift in Sources */,
 				D34D3E052DD614B7005C9ACC /* StellarSecretKeyViewController.swift in Sources */,
+				D066CC2E2E60579D0086DD12 /* MoneroNetworkSettingsViewController.swift in Sources */,
 				11B35CC30F65AC6966F66BA4 /* MarkdownViewModel.swift in Sources */,
 				11B358C1D982EAC4F0A308ED /* MarkdownViewController.swift in Sources */,
 				11B35B3821C6CCB647B98F9A /* MarkdownService.swift in Sources */,
@@ -11955,6 +11966,7 @@
 				11B358657FCC50C9B3A10294 /* ManageWalletsViewController.swift in Sources */,
 				11B358F1E7C72C1F42EC456F /* CoinToggleViewModel.swift in Sources */,
 				11B358492715766BFBB4E720 /* CoinToggleViewController.swift in Sources */,
+				D066CC342E61B2390086DD12 /* MoneroNetworkSettingsViewModel.swift in Sources */,
 				11B3524401E294D8A919186E /* EnabledWallet_v_0_20.swift in Sources */,
 				11B3512E20E90C3332EFCC1B /* RestoreSettingRecord.swift in Sources */,
 				11B3504F9DECABF08D8C82BC /* RestoreSettingsManager.swift in Sources */,

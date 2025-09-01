@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import MoneroKit
 import RxRelay
 import RxSwift
 
@@ -29,9 +30,11 @@ class MoneroNetworkService {
     }
 
     private func syncState() {
+        let (defaultNodes, customNodes) = moneroNodeManager.defaultAndCustomNodes(blockchainType: blockchain.type)
+
         state = State(
-            defaultItems: items(nodes: moneroNodeManager.defaultNodes(blockchainType: blockchain.type)),
-            customItems: items(nodes: moneroNodeManager.customNodes(blockchainType: blockchain.type))
+            defaultItems: items(nodes: defaultNodes),
+            customItems: items(nodes: customNodes)
         )
     }
 
@@ -46,13 +49,15 @@ class MoneroNetworkService {
         }
     }
 
-    func setCurrent(node: MoneroNode) {
+    func setCurrent(node: MoneroNode, isTrusted: Bool) {
+        let kitNode = MoneroKit.Node(url: node.node.url, isTrusted: isTrusted, login: node.node.login, password: node.node.password)
+        let node = MoneroNode(name: node.name, node: kitNode)
+
         guard currentNode != node else {
             return
         }
 
-        moneroNodeManager.saveCurrent(node: node, blockchainType: blockchain.type)
-
+        moneroNodeManager.setCurrent(node: node, blockchainType: blockchain.type)
         syncState()
     }
 }
@@ -62,15 +67,15 @@ extension MoneroNetworkService {
         stateRelay.asObservable()
     }
 
-    func setDefault(index: Int) {
+    func setDefault(index: Int, isTrusted: Bool) {
         let node = state.defaultItems[index].node
         stat(page: .blockchainSettingsMonero, event: .switchMoneroNode(chainUid: blockchain.uid, name: node.name))
-        setCurrent(node: node)
+        setCurrent(node: node, isTrusted: isTrusted)
     }
 
-    func setCustom(index: Int) {
+    func setCustom(index: Int, isTrusted: Bool) {
         stat(page: .blockchainSettingsMonero, event: .switchMoneroNode(chainUid: blockchain.uid, name: "custom"))
-        setCurrent(node: state.customItems[index].node)
+        setCurrent(node: state.customItems[index].node, isTrusted: isTrusted)
     }
 
     func removeCustom(index: Int) {

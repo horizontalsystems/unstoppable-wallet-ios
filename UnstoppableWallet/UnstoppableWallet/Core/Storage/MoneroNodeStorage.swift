@@ -23,7 +23,7 @@ extension MoneroNodeStorage {
 
     func save(record: MoneroNodeRecord) throws {
         _ = try dbPool.write { db in
-            try record.insert(db)
+            try record.save(db)
         }
     }
 
