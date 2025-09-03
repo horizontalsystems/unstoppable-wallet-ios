@@ -340,7 +340,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "lost_accounts.warning_message" = "Die verschlüsselten Daten Ihres Wallets wurden kürzlich ungültig, weil Ihr iOS-Sperrbildschirm geändert wurde";
 
 // Token Balance Page
-"balance.token.locked" = "Gesperrt";
+"balance.token.locked" = "Locked Balance";
 "balance.token.locked.stellar.title" = "Gesperrter Betrag";
 "balance.token.locked.stellar.description" = "Das Stellar-Netzwerk sperrt 1 XLM zur Aktivierung der Wallet sowie 0,5 XLM als Reserve für jedes in Ihrer Wallet aktivierte Token.";
 "balance.token.locked.stellar.description.currently_locked" = "Derzeit gesperrt:";
@@ -1344,6 +1344,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "transactions.title" = "Transaktionen";
 "transactions.tab_bar_item" = "Transaktionen";
 "transactions.filter_all" = "Alle";
+"transactions.syncing_placeholder" = "Please wait for the sync to finish.";
 "transactions.empty_text" = "Sie haben noch keine offenen oder früheren Transaktionen";
 "transactions.pending" = "In Bearbeitung";
 "transactions.processing" = "Verarbeite";
