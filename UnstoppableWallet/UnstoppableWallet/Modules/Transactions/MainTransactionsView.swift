@@ -19,7 +19,7 @@ struct MainTransactionsView: View {
                 )
 
                 if transactionsViewModel.sections.isEmpty {
-                    PlaceholderViewNew(icon: "outgoing_raw_48", subtitle: "transactions.empty_text".localized)
+                    PlaceholderViewNew(icon: "warning_filled", subtitle: "transactions.empty_text".localized)
                 } else {
                     ThemeList(bottomSpacing: .margin16) {
                         TransactionsView(viewModel: transactionsViewModel, statPage: .transactions)

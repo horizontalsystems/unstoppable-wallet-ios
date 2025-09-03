@@ -413,6 +413,14 @@ class TransactionsViewModel: ObservableObject {
 }
 
 extension TransactionsViewModel {
+    var transactionListStatus: TransactionListStatus {
+        if sections.isEmpty {
+            return syncing ? .loading : .empty
+        } else {
+            return .show
+        }
+    }
+
     func record(id: String) -> TransactionRecord? {
         queue.sync {
             __items.first(where: { $0.record.uid == id })?.record
@@ -513,4 +521,36 @@ extension TransactionsViewModel {
         case neutral
         case secondary
     }
+}
+
+struct TransactionListStatus: Equatable {
+    let id: String
+    let icon: String?
+    let title: String?
+    let subtitle: String?
+
+    init(id: String, icon: String? = nil, title: String? = nil, subtitle: String? = nil) {
+        self.id = id
+        self.icon = icon
+        self.title = title
+        self.subtitle = subtitle
+    }
+
+    static let show = TransactionListStatus(
+        id: "show"
+    )
+
+    static let loading = TransactionListStatus(
+        id: "loading",
+        icon: "warning_filled",
+        title: nil,
+        subtitle: "transactions.syncing_placeholder".localized
+    )
+
+    static let empty = TransactionListStatus(
+        id: "empty",
+        icon: "warning_filled",
+        title: nil,
+        subtitle: "transactions.empty_text".localized
+    )
 }

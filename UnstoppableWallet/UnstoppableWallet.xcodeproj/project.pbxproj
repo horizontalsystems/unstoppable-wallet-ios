@@ -1928,6 +1928,10 @@
 		6B93AFCF2E61BDFD00A55120 /* Trc20AddressValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AFCD2E61BDFD00A55120 /* Trc20AddressValidator.swift */; };
 		6B93AFD22E656B3B00A55120 /* ContractAddressValidatorChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AFD12E656B2B00A55120 /* ContractAddressValidatorChain.swift */; };
 		6B93AFD32E656B3B00A55120 /* ContractAddressValidatorChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AFD12E656B2B00A55120 /* ContractAddressValidatorChain.swift */; };
+		6B93AFD52E66C46C00A55120 /* WalletInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AFD42E66C46100A55120 /* WalletInfoView.swift */; };
+		6B93AFD62E66C46C00A55120 /* WalletInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AFD42E66C46100A55120 /* WalletInfoView.swift */; };
+		6B93AFD82E67138C00A55120 /* ViewWithTransactionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AFD72E67138700A55120 /* ViewWithTransactionList.swift */; };
+		6B93AFD92E67138C00A55120 /* ViewWithTransactionList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AFD72E67138700A55120 /* ViewWithTransactionList.swift */; };
 		6BA5117D2BCFA06F00CB5A54 /* FirstAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5117C2BCFA06F00CB5A54 /* FirstAppearModifier.swift */; };
 		6BA5117E2BCFA06F00CB5A54 /* FirstAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5117C2BCFA06F00CB5A54 /* FirstAppearModifier.swift */; };
 		6BA8D2372D5A1DB00093D5C2 /* MarketSectorsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA8D2332D5A1DB00093D5C2 /* MarketSectorsView.swift */; };
@@ -4472,6 +4476,8 @@
 		6B93AFAF2E5EF3FA00A55120 /* WalletConnectStellarTransactionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectStellarTransactionHandler.swift; sourceTree = "<group>"; };
 		6B93AFCD2E61BDFD00A55120 /* Trc20AddressValidator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Trc20AddressValidator.swift; sourceTree = "<group>"; };
 		6B93AFD12E656B2B00A55120 /* ContractAddressValidatorChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractAddressValidatorChain.swift; sourceTree = "<group>"; };
+		6B93AFD42E66C46100A55120 /* WalletInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInfoView.swift; sourceTree = "<group>"; };
+		6B93AFD72E67138700A55120 /* ViewWithTransactionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewWithTransactionList.swift; sourceTree = "<group>"; };
 		6BA5117C2BCFA06F00CB5A54 /* FirstAppearModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstAppearModifier.swift; sourceTree = "<group>"; };
 		6BA8D2332D5A1DB00093D5C2 /* MarketSectorsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketSectorsView.swift; sourceTree = "<group>"; };
 		6BA8D2342D5A1DB00093D5C2 /* MarketSectorsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketSectorsViewModel.swift; sourceTree = "<group>"; };
@@ -8198,6 +8204,8 @@
 		ABC9A15DEE3E0185266FF14F /* Token */ = {
 			isa = PBXGroup;
 			children = (
+				6B93AFD72E67138700A55120 /* ViewWithTransactionList.swift */,
+				6B93AFD42E66C46100A55120 /* WalletInfoView.swift */,
 				D371A23A2E5C36F900D7D7F6 /* WalletTokenTopView.swift */,
 				D371A2372E5C36EE00D7D7F6 /* BaseWalletTokenView.swift */,
 				D34DB1B02E27C66400DD30D3 /* WalletTokenModule.swift */,
@@ -11173,6 +11181,7 @@
 				11B3594B47902B41F5C04E6B /* ReceiveAddressService.swift in Sources */,
 				11B358E4C529863AFFF8806F /* ReceiveAddressViewModel.swift in Sources */,
 				11B35EE923002E9FCC413422 /* ReceiveAddressViewItemFactory.swift in Sources */,
+				6B93AFD92E67138C00A55120 /* ViewWithTransactionList.swift in Sources */,
 				11B35D8E976E984302A81F8B /* ReceiveTokenViewModel.swift in Sources */,
 				6BDFC0862E3C8F1900CC28DD /* MerkleGetTransactionByHashJsonRpc.swift in Sources */,
 				D34637FC2DDDD68800187698 /* AddressCheckerView.swift in Sources */,
@@ -11589,6 +11598,7 @@
 				11B357DCC0BA9E888DE64CB1 /* MultiSwapRevokeViewModel.swift in Sources */,
 				11B35FEC7AA2A8887FCF0AE6 /* StatManager.swift in Sources */,
 				11B3587280273E0804CA84F2 /* Stats.swift in Sources */,
+				6B93AFD62E66C46C00A55120 /* WalletInfoView.swift in Sources */,
 				ABC9AC8F6F1BD574DB5BAA20 /* RecipientRowsView.swift in Sources */,
 				ABC9AEC906C313583DBECCCA /* RecipientRowsViewModel.swift in Sources */,
 				ABC9A835B49A7BF85F87454D /* AlertButtonTintColor.swift in Sources */,
@@ -12756,6 +12766,7 @@
 				11B3550C46C5811A7540A934 /* ReceiveAddressService.swift in Sources */,
 				11B3543A420A23064B056925 /* ReceiveAddressViewModel.swift in Sources */,
 				6BDFC0872E3C8F1900CC28DD /* MerkleGetTransactionByHashJsonRpc.swift in Sources */,
+				6B93AFD82E67138C00A55120 /* ViewWithTransactionList.swift in Sources */,
 				D34637FA2DDDD68800187698 /* AddressCheckerView.swift in Sources */,
 				6BBB92AD2D0FD43D00112409 /* PurchaseBottomSheetView.swift in Sources */,
 				D34338E82C871344001FCAD2 /* TonTransactionAdapter.swift in Sources */,
@@ -13172,6 +13183,7 @@
 				11B355FCAF8DC88550CE2DB3 /* StatManager.swift in Sources */,
 				11B35B1875DF852DE471C511 /* Stats.swift in Sources */,
 				ABC9A28FF8184EDA95751080 /* RecipientRowsView.swift in Sources */,
+				6B93AFD52E66C46C00A55120 /* WalletInfoView.swift in Sources */,
 				ABC9A6537ACEB9AF1CCF9D8C /* RecipientRowsViewModel.swift in Sources */,
 				ABC9A190E478402B48410FCC /* AlertButtonTintColor.swift in Sources */,
 				D3E1E8742C21859000E07052 /* PurchasesView.swift in Sources */,

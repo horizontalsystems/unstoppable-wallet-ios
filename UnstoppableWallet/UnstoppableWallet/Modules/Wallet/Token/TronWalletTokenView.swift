@@ -12,23 +12,26 @@ struct TronWalletTokenView: View {
 
     var body: some View {
         BaseWalletTokenView(wallet: wallet) { walletTokenViewModel, transactionsViewModel in
-            if viewModel.accountActive {
-                ThemeList(bottomSpacing: .margin16) {
+            let transactionListStatus = viewModel.accountActive ? transactionsViewModel.transactionListStatus : .inactiveWallet
+
+            ViewWithTransactionList(
+                transactionListStatus: transactionListStatus,
+                content: {
                     WalletTokenTopView(viewModel: walletTokenViewModel).themeListTopView()
+                },
+                transactionList: {
                     TransactionsView(viewModel: transactionsViewModel, statPage: .tokenPage)
                 }
-                .themeListScrollHeader()
-            } else {
-                VStack(spacing: 0) {
-                    WalletTokenTopView(viewModel: walletTokenViewModel)
-
-                    PlaceholderViewNew(
-                        icon: "warning_filled",
-                        title: "balance.token.account.inactive.title".localized,
-                        subtitle: "balance.token.account.inactive.description".localized
-                    )
-                }
-            }
+            )
         }
     }
+}
+
+extension TransactionListStatus {
+    static let inactiveWallet = TransactionListStatus(
+        id: "inactive_wallet",
+        icon: "warning_filled",
+        title: "balance.token.account.inactive.title".localized,
+        subtitle: "balance.token.account.inactive.description".localized
+    )
 }

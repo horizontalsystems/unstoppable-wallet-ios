@@ -338,7 +338,7 @@
 "lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
 
 // Token Balance Page
-"balance.token.locked" = "Locked";
+"balance.token.locked" = "Locked Balance";
 "balance.token.locked.stellar.title" = "Locked Amount";
 "balance.token.locked.stellar.description" = "The Stellar network locks 1 XLM to activate the wallet and 0.5 XLM as a reserve for each token activated in your wallet.";
 "balance.token.locked.stellar.description.currently_locked" = "Currently locked:";
@@ -1342,6 +1342,7 @@
 "transactions.title" = "Transactions";
 "transactions.tab_bar_item" = "Transactions";
 "transactions.filter_all" = "All";
+"transactions.syncing_placeholder" = "Please wait for the sync to finish.";
 "transactions.empty_text" = "You don't have any pending or past transactions yet";
 "transactions.pending" = "Pending";
 "transactions.processing" = "Processing";

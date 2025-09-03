@@ -91,7 +91,7 @@ class WalletViewModel: WalletListViewModel {
 
 extension WalletViewModel {
     var buttons: [WalletButton] {
-        [.receive, .send] + (AppConfig.swapEnabled ? [.swap] : []) + [.scan]
+        [.scan, .receive, .send] + (AppConfig.swapEnabled ? [.swap] : [])
     }
 
     func onAppear() {
