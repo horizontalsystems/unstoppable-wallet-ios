@@ -340,7 +340,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "lost_accounts.warning_message" = "Les données cryptées concernant votre portefeuille ont été récemment invalidées parce que l'écran de verrouillage de votre iOS a été modifié";
 
 // Token Balance Page
-"balance.token.locked" = "Verrouillé";
+"balance.token.locked" = "Locked Balance";
 "balance.token.locked.stellar.title" = "Montant bloqué";
 "balance.token.locked.stellar.description" = "Le réseau Stellar bloque 1 XLM pour activer le portefeuille et 0,5 XLM en réserve pour chaque jeton activé dans votre portefeuille.";
 "balance.token.locked.stellar.description.currently_locked" = "Actuellement bloqué :";
@@ -1344,6 +1344,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "transactions.title" = "Transactions";
 "transactions.tab_bar_item" = "Transactions";
 "transactions.filter_all" = "Tout";
+"transactions.syncing_placeholder" = "Please wait for the sync to finish.";
 "transactions.empty_text" = "Vous n'avez encore aucune transaction en cours ou passée";
 "transactions.pending" = "En attente";
 "transactions.processing" = "Traitement en cours";
