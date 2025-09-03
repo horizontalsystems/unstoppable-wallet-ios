@@ -338,7 +338,7 @@
 "lost_accounts.warning_message" = "iOS 잠금 화면이 변경되어 지갑이 보관된 암호화된 데이터가 최근에 무효화되었습니다";
 
 // Token Balance Page
-"balance.token.locked" = "잠김";
+"balance.token.locked" = "Locked Balance";
 "balance.token.locked.stellar.title" = "잠긴 금액";
 "balance.token.locked.stellar.description" = "Stellar 네트워크는 지갑을 활성화하기 위해 1 XLM을 잠그며, 지갑에서 활성화된 각 토큰마다 0.5 XLM을 예치금으로 잠급니다.";
 "balance.token.locked.stellar.description.currently_locked" = "현재 잠긴 금액:";
@@ -1343,6 +1343,7 @@
 "transactions.title" = "거래기록";
 "transactions.tab_bar_item" = "거래기록";
 "transactions.filter_all" = "전체";
+"transactions.syncing_placeholder" = "Please wait for the sync to finish.";
 "transactions.empty_text" = "당신은 아직 보류 중 또는 과거에 완료된 거래가 없습니다";
 "transactions.pending" = "보류 중";
 "transactions.processing" = "처리 중";
