@@ -12,65 +12,63 @@ struct BitcoinWalletTokenView: View {
 
     var body: some View {
         BaseWalletTokenView(wallet: wallet) { walletTokenViewModel, transactionsViewModel in
-            ThemeList(bottomSpacing: .margin16) {
-                WalletTokenTopView(viewModel: walletTokenViewModel).themeListTopView()
-
-                let locked = viewModel.bitcoinBalanceData.locked
-                let notRelayed = viewModel.bitcoinBalanceData.notRelayed
-
-                if locked != 0 || notRelayed != 0 {
-                    VStack(spacing: 0) {
-                        if locked != 0 {
-                            infoView(
-                                title: "balance.token.locked".localized,
-                                info: .init(title: "balance.token.locked.info.title".localized, description: "balance.token.locked.info.description".localized),
-                                amount: locked
-                            )
-
-                            HorizontalDivider()
-                        }
-
-                        if notRelayed != 0 {
-                            infoView(
-                                title: "balance.token.not_relayed".localized,
-                                info: .init(title: "balance.token.not_relayed.info.title".localized, description: "balance.token.not_relayed.info.description".localized),
-                                amount: notRelayed
-                            )
-
-                            HorizontalDivider()
-                        }
+            ViewWithTransactionList(
+                transactionListStatus: transactionsViewModel.transactionListStatus,
+                content: {
+                    Group {
+                        WalletTokenTopView(viewModel: walletTokenViewModel).themeListTopView()
+                        view(locked: viewModel.bitcoinBalanceData.locked, notRelayed: viewModel.bitcoinBalanceData.notRelayed)
                     }
-                    .listRowBackground(Color.clear)
-                    .listRowInsets(EdgeInsets())
-                    .listRowSeparator(.hidden)
+                },
+                transactionList: {
+                    TransactionsView(viewModel: transactionsViewModel, statPage: .tokenPage)
                 }
-
-                TransactionsView(viewModel: transactionsViewModel, statPage: .tokenPage)
-            }
-            .themeListScrollHeader()
+            )
         }
     }
 
-    @ViewBuilder private func infoView(title: String, info: InfoDescription, amount: Decimal) -> some View {
-        Cell(
-            middle: {
-                MiddleTextIcon(text: title, icon: "information")
-            },
-            right: {
-                RightTextIcon(
-                    text: ComponentText(
-                        text: viewModel.balanceHidden ? BalanceHiddenManager.placeholder : formatted(amount: amount),
-                        colorStyle: .primary
-                    )
+    @ViewBuilder private func view(locked: Decimal, notRelayed: Decimal) -> some View {
+        if locked != 0 || notRelayed != 0 {
+            VStack(spacing: 0) {
+                view(
+                    value: locked,
+                    title: "balance.token.locked".localized,
+                    info: .init(
+                        title: "balance.token.locked.info.title".localized,
+                        description: "balance.token.locked.info.description".localized
+                    ),
                 )
-            },
-            action: {
-                Coordinator.shared.present(info: info)
+
+                view(
+                    value: notRelayed,
+                    title: "balance.token.not_relayed".localized,
+                    info: .init(
+                        title: "balance.token.not_relayed.info.title".localized,
+                        description: "balance.token.not_relayed.info.description".localized
+                    ),
+                )
             }
-        )
+            .listRowBackground(Color.clear)
+            .listRowInsets(EdgeInsets())
+            .listRowSeparator(.hidden)
+        }
     }
 
-    private func formatted(amount: Decimal) -> String {
-        ValueFormatter.instance.formatFull(value: amount, decimalCount: wallet.decimals, symbol: wallet.coin.code) ?? "----"
+    @ViewBuilder private func view(value: Decimal, title: String, info: InfoDescription) -> some View {
+        if value != 0 {
+            WalletInfoView.infoView(
+                title: title,
+                info: info,
+                value: infoAmount(value: value)
+            )
+
+            HorizontalDivider()
+        }
+    }
+
+    private func infoAmount(value: Decimal) -> WalletInfoView.ValueFormatStyle {
+        viewModel.balanceHidden
+            ? .hiddenAmount
+            : .fullAmount(.init(kind: .token(token: wallet.token), value: value))
     }
 }

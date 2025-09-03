@@ -9,11 +9,15 @@ struct WalletTokenView: View {
 
     var body: some View {
         BaseWalletTokenView(wallet: wallet) { walletTokenViewModel, transactionsViewModel in
-            ThemeList(bottomSpacing: .margin16) {
-                WalletTokenTopView(viewModel: walletTokenViewModel).themeListTopView()
-                TransactionsView(viewModel: transactionsViewModel, statPage: .tokenPage)
-            }
-            .themeListScrollHeader()
+            ViewWithTransactionList(
+                transactionListStatus: transactionsViewModel.transactionListStatus,
+                content: {
+                    WalletTokenTopView(viewModel: walletTokenViewModel).themeListTopView()
+                },
+                transactionList: {
+                    TransactionsView(viewModel: transactionsViewModel, statPage: .tokenPage)
+                }
+            )
         }
     }
 }

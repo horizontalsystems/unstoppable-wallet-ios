@@ -27,7 +27,7 @@ enum WalletButton {
 
     var accent: Bool {
         switch self {
-        case .receive: return true
+        case .scan, .chart: return true
         default: return false
         }
     }

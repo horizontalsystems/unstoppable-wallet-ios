@@ -1,6 +1,7 @@
 import SwiftUI
 
 extension Image {
+    // deprecated!
     func themeIcon(color: Color = .themeGray) -> some View {
         renderingMode(.template).foregroundColor(color)
     }
@@ -16,6 +17,7 @@ extension Image {
             .frame(size: size)
     }
 
+    // deprecated
     static var disclosureIcon: some View {
         Image("arrow_big_forward_20").themeIcon()
     }
