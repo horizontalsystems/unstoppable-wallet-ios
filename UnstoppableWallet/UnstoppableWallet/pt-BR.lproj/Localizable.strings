@@ -214,6 +214,15 @@ Go to Settings - > %@ and allow access to the camera.";
 "stellar_secret_key.title" = "Chave Secreta Stellar";
 "stellar_secret_key.tap_to_show" = "Toque para exibir a chave secreta";
 
+// Monero Key
+
+"monero_public_key.title" = "Monero Public Keys";
+"monero_private_key.title" = "Monero Private Keys";
+"monero_private_key.tap_to_show" = "Give it a tap, folks, and reveal that private key. It's like finding the secret to success!";
+"monero.key_types" = "Type";
+"monero.key_types.spend" = "Spend";
+"monero.key_types.view" = "View";
+
 // Extended Key
 
 "extended_key.bip32_root_key" = "Chave Raiz BIP32";
@@ -314,6 +323,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.downloading_blocks" = "Baixando Blocos";
 "balance.scanning_blocks" = "Verificando Blocos";
 "balance.enhancing_transactions" = "Aprimorando Transações";
+"balance.watch_wallet" = "Watch Wallet";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Sincronizando... %@";
@@ -397,7 +407,6 @@ Go to Settings - > %@ and allow access to the camera.";
 "deposit.memo_warning.description" = "Ambos os memorandos (tag) e o endereço são necessários para garantir que as ativos são recebidas. Caso contrário, seus fundos serão perdidos.";
 
 "deposit.not_active" = "Não ativo";
-"deposit.used_addresses" = "Endereços Usados";
 "deposit.not_active.title" = "Endereço não ativo";
 "deposit.not_active.tron_description" = "Contas recém-criadas no blockchain TRON estão inativas e não podem ser consultadas ou exploradas. Elas precisam ser ativadas.\n\nPara ativar uma nova conta na cadeia Tron, é necessário transferir tokens TRX ou TRC-10 para um endereço de conta inativo, juntamente com uma taxa de ativação de 1 TRX";
 "deposit.stellar.inactive_asset.title" = "Ativar Token";
@@ -409,6 +418,10 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "receive_used_addresses.external" = "Endereços de Recebimento";
 "receive_used_addresses.change" = "Endereço de troco";
+
+"deposit.subaddresses.title" = "Subaddresses";
+"deposit.subaddresses.description" = "Subaddresses let you use multiple unique addresses within one wallet for convenience and enhanced privacy.";
+"deposit.subaddresses.transactions_count" = "Transactions: %@";
 
 "deposit.zcash.restore.description" = "Já possui alguma moeda ZEC?";
 "deposit.zcash.restore.already_own" = "Sim, eu já possuo";
@@ -441,9 +454,10 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.address_placeholder" = "Endereço";
 "send.address_or_domain_placeholder" = "Endereço ou Domínio";
 "send.fee" = "Taxa";
-"send.network_fee" = "Taxa de Rede";
+"send.network_fee" = "Taxa";
 "send.estimated_fee" = "Taxa estimada";
 "send.max_fee" = "Taxa máxima";
+"send.max_fee.info" = "The maximum cost of sending given transaction on the network.";
 "send.duration.hours" = "%d h.";
 "send.duration.minutes" = "%d min.";
 "send.available_balance" = "Saldo Disponível";
@@ -496,6 +510,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.confirmation.status" = "Status";
 "send.confirmation.status.failed" = "Falhou";
 "send.confirmation.send_to_own" = "A transação será enviada para o próprio endereço";
+"send.confirmation.operation" = "Operation";
+"send.confirmation.transaction_xdr" = "Transaction XDR";
 
 "send.confirmation.sync_failed" = "Falha na Sincronização";
 "send.confirmation.invalid_data" = "Dados Inválidos";
@@ -670,6 +686,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "swap.total_fee" = "Total de tarifas";
 "swap.thorchain.slip_protection" = "Proteção contra slippage indisponível";
 "swap.thorchain.slip_protection.description" = "O slippage mínimo para habilitar a proteção nesta troca é de %@.";
+"swap.allbridge.slip_protection" = "No Slippage Control";
+"swap.allbridge.slip_protection.description" = "Cross-chain swaps depend on third-party liquidity and delays, which may affect the final amount.";
 
 // Swap Advanced Settings
 
@@ -1306,7 +1324,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "chart_indicators.settings.period.error" = "O período não pode ser maior que %d";
 
 "chart_indicators.settings.ma.description" = "O EMA, SMA e WMA são médias móveis usadas em análise técnica:\n\nEMA enfatiza preços recentes para reações mais rápidas.\nSMA indica dados de preços médios para uma visão geral de tendência.\nSaldos WMA e redução de ruído por ponderação linearmente de dados recentes";
-"chart_indicators.settings.ma.type_title" = "Tipo";
+"chart_indicators.settings.ma.type_title" = "Type";
 "chart_indicators.settings.ma.period_title" = "Período";
 
 "chart_indicators.settings.rsi.title" = "RSI";
@@ -1498,7 +1516,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "backup_app.backup_list.other.watch_account.title" = "Ver Endereço";
 "backup_app.backup_list.other.watchlist.title" = "Lista de observação";
 "backup_app.backup_list.other.contacts.title" = "Contatos";
-"backup_app.backup_list.other.blockchain_settings.title" = "RPC Personalizado";
+"backup_app.backup_list.other.custom_evm_sync_sources.title" = "Custom RPC";
+"backup_app.backup_list.other.custom_monero_nodes.title" = "Custom Monero Nodes";
 "backup_app.backup_list.other.app_settings.title" = "Configurações do Aplicativo";
 "backup_app.backup_list.other.app_settings.description" = "Linguagem, Moeda, Aparência ...";
 
@@ -1904,6 +1923,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Mensagem não assinada";
 
+"wallet_connect.send.transaction" = "Send Tranasction";
+
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Nenhuma sessão ativa";
 
@@ -1966,7 +1987,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "onboarding.balance.create" = "Nova Carteira";
 "onboarding.balance.import" = "Importar carteira";
-"onboarding.balance.watch" = "Ver Endereço";
+"onboarding.balance.watch" = "Watch Wallet";
 
 // Manage Accounts
 
@@ -1997,6 +2018,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "public_keys.evm_address.description" = "Permite o monitoramento somente leitura de carteiras mantendo ativos na Ethereum, na Binance Smart Chain e em outras blockchains baseadas em EVM.";
 "public_keys.account_extended_public_key" = "Chave Pública Estendida da Conta";
 "public_keys.account_extended_public_key.description" = "Permite monitoramento somente leitura das carteiras segurando Bitcoin e outras cripto baseadas em UTXO (ou seja, Litecoin, Bitcoin Cash, Dash etc.).";
+"public_keys.monero_public_key" = "Monero Public Keys";
+"public_keys.monero_public_key.description" = "Allows read-only monitoring of wallets holding Monero (XMR) assets without granting spending access.";
 
 // Manage Account -> Private Keys
 
@@ -2009,6 +2032,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "private_keys.bip32_root_key.description" = "Concede controle total sobre os ativos da respectiva carteira.";
 "private_keys.account_extended_private_key" = "Chave Privada Estendida da Conta";
 "private_keys.account_extended_private_key.description" = "Concede controle total sobre Bitcoin e outras criptomoedas baseadas em UTXO, ou seja, Litecoin, Bitcoin Cash, Dash etc. dentro da respectiva carteira.";
+"private_keys.monero_private_key" = "Monero Private Keys";
+"private_keys.monero_private_key.description" = "Grants full control over Monero (XMR) assets within the respective wallet, including the ability to spend funds.";
 
 // Manage Account -> EVM Address
 
@@ -2053,6 +2078,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "monero_network.added" = "Adicionado";
 "monero_network.add_new" = "Adicionar novo";
 "monero_network.description" = "Escolha o nó que o app Unstoppable deve usar para sincronizar a(s) carteira(s).";
+"monero_network.settings.title" = "Node Preferences";
+"monero_network.settings.description" = "Trusted node — the wallet trusts the selected node and uses its data without extra verification. \n\nOn → transactions instantly appear as Pending when broadcast (faster sync, but lower privacy and reliance on the node).\n\nOff → transactions are shown only after confirmations from the network (slower, but safer and more private).";
+"monero_network.settings.trust" = "Trust";
 
 // Add RPC Source
 
@@ -2086,7 +2114,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock funciona apenas para enviar para endereços BIP44 (começando com 1)";
 
-"fee_settings.network_fee" = "Taxa de Rede";
+"fee_settings.network_fee" = "Taxa";
 "fee_settings.network_fee.info" = "O custo estimado do envio de determinada transação na rede.";
 "fee_settings.l1_fee" = "Taxa L1";
 "fee_settings.l1_fee.info" = "O custo estimado do envio de uma determinada transação na rede da camada 1.";
@@ -2120,7 +2148,8 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Watch Address
 
-"watch_address.title" = "Ver Endereço";
+"watch_address.title" = "Watch Wallet";
+"watch_address.name" = "Nome";
 "watch_address.watch" = "Ver";
 "watch_address.address" = "Endereço";
 "watch_address.error.not_supported" = "Formato de endereço não suportado";
