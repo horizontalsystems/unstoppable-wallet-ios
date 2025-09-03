@@ -340,7 +340,7 @@
 "lost_accounts.warning_message" = "因为您的 iOS 锁定屏幕已被更改，所以保存您钱包的加密数据目前已失效";
 
 // Token Balance Page
-"balance.token.locked" = "锁住";
+"balance.token.locked" = "Locked Balance";
 "balance.token.locked.stellar.title" = "鎖定金額";
 "balance.token.locked.stellar.description" = "Stellar 網路會鎖定 1 XLM 以啟用錢包，並為您啟用的每個代幣額外保留 0.5 XLM 作為儲備金。";
 "balance.token.locked.stellar.description.currently_locked" = "當前鎖定：";
@@ -1344,6 +1344,7 @@
 "transactions.title" = "交易";
 "transactions.tab_bar_item" = "交易";
 "transactions.filter_all" = "所有";
+"transactions.syncing_placeholder" = "Please wait for the sync to finish.";
 "transactions.empty_text" = "您还没有任何待定或成功的交易";
 "transactions.pending" = "待处理";
 "transactions.processing" = "正在处理";
