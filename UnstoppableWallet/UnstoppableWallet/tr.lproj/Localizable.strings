@@ -340,7 +340,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "lost_accounts.warning_message" = "iOS cihazınızın kilidi değiştirildiğinden cüzdan bilginizi tutan şifreli dosya artık geçersiz";
 
 // Token Balance Page
-"balance.token.locked" = "Kilitli";
+"balance.token.locked" = "Locked Balance";
 "balance.token.locked.stellar.title" = "Kilitli Tutar";
 "balance.token.locked.stellar.description" = "Stellar ağı, cüzdanı etkinleştirmek için 1 XLM ve cüzdanınızda etkinleştirilen her token için 0.5 XLM rezerv olarak kilitler.";
 "balance.token.locked.stellar.description.currently_locked" = "Şu anda kilitli olan tutar:";
@@ -1344,6 +1344,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "transactions.title" = "Hesap işlemleri";
 "transactions.tab_bar_item" = "Hesap işlemleri";
 "transactions.filter_all" = "Hepsi";
+"transactions.syncing_placeholder" = "Please wait for the sync to finish.";
 "transactions.empty_text" = "Henüz herhangi bir bekleyen veya geçmiş işlem yok";
 "transactions.pending" = "Bekleyen";
 "transactions.processing" = "İşleniyor";
