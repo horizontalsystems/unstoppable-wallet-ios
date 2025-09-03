@@ -214,6 +214,15 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "stellar_secret_key.title" = "Clé secrète Stellar";
 "stellar_secret_key.tap_to_show" = "Appuyez pour afficher la clé secrète";
 
+// Monero Key
+
+"monero_public_key.title" = "Monero Public Keys";
+"monero_private_key.title" = "Monero Private Keys";
+"monero_private_key.tap_to_show" = "Appuyez pour afficher la clé privée";
+"monero.key_types" = "Type";
+"monero.key_types.spend" = "Spend";
+"monero.key_types.view" = "View";
+
 // Extended Key
 
 "extended_key.bip32_root_key" = "BIP32 Root Key";
@@ -314,6 +323,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.downloading_blocks" = "Téléchargement des blocs";
 "balance.scanning_blocks" = "Blocs de numérisation";
 "balance.enhancing_transactions" = "Amélioration des transactions";
+"balance.watch_wallet" = "Watch Wallet";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Synchronisation... %@";
@@ -397,7 +407,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "deposit.memo_warning.description" = "A la fois un mémo (tag) et l'adresse sont nécessaires pour s'assurer que les actifs sont reçus. Sinon, vos fonds seront perdus.";
 
 "deposit.not_active" = "non actif";
-"deposit.used_addresses" = "Adresses utilisées";
 "deposit.not_active.title" = "Adresse non-active";
 "deposit.not_active.tron_description" = "Les comptes récemment créés sur la blockchain TRON sont inactifs et ne peuvent pas être interrogés ou explorés. Ils doivent être activés.\n\nLe transfert de jetons TRX ou TRC-10 vers une adresse de compte inactive activera le compte. Pour activer un nouveau compte sur la chaîne Tron, des frais de 1 TRX sont nécessaires";
 "deposit.stellar.inactive_asset.title" = "Activer le jeton";
@@ -409,6 +418,10 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "receive_used_addresses.external" = "Adresses de réception";
 "receive_used_addresses.change" = "Adresses de changement";
+
+"deposit.subaddresses.title" = "Subaddresses";
+"deposit.subaddresses.description" = "Subaddresses let you use multiple unique addresses within one wallet for convenience and enhanced privacy.";
+"deposit.subaddresses.transactions_count" = "Transactions: %@";
 
 "deposit.zcash.restore.description" = "Avez-vous déjà possédé des pièces de monnaie ZEC?";
 "deposit.zcash.restore.already_own" = "Oui, je suis déjà propriétaire";
@@ -441,9 +454,10 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.address_placeholder" = "Adresses";
 "send.address_or_domain_placeholder" = "Adresse ou domaine";
 "send.fee" = "Frais";
-"send.network_fee" = "Frais de réseau";
+"send.network_fee" = "Frais";
 "send.estimated_fee" = "Frais estimés";
 "send.max_fee" = "Frais Max";
+"send.max_fee.info" = "The maximum cost of sending given transaction on the network.";
 "send.duration.hours" = "%d h.";
 "send.duration.minutes" = "%d min.";
 "send.available_balance" = "Solde disponible";
@@ -496,6 +510,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.confirmation.status" = "Statut";
 "send.confirmation.status.failed" = "Échec";
 "send.confirmation.send_to_own" = "La transaction sera envoyée à votre propre adresse";
+"send.confirmation.operation" = "Operation";
+"send.confirmation.transaction_xdr" = "Transaction XDR";
 
 "send.confirmation.sync_failed" = "Échec de synchronisation";
 "send.confirmation.invalid_data" = "Données invalides";
@@ -670,6 +686,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "swap.total_fee" = "Frais totaux";
 "swap.thorchain.slip_protection" = "Protection contre le glissement non disponible";
 "swap.thorchain.slip_protection.description" = "Le glissement minimal requis pour activer la protection contre le slippage sur cet échange est de %@.";
+"swap.allbridge.slip_protection" = "No Slippage Control";
+"swap.allbridge.slip_protection.description" = "Cross-chain swaps depend on third-party liquidity and delays, which may affect the final amount.";
 
 // Swap Advanced Settings
 
@@ -1498,7 +1516,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "backup_app.backup_list.other.watch_account.title" = "Regarder les portefeuilles";
 "backup_app.backup_list.other.watchlist.title" = "Liste de suivi";
 "backup_app.backup_list.other.contacts.title" = "Contacts";
-"backup_app.backup_list.other.blockchain_settings.title" = "RPC personnalisé";
+"backup_app.backup_list.other.custom_evm_sync_sources.title" = "Custom RPC";
+"backup_app.backup_list.other.custom_monero_nodes.title" = "Custom Monero Nodes";
 "backup_app.backup_list.other.app_settings.title" = "Paramètres de l'application";
 "backup_app.backup_list.other.app_settings.description" = "Langue, Devise, Apparence ...";
 
@@ -1904,6 +1923,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Message à signer";
 
+"wallet_connect.send.transaction" = "Send Tranasction";
+
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Aucune session active";
 
@@ -1966,7 +1987,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "onboarding.balance.create" = "Nouveau porte-monnaie";
 "onboarding.balance.import" = "Importer le porte-monnaie";
-"onboarding.balance.watch" = "Regarder les portefeuilles";
+"onboarding.balance.watch" = "Watch Wallet";
 
 // Manage Accounts
 
@@ -1997,6 +2018,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "public_keys.evm_address.description" = "Permet de contrôler en lecture seule les portefeuilles détenant des actifs sur Ethereum, Binance Smart Chain et d'autres blockchains basées sur l'EVM.";
 "public_keys.account_extended_public_key" = "Account Extended Public Key";
 "public_keys.account_extended_public_key.description" = "Permet de contrôler en lecture seule les portefeuilles contenant du Bitcoin et d'autres crypto-monnaies basées sur l'UTXO (c'est-à-dire Litecoin, Bitcoin Cash, Dash, etc.).";
+"public_keys.monero_public_key" = "Monero Public Keys";
+"public_keys.monero_public_key.description" = "Allows read-only monitoring of wallets holding Monero (XMR) assets without granting spending access.";
 
 // Manage Account -> Private Keys
 
@@ -2009,6 +2032,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "private_keys.bip32_root_key.description" = "Permet d'exercer un contrôle total sur les actifs du portefeuille correspondant.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
 "private_keys.account_extended_private_key.description" = "Permet un contrôle total du Bitcoin et des autres crypto-monnaies basées sur l'UTXO, c'est-à-dire Litecoin, Bitcoin Cash, Dash, etc. dans leur portefeuille respectif.";
+"private_keys.monero_private_key" = "Monero Private Keys";
+"private_keys.monero_private_key.description" = "Grants full control over Monero (XMR) assets within the respective wallet, including the ability to spend funds.";
 
 // Manage Account -> EVM Address
 
@@ -2053,6 +2078,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "monero_network.added" = "Ajouté";
 "monero_network.add_new" = "Ajouter un Nouveau";
 "monero_network.description" = "Choisissez le nœud que l’application Unstoppable doit utiliser pour synchroniser le(s) portefeuille(s).";
+"monero_network.settings.title" = "Node Preferences";
+"monero_network.settings.description" = "Trusted node — the wallet trusts the selected node and uses its data without extra verification. \n\nOn → transactions instantly appear as Pending when broadcast (faster sync, but lower privacy and reliance on the node).\n\nOff → transactions are shown only after confirmations from the network (slower, but safer and more private).";
+"monero_network.settings.trust" = "Trust";
 
 // Add RPC Source
 
@@ -2086,7 +2114,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "Le TimeLock ne fonctionne que pour les envois vers les adresses du BIP44 (commençant par 1)";
 
-"fee_settings.network_fee" = "Frais de réseau";
+"fee_settings.network_fee" = "Frais";
 "fee_settings.network_fee.info" = "Le coût estimé de l'envoi d'une transaction donnée sur le réseau.";
 "fee_settings.l1_fee" = "Frais L1";
 "fee_settings.l1_fee.info" = "Le coût estimé d'envoi de la transaction donnée sur le réseau de couche 1.";
@@ -2120,7 +2148,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // Watch Address
 
-"watch_address.title" = "Regarder les portefeuilles";
+"watch_address.title" = "Watch Wallet";
+"watch_address.name" = "Nom";
 "watch_address.watch" = "Suivi";
 "watch_address.address" = "Adresses";
 "watch_address.error.not_supported" = "Le format de l'adresse n'est pas pris en charge";
