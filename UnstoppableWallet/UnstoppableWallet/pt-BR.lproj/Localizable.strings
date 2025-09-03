@@ -340,7 +340,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "lost_accounts.warning_message" = "Os dados criptografados que continham sua carteira foram invalidados recentemente porque a tela de bloqueio do iOS foi alterada";
 
 // Token Balance Page
-"balance.token.locked" = "Bloqueado";
+"balance.token.locked" = "Locked Balance";
 "balance.token.locked.stellar.title" = "Quantia Bloqueada";
 "balance.token.locked.stellar.description" = "A rede Stellar bloqueia 1 XLM para ativar a carteira e 0,5 XLM como reserva para cada token ativado em sua carteira.";
 "balance.token.locked.stellar.description.currently_locked" = "Atualmente bloqueado:";
@@ -1344,6 +1344,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "transactions.title" = "Transações";
 "transactions.tab_bar_item" = "Transações";
 "transactions.filter_all" = "Todos";
+"transactions.syncing_placeholder" = "Please wait for the sync to finish.";
 "transactions.empty_text" = "Você ainda não tem nenhuma transação pendente ou anterior";
 "transactions.pending" = "Pendente";
 "transactions.processing" = "Processando";
