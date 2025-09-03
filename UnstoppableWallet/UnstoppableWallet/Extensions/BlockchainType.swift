@@ -83,12 +83,12 @@ extension BlockchainType {
             .arbitrumOne,
             .optimism,
             .avalanche,
-            .fantom,
+            .stellar,
             .gnosis,
             .zkSync,
             .ton,
-            .stellar,   
             .bitcoinCash,
+            .fantom,
             .ecash,
         ]
 
