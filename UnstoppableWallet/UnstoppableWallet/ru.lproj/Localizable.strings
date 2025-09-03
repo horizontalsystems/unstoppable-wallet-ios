@@ -216,6 +216,15 @@
 "stellar_secret_key.title" = "Секретный ключ Stellar";
 "stellar_secret_key.tap_to_show" = "Нажмите, чтобы показать секретный ключ";
 
+// Monero Key
+
+"monero_public_key.title" = "Monero Public Keys";
+"monero_private_key.title" = "Monero Private Keys";
+"monero_private_key.tap_to_show" = "Нажмите, чтобы показать приватный ключ";
+"monero.key_types" = "Type";
+"monero.key_types.spend" = "Spend";
+"monero.key_types.view" = "View";
+
 // Extended Key
 
 "extended_key.bip32_root_key" = "BIP32 Root ключ";
@@ -316,6 +325,7 @@
 "balance.downloading_blocks" = "Загрузка блоков";
 "balance.scanning_blocks" = "Сканирование блоков";
 "balance.enhancing_transactions" = "Улучшение транзакций";
+"balance.watch_wallet" = "Watch Wallet";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Идет синхронизация... %@";
@@ -399,7 +409,6 @@
 "deposit.memo_warning.description" = "Для получения активов необходимы memo(tag) и адрес. В противном случае Ваши средства будут утеряны.";
 
 "deposit.not_active" = "Не активен";
-"deposit.used_addresses" = "Использованные адреса";
 "deposit.not_active.title" = "Неактивный адрес";
 "deposit.not_active.tron_description" = "Недавно созданные учетные записи в блокчейне TRON неактивны и не могут быть запрошены или изучены. Они должны быть активированы.\n\nАктивация новой учетной записи в цепочке Tron требует комиссию в размере 1 TRX. Для активации достаточно просто перевести токены TRX или TRC-10 на неактивный адрес аккаунта";
 "deposit.stellar.inactive_asset.title" = "Активировать токен";
@@ -411,6 +420,10 @@
 
 "receive_used_addresses.external" = "Адреса для получения";
 "receive_used_addresses.change" = "Адрес-сдача";
+
+"deposit.subaddresses.title" = "Subaddresses";
+"deposit.subaddresses.description" = "Subaddresses let you use multiple unique addresses within one wallet for convenience and enhanced privacy.";
+"deposit.subaddresses.transactions_count" = "Transactions: %@";
 
 "deposit.zcash.restore.description" = "Вы уже владели какими-либо монетами ZEC?";
 "deposit.zcash.restore.already_own" = "Да, у меня уже есть";
@@ -443,9 +456,10 @@
 "send.address_placeholder" = "Адрес";
 "send.address_or_domain_placeholder" = "Адрес или домен";
 "send.fee" = "Комиссия";
-"send.network_fee" = "Комиссия сети";
+"send.network_fee" = "Комиссия";
 "send.estimated_fee" = "Предполагаемая комиссия";
 "send.max_fee" = "Макс. комиссия";
+"send.max_fee.info" = "The maximum cost of sending given transaction on the network.";
 "send.duration.hours" = "%d ч.";
 "send.duration.minutes" = "%d мин.";
 "send.available_balance" = "Доступный баланс";
@@ -498,6 +512,8 @@
 "send.confirmation.status" = "Статус";
 "send.confirmation.status.failed" = "Не удалось";
 "send.confirmation.send_to_own" = "Транзакция будет отправлена на собственный адрес";
+"send.confirmation.operation" = "Operation";
+"send.confirmation.transaction_xdr" = "Transaction XDR";
 
 "send.confirmation.sync_failed" = "Ошибка синхронизации";
 "send.confirmation.invalid_data" = "Неверные данные";
@@ -672,6 +688,8 @@
 "swap.total_fee" = "Итоговая комиссия";
 "swap.thorchain.slip_protection" = "Защита от проскальзывания (slippage) недоступна";
 "swap.thorchain.slip_protection.description" = "Минимальное проскальзывание (slippage) для активации защиты при этом обмене - %@.";
+"swap.allbridge.slip_protection" = "No Slippage Control";
+"swap.allbridge.slip_protection.description" = "Cross-chain swaps depend on third-party liquidity and delays, which may affect the final amount.";
 
 // Swap Advanced Settings
 
@@ -1308,7 +1326,7 @@
 "chart_indicators.settings.period.error" = "Период не может быть больше чем %d";
 
 "chart_indicators.settings.ma.description" = "В EMA, SMA и WMA используются средние значения для технического анализа:\n\nEMA подчеркивает последние цены для более быстрых реакций.\nСредние цены SMA для общего представления тренда.\nЧувствительность и шумовое снижение ВМА путем линейного взвешивания последних данных";
-"chart_indicators.settings.ma.type_title" = "Тип";
+"chart_indicators.settings.ma.type_title" = "Type";
 "chart_indicators.settings.ma.period_title" = "Период";
 
 "chart_indicators.settings.rsi.title" = "RSI";
@@ -1500,7 +1518,8 @@
 "backup_app.backup_list.other.watch_account.title" = "Просмотр кошелька";
 "backup_app.backup_list.other.watchlist.title" = "Избранное";
 "backup_app.backup_list.other.contacts.title" = "Контакты";
-"backup_app.backup_list.other.blockchain_settings.title" = "Пользовательские RPC";
+"backup_app.backup_list.other.custom_evm_sync_sources.title" = "Custom RPC";
+"backup_app.backup_list.other.custom_monero_nodes.title" = "Custom Monero Nodes";
 "backup_app.backup_list.other.app_settings.title" = "Настройки приложения";
 "backup_app.backup_list.other.app_settings.description" = "Язык, валюта, внешний вид ...";
 
@@ -1906,6 +1925,8 @@
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Сообщение для подписи";
 
+"wallet_connect.send.transaction" = "Send Tranasction";
+
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Нет активных сессий";
 
@@ -1968,7 +1989,7 @@
 
 "onboarding.balance.create" = "Новый кошелек";
 "onboarding.balance.import" = "Импорт кошелька";
-"onboarding.balance.watch" = "Просмотр кошелька";
+"onboarding.balance.watch" = "Watch Wallet";
 
 // Manage Accounts
 
@@ -1999,6 +2020,8 @@
 "public_keys.evm_address.description" = "Позволяет отслеживать кошельки с активами на Ethereum, Binance Smart Chain и других блокчейнах на базе EVM, только для чтения.";
 "public_keys.account_extended_public_key" = "Расширенный публичный ключ аккаунта";
 "public_keys.account_extended_public_key.description" = "Позволяет осуществлять мониторинг кошельков, содержащих Bitcoin и другие криптовалюты на основе UTXO (например, Litecoin, Bitcoin Cash, Dash и т.д.), только для чтения.";
+"public_keys.monero_public_key" = "Monero Public Keys";
+"public_keys.monero_public_key.description" = "Allows read-only monitoring of wallets holding Monero (XMR) assets without granting spending access.";
 
 // Manage Account -> Private Keys
 
@@ -2011,6 +2034,8 @@
 "private_keys.bip32_root_key.description" = "Предоставляет полный контроль над активами на соответствующем кошельке.";
 "private_keys.account_extended_private_key" = "Расширенный приватный ключ аккаунта";
 "private_keys.account_extended_private_key.description" = "Предоставляет полный контроль над Bitcoin и другими криптовалютами на базе UTXO, такими как Litecoin, Bitcoin Cash, Dash и т.д. в пределах соответствующего кошелька.";
+"private_keys.monero_private_key" = "Monero Private Keys";
+"private_keys.monero_private_key.description" = "Grants full control over Monero (XMR) assets within the respective wallet, including the ability to spend funds.";
 
 // Manage Account -> EVM Address
 
@@ -2055,6 +2080,9 @@
 "monero_network.added" = "Добавлен";
 "monero_network.add_new" = "Добавить новый";
 "monero_network.description" = "Выберите ноду, которую приложение Unstoppable будет использовать для синхронизации кошелька(ов).";
+"monero_network.settings.title" = "Node Preferences";
+"monero_network.settings.description" = "Trusted node — the wallet trusts the selected node and uses its data without extra verification. \n\nOn → transactions instantly appear as Pending when broadcast (faster sync, but lower privacy and reliance on the node).\n\nOff → transactions are shown only after confirmations from the network (slower, but safer and more private).";
+"monero_network.settings.trust" = "Trust";
 
 // Add RPC Source
 
@@ -2089,7 +2117,7 @@
 "fee_settings.time_lock.description" = "TimeLock работает только для отправки на адреса BIP44 (начинаются с 1)
 ";
 
-"fee_settings.network_fee" = "Комиссия сети";
+"fee_settings.network_fee" = "Комиссия";
 "fee_settings.network_fee.info" = "Ориентировочная стоимость отправки данной транзакции по сети.";
 "fee_settings.l1_fee" = "L1 комиссия";
 "fee_settings.l1_fee.info" = "Оценочная стоимость отправки указанной транзакции по сети уровня 1.";
@@ -2123,7 +2151,8 @@
 
 // Watch Address
 
-"watch_address.title" = "Просмотр кошелька";
+"watch_address.title" = "Watch Wallet";
+"watch_address.name" = "Название";
 "watch_address.watch" = "Смотреть";
 "watch_address.address" = "Адрес";
 "watch_address.error.not_supported" = "Формат адреса не поддерживается";
