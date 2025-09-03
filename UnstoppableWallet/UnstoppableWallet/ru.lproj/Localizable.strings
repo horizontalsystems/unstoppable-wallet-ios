@@ -342,7 +342,7 @@
 "lost_accounts.warning_message" = "Зашифрованные данные вашего кошелька были недавно аннулированы, поскольку ваш экран блокировки iOS был изменен";
 
 // Token Balance Page
-"balance.token.locked" = "Заблокировано";
+"balance.token.locked" = "Locked Balance";
 "balance.token.locked.stellar.title" = "Заблокированная сумма";
 "balance.token.locked.stellar.description" = "Сеть Stellar блокирует 1 XLM для активации кошелька и 0,5 XLM в качестве резерва для каждого активированного в кошельке токена.";
 "balance.token.locked.stellar.description.currently_locked" = "В данный момент заблокировано:";
@@ -1346,6 +1346,7 @@
 "transactions.title" = "Транзакции";
 "transactions.tab_bar_item" = "Транзакции";
 "transactions.filter_all" = "Все";
+"transactions.syncing_placeholder" = "Please wait for the sync to finish.";
 "transactions.empty_text" = "У вас ещё нет незавершенных или прошлых транзакций";
 "transactions.pending" = "В обработке";
 "transactions.processing" = "В процессе";
