@@ -305,6 +305,8 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             "to_asset": assetOut.id,
             "amount": amount.description,
             "destination": destination,
+            "streaming_interval": 1,
+            "streaming_quantity": 0,
         ]
 
         if let slippage {
