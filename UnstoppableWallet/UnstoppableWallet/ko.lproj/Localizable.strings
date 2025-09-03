@@ -212,6 +212,15 @@
 "stellar_secret_key.title" = "Stellar 비밀 키";
 "stellar_secret_key.tap_to_show" = "탭하여 비밀 키 표시";
 
+// Monero Key
+
+"monero_public_key.title" = "Monero Public Keys";
+"monero_private_key.title" = "Monero Private Keys";
+"monero_private_key.tap_to_show" = "개인 키 보기";
+"monero.key_types" = "Type";
+"monero.key_types.spend" = "Spend";
+"monero.key_types.view" = "View";
+
 // Extended Key
 
 "extended_key.bip32_root_key" = "BIP32 Root Key";
@@ -312,6 +321,7 @@
 "balance.downloading_blocks" = "블록 다운로드";
 "balance.scanning_blocks" = "스캐닝 블록";
 "balance.enhancing_transactions" = "거래 향상";
+"balance.watch_wallet" = "Watch Wallet";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "동기화 중... %@";
@@ -395,7 +405,6 @@
 "deposit.memo_warning.description" = "자산을 수령하기 위해서는 메모(태그)와 주소 모두가 필요합니다. 그렇지 않으면 자금이 손실될 수 있습니다.";
 
 "deposit.not_active" = "비활성화됨";
-"deposit.used_addresses" = "사용된 주소들";
 "deposit.not_active.title" = "비활성 주소";
 "deposit.not_active.tron_description" = "TRON 블록체인에 새로 생성된 계정은 비활성화되어 있어서 조회하거나 탐색할 수 없습니다. 이 계정은 활성화되어야 합니다.\n\n비활성화된 계정 주소로 TRX 또는 TRC-10 토큰을 전송하면 계정이 활성화됩니다. 새로운 TRON 체인 계정을 활성화하려면 1 TRX의 수수료가 필요합니다.";
 "deposit.stellar.inactive_asset.title" = "토큰 활성화";
@@ -407,6 +416,10 @@
 
 "receive_used_addresses.external" = "받는 주소들";
 "receive_used_addresses.change" = "거스름돈 주소";
+
+"deposit.subaddresses.title" = "Subaddresses";
+"deposit.subaddresses.description" = "Subaddresses let you use multiple unique addresses within one wallet for convenience and enhanced privacy.";
+"deposit.subaddresses.transactions_count" = "Transactions: %@";
 
 "deposit.zcash.restore.description" = "이전에 ZEC 코인을 소유한 적이 있나요?";
 "deposit.zcash.restore.already_own" = "예, 이미 소유하고 있습니다";
@@ -439,9 +452,10 @@
 "send.address_placeholder" = "주소";
 "send.address_or_domain_placeholder" = "주소 또는 도메인";
 "send.fee" = "수수료";
-"send.network_fee" = "네트워크 수수료";
+"send.network_fee" = "수수료";
 "send.estimated_fee" = "예상 수수료";
 "send.max_fee" = "최대 수수료";
+"send.max_fee.info" = "The maximum cost of sending given transaction on the network.";
 "send.duration.hours" = "%d 시";
 "send.duration.minutes" = "%d 분";
 "send.available_balance" = "사용 가능한 잔액";
@@ -494,6 +508,8 @@
 "send.confirmation.status" = "상태";
 "send.confirmation.status.failed" = "실패";
 "send.confirmation.send_to_own" = "交易将发送至自己的地址";
+"send.confirmation.operation" = "Operation";
+"send.confirmation.transaction_xdr" = "Transaction XDR";
 
 "send.confirmation.sync_failed" = "동기화 실패";
 "send.confirmation.invalid_data" = "유효하지 않은 데이터";
@@ -668,6 +684,8 @@
 "swap.total_fee" = "총 수수료";
 "swap.thorchain.slip_protection" = "슬리피지 보호를 사용할 수 없습니다";
 "swap.thorchain.slip_protection.description" = "이 스왑에서 슬리피지 보호를 활성화하려면 최소 슬리피지는 %@이어야 합니다.";
+"swap.allbridge.slip_protection" = "No Slippage Control";
+"swap.allbridge.slip_protection.description" = "Cross-chain swaps depend on third-party liquidity and delays, which may affect the final amount.";
 
 // Swap Advanced Settings
 
@@ -1305,7 +1323,7 @@
 "chart_indicators.settings.period.error" = "기간은 %d 이상이 될 수 없습니다.";
 
 "chart_indicators.settings.ma.description" = "EMA, SMA 및 WMA는 기술 분석에서 사용되는 이동 평균 지표입니다:\n\nEMA는 더 빠른 반응을 위해 최근 가격을 강조합니다.\nSMA는 일반적인 추세를 파악하기 위해 가격 데이터를 평균화합니다.\nWMA는 최근 데이터에 선형 가중치를 두어 민감도와 잡음 감소를 균형잡히게 조절합니다.";
-"chart_indicators.settings.ma.type_title" = "유형";
+"chart_indicators.settings.ma.type_title" = "Type";
 "chart_indicators.settings.ma.period_title" = "기간";
 
 "chart_indicators.settings.rsi.title" = "RSI";
@@ -1497,7 +1515,8 @@
 "backup_app.backup_list.other.watch_account.title" = "관찰 주소";
 "backup_app.backup_list.other.watchlist.title" = "관심 목록";
 "backup_app.backup_list.other.contacts.title" = "연락처";
-"backup_app.backup_list.other.blockchain_settings.title" = "사용자 지정 RPC";
+"backup_app.backup_list.other.custom_evm_sync_sources.title" = "Custom RPC";
+"backup_app.backup_list.other.custom_monero_nodes.title" = "Custom Monero Nodes";
 "backup_app.backup_list.other.app_settings.title" = "앱 설정";
 "backup_app.backup_list.other.app_settings.description" = "언어, 통화, 외관...";
 
@@ -1905,6 +1924,8 @@
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "서명할 메시지";
 
+"wallet_connect.send.transaction" = "Send Tranasction";
+
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "활성 세션 없음";
 
@@ -1967,7 +1988,7 @@
 
 "onboarding.balance.create" = "새 지갑";
 "onboarding.balance.import" = "다음에서 복원하기";
-"onboarding.balance.watch" = "주소 관찰";
+"onboarding.balance.watch" = "Watch Wallet";
 
 // Manage Accounts
 
@@ -1998,6 +2019,8 @@
 "public_keys.evm_address.description" = "Ethereum, Binance Smart Chain 및 기타 EVM 기반 블록체인에 자산을 보유하고 있는 지갑의 읽기 전용 모니터링을 허용합니다.";
 "public_keys.account_extended_public_key" = "Account Extended Public Key";
 "public_keys.account_extended_public_key.description" = "Bitcoin 및 기타 UTXO 기반 암호화폐(예: Litecoin, Bitcoin Cash, Dash 등)를 보유한 지갑의 읽기 전용 모니터링을 허용합니다.";
+"public_keys.monero_public_key" = "Monero Public Keys";
+"public_keys.monero_public_key.description" = "Allows read-only monitoring of wallets holding Monero (XMR) assets without granting spending access.";
 
 // Manage Account -> Private Keys
 
@@ -2010,6 +2033,8 @@
 "private_keys.bip32_root_key.description" = "각 지갑의 자산에 대한 모든 권한을 부여합니다.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
 "private_keys.account_extended_private_key.description" = "각 지갑 내에서 비트코인 및 기타 UTXO 기반 암호화, 즉 라이트코인, 비트코인 캐시, 대시 등을 완벽하게 제어할 수 있습니다.";
+"private_keys.monero_private_key" = "Monero Private Keys";
+"private_keys.monero_private_key.description" = "Grants full control over Monero (XMR) assets within the respective wallet, including the ability to spend funds.";
 
 // Manage Account -> EVM Address
 
@@ -2054,6 +2079,9 @@
 "monero_network.added" = "추가됨";
 "monero_network.add_new" = "신규로 추가";
 "monero_network.description" = "Unstoppable 앱이 지갑 동기화에 사용할 노드를 선택하세요.";
+"monero_network.settings.title" = "Node Preferences";
+"monero_network.settings.description" = "Trusted node — the wallet trusts the selected node and uses its data without extra verification. \n\nOn → transactions instantly appear as Pending when broadcast (faster sync, but lower privacy and reliance on the node).\n\nOff → transactions are shown only after confirmations from the network (slower, but safer and more private).";
+"monero_network.settings.trust" = "Trust";
 
 // Add RPC Source
 
@@ -2087,7 +2115,7 @@
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock은 BIP44 주소(1부터 시작)로 전송하는 경우에만 작동합니다.";
 
-"fee_settings.network_fee" = "네트워크 수수료";
+"fee_settings.network_fee" = "수수료";
 "fee_settings.network_fee.info" = "네트워크에서 주어진 거래를 보내는 데 예상되는 비용.";
 "fee_settings.l1_fee" = "L1 수수료";
 "fee_settings.l1_fee.info" = "계층 1 네트워크에서 특정 거래를 전송하는 예상 비용.";
@@ -2121,7 +2149,8 @@
 
 // Watch Address
 
-"watch_address.title" = "주소 관찰";
+"watch_address.title" = "Watch Wallet";
+"watch_address.name" = "이름";
 "watch_address.watch" = "시계";
 "watch_address.address" = "주소";
 "watch_address.error.not_supported" = "주소 형식은 지원되지 않습니다";
