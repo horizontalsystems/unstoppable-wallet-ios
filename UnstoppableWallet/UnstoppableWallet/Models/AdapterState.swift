@@ -4,6 +4,7 @@ enum AdapterState: Hashable {
     case synced
     case syncing(progress: Int?, lastBlockDate: Date?)
     case customSyncing(main: String, secondary: String?, progress: Int?)
+    case connecting
     case notSynced(error: String)
     case stopped
 
