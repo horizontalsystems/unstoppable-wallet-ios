@@ -40,6 +40,8 @@ struct WalletListItemView: View, Equatable {
             return progress.map { "balance.syncing_percent".localized("\($0)%") } ?? "balance.syncing".localized
         case let .customSyncing(main, _, _):
             return main
+        case .connecting:
+            return "balance.connecting".localized
         case .stopped:
             return "balance.stopped".localized
         case .notSynced:
