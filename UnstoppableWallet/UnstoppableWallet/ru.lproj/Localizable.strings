@@ -316,7 +316,7 @@
 "balance.receive" = "Получить";
 "balance.deposit" = "Пополнение";
 "balance.chart" = "График";
-"balance.scan" = "Сканировать QR-код";
+"balance.scan" = "QR-код";
 "balance.rate_per_coin" = "%@ за %@";
 "balance.syncing" = "Идет синхронизация...";
 "balance.searching" = "Поиск транзакций...";
