@@ -56,6 +56,13 @@ struct AppearanceView: View {
                         Text(viewModel.baseCurrencyCode).textSubhead1()
                         Image.disclosureIcon
                     }
+                    
+                    ListRow {
+                        Toggle(isOn: $viewModel.useAmountRounding.animation()) {
+                            Text("appearance.amount_rounding".localized).themeBody()
+                        }
+                        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+                    }
                 }
 
                 VStack(spacing: 0) {
@@ -107,15 +114,6 @@ struct AppearanceView: View {
                             Text(viewModel.launchScreen.title).textSubhead1()
                             Image("arrow_small_down_20").themeIcon()
                         }
-                    }
-                }
-
-                ListSection {
-                    ListRow {
-                        Toggle(isOn: $viewModel.useAmountRounding.animation()) {
-                            Text("appearance.amount_rounding".localized).themeBody()
-                        }
-                        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
                     }
                 }
 
