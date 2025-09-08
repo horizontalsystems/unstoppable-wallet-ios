@@ -2109,7 +2109,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "fee_settings.fee_rate.description" = "Hier ist der empfohlene Wert, um die nächsten 2 Blöcke zu treffen";
 "fee_settings.inputs_outputs" = "Ein-/Ausgänge";
 "fee_settings.transaction_settings" = "Transaktionseinstellungen";
-"fee_settings.transaction_settings.description" = "Machen Sie Ihre Bitcoin-Transaktionen schwieriger nachvollziehbar, indem Sie die Transaktionsstruktur verändern.";
+"fee_settings.transaction_settings.description" = "Make your %@ transaction harder to trace by changing the way transactions are structured.";
 "fee_settings.replace_by_fee" = "Ersetzen durch Gebühr";
 "fee_settings.replace_by_fee.description" = "Diese Option ermöglicht es Ihnen, eine festsitzende Transaktion erneut zu senden, indem Sie die Höhe der Gebühr erhöhen.";
 "fee_settings.time_lock" = "TimeLock";
