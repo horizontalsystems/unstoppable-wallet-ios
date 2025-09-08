@@ -2109,7 +2109,7 @@
 "fee_settings.fee_rate.description" = "这是击中下2个区块的推荐值";
 "fee_settings.inputs_outputs" = "输入/输出";
 "fee_settings.transaction_settings" = "交易设置";
-"fee_settings.transaction_settings.description" = "通过更改建构交易的方式使您的比特币交易更难被追踪。";
+"fee_settings.transaction_settings.description" = "Make your %@ transaction harder to trace by changing the way transactions are structured.";
 "fee_settings.replace_by_fee" = "替换交易";
 "fee_settings.replace_by_fee.description" = "此选项允许您通过增加手续费金额来重新发送卡住的交易。";
 "fee_settings.time_lock" = "TimeLock";
