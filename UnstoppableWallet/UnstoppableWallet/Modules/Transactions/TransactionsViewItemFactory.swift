@@ -289,7 +289,13 @@ class TransactionsViewItemFactory {
         case let record as BitcoinIncomingTransactionRecord:
             iconType = singleValueIconType(source: record.source, kind: record.value.kind)
             title = "transactions.receive".localized
-            subTitle = record.from.flatMap { "transactions.from".localized(mapped(address: $0, blockchainType: item.record.source.blockchainType)) } ?? "---"
+            if let from = record.from {
+                subTitle = "transactions.from".localized(mapped(address: from, blockchainType: item.record.source.blockchainType))
+            } else if let to = record.to {
+                subTitle = "transactions.to".localized(mapped(address: to, blockchainType: item.record.source.blockchainType))
+            } else {
+                subTitle = "---"
+            }
 
             primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value), type: type(value: record.value, .incoming))
             if let currencyValue = item.currencyValue {
