@@ -2111,7 +2111,7 @@
 "fee_settings.fee_rate.description" = "Это рекомендуемое значение для попадания в следующие 2 блока";
 "fee_settings.inputs_outputs" = "Вводы/Выводы";
 "fee_settings.transaction_settings" = "Настройки транзакций";
-"fee_settings.transaction_settings.description" = "Затрудните отслеживание Биткойн-транзакций, изменив их структурирование.";
+"fee_settings.transaction_settings.description" = "Make your %@ transaction harder to trace by changing the way transactions are structured.";
 "fee_settings.replace_by_fee" = "Изменить комиссию";
 "fee_settings.replace_by_fee.description" = "Эта опция позволяет повторно отправить застрявшую транзакцию, увеличивая сумму комиссии.";
 "fee_settings.time_lock" = "TimeLock";
