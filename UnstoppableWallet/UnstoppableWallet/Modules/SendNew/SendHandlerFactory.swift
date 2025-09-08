@@ -28,7 +28,7 @@ enum SendHandlerFactory {
         }
     }
 
-    static func preSendHandler(wallet: Wallet) -> IPreSendHandler? {
+    static func preSendHandler(wallet: Wallet, address: ResolvedAddress) -> IPreSendHandler? {
         let adapter = Core.shared.adapterManager.adapter(for: wallet)
 
         if let adapter = adapter as? ISendEthereumAdapter & IBalanceAdapter {
@@ -36,7 +36,7 @@ enum SendHandlerFactory {
         }
 
         if let adapter = adapter as? BitcoinBaseAdapter {
-            return BitcoinPreSendHandler(token: wallet.token, adapter: adapter)
+            return BitcoinPreSendHandler(token: wallet.token, address: address, adapter: adapter)
         }
 
         if let adapter = adapter as? ISendZcashAdapter & IBalanceAdapter {

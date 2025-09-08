@@ -33,6 +33,9 @@ class BitcoinPreSendHandler {
         }
     }
 
+    let rbfAllowed: Bool
+    let lockTimeIntervalState: LockTimeIntervalState
+
     var lockTimeInterval: HodlerPlugin.LockTimeInterval? {
         didSet {
             settingsModifiedSubject.send(settingsModified)
@@ -59,14 +62,14 @@ class BitcoinPreSendHandler {
     private let settingsModifiedSubject = PassthroughSubject<Bool, Never>()
 
     private var pluginData: [UInt8: IPluginData] {
-        guard let lockTimeInterval else {
+        guard lockTimeIntervalState == .enabled, let lockTimeInterval else {
             return [:]
         }
 
         return [HodlerPlugin.id: HodlerData(lockTimeInterval: lockTimeInterval)]
     }
 
-    init(token: Token, adapter: BitcoinBaseAdapter) {
+    init(token: Token, address: ResolvedAddress, adapter: BitcoinBaseAdapter) {
         self.token = token
         self.adapter = adapter
 
@@ -76,8 +79,16 @@ class BitcoinPreSendHandler {
         defaultSortMode = blockchainManager.transactionSortMode(blockchainType: blockchainType)
         sortMode = defaultSortMode
 
-        defaultRbfEnabled = blockchainManager.transactionRbfEnabled(blockchainType: blockchainType)
-        rbfEnabled = defaultRbfEnabled
+        rbfAllowed = blockchainManager.transactionRbfAllowed(blockchainType: blockchainType)
+        defaultRbfEnabled = rbfAllowed ? blockchainManager.transactionRbfEnabled(blockchainType: blockchainType) : false
+        rbfEnabled = rbfAllowed ? defaultRbfEnabled : false
+
+        let isLegacyAddress = address.address.hasPrefix("1")
+        if blockchainType != .bitcoin {
+            lockTimeIntervalState = .inactive
+        } else {
+            lockTimeIntervalState = isLegacyAddress ? .enabled : .disabled
+        }
 
         adapter.balanceStateUpdatedObservable
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
@@ -161,5 +172,13 @@ extension BitcoinPreSendHandler: IPreSendHandler {
         )
 
         return .valid(sendData: .bitcoin(token: token, params: params))
+    }
+}
+
+extension BitcoinPreSendHandler {
+    enum LockTimeIntervalState {
+        case enabled
+        case disabled
+        case inactive
     }
 }

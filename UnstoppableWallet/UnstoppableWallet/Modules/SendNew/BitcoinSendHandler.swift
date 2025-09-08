@@ -1,11 +1,14 @@
 import BitcoinCore
 import Foundation
+import Hodler
 import MarketKit
 
 class BitcoinSendHandler {
     private let token: Token
     private var params: SendParameters
     private var adapter: BitcoinBaseAdapter
+
+    private let blockchainManager = Core.shared.btcBlockchainManager
 
     init(token: Token, params: SendParameters, adapter: BitcoinBaseAdapter) {
         self.token = token
@@ -49,6 +52,7 @@ extension BitcoinSendHandler: ISendHandler {
         return SendData(
             token: token,
             params: params,
+            rbfAllowed: blockchainManager.transactionRbfAllowed(blockchainType: token.blockchainType),
             transactionError: transactionError,
             satoshiPerByte: satoshiPerByte,
             feeData: feeData
@@ -69,10 +73,20 @@ extension BitcoinSendHandler {
         private let token: Token
         private let transactionError: Error?
         let params: SendParameters
+        let rbfAllowed: Bool
 
-        init(token: Token, params: SendParameters, transactionError: Error?, satoshiPerByte: Int?, feeData: BitcoinFeeData?) {
+        private var timeLock: String? {
+            if let data = params.pluginData[HodlerPlugin.id] as? HodlerData {
+                return HodlerPlugin.LockTimeInterval.title(lockTimeInterval: data.lockTimeInterval)
+            }
+
+            return nil
+        }
+
+        init(token: Token, params: SendParameters, rbfAllowed: Bool, transactionError: Error?, satoshiPerByte: Int?, feeData: BitcoinFeeData?) {
             self.token = token
             self.params = params
+            self.rbfAllowed = rbfAllowed
             self.transactionError = transactionError
 
             super.init(satoshiPerByte: satoshiPerByte, fee: feeData?.fee)
@@ -113,24 +127,46 @@ extension BitcoinSendHandler {
             let appValue = AppValue(token: baseToken, value: -decimalValue)
             let rate = rates[baseToken.coin.uid]
 
-            return [.init(
-                [
-                    .amount(
-                        title: "send.confirmation.you_send".localized,
-                        token: baseToken,
-                        appValueType: .regular(appValue: appValue),
-                        currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * decimalValue) },
-                        type: .neutral
-                    ),
-                    .address(
-                        title: "send.confirmation.to".localized,
-                        value: toAddress,
-                        blockchainType: baseToken.blockchainType
-                    ),
-                ]),
-            .init(
+            var sendFields: [SendField] = [
+                .amount(
+                    title: "send.confirmation.you_send".localized,
+                    token: baseToken,
+                    appValueType: .regular(appValue: appValue),
+                    currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * decimalValue) },
+                    type: .neutral
+                ),
+                .address(
+                    title: "send.confirmation.to".localized,
+                    value: toAddress,
+                    blockchainType: baseToken.blockchainType
+                ),
+            ]
+
+            if let memo = params.memo {
+                sendFields.append(.simpleValue(title: "send.confirmation.memo".localized, value: memo, copying: false))
+            }
+
+            if let timeLock {
+                sendFields.append(.simpleValue(icon: "lock", title: "send.confirmation.time_lock".localized, value: timeLock, copying: false))
+            }
+
+            if rbfAllowed, !params.rbfEnabled {
+                sendFields.append(.simpleValue(
+                    title: "send.confirmation.replace_by_fee".localized,
+                    value: "send.confirmation.replace_by_fee.disabled".localized,
+                    copying: false
+                )
+                )
+            }
+
+            let feeSection: SendDataSection = .init(
                 feeFields(feeToken: baseToken, currency: currency, feeTokenRate: rate)
-            )]
+            )
+
+            return [
+                .init(sendFields),
+                feeSection,
+            ]
         }
     }
 }

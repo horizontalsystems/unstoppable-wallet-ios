@@ -2033,6 +2033,8 @@
 		6BE8A07F2ADE2F950012DE7F /* CurrencyValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE8A07D2ADE2F950012DE7F /* CurrencyValue.swift */; };
 		6BE8A0812ADE2FAB0012DE7F /* CurrencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE8A0802ADE2FAB0012DE7F /* CurrencyManager.swift */; };
 		6BE8A0822ADE2FAB0012DE7F /* CurrencyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE8A0802ADE2FAB0012DE7F /* CurrencyManager.swift */; };
+		6BE925CE2E69A34000DC4709 /* DotOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE925CD2E69A33E00DC4709 /* DotOverlay.swift */; };
+		6BE925CF2E69A34000DC4709 /* DotOverlay.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE925CD2E69A33E00DC4709 /* DotOverlay.swift */; };
 		6BEA17732DE5918D00BF73DD /* ShieldSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA17722DE5918500BF73DD /* ShieldSendHandler.swift */; };
 		6BEA17742DE5918D00BF73DD /* ShieldSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA17722DE5918500BF73DD /* ShieldSendHandler.swift */; };
 		6BEA17772DE5C59E00BF73DD /* ZcashShieldingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA17762DE5C59200BF73DD /* ZcashShieldingTransactionRecord.swift */; };
@@ -4526,6 +4528,7 @@
 		6BE8A07A2ADE2F8D0012DE7F /* Currency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		6BE8A07D2ADE2F950012DE7F /* CurrencyValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyValue.swift; sourceTree = "<group>"; };
 		6BE8A0802ADE2FAB0012DE7F /* CurrencyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyManager.swift; sourceTree = "<group>"; };
+		6BE925CD2E69A33E00DC4709 /* DotOverlay.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DotOverlay.swift; sourceTree = "<group>"; };
 		6BEA17722DE5918500BF73DD /* ShieldSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldSendHandler.swift; sourceTree = "<group>"; };
 		6BEA17762DE5C59200BF73DD /* ZcashShieldingTransactionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashShieldingTransactionRecord.swift; sourceTree = "<group>"; };
 		6BEA17792DE8319600BF73DD /* ShieldSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldSendView.swift; sourceTree = "<group>"; };
@@ -5735,6 +5738,7 @@
 		11B3546A6E6F3CC013C9FF44 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				6BE925CD2E69A33E00DC4709 /* DotOverlay.swift */,
 				D371A2402E5DB32900D7D7F6 /* RightButtonText.swift */,
 				D371A2312E589A7200D7D7F6 /* ErrorMessage.swift */,
 				D371A22E2E588E9C00D7D7F6 /* RightTextIcon.swift */,
@@ -10550,6 +10554,7 @@
 				58AAA15A6F863CD3940FEBCC /* CoinCardModule.swift in Sources */,
 				58AAADDF965D00631448EE04 /* SwapCoinCardViewModel.swift in Sources */,
 				58AAAA19D6C7812306A164EA /* SwapCoinCardCell.swift in Sources */,
+				6BE925CF2E69A34000DC4709 /* DotOverlay.swift in Sources */,
 				D30D7E5F2CAAC89700B8CAA7 /* TonConnectEventHandler.swift in Sources */,
 				58AAAF222E553D8DCD123AB2 /* SwapAllowanceService.swift in Sources */,
 				58AAADE506ABABF4F25F98E1 /* SwapPendingAllowanceService.swift in Sources */,
@@ -12135,6 +12140,7 @@
 				D3E36B7B2DF1B5F5007F99CA /* DeterminiteSpinnerStyle.swift in Sources */,
 				58AAAEEA99ACF936862312B2 /* SwapSwitchCell.swift in Sources */,
 				58AAA9E3B53672B3C37B727E /* StepBadgeView.swift in Sources */,
+				6BE925CE2E69A34000DC4709 /* DotOverlay.swift in Sources */,
 				D3AFAAFD2E45FF06004AB074 /* ThemeText.swift in Sources */,
 				58AAAA3E05FEB10822DFC8EE /* SwapStepCell.swift in Sources */,
 				D023D2712A25CF61004F65B0 /* TronAdapter.swift in Sources */,
@@ -14133,7 +14139,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/Hodler.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 2.0.2;
+				version = 2.0.3;
 			};
 		};
 		D092D63B2E3116780039BDB4 /* XCRemoteSwiftPackageReference "MoneroKit.Swift" */ = {

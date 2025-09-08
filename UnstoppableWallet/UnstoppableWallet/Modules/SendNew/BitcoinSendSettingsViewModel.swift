@@ -19,6 +19,10 @@ class BitcoinSendSettingsViewModel: ObservableObject {
         }
     }
 
+    var rbfAllowed: Bool {
+        handler.rbfAllowed
+    }
+
     @Published var lockTimeInterval: HodlerPlugin.LockTimeInterval? {
         didSet {
             handler.lockTimeInterval = lockTimeInterval
@@ -59,6 +63,14 @@ class BitcoinSendSettingsViewModel: ObservableObject {
 }
 
 extension BitcoinSendSettingsViewModel {
+    var coinCode: String {
+        handler.token.coin.code
+    }
+
+    var lockTimeIntervalState: BitcoinPreSendHandler.LockTimeIntervalState {
+        handler.lockTimeIntervalState
+    }
+
     func reset() {
         sortMode = handler.defaultSortMode
         rbfEnabled = handler.defaultRbfEnabled
