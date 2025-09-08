@@ -2110,7 +2110,7 @@
 "fee_settings.fee_rate.description" = "다음 2 블록 타격에 대한 권장 값은 다음과 같습니다.";
 "fee_settings.inputs_outputs" = "입력/출력";
 "fee_settings.transaction_settings" = "거래 설정";
-"fee_settings.transaction_settings.description" = "트랜잭션이 구조화되는 방식을 변경하여 Bitcoin 트랜잭션을 추적하기 어렵게 만드십시오.";
+"fee_settings.transaction_settings.description" = "Make your %@ transaction harder to trace by changing the way transactions are structured.";
 "fee_settings.replace_by_fee" = "수수료로 대체";
 "fee_settings.replace_by_fee.description" = "이 옵션을 통해 거래가 멈춘 상태에서 수수료를 증가시켜 거래를 다시 보낼 수 있습니다.";
 "fee_settings.time_lock" = "TimeLock";
