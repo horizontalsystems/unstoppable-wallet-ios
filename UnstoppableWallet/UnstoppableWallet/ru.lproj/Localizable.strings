@@ -320,6 +320,7 @@
 "balance.rate_per_coin" = "%@ за %@";
 "balance.syncing" = "Идет синхронизация...";
 "balance.searching" = "Поиск транзакций...";
+"balance.connecting" = "Подключение...";
 "balance.stopped" = "Остановлено";
 "balance.downloading_sapling" = "Загрузка sapling... %d%%";
 "balance.downloading_blocks" = "Загрузка блоков";
