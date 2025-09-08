@@ -2110,7 +2110,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "fee_settings.fee_rate.description" = "Este es el valor recomendado para golpear los siguientes 2 bloques";
 "fee_settings.inputs_outputs" = "Entradas/Salidas";
 "fee_settings.transaction_settings" = "Ajustes de la transacción";
-"fee_settings.transaction_settings.description" = "Haga que sus transacciones Bitcoin sean más difíciles de rastrear cambiando la forma en que las transacciones están estructuradas.";
+"fee_settings.transaction_settings.description" = "Make your %@ transaction harder to trace by changing the way transactions are structured.";
 "fee_settings.replace_by_fee" = "Reemplazar por tarifa";
 "fee_settings.replace_by_fee.description" = "Esta opción le permite volver a enviar una transacción bloqueada aumentando la cantidad de la tarifa.";
 "fee_settings.time_lock" = "TimeLock";
