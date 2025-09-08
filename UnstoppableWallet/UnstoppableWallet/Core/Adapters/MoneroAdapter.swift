@@ -99,6 +99,7 @@ class MoneroAdapter {
                 showRawTransaction: false,
                 amount: Decimal(transaction.amount) / coinRate,
                 from: nil,
+                to: transaction.recipientAddress,
                 memo: transaction.memo
             )
         }
@@ -171,7 +172,7 @@ extension MoneroAdapter: IAdapter {
     }
 
     var statusInfo: [(String, Any)] {
-        []
+        kit.statusInfo
     }
 }
 

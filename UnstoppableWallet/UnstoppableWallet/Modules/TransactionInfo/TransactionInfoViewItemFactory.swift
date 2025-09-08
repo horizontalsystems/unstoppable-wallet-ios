@@ -210,7 +210,7 @@ class TransactionInfoViewItemFactory {
         return condition ? trueType : (falseType ?? trueType)
     }
 
-    private func receiveSection(source: TransactionSource, appValue: AppValue, from: String?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:], memo: String? = nil, status: TransactionStatus? = nil, balanceHidden: Bool) -> [TransactionInfoModule.ViewItem] {
+    private func receiveSection(source: TransactionSource, appValue: AppValue, from: String?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:], to: String? = nil, memo: String? = nil, status: TransactionStatus? = nil, balanceHidden: Bool) -> [TransactionInfoModule.ViewItem] {
         var viewItems = [TransactionInfoModule.ViewItem]()
 
         let mint = from == zeroAddress
@@ -258,6 +258,17 @@ class TransactionInfoViewItemFactory {
             let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: from) : nil
 
             viewItems.append(.from(value: from, valueTitle: valueTitle, contactAddress: contactData.contactAddress))
+
+            if let name = contactData.name {
+                viewItems.append(.contactName(name: name))
+            }
+        }
+
+        if let to {
+            let contactData = contactLabelService.contactData(for: to)
+            let valueTitle = contactData.name == nil ? evmLabelManager.addressLabel(address: to) : nil
+
+            viewItems.append(.to(value: to, valueTitle: valueTitle, contactAddress: contactData.contactAddress))
 
             if let name = contactData.name {
                 viewItems.append(.contactName(name: name))
@@ -503,7 +514,7 @@ class TransactionInfoViewItemFactory {
             ]))
 
         case let record as BitcoinIncomingTransactionRecord:
-            sections.append(.init(receiveSection(source: record.source, appValue: record.value, from: record.from, rates: item.rates, balanceHidden: balanceHidden)))
+            sections.append(.init(receiveSection(source: record.source, appValue: record.value, from: record.from, rates: item.rates, to: record.to, balanceHidden: balanceHidden)))
 
             let additionalViewItems = bitcoinViewItems(record: record, lastBlockInfo: item.lastBlockInfo)
             if !additionalViewItems.isEmpty {

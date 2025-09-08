@@ -4,13 +4,15 @@ import MarketKit
 class BitcoinIncomingTransactionRecord: BitcoinTransactionRecord {
     let value: AppValue
     let from: String?
+    let to: String? // For monero transactions
 
     init(token: Token, source: TransactionSource, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: Decimal?, failed: Bool,
          lockInfo: TransactionLockInfo?, conflictingHash: String?, showRawTransaction: Bool,
-         amount: Decimal, from: String?, memo: String? = nil)
+         amount: Decimal, from: String?, to: String? = nil, memo: String? = nil)
     {
         value = AppValue(token: token, value: amount)
         self.from = from
+        self.to = to
 
         super.init(
             source: source,
