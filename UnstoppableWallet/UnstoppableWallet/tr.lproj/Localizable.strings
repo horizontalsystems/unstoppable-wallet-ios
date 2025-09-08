@@ -318,6 +318,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.rate_per_coin" = "%@ = 1 %@";
 "balance.syncing" = "Eşitleniyor...";
 "balance.searching" = "İşlemler aranıyor ...";
+"balance.connecting" = "Bağlanıyor...";
 "balance.stopped" = "Durduruldu";
 "balance.downloading_sapling" = "Sapling indiriliyor... %d%%";
 "balance.downloading_blocks" = "Blokları İndirme";
