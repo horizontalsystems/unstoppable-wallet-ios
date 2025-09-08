@@ -2113,7 +2113,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "fee_settings.fee_rate.description" = "İşte sonraki 2 bloğa eklenmek için önerilen değer";
 "fee_settings.inputs_outputs" = "Giriş/Çıkış";
 "fee_settings.transaction_settings" = "İşlem Ayarları";
-"fee_settings.transaction_settings.description" = "İşlemlerin yapılandırılma şeklini değiştirerek Bitcoin işlemlerinizin izlenilmesini zorlaştırın.";
+"fee_settings.transaction_settings.description" = "Make your %@ transaction harder to trace by changing the way transactions are structured.";
 "fee_settings.replace_by_fee" = "Ücretle Değiştir";
 "fee_settings.replace_by_fee.description" = "Bu seçenek, takılı kalmış bir işlemi ücret miktarını artırarak yeniden göndermenizi sağlar.";
 "fee_settings.time_lock" = "TimeLock";
