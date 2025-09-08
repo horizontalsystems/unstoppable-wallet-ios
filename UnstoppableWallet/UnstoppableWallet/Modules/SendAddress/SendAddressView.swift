@@ -41,7 +41,7 @@ struct SendAddressView: View {
                 }
             )
         ) {
-            if let resolvedAddress, let handler = SendHandlerFactory.preSendHandler(wallet: wallet) {
+            if let resolvedAddress, let handler = SendHandlerFactory.preSendHandler(wallet: wallet, address: resolvedAddress) {
                 PreSendView(wallet: wallet, handler: handler, resolvedAddress: resolvedAddress, amount: amount, memo: memo) {
                     if let onDismiss {
                         onDismiss()

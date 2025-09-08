@@ -58,10 +58,11 @@ struct DonateTokenListView: View {
                 DonateAddressesView()
             }
             .navigationDestination(for: DestinationData.self) { data in
+                let resolvedAddress = ResolvedAddress(address: data.address, issueTypes: [])
                 PreSendView(
                     wallet: data.wallet,
-                    handler: SendHandlerFactory.preSendHandler(wallet: data.wallet),
-                    resolvedAddress: .init(address: data.address, issueTypes: []),
+                    handler: SendHandlerFactory.preSendHandler(wallet: data.wallet, address: resolvedAddress),
+                    resolvedAddress: resolvedAddress,
                     addressVisible: false,
                     onDismiss: {
                         isPresented = false

@@ -9,7 +9,7 @@ enum SendField {
     case doubleValue(title: String, description: InfoDescription?, value1: String, value2: String?)
     case levelValue(title: String, value: String, level: ValueLevel)
     case note(iconName: String?, title: String)
-    case simpleValue(title: String, value: String, copying: Bool)
+    case simpleValue(icon: String? = nil, title: String, value: String, copying: Bool)
     case address(title: String, value: String, blockchainType: BlockchainType)
     case price(title: String, tokenA: Token, tokenB: Token, amountA: Decimal, amountB: Decimal)
     case hex(title: String, value: String)
@@ -99,8 +99,12 @@ enum SendField {
             RecipientRowsView(title: title, value: value, blockchainType: blockchainType)
         case let .price(title, tokenA, tokenB, amountA, amountB):
             PriceRow(title: title, tokenA: tokenA, tokenB: tokenB, amountA: amountA, amountB: amountB)
-        case let .simpleValue(title, value, copying):
+        case let .simpleValue(icon, title, value, copying):
             ListRow {
+                if let icon {
+                    Image(icon).icon()
+                }
+
                 Text(title).textSubhead2()
 
                 Spacer()

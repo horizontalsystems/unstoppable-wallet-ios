@@ -75,60 +75,67 @@ struct BitcoinSendSettingsView: View {
                             }
                         }
                     }
-                    ListSectionFooter(text: "fee_settings.transaction_settings.description".localized)
+                    ListSectionFooter(text: "fee_settings.transaction_settings.description".localized(viewModel.coinCode))
                 }
-                VStack(spacing: 0) {
-                    ListSection {
-                        ListRow {
-                            HStack(spacing: .margin8) {
-                                Text("fee_settings.time_lock".localized).textBody()
+                if viewModel.lockTimeIntervalState != .inactive {
+                    VStack(spacing: 0) {
+                        ListSection {
+                            ListRow {
+                                HStack(spacing: .margin8) {
+                                    Text("fee_settings.time_lock".localized).textBody()
 
-                                Spacer()
+                                    Spacer()
 
-                                Button(action: {
-                                    Coordinator.shared.present(type: .alert) { isPresented in
-                                        OptionAlertView(
-                                            title: "fee_settings.time_lock".localized,
-                                            viewItems: [.init(text: "send.hodler_locktime_off".localized)] +
-                                                HodlerPlugin.LockTimeInterval.allCases.map {
-                                                    AlertViewItem(text: HodlerPlugin.LockTimeInterval.title(lockTimeInterval: $0))
+                                    Button(action: {
+                                        Coordinator.shared.present(type: .alert) { isPresented in
+                                            OptionAlertView(
+                                                title: "fee_settings.time_lock".localized,
+                                                viewItems: [.init(text: "send.hodler_locktime_off".localized)] +
+                                                    HodlerPlugin.LockTimeInterval.allCases.map {
+                                                        AlertViewItem(text: HodlerPlugin.LockTimeInterval.title(lockTimeInterval: $0))
+                                                    },
+                                                onSelect: { index in
+                                                    switch index {
+                                                    case 0: viewModel.lockTimeInterval = nil
+                                                    default: viewModel.lockTimeInterval = HodlerPlugin.LockTimeInterval.allCases[index - 1]
+                                                    }
                                                 },
-                                            onSelect: { index in
-                                                switch index {
-                                                case 0: viewModel.lockTimeInterval = nil
-                                                default: viewModel.lockTimeInterval = HodlerPlugin.LockTimeInterval.allCases[index - 1]
-                                                }
-                                            },
-                                            isPresented: isPresented
-                                        )
-                                    }
-                                }) {
-                                    HStack(spacing: .margin8) {
-                                        if let interval = viewModel.lockTimeInterval {
-                                            Text(HodlerPlugin.LockTimeInterval.title(lockTimeInterval: interval)).textCaption(color: .themeLeah)
-                                        } else {
-                                            Text("send.hodler_locktime_off".localized).textCaption(color: .themeLeah)
+                                                isPresented: isPresented
+                                            )
+                                        }
+                                    }) {
+                                        HStack(spacing: .margin8) {
+                                            if viewModel.lockTimeIntervalState == .enabled,
+                                               let interval = viewModel.lockTimeInterval
+                                            {
+                                                Text(HodlerPlugin.LockTimeInterval.title(lockTimeInterval: interval)).textCaption(color: .themeLeah)
+                                            } else {
+                                                Text("send.hodler_locktime_off".localized).textCaption(color: .themeLeah)
+                                            }
                                         }
                                     }
+                                    .buttonStyle(SecondaryButtonStyle(rightAccessory: .dropDown))
+                                    .disabled(viewModel.lockTimeIntervalState == .disabled)
                                 }
-                                .buttonStyle(SecondaryButtonStyle(rightAccessory: .dropDown))
                             }
                         }
-                    }
 
-                    ListSectionFooter(text: "fee_settings.time_lock.description".localized)
+                        ListSectionFooter(text: "fee_settings.time_lock.description".localized)
+                    }
                 }
-                VStack(spacing: 0) {
-                    ListSection {
-                        ListRow {
-                            Toggle(isOn: $viewModel.rbfEnabled) {
-                                Text("fee_settings.replace_by_fee".localized).themeBody()
+                if viewModel.rbfAllowed {
+                    VStack(spacing: 0) {
+                        ListSection {
+                            ListRow {
+                                Toggle(isOn: $viewModel.rbfEnabled) {
+                                    Text("fee_settings.replace_by_fee".localized).themeBody()
+                                }
+                                .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
                             }
-                            .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
                         }
-                    }
 
-                    ListSectionFooter(text: "fee_settings.replace_by_fee.description".localized)
+                        ListSectionFooter(text: "fee_settings.replace_by_fee.description".localized)
+                    }
                 }
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))

@@ -75,7 +75,8 @@ struct PreSendView: View {
                     }) {
                         Image("settings_24")
                             .renderingMode(.template)
-                            .foregroundColor(.themeGray)
+                            .foregroundColor(handler.settingsModified ? .themeJacob : .themeGray)
+                            .dotOverlay(visible: handler.settingsModified)
                     }
                 }
             }

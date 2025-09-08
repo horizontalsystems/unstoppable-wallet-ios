@@ -12,6 +12,11 @@ class BtcBlockchainManager {
         .dash,
     ]
 
+    static let allowedRbfBlockchainTypes: [BlockchainType] = [
+        .bitcoin,
+        .litecoin,
+    ]
+
     private let marketKit: MarketKit.Kit
     private let storage: BlockchainSettingsStorage
 
@@ -76,6 +81,10 @@ extension BtcBlockchainManager {
 
     func transactionRbfEnabled(blockchainType: BlockchainType) -> Bool {
         storage.btcTransactionRbfEnabled(blockchainType: blockchainType) ?? true
+    }
+
+    func transactionRbfAllowed(blockchainType: BlockchainType) -> Bool {
+        Self.allowedRbfBlockchainTypes.contains(blockchainType)
     }
 
     func save(transactionSortMode: TransactionDataSortMode, blockchainType: BlockchainType) {
