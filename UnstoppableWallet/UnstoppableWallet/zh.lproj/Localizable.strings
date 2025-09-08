@@ -318,6 +318,7 @@
 "balance.rate_per_coin" = "%@ / %@";
 "balance.syncing" = "正在同步...";
 "balance.searching" = "正在搜索交易…...";
+"balance.connecting" = "正在连接...";
 "balance.stopped" = "已停止";
 "balance.downloading_sapling" = "正在下载保存... %d%%";
 "balance.downloading_blocks" = "正在下载块";
