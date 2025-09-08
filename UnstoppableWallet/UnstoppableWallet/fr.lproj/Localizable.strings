@@ -2109,7 +2109,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "fee_settings.fee_rate.description" = "Voici la valeur recommandée pour les 2 blocs suivants";
 "fee_settings.inputs_outputs" = "Entrées/Sorties";
 "fee_settings.transaction_settings" = "Paramètres de transaction";
-"fee_settings.transaction_settings.description" = "Rendez vos Bitcoin transactions plus difficiles à suivre en modifiant la façon dont les transactions sont structurées.";
+"fee_settings.transaction_settings.description" = "Make your %@ transaction harder to trace by changing the way transactions are structured.";
 "fee_settings.replace_by_fee" = "Remplacer par frais";
 "fee_settings.replace_by_fee.description" = "Ce choix vous permet de renvoyer une transaction bloquée en augmentant le montant des frais.";
 "fee_settings.time_lock" = "TimeLock";
