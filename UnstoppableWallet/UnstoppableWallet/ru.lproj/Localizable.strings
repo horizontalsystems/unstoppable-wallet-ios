@@ -61,6 +61,7 @@
 "alert.try_again" = "Попробовать ещё раз";
 "alert.disconnecting" = "Отсоединение";
 "alert.disconnected" = "Отсоединено";
+"alert.connected" = "Connected";
 "alert.enabling" = "Идет активация";
 "alert.enabled_coins" = "Включено ещё %@ монет";
 "alert.sending" = "Отправка";
@@ -1904,9 +1905,24 @@
 "wallet_connect.address" = "Адрес";
 "wallet_connect.network" = "Сеть";
 "wallet_connect.list.pending_requests" = "Ожидающие запросы";
+"wallet_connect.main.connect" = "Connect to %@";
+"wallet_connect.main.connected" = "Connected to %@";
+"wallet_connect.main.premium_alert.title.deactivated" = "Attention!";
+"wallet_connect.main.premium_alert.title.not_available" = "Warning!";
+"wallet_connect.main.premium_alert.title.risky" = "Danger!";
+"wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Domain verification is unavailable. Upgrade to Premium to protect against unverified or phishing websites.";
+"wallet_connect.main.premium_alert.subtitle.risky" = "This website is not verified and may lead to phishing or loss of funds. Connecting is strongly discouraged.";
+"wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check unavailable. Connection possible but without domain safety confirmation.";
+"wallet_connect.scam_protection" = "Защита от мошенничества";
+"wallet_connect.scam_protection.deactivated" = "Deactivated";
+"wallet_connect.scam_protection.risky" = "Рискованно";
+"wallet_connect.scam_protection.secure" = "Secure";
+"wallet_connect.scam_protection.not_available" = "Нет данных";
+"wallet_connect.networks" = "Networks";
+
 "wallet_connect.main.no_any_supported_chains" = "Нет поддерживаемых блокчейнов!";
 "wallet_connect.main.unsupported_chains" = "Некоторые блокчейны не поддерживаются!";
-"wallet_connect.connect_description" = "Нажимая \"Подтвердить\", вы разрешаете этому приложению просматривать ваш общедоступный адрес. Это важный шаг для защиты ваших данных от потенциальных рисков фишинга.";
+"wallet_connect.connect_description" = "By clicking connect, you allow this app to view your public address.";
 "wallet_connect.usage_description" = "Вы можете перейти в браузер. Не закрывайте эту страницу во время использования браузера.";
 "wallet_connect.no_connection" = "Не удалось установить соединение. Попробуйте переподключиться снова.";
 "wallet_connect.button_reconnect" = "Повторное подключение";
