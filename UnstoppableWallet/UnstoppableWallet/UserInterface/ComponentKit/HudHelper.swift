@@ -87,6 +87,7 @@ extension HudHelper {
         case noInternet
         case disconnectingWalletConnect
         case disconnectedWalletConnect
+        case connectedWalletConnect
         case waitingForSession
         case enabling
         case enabled(coins: Int)
@@ -123,6 +124,7 @@ extension HudHelper {
             case .noInternet: image = UIImage(named: "no_internet_24")
             case .waitingForSession: image = UIImage(named: "disconnecting_2_24")
             case .disconnectingWalletConnect, .disconnectedWalletConnect: image = UIImage(named: "disconnecting_2_24")
+            case .connectedWalletConnect: image = UIImage(named: "circle_check_24")
             case .enabling: image = UIImage(named: "arrow_medium_2_down_24")
             case .enabled: image = UIImage(named: "circle_check_24")
             case .sending, .sent: image = UIImage(named: "arrow_medium_2_up_right_24")
@@ -139,7 +141,7 @@ extension HudHelper {
             switch self {
             case .addedToWatchlist, .alreadyAddedToWallet, .notSupportedYet, .sent, .swapped, .approved, .revoked, .attention: return .themeJacob
             case .removedFromWallet, .removedFromWatchlist, .deleted, .noInternet, .disconnectedWalletConnect, .error: return .themeLucian
-            case .addedToWallet, .copied, .saved, .savedToCloud, .done, .restored, .created, .imported, .walletAdded, .enabled, .success: return .themeRemus
+            case .addedToWallet, .copied, .saved, .savedToCloud, .done, .restored, .created, .imported, .walletAdded, .enabled, .success, .connectedWalletConnect: return .themeRemus
             case .waitingForSession, .disconnectingWalletConnect, .enabling, .sending, .swapping, .approving, .revoking: return .themeGray
             }
         }
@@ -165,6 +167,7 @@ extension HudHelper {
             case .waitingForSession: return "alert.waiting_for_session".localized
             case .disconnectingWalletConnect: return "alert.disconnecting".localized
             case .disconnectedWalletConnect: return "alert.disconnected".localized
+            case .connectedWalletConnect: return "alert.connected".localized
             case .enabling: return "alert.enabling".localized
             case let .enabled(count): return "alert.enabled_coins".localized(count)
             case .sending: return "alert.sending".localized

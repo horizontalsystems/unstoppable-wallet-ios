@@ -1,5 +1,6 @@
-import EvmKit
 import Foundation
+
+import MarketKit
 import RxCocoa
 import RxRelay
 import RxSwift
@@ -21,8 +22,11 @@ class WalletConnectMainViewModel {
     private let reconnectButtonRelay = BehaviorRelay<ButtonState>(value: .hidden)
     private let disconnectButtonRelay = BehaviorRelay<ButtonState>(value: .hidden)
     private let closeVisibleRelay = BehaviorRelay<Bool>(value: false)
+    private let headerTitleStateRelay = BehaviorRelay<TitleState>(value: .connect)
     private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
     private let finishRelay = PublishRelay<Void>()
+
+    private let whitelistStateRelay = BehaviorRelay<WalletConnectMainModule.WhitelistState>(value: .loading)
 
     init(service: WalletConnectMainService) {
         self.service = service
@@ -40,6 +44,13 @@ class WalletConnectMainViewModel {
             self?.sync(allowedBlockchains: allowedBlockchains)
         }
         subscribe(scheduler, disposeBag, service.proposalTimeOutAttentionObservable) { [weak self] in self?.showTimeOutAttentionRelay.accept(()) }
+
+        subscribe(scheduler, disposeBag, service.whitelistStateObservable) { [weak self] state in self?.syncWhitelist(state: state) }
+
+        subscribe(MainScheduler.instance, disposeBag, service.connectedObservable) { [weak self] in
+            HudHelper.instance.show(banner: .connectedWalletConnect)
+            self?.finishRelay.accept(())
+        }
 
         sync()
     }
@@ -68,10 +79,13 @@ class WalletConnectMainViewModel {
             return
         }
 
+        syncWhitelist(state: service.whitelistState)
+
         connectingRelay.accept(service.state == .idle)
         cancelVisibleRelay.accept(state != .ready)
         connectButtonRelay.accept(state == .waitingForApproveSession ? (connectionState == .connected ? .enabled : .hidden) : .hidden)
         disconnectButtonRelay.accept(state == .ready ? (connectionState == .connected ? .enabled : .hidden) : .hidden)
+        headerTitleStateRelay.accept(state == .ready ? (connectionState == .connected ? .connected : .connect) : .connect)
 
         let stateForReconnectButton = state == .waitingForApproveSession || state == .ready
         reconnectButtonRelay.accept(stateForReconnectButton ? (connectionState == .disconnected ? .enabled : .hidden) : .hidden)
@@ -81,8 +95,7 @@ class WalletConnectMainViewModel {
             .map { blockchain in
                 BlockchainViewItem(
                     chainId: blockchain.item.chainId,
-                    chainTitle: blockchain.item.blockchain.name,
-                    address: blockchain.item.address.shortened
+                    blockchain: blockchain.item.blockchain
                 )
             }
 
@@ -95,6 +108,15 @@ class WalletConnectMainViewModel {
         )
 
         viewItemRelay.accept(viewItem)
+    }
+
+    private func syncWhitelist(state: WalletConnectMainModule.WhitelistState) {
+        guard service.premiumEnabled else {
+            whitelistStateRelay.accept(.deactivated)
+            return
+        }
+
+        whitelistStateRelay.accept(state)
     }
 
     private func status(connectionState: WalletConnectMainModule.ConnectionState) -> Status? {
@@ -150,6 +172,14 @@ extension WalletConnectMainViewModel {
         disconnectButtonRelay.asDriver()
     }
 
+    var headerTitleStateDriver: Driver<TitleState> {
+        headerTitleStateRelay.asDriver()
+    }
+
+    var whitelistStateDriver: Driver<WalletConnectMainModule.WhitelistState> {
+        whitelistStateRelay.asDriver()
+    }
+
     var closeVisibleDriver: Driver<Bool> {
         closeVisibleRelay.asDriver()
     }
@@ -160,6 +190,10 @@ extension WalletConnectMainViewModel {
 
     var finishSignal: Signal<Void> {
         finishRelay.asSignal()
+    }
+
+    var premiumEnabled: Bool {
+        service.premiumEnabled
     }
 
     func cancel() {
@@ -192,6 +226,18 @@ extension WalletConnectMainViewModel {
 }
 
 extension WalletConnectMainViewModel {
+    enum TitleState {
+        case connect
+        case connected
+
+        func title(name: String) -> String {
+            switch self {
+            case .connect: return "wallet_connect.main.connect".localized(name)
+            case .connected: return "wallet_connect.main.connected".localized(name)
+            }
+        }
+    }
+
     struct ViewItem {
         let dAppMeta: DAppMetaViewItem?
         let status: Status?
@@ -211,8 +257,7 @@ extension WalletConnectMainViewModel {
 
     struct BlockchainViewItem {
         let chainId: String
-        let chainTitle: String?
-        let address: String
+        let blockchain: Blockchain
     }
 
     struct BlockchainSelectorViewItem {

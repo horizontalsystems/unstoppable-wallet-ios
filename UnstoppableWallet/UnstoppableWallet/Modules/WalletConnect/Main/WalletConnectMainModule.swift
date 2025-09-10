@@ -7,14 +7,14 @@ import WalletConnectSign
 import WalletConnectUtils
 
 enum WalletConnectMainModule {
-    static func viewController(account: Account, session: WalletConnectSign.Session? = nil, proposal: WalletConnectSign.Session.Proposal? = nil, sourceViewController: UIViewController?) -> UIViewController {
+    static func viewController(account: Account, session: WalletConnectSign.Session? = nil, proposal: WalletConnectSign.Session.Proposal? = nil, sourceViewController: UIViewController?, viaPushing: Bool = false) -> UIViewController {
         let service = Core.shared.walletConnectSessionManager.service
 
         let chain = ProposalChain()
-        let supportedMethods = Core.shared.walletConnectRequestHandler.supportedMethods
-        chain.append(handler: Eip155ProposalHandler(evmBlockchainManager: Core.shared.evmBlockchainManager, account: account, supportedMethods: supportedMethods))
+        let walletConnectRequestHandler = Core.shared.walletConnectRequestHandler
+        chain.append(handler: Eip155ProposalHandler(evmBlockchainManager: Core.shared.evmBlockchainManager, account: account, supportedMethods: walletConnectRequestHandler.supportedMethodsBy(namespace: Eip155ProposalHandler.namespace)))
 
-        chain.append(handler: StellarProposalHandler(stellarKitManager: Core.shared.stellarKitManager, account: account, supportedMethods: supportedMethods))
+        chain.append(handler: StellarProposalHandler(stellarKitManager: Core.shared.stellarKitManager, account: account, supportedMethods: walletConnectRequestHandler.supportedMethodsBy(namespace: StellarProposalHandler.namespace)))
 
         let mainService = WalletConnectMainService(
             session: session,
@@ -25,15 +25,16 @@ enum WalletConnectMainModule {
             proposalHandler: chain
         )
 
-        return viewController(service: mainService, sourceViewController: sourceViewController)
+        return viewController(service: mainService, sourceViewController: sourceViewController, viaPushing: viaPushing)
     }
 
-    static func viewController(service: WalletConnectMainService, sourceViewController: UIViewController?) -> UIViewController {
+    static func viewController(service: WalletConnectMainService, sourceViewController: UIViewController?, viaPushing: Bool = false) -> UIViewController {
         let viewModel = WalletConnectMainViewModel(service: service)
         let viewController = WalletConnectMainViewController(
             viewModel: viewModel,
             requestViewFactory: Core.shared.walletConnectRequestHandler,
-            sourceViewController: sourceViewController
+            sourceViewController: sourceViewController,
+            viaPushing: viaPushing
         )
 
         let pendingRequestService = WalletConnectMainPendingRequestService(
@@ -47,6 +48,9 @@ enum WalletConnectMainModule {
         let pendingRequestViewModel = WalletConnectMainPendingRequestViewModel(service: pendingRequestService)
         viewController.pendingRequestViewModel = pendingRequestViewModel
 
+        if viaPushing {
+            return viewController
+        }
         return ThemeNavigationController(rootViewController: viewController)
     }
 }
@@ -105,6 +109,84 @@ extension WalletConnectMainModule {
 
         func equal(blockchain: WalletConnectSign.Blockchain) -> Bool {
             namespace == blockchain.namespace && chainId == blockchain.reference
+        }
+    }
+
+    enum WhitelistState: String {
+        case deactivated
+        case loading
+        case secure
+        case risky
+        case notAvailable
+
+        var showAlert: Bool {
+            switch self {
+            case .loading, .secure: return false
+            default: return true
+            }
+        }
+
+        var alertTitle: String {
+            switch self {
+            case .deactivated: return "wallet_connect.main.premium_alert.title.deactivated".localized
+            case .risky: return "wallet_connect.main.premium_alert.title.risky".localized
+            case .notAvailable: return "wallet_connect.main.premium_alert.title.not_available".localized
+            case .loading, .secure: return ""
+            }
+        }
+
+        var alertSubtitle: String {
+            switch self {
+            case .deactivated: return "wallet_connect.main.premium_alert.subtitle.deactivated".localized
+            case .risky: return "wallet_connect.main.premium_alert.subtitle.risky".localized
+            case .notAvailable: return "wallet_connect.main.premium_alert.subtitle.not_available".localized
+            case .loading, .secure: return ""
+            }
+        }
+
+        var alertTitleColor: UIColor {
+            switch self {
+            case .deactivated, .notAvailable: return .themeJacob
+            case .risky: return .themeLucian
+            case .loading, .secure: return .themeGray50
+            }
+        }
+
+        var alertIcon: String {
+            switch self {
+            case .deactivated, .notAvailable, .risky: return "warning_filled"
+            case .loading, .secure: return ""
+            }
+        }
+
+        var protectionValue: String? {
+            switch self {
+            case .deactivated: return "wallet_connect.scam_protection.deactivated".localized
+            case .risky: return "wallet_connect.scam_protection.risky".localized
+            case .notAvailable: return "wallet_connect.scam_protection.not_available".localized
+            case .secure: return "wallet_connect.scam_protection.secure".localized
+            case .loading: return nil
+            }
+        }
+
+        var protectionIcon: String? {
+            switch self {
+            case .deactivated: return "lock"
+            case .risky: return "warning_filled"
+            case .notAvailable: return nil
+            case .secure: return "shield_check_filled"
+            case .loading: return nil
+            }
+        }
+
+        var protectionValueColor: UIColor {
+            switch self {
+            case .deactivated: return .themeJacob
+            case .risky: return .themeLucian
+            case .notAvailable: return .themeLeah
+            case .secure: return .themeRemus
+            case .loading: return .themeGray
+            }
         }
     }
 

@@ -1793,6 +1793,14 @@
 		6B5F5E162C0DDD7500E03EB2 /* RankView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F5E142C0DDD7100E03EB2 /* RankView.swift */; };
 		6B5F5E182C0DDD8700E03EB2 /* RankViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F5E172C0DDD8700E03EB2 /* RankViewModel.swift */; };
 		6B5F5E192C0DDD8700E03EB2 /* RankViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F5E172C0DDD8700E03EB2 /* RankViewModel.swift */; };
+		6B5FA00D2E6EEC6200745DE1 /* PremiumAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FA00C2E6EEC6200745DE1 /* PremiumAlertCell.swift */; };
+		6B5FA00E2E6EEC6200745DE1 /* PremiumAlertCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FA00C2E6EEC6200745DE1 /* PremiumAlertCell.swift */; };
+		6B5FA0102E701B9F00745DE1 /* WhitelistDappProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FA00F2E701B9700745DE1 /* WhitelistDappProvider.swift */; };
+		6B5FA0112E701B9F00745DE1 /* WhitelistDappProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FA00F2E701B9700745DE1 /* WhitelistDappProvider.swift */; };
+		6B5FA0132E701BF000745DE1 /* WhitelistDapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FA0122E701BEB00745DE1 /* WhitelistDapp.swift */; };
+		6B5FA0142E701BF000745DE1 /* WhitelistDapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FA0122E701BEB00745DE1 /* WhitelistDapp.swift */; };
+		6B5FA0162E71287E00745DE1 /* BlockchainListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FA0152E71287500745DE1 /* BlockchainListView.swift */; };
+		6B5FA0172E71287E00745DE1 /* BlockchainListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FA0152E71287500745DE1 /* BlockchainListView.swift */; };
 		6B5FD7D22E40DCD800FEF510 /* MarketVaultChartFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FD7D12E40DCCC00FEF510 /* MarketVaultChartFactory.swift */; };
 		6B5FD7D32E40DCD800FEF510 /* MarketVaultChartFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FD7D12E40DCCC00FEF510 /* MarketVaultChartFactory.swift */; };
 		6B5FD7D52E42005D00FEF510 /* MerkleSendRawTransactionJsonRpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FD7D42E42004D00FEF510 /* MerkleSendRawTransactionJsonRpc.swift */; };
@@ -4427,6 +4435,10 @@
 		6B5F5E102C0C660900E03EB2 /* MarketPlatformViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPlatformViewModel.swift; sourceTree = "<group>"; };
 		6B5F5E142C0DDD7100E03EB2 /* RankView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankView.swift; sourceTree = "<group>"; };
 		6B5F5E172C0DDD8700E03EB2 /* RankViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RankViewModel.swift; sourceTree = "<group>"; };
+		6B5FA00C2E6EEC6200745DE1 /* PremiumAlertCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumAlertCell.swift; sourceTree = "<group>"; };
+		6B5FA00F2E701B9700745DE1 /* WhitelistDappProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhitelistDappProvider.swift; sourceTree = "<group>"; };
+		6B5FA0122E701BEB00745DE1 /* WhitelistDapp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhitelistDapp.swift; sourceTree = "<group>"; };
+		6B5FA0152E71287500745DE1 /* BlockchainListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockchainListView.swift; sourceTree = "<group>"; };
 		6B5FD7D12E40DCCC00FEF510 /* MarketVaultChartFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketVaultChartFactory.swift; sourceTree = "<group>"; };
 		6B5FD7D42E42004D00FEF510 /* MerkleSendRawTransactionJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleSendRawTransactionJsonRpc.swift; sourceTree = "<group>"; };
 		6B5FD7D72E42166C00FEF510 /* DestinationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationHelper.swift; sourceTree = "<group>"; };
@@ -5523,6 +5535,7 @@
 				ABC9A7FC41B9F98871246E0E /* ImageCell.swift */,
 				11B3587A6A05EFF1036F6C4B /* SecondaryButtonCell.swift */,
 				11B359CC2E1E7853CD1547B3 /* LogoHeaderCell.swift */,
+				6B5FA00C2E6EEC6200745DE1 /* PremiumAlertCell.swift */,
 				11B35FEC3027F45085959FBB /* NftDoubleCell.swift */,
 				11B35968F5DE9FDA6EC26FCD /* TextInputCell.swift */,
 				D0D5BCBF2976D3B300587FDB /* PsswordInputCell.swift */,
@@ -6179,6 +6192,7 @@
 		11B356605394189E9B5EBEE0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6B5FA0122E701BEB00745DE1 /* WhitelistDapp.swift */,
 				D01513D02D1EA6A400FD9816 /* SpamScanState.swift */,
 				D02C85A72D1A93A60096A84D /* SpamAddress.swift */,
 				6BE8A07D2ADE2F950012DE7F /* CurrencyValue.swift */,
@@ -6651,6 +6665,7 @@
 		11B35B0445A038D808DEE829 /* Providers */ = {
 			isa = PBXGroup;
 			children = (
+				6B5FA00F2E701B9700745DE1 /* WhitelistDappProvider.swift */,
 				11B35F7D3814B59092D32FF9 /* FeeCoinProvider.swift */,
 				11B35779E6353B98B298FF29 /* CurrentDateProvider.swift */,
 				11B3586FDC91E3742847B7E0 /* AppConfig.swift */,
@@ -8478,6 +8493,7 @@
 		ABC9A6073E7A8B2997B27997 /* Main */ = {
 			isa = PBXGroup;
 			children = (
+				6B5FA0152E71287500745DE1 /* BlockchainListView.swift */,
 				ABC9AE8A193F58021C411311 /* WalletConnectMainModule.swift */,
 				ABC9A3A694467493C6F4AACE /* WalletConnectMainViewController.swift */,
 				ABC9AEA1D717D8CED8462AB0 /* WalletConnectMainViewModel.swift */,
@@ -10084,6 +10100,7 @@
 				5046E672259C491100A941E5 /* InfoSeparatorHeaderView.swift in Sources */,
 				D084F6BF2BEB94F700407FA4 /* OutputSelectView2.swift in Sources */,
 				3C7B99D3D6AE0B1C0D8E5F09 /* UrlManager.swift in Sources */,
+				6B5FA00E2E6EEC6200745DE1 /* PremiumAlertCell.swift in Sources */,
 				58AAA3BE2D0DEF53CE6CEE97 /* EvmKitManager.swift in Sources */,
 				6B5F5E0F2C0C65F700E03EB2 /* MarketPlatformView.swift in Sources */,
 				58AAABE8E8374ED4211F610C /* Eip20Adapter.swift in Sources */,
@@ -10178,6 +10195,7 @@
 				11B35D11809FB5D34D8D6D3F /* BarPageControl.swift in Sources */,
 				11B3598A03285D980219B256 /* CheckboxCell.swift in Sources */,
 				11B358A6F7662B69D358069A /* SelfSizedSectionsTableView.swift in Sources */,
+				6B5FA0112E701B9F00745DE1 /* WhitelistDappProvider.swift in Sources */,
 				11B35B172B09C2017B389C07 /* AlertTitleCell.swift in Sources */,
 				11B356E555F3ACDA6324FA77 /* AlertItemCell.swift in Sources */,
 				6BBB92B12D10095300112409 /* SubscribePeriodSegmentView.swift in Sources */,
@@ -10772,6 +10790,7 @@
 				11B350DCAD95F45727869A56 /* EvmMethodLabel.swift in Sources */,
 				11B356B1E072D1621D38499E /* EvmAddressLabel.swift in Sources */,
 				11B35E2DA9242EAAAA9D99FC /* HsLabelProvider.swift in Sources */,
+				6B5FA0162E71287E00745DE1 /* BlockchainListView.swift in Sources */,
 				11B3554EB87730CEF6316191 /* EvmLabelManager.swift in Sources */,
 				11B352C0FB8BFE700B220E5B /* EvmLabelStorage.swift in Sources */,
 				11B35C5388370450DAF65C5B /* EvmUpdateStatus.swift in Sources */,
@@ -10857,6 +10876,7 @@
 				6BE57E792E339D17003C4C01 /* MerkleRpcBlockchain.swift in Sources */,
 				11B3503F5875A29E6949B13C /* EvmPrivateKeyService.swift in Sources */,
 				D36287CC2CA3E12100ADAF3B /* TonConnectApp.swift in Sources */,
+				6B5FA0132E701BF000745DE1 /* WhitelistDapp.swift in Sources */,
 				11B35F4CF3289335EF9004F1 /* ExtendedKeyViewController.swift in Sources */,
 				11B3591DF0CC1D367C1241AF /* ExtendedKeyModule.swift in Sources */,
 				11B35749EBFB7FE593BECE9E /* ExtendedKeyViewModel.swift in Sources */,
@@ -11670,6 +11690,7 @@
 				5046E671259C491000A941E5 /* InfoSeparatorHeaderView.swift in Sources */,
 				3C7B9BFD8EA7360907306675 /* UrlManager.swift in Sources */,
 				D084F6BE2BEB94F700407FA4 /* OutputSelectView2.swift in Sources */,
+				6B5FA00D2E6EEC6200745DE1 /* PremiumAlertCell.swift in Sources */,
 				58AAA745D76A13D06800BDD1 /* EvmKitManager.swift in Sources */,
 				58AAA82745E47084A2B18F95 /* Eip20Adapter.swift in Sources */,
 				6B5F5E0E2C0C65F700E03EB2 /* MarketPlatformView.swift in Sources */,
@@ -11764,6 +11785,7 @@
 				11B35A7DBF1AFB1FDDB01CE0 /* SelfSizedSectionsTableView.swift in Sources */,
 				11B357EAE56EFCA19EA87D68 /* AlertTitleCell.swift in Sources */,
 				11B35EAFACEA4EA6410E41B7 /* AlertItemCell.swift in Sources */,
+				6B5FA0102E701B9F00745DE1 /* WhitelistDappProvider.swift in Sources */,
 				6BBB92B02D10095300112409 /* SubscribePeriodSegmentView.swift in Sources */,
 				11B3557D484786A0D41E16AF /* AlertViewController.swift in Sources */,
 				D023D2672A24BBC6004F65B0 /* TronAddressParser.swift in Sources */,
@@ -12358,6 +12380,7 @@
 				ABC9A0248195A85CA00D6A13 /* ImageCell.swift in Sources */,
 				11B352FF1C3FA152E2EEFE67 /* EvmMethodLabel.swift in Sources */,
 				11B35FB7BEC8C0DA32C1F670 /* EvmAddressLabel.swift in Sources */,
+				6B5FA0172E71287E00745DE1 /* BlockchainListView.swift in Sources */,
 				D3AFAB032E45FF30004AB074 /* Component.swift in Sources */,
 				11B3535C10D649F8CD1BCDAF /* HsLabelProvider.swift in Sources */,
 				D3A580882BE4DAA2003953F4 /* EvmSendData.swift in Sources */,
@@ -12443,6 +12466,7 @@
 				11B3585E88319E5BBBB9CD3F /* EvmPrivateKeyModule.swift in Sources */,
 				D36287CD2CA3E12100ADAF3B /* TonConnectApp.swift in Sources */,
 				11B35FF02BADC6D832836C44 /* EvmPrivateKeyViewModel.swift in Sources */,
+				6B5FA0142E701BF000745DE1 /* WhitelistDapp.swift in Sources */,
 				D3AFAB152E460328004AB074 /* CellButtonStyle.swift in Sources */,
 				11B353F2788F7E8F42C5E03D /* EvmPrivateKeyViewController.swift in Sources */,
 				11B356B6EBCCF4754C7AF94E /* EvmPrivateKeyService.swift in Sources */,

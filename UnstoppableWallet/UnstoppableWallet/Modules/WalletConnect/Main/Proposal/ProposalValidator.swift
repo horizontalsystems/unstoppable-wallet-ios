@@ -5,8 +5,8 @@ class ProposalValidator {
     static func separateByNamespace(blockchains: [WalletConnectMainModule.BlockchainProposal]) -> [String: [WalletConnectMainModule.BlockchainProposal]] {
         var namespaces = [String: [WalletConnectMainModule.BlockchainProposal]]()
         for blockchain in blockchains {
-            if var namespace = namespaces[blockchain.item.namespace] {
-                namespace.append(blockchain)
+            if namespaces[blockchain.item.namespace] != nil {
+                namespaces[blockchain.item.namespace]?.append(blockchain)
             } else {
                 namespaces[blockchain.item.namespace] = [blockchain]
             }

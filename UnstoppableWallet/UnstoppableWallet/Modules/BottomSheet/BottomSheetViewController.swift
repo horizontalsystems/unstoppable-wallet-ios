@@ -156,6 +156,27 @@ class BottomSheetViewController: ThemeActionSheetController {
         )
     }
 
+    private func valueSection(index: Int, title: String, value: String) -> SectionProtocol {
+        Section(
+            id: "section-\(index)",
+            headerState: .margin(height: .margin12),
+            rows: [
+                CellBuilderNew.row(
+                    rootElement: .hStack([
+                        .textElement(text: .subhead2(title)),
+                        .textElement(text: .subhead1(value)),
+                    ]),
+                    tableView: tableView,
+                    id: "value-\(index)",
+                    height: .heightCell48,
+                    bind: { cell in
+                        cell.set(backgroundStyle: .bordered, isFirst: true, isLast: true)
+                    }
+                ),
+            ]
+        )
+    }
+
     private func contractAddressSection(index: Int, imageUrl: String, value: String, explorerUrl: String?) -> SectionProtocol {
         let backgroundStyle: BaseThemeCell.BackgroundStyle = .bordered
         let textFont: UIFont = .subhead1

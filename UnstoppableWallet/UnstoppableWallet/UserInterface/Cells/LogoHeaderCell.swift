@@ -3,7 +3,7 @@ import SnapKit
 import UIKit
 
 class LogoHeaderCell: UITableViewCell {
-    private static let logoSize: CGFloat = 72
+    private static let logoSize: CGFloat = 48
     private static let verticalMargin: CGFloat = .margin24
 
     private let logoImageView = UIImageView()
@@ -21,36 +21,39 @@ class LogoHeaderCell: UITableViewCell {
         contentView.addSubview(logoImageView)
         logoImageView.snp.makeConstraints { maker in
             maker.top.equalToSuperview().inset(Self.verticalMargin)
-            maker.leading.equalToSuperview().inset(CGFloat.margin24)
+            maker.centerX.equalToSuperview()
             maker.size.equalTo(Self.logoSize)
         }
 
         logoImageView.contentMode = .scaleAspectFit
-        logoImageView.cornerRadius = .cornerRadius16
+        logoImageView.cornerRadius = .cornerRadius8
         logoImageView.layer.cornerCurve = .continuous
         logoImageView.clipsToBounds = true
         logoImageView.backgroundColor = .clear
 
         contentView.addSubview(stackView)
         stackView.snp.makeConstraints { maker in
-            maker.leading.equalTo(logoImageView.snp.trailing).offset(CGFloat.margin16)
-            maker.trailing.equalToSuperview().inset(CGFloat.margin24)
-            maker.centerY.equalTo(logoImageView)
+            maker.leading.equalToSuperview().offset(CGFloat.margin32)
+            maker.trailing.equalToSuperview().inset(CGFloat.margin32)
+            maker.top.equalTo(logoImageView.snp.bottom).offset(Self.verticalMargin)
+            maker.bottom.equalToSuperview().inset(Self.verticalMargin)
         }
 
         stackView.axis = .vertical
-        stackView.spacing = .margin8
+        stackView.spacing = 1
 
         stackView.addArrangedSubview(titleLabel)
 
         titleLabel.numberOfLines = 2
+        titleLabel.textAlignment = .center
         titleLabel.font = .headline1
         titleLabel.textColor = .themeLeah
 
         stackView.addArrangedSubview(subtitleLabel)
 
         subtitleLabel.isHidden = true
-        subtitleLabel.font = .subhead2
+        subtitleLabel.textAlignment = .center
+        subtitleLabel.font = .subhead1
         subtitleLabel.textColor = .themeGray
     }
 
@@ -82,7 +85,9 @@ class LogoHeaderCell: UITableViewCell {
 }
 
 extension LogoHeaderCell {
-    static var height: CGFloat {
-        logoSize + verticalMargin * 2
+    static func height(title: String, url: String?, width: CGFloat) -> CGFloat {
+        logoSize + verticalMargin * 2 +
+            TextComponent.height(width: width - 2 * .margin32, font: .headline1, text: title) +
+            (url.map { TextComponent.height(width: width - 2 * .margin32, font: .subhead1, text: $0) + 1 } ?? 0) + verticalMargin
     }
 }
