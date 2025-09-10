@@ -61,6 +61,7 @@
 "alert.try_again" = "再试一次";
 "alert.disconnecting" = "正在断开连接";
 "alert.disconnected" = "已断开连接";
+"alert.connected" = "Connected";
 "alert.enabling" = "正在启用";
 "alert.enabled_coins" = "启用了 %@ 多硬币";
 "alert.sending" = "发送中";
@@ -1902,9 +1903,24 @@
 "wallet_connect.address" = "地址";
 "wallet_connect.network" = "網絡";
 "wallet_connect.list.pending_requests" = "待处理请求";
+"wallet_connect.main.connect" = "Connect to %@";
+"wallet_connect.main.connected" = "Connected to %@";
+"wallet_connect.main.premium_alert.title.deactivated" = "Attention!";
+"wallet_connect.main.premium_alert.title.not_available" = "Warning!";
+"wallet_connect.main.premium_alert.title.risky" = "Danger!";
+"wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Domain verification is unavailable. Upgrade to Premium to protect against unverified or phishing websites.";
+"wallet_connect.main.premium_alert.subtitle.risky" = "This website is not verified and may lead to phishing or loss of funds. Connecting is strongly discouraged.";
+"wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check unavailable. Connection possible but without domain safety confirmation.";
+"wallet_connect.scam_protection" = "詐騙防護";
+"wallet_connect.scam_protection.deactivated" = "Deactivated";
+"wallet_connect.scam_protection.risky" = "有风险";
+"wallet_connect.scam_protection.secure" = "Secure";
+"wallet_connect.scam_protection.not_available" = "不可用";
+"wallet_connect.networks" = "Networks";
+
 "wallet_connect.main.no_any_supported_chains" = "没有任何支持的链！";
 "wallet_connect.main.unsupported_chains" = "一些链是不支持的！";
-"wallet_connect.connect_description" = "点击批准，表示您允许此应用查看您的公开地址。这是保护您的数据免受潜在钓鱼风险威胁的重要安全步骤。";
+"wallet_connect.connect_description" = "By clicking connect, you allow this app to view your public address.";
 "wallet_connect.usage_description" = "您可以前往浏览器。在浏览器中进行交互时不要关闭此页面。";
 "wallet_connect.no_connection" = "无法建立连接。请重新连接。";
 "wallet_connect.button_reconnect" = "重新连接";
