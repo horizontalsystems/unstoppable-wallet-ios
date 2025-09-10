@@ -102,10 +102,10 @@ class WalletConnectListViewController: ThemeViewController {
         guard let account = Core.shared.accountManager.activeAccount else {
             return
         }
-        let viewController = WalletConnectMainModule.viewController(account: account, session: session, sourceViewController: self)
+        let viewController = WalletConnectMainModule.viewController(account: account, session: session, sourceViewController: self, viaPushing: true)
 
         stat(page: .walletConnect, event: .open(page: .walletConnectSession))
-        navigationController?.present(viewController, animated: true)
+        navigationController?.pushViewController(viewController, animated: true)
     }
 
     private func disableNewConnection(_ isDisabled: Bool) {
@@ -165,15 +165,18 @@ class WalletConnectListViewController: ThemeViewController {
                     component.text = viewItem.description
                 },
             ]),
-            .badge { component in
+            .text { component in
                 if let badge = viewItem.badge {
+                    component.setContentHuggingPriority(.defaultHigh, for: .horizontal)
                     component.isHidden = false
-                    component.badgeView.set(style: .medium)
-                    component.badgeView.text = badge
+                    component.font = .subhead1
+                    component.textColor = .themeJacob
+                    component.text = badge
                 } else {
                     component.isHidden = true
                 }
             },
+            .margin12,
             .image20 { component in
                 component.imageView.image = UIImage(named: "arrow_big_forward_20")
             },

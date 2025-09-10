@@ -61,6 +61,7 @@
 "alert.try_again" = "Try Again";
 "alert.disconnecting" = "Disconnecting";
 "alert.disconnected" = "Disconnected";
+"alert.connected" = "Connected";
 "alert.enabling" = "Enabling";
 "alert.enabled_coins" = "Enabled %@ more coins";
 "alert.sending" = "Sending";
@@ -1900,9 +1901,24 @@
 "wallet_connect.address" = "Address";
 "wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "Pending Requests";
+"wallet_connect.main.connect" = "Connect to %@";
+"wallet_connect.main.connected" = "Connected to %@";
+"wallet_connect.main.premium_alert.title.deactivated" = "Attention!";
+"wallet_connect.main.premium_alert.title.not_available" = "Warning!";
+"wallet_connect.main.premium_alert.title.risky" = "Danger!";
+"wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Domain verification is unavailable. Upgrade to Premium to protect against unverified or phishing websites.";
+"wallet_connect.main.premium_alert.subtitle.risky" = "This website is not verified and may lead to phishing or loss of funds. Connecting is strongly discouraged.";
+"wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check unavailable. Connection possible but without domain safety confirmation.";
+"wallet_connect.scam_protection" = "Scam Protection";
+"wallet_connect.scam_protection.deactivated" = "Deactivated";
+"wallet_connect.scam_protection.risky" = "Risky";
+"wallet_connect.scam_protection.secure" = "Secure";
+"wallet_connect.scam_protection.not_available" = "n/a";
+"wallet_connect.networks" = "Networks";
+
 "wallet_connect.main.no_any_supported_chains" = "No any supported chains!";
 "wallet_connect.main.unsupported_chains" = "Some chains are unsupported!";
-"wallet_connect.connect_description" = "By clicking approve, you allow this app to view your public address. This is an important security step to protect your data from potential phishing risks.";
+"wallet_connect.connect_description" = "By clicking connect, you allow this app to view your public address.";
 "wallet_connect.usage_description" = "You can go to the browser. Do not close this page while interacting in the browser.";
 "wallet_connect.no_connection" = "Failed to establish a connection. Try reconnecting again.";
 "wallet_connect.button_reconnect" = "Reconnect";

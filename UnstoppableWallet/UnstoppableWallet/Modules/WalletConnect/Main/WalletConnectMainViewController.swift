@@ -2,6 +2,7 @@ import RxCocoa
 import RxSwift
 import SectionsTableView
 import SnapKit
+import SwiftUI
 import UIExtensions
 import UIKit
 
@@ -37,14 +38,18 @@ class WalletConnectMainViewController: ThemeViewController {
     private let reconnectButton = PrimaryButton()
     private let cancelButton = PrimaryButton()
 
+    private let viaPushing: Bool
     private let tableView = SectionsTableView(style: .grouped)
 
     private var viewItem: WalletConnectMainViewModel.ViewItem?
+    private var headerState: WalletConnectMainViewModel.TitleState = .connect
+    private var whitelistState: WalletConnectMainModule.WhitelistState = .loading
 
-    init(viewModel: WalletConnectMainViewModel, requestViewFactory: IWalletConnectRequestViewFactory, sourceViewController: UIViewController?) {
+    init(viewModel: WalletConnectMainViewModel, requestViewFactory: IWalletConnectRequestViewFactory, sourceViewController: UIViewController?, viaPushing: Bool = false) {
         self.viewModel = viewModel
         self.requestViewFactory = requestViewFactory
         self.sourceViewController = sourceViewController
+        self.viaPushing = viaPushing
 
         super.init()
     }
@@ -70,6 +75,7 @@ class WalletConnectMainViewController: ThemeViewController {
         tableView.backgroundColor = .clear
 
         tableView.registerCell(forClass: LogoHeaderCell.self)
+        tableView.registerCell(forClass: PremiumAlertCell.self)
 
         view.addSubview(spinner)
         spinner.snp.makeConstraints { maker in
@@ -81,7 +87,7 @@ class WalletConnectMainViewController: ThemeViewController {
         buttonsHolder.add(to: self, under: tableView)
         buttonsHolder.addSubview(connectButton)
 
-        connectButton.set(style: .yellow)
+        connectButton.set(style: .gray)
         connectButton.setTitle("button.connect".localized, for: .normal)
         connectButton.addTarget(self, action: #selector(onTapConnect), for: .touchUpInside)
 
@@ -93,13 +99,13 @@ class WalletConnectMainViewController: ThemeViewController {
 
         buttonsHolder.addSubview(cancelButton)
 
-        cancelButton.set(style: .gray)
+        cancelButton.set(style: .transparent)
         cancelButton.setTitle("button.cancel".localized, for: .normal)
         cancelButton.addTarget(self, action: #selector(onTapCancel), for: .touchUpInside)
 
         buttonsHolder.addSubview(disconnectButton)
 
-        disconnectButton.set(style: .red)
+        disconnectButton.set(style: .gray)
         disconnectButton.setTitle("wallet_connect.button_disconnect".localized, for: .normal)
         disconnectButton.addTarget(self, action: #selector(onTapDisconnect), for: .touchUpInside)
 
@@ -136,6 +142,14 @@ class WalletConnectMainViewController: ThemeViewController {
         }
         subscribe(disposeBag, viewModel.closeVisibleDriver) { [weak self] in
             self?.syncCloseButton(visible: $0)
+        }
+        subscribe(disposeBag, viewModel.headerTitleStateDriver) { [weak self] state in
+            self?.headerState = state
+            self?.tableView.reload()
+        }
+        subscribe(disposeBag, viewModel.whitelistStateDriver) { [weak self] state in
+            self?.whitelistState = state
+            self?.tableView.reload()
         }
         subscribe(disposeBag, viewModel.viewItemDriver) { [weak self] in
             self?.viewItem = $0
@@ -191,7 +205,7 @@ class WalletConnectMainViewController: ThemeViewController {
     }
 
     private func syncCloseButton(visible: Bool) {
-        if visible {
+        if visible, !viaPushing {
             navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.close".localized, style: .plain, target: self, action: #selector(onTapClose))
         } else {
             navigationItem.rightBarButtonItem = nil
@@ -199,7 +213,11 @@ class WalletConnectMainViewController: ThemeViewController {
     }
 
     private func close() {
-        dismiss(animated: true)
+        if viaPushing {
+            navigationController?.popViewController(animated: true)
+        } else {
+            dismiss(animated: true)
+        }
     }
 
     // pending requests section
@@ -279,28 +297,132 @@ extension WalletConnectMainViewController: SectionsDataSource {
         )
     }
 
-    private func pendingRequestSection() -> SectionProtocol? {
+    private func pendingRequestSection(hasBottomMargin: Bool) -> SectionProtocol? {
         guard !pendingRequestViewItems.isEmpty else {
             return nil
         }
         return Section(id: "pending-requests",
                        headerState: tableView.sectionHeader(text: "wallet_connect.list.pending_requests".localized),
-                       footerState: .margin(height: .margin32),
+                       footerState: .margin(height: hasBottomMargin ? .margin16 : 0),
                        rows: pendingRequestViewItems.enumerated().map { index, viewItem in
                            pendingRequestCell(viewItem: viewItem, isFirst: index == 0, isLast: index == pendingRequestViewItems.count - 1)
                        })
     }
 
-    private func headerRow(imageUrl: String?, title: String) -> RowProtocol {
+    private func headerRow(imageUrl: String?, title: String, url: String) -> RowProtocol {
         Row<LogoHeaderCell>(
             id: "header",
             hash: "\(title)-\(imageUrl ?? "N/A")",
-            height: LogoHeaderCell.height,
+            dynamicHeight: { width in
+                LogoHeaderCell.height(title: title, url: url, width: width)
+            },
             bind: { cell, _ in
                 cell.title = title
+                cell.subtitle = url
                 cell.set(imageUrl: imageUrl)
             }
         )
+    }
+
+    private func premiumAlertRow() -> RowProtocol? {
+        guard whitelistState.showAlert else {
+            return nil
+        }
+
+        let state = whitelistState
+
+        return Row<PremiumAlertCell>(
+            id: "premium-alert",
+            hash: "premium-alert-\(whitelistState.rawValue)",
+            dynamicHeight: { width in
+                PremiumAlertCell.height(title: state.alertTitle, subtitle: state.alertSubtitle, width: width)
+            },
+            bind: { cell, _ in
+                cell.setTitle(title: state.alertTitle, color: state.alertTitleColor)
+                cell.subtitle = state.alertSubtitle
+                cell.setIcon(name: state.alertIcon, color: state.alertTitleColor)
+                cell.setBorder(color: state.alertTitleColor)
+            }
+        )
+    }
+
+    private func row(info: RowInfo, index: Int, isFirst: Bool, isLast: Bool) -> RowProtocol {
+        switch info {
+        case let .value(title, value, valueColor):
+            return tableView.universalRow48(
+                id: "value-\(index)",
+                title: .subhead2(title),
+                value: .subhead1(value, color: valueColor ?? .themeLeah),
+                hash: value,
+                isFirst: isFirst,
+                isLast: isLast
+            )
+        case let .scam(state):
+            var elements = [CellBuilderNew.CellElement]()
+            elements.append(.textElement(text: .subhead2("wallet_connect.scam_protection".localized)))
+            if let value = state.protectionValue {
+                elements.append(.textElement(text: .subhead1(value, color: state.protectionValueColor), parameters: .allCompression))
+            }
+            if let icon = state.protectionIcon {
+                elements.append(.margin12)
+                elements.append(
+                    .image20 { (component: ImageComponent) in
+                        component.imageView.image = UIImage(named: icon)
+                        component.imageView.tintColor = state.protectionValueColor
+                    }
+                )
+            }
+            if state == .loading {
+                elements.append(.spinner20 { _ in
+                    ()
+                })
+            }
+
+            var action: (() -> Void)?
+            if !viewModel.premiumEnabled {
+                action = {
+                    Coordinator.shared.presentPurchase(page: .aboutApp, trigger: .priceCloseTo)
+                }
+            }
+
+            return CellBuilderNew.row(
+                rootElement: .hStack(elements),
+                tableView: tableView,
+                id: "value-\(index)",
+                hash: state.rawValue,
+                height: .heightCell48,
+                autoDeselect: true,
+                bind: { cell in
+                    cell.set(backgroundStyle: .lawrence, isFirst: isFirst, isLast: isLast)
+                },
+                action: action,
+            )
+        case let .blockchains(blockchains):
+            let onlyOne = blockchains.count == 1
+            let accessory: CellBuilderNew.CellElement.AccessoryType = onlyOne ? .none : .dropdown
+            let value = onlyOne ? blockchains[0].blockchain.name : "\(blockchains.count)"
+
+            var action: (() -> Void)?
+            if !onlyOne {
+                let blockchains = blockchains.map(\.blockchain)
+                action = { [weak self] in
+                    let blockchainViewController = BlockchainListView(blockchains: blockchains).toNavigationViewController()
+                    self?.present(blockchainViewController, animated: true)
+                }
+            }
+
+            return tableView.universalRow48(
+                id: "value-\(index)",
+                title: .subhead2("wallet_connect.networks".localized),
+                value: .subhead1(value),
+                accessoryType: accessory,
+                hash: "\(blockchains.count)",
+                autoDeselect: true,
+                isFirst: isFirst,
+                isLast: isLast,
+                action: action
+            )
+        }
     }
 
     func buildSections() -> [SectionProtocol] {
@@ -310,48 +432,40 @@ extension WalletConnectMainViewController: SectionsDataSource {
         if let viewItem {
             if let dAppMeta = viewItem.dAppMeta {
                 sections.append(Section(id: "dapp-meta",
-                                        rows: [headerRow(imageUrl: dAppMeta.icon, title: dAppMeta.name)]))
+                                        rows: [headerRow(imageUrl: dAppMeta.icon, title: headerState.title(name: dAppMeta.name), url: dAppMeta.url)]))
             }
 
-            if let pendingRequestSection = pendingRequestSection() {
+            let premiumRow = premiumAlertRow()
+            if let pendingRequestSection = pendingRequestSection(hasBottomMargin: premiumRow == nil) {
                 sections.append(pendingRequestSection)
+            }
+
+            if let row = premiumRow {
+                sections.append(Section(id: "premium-alert", rows: [row]))
             }
 
             var rowInfos = [RowInfo]()
 
-            if let status = viewItem.status {
-                rowInfos.append(.value(title: "status".localized, value: status.title, valueColor: status.color))
-            }
-
-            if let dAppMeta = viewItem.dAppMeta {
-                rowInfos.append(.value(title: "wallet_connect.url".localized, value: dAppMeta.url, valueColor: nil))
-            }
+            rowInfos.append(.scam(whitelistState))
 
             if let accountName = viewItem.activeAccountName {
                 rowInfos.append(.value(title: "wallet_connect.active_account".localized, value: accountName, valueColor: nil))
             }
 
+            let noBlockchainCell = viewItem.blockchains.map(\.isEmpty) ?? true
             for (index, rowInfo) in rowInfos.enumerated() {
                 let isFirst = index == 0
-                let isLast = index == rowInfos.count - 1
+                let isLast = noBlockchainCell ? (index == rowInfos.count - 1) : false
 
-                switch rowInfo {
-                case let .value(title, value, valueColor):
-                    rows.append(
-                        tableView.universalRow48(
-                            id: "value-\(index)",
-                            title: .subhead2(title),
-                            value: .subhead1(value, color: valueColor ?? .themeLeah),
-                            hash: value,
-                            isFirst: isFirst,
-                            isLast: isLast
-                        )
-                    )
-                }
+                rows.append(row(info: rowInfo, index: index, isFirst: isFirst, isLast: isLast))
+            }
+
+            if let blockchains = viewItem.blockchains, !blockchains.isEmpty {
+                rows.append(row(info: .blockchains(blockchains), index: rows.count, isFirst: false, isLast: true))
             }
 
             if let hint = viewItem.hint {
-                rows.append(tableView.highlightedDescriptionRow(id: "hint_footer", text: hint))
+                rows.append(tableView.descriptionRow(id: "hint_footer", text: hint, font: .subhead1, textColor: .gray))
             }
         }
 
@@ -363,5 +477,7 @@ extension WalletConnectMainViewController: SectionsDataSource {
 extension WalletConnectMainViewController {
     enum RowInfo {
         case value(title: String, value: String, valueColor: UIColor?)
+        case scam(WalletConnectMainModule.WhitelistState)
+        case blockchains([WalletConnectMainViewModel.BlockchainViewItem])
     }
 }

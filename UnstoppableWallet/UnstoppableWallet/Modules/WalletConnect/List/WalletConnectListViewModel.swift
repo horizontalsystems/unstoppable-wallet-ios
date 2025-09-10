@@ -34,8 +34,6 @@ class WalletConnectListViewModel {
 
     private func sync(items: [WalletConnectListService.Item]) {
         let viewItems = items.map {
-            let description = $0.blockchains.map(\.shortName).joined(separator: ", ")
-
             var badge: String?
             if $0.requestCount != 0 {
                 badge = "\($0.requestCount)"
@@ -44,7 +42,7 @@ class WalletConnectListViewModel {
             return WalletConnectListViewModel.ViewItem(
                 id: $0.id,
                 title: ($0.appName != "") ? $0.appName : "Unnamed",
-                description: description,
+                description: $0.appUrl,
                 badge: badge,
                 imageUrl: $0.appIcons.last
             )

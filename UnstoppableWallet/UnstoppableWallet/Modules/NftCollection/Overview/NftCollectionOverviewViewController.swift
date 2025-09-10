@@ -145,7 +145,9 @@ extension NftCollectionOverviewViewController: SectionsDataSource {
     private func logoHeaderRow(viewItem: NftCollectionOverviewViewModel.ViewItem) -> RowProtocol {
         Row<LogoHeaderCell>(
             id: "logo-header",
-            height: LogoHeaderCell.height,
+            dynamicHeight: { width in
+                LogoHeaderCell.height(title: viewItem.name, url: nil, width: width)
+            },
             bind: { cell, _ in
                 cell.set(imageUrl: viewItem.logoImageUrl)
                 cell.title = viewItem.name
