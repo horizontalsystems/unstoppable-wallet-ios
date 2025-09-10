@@ -61,6 +61,7 @@
 "alert.try_again" = "다시 시도하십시오.";
 "alert.disconnecting" = "연결을 끊는 중...";
 "alert.disconnected" = "연결 해제";
+"alert.connected" = "Connected";
 "alert.enabling" = "활성화 중";
 "alert.enabled_coins" = "활성화된 %@ 더 많은 코인";
 "alert.sending" = "전송중";
@@ -1903,9 +1904,24 @@
 "wallet_connect.address" = "주소";
 "wallet_connect.network" = "회로망";
 "wallet_connect.list.pending_requests" = "보류 중인 요청";
+"wallet_connect.main.connect" = "Connect to %@";
+"wallet_connect.main.connected" = "Connected to %@";
+"wallet_connect.main.premium_alert.title.deactivated" = "Attention!";
+"wallet_connect.main.premium_alert.title.not_available" = "Warning!";
+"wallet_connect.main.premium_alert.title.risky" = "Danger!";
+"wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Domain verification is unavailable. Upgrade to Premium to protect against unverified or phishing websites.";
+"wallet_connect.main.premium_alert.subtitle.risky" = "This website is not verified and may lead to phishing or loss of funds. Connecting is strongly discouraged.";
+"wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check unavailable. Connection possible but without domain safety confirmation.";
+"wallet_connect.scam_protection" = "사기 방지";
+"wallet_connect.scam_protection.deactivated" = "Deactivated";
+"wallet_connect.scam_protection.risky" = "위험";
+"wallet_connect.scam_protection.secure" = "Secure";
+"wallet_connect.scam_protection.not_available" = "해당 없음 ";
+"wallet_connect.networks" = "Networks";
+
 "wallet_connect.main.no_any_supported_chains" = "지원되는 체인이 없습니다!";
 "wallet_connect.main.unsupported_chains" = "일부 체인은 지원되지 않습니다!";
-"wallet_connect.connect_description" = "승인을 눌러 이 앱이 귀하의 공공 주소를 볼 수 있도록 허용하십시오. 이것은 잠재적인 피싱 위험으로부터 데이터를 보호하기 위한 중요한 보안 단계 입니다.";
+"wallet_connect.connect_description" = "By clicking connect, you allow this app to view your public address.";
 "wallet_connect.usage_description" = "브라우저로 이동하십시오. 브라우저에서 상호 작용하는 동안에는 이 페이지를 닫지 마십시오.";
 "wallet_connect.no_connection" = "연결을 설정하지 못했습니다. 다시 연결해 보세요.";
 "wallet_connect.button_reconnect" = "재연결";
