@@ -362,6 +362,7 @@
 "balance.token.transparent.info.description" = "Прозрачный баланс в данный момент недоступен для использования в нашем кошельке. Однако эти средства могут быть потрачены через другие кошельки, поддерживающие адреса формата t-address.";
 "balance.token.shield" = "Shield";
 
+"balance.token.receive_address" = "Receive Address";
 "balance.token.staked" = "Staked";
 "balance.token.staked.info.title" = "Staked title";
 "balance.token.staked.info.description" = "Staked Description Text";
