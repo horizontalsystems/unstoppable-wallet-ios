@@ -360,6 +360,7 @@
 "balance.token.transparent.info.description" = "透明餘額目前無法在我們的錢包中使用。但其他支援 t-address 的錢包可以花費這些資金。";
 "balance.token.shield" = "屏蔽";
 
+"balance.token.receive_address" = "Receive Address";
 "balance.token.staked" = "已关注";
 "balance.token.staked.info.title" = "关注的标题";
 "balance.token.staked.info.description" = "相关的描述文本";
