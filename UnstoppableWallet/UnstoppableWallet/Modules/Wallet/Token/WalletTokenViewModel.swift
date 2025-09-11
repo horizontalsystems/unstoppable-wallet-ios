@@ -9,8 +9,10 @@ class WalletTokenViewModel: ObservableObject {
     private let cloudBackupManager = Core.shared.cloudBackupManager
     private let balanceHiddenManager = Core.shared.balanceHiddenManager
     private let appManager = Core.shared.appManager
+    private let reachabilityManager = Core.shared.reachabilityManager
 
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     let wallet: Wallet
 
@@ -19,9 +21,11 @@ class WalletTokenViewModel: ObservableObject {
     @Published var balanceData: BalanceData
     @Published var state: AdapterState
     @Published var priceItem: WalletCoinPriceService.Item?
+    @Published private(set) var isReachable: Bool = true
 
     init(wallet: Wallet) {
         self.wallet = wallet
+        isReachable = reachabilityManager.isReachable
         walletService = WalletServiceFactory().walletService(account: wallet.account)
 
         balanceHidden = balanceHiddenManager.balanceHidden
@@ -45,6 +49,11 @@ class WalletTokenViewModel: ObservableObject {
                 self?.balanceHidden = $0
             })
             .disposed(by: disposeBag)
+
+        reachabilityManager.$isReachable
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.isReachable = $0 }
+            .store(in: &cancellables)
     }
 }
 

@@ -29,9 +29,17 @@ struct WalletTokenTopView: View {
                         }
                     }
                 }
+                .padding(.bottom, .margin24)
+            } else {
+                Button(action: {
+                    viewModel.onTapReceive()
+                }) {
+                    WatchAddressView(wallet: viewModel.wallet)
+                        .padding(.vertical, .margin16)
+                }
             }
         }
-        .padding(.vertical, .margin24)
+        .padding(.top, .margin24)
         .padding(.horizontal, .margin16)
         .background(Color.themeTyler)
         .listRowBackground(Color.clear)
@@ -67,8 +75,19 @@ struct WalletTokenTopView: View {
             return BalanceHiddenManager.placeholder
         }
 
+        var colorStyle: ColorStyle = .primary
+        var dimmed = false
+        switch viewModel.state {
+        case .synced:
+            ()
+        case .connecting, .syncing, .customSyncing:
+            dimmed = true
+        case .notSynced, .stopped:
+            colorStyle = .secondary
+        }
+
         if let formatted = ValueFormatter.instance.formatFull(value: viewModel.balanceData.total, decimalCount: viewModel.wallet.decimals, symbol: viewModel.wallet.coin.code) {
-            return ComponentText(text: formatted, dimmed: viewModel.state != .synced)
+            return ComponentText(text: formatted, colorStyle: colorStyle, dimmed: dimmed)
         }
 
         return "----"

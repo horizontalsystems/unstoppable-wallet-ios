@@ -7,6 +7,7 @@ class TransactionsViewModel: ObservableObject {
 
     private let walletManager = Core.shared.walletManager
     private let adapterManager = Core.shared.transactionAdapterManager
+    private let reachabilityManager = Core.shared.reachabilityManager
     private let balanceHiddenManager = Core.shared.balanceHiddenManager
     private let amountRoundingManager = Core.shared.amountRoundingManager
     private let contactLabelService = TransactionsContactLabelService(contactManager: Core.shared.contactManager)
@@ -20,6 +21,7 @@ class TransactionsViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     @Published private(set) var syncing: Bool = false
+    @Published private(set) var isReachable: Bool = true
     @Published private(set) var sections: [Section] = []
 
     @Published var typeFilter: TransactionTypeFilter = .all {
@@ -80,6 +82,8 @@ class TransactionsViewModel: ObservableObject {
 
     init(transactionFilter: TransactionFilter = .init()) {
         self.transactionFilter = transactionFilter
+        isReachable = reachabilityManager.isReachable
+
         viewItemFactory = TransactionsViewItemFactory(contactLabelService: contactLabelService)
 
         subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] _ in self?.syncPoolGroup() }
@@ -88,10 +92,16 @@ class TransactionsViewModel: ObservableObject {
         subscribe(disposeBag, nftMetadataService.assetsBriefMetadataObservable) { [weak self] in self?.handle(assetsBriefMetadata: $0) }
         subscribe(disposeBag, contactLabelService.stateObservable) { [weak self] _ in self?.reportItemData() }
         subscribe(disposeBag, balanceHiddenManager.balanceHiddenObservable) { [weak self] _ in self?.reportItemData() }
+
         amountRoundingManager
             .amountRoundingPublisher
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in self?.reportItemData() }
+            .store(in: &cancellables)
+
+        reachabilityManager.$isReachable
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.isReachable = $0 }
             .store(in: &cancellables)
 
         __syncPoolGroup()
@@ -415,6 +425,10 @@ class TransactionsViewModel: ObservableObject {
 extension TransactionsViewModel {
     var transactionListStatus: TransactionListStatus {
         if sections.isEmpty {
+            if !isReachable {
+                return .notReachable
+            }
+
             return syncing ? .loading : .empty
         } else {
             return .show
@@ -552,5 +566,12 @@ struct TransactionListStatus: Equatable {
         icon: "warning_filled",
         title: nil,
         subtitle: "transactions.empty_text".localized
+    )
+
+    static let notReachable = TransactionListStatus(
+        id: "not_reachable",
+        icon: "globe_error",
+        title: nil,
+        subtitle: "alert.no_internet".localized
     )
 }
