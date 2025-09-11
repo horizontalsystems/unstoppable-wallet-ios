@@ -1801,6 +1801,8 @@
 		6B5FA0142E701BF000745DE1 /* WhitelistDapp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FA0122E701BEB00745DE1 /* WhitelistDapp.swift */; };
 		6B5FA0162E71287E00745DE1 /* BlockchainListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FA0152E71287500745DE1 /* BlockchainListView.swift */; };
 		6B5FA0172E71287E00745DE1 /* BlockchainListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FA0152E71287500745DE1 /* BlockchainListView.swift */; };
+		6B5FA0192E72C21900745DE1 /* WatchAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FA0182E72C21400745DE1 /* WatchAddressView.swift */; };
+		6B5FA01A2E72C21900745DE1 /* WatchAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FA0182E72C21400745DE1 /* WatchAddressView.swift */; };
 		6B5FD7D22E40DCD800FEF510 /* MarketVaultChartFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FD7D12E40DCCC00FEF510 /* MarketVaultChartFactory.swift */; };
 		6B5FD7D32E40DCD800FEF510 /* MarketVaultChartFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FD7D12E40DCCC00FEF510 /* MarketVaultChartFactory.swift */; };
 		6B5FD7D52E42005D00FEF510 /* MerkleSendRawTransactionJsonRpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FD7D42E42004D00FEF510 /* MerkleSendRawTransactionJsonRpc.swift */; };
@@ -4439,6 +4441,7 @@
 		6B5FA00F2E701B9700745DE1 /* WhitelistDappProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhitelistDappProvider.swift; sourceTree = "<group>"; };
 		6B5FA0122E701BEB00745DE1 /* WhitelistDapp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WhitelistDapp.swift; sourceTree = "<group>"; };
 		6B5FA0152E71287500745DE1 /* BlockchainListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlockchainListView.swift; sourceTree = "<group>"; };
+		6B5FA0182E72C21400745DE1 /* WatchAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchAddressView.swift; sourceTree = "<group>"; };
 		6B5FD7D12E40DCCC00FEF510 /* MarketVaultChartFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketVaultChartFactory.swift; sourceTree = "<group>"; };
 		6B5FD7D42E42004D00FEF510 /* MerkleSendRawTransactionJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleSendRawTransactionJsonRpc.swift; sourceTree = "<group>"; };
 		6B5FD7D72E42166C00FEF510 /* DestinationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationHelper.swift; sourceTree = "<group>"; };
@@ -8223,6 +8226,7 @@
 		ABC9A15DEE3E0185266FF14F /* Token */ = {
 			isa = PBXGroup;
 			children = (
+				6B5FA0182E72C21400745DE1 /* WatchAddressView.swift */,
 				6B93AFD72E67138700A55120 /* ViewWithTransactionList.swift */,
 				6B93AFD42E66C46100A55120 /* WalletInfoView.swift */,
 				D371A23A2E5C36F900D7D7F6 /* WalletTokenTopView.swift */,
@@ -11296,6 +11300,7 @@
 				ABC9A0B37693470DAD0FFE20 /* WalletConnectMainService.swift in Sources */,
 				11B3528E5D5EF27D8B64E087 /* BtcBlockchainSettingsView.swift in Sources */,
 				D3AFAAEE2E4205C4004AB074 /* ListHeader.swift in Sources */,
+				6B5FA01A2E72C21900745DE1 /* WatchAddressView.swift in Sources */,
 				11B3523397D1FA961BFE9967 /* ClickableRow.swift in Sources */,
 				11B356C983C2A2B552D214A4 /* ListSectionFooter.swift in Sources */,
 				11B35C7425B861D2F32384E8 /* ListSectionHeader.swift in Sources */,
@@ -12886,6 +12891,7 @@
 				ABC9A2559D001CA67E8F10C7 /* WalletConnectMainService.swift in Sources */,
 				11B3583BA552486FB2141F63 /* BtcBlockchainSettingsView.swift in Sources */,
 				11B35076A96AD17809CE1F62 /* ClickableRow.swift in Sources */,
+				6B5FA0192E72C21900745DE1 /* WatchAddressView.swift in Sources */,
 				11B355B94EB2D73559DF2AC0 /* ListSectionFooter.swift in Sources */,
 				6B4587452E27B20E008F87E7 /* DonateAddressesView.swift in Sources */,
 				11B35CDC811A92DFAAF2C923 /* ListSectionHeader.swift in Sources */,

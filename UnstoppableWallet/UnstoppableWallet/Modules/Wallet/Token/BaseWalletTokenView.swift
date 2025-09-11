@@ -28,10 +28,12 @@ struct BaseWalletTokenView<Content: View>: View {
                 HStack(spacing: 8) {
                     switch viewModel.state {
                     case .notSynced:
-                        Button(action: {
-                            Coordinator.shared.presentBalanceError(wallet: viewModel.wallet, state: viewModel.state)
-                        }) {
-                            Image("warning_filled").icon(colorStyle: .red)
+                        if viewModel.isReachable {
+                            Button(action: {
+                                Coordinator.shared.presentBalanceError(wallet: viewModel.wallet, state: viewModel.state)
+                            }) {
+                                Image("warning_filled").icon(colorStyle: .red)
+                            }
                         }
                     case let .syncing(progress, _), let .customSyncing(_, _, progress):
                         ProgressView(value: max(0.1, Float(progress ?? 10) / 100))
