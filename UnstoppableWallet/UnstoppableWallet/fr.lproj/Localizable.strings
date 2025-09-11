@@ -360,6 +360,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.token.transparent.info.description" = "Le solde transparent ne peut pas être utilisé dans notre portefeuille pour le moment. Mais ces fonds peuvent être dépensés via d’autres portefeuilles prenant en charge les adresses t (t-address)";
 "balance.token.shield" = "Shield";
 
+"balance.token.receive_address" = "Receive Address";
 "balance.token.staked" = "Stakée";
 "balance.token.staked.info.title" = "Titre de la consommation";
 "balance.token.staked.info.description" = "Texte de description de prise";
