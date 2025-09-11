@@ -360,6 +360,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance.token.transparent.info.description" = "Der transparente Saldo kann derzeit in unserer Wallet nicht verwendet werden. Diese Mittel können jedoch von anderen Wallets mit T-Address-Unterstützung ausgegeben werden";
 "balance.token.shield" = "Shield";
 
+"balance.token.receive_address" = "Receive Address";
 "balance.token.staked" = "Absteckung";
 "balance.token.staked.info.title" = "Absteckter Titel";
 "balance.token.staked.info.description" = "Absteckungstext";
