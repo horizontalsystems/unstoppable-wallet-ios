@@ -360,6 +360,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.token.transparent.info.description" = "O saldo transparente não pode ser utilizado nesta carteira no momento. No entanto, esses fundos podem ser gastos em outras carteiras que suportam endereços t-address";
 "balance.token.shield" = "Shield";
 
+"balance.token.receive_address" = "Receive Address";
 "balance.token.staked" = "Investido";
 "balance.token.staked.info.title" = "Título Implantado";
 "balance.token.staked.info.description" = "Texto com Descrição Implantada";
