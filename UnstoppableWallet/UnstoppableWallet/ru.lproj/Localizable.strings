@@ -161,7 +161,7 @@
 "restore_type.cloud.title" = "iCloud";
 "restore_type.file.title" = "из файлов";
 
-"restore_type.recovery.description" = "Импорт с помощью фразы восстановления или приватного ключа.";
+"restore_type.recovery.description" = "Import a wallet using a recovery phrase or a private key.";
 "restore_type.cloud.description" = "Импорт из файла резервной копии в вашем keychain.";
 "restore_type.file.description" = "Импортируйте файл резервной копии из локальной папки.";
 
@@ -240,7 +240,7 @@
 // Backup
 
 "backup.title" = "Фраза восстановления";
-"backup.description" = "Запишите эти слова в правильном порядке и храните их в безопасном месте";
+"backup.description" = "Write these words down in order and keep them safe.";
 "backup.tap_to_show" = "Нажмите, чтобы показать фразу восстановления";
 "backup.passphrase" = "Кодовая фраза";
 "backup.verify" = "Подтвердить";
@@ -262,7 +262,7 @@
 
 "backup_prompt.backup_recovery_phrase" = "Резервная копия";
 "backup_prompt.backup_required" = "Необходима резервная копия";
-"backup_prompt.warning" = "Создайте резервную копию вашей фразы восстановления и пароля, которые позволят вам восстановить ваш кошелек, если телефон потерян, украден, сломал и т.д.";
+"backup_prompt.warning" = "Create a backup of your recovery phrase and the associated passphrase. These will allow you to restore your wallet if your phone is lost, stolen, or damaged.";
 "backup_prompt.backup" = "Резервная копия";
 "backup_prompt.backup_manual" = "Ручное резервное копирование";
 "backup_prompt.backup_cloud" = "Резерв. копирование в iCloud";
@@ -481,7 +481,7 @@
 "send.hodler_locktime_off" = "Выкл.";
 "send.hodler_error.unsupported_address" = "TimeLock работает только при отправке на платёжные адреса, начинающиеся с 1... (также известных как BIP44 адреса)";
 "send.fee_info.title" = "Комиссия";
-"send.fee_info.description" = "Блокчейны требуют от пользователей уплачивать сетевые комиссии при отправке транзакций. Комиссии выше, когда в сети происходит больше транзакций.\n\nКошелек %@ оценивает комиссию на основе текущей активности блокчейна и рекомендует оптимальное значение, чтобы транзакция была обработана в разумное время.\n\nРекомендуемая ставка комиссии показана как количество сатоши, которое пользователь должен заплатить за один байт транзакции. Таким образом, общая комиссия зависит от общего размера транзакции, который измеряется в байтах.\n\nПользователи могут использовать предоставленные элементы управления для увеличения или уменьшения значения ставки комиссии. Изменение ставки комиссии влияет на общую комиссию за транзакцию, которую пользователь заплатит.\n\nУстановка ставки комиссии ниже рекомендуемого значения может привести к тому, что транзакция будет ожидать обработки в течение часов или будет отклонена. Чем ниже значение, тем дольше будет проходить подтверждение транзакции. Для транзакций, где важен приоритет, рекомендуется установить более высокую ставку комиссии.";
+"send.fee_info.description" = "When sending a transaction, you must pay a network fee. The busier the network, the higher the fee.\n\nUnstoppable Wallet suggests an optimal fee to help your transaction confirm in a reasonable time. You can increase or decrease this value.\n\nSetting the fee too low may cause your transaction to stay pending for a long time or even be rejected. For faster confirmation, use a higher fee.";
 "send.transaction_inputs_outputs_info.title" = "Вводы / выводы транзакций";
 "send.transaction_inputs_outputs_info.description" = "Большинство транзакций Bitcoin, а также транзакций в подобных криптовалютах, включая Bitcoin Cash, Dash и Litecoin, создают два выхода. Один выход - это сумма, которая идет получателю, а другой - это выход сдачи, который возвращается отправителю. Способ, которым большинство кошельков строят транзакции, делает легким понимание третьей стороной, какой из выходов отправляется получателю, а какой - сдача, возвращаемая отправителю. Поскольку выход, возвращаемый отправителю, затем используется в будущих транзакциях, становится явным соединение между этими двумя транзакциями.\n\nКошелек %@ реализует меры для усиления защиты от попыток установить, какой выход идет куда.\n\nДля пользователей %@ доступны два варианта:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Перемешать";
@@ -666,7 +666,7 @@
 "swap.quotes.best_price" = "Лучшая цена";
 
 "swap.allowance" = "Разрешение";
-"swap.allowance.description" = "Сумма, которую биржа может потратить от имени пользователя при выполнении обмена токенов. Для осуществления фактической операции обмена необходимо предварительно установить достаточное разрешение для последующей транзакции.";
+"swap.allowance.description" = "Allowance is the amount you let the exchange use on your behalf for swaps. Before making a swap, you first need to approve an allowance transaction.";
 "swap.pending_allowance" = "Ожидающие разрешения";
 "swap.approve" = "Разрешить";
 "swap.approving" = "Разрешение";
@@ -697,10 +697,10 @@
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "Допустимое отклонение";
-"swap.advanced_settings.slippage.footer" = "Ваша транзакция будет отменена, если цена изменится в неблагоприятную сторону более чем на этот процент";
+"swap.advanced_settings.slippage.footer" = "If the price moves beyond this percentage, the swap won’t go through.";
 "swap.advanced_settings.deadline" = "Срок выполнения транзакции";
 "swap.advanced_settings.deadline.footer" = "Ваша транзакция будет отменена, если она останется в ожидании дольше этого времени.";
-"swap.advanced_settings.recipient.footer" = "После операции обмена сумма будет переведена на указанный адрес";
+"swap.advanced_settings.recipient.footer" = "The swapped amount will be sent to the specified address.";
 "swap.advanced_settings.deadline_minute" = "%@ мин!";
 "swap.advanced_settings.recipient_address" = "Адрес получателя";
 "swap.advanced_settings.recipient_address.to" = "Кому";
@@ -1350,7 +1350,7 @@
 "transactions.tab_bar_item" = "Транзакции";
 "transactions.filter_all" = "Все";
 "transactions.syncing_placeholder" = "Please wait for the sync to finish.";
-"transactions.empty_text" = "У вас ещё нет незавершенных или прошлых транзакций";
+"transactions.empty_text" = "No pending or past transactions yet.";
 "transactions.pending" = "В обработке";
 "transactions.processing" = "В процессе";
 "transactions.completed" = "Завершено";
@@ -1564,11 +1564,11 @@
 "settings_security.disable_passcode" = "Отключить код доступа";
 "settings_security.auto_lock" = "Блокировка";
 "settings_security.balance_auto_hide" = "Автоскрытие баланса";
-"settings_security.balance_auto_hide.description" = "Автоматически скрывает баланс при открытии приложения, независимо от предыдущих настроек.";
+"settings_security.balance_auto_hide.description" = "Automatically hides balance every time the app is opened.";
 "settings_security.enable_duress_mode" = "Установить режим Duress";
 "settings_security.edit_duress_passcode" = "Изменить Duress код";
 "settings_security.disable_duress_mode" = "Отключить Duress код";
-"settings_security.duress_mode.description" = "Специализированный режим, разработанный для обеспечения безопасности выбранных кошельков в условиях принуждения.";
+"settings_security.duress_mode.description" = "A special mode that protects selected wallets in case of coercion.";
 
 "biometry.off" = "Выкл.";
 "biometry.manual" = "Вручную";
@@ -1683,9 +1683,9 @@
 // Settings -> Privacy
 
 "settings.privacy" = "Конфиденциальность";
-"settings.privacy.description" = "%@ не собирает персональные данные, которые могут раскрывать вашу частную информацию, такую как балансы монет или адреса. Мы собираем некоторую статистику использования интерфейса исключительно для понимания нашей пользовательской базы и тенденций использования приложения. Эта функция может быть отключена по вашему желанию.";
+"settings.privacy.description" = "%@ doesn’t collect personal data like your balances or wallet addresses. We only use anonymous data to improve the app.";
 "settings.privacy.allow" = "Поделиться данными UI";
-"settings.privacy.allow.description" = "Эта настройка позволяет отключить аналитику UI/UX и обеспечить полную конфиденциальность.";
+"settings.privacy.allow.description" = "This setting lets you turn off analytics and keep your activity fully private.";
 
 // Settings -> Appearance
 
@@ -1734,14 +1734,14 @@
 
 // Settings -> Support
 
-"settings.vip_support.description" = "Получите эксклюзивный доступ к нашей VIP-группе, где премиальные пользователи и команда Unstoppable Wallet работают сообща. Получайте прямую поддержку, обсуждайте будущие обновления и помогайте формировать развитие кошелька.";
+"settings.vip_support.description" = "Join our VIP Group to get direct support, take part in discussions about upcoming updates, and connect more closely with the Unstoppable team.";
 "settings.vip_support.start_chat" = "Присоединиться к VIP-группе";
 
 // Settings -> Contacts
 
 "contacts.title" = "Контакты";
 "contacts.list.search_placeholder" = "Поиск по имени";
-"contacts.list.not_found" = "У вас нет добавленных контактов";
+"contacts.list.not_found" = "No contacts added yet";
 "contacts.list.not_found_search" = "Ничего не найдено";
 "contacts.add_new_contact" = "Добавить новый контакт";
 "contacts.update_contact.already_has_address" = "Выбранный контакт уже имеет адрес на %@. Это действие заменит адрес %@ на %@.";
@@ -1842,7 +1842,7 @@
 "create_wallet.passphrase" = "Кодовая фраза";
 "create_wallet.input.passphrase" = "Кодовая фраза";
 "create_wallet.input.confirm" = "Подтвердить";
-"create_wallet.passphrase_description" = "Think of passphrases as your wallet's secret handshake. If you ever need to bring back a lost wallet, you'll need the recovery phrase and this passphrase. Plus, with just one mnemonic, you can unlock a bunch of multi-coin wallets with different passphrases. Neat, right?";
+"create_wallet.passphrase_description" = "Passphrases provide an additional layer of security for wallets.When restoring a wallet protected by a passphrase, the user must provide both the recovery phrase and the passphrase.\n\nPassphrases also allow users to create multiple independent multi-coin wallets from the same mnemonic, simply by using different passphrases.";
 "create_wallet.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
 "create_wallet.error.forbidden_symbols" = "Hold on there, cowboy! Let's stick to the symbols we know and love::A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "Hmm, your passphrase confirmations aren't matching. Let's try that again.";
@@ -2137,7 +2137,7 @@
 ";
 
 "fee_settings.network_fee" = "Комиссия";
-"fee_settings.network_fee.info" = "Ориентировочная стоимость отправки данной транзакции по сети.";
+"fee_settings.network_fee.info" = "The estimated cost of processing this transaction on the blockchain.";
 "fee_settings.l1_fee" = "L1 комиссия";
 "fee_settings.l1_fee.info" = "Оценочная стоимость отправки указанной транзакции по сети уровня 1.";
 "fee_settings.gas_limit" = "Gas Limit";
@@ -2410,7 +2410,7 @@
 
 "address_checker.title" = "Проверка адреса";
 "address_checker.recipient_check" = "Проверка получателя";
-"address_checker.recipient_check.description" = "Проверяет адрес получателя на наличие рисков перед отправкой.";
+"address_checker.recipient_check.description" = "Scans the recipient address for security risks prior to sending.";
 "address_checker.check_address" = "Проверить адрес";
 "address_checker.check_address.description" = "Позволяет проверить адрес на наличие санкций и в базах черных списков.";
 
