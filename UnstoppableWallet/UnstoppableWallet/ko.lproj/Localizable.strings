@@ -358,6 +358,7 @@
 "balance.token.transparent.info.description" = "透明余额目前无法在本钱包中使用，但支持 t-address 的其他钱包可以花费这笔资金。";
 "balance.token.shield" = "차폐(Shield)";
 
+"balance.token.receive_address" = "Receive Address";
 "balance.token.staked" = "판돈";
 "balance.token.staked.info.title" = "스테이크 타이틀";
 "balance.token.staked.info.description" = "측설 설명 텍스트";
