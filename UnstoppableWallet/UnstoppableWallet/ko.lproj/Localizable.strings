@@ -157,7 +157,7 @@
 "restore_type.cloud.title" = "아이클라우드에서";
 "restore_type.file.title" = "파일에서";
 
-"restore_type.recovery.description" = "이 문구는 복구 문구 또는 개인 키를 사용하여 가져올 수 있습니다.";
+"restore_type.recovery.description" = "Import a wallet using a recovery phrase or a private key.";
 "restore_type.cloud.description" = "키체인의 백업 파일에서 가져옵니다.";
 "restore_type.file.description" = "로컬 폴더에서 백업 파일을 가져오십시오.";
 
@@ -236,7 +236,7 @@
 // Backup
 
 "backup.title" = "복구 문구";
-"backup.description" = "이 단어들을 올바른 순서로 기록하고 안전한 장소에 보관하십시오";
+"backup.description" = "Write these words down in order and keep them safe.";
 "backup.tap_to_show" = "탭하여 복구 문구 표시";
 "backup.passphrase" = "암호문구";
 "backup.verify" = "확인하기";
@@ -258,7 +258,7 @@
 
 "backup_prompt.backup_recovery_phrase" = "백업용 지갑";
 "backup_prompt.backup_required" = "백업이 필요합니다";
-"backup_prompt.warning" = "휴대전화 분실, 도난, 파손 등의 경우 지갑을 복구할 수 있도록 복구 문구 및 관련 비밀번호의 백업 사본을 만드십시오.";
+"backup_prompt.warning" = "Create a backup of your recovery phrase and the associated passphrase. These will allow you to restore your wallet if your phone is lost, stolen, or damaged.";
 "backup_prompt.backup" = "백업";
 "backup_prompt.backup_manual" = "수동으로 백업합니다";
 "backup_prompt.backup_cloud" = "iCloud에 백업";
@@ -477,7 +477,7 @@
 "send.hodler_locktime_off" = "끄기";
 "send.hodler_error.unsupported_address" = "P2PKH (1으로 시작하는) 주소만 시간 잠금이 가능합니다.";
 "send.fee_info.title" = "수수료율";
-"send.fee_info.description" = "블록체인은 사용자가 거래를 보낼 때 네트워크 수수료를 지불하도록 요구합니다. 네트워크에서 많은 거래가 이루어질 때 수수료가 더 높아집니다.\n\n%@ 지갑은 현재 블록체인 활동을 기반으로 수수료를 추정하고 거래가 합리적인 시간 내에 처리되도록 최적의 값을 권장합니다.\n\n권장 수수료율은 사용자가 거래의 단일 바이트에 대해 지불해야 하는 사토시(satoshi) 금액으로 표시됩니다. 따라서 총 수수료는 바이트 단위로 측정되는 거래의 총 크기에 따라 달라집니다.\n\n사용자는 제공된 컨트롤을 사용하여 수수료율을 높이거나 낮출 수 있습니다. 수수료율의 변경은 사용자가 지불할 거래의 총 수수료에 영향을 줍니다.\n\n권장 값보다 낮은 수수료율을 설정하면 거래가 몇 시간 동안 보류 상태로 유지되거나 거부될 수 있습니다. 값이 낮을수록 거래 확인까지 걸리는 시간이 더 길어집니다. 우선 순위가 중요한 거래의 경우 더 높은 수수료율을 설정하는 것이 좋습니다.";
+"send.fee_info.description" = "When sending a transaction, you must pay a network fee. The busier the network, the higher the fee.\n\nUnstoppable Wallet suggests an optimal fee to help your transaction confirm in a reasonable time. You can increase or decrease this value.\n\nSetting the fee too low may cause your transaction to stay pending for a long time or even be rejected. For faster confirmation, use a higher fee.";
 "send.transaction_inputs_outputs_info.title" = "트랜잭션 입력/출력";
 "send.transaction_inputs_outputs_info.description" = "대부분의 비트코인 거래와 비트코인 캐시, 대시, 라이트코인과 같은 암호화폐 거래는 두 개의 출력을 생성합니다. 하나의 출력은 수신자에게 전달되는 금액이고 다른 하나는 변경된 출력으로 발송자에게 반환됩니다. 대부분의 지갑이 거래를 구성하는 방식은 제3자가 어느 출력이 수신자에게 갔고 어느 것이 발송자에게 반환된 변경 금액인지 이해하기 쉽게 만듭니다. 발송자에게 반환된 출력이 후속 거래에 나중에 사용됨에 따라 이 두 거래 사이의 연결이 명백해집니다.\n\n%@ 지갑은 누군가가 어떤 출력이 어디로 가는지 파악하기 어렵게 하는 조치를 시행합니다.\n\n%@ 사용자에게는 두 가지 옵션이 제공됩니다:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
@@ -662,7 +662,7 @@
 "swap.quotes.best_price" = "최상의 가격";
 
 "swap.allowance" = "허용량";
-"swap.allowance.description" = "토큰 스왑을 실행할 때 거래소가 사용자 대신 소비할 수 있는 금액입니다. 실제 스왑 거래가 발생하기 전에 충분한 할당을 설정하는 이전 거래가 필요합니다.";
+"swap.allowance.description" = "Allowance is the amount you let the exchange use on your behalf for swaps. Before making a swap, you first need to approve an allowance transaction.";
 "swap.pending_allowance" = "보류 중인 허용량";
 "swap.approve" = "승인";
 "swap.approving" = "승인 중";
@@ -693,10 +693,10 @@
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "토큰 범위 설정";
-"swap.advanced_settings.slippage.footer" = "가격이 해당 퍼센티지 이상으로 불리하게 변경되면 거래가 취소됩니다.";
+"swap.advanced_settings.slippage.footer" = "If the price moves beyond this percentage, the swap won’t go through.";
 "swap.advanced_settings.deadline" = "거래 마감 시간";
 "swap.advanced_settings.deadline.footer" = "귀하의 거래가 이 시간 이상 보류되면 원상 복귀됩니다.";
-"swap.advanced_settings.recipient.footer" = "교환 작업 후, 금액은 지정된 주소로 이체됩니다.";
+"swap.advanced_settings.recipient.footer" = "The swapped amount will be sent to the specified address.";
 "swap.advanced_settings.deadline_minute" = "최소 %@";
 "swap.advanced_settings.recipient_address" = "수취인 주소";
 "swap.advanced_settings.recipient_address.to" = "에게";
@@ -1347,7 +1347,7 @@
 "transactions.tab_bar_item" = "거래기록";
 "transactions.filter_all" = "전체";
 "transactions.syncing_placeholder" = "Please wait for the sync to finish.";
-"transactions.empty_text" = "당신은 아직 보류 중 또는 과거에 완료된 거래가 없습니다";
+"transactions.empty_text" = "No pending or past transactions yet.";
 "transactions.pending" = "보류 중";
 "transactions.processing" = "처리 중";
 "transactions.completed" = "완료됨";
@@ -1561,11 +1561,11 @@
 "settings_security.disable_passcode" = "비밀번호 비활성화";
 "settings_security.auto_lock" = "자동 잠금";
 "settings_security.balance_auto_hide" = "밸런스 자동 숨기기";
-"settings_security.balance_auto_hide.description" = "앱이 열릴 때마다 잔고를 자동으로 숨깁니다. 이전 설정에 관계없이 적용됩니다.";
+"settings_security.balance_auto_hide.description" = "Automatically hides balance every time the app is opened.";
 "settings_security.enable_duress_mode" = "긴급 상황 모드 설정";
 "settings_security.edit_duress_passcode" = "긴급 상황 비밀번호 편집";
 "settings_security.disable_duress_mode" = "협박 비밀번호를 비활성화합니다.";
-"settings_security.duress_mode.description" = "강요 상황에서 선택한 지갑을 안전하게 보관하기 위해 디자인된 특별한 모드입니다.";
+"settings_security.duress_mode.description" = "A special mode that protects selected wallets in case of coercion.";
 
 "biometry.off" = "끄기";
 "biometry.manual" = "수동";
@@ -1680,9 +1680,9 @@
 // Settings -> Privacy
 
 "settings.privacy" = "개인정보";
-"settings.privacy.description" = "%@는 코인 잔액이나 주소와 같은 개인 정보를 노출하는 개인 데이터를 수집하지 않습니다. UI 사용 통계를 수집하긴 하지만, 이는 사용자 기반 및 앱 사용 트렌드를 이해하기 위한 것입니다. 원하신다면 비활성화할 수 있습니다.";
+"settings.privacy.description" = "%@ doesn’t collect personal data like your balances or wallet addresses. We only use anonymous data to improve the app.";
 "settings.privacy.allow" = "UI 데이터 공유";
-"settings.privacy.allow.description" = "이 설정을 통해 UI/UX 분석을 비활성화하고 완전한 기밀성을 보장할 수 있습니다.";
+"settings.privacy.allow.description" = "This setting lets you turn off analytics and keep your activity fully private.";
 
 // Settings -> Appearance
 
@@ -1731,14 +1731,14 @@
 
 // Settings -> Support
 
-"settings.vip_support.description" = "프리미엄 사용자와 Unstoppable Wallet 팀이 함께하는 VIP 그룹에 독점적으로 참여하세요. 직접적인 지원을 받고, 향후 업데이트를 논의하며, 지갑의 발전에 기여할 수 있습니다.";
+"settings.vip_support.description" = "Join our VIP Group to get direct support, take part in discussions about upcoming updates, and connect more closely with the Unstoppable team.";
 "settings.vip_support.start_chat" = "VIP 그룹 참여";
 
 // Settings -> Contacts
 
 "contacts.title" = "연락처";
 "contacts.list.search_placeholder" = "이름별 검색";
-"contacts.list.not_found" = "추가된 연락처가 없습니다";
+"contacts.list.not_found" = "No contacts added yet";
 "contacts.list.not_found_search" = "검색 결과가 없습니다";
 "contacts.add_new_contact" = "새 연락처 추가";
 "contacts.update_contact.already_has_address" = "선택된 연락처는 이미 %@에 주소가 있습니다. 이 작업은 %@ 주소를 %@로 대체합니다.";
@@ -1841,7 +1841,7 @@
 "create_wallet.passphrase" = "암호문구";
 "create_wallet.input.passphrase" = "암호문구";
 "create_wallet.input.confirm" = "확인";
-"create_wallet.passphrase_description" = "암호는 지갑에 대한 추가 보안 계층을 추가합니다. 이러한 지갑을 복원하려면 사용자는 니모닉과 암호가 모두 필요했습니다.\n\n암호는 또한 사용자가 하나의 니모닉을 사용하지만 다른 암호를 사용하여 여러 코인 지갑을 쉽게 가질 수 있도록 합니다.";
+"create_wallet.passphrase_description" = "Passphrases provide an additional layer of security for wallets.When restoring a wallet protected by a passphrase, the user must provide both the recovery phrase and the passphrase.\n\nPassphrases also allow users to create multiple independent multi-coin wallets from the same mnemonic, simply by using different passphrases.";
 "create_wallet.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
 "create_wallet.error.forbidden_symbols" = "지원되는 기호만 사용하세요: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "암호 확인이 일치하지 않습니다";
@@ -2135,7 +2135,7 @@
 "fee_settings.time_lock.description" = "TimeLock은 BIP44 주소(1부터 시작)로 전송하는 경우에만 작동합니다.";
 
 "fee_settings.network_fee" = "수수료";
-"fee_settings.network_fee.info" = "네트워크에서 주어진 거래를 보내는 데 예상되는 비용.";
+"fee_settings.network_fee.info" = "The estimated cost of processing this transaction on the blockchain.";
 "fee_settings.l1_fee" = "L1 수수료";
 "fee_settings.l1_fee.info" = "계층 1 네트워크에서 특정 거래를 전송하는 예상 비용.";
 "fee_settings.gas_limit" = "Gas Limit";
@@ -2406,7 +2406,7 @@
 
 "address_checker.title" = "주소 확인 도구";
 "address_checker.recipient_check" = "수신자 확인";
-"address_checker.recipient_check.description" = "전송 전에 수신 주소의 위험 여부를 확인합니다.";
+"address_checker.recipient_check.description" = "Scans the recipient address for security risks prior to sending.";
 "address_checker.check_address" = "주소 확인";
 "address_checker.check_address.description" = "允许您检查地址是否存在制裁或被列入黑名单。";
 
