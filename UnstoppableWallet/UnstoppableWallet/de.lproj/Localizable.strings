@@ -159,7 +159,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "restore_type.cloud.title" = "von iCloud";
 "restore_type.file.title" = "aus Dateien";
 
-"restore_type.recovery.description" = "Importieren Sie mithilfe der Wiederherstellungsphrase oder des privaten Schlüssels.";
+"restore_type.recovery.description" = "Import a wallet using a recovery phrase or a private key.";
 "restore_type.cloud.description" = "Importieren Sie aus einer Sicherungsdatei in Ihrem Schlüsselbund.";
 "restore_type.file.description" = "Importieren Sie eine Sicherungsdatei aus Ihrem lokalen Ordner.";
 
@@ -238,7 +238,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Backup
 
 "backup.title" = "Wiederherstellungsphrase";
-"backup.description" = "Schreibe diese Wörter in die richtige Reihenfolge und halte sie an einem sicheren Ort";
+"backup.description" = "Write these words down in order and keep them safe.";
 "backup.tap_to_show" = "Tippen, um Wiederherstellungsphrase anzuzeigen";
 "backup.passphrase" = "Passwort";
 "backup.verify" = "Prüfen";
@@ -260,7 +260,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "backup_prompt.backup_recovery_phrase" = "Wiederherstellungsphrase sichern";
 "backup_prompt.backup_required" = "Sicherung erforderlich";
-"backup_prompt.warning" = "Erstellen Sie eine Sicherungskopie der Wiederherstellungsphrase und des zugehörigen Passworts, mit dem Sie Ihre Wallet wiederherstellen können, wenn Ihr Telefon verloren geht, gestohlen, kaputt, etc.";
+"backup_prompt.warning" = "Create a backup of your recovery phrase and the associated passphrase. These will allow you to restore your wallet if your phone is lost, stolen, or damaged.";
 "backup_prompt.backup" = "Sicherung";
 "backup_prompt.backup_manual" = "Manuelle Sicherung";
 "backup_prompt.backup_cloud" = "Sicherung in iCloud";
@@ -479,7 +479,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.hodler_locktime_off" = "Aus";
 "send.hodler_error.unsupported_address" = "Zeitsperre funktioniert nur mit P2PKH-Adressen (beginnend mit 1) ";
 "send.fee_info.title" = "Gebührenrate";
-"send.fee_info.description" = "Blockchains verlangen, dass Nutzer Netzwerkgebühren beim Versenden von Transaktionen bezahlen. Die Gebühren sind höher, wenn viele Transaktionen im Netzwerk stattfinden.\n\nDie %@ Brieftasche schätzt die Gebühr basierend auf der aktuellen Blockchain Aktivität und empfiehlt den optimalen Wert, damit die Transaktion innerhalb einer angemessenen Zeit bearbeitet werden kann.\n\nDie empfohlene Gebührenrate, die als Betrag des satoshi Benutzers angezeigt wird, um für ein einziges Byte der Transaktion zu bezahlen. Daher hängt die Gesamtgebühr von der Gesamtgröße der Transaktion ab, die in Bytes gemessen wird.\n\nBenutzer können die zur Verfügung gestellten Steuerelemente verwenden, um den Gebührenwert zu erhöhen oder zu senken. Die Änderung des Gebührensatzes ändert die Gesamtgebühr für die Transaktion, die der Nutzer zu zahlen hat.\n\nSetzen der Gebühr unter dem empfohlenen Wert kann dazu führen, dass eine Transaktion stundenlang als ausstehend gehalten oder abgelehnt wird. Je niedriger der Wert, desto länger dauert die Bestätigung der Transaktion. Für Transaktionen, bei denen Priorität wichtig ist, empfehlen wir, höhere Gebührensätze festzulegen.";
+"send.fee_info.description" = "When sending a transaction, you must pay a network fee. The busier the network, the higher the fee.\n\nUnstoppable Wallet suggests an optimal fee to help your transaction confirm in a reasonable time. You can increase or decrease this value.\n\nSetting the fee too low may cause your transaction to stay pending for a long time or even be rejected. For faster confirmation, use a higher fee.";
 "send.transaction_inputs_outputs_info.title" = "Transaktionseingänge / -ausgänge";
 "send.transaction_inputs_outputs_info.description" = "Die meisten Bitcoin-Transaktionen sowie Transaktionen in Kryptowährungen wie Bitcoin-Cash, Dash, und Litecoin erzeugen zwei Ausgänge. Die eine Ausgabe ist der Betrag, der an den Empfänger geht, die andere ist die Umstellausgabe, die an den Absender zurückgegeben wird. Die Art und Weise, wie die meisten Brieftaschen Transaktionen erstellen, macht es für einen Dritten leicht zu verstehen, welche der Ausgaben an den Empfänger gingen und welcher der Änderungsbetrag an den Absender zurückgegeben wurde. Da die an den Absender zurückgegebene Ausgabe später bei zukünftigen Transaktionen verwendet wird, zeigt sich eine Verbindung zwischen diesen beiden Transaktionen.\n\nDie Brieftasche %@ implementiert Maßnahmen, um es jemandem zu erschweren, herauszufinden, welche Ausgabe wohin geht.\n\nEs gibt zwei Optionen für %@ Benutzer:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
@@ -664,7 +664,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "swap.quotes.best_price" = "Bester Preis";
 
 "swap.allowance" = "Vergütung";
-"swap.allowance.description" = "Die Menge, die eine Börse im Namen eines Benutzers für Token-Austausche ausgeben kann. Eine vorhergehende Transaktion, die eine ausreichende Zulage festlegt, ist erforderlich, bevor eine tatsächliche Austauschtransaktion stattfinden kann.";
+"swap.allowance.description" = "Allowance is the amount you let the exchange use on your behalf for swaps. Before making a swap, you first need to approve an allowance transaction.";
 "swap.pending_allowance" = "Ausstehendes Guthaben";
 "swap.approve" = "Genehmigen";
 "swap.approving" = "Wird bestätigt";
@@ -695,10 +695,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "Slippage-Toleranz";
-"swap.advanced_settings.slippage.footer" = "Ihre Transaktion wird zurückgesetzt, wenn sich der Preis um mehr als diesen Prozentsatz ungünstig ändert.";
+"swap.advanced_settings.slippage.footer" = "If the price moves beyond this percentage, the swap won’t go through.";
 "swap.advanced_settings.deadline" = "Transaktionsfrist";
 "swap.advanced_settings.deadline.footer" = "Ihre Transaktion wird rückgängig gemacht, wenn sie länger als diese aussteht.";
-"swap.advanced_settings.recipient.footer" = "Nach dem Umtauschvorgang wird der Betrag an die angegebene Adresse überwiesen";
+"swap.advanced_settings.recipient.footer" = "The swapped amount will be sent to the specified address.";
 "swap.advanced_settings.deadline_minute" = "%@ Min";
 "swap.advanced_settings.recipient_address" = "Empfängeradresse";
 "swap.advanced_settings.recipient_address.to" = "An";
@@ -1348,7 +1348,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "transactions.tab_bar_item" = "Transaktionen";
 "transactions.filter_all" = "Alle";
 "transactions.syncing_placeholder" = "Please wait for the sync to finish.";
-"transactions.empty_text" = "Sie haben noch keine offenen oder früheren Transaktionen";
+"transactions.empty_text" = "No pending or past transactions yet.";
 "transactions.pending" = "In Bearbeitung";
 "transactions.processing" = "Verarbeite";
 "transactions.completed" = "Abgeschlossen";
@@ -1562,11 +1562,11 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "settings_security.disable_passcode" = "Code deaktivieren";
 "settings_security.auto_lock" = "Auto-Sperren";
 "settings_security.balance_auto_hide" = "Auto-Ausblenden ausgleichen";
-"settings_security.balance_auto_hide.description" = "Bei jedem Öffnen der App wird der Saldo automatisch ausgeblendet, unabhängig von den vorherigen Einstellungen.";
+"settings_security.balance_auto_hide.description" = "Automatically hides balance every time the app is opened.";
 "settings_security.enable_duress_mode" = "Duress Modus setzen";
 "settings_security.edit_duress_passcode" = "Duress Code bearbeiten";
 "settings_security.disable_duress_mode" = "Duress Code deaktivieren";
-"settings_security.duress_mode.description" = "Ein spezialisierter Modus, der entworfen wurde, um ausgewählte Brieftaschen unter Zwang zu schützen.";
+"settings_security.duress_mode.description" = "A special mode that protects selected wallets in case of coercion.";
 
 "biometry.off" = "Aus";
 "biometry.manual" = "Manuell";
@@ -1681,9 +1681,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Settings -> Privacy
 
 "settings.privacy" = "Privatsphäre";
-"settings.privacy.description" = "%@ sammelt keine persönlichen Daten, die Ihre privaten Informationen offen legen, z.B. Münzsalden oder Adressen. Während wir einige UI-Nutzungsstatistiken sammeln, dient es allein dazu, unsere Benutzer- und App-Nutzungstrends zu verstehen. Dies kann deaktiviert werden, wenn Sie es wünschen.";
+"settings.privacy.description" = "%@ doesn’t collect personal data like your balances or wallet addresses. We only use anonymous data to improve the app.";
 "settings.privacy.allow" = "UI-Daten teilen";
-"settings.privacy.allow.description" = "Diese Einstellung ermöglicht es Ihnen, UI/UX-Analysen zu deaktivieren und vollständige Vertraulichkeit zu gewährleisten.";
+"settings.privacy.allow.description" = "This setting lets you turn off analytics and keep your activity fully private.";
 
 // Settings -> Appearance
 
@@ -1732,14 +1732,14 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Settings -> Support
 
-"settings.vip_support.description" = "Erhalten Sie exklusiven Zugang zu unserer VIP-Gruppe, in der Premium-Nutzer und das Unstoppable Wallet-Team zusammenarbeiten. Erhalten Sie direkte Unterstützung, diskutieren Sie zukünftige Updates und helfen Sie, die Entwicklung der Wallet mitzugestalten.";
+"settings.vip_support.description" = "Join our VIP Group to get direct support, take part in discussions about upcoming updates, and connect more closely with the Unstoppable team.";
 "settings.vip_support.start_chat" = "VIP-Gruppe beitreten";
 
 // Settings -> Contacts
 
 "contacts.title" = "Kontakte";
 "contacts.list.search_placeholder" = "Nach Namen suchen";
-"contacts.list.not_found" = "Sie haben keinen neuen Kontakt";
+"contacts.list.not_found" = "No contacts added yet";
 "contacts.list.not_found_search" = "Keine Ergebnisse gefunden";
 "contacts.add_new_contact" = "Neuer Kontakt";
 "contacts.update_contact.already_has_address" = "Der ausgewählte Kontakt hat bereits eine Adresse auf %@. Diese Aktion wird die Adresse %@ durch %@ ersetzen.";
@@ -1840,7 +1840,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "create_wallet.passphrase" = "Passwort";
 "create_wallet.input.passphrase" = "Passwort";
 "create_wallet.input.confirm" = "Bestätigen";
-"create_wallet.passphrase_description" = "Passphrases fügen eine zusätzliche Sicherheitsschicht für Brieftaschen hinzu. Um eine solche Brieftasche wiederherzustellen, benötigt ein Benutzer sowohl mnemonische als auch eine Passphrase.\n\nPassphrasen erleichtern es Benutzern auch, mehrere Multicoin-Wallets mit einem einzigen mnemonischen, aber anderen Passwort zu haben.";
+"create_wallet.passphrase_description" = "Passphrases provide an additional layer of security for wallets.When restoring a wallet protected by a passphrase, the user must provide both the recovery phrase and the passphrase.\n\nPassphrases also allow users to create multiple independent multi-coin wallets from the same mnemonic, simply by using different passphrases.";
 "create_wallet.error.empty_passphrase" = "Passphrase darf nicht leer sein";
 "create_wallet.error.forbidden_symbols" = "Bitte verwenden Sie nur unterstützte Symbole: A-Z a-z 0-9 '  \"  ` &  /  ?  !  :  ;  .  , ~  *  $  =  +  -  [ ]  ( )  { }  < >  \\  _  #  @  |  %";
 "create_wallet.error.invalid_confirmation" = "Passphrase-Bestätigung stimmt nicht überein";
@@ -2134,7 +2134,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "fee_settings.time_lock.description" = "TimeLock funktioniert nur beim Senden an BIP44 Adressen (ab 1)";
 
 "fee_settings.network_fee" = "Gebühr";
-"fee_settings.network_fee.info" = "Die geschätzten Kosten für den Versand der Transaktion im Netzwerk.";
+"fee_settings.network_fee.info" = "The estimated cost of processing this transaction on the blockchain.";
 "fee_settings.l1_fee" = "L1 Gebühr";
 "fee_settings.l1_fee.info" = "Die geschätzten Kosten für das Senden einer bestimmten Transaktion im Layer-1-Netzwerk.";
 "fee_settings.gas_limit" = "Gaslimit";
@@ -2405,7 +2405,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "address_checker.title" = "Adressprüfer";
 "address_checker.recipient_check" = "Empfängerprüfung";
-"address_checker.recipient_check.description" = "Überprüft die Empfängeradresse vor dem Senden auf mögliche Risiken.";
+"address_checker.recipient_check.description" = "Scans the recipient address for security risks prior to sending.";
 "address_checker.check_address" = "Adresse prüfen";
 "address_checker.check_address.description" = "Ermöglicht die Überprüfung einer Adresse auf Sanktionen und Blacklists.";
 
