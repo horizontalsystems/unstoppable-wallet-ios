@@ -157,7 +157,7 @@
 "restore_type.cloud.title" = "from iCloud";
 "restore_type.file.title" = "from Files";
 
-"restore_type.recovery.description" = "Import using recovery phrase or private key.";
+"restore_type.recovery.description" = "Import a wallet using a recovery phrase or a private key.";
 "restore_type.cloud.description" = "Import from a backup file in your keychain.";
 "restore_type.file.description" = "Import a backup file from your local folder.";
 
@@ -236,7 +236,7 @@
 // Backup
 
 "backup.title" = "Recovery Phrase";
-"backup.description" = "Write these words down in the correct order and keep them in a safe place";
+"backup.description" = "Write these words down in order and keep them safe.";
 "backup.tap_to_show" = "Tap to show recovery phrase";
 "backup.passphrase" = "Passphrase";
 "backup.verify" = "Verify";
@@ -258,7 +258,7 @@
 
 "backup_prompt.backup_recovery_phrase" = "Backup Recovery Phrase";
 "backup_prompt.backup_required" = "Backup Required";
-"backup_prompt.warning" = "Create a backup copy of the recovery phrase and the associated password that will allow you to recover your wallet if your phone is lost, stolen, broken, etc.";
+"backup_prompt.warning" = "Create a backup of your recovery phrase and the associated passphrase. These will allow you to restore your wallet if your phone is lost, stolen, or damaged.";
 "backup_prompt.backup" = "Backup";
 "backup_prompt.backup_manual" = "Manual Backup";
 "backup_prompt.backup_cloud" = "Backup to iCloud";
@@ -477,7 +477,7 @@
 "send.hodler_locktime_off" = "Off";
 "send.hodler_error.unsupported_address" = "Time locking works only when sending to payment addresses starting with 1... (aka BIP44 addresses)";
 "send.fee_info.title" = "Fee Rate";
-"send.fee_info.description" = "Blockchains require users to pay network fees when sending transactions. The fees are higher when a lot of transactions are taking place on the network.\n\nThe %@ wallet estimates fee based on the current blockchain activity and recommends the optimal value in order for the transaction to be processed within a reasonable amount of time.\n\nThe recommended fee rate is shown as the amount of satoshi the user needs to pay for a single byte of the transaction. Thus, the total fee depends on the total size of the transaction which is measured in bytes.\n\nUsers may use provided controls to increase or decrease the fee rate value. The change in fee rate changes the total fee for the transaction the user will pay.\n\nSetting fee rate below recommended value may result in a transaction being held as pending for hours or being rejected. The lower the value, the longer it will take for the transaction to confirm. For transactions where priority is important, we recommend setting a higher fee rate.";
+"send.fee_info.description" = "When sending a transaction, you must pay a network fee. The busier the network, the higher the fee.\n\nUnstoppable Wallet suggests an optimal fee to help your transaction confirm in a reasonable time. You can increase or decrease this value.\n\nSetting the fee too low may cause your transaction to stay pending for a long time or even be rejected. For faster confirmation, use a higher fee.";
 "send.transaction_inputs_outputs_info.title" = "Transaction Inputs / Outputs";
 "send.transaction_inputs_outputs_info.description" = "Most Bitcoin transactions, as well as transactions in alike cryptocurrencies including Bitcoin Cash, Dash, and Litecoin, generate two outputs. One output is the amount that goes to the receiver and the other is the change output that is returned to the sender. The way most wallets construct transactions makes it easy for a third party to understand which of the outputs went to the receiving party and which one was the change amount returned to the sender. As the output returned to the sender is later used in future transactions, a connection between these two transactions becomes apparent.\n\nThe %@ wallet implements measures to make it harder for someone to figure out which output goes where.\n\nThere are two options available to %@ users:";
 "send.transaction_inputs_outputs_info.shuffle.title" = "1. Shuffle";
@@ -662,7 +662,7 @@
 "swap.quotes.best_price" = "Best Price";
 
 "swap.allowance" = "Allowance";
-"swap.allowance.description" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
+"swap.allowance.description" = "Allowance is the amount you let the exchange use on your behalf for swaps. Before making a swap, you first need to approve an allowance transaction.";
 "swap.pending_allowance" = "Pending Allowance";
 "swap.approve" = "Approve";
 "swap.approving" = "Approving";
@@ -693,10 +693,10 @@
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "Slippage Tolerance";
-"swap.advanced_settings.slippage.footer" = "Your transaction will revert if the price changes unfavorably by more than this percentage";
+"swap.advanced_settings.slippage.footer" = "If the price moves beyond this percentage, the swap won’t go through.";
 "swap.advanced_settings.deadline" = "Transaction Deadline";
 "swap.advanced_settings.deadline.footer" = "Your transaction will revert if it is pending for more than this long.";
-"swap.advanced_settings.recipient.footer" = "After the exchange operation, the amount will be transferred to the specified address";
+"swap.advanced_settings.recipient.footer" = "The swapped amount will be sent to the specified address.";
 "swap.advanced_settings.deadline_minute" = "%@ min";
 "swap.advanced_settings.recipient_address" = "Recipient Address";
 "swap.advanced_settings.recipient_address.to" = "To";
@@ -1346,7 +1346,7 @@
 "transactions.tab_bar_item" = "Transactions";
 "transactions.filter_all" = "All";
 "transactions.syncing_placeholder" = "Please wait for the sync to finish.";
-"transactions.empty_text" = "You don't have any pending or past transactions yet";
+"transactions.empty_text" = "No pending or past transactions yet.";
 "transactions.pending" = "Pending";
 "transactions.processing" = "Processing";
 "transactions.completed" = "Completed";
@@ -1560,11 +1560,11 @@
 "settings_security.disable_passcode" = "Disable Passcode";
 "settings_security.auto_lock" = "Auto-Lock";
 "settings_security.balance_auto_hide" = "Balance Auto Hide";
-"settings_security.balance_auto_hide.description" = "Automatically hides balance each time the app is opened, regardless of previous preferences.";
+"settings_security.balance_auto_hide.description" = "Automatically hides balance every time the app is opened.";
 "settings_security.enable_duress_mode" = "Set Duress Mode";
 "settings_security.edit_duress_passcode" = "Edit Duress Passcode";
 "settings_security.disable_duress_mode" = "Disable Duress Passcode";
-"settings_security.duress_mode.description" = "A specialized mode designed to keep selected wallets safe under coercion.";
+"settings_security.duress_mode.description" = "A special mode that protects selected wallets in case of coercion.";
 
 "biometry.off" = "Off";
 "biometry.manual" = "Manual";
@@ -1679,9 +1679,9 @@
 // Settings -> Privacy
 
 "settings.privacy" = "Privacy";
-"settings.privacy.description" = "%@ never collects personal data such as coin balances or wallet addresses. Only anonymous interface usage data is gathered to help enhance the app experience.";
+"settings.privacy.description" = "%@ doesn’t collect personal data like your balances or wallet addresses. We only use anonymous data to improve the app.";
 "settings.privacy.allow" = "Share UI Data";
-"settings.privacy.allow.description" = "This setting allows you to disable UI/UX analytics and ensure complete confidentiality.";
+"settings.privacy.allow.description" = "This setting lets you turn off analytics and keep your activity fully private.";
 
 // Settings -> Appearance
 
@@ -1730,14 +1730,14 @@
 
 // Settings -> Support
 
-"settings.vip_support.description" = "Get exclusive access to our VIP Group, where premium users and the Unstoppable Wallet team collaborate. Receive direct assistance, discuss future updates, and help shape the wallet’s evolution.";
+"settings.vip_support.description" = "Join our VIP Group to get direct support, take part in discussions about upcoming updates, and connect more closely with the Unstoppable team.";
 "settings.vip_support.start_chat" = "Join VIP Group";
 
 // Settings -> Contacts
 
 "contacts.title" = "Contacts";
 "contacts.list.search_placeholder" = "Search by name";
-"contacts.list.not_found" = "You do not have an added contact";
+"contacts.list.not_found" = "No contacts added yet";
 "contacts.list.not_found_search" = "No results found";
 "contacts.add_new_contact" = "Add New Contact";
 "contacts.update_contact.already_has_address" = "Selected contact already has an address on %@. This action will replace the address %@ with %@.";
@@ -1838,7 +1838,7 @@
 "create_wallet.passphrase" = "Passphrase";
 "create_wallet.input.passphrase" = "Passphrase";
 "create_wallet.input.confirm" = "Confirm";
-"create_wallet.passphrase_description" = "Passphrases add an additional security layer for wallets. To restore such a wallet a user required both a recovery phrase as well as a passphrase.\n\nPassphrases also make it easy for users to have many multi-coin wallets using a single mnemonic but different password.";
+"create_wallet.passphrase_description" = "Passphrases provide an additional layer of security for wallets.When restoring a wallet protected by a passphrase, the user must provide both the recovery phrase and the passphrase.\n\nPassphrases also allow users to create multiple independent multi-coin wallets from the same mnemonic, simply by using different passphrases.";
 "create_wallet.error.empty_passphrase" = "Passphrase cannot be empty";
 "create_wallet.error.forbidden_symbols" = "Please use only supported symbols:A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
@@ -2132,7 +2132,7 @@
 "fee_settings.time_lock.description" = "TimeLock works only for sending to BIP44 addresses (starting with 1)";
 
 "fee_settings.network_fee" = "Fee";
-"fee_settings.network_fee.info" = "The estimated cost of sending given transaction on the network.";
+"fee_settings.network_fee.info" = "The estimated cost of processing this transaction on the blockchain.";
 "fee_settings.l1_fee" = "L1 Fee";
 "fee_settings.l1_fee.info" = "The estimated cost of sending given transaction on layer 1 network.";
 "fee_settings.gas_limit" = "Gas Limit";
@@ -2403,7 +2403,7 @@
 
 "address_checker.title" = "Address Checker";
 "address_checker.recipient_check" = "Recipient Check";
-"address_checker.recipient_check.description" = "Checks the recipient address for risks before sending.";
+"address_checker.recipient_check.description" = "Scans the recipient address for security risks prior to sending.";
 "address_checker.check_address" = "Check Address";
 "address_checker.check_address.description" = "Allows you to check an address against sanctions and blacklist databases.";
 
