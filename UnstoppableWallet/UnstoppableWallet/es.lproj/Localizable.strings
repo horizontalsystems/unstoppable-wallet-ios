@@ -360,6 +360,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.token.transparent.info.description" = "Por ahora, el saldo transparente no se puede utilizar en nuestra billetera. Sin embargo, estos fondos pueden ser gastados desde otras billeteras que soportan direcciones t.";
 "balance.token.shield" = "Blindado";
 
+"balance.token.receive_address" = "Receive Address";
 "balance.token.staked" = "Llevado";
 "balance.token.staked.info.title" = "Título tomado";
 "balance.token.staked.info.description" = "Texto de descripción tomada";
