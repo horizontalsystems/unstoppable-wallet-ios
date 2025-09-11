@@ -360,6 +360,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.token.transparent.info.description" = "Şeffaf bakiye şu anda cüzdanımızda kullanılamaz. Ancak bu tutar, t-adreslerini destekleyen diğer cüzdanlar tarafından harcanabilir";
 "balance.token.shield" = "Shield";
 
+"balance.token.receive_address" = "Receive Address";
 "balance.token.staked" = "Staked";
 "balance.token.staked.info.title" = "Staked title";
 "balance.token.staked.info.description" = "Staked Description Text";
