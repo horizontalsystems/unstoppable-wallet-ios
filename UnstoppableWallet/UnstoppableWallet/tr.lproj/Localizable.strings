@@ -2176,12 +2176,19 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "watch_address.watch" = "İzle";
 "watch_address.address" = "Adres";
 "watch_address.error.not_supported" = "Adres formatı desteklenmiyor";
+"watch_address.error.address_required" = "Please enter an address to continue";
 "watch_address.error.non_public_key" = "Özel anahtarla izlemeye izin verilmiyor";
 "watch_address.error.not_supported_derived_type" = "Türetilmiş tür desteklenmiyor";
-"watch_address.watch_data.placeholder" = "Genel adresinizi veya XPUB anahtarınızı yapıştırın";
-"watch_address.watch_data.description" = "EVM, Tron, TON, Stellar, Bitcoin ailesi (BTC, LTC, BCH, Dash) ve XPUB anahtarlarını destekler.";
+"watch_address.watch_data.placeholder" = "Paste your address (EVM, Tron, TON, Stellar, Monero, BTC, LTC, BCH, Dash) or XPUB";
 "watch_address.choose_blockchain" = "Blockchain Seç";
 "watch_address.choose_coin" = "Kripto Parayı Seç";
+"watch_address.view_key.placeholder" = "Private View Key";
+"watch_address.view_key.error.required" = "Private View Key is required to watch Monero wallets.";
+"watch_address.view_key.error.invalid" = "Invalid View Key";
+"watch_address.birthday_height.placeholder" = "Restore Height (0000000)";
+"watch_address.birthday_height.error.invalid" = "Invalid Restore Height";
+"watch_address.monero_warning.title" = "Attention!";
+"watch_address.monero_warning.description" = "Monero watch wallet show only incoming transactions, The balance displayed may be incorrect.";
 
 // Nft Collections
 
