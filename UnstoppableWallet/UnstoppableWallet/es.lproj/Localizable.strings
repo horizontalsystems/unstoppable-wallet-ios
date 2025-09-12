@@ -2173,12 +2173,19 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "watch_address.watch" = "Ver";
 "watch_address.address" = "Dirección";
 "watch_address.error.not_supported" = "El formato de dirección no está soportado";
+"watch_address.error.address_required" = "Please enter an address to continue";
 "watch_address.error.non_public_key" = "No se permite la visualización por clave privada";
 "watch_address.error.not_supported_derived_type" = "El tipo derivado no está soportado";
-"watch_address.watch_data.placeholder" = "Pega tu dirección pública o clave XPUB";
-"watch_address.watch_data.description" = "Compatible con direcciones de EVM, Tron, TON, Stellar, la familia Bitcoin (BTC, LTC, BCH, Dash) y claves XPUB.";
+"watch_address.watch_data.placeholder" = "Paste your address (EVM, Tron, TON, Stellar, Monero, BTC, LTC, BCH, Dash) or XPUB";
 "watch_address.choose_blockchain" = "Elegir Blockchain";
 "watch_address.choose_coin" = "Elegir moneda";
+"watch_address.view_key.placeholder" = "Private View Key";
+"watch_address.view_key.error.required" = "Private View Key is required to watch Monero wallets.";
+"watch_address.view_key.error.invalid" = "Invalid View Key";
+"watch_address.birthday_height.placeholder" = "Restore Height (0000000)";
+"watch_address.birthday_height.error.invalid" = "Invalid Restore Height";
+"watch_address.monero_warning.title" = "Attention!";
+"watch_address.monero_warning.description" = "Monero watch wallet show only incoming transactions, The balance displayed may be incorrect.";
 
 // Nft Collections
 
