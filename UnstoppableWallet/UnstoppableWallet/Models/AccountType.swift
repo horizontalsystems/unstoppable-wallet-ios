@@ -16,6 +16,7 @@ enum AccountType: Identifiable {
     case stellarAccount(accountId: String)
     case hdExtendedKey(key: HDExtendedKey)
     case btcAddress(address: String, blockchainType: BlockchainType, tokenType: TokenType)
+    case moneroWatchAccount(address: String, viewKey: String, restoreHeight: Int)
 
     var id: Self {
         self
@@ -61,6 +62,8 @@ enum AccountType: Identifiable {
             privateData = key.serialized
         case let .btcAddress(address, blockchainType, tokenType):
             privateData = "\(address)&\(blockchainType.uid)|\(tokenType.id)".data(using: .utf8) ?? Data()
+        case let .moneroWatchAccount(address, viewKey, restoreHeight):
+            privateData = "\(address)|\(viewKey)|\(restoreHeight)".data(using: .utf8) ?? Data()
         }
 
         if hashed {
@@ -144,6 +147,8 @@ enum AccountType: Identifiable {
             }
         case let .btcAddress(_, blockchainType, tokenType):
             return token.blockchainType == blockchainType && token.type == tokenType
+        case .moneroWatchAccount:
+            return token.blockchainType == .monero
         }
     }
 
@@ -201,6 +206,8 @@ enum AccountType: Identifiable {
             }
         case .btcAddress:
             return "BTC Address"
+        case .moneroWatchAccount:
+            return "Monero Watch Account"
         }
     }
 
@@ -237,6 +244,8 @@ enum AccountType: Identifiable {
             }
         case .btcAddress:
             return "btc_address"
+        case .moneroWatchAccount:
+            return "monero_watch_account"
         }
     }
 
@@ -260,6 +269,8 @@ enum AccountType: Identifiable {
                 }
             }
         case let .btcAddress(address, _, _):
+            return address
+        case let .moneroWatchAccount(address, _, _):
             return address
         default: return nil
         }
@@ -363,6 +374,14 @@ extension AccountType {
             return AccountType.tonAddress(address: string)
         case .stellarAccount:
             return AccountType.stellarAccount(accountId: string)
+        case .moneroWatchAccount:
+            let (address, remainder) = split(string, separator: "|")
+            let (viewKey, restoreHeight) = split(remainder, separator: "|")
+            guard let restoreHeightInt = Int(restoreHeight) else {
+                return nil
+            }
+
+            return AccountType.moneroWatchAccount(address: address, viewKey: viewKey, restoreHeight: restoreHeightInt)
         }
     }
 
@@ -376,6 +395,7 @@ extension AccountType {
         case stellarAccount = "stellar_account"
         case hdExtendedKey = "hd_extended_key"
         case btcAddress = "btc_address_key"
+        case moneroWatchAccount = "monero_watch_account"
 
         init(_ type: AccountType) {
             switch type {
@@ -388,6 +408,7 @@ extension AccountType {
             case .stellarAccount: self = .stellarAccount
             case .hdExtendedKey: self = .hdExtendedKey
             case .btcAddress: self = .btcAddress
+            case .moneroWatchAccount: self = .moneroWatchAccount
             }
         }
     }
@@ -414,6 +435,8 @@ extension AccountType: Hashable {
             return lhsKey == rhsKey
         case let (.btcAddress(lhsAddress, lhsBlockchainType, lhsTokenType), .btcAddress(rhsAddress, rhsBlockchainType, rhsTokenType)):
             return lhsAddress == rhsAddress && lhsBlockchainType == rhsBlockchainType && lhsTokenType == rhsTokenType
+        case let (.moneroWatchAccount(lhsAddress, lhsViewKey, lhsRestoreHeight), .moneroWatchAccount(rhsAddress, rhsViewKey, rhsRestoreHeight)):
+            return lhsAddress == rhsAddress && lhsViewKey == rhsViewKey && lhsRestoreHeight == rhsRestoreHeight
         default: return false
         }
     }
@@ -451,6 +474,11 @@ extension AccountType: Hashable {
             hasher.combine(address)
             hasher.combine(blockchainType)
             hasher.combine(tokenType)
+        case let .moneroWatchAccount(address, viewKey, restoreHeight):
+            hasher.combine("moneroWatchWallet")
+            hasher.combine(address)
+            hasher.combine(viewKey)
+            hasher.combine(restoreHeight)
         }
     }
 }

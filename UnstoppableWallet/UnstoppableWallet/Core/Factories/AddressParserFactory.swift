@@ -8,17 +8,6 @@ import MarketKit
 import ZcashLightClientKit
 
 enum AddressParserFactory {
-    static let uriBlockchainTypes: [BlockchainType] = [
-        .bitcoin,
-        .bitcoinCash,
-        .ecash,
-        .litecoin,
-        .dash,
-        .zcash,
-        .ethereum,
-        .tron,
-    ]
-
     static func parser(blockchainType: BlockchainType?, tokenType: TokenType?) -> AddressUriParser {
         AddressUriParser(blockchainType: blockchainType, tokenType: tokenType)
     }

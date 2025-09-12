@@ -91,12 +91,25 @@ class AddressUriParser {
         return nil
     }
 
-    func handleAddressUri(uri: String) throws -> AddressUri {
-        guard let components = URLComponents(string: uri), let scheme = components.scheme else {
+    private func handleAddressUri(uri: String, customSchemeHandling: Bool) throws -> AddressUri {
+        var replacedUriScheme: String?
+        var uriString = uri
+
+        if customSchemeHandling {
+            if let (_scheme, remainder) = getNonValidatedCustomScheme(uriString) {
+                replacedUriScheme = _scheme
+                uriString = "address:\(remainder)"
+            } else {
+                throw ParseError.noUri
+            }
+        }
+
+        guard let components = URLComponents(string: uriString), let _scheme = components.scheme else {
             throw ParseError.noUri
         }
 
-        if let validScheme = blockchainType?.uriScheme, components.scheme != validScheme {
+        let scheme = replacedUriScheme ?? _scheme
+        if let validScheme = blockchainType?.uriScheme, scheme != validScheme {
             throw ParseError.invalidBlockchainType
         }
 
@@ -116,19 +129,25 @@ class AddressUriParser {
         return uri
     }
 
+    private func getNonValidatedCustomScheme(_ urlString: String) -> (String, String)? {
+        guard let colonIndex = urlString.firstIndex(of: ":") else { return nil }
+
+        return (String(urlString[..<colonIndex]), String(urlString[urlString.index(after: colonIndex)...]))
+    }
+
     static func hasUriPrefix(text: String) -> Bool {
         text.components(separatedBy: ":").count > 1
     }
 }
 
 extension AddressUriParser {
-    func parse(url: String) throws -> AddressUri {
+    func parse(url: String, customSchemeHandling: Bool = false) throws -> AddressUri {
         // check if we try to parse deeplink address (like ton://transfer/<address>)
         if let addressUri = handleDeepLink(url: url) {
             return addressUri
         }
 
-        return try handleAddressUri(uri: url)
+        return try handleAddressUri(uri: url, customSchemeHandling: customSchemeHandling)
     }
 
     func uri(_ addressUri: AddressUri) -> String {

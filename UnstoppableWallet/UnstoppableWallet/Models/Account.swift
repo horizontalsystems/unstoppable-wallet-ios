@@ -21,7 +21,7 @@ class Account: Identifiable {
 
     var watchAccount: Bool {
         switch type {
-        case .evmAddress, .tronAddress, .tonAddress, .stellarAccount, .btcAddress:
+        case .evmAddress, .tronAddress, .tonAddress, .stellarAccount, .btcAddress, .moneroWatchAccount:
             return true
         case let .hdExtendedKey(key):
             switch key {

@@ -32,12 +32,12 @@ class MoneroAdapter {
     private let transactionSource: TransactionSource
 
     init(wallet: Wallet, restoreSettings: RestoreSettings, node: Node) throws {
+        let logger = Core.shared.logger.scoped(with: "MoneroKit")
+
         switch wallet.account.type {
         case let .mnemonic(words, passphrase, _):
-            let logger = Core.shared.logger.scoped(with: "MoneroKit")
-
             kit = try MoneroKit.Kit(
-                mnemonic: .bip39(seed: words, passphrase: passphrase),
+                wallet: .bip39(seed: words, passphrase: passphrase),
                 account: 0,
                 restoreHeight: UInt64(restoreSettings.birthdayHeight ?? 0),
                 walletId: wallet.account.id,
@@ -46,6 +46,19 @@ class MoneroAdapter {
                 reachabilityManager: Core.shared.reachabilityManager,
                 logger: logger
             )
+
+        case let .moneroWatchAccount(address, viewKey, restoreHeight):
+            kit = try MoneroKit.Kit(
+                wallet: .watch(address: address, viewKey: viewKey),
+                account: 0,
+                restoreHeight: UInt64(restoreHeight ?? 0),
+                walletId: wallet.account.id,
+                node: node,
+                networkType: Self.networkType,
+                reachabilityManager: Core.shared.reachabilityManager,
+                logger: logger
+            )
+
         default:
             throw AdapterError.unsupportedAccount
         }
@@ -345,11 +358,15 @@ extension MoneroAdapter {
     }
 
     static func key(accountType: AccountType, privateKey: Bool, spendKey: Bool) -> String {
-        guard case let .mnemonic(words, passphrase, _) = accountType else {
-            return ""
-        }
+        switch accountType {
+        case let .mnemonic(words, passphrase, _):
+            return (try? Kit.key(wallet: .bip39(seed: words, passphrase: passphrase), privateKey: privateKey, spendKey: spendKey)) ?? ""
 
-        return (try? Kit.key(mnemonic: .bip39(seed: words, passphrase: passphrase), privateKey: privateKey, spendKey: spendKey)) ?? ""
+        case let .moneroWatchAccount(address, viewKey, restoreHeight):
+            return (try? Kit.key(wallet: .watch(address: address, viewKey: viewKey), privateKey: privateKey, spendKey: spendKey)) ?? ""
+
+        default: return ""
+        }
     }
 }
 

@@ -588,6 +588,8 @@ enum StatEntity: String {
     case evmAddress = "evm_address"
     case evmPrivateKey = "evm_private_key"
     case key
+    case viewKey = "view_key"
+    case height
     case passphrase
     case receiveAddress = "receive_address"
     case recoveryPhrase = "recovery_phrase"
