@@ -31,11 +31,20 @@ struct WalletTokenTopView: View {
                 }
                 .padding(.bottom, .margin24)
             } else {
-                Button(action: {
-                    viewModel.onTapReceive()
-                }) {
-                    WatchAddressView(wallet: viewModel.wallet)
+                VStack(spacing: 0) {
+                    Button(action: {
+                        viewModel.onTapReceive()
+                    }) {
+                        WatchAddressView(wallet: viewModel.wallet)
+                    }
+
+                    if case .moneroWatchAccount = viewModel.wallet.account.type {
+                        AlertCardView(
+                            title: "watch_address.monero_warning.title".localized,
+                            text: "watch_address.monero_warning.description".localized
+                        )
                         .padding(.vertical, .margin16)
+                    }
                 }
             }
         }

@@ -23,9 +23,9 @@ class BlockchainSettingsViewModel: ObservableObject {
         self.moneroNodeManager = moneroNodeManager
         self.marketKit = marketKit
 
-        subscribe(disposeBag, btcBlockchainManager.restoreModeUpdatedObservable) { [weak self] _ in self?.syncBtcItems() }
-        subscribe(disposeBag, evmSyncSourceManager.syncSourceObservable) { [weak self] _ in self?.syncEvmItems() }
-        subscribe(disposeBag, moneroNodeManager.nodeObservable) { [weak self] _ in self?.syncMoneroNodeItems() }
+        subscribe(MainScheduler.instance, disposeBag, btcBlockchainManager.restoreModeUpdatedObservable) { [weak self] _ in self?.syncBtcItems() }
+        subscribe(MainScheduler.instance, disposeBag, evmSyncSourceManager.syncSourceObservable) { [weak self] _ in self?.syncEvmItems() }
+        subscribe(MainScheduler.instance, disposeBag, moneroNodeManager.nodeObservable) { [weak self] _ in self?.syncMoneroNodeItems() }
 
         syncBtcItems()
         syncEvmItems()

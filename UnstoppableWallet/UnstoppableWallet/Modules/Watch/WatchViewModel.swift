@@ -5,6 +5,7 @@ import HdWalletKit
 import MarketKit
 import RxSwift
 import TronKit
+import UIKit
 
 class WatchViewModel: ObservableObject {
     private let accountManager = Core.shared.accountManager
@@ -12,7 +13,9 @@ class WatchViewModel: ObservableObject {
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let marketKit = Core.shared.marketKit
     private let accountFactory = Core.shared.accountFactory
-    private let uriParser = AddressParserFactory.parser(blockchainType: nil, tokenType: nil)
+    private let restoreSettingsManager = Core.shared.restoreSettingsManager
+    private let moneroParser = MoneroWatchWalletParser()
+    private let addressUriParser = AddressParserFactory.parser(blockchainType: nil, tokenType: nil)
     private let addressParserChain = AddressParserChain()
     private var disposeBag = DisposeBag()
 
@@ -32,9 +35,12 @@ class WatchViewModel: ObservableObject {
     }
 
     @Published var name: String
-
     @Published var text = "" {
         didSet {
+            guard !syncingTextWithAddress, text != oldValue else {
+                return
+            }
+
             textCaution = .none
 
             guard !text.isEmpty else {
@@ -47,6 +53,46 @@ class WatchViewModel: ObservableObject {
     }
 
     @Published var textCaution: CautionState = .none
+
+    @Published var requiredFields: [RequiredField] = []
+    @Published var viewKey = "" {
+        didSet {
+            guard let address else {
+                return
+            }
+
+            sync(address: address)
+        }
+    }
+
+    @Published var viewKeyCaution: CautionState = .none
+    @Published var height = "" {
+        didSet {
+            guard let address else {
+                return
+            }
+
+            sync(address: address)
+        }
+    }
+
+    @Published var heightCaution: CautionState = .none
+
+    private var syncingTextWithAddress: Bool = false
+    private var address: Address? {
+        didSet {
+            syncingTextWithAddress = true
+            if let address {
+                if let domain = address.domain {
+                    name = domain
+                    text = domain
+                } else {
+                    text = address.raw
+                }
+            }
+            syncingTextWithAddress = false
+        }
+    }
 
     let itemsSubject = PassthroughSubject<Items, Never>()
     let successSubject = PassthroughSubject<Void, Never>()
@@ -63,14 +109,25 @@ class WatchViewModel: ObservableObject {
                 + AddressParserFactory.parserChainHandlers(blockchainType: .tron)
                 + AddressParserFactory.parserChainHandlers(blockchainType: .ton)
                 + AddressParserFactory.parserChainHandlers(blockchainType: .stellar)
+                + AddressParserFactory.parserChainHandlers(blockchainType: .monero)
         )
     }
 
     private func parse(text: String) {
-        if let address = try? uriParser.parse(url: text) {
-            parseAddress(text: address.address)
+        if let addressUri = try? addressUriParser.parse(url: text, customSchemeHandling: true) {
+            parseAddressUri(addressUri: addressUri)
         } else {
             parseAddress(text: text)
+        }
+    }
+
+    private func parseAddressUri(addressUri: AddressUri) {
+        if let (address, viewKey, height) = moneroParser.parse(uri: addressUri) {
+            self.address = address
+            self.viewKey = viewKey
+            self.height = height
+        } else {
+            parseAddress(text: addressUri.address)
         }
     }
 
@@ -86,6 +143,7 @@ class WatchViewModel: ObservableObject {
                         self?.parseExtendedKey(text: text)
                         return
                     }
+                    self?.address = address
                     self?.sync(address: address)
                 },
                 onError: { [weak self] _ in
@@ -96,6 +154,9 @@ class WatchViewModel: ObservableObject {
     }
 
     private func parseExtendedKey(text: String) {
+        address = nil
+        clearRequiredFields()
+
         do {
             let extendedKey = try HDExtendedKey(extendedKey: text)
 
@@ -115,7 +176,13 @@ class WatchViewModel: ObservableObject {
         }
     }
 
-    private func sync(address: Address) {
+    private func sync(address: Address, forceRequiredFields: Bool = false) {
+        if address.blockchainType == .monero {
+            requiredFields = [.viewKey, .height]
+        } else {
+            clearRequiredFields()
+        }
+
         do {
             let accountType: AccountType
             if let bitcoinAddress = address as? BitcoinAddress, let blockchainType = bitcoinAddress.blockchainType {
@@ -130,12 +197,38 @@ class WatchViewModel: ObservableObject {
                     accountType = .tonAddress(address: address.raw)
                 case .stellar:
                     accountType = .stellarAccount(accountId: address.raw)
+                case .monero:
+                    (state, viewKeyCaution, heightCaution) = moneroParser.parseAndValidate(
+                        address: address, viewKey: viewKey, height: height, forceRequiredFields: forceRequiredFields
+                    )
+                    return
                 default: return
                 }
             }
             state = .ready(accountType: accountType)
         } catch {
             state = .error(error: error)
+        }
+    }
+
+    private func validateAndGetAccount() -> AccountType? {
+        switch state {
+        case let .ready(accountType):
+            return accountType
+
+        case .incomplete:
+            if let address {
+                sync(address: address, forceRequiredFields: true)
+            }
+
+            return nil
+
+        case .notReady:
+            textCaution = .caution(Caution(text: "watch_address.error.address_required".localized, type: .error))
+            return nil
+
+        case .error:
+            return nil
         }
     }
 
@@ -170,6 +263,9 @@ class WatchViewModel: ObservableObject {
 
         case let .btcAddress(_, blockchainType, tokenType):
             tokenQueries = [TokenQuery(blockchainType: blockchainType, tokenType: tokenType)]
+
+        case .moneroWatchAccount:
+            tokenQueries = [TokenQuery(blockchainType: .monero, tokenType: .native)]
         }
 
         guard let tokens = try? marketKit.tokens(queries: tokenQueries) else {
@@ -208,11 +304,19 @@ class WatchViewModel: ObservableObject {
 
         walletManager.save(wallets: wallets)
     }
+
+    private func clearRequiredFields() {
+        requiredFields = []
+        viewKey = ""
+        viewKeyCaution = .none
+        height = ""
+        heightCaution = .none
+    }
 }
 
 extension WatchViewModel {
     func onProceed() {
-        guard case let .ready(accountType) = state else {
+        guard let accountType = validateAndGetAccount() else {
             return
         }
 
@@ -235,6 +339,11 @@ extension WatchViewModel {
         let account = accountFactory.watchAccount(type: accountType, name: accountName)
 
         accountManager.save(account: account)
+
+        if case let .moneroWatchAccount(_, _, restoreHeight) = accountType {
+            restoreSettingsManager.save(settings: [.birthdayHeight: String(restoreHeight)], account: account, blockchainType: .monero)
+        }
+
         enableWallets(account: account, items: items, enabledUids: enabledUids)
 
         stat(page: .watchWallet, event: .watchWallet(walletType: accountType.statDescription))
@@ -246,15 +355,14 @@ extension WatchViewModel {
 extension WatchViewModel {
     enum State {
         case ready(accountType: AccountType)
+        case incomplete
         case notReady
         case error(error: Error)
+    }
 
-        var watchEnabled: Bool {
-            switch self {
-            case .ready: return true
-            case .notReady, .error: return false
-            }
-        }
+    enum RequiredField {
+        case viewKey
+        case height
     }
 
     enum Items: Hashable {

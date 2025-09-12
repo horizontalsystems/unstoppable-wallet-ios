@@ -2634,6 +2634,8 @@
 		D03328A02BF6199600BBB364 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D033289E2BF6199600BBB364 /* InfoView.swift */; };
 		D03F74822BF76D0A004FBCFA /* GasPriceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03F74812BF76D0A004FBCFA /* GasPriceData.swift */; };
 		D03F74832BF76D0A004FBCFA /* GasPriceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03F74812BF76D0A004FBCFA /* GasPriceData.swift */; };
+		D04BC2CD2E7043EB001E1C52 /* MoneroWatchWalletParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04BC2CC2E7043B5001E1C52 /* MoneroWatchWalletParser.swift */; };
+		D04BC2CE2E7043EB001E1C52 /* MoneroWatchWalletParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04BC2CC2E7043B5001E1C52 /* MoneroWatchWalletParser.swift */; };
 		D04D98EA268055A2001A3135 /* TransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04D98E9268055A2001A3135 /* TransactionRecord.swift */; };
 		D04D98EB268055A2001A3135 /* TransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04D98E9268055A2001A3135 /* TransactionRecord.swift */; };
 		D04DD5412B68C0EF00219B87 /* HighlightedTiltledTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D04DD5402B68C0EF00219B87 /* HighlightedTiltledTextView.swift */; };
@@ -2719,6 +2721,8 @@
 		D07157E52A2DDAA6006F141F /* SendTronViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07157E32A2DDAA6006F141F /* SendTronViewController.swift */; };
 		D0740B1B2B87585000B085F9 /* ResendBitcoinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0740B1A2B87585000B085F9 /* ResendBitcoinService.swift */; };
 		D0740B1C2B87585100B085F9 /* ResendBitcoinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0740B1A2B87585000B085F9 /* ResendBitcoinService.swift */; };
+		D07879532E73FF090082212A /* AlertCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07879522E73FECA0082212A /* AlertCardView.swift */; };
+		D07879542E73FF090082212A /* AlertCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D07879522E73FECA0082212A /* AlertCardView.swift */; };
 		D084F6BE2BEB94F700407FA4 /* OutputSelectView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084F6BD2BEB94F700407FA4 /* OutputSelectView2.swift */; };
 		D084F6BF2BEB94F700407FA4 /* OutputSelectView2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084F6BD2BEB94F700407FA4 /* OutputSelectView2.swift */; };
 		D084F6C12BEB951C00407FA4 /* OutputSelectorViewModel2.swift in Sources */ = {isa = PBXBuildFile; fileRef = D084F6C02BEB951C00407FA4 /* OutputSelectorViewModel2.swift */; };
@@ -4837,6 +4841,7 @@
 		D02C85AD2D1A969C0096A84D /* SpamAddressStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamAddressStorage.swift; sourceTree = "<group>"; };
 		D033289E2BF6199600BBB364 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		D03F74812BF76D0A004FBCFA /* GasPriceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasPriceData.swift; sourceTree = "<group>"; };
+		D04BC2CC2E7043B5001E1C52 /* MoneroWatchWalletParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroWatchWalletParser.swift; sourceTree = "<group>"; };
 		D04D98E9268055A2001A3135 /* TransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionRecord.swift; sourceTree = "<group>"; };
 		D04DD5402B68C0EF00219B87 /* HighlightedTiltledTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightedTiltledTextView.swift; sourceTree = "<group>"; };
 		D0532CBD2B149DEE0015DF40 /* WatchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchViewModel.swift; sourceTree = "<group>"; };
@@ -4879,6 +4884,7 @@
 		D07157E02A2DDA17006F141F /* SendTronViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronViewModel.swift; sourceTree = "<group>"; };
 		D07157E32A2DDAA6006F141F /* SendTronViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronViewController.swift; sourceTree = "<group>"; };
 		D0740B1A2B87585000B085F9 /* ResendBitcoinService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResendBitcoinService.swift; sourceTree = "<group>"; };
+		D07879522E73FECA0082212A /* AlertCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertCardView.swift; sourceTree = "<group>"; };
 		D084F6BD2BEB94F700407FA4 /* OutputSelectView2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputSelectView2.swift; sourceTree = "<group>"; };
 		D084F6C02BEB951C00407FA4 /* OutputSelectorViewModel2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputSelectorViewModel2.swift; sourceTree = "<group>"; };
 		D086A9152BF4D08400462024 /* SendParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendParameters.swift; sourceTree = "<group>"; };
@@ -5754,6 +5760,7 @@
 		11B3546A6E6F3CC013C9FF44 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				D07879522E73FECA0082212A /* AlertCardView.swift */,
 				6BE925CD2E69A33E00DC4709 /* DotOverlay.swift */,
 				D371A2402E5DB32900D7D7F6 /* RightButtonText.swift */,
 				D371A2312E589A7200D7D7F6 /* ErrorMessage.swift */,
@@ -9004,6 +9011,7 @@
 		D01517EC2B10A66000FECCBC /* Watch */ = {
 			isa = PBXGroup;
 			children = (
+				D04BC2CC2E7043B5001E1C52 /* MoneroWatchWalletParser.swift */,
 				D3FBC7102E534C0D001083D8 /* WatchSelectView.swift */,
 				D3FBC70D2E533F74001083D8 /* WatchView.swift */,
 				D0532CBD2B149DEE0015DF40 /* WatchViewModel.swift */,
@@ -10095,6 +10103,7 @@
 				11B354AD94C483A7D5E3DD1F /* ValueFormatter.swift in Sources */,
 				11B35BCC6C00E857CE562F16 /* EvmAdapter.swift in Sources */,
 				11B35E0BEC5BE604ACE59BC2 /* PasteboardManager.swift in Sources */,
+				D04BC2CE2E7043EB001E1C52 /* MoneroWatchWalletParser.swift in Sources */,
 				58AAA8D40B3399937CFEB0F2 /* PaymentRequestAddress.swift in Sources */,
 				11B35BDBD856C645045553D2 /* UIImage.swift in Sources */,
 				11B35EBB0DC7C0CE6F51E9DA /* BarsProgressView.swift in Sources */,
@@ -10157,6 +10166,7 @@
 				D05E96912A261D82002CCD71 /* TronTransactionAdapter.swift in Sources */,
 				6BDFC0892E3CDC1C00CC28DD /* SubscriptionView.swift in Sources */,
 				D05E96A42A2627DA002CCD71 /* TronIncomingTransactionRecord.swift in Sources */,
+				D07879532E73FF090082212A /* AlertCardView.swift in Sources */,
 				58AAAD3AC2B87E6AAFE535D8 /* DebugLogger.swift in Sources */,
 				1A564EDBD3E4B37299E199B7 /* AppStatusModule.swift in Sources */,
 				11B3557CB2595D2884C94498 /* MultiTextMetricsView.swift in Sources */,
@@ -11686,6 +11696,7 @@
 				D09D768C2A2E066E004311E6 /* SendTronConfirmationModule.swift in Sources */,
 				11B351C81028727569851233 /* EvmAdapter.swift in Sources */,
 				11B35A801504D47FBE31CF40 /* PasteboardManager.swift in Sources */,
+				D04BC2CD2E7043EB001E1C52 /* MoneroWatchWalletParser.swift in Sources */,
 				58AAA4E1C32E0B48A4CFECCD /* PaymentRequestAddress.swift in Sources */,
 				11B35D0542ACB56A31C61143 /* UIImage.swift in Sources */,
 				11B350E923A4E51AAF9D2828 /* BarsProgressView.swift in Sources */,
@@ -11748,6 +11759,7 @@
 				D05E96902A261D82002CCD71 /* TronTransactionAdapter.swift in Sources */,
 				D05E96A32A2627DA002CCD71 /* TronIncomingTransactionRecord.swift in Sources */,
 				11B35D51B52EF0000711CE05 /* MultiTextMetricsView.swift in Sources */,
+				D07879542E73FF090082212A /* AlertCardView.swift in Sources */,
 				1A5647EF2A5B8141F0BE4320 /* UIDevice.swift in Sources */,
 				D3E36BB82DFAEC4D007F99CA /* WalletViewModel.swift in Sources */,
 				1A5646C3220E1735309D2927 /* AppVersion.swift in Sources */,
@@ -14177,7 +14189,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MoneroKit.Swift.git";
 			requirement = {
 				kind = exactVersion;
-				version = 0.1.10;
+				version = 0.1.11;
 			};
 		};
 		D0EC34D92A4450B100BB308B /* XCRemoteSwiftPackageReference "HCaptcha-ios-sdk" */ = {

@@ -98,6 +98,15 @@ class AccountStorage {
             }
 
             type = .btcAddress(address: address, blockchainType: BlockchainType(uid: blockchainTypeUid), tokenType: tokenType)
+        case .moneroWatchAccount:
+            let viewKey: String? = recover(id: id, typeName: typeName, keyName: .data)
+            guard let address = record.wordsKey, let viewKey,
+                  let restoreHeightString = record.saltKey, let restoreHeight = Int(restoreHeightString)
+            else {
+                return nil
+            }
+
+            type = .moneroWatchAccount(address: address, viewKey: viewKey, restoreHeight: restoreHeight)
         }
 
         return Account(
@@ -152,6 +161,11 @@ class AccountStorage {
             wordsKey = address
             saltKey = blockchainType.uid
             dataKey = tokenType.id
+        case let .moneroWatchAccount(address, viewKey, restoreHeight):
+            typeName = .moneroWatchAccount
+            wordsKey = address
+            saltKey = String(restoreHeight)
+            dataKey = try store(viewKey, id: id, typeName: typeName, keyName: .data)
         }
 
         return AccountRecord(
@@ -188,6 +202,8 @@ class AccountStorage {
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .hdExtendedKey, keyName: .data))
         case .btcAddress:
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .btcAddress, keyName: .data))
+        case .moneroWatchAccount:
+            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .moneroWatchAccount, keyName: .data))
         default:
             ()
         }
@@ -275,6 +291,7 @@ extension AccountStorage {
         case stellarAccount
         case hdExtendedKey
         case btcAddress
+        case moneroWatchAccount
     }
 
     private enum KeyName: String {

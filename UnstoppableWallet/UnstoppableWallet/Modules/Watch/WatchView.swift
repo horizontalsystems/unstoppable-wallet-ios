@@ -33,13 +33,43 @@ struct WatchView: View {
                                     placeholder: "watch_address.watch_data.placeholder".localized,
                                     text: $viewModel.text,
                                     statPage: .watchWallet,
-                                    statEntity: .key
+                                    statEntity: .key,
+                                    onButtonTap: { focusedField = nil }
                                 )
                                 .focused($focusedField, equals: .text)
                                 .modifier(CautionBorder(cautionState: $viewModel.textCaution))
                                 .modifier(CautionPrompt(cautionState: $viewModel.textCaution))
+                            }
 
-                                ListSectionFooter(text: "watch_address.watch_data.description".localized)
+                            ForEach(viewModel.requiredFields, id: \.self) { field in
+                                VStack(spacing: 0) {
+                                    switch field {
+                                    case .viewKey:
+                                        SingleLineLargeTextField(
+                                            placeholder: "watch_address.view_key.placeholder".localized,
+                                            text: $viewModel.viewKey,
+                                            statPage: .watchWallet,
+                                            statEntity: .viewKey,
+                                            keyboardType: UIKeyboardType.asciiCapableNumberPad,
+                                            onButtonTap: { focusedField = nil }
+                                        )
+                                        .focused($focusedField, equals: .viewKey)
+                                        .modifier(CautionBorder(cautionState: $viewModel.viewKeyCaution))
+                                        .modifier(CautionPrompt(cautionState: $viewModel.viewKeyCaution))
+                                    case .height:
+                                        SingleLineLargeTextField(
+                                            placeholder: "watch_address.birthday_height.placeholder".localized,
+                                            text: $viewModel.height,
+                                            statPage: .watchWallet,
+                                            statEntity: .height,
+                                            keyboardType: UIKeyboardType.numberPad,
+                                            onButtonTap: { focusedField = nil }
+                                        )
+                                        .focused($focusedField, equals: .height)
+                                        .modifier(CautionBorder(cautionState: $viewModel.heightCaution))
+                                        .modifier(CautionPrompt(cautionState: $viewModel.heightCaution))
+                                    }
+                                }
                             }
                         }
                         .animation(.default, value: viewModel.text)
@@ -53,7 +83,6 @@ struct WatchView: View {
                     ThemeButton(text: "watch_address.watch".localized) {
                         viewModel.onProceed()
                     }
-                    .disabled(!viewModel.state.watchEnabled)
                 }
             }
             .navigationTitle("watch_address.title".localized)
@@ -68,7 +97,6 @@ struct WatchView: View {
                     Button("watch_address.watch".localized) {
                         viewModel.onProceed()
                     }
-                    .disabled(!viewModel.state.watchEnabled)
                 }
             }
             .onReceive(viewModel.itemsSubject) { items in
@@ -96,5 +124,7 @@ extension WatchView {
     enum Field {
         case name
         case text
+        case viewKey
+        case height
     }
 }

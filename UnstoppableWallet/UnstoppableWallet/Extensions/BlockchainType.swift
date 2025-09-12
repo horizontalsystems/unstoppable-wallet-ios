@@ -156,6 +156,8 @@ extension BlockchainType {
             return self == .ton
         case let .btcAddress(_, blockchainType, _):
             return self == blockchainType
+        case .moneroWatchAccount:
+            return self == .monero
         }
     }
 
