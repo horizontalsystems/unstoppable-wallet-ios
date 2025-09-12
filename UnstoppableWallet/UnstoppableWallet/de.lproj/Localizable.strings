@@ -2172,12 +2172,19 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "watch_address.watch" = "Beobachten";
 "watch_address.address" = "Adresse";
 "watch_address.error.not_supported" = "Adressformat wird nicht unterstützt";
+"watch_address.error.address_required" = "Please enter an address to continue";
 "watch_address.error.non_public_key" = "Das Beobachten mit privatem Schlüssel ist nicht erlaubt";
 "watch_address.error.not_supported_derived_type" = "Abgeleiteter Typ wird nicht unterstützt";
-"watch_address.watch_data.placeholder" = "Fügen Sie Ihre öffentliche Adresse oder Ihren XPUB ein";
-"watch_address.watch_data.description" = "Unterstützt Adressen aus EVM, Tron, TON, Stellar, der Bitcoin-Familie (BTC, LTC, BCH, Dash) sowie XPUB-Schlüssel.";
+"watch_address.watch_data.placeholder" = "Paste your address (EVM, Tron, TON, Stellar, Monero, BTC, LTC, BCH, Dash) or XPUB";
 "watch_address.choose_blockchain" = "Blockchain auswählen";
 "watch_address.choose_coin" = "Coins auswählen";
+"watch_address.view_key.placeholder" = "Private View Key";
+"watch_address.view_key.error.required" = "Private View Key is required to watch Monero wallets.";
+"watch_address.view_key.error.invalid" = "Invalid View Key";
+"watch_address.birthday_height.placeholder" = "Restore Height (0000000)";
+"watch_address.birthday_height.error.invalid" = "Invalid Restore Height";
+"watch_address.monero_warning.title" = "Attention!";
+"watch_address.monero_warning.description" = "Monero watch wallet show only incoming transactions, The balance displayed may be incorrect.";
 
 // Nft Collections
 
