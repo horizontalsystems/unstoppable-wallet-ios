@@ -2173,12 +2173,19 @@
 "watch_address.watch" = "시계";
 "watch_address.address" = "주소";
 "watch_address.error.not_supported" = "주소 형식은 지원되지 않습니다";
+"watch_address.error.address_required" = "Please enter an address to continue";
 "watch_address.error.non_public_key" = "개인 키로 감시하는 것은 허용되지 않습니다";
 "watch_address.error.not_supported_derived_type" = "파생된 유형은 지원되지 않습니다";
-"watch_address.watch_data.placeholder" = "공개 주소 또는 XPUB를 붙여넣으세요";
-"watch_address.watch_data.description" = "EVM, Tron, TON, Stellar, Bitcoin 계열(BTC, LTC, BCH, Dash) 및 XPUB 키의 주소를 지원합니다.";
+"watch_address.watch_data.placeholder" = "Paste your address (EVM, Tron, TON, Stellar, Monero, BTC, LTC, BCH, Dash) or XPUB";
 "watch_address.choose_blockchain" = "블록체인 선택";
 "watch_address.choose_coin" = "코인 선택";
+"watch_address.view_key.placeholder" = "Private View Key";
+"watch_address.view_key.error.required" = "Private View Key is required to watch Monero wallets.";
+"watch_address.view_key.error.invalid" = "Invalid View Key";
+"watch_address.birthday_height.placeholder" = "Restore Height (0000000)";
+"watch_address.birthday_height.error.invalid" = "Invalid Restore Height";
+"watch_address.monero_warning.title" = "Attention!";
+"watch_address.monero_warning.description" = "Monero watch wallet show only incoming transactions, The balance displayed may be incorrect.";
 
 // Nft Collections
 
