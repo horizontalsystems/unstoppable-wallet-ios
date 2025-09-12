@@ -2175,12 +2175,19 @@
 "watch_address.watch" = "Смотреть";
 "watch_address.address" = "Адрес";
 "watch_address.error.not_supported" = "Формат адреса не поддерживается";
+"watch_address.error.address_required" = "Please enter an address to continue";
 "watch_address.error.non_public_key" = "Просмотр по приватному ключу не разрешён";
 "watch_address.error.not_supported_derived_type" = "Неподдерживаемый тип";
-"watch_address.watch_data.placeholder" = "Вставьте свой публичный адрес или XPUB";
-"watch_address.watch_data.description" = "Поддерживаются адреса из сетей EVM, Tron, TON, Stellar, Bitcoin-семейства (BTC, LTC, BCH, Dash) и XPUB-ключи.";
+"watch_address.watch_data.placeholder" = "Paste your address (EVM, Tron, TON, Stellar, Monero, BTC, LTC, BCH, Dash) or XPUB";
 "watch_address.choose_blockchain" = "Выбрать блокчейн";
 "watch_address.choose_coin" = "Выберите токен";
+"watch_address.view_key.placeholder" = "Private View Key";
+"watch_address.view_key.error.required" = "Private View Key is required to watch Monero wallets.";
+"watch_address.view_key.error.invalid" = "Invalid View Key";
+"watch_address.birthday_height.placeholder" = "Restore Height (0000000)";
+"watch_address.birthday_height.error.invalid" = "Invalid Restore Height";
+"watch_address.monero_warning.title" = "Attention!";
+"watch_address.monero_warning.description" = "Monero watch wallet show only incoming transactions, The balance displayed may be incorrect.";
 
 // Nft Collections
 
