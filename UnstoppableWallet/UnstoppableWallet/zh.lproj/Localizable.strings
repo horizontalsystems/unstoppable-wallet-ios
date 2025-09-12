@@ -2172,12 +2172,19 @@
 "watch_address.watch" = "观察";
 "watch_address.address" = "地址";
 "watch_address.error.not_supported" = "不支持的地址格式";
+"watch_address.error.address_required" = "Please enter an address to continue";
 "watch_address.error.non_public_key" = "不允许使用私钥进行观察";
 "watch_address.error.not_supported_derived_type" = "不支持的派生类型";
-"watch_address.watch_data.placeholder" = "粘贴您的公开地址或 XPUB";
-"watch_address.watch_data.description" = "支持来自 EVM、Tron、TON、Stellar、比特币系列（BTC、LTC、BCH、Dash）以及 XPUB 的地址。";
+"watch_address.watch_data.placeholder" = "Paste your address (EVM, Tron, TON, Stellar, Monero, BTC, LTC, BCH, Dash) or XPUB";
 "watch_address.choose_blockchain" = "选择区块链";
 "watch_address.choose_coin" = "选择代币";
+"watch_address.view_key.placeholder" = "Private View Key";
+"watch_address.view_key.error.required" = "Private View Key is required to watch Monero wallets.";
+"watch_address.view_key.error.invalid" = "Invalid View Key";
+"watch_address.birthday_height.placeholder" = "Restore Height (0000000)";
+"watch_address.birthday_height.error.invalid" = "Invalid Restore Height";
+"watch_address.monero_warning.title" = "Attention!";
+"watch_address.monero_warning.description" = "Monero watch wallet show only incoming transactions, The balance displayed may be incorrect.";
 
 // Nft Collections
 
