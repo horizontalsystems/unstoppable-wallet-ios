@@ -167,16 +167,20 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                let adapter = adapterManager.adapter(for: tokenIn) as? BitcoinBaseAdapter
             {
                 do {
+                    let value = adapter.convertToSatoshi(value: amountIn)
+                    if let dustThreshold = slippageSwapQuote.dustThreshold, value <= dustThreshold {
+                        throw BitcoinCoreErrors.SendValueErrors.dust(dustThreshold + 1)
+                    }
+
                     satoshiPerByte = _satoshiPerByte
                     let _params = SendParameters(
                         address: swapQuote.inboundAddress,
-                        value: adapter.convertToSatoshi(value: amountIn),
+                        value: value,
                         feeRate: _satoshiPerByte,
                         sortType: .none,
                         rbfEnabled: true,
                         memo: swapQuote.memo,
                         unspentOutputs: nil,
-                        dustThreshold: swapQuote.dustThreshold,
                         utxoFilters: utxoFilters,
                         changeToFirstInput: true
                     )
@@ -297,7 +301,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             throw SwapError.unsupportedTokenOut
         }
 
-        let amount = (amountIn * pow(10, 8)).rounded(decimal: 0)
+        let amount = (amountIn * pow(10, 8)).roundedDown(decimal: 0)
         let destination = try resolveDestination(token: tokenOut)
 
         var parameters: Parameters = [
@@ -310,7 +314,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         ]
 
         if let slippage {
-            parameters["tolerance_bps"] = Int((slippage * 100).rounded(decimal: 0).description)
+            parameters["tolerance_bps"] = Int((slippage * 100).roundedDown(decimal: 0).description)
         }
 
         if let affiliate, let affiliateBps {
