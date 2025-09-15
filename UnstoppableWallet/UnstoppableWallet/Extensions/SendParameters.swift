@@ -12,7 +12,6 @@ extension SendParameters {
             memo: memo,
             unspentOutputs: unspentOutputs,
             pluginData: pluginData,
-            dustThreshold: dustThreshold,
             utxoFilters: utxoFilters,
             changeToFirstInput: changeToFirstInput
         )

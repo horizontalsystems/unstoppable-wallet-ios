@@ -46,6 +46,10 @@ class BaseSendBtcData {
                 title = "fee_settings.errors.insufficient_balance".localized
                 text = "fee_settings.errors.insufficient_balance.info".localized(feeToken.coin.code)
 
+            case .dust(let dustAmount):
+                title = "send.amount_error.minimum_amount.title".localized
+                text = "send.amount_error.minimum_amount.description".localized("\(dustAmount) satoshis")
+
             default:
                 title = "Send Info error"
                 text = "Send Info error description"
