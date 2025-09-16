@@ -10,11 +10,11 @@ class AccountWarningViewModel: ObservableObject {
     @Published private(set) var item: Item?
 
     private let predefinedAccount: Account?
-    private let canIgnore: Bool
+    private let ignoreType: IgnoreType
 
-    init(predefinedAccount: Account? = nil, canIgnore: Bool) {
+    init(predefinedAccount: Account? = nil, ignoreType: IgnoreType) {
         self.predefinedAccount = predefinedAccount
-        self.canIgnore = canIgnore
+        self.ignoreType = ignoreType
 
         if predefinedAccount == nil {
             accountManager.activeAccountPublisher
@@ -36,20 +36,37 @@ class AccountWarningViewModel: ObservableObject {
         }
 
         if account.nonStandard {
+            var description = AttributedString("restore.error.non_standard.description".localized)
+            var underlined = AttributedString("restore.error.non_standard.link".localized)
+            underlined.underlineStyle = .single
+
+            description.append(underlined)
+
             return Item(
-                caution: CautionNew(title: "note".localized, text: "restore.error.non_standard.description".localized, type: .error),
+                alertItem: .init(text: .attributed(description), type: .critical),
                 url: warningUrl(path: "/management/migration_required.md"),
                 canIgnore: false
             )
         } else if account.nonRecommended {
-            if canIgnore, accountRestoreWarningManager.getIgnoreWarning(account: account) {
-                return nil
+            switch ignoreType {
+            case .always: return nil
+            case .auto:
+                if accountRestoreWarningManager.getIgnoreWarning(account: account) {
+                    return nil
+                }
+            case .none: ()
             }
 
+            var description = AttributedString("restore.warning.non_recommended.description".localized)
+            var underlined = AttributedString("restore.error.non_standard.link".localized)
+            underlined.underlineStyle = .single
+
+            description.append(underlined)
+
             return Item(
-                caution: CautionNew(title: "note".localized, text: "restore.warning.non_recommended.description".localized, type: .warning),
+                alertItem: .init(text: .attributed(description)),
                 url: warningUrl(path: "/management/migration_recommended.md"),
-                canIgnore: canIgnore
+                canIgnore: true
             )
         } else {
             return nil
@@ -73,8 +90,14 @@ extension AccountWarningViewModel {
 }
 
 extension AccountWarningViewModel {
+    enum IgnoreType {
+        case always
+        case auto
+        case none
+    }
+
     struct Item: Equatable {
-        let caution: CautionNew
+        let alertItem: AlertCardViewItem
         let url: URL?
         let canIgnore: Bool
     }

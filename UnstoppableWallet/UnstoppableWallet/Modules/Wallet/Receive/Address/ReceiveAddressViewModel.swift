@@ -40,6 +40,7 @@ class ReceiveAddressViewModel: ObservableObject {
         self.decimalParser = decimalParser
 
         service.statusUpdatedPublisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.sync(state: $0) }
             .store(in: &cancellables)
 

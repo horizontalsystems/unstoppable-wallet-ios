@@ -87,6 +87,15 @@ struct MainView: View {
                     }
                 }
 
+                if walletViewModel.totalItem.state == .syncing {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        ProgressView(value: 0.55)
+                            .progressViewStyle(DeterminiteSpinnerStyle())
+                            .frame(width: 20, height: 20)
+                            .spinning()
+                    }
+                }
+
                 if walletViewModel.buttonHidden {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button(action: {

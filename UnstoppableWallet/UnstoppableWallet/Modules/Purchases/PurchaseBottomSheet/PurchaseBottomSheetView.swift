@@ -71,9 +71,7 @@ struct PurchaseBottomSheetView: View {
             .padding(EdgeInsets(top: .margin24, leading: .margin24, bottom: 0, trailing: .margin24))
 
             VStack(spacing: 0) {
-                Text(termsText())
-                    .foregroundColor(.themeGray)
-                    .font(.themeSubhead2)
+                ThemeText(termsText(), style: .subhead)
                     .multilineTextAlignment(.center)
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin32, bottom: .margin12, trailing: .margin32))

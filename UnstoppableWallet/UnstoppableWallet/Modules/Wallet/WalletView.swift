@@ -2,7 +2,7 @@ import SwiftUI
 
 struct WalletView: View {
     @ObservedObject var viewModel: WalletViewModel
-    @StateObject var accountWarningViewModel = AccountWarningViewModel(canIgnore: true)
+    @StateObject var accountWarningViewModel = AccountWarningViewModel(ignoreType: .always)
 
     @Binding var path: NavigationPath
 
@@ -133,7 +133,7 @@ struct WalletView: View {
 
     @ViewBuilder private func itemsView() -> some View {
         ListForEach(viewModel.items) { item in
-            WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, amountRounding: viewModel.amountRounding, subtitleMode: .price) {
+            WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, amountRounding: viewModel.amountRounding, subtitleMode: .price, isReachable: viewModel.isReachable) {
                 path.append(item.wallet)
             } failedAction: {
                 Coordinator.shared.presentBalanceError(wallet: item.wallet, state: item.state)
@@ -213,9 +213,21 @@ struct WalletView: View {
             return BalanceHiddenManager.placeholder
         }
 
+        var colorStyle: ColorStyle = .primary
+        var dimmed = false
+        switch viewModel.totalItem.state {
+        case .synced:
+            ()
+        case .expired:
+            colorStyle = .secondary
+        case .syncing:
+            dimmed = true
+        }
+
         return ComponentText(
             text: ValueFormatter.instance.formatWith(rounding: viewModel.amountRounding, currencyValue: viewModel.totalItem.currencyValue) ?? String.placeholder,
-            dimmed: viewModel.totalItem.expired
+            colorStyle: colorStyle,
+            dimmed: dimmed
         )
     }
 

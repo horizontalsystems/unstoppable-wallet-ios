@@ -6,13 +6,14 @@ struct WalletListItemView: View, Equatable {
     let balanceHidden: Bool
     let amountRounding: Bool
     let subtitleMode: SubtitleMode
+    let isReachable: Bool
     let action: () -> Void
     let failedAction: () -> Void
 
     var body: some View {
         Cell(
             left: {
-                BalanceCoinIconView(coin: item.wallet.coin, state: item.state, placeholderImage: item.wallet.token.placeholderImageName) {
+                BalanceCoinIconView(coin: item.wallet.coin, state: item.state, isReachable: isReachable, placeholderImage: item.wallet.token.placeholderImageName) {
                     failedAction()
                 }
             },
@@ -35,6 +36,10 @@ struct WalletListItemView: View, Equatable {
     }
 
     private var subtitle: CustomStringConvertible {
+        if !isReachable {
+            return itemSubtitle
+        }
+
         switch item.state {
         case let .syncing(progress, _):
             return progress.map { "balance.syncing_percent".localized("\($0)%") } ?? "balance.syncing".localized
@@ -47,34 +52,50 @@ struct WalletListItemView: View, Equatable {
         case .notSynced:
             return "balance_error.sync_error".localized
         case .synced:
-            switch subtitleMode {
-            case .price:
-                if let priceItem = item.priceItem {
-                    return ComponentText(text: ValueFormatter.instance.formatFull(currencyValue: priceItem.price) ?? String.placeholder, dimmed: priceItem.expired)
-                } else {
-                    return "n/a".localized
-                }
-            case .coinName:
-                return item.wallet.coin.name
+            return itemSubtitle
+        }
+    }
+
+    private var itemSubtitle: CustomStringConvertible {
+        switch subtitleMode {
+        case .price:
+            if let priceItem = item.priceItem {
+                return ComponentText(text: ValueFormatter.instance.formatFull(currencyValue: priceItem.price) ?? String.placeholder, dimmed: priceItem.expired)
+            } else {
+                return "n/a".localized
             }
+        case .coinName:
+            return item.wallet.coin.name
         }
     }
 
     private var subtitle2: CustomStringConvertible? {
+        if !isReachable {
+            return itemSubtitle2
+        }
+
         switch item.state {
         case .synced:
-            switch subtitleMode {
-            case .price:
-                return item.priceItem.map { Diff.text(diff: $0.diff, expired: $0.expired) }
-            default:
-                return nil
-            }
+            return itemSubtitle2
+        default:
+            return nil
+        }
+    }
+
+    private var itemSubtitle2: CustomStringConvertible? {
+        switch subtitleMode {
+        case .price:
+            return item.priceItem.map { Diff.text(diff: $0.diff, expired: $0.expired) }
         default:
             return nil
         }
     }
 
     private var secondary: CustomStringConvertible? {
+        if !isReachable {
+            return secondaryValue
+        }
+
         switch item.state {
         case let .syncing(_, lastBlockDate):
             return lastBlockDate.map { "balance.synced_through".localized(DateHelper.instance.formatSyncedThroughDate(from: $0)) } ?? secondaryValue
@@ -112,7 +133,7 @@ struct WalletListItemView: View, Equatable {
     private func coinValue(value: Decimal, decimalCount: Int, symbol: String? = nil, state: AdapterState, expanded _: Bool = false) -> CustomStringConvertible {
         ComponentText(
             text: ValueFormatter.instance.formatWith(rounding: amountRounding, value: value, decimalCount: decimalCount, symbol: symbol) ?? String.placeholder,
-            dimmed: state != .synced
+            dimmed: (state != .synced) && isReachable
         )
     }
 
@@ -126,7 +147,7 @@ struct WalletListItemView: View, Equatable {
 
         return ComponentText(
             text: ValueFormatter.instance.formatWith(rounding: amountRounding, currencyValue: currencyValue) ?? String.placeholder,
-            dimmed: state != .synced || priceItem.expired
+            dimmed: (state != .synced && isReachable) || priceItem.expired
         )
     }
 

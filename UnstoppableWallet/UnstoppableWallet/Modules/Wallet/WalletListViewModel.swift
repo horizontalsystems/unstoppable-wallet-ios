@@ -11,6 +11,7 @@ class WalletListViewModel: ObservableObject {
     private let sorter = WalletSorter()
     let balanceHiddenManager = Core.shared.balanceHiddenManager
     let accountManager = Core.shared.accountManager
+    private let reachabilityManager = Core.shared.reachabilityManager
     private let userDefaultsStorage = Core.shared.userDefaultsStorage
     private let cacheManager = Core.shared.enabledWalletCacheManager
     private let feeCoinProvider = Core.shared.feeCoinProvider
@@ -33,6 +34,7 @@ class WalletListViewModel: ObservableObject {
     }
 
     @Published private(set) var items: [Item] = []
+    @Published private(set) var isReachable: Bool = true
 
     var walletService: WalletService?
 
@@ -50,6 +52,7 @@ class WalletListViewModel: ObservableObject {
         balancePrimaryValue = appSettingManager.balancePrimaryValue
         balanceHidden = balanceHiddenManager.balanceHidden
         amountRounding = amountRoundingManager.useAmountRounding
+        isReachable = reachabilityManager.isReachable
 
         coinPriceService.delegate = self
 
@@ -82,6 +85,11 @@ class WalletListViewModel: ObservableObject {
             .sink { [weak self] in
                 self?.amountRounding = $0
             }
+            .store(in: &cancellables)
+
+        reachabilityManager.$isReachable
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.isReachable = $0 }
             .store(in: &cancellables)
 
         _syncWalletService()

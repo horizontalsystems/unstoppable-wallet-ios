@@ -5,35 +5,46 @@ import SwiftUI
 struct BalanceCoinIconView: View {
     let coin: Coin
     let state: AdapterState
+    let isReachable: Bool
     let placeholderImage: String?
     let onTapFailed: () -> Void
 
     var body: some View {
         Group {
-            switch state {
-            case .notSynced:
-                ZStack {
-                    Circle().fill(Color.themeBlade)
-                    Image("warning_filled").themeIcon(color: .themeLucian)
-                }
-                .frame(size: .iconSize32)
-                .onTapGesture(perform: onTapFailed)
-            default:
-                CoinIconView(coin: coin, placeholderImage: placeholderImage)
-                    .opacity(state.syncing ? 0.5 : 1)
-                    .overlay {
-                        switch state {
-                        case let .syncing(progress, _), let .customSyncing(_, _, progress):
-                            ProgressView(value: max(0.1, Float(progress ?? 10) / 100))
-                                .progressViewStyle(DeterminiteSpinnerStyle())
-                                .frame(width: 36, height: 36)
-                                .spinning()
-                        default:
-                            EmptyView()
-                        }
+            if !isReachable {
+                // show standard icon when noInternet
+                coinIconView()
+            } else {
+                switch state {
+                case .notSynced:
+                    ZStack {
+                        Circle().fill(Color.themeBlade)
+                        Image("warning_filled").themeIcon(color: .themeLucian)
                     }
+                    .frame(size: .iconSize32)
+                    .onTapGesture(perform: onTapFailed)
+                default:
+                    coinIconView()
+                }
             }
         }
+    }
+
+    @ViewBuilder
+    private func coinIconView() -> some View {
+        CoinIconView(coin: coin, placeholderImage: placeholderImage)
+            .opacity(state.syncing ? 0.5 : 1)
+            .overlay {
+                switch state {
+                case let .syncing(progress, _), let .customSyncing(_, _, progress):
+                    ProgressView(value: max(0.1, Float(progress ?? 10) / 100))
+                        .progressViewStyle(DeterminiteSpinnerStyle())
+                        .frame(width: 36, height: 36)
+                        .spinning()
+                default:
+                    EmptyView()
+                }
+            }
     }
 }
 
