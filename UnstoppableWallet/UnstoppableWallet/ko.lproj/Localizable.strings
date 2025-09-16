@@ -79,6 +79,9 @@
 "alert.unable_to_replace" = "교체할 수 없음";
 "alert.already_replaced" = "이미 교체했습니다";
 
+"alert_card.title.critical" = "Warning!";
+"alert_card.title.caution" = "Attention!";
+
 "no_results_found" = "검색 결과가 없습니다";
 "action.loading" = "로딩중";
 "placeholder.search" = "검색";
@@ -147,8 +150,10 @@
 "restore.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
 "restore.non_standard_import" = "비표준 복원";
 "restore.non_standard_import.description" = "이 페이지는 비표준 지갑을 가지고 있는 %@ 사용자를 위한 특별한 지갑 복원 메커니즘을 제공합니다. 일반적으로 이러한 지갑은 %@ 버전 0.27 - 0.28에서 영어가 아닌 니모닉 단어 목록 및/또는 지갑 암호의 특수 문자(예: 분음 부호)를 사용하여 생성되었을 수 있습니다.\n\n영향을 받는 사용자인 경우 버전 0.29로 업데이트하면 지갑 잔액이 0으로 표시됩니다. 이 페이지에서는 비표준 지갑에 대한 액세스를 복원할 수 있습니다. 복원되면 새 지갑(표준 준수)을 만들고 그곳으로 자금을 옮기는 것이 좋습니다.";
-"restore.warning.non_recommended.description" = "이 지갑은 비밀 단어 목록 및/또는 암호 문구에 비표준 문자를 사용하는 것 같습니다. 잔액이나 거래 내역이 보이지 않으면 아래에서 자세한 내용을 읽어보세요.\n\n더 많은 정보를 얻으려면 클릭하십시오";
-"restore.error.non_standard.description" = "비표준 호환 지갑입니다. 자세한 내용은 아래를 참조하십시오.\n\n더 많은 정보를 얻으려면 클릭하십시오";
+"restore.warning.non_recommended.description" = "This wallet seems to use a non-standard character in its recovery phrase and/or a passphrase. If you do not see a balance or transactions please read below for details.\n\n";
+"restore.error.non_standard.description" = "This is a non-standard wallet. Please migrate to a standard wallet to avoid risk of fund loss.\n\n";
+
+"restore.error.non_standard.link" = "Click to get more info";
 
 // Restore Type
 
@@ -1909,8 +1914,6 @@
 "wallet_connect.list.pending_requests" = "보류 중인 요청";
 "wallet_connect.main.connect" = "Connect to %@";
 "wallet_connect.main.connected" = "Connected to %@";
-"wallet_connect.main.premium_alert.title.deactivated" = "Attention!";
-"wallet_connect.main.premium_alert.title.not_available" = "Warning!";
 "wallet_connect.main.premium_alert.title.risky" = "Danger!";
 "wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Domain verification is unavailable. Upgrade to Premium to protect against unverified or phishing websites.";
 "wallet_connect.main.premium_alert.subtitle.risky" = "This website is not verified and may lead to phishing or loss of funds. Connecting is strongly discouraged.";
@@ -2186,7 +2189,6 @@
 "watch_address.view_key.error.invalid" = "Invalid View Key";
 "watch_address.birthday_height.placeholder" = "Restore Height (0000000)";
 "watch_address.birthday_height.error.invalid" = "Invalid Restore Height";
-"watch_address.monero_warning.title" = "Attention!";
 "watch_address.monero_warning.description" = "Monero watch wallet show only incoming transactions, The balance displayed may be incorrect.";
 
 // Nft Collections
