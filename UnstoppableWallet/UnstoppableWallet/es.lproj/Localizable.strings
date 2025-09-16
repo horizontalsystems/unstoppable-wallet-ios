@@ -542,6 +542,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.address_error.own_address" = "No está permitido enviar %@ a tu propia dirección. Ingresa una dirección de destinatario diferente.";
 "send.amount_error.maximum_amount" = "Monto máximo %@";
 "send.amount_error.minimum_amount" = "Monto mínimo %@";
+"send.amount_error.minimum_amount.title" = "Minimum amount";
+"send.amount_error.minimum_amount.description" = "Minimum amount must be %@";
 "send.amount_error.min_required_balance" = "Min. requerido restante %@";
 "send.amount_warning.coin_needed_for_fee" = "Considere dejar algún %@ en el saldo para poder pagar futuras transacciones.";
 "send.token.insufficient_fee_alert" = "Las comisiones de transacción para %@ (%@) pagado en %@. Es necesario %@.";
