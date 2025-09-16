@@ -542,6 +542,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.address_error.own_address" = "%@’ı kendi adresinize göndermenize izin verilmiyor. Lütfen farklı bir alıcı adresi girin.";
 "send.amount_error.maximum_amount" = "Maksimum miktar %@";
 "send.amount_error.minimum_amount" = "Minimum miktar %@";
+"send.amount_error.minimum_amount.title" = "Minimum amount";
+"send.amount_error.minimum_amount.description" = "Minimum amount must be %@";
 "send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
 "send.amount_warning.coin_needed_for_fee" = "Gelecekteki işlemler için ödeme yapabilmek için bakiyenizde biraz %@ bırakmayı göz önünde bulundurun.";
 "send.token.insufficient_fee_alert" = "%@ (%@) için ișlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
