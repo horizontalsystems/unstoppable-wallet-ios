@@ -79,6 +79,9 @@
 "alert.unable_to_replace" = "Nicht möglich zu ersetzen";
 "alert.already_replaced" = "Bereits ersetzt";
 
+"alert_card.title.critical" = "Warning!";
+"alert_card.title.caution" = "Attention!";
+
 "no_results_found" = "Keine Ergebnisse gefunden";
 "action.loading" = "wird geladen ...";
 "placeholder.search" = "Suche";
@@ -149,8 +152,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "restore.error.empty_passphrase" = "Die Passphrase darf nicht leer sein";
 "restore.non_standard_import" = "Nicht standardmäßige Wiederherstellung";
 "restore.non_standard_import.description" = "Diese Seite bietet einen speziellen Wallet-Importmechanismus für Benutzer von %@ die eine nicht standardmäßige Wallet haben. Solche Brieftaschen könnten in %@ Version 0 erstellt worden sein. 7 - 0.28 unter Verwendung einer nicht-englischen Wiederherstellungsphrase und/oder eines Sonderzeichens in der Brieftasche Passphrase (d.h. diakritisches Symbol).\n\nWenn Sie ein betroffener Benutzer sind, wird Ihr Wallet-Guthaben nach dem Import in Version 0.29 oder höher 0 angezeigt. Auf dieser Seite können Sie den Zugriff auf Ihre nicht standardmäßige Brieftasche wiederherstellen. Sobald Sie importiert haben, empfehlen wir Ihnen eine neue Wallet zu erstellen (die standardkonform ist) und Geld dorthin zu verschieben.";
-"restore.warning.non_recommended.description" = "Diese Brieftasche scheint ein nicht standardmäßiges Zeichen in ihrer geheimen Wortliste und/oder einer Passphrase zu verwenden. Wenn Sie kein Guthaben oder Transaktionen sehen, lesen Sie bitte unten für Details.\n\nKLICKEN, UM WEITERE INFORMATIONEN ZU ERHALTEN";
-"restore.error.non_standard.description" = "Dies ist eine nicht standardmäßige Wallet. \n\nKLICKEN SIE MEHR INFO";
+"restore.warning.non_recommended.description" = "This wallet seems to use a non-standard character in its recovery phrase and/or a passphrase. If you do not see a balance or transactions please read below for details.\n\n";
+"restore.error.non_standard.description" = "This is a non-standard wallet. Please migrate to a standard wallet to avoid risk of fund loss.\n\n";
+
+"restore.error.non_standard.link" = "Click to get more info";
 
 // Restore Type
 
@@ -1908,8 +1913,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "wallet_connect.list.pending_requests" = "Ausstehende Anfragen";
 "wallet_connect.main.connect" = "Connect to %@";
 "wallet_connect.main.connected" = "Connected to %@";
-"wallet_connect.main.premium_alert.title.deactivated" = "Attention!";
-"wallet_connect.main.premium_alert.title.not_available" = "Warning!";
 "wallet_connect.main.premium_alert.title.risky" = "Danger!";
 "wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Domain verification is unavailable. Upgrade to Premium to protect against unverified or phishing websites.";
 "wallet_connect.main.premium_alert.subtitle.risky" = "This website is not verified and may lead to phishing or loss of funds. Connecting is strongly discouraged.";
@@ -2185,7 +2188,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "watch_address.view_key.error.invalid" = "Invalid View Key";
 "watch_address.birthday_height.placeholder" = "Restore Height (0000000)";
 "watch_address.birthday_height.error.invalid" = "Invalid Restore Height";
-"watch_address.monero_warning.title" = "Attention!";
 "watch_address.monero_warning.description" = "Monero watch wallet show only incoming transactions, The balance displayed may be incorrect.";
 
 // Nft Collections
