@@ -542,6 +542,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.address_error.own_address" = "L’envoi de %@ vers votre propre adresse n’est pas autorisé. Veuillez saisir une autre adresse de destinataire.";
 "send.amount_error.maximum_amount" = "Montant maximum %@";
 "send.amount_error.minimum_amount" = "Montant minimum %@";
+"send.amount_error.minimum_amount.title" = "Minimum amount";
+"send.amount_error.minimum_amount.description" = "Minimum amount must be %@";
 "send.amount_error.min_required_balance" = "Minimum requis %@ restant";
 "send.amount_warning.coin_needed_for_fee" = "Pensez à laisser quelques %@ sur le solde pour payer de futures transactions.";
 "send.token.insufficient_fee_alert" = "Frais de transaction pour %@ (%@) payé en %@. Il est nécessaire %@.";
