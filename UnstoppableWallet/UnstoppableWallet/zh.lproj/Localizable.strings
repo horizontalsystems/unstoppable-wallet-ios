@@ -542,6 +542,8 @@
 "send.address_error.own_address" = "不允许将 %@ 发送到您自己的地址。请输入其他收款地址。";
 "send.amount_error.maximum_amount" = "最大金额 %@";
 "send.amount_error.minimum_amount" = "最小金额 %@";
+"send.amount_error.minimum_amount.title" = "Minimum amount";
+"send.amount_error.minimum_amount.description" = "Minimum amount must be %@";
 "send.amount_error.min_required_balance" = "最小要求剩余 %@";
 "send.amount_warning.coin_needed_for_fee" = "考虑留下%@作为余额以便能够支付未来的交易。";
 "send.token.insufficient_fee_alert" = "%@（%@）的交易费用以%@支付。您需要%@。";
