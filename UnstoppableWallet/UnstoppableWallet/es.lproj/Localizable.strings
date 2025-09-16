@@ -79,6 +79,9 @@
 "alert.unable_to_replace" = "No se puede reemplazar";
 "alert.already_replaced" = "Ya reemplazado";
 
+"alert_card.title.critical" = "Warning!";
+"alert_card.title.caution" = "Attention!";
+
 "no_results_found" = "No se han encontrado resultados";
 "action.loading" = "cargando...";
 "placeholder.search" = "Buscar";
@@ -149,8 +152,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "restore.error.empty_passphrase" = "La frase no puede estar vacía";
 "restore.non_standard_import" = "Restauración no estándar";
 "restore.non_standard_import.description" = "Esta página proporciona un mecanismo especial de importación de carteras para usuarios de %@ que tienen una cartera no estándar. Dichas carteras podrían haberse creado en la versión %@ 0.27 - 0.28 utilizando una frase de recuperación en un idioma que no es inglés y/o un carácter especial en la frase de contraseña de la cartera (por ejemplo, un símbolo diacrítico).\n\nSi eres un usuario afectado, entonces tu saldo en la cartera se mostrará como 0 después de importar dicha cartera en la versión 0.29 o superior. Esta página te permitirá restaurar el acceso a tu cartera no estándar. Una vez importada, se recomienda crear una nueva cartera (que cumpla con los estándares) y transferir allí los fondos.";
-"restore.warning.non_recommended.description" = "Parece que esta cartera utiliza un carácter no estándar en su frase de recuperación y/o contraseña. Si no ves un saldo o transacciones, por favor lee abajo para más detalles. \n\nHAGA CLIC PARA OBTENER MÁS INFORMACIÓN";
-"restore.error.non_standard.description" = "Esta es una cartera no estándar. \n\nCLICK PARA CONTRAR MÁS INFO";
+"restore.warning.non_recommended.description" = "This wallet seems to use a non-standard character in its recovery phrase and/or a passphrase. If you do not see a balance or transactions please read below for details.\n\n";
+"restore.error.non_standard.description" = "This is a non-standard wallet. Please migrate to a standard wallet to avoid risk of fund loss.\n\n";
+
+"restore.error.non_standard.link" = "Click to get more info";
 
 // Restore Type
 
@@ -1909,8 +1914,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "wallet_connect.list.pending_requests" = "Solicitudes Pendientes";
 "wallet_connect.main.connect" = "Connect to %@";
 "wallet_connect.main.connected" = "Connected to %@";
-"wallet_connect.main.premium_alert.title.deactivated" = "Attention!";
-"wallet_connect.main.premium_alert.title.not_available" = "Warning!";
 "wallet_connect.main.premium_alert.title.risky" = "Danger!";
 "wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Domain verification is unavailable. Upgrade to Premium to protect against unverified or phishing websites.";
 "wallet_connect.main.premium_alert.subtitle.risky" = "This website is not verified and may lead to phishing or loss of funds. Connecting is strongly discouraged.";
@@ -2186,7 +2189,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "watch_address.view_key.error.invalid" = "Invalid View Key";
 "watch_address.birthday_height.placeholder" = "Restore Height (0000000)";
 "watch_address.birthday_height.error.invalid" = "Invalid Restore Height";
-"watch_address.monero_warning.title" = "Attention!";
 "watch_address.monero_warning.description" = "Monero watch wallet show only incoming transactions, The balance displayed may be incorrect.";
 
 // Nft Collections
