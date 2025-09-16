@@ -40,7 +40,7 @@ struct DonateTokenListView: View {
                         let items = viewModel.items
 
                         ListForEach(items) { item in
-                            WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, amountRounding: viewModel.amountRounding, subtitleMode: .coinName) {
+                            WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, amountRounding: viewModel.amountRounding, subtitleMode: .coinName, isReachable: viewModel.isReachable) {
                                 guard let address = AppConfig.donationAddresses.first(where: { $0.key == item.wallet.token.blockchainType })?.value else {
                                     return
                                 }

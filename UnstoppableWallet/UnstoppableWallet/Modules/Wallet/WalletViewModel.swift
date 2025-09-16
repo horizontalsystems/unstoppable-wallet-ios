@@ -10,16 +10,13 @@ class WalletViewModel: WalletListViewModel {
     private let appManager = Core.shared.appManager
     private let eventHandler = Core.shared.appEventHandler
     private let rateAppManager = Core.shared.rateAppManager
-    private let reachabilityManager = Core.shared.reachabilityManager
 
     @Published private(set) var buttonHidden: Bool
     @Published private(set) var totalItem: TotalItem
-    @Published private(set) var isReachable: Bool
 
     override init() {
         buttonHidden = walletButtonHiddenManager.buttonHidden
-        totalItem = .init(currencyValue: .init(currency: .init(code: "", symbol: "", decimal: 0), value: 0), expired: false, convertedValue: nil, convertedValueExpired: false)
-        isReachable = reachabilityManager.isReachable
+        totalItem = .init(currencyValue: .init(currency: .init(code: "", symbol: "", decimal: 0), value: 0), state: .synced, convertedValue: nil, convertedValueExpired: false)
 
         super.init()
 
@@ -27,8 +24,9 @@ class WalletViewModel: WalletListViewModel {
             self?.coinPriceService.refresh()
         }
 
-        balanceConversionManager.$conversionToken.sink { [weak self] _ in self?.syncTotalItem() }.store(in: &cancellables)
-        reachabilityManager.$isReachable.sink { [weak self] in self?.isReachable = $0 }.store(in: &cancellables)
+        balanceConversionManager.$conversionToken
+            .sink { [weak self] _ in self?.syncTotalItem() }
+            .store(in: &cancellables)
 
         walletButtonHiddenManager.buttonHiddenObservable
             .observeOn(MainScheduler.instance)
@@ -51,10 +49,15 @@ class WalletViewModel: WalletListViewModel {
     override func _syncTotalItem() {
         var total: Decimal = 0
         var expired = false
+        var syncing = false
 
         for item in __items {
             if let rateItem = item.priceItem {
                 total += item.balanceData.total * rateItem.price.value
+
+                if item.state.syncing {
+                    syncing = true
+                }
 
                 if rateItem.expired {
                     expired = true
@@ -76,9 +79,18 @@ class WalletViewModel: WalletListViewModel {
             convertedValueExpired = priceItem.expired
         }
 
+        let state: ValueState
+        if syncing {
+            state = .syncing
+        } else if expired {
+            state = .expired
+        } else {
+            state = .synced
+        }
+
         let totalItem = TotalItem(
             currencyValue: CurrencyValue(currency: coinPriceService.currency, value: total),
-            expired: expired,
+            state: state,
             convertedValue: convertedValue,
             convertedValueExpired: expired || convertedValueExpired
         )
@@ -154,8 +166,14 @@ extension WalletViewModel {
 extension WalletViewModel {
     struct TotalItem {
         let currencyValue: CurrencyValue
-        let expired: Bool
+        let state: ValueState
         let convertedValue: AppValue?
         let convertedValueExpired: Bool
+    }
+
+    enum ValueState {
+        case synced
+        case syncing
+        case expired
     }
 }

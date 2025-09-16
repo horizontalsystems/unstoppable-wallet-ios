@@ -44,7 +44,7 @@ struct SendTokenListView: View {
                     let items = filteredItems
 
                     ThemeList(items) { item in
-                        WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, amountRounding: viewModel.amountRounding, subtitleMode: .coinName) {
+                        WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, amountRounding: viewModel.amountRounding, subtitleMode: .coinName, isReachable: viewModel.isReachable) {
                             path.append(item.wallet)
                             stat(page: .sendTokenList, event: .openSend(token: item.wallet.token))
                         } failedAction: {

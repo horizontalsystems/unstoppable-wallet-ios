@@ -39,11 +39,8 @@ struct WalletTokenTopView: View {
                     }
 
                     if case .moneroWatchAccount = viewModel.wallet.account.type {
-                        AlertCardView(
-                            title: "watch_address.monero_warning.title".localized,
-                            text: "watch_address.monero_warning.description".localized
-                        )
-                        .padding(.vertical, .margin16)
+                        AlertCardView(.init(text: "watch_address.monero_warning.description".localized))
+                            .padding(.vertical, .margin16)
                     }
                 }
             }
@@ -86,6 +83,7 @@ struct WalletTokenTopView: View {
 
         var colorStyle: ColorStyle = .primary
         var dimmed = false
+
         switch viewModel.state {
         case .synced:
             ()

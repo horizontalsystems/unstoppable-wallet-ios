@@ -24,7 +24,7 @@ enum AdapterState: Hashable {
 
     var syncing: Bool {
         switch self {
-        case .syncing, .customSyncing: return true
+        case .connecting, .syncing, .customSyncing: return true
         default: return false
         }
     }

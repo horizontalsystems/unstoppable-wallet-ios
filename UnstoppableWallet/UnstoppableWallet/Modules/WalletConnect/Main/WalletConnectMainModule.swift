@@ -128,9 +128,9 @@ extension WalletConnectMainModule {
 
         var alertTitle: String {
             switch self {
-            case .deactivated: return "wallet_connect.main.premium_alert.title.deactivated".localized
+            case .deactivated: return "alert_card.title.caution".localized
             case .risky: return "wallet_connect.main.premium_alert.title.risky".localized
-            case .notAvailable: return "wallet_connect.main.premium_alert.title.not_available".localized
+            case .notAvailable: return "alert_card.title.critical".localized
             case .loading, .secure: return ""
             }
         }

@@ -11,7 +11,7 @@ struct ManageAccountView: View {
 
     init(account: Account, isPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: ManageAccountViewModel(account: account))
-        _accountWarningViewModel = StateObject(wrappedValue: AccountWarningViewModel(predefinedAccount: account, canIgnore: false))
+        _accountWarningViewModel = StateObject(wrappedValue: AccountWarningViewModel(predefinedAccount: account, ignoreType: .auto))
         _isPresented = isPresented
     }
 
