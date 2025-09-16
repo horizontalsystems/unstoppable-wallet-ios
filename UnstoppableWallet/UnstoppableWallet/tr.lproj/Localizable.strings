@@ -79,6 +79,9 @@
 "alert.unable_to_replace" = "Değiştirilemiyor";
 "alert.already_replaced" = "Zaten değiştirildi";
 
+"alert_card.title.critical" = "Warning!";
+"alert_card.title.caution" = "Attention!";
+
 "no_results_found" = "Sonuç bulunamadı";
 "action.loading" = "yükleniyor...";
 "placeholder.search" = "Ara";
@@ -149,8 +152,10 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "restore.error.empty_passphrase" = "Şifre boş bırakılamaz";
 "restore.non_standard_import" = "Standart Olmayan Yükleme";
 "restore.non_standard_import.description" = "Bu sayfa, standart olmayan bir cüzdanı olan %@ kullanıcıları için özel geri yükleme mekanizması sağlar. Genel olarak, bu tür cüzdanlar, İngilizce olmayan bir anımsatma kelimeleri listesi ve/veya cüzdan şifresinde özel bir karakter (yani aksan simgesi) kullanılarak %@ 0.27 - 0.28 sürümünde oluşturulmuş olabilir.\n\n Bu durumdan etkilenen bir kullanıcıysanız, 0.29 sürümüne güncelledikten sonra cüzdan bakiyeniz 0 olarak görüntülenir. Bu sayfa, standart olmayan cüzdanınıza erişimi geri yüklemenizi sağlayacaktır. Geri yüklendikten sonra, yeni bir cüzdan oluşturmanız (standartlarla uyumlu) ve paranızı oraya taşımanız önerilir.";
-"restore.warning.non_recommended.description" = "Bu cüzdan, gizli sözcükler listesinde ve/veya bir şifrede standart olmayan bir karakter kullanıyor gibi görünüyor. Bir bakiye veya işlem göremiyorsanız lütfen bilgi için aşağıya bakınız.\n\nDAHA FAZLA BİLGİ ALMAK İÇİN TIKLAYINIZ";
-"restore.error.non_standard.description" = "Bu standart olmayan bir cüzdandır. \n\nDAHA FAZLA BİLGİ ALMAK İÇİN TIKLAYIN";
+"restore.warning.non_recommended.description" = "This wallet seems to use a non-standard character in its recovery phrase and/or a passphrase. If you do not see a balance or transactions please read below for details.\n\n";
+"restore.error.non_standard.description" = "This is a non-standard wallet. Please migrate to a standard wallet to avoid risk of fund loss.\n\n";
+
+"restore.error.non_standard.link" = "Click to get more info";
 
 // Restore Type
 
@@ -1912,8 +1917,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "wallet_connect.list.pending_requests" = "Bekleyen Talepler";
 "wallet_connect.main.connect" = "Connect to %@";
 "wallet_connect.main.connected" = "Connected to %@";
-"wallet_connect.main.premium_alert.title.deactivated" = "Attention!";
-"wallet_connect.main.premium_alert.title.not_available" = "Warning!";
 "wallet_connect.main.premium_alert.title.risky" = "Danger!";
 "wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Domain verification is unavailable. Upgrade to Premium to protect against unverified or phishing websites.";
 "wallet_connect.main.premium_alert.subtitle.risky" = "This website is not verified and may lead to phishing or loss of funds. Connecting is strongly discouraged.";
@@ -2189,7 +2192,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "watch_address.view_key.error.invalid" = "Invalid View Key";
 "watch_address.birthday_height.placeholder" = "Restore Height (0000000)";
 "watch_address.birthday_height.error.invalid" = "Invalid Restore Height";
-"watch_address.monero_warning.title" = "Attention!";
 "watch_address.monero_warning.description" = "Monero watch wallet show only incoming transactions, The balance displayed may be incorrect.";
 
 // Nft Collections
