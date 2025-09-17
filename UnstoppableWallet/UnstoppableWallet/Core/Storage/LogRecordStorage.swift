@@ -12,7 +12,7 @@ extension LogRecordStorage {
     func logs(context: String) -> [LogRecord] {
         try! dbPool.read { db in
             try LogRecord
-                .filter(LogRecord.Columns.context.like("\(context)%"))
+                .filter(LogRecord.Columns.context.like("%\(context)%"))
                 .order(LogRecord.Columns.date.asc)
                 .fetchAll(db)
         }

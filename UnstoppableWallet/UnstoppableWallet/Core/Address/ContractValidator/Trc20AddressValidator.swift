@@ -21,7 +21,7 @@ class Trc20AddressValidator {
     }
 
     private func checkBlacklistedStatus(address: TronKit.Address, contract: TronKit.Address) async throws -> Bool {
-        var parameters: [String: Any] = [
+        let parameters: [String: Any] = [
             "owner_address": address.hex,
             "contract_address": contract.hex,
             "function_selector": "$methodName(address)",
