@@ -35,7 +35,9 @@ struct MultiSwapSlippageView: View {
                 .font(.themeBody)
                 .keyboardType(.decimalPad)
                 .autocorrectionDisabled()
+                .disabled(viewModel.mode.disabled)
             }, onTap: onTap)
+            .disabled(viewModel.mode.disabled)
         }
         .modifier(CautionBorder(cautionState: cautionState))
         .modifier(CautionPrompt(cautionState: cautionState))

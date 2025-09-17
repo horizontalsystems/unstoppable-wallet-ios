@@ -38,15 +38,6 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
             cautions.append(caution(transactionError: transactionError, feeToken: baseToken))
         }
 
-        // switch MultiSwapSlippage.validate(slippage: slippage) {
-        // case .none: ()
-        // case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
-        // }
-
-        if swapQuote.slipProtectionThreshold > slippage {
-            cautions.append(CautionNew(title: "swap.thorchain.slip_protection".localized, text: "swap.thorchain.slip_protection.description".localized("\(swapQuote.slipProtectionThreshold.rounded(decimal: 2).description)%"), type: .warning))
-        }
-
         return cautions
     }
 
@@ -57,23 +48,21 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
             fields.append(.recipient(recipient.title, blockchainType: tokenOut.blockchainType))
         }
 
-        if swapQuote.slipProtectionThreshold <= slippage {
-            if slippage != MultiSwapSlippage.default {
-                fields.append(.slippage(slippage))
-            }
-
-            let minAmountOut = amountOut * (1 - slippage / 100)
-
-            fields.append(
-                .value(
-                    title: "swap.confirmation.minimum_received".localized,
-                    description: nil,
-                    appValue: AppValue(token: tokenOut, value: minAmountOut),
-                    currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: minAmountOut * $0) },
-                    formatFull: true
-                )
-            )
+        if slippage != MultiSwapSlippage.default {
+            fields.append(.slippage(slippage))
         }
+
+        let minAmountOut = amountOut * (1 - slippage / 100)
+
+        fields.append(
+            .value(
+                title: "swap.confirmation.minimum_received".localized,
+                description: nil,
+                appValue: AppValue(token: tokenOut, value: minAmountOut),
+                currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: minAmountOut * $0) },
+                formatFull: true
+            )
+        )
 
         return fields
     }

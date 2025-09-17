@@ -511,11 +511,11 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         ], isList: false)]
     }
 
-    func settingsView(tokenIn: Token, tokenOut: Token, onChangeSettings: @escaping () -> Void) -> AnyView {
+    func settingsView(tokenIn: Token, tokenOut: Token, quote: IMultiSwapQuote, onChangeSettings: @escaping () -> Void) -> AnyView {
         let crosschain = tokenIn.blockchainType != tokenOut.blockchainType
         if !crosschain {
             let view = ThemeNavigationStack {
-                RecipientAndSlippageMultiSwapSettingsView(tokenOut: tokenOut, storage: storage, onChangeSettings: onChangeSettings)
+                RecipientAndSlippageMultiSwapSettingsView(tokenOut: tokenOut, storage: storage, slippageMode: .adjustable, onChangeSettings: onChangeSettings)
             }
             return AnyView(view)
         }

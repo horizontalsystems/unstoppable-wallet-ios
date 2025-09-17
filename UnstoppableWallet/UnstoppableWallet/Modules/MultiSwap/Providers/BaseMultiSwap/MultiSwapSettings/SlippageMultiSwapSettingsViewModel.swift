@@ -6,6 +6,8 @@ import UIKit
 class SlippageMultiSwapSettingsViewModel: ObservableObject, IMultiSwapSettingsField {
     private let decimalParser = AmountDecimalParser()
     var storage: MultiSwapSettingStorage
+    var mode: SlippageMode
+
     var syncSubject = PassthroughSubject<Void, Never>()
 
     @Published var slippageCautionState: CautionState = .none
@@ -29,8 +31,9 @@ class SlippageMultiSwapSettingsViewModel: ObservableObject, IMultiSwapSettingsFi
         }
     }
 
-    init(storage: MultiSwapSettingStorage) {
+    init(storage: MultiSwapSettingStorage, mode: SlippageMode) {
         self.storage = storage
+        self.mode = mode
 
         slippage = initialSlippage
         slippageString = slippage?.description ?? ""
@@ -50,10 +53,17 @@ class SlippageMultiSwapSettingsViewModel: ObservableObject, IMultiSwapSettingsFi
     }
 
     func onReset() {
+        guard !mode.disabled else {
+            return
+        }
         slippage = nil
     }
 
     func onDone() {
+        guard !mode.disabled else {
+            return
+        }
+
         if slippage == nil {
             storage.set(value: nil, for: MultiSwapSettingStorage.LegacySetting.slippage)
         } else if let slippage, slippage != initialSlippage {
@@ -68,13 +78,27 @@ extension SlippageMultiSwapSettingsViewModel {
     }
 
     var initialSlippage: Decimal? {
-        storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage)
+        switch mode {
+        case let .fixed(slippage): return slippage
+        case .adjustable: return storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage)
+        }
     }
 
     func stepSlippage(direction: StepChangeButtonsViewDirection) {
         switch direction {
         case .down: slippage = max((slippage ?? MultiSwapSlippage.default) - 0.5, 0)
         case .up: slippage = (slippage ?? MultiSwapSlippage.default) + 0.5
+        }
+    }
+}
+
+extension SlippageMultiSwapSettingsViewModel {
+    enum SlippageMode: Equatable {
+        case fixed(Decimal)
+        case adjustable
+        
+        var disabled: Bool {
+            self != .adjustable
         }
     }
 }

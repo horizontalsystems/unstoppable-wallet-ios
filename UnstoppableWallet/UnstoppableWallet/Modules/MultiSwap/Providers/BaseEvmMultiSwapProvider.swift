@@ -73,7 +73,7 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         ], isList: false)]
     }
 
-    func settingsView(tokenIn _: Token, tokenOut _: Token, onChangeSettings _: @escaping () -> Void) -> AnyView {
+    func settingsView(tokenIn _: Token, tokenOut _: Token, quote _: IMultiSwapQuote, onChangeSettings _: @escaping () -> Void) -> AnyView {
         fatalError("settingsView(tokenIn:tokenOut:onChangeSettings:) has not been implemented")
     }
 

@@ -2,15 +2,13 @@ import EvmKit
 import Foundation
 import MarketKit
 
-class ThorChainMultiSwapEvmQuote: BaseEvmMultiSwapQuote {
+class ThorChainMultiSwapEvmQuote: BaseEvmMultiSwapQuote, IMultiSwapSlippageProvider {
     let swapQuote: ThorChainMultiSwapProvider.SwapQuote
     let recipient: Address?
-    let slippage: Decimal
 
-    init(swapQuote: ThorChainMultiSwapProvider.SwapQuote, recipient: Address?, slippage: Decimal, allowanceState: MultiSwapAllowanceHelper.AllowanceState) {
+    init(swapQuote: ThorChainMultiSwapProvider.SwapQuote, recipient: Address?, allowanceState: MultiSwapAllowanceHelper.AllowanceState) {
         self.swapQuote = swapQuote
         self.recipient = recipient
-        self.slippage = slippage
 
         super.init(allowanceState: allowanceState)
     }
@@ -20,7 +18,11 @@ class ThorChainMultiSwapEvmQuote: BaseEvmMultiSwapQuote {
     }
 
     override var settingsModified: Bool {
-        super.settingsModified || recipient != nil || slippage != MultiSwapSlippage.default
+        super.settingsModified || recipient != nil
+    }
+    
+    var slippage: Decimal {
+        swapQuote.slipProtectionThreshold.rounded(decimal: 2)
     }
 
     override func fields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?) -> [MultiSwapMainField] {
@@ -30,25 +32,17 @@ class ThorChainMultiSwapEvmQuote: BaseEvmMultiSwapQuote {
             fields.append(.recipient(recipient.title))
         }
 
-        if slippage != MultiSwapSlippage.default {
-            fields.append(.slippage(slippage))
-        }
+        fields.append(.slippage(slippage))
 
         return fields
     }
 
     override func cautions() -> [CautionNew] {
-        var cautions = super.cautions()
-
         // switch MultiSwapSlippage.validate(slippage: slippage) {
         // case .none: ()
         // case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
         // }
 
-        if swapQuote.slipProtectionThreshold > slippage {
-            cautions.append(CautionNew(title: "swap.thorchain.slip_protection".localized, text: "swap.thorchain.slip_protection.description".localized("\(swapQuote.slipProtectionThreshold.rounded(decimal: 2).description)%"), type: .warning))
-        }
-
-        return cautions
+        []
     }
 }

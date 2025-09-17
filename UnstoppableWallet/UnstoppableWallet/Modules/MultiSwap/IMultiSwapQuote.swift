@@ -8,3 +8,7 @@ protocol IMultiSwapQuote {
     func fields(tokenIn: Token, tokenOut: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?) -> [MultiSwapMainField]
     func cautions() -> [CautionNew]
 }
+
+protocol IMultiSwapSlippageProvider {
+    var slippage: Decimal { get }
+}
