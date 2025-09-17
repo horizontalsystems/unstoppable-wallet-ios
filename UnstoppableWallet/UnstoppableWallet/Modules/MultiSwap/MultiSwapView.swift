@@ -413,7 +413,7 @@ struct MultiSwapView: View {
                 viewModel.stopAutoQuoting()
 
                 Coordinator.shared.present { _ in
-                    currentQuote.provider.settingsView(tokenIn: tokenIn, tokenOut: tokenOut) {
+                    currentQuote.provider.settingsView(tokenIn: tokenIn, tokenOut: tokenOut, quote: currentQuote.quote) {
                         viewModel.syncQuotes()
                     }
                 } onDismiss: {

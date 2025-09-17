@@ -692,15 +692,13 @@
 "swap.liquidity_fee" = "Liquidity Fee";
 "swap.outbound_fee" = "Outbound Fee";
 "swap.total_fee" = "Total Fee";
-"swap.thorchain.slip_protection" = "Slip protection unavailable";
-"swap.thorchain.slip_protection.description" = "Minimum slippage to enable slip protection for this swap is %@.";
 "swap.allbridge.slip_protection" = "No Slippage Control";
 "swap.allbridge.slip_protection.description" = "Cross-chain swaps depend on third-party liquidity and delays, which may affect the final amount.";
 
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "Slippage Tolerance";
-"swap.advanced_settings.slippage.footer" = "If the price moves beyond this percentage, the swap won’t go through.";
+"swap.advanced_settings.slippage.footer" = "Your Transaction will revert if the price change unfavorably by more than this precentage";
 "swap.advanced_settings.deadline" = "Transaction Deadline";
 "swap.advanced_settings.deadline.footer" = "Your transaction will revert if it is pending for more than this long.";
 "swap.advanced_settings.recipient.footer" = "The swapped amount will be sent to the specified address.";

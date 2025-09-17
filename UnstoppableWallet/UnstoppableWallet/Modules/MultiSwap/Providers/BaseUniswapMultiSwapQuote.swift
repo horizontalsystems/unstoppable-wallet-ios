@@ -52,10 +52,7 @@ class BaseUniswapMultiSwapQuote: BaseEvmMultiSwapQuote {
         }
 
         let slippage = tradeOptions.allowedSlippage
-
-        if slippage != MultiSwapSlippage.default {
-            fields.append(.slippage(slippage))
-        }
+        fields.append(.slippage(slippage))
 
         return fields
     }

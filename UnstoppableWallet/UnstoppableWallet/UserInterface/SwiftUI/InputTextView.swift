@@ -7,6 +7,7 @@ struct InputTextView: View {
 
     var text: Binding<String>
 
+    @Environment(\.isEnabled) private var isEnabled
     @Binding var secured: Bool
 
     @State var shake = false
@@ -49,12 +50,14 @@ struct InputTextView: View {
                     axis: .vertical
                 )
                 .accentColor(.themeYellow)
+                .foregroundColor(isEnabled ? .themeLeah : .themeAndy)
             } else {
                 TextField(
                     placeholder,
                     text: text
                 )
                 .accentColor(.themeYellow)
+                .foregroundColor(isEnabled ? .themeLeah : .themeAndy)
                 .frame(height: 20) // TODO: How to remove this? (When change from Secure to TextField it's change height)
             }
         }

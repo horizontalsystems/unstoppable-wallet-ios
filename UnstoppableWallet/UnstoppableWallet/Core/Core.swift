@@ -167,7 +167,7 @@ class Core {
 
         let logRecordStorage = LogRecordStorage(dbPool: dbPool)
         logRecordManager = LogRecordManager(storage: logRecordStorage)
-        logger = Logger(minLogLevel: .error, storage: logRecordManager)
+        logger = Logger(minLogLevel: .debug, storage: logRecordManager)
 
         currencyManager = CurrencyManager(storage: sharedLocalStorage)
         networkManager = NetworkManager(logger: logger)
