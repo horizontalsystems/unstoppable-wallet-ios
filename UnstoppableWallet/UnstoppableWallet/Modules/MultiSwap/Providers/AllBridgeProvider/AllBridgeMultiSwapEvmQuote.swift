@@ -17,12 +17,16 @@ class AllBridgeMultiSwapEvmQuote: BaseEvmMultiSwapQuote {
         super.init(allowanceState: allowanceState)
     }
 
+    private var slippageModified: Bool {
+        slippage != MultiSwapSlippage.default
+    }
+
     override var amountOut: Decimal {
         expectedAmountOut
     }
 
     override var settingsModified: Bool {
-        super.settingsModified || recipient != nil || slippage != MultiSwapSlippage.default
+        super.settingsModified || recipient != nil || slippageModified
     }
 
     override func fields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?) -> [MultiSwapMainField] {
@@ -32,21 +36,11 @@ class AllBridgeMultiSwapEvmQuote: BaseEvmMultiSwapQuote {
             fields.append(.recipient(recipient.title))
         }
 
-        if !crosschain, slippage != MultiSwapSlippage.default {
-            fields.append(.slippage(slippage))
+        if !crosschain {
+            fields.append(.slippage(slippage, settingId: MultiSwapMainField.slippageSettingId, modified: slippageModified))
         }
 
         fields.append(contentsOf: super.fields(tokenIn: tokenIn, tokenOut: tokenOut, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate))
         return fields
-    }
-
-    override func cautions() -> [CautionNew] {
-        var cautions = super.cautions()
-
-        if crosschain, cautions.isEmpty {
-            cautions.append(CautionNew(title: "swap.allbridge.slip_protection".localized, text: "swap.allbridge.slip_protection.description".localized, type: .warning))
-        }
-
-        return cautions
     }
 }

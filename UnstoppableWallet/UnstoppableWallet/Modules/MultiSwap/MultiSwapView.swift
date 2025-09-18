@@ -474,9 +474,11 @@ struct MultiSwapView: View {
 
             if let settingId = field.settingId {
                 Button(action: {
-                    if let currentQuote = viewModel.currentQuote {
+                    if let tokenOut = viewModel.tokenOut, let currentQuote = viewModel.currentQuote {
                         Coordinator.shared.present { _ in
-                            currentQuote.provider.settingView(settingId: settingId)
+                            currentQuote.provider.settingView(settingId: settingId, tokenOut: tokenOut) {
+                                viewModel.syncQuotes()
+                            }
                         }
                     }
                 }) {

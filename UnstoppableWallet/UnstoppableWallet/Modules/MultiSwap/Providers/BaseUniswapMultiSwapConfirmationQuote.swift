@@ -47,10 +47,7 @@ class BaseUniswapMultiSwapConfirmationQuote: BaseEvmMultiSwapConfirmationQuote {
         }
 
         let slippage = quote.tradeOptions.allowedSlippage
-
-        if slippage != MultiSwapSlippage.default {
-            fields.append(.slippage(slippage))
-        }
+        fields.append(.slippage(slippage))
 
         let minAmountOut = amountOut * (1 - slippage / 100)
 

@@ -54,9 +54,7 @@ class OneInchMultiSwapConfirmationQuote: BaseEvmMultiSwapConfirmationQuote {
             fields.append(.recipient(recipient.title, blockchainType: tokenOut.blockchainType))
         }
 
-        if slippage != MultiSwapSlippage.default {
-            fields.append(.slippage(slippage))
-        }
+        fields.append(.slippage(slippage))
 
         let minAmountOut = amountOut * (1 - slippage / 100)
 
