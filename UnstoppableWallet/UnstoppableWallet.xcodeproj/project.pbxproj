@@ -13509,7 +13509,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIconDark AppIconMono AppIconLeo AppIconMustang AppIconYak AppIconPunk AppIcon1874 AppIcon8ball AppIconPepe AppIconIvfun AppIconDoge AppIconGigaChad AppIconPlFlag AppIconYesChad";
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIconDark AppIconMono AppIconPunk AppIcon1874 AppIcon8ball AppIconPepe AppIconIvfun AppIconDoge AppIconGigaChad AppIconPlFlag AppIconYesChad AppIconYS AppIconZcash AppIconMonero";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -13586,7 +13586,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIconDark AppIconMono AppIconLeo AppIconMustang AppIconYak AppIconPunk AppIcon1874 AppIcon8ball AppIconPepe AppIconIvfun AppIconDoge AppIconGigaChad AppIconPlFlag AppIconYesChad";
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIconDark AppIconMono AppIconPunk AppIcon1874 AppIcon8ball AppIconPepe AppIconIvfun AppIconDoge AppIconGigaChad AppIconPlFlag AppIconYesChad AppIconYS AppIconZcash AppIconMonero";
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
