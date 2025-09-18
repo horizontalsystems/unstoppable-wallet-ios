@@ -164,6 +164,7 @@ struct MainView: View {
 extension MainView {
     struct BadgeView: View {
         private let emptyBadgeSize: CGFloat = 10
+        @State private var textHeight: CGFloat = 0
 
         let badge: String
 
@@ -178,7 +179,15 @@ extension MainView {
                     .foregroundStyle(Color.white)
                     .padding(.horizontal, 2)
                     .padding(.vertical, 2)
-                    .background(Color.themeRed)
+                    .frame(minWidth: textHeight)
+                    .background(
+                        GeometryReader { geometry in
+                            Color.themeRed
+                                .onAppear {
+                                    textHeight = geometry.size.height
+                                }
+                        }
+                    )
                     .clipShape(Capsule())
             }
         }
