@@ -20,7 +20,7 @@ class ThorChainMultiSwapEvmQuote: BaseEvmMultiSwapQuote, IMultiSwapSlippageProvi
     override var settingsModified: Bool {
         super.settingsModified || recipient != nil
     }
-    
+
     var slippage: Decimal {
         swapQuote.slipProtectionThreshold.rounded(decimal: 2)
     }

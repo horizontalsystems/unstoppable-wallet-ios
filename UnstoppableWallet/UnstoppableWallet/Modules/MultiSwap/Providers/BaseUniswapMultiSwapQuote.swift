@@ -17,6 +17,10 @@ class BaseUniswapMultiSwapQuote: BaseEvmMultiSwapQuote {
         super.init(allowanceState: allowanceState)
     }
 
+    private var slippageModified: Bool {
+        tradeOptions.allowedSlippage != MultiSwapSlippage.default
+    }
+
     override var amountOut: Decimal {
         trade.amountOut ?? 0
     }
@@ -30,7 +34,7 @@ class BaseUniswapMultiSwapQuote: BaseEvmMultiSwapQuote {
     }
 
     override var settingsModified: Bool {
-        super.settingsModified || recipient != nil || tradeOptions.allowedSlippage != MultiSwapSlippage.default
+        super.settingsModified || recipient != nil || slippageModified
     }
 
     override func fields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?) -> [MultiSwapMainField] {
@@ -52,7 +56,7 @@ class BaseUniswapMultiSwapQuote: BaseEvmMultiSwapQuote {
         }
 
         let slippage = tradeOptions.allowedSlippage
-        fields.append(.slippage(slippage))
+        fields.append(.slippage(slippage, settingId: MultiSwapMainField.slippageSettingId, modified: slippageModified))
 
         return fields
     }

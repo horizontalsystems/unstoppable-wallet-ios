@@ -21,11 +21,10 @@ class ThorChainMultiSwapBtcQuote: IMultiSwapQuote, IMultiSwapSlippageProvider {
     var settingsModified: Bool {
         recipient != nil
     }
-    
+
     var slippage: Decimal {
         swapQuote.slipProtectionThreshold.rounded(decimal: 2)
     }
-
 
     func fields(tokenIn _: MarketKit.Token, tokenOut _: MarketKit.Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?) -> [MultiSwapMainField] {
         var fields = [MultiSwapMainField]()

@@ -96,7 +96,7 @@ extension SlippageMultiSwapSettingsViewModel {
     enum SlippageMode: Equatable {
         case fixed(Decimal)
         case adjustable
-        
+
         var disabled: Bool {
             self != .adjustable
         }
@@ -150,7 +150,7 @@ enum MultiSwapSlippage {
             )
             )
         }
-        if slippage > MultiSwapSlippage.usualHighest {
+        if slippage >= MultiSwapSlippage.usualHighest {
             return .caution(.init(text: "swap.advanced_settings.warning.unusual_slippage".localized, type: .warning))
         }
 

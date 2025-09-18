@@ -37,7 +37,7 @@ struct MultiSwapSlippageView: View {
                 .autocorrectionDisabled()
                 .disabled(viewModel.mode.disabled)
             }, onTap: onTap)
-            .disabled(viewModel.mode.disabled)
+                .disabled(viewModel.mode.disabled)
         }
         .modifier(CautionBorder(cautionState: cautionState))
         .modifier(CautionPrompt(cautionState: cautionState))

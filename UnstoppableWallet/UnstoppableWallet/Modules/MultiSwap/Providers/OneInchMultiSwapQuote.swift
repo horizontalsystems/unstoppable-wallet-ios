@@ -20,8 +20,12 @@ class OneInchMultiSwapQuote: BaseEvmMultiSwapQuote {
         quote.amountOut ?? 0
     }
 
+    private var slippageModified: Bool {
+        slippage != MultiSwapSlippage.default
+    }
+
     override var settingsModified: Bool {
-        super.settingsModified || recipient != nil || slippage != MultiSwapSlippage.default
+        super.settingsModified || recipient != nil || slippageModified
     }
 
     override func fields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?) -> [MultiSwapMainField] {
@@ -31,9 +35,7 @@ class OneInchMultiSwapQuote: BaseEvmMultiSwapQuote {
             fields.append(.recipient(recipient.title))
         }
 
-        if slippage != MultiSwapSlippage.default {
-            fields.append(.slippage(slippage))
-        }
+        fields.append(.slippage(slippage, settingId: MultiSwapMainField.slippageSettingId, modified: slippageModified))
 
         return fields
     }

@@ -1,3 +1,4 @@
+import Combine
 import EvmKit
 import Foundation
 import MarketKit
@@ -77,7 +78,7 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         fatalError("settingsView(tokenIn:tokenOut:onChangeSettings:) has not been implemented")
     }
 
-    func settingView(settingId _: String) -> AnyView {
+    func settingView(settingId _: String, tokenOut _: Token, onChangeSetting _: @escaping () -> Void) -> AnyView {
         fatalError("settingView(settingId:) has not been implemented")
     }
 

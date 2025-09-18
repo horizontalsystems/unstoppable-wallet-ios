@@ -69,7 +69,7 @@ class AllBridgeMultiSwapEvmConfirmationQuote: BaseEvmMultiSwapConfirmationQuote 
             fields.append(.recipient(recipient.title, blockchainType: tokenOut.blockchainType))
         }
 
-        if slippage != MultiSwapSlippage.default {
+        if !crosschain {
             fields.append(.slippage(slippage))
         }
 

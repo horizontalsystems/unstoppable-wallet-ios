@@ -46,7 +46,6 @@ struct RecipientAndSlippageMultiSwapSettingsView: View {
 }
 
 extension RecipientAndSlippageMultiSwapSettingsView {
-    
     class ViewModel: BaseMultiSwapSettingsViewModel {
         let addressViewModel: AddressMultiSwapSettingsViewModel
         let slippageViewModel: SlippageMultiSwapSettingsViewModel

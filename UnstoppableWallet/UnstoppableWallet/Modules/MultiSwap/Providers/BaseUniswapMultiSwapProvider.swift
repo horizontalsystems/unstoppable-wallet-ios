@@ -43,12 +43,24 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
         )
     }
 
-    override func settingsView(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, quote: IMultiSwapQuote, onChangeSettings: @escaping () -> Void) -> AnyView {
+    private func settingsView(tokenOut: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
         let view = ThemeNavigationStack {
             RecipientAndSlippageMultiSwapSettingsView(tokenOut: tokenOut, storage: storage, slippageMode: .adjustable, onChangeSettings: onChangeSettings)
         }
 
         return AnyView(view)
+    }
+
+    override func settingsView(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, quote _: IMultiSwapQuote, onChangeSettings: @escaping () -> Void) -> AnyView {
+        settingsView(tokenOut: tokenOut, onChangeSettings: onChangeSettings)
+    }
+
+    override func settingView(settingId: String, tokenOut: MarketKit.Token, onChangeSetting: @escaping () -> Void) -> AnyView {
+        if settingId == MultiSwapMainField.slippageSettingId {
+            return settingsView(tokenOut: tokenOut, onChangeSettings: onChangeSetting)
+        }
+
+        return super.settingView(settingId: settingId, tokenOut: tokenOut, onChangeSetting: onChangeSetting)
     }
 
     override func swap(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, amountIn _: Decimal, quote: IMultiSwapConfirmationQuote) async throws {
@@ -119,7 +131,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
             tradeOptions: tradeOptions,
             recipient: recipient,
             providerName: name,
-            allowanceState: allowanceState(token: tokenIn, amount: amountIn)
+            allowanceState: allowanceState(token: tokenIn, amount: amountIn),
         )
     }
 }

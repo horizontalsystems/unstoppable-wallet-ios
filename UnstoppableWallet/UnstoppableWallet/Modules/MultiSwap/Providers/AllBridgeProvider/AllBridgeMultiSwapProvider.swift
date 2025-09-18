@@ -511,13 +511,17 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         ], isList: false)]
     }
 
-    func settingsView(tokenIn: Token, tokenOut: Token, quote: IMultiSwapQuote, onChangeSettings: @escaping () -> Void) -> AnyView {
+    private func settingsView(tokenOut: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
+        let view = ThemeNavigationStack {
+            RecipientAndSlippageMultiSwapSettingsView(tokenOut: tokenOut, storage: storage, slippageMode: .adjustable, onChangeSettings: onChangeSettings)
+        }
+        return AnyView(view)
+    }
+
+    func settingsView(tokenIn: Token, tokenOut: Token, quote _: IMultiSwapQuote, onChangeSettings: @escaping () -> Void) -> AnyView {
         let crosschain = tokenIn.blockchainType != tokenOut.blockchainType
         if !crosschain {
-            let view = ThemeNavigationStack {
-                RecipientAndSlippageMultiSwapSettingsView(tokenOut: tokenOut, storage: storage, slippageMode: .adjustable, onChangeSettings: onChangeSettings)
-            }
-            return AnyView(view)
+            return settingsView(tokenOut: tokenOut, onChangeSettings: onChangeSettings)
         }
 
         let view = ThemeNavigationStack {
@@ -526,7 +530,11 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         return AnyView(view)
     }
 
-    func settingView(settingId _: String) -> AnyView {
+    func settingView(settingId: String, tokenOut: Token, onChangeSetting: @escaping () -> Void) -> AnyView {
+        if settingId == MultiSwapMainField.slippageSettingId {
+            return settingsView(tokenOut: tokenOut, onChangeSettings: onChangeSetting)
+        }
+
         fatalError("settingView(settingId:) has not been implemented")
     }
 

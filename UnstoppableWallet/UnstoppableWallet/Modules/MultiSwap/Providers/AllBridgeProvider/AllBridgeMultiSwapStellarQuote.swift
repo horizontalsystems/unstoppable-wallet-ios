@@ -22,8 +22,12 @@ class AllBridgeMultiSwapStellarQuote: IMultiSwapQuote {
         nil
     }
 
+    private var slippageModified: Bool {
+        slippage != MultiSwapSlippage.default
+    }
+
     var settingsModified: Bool {
-        recipient != nil || slippage != MultiSwapSlippage.default
+        recipient != nil || slippageModified
     }
 
     func fields(tokenIn _: MarketKit.Token, tokenOut _: MarketKit.Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?) -> [MultiSwapMainField] {
@@ -33,20 +37,14 @@ class AllBridgeMultiSwapStellarQuote: IMultiSwapQuote {
             fields.append(.recipient(recipient.title))
         }
 
-        if slippage != MultiSwapSlippage.default {
-            fields.append(.slippage(slippage))
+        if !crosschain {
+            fields.append(.slippage(slippage, settingId: MultiSwapMainField.slippageSettingId, modified: slippageModified))
         }
 
         return fields
     }
 
     func cautions() -> [CautionNew] {
-        var cautions = [CautionNew]()
-
-        if crosschain {
-            cautions.append(CautionNew(title: "swap.allbridge.slip_protection".localized, text: "swap.allbridge.slip_protection.description".localized, type: .warning))
-        }
-
-        return cautions
+        []
     }
 }
