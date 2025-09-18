@@ -284,11 +284,9 @@ extension ValueFormatter {
     }
 
     func format(percentValue: Decimal, signType: SignType = .always) -> String? {
-        let (transformedValue, digits) = transformedFull(value: percentValue, maxDigits: 2)
-
         let string: String? = rawFormatterQueue.sync {
-            rawFormatter.maximumFractionDigits = digits
-            return rawFormatter.string(from: transformedValue as NSDecimalNumber)
+            rawFormatter.maximumFractionDigits = 2
+            return rawFormatter.string(from: abs(percentValue) as NSDecimalNumber)
         }
 
         guard let string else {
