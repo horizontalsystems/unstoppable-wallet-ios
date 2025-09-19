@@ -104,7 +104,7 @@ struct PreSendView: View {
                 .keyboardType(.decimalPad)
                 .focused($focusField, equals: .amount)
 
-            if viewModel.rate != nil {
+            if let coinPrice = viewModel.coinPrice {
                 HStack(spacing: 0) {
                     Text(viewModel.currency.symbol).textBody(color: .themeGray)
 
@@ -114,6 +114,7 @@ struct PreSendView: View {
                         .keyboardType(.decimalPad)
                         .focused($focusField, equals: .fiatAmount)
                         .frame(height: 20)
+                        .disabled(coinPrice.expired)
                 }
             } else {
                 Text("swap.rate_not_available".localized)
