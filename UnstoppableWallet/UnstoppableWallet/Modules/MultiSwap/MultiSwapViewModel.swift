@@ -42,12 +42,12 @@ class MultiSwapViewModel: ObservableObject {
             }
 
             if let internalTokenIn {
-                rateIn = marketKit.coinPrice(coinUid: internalTokenIn.coin.uid, currencyCode: currency.code)?.value
+                coinPriceIn = marketKit.coinPrice(coinUid: internalTokenIn.coin.uid, currencyCode: currency.code)
                 rateInCancellable = marketKit.coinPricePublisher(coinUid: internalTokenIn.coin.uid, currencyCode: currency.code)
                     .receive(on: DispatchQueue.main)
-                    .sink { [weak self] price in self?.rateIn = price.value }
+                    .sink { [weak self] price in self?.coinPriceIn = price }
             } else {
-                rateIn = nil
+                coinPriceIn = nil
                 rateInCancellable = nil
             }
 
@@ -154,7 +154,7 @@ class MultiSwapViewModel: ObservableObject {
     @Published var adapterState: AdapterState?
     @Published var availableBalance: Decimal?
 
-    @Published var rateIn: Decimal? {
+    @Published var coinPriceIn: CoinPrice? {
         didSet {
             syncFiatAmountIn()
         }
@@ -328,12 +328,12 @@ class MultiSwapViewModel: ObservableObject {
             return
         }
 
-        guard let rateIn, let fiatAmountIn else {
+        guard let coinPriceIn, let fiatAmountIn else {
             amountIn = nil
             return
         }
 
-        amountIn = fiatAmountIn / rateIn
+        amountIn = fiatAmountIn / coinPriceIn.value
     }
 
     private func syncFiatAmountIn() {
@@ -341,12 +341,12 @@ class MultiSwapViewModel: ObservableObject {
             return
         }
 
-        guard let rateIn, let amountIn else {
+        guard let coinPriceIn, let amountIn else {
             fiatAmountIn = nil
             return
         }
 
-        fiatAmountIn = (amountIn * rateIn).rounded(decimal: 2)
+        fiatAmountIn = (amountIn * coinPriceIn.value).rounded(decimal: 2)
     }
 
     private func syncFiatAmountOut() {

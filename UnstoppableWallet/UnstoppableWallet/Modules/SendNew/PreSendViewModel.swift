@@ -72,7 +72,7 @@ class PreSendViewModel: ObservableObject {
         }
     }
 
-    @Published var rate: Decimal? {
+    @Published var coinPrice: CoinPrice? {
         didSet {
             syncFiatAmount()
         }
@@ -115,10 +115,10 @@ class PreSendViewModel: ObservableObject {
             .sink { [weak self] in self?.currency = $0 }
             .store(in: &cancellables)
 
-        rate = marketKit.coinPrice(coinUid: wallet.coin.uid, currencyCode: currency.code)?.value
+        coinPrice = marketKit.coinPrice(coinUid: wallet.coin.uid, currencyCode: currency.code)
         marketKit.coinPricePublisher(coinUid: wallet.coin.uid, currencyCode: currency.code)
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] price in self?.rate = price.value }
+            .sink { [weak self] price in self?.coinPrice = price }
             .store(in: &cancellables)
 
         if let handler {
@@ -150,12 +150,12 @@ class PreSendViewModel: ObservableObject {
             return
         }
 
-        guard let rate, let fiatAmount else {
+        guard let coinPrice, let fiatAmount else {
             amount = nil
             return
         }
 
-        amount = fiatAmount / rate
+        amount = fiatAmount / coinPrice.value
     }
 
     private func syncFiatAmount() {
@@ -163,12 +163,12 @@ class PreSendViewModel: ObservableObject {
             return
         }
 
-        guard let rate, let amount else {
+        guard let coinPrice, let amount else {
             fiatAmount = nil
             return
         }
 
-        fiatAmount = (amount * rate).rounded(decimal: 2)
+        fiatAmount = (amount * coinPrice.value).rounded(decimal: 2)
     }
 
     private func syncHasMemo() {

@@ -103,7 +103,7 @@ struct MultiSwapView: View {
                     .focused($isInputActive)
 
                 if viewModel.tokenIn != nil {
-                    if viewModel.rateIn != nil {
+                    if let coinPriceIn = viewModel.coinPriceIn {
                         HStack(spacing: 0) {
                             Text(viewModel.currency.symbol).textBody(color: .themeGray)
 
@@ -113,6 +113,7 @@ struct MultiSwapView: View {
                                 .keyboardType(.decimalPad)
                                 .focused($isInputActive)
                                 .frame(height: 20)
+                                .disabled(coinPriceIn.expired)
                         }
                     } else {
                         Text("swap.rate_not_available".localized)
@@ -361,7 +362,7 @@ struct MultiSwapView: View {
                     tokenIn: tokenIn,
                     tokenOut: tokenOut,
                     currency: viewModel.currency,
-                    tokenInRate: viewModel.rateIn,
+                    tokenInRate: viewModel.coinPriceIn?.value,
                     tokenOutRate: viewModel.rateOut
                 )
 
