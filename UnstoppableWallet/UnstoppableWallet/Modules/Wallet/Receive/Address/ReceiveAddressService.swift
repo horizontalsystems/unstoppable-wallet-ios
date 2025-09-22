@@ -135,6 +135,16 @@ extension ReceiveAddressService {
     }
 }
 
+extension ReceiveAddressService: ICurrentAddressProvider {
+    var address: String? {
+        guard let receiveAddress = state.data, let assetReceiveAddress = receiveAddress as? AssetReceiveAddress else {
+            return nil
+        }
+        
+        return assetReceiveAddress.address.address
+    }
+}
+
 class ReceiveAddress {
     let coinCode: String
     let imageUrl: String?
@@ -146,3 +156,4 @@ class ReceiveAddress {
 
     var raw: String { fatalError("must be overridden") }
 }
+

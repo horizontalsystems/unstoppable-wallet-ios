@@ -57,6 +57,10 @@ class WatchViewModel: ObservableObject {
     @Published var requiredFields: [RequiredField] = []
     @Published var viewKey = "" {
         didSet {
+            guard oldValue != viewKey else {
+                return
+            }
+
             guard let address else {
                 return
             }
@@ -68,6 +72,10 @@ class WatchViewModel: ObservableObject {
     @Published var viewKeyCaution: CautionState = .none
     @Published var height = "" {
         didSet {
+            guard oldValue != height else {
+                return
+            }
+
             guard let address else {
                 return
             }

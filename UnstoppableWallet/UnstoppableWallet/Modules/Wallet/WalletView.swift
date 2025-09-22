@@ -146,6 +146,52 @@ struct WalletView: View {
                 }
                 .tint(.themeBlade)
             }
+            .contextMenu {
+                if !item.wallet.account.watchAccount {
+                    Button {
+                        Coordinator.shared.present { isPresented in
+                            ThemeNavigationStack {
+                                SendAddressView(wallet: item.wallet, isPresented: isPresented)
+                            }
+                        }
+                        stat(page: .tokenPage, event: .openSend(token: item.wallet.token))
+                    } label: {
+                        Label("balance.send".localized, image: "arrow_m_up")
+                    }
+                }
+                let addressProvider = ReceiveAddressModule.addressProvider(wallet: item.wallet)
+                if addressProvider.address != nil {
+                    Button {
+                        if let address = addressProvider.address {
+                            CopyHelper.copyAndNotify(value: address)
+                        }
+                    } label: {
+                        Label("balance.copy_address".localized, image: "copy")
+                    }
+                }
+                if !item.wallet.account.watchAccount, item.wallet.token.swappable {
+                    Button {
+                        Coordinator.shared.present { _ in
+                            MultiSwapView(token: item.wallet.token)
+                        }
+                        stat(page: .tokenPage, event: .open(page: .swap))
+                    } label: {
+                        Label("balance.swap".localized, image: "swap_e")
+                    }
+                }
+                Button {
+                    Coordinator.shared.presentCoinPage(coin: item.wallet.coin, page: .tokenPage)
+                } label: {
+                    Label("balance.coin_info".localized, image: "chart")
+                }
+                Button {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                        viewModel.onDisable(wallet: item.wallet)
+                    }
+                } label: {
+                    Label("balance.hide_coin".localized, image: "minus_e")
+                }
+            }
         }
     }
 

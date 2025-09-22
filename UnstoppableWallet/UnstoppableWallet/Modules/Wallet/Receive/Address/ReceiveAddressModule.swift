@@ -116,3 +116,9 @@ enum ReceiveAddressModule {
         }
     }
 }
+
+extension ReceiveAddressModule {
+    static func addressProvider(wallet: Wallet) -> ICurrentAddressProvider {
+        ReceiveAddressService(wallet: wallet, adapterManager: Core.shared.adapterManager)
+    }
+}

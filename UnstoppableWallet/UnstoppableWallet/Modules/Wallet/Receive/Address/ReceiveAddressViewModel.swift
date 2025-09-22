@@ -2,6 +2,10 @@ import Combine
 import Foundation
 import MarketKit
 
+protocol ICurrentAddressProvider {
+    var address: String? { get }
+}
+
 protocol IReceiveAddressService {
     var title: String { get }
     var coinName: String { get }
