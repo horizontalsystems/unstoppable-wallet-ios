@@ -319,6 +319,9 @@
 "balance.deposit" = "Deposit";
 "balance.chart" = "Chart";
 "balance.scan" = "Scan";
+"balance.copy_address" = "Copy Address";
+"balance.coin_info" = "Coin Info";
+"balance.hide_coin" = "Hide Coin";
 "balance.rate_per_coin" = "%@ per %@";
 "balance.syncing" = "Syncing...";
 "balance.searching" = "Searching transactions...";
