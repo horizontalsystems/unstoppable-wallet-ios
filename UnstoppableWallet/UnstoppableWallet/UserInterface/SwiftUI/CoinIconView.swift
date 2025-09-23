@@ -36,6 +36,11 @@ struct BalanceCoinIconView: View {
             .opacity(state.syncing ? 0.5 : 1)
             .overlay {
                 switch state {
+                case .connecting:
+                        ProgressView(value: 0.1)
+                        .progressViewStyle(DeterminiteSpinnerStyle())
+                        .frame(width: 36, height: 36)
+                        .spinning()
                 case let .syncing(progress, _), let .customSyncing(_, _, progress):
                     ProgressView(value: max(0.1, Float(progress ?? 10) / 100))
                         .progressViewStyle(DeterminiteSpinnerStyle())

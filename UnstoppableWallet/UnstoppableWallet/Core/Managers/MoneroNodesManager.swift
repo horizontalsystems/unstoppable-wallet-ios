@@ -47,6 +47,10 @@ class MoneroNodeManager {
         case .monero:
             return [
                 MoneroNode(
+                    name: "xmr-tw.org",
+                    node: .init(url: URL(string: "opennode.xmr-tw.org:18089/mainnet/xmr-tw.org")!, isTrusted: false)
+                ),
+                MoneroNode(
                     name: "boldsuck.org",
                     node: .init(url: URL(string: "xmr-de.boldsuck.org:18081")!, isTrusted: false)
                 ),
