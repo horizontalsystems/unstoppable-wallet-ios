@@ -553,7 +553,9 @@ extension ZcashAdapter {
             outputParamsURL: outputParamsURL(uniqueId: uniqueId),
             saplingParamsSourceURL: SaplingParamsSourceURL.default,
             alias: .custom(uniqueId),
-            loggingPolicy: .noLogging
+            loggingPolicy: .noLogging,
+            isTorEnabled: false,
+            isExchangeRateEnabled: false
         )
     }
 
