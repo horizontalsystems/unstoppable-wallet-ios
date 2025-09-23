@@ -140,7 +140,7 @@ extension ReceiveAddressService: ICurrentAddressProvider {
         guard let receiveAddress = state.data, let assetReceiveAddress = receiveAddress as? AssetReceiveAddress else {
             return nil
         }
-        
+
         return assetReceiveAddress.address.address
     }
 }
@@ -156,4 +156,3 @@ class ReceiveAddress {
 
     var raw: String { fatalError("must be overridden") }
 }
-

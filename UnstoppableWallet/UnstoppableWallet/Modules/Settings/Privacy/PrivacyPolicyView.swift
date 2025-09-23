@@ -20,6 +20,26 @@ struct PrivacyPolicyView: View {
                     }
                     ListSectionFooter(text: "settings.privacy.allow.description".localized)
                 }
+
+                VStack(spacing: 0) {
+                    ListSection {
+                        Cell(
+                            left: {
+                                Image("icon_nym").icon()
+                            },
+                            middle: {
+                                ThemeText("settings.privacy.nym".localized, style: .body)
+                            },
+                            right: {
+                                Image.disclosureIcon
+                            },
+                            action: {
+                                UrlManager.open(url: AppConfig.nymVpnLink)
+                            }
+                        )
+                    }
+                    ListSectionFooter(text: "settings.privacy.nym.description".localized)
+                }
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }

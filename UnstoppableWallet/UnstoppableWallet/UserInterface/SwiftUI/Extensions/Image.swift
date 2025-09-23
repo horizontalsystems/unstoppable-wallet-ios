@@ -19,7 +19,7 @@ extension Image {
 
     // deprecated
     static var disclosureIcon: some View {
-        Image("arrow_big_forward_20").themeIcon()
+        Image("arrow_big_forward_20").icon(size: .iconSize20)
     }
 
     static var checkIcon: some View {
