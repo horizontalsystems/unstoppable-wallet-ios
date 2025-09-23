@@ -484,9 +484,9 @@ struct MultiSwapView: View {
                     }
                 }) {
                     if field.modified {
-                        Image("edit2_20").themeIcon(color: .themeJacob)
+                        Image("pen_filled").themeIcon(color: .themeJacob)
                     } else {
-                        Image("edit2_20").renderingMode(.template)
+                        Image("pen_filled").renderingMode(.template)
                     }
                 }
                 .buttonStyle(SecondaryCircleButtonStyle(style: .transparent))

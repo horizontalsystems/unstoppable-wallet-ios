@@ -72,11 +72,6 @@ class BaseUniswapMultiSwapQuote: BaseEvmMultiSwapQuote {
             }
         }
 
-        switch MultiSwapSlippage.validate(slippage: tradeOptions.allowedSlippage) {
-        case .none: ()
-        case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
-        }
-
         return cautions
     }
 

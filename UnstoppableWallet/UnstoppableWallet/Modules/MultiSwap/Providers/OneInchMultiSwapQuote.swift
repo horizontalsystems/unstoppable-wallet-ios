@@ -39,15 +39,4 @@ class OneInchMultiSwapQuote: BaseEvmMultiSwapQuote {
 
         return fields
     }
-
-    override func cautions() -> [CautionNew] {
-        var cautions = super.cautions()
-
-        switch MultiSwapSlippage.validate(slippage: slippage) {
-        case .none: ()
-        case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
-        }
-
-        return cautions
-    }
 }

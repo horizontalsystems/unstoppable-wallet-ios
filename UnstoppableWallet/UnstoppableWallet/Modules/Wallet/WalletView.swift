@@ -193,6 +193,7 @@ struct WalletView: View {
                 }
             }
         }
+        .tint(.themeLeah)
     }
 
     @ViewBuilder private func headerView(account _: Account) -> some View {
