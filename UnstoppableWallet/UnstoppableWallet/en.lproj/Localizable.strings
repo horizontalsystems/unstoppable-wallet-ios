@@ -1688,6 +1688,8 @@
 "settings.privacy.description" = "%@ doesn’t collect personal data like your balances or wallet addresses. We only use anonymous data to improve the app.";
 "settings.privacy.allow" = "Share UI Data";
 "settings.privacy.allow.description" = "This setting lets you turn off analytics and keep your activity fully private.";
+"settings.privacy.nym" = "Get Nym VPN";
+"settings.privacy.nym.description" = "Unstoppable offers the best prices on Nym VPN service. Connect through us and you will increase your privacy much more favorably.";
 
 // Settings -> Appearance
 

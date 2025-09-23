@@ -13,6 +13,7 @@ enum AppConfig {
     static let analyticsLink = "https://unstoppable.money/analytics"
     static let privacyPolicyLink = "https://unstoppable.money/privacy"
     static let appleTermsOfServiceLink = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula"
+    static let nymVpnLink = "https://nymtechnologies.pxf.io/N9vnr1"
     static let appGitHubAccount = "horizontalsystems"
     static let appGitHubRepository = "unstoppable-wallet-ios"
     static let appTwitterAccount = "unstoppablebyhs"
