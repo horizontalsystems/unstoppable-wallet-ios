@@ -39,11 +39,6 @@ class OneInchMultiSwapConfirmationQuote: BaseEvmMultiSwapConfirmationQuote {
             )
         }
 
-        switch MultiSwapSlippage.validate(slippage: slippage) {
-        case .none: ()
-        case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
-        }
-
         return cautions
     }
 

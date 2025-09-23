@@ -41,14 +41,6 @@ class AllBridgeMultiSwapTronConfirmationQuote: IMultiSwapConfirmationQuote {
             return [caution(transactionError: transactionError, feeToken: baseToken)]
         }
 
-        if crosschain {
-            return [.init(
-                title: "swap.allbridge.slip_protection".localized,
-                text: "swap.allbridge.slip_protection.description".localized,
-                type: .warning
-            )]
-        }
-
         return []
     }
 

@@ -30,11 +30,6 @@ class ThorChainMultiSwapEvmConfirmationQuote: BaseEvmMultiSwapConfirmationQuote 
             cautions.append(caution(transactionError: transactionError, feeToken: baseToken))
         }
 
-        // switch MultiSwapSlippage.validate(slippage: slippage) {
-        // case .none: ()
-        // case let .caution(caution): cautions.append(caution.cautionNew(title: "swap.advanced_settings.slippage".localized))
-        // }
-
         return cautions
     }
 

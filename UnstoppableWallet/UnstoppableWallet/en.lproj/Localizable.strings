@@ -695,8 +695,6 @@
 "swap.liquidity_fee" = "Liquidity Fee";
 "swap.outbound_fee" = "Outbound Fee";
 "swap.total_fee" = "Total Fee";
-"swap.allbridge.slip_protection" = "No Slippage Control";
-"swap.allbridge.slip_protection.description" = "Cross-chain swaps depend on third-party liquidity and delays, which may affect the final amount.";
 
 // Swap Advanced Settings
 

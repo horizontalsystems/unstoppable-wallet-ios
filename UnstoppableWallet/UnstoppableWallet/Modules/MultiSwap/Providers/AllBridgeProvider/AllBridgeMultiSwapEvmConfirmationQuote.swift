@@ -50,15 +50,6 @@ class AllBridgeMultiSwapEvmConfirmationQuote: BaseEvmMultiSwapConfirmationQuote 
             ]
         }
 
-        if crosschain {
-            cautions.append(.init(
-                title: "swap.allbridge.slip_protection".localized,
-                text: "swap.allbridge.slip_protection.description".localized,
-                type: .warning
-            )
-            )
-        }
-
         return cautions
     }
 
