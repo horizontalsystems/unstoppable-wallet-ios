@@ -46,13 +46,13 @@ class ContactBookViewController: ThemeSearchViewController {
         // add editable buttons (Add Contact + Settings)
         if mode.editable {
             let addContact = UIBarButtonItem(image: UIImage(named: "user_plus_24"), style: .plain, target: self, action: #selector(onCreateContact))
-            addContact.tintColor = .themeJacob
+            addContact.tintColor = .themeGray
 
             let settingsItem = UIBarButtonItem(customView: manageBarButtonView)
             manageBarButtonView.onTap = { [weak self] in
                 self?.onTapSettings()
             }
-            settingsItem.tintColor = .themeJacob
+            settingsItem.tintColor = .themeGray
 
             navigationItem.rightBarButtonItems = [settingsItem, addContact]
         }

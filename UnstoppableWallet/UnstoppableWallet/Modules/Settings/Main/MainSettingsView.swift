@@ -336,13 +336,15 @@ struct MainSettingsView: View {
     }
 
     @ViewBuilder private func contacts() -> some View {
-        NavigationRow(spacing: .margin8, destination: {
-            ContactBookView(mode: .edit)
-                .ignoresSafeArea()
-                .onFirstAppear {
-                    stat(page: .settings, event: .open(page: .contacts))
-                }
-        }) {
+        ClickableRow(spacing: .margin8) {
+            Coordinator.shared.present { _ in
+                ContactBookView(mode: .edit, presented: true)
+                    .ignoresSafeArea()
+                    .onFirstAppear {
+                        stat(page: .settings, event: .open(page: .contacts))
+                    }
+            }
+        } content: {
             HStack(spacing: .margin16) {
                 Image("user_24").themeIcon()
                 Text("contacts.title".localized).textBody()
