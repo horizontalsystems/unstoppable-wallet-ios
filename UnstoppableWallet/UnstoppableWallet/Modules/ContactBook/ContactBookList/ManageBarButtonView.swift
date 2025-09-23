@@ -26,7 +26,7 @@ class ManageBarButtonView: UIView {
         button.snp.makeConstraints { maker in
             maker.edges.equalToSuperview()
         }
-        button.setImage(UIImage(named: "manage_2_24")?.withTintColor(.themeJacob), for: .normal)
+        button.setImage(UIImage(named: "manage_2_24")?.withTintColor(.themeGray), for: .normal)
         button.addTarget(self, action: #selector(onTapButton), for: .touchUpInside)
     }
 
