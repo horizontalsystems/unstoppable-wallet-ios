@@ -61,6 +61,7 @@
 "alert.try_again" = "Inténtalo de nuevo";
 "alert.disconnecting" = "Desconectando";
 "alert.disconnected" = "Desconectado";
+"alert.connected" = "Connected";
 "alert.enabling" = "Activando";
 "alert.enabled_coins" = "Activado %@ monedas más";
 "alert.sending" = "Enviar";
@@ -77,6 +78,9 @@
 "alert.rbf_not_Enabled" = "RBF (Reemplazar por tarifa) no habilitado";
 "alert.unable_to_replace" = "No se puede reemplazar";
 "alert.already_replaced" = "Ya reemplazado";
+
+"alert_card.title.critical" = "Warning!";
+"alert_card.title.caution" = "Attention!";
 
 "no_results_found" = "No se han encontrado resultados";
 "action.loading" = "cargando...";
@@ -151,6 +155,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "restore.warning.non_recommended.description" = "Parece que esta cartera utiliza un carácter no estándar en su frase de recuperación y/o contraseña. Si no ves un saldo o transacciones, por favor lee abajo para más detalles. \n\nHAGA CLIC PARA OBTENER MÁS INFORMACIÓN";
 "restore.error.non_standard.description" = "Esta es una cartera no estándar. \n\nCLICK PARA CONTRAR MÁS INFO";
 
+"restore.error.non_standard.link" = "Click to get more info";
+
 // Restore Type
 
 "restore_type.title" = "Importar Cartera";
@@ -213,6 +219,15 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "stellar_secret_key.title" = "Clave secreta de Stellar";
 "stellar_secret_key.tap_to_show" = "Toca para mostrar la clave secreta";
+
+// Monero Key
+
+"monero_public_key.title" = "Monero Public Keys";
+"monero_private_key.title" = "Monero Private Keys";
+"monero_private_key.tap_to_show" = "Toca para mostrar la clave privada";
+"monero.key_types" = "Type";
+"monero.key_types.spend" = "Spend";
+"monero.key_types.view" = "View";
 
 // Extended Key
 
@@ -306,14 +321,19 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.deposit" = "Recibir";
 "balance.chart" = "Gráfico";
 "balance.scan" = "Escanear";
+"balance.copy_address" = "Copy Address";
+"balance.coin_info" = "Coin Info";
+"balance.hide_coin" = "Hide Coin";
 "balance.rate_per_coin" = "%@ por %@";
 "balance.syncing" = "Sincronizando...";
 "balance.searching" = "Buscando transacciones…";
+"balance.connecting" = "Conectando...";
 "balance.stopped" = "Detenido";
 "balance.downloading_sapling" = "Descargando Sapling... %d%%";
 "balance.downloading_blocks" = "Descargando bloques";
 "balance.scanning_blocks" = "Bloques de escaneo";
 "balance.enhancing_transactions" = "Mejorar las transacciones";
+"balance.watch_wallet" = "Watch Wallet";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Sincronizando... %@";
@@ -348,6 +368,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.token.transparent.info.description" = "Por ahora, el saldo transparente no se puede utilizar en nuestra billetera. Sin embargo, estos fondos pueden ser gastados desde otras billeteras que soportan direcciones t.";
 "balance.token.shield" = "Blindado";
 
+"balance.token.receive_address" = "Receive Address";
 "balance.token.staked" = "Llevado";
 "balance.token.staked.info.title" = "Título tomado";
 "balance.token.staked.info.description" = "Texto de descripción tomada";
@@ -397,7 +418,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "deposit.memo_warning.description" = "Tanto un memo (etiqueta) como la dirección son necesarios para asegurar que los activos sean recibidos. De lo contrario sus fondos se perderán.";
 
 "deposit.not_active" = "inactivo";
-"deposit.used_addresses" = "Direcciones Utilizadas";
 "deposit.not_active.title" = "Dirección no activa";
 "deposit.not_active.tron_description" = "Las cuentas recién creadas en la cadena de bloques TRON están inactivas y no se pueden consultar ni explorar. Necesitan ser activadas.\n\nPara activar una cuenta inactiva, transfiera tokens TRX o TRC-10 a su dirección. Para activar una nueva cuenta en la cadena Tron, se requiere una cuota de 1 TRX";
 "deposit.stellar.inactive_asset.title" = "Activar token";
@@ -409,6 +429,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "receive_used_addresses.external" = "Direcciones para recibir";
 "receive_used_addresses.change" = "Cambiar direcciones";
+
+"deposit.subaddresses.title" = "Subaddresses";
+"deposit.subaddresses.description" = "Subaddresses let you use multiple unique addresses within one wallet for convenience and enhanced privacy.";
+"deposit.subaddresses.transactions_count" = "Transactions: %@";
 
 "deposit.zcash.restore.description" = "¿Ya has poseído alguna moneda ZEC?";
 "deposit.zcash.restore.already_own" = "Sí, ya tengo";
@@ -441,9 +465,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.address_placeholder" = "Dirección";
 "send.address_or_domain_placeholder" = "Dominio o dirección";
 "send.fee" = "Comisión";
-"send.network_fee" = "Cuota de transferencia";
+"send.network_fee" = "Comisión";
 "send.estimated_fee" = "Tasa Estimada";
 "send.max_fee" = "Comisión Máx.";
+"send.max_fee.info" = "The maximum cost of sending given transaction on the network.";
 "send.duration.hours" = "%d h.";
 "send.duration.minutes" = "%d min.";
 "send.available_balance" = "Saldo disponible";
@@ -496,6 +521,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.confirmation.status" = "Estado";
 "send.confirmation.status.failed" = "Falló";
 "send.confirmation.send_to_own" = "La transacción se enviará a la propia dirección";
+"send.confirmation.operation" = "Operation";
+"send.confirmation.transaction_xdr" = "Transaction XDR";
 
 "send.confirmation.sync_failed" = "Error de sincronización";
 "send.confirmation.invalid_data" = "Datos no válidos";
@@ -523,6 +550,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.address_error.own_address" = "No está permitido enviar %@ a tu propia dirección. Ingresa una dirección de destinatario diferente.";
 "send.amount_error.maximum_amount" = "Monto máximo %@";
 "send.amount_error.minimum_amount" = "Monto mínimo %@";
+"send.amount_error.minimum_amount.title" = "Minimum amount";
+"send.amount_error.minimum_amount.description" = "Minimum amount must be %@";
 "send.amount_error.min_required_balance" = "Min. requerido restante %@";
 "send.amount_warning.coin_needed_for_fee" = "Considere dejar algún %@ en el saldo para poder pagar futuras transacciones.";
 "send.token.insufficient_fee_alert" = "Las comisiones de transacción para %@ (%@) pagado en %@. Es necesario %@.";
@@ -668,8 +697,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "swap.liquidity_fee" = "Tarifa de liquidez";
 "swap.outbound_fee" = "Tarifa de salida";
 "swap.total_fee" = "Tarifa Total";
-"swap.thorchain.slip_protection" = "Protección contra deslizamiento no disponible";
-"swap.thorchain.slip_protection.description" = "El deslizamiento mínimo para habilitar la protección contra deslizamiento en este intercambio es de %@.";
 
 // Swap Advanced Settings
 
@@ -1306,7 +1333,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "chart_indicators.settings.period.error" = "El período no puede ser mayor que %d";
 
 "chart_indicators.settings.ma.description" = "La EMA, el SMA y la WMA son promedios móviles usados en el análisis técnico:\n\nEMA enfatiza los precios recientes para reacciones más rápidas.\nSMA promedia los datos de precios para una vista general de tendencia.\nWMA equilibra la sensibilidad y la reducción de ruido por ponderación lineal de datos recientes";
-"chart_indicators.settings.ma.type_title" = "Tipo";
+"chart_indicators.settings.ma.type_title" = "Type";
 "chart_indicators.settings.ma.period_title" = "Period";
 
 "chart_indicators.settings.rsi.title" = "RSI";
@@ -1326,6 +1353,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "transactions.title" = "Transacciones";
 "transactions.tab_bar_item" = "Transacciones";
 "transactions.filter_all" = "Todo";
+"transactions.syncing_placeholder" = "Please wait for the sync to finish.";
 "transactions.empty_text" = "Todavía no tienes transacciones pendientes o pasadas";
 "transactions.pending" = "Pendiente";
 "transactions.processing" = "Procesando";
@@ -1499,7 +1527,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "backup_app.backup_list.other.watch_account.title" = "Ver carteras";
 "backup_app.backup_list.other.watchlist.title" = "Lista de Seguimiento";
 "backup_app.backup_list.other.contacts.title" = "Contactos";
-"backup_app.backup_list.other.blockchain_settings.title" = "RPC personalizado";
+"backup_app.backup_list.other.custom_evm_sync_sources.title" = "Custom RPC";
+"backup_app.backup_list.other.custom_monero_nodes.title" = "Custom Monero Nodes";
 "backup_app.backup_list.other.app_settings.title" = "Ajustes de app";
 "backup_app.backup_list.other.app_settings.description" = "Idioma, moneda, Apariencia ...";
 
@@ -1662,6 +1691,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "settings.privacy.description" = "%@ no recopila datos personales que exponen su información privada, es decir, saldos de monedas o direcciones. Mientras recopilamos algunas estadísticas de uso de la interfaz de usuario, es sólo para entender nuestras tendencias de uso de la base de usuarios y de la aplicación. Esto puede desactivarse si lo desea.";
 "settings.privacy.allow" = "Compartir datos de UI";
 "settings.privacy.allow.description" = "Esta configuración te permite desactivar el análisis de UI/UX y garantizar total confidencialidad.";
+"settings.privacy.nym" = "Get Nym VPN";
+"settings.privacy.nym.description" = "Unstoppable offers the best prices on Nym VPN service. Connect through us and you will increase your privacy much more favorably.";
 
 // Settings -> Appearance
 
@@ -1882,6 +1913,19 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "wallet_connect.address" = "Dirección";
 "wallet_connect.network" = "La red";
 "wallet_connect.list.pending_requests" = "Solicitudes Pendientes";
+"wallet_connect.main.connect" = "Connect to %@";
+"wallet_connect.main.connected" = "Connected to %@";
+"wallet_connect.main.premium_alert.title.risky" = "Danger!";
+"wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Domain verification is unavailable. Upgrade to Premium to protect against unverified or phishing websites.";
+"wallet_connect.main.premium_alert.subtitle.risky" = "This website is not verified and may lead to phishing or loss of funds. Connecting is strongly discouraged.";
+"wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check unavailable. Connection possible but without domain safety confirmation.";
+"wallet_connect.scam_protection" = "Scam Protection";
+"wallet_connect.scam_protection.deactivated" = "Deactivated";
+"wallet_connect.scam_protection.risky" = "Arriesgado";
+"wallet_connect.scam_protection.secure" = "Secure";
+"wallet_connect.scam_protection.not_available" = "N/A";
+"wallet_connect.networks" = "Networks";
+
 "wallet_connect.main.no_any_supported_chains" = "¡No hay cadenas compatibles!";
 "wallet_connect.main.unsupported_chains" = "¡Algunas cadenas no son soportadas!";
 "wallet_connect.connect_description" = "Al hacer clic en aprobar, usted puede permitir que esta aplicación vea su dirección pública. Esto es un paso importante de seguridad para proteger sus datos de posibles riesgos de phishing.";
@@ -1904,6 +1948,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "wallet_connect.sign.domain" = "Dominio";
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Mensaje a firmar";
+
+"wallet_connect.send.transaction" = "Send Tranasction";
 
 "wallet_connect_list.title" = "Walletconnect";
 "wallet_connect.list.empty_view_text" = "No hay sesiones activas";
@@ -1967,7 +2013,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "onboarding.balance.create" = "Cartera nueva";
 "onboarding.balance.import" = "Importar Cartera";
-"onboarding.balance.watch" = "Ver carteras";
+"onboarding.balance.watch" = "Watch Wallet";
 
 // Manage Accounts
 
@@ -1998,6 +2044,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "public_keys.evm_address.description" = "Permite el monitoreo de sólo lectura de carteras que poseen activos en Ethereum, Binance Smart Chain y otros blockchains basados en EVM.";
 "public_keys.account_extended_public_key" = "Account Extended Public Key";
 "public_keys.account_extended_public_key.description" = "Permite el monitoreo de sólo lectura de carteras con cripto de Bitcoin y otros basados en UTXO (es decir, Litecoin, Bitcoin Cash, Dash, etc.).";
+"public_keys.monero_public_key" = "Monero Public Keys";
+"public_keys.monero_public_key.description" = "Allows read-only monitoring of wallets holding Monero (XMR) assets without granting spending access.";
 
 // Manage Account -> Private Keys
 
@@ -2010,6 +2058,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "private_keys.bip32_root_key.description" = "Otorga total control sobre los activos de la respectiva cartera.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
 "private_keys.account_extended_private_key.description" = "Otorga control total sobre Bitcoin y otras criptomonedas basadas en UTXO, es decir, Litecoin, Bitcoin Cash, Dash, etc. dentro de su respectiva cartera.";
+"private_keys.monero_private_key" = "Monero Private Keys";
+"private_keys.monero_private_key.description" = "Grants full control over Monero (XMR) assets within the respective wallet, including the ability to spend funds.";
 
 // Manage Account -> EVM Address
 
@@ -2054,6 +2104,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "monero_network.added" = "Añadido";
 "monero_network.add_new" = "Añadir Nuevo";
 "monero_network.description" = "Elige el nodo que la aplicación Unstoppable debe usar para sincronizar la(s) wallet(s).";
+"monero_network.settings.title" = "Node Preferences";
+"monero_network.settings.description" = "Trusted node — the wallet trusts the selected node and uses its data without extra verification. \n\nOn → transactions instantly appear as Pending when broadcast (faster sync, but lower privacy and reliance on the node).\n\nOff → transactions are shown only after confirmations from the network (slower, but safer and more private).";
+"monero_network.settings.trust" = "Trust";
 
 // Add RPC Source
 
@@ -2087,7 +2140,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "TimeLock sólo funciona para enviar a direcciones BIP44 (comenzando con 1)";
 
-"fee_settings.network_fee" = "Cuota de transferencia";
+"fee_settings.network_fee" = "Comisión";
 "fee_settings.network_fee.info" = "El coste estimado del envío de una transacción en la red.";
 "fee_settings.l1_fee" = "Tarifa L1";
 "fee_settings.l1_fee.info" = "El costo estimado de enviar una transacción dada en la red de capa 1.";
@@ -2121,16 +2174,23 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Watch Address
 
-"watch_address.title" = "Ver carteras";
+"watch_address.title" = "Watch Wallet";
+"watch_address.name" = "Nombre";
 "watch_address.watch" = "Ver";
 "watch_address.address" = "Dirección";
 "watch_address.error.not_supported" = "El formato de dirección no está soportado";
+"watch_address.error.address_required" = "Please enter an address to continue";
 "watch_address.error.non_public_key" = "No se permite la visualización por clave privada";
 "watch_address.error.not_supported_derived_type" = "El tipo derivado no está soportado";
 "watch_address.watch_data.placeholder" = "Pega tu dirección pública o clave XPUB";
-"watch_address.watch_data.description" = "Compatible con direcciones de EVM, Tron, TON, Stellar, la familia Bitcoin (BTC, LTC, BCH, Dash) y claves XPUB.";
 "watch_address.choose_blockchain" = "Elegir Blockchain";
 "watch_address.choose_coin" = "Elegir moneda";
+"watch_address.view_key.placeholder" = "Private View Key";
+"watch_address.view_key.error.required" = "Private View Key is required to watch Monero wallets.";
+"watch_address.view_key.error.invalid" = "Invalid View Key";
+"watch_address.birthday_height.placeholder" = "Restore Height (0000000)";
+"watch_address.birthday_height.error.invalid" = "Invalid Restore Height";
+"watch_address.monero_warning.description" = "Monero watch wallet show only incoming transactions, The balance displayed may be incorrect.";
 
 // Nft Collections
 
@@ -2300,7 +2360,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "purchases.duress_mode.description" = "Seguridad inteligente de fondos durante amenazas físicas";
 "purchases.duress_mode.info" = "Tu cripto. Tu seguridad. El Modo Coacción te permite crear múltiples configuraciones alternativas de wallet, cada una con un PIN distinto, proporcionando una vía de escape oculta en situaciones de alto riesgo. Si te obligan a desbloquear tu wallet, simplemente usa el PIN de coacción para acceder a una wallet secundaria sin exponer activos críticos. Tus fondos reales permanecen ocultos. Tu seguridad permanece intacta.";
 
-"purchases.address_phishing" = "Protección contra estafas";
+"purchases.address_phishing" = "Scam Protection";
 "purchases.address_phishing.description" = "Protección automática eficaz contra fraudes y ataques de phishing";
 "purchases.address_phishing.info" = "Una dirección incorrecta, y tu cripto se pierde para siempre. Unstoppable escanea automáticamente las direcciones de destinatarios en busca de patrones sospechosos y te defiende contra las últimas amenazas de phishing, evitando que envíes fondos a un hacker. Bloquea transferencias fraudulentas antes de que ocurran.";
 
