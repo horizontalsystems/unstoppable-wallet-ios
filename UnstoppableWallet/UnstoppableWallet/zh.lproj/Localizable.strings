@@ -61,6 +61,7 @@
 "alert.try_again" = "再试一次";
 "alert.disconnecting" = "正在断开连接";
 "alert.disconnected" = "已断开连接";
+"alert.connected" = "Connected";
 "alert.enabling" = "正在启用";
 "alert.enabled_coins" = "启用了 %@ 多硬币";
 "alert.sending" = "发送中";
@@ -77,6 +78,9 @@
 "alert.rbf_not_Enabled" = "RBF(替换交易) 未启用";
 "alert.unable_to_replace" = "无法替换";
 "alert.already_replaced" = "已经替换";
+
+"alert_card.title.critical" = "Warning!";
+"alert_card.title.caution" = "Attention!";
 
 "no_results_found" = "未发现结果";
 "action.loading" = "正在加载...";
@@ -151,6 +155,8 @@
 "restore.warning.non_recommended.description" = "这个钱包似乎在其密码列表和/或密码短语中使用了非标准字符。 如果您没有看到余额或交易，请阅读下面的详细信息。\n\n点击获取更多信息";
 "restore.error.non_standard.description" = "这是一个不符合标准的钱包。 详情请阅读下文。\n\n点击获取更多信息";
 
+"restore.error.non_standard.link" = "Click to get more info";
+
 // Restore Type
 
 "restore_type.title" = "恢复自";
@@ -213,6 +219,15 @@
 
 "stellar_secret_key.title" = "Stellar 私钥";
 "stellar_secret_key.tap_to_show" = "點擊以顯示私密金鑰";
+
+// Monero Key
+
+"monero_public_key.title" = "Monero Public Keys";
+"monero_private_key.title" = "Monero Private Keys";
+"monero_private_key.tap_to_show" = "点击显示私钥";
+"monero.key_types" = "Type";
+"monero.key_types.spend" = "Spend";
+"monero.key_types.view" = "View";
 
 // Extended Key
 
@@ -306,14 +321,19 @@
 "balance.deposit" = "接收";
 "balance.chart" = "图表";
 "balance.scan" = "扫描";
+"balance.copy_address" = "Copy Address";
+"balance.coin_info" = "Coin Info";
+"balance.hide_coin" = "Hide Coin";
 "balance.rate_per_coin" = "%@ / %@";
 "balance.syncing" = "正在同步...";
 "balance.searching" = "正在搜索交易…...";
+"balance.connecting" = "正在连接...";
 "balance.stopped" = "已停止";
 "balance.downloading_sapling" = "正在下载保存... %d%%";
 "balance.downloading_blocks" = "正在下载块";
 "balance.scanning_blocks" = "扫描块";
 "balance.enhancing_transactions" = "加强交易";
+"balance.watch_wallet" = "Watch Wallet";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "正在同步... %@";
@@ -348,6 +368,7 @@
 "balance.token.transparent.info.description" = "透明餘額目前無法在我們的錢包中使用。但其他支援 t-address 的錢包可以花費這些資金。";
 "balance.token.shield" = "屏蔽";
 
+"balance.token.receive_address" = "Receive Address";
 "balance.token.staked" = "已关注";
 "balance.token.staked.info.title" = "关注的标题";
 "balance.token.staked.info.description" = "相关的描述文本";
@@ -397,7 +418,6 @@
 "deposit.memo_warning.description" = "需要填写备注(标签)和地址以确保收到资产。否则您的资金将丢失。";
 
 "deposit.not_active" = "不活动";
-"deposit.used_addresses" = "已使用地址";
 "deposit.not_active.title" = "未激活的地址";
 "deposit.not_active.tron_description" = "新创建的 TRON 区块链上的帐户是不活动的，无法查询或探索。它们需要激活。\n\n正在将TRX或 TRC-10令牌传输到一个不活动的帐户地址将激活该帐户。 激活Tron链上的一个新帐户需要1TRX";
 "deposit.stellar.inactive_asset.title" = "啟用代幣";
@@ -409,6 +429,10 @@
 
 "receive_used_addresses.external" = "接收地址";
 "receive_used_addresses.change" = "找零地址";
+
+"deposit.subaddresses.title" = "Subaddresses";
+"deposit.subaddresses.description" = "Subaddresses let you use multiple unique addresses within one wallet for convenience and enhanced privacy.";
+"deposit.subaddresses.transactions_count" = "Transactions: %@";
 
 "deposit.zcash.restore.description" = "您以前是否拥有过任何ZEC硬币？";
 "deposit.zcash.restore.already_own" = "是的，我已经拥有了";
@@ -441,9 +465,10 @@
 "send.address_placeholder" = "地址";
 "send.address_or_domain_placeholder" = "地址或域名";
 "send.fee" = "费用";
-"send.network_fee" = "网络费";
+"send.network_fee" = "费用";
 "send.estimated_fee" = "预估费用";
 "send.max_fee" = "最大手续费";
+"send.max_fee.info" = "The maximum cost of sending given transaction on the network.";
 "send.duration.hours" = "%d小时。";
 "send.duration.minutes" = "%d分钟。";
 "send.available_balance" = "可用余额";
@@ -496,6 +521,8 @@
 "send.confirmation.status" = "状态";
 "send.confirmation.status.failed" = "失败";
 "send.confirmation.send_to_own" = "交易将发送至自己的地址";
+"send.confirmation.operation" = "Operation";
+"send.confirmation.transaction_xdr" = "Transaction XDR";
 
 "send.confirmation.sync_failed" = "同步失败";
 "send.confirmation.invalid_data" = "无效数据";
@@ -523,6 +550,8 @@
 "send.address_error.own_address" = "不允许将 %@ 发送到您自己的地址。请输入其他收款地址。";
 "send.amount_error.maximum_amount" = "最大金额 %@";
 "send.amount_error.minimum_amount" = "最小金额 %@";
+"send.amount_error.minimum_amount.title" = "Minimum amount";
+"send.amount_error.minimum_amount.description" = "Minimum amount must be %@";
 "send.amount_error.min_required_balance" = "最小要求剩余 %@";
 "send.amount_warning.coin_needed_for_fee" = "考虑留下%@作为余额以便能够支付未来的交易。";
 "send.token.insufficient_fee_alert" = "%@（%@）的交易费用以%@支付。您需要%@。";
@@ -668,8 +697,6 @@
 "swap.liquidity_fee" = "流动性费用";
 "swap.outbound_fee" = "出站费";
 "swap.total_fee" = "总费用";
-"swap.thorchain.slip_protection" = "滑價保護無法使用";
-"swap.thorchain.slip_protection.description" = "啟用此交易滑價保護的最低滑價為 %@。";
 
 // Swap Advanced Settings
 
@@ -1306,7 +1333,7 @@
 "chart_indicators.settings.period.error" = "周期不能超过 %d";
 
 "chart_indicators.settings.ma.description" = "在技术分析中，EMA、SMA和WMA正在移动平均值：\n\nEMA强调最近的价格以便更快的反应。\n一般趋势视图的SMA平均价格数据。\nWMA 通过线性加权最近数据平衡敏感度和噪声减少";
-"chart_indicators.settings.ma.type_title" = "类型";
+"chart_indicators.settings.ma.type_title" = "Type";
 "chart_indicators.settings.ma.period_title" = "句号";
 
 "chart_indicators.settings.rsi.title" = "RSI";
@@ -1326,6 +1353,7 @@
 "transactions.title" = "交易";
 "transactions.tab_bar_item" = "交易";
 "transactions.filter_all" = "所有";
+"transactions.syncing_placeholder" = "Please wait for the sync to finish.";
 "transactions.empty_text" = "您还没有任何待定或成功的交易";
 "transactions.pending" = "待处理";
 "transactions.processing" = "正在处理";
@@ -1498,7 +1526,8 @@
 "backup_app.backup_list.other.watch_account.title" = "观察地址";
 "backup_app.backup_list.other.watchlist.title" = "关注";
 "backup_app.backup_list.other.contacts.title" = "联系人";
-"backup_app.backup_list.other.blockchain_settings.title" = "自定义 RPC";
+"backup_app.backup_list.other.custom_evm_sync_sources.title" = "Custom RPC";
+"backup_app.backup_list.other.custom_monero_nodes.title" = "Custom Monero Nodes";
 "backup_app.backup_list.other.app_settings.title" = "应用设置";
 "backup_app.backup_list.other.app_settings.description" = "语言、 货币、 外观...";
 
@@ -1661,6 +1690,8 @@
 "settings.privacy.description" = "%@不收集暴露您私人信息的个人数据，例如币余额或地址。虽然我们收集了一些用户界面使用统计数据，但这仅用于了解我们的用户群和应用程序使用趋势。如果您希望，可以禁用此功能。";
 "settings.privacy.allow" = "共享界面数据";
 "settings.privacy.allow.description" = "此設置允許您禁用UI/UX分析並確保完全的隱私性。";
+"settings.privacy.nym" = "Get Nym VPN";
+"settings.privacy.nym.description" = "Unstoppable offers the best prices on Nym VPN service. Connect through us and you will increase your privacy much more favorably.";
 
 // Settings -> Appearance
 
@@ -1881,6 +1912,19 @@
 "wallet_connect.address" = "地址";
 "wallet_connect.network" = "網絡";
 "wallet_connect.list.pending_requests" = "待处理请求";
+"wallet_connect.main.connect" = "Connect to %@";
+"wallet_connect.main.connected" = "Connected to %@";
+"wallet_connect.main.premium_alert.title.risky" = "Danger!";
+"wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Domain verification is unavailable. Upgrade to Premium to protect against unverified or phishing websites.";
+"wallet_connect.main.premium_alert.subtitle.risky" = "This website is not verified and may lead to phishing or loss of funds. Connecting is strongly discouraged.";
+"wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check unavailable. Connection possible but without domain safety confirmation.";
+"wallet_connect.scam_protection" = "Scam Protection";
+"wallet_connect.scam_protection.deactivated" = "Deactivated";
+"wallet_connect.scam_protection.risky" = "有风险";
+"wallet_connect.scam_protection.secure" = "Secure";
+"wallet_connect.scam_protection.not_available" = "不可用";
+"wallet_connect.networks" = "Networks";
+
 "wallet_connect.main.no_any_supported_chains" = "没有任何支持的链！";
 "wallet_connect.main.unsupported_chains" = "一些链是不支持的！";
 "wallet_connect.connect_description" = "点击批准，表示您允许此应用查看您的公开地址。这是保护您的数据免受潜在钓鱼风险威胁的重要安全步骤。";
@@ -1903,6 +1947,8 @@
 "wallet_connect.sign.domain" = "域名";
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "待签名消息";
+
+"wallet_connect.send.transaction" = "Send Tranasction";
 
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "没有活跃会话";
@@ -1966,7 +2012,7 @@
 
 "onboarding.balance.create" = "新钱包";
 "onboarding.balance.import" = "恢复自";
-"onboarding.balance.watch" = "观察地址";
+"onboarding.balance.watch" = "Watch Wallet";
 
 // Manage Accounts
 
@@ -1997,6 +2043,8 @@
 "public_keys.evm_address.description" = "允许只读监视持有Etherum、 Binance Smart Chain和其他基于 EVM 的区块链的钱包。";
 "public_keys.account_extended_public_key" = "Account Extended Public Key";
 "public_keys.account_extended_public_key.description" = "允许只读监视持有比特币和其他基于 UTXO 的加密钱包(即Liteco、 比特币现金、 破折号等)。";
+"public_keys.monero_public_key" = "Monero Public Keys";
+"public_keys.monero_public_key.description" = "Allows read-only monitoring of wallets holding Monero (XMR) assets without granting spending access.";
 
 // Manage Account -> Private Keys
 
@@ -2009,6 +2057,8 @@
 "private_keys.bip32_root_key.description" = "授予对相应钱包上的资产的完全控制。";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
 "private_keys.account_extended_private_key.description" = "授予对比特币和基于加密货币的其他未花费交易输出（UTXO）的完全控制，即在相应钱包内的莱特币、比特币现金、达世币等。";
+"private_keys.monero_private_key" = "Monero Private Keys";
+"private_keys.monero_private_key.description" = "Grants full control over Monero (XMR) assets within the respective wallet, including the ability to spend funds.";
 
 // Manage Account -> EVM Address
 
@@ -2053,6 +2103,9 @@
 "monero_network.added" = "已添加";
 "monero_network.add_new" = "添加新的";
 "monero_network.description" = "选择 Unstoppable 应用用于同步钱包的节点。";
+"monero_network.settings.title" = "Node Preferences";
+"monero_network.settings.description" = "Trusted node — the wallet trusts the selected node and uses its data without extra verification. \n\nOn → transactions instantly appear as Pending when broadcast (faster sync, but lower privacy and reliance on the node).\n\nOff → transactions are shown only after confirmations from the network (slower, but safer and more private).";
+"monero_network.settings.trust" = "Trust";
 
 // Add RPC Source
 
@@ -2086,7 +2139,7 @@
 "fee_settings.time_lock" = "TimeLock";
 "fee_settings.time_lock.description" = "时间锁（TimeLock）只适用于发送到BIP44地址（从1开始）";
 
-"fee_settings.network_fee" = "网络费";
+"fee_settings.network_fee" = "费用";
 "fee_settings.network_fee.info" = "在网络上发送给定交易的估计费用。";
 "fee_settings.l1_fee" = "L1费用";
 "fee_settings.l1_fee.info" = "给定交易在第1层网络上发送的预估成本。";
@@ -2120,16 +2173,23 @@
 
 // Watch Address
 
-"watch_address.title" = "观察地址";
+"watch_address.title" = "Watch Wallet";
+"watch_address.name" = "名称";
 "watch_address.watch" = "观察";
 "watch_address.address" = "地址";
 "watch_address.error.not_supported" = "不支持的地址格式";
+"watch_address.error.address_required" = "Please enter an address to continue";
 "watch_address.error.non_public_key" = "不允许使用私钥进行观察";
 "watch_address.error.not_supported_derived_type" = "不支持的派生类型";
 "watch_address.watch_data.placeholder" = "粘贴您的公开地址或 XPUB";
-"watch_address.watch_data.description" = "支持来自 EVM、Tron、TON、Stellar、比特币系列（BTC、LTC、BCH、Dash）以及 XPUB 的地址。";
 "watch_address.choose_blockchain" = "选择区块链";
 "watch_address.choose_coin" = "选择代币";
+"watch_address.view_key.placeholder" = "Private View Key";
+"watch_address.view_key.error.required" = "Private View Key is required to watch Monero wallets.";
+"watch_address.view_key.error.invalid" = "Invalid View Key";
+"watch_address.birthday_height.placeholder" = "Restore Height (0000000)";
+"watch_address.birthday_height.error.invalid" = "Invalid Restore Height";
+"watch_address.monero_warning.description" = "Monero watch wallet show only incoming transactions, The balance displayed may be incorrect.";
 
 // Nft Collections
 
@@ -2299,7 +2359,7 @@
 "purchases.duress_mode.description" = "面對實體威脅時的智能資金安全保障";
 "purchases.duress_mode.info" = "您的加密貨幣。您的安全。脅迫模式讓您創建多個備用錢包設置，每個都有單獨的PIN碼，在高風險情況下提供隱藏的逃生路線。如果被迫解鎖您的錢包，只需使用脅迫PIN碼訪問次要錢包，不會暴露關鍵資產。您的真實資金保持隱藏。您的安全完好無損。";
 
-"purchases.address_phishing" = "詐騙防護";
+"purchases.address_phishing" = "Scam Protection";
 "purchases.address_phishing.description" = "有效自動防護詐騙和釣魚攻擊";
 "purchases.address_phishing.info" = "只要输错 - 个地址，您的加密资产就可能永远丢失。Unstoppable 会自动扫描收款地址中的可疑特征，并防御最新的钓鱼攻击，防止您将资金发送给黑客。提前阻止欺诈性转账，保障您的资产安全。";
 
