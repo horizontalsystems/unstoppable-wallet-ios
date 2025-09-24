@@ -62,20 +62,6 @@ class BitcoinTransactionService: ITransactionService {
         }
     }
 
-    func settingsView(feeData: Binding<FeeData?>, loading: Binding<Bool>, feeToken: MarketKit.Token, currency: Currency, feeTokenRate: Binding<Decimal?>) -> AnyView? {
-        let view = BitcoinFeeSettingsView(
-            service: self,
-            blockchainType: blockchainType,
-            feeData: feeData,
-            loading: loading,
-            feeToken: feeToken,
-            currency: currency,
-            feeTokenRate: feeTokenRate
-        )
-
-        return AnyView(ThemeNavigationStack { view })
-    }
-
     func set(satoshiPerByte: Int) {
         self.satoshiPerByte = satoshiPerByte
         usingRecommended = (satoshiPerByte == actualFeeRates?.recommended)

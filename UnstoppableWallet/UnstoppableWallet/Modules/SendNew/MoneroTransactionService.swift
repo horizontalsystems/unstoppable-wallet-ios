@@ -34,19 +34,6 @@ class MoneroTransactionService: ITransactionService {
         }
     }
 
-    func settingsView(feeData: Binding<FeeData?>, loading: Binding<Bool>, feeToken: MarketKit.Token, currency: Currency, feeTokenRate: Binding<Decimal?>) -> AnyView? {
-        let view = MoneroFeeSettingsView(
-            service: self,
-            feeData: feeData,
-            loading: loading,
-            feeToken: feeToken,
-            currency: currency,
-            feeTokenRate: feeTokenRate
-        )
-
-        return AnyView(ThemeNavigationStack { view })
-    }
-
     func set(priority: SendPriority) {
         self.priority = priority
         usingRecommended = (priority == .default)
