@@ -2051,6 +2051,8 @@
 		6BEA17782DE5C59E00BF73DD /* ZcashShieldingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA17762DE5C59200BF73DD /* ZcashShieldingTransactionRecord.swift */; };
 		6BEA177A2DE8319D00BF73DD /* ShieldSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA17792DE8319600BF73DD /* ShieldSendView.swift */; };
 		6BEA177B2DE8319D00BF73DD /* ShieldSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA17792DE8319600BF73DD /* ShieldSendView.swift */; };
+		6BEEBAB62E83F38700DB8B27 /* FeeSettingsViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEEBAB52E83F38100DB8B27 /* FeeSettingsViewFactory.swift */; };
+		6BEEBAB72E83F38700DB8B27 /* FeeSettingsViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEEBAB52E83F38100DB8B27 /* FeeSettingsViewFactory.swift */; };
 		6BEF09562E12848E004F4514 /* DeepLinkViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF09552E128486004F4514 /* DeepLinkViewManager.swift */; };
 		6BEF09572E12848E004F4514 /* DeepLinkViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF09552E128486004F4514 /* DeepLinkViewManager.swift */; };
 		6BEF09602E252519004F4514 /* StartScreenAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF095F2E25250B004F4514 /* StartScreenAlertManager.swift */; };
@@ -4551,6 +4553,7 @@
 		6BEA17722DE5918500BF73DD /* ShieldSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldSendHandler.swift; sourceTree = "<group>"; };
 		6BEA17762DE5C59200BF73DD /* ZcashShieldingTransactionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashShieldingTransactionRecord.swift; sourceTree = "<group>"; };
 		6BEA17792DE8319600BF73DD /* ShieldSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldSendView.swift; sourceTree = "<group>"; };
+		6BEEBAB52E83F38100DB8B27 /* FeeSettingsViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeSettingsViewFactory.swift; sourceTree = "<group>"; };
 		6BEF09552E128486004F4514 /* DeepLinkViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkViewManager.swift; sourceTree = "<group>"; };
 		6BEF095F2E25250B004F4514 /* StartScreenAlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenAlertManager.swift; sourceTree = "<group>"; };
 		6BF655852E49BF6C0055A9D5 /* AllBridgeMultiSwapStellarQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBridgeMultiSwapStellarQuote.swift; sourceTree = "<group>"; };
@@ -9164,6 +9167,7 @@
 		D0B462F12B5A470F0027815D /* FeeSettings */ = {
 			isa = PBXGroup;
 			children = (
+				6BEEBAB52E83F38100DB8B27 /* FeeSettingsViewFactory.swift */,
 				D0DEFF032BD1253B004C9DF0 /* BitcoinFeeSettingsView.swift */,
 				D0DEFF022BD1253B004C9DF0 /* BitcoinFeeSettingsViewModel.swift */,
 				D06A171A2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift */,
@@ -11358,6 +11362,7 @@
 				6B6E13EF2DEDABDE007F4A39 /* HUDCoverView.swift in Sources */,
 				6B6E13F02DEDABDE007F4A39 /* HUDStatusModel.swift in Sources */,
 				6B6E13F12DEDABDE007F4A39 /* HUDProgressView.swift in Sources */,
+				6BEEBAB72E83F38700DB8B27 /* FeeSettingsViewFactory.swift in Sources */,
 				6B6E13F22DEDABDE007F4A39 /* DimViewController.swift in Sources */,
 				6B6E13F32DEDABDE007F4A39 /* HapticGenerator.swift in Sources */,
 				6B6E13F42DEDABDE007F4A39 /* BackgroundHUDWindow.swift in Sources */,
@@ -12951,6 +12956,7 @@
 				6B6E140B2DEDABDE007F4A39 /* HUDProgressView.swift in Sources */,
 				6B6E140C2DEDABDE007F4A39 /* DimViewController.swift in Sources */,
 				6B6E140D2DEDABDE007F4A39 /* HapticGenerator.swift in Sources */,
+				6BEEBAB62E83F38700DB8B27 /* FeeSettingsViewFactory.swift in Sources */,
 				6B6E140E2DEDABDE007F4A39 /* BackgroundHUDWindow.swift in Sources */,
 				6B6E140F2DEDABDE007F4A39 /* HUDViewInteractor.swift in Sources */,
 				6B6E14102DEDABDE007F4A39 /* HUD.swift in Sources */,

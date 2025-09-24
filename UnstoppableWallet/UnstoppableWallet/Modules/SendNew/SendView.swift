@@ -32,13 +32,7 @@ struct SendView: View {
                 if let transactionService = viewModel.transactionService, let feeToken = viewModel.handler?.baseToken {
                     Button(action: {
                         Coordinator.shared.present { _ in
-                            transactionService.settingsView(
-                                feeData: Binding<FeeData?>(get: { viewModel.state.data?.feeData }, set: { _ in }),
-                                loading: Binding<Bool>(get: { viewModel.state.isSyncing }, set: { _ in }),
-                                feeToken: feeToken,
-                                currency: viewModel.currency,
-                                feeTokenRate: Binding<Decimal?>(get: { viewModel.rates[feeToken.coin.uid] }, set: { _ in })
-                            )
+                            FeeSettingsViewFactory.createSettingsView(sendViewModel: viewModel, feeToken: feeToken)
                         }
                     }) {
                         Image("manage_2_20").renderingMode(.template)

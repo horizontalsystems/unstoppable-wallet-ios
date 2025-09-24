@@ -2,23 +2,16 @@ import MarketKit
 import SwiftUI
 
 struct BitcoinFeeSettingsView: View {
+    @EnvironmentObject private var sendViewModel: SendViewModel
     @StateObject private var viewModel: BitcoinFeeSettingsViewModel
-    @Binding private var feeData: FeeData?
-    @Binding private var loading: Bool
     private var feeToken: Token
-    private var currency: Currency
-    @Binding private var feeTokenRate: Decimal?
 
     private var helper = FeeSettingsViewHelper()
     @Environment(\.presentationMode) private var presentationMode
 
-    init(service: BitcoinTransactionService, blockchainType _: BlockchainType, feeData: Binding<FeeData?>, loading: Binding<Bool>, feeToken: Token, currency: Currency, feeTokenRate: Binding<Decimal?>) {
+    init(service: BitcoinTransactionService, feeToken: Token) {
         _viewModel = .init(wrappedValue: BitcoinFeeSettingsViewModel(service: service))
-        _feeData = feeData
-        _loading = loading
         self.feeToken = feeToken
-        self.currency = currency
-        _feeTokenRate = feeTokenRate
     }
 
     var body: some View {
@@ -27,7 +20,13 @@ struct BitcoinFeeSettingsView: View {
                 ListSection {
                     helper.row(
                         title: "fee_settings.network_fee".localized,
-                        feeValue: helper.feeAmount(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate, loading: loading, feeData: feeData),
+                        feeValue: helper.feeAmount(
+                            feeToken: feeToken,
+                            currency: sendViewModel.currency,
+                            feeTokenRate: sendViewModel.rates[feeToken.coin.uid],
+                            loading: sendViewModel.state.isSyncing,
+                            feeData: sendViewModel.state.data?.feeData
+                        ),
                         infoDescription: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized)
                     )
                 }

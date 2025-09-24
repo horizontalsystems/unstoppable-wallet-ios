@@ -3,31 +3,28 @@ import MarketKit
 import SwiftUI
 
 struct Eip1559FeeSettingsView: View {
+    @EnvironmentObject private var sendViewModel: SendViewModel
     @StateObject private var viewModel: Eip1559FeeSettingsViewModel
-    @Binding private var feeData: FeeData?
-    @Binding private var loading: Bool
     private var feeToken: Token
-    private var currency: Currency
-    @Binding private var feeTokenRate: Decimal?
 
     private var helper = FeeSettingsViewHelper()
     @Environment(\.presentationMode) private var presentationMode
 
-    init(service: EvmTransactionService, blockchainType: BlockchainType, feeData: Binding<FeeData?>, loading: Binding<Bool>, feeToken: Token, currency: Currency, feeTokenRate: Binding<Decimal?>) {
+    init(service: EvmTransactionService, blockchainType: BlockchainType, feeToken: Token) {
         _viewModel = .init(wrappedValue: Eip1559FeeSettingsViewModel(service: service, feeViewItemFactory: FeeViewItemFactory(scale: blockchainType.feePriceScale)))
-        _feeData = feeData
-        _loading = loading
         self.feeToken = feeToken
-        self.currency = currency
-        _feeTokenRate = feeTokenRate
     }
 
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
                 let (l2FeeValue, l1FeeValue, gasLimitValue) = helper.feeAmount(
-                    feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate, loading: loading,
-                    feeData: feeData, gasPrice: viewModel.service.gasPrice
+                    feeToken: feeToken,
+                    currency: sendViewModel.currency,
+                    feeTokenRate: sendViewModel.rates[feeToken.coin.uid],
+                    loading: sendViewModel.state.isSyncing,
+                    feeData: sendViewModel.state.data?.feeData,
+                    gasPrice: viewModel.service.gasPrice
                 )
 
                 ListSection {

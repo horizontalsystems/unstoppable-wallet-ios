@@ -153,30 +153,8 @@ class EvmTransactionService: ITransactionService {
         }
     }
 
-    func settingsView(feeData: Binding<FeeData?>, loading: Binding<Bool>, feeToken: Token, currency: Currency, feeTokenRate: Binding<Decimal?>) -> AnyView? {
-        if chain.isEIP1559Supported {
-            let view = Eip1559FeeSettingsView(
-                service: self,
-                blockchainType: blockchainType,
-                feeData: feeData,
-                loading: loading,
-                feeToken: feeToken,
-                currency: currency,
-                feeTokenRate: feeTokenRate
-            )
-            return AnyView(ThemeNavigationStack { view })
-        } else {
-            let view = LegacyFeeSettingsView(
-                service: self,
-                blockchainType: blockchainType,
-                feeData: feeData,
-                loading: loading,
-                feeToken: feeToken,
-                currency: currency,
-                feeTokenRate: feeTokenRate
-            )
-            return AnyView(ThemeNavigationStack { view })
-        }
+    var isEIP1559Supported: Bool {
+        chain.isEIP1559Supported
     }
 
     func set(gasPrice: GasPrice) {
