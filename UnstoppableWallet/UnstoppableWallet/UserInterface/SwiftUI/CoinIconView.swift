@@ -37,7 +37,7 @@ struct BalanceCoinIconView: View {
             .overlay {
                 switch state {
                 case .connecting:
-                        ProgressView(value: 0.1)
+                    ProgressView(value: 0.1)
                         .progressViewStyle(DeterminiteSpinnerStyle())
                         .frame(width: 36, height: 36)
                         .spinning()
