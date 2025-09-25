@@ -10,112 +10,124 @@ struct AppearanceView: View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
                 ListSection {
-                    ClickableRow(spacing: .margin8) {
-                        Coordinator.shared.present(type: .alert) { isPresented in
-                            OptionAlertView(
-                                title: "appearance.theme".localized,
-                                viewItems: viewModel.themeModes.map { .init(text: title(themeMode: $0), selected: viewModel.themeMode == $0) },
-                                onSelect: { index in
-                                    viewModel.themeMode = viewModel.themeModes[index]
-                                },
-                                isPresented: isPresented
-                            )
+                    Cell(
+                        middle: {
+                            ThemeText("appearance.theme".localized, style: .headline2)
+                        },
+                        right: {
+                            ThemeText(title(themeMode: viewModel.themeMode), style: .subheadSB).arrow(style: .dropdown)
+                        },
+                        action: {
+                            Coordinator.shared.present(type: .alert) { isPresented in
+                                OptionAlertView(
+                                    title: "appearance.theme".localized,
+                                    viewItems: viewModel.themeModes.map { .init(text: title(themeMode: $0), selected: viewModel.themeMode == $0) },
+                                    onSelect: { index in
+                                        viewModel.themeMode = viewModel.themeModes[index]
+                                    },
+                                    isPresented: isPresented
+                                )
+                            }
                         }
-                    } content: {
-                        Text("appearance.theme".localized).textBody()
-                        Spacer()
-                        Text(title(themeMode: viewModel.themeMode)).textSubhead1()
-                        Image("arrow_small_down_20").themeIcon()
-                    }
+                    )
                 }
 
                 ListSection {
-                    ClickableRow(spacing: .margin8, action: {
-                        if let url = URL(string: UIApplication.openSettingsURLString) {
-                            openURL(url)
+                    Cell(
+                        middle: {
+                            ThemeText("settings.language".localized, style: .headline2)
+                        },
+                        right: {
+                            HStack(spacing: .margin8) {
+                                if let language = LanguageManager.shared.currentLanguageDisplayName {
+                                    ThemeText(language, style: .subheadSB, colorStyle: .secondary)
+                                }
+
+                                Image.disclosureIcon
+                            }
+                        },
+                        action: {
+                            if let url = URL(string: UIApplication.openSettingsURLString) {
+                                openURL(url)
+                            }
                         }
-                    }) {
-                        Text("settings.language".localized).textBody()
-                        Spacer()
+                    )
 
-                        if let language = LanguageManager.shared.currentLanguageDisplayName {
-                            Text(language).textSubhead1()
-                        }
-
-                        Image.disclosureIcon
-                    }
-
-                    NavigationRow(spacing: .margin8, destination: {
+                    NavigationLink(destination: {
                         BaseCurrencySettingsModule.view()
                             .onFirstAppear {
                                 stat(page: .appearance, event: .open(page: .baseCurrency))
                             }
                     }) {
-                        Text("settings.base_currency".localized).textBody()
-                        Spacer()
-                        Text(viewModel.baseCurrencyCode).textSubhead1()
-                        Image.disclosureIcon
+                        Cell(
+                            middle: {
+                                ThemeText("settings.base_currency".localized, style: .headline2)
+                            },
+                            right: {
+                                ThemeText(viewModel.baseCurrencyCode, style: .subheadSB, colorStyle: .secondary).arrow(style: .disclosure)
+                            }
+                        )
                     }
+                    .buttonStyle(CellButtonStyle())
                 }
 
                 VStack(spacing: 0) {
                     ListSectionHeader(text: "appearance.markets_tab".localized)
                     ListSection {
-                        ListRow {
-                            Toggle(isOn: $viewModel.hideMarkets.animation()) {
-                                Text("appearance.hide_markets".localized).themeBody()
+                        Cell(
+                            middle: {
+                                MultiText(title: "appearance.hide_markets".localized, subtitle: "appearance.hide_markets.description".localized)
+                            },
+                            right: {
+                                ThemeToggle(isOn: $viewModel.hideMarkets.animation(), style: .yellow)
                             }
-                            .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-                        }
+                        )
 
-                        ClickableRow(spacing: .margin8) {
-                            Coordinator.shared.present(type: .alert) { isPresented in
-                                OptionAlertView(
-                                    title: "appearance.price_change".localized,
-                                    viewItems: PriceChangeMode.allCases.map { .init(text: title(priceChangeMode: $0), selected: viewModel.priceChangeMode == $0) },
-                                    onSelect: { index in
-                                        viewModel.priceChangeMode = PriceChangeMode.allCases[index]
-                                    },
-                                    isPresented: isPresented
-                                )
+                        Cell(
+                            middle: {
+                                MultiText(title: "appearance.price_change".localized, subtitle: "appearance.price_change.description".localized)
+                            },
+                            right: {
+                                ThemeText(title(priceChangeMode: viewModel.priceChangeMode), style: .subheadSB).arrow(style: .dropdown)
+                            },
+                            action: {
+                                Coordinator.shared.present(type: .alert) { isPresented in
+                                    OptionAlertView(
+                                        title: "appearance.price_change".localized,
+                                        viewItems: PriceChangeMode.allCases.map { .init(text: title(priceChangeMode: $0), selected: viewModel.priceChangeMode == $0) },
+                                        onSelect: { index in
+                                            viewModel.priceChangeMode = PriceChangeMode.allCases[index]
+                                        },
+                                        isPresented: isPresented
+                                    )
+                                }
                             }
-                        } content: {
-                            Text("appearance.price_change".localized).textBody()
-                            Spacer()
-                            Text(title(priceChangeMode: viewModel.priceChangeMode)).textSubhead1()
-                            Image("arrow_small_down_20").themeIcon()
-                        }
+                        )
                     }
                 }
 
                 if !viewModel.hideMarkets {
                     ListSection {
-                        ClickableRow(spacing: .margin8) {
-                            Coordinator.shared.present(type: .alert) { isPresented in
-                                OptionAlertView(
-                                    title: "appearance.launch_screen".localized,
-                                    viewItems: LaunchScreen.allCases.map { .init(text: $0.title, selected: viewModel.launchScreen == $0) },
-                                    onSelect: { index in
-                                        viewModel.launchScreen = LaunchScreen.allCases[index]
-                                    },
-                                    isPresented: isPresented
-                                )
+                        Cell(
+                            middle: {
+                                MultiText(title: "appearance.launch_screen".localized, subtitle: "appearance.launch_screen.description".localized)
+                            },
+                            right: {
+                                ThemeText(viewModel.launchScreen.title, style: .subheadSB).arrow(style: .dropdown)
+                            },
+                            action: {
+                                Coordinator.shared.present(type: .alert) { isPresented in
+                                    OptionAlertView(
+                                        title: "appearance.launch_screen".localized,
+                                        viewItems: LaunchScreen.allCases.map { .init(text: $0.title, selected: viewModel.launchScreen == $0) },
+                                        onSelect: { index in
+                                            viewModel.launchScreen = LaunchScreen.allCases[index]
+                                        },
+                                        isPresented: isPresented
+                                    )
+                                }
                             }
-                        } content: {
-                            Text("appearance.launch_screen".localized).textBody()
-                            Spacer()
-                            Text(viewModel.launchScreen.title).textSubhead1()
-                            Image("arrow_small_down_20").themeIcon()
-                        }
-                    }
-                }
-
-                ListSection {
-                    ListRow {
-                        Toggle(isOn: $viewModel.useAmountRounding.animation()) {
-                            Text("appearance.amount_rounding".localized).themeBody()
-                        }
-                        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+                        )
                     }
                 }
 
@@ -123,33 +135,44 @@ struct AppearanceView: View {
                     ListSectionHeader(text: "appearance.balance_tab".localized)
 
                     ListSection {
-                        ListRow {
-                            Toggle(isOn: $viewModel.hideBalanceButtons.animation()) {
-                                Text("appearance.hide_buttons".localized).themeBody()
+                        Cell(
+                            middle: {
+                                MultiText(title: "appearance.hide_buttons".localized, subtitle: "appearance.hide_buttons.description".localized)
+                            },
+                            right: {
+                                ThemeToggle(isOn: $viewModel.hideBalanceButtons.animation(), style: .yellow)
                             }
-                            .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-                        }
+                        )
+                        Cell(
+                            middle: {
+                                MultiText(title: "appearance.amount_rounding".localized, subtitle: "appearance.amount_rounding.description".localized)
+                            },
+                            right: {
+                                ThemeToggle(isOn: $viewModel.useAmountRounding.animation(), style: .yellow)
+                            }
+                        )
 
-                        ClickableRow(spacing: .margin8) {
-                            Coordinator.shared.present(type: .alert) { isPresented in
-                                OptionAlertView(
-                                    title: "appearance.balance_value".localized,
-                                    viewItems: BalancePrimaryValue.allCases.map { .init(text: title(balancePrimaryValue: $0), selected: viewModel.balancePrimaryValue == $0) },
-                                    onSelect: { index in
-                                        viewModel.balancePrimaryValue = BalancePrimaryValue.allCases[index]
-                                    },
-                                    isPresented: isPresented
-                                )
+                        Cell(
+                            middle: {
+                                MultiText(title: "appearance.balance_value".localized, subtitle: "appearance.balance_value.description".localized)
+                            },
+                            right: {
+                                ThemeText(title(balancePrimaryValue: viewModel.balancePrimaryValue), style: .subheadSB).arrow(style: .dropdown)
+                            },
+                            action: {
+                                Coordinator.shared.present(type: .alert) { isPresented in
+                                    OptionAlertView(
+                                        title: "appearance.balance_value".localized,
+                                        viewItems: BalancePrimaryValue.allCases.map { .init(text: title(balancePrimaryValue: $0), selected: viewModel.balancePrimaryValue == $0) },
+                                        onSelect: { index in
+                                            viewModel.balancePrimaryValue = BalancePrimaryValue.allCases[index]
+                                        },
+                                        isPresented: isPresented
+                                    )
+                                }
                             }
-                        } content: {
-                            Text("appearance.balance_value".localized).textBody()
-                            Spacer()
-                            Text(title(balancePrimaryValue: viewModel.balancePrimaryValue)).textSubhead1()
-                            Image("arrow_small_down_20").themeIcon()
-                        }
+                        )
                     }
-
-                    ListSectionFooter(text: "appearance.balance_tab.footer".localized)
                 }
 
                 VStack(spacing: 0) {
@@ -166,8 +189,8 @@ struct AppearanceView: View {
                                             .scaledToFit()
                                             .clipShape(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous))
                                             .frame(width: 60, height: 60)
-                                        Text(appIcon.title)
-                                            .themeSubhead1(color: viewModel.appIcon == appIcon ? .themeJacob : .themeLeah, alignment: .center)
+                                        ThemeText(appIcon.title, style: .subhead, colorStyle: viewModel.appIcon == appIcon ? .yellow : .primary)
+                                            .frame(maxWidth: .infinity, alignment: .center)
                                     }
                                 }
                             }

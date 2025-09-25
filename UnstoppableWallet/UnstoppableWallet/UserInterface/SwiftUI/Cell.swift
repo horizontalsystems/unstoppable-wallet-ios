@@ -33,9 +33,11 @@ struct Cell<Left: View, Middle: View, Right: View>: View {
     }
 
     @ViewBuilder func content() -> some View {
-        HStack(spacing: .margin16) {
-            left
-            middle
+        HStack(spacing: .margin8) {
+            HStack(spacing: .margin16) {
+                left
+                middle
+            }
             Spacer()
             right
         }

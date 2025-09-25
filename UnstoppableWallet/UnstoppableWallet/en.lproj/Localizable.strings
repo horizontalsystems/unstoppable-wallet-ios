@@ -1702,21 +1702,26 @@
 
 "appearance.markets_tab" = "Markets Tab";
 "appearance.hide_markets" = "Hide Markets";
+"appearance.hide_markets.description" = "Remove the Markets tab from view.";
 "appearance.price_change" = "Price Change %";
+"appearance.price_change.description" = "Choose period for price change display.";
 "appearance.price_change.24h" = "24H";
 "appearance.price_change.1d" = "Midnight UTC";
 
 "appearance.launch_screen" = "Launch Screen";
+"appearance.launch_screen.description" = "Select which screen opens on startup.";
 "appearance.launch_screen.auto" = "Auto";
 "appearance.launch_screen.balance" = "Balance";
 "appearance.launch_screen.market_overview" = "Market Overview";
 "appearance.launch_screen.watchlist" = "Favorites";
 
 "appearance.balance_tab" = "Balance Tab";
-"appearance.balance_tab.footer" = "The “Hide Buttons” configuration hides the Send, Receive, and Swap buttons on Balance tab.";
 "appearance.amount_rounding" = "Amount Rounding";
+"appearance.amount_rounding.description" = "Round balance numbers for easier reading.";
 "appearance.hide_buttons" = "Hide Buttons";
+"appearance.hide_buttons.description" = "Hide Send, Receive, and Swap buttons in Balance.";
 "appearance.balance_value" = "Balance Value";
+"appearance.balance_value.description" = "Show balance in coins or fiat.";
 "appearance.balance_value.coin_fiat" = "Coin / Fiat";
 "appearance.balance_value.fiat_coin" = "Fiat / Coin";
 
