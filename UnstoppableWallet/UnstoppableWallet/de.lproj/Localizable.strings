@@ -61,7 +61,7 @@
 "alert.try_again" = "Nochmals versuchen";
 "alert.disconnecting" = "Verbindung wird getrennt";
 "alert.disconnected" = "Verbindung getrennt";
-"alert.connected" = "Connected";
+"alert.connected" = "Verbunden";
 "alert.enabling" = "Aktivieren";
 "alert.enabled_coins" = "%@ weitere Coins aktiviert";
 "alert.sending" = "Wird gesendet";
@@ -79,8 +79,8 @@
 "alert.unable_to_replace" = "Nicht möglich zu ersetzen";
 "alert.already_replaced" = "Bereits ersetzt";
 
-"alert_card.title.critical" = "Warning!";
-"alert_card.title.caution" = "Attention!";
+"alert_card.title.critical" = "Warnung!";
+"alert_card.title.caution" = "Achtung!";
 
 "no_results_found" = "Keine Ergebnisse gefunden";
 "action.loading" = "wird geladen ...";
