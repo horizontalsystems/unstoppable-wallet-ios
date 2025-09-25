@@ -429,7 +429,7 @@
 "receive_used_addresses.change" = "Change Addresses";
 
 "deposit.subaddresses.title" = "Subaddresses";
-"deposit.subaddresses.description" = ""Subaddresses let you manage several unique addresses under one wallet—making it easier to organize and enhancing your privacy."";
+"deposit.subaddresses.description" = "Subaddresses let you manage several unique addresses under one wallet—making it easier to organize and enhancing your privacy.";
 "deposit.subaddresses.transactions_count" = "Transactions: %@";
 
 "deposit.zcash.restore.description" = "Have you previously owned any ZEC coins?";
