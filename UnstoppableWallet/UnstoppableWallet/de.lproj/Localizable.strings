@@ -1353,7 +1353,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "transactions.title" = "Transaktionen";
 "transactions.tab_bar_item" = "Transaktionen";
 "transactions.filter_all" = "Alle";
-"transactions.syncing_placeholder" = "Please wait for the sync to finish.";
+"transactions.syncing_placeholder" = "Bitte warten, bis die Synchronisation abgeschlossen ist.";
 "transactions.empty_text" = "Sie haben noch keine offenen oder früheren Transaktionen";
 "transactions.pending" = "In Bearbeitung";
 "transactions.processing" = "Verarbeite";
@@ -1526,7 +1526,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "backup_app.backup_list.other.watch_account.title" = "Watch-Adresse";
 "backup_app.backup_list.other.watchlist.title" = "Merkliste";
 "backup_app.backup_list.other.contacts.title" = "Kontakte";
-"backup_app.backup_list.other.custom_evm_sync_sources.title" = "Custom RPC";
+"backup_app.backup_list.other.custom_evm_sync_sources.title" = "Eigener RPC";
 "backup_app.backup_list.other.custom_monero_nodes.title" = "Custom Monero Nodes";
 "backup_app.backup_list.other.app_settings.title" = "App-Einstellungen";
 "backup_app.backup_list.other.app_settings.description" = "Sprache, Währung, Erscheinung ...";
@@ -2049,19 +2049,19 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "public_keys.account_extended_public_key" = "Account Extended Public Key";
 "public_keys.account_extended_public_key.description" = "Ermöglicht die schreibgeschützte Überwachung von Brieftaschen mit Bitcoin und anderen auf UTXO basierenden Verschlüsselungen (z.B. Litecoin, Bitcoin Cash, Dash, etc.).";
 "public_keys.monero_public_key" = "Monero Public Keys";
-"public_keys.monero_public_key.description" = "Allows read-only monitoring of wallets holding Monero (XMR) assets without granting spending access.";
+"public_keys.monero_public_key.description" = "Ermöglicht die reine Ansicht von Wallets mit Monero (XMR)-Vermögenswerten, ohne Ausgaberechte zu gewähren.";
 
 // Manage Account -> Private Keys
 
 "private_keys.title" = "Private Schlüssel";
 "private_keys.evm_private_key" = "EVM privater Schlüssel";
-"private_keys.evm_private_key.description" = "Grants full control over assets on EVM-based networks (e.g., Ethereum, BNB Smart Chain, Polygon, Avalanche) within this wallet.";
+"private_keys.evm_private_key.description" = "Gewährt volle Kontrolle über Vermögenswerte in EVM-basierten Netzwerken (z. B. Ethereum, BNB Smart Chain, Polygon, Avalanche) innerhalb dieser Wallet.";
 "private_keys.stellar_secret_key" = "Stellar Geheimschlüssel";
-"private_keys.stellar_secret_key.description" = "Grants full control over assets on the Stellar network within this wallet.";
+"private_keys.stellar_secret_key.description" = "Gewährt volle Kontrolle über Vermögenswerte im Stellar-Netzwerk innerhalb dieser Wallet.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
-"private_keys.bip32_root_key.description" = "The master private key of the wallet. Grants full control over all derived accounts and assets.";
+"private_keys.bip32_root_key.description" = "Der Master-Private-Key der Wallet. Gewährt volle Kontrolle über alle abgeleiteten Konten und Vermögenswerte.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
-"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO-based assets (e.g., Litecoin, Bitcoin Cash, Dash) within this wallet.";
+"private_keys.account_extended_private_key.description" = "Gewährt volle Kontrolle über Bitcoin und andere UTXO-basierte Vermögenswerte (z. B. Litecoin, Bitcoin Cash, Dash) innerhalb dieser Wallet.";
 "private_keys.monero_private_key" = "Monero Private Keys";
 "private_keys.monero_private_key.description" = "Grants full control over Monero (XMR) assets within this wallet, including the ability to spend funds.";
 
@@ -2109,7 +2109,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "monero_network.add_new" = "Neu hinzufügen";
 "monero_network.description" = "Wählen Sie den Knoten aus, den die Unstoppable-App zur Synchronisierung der Wallet(s) verwenden soll.";
 "monero_network.settings.title" = "Node Preferences";
-"monero_network.settings.description" = "Trusted node — When enabled, the wallet trusts the selected node and accepts its data without additional verification. \n\nOn → Transactions appear as Pending immediately after broadcast (faster sync, but lower privacy and greater reliance on the node).\n\nOff → Transactions appear only after network confirmations (slower, but safer and more private).";
+"monero_network.settings.description" = "Trusted node - When enabled, the wallet trusts the selected node and accepts its data without additional verification. \n\nOn → Transactions appear as Pending immediately after broadcast (faster sync, but lower privacy and greater reliance on the node).\n\nOff → Transactions appear only after network confirmations (slower, but safer and more private).";
 "monero_network.settings.trust" = "Trust";
 
 // Add RPC Source
@@ -2194,7 +2194,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "watch_address.view_key.error.invalid" = "Invalid View Key";
 "watch_address.birthday_height.placeholder" = "Restore Height (0000000)";
 "watch_address.birthday_height.error.invalid" = "Invalid Restore Height";
-"watch_address.monero_warning.description" = "Monero watch wallet show only incoming transactions, The balance displayed may be incorrect.";
+"watch_address.monero_warning.description" = "A Monero watch-only wallet shows only incoming transactions. The displayed balance may be inaccurate.";
 
 // Nft Collections
 
