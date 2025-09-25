@@ -431,7 +431,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "receive_used_addresses.change" = "Endereço de troco";
 
 "deposit.subaddresses.title" = "Subaddresses";
-"deposit.subaddresses.description" = "Subaddresses let you use multiple unique addresses within one wallet for convenience and enhanced privacy.";
+"deposit.subaddresses.description" = "Subaddresses let you manage several unique addresses under one wallet—making it easier to organize and enhancing your privacy.";
 "deposit.subaddresses.transactions_count" = "Transactions: %@";
 
 "deposit.zcash.restore.description" = "Já possui alguma moeda ZEC?";
@@ -468,7 +468,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.network_fee" = "Taxa";
 "send.estimated_fee" = "Taxa estimada";
 "send.max_fee" = "Taxa máxima";
-"send.max_fee.info" = "The maximum cost of sending given transaction on the network.";
+"send.max_fee.info" = "The maximum fee a user may pay to send a transaction on the network.";
 "send.duration.hours" = "%d h.";
 "send.duration.minutes" = "%d min.";
 "send.available_balance" = "Saldo Disponível";
@@ -1704,21 +1704,26 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "appearance.markets_tab" = "Guia de Mercados";
 "appearance.hide_markets" = "Esconder Mercados";
+"appearance.hide_markets.description" = "Remove the Markets tab from view.";
 "appearance.price_change" = "Mudança de Preço";
+"appearance.price_change.description" = "Choose period for price change display.";
 "appearance.price_change.24h" = "24h";
 "appearance.price_change.1d" = "Meia-noite UTC";
 
 "appearance.launch_screen" = "Tela Inicial";
+"appearance.launch_screen.description" = "Select which screen opens on startup.";
 "appearance.launch_screen.auto" = "Automático";
 "appearance.launch_screen.balance" = "Saldo";
 "appearance.launch_screen.market_overview" = "Visão geral do mercado";
 "appearance.launch_screen.watchlist" = "Lista de observação";
 
 "appearance.balance_tab" = "Aba de Saldo";
-"appearance.balance_tab.footer" = "A configuração “Ocultar Botões” esconde os botões Enviar, Receber e Swap na aba de Saldo.";
 "appearance.amount_rounding" = "Arredondamento de Valores";
+"appearance.amount_rounding.description" = "Round balance numbers for easier reading.";
 "appearance.hide_buttons" = "Ocultar Botões";
+"appearance.hide_buttons.description" = "Hide Send, Receive, and Swap buttons in Balance.";
 "appearance.balance_value" = "Valor Patrimonial";
+"appearance.balance_value.description" = "Show balance in coins or fiat.";
 "appearance.balance_value.coin_fiat" = "Criptomoeda/Moeda Fiat";
 "appearance.balance_value.fiat_coin" = "Moeda Fiat / Criptomoeda";
 
@@ -1915,9 +1920,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "wallet_connect.main.connect" = "Connect to %@";
 "wallet_connect.main.connected" = "Connected to %@";
 "wallet_connect.main.premium_alert.title.risky" = "Danger!";
-"wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Domain verification is unavailable. Upgrade to Premium to protect against unverified or phishing websites.";
-"wallet_connect.main.premium_alert.subtitle.risky" = "This website is not verified and may lead to phishing or loss of funds. Connecting is strongly discouraged.";
-"wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check unavailable. Connection possible but without domain safety confirmation.";
+"wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Get Premium to keep your funds safe from unverified and phishing sites.";
+"wallet_connect.main.premium_alert.subtitle.risky" = "This site is not verified. Connecting could expose you to phishing and loss of funds.";
+"wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check failed. Connection allowed, but domain may be unsafe.";
 "wallet_connect.scam_protection" = "Scam Protection";
 "wallet_connect.scam_protection.deactivated" = "Deactivated";
 "wallet_connect.scam_protection.risky" = "Arriscado";
@@ -2050,15 +2055,15 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "private_keys.title" = "Chave Privada";
 "private_keys.evm_private_key" = "Chave Privada EVM";
-"private_keys.evm_private_key.description" = "Concede controle total sobre cripto baseado em EVM i.e Ethereum, Binance Smart Chain, etc. dentro da respectiva carteira.";
+"private_keys.evm_private_key.description" = "Grants full control over assets on EVM-based networks (e.g., Ethereum, BNB Smart Chain, Polygon, Avalanche) within this wallet.";
 "private_keys.stellar_secret_key" = "Chave Secreta Stellar";
-"private_keys.stellar_secret_key.description" = "Concede controle total sobre os ativos Stellar dentro da respectiva carteira.";
+"private_keys.stellar_secret_key.description" = "Grants full control over assets on the Stellar network within this wallet.";
 "private_keys.bip32_root_key" = "Chave Raiz BIP32";
-"private_keys.bip32_root_key.description" = "Concede controle total sobre os ativos da respectiva carteira.";
+"private_keys.bip32_root_key.description" = "The master private key of the wallet. Grants full control over all derived accounts and assets.";
 "private_keys.account_extended_private_key" = "Chave Privada Estendida da Conta";
-"private_keys.account_extended_private_key.description" = "Concede controle total sobre Bitcoin e outras criptomoedas baseadas em UTXO, ou seja, Litecoin, Bitcoin Cash, Dash etc. dentro da respectiva carteira.";
+"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO-based assets (e.g., Litecoin, Bitcoin Cash, Dash) within this wallet.";
 "private_keys.monero_private_key" = "Monero Private Keys";
-"private_keys.monero_private_key.description" = "Grants full control over Monero (XMR) assets within the respective wallet, including the ability to spend funds.";
+"private_keys.monero_private_key.description" = "Grants full control over Monero (XMR) assets within this wallet, including the ability to spend funds.";
 
 // Manage Account -> EVM Address
 
@@ -2104,7 +2109,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "monero_network.add_new" = "Adicionar novo";
 "monero_network.description" = "Escolha o nó que o app Unstoppable deve usar para sincronizar a(s) carteira(s).";
 "monero_network.settings.title" = "Node Preferences";
-"monero_network.settings.description" = "Trusted node — the wallet trusts the selected node and uses its data without extra verification. \n\nOn → transactions instantly appear as Pending when broadcast (faster sync, but lower privacy and reliance on the node).\n\nOff → transactions are shown only after confirmations from the network (slower, but safer and more private).";
+"monero_network.settings.description" = "Trusted node — When enabled, the wallet trusts the selected node and accepts its data without additional verification. \n\nOn → Transactions appear as Pending immediately after broadcast (faster sync, but lower privacy and greater reliance on the node).\n\nOff → Transactions appear only after network confirmations (slower, but safer and more private).";
 "monero_network.settings.trust" = "Trust";
 
 // Add RPC Source
