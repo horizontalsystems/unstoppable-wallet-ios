@@ -1528,7 +1528,7 @@
 "backup_app.backup_list.other.watch_account.title" = "Просмотр кошелька";
 "backup_app.backup_list.other.watchlist.title" = "Избранное";
 "backup_app.backup_list.other.contacts.title" = "Контакты";
-"backup_app.backup_list.other.custom_evm_sync_sources.title" = "Custom RPC";
+"backup_app.backup_list.other.custom_evm_sync_sources.title" = "Пользовательские RPC";
 "backup_app.backup_list.other.custom_monero_nodes.title" = "Custom Monero Nodes";
 "backup_app.backup_list.other.app_settings.title" = "Настройки приложения";
 "backup_app.backup_list.other.app_settings.description" = "Язык, валюта, внешний вид ...";
