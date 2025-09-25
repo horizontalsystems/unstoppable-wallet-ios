@@ -15,7 +15,6 @@ struct LegacyFeeSettingsView: View {
         self.feeToken = feeToken
     }
 
-
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {

@@ -38,3 +38,39 @@ struct DropdownButton: View {
         }
     }
 }
+
+struct ArrowModifier: ViewModifier {
+    var style: Style
+    var colorStyle: ColorStyle? = nil
+    var spacing: CGFloat = .margin8
+
+    func body(content: Content) -> some View {
+        HStack(spacing: spacing) {
+            content
+            style.view(colorStyle: colorStyle)
+        }
+    }
+}
+
+extension ArrowModifier {
+    enum Style {
+        case dropdown
+        case disclosure
+
+        @ViewBuilder
+        func view(colorStyle: ColorStyle? = nil) -> some View {
+            switch self {
+            case .dropdown:
+                Image.dropdown(colorStyle: colorStyle ?? .primary)
+            case .disclosure:
+                Image.disclosure(colorStyle: colorStyle ?? .secondary)
+            }
+        }
+    }
+}
+
+extension View {
+    func arrow(style: ArrowModifier.Style, colorStyle: ColorStyle? = nil, spacing: CGFloat = .margin8) -> some View {
+        modifier(ArrowModifier(style: style, colorStyle: colorStyle, spacing: spacing))
+    }
+}

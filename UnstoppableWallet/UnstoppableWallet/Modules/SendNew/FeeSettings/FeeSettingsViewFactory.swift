@@ -1,5 +1,5 @@
-import SwiftUI
 import MarketKit
+import SwiftUI
 
 class FeeSettingsViewFactory {
     static func createSettingsView(sendViewModel: SendViewModel, feeToken: Token) -> AnyView? {

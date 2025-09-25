@@ -17,9 +17,16 @@ extension Image {
             .frame(size: size)
     }
 
-    // deprecated
     static var disclosureIcon: some View {
-        Image("arrow_big_forward_20").icon(size: .iconSize20)
+        Image("arrow_b_right").icon(size: .iconSize20)
+    }
+
+    static func disclosure(colorStyle: ColorStyle) -> some View {
+        Image("arrow_b_right").icon(size: .iconSize20, colorStyle: colorStyle)
+    }
+
+    static func dropdown(colorStyle: ColorStyle) -> some View {
+        Image("arrow_s_down").icon(size: .iconSize20, colorStyle: colorStyle)
     }
 
     static var checkIcon: some View {

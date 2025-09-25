@@ -2053,6 +2053,8 @@
 		6BEA177B2DE8319D00BF73DD /* ShieldSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEA17792DE8319600BF73DD /* ShieldSendView.swift */; };
 		6BEEBAB62E83F38700DB8B27 /* FeeSettingsViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEEBAB52E83F38100DB8B27 /* FeeSettingsViewFactory.swift */; };
 		6BEEBAB72E83F38700DB8B27 /* FeeSettingsViewFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEEBAB52E83F38100DB8B27 /* FeeSettingsViewFactory.swift */; };
+		6BEEBAB92E841A4B00DB8B27 /* ThemeToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEEBAB82E841A4500DB8B27 /* ThemeToggle.swift */; };
+		6BEEBABA2E841A4B00DB8B27 /* ThemeToggle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEEBAB82E841A4500DB8B27 /* ThemeToggle.swift */; };
 		6BEF09562E12848E004F4514 /* DeepLinkViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF09552E128486004F4514 /* DeepLinkViewManager.swift */; };
 		6BEF09572E12848E004F4514 /* DeepLinkViewManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF09552E128486004F4514 /* DeepLinkViewManager.swift */; };
 		6BEF09602E252519004F4514 /* StartScreenAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF095F2E25250B004F4514 /* StartScreenAlertManager.swift */; };
@@ -4554,6 +4556,7 @@
 		6BEA17762DE5C59200BF73DD /* ZcashShieldingTransactionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashShieldingTransactionRecord.swift; sourceTree = "<group>"; };
 		6BEA17792DE8319600BF73DD /* ShieldSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShieldSendView.swift; sourceTree = "<group>"; };
 		6BEEBAB52E83F38100DB8B27 /* FeeSettingsViewFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeeSettingsViewFactory.swift; sourceTree = "<group>"; };
+		6BEEBAB82E841A4500DB8B27 /* ThemeToggle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeToggle.swift; sourceTree = "<group>"; };
 		6BEF09552E128486004F4514 /* DeepLinkViewManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkViewManager.swift; sourceTree = "<group>"; };
 		6BEF095F2E25250B004F4514 /* StartScreenAlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenAlertManager.swift; sourceTree = "<group>"; };
 		6BF655852E49BF6C0055A9D5 /* AllBridgeMultiSwapStellarQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBridgeMultiSwapStellarQuote.swift; sourceTree = "<group>"; };
@@ -5763,6 +5766,7 @@
 		11B3546A6E6F3CC013C9FF44 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				6BEEBAB82E841A4500DB8B27 /* ThemeToggle.swift */,
 				D07879522E73FECA0082212A /* AlertCardView.swift */,
 				6BE925CD2E69A33E00DC4709 /* DotOverlay.swift */,
 				D371A2402E5DB32900D7D7F6 /* RightButtonText.swift */,
@@ -11264,6 +11268,7 @@
 				6B1D8E3D2DEADF7F00A52B01 /* SliderButtonComponent.swift in Sources */,
 				6B6E13952DED8192007F4A39 /* UIRectEdge.swift in Sources */,
 				6B1D8E3E2DEADF7F00A52B01 /* CellBuilderNew.swift in Sources */,
+				6BEEBAB92E841A4B00DB8B27 /* ThemeToggle.swift in Sources */,
 				6B1D8E3F2DEADF7F00A52B01 /* TransactionImageComponent.swift in Sources */,
 				6B1D8E402DEADF7F00A52B01 /* TopDescriptionHeaderFooterView.swift in Sources */,
 				6B1D8E412DEADF7F00A52B01 /* EmptyCell.swift in Sources */,
@@ -12858,6 +12863,7 @@
 				6B1D8EB62DEADF7F00A52B01 /* CellBuilderNew.swift in Sources */,
 				6B1D8EB72DEADF7F00A52B01 /* TransactionImageComponent.swift in Sources */,
 				6B1D8EB82DEADF7F00A52B01 /* TopDescriptionHeaderFooterView.swift in Sources */,
+				6BEEBABA2E841A4B00DB8B27 /* ThemeToggle.swift in Sources */,
 				6B1D8EB92DEADF7F00A52B01 /* EmptyCell.swift in Sources */,
 				6B1D8EBA2DEADF7F00A52B01 /* SecondaryButtonComponent.swift in Sources */,
 				6B1D8EBB2DEADF7F00A52B01 /* ActivityIndicators.swift in Sources */,
