@@ -429,7 +429,7 @@
 "receive_used_addresses.change" = "Change Addresses";
 
 "deposit.subaddresses.title" = "Subaddresses";
-"deposit.subaddresses.description" = "Subaddresses let you use multiple unique addresses within one wallet for convenience and enhanced privacy.";
+"deposit.subaddresses.description" = ""Subaddresses let you manage several unique addresses under one wallet—making it easier to organize and enhancing your privacy."";
 "deposit.subaddresses.transactions_count" = "Transactions: %@";
 
 "deposit.zcash.restore.description" = "Have you previously owned any ZEC coins?";
@@ -466,7 +466,7 @@
 "send.network_fee" = "Fee";
 "send.estimated_fee" = "Estimated Fee";
 "send.max_fee" = "Max Fee";
-"send.max_fee.info" = "The maximum cost of sending given transaction on the network.";
+"send.max_fee.info" = "The maximum fee a user may pay to send a transaction on the network.";
 "send.duration.hours" = "%d h.";
 "send.duration.minutes" = "%d min.";
 "send.available_balance" = "Available Balance";
@@ -1913,9 +1913,9 @@
 "wallet_connect.main.connect" = "Connect to %@";
 "wallet_connect.main.connected" = "Connected to %@";
 "wallet_connect.main.premium_alert.title.risky" = "Danger!";
-"wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Domain verification is unavailable. Upgrade to Premium to protect against unverified or phishing websites.";
-"wallet_connect.main.premium_alert.subtitle.risky" = "This website is not verified and may lead to phishing or loss of funds. Connecting is strongly discouraged.";
-"wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check unavailable. Connection possible but without domain safety confirmation.";
+"wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Get Premium to keep your funds safe from unverified and phishing sites.";
+"wallet_connect.main.premium_alert.subtitle.risky" = "This site is not verified. Connecting could expose you to phishing and loss of funds.";
+"wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check failed. Connection allowed, but domain may be unsafe.";
 "wallet_connect.scam_protection" = "Scam Protection";
 "wallet_connect.scam_protection.deactivated" = "Deactivated";
 "wallet_connect.scam_protection.risky" = "Risky";
@@ -2048,15 +2048,15 @@
 
 "private_keys.title" = "Private Keys";
 "private_keys.evm_private_key" = "EVM Private Key";
-"private_keys.evm_private_key.description" = "Grants full control over EVM-based crypto i.e. Ethereum, Binance Smart Chain, etc within the respective wallet.";
+"private_keys.evm_private_key.description" = "Grants full control over assets on EVM-based networks (e.g., Ethereum, BNB Smart Chain, Polygon, Avalanche) within this wallet.";
 "private_keys.stellar_secret_key" = "Stellar Secret Key";
-"private_keys.stellar_secret_key.description" = "Grants full control over Stellar assets within the respective wallet.";
+"private_keys.stellar_secret_key.description" = "Grants full control over assets on the Stellar network within this wallet.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
-"private_keys.bip32_root_key.description" = "Grants full control over the assets on the respective wallet.";
+"private_keys.bip32_root_key.description" = "The master private key of the wallet. Grants full control over all derived accounts and assets.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
-"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO-based crypto i.e. Litecoin, Bitcoin Cash, Dash, etc. within the respective wallet.";
+"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO-based assets (e.g., Litecoin, Bitcoin Cash, Dash) within this wallet.";
 "private_keys.monero_private_key" = "Monero Private Keys";
-"private_keys.monero_private_key.description" = "Grants full control over Monero (XMR) assets within the respective wallet, including the ability to spend funds.";
+"private_keys.monero_private_key.description" = "Grants full control over Monero (XMR) assets within this wallet, including the ability to spend funds.";
 
 // Manage Account -> EVM Address
 
@@ -2102,7 +2102,7 @@
 "monero_network.add_new" = "Add New";
 "monero_network.description" = "Choose the node Unstoppable app should use for synchronizing wallet(s).";
 "monero_network.settings.title" = "Node Preferences";
-"monero_network.settings.description" = "Trusted node — the wallet trusts the selected node and uses its data without extra verification. \n\nOn → transactions instantly appear as Pending when broadcast (faster sync, but lower privacy and reliance on the node).\n\nOff → transactions are shown only after confirmations from the network (slower, but safer and more private).";
+"monero_network.settings.description" = "Trusted node — When enabled, the wallet trusts the selected node and accepts its data without additional verification. \n\nOn → Transactions appear as Pending immediately after broadcast (faster sync, but lower privacy and greater reliance on the node).\n\nOff → Transactions appear only after network confirmations (slower, but safer and more private).";
 "monero_network.settings.trust" = "Trust";
 
 // Add RPC Source
