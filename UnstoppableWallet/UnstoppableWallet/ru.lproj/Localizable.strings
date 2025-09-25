@@ -1033,7 +1033,7 @@
 // Market Vaults
 
 "market.vaults.apy" = "APY %@";
-"market.vaults.tvl" = "TVL: %@";
+"market.vaults.tvl" = "TVL:%@";
 "market.vaults.premium.description" = "Исследуйте лучшие доходности от DeFi-стейкинга - всё в одном месте.";
 "market.vaults.premium.unlock" = "Подпишитесь";
 
