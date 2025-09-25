@@ -431,7 +431,7 @@
 "receive_used_addresses.change" = "找零地址";
 
 "deposit.subaddresses.title" = "Subaddresses";
-"deposit.subaddresses.description" = "Subaddresses let you use multiple unique addresses within one wallet for convenience and enhanced privacy.";
+"deposit.subaddresses.description" = "Subaddresses let you manage several unique addresses under one wallet—making it easier to organize and enhancing your privacy.";
 "deposit.subaddresses.transactions_count" = "Transactions: %@";
 
 "deposit.zcash.restore.description" = "您以前是否拥有过任何ZEC硬币？";
@@ -468,7 +468,7 @@
 "send.network_fee" = "费用";
 "send.estimated_fee" = "预估费用";
 "send.max_fee" = "最大手续费";
-"send.max_fee.info" = "The maximum cost of sending given transaction on the network.";
+"send.max_fee.info" = "The maximum fee a user may pay to send a transaction on the network.";
 "send.duration.hours" = "%d小时。";
 "send.duration.minutes" = "%d分钟。";
 "send.available_balance" = "可用余额";
@@ -1704,21 +1704,26 @@
 
 "appearance.markets_tab" = "市场选项卡";
 "appearance.hide_markets" = "隐藏市场";
+"appearance.hide_markets.description" = "Remove the Markets tab from view.";
 "appearance.price_change" = "价格变动";
+"appearance.price_change.description" = "Choose period for price change display.";
 "appearance.price_change.24h" = "24时";
 "appearance.price_change.1d" = "午夜UTC";
 
 "appearance.launch_screen" = "启动屏幕";
+"appearance.launch_screen.description" = "Select which screen opens on startup.";
 "appearance.launch_screen.auto" = "自动";
 "appearance.launch_screen.balance" = "余额";
 "appearance.launch_screen.market_overview" = "行情";
 "appearance.launch_screen.watchlist" = "关注";
 
 "appearance.balance_tab" = "余额标签";
-"appearance.balance_tab.footer" = "启用“隐藏按钮”设置后，将隐藏余额页面中的发送、接收和兑换按钮。";
 "appearance.amount_rounding" = "金额取整";
+"appearance.amount_rounding.description" = "Round balance numbers for easier reading.";
 "appearance.hide_buttons" = "隐藏按钮";
+"appearance.hide_buttons.description" = "Hide Send, Receive, and Swap buttons in Balance.";
 "appearance.balance_value" = "余额值";
+"appearance.balance_value.description" = "Show balance in coins or fiat.";
 "appearance.balance_value.coin_fiat" = "加密货币 / 法定货币";
 "appearance.balance_value.fiat_coin" = "法定货币 / 加密货币";
 
@@ -1915,9 +1920,9 @@
 "wallet_connect.main.connect" = "Connect to %@";
 "wallet_connect.main.connected" = "Connected to %@";
 "wallet_connect.main.premium_alert.title.risky" = "Danger!";
-"wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Domain verification is unavailable. Upgrade to Premium to protect against unverified or phishing websites.";
-"wallet_connect.main.premium_alert.subtitle.risky" = "This website is not verified and may lead to phishing or loss of funds. Connecting is strongly discouraged.";
-"wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check unavailable. Connection possible but without domain safety confirmation.";
+"wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Get Premium to keep your funds safe from unverified and phishing sites.";
+"wallet_connect.main.premium_alert.subtitle.risky" = "This site is not verified. Connecting could expose you to phishing and loss of funds.";
+"wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check failed. Connection allowed, but domain may be unsafe.";
 "wallet_connect.scam_protection" = "Scam Protection";
 "wallet_connect.scam_protection.deactivated" = "Deactivated";
 "wallet_connect.scam_protection.risky" = "有风险";
@@ -2050,15 +2055,15 @@
 
 "private_keys.title" = "私钥";
 "private_keys.evm_private_key" = "EVM 私钥";
-"private_keys.evm_private_key.description" = "授予对基于加密货币的EVM的完全控制，即在相应钱包内的以太坊、币安智能链等。";
+"private_keys.evm_private_key.description" = "Grants full control over assets on EVM-based networks (e.g., Ethereum, BNB Smart Chain, Polygon, Avalanche) within this wallet.";
 "private_keys.stellar_secret_key" = "Stellar 私钥";
-"private_keys.stellar_secret_key.description" = "授予錢包內 Stellar 資產的完整控制權。";
+"private_keys.stellar_secret_key.description" = "Grants full control over assets on the Stellar network within this wallet.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
-"private_keys.bip32_root_key.description" = "授予对相应钱包上的资产的完全控制。";
+"private_keys.bip32_root_key.description" = "The master private key of the wallet. Grants full control over all derived accounts and assets.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
-"private_keys.account_extended_private_key.description" = "授予对比特币和基于加密货币的其他未花费交易输出（UTXO）的完全控制，即在相应钱包内的莱特币、比特币现金、达世币等。";
+"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO-based assets (e.g., Litecoin, Bitcoin Cash, Dash) within this wallet.";
 "private_keys.monero_private_key" = "Monero Private Keys";
-"private_keys.monero_private_key.description" = "Grants full control over Monero (XMR) assets within the respective wallet, including the ability to spend funds.";
+"private_keys.monero_private_key.description" = "Grants full control over Monero (XMR) assets within this wallet, including the ability to spend funds.";
 
 // Manage Account -> EVM Address
 
@@ -2104,7 +2109,7 @@
 "monero_network.add_new" = "添加新的";
 "monero_network.description" = "选择 Unstoppable 应用用于同步钱包的节点。";
 "monero_network.settings.title" = "Node Preferences";
-"monero_network.settings.description" = "Trusted node — the wallet trusts the selected node and uses its data without extra verification. \n\nOn → transactions instantly appear as Pending when broadcast (faster sync, but lower privacy and reliance on the node).\n\nOff → transactions are shown only after confirmations from the network (slower, but safer and more private).";
+"monero_network.settings.description" = "Trusted node — When enabled, the wallet trusts the selected node and accepts its data without additional verification. \n\nOn → Transactions appear as Pending immediately after broadcast (faster sync, but lower privacy and greater reliance on the node).\n\nOff → Transactions appear only after network confirmations (slower, but safer and more private).";
 "monero_network.settings.trust" = "Trust";
 
 // Add RPC Source
