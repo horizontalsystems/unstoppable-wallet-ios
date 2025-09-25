@@ -4,10 +4,12 @@ import MarketKit
 class ThorChainMultiSwapBtcQuote: IMultiSwapQuote, IMultiSwapSlippageProvider {
     let swapQuote: ThorChainMultiSwapProvider.SwapQuote
     let recipient: Address?
+    let slippage: Decimal
 
-    init(swapQuote: ThorChainMultiSwapProvider.SwapQuote, recipient: Address?) {
+    init(swapQuote: ThorChainMultiSwapProvider.SwapQuote, recipient: Address?, slippage: Decimal) {
         self.swapQuote = swapQuote
         self.recipient = recipient
+        self.slippage = slippage
     }
 
     var amountOut: Decimal {
@@ -18,12 +20,12 @@ class ThorChainMultiSwapBtcQuote: IMultiSwapQuote, IMultiSwapSlippageProvider {
         nil
     }
 
-    var settingsModified: Bool {
-        recipient != nil
+    private var slippageModified: Bool {
+        slippage != MultiSwapSlippage.default
     }
 
-    var slippage: Decimal {
-        swapQuote.slipProtectionThreshold.rounded(decimal: 2)
+    var settingsModified: Bool {
+        recipient != nil || slippageModified
     }
 
     func fields(tokenIn _: MarketKit.Token, tokenOut _: MarketKit.Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?) -> [MultiSwapMainField] {
@@ -33,7 +35,7 @@ class ThorChainMultiSwapBtcQuote: IMultiSwapQuote, IMultiSwapSlippageProvider {
             fields.append(.recipient(recipient.title))
         }
 
-        fields.append(.slippage(slippage))
+        fields.append(.slippage(slippage, settingId: MultiSwapMainField.slippageSettingId, modified: slippageModified))
 
         return fields
     }

@@ -68,6 +68,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
 
         let blockchainType = tokenIn.blockchainType
+        let slippage: Decimal = storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.default
 
         switch blockchainType {
         case .arbitrumOne, .avalanche, .base, .binanceSmartChain, .ethereum:
@@ -78,12 +79,14 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             return await ThorChainMultiSwapEvmQuote(
                 swapQuote: swapQuote,
                 recipient: storage.recipient(blockchainType: blockchainType),
+                slippage: slippage,
                 allowanceState: allowanceHelper.allowanceState(spenderAddress: .init(raw: router), token: tokenIn, amount: amountIn)
             )
         case .bitcoin, .bitcoinCash, .dash, .litecoin:
             return ThorChainMultiSwapBtcQuote(
                 swapQuote: swapQuote,
                 recipient: storage.recipient(blockchainType: blockchainType),
+                slippage: slippage
             )
         default:
             throw SwapError.unsupportedTokenIn
@@ -92,7 +95,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
 
     func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
         let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
-        let slippage = swapQuote.slipProtectionThreshold.rounded(decimal: 2)
+        let slippage = storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.default
 
         switch tokenIn.blockchainType {
         case .arbitrumOne, .avalanche, .base, .binanceSmartChain, .ethereum:
@@ -235,24 +238,23 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         ], isList: false)]
     }
 
-    func settingsView(tokenIn _: Token, tokenOut: Token, quote: IMultiSwapQuote, onChangeSettings: @escaping () -> Void) -> AnyView {
-        guard let slippageProvider = quote as? IMultiSwapSlippageProvider else {
-            let view = ThemeNavigationStack {
-                RecipientMultiSwapSettingsView(tokenOut: tokenOut, storage: storage, onChangeSettings: onChangeSettings)
-            }
-            return AnyView(view)
-        }
-
-        let slippage = slippageProvider.slippage
-
+    private func settingsView(tokenOut: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
         let view = ThemeNavigationStack {
-            RecipientAndSlippageMultiSwapSettingsView(tokenOut: tokenOut, storage: storage, slippageMode: .fixed(slippage), onChangeSettings: onChangeSettings)
+            RecipientAndSlippageMultiSwapSettingsView(tokenOut: tokenOut, storage: storage, slippageMode: .adjustable, onChangeSettings: onChangeSettings)
         }
 
         return AnyView(view)
     }
 
-    func settingView(settingId _: String, tokenOut _: Token, onChangeSetting _: @escaping () -> Void) -> AnyView {
+    func settingsView(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, quote _: IMultiSwapQuote, onChangeSettings: @escaping () -> Void) -> AnyView {
+        settingsView(tokenOut: tokenOut, onChangeSettings: onChangeSettings)
+    }
+
+    func settingView(settingId: String, tokenOut: MarketKit.Token, onChangeSetting: @escaping () -> Void) -> AnyView {
+        if settingId == MultiSwapMainField.slippageSettingId {
+            return settingsView(tokenOut: tokenOut, onChangeSettings: onChangeSetting)
+        }
+
         fatalError("settingView(settingId:) has not been implemented")
     }
 
@@ -316,7 +318,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         ]
 
         if let slippage {
-            parameters["tolerance_bps"] = Int((slippage * 100).roundedDown(decimal: 0).description)
+            parameters["liquidity_tolerance_bps"] = Int((slippage * 100).roundedDown(decimal: 0).description)
         }
 
         if let affiliate, let affiliateBps {
@@ -450,11 +452,6 @@ extension BaseThorChainMultiSwapProvider {
             totalFee = try map.value("fees.total", using: Transform.stringToDecimalTransform) / pow(10, 8)
 
             dustThreshold = try? map.value("dust_threshold", using: Transform.stringToIntTransform)
-        }
-
-        var slipProtectionThreshold: Decimal {
-            let totalValue = expectedAmountOut + totalFee
-            return 100 - (expectedAmountOut * 100 / totalValue)
         }
     }
 

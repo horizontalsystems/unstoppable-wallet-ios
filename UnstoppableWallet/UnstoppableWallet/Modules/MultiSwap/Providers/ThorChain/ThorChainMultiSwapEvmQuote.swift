@@ -5,10 +5,12 @@ import MarketKit
 class ThorChainMultiSwapEvmQuote: BaseEvmMultiSwapQuote, IMultiSwapSlippageProvider {
     let swapQuote: ThorChainMultiSwapProvider.SwapQuote
     let recipient: Address?
+    let slippage: Decimal
 
-    init(swapQuote: ThorChainMultiSwapProvider.SwapQuote, recipient: Address?, allowanceState: MultiSwapAllowanceHelper.AllowanceState) {
+    init(swapQuote: ThorChainMultiSwapProvider.SwapQuote, recipient: Address?, slippage: Decimal, allowanceState: MultiSwapAllowanceHelper.AllowanceState) {
         self.swapQuote = swapQuote
         self.recipient = recipient
+        self.slippage = slippage
 
         super.init(allowanceState: allowanceState)
     }
@@ -19,10 +21,6 @@ class ThorChainMultiSwapEvmQuote: BaseEvmMultiSwapQuote, IMultiSwapSlippageProvi
 
     override var settingsModified: Bool {
         super.settingsModified || recipient != nil
-    }
-
-    var slippage: Decimal {
-        swapQuote.slipProtectionThreshold.rounded(decimal: 2)
     }
 
     override func fields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?) -> [MultiSwapMainField] {
