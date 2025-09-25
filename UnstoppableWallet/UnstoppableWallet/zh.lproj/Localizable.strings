@@ -2109,7 +2109,7 @@
 "monero_network.add_new" = "添加新的";
 "monero_network.description" = "选择 Unstoppable 应用用于同步钱包的节点。";
 "monero_network.settings.title" = "节点偏好设置";
-"monero_network.settings.description" = "可信节点 - 启用后，钱包会信任所选节点并接受其数据，而无需额外验证。\n\nOn → 交易在广播后立即显示为“待处理”（同步更快，但隐私性较低，并且更加依赖该节点）。\n\nOff → 交易仅在网络确认后才显示（同步较慢，但更安全且隐私性更高）。";
+"monero_network.settings.description" = "Trusted node - When enabled, the wallet trusts the selected node and accepts its data without additional verification. \n\nOn → Transactions appear as Pending immediately after broadcast (faster sync, but lower privacy and greater reliance on the node).\n\nOff → Transactions appear only after network confirmations (slower, but safer and more private).";
 "monero_network.settings.trust" = "信任";
 
 // Add RPC Source
@@ -2194,7 +2194,7 @@
 "watch_address.view_key.error.invalid" = "查看密钥无效";
 "watch_address.birthday_height.placeholder" = "恢复高度 (0000000)";
 "watch_address.birthday_height.error.invalid" = "恢复高度无效";
-"watch_address.monero_warning.description" = "Monero watch wallet show only incoming transactions, The balance displayed may be incorrect.";
+"watch_address.monero_warning.description" = "A Monero watch-only wallet shows only incoming transactions. The displayed balance may be inaccurate.";
 
 // Nft Collections
 
