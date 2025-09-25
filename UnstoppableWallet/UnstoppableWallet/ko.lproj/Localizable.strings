@@ -429,7 +429,7 @@
 "receive_used_addresses.change" = "거스름돈 주소";
 
 "deposit.subaddresses.title" = "Subaddresses";
-"deposit.subaddresses.description" = "Subaddresses let you use multiple unique addresses within one wallet for convenience and enhanced privacy.";
+"deposit.subaddresses.description" = "Subaddresses let you manage several unique addresses under one wallet—making it easier to organize and enhancing your privacy.";
 "deposit.subaddresses.transactions_count" = "Transactions: %@";
 
 "deposit.zcash.restore.description" = "이전에 ZEC 코인을 소유한 적이 있나요?";
@@ -466,7 +466,7 @@
 "send.network_fee" = "수수료";
 "send.estimated_fee" = "예상 수수료";
 "send.max_fee" = "최대 수수료";
-"send.max_fee.info" = "The maximum cost of sending given transaction on the network.";
+"send.max_fee.info" = "The maximum fee a user may pay to send a transaction on the network.";
 "send.duration.hours" = "%d 시";
 "send.duration.minutes" = "%d 분";
 "send.available_balance" = "사용 가능한 잔액";
@@ -1703,21 +1703,26 @@
 
 "appearance.markets_tab" = "마켓 탭";
 "appearance.hide_markets" = "마켓 숨기기";
+"appearance.hide_markets.description" = "Remove the Markets tab from view.";
 "appearance.price_change" = "가격 변경";
+"appearance.price_change.description" = "Choose period for price change display.";
 "appearance.price_change.24h" = "24시";
 "appearance.price_change.1d" = "UTC 자정";
 
 "appearance.launch_screen" = "시작 화면";
+"appearance.launch_screen.description" = "Select which screen opens on startup.";
 "appearance.launch_screen.auto" = "자동";
 "appearance.launch_screen.balance" = "잔액";
 "appearance.launch_screen.market_overview" = "시장 개요";
 "appearance.launch_screen.watchlist" = "관심 목록";
 
 "appearance.balance_tab" = "잔고 탭";
-"appearance.balance_tab.footer" = "\"버튼 숨기기\" 설정을 활성화하면 잔액 탭에서 보내기, 받기, 스왑 버튼이 숨겨집니다.";
 "appearance.amount_rounding" = "금액 반올림";
+"appearance.amount_rounding.description" = "Round balance numbers for easier reading.";
 "appearance.hide_buttons" = "숨김 버튼";
+"appearance.hide_buttons.description" = "Hide Send, Receive, and Swap buttons in Balance.";
 "appearance.balance_value" = "균형 가치";
+"appearance.balance_value.description" = "Show balance in coins or fiat.";
 "appearance.balance_value.coin_fiat" = "코인/피아트";
 "appearance.balance_value.fiat_coin" = "피아트/코인";
 
@@ -1916,9 +1921,9 @@
 "wallet_connect.main.connect" = "Connect to %@";
 "wallet_connect.main.connected" = "Connected to %@";
 "wallet_connect.main.premium_alert.title.risky" = "Danger!";
-"wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Domain verification is unavailable. Upgrade to Premium to protect against unverified or phishing websites.";
-"wallet_connect.main.premium_alert.subtitle.risky" = "This website is not verified and may lead to phishing or loss of funds. Connecting is strongly discouraged.";
-"wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check unavailable. Connection possible but without domain safety confirmation.";
+"wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Get Premium to keep your funds safe from unverified and phishing sites.";
+"wallet_connect.main.premium_alert.subtitle.risky" = "This site is not verified. Connecting could expose you to phishing and loss of funds.";
+"wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check failed. Connection allowed, but domain may be unsafe.";
 "wallet_connect.scam_protection" = "Scam Protection";
 "wallet_connect.scam_protection.deactivated" = "Deactivated";
 "wallet_connect.scam_protection.risky" = "위험";
@@ -2051,15 +2056,15 @@
 
 "private_keys.title" = "개인 암호";
 "private_keys.evm_private_key" = "EVM 개인 키";
-"private_keys.evm_private_key.description" = "각 지갑 내에서 EVM 기반 암호화, 즉 이더리움, 바이낸스 스마트 체인 등에 대한 완전한 제어 권한을 부여합니다.";
+"private_keys.evm_private_key.description" = "Grants full control over assets on EVM-based networks (e.g., Ethereum, BNB Smart Chain, Polygon, Avalanche) within this wallet.";
 "private_keys.stellar_secret_key" = "Stellar 비밀 키";
-"private_keys.stellar_secret_key.description" = "해당 지갑 내 Stellar 자산에 대한 완전한 제어 권한을 부여합니다.";
+"private_keys.stellar_secret_key.description" = "Grants full control over assets on the Stellar network within this wallet.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
-"private_keys.bip32_root_key.description" = "각 지갑의 자산에 대한 모든 권한을 부여합니다.";
+"private_keys.bip32_root_key.description" = "The master private key of the wallet. Grants full control over all derived accounts and assets.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
-"private_keys.account_extended_private_key.description" = "각 지갑 내에서 비트코인 및 기타 UTXO 기반 암호화, 즉 라이트코인, 비트코인 캐시, 대시 등을 완벽하게 제어할 수 있습니다.";
+"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO-based assets (e.g., Litecoin, Bitcoin Cash, Dash) within this wallet.";
 "private_keys.monero_private_key" = "Monero Private Keys";
-"private_keys.monero_private_key.description" = "Grants full control over Monero (XMR) assets within the respective wallet, including the ability to spend funds.";
+"private_keys.monero_private_key.description" = "Grants full control over Monero (XMR) assets within this wallet, including the ability to spend funds.";
 
 // Manage Account -> EVM Address
 
@@ -2105,7 +2110,7 @@
 "monero_network.add_new" = "신규로 추가";
 "monero_network.description" = "Unstoppable 앱이 지갑 동기화에 사용할 노드를 선택하세요.";
 "monero_network.settings.title" = "Node Preferences";
-"monero_network.settings.description" = "Trusted node — the wallet trusts the selected node and uses its data without extra verification. \n\nOn → transactions instantly appear as Pending when broadcast (faster sync, but lower privacy and reliance on the node).\n\nOff → transactions are shown only after confirmations from the network (slower, but safer and more private).";
+"monero_network.settings.description" = "Trusted node — When enabled, the wallet trusts the selected node and accepts its data without additional verification. \n\nOn → Transactions appear as Pending immediately after broadcast (faster sync, but lower privacy and greater reliance on the node).\n\nOff → Transactions appear only after network confirmations (slower, but safer and more private).";
 "monero_network.settings.trust" = "Trust";
 
 // Add RPC Source
