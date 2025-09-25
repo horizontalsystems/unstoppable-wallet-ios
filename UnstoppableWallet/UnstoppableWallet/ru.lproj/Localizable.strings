@@ -433,7 +433,7 @@
 "receive_used_addresses.change" = "Адрес-сдача";
 
 "deposit.subaddresses.title" = "Subaddresses";
-"deposit.subaddresses.description" = "Subaddresses let you use multiple unique addresses within one wallet for convenience and enhanced privacy.";
+"deposit.subaddresses.description" = "Subaddresses let you manage several unique addresses under one wallet—making it easier to organize and enhancing your privacy.";
 "deposit.subaddresses.transactions_count" = "Transactions: %@";
 
 "deposit.zcash.restore.description" = "Вы уже владели какими-либо монетами ZEC?";
@@ -470,7 +470,7 @@
 "send.network_fee" = "Комиссия";
 "send.estimated_fee" = "Предполагаемая комиссия";
 "send.max_fee" = "Макс. комиссия";
-"send.max_fee.info" = "The maximum cost of sending given transaction on the network.";
+"send.max_fee.info" = "The maximum fee a user may pay to send a transaction on the network.";
 "send.duration.hours" = "%d ч.";
 "send.duration.minutes" = "%d мин.";
 "send.available_balance" = "Доступный баланс";
@@ -1706,21 +1706,26 @@
 
 "appearance.markets_tab" = "Вкладка рынки";
 "appearance.hide_markets" = "Скрыть рынки";
+"appearance.hide_markets.description" = "Remove the Markets tab from view.";
 "appearance.price_change" = "по изменению цены (%)";
+"appearance.price_change.description" = "Choose period for price change display.";
 "appearance.price_change.24h" = "24ч";
 "appearance.price_change.1d" = "Полночь по UTC";
 
 "appearance.launch_screen" = "Запуск экрана";
+"appearance.launch_screen.description" = "Select which screen opens on startup.";
 "appearance.launch_screen.auto" = "По умолчанию";
 "appearance.launch_screen.balance" = "Баланс";
 "appearance.launch_screen.market_overview" = "Обзор рынка";
 "appearance.launch_screen.watchlist" = "Избранное";
 
 "appearance.balance_tab" = "Вкладка баланс";
-"appearance.balance_tab.footer" = "Настройка «Скрыть кнопки» убирает кнопки Отправить, Получить и Обмен на вкладке баланса.";
 "appearance.amount_rounding" = "Округление суммы";
+"appearance.amount_rounding.description" = "Round balance numbers for easier reading.";
 "appearance.hide_buttons" = "Скрыть кнопки";
+"appearance.hide_buttons.description" = "Hide Send, Receive, and Swap buttons in Balance.";
 "appearance.balance_value" = "Значение баланса";
+"appearance.balance_value.description" = "Show balance in coins or fiat.";
 "appearance.balance_value.coin_fiat" = "Монета / Фиат";
 "appearance.balance_value.fiat_coin" = "Фиат / Монета";
 
@@ -1917,9 +1922,9 @@
 "wallet_connect.main.connect" = "Connect to %@";
 "wallet_connect.main.connected" = "Connected to %@";
 "wallet_connect.main.premium_alert.title.risky" = "Danger!";
-"wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Domain verification is unavailable. Upgrade to Premium to protect against unverified or phishing websites.";
-"wallet_connect.main.premium_alert.subtitle.risky" = "This website is not verified and may lead to phishing or loss of funds. Connecting is strongly discouraged.";
-"wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check unavailable. Connection possible but without domain safety confirmation.";
+"wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Get Premium to keep your funds safe from unverified and phishing sites.";
+"wallet_connect.main.premium_alert.subtitle.risky" = "This site is not verified. Connecting could expose you to phishing and loss of funds.";
+"wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check failed. Connection allowed, but domain may be unsafe.";
 "wallet_connect.scam_protection" = "Scam Protection";
 "wallet_connect.scam_protection.deactivated" = "Deactivated";
 "wallet_connect.scam_protection.risky" = "Рискованно";
@@ -2052,15 +2057,15 @@
 
 "private_keys.title" = "Приватные ключи";
 "private_keys.evm_private_key" = "Приватный ключ EVM";
-"private_keys.evm_private_key.description" = "Предоставляет полный контроль над криптовалютами на базе EVM, т.е. Ethereum, Binance Smart Chain и т.д. в пределах соответствующего кошелька.";
+"private_keys.evm_private_key.description" = "Grants full control over assets on EVM-based networks (e.g., Ethereum, BNB Smart Chain, Polygon, Avalanche) within this wallet.";
 "private_keys.stellar_secret_key" = "Секретный ключ Stellar";
-"private_keys.stellar_secret_key.description" = "Предоставляет полный контроль над активами Stellar в данном кошельке.";
+"private_keys.stellar_secret_key.description" = "Grants full control over assets on the Stellar network within this wallet.";
 "private_keys.bip32_root_key" = "BIP32 Root ключ";
-"private_keys.bip32_root_key.description" = "Предоставляет полный контроль над активами на соответствующем кошельке.";
+"private_keys.bip32_root_key.description" = "The master private key of the wallet. Grants full control over all derived accounts and assets.";
 "private_keys.account_extended_private_key" = "Расширенный приватный ключ аккаунта";
-"private_keys.account_extended_private_key.description" = "Предоставляет полный контроль над Bitcoin и другими криптовалютами на базе UTXO, такими как Litecoin, Bitcoin Cash, Dash и т.д. в пределах соответствующего кошелька.";
+"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO-based assets (e.g., Litecoin, Bitcoin Cash, Dash) within this wallet.";
 "private_keys.monero_private_key" = "Monero Private Keys";
-"private_keys.monero_private_key.description" = "Grants full control over Monero (XMR) assets within the respective wallet, including the ability to spend funds.";
+"private_keys.monero_private_key.description" = "Grants full control over Monero (XMR) assets within this wallet, including the ability to spend funds.";
 
 // Manage Account -> EVM Address
 
@@ -2106,7 +2111,7 @@
 "monero_network.add_new" = "Добавить новый";
 "monero_network.description" = "Выберите ноду, которую приложение Unstoppable будет использовать для синхронизации кошелька(ов).";
 "monero_network.settings.title" = "Node Preferences";
-"monero_network.settings.description" = "Trusted node — the wallet trusts the selected node and uses its data without extra verification. \n\nOn → transactions instantly appear as Pending when broadcast (faster sync, but lower privacy and reliance on the node).\n\nOff → transactions are shown only after confirmations from the network (slower, but safer and more private).";
+"monero_network.settings.description" = "Trusted node — When enabled, the wallet trusts the selected node and accepts its data without additional verification. \n\nOn → Transactions appear as Pending immediately after broadcast (faster sync, but lower privacy and greater reliance on the node).\n\nOff → Transactions appear only after network confirmations (slower, but safer and more private).";
 "monero_network.settings.trust" = "Trust";
 
 // Add RPC Source
