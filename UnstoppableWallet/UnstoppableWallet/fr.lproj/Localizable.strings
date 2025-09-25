@@ -61,7 +61,7 @@
 "alert.try_again" = "Réessayez";
 "alert.disconnecting" = "Déconnexion";
 "alert.disconnected" = "Déconnecté";
-"alert.connected" = "Connected";
+"alert.connected" = "Connecté";
 "alert.enabling" = "Activation";
 "alert.enabled_coins" = "%@ pièces supplémentaires activées";
 "alert.sending" = "En attente";
@@ -321,8 +321,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.deposit" = "Recevoir";
 "balance.chart" = "Graphique";
 "balance.scan" = "Scanner";
-"balance.copy_address" = "Copy Address";
-"balance.coin_info" = "Coin Info";
+"balance.copy_address" = "Copier l'adresse";
+"balance.coin_info" = "Informations de la cryptomonnaie";
 "balance.hide_coin" = "Hide Coin";
 "balance.rate_per_coin" = "%@ par %@";
 "balance.syncing" = "Synchronisation...";
@@ -333,7 +333,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.downloading_blocks" = "Téléchargement des blocs";
 "balance.scanning_blocks" = "Blocs de numérisation";
 "balance.enhancing_transactions" = "Amélioration des transactions";
-"balance.watch_wallet" = "Watch Wallet";
+"balance.watch_wallet" = "Regarder les portefeuilles";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Synchronisation... %@";
@@ -432,7 +432,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "deposit.subaddresses.title" = "Subaddresses";
 "deposit.subaddresses.description" = "Subaddresses let you use multiple unique addresses within one wallet for convenience and enhanced privacy.";
-"deposit.subaddresses.transactions_count" = "Transactions: %@";
+"deposit.subaddresses.transactions_count" = "Transactions : %@";
 
 "deposit.zcash.restore.description" = "Avez-vous déjà possédé des pièces de monnaie ZEC?";
 "deposit.zcash.restore.already_own" = "Oui, je suis déjà propriétaire";
@@ -2012,7 +2012,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "onboarding.balance.create" = "Nouveau porte-monnaie";
 "onboarding.balance.import" = "Importer le porte-monnaie";
-"onboarding.balance.watch" = "Watch Wallet";
+"onboarding.balance.watch" = "Regarder les portefeuilles";
 
 // Manage Accounts
 
@@ -2173,7 +2173,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // Watch Address
 
-"watch_address.title" = "Watch Wallet";
+"watch_address.title" = "Regarder les portefeuilles";
 "watch_address.name" = "Nom";
 "watch_address.watch" = "Suivi";
 "watch_address.address" = "Adresses";
