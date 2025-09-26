@@ -433,7 +433,7 @@
 "receive_used_addresses.change" = "Адрес-сдача";
 
 "deposit.subaddresses.title" = "Subaddresses";
-"deposit.subaddresses.description" = "Subaddresses let you manage several unique addresses under one wallet—making it easier to organize and enhancing your privacy.";
+"deposit.subaddresses.description" = "Use subaddresses to manage multiple unique addresses in one wallet - easier to organize, safer for your privacy.";
 "deposit.subaddresses.transactions_count" = "Transactions: %@";
 
 "deposit.zcash.restore.description" = "Вы уже владели какими-либо монетами ZEC?";
@@ -1693,7 +1693,7 @@
 "settings.privacy.allow" = "Поделиться данными UI";
 "settings.privacy.allow.description" = "Эта настройка позволяет отключить аналитику UI/UX и обеспечить полную конфиденциальность.";
 "settings.privacy.nym" = "Get Nym VPN";
-"settings.privacy.nym.description" = "Unstoppable offers the best prices on Nym VPN service. Connect through us and you will increase your privacy much more favorably.";
+"settings.privacy.nym.description" = "Get the best deal on Nym VPN with Unstoppable — enjoy stronger privacy at a better price.";
 
 // Settings -> Appearance
 
@@ -1706,14 +1706,14 @@
 
 "appearance.markets_tab" = "Вкладка рынки";
 "appearance.hide_markets" = "Скрыть рынки";
-"appearance.hide_markets.description" = "Remove the Markets tab from view.";
+"appearance.hide_markets.description" = "Hide the Markets tab completely.";
 "appearance.price_change" = "по изменению цены (%)";
-"appearance.price_change.description" = "Choose period for price change display.";
+"appearance.price_change.description" = "Select the time period for displaying token price changes.";
 "appearance.price_change.24h" = "24ч";
 "appearance.price_change.1d" = "Полночь по UTC";
 
 "appearance.launch_screen" = "Запуск экрана";
-"appearance.launch_screen.description" = "Select which screen opens on startup.";
+"appearance.launch_screen.description" = "Choose the default screen the app opens on.";
 "appearance.launch_screen.auto" = "По умолчанию";
 "appearance.launch_screen.balance" = "Баланс";
 "appearance.launch_screen.market_overview" = "Обзор рынка";
@@ -1721,11 +1721,11 @@
 
 "appearance.balance_tab" = "Вкладка баланс";
 "appearance.amount_rounding" = "Округление суммы";
-"appearance.amount_rounding.description" = "Round balance numbers for easier reading.";
+"appearance.amount_rounding.description" = "Display balances and transaction amounts as rounded values.";
 "appearance.hide_buttons" = "Скрыть кнопки";
-"appearance.hide_buttons.description" = "Hide Send, Receive, and Swap buttons in Balance.";
+"appearance.hide_buttons.description" = "Hide the Send, Receive, and Swap buttons on the Balance tab.";
 "appearance.balance_value" = "Значение баланса";
-"appearance.balance_value.description" = "Show balance in coins or fiat.";
+"appearance.balance_value.description" = "Show balances highlighted either in crypto or fiat.";
 "appearance.balance_value.coin_fiat" = "Монета / Фиат";
 "appearance.balance_value.fiat_coin" = "Фиат / Монета";
 
