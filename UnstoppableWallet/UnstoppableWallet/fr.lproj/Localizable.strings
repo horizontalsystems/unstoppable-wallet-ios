@@ -431,7 +431,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "receive_used_addresses.change" = "Adresses de changement";
 
 "deposit.subaddresses.title" = "Sous-adresses";
-"deposit.subaddresses.description" = "Use subaddresses to manage multiple unique addresses in one wallet - easier to organize, safer for your privacy.";
+"deposit.subaddresses.description" = "Utilisez des sous-adresses pour gérer plusieurs adresses uniques dans un seul portefeuille — plus facile à organiser et plus sûr pour votre confidentialité.";
 "deposit.subaddresses.transactions_count" = "Transactions : %@";
 
 "deposit.zcash.restore.description" = "Avez-vous déjà possédé des pièces de monnaie ZEC?";
@@ -1691,7 +1691,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "settings.privacy.allow" = "Partager les données UI";
 "settings.privacy.allow.description" = "Ce paramètre vous permet de désactiver les analyses d'interface utilisateur et de garantir une confidentialité totale.";
 "settings.privacy.nym" = "Obtenir Nym VPN";
-"settings.privacy.nym.description" = "Get the best deal on Nym VPN with Unstoppable — enjoy stronger privacy at a better price.";
+"settings.privacy.nym.description" = "Obtenez la meilleure offre sur Nym VPN avec Unstoppable — profitez d’une confidentialité renforcée à un meilleur prix.";
 
 // Settings -> Appearance
 
@@ -1704,14 +1704,14 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "appearance.markets_tab" = "Onglet Marchés";
 "appearance.hide_markets" = "Masquer les marchés";
-"appearance.hide_markets.description" = "Hide the Markets tab completely.";
+"appearance.hide_markets.description" = "Masquer complètement l’onglet Marchés.";
 "appearance.price_change" = "Variation de prix";
-"appearance.price_change.description" = "Select the time period for displaying token price changes.";
+"appearance.price_change.description" = "Sélectionnez la période pour l’affichage des variations de prix des tokens.";
 "appearance.price_change.24h" = "24H";
 "appearance.price_change.1d" = "Minuit UTC";
 
 "appearance.launch_screen" = "Écran de démarrage";
-"appearance.launch_screen.description" = "Choose the default screen the app opens on.";
+"appearance.launch_screen.description" = "Choisissez l’écran par défaut qui s’ouvre au lancement de l’application.";
 "appearance.launch_screen.auto" = "Auto";
 "appearance.launch_screen.balance" = "Solde";
 "appearance.launch_screen.market_overview" = "Vue d'ensemble du marché";
@@ -1719,11 +1719,11 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "appearance.balance_tab" = "Balance Tab";
 "appearance.amount_rounding" = "Arrondi du montant";
-"appearance.amount_rounding.description" = "Display balances and transaction amounts as rounded values.";
+"appearance.amount_rounding.description" = "Afficher les soldes et les montants des transactions sous forme arrondie.";
 "appearance.hide_buttons" = "Masquer les boutons";
-"appearance.hide_buttons.description" = "Hide the Send, Receive, and Swap buttons on the Balance tab.";
+"appearance.hide_buttons.description" = "Masquer les boutons Envoyer, Recevoir et Échanger dans l’onglet Solde.";
 "appearance.balance_value" = "Valeur du solde";
-"appearance.balance_value.description" = "Show balances highlighted either in crypto or fiat.";
+"appearance.balance_value.description" = "Afficher les soldes mis en évidence soit en crypto, soit en fiat.";
 "appearance.balance_value.coin_fiat" = "Pièce / Fiat";
 "appearance.balance_value.fiat_coin" = "Fiat / Pièce";
 
@@ -1919,7 +1919,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "wallet_connect.list.pending_requests" = "Demandes en attente";
 "wallet_connect.main.connect" = "Se connecter à %@";
 "wallet_connect.main.connected" = "Connecté à %@";
-"wallet_connect.main.premium_alert.title.risky" = "Danger!";
+"wallet_connect.main.premium_alert.title.risky" = "Risque!";
 "wallet_connect.main.premium_alert.subtitle.deactivated" = "La protection anti-fraude est désactivée. Passez à Premium pour protéger vos fonds contre les sites non vérifiés et de phishing.";
 "wallet_connect.main.premium_alert.subtitle.risky" = "Ce site n’est pas vérifié. La connexion peut vous exposer à du phishing et à une perte de fonds.";
 "wallet_connect.main.premium_alert.subtitle.not_available" = "Échec de la vérification anti-fraude. Connexion autorisée, mais le domaine peut être risqué.";
