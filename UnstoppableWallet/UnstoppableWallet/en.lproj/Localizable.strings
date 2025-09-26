@@ -429,7 +429,7 @@
 "receive_used_addresses.change" = "Change Addresses";
 
 "deposit.subaddresses.title" = "Subaddresses";
-"deposit.subaddresses.description" = "Subaddresses let you manage several unique addresses under one wallet—making it easier to organize and enhancing your privacy.";
+"deposit.subaddresses.description" = "Use subaddresses to manage multiple unique addresses in one wallet - easier to organize, safer for your privacy.";
 "deposit.subaddresses.transactions_count" = "Transactions: %@";
 
 "deposit.zcash.restore.description" = "Have you previously owned any ZEC coins?";
@@ -1702,14 +1702,14 @@
 
 "appearance.markets_tab" = "Markets Tab";
 "appearance.hide_markets" = "Hide Markets";
-"appearance.hide_markets.description" = "Remove the Markets tab from view.";
+"appearance.hide_markets.description" = "Hide the Markets tab completely.";
 "appearance.price_change" = "Price Change %";
-"appearance.price_change.description" = "Choose period for price change display.";
+"appearance.price_change.description" = "Select the time period for displaying token price changes.";
 "appearance.price_change.24h" = "24H";
 "appearance.price_change.1d" = "Midnight UTC";
 
 "appearance.launch_screen" = "Launch Screen";
-"appearance.launch_screen.description" = "Select which screen opens on startup.";
+"appearance.launch_screen.description" = "Choose the default screen the app opens on.";
 "appearance.launch_screen.auto" = "Auto";
 "appearance.launch_screen.balance" = "Balance";
 "appearance.launch_screen.market_overview" = "Market Overview";
@@ -1717,11 +1717,11 @@
 
 "appearance.balance_tab" = "Balance Tab";
 "appearance.amount_rounding" = "Amount Rounding";
-"appearance.amount_rounding.description" = "Round balance numbers for easier reading.";
+"appearance.amount_rounding.description" = "Display balances and transaction amounts as rounded values.";
 "appearance.hide_buttons" = "Hide Buttons";
-"appearance.hide_buttons.description" = "Hide Send, Receive, and Swap buttons in Balance.";
+"appearance.hide_buttons.description" = "Hide the Send, Receive, and Swap buttons on the Balance tab.";
 "appearance.balance_value" = "Balance Value";
-"appearance.balance_value.description" = "Show balance in coins or fiat.";
+"appearance.balance_value.description" = "Show balances highlighted either in crypto or fiat.";
 "appearance.balance_value.coin_fiat" = "Coin / Fiat";
 "appearance.balance_value.fiat_coin" = "Fiat / Coin";
 
