@@ -429,7 +429,7 @@
 "receive_used_addresses.change" = "거스름돈 주소";
 
 "deposit.subaddresses.title" = "Subaddresses";
-"deposit.subaddresses.description" = "Subaddresses let you manage several unique addresses under one wallet—making it easier to organize and enhancing your privacy.";
+"deposit.subaddresses.description" = "Use subaddresses to manage multiple unique addresses in one wallet - easier to organize, safer for your privacy.";
 "deposit.subaddresses.transactions_count" = "Transactions: %@";
 
 "deposit.zcash.restore.description" = "이전에 ZEC 코인을 소유한 적이 있나요?";
@@ -1690,7 +1690,7 @@
 "settings.privacy.allow" = "UI 데이터 공유";
 "settings.privacy.allow.description" = "이 설정을 통해 UI/UX 분석을 비활성화하고 완전한 기밀성을 보장할 수 있습니다.";
 "settings.privacy.nym" = "Get Nym VPN";
-"settings.privacy.nym.description" = "Unstoppable offers the best prices on Nym VPN service. Connect through us and you will increase your privacy much more favorably.";
+"settings.privacy.nym.description" = "Get the best deal on Nym VPN with Unstoppable — enjoy stronger privacy at a better price.";
 
 // Settings -> Appearance
 
@@ -1703,14 +1703,14 @@
 
 "appearance.markets_tab" = "마켓 탭";
 "appearance.hide_markets" = "마켓 숨기기";
-"appearance.hide_markets.description" = "Remove the Markets tab from view.";
+"appearance.hide_markets.description" = "Hide the Markets tab completely.";
 "appearance.price_change" = "가격 변경";
-"appearance.price_change.description" = "Choose period for price change display.";
+"appearance.price_change.description" = "Select the time period for displaying token price changes.";
 "appearance.price_change.24h" = "24시";
 "appearance.price_change.1d" = "UTC 자정";
 
 "appearance.launch_screen" = "시작 화면";
-"appearance.launch_screen.description" = "Select which screen opens on startup.";
+"appearance.launch_screen.description" = "Choose the default screen the app opens on.";
 "appearance.launch_screen.auto" = "자동";
 "appearance.launch_screen.balance" = "잔액";
 "appearance.launch_screen.market_overview" = "시장 개요";
@@ -1718,11 +1718,11 @@
 
 "appearance.balance_tab" = "잔고 탭";
 "appearance.amount_rounding" = "금액 반올림";
-"appearance.amount_rounding.description" = "Round balance numbers for easier reading.";
+"appearance.amount_rounding.description" = "Display balances and transaction amounts as rounded values.";
 "appearance.hide_buttons" = "숨김 버튼";
-"appearance.hide_buttons.description" = "Hide Send, Receive, and Swap buttons in Balance.";
+"appearance.hide_buttons.description" = "Hide the Send, Receive, and Swap buttons on the Balance tab.";
 "appearance.balance_value" = "균형 가치";
-"appearance.balance_value.description" = "Show balance in coins or fiat.";
+"appearance.balance_value.description" = "Show balances highlighted either in crypto or fiat.";
 "appearance.balance_value.coin_fiat" = "코인/피아트";
 "appearance.balance_value.fiat_coin" = "피아트/코인";
 
