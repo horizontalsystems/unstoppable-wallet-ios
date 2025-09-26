@@ -431,7 +431,7 @@
 "receive_used_addresses.change" = "找零地址";
 
 "deposit.subaddresses.title" = "子地址";
-"deposit.subaddresses.description" = "Use subaddresses to manage multiple unique addresses in one wallet - easier to organize, safer for your privacy.";
+"deposit.subaddresses.description" = "使用子地址来管理一个钱包中的多个独特地址——更容易组织起来，对您的隐私更安全。";
 "deposit.subaddresses.transactions_count" = "交易：%@";
 
 "deposit.zcash.restore.description" = "您以前是否拥有过任何ZEC硬币？";
@@ -1691,7 +1691,7 @@
 "settings.privacy.allow" = "共享界面数据";
 "settings.privacy.allow.description" = "此設置允許您禁用UI/UX分析並確保完全的隱私性。";
 "settings.privacy.nym" = "获取 Nym VPN";
-"settings.privacy.nym.description" = "Get the best deal on Nym VPN with Unstoppable — enjoy stronger privacy at a better price.";
+"settings.privacy.nym.description" = "通过 Unstoppable 获取 Nym VPN 的最佳优惠——以更实惠的价格享受更强的隐私保护。";
 
 // Settings -> Appearance
 
@@ -1704,14 +1704,14 @@
 
 "appearance.markets_tab" = "市场选项卡";
 "appearance.hide_markets" = "隐藏市场";
-"appearance.hide_markets.description" = "Hide the Markets tab completely.";
+"appearance.hide_markets.description" = "完全隐藏“市场”标签页。";
 "appearance.price_change" = "价格变动";
-"appearance.price_change.description" = "Select the time period for displaying token price changes.";
+"appearance.price_change.description" = "选择代币价格变动的显示周期。";
 "appearance.price_change.24h" = "24时";
 "appearance.price_change.1d" = "午夜UTC";
 
 "appearance.launch_screen" = "启动屏幕";
-"appearance.launch_screen.description" = "Choose the default screen the app opens on.";
+"appearance.launch_screen.description" = "选择应用启动时默认打开的界面。";
 "appearance.launch_screen.auto" = "自动";
 "appearance.launch_screen.balance" = "余额";
 "appearance.launch_screen.market_overview" = "行情";
@@ -1719,11 +1719,11 @@
 
 "appearance.balance_tab" = "余额标签";
 "appearance.amount_rounding" = "金额取整";
-"appearance.amount_rounding.description" = "Display balances and transaction amounts as rounded values.";
+"appearance.amount_rounding.description" = "将余额和交易金额显示为取整后的数值。";
 "appearance.hide_buttons" = "隐藏按钮";
-"appearance.hide_buttons.description" = "Hide the Send, Receive, and Swap buttons on the Balance tab.";
+"appearance.hide_buttons.description" = "在“余额”标签页隐藏发送、接收和兑换按钮。";
 "appearance.balance_value" = "余额值";
-"appearance.balance_value.description" = "Show balances highlighted either in crypto or fiat.";
+"appearance.balance_value.description" = "余额可高亮显示为加密货币或法币。";
 "appearance.balance_value.coin_fiat" = "加密货币 / 法定货币";
 "appearance.balance_value.fiat_coin" = "法定货币 / 加密货币";
 
@@ -2109,7 +2109,7 @@
 "monero_network.add_new" = "添加新的";
 "monero_network.description" = "选择 Unstoppable 应用用于同步钱包的节点。";
 "monero_network.settings.title" = "节点偏好设置";
-"monero_network.settings.description" = "Trusted node - When enabled, the wallet trusts the selected node and accepts its data without additional verification. \n\nOn → Transactions appear as Pending immediately after broadcast (faster sync, but lower privacy and greater reliance on the node).\n\nOff → Transactions appear only after network confirmations (slower, but safer and more private).";
+"monero_network.settings.description" = "可信节点——启用后，钱包会信任所选节点并接受其数据，而无需额外验证。\n\nOn → 交易在广播后立即显示为“待处理”（同步更快，但隐私性较低，更依赖节点）。\n\nOff → 交易仅在网络确认后才显示（同步较慢，但更安全且更具隐私性）。";
 "monero_network.settings.trust" = "信任";
 
 // Add RPC Source
@@ -2194,7 +2194,7 @@
 "watch_address.view_key.error.invalid" = "查看密钥无效";
 "watch_address.birthday_height.placeholder" = "恢复高度 (0000000)";
 "watch_address.birthday_height.error.invalid" = "恢复高度无效";
-"watch_address.monero_warning.description" = "A Monero watch-only wallet shows only incoming transactions. The displayed balance may be inaccurate.";
+"watch_address.monero_warning.description" = "Monero 观察钱包仅显示接收的交易，显示的余额可能不准确。";
 
 // Nft Collections
 
