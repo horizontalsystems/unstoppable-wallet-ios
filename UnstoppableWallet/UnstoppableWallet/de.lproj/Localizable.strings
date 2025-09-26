@@ -430,9 +430,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "receive_used_addresses.external" = "Empfängeraddressen";
 "receive_used_addresses.change" = "Wechselgeldadressen";
 
-"deposit.subaddresses.title" = "Subaddresses";
-"deposit.subaddresses.description" = "Use subaddresses to manage multiple unique addresses in one wallet - easier to organize, safer for your privacy.";
-"deposit.subaddresses.transactions_count" = "Transactions: %@";
+"deposit.subaddresses.title" = "Subadressen";
+"deposit.subaddresses.description" = "Verwenden Sie Subadressen, um mehrere eindeutige Adressen in einer Wallet zu verwalten – einfacher zu organisieren und sicherer für Ihre Privatsphäre.";
+"deposit.subaddresses.transactions_count" = "Transaktionen: %@";
 
 "deposit.zcash.restore.description" = "Hast du schon einmal im Besitz von ZEC-Münzen?";
 "deposit.zcash.restore.already_own" = "Ja, ich besitze bereits";
@@ -458,7 +458,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Send
 
 "send.title" = "Senden %@";
-"send.title.shield" = "Shield %@";
+"send.title.shield" = "Schutz %@";
 "send.send" = "Senden";
 "send.no_assets" = "Sie haben keine Assets zu senden.";
 "send.amount_placeholder" = "Betrag";
@@ -468,7 +468,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.network_fee" = "Gebühr";
 "send.estimated_fee" = "Geschätzte Gebühren";
 "send.max_fee" = "Max Gebühr";
-"send.max_fee.info" = "The maximum fee a user may pay to send a transaction on the network.";
+"send.max_fee.info" = "Die maximale Gebühr, die ein Benutzer für das Senden einer Transaktion im Netzwerk zahlen kann.";
 "send.duration.hours" = "%d Std.";
 "send.duration.minutes" = "%d Min.";
 "send.available_balance" = "Verfügbares Guthaben";
@@ -521,8 +521,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.confirmation.status" = "Status";
 "send.confirmation.status.failed" = "Fehlgeschlagen";
 "send.confirmation.send_to_own" = "Transaktion wird an eigene Adresse gesendet";
-"send.confirmation.operation" = "Operation";
-"send.confirmation.transaction_xdr" = "Transaction XDR";
+"send.confirmation.operation" = "Vorgang";
+"send.confirmation.transaction_xdr" = "Transaktion XDR";
 
 "send.confirmation.sync_failed" = "Synchronisation fehlgeschlagen";
 "send.confirmation.invalid_data" = "Ungültige Daten";
@@ -550,8 +550,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.address_error.own_address" = "Das Senden von %@ an die eigene Adresse ist nicht erlaubt. Bitte geben Sie eine andere Empfängeradresse ein.";
 "send.amount_error.maximum_amount" = "Maximaler Betrag %@";
 "send.amount_error.minimum_amount" = "Minimaler Betrag %@";
-"send.amount_error.minimum_amount.title" = "Minimum amount";
-"send.amount_error.minimum_amount.description" = "Minimum amount must be %@";
+"send.amount_error.minimum_amount.title" = "Mindestbetrag";
+"send.amount_error.minimum_amount.description" = "Der Mindestbetrag muss %@ betragen";
 "send.amount_error.min_required_balance" = "Mindestens erforderlicher Rest %@";
 "send.amount_warning.coin_needed_for_fee" = "Überlegen Sie, ob Sie einige %@ auf dem Guthaben belassen wollen, um für zukünftige Transaktionen bezahlen zu können.";
 "send.token.insufficient_fee_alert" = "Transaktionsgebühren für %@ %@ in %@ bezahlt. Du brauchst %@.";
@@ -578,7 +578,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "approve.confirmation.you_approve" = "Sie genehmigen";
 "approve.confirmation.you_revoke" = "Du widerrufen";
-"approve.confirmation.spender" = "Spender";
+"approve.confirmation.spender" = "Ausgeber";
 
 "send.enter_amount" = "Betrag eingeben";
 "send.token_not_enabled" = "Token nicht aktiviert";
@@ -597,15 +597,15 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.address.check.disabled" = "Deaktiviert";
 "send.address.risky.title" = "Risikoreiche Adresse!";
 "send.address.risky.description" = "Du bist dabei, Gelder an eine risikoreiche Adresse zu senden. Das Fortfahren könnte zum Verlust von Geldern oder anderen Sicherheitsrisiken führen. Durch das Fortfahren akzeptierst du die potenziellen Gefahren. Bist du sicher, dass du fortfahren möchtest?";
-"send.address.phishing_check" = "Phishing Check";
+"send.address.phishing_check" = "Phishing-Prüfung";
 "send.address.phishing.description" = "Analysiert die angegebene Zieladresse auf potenzielle Phishing-Risiken.\n\nSauber: Keine verdächtigen Aktivitäten erkannt.\n\nErkannt: Es scheint, dass jemand versuchen könnte, dich dazu zu bringen, Gelder an eine falsche Adresse zu senden. Fahre nur fort, wenn du absolut sicher bist, dass die Adresse korrekt ist. Erwäge, zuerst eine kleine Testtransaktion zu senden.";
 "send.address.phishing.caution.title" = "Phishing-Adresse erkannt!";
 "send.address.phishing.caution.description" = "Die eingegebene Adresse könnte betrügerisch sein. Betrüger ändern oft die ersten und letzten Zeichen. Überprüfe die vollständige Adresse sorgfältig, bevor du fortfährst, um Verluste zu vermeiden.";
-"send.address.sanction_check" = "Sanction Check";
+"send.address.sanction_check" = "Sanktionsprüfung";
 "send.address.sanction.description" = "Überprüft, ob die Empfängeradresse internationalen Sanktionen unterliegt, unter Verwendung von Daten von Chainalysis.com.\n\nSauber: Keine Sanktionen erkannt.\n\nErkannt: Potenzielles rechtliches Risiko. Transaktionen mit dieser Adresse könnten in bestimmten Rechtsordnungen eingeschränkt oder illegal sein.";
 "send.address.sanction.caution.title" = "Sanktionierte Adresse!";
 "send.address.sanction.caution.description" = "Die eingegebene Adresse ist als sanktioniert gekennzeichnet. Transaktionen an diese Adresse könnten zu Verlusten oder anderen Risiken führen. Bitte überprüfe die Details des Empfängers, bevor du fortfährst.";
-"send.address.blacklist_check" = "Blacklist Check";
+"send.address.blacklist_check" = "Blacklist-Prüfung";
 "send.address.blacklist.description" = "Überprüft, ob die Zieladresse auf offiziellen oder inoffiziellen schwarzen Listen steht.\n\nSauber: Keine Blacklist-Kennzeichnungen.\n\nErkannt: Die Adresse steht auf der schwarzen Liste und könnte mit rechtlichen oder Sicherheitsrisiken verbunden sein. Fahre mit Vorsicht fort. Viele Kryptobörsen beschränken Nutzer, die Gelder von Wallets einzahlen oder abheben, die mit Adressen auf schwarzen Listen interagiert haben. Behalte das im Hinterkopf.";
 "send.address.blacklist.caution.title" = "Adresse auf schwarzer Liste!";
 "send.address.blacklist.caution.description" = "Die eingegebene Adresse ist als auf der schwarzen Liste stehend gekennzeichnet. Transaktionen an diese Adresse könnten zu Verlusten oder anderen Risiken führen. Bitte überprüfe die Details des Empfängers, bevor du fortfährst.";
@@ -1411,7 +1411,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "tx_info.from_hash" = "Von";
 "tx_info.transaction_id" = "Transaktion ID";
 "tx_info.to_hash" = "An";
-"tx_info.spender" = "Spender";
+"tx_info.spender" = "Ausgeber";
 "tx_info.contact_name" = "Kontaktname";
 "tx_info.button_explorer" = "Auf %@ ansehen";
 "tx_info.rate" = "Historischer Rate";
@@ -1922,13 +1922,13 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "wallet_connect.main.premium_alert.title.risky" = "Danger!";
 "wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Get Premium to keep your funds safe from unverified and phishing sites.";
 "wallet_connect.main.premium_alert.subtitle.risky" = "This site is not verified. Connecting could expose you to phishing and loss of funds.";
-"wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check failed. Connection allowed, but domain may be unsafe.";
-"wallet_connect.scam_protection" = "Scam Protection";
-"wallet_connect.scam_protection.deactivated" = "Deactivated";
+"wallet_connect.main.premium_alert.subtitle.not_available" = "Betrugsschutz-Überprüfung fehlgeschlagen. Verbindung erlaubt, aber die Domain könnte unsicher sein.";
+"wallet_connect.scam_protection" = "Betrugsschutz";
+"wallet_connect.scam_protection.deactivated" = "Deaktiviert";
 "wallet_connect.scam_protection.risky" = "Riskant";
-"wallet_connect.scam_protection.secure" = "Secure";
+"wallet_connect.scam_protection.secure" = "Sicher";
 "wallet_connect.scam_protection.not_available" = "N/A";
-"wallet_connect.networks" = "Networks";
+"wallet_connect.networks" = "Netzwerke";
 
 "wallet_connect.main.no_any_supported_chains" = "Keine unterstützten Ketten!";
 "wallet_connect.main.unsupported_chains" = "Einige Ketten werden nicht unterstützt!";
@@ -2063,7 +2063,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "private_keys.account_extended_private_key" = "Account Extended Private Key";
 "private_keys.account_extended_private_key.description" = "Gewährt volle Kontrolle über Bitcoin und andere UTXO-basierte Vermögenswerte (z. B. Litecoin, Bitcoin Cash, Dash) innerhalb dieser Wallet.";
 "private_keys.monero_private_key" = "Monero Private Keys";
-"private_keys.monero_private_key.description" = "Grants full control over Monero (XMR) assets within this wallet, including the ability to spend funds.";
+"private_keys.monero_private_key.description" = "Gewährt volle Kontrolle über Monero (XMR)-Vermögenswerte innerhalb dieser Wallet, einschließlich der Möglichkeit, Gelder auszugeben.";
 
 // Manage Account -> EVM Address
 
@@ -2108,9 +2108,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "monero_network.added" = "Hinzugefügt";
 "monero_network.add_new" = "Neu hinzufügen";
 "monero_network.description" = "Wählen Sie den Knoten aus, den die Unstoppable-App zur Synchronisierung der Wallet(s) verwenden soll.";
-"monero_network.settings.title" = "Node Preferences";
-"monero_network.settings.description" = "Trusted node - When enabled, the wallet trusts the selected node and accepts its data without additional verification. \n\nOn → Transactions appear as Pending immediately after broadcast (faster sync, but lower privacy and greater reliance on the node).\n\nOff → Transactions appear only after network confirmations (slower, but safer and more private).";
-"monero_network.settings.trust" = "Trust";
+"monero_network.settings.title" = "Knoteneinstellungen";
+"monero_network.settings.description" = "Vertrauensknoten – Wenn aktiviert, vertraut die Wallet dem ausgewählten Knoten und akzeptiert dessen Daten ohne zusätzliche Überprüfung.\n\nEin → Transaktionen erscheinen sofort nach dem Senden als „ausstehend“ (schnellere Synchronisierung, jedoch geringere Privatsphäre und stärkere Abhängigkeit vom Knoten).\n\nAus → Transaktionen erscheinen erst nach Netzwerkbestätigungen (langsamer, aber sicherer und mit höherer Privatsphäre).";
+"monero_network.settings.trust" = "Vertrauen";
 
 // Add RPC Source
 
@@ -2183,18 +2183,18 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "watch_address.watch" = "Beobachten";
 "watch_address.address" = "Adresse";
 "watch_address.error.not_supported" = "Adressformat wird nicht unterstützt";
-"watch_address.error.address_required" = "Please enter an address to continue";
+"watch_address.error.address_required" = "Bitte geben Sie eine Adresse ein, um fortzufahren.";
 "watch_address.error.non_public_key" = "Das Beobachten mit privatem Schlüssel ist nicht erlaubt";
 "watch_address.error.not_supported_derived_type" = "Abgeleiteter Typ wird nicht unterstützt";
 "watch_address.watch_data.placeholder" = "Fügen Sie Ihre öffentliche Adresse oder Ihren XPUB ein";
 "watch_address.choose_blockchain" = "Blockchain auswählen";
 "watch_address.choose_coin" = "Coins auswählen";
-"watch_address.view_key.placeholder" = "Private View Key";
-"watch_address.view_key.error.required" = "Private View Key is required to watch Monero wallets.";
-"watch_address.view_key.error.invalid" = "Invalid View Key";
-"watch_address.birthday_height.placeholder" = "Restore Height (0000000)";
-"watch_address.birthday_height.error.invalid" = "Invalid Restore Height";
-"watch_address.monero_warning.description" = "A Monero watch-only wallet shows only incoming transactions. The displayed balance may be inaccurate.";
+"watch_address.view_key.placeholder" = "Privater View-Key";
+"watch_address.view_key.error.required" = "Ein privater View-Key ist erforderlich, um Monero-Wallets anzuzeigen.";
+"watch_address.view_key.error.invalid" = "Ungültiger View-Key";
+"watch_address.birthday_height.placeholder" = "Wiederherstellungshöhe (0000000)";
+"watch_address.birthday_height.error.invalid" = "Ungültige Wiederherstellungshöhe";
+"watch_address.monero_warning.description" = "Eine Monero-Wallet im Nur-Ansehen-Modus zeigt nur eingehende Transaktionen an. Der angezeigte Kontostand kann ungenau sein.";
 
 // Nft Collections
 
@@ -2364,7 +2364,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "purchases.duress_mode.description" = "Intelligente Fondssicherheit bei physischen Bedrohungen";
 "purchases.duress_mode.info" = "Ihre Krypto. Ihre Sicherheit. Der Notfallmodus ermöglicht es Ihnen, mehrere alternative Wallet-Konfigurationen zu erstellen, jede mit einer separaten PIN, und bietet so einen versteckten Ausweg in Hochrisikosituationen. Wenn Sie gezwungen werden, Ihre Wallet zu entsperren, verwenden Sie einfach die Notfall-PIN, um auf eine sekundäre Wallet zuzugreifen, ohne dass kritische Vermögenswerte preisgegeben werden. Ihre tatsächlichen Gelder bleiben verborgen. Ihre Sicherheit bleibt intakt.";
 
-"purchases.address_phishing" = "Scam Protection";
+"purchases.address_phishing" = "Betrugsschutz";
 "purchases.address_phishing.description" = "Effektiver automatischer Schutz gegen Betrug und Phishing-Angriffe";
 "purchases.address_phishing.info" = "Eine falsche Adresse, und Ihre Kryptowährung ist für immer verloren. Unstoppable scannt automatisch Empfängeradressen auf verdächtige Muster und schützt vor den neuesten Phishing-Bedrohungen, um zu verhindern, dass Sie Gelder an einen Hacker senden. Blockieren Sie betrügerische Überweisungen, bevor sie passieren.";
 
@@ -2428,8 +2428,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Check Address
 
-"check_address.sanctions_check" = "Sanctions Check";
-"check_address.coin_blacklist_check" = "%@ Blacklist Check";
+"check_address.sanctions_check" = "Sanktionsprüfung";
+"check_address.coin_blacklist_check" = "%@ Blacklist-Prüfung";
 "check_address.on_blockchain" = "am %@";
 "check_address.chainalysis.description" = "Chainalysis ist eine Blockchain-Analyseplattform, die Werkzeuge zum Nachverfolgen, Untersuchen und Bewerten von Risiken bei Krypto-Adressen bereitstellt. Sie hilft dabei, Adressen zu identifizieren, die mit Sanktionen, Betrug oder anderen illegalen Aktivitäten in Verbindung stehen.";
 "check_address.hashdit.description" = "HashDit ist eine Sicherheitsplattform, die es Nutzern ermöglicht, Wallet-Adressen auf Risiken wie Sanktionen und Blacklist-Status zu überprüfen. Sie hilft, Interaktionen mit potenziell böswilligen oder gesperrten Adressen zu vermeiden.";
