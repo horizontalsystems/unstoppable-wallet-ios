@@ -111,7 +111,7 @@
 "selector.any" = "Cualquier";
 "selector.none" = "None";
 
-"face_id" = "Face ID";
+"face_id" = "ID de rostro";
 "touch_id" = "Touch ID";
 
 "auto_lock.immediate" = "Inmediato";
@@ -1353,7 +1353,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "transactions.title" = "Transacciones";
 "transactions.tab_bar_item" = "Transacciones";
 "transactions.filter_all" = "Todo";
-"transactions.syncing_placeholder" = "Please wait for the sync to finish.";
+"transactions.syncing_placeholder" = "Por favor, espere a que termine la sincronización.";
 "transactions.empty_text" = "Todavía no tienes transacciones pendientes o pasadas";
 "transactions.pending" = "Pendiente";
 "transactions.processing" = "Procesando";
@@ -1527,8 +1527,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "backup_app.backup_list.other.watch_account.title" = "Ver carteras";
 "backup_app.backup_list.other.watchlist.title" = "Lista de Seguimiento";
 "backup_app.backup_list.other.contacts.title" = "Contactos";
-"backup_app.backup_list.other.custom_evm_sync_sources.title" = "Custom RPC";
-"backup_app.backup_list.other.custom_monero_nodes.title" = "Custom Monero Nodes";
+"backup_app.backup_list.other.custom_evm_sync_sources.title" = "RPC personalizado";
+"backup_app.backup_list.other.custom_monero_nodes.title" = "사용자 지정 Monero 노드";
 "backup_app.backup_list.other.app_settings.title" = "Ajustes de app";
 "backup_app.backup_list.other.app_settings.description" = "Idioma, moneda, Apariencia ...";
 
@@ -1919,7 +1919,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "wallet_connect.network" = "La red";
 "wallet_connect.list.pending_requests" = "Solicitudes Pendientes";
 "wallet_connect.main.connect" = "Connect to %@";
-"wallet_connect.main.connected" = "Connected to %@";
+"wallet_connect.main.connected" = "%@에 연결됨";
 "wallet_connect.main.premium_alert.title.risky" = "Danger!";
 "wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Get Premium to keep your funds safe from unverified and phishing sites.";
 "wallet_connect.main.premium_alert.subtitle.risky" = "This site is not verified. Connecting could expose you to phishing and loss of funds.";
