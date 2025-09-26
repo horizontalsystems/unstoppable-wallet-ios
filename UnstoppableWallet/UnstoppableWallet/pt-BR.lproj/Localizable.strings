@@ -431,7 +431,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "receive_used_addresses.change" = "Endereço de troco";
 
 "deposit.subaddresses.title" = "Subaddresses";
-"deposit.subaddresses.description" = "Subaddresses let you manage several unique addresses under one wallet—making it easier to organize and enhancing your privacy.";
+"deposit.subaddresses.description" = "Use subaddresses to manage multiple unique addresses in one wallet - easier to organize, safer for your privacy.";
 "deposit.subaddresses.transactions_count" = "Transactions: %@";
 
 "deposit.zcash.restore.description" = "Já possui alguma moeda ZEC?";
@@ -1691,7 +1691,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.privacy.allow" = "Compartilhar Dados de UI";
 "settings.privacy.allow.description" = "Esta configuração permite que você desative a análise de UI/UX e garanta total confidencialidade.";
 "settings.privacy.nym" = "Get Nym VPN";
-"settings.privacy.nym.description" = "Unstoppable offers the best prices on Nym VPN service. Connect through us and you will increase your privacy much more favorably.";
+"settings.privacy.nym.description" = "Get the best deal on Nym VPN with Unstoppable — enjoy stronger privacy at a better price.";
 
 // Settings -> Appearance
 
@@ -1704,14 +1704,14 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "appearance.markets_tab" = "Guia de Mercados";
 "appearance.hide_markets" = "Esconder Mercados";
-"appearance.hide_markets.description" = "Remove the Markets tab from view.";
+"appearance.hide_markets.description" = "Hide the Markets tab completely.";
 "appearance.price_change" = "Mudança de Preço";
-"appearance.price_change.description" = "Choose period for price change display.";
+"appearance.price_change.description" = "Select the time period for displaying token price changes.";
 "appearance.price_change.24h" = "24h";
 "appearance.price_change.1d" = "Meia-noite UTC";
 
 "appearance.launch_screen" = "Tela Inicial";
-"appearance.launch_screen.description" = "Select which screen opens on startup.";
+"appearance.launch_screen.description" = "Choose the default screen the app opens on.";
 "appearance.launch_screen.auto" = "Automático";
 "appearance.launch_screen.balance" = "Saldo";
 "appearance.launch_screen.market_overview" = "Visão geral do mercado";
@@ -1719,11 +1719,11 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "appearance.balance_tab" = "Aba de Saldo";
 "appearance.amount_rounding" = "Arredondamento de Valores";
-"appearance.amount_rounding.description" = "Round balance numbers for easier reading.";
+"appearance.amount_rounding.description" = "Display balances and transaction amounts as rounded values.";
 "appearance.hide_buttons" = "Ocultar Botões";
-"appearance.hide_buttons.description" = "Hide Send, Receive, and Swap buttons in Balance.";
+"appearance.hide_buttons.description" = "Hide the Send, Receive, and Swap buttons on the Balance tab.";
 "appearance.balance_value" = "Valor Patrimonial";
-"appearance.balance_value.description" = "Show balance in coins or fiat.";
+"appearance.balance_value.description" = "Show balances highlighted either in crypto or fiat.";
 "appearance.balance_value.coin_fiat" = "Criptomoeda/Moeda Fiat";
 "appearance.balance_value.fiat_coin" = "Moeda Fiat / Criptomoeda";
 
