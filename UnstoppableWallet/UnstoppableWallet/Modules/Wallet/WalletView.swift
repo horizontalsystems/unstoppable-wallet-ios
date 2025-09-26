@@ -160,13 +160,13 @@ struct WalletView: View {
                     }
                 }
                 let addressProvider = ReceiveAddressModule.addressProvider(wallet: item.wallet)
-                if addressProvider.address != nil {
+                if let address = addressProvider.address {
                     Button {
-                        if let address = addressProvider.address {
-                            CopyHelper.copyAndNotify(value: address)
-                        }
+                        CopyHelper.copyAndNotify(value: address)
                     } label: {
-                        Label("balance.copy_address".localized, image: "copy")
+                        Text("balance.copy_address".localized)
+                        Text(address.shortened)
+                        Image("copy")
                     }
                 }
                 if !item.wallet.account.watchAccount, item.wallet.token.swappable {

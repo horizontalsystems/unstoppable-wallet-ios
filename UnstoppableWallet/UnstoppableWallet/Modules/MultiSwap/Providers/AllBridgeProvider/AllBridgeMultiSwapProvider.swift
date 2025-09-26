@@ -25,35 +25,34 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
     ]
 
     private let proxies: [String: String] = [
-        //        //Ethereum
-        //        "0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e": nil,
-        // BNB Chain
-        "0x3C4FA639c8D7E65c603145adaD8bD12F2358312f": "0xdb7A84411507FA4cFE460ddAE0df8c411AB9DFa2",
-        // Tron
-        //        "TAuErcuAtU6BPt6YwL51JZ4RpDCPQASCU2": nil,
-        //        //Solana
-        //        "BrdgN2RPzEMWF96ZbnnJaUtQDQx7VRXYaHHbYCBvceWB": nil,
-        //        //Polygon
-        //        "0x7775d63836987f444E2F14AA0fA2602204D7D3E0": nil,
-        //        //Arbitrum
-        //        "0x9Ce3447B58D58e8602B7306316A5fF011B92d189": nil,
-        //        //Stellar
-        //        "CBQ6GW7QCFFE252QEVENUNG45KYHHBRO4IZIWFJOXEFANHPQUXX5NFWV": nil,
-        //        //Avalanche
-        //        "0x9068E1C28941D0A680197Cc03be8aFe27ccaeea9": nil,
-        //        //Base
-        //        "0x001E3f136c2f804854581Da55Ad7660a2b35DEf7": nil,
-        //        //OP Mainnet
-        //        "0x97E5BF5068eA6a9604Ee25851e6c9780Ff50d5ab": nil,
-        //        //Celo
-        //        "0x80858f5F8EFD2Ab6485Aba1A0B9557ED46C6ba0e": nil,
-        //        //Sui
-        //        "0x83d6f864a6b0f16898376b486699aa6321eb6466d1daf6a2e3764a51908fe99d": nil,
+        //        Ethereum
+        "0x609c690e8F7D68a59885c9132e812eEbDaAf0c9e": "0x6153F92eF47A97046820714233956f0B0F99d886",
+//        BNB Chain
+        "0x3C4FA639c8D7E65c603145adaD8bD12F2358312f": "0x6153F92eF47A97046820714233956f0B0F99d886",
+//        Tron
+//        "TAuErcuAtU6BPt6YwL51JZ4RpDCPQASCU2" to null,
+//        Solana
+//        "BrdgN2RPzEMWF96ZbnnJaUtQDQx7VRXYaHHbYCBvceWB" to null,
+//        Polygon
+        "0x7775d63836987f444E2F14AA0fA2602204D7D3E0": "0x6153F92eF47A97046820714233956f0B0F99d886",
+//        Arbitrum
+        "0x9Ce3447B58D58e8602B7306316A5fF011B92d189": "0x6153F92eF47A97046820714233956f0B0F99d886",
+//        Stellar
+//        "CBQ6GW7QCFFE252QEVENUNG45KYHHBRO4IZIWFJOXEFANHPQUXX5NFWV" to null,
+//        Avalanche
+        "0x9068E1C28941D0A680197Cc03be8aFe27ccaeea9": "0x6153F92eF47A97046820714233956f0B0F99d886",
+//        Base
+        "0x001E3f136c2f804854581Da55Ad7660a2b35DEf7": "0x6153F92eF47A97046820714233956f0B0F99d886",
+//        OP Mainnet
+        "0x97E5BF5068eA6a9604Ee25851e6c9780Ff50d5ab": "0x6153F92eF47A97046820714233956f0B0F99d886",
+//        Celo
+//        "0x80858f5F8EFD2Ab6485Aba1A0B9557ED46C6ba0e" to null,
+//        Sui
+//        "0x83d6f864a6b0f16898376b486699aa6321eb6466d1daf6a2e3764a51908fe99d" to null,
     ]
 
     private let feePaymentMethod = FeePaymentMethod.stableCoin
 
-    //    private let networkManager = Core.shared.networkManager
     private let allowanceHelper = MultiSwapAllowanceHelper()
     private let marketKit = Core.shared.marketKit
     private let networkManager: NetworkManager

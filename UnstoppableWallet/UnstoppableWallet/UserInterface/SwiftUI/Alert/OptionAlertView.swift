@@ -18,7 +18,8 @@ struct OptionAlertView: View {
                 view
                     .scaleEffect(scale)
                     .opacity(opacity)
-                    .frame(maxWidth: max(0, proxy.size.width - 2 * .margin32), maxHeight: max(0, proxy.size.height - 4 * .margin32))
+                    .frame(width: 240)
+                    .frame(maxHeight: max(0, proxy.size.height - 4 * .margin32))
             }
             .ignoresSafeArea()
             .transition(.opacity)
