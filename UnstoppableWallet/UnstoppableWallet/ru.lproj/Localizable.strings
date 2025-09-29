@@ -61,7 +61,7 @@
 "alert.try_again" = "Попробовать ещё раз";
 "alert.disconnecting" = "Отсоединение";
 "alert.disconnected" = "Отсоединено";
-"alert.connected" = "Connected";
+"alert.connected" = "Подключено";
 "alert.enabling" = "Идет активация";
 "alert.enabled_coins" = "Включено ещё %@ монет";
 "alert.sending" = "Отправка";
@@ -79,8 +79,8 @@
 "alert.unable_to_replace" = "Не удается заменить";
 "alert.already_replaced" = "Уже заменены";
 
-"alert_card.title.critical" = "Warning!";
-"alert_card.title.caution" = "Attention!";
+"alert_card.title.critical" = "Предупреждение!";
+"alert_card.title.caution" = "Внимание!";
 
 "no_results_found" = "Ничего не найдено";
 "action.loading" = "загрузка...";
@@ -103,10 +103,10 @@
 "sync_error" = "Ошибка синхронизации. Повторите попытку.";
 
 "number.thousand" = "%@ тыс.";
-"number.million" = "%@M";
-"number.billion" = "%@B";
-"number.trillion" = "%@T";
-"number.quadrillion" = "%@Q";
+"number.million" = "%@млн";
+"number.billion" = "%@млрд";
+"number.trillion" = "%@трлн";
+"number.quadrillion" = "%@квдрлн";
 
 "selector.any" = "Любое";
 "selector.none" = "None";
@@ -157,7 +157,7 @@
 \n\nПОЖАЛУЙСТА НАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ";
 "restore.error.non_standard.description" = "Это нестандартный кошелек.\n\nНАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ";
 
-"restore.error.non_standard.link" = "Click to get more info";
+"restore.error.non_standard.link" = "Нажмите для подробной информации";
 
 // Restore Type
 
@@ -224,12 +224,12 @@
 
 // Monero Key
 
-"monero_public_key.title" = "Monero Public Keys";
-"monero_private_key.title" = "Monero Private Keys";
+"monero_public_key.title" = "Публичные ключи Monero";
+"monero_private_key.title" = "Приватные ключи Monero";
 "monero_private_key.tap_to_show" = "Нажмите, чтобы показать приватный ключ";
-"monero.key_types" = "Type";
-"monero.key_types.spend" = "Spend";
-"monero.key_types.view" = "View";
+"monero.key_types" = "Тип";
+"monero.key_types.spend" = "Ключ расхода (Spend key)";
+"monero.key_types.view" = "Ключ просмотра (View key)";
 
 // Extended Key
 
@@ -323,9 +323,9 @@
 "balance.deposit" = "Пополнение";
 "balance.chart" = "График";
 "balance.scan" = "Сканировать QR-код";
-"balance.copy_address" = "Copy Address";
-"balance.coin_info" = "Coin Info";
-"balance.hide_coin" = "Hide Coin";
+"balance.copy_address" = "Скопировать адрес";
+"balance.coin_info" = "Инфо";
+"balance.hide_coin" = "Скрыть";
 "balance.rate_per_coin" = "%@ за %@";
 "balance.syncing" = "Идет синхронизация...";
 "balance.searching" = "Поиск транзакций...";
@@ -335,7 +335,7 @@
 "balance.downloading_blocks" = "Загрузка блоков";
 "balance.scanning_blocks" = "Сканирование блоков";
 "balance.enhancing_transactions" = "Улучшение транзакций";
-"balance.watch_wallet" = "Watch Wallet";
+"balance.watch_wallet" = "Просмотр кошелька";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Идет синхронизация... %@";
@@ -370,7 +370,7 @@
 "balance.token.transparent.info.description" = "Прозрачный баланс в данный момент недоступен для использования в нашем кошельке. Однако эти средства могут быть потрачены через другие кошельки, поддерживающие адреса формата t-address.";
 "balance.token.shield" = "Shield";
 
-"balance.token.receive_address" = "Receive Address";
+"balance.token.receive_address" = "Адрес получателя";
 "balance.token.staked" = "Staked";
 "balance.token.staked.info.title" = "Staked title";
 "balance.token.staked.info.description" = "Staked Description Text";
@@ -432,9 +432,9 @@
 "receive_used_addresses.external" = "Адреса для получения";
 "receive_used_addresses.change" = "Адрес-сдача";
 
-"deposit.subaddresses.title" = "Subaddresses";
-"deposit.subaddresses.description" = "Use subaddresses to manage multiple unique addresses in one wallet - easier to organize, safer for your privacy.";
-"deposit.subaddresses.transactions_count" = "Transactions: %@";
+"deposit.subaddresses.title" = "Субадреса";
+"deposit.subaddresses.description" = "Используйте субадреса, чтобы управлять несколькими уникальными адресами в одном кошельке - это удобнее и надёжнее для вашей конфиденциальности.";
+"deposit.subaddresses.transactions_count" = "Транзакций: %@";
 
 "deposit.zcash.restore.description" = "Вы уже владели какими-либо монетами ZEC?";
 "deposit.zcash.restore.already_own" = "Да, у меня уже есть";
@@ -470,7 +470,7 @@
 "send.network_fee" = "Комиссия";
 "send.estimated_fee" = "Предполагаемая комиссия";
 "send.max_fee" = "Макс. комиссия";
-"send.max_fee.info" = "The maximum fee a user may pay to send a transaction on the network.";
+"send.max_fee.info" = "Максимальная комиссия, которую пользователь может заплатить за отправку транзакции в сети.";
 "send.duration.hours" = "%d ч.";
 "send.duration.minutes" = "%d мин.";
 "send.available_balance" = "Доступный баланс";
@@ -523,8 +523,8 @@
 "send.confirmation.status" = "Статус";
 "send.confirmation.status.failed" = "Не удалось";
 "send.confirmation.send_to_own" = "Транзакция будет отправлена на собственный адрес";
-"send.confirmation.operation" = "Operation";
-"send.confirmation.transaction_xdr" = "Transaction XDR";
+"send.confirmation.operation" = "Операция";
+"send.confirmation.transaction_xdr" = "Транзакция XDR";
 
 "send.confirmation.sync_failed" = "Ошибка синхронизации";
 "send.confirmation.invalid_data" = "Неверные данные";
@@ -552,8 +552,8 @@
 "send.address_error.own_address" = "Отправка %@ на собственный адрес не разрешена. Пожалуйста, введите другой адрес получателя.";
 "send.amount_error.maximum_amount" = "Макс. сумма %@";
 "send.amount_error.minimum_amount" = "Мин. сумма %@";
-"send.amount_error.minimum_amount.title" = "Minimum amount";
-"send.amount_error.minimum_amount.description" = "Minimum amount must be %@";
+"send.amount_error.minimum_amount.title" = "Минимальная сумма";
+"send.amount_error.minimum_amount.description" = "Минимальная сумма должна быть %@";
 "send.amount_error.min_required_balance" = "Мин. обязательный остаток %@";
 "send.amount_warning.coin_needed_for_fee" = "Рассмотрите возможность оставить %@ на балансе, чтобы иметь возможность оплачивать будущие транзакции.";
 "send.token.insufficient_fee_alert" = "Комиссии за транзакцию %@ (%@) взимаются в %@. Вам нужно %@.";
@@ -793,7 +793,7 @@
 "market.tab.news" = "Новости";
 "market.tab.coins" = "Монеты";
 "market.tab.watchlist" = "Избранное";
-"market.tab.vaults" = "Earn";
+"market.tab.vaults" = "Доход (APY)";
 "market.tab.platforms" = "Платформы";
 "market.tab.pairs" = "Пары";
 "market.tab.sectors" = "Секторы";
@@ -1335,7 +1335,7 @@
 "chart_indicators.settings.period.error" = "Период не может быть больше чем %d";
 
 "chart_indicators.settings.ma.description" = "В EMA, SMA и WMA используются средние значения для технического анализа:\n\nEMA подчеркивает последние цены для более быстрых реакций.\nСредние цены SMA для общего представления тренда.\nЧувствительность и шумовое снижение ВМА путем линейного взвешивания последних данных";
-"chart_indicators.settings.ma.type_title" = "Type";
+"chart_indicators.settings.ma.type_title" = "Тип";
 "chart_indicators.settings.ma.period_title" = "Период";
 
 "chart_indicators.settings.rsi.title" = "RSI";
@@ -1355,7 +1355,7 @@
 "transactions.title" = "Транзакции";
 "transactions.tab_bar_item" = "Транзакции";
 "transactions.filter_all" = "Все";
-"transactions.syncing_placeholder" = "Please wait for the sync to finish.";
+"transactions.syncing_placeholder" = "Пожалуйста, дождитесь завершение синхронизации.";
 "transactions.empty_text" = "У вас ещё нет незавершенных или прошлых транзакций";
 "transactions.pending" = "В обработке";
 "transactions.processing" = "В процессе";
@@ -1529,7 +1529,7 @@
 "backup_app.backup_list.other.watchlist.title" = "Избранное";
 "backup_app.backup_list.other.contacts.title" = "Контакты";
 "backup_app.backup_list.other.custom_evm_sync_sources.title" = "Пользовательские RPC";
-"backup_app.backup_list.other.custom_monero_nodes.title" = "Custom Monero Nodes";
+"backup_app.backup_list.other.custom_monero_nodes.title" = "Пользовательские узлы Monero";
 "backup_app.backup_list.other.app_settings.title" = "Настройки приложения";
 "backup_app.backup_list.other.app_settings.description" = "Язык, валюта, внешний вид ...";
 
@@ -1692,8 +1692,8 @@
 "settings.privacy.description" = "%@ не собирает персональные данные, которые могут раскрывать вашу частную информацию, такую как балансы монет или адреса. Мы собираем некоторую статистику использования интерфейса исключительно для понимания нашей пользовательской базы и тенденций использования приложения. Эта функция может быть отключена по вашему желанию.";
 "settings.privacy.allow" = "Поделиться данными UI";
 "settings.privacy.allow.description" = "Эта настройка позволяет отключить аналитику UI/UX и обеспечить полную конфиденциальность.";
-"settings.privacy.nym" = "Get Nym VPN";
-"settings.privacy.nym.description" = "Get the best deal on Nym VPN with Unstoppable — enjoy stronger privacy at a better price.";
+"settings.privacy.nym" = "Скачать Nym VPN";
+"settings.privacy.nym.description" = "Получите лучшие условия на Nym VPN с Unstoppable - больше конфиденциальности по выгодной цене.";
 
 // Settings -> Appearance
 
@@ -1706,14 +1706,14 @@
 
 "appearance.markets_tab" = "Вкладка рынки";
 "appearance.hide_markets" = "Скрыть рынки";
-"appearance.hide_markets.description" = "Hide the Markets tab completely.";
+"appearance.hide_markets.description" = "Полностью скрыть вкладку «Рынки».";
 "appearance.price_change" = "по изменению цены (%)";
-"appearance.price_change.description" = "Select the time period for displaying token price changes.";
+"appearance.price_change.description" = "Выберите период отображения изменения цены токена.";
 "appearance.price_change.24h" = "24ч";
 "appearance.price_change.1d" = "Полночь по UTC";
 
 "appearance.launch_screen" = "Запуск экрана";
-"appearance.launch_screen.description" = "Choose the default screen the app opens on.";
+"appearance.launch_screen.description" = "Выберите экран, который будет открываться по умолчанию.";
 "appearance.launch_screen.auto" = "По умолчанию";
 "appearance.launch_screen.balance" = "Баланс";
 "appearance.launch_screen.market_overview" = "Обзор рынка";
@@ -1721,11 +1721,11 @@
 
 "appearance.balance_tab" = "Вкладка баланс";
 "appearance.amount_rounding" = "Округление суммы";
-"appearance.amount_rounding.description" = "Display balances and transaction amounts as rounded values.";
+"appearance.amount_rounding.description" = "Скрыть кнопки «Отправить», «Получить» и «Обмен» на вкладке «Баланс».";
 "appearance.hide_buttons" = "Скрыть кнопки";
-"appearance.hide_buttons.description" = "Hide the Send, Receive, and Swap buttons on the Balance tab.";
+"appearance.hide_buttons.description" = "Отображать округлённые балансы и суммы транзакций.";
 "appearance.balance_value" = "Значение баланса";
-"appearance.balance_value.description" = "Show balances highlighted either in crypto or fiat.";
+"appearance.balance_value.description" = "Показывать балансы с выделением в криптовалюте или фиате.";
 "appearance.balance_value.coin_fiat" = "Монета / Фиат";
 "appearance.balance_value.fiat_coin" = "Фиат / Монета";
 
@@ -1919,18 +1919,18 @@
 "wallet_connect.address" = "Адрес";
 "wallet_connect.network" = "Сеть";
 "wallet_connect.list.pending_requests" = "Ожидающие запросы";
-"wallet_connect.main.connect" = "Connect to %@";
-"wallet_connect.main.connected" = "Connected to %@";
-"wallet_connect.main.premium_alert.title.risky" = "Danger!";
-"wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Get Premium to keep your funds safe from unverified and phishing sites.";
-"wallet_connect.main.premium_alert.subtitle.risky" = "This site is not verified. Connecting could expose you to phishing and loss of funds.";
-"wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check failed. Connection allowed, but domain may be unsafe.";
-"wallet_connect.scam_protection" = "Scam Protection";
-"wallet_connect.scam_protection.deactivated" = "Deactivated";
+"wallet_connect.main.connect" = "Подключиться к %@";
+"wallet_connect.main.connected" = "Подключено к %@";
+"wallet_connect.main.premium_alert.title.risky" = "Опасность!";
+"wallet_connect.main.premium_alert.subtitle.deactivated" = "Защита от скамов отключена. Подключите Premium, чтобы защитить средства от непроверенных и фишинговых сайтов.";
+"wallet_connect.main.premium_alert.subtitle.risky" = "Сайт не проверен. Подключение может привести к фишингу и потере средств.";
+"wallet_connect.main.premium_alert.subtitle.not_available" = "Проверка защиты от скамов не удалась. Подключение разрешено, но домен может быть небезопасен.";
+"wallet_connect.scam_protection" = "Scam-защита";
+"wallet_connect.scam_protection.deactivated" = "Отключено";
 "wallet_connect.scam_protection.risky" = "Рискованно";
-"wallet_connect.scam_protection.secure" = "Secure";
+"wallet_connect.scam_protection.secure" = "Безопасно";
 "wallet_connect.scam_protection.not_available" = "Нет данных";
-"wallet_connect.networks" = "Networks";
+"wallet_connect.networks" = "Сети";
 
 "wallet_connect.main.no_any_supported_chains" = "Нет поддерживаемых блокчейнов!";
 "wallet_connect.main.unsupported_chains" = "Некоторые блокчейны не поддерживаются!";
@@ -1955,7 +1955,7 @@
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Сообщение для подписи";
 
-"wallet_connect.send.transaction" = "Send Transaction";
+"wallet_connect.send.transaction" = "Отправить транзакцию";
 
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Нет активных сессий";
@@ -2019,7 +2019,7 @@
 
 "onboarding.balance.create" = "Новый кошелек";
 "onboarding.balance.import" = "Импорт кошелька";
-"onboarding.balance.watch" = "Watch Wallet";
+"onboarding.balance.watch" = "Просмотр кошелька";
 
 // Manage Accounts
 
@@ -2050,22 +2050,22 @@
 "public_keys.evm_address.description" = "Позволяет отслеживать кошельки с активами на Ethereum, Binance Smart Chain и других блокчейнах на базе EVM, только для чтения.";
 "public_keys.account_extended_public_key" = "Расширенный публичный ключ аккаунта";
 "public_keys.account_extended_public_key.description" = "Позволяет осуществлять мониторинг кошельков, содержащих Bitcoin и другие криптовалюты на основе UTXO (например, Litecoin, Bitcoin Cash, Dash и т.д.), только для чтения.";
-"public_keys.monero_public_key" = "Monero Public Keys";
-"public_keys.monero_public_key.description" = "Allows read-only monitoring of wallets holding Monero (XMR) assets without granting spending access.";
+"public_keys.monero_public_key" = "Публичные ключи Monero";
+"public_keys.monero_public_key.description" = "Позволяет в режиме «только для чтения» отслеживать кошельки с активами Monero (XMR), без возможности их тратить.";
 
 // Manage Account -> Private Keys
 
 "private_keys.title" = "Приватные ключи";
 "private_keys.evm_private_key" = "Приватный ключ EVM";
-"private_keys.evm_private_key.description" = "Grants full control over assets on EVM-based networks (e.g., Ethereum, BNB Smart Chain, Polygon, Avalanche) within this wallet.";
+"private_keys.evm_private_key.description" = "Предоставляет полный контроль над активами в сетях, совместимых с EVM (например, Ethereum, BNB Smart Chain, Polygon, Avalanche) в данном кошельке.";
 "private_keys.stellar_secret_key" = "Секретный ключ Stellar";
-"private_keys.stellar_secret_key.description" = "Grants full control over assets on the Stellar network within this wallet.";
+"private_keys.stellar_secret_key.description" = "Предоставляет полный контроль над активами в сети Stellar в данном кошельке.";
 "private_keys.bip32_root_key" = "BIP32 Root ключ";
-"private_keys.bip32_root_key.description" = "The master private key of the wallet. Grants full control over all derived accounts and assets.";
+"private_keys.bip32_root_key.description" = "Мастер-ключ кошелька. Предоставляет полный контроль над всеми производными аккаунтами и активами.";
 "private_keys.account_extended_private_key" = "Расширенный приватный ключ аккаунта";
-"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO-based assets (e.g., Litecoin, Bitcoin Cash, Dash) within this wallet.";
-"private_keys.monero_private_key" = "Monero Private Keys";
-"private_keys.monero_private_key.description" = "Grants full control over Monero (XMR) assets within this wallet, including the ability to spend funds.";
+"private_keys.account_extended_private_key.description" = "Предоставляет полный контроль над Bitcoin и другими активами на основе UTXO (например, Litecoin, Bitcoin Cash, Dash) в данном кошельке.";
+"private_keys.monero_private_key" = "Приватные ключи Monero";
+"private_keys.monero_private_key.description" = "Предоставляет полный контроль над активами Monero (XMR) в данном кошельке, включая возможность тратить средства.";
 
 // Manage Account -> EVM Address
 
@@ -2106,13 +2106,13 @@
 
 // Monero Node
 
-"monero_network.node" = "Node";
+"monero_network.node" = "Узел";
 "monero_network.added" = "Добавлен";
 "monero_network.add_new" = "Добавить новый";
 "monero_network.description" = "Выберите ноду, которую приложение Unstoppable будет использовать для синхронизации кошелька(ов).";
-"monero_network.settings.title" = "Node Preferences";
-"monero_network.settings.description" = "Trusted node - When enabled, the wallet trusts the selected node and accepts its data without additional verification. \n\nOn → Transactions appear as Pending immediately after broadcast (faster sync, but lower privacy and greater reliance on the node).\n\nOff → Transactions appear only after network confirmations (slower, but safer and more private).";
-"monero_network.settings.trust" = "Trust";
+"monero_network.settings.title" = "Настройки узла";
+"monero_network.settings.description" = "Доверенный узел — при включении кошелёк доверяет выбранному узлу и принимает его данные без дополнительной проверки.\n\nВкл. → Транзакции отображаются как «Ожидающие» сразу после отправки (быстрая синхронизация, но ниже уровень приватности и большее доверие к узлу).\n\nВыкл. → Транзакции отображаются только после подтверждений сети (медленнее, но безопаснее и приватнее).";
+"monero_network.settings.trust" = "Доверять узлу";
 
 // Add RPC Source
 
@@ -2181,23 +2181,23 @@
 
 // Watch Address
 
-"watch_address.title" = "Watch Wallet";
+"watch_address.title" = "Просмотр кошелька";
 "watch_address.name" = "Название";
 "watch_address.watch" = "Смотреть";
 "watch_address.address" = "Адрес";
 "watch_address.error.not_supported" = "Формат адреса не поддерживается";
-"watch_address.error.address_required" = "Please enter an address to continue";
+"watch_address.error.address_required" = "Введите адрес, чтобы продолжить";
 "watch_address.error.non_public_key" = "Просмотр по приватному ключу не разрешён";
 "watch_address.error.not_supported_derived_type" = "Неподдерживаемый тип";
 "watch_address.watch_data.placeholder" = "Вставьте свой публичный адрес или XPUB";
 "watch_address.choose_blockchain" = "Выбрать блокчейн";
 "watch_address.choose_coin" = "Выберите токен";
-"watch_address.view_key.placeholder" = "Private View Key";
-"watch_address.view_key.error.required" = "Private View Key is required to watch Monero wallets.";
-"watch_address.view_key.error.invalid" = "Invalid View Key";
-"watch_address.birthday_height.placeholder" = "Restore Height (0000000)";
-"watch_address.birthday_height.error.invalid" = "Invalid Restore Height";
-"watch_address.monero_warning.description" = "A Monero watch-only wallet shows only incoming transactions. The displayed balance may be inaccurate.";
+"watch_address.view_key.placeholder" = "Приватный ключ просмотра";
+"watch_address.view_key.error.required" = "Для просмотра кошельков Monero требуется приватный ключ просмотра.";
+"watch_address.view_key.error.invalid" = "Недействительный ключ просмотра";
+"watch_address.birthday_height.placeholder" = "Высота восстановления (0000000)";
+"watch_address.birthday_height.error.invalid" = "Недействительная высота восстановления";
+"watch_address.monero_warning.description" = "Кошелёк Monero в режиме «только для просмотра» отображает только входящие транзакции. Отображаемый баланс может быть неточным.";
 
 // Nft Collections
 
@@ -2367,7 +2367,7 @@
 "purchases.duress_mode.description" = "Умная безопасность средств при физической угрозе";
 "purchases.duress_mode.info" = "Ваша криптовалюта. Ваша безопасность. Инновационный режим принуждения — это ваша невидимая страховка в критических ситуациях. Создавайте несколько версий вашего кошелька, каждую с уникальным PIN-кодом, обеспечивая себе секретный запасной выход при возникновении угрозы. Столкнулись с принуждением разблокировать ваш кошелек? Просто введите специальный PIN-код и получите доступ к запасному кошельку, оставляя ваши основные активы полностью защищенными и невидимыми. Ваши реальные средства в безопасности. Ваше спокойствие — бесценно.";
 
-"purchases.address_phishing" = "Scam Protection";
+"purchases.address_phishing" = "Scam-защита";
 "purchases.address_phishing.description" = "Эффективная авто-защита против скам и фишинг-атак";
 "purchases.address_phishing.info" = "Один неверный адрес, и ваша крипта потеряна навсегда. Unstoppable автоматически проверяет адреса получателей на подозрительные шаблоны и защищает от новейших фишинговых угроз, предотвращая отправку средств хакерам. Блокируйте мошеннические переводы до того, как они произойдут.";
 
