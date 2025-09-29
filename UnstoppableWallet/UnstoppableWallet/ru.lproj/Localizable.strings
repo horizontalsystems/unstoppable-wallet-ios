@@ -1955,7 +1955,7 @@
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Сообщение для подписи";
 
-"wallet_connect.send.transaction" = "Send Tranasction";
+"wallet_connect.send.transaction" = "Send Transaction";
 
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Нет активных сессий";
