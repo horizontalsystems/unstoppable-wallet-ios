@@ -29,7 +29,7 @@ struct BottomSearchBar: View {
                 .clipShape(RoundedRectangle(cornerRadius: .cornerRadius24, style: .continuous))
 
                 if cancelVisible {
-                    IconButton(icon: "close", style: .secondary, size: .small) {
+                    IconButton(icon: "close", style: .primary, size: .small) {
                         focused = false
                         text = ""
                     }
