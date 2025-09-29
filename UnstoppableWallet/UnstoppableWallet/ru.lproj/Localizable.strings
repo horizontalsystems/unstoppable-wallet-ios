@@ -322,7 +322,7 @@
 "balance.receive" = "Получить";
 "balance.deposit" = "Пополнение";
 "balance.chart" = "График";
-"balance.scan" = "Сканировать QR-код";
+"balance.scan" = "QR-код";
 "balance.copy_address" = "Скопировать адрес";
 "balance.coin_info" = "Инфо";
 "balance.hide_coin" = "Скрыть";
@@ -1707,7 +1707,7 @@
 "appearance.markets_tab" = "Вкладка рынки";
 "appearance.hide_markets" = "Скрыть рынки";
 "appearance.hide_markets.description" = "Полностью скрыть вкладку «Рынки».";
-"appearance.price_change" = "по изменению цены (%)";
+"appearance.price_change" = "Изменение цены (%)";
 "appearance.price_change.description" = "Выберите период отображения изменения цены токена.";
 "appearance.price_change.24h" = "24ч";
 "appearance.price_change.1d" = "Полночь по UTC";
