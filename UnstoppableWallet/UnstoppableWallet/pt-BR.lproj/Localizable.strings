@@ -1721,9 +1721,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "appearance.amount_rounding" = "Arredondamento de Valores";
 "appearance.amount_rounding.description" = "Exibir saldos e valores de transações como números arredondados.";
 "appearance.hide_buttons" = "Ocultar Botões";
-"appearance.hide_buttons.description" = "Hide the Send, Receive, and Swap buttons on the Balance tab.";
+"appearance.hide_buttons.description" = "Ocultar os botões Enviar, Receber e Swap na aba de Saldo.";
 "appearance.balance_value" = "Valor Patrimonial";
-"appearance.balance_value.description" = "Show balances highlighted either in crypto or fiat.";
+"appearance.balance_value.description" = "Exibir saldos destacados em cripto ou em moeda fiduciária.";
 "appearance.balance_value.coin_fiat" = "Criptomoeda/Moeda Fiat";
 "appearance.balance_value.fiat_coin" = "Moeda Fiat / Criptomoeda";
 
@@ -1919,16 +1919,16 @@ Go to Settings - > %@ and allow access to the camera.";
 "wallet_connect.list.pending_requests" = "Solicitações Pendentes";
 "wallet_connect.main.connect" = "Conectar a %@";
 "wallet_connect.main.connected" = "Conectado a %@";
-"wallet_connect.main.premium_alert.title.risky" = "Danger!";
+"wallet_connect.main.premium_alert.title.risky" = "Perigo!";
 "wallet_connect.main.premium_alert.subtitle.deactivated" = "Proteção contra golpes desativada. Obtenha o Premium para manter seus fundos seguros contra sites não verificados e de phishing.";
 "wallet_connect.main.premium_alert.subtitle.risky" = "Este site não é verificado. Conectar-se pode expô-lo a phishing e à perda de fundos.";
-"wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check failed. Connection allowed, but domain may be unsafe.";
-"wallet_connect.scam_protection" = "Scam Protection";
-"wallet_connect.scam_protection.deactivated" = "Deactivated";
+"wallet_connect.main.premium_alert.subtitle.not_available" = "Falha na verificação da Proteção contra Fraudes. Conexão permitida, mas o domínio pode não ser seguro.";
+"wallet_connect.scam_protection" = "Proteção contra Fraudes";
+"wallet_connect.scam_protection.deactivated" = "Desativada";
 "wallet_connect.scam_protection.risky" = "Arriscado";
-"wallet_connect.scam_protection.secure" = "Secure";
+"wallet_connect.scam_protection.secure" = "Seguro";
 "wallet_connect.scam_protection.not_available" = "N/A";
-"wallet_connect.networks" = "Networks";
+"wallet_connect.networks" = "Redes";
 
 "wallet_connect.main.no_any_supported_chains" = "Nenhuma cadeia suportada!";
 "wallet_connect.main.unsupported_chains" = "Algumas cadeias não são suportadas!";
@@ -1953,7 +1953,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Mensagem não assinada";
 
-"wallet_connect.send.transaction" = "Send Tranasction";
+"wallet_connect.send.transaction" = "Send Transaction";
 
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Nenhuma sessão ativa";
@@ -2109,8 +2109,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "monero_network.add_new" = "Adicionar novo";
 "monero_network.description" = "Escolha o nó que o app Unstoppable deve usar para sincronizar a(s) carteira(s).";
 "monero_network.settings.title" = "Preferências de Nós";
-"monero_network.settings.description" = "Trusted node - When enabled, the wallet trusts the selected node and accepts its data without additional verification. \n\nOn → Transactions appear as Pending immediately after broadcast (faster sync, but lower privacy and greater reliance on the node).\n\nOff → Transactions appear only after network confirmations (slower, but safer and more private).";
-"monero_network.settings.trust" = "Trust";
+"monero_network.settings.description" = "Nó confiável – Quando ativado, a carteira confia no nó selecionado e aceita seus dados sem verificação adicional.\n\nLigado → As transações aparecem como Pendentes imediatamente após o envio (sincronização mais rápida, mas com menor privacidade e maior dependência do nó).\n\nDesligado → As transações aparecem somente após as confirmações da rede (mais lento, mas mais seguro e com maior privacidade).";
+"monero_network.settings.trust" = "Confiar";
 
 // Add RPC Source
 
@@ -2183,18 +2183,18 @@ Go to Settings - > %@ and allow access to the camera.";
 "watch_address.watch" = "Ver";
 "watch_address.address" = "Endereço";
 "watch_address.error.not_supported" = "Formato de endereço não suportado";
-"watch_address.error.address_required" = "Please enter an address to continue";
+"watch_address.error.address_required" = "Insira um endereço para continuar";
 "watch_address.error.non_public_key" = "Não é permitido observar por chave privada";
 "watch_address.error.not_supported_derived_type" = "Tipo derivado não suportado";
 "watch_address.watch_data.placeholder" = "Cole seu endereço público ou chave XPUB";
 "watch_address.choose_blockchain" = "Escolha Blockchain";
 "watch_address.choose_coin" = "Escolher Moedas";
-"watch_address.view_key.placeholder" = "Private View Key";
-"watch_address.view_key.error.required" = "Private View Key is required to watch Monero wallets.";
-"watch_address.view_key.error.invalid" = "Invalid View Key";
-"watch_address.birthday_height.placeholder" = "Restore Height (0000000)";
-"watch_address.birthday_height.error.invalid" = "Invalid Restore Height";
-"watch_address.monero_warning.description" = "A Monero watch-only wallet shows only incoming transactions. The displayed balance may be inaccurate.";
+"watch_address.view_key.placeholder" = "Chave de Visualização Privada";
+"watch_address.view_key.error.required" = "A Chave de Visualização Privada é necessária para visualizar carteiras Monero.";
+"watch_address.view_key.error.invalid" = "Chave de Visualização Inválida";
+"watch_address.birthday_height.placeholder" = "Altura de Restauração (0000000)";
+"watch_address.birthday_height.error.invalid" = "Altura de Restauração Inválida";
+"watch_address.monero_warning.description" = "Uma carteira Monero somente para visualização exibe apenas transações recebidas. O saldo exibido pode estar incorreto.";
 
 // Nft Collections
 
@@ -2364,7 +2364,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "purchases.duress_mode.description" = "Mantenha-se Seguro Onde Quer Que Vá";
 "purchases.duress_mode.info" = "Sua cripto. Sua segurança. O Modo Coação permite que você crie várias configurações de carteira alternativas, cada uma com um PIN separado, fornecendo uma rota de fuga oculta em situações de alto risco. Se for forçado a desbloquear sua carteira, basta usar o PIN de coação (alternativo) para acessar uma carteira secundária sem ativos críticos expostos. Seus fundos reais permanecem ocultos. Sua segurança permanece intacta.";
 
-"purchases.address_phishing" = "Scam Protection";
+"purchases.address_phishing" = "Proteção contra Fraudes";
 "purchases.address_phishing.description" = "Mantenha-se Seguro Sem Complicações";
 "purchases.address_phishing.info" = "Um endereço errado e sua cripto se vai para sempre. A Unstoppable verifica automaticamente os endereços dos destinatários em busca de padrões suspeitos e defende contra as últimas ameaças de phishing, impedindo que você envie fundos para um hacker. Bloqueie transferências fraudulentas antes que elas aconteçam.";
 
