@@ -61,7 +61,7 @@
 "alert.try_again" = "Tentar novamente";
 "alert.disconnecting" = "Desconectando";
 "alert.disconnected" = "Desconectado";
-"alert.connected" = "Connected";
+"alert.connected" = "Conectado";
 "alert.enabling" = "Ativando";
 "alert.enabled_coins" = "Moedas a mais ativadas %@";
 "alert.sending" = "Enviando";
@@ -79,8 +79,8 @@
 "alert.unable_to_replace" = "Incapaz de substituir";
 "alert.already_replaced" = "Já substituído";
 
-"alert_card.title.critical" = "Warning!";
-"alert_card.title.caution" = "Attention!";
+"alert_card.title.critical" = "Aviso!";
+"alert_card.title.caution" = "Atenção!";
 
 "no_results_found" = "Nenhum resultado encontrado";
 "action.loading" = "carregando...";
@@ -155,7 +155,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "restore.warning.non_recommended.description" = "Esta carteira parece usar um caractere não padrão em sua lista de palavras secretas e/ou uma frase secreta.  Se você não ver um saldo ou transações, leia abaixo para obter detalhes.\n\nCLIQUE PARA OBTER MAIS INFORMAÇÕES";
 "restore.error.non_standard.description" = "Esta é uma carteira não padrão. \n\nCLIQUE PARA OBTER MAIS INFORMAÇÕES";
 
-"restore.error.non_standard.link" = "Click to get more info";
+"restore.error.non_standard.link" = "Clique para mais informações";
 
 // Restore Type
 
@@ -222,12 +222,12 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Monero Key
 
-"monero_public_key.title" = "Monero Public Keys";
-"monero_private_key.title" = "Monero Private Keys";
+"monero_public_key.title" = "Chaves Públicas do Monero";
+"monero_private_key.title" = "Chaves Privadas do Monero";
 "monero_private_key.tap_to_show" = "Give it a tap, folks, and reveal that private key. It's like finding the secret to success!";
-"monero.key_types" = "Type";
-"monero.key_types.spend" = "Spend";
-"monero.key_types.view" = "View";
+"monero.key_types" = "Tipo";
+"monero.key_types.spend" = "Gastar";
+"monero.key_types.view" = "Visualizar";
 
 // Extended Key
 
@@ -321,9 +321,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.deposit" = "Receber";
 "balance.chart" = "Gráfico";
 "balance.scan" = "Escanear QR Code";
-"balance.copy_address" = "Copy Address";
-"balance.coin_info" = "Coin Info";
-"balance.hide_coin" = "Hide Coin";
+"balance.copy_address" = "Copiar Endereço";
+"balance.coin_info" = "Informações da Moeda";
+"balance.hide_coin" = "Ocultar Moeda";
 "balance.rate_per_coin" = "%@ por %@";
 "balance.syncing" = "Sincronizando...";
 "balance.searching" = "Procurando transações...";
@@ -333,7 +333,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.downloading_blocks" = "Baixando Blocos";
 "balance.scanning_blocks" = "Verificando Blocos";
 "balance.enhancing_transactions" = "Aprimorando Transações";
-"balance.watch_wallet" = "Watch Wallet";
+"balance.watch_wallet" = "Monitorar Carteira";
 
 "balance.searching.count" = "%@ tx";
 "balance.syncing_percent" = "Sincronizando... %@";
@@ -366,9 +366,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.token.transparent" = "Transparente";
 "balance.token.transparent.info.title" = "Quantia transparente";
 "balance.token.transparent.info.description" = "O saldo transparente não pode ser utilizado nesta carteira no momento. No entanto, esses fundos podem ser gastos em outras carteiras que suportam endereços t-address";
-"balance.token.shield" = "Shield";
+"balance.token.shield" = "Blindar";
 
-"balance.token.receive_address" = "Receive Address";
+"balance.token.receive_address" = "Endereço de Recebimento";
 "balance.token.staked" = "Investido";
 "balance.token.staked.info.title" = "Título Implantado";
 "balance.token.staked.info.description" = "Texto com Descrição Implantada";
@@ -430,9 +430,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "receive_used_addresses.external" = "Endereços de Recebimento";
 "receive_used_addresses.change" = "Endereço de troco";
 
-"deposit.subaddresses.title" = "Subaddresses";
-"deposit.subaddresses.description" = "Use subaddresses to manage multiple unique addresses in one wallet - easier to organize, safer for your privacy.";
-"deposit.subaddresses.transactions_count" = "Transactions: %@";
+"deposit.subaddresses.title" = "Subendereços";
+"deposit.subaddresses.description" = "Use subendereços para gerenciar vários endereços únicos em uma única carteira — mais fácil de organizar e mais seguro para a sua privacidade.";
+"deposit.subaddresses.transactions_count" = "Transação %@";
 
 "deposit.zcash.restore.description" = "Já possui alguma moeda ZEC?";
 "deposit.zcash.restore.already_own" = "Sim, eu já possuo";
@@ -468,7 +468,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.network_fee" = "Taxa";
 "send.estimated_fee" = "Taxa estimada";
 "send.max_fee" = "Taxa máxima";
-"send.max_fee.info" = "The maximum fee a user may pay to send a transaction on the network.";
+"send.max_fee.info" = "A taxa máxima que um usuário pode pagar para enviar uma transação na rede.";
 "send.duration.hours" = "%d h.";
 "send.duration.minutes" = "%d min.";
 "send.available_balance" = "Saldo Disponível";
@@ -521,8 +521,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.confirmation.status" = "Status";
 "send.confirmation.status.failed" = "Falhou";
 "send.confirmation.send_to_own" = "A transação será enviada para o próprio endereço";
-"send.confirmation.operation" = "Operation";
-"send.confirmation.transaction_xdr" = "Transaction XDR";
+"send.confirmation.operation" = "Operação";
+"send.confirmation.transaction_xdr" = "Transação XDR";
 
 "send.confirmation.sync_failed" = "Falha na Sincronização";
 "send.confirmation.invalid_data" = "Dados Inválidos";
@@ -550,8 +550,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.address_error.own_address" = "Não é permitido enviar %@ para seu próprio endereço. Insira um endereço de destinatário diferente.";
 "send.amount_error.maximum_amount" = "Valor máximo: %@";
 "send.amount_error.minimum_amount" = "Valor mínimo: %@";
-"send.amount_error.minimum_amount.title" = "Minimum amount";
-"send.amount_error.minimum_amount.description" = "Minimum amount must be %@";
+"send.amount_error.minimum_amount.title" = "Valor Mínimo";
+"send.amount_error.minimum_amount.description" = "O valor mínimo deve ser %@";
 "send.amount_error.min_required_balance" = "Restante min. necessário %@";
 "send.amount_warning.coin_needed_for_fee" = "Considere deixar algum %@ no saldo para poder pagar transações futuras.";
 "send.token.insufficient_fee_alert" = "Taxas de transação para %@ (%@) pagas em %@. Você precisa de %@.";
@@ -1333,7 +1333,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "chart_indicators.settings.period.error" = "O período não pode ser maior que %d";
 
 "chart_indicators.settings.ma.description" = "O EMA, SMA e WMA são médias móveis usadas em análise técnica:\n\nEMA enfatiza preços recentes para reações mais rápidas.\nSMA indica dados de preços médios para uma visão geral de tendência.\nSaldos WMA e redução de ruído por ponderação linearmente de dados recentes";
-"chart_indicators.settings.ma.type_title" = "Type";
+"chart_indicators.settings.ma.type_title" = "Tipo";
 "chart_indicators.settings.ma.period_title" = "Período";
 
 "chart_indicators.settings.rsi.title" = "RSI";
@@ -1353,7 +1353,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "transactions.title" = "Transações";
 "transactions.tab_bar_item" = "Transações";
 "transactions.filter_all" = "Todos";
-"transactions.syncing_placeholder" = "Please wait for the sync to finish.";
+"transactions.syncing_placeholder" = "Por favor, aguarde a conclusão da sincronização.";
 "transactions.empty_text" = "Você ainda não tem nenhuma transação pendente ou anterior";
 "transactions.pending" = "Pendente";
 "transactions.processing" = "Processando";
@@ -1366,7 +1366,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "transactions.mint" = "Mint";
 "transactions.approve" = "Aprovado";
 "transactions.swap" = "Trocado";
-"transactions.shield" = "Shield";
+"transactions.shield" = "Blindar";
 "transactions.unshield" = "Unshield";
 "transactions.transfer" = "Transferir";
 "transactions.contract_call" = "Chamada de Contrato";
@@ -1526,8 +1526,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "backup_app.backup_list.other.watch_account.title" = "Ver Endereço";
 "backup_app.backup_list.other.watchlist.title" = "Lista de observação";
 "backup_app.backup_list.other.contacts.title" = "Contatos";
-"backup_app.backup_list.other.custom_evm_sync_sources.title" = "Custom RPC";
-"backup_app.backup_list.other.custom_monero_nodes.title" = "Custom Monero Nodes";
+"backup_app.backup_list.other.custom_evm_sync_sources.title" = "RPC Personalizado";
+"backup_app.backup_list.other.custom_monero_nodes.title" = "Nós Monero Personalizados";
 "backup_app.backup_list.other.app_settings.title" = "Configurações do Aplicativo";
 "backup_app.backup_list.other.app_settings.description" = "Linguagem, Moeda, Aparência ...";
 
@@ -1690,8 +1690,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "settings.privacy.description" = "%@ não coleta dados pessoais que exponham suas informações privadas, como saldos de moedas ou endereços. Embora coletemos algumas estatísticas de uso da interface do usuário, é exclusivamente para entender nossa base de usuários e tendências de uso do aplicativo. Isso pode ser desativado se você desejar.";
 "settings.privacy.allow" = "Compartilhar Dados de UI";
 "settings.privacy.allow.description" = "Esta configuração permite que você desative a análise de UI/UX e garanta total confidencialidade.";
-"settings.privacy.nym" = "Get Nym VPN";
-"settings.privacy.nym.description" = "Get the best deal on Nym VPN with Unstoppable — enjoy stronger privacy at a better price.";
+"settings.privacy.nym" = "Obter Nym VPN";
+"settings.privacy.nym.description" = "Garanta a melhor oferta no Nym VPN com o Unstoppable — aproveite mais privacidade por um preço melhor.";
 
 // Settings -> Appearance
 
@@ -1704,14 +1704,14 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "appearance.markets_tab" = "Guia de Mercados";
 "appearance.hide_markets" = "Esconder Mercados";
-"appearance.hide_markets.description" = "Hide the Markets tab completely.";
+"appearance.hide_markets.description" = "Ocultar completamente a aba de Mercados.";
 "appearance.price_change" = "Mudança de Preço";
-"appearance.price_change.description" = "Select the time period for displaying token price changes.";
+"appearance.price_change.description" = "Selecione o período de tempo para exibir as variações de preço dos tokens.";
 "appearance.price_change.24h" = "24h";
 "appearance.price_change.1d" = "Meia-noite UTC";
 
 "appearance.launch_screen" = "Tela Inicial";
-"appearance.launch_screen.description" = "Choose the default screen the app opens on.";
+"appearance.launch_screen.description" = "Escolha a tela padrão que o app deve abrir.";
 "appearance.launch_screen.auto" = "Automático";
 "appearance.launch_screen.balance" = "Saldo";
 "appearance.launch_screen.market_overview" = "Visão geral do mercado";
@@ -1719,7 +1719,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "appearance.balance_tab" = "Aba de Saldo";
 "appearance.amount_rounding" = "Arredondamento de Valores";
-"appearance.amount_rounding.description" = "Display balances and transaction amounts as rounded values.";
+"appearance.amount_rounding.description" = "Exibir saldos e valores de transações como números arredondados.";
 "appearance.hide_buttons" = "Ocultar Botões";
 "appearance.hide_buttons.description" = "Hide the Send, Receive, and Swap buttons on the Balance tab.";
 "appearance.balance_value" = "Valor Patrimonial";
@@ -1731,7 +1731,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Settings -> Subsription
 
-"subscription.premium.label" = "Premium";
+"subscription.premium.label" = "Prêmio";
 "subscription.title" = "Assinatura";
 "subscription.get" = "Obter Premium";
 "subscription.restore" = "Restaurar Compra";
@@ -1917,11 +1917,11 @@ Go to Settings - > %@ and allow access to the camera.";
 "wallet_connect.address" = "Endereço";
 "wallet_connect.network" = "Rede";
 "wallet_connect.list.pending_requests" = "Solicitações Pendentes";
-"wallet_connect.main.connect" = "Connect to %@";
-"wallet_connect.main.connected" = "Connected to %@";
+"wallet_connect.main.connect" = "Conectar a %@";
+"wallet_connect.main.connected" = "Conectado a %@";
 "wallet_connect.main.premium_alert.title.risky" = "Danger!";
-"wallet_connect.main.premium_alert.subtitle.deactivated" = "Scam Protection is deactivated. Get Premium to keep your funds safe from unverified and phishing sites.";
-"wallet_connect.main.premium_alert.subtitle.risky" = "This site is not verified. Connecting could expose you to phishing and loss of funds.";
+"wallet_connect.main.premium_alert.subtitle.deactivated" = "Proteção contra golpes desativada. Obtenha o Premium para manter seus fundos seguros contra sites não verificados e de phishing.";
+"wallet_connect.main.premium_alert.subtitle.risky" = "Este site não é verificado. Conectar-se pode expô-lo a phishing e à perda de fundos.";
 "wallet_connect.main.premium_alert.subtitle.not_available" = "Scam Protection check failed. Connection allowed, but domain may be unsafe.";
 "wallet_connect.scam_protection" = "Scam Protection";
 "wallet_connect.scam_protection.deactivated" = "Deactivated";
@@ -2017,7 +2017,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "onboarding.balance.create" = "Nova Carteira";
 "onboarding.balance.import" = "Importar carteira";
-"onboarding.balance.watch" = "Watch Wallet";
+"onboarding.balance.watch" = "Monitorar Carteira";
 
 // Manage Accounts
 
@@ -2048,22 +2048,22 @@ Go to Settings - > %@ and allow access to the camera.";
 "public_keys.evm_address.description" = "Permite o monitoramento somente leitura de carteiras mantendo ativos na Ethereum, na Binance Smart Chain e em outras blockchains baseadas em EVM.";
 "public_keys.account_extended_public_key" = "Chave Pública Estendida da Conta";
 "public_keys.account_extended_public_key.description" = "Permite monitoramento somente leitura das carteiras segurando Bitcoin e outras cripto baseadas em UTXO (ou seja, Litecoin, Bitcoin Cash, Dash etc.).";
-"public_keys.monero_public_key" = "Monero Public Keys";
-"public_keys.monero_public_key.description" = "Allows read-only monitoring of wallets holding Monero (XMR) assets without granting spending access.";
+"public_keys.monero_public_key" = "Chaves Públicas do Monero";
+"public_keys.monero_public_key.description" = "Permite o monitoramento em modo somente leitura de carteiras com ativos Monero (XMR), sem conceder acesso para gastos.";
 
 // Manage Account -> Private Keys
 
 "private_keys.title" = "Chave Privada";
 "private_keys.evm_private_key" = "Chave Privada EVM";
-"private_keys.evm_private_key.description" = "Grants full control over assets on EVM-based networks (e.g., Ethereum, BNB Smart Chain, Polygon, Avalanche) within this wallet.";
+"private_keys.evm_private_key.description" = "Concede controle total sobre os ativos em redes baseadas em EVM (ex.: Ethereum, BNB Smart Chain, Polygon, Avalanche) dentro desta carteira.";
 "private_keys.stellar_secret_key" = "Chave Secreta Stellar";
-"private_keys.stellar_secret_key.description" = "Grants full control over assets on the Stellar network within this wallet.";
+"private_keys.stellar_secret_key.description" = "Concede controle total sobre os ativos na rede Stellar dentro desta carteira.";
 "private_keys.bip32_root_key" = "Chave Raiz BIP32";
-"private_keys.bip32_root_key.description" = "The master private key of the wallet. Grants full control over all derived accounts and assets.";
+"private_keys.bip32_root_key.description" = "A chave privada mestre da carteira. Concede controle total sobre todas as contas derivadas e seus ativos.";
 "private_keys.account_extended_private_key" = "Chave Privada Estendida da Conta";
-"private_keys.account_extended_private_key.description" = "Grants full control over Bitcoin and other UTXO-based assets (e.g., Litecoin, Bitcoin Cash, Dash) within this wallet.";
-"private_keys.monero_private_key" = "Monero Private Keys";
-"private_keys.monero_private_key.description" = "Grants full control over Monero (XMR) assets within this wallet, including the ability to spend funds.";
+"private_keys.account_extended_private_key.description" = "Concede controle total sobre o Bitcoin e outros ativos baseados em UTXO (ex.: Litecoin, Bitcoin Cash, Dash) dentro desta carteira.";
+"private_keys.monero_private_key" = "Chaves Privadas do Monero";
+"private_keys.monero_private_key.description" = "Concede controle total sobre os ativos Monero (XMR) dentro desta carteira, incluindo a capacidade de gastar fundos.";
 
 // Manage Account -> EVM Address
 
@@ -2108,7 +2108,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "monero_network.added" = "Adicionado";
 "monero_network.add_new" = "Adicionar novo";
 "monero_network.description" = "Escolha o nó que o app Unstoppable deve usar para sincronizar a(s) carteira(s).";
-"monero_network.settings.title" = "Node Preferences";
+"monero_network.settings.title" = "Preferências de Nós";
 "monero_network.settings.description" = "Trusted node - When enabled, the wallet trusts the selected node and accepts its data without additional verification. \n\nOn → Transactions appear as Pending immediately after broadcast (faster sync, but lower privacy and greater reliance on the node).\n\nOff → Transactions appear only after network confirmations (slower, but safer and more private).";
 "monero_network.settings.trust" = "Trust";
 
@@ -2178,7 +2178,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Watch Address
 
-"watch_address.title" = "Watch Wallet";
+"watch_address.title" = "Monitorar Carteira";
 "watch_address.name" = "Nome";
 "watch_address.watch" = "Ver";
 "watch_address.address" = "Endereço";
@@ -2331,15 +2331,15 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Purchases
 
-"premium.cell.title" = "Premium";
+"premium.cell.title" = "Prêmio";
 "premium.cell.description" = "Melhore sua experiência com os recursos do %@!";
-"premium.cell.description.key" = "Premium";
+"premium.cell.description.key" = "Prêmio";
 "premium.cell.try" = "Teste GRÁTIS";
 
 "mini_app.cell.title" = "MiniApp";
 "mini_app.cell.description" = "Passe nos testes, conclua tarefas e ganhe tokens!";
 
-"purchases.title" = "Premium";
+"purchases.title" = "Prêmio";
 "purchases.description" = "Escolha o plano";
 "purchases.type.pro" = "Pro";
 "purchases.type.vip" = "Vip";
@@ -2385,7 +2385,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "purchases.button.try" = "Teste GRÁTIS";
 "purchases.button.activated" = "Ativado";
-"purchases.button.upgrade" = "Upgrade";
+"purchases.button.upgrade" = "Atualizar";
 
 "purchase.period.title" = "Selecionar Assinatura";
 "purchase.period.annually" = "Anualmente";
@@ -2413,7 +2413,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "purchases.promocode.button.invalid" = "Código Promocional Inválido";
 "purchases.promocode.button.already_used" = "Código Promocional Já Utilizado";
 
-"purchases.successful_subscription.title" = "Premium";
+"purchases.successful_subscription.title" = "Prêmio";
 "purchases.successful_subscription.description" = "Obrigado por sua assinatura!";
 "purchases.successful_subscription.subscribed" = "Aproveite o poder total do aplicativo.";
 "purchases.successful_subscription.button.go_app" = "Ir ao App";
