@@ -1951,7 +1951,7 @@
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Message to sign";
 
-"wallet_connect.send.transaction" = "Send Tranasction";
+"wallet_connect.send.transaction" = "Send Transaction";
 
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "No active sessions";

@@ -31,7 +31,7 @@ struct WalletTokenTopView: View {
                 }
                 .padding(.bottom, .margin24)
             } else {
-                VStack(spacing: 0) {
+                VStack(spacing: .margin16) {
                     Button(action: {
                         viewModel.onTapReceive()
                     }) {
@@ -40,9 +40,9 @@ struct WalletTokenTopView: View {
 
                     if case .moneroWatchAccount = viewModel.wallet.account.type {
                         AlertCardView(.init(text: "watch_address.monero_warning.description".localized))
-                            .padding(.vertical, .margin16)
                     }
                 }
+                .padding(.vertical, .margin16)
             }
         }
         .padding(.top, .margin24)
