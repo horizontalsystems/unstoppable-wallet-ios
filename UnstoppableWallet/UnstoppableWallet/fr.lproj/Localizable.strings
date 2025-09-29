@@ -1953,7 +1953,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "Message à signer";
 
-"wallet_connect.send.transaction" = "Send Transaction";
+"wallet_connect.send.transaction" = "Envoyer la transaction";
 
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Aucune session active";

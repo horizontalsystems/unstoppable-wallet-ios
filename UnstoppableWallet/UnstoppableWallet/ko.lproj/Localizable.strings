@@ -1954,7 +1954,7 @@
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "서명할 메시지";
 
-"wallet_connect.send.transaction" = "Send Transaction";
+"wallet_connect.send.transaction" = "트랜잭션 전송";
 
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "활성 세션 없음";
