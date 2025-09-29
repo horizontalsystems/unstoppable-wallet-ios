@@ -102,7 +102,7 @@
 
 "sync_error" = "Ошибка синхронизации. Повторите попытку.";
 
-"number.thousand" = "%@K";
+"number.thousand" = "%@ тыс.";
 "number.million" = "%@M";
 "number.billion" = "%@B";
 "number.trillion" = "%@T";
