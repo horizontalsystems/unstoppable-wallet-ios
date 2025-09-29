@@ -1953,7 +1953,7 @@
 "wallet_connect.sign.dapp_name" = "dApp";
 "wallet_connect.sign.message" = "待签名消息";
 
-"wallet_connect.send.transaction" = "发送交易";
+"wallet_connect.send.transaction" = "Send Transaction";
 
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "没有活跃会话";
