@@ -3,6 +3,7 @@ import HsCryptoKit
 import HsToolKit
 import MarketKit
 import TronKit
+import Alamofire
 
 class Trc20AddressValidator {
     private static let tronGridUrl = "https://api.trongrid.io/wallet/triggerconstantcontract"
@@ -22,17 +23,23 @@ class Trc20AddressValidator {
 
     private func checkBlacklistedStatus(address: TronKit.Address, contract: TronKit.Address) async throws -> Bool {
         let parameters: [String: Any] = [
-            "owner_address": address.hex,
-            "contract_address": contract.hex,
-            "function_selector": "$methodName(address)",
+            "owner_address": address.base58,
+            "contract_address": contract.base58,
+            "function_selector": "isBlackListed(address)",
             "parameter": encodeAddressForContract(address.hex),
             "visible": true,
         ]
 
         do {
-            let result = try await networkManager.fetchJson(url: Self.tronGridUrl, parameters: parameters)
+            let result = try await networkManager.fetchJson(url: Self.tronGridUrl, method: .post, parameters: parameters, encoding: JSONEncoding.default)
             print(result)
 
+            if let jsonDict = result as? [String: Any],
+               let constantResult = jsonDict["constant_result"] as? [String],
+               let firstResult = constantResult.first {
+                return !firstResult.hasSuffix("01")
+            }
+                
             return false
         } catch {
             print("Error: \(error)")
@@ -40,10 +47,9 @@ class Trc20AddressValidator {
         }
     }
 
-    private func encodeAddressForContract(_ base58Address: String) -> String {
+    private func encodeAddressForContract(_ hexAddress: String) -> String {
         // Convert base58 to hex address for ABI encoding
         // TRON addresses when converted to hex start with 41, we need to remove it and pad to 32 bytes
-        let hexAddress = Base58.decode(base58Address).hs.hex
         let addressWithout41 = hexAddress.stripping(prefix: "41")
         return "000000000000000000000000\(addressWithout41)"
     }
