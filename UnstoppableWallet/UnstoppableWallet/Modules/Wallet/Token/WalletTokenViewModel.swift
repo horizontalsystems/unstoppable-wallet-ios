@@ -55,6 +55,13 @@ class WalletTokenViewModel: ObservableObject {
             .sink { [weak self] in self?.isReachable = $0 }
             .store(in: &cancellables)
     }
+
+    func refresh() async {
+        walletService.refresh()
+        coinPriceService.refresh()
+
+        try? await Task.sleep(nanoseconds: 1_000_000_000)
+    }
 }
 
 extension WalletTokenViewModel: IWalletServiceDelegate {

@@ -122,9 +122,12 @@ extension Coordinator {
         }
     }
 
-    func presentBalanceError(wallet: Wallet, state: AdapterState) {
+    func presentBalanceError(wallet: Wallet, state: AdapterState, showNotReachable: Bool = true) {
         if !Core.shared.reachabilityManager.isReachable {
-            HudHelper.instance.show(banner: .noInternet)
+            if showNotReachable {
+                HudHelper.instance.show(banner: .noInternet)
+            }
+
             return
         }
 

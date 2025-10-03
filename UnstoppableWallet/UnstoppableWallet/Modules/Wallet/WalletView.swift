@@ -162,7 +162,7 @@ struct WalletView: View {
                 let addressProvider = ReceiveAddressModule.addressProvider(wallet: item.wallet)
                 if let address = addressProvider.address {
                     Button {
-                        CopyHelper.copyAndNotify(value: address)
+                        copyAddressIfBackedUp(address: address)
                     } label: {
                         Text("balance.copy_address".localized)
                         Text(address.shortened)
@@ -194,6 +194,14 @@ struct WalletView: View {
             }
         }
         .tint(.themeLeah)
+    }
+
+    private func copyAddressIfBackedUp(address: String) {
+        guard viewModel.verifyBackedUp() else {
+            return
+        }
+
+        CopyHelper.copyAndNotify(value: address)
     }
 
     @ViewBuilder private func headerView(account _: Account) -> some View {
@@ -262,13 +270,16 @@ struct WalletView: View {
 
         var colorStyle: ColorStyle = .primary
         var dimmed = false
-        switch viewModel.totalItem.state {
-        case .synced:
-            ()
-        case .expired:
-            colorStyle = .secondary
-        case .syncing:
-            dimmed = true
+
+        if viewModel.isReachable {
+            switch viewModel.totalItem.state {
+            case .synced:
+                ()
+            case .expired:
+                colorStyle = .secondary
+            case .syncing:
+                dimmed = true
+            }
         }
 
         return ComponentText(
@@ -283,9 +294,14 @@ struct WalletView: View {
             return " "
         }
 
+        var dimmed = false
+        if viewModel.totalItem.state == .syncing {
+            dimmed = true
+        }
+
         return ComponentText(
             text: viewModel.totalItem.convertedValue.flatMap { $0.formattedWith(rounding: viewModel.amountRounding) }.map { "≈ \($0)" } ?? String.placeholder,
-            dimmed: viewModel.totalItem.convertedValueExpired
+            dimmed: dimmed
         )
     }
 }

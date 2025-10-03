@@ -1,9 +1,9 @@
+import Alamofire
 import Foundation
 import HsCryptoKit
 import HsToolKit
 import MarketKit
 import TronKit
-import Alamofire
 
 class Trc20AddressValidator {
     private static let tronGridUrl = "https://api.trongrid.io/wallet/triggerconstantcontract"
@@ -36,10 +36,11 @@ class Trc20AddressValidator {
 
             if let jsonDict = result as? [String: Any],
                let constantResult = jsonDict["constant_result"] as? [String],
-               let firstResult = constantResult.first {
+               let firstResult = constantResult.first
+            {
                 return !firstResult.hasSuffix("01")
             }
-                
+
             return false
         } catch {
             print("Error: \(error)")
