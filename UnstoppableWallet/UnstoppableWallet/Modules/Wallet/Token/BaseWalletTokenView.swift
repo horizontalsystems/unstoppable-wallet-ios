@@ -16,11 +16,14 @@ struct BaseWalletTokenView<Content: View>: View {
         ThemeView(style: .list) {
             content(viewModel, transactionsViewModel)
         }
-        // .onAppear {
-        //     if viewModel.state.isNotSynced {
-        //         Coordinator.shared.presentBalanceError(wallet: viewModel.wallet, state: viewModel.state)
-        //     }
-        // }
+        .refreshable {
+            await viewModel.refresh()
+        }
+        .onAppear {
+            if viewModel.state.isNotSynced {
+                Coordinator.shared.presentBalanceError(wallet: viewModel.wallet, state: viewModel.state, showNotReachable: false)
+            }
+        }
         .navigationTitle(viewModel.title)
         .toolbarRole(.editor)
         .toolbar {

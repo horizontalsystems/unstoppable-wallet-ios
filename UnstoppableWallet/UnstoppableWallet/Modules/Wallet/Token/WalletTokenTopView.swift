@@ -90,7 +90,9 @@ struct WalletTokenTopView: View {
         case .connecting, .syncing, .customSyncing:
             dimmed = true
         case .notSynced, .stopped:
-            colorStyle = .secondary
+            if viewModel.isReachable {
+                colorStyle = .secondary
+            }
         }
 
         if let formatted = ValueFormatter.instance.formatFull(value: viewModel.balanceData.total, decimalCount: viewModel.wallet.decimals, symbol: viewModel.wallet.coin.code) {
@@ -114,7 +116,7 @@ struct WalletTokenTopView: View {
                 text += " - " + "balance.synced_through".localized(syncedUntil)
             }
 
-            return text
+            return ComponentText(text: text, dimmed: true)
         case let .customSyncing(main, secondary, _):
             return [main, secondary].compactMap { $0 }.joined(separator: " - ")
         case .stopped:
@@ -132,7 +134,7 @@ struct WalletTokenTopView: View {
             let currencyValue = CurrencyValue(currency: price.currency, value: viewModel.balanceData.total * price.value)
 
             if let formatted = ValueFormatter.instance.formatFull(currencyValue: currencyValue) {
-                return ComponentText(text: formatted, dimmed: viewModel.state != .synced || priceItem.expired)
+                return ComponentText(text: formatted, dimmed: priceItem.expired)
             }
 
             return "----"
