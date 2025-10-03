@@ -7,8 +7,8 @@ extension Token {
         switch type {
         case .native:
             switch blockchainType {
-            case .ethereum, .binanceSmartChain, .tron, .ton: return nil
-            default: return blockchain.name
+            case .optimism, .arbitrumOne, .base, .zkSync: return blockchain.name
+            default: return nil
             }
         case .eip20:
             switch blockchainType {
