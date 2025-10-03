@@ -106,6 +106,19 @@ extension WalletViewModel {
         [.scan, .receive, .send] + (AppConfig.swapEnabled ? [.swap] : [])
     }
 
+    func verifyBackedUp() -> Bool {
+        guard let account else {
+            return false
+        }
+
+        let backedUp = account.backedUp || cloudBackupManager.backedUp(uniqueId: account.type.uniqueId())
+        if !backedUp {
+            showBackupBottomSheet()
+        }
+
+        return backedUp
+    }
+
     func onAppear() {
         rateAppManager.onBalancePageAppear()
     }
@@ -122,27 +135,35 @@ extension WalletViewModel {
         balanceConversionManager.toggleConversionToken()
     }
 
+    func showBackupBottomSheet() {
+        guard let account else {
+            return
+        }
+
+        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+            BackupRequiredView.prompt(
+                account: account,
+                description: "receive_alert.any_coins.not_backed_up_description".localized(account.name),
+                isPresented: isPresented
+            )
+        }
+
+        stat(page: .balance, event: .open(page: .backupRequired))
+    }
+
     func onTapReceive() {
         guard let account else {
             return
         }
 
-        if account.backedUp || cloudBackupManager.backedUp(uniqueId: account.type.uniqueId()) {
-            Coordinator.shared.present { _ in
-                ReceiveView(account: account).ignoresSafeArea()
-            }
-            stat(page: .balance, event: .open(page: .receiveTokenList))
-        } else {
-            Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                BackupRequiredView.prompt(
-                    account: account,
-                    description: "receive_alert.any_coins.not_backed_up_description".localized(account.name),
-                    isPresented: isPresented
-                )
-            }
-
-            stat(page: .balance, event: .open(page: .backupRequired))
+        guard verifyBackedUp() else {
+            return
         }
+
+        Coordinator.shared.present { _ in
+            ReceiveView(account: account).ignoresSafeArea()
+        }
+        stat(page: .balance, event: .open(page: .receiveTokenList))
     }
 
     func onDisable(wallet: Wallet) {
