@@ -347,7 +347,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance_error.change_source" = "Cambiar Origen";
 "balance_error.sync_error" = "Error de sincronización";
 "lost_accounts.warning_title" = "Error de la cadena de Claves del iOs ";
-"lost_accounts.warning_message" = "Los datos encriptados que contienen tu cartera fueron invalidados recientemente debido a que se cambió la pantalla de bloqueo de tu iOS";
+"lost_accounts.warning_message" = "Debido a un error del llavero de iOS, no pudimos acceder a las siguientes wallets:\n\n%@\n\nReiniciar la aplicación normalmente soluciona el problema. Si el inconveniente persiste, puedes desvincular y restaurar estas wallets.";
 
 // Token Balance Page
 "balance.token.locked" = "Bloqueado";

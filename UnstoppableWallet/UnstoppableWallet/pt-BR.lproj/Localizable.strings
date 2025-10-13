@@ -347,7 +347,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance_error.change_source" = "Mudar a fonte";
 "balance_error.sync_error" = "Erro de Sincronização";
 "lost_accounts.warning_title" = "Erro de Keychain do iOS";
-"lost_accounts.warning_message" = "Os dados criptografados que continham sua carteira foram invalidados recentemente porque a tela de bloqueio do iOS foi alterada";
+"lost_accounts.warning_message" = "Devido a um erro no Keychain do iOS, não foi possível acessar as seguintes carteiras:\n\n%@\n\nReiniciar o app geralmente resolve o problema. Se o erro persistir, você pode desvincular e restaurar essas carteiras.";
 
 // Token Balance Page
 "balance.token.locked" = "Bloqueado";

@@ -347,7 +347,7 @@
 "balance_error.change_source" = "更改源";
 "balance_error.sync_error" = "同步出错";
 "lost_accounts.warning_title" = "iOS Keychain 错误";
-"lost_accounts.warning_message" = "因为您的 iOS 锁定屏幕已被更改，所以保存您钱包的加密数据目前已失效";
+"lost_accounts.warning_message" = "由于 iOS 钥匙串错误，无法访问以下钱包：\n\n%@\n\n重新启动应用通常可以解决此问题。如果问题仍然存在，您可以取消关联并恢复这些钱包。";
 
 // Token Balance Page
 "balance.token.locked" = "锁住";

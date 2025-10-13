@@ -347,7 +347,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance_error.change_source" = "Kaynağı Değiştir";
 "balance_error.sync_error" = "Senk. hatası";
 "lost_accounts.warning_title" = "iOS Keychain Hatası";
-"lost_accounts.warning_message" = "iOS cihazınızın kilidi değiştirildiğinden cüzdan bilginizi tutan şifreli dosya artık geçersiz";
+"lost_accounts.warning_message" = "Bir iOS Keychain hatası nedeniyle aşağıdaki cüzdanlara erişemedik:\n\n%@\n\nUygulamayı yeniden başlatmak genellikle sorunu çözer. Sorun devam ederse bu cüzdanların bağlantısını kaldırıp yeniden yükleyebilirsiniz.";
 
 // Token Balance Page
 "balance.token.locked" = "Kilitli";
