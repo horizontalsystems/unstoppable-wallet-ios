@@ -347,7 +347,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance_error.change_source" = "Quelle ändern";
 "balance_error.sync_error" = "Sync-Fehler";
 "lost_accounts.warning_title" = "iOS-Keychain-Fehler";
-"lost_accounts.warning_message" = "Die verschlüsselten Daten Ihres Wallets wurden kürzlich ungültig, weil Ihr iOS-Sperrbildschirm geändert wurde";
+"lost_accounts.warning_message" = "Aufgrund eines Fehlers im iOS-Schlüsselbund konnten wir auf die folgenden Wallets nicht zugreifen:\n\n%@\n\nEin Neustart der App behebt das Problem in der Regel. Falls das Problem weiterhin besteht, können Sie diese Wallets trennen und wiederherstellen.";
 
 // Token Balance Page
 "balance.token.locked" = "Gesperrt";
