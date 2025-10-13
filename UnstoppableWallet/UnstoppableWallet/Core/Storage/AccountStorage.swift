@@ -246,23 +246,24 @@ class AccountStorage {
 }
 
 extension AccountStorage {
-    var allAccounts: [Account] {
-        storage.all.compactMap { createAccount(record: $0) }
+    var allAccounts: ([Account], [AccountRecord]) {
+        var accounts = [Account]()
+        var lostAccountRecords = [AccountRecord]()
+
+        for record in storage.all {
+            if let account = createAccount(record: record) {
+                accounts.append(account)
+            } else {
+                lostAccountRecords.append(record)
+            }
+        }
+
+        return (accounts, lostAccountRecords)
     }
 
     func save(account: Account) {
         if let record = try? createRecord(account: account) {
             storage.save(record: record)
-        }
-    }
-
-    var lostAccountIds: [String] {
-        storage.all.compactMap { accountRecord in
-            if createAccount(record: accountRecord) == nil {
-                return accountRecord.id
-            }
-
-            return nil
         }
     }
 
