@@ -195,6 +195,7 @@ extension MainView {
 }
 
 struct AccountsLostView: View {
+    let records: [AccountRecord]
     @Binding var isPresented: Bool
 
     var body: some View {
@@ -202,10 +203,10 @@ struct AccountsLostView: View {
             icon: .warning,
             title: "lost_accounts.warning_title".localized,
             items: [
-                .text(text: "lost_accounts.warning_message".localized),
+                .text(text: "lost_accounts.warning_message".localized(records.map { "- \($0.name)" }.joined(separator: "\n"))),
             ],
             buttons: [
-                .init(style: .yellow, title: "button.ok".localized) {
+                .init(style: .yellow, title: "button.i_understand".localized) {
                     isPresented = false
                 },
             ],

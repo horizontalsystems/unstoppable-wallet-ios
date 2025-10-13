@@ -24,7 +24,7 @@ class StartScreenAlertManager {
             .sink { [weak self] _ in self?.handleNextAlert() }
             .store(in: &cancellables)
 
-        accountManager.$accountsLost
+        accountManager.$lostAccountRecords
             .receive(on: DispatchQueue.main)
             .sink { [weak self] _ in self?.handleNextAlert() }
             .store(in: &cancellables)
@@ -54,11 +54,11 @@ class StartScreenAlertManager {
             } onDismiss: { [weak self] in
                 self?.handleNextAlert()
             }
-        } else if accountManager.accountsLost {
+        } else if let records = accountManager.lostAccountRecords {
             Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                AccountsLostView(isPresented: isPresented)
+                AccountsLostView(records: records, isPresented: isPresented)
             } onDismiss: { [weak self] in
-                self?.accountManager.accountsLost = false
+                self?.accountManager.lostAccountRecords = nil
             }
         } else if jailbreakService.needToShowAlert {
             Coordinator.shared.present { isPresented in
