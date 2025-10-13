@@ -117,14 +117,13 @@ extension ZcashTransactionWrapper: Comparable {
     }
 
     public static func == (lhs: ZcashTransactionWrapper, rhs: ZcashTransactionWrapper) -> Bool {
-        lhs.transactionHash == rhs.transactionHash && lhs.transactionIndex == rhs.transactionIndex
+        lhs.transactionHash == rhs.transactionHash
     }
 }
 
 extension ZcashTransactionWrapper: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(transactionHash)
-        hasher.combine(transactionIndex)
     }
 }
 

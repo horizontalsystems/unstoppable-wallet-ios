@@ -347,7 +347,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance_error.change_source" = "Changer la Source";
 "balance_error.sync_error" = "Erreur de synchronisation";
 "lost_accounts.warning_title" = "Erreur du trousseau d’accès iOS";
-"lost_accounts.warning_message" = "Les données cryptées concernant votre portefeuille ont été récemment invalidées parce que l'écran de verrouillage de votre iOS a été modifié";
+"lost_accounts.warning_message" = "En raison d’une erreur du trousseau iOS, nous n’avons pas pu accéder aux portefeuilles suivants :\n\n%@\n\nLe redémarrage de l’application résout généralement ce problème. Si celui-ci persiste, vous pouvez dissocier puis restaurer ces portefeuilles.";
 
 // Token Balance Page
 "balance.token.locked" = "Verrouillé";

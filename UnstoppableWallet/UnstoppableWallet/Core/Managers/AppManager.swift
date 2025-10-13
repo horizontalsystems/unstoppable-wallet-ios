@@ -114,8 +114,6 @@ extension AppManager {
     }
 
     func willEnterForeground() {
-        accountManager.handleForeground()
-
         willEnterForegroundSubject.send()
         willEnterForegroundSubjectOld.onNext(())
 

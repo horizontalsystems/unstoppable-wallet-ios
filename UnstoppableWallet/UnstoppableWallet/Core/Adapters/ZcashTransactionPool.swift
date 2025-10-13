@@ -64,7 +64,7 @@ class ZcashTransactionPool {
     }
 
     private func sync(own: inout Set<ZcashTransactionWrapper>, incoming: [ZcashTransactionWrapper]) {
-        incoming.forEach { transaction in own.insert(transaction) }
+        incoming.forEach { transaction in own.update(with: transaction) }
     }
 
     func initTransactions() async {

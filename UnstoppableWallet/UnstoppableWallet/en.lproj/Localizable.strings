@@ -345,7 +345,7 @@
 "balance_error.change_source" = "Change Source";
 "balance_error.sync_error" = "Sync Error";
 "lost_accounts.warning_title" = "iOS Keychain Error";
-"lost_accounts.warning_message" = "The encrypted data holding your wallet was recently invalidated because your iOS lock screen was changed";
+"lost_accounts.warning_message" = "Due to an iOS Keychain error, we couldn't access the following wallets:\n\n%@\n\nRestarting the app usually fixes this. If the issue persists, you can unlink and restore these wallets.";
 
 // Token Balance Page
 "balance.token.locked" = "Locked Balance";
