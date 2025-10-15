@@ -320,7 +320,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.receive" = "Receber";
 "balance.deposit" = "Receber";
 "balance.chart" = "Gráfico";
-"balance.scan" = "Escanear QR Code";
+"balance.scan" = "QR-Code";
 "balance.copy_address" = "Copiar Endereço";
 "balance.coin_info" = "Informações da Moeda";
 "balance.hide_coin" = "Ocultar Moeda";
