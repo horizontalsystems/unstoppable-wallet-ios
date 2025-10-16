@@ -7,7 +7,6 @@ protocol ICurrentAddressProvider {
 }
 
 protocol IReceiveAddressService {
-    var title: String { get }
     var coinName: String { get }
     var coinType: BlockchainType { get }
     var state: DataStatus<ReceiveAddress> { get }
@@ -75,10 +74,6 @@ extension ReceiveAddressViewModel {
         popupSubject.eraseToAnyPublisher()
     }
 
-    var title: String {
-        service.title
-    }
-
     var coinName: String {
         service.coinName
     }
@@ -129,8 +124,8 @@ extension ReceiveAddressViewModel {
 }
 
 extension ReceiveAddressViewModel {
-    static func instance(wallet: Wallet) -> ReceiveAddressViewModel {
-        let service = ReceiveAddressService(wallet: wallet, adapterManager: Core.shared.adapterManager)
+    static func instance(wallet: Wallet, type: DepositAddressType) -> ReceiveAddressViewModel {
+        let service = ReceiveAddressService(wallet: wallet, type: type, adapterManager: Core.shared.adapterManager)
         let depositViewItemFactory = ReceiveAddressViewItemFactory()
 
         return ReceiveAddressViewModel(service: service, viewItemFactory: depositViewItemFactory, decimalParser: AmountDecimalParser())

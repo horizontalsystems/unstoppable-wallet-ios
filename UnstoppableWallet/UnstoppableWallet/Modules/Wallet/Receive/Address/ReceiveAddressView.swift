@@ -7,27 +7,25 @@ private let appIconSize: CGFloat = 47
 
 struct ReceiveAddressView: View {
     @StateObject var viewModel: ReceiveAddressViewModel
-    var onDismiss: (() -> Void)?
-
     @State private var inputAmountPresented: Bool = false
 
+    var onDismiss: (() -> Void)? = nil
     @Environment(\.presentationMode) private var presentationMode
 
-    init(wallet: Wallet, onDismiss: (() -> Void)? = nil) {
+    init(factory: ReceiveAddressViewModelFactory, type: DepositAddressType, onDismiss: (() -> Void)? = nil) {
         self.onDismiss = onDismiss
-
-        _viewModel = StateObject(wrappedValue: ReceiveAddressViewModel.instance(wallet: wallet))
+        _viewModel = StateObject(wrappedValue: factory.viewModel(for: type))
     }
 
     var body: some View {
-        ScrollableThemeView {
+        VStack {
             switch viewModel.state {
             case .loading:
                 ProgressView()
             case let .completed(viewItem):
-                VStack(spacing: .margin12) {
-                    if let description = viewItem.highlightedDescription {
-                        HighlightedTextView(text: description.text, style: description.style)
+                VStack(spacing: .margin16) {
+                    if let alertViewItem = viewItem.caution {
+                        AlertCardView(alertViewItem)
                     }
 
                     ListSection {
@@ -62,9 +60,7 @@ struct ReceiveAddressView: View {
                         }
                     }
                 }
-                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
-
-                Spacer().frame(height: 52)
+                .padding(EdgeInsets(top: .margin16, leading: .margin16, bottom: .margin24, trailing: .margin16))
 
                 LazyVGrid(columns: viewModel.actions.map { _ in GridItem(.flexible(), alignment: .top) }, spacing: .margin16) {
                     ForEach(viewModel.actions, id: \.self) { action in
@@ -106,20 +102,6 @@ struct ReceiveAddressView: View {
                 )
             }
         }
-        .navigationTitle(viewModel.title)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button("button.done".localized) {
-                    if let onDismiss {
-                        onDismiss()
-                    } else {
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                }
-            }
-        }
-        .accentColor(.themeJacob)
     }
 
     @ViewBuilder private func qrView(item: ReceiveAddressModule.QrItem) -> some View {

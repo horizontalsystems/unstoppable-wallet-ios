@@ -390,6 +390,11 @@
 // Deposit
 
 "deposit.receive_coin" = "Receive %@";
+"deposit.address_type.unified" = "Unified";
+"deposit.address_type.transparent" = "Transparent";
+"deposit.address_type.transparent.caution" = "You can receive ZEC to this Transparent address. To send, transfer it to a Shielded one.";
+"deposit.address_type.legacy" = "Legacy";
+
 "deposit.address" = "Address";
 "deposit.your_address" = "Your Address";
 "receive_alert.not_backed_up_description" = "You need to backup %@ before you may receive %@.";

@@ -2016,6 +2016,14 @@
 		6BCD531A2A161F9200993F20 /* BackupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD53182A161F9100993F20 /* BackupService.swift */; };
 		6BCD531C2A16203F00993F20 /* CloudBackupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD531B2A16203F00993F20 /* CloudBackupManager.swift */; };
 		6BCD531D2A16203F00993F20 /* CloudBackupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD531B2A16203F00993F20 /* CloudBackupManager.swift */; };
+		6BD766352E9E0775008DDEA7 /* MayaMultiSwapZcashConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD766342E9E0767008DDEA7 /* MayaMultiSwapZcashConfirmationQuote.swift */; };
+		6BD766362E9E0775008DDEA7 /* MayaMultiSwapZcashConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD766342E9E0767008DDEA7 /* MayaMultiSwapZcashConfirmationQuote.swift */; };
+		6BD766382E9F54A6008DDEA7 /* ReceiveAddressTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD766372E9F549D008DDEA7 /* ReceiveAddressTabView.swift */; };
+		6BD766392E9F54A6008DDEA7 /* ReceiveAddressTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD766372E9F549D008DDEA7 /* ReceiveAddressTabView.swift */; };
+		6BD7663B2E9F6F64008DDEA7 /* ReceiveAddressViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD7663A2E9F6F55008DDEA7 /* ReceiveAddressViewModelFactory.swift */; };
+		6BD7663C2E9F6F64008DDEA7 /* ReceiveAddressViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD7663A2E9F6F55008DDEA7 /* ReceiveAddressViewModelFactory.swift */; };
+		6BD766402EA0E100008DDEA7 /* ZcashLightClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BD7663F2EA0E100008DDEA7 /* ZcashLightClientKit */; };
+		6BD766422EA0E109008DDEA7 /* ZcashLightClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BD766412EA0E109008DDEA7 /* ZcashLightClientKit */; };
 		6BDA29AB29D6F37C003847ED /* ECashKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDA29AA29D6F37C003847ED /* ECashKit */; };
 		6BDA29AD29D6F384003847ED /* ECashKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDA29AC29D6F384003847ED /* ECashKit */; };
 		6BDDB59C2C1816B500DE9D56 /* TonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDDB59B2C1816B500DE9D56 /* TonKit */; };
@@ -3174,8 +3182,6 @@
 		D3948F212ADA88D900FAE566 /* IntentExtension Dev.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D3948F192ADA88D800FAE566 /* IntentExtension Dev.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D3948F2B2ADA8CBC00FAE566 /* HsToolKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3948F2A2ADA8CBC00FAE566 /* HsToolKit */; };
 		D3948F2F2ADA8CD500FAE566 /* HsToolKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3948F2E2ADA8CD500FAE566 /* HsToolKit */; };
-		D3993DA528F4229F008720FB /* ZcashLightClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DA428F4229F008720FB /* ZcashLightClientKit */; };
-		D3993DA728F422BD008720FB /* ZcashLightClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DA628F422BD008720FB /* ZcashLightClientKit */; };
 		D3993DB028F4256F008720FB /* WalletConnect in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DAF28F4256F008720FB /* WalletConnect */; };
 		D3993DB828F42595008720FB /* WalletConnect in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DB728F42595008720FB /* WalletConnect */; };
 		D3993DC228F42992008720FB /* UnstoppableDomainsResolution in Frameworks */ = {isa = PBXBuildFile; productRef = D3993DC128F42992008720FB /* UnstoppableDomainsResolution */; };
@@ -4539,6 +4545,9 @@
 		6BCD53112A161F4800993F20 /* BackupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupViewController.swift; sourceTree = "<group>"; };
 		6BCD53182A161F9100993F20 /* BackupService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupService.swift; sourceTree = "<group>"; };
 		6BCD531B2A16203F00993F20 /* CloudBackupManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudBackupManager.swift; sourceTree = "<group>"; };
+		6BD766342E9E0767008DDEA7 /* MayaMultiSwapZcashConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MayaMultiSwapZcashConfirmationQuote.swift; sourceTree = "<group>"; };
+		6BD766372E9F549D008DDEA7 /* ReceiveAddressTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiveAddressTabView.swift; sourceTree = "<group>"; };
+		6BD7663A2E9F6F55008DDEA7 /* ReceiveAddressViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiveAddressViewModelFactory.swift; sourceTree = "<group>"; };
 		6BDFC0822E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelTransactionJsonRpc.swift; sourceTree = "<group>"; };
 		6BDFC0852E3C8F0700CC28DD /* MerkleGetTransactionByHashJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleGetTransactionByHashJsonRpc.swift; sourceTree = "<group>"; };
 		6BDFC0882E3CDC1300CC28DD /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
@@ -5234,6 +5243,7 @@
 				D3AF5A9129FFD87500C1399E /* RxRelay in Frameworks */,
 				D3993DB028F4256F008720FB /* WalletConnect in Frameworks */,
 				D3C187E8290FD00E00FE1900 /* SectionsTableView in Frameworks */,
+				6BD766402EA0E100008DDEA7 /* ZcashLightClientKit in Frameworks */,
 				6B55E33D2AF26D7A00616B60 /* Starscream in Frameworks */,
 				D3E323C82AE7B8E400F73914 /* KeychainAccess in Frameworks */,
 				500F1D1327AA87D1002AA419 /* AlignedCollectionViewFlowLayout in Frameworks */,
@@ -5269,7 +5279,6 @@
 				D3C187B52907A63600FE1900 /* HdWalletKit in Frameworks */,
 				D3604E5928F02B280066C366 /* UniswapKit in Frameworks */,
 				D3BF1E65274CBBE400229A00 /* DeepDiff in Frameworks */,
-				D3993DA728F422BD008720FB /* ZcashLightClientKit in Frameworks */,
 				D3C187E4290FD00E00FE1900 /* (null) in Frameworks */,
 				D3604E9C28F03DC00066C366 /* FeeRateKit in Frameworks */,
 				D339A93F29126D2A00B895BE /* HsCryptoKit in Frameworks */,
@@ -5303,6 +5312,7 @@
 				D3BF1E5C274BC29D00229A00 /* Down in Frameworks */,
 				D3604E4A28F02A8C0066C366 /* Eip20Kit in Frameworks */,
 				D3604E4328F02A020066C366 /* EvmKit in Frameworks */,
+				6BD766422EA0E109008DDEA7 /* ZcashLightClientKit in Frameworks */,
 				D0EC34DB2A4450B100BB308B /* HCaptcha in Frameworks */,
 				D3604E7028F03AC80066C366 /* MarketKit in Frameworks */,
 				D3E323CA2AE7B8F400F73914 /* KeychainAccess in Frameworks */,
@@ -5317,7 +5327,6 @@
 				D3C187B32907A60800FE1900 /* HdWalletKit in Frameworks */,
 				D3604E5028F02AE70066C366 /* UniswapKit in Frameworks */,
 				D3BF1E63274CBBCE00229A00 /* DeepDiff in Frameworks */,
-				D3993DA528F4229F008720FB /* ZcashLightClientKit in Frameworks */,
 				D023D2632A249E59004F65B0 /* TronKit in Frameworks */,
 				D3C187D5290FCF7D00FE1900 /* (null) in Frameworks */,
 				D3604E8228F03C6B0066C366 /* FeeRateKit in Frameworks */,
@@ -6355,6 +6364,8 @@
 		11B356B7ABEC322094A26526 /* Address */ = {
 			isa = PBXGroup;
 			children = (
+				6BD7663A2E9F6F55008DDEA7 /* ReceiveAddressViewModelFactory.swift */,
+				6BD766372E9F549D008DDEA7 /* ReceiveAddressTabView.swift */,
 				11B35BB3B8928864A742C83E /* ReceiveAddressModule.swift */,
 				11B35B109B4F60753BEC5078 /* ReceiveAddressService.swift */,
 				11B3532A1DC90E3D0E3403F8 /* ReceiveAddressViewModel.swift */,
@@ -9664,6 +9675,7 @@
 		D3FBC7192E55E918001083D8 /* ThorChain */ = {
 			isa = PBXGroup;
 			children = (
+				6BD766342E9E0767008DDEA7 /* MayaMultiSwapZcashConfirmationQuote.swift */,
 				D3FBC71D2E55E947001083D8 /* MayaMultiSwapProvider.swift */,
 				D3FBC71A2E55E93C001083D8 /* ThorChainMultiSwapProvider.swift */,
 				11B35B323F0836767BA0565F /* BaseThorChainMultiSwapProvider.swift */,
@@ -9712,7 +9724,6 @@
 				D3604E9928F03DC00066C366 /* Chart */,
 				D3604E9B28F03DC00066C366 /* FeeRateKit */,
 				D3604E9F28F03DC00066C366 /* DashKit */,
-				D3993DA628F422BD008720FB /* ZcashLightClientKit */,
 				D3993DAF28F4256F008720FB /* WalletConnect */,
 				D3993DC328F429AA008720FB /* UnstoppableDomainsResolution */,
 				D3C187B42907A63600FE1900 /* HdWalletKit */,
@@ -9736,6 +9747,7 @@
 				6B6D3F2C2DED72BF00AB2915 /* SkeletonView */,
 				6B6E14252DEDB57B007F4A39 /* Kingfisher */,
 				D092D63C2E3116780039BDB4 /* MoneroKit */,
+				6BD7663F2EA0E100008DDEA7 /* ZcashLightClientKit */,
 			);
 			productName = Wallet;
 			productReference = D38405CE218317DF007D50AD /* Unstoppable D.app */;
@@ -9775,7 +9787,6 @@
 				D3604E7E28F03C1D0066C366 /* Chart */,
 				D3604E8128F03C6B0066C366 /* FeeRateKit */,
 				D3604E8728F03D9E0066C366 /* DashKit */,
-				D3993DA428F4229F008720FB /* ZcashLightClientKit */,
 				D3993DB728F42595008720FB /* WalletConnect */,
 				D3993DC128F42992008720FB /* UnstoppableDomainsResolution */,
 				D3C187B22907A60800FE1900 /* HdWalletKit */,
@@ -9798,6 +9809,7 @@
 				6B6D3F2A2DED72B700AB2915 /* SkeletonView */,
 				6B6E14272DEDB58A007F4A39 /* Kingfisher */,
 				D092D63E2E3116A90039BDB4 /* MoneroKit */,
+				6BD766412EA0E109008DDEA7 /* ZcashLightClientKit */,
 			);
 			productName = Wallet;
 			productReference = D38406BE21831B3D007D50AD /* Unstoppable.app */;
@@ -9951,7 +9963,6 @@
 				D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart" */,
 				D3604E8028F03C6B0066C366 /* XCRemoteSwiftPackageReference "FeeRateKit" */,
 				D3604E8628F03D9E0066C366 /* XCRemoteSwiftPackageReference "DashKit" */,
-				D3993DA328F4229F008720FB /* XCRemoteSwiftPackageReference "ZcashLightClientKit" */,
 				D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */,
 				D3993DC028F42992008720FB /* XCRemoteSwiftPackageReference "resolution-swift" */,
 				D3C187B12907A60700FE1900 /* XCRemoteSwiftPackageReference "HdWalletKit" */,
@@ -9976,6 +9987,7 @@
 				6B1D8DF42DEACFA200A52B01 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				6B1D8DF62DEAD10900A52B01 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				D092D63B2E3116780039BDB4 /* XCRemoteSwiftPackageReference "MoneroKit.Swift" */,
+				6BD7663E2EA0DF2B008DDEA7 /* XCRemoteSwiftPackageReference "ZcashLightClientKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
@@ -10334,6 +10346,7 @@
 				11B35A42BF19B93C6005FBD9 /* AddTokenService.swift in Sources */,
 				11B35D550563934444558D15 /* AddTokenViewController.swift in Sources */,
 				58AAABE760739C0ECC6CA720 /* DownloadService.swift in Sources */,
+				6BD7663B2E9F6F64008DDEA7 /* ReceiveAddressViewModelFactory.swift in Sources */,
 				D3AFAAD12E2F9453004AB074 /* VaultChartFetcher.swift in Sources */,
 				D3E36BC42E013CC5007F99CA /* SendTokenListViewModel.swift in Sources */,
 				11B3502E7AA00ACFE8EE8CD9 /* FormTextView.swift in Sources */,
@@ -10798,6 +10811,7 @@
 				ABC9AC5552508D091D622027 /* SendZcashFactory.swift in Sources */,
 				ABC9A6BC79804B3D3AAFA8F1 /* SendZcashService.swift in Sources */,
 				ABC9A55FD66CB6374F2D520D /* SendZcashViewController.swift in Sources */,
+				6BD766382E9F54A6008DDEA7 /* ReceiveAddressTabView.swift in Sources */,
 				ABC9A852D667D38030B7EF39 /* SendConfirmationModule.swift in Sources */,
 				D3E36B8E2DF94B73007F99CA /* StellarWalletTokenView.swift in Sources */,
 				D3A12E962CC8C5B6008D5F99 /* EducationViewModel.swift in Sources */,
@@ -11269,6 +11283,7 @@
 				6B6E13952DED8192007F4A39 /* UIRectEdge.swift in Sources */,
 				6B1D8E3E2DEADF7F00A52B01 /* CellBuilderNew.swift in Sources */,
 				6BEEBAB92E841A4B00DB8B27 /* ThemeToggle.swift in Sources */,
+				6BD766362E9E0775008DDEA7 /* MayaMultiSwapZcashConfirmationQuote.swift in Sources */,
 				6B1D8E3F2DEADF7F00A52B01 /* TransactionImageComponent.swift in Sources */,
 				6B1D8E402DEADF7F00A52B01 /* TopDescriptionHeaderFooterView.swift in Sources */,
 				6B1D8E412DEADF7F00A52B01 /* EmptyCell.swift in Sources */,
@@ -11929,6 +11944,7 @@
 				11B35A90F19DE20ABE21F423 /* AddTokenService.swift in Sources */,
 				11B35FAB3263E489CB9017FC /* AddTokenViewController.swift in Sources */,
 				58AAA203CEB400A883379822 /* DownloadService.swift in Sources */,
+				6BD7663C2E9F6F64008DDEA7 /* ReceiveAddressViewModelFactory.swift in Sources */,
 				11B35246E31C33624A929628 /* FormTextView.swift in Sources */,
 				11B355E1AD0038B222CB652A /* AddressInputCell.swift in Sources */,
 				D3AFAAD02E2F9453004AB074 /* VaultChartFetcher.swift in Sources */,
@@ -12393,6 +12409,7 @@
 				D3E36B8D2DF94B73007F99CA /* StellarWalletTokenView.swift in Sources */,
 				D3A12E972CC8C5B6008D5F99 /* EducationViewModel.swift in Sources */,
 				D34338E52C8703F6001FCAD2 /* TonKitManager.swift in Sources */,
+				6BD766392E9F54A6008DDEA7 /* ReceiveAddressTabView.swift in Sources */,
 				ABC9AEC9C350F3CD059C9716 /* SendMemoInputService.swift in Sources */,
 				ABC9ACDD64F14C0D65A5CFBC /* SendZcashFactory.swift in Sources */,
 				ABC9A51F2E7EB0B477EBE708 /* SendZcashService.swift in Sources */,
@@ -12864,6 +12881,7 @@
 				6B1D8EB72DEADF7F00A52B01 /* TransactionImageComponent.swift in Sources */,
 				6B1D8EB82DEADF7F00A52B01 /* TopDescriptionHeaderFooterView.swift in Sources */,
 				6BEEBABA2E841A4B00DB8B27 /* ThemeToggle.swift in Sources */,
+				6BD766352E9E0775008DDEA7 /* MayaMultiSwapZcashConfirmationQuote.swift in Sources */,
 				6B1D8EB92DEADF7F00A52B01 /* EmptyCell.swift in Sources */,
 				6B1D8EBA2DEADF7F00A52B01 /* SecondaryButtonComponent.swift in Sources */,
 				6B1D8EBB2DEADF7F00A52B01 /* ActivityIndicators.swift in Sources */,
@@ -14148,6 +14166,14 @@
 				minimumVersion = 3.1.2;
 			};
 		};
+		6BD7663E2EA0DF2B008DDEA7 /* XCRemoteSwiftPackageReference "ZcashLightClientKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/ZcashLightClientKit";
+			requirement = {
+				branch = "feature/add-op-return";
+				kind = branch;
+			};
+		};
 		6BDA29A929D6EA9B003847ED /* XCRemoteSwiftPackageReference "ECashKit.Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/ECashKit.Swift.git";
@@ -14322,14 +14348,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.0.4;
-			};
-		};
-		D3993DA328F4229F008720FB /* XCRemoteSwiftPackageReference "ZcashLightClientKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/zcash/ZcashLightClientKit";
-			requirement = {
-				kind = exactVersion;
-				version = 2.3.2;
 			};
 		};
 		D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */ = {
@@ -14542,6 +14560,16 @@
 			package = D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "WalletConnectSwiftV2" */;
 			productName = Web3Wallet;
 		};
+		6BD7663F2EA0E100008DDEA7 /* ZcashLightClientKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6BD7663E2EA0DF2B008DDEA7 /* XCRemoteSwiftPackageReference "ZcashLightClientKit" */;
+			productName = ZcashLightClientKit;
+		};
+		6BD766412EA0E109008DDEA7 /* ZcashLightClientKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6BD7663E2EA0DF2B008DDEA7 /* XCRemoteSwiftPackageReference "ZcashLightClientKit" */;
+			productName = ZcashLightClientKit;
+		};
 		6BDA29AA29D6F37C003847ED /* ECashKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 6BDA29A929D6EA9B003847ED /* XCRemoteSwiftPackageReference "ECashKit.Swift" */;
@@ -14753,16 +14781,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6BDA29AE29D6F934003847ED /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */;
 			productName = HsToolKit;
-		};
-		D3993DA428F4229F008720FB /* ZcashLightClientKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D3993DA328F4229F008720FB /* XCRemoteSwiftPackageReference "ZcashLightClientKit" */;
-			productName = ZcashLightClientKit;
-		};
-		D3993DA628F422BD008720FB /* ZcashLightClientKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D3993DA328F4229F008720FB /* XCRemoteSwiftPackageReference "ZcashLightClientKit" */;
-			productName = ZcashLightClientKit;
 		};
 		D3993DAF28F4256F008720FB /* WalletConnect */ = {
 			isa = XCSwiftPackageProductDependency;

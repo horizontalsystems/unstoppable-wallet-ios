@@ -4,7 +4,7 @@ struct WatchAddressView: View {
     @StateObject var viewModel: ReceiveAddressViewModel
 
     init(wallet: Wallet) {
-        _viewModel = StateObject(wrappedValue: ReceiveAddressViewModel.instance(wallet: wallet))
+        _viewModel = StateObject(wrappedValue: ReceiveAddressViewModel.instance(wallet: wallet, type: .legacy))
     }
 
     var body: some View {

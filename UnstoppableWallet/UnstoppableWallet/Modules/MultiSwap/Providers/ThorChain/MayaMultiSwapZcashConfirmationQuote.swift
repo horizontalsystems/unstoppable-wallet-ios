@@ -1,22 +1,23 @@
 import BitcoinCore
 import Foundation
 import MarketKit
+import ZcashLightClientKit
 
-class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirmationQuote {
+class MayaMultiSwapZcashConfirmationQuote: IMultiSwapConfirmationQuote {
     let swapQuote: ThorChainMultiSwapProvider.SwapQuote
     let recipient: Address?
+    let amountIn: Decimal
     let slippage: Decimal
-    let sendParameters: SendParameters?
+    let totalFeeRequired: Zatoshi
     let transactionError: Error?
 
-    init(swapQuote: ThorChainMultiSwapProvider.SwapQuote, recipient: Address?, slippage: Decimal, satoshiPerByte: Int?, fee: Decimal?, sendParameters: SendParameters?, transactionError: Error?) {
+    init(swapQuote: ThorChainMultiSwapProvider.SwapQuote, recipient: Address?, amountIn: Decimal, totalFeeRequired: Zatoshi, slippage: Decimal, transactionError: Error?) {
         self.swapQuote = swapQuote
         self.recipient = recipient
+        self.amountIn = amountIn
+        self.totalFeeRequired = totalFeeRequired
         self.slippage = slippage
-        self.sendParameters = sendParameters
         self.transactionError = transactionError
-
-        super.init(satoshiPerByte: satoshiPerByte, fee: fee)
     }
 
     var amountOut: Decimal {
@@ -24,11 +25,11 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
     }
 
     var feeData: FeeData? {
-        fee.map { .bitcoin(bitcoinFeeData: BitcoinFeeData(fee: $0)) }
+        .zcash(fee: totalFeeRequired.decimalValue.decimalValue)
     }
 
     var canSwap: Bool {
-        satoshiPerByte != nil && fee != nil
+        transactionError == nil
     }
 
     func cautions(baseToken: MarketKit.Token) -> [CautionNew] {
@@ -64,7 +65,7 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
     func otherSections(tokenIn _: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate _: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendDataSection] {
         var sections = [SendDataSection]()
 
-        var feeFields = super.feeFields(feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate)
+        var feeFields = [SendField]()
 
         if swapQuote.affiliateFee > 0 {
             feeFields.append(
@@ -129,5 +130,39 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
         }
 
         return sections
+    }
+
+    private func amountData(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
+        let fee = totalFeeRequired.decimalValue.decimalValue
+        return AmountData(
+            appValue: AppValue(token: feeToken, value: fee),
+            currencyValue: feeTokenRate.map { CurrencyValue(currency: currency, value: fee * $0) }
+        )
+    }
+
+    private func caution(transactionError: Error, feeToken: Token) -> CautionNew {
+        let title: String
+        let text: String
+
+        if let error = transactionError as? BitcoinCoreErrors.SendValueErrors {
+            switch error {
+            case .notEnough:
+                title = "fee_settings.errors.insufficient_balance".localized
+                text = "fee_settings.errors.insufficient_balance.info".localized(feeToken.coin.code)
+
+            case let .dust(dustAmount):
+                title = "send.amount_error.minimum_amount.title".localized
+                text = "send.amount_error.minimum_amount.description".localized("\(dustAmount) zatoshis")
+
+            default:
+                title = "Send Info error"
+                text = "Send Info error description"
+            }
+        } else {
+            title = "alert.error".localized
+            text = transactionError.convertedError.smartDescription
+        }
+
+        return CautionNew(title: title, text: text, type: .error)
     }
 }
