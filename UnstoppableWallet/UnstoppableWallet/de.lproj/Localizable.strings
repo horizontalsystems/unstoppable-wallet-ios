@@ -392,6 +392,11 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Deposit
 
 "deposit.receive_coin" = "%@ Anfordern ";
+"deposit.address_type.unified" = "Unified";
+"deposit.address_type.transparent" = "Transparente";
+"deposit.address_type.transparent.caution" = "You can receive ZEC to this Transparent address. To send, transfer it to a Shielded one.";
+"deposit.address_type.legacy" = "Legacy";
+
 "deposit.address" = "Adresse";
 "deposit.your_address" = "Deine Adresse";
 "receive_alert.not_backed_up_description" = "Sie müssen %@ sichern, bevor Sie %@ empfangen können.";
