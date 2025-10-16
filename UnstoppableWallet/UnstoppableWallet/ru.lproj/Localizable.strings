@@ -394,6 +394,11 @@
 // Deposit
 
 "deposit.receive_coin" = "Получить %@";
+"deposit.address_type.unified" = "Unified";
+"deposit.address_type.transparent" = "Transparent";
+"deposit.address_type.transparent.caution" = "You can receive ZEC to this Transparent address. To send, transfer it to a Shielded one.";
+"deposit.address_type.legacy" = "Legacy";
+
 "deposit.address" = "Адрес";
 "deposit.your_address" = "Ваш адрес";
 "receive_alert.not_backed_up_description" = "Вам нужно сделать резервную копию %@ перед получением %@.";
