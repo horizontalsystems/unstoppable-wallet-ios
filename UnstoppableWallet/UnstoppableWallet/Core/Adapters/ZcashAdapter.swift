@@ -25,7 +25,8 @@ class ZcashAdapter {
     private let synchronizer: Synchronizer
 
     private var accountId: AccountUUID?
-    private var zAddress: String?
+    private var uAddress: UnifiedAddress?
+    private(set) var tAddress: TransparentAddress?
     private var transactionPool: ZcashTransactionPool?
 
     private let uniqueId: String
@@ -42,7 +43,7 @@ class ZcashAdapter {
     private let balanceStateSubject = PublishSubject<AdapterState>()
     private let balanceSubject = PublishSubject<BalanceData>()
     private let transactionSubject = PublishSubject<[ZcashTransactionWrapper]>()
-    private let depositAddressSubject = PassthroughSubject<DataStatus<DepositAddress>, Never>()
+    private let depositAddressSubject = PassthroughSubject<DataStatus<[DepositAddressType: DepositAddress]>, Never>()
 
     private var started = false
     private var lastBlockHeight: Int = 0
@@ -164,15 +165,18 @@ class ZcashAdapter {
                 }
 
                 self?.logger?.log(level: .debug, message: "Successful prepared!")
-                guard let address = try? await synchronizer.getUnifiedAddress(accountUUID: account.id),
-                      let saplingAddress = try? address.saplingReceiver()
+                guard let uAddress = try? await synchronizer.getUnifiedAddress(accountUUID: account.id),
+                      let tAddress = try? await synchronizer.getTransparentAddress(accountUUID: account.id),
+                      let saplingAddress = try? uAddress.saplingReceiver()
                 else {
                     throw AppError.ZcashError.noReceiveAddress
                 }
 
                 self?.accountId = account.id
-                self?.zAddress = address.stringEncoded
-                self?.depositAddressSubject.send(.completed(DepositAddress(saplingAddress.stringEncoded)))
+                self?.uAddress = uAddress
+                self?.tAddress = tAddress
+
+                self?.depositAddressSubject.send(.completed(DepositAddressType.zcash(unified: uAddress.stringEncoded, transparent: tAddress.stringEncoded)))
 
                 self?.logger?.log(level: .debug, message: "Successful get address for 0 account! \(saplingAddress.stringEncoded)")
 
@@ -229,7 +233,7 @@ class ZcashAdapter {
             return
         }
 
-        if zAddress == nil { // else we need to try prepare library again
+        if uAddress == nil { // else we need to try prepare library again
             logger?.log(level: .debug, message: "No address, try to prepare kit again!")
             prepare(seedData: seedData, walletBirthday: birthday, for: initMode)
 
@@ -670,7 +674,7 @@ extension ZcashAdapter: IAdapter {
     }
 
     var debugInfo: String {
-        let zAddress = zAddress ?? "No Info"
+        let zAddress = uAddress?.stringEncoded ?? "No Info"
         var balanceState = "No Balance Information yet"
 
         if let status = synchronizerState, let accountId {
@@ -771,12 +775,20 @@ extension ZcashAdapter: IBalanceAdapter {
 }
 
 extension ZcashAdapter: IDepositAdapter {
-    var receiveAddress: DepositAddress {
-        // only first account
-        DepositAddress(zAddress ?? "n/a".localized)
+    var addressTypes: [DepositAddressType] {
+        [.unified, .transparent]
     }
 
-    var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {
+    var receiveAddress: DepositAddress {
+        .init(uAddress?.stringEncoded ?? "n/a".localized)
+    }
+
+    var allAddresses: [DepositAddressType: DepositAddress] {
+        let na = "n/a".localized
+        return DepositAddressType.zcash(unified: uAddress?.stringEncoded ?? na, transparent: tAddress?.stringEncoded ?? na)
+    }
+
+    var receiveAddressPublisher: AnyPublisher<DataStatus<[DepositAddressType: DepositAddress]>, Never> {
         depositAddressSubject.eraseToAnyPublisher()
     }
 }
@@ -820,7 +832,9 @@ extension ZcashAdapter: ISendZcashAdapter {
     }
 
     func validate(address: String, checkSendToSelf: Bool = true) throws -> AddressType {
-        if checkSendToSelf, address == receiveAddress.address {
+        if checkSendToSelf, allAddresses.contains(where: { _, value in
+            value.address.lowercased() == address.lowercased()
+        }) {
             throw AppError.zcash(reason: .sendToSelf)
         }
 
@@ -862,6 +876,20 @@ extension ZcashAdapter: ISendZcashAdapter {
             }
             return Disposables.create()
         }
+    }
+
+    func send(amount: Decimal, address: Recipient, memo: Memo?) async throws {
+        guard let accountId else {
+            throw AppError.ZcashError.noAccountId
+        }
+
+        let proposal = try await synchronizer.proposeTransfer(
+            accountUUID: accountId,
+            recipient: address,
+            amount: Zatoshi.from(decimal: amount), memo: memo
+        )
+
+        try await send(proposal: proposal)
     }
 
     func send(proposal: Proposal) async throws {
@@ -1041,4 +1069,19 @@ extension WalletInitMode {
 
 extension Zip32AccountIndex {
     static let zero: Self = .init(0)
+}
+
+extension DepositAddressType {
+    static let unified: Self = .init(name: "deposit.address_type.unified".localized)
+    static let transparent: Self = .init(
+        name: "deposit.address_type.transparent".localized, caution:
+        .init(
+            text: "deposit.address_type.transparent.caution".localized,
+            type: .warning
+        )
+    )
+
+    fileprivate static func zcash(unified: String, transparent: String) -> [DepositAddressType: DepositAddress] {
+        [.unified: .init(unified), .transparent: .init(transparent)]
+    }
 }

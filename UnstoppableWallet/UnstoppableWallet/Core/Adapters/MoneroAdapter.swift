@@ -17,7 +17,7 @@ class MoneroAdapter {
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
     private let balanceStateSubject = PublishSubject<AdapterState>()
     let transactionRecordsSubject = PublishSubject<[BitcoinTransactionRecord]>()
-    private let depositAddressSubject = PassthroughSubject<DataStatus<DepositAddress>, Never>()
+    private let depositAddressSubject = PassthroughSubject<DataStatus<[DepositAddressType: DepositAddress]>, Never>()
 
     private(set) var balanceState: AdapterState {
         didSet {
@@ -51,7 +51,7 @@ class MoneroAdapter {
             kit = try MoneroKit.Kit(
                 wallet: .watch(address: address, viewKey: viewKey),
                 account: 0,
-                restoreHeight: UInt64(restoreHeight ?? 0),
+                restoreHeight: UInt64(restoreHeight),
                 walletId: wallet.account.id,
                 node: node,
                 networkType: Self.networkType,
@@ -191,7 +191,7 @@ extension MoneroAdapter: IAdapter {
 
 extension MoneroAdapter: MoneroKitDelegate {
     func subAddressesUpdated(subaddresses _: [MoneroKit.SubAddress]) {
-        depositAddressSubject.send(.completed(receiveAddress))
+        depositAddressSubject.send(.completed(allAddresses))
     }
 
     func balanceDidChange(balanceInfo: MoneroKit.BalanceInfo) {
@@ -329,7 +329,7 @@ extension MoneroAdapter: IDepositAdapter {
         DepositAddress(kit.receiveAddress)
     }
 
-    var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {
+    var receiveAddressPublisher: AnyPublisher<DataStatus<[DepositAddressType: DepositAddress]>, Never> {
         depositAddressSubject.eraseToAnyPublisher()
     }
 

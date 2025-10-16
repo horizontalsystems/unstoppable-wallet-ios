@@ -7,6 +7,7 @@ import HsToolKit
 import MarketKit
 import ObjectMapper
 import SwiftUI
+import ZcashLightClientKit
 
 class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     private let networkManager = Core.shared.networkManager
@@ -82,7 +83,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 slippage: slippage,
                 allowanceState: allowanceHelper.allowanceState(spenderAddress: .init(raw: router), token: tokenIn, amount: amountIn)
             )
-        case .bitcoin, .bitcoinCash, .dash, .litecoin:
+        case .bitcoin, .bitcoinCash, .dash, .litecoin, .zcash:
             return ThorChainMultiSwapBtcQuote(
                 swapQuote: swapQuote,
                 recipient: storage.recipient(blockchainType: blockchainType),
@@ -197,6 +198,35 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 sendParameters: params,
                 transactionError: transactionError
             )
+        case .zcash:
+            guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
+                throw SwapError.noZcashAdapter
+            }
+            var transactionError: Error?
+
+            let address: Recipient
+            if let transparent = adapter.recipient(from: swapQuote.inboundAddress) {
+                address = transparent
+            } else {
+                throw SendTransactionError.invalidAddress
+            }
+
+            let proposal = try await adapter.sendProposal(amount: amountIn, address: address, memo: .init(string: swapQuote.memo))
+
+            if let dustThreshold = swapQuote.dustThreshold,
+               Int(Zatoshi.from(decimal: amountIn).amount) <= dustThreshold
+            {
+                transactionError = BitcoinCoreErrors.SendValueErrors.dust(dustThreshold + 1)
+            }
+
+            return MayaMultiSwapZcashConfirmationQuote(
+                swapQuote: swapQuote,
+                recipient: storage.recipient(blockchainType: tokenIn.blockchainType),
+                amountIn: amountIn,
+                totalFeeRequired: proposal.totalFeeRequired(),
+                slippage: slippage,
+                transactionError: transactionError
+            )
         default:
             throw SwapError.unsupportedTokenIn
         }
@@ -293,6 +323,19 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             }
 
             try adapter.send(params: sendParameters)
+        } else if let quote = quote as? MayaMultiSwapZcashConfirmationQuote {
+            guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
+                throw SwapError.noZcashAdapter
+            }
+
+            let address: Recipient
+            if let transparent = adapter.recipient(from: quote.swapQuote.inboundAddress) {
+                address = transparent
+            } else {
+                throw SendTransactionError.invalidAddress
+            }
+
+            try await adapter.send(amount: quote.amountIn, address: address, memo: .init(string: quote.swapQuote.memo))
         }
     }
 
@@ -405,7 +448,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         case "DASH": return .dash
         case "ETH": return .ethereum
         case "LTC": return .litecoin
-        // case "ZEC": return .zcash
+        case "ZEC": return .zcash
         default: return nil
         }
     }
@@ -465,6 +508,7 @@ extension BaseThorChainMultiSwapProvider {
         case noGasLimit
         case noEvmKitWrapper
         case noBitcoinAdapter
+        case noZcashAdapter
         case noSendParameters
     }
 }

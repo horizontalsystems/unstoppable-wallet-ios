@@ -28,7 +28,7 @@ class StellarAdapter {
     }
 
     private let transactionRecordsSubject = PublishSubject<[TonTransactionRecord]>()
-    private let receiveAddressSubject = PassthroughSubject<DataStatus<DepositAddress>, Never>()
+    private let receiveAddressSubject = PassthroughSubject<DataStatus<[DepositAddressType: DepositAddress]>, Never>()
 
     init?(stellarKit: StellarKit.Kit, asset: StellarKit.Asset) {
         self.stellarKit = stellarKit
@@ -50,7 +50,7 @@ class StellarAdapter {
     }
 
     private func syncReceiveAddress() {
-        receiveAddressSubject.send(.completed(receiveAddress))
+        receiveAddressSubject.send(.completed(allAddresses))
     }
 
     private var assetActivated: Bool {
@@ -118,7 +118,7 @@ extension StellarAdapter: IDepositAdapter {
         StellarDepositAddress(receiveAddress: stellarKit.receiveAddress, assetActivated: assetActivated)
     }
 
-    var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {
+    var receiveAddressPublisher: AnyPublisher<DataStatus<[DepositAddressType: DepositAddress]>, Never> {
         receiveAddressSubject.eraseToAnyPublisher()
     }
 }

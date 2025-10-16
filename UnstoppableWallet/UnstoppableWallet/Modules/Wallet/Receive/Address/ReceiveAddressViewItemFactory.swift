@@ -8,12 +8,12 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
             return .empty(address: item.raw)
         }
 
-        var description: ReceiveAddressModule.HighlightedDescription?
-        if item.watchAccount {
-            description = .init(
-                text: "deposit.warning.watch_account".localized,
-                style: .yellow
-            )
+        var alertCardViewItem: AlertCardViewItem?
+
+        if let caution = item.caution {
+            alertCardViewItem = AlertCardViewItem(text: caution.text, type: caution.type == .error ? .critical : .caution, style: .inline)
+        } else if item.watchAccount {
+            alertCardViewItem = AlertCardViewItem(text: "deposit.warning.watch_account".localized, style: .inline)
         }
 
         var networkName = ""
@@ -73,13 +73,13 @@ class ReceiveAddressViewItemFactory: IReceiveAddressViewItemFactory {
         let notEmpty = item.usedAddresses?.contains { _, value in !value.isEmpty } ?? false
         return .init(
             copyValue: uri,
-            highlightedDescription: description,
             qrItem: qrItem,
             amount: amountString,
             active: active,
             assetActivated: assetActivated,
             memo: nil,
-            usedAddresses: notEmpty ? item.usedAddresses : nil
+            usedAddresses: notEmpty ? item.usedAddresses : nil,
+            caution: alertCardViewItem
         )
     }
 

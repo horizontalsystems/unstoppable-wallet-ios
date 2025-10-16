@@ -35,18 +35,29 @@ protocol IBalanceAdapter: IBaseAdapter {
 }
 
 protocol IDepositAdapter: IBaseAdapter {
+    var addressTypes: [DepositAddressType] { get }
+    var allAddresses: [DepositAddressType: DepositAddress] { get }
     var receiveAddress: DepositAddress { get }
-    var receiveAddressStatus: DataStatus<DepositAddress> { get }
-    var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> { get }
+
+    var receiveAddressStatus: DataStatus<[DepositAddressType: DepositAddress]> { get }
+    var receiveAddressPublisher: AnyPublisher<DataStatus<[DepositAddressType: DepositAddress]>, Never> { get }
     func usedAddresses(change: Bool) -> [UsedAddress]
 }
 
 extension IDepositAdapter {
-    var receiveAddressStatus: DataStatus<DepositAddress> {
-        .completed(receiveAddress)
+    var addressTypes: [DepositAddressType] {
+        [.legacy]
     }
 
-    var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {
+    var allAddresses: [DepositAddressType: DepositAddress] {
+        [.legacy: receiveAddress]
+    }
+
+    var receiveAddressStatus: DataStatus<[DepositAddressType: DepositAddress]> {
+        .completed(allAddresses)
+    }
+
+    var receiveAddressPublisher: AnyPublisher<DataStatus<[DepositAddressType: DepositAddress]>, Never> {
         Just(receiveAddressStatus).eraseToAnyPublisher()
     }
 

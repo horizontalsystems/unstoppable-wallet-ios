@@ -78,7 +78,7 @@ enum ReceiveAddressModule {
         let style: HighlightedDescriptionBaseView.Style
     }
 
-    enum AddressType: Int, Comparable {
+    enum AddressChain: Int, Comparable {
         case external
         case change
 
@@ -89,29 +89,29 @@ enum ReceiveAddressModule {
             }
         }
 
-        static func < (lhs: AddressType, rhs: AddressType) -> Bool { lhs.rawValue < rhs.rawValue }
+        static func < (lhs: AddressChain, rhs: AddressChain) -> Bool { lhs.rawValue < rhs.rawValue }
     }
 
     struct ViewItem {
         let copyValue: String
-        let highlightedDescription: HighlightedDescription?
         let qrItem: QrItem
         let amount: String?
         let active: Bool
         let assetActivated: Bool
         let memo: String?
-        let usedAddresses: [AddressType: [UsedAddress]]?
+        let usedAddresses: [AddressChain: [UsedAddress]]?
+        let caution: AlertCardViewItem?
 
         static func empty(address: String) -> Self {
             .init(
                 copyValue: address,
-                highlightedDescription: nil,
                 qrItem: .init(address: address, uri: nil, networkName: nil),
                 amount: nil,
                 active: true,
                 assetActivated: true,
                 memo: nil,
-                usedAddresses: nil
+                usedAddresses: nil,
+                caution: nil
             )
         }
     }
@@ -119,6 +119,6 @@ enum ReceiveAddressModule {
 
 extension ReceiveAddressModule {
     static func addressProvider(wallet: Wallet) -> ICurrentAddressProvider {
-        ReceiveAddressService(wallet: wallet, adapterManager: Core.shared.adapterManager)
+        ReceiveAddressService(wallet: wallet, type: .legacy, adapterManager: Core.shared.adapterManager)
     }
 }

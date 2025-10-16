@@ -6,8 +6,9 @@ import RxCocoa
 import RxSwift
 
 class ReceiveAddressService {
-    private let adapterManager: AdapterManager
     let wallet: Wallet
+    private let type: DepositAddressType
+    private let adapterManager: AdapterManager
 
     private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
@@ -22,8 +23,9 @@ class ReceiveAddressService {
 
     var adapter: IDepositAdapter?
 
-    init(wallet: Wallet, adapterManager: AdapterManager) {
+    init(wallet: Wallet, type: DepositAddressType, adapterManager: AdapterManager) {
         self.wallet = wallet
+        self.type = type
         self.adapterManager = adapterManager
 
         subscribe(disposeBag, adapterManager.adapterDataReadyObservable) { [weak self] adapterData in
@@ -54,25 +56,29 @@ class ReceiveAddressService {
         cancellables.removeAll()
 
         let isMainNet = adapter.isMainNet
+        let type = type
+
         adapter.receiveAddressPublisher
-            .sink { [weak self, weak adapter] status in
-                var usedAddresses = [ReceiveAddressModule.AddressType: [UsedAddress]]()
+            .sink { [weak self, weak adapter] _ in
+                var usedAddresses = [ReceiveAddressModule.AddressChain: [UsedAddress]]()
                 usedAddresses[.external] = adapter?.usedAddresses(change: false) ?? []
                 usedAddresses[.change] = adapter?.usedAddresses(change: true) ?? []
 
-                self?.updateStatus(status: status, usedAddresses: usedAddresses, isMainNet: isMainNet)
+                let receiveAddress = adapter?.allAddresses[type] ?? adapter?.receiveAddress ?? DepositAddress("n/a".localized)
+                self?.updateStatus(address: receiveAddress, usedAddresses: usedAddresses, isMainNet: isMainNet)
             }
             .store(in: &cancellables)
 
-        var usedAddresses = [ReceiveAddressModule.AddressType: [UsedAddress]]()
+        var usedAddresses = [ReceiveAddressModule.AddressChain: [UsedAddress]]()
         usedAddresses[.external] = adapter.usedAddresses(change: false)
         usedAddresses[.change] = adapter.usedAddresses(change: true)
 
-        updateStatus(status: adapter.receiveAddressStatus, usedAddresses: usedAddresses, isMainNet: isMainNet)
+        let receiveAddress = adapter.allAddresses[type] ?? adapter.receiveAddress
+        updateStatus(address: receiveAddress, usedAddresses: usedAddresses, isMainNet: isMainNet)
     }
 
-    private func updateStatus(status: DataStatus<DepositAddress>, usedAddresses: [ReceiveAddressModule.AddressType: [UsedAddress]]?, isMainNet: Bool) {
-        state = status.map { address in
+    private func updateStatus(address: DepositAddress, usedAddresses: [ReceiveAddressModule.AddressChain: [UsedAddress]]?, isMainNet: Bool) {
+        state = .completed(
             AssetReceiveAddress(
                 address: address,
                 usedAddresses: usedAddresses,
@@ -80,17 +86,14 @@ class ReceiveAddressService {
                 isMainNet: isMainNet,
                 watchAccount: wallet.account.watchAccount,
                 coinCode: wallet.coin.code,
-                imageUrl: wallet.coin.imageUrl
+                imageUrl: wallet.coin.imageUrl,
+                caution: type.caution
             )
-        }
+        )
     }
 }
 
 extension ReceiveAddressService: IReceiveAddressService {
-    var title: String {
-        "deposit.receive_coin".localized(wallet.coin.code)
-    }
-
     var coinName: String {
         wallet.coin.name
     }
@@ -107,17 +110,19 @@ extension ReceiveAddressService: IReceiveAddressService {
 extension ReceiveAddressService {
     class AssetReceiveAddress: ReceiveAddress {
         let address: DepositAddress
-        let usedAddresses: [ReceiveAddressModule.AddressType: [UsedAddress]]?
+        let usedAddresses: [ReceiveAddressModule.AddressChain: [UsedAddress]]?
         let token: Token
         let isMainNet: Bool
         let watchAccount: Bool
+        let caution: CautionNew?
 
-        init(address: DepositAddress, usedAddresses: [ReceiveAddressModule.AddressType: [UsedAddress]]?, token: Token, isMainNet: Bool, watchAccount: Bool, coinCode: String, imageUrl: String?) {
+        init(address: DepositAddress, usedAddresses: [ReceiveAddressModule.AddressChain: [UsedAddress]]?, token: Token, isMainNet: Bool, watchAccount: Bool, coinCode: String, imageUrl: String, caution: CautionNew?) {
             self.address = address
             self.usedAddresses = usedAddresses
             self.token = token
             self.isMainNet = isMainNet
             self.watchAccount = watchAccount
+            self.caution = caution
             super.init(coinCode: coinCode, imageUrl: imageUrl)
         }
 
@@ -141,7 +146,7 @@ extension ReceiveAddressService: ICurrentAddressProvider {
             return nil
         }
 
-        return assetReceiveAddress.address.address
+        return assetReceiveAddress.raw
     }
 }
 
