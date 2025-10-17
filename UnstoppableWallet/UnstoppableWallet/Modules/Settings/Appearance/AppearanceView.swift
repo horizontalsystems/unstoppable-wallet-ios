@@ -151,7 +151,14 @@ struct AppearanceView: View {
                                 ThemeToggle(isOn: $viewModel.useAmountRounding.animation(), style: .yellow)
                             }
                         )
-
+                        Cell(
+                            middle: {
+                                MultiText(title: "appearance.recently_sent".localized, subtitle: "appearance.recently_sent.description".localized)
+                            },
+                            right: {
+                                ThemeToggle(isOn: $viewModel.showRecentlySent.animation(), style: .yellow)
+                            }
+                        )
                         Cell(
                             middle: {
                                 MultiText(title: "appearance.balance_value".localized, subtitle: "appearance.balance_value.description".localized)

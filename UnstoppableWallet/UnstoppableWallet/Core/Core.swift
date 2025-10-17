@@ -63,6 +63,7 @@ class Core {
     let coinManager: CoinManager
     let passcodeLockManager: PasscodeLockManager
     let amountRoundingManager: AmountRoundingManager
+    let recentlySentManager: RecentlySentManager
 
     let btcBlockchainManager: BtcBlockchainManager
     let evmSyncSourceManager: EvmSyncSourceManager
@@ -195,6 +196,7 @@ class Core {
         coinManager = CoinManager(marketKit: marketKit, walletManager: walletManager)
         passcodeLockManager = PasscodeLockManager(accountManager: accountManager, walletManager: walletManager)
         amountRoundingManager = AmountRoundingManager(storage: localStorage)
+        recentlySentManager = RecentlySentManager(storage: localStorage)
 
         let blockchainSettingRecordStorage = try BlockchainSettingRecordStorage(dbPool: dbPool)
         let blockchainSettingsStorage = BlockchainSettingsStorage(storage: blockchainSettingRecordStorage)
