@@ -3,27 +3,44 @@ import SwiftUI
 struct ZcashWalletTokenView: View {
     @StateObject var viewModel: ZcashWalletTokenViewModel
 
-    private let wallet: Wallet
-
     init(wallet: Wallet, adapter: ZcashAdapter) {
-        _viewModel = StateObject(wrappedValue: ZcashWalletTokenViewModel(adapter: adapter))
-        self.wallet = wallet
+        _viewModel = StateObject(wrappedValue: ZcashWalletTokenViewModel(adapter: adapter, wallet: wallet))
     }
 
     var body: some View {
-        BaseWalletTokenView(wallet: wallet) { walletTokenViewModel, transactionsViewModel in
+        BaseWalletTokenView(wallet: viewModel.wallet) { walletTokenViewModel, transactionsViewModel in
             ViewWithTransactionList(
                 transactionListStatus: transactionsViewModel.transactionListStatus,
                 content: {
-                    Group {
-                        WalletTokenTopView(viewModel: walletTokenViewModel).themeListTopView()
+                    VStack(spacing: 0) {
+                        WalletTokenTopView(viewModel: walletTokenViewModel)
+                        view(birthday: viewModel.birthdayHeight?.description)
                         view(processing: viewModel.zcashBalanceData.processing, transparent: viewModel.zcashBalanceData.transparent)
                     }
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
                 },
                 transactionList: {
                     TransactionsView(viewModel: transactionsViewModel, statPage: .tokenPage)
                 }
             )
+        }
+    }
+
+    @ViewBuilder private func view(birthday: String?) -> some View {
+        if let birthday {
+            Cell(
+                middle: {
+                    MiddleTextIcon(text: "birthday_height.title".localized)
+                },
+                right: {
+                    RightButtonText(text: birthday, icon: "copy_filled") {
+                        CopyHelper.copyAndNotify(value: birthday)
+                    }
+                },
+            )
+            .background(Color.themeTyler)
         }
     }
 
@@ -33,9 +50,6 @@ struct ZcashWalletTokenView: View {
                 view(processing: processing)
                 view(transparent: transparent)
             }
-            .listRowBackground(Color.clear)
-            .listRowInsets(EdgeInsets())
-            .listRowSeparator(.hidden)
         }
     }
 
@@ -94,6 +108,6 @@ struct ZcashWalletTokenView: View {
     private func infoAmount(value: Decimal) -> WalletInfoView.ValueFormatStyle {
         viewModel.balanceHidden
             ? .hiddenAmount
-            : .fullAmount(.init(kind: .token(token: wallet.token), value: value))
+            : .fullAmount(.init(kind: .token(token: viewModel.wallet.token), value: value))
     }
 }

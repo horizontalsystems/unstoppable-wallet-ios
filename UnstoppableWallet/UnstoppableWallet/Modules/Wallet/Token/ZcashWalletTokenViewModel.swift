@@ -4,16 +4,20 @@ import RxSwift
 
 class ZcashWalletTokenViewModel: ObservableObject {
     private let balanceHiddenManager = Core.shared.balanceHiddenManager
+    private let restoreSettingsService = RestoreSettingsService(manager: Core.shared.restoreSettingsManager)
     private let adapter: ZcashAdapter
 
     private var cancellables = Set<AnyCancellable>()
     private let disposeBag = DisposeBag()
 
+    let wallet: Wallet
+
     @Published var zcashBalanceData: ZcashAdapter.ZcashBalanceData
     @Published var balanceHidden: Bool
 
-    init(adapter: ZcashAdapter) {
+    init(adapter: ZcashAdapter, wallet: Wallet) {
         self.adapter = adapter
+        self.wallet = wallet
         zcashBalanceData = adapter.zcashBalanceData
         balanceHidden = balanceHiddenManager.balanceHidden
 
@@ -28,5 +32,10 @@ class ZcashWalletTokenViewModel: ObservableObject {
                 self?.balanceHidden = $0
             })
             .disposed(by: disposeBag)
+    }
+
+    var birthdayHeight: Int? {
+        let settings = restoreSettingsService.settings(accountId: wallet.account.id, blockchainType: .zcash)
+        return settings.birthdayHeight
     }
 }
