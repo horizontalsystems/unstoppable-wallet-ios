@@ -5,6 +5,8 @@ import MarketKit
 class AddressViewModel: ObservableObject {
     private let purchaseManager = Core.shared.purchaseManager
     private let appSettingManager = Core.shared.appSettingManager
+    private let recentlySentManager = Core.shared.recentlySentManager
+
     let token: Token
     let destination: Destination
     let issueTypes: [AddressSecurityIssueType]
@@ -48,7 +50,7 @@ class AddressViewModel: ObservableObject {
             }
             .sorted { $0.name ?? "" < $1.name ?? "" }
 
-        let recentAddress = try? Core.shared.recentAddressStorage.address(blockchainUid: token.blockchainType.uid)
+        let recentAddress = recentlySentManager.recentlySent ? try? Core.shared.recentAddressStorage.address(blockchainUid: token.blockchainType.uid) : nil
 
         recentContact = recentAddress.map { address in
             Contact(uid: "recent", name: contacts.first(where: { $0.address.lowercased() == address.lowercased() })?.name, address: address)
