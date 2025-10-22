@@ -1,27 +1,23 @@
 import Combine
 import Foundation
 import MarketKit
+import SwiftUI
 
 protocol ICurrentAddressProvider {
     var address: String? { get }
 }
 
 protocol IReceiveAddressService {
+    var title: String { get }
     var coinName: String { get }
     var coinType: BlockchainType { get }
     var state: DataStatus<ReceiveAddress> { get }
     var statusUpdatedPublisher: AnyPublisher<DataStatus<ReceiveAddress>, Never> { get }
 }
 
-protocol IReceiveAddressViewItemFactory {
-    func viewItem(item: ReceiveAddress, amount: String?) -> ReceiveAddressModule.ViewItem
-    func popup(item: ReceiveAddress) -> ReceiveAddressModule.PopupWarningItem?
-    func actions(item: ReceiveAddress) -> [ReceiveAddressModule.ActionType]
-}
-
-class ReceiveAddressViewModel: ObservableObject {
-    private let service: IReceiveAddressService
-    private let viewItemFactory: IReceiveAddressViewItemFactory
+class BaseReceiveAddressViewModel: ObservableObject {
+    private let service: BaseReceiveAddressService
+    private let viewItemFactory: ReceiveAddressViewItemFactory
     private let decimalParser: AmountDecimalParser
     private var cancellables = Set<AnyCancellable>()
     private var hasAppeared = false
@@ -37,14 +33,16 @@ class ReceiveAddressViewModel: ObservableObject {
         amountFieldChangedSuccessSubject.eraseToAnyPublisher()
     }
 
-    init(service: IReceiveAddressService, viewItemFactory: IReceiveAddressViewItemFactory, decimalParser: AmountDecimalParser) {
+    init(service: BaseReceiveAddressService, viewItemFactory: ReceiveAddressViewItemFactory, decimalParser: AmountDecimalParser) {
         self.service = service
         self.viewItemFactory = viewItemFactory
         self.decimalParser = decimalParser
 
         service.statusUpdatedPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.sync(state: $0) }
+            .sink { [weak self] in
+                self?.sync(state: $0)
+            }
             .store(in: &cancellables)
 
         sync(state: service.state)
@@ -67,27 +65,27 @@ class ReceiveAddressViewModel: ObservableObject {
             actions = viewItemFactory.actions(item: item)
         }
     }
+
+    func popupButtons(mode _: ReceiveAddressModule.PopupWarningItem.Mode, isPresented _: Binding<Bool>) -> [BottomSheetView.ButtonItem] {
+        []
+    }
 }
 
-extension ReceiveAddressViewModel {
+extension BaseReceiveAddressViewModel {
     var popupPublisher: AnyPublisher<ReceiveAddressModule.PopupWarningItem, Never> {
         popupSubject.eraseToAnyPublisher()
     }
 
+    var wallet: Wallet {
+        service.wallet
+    }
+
+    var title: String {
+        service.title
+    }
+
     var coinName: String {
         service.coinName
-    }
-
-    var usedAddressesTitle: String {
-        service.coinType == .monero ? "deposit.subaddresses.title".localized : "deposit.used_addresses.title".localized
-    }
-
-    var usedAddressesDescription: String {
-        service.coinType == .monero ? "deposit.subaddresses.description".localized : "deposit.used_addresses.description".localized(coinName)
-    }
-
-    var hasChangeAddresses: Bool {
-        !(service.coinType == .monero)
     }
 
     func set(amount: String) {
@@ -113,21 +111,13 @@ extension ReceiveAddressViewModel {
     var initialText: String {
         amount == 0 ? "" : amount.description
     }
-
-    var stellarSendData: SendData? {
-        guard let service = service as? ReceiveAddressService, let adapter = service.adapter as? StellarAdapter else {
-            return nil
-        }
-
-        return .stellar(data: .changeTrust(asset: adapter.asset, limit: StellarAdapter.maxValue), token: service.wallet.token, memo: nil)
-    }
 }
 
-extension ReceiveAddressViewModel {
-    static func instance(wallet: Wallet, type: DepositAddressType) -> ReceiveAddressViewModel {
-        let service = ReceiveAddressService(wallet: wallet, type: type, adapterManager: Core.shared.adapterManager)
+extension BaseReceiveAddressViewModel {
+    static func instance(wallet: Wallet) -> BaseReceiveAddressViewModel {
+        let service = BaseReceiveAddressService(wallet: wallet)
         let depositViewItemFactory = ReceiveAddressViewItemFactory()
 
-        return ReceiveAddressViewModel(service: service, viewItemFactory: depositViewItemFactory, decimalParser: AmountDecimalParser())
+        return BaseReceiveAddressViewModel(service: service, viewItemFactory: depositViewItemFactory, decimalParser: AmountDecimalParser())
     }
 }

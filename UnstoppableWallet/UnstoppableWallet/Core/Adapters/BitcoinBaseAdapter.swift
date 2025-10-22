@@ -446,7 +446,7 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
     }
 }
 
-extension BitcoinBaseAdapter: IDepositAdapter {
+extension BitcoinBaseAdapter: IDepositAdapter, IHDDepositAdapter {
     var receiveAddress: DepositAddress {
         DepositAddress(abstractKit.receiveAddress())
     }
@@ -471,28 +471,12 @@ extension BitcoinBaseAdapter {
     }
 }
 
-struct DepositAddressType: Hashable {
-    static let legacy: Self = .init(name: "deposit.address_type.legacy".localized)
-
-    let name: String
-    let caution: CautionNew?
-
-    init(name: String, caution: CautionNew? = nil) {
-        self.name = name
-        self.caution = caution
-    }
-}
-
 class DepositAddress {
     let address: String
 
     init(_ receiveAddress: String) {
         address = receiveAddress
     }
-}
-
-enum DepositAddressError: Error {
-    case notExist
 }
 
 public struct UsedAddress: Hashable {
