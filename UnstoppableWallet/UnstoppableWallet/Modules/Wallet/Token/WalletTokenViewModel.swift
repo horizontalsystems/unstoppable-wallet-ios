@@ -135,7 +135,7 @@ extension WalletTokenViewModel {
         if wallet.account.backedUp || cloudBackupManager.backedUp(uniqueId: wallet.account.type.uniqueId()) {
             Coordinator.shared.present { [wallet] _ in
                 ThemeNavigationStack {
-                    ReceiveAddressTabView.instance(wallet: wallet)
+                    ReceiveAddressModule.instance(wallet: wallet)
                 }
             }
 

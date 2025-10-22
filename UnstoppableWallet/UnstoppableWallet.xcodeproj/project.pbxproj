@@ -311,7 +311,7 @@
 		11B354283B8AC609B65AADDF /* FavoriteCoinRecord_v_0_38.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E255F6CA21FFA9E6B42 /* FavoriteCoinRecord_v_0_38.swift */; };
 		11B3542A74C72C4CE03C727B /* CoinToggleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A3B8FB90E561DE3F22B /* CoinToggleViewController.swift */; };
 		11B35434C09F1E3818DC857B /* ReceiveDerivationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357EEC98939F9C7AA3271 /* ReceiveDerivationViewModel.swift */; };
-		11B3543A420A23064B056925 /* ReceiveAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3532A1DC90E3D0E3403F8 /* ReceiveAddressViewModel.swift */; };
+		11B3543A420A23064B056925 /* BaseReceiveAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3532A1DC90E3D0E3403F8 /* BaseReceiveAddressViewModel.swift */; };
 		11B3543A7A9EB1E0E0E8753D /* DuressModeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F5B696CF0677865FA2C /* DuressModeViewModel.swift */; };
 		11B3543EF331DA9E5E33822A /* SingleCoinPriceEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E514EF2784402C7DC2A /* SingleCoinPriceEntry.swift */; };
 		11B35444DADD43277D30DFE6 /* AmountData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B617A9CE668EEF4978B /* AmountData.swift */; };
@@ -372,7 +372,7 @@
 		11B35508E26446AC692EBAEF /* RecipientAndSlippageMultiSwapSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3599833F166185872A3AC /* RecipientAndSlippageMultiSwapSettingsView.swift */; };
 		11B3550A6826CF513B1A77F0 /* TabHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357D7156B86181DD0C6D4 /* TabHeaderView.swift */; };
 		11B3550B0E0438427CBE72A3 /* NftCollectionOverviewModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35507299A9DA6CF3C626A /* NftCollectionOverviewModule.swift */; };
-		11B3550C46C5811A7540A934 /* ReceiveAddressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B109B4F60753BEC5078 /* ReceiveAddressService.swift */; };
+		11B3550C46C5811A7540A934 /* BaseReceiveAddressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B109B4F60753BEC5078 /* BaseReceiveAddressService.swift */; };
 		11B3550E1FD46B02F0154CBC /* PublicKeysViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F5A3CC8C229C0849756 /* PublicKeysViewController.swift */; };
 		11B3551E5E9A6D167F7BA078 /* LaunchScreenManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35BEEC0AB0B09C7E4209A /* LaunchScreenManager.swift */; };
 		11B3551F51D987A150C3BC26 /* TabButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B351DBFA79DAF0A82A1925 /* TabButtonStyle.swift */; };
@@ -640,7 +640,7 @@
 		11B358D519ACFE88A7823C7E /* ApiProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3531363949F235A210921 /* ApiProvider.swift */; };
 		11B358DC6827FC6035BF3225 /* TokenQuery.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353684493AFDF3711DF2B /* TokenQuery.swift */; };
 		11B358E12CBE7D1B687AE788 /* NumPadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353E1284B381BE56AC663 /* NumPadView.swift */; };
-		11B358E4C529863AFFF8806F /* ReceiveAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3532A1DC90E3D0E3403F8 /* ReceiveAddressViewModel.swift */; };
+		11B358E4C529863AFFF8806F /* BaseReceiveAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3532A1DC90E3D0E3403F8 /* BaseReceiveAddressViewModel.swift */; };
 		11B358E7A9BC36B1B562A5B4 /* NftMetadataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359FE71F5DE6AAD2BA3D8 /* NftMetadataManager.swift */; };
 		11B358EC0A19773B1455CF62 /* LockoutManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3576F224007FD4154EBE8 /* LockoutManager.swift */; };
 		11B358EC68642C5A57ACB803 /* IMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357975CCFB31CCEF29F97 /* IMultiSwapProvider.swift */; };
@@ -663,7 +663,7 @@
 		11B3593B114BFE4B6CCD6E19 /* MarketWideCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B354AFC10A63BDF4E86EE0 /* MarketWideCardCell.swift */; };
 		11B359413C92A83580A130B3 /* MnemonicInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35DB358405198CF67F11D /* MnemonicInputCell.swift */; };
 		11B359425D03F504ECA51B1A /* BlockchainSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B350FFC1582D23FD709970 /* BlockchainSettingsView.swift */; };
-		11B3594B47902B41F5C04E6B /* ReceiveAddressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B109B4F60753BEC5078 /* ReceiveAddressService.swift */; };
+		11B3594B47902B41F5C04E6B /* BaseReceiveAddressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B109B4F60753BEC5078 /* BaseReceiveAddressService.swift */; };
 		11B3594BEB2E05413B0DB30F /* MultiSwapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FC4CD29F471F497819B /* MultiSwapView.swift */; };
 		11B3594DD9B54E11190B4CD5 /* PoolProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359636E1AA1BC72CF7B11 /* PoolProvider.swift */; };
 		11B3594FCD35038663CD4FEF /* ReceiveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CFED85A9315089223E3 /* ReceiveViewModel.swift */; };
@@ -1761,6 +1761,8 @@
 		6B4587522E2F44AB008F87E7 /* CurrencyValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4587502E2F44A2008F87E7 /* CurrencyValueFormatter.swift */; };
 		6B4587542E2F476D008F87E7 /* AmountRoundingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4587532E2F475E008F87E7 /* AmountRoundingManager.swift */; };
 		6B4587552E2F476D008F87E7 /* AmountRoundingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4587532E2F475E008F87E7 /* AmountRoundingManager.swift */; };
+		6B50FD9F2EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B50FD9E2EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift */; };
+		6B50FDA02EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B50FD9E2EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift */; };
 		6B55E33B2AF26D6400616B60 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 6B55E33A2AF26D6400616B60 /* Starscream */; };
 		6B55E33D2AF26D7A00616B60 /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = 6B55E33C2AF26D7A00616B60 /* Starscream */; };
 		6B5A13D72DF0414B006E609C /* Manrope-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6B5A13D52DF0414B006E609C /* Manrope-Regular.ttf */; };
@@ -1783,6 +1785,30 @@
 		6B5A13F62DF93DED006E609C /* PerformanceDataSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5A13F42DF93DEB006E609C /* PerformanceDataSelectViewModel.swift */; };
 		6B5A13F82DF97B5E006E609C /* PerformanceDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5A13F72DF97B32006E609C /* PerformanceDataManager.swift */; };
 		6B5A13F92DF97B5E006E609C /* PerformanceDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5A13F72DF97B32006E609C /* PerformanceDataManager.swift */; };
+		6B5D850C2EA772E300F13E2C /* TronReceiveAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D850B2EA772DB00F13E2C /* TronReceiveAddressView.swift */; };
+		6B5D850D2EA772E300F13E2C /* TronReceiveAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D850B2EA772DB00F13E2C /* TronReceiveAddressView.swift */; };
+		6B5D850F2EA7731000F13E2C /* TronReceiveAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D850E2EA7730E00F13E2C /* TronReceiveAddressViewModel.swift */; };
+		6B5D85102EA7731000F13E2C /* TronReceiveAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D850E2EA7730E00F13E2C /* TronReceiveAddressViewModel.swift */; };
+		6B5D85122EA7739400F13E2C /* TronReceiveAddressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85112EA7738D00F13E2C /* TronReceiveAddressService.swift */; };
+		6B5D85132EA7739400F13E2C /* TronReceiveAddressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85112EA7738D00F13E2C /* TronReceiveAddressService.swift */; };
+		6B5D85182EA77DD900F13E2C /* StellarReceiveAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85152EA77DD900F13E2C /* StellarReceiveAddressViewModel.swift */; };
+		6B5D85192EA77DD900F13E2C /* StellarReceiveAddressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85142EA77DD900F13E2C /* StellarReceiveAddressService.swift */; };
+		6B5D851A2EA77DD900F13E2C /* StellarReceiveAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85162EA77DD900F13E2C /* StellarReceiveAddressView.swift */; };
+		6B5D851B2EA77DD900F13E2C /* StellarReceiveAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85152EA77DD900F13E2C /* StellarReceiveAddressViewModel.swift */; };
+		6B5D851C2EA77DD900F13E2C /* StellarReceiveAddressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85142EA77DD900F13E2C /* StellarReceiveAddressService.swift */; };
+		6B5D851D2EA77DD900F13E2C /* StellarReceiveAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85162EA77DD900F13E2C /* StellarReceiveAddressView.swift */; };
+		6B5D851F2EA793E500F13E2C /* StellarReceiveAddressViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D851E2EA793D400F13E2C /* StellarReceiveAddressViewItemFactory.swift */; };
+		6B5D85202EA793E500F13E2C /* StellarReceiveAddressViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D851E2EA793D400F13E2C /* StellarReceiveAddressViewItemFactory.swift */; };
+		6B5D85222EA794C600F13E2C /* TronReceiveAddressViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85212EA794BA00F13E2C /* TronReceiveAddressViewItemFactory.swift */; };
+		6B5D85232EA794C600F13E2C /* TronReceiveAddressViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85212EA794BA00F13E2C /* TronReceiveAddressViewItemFactory.swift */; };
+		6B5D85292EA7A59900F13E2C /* MoneroReceiveAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85252EA7A59900F13E2C /* MoneroReceiveAddressView.swift */; };
+		6B5D852A2EA7A59900F13E2C /* MoneroReceiveAddressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85272EA7A59900F13E2C /* MoneroReceiveAddressService.swift */; };
+		6B5D852B2EA7A59900F13E2C /* MoneroReceiveAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85262EA7A59900F13E2C /* MoneroReceiveAddressViewModel.swift */; };
+		6B5D852C2EA7A59900F13E2C /* MoneroReceiveAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85252EA7A59900F13E2C /* MoneroReceiveAddressView.swift */; };
+		6B5D852D2EA7A59900F13E2C /* MoneroReceiveAddressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85272EA7A59900F13E2C /* MoneroReceiveAddressService.swift */; };
+		6B5D852E2EA7A59900F13E2C /* MoneroReceiveAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85262EA7A59900F13E2C /* MoneroReceiveAddressViewModel.swift */; };
+		6B5D85302EA7B05A00F13E2C /* ZCashReceiveAddressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D852F2EA7B05000F13E2C /* ZCashReceiveAddressService.swift */; };
+		6B5D85312EA7B05A00F13E2C /* ZCashReceiveAddressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D852F2EA7B05000F13E2C /* ZCashReceiveAddressService.swift */; };
 		6B5F33892D07FDF3001E23A4 /* EnabledWallet_v_0_40.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F33882D07FDF3001E23A4 /* EnabledWallet_v_0_40.swift */; };
 		6B5F338A2D07FDF3001E23A4 /* EnabledWallet_v_0_40.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F33882D07FDF3001E23A4 /* EnabledWallet_v_0_40.swift */; };
 		6B5F5E0E2C0C65F700E03EB2 /* MarketPlatformView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5F5E0D2C0C65F700E03EB2 /* MarketPlatformView.swift */; };
@@ -2018,12 +2044,22 @@
 		6BCD531D2A16203F00993F20 /* CloudBackupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD531B2A16203F00993F20 /* CloudBackupManager.swift */; };
 		6BD766352E9E0775008DDEA7 /* MayaMultiSwapZcashConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD766342E9E0767008DDEA7 /* MayaMultiSwapZcashConfirmationQuote.swift */; };
 		6BD766362E9E0775008DDEA7 /* MayaMultiSwapZcashConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD766342E9E0767008DDEA7 /* MayaMultiSwapZcashConfirmationQuote.swift */; };
-		6BD766382E9F54A6008DDEA7 /* ReceiveAddressTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD766372E9F549D008DDEA7 /* ReceiveAddressTabView.swift */; };
-		6BD766392E9F54A6008DDEA7 /* ReceiveAddressTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD766372E9F549D008DDEA7 /* ReceiveAddressTabView.swift */; };
-		6BD7663B2E9F6F64008DDEA7 /* ReceiveAddressViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD7663A2E9F6F55008DDEA7 /* ReceiveAddressViewModelFactory.swift */; };
-		6BD7663C2E9F6F64008DDEA7 /* ReceiveAddressViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD7663A2E9F6F55008DDEA7 /* ReceiveAddressViewModelFactory.swift */; };
 		6BD766402EA0E100008DDEA7 /* ZcashLightClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BD7663F2EA0E100008DDEA7 /* ZcashLightClientKit */; };
 		6BD766422EA0E109008DDEA7 /* ZcashLightClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BD766412EA0E109008DDEA7 /* ZcashLightClientKit */; };
+		6BD766472EA25669008DDEA7 /* ZcashReceiveAddressSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD766462EA25667008DDEA7 /* ZcashReceiveAddressSelectView.swift */; };
+		6BD766482EA25669008DDEA7 /* ZcashReceiveAddressSelectView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD766462EA25667008DDEA7 /* ZcashReceiveAddressSelectView.swift */; };
+		6BD7664A2EA25AC2008DDEA7 /* ZcashReceiveAddressSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD766492EA25ABF008DDEA7 /* ZcashReceiveAddressSelectViewModel.swift */; };
+		6BD7664B2EA25AC2008DDEA7 /* ZcashReceiveAddressSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD766492EA25ABF008DDEA7 /* ZcashReceiveAddressSelectViewModel.swift */; };
+		6BD766522EA62121008DDEA7 /* HDReceiveAddressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD766512EA62119008DDEA7 /* HDReceiveAddressService.swift */; };
+		6BD766532EA62121008DDEA7 /* HDReceiveAddressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD766512EA62119008DDEA7 /* HDReceiveAddressService.swift */; };
+		6BD766552EA625EC008DDEA7 /* HDReceiveAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD766542EA625E5008DDEA7 /* HDReceiveAddressViewModel.swift */; };
+		6BD766562EA625EC008DDEA7 /* HDReceiveAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD766542EA625E5008DDEA7 /* HDReceiveAddressViewModel.swift */; };
+		6BD7665C2EA62E22008DDEA7 /* BaseReceiveAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD7665B2EA62E1E008DDEA7 /* BaseReceiveAddressView.swift */; };
+		6BD7665D2EA62E22008DDEA7 /* BaseReceiveAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD7665B2EA62E1E008DDEA7 /* BaseReceiveAddressView.swift */; };
+		6BD7665F2EA637FD008DDEA7 /* HDReceiveAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD7665E2EA637EA008DDEA7 /* HDReceiveAddressView.swift */; };
+		6BD766602EA637FD008DDEA7 /* HDReceiveAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD7665E2EA637EA008DDEA7 /* HDReceiveAddressView.swift */; };
+		6BD766652EA6442D008DDEA7 /* ReceiveAddressBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD766642EA64422008DDEA7 /* ReceiveAddressBodyView.swift */; };
+		6BD766662EA6442D008DDEA7 /* ReceiveAddressBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD766642EA64422008DDEA7 /* ReceiveAddressBodyView.swift */; };
 		6BDA29AB29D6F37C003847ED /* ECashKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDA29AA29D6F37C003847ED /* ECashKit */; };
 		6BDA29AD29D6F384003847ED /* ECashKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDA29AC29D6F384003847ED /* ECashKit */; };
 		6BDDB59C2C1816B500DE9D56 /* TonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDDB59B2C1816B500DE9D56 /* TonKit */; };
@@ -3688,7 +3724,7 @@
 		11B353262E45560C91FD6B65 /* EvmPrivateKeyViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmPrivateKeyViewModel.swift; sourceTree = "<group>"; };
 		11B353282C7000D3BDFC7FD0 /* EvmAddressLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmAddressLabel.swift; sourceTree = "<group>"; };
 		11B3532946EA785A7C65D193 /* RestoreSettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreSettingsService.swift; sourceTree = "<group>"; };
-		11B3532A1DC90E3D0E3403F8 /* ReceiveAddressViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveAddressViewModel.swift; sourceTree = "<group>"; };
+		11B3532A1DC90E3D0E3403F8 /* BaseReceiveAddressViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseReceiveAddressViewModel.swift; sourceTree = "<group>"; };
 		11B35332D245CFF50A68F8CA /* SectionsTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SectionsTableView.swift; sourceTree = "<group>"; };
 		11B353355FF7FBE72BF60981 /* PreSendView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreSendView.swift; sourceTree = "<group>"; };
 		11B353356496AA219686B993 /* UIWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UIWindow.swift; sourceTree = "<group>"; };
@@ -3973,7 +4009,7 @@
 		11B35AFE2C95FF73F75652D8 /* ChartView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		11B35B0879F715C0777919AA /* WatchlistWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchlistWidget.swift; sourceTree = "<group>"; };
 		11B35B0F9BC5C4CDBC5B041D /* EvmSendHandler.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmSendHandler.swift; sourceTree = "<group>"; };
-		11B35B109B4F60753BEC5078 /* ReceiveAddressService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiveAddressService.swift; sourceTree = "<group>"; };
+		11B35B109B4F60753BEC5078 /* BaseReceiveAddressService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseReceiveAddressService.swift; sourceTree = "<group>"; };
 		11B35B143F359BE790EC392B /* EvmAddressService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EvmAddressService.swift; sourceTree = "<group>"; };
 		11B35B15E0AE668C9AF10161 /* LanguageHourFormatter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LanguageHourFormatter.swift; sourceTree = "<group>"; };
 		11B35B176A5FDEBBE94D307E /* BitcoinCashCoinType.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinCashCoinType.swift; sourceTree = "<group>"; };
@@ -4439,6 +4475,7 @@
 		6B45874D2E290296008F87E7 /* MarketEtfViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketEtfViewModelFactory.swift; sourceTree = "<group>"; };
 		6B4587502E2F44A2008F87E7 /* CurrencyValueFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyValueFormatter.swift; sourceTree = "<group>"; };
 		6B4587532E2F475E008F87E7 /* AmountRoundingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountRoundingManager.swift; sourceTree = "<group>"; };
+		6B50FD9E2EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZCashReceiveAddressViewItemFactory.swift; sourceTree = "<group>"; };
 		6B5A13D42DF0414B006E609C /* Manrope-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Manrope-Medium.ttf"; sourceTree = "<group>"; };
 		6B5A13D52DF0414B006E609C /* Manrope-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Manrope-Regular.ttf"; sourceTree = "<group>"; };
 		6B5A13D62DF0414B006E609C /* Manrope-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Manrope-SemiBold.ttf"; sourceTree = "<group>"; };
@@ -4446,6 +4483,18 @@
 		6B5A13F12DF93DC3006E609C /* PerformanceDataSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceDataSelectView.swift; sourceTree = "<group>"; };
 		6B5A13F42DF93DEB006E609C /* PerformanceDataSelectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceDataSelectViewModel.swift; sourceTree = "<group>"; };
 		6B5A13F72DF97B32006E609C /* PerformanceDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceDataManager.swift; sourceTree = "<group>"; };
+		6B5D850B2EA772DB00F13E2C /* TronReceiveAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronReceiveAddressView.swift; sourceTree = "<group>"; };
+		6B5D850E2EA7730E00F13E2C /* TronReceiveAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronReceiveAddressViewModel.swift; sourceTree = "<group>"; };
+		6B5D85112EA7738D00F13E2C /* TronReceiveAddressService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronReceiveAddressService.swift; sourceTree = "<group>"; };
+		6B5D85142EA77DD900F13E2C /* StellarReceiveAddressService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarReceiveAddressService.swift; sourceTree = "<group>"; };
+		6B5D85152EA77DD900F13E2C /* StellarReceiveAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarReceiveAddressViewModel.swift; sourceTree = "<group>"; };
+		6B5D85162EA77DD900F13E2C /* StellarReceiveAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarReceiveAddressView.swift; sourceTree = "<group>"; };
+		6B5D851E2EA793D400F13E2C /* StellarReceiveAddressViewItemFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarReceiveAddressViewItemFactory.swift; sourceTree = "<group>"; };
+		6B5D85212EA794BA00F13E2C /* TronReceiveAddressViewItemFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronReceiveAddressViewItemFactory.swift; sourceTree = "<group>"; };
+		6B5D85252EA7A59900F13E2C /* MoneroReceiveAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroReceiveAddressView.swift; sourceTree = "<group>"; };
+		6B5D85262EA7A59900F13E2C /* MoneroReceiveAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroReceiveAddressViewModel.swift; sourceTree = "<group>"; };
+		6B5D85272EA7A59900F13E2C /* MoneroReceiveAddressService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroReceiveAddressService.swift; sourceTree = "<group>"; };
+		6B5D852F2EA7B05000F13E2C /* ZCashReceiveAddressService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZCashReceiveAddressService.swift; sourceTree = "<group>"; };
 		6B5F33882D07FDF3001E23A4 /* EnabledWallet_v_0_40.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EnabledWallet_v_0_40.swift; sourceTree = "<group>"; };
 		6B5F5E0D2C0C65F700E03EB2 /* MarketPlatformView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPlatformView.swift; sourceTree = "<group>"; };
 		6B5F5E102C0C660900E03EB2 /* MarketPlatformViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketPlatformViewModel.swift; sourceTree = "<group>"; };
@@ -4546,8 +4595,13 @@
 		6BCD53182A161F9100993F20 /* BackupService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupService.swift; sourceTree = "<group>"; };
 		6BCD531B2A16203F00993F20 /* CloudBackupManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudBackupManager.swift; sourceTree = "<group>"; };
 		6BD766342E9E0767008DDEA7 /* MayaMultiSwapZcashConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MayaMultiSwapZcashConfirmationQuote.swift; sourceTree = "<group>"; };
-		6BD766372E9F549D008DDEA7 /* ReceiveAddressTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiveAddressTabView.swift; sourceTree = "<group>"; };
-		6BD7663A2E9F6F55008DDEA7 /* ReceiveAddressViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiveAddressViewModelFactory.swift; sourceTree = "<group>"; };
+		6BD766462EA25667008DDEA7 /* ZcashReceiveAddressSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashReceiveAddressSelectView.swift; sourceTree = "<group>"; };
+		6BD766492EA25ABF008DDEA7 /* ZcashReceiveAddressSelectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashReceiveAddressSelectViewModel.swift; sourceTree = "<group>"; };
+		6BD766512EA62119008DDEA7 /* HDReceiveAddressService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HDReceiveAddressService.swift; sourceTree = "<group>"; };
+		6BD766542EA625E5008DDEA7 /* HDReceiveAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HDReceiveAddressViewModel.swift; sourceTree = "<group>"; };
+		6BD7665B2EA62E1E008DDEA7 /* BaseReceiveAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseReceiveAddressView.swift; sourceTree = "<group>"; };
+		6BD7665E2EA637EA008DDEA7 /* HDReceiveAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HDReceiveAddressView.swift; sourceTree = "<group>"; };
+		6BD766642EA64422008DDEA7 /* ReceiveAddressBodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiveAddressBodyView.swift; sourceTree = "<group>"; };
 		6BDFC0822E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelTransactionJsonRpc.swift; sourceTree = "<group>"; };
 		6BDFC0852E3C8F0700CC28DD /* MerkleGetTransactionByHashJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleGetTransactionByHashJsonRpc.swift; sourceTree = "<group>"; };
 		6BDFC0882E3CDC1300CC28DD /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
@@ -6364,11 +6418,15 @@
 		11B356B7ABEC322094A26526 /* Address */ = {
 			isa = PBXGroup;
 			children = (
-				6BD7663A2E9F6F55008DDEA7 /* ReceiveAddressViewModelFactory.swift */,
-				6BD766372E9F549D008DDEA7 /* ReceiveAddressTabView.swift */,
+				6B5D850A2EA772CD00F13E2C /* Tron */,
+				6B5D85172EA77DD900F13E2C /* Stellar */,
+				6BD7665A2EA62E17008DDEA7 /* Base */,
+				6BD766502EA6210D008DDEA7 /* HD */,
+				6B5D85282EA7A59900F13E2C /* Monero */,
+				6BD7664F2EA62078008DDEA7 /* Zcash */,
 				11B35BB3B8928864A742C83E /* ReceiveAddressModule.swift */,
-				11B35B109B4F60753BEC5078 /* ReceiveAddressService.swift */,
-				11B3532A1DC90E3D0E3403F8 /* ReceiveAddressViewModel.swift */,
+				11B35B109B4F60753BEC5078 /* BaseReceiveAddressService.swift */,
+				11B3532A1DC90E3D0E3403F8 /* BaseReceiveAddressViewModel.swift */,
 				11B353E0AC6E1DE4F81BDEF5 /* ReceiveAddressViewItemFactory.swift */,
 				ABC9A1E2627D9F2C775AB3EE /* ReceiveAddressView.swift */,
 			);
@@ -7879,6 +7937,38 @@
 			path = PerformanceUidSelect;
 			sourceTree = "<group>";
 		};
+		6B5D850A2EA772CD00F13E2C /* Tron */ = {
+			isa = PBXGroup;
+			children = (
+				6B5D85212EA794BA00F13E2C /* TronReceiveAddressViewItemFactory.swift */,
+				6B5D85112EA7738D00F13E2C /* TronReceiveAddressService.swift */,
+				6B5D850E2EA7730E00F13E2C /* TronReceiveAddressViewModel.swift */,
+				6B5D850B2EA772DB00F13E2C /* TronReceiveAddressView.swift */,
+			);
+			path = Tron;
+			sourceTree = "<group>";
+		};
+		6B5D85172EA77DD900F13E2C /* Stellar */ = {
+			isa = PBXGroup;
+			children = (
+				6B5D851E2EA793D400F13E2C /* StellarReceiveAddressViewItemFactory.swift */,
+				6B5D85142EA77DD900F13E2C /* StellarReceiveAddressService.swift */,
+				6B5D85152EA77DD900F13E2C /* StellarReceiveAddressViewModel.swift */,
+				6B5D85162EA77DD900F13E2C /* StellarReceiveAddressView.swift */,
+			);
+			path = Stellar;
+			sourceTree = "<group>";
+		};
+		6B5D85282EA7A59900F13E2C /* Monero */ = {
+			isa = PBXGroup;
+			children = (
+				6B5D85252EA7A59900F13E2C /* MoneroReceiveAddressView.swift */,
+				6B5D85262EA7A59900F13E2C /* MoneroReceiveAddressViewModel.swift */,
+				6B5D85272EA7A59900F13E2C /* MoneroReceiveAddressService.swift */,
+			);
+			path = Monero;
+			sourceTree = "<group>";
+		};
 		6B5F5E132C0DDD6000E03EB2 /* Rank */ = {
 			isa = PBXGroup;
 			children = (
@@ -8115,6 +8205,36 @@
 				6BCD53112A161F4800993F20 /* BackupViewController.swift */,
 			);
 			path = Manual;
+			sourceTree = "<group>";
+		};
+		6BD7664F2EA62078008DDEA7 /* Zcash */ = {
+			isa = PBXGroup;
+			children = (
+				6B50FD9E2EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift */,
+				6B5D852F2EA7B05000F13E2C /* ZCashReceiveAddressService.swift */,
+				6BD766492EA25ABF008DDEA7 /* ZcashReceiveAddressSelectViewModel.swift */,
+				6BD766462EA25667008DDEA7 /* ZcashReceiveAddressSelectView.swift */,
+			);
+			path = Zcash;
+			sourceTree = "<group>";
+		};
+		6BD766502EA6210D008DDEA7 /* HD */ = {
+			isa = PBXGroup;
+			children = (
+				6BD7665E2EA637EA008DDEA7 /* HDReceiveAddressView.swift */,
+				6BD766542EA625E5008DDEA7 /* HDReceiveAddressViewModel.swift */,
+				6BD766512EA62119008DDEA7 /* HDReceiveAddressService.swift */,
+			);
+			path = HD;
+			sourceTree = "<group>";
+		};
+		6BD7665A2EA62E17008DDEA7 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				6BD766642EA64422008DDEA7 /* ReceiveAddressBodyView.swift */,
+				6BD7665B2EA62E1E008DDEA7 /* BaseReceiveAddressView.swift */,
+			);
+			path = Base;
 			sourceTree = "<group>";
 		};
 		6BE57E752E339CB5003C4C01 /* Merkle */ = {
@@ -10087,6 +10207,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B5D851D2EA77DD900F13E2C /* StellarReceiveAddressView.swift in Sources */,
 				D38404E4218317DF007D50AD /* AppDelegate.swift in Sources */,
 				D3840502218317DF007D50AD /* Protocols.swift in Sources */,
 				D07157DF2A2DDA09006F141F /* SendTronService.swift in Sources */,
@@ -10099,6 +10220,7 @@
 				D09D768F2A2E06D6004311E6 /* SendTronConfirmationViewController.swift in Sources */,
 				D0A690262BFCB51800E59296 /* TronPresendHandler.swift in Sources */,
 				6BB6E75E2D42354600C1EA66 /* PrivacyPolicyView.swift in Sources */,
+				6B5D850F2EA7731000F13E2C /* TronReceiveAddressViewModel.swift in Sources */,
 				D3840581218317DF007D50AD /* Core.swift in Sources */,
 				D3840583218317DF007D50AD /* CoverManager.swift in Sources */,
 				D3B73E312BDFC5580067429D /* PriceRow.swift in Sources */,
@@ -10118,6 +10240,7 @@
 				D38405A5218317DF007D50AD /* DateHelper.swift in Sources */,
 				D3DB51A62BD685B40091BBDB /* MarketTabView.swift in Sources */,
 				D38405A6218317DF007D50AD /* SystemInfoManager.swift in Sources */,
+				6B50FDA02EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift in Sources */,
 				6B6E138F2DED815B007F4A39 /* UIButton.swift in Sources */,
 				D38405A7218317DF007D50AD /* PermissionsHelper.swift in Sources */,
 				11B354AD94C483A7D5E3DD1F /* ValueFormatter.swift in Sources */,
@@ -10298,6 +10421,7 @@
 				11B35A228EFA7F36B12A1FC9 /* UITabBarItem.swift in Sources */,
 				6BCD531D2A16203F00993F20 /* CloudBackupManager.swift in Sources */,
 				58AAAF4236075971CC88F7ED /* SwapApproveService.swift in Sources */,
+				6BD766662EA6442D008DDEA7 /* ReceiveAddressBodyView.swift in Sources */,
 				D3C5986F2C1315AF00789D69 /* AttributedStringView.swift in Sources */,
 				58AAAE666BAD91283206BA1C /* SwapApproveViewModel.swift in Sources */,
 				58AAA0D14CD9EDAE2DBF7540 /* SwapApproveViewController.swift in Sources */,
@@ -10346,7 +10470,6 @@
 				11B35A42BF19B93C6005FBD9 /* AddTokenService.swift in Sources */,
 				11B35D550563934444558D15 /* AddTokenViewController.swift in Sources */,
 				58AAABE760739C0ECC6CA720 /* DownloadService.swift in Sources */,
-				6BD7663B2E9F6F64008DDEA7 /* ReceiveAddressViewModelFactory.swift in Sources */,
 				D3AFAAD12E2F9453004AB074 /* VaultChartFetcher.swift in Sources */,
 				D3E36BC42E013CC5007F99CA /* SendTokenListViewModel.swift in Sources */,
 				11B3502E7AA00ACFE8EE8CD9 /* FormTextView.swift in Sources */,
@@ -10393,6 +10516,7 @@
 				11B350B7D3DDBEE4F5B6E914 /* SendEvmTransactionViewModel.swift in Sources */,
 				11B354A6D78AA69DC3B8E496 /* SwapApproveConfirmationViewController.swift in Sources */,
 				11B35B5FA3177BC9ED21B929 /* SwapApproveConfirmationModule.swift in Sources */,
+				6BD7665F2EA637FD008DDEA7 /* HDReceiveAddressView.swift in Sources */,
 				11B35E13FC5117E8F1829DCB /* RecipientAddressCautionCell.swift in Sources */,
 				11B35E9A5F3FB43FD2F5C718 /* AmountInputCell.swift in Sources */,
 				11B35FD73BCF3DD557FD9783 /* RecipientAddressInputCell.swift in Sources */,
@@ -10440,6 +10564,7 @@
 				6B5F338A2D07FDF3001E23A4 /* EnabledWallet_v_0_40.swift in Sources */,
 				D08D16852C2165490086E5A5 /* TonSendHandler.swift in Sources */,
 				D3E36B7E2DF1B5FE007F99CA /* SpinningModifier.swift in Sources */,
+				6B5D852D2EA7A59900F13E2C /* MoneroReceiveAddressService.swift in Sources */,
 				6BCD53152A161F4800993F20 /* BackupViewModel.swift in Sources */,
 				11B35D10A6A15EFA47FCE6D0 /* TextCell.swift in Sources */,
 				6BCD53012A161F4100993F20 /* BackupCloudModule.swift in Sources */,
@@ -10600,6 +10725,7 @@
 				2FA5D8B40E95A9F8617EB4CA /* TransactionInfoService.swift in Sources */,
 				6B146A9C2A52A69400648C10 /* ChartIndicatorSettingsModule.swift in Sources */,
 				2FA5DEBB998DAFD3C8A802FD /* TransactionInfoViewController.swift in Sources */,
+				6B5D85122EA7739400F13E2C /* TronReceiveAddressService.swift in Sources */,
 				2FA5DFD5AFFA720FA28CCD6A /* TransactionInfoViewItemFactory.swift in Sources */,
 				2FA5D6CE58855A2E5DB57ED3 /* TransactionInfoViewModel.swift in Sources */,
 				58AAAE48451AF437CE86CE4C /* InputBadgeWrapperView.swift in Sources */,
@@ -10811,7 +10937,6 @@
 				ABC9AC5552508D091D622027 /* SendZcashFactory.swift in Sources */,
 				ABC9A6BC79804B3D3AAFA8F1 /* SendZcashService.swift in Sources */,
 				ABC9A55FD66CB6374F2D520D /* SendZcashViewController.swift in Sources */,
-				6BD766382E9F54A6008DDEA7 /* ReceiveAddressTabView.swift in Sources */,
 				ABC9A852D667D38030B7EF39 /* SendConfirmationModule.swift in Sources */,
 				D3E36B8E2DF94B73007F99CA /* StellarWalletTokenView.swift in Sources */,
 				D3A12E962CC8C5B6008D5F99 /* EducationViewModel.swift in Sources */,
@@ -10895,6 +11020,7 @@
 				11B3544E1538F4326C10A735 /* HeaderAmountView.swift in Sources */,
 				ABC9A295A99F39EFAAF8FCDA /* Integer.swift in Sources */,
 				ABC9A794E47FC07ABFC32BBD /* FeePriceScale.swift in Sources */,
+				6B5D85302EA7B05A00F13E2C /* ZCashReceiveAddressService.swift in Sources */,
 				1A56463FADAB4646BA106A5D /* TopPlatformMarketCapFetcher.swift in Sources */,
 				11B35BADA9ACC9921545BAD9 /* SecondaryButtonCell.swift in Sources */,
 				11B357DDBC0536428B997FE5 /* InputSecondaryCircleButtonWrapperView.swift in Sources */,
@@ -10991,6 +11117,7 @@
 				11B356D4E85B0A0133F6870C /* RestorePrivateKeyService.swift in Sources */,
 				D0F7D1152E5C67B800A91833 /* MoneroKeyViewController.swift in Sources */,
 				D0F7D1172E5C67B800A91833 /* MoneroKeyViewModel.swift in Sources */,
+				6BD766522EA62121008DDEA7 /* HDReceiveAddressService.swift in Sources */,
 				11B3529D506ADAEB715BF0D1 /* RestorePrivateKeyViewModel.swift in Sources */,
 				11B35A5C28DF128893703B6C /* RestoreViewModel.swift in Sources */,
 				11B35FF072E32C5D4028D0F6 /* TextInputCell.swift in Sources */,
@@ -11043,6 +11170,7 @@
 				11B35FC689D745FFBB3684C4 /* TokenType.swift in Sources */,
 				D3E36BBE2E00388C007F99CA /* SendTokenListView.swift in Sources */,
 				11B354F237E59C24ED8F3759 /* TokenQuery.swift in Sources */,
+				6B5D85222EA794C600F13E2C /* TronReceiveAddressViewItemFactory.swift in Sources */,
 				11B35D106185086B3BEC5119 /* Blockchain.swift in Sources */,
 				11B35E9CEC6187783834860E /* BlockchainType.swift in Sources */,
 				D3DD67382BC3CC2C00EC7F78 /* ThorChainMultiSwapBtcConfirmationQuote.swift in Sources */,
@@ -11132,6 +11260,7 @@
 				ABC9ACC4CA8C9CBCA7C1A182 /* ContactBookContactService.swift in Sources */,
 				ABC9A6F88E51293F2605CACD /* ContactBookContactModule.swift in Sources */,
 				ABC9A69A1A01DBD07CAAC9CD /* ContactBookAddressViewController.swift in Sources */,
+				6BD7665C2EA62E22008DDEA7 /* BaseReceiveAddressView.swift in Sources */,
 				ABC9A1D806117252BDECC095 /* ContactBookAddressModule.swift in Sources */,
 				ABC9AEDA6111C0A603807E85 /* ContactBookAddressViewModel.swift in Sources */,
 				ABC9AEF62C857F322FFA87E4 /* ContactBookAddressService.swift in Sources */,
@@ -11239,8 +11368,8 @@
 				D311DA202BD115240013DB8F /* MarketGlobalViewModel.swift in Sources */,
 				11B35E12C98A47C768DEDB65 /* EnabledWallet_v_0_34.swift in Sources */,
 				11B35777D07EC35D2AD98094 /* ReceiveAddressModule.swift in Sources */,
-				11B3594B47902B41F5C04E6B /* ReceiveAddressService.swift in Sources */,
-				11B358E4C529863AFFF8806F /* ReceiveAddressViewModel.swift in Sources */,
+				11B3594B47902B41F5C04E6B /* BaseReceiveAddressService.swift in Sources */,
+				11B358E4C529863AFFF8806F /* BaseReceiveAddressViewModel.swift in Sources */,
 				11B35EE923002E9FCC413422 /* ReceiveAddressViewItemFactory.swift in Sources */,
 				6B93AFD92E67138C00A55120 /* ViewWithTransactionList.swift in Sources */,
 				11B35D8E976E984302A81F8B /* ReceiveTokenViewModel.swift in Sources */,
@@ -11356,6 +11485,7 @@
 				11B3507578AF3163AAC8C494 /* EditPasscodeModule.swift in Sources */,
 				11B3518C9B837CB6C740AABB /* CreatePasscodeModule.swift in Sources */,
 				11B353096900F82EDF084F3B /* SetPasscodeViewModel.swift in Sources */,
+				6BD7664A2EA25AC2008DDEA7 /* ZcashReceiveAddressSelectViewModel.swift in Sources */,
 				11B35D4CF0FBE2496CED70E4 /* EditPasscodeViewModel.swift in Sources */,
 				11B35481F59793CD9C95B324 /* CreatePasscodeViewModel.swift in Sources */,
 				11B3531D97E44DA1D8280C35 /* EditDuressPasscodeViewModel.swift in Sources */,
@@ -11397,6 +11527,7 @@
 				6B6E13FC2DEDABDE007F4A39 /* HUDStatusView.swift in Sources */,
 				6B6E13FD2DEDABDE007F4A39 /* HUDModel.swift in Sources */,
 				6B6E13FE2DEDABDE007F4A39 /* HUDViewTheme.swift in Sources */,
+				6B5D852E2EA7A59900F13E2C /* MoneroReceiveAddressViewModel.swift in Sources */,
 				6B6E13FF2DEDABDE007F4A39 /* HUDView.swift in Sources */,
 				6B6E14002DEDABDE007F4A39 /* SmoothValueChanger.swift in Sources */,
 				11B358E12CBE7D1B687AE788 /* NumPadView.swift in Sources */,
@@ -11454,6 +11585,8 @@
 				ABC9AF309AAE5C54D2020B23 /* RawFullBackup.swift in Sources */,
 				ABC9A67C2D782AD0DFDF0C3C /* RestoreFileConfigurationViewController.swift in Sources */,
 				ABC9ACEB81BCB00435B35F64 /* RestoreFileHelper.swift in Sources */,
+				6B5D851B2EA77DD900F13E2C /* StellarReceiveAddressViewModel.swift in Sources */,
+				6B5D851C2EA77DD900F13E2C /* StellarReceiveAddressService.swift in Sources */,
 				11B35538EF749777CF7B2E8B /* ChartUiView.swift in Sources */,
 				11B35FA1970606C12E57C2EA /* ChartView.swift in Sources */,
 				D34DB1A92E1BEC1800DD30D3 /* Coordinator.swift in Sources */,
@@ -11470,6 +11603,7 @@
 				6BEA17732DE5918D00BF73DD /* ShieldSendHandler.swift in Sources */,
 				D350DDB52AE27E3B00CF1989 /* AppWidget.intentdefinition in Sources */,
 				11B359A79743E965870AE8B6 /* AppWidgetConstants.swift in Sources */,
+				6B5D850C2EA772E300F13E2C /* TronReceiveAddressView.swift in Sources */,
 				6BBB92BB2D11648E00112409 /* PromoCodeBottomSheetViewModel.swift in Sources */,
 				D34DB1AC2E24E59000DD30D3 /* CloudNotAvailableView.swift in Sources */,
 				11B359F812683F62595AFEE2 /* DateFormatterCache.swift in Sources */,
@@ -11506,6 +11640,7 @@
 				ABC9A6904E4DAE4C34EAEAE7 /* WCRequestPayload.swift in Sources */,
 				ABC9AF8BC668A989C34206BE /* AddressEventHandler.swift in Sources */,
 				ABC9AA82FC637FD132FA3D36 /* WCSendEthereumTransactionRequestModule.swift in Sources */,
+				6BD766472EA25669008DDEA7 /* ZcashReceiveAddressSelectView.swift in Sources */,
 				ABC9AF4E0120BFFB65D15A9B /* WCSendEthereumTransactionRequestService.swift in Sources */,
 				ABC9A192B0E531E1B2E4FF3F /* WCSendEthereumTransactionRequestViewModel.swift in Sources */,
 				ABC9AF231709386971D1A7AA /* WCSignMessageRequestViewModel.swift in Sources */,
@@ -11542,6 +11677,7 @@
 				ABC9AB6FF4DCBE7EFB5B8B7B /* ActionSheetModule.swift in Sources */,
 				ABC9A14877872E0FC7C9D0D2 /* ActionSheetTapView.swift in Sources */,
 				ABC9AFFAC86660ECAD968B2C /* ActionSheetConfiguration.swift in Sources */,
+				6B5D852C2EA7A59900F13E2C /* MoneroReceiveAddressView.swift in Sources */,
 				D3DD671D2BC3BB9300EC7F78 /* BaseEvmMultiSwapQuote.swift in Sources */,
 				ABC9A5EBD9EAC91EB97C199C /* ActionSheetControllerNew.swift in Sources */,
 				6BE57E812E33A0A6003C4C01 /* MerkleTransactionHash.swift in Sources */,
@@ -11597,6 +11733,7 @@
 				11B35490732E5F84656F339A /* PancakeV2MultiSwapProvider.swift in Sources */,
 				11B35CC202B611609C8445A4 /* BaseUniswapV3MultiSwapProvider.swift in Sources */,
 				11B35A33693733CDCBACD727 /* UniswapV3MultiSwapProvider.swift in Sources */,
+				6BD766562EA625EC008DDEA7 /* HDReceiveAddressViewModel.swift in Sources */,
 				11B35991B877DCF82D6E51B5 /* BaseUniswapMultiSwapProvider.swift in Sources */,
 				11B3570C71E4B47382D2DA4B /* MultiSwapTokenSelectView.swift in Sources */,
 				11B357EC10CF3DB905D9F19E /* MultiSwapTokenSelectViewModel.swift in Sources */,
@@ -11666,6 +11803,7 @@
 				6B93AFD62E66C46C00A55120 /* WalletInfoView.swift in Sources */,
 				ABC9AC8F6F1BD574DB5BAA20 /* RecipientRowsView.swift in Sources */,
 				ABC9AEC906C313583DBECCCA /* RecipientRowsViewModel.swift in Sources */,
+				6B5D851F2EA793E500F13E2C /* StellarReceiveAddressViewItemFactory.swift in Sources */,
 				ABC9A835B49A7BF85F87454D /* AlertButtonTintColor.swift in Sources */,
 				D3E1E8752C21859000E07052 /* PurchasesView.swift in Sources */,
 				6B5A13F22DF93DD3006E609C /* PerformanceDataSelectView.swift in Sources */,
@@ -11685,6 +11823,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6B5D851A2EA77DD900F13E2C /* StellarReceiveAddressView.swift in Sources */,
 				D38405D321831B3D007D50AD /* AppDelegate.swift in Sources */,
 				D36DE0FC272FD92F000BC916 /* SwapSelectProviderService.swift in Sources */,
 				D09D76912A2E0753004311E6 /* SendTronConfirmationViewModel.swift in Sources */,
@@ -11697,6 +11836,7 @@
 				D0A690252BFCB51800E59296 /* TronPresendHandler.swift in Sources */,
 				6BB6E75D2D42354600C1EA66 /* PrivacyPolicyView.swift in Sources */,
 				D384067021831B3D007D50AD /* Core.swift in Sources */,
+				6B5D85102EA7731000F13E2C /* TronReceiveAddressViewModel.swift in Sources */,
 				D384067221831B3D007D50AD /* CoverManager.swift in Sources */,
 				D3B73E302BDFC5580067429D /* PriceRow.swift in Sources */,
 				D384067A21831B3D007D50AD /* LanguageManager.swift in Sources */,
@@ -11716,6 +11856,7 @@
 				D384069521831B3D007D50AD /* SystemInfoManager.swift in Sources */,
 				D3DB51A52BD685B40091BBDB /* MarketTabView.swift in Sources */,
 				D384069621831B3D007D50AD /* PermissionsHelper.swift in Sources */,
+				6B50FD9F2EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift in Sources */,
 				6B6E13902DED815B007F4A39 /* UIButton.swift in Sources */,
 				11B3541F6B5316F3B373D1EA /* ValueFormatter.swift in Sources */,
 				D09D768C2A2E066E004311E6 /* SendTronConfirmationModule.swift in Sources */,
@@ -11896,6 +12037,7 @@
 				11B357BD9D9681D0D79DDEBE /* UITabBarItem.swift in Sources */,
 				6BCD531C2A16203F00993F20 /* CloudBackupManager.swift in Sources */,
 				58AAA996A8547DBE1BF378CE /* SwapApproveService.swift in Sources */,
+				6BD766652EA6442D008DDEA7 /* ReceiveAddressBodyView.swift in Sources */,
 				D3C5986E2C1315AF00789D69 /* AttributedStringView.swift in Sources */,
 				58AAA4915E1B70248A8DC620 /* SwapApproveViewModel.swift in Sources */,
 				58AAA7B99324DDA9C53692AD /* SwapApproveViewController.swift in Sources */,
@@ -11944,7 +12086,6 @@
 				11B35A90F19DE20ABE21F423 /* AddTokenService.swift in Sources */,
 				11B35FAB3263E489CB9017FC /* AddTokenViewController.swift in Sources */,
 				58AAA203CEB400A883379822 /* DownloadService.swift in Sources */,
-				6BD7663C2E9F6F64008DDEA7 /* ReceiveAddressViewModelFactory.swift in Sources */,
 				11B35246E31C33624A929628 /* FormTextView.swift in Sources */,
 				11B355E1AD0038B222CB652A /* AddressInputCell.swift in Sources */,
 				D3AFAAD02E2F9453004AB074 /* VaultChartFetcher.swift in Sources */,
@@ -11991,6 +12132,7 @@
 				11B350F8D2D09F1BD5ECF003 /* SendEvmViewModel.swift in Sources */,
 				D3DB51A22BD6857E0091BBDB /* MarketGlobalView.swift in Sources */,
 				11B35063C586D8E1365E9DFF /* SendEvmConfirmationViewController.swift in Sources */,
+				6BD766602EA637FD008DDEA7 /* HDReceiveAddressView.swift in Sources */,
 				11B355984178BF117AB606F5 /* SendAvailableBalanceCell.swift in Sources */,
 				11B355C78B016FC2EDDAECCC /* SendEvmModule.swift in Sources */,
 				D084F6C12BEB951C00407FA4 /* OutputSelectorViewModel2.swift in Sources */,
@@ -12038,6 +12180,7 @@
 				58AAAB04DD6CB4DBEE62526C /* ChartModule.swift in Sources */,
 				6BA8D24C2D5CA7DC0093D5C2 /* SupportViewModel.swift in Sources */,
 				11B353AD1FE351B86CA538EA /* RestoreMnemonicViewModel.swift in Sources */,
+				6B5D852A2EA7A59900F13E2C /* MoneroReceiveAddressService.swift in Sources */,
 				11B35631E5455A54854A2A6F /* RestoreMnemonicService.swift in Sources */,
 				11B357F4C63379217B25AA75 /* RestoreSelectModule.swift in Sources */,
 				11B3515F2ACB403229345352 /* RestoreSelectViewModel.swift in Sources */,
@@ -12198,6 +12341,7 @@
 				D30D7E602CAAC89700B8CAA7 /* TonConnectEventHandler.swift in Sources */,
 				58AAA539E1E8F4EA861A3F80 /* SwapCoinCardCell.swift in Sources */,
 				58AAAE3339DA7E8D7C467718 /* SwapAllowanceService.swift in Sources */,
+				6B5D85132EA7739400F13E2C /* TronReceiveAddressService.swift in Sources */,
 				58AAAC4F4425F8C33B604020 /* SwapPendingAllowanceService.swift in Sources */,
 				58AAADC5D50DBAEA6C8DE2C6 /* SwapAllowanceViewModel.swift in Sources */,
 				58AAA744C065C62FC7D1D58F /* SwapAllowanceCell.swift in Sources */,
@@ -12409,7 +12553,6 @@
 				D3E36B8D2DF94B73007F99CA /* StellarWalletTokenView.swift in Sources */,
 				D3A12E972CC8C5B6008D5F99 /* EducationViewModel.swift in Sources */,
 				D34338E52C8703F6001FCAD2 /* TonKitManager.swift in Sources */,
-				6BD766392E9F54A6008DDEA7 /* ReceiveAddressTabView.swift in Sources */,
 				ABC9AEC9C350F3CD059C9716 /* SendMemoInputService.swift in Sources */,
 				ABC9ACDD64F14C0D65A5CFBC /* SendZcashFactory.swift in Sources */,
 				ABC9A51F2E7EB0B477EBE708 /* SendZcashService.swift in Sources */,
@@ -12493,6 +12636,7 @@
 				ABC9A819DDAEE683FCCA02EF /* NftAssetCellFactory.swift in Sources */,
 				11B35D10BB1FC795924ED987 /* BalanceHiddenManager.swift in Sources */,
 				11B356FF5E5CC9AA34B89C86 /* HeaderAmountView.swift in Sources */,
+				6B5D85312EA7B05A00F13E2C /* ZCashReceiveAddressService.swift in Sources */,
 				ABC9A7CBFDC0DF741E29EA44 /* Integer.swift in Sources */,
 				ABC9A3D46AA7356763213BA6 /* FeePriceScale.swift in Sources */,
 				1A5640DE72AC306799695F48 /* TopPlatformMarketCapFetcher.swift in Sources */,
@@ -12589,6 +12733,7 @@
 				11B35EB5359DB0EA8058A75C /* RestoreModule.swift in Sources */,
 				D0F7D1112E5C67B800A91833 /* MoneroKeyViewController.swift in Sources */,
 				D0F7D1132E5C67B800A91833 /* MoneroKeyViewModel.swift in Sources */,
+				6BD766532EA62121008DDEA7 /* HDReceiveAddressService.swift in Sources */,
 				11B354FE5CD0F5658C7CCC69 /* RestoreViewController.swift in Sources */,
 				D090AF61297D725D00699916 /* TransparentIconButtonView.swift in Sources */,
 				11B35A79476177D3BE7DE477 /* RestorePrivateKeyService.swift in Sources */,
@@ -12641,6 +12786,7 @@
 				D3E36BBD2E00388C007F99CA /* SendTokenListView.swift in Sources */,
 				11B35DDD77B56489D1EB72C5 /* Token.swift in Sources */,
 				11B35C7BB534F9FFE5B6B3A6 /* TokenType.swift in Sources */,
+				6B5D85232EA794C600F13E2C /* TronReceiveAddressViewItemFactory.swift in Sources */,
 				11B358DC6827FC6035BF3225 /* TokenQuery.swift in Sources */,
 				D3DD67372BC3CC2C00EC7F78 /* ThorChainMultiSwapBtcConfirmationQuote.swift in Sources */,
 				11B3536884FEE247C144B395 /* Blockchain.swift in Sources */,
@@ -12730,6 +12876,7 @@
 				ABC9AF81A6F30F0041FE1FAC /* ContactBookAddressViewController.swift in Sources */,
 				ABC9A88848665A3482D51724 /* ContactBookAddressModule.swift in Sources */,
 				ABC9A0BAB439DEB0BC7495C3 /* ContactBookAddressViewModel.swift in Sources */,
+				6BD7665D2EA62E22008DDEA7 /* BaseReceiveAddressView.swift in Sources */,
 				ABC9A2C671DE8C67F192D22E /* ContactBookAddressService.swift in Sources */,
 				6BCD53192A161F9200993F20 /* BackupService.swift in Sources */,
 				ABC9A638E7EA1788D40FF929 /* FileManager.swift in Sources */,
@@ -12837,8 +12984,8 @@
 				D311DA1F2BD115240013DB8F /* MarketGlobalViewModel.swift in Sources */,
 				11B350153FC4894DAFCDB06F /* EnabledWallet_v_0_34.swift in Sources */,
 				11B35F4294930802EC8C9CEA /* ReceiveAddressModule.swift in Sources */,
-				11B3550C46C5811A7540A934 /* ReceiveAddressService.swift in Sources */,
-				11B3543A420A23064B056925 /* ReceiveAddressViewModel.swift in Sources */,
+				11B3550C46C5811A7540A934 /* BaseReceiveAddressService.swift in Sources */,
+				11B3543A420A23064B056925 /* BaseReceiveAddressViewModel.swift in Sources */,
 				6BDFC0872E3C8F1900CC28DD /* MerkleGetTransactionByHashJsonRpc.swift in Sources */,
 				6B93AFD82E67138C00A55120 /* ViewWithTransactionList.swift in Sources */,
 				D34637FA2DDDD68800187698 /* AddressCheckerView.swift in Sources */,
@@ -12954,6 +13101,7 @@
 				11B3591C77EE71054BF819D0 /* SetPasscodeView.swift in Sources */,
 				11B3587D9E89A97F63CD0C5A /* EditPasscodeModule.swift in Sources */,
 				11B35E051C3D3534E88BEB3D /* CreatePasscodeModule.swift in Sources */,
+				6BD7664B2EA25AC2008DDEA7 /* ZcashReceiveAddressSelectViewModel.swift in Sources */,
 				11B351E088F87C02C870DDB8 /* SetPasscodeViewModel.swift in Sources */,
 				D08D16812C2164880086E5A5 /* TonPresendHandler.swift in Sources */,
 				D34D3DDC2DBF9B7E005C9ACC /* StellarSendHandler.swift in Sources */,
@@ -12995,6 +13143,7 @@
 				6B6E14182DEDABDE007F4A39 /* HUDViewTheme.swift in Sources */,
 				6B6E14192DEDABDE007F4A39 /* HUDView.swift in Sources */,
 				6B6E141A2DEDABDE007F4A39 /* SmoothValueChanger.swift in Sources */,
+				6B5D852B2EA7A59900F13E2C /* MoneroReceiveAddressViewModel.swift in Sources */,
 				11B358B004B48988A1F6D888 /* AppUnlockViewModel.swift in Sources */,
 				11B35902128F12FB06B0CA5E /* BaseUnlockViewModel.swift in Sources */,
 				11B35E8DED55EE76CE1F943D /* ModuleUnlockViewModel.swift in Sources */,
@@ -13052,6 +13201,8 @@
 				ABC9A2F6D2A2AAFA31C64BAB /* RestoreFileConfigurationViewModel.swift in Sources */,
 				ABC9A37FB71FA7DA14553EFC /* RawFullBackup.swift in Sources */,
 				ABC9A0C5DE01B3C50D4C7FF2 /* RestoreFileConfigurationViewController.swift in Sources */,
+				6B5D85182EA77DD900F13E2C /* StellarReceiveAddressViewModel.swift in Sources */,
+				6B5D85192EA77DD900F13E2C /* StellarReceiveAddressService.swift in Sources */,
 				D34DB1A82E1BEC1800DD30D3 /* Coordinator.swift in Sources */,
 				ABC9A3231731F39ECA5B90ED /* RestoreFileHelper.swift in Sources */,
 				11B356DF455592656B742485 /* ChartUiView.swift in Sources */,
@@ -13068,6 +13219,7 @@
 				11B3551F51D987A150C3BC26 /* TabButtonStyle.swift in Sources */,
 				6BBB92BA2D11648E00112409 /* PromoCodeBottomSheetViewModel.swift in Sources */,
 				D34DB1AB2E24E59000DD30D3 /* CloudNotAvailableView.swift in Sources */,
+				6B5D850D2EA772E300F13E2C /* TronReceiveAddressView.swift in Sources */,
 				11B35D5CEB75CD7626D6A612 /* SharedLocalStorage.swift in Sources */,
 				D350DDB22AE27E3B00CF1989 /* AppWidget.intentdefinition in Sources */,
 				11B35FD593B38EEEE5F18010 /* AppWidgetConstants.swift in Sources */,
@@ -13104,6 +13256,7 @@
 				ABC9A41B8484D568EEAD72AE /* WalletConnectChain.swift in Sources */,
 				ABC9A82C93C9E266D1AFD1C3 /* WalletConnectTransaction.swift in Sources */,
 				ABC9A43B0EDD9BB6291F2E46 /* WCRequestPayload.swift in Sources */,
+				6BD766482EA25669008DDEA7 /* ZcashReceiveAddressSelectView.swift in Sources */,
 				ABC9A735B9F27756B046AF9F /* AddressEventHandler.swift in Sources */,
 				ABC9A3345E4D8A354AEBB574 /* WCSendEthereumTransactionRequestModule.swift in Sources */,
 				ABC9AFFE5C166606FD561A21 /* WCSendEthereumTransactionRequestService.swift in Sources */,
@@ -13140,6 +13293,7 @@
 				ABC9A674A859280DDD21FA57 /* ActionSheetPresentationController.swift in Sources */,
 				ABC9AD04E4D3706E01B72D8D /* ActionStyleNew.swift in Sources */,
 				ABC9AC786F40F51F2108048F /* ActionSheetModule.swift in Sources */,
+				6B5D85292EA7A59900F13E2C /* MoneroReceiveAddressView.swift in Sources */,
 				D3DD671C2BC3BB9300EC7F78 /* BaseEvmMultiSwapQuote.swift in Sources */,
 				6BE57E802E33A0A6003C4C01 /* MerkleTransactionHash.swift in Sources */,
 				ABC9A3103BC1D3CC7E9D80BD /* ActionSheetTapView.swift in Sources */,
@@ -13195,6 +13349,7 @@
 				11B35F0FF89A5B636C2EFE48 /* UniswapV2MultiSwapProvider.swift in Sources */,
 				11B356B6D73ADF1B1567CB47 /* PancakeV3MultiSwapProvider.swift in Sources */,
 				11B35CA4F61231F536BE9A24 /* PancakeV2MultiSwapProvider.swift in Sources */,
+				6BD766552EA625EC008DDEA7 /* HDReceiveAddressViewModel.swift in Sources */,
 				11B352D47A0F5A3E4AF8F948 /* BaseUniswapV3MultiSwapProvider.swift in Sources */,
 				11B35FB2259B3BB16AFE5624 /* UniswapV3MultiSwapProvider.swift in Sources */,
 				D36287AD2CA2BA2700ADAF3B /* TonConnectManager.swift in Sources */,
@@ -13264,6 +13419,7 @@
 				6B93AFD52E66C46C00A55120 /* WalletInfoView.swift in Sources */,
 				ABC9A6537ACEB9AF1CCF9D8C /* RecipientRowsViewModel.swift in Sources */,
 				ABC9A190E478402B48410FCC /* AlertButtonTintColor.swift in Sources */,
+				6B5D85202EA793E500F13E2C /* StellarReceiveAddressViewItemFactory.swift in Sources */,
 				D3E1E8742C21859000E07052 /* PurchasesView.swift in Sources */,
 				6B5A13F32DF93DD3006E609C /* PerformanceDataSelectView.swift in Sources */,
 				ABC9AF8603F37760F2D40A6E /* TransparentFullScreenCover.swift in Sources */,

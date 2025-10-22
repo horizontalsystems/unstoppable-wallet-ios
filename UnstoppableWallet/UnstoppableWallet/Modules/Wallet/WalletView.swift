@@ -159,13 +159,14 @@ struct WalletView: View {
                         Label("balance.send".localized, image: "arrow_m_up")
                     }
                 }
-                let addressProvider = ReceiveAddressModule.addressProvider(wallet: item.wallet)
-                if let address = addressProvider.address {
+                if let addressAdapter = Core.shared.adapterManager.adapter(for: item.wallet),
+                   let depositAdapter = addressAdapter as? IDepositAdapter
+                {
                     Button {
-                        copyAddressIfBackedUp(address: address)
+                        copyAddressIfBackedUp(address: depositAdapter.receiveAddress.address)
                     } label: {
                         Text("balance.copy_address".localized)
-                        Text(address.shortened)
+                        Text(depositAdapter.receiveAddress.address.shortened)
                         Image("copy")
                     }
                 }

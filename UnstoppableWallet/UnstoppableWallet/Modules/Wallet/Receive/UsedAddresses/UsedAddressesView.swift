@@ -5,10 +5,10 @@ struct UsedAddressesView: View {
     let title: String
     let description: String
     let hasChangeAddresses: Bool
-    let usedAddresses: [ReceiveAddressModule.AddressChain: [UsedAddress]]
+    let usedAddresses: [HDReceiveAddressViewModel.AddressChain: [UsedAddress]]
     var onDismiss: (() -> Void)?
 
-    @State private var currentTabIndex: Int = ReceiveAddressModule.AddressChain.external.rawValue
+    @State private var currentTabIndex: Int = HDReceiveAddressViewModel.AddressChain.external.rawValue
 
     @Environment(\.presentationMode) private var presentationMode
 
@@ -25,7 +25,7 @@ struct UsedAddressesView: View {
                 }
 
                 ListSection {
-                    if let key = ReceiveAddressModule.AddressChain(rawValue: currentTabIndex), let addresses = usedAddresses[key] {
+                    if let key = HDReceiveAddressViewModel.AddressChain(rawValue: currentTabIndex), let addresses = usedAddresses[key] {
                         ForEach(addresses, id: \.self) { address in
                             ListRow {
                                 HStack(spacing: .margin16) {
