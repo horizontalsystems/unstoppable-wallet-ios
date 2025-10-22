@@ -392,8 +392,12 @@
 // Deposit
 
 "deposit.receive_coin" = "收到%@";
+"deposit.zcash.title" = "Address Type";
+"deposit.zcash.header" = "Choose how you want to receive Zcash.";
 "deposit.address_type.unified" = "Unified";
+"deposit.address_type.unified.description" = "Use for personal and private transfers between wallets.";
 "deposit.address_type.transparent" = "透明";
+"deposit.address_type.transparent.description" = "Use for receiving from exchanges or services that don’t support unified addresses.";
 "deposit.address_type.transparent.caution" = "You can receive ZEC to this Transparent address. To send, transfer it to a Shielded one.";
 "deposit.address_type.legacy" = "遗留问题";
 
