@@ -73,6 +73,7 @@
 "alert.revoking" = "Отмена";
 "alert.revoked" = "Отменен";
 "alert.cant_recognize" = "Не удалось распознать";
+"alert.not_founded" = "Not Founded.";
 
 "alert.fee_too_low" = "Комиссия слишком низкая";
 "alert.rbf_not_Enabled" = "RBF (Replace-By-Fee) не активирован";
@@ -445,9 +446,9 @@
 "deposit.subaddresses.description" = "Используйте субадреса, чтобы управлять несколькими уникальными адресами в одном кошельке - это удобнее и надёжнее для вашей конфиденциальности.";
 "deposit.subaddresses.transactions_count" = "Транзакций: %@";
 
-"deposit.zcash.restore.description" = "Вы уже владели какими-либо монетами ZEC?";
-"deposit.zcash.restore.already_own" = "Да, у меня уже есть";
-"deposit.zcash.restore.dont_have" = "Нет, у меня нет";
+"deposit.restore.enabled.description" = "Have you previously owned any %@ coins?";
+"deposit.restore.enabled.already_own" = "Yes, I already own";
+"deposit.restore.enabled.dont_have" = "No, I don’t have";
 
 "deposit.warning" = "Только совместимые с сетью токены. Другие будут потеряны.";
 "deposit.warning.watch_account" = "Этот адрес - адрес наблюдаемого аккаунта";
