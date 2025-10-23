@@ -73,6 +73,7 @@
 "alert.revoking" = "철회";
 "alert.revoked" = "철회됨";
 "alert.cant_recognize" = "인식할 수 없음";
+"alert.not_founded" = "Not Founded.";
 
 "alert.fee_too_low" = "수수료가 너무 낮음";
 "alert.rbf_not_Enabled" = "RBF(수수료 변경)가 활성화되지 않았습니다";
@@ -441,9 +442,9 @@
 "deposit.subaddresses.description" = "하나의 지갑에서 여러 개의 고유 주소를 관리하려면 서브주소를 사용하세요. 더 쉽게 정리할 수 있고 개인 정보 보호도 강화됩니다.";
 "deposit.subaddresses.transactions_count" = "트랜잭션: %@";
 
-"deposit.zcash.restore.description" = "이전에 ZEC 코인을 소유한 적이 있나요?";
-"deposit.zcash.restore.already_own" = "예, 이미 소유하고 있습니다";
-"deposit.zcash.restore.dont_have" = "아니요, 없어요";
+"deposit.restore.enabled.description" = "Have you previously owned any %@ coins?";
+"deposit.restore.enabled.already_own" = "Yes, I already own";
+"deposit.restore.enabled.dont_have" = "No, I don’t have";
 
 "deposit.warning" = "네트워크 호환 토큰만 허용됩니다. 그 외에는 소멸됩니다.";
 "deposit.warning.watch_account" = "이 주소는 관찰 중인 계정의 주소입니다";
