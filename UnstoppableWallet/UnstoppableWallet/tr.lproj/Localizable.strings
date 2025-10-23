@@ -73,6 +73,7 @@
 "alert.revoking" = "İptal ediliyor";
 "alert.revoked" = "İptal et";
 "alert.cant_recognize" = "Tanıyamıyorum";
+"alert.not_founded" = "Not Founded.";
 
 "alert.fee_too_low" = "Ücret Çok Düşük";
 "alert.rbf_not_Enabled" = "RBF (Ücretle Değiştir) etkin değil";
@@ -443,9 +444,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "deposit.subaddresses.description" = "Tek bir cüzdanda birden fazla benzersiz adresi yönetmek için alt adresleri kullanın – düzenlemeyi kolaylaştırır, gizliliğinizi daha güvenli hale getirir.";
 "deposit.subaddresses.transactions_count" = "İşlemler: %@";
 
-"deposit.zcash.restore.description" = "Daha önce herhangi bir ZEC paranız var mıydı?";
-"deposit.zcash.restore.already_own" = "Evet, zaten sahibim";
-"deposit.zcash.restore.dont_have" = "Hayır, bende yok";
+"deposit.restore.enabled.description" = "Have you previously owned any %@ coins?";
+"deposit.restore.enabled.already_own" = "Yes, I already own";
+"deposit.restore.enabled.dont_have" = "No, I don’t have";
 
 "deposit.warning" = "Sadece ağ uyumlu jetonlar. Diğerleri kaybedilecek.";
 "deposit.warning.watch_account" = "Bu adres izlenen hesabın adresidir";
