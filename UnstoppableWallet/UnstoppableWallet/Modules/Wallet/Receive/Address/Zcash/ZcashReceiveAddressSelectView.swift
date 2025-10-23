@@ -6,13 +6,13 @@ struct ZcashReceiveAddressSelectView: View {
     private let wallet: Wallet
     private var onDismiss: (() -> Void)?
 
-    @State private var selectedAddressType: ZcashAdapter.AddressType?
-    @State private var isShowingDestination = false
+    @Binding var path: NavigationPath
 
     @Environment(\.presentationMode) private var presentationMode
 
-    init(wallet: Wallet, onDismiss: (() -> Void)? = nil) {
+    init(wallet: Wallet, path: Binding<NavigationPath>, onDismiss: (() -> Void)? = nil) {
         self.wallet = wallet
+        _path = path
         self.onDismiss = onDismiss
 
         _viewModel = StateObject(wrappedValue: ZcashReceiveAddressSelectViewModel())
@@ -20,36 +20,27 @@ struct ZcashReceiveAddressSelectView: View {
 
     var body: some View {
         ThemeView(style: .list) {
-            VStack(spacing: 0) {
-                ThemeList {
-                    Section {
-                        ListForEach(viewModel.viewItems) { viewItem in
-                            cell(viewItem: viewItem)
-                        }
-                    } header: {
-                        ThemeText("deposit.zcash.header".localized, style: .subhead, colorStyle: .secondary)
-                            .padding(.horizontal, .margin32)
-                            .padding(.top, .margin12)
-                            .padding(.bottom, .margin32)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .background(Color.themeTyler)
-                            .listRowInsets(EdgeInsets())
+            ThemeList {
+                Section {
+                    ListForEach(viewModel.viewItems) { viewItem in
+                        cell(viewItem: viewItem)
                     }
-                }
-
-                if let addressType = selectedAddressType { // TODO: remove code after deleting UIViewControllers from WalletView Receive Pages
-                    NavigationLink(
-                        destination: destinationView(for: addressType),
-                        isActive: $isShowingDestination
-                    ) {
-                        EmptyView()
-                    }
-                    .hidden()
+                } header: {
+                    ThemeText("deposit.zcash.header".localized, style: .subhead, colorStyle: .secondary)
+                        .padding(.horizontal, .margin32)
+                        .padding(.top, .margin12)
+                        .padding(.bottom, .margin32)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .background(Color.themeTyler)
+                        .listRowInsets(EdgeInsets())
                 }
             }
         }
         .navigationTitle("deposit.zcash.title".localized)
         .navigationBarTitleDisplayMode(.inline)
+        .navigationDestination(for: ZcashAdapter.AddressType.self, destination: { addresType in
+            destinationView(for: addresType)
+        })
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button("button.cancel".localized) {
@@ -73,8 +64,7 @@ struct ZcashReceiveAddressSelectView: View {
                 Image.disclosureIcon
             },
             action: {
-                selectedAddressType = viewItem.addressType
-                isShowingDestination = true
+                path.append(viewItem.addressType)
             }
         )
     }

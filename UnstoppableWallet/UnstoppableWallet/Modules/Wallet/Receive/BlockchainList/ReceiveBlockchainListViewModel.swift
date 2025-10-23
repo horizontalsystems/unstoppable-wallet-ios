@@ -1,6 +1,8 @@
+import Combine
+import Foundation
 import MarketKit
 
-class ReceiveTokenViewModel: IReceiveSelectorViewModel {
+class ReceiveBlockchainListViewModel: ObservableObject {
     private let fullCoin: FullCoin
     private let accountType: AccountType
 
@@ -10,8 +12,8 @@ class ReceiveTokenViewModel: IReceiveSelectorViewModel {
     }
 }
 
-extension ReceiveTokenViewModel {
-    var viewItems: [ReceiveSelectorViewModel.ViewItem] {
+extension ReceiveBlockchainListViewModel {
+    var viewItems: [ReceiveBlockchainListViewModel.ViewItem] {
         let tokens = fullCoin.tokens
             .filter { accountType.supports(token: $0) }
             .sorted { lhsToken, rhsToken in
@@ -26,7 +28,7 @@ extension ReceiveTokenViewModel {
             }
 
         return tokens.map {
-            ReceiveSelectorViewModel.ViewItem(
+            .init(
                 uid: $0.blockchain.uid,
                 imageUrl: $0.blockchainType.imageUrl,
                 title: $0.blockchain.name,
@@ -38,8 +40,15 @@ extension ReceiveTokenViewModel {
     func item(uid: String) -> Token? {
         fullCoin.tokens.first { $0.blockchain.uid == uid }
     }
+}
 
-    var title: String { "receive_network_select.title".localized }
-    var topDescription: String { "receive_network_select.description".localized }
-    var highlightedBottomDescription: String? { nil }
+extension ReceiveBlockchainListViewModel {
+    struct ViewItem: Hashable, Identifiable {
+        let uid: String
+        let imageUrl: String?
+        let title: String
+        let subtitle: String
+
+        var id: String { uid }
+    }
 }

@@ -6,6 +6,8 @@ import SnapKit
 import UIExtensions
 import UIKit
 
+import SwiftUI
+
 class BirthdayInputViewController: KeyboardAwareViewController {
     private let token: Token
 
@@ -237,4 +239,20 @@ extension BirthdayInputViewController {
             }
         }
     }
+}
+
+struct BirthdayInputView: UIViewControllerRepresentable {
+    let token: Token
+    let onEnterBirthdayHeight: (Int) -> Void
+
+    func makeUIViewController(context _: Context) -> UINavigationController {
+        let viewController = BirthdayInputViewController(token: token)
+        viewController.onEnterBirthdayHeight = { [weak viewController] height in
+            onEnterBirthdayHeight(height ?? 0)
+            viewController?.dismiss(animated: true)
+        }
+        return ThemeNavigationController(rootViewController: viewController)
+    }
+
+    func updateUIViewController(_: UINavigationController, context _: Context) {}
 }

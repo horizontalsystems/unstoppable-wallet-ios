@@ -2,8 +2,9 @@ import Foundation
 import HsExtensions
 import MarketKit
 
-class ReceiveSelectCoinService {
+class ReceiveCoinListService {
     private let provider: CoinProvider
+    private let settingsService = RestoreSettingsService(manager: Core.shared.restoreSettingsManager)
 
     private var filter: String = "" {
         didSet {
@@ -24,6 +25,11 @@ class ReceiveSelectCoinService {
 
         if filter.isEmpty {
             self.coins = coins
+            return
+        }
+
+        if coins.isEmpty {
+            self.coins = []
             return
         }
 
@@ -54,9 +60,18 @@ class ReceiveSelectCoinService {
             return lhsFullCoin.coin.name.lowercased() < rhsFullCoin.coin.name.lowercased()
         }
     }
+
+    func onRestoreWithBirthdayHeight(account: Account, token: Token, height: Int?) {
+        // create token with birthdayHeight
+        let tokenWithSettings = settingsService.enter(birthdayHeight: height, token: token)
+        settingsService.save(settings: tokenWithSettings.settings, account: account, blockchainType: token.blockchainType)
+
+        // create wallet for token
+        ReceiveModule.createWallet(account: account, token: token)
+    }
 }
 
-extension ReceiveSelectCoinService {
+extension ReceiveCoinListService {
     func set(filter: String) {
         self.filter = filter
     }
