@@ -73,6 +73,7 @@
 "alert.revoking" = "Révocation en cours";
 "alert.revoked" = "Révoqué";
 "alert.cant_recognize" = "Impossible de reconnaître";
+"alert.not_founded" = "Not Founded.";
 
 "alert.fee_too_low" = "Frais trop bas";
 "alert.rbf_not_Enabled" = "RBF(Remplacer par frais) non activé";
@@ -443,9 +444,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "deposit.subaddresses.description" = "Utilisez des sous-adresses pour gérer plusieurs adresses uniques dans un seul portefeuille — plus facile à organiser et plus sûr pour votre confidentialité.";
 "deposit.subaddresses.transactions_count" = "Transactions : %@";
 
-"deposit.zcash.restore.description" = "Avez-vous déjà possédé des pièces de monnaie ZEC?";
-"deposit.zcash.restore.already_own" = "Oui, je suis déjà propriétaire";
-"deposit.zcash.restore.dont_have" = "Non, je n'ai pas";
+"deposit.restore.enabled.description" = "Have you previously owned any %@ coins?";
+"deposit.restore.enabled.already_own" = "Yes, I already own";
+"deposit.restore.enabled.dont_have" = "No, I don’t have";
 
 "deposit.warning" = "Seuls les jetons compatibles avec le réseau seront conservés. Les autres seront perdus.";
 "deposit.warning.watch_account" = "Cette adresse est l'adresse du compte surveillé";
