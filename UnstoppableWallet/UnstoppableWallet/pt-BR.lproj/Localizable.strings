@@ -73,6 +73,7 @@
 "alert.revoking" = "Revogando";
 "alert.revoked" = "Revogado";
 "alert.cant_recognize" = "Impossível Reconhecer";
+"alert.not_founded" = "Not Founded.";
 
 "alert.fee_too_low" = "Taxa Baixa Muito";
 "alert.rbf_not_Enabled" = "RBF (Substituir por taxa) não ativado";
@@ -443,9 +444,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "deposit.subaddresses.description" = "Use subendereços para gerenciar vários endereços únicos em uma única carteira — mais fácil de organizar e mais seguro para a sua privacidade.";
 "deposit.subaddresses.transactions_count" = "Transação %@";
 
-"deposit.zcash.restore.description" = "Já possui alguma moeda ZEC?";
-"deposit.zcash.restore.already_own" = "Sim, eu já possuo";
-"deposit.zcash.restore.dont_have" = "Não, eu não tenho";
+"deposit.restore.enabled.description" = "Have you previously owned any %@ coins?";
+"deposit.restore.enabled.already_own" = "Yes, I already own";
+"deposit.restore.enabled.dont_have" = "No, I don’t have";
 
 "deposit.warning" = "Apenas tokens compatíveis com a rede. Outros serão perdidos.";
 "deposit.warning.watch_account" = "Este endereço é o endereço da conta monitorada";
