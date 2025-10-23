@@ -73,6 +73,7 @@
 "alert.revoking" = "正在取消";
 "alert.revoked" = "已注销";
 "alert.cant_recognize" = "无法识别";
+"alert.not_founded" = "Not Founded.";
 
 "alert.fee_too_low" = "费用过低";
 "alert.rbf_not_Enabled" = "RBF(替换交易) 未启用";
@@ -443,9 +444,9 @@
 "deposit.subaddresses.description" = "使用子地址来管理一个钱包中的多个独特地址——更容易组织起来，对您的隐私更安全。";
 "deposit.subaddresses.transactions_count" = "交易：%@";
 
-"deposit.zcash.restore.description" = "您以前是否拥有过任何ZEC硬币？";
-"deposit.zcash.restore.already_own" = "是的，我已经拥有了";
-"deposit.zcash.restore.dont_have" = "不，我没有";
+"deposit.restore.enabled.description" = "Have you previously owned any %@ coins?";
+"deposit.restore.enabled.already_own" = "Yes, I already own";
+"deposit.restore.enabled.dont_have" = "No, I don’t have";
 
 "deposit.warning" = "仅支持与网络兼容的代币，其他将会丧失。";
 "deposit.warning.watch_account" = "该地址是被监视账户的地址";
