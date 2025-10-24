@@ -35,7 +35,7 @@ class WatchViewModel: ObservableObject {
     }
 
     @Published var name: String
-    @Published var text = "" {
+    @Published var text = AppConfig.defaultWatchAddress ?? "" {
         didSet {
             guard !syncingTextWithAddress, text != oldValue else {
                 return

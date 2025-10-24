@@ -46,6 +46,7 @@ struct AddressViewNew: View {
                         }
                     }
                     .font(.themeBody)
+                    .tint(.themeInputFieldTintColor)
                     .autocorrectionDisabled()
                     .autocapitalization(.none)
                     .modifier(RightChecking(state: $viewModel.checkingState))

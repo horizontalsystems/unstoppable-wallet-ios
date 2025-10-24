@@ -33,6 +33,7 @@ struct MultiSwapSlippageView: View {
                     text: text
                 )
                 .font(.themeBody)
+                .tint(.themeInputFieldTintColor)
                 .keyboardType(.decimalPad)
                 .autocorrectionDisabled()
                 .disabled(viewModel.mode.disabled)

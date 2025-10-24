@@ -17,7 +17,7 @@ struct LargeTextField: View {
             .lineLimit(3...)
             .autocorrectionDisabled()
             .font(TextStyle.body.font)
-            .accentColor(.themeLeah)
+            .tint(.themeInputFieldTintColor)
 
             HStack(spacing: .margin8) {
                 Spacer()

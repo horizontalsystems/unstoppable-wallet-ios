@@ -28,6 +28,7 @@ struct InputTextView: View {
     var body: some View {
         editView()
             .font(font)
+            .tint(.themeInputFieldTintColor)
             .accentColor(.themeLeah)
             .modifier(Validated(text: text, isValidText: isValidText))
     }
