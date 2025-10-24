@@ -99,6 +99,7 @@ struct MultiSwapView: View {
                 TextField("", text: $viewModel.amountString, prompt: Text("0").foregroundColor(.themeGray))
                     .foregroundColor(.themeLeah)
                     .font(.themeHeadline1)
+                    .tint(.themeInputFieldTintColor)
                     .keyboardType(.decimalPad)
                     .focused($isInputActive)
 
@@ -110,6 +111,7 @@ struct MultiSwapView: View {
                             TextField("", text: $viewModel.fiatAmountString, prompt: Text("0").foregroundColor(.themeGray))
                                 .foregroundColor(.themeGray)
                                 .font(.themeBody)
+                                .tint(.themeInputFieldTintColor)
                                 .keyboardType(.decimalPad)
                                 .focused($isInputActive)
                                 .frame(height: 20)

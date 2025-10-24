@@ -101,6 +101,7 @@ struct PreSendView: View {
             TextField("", text: $viewModel.amountString, prompt: Text("0").foregroundColor(.themeGray))
                 .foregroundColor(.themeLeah)
                 .font(.themeHeadline1)
+                .tint(.themeInputFieldTintColor)
                 .keyboardType(.decimalPad)
                 .focused($focusField, equals: .amount)
 
@@ -111,6 +112,7 @@ struct PreSendView: View {
                     TextField("", text: $viewModel.fiatAmountString, prompt: Text("0").foregroundColor(.themeGray))
                         .foregroundColor(.themeGray)
                         .font(.themeBody)
+                        .tint(.themeInputFieldTintColor)
                         .keyboardType(.decimalPad)
                         .focused($focusField, equals: .fiatAmount)
                         .frame(height: 20)
