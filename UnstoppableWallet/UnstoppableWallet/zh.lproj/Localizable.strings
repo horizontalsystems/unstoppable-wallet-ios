@@ -27,6 +27,7 @@
 "button.sign" = "签名";
 "button.more" = "显示更多";
 "button.i_understand" = "我理解";
+"button.understood" = "Understood";
 "button.learn_more" = "了解更多";
 "button.unlock" = "解锁​​​​";
 "button.select" = "选择";
@@ -189,7 +190,8 @@
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "资金地址（推荐）";
 "sync_mode.hybrid" = "混合型";
 "sync_mode.from_blockchain" = "来自区块链";
-"blockchain_settings.description" = "选择接收付款的地址格式。恢复现有钱包时应选择正确的格式。";
+"blockchain_settings.description" = "Select the address format for the coin.";
+"blockchain_settings.footer" = "Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
 
@@ -347,6 +349,8 @@
 
 "balance_error.change_source" = "更改源";
 "balance_error.sync_error" = "同步出错";
+"balance_error.sync_error.description.with_source" = "Failed to fetch data from the current source. You can retry or switch to a different sync source.";
+"balance_error.sync_error.description.without_source" = "Failed to fetch data from the current source. Please try again later.";
 "lost_accounts.warning_title" = "iOS Keychain 错误";
 "lost_accounts.warning_message" = "由于 iOS 钥匙串错误，无法访问以下钱包：\n\n%@\n\n重新启动应用通常可以解决此问题。如果问题仍然存在，您可以取消关联并恢复这些钱包。";
 
