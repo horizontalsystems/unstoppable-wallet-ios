@@ -3,7 +3,7 @@ class TronReceiveAddressViewItemFactory: ReceiveAddressViewItemFactory {
         if let item = item as? TronReceiveAddressService.TronAssetReceiveAddress, !item.activated {
             return .init(
                 title: "deposit.not_active.title".localized,
-                description: .init(text: "deposit.not_active.tron_description".localized, style: .warning),
+                description: .init(text: "deposit.not_active.tron_description".localized),
                 mode: .done(title: "button.i_understand".localized)
             )
         }

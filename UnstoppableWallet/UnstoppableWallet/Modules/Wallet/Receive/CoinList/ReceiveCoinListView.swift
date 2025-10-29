@@ -46,7 +46,7 @@ struct ReceiveCoinListView: View {
             }
             .onChange(of: viewModel.enableTokenWithBirthday) { token in
                 if let token {
-                    showZcashEnableSheet(token: token)
+                    showBirthdayEnableSheet(token: token)
                 }
             }
             .onChange(of: viewModel.pushCoinUid) { uid in
@@ -89,28 +89,26 @@ struct ReceiveCoinListView: View {
         }
     }
 
-    private func showZcashEnableSheet(token: Token) {
+    private func showBirthdayEnableSheet(token: Token) {
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
-            BottomSheetView(
-                icon: .remote(url: token.coin.imageUrl, placeholder: "placeholder_circle_32"),
-                title: token.coin.code,
-                subtitle: token.coin.name,
+            BottomSheetView.instance(
+                title: token.coin.name,
                 items: [
                     .text(text: "deposit.restore.enabled.description".localized(token.coin.code)),
-                ],
-                buttons: [
-                    .init(style: .yellow, title: "deposit.restore.enabled.already_own".localized) {
-                        isPresented.wrappedValue = false
-                        viewModel.enableTokenWithBirthday = nil
+                    .buttonGroup(.init(buttons: [
+                        .init(style: .yellow, title: "deposit.restore.enabled.already_own".localized, action: {
+                            isPresented.wrappedValue = false
+                            viewModel.enableTokenWithBirthday = nil
 
-                        showRestoreZcash(token: token)
-                    },
-                    .init(style: .gray, title: "deposit.restore.enabled.dont_have".localized) {
-                        isPresented.wrappedValue = false
-                        viewModel.enableTokenWithBirthday = nil
+                            showRestoreZcash(token: token)
+                        }),
+                        .init(style: .transparent, title: "deposit.restore.enabled.dont_have".localized, action: {
+                            isPresented.wrappedValue = false
+                            viewModel.enableTokenWithBirthday = nil
 
-                        viewModel.createZcashWallet(token: token, height: nil)
-                    },
+                            viewModel.createZcashWallet(token: token, height: nil)
+                        }),
+                    ])),
                 ],
                 isPresented: isPresented
             )

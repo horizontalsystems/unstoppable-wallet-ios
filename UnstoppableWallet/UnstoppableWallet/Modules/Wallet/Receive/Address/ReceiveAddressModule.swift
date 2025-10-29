@@ -23,7 +23,6 @@ enum ReceiveAddressModule {
 
     struct DescriptionItem {
         let text: String
-        let style: HighlightedTextView.Style
     }
 
     struct PopupWarningItem: Equatable, Identifiable {

@@ -66,7 +66,7 @@ class BaseReceiveAddressViewModel: ObservableObject {
         }
     }
 
-    func popupButtons(mode _: ReceiveAddressModule.PopupWarningItem.Mode, isPresented _: Binding<Bool>) -> [BottomSheetView.ButtonItem] {
+    func popupButtons(mode _: ReceiveAddressModule.PopupWarningItem.Mode, isPresented _: Binding<Bool>) -> [ButtonGroupViewModel.ButtonItem] {
         []
     }
 }

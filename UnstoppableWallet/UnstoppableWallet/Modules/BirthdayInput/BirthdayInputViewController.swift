@@ -243,12 +243,12 @@ extension BirthdayInputViewController {
 
 struct BirthdayInputView: UIViewControllerRepresentable {
     let token: Token
-    let onEnterBirthdayHeight: (Int) -> Void
+    let onEnterBirthdayHeight: (Int?) -> Void
 
     func makeUIViewController(context _: Context) -> UINavigationController {
         let viewController = BirthdayInputViewController(token: token)
         viewController.onEnterBirthdayHeight = { [weak viewController] height in
-            onEnterBirthdayHeight(height ?? 0)
+            onEnterBirthdayHeight(height)
             viewController?.dismiss(animated: true)
         }
         return ThemeNavigationController(rootViewController: viewController)

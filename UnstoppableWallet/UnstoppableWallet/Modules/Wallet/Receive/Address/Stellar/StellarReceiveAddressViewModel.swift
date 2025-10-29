@@ -40,7 +40,7 @@ class StellarReceiveAddressViewModel: BaseReceiveAddressViewModel {
         return .stellar(data: .changeTrust(asset: adapter.asset, limit: StellarAdapter.maxValue), token: stellarService.wallet.token, memo: nil)
     }
 
-    override func popupButtons(mode: ReceiveAddressModule.PopupWarningItem.Mode, isPresented: Binding<Bool>) -> [BottomSheetView.ButtonItem] {
+    override func popupButtons(mode: ReceiveAddressModule.PopupWarningItem.Mode, isPresented: Binding<Bool>) -> [ButtonGroupViewModel.ButtonItem] {
         if mode is ActivateStellarAssetMode {
             return [
                 .init(style: .yellow, title: "deposit.activate".localized) { [weak self] in

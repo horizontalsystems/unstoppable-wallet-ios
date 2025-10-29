@@ -27,6 +27,7 @@
 "button.sign" = "Sign";
 "button.more" = "Show More";
 "button.i_understand" = "I Understand";
+"button.understood" = "Understood";
 "button.learn_more" = "Learn More";
 "button.unlock" = "Unlock";
 "button.select" = "Select";
@@ -187,7 +188,8 @@
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.hybrid" = "Hybrid";
 "sync_mode.from_blockchain" = "%@ Blockchain";
-"blockchain_settings.description" = "Select the address format for receiving payments. A correct format should be chosen when restoring an existing wallet.";
+"blockchain_settings.description" = "Select the address format for the coin.";
+"blockchain_settings.footer" = "Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
 
@@ -345,6 +347,8 @@
 
 "balance_error.change_source" = "Change Source";
 "balance_error.sync_error" = "Sync Error";
+"balance_error.sync_error.description.with_source" = "Failed to fetch data from the current source. You can retry or switch to a different sync source.";
+"balance_error.sync_error.description.without_source" = "Failed to fetch data from the current source. Please try again later.";
 "lost_accounts.warning_title" = "iOS Keychain Error";
 "lost_accounts.warning_message" = "Due to an iOS Keychain error, we couldn't access the following wallets:\n\n%@\n\nRestarting the app usually fixes this. If the issue persists, you can unlink and restore these wallets.";
 

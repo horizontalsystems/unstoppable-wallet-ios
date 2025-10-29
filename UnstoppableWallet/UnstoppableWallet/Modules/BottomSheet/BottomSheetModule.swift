@@ -1,4 +1,5 @@
 
+import Combine
 import SectionsTableView
 import SwiftUI
 import UIKit
@@ -16,68 +17,8 @@ enum BottomSheetModule {
 
 extension BottomSheetModule {
     static func copyConfirmation(value: String, onCopy: (() -> Void)? = nil) -> UIViewController {
-        viewController(
-            image: .warning,
-            title: "copy_warning.title".localized,
-            items: [
-                .highlightedDescription(text: "copy_warning.description".localized),
-            ],
-            buttons: [
-                .init(style: .red, title: "copy_warning.i_will_risk_it".localized) {
-                    UIPasteboard.general.string = value
-                    HudHelper.instance.show(banner: .copied)
-                    onCopy?()
-                },
-                .init(style: .transparent, title: "copy_warning.dont_copy".localized),
-            ]
-        )
-    }
-
-    static func backupPromptAfterCreate(account: Account, sourceViewController: UIViewController?) -> UIViewController {
-        backupPrompt(
-            title: "backup_prompt.backup_recovery_phrase".localized,
-            description: "backup_prompt.warning".localized,
-            cancelText: "backup_prompt.later".localized,
-            account: account,
-            sourceViewController: sourceViewController,
-            statPage: .backupPromptAfterCreate
-        )
-    }
-
-    static func backupRequiredPrompt(description: String, account: Account, sourceViewController: UIViewController?) -> UIViewController {
-        backupPrompt(
-            title: "backup_prompt.backup_required".localized,
-            description: description,
-            cancelText: "button.cancel".localized,
-            account: account,
-            sourceViewController: sourceViewController,
-            statPage: .backupRequired
-        )
-    }
-
-    private static func backupPrompt(title: String, description: String, cancelText: String, account: Account, sourceViewController: UIViewController?, statPage: StatPage) -> UIViewController {
-        viewController(
-            image: .warning,
-            title: title,
-            items: [
-                .highlightedDescription(text: description),
-            ],
-            buttons: [
-                .init(style: .yellow, title: "backup_prompt.backup_manual".localized, imageName: "edit_24", actionType: .afterClose) { [weak sourceViewController] in
-                    guard let viewController = BackupModule.manualViewController(account: account) else {
-                        return
-                    }
-
-                    sourceViewController?.present(viewController, animated: true)
-                    stat(page: statPage, event: .open(page: .manualBackup))
-                },
-                .init(style: .gray, title: "backup_prompt.backup_cloud".localized, imageName: "icloud_24", actionType: .afterClose) { [weak sourceViewController] in
-                    sourceViewController?.present(BackupModule.cloudViewController(account: account), animated: true)
-                    stat(page: statPage, event: .open(page: .cloudBackup))
-                },
-                .init(style: .transparent, title: cancelText),
-            ]
-        )
+        let wrapper = CopyConfirmationHostingController(value: value, onCopy: onCopy)
+        return wrapper.toBottomSheet
     }
 
     static func description(title: String, text: String, buttons: [Button] = []) -> UIViewController {
@@ -88,38 +29,6 @@ extension BottomSheetModule {
                 .description(text: text),
             ],
             buttons: buttons
-        )
-    }
-
-    static func confirmDeleteCloudBackupController(action: (() -> Void)?) -> UIViewController {
-        viewController(
-            image: .trash,
-            title: "manage_account.cloud_delete_backup_recovery_phrase".localized,
-            items: [
-                .highlightedDescription(text: "manage_account.cloud_delete_backup_recovery_phrase.description".localized),
-            ],
-            buttons: [
-                .init(style: .red, title: "button.delete".localized, actionType: .afterClose) {
-                    action?()
-                },
-                .init(style: .transparent, title: "button.cancel".localized),
-            ]
-        )
-    }
-
-    static func deleteCloudBackupAfterManualBackupController(action: (() -> Void)?) -> UIViewController {
-        viewController(
-            image: .warning,
-            title: "manage_account.manual_backup_required".localized,
-            items: [
-                .highlightedDescription(text: "manage_account.manual_backup_required.description".localized),
-            ],
-            buttons: [
-                .init(style: .yellow, title: "manage_account.manual_backup_required.button".localized, actionType: .afterClose) {
-                    action?()
-                },
-                .init(style: .transparent, title: "button.cancel".localized),
-            ]
         )
     }
 
@@ -194,4 +103,79 @@ struct ViewWrapper: UIViewControllerRepresentable {
     }
 
     func updateUIViewController(_: UIViewController, context _: Context) {}
+}
+
+private class CopyConfirmationHostingController: UIHostingController<CopyConfirmationWrapperView> {
+    init(value: String, onCopy: (() -> Void)?) {
+        let isPresented = Binding<Bool>(
+            get: { true },
+            set: { _ in }
+        )
+
+        let view = CopyConfirmationWrapperView(
+            value: value,
+            onCopy: onCopy,
+            isPresented: isPresented
+        )
+
+        super.init(rootView: view)
+
+        let dismissBinding = Binding<Bool>(
+            get: { true },
+            set: { [weak self] newValue in
+                if !newValue {
+                    self?.dismiss(animated: true)
+                }
+            }
+        )
+
+        rootView = CopyConfirmationWrapperView(
+            value: value,
+            onCopy: onCopy,
+            isPresented: dismissBinding
+        )
+    }
+
+    @available(*, unavailable)
+    @MainActor dynamic required init?(coder _: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+struct CopyConfirmationWrapperView: View {
+    let value: String
+    let onCopy: (() -> Void)?
+    @Binding var isPresented: Bool
+
+    var body: some View {
+        BottomSheetView.instance(
+            icon: .error,
+            title: "copy_warning.title".localized,
+            items: [
+                .text(text: "copy_warning.description".localized),
+                .buttonGroup(
+                    .init(buttons: [
+                        .init(
+                            style: .gray,
+                            title: "copy_warning.i_will_risk_it".localized,
+                            action: {
+                                UIPasteboard.general.string = value
+                                HudHelper.instance.show(banner: .copied)
+                                onCopy?()
+                                isPresented = false
+                            }
+                        ),
+                        .init(
+                            style: .transparent,
+                            title: "copy_warning.dont_copy".localized,
+                            action: {
+                                isPresented = false
+                            }
+                        ),
+                    ])
+                ),
+            ],
+            isPresented: $isPresented
+        )
+    }
 }
