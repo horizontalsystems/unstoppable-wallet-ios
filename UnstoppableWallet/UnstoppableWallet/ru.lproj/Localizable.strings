@@ -27,6 +27,7 @@
 "button.sign" = "Подписать";
 "button.more" = "Показать больше";
 "button.i_understand" = "Я понимаю";
+"button.understood" = "Understood";
 "button.learn_more" = "Подробнее";
 "button.unlock" = "Разблокировать";
 "button.select" = "Выбрать";
@@ -191,7 +192,8 @@
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (рекомендованный)";
 "sync_mode.hybrid" = "Гибрид";
 "sync_mode.from_blockchain" = "Из блокчейна";
-"blockchain_settings.description" = "Выберите формат адреса для получения средств. Правильный формат должен быть выбран при восстановлении существующего кошелька.";
+"blockchain_settings.description" = "Select the address format for the coin.";
+"blockchain_settings.footer" = "Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
 
@@ -349,6 +351,8 @@
 
 "balance_error.change_source" = "Изменить источник";
 "balance_error.sync_error" = "Ошибка синхронизации";
+"balance_error.sync_error.description.with_source" = "Failed to fetch data from the current source. You can retry or switch to a different sync source.";
+"balance_error.sync_error.description.without_source" = "Failed to fetch data from the current source. Please try again later.";
 "lost_accounts.warning_title" = "Ошибка связки ключей iOS";
 "lost_accounts.warning_message" = "Из-за ошибки iOS Keychain не удалось получить доступ к следующим кошелькам:\n\n%@\n\nОбычно проблему решает перезапуск приложения. Если ошибка сохраняется, вы можете удалить эти кошельки из приложения и восстановить их заново.";
 
