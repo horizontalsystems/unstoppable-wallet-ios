@@ -27,6 +27,7 @@
 "button.sign" = "Signer";
 "button.more" = "Afficher plus";
 "button.i_understand" = "J’ai Compris";
+"button.understood" = "Understood";
 "button.learn_more" = "En savoir plus";
 "button.unlock" = "Déverrouiller";
 "button.select" = "Sélectionner";
@@ -189,7 +190,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommendé)";
 "sync_mode.hybrid" = "Hybride";
 "sync_mode.from_blockchain" = "De la Blockchain";
-"blockchain_settings.description" = "Sélectionnez le format d'adresse pour la réception des paiements. Un format correct doit être choisi lors de la restauration d'un portefeuille existant.";
+"blockchain_settings.description" = "Select the address format for the coin.";
+"blockchain_settings.footer" = "Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
 
@@ -347,6 +349,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "balance_error.change_source" = "Changer la Source";
 "balance_error.sync_error" = "Erreur de synchronisation";
+"balance_error.sync_error.description.with_source" = "Failed to fetch data from the current source. You can retry or switch to a different sync source.";
+"balance_error.sync_error.description.without_source" = "Failed to fetch data from the current source. Please try again later.";
 "lost_accounts.warning_title" = "Erreur du trousseau d’accès iOS";
 "lost_accounts.warning_message" = "En raison d’une erreur du trousseau iOS, nous n’avons pas pu accéder aux portefeuilles suivants :\n\n%@\n\nLe redémarrage de l’application résout généralement ce problème. Si celui-ci persiste, vous pouvez dissocier puis restaurer ces portefeuilles.";
 
