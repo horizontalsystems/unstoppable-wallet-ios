@@ -27,6 +27,7 @@
 "button.sign" = "Assinar";
 "button.more" = "Mostrar Mais";
 "button.i_understand" = "Estou ciente";
+"button.understood" = "Understood";
 "button.learn_more" = "Saiba Mais";
 "button.unlock" = "Desbloquear";
 "button.select" = "Selecionar";
@@ -189,7 +190,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recomendado)";
 "sync_mode.hybrid" = "Híbrido";
 "sync_mode.from_blockchain" = "Da Blockchain";
-"blockchain_settings.description" = "Get ready to receive payments, folks! When restoring your wallet, make sure to select the right address format. It's all about getting it right!";
+"blockchain_settings.description" = "Select the address format for the coin.";
+"blockchain_settings.footer" = "Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
 
@@ -347,6 +349,8 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "balance_error.change_source" = "Mudar a fonte";
 "balance_error.sync_error" = "Erro de Sincronização";
+"balance_error.sync_error.description.with_source" = "Failed to fetch data from the current source. You can retry or switch to a different sync source.";
+"balance_error.sync_error.description.without_source" = "Failed to fetch data from the current source. Please try again later.";
 "lost_accounts.warning_title" = "Erro de Keychain do iOS";
 "lost_accounts.warning_message" = "Devido a um erro no Keychain do iOS, não foi possível acessar as seguintes carteiras:\n\n%@\n\nReiniciar o app geralmente resolve o problema. Se o erro persistir, você pode desvincular e restaurar essas carteiras.";
 
