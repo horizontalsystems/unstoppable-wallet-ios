@@ -147,17 +147,17 @@ struct SubscriptionView: View {
     }
 
     @ViewBuilder private func infoView(viewItem: PurchasesViewModel.ViewItem, isPresented: Binding<Bool>) -> some View {
-        BottomSheetView(
-            icon: .local(name: viewItem.iconName, tint: .themeJacob),
+        BottomSheetView.instance(
+            icon: .local(name: viewItem.iconName, style: .yellow),
             title: "purchases.\(viewItem.title)".localized,
-            titleColor: .themeJacob,
+            colorStyle: .yellow,
             items: [
                 .text(text: "purchases.\(viewItem.title).info".localized),
-            ],
-            buttons: [
-                .init(style: .yellow, title: "button.close".localized) {
-                    isPresented.wrappedValue = false
-                },
+                .buttonGroup(.init(buttons: [
+                    .init(style: .yellow, title: "button.close".localized) {
+                        isPresented.wrappedValue = false
+                    },
+                ])),
             ],
             isPresented: isPresented
         )

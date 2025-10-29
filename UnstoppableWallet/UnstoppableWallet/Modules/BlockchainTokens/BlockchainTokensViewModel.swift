@@ -28,7 +28,8 @@ class BlockchainTokensViewModel {
                     subtitle: token.type.description,
                     selected: request.enabledTokens.contains(token)
                 )
-            }
+            },
+            footer: "blockchain_settings.footer".localized
         )
 
         openBottomSelectorRelay.accept(config)

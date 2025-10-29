@@ -190,59 +190,59 @@ struct ManageAccountView: View {
     }
 
     @ViewBuilder private func confirmUnlinkWatchView(isPresented: Binding<Bool>) -> some View {
-        BottomSheetView(
-            icon: .warning,
+        BottomSheetView.instance(
+            icon: .trash,
             title: "settings_manage_keys.delete.title".localized,
             items: [
-                .highlightedDescription(text: "settings_manage_keys.delete.confirmation_watch".localized, style: .warning),
-            ],
-            buttons: [
-                .init(style: .red, title: "settings_manage_keys.delete.confirmation_watch.button".localized) {
-                    unlink()
-                },
+                .text(text: "settings_manage_keys.delete.confirmation_watch".localized),
+                .buttonGroup(.init(buttons: [
+                    .init(style: .gray, title: "settings_manage_keys.delete.confirmation_watch.button".localized) {
+                        unlink()
+                    },
+                ])),
             ],
             isPresented: isPresented
         )
     }
 
     @ViewBuilder private func confirmDeleteCloudBackupView(isPresented: Binding<Bool>) -> some View {
-        BottomSheetView(
+        BottomSheetView.instance(
             icon: .trash,
             title: "manage_account.cloud_delete_backup_recovery_phrase".localized,
             items: [
-                .highlightedDescription(text: "manage_account.cloud_delete_backup_recovery_phrase.description".localized, style: .warning),
-            ],
-            buttons: [
-                .init(style: .red, title: "button.delete".localized) {
-                    isPresented.wrappedValue = false
-                    deleteCloudBackup()
-                },
-                .init(style: .transparent, title: "button.cancel".localized) {
-                    isPresented.wrappedValue = false
-                },
+                .text(text: "manage_account.cloud_delete_backup_recovery_phrase.description".localized),
+                .buttonGroup(.init(buttons: [
+                    .init(style: .gray, title: "button.delete".localized) {
+                        isPresented.wrappedValue = false
+                        deleteCloudBackup()
+                    },
+                    .init(style: .transparent, title: "button.cancel".localized) {
+                        isPresented.wrappedValue = false
+                    },
+                ])),
             ],
             isPresented: isPresented
         )
     }
 
     @ViewBuilder private func confirmDeleteCloudBackupAfterManualBackupView(isPresented: Binding<Bool>) -> some View {
-        BottomSheetView(
-            icon: .warning,
+        BottomSheetView.instance(
+            icon: .trash,
             title: "manage_account.manual_backup_required".localized,
             items: [
-                .highlightedDescription(text: "manage_account.manual_backup_required.description".localized, style: .warning),
-            ],
-            buttons: [
-                .init(style: .yellow, title: "manage_account.manual_backup_required.button".localized) {
-                    isPresented.wrappedValue = false
+                .warning(text: "manage_account.manual_backup_required.description".localized),
+                .buttonGroup(.init(buttons: [
+                    .init(style: .gray, title: "manage_account.manual_backup_required.button".localized) {
+                        isPresented.wrappedValue = false
 
-                    Coordinator.shared.performAfterUnlock {
-                        presentBackup(reason: .deleteCloudBackup)
-                    }
-                },
-                .init(style: .transparent, title: "button.cancel".localized) {
-                    isPresented.wrappedValue = false
-                },
+                        Coordinator.shared.performAfterUnlock {
+                            presentBackup(reason: .deleteCloudBackup)
+                        }
+                    },
+                    .init(style: .transparent, title: "button.cancel".localized) {
+                        isPresented.wrappedValue = false
+                    },
+                ])),
             ],
             isPresented: isPresented
         )
@@ -290,6 +290,9 @@ extension ManageAccountView {
         @Binding var isPresented: Bool
         let onUnlink: () -> Void
 
+        @StateObject private var selectorViewModel = SelectorGroupsViewModel()
+        @StateObject private var buttonViewModel = ButtonGroupViewModel()
+
         @State private var checkedIndices = Set<Int>()
 
         private let items = [
@@ -298,44 +301,52 @@ extension ManageAccountView {
         ]
 
         var body: some View {
-            VStack(spacing: 0) {
-                BottomSheetView.TitleView(
-                    icon: .trash,
-                    title: "settings_manage_keys.delete.title".localized,
-                    isPresented: $isPresented
-                )
-
-                ListSection {
-                    ForEach(0 ..< items.count, id: \.self) { index in
-                        ClickableRow(action: {
-                            if checkedIndices.contains(index) {
-                                checkedIndices.remove(index)
-                            } else {
-                                checkedIndices.insert(index)
-                            }
-                        }) {
-                            Image(checkedIndices.contains(index) ? "checkbox_active_24" : "checkbox_diactive_24")
-                            Text(items[index]).themeSubhead2(color: .themeLeah)
-                        }
-                    }
-                }
-                .themeListStyle(.bordered)
-                .padding(.horizontal, .margin16)
-                .padding(.bottom, .margin24)
-
-                VStack(spacing: .margin12) {
-                    Button(
-                        action: onUnlink,
-                        label: {
-                            Text("security_settings.delete_alert_button".localized)
-                        }
-                    )
-                    .buttonStyle(PrimaryButtonStyle(style: .red))
-                    .disabled(checkedIndices.count < items.count)
-                }
-                .padding(.horizontal, .margin24)
+            BottomSheetView(
+                icon: .trash,
+                title: "settings_manage_keys.delete.title".localized,
+                items: [
+                    .groupSelector(.init(id: Controls.selector, items: items.map { .init(id: $0, description: $0) })),
+                    .buttonGroup(
+                        .init(buttons: [
+                            .init(
+                                id: Controls.delete,
+                                style: .gray,
+                                title: "security_settings.delete_alert_button".localized,
+                                action: {
+                                    onUnlink()
+                                    isPresented = false
+                                }
+                            ),
+                        ])
+                    ),
+                ],
+                isPresented: $isPresented,
+                selectorViewModel: selectorViewModel,
+                buttonViewModel: buttonViewModel
+            )
+            .onAppear {
+                setupViewModels()
             }
-            .padding(.bottom, .margin24)
+            .onChange(of: selectorViewModel.groupStates[Controls.selector]) { _ in
+                updateButtonState()
+            }
+        }
+
+        private func setupViewModels() {
+            selectorViewModel.append(id: Controls.selector, initialSelection: [])
+            buttonViewModel.append(id: Controls.delete, isDisabled: true)
+        }
+
+        private func updateButtonState() {
+            let selection = selectorViewModel.getSelection(Controls.selector)
+            let allChecked = selection.count == items.count
+
+            buttonViewModel.setDisabled(!allChecked, for: Controls.delete)
+        }
+
+        private enum Controls {
+            static let selector = "selector"
+            static let delete = "delete"
         }
     }
 }

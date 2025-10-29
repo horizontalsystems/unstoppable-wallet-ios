@@ -12,17 +12,20 @@ struct BalanceErrorBottomView: View {
     }
 
     var body: some View {
-        BottomSheetView(
-            icon: .local(name: "warning_2_24", tint: .themeLucian),
+        BottomSheetView.instance(
+            icon: .error,
             title: "balance_error.sync_error".localized,
-            buttons: buttons(item: viewModel.item),
+            items: [
+                .text(text: viewModel.item.sourceType != nil ? "balance_error.sync_error.description.with_source".localized : "balance_error.sync_error.description.without_source".localized),
+                .buttonGroup(.init(buttons: buttons(item: viewModel.item))),
+            ],
             isPresented: $isPresented
         )
     }
 
-    private func buttons(item: BalanceErrorBottomViewModel.Item) -> [BottomSheetView.ButtonItem] {
-        var buttons: [BottomSheetView.ButtonItem] = [
-            .init(style: .yellow, title: "button.retry".localized) {
+    private func buttons(item: BalanceErrorBottomViewModel.Item) -> [ButtonGroupViewModel.ButtonItem] {
+        var buttons: [ButtonGroupViewModel.ButtonItem] = [
+            .init(style: .gray, title: "button.retry".localized) {
                 viewModel.refresh(wallet: item.wallet)
                 isPresented = false
             },
@@ -30,7 +33,7 @@ struct BalanceErrorBottomView: View {
 
         if let sourceType = item.sourceType {
             buttons.append(
-                .init(style: .gray, title: "balance_error.change_source".localized) {
+                .init(style: .transparent, title: "balance_error.change_source".localized) {
                     isPresented = false
 
                     switch sourceType {
@@ -52,23 +55,6 @@ struct BalanceErrorBottomView: View {
                 }
             )
         }
-
-        buttons.append(
-            .init(style: .transparent, title: "button.report".localized) {
-                isPresented = false
-
-                if MFMailComposeViewController.canSendMail() {
-                    Coordinator.shared.present { isPresented in
-                        MailView(
-                            recipient: AppConfig.reportEmail, body: item.error,
-                            isPresented: isPresented
-                        )
-                    }
-                } else {
-                    CopyHelper.copyAndNotify(value: AppConfig.reportEmail)
-                }
-            }
-        )
 
         return buttons
     }

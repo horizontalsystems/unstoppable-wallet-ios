@@ -6,8 +6,8 @@ struct Informed: ViewModifier {
     func body(content: Content) -> some View {
         Button(action: {
             Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                BottomSheetView(
-                    icon: .info,
+                BottomSheetView.instance(
+                    icon: .book,
                     title: infoDescription.title,
                     items: [
                         .text(text: infoDescription.description),

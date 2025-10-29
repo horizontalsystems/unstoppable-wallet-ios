@@ -47,16 +47,16 @@ class WalletConnectVerificationModel: ObservableObject {
 
     private func presentNoAccount() {
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
-            BottomSheetView(
-                icon: .local(name: "wallet_connect_24", tint: .themeJacob),
+            BottomSheetView.instance(
+                icon: .warning,
                 title: "wallet_connect.title".localized,
                 items: [
-                    .highlightedDescription(text: "wallet_connect.no_account.description".localized),
-                ],
-                buttons: [
-                    .init(style: .yellow, title: "button.ok".localized) {
-                        isPresented.wrappedValue = false
-                    },
+                    .warning(text: "wallet_connect.no_account.description".localized),
+                    .buttonGroup(.init(buttons: [
+                        .init(style: .yellow, title: "button.ok".localized) {
+                            isPresented.wrappedValue = false
+                        },
+                    ])),
                 ],
                 isPresented: isPresented
             )
@@ -65,23 +65,23 @@ class WalletConnectVerificationModel: ObservableObject {
 
     private func presentNotSupported(accountType: AccountType, onSwitch: (() -> Void)?) {
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
-            BottomSheetView(
-                icon: .local(name: "wallet_connect_24", tint: .themeJacob),
+            BottomSheetView.instance(
+                icon: .warning,
                 title: "wallet_connect.title".localized,
                 items: [
-                    .highlightedDescription(text: "wallet_connect.non_supported_account.description".localized(accountType.description)),
-                ],
-                buttons: [
-                    .init(style: .yellow, title: "wallet_connect.non_supported_account.switch".localized) {
-                        isPresented.wrappedValue = false
+                    .warning(text: "wallet_connect.non_supported_account.description".localized(accountType.description)),
+                    .buttonGroup(.init(buttons: [
+                        .init(style: .yellow, title: "wallet_connect.non_supported_account.switch".localized) {
+                            isPresented.wrappedValue = false
 
-                        DispatchQueue.main.async {
-                            onSwitch?()
-                        }
-                    },
-                    .init(style: .transparent, title: "button.cancel".localized) {
-                        isPresented.wrappedValue = false
-                    },
+                            DispatchQueue.main.async {
+                                onSwitch?()
+                            }
+                        },
+                        .init(style: .transparent, title: "button.cancel".localized) {
+                            isPresented.wrappedValue = false
+                        },
+                    ])),
                 ],
                 isPresented: isPresented
             )

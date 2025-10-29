@@ -75,25 +75,25 @@ struct ZcashWalletTokenView: View {
                 value: infoAmount(value: transparent),
                 action: {
                     Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                        BottomSheetView(
+                        BottomSheetView.instance(
                             icon: .info,
                             title: "balance.token.transparent.info.title".localized,
                             items: [
                                 .text(text: "balance.token.transparent.info.description".localized),
-                            ],
-                            buttons: [
-                                .init(style: .yellow, title: "balance.token.shield".localized) {
-                                    isPresented.wrappedValue = false
+                                .buttonGroup(.init(buttons: [
+                                    .init(style: .yellow, title: "balance.token.shield".localized) {
+                                        isPresented.wrappedValue = false
 
-                                    Coordinator.shared.present { _ in
-                                        ThemeNavigationStack {
-                                            ShieldSendView(amount: viewModel.zcashBalanceData.transparent, address: nil)
+                                        Coordinator.shared.present { _ in
+                                            ThemeNavigationStack {
+                                                ShieldSendView(amount: viewModel.zcashBalanceData.transparent, address: nil)
+                                            }
                                         }
-                                    }
-                                },
-                                .init(style: .transparent, title: "button.close".localized) {
-                                    isPresented.wrappedValue = false
-                                },
+                                    },
+                                    .init(style: .transparent, title: "button.close".localized) {
+                                        isPresented.wrappedValue = false
+                                    },
+                                ])),
                             ],
                             isPresented: isPresented
                         )
