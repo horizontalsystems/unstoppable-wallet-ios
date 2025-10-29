@@ -27,6 +27,7 @@
 "button.sign" = "가입";
 "button.more" = "더 보기";
 "button.i_understand" = "이해합니다";
+"button.understood" = "Understood";
 "button.learn_more" = "자세히 보기";
 "button.unlock" = "잠금 해제";
 "button.select" = "선택";
@@ -187,7 +188,8 @@
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "현금주소(권장)";
 "sync_mode.hybrid" = "하이브리드";
 "sync_mode.from_blockchain" = "블록체인으로 부터";
-"blockchain_settings.description" = "지불을 받기 위한 주소 형식을 선택하십시오. 기존 지갑을 복원할 때 올바른 형식을 선택해야 합니다.";
+"blockchain_settings.description" = "Select the address format for the coin.";
+"blockchain_settings.footer" = "Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
 
@@ -345,6 +347,8 @@
 
 "balance_error.change_source" = "출처를 변경하다";
 "balance_error.sync_error" = "동기화 오류";
+"balance_error.sync_error.description.with_source" = "Failed to fetch data from the current source. You can retry or switch to a different sync source.";
+"balance_error.sync_error.description.without_source" = "Failed to fetch data from the current source. Please try again later.";
 "lost_accounts.warning_title" = "iOS 키체인 오류";
 "lost_accounts.warning_message" = "iOS 키체인 오류로 인해 다음 지갑에 접근할 수 없습니다:\n\n%@\n\n앱을 다시 시작하면 대부분의 경우 문제가 해결됩니다. 문제가 지속되면 해당 지갑을 연결 해제한 후 복원할 수 있습니다.";
 
