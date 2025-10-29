@@ -27,6 +27,7 @@
 "button.sign" = "Firma";
 "button.more" = "Mostrar más";
 "button.i_understand" = "Entiendo";
+"button.understood" = "Understood";
 "button.learn_more" = "Aprender más";
 "button.unlock" = "Desbloquear";
 "button.select" = "Seleccionar";
@@ -189,7 +190,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "Dirección de caja (recomendado)";
 "sync_mode.hybrid" = "Híbrido";
 "sync_mode.from_blockchain" = "Desde Blockchain";
-"blockchain_settings.description" = "Seleccione el formato de dirección para recibir pagos. Debe elegirse un formato correcto cuando se restaure una cartera existente.";
+"blockchain_settings.description" = "Select the address format for the coin.";
+"blockchain_settings.footer" = "Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
 
@@ -347,6 +349,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "balance_error.change_source" = "Cambiar Origen";
 "balance_error.sync_error" = "Error de sincronización";
+"balance_error.sync_error.description.with_source" = "Failed to fetch data from the current source. You can retry or switch to a different sync source.";
+"balance_error.sync_error.description.without_source" = "Failed to fetch data from the current source. Please try again later.";
 "lost_accounts.warning_title" = "Error de la cadena de Claves del iOs ";
 "lost_accounts.warning_message" = "Debido a un error del llavero de iOS, no pudimos acceder a las siguientes wallets:\n\n%@\n\nReiniciar la aplicación normalmente soluciona el problema. Si el inconveniente persiste, puedes desvincular y restaurar estas wallets.";
 
