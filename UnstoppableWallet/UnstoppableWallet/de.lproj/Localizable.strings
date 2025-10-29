@@ -27,6 +27,7 @@
 "button.sign" = "Signieren";
 "button.more" = "Mehr anzeigen";
 "button.i_understand" = "Ich stimme zu";
+"button.understood" = "Understood";
 "button.learn_more" = "Mehr erfahren";
 "button.unlock" = "Entsperren";
 "button.select" = "Auswählen";
@@ -189,7 +190,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (empfohlen)";
 "sync_mode.hybrid" = "Hybrid";
 "sync_mode.from_blockchain" = "Von Blockchain";
-"blockchain_settings.description" = "Wählen Sie das Adressformat für den Empfang von Zahlungen. Ein korrektes Format sollte bei der Wiederherstellung einer bestehenden Brieftasche gewählt werden.";
+"blockchain_settings.description" = "Select the address format for the coin.";
+"blockchain_settings.footer" = "Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
 
@@ -347,6 +349,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "balance_error.change_source" = "Quelle ändern";
 "balance_error.sync_error" = "Sync-Fehler";
+"balance_error.sync_error.description.with_source" = "Failed to fetch data from the current source. You can retry or switch to a different sync source.";
+"balance_error.sync_error.description.without_source" = "Failed to fetch data from the current source. Please try again later.";
 "lost_accounts.warning_title" = "iOS-Keychain-Fehler";
 "lost_accounts.warning_message" = "Aufgrund eines Fehlers im iOS-Schlüsselbund konnten wir auf die folgenden Wallets nicht zugreifen:\n\n%@\n\nEin Neustart der App behebt das Problem in der Regel. Falls das Problem weiterhin besteht, können Sie diese Wallets trennen und wiederherstellen.";
 
