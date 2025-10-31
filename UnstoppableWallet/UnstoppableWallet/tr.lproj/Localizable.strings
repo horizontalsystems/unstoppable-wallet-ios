@@ -329,7 +329,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.searching" = "İşlemler aranıyor ...";
 "balance.connecting" = "Bağlanıyor...";
 "balance.stopped" = "Durduruldu";
-"balance.downloading_sapling" = "Sapling indiriliyor... %d%%";
+"balance.downloading_sapling" = "Sapling indiriliyor...";
 "balance.downloading_blocks" = "Blokları İndirme";
 "balance.scanning_blocks" = "Tarama Blokları";
 "balance.enhancing_transactions" = "İşlemleri Geliştirme";

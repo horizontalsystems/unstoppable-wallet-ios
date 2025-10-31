@@ -31,7 +31,7 @@ class WalletTokenViewModel: ObservableObject {
         balanceHidden = balanceHiddenManager.balanceHidden
         isMainNet = walletService.isMainNet(wallet: wallet) ?? true
         balanceData = walletService.balanceData(wallet: wallet) ?? BalanceData(balance: 0)
-        state = walletService.state(wallet: wallet) ?? .syncing(progress: nil, lastBlockDate: nil)
+        state = walletService.state(wallet: wallet) ?? .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
         priceItem = wallet.priceCoinUid.flatMap { coinPriceService.item(coinUid: $0) }
 
         walletService.delegate = self

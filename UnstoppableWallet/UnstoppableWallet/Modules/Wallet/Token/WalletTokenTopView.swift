@@ -104,17 +104,17 @@ struct WalletTokenTopView: View {
 
     private var secondaryValue: CustomStringConvertible {
         switch viewModel.state {
-        case let .syncing(progress, lastBlockDate):
+        case let .syncing(progress, remaining, lastBlockDate):
             var text = ""
-            if let progress {
-                text = "balance.syncing_percent".localized("\(progress)%")
+            if let remaining {
+                text = "balance.remaining".localized(remaining.description)
             } else {
                 text = "balance.syncing".localized
             }
 
-            if let syncedUntil = lastBlockDate.map({ DateHelper.instance.formatSyncedThroughDate(from: $0) }) {
-                text += " - " + "balance.synced_through".localized(syncedUntil)
-            }
+//            if let syncedUntil = lastBlockDate.map({ DateHelper.instance.formatSyncedThroughDate(from: $0) }) {
+//                text += " - " + "balance.synced_through".localized(syncedUntil)
+//            }
 
             return ComponentText(text: text, dimmed: true)
         case let .customSyncing(main, secondary, _):

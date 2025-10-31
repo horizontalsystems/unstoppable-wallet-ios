@@ -329,7 +329,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.searching" = "Recherche des transactions…...";
 "balance.connecting" = "Connexion en cours...";
 "balance.stopped" = "Arrêté";
-"balance.downloading_sapling" = "Téléchargement de la pousse... %d%%";
+"balance.downloading_sapling" = "Téléchargement de la pousse...";
 "balance.downloading_blocks" = "Téléchargement des blocs";
 "balance.scanning_blocks" = "Blocs de numérisation";
 "balance.enhancing_transactions" = "Amélioration des transactions";

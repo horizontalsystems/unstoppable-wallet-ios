@@ -41,11 +41,17 @@ struct BalanceCoinIconView: View {
                         .progressViewStyle(DeterminiteSpinnerStyle())
                         .frame(width: 36, height: 36)
                         .spinning()
-                case let .syncing(progress, _), let .customSyncing(_, _, progress):
-                    ProgressView(value: max(0.1, Float(progress ?? 10) / 100))
-                        .progressViewStyle(DeterminiteSpinnerStyle())
-                        .frame(width: 36, height: 36)
-                        .spinning()
+                case let .syncing(progress, _, _), let .customSyncing(_, _, progress):
+                    ZStack(alignment: .center) {
+                        ProgressView(value: max(0.1, Float(progress ?? 10) / 100))
+                            .progressViewStyle(DeterminiteSpinnerStyle())
+                            .frame(width: 36, height: 36)
+                            .spinning()
+
+                        if let progress {
+                            ThemeText(progress.description + "%", style: .captionSB, colorStyle: .primary).opacity(0.75)
+                        }
+                    }
                 default:
                     EmptyView()
                 }
