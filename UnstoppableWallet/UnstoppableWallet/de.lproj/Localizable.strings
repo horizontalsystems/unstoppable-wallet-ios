@@ -332,14 +332,11 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance.searching" = "Transaktionen werden gesucht...";
 "balance.connecting" = "Verbinde...";
 "balance.stopped" = "Stoppen";
-"balance.downloading_sapling" = "Setze herunterladen... %d%%";
-"balance.downloading_blocks" = "Blöcke herunterladen";
-"balance.scanning_blocks" = "Scanne Blöcke";
-"balance.enhancing_transactions" = "Transaktionen verbessern";
+"balance.downloading_sapling" = "Downloading...";
 "balance.watch_wallet" = "Wallet de solo visualización";
 
 "balance.searching.count" = "%@ tx";
-"balance.syncing_percent" = "Synchronisieren... %@";
+"balance.remaining" = "Blocks Remaining - %@";
 "balance.synced_through" = "bis %@";
 "balance.empty.description" = "Sie haben keine Coins zu diesem Wallet hinzugefügt.";
 "balance.sort.header" = "Sortieren nach";
