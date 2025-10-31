@@ -332,14 +332,11 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.searching" = "Recherche des transactions…...";
 "balance.connecting" = "Connexion en cours...";
 "balance.stopped" = "Arrêté";
-"balance.downloading_sapling" = "Téléchargement de la pousse... %d%%";
-"balance.downloading_blocks" = "Téléchargement des blocs";
-"balance.scanning_blocks" = "Blocs de numérisation";
-"balance.enhancing_transactions" = "Amélioration des transactions";
+"balance.downloading_sapling" = "Downloading...";
 "balance.watch_wallet" = "Regarder les portefeuilles";
 
 "balance.searching.count" = "%@ tx";
-"balance.syncing_percent" = "Synchronisation... %@";
+"balance.remaining" = "Blocks Remaining - %@";
 "balance.synced_through" = "jusqu'à: %@";
 "balance.empty.description" = "Vous n'avez ajouté aucune pièce à ce portefeuille.";
 "balance.sort.header" = "Trier par";
