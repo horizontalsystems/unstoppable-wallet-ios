@@ -332,14 +332,11 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.searching" = "Buscando transacciones…";
 "balance.connecting" = "Conectando...";
 "balance.stopped" = "Detenido";
-"balance.downloading_sapling" = "Descargando Sapling... %d%%";
-"balance.downloading_blocks" = "Descargando bloques";
-"balance.scanning_blocks" = "Bloques de escaneo";
-"balance.enhancing_transactions" = "Mejorar las transacciones";
+"balance.downloading_sapling" = "Downloading...";
 "balance.watch_wallet" = "Wallet de solo visualización";
 
 "balance.searching.count" = "%@ tx";
-"balance.syncing_percent" = "Sincronizando... %@";
+"balance.remaining" = "Blocks Remaining - %@";
 "balance.synced_through" = "hasta %@";
 "balance.empty.description" = "No has añadido ninguna moneda a esta cartera.";
 "balance.sort.header" = "Ordenar por";
