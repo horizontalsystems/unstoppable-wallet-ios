@@ -332,14 +332,11 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.searching" = "Procurando transações...";
 "balance.connecting" = "Conectando...";
 "balance.stopped" = "Parado";
-"balance.downloading_sapling" = "Baixando prévias.. %d%%";
-"balance.downloading_blocks" = "Baixando Blocos";
-"balance.scanning_blocks" = "Verificando Blocos";
-"balance.enhancing_transactions" = "Aprimorando Transações";
+"balance.downloading_sapling" = "Downloading...";
 "balance.watch_wallet" = "Monitorar Carteira";
 
 "balance.searching.count" = "%@ tx";
-"balance.syncing_percent" = "Sincronizando... %@";
+"balance.remaining" = "Blocks Remaining - %@";
 "balance.synced_through" = "até %@";
 "balance.empty.description" = "Você não adicionou nenhuma moeda nesta carteira.";
 "balance.sort.header" = "Organizar por";
