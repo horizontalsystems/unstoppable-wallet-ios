@@ -334,14 +334,11 @@
 "balance.searching" = "Поиск транзакций...";
 "balance.connecting" = "Подключение...";
 "balance.stopped" = "Остановлено";
-"balance.downloading_sapling" = "Загрузка sapling... %d%%";
-"balance.downloading_blocks" = "Загрузка блоков";
-"balance.scanning_blocks" = "Сканирование блоков";
-"balance.enhancing_transactions" = "Улучшение транзакций";
+"balance.downloading_sapling" = "Downloading...";
 "balance.watch_wallet" = "Просмотр кошелька";
 
 "balance.searching.count" = "%@ tx";
-"balance.syncing_percent" = "Идет синхронизация... %@";
+"balance.remaining" = "Blocks Remaining - %@";
 "balance.synced_through" = "до %@";
 "balance.empty.description" = "Вы еще не добавили токены в этот кошелек.";
 "balance.sort.header" = "Сортировка";
