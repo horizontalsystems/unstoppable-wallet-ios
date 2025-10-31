@@ -329,7 +329,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance.searching" = "Transaktionen werden gesucht...";
 "balance.connecting" = "Verbinde...";
 "balance.stopped" = "Stoppen";
-"balance.downloading_sapling" = "Setze herunterladen... %d%%";
+"balance.downloading_sapling" = "Herunterladen...";
 "balance.downloading_blocks" = "Blöcke herunterladen";
 "balance.scanning_blocks" = "Scanne Blöcke";
 "balance.enhancing_transactions" = "Transaktionen verbessern";

@@ -51,7 +51,7 @@ class MoneroAdapter {
             kit = try MoneroKit.Kit(
                 wallet: .watch(address: address, viewKey: viewKey),
                 account: 0,
-                restoreHeight: UInt64(restoreHeight ?? 0),
+                restoreHeight: UInt64(restoreHeight),
                 walletId: wallet.account.id,
                 node: node,
                 networkType: Self.networkType,
@@ -135,8 +135,8 @@ class MoneroAdapter {
         case .synced:
             return .synced
 
-        case let .syncing(progress, _):
-            return .syncing(progress: progress, lastBlockDate: nil)
+        case let .syncing(progress, remainingBlockCount):
+            return .syncing(progress: min(99, progress), remaining: max(1, remainingBlockCount), lastBlockDate: nil)
 
         case let .notSynced(error):
             return .notSynced(error: error.localizedDescription)

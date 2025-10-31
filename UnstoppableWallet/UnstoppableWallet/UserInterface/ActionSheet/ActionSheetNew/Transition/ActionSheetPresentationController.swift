@@ -12,8 +12,9 @@ class ActionSheetPresentationController: UIPresentationController {
         self.configuration = configuration
         super.init(presentedViewController: presentedViewController, presenting: presentingViewController)
 
-        if configuration.tapToDismiss {
+        if let tapToDismiss = configuration.tapToDismiss {
             tapView.handleTap = { [weak presentedViewController] in
+                tapToDismiss()
                 presentedViewController?.dismiss(animated: true)
             }
         }

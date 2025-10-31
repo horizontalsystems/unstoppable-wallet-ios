@@ -329,7 +329,7 @@
 "balance.searching" = "正在搜索交易…...";
 "balance.connecting" = "正在连接...";
 "balance.stopped" = "已停止";
-"balance.downloading_sapling" = "正在下载保存... %d%%";
+"balance.downloading_sapling" = "正在下载保存...";
 "balance.downloading_blocks" = "正在下载块";
 "balance.scanning_blocks" = "扫描块";
 "balance.enhancing_transactions" = "加强交易";

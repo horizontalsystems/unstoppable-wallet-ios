@@ -327,7 +327,7 @@
 "balance.searching" = "거래 검색 중...";
 "balance.connecting" = "연결 중...";
 "balance.stopped" = "은행 정지";
-"balance.downloading_sapling" = "묘목 다운로드 중... %d%%";
+"balance.downloading_sapling" = "묘목 다운로드 중...";
 "balance.downloading_blocks" = "블록 다운로드";
 "balance.scanning_blocks" = "스캐닝 블록";
 "balance.enhancing_transactions" = "거래 향상";

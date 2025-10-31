@@ -190,7 +190,7 @@ class WalletListViewModel: ObservableObject {
     }
 
     private var fallbackAdapterState: AdapterState {
-        .syncing(progress: nil, lastBlockDate: nil)
+        .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
     }
 
     var conversionCoinUids: Set<String> {

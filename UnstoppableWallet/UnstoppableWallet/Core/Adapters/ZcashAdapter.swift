@@ -270,13 +270,13 @@ class ZcashAdapter {
         case .unprepared:
             if started {
                 logger?.log(level: .debug, message: "State: Disconnected")
-                syncStatus = .syncing(progress: nil, lastBlockDate: nil)
+                syncStatus = .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
             } else {
                 syncStatus = .idle
             }
         case .stopped:
             logger?.log(level: .debug, message: "State: Disconnected")
-            syncStatus = .syncing(progress: nil, lastBlockDate: nil)
+            syncStatus = .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
         case .upToDate:
             if !started {
                 started = true
@@ -299,7 +299,10 @@ class ZcashAdapter {
 
             lastBlockUpdatedSubject.onNext(())
 
-            syncStatus = .downloadingBlocks(progress: progress, lastBlock: state.latestBlockHeight)
+            let newProgress = min(99, Int(progress * 100))
+            let newRemaining = max(1, Int(Float(lastBlockHeight - birthday) * (1 - progress)))
+
+            syncStatus = .syncing(progress: newProgress, remaining: newRemaining, lastBlockDate: nil)
         case let .error(error):
             if !started, case .synchronizerDisconnected = error as? ZcashError {
                 syncStatus = .idle
@@ -984,9 +987,8 @@ enum ZCashAdapterState: Equatable {
     case idle
     case preparing
     case synced
-    case syncing(progress: Int?, lastBlockDate: Date?)
+    case syncing(progress: Int?, remaining: Int?, lastBlockDate: Date?)
     case downloadingSapling(progress: Int)
-    case downloadingBlocks(progress: Float, lastBlock: Int)
     case notSynced(error: Error)
 
     public static func == (lhs: ZCashAdapterState, rhs: ZCashAdapterState) -> Bool {
@@ -994,9 +996,8 @@ enum ZCashAdapterState: Equatable {
         case (.idle, .idle): return true
         case (.preparing, .preparing): return true
         case (.synced, .synced): return true
-        case let (.syncing(lProgress, lLastBlockDate), .syncing(rProgress, rLastBlockDate)): return lProgress == rProgress && lLastBlockDate == rLastBlockDate
+        case let (.syncing(lProgress, lRemaining, lLastBlockDate), .syncing(rProgress, rRemaining, rLastBlockDate)): return lProgress == rProgress && lRemaining == rRemaining && lLastBlockDate == rLastBlockDate
         case let (.downloadingSapling(lProgress), .downloadingSapling(rProgress)): return lProgress == rProgress
-        case let (.downloadingBlocks(lNumber, lLast), .downloadingBlocks(rNumber, rLast)): return lNumber == rNumber && lLast == rLast
         case (.notSynced, .notSynced): return true
         default: return false
         }
@@ -1007,12 +1008,9 @@ enum ZCashAdapterState: Equatable {
         case .idle: return .customSyncing(main: "Starting...", secondary: nil, progress: nil)
         case .preparing: return .customSyncing(main: "Preparing...", secondary: nil, progress: nil)
         case .synced: return .synced
-        case let .syncing(progress, lastDate): return .syncing(progress: progress, lastBlockDate: lastDate)
+        case let .syncing(progress, remaining, lastDate): return .syncing(progress: progress, remaining: remaining, lastBlockDate: lastDate)
         case let .downloadingSapling(progress):
-            return .customSyncing(main: "balance.downloading_sapling".localized(progress), secondary: nil, progress: progress)
-        case let .downloadingBlocks(progress, _):
-            let percentValue = ValueFormatter.instance.format(percentValue: Decimal(Double(progress * 100)), signType: .never)
-            return .customSyncing(main: "balance.downloading_blocks".localized, secondary: percentValue, progress: Int(progress * 100))
+            return .customSyncing(main: "balance.downloading_sapling".localized, secondary: nil, progress: progress)
         case let .notSynced(error): return .notSynced(error: error.localizedDescription)
         }
     }
@@ -1022,19 +1020,9 @@ enum ZCashAdapterState: Equatable {
         case .idle: return "Idle"
         case .preparing: return "Preparing..."
         case .synced: return "Synced"
-        case let .syncing(progress, lastDate): return "Syncing: progress = \(progress?.description ?? "N/A"), lastBlockDate: \(lastDate?.description ?? "N/A")"
+        case let .syncing(progress, _, lastDate): return "Syncing: progress = \(progress?.description ?? "N/A"), lastBlockDate: \(lastDate?.description ?? "N/A")"
         case let .downloadingSapling(progress): return "downloadingSapling: progress = \(progress)"
-        case let .downloadingBlocks(progress, _):
-            let percentValue = ValueFormatter.instance.format(percentValue: Decimal(Double(progress * 100)), signType: .never)
-            return "Downloading Blocks: \(percentValue?.description ?? "N/A") : \(Int(progress * 100))"
         case let .notSynced(error): return "Not synced \(error.localizedDescription)"
-        }
-    }
-
-    var isDownloading: Bool {
-        switch self {
-        case .downloadingBlocks: return true
-        default: return false
         }
     }
 

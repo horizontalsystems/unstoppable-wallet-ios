@@ -331,7 +331,7 @@
 "balance.searching" = "Поиск транзакций...";
 "balance.connecting" = "Подключение...";
 "balance.stopped" = "Остановлено";
-"balance.downloading_sapling" = "Загрузка sapling... %d%%";
+"balance.downloading_sapling" = "Загрузка...";
 "balance.downloading_blocks" = "Загрузка блоков";
 "balance.scanning_blocks" = "Сканирование блоков";
 "balance.enhancing_transactions" = "Улучшение транзакций";

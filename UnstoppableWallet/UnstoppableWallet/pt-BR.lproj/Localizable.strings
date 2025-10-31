@@ -329,7 +329,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.searching" = "Procurando transações...";
 "balance.connecting" = "Conectando...";
 "balance.stopped" = "Parado";
-"balance.downloading_sapling" = "Baixando prévias.. %d%%";
+"balance.downloading_sapling" = "Baixando prévias...";
 "balance.downloading_blocks" = "Baixando Blocos";
 "balance.scanning_blocks" = "Verificando Blocos";
 "balance.enhancing_transactions" = "Aprimorando Transações";
