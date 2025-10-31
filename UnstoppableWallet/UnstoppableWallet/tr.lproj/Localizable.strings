@@ -332,14 +332,11 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.searching" = "İşlemler aranıyor ...";
 "balance.connecting" = "Bağlanıyor...";
 "balance.stopped" = "Durduruldu";
-"balance.downloading_sapling" = "Sapling indiriliyor... %d%%";
-"balance.downloading_blocks" = "Blokları İndirme";
-"balance.scanning_blocks" = "Tarama Blokları";
-"balance.enhancing_transactions" = "İşlemleri Geliştirme";
+"balance.downloading_sapling" = "Downloading...";
 "balance.watch_wallet" = "Cüzdan İzle";
 
 "balance.searching.count" = "bakiye.araması.miktar";
-"balance.syncing_percent" = "Senkronize ediliyor... %@";
+"balance.remaining" = "Blocks Remaining - %@";
 "balance.synced_through" = "%@ kadar";
 "balance.empty.description" = "Bu cüzdana hiç jeton eklemediniz.";
 "balance.sort.header" = "Sıralama şekli";
