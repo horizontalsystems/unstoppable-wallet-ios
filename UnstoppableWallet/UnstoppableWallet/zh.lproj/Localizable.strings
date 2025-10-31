@@ -332,14 +332,11 @@
 "balance.searching" = "正在搜索交易…...";
 "balance.connecting" = "正在连接...";
 "balance.stopped" = "已停止";
-"balance.downloading_sapling" = "正在下载保存... %d%%";
-"balance.downloading_blocks" = "正在下载块";
-"balance.scanning_blocks" = "扫描块";
-"balance.enhancing_transactions" = "加强交易";
+"balance.downloading_sapling" = "Downloading...";
 "balance.watch_wallet" = "观察地址";
 
 "balance.searching.count" = "%@ tx";
-"balance.syncing_percent" = "正在同步... %@";
+"balance.remaining" = "Blocks Remaining - %@";
 "balance.synced_through" = "直到 %@";
 "balance.empty.description" = "您还没有添加任何代币到此钱包中。";
 "balance.sort.header" = "排序方式";
