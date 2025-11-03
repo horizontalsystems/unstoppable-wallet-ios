@@ -782,6 +782,7 @@
 
 "swap.dex_info.link_button" = "%@ Сайт";
 
+"swap.maya.shielded_address.error" = "Can't fetch shielded address for Memo (Maya)";
 
 
 // Market
