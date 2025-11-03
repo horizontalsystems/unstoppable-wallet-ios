@@ -14382,7 +14382,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/ZcashLightClientKit";
 			requirement = {
-				branch = "feature/add-op-return";
+				branch = feature/add_multi_payments_proposal;
 				kind = branch;
 			};
 		};
