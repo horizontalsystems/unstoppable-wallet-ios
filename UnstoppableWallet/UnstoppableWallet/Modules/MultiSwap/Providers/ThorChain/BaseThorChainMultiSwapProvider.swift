@@ -7,24 +7,24 @@ import HsToolKit
 import MarketKit
 import ObjectMapper
 import SwiftUI
-import ZcashLightClientKit
 
 class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
-    private let networkManager = Core.shared.networkManager
+    let networkManager = Core.shared.networkManager
+    let adapterManager = Core.shared.adapterManager
     // private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
     private let marketKit = Core.shared.marketKit
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let btcBlockchainManager = Core.shared.btcBlockchainManager
     private let accountManager = Core.shared.accountManager
-    private let adapterManager = Core.shared.adapterManager
     private let localStorage = Core.shared.localStorage
-    private let storage: MultiSwapSettingStorage
     private let allowanceHelper = MultiSwapAllowanceHelper()
     private let evmFeeEstimator = EvmFeeEstimator()
     private let utxoFilters = UtxoFilters(
         scriptTypes: [.p2pkh, .p2wpkhSh, .p2wpkh],
         maxOutputsCountForInputs: 10
     )
+
+    let storage: MultiSwapSettingStorage
 
     var assets = [Asset]()
 
@@ -198,35 +198,6 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 sendParameters: params,
                 transactionError: transactionError
             )
-        case .zcash:
-            guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
-                throw SwapError.noZcashAdapter
-            }
-            var transactionError: Error?
-
-            let address: Recipient
-            if let transparent = adapter.recipient(from: swapQuote.inboundAddress) {
-                address = transparent
-            } else {
-                throw SendTransactionError.invalidAddress
-            }
-
-            let proposal = try await adapter.sendProposal(amount: amountIn, address: address, memo: .init(string: swapQuote.memo))
-
-            if let dustThreshold = swapQuote.dustThreshold,
-               Int(Zatoshi.from(decimal: amountIn).amount) <= dustThreshold
-            {
-                transactionError = BitcoinCoreErrors.SendValueErrors.dust(dustThreshold + 1)
-            }
-
-            return MayaMultiSwapZcashConfirmationQuote(
-                swapQuote: swapQuote,
-                recipient: storage.recipient(blockchainType: tokenIn.blockchainType),
-                amountIn: amountIn,
-                totalFeeRequired: proposal.totalFeeRequired(),
-                slippage: slippage,
-                transactionError: transactionError
-            )
         default:
             throw SwapError.unsupportedTokenIn
         }
@@ -323,23 +294,10 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             }
 
             try adapter.send(params: sendParameters)
-        } else if let quote = quote as? MayaMultiSwapZcashConfirmationQuote {
-            guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
-                throw SwapError.noZcashAdapter
-            }
-
-            let address: Recipient
-            if let transparent = adapter.recipient(from: quote.swapQuote.inboundAddress) {
-                address = transparent
-            } else {
-                throw SendTransactionError.invalidAddress
-            }
-
-            try await adapter.send(amount: quote.amountIn, address: address, memo: .init(string: quote.swapQuote.memo))
         }
     }
 
-    private func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil) async throws -> SwapQuote {
+    func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil) async throws -> SwapQuote {
         guard let assetIn = assets.first(where: { $0.token == tokenIn }) else {
             throw SwapError.unsupportedTokenIn
         }

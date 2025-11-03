@@ -46,10 +46,17 @@ class MainSettingsViewModel: ObservableObject {
         }
     }
 
+    @Published var mayaStagenetEnabled: Bool {
+        didSet {
+            testNetManager.set(mayaStagenetEnabled: mayaStagenetEnabled)
+        }
+    }
+
     init() {
         showTestSwitchers = Bundle.main.object(forInfoDictionaryKey: "ShowTestNetSwitcher") as? String == "true"
         emulatePurchase = localStorage.emulatePurchase
         testNetEnabled = testNetManager.testNetEnabled
+        mayaStagenetEnabled = testNetManager.mayaStagenetEnabled
 
         subscribe(MainScheduler.instance, disposeBag, backupManager.allBackedUpObservable) { [weak self] _ in self?.syncManageWalletsAlert() }
         subscribe(MainScheduler.instance, disposeBag, walletConnectSessionManager.sessionsObservable) { [weak self] _ in self?.syncWalletConnectSessionCount() }

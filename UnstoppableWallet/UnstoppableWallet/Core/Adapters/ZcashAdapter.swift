@@ -807,6 +807,23 @@ extension ZcashAdapter: ISendZcashAdapter {
         return try await synchronizer.proposeTransfer(accountUUID: accountId, recipient: address, amount: amountInZatoshi, memo: memo)
     }
 
+    func sendProposal(outputs: [TransferOutput]) async throws -> Proposal {
+        guard let accountId else {
+            throw AppError.ZcashError.noAccountId
+        }
+
+        return try await synchronizer.proposeTransfer(
+            accountUUID: accountId,
+            proposalOutputs: outputs.map {
+                .init(
+                    recipient: $0.address,
+                    amount: Zatoshi.from(decimal: $0.amount),
+                    memo: $0.memo
+                )
+            }
+        )
+    }
+
     func shieldProposal(threshold: Decimal, address: Recipient?, memo: Memo?) async throws -> Proposal? {
         guard let accountId else {
             throw AppError.ZcashError.noAccountId
@@ -871,16 +888,7 @@ extension ZcashAdapter: ISendZcashAdapter {
     }
 
     func send(amount: Decimal, address: Recipient, memo: Memo?) async throws {
-        guard let accountId else {
-            throw AppError.ZcashError.noAccountId
-        }
-
-        let proposal = try await synchronizer.proposeTransfer(
-            accountUUID: accountId,
-            recipient: address,
-            amount: Zatoshi.from(decimal: amount), memo: memo
-        )
-
+        let proposal = try await sendProposal(amount: amount, address: address, memo: memo)
         try await send(proposal: proposal)
     }
 
@@ -954,6 +962,12 @@ extension ZcashAdapter {
         var processing: Decimal {
             fullBalance - available
         }
+    }
+
+    struct TransferOutput {
+        let amount: Decimal
+        let address: Recipient
+        let memo: Memo?
     }
 }
 

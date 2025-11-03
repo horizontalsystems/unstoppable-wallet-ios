@@ -4,14 +4,14 @@ import MarketKit
 import ZcashLightClientKit
 
 class MayaMultiSwapZcashConfirmationQuote: IMultiSwapConfirmationQuote {
-    let swapQuote: ThorChainMultiSwapProvider.SwapQuote
+    let swapQuote: MayaMultiSwapProvider.SwapQuote
     let recipient: Address?
     let amountIn: Decimal
     let slippage: Decimal
     let totalFeeRequired: Zatoshi
     let transactionError: Error?
 
-    init(swapQuote: ThorChainMultiSwapProvider.SwapQuote, recipient: Address?, amountIn: Decimal, totalFeeRequired: Zatoshi, slippage: Decimal, transactionError: Error?) {
+    init(swapQuote: MayaMultiSwapProvider.SwapQuote, recipient: Address?, amountIn: Decimal, totalFeeRequired: Zatoshi, slippage: Decimal, transactionError: Error?) {
         self.swapQuote = swapQuote
         self.recipient = recipient
         self.amountIn = amountIn
@@ -21,7 +21,7 @@ class MayaMultiSwapZcashConfirmationQuote: IMultiSwapConfirmationQuote {
     }
 
     var amountOut: Decimal {
-        swapQuote.expectedAmountOut
+        swapQuote.quote.expectedAmountOut
     }
 
     var feeData: FeeData? {
@@ -67,38 +67,38 @@ class MayaMultiSwapZcashConfirmationQuote: IMultiSwapConfirmationQuote {
 
         var feeFields = [SendField]()
 
-        if swapQuote.affiliateFee > 0 {
+        if swapQuote.quote.affiliateFee > 0 {
             feeFields.append(
                 .value(
                     title: "swap.affiliate_fee".localized,
                     description: nil,
-                    appValue: AppValue(token: tokenOut, value: swapQuote.affiliateFee),
-                    currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: swapQuote.affiliateFee * $0) },
+                    appValue: AppValue(token: tokenOut, value: swapQuote.quote.affiliateFee),
+                    currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: swapQuote.quote.affiliateFee * $0) },
                     formatFull: true
                 )
             )
         }
 
-        if swapQuote.liquidityFee > 0 {
+        if swapQuote.quote.liquidityFee > 0 {
             feeFields.append(
                 .value(
                     title: "swap.liquidity_fee".localized,
                     description: nil,
-                    appValue: AppValue(token: tokenOut, value: swapQuote.liquidityFee),
-                    currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: swapQuote.liquidityFee * $0) },
+                    appValue: AppValue(token: tokenOut, value: swapQuote.quote.liquidityFee),
+                    currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: swapQuote.quote.liquidityFee * $0) },
                     formatFull: true
                 )
             )
         }
 
-        if swapQuote.outboundFee > 0 {
+        if swapQuote.quote.outboundFee > 0 {
             feeFields.append(
                 .value(
                     title: "swap.outbound_fee".localized,
                     description: nil,
-                    appValue: AppValue(token: tokenOut, value: swapQuote.outboundFee),
+                    appValue: AppValue(token: tokenOut, value: swapQuote.quote.outboundFee),
                     currencyValue: tokenOutRate.map {
-                        CurrencyValue(currency: currency, value: swapQuote.outboundFee * $0)
+                        CurrencyValue(currency: currency, value: swapQuote.quote.outboundFee * $0)
                     },
                     formatFull: true
                 )
@@ -113,7 +113,7 @@ class MayaMultiSwapZcashConfirmationQuote: IMultiSwapConfirmationQuote {
            let feeAmountData = amountData(feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate),
            let feeCurrencyValue = feeAmountData.currencyValue
         {
-            let totalFee = feeCurrencyValue.value + (swapQuote.affiliateFee + swapQuote.liquidityFee + swapQuote.outboundFee) * tokenOutRate
+            let totalFee = feeCurrencyValue.value + (swapQuote.quote.affiliateFee + swapQuote.quote.liquidityFee + swapQuote.quote.outboundFee) * tokenOutRate
             let currencyValue = CurrencyValue(currency: currency, value: totalFee)
 
             if let formatted = ValueFormatter.instance.formatFull(currencyValue: currencyValue) {
