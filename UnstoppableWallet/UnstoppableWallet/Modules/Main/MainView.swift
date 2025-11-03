@@ -199,10 +199,9 @@ struct AccountsLostView: View {
     @Binding var isPresented: Bool
 
     var body: some View {
-        BottomSheetView.instance(
-            icon: .warning,
-            title: "lost_accounts.warning_title".localized,
+        BottomSheetView(
             items: [
+                .title(icon: .warning, title: "lost_accounts.warning_title".localized),
                 .text(text: "lost_accounts.warning_message".localized(records.map { "- \($0.name)" }.joined(separator: "\n"))),
                 .buttonGroup(.init(buttons: [
                     .init(style: .yellow, title: "button.i_understand".localized) {
@@ -210,7 +209,6 @@ struct AccountsLostView: View {
                     },
                 ])),
             ],
-            isPresented: $isPresented
         )
     }
 }

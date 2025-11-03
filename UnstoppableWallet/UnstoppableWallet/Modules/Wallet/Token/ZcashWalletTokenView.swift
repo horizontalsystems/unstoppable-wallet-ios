@@ -75,10 +75,9 @@ struct ZcashWalletTokenView: View {
                 value: infoAmount(value: transparent),
                 action: {
                     Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                        BottomSheetView.instance(
-                            icon: .info,
-                            title: "balance.token.transparent.info.title".localized,
+                        BottomSheetView(
                             items: [
+                                .title(icon: .info, title: "balance.token.transparent.info.title".localized),
                                 .text(text: "balance.token.transparent.info.description".localized),
                                 .buttonGroup(.init(buttons: [
                                     .init(style: .yellow, title: "balance.token.shield".localized) {
@@ -95,7 +94,6 @@ struct ZcashWalletTokenView: View {
                                     },
                                 ])),
                             ],
-                            isPresented: isPresented
                         )
                     }
                 }

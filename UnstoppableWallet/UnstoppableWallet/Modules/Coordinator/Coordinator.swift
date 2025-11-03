@@ -175,10 +175,9 @@ extension Coordinator {
 
     func present(info: InfoDescription) {
         present(type: .bottomSheet) { isPresented in
-            BottomSheetView.instance(
-                icon: .book,
-                title: info.title,
+            BottomSheetView(
                 items: [
+                    .title(icon: .book, title: info.title),
                     .text(text: info.description),
                     .buttonGroup(.init(buttons: [
                         .init(style: .gray, title: "button.understood".localized) {
@@ -186,7 +185,6 @@ extension Coordinator {
                         },
                     ])),
                 ],
-                isPresented: isPresented
             )
         }
     }

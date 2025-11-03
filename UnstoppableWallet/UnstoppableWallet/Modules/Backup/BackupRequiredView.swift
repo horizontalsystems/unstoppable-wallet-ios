@@ -10,10 +10,9 @@ struct BackupRequiredView: View {
     @Binding var isPresented: Bool
 
     var body: some View {
-        BottomSheetView.instance(
-            icon: .warning,
-            title: title,
+        BottomSheetView(
             items: [
+                .title(icon: .warning, title: title),
                 .text(text: description),
                 .buttonGroup(.init(buttons: [
                     .init(style: .gray, title: "backup_prompt.backup_manual".localized, icon: "edit_24") {
@@ -34,7 +33,6 @@ struct BackupRequiredView: View {
                     },
                 ])),
             ],
-            isPresented: $isPresented
         )
     }
 

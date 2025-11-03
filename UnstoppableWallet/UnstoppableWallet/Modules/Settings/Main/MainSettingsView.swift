@@ -101,6 +101,14 @@ struct MainSettingsView: View {
                     stat(page: .settings, event: .open(page: .addressChecker))
                 }
         }
+        .navigationDestination(isPresented: $walletConnectPresented) {
+            WalletConnectListView()
+                .navigationTitle("wallet_connect_list.title".localized)
+                .ignoresSafeArea()
+                .onFirstAppear {
+                    stat(page: .settings, event: .open(page: .walletConnect))
+                }
+        }
     }
 
     @ViewBuilder private func slider() -> some View {
@@ -285,14 +293,6 @@ struct MainSettingsView: View {
             }
 
             Image.disclosureIcon
-        }
-        .navigationDestination(isPresented: $walletConnectPresented) {
-            WalletConnectListView()
-                .navigationTitle("wallet_connect_list.title".localized)
-                .ignoresSafeArea()
-                .onFirstAppear {
-                    stat(page: .settings, event: .open(page: .walletConnect))
-                }
         }
     }
 

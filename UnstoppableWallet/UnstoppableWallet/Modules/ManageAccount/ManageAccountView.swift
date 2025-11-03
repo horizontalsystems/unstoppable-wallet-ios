@@ -145,7 +145,7 @@ struct ManageAccountView: View {
                                 }
                             } else {
                                 Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                                    UnlinkView(isPresented: isPresented) {
+                                    UnlinkBottomSheetView(isPresented: isPresented) {
                                         unlink()
                                     }
                                 }
@@ -189,11 +189,10 @@ struct ManageAccountView: View {
         }
     }
 
-    @ViewBuilder private func confirmUnlinkWatchView(isPresented: Binding<Bool>) -> some View {
-        BottomSheetView.instance(
-            icon: .trash,
-            title: "settings_manage_keys.delete.title".localized,
+    @ViewBuilder private func confirmUnlinkWatchView(isPresented _: Binding<Bool>) -> some View {
+        BottomSheetView(
             items: [
+                .title(icon: .trash, title: "settings_manage_keys.delete.title".localized),
                 .text(text: "settings_manage_keys.delete.confirmation_watch".localized),
                 .buttonGroup(.init(buttons: [
                     .init(style: .gray, title: "settings_manage_keys.delete.confirmation_watch.button".localized) {
@@ -201,15 +200,13 @@ struct ManageAccountView: View {
                     },
                 ])),
             ],
-            isPresented: isPresented
         )
     }
 
     @ViewBuilder private func confirmDeleteCloudBackupView(isPresented: Binding<Bool>) -> some View {
-        BottomSheetView.instance(
-            icon: .trash,
-            title: "manage_account.cloud_delete_backup_recovery_phrase".localized,
+        BottomSheetView(
             items: [
+                .title(icon: .trash, title: "manage_account.cloud_delete_backup_recovery_phrase".localized),
                 .text(text: "manage_account.cloud_delete_backup_recovery_phrase.description".localized),
                 .buttonGroup(.init(buttons: [
                     .init(style: .gray, title: "button.delete".localized) {
@@ -221,15 +218,13 @@ struct ManageAccountView: View {
                     },
                 ])),
             ],
-            isPresented: isPresented
         )
     }
 
     @ViewBuilder private func confirmDeleteCloudBackupAfterManualBackupView(isPresented: Binding<Bool>) -> some View {
-        BottomSheetView.instance(
-            icon: .trash,
-            title: "manage_account.manual_backup_required".localized,
+        BottomSheetView(
             items: [
+                .title(icon: .trash, title: "manage_account.manual_backup_required".localized),
                 .warning(text: "manage_account.manual_backup_required.description".localized),
                 .buttonGroup(.init(buttons: [
                     .init(style: .gray, title: "manage_account.manual_backup_required.button".localized) {
@@ -244,7 +239,6 @@ struct ManageAccountView: View {
                     },
                 ])),
             ],
-            isPresented: isPresented
         )
     }
 
@@ -284,69 +278,5 @@ extension ManageAccountView {
         case deleteCloudBackup
 
         var id: Self { self }
-    }
-
-    struct UnlinkView: View {
-        @Binding var isPresented: Bool
-        let onUnlink: () -> Void
-
-        @StateObject private var selectorViewModel = SelectorGroupsViewModel()
-        @StateObject private var buttonViewModel = ButtonGroupViewModel()
-
-        @State private var checkedIndices = Set<Int>()
-
-        private let items = [
-            "settings_manage_keys.delete.confirmation_remove".localized,
-            "settings_manage_keys.delete.confirmation_loose".localized,
-        ]
-
-        var body: some View {
-            BottomSheetView(
-                icon: .trash,
-                title: "settings_manage_keys.delete.title".localized,
-                items: [
-                    .groupSelector(.init(id: Controls.selector, items: items.map { .init(id: $0, description: $0) })),
-                    .buttonGroup(
-                        .init(buttons: [
-                            .init(
-                                id: Controls.delete,
-                                style: .gray,
-                                title: "security_settings.delete_alert_button".localized,
-                                action: {
-                                    onUnlink()
-                                    isPresented = false
-                                }
-                            ),
-                        ])
-                    ),
-                ],
-                isPresented: $isPresented,
-                selectorViewModel: selectorViewModel,
-                buttonViewModel: buttonViewModel
-            )
-            .onAppear {
-                setupViewModels()
-            }
-            .onChange(of: selectorViewModel.groupStates[Controls.selector]) { _ in
-                updateButtonState()
-            }
-        }
-
-        private func setupViewModels() {
-            selectorViewModel.append(id: Controls.selector, initialSelection: [])
-            buttonViewModel.append(id: Controls.delete, isDisabled: true)
-        }
-
-        private func updateButtonState() {
-            let selection = selectorViewModel.getSelection(Controls.selector)
-            let allChecked = selection.count == items.count
-
-            buttonViewModel.setDisabled(!allChecked, for: Controls.delete)
-        }
-
-        private enum Controls {
-            static let selector = "selector"
-            static let delete = "delete"
-        }
     }
 }

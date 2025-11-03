@@ -4,7 +4,7 @@ struct CoordinatorViewModifier: ViewModifier {
     @ObservedObject private var coordinator = Coordinator.shared
     private let level: Int
 
-    @State private var sheetHeight: CGFloat = .zero
+    @State private var sheetHeight: CGFloat? = nil
 
     init(level: Int = 0) {
         self.level = level
@@ -62,7 +62,7 @@ struct CoordinatorViewModifier: ViewModifier {
                             sheetHeight = newHeight
                         }
                     }
-                    .presentationDetents([.height(sheetHeight)])
+                    .presentationDetents([sheetHeight.map { .height($0) } ?? .medium])
                     .modifier(CoordinatorViewModifier(level: level + 1))
                 }
             }
