@@ -780,6 +780,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "swap.dex_info.link_button" = "%@ Sitesi";
 
+"swap.maya.shielded_address.error" = "Can't fetch shielded address for Memo (Maya)";
 
 
 // Market
