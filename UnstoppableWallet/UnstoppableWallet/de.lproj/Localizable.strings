@@ -780,6 +780,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "swap.dex_info.link_button" = "%@ Seite";
 
+"swap.maya.shielded_address.error" = "Can't fetch shielded address for Memo (Maya)";
 
 
 // Market
