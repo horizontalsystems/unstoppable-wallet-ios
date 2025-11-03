@@ -47,10 +47,9 @@ class WalletConnectVerificationModel: ObservableObject {
 
     private func presentNoAccount() {
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
-            BottomSheetView.instance(
-                icon: .warning,
-                title: "wallet_connect.title".localized,
+            BottomSheetView(
                 items: [
+                    .title(icon: .warning, title: "wallet_connect.title".localized),
                     .warning(text: "wallet_connect.no_account.description".localized),
                     .buttonGroup(.init(buttons: [
                         .init(style: .yellow, title: "button.ok".localized) {
@@ -58,17 +57,15 @@ class WalletConnectVerificationModel: ObservableObject {
                         },
                     ])),
                 ],
-                isPresented: isPresented
             )
         }
     }
 
     private func presentNotSupported(accountType: AccountType, onSwitch: (() -> Void)?) {
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
-            BottomSheetView.instance(
-                icon: .warning,
-                title: "wallet_connect.title".localized,
+            BottomSheetView(
                 items: [
+                    .title(icon: .warning, title: "wallet_connect.title".localized),
                     .warning(text: "wallet_connect.non_supported_account.description".localized(accountType.description)),
                     .buttonGroup(.init(buttons: [
                         .init(style: .yellow, title: "wallet_connect.non_supported_account.switch".localized) {
@@ -83,7 +80,6 @@ class WalletConnectVerificationModel: ObservableObject {
                         },
                     ])),
                 ],
-                isPresented: isPresented
             )
         }
     }

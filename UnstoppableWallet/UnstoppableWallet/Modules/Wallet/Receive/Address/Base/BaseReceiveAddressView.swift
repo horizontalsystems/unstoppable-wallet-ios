@@ -30,13 +30,12 @@ struct BaseReceiveAddressView<Content: View>: View {
         }
         .onReceive(viewModel.popupPublisher) { popup in
             Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                BottomSheetView.instance(
-                    title: popup.title,
+                BottomSheetView(
                     items: [
+                        .title(title: popup.title),
                         .text(text: popup.description.text),
                         .buttonGroup(.init(buttons: viewModel.popupButtons(mode: popup.mode, isPresented: isPresented))),
                     ],
-                    isPresented: isPresented
                 )
             }
         }

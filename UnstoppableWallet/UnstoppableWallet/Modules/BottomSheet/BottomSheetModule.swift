@@ -148,10 +148,9 @@ struct CopyConfirmationWrapperView: View {
     @Binding var isPresented: Bool
 
     var body: some View {
-        BottomSheetView.instance(
-            icon: .error,
-            title: "copy_warning.title".localized,
+        BottomSheetView(
             items: [
+                .title(icon: .error, title: "copy_warning.title".localized),
                 .text(text: "copy_warning.description".localized),
                 .buttonGroup(
                     .init(buttons: [
@@ -175,7 +174,6 @@ struct CopyConfirmationWrapperView: View {
                     ])
                 ),
             ],
-            isPresented: $isPresented
         )
     }
 }

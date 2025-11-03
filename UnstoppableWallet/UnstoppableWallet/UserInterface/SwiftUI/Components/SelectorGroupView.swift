@@ -18,7 +18,7 @@ struct SelectorGroupView: View {
 
     var body: some View {
         ListSection {
-            ListForEach(group.items) { item in
+            ForEach(group.items) { item in
                 cellView(for: item)
             }
         }
@@ -72,7 +72,7 @@ struct SelectorGroupView: View {
                         checkboxImage(isSelected: isSelected)
                     },
                     middle: {
-                        MultiText(title: item.text, subtitle: item.description)
+                        MultiText(subtitle: item.description)
                     },
                 )
             } else {

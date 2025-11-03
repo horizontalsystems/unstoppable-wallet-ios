@@ -5,14 +5,12 @@ struct Informed: ViewModifier {
 
     func body(content: Content) -> some View {
         Button(action: {
-            Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                BottomSheetView.instance(
-                    icon: .book,
-                    title: infoDescription.title,
+            Coordinator.shared.present(type: .bottomSheet) { _ in
+                BottomSheetView(
                     items: [
+                        .title(icon: .book, title: infoDescription.title),
                         .text(text: infoDescription.description),
                     ],
-                    isPresented: isPresented
                 )
             }
         }, label: {

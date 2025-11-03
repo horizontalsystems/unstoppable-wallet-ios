@@ -91,9 +91,9 @@ struct ReceiveCoinListView: View {
 
     private func showBirthdayEnableSheet(token: Token) {
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
-            BottomSheetView.instance(
-                title: token.coin.name,
+            BottomSheetView(
                 items: [
+                    .title(title: token.coin.name),
                     .text(text: "deposit.restore.enabled.description".localized(token.coin.code)),
                     .buttonGroup(.init(buttons: [
                         .init(style: .yellow, title: "deposit.restore.enabled.already_own".localized, action: {
@@ -110,7 +110,6 @@ struct ReceiveCoinListView: View {
                         }),
                     ])),
                 ],
-                isPresented: isPresented
             )
         }
     }

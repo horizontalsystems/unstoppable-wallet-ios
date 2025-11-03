@@ -226,10 +226,9 @@ struct PreSendView: View {
                 confirmPresented = true
             } else {
                 Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                    BottomSheetView.instance(
-                        icon: .local(name: "warning_2_24", style: .red),
-                        title: "send.address.risky.title".localized,
+                    BottomSheetView(
                         items: [
+                            .title(icon: .local(name: "warning_2_24", style: .red), title: "send.address.risky.title".localized),
                             .warning(text: "send.address.risky.description".localized),
                             .buttonGroup(.init(buttons: [
                                 .init(style: .red, title: "send.continue_anyway".localized) {
@@ -239,7 +238,6 @@ struct PreSendView: View {
                                 .init(style: .transparent, title: "button.cancel".localized) { isPresented.wrappedValue = false },
                             ])),
                         ],
-                        isPresented: isPresented
                     )
                 }
             }

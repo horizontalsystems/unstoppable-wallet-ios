@@ -12,14 +12,12 @@ struct BalanceErrorBottomView: View {
     }
 
     var body: some View {
-        BottomSheetView.instance(
-            icon: .error,
-            title: "balance_error.sync_error".localized,
+        BottomSheetView(
             items: [
+                .title(icon: .error, title: "balance_error.sync_error".localized),
                 .text(text: viewModel.item.sourceType != nil ? "balance_error.sync_error.description.with_source".localized : "balance_error.sync_error.description.without_source".localized),
                 .buttonGroup(.init(buttons: buttons(item: viewModel.item))),
             ],
-            isPresented: $isPresented
         )
     }
 

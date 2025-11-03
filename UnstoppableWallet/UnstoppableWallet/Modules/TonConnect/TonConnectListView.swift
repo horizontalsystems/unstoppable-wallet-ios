@@ -65,11 +65,10 @@ struct TonConnectListView: View {
     }
 
     private func onClick(app: TonConnectApp) {
-        Coordinator.shared.present(type: .bottomSheet) { isPresented in
-            BottomSheetView.instance(
-                icon: .trash,
-                title: "ton_connect.list.disconnect_app".localized,
+        Coordinator.shared.present(type: .bottomSheet) { _ in
+            BottomSheetView(
                 items: [
+                    .title(icon: .trash, title: "ton_connect.list.disconnect_app".localized),
                     .text(text: "ton_connect.list.disconnect_app.description".localized(app.manifest.name)),
                     .buttonGroup(.init(buttons: [
                         .init(style: .red, title: "ton_connect.list.disconnect_app.disconnect".localized) {
@@ -78,7 +77,6 @@ struct TonConnectListView: View {
                         },
                     ])),
                 ],
-                isPresented: isPresented
             )
         }
     }
