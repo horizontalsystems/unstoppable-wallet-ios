@@ -4,8 +4,13 @@ enum DestinationHelper {
     static func resolveDestination(token: Token) throws -> String {
         let blockchainType = token.blockchainType
 
-        if let depositAdapter = Core.shared.adapterManager.adapter(for: token) as? IDepositAdapter {
-            return depositAdapter.receiveAddress.address
+        switch Core.shared.adapterManager.adapter(for: token) {
+        case let adapter as ZcashAdapter:
+            if let tAddress = adapter.tAddress?.stringEncoded {
+                return tAddress
+            }
+        case let adapter as IDepositAdapter: return adapter.receiveAddress.address
+        default: ()
         }
 
         guard let account = Core.shared.accountManager.activeAccount else {
