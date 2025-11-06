@@ -239,7 +239,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         ], isList: false)]
     }
 
-    private func settingsView(tokenOut: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
+    func settingsView(tokenOut: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
         let view = ThemeNavigationStack {
             RecipientAndSlippageMultiSwapSettingsView(tokenOut: tokenOut, storage: storage, slippageMode: .adjustable, onChangeSettings: onChangeSettings)
         }

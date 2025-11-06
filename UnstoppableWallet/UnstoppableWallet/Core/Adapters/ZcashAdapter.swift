@@ -978,12 +978,21 @@ class ZcashAddressValidator {
         self.network = network
     }
 
-    public func validate(address: String) throws {
+    public func validate(address: String) throws -> Recipient {
         do {
-            _ = try Recipient(address, network: network.networkType)
+            return try Recipient(address, network: network.networkType)
         } catch {
             // FIXME: Should this be handled another way? logged? how?
             throw AppError.addressInvalid
+        }
+    }
+}
+
+extension Recipient {
+    var isTransparent: Bool {
+        switch self {
+        case .tex, .transparent: return true
+        case .sapling, .unified: return false
         }
     }
 }

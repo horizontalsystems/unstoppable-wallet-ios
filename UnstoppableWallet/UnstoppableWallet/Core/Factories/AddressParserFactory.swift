@@ -12,7 +12,7 @@ enum AddressParserFactory {
         AddressUriParser(blockchainType: blockchainType, tokenType: tokenType)
     }
 
-    static func parserChainHandlers(blockchainType: BlockchainType, withEns: Bool = true) -> [IAddressParserItem] {
+    static func parserChainHandlers(blockchainType: BlockchainType, filter: ParserFilter? = nil, withEns: Bool = true) -> [IAddressParserItem] {
         switch blockchainType {
         case .bitcoin, .dash, .litecoin, .bitcoinCash, .ecash:
             let scriptConverter = ScriptConverter()
@@ -87,7 +87,14 @@ enum AddressParserFactory {
         case .zcash:
             let network = ZcashNetworkBuilder.network(for: .mainnet)
             let validator = ZcashAddressValidator(network: network)
-            let zcashParserItem = ZcashAddressParserItem(parserType: .validator(validator))
+
+            let addressType = filter.flatMap {
+                switch $0 {
+                case let .zCashTypes(type): return type
+//                default: return nil
+                }
+            }
+            let zcashParserItem = ZcashAddressParserItem(parserType: .validator(validator), addressType: addressType)
 
             return [zcashParserItem]
         case .solana: return []
@@ -101,16 +108,25 @@ enum AddressParserFactory {
         }
     }
 
-    static func parserChain(blockchainType: BlockchainType?, withEns: Bool = true) -> AddressParserChain {
+    static func parserChain(blockchainType: BlockchainType?, filter: ParserFilter? = nil, withEns: Bool = true) -> AddressParserChain {
         if let blockchainType {
-            return AddressParserChain().append(handlers: parserChainHandlers(blockchainType: blockchainType, withEns: withEns))
+            return AddressParserChain().append(handlers: parserChainHandlers(blockchainType: blockchainType, filter: filter, withEns: withEns))
         }
 
         var handlers = [IAddressParserItem]()
         for blockchainType in BlockchainType.supported {
-            handlers.append(contentsOf: parserChainHandlers(blockchainType: blockchainType, withEns: withEns))
+            handlers.append(contentsOf: parserChainHandlers(blockchainType: blockchainType, filter: filter, withEns: withEns))
         }
 
         return AddressParserChain().append(handlers: handlers)
+    }
+}
+
+extension AddressParserFactory {
+    enum ParserFilter {
+        static let zCashTransparentOnly: Self = .zCashTypes(.transparent)
+
+        case zCashTypes(ZcashAdapter.AddressType)
+        // can be updated with btc addresses (like Only Legacy or SegWit)
     }
 }

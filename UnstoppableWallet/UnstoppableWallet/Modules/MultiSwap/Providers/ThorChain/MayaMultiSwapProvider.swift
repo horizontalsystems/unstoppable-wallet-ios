@@ -2,6 +2,7 @@ import BitcoinCore
 import Foundation
 import MarketKit
 import ObjectMapper
+import SwiftUI
 import ZcashLightClientKit
 
 class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
@@ -116,6 +117,12 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         }
 
         throw MayaProviderError.noShieldedAddress
+    }
+
+    override func settingsView(tokenOut: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
+        let view = super.settingsView(tokenOut: tokenOut, onChangeSettings: onChangeSettings)
+            .environment(\.addressParserFilter, .zCashTransparentOnly)
+        return AnyView(view)
     }
 }
 

@@ -19,6 +19,7 @@ class AddressService {
     private var addressParserChain: AddressParserChain?
 
     private(set) var blockchainType: BlockchainType?
+    private let filter: AddressParserFactory.ParserFilter?
     private let contactBookManager: ContactBookManager?
 
     private let showUriErrorRelay = PublishRelay<Error>()
@@ -62,15 +63,16 @@ class AddressService {
         }
     }
 
-    init(mode: Mode, marketKit: MarketKit.Kit, contactBookManager: ContactBookManager?, blockchainType: BlockchainType?, initialAddress: Address? = nil) {
+    init(mode: Mode, marketKit: MarketKit.Kit, contactBookManager: ContactBookManager?, blockchainType: BlockchainType?, filter: AddressParserFactory.ParserFilter? = nil, initialAddress: Address? = nil) {
         self.marketKit = marketKit
         self.blockchainType = blockchainType
+        self.filter = filter
         self.contactBookManager = contactBookManager
 
         switch mode {
         case .blockchainType:
             addressUriParser = AddressParserFactory.parser(blockchainType: blockchainType, tokenType: nil) // TODO: Check if tokenType is nesessary
-            addressParserChain = blockchainType.flatMap { AddressParserFactory.parserChain(blockchainType: $0) }
+            addressParserChain = blockchainType.flatMap { AddressParserFactory.parserChain(blockchainType: $0, filter: filter) }
         case let .parsers(uriParser, parserChain):
             addressUriParser = uriParser
             addressParserChain = parserChain
@@ -191,7 +193,7 @@ extension AddressService {
         self.blockchainType = blockchainType
 
         addressUriParser = AddressParserFactory.parser(blockchainType: blockchainType, tokenType: nil)
-        addressParserChain = AddressParserFactory.parserChain(blockchainType: blockchainType)
+        addressParserChain = AddressParserFactory.parserChain(blockchainType: blockchainType, filter: filter)
 
         set(text: text)
         showContactsRelay.accept(showContacts)

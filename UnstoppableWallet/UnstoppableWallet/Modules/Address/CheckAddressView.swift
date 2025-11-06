@@ -5,6 +5,7 @@ struct CheckAddressView: View {
     @StateObject var viewModel = CheckAddressViewModel()
 
     @Environment(\.presentationMode) private var presentationMode
+    @Environment(\.addressParserFilter) private var parserFilter
 
     var borderColor: Color {
         switch viewModel.addressResult {
@@ -20,6 +21,7 @@ struct CheckAddressView: View {
                     initial: .init(showContacts: false),
                     text: $viewModel.address,
                     result: $viewModel.addressResult,
+                    parserFilter: parserFilter,
                     borderColor: Binding(get: { borderColor }, set: { _ in })
                 )
                 .padding(.bottom, .margin12)
