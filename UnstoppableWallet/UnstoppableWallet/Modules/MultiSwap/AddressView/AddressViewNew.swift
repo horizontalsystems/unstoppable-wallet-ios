@@ -11,8 +11,8 @@ struct AddressViewNew: View {
     @Binding var result: AddressInput.Result
     @Binding var borderColor: Color
 
-    init(initial: AddressInput.Initial, text: Binding<String>, result: Binding<AddressInput.Result>, borderColor: Binding<Color>) {
-        _viewModel = StateObject(wrappedValue: AddressViewModelNew(initial: initial))
+    init(initial: AddressInput.Initial, text: Binding<String>, result: Binding<AddressInput.Result>, parserFilter: AddressParserFactory.ParserFilter?, borderColor: Binding<Color>) {
+        _viewModel = StateObject(wrappedValue: AddressViewModelNew(initial: initial, parserFilter: parserFilter))
 
         _text = text
         _result = result
