@@ -297,7 +297,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil) async throws -> SwapQuote {
+    func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil, params: Parameters? = nil) async throws -> SwapQuote {
         guard let assetIn = assets.first(where: { $0.token == tokenIn }) else {
             throw SwapError.unsupportedTokenIn
         }
@@ -307,7 +307,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         }
 
         let amount = (amountIn * pow(10, 8)).roundedDown(decimal: 0)
-        let destination = try resolveDestination(token: tokenOut)
+        let destination = try await resolveDestination(token: tokenOut)
 
         var parameters: Parameters = [
             "from_asset": assetIn.id,
@@ -327,15 +327,21 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             parameters["affiliate_bps"] = affiliateBps
         }
 
+        if let params {
+            parameters.merge(params) { _, custom in
+                custom
+            }
+        }
+
         return try await networkManager.fetch(url: "\(baseUrl)/quote/swap", parameters: parameters)
     }
 
-    private func resolveDestination(token: Token) throws -> String {
+    func resolveDestination(token: Token) async throws -> String {
         if let recipient = storage.recipient(blockchainType: token.blockchainType) {
             return recipient.raw
         }
 
-        return try DestinationHelper.resolveDestination(token: token)
+        return try await DestinationHelper.resolveDestination(token: token).address
     }
 
     private func syncPools() {

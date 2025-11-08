@@ -1,3 +1,4 @@
+import Alamofire
 import BitcoinCore
 import Foundation
 import MarketKit
@@ -7,6 +8,7 @@ import ZcashLightClientKit
 
 class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
     private let testNetManager = Core.shared.testNetManager
+    private var temporaryDestinationAddress: String?
 
     override var baseUrl: String {
         let stagenet = testNetManager.mayaStagenetEnabled ? "stagenet." : ""
@@ -34,16 +36,19 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
     }
 
     private func zcashSwapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil) async throws -> SwapQuote {
-        let swapQuote = try await super.swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage)
+        let refundAddress = try await resolveDestination(token: tokenIn)
+        let params: Parameters = [
+            "refund_address": refundAddress,
+        ]
+
+        let swapQuote = try await super.swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, params: params)
 
         let unifiedAddress = try await inboundUnifiedAddress(tokenIn: tokenIn)
         return SwapQuote(quote: swapQuote, unifiedAddress: unifiedAddress)
     }
 
     private func proposal(tokenIn: Token, swapQuote: SwapQuote, amountIn: Decimal) async throws -> Proposal {
-        guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter,
-              let tAddress = adapter.tAddress?.stringEncoded
-        else {
+        guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
             throw SwapError.noZcashAdapter
         }
 
@@ -57,8 +62,9 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         let memoOutput = try ZcashAdapter.TransferOutput(
             amount: 0,
             address: uRecipient,
-            memo: .init(string: swapQuote.memo(refundAddress: tAddress))
+            memo: .init(string: swapQuote.quote.memo)
         )
+
         return try await adapter.sendProposal(outputs: [transparentOutput, memoOutput])
     }
 
@@ -124,6 +130,25 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
             .environment(\.addressParserFilter, .zCashTransparentOnly)
         return AnyView(view)
     }
+
+    override func resolveDestination(token: Token) async throws -> String {
+        if let recipient = storage.recipient(blockchainType: token.blockchainType) {
+            return recipient.raw
+        }
+        // use temporary address, to avoid muptiply create address without existing Adapter for token
+        if let temporaryDestinationAddress {
+            return temporaryDestinationAddress
+        }
+
+        let destination = try await DestinationHelper.resolveDestination(token: token)
+
+        // if token not enabled, just save first address to avoid repeatly getter.
+        if destination.type == .nonExisting {
+            temporaryDestinationAddress = destination.address
+        }
+
+        return destination.address
+    }
 }
 
 extension MayaMultiSwapProvider {
@@ -134,18 +159,6 @@ extension MayaMultiSwapProvider {
         init(quote: BaseThorChainMultiSwapProvider.SwapQuote, unifiedAddress: String) {
             self.unifiedAddress = unifiedAddress
             self.quote = quote
-        }
-
-        func memo(refundAddress: String) -> String {
-            // example: "=:ARB.USDT:0xA73339e3bE3bd4B3fDC7e4094c1417135544bE07:0/1/0"
-            var memoParts = quote.memo.split(separator: ":")
-            guard memoParts.count >= 3 else {
-                return quote.memo
-            }
-            memoParts[2] += "/\(refundAddress)"
-
-            let joined = memoParts.joined(separator: ":")
-            return joined
         }
     }
 }
