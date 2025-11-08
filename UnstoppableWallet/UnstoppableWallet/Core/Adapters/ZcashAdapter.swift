@@ -543,6 +543,61 @@ class ZcashAdapter {
 }
 
 extension ZcashAdapter {
+    static func addresses(for accountType: AccountType, network: ZcashNetwork) async throws -> (unified: UnifiedAddress, transparent: TransparentAddress) {
+        guard let seed = accountType.mnemonicSeed else {
+            throw AdapterError.unsupportedAccount
+        }
+
+        let seedData = [UInt8](seed)
+        let tool = DerivationTool(networkType: network.networkType)
+
+        guard let unifiedSpendingKey = try? tool.deriveUnifiedSpendingKey(seed: seedData, accountIndex: .zero),
+              let unifiedViewingKey = try? tool.deriveUnifiedFullViewingKey(from: unifiedSpendingKey)
+        else {
+            throw AppError.ZcashError.cantCreateKeys
+        }
+
+        let uniqueId = UUID().uuidString
+        let initializer = try ZcashAdapter.initializer(network: network, uniqueId: uniqueId)
+        let synchronizer = SDKSynchronizer(initializer: initializer)
+
+        let birthday = BlockHeight.ofLatestCheckpoint(network: network)
+
+        let result = try await synchronizer.prepare(
+            with: seedData,
+            walletBirthday: birthday,
+            for: .newWallet,
+            name: "",
+            keySource: nil
+        )
+
+        if case .seedRequired = result {
+            throw AppError.ZcashError.seedRequired
+        }
+
+        guard let account = try await synchronizer.listAccounts().first else {
+            throw AppError.ZcashError.noReceiveAddress
+        }
+
+        guard let uAddress = try? await synchronizer.getUnifiedAddress(accountUUID: account.id),
+              let tAddress = try? await synchronizer.getTransparentAddress(accountUUID: account.id)
+        else {
+            throw AppError.ZcashError.noReceiveAddress
+        }
+
+        synchronizer.stop()
+
+        return (uAddress, tAddress)
+    }
+
+    static func firstAddress(accountType: AccountType, addressType: AddressType) async throws -> String {
+        let network = ZcashNetworkBuilder.network(for: .mainnet)
+        let (uAddress, tAddress) = try await addresses(for: accountType, network: network)
+        return addressType == .shielded ? uAddress.stringEncoded : tAddress.stringEncoded
+    }
+}
+
+extension ZcashAdapter {
     public static func newBirthdayHeight(network: ZcashNetwork) -> Int {
         BlockHeight.ofLatestCheckpoint(network: network)
     }

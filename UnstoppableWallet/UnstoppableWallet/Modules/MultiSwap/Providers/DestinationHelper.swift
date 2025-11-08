@@ -1,15 +1,15 @@
 import MarketKit
 
 enum DestinationHelper {
-    static func resolveDestination(token: Token) throws -> String {
+    static func resolveDestination(token: Token) async throws -> Destination {
         let blockchainType = token.blockchainType
 
         switch Core.shared.adapterManager.adapter(for: token) {
         case let adapter as ZcashAdapter:
             if let tAddress = adapter.tAddress?.stringEncoded {
-                return tAddress
+                return .init(address: tAddress, type: .existing)
             }
-        case let adapter as IDepositAdapter: return adapter.receiveAddress.address
+        case let adapter as IDepositAdapter: return .init(address: adapter.receiveAddress.address, type: .existing)
         default: ()
         }
 
@@ -23,29 +23,45 @@ enum DestinationHelper {
                 throw SwapError.noDestinationAddress
             }
 
-            return address.eip55
+            return .init(address: address.eip55, type: .existing)
         }
 
+        let address: String
         switch blockchainType {
         case .bitcoin:
-            return try BitcoinAdapter.firstAddress(accountType: account.type, tokenType: token.type)
+            address = try BitcoinAdapter.firstAddress(accountType: account.type, tokenType: token.type)
         case .bitcoinCash:
-            return try BitcoinCashAdapter.firstAddress(accountType: account.type, tokenType: token.type)
+            address = try BitcoinCashAdapter.firstAddress(accountType: account.type, tokenType: token.type)
         case .dash:
-            return try DashAdapter.firstAddress(accountType: account.type)
+            address = try DashAdapter.firstAddress(accountType: account.type)
         case .litecoin:
-            return try LitecoinAdapter.firstAddress(accountType: account.type, tokenType: token.type)
+            address = try LitecoinAdapter.firstAddress(accountType: account.type, tokenType: token.type)
         case .tron:
-            return try Core.shared.tronAccountManager.address(type: account.type)
+            address = try Core.shared.tronAccountManager.address(type: account.type)
         case .stellar:
-            return try StellarKitManager.accountId(accountType: account.type)
+            address = try StellarKitManager.accountId(accountType: account.type)
+        case .zcash:
+            // provide transparent address for zcash swap
+            address = try await ZcashAdapter.firstAddress(accountType: account.type, addressType: .transparent)
         default:
             throw SwapError.noDestinationAddress
         }
+
+        return .init(address: address, type: .nonExisting)
     }
 }
 
 extension DestinationHelper {
+    struct Destination {
+        let address: String
+        let type: ResolvedType
+    }
+
+    enum ResolvedType {
+        case existing
+        case nonExisting
+    }
+
     enum SwapError: Error {
         case noActiveAccount
         case noDestinationAddress
