@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct TermsView: View {
-    private let termCount = 2
+    private let termCount = 5
 
     @StateObject private var viewModel = TermsViewModel()
 
