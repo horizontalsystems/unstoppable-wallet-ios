@@ -28,14 +28,26 @@ struct StellarWalletTokenView: View {
         }
     }
 
-    @ViewBuilder private func view(lockInfo _: StellarWalletTokenViewModel.LockInfo?) -> some View {
-        if let lockInfo = viewModel.lockInfo {
+    @ViewBuilder private func view(lockInfo: StellarWalletTokenViewModel.LockInfo?) -> some View {
+        if let lockInfo {
             VStack(spacing: 0) {
                 WalletInfoView.infoView(
                     title: "balance.token.locked".localized,
-                    info: lockedDescription(lockInfo: lockInfo),
                     value: lockedValue(lockInfo: lockInfo)
-                )
+                ) {
+                    Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                        BottomSheetView(items: [
+                            .title(title: "balance.token.locked".localized),
+                            .list(items: lockedItems(lockInfo: lockInfo)),
+                            .footer(text: "balance.token.locked.stellar.description".localized),
+                            .buttonGroup(.init(buttons: [
+                                .init(style: .gray, title: "button.close".localized) {
+                                    isPresented.wrappedValue = false
+                                },
+                            ])),
+                        ])
+                    }
+                }
 
                 HorizontalDivider()
             }
@@ -45,14 +57,24 @@ struct StellarWalletTokenView: View {
         }
     }
 
-    private func lockedDescription(lockInfo: StellarWalletTokenViewModel.LockInfo) -> InfoDescription {
-        var description = "\("balance.token.locked.stellar.description".localized)\n\n\("balance.token.locked.stellar.description.currently_locked".localized)\n • 1 XLM - \("balance.token.locked.stellar.description.wallet_activation".localized)"
+    private func lockedItems(lockInfo: StellarWalletTokenViewModel.LockInfo) -> [BSModule.ListItem] {
+        var items: [BSModule.ListItem] = [
+            .init(
+                title: "balance.token.locked.stellar.description.wallet_activation".localized,
+                value: ComponentText(text: "1 XLM", colorStyle: .primary)
+            ),
+        ]
 
         for asset in lockInfo.assets {
-            description += "\n • 0.5 XLM - \(asset)"
+            items.append(
+                .init(
+                    title: asset,
+                    value: ComponentText(text: "0.5 XLM", colorStyle: .primary)
+                )
+            )
         }
 
-        return .init(title: "balance.token.locked.stellar.title".localized, description: description)
+        return items
     }
 
     private func lockedValue(lockInfo: StellarWalletTokenViewModel.LockInfo) -> WalletInfoView.ValueFormatStyle {

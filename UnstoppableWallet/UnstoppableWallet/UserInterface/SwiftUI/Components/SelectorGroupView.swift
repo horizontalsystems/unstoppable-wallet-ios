@@ -97,8 +97,7 @@ struct SelectorGroupView: View {
 
     @ViewBuilder
     private func checkboxImage(isSelected: Bool) -> some View {
-        Image(systemName: isSelected ? "checkmark.circle.fill" : "circle")
-            .foregroundColor(isSelected ? .themeYellow : .themeGray)
-            .font(.system(size: 24))
+        Image(isSelected ? "checkbox_circle_on" : "checkbox_circle_off")
+            .icon(size: .iconSize24, colorStyle: isSelected ? .yellow : .andy)
     }
 }
