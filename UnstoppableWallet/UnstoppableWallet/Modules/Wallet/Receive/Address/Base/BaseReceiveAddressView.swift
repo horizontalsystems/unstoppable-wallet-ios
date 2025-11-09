@@ -32,7 +32,7 @@ struct BaseReceiveAddressView<Content: View>: View {
             Coordinator.shared.present(type: .bottomSheet) { isPresented in
                 BottomSheetView(
                     items: [
-                        .title(title: popup.title),
+                        .title(icon: .warning, title: popup.title),
                         .text(text: popup.description.text),
                         .buttonGroup(.init(buttons: viewModel.popupButtons(mode: popup.mode, isPresented: isPresented))),
                     ],

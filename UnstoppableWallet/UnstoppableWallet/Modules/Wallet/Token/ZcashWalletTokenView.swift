@@ -45,41 +45,51 @@ struct ZcashWalletTokenView: View {
     }
 
     @ViewBuilder private func view(processing: Decimal, transparent: Decimal) -> some View {
-        if processing != 0 || transparent > ZcashAdapter.minimalThreshold {
-            VStack(spacing: 0) {
+        VStack(spacing: 0) {
+            if processing != 0 {
                 view(processing: processing)
+                    .padding(.bottom, .heightOnePixel)
+
+                HorizontalDivider()
+            }
+            if transparent > ZcashAdapter.minimalThreshold {
                 view(transparent: transparent)
+                HorizontalDivider()
             }
         }
     }
 
     @ViewBuilder private func view(processing: Decimal) -> some View {
-        if processing != 0 {
-            WalletInfoView.infoView(
-                title: "balance.token.processing".localized,
-                info: .init(
-                    title: "balance.token.processing.info.title".localized,
-                    description: "balance.token.processing.info.description".localized
-                ),
-                value: infoAmount(value: processing)
-            )
-
-            HorizontalDivider()
-        }
+        WalletInfoView.infoView(
+            title: "balance.token.processing".localized,
+            info: .init(
+                title: "balance.token.processing.info.title".localized,
+                description: "balance.token.processing.info.description".localized
+            ),
+            value: infoAmount(value: processing)
+        )
     }
 
     @ViewBuilder private func view(transparent: Decimal) -> some View {
-        if transparent > ZcashAdapter.minimalThreshold {
-            WalletInfoView.infoView(
-                title: "balance.token.transparent".localized,
-                value: infoAmount(value: transparent),
-                action: {
-                    Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                        BottomSheetView(
-                            items: [
-                                .title(icon: .info, title: "balance.token.transparent.info.title".localized),
-                                .text(text: "balance.token.transparent.info.description".localized),
-                                .buttonGroup(.init(buttons: [
+        WalletInfoView.infoView(
+            title: "balance.token.transparent".localized,
+            value: infoAmount(value: transparent),
+            action: {
+                Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                    BottomSheetView(
+                        items: [
+                            .title(title: "balance.token.transparent.info.title".localized),
+                            .list(items: [
+                                .init(
+                                    title: "balance.token.transparent.info.item".localized,
+                                    value: ComponentText(text: infoAmount(value: transparent).formatted, colorStyle: .primary)
+                                ),
+                            ]),
+                            .footer(text: "balance.token.transparent.info.description".localized),
+                            .buttonGroup(.init(buttons: [
+                                    .init(style: .gray, title: "button.cancel".localized) {
+                                        isPresented.wrappedValue = false
+                                    },
                                     .init(style: .yellow, title: "balance.token.shield".localized) {
                                         isPresented.wrappedValue = false
 
@@ -89,18 +99,13 @@ struct ZcashWalletTokenView: View {
                                             }
                                         }
                                     },
-                                    .init(style: .transparent, title: "button.close".localized) {
-                                        isPresented.wrappedValue = false
-                                    },
-                                ])),
-                            ],
-                        )
-                    }
+                                ],
+                                alignment: .horizontal)),
+                        ],
+                    )
                 }
-            )
-
-            HorizontalDivider()
-        }
+            }
+        )
     }
 
     private func infoAmount(value: Decimal) -> WalletInfoView.ValueFormatStyle {

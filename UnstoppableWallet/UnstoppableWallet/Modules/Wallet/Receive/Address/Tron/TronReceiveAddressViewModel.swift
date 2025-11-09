@@ -33,7 +33,7 @@ class TronReceiveAddressViewModel: BaseReceiveAddressViewModel {
     override func popupButtons(mode: ReceiveAddressModule.PopupWarningItem.Mode, isPresented: Binding<Bool>) -> [ButtonGroupViewModel.ButtonItem] {
         if let done = mode as? DoneMode {
             return [
-                .init(style: .yellow, title: done.title) {
+                .init(style: .gray, title: done.title) {
                     isPresented.wrappedValue = false
                 },
             ]

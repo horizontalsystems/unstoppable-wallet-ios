@@ -4,7 +4,7 @@ class TronReceiveAddressViewItemFactory: ReceiveAddressViewItemFactory {
             return .init(
                 title: "deposit.not_active.title".localized,
                 description: .init(text: "deposit.not_active.tron_description".localized),
-                mode: .done(title: "button.i_understand".localized)
+                mode: .done(title: "button.understood".localized)
             )
         }
 

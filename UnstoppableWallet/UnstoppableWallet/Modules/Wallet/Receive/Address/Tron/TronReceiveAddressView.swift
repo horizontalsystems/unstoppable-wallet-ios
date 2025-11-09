@@ -34,7 +34,19 @@ struct TronReceiveAddressView: View {
                 ThemeText("deposit.not_active".localized, style: .subheadSB, colorStyle: .yellow)
             }
         ) {
-            Coordinator.shared.present(info: .init(title: "deposit.not_active.title".localized, description: "deposit.not_active.tron_description".localized))
+            Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                BottomSheetView(
+                    items: [
+                        .title(icon: .warning, title: "deposit.not_active.title".localized),
+                        .text(text: "deposit.not_active.tron_description".localized),
+                        .buttonGroup(.init(buttons: [
+                            .init(style: .gray, title: "button.understood".localized) {
+                                isPresented.wrappedValue = false
+                            },
+                        ])),
+                    ],
+                )
+            }
         }
     }
 }
