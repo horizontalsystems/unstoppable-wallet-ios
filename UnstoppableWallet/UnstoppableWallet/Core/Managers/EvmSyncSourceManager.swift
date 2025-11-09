@@ -21,15 +21,15 @@ class EvmSyncSourceManager {
     private func defaultTransactionSource(blockchainType: BlockchainType) -> EvmKit.TransactionSource {
         switch blockchainType {
         case .ethereum: return .ethereumEtherscan(apiKeys: AppConfig.etherscanKeys)
-        case .binanceSmartChain: return .ethereumEtherscan(apiKeys: AppConfig.bscscanKeys)
-        case .polygon: return .ethereumEtherscan(apiKeys: AppConfig.polygonscanKeys)
+        case .binanceSmartChain: return .bscscan(apiKeys: AppConfig.bscscanKeys)
+        case .polygon: return .polygonscan(apiKeys: AppConfig.polygonscanKeys)
         case .avalanche: return .snowtrace(apiKeys: AppConfig.snowtraceKeys)
-        case .optimism: return .ethereumEtherscan(apiKeys: AppConfig.optimismEtherscanKeys)
-        case .arbitrumOne: return .ethereumEtherscan(apiKeys: AppConfig.arbiscanKeys)
-        case .gnosis: return .ethereumEtherscan(apiKeys: AppConfig.gnosisscanKeys)
-        case .fantom: return .ethereumEtherscan(apiKeys: AppConfig.ftmscanKeys)
-        case .base: return .ethereumEtherscan(apiKeys: AppConfig.basescanKeys)
-        case .zkSync: return .ethereumEtherscan(apiKeys: AppConfig.eraZkSyncKeys)
+        case .optimism: return .optimisticEtherscan(apiKeys: AppConfig.optimismEtherscanKeys)
+        case .arbitrumOne: return .arbiscan(apiKeys: AppConfig.arbiscanKeys)
+        case .gnosis: return .gnosis(apiKeys: AppConfig.gnosisscanKeys)
+        case .fantom: return .fantom(apiKeys: AppConfig.ftmscanKeys)
+        case .base: return .basescan(apiKeys: AppConfig.basescanKeys)
+        case .zkSync: return .eraZkSync(apiKeys: AppConfig.eraZkSyncKeys)
         default: fatalError("Non-supported EVM blockchain")
         }
     }
