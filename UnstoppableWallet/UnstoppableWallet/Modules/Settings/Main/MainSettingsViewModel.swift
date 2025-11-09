@@ -71,7 +71,7 @@ class MainSettingsViewModel: ObservableObject {
 
         subscribe(&cancellables, accountRestoreWarningManager.hasNonStandardPublisher) { [weak self] _ in self?.syncManageWalletsAlert() }
         subscribe(&cancellables, passcodeManager.$isPasscodeSet) { [weak self] _ in self?.syncSecurityAlert() }
-        subscribe(&cancellables, termsManager.$termsAccepted) { [weak self] _ in self?.syncAboutAlert() }
+        subscribe(&cancellables, termsManager.$state) { [weak self] _ in self?.syncAboutAlert() }
 
         Publishers.Merge3(
             purchaseManager.$purchaseData.map { _ in () },
@@ -125,7 +125,7 @@ class MainSettingsViewModel: ObservableObject {
     }
 
     private func syncAboutAlert() {
-        aboutAlert = !termsManager.termsAccepted
+        aboutAlert = !termsManager.state.allAccepted
     }
 }
 

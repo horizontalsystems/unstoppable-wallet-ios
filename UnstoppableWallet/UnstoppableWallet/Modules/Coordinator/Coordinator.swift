@@ -113,7 +113,7 @@ extension Coordinator {
             onPresent?()
         }
 
-        if Core.shared.termsManager.termsAccepted {
+        if Core.shared.termsManager.state.allAccepted {
             onAccept()
         } else {
             Coordinator.shared.present { isPresented in

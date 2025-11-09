@@ -1,14 +1,12 @@
 import SwiftUI
 
 struct TermsView: View {
-    private let termCount = 2
-
     @StateObject private var viewModel = TermsViewModel()
 
     @Binding var isPresented: Bool
     let onAccept: (() -> Void)?
 
-    @State private var checkedIndices = Set<Int>()
+    @State private var checkedIds = Set<String>()
 
     init(isPresented: Binding<Bool>, onAccept: (() -> Void)? = nil) {
         _isPresented = isPresented
@@ -18,11 +16,11 @@ struct TermsView: View {
     var body: some View {
         ThemeNavigationStack {
             ThemeView {
-                if viewModel.termsAccepted {
-                    content()
+                if viewModel.allTermsAccepted {
+                    content(readOnly: true)
                 } else {
                     BottomGradientWrapper {
-                        content()
+                        content(readOnly: false)
                     } bottomContent: {
                         Button(action: {
                             viewModel.setTermsAccepted()
@@ -32,7 +30,7 @@ struct TermsView: View {
                             Text("terms.i_agree".localized)
                         }
                         .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                        .disabled(checkedIndices.count < termCount)
+                        .disabled(checkedIds.count < viewModel.terms.count)
                     }
                 }
             }
@@ -44,27 +42,26 @@ struct TermsView: View {
                     }
                 }
             }
+            .onAppear {
+                checkedIds = viewModel.acceptedTermIds
+            }
         }
     }
 
-    @ViewBuilder private func content() -> some View {
+    @ViewBuilder private func content(readOnly: Bool) -> some View {
         ScrollView {
             VStack(spacing: .margin24) {
                 ListSection {
-                    ForEach(0 ..< termCount, id: \.self) { index in
-                        if viewModel.termsAccepted {
+                    ForEach(viewModel.terms) { term in
+                        if readOnly {
                             ListRow {
-                                rowContent(index: index, checked: true)
+                                rowContent(term: term, checked: true)
                             }
                         } else {
                             ClickableRow(action: {
-                                if checkedIndices.contains(index) {
-                                    checkedIndices.remove(index)
-                                } else {
-                                    checkedIndices.insert(index)
-                                }
+                                toggleTerm(term)
                             }) {
-                                rowContent(index: index, checked: checkedIndices.contains(index))
+                                rowContent(term: term, checked: checkedIds.contains(term.id))
                             }
                         }
                     }
@@ -74,8 +71,17 @@ struct TermsView: View {
         }
     }
 
-    @ViewBuilder private func rowContent(index: Int, checked: Bool) -> some View {
+    @ViewBuilder private func rowContent(term: TermsManager.Term, checked: Bool) -> some View {
         Image(checked ? "checkbox_active_24" : "checkbox_diactive_24")
-        Text("terms.item.\(index + 1)".localized).themeSubhead2(color: .themeLeah)
+        Text(term.localizedKey.localized)
+            .themeSubhead2(color: .themeLeah)
+    }
+
+    private func toggleTerm(_ term: TermsManager.Term) {
+        if checkedIds.contains(term.id) {
+            checkedIds.remove(term.id)
+        } else {
+            checkedIds.insert(term.id)
+        }
     }
 }

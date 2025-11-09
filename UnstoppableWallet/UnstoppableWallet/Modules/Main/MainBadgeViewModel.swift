@@ -32,7 +32,7 @@ class MainBadgeViewModel: ObservableObject {
             .sink { [weak self] _ in self?.syncSettingsBadge() }
             .store(in: &cancellables)
 
-        termsManager.$termsAccepted
+        termsManager.$state
             .sink { [weak self] _ in self?.syncSettingsBadge() }
             .store(in: &cancellables)
 
@@ -63,7 +63,7 @@ class MainBadgeViewModel: ObservableObject {
         }
 
         let cloudError = contactManager.iCloudError != nil && contactManager.remoteSync
-        let visible = accountRestoreWarningManager.hasNonStandard || !backupManager.allBackedUp || !passcodeManager.isPasscodeSet || !termsManager.termsAccepted || cloudError
+        let visible = accountRestoreWarningManager.hasNonStandard || !backupManager.allBackedUp || !passcodeManager.isPasscodeSet || !termsManager.state.allAccepted || cloudError
 
         return visible ? "" : nil
     }
