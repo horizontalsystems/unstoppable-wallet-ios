@@ -366,8 +366,9 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.token.processing.info.title" = "Detenido";
 "balance.token.processing.info.description" = "Transacciones con esta cantidad todavía sincronizadas. Y cuando se confirmen, estos tokens estarán disponibles para gastos";
 "balance.token.transparent" = "Transparente";
-"balance.token.transparent.info.title" = "Monto transparente";
-"balance.token.transparent.info.description" = "Por ahora, el saldo transparente no se puede utilizar en nuestra billetera. Sin embargo, estos fondos pueden ser gastados desde otras billeteras que soportan direcciones t.";
+"balance.token.transparent.info.title" = "Transparente";
+"balance.token.transparent.info.item" = "Transparent Amount";
+"balance.token.transparent.info.description" = "This balance is publicly visible on the blockchain. You can transfer it to your shielded address with “Shield”.";
 "balance.token.shield" = "Blindado";
 
 "balance.token.receive_address" = "Dirección de recepción";
@@ -429,8 +430,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "deposit.memo_warning.description" = "Tanto un memo (etiqueta) como la dirección son necesarios para asegurar que los activos sean recibidos. De lo contrario sus fondos se perderán.";
 
 "deposit.not_active" = "inactivo";
-"deposit.not_active.title" = "Dirección no activa";
-"deposit.not_active.tron_description" = "Las cuentas recién creadas en la cadena de bloques TRON están inactivas y no se pueden consultar ni explorar. Necesitan ser activadas.\n\nPara activar una cuenta inactiva, transfiera tokens TRX o TRC-10 a su dirección. Para activar una nueva cuenta en la cadena Tron, se requiere una cuota de 1 TRX";
+"deposit.not_active.title" = "Cuenta No Activa";
+"deposit.not_active.tron_description" = "New TRON wallets need at least 1 TRX to activate. Until then, they can receive tokens but won’t show correct balances.";
 "deposit.stellar.inactive_asset.title" = "Activar token";
 "deposit.stellar.inactive_asset.description" = "Para recibir %@, debes activar el token. La red Stellar requiere que se establezca una línea de confianza para cada token. Sin ella, tu billetera no podrá recibir %@ — la transacción será rechazada y los fondos no se entregarán.";
 
@@ -1509,8 +1510,12 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "terms.title" = "Términos";
 "terms.i_agree" = "Acepto";
 
-"terms.item.1" = "Realiza una copia de seguridad segura de las frases de recuperación para cada cartera. Es la única manera de recuperar el acceso a los fondos si la aplicación falla.";
-"terms.item.2" = "Deshabilitar el PIN (código) de desbloqueo en el smartphone elimina todas las carteras de la aplicación. Se necesitarán las frases de recuperación para restaurar el acceso a los fondos.";
+"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It’s the only way to regain access to your funds if the app is deleted, lost, or malfunctions. No one can restore it for you.";
+"terms.item.device_pin" = "Disabling your smartphone’s unlock PIN (or passcode) wipes all wallets from the app. You’ll need your recovery phrases to restore access.";
+"terms.item.privacy_notice" = "The app doesn’t spy or collect data about your balances or transactions - we don’t even know how many people use it. It only tracks anonymous usage patterns (pages opened, buttons tapped) to improve usability. You can turn this off in Settings → Privacy.";
+"terms.item.monetization" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet. This helps us stay independent, open source, and free of VC money.";
+"terms.item.open_source" = "The app is verifiably open source, with all source code published online. Everything stated above can be publicly verified by anyone.";
+
 
 // Settings -> Tell Friends
 
