@@ -366,8 +366,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.token.processing.info.title" = "İşlem Sayısı";
 "balance.token.processing.info.description" = "Bu tutardaki işlemler hâlâ senkronize ediliyor. Ve onaylandığında, bu tokenler harcama için kullanılabilir";
 "balance.token.transparent" = "Şeffaf";
-"balance.token.transparent.info.title" = "Şeffaf tutar";
-"balance.token.transparent.info.description" = "Şeffaf bakiye şu anda cüzdanımızda kullanılamaz. Ancak bu tutar, t-adreslerini destekleyen diğer cüzdanlar tarafından harcanabilir";
+"balance.token.transparent.info.title" = "Şeffaf";
+"balance.token.transparent.info.item" = "Transparent Amount";
+"balance.token.transparent.info.description" = "This balance is publicly visible on the blockchain. You can transfer it to your shielded address with “Shield”.";
 "balance.token.shield" = "Shield";
 
 "balance.token.receive_address" = "Alım Adresi";
@@ -429,8 +430,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "deposit.memo_warning.description" = "Varlıkların alındığından emin olmak için hem not (etiket) hem de adres gereklidir. Aksi takdirde paranız kaybolacaktır.";
 
 "deposit.not_active" = "aktif değil";
-"deposit.not_active.title" = "Aktif Adres Değil";
-"deposit.not_active.tron_description" = "TRON blok zincirinde yeni oluşturulan hesaplar etkin değildir ve sorgulanamaz veya araştırılamaz. Etkinleştirilmeleri gerekiyor.\n\nTRX veya TRC-10 jetonlarını etkin olmayan bir hesap adresine aktarmak, hesabı etkinleştirir. Tron zincirinde yeni bir hesabın etkinleştirilmesi 1 TRX ücret gerektirir";
+"deposit.not_active.title" = "Hesap aktif değil";
+"deposit.not_active.tron_description" = "New TRON wallets need at least 1 TRX to activate. Until then, they can receive tokens but won’t show correct balances.";
 "deposit.stellar.inactive_asset.title" = "Token’i Aktive Et";
 "deposit.stellar.inactive_asset.description" = "%@ almak için token’i aktive etmeniz gerekiyor. Stellar ağı, her bir token için trustline kurulmasını gerektirir. Bu kurulmazsa, cüzdan %@ alamaz — işlem reddedilir ve fonlar teslim edilmez.";
 
@@ -1512,8 +1513,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "terms.title" = "Şartlar";
 "terms.i_agree" = "Kabul Ediyorum";
 
-"terms.item.1" = "Her cüzdan için kurtarma ifadelerini güvenli bir şekilde yedekleyin. Uygulama arızalanırsa fonlara yeniden erişmenin tek yolu budur.";
-"terms.item.2" = "Akıllı telefon kilit açma PIN'ini devre dışı bırakmak, tüm cüzdanları uygulamadan siler. Fonlara yeniden erişim sağlamak için kurtarma ifadelerine ihtiyaç duyulacaktır.";
+"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It’s the only way to regain access to your funds if the app is deleted, lost, or malfunctions. No one can restore it for you.";
+"terms.item.device_pin" = "Disabling your smartphone’s unlock PIN (or passcode) wipes all wallets from the app. You’ll need your recovery phrases to restore access.";
+"terms.item.privacy_notice" = "The app doesn’t spy or collect data about your balances or transactions - we don’t even know how many people use it. It only tracks anonymous usage patterns (pages opened, buttons tapped) to improve usability. You can turn this off in Settings → Privacy.";
+"terms.item.monetization" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet. This helps us stay independent, open source, and free of VC money.";
+"terms.item.open_source" = "The app is verifiably open source, with all source code published online. Everything stated above can be publicly verified by anyone.";
+
 
 // Settings -> Tell Friends
 
