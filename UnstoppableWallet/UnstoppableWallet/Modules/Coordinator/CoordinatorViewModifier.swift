@@ -59,7 +59,9 @@ struct CoordinatorViewModifier: ViewModifier {
                             }
                         }
                         .onPreferenceChange(InnerHeightPreferenceKey.self) { newHeight in
-                            sheetHeight = newHeight
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                sheetHeight = newHeight
+                            }
                         }
                     }
                     .presentationDetents([sheetHeight.map { .height($0) } ?? .medium])

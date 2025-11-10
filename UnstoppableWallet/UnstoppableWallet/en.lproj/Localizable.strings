@@ -2477,3 +2477,6 @@
 
 "mev_protection.title" = "MEV Protection";
 "mev_protection.description" = "So-called front-running bots watch every trade, trying to make you overpay. This feature blocks them.";
+
+// Defense
+"defense_cell.title" = "Defense System";
