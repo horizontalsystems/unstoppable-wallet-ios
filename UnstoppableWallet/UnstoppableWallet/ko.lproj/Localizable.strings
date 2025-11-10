@@ -364,8 +364,9 @@
 "balance.token.processing.info.title" = "처리 중인 금액";
 "balance.token.processing.info.description" = "이 금액의 거래가 여전히 동기화 중입니다. 거래가 확인되면 이 토큰들은 사용할 수 있게 됩니다.";
 "balance.token.transparent" = "透明";
-"balance.token.transparent.info.title" = "透明金额";
-"balance.token.transparent.info.description" = "透明余额目前无法在本钱包中使用，但支持 t-address 的其他钱包可以花费这笔资金。";
+"balance.token.transparent.info.title" = "透明";
+"balance.token.transparent.info.item" = "Transparent Amount";
+"balance.token.transparent.info.description" = "This balance is publicly visible on the blockchain. You can transfer it to your shielded address with “Shield”.";
 "balance.token.shield" = "차폐(Shield)";
 
 "balance.token.receive_address" = "수신 주소";
@@ -427,8 +428,8 @@
 "deposit.memo_warning.description" = "자산을 수령하기 위해서는 메모(태그)와 주소 모두가 필요합니다. 그렇지 않으면 자금이 손실될 수 있습니다.";
 
 "deposit.not_active" = "비활성화됨";
-"deposit.not_active.title" = "비활성 주소";
-"deposit.not_active.tron_description" = "TRON 블록체인에 새로 생성된 계정은 비활성화되어 있어서 조회하거나 탐색할 수 없습니다. 이 계정은 활성화되어야 합니다.\n\n비활성화된 계정 주소로 TRX 또는 TRC-10 토큰을 전송하면 계정이 활성화됩니다. 새로운 TRON 체인 계정을 활성화하려면 1 TRX의 수수료가 필요합니다.";
+"deposit.not_active.title" = "계정이 활성화되지 않음";
+"deposit.not_active.tron_description" = "New TRON wallets need at least 1 TRX to activate. Until then, they can receive tokens but won’t show correct balances.";
 "deposit.stellar.inactive_asset.title" = "토큰 활성화";
 "deposit.stellar.inactive_asset.description" = "%@을(를) 수신하려면 해당 토큰을 활성화해야 합니다. Stellar 네트워크는 각 토큰마다 신뢰 라인을 설정해야 하며, 설정되지 않으면 %@을 받을 수 없습니다. 거래는 거부되고 자금은 전달되지 않습니다.";
 
@@ -1507,8 +1508,12 @@
 "terms.title" = "약관";
 "terms.i_agree" = "동의함";
 
-"terms.item.1" = "지갑별 복구 문구를 안전하게 백업합니다. 앱이 오작동하는 경우 자금에 다시 액세스할 수 있는 유일한 방법입니다.";
-"terms.item.2" = "스마트폰에서 잠금 해제 PIN(코드)을 비활성화하면 앱에서 모든 지갑이 삭제됩니다. 자금에 대한 액세스를 복원하려면 복구 문구가 필요합니다.";
+"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It’s the only way to regain access to your funds if the app is deleted, lost, or malfunctions. No one can restore it for you.";
+"terms.item.device_pin" = "Disabling your smartphone’s unlock PIN (or passcode) wipes all wallets from the app. You’ll need your recovery phrases to restore access.";
+"terms.item.privacy_notice" = "The app doesn’t spy or collect data about your balances or transactions - we don’t even know how many people use it. It only tracks anonymous usage patterns (pages opened, buttons tapped) to improve usability. You can turn this off in Settings → Privacy.";
+"terms.item.monetization" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet. This helps us stay independent, open source, and free of VC money.";
+"terms.item.open_source" = "The app is verifiably open source, with all source code published online. Everything stated above can be publicly verified by anyone.";
+
 
 // Settings -> Tell Friends
 
