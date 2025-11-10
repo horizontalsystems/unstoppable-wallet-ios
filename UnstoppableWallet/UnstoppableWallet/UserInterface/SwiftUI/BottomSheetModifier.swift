@@ -25,7 +25,9 @@ struct BottomSheetModifier<Item: Identifiable, ContentView: View>: ViewModifier 
                             }
                         }
                         .onPreferenceChange(InnerHeightPreferenceKey.self) { newHeight in
-                            sheetHeight = newHeight
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                sheetHeight = newHeight
+                            }
                         }
                 }
                 .presentationDetents([.height(sheetHeight)])
@@ -58,7 +60,9 @@ struct BooleanBottomSheetModifier<ContentView: View>: ViewModifier {
                             }
                         }
                         .onPreferenceChange(InnerHeightPreferenceKey.self) { newHeight in
-                            sheetHeight = newHeight
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                sheetHeight = newHeight
+                            }
                         }
                 }
                 .presentationDetents([.height(sheetHeight)])
