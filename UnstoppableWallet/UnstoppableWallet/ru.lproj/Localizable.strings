@@ -368,8 +368,9 @@
 "balance.token.processing.info.title" = "Обрабатываемая сумма";
 "balance.token.processing.info.description" = "Транзакции с этой суммой все еще синхронизируются. Когда они будут подтверждены, эти токены будут доступны для траты";
 "balance.token.transparent" = "Transparent";
-"balance.token.transparent.info.title" = "Transparent сумма";
-"balance.token.transparent.info.description" = "Прозрачный баланс в данный момент недоступен для использования в нашем кошельке. Однако эти средства могут быть потрачены через другие кошельки, поддерживающие адреса формата t-address.";
+"balance.token.transparent.info.title" = "Transparent";
+"balance.token.transparent.info.item" = "Transparent Amount";
+"balance.token.transparent.info.description" = "This balance is publicly visible on the blockchain. You can transfer it to your shielded address with “Shield”.";
 "balance.token.shield" = "Shield";
 
 "balance.token.receive_address" = "Адрес получателя";
@@ -431,8 +432,8 @@
 "deposit.memo_warning.description" = "Для получения активов необходимы memo(tag) и адрес. В противном случае Ваши средства будут утеряны.";
 
 "deposit.not_active" = "Не активен";
-"deposit.not_active.title" = "Неактивный адрес";
-"deposit.not_active.tron_description" = "Недавно созданные учетные записи в блокчейне TRON неактивны и не могут быть запрошены или изучены. Они должны быть активированы.\n\nАктивация новой учетной записи в цепочке Tron требует комиссию в размере 1 TRX. Для активации достаточно просто перевести токены TRX или TRC-10 на неактивный адрес аккаунта";
+"deposit.not_active.title" = "Аккаунт не активен";
+"deposit.not_active.tron_description" = "New TRON wallets need at least 1 TRX to activate. Until then, they can receive tokens but won’t show correct balances.";
 "deposit.stellar.inactive_asset.title" = "Активировать токен";
 "deposit.stellar.inactive_asset.description" = "Чтобы получить %@, необходимо активировать токен. Сеть Stellar требует установить доверительную линию (trustline) для каждого токена. Без этого ваш кошелёк не сможет принять %@ — транзакция будет отклонена, и средства не будут доставлены.";
 
@@ -1510,8 +1511,12 @@
 "terms.title" = "Условия использования";
 "terms.i_agree" = "Я принимаю";
 
-"terms.item.1" = "Безопасное резервное копирование фраз для каждого кошелька. Это единственный способ восстановить доступ к средствам, если приложение не работает.";
-"terms.item.2" = "Отключение PIN-кода разблокировки на смартфоне удаляет все кошельки из приложения. Для восстановления доступа к средствам потребуется восстановление фраз.";
+"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It’s the only way to regain access to your funds if the app is deleted, lost, or malfunctions. No one can restore it for you.";
+"terms.item.device_pin" = "Disabling your smartphone’s unlock PIN (or passcode) wipes all wallets from the app. You’ll need your recovery phrases to restore access.";
+"terms.item.privacy_notice" = "The app doesn’t spy or collect data about your balances or transactions - we don’t even know how many people use it. It only tracks anonymous usage patterns (pages opened, buttons tapped) to improve usability. You can turn this off in Settings → Privacy.";
+"terms.item.monetization" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet. This helps us stay independent, open source, and free of VC money.";
+"terms.item.open_source" = "The app is verifiably open source, with all source code published online. Everything stated above can be publicly verified by anyone.";
+
 
 // Settings -> Tell Friends
 
