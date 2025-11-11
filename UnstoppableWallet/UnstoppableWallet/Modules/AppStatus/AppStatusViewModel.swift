@@ -1,15 +1,32 @@
 import Foundation
 import MarketKit
 
-class AppStatusViewModel {
-    private let dateFormatter = DateFormatter()
-    private(set) var sections = [Section]()
+class AppStatusViewModel: ObservableObject {
+    private let systemInfoManager = Core.shared.systemInfoManager
+    private let appVersionStorage = Core.shared.appVersionStorage
+    private let accountManager = Core.shared.accountManager
+    private let walletManager = Core.shared.walletManager
+    private let adapterManager = Core.shared.adapterManager
+    private let logRecordManager = Core.shared.logRecordManager
+    private let evmBlockchainManager = Core.shared.evmBlockchainManager
+    private let marketKit = Core.shared.marketKit
 
-    init(systemInfoManager: SystemInfoManager, appVersionStorage: AppVersionStorage, accountManager: AccountManager,
-         walletManager: WalletManager, adapterManager: AdapterManager, logRecordManager: LogRecordManager,
-         evmBlockchainManager: EvmBlockchainManager, marketKit: MarketKit.Kit)
-    {
+    private let dateFormatter = DateFormatter()
+    @Published private(set) var sections: DataStatus<[Section]> = .loading
+
+    init() {
         dateFormatter.dateFormat = "dd MMM yyyy, HH:mm"
+        Task {
+            let sections = make()
+
+            DispatchQueue.main.async {
+                self.sections = .completed(sections)
+            }
+        }
+    }
+
+    private func make() -> [Section] {
+        var sections: [Section] = []
 
         sections.append(
             Section(
@@ -123,6 +140,8 @@ class AppStatusViewModel {
                 )
             )
         }
+
+        return sections
     }
 
     private func block(blockchain: String, statusInfo: [(String, Any)]) -> [Field] {
@@ -162,9 +181,13 @@ class AppStatusViewModel {
     }
 
     var rawStatus: String {
+        guard let data = sections.data else {
+            return "Loading..."
+        }
+
         var rawInfo = ""
 
-        for section in sections {
+        for section in data {
             rawInfo += section.title + "\n"
 
             for block in section.blocks {

@@ -1184,7 +1184,6 @@
 		1A56440AD78BD32AEAE2A2EA /* PlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5644A21F9FEC4E2A7B0860 /* PlaceholderView.swift */; };
 		1A56441AD76BA80CB74902CB /* TraitCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5648911028181BB1462CFE /* TraitCell.swift */; };
 		1A5644271F4CD209136352EE /* FilterHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564B1C051AF2C87C670563 /* FilterHeaderView.swift */; };
-		1A5644CF2BEC2E7C6227BDC7 /* AppStatusModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56404C1C16B85434117DB7 /* AppStatusModule.swift */; };
 		1A5644FE2885F71299CC66EA /* PlaceholderViewModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CF35E7A07E96B704ADA /* PlaceholderViewModule.swift */; };
 		1A564504E164177DD6EECFBA /* BalanceErrorService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646B5D68A302515565030 /* BalanceErrorService.swift */; };
 		1A564512989CEBC48ABCB94E /* ConvertedError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A6A5C4F3080690AE93F /* ConvertedError.swift */; };
@@ -1257,7 +1256,6 @@
 		1A564DC4E55C1BE1C4D4CDA9 /* HighlightedDescriptionBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564BCC9DD29DB5455669A5 /* HighlightedDescriptionBaseView.swift */; };
 		1A564E0B7DB0060B9600FCB1 /* BalanceErrorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CE56CEC73B78C9DB6B5 /* BalanceErrorViewController.swift */; };
 		1A564E69BA99DF8CD4562902 /* PlaceholderViewModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CF35E7A07E96B704ADA /* PlaceholderViewModule.swift */; };
-		1A564EDBD3E4B37299E199B7 /* AppStatusModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56404C1C16B85434117DB7 /* AppStatusModule.swift */; };
 		1A564EE727CD892E7F2E5715 /* ScanQrViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564A144576DB93334E1682 /* ScanQrViewController.swift */; };
 		1A564F382602A283C370E7FB /* AppError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56489DE231CDDCA75CAEB3 /* AppError.swift */; };
 		1A564F73B7FE144D39DEA34F /* UIDevice.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A56447C12D91108517ED217 /* UIDevice.swift */; };
@@ -4186,7 +4184,6 @@
 		11B35FEC3027F45085959FBB /* NftDoubleCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftDoubleCell.swift; sourceTree = "<group>"; };
 		11B35FF02BBEDAEF446D0610 /* ModuleUnlockView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ModuleUnlockView.swift; sourceTree = "<group>"; };
 		11B35FF3390A7BB8E040620D /* PlaceholderViewNew.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlaceholderViewNew.swift; sourceTree = "<group>"; };
-		1A56404C1C16B85434117DB7 /* AppStatusModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppStatusModule.swift; sourceTree = "<group>"; };
 		1A5641572B6E46E18B52A6A9 /* SecuritySettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SecuritySettingsModule.swift; sourceTree = "<group>"; };
 		1A5641679DC88BE355F0F3A0 /* Development.template.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Development.template.xcconfig; sourceTree = "<group>"; };
 		1A56417C27A95B429D9F2912 /* MarkdownContentProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownContentProvider.swift; sourceTree = "<group>"; };
@@ -7249,7 +7246,6 @@
 		1A564DFE0406B2AFCA4CAEC9 /* AppStatus */ = {
 			isa = PBXGroup;
 			children = (
-				1A56404C1C16B85434117DB7 /* AppStatusModule.swift */,
 				11B357C16B28B535457F6E34 /* AppStatusView.swift */,
 				11B35496770FA251785E5581 /* AppStatusViewModel.swift */,
 			);
@@ -10355,7 +10351,6 @@
 				D05E96A42A2627DA002CCD71 /* TronIncomingTransactionRecord.swift in Sources */,
 				D07879532E73FF090082212A /* AlertCardView.swift in Sources */,
 				58AAAD3AC2B87E6AAFE535D8 /* DebugLogger.swift in Sources */,
-				1A564EDBD3E4B37299E199B7 /* AppStatusModule.swift in Sources */,
 				11B3557CB2595D2884C94498 /* MultiTextMetricsView.swift in Sources */,
 				D3E36BB72DFAEC4D007F99CA /* WalletViewModel.swift in Sources */,
 				1A564F73B7FE144D39DEA34F /* UIDevice.swift in Sources */,
@@ -11970,7 +11965,6 @@
 				D01513D22D1EA6A400FD9816 /* SpamScanState.swift in Sources */,
 				58AAAD33B32694AFA2E954D6 /* GradientLayer.swift in Sources */,
 				58AAAF6248682EE23B3C3D5A /* DebugLogger.swift in Sources */,
-				1A5644CF2BEC2E7C6227BDC7 /* AppStatusModule.swift in Sources */,
 				D05E96902A261D82002CCD71 /* TronTransactionAdapter.swift in Sources */,
 				D05E96A32A2627DA002CCD71 /* TronIncomingTransactionRecord.swift in Sources */,
 				11B35D51B52EF0000711CE05 /* MultiTextMetricsView.swift in Sources */,
