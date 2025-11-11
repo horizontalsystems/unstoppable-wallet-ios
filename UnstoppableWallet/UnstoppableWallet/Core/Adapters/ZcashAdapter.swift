@@ -929,16 +929,51 @@ extension ZcashAdapter: ISendZcashAdapter {
             throw AppError.ZcashError.noAccountId
         }
 
-        return try await synchronizer.proposeTransfer(
-            accountUUID: accountId,
-            proposalOutputs: outputs.map {
-                .init(
-                    recipient: $0.address,
-                    amount: Zatoshi.from(decimal: $0.amount),
-                    memo: $0.memo
-                )
-            }
+        let paymentURI = createPaymentURI(outputs: outputs)
+            
+        return try await synchronizer.proposefulfillingPaymentURI(
+            paymentURI,
+            accountUUID: accountId
         )
+    }
+    
+    private func createPaymentURI(outputs: [TransferOutput]) -> String {
+        var components = URLComponents()
+        components.scheme = "zcash"
+        components.path = ""
+        
+        var queryItems: [URLQueryItem] = []
+        
+        for (index, output) in outputs.enumerated() {
+            if index == 0 {
+                queryItems.append(URLQueryItem(name: "address", value: output.address.stringEncoded))
+                queryItems.append(URLQueryItem(name: "amount", value: output.amount.description))
+                
+                if let memo = output.memo, let string = memo.toString() {
+                    let base64url = encodeBase64URL(string)
+                    queryItems.append(URLQueryItem(name: "memo", value: base64url))
+                }
+            } else {
+                queryItems.append(URLQueryItem(name: "address.\(index)", value: output.address.stringEncoded))
+                queryItems.append(URLQueryItem(name: "amount.\(index)", value: output.amount.description))
+                
+                if let memo = output.memo, let string = memo.toString() {
+                    let base64url = encodeBase64URL(string)
+                    queryItems.append(URLQueryItem(name: "memo.\(index)", value: base64url))
+                }
+            }
+        }
+        
+        components.queryItems = queryItems
+        return components.string ?? ""
+    }
+
+    private func encodeBase64URL(_ string: String) -> String {
+        let data = string.data(using: .utf8)!
+        return data.base64EncodedString()
+            .replacingOccurrences(of: "+", with: "-")
+            .replacingOccurrences(of: "/", with: "_")
+            .replacingOccurrences(of: "=", with: "")
     }
 
     func shieldProposal(threshold: Decimal, address: Recipient?, memo: Memo?) async throws -> Proposal? {
