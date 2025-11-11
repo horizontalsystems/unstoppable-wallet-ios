@@ -10,11 +10,12 @@ struct PreSendView: View {
     @Environment(\.presentationMode) private var presentationMode
     @FocusState private var focusField: FocusField?
 
-    @State private var confirmPresented = false
+    @Binding var path: NavigationPath
 
-    init(wallet: Wallet, handler: IPreSendHandler?, resolvedAddress: ResolvedAddress, amount: Decimal? = nil, memo: String? = nil, addressVisible: Bool = true, onDismiss: @escaping () -> Void) {
+    init(wallet: Wallet, handler: IPreSendHandler?, resolvedAddress: ResolvedAddress, amount: Decimal? = nil, memo: String? = nil, addressVisible: Bool = true, path: Binding<NavigationPath>, onDismiss: @escaping () -> Void) {
         _viewModel = StateObject(wrappedValue: PreSendViewModel(wallet: wallet, handler: handler, resolvedAddress: resolvedAddress, amount: amount, memo: memo))
         self.addressVisible = addressVisible
+       _path = path
         self.onDismiss = onDismiss
     }
 
@@ -50,17 +51,15 @@ struct PreSendView: View {
                 .animation(.linear, value: viewModel.hasMemo)
             }
         }
+        .navigationDestination(for: ConfirmationData.self) { data in
+            RegularSendView(sendData: data.sendData, address: data.address) {
+                HudHelper.instance.show(banner: .sent)
+                onDismiss()
+            }
+            .toolbarRole(.editor)
+        }
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(isPresented: $confirmPresented) {
-            if let sendData = viewModel.sendData {
-                RegularSendView(sendData: sendData.sendData, address: sendData.address) {
-                    HudHelper.instance.show(banner: .sent)
-                    onDismiss()
-                }
-                .toolbarRole(.editor)
-            }
-        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 if let handler = viewModel.handler, handler.hasSettings {
@@ -222,8 +221,12 @@ struct PreSendView: View {
         let (title, disabled, showProgress) = buttonState()
 
         Button(action: {
+            guard let sendData = viewModel.sendData else { return }
             if viewModel.resolvedAddress.issueTypes.isEmpty {
-                confirmPresented = true
+                path.append(ConfirmationData(
+                    sendData: sendData.sendData,
+                    address: sendData.address
+                ))
             } else {
                 Coordinator.shared.present(type: .bottomSheet) { isPresented in
                     BottomSheetView(
@@ -233,7 +236,10 @@ struct PreSendView: View {
                             .buttonGroup(.init(buttons: [
                                 .init(style: .red, title: "send.continue_anyway".localized) {
                                     isPresented.wrappedValue = false
-                                    confirmPresented = true
+                                    path.append(ConfirmationData(
+                                        sendData: sendData.sendData,
+                                        address: sendData.address
+                                    ))
                                 },
                                 .init(style: .transparent, title: "button.cancel".localized) { isPresented.wrappedValue = false },
                             ])),
@@ -302,4 +308,18 @@ extension PreSendView {
         case amount
         case fiatAmount
     }
+    
+    struct ConfirmationData: Hashable, Equatable {
+           let id = UUID()
+           let sendData: SendData
+           let address: String?
+        
+        func hash(into hasher: inout Hasher) {
+            hasher.combine(id)
+        }
+        
+        static func == (lhs: Self, rhs: Self) -> Bool {
+            lhs.id == rhs.id
+        }
+   }
 }

@@ -220,17 +220,10 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 }
             },
             set: { [weak self] newValue in
-                let successBlock = { [weak self] in
+                Coordinator.shared.performAfterPurchase(premiumFeature: .vipSupport, page: .swap, trigger: .mevProtection) {
                     self?.useMevProtection = newValue
                     self?.localStorage.useMevProtection = newValue
                 }
-
-                guard Core.shared.purchaseManager.activated(.vipSupport) else {
-                    // Coordinator.shared.presentPurchases(onSuccess: successBlock)
-                    return
-                }
-
-                successBlock()
             }
         )
 

@@ -404,7 +404,7 @@ class ZcashAdapter {
             BottomSheetView(
                 items: [
                     .title(icon: ThemeImage.shieldOff, title: "balance.token.transparent.detected.title".localized),
-                    .text(text: "balance.token.transparent.info.description".localized),
+                    .text(text: "balance.token.transparent.detected.description".localized),
                     .buttonGroup(.init(buttons: [
                             .init(style: .gray, title: "button.cancel".localized) {
                                 isPresented.wrappedValue = false
