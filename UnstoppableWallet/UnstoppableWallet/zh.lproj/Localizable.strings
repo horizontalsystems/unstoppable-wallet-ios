@@ -366,9 +366,10 @@
 "balance.token.processing.info.title" = "处理金额";
 "balance.token.processing.info.description" = "此金额的交易仍然在同步。当它们被确认时，这些代币将用于支出";
 "balance.token.transparent" = "透明";
-"balance.token.transparent.info.title" = "透明";
+"balance.token.transparent.info.title" = "Transparent Amount";
+"balance.token.transparent.detected.title" = "Detected Transparent ZEC";
 "balance.token.transparent.info.item" = "Transparent Amount";
-"balance.token.transparent.info.description" = "This balance is publicly visible on the blockchain. You can transfer it to your shielded address with “Shield”.";
+"balance.token.transparent.info.description" = "You have a ZEC balance held in a transparent address. To use it in Unstoppable, it must be shielded for full privacy.";
 "balance.token.shield" = "屏蔽";
 
 "balance.token.receive_address" = "收款地址";
