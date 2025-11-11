@@ -177,7 +177,7 @@ extension Coordinator {
         present(type: .bottomSheet) { isPresented in
             BottomSheetView(
                 items: [
-                    .title(icon: .book, title: info.title),
+                    .title(icon: ThemeImage.book, title: info.title),
                     .text(text: info.description),
                     .buttonGroup(.init(buttons: [
                         .init(style: .gray, title: "button.understood".localized) {

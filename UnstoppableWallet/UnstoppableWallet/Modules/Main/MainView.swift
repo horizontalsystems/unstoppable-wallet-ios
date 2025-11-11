@@ -201,7 +201,7 @@ struct AccountsLostView: View {
     var body: some View {
         BottomSheetView(
             items: [
-                .title(icon: .warning, title: "lost_accounts.warning_title".localized),
+                .title(icon: ThemeImage.warning, title: "lost_accounts.warning_title".localized),
                 .text(text: "lost_accounts.warning_message".localized(records.map { "- \($0.name)" }.joined(separator: "\n"))),
                 .buttonGroup(.init(buttons: [
                     .init(style: .yellow, title: "button.i_understand".localized) {

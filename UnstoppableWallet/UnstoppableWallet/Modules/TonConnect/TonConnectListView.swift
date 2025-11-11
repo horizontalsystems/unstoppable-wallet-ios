@@ -68,7 +68,7 @@ struct TonConnectListView: View {
         Coordinator.shared.present(type: .bottomSheet) { _ in
             BottomSheetView(
                 items: [
-                    .title(icon: .trash, title: "ton_connect.list.disconnect_app".localized),
+                    .title(icon: ThemeImage.trash, title: "ton_connect.list.disconnect_app".localized),
                     .text(text: "ton_connect.list.disconnect_app.description".localized(app.manifest.name)),
                     .buttonGroup(.init(buttons: [
                         .init(style: .red, title: "ton_connect.list.disconnect_app.disconnect".localized) {

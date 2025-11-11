@@ -37,7 +37,7 @@ struct TronReceiveAddressView: View {
             Coordinator.shared.present(type: .bottomSheet) { isPresented in
                 BottomSheetView(
                     items: [
-                        .title(icon: .warning, title: "deposit.not_active.title".localized),
+                        .title(icon: ThemeImage.warning, title: "deposit.not_active.title".localized),
                         .text(text: "deposit.not_active.tron_description".localized),
                         .buttonGroup(.init(buttons: [
                             .init(style: .gray, title: "button.understood".localized) {

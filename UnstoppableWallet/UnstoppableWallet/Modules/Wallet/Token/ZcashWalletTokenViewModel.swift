@@ -33,9 +33,4 @@ class ZcashWalletTokenViewModel: ObservableObject {
             })
             .disposed(by: disposeBag)
     }
-
-    var birthdayHeight: Int? {
-        let settings = restoreSettingsService.settings(accountId: wallet.account.id, blockchainType: .zcash)
-        return settings.birthdayHeight
-    }
 }

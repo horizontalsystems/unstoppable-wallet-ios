@@ -12,7 +12,7 @@ struct BackupRequiredView: View {
     var body: some View {
         BottomSheetView(
             items: [
-                .title(icon: .warning, title: title),
+                .title(icon: ThemeImage.warning, title: title),
                 .text(text: description),
                 .buttonGroup(.init(buttons: [
                     .init(style: .gray, title: "backup_prompt.backup_manual".localized, icon: "edit_24") {

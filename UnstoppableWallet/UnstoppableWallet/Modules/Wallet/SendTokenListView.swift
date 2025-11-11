@@ -42,18 +42,21 @@ struct SendTokenListView: View {
                     )
 
                     let items = filteredItems
-
-                    ThemeList(items) { item in
-                        WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, amountRounding: viewModel.amountRounding, subtitleMode: .coinName, isReachable: viewModel.isReachable) {
-                            path.append(item.wallet)
-                            stat(page: .sendTokenList, event: .openSend(token: item.wallet.token))
-                        } failedAction: {
-                            Coordinator.shared.presentBalanceError(wallet: item.wallet, state: item.state)
+                    if items.isEmpty {
+                        PlaceholderViewNew(icon: "warning_filled", subtitle: "alert.not_founded".localized)
+                    } else {
+                        ThemeList(items) { item in
+                            WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, amountRounding: viewModel.amountRounding, subtitleMode: .coinName, isReachable: viewModel.isReachable) {
+                                path.append(item.wallet)
+                                stat(page: .sendTokenList, event: .openSend(token: item.wallet.token))
+                            } failedAction: {
+                                Coordinator.shared.presentBalanceError(wallet: item.wallet, state: item.state)
+                            }
                         }
                     }
-                    .safeAreaInset(edge: .bottom) {
-                        BottomSearchBar(text: $searchText, prompt: "placeholder.search".localized, focused: $searchFocused)
-                    }
+                }
+                .safeAreaInset(edge: .bottom) {
+                    BottomSearchBar(text: $searchText, prompt: "placeholder.search".localized, focused: $searchFocused)
                 }
             }
             .navigationDestination(for: Wallet.self) { wallet in

@@ -14,7 +14,6 @@ struct ZcashWalletTokenView: View {
                 content: {
                     VStack(spacing: 0) {
                         WalletTokenTopView(viewModel: walletTokenViewModel)
-                        view(birthday: viewModel.birthdayHeight?.description)
                         view(processing: viewModel.zcashBalanceData.processing, transparent: viewModel.zcashBalanceData.transparent)
                     }
                     .listRowBackground(Color.clear)
@@ -25,22 +24,6 @@ struct ZcashWalletTokenView: View {
                     TransactionsView(viewModel: transactionsViewModel, statPage: .tokenPage)
                 }
             )
-        }
-    }
-
-    @ViewBuilder private func view(birthday: String?) -> some View {
-        if let birthday {
-            Cell(
-                middle: {
-                    MiddleTextIcon(text: "birthday_height.title".localized)
-                },
-                right: {
-                    RightButtonText(text: birthday, icon: "copy_filled") {
-                        CopyHelper.copyAndNotify(value: birthday)
-                    }
-                },
-            )
-            .background(Color.themeTyler)
         }
     }
 
@@ -71,21 +54,28 @@ struct ZcashWalletTokenView: View {
     }
 
     @ViewBuilder private func view(transparent: Decimal) -> some View {
-        WalletInfoView.infoView(
-            title: "balance.token.transparent".localized,
-            value: infoAmount(value: transparent),
+        Cell(
+            middle: {
+                MiddleTextIcon(text: "balance.token.transparent".localized)
+            },
+            right: {
+                RightTextIcon(
+                    text: ComponentText(
+                        text: infoAmount(value: transparent).formatted,
+                        colorStyle: .yellow
+                    ),
+                    icon: ComponentImage("warning_filled", colorStyle: .yellow)
+                )
+            },
             action: {
                 Coordinator.shared.present(type: .bottomSheet) { isPresented in
                     BottomSheetView(
                         items: [
-                            .title(title: "balance.token.transparent.info.title".localized),
-                            .list(items: [
-                                .init(
-                                    title: "balance.token.transparent.info.item".localized,
-                                    value: ComponentText(text: infoAmount(value: transparent).formatted, colorStyle: .primary)
-                                ),
-                            ]),
-                            .footer(text: "balance.token.transparent.info.description".localized),
+                            .title(
+                                icon: ThemeImage.shieldOff,
+                                title: "balance.token.transparent.info.title".localized
+                            ),
+                            .text(text: "balance.token.transparent.info.description".localized),
                             .buttonGroup(.init(buttons: [
                                     .init(style: .gray, title: "button.cancel".localized) {
                                         isPresented.wrappedValue = false
