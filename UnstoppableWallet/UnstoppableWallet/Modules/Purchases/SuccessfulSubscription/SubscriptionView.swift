@@ -150,7 +150,7 @@ struct SubscriptionView: View {
         BottomSheetView(
             items: [
                 .title(
-                    icon: .local(name: viewItem.iconName, style: .yellow),
+                    icon: ComponentImage(viewItem.iconName, size: .iconSize72, colorStyle: .yellow),
                     title: ComponentText(text: "purchases.\(viewItem.title)".localized, colorStyle: .yellow)
                 ),
                 .text(text: "purchases.\(viewItem.title).info".localized),

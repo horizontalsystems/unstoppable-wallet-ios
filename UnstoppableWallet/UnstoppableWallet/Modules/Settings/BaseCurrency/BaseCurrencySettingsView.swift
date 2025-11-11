@@ -57,7 +57,7 @@ struct BaseCurrencySettingsView: View {
     @ViewBuilder private func confirmView(currency: Currency, isPresented: Binding<Bool>) -> some View {
         BottomSheetView(
             items: [
-                .title(icon: .warning, title: "settings.base_currency.disclaimer".localized),
+                .title(icon: ThemeImage.warning, title: "settings.base_currency.disclaimer".localized),
                 .warning(text: "settings.base_currency.disclaimer.description".localized(AppConfig.appName, viewModel.popularCurrencies.map(\.code).joined(separator: ", "))),
                 .buttonGroup(.init(buttons: [
                     .init(style: .yellow, title: "settings.base_currency.disclaimer.set".localized) {

@@ -6,7 +6,7 @@ struct CloudNotAvailableView: View {
     var body: some View {
         BottomSheetView(
             items: [
-                .title(icon: .error, title: "backup.cloud.no_access.title".localized),
+                .title(icon: ThemeImage.error, title: "backup.cloud.no_access.title".localized),
                 .warning(text: "backup.cloud.no_access.description".localized),
                 .buttonGroup(.init(buttons: [
                     .init(style: .yellow, title: "button.ok".localized) {

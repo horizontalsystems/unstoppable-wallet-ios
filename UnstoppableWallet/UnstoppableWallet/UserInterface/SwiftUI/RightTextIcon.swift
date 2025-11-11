@@ -2,7 +2,7 @@ import SwiftUI
 
 struct RightTextIcon: View {
     var text: CustomStringConvertible
-    var icon: String?
+    var icon: CustomStringConvertible?
 
     var body: some View {
         HStack(spacing: .margin12) {
@@ -10,7 +10,7 @@ struct RightTextIcon: View {
                 .multilineTextAlignment(.trailing)
 
             if let icon {
-                Image(icon).icon(size: .iconSize20)
+                ThemeImage(icon, size: .iconSize20)
             }
         }
     }

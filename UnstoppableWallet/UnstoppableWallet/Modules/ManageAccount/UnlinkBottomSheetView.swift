@@ -37,7 +37,7 @@ struct UnlinkBottomSheetView: View {
 
         views.append(BSModule.view(for: .title(
             showGrabber: true,
-            icon: .trash,
+            icon: ThemeImage.trash,
             title: "settings_manage_keys.delete.title".localized,
             isPresented: $isPresented
         )))
@@ -79,7 +79,7 @@ struct UnlinkBottomSheetView: View {
     }
 
     private func updateButtonState() {
-        let hasSelection = !(selectorViewModel.getSelection(Controls.selector).isEmpty)
-        buttonViewModel.setDisabled(!hasSelection, for: Controls.delete)
+        let allSelected = selectorViewModel.getSelection(Controls.selector).count == items.count
+        buttonViewModel.setDisabled(!allSelected, for: Controls.delete)
     }
 }

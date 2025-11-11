@@ -8,7 +8,7 @@ struct Informed: ViewModifier {
             Coordinator.shared.present(type: .bottomSheet) { _ in
                 BottomSheetView(
                     items: [
-                        .title(icon: .book, title: infoDescription.title),
+                        .title(icon: ThemeImage.book, title: infoDescription.title),
                         .text(text: infoDescription.description),
                     ],
                 )

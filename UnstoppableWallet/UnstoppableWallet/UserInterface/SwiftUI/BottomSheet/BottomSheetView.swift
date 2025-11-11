@@ -58,10 +58,10 @@ enum BSModule {
         Cell(
             style: .secondary,
             middle: {
-                MultiText(subtitle: item.title)
+                MiddleTextIcon(text: item.title)
             },
             right: {
-                RightMultiText(subtitle: item.value)
+                RightTextIcon(text: item.value)
             }
         )
     }
@@ -69,7 +69,7 @@ enum BSModule {
 
 extension BSModule {
     enum Item {
-        case title(showGrabber: Bool, icon: BSTitleView.Icon?, title: CustomStringConvertible, isPresented: Binding<Bool>?)
+        case title(showGrabber: Bool, icon: CustomStringConvertible?, title: CustomStringConvertible, isPresented: Binding<Bool>?)
         case subtitle(text: CustomStringConvertible)
         case text(text: CustomStringConvertible)
         case footer(text: CustomStringConvertible)
@@ -77,7 +77,7 @@ extension BSModule {
         case list(items: [ListItem])
         case buttonGroup(ButtonGroupViewModel.ButtonGroup)
 
-        static func title(icon: BSTitleView.Icon? = nil, title: CustomStringConvertible) -> Self {
+        static func title(icon: CustomStringConvertible? = nil, title: CustomStringConvertible) -> Self {
             .title(showGrabber: true, icon: icon, title: title, isPresented: nil)
         }
 

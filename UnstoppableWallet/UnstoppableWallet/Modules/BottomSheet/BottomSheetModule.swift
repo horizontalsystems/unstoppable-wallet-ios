@@ -150,7 +150,7 @@ struct CopyConfirmationWrapperView: View {
     var body: some View {
         BottomSheetView(
             items: [
-                .title(icon: .error, title: "copy_warning.title".localized),
+                .title(icon: ThemeImage.error, title: "copy_warning.title".localized),
                 .text(text: "copy_warning.description".localized),
                 .buttonGroup(
                     .init(buttons: [

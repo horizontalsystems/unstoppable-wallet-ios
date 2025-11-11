@@ -11,6 +11,7 @@ import ZcashLightClientKit
 
 class ZcashAdapter {
     static let minimalThreshold: Decimal = 0.0004 // minimal transparent balance to shielding
+    static let keyTransparentBalance = "zcash_transparent_balance_key_"
 
     private static let endPoint = "zec.rocks" // "lightwalletd.electriccoin.co"
     private let queue = DispatchQueue(label: "\(AppConfig.label).zcash-adapter", qos: .userInitiated)
@@ -21,6 +22,9 @@ class ZcashAdapter {
     private let transactionSource: TransactionSource
 
     private let saplingDownloader = DownloadService(queueLabel: "io.SaplingDownloader")
+
+    private let userDefaultsStorage = Core.shared.userDefaultsStorage
+    private var transparentBalanceCache: Decimal?
 
     private let synchronizer: Synchronizer
 
@@ -51,6 +55,7 @@ class ZcashAdapter {
 
     @PostPublished var zcashBalanceData: ZcashBalanceData = .empty {
         didSet {
+            handleTransparentUpdates()
             balanceSubject.onNext(zcashBalanceData.balanceData)
         }
     }
@@ -361,6 +366,63 @@ class ZcashAdapter {
         let newTxs = await transactionPool?.sync(transactions: transactions, lastBlockHeight: lastBlockHeight) ?? []
         logger?.log(level: .debug, message: "pool will update txs: \(newTxs.count)")
         transactionSubject.onNext(newTxs)
+    }
+
+    private func handleTransparentUpdates() {
+        // handle only after syncing adapter
+        guard let synchronizerState,
+              synchronizerState.syncStatus == .upToDate
+        else {
+            return
+        }
+
+        let currentBalance = zcashBalanceData.transparent
+        if currentBalance == transparentBalanceCache {
+            return
+        }
+
+        transparentBalanceCache = currentBalance
+
+        let previousBalance: Decimal
+        if let valueString: String = userDefaultsStorage.value(for: Self.keyTransparentBalance + uniqueId),
+           let value = Decimal(string: valueString)
+        {
+            previousBalance = value
+        } else {
+            previousBalance = 0
+        }
+
+        userDefaultsStorage.set(value: currentBalance.description, for: Self.keyTransparentBalance + uniqueId)
+
+        if currentBalance != previousBalance, currentBalance > Self.minimalThreshold {
+            showShieldingAlert(balance: currentBalance)
+        }
+    }
+
+    private func showShieldingAlert(balance: Decimal) {
+        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+            BottomSheetView(
+                items: [
+                    .title(icon: ThemeImage.shieldOff, title: "balance.token.transparent.detected.title".localized),
+                    .text(text: "balance.token.transparent.info.description".localized),
+                    .buttonGroup(.init(buttons: [
+                            .init(style: .gray, title: "button.cancel".localized) {
+                                isPresented.wrappedValue = false
+                            },
+                            .init(style: .yellow, title: "balance.token.shield".localized) {
+                                isPresented.wrappedValue = false
+
+                                Coordinator.shared.present { _ in
+                                    ThemeNavigationStack {
+                                        ShieldSendView(amount: balance, address: nil)
+                                    }
+                                }
+                            },
+                        ],
+                        alignment: .horizontal)),
+                ],
+            )
+        }
     }
 
     func transactionRecord(fromTransaction transaction: ZcashTransactionWrapper) -> TransactionRecord {

@@ -192,7 +192,7 @@ struct ManageAccountView: View {
     @ViewBuilder private func confirmUnlinkWatchView(isPresented _: Binding<Bool>) -> some View {
         BottomSheetView(
             items: [
-                .title(icon: .trash, title: "settings_manage_keys.delete.title".localized),
+                .title(icon: ThemeImage.trash, title: "settings_manage_keys.delete.title".localized),
                 .text(text: "settings_manage_keys.delete.confirmation_watch".localized),
                 .buttonGroup(.init(buttons: [
                     .init(style: .gray, title: "settings_manage_keys.delete.confirmation_watch.button".localized) {
@@ -206,7 +206,7 @@ struct ManageAccountView: View {
     @ViewBuilder private func confirmDeleteCloudBackupView(isPresented: Binding<Bool>) -> some View {
         BottomSheetView(
             items: [
-                .title(icon: .trash, title: "manage_account.cloud_delete_backup_recovery_phrase".localized),
+                .title(icon: ThemeImage.trash, title: "manage_account.cloud_delete_backup_recovery_phrase".localized),
                 .text(text: "manage_account.cloud_delete_backup_recovery_phrase.description".localized),
                 .buttonGroup(.init(buttons: [
                     .init(style: .gray, title: "button.delete".localized) {
@@ -224,7 +224,7 @@ struct ManageAccountView: View {
     @ViewBuilder private func confirmDeleteCloudBackupAfterManualBackupView(isPresented: Binding<Bool>) -> some View {
         BottomSheetView(
             items: [
-                .title(icon: .trash, title: "manage_account.manual_backup_required".localized),
+                .title(icon: ThemeImage.trash, title: "manage_account.manual_backup_required".localized),
                 .warning(text: "manage_account.manual_backup_required.description".localized),
                 .buttonGroup(.init(buttons: [
                     .init(style: .gray, title: "manage_account.manual_backup_required.button".localized) {

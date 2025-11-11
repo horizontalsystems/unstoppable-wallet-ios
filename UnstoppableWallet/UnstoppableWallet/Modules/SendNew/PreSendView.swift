@@ -228,7 +228,7 @@ struct PreSendView: View {
                 Coordinator.shared.present(type: .bottomSheet) { isPresented in
                     BottomSheetView(
                         items: [
-                            .title(icon: .local(name: "warning_2_24", style: .red), title: "send.address.risky.title".localized),
+                            .title(icon: ThemeImage.warning, title: "send.address.risky.title".localized),
                             .warning(text: "send.address.risky.description".localized),
                             .buttonGroup(.init(buttons: [
                                 .init(style: .red, title: "send.continue_anyway".localized) {

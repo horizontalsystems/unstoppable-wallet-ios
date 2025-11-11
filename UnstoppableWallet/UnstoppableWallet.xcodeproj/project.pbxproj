@@ -1797,6 +1797,8 @@
 		6B5A13F62DF93DED006E609C /* PerformanceDataSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5A13F42DF93DEB006E609C /* PerformanceDataSelectViewModel.swift */; };
 		6B5A13F82DF97B5E006E609C /* PerformanceDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5A13F72DF97B32006E609C /* PerformanceDataManager.swift */; };
 		6B5A13F92DF97B5E006E609C /* PerformanceDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5A13F72DF97B32006E609C /* PerformanceDataManager.swift */; };
+		6B5ABF002EC2D1F40061D2AA /* ThemeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5ABEFF2EC2D1EF0061D2AA /* ThemeImage.swift */; };
+		6B5ABF012EC2D1F40061D2AA /* ThemeImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5ABEFF2EC2D1EF0061D2AA /* ThemeImage.swift */; };
 		6B5D850C2EA772E300F13E2C /* TronReceiveAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D850B2EA772DB00F13E2C /* TronReceiveAddressView.swift */; };
 		6B5D850D2EA772E300F13E2C /* TronReceiveAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D850B2EA772DB00F13E2C /* TronReceiveAddressView.swift */; };
 		6B5D850F2EA7731000F13E2C /* TronReceiveAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D850E2EA7730E00F13E2C /* TronReceiveAddressViewModel.swift */; };
@@ -4497,6 +4499,7 @@
 		6B5A13F12DF93DC3006E609C /* PerformanceDataSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceDataSelectView.swift; sourceTree = "<group>"; };
 		6B5A13F42DF93DEB006E609C /* PerformanceDataSelectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceDataSelectViewModel.swift; sourceTree = "<group>"; };
 		6B5A13F72DF97B32006E609C /* PerformanceDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceDataManager.swift; sourceTree = "<group>"; };
+		6B5ABEFF2EC2D1EF0061D2AA /* ThemeImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThemeImage.swift; sourceTree = "<group>"; };
 		6B5D850B2EA772DB00F13E2C /* TronReceiveAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronReceiveAddressView.swift; sourceTree = "<group>"; };
 		6B5D850E2EA7730E00F13E2C /* TronReceiveAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronReceiveAddressViewModel.swift; sourceTree = "<group>"; };
 		6B5D85112EA7738D00F13E2C /* TronReceiveAddressService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronReceiveAddressService.swift; sourceTree = "<group>"; };
@@ -5829,6 +5832,7 @@
 		11B3546A6E6F3CC013C9FF44 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				6B5ABEFF2EC2D1EF0061D2AA /* ThemeImage.swift */,
 				6B44BE7B2EB4B86300257FD7 /* Components */,
 				6B44BE532EB19F6500257FD7 /* BottomSheet */,
 				6BEEBAB82E841A4500DB8B27 /* ThemeToggle.swift */,
@@ -6041,7 +6045,6 @@
 		11B354AB3C3435F2D5F39EE6 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
-				6B44BE852EB5FDE000257FD7 /* DefenceSystem */,
 				D34DB1A02E1BEBE300DD30D3 /* Coordinator */,
 				D34DB1772E13FE3B00DD30D3 /* AccountWarning */,
 				6BEA17682DE5838E00BF73DD /* ZCashShieldTokens */,
@@ -7925,13 +7928,6 @@
 				6B44BE572EB1A50500257FD7 /* SelectorGroupViewModel.swift */,
 			);
 			path = Components;
-			sourceTree = "<group>";
-		};
-		6B44BE852EB5FDE000257FD7 /* DefenceSystem */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = DefenceSystem;
 			sourceTree = "<group>";
 		};
 		6B50FDA92EA8ED70004CD0A0 /* CoinList */ = {
@@ -11260,6 +11256,7 @@
 				D3AFAB112E460207004AB074 /* DropdownButton.swift in Sources */,
 				D3AEB88A2DBA63E800E385C8 /* StellarAddressParserItem.swift in Sources */,
 				2FA5D01D1C1E23AC162B267B /* NonceViewModel.swift in Sources */,
+				6B5ABF012EC2D1F40061D2AA /* ThemeImage.swift in Sources */,
 				2FA5D6E8F9B4E66D9FC52C37 /* LegacyGasPriceService.swift in Sources */,
 				2FA5D5268D73DCC5651C09AF /* LegacyEvmFeeViewModel.swift in Sources */,
 				2FA5D50BFA714AAF76AC536B /* Eip1559GasPriceService.swift in Sources */,
@@ -12880,6 +12877,7 @@
 				2FA5D1F6979A345597788DE9 /* NonceService.swift in Sources */,
 				2FA5D62FF4A9D8F54848D2C0 /* NonceViewModel.swift in Sources */,
 				2FA5DDC853CB680F672C1B50 /* LegacyEvmFeeViewModel.swift in Sources */,
+				6B5ABF002EC2D1F40061D2AA /* ThemeImage.swift in Sources */,
 				11B3504619330D3DB0E0ECD1 /* PublicKeysModule.swift in Sources */,
 				11B35E70BF95197591A052EF /* PublicKeysService.swift in Sources */,
 				D0E5E8522BE260C8005080A4 /* BitcoinPreSendHandler.swift in Sources */,

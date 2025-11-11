@@ -49,7 +49,7 @@ class WalletConnectVerificationModel: ObservableObject {
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
             BottomSheetView(
                 items: [
-                    .title(icon: .warning, title: "wallet_connect.title".localized),
+                    .title(icon: ThemeImage.warning, title: "wallet_connect.title".localized),
                     .warning(text: "wallet_connect.no_account.description".localized),
                     .buttonGroup(.init(buttons: [
                         .init(style: .yellow, title: "button.ok".localized) {
@@ -65,7 +65,7 @@ class WalletConnectVerificationModel: ObservableObject {
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
             BottomSheetView(
                 items: [
-                    .title(icon: .warning, title: "wallet_connect.title".localized),
+                    .title(icon: ThemeImage.warning, title: "wallet_connect.title".localized),
                     .warning(text: "wallet_connect.non_supported_account.description".localized(accountType.description)),
                     .buttonGroup(.init(buttons: [
                         .init(style: .yellow, title: "wallet_connect.non_supported_account.switch".localized) {
