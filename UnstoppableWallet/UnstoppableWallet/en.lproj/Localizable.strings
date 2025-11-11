@@ -365,9 +365,10 @@
 "balance.token.processing.info.description" = "Transactions with this amount still syncing. And when they are confirmed, these tokens will be available for spending";
 "balance.token.transparent" = "Transparent";
 "balance.token.transparent.info.title" = "Transparent Amount";
-"balance.token.transparent.detected.title" = "Detected Transparent ZEC";
 "balance.token.transparent.info.item" = "Transparent Amount";
 "balance.token.transparent.info.description" = "You have a ZEC balance held in a transparent address. To use it in Unstoppable, it must be shielded for full privacy.";
+"balance.token.transparent.detected.title" = "Detected Transparent ZEC";
+"balance.token.transparent.detected.description" = "You have a ZEC balance held in a transparent address. To use it in Unstoppable, it must be shielded for full privacy.";
 "balance.token.shield" = "Shield";
 
 "balance.token.receive_address" = "Receive Address";

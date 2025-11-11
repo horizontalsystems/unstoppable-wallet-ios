@@ -7,16 +7,17 @@ struct SendAddressView: View {
     private let fromAddress: String?
     private let amount: Decimal?
     private let memo: String?
+
+    @Binding var path: NavigationPath
     @Binding var isPresented: Bool
     private let onDismiss: (() -> Void)?
 
-    @State private var resolvedAddress: ResolvedAddress?
-
-    init(wallet: Wallet, address: String? = nil, amount: Decimal? = nil, memo: String? = nil, isPresented: Binding<Bool>, onDismiss: (() -> Void)? = nil) {
+    init(wallet: Wallet, address: String? = nil, amount: Decimal? = nil, memo: String? = nil, path: Binding<NavigationPath>, isPresented: Binding<Bool>, onDismiss: (() -> Void)? = nil) {
         self.wallet = wallet
         self.address = address
         self.amount = amount
         self.memo = memo
+        _path = path
         _isPresented = isPresented
         self.onDismiss = onDismiss
 
@@ -26,23 +27,13 @@ struct SendAddressView: View {
     var body: some View {
         ThemeView {
             AddressView(token: wallet.token, buttonTitle: "send.next_button".localized, destination: .send(fromAddress: fromAddress), address: address) { resolvedAddress in
-                self.resolvedAddress = resolvedAddress
+                path.append(resolvedAddress)
             }
         }
         .navigationTitle("address.title".localized)
-        .navigationDestination(
-            isPresented: Binding(
-                get: {
-                    resolvedAddress != nil
-                }, set: { active in
-                    if !active {
-                        resolvedAddress = nil
-                    }
-                }
-            )
-        ) {
-            if let resolvedAddress, let handler = SendHandlerFactory.preSendHandler(wallet: wallet, address: resolvedAddress) {
-                PreSendView(wallet: wallet, handler: handler, resolvedAddress: resolvedAddress, amount: amount, memo: memo) {
+        .navigationDestination(for: ResolvedAddress.self) { resolvedAddress in
+            if let handler = SendHandlerFactory.preSendHandler(wallet: wallet, address: resolvedAddress) {
+                PreSendView(wallet: wallet, handler: handler, resolvedAddress: resolvedAddress, amount: amount, memo: memo, path: $path) {
                     if let onDismiss {
                         onDismiss()
                     } else {
@@ -58,6 +49,19 @@ struct SendAddressView: View {
                     isPresented = false
                 }
             }
+        }
+    }
+}
+
+struct SendAddressViewWrapper: View {
+    let wallet: Wallet
+    @Binding var isPresented: Bool
+    
+    @State private var path = NavigationPath()
+
+    var body: some View {
+        ThemeNavigationStack(path: $path) {
+            SendAddressView(wallet: wallet, path: $path, isPresented: $isPresented)
         }
     }
 }
