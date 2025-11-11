@@ -366,9 +366,10 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.token.processing.info.title" = "İşlem Sayısı";
 "balance.token.processing.info.description" = "Bu tutardaki işlemler hâlâ senkronize ediliyor. Ve onaylandığında, bu tokenler harcama için kullanılabilir";
 "balance.token.transparent" = "Şeffaf";
-"balance.token.transparent.info.title" = "Şeffaf";
+"balance.token.transparent.info.title" = "Transparent Amount";
+"balance.token.transparent.detected.title" = "Detected Transparent ZEC";
 "balance.token.transparent.info.item" = "Transparent Amount";
-"balance.token.transparent.info.description" = "This balance is publicly visible on the blockchain. You can transfer it to your shielded address with “Shield”.";
+"balance.token.transparent.info.description" = "You have a ZEC balance held in a transparent address. To use it in Unstoppable, it must be shielded for full privacy.";
 "balance.token.shield" = "Shield";
 
 "balance.token.receive_address" = "Alım Adresi";
