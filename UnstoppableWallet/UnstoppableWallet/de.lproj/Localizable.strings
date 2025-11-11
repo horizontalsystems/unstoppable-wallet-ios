@@ -366,9 +366,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance.token.processing.info.title" = "Bearbeitungsbetrag";
 "balance.token.processing.info.description" = "Transaktionen mit diesem Betrag werden noch synchronisiert. Und wenn sie bestätigt werden, stehen diese Token für Ausgaben zur Verfügung";
 "balance.token.transparent" = "Transparente";
-"balance.token.transparent.info.title" = "Transparente";
+"balance.token.transparent.info.title" = "Transparent Amount";
+"balance.token.transparent.detected.title" = "Detected Transparent ZEC";
 "balance.token.transparent.info.item" = "Transparent Amount";
-"balance.token.transparent.info.description" = "This balance is publicly visible on the blockchain. You can transfer it to your shielded address with “Shield”.";
+"balance.token.transparent.info.description" = "You have a ZEC balance held in a transparent address. To use it in Unstoppable, it must be shielded for full privacy.";
 "balance.token.shield" = "Proteger";
 
 "balance.token.receive_address" = "Dirección de recepción";
