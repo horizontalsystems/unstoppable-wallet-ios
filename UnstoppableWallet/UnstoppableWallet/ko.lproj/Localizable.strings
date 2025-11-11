@@ -364,9 +364,10 @@
 "balance.token.processing.info.title" = "처리 중인 금액";
 "balance.token.processing.info.description" = "이 금액의 거래가 여전히 동기화 중입니다. 거래가 확인되면 이 토큰들은 사용할 수 있게 됩니다.";
 "balance.token.transparent" = "透明";
-"balance.token.transparent.info.title" = "透明";
+"balance.token.transparent.info.title" = "Transparent Amount";
+"balance.token.transparent.detected.title" = "Detected Transparent ZEC";
 "balance.token.transparent.info.item" = "Transparent Amount";
-"balance.token.transparent.info.description" = "This balance is publicly visible on the blockchain. You can transfer it to your shielded address with “Shield”.";
+"balance.token.transparent.info.description" = "You have a ZEC balance held in a transparent address. To use it in Unstoppable, it must be shielded for full privacy.";
 "balance.token.shield" = "차폐(Shield)";
 
 "balance.token.receive_address" = "수신 주소";
