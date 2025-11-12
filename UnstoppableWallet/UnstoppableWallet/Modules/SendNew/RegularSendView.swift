@@ -52,3 +52,28 @@ struct RegularSendView: View {
         .navigationBarTitleDisplayMode(.inline)
     }
 }
+
+struct RegularSendViewWrapper: View {
+    let sendData: SendData
+    let address: String?
+    @Binding var isPresented: Bool
+    let onSuccess: () -> Void
+    
+    @State private var path = NavigationPath()
+    
+    var body: some View {
+        ThemeNavigationStack(path: $path) {
+            RegularSendView(sendData: sendData, address: address) {
+                isPresented = false
+                onSuccess()
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button("button.cancel".localized) {
+                        isPresented = false
+                    }
+                }
+            }
+        }
+    }
+}
