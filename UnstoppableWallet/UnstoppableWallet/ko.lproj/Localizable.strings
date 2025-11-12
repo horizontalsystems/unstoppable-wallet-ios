@@ -446,8 +446,8 @@
 "deposit.subaddresses.transactions_count" = "트랜잭션: %@";
 
 "deposit.restore.enabled.description" = "Have you previously owned any %@ coins?";
-"deposit.restore.enabled.already_own" = "Yes, I already own";
-"deposit.restore.enabled.dont_have" = "No, I don’t have";
+"deposit.restore.enabled.already_own" = "예, 이미 소유하고 있습니다";
+"deposit.restore.enabled.dont_have" = "아니요, 없어요";
 
 "deposit.warning" = "네트워크 호환 토큰만 허용됩니다. 그 외에는 소멸됩니다.";
 "deposit.warning.watch_account" = "이 주소는 관찰 중인 계정의 주소입니다";
