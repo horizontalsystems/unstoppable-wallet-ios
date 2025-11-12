@@ -52,7 +52,7 @@ enum SendModule {
         }
 
         let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType, tokenType: token.type)
-        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: Core.shared.marketKit, contactBookManager: Core.shared.contactManager, blockchainType: token.blockchainType)
+        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: Core.shared.marketKit, contactBookManager: Core.shared.contactManager, blockchainType: token.blockchainType, filter: nil)
 
         let memoService = SendMemoInputService(maxSymbols: 80)
 
@@ -176,12 +176,12 @@ enum SendModule {
         let amountCautionService = SendAmountCautionService(amountInputService: amountInputService)
 
         // Address
-        let zcashParserItem = ZcashAddressParserItem(parserType: .adapter(adapter))
+        let zcashParserItem = ZcashAddressParserItem(parserType: .adapter(adapter), addressType: nil)
         let addressParserChain = AddressParserChain()
             .append(handler: zcashParserItem)
 
         let addressUriParser = AddressParserFactory.parser(blockchainType: token.blockchainType, tokenType: token.type)
-        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: Core.shared.marketKit, contactBookManager: Core.shared.contactManager, blockchainType: token.blockchainType)
+        let addressService = AddressService(mode: .parsers(addressUriParser, addressParserChain), marketKit: Core.shared.marketKit, contactBookManager: Core.shared.contactManager, blockchainType: token.blockchainType, filter: nil)
 
         let memoService = SendMemoInputService(maxSymbols: 120)
 

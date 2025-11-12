@@ -17,7 +17,7 @@ class MoneroAdapter {
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
     private let balanceStateSubject = PublishSubject<AdapterState>()
     let transactionRecordsSubject = PublishSubject<[BitcoinTransactionRecord]>()
-    private let depositAddressSubject = PassthroughSubject<DataStatus<[DepositAddressType: DepositAddress]>, Never>()
+    private let depositAddressSubject = PassthroughSubject<DataStatus<DepositAddress>, Never>()
 
     private(set) var balanceState: AdapterState {
         didSet {
@@ -135,8 +135,8 @@ class MoneroAdapter {
         case .synced:
             return .synced
 
-        case let .syncing(progress, _):
-            return .syncing(progress: progress, lastBlockDate: nil)
+        case let .syncing(progress, remainingBlockCount):
+            return .syncing(progress: min(99, progress), remaining: max(1, remainingBlockCount), lastBlockDate: nil)
 
         case let .notSynced(error):
             return .notSynced(error: error.localizedDescription)
@@ -191,7 +191,7 @@ extension MoneroAdapter: IAdapter {
 
 extension MoneroAdapter: MoneroKitDelegate {
     func subAddressesUpdated(subaddresses _: [MoneroKit.SubAddress]) {
-        depositAddressSubject.send(.completed(allAddresses))
+        depositAddressSubject.send(.completed(receiveAddress))
     }
 
     func balanceDidChange(balanceInfo: MoneroKit.BalanceInfo) {
@@ -329,13 +329,12 @@ extension MoneroAdapter: IDepositAdapter {
         DepositAddress(kit.receiveAddress)
     }
 
-    var receiveAddressPublisher: AnyPublisher<DataStatus<[DepositAddressType: DepositAddress]>, Never> {
+    var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {
         depositAddressSubject.eraseToAnyPublisher()
     }
 
-    func usedAddresses(change: Bool) -> [UsedAddress] {
-        if change { return [] }
-        return kit.usedAddresses.map {
+    var usedAddresses: [UsedAddress] {
+        kit.usedAddresses.map {
             UsedAddress(index: $0.index, address: $0.address, explorerUrl: nil, transactionsCount: $0.transactionsCount)
         }
     }
@@ -362,7 +361,7 @@ extension MoneroAdapter {
         case let .mnemonic(words, passphrase, _):
             return (try? Kit.key(wallet: .bip39(seed: words, passphrase: passphrase), privateKey: privateKey, spendKey: spendKey)) ?? ""
 
-        case let .moneroWatchAccount(address, viewKey, restoreHeight):
+        case let .moneroWatchAccount(address, viewKey, _):
             return (try? Kit.key(wallet: .watch(address: address, viewKey: viewKey), privateKey: privateKey, spendKey: spendKey)) ?? ""
 
         default: return ""

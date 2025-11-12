@@ -41,8 +41,8 @@ struct WalletListItemView: View, Equatable {
         }
 
         switch item.state {
-        case let .syncing(progress, _):
-            return progress.map { "balance.syncing_percent".localized("\($0)%") } ?? "balance.syncing".localized
+        case let .syncing(progress, remaining, _):
+            return remaining.map { "balance.remaining".localized("\($0)") } ?? "balance.syncing".localized
         case let .customSyncing(main, _, _):
             return main
         case .connecting:
@@ -97,8 +97,9 @@ struct WalletListItemView: View, Equatable {
         }
 
         switch item.state {
-        case let .syncing(_, lastBlockDate):
-            return lastBlockDate.map { "balance.synced_through".localized(DateHelper.instance.formatSyncedThroughDate(from: $0)) } ?? secondaryValue
+        case .syncing:
+//            return lastBlockDate.map { "balance.synced_through".localized(DateHelper.instance.formatSyncedThroughDate(from: $0)) } ?? secondaryValue
+            return secondaryValue
         case let .customSyncing(_, secondary, _):
             return secondary
         case .stopped:

@@ -333,6 +333,7 @@
 "balance.connecting" = "正在连接...";
 "balance.stopped" = "已停止";
 "balance.downloading_sapling" = "正在下载...";
+
 "balance.watch_wallet" = "观察地址";
 
 "balance.searching.count" = "%@ tx";

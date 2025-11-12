@@ -46,7 +46,7 @@ extension Trc20Adapter: IBalanceAdapter {
 
     var balanceStateUpdatedObservable: Observable<AdapterState> {
         tronKit.syncStatePublisher.asObservable().map { [weak self] in
-            self?.convertToAdapterState(tronSyncState: $0) ?? .syncing(progress: nil, lastBlockDate: nil)
+            self?.convertToAdapterState(tronSyncState: $0) ?? .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
         }
     }
 

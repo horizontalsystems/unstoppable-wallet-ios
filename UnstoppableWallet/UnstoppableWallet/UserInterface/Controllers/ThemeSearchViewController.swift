@@ -29,6 +29,7 @@ class ThemeSearchViewController: KeyboardAwareViewController {
         searchController.delegate = self
         searchController.searchBar.setValue("button.cancel".localized, forKey: "cancelButtonText")
         searchController.searchBar.placeholder = "placeholder.search".localized
+        searchController.searchBar.tintColor = .themeInputFieldTintColor
 
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false

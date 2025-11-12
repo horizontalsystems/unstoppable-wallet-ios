@@ -150,22 +150,21 @@ struct WalletView: View {
                 if !item.wallet.account.watchAccount {
                     Button {
                         Coordinator.shared.present { isPresented in
-                            ThemeNavigationStack {
-                                SendAddressView(wallet: item.wallet, isPresented: isPresented)
-                            }
+                            SendAddressViewWrapper(wallet: item.wallet, isPresented: isPresented)
                         }
                         stat(page: .tokenPage, event: .openSend(token: item.wallet.token))
                     } label: {
                         Label("balance.send".localized, image: "arrow_m_up")
                     }
                 }
-                let addressProvider = ReceiveAddressModule.addressProvider(wallet: item.wallet)
-                if let address = addressProvider.address {
+                if let addressAdapter = Core.shared.adapterManager.adapter(for: item.wallet),
+                   let depositAdapter = addressAdapter as? IDepositAdapter
+                {
                     Button {
-                        copyAddressIfBackedUp(address: address)
+                        copyAddressIfBackedUp(address: depositAdapter.receiveAddress.address)
                     } label: {
                         Text("balance.copy_address".localized)
-                        Text(address.shortened)
+                        Text(depositAdapter.receiveAddress.address.shortened)
                         Image("copy")
                     }
                 }

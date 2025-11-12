@@ -22,3 +22,23 @@ extension Text {
         self.init(componentText.text)
     }
 }
+
+enum ComponentImage: CustomStringConvertible {
+    case local(name: String, size: CGFloat?, colorStyle: ColorStyle?)
+    case remote(url: String, placeholder: String?, size: CGFloat?)
+
+    init(_ name: String, size: CGFloat? = nil, colorStyle: ColorStyle? = nil) {
+        self = .local(name: name, size: size, colorStyle: colorStyle)
+    }
+
+    init(url: String, placeholder: String? = nil, size: CGFloat? = nil) {
+        self = .remote(url: url, placeholder: placeholder, size: size)
+    }
+
+    var description: String {
+        switch self {
+        case let .local(name, _, _): return name
+        case let .remote(url, _, _): return url
+        }
+    }
+}

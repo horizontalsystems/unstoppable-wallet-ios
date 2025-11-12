@@ -183,7 +183,7 @@ extension BitcoinBaseAdapter: IAdapter {
     }
 
     func start() {
-        balanceState = .syncing(progress: 0, lastBlockDate: nil)
+        balanceState = .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
         abstractKit.start()
     }
 
@@ -240,19 +240,27 @@ extension BitcoinBaseAdapter: BitcoinCoreDelegate {
             }
 
             balanceState = .notSynced(error: converted.localizedDescription)
-        case let .syncing(progress):
-            let newProgress = Int(progress * 100)
+        case .syncingStarted:
+            if case let .syncing(progress, remaining, date) = balanceState,
+               progress == nil, remaining == nil, date == nil
+            {
+                return
+            }
+            balanceState = .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
+        case let .syncing(all, downloaded):
+            let newProgress = min(Int(Double(downloaded) / Double(all) * 100), 99)
+            let newRemaining = max(1, all - downloaded)
             let newDate = showSyncedUntil
                 ? abstractKit.lastBlockInfo?.timestamp.map { Date(timeIntervalSince1970: Double($0)) }
                 : nil
 
-            if case let .syncing(currentProgress, currentDate) = balanceState, newProgress == currentProgress {
+            if case let .syncing(currentProgress, _, currentDate) = balanceState, newProgress == currentProgress {
                 if let currentDate, let newDate, currentDate.isSameDay(as: newDate) {
                     return
                 }
             }
 
-            balanceState = .syncing(progress: newProgress, lastBlockDate: newDate)
+            balanceState = .syncing(progress: newProgress, remaining: newRemaining, lastBlockDate: newDate)
         case let .apiSyncing(newCount):
             let newCountDescription = "balance.searching.count".localized("\(newCount)")
             if case let .customSyncing(_, secondary, _) = balanceState, newCountDescription == secondary {
@@ -446,7 +454,7 @@ extension BitcoinBaseAdapter: ITransactionsAdapter {
     }
 }
 
-extension BitcoinBaseAdapter: IDepositAdapter {
+extension BitcoinBaseAdapter: IDepositAdapter, IHDDepositAdapter {
     var receiveAddress: DepositAddress {
         DepositAddress(abstractKit.receiveAddress())
     }
@@ -471,28 +479,12 @@ extension BitcoinBaseAdapter {
     }
 }
 
-struct DepositAddressType: Hashable {
-    static let legacy: Self = .init(name: "deposit.address_type.legacy".localized)
-
-    let name: String
-    let caution: CautionNew?
-
-    init(name: String, caution: CautionNew? = nil) {
-        self.name = name
-        self.caution = caution
-    }
-}
-
 class DepositAddress {
     let address: String
 
     init(_ receiveAddress: String) {
         address = receiveAddress
     }
-}
-
-enum DepositAddressError: Error {
-    case notExist
 }
 
 public struct UsedAddress: Hashable {

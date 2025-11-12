@@ -41,7 +41,7 @@ extension EvmAdapter: IBalanceAdapter {
 
     var balanceStateUpdatedObservable: Observable<AdapterState> {
         evmKit.syncStateObservable.map { [weak self] in
-            self?.convertToAdapterState(evmSyncState: $0) ?? .syncing(progress: nil, lastBlockDate: nil)
+            self?.convertToAdapterState(evmSyncState: $0) ?? .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
         }
     }
 

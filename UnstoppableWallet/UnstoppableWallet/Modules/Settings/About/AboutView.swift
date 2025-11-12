@@ -26,7 +26,7 @@ struct AboutView: View {
 
                 ListSection {
                     NavigationRow(destination: {
-                        AppStatusModule.view()
+                        AppStatusView()
                             .onFirstAppear { stat(page: .aboutApp, event: .open(page: .appStatus)) }
                     }) {
                         Image("app_status_24").themeIcon()

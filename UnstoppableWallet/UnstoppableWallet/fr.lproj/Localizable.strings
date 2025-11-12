@@ -332,6 +332,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.searching" = "Recherche des transactions…...";
 "balance.connecting" = "Connexion en cours...";
 "balance.stopped" = "Arrêté";
+
 "balance.downloading_sapling" = "Téléchargement en cours...";
 "balance.watch_wallet" = "Regarder les portefeuilles";
 

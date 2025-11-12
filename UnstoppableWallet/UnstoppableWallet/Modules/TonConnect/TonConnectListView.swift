@@ -18,22 +18,7 @@ struct TonConnectListView: View {
                                     ListSection {
                                         ForEach(item.apps) { app in
                                             ClickableRow(action: {
-                                                Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                                                    BottomSheetView(
-                                                        icon: .trash,
-                                                        title: "ton_connect.list.disconnect_app".localized,
-                                                        items: [
-                                                            .text(text: "ton_connect.list.disconnect_app.description".localized(app.manifest.name)),
-                                                        ],
-                                                        buttons: [
-                                                            .init(style: .red, title: "ton_connect.list.disconnect_app.disconnect".localized) {
-                                                                viewModel.disconnect(app: app)
-//                                                                tonConnectApp = nil
-                                                            },
-                                                        ],
-                                                        isPresented: isPresented
-                                                    )
-                                                }
+                                                onClick(app: app)
                                             }) {
                                                 KFImage.url(app.manifest.iconUrl)
                                                     .resizable()
@@ -77,5 +62,22 @@ struct TonConnectListView: View {
         }
         .navigationTitle("TON Connect")
         .navigationBarTitleDisplayMode(.inline)
+    }
+
+    private func onClick(app: TonConnectApp) {
+        Coordinator.shared.present(type: .bottomSheet) { _ in
+            BottomSheetView(
+                items: [
+                    .title(icon: ThemeImage.trash, title: "ton_connect.list.disconnect_app".localized),
+                    .text(text: "ton_connect.list.disconnect_app.description".localized(app.manifest.name)),
+                    .buttonGroup(.init(buttons: [
+                        .init(style: .red, title: "ton_connect.list.disconnect_app.disconnect".localized) {
+                            viewModel.disconnect(app: app)
+//                                                                tonConnectApp = nil
+                        },
+                    ])),
+                ],
+            )
+        }
     }
 }

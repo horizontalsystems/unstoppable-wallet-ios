@@ -46,10 +46,17 @@ class MainSettingsViewModel: ObservableObject {
         }
     }
 
+    @Published var mayaStagenetEnabled: Bool {
+        didSet {
+            testNetManager.set(mayaStagenetEnabled: mayaStagenetEnabled)
+        }
+    }
+
     init() {
         showTestSwitchers = Bundle.main.object(forInfoDictionaryKey: "ShowTestNetSwitcher") as? String == "true"
         emulatePurchase = localStorage.emulatePurchase
         testNetEnabled = testNetManager.testNetEnabled
+        mayaStagenetEnabled = testNetManager.mayaStagenetEnabled
 
         subscribe(MainScheduler.instance, disposeBag, backupManager.allBackedUpObservable) { [weak self] _ in self?.syncManageWalletsAlert() }
         subscribe(MainScheduler.instance, disposeBag, walletConnectSessionManager.sessionsObservable) { [weak self] _ in self?.syncWalletConnectSessionCount() }
@@ -64,7 +71,7 @@ class MainSettingsViewModel: ObservableObject {
 
         subscribe(&cancellables, accountRestoreWarningManager.hasNonStandardPublisher) { [weak self] _ in self?.syncManageWalletsAlert() }
         subscribe(&cancellables, passcodeManager.$isPasscodeSet) { [weak self] _ in self?.syncSecurityAlert() }
-        subscribe(&cancellables, termsManager.$termsAccepted) { [weak self] _ in self?.syncAboutAlert() }
+        subscribe(&cancellables, termsManager.$state) { [weak self] _ in self?.syncAboutAlert() }
 
         Publishers.Merge3(
             purchaseManager.$purchaseData.map { _ in () },
@@ -118,7 +125,7 @@ class MainSettingsViewModel: ObservableObject {
     }
 
     private func syncAboutAlert() {
-        aboutAlert = !termsManager.termsAccepted
+        aboutAlert = !termsManager.state.allAccepted
     }
 }
 

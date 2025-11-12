@@ -11,7 +11,7 @@ enum SendTronModule {
             mode: .parsers(AddressParserFactory.parser(blockchainType: .tron, tokenType: token.type), addressParserChain),
             marketKit: Core.shared.marketKit,
             contactBookManager: Core.shared.contactManager,
-            blockchainType: .tron
+            blockchainType: .tron,
         )
         let memoService = SendMemoInputService(maxSymbols: 120)
 
