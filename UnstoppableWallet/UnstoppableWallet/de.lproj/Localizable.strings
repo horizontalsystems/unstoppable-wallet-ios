@@ -1739,6 +1739,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "appearance.balance_tab" = "Balance Tab";
 "appearance.amount_rounding" = "Betragsrundung";
 "appearance.amount_rounding.description" = "Kontostände und Transaktionsbeträge als gerundete Werte anzeigen.";
+"appearance.recently_sent" = "Recently Sent";
+"appearance.recently_sent.description" = "Display recently sent address for token.";
 "appearance.hide_buttons" = "Schaltflächen ausblenden";
 "appearance.hide_buttons.description" = "Die Schaltflächen „Senden“, „Empfangen“ und „Tauschen“ im Reiter „Kontostand“ ausblenden.";
 "appearance.balance_value" = "Saldo Wert";
