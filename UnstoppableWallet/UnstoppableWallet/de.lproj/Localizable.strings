@@ -27,6 +27,7 @@
 "button.sign" = "Signieren";
 "button.more" = "Mehr anzeigen";
 "button.i_understand" = "Ich stimme zu";
+"button.understood" = "Verstanden";
 "button.learn_more" = "Mehr erfahren";
 "button.unlock" = "Entsperren";
 "button.select" = "Auswählen";
@@ -73,6 +74,7 @@
 "alert.revoking" = "Widerrufen";
 "alert.revoked" = "Widerrufen";
 "alert.cant_recognize" = "Kann nicht erkennen";
+"alert.not_founded" = "Nicht gefunden.";
 
 "alert.fee_too_low" = "Gebühr zu niedrig";
 "alert.rbf_not_Enabled" = "RBF(Ersetzen durch Gebühr) nicht aktiviert";
@@ -188,7 +190,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (empfohlen)";
 "sync_mode.hybrid" = "Hybrid";
 "sync_mode.from_blockchain" = "Von Blockchain";
-"blockchain_settings.description" = "Wählen Sie das Adressformat für den Empfang von Zahlungen. Ein korrektes Format sollte bei der Wiederherstellung einer bestehenden Brieftasche gewählt werden.";
+"blockchain_settings.description" = "Wählen Sie das Adressformat für die Coin aus.";
+"blockchain_settings.footer" = "Verwenden Sie die empfohlene Option, wenn Sie unsicher sind. Beim Wiederherstellen einer vorhandenen Wallet muss das richtige Format gewählt werden.";
 
 // Coin Platforms
 
@@ -329,14 +332,11 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance.searching" = "Transaktionen werden gesucht...";
 "balance.connecting" = "Verbinde...";
 "balance.stopped" = "Stoppen";
-"balance.downloading_sapling" = "Herunterladen...";
-"balance.downloading_blocks" = "Blöcke herunterladen";
-"balance.scanning_blocks" = "Scanne Blöcke";
-"balance.enhancing_transactions" = "Transaktionen verbessern";
+"balance.downloading_sapling" = "Wird heruntergeladen...";
 "balance.watch_wallet" = "Wallet de solo visualización";
 
 "balance.searching.count" = "%@ tx";
-"balance.syncing_percent" = "Synchronisieren... %@";
+"balance.remaining" = "Verbleibende Blöcke – %@";
 "balance.synced_through" = "bis %@";
 "balance.empty.description" = "Sie haben keine Coins zu diesem Wallet hinzugefügt.";
 "balance.sort.header" = "Sortieren nach";
@@ -346,6 +346,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "balance_error.change_source" = "Quelle ändern";
 "balance_error.sync_error" = "Sync-Fehler";
+"balance_error.sync_error.description.with_source" = "Fehler beim Abrufen der Daten von der aktuellen Quelle. Sie können es erneut versuchen oder zu einer anderen Synchronisierungsquelle wechseln.";
+"balance_error.sync_error.description.without_source" = "Fehler beim Abrufen der Daten von der aktuellen Quelle. Bitte versuchen Sie es später erneut.";
 "lost_accounts.warning_title" = "iOS-Keychain-Fehler";
 "lost_accounts.warning_message" = "Aufgrund eines Fehlers im iOS-Schlüsselbund konnten wir auf die folgenden Wallets nicht zugreifen:\n\n%@\n\nEin Neustart der App behebt das Problem in der Regel. Falls das Problem weiterhin besteht, können Sie diese Wallets trennen und wiederherstellen.";
 
@@ -365,7 +367,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance.token.processing.info.description" = "Transaktionen mit diesem Betrag werden noch synchronisiert. Und wenn sie bestätigt werden, stehen diese Token für Ausgaben zur Verfügung";
 "balance.token.transparent" = "Transparente";
 "balance.token.transparent.info.title" = "Transparenter Betrag";
-"balance.token.transparent.info.description" = "Der transparente Saldo kann derzeit in unserer Wallet nicht verwendet werden. Diese Mittel können jedoch von anderen Wallets mit T-Address-Unterstützung ausgegeben werden";
+"balance.token.transparent.info.item" = "Transparenter Betrag";
+"balance.token.transparent.info.description" = "Sie besitzen ein ZEC-Guthaben auf einer transparenten Adresse. Um es in Unstoppable zu verwenden, muss es für vollständige Privatsphäre abgeschirmt werden.";
+"balance.token.transparent.detected.title" = "Transparenter ZEC erkannt";
+"balance.token.transparent.detected.description" = "Sie besitzen ein ZEC-Guthaben auf einer transparenten Adresse. Um es in Unstoppable zu verwenden, muss es für vollständige Privatsphäre abgeschirmt werden.";
 "balance.token.shield" = "Proteger";
 
 "balance.token.receive_address" = "Dirección de recepción";
@@ -392,6 +397,15 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Deposit
 
 "deposit.receive_coin" = "%@ Anfordern ";
+"deposit.zcash.title" = "Adresstyp";
+"deposit.zcash.header" = "Wählen Sie, wie Sie Zcash empfangen möchten.";
+"deposit.address_type.unified" = "Vereinheitlicht";
+"deposit.address_type.unified.description" = "Verwenden Sie diese Option für persönliche und private Transfers zwischen Wallets.";
+"deposit.address_type.transparent" = "Transparente";
+"deposit.address_type.transparent.description" = "Verwenden Sie diese Option, um Zahlungen von Börsen oder Diensten zu empfangen, die keine vereinheitlichten Adressen unterstützen.";
+"deposit.address_type.transparent.caution" = "Sie können ZEC an diese transparente Adresse empfangen. Zum Senden müssen Sie es jedoch an eine abgeschirmte Adresse übertragen.";
+"deposit.address_type.legacy" = "Legacy";
+
 "deposit.address" = "Adresse";
 "deposit.your_address" = "Deine Adresse";
 "receive_alert.not_backed_up_description" = "Sie müssen %@ sichern, bevor Sie %@ empfangen können.";
@@ -418,8 +432,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "deposit.memo_warning.description" = "Sowohl eine Memo (Tag) als auch die Adresse werden benötigt, um sicherzustellen, dass Vermögenswerte empfangen werden. Andernfalls gehen Ihre Gelder verloren.";
 
 "deposit.not_active" = "nicht aktiv";
-"deposit.not_active.title" = "Keine aktive Adresse";
-"deposit.not_active.tron_description" = "Neu erstellte Konten in der TRON-Blockchain sind inaktiv und können nicht abgefragt oder untersucht werden. Sie müssen aktiviert werden.\n\nDie Übertragung von TRX- oder TRC-10-Token an eine inaktive Konto-Adresse wird das Konto aktivieren. Zur Aktivierung eines neuen Kontos auf der Tron-Kette ist eine Gebühr von 1 TRX erforderlich";
+"deposit.not_active.title" = "Konto nicht aktiv";
+"deposit.not_active.tron_description" = "Neue TRON-Wallets benötigen mindestens 1 TRX zur Aktivierung. Bis dahin können sie zwar Tokens empfangen, zeigen jedoch keine korrekten Guthaben an.";
 "deposit.stellar.inactive_asset.title" = "Token aktivieren";
 "deposit.stellar.inactive_asset.description" = "Um %@ zu empfangen, müssen Sie das Token aktivieren. Das Stellar-Netzwerk verlangt, dass für jedes Token eine Trustline eingerichtet wird. Ohne diese kann Ihre Wallet %@ nicht empfangen — die Transaktion wird abgelehnt und die Gelder nicht gutgeschrieben.";
 
@@ -434,9 +448,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "deposit.subaddresses.description" = "Verwenden Sie Subadressen, um mehrere eindeutige Adressen in einer Wallet zu verwalten – einfacher zu organisieren und sicherer für Ihre Privatsphäre.";
 "deposit.subaddresses.transactions_count" = "Transaktionen: %@";
 
-"deposit.zcash.restore.description" = "Hast du schon einmal im Besitz von ZEC-Münzen?";
-"deposit.zcash.restore.already_own" = "Ja, ich besitze bereits";
-"deposit.zcash.restore.dont_have" = "Nein, ich habe nicht";
+"deposit.restore.enabled.description" = "Haben Sie zuvor %@ Coins besessen?";
+"deposit.restore.enabled.already_own" = "Ja, ich besitze bereits";
+"deposit.restore.enabled.dont_have" = "Nein, ich habe nicht";
 
 "deposit.warning" = "Nur Netzwerk-kompatible Tokens. Andere gehen verloren.";
 "deposit.warning.watch_account" = "Diese Adresse ist die Adresse des überwachten Kontos";
@@ -769,6 +783,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "swap.dex_info.link_button" = "%@ Seite";
 
+"swap.maya.shielded_address.error" = "Abgeschirmte Adresse für Memo (Maya) kann nicht abgerufen werden";
 
 
 // Market
@@ -1496,8 +1511,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "terms.title" = "Bedingungen";
 "terms.i_agree" = "Ich stimme zu";
 
-"terms.item.1" = "Sicheres Backup der Wiederherstellungsausdrücke für jede Wallet. Dies ist die einzige Möglichkeit, den Zugriff auf Gelder zurückzugewinnen, wenn die App nicht funktioniert.";
-"terms.item.2" = "Das Deaktivieren der PIN (Code) auf dem Smartphone löscht alle Brieftaschen aus der App. Wiederherstellungs-Phrasen werden benötigt, um den Zugriff auf Gelder wiederherzustellen.";
+"terms.item.backup_recovery" = "Sichern Sie die Wiederherstellungsphrase für jede Wallet an einem sicheren Ort. Sie ist die einzige Möglichkeit, wieder auf Ihr Guthaben zuzugreifen, falls die App gelöscht, verloren oder beschädigt wird. Niemand kann sie für Sie wiederherstellen.";
+"terms.item.device_pin" = "Das Deaktivieren des Entsperr-PINs (oder -Passcodes) Ihres Smartphones löscht alle Wallets aus der App. Sie benötigen Ihre Wiederherstellungsphrasen, um wieder Zugriff zu erhalten.";
+"terms.item.privacy_notice" = "Die App überwacht oder sammelt keine Daten über Ihre Guthaben oder Transaktionen – wir wissen nicht einmal, wie viele Personen sie verwenden. Sie verfolgt nur anonyme Nutzungsmuster (geöffnete Seiten, angeklickte Schaltflächen), um die Benutzerfreundlichkeit zu verbessern. Sie können dies unter Einstellungen → Datenschutz deaktivieren.";
+"terms.item.monetization" = "Im Rahmen ihres Monetarisierungsmodells erhält die App kleine Provisionen von DEX-Swaps, die innerhalb der Wallet ausgeführt werden. Dadurch bleiben wir unabhängig, Open Source und frei von Risikokapital.";
+"terms.item.open_source" = "Die App ist nachweislich Open Source, und der gesamte Quellcode ist online veröffentlicht. Alles oben Genannte kann von jedem öffentlich überprüft werden.";
+
 
 // Settings -> Tell Friends
 

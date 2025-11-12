@@ -27,6 +27,7 @@
 "button.sign" = "签名";
 "button.more" = "显示更多";
 "button.i_understand" = "我理解";
+"button.understood" = "明白";
 "button.learn_more" = "了解更多";
 "button.unlock" = "解锁​​​​";
 "button.select" = "选择";
@@ -73,6 +74,7 @@
 "alert.revoking" = "正在取消";
 "alert.revoked" = "已注销";
 "alert.cant_recognize" = "无法识别";
+"alert.not_founded" = "未找到。";
 
 "alert.fee_too_low" = "费用过低";
 "alert.rbf_not_Enabled" = "RBF(替换交易) 未启用";
@@ -188,7 +190,8 @@
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "资金地址（推荐）";
 "sync_mode.hybrid" = "混合型";
 "sync_mode.from_blockchain" = "来自区块链";
-"blockchain_settings.description" = "选择接收付款的地址格式。恢复现有钱包时应选择正确的格式。";
+"blockchain_settings.description" = "请选择该币种的地址格式。";
+"blockchain_settings.footer" = "如果不确定，请使用推荐选项。恢复现有钱包时需选择正确的地址格式。";
 
 // Coin Platforms
 
@@ -329,14 +332,12 @@
 "balance.searching" = "正在搜索交易…...";
 "balance.connecting" = "正在连接...";
 "balance.stopped" = "已停止";
-"balance.downloading_sapling" = "正在下载保存...";
-"balance.downloading_blocks" = "正在下载块";
-"balance.scanning_blocks" = "扫描块";
-"balance.enhancing_transactions" = "加强交易";
+"balance.downloading_sapling" = "正在下载...";
+
 "balance.watch_wallet" = "观察地址";
 
 "balance.searching.count" = "%@ tx";
-"balance.syncing_percent" = "正在同步... %@";
+"balance.remaining" = "剩余区块数 - %@";
 "balance.synced_through" = "直到 %@";
 "balance.empty.description" = "您还没有添加任何代币到此钱包中。";
 "balance.sort.header" = "排序方式";
@@ -346,6 +347,8 @@
 
 "balance_error.change_source" = "更改源";
 "balance_error.sync_error" = "同步出错";
+"balance_error.sync_error.description.with_source" = "无法从当前来源获取数据。您可以重试或切换到其他同步来源。";
+"balance_error.sync_error.description.without_source" = "无法从当前来源获取数据。请稍后重试。";
 "lost_accounts.warning_title" = "iOS Keychain 错误";
 "lost_accounts.warning_message" = "由于 iOS 钥匙串错误，无法访问以下钱包：\n\n%@\n\n重新启动应用通常可以解决此问题。如果问题仍然存在，您可以取消关联并恢复这些钱包。";
 
@@ -364,8 +367,11 @@
 "balance.token.processing.info.title" = "处理金额";
 "balance.token.processing.info.description" = "此金额的交易仍然在同步。当它们被确认时，这些代币将用于支出";
 "balance.token.transparent" = "透明";
-"balance.token.transparent.info.title" = "透明金額";
-"balance.token.transparent.info.description" = "透明餘額目前無法在我們的錢包中使用。但其他支援 t-address 的錢包可以花費這些資金。";
+"balance.token.transparent.info.title" = "透明余额";
+"balance.token.transparent.info.item" = "透明余额";
+"balance.token.transparent.info.description" = "您在透明地址中持有 ZEC 余额。要在 Unstoppable 中使用，必须将其屏蔽（shield）以实现完全隐私。";
+"balance.token.transparent.detected.title" = "检测到透明 ZEC 地址";
+"balance.token.transparent.detected.description" = "您在透明地址中持有 ZEC 余额。要在 Unstoppable 中使用，必须将其屏蔽（shield）以实现完全隐私。";
 "balance.token.shield" = "屏蔽";
 
 "balance.token.receive_address" = "收款地址";
@@ -392,6 +398,15 @@
 // Deposit
 
 "deposit.receive_coin" = "收到%@";
+"deposit.zcash.title" = "地址类型";
+"deposit.zcash.header" = "请选择您希望接收 Zcash 的方式。";
+"deposit.address_type.unified" = "Unified";
+"deposit.address_type.unified.description" = "适用于钱包之间的个人和隐私转账。";
+"deposit.address_type.transparent" = "透明";
+"deposit.address_type.transparent.description" = "适用于从不支持统一地址的交易所或服务接收资金。";
+"deposit.address_type.transparent.caution" = "您可以接收 ZEC 到此透明地址。若要发送，请先转入屏蔽地址。";
+"deposit.address_type.legacy" = "遗留问题";
+
 "deposit.address" = "地址";
 "deposit.your_address" = "您的地址";
 "receive_alert.not_backed_up_description" = "您必须在接收%@之前先备份%@。";
@@ -418,8 +433,8 @@
 "deposit.memo_warning.description" = "需要填写备注(标签)和地址以确保收到资产。否则您的资金将丢失。";
 
 "deposit.not_active" = "不活动";
-"deposit.not_active.title" = "未激活的地址";
-"deposit.not_active.tron_description" = "新创建的 TRON 区块链上的帐户是不活动的，无法查询或探索。它们需要激活。\n\n正在将TRX或 TRC-10令牌传输到一个不活动的帐户地址将激活该帐户。 激活Tron链上的一个新帐户需要1TRX";
+"deposit.not_active.title" = "帐户未激活";
+"deposit.not_active.tron_description" = "新创建的 TRON 钱包至少需要 1 个 TRX 才能激活。在此之前可接收代币，但余额显示可能不正确。";
 "deposit.stellar.inactive_asset.title" = "啟用代幣";
 "deposit.stellar.inactive_asset.description" = "若要接收 %@，需先激活该代币。Stellar 网络要求为每个代币建立信任线；若未建立，您的钱包将无法接收 %@，交易会被拒绝且资金无法到账。";
 
@@ -434,9 +449,9 @@
 "deposit.subaddresses.description" = "使用子地址来管理一个钱包中的多个独特地址——更容易组织起来，对您的隐私更安全。";
 "deposit.subaddresses.transactions_count" = "交易：%@";
 
-"deposit.zcash.restore.description" = "您以前是否拥有过任何ZEC硬币？";
-"deposit.zcash.restore.already_own" = "是的，我已经拥有了";
-"deposit.zcash.restore.dont_have" = "不，我没有";
+"deposit.restore.enabled.description" = "您之前是否持有过 %@ 币？";
+"deposit.restore.enabled.already_own" = "是的，我已经拥有了";
+"deposit.restore.enabled.dont_have" = "不，我没有";
 
 "deposit.warning" = "仅支持与网络兼容的代币，其他将会丧失。";
 "deposit.warning.watch_account" = "该地址是被监视账户的地址";
@@ -769,6 +784,7 @@
 
 "swap.dex_info.link_button" = "%@ 站点";
 
+"swap.maya.shielded_address.error" = "无法获取用于备注（Memo）的屏蔽地址（Maya）。";
 
 
 // Market
@@ -1496,8 +1512,12 @@
 "terms.title" = "条款";
 "terms.i_agree" = "我同意";
 
-"terms.item.1" = "安全地备份每个钱包的恢复短语。这是在应用程序发生故障时重新获得资金的唯一途径。";
-"terms.item.2" = "在智能手机上禁用解锁 PIN (代码)会删除应用程序中的所有钱包。恢复资金访问将需要恢复短语。";
+"terms.item.backup_recovery" = "请安全备份每个钱包的恢复助记词。如果应用被删除、丢失或出现故障，这是唯一恢复资金访问的方式。无人能为您恢复。";
+"terms.item.device_pin" = "禁用手机解锁 PIN（或密码）会清除应用中的所有钱包。您需要使用恢复助记词来重新访问钱包。";
+"terms.item.privacy_notice" = "本应用不会监视或收集您的余额和交易数据——我们甚至不知道有多少人在使用。应用仅收集匿名使用统计（如打开的页面、点击的按钮），以改进用户体验。您可在“设置 → 隐私”中关闭此功能。";
+"terms.item.monetization" = "作为盈利模式的-部分，应用会从钱包内执行的 DEX 兑换中获得少量佣金。这有助于我们保持独立、开源，并远离风险投资资金。";
+"terms.item.open_source" = "本应用完全开源，所有源代码均已公开发布。上述内容任何人都可公开验证。";
+
 
 // Settings -> Tell Friends
 

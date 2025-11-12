@@ -27,6 +27,7 @@
 "button.sign" = "kaydol";
 "button.more" = "Daha Fazlası";
 "button.i_understand" = "Anlıyorum";
+"button.understood" = "Understood";
 "button.learn_more" = "Daha fazla bilgi edin";
 "button.unlock" = "Kilidi Aç";
 "button.select" = "Seç";
@@ -73,6 +74,7 @@
 "alert.revoking" = "İptal ediliyor";
 "alert.revoked" = "İptal et";
 "alert.cant_recognize" = "Tanıyamıyorum";
+"alert.not_founded" = "Not Founded.";
 
 "alert.fee_too_low" = "Ücret Çok Düşük";
 "alert.rbf_not_Enabled" = "RBF (Ücretle Değiştir) etkin değil";
@@ -188,7 +190,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (önerilen)";
 "sync_mode.hybrid" = "Hybrid";
 "sync_mode.from_blockchain" = "Blockchain çıkışlı";
-"blockchain_settings.description" = "Ödemeleri almak için adres biçimini seçin. Mevcut bir cüzdanı geri yüklerken doğru bir format seçilmelidir.";
+"blockchain_settings.description" = "Select the address format for the coin.";
+"blockchain_settings.footer" = "Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
 
@@ -329,14 +332,11 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.searching" = "İşlemler aranıyor ...";
 "balance.connecting" = "Bağlanıyor...";
 "balance.stopped" = "Durduruldu";
-"balance.downloading_sapling" = "Sapling indiriliyor...";
-"balance.downloading_blocks" = "Blokları İndirme";
-"balance.scanning_blocks" = "Tarama Blokları";
-"balance.enhancing_transactions" = "İşlemleri Geliştirme";
+"balance.downloading_sapling" = "Downloading...";
 "balance.watch_wallet" = "Cüzdan İzle";
 
 "balance.searching.count" = "bakiye.araması.miktar";
-"balance.syncing_percent" = "Senkronize ediliyor... %@";
+"balance.remaining" = "Blocks Remaining - %@";
 "balance.synced_through" = "%@ kadar";
 "balance.empty.description" = "Bu cüzdana hiç jeton eklemediniz.";
 "balance.sort.header" = "Sıralama şekli";
@@ -346,6 +346,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "balance_error.change_source" = "Kaynağı Değiştir";
 "balance_error.sync_error" = "Senk. hatası";
+"balance_error.sync_error.description.with_source" = "Failed to fetch data from the current source. You can retry or switch to a different sync source.";
+"balance_error.sync_error.description.without_source" = "Failed to fetch data from the current source. Please try again later.";
 "lost_accounts.warning_title" = "iOS Keychain Hatası";
 "lost_accounts.warning_message" = "Bir iOS Keychain hatası nedeniyle aşağıdaki cüzdanlara erişemedik:\n\n%@\n\nUygulamayı yeniden başlatmak genellikle sorunu çözer. Sorun devam ederse bu cüzdanların bağlantısını kaldırıp yeniden yükleyebilirsiniz.";
 
@@ -364,8 +366,11 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.token.processing.info.title" = "İşlem Sayısı";
 "balance.token.processing.info.description" = "Bu tutardaki işlemler hâlâ senkronize ediliyor. Ve onaylandığında, bu tokenler harcama için kullanılabilir";
 "balance.token.transparent" = "Şeffaf";
-"balance.token.transparent.info.title" = "Şeffaf tutar";
-"balance.token.transparent.info.description" = "Şeffaf bakiye şu anda cüzdanımızda kullanılamaz. Ancak bu tutar, t-adreslerini destekleyen diğer cüzdanlar tarafından harcanabilir";
+"balance.token.transparent.info.title" = "Transparent Amount";
+"balance.token.transparent.info.item" = "Transparent Amount";
+"balance.token.transparent.info.description" = "You have a ZEC balance held in a transparent address. To use it in Unstoppable, it must be shielded for full privacy.";
+"balance.token.transparent.detected.title" = "Detected Transparent ZEC";
+"balance.token.transparent.detected.description" = "You have a ZEC balance held in a transparent address. To use it in Unstoppable, it must be shielded for full privacy.";
 "balance.token.shield" = "Shield";
 
 "balance.token.receive_address" = "Alım Adresi";
@@ -392,6 +397,15 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Deposit
 
 "deposit.receive_coin" = "%@ al";
+"deposit.zcash.title" = "Address Type";
+"deposit.zcash.header" = "Choose how you want to receive Zcash.";
+"deposit.address_type.unified" = "Unified";
+"deposit.address_type.unified.description" = "Use for personal and private transfers between wallets.";
+"deposit.address_type.transparent" = "Şeffaf";
+"deposit.address_type.transparent.description" = "Use for receiving from exchanges or services that don’t support unified addresses.";
+"deposit.address_type.transparent.caution" = "You can receive ZEC to this Transparent address. To send, transfer it to a Shielded one.";
+"deposit.address_type.legacy" = "Legacy";
+
 "deposit.address" = "Adres";
 "deposit.your_address" = "Adresiniz";
 "receive_alert.not_backed_up_description" = "%@ almadan önce %@ anahtarlarınızı yedeklemeniz gerekiyor.";
@@ -418,8 +432,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "deposit.memo_warning.description" = "Varlıkların alındığından emin olmak için hem not (etiket) hem de adres gereklidir. Aksi takdirde paranız kaybolacaktır.";
 
 "deposit.not_active" = "aktif değil";
-"deposit.not_active.title" = "Aktif Adres Değil";
-"deposit.not_active.tron_description" = "TRON blok zincirinde yeni oluşturulan hesaplar etkin değildir ve sorgulanamaz veya araştırılamaz. Etkinleştirilmeleri gerekiyor.\n\nTRX veya TRC-10 jetonlarını etkin olmayan bir hesap adresine aktarmak, hesabı etkinleştirir. Tron zincirinde yeni bir hesabın etkinleştirilmesi 1 TRX ücret gerektirir";
+"deposit.not_active.title" = "Hesap aktif değil";
+"deposit.not_active.tron_description" = "New TRON wallets need at least 1 TRX to activate. Until then, they can receive tokens but won’t show correct balances.";
 "deposit.stellar.inactive_asset.title" = "Token’i Aktive Et";
 "deposit.stellar.inactive_asset.description" = "%@ almak için token’i aktive etmeniz gerekiyor. Stellar ağı, her bir token için trustline kurulmasını gerektirir. Bu kurulmazsa, cüzdan %@ alamaz — işlem reddedilir ve fonlar teslim edilmez.";
 
@@ -434,9 +448,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "deposit.subaddresses.description" = "Tek bir cüzdanda birden fazla benzersiz adresi yönetmek için alt adresleri kullanın – düzenlemeyi kolaylaştırır, gizliliğinizi daha güvenli hale getirir.";
 "deposit.subaddresses.transactions_count" = "İşlemler: %@";
 
-"deposit.zcash.restore.description" = "Daha önce herhangi bir ZEC paranız var mıydı?";
-"deposit.zcash.restore.already_own" = "Evet, zaten sahibim";
-"deposit.zcash.restore.dont_have" = "Hayır, bende yok";
+"deposit.restore.enabled.description" = "Have you previously owned any %@ coins?";
+"deposit.restore.enabled.already_own" = "Yes, I already own";
+"deposit.restore.enabled.dont_have" = "No, I don’t have";
 
 "deposit.warning" = "Sadece ağ uyumlu jetonlar. Diğerleri kaybedilecek.";
 "deposit.warning.watch_account" = "Bu adres izlenen hesabın adresidir";
@@ -769,6 +783,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "swap.dex_info.link_button" = "%@ Sitesi";
 
+"swap.maya.shielded_address.error" = "Can't fetch shielded address for Memo (Maya)";
 
 
 // Market
@@ -1500,8 +1515,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "terms.title" = "Şartlar";
 "terms.i_agree" = "Kabul Ediyorum";
 
-"terms.item.1" = "Her cüzdan için kurtarma ifadelerini güvenli bir şekilde yedekleyin. Uygulama arızalanırsa fonlara yeniden erişmenin tek yolu budur.";
-"terms.item.2" = "Akıllı telefon kilit açma PIN'ini devre dışı bırakmak, tüm cüzdanları uygulamadan siler. Fonlara yeniden erişim sağlamak için kurtarma ifadelerine ihtiyaç duyulacaktır.";
+"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It’s the only way to regain access to your funds if the app is deleted, lost, or malfunctions. No one can restore it for you.";
+"terms.item.device_pin" = "Disabling your smartphone’s unlock PIN (or passcode) wipes all wallets from the app. You’ll need your recovery phrases to restore access.";
+"terms.item.privacy_notice" = "The app doesn’t spy or collect data about your balances or transactions - we don’t even know how many people use it. It only tracks anonymous usage patterns (pages opened, buttons tapped) to improve usability. You can turn this off in Settings → Privacy.";
+"terms.item.monetization" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet. This helps us stay independent, open source, and free of VC money.";
+"terms.item.open_source" = "The app is verifiably open source, with all source code published online. Everything stated above can be publicly verified by anyone.";
+
 
 // Settings -> Tell Friends
 
