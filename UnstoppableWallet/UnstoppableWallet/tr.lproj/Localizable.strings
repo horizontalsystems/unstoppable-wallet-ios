@@ -1743,6 +1743,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "appearance.balance_tab" = "Bakiye Sekmesi";
 "appearance.amount_rounding" = "Tutar Yuvarlama";
 "appearance.amount_rounding.description" = "Bakiyeleri ve işlem tutarlarını yuvarlanmış değerler olarak göster.";
+"appearance.recently_sent" = "Recently Sent";
+"appearance.recently_sent.description" = "Display recently sent address for token.";
 "appearance.hide_buttons" = "Düğmeleri Gizle";
 "appearance.hide_buttons.description" = "Bakiye sekmesinde Gönder, Al ve Takas butonlarını gizle.";
 "appearance.balance_value" = "Bakiye değeri";
