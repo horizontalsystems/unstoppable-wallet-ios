@@ -27,7 +27,7 @@
 "button.sign" = "Firma";
 "button.more" = "Mostrar más";
 "button.i_understand" = "Entiendo";
-"button.understood" = "Understood";
+"button.understood" = "Entendido";
 "button.learn_more" = "Aprender más";
 "button.unlock" = "Desbloquear";
 "button.select" = "Seleccionar";
@@ -74,7 +74,7 @@
 "alert.revoking" = "Revocando";
 "alert.revoked" = "Revocada";
 "alert.cant_recognize" = "No se puede reconocer";
-"alert.not_founded" = "Not Founded.";
+"alert.not_founded" = "No encontrado.";
 
 "alert.fee_too_low" = "Tarifa Demasiado Baja";
 "alert.rbf_not_Enabled" = "RBF (Reemplazar por tarifa) no habilitado";
@@ -190,7 +190,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "Dirección de caja (recomendado)";
 "sync_mode.hybrid" = "Híbrido";
 "sync_mode.from_blockchain" = "Desde Blockchain";
-"blockchain_settings.description" = "Select the address format for the coin.";
+"blockchain_settings.description" = "Selecciona el formato de dirección para la moneda.";
 "blockchain_settings.footer" = "Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
 
 // Coin Platforms
@@ -367,9 +367,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.token.processing.info.description" = "Transacciones con esta cantidad todavía sincronizadas. Y cuando se confirmen, estos tokens estarán disponibles para gastos";
 "balance.token.transparent" = "Transparente";
 "balance.token.transparent.info.title" = "Transparent Amount";
-"balance.token.transparent.detected.title" = "Detected Transparent ZEC";
 "balance.token.transparent.info.item" = "Transparent Amount";
 "balance.token.transparent.info.description" = "You have a ZEC balance held in a transparent address. To use it in Unstoppable, it must be shielded for full privacy.";
+"balance.token.transparent.detected.title" = "Detected Transparent ZEC";
+"balance.token.transparent.detected.description" = "You have a ZEC balance held in a transparent address. To use it in Unstoppable, it must be shielded for full privacy.";
 "balance.token.shield" = "Blindado";
 
 "balance.token.receive_address" = "Dirección de recepción";
@@ -448,8 +449,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "deposit.subaddresses.transactions_count" = "Transacciones: %@";
 
 "deposit.restore.enabled.description" = "Have you previously owned any %@ coins?";
-"deposit.restore.enabled.already_own" = "Yes, I already own";
-"deposit.restore.enabled.dont_have" = "No, I don’t have";
+"deposit.restore.enabled.already_own" = "Sí, ya tengo";
+"deposit.restore.enabled.dont_have" = "No, no tengo";
 
 "deposit.warning" = "Sólo tokens compatibles con la red. Otros se perderán.";
 "deposit.warning.watch_account" = "Esta dirección es la dirección de la cuenta observada";
