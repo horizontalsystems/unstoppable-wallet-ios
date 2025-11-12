@@ -27,7 +27,7 @@
 "button.sign" = "Подписать";
 "button.more" = "Показать больше";
 "button.i_understand" = "Я понимаю";
-"button.understood" = "Understood";
+"button.understood" = "Понятно";
 "button.learn_more" = "Подробнее";
 "button.unlock" = "Разблокировать";
 "button.select" = "Выбрать";
@@ -74,7 +74,7 @@
 "alert.revoking" = "Отмена";
 "alert.revoked" = "Отменен";
 "alert.cant_recognize" = "Не удалось распознать";
-"alert.not_founded" = "Not Founded.";
+"alert.not_founded" = "Не найдено.";
 
 "alert.fee_too_low" = "Комиссия слишком низкая";
 "alert.rbf_not_Enabled" = "RBF (Replace-By-Fee) не активирован";
@@ -192,8 +192,8 @@
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (рекомендованный)";
 "sync_mode.hybrid" = "Гибрид";
 "sync_mode.from_blockchain" = "Из блокчейна";
-"blockchain_settings.description" = "Select the address format for the coin.";
-"blockchain_settings.footer" = "Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
+"blockchain_settings.description" = "Выберите формат адреса для токена.";
+"blockchain_settings.footer" = "Следуйте рекомендованному варианту, если не уверены. Правильный формат должен быть выбран при восстановлении существующего кошелька.";
 
 // Coin Platforms
 
@@ -334,11 +334,11 @@
 "balance.searching" = "Поиск транзакций...";
 "balance.connecting" = "Подключение...";
 "balance.stopped" = "Остановлено";
-"balance.downloading_sapling" = "Downloading...";
+"balance.downloading_sapling" = "Загрузка...";
 "balance.watch_wallet" = "Просмотр кошелька";
 
 "balance.searching.count" = "%@ tx";
-"balance.remaining" = "Blocks Remaining - %@";
+"balance.remaining" = "Осталось блоков - %@";
 "balance.synced_through" = "до %@";
 "balance.empty.description" = "Вы еще не добавили токены в этот кошелек.";
 "balance.sort.header" = "Сортировка";
@@ -348,8 +348,8 @@
 
 "balance_error.change_source" = "Изменить источник";
 "balance_error.sync_error" = "Ошибка синхронизации";
-"balance_error.sync_error.description.with_source" = "Failed to fetch data from the current source. You can retry or switch to a different sync source.";
-"balance_error.sync_error.description.without_source" = "Failed to fetch data from the current source. Please try again later.";
+"balance_error.sync_error.description.with_source" = "Не удалось получить данные из текущего источника. Вы можете повторить попытку или переключиться на другой источник синхронизации.";
+"balance_error.sync_error.description.without_source" = "Не удалось получить данные из текущего источника. Пожалуйста, попробуйте позже.";
 "lost_accounts.warning_title" = "Ошибка связки ключей iOS";
 "lost_accounts.warning_message" = "Из-за ошибки iOS Keychain не удалось получить доступ к следующим кошелькам:\n\n%@\n\nОбычно проблему решает перезапуск приложения. Если ошибка сохраняется, вы можете удалить эти кошельки из приложения и восстановить их заново.";
 
@@ -368,11 +368,11 @@
 "balance.token.processing.info.title" = "Обрабатываемая сумма";
 "balance.token.processing.info.description" = "Транзакции с этой суммой все еще синхронизируются. Когда они будут подтверждены, эти токены будут доступны для траты";
 "balance.token.transparent" = "Transparent";
-"balance.token.transparent.info.title" = "Transparent Amount";
-"balance.token.transparent.info.item" = "Transparent Amount";
-"balance.token.transparent.info.description" = "You have a ZEC balance held in a transparent address. To use it in Unstoppable, it must be shielded for full privacy.";
-"balance.token.transparent.detected.title" = "Detected Transparent ZEC";
-"balance.token.transparent.detected.description" = "You have a ZEC balance held in a transparent address. To use it in Unstoppable, it must be shielded for full privacy.";
+"balance.token.transparent.info.title" = "Transparent баланс";
+"balance.token.transparent.info.item" = "Transparent баланс";
+"balance.token.transparent.info.description" = "У вас есть ZEC, находящийся на transparent адресе. Чтобы использовать его в Unstoppable, необходимо выполнить shielding для полной приватности.";
+"balance.token.transparent.detected.title" = "Обнаружен Transparent ZEC";
+"balance.token.transparent.detected.description" = "У вас есть ZEC, находящийся на transparent адресе. Чтобы использовать его в Unstoppable, необходимо выполнить shielding для полной приватности.";
 "balance.token.shield" = "Shield";
 
 "balance.token.receive_address" = "Адрес получателя";
@@ -399,13 +399,13 @@
 // Deposit
 
 "deposit.receive_coin" = "Получить %@";
-"deposit.zcash.title" = "Address Type";
-"deposit.zcash.header" = "Choose how you want to receive Zcash.";
+"deposit.zcash.title" = "Тип адреса";
+"deposit.zcash.header" = "Выберите, как вы хотите получать Zcash.";
 "deposit.address_type.unified" = "Unified";
-"deposit.address_type.unified.description" = "Use for personal and private transfers between wallets.";
+"deposit.address_type.unified.description" = "Используйте для личных и приватных переводов между кошельками.";
 "deposit.address_type.transparent" = "Transparent";
-"deposit.address_type.transparent.description" = "Use for receiving from exchanges or services that don’t support unified addresses.";
-"deposit.address_type.transparent.caution" = "You can receive ZEC to this Transparent address. To send, transfer it to a Shielded one.";
+"deposit.address_type.transparent.description" = "Используйте для получения от бирж или сервисов, которые не поддерживают унифицированные адреса.";
+"deposit.address_type.transparent.caution" = "Вы можете получать ZEC на этот transparent адрес. Чтобы отправить, переведите средства на shielded-адрес.";
 "deposit.address_type.legacy" = "Legacy";
 
 "deposit.address" = "Адрес";
@@ -435,7 +435,7 @@
 
 "deposit.not_active" = "Не активен";
 "deposit.not_active.title" = "Аккаунт не активен";
-"deposit.not_active.tron_description" = "New TRON wallets need at least 1 TRX to activate. Until then, they can receive tokens but won’t show correct balances.";
+"deposit.not_active.tron_description" = "Новые TRON-кошельки требуют минимум 1 TRX для активации. До этого они могут получать токены, но балансы будут отображаться некорректно.";
 "deposit.stellar.inactive_asset.title" = "Активировать токен";
 "deposit.stellar.inactive_asset.description" = "Чтобы получить %@, необходимо активировать токен. Сеть Stellar требует установить доверительную линию (trustline) для каждого токена. Без этого ваш кошелёк не сможет принять %@ — транзакция будет отклонена, и средства не будут доставлены.";
 
@@ -450,9 +450,9 @@
 "deposit.subaddresses.description" = "Используйте субадреса, чтобы управлять несколькими уникальными адресами в одном кошельке - это удобнее и надёжнее для вашей конфиденциальности.";
 "deposit.subaddresses.transactions_count" = "Транзакций: %@";
 
-"deposit.restore.enabled.description" = "Have you previously owned any %@ coins?";
-"deposit.restore.enabled.already_own" = "Yes, I already own";
-"deposit.restore.enabled.dont_have" = "No, I don’t have";
+"deposit.restore.enabled.description" = "Ранее у вас уже были %@ монеты?";
+"deposit.restore.enabled.already_own" = "Да, у меня уже есть";
+"deposit.restore.enabled.dont_have" = "Нет, у меня нет";
 
 "deposit.warning" = "Только совместимые с сетью токены. Другие будут потеряны.";
 "deposit.warning.watch_account" = "Этот адрес - адрес наблюдаемого аккаунта";
@@ -785,7 +785,7 @@
 
 "swap.dex_info.link_button" = "%@ Сайт";
 
-"swap.maya.shielded_address.error" = "Can't fetch shielded address for Memo (Maya)";
+"swap.maya.shielded_address.error" = "Не удалось получить shielded-адрес для Memo (Maya)";
 
 
 // Market
@@ -1513,11 +1513,12 @@
 "terms.title" = "Условия использования";
 "terms.i_agree" = "Я принимаю";
 
-"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It’s the only way to regain access to your funds if the app is deleted, lost, or malfunctions. No one can restore it for you.";
-"terms.item.device_pin" = "Disabling your smartphone’s unlock PIN (or passcode) wipes all wallets from the app. You’ll need your recovery phrases to restore access.";
-"terms.item.privacy_notice" = "The app doesn’t spy or collect data about your balances or transactions - we don’t even know how many people use it. It only tracks anonymous usage patterns (pages opened, buttons tapped) to improve usability. You can turn this off in Settings → Privacy.";
-"terms.item.monetization" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet. This helps us stay independent, open source, and free of VC money.";
-"terms.item.open_source" = "The app is verifiably open source, with all source code published online. Everything stated above can be publicly verified by anyone.";
+"terms.item.backup_recovery" = "Надёжно сохраните фразу восстановления для каждого кошелька. Это единственный способ восстановить доступ к средствам, если приложение будет удалено, утеряно или выйдет из строя. Никто не сможет восстановить её за вас.";
+"terms.item.device_pin" = "Отключение PIN-кода (или пароля) разблокировки телефона полностью удалит все кошельки из приложения. Вам потребуется фраза восстановления, чтобы вернуть доступ.";
+"terms.item.privacy_notice" = "Приложение не отслеживает и не собирает данные о ваших балансах и транзакциях - мы даже не знаем, сколько людей им пользуется.
+Оно фиксирует только анонимную статистику использования (открытые страницы, нажатия кнопок), чтобы улучшать интерфейс. Это можно отключить в Настройки → Конфиденциальность.";
+"terms.item.monetization" = "В рамках своей модели монетизации приложение получает небольшие комиссии с DEX-свапов, выполненных внутри кошелька. Это помогает нам оставаться независимыми, открытым исходным кодом и без венчурного финансирования.";
+"terms.item.open_source" = "Приложение имеет открытый исходный код, и всё, что указано выше, может быть публично проверено любым пользователем.";
 
 
 // Settings -> Tell Friends
