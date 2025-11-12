@@ -27,7 +27,7 @@
 "button.sign" = "Assinar";
 "button.more" = "Mostrar Mais";
 "button.i_understand" = "Estou ciente";
-"button.understood" = "Understood";
+"button.understood" = "Entendido";
 "button.learn_more" = "Saiba Mais";
 "button.unlock" = "Desbloquear";
 "button.select" = "Selecionar";
@@ -74,7 +74,7 @@
 "alert.revoking" = "Revogando";
 "alert.revoked" = "Revogado";
 "alert.cant_recognize" = "Impossível Reconhecer";
-"alert.not_founded" = "Not Founded.";
+"alert.not_founded" = "Não encontrado.";
 
 "alert.fee_too_low" = "Taxa Baixa Muito";
 "alert.rbf_not_Enabled" = "RBF (Substituir por taxa) não ativado";
@@ -190,8 +190,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recomendado)";
 "sync_mode.hybrid" = "Híbrido";
 "sync_mode.from_blockchain" = "Da Blockchain";
-"blockchain_settings.description" = "Select the address format for the coin.";
-"blockchain_settings.footer" = "Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
+"blockchain_settings.description" = "Selecione o formato de endereço para a moeda.";
+"blockchain_settings.footer" = "Prossiga com a opção recomendada se não tiver certeza. É importante escolher o formato correto ao restaurar uma carteira existente.";
 
 // Coin Platforms
 
@@ -332,11 +332,11 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.searching" = "Procurando transações...";
 "balance.connecting" = "Conectando...";
 "balance.stopped" = "Parado";
-"balance.downloading_sapling" = "Downloading...";
+"balance.downloading_sapling" = "Baixando...";
 "balance.watch_wallet" = "Monitorar Carteira";
 
 "balance.searching.count" = "%@ tx";
-"balance.remaining" = "Blocks Remaining - %@";
+"balance.remaining" = "Blocos Restantes – %@";
 "balance.synced_through" = "até %@";
 "balance.empty.description" = "Você não adicionou nenhuma moeda nesta carteira.";
 "balance.sort.header" = "Organizar por";
@@ -346,8 +346,8 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "balance_error.change_source" = "Mudar a fonte";
 "balance_error.sync_error" = "Erro de Sincronização";
-"balance_error.sync_error.description.with_source" = "Failed to fetch data from the current source. You can retry or switch to a different sync source.";
-"balance_error.sync_error.description.without_source" = "Failed to fetch data from the current source. Please try again later.";
+"balance_error.sync_error.description.with_source" = "Falha ao obter dados da fonte atual. Você pode tentar novamente ou mudar para outra fonte de sincronização.";
+"balance_error.sync_error.description.without_source" = "Falha ao obter dados da fonte atual. Tente novamente mais tarde.";
 "lost_accounts.warning_title" = "Erro de Keychain do iOS";
 "lost_accounts.warning_message" = "Devido a um erro no Keychain do iOS, não foi possível acessar as seguintes carteiras:\n\n%@\n\nReiniciar o app geralmente resolve o problema. Se o erro persistir, você pode desvincular e restaurar essas carteiras.";
 
@@ -366,10 +366,11 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.token.processing.info.title" = "Processando quantia";
 "balance.token.processing.info.description" = "As transações com esse valor ainda estão sendo sincronizadas. E quando forem confirmadas, esses tokens estarão disponíveis para gastar";
 "balance.token.transparent" = "Transparente";
-"balance.token.transparent.info.title" = "Transparent Amount";
-"balance.token.transparent.detected.title" = "Detected Transparent ZEC";
-"balance.token.transparent.info.item" = "Transparent Amount";
-"balance.token.transparent.info.description" = "You have a ZEC balance held in a transparent address. To use it in Unstoppable, it must be shielded for full privacy.";
+"balance.token.transparent.info.title" = "Valor Transparente";
+"balance.token.transparent.info.item" = "Valor Transparente";
+"balance.token.transparent.info.description" = "Você possui um saldo de ZEC em um endereço transparente. Para usá-lo no Unstoppable, é necessário blindá-lo (shield) para garantir total privacidade.";
+"balance.token.transparent.detected.title" = "ZEC Transparente Detectado";
+"balance.token.transparent.detected.description" = "Você possui um saldo de ZEC em um endereço transparente. Para usá-lo no Unstoppable, é necessário blindá-lo (shield) para garantir total privacidade.";
 "balance.token.shield" = "Blindar";
 
 "balance.token.receive_address" = "Endereço de Recebimento";
@@ -396,13 +397,13 @@ Go to Settings - > %@ and allow access to the camera.";
 // Deposit
 
 "deposit.receive_coin" = "Receber %@";
-"deposit.zcash.title" = "Address Type";
-"deposit.zcash.header" = "Choose how you want to receive Zcash.";
+"deposit.zcash.title" = "Tipo de Endereço";
+"deposit.zcash.header" = "Escolha como deseja receber Zcash.";
 "deposit.address_type.unified" = "Unified";
-"deposit.address_type.unified.description" = "Use for personal and private transfers between wallets.";
+"deposit.address_type.unified.description" = "Use para transferências pessoais e privadas entre carteiras.";
 "deposit.address_type.transparent" = "Transparente";
-"deposit.address_type.transparent.description" = "Use for receiving from exchanges or services that don’t support unified addresses.";
-"deposit.address_type.transparent.caution" = "You can receive ZEC to this Transparent address. To send, transfer it to a Shielded one.";
+"deposit.address_type.transparent.description" = "Use para receber de exchanges ou serviços que não oferecem suporte a endereços unificados.";
+"deposit.address_type.transparent.caution" = "Você pode receber ZEC neste endereço Transparente. Para enviar, transfira-o para um endereço Blindado (Shielded).";
 "deposit.address_type.legacy" = "Legacy";
 
 "deposit.address" = "Endereço";
@@ -432,7 +433,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "deposit.not_active" = "Não ativo";
 "deposit.not_active.title" = "Conta Não Ativa";
-"deposit.not_active.tron_description" = "New TRON wallets need at least 1 TRX to activate. Until then, they can receive tokens but won’t show correct balances.";
+"deposit.not_active.tron_description" = "Novas carteiras TRON precisam de pelo menos 1 TRX para serem ativadas. Até lá, podem receber tokens, mas os saldos podem não ser exibidos corretamente.";
 "deposit.stellar.inactive_asset.title" = "Ativar Token";
 "deposit.stellar.inactive_asset.description" = "Para receber %@, você precisa ativar o token. A rede Stellar exige o estabelecimento de uma trustline para cada token. Sem ela, sua carteira não poderá receber %@ — a transação será rejeitada e os fundos não serão entregues.";
 
@@ -447,9 +448,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "deposit.subaddresses.description" = "Use subendereços para gerenciar vários endereços únicos em uma única carteira — mais fácil de organizar e mais seguro para a sua privacidade.";
 "deposit.subaddresses.transactions_count" = "Transação %@";
 
-"deposit.restore.enabled.description" = "Have you previously owned any %@ coins?";
-"deposit.restore.enabled.already_own" = "Yes, I already own";
-"deposit.restore.enabled.dont_have" = "No, I don’t have";
+"deposit.restore.enabled.description" = "Você já possuiu moedas %@ anteriormente?";
+"deposit.restore.enabled.already_own" = "Sim, eu já possuo";
+"deposit.restore.enabled.dont_have" = "Não, eu não tenho";
 
 "deposit.warning" = "Apenas tokens compatíveis com a rede. Outros serão perdidos.";
 "deposit.warning.watch_account" = "Este endereço é o endereço da conta monitorada";
@@ -782,7 +783,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "swap.dex_info.link_button" = "%@ Site";
 
-"swap.maya.shielded_address.error" = "Can't fetch shielded address for Memo (Maya)";
+"swap.maya.shielded_address.error" = "Não foi possível obter o endereço blindado para Memo (Maya)";
 
 
 // Market
@@ -1510,11 +1511,11 @@ Go to Settings - > %@ and allow access to the camera.";
 "terms.title" = "Termos";
 "terms.i_agree" = "Eu concordo";
 
-"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It’s the only way to regain access to your funds if the app is deleted, lost, or malfunctions. No one can restore it for you.";
-"terms.item.device_pin" = "Disabling your smartphone’s unlock PIN (or passcode) wipes all wallets from the app. You’ll need your recovery phrases to restore access.";
-"terms.item.privacy_notice" = "The app doesn’t spy or collect data about your balances or transactions - we don’t even know how many people use it. It only tracks anonymous usage patterns (pages opened, buttons tapped) to improve usability. You can turn this off in Settings → Privacy.";
-"terms.item.monetization" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet. This helps us stay independent, open source, and free of VC money.";
-"terms.item.open_source" = "The app is verifiably open source, with all source code published online. Everything stated above can be publicly verified by anyone.";
+"terms.item.backup_recovery" = "Faça backup com segurança da frase de recuperação de cada carteira. É a única forma de recuperar o acesso aos seus fundos se o app for excluído, perdido ou apresentar falhas. Ninguém pode restaurá-la por você.";
+"terms.item.device_pin" = "Desativar o PIN (ou senha) de desbloqueio do seu smartphone apaga todas as carteiras do app. Você precisará das frases de recuperação para restaurar o acesso.";
+"terms.item.privacy_notice" = "O app não espiona nem coleta dados sobre seus saldos ou transações — nem sequer sabemos quantas pessoas o utilizam. Ele apenas registra padrões de uso anônimos (páginas abertas, botões tocados) para melhorar a usabilidade. Você pode desativar isso em Configurações → Privacidade.";
+"terms.item.monetization" = "Como parte de seu modelo de monetização, o app recebe pequenas comissões de swaps realizados em DEXs dentro da carteira. Isso nos ajuda a permanecer independentes, de código aberto e sem financiamento de capital de risco.";
+"terms.item.open_source" = "O app é comprovadamente open source, com todo o código-fonte publicado online. Tudo o que foi mencionado acima pode ser verificado publicamente por qualquer pessoa.";
 
 
 // Settings -> Tell Friends
