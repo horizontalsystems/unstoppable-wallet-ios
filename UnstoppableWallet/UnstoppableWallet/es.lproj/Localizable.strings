@@ -1740,6 +1740,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "appearance.balance_tab" = "Pestaña de saldo";
 "appearance.amount_rounding" = "Redondeo de montos";
 "appearance.amount_rounding.description" = "Mostrar los saldos y montos de transacciones con valores redondeados.";
+"appearance.recently_sent" = "Recently Sent";
+"appearance.recently_sent.description" = "Display recently sent address for token.";
 "appearance.hide_buttons" = "Ocultar Botones";
 "appearance.hide_buttons.description" = "Ocultar los botones de Enviar, Recibir e Intercambiar en la pestaña de Saldo.";
 "appearance.balance_value" = "Valor de Saldo";
