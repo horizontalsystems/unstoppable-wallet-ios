@@ -333,7 +333,6 @@
 "balance.connecting" = "正在连接...";
 "balance.stopped" = "已停止";
 "balance.downloading_sapling" = "正在下载...";
-
 "balance.watch_wallet" = "观察地址";
 
 "balance.searching.count" = "%@ tx";
@@ -1740,6 +1739,8 @@
 "appearance.balance_tab" = "余额标签";
 "appearance.amount_rounding" = "金额取整";
 "appearance.amount_rounding.description" = "将余额和交易金额显示为取整后的数值。";
+"appearance.recently_sent" = "Recently Sent";
+"appearance.recently_sent.description" = "Display recently sent address for token.";
 "appearance.hide_buttons" = "隐藏按钮";
 "appearance.hide_buttons.description" = "在“余额”标签页隐藏发送、接收和兑换按钮。";
 "appearance.balance_value" = "余额值";
