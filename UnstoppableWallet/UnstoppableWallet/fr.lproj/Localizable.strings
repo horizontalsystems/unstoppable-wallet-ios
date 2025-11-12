@@ -27,7 +27,7 @@
 "button.sign" = "Signer";
 "button.more" = "Afficher plus";
 "button.i_understand" = "J’ai Compris";
-"button.understood" = "Understood";
+"button.understood" = "Unified";
 "button.learn_more" = "En savoir plus";
 "button.unlock" = "Déverrouiller";
 "button.select" = "Sélectionner";
@@ -74,7 +74,7 @@
 "alert.revoking" = "Révocation en cours";
 "alert.revoked" = "Révoqué";
 "alert.cant_recognize" = "Impossible de reconnaître";
-"alert.not_founded" = "Not Founded.";
+"alert.not_founded" = "Non Trouvé.";
 
 "alert.fee_too_low" = "Frais trop bas";
 "alert.rbf_not_Enabled" = "RBF(Remplacer par frais) non activé";
@@ -190,8 +190,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (recommendé)";
 "sync_mode.hybrid" = "Hybride";
 "sync_mode.from_blockchain" = "De la Blockchain";
-"blockchain_settings.description" = "Select the address format for the coin.";
-"blockchain_settings.footer" = "Proceed with recommended option if unsure. A correct format should be chosen when restoring an existing wallet.";
+"blockchain_settings.description" = "Sélectionnez le format d’adresse pour cette cryptomonnaie.";
+"blockchain_settings.footer" = "Suivez l’option recommandée si vous n’êtes pas sûr(e). Le format correct doit être choisi lors de la restauration d’un portefeuille existant.";
 
 // Coin Platforms
 
@@ -332,11 +332,11 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.searching" = "Recherche des transactions…...";
 "balance.connecting" = "Connexion en cours...";
 "balance.stopped" = "Arrêté";
-"balance.downloading_sapling" = "Downloading...";
+"balance.downloading_sapling" = "Téléchargement en cours...";
 "balance.watch_wallet" = "Regarder les portefeuilles";
 
 "balance.searching.count" = "%@ tx";
-"balance.remaining" = "Blocks Remaining - %@";
+"balance.remaining" = "Blocs restants - %@";
 "balance.synced_through" = "jusqu'à: %@";
 "balance.empty.description" = "Vous n'avez ajouté aucune pièce à ce portefeuille.";
 "balance.sort.header" = "Trier par";
@@ -346,8 +346,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "balance_error.change_source" = "Changer la Source";
 "balance_error.sync_error" = "Erreur de synchronisation";
-"balance_error.sync_error.description.with_source" = "Failed to fetch data from the current source. You can retry or switch to a different sync source.";
-"balance_error.sync_error.description.without_source" = "Failed to fetch data from the current source. Please try again later.";
+"balance_error.sync_error.description.with_source" = "Échec de la récupération des données depuis la source actuelle. Vous pouvez réessayer ou changer de source de synchronisation.";
+"balance_error.sync_error.description.without_source" = "Impossible d’obtenir les données depuis la source actuelle. Veuillez réessayer plus tard.";
 "lost_accounts.warning_title" = "Erreur du trousseau d’accès iOS";
 "lost_accounts.warning_message" = "En raison d’une erreur du trousseau iOS, nous n’avons pas pu accéder aux portefeuilles suivants :\n\n%@\n\nLe redémarrage de l’application résout généralement ce problème. Si celui-ci persiste, vous pouvez dissocier puis restaurer ces portefeuilles.";
 
@@ -366,10 +366,11 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.token.processing.info.title" = "Montant en cours de traitement";
 "balance.token.processing.info.description" = "Les transactions avec ce montant sont toujours en cours de synchronisation. Une fois qu'elles seront confirmées, ces jetons seront disponibles pour être dépensés";
 "balance.token.transparent" = "Transparent";
-"balance.token.transparent.info.title" = "Transparent Amount";
-"balance.token.transparent.detected.title" = "Detected Transparent ZEC";
-"balance.token.transparent.info.item" = "Transparent Amount";
-"balance.token.transparent.info.description" = "You have a ZEC balance held in a transparent address. To use it in Unstoppable, it must be shielded for full privacy.";
+"balance.token.transparent.info.title" = "Montant transparent";
+"balance.token.transparent.info.item" = "Montant transparent";
+"balance.token.transparent.info.description" = "Vous détenez un solde ZEC sur une adresse transparente. Pour l’utiliser dans Unstoppable, il doit être protégé (shielded) afin de garantir une confidentialité totale.";
+"balance.token.transparent.detected.title" = "ZEC transparent détecté";
+"balance.token.transparent.detected.description" = "Vous détenez un solde ZEC sur une adresse transparente. Pour l’utiliser dans Unstoppable, il doit être protégé (shielded) afin de garantir une confidentialité totale.";
 "balance.token.shield" = "Shield";
 
 "balance.token.receive_address" = "Adresse de réception";
@@ -396,13 +397,13 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 // Deposit
 
 "deposit.receive_coin" = "Recevoir %@";
-"deposit.zcash.title" = "Address Type";
-"deposit.zcash.header" = "Choose how you want to receive Zcash.";
+"deposit.zcash.title" = "Type d’adresse";
+"deposit.zcash.header" = "Choisissez la manière dont vous souhaitez recevoir vos Zcash.";
 "deposit.address_type.unified" = "Unified";
-"deposit.address_type.unified.description" = "Use for personal and private transfers between wallets.";
+"deposit.address_type.unified.description" = "À utiliser pour les transferts personnels et privés entre portefeuilles.";
 "deposit.address_type.transparent" = "Transparent";
-"deposit.address_type.transparent.description" = "Use for receiving from exchanges or services that don’t support unified addresses.";
-"deposit.address_type.transparent.caution" = "You can receive ZEC to this Transparent address. To send, transfer it to a Shielded one.";
+"deposit.address_type.transparent.description" = "À utiliser pour recevoir depuis des plateformes ou services ne prenant pas en charge les adresses unifiées.";
+"deposit.address_type.transparent.caution" = "Vous pouvez recevoir des ZEC sur cette adresse transparente. Pour envoyer, transférez-les d’abord vers une adresse protégée.";
 "deposit.address_type.legacy" = "Legacy";
 
 "deposit.address" = "Adresses";
@@ -432,7 +433,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "deposit.not_active" = "non actif";
 "deposit.not_active.title" = "Compte non actif";
-"deposit.not_active.tron_description" = "New TRON wallets need at least 1 TRX to activate. Until then, they can receive tokens but won’t show correct balances.";
+"deposit.not_active.tron_description" = "Les nouveaux portefeuilles TRON nécessitent au moins 1 TRX pour être activés. D’ici là, ils peuvent recevoir des tokens, mais les soldes affichés ne seront pas exacts.";
 "deposit.stellar.inactive_asset.title" = "Activer le jeton";
 "deposit.stellar.inactive_asset.description" = "Pour recevoir %@, vous devez activer le jeton. Le réseau Stellar exige qu’une trustline soit établie pour chaque jeton. Sans cela, votre portefeuille ne pourra pas recevoir %@ — la transaction sera rejetée et les fonds ne seront pas crédités.";
 
@@ -447,9 +448,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "deposit.subaddresses.description" = "Utilisez des sous-adresses pour gérer plusieurs adresses uniques dans un seul portefeuille — plus facile à organiser et plus sûr pour votre confidentialité.";
 "deposit.subaddresses.transactions_count" = "Transactions : %@";
 
-"deposit.restore.enabled.description" = "Have you previously owned any %@ coins?";
-"deposit.restore.enabled.already_own" = "Yes, I already own";
-"deposit.restore.enabled.dont_have" = "No, I don’t have";
+"deposit.restore.enabled.description" = "Avez-vous déjà possédé des coins %@ ?";
+"deposit.restore.enabled.already_own" = "Oui, je suis déjà propriétaire";
+"deposit.restore.enabled.dont_have" = "Non, je n'ai pas";
 
 "deposit.warning" = "Seuls les jetons compatibles avec le réseau seront conservés. Les autres seront perdus.";
 "deposit.warning.watch_account" = "Cette adresse est l'adresse du compte surveillé";
@@ -782,7 +783,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "swap.dex_info.link_button" = "Site %@";
 
-"swap.maya.shielded_address.error" = "Can't fetch shielded address for Memo (Maya)";
+"swap.maya.shielded_address.error" = "Impossible d’obtenir l’adresse protégée pour Memo (Maya)";
 
 
 // Market
@@ -1510,11 +1511,11 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "terms.title" = "Conditions";
 "terms.i_agree" = "J'accepte";
 
-"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It’s the only way to regain access to your funds if the app is deleted, lost, or malfunctions. No one can restore it for you.";
-"terms.item.device_pin" = "Disabling your smartphone’s unlock PIN (or passcode) wipes all wallets from the app. You’ll need your recovery phrases to restore access.";
-"terms.item.privacy_notice" = "The app doesn’t spy or collect data about your balances or transactions - we don’t even know how many people use it. It only tracks anonymous usage patterns (pages opened, buttons tapped) to improve usability. You can turn this off in Settings → Privacy.";
-"terms.item.monetization" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet. This helps us stay independent, open source, and free of VC money.";
-"terms.item.open_source" = "The app is verifiably open source, with all source code published online. Everything stated above can be publicly verified by anyone.";
+"terms.item.backup_recovery" = "Sauvegardez soigneusement la phrase de récupération de chaque portefeuille. C’est le seul moyen de retrouver l’accès à vos fonds si l’application est supprimée, perdue ou défectueuse. Personne ne peut la restaurer à votre place.";
+"terms.item.device_pin" = "La désactivation du code PIN (de déverrouillage du téléphone) efface tous les portefeuilles de l’application. Vous aurez besoin de vos phrases de récupération pour les restaurer.";
+"terms.item.privacy_notice" = "L’application n’espionne pas et ne collecte aucune donnée sur vos soldes ou transactions — nous ne savons même pas combien d’utilisateurs l’utilisent. Elle suit uniquement de manière anonyme certaines statistiques d’utilisation (pages ouvertes, boutons utilisés) pour améliorer l’ergonomie. Vous pouvez désactiver cette option dans Paramètres → Confidentialité.";
+"terms.item.monetization" = "Dans le cadre de son modèle de monétisation, l’application perçoit de petites commissions sur les échanges DEX effectués dans le portefeuille. Cela nous permet de rester indépendants, open source et sans financement par capital-risque.";
+"terms.item.open_source" = "L’application est vérifiablement open source ; l’intégralité du code source est publiée en ligne. Tout ce qui précède peut être vérifié publiquement par n’importe qui.";
 
 
 // Settings -> Tell Friends
