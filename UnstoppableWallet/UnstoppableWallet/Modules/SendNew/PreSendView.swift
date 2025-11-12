@@ -222,11 +222,18 @@ struct PreSendView: View {
 
         Button(action: {
             guard let sendData = viewModel.sendData else { return }
+            let proceedToSend = {
+                if #available(iOS 17.0, *) {
+                    path.append(ConfirmationData(
+                        sendData: sendData.sendData,
+                        address: sendData.address
+                    ))
+                } else {
+                    presentRegularSendView(sendData: sendData.sendData, address: sendData.address)
+                }
+            }
             if viewModel.resolvedAddress.issueTypes.isEmpty {
-                path.append(ConfirmationData(
-                    sendData: sendData.sendData,
-                    address: sendData.address
-                ))
+                proceedToSend()
             } else {
                 Coordinator.shared.present(type: .bottomSheet) { isPresented in
                     BottomSheetView(
@@ -236,10 +243,7 @@ struct PreSendView: View {
                             .buttonGroup(.init(buttons: [
                                 .init(style: .red, title: "send.continue_anyway".localized) {
                                     isPresented.wrappedValue = false
-                                    path.append(ConfirmationData(
-                                        sendData: sendData.sendData,
-                                        address: sendData.address
-                                    ))
+                                    proceedToSend()
                                 },
                                 .init(style: .transparent, title: "button.cancel".localized) { isPresented.wrappedValue = false },
                             ])),
@@ -258,6 +262,20 @@ struct PreSendView: View {
         }
         .disabled(disabled)
         .buttonStyle(PrimaryButtonStyle(style: .yellow))
+    }
+
+    private func presentRegularSendView(sendData: SendData, address: String?) {
+        Coordinator.shared.present { regularSendPresented in
+            RegularSendViewWrapper(
+                sendData: sendData,
+                address: address,
+                isPresented: regularSendPresented,
+                onSuccess: {
+                    HudHelper.instance.show(banner: .sent)
+                    onDismiss()
+                }
+            )
+        }
     }
 
     @ViewBuilder private func cautionsView() -> some View {
