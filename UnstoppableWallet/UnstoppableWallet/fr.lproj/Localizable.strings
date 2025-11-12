@@ -332,7 +332,6 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.searching" = "Recherche des transactions…...";
 "balance.connecting" = "Connexion en cours...";
 "balance.stopped" = "Arrêté";
-
 "balance.downloading_sapling" = "Téléchargement en cours...";
 "balance.watch_wallet" = "Regarder les portefeuilles";
 
@@ -1740,6 +1739,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "appearance.balance_tab" = "Balance Tab";
 "appearance.amount_rounding" = "Arrondi du montant";
 "appearance.amount_rounding.description" = "Afficher les soldes et les montants des transactions sous forme arrondie.";
+"appearance.recently_sent" = "Recently Sent";
+"appearance.recently_sent.description" = "Display recently sent address for token.";
 "appearance.hide_buttons" = "Masquer les boutons";
 "appearance.hide_buttons.description" = "Masquer les boutons Envoyer, Recevoir et Échanger dans l’onglet Solde.";
 "appearance.balance_value" = "Valeur du solde";
