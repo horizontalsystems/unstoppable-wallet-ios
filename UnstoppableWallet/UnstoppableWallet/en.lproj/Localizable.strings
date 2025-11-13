@@ -273,7 +273,7 @@
 
 "backup.cloud.title" = "Backup to iCloud";
 "backup.cloud.description" = "iCloud storage is a third-party cloud storage service provided by Apple. It's important to know that your data will be stored on Apple's servers, not on your personal devices. This means that you are entrusting your data and handing over the security of your information to a third-party service.";
-"backup.cloud.terms.item.1" = "I understand that losing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
+"backup.cloud.terms.item.1" = "I understand that losing access to my iCloud, will result in losing access to the backup of a respective wallet.";
 
 "backup.cloud.name.title" = "Backup Name";
 "backup.cloud.name.description" = "Enter name for the backup file.";
@@ -1531,14 +1531,14 @@
 
 "backup_app.backup.disclaimer.cloud.title" = "Backup to iCloud";
 "backup_app.backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
-"backup_app.backup.disclaimer.cloud.checkbox_label" = "I understand that losing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
+"backup_app.backup.disclaimer.cloud.checkbox_label" = "I understand that losing access to my iCloud, will result in losing access to the backup of a respective wallet.";
 "backup_app.backup.disclaimer.file.title" = "Backup to File";
 "backup_app.backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives , storage on smartphone etc. are all vulnerable to loss due to physical damage, theft or other unforeseen circumstances.";
 "backup_app.backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in loss of a backup to a respective wallet.";
 
 "backup.disclaimer.cloud.title" = "Backup to iCloud";
 "backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
-"backup.disclaimer.cloud.checkbox_label" = "I understand that losing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
+"backup.disclaimer.cloud.checkbox_label" = "I understand that losing access to my iCloud, will result in losing access to the backup of a respective wallet.";
 "backup.disclaimer.file.title" = "Backup to File";
 "backup.disclaimer.file.description" = "Storage devices i.e. hard drives, USB drives, storage on smartphones, etc. are all vulnerable to loss due to physical damage, theft, or other unforeseen circumstances.";
 "backup.disclaimer.file.checkbox_label" = "I understand that theft or damage of a backup device will result in the loss of a backup to a respective wallet.";
