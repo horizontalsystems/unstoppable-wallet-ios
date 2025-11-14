@@ -1742,8 +1742,8 @@
 "appearance.balance_tab" = "Вкладка баланс";
 "appearance.amount_rounding" = "Округление суммы";
 "appearance.amount_rounding.description" = "Скрыть кнопки «Отправить», «Получить» и «Обмен» на вкладке «Баланс».";
-"appearance.recently_sent" = "Recently Sent";
-"appearance.recently_sent.description" = "Display recently sent address for token.";
+"appearance.recently_sent" = "Недавно отправленные";
+"appearance.recently_sent.description" = "Показывать недавно отправленный адрес для токена.";
 "appearance.hide_buttons" = "Скрыть кнопки";
 "appearance.hide_buttons.description" = "Отображать округлённые балансы и суммы транзакций.";
 "appearance.balance_value" = "Значение баланса";
