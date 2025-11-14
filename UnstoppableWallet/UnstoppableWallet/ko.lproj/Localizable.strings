@@ -1738,6 +1738,8 @@
 "appearance.balance_tab" = "잔고 탭";
 "appearance.amount_rounding" = "금액 반올림";
 "appearance.amount_rounding.description" = "잔액과 거래 금액을 반올림하여 표시하기.";
+"appearance.recently_sent" = "최근 전송";
+"appearance.recently_sent.description" = "토큰의 최근 전송 주소를 표시합니다.";
 "appearance.hide_buttons" = "숨김 버튼";
 "appearance.hide_buttons.description" = "잔액 탭에서 보내기, 받기, 교환 버튼 숨기기.";
 "appearance.balance_value" = "균형 가치";

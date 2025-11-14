@@ -1739,6 +1739,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "appearance.balance_tab" = "Aba de Saldo";
 "appearance.amount_rounding" = "Arredondamento de Valores";
 "appearance.amount_rounding.description" = "Exibir saldos e valores de transações como números arredondados.";
+"appearance.recently_sent" = "Enviados Recentemente";
+"appearance.recently_sent.description" = "Exibir o endereço recentemente usado para envio do token.";
 "appearance.hide_buttons" = "Ocultar Botões";
 "appearance.hide_buttons.description" = "Ocultar os botões Enviar, Receber e Swap na aba de Saldo.";
 "appearance.balance_value" = "Valor Patrimonial";
