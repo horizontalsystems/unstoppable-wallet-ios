@@ -58,9 +58,9 @@ struct RegularSendViewWrapper: View {
     let address: String?
     @Binding var isPresented: Bool
     let onSuccess: () -> Void
-    
+
     @State private var path = NavigationPath()
-    
+
     var body: some View {
         ThemeNavigationStack(path: $path) {
             RegularSendView(sendData: sendData, address: address) {

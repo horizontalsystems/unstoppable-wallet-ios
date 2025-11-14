@@ -15,7 +15,7 @@ struct PreSendView: View {
     init(wallet: Wallet, handler: IPreSendHandler?, resolvedAddress: ResolvedAddress, amount: Decimal? = nil, memo: String? = nil, addressVisible: Bool = true, path: Binding<NavigationPath>, onDismiss: @escaping () -> Void) {
         _viewModel = StateObject(wrappedValue: PreSendViewModel(wallet: wallet, handler: handler, resolvedAddress: resolvedAddress, amount: amount, memo: memo))
         self.addressVisible = addressVisible
-       _path = path
+        _path = path
         self.onDismiss = onDismiss
     }
 
@@ -326,18 +326,18 @@ extension PreSendView {
         case amount
         case fiatAmount
     }
-    
+
     struct ConfirmationData: Hashable, Equatable {
-           let id = UUID()
-           let sendData: SendData
-           let address: String?
-        
+        let id = UUID()
+        let sendData: SendData
+        let address: String?
+
         func hash(into hasher: inout Hasher) {
             hasher.combine(id)
         }
-        
+
         static func == (lhs: Self, rhs: Self) -> Bool {
             lhs.id == rhs.id
         }
-   }
+    }
 }

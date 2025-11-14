@@ -2121,6 +2121,10 @@
 		6BF655872E49BF830055A9D5 /* AllBridgeMultiSwapStellarQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF655852E49BF6C0055A9D5 /* AllBridgeMultiSwapStellarQuote.swift */; };
 		6BF655892E49E62D0055A9D5 /* AllBridgeMultiSwapEvmConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF655882E49E61A0055A9D5 /* AllBridgeMultiSwapEvmConfirmationQuote.swift */; };
 		6BF6558A2E49E62D0055A9D5 /* AllBridgeMultiSwapEvmConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF655882E49E61A0055A9D5 /* AllBridgeMultiSwapEvmConfirmationQuote.swift */; };
+		6BF9B3DA2EC6A4FD00F125BF /* ZcashAdapterStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF9B3D92EC6A4FD00F125BF /* ZcashAdapterStorage.swift */; };
+		6BF9B3DB2EC6A4FD00F125BF /* ZcashAdapterStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF9B3D92EC6A4FD00F125BF /* ZcashAdapterStorage.swift */; };
+		6BF9B3DE2EC6A63B00F125BF /* ZcashBalanceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF9B3DD2EC6A63700F125BF /* ZcashBalanceData.swift */; };
+		6BF9B3DF2EC6A63B00F125BF /* ZcashBalanceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BF9B3DD2EC6A63700F125BF /* ZcashBalanceData.swift */; };
 		6BFA4E032D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA4E022D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift */; };
 		6BFA4E042D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA4E022D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift */; };
 		ABC9A001F335B695CD066218 /* NftAssetModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD35D41AEEBD38AA08B5 /* NftAssetModule.swift */; };
@@ -4641,6 +4645,8 @@
 		6BEF095F2E25250B004F4514 /* StartScreenAlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenAlertManager.swift; sourceTree = "<group>"; };
 		6BF655852E49BF6C0055A9D5 /* AllBridgeMultiSwapStellarQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBridgeMultiSwapStellarQuote.swift; sourceTree = "<group>"; };
 		6BF655882E49E61A0055A9D5 /* AllBridgeMultiSwapEvmConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBridgeMultiSwapEvmConfirmationQuote.swift; sourceTree = "<group>"; };
+		6BF9B3D92EC6A4FD00F125BF /* ZcashAdapterStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashAdapterStorage.swift; sourceTree = "<group>"; };
+		6BF9B3DD2EC6A63700F125BF /* ZcashBalanceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashBalanceData.swift; sourceTree = "<group>"; };
 		6BFA4E022D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketAdvancedSearchCategoriesView.swift; sourceTree = "<group>"; };
 		ABC9A021D71EDD24DFB6BA62 /* CoinProChartModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinProChartModule.swift; sourceTree = "<group>"; };
 		ABC9A02C808FCE6082E3F97A /* DebounceTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebounceTextField.swift; sourceTree = "<group>"; };
@@ -7029,6 +7035,7 @@
 		11B35E1EBCA59D0D1DD9ABCD /* Adapters */ = {
 			isa = PBXGroup;
 			children = (
+				6BF9B3DC2EC6A62400F125BF /* Zcash */,
 				D05E96AB2A287155002CCD71 /* Evm */,
 				D023D26F2A25CF18004F65B0 /* Tron */,
 				D0F43D87237030F800016EF5 /* Compatibility */,
@@ -7038,9 +7045,6 @@
 				1A564BF724C69C237E309C07 /* BitcoinCashAdapter.swift */,
 				11B358CA18471A93188933B4 /* DashAdapter.swift */,
 				11B356861F703A5A5C6630B6 /* LitecoinAdapter.swift */,
-				3AF9F618253EF555000626A8 /* ZcashAdapter.swift */,
-				3AF9F619253EF555000626A8 /* ZcashTransactionWrapper.swift */,
-				3AF9F617253EF555000626A8 /* ZcashTransactionPool.swift */,
 				ABC9A4C563432A34A634B82A /* ECashAdapter.swift */,
 				11B35F9B75F6663FAFCA3177 /* TonAdapter.swift */,
 				D34338E72C871344001FCAD2 /* TonTransactionAdapter.swift */,
@@ -8333,6 +8337,18 @@
 				6B5FD7DD2E44788000FEF510 /* AllBridgeMultiSwapEvmQuote.swift */,
 			);
 			path = AllBridgeProvider;
+			sourceTree = "<group>";
+		};
+		6BF9B3DC2EC6A62400F125BF /* Zcash */ = {
+			isa = PBXGroup;
+			children = (
+				6BF9B3D92EC6A4FD00F125BF /* ZcashAdapterStorage.swift */,
+				6BF9B3DD2EC6A63700F125BF /* ZcashBalanceData.swift */,
+				3AF9F618253EF555000626A8 /* ZcashAdapter.swift */,
+				3AF9F619253EF555000626A8 /* ZcashTransactionWrapper.swift */,
+				3AF9F617253EF555000626A8 /* ZcashTransactionPool.swift */,
+			);
+			path = Zcash;
 			sourceTree = "<group>";
 		};
 		95AD93BB0A2D5F5C4A435252 /* Frameworks */ = {
@@ -10283,6 +10299,7 @@
 				D38405A2218317DF007D50AD /* UIAlertController.swift in Sources */,
 				D38405A5218317DF007D50AD /* DateHelper.swift in Sources */,
 				D3DB51A62BD685B40091BBDB /* MarketTabView.swift in Sources */,
+				6BF9B3DB2EC6A4FD00F125BF /* ZcashAdapterStorage.swift in Sources */,
 				D38405A6218317DF007D50AD /* SystemInfoManager.swift in Sources */,
 				6B50FDA02EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift in Sources */,
 				6B6E138F2DED815B007F4A39 /* UIButton.swift in Sources */,
@@ -11732,6 +11749,7 @@
 				6BE57E812E33A0A6003C4C01 /* MerkleTransactionHash.swift in Sources */,
 				11B35BFCE745A340714F1DE7 /* BadgeViewNew.swift in Sources */,
 				11B3523804E0F4F1DA8A1D9E /* BaseCurrencySettingsViewModel.swift in Sources */,
+				6BF9B3DE2EC6A63B00F125BF /* ZcashBalanceData.swift in Sources */,
 				11B35F18FEEEAA9EC6043CA6 /* BaseCurrencySettingsView.swift in Sources */,
 				11B35E749106C1ABD9335778 /* TransactionFilterModule.swift in Sources */,
 				D3384D0A2BFCB43800515664 /* MarketWatchlistSignalsView.swift in Sources */,
@@ -11904,6 +11922,7 @@
 				D384069421831B3D007D50AD /* DateHelper.swift in Sources */,
 				D384069521831B3D007D50AD /* SystemInfoManager.swift in Sources */,
 				D3DB51A52BD685B40091BBDB /* MarketTabView.swift in Sources */,
+				6BF9B3DA2EC6A4FD00F125BF /* ZcashAdapterStorage.swift in Sources */,
 				D384069621831B3D007D50AD /* PermissionsHelper.swift in Sources */,
 				6B50FD9F2EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift in Sources */,
 				6B6E13902DED815B007F4A39 /* UIButton.swift in Sources */,
@@ -13353,6 +13372,7 @@
 				ABC9A3103BC1D3CC7E9D80BD /* ActionSheetTapView.swift in Sources */,
 				ABC9A331A15BAB3C3B88D808 /* ActionSheetConfiguration.swift in Sources */,
 				ABC9AE558CE5912B5C15B6EB /* ActionSheetControllerNew.swift in Sources */,
+				6BF9B3DF2EC6A63B00F125BF /* ZcashBalanceData.swift in Sources */,
 				11B3537EE13B3EFB2E979821 /* BadgeViewNew.swift in Sources */,
 				11B35955EE2F47EFAFCBCE9F /* BaseCurrencySettingsViewModel.swift in Sources */,
 				D3384D092BFCB43800515664 /* MarketWatchlistSignalsView.swift in Sources */,
