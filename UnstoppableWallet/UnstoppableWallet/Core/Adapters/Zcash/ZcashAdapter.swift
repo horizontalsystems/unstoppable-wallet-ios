@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import GRDB
 import HdWalletKit
 import HsExtensions
 import HsToolKit
@@ -11,7 +12,6 @@ import ZcashLightClientKit
 
 class ZcashAdapter {
     static let minimalThreshold: Decimal = 0.0004 // minimal transparent balance to shielding
-    static let keyTransparentBalance = "zcash_transparent_balance_key_"
 
     private static let endPoint = "zec.rocks" // "lightwalletd.electriccoin.co"
     private let queue = DispatchQueue(label: "\(AppConfig.label).zcash-adapter", qos: .userInitiated)
@@ -23,10 +23,8 @@ class ZcashAdapter {
 
     private let saplingDownloader = DownloadService(queueLabel: "io.SaplingDownloader")
 
-    private let userDefaultsStorage = Core.shared.userDefaultsStorage
-    private var transparentBalanceCache: Decimal?
-
     private let synchronizer: Synchronizer
+    private let zCashAdapterStorage: ZcashAdapterStorage
 
     private var accountId: AccountUUID?
     private(set) var uAddress: UnifiedAddress?
@@ -53,10 +51,9 @@ class ZcashAdapter {
     private var lastBlockHeight: Int = 0
     private(set) var areFundsSpendable: Bool = false
 
-    @PostPublished var zcashBalanceData: ZcashBalanceData = .empty {
+    @PostPublished var zCashBalanceData: ZcashBalanceData {
         didSet {
-            handleTransparentUpdates()
-            balanceSubject.onNext(zcashBalanceData.balanceData)
+            balanceSubject.onNext(zCashBalanceData.balanceData)
         }
     }
 
@@ -115,6 +112,14 @@ class ZcashAdapter {
 
         let seedData = [UInt8](seed)
         self.seedData = seedData
+
+        // initialize DB and get cached balances
+        let databaseURL = try FileManager.default
+            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            .appendingPathComponent("zCash.storage")
+        let dbPool = try DatabasePool(path: databaseURL.path)
+        zCashAdapterStorage = try ZcashAdapterStorage(dbPool: dbPool)
+        zCashBalanceData = try zCashAdapterStorage.balanceData(id: uniqueId) ?? .empty(id: uniqueId)
 
         let initializer = try ZcashAdapter.initializer(network: network, uniqueId: uniqueId)
         synchronizer = SDKSynchronizer(initializer: initializer)
@@ -196,17 +201,6 @@ class ZcashAdapter {
                     self?.logger?.log(level: .debug, message: "Send to pool all transactions \(wrapped.count)")
                     self?.transactionSubject.onNext(wrapped)
                 }
-
-                let accountBalances = try? await synchronizer.getAccountsBalances()[account.id]
-                let shielded = accountBalances?.saplingBalance.total().decimalValue.decimalValue ?? 0
-                let shieldedVerified = accountBalances?.saplingBalance.spendableValue.decimalValue.decimalValue ?? 0
-                let transparent = accountBalances?.unshielded.decimalValue.decimalValue ?? 0
-
-                self?.zcashBalanceData = ZcashBalanceData(
-                    fullBalance: shielded,
-                    available: shieldedVerified,
-                    transparent: transparent
-                )
 
                 let height = try await synchronizer.latestHeight()
                 self?.lastBlockHeight = height
@@ -368,7 +362,23 @@ class ZcashAdapter {
         transactionSubject.onNext(newTxs)
     }
 
-    private func handleTransparentUpdates() {
+    private func update(balanceData: ZcashBalanceData) {
+        let oldTransparent = zCashBalanceData.transparent
+
+        if balanceData != zCashBalanceData {
+            zCashBalanceData = balanceData
+            do {
+                try zCashAdapterStorage.save(balanceData: balanceData)
+                logger?.log(level: .debug, message: "Saved balance: transparent=\(balanceData.transparent)")
+            } catch {
+                logger?.log(level: .warning, message: "Failed to save balance to DB: \(error)")
+            }
+        }
+
+        handleTransparentUpdates(oldBalance: oldTransparent, newBalance: balanceData.transparent)
+    }
+
+    private func handleTransparentUpdates(oldBalance _: Decimal, newBalance: Decimal) {
         // handle only after syncing adapter
         guard let synchronizerState,
               synchronizerState.syncStatus == .upToDate
@@ -376,26 +386,22 @@ class ZcashAdapter {
             return
         }
 
-        let currentBalance = zcashBalanceData.transparent
-        if currentBalance == transparentBalanceCache {
+        let alertState = try? zCashAdapterStorage.alertState(id: uniqueId)
+        let lastAlerted = alertState?.lastAlertedBalance ?? 0
+
+        if newBalance <= Self.minimalThreshold, lastAlerted > 0 {
+            let resetState = ZcashTransparentAlertState(id: uniqueId, lastAlertedBalance: 0)
+            try? zCashAdapterStorage.save(state: resetState)
             return
         }
 
-        transparentBalanceCache = currentBalance
+        // show alert only when new
+        if newBalance > lastAlerted, newBalance > Self.minimalThreshold {
+            logger?.log(level: .debug, message: "Received transparent funds: \(lastAlerted) → \(newBalance), showing shielding alert")
+            showShieldingAlert(balance: newBalance)
 
-        let previousBalance: Decimal
-        if let valueString: String = userDefaultsStorage.value(for: Self.keyTransparentBalance + uniqueId),
-           let value = Decimal(string: valueString)
-        {
-            previousBalance = value
-        } else {
-            previousBalance = 0
-        }
-
-        userDefaultsStorage.set(value: currentBalance.description, for: Self.keyTransparentBalance + uniqueId)
-
-        if currentBalance != previousBalance, currentBalance > Self.minimalThreshold {
-            showShieldingAlert(balance: currentBalance)
+            let newState = ZcashTransparentAlertState(id: uniqueId, lastAlertedBalance: newBalance)
+            try? zCashAdapterStorage.save(state: newState)
         }
     }
 
@@ -580,19 +586,24 @@ class ZcashAdapter {
 
     private func syncZcashBalanceData() {
         guard let synchronizerState, let accountId, let balances = synchronizerState.accountsBalances[accountId] else {
-            zcashBalanceData = .empty
+            zCashBalanceData = (try? zCashAdapterStorage.balanceData(id: uniqueId)) ?? .empty(id: uniqueId)
             return
         }
 
         let full = balances.saplingBalance.total() + balances.orchardBalance.total()
         let available = balances.saplingBalance.spendableValue + balances.orchardBalance.spendableValue
+        logger?.log(level: .debug, message: "Full balance from syncer: \(full.decimalValue.decimalValue.description)")
+        logger?.log(level: .debug, message: "Available balance from syncer: \(available.decimalValue.decimalValue.description)")
 
 //        print("BALANCE: t = \(balances.unshielded.decimalValue.decimalValue)")
-        zcashBalanceData = ZcashBalanceData(
-            fullBalance: full.decimalValue.decimalValue,
+        let zCashBalanceData = ZcashBalanceData(
+            id: uniqueId,
+            full: full.decimalValue.decimalValue,
             available: available.decimalValue.decimalValue,
             transparent: balances.unshielded.decimalValue.decimalValue
         )
+
+        update(balanceData: zCashBalanceData)
     }
 
     deinit {
@@ -614,7 +625,7 @@ extension ZcashAdapter {
         let tool = DerivationTool(networkType: network.networkType)
 
         guard let unifiedSpendingKey = try? tool.deriveUnifiedSpendingKey(seed: seedData, accountIndex: .zero),
-              let unifiedViewingKey = try? tool.deriveUnifiedFullViewingKey(from: unifiedSpendingKey)
+              let _ = try? tool.deriveUnifiedFullViewingKey(from: unifiedSpendingKey)
         else {
             throw AppError.ZcashError.cantCreateKeys
         }
@@ -886,7 +897,7 @@ extension ZcashAdapter: IBalanceAdapter {
     }
 
     var balanceData: BalanceData {
-        zcashBalanceData.balanceData
+        zCashBalanceData.balanceData
     }
 
     var balanceDataUpdatedObservable: Observable<BalanceData> {
@@ -930,25 +941,25 @@ extension ZcashAdapter: ISendZcashAdapter {
         }
 
         let paymentURI = createPaymentURI(outputs: outputs)
-            
+
         return try await synchronizer.proposefulfillingPaymentURI(
             paymentURI,
             accountUUID: accountId
         )
     }
-    
+
     private func createPaymentURI(outputs: [TransferOutput]) -> String {
         var components = URLComponents()
         components.scheme = "zcash"
         components.path = ""
-        
+
         var queryItems: [URLQueryItem] = []
-        
+
         for (index, output) in outputs.enumerated() {
             if index == 0 {
                 queryItems.append(URLQueryItem(name: "address", value: output.address.stringEncoded))
                 queryItems.append(URLQueryItem(name: "amount", value: output.amount.description))
-                
+
                 if let memo = output.memo, let string = memo.toString() {
                     let base64url = encodeBase64URL(string)
                     queryItems.append(URLQueryItem(name: "memo", value: base64url))
@@ -956,14 +967,14 @@ extension ZcashAdapter: ISendZcashAdapter {
             } else {
                 queryItems.append(URLQueryItem(name: "address.\(index)", value: output.address.stringEncoded))
                 queryItems.append(URLQueryItem(name: "amount.\(index)", value: output.amount.description))
-                
+
                 if let memo = output.memo, let string = memo.toString() {
                     let base64url = encodeBase64URL(string)
                     queryItems.append(URLQueryItem(name: "memo.\(index)", value: base64url))
                 }
             }
         }
-        
+
         components.queryItems = queryItems
         return components.string ?? ""
     }
@@ -1100,22 +1111,6 @@ extension ZcashAdapter: ISendZcashAdapter {
 }
 
 extension ZcashAdapter {
-    struct ZcashBalanceData {
-        let fullBalance: Decimal
-        let available: Decimal
-        let transparent: Decimal
-
-        static let empty = ZcashBalanceData(fullBalance: 0, available: 0, transparent: 0)
-
-        var balanceData: BalanceData {
-            BalanceData(balance: available)
-        }
-
-        var processing: Decimal {
-            fullBalance - available
-        }
-    }
-
     struct TransferOutput {
         let amount: Decimal
         let address: Recipient

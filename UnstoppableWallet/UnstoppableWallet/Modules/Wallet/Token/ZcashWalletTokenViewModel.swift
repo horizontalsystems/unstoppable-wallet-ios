@@ -12,18 +12,18 @@ class ZcashWalletTokenViewModel: ObservableObject {
 
     let wallet: Wallet
 
-    @Published var zcashBalanceData: ZcashAdapter.ZcashBalanceData
+    @Published var zCashBalanceData: ZcashBalanceData
     @Published var balanceHidden: Bool
 
     init(adapter: ZcashAdapter, wallet: Wallet) {
         self.adapter = adapter
         self.wallet = wallet
-        zcashBalanceData = adapter.zcashBalanceData
+        zCashBalanceData = adapter.zCashBalanceData
         balanceHidden = balanceHiddenManager.balanceHidden
 
-        adapter.$zcashBalanceData
+        adapter.$zCashBalanceData
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.zcashBalanceData = $0 }
+            .sink { [weak self] in self?.zCashBalanceData = $0 }
             .store(in: &cancellables)
 
         balanceHiddenManager.balanceHiddenObservable

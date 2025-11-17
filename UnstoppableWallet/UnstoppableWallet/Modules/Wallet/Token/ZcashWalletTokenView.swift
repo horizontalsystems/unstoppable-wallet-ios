@@ -14,7 +14,10 @@ struct ZcashWalletTokenView: View {
                 content: {
                     VStack(spacing: 0) {
                         WalletTokenTopView(viewModel: walletTokenViewModel)
-                        view(processing: viewModel.zcashBalanceData.processing, transparent: viewModel.zcashBalanceData.transparent)
+                        if viewModel.zCashBalanceData.transparent > ZcashAdapter.minimalThreshold {
+                            view(transparent: viewModel.zCashBalanceData.transparent)
+                            HorizontalDivider()
+                        }
                     }
                     .listRowBackground(Color.clear)
                     .listRowInsets(EdgeInsets())
@@ -25,32 +28,6 @@ struct ZcashWalletTokenView: View {
                 }
             )
         }
-    }
-
-    @ViewBuilder private func view(processing: Decimal, transparent: Decimal) -> some View {
-        VStack(spacing: 0) {
-            if processing != 0 {
-                view(processing: processing)
-                    .padding(.bottom, .heightOnePixel)
-
-                HorizontalDivider()
-            }
-            if transparent > ZcashAdapter.minimalThreshold {
-                view(transparent: transparent)
-                HorizontalDivider()
-            }
-        }
-    }
-
-    @ViewBuilder private func view(processing: Decimal) -> some View {
-        WalletInfoView.infoView(
-            title: "balance.token.processing".localized,
-            info: .init(
-                title: "balance.token.processing.info.title".localized,
-                description: "balance.token.processing.info.description".localized
-            ),
-            value: infoAmount(value: processing)
-        )
     }
 
     @ViewBuilder private func view(transparent: Decimal) -> some View {
@@ -85,7 +62,7 @@ struct ZcashWalletTokenView: View {
 
                                         Coordinator.shared.present { _ in
                                             ThemeNavigationStack {
-                                                ShieldSendView(amount: viewModel.zcashBalanceData.transparent, address: nil)
+                                                ShieldSendView(amount: viewModel.zCashBalanceData.transparent, address: nil)
                                             }
                                         }
                                     },
