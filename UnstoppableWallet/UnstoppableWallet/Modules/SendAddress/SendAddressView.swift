@@ -56,7 +56,7 @@ struct SendAddressView: View {
 struct SendAddressViewWrapper: View {
     let wallet: Wallet
     @Binding var isPresented: Bool
-    
+
     @State private var path = NavigationPath()
 
     var body: some View {
