@@ -101,6 +101,14 @@ struct MainSettingsView: View {
                     stat(page: .settings, event: .open(page: .addressChecker))
                 }
         }
+        .navigationDestination(isPresented: $walletConnectPresented) {
+            WalletConnectListView()
+                .navigationTitle("wallet_connect_list.title".localized)
+                .ignoresSafeArea()
+                .onFirstAppear {
+                    stat(page: .settings, event: .open(page: .walletConnect))
+                }
+        }
     }
 
     @ViewBuilder private func slider() -> some View {
@@ -286,14 +294,6 @@ struct MainSettingsView: View {
 
             Image.disclosureIcon
         }
-        .navigationDestination(isPresented: $walletConnectPresented) {
-            WalletConnectListView()
-                .navigationTitle("wallet_connect_list.title".localized)
-                .ignoresSafeArea()
-                .onFirstAppear {
-                    stat(page: .settings, event: .open(page: .walletConnect))
-                }
-        }
     }
 
     @ViewBuilder private func tonConnect() -> some View {
@@ -385,12 +385,7 @@ struct MainSettingsView: View {
     @ViewBuilder private func vipSupport() -> some View {
         ClickableRow(action: {
             Coordinator.shared.performAfterPurchase(premiumFeature: .vipSupport, page: .settings, trigger: .vipSupport) {
-                Coordinator.shared.present(type: .bottomSheet) { _ in
-                    SupportView { telegramUrl in
-                        UrlManager.open(url: telegramUrl)
-                    }
-                }
-
+                UrlManager.open(url: MainSettingsViewModel.supportLink)
                 stat(page: .settings, event: .open(page: .vipSupport))
             }
         }) {
@@ -560,6 +555,13 @@ struct MainSettingsView: View {
             ListRow {
                 Toggle(isOn: $viewModel.testNetEnabled) {
                     Text("TestNet Enabled").themeBody()
+                }
+                .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+            }
+
+            ListRow {
+                Toggle(isOn: $viewModel.mayaStagenetEnabled) {
+                    Text("Maya Stagenet Enabled").themeBody()
                 }
                 .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
             }

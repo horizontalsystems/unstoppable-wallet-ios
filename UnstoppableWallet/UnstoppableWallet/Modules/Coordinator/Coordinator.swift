@@ -113,7 +113,7 @@ extension Coordinator {
             onPresent?()
         }
 
-        if Core.shared.termsManager.termsAccepted {
+        if Core.shared.termsManager.state.allAccepted {
             onAccept()
         } else {
             Coordinator.shared.present { isPresented in
@@ -176,17 +176,15 @@ extension Coordinator {
     func present(info: InfoDescription) {
         present(type: .bottomSheet) { isPresented in
             BottomSheetView(
-                icon: .info,
-                title: info.title,
                 items: [
+                    .title(icon: ThemeImage.book, title: info.title),
                     .text(text: info.description),
+                    .buttonGroup(.init(buttons: [
+                        .init(style: .gray, title: "button.understood".localized) {
+                            isPresented.wrappedValue = false
+                        },
+                    ])),
                 ],
-                buttons: [
-                    .init(style: .yellow, title: "button.close".localized) {
-                        isPresented.wrappedValue = false
-                    },
-                ],
-                isPresented: isPresented
             )
         }
     }

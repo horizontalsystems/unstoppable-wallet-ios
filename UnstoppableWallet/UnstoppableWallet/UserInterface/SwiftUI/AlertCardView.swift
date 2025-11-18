@@ -53,7 +53,7 @@ struct AlertCardView: View {
                 }
             }
             .multilineTextAlignment(style.textAlignment)
-            .frame(maxWidth: .infinity)
+            .frame(maxWidth: .infinity, alignment: style.alignment)
         }
     }
 }
@@ -82,14 +82,14 @@ extension AlertCardView {
         case inline
         case structured
 
-        var alignment: HorizontalAlignment {
+        var textAlignment: TextAlignment {
             switch self {
             case .inline: return .leading
             case .structured: return .center
             }
         }
 
-        var textAlignment: TextAlignment {
+        var alignment: Alignment {
             switch self {
             case .inline: return .leading
             case .structured: return .center

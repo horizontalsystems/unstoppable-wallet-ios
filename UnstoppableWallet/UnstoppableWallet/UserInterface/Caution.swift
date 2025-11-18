@@ -114,7 +114,7 @@ class CancellableTitledCaution: TitledCaution {
     }
 }
 
-struct CautionNew: Equatable {
+struct CautionNew: Equatable, Hashable {
     let title: String?
     let text: String
     let type: CautionType

@@ -14,9 +14,9 @@ class AboutViewModel: ObservableObject {
         self.systemInfoManager = systemInfoManager
         self.releaseNotesService = releaseNotesService
 
-        termsManager.$termsAccepted.sink { [weak self] in self?.syncTermsAlert(termsAccepted: $0) }.store(in: &cancellables)
+        termsManager.$state.sink { [weak self] in self?.syncTermsAlert(termsAccepted: $0.allAccepted) }.store(in: &cancellables)
 
-        syncTermsAlert(termsAccepted: termsManager.termsAccepted)
+        syncTermsAlert(termsAccepted: termsManager.state.allAccepted)
     }
 
     private func syncTermsAlert(termsAccepted: Bool) {

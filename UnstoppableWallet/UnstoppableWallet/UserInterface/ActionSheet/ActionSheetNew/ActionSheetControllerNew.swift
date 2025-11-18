@@ -38,7 +38,10 @@ public class ActionSheetControllerNew: UIViewController, IDeinitDelegate {
 
         super.init(nibName: nil, bundle: nil)
 
-        let animator = ActionSheetAnimator(configuration: configuration)
+        let animator = ActionSheetAnimator(configuration: configuration.set(tapOnDismiss: { [weak self] in
+            self?.viewDelegate?.didInteractiveDismissed()
+        }))
+
         self.animator = animator
         transitioningDelegate = animator
         animator.interactiveTransitionDelegate = self
@@ -61,18 +64,19 @@ public class ActionSheetControllerNew: UIViewController, IDeinitDelegate {
 
     override public func viewDidLoad() {
         super.viewDidLoad()
-
-        if configuration.tapToDismiss {
-            let tapView = ActionSheetTapView()
-            view.addSubview(tapView)
-            tapView.snp.makeConstraints { maker in
-                maker.edges.equalToSuperview()
-            }
-            tapView.handleTap = { [weak self] in
-                self?.dismissing = true
-                self?.dismiss(animated: true)
-            }
-        }
+//
+//        if configuration.tapToDismiss {
+//            let tapView = ActionSheetTapView()
+//            view.addSubview(tapView)
+//            tapView.snp.makeConstraints { maker in
+//                maker.edges.equalToSuperview()
+//            }
+//            tapView.handleTap = { [weak self] in
+//                self?.dismissing = true
+//                self?.dismiss(animated: true)
+//                self?.viewDelegate?.didInteractiveDismissed()
+//            }
+//        }
 
         // add and setup content as child view controller
         addChildController()

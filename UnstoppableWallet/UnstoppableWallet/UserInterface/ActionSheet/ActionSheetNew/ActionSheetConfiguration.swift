@@ -3,7 +3,7 @@ import UIKit
 
 public class ActionSheetConfiguration {
     public var style: ActionStyleNew
-    public var tapToDismiss: Bool = true
+    public var tapToDismiss: (() -> Void)?
 
     public var ignoreInteractiveFalseMoving: Bool = true
     public var ignoreKeyboard: Bool = false
@@ -49,6 +49,11 @@ public class ActionSheetConfiguration {
 
     public func set(contentBackgroundColor: UIColor) -> Self {
         self.contentBackgroundColor = contentBackgroundColor
+        return self
+    }
+
+    public func set(tapOnDismiss: (() -> Void)?) -> Self {
+        tapToDismiss = tapOnDismiss
         return self
     }
 }

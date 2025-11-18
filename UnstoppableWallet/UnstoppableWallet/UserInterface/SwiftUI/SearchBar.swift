@@ -13,8 +13,9 @@ struct BottomSearchBar: View {
                 HStack(spacing: .margin8) {
                     Image("search").icon()
                     TextField("", text: $text, prompt: Text(prompt)
-                        .foregroundColor(.themeAndy))
+                        .foregroundColor(.themeGray))
                         .font(.themeBody)
+                        .tint(.themeInputFieldTintColor)
                         .focused($focused)
 
                     if !text.isEmpty {
@@ -59,6 +60,7 @@ struct SearchBar: View {
                 Image(systemName: "magnifyingglass").themeIcon(color: .themeGray)
                 TextField("", text: $text, prompt: Text(prompt).foregroundColor(.themeGray))
                     .font(.themeBody)
+                    .tint(.themeLeah)
             }
             .padding(.horizontal, .margin8)
             .padding(.vertical, 7)
@@ -85,6 +87,7 @@ struct SearchBarWithCancel: View {
                     TextField("", text: $text, prompt: Text(prompt)
                         .foregroundColor(.themeGray))
                         .font(.themeBody)
+                        .tint(.themeLeah)
                         .focused($focused)
                 }
                 .padding(.horizontal, .margin8)

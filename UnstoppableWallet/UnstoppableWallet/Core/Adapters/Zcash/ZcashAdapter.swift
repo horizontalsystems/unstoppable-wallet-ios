@@ -1,0 +1,1219 @@
+import Combine
+import Foundation
+import GRDB
+import HdWalletKit
+import HsExtensions
+import HsToolKit
+import MarketKit
+import RxRelay
+import RxSwift
+import UIKit
+import ZcashLightClientKit
+
+class ZcashAdapter {
+    static let minimalThreshold: Decimal = 0.0004 // minimal transparent balance to shielding
+
+    private static let endPoint = "zec.rocks" // "lightwalletd.electriccoin.co"
+    private let queue = DispatchQueue(label: "\(AppConfig.label).zcash-adapter", qos: .userInitiated)
+
+    private var cancellables: [AnyCancellable] = []
+
+    private let token: Token
+    private let transactionSource: TransactionSource
+
+    private let saplingDownloader = DownloadService(queueLabel: "io.SaplingDownloader")
+
+    private let synchronizer: Synchronizer
+    private let zCashAdapterStorage: ZcashAdapterStorage
+
+    private var accountId: AccountUUID?
+    private(set) var uAddress: UnifiedAddress?
+    private(set) var tAddress: TransparentAddress?
+    private var transactionPool: ZcashTransactionPool?
+
+    private let uniqueId: String
+    private let seedData: [UInt8]
+    private let birthday: BlockHeight
+    private let initMode: WalletInitMode
+    private var viewingKey: UnifiedFullViewingKey? // this being a single account does not need to be an array
+    private var spendingKey: UnifiedSpendingKey?
+    private var logger: HsToolKit.Logger?
+
+    private(set) var network: ZcashNetwork
+
+    private let lastBlockUpdatedSubject = PublishSubject<Void>()
+    private let balanceStateSubject = PublishSubject<AdapterState>()
+    private let balanceSubject = PublishSubject<BalanceData>()
+    private let transactionSubject = PublishSubject<[ZcashTransactionWrapper]>()
+    private let depositAddressSubject = PassthroughSubject<DataStatus<DepositAddress>, Never>()
+
+    private var started = false
+    private var lastBlockHeight: Int = 0
+    private(set) var areFundsSpendable: Bool = false
+
+    @PostPublished var zCashBalanceData: ZcashBalanceData {
+        didSet {
+            balanceSubject.onNext(zCashBalanceData.balanceData)
+        }
+    }
+
+    private var synchronizerState: SynchronizerState? {
+        didSet {
+            lastBlockUpdatedSubject.onNext(())
+            syncZcashBalanceData()
+        }
+    }
+
+    private var state: ZCashAdapterState = .idle {
+        didSet {
+            balanceStateSubject.onNext(balanceState)
+            syncing = balanceState.syncing
+        }
+    }
+
+    var balanceState: AdapterState {
+        state.adapterState
+    }
+
+    private(set) var syncing: Bool = true
+
+    init(wallet: Wallet, restoreSettings: RestoreSettings) throws {
+        logger = Core.shared.logger.scoped(with: "ZCashKit")
+//        logger = HsToolKit.Logger(minLogLevel: .debug)
+
+        guard let seed = wallet.account.type.mnemonicSeed else {
+            throw AdapterError.unsupportedAccount
+        }
+
+        network = ZcashNetworkBuilder.network(for: .mainnet)
+
+        token = wallet.token
+        transactionSource = wallet.transactionSource
+        uniqueId = wallet.account.id
+
+        var existingMode: WalletInitMode?
+        if let dbUrl = try? Self.spendParamsURL(uniqueId: uniqueId),
+           Self.exist(url: dbUrl)
+        {
+            existingMode = .existingWallet
+        }
+        switch wallet.account.origin {
+        case .created:
+            birthday = Self.newBirthdayHeight(network: network)
+            initMode = existingMode ?? .newWallet
+        case .restored:
+            if let height = restoreSettings.birthdayHeight {
+                birthday = max(height, network.constants.saplingActivationHeight)
+            } else {
+                birthday = network.constants.saplingActivationHeight
+            }
+            initMode = existingMode ?? .restoreWallet
+        }
+
+        let seedData = [UInt8](seed)
+        self.seedData = seedData
+
+        // initialize DB and get cached balances
+        let databaseURL = try FileManager.default
+            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            .appendingPathComponent("zCash.storage")
+        let dbPool = try DatabasePool(path: databaseURL.path)
+        zCashAdapterStorage = try ZcashAdapterStorage(dbPool: dbPool)
+        zCashBalanceData = try zCashAdapterStorage.balanceData(id: uniqueId) ?? .empty(id: uniqueId)
+
+        let initializer = try ZcashAdapter.initializer(network: network, uniqueId: uniqueId)
+        synchronizer = SDKSynchronizer(initializer: initializer)
+        // subscribe on sync states
+        synchronizer
+            .stateStream
+            .throttle(for: .seconds(0.3), scheduler: DispatchQueue.main, latest: true)
+            .sink(receiveValue: { [weak self] state in self?.sync(state: state) })
+            .store(in: &cancellables)
+
+        // subscribe on new transactions
+        synchronizer
+            .eventStream
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] event in self?.sync(event: event) })
+            .store(in: &cancellables)
+
+        saplingDownloader
+            .$state
+            .sink(receiveValue: { [weak self] in self?.downloaderStatusUpdated(state: $0) })
+            .store(in: &cancellables)
+
+        // subscribe on background and events from sapling downloader
+        NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+
+    private func prepare(seedData: [UInt8], walletBirthday: BlockHeight, for initMode: WalletInitMode) {
+        guard !state.isPrepairing else {
+            return
+        }
+        state = .preparing
+
+        depositAddressSubject.send(.loading)
+        Task { [weak self, synchronizer] in
+            do {
+                let tool = DerivationTool(networkType: .mainnet)
+                guard let unifiedSpendingKey = try? tool.deriveUnifiedSpendingKey(seed: seedData, accountIndex: .zero),
+                      let unifiedViewingKey = try? tool.deriveUnifiedFullViewingKey(from: unifiedSpendingKey)
+                else {
+                    throw AppError.ZcashError.cantCreateKeys
+                }
+
+                self?.spendingKey = unifiedSpendingKey
+                self?.viewingKey = unifiedViewingKey
+
+                let result = try await synchronizer.prepare(with: seedData, walletBirthday: walletBirthday, for: initMode, name: "", keySource: nil)
+                if case .seedRequired = result {
+                    throw AppError.ZcashError.seedRequired
+                }
+
+                guard let account = try await synchronizer.listAccounts().first else {
+                    throw AppError.ZcashError.noReceiveAddress
+                }
+
+                self?.logger?.log(level: .debug, message: "Successful prepared!")
+                guard let uAddress = try? await synchronizer.getUnifiedAddress(accountUUID: account.id),
+                      let tAddress = try? await synchronizer.getTransparentAddress(accountUUID: account.id),
+                      let saplingAddress = try? uAddress.saplingReceiver()
+                else {
+                    throw AppError.ZcashError.noReceiveAddress
+                }
+
+                self?.accountId = account.id
+                self?.uAddress = uAddress
+                self?.tAddress = tAddress
+
+                self?.depositAddressSubject.send(.completed(DepositAddress(uAddress.stringEncoded)))
+
+                self?.logger?.log(level: .debug, message: "Successful get address for 0 account! \(saplingAddress.stringEncoded)")
+
+                let transactionPool = ZcashTransactionPool(accountId: account.id, receiveAddress: saplingAddress, synchronizer: synchronizer)
+                self?.transactionPool = transactionPool
+
+                self?.logger?.log(level: .debug, message: "Starting fetch transactions.")
+                await transactionPool.initTransactions()
+                let wrapped = transactionPool.all
+
+                if !wrapped.isEmpty {
+                    self?.logger?.log(level: .debug, message: "Send to pool all transactions \(wrapped.count)")
+                    self?.transactionSubject.onNext(wrapped)
+                }
+
+                let height = try await synchronizer.latestHeight()
+                self?.lastBlockHeight = height
+
+                self?.lastBlockUpdatedSubject.onNext(())
+
+                self?.finishPrepare()
+            } catch {
+                self?.setPreparing(error: error)
+            }
+        }
+    }
+
+    private func setPreparing(error: Error) {
+        state = .notSynced(error: error)
+        logger?.log(level: .error, message: "Has preparing error! \(error)")
+    }
+
+    private func finishPrepare() {
+        state = .idle
+
+        logger?.log(level: .debug, message: "Start kit after finish preparing!")
+        startSynchronizer()
+    }
+
+    private func startSynchronizer() {
+        guard !state.isPrepairing else { // postpone start library until preparing will finish
+            logger?.log(level: .debug, message: "Can't start because preparing!")
+            return
+        }
+
+        if uAddress == nil { // else we need to try prepare library again
+            logger?.log(level: .debug, message: "No address, try to prepare kit again!")
+            prepare(seedData: seedData, walletBirthday: birthday, for: initMode)
+
+            return
+        }
+
+        if saplingDataExist() {
+            logger?.log(level: .debug, message: "Start syncing kit!")
+            syncMain()
+        }
+    }
+
+    @objc private func didEnterBackground(_: Notification) {
+        stop()
+    }
+
+    private func downloaderStatusUpdated(state: DownloadService.State) {
+        switch state {
+        case .idle:
+            ()
+        case .success:
+            syncMain()
+        case let .inProgress(progress):
+            self.state = .downloadingSapling(progress: Int(progress * 100))
+        }
+    }
+
+    private func sync(state: SynchronizerState) {
+        synchronizerState = state
+
+        var syncStatus = self.state
+
+        switch state.syncStatus {
+        case .unprepared:
+            if started {
+                logger?.log(level: .debug, message: "State: Disconnected")
+                syncStatus = .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
+            } else {
+                syncStatus = .idle
+            }
+        case .stopped:
+            logger?.log(level: .debug, message: "State: Disconnected")
+            syncStatus = .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
+        case .upToDate:
+            if !started {
+                started = true
+            }
+            logger?.log(level: .debug, message: "State: Synced")
+            syncStatus = .synced
+            lastBlockHeight = max(state.latestBlockHeight, lastBlockHeight)
+            logger?.log(level: .debug, message: "Update BlockHeight = \(lastBlockHeight)")
+            checkFailingTransactions()
+        case let .syncing(progress, areFundsSpendable):
+            if !started {
+                started = true
+            }
+            logger?.log(level: .debug, message: "State: Syncing")
+            logger?.log(level: .debug, message: "State progress: \(progress) | spendable: \(areFundsSpendable)")
+            lastBlockHeight = max(state.latestBlockHeight, lastBlockHeight)
+            self.areFundsSpendable = areFundsSpendable
+
+            logger?.log(level: .debug, message: "Update BlockHeight = \(lastBlockHeight)")
+
+            lastBlockUpdatedSubject.onNext(())
+
+            let newProgress = min(99, Int(progress * 100))
+            let newRemaining = max(1, Int(Float(lastBlockHeight - birthday) * (1 - progress)))
+
+            syncStatus = .syncing(progress: newProgress, remaining: newRemaining, lastBlockDate: nil)
+        case let .error(error):
+            if !started, case .synchronizerDisconnected = error as? ZcashError {
+                syncStatus = .idle
+            } else {
+                started = true
+                logger?.log(level: .error, message: "State: Error: \(error)")
+                syncStatus = .notSynced(error: AppError.unknownError)
+            }
+        }
+
+        if syncStatus != self.state {
+            self.state = syncStatus
+        }
+    }
+
+    private func sync(event: SynchronizerEvent) {
+        switch event {
+        case let .foundTransactions(transactions, inRange):
+            logger?.log(level: .debug, message: "found \(transactions.count) mined txs in range: \(String(describing: inRange))")
+            for overview in transactions {
+                logger?.log(level: .debug, message: "tx: v =\(overview.value.decimalValue.decimalString) : fee = \(overview.fee?.decimalString() ?? "N/A") : height = \(overview.minedHeight?.description ?? "N/A")")
+            }
+            let lastBlockHeight = max(inRange?.upperBound ?? 0, lastBlockHeight)
+            Task {
+                let newTxs = await transactionPool?.sync(transactions: transactions, lastBlockHeight: lastBlockHeight) ?? []
+                transactionSubject.onNext(newTxs)
+            }
+        case let .minedTransaction(pendingEntity):
+            logger?.log(level: .debug, message: "found pending tx: v =\(pendingEntity.value.decimalValue.decimalString) : fee = \(pendingEntity.fee?.decimalString() ?? "N/A")")
+            Task {
+                try await update(transactions: [pendingEntity])
+            }
+        default:
+            logger?.log(level: .debug, message: "Event: \(event)")
+        }
+    }
+
+    private func checkFailingTransactions() {
+        reSyncPending()
+    }
+
+    private func reSyncPending() {
+        Task {
+            let pending = await synchronizer.transactions.filter { overview in overview.minedHeight == nil }
+            logger?.log(level: .debug, message: "Resync pending txs: \(pending.count)")
+            for entity in pending {
+                logger?.log(level: .debug, message: "TX : \(entity.value.decimalValue.description)")
+            }
+            if !pending.isEmpty {
+                try await update(transactions: pending)
+            }
+        }
+    }
+
+    private func update(transactions: [ZcashTransaction.Overview]) async throws {
+        let newTxs = await transactionPool?.sync(transactions: transactions, lastBlockHeight: lastBlockHeight) ?? []
+        logger?.log(level: .debug, message: "pool will update txs: \(newTxs.count)")
+        transactionSubject.onNext(newTxs)
+    }
+
+    private func update(balanceData: ZcashBalanceData) {
+        let oldTransparent = zCashBalanceData.transparent
+
+        if balanceData != zCashBalanceData {
+            zCashBalanceData = balanceData
+            do {
+                try zCashAdapterStorage.save(balanceData: balanceData)
+                logger?.log(level: .debug, message: "Saved balance: transparent=\(balanceData.transparent)")
+            } catch {
+                logger?.log(level: .warning, message: "Failed to save balance to DB: \(error)")
+            }
+        }
+
+        handleTransparentUpdates(oldBalance: oldTransparent, newBalance: balanceData.transparent)
+    }
+
+    private func handleTransparentUpdates(oldBalance _: Decimal, newBalance: Decimal) {
+        // handle only after syncing adapter
+        guard let synchronizerState,
+              synchronizerState.syncStatus == .upToDate
+        else {
+            return
+        }
+
+        let alertState = try? zCashAdapterStorage.alertState(id: uniqueId)
+        let lastAlerted = alertState?.lastAlertedBalance ?? 0
+
+        if newBalance <= Self.minimalThreshold, lastAlerted > 0 {
+            let resetState = ZcashTransparentAlertState(id: uniqueId, lastAlertedBalance: 0)
+            try? zCashAdapterStorage.save(state: resetState)
+            return
+        }
+
+        // show alert only when new
+        if newBalance > lastAlerted, newBalance > Self.minimalThreshold {
+            logger?.log(level: .debug, message: "Received transparent funds: \(lastAlerted) → \(newBalance), showing shielding alert")
+            showShieldingAlert(balance: newBalance)
+
+            let newState = ZcashTransparentAlertState(id: uniqueId, lastAlertedBalance: newBalance)
+            try? zCashAdapterStorage.save(state: newState)
+        }
+    }
+
+    private func showShieldingAlert(balance: Decimal) {
+        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+            BottomSheetView(
+                items: [
+                    .title(icon: ThemeImage.shieldOff, title: "balance.token.transparent.detected.title".localized),
+                    .text(text: "balance.token.transparent.detected.description".localized),
+                    .buttonGroup(.init(buttons: [
+                            .init(style: .gray, title: "button.cancel".localized) {
+                                isPresented.wrappedValue = false
+                            },
+                            .init(style: .yellow, title: "balance.token.shield".localized) {
+                                isPresented.wrappedValue = false
+
+                                Coordinator.shared.present { _ in
+                                    ThemeNavigationStack {
+                                        ShieldSendView(amount: balance, address: nil)
+                                    }
+                                }
+                            },
+                        ],
+                        alignment: .horizontal)),
+                ],
+            )
+        }
+    }
+
+    func transactionRecord(fromTransaction transaction: ZcashTransactionWrapper) -> TransactionRecord {
+        let showRawTransaction = transaction.minedHeight == nil || transaction.failed
+
+        // TODO: Should have it's own transactions with memo
+        if let direction = transaction.shieldDirection {
+            return ZcashShieldingTransactionRecord(
+                token: token,
+                source: transactionSource,
+                uid: transaction.transactionHash,
+                transactionHash: transaction.transactionHash,
+                transactionIndex: transaction.transactionIndex,
+                blockHeight: transaction.minedHeight,
+                confirmationsThreshold: ZcashSDK.defaultRewindDistance,
+                date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+                fee: transaction.fee?.decimalValue.decimalValue,
+                failed: transaction.failed,
+                lockInfo: nil,
+                conflictingHash: nil,
+                showRawTransaction: showRawTransaction,
+                amount: abs(transaction.value.decimalValue.decimalValue),
+                direction: .init(direction: direction),
+                memo: transaction.memo
+            )
+        }
+        if !transaction.isSentTransaction {
+            return BitcoinIncomingTransactionRecord(
+                token: token,
+                source: transactionSource,
+                uid: transaction.transactionHash,
+                transactionHash: transaction.transactionHash,
+                transactionIndex: transaction.transactionIndex,
+                blockHeight: transaction.minedHeight,
+                confirmationsThreshold: ZcashSDK.defaultRewindDistance,
+                date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+                fee: transaction.fee?.decimalValue.decimalValue,
+                failed: transaction.failed,
+                lockInfo: nil,
+                conflictingHash: nil,
+                showRawTransaction: showRawTransaction,
+                amount: abs(transaction.value.decimalValue.decimalValue),
+                from: transaction.recipientAddress,
+                memo: transaction.memo
+            )
+        } else {
+            return BitcoinOutgoingTransactionRecord(
+                token: token,
+                source: transactionSource,
+                uid: transaction.transactionHash,
+                transactionHash: transaction.transactionHash,
+                transactionIndex: transaction.transactionIndex,
+                blockHeight: transaction.minedHeight,
+                confirmationsThreshold: ZcashSDK.defaultRewindDistance,
+                date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
+                fee: transaction.fee?.decimalValue.decimalValue,
+                failed: transaction.failed,
+                lockInfo: nil,
+                conflictingHash: nil,
+                showRawTransaction: showRawTransaction,
+                amount: abs(transaction.value.decimalValue.decimalValue),
+                to: transaction.recipientAddress,
+                sentToSelf: false,
+                memo: transaction.memo,
+                replaceable: false
+            )
+        }
+    }
+
+    private static var cloudSpendParamsURL: URL? {
+        URL(string: ZcashSDK.cloudParameterURL + ZcashSDK.spendParamFilename)
+    }
+
+    private static var cloudOutputParamsURL: URL? {
+        URL(string: ZcashSDK.cloudParameterURL + ZcashSDK.outputParamFilename)
+    }
+
+    private func saplingDataExist() -> Bool {
+        var isExist = true
+
+        if let cloudSpendParamsURL = Self.cloudOutputParamsURL,
+           let destinationURL = try? Self.outputParamsURL(uniqueId: uniqueId),
+           !DownloadService.existing(url: destinationURL)
+        {
+            isExist = false
+            saplingDownloader.download(source: cloudSpendParamsURL, destination: destinationURL)
+        }
+
+        if let cloudSpendParamsURL = Self.cloudSpendParamsURL,
+           let destinationURL = try? Self.spendParamsURL(uniqueId: uniqueId),
+           !DownloadService.existing(url: destinationURL)
+        {
+            isExist = false
+            saplingDownloader.download(source: cloudSpendParamsURL, destination: destinationURL)
+        }
+
+        return isExist
+    }
+
+    func fixPendingTransactionsIfNeeded(completion: (() -> Void)? = nil) {
+        // check if we need to perform the fix or leave
+        // get all the pending transactions
+        guard !Core.shared.localStorage.zcashAlwaysPendingRewind else {
+            completion?()
+            return
+        }
+
+        Task {
+            let txs = await synchronizer.transactions.filter { overview in overview.minedHeight == nil }
+            // fetch the first one that's reported to be unmined
+            guard let firstUnmined = txs.filter({ $0.minedHeight == nil }).first else {
+                Core.shared.localStorage.zcashAlwaysPendingRewind = true
+                completion?()
+                return
+            }
+
+            rewind(unmined: firstUnmined, completion: completion)
+        }
+    }
+
+    private func rewind(unmined: ZcashTransaction.Overview, completion: (() -> Void)? = nil) {
+        synchronizer
+            .rewind(.transaction(unmined))
+            .sink(receiveCompletion: { result in
+                      switch result {
+                      case .finished:
+                          Core.shared.localStorage.zcashAlwaysPendingRewind = true
+                          completion?()
+                      case .failure:
+                          self.rewindQuick()
+                      }
+                  },
+                  receiveValue: { _ in })
+            .store(in: &cancellables)
+    }
+
+    private func rewindQuick(completion: (() -> Void)? = nil) {
+        synchronizer
+            .rewind(.quick)
+            .sink(receiveCompletion: { [weak self] result in
+                      switch result {
+                      case .finished:
+                          Core.shared.localStorage.zcashAlwaysPendingRewind = true
+                          self?.logger?.log(level: .debug, message: "rewind Successful")
+                          completion?()
+                      case let .failure(error):
+                          self?.state = .notSynced(error: error)
+                          completion?()
+                          self?.logger?.log(level: .error, message: "attempt to fix pending transactions failed with error: \(error)")
+                      }
+                  },
+                  receiveValue: { _ in })
+            .store(in: &cancellables)
+    }
+
+    private func syncZcashBalanceData() {
+        guard let synchronizerState, let accountId, let balances = synchronizerState.accountsBalances[accountId] else {
+            zCashBalanceData = (try? zCashAdapterStorage.balanceData(id: uniqueId)) ?? .empty(id: uniqueId)
+            return
+        }
+
+        let full = balances.saplingBalance.total() + balances.orchardBalance.total()
+        let available = balances.saplingBalance.spendableValue + balances.orchardBalance.spendableValue
+        logger?.log(level: .debug, message: "Full balance from syncer: \(full.decimalValue.decimalValue.description)")
+        logger?.log(level: .debug, message: "Available balance from syncer: \(available.decimalValue.decimalValue.description)")
+
+//        print("BALANCE: t = \(balances.unshielded.decimalValue.decimalValue)")
+        let zCashBalanceData = ZcashBalanceData(
+            id: uniqueId,
+            full: full.decimalValue.decimalValue,
+            available: available.decimalValue.decimalValue,
+            transparent: balances.unshielded.decimalValue.decimalValue
+        )
+
+        update(balanceData: zCashBalanceData)
+    }
+
+    deinit {
+        NotificationCenter.default.removeObserver(self)
+        Task { [weak self] in
+            self?.synchronizer.stop()
+            self?.logger?.log(level: .debug, message: "Synchronizer Was Stopped")
+        }
+    }
+}
+
+extension ZcashAdapter {
+    static func addresses(for accountType: AccountType, network: ZcashNetwork) async throws -> (unified: UnifiedAddress, transparent: TransparentAddress) {
+        guard let seed = accountType.mnemonicSeed else {
+            throw AdapterError.unsupportedAccount
+        }
+
+        let seedData = [UInt8](seed)
+        let tool = DerivationTool(networkType: network.networkType)
+
+        guard let unifiedSpendingKey = try? tool.deriveUnifiedSpendingKey(seed: seedData, accountIndex: .zero),
+              let _ = try? tool.deriveUnifiedFullViewingKey(from: unifiedSpendingKey)
+        else {
+            throw AppError.ZcashError.cantCreateKeys
+        }
+
+        let uniqueId = UUID().uuidString
+        let initializer = try ZcashAdapter.initializer(network: network, uniqueId: uniqueId)
+        let synchronizer = SDKSynchronizer(initializer: initializer)
+
+        let birthday = BlockHeight.ofLatestCheckpoint(network: network)
+
+        let result = try await synchronizer.prepare(
+            with: seedData,
+            walletBirthday: birthday,
+            for: .newWallet,
+            name: "",
+            keySource: nil
+        )
+
+        if case .seedRequired = result {
+            throw AppError.ZcashError.seedRequired
+        }
+
+        guard let account = try await synchronizer.listAccounts().first else {
+            throw AppError.ZcashError.noReceiveAddress
+        }
+
+        guard let uAddress = try? await synchronizer.getUnifiedAddress(accountUUID: account.id),
+              let tAddress = try? await synchronizer.getTransparentAddress(accountUUID: account.id)
+        else {
+            throw AppError.ZcashError.noReceiveAddress
+        }
+
+        synchronizer.stop()
+
+        return (uAddress, tAddress)
+    }
+
+    static func firstAddress(accountType: AccountType, addressType: AddressType) async throws -> String {
+        let network = ZcashNetworkBuilder.network(for: .mainnet)
+        let (uAddress, tAddress) = try await addresses(for: accountType, network: network)
+        return addressType == .shielded ? uAddress.stringEncoded : tAddress.stringEncoded
+    }
+}
+
+extension ZcashAdapter {
+    public static func newBirthdayHeight(network: ZcashNetwork) -> Int {
+        BlockHeight.ofLatestCheckpoint(network: network)
+    }
+
+    static func initializer(network: ZcashNetwork, uniqueId: String) throws -> Initializer {
+        try Initializer(
+            cacheDbURL: nil,
+            fsBlockDbRoot: fsBlockDbRootURL(uniqueId: uniqueId, network: network),
+            generalStorageURL: generalStorageURL(uniqueId: uniqueId, network: network),
+            dataDbURL: dataDbURL(uniqueId: uniqueId, network: network),
+            torDirURL: torDirURL(uniqueId: uniqueId, network: network),
+            endpoint: LightWalletEndpoint(address: endPoint, port: 443, secure: true, streamingCallTimeoutInMillis: 10 * 60 * 60 * 1000),
+            network: network,
+            spendParamsURL: spendParamsURL(uniqueId: uniqueId),
+            outputParamsURL: outputParamsURL(uniqueId: uniqueId),
+            saplingParamsSourceURL: SaplingParamsSourceURL.default,
+            alias: .custom(uniqueId),
+            loggingPolicy: .noLogging,
+            isTorEnabled: false,
+            isExchangeRateEnabled: false
+        )
+    }
+
+    private static func dataDirectoryUrl() throws -> URL {
+        let fileManager = FileManager.default
+
+        let url = try fileManager
+            .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
+            .appendingPathComponent("z-cash-kit", isDirectory: true)
+
+        try fileManager.createDirectory(at: url, withIntermediateDirectories: true)
+
+        return url
+    }
+
+    private static func exist(url: URL) -> Bool {
+        let fileManager = FileManager.default
+
+        do {
+            return try fileManager.fileExists(coordinatingAccessAt: url).exists
+        } catch {
+            return false
+        }
+    }
+
+    private static func fsBlockDbRootURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
+        try dataDirectoryUrl().appendingPathComponent(network.networkType.chainName + uniqueId + ZcashSDK.defaultFsCacheName, isDirectory: true)
+    }
+
+    private static func generalStorageURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
+        try dataDirectoryUrl().appendingPathComponent(network.networkType.chainName + uniqueId + "general_storage", isDirectory: true)
+    }
+
+    private static func cacheDbURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
+        try dataDirectoryUrl().appendingPathComponent(network.constants.defaultDbNamePrefix + uniqueId + ZcashSDK.defaultCacheDbName, isDirectory: false)
+    }
+
+    private static func dataDbURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
+        try dataDirectoryUrl().appendingPathComponent(network.constants.defaultDbNamePrefix + uniqueId + ZcashSDK.defaultDataDbName, isDirectory: false)
+    }
+
+    private static func torDirURL(uniqueId: String, network: ZcashNetwork) throws -> URL {
+        try dataDirectoryUrl().appendingPathComponent(network.constants.defaultDbNamePrefix + uniqueId + ZcashSDK.defaultTorDirName, isDirectory: true)
+    }
+
+    private static func spendParamsURL(uniqueId: String) throws -> URL {
+        try dataDirectoryUrl().appendingPathComponent("sapling-spend_\(uniqueId).params")
+    }
+
+    private static func outputParamsURL(uniqueId: String) throws -> URL {
+        try dataDirectoryUrl().appendingPathComponent("sapling-output_\(uniqueId).params")
+    }
+
+    public static func clear(except excludedWalletIds: [String]) throws {
+        let fileManager = FileManager.default
+        let fileUrls = try fileManager.contentsOfDirectory(at: dataDirectoryUrl(), includingPropertiesForKeys: nil)
+
+        for filename in fileUrls {
+            if !excludedWalletIds.contains(where: { filename.lastPathComponent.contains($0) }) {
+                try fileManager.removeItem(at: filename)
+            }
+        }
+    }
+}
+
+extension ZcashAdapter: IAdapter {
+    var isMainNet: Bool {
+        network.networkType == .mainnet
+    }
+
+    func start() {
+        prepare(seedData: seedData, walletBirthday: birthday, for: initMode)
+    }
+
+    func stop() {
+        synchronizer.stop()
+        logger?.log(level: .debug, message: "Synchronizer will stop")
+    }
+
+    func refresh() {
+        startSynchronizer()
+    }
+
+    private func syncMain() {
+        DispatchQueue.main.async { [weak self] in
+            self?.sync()
+        }
+    }
+
+    private func sync() {
+        syncZcashBalanceData()
+
+        fixPendingTransactionsIfNeeded { [weak self] in
+            self?.logger?.log(level: .debug, message: "\(Date()) Try to start synchronizer :by Thread:\(Thread.current)")
+            Task { [weak self] in
+                do {
+                    try await self?.synchronizer.start(retry: true)
+                } catch {
+                    self?.state = .notSynced(error: error)
+                }
+            }
+        }
+    }
+
+    var statusInfo: [(String, Any)] {
+        [
+            ("Last Block Info", lastBlockHeight),
+            ("Sync State", state.description),
+            ("Birthday Height", birthday.description),
+            ("Init Mode", initMode.description),
+        ]
+    }
+
+    var debugInfo: String {
+        let zAddress = uAddress?.stringEncoded ?? "No Info"
+        var balanceState = "No Balance Information yet"
+
+        if let status = synchronizerState, let accountId {
+            balanceState = """
+            shielded balance (BalanceData)
+                accountId: \(accountId)
+                total:  \(balanceData.total.description)
+                verified:  \(balanceData.available)
+            unshielded balance: \(String(describing: status.accountsBalances[accountId]?.unshielded ?? Zatoshi(0)))
+            """
+        }
+        return """
+        ZcashAdapter
+        z-address: \(String(describing: zAddress))
+        spendingKeys: \(spendingKey?.description ?? "N/A")
+        balanceState: \(balanceState)
+        """
+    }
+}
+
+extension ZcashAdapter: ITransactionsAdapter {
+    var lastBlockInfo: LastBlockInfo? {
+        LastBlockInfo(height: lastBlockHeight, timestamp: nil)
+    }
+
+    var syncingObservable: Observable<Void> {
+        balanceStateSubject.map { _ in () }
+    }
+
+    var lastBlockUpdatedObservable: Observable<Void> {
+        lastBlockUpdatedSubject.asObservable()
+    }
+
+    var explorerTitle: String {
+        "blockchair.com"
+    }
+
+    var additionalTokenQueries: [TokenQuery] {
+        []
+    }
+
+    func explorerUrl(transactionHash: String) -> String? {
+        network.networkType == .mainnet ? "https://blockchair.com/zcash/transaction/" + transactionHash : nil
+    }
+
+    func transactionsObservable(token _: Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {
+        transactionSubject.asObservable()
+            .map { [weak self] transactions in
+                transactions.compactMap { transaction -> TransactionRecord? in
+                    if let address, let recipient = transaction.recipientAddress, address.lowercased() != recipient.lowercased() {
+                        return nil
+                    }
+
+                    guard let record = self?.transactionRecord(fromTransaction: transaction) else {
+                        return nil
+                    }
+
+                    switch (record, filter) {
+                    case (_, .all): return record
+                    case (is BitcoinIncomingTransactionRecord, .incoming): return record
+                    case (is BitcoinOutgoingTransactionRecord, .outgoing): return record
+                    default: return nil
+                    }
+                }
+            }
+            .filter { !$0.isEmpty }
+    }
+
+    func transactionsSingle(paginationData: String?, token _: Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
+        transactionPool?.transactionsSingle(paginationData: paginationData, filter: filter, descending: true, address: address, limit: limit).map { [weak self] txs in
+            txs.compactMap { self?.transactionRecord(fromTransaction: $0) }
+        } ?? .just([])
+    }
+
+    func allTransactionsAfter(paginationData: String?) -> Single<[TransactionRecord]> {
+        transactionPool?.transactionsSingle(paginationData: paginationData, filter: .all, descending: false, address: nil, limit: nil).map { [weak self] txs in
+            txs.compactMap { self?.transactionRecord(fromTransaction: $0) }
+        } ?? .just([])
+    }
+
+    func rawTransaction(hash: String) -> String? {
+        transactionPool?.transaction(by: hash)?.raw?.hs.hex
+    }
+}
+
+extension ZcashAdapter: IBalanceAdapter {
+    var balanceStateUpdatedObservable: Observable<AdapterState> {
+        balanceStateSubject.asObservable()
+    }
+
+    var balanceData: BalanceData {
+        zCashBalanceData.balanceData
+    }
+
+    var balanceDataUpdatedObservable: Observable<BalanceData> {
+        balanceSubject.asObservable()
+    }
+}
+
+extension ZcashAdapter: IDepositAdapter {
+    var receiveAddress: DepositAddress {
+        .init(uAddress?.stringEncoded ?? "n/a".localized)
+    }
+
+    var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {
+        depositAddressSubject.eraseToAnyPublisher()
+    }
+}
+
+extension ZcashAdapter: ISendZcashAdapter {
+    enum AddressType {
+        case shielded
+        case transparent
+    }
+
+    var availableBalance: Decimal {
+        max(0, balanceData.available)
+    }
+
+    func sendProposal(amount: Decimal, address: Recipient, memo: Memo?) async throws -> Proposal {
+        guard let accountId else {
+            throw AppError.ZcashError.noAccountId
+        }
+
+        let amountInZatoshi = Zatoshi.from(decimal: amount)
+
+        return try await synchronizer.proposeTransfer(accountUUID: accountId, recipient: address, amount: amountInZatoshi, memo: memo)
+    }
+
+    func sendProposal(outputs: [TransferOutput]) async throws -> Proposal {
+        guard let accountId else {
+            throw AppError.ZcashError.noAccountId
+        }
+
+        let paymentURI = createPaymentURI(outputs: outputs)
+
+        return try await synchronizer.proposefulfillingPaymentURI(
+            paymentURI,
+            accountUUID: accountId
+        )
+    }
+
+    private func createPaymentURI(outputs: [TransferOutput]) -> String {
+        var components = URLComponents()
+        components.scheme = "zcash"
+        components.path = ""
+
+        var queryItems: [URLQueryItem] = []
+
+        for (index, output) in outputs.enumerated() {
+            if index == 0 {
+                queryItems.append(URLQueryItem(name: "address", value: output.address.stringEncoded))
+                queryItems.append(URLQueryItem(name: "amount", value: output.amount.description))
+
+                if let memo = output.memo, let string = memo.toString() {
+                    let base64url = encodeBase64URL(string)
+                    queryItems.append(URLQueryItem(name: "memo", value: base64url))
+                }
+            } else {
+                queryItems.append(URLQueryItem(name: "address.\(index)", value: output.address.stringEncoded))
+                queryItems.append(URLQueryItem(name: "amount.\(index)", value: output.amount.description))
+
+                if let memo = output.memo, let string = memo.toString() {
+                    let base64url = encodeBase64URL(string)
+                    queryItems.append(URLQueryItem(name: "memo.\(index)", value: base64url))
+                }
+            }
+        }
+
+        components.queryItems = queryItems
+        return components.string ?? ""
+    }
+
+    private func encodeBase64URL(_ string: String) -> String {
+        let data = string.data(using: .utf8)!
+        return data.base64EncodedString()
+            .replacingOccurrences(of: "+", with: "-")
+            .replacingOccurrences(of: "/", with: "_")
+            .replacingOccurrences(of: "=", with: "")
+    }
+
+    func shieldProposal(threshold: Decimal, address: Recipient?, memo: Memo?) async throws -> Proposal? {
+        guard let accountId else {
+            throw AppError.ZcashError.noAccountId
+        }
+
+        let requiredMemo = try memo ?? Memo(string: "")
+
+        var transparentAddress: TransparentAddress? = nil
+        switch address {
+        case let .transparent(tAddress): transparentAddress = tAddress
+        default: ()
+        }
+
+        let amountInZatoshi = Zatoshi.from(decimal: threshold)
+
+        return try await synchronizer.proposeShielding(accountUUID: accountId, shieldingThreshold: amountInZatoshi, memo: requiredMemo, transparentReceiver: transparentAddress)
+    }
+
+    func validate(address: String, checkSendToSelf: Bool = true) throws -> AddressType {
+        if checkSendToSelf, uAddress?.stringEncoded.lowercased() == address.lowercased() || tAddress?.stringEncoded == address.lowercased() {
+            throw AppError.zcash(reason: .sendToSelf)
+        }
+
+        do {
+            switch try Recipient(address, network: network.networkType) {
+            case .transparent:
+                return .transparent
+            case .sapling, .unified, .tex: // I'm keeping changes to the minimum. Unified Address should be treated as a different address type which will include some shielded pool and possibly others as well.
+                return .shielded
+            }
+        } catch {
+            // FIXME: Should this be handled another way? logged? how?
+            throw AppError.addressInvalid
+        }
+    }
+
+    func sendSingle(amount: Decimal, address: Recipient, memo: Memo?) -> Single<Void> {
+        guard let accountId else {
+            return .error(AppError.ZcashError.noAccountId)
+        }
+
+        return Single.create { [weak self] observer in
+            Task { [weak self] in
+                do {
+                    guard let proposal = try await self?.synchronizer.proposeTransfer(
+                        accountUUID: accountId,
+                        recipient: address,
+                        amount: Zatoshi.from(decimal: amount), memo: memo
+                    ) else {
+                        observer(.error(AppError.unknownError))
+                        return
+                    }
+
+                    try await self?.send(proposal: proposal)
+                    observer(.success(()))
+                } catch {
+                    observer(.error(error))
+                }
+            }
+            return Disposables.create()
+        }
+    }
+
+    func send(amount: Decimal, address: Recipient, memo: Memo?) async throws {
+        let proposal = try await sendProposal(amount: amount, address: address, memo: memo)
+        try await send(proposal: proposal)
+    }
+
+    func send(proposal: Proposal) async throws {
+        guard let spendingKey else {
+            throw AppError.ZcashError.noReceiveAddress
+        }
+
+        let stream = try await synchronizer.createProposedTransactions(proposal: proposal, spendingKey: spendingKey)
+
+        let transactionCount = proposal.transactionCount()
+        var successCount = 0
+        var iterator = stream.makeAsyncIterator()
+
+        var txIds: [String] = []
+        var resubmitableFailure = false
+
+        for _ in 1 ... transactionCount {
+            if let transactionSubmitResult = try await iterator.next() {
+                switch transactionSubmitResult {
+                case let .success(txId: id):
+                    successCount += 1
+                    txIds.append(id.toHexStringTxId())
+                    logger?.log(level: .debug, message: "-> Successful send TX: \(id.toHexStringTxId())")
+                case let .grpcFailure(txId: id, error: error):
+                    txIds.append(id.toHexStringTxId())
+                    logger?.log(level: .error, message: "-> Error with send TX: \(error.localizedDescription)")
+                    resubmitableFailure = true
+                case let .submitFailure(txId: id, code: code, description: description):
+                    txIds.append(id.toHexStringTxId())
+                    logger?.log(level: .error, message: "-> Error submit TX: \(id.toHexStringTxId()) | code: \(code) | desc: \(description)")
+                case let .notAttempted(txId: id):
+                    txIds.append(id.toHexStringTxId())
+                    logger?.log(level: .error, message: "-> notAttempted TX: \(id.toHexStringTxId())")
+                }
+            }
+        }
+
+        if successCount == 0 {
+            if resubmitableFailure {
+                logger?.log(level: .debug, message: "Grpc Failure! \(txIds.count)")
+            } else {
+                logger?.log(level: .debug, message: "Failure sended TXs! \(txIds.count)")
+            }
+        } else if successCount == transactionCount {
+            logger?.log(level: .debug, message: "Successful sended All TXs")
+        } else {
+            logger?.log(level: .debug, message: "Partial success TXs \(txIds.count)")
+        }
+
+        reSyncPending()
+    }
+
+    func recipient(from stringEncodedAddress: String) -> ZcashLightClientKit.Recipient? {
+        try? Recipient(stringEncodedAddress, network: network.networkType)
+    }
+}
+
+extension ZcashAdapter {
+    struct TransferOutput {
+        let amount: Decimal
+        let address: Recipient
+        let memo: Memo?
+    }
+}
+
+class ZcashAddressValidator {
+    private let network: ZcashNetwork
+
+    init(network: ZcashNetwork) {
+        self.network = network
+    }
+
+    public func validate(address: String) throws -> Recipient {
+        do {
+            return try Recipient(address, network: network.networkType)
+        } catch {
+            // FIXME: Should this be handled another way? logged? how?
+            throw AppError.addressInvalid
+        }
+    }
+}
+
+extension Recipient {
+    var isTransparent: Bool {
+        switch self {
+        case .tex, .transparent: return true
+        case .sapling, .unified: return false
+        }
+    }
+}
+
+extension EnhancementProgress {
+    var progress: Int {
+        guard totalTransactions <= 0 else {
+            return 0
+        }
+        return Int(Double(enhancedTransactions) / Double(totalTransactions)) * 100
+    }
+}
+
+enum ZCashAdapterState: Equatable {
+    case idle
+    case preparing
+    case synced
+    case syncing(progress: Int?, remaining: Int?, lastBlockDate: Date?)
+    case downloadingSapling(progress: Int)
+    case notSynced(error: Error)
+
+    public static func == (lhs: ZCashAdapterState, rhs: ZCashAdapterState) -> Bool {
+        switch (lhs, rhs) {
+        case (.idle, .idle): return true
+        case (.preparing, .preparing): return true
+        case (.synced, .synced): return true
+        case let (.syncing(lProgress, lRemaining, lLastBlockDate), .syncing(rProgress, rRemaining, rLastBlockDate)): return lProgress == rProgress && lRemaining == rRemaining && lLastBlockDate == rLastBlockDate
+        case let (.downloadingSapling(lProgress), .downloadingSapling(rProgress)): return lProgress == rProgress
+        case (.notSynced, .notSynced): return true
+        default: return false
+        }
+    }
+
+    var adapterState: AdapterState {
+        switch self {
+        case .idle: return .customSyncing(main: "Starting...", secondary: nil, progress: nil)
+        case .preparing: return .customSyncing(main: "Preparing...", secondary: nil, progress: nil)
+        case .synced: return .synced
+        case let .syncing(progress, remaining, lastDate): return .syncing(progress: progress, remaining: remaining, lastBlockDate: lastDate)
+        case let .downloadingSapling(progress):
+            return .customSyncing(main: "balance.downloading_sapling".localized, secondary: nil, progress: progress)
+        case let .notSynced(error): return .notSynced(error: error.localizedDescription)
+        }
+    }
+
+    var description: String {
+        switch self {
+        case .idle: return "Idle"
+        case .preparing: return "Preparing..."
+        case .synced: return "Synced"
+        case let .syncing(progress, _, lastDate): return "Syncing: progress = \(progress?.description ?? "N/A"), lastBlockDate: \(lastDate?.description ?? "N/A")"
+        case let .downloadingSapling(progress): return "downloadingSapling: progress = \(progress)"
+        case let .notSynced(error): return "Not synced \(error.localizedDescription)"
+        }
+    }
+
+    var isPrepairing: Bool {
+        switch self {
+        case .preparing: return true
+        default: return false
+        }
+    }
+}
+
+extension WalletInitMode {
+    var description: String {
+        switch self {
+        case .newWallet: return "New Wallet"
+        case .existingWallet: return "Existing Wallet"
+        case .restoreWallet: return "Restored Wallet"
+        }
+    }
+}
+
+extension Zip32AccountIndex {
+    static let zero: Self = .init(0)
+}

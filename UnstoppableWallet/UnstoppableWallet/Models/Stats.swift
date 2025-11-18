@@ -185,6 +185,7 @@ enum StatEvent {
     case addToWallet
     case addToWatchlist(coinUid: String)
     case amountRounding(use: Bool)
+    case recentlySent(show: Bool)
     case approveRequest(chainUid: String)
     case cancel
     case clear(entity: StatEntity)
@@ -273,6 +274,7 @@ enum StatEvent {
         case .addToWallet: return "add_to_wallet"
         case .addToWatchlist: return "add_to_watchlist"
         case .amountRounding: return "use_amount_rounding"
+        case .recentlySent: return "show_recently_sent"
         case .approveRequest: return "approve_request"
         case .cancel: return "cancel"
         case .clear: return "clear"
@@ -354,6 +356,7 @@ enum StatEvent {
         case let .addToken(token): return params(token: token).merging([.entity: StatEntity.token.rawValue]) { $1 }
         case let .addToWatchlist(coinUid): return [.coinUid: coinUid]
         case let .amountRounding(use): return [.use: use]
+        case let .recentlySent(shown): return [.shown: shown]
         case let .approveRequest(chainUid): return [.chainUid: chainUid]
         case let .clear(entity): return [.entity: entity.rawValue]
         case let .copy(entity): return [.entity: entity.rawValue]

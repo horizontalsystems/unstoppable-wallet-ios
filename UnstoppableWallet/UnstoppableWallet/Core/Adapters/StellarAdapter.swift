@@ -126,7 +126,7 @@ extension StellarAdapter: IDepositAdapter {
 extension StellarAdapter {
     private static func adapterState(kitSyncState: StellarKit.SyncState) -> AdapterState {
         switch kitSyncState {
-        case .syncing: return .syncing(progress: nil, lastBlockDate: nil)
+        case .syncing: return .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
         case .synced: return .synced
         case let .notSynced(error): return .notSynced(error: error.localizedDescription)
         }

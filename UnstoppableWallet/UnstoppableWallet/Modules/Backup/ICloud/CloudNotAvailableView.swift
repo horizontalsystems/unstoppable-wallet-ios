@@ -5,17 +5,15 @@ struct CloudNotAvailableView: View {
 
     var body: some View {
         BottomSheetView(
-            icon: .local(name: "icloud_24", tint: .themeJacob),
-            title: "backup.cloud.no_access.title".localized,
             items: [
-                .highlightedDescription(text: "backup.cloud.no_access.description".localized),
+                .title(icon: ThemeImage.error, title: "backup.cloud.no_access.title".localized),
+                .warning(text: "backup.cloud.no_access.description".localized),
+                .buttonGroup(.init(buttons: [
+                    .init(style: .yellow, title: "button.ok".localized) {
+                        isPresented = false
+                    },
+                ])),
             ],
-            buttons: [
-                .init(style: .yellow, title: "button.ok".localized) {
-                    isPresented = false
-                },
-            ],
-            isPresented: $isPresented
         )
     }
 }

@@ -1,9 +1,31 @@
 import SwiftUI
 
 struct AppStatusView: View {
-    let viewModel: AppStatusViewModel
+    @StateObject var viewModel = AppStatusViewModel()
 
     var body: some View {
+        Group {
+            switch viewModel.sections {
+            case .loading:
+                ThemeView {
+                    VStack(spacing: .margin12) {
+                        ProgressView()
+                    }
+                }
+            case .failed:
+                ThemeView {
+                    PlaceholderViewNew(icon: "warning_filled", subtitle: "alert.not_founded".localized)
+                }
+            case let .completed(list):
+                sections(list)
+            }
+        }
+        .navigationTitle("app_status.title".localized)
+        .navigationBarTitleDisplayMode(.inline)
+    }
+
+    @ViewBuilder
+    func sections(_ sections: [AppStatusViewModel.Section]) -> some View {
         ScrollableThemeView {
             VStack(spacing: .margin24) {
                 HStack(spacing: .margin8) {
@@ -26,7 +48,7 @@ struct AppStatusView: View {
                     .buttonStyle(PrimaryButtonStyle(style: .gray))
                 }
 
-                ForEach(viewModel.sections, id: \.title) { section in
+                ForEach(sections, id: \.title) { section in
                     VStack(spacing: 0) {
                         ListSectionHeader(text: section.title)
 
@@ -56,7 +78,5 @@ struct AppStatusView: View {
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-        .navigationTitle("app_status.title".localized)
-        .navigationBarTitleDisplayMode(.inline)
     }
 }

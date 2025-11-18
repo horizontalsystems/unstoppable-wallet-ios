@@ -51,7 +51,7 @@ class MoneroAdapter {
             kit = try MoneroKit.Kit(
                 wallet: .watch(address: address, viewKey: viewKey),
                 account: 0,
-                restoreHeight: UInt64(restoreHeight ?? 0),
+                restoreHeight: UInt64(restoreHeight),
                 walletId: wallet.account.id,
                 node: node,
                 networkType: Self.networkType,
@@ -135,8 +135,8 @@ class MoneroAdapter {
         case .synced:
             return .synced
 
-        case let .syncing(progress, _):
-            return .syncing(progress: progress, lastBlockDate: nil)
+        case let .syncing(progress, remainingBlockCount):
+            return .syncing(progress: min(99, progress), remaining: max(1, remainingBlockCount), lastBlockDate: nil)
 
         case let .notSynced(error):
             return .notSynced(error: error.localizedDescription)
@@ -333,9 +333,8 @@ extension MoneroAdapter: IDepositAdapter {
         depositAddressSubject.eraseToAnyPublisher()
     }
 
-    func usedAddresses(change: Bool) -> [UsedAddress] {
-        if change { return [] }
-        return kit.usedAddresses.map {
+    var usedAddresses: [UsedAddress] {
+        kit.usedAddresses.map {
             UsedAddress(index: $0.index, address: $0.address, explorerUrl: nil, transactionsCount: $0.transactionsCount)
         }
     }
@@ -362,7 +361,7 @@ extension MoneroAdapter {
         case let .mnemonic(words, passphrase, _):
             return (try? Kit.key(wallet: .bip39(seed: words, passphrase: passphrase), privateKey: privateKey, spendKey: spendKey)) ?? ""
 
-        case let .moneroWatchAccount(address, viewKey, restoreHeight):
+        case let .moneroWatchAccount(address, viewKey, _):
             return (try? Kit.key(wallet: .watch(address: address, viewKey: viewKey), privateKey: privateKey, spendKey: spendKey)) ?? ""
 
         default: return ""

@@ -3,6 +3,7 @@ import SwiftUI
 
 struct MultiSwapAddressView: View {
     @ObservedObject var viewModel: AddressMultiSwapSettingsViewModel
+    @Environment(\.addressParserFilter) private var parserFilter
 
     var body: some View {
         VStack(spacing: 0) {
@@ -19,6 +20,7 @@ struct MultiSwapAddressView: View {
                             .navigationTitle("address.title".localized)
                             .navigationBarTitleDisplayMode(.inline)
                         }
+                        .environment(\.addressParserFilter, parserFilter)
                     }
                 } content: {
                     if let address = viewModel.address {

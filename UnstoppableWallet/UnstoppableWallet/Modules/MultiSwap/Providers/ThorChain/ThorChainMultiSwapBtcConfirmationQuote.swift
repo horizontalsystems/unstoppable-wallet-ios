@@ -32,13 +32,9 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
     }
 
     func cautions(baseToken: MarketKit.Token) -> [CautionNew] {
-        var cautions = [CautionNew]()
-
-        if let transactionError {
-            cautions.append(caution(transactionError: transactionError, feeToken: baseToken))
-        }
-
-        return cautions
+        transactionError.map { error in
+            [caution(transactionError: error, feeToken: baseToken)]
+        } ?? []
     }
 
     func priceSectionFields(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, baseToken _: MarketKit.Token, currency: Currency, tokenInRate _: Decimal?, tokenOutRate: Decimal?, baseTokenRate _: Decimal?) -> [SendField] {

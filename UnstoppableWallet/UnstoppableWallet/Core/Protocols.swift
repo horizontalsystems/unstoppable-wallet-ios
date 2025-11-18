@@ -38,6 +38,9 @@ protocol IDepositAdapter: IBaseAdapter {
     var receiveAddress: DepositAddress { get }
     var receiveAddressStatus: DataStatus<DepositAddress> { get }
     var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> { get }
+}
+
+protocol IHDDepositAdapter: IDepositAdapter {
     func usedAddresses(change: Bool) -> [UsedAddress]
 }
 

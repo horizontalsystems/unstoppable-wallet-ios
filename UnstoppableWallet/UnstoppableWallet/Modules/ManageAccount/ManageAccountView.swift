@@ -145,7 +145,7 @@ struct ManageAccountView: View {
                                 }
                             } else {
                                 Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                                    UnlinkView(isPresented: isPresented) {
+                                    UnlinkBottomSheetView(isPresented: isPresented) {
                                         unlink()
                                     }
                                 }
@@ -189,62 +189,56 @@ struct ManageAccountView: View {
         }
     }
 
-    @ViewBuilder private func confirmUnlinkWatchView(isPresented: Binding<Bool>) -> some View {
+    @ViewBuilder private func confirmUnlinkWatchView(isPresented _: Binding<Bool>) -> some View {
         BottomSheetView(
-            icon: .warning,
-            title: "settings_manage_keys.delete.title".localized,
             items: [
-                .highlightedDescription(text: "settings_manage_keys.delete.confirmation_watch".localized, style: .warning),
+                .title(icon: ThemeImage.trash, title: "settings_manage_keys.delete.title".localized),
+                .text(text: "settings_manage_keys.delete.confirmation_watch".localized),
+                .buttonGroup(.init(buttons: [
+                    .init(style: .gray, title: "settings_manage_keys.delete.confirmation_watch.button".localized) {
+                        unlink()
+                    },
+                ])),
             ],
-            buttons: [
-                .init(style: .red, title: "settings_manage_keys.delete.confirmation_watch.button".localized) {
-                    unlink()
-                },
-            ],
-            isPresented: isPresented
         )
     }
 
     @ViewBuilder private func confirmDeleteCloudBackupView(isPresented: Binding<Bool>) -> some View {
         BottomSheetView(
-            icon: .trash,
-            title: "manage_account.cloud_delete_backup_recovery_phrase".localized,
             items: [
-                .highlightedDescription(text: "manage_account.cloud_delete_backup_recovery_phrase.description".localized, style: .warning),
+                .title(icon: ThemeImage.trash, title: "manage_account.cloud_delete_backup_recovery_phrase".localized),
+                .text(text: "manage_account.cloud_delete_backup_recovery_phrase.description".localized),
+                .buttonGroup(.init(buttons: [
+                    .init(style: .gray, title: "button.delete".localized) {
+                        isPresented.wrappedValue = false
+                        deleteCloudBackup()
+                    },
+                    .init(style: .transparent, title: "button.cancel".localized) {
+                        isPresented.wrappedValue = false
+                    },
+                ])),
             ],
-            buttons: [
-                .init(style: .red, title: "button.delete".localized) {
-                    isPresented.wrappedValue = false
-                    deleteCloudBackup()
-                },
-                .init(style: .transparent, title: "button.cancel".localized) {
-                    isPresented.wrappedValue = false
-                },
-            ],
-            isPresented: isPresented
         )
     }
 
     @ViewBuilder private func confirmDeleteCloudBackupAfterManualBackupView(isPresented: Binding<Bool>) -> some View {
         BottomSheetView(
-            icon: .warning,
-            title: "manage_account.manual_backup_required".localized,
             items: [
-                .highlightedDescription(text: "manage_account.manual_backup_required.description".localized, style: .warning),
-            ],
-            buttons: [
-                .init(style: .yellow, title: "manage_account.manual_backup_required.button".localized) {
-                    isPresented.wrappedValue = false
+                .title(icon: ThemeImage.trash, title: "manage_account.manual_backup_required".localized),
+                .warning(text: "manage_account.manual_backup_required.description".localized),
+                .buttonGroup(.init(buttons: [
+                    .init(style: .gray, title: "manage_account.manual_backup_required.button".localized) {
+                        isPresented.wrappedValue = false
 
-                    Coordinator.shared.performAfterUnlock {
-                        presentBackup(reason: .deleteCloudBackup)
-                    }
-                },
-                .init(style: .transparent, title: "button.cancel".localized) {
-                    isPresented.wrappedValue = false
-                },
+                        Coordinator.shared.performAfterUnlock {
+                            presentBackup(reason: .deleteCloudBackup)
+                        }
+                    },
+                    .init(style: .transparent, title: "button.cancel".localized) {
+                        isPresented.wrappedValue = false
+                    },
+                ])),
             ],
-            isPresented: isPresented
         )
     }
 
@@ -284,58 +278,5 @@ extension ManageAccountView {
         case deleteCloudBackup
 
         var id: Self { self }
-    }
-
-    struct UnlinkView: View {
-        @Binding var isPresented: Bool
-        let onUnlink: () -> Void
-
-        @State private var checkedIndices = Set<Int>()
-
-        private let items = [
-            "settings_manage_keys.delete.confirmation_remove".localized,
-            "settings_manage_keys.delete.confirmation_loose".localized,
-        ]
-
-        var body: some View {
-            VStack(spacing: 0) {
-                BottomSheetView.TitleView(
-                    icon: .trash,
-                    title: "settings_manage_keys.delete.title".localized,
-                    isPresented: $isPresented
-                )
-
-                ListSection {
-                    ForEach(0 ..< items.count, id: \.self) { index in
-                        ClickableRow(action: {
-                            if checkedIndices.contains(index) {
-                                checkedIndices.remove(index)
-                            } else {
-                                checkedIndices.insert(index)
-                            }
-                        }) {
-                            Image(checkedIndices.contains(index) ? "checkbox_active_24" : "checkbox_diactive_24")
-                            Text(items[index]).themeSubhead2(color: .themeLeah)
-                        }
-                    }
-                }
-                .themeListStyle(.bordered)
-                .padding(.horizontal, .margin16)
-                .padding(.bottom, .margin24)
-
-                VStack(spacing: .margin12) {
-                    Button(
-                        action: onUnlink,
-                        label: {
-                            Text("security_settings.delete_alert_button".localized)
-                        }
-                    )
-                    .buttonStyle(PrimaryButtonStyle(style: .red))
-                    .disabled(checkedIndices.count < items.count)
-                }
-                .padding(.horizontal, .margin24)
-            }
-            .padding(.bottom, .margin24)
-        }
     }
 }

@@ -23,7 +23,6 @@ enum ReceiveAddressModule {
 
     struct DescriptionItem {
         let text: String
-        let style: HighlightedTextView.Style
     }
 
     struct PopupWarningItem: Equatable, Identifiable {
@@ -40,10 +39,7 @@ enum ReceiveAddressModule {
             title + description.text
         }
 
-        enum Mode {
-            case done(title: String)
-            case activateStellarAsset
-        }
+        class Mode {}
     }
 
     enum PopupWarning: Equatable {
@@ -78,29 +74,11 @@ enum ReceiveAddressModule {
         let style: HighlightedDescriptionBaseView.Style
     }
 
-    enum AddressType: Int, Comparable {
-        case external
-        case change
-
-        var title: String {
-            switch self {
-            case .external: return "receive_used_addresses.external".localized
-            case .change: return "receive_used_addresses.change".localized
-            }
-        }
-
-        static func < (lhs: AddressType, rhs: AddressType) -> Bool { lhs.rawValue < rhs.rawValue }
-    }
-
     struct ViewItem {
         let copyValue: String
         let highlightedDescription: HighlightedDescription?
         let qrItem: QrItem
         let amount: String?
-        let active: Bool
-        let assetActivated: Bool
-        let memo: String?
-        let usedAddresses: [AddressType: [UsedAddress]]?
 
         static func empty(address: String) -> Self {
             .init(
@@ -108,10 +86,6 @@ enum ReceiveAddressModule {
                 highlightedDescription: nil,
                 qrItem: .init(address: address, uri: nil, networkName: nil),
                 amount: nil,
-                active: true,
-                assetActivated: true,
-                memo: nil,
-                usedAddresses: nil
             )
         }
     }
@@ -119,6 +93,21 @@ enum ReceiveAddressModule {
 
 extension ReceiveAddressModule {
     static func addressProvider(wallet: Wallet) -> ICurrentAddressProvider {
-        ReceiveAddressService(wallet: wallet, adapterManager: Core.shared.adapterManager)
+        BaseReceiveAddressService(wallet: wallet)
+    }
+
+    @ViewBuilder static func instance(wallet: Wallet, path: Binding<NavigationPath>, onDismiss: (() -> Void)? = nil) -> some View {
+        switch wallet.token.blockchainType {
+        case .bitcoin, .bitcoinCash, .litecoin, .dash, .ecash: HDReceiveAddressView(wallet: wallet, onDismiss: onDismiss)
+        case .tron: TronReceiveAddressView(wallet: wallet, onDismiss: onDismiss)
+        case .stellar: StellarReceiveAddressView(wallet: wallet, onDismiss: onDismiss)
+        case .monero: MoneroReceiveAddressView(wallet: wallet, onDismiss: onDismiss)
+        case .zcash: ZcashReceiveAddressSelectView(wallet: wallet, path: path, onDismiss: onDismiss)
+        default:
+            let service = BaseReceiveAddressService(wallet: wallet)
+            let viewModel = BaseReceiveAddressViewModel(service: service, viewItemFactory: ReceiveAddressViewItemFactory(), decimalParser: AmountDecimalParser())
+
+            BaseReceiveAddressView(viewModel: viewModel, content: {}, onDismiss: onDismiss)
+        }
     }
 }

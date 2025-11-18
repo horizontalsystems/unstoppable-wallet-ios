@@ -9,21 +9,22 @@ import ObjectMapper
 import SwiftUI
 
 class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
-    private let networkManager = Core.shared.networkManager
+    let networkManager = Core.shared.networkManager
+    let adapterManager = Core.shared.adapterManager
     // private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
     private let marketKit = Core.shared.marketKit
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let btcBlockchainManager = Core.shared.btcBlockchainManager
     private let accountManager = Core.shared.accountManager
-    private let adapterManager = Core.shared.adapterManager
     private let localStorage = Core.shared.localStorage
-    private let storage: MultiSwapSettingStorage
     private let allowanceHelper = MultiSwapAllowanceHelper()
     private let evmFeeEstimator = EvmFeeEstimator()
     private let utxoFilters = UtxoFilters(
         scriptTypes: [.p2pkh, .p2wpkhSh, .p2wpkh],
         maxOutputsCountForInputs: 10
     )
+
+    let storage: MultiSwapSettingStorage
 
     var assets = [Asset]()
 
@@ -82,7 +83,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 slippage: slippage,
                 allowanceState: allowanceHelper.allowanceState(spenderAddress: .init(raw: router), token: tokenIn, amount: amountIn)
             )
-        case .bitcoin, .bitcoinCash, .dash, .litecoin:
+        case .bitcoin, .bitcoinCash, .dash, .litecoin, .zcash:
             return ThorChainMultiSwapBtcQuote(
                 swapQuote: swapQuote,
                 recipient: storage.recipient(blockchainType: blockchainType),
@@ -219,17 +220,10 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 }
             },
             set: { [weak self] newValue in
-                let successBlock = { [weak self] in
+                Coordinator.shared.performAfterPurchase(premiumFeature: .vipSupport, page: .swap, trigger: .mevProtection) {
                     self?.useMevProtection = newValue
                     self?.localStorage.useMevProtection = newValue
                 }
-
-                guard Core.shared.purchaseManager.activated(.vipSupport) else {
-                    // Coordinator.shared.presentPurchases(onSuccess: successBlock)
-                    return
-                }
-
-                successBlock()
             }
         )
 
@@ -238,7 +232,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         ], isList: false)]
     }
 
-    private func settingsView(tokenOut: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
+    func settingsView(tokenOut: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
         let view = ThemeNavigationStack {
             RecipientAndSlippageMultiSwapSettingsView(tokenOut: tokenOut, storage: storage, slippageMode: .adjustable, onChangeSettings: onChangeSettings)
         }
@@ -296,7 +290,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    private func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil) async throws -> SwapQuote {
+    func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil, params: Parameters? = nil) async throws -> SwapQuote {
         guard let assetIn = assets.first(where: { $0.token == tokenIn }) else {
             throw SwapError.unsupportedTokenIn
         }
@@ -306,7 +300,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         }
 
         let amount = (amountIn * pow(10, 8)).roundedDown(decimal: 0)
-        let destination = try resolveDestination(token: tokenOut)
+        let destination = try await resolveDestination(token: tokenOut)
 
         var parameters: Parameters = [
             "from_asset": assetIn.id,
@@ -326,15 +320,21 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             parameters["affiliate_bps"] = affiliateBps
         }
 
+        if let params {
+            parameters.merge(params) { _, custom in
+                custom
+            }
+        }
+
         return try await networkManager.fetch(url: "\(baseUrl)/quote/swap", parameters: parameters)
     }
 
-    private func resolveDestination(token: Token) throws -> String {
+    func resolveDestination(token: Token) async throws -> String {
         if let recipient = storage.recipient(blockchainType: token.blockchainType) {
             return recipient.raw
         }
 
-        return try DestinationHelper.resolveDestination(token: token)
+        return try await DestinationHelper.resolveDestination(token: token).address
     }
 
     private func syncPools() {
@@ -405,7 +405,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         case "DASH": return .dash
         case "ETH": return .ethereum
         case "LTC": return .litecoin
-        // case "ZEC": return .zcash
+        case "ZEC": return .zcash
         default: return nil
         }
     }
@@ -465,6 +465,7 @@ extension BaseThorChainMultiSwapProvider {
         case noGasLimit
         case noEvmKitWrapper
         case noBitcoinAdapter
+        case noZcashAdapter
         case noSendParameters
     }
 }

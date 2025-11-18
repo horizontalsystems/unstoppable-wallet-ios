@@ -200,17 +200,15 @@ struct AccountsLostView: View {
 
     var body: some View {
         BottomSheetView(
-            icon: .warning,
-            title: "lost_accounts.warning_title".localized,
             items: [
+                .title(icon: ThemeImage.warning, title: "lost_accounts.warning_title".localized),
                 .text(text: "lost_accounts.warning_message".localized(records.map { "- \($0.name)" }.joined(separator: "\n"))),
+                .buttonGroup(.init(buttons: [
+                    .init(style: .yellow, title: "button.i_understand".localized) {
+                        isPresented = false
+                    },
+                ])),
             ],
-            buttons: [
-                .init(style: .yellow, title: "button.i_understand".localized) {
-                    isPresented = false
-                },
-            ],
-            isPresented: $isPresented
         )
     }
 }

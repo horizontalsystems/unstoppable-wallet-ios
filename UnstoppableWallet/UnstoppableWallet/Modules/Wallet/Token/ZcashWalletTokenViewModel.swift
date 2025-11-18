@@ -4,22 +4,26 @@ import RxSwift
 
 class ZcashWalletTokenViewModel: ObservableObject {
     private let balanceHiddenManager = Core.shared.balanceHiddenManager
+    private let restoreSettingsService = RestoreSettingsService(manager: Core.shared.restoreSettingsManager)
     private let adapter: ZcashAdapter
 
     private var cancellables = Set<AnyCancellable>()
     private let disposeBag = DisposeBag()
 
-    @Published var zcashBalanceData: ZcashAdapter.ZcashBalanceData
+    let wallet: Wallet
+
+    @Published var zCashBalanceData: ZcashBalanceData
     @Published var balanceHidden: Bool
 
-    init(adapter: ZcashAdapter) {
+    init(adapter: ZcashAdapter, wallet: Wallet) {
         self.adapter = adapter
-        zcashBalanceData = adapter.zcashBalanceData
+        self.wallet = wallet
+        zCashBalanceData = adapter.zCashBalanceData
         balanceHidden = balanceHiddenManager.balanceHidden
 
-        adapter.$zcashBalanceData
+        adapter.$zCashBalanceData
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] in self?.zcashBalanceData = $0 }
+            .sink { [weak self] in self?.zCashBalanceData = $0 }
             .store(in: &cancellables)
 
         balanceHiddenManager.balanceHiddenObservable

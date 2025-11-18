@@ -8,6 +8,7 @@ struct AddressView: View {
     private let onFinish: (ResolvedAddress) -> Void
 
     @Environment(\.presentationMode) private var presentationMode
+    @Environment(\.addressParserFilter) private var parserFilter
 
     var borderColor: Color {
         switch viewModel.addressResult {
@@ -33,6 +34,7 @@ struct AddressView: View {
                         ),
                         text: $viewModel.address,
                         result: $viewModel.addressResult,
+                        parserFilter: parserFilter,
                         borderColor: Binding(get: { borderColor }, set: { _ in })
                     )
                     .padding(.bottom, .margin12)
@@ -182,5 +184,16 @@ struct AddressView: View {
         }
 
         return (title, disabled, showProgress)
+    }
+}
+
+private struct AddressParserFilterKey: EnvironmentKey {
+    static let defaultValue: AddressParserFactory.ParserFilter? = nil
+}
+
+extension EnvironmentValues {
+    var addressParserFilter: AddressParserFactory.ParserFilter? {
+        get { self[AddressParserFilterKey.self] }
+        set { self[AddressParserFilterKey.self] = newValue }
     }
 }

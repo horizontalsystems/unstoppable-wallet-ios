@@ -38,7 +38,7 @@ struct BaseWalletTokenView<Content: View>: View {
                                 Image("warning_filled").icon(colorStyle: .red)
                             }
                         }
-                    case let .syncing(progress, _), let .customSyncing(_, _, progress):
+                    case let .syncing(progress, _, _), let .customSyncing(_, _, progress):
                         ProgressView(value: max(0.1, Float(progress ?? 10) / 100))
                             .progressViewStyle(DeterminiteSpinnerStyle())
                             .frame(width: 20, height: 20)

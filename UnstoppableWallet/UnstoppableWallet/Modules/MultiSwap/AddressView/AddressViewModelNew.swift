@@ -32,9 +32,9 @@ class AddressViewModelNew: ObservableObject {
 
     @Published var checkingState: RightChecking.State = .idle
 
-    init(initial: AddressInput.Initial) {
+    init(initial: AddressInput.Initial, parserFilter: AddressParserFactory.ParserFilter?) {
         addressUriParser = AddressParserFactory.parser(blockchainType: initial.blockchainType, tokenType: nil)
-        parserChain = AddressParserFactory.parserChain(blockchainType: initial.blockchainType)
+        parserChain = AddressParserFactory.parserChain(blockchainType: initial.blockchainType, filter: parserFilter)
 
         blockchainType = initial.blockchainType
 

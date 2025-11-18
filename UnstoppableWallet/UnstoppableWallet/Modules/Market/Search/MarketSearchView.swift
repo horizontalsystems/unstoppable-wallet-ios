@@ -30,9 +30,13 @@ struct MarketSearchView: View {
                     }
                 }
             case let .searchResults(fullCoins):
-                ThemeList {
-                    ListForEach(fullCoins) { fullCoin in
-                        itemContent(fullCoin: fullCoin)
+                if fullCoins.isEmpty {
+                    PlaceholderViewNew(icon: "warning_filled", subtitle: "alert.not_founded".localized)
+                } else {
+                    ThemeList {
+                        ListForEach(fullCoins) { fullCoin in
+                            itemContent(fullCoin: fullCoin)
+                        }
                     }
                 }
             }

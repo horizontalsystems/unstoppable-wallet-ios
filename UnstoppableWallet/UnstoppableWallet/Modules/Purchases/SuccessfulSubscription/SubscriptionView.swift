@@ -148,18 +148,18 @@ struct SubscriptionView: View {
 
     @ViewBuilder private func infoView(viewItem: PurchasesViewModel.ViewItem, isPresented: Binding<Bool>) -> some View {
         BottomSheetView(
-            icon: .local(name: viewItem.iconName, tint: .themeJacob),
-            title: "purchases.\(viewItem.title)".localized,
-            titleColor: .themeJacob,
             items: [
+                .title(
+                    icon: ComponentImage(viewItem.iconName, size: .iconSize72, colorStyle: .yellow),
+                    title: ComponentText(text: "purchases.\(viewItem.title)".localized, colorStyle: .yellow)
+                ),
                 .text(text: "purchases.\(viewItem.title).info".localized),
+                .buttonGroup(.init(buttons: [
+                    .init(style: .yellow, title: "button.close".localized) {
+                        isPresented.wrappedValue = false
+                    },
+                ])),
             ],
-            buttons: [
-                .init(style: .yellow, title: "button.close".localized) {
-                    isPresented.wrappedValue = false
-                },
-            ],
-            isPresented: isPresented
         )
     }
 

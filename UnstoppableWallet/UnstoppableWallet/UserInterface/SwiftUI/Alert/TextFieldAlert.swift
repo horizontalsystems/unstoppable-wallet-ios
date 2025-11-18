@@ -41,6 +41,7 @@ class TextFieldAlertViewController: UIViewController {
             guard let self else { return }
             textField.keyboardType = .decimalPad
             textField.text = text
+            textField.tintColor = .themeInputFieldTintColor
             subscription = NotificationCenter.default
                 .publisher(for: UITextField.textDidChangeNotification, object: textField)
                 .map { ($0.object as? UITextField)?.text ?? "" }

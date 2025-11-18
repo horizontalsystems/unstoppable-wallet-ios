@@ -2,7 +2,7 @@ import SwiftUI
 
 struct RightMultiText: View {
     var eyebrow: CustomStringConvertible?
-    let title: CustomStringConvertible?
+    var title: CustomStringConvertible?
     var subtitle: CustomStringConvertible?
     var description: CustomStringConvertible?
 

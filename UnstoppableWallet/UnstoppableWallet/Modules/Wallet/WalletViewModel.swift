@@ -161,7 +161,7 @@ extension WalletViewModel {
         }
 
         Coordinator.shared.present { _ in
-            ReceiveView(account: account).ignoresSafeArea()
+            ReceiveCoinListView(account: account)
         }
         stat(page: .balance, event: .open(page: .receiveTokenList))
     }

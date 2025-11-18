@@ -64,6 +64,7 @@ struct DonateTokenListView: View {
                     handler: SendHandlerFactory.preSendHandler(wallet: data.wallet, address: resolvedAddress),
                     resolvedAddress: resolvedAddress,
                     addressVisible: false,
+                    path: $path,
                     onDismiss: {
                         isPresented = false
                     }

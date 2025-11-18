@@ -45,7 +45,7 @@ extension BlockchainType {
         .stellar,
         .tron,
         .zkSync,
-        // .zcash,
+        .zcash,
     ]
 
     func placeholderImageName(tokenProtocol: TokenProtocol?) -> String {
