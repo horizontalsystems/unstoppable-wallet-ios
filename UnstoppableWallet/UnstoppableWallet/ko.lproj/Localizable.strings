@@ -360,9 +360,6 @@
 "balance.token.not_relayed" = "방송";
 "balance.token.not_relayed.info.title" = "방송";
 "balance.token.not_relayed.info.description" = "이 금액을 보유한 거래는 방송되었지만 아직 네트워크에서 수락되지 않았습니다.";
-"balance.token.processing" = "처리 중";
-"balance.token.processing.info.title" = "처리 중인 금액";
-"balance.token.processing.info.description" = "이 금액의 거래가 여전히 동기화 중입니다. 거래가 확인되면 이 토큰들은 사용할 수 있게 됩니다.";
 "balance.token.transparent" = "透明";
 "balance.token.transparent.info.title" = "투명 잔액";
 "balance.token.transparent.info.item" = "투명 잔액";
