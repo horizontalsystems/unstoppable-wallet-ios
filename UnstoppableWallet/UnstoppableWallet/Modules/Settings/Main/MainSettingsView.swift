@@ -385,12 +385,7 @@ struct MainSettingsView: View {
     @ViewBuilder private func vipSupport() -> some View {
         ClickableRow(action: {
             Coordinator.shared.performAfterPurchase(premiumFeature: .vipSupport, page: .settings, trigger: .vipSupport) {
-                Coordinator.shared.present(type: .bottomSheet) { _ in
-                    SupportView { telegramUrl in
-                        UrlManager.open(url: telegramUrl)
-                    }
-                }
-
+                UrlManager.open(url: MainSettingsViewModel.supportLink)
                 stat(page: .settings, event: .open(page: .vipSupport))
             }
         }) {

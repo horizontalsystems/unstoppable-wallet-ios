@@ -4,6 +4,7 @@ import MarketKit
 import RxSwift
 
 class MainSettingsViewModel: ObservableObject {
+    static let supportLink = "https://t.me/m/-uTI4HwKZWNi"
     private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
 
