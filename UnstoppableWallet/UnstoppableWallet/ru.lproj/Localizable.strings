@@ -364,9 +364,6 @@
 "balance.token.not_relayed" = "Трансляция";
 "balance.token.not_relayed.info.title" = "Передача";
 "balance.token.not_relayed.info.description" = "Транзакция, содержащая эту сумму, транслирована, но еще не принята сетью";
-"balance.token.processing" = "В процессе";
-"balance.token.processing.info.title" = "Обрабатываемая сумма";
-"balance.token.processing.info.description" = "Транзакции с этой суммой все еще синхронизируются. Когда они будут подтверждены, эти токены будут доступны для траты";
 "balance.token.transparent" = "Transparent";
 "balance.token.transparent.info.title" = "Transparent баланс";
 "balance.token.transparent.info.item" = "Transparent баланс";
