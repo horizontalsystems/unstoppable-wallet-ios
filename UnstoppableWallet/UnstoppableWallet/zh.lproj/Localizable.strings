@@ -362,9 +362,6 @@
 "balance.token.not_relayed" = "广播";
 "balance.token.not_relayed.info.title" = "广播";
 "balance.token.not_relayed.info.description" = "此金额的交易已广播，但尚未被网络接受。";
-"balance.token.processing" = "正在处理";
-"balance.token.processing.info.title" = "处理金额";
-"balance.token.processing.info.description" = "此金额的交易仍然在同步。当它们被确认时，这些代币将用于支出";
 "balance.token.transparent" = "透明";
 "balance.token.transparent.info.title" = "透明余额";
 "balance.token.transparent.info.item" = "透明余额";
