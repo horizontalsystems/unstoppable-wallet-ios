@@ -1990,7 +1990,6 @@
 		6BA8D24D2D5CA7DC0093D5C2 /* SupportViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA8D24B2D5CA7DC0093D5C2 /* SupportViewModel.swift */; };
 		6BA8D24F2D5CA7E80093D5C2 /* SupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA8D24E2D5CA7E80093D5C2 /* SupportView.swift */; };
 		6BA8D2502D5CA7E80093D5C2 /* SupportView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA8D24E2D5CA7E80093D5C2 /* SupportView.swift */; };
-		6BA971852ECB244900DEC017 /* ZcashTransparentAlertState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971842ECB243C00DEC017 /* ZcashTransparentAlertState.swift */; };
 		6BA9718F2ECB3B7B00DEC017 /* ZcashBalanceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA9718A2ECB3B7B00DEC017 /* ZcashBalanceData.swift */; };
 		6BA971902ECB3B7B00DEC017 /* ZcashTransactionPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA9718B2ECB3B7B00DEC017 /* ZcashTransactionPool.swift */; };
 		6BA971912ECB3B7B00DEC017 /* ZcashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971882ECB3B7B00DEC017 /* ZcashAdapter.swift */; };
@@ -1999,6 +1998,11 @@
 		6BA971942ECB3B7B00DEC017 /* ZcashTransactionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA9718C2ECB3B7B00DEC017 /* ZcashTransactionWrapper.swift */; };
 		6BA9719C2ECB3C3000DEC017 /* ZcashTransparentAlertState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA9719B2ECB3C3000DEC017 /* ZcashTransparentAlertState.swift */; };
 		6BA9719D2ECB3C3000DEC017 /* ZcashTransparentAlertState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA9719B2ECB3C3000DEC017 /* ZcashTransparentAlertState.swift */; };
+		6BA9719E2ECCCB8300DEC017 /* ZcashAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971882ECB3B7B00DEC017 /* ZcashAdapter.swift */; };
+		6BA9719F2ECCCB8800DEC017 /* ZcashAdapterStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971892ECB3B7B00DEC017 /* ZcashAdapterStorage.swift */; };
+		6BA971A02ECCCB8C00DEC017 /* ZcashBalanceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA9718A2ECB3B7B00DEC017 /* ZcashBalanceData.swift */; };
+		6BA971A12ECCCB9200DEC017 /* ZcashTransactionPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA9718B2ECB3B7B00DEC017 /* ZcashTransactionPool.swift */; };
+		6BA971A22ECCCB9600DEC017 /* ZcashTransactionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA9718C2ECB3B7B00DEC017 /* ZcashTransactionWrapper.swift */; };
 		6BAAF3472B9B245C00EFE5B2 /* ShimmerEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3442B9B245C00EFE5B2 /* ShimmerEffect.swift */; };
 		6BAAF3492B9B245C00EFE5B2 /* SlideButtonStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3452B9B245C00EFE5B2 /* SlideButtonStyling.swift */; };
 		6BAAF34B2B9B245C00EFE5B2 /* SlideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3462B9B245C00EFE5B2 /* SlideButton.swift */; };
@@ -11926,6 +11930,7 @@
 				D384068121831B3D007D50AD /* SecuritySettingsViewModel.swift in Sources */,
 				D0DEFF042BD1253C004C9DF0 /* BitcoinFeeSettingsViewModel.swift in Sources */,
 				D384068221831B3D007D50AD /* BitcoinAdapter.swift in Sources */,
+				6BA9719E2ECCCB8300DEC017 /* ZcashAdapter.swift in Sources */,
 				6B45874F2E290298008F87E7 /* MarketEtfViewModelFactory.swift in Sources */,
 				D384068921831B3D007D50AD /* KeyboardObservingViewController.swift in Sources */,
 				D384069021831B3D007D50AD /* Date.swift in Sources */,
@@ -12352,6 +12357,7 @@
 				11B35F73153DEE805DD539CE /* EvmNetworkViewController.swift in Sources */,
 				11B35B507F2F843A5B3E4C7C /* EvmNetworkViewModel.swift in Sources */,
 				D3FBC7122E534C11001083D8 /* WatchSelectView.swift in Sources */,
+				6BA971A22ECCCB9600DEC017 /* ZcashTransactionWrapper.swift in Sources */,
 				11B35B81B3C6EDC01D0B3C1F /* EvmNetworkService.swift in Sources */,
 				11B35EA3CBC8B198C3A71382 /* EvmNetworkModule.swift in Sources */,
 				6B71E9BF2E4CC6700097E234 /* RecipientMultiSwapSettingsView.swift in Sources */,
@@ -12373,7 +12379,6 @@
 				58AAA71839C54D05E04BC2EC /* UniswapSettingsDataSource.swift in Sources */,
 				6BCD53082A161F4100993F20 /* ICloudBackupNameService.swift in Sources */,
 				58AAA50BFCE894B7650F28B0 /* OneInchSettingsDataSource.swift in Sources */,
-				6BA971852ECB244900DEC017 /* ZcashTransparentAlertState.swift in Sources */,
 				58AAA9771EA29EC8CDA33C58 /* OneInchSettingsModule.swift in Sources */,
 				58AAA96EA2327421BB3A115B /* SwapDeadlineViewModel.swift in Sources */,
 				D09D768E2A2E06D6004311E6 /* SendTronConfirmationViewController.swift in Sources */,
@@ -12549,6 +12554,7 @@
 				ABC9ADF2CFB90B882B5DE3F9 /* WalletConnectService.swift in Sources */,
 				ABC9A4F4B7F17169DC240A98 /* WalletConnectUriHandler.swift in Sources */,
 				ABC9AA27A709AC5F85176A53 /* WalletConnectModule.swift in Sources */,
+				6BA971A02ECCCB8C00DEC017 /* ZcashBalanceData.swift in Sources */,
 				6BB14F7D2C05FBAF00E879B2 /* MarketTvlView.swift in Sources */,
 				6B44BE642EB1C00900257FD7 /* ButtonGroupViewModel.swift in Sources */,
 				ABC9ABC375B65451761D4766 /* SendFeeViewModel.swift in Sources */,
@@ -12732,6 +12738,7 @@
 				D3FBC70E2E533F78001083D8 /* WatchView.swift in Sources */,
 				11B354FF8C01ADB837FBAC82 /* RecoveryPhraseViewController.swift in Sources */,
 				11B356DC58C5312D5034D30E /* RecoveryPhraseViewModel.swift in Sources */,
+				6BA971A12ECCCB9200DEC017 /* ZcashTransactionPool.swift in Sources */,
 				11B35C3418D6E7D94CB5C2AF /* RecoveryPhraseService.swift in Sources */,
 				6BE57E7A2E339D17003C4C01 /* MerlkeTransactionHashStorage.swift in Sources */,
 				6BE57E7B2E339D17003C4C01 /* MerkleRpcBlockchain.swift in Sources */,
@@ -13134,6 +13141,7 @@
 				6B1D8ECD2DEADF7F00A52B01 /* SecondaryCircleButtonComponent.swift in Sources */,
 				6B1D8ECE2DEADF7F00A52B01 /* SliderButton.swift in Sources */,
 				6B1D8ECF2DEADF7F00A52B01 /* PrimaryButtonComponent.swift in Sources */,
+				6BA9719F2ECCCB8800DEC017 /* ZcashAdapterStorage.swift in Sources */,
 				6B1D8ED02DEADF7F00A52B01 /* SpinnerComponent.swift in Sources */,
 				6B1D8ED12DEADF7F00A52B01 /* SubtitleHeaderFooterView.swift in Sources */,
 				6B1D8ED22DEADF7F00A52B01 /* SecondaryCircleButton.swift in Sources */,
