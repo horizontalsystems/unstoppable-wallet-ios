@@ -256,12 +256,7 @@ class MultiSwapViewModel: ObservableObject {
 
     @Published var quotes: [Quote] = [] {
         didSet {
-            if let featuredQuote = quotes.first(where: { $0.provider is OneInchMultiSwapProvider }) {
-                bestQuote = featuredQuote
-            } else {
-                bestQuote = quotes.max { $0.quote.amountOut < $1.quote.amountOut }
-            }
-
+            bestQuote = quotes.first
             syncCurrentQuote()
 
             timer?.invalidate()
@@ -430,7 +425,12 @@ class MultiSwapViewModel: ObservableObject {
                 return quotes
             }
 
-            let quotes = optionalQuotes.compactMap { $0 }.sorted { $0.quote.amountOut > $1.quote.amountOut }
+            let quotes = optionalQuotes.compactMap { $0 }.sorted {
+                if $0.provider.priority != $1.provider.priority {
+                    return $0.provider.priority > $1.provider.priority
+                }
+                return $0.quote.amountOut > $1.quote.amountOut
+            }
 
             if !Task.isCancelled {
                 await MainActor.run { [weak self, quotes] in

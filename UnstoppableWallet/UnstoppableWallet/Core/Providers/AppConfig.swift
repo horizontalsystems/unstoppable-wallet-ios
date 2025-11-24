@@ -139,6 +139,11 @@ enum AppConfig {
         (Bundle.main.object(forInfoDictionaryKey: "OneInchApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
 
+    static var unstoppableSwapApiKey: String {
+        "44fc76602e17e0c8259b6ce3bae3ca90804c6fd8f42ca00e6943a6b1ba7fe242"
+//        (Bundle.main.object(forInfoDictionaryKey: "UnstoppableSwapApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
+    }
+
     static var oneInchCommissionAddress: String? {
         (Bundle.main.object(forInfoDictionaryKey: "OneInchCommissionAddress") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }

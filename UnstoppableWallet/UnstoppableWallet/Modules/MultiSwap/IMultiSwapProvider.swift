@@ -6,6 +6,7 @@ protocol IMultiSwapProvider {
     var id: String { get }
     var name: String { get }
     var icon: String { get }
+    var priority: Int { get }
     func supports(tokenIn: Token, tokenOut: Token) -> Bool
     func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> IMultiSwapQuote
     func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote

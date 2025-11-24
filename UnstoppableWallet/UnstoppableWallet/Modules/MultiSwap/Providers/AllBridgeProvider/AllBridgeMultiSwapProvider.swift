@@ -88,6 +88,8 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         "allbridge_32"
     }
 
+    let priority = 10
+
     private func syncPools() {
         Task { [weak self, networkManager, baseUrl] in
             do {

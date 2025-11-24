@@ -29,6 +29,10 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         fatalError("Must be implemented in subclass")
     }
 
+    var priority: Int {
+        100
+    }
+
     func supports(tokenIn _: Token, tokenOut _: Token) -> Bool {
         fatalError("Must be implemented in subclass")
     }

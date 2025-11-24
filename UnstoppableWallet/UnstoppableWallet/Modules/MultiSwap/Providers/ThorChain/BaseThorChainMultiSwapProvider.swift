@@ -51,6 +51,10 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         fatalError("Must be overridden by subclass")
     }
 
+    var priority: Int {
+        10
+    }
+
     var affiliate: String? {
         nil
     }
