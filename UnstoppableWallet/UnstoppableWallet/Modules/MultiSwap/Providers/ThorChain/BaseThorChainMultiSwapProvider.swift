@@ -20,8 +20,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     private let allowanceHelper = MultiSwapAllowanceHelper()
     private let evmFeeEstimator = EvmFeeEstimator()
     private let utxoFilters = UtxoFilters(
-        scriptTypes: [.p2pkh, .p2wpkhSh, .p2wpkh],
-        maxOutputsCountForInputs: 10
+        scriptTypes: [.p2pkh, .p2wpkhSh, .p2wpkh]
     )
 
     let storage: MultiSwapSettingStorage
