@@ -2350,11 +2350,11 @@
 
 // Black Friday
 
-"premium.cell.black_friday.description" = "Upgrade to %@ with our biggest discount of the year";
-"premium.black_friday.discount.save" = "save";
-"purchase.black_friday.period.lifetime" = "lifetime access";
-"purchase.black_friday.period.per_month" = "per month";
-"purchase.black_friday.period.per_year" = "per year";
+"premium.cell.black_friday.description" = "올해 최대 할인으로 %@로 업그레이드하세요";
+"premium.black_friday.discount.save" = "절약";
+"purchase.black_friday.period.lifetime" = "평생 이용";
+"purchase.black_friday.period.per_month" = "월별";
+"purchase.black_friday.period.per_year" = "연간";
 
 // Purchases
 
@@ -2368,22 +2368,22 @@
 
 "purchases.title" = "프리미엄";
 "purchases.description" = "플랜 선택";
-"purchases.type.pro" = "Pro";
+"purchases.type.pro" = "프로";
 "purchases.type.vip" = "VIP";
 
 // Defense System
-"purchases.defense_system" = "Defense System";
-"purchases.secure_send" = "Secure Send";
-"purchases.secure_send.description" = "Warns you about risky addresses.";
+"purchases.defense_system" = "방어 시스템";
+"purchases.secure_send" = "안전 전송";
+"purchases.secure_send.description" = "위험한 주소에 대해 경고합니다.";
 "purchases.scam_protection" = "스캠 보호";
-"purchases.scam_protection.description" = "Lets you know if a dApp site is fake.";
-"purchases.loss_protection" = "Loss Protection";
-"purchases.loss_protection.description" = "Stops bots from stealing in swaps.";
-"purchases.robbery_protection" = "Robbery Protection";
-"purchases.robbery_protection.description" = "Protects funds if you’re forced to open the app.";
+"purchases.scam_protection.description" = "dApp 사이트가 위조된 경우 알려줍니다.";
+"purchases.loss_protection" = "손실 방지";
+"purchases.loss_protection.description" = "스왑 중 봇이 자금을 탈취하지 못하도록 차단합니다.";
+"purchases.robbery_protection" = "강제 상황 보호";
+"purchases.robbery_protection.description" = "강제로 앱을 열어야 하는 상황에서도 자금을 보호합니다.";
 
 // Market Insights
-"purchases.market_insights" = "Market Insights";
+"purchases.market_insights" = "시장 인사이트";
 "purchases.token_insights" = "분석";
 "purchases.token_insights.description" = "주요 기준별 상위 100개 목록 접근";
 "purchases.token_insights.info" = "심층 분석을 위한 올인원 도구입니다. 거래량, 거래소 유동성, 보유자 행동 패턴 및 온체인 트렌드를 기반으로 엄선된 상위 250개 토큰 목록을 한눈에 살펴보세요. 필터링, 분석하고 항상 앞서 나가세요.";
@@ -2414,7 +2414,7 @@
 "purchase.period.monthly" = "월간";
 "purchase.period.onetime" = "일회성 결제";
 "purchase.period.onetime.description" = "평생 이용 가능";
-"purchase.period.save" = "save";
+"purchase.period.save" = "절약";
 "purchase.period.year" = "년";
 "purchase.period.month" = "월";
 "purchase.period.description1" = "처음 7일 무료 체험 제공.";
