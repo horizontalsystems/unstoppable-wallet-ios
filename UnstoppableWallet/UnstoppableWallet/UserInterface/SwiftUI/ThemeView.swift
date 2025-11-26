@@ -49,7 +49,11 @@ struct ScrollableThemeView<Content: View>: View {
 
 struct ThemeRadialView<Content: View>: View {
     @ViewBuilder let content: Content
+
     private let circleDiameter: CGFloat = 250
+    var yellow = true
+    var orange = true
+    var blue = true
 
     var body: some View {
         GeometryReader { proxy in
@@ -62,23 +66,29 @@ struct ThemeRadialView<Content: View>: View {
 
                     let deltaHeight = (windowSize.height - viewSize.height) / 2
 
-                    Circle()
-                        .fill(Color(hex: 0xEDD716, alpha: 0.6))
-                        .frame(width: circleDiameter, height: circleDiameter)
-                        .blur(radius: 100)
-                        .offset(x: -1 * viewSize.width / 2, y: deltaHeight - circleDiameter / 2)
+                    if yellow {
+                        Circle()
+                            .fill(Color(hex: 0xEDD716, alpha: 0.6))
+                            .frame(width: circleDiameter, height: circleDiameter)
+                            .blur(radius: 100)
+                            .offset(x: -1 * viewSize.width / 2, y: deltaHeight - circleDiameter / 2)
+                    }
 
-                    Circle()
-                        .fill(Color(hex: 0xFF9B26, alpha: 0.7))
-                        .frame(width: circleDiameter, height: circleDiameter)
-                        .blur(radius: 150)
-                        .offset(x: 0, y: deltaHeight)
+                    if orange {
+                        Circle()
+                            .fill(Color(hex: 0xFF9B26, alpha: 0.7))
+                            .frame(width: circleDiameter, height: circleDiameter)
+                            .blur(radius: 150)
+                            .offset(x: 0, y: deltaHeight)
+                    }
 
-                    Circle()
-                        .fill(Color(hex: 0x003C74))
-                        .frame(width: circleDiameter, height: circleDiameter)
-                        .blur(radius: 150)
-                        .offset(x: viewSize.width / 2, y: deltaHeight + circleDiameter / 2)
+                    if blue {
+                        Circle()
+                            .fill(Color(hex: 0x003C74))
+                            .frame(width: circleDiameter, height: circleDiameter)
+                            .blur(radius: 150)
+                            .offset(x: viewSize.width / 2, y: deltaHeight + circleDiameter / 2)
+                    }
                 }
 
                 content
