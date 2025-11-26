@@ -2353,11 +2353,11 @@
 
 // Black Friday
 
-"premium.cell.black_friday.description" = "Upgrade to %@ with our biggest discount of the year";
-"premium.black_friday.discount.save" = "save";
-"purchase.black_friday.period.lifetime" = "lifetime access";
-"purchase.black_friday.period.per_month" = "per month";
-"purchase.black_friday.period.per_year" = "per year";
+"premium.cell.black_friday.description" = "Обновитесь до %@ с нашей самой большой скидкой года";
+"premium.black_friday.discount.save" = "экономия";
+"purchase.black_friday.period.lifetime" = "пожизненный доступ";
+"purchase.black_friday.period.per_month" = "в месяц";
+"purchase.black_friday.period.per_year" = "в год";
 
 // Purchases
 
@@ -2375,18 +2375,18 @@
 "purchases.type.vip" = "VIP";
 
 // Defense System
-"purchases.defense_system" = "Defense System";
-"purchases.secure_send" = "Secure Send";
-"purchases.secure_send.description" = "Warns you about risky addresses.";
+"purchases.defense_system" = "Система защиты";
+"purchases.secure_send" = "Безопасная отправка";
+"purchases.secure_send.description" = "Предупреждает о рискованных адресах.";
 "purchases.scam_protection" = "Scam-защита";
-"purchases.scam_protection.description" = "Lets you know if a dApp site is fake.";
-"purchases.loss_protection" = "Loss Protection";
-"purchases.loss_protection.description" = "Stops bots from stealing in swaps.";
-"purchases.robbery_protection" = "Robbery Protection";
-"purchases.robbery_protection.description" = "Protects funds if you’re forced to open the app.";
+"purchases.scam_protection.description" = "Сообщает, если сайт dApp - фальшивый.";
+"purchases.loss_protection" = "Защита от потери";
+"purchases.loss_protection.description" = "Блокирует действия ботов, ворующих средства во время свапов.";
+"purchases.robbery_protection" = "Защита при ограблении";
+"purchases.robbery_protection.description" = "Сохраняет средства, если вас заставили открыть приложение.";
 
 // Market Insights
-"purchases.market_insights" = "Market Insights";
+"purchases.market_insights" = "Аналитика рынка";
 "purchases.token_insights" = "Аналитика";
 "purchases.token_insights.description" = "Доступ к топ-100 спискам по ключевым критериям";
 "purchases.token_insights.info" = "Ваш универсальный инструмент для глубокого анализа. Просматривайте подборку Top 250 токенов на основе объема торгов, ликвидности бирж, поведения держателей и трендов в сети — все в одном месте. Фильтруйте, анализируйте и оставайтесь впереди.";
@@ -2417,7 +2417,7 @@
 "purchase.period.monthly" = "Ежемесячно";
 "purchase.period.onetime" = "Разовая";
 "purchase.period.onetime.description" = "для пожизненного доступа";
-"purchase.period.save" = "save";
+"purchase.period.save" = "экономия";
 "purchase.period.year" = "год";
 "purchase.period.month" = "месяц";
 "purchase.period.description1" = "Пользуйтесь первые 7 дней БЕСПЛАТНО";
