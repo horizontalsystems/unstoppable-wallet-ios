@@ -88,7 +88,7 @@ class BlackFridayPurchaseProductItemFactory: PurchaseProductItemFactory {
             case .annually:
                 badgeType = .blackFriday
                 descriptionPeriod = "purchase.black_friday.period.per_year".localized
-                discountBadge = "premium.black_friday.discount.save".localized + " \(discountPercentage)%"
+                discountBadge = "premium.black_friday.discount.save".localized.uppercased() + " \(discountPercentage)%"
             }
         }
 

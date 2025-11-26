@@ -1,9 +1,11 @@
 import SwiftUI
 
 struct BlackFridayPremiumSlideView: View {
+    @StateObject var viewModel = BlackFridayPremiumSlideViewModel()
+
     var body: some View {
         ZStack(alignment: .trailing) {
-            Image("bf_banner_premium")
+            Image(viewModel.themeMode.colorScheme == .dark ? "bf_banner_premium" : "bf_banner_premium_light")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
                 .clipped()
@@ -22,7 +24,7 @@ struct BlackFridayPremiumSlideView: View {
 
                     Spacer()
 
-                    HStack(spacing: -19) {
+                    HStack(spacing: -16) {
                         Image("bf_50")
                             .resizable()
                             .frame(width: 100, height: 53)

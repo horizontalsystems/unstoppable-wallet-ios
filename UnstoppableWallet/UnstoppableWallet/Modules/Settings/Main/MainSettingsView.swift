@@ -142,7 +142,7 @@ struct MainSettingsView: View {
                 return
             }
 
-            currentSlideIndex = (currentSlideIndex + 1) % viewModel.slides.count
+            currentSlideIndex = PremiumFactory.forceShowingPremium ? 0 : (currentSlideIndex + 1) % viewModel.slides.count
         }
     }
 
