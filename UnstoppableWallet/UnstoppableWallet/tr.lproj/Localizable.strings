@@ -2357,11 +2357,11 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Black Friday
 
-"premium.cell.black_friday.description" = "Upgrade to %@ with our biggest discount of the year";
-"premium.black_friday.discount.save" = "save";
-"purchase.black_friday.period.lifetime" = "lifetime access";
-"purchase.black_friday.period.per_month" = "per month";
-"purchase.black_friday.period.per_year" = "per year";
+"premium.cell.black_friday.description" = "Yılın en büyük indirimiyle %@ sürümüne yükseltin";
+"premium.black_friday.discount.save" = "tasarruf et";
+"purchase.black_friday.period.lifetime" = "ömür boyu erişim";
+"purchase.black_friday.period.per_month" = "aylık";
+"purchase.black_friday.period.per_year" = "yıllık";
 
 // Purchases
 
@@ -2379,18 +2379,18 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "purchases.type.vip" = "Vip";
 
 // Defense System
-"purchases.defense_system" = "Defense System";
-"purchases.secure_send" = "Secure Send";
-"purchases.secure_send.description" = "Warns you about risky addresses.";
+"purchases.defense_system" = "Savunma Sistemi";
+"purchases.secure_send" = "Güvenli Gönderim";
+"purchases.secure_send.description" = "Riskli adresler konusunda sizi uyarır.";
 "purchases.scam_protection" = "Dolandırıcılık Koruması";
-"purchases.scam_protection.description" = "Lets you know if a dApp site is fake.";
-"purchases.loss_protection" = "Loss Protection";
-"purchases.loss_protection.description" = "Stops bots from stealing in swaps.";
-"purchases.robbery_protection" = "Robbery Protection";
-"purchases.robbery_protection.description" = "Protects funds if you’re forced to open the app.";
+"purchases.scam_protection.description" = "Bir dApp sitesinin sahte olup olmadığını bildirir.";
+"purchases.loss_protection" = "Kayıp Koruması";
+"purchases.loss_protection.description" = "Botların takas işlemlerinde sizi zarara uğratmasını engeller.";
+"purchases.robbery_protection" = "Zorla Açtırma Koruması";
+"purchases.robbery_protection.description" = "Uygulamayı zorla açmanız gereken durumlarda fonlarınızı korur.";
 
 // Market Insights
-"purchases.market_insights" = "Market Insights";
+"purchases.market_insights" = "Piyasa İçgörüleri";
 "purchases.token_insights" = "Analitik";
 "purchases.token_insights.description" = "Önemli kriterlere göre ilk 100 listelerine erişim";
 "purchases.token_insights.info" = "Derinlemesine analiz için tek araçınız. İşlem hacmi, borsa likiditesi, yatırımcı davranışı ve zincir üstü trendlere dayalı olarak düzenlenmiş En İyi 250 token listesine göz atın—hepsi tek bir bakışta. Filtreleyin, analiz edin ve öne geçin.";
@@ -2421,7 +2421,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "purchase.period.monthly" = "Aylık";
 "purchase.period.onetime" = "Tek Seferlik";
 "purchase.period.onetime.description" = "ömür boyu erişim için";
-"purchase.period.save" = "save";
+"purchase.period.save" = "tasarruf et";
 "purchase.period.year" = "yıl";
 "purchase.period.month" = "ay";
 "purchase.period.description1" = "İlk 7 günü ÜCRETSİZ deneyin.";
