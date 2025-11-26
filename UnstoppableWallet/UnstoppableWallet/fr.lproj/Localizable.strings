@@ -409,7 +409,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "receive_alert.any_coins.not_backed_up_description" = "Vous devez sauvegarder %@ avant de pouvoir recevoir des pièces.";
 "deposit.no_adapter.error" = "Impossible de fournir l'adresse";
 
-"deposit.address_format" = "Format";
+"deposit.address_format" = "Formater";
 "deposit.address_network" = "Réseau";
 "deposit.qr_code_description" = "Votre adresse pour le dépôt %@";
 "deposit.qr_code_description.watch" = "Adresse de la montre de %@";
@@ -2349,11 +2349,11 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // Black Friday
 
-"premium.cell.black_friday.description" = "Upgrade to %@ with our biggest discount of the year";
-"premium.black_friday.discount.save" = "save";
-"purchase.black_friday.period.lifetime" = "lifetime access";
-"purchase.black_friday.period.per_month" = "per month";
-"purchase.black_friday.period.per_year" = "per year";
+"premium.cell.black_friday.description" = "Passez à %@ avec notre plus grande réduction de l’année";
+"premium.black_friday.discount.save" = "économiser";
+"purchase.black_friday.period.lifetime" = "accès à vie";
+"purchase.black_friday.period.per_month" = "par mois";
+"purchase.black_friday.period.per_year" = "par an";
 
 // Purchases
 
@@ -2371,18 +2371,18 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "purchases.type.vip" = "Vip";
 
 // Defense System
-"purchases.defense_system" = "Defense System";
-"purchases.secure_send" = "Secure Send";
-"purchases.secure_send.description" = "Warns you about risky addresses.";
+"purchases.defense_system" = "Système de défense";
+"purchases.secure_send" = "Envoi sécurisé";
+"purchases.secure_send.description" = "Vous avertit des adresses à risque.";
 "purchases.scam_protection" = "Protection anti-fraude";
-"purchases.scam_protection.description" = "Lets you know if a dApp site is fake.";
-"purchases.loss_protection" = "Loss Protection";
-"purchases.loss_protection.description" = "Stops bots from stealing in swaps.";
-"purchases.robbery_protection" = "Robbery Protection";
-"purchases.robbery_protection.description" = "Protects funds if you’re forced to open the app.";
+"purchases.scam_protection.description" = "Vous informe si un site dApp est frauduleux.";
+"purchases.loss_protection" = "Protection contre les pertes";
+"purchases.loss_protection.description" = "Empêche les bots de voler vos fonds lors des échanges.";
+"purchases.robbery_protection" = "Protection contre le vol";
+"purchases.robbery_protection.description" = "Protège vos fonds si vous êtes contraint d’ouvrir l’application.";
 
 // Market Insights
-"purchases.market_insights" = "Market Insights";
+"purchases.market_insights" = "Aperçus du marché";
 "purchases.token_insights" = "Analyses";
 "purchases.token_insights.description" = "Accès aux listes top-100 selon des critères clés";
 "purchases.token_insights.info" = "Votre outil tout-en-un pour une analyse approfondie. Parcourez des listes sélectionnées des 250 principaux tokens selon le volume d’échange, la liquidité sur les plateformes, le comportement des détenteurs et les tendances on-chain - le tout en un coup d’œil. Filtrez, analysez et gardez une longueur d’avance.";
@@ -2413,7 +2413,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "purchase.period.monthly" = "Mensuellement";
 "purchase.period.onetime" = "Paiement unique";
 "purchase.period.onetime.description" = "pour un accès à vie";
-"purchase.period.save" = "save";
+"purchase.period.save" = "économiser";
 "purchase.period.year" = "année";
 "purchase.period.month" = "mois";
 "purchase.period.description1" = "Profitez des 7 premiers jours GRATUITS.";
