@@ -2349,11 +2349,11 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Black Friday
 
-"premium.cell.black_friday.description" = "Upgrade to %@ with our biggest discount of the year";
-"premium.black_friday.discount.save" = "save";
-"purchase.black_friday.period.lifetime" = "lifetime access";
-"purchase.black_friday.period.per_month" = "per month";
-"purchase.black_friday.period.per_year" = "per year";
+"premium.cell.black_friday.description" = "Upgraden Sie auf %@ mit unserem größten Rabatt des Jahres";
+"premium.black_friday.discount.save" = "sparen";
+"purchase.black_friday.period.lifetime" = "lebenslanger Zugriff";
+"purchase.black_friday.period.per_month" = "pro monat";
+"purchase.black_friday.period.per_year" = "pro Jahr";
 
 // Purchases
 
@@ -2371,18 +2371,18 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "purchases.type.vip" = "VIP";
 
 // Defense System
-"purchases.defense_system" = "Defense System";
-"purchases.secure_send" = "Secure Send";
-"purchases.secure_send.description" = "Warns you about risky addresses.";
+"purchases.defense_system" = "Verteidigungssystem";
+"purchases.secure_send" = "Sicheres Senden";
+"purchases.secure_send.description" = "Warnt Sie vor riskanten Adressen.";
 "purchases.scam_protection" = "Betrugsschutz";
-"purchases.scam_protection.description" = "Lets you know if a dApp site is fake.";
-"purchases.loss_protection" = "Loss Protection";
-"purchases.loss_protection.description" = "Stops bots from stealing in swaps.";
-"purchases.robbery_protection" = "Robbery Protection";
-"purchases.robbery_protection.description" = "Protects funds if you’re forced to open the app.";
+"purchases.scam_protection.description" = "Informiert Sie, wenn eine dApp-Website gefälscht ist.";
+"purchases.loss_protection" = "Verlustschutz";
+"purchases.loss_protection.description" = "Verhindert, dass Bots bei Swaps Gelder stehlen.";
+"purchases.robbery_protection" = "Raubschutz";
+"purchases.robbery_protection.description" = "Schützt Ihr Guthaben, wenn Sie gezwungen werden, die App zu öffnen.";
 
 // Market Insights
-"purchases.market_insights" = "Market Insights";
+"purchases.market_insights" = "Markteinblicke";
 "purchases.token_insights" = "Analytik";
 "purchases.token_insights.description" = "Zugriff auf Top-100 Listen nach Schlüsselkriterien";
 "purchases.token_insights.info" = "Ihr All-in-One-Tool für tiefgehende Analysen. Durchsuchen Sie kuratierte Top-250-Token-Listen basierend auf Handelsvolumen, Börsen-Liquidität, Halterverhalten und On-Chain-Trends – alles auf einen Blick. Filtern, analysieren und bleiben Sie voraus.";
@@ -2413,7 +2413,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "purchase.period.monthly" = "Monatlich";
 "purchase.period.onetime" = "Einmalig";
 "purchase.period.onetime.description" = "für lebenslangen Zugang";
-"purchase.period.save" = "save";
+"purchase.period.save" = "sparen";
 "purchase.period.year" = "jahr";
 "purchase.period.month" = "monate";
 "purchase.period.description1" = "Genießen Sie die ersten 7 Tage kostenlos.";
