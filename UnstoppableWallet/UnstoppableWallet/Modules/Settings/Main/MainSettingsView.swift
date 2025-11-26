@@ -149,7 +149,7 @@ struct MainSettingsView: View {
     @ViewBuilder private func slide(slide: MainSettingsViewModel.Slide) -> some View {
         switch slide {
         case .premium:
-            premiumSlide()
+            PremiumFactory.slide(offer: viewModel.introductoryOffer)
                 .onTapGesture {
                     Coordinator.shared.presentPurchase(page: .settings, trigger: .banner)
                 }
@@ -159,32 +159,6 @@ struct MainSettingsView: View {
                     UrlManager.open(url: "https://t.me/\(AppConfig.appTokenTelegramAccount)/app")
                 }
         }
-    }
-
-    @ViewBuilder private func premiumSlide() -> some View {
-        ZStack(alignment: .trailing) {
-            GeometryReader { geometry in
-                Image("banner_premium")
-                    .clipped()
-                    .frame(width: geometry.size.width, alignment: .trailing)
-            }
-
-            VStack(alignment: .leading, spacing: .margin2) {
-                Text("premium.cell.title".localized).textHeadline1(color: .themeYellow)
-                Spacer(minLength: 0)
-
-                VStack(alignment: .leading, spacing: .margin4) {
-                    Text("premium.cell.description".localized("premium.cell.description.key".localized)).textSubhead1(color: .themeLight)
-
-                    if let introductoryOffer = viewModel.introductoryOffer {
-                        Text(introductoryOffer).textCaptionSB(color: .themeGreen)
-                    }
-                }
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(EdgeInsets(top: .margin16, leading: .margin16, bottom: .margin16, trailing: 138))
-        }
-        .background(Color.themeDarker)
     }
 
     @ViewBuilder private func miniAppSlide() -> some View {

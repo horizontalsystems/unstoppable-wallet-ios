@@ -5,8 +5,8 @@ class PurchaseBottomSheetViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var waitTask: Task<Void, Never>?
 
-    @Published var items: [Item] = []
-    @Published var selectedItem: Item?
+    @Published var items: [PurchaseProductItemFactory.Item] = []
+    @Published var selectedItem: PurchaseProductItemFactory.Item?
 
     @Published var buttonState: ButtonState = .idle
 
@@ -51,7 +51,7 @@ class PurchaseBottomSheetViewModel: ObservableObject {
             .sorted { $0.order < $1.order }
             .compactMap {
                 let used = purchaseManager.usedOfferProductIds.contains($0.id)
-                return Item(product: $0, offerWasUsed: used, monthlyPrice: monthlyPrice)
+                return PremiumFactory.productItemFactory.item(product: $0, offerWasUsed: used, monthlyPrice: monthlyPrice)
             }
 
         selectedItem = selectedItem ?? items.first
@@ -124,7 +124,7 @@ extension PurchaseBottomSheetViewModel {
         finishSubject.eraseToAnyPublisher()
     }
 
-    func set(item: Item) {
+    func set(item: PurchaseProductItemFactory.Item) {
         selectedItem = item
     }
 
@@ -142,73 +142,6 @@ extension PurchaseBottomSheetViewModel {
     enum ButtonState {
         case idle
         case loading
-    }
-
-    struct Item: Hashable, Equatable {
-        let product: PurchaseManager.ProductData
-        let title: String
-        let discountBadge: String?
-
-        let price: String
-        let priceDescription: String?
-        let priceDescripionAccented: Bool
-
-        let introductoryOfferType: PurchaseManager.IntroductoryOfferType
-
-        init?(product: PurchaseManager.ProductData, offerWasUsed: Bool, monthlyPrice: Decimal?) {
-            self.product = product
-            price = product.priceFormatted
-
-            if offerWasUsed {
-                introductoryOfferType = .none
-            } else {
-                introductoryOfferType = .init(product.introductoryOffer)
-            }
-
-            switch product.type {
-            case .lifetime:
-                title = "purchase.period.onetime".localized
-                discountBadge = nil
-
-                priceDescription = nil
-                priceDescripionAccented = false
-            case .subscription:
-                guard let period = product.period else {
-                    return nil
-                }
-
-                title = period.title
-                switch period {
-                case .monthly:
-                    discountBadge = nil
-
-                    priceDescription = nil
-                    priceDescripionAccented = false
-                case .annually:
-                    let realMonthlyPrice = product.price / 12
-
-                    if let monthlyPrice, monthlyPrice > 0 {
-                        let discountPrecentage = ((monthlyPrice - realMonthlyPrice) / monthlyPrice) * 100
-                        discountBadge = ["purchase.period.save".localized.uppercased(), "\(discountPrecentage.rounded(decimal: 0))%"].joined(separator: " ")
-
-                        priceDescription = "(\([realMonthlyPrice.rounded(decimal: 2).description, "purchase.period.month".localized].joined(separator: "/")))"
-                        priceDescripionAccented = true
-                    } else {
-                        discountBadge = nil
-                        priceDescription = nil
-                        priceDescripionAccented = false
-                    }
-                }
-            }
-        }
-
-        public func hash(into hasher: inout Hasher) {
-            hasher.combine(product.id)
-        }
-
-        static func == (lhs: Self, rhs: Self) -> Bool {
-            lhs.product.id == rhs.product.id
-        }
     }
 }
 

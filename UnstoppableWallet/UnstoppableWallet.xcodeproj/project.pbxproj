@@ -2003,6 +2003,30 @@
 		6BA971A02ECCCB8C00DEC017 /* ZcashBalanceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA9718A2ECB3B7B00DEC017 /* ZcashBalanceData.swift */; };
 		6BA971A12ECCCB9200DEC017 /* ZcashTransactionPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA9718B2ECB3B7B00DEC017 /* ZcashTransactionPool.swift */; };
 		6BA971A22ECCCB9600DEC017 /* ZcashTransactionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA9718C2ECB3B7B00DEC017 /* ZcashTransactionWrapper.swift */; };
+		6BA971BF2ED560D800DEC017 /* PremiumFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971BE2ED560D200DEC017 /* PremiumFeature.swift */; };
+		6BA971C02ED560D800DEC017 /* PremiumFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971BE2ED560D200DEC017 /* PremiumFeature.swift */; };
+		6BA971C62ED56C5F00DEC017 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971C52ED56C5D00DEC017 /* SectionHeader.swift */; };
+		6BA971C72ED56C5F00DEC017 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971C52ED56C5D00DEC017 /* SectionHeader.swift */; };
+		6BA971C92ED5809100DEC017 /* PremiumFeaturesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971C82ED5808400DEC017 /* PremiumFeaturesListView.swift */; };
+		6BA971CA2ED5809100DEC017 /* PremiumFeaturesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971C82ED5808400DEC017 /* PremiumFeaturesListView.swift */; };
+		6BA971CD2ED582D800DEC017 /* PremiumHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971CC2ED582D200DEC017 /* PremiumHeaderView.swift */; };
+		6BA971CE2ED582D800DEC017 /* PremiumHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971CC2ED582D200DEC017 /* PremiumHeaderView.swift */; };
+		6BA971D02ED5A5FD00DEC017 /* BlackFridayPremiumHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971CF2ED5A5FD00DEC017 /* BlackFridayPremiumHeaderView.swift */; };
+		6BA971D12ED5A5FD00DEC017 /* BlackFridayPremiumHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971CF2ED5A5FD00DEC017 /* BlackFridayPremiumHeaderView.swift */; };
+		6BA971D32ED5AE1D00DEC017 /* PremiumSlideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971D22ED5AE1700DEC017 /* PremiumSlideView.swift */; };
+		6BA971D42ED5AE1D00DEC017 /* PremiumSlideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971D22ED5AE1700DEC017 /* PremiumSlideView.swift */; };
+		6BA971D62ED5AEFC00DEC017 /* BlackFridayPremiumSlideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971D52ED5AEFC00DEC017 /* BlackFridayPremiumSlideView.swift */; };
+		6BA971D72ED5AEFC00DEC017 /* BlackFridayPremiumSlideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971D52ED5AEFC00DEC017 /* BlackFridayPremiumSlideView.swift */; };
+		6BA971D92ED5AF8500DEC017 /* PremiumFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971D82ED5AF6D00DEC017 /* PremiumFactory.swift */; };
+		6BA971DA2ED5AF8500DEC017 /* PremiumFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971D82ED5AF6D00DEC017 /* PremiumFactory.swift */; };
+		6BA971DC2ED5CCD200DEC017 /* PurchaseProductItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971DB2ED5CCC100DEC017 /* PurchaseProductItemFactory.swift */; };
+		6BA971DD2ED5CCD200DEC017 /* PurchaseProductItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971DB2ED5CCC100DEC017 /* PurchaseProductItemFactory.swift */; };
+		6BA971DF2ED6A1ED00DEC017 /* BlackFridayPurchaseProductItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971DE2ED6A1ED00DEC017 /* BlackFridayPurchaseProductItemFactory.swift */; };
+		6BA971E02ED6A1ED00DEC017 /* BlackFridayPurchaseProductItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971DE2ED6A1ED00DEC017 /* BlackFridayPurchaseProductItemFactory.swift */; };
+		6BA971E52ED6A85000DEC017 /* SubscribePeriodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971E42ED6A84600DEC017 /* SubscribePeriodView.swift */; };
+		6BA971E62ED6A85000DEC017 /* SubscribePeriodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971E42ED6A84600DEC017 /* SubscribePeriodView.swift */; };
+		6BA971E82ED6A8D200DEC017 /* BlackFridaySubscribePeriodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971E72ED6A8C500DEC017 /* BlackFridaySubscribePeriodView.swift */; };
+		6BA971E92ED6A8D200DEC017 /* BlackFridaySubscribePeriodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971E72ED6A8C500DEC017 /* BlackFridaySubscribePeriodView.swift */; };
 		6BAAF3472B9B245C00EFE5B2 /* ShimmerEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3442B9B245C00EFE5B2 /* ShimmerEffect.swift */; };
 		6BAAF3492B9B245C00EFE5B2 /* SlideButtonStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3452B9B245C00EFE5B2 /* SlideButtonStyling.swift */; };
 		6BAAF34B2B9B245C00EFE5B2 /* SlideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3462B9B245C00EFE5B2 /* SlideButton.swift */; };
@@ -4593,6 +4617,18 @@
 		6BA9718B2ECB3B7B00DEC017 /* ZcashTransactionPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashTransactionPool.swift; sourceTree = "<group>"; };
 		6BA9718C2ECB3B7B00DEC017 /* ZcashTransactionWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashTransactionWrapper.swift; sourceTree = "<group>"; };
 		6BA9719B2ECB3C3000DEC017 /* ZcashTransparentAlertState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashTransparentAlertState.swift; sourceTree = "<group>"; };
+		6BA971BE2ED560D200DEC017 /* PremiumFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumFeature.swift; sourceTree = "<group>"; };
+		6BA971C52ED56C5D00DEC017 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
+		6BA971C82ED5808400DEC017 /* PremiumFeaturesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumFeaturesListView.swift; sourceTree = "<group>"; };
+		6BA971CC2ED582D200DEC017 /* PremiumHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumHeaderView.swift; sourceTree = "<group>"; };
+		6BA971CF2ED5A5FD00DEC017 /* BlackFridayPremiumHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackFridayPremiumHeaderView.swift; sourceTree = "<group>"; };
+		6BA971D22ED5AE1700DEC017 /* PremiumSlideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumSlideView.swift; sourceTree = "<group>"; };
+		6BA971D52ED5AEFC00DEC017 /* BlackFridayPremiumSlideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackFridayPremiumSlideView.swift; sourceTree = "<group>"; };
+		6BA971D82ED5AF6D00DEC017 /* PremiumFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumFactory.swift; sourceTree = "<group>"; };
+		6BA971DB2ED5CCC100DEC017 /* PurchaseProductItemFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseProductItemFactory.swift; sourceTree = "<group>"; };
+		6BA971DE2ED6A1ED00DEC017 /* BlackFridayPurchaseProductItemFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackFridayPurchaseProductItemFactory.swift; sourceTree = "<group>"; };
+		6BA971E42ED6A84600DEC017 /* SubscribePeriodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribePeriodView.swift; sourceTree = "<group>"; };
+		6BA971E72ED6A8C500DEC017 /* BlackFridaySubscribePeriodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackFridaySubscribePeriodView.swift; sourceTree = "<group>"; };
 		6BAAF3442B9B245C00EFE5B2 /* ShimmerEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShimmerEffect.swift; sourceTree = "<group>"; };
 		6BAAF3452B9B245C00EFE5B2 /* SlideButtonStyling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideButtonStyling.swift; sourceTree = "<group>"; };
 		6BAAF3462B9B245C00EFE5B2 /* SlideButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideButton.swift; sourceTree = "<group>"; };
@@ -5843,6 +5879,7 @@
 		11B3546A6E6F3CC013C9FF44 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				6BA971C52ED56C5D00DEC017 /* SectionHeader.swift */,
 				6B5ABEFF2EC2D1EF0061D2AA /* ThemeImage.swift */,
 				6B44BE7B2EB4B86300257FD7 /* Components */,
 				6B44BE532EB19F6500257FD7 /* BottomSheet */,
@@ -5954,6 +5991,7 @@
 		11B35480153660045A6CF9AC /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				6BA971BD2ED560C900DEC017 /* Premium */,
 				6B4587532E2F475E008F87E7 /* AmountRoundingManager.swift */,
 				6BD766432EA239CF008DDEA7 /* RecentlySentManager.swift */,
 				6B0B6E732E092BF700A0F0C9 /* Spam */,
@@ -8034,6 +8072,8 @@
 		6B67F0F02D1C06D8003452DC /* SuccessfulSubscription */ = {
 			isa = PBXGroup;
 			children = (
+				6BA971CC2ED582D200DEC017 /* PremiumHeaderView.swift */,
+				6BA971C82ED5808400DEC017 /* PremiumFeaturesListView.swift */,
 				6BDFC0882E3CDC1300CC28DD /* SubscriptionView.swift */,
 				6B67F0F12D1C06F2003452DC /* SuccessfulSubscriptionView.swift */,
 			);
@@ -8209,6 +8249,25 @@
 			path = Zcash;
 			sourceTree = "<group>";
 		};
+		6BA971BD2ED560C900DEC017 /* Premium */ = {
+			isa = PBXGroup;
+			children = (
+				6BA971BE2ED560D200DEC017 /* PremiumFeature.swift */,
+			);
+			path = Premium;
+			sourceTree = "<group>";
+		};
+		6BA971CB2ED5827C00DEC017 /* BlackFriday */ = {
+			isa = PBXGroup;
+			children = (
+				6BA971E72ED6A8C500DEC017 /* BlackFridaySubscribePeriodView.swift */,
+				6BA971D52ED5AEFC00DEC017 /* BlackFridayPremiumSlideView.swift */,
+				6BA971CF2ED5A5FD00DEC017 /* BlackFridayPremiumHeaderView.swift */,
+				6BA971DE2ED6A1ED00DEC017 /* BlackFridayPurchaseProductItemFactory.swift */,
+			);
+			path = BlackFriday;
+			sourceTree = "<group>";
+		};
 		6BB14F782C05FAA600E879B2 /* Tvl */ = {
 			isa = PBXGroup;
 			children = (
@@ -8221,6 +8280,8 @@
 		6BBB92AB2D0E889C00112409 /* PurchaseBottomSheet */ = {
 			isa = PBXGroup;
 			children = (
+				6BA971E42ED6A84600DEC017 /* SubscribePeriodView.swift */,
+				6BA971DB2ED5CCC100DEC017 /* PurchaseProductItemFactory.swift */,
 				6BBB92AC2D0FD43D00112409 /* PurchaseBottomSheetView.swift */,
 				6BBB92AF2D10095300112409 /* SubscribePeriodSegmentView.swift */,
 				6BBB92B22D10142900112409 /* PurchaseBottomSheetViewModel.swift */,
@@ -9817,6 +9878,9 @@
 		D3E1E8722C21856000E07052 /* Purchases */ = {
 			isa = PBXGroup;
 			children = (
+				6BA971D82ED5AF6D00DEC017 /* PremiumFactory.swift */,
+				6BA971D22ED5AE1700DEC017 /* PremiumSlideView.swift */,
+				6BA971CB2ED5827C00DEC017 /* BlackFriday */,
 				6B9032C62D1D6FB900F3F5AC /* PurchaseList */,
 				6B67F0F02D1C06D8003452DC /* SuccessfulSubscription */,
 				6BBB92B52D11644D00112409 /* PromoCodeBottomSheet */,
@@ -10598,6 +10662,8 @@
 				11B358C72B4E7F70331084AA /* SendEvmViewController.swift in Sources */,
 				D3DB51A32BD6857E0091BBDB /* MarketGlobalView.swift in Sources */,
 				11B35321C9FCFD1DFA4401A3 /* SendEvmService.swift in Sources */,
+				6BA971D42ED5AE1D00DEC017 /* PremiumSlideView.swift in Sources */,
+				6BA971E82ED6A8D200DEC017 /* BlackFridaySubscribePeriodView.swift in Sources */,
 				11B3564C551C6C76ECCE387D /* SendEvmViewModel.swift in Sources */,
 				11B35FF681C01782693B3C4A /* SendEvmConfirmationViewController.swift in Sources */,
 				D3AFAB022E45FF30004AB074 /* Component.swift in Sources */,
@@ -10623,6 +10689,7 @@
 				6B1D8D042DE98F2600A52B01 /* Margins.swift in Sources */,
 				11B35D40702B98DD14429562 /* FormAmountInputView.swift in Sources */,
 				1A56427D35F4EDC473A732E7 /* ReadMoreTextCell.swift in Sources */,
+				6BA971E02ED6A1ED00DEC017 /* BlackFridayPurchaseProductItemFactory.swift in Sources */,
 				11B35F3525372880BC7B47DB /* EvmCoinServiceFactory.swift in Sources */,
 				1A564DC4E55C1BE1C4D4CDA9 /* HighlightedDescriptionBaseView.swift in Sources */,
 				1A564977D009E610D8D194AE /* TitledHighlightedDescriptionView.swift in Sources */,
@@ -10660,6 +10727,7 @@
 				11B3598BE9C7A456A70B5DFD /* BackupVerifyWordsViewModel.swift in Sources */,
 				6BE8A0822ADE2FAB0012DE7F /* CurrencyManager.swift in Sources */,
 				D3833ADF2BEE3FE000ACECFB /* MarketPlatformsView.swift in Sources */,
+				6BA971CD2ED582D800DEC017 /* PremiumHeaderView.swift in Sources */,
 				11B35828C42630241AE8D0E0 /* BackupVerifyWordsService.swift in Sources */,
 				11B3534EF58DAC9E15DC49A5 /* BackupVerifyWordsViewController.swift in Sources */,
 				11B35E08C957B79CF373E9FB /* BackupVerifyWordsModule.swift in Sources */,
@@ -10808,9 +10876,11 @@
 				58AAA15A6F863CD3940FEBCC /* CoinCardModule.swift in Sources */,
 				58AAADDF965D00631448EE04 /* SwapCoinCardViewModel.swift in Sources */,
 				58AAAA19D6C7812306A164EA /* SwapCoinCardCell.swift in Sources */,
+				6BA971E52ED6A85000DEC017 /* SubscribePeriodView.swift in Sources */,
 				6BE925CF2E69A34000DC4709 /* DotOverlay.swift in Sources */,
 				D30D7E5F2CAAC89700B8CAA7 /* TonConnectEventHandler.swift in Sources */,
 				58AAAF222E553D8DCD123AB2 /* SwapAllowanceService.swift in Sources */,
+				6BA971DC2ED5CCD200DEC017 /* PurchaseProductItemFactory.swift in Sources */,
 				58AAADE506ABABF4F25F98E1 /* SwapPendingAllowanceService.swift in Sources */,
 				D023D2722A25CF61004F65B0 /* TronAdapter.swift in Sources */,
 				58AAAA7B0493F3790D49AA14 /* SwapAllowanceViewModel.swift in Sources */,
@@ -11061,6 +11131,7 @@
 				ABC9A467DBB7FA0778225969 /* EnsAddressParserItem.swift in Sources */,
 				ABC9AE4FD599490B0A23003D /* PredefinedBlockchainService.swift in Sources */,
 				1A5645BF7E9F7DF6B0C8912C /* PlaceholderView.swift in Sources */,
+				6BA971D92ED5AF8500DEC017 /* PremiumFactory.swift in Sources */,
 				D3DD67232BC3BD5C00EC7F78 /* BaseEvmMultiSwapConfirmationQuote.swift in Sources */,
 				1A5648C0787EBA8CDCB6F761 /* ReachabilityService.swift in Sources */,
 				1A564406716193E4A2D9075F /* ReachabilityViewModel.swift in Sources */,
@@ -11394,6 +11465,7 @@
 				ABC9A0073333D3DEC2797D15 /* BackupCloudPassphraseViewController.swift in Sources */,
 				ABC9AE472D9105F6FDAECD42 /* BackupCloudPassphraseService.swift in Sources */,
 				D092D6412E31172E0039BDB4 /* MoneroAdapter.swift in Sources */,
+				6BA971C62ED56C5F00DEC017 /* SectionHeader.swift in Sources */,
 				ABC9ABE3189E497EC732B331 /* BackupCloudPassphraseViewModel.swift in Sources */,
 				D38955982DE5B3E70012114F /* CheckAddressViewModel.swift in Sources */,
 				D34338EC2C8714A2001FCAD2 /* TonEventConverter.swift in Sources */,
@@ -11590,6 +11662,7 @@
 				6B6E13EC2DEDABDE007F4A39 /* HUDContainerView.swift in Sources */,
 				6B6E13ED2DEDABDE007F4A39 /* HUDViewModule.swift in Sources */,
 				6B6E13EE2DEDABDE007F4A39 /* HUDStatusFactory.swift in Sources */,
+				6BA971CA2ED5809100DEC017 /* PremiumFeaturesListView.swift in Sources */,
 				6B6E13EF2DEDABDE007F4A39 /* HUDCoverView.swift in Sources */,
 				6B6E13F02DEDABDE007F4A39 /* HUDStatusModel.swift in Sources */,
 				6B6E13F12DEDABDE007F4A39 /* HUDProgressView.swift in Sources */,
@@ -11687,6 +11760,7 @@
 				11B359A79743E965870AE8B6 /* AppWidgetConstants.swift in Sources */,
 				6B5D850C2EA772E300F13E2C /* TronReceiveAddressView.swift in Sources */,
 				6BBB92BB2D11648E00112409 /* PromoCodeBottomSheetViewModel.swift in Sources */,
+				6BA971D02ED5A5FD00DEC017 /* BlackFridayPremiumHeaderView.swift in Sources */,
 				D34DB1AC2E24E59000DD30D3 /* CloudNotAvailableView.swift in Sources */,
 				11B359F812683F62595AFEE2 /* DateFormatterCache.swift in Sources */,
 				D3AFAB0F2E460200004AB074 /* IconButton.swift in Sources */,
@@ -11873,10 +11947,12 @@
 				11B35EB5ED4046F35FB3D7EE /* EvmTransactionService.swift in Sources */,
 				11B35E76790F028FDB8A7FF0 /* TransactionServiceFactory.swift in Sources */,
 				11B356FFD93EA8213591FCD5 /* TransactionSettings.swift in Sources */,
+				6BA971BF2ED560D800DEC017 /* PremiumFeature.swift in Sources */,
 				11B3507DDB28D87FF9B6146E /* EvmFeeData.swift in Sources */,
 				11B351354518B4193A672044 /* EvmFeeEstimator.swift in Sources */,
 				ABC9A07B88375991F5749391 /* SlideButton.swift in Sources */,
 				ABC9A4DE73BE3055DD97343B /* ShimmerEffect.swift in Sources */,
+				6BA971D72ED5AEFC00DEC017 /* BlackFridayPremiumSlideView.swift in Sources */,
 				D3833B032BF38A8000ACECFB /* MarketTabViewModel.swift in Sources */,
 				ABC9A6C591067D34C6DF2673 /* SlideButtonStyling.swift in Sources */,
 				D34A29B82BFB4E3200F63036 /* WatchlistSortBy.swift in Sources */,
@@ -12018,6 +12094,7 @@
 				3A73FC69258B1AD100FE4D34 /* MarketModule.swift in Sources */,
 				D36DE0B3272FD689000BC916 /* SwapProviderManager.swift in Sources */,
 				D3E36BA12DF98B91007F99CA /* TronWalletTokenViewModel.swift in Sources */,
+				6BA971DA2ED5AF8500DEC017 /* PremiumFactory.swift in Sources */,
 				11B35EA38C735462E57135E0 /* AccountRecord_v_0_10.swift in Sources */,
 				11B3512E66B939A93AE62F37 /* EnabledWallet_v_0_10.swift in Sources */,
 				1A564665243CEEBF646D1328 /* ConvertedError.swift in Sources */,
@@ -12027,6 +12104,7 @@
 				58AAA39A983D2E97066C3959 /* LastBlockInfo.swift in Sources */,
 				D3384D242BFF0CD100515664 /* MarketVolumeViewModel.swift in Sources */,
 				58AAA550B894B6F8FC8DA1B1 /* UITextView.swift in Sources */,
+				6BA971D32ED5AE1D00DEC017 /* PremiumSlideView.swift in Sources */,
 				58AAA6A77A2B953931A1D7FC /* DataStatus.swift in Sources */,
 				11B354B8BD1C3C036F6DE16A /* LitecoinAdapter.swift in Sources */,
 				D3447DEA25E38300009928D9 /* WalletConnectManager.swift in Sources */,
@@ -12076,6 +12154,7 @@
 				D34D3E052DD614B7005C9ACC /* StellarSecretKeyViewController.swift in Sources */,
 				D066CC2E2E60579D0086DD12 /* MoneroNetworkSettingsViewController.swift in Sources */,
 				11B35CC30F65AC6966F66BA4 /* MarkdownViewModel.swift in Sources */,
+				6BA971C92ED5809100DEC017 /* PremiumFeaturesListView.swift in Sources */,
 				11B358C1D982EAC4F0A308ED /* MarkdownViewController.swift in Sources */,
 				11B35B3821C6CCB647B98F9A /* MarkdownService.swift in Sources */,
 				11B35711E8B592D0B88C9CC1 /* Error.swift in Sources */,
@@ -12221,6 +12300,7 @@
 				D084F6C12BEB951C00407FA4 /* OutputSelectorViewModel2.swift in Sources */,
 				11B353E61A5496074178741C /* SendAvailableBalanceViewModel.swift in Sources */,
 				58AAA8757A05F21766ED0EA5 /* SimpleSheetTitleView.swift in Sources */,
+				6BA971D62ED5AEFC00DEC017 /* BlackFridayPremiumSlideView.swift in Sources */,
 				6B6E13932DED817D007F4A39 /* UIView.swift in Sources */,
 				11B3516FFFEA842D66C51988 /* AmountTypeSwitchService.swift in Sources */,
 				11B3558A85AE9CAD42030EAD /* FiatService.swift in Sources */,
@@ -12249,6 +12329,7 @@
 				58AAAB32C3D3DCBD004513C7 /* CoinChartViewModel.swift in Sources */,
 				D36DE0C6272FD864000BC916 /* UniswapViewModel.swift in Sources */,
 				D3E36B952DF96088007F99CA /* BitcoinWalletTokenView.swift in Sources */,
+				6BA971DD2ED5CCD200DEC017 /* PurchaseProductItemFactory.swift in Sources */,
 				D3833AFF2BF335D100ACECFB /* MarketNewsViewModel.swift in Sources */,
 				D36DE0D8272FD887000BC916 /* OneInchDataSource.swift in Sources */,
 				58AAA2EBAFC1C443C48BA857 /* CoinChartFactory.swift in Sources */,
@@ -12285,6 +12366,7 @@
 				11B357F031383D358D4AC864 /* BackupVerifyWordsModule.swift in Sources */,
 				11B3597E4CCEF19A8E4D1222 /* BottomMultiSelectorViewController.swift in Sources */,
 				11B3565070D890657E004402 /* ManageWalletsModule.swift in Sources */,
+				6BA971CE2ED582D800DEC017 /* PremiumHeaderView.swift in Sources */,
 				11B35D45BA3D8B9C5E2AE4ED /* ManageWalletsService.swift in Sources */,
 				6B5FD7D92E42169600FEF510 /* DestinationHelper.swift in Sources */,
 				11B354EE16A63DAD95DE3861 /* ManageWalletsViewModel.swift in Sources */,
@@ -12407,6 +12489,7 @@
 				2FA5DC0554CE24AE27663585 /* EvmTransactionRecord.swift in Sources */,
 				2FA5DE81BBA97B8B6F30A779 /* EvmTransactionConverter.swift in Sources */,
 				D30C4D582D55FE980082B487 /* BottomSheetModifier.swift in Sources */,
+				6BA971C02ED560D800DEC017 /* PremiumFeature.swift in Sources */,
 				D36287BF2CA3D7B100ADAF3B /* TonConnect+Encodable.swift in Sources */,
 				58AAA926E1D95F61CA06EFB8 /* SwapConfirmationModule.swift in Sources */,
 				58AAA1152EEEBC93FCC3CAAC /* SwapConfirmationViewController.swift in Sources */,
@@ -12792,6 +12875,7 @@
 				11B350170A8E4E7E0F71086F /* NftAssetMetadata.swift in Sources */,
 				D09200B3293F21520091981A /* RestoreMnemonicNonStandardService.swift in Sources */,
 				11B35A378CD86AC6C55AE874 /* NftKey.swift in Sources */,
+				6BA971E62ED6A85000DEC017 /* SubscribePeriodView.swift in Sources */,
 				11B3505A7E4B89E9A23C19F5 /* NftMetadataSyncRecord.swift in Sources */,
 				D34DB1B12E27C66400DD30D3 /* WalletTokenModule.swift in Sources */,
 				11B3554B34C3A01745AC473B /* NftCollectionMetadata.swift in Sources */,
@@ -12904,6 +12988,7 @@
 				2FA5DF3D135C616A61B37292 /* StepperAmountInputView.swift in Sources */,
 				2FA5D9A3C943976E38293621 /* StepperAmountInputCell.swift in Sources */,
 				2FA5D6CF72BEC8CF1AEE3F9D /* EvmCommonGasDataService.swift in Sources */,
+				6BA971E92ED6A8D200DEC017 /* BlackFridaySubscribePeriodView.swift in Sources */,
 				2FA5D4C0118B480BEFDFB082 /* EvmFeeModule.swift in Sources */,
 				2FA5D98FF7412EBBD2FFFBC4 /* EvmFeeService.swift in Sources */,
 				2FA5D01A5570C6DE5D07E2C4 /* EvmFeeViewItemFactory.swift in Sources */,
@@ -12943,6 +13028,7 @@
 				2FA5DDD1C1B4F6A483D9F089 /* InputOutputOrderService.swift in Sources */,
 				2FA5D715FCD64E7FD500BC27 /* InputOutputOrderDataSource.swift in Sources */,
 				2FA5D75976344172376327E2 /* InputOutputOrderViewModel.swift in Sources */,
+				6BA971D12ED5A5FD00DEC017 /* BlackFridayPremiumHeaderView.swift in Sources */,
 				2FA5D2C0B49B98F1C55DCBF3 /* FeeRateDataSource.swift in Sources */,
 				2FA5DF43F20E03E94403555D /* FeeRateViewModel.swift in Sources */,
 				2FA5DF7570C7D9E33922CB03 /* FeeRateService.swift in Sources */,
@@ -13279,6 +13365,7 @@
 				ABC9A04FAB83D7A8D251DA90 /* BackupPasswordView.swift in Sources */,
 				D0F9F5172B99857700C3190A /* FeeSettings.swift in Sources */,
 				D3E36BA62DF99DAD007F99CA /* BalanceErrorBottomView.swift in Sources */,
+				6BA971DF2ED6A1ED00DEC017 /* BlackFridayPurchaseProductItemFactory.swift in Sources */,
 				ABC9A0CE0155F89F12350DFC /* BackupListView.swift in Sources */,
 				D3384D212BFF0CCA00515664 /* MarketVolumeView.swift in Sources */,
 				ABC9A4465982823773CE1B50 /* BackupDisclaimerView.swift in Sources */,
@@ -13479,6 +13566,7 @@
 				11B3550846F2DD60D3778FE5 /* EvmSendHandler.swift in Sources */,
 				11B350B33F891A2720420697 /* ISendHandler.swift in Sources */,
 				11B35A3B506EDD1EFB7D913E /* BaseSendEvmData.swift in Sources */,
+				6BA971C72ED56C5F00DEC017 /* SectionHeader.swift in Sources */,
 				D02C85AF2D1A969C0096A84D /* SpamAddressStorage.swift in Sources */,
 				11B3546D0D2F891FC9AE372C /* IMultiSwapQuote.swift in Sources */,
 				11B3584A053BC5DAE6E434F8 /* IMultiSwapConfirmationQuote.swift in Sources */,
