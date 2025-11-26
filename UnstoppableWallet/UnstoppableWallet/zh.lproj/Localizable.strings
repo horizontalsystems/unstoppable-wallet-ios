@@ -362,9 +362,6 @@
 "balance.token.not_relayed" = "广播";
 "balance.token.not_relayed.info.title" = "广播";
 "balance.token.not_relayed.info.description" = "此金额的交易已广播，但尚未被网络接受。";
-"balance.token.processing" = "正在处理";
-"balance.token.processing.info.title" = "处理金额";
-"balance.token.processing.info.description" = "此金额的交易仍然在同步。当它们被确认时，这些代币将用于支出";
 "balance.token.transparent" = "透明";
 "balance.token.transparent.info.title" = "透明余额";
 "balance.token.transparent.info.item" = "透明余额";
@@ -2350,6 +2347,14 @@
 "transaction_filter.hide_suspicious_txs" = "隐藏可疑Txs";
 "transaction_filter.hide_suspicious_txs.description" = "隐藏到达的沙尘群交易，这部分解决了地址中毒攻击问题。";
 
+// Black Friday
+
+"premium.cell.black_friday.description" = "Upgrade to %@ with our biggest discount of the year";
+"premium.black_friday.discount.save" = "save";
+"purchase.black_friday.period.lifetime" = "lifetime access";
+"purchase.black_friday.period.per_month" = "per month";
+"purchase.black_friday.period.per_year" = "per year";
+
 // Purchases
 
 "premium.cell.title" = "高級版";
@@ -2365,6 +2370,19 @@
 "purchases.type.pro" = "专业版";
 "purchases.type.vip" = "尊享版 / VIP";
 
+// Defense System
+"purchases.defense_system" = "Defense System";
+"purchases.secure_send" = "Secure Send";
+"purchases.secure_send.description" = "Warns you about risky addresses.";
+"purchases.scam_protection" = "防骗保护";
+"purchases.scam_protection.description" = "Lets you know if a dApp site is fake.";
+"purchases.loss_protection" = "Loss Protection";
+"purchases.loss_protection.description" = "Stops bots from stealing in swaps.";
+"purchases.robbery_protection" = "Robbery Protection";
+"purchases.robbery_protection.description" = "Protects funds if you’re forced to open the app.";
+
+// Market Insights
+"purchases.market_insights" = "Market Insights";
 "purchases.token_insights" = "分析";
 "purchases.token_insights.description" = "按關鍵標準獲取前100名列表";
 "purchases.token_insights.info" = "您的一站式深度分析工具。瀏覽根據交易量、交易所流動性、持有者行為和鏈上趨勢策劃的前250名代幣列表—一目了然。篩選、分析並保持領先。";
@@ -2377,29 +2395,11 @@
 "purchases.trade_signals.description" = "自動監控您代幣的市場趨勢";
 "purchases.trade_signals.info" = "不再錯過任何交易機會。觀察趨勢提供由先進技術分析驅動的實時警報，幫助您在趨勢發生前識別、發現突破點並避免陷阱。快速行動，智能交易，最大化收益。";
 
-"purchases.tx_speed_up" = "加速交易 / 取消交易";
-"purchases.tx_speed_up.description" = "加速和取消交易";
-"purchases.tx_speed_up.info" = "“加速/取消交易” 功能让您全面掌控区块链交易。通过提高 Gas 费用，用户可以加快待处理交易的确认；如有需要，还可直接取消尚未确认的交易。该功能为交易管理增加了一层灵活性和便利性，确保用户始终掌控自己的操作。";
-
-"purchases.duress_mode" = "服用模式";
-"purchases.duress_mode.description" = "面對實體威脅時的智能資金安全保障";
-"purchases.duress_mode.info" = "您的加密貨幣。您的安全。脅迫模式讓您創建多個備用錢包設置，每個都有單獨的PIN碼，在高風險情況下提供隱藏的逃生路線。如果被迫解鎖您的錢包，只需使用脅迫PIN碼訪問次要錢包，不會暴露關鍵資產。您的真實資金保持隱藏。您的安全完好無損。";
-
-"purchases.address_phishing" = "防骗保护";
-"purchases.address_phishing.description" = "有效自動防護詐騙和釣魚攻擊";
-"purchases.address_phishing.info" = "只要输错 - 个地址，您的加密资产就可能永远丢失。Unstoppable 会自动扫描收款地址中的可疑特征，并防御最新的钓鱼攻击，防止您将资金发送给黑客。提前阻止欺诈性转账，保障您的资产安全。";
-
-"purchases.address_checker" = "黑名單檢查";
-"purchases.address_checker.description" = "確保您的加密貨幣操作合法性";
-"purchases.address_checker.info" = "保護自己免受風險和受制裁實體的侵害。黑名單檢查自動對照高風險數據庫篩選接收地址，在您發送前標記詐騙、欺詐和受制裁實體。如果一個地址被列入黑名單，您將在犯下代價高昂的錯誤前知道。保護您的交易。保持您的加密貨幣清潔。保持合規。";
-
+// Vip Support
+"purchases.vip" = "VIP";
 "purchases.vip_support" = "貴賓群組";
 "purchases.vip_support.description" = "直接聯繫錢包團隊獲取快速技術支援。";
 "purchases.vip_support.info" = "成為進化的一部分。加入 VIP 群組，直接與我們的團隊連接獲取技術支援。對即將推出的功能進行投票，搶先獨家了解未來更新。您的聲音很重要——幫助塑造下一代加密貨幣錢包。";
-
-"purchases.vip_club" = "VIP俱乐部";
-"purchases.vip_club.description" = "专属私密聊天";
-"purchases.vip_club.info" = "VIP 俱乐部为您提供进入高端社区的专属通道。会员可参与私密讨论，获取行业专家的见解，并与顶级用户建立人脉。对于希望凭借内部资讯与人脉保持领先的人来说，这是理想选择。";
 
 "purchases.wallet_description.title" = "高評價的安全性、卓越的隱私性和真正的非託管錢包。";
 "purchases.wallet_description.approved" = "經以下機構批准和審核：";
@@ -2413,7 +2413,7 @@
 "purchase.period.monthly" = "月度";
 "purchase.period.onetime" = "一次性";
 "purchase.period.onetime.description" = "终身访问";
-"purchase.period.save" = "保存";
+"purchase.period.save" = "save";
 "purchase.period.year" = "年";
 "purchase.period.month" = "月";
 "purchase.period.description1" = "畅享前 7 天免费体验";
