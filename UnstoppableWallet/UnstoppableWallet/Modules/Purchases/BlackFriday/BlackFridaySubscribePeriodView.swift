@@ -48,7 +48,7 @@ struct BlackFridaySubscribePeriodView: View {
                 .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous))
 
         case .blackFriday:
-            ThemeText(text, style: .microSB)
+            ThemeText(text, style: .microSB, colorStyle: .dark)
                 .padding(.horizontal, .margin6)
                 .padding(.vertical, .margin2)
                 .background(

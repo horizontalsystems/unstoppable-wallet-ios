@@ -55,4 +55,8 @@ enum PremiumFactory {
             )
         }
     }
+
+    static var forceShowingPremium: Bool {
+        isBlackFriday
+    }
 }

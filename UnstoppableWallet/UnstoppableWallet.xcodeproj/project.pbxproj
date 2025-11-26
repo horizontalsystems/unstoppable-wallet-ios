@@ -2027,6 +2027,8 @@
 		6BA971E62ED6A85000DEC017 /* SubscribePeriodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971E42ED6A84600DEC017 /* SubscribePeriodView.swift */; };
 		6BA971E82ED6A8D200DEC017 /* BlackFridaySubscribePeriodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971E72ED6A8C500DEC017 /* BlackFridaySubscribePeriodView.swift */; };
 		6BA971E92ED6A8D200DEC017 /* BlackFridaySubscribePeriodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971E72ED6A8C500DEC017 /* BlackFridaySubscribePeriodView.swift */; };
+		6BA971EB2ED73EDC00DEC017 /* BlackFridayPremiumSlideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971EA2ED73ED100DEC017 /* BlackFridayPremiumSlideViewModel.swift */; };
+		6BA971EC2ED73EDC00DEC017 /* BlackFridayPremiumSlideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971EA2ED73ED100DEC017 /* BlackFridayPremiumSlideViewModel.swift */; };
 		6BAAF3472B9B245C00EFE5B2 /* ShimmerEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3442B9B245C00EFE5B2 /* ShimmerEffect.swift */; };
 		6BAAF3492B9B245C00EFE5B2 /* SlideButtonStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3452B9B245C00EFE5B2 /* SlideButtonStyling.swift */; };
 		6BAAF34B2B9B245C00EFE5B2 /* SlideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3462B9B245C00EFE5B2 /* SlideButton.swift */; };
@@ -4629,6 +4631,7 @@
 		6BA971DE2ED6A1ED00DEC017 /* BlackFridayPurchaseProductItemFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackFridayPurchaseProductItemFactory.swift; sourceTree = "<group>"; };
 		6BA971E42ED6A84600DEC017 /* SubscribePeriodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribePeriodView.swift; sourceTree = "<group>"; };
 		6BA971E72ED6A8C500DEC017 /* BlackFridaySubscribePeriodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackFridaySubscribePeriodView.swift; sourceTree = "<group>"; };
+		6BA971EA2ED73ED100DEC017 /* BlackFridayPremiumSlideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackFridayPremiumSlideViewModel.swift; sourceTree = "<group>"; };
 		6BAAF3442B9B245C00EFE5B2 /* ShimmerEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShimmerEffect.swift; sourceTree = "<group>"; };
 		6BAAF3452B9B245C00EFE5B2 /* SlideButtonStyling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideButtonStyling.swift; sourceTree = "<group>"; };
 		6BAAF3462B9B245C00EFE5B2 /* SlideButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideButton.swift; sourceTree = "<group>"; };
@@ -8260,6 +8263,7 @@
 		6BA971CB2ED5827C00DEC017 /* BlackFriday */ = {
 			isa = PBXGroup;
 			children = (
+				6BA971EA2ED73ED100DEC017 /* BlackFridayPremiumSlideViewModel.swift */,
 				6BA971E72ED6A8C500DEC017 /* BlackFridaySubscribePeriodView.swift */,
 				6BA971D52ED5AEFC00DEC017 /* BlackFridayPremiumSlideView.swift */,
 				6BA971CF2ED5A5FD00DEC017 /* BlackFridayPremiumHeaderView.swift */,
@@ -10603,6 +10607,7 @@
 				D0A980B02B60E73F00127AF4 /* LegacyFeeSettingsView.swift in Sources */,
 				11B35A4D9BD4B8C29FBAFACF /* AboutModule.swift in Sources */,
 				11B35B086B0D62A9D7A10CD0 /* AddTokenViewModel.swift in Sources */,
+				6BA971EC2ED73EDC00DEC017 /* BlackFridayPremiumSlideViewModel.swift in Sources */,
 				11B35A42BF19B93C6005FBD9 /* AddTokenService.swift in Sources */,
 				11B35D550563934444558D15 /* AddTokenViewController.swift in Sources */,
 				58AAABE760739C0ECC6CA720 /* DownloadService.swift in Sources */,
@@ -12514,6 +12519,7 @@
 				6B5D85132EA7739400F13E2C /* TronReceiveAddressService.swift in Sources */,
 				58AAAC4F4425F8C33B604020 /* SwapPendingAllowanceService.swift in Sources */,
 				58AAADC5D50DBAEA6C8DE2C6 /* SwapAllowanceViewModel.swift in Sources */,
+				6BA971EB2ED73EDC00DEC017 /* BlackFridayPremiumSlideViewModel.swift in Sources */,
 				58AAA744C065C62FC7D1D58F /* SwapAllowanceCell.swift in Sources */,
 				6BAAF3492B9B245C00EFE5B2 /* SlideButtonStyling.swift in Sources */,
 				D3E36B7B2DF1B5F5007F99CA /* DeterminiteSpinnerStyle.swift in Sources */,
