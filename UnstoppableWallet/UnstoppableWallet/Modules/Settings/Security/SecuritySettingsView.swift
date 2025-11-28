@@ -108,7 +108,7 @@ struct SecuritySettingsView: View {
                     ListSection {
                         if viewModel.isDuressPasscodeSet {
                             ClickableRow(action: {
-                                Coordinator.shared.performAfterPurchase(premiumFeature: .duressMode, page: .security, trigger: .duressMode) {
+                                Coordinator.shared.performAfterPurchase(premiumFeature: .robberyProtection, page: .security, trigger: .robberyProtection) {
                                     Coordinator.shared.presentAfterUnlock { isPresented in
                                         ThemeNavigationStack { EditPasscodeModule.editDuressPasscodeView(showParentSheet: isPresented) }
                                     }
@@ -128,7 +128,7 @@ struct SecuritySettingsView: View {
                             }
                         } else {
                             ClickableRow(action: {
-                                Coordinator.shared.performAfterPurchase(premiumFeature: .duressMode, page: .security, trigger: .duressMode) {
+                                Coordinator.shared.performAfterPurchase(premiumFeature: .robberyProtection, page: .security, trigger: .robberyProtection) {
                                     if viewModel.isPasscodeSet {
                                         Coordinator.shared.performAfterUnlock {
                                             presentCreateDuressPasscode()

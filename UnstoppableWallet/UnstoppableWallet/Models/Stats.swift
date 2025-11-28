@@ -484,7 +484,7 @@ enum StatPremiumTrigger: String {
     case dexLiquidity = "dex_liquidity"
     case dexVolume = "dex_volume"
     case disableAddressChecker = "disable_address_checker"
-    case duressMode = "duress_mode"
+    case robberyProtection = "robbery_protection"
     case filter
     case getPremium = "get_premium"
     case goodCexVolume = "good_cex_volume"

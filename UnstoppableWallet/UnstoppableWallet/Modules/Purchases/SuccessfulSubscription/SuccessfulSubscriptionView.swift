@@ -5,7 +5,7 @@ struct SuccessfulSubscriptionView: View {
     @Binding var isPresented: Bool
 
     var body: some View {
-        ThemeRadialView {
+        PremiumFactory.radialView {
             VStack(spacing: 0) {
                 Image("box_2")
 

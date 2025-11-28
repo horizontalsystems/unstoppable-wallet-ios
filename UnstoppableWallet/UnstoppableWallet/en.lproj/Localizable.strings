@@ -2345,6 +2345,14 @@
 "transaction_filter.hide_suspicious_txs" = "Hide Suspicious Txs";
 "transaction_filter.hide_suspicious_txs.description" = "Hiding incoming transactions with the dust amount in stablecoins, this partially solves the  address poisoning attack problems.";
 
+// Black Friday
+
+"premium.cell.black_friday.description" = "Upgrade to %@ with our biggest discount of the year";
+"premium.black_friday.discount.save" = "save";
+"purchase.black_friday.period.lifetime" = "lifetime access";
+"purchase.black_friday.period.per_month" = "per month";
+"purchase.black_friday.period.per_year" = "per year";
+
 // Purchases
 
 "premium.cell.title" = "Premium";
@@ -2360,41 +2368,36 @@
 "purchases.type.pro" = "Pro";
 "purchases.type.vip" = "Vip";
 
-"purchases.token_insights" = "Analytics";
-"purchases.token_insights.description" = "Access to top-100 lists by key criteria";
+// Defense System
+"purchases.defense_system" = "Defense System";
+"purchases.secure_send" = "Secure Send";
+"purchases.secure_send.description" = "Warns you about risky addresses.";
+"purchases.scam_protection" = "Scam Protection";
+"purchases.scam_protection.description" = "Lets you know if a dApp site is fake.";
+"purchases.loss_protection" = "Loss Protection";
+"purchases.loss_protection.description" = "Stops bots from stealing in swaps.";
+"purchases.robbery_protection" = "Robbery Protection";
+"purchases.robbery_protection.description" = "Protects funds if you’re forced to open the app.";
+
+// Market Insights
+"purchases.market_insights" = "Market Insights";
+"purchases.token_insights" = "Token Insights";
+"purchases.token_insights.description" = "Full analytics and data about tokens.";
 "purchases.token_insights.info" = "Your all-in-one tool for deep analysis. Browse curated Top 250 token lists based on trading volume, exchange liquidity, holder behavior, and on-chain trends—all at a glance. Filter, analyze, and stay ahead.";
 
 "purchases.advanced_search" = "Advanced Search";
-"purchases.advanced_search.description" = "Multi-level filtering across multiple parameters";
+"purchases.advanced_search.description" = "Custom filters for token searches.";
 "purchases.advanced_search.info" = "Ditch the noise and zero in on high-potential tokens with precision. Use Advanced Search to filter through thousands of tokens by trading volume, blockchain, market cap, price trends, sector, and performance—and more. Powerful, accurate, and built for discovery.";
 
-"purchases.trade_signals" = "Signals and Trends";
-"purchases.trade_signals.description" = "Auto-monitoring of market trends for your tokens";
+"purchases.trade_signals" = "Trade Signals";
+"purchases.trade_signals.description" = "Signals for confident trading.";
 "purchases.trade_signals.info" = "Never miss a trading opportunity again. Watch Trends delivers real-time alerts powered by advanced technical analysis, helping you identify trends, spot breakouts, and avoid pitfalls before they happen. Act fast, trade smart, and maximize gains.";
 
-"purchases.tx_speed_up" = "Tx Speed UP / Cancel ";
-"purchases.tx_speed_up.description" = "Speed up and cancel transactions.";
-"purchases.tx_speed_up.info" = "Tx Speed Up / Cancel provides full control over blockchain transactions. With this feature, users can accelerate pending transactions by increasing gas fees or cancel unconfirmed transactions altogether if needed. It adds a layer of flexibility and convenience to transaction management, ensuring users remain in control of their activity.";
-
-"purchases.duress_mode" = "Duress Mode";
-"purchases.duress_mode.description" = "Smart fund security during physical threats";
-"purchases.duress_mode.info" = "Your crypto. Your security. Duress Mode lets you create multiple alternate wallet setups, each with a separate PIN, providing a hidden escape route in high-risk situations. If forced to unlock your wallet, simply use the duress PIN to access a secondary wallet with no critical assets exposed. Your real funds stay hidden. Your security stays intact.";
-
-"purchases.address_phishing" = "Scam Protection";
-"purchases.address_phishing.description" = "Effective auto-protection against scams and phishing attacks";
-"purchases.address_phishing.info" = "One wrong address, and your crypto is gone forever. Unstoppable automatically scans recipient addresses for suspicious patterns and defends against the latest phishing threats, preventing you from sending funds to a hacker. Block fraudulent transfers before they happen.";
-
-"purchases.address_checker" = "Blacklist Checker";
-"purchases.address_checker.description" = "Guarantee of legality for your crypto operations";
-"purchases.address_checker.info" = "Protect yourself from risky and sanctioned entities. Blacklist Checker automatically screens recipient addresses against high-risk databases, flagging scams, frauds, and sanctioned entities before you send. If an address is blacklisted, you’ll know before making a costly mistake. Secure your transactions. Keep your crypto clean. Stay compliant.";
-
-"purchases.vip_support" = "VIP Support";
-"purchases.vip_support.description" = "Access to wallet team for quick tech support.";
+// Vip Support
+"purchases.vip" = "VIP";
+"purchases.vip_support" = "Priority Support";
+"purchases.vip_support.description" = "Direct chat.";
 "purchases.vip_support.info" = "Be part of the evolution. Join the VIP Group to connect directly with our team for tech support. Vote on upcoming features, and get an exclusive first look at future updates. Your voice matters—help shape the next-gen crypto wallet.";
-
-"purchases.vip_club" = "VIP Club";
-"purchases.vip_club.description" = "Private chat with exclusive information.";
-"purchases.vip_club.info" = "The VIP Club offers exclusive access to a premium community of like-minded individuals. Members can participate in private discussions, gain insights from industry experts, and network with other top-tier users. This feature is perfect for those who want to stay ahead with insider knowledge and connections.";
 
 "purchases.wallet_description.title" = "Highly rated security, exceptional privacy, and a truly non-custodial wallet.";
 "purchases.wallet_description.approved" = "Approved and Audited By:";

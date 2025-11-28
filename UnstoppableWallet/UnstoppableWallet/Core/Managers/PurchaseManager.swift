@@ -473,6 +473,7 @@ extension PurchaseManager {
 
         let price: Decimal
         let priceFormatted: String
+        let priceFormatStyle: Decimal.FormatStyle.Currency
 
         let introductoryOffer: Product.SubscriptionOffer?
         var hasTrialPeriod: Bool {
@@ -494,12 +495,13 @@ extension PurchaseManager {
             return nil
         }
 
-        init(id: String, type: PurchaseType, period: SubscriptionPeriod?, price: Decimal, priceFormatted: String, introductoryOffer: Product.SubscriptionOffer?) {
+        init(id: String, type: PurchaseType, period: SubscriptionPeriod?, price: Decimal, priceFormatted: String, priceFormatStyle: Decimal.FormatStyle.Currency, introductoryOffer: Product.SubscriptionOffer?) {
             self.id = id
             self.type = type
             self.period = period
             self.price = price
             self.priceFormatted = priceFormatted
+            self.priceFormatStyle = priceFormatStyle
             self.introductoryOffer = introductoryOffer
         }
 
@@ -518,8 +520,9 @@ extension PurchaseManager {
                 self.type = .subscription
                 period = SubscriptionPeriod(id: product.id)
             }
-            priceFormatted = product.displayPrice
             price = product.price
+            priceFormatted = product.displayPrice
+            priceFormatStyle = product.priceFormatStyle
             introductoryOffer = product.subscription?.introductoryOffer
         }
     }
@@ -591,21 +594,11 @@ extension PurchaseManager {
     }
 }
 
-enum PremiumFeature: String, CaseIterable {
-    case tokenInsights = "token_insights"
-    case advancedSearch = "advanced_search"
-    case tradeSignals = "trade_signals"
-    case duressMode = "duress_mode"
-    case addressPhishing = "address_phishing"
-    case addressChecker = "address_checker"
-    case vipSupport = "vip_support"
-}
-
 // test data for emulate purchases
 extension PurchaseManager.ProductData {
     static var testProducts: [PurchaseManager.ProductData] { [
-        PurchaseManager.ProductData(id: "premium_1m", type: .subscription, period: .monthly, price: 0.99, priceFormatted: "0.99$", introductoryOffer: nil),
-        PurchaseManager.ProductData(id: "premium_1y", type: .subscription, period: .annually, price: 10.99, priceFormatted: "10.99$", introductoryOffer: nil),
-        PurchaseManager.ProductData(id: "premium_lifetime", type: .lifetime, period: nil, price: 100, priceFormatted: "100$", introductoryOffer: nil),
+        PurchaseManager.ProductData(id: "premium_1m", type: .subscription, period: .monthly, price: 5.99, priceFormatted: "USD 5.99", priceFormatStyle: .currency(code: "USD"), introductoryOffer: nil),
+        PurchaseManager.ProductData(id: "premium_1y", type: .subscription, period: .annually, price: 20.99, priceFormatted: "USD 20.99", priceFormatStyle: .currency(code: "USD"), introductoryOffer: nil),
+        PurchaseManager.ProductData(id: "premium_lifetime", type: .lifetime, period: nil, price: 100, priceFormatted: "USD 100", priceFormatStyle: .currency(code: "USD"), introductoryOffer: nil),
     ] }
 }

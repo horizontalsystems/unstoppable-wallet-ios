@@ -362,9 +362,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance.token.not_relayed" = "Übertragung";
 "balance.token.not_relayed.info.title" = "Übertragung";
 "balance.token.not_relayed.info.description" = "Die Transaktion, die diesen Betrag hält, wurde übertragen, aber noch nicht vom Netzwerk akzeptiert";
-"balance.token.processing" = "Verarbeite";
-"balance.token.processing.info.title" = "Bearbeitungsbetrag";
-"balance.token.processing.info.description" = "Transaktionen mit diesem Betrag werden noch synchronisiert. Und wenn sie bestätigt werden, stehen diese Token für Ausgaben zur Verfügung";
 "balance.token.transparent" = "Transparente";
 "balance.token.transparent.info.title" = "Transparenter Betrag";
 "balance.token.transparent.info.item" = "Transparenter Betrag";
@@ -2350,6 +2347,14 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "transaction_filter.hide_suspicious_txs" = "Verdächtige Txs ausblenden";
 "transaction_filter.hide_suspicious_txs.description" = "Das Verstecken eingehender Transaktionen mit dem Staub in Stablecoins löst teilweise die Adressenvergiftungsprobleme.";
 
+// Black Friday
+
+"premium.cell.black_friday.description" = "Upgraden Sie auf %@ mit unserem größten Rabatt des Jahres";
+"premium.black_friday.discount.save" = "sparen";
+"purchase.black_friday.period.lifetime" = "lebenslanger Zugriff";
+"purchase.black_friday.period.per_month" = "pro monat";
+"purchase.black_friday.period.per_year" = "pro Jahr";
+
 // Purchases
 
 "premium.cell.title" = "Prämie";
@@ -2365,6 +2370,19 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "purchases.type.pro" = "Pro";
 "purchases.type.vip" = "VIP";
 
+// Defense System
+"purchases.defense_system" = "Verteidigungssystem";
+"purchases.secure_send" = "Sicheres Senden";
+"purchases.secure_send.description" = "Warnt Sie vor riskanten Adressen.";
+"purchases.scam_protection" = "Betrugsschutz";
+"purchases.scam_protection.description" = "Informiert Sie, wenn eine dApp-Website gefälscht ist.";
+"purchases.loss_protection" = "Verlustschutz";
+"purchases.loss_protection.description" = "Verhindert, dass Bots bei Swaps Gelder stehlen.";
+"purchases.robbery_protection" = "Raubschutz";
+"purchases.robbery_protection.description" = "Schützt Ihr Guthaben, wenn Sie gezwungen werden, die App zu öffnen.";
+
+// Market Insights
+"purchases.market_insights" = "Markteinblicke";
 "purchases.token_insights" = "Analytik";
 "purchases.token_insights.description" = "Zugriff auf Top-100 Listen nach Schlüsselkriterien";
 "purchases.token_insights.info" = "Ihr All-in-One-Tool für tiefgehende Analysen. Durchsuchen Sie kuratierte Top-250-Token-Listen basierend auf Handelsvolumen, Börsen-Liquidität, Halterverhalten und On-Chain-Trends – alles auf einen Blick. Filtern, analysieren und bleiben Sie voraus.";
@@ -2377,29 +2395,11 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "purchases.trade_signals.description" = "Automatische Überwachung von Markttrends für Ihre Tokens";
 "purchases.trade_signals.info" = "Verpassen Sie nie wieder eine Handelsgelegenheit. Watch Trends liefert Echtzeit-Benachrichtigungen, unterstützt durch fortschrittliche technische Analyse, die Ihnen hilft, Trends zu identifizieren, Ausbrüche zu erkennen und Fallstricke zu vermeiden, bevor sie passieren. Handeln Sie schnell, traden Sie smart und maximieren Sie Ihre Gewinne.";
 
-"purchases.tx_speed_up" = "Transaktion beschleunigen / abbrechen";
-"purchases.tx_speed_up.description" = "Transaktionen beschleunigen und abbrechen.";
-"purchases.tx_speed_up.info" = "„Transaktion beschleunigen / abbrechen“ bietet volle Kontrolle über Blockchain-Transaktionen. Mit dieser Funktion können Benutzer ausstehende Transaktionen beschleunigen, indem sie die Gasgebühren erhöhen, oder unbestätigte Transaktionen bei Bedarf vollständig stornieren. Dadurch erhalten sie mehr Flexibilität und Komfort im Transaktionsmanagement und behalten jederzeit die volle Kontrolle über ihre Aktivitäten.";
-
-"purchases.duress_mode" = "Duress-Modus";
-"purchases.duress_mode.description" = "Intelligente Fondssicherheit bei physischen Bedrohungen";
-"purchases.duress_mode.info" = "Ihre Krypto. Ihre Sicherheit. Der Notfallmodus ermöglicht es Ihnen, mehrere alternative Wallet-Konfigurationen zu erstellen, jede mit einer separaten PIN, und bietet so einen versteckten Ausweg in Hochrisikosituationen. Wenn Sie gezwungen werden, Ihre Wallet zu entsperren, verwenden Sie einfach die Notfall-PIN, um auf eine sekundäre Wallet zuzugreifen, ohne dass kritische Vermögenswerte preisgegeben werden. Ihre tatsächlichen Gelder bleiben verborgen. Ihre Sicherheit bleibt intakt.";
-
-"purchases.address_phishing" = "Betrugsschutz";
-"purchases.address_phishing.description" = "Effektiver automatischer Schutz gegen Betrug und Phishing-Angriffe";
-"purchases.address_phishing.info" = "Eine falsche Adresse, und Ihre Kryptowährung ist für immer verloren. Unstoppable scannt automatisch Empfängeradressen auf verdächtige Muster und schützt vor den neuesten Phishing-Bedrohungen, um zu verhindern, dass Sie Gelder an einen Hacker senden. Blockieren Sie betrügerische Überweisungen, bevor sie passieren.";
-
-"purchases.address_checker" = "SchwarzListen-Prüfer";
-"purchases.address_checker.description" = "Garantie der Legalität für Ihre Krypto-Transaktionen";
-"purchases.address_checker.info" = "Schützen Sie sich vor risikoreichen und sanktionierten Entitäten. Der Schwarzlisten-Prüfer überprüft automatisch Empfängeradressen gegen Hochrisiko-Datenbanken und markiert Betrug, Fälschungen und sanktionierte Entitäten, bevor Sie senden. Wenn eine Adresse auf der Schwarzliste steht, erfahren Sie es, bevor Sie einen kostspieligen Fehler machen. Sichern Sie Ihre Transaktionen. Halten Sie Ihre Kryptowährung sauber. Bleiben Sie konform.";
-
+// Vip Support
+"purchases.vip" = "VIP";
 "purchases.vip_support" = "VIP-Gruppe";
 "purchases.vip_support.description" = "Direkter Zugang zum Wallet-Team für schnellen technischen Support.";
 "purchases.vip_support.info" = "Werden Sie Teil der Evolution. Treten Sie der VIP-Gruppe bei, um direkt mit unserem Team für technischen Support in Verbindung zu treten. Stimmen Sie über kommende Funktionen ab und erhalten Sie exklusive Vorabeinblicke in zukünftige Updates. Ihre Stimme zählt – helfen Sie mit, die nächste Generation der Krypto-Wallet zu gestalten.";
-
-"purchases.vip_club" = "VIP-Club";
-"purchases.vip_club.description" = "Privater Chat mit exklusiven Informationen.";
-"purchases.vip_club.info" = "Der VIP-Club bietet exklusiven Zugang zu einer Premium-Community von Gleichgesinnten. Mitglieder können an privaten Diskussionen teilnehmen, Einblicke von Branchenexperten gewinnen und sich mit anderen Top-Nutzern vernetzen. Diese Funktion ist ideal für alle, die mit Insiderwissen und wertvollen Kontakten immer einen Schritt voraus sein möchten.";
 
 "purchases.wallet_description.title" = "Hochbewertete Sicherheit, außergewöhnliche Privatsphäre und eine wirklich nicht-verwaltete Wallet.";
 "purchases.wallet_description.approved" = "Genehmigt und geprüft von:";
@@ -2413,7 +2413,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "purchase.period.monthly" = "Monatlich";
 "purchase.period.onetime" = "Einmalig";
 "purchase.period.onetime.description" = "für lebenslangen Zugang";
-"purchase.period.save" = "speichern";
+"purchase.period.save" = "sparen";
 "purchase.period.year" = "jahr";
 "purchase.period.month" = "monate";
 "purchase.period.description1" = "Genießen Sie die ersten 7 Tage kostenlos.";

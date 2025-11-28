@@ -362,9 +362,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.token.not_relayed" = "Yayınlama";
 "balance.token.not_relayed.info.title" = "Yayın";
 "balance.token.not_relayed.info.description" = "Bu miktarı içeren işlem yayınlandı ancak henüz ağ tarafından kabul edilmedi";
-"balance.token.processing" = "İşleniyor";
-"balance.token.processing.info.title" = "İşlem Sayısı";
-"balance.token.processing.info.description" = "Bu tutardaki işlemler hâlâ senkronize ediliyor. Ve onaylandığında, bu tokenler harcama için kullanılabilir";
 "balance.token.transparent" = "Şeffaf";
 "balance.token.transparent.info.title" = "Şeffaf Tutar";
 "balance.token.transparent.info.item" = "Şeffaf Tutar";
@@ -2358,6 +2355,14 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "transaction_filter.hide_suspicious_txs" = "Şüpheli İşlemleri Gizle";
 "transaction_filter.hide_suspicious_txs.description" = "Gelen işlemleri, stablecoin'lerdeki toz miktarı ile gizlemek, adres zehirleme saldırısı sorunlarını kısmen çözer.";
 
+// Black Friday
+
+"premium.cell.black_friday.description" = "Yılın en büyük indirimiyle %@ sürümüne yükseltin";
+"premium.black_friday.discount.save" = "tasarruf et";
+"purchase.black_friday.period.lifetime" = "ömür boyu erişim";
+"purchase.black_friday.period.per_month" = "aylık";
+"purchase.black_friday.period.per_year" = "yıllık";
+
 // Purchases
 
 "premium.cell.title" = "Premium";
@@ -2373,6 +2378,19 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "purchases.type.pro" = "Pro";
 "purchases.type.vip" = "Vip";
 
+// Defense System
+"purchases.defense_system" = "Savunma Sistemi";
+"purchases.secure_send" = "Güvenli Gönderim";
+"purchases.secure_send.description" = "Riskli adresler konusunda sizi uyarır.";
+"purchases.scam_protection" = "Dolandırıcılık Koruması";
+"purchases.scam_protection.description" = "Bir dApp sitesinin sahte olup olmadığını bildirir.";
+"purchases.loss_protection" = "Kayıp Koruması";
+"purchases.loss_protection.description" = "Botların takas işlemlerinde sizi zarara uğratmasını engeller.";
+"purchases.robbery_protection" = "Zorla Açtırma Koruması";
+"purchases.robbery_protection.description" = "Uygulamayı zorla açmanız gereken durumlarda fonlarınızı korur.";
+
+// Market Insights
+"purchases.market_insights" = "Piyasa İçgörüleri";
 "purchases.token_insights" = "Analitik";
 "purchases.token_insights.description" = "Önemli kriterlere göre ilk 100 listelerine erişim";
 "purchases.token_insights.info" = "Derinlemesine analiz için tek araçınız. İşlem hacmi, borsa likiditesi, yatırımcı davranışı ve zincir üstü trendlere dayalı olarak düzenlenmiş En İyi 250 token listesine göz atın—hepsi tek bir bakışta. Filtreleyin, analiz edin ve öne geçin.";
@@ -2385,29 +2403,11 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "purchases.trade_signals.description" = "Tokenleriniz için piyasa trendlerinin otomatik takibi";
 "purchases.trade_signals.info" = "Bir daha hiçbir ticaret fırsatını kaçırmayın. Trendleri İzleyin, gelişmiş teknik analize dayalı gerçek zamanlı uyarılar sunarak trendleri belirlemenize, ani yükselişleri tespit etmenize ve sorunları önceden fark etmenize yardımcı olur. Hızlı hareket edin, akıllı ticaret yapın ve kazançlarınızı maksimize edin.";
 
-"purchases.tx_speed_up" = "İşlemi Hızlandır / İptal Et";
-"purchases.tx_speed_up.description" = "İşlemleri hızlandırın veya iptal edin.";
-"purchases.tx_speed_up.info" = "“İşlemi Hızlandır / İptal Et” özelliği, blockchain işlemleri üzerinde tam kontrol sağlar. Kullanıcılar bu özellik sayesinde bekleyen işlemleri gas ücretini artırarak hızlandırabilir veya henüz onaylanmamış işlemleri tamamen iptal edebilir. Bu, işlem yönetimine esneklik ve kolaylık kazandırır, böylece kullanıcılar kendi aktiviteleri üzerinde kontrolü sürdürür.";
-
-"purchases.duress_mode" = "Duress Modu";
-"purchases.duress_mode.description" = "Fiziksel tehditler sırasında akıllı fon güvenliği";
-"purchases.duress_mode.info" = "Sizin kripto paranız. Sizin güvenliğiniz. Baskı Modu, her biri ayrı PIN ile birden fazla alternatif cüzdan kurulumu oluşturmanıza olanak tanır ve yüksek riskli durumlarda gizli bir kaçış yolu sağlar. Cüzdanınızın kilidini açmaya zorlanırsanız, kritik varlıklarınızı ifşa etmeden ikincil bir cüzdana erişmek için baskı PIN'ini kullanmanız yeterlidir. Gerçek fonlarınız gizli kalır. Güvenliğiniz bozulmaz.";
-
-"purchases.address_phishing" = "Dolandırıcılık Koruması";
-"purchases.address_phishing.description" = "Zahmet Çekmeden Güvende Kalın";
-"purchases.address_phishing.info" = "Yanlış bir adres ve kripto paranız sonsuza dek kaybolabilir. Unstoppable, alıcı adresleri şüpheli kalıplar için otomatik olarak tarar ve en son oltalama tehditlerine karşı savunma sağlayarak fonlarınızı bir bilgisayar korsanına göndermenizi önler. Gerçekleşmeden önce sahte transferleri engelleyin.";
-
-"purchases.address_checker" = "Kara Liste Kontrolcüsü";
-"purchases.address_checker.description" = "Dolandırıcılık ve oltalama saldırılarına karşı etkili otomatik koruma";
-"purchases.address_checker.info" = "Kendinizi riskli ve yaptırım uygulanan kuruluşlardan koruyun. Kara Liste Kontrolcüsü, göndermeden önce alıcı adresleri yüksek riskli veritabanlarına karşı otomatik olarak tarar ve dolandırıcılık, sahtekarlık ve yaptırım uygulanan kuruluşları işaretler. Bir adres kara listeye alınmışsa, maliyetli bir hata yapmadan önce bileceksiniz. İşlemlerinizi güvence altına alın. Kripto paranızı temiz tutun. Uyumlu kalın.";
-
+// Vip Support
+"purchases.vip" = "VIP";
 "purchases.vip_support" = "VIP Grubu";
 "purchases.vip_support.description" = "Hızlı teknik destek için cüzdan ekibine erişim.";
 "purchases.vip_support.info" = "Evrimin bir parçası olun. VIP Gruba katılarak teknik destek için ekibimizle doğrudan bağlantı kurun. Gelecek özelliklere oy verin ve gelecekteki güncellemelere özel bir bakış atın. Sizin sesiniz önemli—yeni nesil kripto cüzdanını şekillendirmeye yardımcı olun.";
-
-"purchases.vip_club" = "VIP Kulüp";
-"purchases.vip_club.description" = "Özel bilgiler içeren özel sohbet.";
-"purchases.vip_club.info" = "VIP Kulüp, benzer düşünce yapısına sahip seçkin bir topluluğa özel erişim sunar. Üyeler özel tartışmalara katılabilir, sektör uzmanlarından içgörüler edinebilir ve üst düzey kullanıcılarla bağlantı kurabilir. Bu özellik, içeriden bilgi ve bağlantılarla bir adım önde olmak isteyenler için idealdir.";
 
 "purchases.wallet_description.title" = "Yüksek güvenlik derecesi, olağanüstü gizlilik ve gerçek anlamda emanet edilmeyen bir cüzdan.";
 "purchases.wallet_description.approved" = "Tarafından Onaylanmış ve Denetlenmiş:";
@@ -2421,7 +2421,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "purchase.period.monthly" = "Aylık";
 "purchase.period.onetime" = "Tek Seferlik";
 "purchase.period.onetime.description" = "ömür boyu erişim için";
-"purchase.period.save" = "kaydet";
+"purchase.period.save" = "tasarruf et";
 "purchase.period.year" = "yıl";
 "purchase.period.month" = "ay";
 "purchase.period.description1" = "İlk 7 günü ÜCRETSİZ deneyin.";
