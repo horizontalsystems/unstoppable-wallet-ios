@@ -2374,12 +2374,16 @@ Go to Settings - > %@ and allow access to the camera.";
 "purchases.defense_system" = "Sistema de Defesa";
 "purchases.secure_send" = "Envio Seguro";
 "purchases.secure_send.description" = "Avisa sobre endereços suspeitos ou de risco.";
+"purchases.secure_send.info" = "Checks recipient wallets for phishing or fraud. Alerts you before sending to risky addresses.";
 "purchases.scam_protection" = "Proteção contra Fraudes";
 "purchases.scam_protection.description" = "Informa se um site de dApp é falso.";
+"purchases.scam_protection.info" = "Detects fake or malicious dApps before connection. Prevents phishing and keeps your assets safe.";
 "purchases.loss_protection" = "Proteção contra Perdas";
 "purchases.loss_protection.description" = "Impede que bots roubem fundos durante swaps.";
+"purchases.loss_protection.info" = "Stops bots and front-running attacks during swaps. Keeps your transactions fair and secure.";
 "purchases.robbery_protection" = "Proteção contra Roubo";
 "purchases.robbery_protection.description" = "Protege seus fundos caso seja forçado a abrir o app.";
+"purchases.robbery_protection.info" = "Lets you create a decoy wallet with a separate PIN. Keeps real assets hidden in high-risk situations.";
 
 // Market Insights
 "purchases.market_insights" = "Análises de Mercado";
@@ -2400,6 +2404,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "purchases.vip_support" = "Grupo VIP";
 "purchases.vip_support.description" = "Acesso à equipe da carteira para suporte técnico rápido.";
 "purchases.vip_support.info" = "Seja parte da evolução. Junte-se ao Grupo VIP para se conectar diretamente com nossa equipe de suporte técnico. Vote nas próximas funcionalidades e tenha uma prévia exclusiva das atualizações futuras. Sua voz importa—ajude a moldar a carteira de criptomoedas de próxima geração.";
+
+"purchase.bottom_sheet.description" = "One purchase unlocks all Premium features.";
 
 "purchases.wallet_description.title" = "Segurança altamente qualificada, privacidade excepcional e uma carteira verdadeiramente sem custódia.";
 "purchases.wallet_description.approved" = "Aprovado e Auditado Por:";
