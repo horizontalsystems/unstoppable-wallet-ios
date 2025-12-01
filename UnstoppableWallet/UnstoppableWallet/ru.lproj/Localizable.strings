@@ -2378,12 +2378,17 @@
 "purchases.defense_system" = "Система защиты";
 "purchases.secure_send" = "Безопасная отправка";
 "purchases.secure_send.description" = "Предупреждает о рискованных адресах.";
+"purchases.secure_send.info" = "Проверяет адреса получателей на фишинг и мошенничество.
+Предупреждает перед отправкой средств на подозрительные адреса.";
 "purchases.scam_protection" = "Scam-защита";
 "purchases.scam_protection.description" = "Сообщает, если сайт dApp - фальшивый.";
+"purchases.scam_protection.info" = "Обнаруживает поддельные или вредоносные dApp-сайты до подключения. Предотвращает фишинг и защищает ваши активы.";
 "purchases.loss_protection" = "Защита от потери";
 "purchases.loss_protection.description" = "Блокирует действия ботов, ворующих средства во время свапов.";
+"purchases.loss_protection.info" = "Останавливает ботов и атак на передний план во время подкачки. Сохраняет ваши транзакции честно и безопасно.";
 "purchases.robbery_protection" = "Защита при ограблении";
 "purchases.robbery_protection.description" = "Сохраняет средства, если вас заставили открыть приложение.";
+"purchases.robbery_protection.info" = "Позволяет создать ложный кошелёк с отдельным PIN-кодом. Скрывает ваши реальные активы в рискованных ситуациях.";
 
 // Market Insights
 "purchases.market_insights" = "Аналитика рынка";
@@ -2404,6 +2409,8 @@
 "purchases.vip_support" = "VIP тех. поддержка";
 "purchases.vip_support.description" = "Доступ к команде кошелька для быстрой технической поддержки.";
 "purchases.vip_support.info" = "Будьте частью развития. Присоединитесь к VIP-группе для прямого взаимодействия с нашей командой по технической поддержке. Голосуйте за предстоящие функции и получайте эксклюзивный предварительный доступ к будущим обновлениям. Ваш голос имеет значение — помогите сформировать криптокошелек нового поколения.";
+
+"purchase.bottom_sheet.description" = "Одна покупка открывает все функции Premium.";
 
 "purchases.wallet_description.title" = "Высоко оцененная безопасность, исключительная приватность и по-настоящему некастодиальный кошелек.";
 "purchases.wallet_description.approved" = "Одобрено и проверено:";
