@@ -2375,12 +2375,16 @@
 "purchases.defense_system" = "방어 시스템";
 "purchases.secure_send" = "안전 전송";
 "purchases.secure_send.description" = "위험한 주소에 대해 경고합니다.";
+"purchases.secure_send.info" = "Checks recipient wallets for phishing or fraud. Alerts you before sending to risky addresses.";
 "purchases.scam_protection" = "스캠 보호";
 "purchases.scam_protection.description" = "dApp 사이트가 위조된 경우 알려줍니다.";
+"purchases.scam_protection.info" = "Detects fake or malicious dApps before connection. Prevents phishing and keeps your assets safe.";
 "purchases.loss_protection" = "손실 방지";
 "purchases.loss_protection.description" = "스왑 중 봇이 자금을 탈취하지 못하도록 차단합니다.";
+"purchases.loss_protection.info" = "Stops bots and front-running attacks during swaps. Keeps your transactions fair and secure.";
 "purchases.robbery_protection" = "강제 상황 보호";
 "purchases.robbery_protection.description" = "강제로 앱을 열어야 하는 상황에서도 자금을 보호합니다.";
+"purchases.robbery_protection.info" = "Lets you create a decoy wallet with a separate PIN. Keeps real assets hidden in high-risk situations.";
 
 // Market Insights
 "purchases.market_insights" = "시장 인사이트";
@@ -2401,6 +2405,8 @@
 "purchases.vip_support" = "VIP 그룹";
 "purchases.vip_support.description" = "지갑 팀에 접근하여 신속한 기술 지원을 받으세요.";
 "purchases.vip_support.info" = "진화의 일원이 되세요. VIP 그룹에 가입하여 기술 지원을 위해 저희 팀과 직접 연결하세요. 예정된 기능에 투표하고, 향후 업데이트에 대한 독점 미리보기를 받으세요. 당신의 의견이 중요합니다—차세대 암호화폐 지갑을 함께 만들어 나가세요.";
+
+"purchase.bottom_sheet.description" = "One purchase unlocks all Premium features.";
 
 "purchases.wallet_description.title" = "높은 평가를 받는 보안, 탁월한 개인 정보 보호, 그리고 진정한 비수탁형 지갑.";
 "purchases.wallet_description.approved" = "다음 기관에서 승인 및 감사:";
