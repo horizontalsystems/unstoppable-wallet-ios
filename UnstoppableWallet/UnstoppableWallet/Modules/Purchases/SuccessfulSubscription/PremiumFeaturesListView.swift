@@ -27,7 +27,14 @@ struct PremiumFeaturesListView: View {
                     row(
                         title: feature.title,
                         description: feature.description,
-                        icon: feature.icon
+                        icon: feature.icon,
+                        action: {
+                            Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                                PremiumFeaturesInfoBottomSheetView(isPresented: isPresented, currentSlideIndex: feature.index, action: {
+                                    isPresented.wrappedValue = false
+                                })
+                            }
+                        }
                     )
                 }
             }
@@ -36,14 +43,15 @@ struct PremiumFeaturesListView: View {
         }
     }
 
-    @ViewBuilder private func row(title: String, description: String, icon: String) -> some View {
+    @ViewBuilder private func row(title: String, description: String, icon: String, action: @escaping () -> Void) -> some View {
         Cell(
             left: {
                 Image(icon).icon(colorStyle: .yellow)
             },
             middle: {
                 MultiText(eyebrow: ComponentText(text: title, colorStyle: .primary), description: description)
-            }
+            },
+            action: action
         )
     }
 }

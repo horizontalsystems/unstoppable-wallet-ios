@@ -23,36 +23,39 @@ struct UnlinkBottomSheetView: View {
     }
 
     var body: some View {
-        BottomSheetView(views: views())
-            .onAppear {
-                updateViewModels()
+        ThemeView(style: .list) {
+            VStack(spacing: 0) {
+                BSModule.view(for: .title(
+                    showGrabber: true,
+                    icon: ThemeImage.trash,
+                    title: "settings_manage_keys.delete.title".localized,
+                    isPresented: $isPresented
+                ))
+
+                selector()
+                buttons()
             }
-            .onChange(of: selectorViewModel.groupStates[Controls.selector]) { _ in
-                updateButtonState()
-            }
+        }
+        .onAppear {
+            updateViewModels()
+        }
+        .onChange(of: selectorViewModel.groupStates[Controls.selector]) { _ in
+            updateButtonState()
+        }
     }
 
-    private func views() -> [AnyView] {
-        var views: [AnyView] = []
-
-        views.append(BSModule.view(for: .title(
-            showGrabber: true,
-            icon: ThemeImage.trash,
-            title: "settings_manage_keys.delete.title".localized,
-            isPresented: $isPresented
-        )))
-
+    @ViewBuilder private func selector() -> some View {
         let group = GroupSelector(
             id: Controls.selector,
             items: items.map { .init(id: $0, description: $0) }
         )
 
-        views.append(AnyView(
-            SelectorGroupView(group: group, viewModel: selectorViewModel)
-                .padding(.horizontal, .margin16)
-                .padding(.vertical, .margin8)
-        ))
+        SelectorGroupView(group: group, viewModel: selectorViewModel)
+            .padding(.horizontal, .margin16)
+            .padding(.vertical, .margin8)
+    }
 
+    @ViewBuilder private func buttons() -> some View {
         let buttonGroup = ButtonGroupViewModel.ButtonGroup(
             buttons: [
                 .init(
@@ -66,11 +69,7 @@ struct UnlinkBottomSheetView: View {
                 ),
             ]
         )
-        views.append(AnyView(
-            ButtonGroupView(group: buttonGroup, viewModel: buttonViewModel)
-        ))
-
-        return views
+        ButtonGroupView(group: buttonGroup, viewModel: buttonViewModel)
     }
 
     private func updateViewModels() {

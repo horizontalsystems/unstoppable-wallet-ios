@@ -41,26 +41,33 @@ struct BottomMultiSelectorView: View {
     }
 
     var body: some View {
-        BottomSheetView(views: views())
-            .onChange(of: selectorViewModel.groupStates[Controls.selector]) { _ in
-                updateButtonState()
+        ThemeView(style: .list) {
+            VStack(spacing: 0) {
+                BSModule.view(for: .title(
+                    showGrabber: true,
+                    icon: nil,
+                    title: config.title,
+                    isPresented: $isPresented
+                ))
+                if let description = config.description {
+                    BSModule.view(for: .text(text: description))
+                }
+
+                selector()
+
+                if let footer = config.footer {
+                    BSModule.view(for: .footer(text: footer))
+                }
+
+                buttons()
             }
+        }
+        .onChange(of: selectorViewModel.groupStates[Controls.selector]) { _ in
+            updateButtonState()
+        }
     }
 
-    private func views() -> [AnyView] {
-        var views: [AnyView] = []
-
-        views.append(BSModule.view(for: .title(
-            showGrabber: true,
-            icon: nil,
-            title: config.title,
-            isPresented: $isPresented
-        )))
-
-        if let description = config.description {
-            views.append(BSModule.view(for: .text(text: description)))
-        }
-
+    @ViewBuilder private func selector() -> some View {
         let group = GroupSelector(
             id: Controls.selector,
             items: config.viewItems.enumerated().map { index, viewItem in
@@ -75,16 +82,12 @@ struct BottomMultiSelectorView: View {
             requireSelection: !config.allowEmpty
         )
 
-        views.append(AnyView(
-            SelectorGroupView(group: group, viewModel: selectorViewModel)
-                .padding(.horizontal, .margin16)
-                .padding(.vertical, .margin8)
-        ))
+        SelectorGroupView(group: group, viewModel: selectorViewModel)
+            .padding(.horizontal, .margin16)
+            .padding(.vertical, .margin8)
+    }
 
-        if let footer = config.footer {
-            views.append(BSModule.view(for: .footer(text: footer)))
-        }
-
+    @ViewBuilder private func buttons() -> some View {
         let buttonGroup = ButtonGroupViewModel.ButtonGroup(
             buttons: [
                 ButtonGroupViewModel.ButtonItem(
@@ -97,11 +100,7 @@ struct BottomMultiSelectorView: View {
             alignment: .vertical
         )
 
-        views.append(AnyView(
-            ButtonGroupView(group: buttonGroup, viewModel: buttonViewModel)
-        ))
-
-        return views
+        ButtonGroupView(group: buttonGroup, viewModel: buttonViewModel)
     }
 
     private func updateButtonState() {

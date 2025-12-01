@@ -12,13 +12,19 @@ extension Image {
             .frame(size: size)
     }
 
+    func icon(size: CGSize, colorStyle: ColorStyle = .secondary) -> some View {
+        resizable()
+            .foregroundColor(colorStyle.color)
+            .frame(width: size.width, height: size.height)
+    }
+
     func buttonIcon(size: CGFloat = .iconSize24) -> some View {
         resizable()
             .frame(size: size)
     }
 
     static var disclosureIcon: some View {
-        Image("arrow_b_right").icon(size: .iconSize20)
+        Image("arrow_b_right").icon(size: CGFloat.iconSize20)
     }
 
     static func disclosure(colorStyle: ColorStyle) -> some View {

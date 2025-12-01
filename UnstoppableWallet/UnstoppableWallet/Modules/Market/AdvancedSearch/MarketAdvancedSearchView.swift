@@ -187,7 +187,7 @@ struct MarketAdvancedSearchView: View {
             }
         } else {
             ClickableRow {
-                Coordinator.shared.presentPurchase(page: .advancedSearch, trigger: statPremiumKey)
+                Coordinator.shared.presentPurchase(premiumFeature: .advancedSearch, page: .advancedSearch, trigger: statPremiumKey)
             } content: {
                 view
             }

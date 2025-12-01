@@ -26,6 +26,10 @@ enum PremiumFeature: String, CaseIterable, Identifiable {
     case vipSupport = "vip_support"
 
     var id: String { rawValue }
+
+    var index: Int {
+        Self.allCases.firstIndex(of: self) ?? 0
+    }
 }
 
 extension PremiumCategory {

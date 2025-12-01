@@ -2065,6 +2065,10 @@
 		6BBCE4A52BDA419B00ABBD55 /* Web3Wallet in Frameworks */ = {isa = PBXBuildFile; productRef = 6BBCE4A42BDA419B00ABBD55 /* Web3Wallet */; };
 		6BBD462D2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBD462C2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift */; };
 		6BBD462E2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBD462C2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift */; };
+		6BCAADD02ED9630E00ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAADCF2ED962F400ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift */; };
+		6BCAADD12ED9630E00ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAADCF2ED962F400ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift */; };
+		6BCAADD52EDC08A100ECB0F1 /* PremiumFeaturesWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAADD42EDC089400ECB0F1 /* PremiumFeaturesWrapper.swift */; };
+		6BCAADD62EDC08A100ECB0F1 /* PremiumFeaturesWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAADD42EDC089400ECB0F1 /* PremiumFeaturesWrapper.swift */; };
 		6BCD53002A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
 		6BCD53012A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
 		6BCD53022A161F4100993F20 /* ICloudBackupTermsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F92A161F4100993F20 /* ICloudBackupTermsViewModel.swift */; };
@@ -4649,6 +4653,8 @@
 		6BBB92B62D11646600112409 /* PromoCodeBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCodeBottomSheetView.swift; sourceTree = "<group>"; };
 		6BBB92B92D11648E00112409 /* PromoCodeBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCodeBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		6BBD462C2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBridgeMultiSwapStellarConfirmationQuote.swift; sourceTree = "<group>"; };
+		6BCAADCF2ED962F400ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumFeaturesInfoBottomSheetView.swift; sourceTree = "<group>"; };
+		6BCAADD42EDC089400ECB0F1 /* PremiumFeaturesWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumFeaturesWrapper.swift; sourceTree = "<group>"; };
 		6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupCloudModule.swift; sourceTree = "<group>"; };
 		6BCD52F92A161F4100993F20 /* ICloudBackupTermsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewModel.swift; sourceTree = "<group>"; };
 		6BCD52FA2A161F4100993F20 /* ICloudBackupTermsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewController.swift; sourceTree = "<group>"; };
@@ -8302,6 +8308,15 @@
 			path = PromoCodeBottomSheet;
 			sourceTree = "<group>";
 		};
+		6BCAADD22EDC086500ECB0F1 /* FeaturesBottomSheet */ = {
+			isa = PBXGroup;
+			children = (
+				6BCAADD42EDC089400ECB0F1 /* PremiumFeaturesWrapper.swift */,
+				6BCAADCF2ED962F400ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift */,
+			);
+			path = FeaturesBottomSheet;
+			sourceTree = "<group>";
+		};
 		6BCD52F62A161F4100993F20 /* ICloud */ = {
 			isa = PBXGroup;
 			children = (
@@ -9882,6 +9897,7 @@
 		D3E1E8722C21856000E07052 /* Purchases */ = {
 			isa = PBXGroup;
 			children = (
+				6BCAADD22EDC086500ECB0F1 /* FeaturesBottomSheet */,
 				6BA971D82ED5AF6D00DEC017 /* PremiumFactory.swift */,
 				6BA971D22ED5AE1700DEC017 /* PremiumSlideView.swift */,
 				6BA971CB2ED5827C00DEC017 /* BlackFriday */,
@@ -11853,6 +11869,7 @@
 				11B352E8348A715EB537F643 /* TransactionFilterViewModel.swift in Sources */,
 				D3E1E8782C21859900E07052 /* PurchasesViewModel.swift in Sources */,
 				11B35AAD64D68265B2128C25 /* TransactionBlockchainSelectView.swift in Sources */,
+				6BCAADD52EDC08A100ECB0F1 /* PremiumFeaturesWrapper.swift in Sources */,
 				D3AEB8872DBA123D00E385C8 /* StellarOperationConverter.swift in Sources */,
 				11B35A4F4A98537CE99B5221 /* TransactionTokenSelectView.swift in Sources */,
 				11B35ACE7B126DCF9F7F1A19 /* SearchBar.swift in Sources */,
@@ -11861,6 +11878,7 @@
 				D389BC502C0DEF1800724504 /* MarketAdvancedSearchResultsView.swift in Sources */,
 				11B35927C89712EF8ED36981 /* InputRowModifier.swift in Sources */,
 				11B359926B194C0207B1C8E6 /* PreSendView.swift in Sources */,
+				6BCAADD02ED9630E00ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift in Sources */,
 				11B35FA298822DABDB1CD109 /* PreSendViewModel.swift in Sources */,
 				11B351581C801BF3A8415DBE /* TonAddressParserItem.swift in Sources */,
 				ABC9A57D1DA5481E44DEE8C0 /* PrimaryCircleButtonStyle.swift in Sources */,
@@ -12729,6 +12747,7 @@
 				ABC9AC839A67BDEABD24CD7A /* SendMemoInputCell.swift in Sources */,
 				ABC9ACADCCE9CEB2588D91D5 /* SendMemoInputViewModel.swift in Sources */,
 				D3E36B8D2DF94B73007F99CA /* StellarWalletTokenView.swift in Sources */,
+				6BCAADD12ED9630E00ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift in Sources */,
 				D3A12E972CC8C5B6008D5F99 /* EducationViewModel.swift in Sources */,
 				D34338E52C8703F6001FCAD2 /* TonKitManager.swift in Sources */,
 				ABC9AEC9C350F3CD059C9716 /* SendMemoInputService.swift in Sources */,
@@ -13353,6 +13372,7 @@
 				D3E36BE72E097768007F99CA /* CreateAccountViewModel.swift in Sources */,
 				11B3511DAD3881FDE2419A64 /* AutoLockPeriod.swift in Sources */,
 				ABC9A2035980B70E1C0790A8 /* CheckboxStyle.swift in Sources */,
+				6BCAADD62EDC08A100ECB0F1 /* PremiumFeaturesWrapper.swift in Sources */,
 				ABC9A99A45187C36D48840F8 /* BackupAppModule.swift in Sources */,
 				ABC9AE51262C09EABF5CCEEE /* InputTextView.swift in Sources */,
 				6BB14F802C06F19300E879B2 /* DefiCoin.swift in Sources */,

@@ -82,7 +82,7 @@ struct CoinAnalyticsView: View {
         content
             .onTapGesture {
                 if !viewModel.analyticsEnabled {
-                    Coordinator.shared.presentPurchase(page: .coinAnalytics, trigger: statTrigger)
+                    Coordinator.shared.presentPurchase(premiumFeature: .tokenInsights, page: .coinAnalytics, trigger: statTrigger)
                 }
             }
         // .allowsHitTesting(!viewModel.analyticsEnabled)

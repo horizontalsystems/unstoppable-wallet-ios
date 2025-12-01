@@ -48,12 +48,14 @@ struct ScrollableThemeView<Content: View>: View {
 }
 
 struct ThemeRadialView<Content: View>: View {
-    @ViewBuilder let content: Content
-
     private let circleDiameter: CGFloat = 250
-    var yellow = true
-    var orange = true
-    var blue = true
+    var radialPositions: ThemeRadialPosition = .center
+
+    var left: UInt? = 0xEDD716
+    var center: UInt? = 0xFF9B26
+    var right: UInt? = 0x003C74
+
+    @ViewBuilder let content: Content
 
     var body: some View {
         GeometryReader { proxy in
@@ -62,32 +64,33 @@ struct ThemeRadialView<Content: View>: View {
 
                 ZStack {
                     let windowSize = UIScreen.currentSize
+
                     let viewSize = proxy.size
-
                     let deltaHeight = (windowSize.height - viewSize.height) / 2
+                    let offsets = offsets(viewSize: viewSize, deltaHeight: deltaHeight)
 
-                    if yellow {
+                    if let left {
                         Circle()
-                            .fill(Color(hex: 0xEDD716, alpha: 0.6))
+                            .fill(Color(hex: left, alpha: 0.6))
                             .frame(width: circleDiameter, height: circleDiameter)
                             .blur(radius: 100)
-                            .offset(x: -1 * viewSize.width / 2, y: deltaHeight - circleDiameter / 2)
+                            .offset(x: offsets.left.x, y: offsets.left.y)
                     }
 
-                    if orange {
+                    if let center {
                         Circle()
-                            .fill(Color(hex: 0xFF9B26, alpha: 0.7))
+                            .fill(Color(hex: center, alpha: 0.7))
                             .frame(width: circleDiameter, height: circleDiameter)
                             .blur(radius: 150)
-                            .offset(x: 0, y: deltaHeight)
+                            .offset(x: offsets.center.x, y: offsets.center.y)
                     }
 
-                    if blue {
+                    if let right {
                         Circle()
-                            .fill(Color(hex: 0x003C74))
+                            .fill(Color(hex: right))
                             .frame(width: circleDiameter, height: circleDiameter)
                             .blur(radius: 150)
-                            .offset(x: viewSize.width / 2, y: deltaHeight + circleDiameter / 2)
+                            .offset(x: offsets.right.x, y: offsets.right.y)
                     }
                 }
 
@@ -95,6 +98,28 @@ struct ThemeRadialView<Content: View>: View {
             }
         }
     }
+
+    private func offsets(viewSize: CGSize, deltaHeight: CGFloat) -> (left: CGPoint, center: CGPoint, right: CGPoint) {
+        switch radialPositions {
+        case .center:
+            (
+                left: .init(x: -1 * viewSize.width / 2, y: deltaHeight - circleDiameter / 2),
+                center: .init(x: 0, y: deltaHeight),
+                right: .init(x: viewSize.width / 2, y: deltaHeight + circleDiameter / 2)
+            )
+        case .corners:
+            (
+                left: CGPoint(x: -viewSize.width / 2, y: -viewSize.height / 2),
+                center: CGPoint(x: 0, y: deltaHeight),
+                right: CGPoint(x: viewSize.width / 2, y: viewSize.height / 2)
+            )
+        }
+    }
+}
+
+enum ThemeRadialPosition {
+    case center
+    case corners
 }
 
 struct ThemeNavigationStack<Content: View>: View {
