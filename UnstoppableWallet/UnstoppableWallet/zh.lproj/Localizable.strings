@@ -2374,16 +2374,17 @@
 "purchases.defense_system" = "防御系统";
 "purchases.secure_send" = "安全发送";
 "purchases.secure_send.description" = "提醒您注意高风险地址。";
-"purchases.secure_send.info" = "Checks recipient wallets for phishing or fraud. Alerts you before sending to risky addresses.";
+"purchases.secure_send.info" = "检查收款钱包是否存在钓鱼或欺诈风险，并在您向高风险地址转账前发出提醒。";
 "purchases.scam_protection" = "防骗保护";
 "purchases.scam_protection.description" = "识别并提示伪造的 dApp 网站。";
-"purchases.scam_protection.info" = "Detects fake or malicious dApps before connection. Prevents phishing and keeps your assets safe.";
+"purchases.scam_protection.info" = "在连接前检测伪造或恶意的 dApp，防止钓鱼攻击，保障您的资产安全。
+";
 "purchases.loss_protection" = "损失保护";
 "purchases.loss_protection.description" = "防止机器人在兑换过程中窃取资产。";
-"purchases.loss_protection.info" = "Stops bots and front-running attacks during swaps. Keeps your transactions fair and secure.";
+"purchases.loss_protection.info" = "在兑换过程中阻止机器人和抢跑攻击，确保您的交易公平且安全。";
 "purchases.robbery_protection" = "抢劫保护";
 "purchases.robbery_protection.description" = "在您被迫打开应用时保护资金安全。";
-"purchases.robbery_protection.info" = "Lets you create a decoy wallet with a separate PIN. Keeps real assets hidden in high-risk situations.";
+"purchases.robbery_protection.info" = "允许您创建一个带独立 PIN 的诱饵钱包，在高风险情况下隐藏真实资产。";
 
 // Market Insights
 "purchases.market_insights" = "市场洞察";
@@ -2405,7 +2406,7 @@
 "purchases.vip_support.description" = "直接聯繫錢包團隊獲取快速技術支援。";
 "purchases.vip_support.info" = "成為進化的一部分。加入 VIP 群組，直接與我們的團隊連接獲取技術支援。對即將推出的功能進行投票，搶先獨家了解未來更新。您的聲音很重要——幫助塑造下一代加密貨幣錢包。";
 
-"purchase.bottom_sheet.description" = "One purchase unlocks all Premium features.";
+"purchase.bottom_sheet.description" = "购买即可解锁所有高级功能。";
 
 "purchases.wallet_description.title" = "高評價的安全性、卓越的隱私性和真正的非託管錢包。";
 "purchases.wallet_description.approved" = "經以下機構批准和審核：";
