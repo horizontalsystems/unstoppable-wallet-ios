@@ -158,7 +158,7 @@ struct AddressView: View {
         .onTapGesture {
             switch state {
             case .locked:
-                Coordinator.shared.presentPurchase(page: viewModel.destination.sourceStatPage, trigger: .addressChecker)
+                Coordinator.shared.presentPurchase(premiumFeature: .scamProtection, page: viewModel.destination.sourceStatPage, trigger: .addressChecker)
             default:
                 Coordinator.shared.present(info: checkDescription)
             }

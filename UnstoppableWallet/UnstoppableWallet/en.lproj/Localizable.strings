@@ -2372,32 +2372,38 @@
 "purchases.defense_system" = "Defense System";
 "purchases.secure_send" = "Secure Send";
 "purchases.secure_send.description" = "Warns you about risky addresses.";
+"purchases.secure_send.info" = "Checks recipient wallets for phishing or fraud. Alerts you before sending to risky addresses.";
 "purchases.scam_protection" = "Scam Protection";
 "purchases.scam_protection.description" = "Lets you know if a dApp site is fake.";
+"purchases.scam_protection.info" = "Detects fake or malicious dApps before connection. Prevents phishing and keeps your assets safe.";
 "purchases.loss_protection" = "Loss Protection";
 "purchases.loss_protection.description" = "Stops bots from stealing in swaps.";
+"purchases.loss_protection.info" = "Stops bots and front-running attacks during swaps. Keeps your transactions fair and secure.";
 "purchases.robbery_protection" = "Robbery Protection";
 "purchases.robbery_protection.description" = "Protects funds if you’re forced to open the app.";
+"purchases.robbery_protection.info" = "Lets you create a decoy wallet with a separate PIN. Keeps real assets hidden in high-risk situations.";
 
 // Market Insights
 "purchases.market_insights" = "Market Insights";
 "purchases.token_insights" = "Token Insights";
 "purchases.token_insights.description" = "Full analytics and data about tokens.";
-"purchases.token_insights.info" = "Your all-in-one tool for deep analysis. Browse curated Top 250 token lists based on trading volume, exchange liquidity, holder behavior, and on-chain trends—all at a glance. Filter, analyze, and stay ahead.";
+"purchases.token_insights.info" = "Shows detailed token data — volume, liquidity, and trends. Helps you make smarter investment decisions.";
 
 "purchases.advanced_search" = "Advanced Search";
 "purchases.advanced_search.description" = "Custom filters for token searches.";
-"purchases.advanced_search.info" = "Ditch the noise and zero in on high-potential tokens with precision. Use Advanced Search to filter through thousands of tokens by trading volume, blockchain, market cap, price trends, sector, and performance—and more. Powerful, accurate, and built for discovery.";
+"purchases.advanced_search.info" = "Find tokens with filters by volume, chain, or sector. Includes metrics for CEX/DEX activity and listings.";
 
 "purchases.trade_signals" = "Trade Signals";
 "purchases.trade_signals.description" = "Signals for confident trading.";
-"purchases.trade_signals.info" = "Never miss a trading opportunity again. Watch Trends delivers real-time alerts powered by advanced technical analysis, helping you identify trends, spot breakouts, and avoid pitfalls before they happen. Act fast, trade smart, and maximize gains.";
+"purchases.trade_signals.info" = "Sends real-time alerts on trading opportunities. Highlights profit chances or market risks instantly.";
 
 // Vip Support
 "purchases.vip" = "VIP";
 "purchases.vip_support" = "Priority Support";
 "purchases.vip_support.description" = "Direct chat.";
-"purchases.vip_support.info" = "Be part of the evolution. Join the VIP Group to connect directly with our team for tech support. Vote on upcoming features, and get an exclusive first look at future updates. Your voice matters—help shape the next-gen crypto wallet.";
+"purchases.vip_support.info" = "Gives you direct access to priority support. Get fast, personal help from the Unstoppable team.";
+
+"purchase.bottom_sheet.description" = "One purchase unlocks all Premium features.";
 
 "purchases.wallet_description.title" = "Highly rated security, exceptional privacy, and a truly non-custodial wallet.";
 "purchases.wallet_description.approved" = "Approved and Audited By:";

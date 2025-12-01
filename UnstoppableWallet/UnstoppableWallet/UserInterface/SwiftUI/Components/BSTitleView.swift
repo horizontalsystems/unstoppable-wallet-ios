@@ -4,13 +4,15 @@ import SwiftUI
 struct BSTitleView: View {
     private let showGrabber: Bool
     private let icon: CustomStringConvertible?
-    private let title: CustomStringConvertible
+    private let topImage: CustomStringConvertible?
+    private let title: CustomStringConvertible?
 
     private let showDismiss: Bool
     @Binding var isPresented: Bool
 
-    init(showGrabber: Bool = true, icon: CustomStringConvertible? = nil, title: CustomStringConvertible, subtitle _: CustomStringConvertible? = nil, isPresented: Binding<Bool>? = nil) {
+    init(showGrabber: Bool = true, icon: CustomStringConvertible? = nil, topImage: CustomStringConvertible? = nil, title: CustomStringConvertible?, subtitle _: CustomStringConvertible? = nil, isPresented: Binding<Bool>? = nil) {
         self.showGrabber = showGrabber
+        self.topImage = topImage
         self.icon = icon
         self.title = title
 
@@ -30,15 +32,21 @@ struct BSTitleView: View {
                     .padding(.bottom, .margin12)
             }
 
+            if let topImage {
+                ThemeImage(topImage, size: .null)
+            }
+
             if let icon {
                 ThemeImage(icon, size: .iconSize72)
                     .padding(.top, .margin16)
                     .padding(.bottom, .margin8)
             }
 
-            ThemeText(title, style: .headline1)
-                .padding(.top, .margin16)
-                .padding(.bottom, .margin8)
+            if let title {
+                ThemeText(title, style: .headline1)
+                    .padding(.top, .margin16)
+                    .padding(.bottom, .margin8)
+            }
         }
         .padding(.horizontal, .margin48)
     }

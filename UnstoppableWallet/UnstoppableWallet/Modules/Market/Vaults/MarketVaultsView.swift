@@ -138,7 +138,7 @@ struct MarketVaultsView: View {
                                 .padding(.horizontal, .margin24)
 
                             Button(action: {
-                                Coordinator.shared.presentPurchase(page: .vaults, trigger: .unlock)
+                                Coordinator.shared.presentPurchase(premiumFeature: .tokenInsights, page: .vaults, trigger: .unlock)
                             }) {
                                 Text("market.vaults.premium.unlock".localized)
                             }

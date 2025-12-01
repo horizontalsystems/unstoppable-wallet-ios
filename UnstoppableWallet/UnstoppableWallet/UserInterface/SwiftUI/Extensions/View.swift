@@ -48,3 +48,13 @@ extension UIView {
         return nil
     }
 }
+
+extension View {
+    @ViewBuilder func applyFrame(size: CGSize?) -> some View {
+        if let size {
+            frame(width: size.width, height: size.height)
+        } else {
+            self
+        }
+    }
+}

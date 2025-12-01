@@ -2,55 +2,52 @@ import Kingfisher
 import SwiftUI
 
 enum BSModule {
-    static func view(for item: Item) -> AnyView {
+    @ViewBuilder static func view(for item: Item) -> some View {
         switch item {
-        case let .title(showGrabber, icon, title, isPresented): return AnyView(
-                BSTitleView(showGrabber: showGrabber, icon: icon, title: title, isPresented: isPresented))
+        case let .title(showGrabber, icon, title, isPresented):
+            BSTitleView(showGrabber: showGrabber, icon: icon, title: title, isPresented: isPresented)
+        case let .imagedTitle(image, title, isPresented):
+            BSTitleView(showGrabber: false, topImage: image, title: title, isPresented: isPresented)
+        case let .title2(text):
+            ThemeText(text, style: .body)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, .margin32)
+                .padding(.top, .margin16)
         case let .subtitle(text):
-            return AnyView(
-                ThemeText(text, style: .subhead)
-                    .multilineTextAlignment(.center)
-                    .padding(.horizontal, .margin32)
-                    .padding(.bottom, .margin16)
-            )
+            ThemeText(text, style: .subhead)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, .margin32)
+                .padding(.bottom, .margin16)
         case let .text(text):
-            return AnyView(
-                ThemeText(text, style: .body, colorStyle: .secondary)
-                    .multilineTextAlignment(.center)
-                    .frame(alignment: .center)
-                    .padding(.horizontal, .margin32)
-                    .padding(.vertical, .margin16)
-            )
+            ThemeText(text, style: .body, colorStyle: .secondary)
+                .multilineTextAlignment(.center)
+                .frame(maxWidth: .infinity, alignment: .center)
+                .padding(.horizontal, .margin32)
+                .padding(.vertical, .margin16)
         case let .footer(text):
-            return AnyView(
-                ThemeText(text, style: .subhead)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal, .margin32)
-                    .padding(.top, .margin12)
-                    .padding(.bottom, .margin24)
-            )
-
+            ThemeText(text, style: .subhead)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.horizontal, .margin32)
+                .padding(.top, .margin12)
+                .padding(.bottom, .margin24)
         case let .highlightedDescription(text, type, style):
-            return AnyView(AlertCardView(.init(text: text, type: type, style: style)))
-
+            AlertCardView(.init(text: text, type: type, style: style))
         case let .list(items):
-            return AnyView(
-                VStack(spacing: 0) {
-                    ForEach(items.indices, id: \.self) { index in
-                        listView(item: items[index])
-                    }
+            VStack(spacing: 0) {
+                ForEach(items.indices, id: \.self) { index in
+                    listView(item: items[index])
                 }
-                .padding(.vertical, .margin8)
-                .clipShape(RoundedRectangle(cornerRadius: .cornerRadius16, style: .continuous))
-                .overlay(
-                    RoundedRectangle(cornerRadius: .cornerRadius16, style: .continuous)
-                        .stroke(Color.themeBlade, lineWidth: .heightOneDp)
-                )
-                .padding(.horizontal, .margin16)
-                .padding(.vertical, .margin8)
+            }
+            .padding(.vertical, .margin8)
+            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius16, style: .continuous))
+            .overlay(
+                RoundedRectangle(cornerRadius: .cornerRadius16, style: .continuous)
+                    .stroke(Color.themeBlade, lineWidth: .heightOneDp)
             )
+            .padding(.horizontal, .margin16)
+            .padding(.vertical, .margin8)
         case let .buttonGroup(group):
-            return AnyView(ButtonGroupView(group: group))
+            ButtonGroupView(group: group)
         }
     }
 
@@ -70,6 +67,8 @@ enum BSModule {
 extension BSModule {
     enum Item {
         case title(showGrabber: Bool, icon: CustomStringConvertible?, title: CustomStringConvertible, isPresented: Binding<Bool>?)
+        case imagedTitle(image: CustomStringConvertible?, title: CustomStringConvertible?, isPresented: Binding<Bool>?)
+        case title2(text: CustomStringConvertible)
         case subtitle(text: CustomStringConvertible)
         case text(text: CustomStringConvertible)
         case footer(text: CustomStringConvertible)
@@ -97,21 +96,17 @@ extension BSModule {
 }
 
 struct BottomSheetView: View {
-    private let views: [AnyView]
+    private let items: [BSModule.Item]
 
     init(items: [BSModule.Item]) {
-        views = items.map { BSModule.view(for: $0) }
-    }
-
-    init(views: [AnyView]) {
-        self.views = views
+        self.items = items
     }
 
     var body: some View {
         ThemeView(style: .list) {
             VStack(spacing: 0) {
-                ForEach(views.indices, id: \.self) { index in
-                    views[index]
+                ForEach(items.indices, id: \.self) { index in
+                    BSModule.view(for: items[index])
                 }
             }
         }

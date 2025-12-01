@@ -3,34 +3,51 @@ import SwiftUI
 
 struct ThemeImage: View {
     private let image: ImageType
-    private let size: CGFloat
+    private let size: CGSize?
     private let colorStyle: ColorStyle
 
     init(_ name: CustomStringConvertible, size: CGFloat? = nil, colorStyle: ColorStyle? = nil) {
+        self.init(name, size: size.map { CGSize(width: $0, height: $0) }, colorStyle: colorStyle)
+    }
+
+    init(_ name: CustomStringConvertible, size: CGSize? = nil, colorStyle: ColorStyle? = nil) {
         if let componentImage = name as? ComponentImage {
             switch componentImage {
-            case let .local(name, localSize, localColorStyle):
-                image = .local(name: name)
-                self.size = localSize ?? size ?? .iconSize24
+            case let .icon(name, localSize, localColorStyle):
+                image = .icon(name: name)
+                self.size = localSize ?? size
                 self.colorStyle = localColorStyle ?? colorStyle ?? .secondary
+            case let .image(name, contentMode, localSize):
+                image = .image(name: name, contentMode: contentMode)
+                self.size = localSize ?? size
+                self.colorStyle = .primary
             case let .remote(url, placeholder, localSize):
                 image = .remote(url: url, placeholder: placeholder)
-                self.size = localSize ?? size ?? .iconSize24
+                self.size = localSize ?? size
                 self.colorStyle = .primary
             }
         } else {
-            image = .local(name: name.description)
-            self.size = size ?? .iconSize24
+            image = .icon(name: name.description)
+            self.size = size ?? .size24
             self.colorStyle = colorStyle ?? .secondary
         }
     }
 
     var body: some View {
         switch image {
-        case let .local(name):
+        case let .icon(name):
             Image(name)
                 .renderingMode(.template)
-                .icon(size: size, colorStyle: colorStyle)
+                .icon(size: size ?? .size24, colorStyle: colorStyle)
+        case let .image(name: name, contentMode: contentMode):
+            if let size {
+                Image(name)
+                    .resizable()
+                    .aspectRatio(contentMode: contentMode)
+                    .applyFrame(size: size)
+            } else {
+                Image(name)
+            }
         case let .remote(url, placeholder):
             KFImage.url(URL(string: url))
                 .resizable()
@@ -42,14 +59,15 @@ struct ThemeImage: View {
                             .fill(Color.themeBlade)
                     }
                 }
-                .frame(width: size, height: size)
+                .applyFrame(size: size)
         }
     }
 }
 
 extension ThemeImage {
     enum ImageType {
-        case local(name: String)
+        case icon(name: String)
+        case image(name: String, contentMode: SwiftUICore.ContentMode)
         case remote(url: String, placeholder: String?)
     }
 }
