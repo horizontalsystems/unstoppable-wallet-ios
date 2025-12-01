@@ -2382,13 +2382,13 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "purchases.defense_system" = "Savunma Sistemi";
 "purchases.secure_send" = "Güvenli Gönderim";
 "purchases.secure_send.description" = "Riskli adresler konusunda sizi uyarır.";
-"purchases.secure_send.info" = "Checks recipient wallets for phishing or fraud. Alerts you before sending to risky addresses.";
+"purchases.secure_send.info" = "Alıcı cüzdanları oltalama veya dolandırıcılık açısından kontrol eder. Riskli adreslere göndermeden önce sizi uyarır.";
 "purchases.scam_protection" = "Dolandırıcılık Koruması";
 "purchases.scam_protection.description" = "Bir dApp sitesinin sahte olup olmadığını bildirir.";
-"purchases.scam_protection.info" = "Detects fake or malicious dApps before connection. Prevents phishing and keeps your assets safe.";
+"purchases.scam_protection.info" = "Bağlanmadan önce sahte veya kötü amaçlı dApp’leri tespit eder. Oltalama saldırılarını önler ve varlıklarınızı korur.";
 "purchases.loss_protection" = "Kayıp Koruması";
 "purchases.loss_protection.description" = "Botların takas işlemlerinde sizi zarara uğratmasını engeller.";
-"purchases.loss_protection.info" = "Stops bots and front-running attacks during swaps. Keeps your transactions fair and secure.";
+"purchases.loss_protection.info" = "Takas sırasında botları ve front-running saldırılarını engeller. İşlemlerinizi adil ve güvenli tutar.";
 "purchases.robbery_protection" = "Zorla Açtırma Koruması";
 "purchases.robbery_protection.description" = "Uygulamayı zorla açmanız gereken durumlarda fonlarınızı korur.";
 "purchases.robbery_protection.info" = "Lets you create a decoy wallet with a separate PIN. Keeps real assets hidden in high-risk situations.";
@@ -2413,7 +2413,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "purchases.vip_support.description" = "Hızlı teknik destek için cüzdan ekibine erişim.";
 "purchases.vip_support.info" = "Evrimin bir parçası olun. VIP Gruba katılarak teknik destek için ekibimizle doğrudan bağlantı kurun. Gelecek özelliklere oy verin ve gelecekteki güncellemelere özel bir bakış atın. Sizin sesiniz önemli—yeni nesil kripto cüzdanını şekillendirmeye yardımcı olun.";
 
-"purchase.bottom_sheet.description" = "One purchase unlocks all Premium features.";
+"purchase.bottom_sheet.description" = "Tek bir satın alım tüm Premium özelliklerin kilidini açar.";
 
 "purchases.wallet_description.title" = "Yüksek güvenlik derecesi, olağanüstü gizlilik ve gerçek anlamda emanet edilmeyen bir cüzdan.";
 "purchases.wallet_description.approved" = "Tarafından Onaylanmış ve Denetlenmiş:";
