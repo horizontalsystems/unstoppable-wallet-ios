@@ -2374,16 +2374,16 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "purchases.defense_system" = "Verteidigungssystem";
 "purchases.secure_send" = "Sicheres Senden";
 "purchases.secure_send.description" = "Warnt Sie vor riskanten Adressen.";
-"purchases.secure_send.info" = "Checks recipient wallets for phishing or fraud. Alerts you before sending to risky addresses.";
+"purchases.secure_send.info" = "Prüft Empfänger-Wallets auf Phishing oder Betrug und warnt Sie, bevor Sie an riskante Adressen senden.";
 "purchases.scam_protection" = "Betrugsschutz";
 "purchases.scam_protection.description" = "Informiert Sie, wenn eine dApp-Website gefälscht ist.";
-"purchases.scam_protection.info" = "Detects fake or malicious dApps before connection. Prevents phishing and keeps your assets safe.";
+"purchases.scam_protection.info" = "Erkennt gefälschte oder bösartige dApps, bevor eine Verbindung hergestellt wird. Verhindert Phishing und schützt Ihre Vermögenswerte.";
 "purchases.loss_protection" = "Verlustschutz";
 "purchases.loss_protection.description" = "Verhindert, dass Bots bei Swaps Gelder stehlen.";
-"purchases.loss_protection.info" = "Stops bots and front-running attacks during swaps. Keeps your transactions fair and secure.";
+"purchases.loss_protection.info" = "Stoppt Bots und Front-Running-Angriffe bei Swaps. Hält Ihre Transaktionen fair und sicher.";
 "purchases.robbery_protection" = "Raubschutz";
 "purchases.robbery_protection.description" = "Schützt Ihr Guthaben, wenn Sie gezwungen werden, die App zu öffnen.";
-"purchases.robbery_protection.info" = "Lets you create a decoy wallet with a separate PIN. Keeps real assets hidden in high-risk situations.";
+"purchases.robbery_protection.info" = "Ermöglicht das Erstellen einer Tarn-Wallet mit separater PIN und hält Ihre echten Vermögenswerte in risikoreichen Situationen verborgen.";
 
 // Market Insights
 "purchases.market_insights" = "Markteinblicke";
@@ -2405,7 +2405,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "purchases.vip_support.description" = "Direkter Zugang zum Wallet-Team für schnellen technischen Support.";
 "purchases.vip_support.info" = "Werden Sie Teil der Evolution. Treten Sie der VIP-Gruppe bei, um direkt mit unserem Team für technischen Support in Verbindung zu treten. Stimmen Sie über kommende Funktionen ab und erhalten Sie exklusive Vorabeinblicke in zukünftige Updates. Ihre Stimme zählt – helfen Sie mit, die nächste Generation der Krypto-Wallet zu gestalten.";
 
-"purchase.bottom_sheet.description" = "One purchase unlocks all Premium features.";
+"purchase.bottom_sheet.description" = "Ein einziger Kauf schaltet alle Premium-Funktionen frei.";
 
 "purchases.wallet_description.title" = "Hochbewertete Sicherheit, außergewöhnliche Privatsphäre und eine wirklich nicht-verwaltete Wallet.";
 "purchases.wallet_description.approved" = "Genehmigt und geprüft von:";
