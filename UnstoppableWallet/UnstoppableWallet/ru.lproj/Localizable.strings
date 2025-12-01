@@ -2378,12 +2378,16 @@
 "purchases.defense_system" = "Система защиты";
 "purchases.secure_send" = "Безопасная отправка";
 "purchases.secure_send.description" = "Предупреждает о рискованных адресах.";
+"purchases.secure_send.info" = "Checks recipient wallets for phishing or fraud. Alerts you before sending to risky addresses.";
 "purchases.scam_protection" = "Scam-защита";
 "purchases.scam_protection.description" = "Сообщает, если сайт dApp - фальшивый.";
+"purchases.scam_protection.info" = "Detects fake or malicious dApps before connection. Prevents phishing and keeps your assets safe.";
 "purchases.loss_protection" = "Защита от потери";
 "purchases.loss_protection.description" = "Блокирует действия ботов, ворующих средства во время свапов.";
+"purchases.loss_protection.info" = "Stops bots and front-running attacks during swaps. Keeps your transactions fair and secure.";
 "purchases.robbery_protection" = "Защита при ограблении";
 "purchases.robbery_protection.description" = "Сохраняет средства, если вас заставили открыть приложение.";
+"purchases.robbery_protection.info" = "Lets you create a decoy wallet with a separate PIN. Keeps real assets hidden in high-risk situations.";
 
 // Market Insights
 "purchases.market_insights" = "Аналитика рынка";
@@ -2404,6 +2408,8 @@
 "purchases.vip_support" = "VIP тех. поддержка";
 "purchases.vip_support.description" = "Доступ к команде кошелька для быстрой технической поддержки.";
 "purchases.vip_support.info" = "Будьте частью развития. Присоединитесь к VIP-группе для прямого взаимодействия с нашей командой по технической поддержке. Голосуйте за предстоящие функции и получайте эксклюзивный предварительный доступ к будущим обновлениям. Ваш голос имеет значение — помогите сформировать криптокошелек нового поколения.";
+
+"purchase.bottom_sheet.description" = "One purchase unlocks all Premium features.";
 
 "purchases.wallet_description.title" = "Высоко оцененная безопасность, исключительная приватность и по-настоящему некастодиальный кошелек.";
 "purchases.wallet_description.approved" = "Одобрено и проверено:";
