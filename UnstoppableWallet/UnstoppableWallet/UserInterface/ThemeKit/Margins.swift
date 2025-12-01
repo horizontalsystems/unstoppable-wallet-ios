@@ -58,3 +58,13 @@ public extension CGFloat {
     static let buttonSize56: CGFloat = 56
     static let buttonSize32: CGFloat = 32
 }
+
+extension CGSize {
+    static let size16: CGSize = .init(width: .iconSize16, height: .iconSize16)
+    static let size20: CGSize = .init(width: .iconSize20, height: .iconSize20)
+    static let size24: CGSize = .init(width: .iconSize24, height: .iconSize24)
+    static let size32: CGSize = .init(width: .iconSize32, height: .iconSize32)
+    static let size48: CGSize = .init(width: .iconSize48, height: .iconSize48)
+    static let size72: CGSize = .init(width: .iconSize72, height: .iconSize72)
+    static let null: CGSize? = nil
+}

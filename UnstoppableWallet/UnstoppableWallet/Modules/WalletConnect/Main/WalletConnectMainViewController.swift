@@ -381,7 +381,7 @@ extension WalletConnectMainViewController: SectionsDataSource {
             var action: (() -> Void)?
             if !viewModel.premiumEnabled {
                 action = {
-                    Coordinator.shared.presentPurchase(page: .aboutApp, trigger: .priceCloseTo)
+                    Coordinator.shared.presentPurchase(premiumFeature: .scamProtection, page: .aboutApp, trigger: .priceCloseTo)
                 }
             }
 

@@ -24,20 +24,34 @@ extension Text {
 }
 
 enum ComponentImage: CustomStringConvertible {
-    case local(name: String, size: CGFloat?, colorStyle: ColorStyle?)
-    case remote(url: String, placeholder: String?, size: CGFloat?)
+    case icon(name: String, size: CGSize?, colorStyle: ColorStyle?)
+    case image(name: String, contentMode: ContentMode, size: CGSize?)
+    case remote(url: String, placeholder: String?, size: CGSize?)
 
-    init(_ name: String, size: CGFloat? = nil, colorStyle: ColorStyle? = nil) {
-        self = .local(name: name, size: size, colorStyle: colorStyle)
+    init(_ name: String, colorStyle: ColorStyle? = nil) {
+        self = .icon(name: name, size: nil, colorStyle: colorStyle)
     }
 
-    init(url: String, placeholder: String? = nil, size: CGFloat? = nil) {
+    init(_ name: String, size: CGFloat, colorStyle: ColorStyle? = nil) {
+        self = .icon(name: name, size: CGSize(width: size, height: size), colorStyle: colorStyle)
+    }
+
+    init(_ name: String, size: CGSize, colorStyle: ColorStyle? = nil) {
+        self = .icon(name: name, size: size, colorStyle: colorStyle)
+    }
+
+    init(image: String, contentMode: ContentMode = .fill, size: CGSize? = nil) {
+        self = .image(name: image, contentMode: contentMode, size: size)
+    }
+
+    init(url: String, placeholder: String? = nil, size: CGSize? = nil) {
         self = .remote(url: url, placeholder: placeholder, size: size)
     }
 
     var description: String {
         switch self {
-        case let .local(name, _, _): return name
+        case let .icon(name, _, _): return name
+        case let .image(name, _, _): return name
         case let .remote(url, _, _): return url
         }
     }

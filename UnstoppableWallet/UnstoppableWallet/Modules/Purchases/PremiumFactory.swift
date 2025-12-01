@@ -28,7 +28,11 @@ enum PremiumFactory {
 
     // Purchase main+success views Background
     @ViewBuilder static func radialView(@ViewBuilder _ content: () -> some View) -> some View {
-        ThemeRadialView(content: content, blue: !isBlackFriday)
+        if isBlackFriday {
+            ThemeRadialView(right: nil, content: content)
+        } else {
+            ThemeRadialView(content: content)
+        }
     }
 
     // Purchase select type bottom sheet

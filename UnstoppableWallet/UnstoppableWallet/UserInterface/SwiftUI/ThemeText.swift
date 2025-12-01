@@ -10,7 +10,7 @@ struct ThemeText: View {
         if let componentText = text as? ComponentText {
             self.text = .plain(componentText.text)
             self.style = style
-            self.colorStyle = colorStyle ?? componentText.colorStyle ?? style.defaultColorStyle
+            self.colorStyle = componentText.colorStyle ?? colorStyle ?? style.defaultColorStyle
             self.dimmed = dimmed || componentText.dimmed
         } else {
             self.text = .plain(text.description)

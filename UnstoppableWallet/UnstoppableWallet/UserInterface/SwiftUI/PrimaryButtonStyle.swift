@@ -9,7 +9,7 @@ struct PrimaryButtonStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
             .frame(maxWidth: .infinity)
-            .padding(EdgeInsets(top: 15, leading: .margin32, bottom: 15, trailing: .margin32))
+            .padding(EdgeInsets(top: 17, leading: .margin32, bottom: 17, trailing: .margin32))
             .font(.themeHeadline2)
             .foregroundColor(style.foregroundColor(isEnabled: isEnabled, isPressed: configuration.isPressed))
             .backgrounded(style: style, isEnabled: isEnabled, isPressed: configuration.isPressed)
