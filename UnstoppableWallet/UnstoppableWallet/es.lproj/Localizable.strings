@@ -2375,12 +2375,16 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "purchases.defense_system" = "Sistema de defensa";
 "purchases.secure_send" = "Envío seguro";
 "purchases.secure_send.description" = "Te advierte sobre direcciones de alto riesgo.";
+"purchases.secure_send.info" = "Checks recipient wallets for phishing or fraud. Alerts you before sending to risky addresses.";
 "purchases.scam_protection" = "Protección contra estafas";
 "purchases.scam_protection.description" = "Te informa si un sitio dApp es falso.";
+"purchases.scam_protection.info" = "Detects fake or malicious dApps before connection. Prevents phishing and keeps your assets safe.";
 "purchases.loss_protection" = "Protección contra pérdidas";
 "purchases.loss_protection.description" = "Evita que los bots roben durante los intercambios (swaps).";
+"purchases.loss_protection.info" = "Stops bots and front-running attacks during swaps. Keeps your transactions fair and secure.";
 "purchases.robbery_protection" = "Protección contra robo";
 "purchases.robbery_protection.description" = "Protege tus fondos si te ves obligado a abrir la aplicación.";
+"purchases.robbery_protection.info" = "Lets you create a decoy wallet with a separate PIN. Keeps real assets hidden in high-risk situations.";
 
 // Market Insights
 "purchases.market_insights" = "Análisis del mercado";
@@ -2401,6 +2405,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "purchases.vip_support" = "Grupo VIP";
 "purchases.vip_support.description" = "Accès à l'équipe du portefeuille pour un support technique rapide.";
 "purchases.vip_support.info" = "Faites partie de l'évolution. Rejoignez le Groupe VIP pour communiquer directement avec notre équipe de support technique. Votez pour les fonctionnalités à venir et obtenez un aperçu exclusif des futures mises à jour. Votre voix compte — aidez-nous à façonner le portefeuille crypto de nouvelle génération.";
+
+"purchase.bottom_sheet.description" = "One purchase unlocks all Premium features.";
 
 "purchases.wallet_description.title" = "Seguridad altamente valorada, privacidad excepcional y una cartera verdaderamente no custodial.";
 "purchases.wallet_description.approved" = "Aprobado y Auditado Por:";
