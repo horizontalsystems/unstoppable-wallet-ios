@@ -2401,9 +2401,9 @@ Go to Settings - > %@ and allow access to the camera.";
 
 // Vip Support
 "purchases.vip" = "VIP";
-"purchases.vip_support" = "Grupo VIP";
+"purchases.vip_support" = "Suporte prioritário";
 "purchases.vip_support.description" = "Acesso à equipe da carteira para suporte técnico rápido.";
-"purchases.vip_support.info" = "Seja parte da evolução. Junte-se ao Grupo VIP para se conectar diretamente com nossa equipe de suporte técnico. Vote nas próximas funcionalidades e tenha uma prévia exclusiva das atualizações futuras. Sua voz importa—ajude a moldar a carteira de criptomoedas de próxima geração.";
+"purchases.vip_support.info" = "Garante acesso direto ao suporte prioritário. Receba ajuda rápida e personalizada da equipe do Unstoppable.";
 
 "purchase.bottom_sheet.description" = "Uma única compra libera todos os recursos Premium.";
 
