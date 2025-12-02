@@ -2389,7 +2389,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "purchases.market_insights" = "Análises de Mercado";
 "purchases.token_insights" = "Análises";
 "purchases.token_insights.description" = "Domine a Pesquisa de Tokens";
-"purchases.token_insights.info" = "Sua ferramenta tudo-em-um para análise profunda. Navegue pelas listas de tokens Top 250 selecionados com base no volume de negociação, liquidez da corretora, comportamento do holder e tendências on-chain — tudo de uma vez. Filtre, analise e fique à frente.";
+"purchases.token_insights.info" = "Exibe dados detalhados do token - volume, liquidez e tendências. Ajuda você a tomar decisões de investimento mais inteligentes.";
 
 "purchases.advanced_search" = "Busca Avançada";
 "purchases.advanced_search.description" = "Descubra Tokens em Tendência";
