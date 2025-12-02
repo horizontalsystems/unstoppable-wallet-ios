@@ -2402,9 +2402,9 @@
 
 // Vip Support
 "purchases.vip" = "VIP";
-"purchases.vip_support" = "VIP 그룹";
+"purchases.vip_support" = "우선 지원";
 "purchases.vip_support.description" = "지갑 팀에 접근하여 신속한 기술 지원을 받으세요.";
-"purchases.vip_support.info" = "진화의 일원이 되세요. VIP 그룹에 가입하여 기술 지원을 위해 저희 팀과 직접 연결하세요. 예정된 기능에 투표하고, 향후 업데이트에 대한 독점 미리보기를 받으세요. 당신의 의견이 중요합니다—차세대 암호화폐 지갑을 함께 만들어 나가세요.";
+"purchases.vip_support.info" = "우선 지원 팀에 직접 연결되어 신속하고 개인화된 도움을 받을 수 있습니다. Unstoppable 팀이 빠르게 지원합니다.";
 
 "purchase.bottom_sheet.description" = "한 번의 결제로 모든 프리미엄 기능을 이용할 수 있습니다.";
 
