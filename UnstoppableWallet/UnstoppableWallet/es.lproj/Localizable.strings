@@ -2390,15 +2390,15 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "purchases.market_insights" = "Análisis del mercado";
 "purchases.token_insights" = "Estadísticas";
 "purchases.token_insights.description" = "Acceso a listas top-100 según criterios clave";
-"purchases.token_insights.info" = "Tu herramienta todo en uno para análisis profundo. Navega por listas curadas de los 250 mejores tokens basadas en volumen de trading, liquidez en exchanges, comportamiento de holders y tendencias on-chain—todo de un vistazo. Filtra, analiza y mantente a la vanguardia.";
+"purchases.token_insights.info" = "Muestra datos detallados del token - volumen, liquidez y tendencias. Te ayuda a tomar decisiones de inversión más inteligentes.";
 
 "purchases.advanced_search" = "Búsqueda Avanzada";
 "purchases.advanced_search.description" = "Filtrado multinivel con múltiples parámetros";
-"purchases.advanced_search.info" = "Elimina el ruido y concéntrate en tokens de alto potencial con precisión. Usa la Búsqueda Avanzada para filtrar miles de tokens por volumen de trading, blockchain, capitalización de mercado, tendencias de precios, sector y rendimiento—y más. Potente, preciso y diseñado para el descubrimiento.";
+"purchases.advanced_search.info" = "Encuentra tokens usando filtros por volumen, cadena o sector. Incluye métricas de actividad en CEX/DEX y listados.";
 
 "purchases.trade_signals" = "Señales y Tendencias";
 "purchases.trade_signals.description" = "Monitoreo automático de tendencias del mercado para tus tokens";
-"purchases.trade_signals.info" = "Nunca más pierdas una oportunidad de trading. Observador de Tendencias ofrece alertas en tiempo real impulsadas por análisis técnico avanzado, ayudándote a identificar tendencias, detectar breakouts y evitar obstáculos antes de que ocurran. Actúa rápido, opera con inteligencia y maximiza las ganancias.";
+"purchases.trade_signals.info" = "Envía alertas en tiempo real sobre oportunidades de trading. Destaca al instante posibles ganancias o riesgos del mercado.";
 
 // Vip Support
 "purchases.vip" = "VIP";
