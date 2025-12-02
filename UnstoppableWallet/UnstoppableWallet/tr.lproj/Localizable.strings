@@ -2409,9 +2409,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Vip Support
 "purchases.vip" = "VIP";
-"purchases.vip_support" = "VIP Grubu";
+"purchases.vip_support" = "Öncelikli destek";
 "purchases.vip_support.description" = "Hızlı teknik destek için cüzdan ekibine erişim.";
-"purchases.vip_support.info" = "Evrimin bir parçası olun. VIP Gruba katılarak teknik destek için ekibimizle doğrudan bağlantı kurun. Gelecek özelliklere oy verin ve gelecekteki güncellemelere özel bir bakış atın. Sizin sesiniz önemli—yeni nesil kripto cüzdanını şekillendirmeye yardımcı olun.";
+"purchases.vip_support.info" = "Size doğrudan öncelikli desteğe erişim sağlar. Unstoppable ekibinden hızlı ve kişisel yardım alın.";
 
 "purchase.bottom_sheet.description" = "Tek bir satın alım tüm Premium özelliklerin kilidini açar.";
 
