@@ -2390,15 +2390,15 @@
 "purchases.market_insights" = "시장 인사이트";
 "purchases.token_insights" = "분석";
 "purchases.token_insights.description" = "주요 기준별 상위 100개 목록 접근";
-"purchases.token_insights.info" = "심층 분석을 위한 올인원 도구입니다. 거래량, 거래소 유동성, 보유자 행동 패턴 및 온체인 트렌드를 기반으로 엄선된 상위 250개 토큰 목록을 한눈에 살펴보세요. 필터링, 분석하고 항상 앞서 나가세요.";
+"purchases.token_insights.info" = "거래량, 유동성, 트렌드 등 토큰의 세부 데이터를 보여주어 더 현명한 투자 결정을 내릴 수 있도록 돕습니다.";
 
 "purchases.advanced_search" = "고급 검색";
 "purchases.advanced_search.description" = "다양한 매개변수에 대한 다중 레벨 필터링";
-"purchases.advanced_search.info" = "불필요한 정보는 배제하고 높은 잠재력을 가진 토큰을 정확하게 찾아보세요. 고급 검색을 사용하여 거래량, 블록체인, 시가총액, 가격 동향, 섹터 및 성과 등 수천 개의 토큰을 필터링하세요. 강력하고 정확하며 발견을 위해 설계되었습니다.";
+"purchases.advanced_search.info" = "거래량, 체인, 섹터별 필터를 사용해 토큰을 찾을 수 있습니다. CEX/DEX 거래 활동과 상장 관련 지표도 포함되어 있습니다.";
 
 "purchases.trade_signals" = "신호 및 트렌드";
 "purchases.trade_signals.description" = "보유 토큰의 시장 트렌드 자동 모니터링";
-"purchases.trade_signals.info" = "더 이상 거래 기회를 놓치지 마세요. 트렌드 지켜보기는 고급 기술 분석을 통해 실시간 알림을 제공하여 트렌드를 식별하고, 돌파 신호를 포착하며, 발생하기 전에 위험 요소를 피할 수 있도록 도와줍니다. 신속하게 행동하고, 똑똑하게 거래하며, 수익을 최대화하세요.";
+"purchases.trade_signals.info" = "실시간으로 거래 기회를 알림으로 제공합니다. 수익 가능성이나 시장 위험을 즉시 파악할 수 있습니다.";
 
 // Vip Support
 "purchases.vip" = "VIP";

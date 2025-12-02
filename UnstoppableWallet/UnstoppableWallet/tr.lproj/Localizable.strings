@@ -2391,21 +2391,21 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "purchases.loss_protection.info" = "Takas sırasında botları ve front-running saldırılarını engeller. İşlemlerinizi adil ve güvenli tutar.";
 "purchases.robbery_protection" = "Zorla Açtırma Koruması";
 "purchases.robbery_protection.description" = "Uygulamayı zorla açmanız gereken durumlarda fonlarınızı korur.";
-"purchases.robbery_protection.info" = "Lets you create a decoy wallet with a separate PIN. Keeps real assets hidden in high-risk situations.";
+"purchases.robbery_protection.info" = "Ayrı bir PIN ile sahte (yem) cüzdan oluşturmanıza olanak tanır. Yüksek riskli durumlarda gerçek varlıklarınızı gizli tutar.";
 
 // Market Insights
 "purchases.market_insights" = "Piyasa İçgörüleri";
 "purchases.token_insights" = "Analitik";
 "purchases.token_insights.description" = "Önemli kriterlere göre ilk 100 listelerine erişim";
-"purchases.token_insights.info" = "Derinlemesine analiz için tek araçınız. İşlem hacmi, borsa likiditesi, yatırımcı davranışı ve zincir üstü trendlere dayalı olarak düzenlenmiş En İyi 250 token listesine göz atın—hepsi tek bir bakışta. Filtreleyin, analiz edin ve öne geçin.";
+"purchases.token_insights.info" = "Token için ayrıntılı veriler gösterir - hacim, likidite ve trendler. Daha akıllı yatırım kararları almanıza yardımcı olur.";
 
 "purchases.advanced_search" = "Gelişmiş Arama";
 "purchases.advanced_search.description" = "Çoklu parametreler üzerinden çok seviyeli filtreleme";
-"purchases.advanced_search.info" = "Gereksiz detayları bırakın ve yüksek potansiyelli tokenlere hassasiyetle odaklanın. Gelişmiş Arama'yı kullanarak binlerce tokeni işlem hacmi, blok zinciri, piyasa değeri, fiyat trendleri, sektör ve performansa göre filtreleyebilirsiniz—ve daha fazlası. Güçlü, doğru ve keşif için tasarlanmış.";
+"purchases.advanced_search.info" = "Token’ları hacim, ağ veya sektör filtreleriyle bulun. CEX/DEX aktiviteleri ve listelemeler için metrikler içerir.";
 
 "purchases.trade_signals" = "Sinyaller ve Trendler";
 "purchases.trade_signals.description" = "Tokenleriniz için piyasa trendlerinin otomatik takibi";
-"purchases.trade_signals.info" = "Bir daha hiçbir ticaret fırsatını kaçırmayın. Trendleri İzleyin, gelişmiş teknik analize dayalı gerçek zamanlı uyarılar sunarak trendleri belirlemenize, ani yükselişleri tespit etmenize ve sorunları önceden fark etmenize yardımcı olur. Hızlı hareket edin, akıllı ticaret yapın ve kazançlarınızı maksimize edin.";
+"purchases.trade_signals.info" = "Alım-satım fırsatları için gerçek zamanlı bildirimler gönderir. Kâr fırsatlarını veya piyasa risklerini anında vurgular.";
 
 // Vip Support
 "purchases.vip" = "VIP";

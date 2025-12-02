@@ -2389,15 +2389,15 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "purchases.market_insights" = "Markteinblicke";
 "purchases.token_insights" = "Analytik";
 "purchases.token_insights.description" = "Zugriff auf Top-100 Listen nach Schlüsselkriterien";
-"purchases.token_insights.info" = "Ihr All-in-One-Tool für tiefgehende Analysen. Durchsuchen Sie kuratierte Top-250-Token-Listen basierend auf Handelsvolumen, Börsen-Liquidität, Halterverhalten und On-Chain-Trends – alles auf einen Blick. Filtern, analysieren und bleiben Sie voraus.";
+"purchases.token_insights.info" = "Zeigt detaillierte Token-Daten wie Volumen, Liquidität und Trends an. Hilft Ihnen, fundiertere Anlageentscheidungen zu treffen.";
 
 "purchases.advanced_search" = "Erweiterte Suche";
 "purchases.advanced_search.description" = "Mehrstufige Filterung über mehrere Parameter";
-"purchases.advanced_search.info" = "Lassen Sie den Lärm hinter sich und konzentrieren Sie sich präzise auf Token mit hohem Potenzial. Nutzen Sie die Erweiterte Suche, um Tausende von Token nach Handelsvolumen, Blockchain, Marktkapitalisierung, Preistrends, Sektor und Performance zu filtern – und mehr. Leistungsstark, präzise und für Entdeckungen konzipiert.";
+"purchases.advanced_search.info" = "Finden Sie Tokens mithilfe von Filtern nach Volumen, Chain oder Sektor. Enthält Kennzahlen zu CEX/DEX-Aktivität und Listings.";
 
 "purchases.trade_signals" = "Signale und Trends";
 "purchases.trade_signals.description" = "Automatische Überwachung von Markttrends für Ihre Tokens";
-"purchases.trade_signals.info" = "Verpassen Sie nie wieder eine Handelsgelegenheit. Watch Trends liefert Echtzeit-Benachrichtigungen, unterstützt durch fortschrittliche technische Analyse, die Ihnen hilft, Trends zu identifizieren, Ausbrüche zu erkennen und Fallstricke zu vermeiden, bevor sie passieren. Handeln Sie schnell, traden Sie smart und maximieren Sie Ihre Gewinne.";
+"purchases.trade_signals.info" = "Sendet Echtzeitbenachrichtigungen über Handelsmöglichkeiten und weist sofort auf Gewinnchancen oder Marktrisiken hin.";
 
 // Vip Support
 "purchases.vip" = "VIP";
