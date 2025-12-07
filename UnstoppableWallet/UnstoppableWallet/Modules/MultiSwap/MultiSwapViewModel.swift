@@ -28,14 +28,17 @@ class MultiSwapViewModel: ObservableObject {
     private var enteringFiat = false
 
     @Published var validProviders = [IMultiSwapProvider]()
-
+    @Published var providersInitialized = false
+    
     private var internalTokenIn: Token? {
         didSet {
             guard internalTokenIn != oldValue else {
                 return
             }
 
-            syncValidProviders()
+            if providersInitialized {
+                syncValidProviders()
+            }
 
             if internalTokenIn != tokenIn {
                 tokenIn = internalTokenIn
@@ -113,7 +116,9 @@ class MultiSwapViewModel: ObservableObject {
                 return
             }
 
-            syncValidProviders()
+            if providersInitialized {
+                syncValidProviders()
+            }
 
             if internalTokenOut != tokenOut {
                 tokenOut = internalTokenOut
@@ -256,12 +261,7 @@ class MultiSwapViewModel: ObservableObject {
 
     @Published var quotes: [Quote] = [] {
         didSet {
-            if let featuredQuote = quotes.first(where: { $0.provider is OneInchMultiSwapProvider }) {
-                bestQuote = featuredQuote
-            } else {
-                bestQuote = quotes.max { $0.quote.amountOut < $1.quote.amountOut }
-            }
-
+            bestQuote = quotes.first
             syncCurrentQuote()
 
             timer?.invalidate()
@@ -302,13 +302,34 @@ class MultiSwapViewModel: ObservableObject {
         }
 
         currencyManager.$baseCurrency.sink { [weak self] in self?.currency = $0 }.store(in: &cancellables)
-
+        
+        subscribeToProvidersInitialization()
+        
         syncFiatAmountIn()
         syncFiatAmountOut()
     }
-
+    
+    private func subscribeToProvidersInitialization() {
+        guard !providers.isEmpty else {
+            providersInitialized = true
+            return
+        }
+        
+        Publishers.MergeMany(providers.map { $0.initializedPublisher })
+            .collect(providers.count)
+            .first()
+            .delay(for: .seconds(3), scheduler: DispatchQueue.main)
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in
+                self?.providersInitialized = true
+                self?.syncValidProviders()
+                self?.syncQuotes()
+            }
+            .store(in: &cancellables)
+    }
+    
     private func syncValidProviders() {
-        if let internalTokenIn, let internalTokenOut {
+        if providersInitialized, let internalTokenIn, let internalTokenOut {
             validProviders = providers.filter { $0.supports(tokenIn: internalTokenIn, tokenOut: internalTokenOut) }
         } else {
             validProviders = []
@@ -371,7 +392,7 @@ class MultiSwapViewModel: ObservableObject {
         quotesTask = nil
         quotes = []
 
-        guard let internalTokenIn, let internalTokenOut, let amountIn, amountIn != 0 else {
+        guard providersInitialized, let internalTokenIn, let internalTokenOut, let amountIn, amountIn != 0 else {
             if quoting {
                 quoting = false
             }
@@ -430,7 +451,12 @@ class MultiSwapViewModel: ObservableObject {
                 return quotes
             }
 
-            let quotes = optionalQuotes.compactMap { $0 }.sorted { $0.quote.amountOut > $1.quote.amountOut }
+            let quotes = optionalQuotes.compactMap { $0 }.sorted {
+                if $0.provider.priority != $1.provider.priority {
+                    return $0.provider.priority > $1.provider.priority
+                }
+                return $0.quote.amountOut > $1.quote.amountOut
+            }
 
             if !Task.isCancelled {
                 await MainActor.run { [weak self, quotes] in

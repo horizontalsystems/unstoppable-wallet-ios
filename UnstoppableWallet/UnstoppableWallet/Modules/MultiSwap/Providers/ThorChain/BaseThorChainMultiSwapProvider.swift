@@ -3,6 +3,7 @@ import BigInt
 import BitcoinCore
 import EvmKit
 import Foundation
+import Combine
 import HsToolKit
 import MarketKit
 import ObjectMapper
@@ -29,6 +30,11 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
 
     @Published private var useMevProtection: Bool = false
 
+    private let initializedSubject = PassthroughSubject<Bool, Never>()
+    var initializedPublisher: AnyPublisher<Bool, Never> {
+        initializedSubject.eraseToAnyPublisher()
+    }
+
     init(storage: MultiSwapSettingStorage) {
         self.storage = storage
 
@@ -49,6 +55,10 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
 
     var icon: String {
         fatalError("Must be overridden by subclass")
+    }
+
+    var priority: Int {
+        10
     }
 
     var affiliate: String? {
@@ -338,13 +348,19 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
 
     private func syncPools() {
         Task { [weak self, networkManager, baseUrl] in
-            let pools: [Pool] = try await networkManager.fetch(url: "\(baseUrl)/pools")
-            self?.sync(pools: pools)
+            do {
+                let pools: [Pool] = try await networkManager.fetch(url: "\(baseUrl)/pools")
+                self?.sync(pools: pools)
+                self?.initializedSubject.send(true)
+            } catch {
+                self?.initializedSubject.send(false)
+                throw error
+            }
         }
     }
 
     private func sync(pools: [Pool]) {
-        assets = []
+        var assets = [Asset]()
 
         let availablePools = pools.filter { $0.status.caseInsensitiveCompare("available") == .orderedSame }
 
@@ -391,6 +407,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 assets.append(contentsOf: tokens.map { Asset(id: pool.asset, token: $0) })
             }
         }
+        self.assets = assets
     }
 
     private func blockchainType(assetBlockchainId: String) -> BlockchainType? {

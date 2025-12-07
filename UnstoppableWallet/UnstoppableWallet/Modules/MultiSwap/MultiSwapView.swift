@@ -515,7 +515,10 @@ struct MultiSwapView: View {
         var showProgress = false
         var preSwapStep: MultiSwapPreSwapStep?
 
-        if viewModel.quoting {
+        if !viewModel.providersInitialized {
+            title = "swap.initializing".localized
+            showProgress = true
+        } else if viewModel.quoting {
             title = "swap.quoting".localized
             showProgress = true
         } else if viewModel.tokenIn == nil {

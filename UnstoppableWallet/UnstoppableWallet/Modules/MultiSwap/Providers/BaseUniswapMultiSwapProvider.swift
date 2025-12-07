@@ -13,6 +13,10 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
         try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
     }
 
+    override var priority: Int {
+        10
+    }
+
     override func confirmationQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
         let quote = try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
 
