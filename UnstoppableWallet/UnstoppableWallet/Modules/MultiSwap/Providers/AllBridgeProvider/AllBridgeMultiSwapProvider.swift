@@ -2,6 +2,7 @@ import Alamofire
 import BigInt
 import EvmKit
 import Foundation
+import Combine
 import HsToolKit
 import MarketKit
 import ObjectMapper
@@ -67,6 +68,11 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
 
     private var tokenPairs: [Token: AbToken] = [:]
     @Published private var useMevProtection: Bool = false
+    
+    private let initializedSubject = PassthroughSubject<Bool, Never>()
+    var initializedPublisher: AnyPublisher<Bool, Never> {
+        initializedSubject.eraseToAnyPublisher()
+    }
 
     init(storage: MultiSwapSettingStorage, logger: Logger? = nil) {
         self.storage = storage
@@ -88,13 +94,17 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         "allbridge_32"
     }
 
+    let priority = 10
+
     private func syncPools() {
         Task { [weak self, networkManager, baseUrl] in
             do {
                 let abTokens: [AbToken] = try await networkManager.fetch(url: "\(baseUrl)/tokens")
                 self?.logger?.log(level: .debug, message: "AllBridge: Handle \(abTokens.count) tokens.")
                 self?.sync(abTokens: abTokens)
+                self?.initializedSubject.send(true)
             } catch {
+                self?.initializedSubject.send(false)
                 self?.logger?.log(level: .debug, message: "AllBridge: Error when fetching tokens \(error)")
             }
         }

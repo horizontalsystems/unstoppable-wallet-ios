@@ -666,6 +666,7 @@
 "swap.minimum_short" = "(min)";
 "swap.maximum_short" = "(max)";
 
+"swap.initializing" = "Initialization...";
 "swap.rate_not_available" = "Rate not available";
 "swap.select" = "Select";
 "swap.quoting" = "Quoting";
@@ -678,6 +679,9 @@
 "swap.token_syncing" = "Token Syncing";
 "swap.token_not_synced" = "Token Not Synced";
 "swap.insufficient_balance" = "Insufficient Balance";
+
+"zcash_parsing.only_transparent" = "You can use only transparent addresses.";
+"zcash_parsing.only_shielded" = "You can use only shielded(unified) addresses.";
 
 "swap.quotes.providers" = "Providers";
 "swap.quotes.best_price" = "Best Price";

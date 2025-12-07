@@ -13,6 +13,11 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
 
     @Published private var useMevProtection: Bool = false
 
+    
+    var initializedPublisher: AnyPublisher<Bool, Never> {
+        Just(true).eraseToAnyPublisher()
+    }
+
     init(storage: MultiSwapSettingStorage) {
         self.storage = storage
     }
@@ -27,6 +32,10 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
 
     var icon: String {
         fatalError("Must be implemented in subclass")
+    }
+
+    var priority: Int {
+        100
     }
 
     func supports(tokenIn _: Token, tokenOut _: Token) -> Bool {

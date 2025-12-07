@@ -11,18 +11,18 @@ class ZcashAddressParserItem {
         self.addressType = addressType
     }
 
-    private func validate(address: String, checkSendToSelf: Bool) -> Single<Address> {
+    private func validate(address: String, checkType: Bool = true, checkSendToSelf: Bool) -> Single<Address> {
         do {
             switch parserType {
             case let .adapter(adapter):
                 let parsedType = try adapter.validate(address: address, checkSendToSelf: checkSendToSelf)
-                if let addressType, parsedType != addressType {
+                if checkType, let addressType, parsedType != addressType {
                     return Single.error(addressType == .transparent ? ParseError.onlyTransparent : ParseError.onlyShielded)
                 }
                 return Single.just(Address(raw: address, domain: nil, blockchainType: blockchainType))
             case let .validator(validator):
                 let recipient = try validator.validate(address: address)
-                if let addressType {
+                if checkType, let addressType {
                     switch addressType {
                     case .shielded:
                         if recipient.isTransparent {
@@ -50,7 +50,7 @@ extension ZcashAddressParserItem: IAddressParserItem {
     }
 
     func isValid(address: String) -> Single<Bool> {
-        validate(address: address, checkSendToSelf: false)
+        validate(address: address, checkType: false, checkSendToSelf: false)
             .map { _ in true }
             .catchErrorJustReturn(false)
     }
@@ -62,8 +62,15 @@ extension ZcashAddressParserItem {
         case validator(ZcashAddressValidator)
     }
 
-    enum ParseError: Error {
+    enum ParseError: LocalizedError {
         case onlyTransparent
         case onlyShielded
+        
+        public var errorDescription: String? {
+            switch self {
+            case .onlyTransparent: return "zcash_parsing.only_transparent".localized
+            case .onlyShielded: return "zcash_parsing.only_shielded".localized
+            }
+        }
     }
 }

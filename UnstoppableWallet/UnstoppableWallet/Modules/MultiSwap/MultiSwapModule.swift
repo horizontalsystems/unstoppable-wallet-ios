@@ -25,6 +25,7 @@ extension MultiSwapViewModel {
             providers.append(OneInchMultiSwapProvider(kit: OneInchKit.Kit.instance(apiKey: apiKey), storage: storage))
         }
 
+        providers.append(UnstoppableMultiSwapProvider(storage: storage, logger: .init(minLogLevel: .debug)))
         providers.append(ThorChainMultiSwapProvider(storage: storage))
         providers.append(MayaMultiSwapProvider(storage: storage))
         providers.append(AllBridgeMultiSwapProvider(storage: storage))

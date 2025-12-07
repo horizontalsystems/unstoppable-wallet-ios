@@ -2029,6 +2029,20 @@
 		6BA971E92ED6A8D200DEC017 /* BlackFridaySubscribePeriodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971E72ED6A8C500DEC017 /* BlackFridaySubscribePeriodView.swift */; };
 		6BA971EB2ED73EDC00DEC017 /* BlackFridayPremiumSlideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971EA2ED73ED100DEC017 /* BlackFridayPremiumSlideViewModel.swift */; };
 		6BA971EC2ED73EDC00DEC017 /* BlackFridayPremiumSlideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971EA2ED73ED100DEC017 /* BlackFridayPremiumSlideViewModel.swift */; };
+		6BA971A62ECD731800DEC017 /* UnstoppableMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971A52ECD731100DEC017 /* UnstoppableMultiSwapProvider.swift */; };
+		6BA971A72ECD731800DEC017 /* UnstoppableMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971A52ECD731100DEC017 /* UnstoppableMultiSwapProvider.swift */; };
+		6BA971A92ECD758F00DEC017 /* UnstoppableMultiSwapEvmQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971A82ECD758A00DEC017 /* UnstoppableMultiSwapEvmQuote.swift */; };
+		6BA971AA2ECD758F00DEC017 /* UnstoppableMultiSwapEvmQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971A82ECD758A00DEC017 /* UnstoppableMultiSwapEvmQuote.swift */; };
+		6BA971AC2ECD75BE00DEC017 /* UnstoppableMultiSwapBtcQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971AB2ECD75BD00DEC017 /* UnstoppableMultiSwapBtcQuote.swift */; };
+		6BA971AD2ECD75BE00DEC017 /* UnstoppableMultiSwapBtcQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971AB2ECD75BD00DEC017 /* UnstoppableMultiSwapBtcQuote.swift */; };
+		6BA971B22ECD77FE00DEC017 /* UnstoppableMultiSwapEvmConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971B12ECD77FE00DEC017 /* UnstoppableMultiSwapEvmConfirmationQuote.swift */; };
+		6BA971B32ECD77FE00DEC017 /* UnstoppableMultiSwapEvmConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971B12ECD77FE00DEC017 /* UnstoppableMultiSwapEvmConfirmationQuote.swift */; };
+		6BA971B52ECD78A400DEC017 /* UnstoppableMultiSwapBtcConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971B42ECD78A400DEC017 /* UnstoppableMultiSwapBtcConfirmationQuote.swift */; };
+		6BA971B62ECD78A400DEC017 /* UnstoppableMultiSwapBtcConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971B42ECD78A400DEC017 /* UnstoppableMultiSwapBtcConfirmationQuote.swift */; };
+		6BA971B82ECD79C200DEC017 /* UnstoppableMultiSwapZcashConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971B72ECD79C200DEC017 /* UnstoppableMultiSwapZcashConfirmationQuote.swift */; };
+		6BA971B92ECD79C200DEC017 /* UnstoppableMultiSwapZcashConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971B72ECD79C200DEC017 /* UnstoppableMultiSwapZcashConfirmationQuote.swift */; };
+		6BA971BB2ECD8DBA00DEC017 /* UnstoppableProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971BA2ECD8DAE00DEC017 /* UnstoppableProvider.swift */; };
+		6BA971BC2ECD8DBA00DEC017 /* UnstoppableProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971BA2ECD8DAE00DEC017 /* UnstoppableProvider.swift */; };
 		6BAAF3472B9B245C00EFE5B2 /* ShimmerEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3442B9B245C00EFE5B2 /* ShimmerEffect.swift */; };
 		6BAAF3492B9B245C00EFE5B2 /* SlideButtonStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3452B9B245C00EFE5B2 /* SlideButtonStyling.swift */; };
 		6BAAF34B2B9B245C00EFE5B2 /* SlideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3462B9B245C00EFE5B2 /* SlideButton.swift */; };
@@ -4636,6 +4650,13 @@
 		6BA971E42ED6A84600DEC017 /* SubscribePeriodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribePeriodView.swift; sourceTree = "<group>"; };
 		6BA971E72ED6A8C500DEC017 /* BlackFridaySubscribePeriodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackFridaySubscribePeriodView.swift; sourceTree = "<group>"; };
 		6BA971EA2ED73ED100DEC017 /* BlackFridayPremiumSlideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackFridayPremiumSlideViewModel.swift; sourceTree = "<group>"; };
+		6BA971A52ECD731100DEC017 /* UnstoppableMultiSwapProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableMultiSwapProvider.swift; sourceTree = "<group>"; };
+		6BA971A82ECD758A00DEC017 /* UnstoppableMultiSwapEvmQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableMultiSwapEvmQuote.swift; sourceTree = "<group>"; };
+		6BA971AB2ECD75BD00DEC017 /* UnstoppableMultiSwapBtcQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableMultiSwapBtcQuote.swift; sourceTree = "<group>"; };
+		6BA971B12ECD77FE00DEC017 /* UnstoppableMultiSwapEvmConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableMultiSwapEvmConfirmationQuote.swift; sourceTree = "<group>"; };
+		6BA971B42ECD78A400DEC017 /* UnstoppableMultiSwapBtcConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableMultiSwapBtcConfirmationQuote.swift; sourceTree = "<group>"; };
+		6BA971B72ECD79C200DEC017 /* UnstoppableMultiSwapZcashConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableMultiSwapZcashConfirmationQuote.swift; sourceTree = "<group>"; };
+		6BA971BA2ECD8DAE00DEC017 /* UnstoppableProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableProvider.swift; sourceTree = "<group>"; };
 		6BAAF3442B9B245C00EFE5B2 /* ShimmerEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShimmerEffect.swift; sourceTree = "<group>"; };
 		6BAAF3452B9B245C00EFE5B2 /* SlideButtonStyling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideButtonStyling.swift; sourceTree = "<group>"; };
 		6BAAF3462B9B245C00EFE5B2 /* SlideButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideButton.swift; sourceTree = "<group>"; };
@@ -6521,6 +6542,7 @@
 		11B35733E1033052E6CA46C3 /* Providers */ = {
 			isa = PBXGroup;
 			children = (
+				6BA971A42ECD730600DEC017 /* Unstoppable */,
 				D3FBC7192E55E918001083D8 /* ThorChain */,
 				6BF655842E49BF400055A9D5 /* AllBridgeProvider */,
 				6B5FD7D72E42166C00FEF510 /* DestinationHelper.swift */,
@@ -8276,6 +8298,20 @@
 				6BA971DE2ED6A1ED00DEC017 /* BlackFridayPurchaseProductItemFactory.swift */,
 			);
 			path = BlackFriday;
+			sourceTree = "<group>";
+		};
+		6BA971A42ECD730600DEC017 /* Unstoppable */ = {
+			isa = PBXGroup;
+			children = (
+				6BA971BA2ECD8DAE00DEC017 /* UnstoppableProvider.swift */,
+				6BA971B72ECD79C200DEC017 /* UnstoppableMultiSwapZcashConfirmationQuote.swift */,
+				6BA971AB2ECD75BD00DEC017 /* UnstoppableMultiSwapBtcQuote.swift */,
+				6BA971B42ECD78A400DEC017 /* UnstoppableMultiSwapBtcConfirmationQuote.swift */,
+				6BA971A82ECD758A00DEC017 /* UnstoppableMultiSwapEvmQuote.swift */,
+				6BA971B12ECD77FE00DEC017 /* UnstoppableMultiSwapEvmConfirmationQuote.swift */,
+				6BA971A52ECD731100DEC017 /* UnstoppableMultiSwapProvider.swift */,
+			);
+			path = Unstoppable;
 			sourceTree = "<group>";
 		};
 		6BB14F782C05FAA600E879B2 /* Tvl */ = {
@@ -10405,6 +10441,7 @@
 				11B35BCC6C00E857CE562F16 /* EvmAdapter.swift in Sources */,
 				11B35E0BEC5BE604ACE59BC2 /* PasteboardManager.swift in Sources */,
 				D04BC2CE2E7043EB001E1C52 /* MoneroWatchWalletParser.swift in Sources */,
+				6BA971B32ECD77FE00DEC017 /* UnstoppableMultiSwapEvmConfirmationQuote.swift in Sources */,
 				58AAA8D40B3399937CFEB0F2 /* PaymentRequestAddress.swift in Sources */,
 				11B35BDBD856C645045553D2 /* UIImage.swift in Sources */,
 				11B35EBB0DC7C0CE6F51E9DA /* BarsProgressView.swift in Sources */,
@@ -11439,6 +11476,7 @@
 				ABC9A6F88E51293F2605CACD /* ContactBookContactModule.swift in Sources */,
 				ABC9A69A1A01DBD07CAAC9CD /* ContactBookAddressViewController.swift in Sources */,
 				6BD7665C2EA62E22008DDEA7 /* BaseReceiveAddressView.swift in Sources */,
+				6BA971B62ECD78A400DEC017 /* UnstoppableMultiSwapBtcConfirmationQuote.swift in Sources */,
 				ABC9A1D806117252BDECC095 /* ContactBookAddressModule.swift in Sources */,
 				ABC9AEDA6111C0A603807E85 /* ContactBookAddressViewModel.swift in Sources */,
 				ABC9AEF62C857F322FFA87E4 /* ContactBookAddressService.swift in Sources */,
@@ -11610,6 +11648,8 @@
 				6B1D8E522DEADF7F00A52B01 /* MultiTextComponent.swift in Sources */,
 				6B1D8E532DEADF7F00A52B01 /* PrimaryCircleButtonComponent.swift in Sources */,
 				6B1D8E542DEADF7F00A52B01 /* BaseThemeCell.swift in Sources */,
+				6BA971B92ECD79C200DEC017 /* UnstoppableMultiSwapZcashConfirmationQuote.swift in Sources */,
+				6BA971AC2ECD75BE00DEC017 /* UnstoppableMultiSwapBtcQuote.swift in Sources */,
 				6B1D8E552DEADF7F00A52B01 /* SecondaryCircleButtonComponent.swift in Sources */,
 				6B1D8E562DEADF7F00A52B01 /* SliderButton.swift in Sources */,
 				6B1D8E572DEADF7F00A52B01 /* PrimaryButtonComponent.swift in Sources */,
@@ -11700,6 +11740,7 @@
 				6B6E13FA2DEDABDE007F4A39 /* NativeProgressView.swift in Sources */,
 				6B6E13FB2DEDABDE007F4A39 /* DimHUDWindow.swift in Sources */,
 				6B6E13FC2DEDABDE007F4A39 /* HUDStatusView.swift in Sources */,
+				6BA971BC2ECD8DBA00DEC017 /* UnstoppableProvider.swift in Sources */,
 				6B6E13FD2DEDABDE007F4A39 /* HUDModel.swift in Sources */,
 				6B6E13FE2DEDABDE007F4A39 /* HUDViewTheme.swift in Sources */,
 				6B5D852E2EA7A59900F13E2C /* MoneroReceiveAddressViewModel.swift in Sources */,
@@ -11728,6 +11769,7 @@
 				11B356A35A5981DD231E580C /* ThemeListStyle.swift in Sources */,
 				11B357C425D633543FD109C3 /* DuressModeSelectView.swift in Sources */,
 				11B358D35D2270FD78C6EF82 /* AutoLockPeriod.swift in Sources */,
+				6BA971A62ECD731800DEC017 /* UnstoppableMultiSwapProvider.swift in Sources */,
 				ABC9AF95141EA649524FBF88 /* CheckboxStyle.swift in Sources */,
 				ABC9A79CFCEBAC442A1B791D /* BackupAppModule.swift in Sources */,
 				D3E36BE82E097768007F99CA /* CreateAccountViewModel.swift in Sources */,
@@ -11916,6 +11958,7 @@
 				6BD766562EA625EC008DDEA7 /* HDReceiveAddressViewModel.swift in Sources */,
 				11B35991B877DCF82D6E51B5 /* BaseUniswapMultiSwapProvider.swift in Sources */,
 				11B3570C71E4B47382D2DA4B /* MultiSwapTokenSelectView.swift in Sources */,
+				6BA971A92ECD758F00DEC017 /* UnstoppableMultiSwapEvmQuote.swift in Sources */,
 				11B357EC10CF3DB905D9F19E /* MultiSwapTokenSelectViewModel.swift in Sources */,
 				D36287AC2CA2BA2700ADAF3B /* TonConnectManager.swift in Sources */,
 				11B35C2D31DE8081AC572B27 /* BaseUniswapV2MultiSwapProvider.swift in Sources */,
@@ -12772,6 +12815,7 @@
 				D371A2332E589A7500D7D7F6 /* ErrorMessage.swift in Sources */,
 				11B35C8A95E4C8D43F9279B6 /* EvmLabelStorage.swift in Sources */,
 				11B351DED0D2632D24084263 /* EvmUpdateStatus.swift in Sources */,
+				6BA971A72ECD731800DEC017 /* UnstoppableMultiSwapProvider.swift in Sources */,
 				11B35E83437BEB5CCE342ACB /* SyncerState.swift in Sources */,
 				D3AFAB0B2E4601FA004AB074 /* ThemeButton.swift in Sources */,
 				11B35E61083F8A098D458EBC /* SyncerStateStorage.swift in Sources */,
@@ -12821,6 +12865,7 @@
 				11B35AC389ACC3E4096EC645 /* PoolGroupFactory.swift in Sources */,
 				11B3595D3E150BF50856A746 /* PoolSource.swift in Sources */,
 				D34DB17A2E13FE5000DD30D3 /* AccountWarningView.swift in Sources */,
+				6BA971AD2ECD75BE00DEC017 /* UnstoppableMultiSwapBtcQuote.swift in Sources */,
 				ABC9A043F82D9F5945C5FAFA /* PseudoAccessoryView.swift in Sources */,
 				ABC9A90BDA552DFBCB19B226 /* NftAssetOverviewService.swift in Sources */,
 				ABC9A4387AF9D012498DF42B /* NftAssetOverviewViewModel.swift in Sources */,
@@ -13030,6 +13075,7 @@
 				D0E5E8522BE260C8005080A4 /* BitcoinPreSendHandler.swift in Sources */,
 				D3E36BC92E028D55007F99CA /* UnstoppableApp.swift in Sources */,
 				D371A2412E5DB32900D7D7F6 /* RightButtonText.swift in Sources */,
+				6BA971BB2ECD8DBA00DEC017 /* UnstoppableProvider.swift in Sources */,
 				11B35281808DE30B8D717B73 /* PublicKeysViewModel.swift in Sources */,
 				11B3550E1FD46B02F0154CBC /* PublicKeysViewController.swift in Sources */,
 				6BAAF3472B9B245C00EFE5B2 /* ShimmerEffect.swift in Sources */,
@@ -13264,6 +13310,7 @@
 				6B1D8ED82DEADF7F00A52B01 /* TextButtonComponent.swift in Sources */,
 				D3F9B0312BE3B39D009FFA95 /* EvmDecoration.swift in Sources */,
 				11B35EECB57465598F305C5B /* ListRow.swift in Sources */,
+				6BA971B52ECD78A400DEC017 /* UnstoppableMultiSwapBtcConfirmationQuote.swift in Sources */,
 				11B3538D0F8C037E40623A81 /* Text.swift in Sources */,
 				6BEF09612E252519004F4514 /* StartScreenAlertManager.swift in Sources */,
 				11B35503B3E84FEFCDF1AFED /* ThemeView.swift in Sources */,
@@ -13315,6 +13362,7 @@
 				D3E41E0A2C25850000499F50 /* MailView.swift in Sources */,
 				11B35F1949F7203F34347550 /* ModuleUnlockView.swift in Sources */,
 				6B6E14012DEDABDE007F4A39 /* DimCoverView.swift in Sources */,
+				6BA971B22ECD77FE00DEC017 /* UnstoppableMultiSwapEvmConfirmationQuote.swift in Sources */,
 				6B6E14022DEDABDE007F4A39 /* HUDTheme.swift in Sources */,
 				6B6E14032DEDABDE007F4A39 /* HUDWindow.swift in Sources */,
 				D3E36BF02E0BCEBE007F99CA /* TermsView.swift in Sources */,
@@ -13413,6 +13461,7 @@
 				11B353E4793549B6A4F23997 /* CoinOverviewView.swift in Sources */,
 				11B35FDF03CD52FEC5B1745A /* CoinOverviewViewModel.swift in Sources */,
 				D3833AE12BEE3FE800ACECFB /* MarketPlatformsViewModel.swift in Sources */,
+				6BA971AA2ECD758F00DEC017 /* UnstoppableMultiSwapEvmQuote.swift in Sources */,
 				ABC9AC170807B409634706E6 /* BackupManagerView.swift in Sources */,
 				11B35916211F5D5EA0DBD207 /* CoinPageViewModel.swift in Sources */,
 				D3DD671F2BC3BD1200EC7F78 /* BaseUniswapMultiSwapQuote.swift in Sources */,
@@ -13451,6 +13500,7 @@
 				ABC9A2969ACF7FD0801043FE /* Encodable.swift in Sources */,
 				ABC9A932AD114A779BF4EC16 /* Eip155RequestFactory.swift in Sources */,
 				ABC9AC5C5D51D703D7867211 /* WalletConnectRequestHandler.swift in Sources */,
+				6BA971B82ECD79C200DEC017 /* UnstoppableMultiSwapZcashConfirmationQuote.swift in Sources */,
 				ABC9AD900F508E6A1FD96662 /* WCEthereumTransactionHandler.swift in Sources */,
 				6B44BE582EB1A51000257FD7 /* SelectorGroupViewModel.swift in Sources */,
 				ABC9A8CB0A676BEFF303E78B /* WCSignMessageHandler.swift in Sources */,

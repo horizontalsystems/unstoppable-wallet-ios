@@ -60,6 +60,7 @@ struct AddressViewNew: View {
                 }
             )
         }
+        .modifier(CautionPrompt(cautionState: $viewModel.cautionState))
     }
 
     @ViewBuilder func textField(placeholder: String, text: Binding<String>) -> some View {
