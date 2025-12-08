@@ -1857,6 +1857,10 @@
 		6B69A9A02EDFFC5C00127DBB /* DefenceSystemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B69A9962EDFFC5C00127DBB /* DefenceSystemCell.swift */; };
 		6B69A9A12EDFFC5C00127DBB /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B69A9952EDFFC5C00127DBB /* BubbleView.swift */; };
 		6B69A9A22EDFFC5C00127DBB /* WalletConnectBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B69A9922EDFFC5C00127DBB /* WalletConnectBottomSheetView.swift */; };
+		6B69A9A72EE6842700127DBB /* SendDefenseSystemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B69A9A62EE6841400127DBB /* SendDefenseSystemView.swift */; };
+		6B69A9A82EE6842700127DBB /* SendDefenseSystemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B69A9A62EE6841400127DBB /* SendDefenseSystemView.swift */; };
+		6B69A9AA2EE6842D00127DBB /* SendDefenseSystemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B69A9A92EE6842D00127DBB /* SendDefenseSystemViewModel.swift */; };
+		6B69A9AB2EE6842D00127DBB /* SendDefenseSystemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B69A9A92EE6842D00127DBB /* SendDefenseSystemViewModel.swift */; };
 		6B6D3F292DED72AE00AB2915 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 6B6D3F282DED72AE00AB2915 /* SkeletonView */; };
 		6B6D3F2B2DED72B700AB2915 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 6B6D3F2A2DED72B700AB2915 /* SkeletonView */; };
 		6B6D3F2D2DED72BF00AB2915 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 6B6D3F2C2DED72BF00AB2915 /* SkeletonView */; };
@@ -2013,6 +2017,20 @@
 		6BA971A02ECCCB8C00DEC017 /* ZcashBalanceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA9718A2ECB3B7B00DEC017 /* ZcashBalanceData.swift */; };
 		6BA971A12ECCCB9200DEC017 /* ZcashTransactionPool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA9718B2ECB3B7B00DEC017 /* ZcashTransactionPool.swift */; };
 		6BA971A22ECCCB9600DEC017 /* ZcashTransactionWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA9718C2ECB3B7B00DEC017 /* ZcashTransactionWrapper.swift */; };
+		6BA971A62ECD731800DEC017 /* UnstoppableMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971A52ECD731100DEC017 /* UnstoppableMultiSwapProvider.swift */; };
+		6BA971A72ECD731800DEC017 /* UnstoppableMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971A52ECD731100DEC017 /* UnstoppableMultiSwapProvider.swift */; };
+		6BA971A92ECD758F00DEC017 /* UnstoppableMultiSwapEvmQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971A82ECD758A00DEC017 /* UnstoppableMultiSwapEvmQuote.swift */; };
+		6BA971AA2ECD758F00DEC017 /* UnstoppableMultiSwapEvmQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971A82ECD758A00DEC017 /* UnstoppableMultiSwapEvmQuote.swift */; };
+		6BA971AC2ECD75BE00DEC017 /* UnstoppableMultiSwapBtcQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971AB2ECD75BD00DEC017 /* UnstoppableMultiSwapBtcQuote.swift */; };
+		6BA971AD2ECD75BE00DEC017 /* UnstoppableMultiSwapBtcQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971AB2ECD75BD00DEC017 /* UnstoppableMultiSwapBtcQuote.swift */; };
+		6BA971B22ECD77FE00DEC017 /* UnstoppableMultiSwapEvmConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971B12ECD77FE00DEC017 /* UnstoppableMultiSwapEvmConfirmationQuote.swift */; };
+		6BA971B32ECD77FE00DEC017 /* UnstoppableMultiSwapEvmConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971B12ECD77FE00DEC017 /* UnstoppableMultiSwapEvmConfirmationQuote.swift */; };
+		6BA971B52ECD78A400DEC017 /* UnstoppableMultiSwapBtcConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971B42ECD78A400DEC017 /* UnstoppableMultiSwapBtcConfirmationQuote.swift */; };
+		6BA971B62ECD78A400DEC017 /* UnstoppableMultiSwapBtcConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971B42ECD78A400DEC017 /* UnstoppableMultiSwapBtcConfirmationQuote.swift */; };
+		6BA971B82ECD79C200DEC017 /* UnstoppableMultiSwapZcashConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971B72ECD79C200DEC017 /* UnstoppableMultiSwapZcashConfirmationQuote.swift */; };
+		6BA971B92ECD79C200DEC017 /* UnstoppableMultiSwapZcashConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971B72ECD79C200DEC017 /* UnstoppableMultiSwapZcashConfirmationQuote.swift */; };
+		6BA971BB2ECD8DBA00DEC017 /* UnstoppableProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971BA2ECD8DAE00DEC017 /* UnstoppableProvider.swift */; };
+		6BA971BC2ECD8DBA00DEC017 /* UnstoppableProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971BA2ECD8DAE00DEC017 /* UnstoppableProvider.swift */; };
 		6BA971BF2ED560D800DEC017 /* PremiumFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971BE2ED560D200DEC017 /* PremiumFeature.swift */; };
 		6BA971C02ED560D800DEC017 /* PremiumFeature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971BE2ED560D200DEC017 /* PremiumFeature.swift */; };
 		6BA971C62ED56C5F00DEC017 /* SectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971C52ED56C5D00DEC017 /* SectionHeader.swift */; };
@@ -2039,20 +2057,6 @@
 		6BA971E92ED6A8D200DEC017 /* BlackFridaySubscribePeriodView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971E72ED6A8C500DEC017 /* BlackFridaySubscribePeriodView.swift */; };
 		6BA971EB2ED73EDC00DEC017 /* BlackFridayPremiumSlideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971EA2ED73ED100DEC017 /* BlackFridayPremiumSlideViewModel.swift */; };
 		6BA971EC2ED73EDC00DEC017 /* BlackFridayPremiumSlideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971EA2ED73ED100DEC017 /* BlackFridayPremiumSlideViewModel.swift */; };
-		6BA971A62ECD731800DEC017 /* UnstoppableMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971A52ECD731100DEC017 /* UnstoppableMultiSwapProvider.swift */; };
-		6BA971A72ECD731800DEC017 /* UnstoppableMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971A52ECD731100DEC017 /* UnstoppableMultiSwapProvider.swift */; };
-		6BA971A92ECD758F00DEC017 /* UnstoppableMultiSwapEvmQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971A82ECD758A00DEC017 /* UnstoppableMultiSwapEvmQuote.swift */; };
-		6BA971AA2ECD758F00DEC017 /* UnstoppableMultiSwapEvmQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971A82ECD758A00DEC017 /* UnstoppableMultiSwapEvmQuote.swift */; };
-		6BA971AC2ECD75BE00DEC017 /* UnstoppableMultiSwapBtcQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971AB2ECD75BD00DEC017 /* UnstoppableMultiSwapBtcQuote.swift */; };
-		6BA971AD2ECD75BE00DEC017 /* UnstoppableMultiSwapBtcQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971AB2ECD75BD00DEC017 /* UnstoppableMultiSwapBtcQuote.swift */; };
-		6BA971B22ECD77FE00DEC017 /* UnstoppableMultiSwapEvmConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971B12ECD77FE00DEC017 /* UnstoppableMultiSwapEvmConfirmationQuote.swift */; };
-		6BA971B32ECD77FE00DEC017 /* UnstoppableMultiSwapEvmConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971B12ECD77FE00DEC017 /* UnstoppableMultiSwapEvmConfirmationQuote.swift */; };
-		6BA971B52ECD78A400DEC017 /* UnstoppableMultiSwapBtcConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971B42ECD78A400DEC017 /* UnstoppableMultiSwapBtcConfirmationQuote.swift */; };
-		6BA971B62ECD78A400DEC017 /* UnstoppableMultiSwapBtcConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971B42ECD78A400DEC017 /* UnstoppableMultiSwapBtcConfirmationQuote.swift */; };
-		6BA971B82ECD79C200DEC017 /* UnstoppableMultiSwapZcashConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971B72ECD79C200DEC017 /* UnstoppableMultiSwapZcashConfirmationQuote.swift */; };
-		6BA971B92ECD79C200DEC017 /* UnstoppableMultiSwapZcashConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971B72ECD79C200DEC017 /* UnstoppableMultiSwapZcashConfirmationQuote.swift */; };
-		6BA971BB2ECD8DBA00DEC017 /* UnstoppableProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971BA2ECD8DAE00DEC017 /* UnstoppableProvider.swift */; };
-		6BA971BC2ECD8DBA00DEC017 /* UnstoppableProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA971BA2ECD8DAE00DEC017 /* UnstoppableProvider.swift */; };
 		6BAAF3472B9B245C00EFE5B2 /* ShimmerEffect.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3442B9B245C00EFE5B2 /* ShimmerEffect.swift */; };
 		6BAAF3492B9B245C00EFE5B2 /* SlideButtonStyling.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3452B9B245C00EFE5B2 /* SlideButtonStyling.swift */; };
 		6BAAF34B2B9B245C00EFE5B2 /* SlideButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BAAF3462B9B245C00EFE5B2 /* SlideButton.swift */; };
@@ -4595,6 +4599,8 @@
 		6B69A9952EDFFC5C00127DBB /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
 		6B69A9962EDFFC5C00127DBB /* DefenceSystemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefenceSystemCell.swift; sourceTree = "<group>"; };
 		6B69A9972EDFFC5C00127DBB /* DefenseMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefenseMessageView.swift; sourceTree = "<group>"; };
+		6B69A9A62EE6841400127DBB /* SendDefenseSystemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendDefenseSystemView.swift; sourceTree = "<group>"; };
+		6B69A9A92EE6842D00127DBB /* SendDefenseSystemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendDefenseSystemViewModel.swift; sourceTree = "<group>"; };
 		6B6E138E2DED8159007F4A39 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		6B6E13912DED8176007F4A39 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		6B6E13942DED818D007F4A39 /* UIRectEdge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIRectEdge.swift; sourceTree = "<group>"; };
@@ -4657,6 +4663,13 @@
 		6BA9718B2ECB3B7B00DEC017 /* ZcashTransactionPool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashTransactionPool.swift; sourceTree = "<group>"; };
 		6BA9718C2ECB3B7B00DEC017 /* ZcashTransactionWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashTransactionWrapper.swift; sourceTree = "<group>"; };
 		6BA9719B2ECB3C3000DEC017 /* ZcashTransparentAlertState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashTransparentAlertState.swift; sourceTree = "<group>"; };
+		6BA971A52ECD731100DEC017 /* UnstoppableMultiSwapProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableMultiSwapProvider.swift; sourceTree = "<group>"; };
+		6BA971A82ECD758A00DEC017 /* UnstoppableMultiSwapEvmQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableMultiSwapEvmQuote.swift; sourceTree = "<group>"; };
+		6BA971AB2ECD75BD00DEC017 /* UnstoppableMultiSwapBtcQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableMultiSwapBtcQuote.swift; sourceTree = "<group>"; };
+		6BA971B12ECD77FE00DEC017 /* UnstoppableMultiSwapEvmConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableMultiSwapEvmConfirmationQuote.swift; sourceTree = "<group>"; };
+		6BA971B42ECD78A400DEC017 /* UnstoppableMultiSwapBtcConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableMultiSwapBtcConfirmationQuote.swift; sourceTree = "<group>"; };
+		6BA971B72ECD79C200DEC017 /* UnstoppableMultiSwapZcashConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableMultiSwapZcashConfirmationQuote.swift; sourceTree = "<group>"; };
+		6BA971BA2ECD8DAE00DEC017 /* UnstoppableProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableProvider.swift; sourceTree = "<group>"; };
 		6BA971BE2ED560D200DEC017 /* PremiumFeature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumFeature.swift; sourceTree = "<group>"; };
 		6BA971C52ED56C5D00DEC017 /* SectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionHeader.swift; sourceTree = "<group>"; };
 		6BA971C82ED5808400DEC017 /* PremiumFeaturesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumFeaturesListView.swift; sourceTree = "<group>"; };
@@ -4670,13 +4683,6 @@
 		6BA971E42ED6A84600DEC017 /* SubscribePeriodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscribePeriodView.swift; sourceTree = "<group>"; };
 		6BA971E72ED6A8C500DEC017 /* BlackFridaySubscribePeriodView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackFridaySubscribePeriodView.swift; sourceTree = "<group>"; };
 		6BA971EA2ED73ED100DEC017 /* BlackFridayPremiumSlideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BlackFridayPremiumSlideViewModel.swift; sourceTree = "<group>"; };
-		6BA971A52ECD731100DEC017 /* UnstoppableMultiSwapProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableMultiSwapProvider.swift; sourceTree = "<group>"; };
-		6BA971A82ECD758A00DEC017 /* UnstoppableMultiSwapEvmQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableMultiSwapEvmQuote.swift; sourceTree = "<group>"; };
-		6BA971AB2ECD75BD00DEC017 /* UnstoppableMultiSwapBtcQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableMultiSwapBtcQuote.swift; sourceTree = "<group>"; };
-		6BA971B12ECD77FE00DEC017 /* UnstoppableMultiSwapEvmConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableMultiSwapEvmConfirmationQuote.swift; sourceTree = "<group>"; };
-		6BA971B42ECD78A400DEC017 /* UnstoppableMultiSwapBtcConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableMultiSwapBtcConfirmationQuote.swift; sourceTree = "<group>"; };
-		6BA971B72ECD79C200DEC017 /* UnstoppableMultiSwapZcashConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableMultiSwapZcashConfirmationQuote.swift; sourceTree = "<group>"; };
-		6BA971BA2ECD8DAE00DEC017 /* UnstoppableProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UnstoppableProvider.swift; sourceTree = "<group>"; };
 		6BAAF3442B9B245C00EFE5B2 /* ShimmerEffect.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShimmerEffect.swift; sourceTree = "<group>"; };
 		6BAAF3452B9B245C00EFE5B2 /* SlideButtonStyling.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideButtonStyling.swift; sourceTree = "<group>"; };
 		6BAAF3462B9B245C00EFE5B2 /* SlideButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SlideButton.swift; sourceTree = "<group>"; };
@@ -8152,6 +8158,15 @@
 			path = DefenceSystem;
 			sourceTree = "<group>";
 		};
+		6B69A9A52EE6840700127DBB /* SendDefenseSystem */ = {
+			isa = PBXGroup;
+			children = (
+				6B69A9A62EE6841400127DBB /* SendDefenseSystemView.swift */,
+				6B69A9A92EE6842D00127DBB /* SendDefenseSystemViewModel.swift */,
+			);
+			path = SendDefenseSystem;
+			sourceTree = "<group>";
+		};
 		6B6E13C62DEDABBB007F4A39 /* HUD */ = {
 			isa = PBXGroup;
 			children = (
@@ -8326,6 +8341,20 @@
 			path = Zcash;
 			sourceTree = "<group>";
 		};
+		6BA971A42ECD730600DEC017 /* Unstoppable */ = {
+			isa = PBXGroup;
+			children = (
+				6BA971BA2ECD8DAE00DEC017 /* UnstoppableProvider.swift */,
+				6BA971B72ECD79C200DEC017 /* UnstoppableMultiSwapZcashConfirmationQuote.swift */,
+				6BA971AB2ECD75BD00DEC017 /* UnstoppableMultiSwapBtcQuote.swift */,
+				6BA971B42ECD78A400DEC017 /* UnstoppableMultiSwapBtcConfirmationQuote.swift */,
+				6BA971A82ECD758A00DEC017 /* UnstoppableMultiSwapEvmQuote.swift */,
+				6BA971B12ECD77FE00DEC017 /* UnstoppableMultiSwapEvmConfirmationQuote.swift */,
+				6BA971A52ECD731100DEC017 /* UnstoppableMultiSwapProvider.swift */,
+			);
+			path = Unstoppable;
+			sourceTree = "<group>";
+		};
 		6BA971BD2ED560C900DEC017 /* Premium */ = {
 			isa = PBXGroup;
 			children = (
@@ -8344,20 +8373,6 @@
 				6BA971DE2ED6A1ED00DEC017 /* BlackFridayPurchaseProductItemFactory.swift */,
 			);
 			path = BlackFriday;
-			sourceTree = "<group>";
-		};
-		6BA971A42ECD730600DEC017 /* Unstoppable */ = {
-			isa = PBXGroup;
-			children = (
-				6BA971BA2ECD8DAE00DEC017 /* UnstoppableProvider.swift */,
-				6BA971B72ECD79C200DEC017 /* UnstoppableMultiSwapZcashConfirmationQuote.swift */,
-				6BA971AB2ECD75BD00DEC017 /* UnstoppableMultiSwapBtcQuote.swift */,
-				6BA971B42ECD78A400DEC017 /* UnstoppableMultiSwapBtcConfirmationQuote.swift */,
-				6BA971A82ECD758A00DEC017 /* UnstoppableMultiSwapEvmQuote.swift */,
-				6BA971B12ECD77FE00DEC017 /* UnstoppableMultiSwapEvmConfirmationQuote.swift */,
-				6BA971A52ECD731100DEC017 /* UnstoppableMultiSwapProvider.swift */,
-			);
-			path = Unstoppable;
 			sourceTree = "<group>";
 		};
 		6BB14F782C05FAA600E879B2 /* Tvl */ = {
@@ -9613,6 +9628,7 @@
 		D30C4D3F2D392FBF0082B487 /* Address */ = {
 			isa = PBXGroup;
 			children = (
+				6B69A9A52EE6840700127DBB /* SendDefenseSystem */,
 				D38955942DE5B3E70012114F /* CheckAddressViewModel.swift */,
 				D38955952DE5B3E70012114F /* CheckAddressView.swift */,
 				D30C4D432D392FD00082B487 /* AddressViewModel.swift */,
@@ -10765,6 +10781,7 @@
 				11B3574A4715D307D9EFCF43 /* SendEvmConfirmationModule.swift in Sources */,
 				11B358C72B4E7F70331084AA /* SendEvmViewController.swift in Sources */,
 				D3DB51A32BD6857E0091BBDB /* MarketGlobalView.swift in Sources */,
+				6B69A9AB2EE6842D00127DBB /* SendDefenseSystemViewModel.swift in Sources */,
 				11B35321C9FCFD1DFA4401A3 /* SendEvmService.swift in Sources */,
 				6BA971D42ED5AE1D00DEC017 /* PremiumSlideView.swift in Sources */,
 				6BA971E82ED6A8D200DEC017 /* BlackFridaySubscribePeriodView.swift in Sources */,
@@ -10870,6 +10887,7 @@
 				11B35A33CB6CA5C4A25ECFC9 /* MnemonicWordCell.swift in Sources */,
 				1A564B1D457A23C7732B76DF /* ReleaseNotesService.swift in Sources */,
 				D3E36BD52E04254E007F99CA /* AppView.swift in Sources */,
+				6B69A9A72EE6842700127DBB /* SendDefenseSystemView.swift in Sources */,
 				1A5642F3BA1892109A596B61 /* MarkdownContentProvider.swift in Sources */,
 				6B93AF992E5D901000A55120 /* StellarProposalHandler.swift in Sources */,
 				1A5645DA5F609D469D12A6E1 /* AppVersionRecord.swift in Sources */,
@@ -13172,6 +13190,7 @@
 				ABC9A30629619D5BD6CEB952 /* ContactBookContactViewController.swift in Sources */,
 				ABC9A20A25C4C683A73CB994 /* ContactBookContactViewModel.swift in Sources */,
 				6BB14F6B2BF49E7100E879B2 /* WalletButtonHiddenManager.swift in Sources */,
+				6B69A9AA2EE6842D00127DBB /* SendDefenseSystemViewModel.swift in Sources */,
 				ABC9A2BE94B97921C3017C3F /* ContactBookContactService.swift in Sources */,
 				ABC9A307AAD83C3ED0D591C7 /* ContactBookContactModule.swift in Sources */,
 				ABC9AF81A6F30F0041FE1FAC /* ContactBookAddressViewController.swift in Sources */,
@@ -13692,6 +13711,7 @@
 				ABC9A5B9D81C00155732363C /* TransactionContactSelectView.swift in Sources */,
 				ABC9A6C99739F0AC308F0574 /* TransactionContactSelectViewModel.swift in Sources */,
 				ABC9A9873160D2EAFD4D6D2A /* TransactionBlockchainSelectViewModel.swift in Sources */,
+				6B69A9A82EE6842700127DBB /* SendDefenseSystemView.swift in Sources */,
 				ABC9AD8175A3223E207E390E /* TransactionTokenSelectViewModel.swift in Sources */,
 				11B3541A3A7BDE85240F71A0 /* SendView.swift in Sources */,
 				11B35563DA099AE8ABE34F8D /* SendViewModel.swift in Sources */,

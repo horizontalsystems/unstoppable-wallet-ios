@@ -1,8 +1,8 @@
 import Alamofire
 import BigInt
+import Combine
 import EvmKit
 import Foundation
-import Combine
 import HsToolKit
 import MarketKit
 import ObjectMapper
@@ -68,7 +68,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
 
     private var tokenPairs: [Token: AbToken] = [:]
     @Published private var useMevProtection: Bool = false
-    
+
     private let initializedSubject = PassthroughSubject<Bool, Never>()
     var initializedPublisher: AnyPublisher<Bool, Never> {
         initializedSubject.eraseToAnyPublisher()

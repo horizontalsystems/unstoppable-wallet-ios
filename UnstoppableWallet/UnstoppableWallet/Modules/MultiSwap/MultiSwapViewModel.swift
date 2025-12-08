@@ -29,7 +29,7 @@ class MultiSwapViewModel: ObservableObject {
 
     @Published var validProviders = [IMultiSwapProvider]()
     @Published var providersInitialized = false
-    
+
     private var internalTokenIn: Token? {
         didSet {
             guard internalTokenIn != oldValue else {
@@ -302,20 +302,20 @@ class MultiSwapViewModel: ObservableObject {
         }
 
         currencyManager.$baseCurrency.sink { [weak self] in self?.currency = $0 }.store(in: &cancellables)
-        
+
         subscribeToProvidersInitialization()
-        
+
         syncFiatAmountIn()
         syncFiatAmountOut()
     }
-    
+
     private func subscribeToProvidersInitialization() {
         guard !providers.isEmpty else {
             providersInitialized = true
             return
         }
-        
-        Publishers.MergeMany(providers.map { $0.initializedPublisher })
+
+        Publishers.MergeMany(providers.map(\.initializedPublisher))
             .collect(providers.count)
             .first()
             .delay(for: .seconds(3), scheduler: DispatchQueue.main)
@@ -327,7 +327,7 @@ class MultiSwapViewModel: ObservableObject {
             }
             .store(in: &cancellables)
     }
-    
+
     private func syncValidProviders() {
         if providersInitialized, let internalTokenIn, let internalTokenOut {
             validProviders = providers.filter { $0.supports(tokenIn: internalTokenIn, tokenOut: internalTokenOut) }

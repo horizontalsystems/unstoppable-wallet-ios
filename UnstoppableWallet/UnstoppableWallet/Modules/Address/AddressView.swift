@@ -1,9 +1,10 @@
-
 import MarketKit
 import SwiftUI
 
 struct AddressView: View {
-    @StateObject var viewModel: AddressViewModel
+    @StateObject private var viewModel: AddressViewModel
+    @StateObject private var defenseViewModel: SendDefenseSystemViewModel
+
     private let buttonTitle: String
     private let onFinish: (ResolvedAddress) -> Void
 
@@ -18,7 +19,16 @@ struct AddressView: View {
     }
 
     init(token: Token, buttonTitle: String, destination: AddressViewModel.Destination, address: String? = nil, onFinish: @escaping (ResolvedAddress) -> Void) {
-        _viewModel = StateObject(wrappedValue: AddressViewModel(token: token, destination: destination, address: address))
+        _viewModel = StateObject(wrappedValue: AddressViewModel(
+            token: token,
+            destination: destination,
+            address: address
+        ))
+        _defenseViewModel = StateObject(wrappedValue: SendDefenseSystemViewModel(
+            token: token,
+            destination: destination
+        ))
+
         self.buttonTitle = buttonTitle
         self.onFinish = onFinish
     }
@@ -62,27 +72,9 @@ struct AddressView: View {
                                 }
                                 .themeListStyle(.bordered)
                             }
-                        case .checking, .valid:
-                            ListSection {
-                                VStack(spacing: 0) {
-                                    ForEach(viewModel.issueTypes) { type in
-                                        checkView(title: type.checkTitle, checkDescription: type.description, state: viewModel.checkStates[type] ?? .notAvailable)
-                                    }
-                                }
-                            }
-                            .themeListStyle(.bordered)
-                            .padding(.top, .margin16)
-
-                            let cautions = viewModel.issueTypes.filter { viewModel.checkStates[$0] == .detected }.map(\.caution)
-
-                            if !cautions.isEmpty {
-                                VStack(spacing: .margin16) {
-                                    ForEach(cautions.indices, id: \.self) { index in
-                                        HighlightedTextView(caution: cautions[index])
-                                    }
-                                }
+                        case .valid:
+                            SendDefenseSystemView(viewModel: defenseViewModel)
                                 .padding(.top, .margin16)
-                            }
                         }
                     }
                 }
@@ -92,11 +84,7 @@ struct AddressView: View {
             let (title, disabled, showProgress) = buttonState()
 
             Button(action: {
-                guard case let .valid(resolvedAddress) = viewModel.state else {
-                    return
-                }
-
-                onFinish(resolvedAddress)
+                handleFinish()
             }) {
                 HStack(spacing: .margin8) {
                     if showProgress {
@@ -108,6 +96,13 @@ struct AddressView: View {
             }
             .disabled(disabled)
             .buttonStyle(PrimaryButtonStyle(style: .yellow))
+        }
+        .onChange(of: viewModel.state) { newState in
+            if case let .valid(address) = newState {
+                defenseViewModel.set(address: address)
+            } else {
+                defenseViewModel.reset()
+            }
         }
     }
 
@@ -126,43 +121,17 @@ struct AddressView: View {
         }
     }
 
-    @ViewBuilder private func checkView(title: String, checkDescription: InfoDescription, state: AddressViewModel.CheckState) -> some View {
-        HStack(spacing: .margin8) {
-            HStack(spacing: .margin8) {
-                Image("star_premium_20").themeIcon(color: .themeJacob)
-                Text(title).textSubhead2()
-            }
-
-            Spacer()
-
-            switch state {
-            case .checking:
-                ProgressView()
-            case .clear:
-                HStack(spacing: .margin8) {
-                    Text("send.address.check.clear".localized).textSubhead2(color: .themeRemus)
-                }
-            case .detected:
-                Text("send.address.check.detected".localized).textSubhead2(color: .themeLucian)
-            case .notAvailable:
-                Text("n/a".localized).textSubhead2()
-            case .locked:
-                Image("lock_20").themeIcon()
-            case .disabled:
-                Text("send.address.check.disabled".localized).textSubhead2(color: .themeLeah)
-            }
+    private func handleFinish() {
+        guard case let .valid(address) = viewModel.state else {
+            return
         }
-        .padding(.horizontal, .margin16)
-        .frame(minHeight: 40)
-        .contentShape(Rectangle())
-        .onTapGesture {
-            switch state {
-            case .locked:
-                Coordinator.shared.presentPurchase(premiumFeature: .scamProtection, page: viewModel.destination.sourceStatPage, trigger: .addressChecker)
-            default:
-                Coordinator.shared.present(info: checkDescription)
-            }
-        }
+
+        let resolvedAddress = ResolvedAddress(
+            address: address.raw,
+            issueTypes: defenseViewModel.detectedIssueTypes
+        )
+
+        onFinish(resolvedAddress)
     }
 
     private func buttonState() -> (String, Bool, Bool) {
@@ -175,12 +144,15 @@ struct AddressView: View {
             title = "send.address.enter_address".localized
         case .invalid:
             title = "send.address.invalid_address".localized
-        case .checking:
-            title = "send.address.checking".localized
-            showProgress = true
         case .valid:
-            title = buttonTitle
-            disabled = false
+            if defenseViewModel.isChecking {
+                title = "send.address.checking".localized
+                disabled = true
+                showProgress = true
+            } else {
+                title = buttonTitle
+                disabled = false
+            }
         }
 
         return (title, disabled, showProgress)

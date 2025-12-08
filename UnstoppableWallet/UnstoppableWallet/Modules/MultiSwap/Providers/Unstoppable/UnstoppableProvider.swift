@@ -64,7 +64,7 @@ class UnstoppableProvider {
         }
 
         let response: QuoteResponse = try await networkManager.fetch(url: "\(baseUrl)quote", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
-        
+
         return response
     }
 }
@@ -136,7 +136,7 @@ extension UnstoppableProvider {
         let memo: String?
         let dustThreshold: Int?
         let providers: [String]?
-        
+
         init(expectedBuyAmount: Decimal?, approvalAddress: String?, tx: [String: Any]?, inboundAddress: String?, memo: String?, dustThreshold: Int?, providers: [String]?) {
             self.expectedBuyAmount = expectedBuyAmount
             self.approvalAddress = approvalAddress
@@ -146,7 +146,7 @@ extension UnstoppableProvider {
             self.dustThreshold = dustThreshold
             self.providers = providers
         }
-        
+
         required init(map: Map) throws {
             expectedBuyAmount = try? map.value("expectedBuyAmount", using: Transform.stringToDecimalTransform)
             approvalAddress = try? map.value("meta.approvalAddress")
@@ -157,15 +157,15 @@ extension UnstoppableProvider {
             providers = try? map.value("providers")
         }
     }
-    
+
     class MayaQuoteRoute: QuoteRoute {
         let memoAddress: String?
-        
+
         init(expectedBuyAmount: Decimal?, approvalAddress: String?, tx: [String: Any]?, inboundAddress: String?, memo: String?, dustThreshold: Int?, providers: [String]?, memoAddress: String?) {
             self.memoAddress = memoAddress
             super.init(expectedBuyAmount: expectedBuyAmount, approvalAddress: approvalAddress, tx: tx, inboundAddress: inboundAddress, memo: memo, dustThreshold: dustThreshold, providers: providers)
         }
-            
+
         required init(map: Map) throws {
             memoAddress = try? map.value("shielded_memo_address")
             try super.init(map: map)

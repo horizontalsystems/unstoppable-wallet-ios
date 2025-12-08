@@ -65,7 +65,7 @@ extension ZcashAddressParserItem {
     enum ParseError: LocalizedError {
         case onlyTransparent
         case onlyShielded
-        
+
         public var errorDescription: String? {
             switch self {
             case .onlyTransparent: return "zcash_parsing.only_transparent".localized

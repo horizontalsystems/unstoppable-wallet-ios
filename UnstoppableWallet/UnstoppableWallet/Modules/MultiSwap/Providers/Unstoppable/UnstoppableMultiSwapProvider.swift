@@ -1,13 +1,13 @@
 import Alamofire
 import BigInt
 import BitcoinCore
+import Combine
 import EvmKit
 import Foundation
 import HsToolKit
 import MarketKit
 import ObjectMapper
 import SwiftUI
-import Combine
 import TronKit
 import ZcashLightClientKit
 
@@ -73,7 +73,7 @@ class UnstoppableMultiSwapProvider: IMultiSwapProvider {
     var icon: String { "app_icon_main" }
 
     let priority = 1000
-    
+
     var lastBestQuoteRoute: UnstoppableProvider.QuoteRoute?
 
     private func syncPools() {
@@ -82,14 +82,14 @@ class UnstoppableMultiSwapProvider: IMultiSwapProvider {
 
             do {
                 let providersResponse = try await provider.providers()
-                
+
                 let providerNames = providersResponse.providers.map(\.provider)
                 var assets = [Token: Asset]()
-                
+
                 for providerName in providerNames {
                     do {
                         let response = try await provider.tokens(provider: providerName)
-                        
+
                         for token in response.tokens {
                             registerAssets(
                                 from: token,
@@ -101,12 +101,12 @@ class UnstoppableMultiSwapProvider: IMultiSwapProvider {
                         logger?.log(level: .error, message: "Unstoppable: Failed to fetch tokens for provider \(providerName): \(error)")
                     }
                 }
-                
+
                 logger?.log(level: .debug, message: "Unstoppable: Synced \(assets.count) assets")
                 self.assets = assets
-                self.initializedSubject.send(true)
+                initializedSubject.send(true)
             } catch {
-                self.initializedSubject.send(false)
+                initializedSubject.send(false)
                 throw error
             }
         }
@@ -225,7 +225,7 @@ class UnstoppableMultiSwapProvider: IMultiSwapProvider {
             recipient: storage.recipient(blockchainType: tokenOut.blockchainType),
             dry: true
         )
-        
+
         lastBestQuoteRoute = bestRoute
         let blockchainType = tokenIn.blockchainType
 
@@ -259,7 +259,7 @@ class UnstoppableMultiSwapProvider: IMultiSwapProvider {
             throw SwapError.unsupportedTokenIn
         }
     }
-    
+
     func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
         let slippage: Decimal = storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.default
 
@@ -347,20 +347,20 @@ class UnstoppableMultiSwapProvider: IMultiSwapProvider {
             .mevProtection(isOn: binding),
         ], isList: false)]
     }
-    
+
     private func settingView(tokenOut: Token, storage: MultiSwapSettingStorage, slippageMode: SlippageMultiSwapSettingsViewModel.SlippageMode, onChangeSettings: @escaping () -> Void) -> AnyView {
         let view = RecipientAndSlippageMultiSwapSettingsView(tokenOut: tokenOut, storage: storage, slippageMode: .adjustable, onChangeSettings: onChangeSettings)
 
         guard let providers = lastBestQuoteRoute?.providers else {
             return AnyView(view)
         }
-        
+
         if tokenOut.blockchainType == .zcash {
             if providers.contains(Provider.mayaSwap.rawValue) {
                 return AnyView(view.environment(\.addressParserFilter, .zCashTransparentOnly))
             }
         }
-        
+
         return AnyView(view)
     }
 
@@ -411,7 +411,7 @@ class UnstoppableMultiSwapProvider: IMultiSwapProvider {
             guard let adapter = adapterManager.adapter(for: tokenIn) as? BitcoinBaseAdapter else {
                 throw SwapError.noBitcoinAdapter
             }
-            
+
             guard let sendParameters = quote.sendParameters else {
                 throw SwapError.noSendParameters
             }
@@ -483,7 +483,8 @@ class UnstoppableMultiSwapProvider: IMultiSwapProvider {
             .filter({ route in
                 Set(route.providers ?? []).intersection(blockedProviders.map(\.rawValue)).isEmpty
             })
-            .max(by: { ($0.expectedBuyAmount ?? 0) < ($1.expectedBuyAmount ?? 0) }) else {
+            .max(by: { ($0.expectedBuyAmount ?? 0) < ($1.expectedBuyAmount ?? 0) })
+        else {
             throw SwapError.noRoutes
         }
 
@@ -607,7 +608,7 @@ class UnstoppableMultiSwapProvider: IMultiSwapProvider {
                     utxoFilters: utxoFilters,
                     changeToFirstInput: true
                 )
-                
+
                 sendInfo = try adapter.sendInfo(params: _params)
                 params = _params
             } catch {
@@ -687,7 +688,7 @@ extension UnstoppableMultiSwapProvider {
         let token: Token
         let providers: Set<String>
     }
-    
+
     enum Provider: String {
         case oneInch = "ONEINCH"
         case thorChain = "THORCHAIN"

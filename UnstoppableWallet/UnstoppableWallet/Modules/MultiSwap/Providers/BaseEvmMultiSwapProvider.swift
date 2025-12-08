@@ -13,7 +13,6 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
 
     @Published private var useMevProtection: Bool = false
 
-    
     var initializedPublisher: AnyPublisher<Bool, Never> {
         Just(true).eraseToAnyPublisher()
     }

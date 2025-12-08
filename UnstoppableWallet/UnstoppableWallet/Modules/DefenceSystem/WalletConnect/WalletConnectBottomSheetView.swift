@@ -21,7 +21,7 @@ struct WalletConnectBottomSheetView: View {
             }
         }
     }
-    
+
     @ViewBuilder private func defenseSystem() -> some View {
         DefenseMessageView(direction: .bottom, state: viewModel.state, content: {
             Text(viewModel.content)

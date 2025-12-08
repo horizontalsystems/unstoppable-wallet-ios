@@ -3,22 +3,14 @@ import Foundation
 import MarketKit
 
 class AddressViewModel: ObservableObject {
-    private let purchaseManager = Core.shared.purchaseManager
-    private let appSettingManager = Core.shared.appSettingManager
     private let recentlySentManager = Core.shared.recentlySentManager
 
     let token: Token
     let destination: Destination
-    let issueTypes: [AddressSecurityIssueType]
     let contacts: [Contact]
     let recentContact: Contact?
-    private var cancellables = Set<AnyCancellable>()
 
-    private var premiumEnabled: Bool {
-        didSet {
-            syncAddressState()
-        }
-    }
+    private var cancellables = Set<AnyCancellable>()
 
     @Published var address: String = ""
     @Published var addressResult: AddressInput.Result = .idle {
@@ -29,16 +21,9 @@ class AddressViewModel: ObservableObject {
 
     @Published private(set) var state: State = .empty
 
-    @Published private(set) var checkStates = [AddressSecurityIssueType: CheckState]() {
-        didSet {
-            syncValidState()
-        }
-    }
-
     init(token: Token, destination: AddressViewModel.Destination, address: String?) {
         self.token = token
         self.destination = destination
-        issueTypes = AddressSecurityIssueType.issueTypes(token: token)
 
         let contacts = Core.shared.contactManager.contacts(blockchainUid: token.blockchainType.uid)
             .compactMap { contact -> Contact? in
@@ -58,19 +43,11 @@ class AddressViewModel: ObservableObject {
 
         self.contacts = contacts
 
-        premiumEnabled = purchaseManager.activated(.scamProtection)
-
         defer {
             if let address {
                 self.address = address
             }
         }
-
-        purchaseManager.$activeFeatures
-            .sink { [weak self] features in
-                self?.premiumEnabled = features.contains(.scamProtection)
-            }
-            .store(in: &cancellables)
     }
 
     private func syncAddressState() {
@@ -87,93 +64,19 @@ class AddressViewModel: ObservableObject {
                     title: "send.address.invalid_address".localized,
                     text: "send.address_error.own_address".localized(token.coin.code),
                     type: .error
-                )
-                )
+                ))
             } else {
-                if !appSettingManager.recipientAddressCheck {
-                    for type in issueTypes {
-                        checkStates[type] = .disabled
-                    }
-
-                    state = .valid(resolvedAddress: ResolvedAddress(address: address, issueTypes: []))
-                } else if premiumEnabled {
-                    check(address: success.address)
-                } else {
-                    for type in issueTypes {
-                        checkStates[type] = .locked
-                    }
-
-                    state = .valid(resolvedAddress: ResolvedAddress(address: address, issueTypes: []))
-                }
+                state = .valid(address: success.address)
             }
         }
-    }
-
-    private func check(address: Address) {
-        for type in issueTypes {
-            checkStates[type] = .checking
-        }
-
-        state = .checking
-
-        for type in issueTypes {
-            let checker = AddressSecurityCheckerFactory.addressSecurityChecker(type: type)
-
-            Task {
-                do {
-                    let isClear = try await checker.isClear(address: address, token: token)
-
-                    await MainActor.run {
-                        checkStates[type] = isClear ? .clear : .detected
-                    }
-                } catch {
-                    await MainActor.run {
-                        checkStates[type] = .notAvailable
-                    }
-                }
-            }
-        }
-    }
-
-    private func syncValidState() {
-        guard case .checking = state else {
-            return
-        }
-
-        var detectedTypes = [AddressSecurityIssueType]()
-
-        for type in issueTypes {
-            let checkState = checkStates[type] ?? .notAvailable
-
-            switch checkState {
-            case .checking:
-                return
-            case .detected:
-                detectedTypes.append(type)
-            default: ()
-            }
-        }
-
-        let resolvedAddress = ResolvedAddress(address: address, issueTypes: detectedTypes)
-        state = .valid(resolvedAddress: resolvedAddress)
     }
 }
 
 extension AddressViewModel {
-    enum State {
+    enum State: Equatable {
         case empty
         case invalid(CautionNew?)
-        case checking
-        case valid(resolvedAddress: ResolvedAddress)
-    }
-
-    enum CheckState {
-        case checking
-        case clear
-        case detected
-        case notAvailable
-        case locked
-        case disabled
+        case valid(address: Address)
     }
 
     enum Destination {

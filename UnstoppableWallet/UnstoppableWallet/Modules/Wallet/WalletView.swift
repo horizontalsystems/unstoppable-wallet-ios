@@ -131,7 +131,7 @@ struct WalletView: View {
             }
         }
     }
-    
+
     private func tap() {
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
             WalletConnectBottomSheetView(isPresented: isPresented)

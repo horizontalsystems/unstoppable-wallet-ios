@@ -29,7 +29,7 @@ class AddressViewModelNew: ObservableObject {
             syncCheckingState()
         }
     }
-    
+
     @Published var cautionState: CautionState = .none
     @Published var checkingState: RightChecking.State = .idle
 
@@ -93,19 +93,19 @@ class AddressViewModelNew: ObservableObject {
 
     private func syncCheckingState() {
         cautionState = {
-           guard case let .invalid(failure) = result else {
-               return .none
-           }
-            
+            guard case let .invalid(failure) = result else {
+                return .none
+            }
+
             var internalError: Error? = failure.error
             if case let .fetchError(error) = failure.error as? AddressParserChain.ParserError {
                 internalError = error
             }
-           
+
             let description = ((internalError as? LocalizedError) ?? failure.error)?.localizedDescription
             return description.map { .caution(.init(text: $0, type: .error)) } ?? .none
-       }()
-        
+        }()
+
         switch result {
         case .loading: checkingState = .loading
         case .valid: checkingState = .checked

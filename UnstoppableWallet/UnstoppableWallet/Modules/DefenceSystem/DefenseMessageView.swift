@@ -26,7 +26,7 @@ struct DefenseMessageView<Content: View>: View {
     }
 }
 
-struct DefenseMessageModule {
+enum DefenseMessageModule {
     static let animationTime: TimeInterval = 0.3
 
     enum Direction {
@@ -40,7 +40,7 @@ struct DefenseMessageModule {
         case attention
         case negative
         case notAvailable
-        
+
         var backgroundColor: Color {
             switch self {
             case .loading:
