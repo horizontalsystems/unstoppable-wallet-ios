@@ -12,14 +12,14 @@ struct PremiumSlideView: View {
             }
 
             VStack(alignment: .leading, spacing: .margin2) {
-                Text("premium.cell.title".localized).textHeadline1(color: .themeYellow)
+                ThemeText("premium.cell.title".localized, style: .headline1, colorStyle: .yellow)
                 Spacer(minLength: 0)
 
                 VStack(alignment: .leading, spacing: .margin4) {
-                    ThemeText("premium.cell.description".localized("premium.cell.description.key".localized), style: .subhead, colorStyle: .primary)
+                    ThemeText("premium.cell.description".localized("premium.cell.description.key".localized), style: .subhead, colorStyle: .bright)
 
                     if let introductoryOffer {
-                        Text(introductoryOffer).textCaptionSB(color: .themeGreen)
+                        ThemeText(introductoryOffer, style: .captionSB, colorStyle: .green)
                     }
                 }
             }
