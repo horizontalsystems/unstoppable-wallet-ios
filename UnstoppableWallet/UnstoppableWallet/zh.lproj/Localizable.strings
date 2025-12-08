@@ -2390,15 +2390,15 @@
 "purchases.market_insights" = "市场洞察";
 "purchases.token_insights" = "分析";
 "purchases.token_insights.description" = "按關鍵標準獲取前100名列表";
-"purchases.token_insights.info" = "您的一站式深度分析工具。瀏覽根據交易量、交易所流動性、持有者行為和鏈上趨勢策劃的前250名代幣列表—一目了然。篩選、分析並保持領先。";
+"purchases.token_insights.info" = "显示代币的详细数据—包括交易量、流动性和趋势，帮助您做出更明智的投资决策。";
 
 "purchases.advanced_search" = "進階搜尋";
 "purchases.advanced_search.description" = "多參數多層級篩選";
-"purchases.advanced_search.info" = "摒棄雜訊，精準鎖定高潛力代幣。使用進階搜尋功能，通過交易量、區塊鏈、市值、價格趨勢、行業和表現等條件篩選數千種代幣。強大、精準且專為發現而設計。";
+"purchases.advanced_search.info" = "通过交易量、链或行业等筛选条件查找代币，并包含 CEX/DEX 活跃度及上架相关指标。";
 
 "purchases.trade_signals" = "信號與趨勢";
 "purchases.trade_signals.description" = "自動監控您代幣的市場趨勢";
-"purchases.trade_signals.info" = "不再錯過任何交易機會。觀察趨勢提供由先進技術分析驅動的實時警報，幫助您在趨勢發生前識別、發現突破點並避免陷阱。快速行動，智能交易，最大化收益。";
+"purchases.trade_signals.info" = "实时推送交易机会提醒，及时提示潜在盈利机会或市场风险。";
 
 // Vip Support
 "purchases.vip" = "VIP";

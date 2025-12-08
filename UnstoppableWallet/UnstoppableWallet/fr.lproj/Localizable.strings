@@ -2389,15 +2389,15 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "purchases.market_insights" = "Aperçus du marché";
 "purchases.token_insights" = "Analyses";
 "purchases.token_insights.description" = "Accès aux listes top-100 selon des critères clés";
-"purchases.token_insights.info" = "Votre outil tout-en-un pour une analyse approfondie. Parcourez des listes sélectionnées des 250 principaux tokens selon le volume d’échange, la liquidité sur les plateformes, le comportement des détenteurs et les tendances on-chain - le tout en un coup d’œil. Filtrez, analysez et gardez une longueur d’avance.";
+"purchases.token_insights.info" = "Affiche des données détaillées sur les tokens - volume, liquidité et tendances. Vous aide à prendre des décisions d’investissement plus éclairées.";
 
 "purchases.advanced_search" = "Recherche Avancée";
 "purchases.advanced_search.description" = "Filtrage multi-niveaux sur plusieurs paramètres";
-"purchases.advanced_search.info" = "Éliminez le bruit et concentrez-vous avec précision sur les jetons à fort potentiel. Utilisez la Recherche Avancée pour filtrer des milliers de jetons par volume d'échanges, blockchain, capitalisation boursière, tendances de prix, secteur et performance—et bien plus encore. Puissant, précis et conçu pour la découverte.";
+"purchases.advanced_search.info" = "Trouvez des tokens grâce à des filtres par volume, blockchain ou secteur. Inclut des métriques liées à l’activité CEX/DEX et aux nouvelles cotations.";
 
 "purchases.trade_signals" = "Signaux et Tendances";
 "purchases.trade_signals.description" = "Surveillance automatique des tendances du marché pour vos tokens";
-"purchases.trade_signals.info" = "Ne manquez plus jamais une opportunité de trading. Le Suivi des Tendances vous livre des alertes en temps réel alimentées par une analyse technique avancée, vous aidant à identifier les tendances, repérer les percées et éviter les pièges avant qu'ils ne surviennent. Agissez vite, tradez intelligemment et maximisez vos gains.";
+"purchases.trade_signals.info" = "Envoie des alertes en temps réel sur les opportunités de trading. Met immédiatement en évidence les occasions de profit ou les risques de marché.";
 
 // Vip Support
 "purchases.vip" = "VIP";

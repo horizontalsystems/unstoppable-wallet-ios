@@ -2389,15 +2389,15 @@ Go to Settings - > %@ and allow access to the camera.";
 "purchases.market_insights" = "Análises de Mercado";
 "purchases.token_insights" = "Análises";
 "purchases.token_insights.description" = "Domine a Pesquisa de Tokens";
-"purchases.token_insights.info" = "Sua ferramenta tudo-em-um para análise profunda. Navegue pelas listas de tokens Top 250 selecionados com base no volume de negociação, liquidez da corretora, comportamento do holder e tendências on-chain — tudo de uma vez. Filtre, analise e fique à frente.";
+"purchases.token_insights.info" = "Exibe dados detalhados do token - volume, liquidez e tendências. Ajuda você a tomar decisões de investimento mais inteligentes.";
 
 "purchases.advanced_search" = "Busca Avançada";
 "purchases.advanced_search.description" = "Descubra Tokens em Tendência";
-"purchases.advanced_search.info" = "Abandone o ruído e concentre-se em tokens de alto potencial com precisão. Use a Pesquisa Avançada para filtrar milhares de tokens por volume de negociação, blockchain, capitalização de mercado, tendências de preço, setor e desempenho — e muito mais. Poderoso, preciso e criado para descobrir.";
+"purchases.advanced_search.info" = "Encontre tokens usando filtros por volume, rede ou setor. Inclui métricas de atividade em CEX/DEX e listagens.";
 
 "purchases.trade_signals" = "Acompanhar Tendências";
 "purchases.trade_signals.description" = "Negocie com Inteligência, Lucre Mais Rápido";
-"purchases.trade_signals.info" = "Nunca mais perca uma oportunidade de negociação. O Monitoramento de Tendências fornece alertas em tempo real com base em análises técnicas avançadas, ajudando você a identificar tendências, detectar rompimentos e evitar armadilhas antes que elas aconteçam. Aja rápido, negocie de forma inteligente e maximize os ganhos.";
+"purchases.trade_signals.info" = "Envia alertas em tempo real sobre oportunidades de trading. Destaca imediatamente chances de lucro ou riscos de mercado.";
 
 // Vip Support
 "purchases.vip" = "VIP";
