@@ -49,7 +49,7 @@ class BaseReceiveAddressViewModel: ObservableObject {
     }
 
     private func sync(state: DataStatus<ReceiveAddress>) {
-        self.state = state.map { viewItemFactory.viewItem(item: $0, amount: amount == 0 ? nil : amount.description) }
+        self.state = state.map { viewItemFactory.viewItem(item: $0, amount: amount == 0 ? nil : amount) }
         syncPopup(state: state)
         syncActions(state: state)
     }

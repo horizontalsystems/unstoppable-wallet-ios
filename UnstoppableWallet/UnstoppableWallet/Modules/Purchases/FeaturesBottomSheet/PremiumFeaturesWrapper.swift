@@ -5,12 +5,12 @@ struct PremiumFeaturesWrapper: View {
 
     @Binding private var isPresented: Bool
     private let feature: PremiumFeature
-    
+
     init(isPresented: Binding<Bool>, feature: PremiumFeature) {
         _isPresented = isPresented
         self.feature = feature
     }
-    
+
     var body: some View {
         PremiumFeaturesInfoBottomSheetView(
             isPresented: $isPresented,
@@ -20,7 +20,7 @@ struct PremiumFeaturesWrapper: View {
                 Coordinator.shared.present(type: .bottomSheet) { purchasePresented in
                     PurchaseBottomSheetView(
                         isPresented: purchasePresented,
-                        onSubscribe: { data in }
+                        onSubscribe: { _ in }
                     )
                 } onDismiss: {
                     isPresented = false
@@ -28,7 +28,7 @@ struct PremiumFeaturesWrapper: View {
             }
         )
     }
-    
+
     private var buttonState: String {
         var title = "purchases.button.try".localized
 

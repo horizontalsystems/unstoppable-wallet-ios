@@ -3,7 +3,7 @@ import Foundation
 class ReceiveAddressViewItemFactory {
     typealias Item = ReceiveAddress
 
-    func viewItem(item: Item, amount: String?) -> ReceiveAddressModule.ViewItem {
+    func viewItem(item: Item, amount: Decimal?) -> ReceiveAddressModule.ViewItem {
         guard let item = item as? BaseReceiveAddressService.AssetReceiveAddress else {
             return .empty(address: item.raw)
         }
@@ -17,8 +17,8 @@ class ReceiveAddressViewItemFactory {
         )
 
         var amountString: String?
-        if let amount, let decimalValue = Decimal(string: amount) {
-            let appValue = AppValue(token: item.token, value: decimalValue)
+        if let amount {
+            let appValue = AppValue(token: item.token, value: amount)
             amountString = appValue.formattedFull()
         }
 
@@ -60,14 +60,15 @@ class ReceiveAddressViewItemFactory {
         return networkName
     }
 
-    func uri(item: BaseReceiveAddressService.AssetReceiveAddress, amount: String?) -> String {
+    func uri(item: BaseReceiveAddressService.AssetReceiveAddress, amount: Decimal?) -> String {
         var uri = item.address.address
         if let amount {
             let parser = AddressUriParser(blockchainType: item.token.blockchainType, tokenType: item.token.type)
             var addressUri = AddressUri(scheme: item.token.blockchainType.uriScheme ?? "")
             addressUri.address = uri
 
-            addressUri.parameters[AddressUri.Field.amountField(blockchainType: item.token.blockchainType)] = amount
+            addressUri.parameters[AddressUri.Field.amountField(blockchainType: item.token.blockchainType)] = AddressUri.toUri(amount: amount, token: item.token).description
+
             addressUri.parameters[.blockchainUid] = item.token.blockchainType.uid
             switch item.token.type {
             case .addressType, .derived: ()
