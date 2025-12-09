@@ -21,6 +21,14 @@ extension Decimal {
         return integerDigits + fractionDigits
     }
 
+    func toReadable(decimals: Int) -> Decimal {
+        Decimal(sign: .plus, exponent: -decimals, significand: self)
+    }
+
+    func fromReadable(decimals: Int) -> Decimal {
+        Decimal(sign: .plus, exponent: decimals, significand: self)
+    }
+
     func isMaxValue(decimals: Int) -> Bool {
         let maxInDecimal = Decimal(sign: .plus, exponent: -decimals, significand: Decimal(string: max256ByteNumber.description)!)
         return maxInDecimal == self

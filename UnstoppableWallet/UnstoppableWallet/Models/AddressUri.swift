@@ -40,6 +40,20 @@ struct AddressUri: Equatable {
 }
 
 extension AddressUri {
+    static func toUri(amount: Decimal, token: Token) -> Decimal {
+        if token.blockchainType.isEvm {
+            return amount.fromReadable(decimals: token.decimals)
+        }
+        return amount
+    }
+
+    static func fromUri(amount: Decimal, token: Token) -> Decimal {
+        if token.blockchainType.isEvm {
+            return amount.toReadable(decimals: token.decimals)
+        }
+        return amount
+    }
+
     enum Field: String, CaseIterable {
         case amount
         case value
@@ -51,7 +65,7 @@ extension AddressUri {
         case tokenUid = "token_uid"
 
         static func amountField(blockchainType: BlockchainType) -> Self {
-            if EvmBlockchainManager.blockchainTypes.contains(blockchainType) {
+            if blockchainType.isEvm {
                 return .value
             }
             if blockchainType == .monero {
