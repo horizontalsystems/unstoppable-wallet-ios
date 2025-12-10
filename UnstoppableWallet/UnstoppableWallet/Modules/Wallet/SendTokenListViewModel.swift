@@ -41,10 +41,10 @@ extension SendTokenListViewModel {
         let blockchainTypes: [BlockchainType]?
         let tokenTypes: [TokenType]?
         let address: String?
-        let amount: Decimal?
+        let amount: AddressUri.Amount?
         let memo: String?
 
-        init(blockchainTypes: [BlockchainType]? = nil, tokenTypes: [TokenType]? = nil, address: String? = nil, amount: Decimal? = nil, memo: String? = nil) {
+        init(blockchainTypes: [BlockchainType]? = nil, tokenTypes: [TokenType]? = nil, address: String? = nil, amount: AddressUri.Amount? = nil, memo: String? = nil) {
             self.blockchainTypes = blockchainTypes
             self.tokenTypes = tokenTypes
             self.address = address

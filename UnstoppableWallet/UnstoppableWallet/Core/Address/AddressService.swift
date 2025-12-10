@@ -172,7 +172,7 @@ extension AddressService {
         do {
             let result = try addressUriParser.parse(url: text.trimmingCharacters(in: .whitespaces))
             if let amount = result.amount {
-                publishAmountRelay.accept(amount)
+                publishAmountRelay.accept(amount.humanReadable(decimals: EvmAdapter.decimals))
             }
             set(text: result.address)
             return result.address
