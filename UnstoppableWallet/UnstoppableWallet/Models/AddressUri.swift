@@ -24,8 +24,9 @@ struct AddressUri: Equatable {
         return value.map { $0 as! T }
     }
 
-    var amount: Decimal? {
-        value(field: .amount) ?? value(field: .value) ?? value(field: .txAmount)
+    var amount: Amount? {
+        value(field: .value).map { .points($0) } ??
+            (value(field: .amount) ?? value(field: .txAmount)).map { .decimals($0) }
     }
 
     var memo: String? {
@@ -40,18 +41,12 @@ struct AddressUri: Equatable {
 }
 
 extension AddressUri {
-    static func toUri(amount: Decimal, token: Token) -> Decimal {
-        if token.blockchainType.isEvm {
-            return amount.fromReadable(decimals: token.decimals)
+    static func toUri(field: AddressUri.Field, amount: Decimal, token: Token) -> Decimal {
+        switch field {
+        case .value: return amount.fromReadable(decimals: token.decimals)
+        case .txAmount, .amount: return amount
+        default: return 0
         }
-        return amount
-    }
-
-    static func fromUri(amount: Decimal, token: Token) -> Decimal {
-        if token.blockchainType.isEvm {
-            return amount.toReadable(decimals: token.decimals)
-        }
-        return amount
     }
 
     enum Field: String, CaseIterable {
@@ -72,6 +67,29 @@ extension AddressUri {
                 return .txAmount
             }
             return .amount
+        }
+    }
+
+    enum Amount {
+        case points(Decimal) // lamports, satoshi, wei
+        case decimals(Decimal) // human readable
+
+        var description: String {
+            switch self {
+            case let .points(decimal):
+                return "P:\(decimal)"
+            case let .decimals(decimal):
+                return "D:\(decimal)"
+            }
+        }
+
+        func humanReadable(decimals: Int) -> Decimal {
+            switch self {
+            case let .points(decimal):
+                return decimal.toReadable(decimals: decimals)
+            case let .decimals(decimal):
+                return decimal
+            }
         }
     }
 }

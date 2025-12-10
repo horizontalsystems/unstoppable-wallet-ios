@@ -63,7 +63,7 @@ struct SendTokenListView: View {
                 SendAddressView(
                     wallet: wallet,
                     address: viewModel.options.address,
-                    amount: viewModel.options.amount.map { AddressUri.fromUri(amount: $0, token: wallet.token) },
+                    amount: viewModel.options.amount?.humanReadable(decimals: wallet.token.decimals),
                     memo: viewModel.options.memo,
                     path: $path,
                     isPresented: $isPresented

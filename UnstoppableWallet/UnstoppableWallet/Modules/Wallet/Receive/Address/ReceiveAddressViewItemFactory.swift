@@ -67,7 +67,8 @@ class ReceiveAddressViewItemFactory {
             var addressUri = AddressUri(scheme: item.token.blockchainType.uriScheme ?? "")
             addressUri.address = uri
 
-            addressUri.parameters[AddressUri.Field.amountField(blockchainType: item.token.blockchainType)] = AddressUri.toUri(amount: amount, token: item.token).description
+            let amountField = AddressUri.Field.amountField(blockchainType: item.token.blockchainType)
+            addressUri.parameters[amountField] = AddressUri.toUri(field: amountField, amount: amount, token: item.token).description
 
             addressUri.parameters[.blockchainUid] = item.token.blockchainType.uid
             switch item.token.type {
