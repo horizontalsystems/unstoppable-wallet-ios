@@ -1,4 +1,4 @@
-import MarketKit
+import marketkit
 
 class UniswapV3MultiSwapProvider: BaseUniswapV3MultiSwapProvider {
     override var id: String {

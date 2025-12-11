@@ -5,32 +5,48 @@ struct SendDefenseSystemView: View {
     @ObservedObject var viewModel: SendDefenseSystemViewModel
 
     var body: some View {
-        VStack(spacing: 0) {
-            ListSection {
-                VStack(spacing: 0) {
-                    ForEach(AddressSecurityIssueType.allCases.filter { type in
-                        // Показываем только те типы, которые есть в viewModel
-                        viewModel.checkStates.keys.contains(type)
-                    }) { type in
-                        CheckRowView(
-                            type: type,
-                            state: viewModel.checkStates[type] ?? .idle,
-                            destination: viewModel.destination
-                        )
-                    }
-                }
-            }
-            .themeListStyle(.bordered)
+        let (state, message, action) = state
+        DefenseMessageView(
+            direction: .bottom,
+            state: state,
+            content: {
+                let item = DefenseSystemContentFactory.item(system: .send, state: state, message: message, action: action?.type)
+                DefenseSystemContentFactory.view(item: item, state: state)
+            },
+            action: action?.action
+        )
+    }
+    
+    private var state: (DefenseMessageModule.State, CustomStringConvertible, Action?) {
+        var state = DefenseMessageModule.State.positive
+        var message = "defense.send.positive.message_1".localized
+        var action: Action?
 
-            if !viewModel.detectedIssueTypes.isEmpty {
-                VStack(spacing: .margin16) {
-                    ForEach(viewModel.detectedIssueTypes) { type in
-                        HighlightedTextView(caution: type.caution)
-                    }
+        if !viewModel.premiumEnabled {
+            state =  .attention
+            message = "defense.send.attention.message_1".localized
+            action = .init(
+                type: .arrow("defense.non_private.activate".localized),
+                action: {
+                    Coordinator.shared.presentPurchase(premiumFeature: .scamProtection, page: .send, trigger: .addressChecker)
                 }
-                .padding(.top, .margin16)
-            }
+            )
+        } else if viewModel.isChecking {
+            state = .loading
+            message = ""
+        } else if !viewModel.detectedIssueTypes.isEmpty {
+            state = .negative
+            message = "defense.send.negative.message_1".localized(viewModel.detectedIssueTypes.map { $0.checkTitle }.joined(separator: " / "))
         }
+            
+        return (state, message, action)
+    }
+}
+
+extension SendDefenseSystemView {
+    struct Action {
+        let type: DefenseMessageModule.ActionType
+        let action : () -> Void
     }
 }
 

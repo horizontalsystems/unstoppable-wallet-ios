@@ -29,7 +29,7 @@ struct SendView: View {
         }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                if let transactionService = viewModel.transactionService, let feeToken = viewModel.handler?.baseToken {
+                if viewModel.transactionService != nil, let feeToken = viewModel.handler?.baseToken {
                     Button(action: {
                         Coordinator.shared.present { _ in
                             FeeSettingsViewFactory.createSettingsView(sendViewModel: viewModel, feeToken: feeToken)

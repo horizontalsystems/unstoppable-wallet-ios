@@ -1861,6 +1861,8 @@
 		6B69A9A82EE6842700127DBB /* SendDefenseSystemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B69A9A62EE6841400127DBB /* SendDefenseSystemView.swift */; };
 		6B69A9AA2EE6842D00127DBB /* SendDefenseSystemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B69A9A92EE6842D00127DBB /* SendDefenseSystemViewModel.swift */; };
 		6B69A9AB2EE6842D00127DBB /* SendDefenseSystemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B69A9A92EE6842D00127DBB /* SendDefenseSystemViewModel.swift */; };
+		6B69A9AD2EE9689200127DBB /* DefenseMessageItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B69A9AC2EE9688500127DBB /* DefenseMessageItemFactory.swift */; };
+		6B69A9AE2EE9689200127DBB /* DefenseMessageItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B69A9AC2EE9688500127DBB /* DefenseMessageItemFactory.swift */; };
 		6B6D3F292DED72AE00AB2915 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 6B6D3F282DED72AE00AB2915 /* SkeletonView */; };
 		6B6D3F2B2DED72B700AB2915 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 6B6D3F2A2DED72B700AB2915 /* SkeletonView */; };
 		6B6D3F2D2DED72BF00AB2915 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 6B6D3F2C2DED72BF00AB2915 /* SkeletonView */; };
@@ -4601,6 +4603,7 @@
 		6B69A9972EDFFC5C00127DBB /* DefenseMessageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefenseMessageView.swift; sourceTree = "<group>"; };
 		6B69A9A62EE6841400127DBB /* SendDefenseSystemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendDefenseSystemView.swift; sourceTree = "<group>"; };
 		6B69A9A92EE6842D00127DBB /* SendDefenseSystemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendDefenseSystemViewModel.swift; sourceTree = "<group>"; };
+		6B69A9AC2EE9688500127DBB /* DefenseMessageItemFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefenseMessageItemFactory.swift; sourceTree = "<group>"; };
 		6B6E138E2DED8159007F4A39 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		6B6E13912DED8176007F4A39 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
 		6B6E13942DED818D007F4A39 /* UIRectEdge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIRectEdge.swift; sourceTree = "<group>"; };
@@ -8150,6 +8153,7 @@
 		6B69A9982EDFFC5C00127DBB /* DefenceSystem */ = {
 			isa = PBXGroup;
 			children = (
+				6B69A9AC2EE9688500127DBB /* DefenseMessageItemFactory.swift */,
 				6B69A9942EDFFC5C00127DBB /* WalletConnect */,
 				6B69A9952EDFFC5C00127DBB /* BubbleView.swift */,
 				6B69A9962EDFFC5C00127DBB /* DefenceSystemCell.swift */,
@@ -10896,6 +10900,7 @@
 				1A564D86E3D7E200D9B81592 /* AppVersionStorage.swift in Sources */,
 				11B35E165D6681B849F9A934 /* TextFieldStackView.swift in Sources */,
 				11B3560586CBAB617211F003 /* Caution.swift in Sources */,
+				6B69A9AD2EE9689200127DBB /* DefenseMessageItemFactory.swift in Sources */,
 				11B359413C92A83580A130B3 /* MnemonicInputCell.swift in Sources */,
 				6B5FD7D32E40DCD800FEF510 /* MarketVaultChartFactory.swift in Sources */,
 				D36DE0BE272FD864000BC916 /* SwapViewItemHelper.swift in Sources */,
@@ -13442,6 +13447,7 @@
 				6B6E14072DEDABDE007F4A39 /* HUDViewModule.swift in Sources */,
 				6B6E14082DEDABDE007F4A39 /* HUDStatusFactory.swift in Sources */,
 				6B6E14092DEDABDE007F4A39 /* HUDCoverView.swift in Sources */,
+				6B69A9AE2EE9689200127DBB /* DefenseMessageItemFactory.swift in Sources */,
 				6B6E140A2DEDABDE007F4A39 /* HUDStatusModel.swift in Sources */,
 				6B6E140B2DEDABDE007F4A39 /* HUDProgressView.swift in Sources */,
 				6B6E140C2DEDABDE007F4A39 /* DimViewController.swift in Sources */,

@@ -4,16 +4,18 @@ struct BubbleView<Content: View>: View {
     let direction: DefenseMessageModule.Direction
     let color: Color
     let content: () -> Content
+    var action: (() -> Void)?
 
-    init(direction: DefenseMessageModule.Direction, color: Color, @ViewBuilder content: @escaping () -> Content) {
+    init(direction: DefenseMessageModule.Direction, color: Color, @ViewBuilder content: @escaping () -> Content, action: (() -> Void)?) {
         self.direction = direction
         self.color = color
         self.content = content
+        self.action = action
     }
 
     var body: some View {
         VStack(alignment: .leading, spacing: -1) {
-            if direction == .top {
+            if direction == .bottom {
                 tail(rotated: false)
             }
 
@@ -21,13 +23,16 @@ struct BubbleView<Content: View>: View {
                 .padding(.vertical, .margin16)
                 .padding(.horizontal, .margin24)
                 .frame(maxWidth: .infinity, minHeight: .minHeightBubble)
+                .onTapGesture {
+                    action?()
+                }
                 .background(
                     RoundedRectangle(cornerRadius: .cornerRadius16)
                         .fill(color)
 //                        .animation(.easeInOut(duration: DefenseMessageModule.animationTime), value: color)
                 )
 
-            if direction == .bottom {
+            if direction == .top {
                 tail(rotated: true)
             }
         }

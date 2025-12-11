@@ -14,7 +14,7 @@ class SendDefenseSystemViewModel: ObservableObject {
     private var tasks = [AddressSecurityIssueType: Task<Void, Never>]()
     private var cancellables = Set<AnyCancellable>()
 
-    private var premiumEnabled: Bool {
+    private(set) var premiumEnabled: Bool {
         didSet {
             if let currentAddress {
                 set(address: currentAddress)

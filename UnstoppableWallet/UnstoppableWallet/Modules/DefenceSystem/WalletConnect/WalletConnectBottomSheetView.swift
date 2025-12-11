@@ -7,8 +7,8 @@ struct WalletConnectBottomSheetView: View {
     var body: some View {
         ThemeView(style: .list) {
             VStack(spacing: 0) {
-                BSModule.view(for: .title(title: "HEllo Salam"))
-                BSModule.view(for: .text(text: "This is always strange desctiprion text"))
+                BSModule.view(for: .title(title: "Title"))
+                BSModule.view(for: .text(text: "This is always description text"))
 
                 defenseSystem()
                     .animation(.easeInOut(duration: DefenseMessageModule.animationTime), value: viewModel.content)

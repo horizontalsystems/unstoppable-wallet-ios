@@ -86,8 +86,7 @@ struct WalletView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .contentShape(Rectangle())
                     .onTapGesture {
-//                        viewModel.onTapAmount()
-                        tap()
+                        viewModel.onTapAmount()
                         HapticGenerator.instance.notification(.feedback(.soft))
                     }
 
@@ -129,12 +128,6 @@ struct WalletView: View {
                 .padding(.bottom, 24)
                 .padding(.horizontal, 16)
             }
-        }
-    }
-
-    private func tap() {
-        Coordinator.shared.present(type: .bottomSheet) { isPresented in
-            WalletConnectBottomSheetView(isPresented: isPresented)
         }
     }
 

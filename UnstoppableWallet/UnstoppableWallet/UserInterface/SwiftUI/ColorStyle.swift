@@ -10,6 +10,7 @@ enum ColorStyle {
     case red
     case green
     case yellow
+    case custom(Color)
 
     init(diff: Decimal) {
         self = diff == 0 ? .secondary : (diff.isSignMinus ? .red : .green)
@@ -30,6 +31,7 @@ enum ColorStyle {
         case .red: return .themeLucian.opacity(dimmed ? 0.5 : 1)
         case .green: return .themeRemus.opacity(dimmed ? 0.5 : 1)
         case .yellow: return .themeJacob.opacity(dimmed ? 0.5 : 1)
+        case let .custom(color): return color.opacity(dimmed ? 0.5 : 1)
         }
     }
 }

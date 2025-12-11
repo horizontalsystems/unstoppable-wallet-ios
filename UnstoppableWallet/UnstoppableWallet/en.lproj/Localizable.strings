@@ -2480,3 +2480,17 @@
 
 // Defense
 "defense_cell.title" = "Defense System";
+
+// Send
+"defense.send.loading" = "Cheking...";
+"defense.send.not_available" = "Not Available";
+"defense.send.positive" = "Safe";
+"defense.send.attention" = "Attention!";
+"defense.send.negative" = "Danger!";
+
+"defense.non_private.activate" = "Activate";
+
+"defense.send.attention.message_1" = "Risky vibes here. Wanna donate to scammers? Didn’t think so. Enable me.";
+"defense.send.positive.message_1" = "Checked this address — no phishing, blacklist, or sanctions. It’s safe to use.";
+"defense.send.negative.message_1" = "Address has some issues with: %@";
+

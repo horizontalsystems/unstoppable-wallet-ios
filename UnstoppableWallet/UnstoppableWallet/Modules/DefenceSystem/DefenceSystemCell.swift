@@ -2,15 +2,10 @@ import SwiftUI
 
 struct DefenceSystemCell: View {
     var body: some View {
-        Cell(
-            style: .secondary,
-            left: {
-                Image("defense_filled")
-                    .frame(size: .iconSize20)
-            },
-            middle: {
-                ThemeText("defense_cell.title".localized, style: .subhead, colorStyle: .primary)
-            }
-        )
+        HStack(spacing: .margin8) {
+            ThemeImage(ComponentImage.init(image: "defense_filled"), size: .iconSize20)
+            ThemeText("defense_cell.title".localized, style: .subhead, colorStyle: .primary)
+            Spacer()
+        }
     }
 }
