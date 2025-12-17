@@ -243,14 +243,6 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         settingsView(tokenOut: tokenOut, onChangeSettings: onChangeSettings)
     }
 
-    func settingView(settingId: String, tokenOut: MarketKit.Token, onChangeSetting: @escaping () -> Void) -> AnyView {
-        if settingId == MultiSwapMainField.slippageSettingId {
-            return settingsView(tokenOut: tokenOut, onChangeSettings: onChangeSetting)
-        }
-
-        fatalError("settingView(settingId:) has not been implemented")
-    }
-
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
         allowanceHelper.preSwapView(step: step, tokenIn: tokenIn, amount: amount, isPresented: isPresented, onSuccess: onSuccess)
     }

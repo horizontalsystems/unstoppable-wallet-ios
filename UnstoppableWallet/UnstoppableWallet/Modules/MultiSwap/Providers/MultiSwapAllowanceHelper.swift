@@ -111,37 +111,6 @@ extension MultiSwapAllowanceHelper {
 
             return cautions
         }
-
-        func fields() -> [MultiSwapMainField] {
-            var fields = [MultiSwapMainField]()
-
-            switch self {
-            case let .notEnough(appValue, _, _):
-                if let formatted = appValue.formattedShort() {
-                    fields.append(
-                        MultiSwapMainField(
-                            title: "swap.allowance".localized,
-                            infoDescription: .init(title: "swap.allowance".localized, description: "swap.allowance.description".localized),
-                            value: "\(formatted)",
-                            valueLevel: .error
-                        )
-                    )
-                }
-            case let .pendingAllowance(appValue):
-                if let formatted = appValue.formattedShort() {
-                    fields.append(
-                        MultiSwapMainField(
-                            title: "swap.pending_allowance".localized,
-                            value: "\(formatted)",
-                            valueLevel: .warning
-                        )
-                    )
-                }
-            default: ()
-            }
-
-            return fields
-        }
     }
 
     class UnlockStep: MultiSwapPreSwapStep {

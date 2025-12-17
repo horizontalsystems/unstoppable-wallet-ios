@@ -134,13 +134,13 @@ struct AppValue {
         return formattedFull(signType: signType)
     }
 
-    func formattedFull(signType: ValueFormatter.SignType = .never) -> String? {
+    func formattedFull(signType: ValueFormatter.SignType = .never, showCode: Bool = true) -> String? {
         switch kind {
-        case let .token(token): return ValueFormatter.instance.formatFull(value: value, decimalCount: token.decimals, symbol: code, signType: signType)
-        case let .coin(_, decimals): return ValueFormatter.instance.formatFull(value: value, decimalCount: decimals, symbol: code, signType: signType)
-        case let .eip20Token(_, _, tokenDecimals): return ValueFormatter.instance.formatFull(value: value, decimalCount: tokenDecimals, symbol: code, signType: signType)
-        case let .jetton(jetton): return ValueFormatter.instance.formatFull(value: value, decimalCount: jetton.decimals, symbol: code, signType: signType)
-        case .stellar: return ValueFormatter.instance.formatFull(value: value, decimalCount: 7, symbol: code, signType: signType)
+        case let .token(token): return ValueFormatter.instance.formatFull(value: value, decimalCount: token.decimals, symbol: showCode ? code : nil, signType: signType)
+        case let .coin(_, decimals): return ValueFormatter.instance.formatFull(value: value, decimalCount: decimals, symbol: showCode ? code : nil, signType: signType)
+        case let .eip20Token(_, _, tokenDecimals): return ValueFormatter.instance.formatFull(value: value, decimalCount: tokenDecimals, symbol: showCode ? code : nil, signType: signType)
+        case let .jetton(jetton): return ValueFormatter.instance.formatFull(value: value, decimalCount: jetton.decimals, symbol: showCode ? code : nil, signType: signType)
+        case .stellar: return ValueFormatter.instance.formatFull(value: value, decimalCount: 7, symbol: showCode ? code : nil, signType: signType)
         case .nft: return "\(value.sign == .plus ? "+" : "")\(value) \(code)"
         case .raw: return nil
         }

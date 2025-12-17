@@ -68,6 +68,11 @@ struct CoinIconView: View {
         self.placeholderImage = placeholderImage
     }
 
+    init(token: Token) {
+        coin = token.coin
+        placeholderImage = token.placeholderImageName
+    }
+
     var body: some View {
         IconView(url: coin?.imageUrl, alternativeUrl: coin?.image, placeholderImage: placeholderImage, type: .circle)
     }

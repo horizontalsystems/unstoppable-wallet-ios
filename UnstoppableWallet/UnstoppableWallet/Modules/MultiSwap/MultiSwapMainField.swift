@@ -1,8 +1,6 @@
 import Foundation
 
 struct MultiSwapMainField: Identifiable {
-    static let slippageSettingId = "multiswap-slippage"
-
     let title: String
     let infoDescription: InfoDescription?
     let value: String
@@ -25,7 +23,7 @@ struct MultiSwapMainField: Identifiable {
 }
 
 extension MultiSwapMainField {
-    static func recipient(_ recipient: String, level _: ValueLevel = .regular) -> Self {
+    static func recipient(_ recipient: String) -> Self {
         .init(
             title: "swap.recipient".localized,
             value: recipient,
@@ -33,13 +31,11 @@ extension MultiSwapMainField {
         )
     }
 
-    static func slippage(_ slippage: Decimal, settingId: String? = nil, modified: Bool = false) -> Self {
+    static func slippage(_ slippage: Decimal, settingId _: String? = nil, modified _: Bool = false) -> Self {
         .init(
             title: "swap.slippage".localized,
             value: "\(slippage.description)%",
             valueLevel: MultiSwapSlippage.validate(slippage: slippage).valueLevel,
-            settingId: settingId,
-            modified: modified
         )
     }
 }

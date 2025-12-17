@@ -15,7 +15,7 @@ struct ThemeListStyleModifier: ViewModifier {
     private let cornerRadius: CGFloat
     private let selected: Bool
 
-    init(themeListStyle: ThemeListStyle = .lawrence, cornerRadius: CGFloat = 12, selected: Bool = false) { // TODO: put params
+    init(themeListStyle: ThemeListStyle = .lawrence, cornerRadius: CGFloat = 16, selected: Bool = false) { // TODO: put params
         self.themeListStyle = themeListStyle
         self.cornerRadius = cornerRadius
         self.selected = selected

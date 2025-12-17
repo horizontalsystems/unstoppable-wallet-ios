@@ -35,7 +35,9 @@ class ThorChainMultiSwapBtcQuote: IMultiSwapQuote, IMultiSwapSlippageProvider {
             fields.append(.recipient(recipient.title))
         }
 
-        fields.append(.slippage(slippage, settingId: MultiSwapMainField.slippageSettingId, modified: slippageModified))
+        if slippageModified {
+            fields.append(.slippage(slippage))
+        }
 
         return fields
     }

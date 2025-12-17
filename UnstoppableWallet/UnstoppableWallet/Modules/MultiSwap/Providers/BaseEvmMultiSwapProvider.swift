@@ -78,10 +78,6 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         fatalError("settingsView(tokenIn:tokenOut:onChangeSettings:) has not been implemented")
     }
 
-    func settingView(settingId _: String, tokenOut _: Token, onChangeSetting _: @escaping () -> Void) -> AnyView {
-        fatalError("settingView(settingId:) has not been implemented")
-    }
-
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
         allowanceHelper.preSwapView(step: step, tokenIn: tokenIn, amount: amount, isPresented: isPresented, onSuccess: onSuccess)
     }
