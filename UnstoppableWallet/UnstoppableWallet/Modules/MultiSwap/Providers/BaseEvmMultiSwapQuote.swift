@@ -27,8 +27,6 @@ class BaseEvmMultiSwapQuote: IMultiSwapQuote {
     }
 
     func fields(tokenIn _: Token, tokenOut _: Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?) -> [MultiSwapMainField] {
-        var fields = [MultiSwapMainField]()
-        fields.append(contentsOf: allowanceState.fields())
-        return fields
+        []
     }
 }

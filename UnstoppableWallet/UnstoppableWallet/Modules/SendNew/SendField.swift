@@ -30,7 +30,7 @@ enum SendField {
                     Spacer()
 
                     VStack(alignment: .trailing, spacing: 1) {
-                        if let formatted = appValueType.formattedFull {
+                        if let formatted = appValueType.formattedFull() {
                             Text(formatted)
                                 .textSubhead1(color: type.color)
                                 .multilineTextAlignment(.trailing)
@@ -207,16 +207,16 @@ enum SendField {
         case infinity(code: String)
         case withoutAmount(code: String)
 
-        private func formatted(full: Bool) -> String? {
+        private func formatted(full: Bool, showCode: Bool = true) -> String? {
             switch self {
-            case let .regular(appValue): return full ? appValue.formattedFull() : appValue.formattedShort()
-            case let .infinity(code): return "∞ \(code)"
+            case let .regular(appValue): return full ? appValue.formattedFull(showCode: showCode) : appValue.formattedShort()
+            case let .infinity(code): return showCode ? "∞ \(code)" : "∞"
             case let .withoutAmount(code): return "\(code)"
             }
         }
 
-        var formattedFull: String? {
-            formatted(full: true)
+        func formattedFull(showCode: Bool = true) -> String? {
+            formatted(full: true, showCode: showCode)
         }
 
         var formattedShort: String? {

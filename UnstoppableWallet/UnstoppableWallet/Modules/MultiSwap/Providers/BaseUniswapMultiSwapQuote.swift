@@ -40,39 +40,19 @@ class BaseUniswapMultiSwapQuote: BaseEvmMultiSwapQuote {
     override func fields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?) -> [MultiSwapMainField] {
         var fields = super.fields(tokenIn: tokenIn, tokenOut: tokenOut, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate)
 
-        if let priceImpact = trade.priceImpact, BaseUniswapMultiSwapProvider.PriceImpactLevel(priceImpact: priceImpact) != .negligible {
-            fields.append(
-                MultiSwapMainField(
-                    title: "swap.price_impact".localized,
-                    infoDescription: .init(title: "swap.price_impact".localized, description: "swap.price_impact.description".localized),
-                    value: "-\(priceImpact.rounded(decimal: 2))%",
-                    valueLevel: BaseUniswapMultiSwapProvider.PriceImpactLevel(priceImpact: priceImpact).valueLevel
-                )
-            )
-        }
-
         if let recipient {
             fields.append(.recipient(recipient.title))
         }
 
-        let slippage = tradeOptions.allowedSlippage
-        fields.append(.slippage(slippage, settingId: MultiSwapMainField.slippageSettingId, modified: slippageModified))
+        if slippageModified {
+            fields.append(.slippage(tradeOptions.allowedSlippage))
+        }
 
         return fields
     }
 
     override func cautions() -> [CautionNew] {
-        var cautions = super.cautions()
-
-        if let priceImpact = trade.priceImpact {
-            switch BaseUniswapMultiSwapProvider.PriceImpactLevel(priceImpact: priceImpact) {
-            case .warning: cautions.append(.init(title: "swap.price_impact".localized, text: "swap.confirmation.impact_warning".localized, type: .warning))
-            case .forbidden: cautions.append(.init(title: "swap.price_impact".localized, text: "swap.confirmation.impact_too_high".localized(AppConfig.appName, providerName), type: .error))
-            default: ()
-            }
-        }
-
-        return cautions
+        []
     }
 
     enum Trade {

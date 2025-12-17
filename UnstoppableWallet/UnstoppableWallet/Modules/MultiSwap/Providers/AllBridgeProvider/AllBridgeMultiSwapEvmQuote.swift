@@ -36,8 +36,8 @@ class AllBridgeMultiSwapEvmQuote: BaseEvmMultiSwapQuote {
             fields.append(.recipient(recipient.title))
         }
 
-        if !crosschain {
-            fields.append(.slippage(slippage, settingId: MultiSwapMainField.slippageSettingId, modified: slippageModified))
+        if !crosschain, slippageModified {
+            fields.append(.slippage(slippage))
         }
 
         fields.append(contentsOf: super.fields(tokenIn: tokenIn, tokenOut: tokenOut, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate))

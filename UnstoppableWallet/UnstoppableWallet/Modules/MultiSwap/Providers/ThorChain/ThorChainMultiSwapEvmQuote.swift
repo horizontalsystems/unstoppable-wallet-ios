@@ -15,12 +15,16 @@ class ThorChainMultiSwapEvmQuote: BaseEvmMultiSwapQuote, IMultiSwapSlippageProvi
         super.init(allowanceState: allowanceState)
     }
 
+    private var slippageModified: Bool {
+        slippage != MultiSwapSlippage.default
+    }
+
     override var amountOut: Decimal {
         swapQuote.expectedAmountOut
     }
 
     override var settingsModified: Bool {
-        super.settingsModified || recipient != nil
+        super.settingsModified || recipient != nil || slippageModified
     }
 
     override func fields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?) -> [MultiSwapMainField] {
@@ -30,7 +34,9 @@ class ThorChainMultiSwapEvmQuote: BaseEvmMultiSwapQuote, IMultiSwapSlippageProvi
             fields.append(.recipient(recipient.title))
         }
 
-        fields.append(.slippage(slippage))
+        if slippageModified {
+            fields.append(.slippage(slippage))
+        }
 
         return fields
     }

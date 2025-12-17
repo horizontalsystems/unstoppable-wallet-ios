@@ -271,7 +271,7 @@ class MultiSwapViewModel: ObservableObject {
                 nextQuoteTime = Date().timeIntervalSince1970 + autoRefreshDuration
 
                 timer = Timer.scheduledTimer(withTimeInterval: autoRefreshDuration, repeats: false) { [weak self] _ in
-                    self?.syncQuotes()
+                    self?.syncQuotes(silent: true)
                 }
             }
         }
@@ -367,9 +367,12 @@ class MultiSwapViewModel: ObservableObject {
         priceImpact = (fiatAmountOut * 100 / fiatAmountIn) - 100
     }
 
-    func syncQuotes() {
+    func syncQuotes(silent: Bool = false) {
         quotesTask = nil
-        quotes = []
+
+        if !silent {
+            quotes = []
+        }
 
         guard let internalTokenIn, let internalTokenOut, let amountIn, amountIn != 0 else {
             if quoting {
@@ -387,7 +390,7 @@ class MultiSwapViewModel: ObservableObject {
             return
         }
 
-        if !quoting {
+        if !quoting, !silent {
             quoting = true
         }
 
@@ -511,11 +514,11 @@ extension MultiSwapViewModel {
         let now = Date().timeIntervalSince1970
 
         if now > nextQuoteTime {
-            syncQuotes()
+            syncQuotes(silent: true)
         } else {
             timer?.invalidate()
             timer = Timer.scheduledTimer(withTimeInterval: nextQuoteTime - now, repeats: false) { [weak self] _ in
-                self?.syncQuotes()
+                self?.syncQuotes(silent: true)
             }
         }
     }

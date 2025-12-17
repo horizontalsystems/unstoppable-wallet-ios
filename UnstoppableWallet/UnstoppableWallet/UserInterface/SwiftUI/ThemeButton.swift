@@ -3,6 +3,7 @@ import SwiftUI
 struct ThemeButton: View {
     let text: String
     var icon: String? = nil
+    var spinner: Bool = false
     var style: ThemeButton.Style = .primary
     var mode: ThemeButton.Mode = .solid
     var size: ThemeButton.Size = .medium
@@ -11,6 +12,10 @@ struct ThemeButton: View {
     var body: some View {
         Button(action: action) {
             HStack(spacing: size.iconSpacing) {
+                if spinner {
+                    ProgressView()
+                }
+
                 if let icon {
                     Image(icon).buttonIcon(size: size.iconSize)
                 }
