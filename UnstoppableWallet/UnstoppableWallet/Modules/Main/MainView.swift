@@ -56,7 +56,6 @@ struct MainView: View {
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbar() }
         }
-        .modifier(CoordinatorViewModifier())
     }
 
     @ToolbarContentBuilder func toolbar() -> some ToolbarContent {

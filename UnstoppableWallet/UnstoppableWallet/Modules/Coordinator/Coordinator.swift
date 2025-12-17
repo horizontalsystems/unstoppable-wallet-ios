@@ -6,40 +6,55 @@ import SwiftUI
 class Coordinator: ObservableObject {
     static let shared = Coordinator()
 
-    @Published private var routeStack: [Route] = []
+    private var routeStack: [Route] = []
+    
+    private var levelPublishers: [Int: PassthroughSubject<RouteType?, Never>] = [:]
+
+    func publisher(for level: Int) -> AnyPublisher<RouteType?, Never> {
+        if levelPublishers[level] == nil {
+            levelPublishers[level] = PassthroughSubject<RouteType?, Never>()
+        }
+        return levelPublishers[level]!.eraseToAnyPublisher()
+    }
 
     func present(type: RouteType = .sheet, @ViewBuilder content: @escaping (Binding<Bool>) -> some View, onDismiss: (() -> Void)? = nil) {
         DispatchQueue.main.async { [weak self] in
-            self?.routeStack.append(Route(type: type, content: content, onDismiss: onDismiss))
+            guard let self = self else {
+                return
+            }
+            
+            let route = Route(type: type, content: content, onDismiss: onDismiss)
+            self.routeStack.append(route)
+            let newLevel = self.routeStack.count - 1
+            self.levelPublishers[newLevel]?.send(type)
         }
     }
 
     func route(at level: Int) -> Route? {
-        guard level >= 0, level < routeStack.count else { return nil }
+        guard level >= 0, level < routeStack.count else {
+            return nil
+        }
         return routeStack[level]
     }
 
-    func hasSheet(at level: Int) -> Bool {
-        level < routeStack.count && routeStack[level].type == .sheet
-    }
-
-    func hasBottomSheet(at level: Int) -> Bool {
-        level < routeStack.count && routeStack[level].type == .bottomSheet
-    }
-
-    func hasAlert(at level: Int) -> Bool {
-        level < routeStack.count && routeStack[level].type == .alert
-    }
-
     func onRouteDismissed(at level: Int) {
-        if level < routeStack.count {
-            for route in routeStack[level...].reversed() {
-                DispatchQueue.main.async {
-                    route.onDismiss?()
-                }
+        guard level >= 0, level < routeStack.count else {
+            return
+        }
+        
+        let dismissedCount = routeStack.count - level
+        
+        for route in routeStack[level...].reversed() {
+            DispatchQueue.main.async {
+                route.onDismiss?()
             }
+        }
 
-            routeStack.removeSubrange(level...)
+        routeStack.removeSubrange(level...)
+        
+        for lvl in level..<(level + dismissedCount) {
+            let newType: RouteType? = lvl < routeStack.count ? routeStack[lvl].type : nil
+            levelPublishers[lvl]?.send(newType)
         }
     }
 }
@@ -57,11 +72,11 @@ extension Coordinator {
         }
 
         func content(isPresented: Binding<Bool>) -> AnyView {
-            contentBuilder(isPresented)
+            return contentBuilder(isPresented)
         }
     }
 
-    enum RouteType {
+    enum RouteType: Equatable {
         case sheet
         case bottomSheet
         case alert
