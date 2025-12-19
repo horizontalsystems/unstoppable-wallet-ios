@@ -1,15 +1,14 @@
 import Foundation
 import MarketKit
 import MoneroKit
-import RxCocoa
-import RxSwift
 import ZanoKit
 import ZcashLightClientKit
+import Combine
 
 class RestoreSettingsView {
     private let viewModel: RestoreSettingsViewModel
     private let statPage: StatPage
-    private let disposeBag = DisposeBag()
+    private var cancellables: [AnyCancellable] = []
 
     private var enteredHeight: Int?
 
@@ -17,9 +16,9 @@ class RestoreSettingsView {
         self.viewModel = viewModel
         self.statPage = statPage
 
-        subscribe(disposeBag, viewModel.openBirthdayAlertSignal) { [weak self] token in
+        viewModel.openBirthdayAlertPublisher.sink { [weak self] token in
             self?.showBirthdayAlert(blockchain: token.blockchain)
-        }
+        }.store(in: &cancellables)
     }
 
     private func showBirthdayAlert(blockchain: Blockchain) {

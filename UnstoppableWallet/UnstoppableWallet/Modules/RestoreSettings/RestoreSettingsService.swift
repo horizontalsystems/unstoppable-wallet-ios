@@ -1,14 +1,12 @@
+import Combine
 import MarketKit
-import RxRelay
-import RxSwift
 
 class RestoreSettingsService {
     private let manager: RestoreSettingsManager
 
-    private let approveSettingsRelay = PublishRelay<TokenWithSettings>()
-    private let rejectApproveSettingsRelay = PublishRelay<Token>()
-
-    private let requestRelay = PublishRelay<Request>()
+    private let approveSettingsSubject = PassthroughSubject<TokenWithSettings, Never>()
+    private let rejectApproveSettingsSubject = PassthroughSubject<Token, Never>()
+    private let requestSubject = PassthroughSubject<Request, Never>()
 
     init(manager: RestoreSettingsManager) {
         self.manager = manager
@@ -16,16 +14,16 @@ class RestoreSettingsService {
 }
 
 extension RestoreSettingsService {
-    var approveSettingsObservable: Observable<TokenWithSettings> {
-        approveSettingsRelay.asObservable()
+    var approveSettingsPublisher: AnyPublisher<TokenWithSettings, Never> {
+        approveSettingsSubject.eraseToAnyPublisher()
     }
 
-    var rejectApproveSettingsObservable: Observable<Token> {
-        rejectApproveSettingsRelay.asObservable()
+    var rejectApproveSettingsPublisher: AnyPublisher<Token, Never> {
+        rejectApproveSettingsSubject.eraseToAnyPublisher()
     }
 
-    var requestObservable: Observable<Request> {
-        requestRelay.asObservable()
+    var requestPublisher: AnyPublisher<Request, Never> {
+        requestSubject.eraseToAnyPublisher()
     }
 
     func approveSettings(token: Token, account: Account? = nil) {
@@ -38,7 +36,7 @@ extension RestoreSettingsService {
                 settings[type] = type.createdAccountValue(blockchainType: blockchainType)
             }
 
-            approveSettingsRelay.accept(TokenWithSettings(token: token, settings: settings))
+            approveSettingsSubject.send(TokenWithSettings(token: token, settings: settings))
             return
         }
 
@@ -50,11 +48,11 @@ extension RestoreSettingsService {
                 type: .birthdayHeight
             )
 
-            requestRelay.accept(request)
+            requestSubject.send(request)
             return
         }
 
-        approveSettingsRelay.accept(TokenWithSettings(token: token, settings: [:]))
+        approveSettingsSubject.send(TokenWithSettings(token: token, settings: [:]))
     }
 
     func save(settings: RestoreSettings, account: Account, blockchainType: BlockchainType) {
@@ -68,13 +66,13 @@ extension RestoreSettingsService {
         }
 
         let tokenWithSettings = TokenWithSettings(token: token, settings: settings)
-        approveSettingsRelay.accept(tokenWithSettings)
+        approveSettingsSubject.send(tokenWithSettings)
 
         return tokenWithSettings
     }
 
     func cancel(token: Token) {
-        rejectApproveSettingsRelay.accept(token)
+        rejectApproveSettingsSubject.send(token)
     }
 
     func settings(accountId: String, blockchainType: BlockchainType) -> RestoreSettings {

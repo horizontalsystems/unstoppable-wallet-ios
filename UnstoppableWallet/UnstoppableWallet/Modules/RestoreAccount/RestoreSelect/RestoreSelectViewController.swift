@@ -40,12 +40,23 @@ class RestoreSelectViewController: CoinToggleViewController {
             self?.open(controller: controller)
         }
 
-        subscribe(disposeBag, viewModel.restoreEnabledDriver) { [weak self] in self?.navigationItem.rightBarButtonItem?.isEnabled = $0 }
-        subscribe(disposeBag, viewModel.disableBlockchainSignal) { [weak self] in self?.setToggle(on: false, uid: $0) }
-        subscribe(disposeBag, viewModel.successSignal) { [weak self] in
-            HudHelper.instance.show(banner: .imported)
-            self?.onRestore()
-        }
+        viewModel.restoreEnabledPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.navigationItem.rightBarButtonItem?.isEnabled = $0 }
+            .store(in: &cancellables)
+
+        viewModel.disableBlockchainPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.setToggle(on: false, uid: $0) }
+            .store(in: &cancellables)
+
+        viewModel.successPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                HudHelper.instance.show(banner: .imported)
+                self?.onRestore()
+            }
+            .store(in: &cancellables)
     }
 
     private func open(controller: UIViewController) {
