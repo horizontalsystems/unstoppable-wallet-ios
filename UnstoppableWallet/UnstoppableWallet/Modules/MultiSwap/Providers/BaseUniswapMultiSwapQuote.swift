@@ -25,14 +25,6 @@ class BaseUniswapMultiSwapQuote: BaseEvmMultiSwapQuote {
         trade.amountOut ?? 0
     }
 
-    override var customButtonState: MultiSwapButtonState? {
-        if let priceImpact = trade.priceImpact, BaseUniswapMultiSwapProvider.PriceImpactLevel(priceImpact: priceImpact) == .forbidden {
-            return .init(title: "swap.high_price_impact".localized, disabled: true)
-        }
-
-        return super.customButtonState
-    }
-
     override var settingsModified: Bool {
         super.settingsModified || recipient != nil || slippageModified
     }

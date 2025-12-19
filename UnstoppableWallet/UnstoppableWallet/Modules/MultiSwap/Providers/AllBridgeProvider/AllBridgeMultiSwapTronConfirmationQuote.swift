@@ -44,22 +44,20 @@ class AllBridgeMultiSwapTronConfirmationQuote: IMultiSwapConfirmationQuote {
         return []
     }
 
-    func priceSectionFields(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, baseToken _: MarketKit.Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate _: Decimal?) -> [SendField] {
+    func fields(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, baseToken: MarketKit.Token, currency: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
         var fields = [SendField]()
+
+        if !crosschain, let slippage = SendField.slippage(slippage) {
+            fields.append(slippage)
+        }
 
         if let recipient {
             fields.append(.recipient(recipient.title, blockchainType: tokenOut.blockchainType))
         }
 
-        if !crosschain {
-            fields.append(.slippage(slippage))
-        }
+        fields.append(contentsOf: feeFields(currency: currency, baseToken: baseToken, feeTokenRate: baseTokenRate))
 
         return fields
-    }
-
-    func otherSections(tokenIn _: Token, tokenOut _: Token, baseToken: Token, currency: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate: Decimal?) -> [SendDataSection] {
-        [.init(feeFields(currency: currency, baseToken: baseToken, feeTokenRate: baseTokenRate))]
     }
 
     private func feeFields(currency: Currency, baseToken: Token, feeTokenRate: Decimal?) -> [SendField] {

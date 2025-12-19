@@ -55,8 +55,9 @@ struct MultiSwapSendView: View {
                 }
             }
         }
-        .navigationTitle("send.confirmation.title".localized)
+        .navigationTitle("swap.confirmation.title".localized)
         .navigationBarTitleDisplayMode(.inline)
+        .toolbarRole(.editor)
     }
 
     private func bottomText() -> (String, Color) {

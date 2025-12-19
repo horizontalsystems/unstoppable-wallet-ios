@@ -1,5 +1,5 @@
-import SwiftUI
 import Combine
+import SwiftUI
 
 struct CoordinatorViewModifier: ViewModifier {
     private let coordinator = Coordinator.shared
@@ -14,7 +14,7 @@ struct CoordinatorViewModifier: ViewModifier {
     }
 
     func body(content: Content) -> some View {
-        return content
+        content
             .onAppear {
                 currentType = coordinator.route(at: level)?.type
                 cancellable = coordinator.publisher(for: level)
@@ -34,7 +34,7 @@ struct CoordinatorViewModifier: ViewModifier {
                 alertContent()
             }
     }
-    
+
     private func binding(for type: Coordinator.RouteType) -> Binding<Bool> {
         Binding<Bool>(
             get: {
@@ -47,18 +47,18 @@ struct CoordinatorViewModifier: ViewModifier {
             }
         )
     }
-    
+
     private func sheetContent() -> some View {
-        return Group {
+        Group {
             if let route = coordinator.route(at: level) {
                 route.content(isPresented: binding(for: .sheet))
                     .modifier(CoordinatorViewModifier(level: level + 1))
             }
         }
     }
-    
+
     private func bottomSheetContent() -> some View {
-        return Group {
+        Group {
             if let route = coordinator.route(at: level) {
                 ZStack {
                     Color.themeLawrence.ignoresSafeArea()
@@ -79,16 +79,16 @@ struct CoordinatorViewModifier: ViewModifier {
             }
         }
     }
-    
+
     private func alertContent() -> some View {
-        return Group {
+        Group {
             if let route = coordinator.route(at: level) {
                 route.content(isPresented: binding(for: .alert))
                     .modifier(CoordinatorViewModifier(level: level + 1))
             }
         }
     }
-    
+
     private func handleHeightChange(_ newHeight: CGFloat) {
         if sheetHeight != newHeight {
             sheetHeight = newHeight

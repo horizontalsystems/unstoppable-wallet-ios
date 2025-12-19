@@ -2,7 +2,7 @@ import SwiftUI
 
 struct Informed: ViewModifier {
     let infoDescription: InfoDescription
-    var leadingPadding: CGFloat = 16
+    var horizontalPadding: CGFloat = 16
 
     func body(content: Content) -> some View {
         Button(action: {
@@ -15,11 +15,11 @@ struct Informed: ViewModifier {
                 )
             }
         }, label: {
-            HStack(spacing: .margin8) {
+            HStack(spacing: 8) {
                 content
-                Image("circle_information_20").themeIcon()
+                ThemeImage("info_filled", size: 20)
             }
-            .padding(EdgeInsets(top: 5.5, leading: leadingPadding, bottom: 5.5, trailing: .margin16))
+            .padding(.horizontal, horizontalPadding)
         })
     }
 }

@@ -38,98 +38,23 @@ class MayaMultiSwapZcashConfirmationQuote: IMultiSwapConfirmationQuote {
         } ?? []
     }
 
-    func priceSectionFields(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, baseToken _: MarketKit.Token, currency: Currency, tokenInRate _: Decimal?, tokenOutRate: Decimal?, baseTokenRate _: Decimal?) -> [SendField] {
+    func fields(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, baseToken _: MarketKit.Token, currency _: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate _: Decimal?) -> [SendField] {
         var fields = [SendField]()
+
+        let minAmountOut = amountOut * (1 - slippage / 100)
+        if let minRecieve = SendField.minRecieve(token: tokenOut, value: minAmountOut) {
+            fields.append(minRecieve)
+        }
+
+        if let slippage = SendField.slippage(slippage) {
+            fields.append(slippage)
+        }
 
         if let recipient {
             fields.append(.recipient(recipient.title, blockchainType: tokenOut.blockchainType))
         }
 
-        fields.append(.slippage(slippage))
-
-        let minAmountOut = amountOut * (1 - slippage / 100)
-
-        fields.append(
-            .value(
-                title: "swap.confirmation.minimum_received".localized,
-                description: nil,
-                appValue: AppValue(token: tokenOut, value: minAmountOut),
-                currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: minAmountOut * $0) },
-                formatFull: true
-            )
-        )
-
         return fields
-    }
-
-    func otherSections(tokenIn _: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate _: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendDataSection] {
-        var sections = [SendDataSection]()
-
-        var feeFields = [SendField]()
-
-        if swapQuote.quote.affiliateFee > 0 {
-            feeFields.append(
-                .value(
-                    title: "swap.affiliate_fee".localized,
-                    description: nil,
-                    appValue: AppValue(token: tokenOut, value: swapQuote.quote.affiliateFee),
-                    currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: swapQuote.quote.affiliateFee * $0) },
-                    formatFull: true
-                )
-            )
-        }
-
-        if swapQuote.quote.liquidityFee > 0 {
-            feeFields.append(
-                .value(
-                    title: "swap.liquidity_fee".localized,
-                    description: nil,
-                    appValue: AppValue(token: tokenOut, value: swapQuote.quote.liquidityFee),
-                    currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: swapQuote.quote.liquidityFee * $0) },
-                    formatFull: true
-                )
-            )
-        }
-
-        if swapQuote.quote.outboundFee > 0 {
-            feeFields.append(
-                .value(
-                    title: "swap.outbound_fee".localized,
-                    description: nil,
-                    appValue: AppValue(token: tokenOut, value: swapQuote.quote.outboundFee),
-                    currencyValue: tokenOutRate.map {
-                        CurrencyValue(currency: currency, value: swapQuote.quote.outboundFee * $0)
-                    },
-                    formatFull: true
-                )
-            )
-        }
-
-        if !feeFields.isEmpty {
-            sections.append(.init(feeFields))
-        }
-
-        if let tokenOutRate,
-           let feeAmountData = amountData(feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate),
-           let feeCurrencyValue = feeAmountData.currencyValue
-        {
-            let totalFee = feeCurrencyValue.value + (swapQuote.quote.affiliateFee + swapQuote.quote.liquidityFee + swapQuote.quote.outboundFee) * tokenOutRate
-            let currencyValue = CurrencyValue(currency: currency, value: totalFee)
-
-            if let formatted = ValueFormatter.instance.formatFull(currencyValue: currencyValue) {
-                sections.append(
-                    .init([
-                        .levelValue(
-                            title: "swap.total_fee".localized,
-                            value: formatted,
-                            level: .regular
-                        ),
-                    ])
-                )
-            }
-        }
-
-        return sections
     }
 
     private func amountData(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {

@@ -740,7 +740,7 @@
 
 // Swap Confirmation
 
-"swap.confirmation.title" = "Confirm";
+"swap.confirmation.title" = "Confirm Swap";
 "swap.confirmation.quoting" = "Quoting...";
 "swap.confirmation.invalid_quote" = "Invalid Quote";
 "swap.confirmation.please_wait" = "Please Wait";

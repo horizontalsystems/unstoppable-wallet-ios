@@ -1,6 +1,7 @@
 import Alamofire
 import BigInt
 import BitcoinCore
+import Combine
 import EvmKit
 import Foundation
 import HsToolKit
@@ -22,6 +23,8 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     private let utxoFilters = UtxoFilters(
         scriptTypes: [.p2pkh, .p2wpkhSh, .p2wpkh]
     )
+
+    private let syncSubject = PassthroughSubject<Void, Never>()
 
     let storage: MultiSwapSettingStorage
 
@@ -49,6 +52,10 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
 
     var icon: String {
         fatalError("Must be overridden by subclass")
+    }
+
+    var syncPublisher: AnyPublisher<Void, Never>? {
+        syncSubject.eraseToAnyPublisher()
     }
 
     var affiliate: String? {
@@ -383,6 +390,8 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 assets.append(contentsOf: tokens.map { Asset(id: pool.asset, token: $0) })
             }
         }
+
+        syncSubject.send()
     }
 
     private func blockchainType(assetBlockchainId: String) -> BlockchainType? {

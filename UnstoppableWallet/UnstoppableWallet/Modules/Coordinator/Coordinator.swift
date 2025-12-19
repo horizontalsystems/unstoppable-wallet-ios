@@ -7,7 +7,7 @@ class Coordinator: ObservableObject {
     static let shared = Coordinator()
 
     private var routeStack: [Route] = []
-    
+
     private var levelPublishers: [Int: PassthroughSubject<RouteType?, Never>] = [:]
 
     func publisher(for level: Int) -> AnyPublisher<RouteType?, Never> {
@@ -19,14 +19,14 @@ class Coordinator: ObservableObject {
 
     func present(type: RouteType = .sheet, @ViewBuilder content: @escaping (Binding<Bool>) -> some View, onDismiss: (() -> Void)? = nil) {
         DispatchQueue.main.async { [weak self] in
-            guard let self = self else {
+            guard let self else {
                 return
             }
-            
+
             let route = Route(type: type, content: content, onDismiss: onDismiss)
-            self.routeStack.append(route)
-            let newLevel = self.routeStack.count - 1
-            self.levelPublishers[newLevel]?.send(type)
+            routeStack.append(route)
+            let newLevel = routeStack.count - 1
+            levelPublishers[newLevel]?.send(type)
         }
     }
 
@@ -41,9 +41,9 @@ class Coordinator: ObservableObject {
         guard level >= 0, level < routeStack.count else {
             return
         }
-        
+
         let dismissedCount = routeStack.count - level
-        
+
         for route in routeStack[level...].reversed() {
             DispatchQueue.main.async {
                 route.onDismiss?()
@@ -51,8 +51,8 @@ class Coordinator: ObservableObject {
         }
 
         routeStack.removeSubrange(level...)
-        
-        for lvl in level..<(level + dismissedCount) {
+
+        for lvl in level ..< (level + dismissedCount) {
             let newType: RouteType? = lvl < routeStack.count ? routeStack[lvl].type : nil
             levelPublishers[lvl]?.send(newType)
         }
@@ -72,7 +72,7 @@ extension Coordinator {
         }
 
         func content(isPresented: Binding<Bool>) -> AnyView {
-            return contentBuilder(isPresented)
+            contentBuilder(isPresented)
         }
     }
 

@@ -32,10 +32,10 @@ struct SendView: View {
                 if let transactionService = viewModel.transactionService, let feeToken = viewModel.handler?.baseToken {
                     Button(action: {
                         Coordinator.shared.present { _ in
-                            FeeSettingsViewFactory.createSettingsView(sendViewModel: viewModel, feeToken: feeToken)
+                            FeeSettingsViewFactory.createSettingsView(transactionService: transactionService, sendViewModel: viewModel, feeToken: feeToken)
                         }
                     }) {
-                        Image("manage_2_20").renderingMode(.template)
+                        Image("manage").renderingMode(.template)
                     }
                     .disabled(viewModel.state.isSyncing)
                 }
@@ -50,6 +50,28 @@ struct SendView: View {
     @ViewBuilder private func dataView(data: ISendData, handler: ISendHandler) -> some View {
         ScrollView {
             VStack(spacing: .margin16) {
+                let flowSection = data.flowSection(baseToken: handler.baseToken, currency: viewModel.currency, rates: viewModel.rates)
+
+                if let flowSection {
+                    ListSection {
+                        VStack(spacing: 0) {
+                            flowSection.0.listRow
+
+                            HorizontalDivider()
+                                .overlay(
+                                    Circle()
+                                        .fill(Color.themeLawrence)
+                                        .frame(width: 20, height: 20)
+                                        .overlay(
+                                            ThemeImage("arrow_m_down", size: .iconSize20)
+                                        )
+                                )
+
+                            flowSection.1.listRow
+                        }
+                    }
+                }
+
                 let sections = data.sections(baseToken: handler.baseToken, currency: viewModel.currency, rates: viewModel.rates)
 
                 if !sections.isEmpty {
@@ -59,9 +81,12 @@ struct SendView: View {
                         if !section.fields.isEmpty {
                             if section.isList {
                                 ListSection {
-                                    ForEach(section.fields.indices, id: \.self) { index in
-                                        section.fields[index].listRow
+                                    VStack(spacing: 0) {
+                                        ForEach(section.fields.indices, id: \.self) { index in
+                                            section.fields[index].listRow
+                                        }
                                     }
+                                    .padding(.vertical, 8)
                                 }
                             } else {
                                 ForEach(section.fields.indices, id: \.self) { index in

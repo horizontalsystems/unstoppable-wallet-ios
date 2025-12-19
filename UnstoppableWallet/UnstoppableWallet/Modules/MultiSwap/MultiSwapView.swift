@@ -224,7 +224,7 @@ struct MultiSwapView: View {
                                 .textBody(color: viewModel.fiatAmountOut == nil ? .themeAndy : .themeGray)
                                 .frame(height: 22)
 
-                            if let priceImpact = viewModel.priceImpact, priceImpact < 0 {
+                            if let priceImpact = viewModel.priceImpact {
                                 let level = MultiSwapViewModel.PriceImpactLevel(priceImpact: abs(priceImpact))
 
                                 switch level {
@@ -370,7 +370,7 @@ struct MultiSwapView: View {
 
         if !cautions.isEmpty {
             ForEach(cautions.indices, id: \.self) { index in
-                HighlightedTextView(caution: cautions[index])
+                AlertCardView(caution: cautions[index])
             }
         }
     }
@@ -504,6 +504,8 @@ struct MultiSwapView: View {
             title = "swap.token_not_synced".localized
         } else if let availableBalance = viewModel.availableBalance, let amountIn = viewModel.amountIn, amountIn > availableBalance {
             title = "swap.insufficient_balance".localized
+        } else if let priceImpact = viewModel.priceImpact, MultiSwapViewModel.PriceImpactLevel(priceImpact: abs(priceImpact)) == .forbidden {
+            title = "swap.high_price_impact".localized
         } else if let currentQuote = viewModel.currentQuote, let state = currentQuote.quote.customButtonState {
             title = state.title
             style = state.style
