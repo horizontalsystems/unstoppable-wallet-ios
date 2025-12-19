@@ -42,27 +42,22 @@ class OneInchMultiSwapConfirmationQuote: BaseEvmMultiSwapConfirmationQuote {
         return cautions
     }
 
-    override func priceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, baseToken: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
-        var fields = super.priceSectionFields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
+    override func fields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, baseToken: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
+        var fields = [SendField]()
+
+        let minAmountOut = amountOut * (1 - slippage / 100)
+        if let minRecieve = SendField.minRecieve(token: tokenOut, value: minAmountOut) {
+            fields.append(minRecieve)
+        }
+
+        if let slippage = SendField.slippage(slippage) {
+            fields.append(slippage)
+        }
 
         if let recipient {
             fields.append(.recipient(recipient.title, blockchainType: tokenOut.blockchainType))
         }
 
-        fields.append(.slippage(slippage))
-
-        let minAmountOut = amountOut * (1 - slippage / 100)
-
-        fields.append(
-            .value(
-                title: "swap.confirmation.minimum_received".localized,
-                description: nil,
-                appValue: AppValue(token: tokenOut, value: minAmountOut),
-                currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: minAmountOut * $0) },
-                formatFull: true
-            )
-        )
-
-        return fields
+        return fields + super.fields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
     }
 }

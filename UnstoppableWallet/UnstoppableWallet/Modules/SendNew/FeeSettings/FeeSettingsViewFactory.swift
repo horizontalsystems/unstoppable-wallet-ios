@@ -2,8 +2,8 @@ import MarketKit
 import SwiftUI
 
 class FeeSettingsViewFactory {
-    static func createSettingsView(sendViewModel: SendViewModel, feeToken: Token) -> AnyView? {
-        switch sendViewModel.transactionService {
+    static func createSettingsView(transactionService: ITransactionService, sendViewModel: SendViewModel, feeToken: Token) -> AnyView? {
+        switch transactionService {
         case let service as BitcoinTransactionService:
             let view = BitcoinFeeSettingsView(service: service, feeToken: feeToken)
                 .environmentObject(sendViewModel)

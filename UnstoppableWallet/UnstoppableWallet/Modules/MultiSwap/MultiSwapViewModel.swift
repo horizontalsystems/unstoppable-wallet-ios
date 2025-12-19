@@ -305,6 +305,17 @@ class MultiSwapViewModel: ObservableObject {
 
         syncFiatAmountIn()
         syncFiatAmountOut()
+
+        for provider in providers {
+            if let syncPublisher = provider.syncPublisher {
+                syncPublisher
+                    .sink { [weak self] in
+                        self?.syncValidProviders()
+                        self?.syncQuotes(silent: true)
+                    }
+                    .store(in: &cancellables)
+            }
+        }
     }
 
     private func syncValidProviders() {
@@ -359,7 +370,7 @@ class MultiSwapViewModel: ObservableObject {
     }
 
     func syncPriceImpact() {
-        guard let fiatAmountIn, let fiatAmountOut, fiatAmountIn != 0 else {
+        guard let fiatAmountIn, let fiatAmountOut, fiatAmountIn != 0, fiatAmountIn > fiatAmountOut else {
             priceImpact = nil
             return
         }

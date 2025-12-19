@@ -5,6 +5,7 @@ import SwiftUI
 
 enum SendField {
     case amount(title: String, token: Token, appValueType: AppValueType, currencyValue: CurrencyValue?, type: AmountType)
+    case amountNew(token: Token, appValueType: AppValueType, currencyValue: CurrencyValue?)
     case value(title: String, description: InfoDescription?, appValue: AppValue?, currencyValue: CurrencyValue?, formatFull: Bool)
     case doubleValue(title: String, description: InfoDescription?, value1: String, value2: String?)
     case levelValue(title: String, value: String, level: ValueLevel)
@@ -48,45 +49,54 @@ enum SendField {
                     }
                 }
             }
+        case let .amountNew(token, appValueType, currencyValue):
+            Cell(
+                left: {
+                    CoinIconView(token: token)
+                },
+                middle: {
+                    MultiText(
+                        title: token.coin.code,
+                        subtitle: token.fullBadge,
+                    )
+                },
+                right: {
+                    RightMultiText(
+                        title: appValueType.formattedFull(showCode: false),
+                        subtitle: currencyValue?.formattedFull
+                    )
+                }
+            )
         case let .value(title, infoDescription, appValue, currencyValue, formatFull):
-            ListRow(padding: EdgeInsets(top: .margin12, leading: infoDescription == nil ? .margin16 : 0, bottom: .margin12, trailing: .margin16)) {
-                if let infoDescription {
-                    Text(title)
-                        .textSubhead2()
-                        .modifier(Informed(infoDescription: infoDescription))
-                } else {
-                    Text(title)
-                        .textSubhead2()
-                }
-
-                Spacer()
-
-                VStack(alignment: .trailing, spacing: 1) {
-                    if let formatted = (formatFull ? appValue?.formattedFull() : appValue?.formattedShort()) {
-                        Text(formatted)
-                            .textSubhead1(color: .themeLeah)
-                            .multilineTextAlignment(.trailing)
+            Cell(
+                style: .secondary,
+                middle: {
+                    if let infoDescription {
+                        MiddleTextIcon(text: title)
+                            .modifier(Informed(infoDescription: infoDescription, horizontalPadding: 0))
                     } else {
-                        Text("n/a".localized)
-                            .textSubhead1()
-                            .multilineTextAlignment(.trailing)
+                        MiddleTextIcon(text: title)
                     }
+                },
+                right: {
+                    let formatted = (formatFull ? appValue?.formattedFull() : appValue?.formattedShort())
 
-                    if let formatted = (formatFull ? currencyValue?.formattedFull : currencyValue?.formattedShort) {
-                        Text(formatted)
-                            .textCaption()
-                            .multilineTextAlignment(.trailing)
-                    }
+                    RightMultiText(
+                        subtitleSB: ComponentText(text: formatted ?? "n/a".localized, colorStyle: formatted != nil ? .primary : .secondary),
+                        subtitle: formatFull ? currencyValue?.formattedFull : currencyValue?.formattedShort
+                    )
                 }
-            }
+            )
         case let .levelValue(title, value, level):
-            ListRow {
-                Text(title).textSubhead2()
-                Spacer()
-                Text(value)
-                    .textSubhead1(color: color(valueLevel: level))
-                    .multilineTextAlignment(.trailing)
-            }
+            Cell(
+                style: .secondary,
+                middle: {
+                    MiddleTextIcon(text: title)
+                },
+                right: {
+                    RightTextIcon(text: ComponentText(text: value, colorStyle: colorStyle(valueLevel: level)))
+                }
+            )
         case let .note(iconName, title):
             ListRow {
                 if let iconName {
@@ -194,11 +204,11 @@ enum SendField {
         }
     }
 
-    private func color(valueLevel: ValueLevel) -> Color {
+    private func colorStyle(valueLevel: ValueLevel) -> ColorStyle {
         switch valueLevel {
-        case .regular: return .themeLeah
-        case .warning: return .themeJacob
-        case .error: return .themeLucian
+        case .regular: return .primary
+        case .warning: return .yellow
+        case .error: return .red
         }
     }
 
@@ -254,19 +264,27 @@ extension SendField {
         )
     }
 
-    static func priceImpact(_ priceImpact: Decimal) -> Self {
-        .levelValue(
-            title: "swap.price_impact".localized,
-            value: "\(priceImpact.rounded(decimal: 2))%",
-            level: BaseUniswapMultiSwapProvider.PriceImpactLevel(priceImpact: priceImpact).valueLevel
-        )
-    }
+    static func slippage(_ slippage: Decimal) -> Self? {
+        guard slippage != MultiSwapSlippage.default else {
+            return nil
+        }
 
-    static func slippage(_ slippage: Decimal) -> Self {
-        .levelValue(
+        return .levelValue(
             title: "swap.slippage".localized,
             value: "\(slippage.description)%",
             level: MultiSwapSlippage.validate(slippage: slippage).valueLevel
+        )
+    }
+
+    static func minRecieve(token: Token, value: Decimal) -> Self? {
+        guard let formatted = AppValue(token: token, value: value).formattedShort() else {
+            return nil
+        }
+
+        return .levelValue(
+            title: "swap.confirmation.minimum_received".localized,
+            value: formatted,
+            level: .regular
         )
     }
 }

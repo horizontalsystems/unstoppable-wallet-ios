@@ -40,7 +40,6 @@ class AllBridgeMultiSwapEvmQuote: BaseEvmMultiSwapQuote {
             fields.append(.slippage(slippage))
         }
 
-        fields.append(contentsOf: super.fields(tokenIn: tokenIn, tokenOut: tokenOut, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate))
-        return fields
+        return fields + super.fields(tokenIn: tokenIn, tokenOut: tokenOut, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate)
     }
 }

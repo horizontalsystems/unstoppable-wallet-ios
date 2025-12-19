@@ -16,6 +16,14 @@ struct AlertCardView: View {
         style = item.style
     }
 
+    init(caution: CautionNew) {
+        iconName = Self.defaultIcon
+        title = caution.title
+        text = .plain(caution.text)
+        type = .init(cautionType: caution.type)
+        style = .structured
+    }
+
     var body: some View {
         VStack(alignment: .center, spacing: 8) {
             if let title {
@@ -62,6 +70,13 @@ extension AlertCardView {
     enum CardType: Equatable {
         case critical
         case caution
+
+        init(cautionType: CautionType) {
+            switch cautionType {
+            case .warning: self = .caution
+            case .error: self = .critical
+            }
+        }
 
         var colorStyle: ColorStyle {
             switch self {

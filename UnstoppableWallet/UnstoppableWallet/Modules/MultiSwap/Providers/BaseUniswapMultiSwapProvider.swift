@@ -139,32 +139,4 @@ extension BaseUniswapMultiSwapProvider {
         case noGasLimit
         case noEvmKitWrapper
     }
-
-    enum PriceImpactLevel {
-        case negligible
-        case normal
-        case warning
-        case forbidden
-
-        private static let normalPriceImpact: Decimal = 1
-        private static let warningPriceImpact: Decimal = 5
-        private static let forbiddenPriceImpact: Decimal = 20
-
-        init(priceImpact: Decimal) {
-            switch priceImpact {
-            case 0 ..< Self.normalPriceImpact: self = .negligible
-            case Self.normalPriceImpact ..< Self.warningPriceImpact: self = .normal
-            case Self.warningPriceImpact ..< Self.forbiddenPriceImpact: self = .warning
-            default: self = .forbidden
-            }
-        }
-
-        var valueLevel: ValueLevel {
-            switch self {
-            case .warning: return .warning
-            case .forbidden: return .error
-            default: return .regular
-            }
-        }
-    }
 }

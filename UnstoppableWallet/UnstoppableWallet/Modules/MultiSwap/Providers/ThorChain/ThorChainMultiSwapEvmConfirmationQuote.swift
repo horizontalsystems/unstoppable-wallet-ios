@@ -33,97 +33,22 @@ class ThorChainMultiSwapEvmConfirmationQuote: BaseEvmMultiSwapConfirmationQuote 
         return cautions
     }
 
-    override func priceSectionFields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, baseToken: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
-        var fields = super.priceSectionFields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
+    override func fields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, baseToken: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
+        var fields = [SendField]()
+
+        let minAmountOut = amountOut * (1 - slippage / 100)
+        if let minRecieve = SendField.minRecieve(token: tokenOut, value: minAmountOut) {
+            fields.append(minRecieve)
+        }
+
+        if let slippage = SendField.slippage(slippage) {
+            fields.append(slippage)
+        }
 
         if let recipient {
             fields.append(.recipient(recipient.title, blockchainType: tokenOut.blockchainType))
         }
 
-        fields.append(.slippage(slippage))
-
-        let minAmountOut = amountOut * (1 - slippage / 100)
-
-        fields.append(
-            .value(
-                title: "swap.confirmation.minimum_received".localized,
-                description: nil,
-                appValue: AppValue(token: tokenOut, value: minAmountOut),
-                currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: minAmountOut * $0) },
-                formatFull: true
-            )
-        )
-
-        return fields
-    }
-
-    override func otherSections(tokenIn: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendDataSection] {
-        var sections = super.otherSections(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
-
-        if let tokenOutRate, let evmFeeData,
-           let evmFeeAmountData = evmFeeData.totalAmountData(gasPrice: gasPrice, feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate),
-           let evmFeeCurrencyValue = evmFeeAmountData.currencyValue
-        {
-            let totalFee = evmFeeCurrencyValue.value + (swapQuote.affiliateFee + swapQuote.liquidityFee + swapQuote.outboundFee) * tokenOutRate
-            let currencyValue = CurrencyValue(currency: currency, value: totalFee)
-
-            if let formatted = ValueFormatter.instance.formatFull(currencyValue: currencyValue) {
-                sections.append(
-                    .init([
-                        .levelValue(
-                            title: "swap.total_fee".localized,
-                            value: formatted,
-                            level: .regular
-                        ),
-                    ])
-                )
-            }
-        }
-
-        return sections
-    }
-
-    override func additionalFeeFields(tokenIn: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
-        var fields = super.additionalFeeFields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
-
-        if swapQuote.affiliateFee > 0 {
-            fields.append(
-                .value(
-                    title: "swap.affiliate_fee".localized,
-                    description: nil,
-                    appValue: AppValue(token: tokenOut, value: swapQuote.affiliateFee),
-                    currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: swapQuote.affiliateFee * $0) },
-                    formatFull: true
-                )
-            )
-        }
-
-        if swapQuote.liquidityFee > 0 {
-            fields.append(
-                .value(
-                    title: "swap.liquidity_fee".localized,
-                    description: nil,
-                    appValue: AppValue(token: tokenOut, value: swapQuote.liquidityFee),
-                    currencyValue: tokenOutRate.map { CurrencyValue(currency: currency, value: swapQuote.liquidityFee * $0) },
-                    formatFull: true
-                )
-            )
-        }
-
-        if swapQuote.outboundFee > 0 {
-            fields.append(
-                .value(
-                    title: "swap.outbound_fee".localized,
-                    description: nil,
-                    appValue: AppValue(token: tokenOut, value: swapQuote.outboundFee),
-                    currencyValue: tokenOutRate.map {
-                        CurrencyValue(currency: currency, value: swapQuote.outboundFee * $0)
-                    },
-                    formatFull: true
-                )
-            )
-        }
-
-        return fields
+        return fields + super.fields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
     }
 }
