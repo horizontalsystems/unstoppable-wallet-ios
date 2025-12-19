@@ -1,34 +1,33 @@
+import Combine
 import MarketKit
-import RxRelay
-import RxSwift
 
 class BlockchainTokensService {
-    private let approveTokensRelay = PublishRelay<(Blockchain, [Token])>()
-    private let rejectApproveTokensRelay = PublishRelay<Blockchain>()
+    private let approveTokensSubject = PassthroughSubject<(Blockchain, [Token]), Never>()
+    private let rejectApproveTokensSubject = PassthroughSubject<Blockchain, Never>()
 
-    private let requestRelay = PublishRelay<Request>()
+    private let requestSubject = PassthroughSubject<Request, Never>()
 
     private var currentRequest: Request?
 }
 
 extension BlockchainTokensService {
-    var approveTokensObservable: Observable<(Blockchain, [Token])> {
-        approveTokensRelay.asObservable()
+    var approveTokensPublisher: AnyPublisher<(Blockchain, [Token]), Never> {
+        approveTokensSubject.eraseToAnyPublisher()
     }
 
-    var rejectApproveTokensObservable: Observable<Blockchain> {
-        rejectApproveTokensRelay.asObservable()
+    var rejectApproveTokensPublisher: AnyPublisher<Blockchain, Never> {
+        rejectApproveTokensSubject.eraseToAnyPublisher()
     }
 
-    var requestObservable: Observable<Request> {
-        requestRelay.asObservable()
+    var requestPublisher: AnyPublisher<Request, Never> {
+        requestSubject.eraseToAnyPublisher()
     }
 
     func approveTokens(blockchain: Blockchain, tokens: [Token], enabledTokens: [Token], allowEmpty: Bool = false) {
         let request = Request(blockchain: blockchain, tokens: tokens.ordered(), enabledTokens: enabledTokens, allowEmpty: allowEmpty)
 
         currentRequest = request
-        requestRelay.accept(request)
+        requestSubject.send(request)
     }
 
     func select(indexes: [Int]) {
@@ -36,7 +35,7 @@ extension BlockchainTokensService {
             return
         }
 
-        approveTokensRelay.accept((request.blockchain, indexes.map { request.tokens[$0] }))
+        approveTokensSubject.send((request.blockchain, indexes.map { request.tokens[$0] }))
     }
 
     func cancel() {
@@ -44,7 +43,7 @@ extension BlockchainTokensService {
             return
         }
 
-        rejectApproveTokensRelay.accept(request.blockchain)
+        rejectApproveTokensSubject.send(request.blockchain)
     }
 }
 

@@ -1,13 +1,11 @@
 import MarketKit
-import RxCocoa
-import RxSwift
-
+import Combine
 import UIKit
 
 class RestoreSettingsView {
     private let viewModel: RestoreSettingsViewModel
     private let statPage: StatPage
-    private let disposeBag = DisposeBag()
+    private var cancellables: [AnyCancellable] = []
 
     var onOpenController: ((UIViewController) -> Void)?
 
@@ -15,9 +13,9 @@ class RestoreSettingsView {
         self.viewModel = viewModel
         self.statPage = statPage
 
-        subscribe(disposeBag, viewModel.openBirthdayAlertSignal) { [weak self] token in
+        viewModel.openBirthdayAlertPublisher.sink { [weak self] token in
             self?.showBirthdayAlert(token: token)
-        }
+        }.store(in: &cancellables)
     }
 
     private func showBirthdayAlert(token: Token) {

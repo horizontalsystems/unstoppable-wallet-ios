@@ -97,9 +97,11 @@ extension BSModule {
 
 struct BottomSheetView: View {
     private let items: [BSModule.Item]
+    private let id: String
 
-    init(items: [BSModule.Item]) {
+    init(items: [BSModule.Item], id: String = "ID") {
         self.items = items
+        self.id = id
     }
 
     var body: some View {
@@ -109,6 +111,12 @@ struct BottomSheetView: View {
                     BSModule.view(for: items[index])
                 }
             }
+        }
+        .onAppear {
+            print("🎨 [BottomSheet Content \(id)] appeared")
+        }
+        .onDisappear {
+            print("🎨 [BottomSheet Content \(id)] disappeared")
         }
     }
 }
@@ -123,8 +131,8 @@ struct InfoDescription: Identifiable {
 }
 
 class BottomSheetWrapperView: UIHostingController<BottomSheetView> {
-    init(items: [BSModule.Item]) {
-        let view = BottomSheetView(items: items)
+    init(items: [BSModule.Item], id: String = "ID") {
+        let view = BottomSheetView(items: items, id: id)
         super.init(rootView: view)
     }
 

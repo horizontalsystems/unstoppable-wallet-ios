@@ -8,6 +8,14 @@ struct ThemeToggle: View {
         self.isOn = isOn
         self.style = style
     }
+    
+    init(isOn: Bool, style: ThemeToggleStyle, onToggle: @escaping (Bool) -> Void) {
+        self.isOn = Binding(
+            get: { isOn },
+            set: { onToggle($0) }
+        ).animation()
+        self.style = style
+    }
 
     var body: some View {
         Toggle(isOn: isOn) {}
