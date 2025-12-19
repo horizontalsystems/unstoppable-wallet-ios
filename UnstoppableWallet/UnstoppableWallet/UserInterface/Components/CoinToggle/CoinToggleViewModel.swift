@@ -1,9 +1,8 @@
 import MarketKit
-import RxCocoa
-import RxSwift
+import Combine
 
 protocol ICoinToggleViewModel {
-    var viewItemsDriver: Driver<[CoinToggleViewModel.ViewItem]> { get }
+    var viewItemsPublisher: AnyPublisher<[CoinToggleViewModel.ViewItem], Never> { get }
 
     func onEnable(uid: String)
     func onDisable(uid: String)

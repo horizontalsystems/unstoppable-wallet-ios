@@ -1,17 +1,17 @@
-import RxCocoa
-import RxRelay
-import RxSwift
+import Combine
 
 class BlockchainTokensViewModel {
     private let service: BlockchainTokensService
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
-    private let openBottomSelectorRelay = PublishRelay<SelectorModule.MultiConfig>()
+    private let openBottomSelectorSubject = PassthroughSubject<SelectorModule.MultiConfig, Never>()
 
     init(service: BlockchainTokensService) {
         self.service = service
 
-        subscribe(disposeBag, service.requestObservable) { [weak self] in self?.handle(request: $0) }
+        service.requestPublisher
+            .sink { [weak self] in self?.handle(request: $0) }
+            .store(in: &cancellables)
     }
 
     private func handle(request: BlockchainTokensService.Request) {
@@ -32,13 +32,13 @@ class BlockchainTokensViewModel {
             footer: "blockchain_settings.footer".localized
         )
 
-        openBottomSelectorRelay.accept(config)
+        openBottomSelectorSubject.send(config)
     }
 }
 
 extension BlockchainTokensViewModel {
-    var openBottomSelectorSignal: Signal<SelectorModule.MultiConfig> {
-        openBottomSelectorRelay.asSignal()
+    var openBottomSelectorPublisher: AnyPublisher<SelectorModule.MultiConfig, Never> {
+        openBottomSelectorSubject.eraseToAnyPublisher()
     }
 
     func onSelect(indexes: [Int]) {

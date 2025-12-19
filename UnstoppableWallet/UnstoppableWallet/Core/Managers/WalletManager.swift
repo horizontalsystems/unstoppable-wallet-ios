@@ -10,6 +10,7 @@ class WalletManager {
     private var cancellables = Set<AnyCancellable>()
 
     private let activeWalletDataRelay = PublishRelay<WalletData>()
+    private let activeWalletDataSubject = PassthroughSubject<WalletData, Never>()
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).wallet_manager", qos: .userInitiated)
 
@@ -50,6 +51,7 @@ class WalletManager {
         }
 
         activeWalletDataRelay.accept(cachedActiveWalletData)
+        activeWalletDataSubject.send(cachedActiveWalletData)
     }
 
     private func reloadWallets() {
@@ -68,6 +70,10 @@ extension WalletManager {
 
     var activeWalletDataUpdatedObservable: Observable<WalletData> {
         activeWalletDataRelay.asObservable()
+    }
+    
+    var activeWalletDataUpdatedPublisher: AnyPublisher<WalletData, Never> {
+        activeWalletDataSubject.eraseToAnyPublisher()
     }
 
     func preloadWallets() {
