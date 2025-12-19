@@ -226,8 +226,8 @@ struct WalletView: View {
 
             IconButton(icon: "manage", style: .secondary, size: .small) {
                 if let account = viewModel.account {
-                    Coordinator.shared.present { _ in
-                        ManageWalletsView(account: account).ignoresSafeArea()
+                    Coordinator.shared.present { isPresented in
+                        ManageWalletsView(account: account, isPresented: isPresented).ignoresSafeArea()
                     }
                     stat(page: .balance, event: .open(page: .coinManager))
                 }
