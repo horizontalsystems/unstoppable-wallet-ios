@@ -85,21 +85,6 @@ struct ManageWalletListView: View {
         }
     }
 
-    private func showBirthdayHeight(coin: Coin, height: Int) {
-        Coordinator.shared.present(type: .bottomSheet) { isPresented in
-            BottomSheetView(items: [
-                .title(icon: ComponentImage(url: coin.imageUrl), title: coin.code),
-                .list(items: [
-                    .init(title: "birthday_height.title".localized, value: height.description)
-                ]),
-                .buttonGroup(.init(buttons: [
-                    .init(style: .gray, title: "button.close".localized) {
-                        isPresented.wrappedValue = false
-                    },
-                ])),
-            ])
-        }
-    }
 //
 //        private func showContractBottomSheet(coin: Coin, blockchainImageUrl: String, value: String, explorerUrl: String?) {
 //            Coordinator.shared.present(type: .bottomSheet) { isPresented in
