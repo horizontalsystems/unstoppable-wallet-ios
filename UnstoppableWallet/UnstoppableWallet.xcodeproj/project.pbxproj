@@ -13020,6 +13020,7 @@
 				ABC9ADE7C30F3F992FD9E1CC /* Array.swift in Sources */,
 				6B954B212F3C8EAA008A1A16 /* CloudRestoreBackupListView.swift in Sources */,
 				6B6962E02EEFC2B40070179F /* ManageWalletsTokenInfoProvider.swift in Sources */,
+				6B6962E02EEFC2B40070179F /* ManageWalletsTokenInfoProvider.swift in Sources */,
 				ABC9AE223619E13A296BED51 /* MarketCardCell.swift in Sources */,
 				11B353E7A2462E19D946E723 /* CellComponent.swift in Sources */,
 				11B350E04791F74A6EE26765 /* BalancePrimaryValue.swift in Sources */,
