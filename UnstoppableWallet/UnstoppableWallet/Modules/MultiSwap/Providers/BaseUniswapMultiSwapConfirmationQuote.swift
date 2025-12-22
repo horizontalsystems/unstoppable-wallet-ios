@@ -3,11 +3,11 @@ import Foundation
 import MarketKit
 
 class BaseUniswapMultiSwapConfirmationQuote: BaseEvmMultiSwapConfirmationQuote {
-    let quote: BaseUniswapMultiSwapQuote
+    let quote: UniswapMultiSwapQuote
     let transactionData: TransactionData?
     let transactionError: Error?
 
-    init(quote: BaseUniswapMultiSwapQuote, transactionData: TransactionData?, transactionError: Error?, gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?) {
+    init(quote: UniswapMultiSwapQuote, transactionData: TransactionData?, transactionError: Error?, gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?) {
         self.quote = quote
         self.transactionData = transactionData
         self.transactionError = transactionError
@@ -49,9 +49,9 @@ class BaseUniswapMultiSwapConfirmationQuote: BaseEvmMultiSwapConfirmationQuote {
             fields.append(slippage)
         }
 
-        if let recipient = quote.recipient {
-            fields.append(.recipient(recipient.title, blockchainType: tokenOut.blockchainType))
-        }
+        // if let recipient = quote.recipient {
+        //     fields.append(.recipient(recipient.title, blockchainType: tokenOut.blockchainType))
+        // }
 
         return fields + super.fields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
     }

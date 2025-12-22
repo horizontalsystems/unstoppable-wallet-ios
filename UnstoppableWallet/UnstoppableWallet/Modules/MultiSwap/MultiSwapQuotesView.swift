@@ -17,6 +17,7 @@ struct MultiSwapQuotesView: View {
                                 Image(quote.provider.icon)
                                     .resizable()
                                     .scaledToFit()
+                                    .cornerRadius(6)
                                     .frame(width: .iconSize32, height: .iconSize32)
 
                                 VStack(alignment: .leading, spacing: 1) {
@@ -67,7 +68,7 @@ struct MultiSwapQuotesView: View {
             return nil
         }
 
-        return AppValue(token: tokenOut, value: quote.quote.amountOut).formattedFull()
+        return AppValue(token: tokenOut, value: quote.quote.expectedBuyAmount).formattedFull()
     }
 
     private func quoteCurrencyValue(quote: MultiSwapViewModel.Quote) -> String? {
@@ -75,6 +76,6 @@ struct MultiSwapQuotesView: View {
             return nil
         }
 
-        return ValueFormatter.instance.formatShort(currency: viewModel.currency, value: quote.quote.amountOut * rateOut)
+        return ValueFormatter.instance.formatShort(currency: viewModel.currency, value: quote.quote.expectedBuyAmount * rateOut)
     }
 }

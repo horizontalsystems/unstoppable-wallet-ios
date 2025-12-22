@@ -2,51 +2,21 @@ import Foundation
 import MarketKit
 import UniswapKit
 
-class BaseUniswapMultiSwapQuote: BaseEvmMultiSwapQuote {
+class UniswapMultiSwapQuote: EvmMultiSwapQuote {
     let trade: Trade
     let tradeOptions: TradeOptions
-    let recipient: Address?
     let providerName: String
 
-    init(trade: Trade, tradeOptions: TradeOptions, recipient: Address?, providerName: String, allowanceState: MultiSwapAllowanceHelper.AllowanceState) {
+    init(trade: Trade, tradeOptions: TradeOptions, providerName: String, allowanceState: MultiSwapAllowanceHelper.AllowanceState) {
         self.trade = trade
         self.tradeOptions = tradeOptions
-        self.recipient = recipient
         self.providerName = providerName
 
-        super.init(allowanceState: allowanceState)
+        super.init(expectedBuyAmount: trade.amountOut ?? 0, allowanceState: allowanceState)
     }
+}
 
-    private var slippageModified: Bool {
-        tradeOptions.allowedSlippage != MultiSwapSlippage.default
-    }
-
-    override var amountOut: Decimal {
-        trade.amountOut ?? 0
-    }
-
-    override var settingsModified: Bool {
-        super.settingsModified || recipient != nil || slippageModified
-    }
-
-    override func fields(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?) -> [MultiSwapMainField] {
-        var fields = super.fields(tokenIn: tokenIn, tokenOut: tokenOut, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate)
-
-        if let recipient {
-            fields.append(.recipient(recipient.title))
-        }
-
-        if slippageModified {
-            fields.append(.slippage(tradeOptions.allowedSlippage))
-        }
-
-        return fields
-    }
-
-    override func cautions() -> [CautionNew] {
-        []
-    }
-
+extension UniswapMultiSwapQuote {
     enum Trade {
         case v2(tradeData: TradeData)
         case v3(bestTrade: TradeDataV3)

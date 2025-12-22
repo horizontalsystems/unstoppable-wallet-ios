@@ -55,24 +55,18 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
 
     private let allowanceHelper = MultiSwapAllowanceHelper()
     private let marketKit = Core.shared.marketKit
-    private let networkManager: NetworkManager
+    private let networkManager = Core.shared.networkManager
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let tronKitManager = Core.shared.tronAccountManager.tronKitManager
     private let stellarKitManager = Core.shared.stellarKitManager
     private let localStorage = Core.shared.localStorage
     private let evmFeeEstimator = EvmFeeEstimator()
-    private let logger: Logger?
-
-    private let storage: MultiSwapSettingStorage
+    private var logger: Logger?
 
     private var tokenPairs: [Token: AbToken] = [:]
     @Published private var useMevProtection: Bool = false
 
-    init(storage: MultiSwapSettingStorage, logger: Logger? = nil) {
-        self.storage = storage
-        self.logger = logger
-        networkManager = NetworkManager(logger: logger)
-
+    init() {
         syncPools()
     }
 
@@ -85,7 +79,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
     }
 
     var icon: String {
-        "allbridge_32"
+        "swap_provider_allbridge"
     }
 
     private func syncPools() {
@@ -134,12 +128,8 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         tokenPairs[tokenIn] != nil && tokenPairs[tokenOut] != nil
     }
 
-    private var slippage: Decimal {
-        storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.default
-    }
-
-    private func resolveDestination(token: Token) async throws -> String {
-        if let recipient = storage.recipient(blockchainType: token.blockchainType) {
+    private func resolveDestination(recipient: Address?, token: Token) async throws -> String {
+        if let recipient {
             return recipient.raw
         }
 
@@ -211,7 +201,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         return info.estimatedAmount.min.float
     }
 
-    func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> IMultiSwapQuote {
+    func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage _: Decimal) async throws -> MultiSwapQuote {
         guard let abTokenIn = tokenPairs[tokenIn] else {
             throw SwapError.unsupportedTokenIn
         }
@@ -230,37 +220,20 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
             let state = await allowanceHelper.allowanceState(spenderAddress: .init(raw: router), token: tokenIn, amount: amountIn)
             logger?.log(level: .debug, message: "AllBridge: Allowance = \(state)")
 
-            return AllBridgeMultiSwapEvmQuote(
-                expectedAmountOut: amountOut,
-                crosschain: crosschain,
-                recipient: storage.recipient(blockchainType: tokenOut.blockchainType),
-                slippage: slippage,
-                allowanceState: state
-            )
+            return EvmMultiSwapQuote(expectedBuyAmount: amountOut, allowanceState: state)
         } else if tokenIn.blockchainType == .tron {
             let state = await allowanceHelper.allowanceState(spenderAddress: .init(raw: bridgeAddress), token: tokenIn, amount: amountIn)
             logger?.log(level: .debug, message: "AllBridge: Allowance = \(state)")
 
-            return AllBridgeMultiSwapEvmQuote(
-                expectedAmountOut: amountOut,
-                crosschain: crosschain,
-                recipient: storage.recipient(blockchainType: tokenOut.blockchainType),
-                slippage: slippage,
-                allowanceState: state
-            )
+            return EvmMultiSwapQuote(expectedBuyAmount: amountOut, allowanceState: state)
         } else if tokenIn.blockchainType == .stellar {
-            return AllBridgeMultiSwapStellarQuote(
-                expectedAmountOut: amountOut,
-                crosschain: crosschain,
-                recipient: storage.recipient(blockchainType: tokenOut.blockchainType),
-                slippage: slippage
-            )
+            return MultiSwapQuote(expectedBuyAmount: amountOut)
         }
 
         throw SwapError.unsupportedTokenIn
     }
 
-    private func transactionParameters(tokenIn: Token, tokenOut: Token, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> Parameters {
+    private func transactionParameters(tokenIn: Token, tokenOut: Token, recipient: Address?, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> Parameters {
         guard let abTokenIn = tokenPairs[tokenIn] else {
             throw SwapError.unsupportedTokenIn
         }
@@ -273,8 +246,8 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
             throw SwapError.invalidAmount
         }
 
-        let sender = try await resolveDestination(token: tokenIn)
-        let recipient = try await resolveDestination(token: tokenOut)
+        let sender = try await resolveDestination(recipient: recipient, token: tokenIn)
+        let recipient = try await resolveDestination(recipient: recipient, token: tokenOut)
 
         guard let amountOutMinInt = tokenOut.rawAmount(expectedAmountOutMin) else {
             throw SwapError.invalidAmount
@@ -298,23 +271,23 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         return parameters
     }
 
-    func fetchTransactionData<T: ImmutableMappable>(tokenIn: Token, tokenOut: Token, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> T {
-        let parameters = try await transactionParameters(tokenIn: tokenIn, tokenOut: tokenOut, crosschain: crosschain, amountIn: amountIn, expectedAmountOutMin: expectedAmountOutMin)
+    func fetchTransactionData<T: ImmutableMappable>(tokenIn: Token, tokenOut: Token, recipient: Address?, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> T {
+        let parameters = try await transactionParameters(tokenIn: tokenIn, tokenOut: tokenOut, recipient: recipient, crosschain: crosschain, amountIn: amountIn, expectedAmountOutMin: expectedAmountOutMin)
 
         let path = crosschain ? "bridge" : "swap"
 
         return try await networkManager.fetch(url: "\(baseUrl)/raw/\(path)", parameters: parameters)
     }
 
-    func fetchStellarData(tokenIn: Token, tokenOut: Token, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> Data {
-        let parameters = try await transactionParameters(tokenIn: tokenIn, tokenOut: tokenOut, crosschain: crosschain, amountIn: amountIn, expectedAmountOutMin: expectedAmountOutMin)
+    func fetchStellarData(tokenIn: Token, tokenOut: Token, recipient: Address?, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> Data {
+        let parameters = try await transactionParameters(tokenIn: tokenIn, tokenOut: tokenOut, recipient: recipient, crosschain: crosschain, amountIn: amountIn, expectedAmountOutMin: expectedAmountOutMin)
 
         let path = crosschain ? "bridge" : "swap"
 
         return try await networkManager.fetchData(url: "\(baseUrl)/raw/\(path)", parameters: parameters)
     }
 
-    func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+    func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: Address?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
         let crosschain = tokenIn.blockchainType != tokenOut.blockchainType
 
         let amountOut = try await estimateAmountOut(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
@@ -323,6 +296,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
             let evmResponse: EvmSwapResponse = try await fetchTransactionData(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
+                recipient: recipient,
                 crosschain: crosschain,
                 amountIn: amountIn,
                 expectedAmountOutMin: amountOut
@@ -364,7 +338,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
             return AllBridgeMultiSwapEvmConfirmationQuote(
                 amountIn: amountIn,
                 expectedAmountOut: amountOut,
-                recipient: storage.recipient(blockchainType: blockchainType),
+                recipient: recipient,
                 crosschain: crosschain,
                 slippage: slippage,
                 transactionData: transactionData,
@@ -378,6 +352,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
             let createdTransaction: TronKit.CreatedTransactionResponse = try await fetchTransactionData(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
+                recipient: recipient,
                 crosschain: crosschain,
                 amountIn: amountIn,
                 expectedAmountOutMin: amountOut
@@ -420,7 +395,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
             return AllBridgeMultiSwapTronConfirmationQuote(
                 amountIn: amountIn,
                 expectedAmountOut: amountOut,
-                recipient: storage.recipient(blockchainType: tokenIn.blockchainType),
+                recipient: recipient,
                 crosschain: crosschain,
                 slippage: slippage,
                 createdTransaction: createdTransaction,
@@ -431,6 +406,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
             let transactionEnvelopeData: Data = try await fetchStellarData(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
+                recipient: recipient,
                 crosschain: crosschain,
                 amountIn: amountIn,
                 expectedAmountOutMin: amountOut
@@ -465,7 +441,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
             return AllBridgeMultiSwapStellarConfirmationQuote(
                 amountIn: amountIn,
                 expectedAmountOut: amountOut,
-                recipient: storage.recipient(blockchainType: tokenIn.blockchainType),
+                recipient: recipient,
                 crosschain: crosschain,
                 slippage: slippage,
                 transactionEnvelope: transactionEnvelope,
@@ -508,25 +484,6 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         return [.init([
             .mevProtection(isOn: binding),
         ], isList: false)]
-    }
-
-    private func settingsView(tokenOut: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
-        let view = ThemeNavigationStack {
-            RecipientAndSlippageMultiSwapSettingsView(tokenOut: tokenOut, storage: storage, slippageMode: .adjustable, onChangeSettings: onChangeSettings)
-        }
-        return AnyView(view)
-    }
-
-    func settingsView(tokenIn: Token, tokenOut: Token, quote _: IMultiSwapQuote, onChangeSettings: @escaping () -> Void) -> AnyView {
-        let crosschain = tokenIn.blockchainType != tokenOut.blockchainType
-        if !crosschain {
-            return settingsView(tokenOut: tokenOut, onChangeSettings: onChangeSettings)
-        }
-
-        let view = ThemeNavigationStack {
-            RecipientMultiSwapSettingsView(tokenOut: tokenOut, storage: storage, onChangeSettings: onChangeSettings)
-        }
-        return AnyView(view)
     }
 
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {

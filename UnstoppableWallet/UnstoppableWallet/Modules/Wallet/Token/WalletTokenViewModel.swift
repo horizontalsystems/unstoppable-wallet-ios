@@ -127,7 +127,7 @@ extension WalletTokenViewModel {
         if wallet.account.watchAccount {
             return []
         } else {
-            return [.chart, .receive, .send] + (AppConfig.swapEnabled && wallet.token.swappable ? [.swap] : [])
+            return [.chart, .receive, .send] + (AppConfig.swapEnabled ? [.swap] : [])
         }
     }
 

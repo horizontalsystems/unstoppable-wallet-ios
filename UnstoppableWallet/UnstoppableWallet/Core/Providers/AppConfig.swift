@@ -165,6 +165,10 @@ enum AppConfig {
         (Bundle.main.object(forInfoDictionaryKey: "MayaAffiliateBps") as? String).flatMap { $0.isEmpty ? nil : Int($0) }
     }
 
+    static var uswapApiKey: String? {
+        (Bundle.main.object(forInfoDictionaryKey: "USwapApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
+    }
+
     static var referralAppServerUrl: String {
         (Bundle.main.object(forInfoDictionaryKey: "ReferralAppServerUrl") as? String) ?? ""
     }

@@ -10,7 +10,7 @@ class QuickSwapMultiSwapProvider: BaseUniswapV2MultiSwapProvider {
     }
 
     override var icon: String {
-        "quick_32"
+        "swap_provider_quick"
     }
 
     override func supports(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token) -> Bool {

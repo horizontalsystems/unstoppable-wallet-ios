@@ -168,7 +168,7 @@ struct WalletView: View {
                         Image("copy")
                     }
                 }
-                if !item.wallet.account.watchAccount, item.wallet.token.swappable {
+                if !item.wallet.account.watchAccount {
                     Button {
                         Coordinator.shared.present { _ in
                             MultiSwapView(token: item.wallet.token)

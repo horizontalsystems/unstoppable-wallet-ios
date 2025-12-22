@@ -26,15 +26,11 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
 
     private let syncSubject = PassthroughSubject<Void, Never>()
 
-    let storage: MultiSwapSettingStorage
-
     var assets = [Asset]()
 
     @Published private var useMevProtection: Bool = false
 
-    init(storage: MultiSwapSettingStorage) {
-        self.storage = storage
-
+    init() {
         syncPools()
     }
 
@@ -71,11 +67,10 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         return tokens.contains(tokenIn) && tokens.contains(tokenOut)
     }
 
-    func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> IMultiSwapQuote {
-        let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
+    func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal) async throws -> MultiSwapQuote {
+        let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage)
 
         let blockchainType = tokenIn.blockchainType
-        let slippage: Decimal = storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.default
 
         switch blockchainType {
         case .arbitrumOne, .avalanche, .base, .binanceSmartChain, .ethereum:
@@ -83,26 +78,19 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 throw SwapError.noRouterAddress
             }
 
-            return await ThorChainMultiSwapEvmQuote(
-                swapQuote: swapQuote,
-                recipient: storage.recipient(blockchainType: blockchainType),
-                slippage: slippage,
+            return await EvmMultiSwapQuote(
+                expectedBuyAmount: swapQuote.expectedAmountOut,
                 allowanceState: allowanceHelper.allowanceState(spenderAddress: .init(raw: router), token: tokenIn, amount: amountIn)
             )
         case .bitcoin, .bitcoinCash, .dash, .litecoin, .zcash:
-            return ThorChainMultiSwapBtcQuote(
-                swapQuote: swapQuote,
-                recipient: storage.recipient(blockchainType: blockchainType),
-                slippage: slippage
-            )
+            return MultiSwapQuote(expectedBuyAmount: swapQuote.expectedAmountOut)
         default:
             throw SwapError.unsupportedTokenIn
         }
     }
 
-    func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
-        let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
-        let slippage = storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.default
+    func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: Address?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+        let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient)
 
         switch tokenIn.blockchainType {
         case .arbitrumOne, .avalanche, .base, .binanceSmartChain, .ethereum:
@@ -152,7 +140,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
 
             return ThorChainMultiSwapEvmConfirmationQuote(
                 swapQuote: swapQuote,
-                recipient: storage.recipient(blockchainType: blockchainType),
+                recipient: recipient,
                 slippage: slippage,
                 transactionData: transactionData,
                 transactionError: transactionError,
@@ -197,7 +185,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
 
             return ThorChainMultiSwapBtcConfirmationQuote(
                 swapQuote: swapQuote,
-                recipient: storage.recipient(blockchainType: tokenIn.blockchainType),
+                recipient: recipient,
                 slippage: slippage,
                 satoshiPerByte: satoshiPerByte,
                 fee: sendInfo?.fee,
@@ -238,18 +226,6 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         ], isList: false)]
     }
 
-    func settingsView(tokenOut: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
-        let view = ThemeNavigationStack {
-            RecipientAndSlippageMultiSwapSettingsView(tokenOut: tokenOut, storage: storage, slippageMode: .adjustable, onChangeSettings: onChangeSettings)
-        }
-
-        return AnyView(view)
-    }
-
-    func settingsView(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, quote _: IMultiSwapQuote, onChangeSettings: @escaping () -> Void) -> AnyView {
-        settingsView(tokenOut: tokenOut, onChangeSettings: onChangeSettings)
-    }
-
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
         allowanceHelper.preSwapView(step: step, tokenIn: tokenIn, amount: amount, isPresented: isPresented, onSuccess: onSuccess)
     }
@@ -288,7 +264,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil, params: Parameters? = nil) async throws -> SwapQuote {
+    func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: Address? = nil, params: Parameters? = nil) async throws -> SwapQuote {
         guard let assetIn = assets.first(where: { $0.token == tokenIn }) else {
             throw SwapError.unsupportedTokenIn
         }
@@ -298,7 +274,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         }
 
         let amount = (amountIn * pow(10, 8)).roundedDown(decimal: 0)
-        let destination = try await resolveDestination(token: tokenOut)
+        let destination = try await resolveDestination(recipient: recipient, token: tokenOut)
 
         var parameters: Parameters = [
             "from_asset": assetIn.id,
@@ -307,11 +283,8 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             "destination": destination,
             "streaming_interval": 1,
             "streaming_quantity": 0,
+            "liquidity_tolerance_bps": Int((slippage * 100).roundedDown(decimal: 0).description),
         ]
-
-        if let slippage {
-            parameters["liquidity_tolerance_bps"] = Int((slippage * 100).roundedDown(decimal: 0).description)
-        }
 
         if let affiliate, let affiliateBps {
             parameters["affiliate"] = affiliate
@@ -327,8 +300,8 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         return try await networkManager.fetch(url: "\(baseUrl)/quote/swap", parameters: parameters)
     }
 
-    func resolveDestination(token: Token) async throws -> String {
-        if let recipient = storage.recipient(blockchainType: token.blockchainType) {
+    func resolveDestination(recipient: Address?, token: Token) async throws -> String {
+        if let recipient {
             return recipient.raw
         }
 

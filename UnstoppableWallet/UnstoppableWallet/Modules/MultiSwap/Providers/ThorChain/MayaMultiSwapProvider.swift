@@ -24,7 +24,7 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
     }
 
     override var icon: String {
-        "maya_32"
+        "swap_provider_maya"
     }
 
     override var affiliate: String? {
@@ -35,8 +35,8 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         AppConfig.mayaAffiliateBps
     }
 
-    private func zcashSwapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil) async throws -> SwapQuote {
-        let refundAddress = try await resolveDestination(token: tokenIn)
+    private func zcashSwapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: Address?) async throws -> SwapQuote {
+        let refundAddress = try await resolveDestination(recipient: recipient, token: tokenIn)
         let params: Parameters = [
             "refund_address": refundAddress,
         ]
@@ -68,14 +68,13 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         return try await adapter.sendProposal(outputs: [transparentOutput, memoOutput])
     }
 
-    override func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+    override func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: Address?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
         // use base scenario for all tokens except zcash
         guard tokenIn.blockchainType == .zcash else {
-            return try await super.confirmationQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, transactionSettings: transactionSettings)
+            return try await super.confirmationQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient, transactionSettings: transactionSettings)
         }
 
-        let swapQuote = try await zcashSwapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
-        let slippage = storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.default
+        let swapQuote = try await zcashSwapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient)
 
         var transactionError: Error?
         let proposal = try await proposal(tokenIn: tokenIn, swapQuote: swapQuote, amountIn: amountIn)
@@ -88,7 +87,7 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
 
         return MayaMultiSwapZcashConfirmationQuote(
             swapQuote: swapQuote,
-            recipient: storage.recipient(blockchainType: tokenIn.blockchainType),
+            recipient: recipient,
             amountIn: amountIn,
             totalFeeRequired: proposal.totalFeeRequired(),
             slippage: slippage,
@@ -125,14 +124,14 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         throw MayaProviderError.noShieldedAddress
     }
 
-    override func settingsView(tokenOut: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
-        let view = super.settingsView(tokenOut: tokenOut, onChangeSettings: onChangeSettings)
-            .environment(\.addressParserFilter, .zCashTransparentOnly)
-        return AnyView(view)
-    }
+    // override func settingsView(tokenOut: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
+    //     let view = super.settingsView(tokenOut: tokenOut, onChangeSettings: onChangeSettings)
+    //         .environment(\.addressParserFilter, .zCashTransparentOnly)
+    //     return AnyView(view)
+    // }
 
-    override func resolveDestination(token: Token) async throws -> String {
-        if let recipient = storage.recipient(blockchainType: token.blockchainType) {
+    override func resolveDestination(recipient: Address?, token: Token) async throws -> String {
+        if let recipient {
             return recipient.raw
         }
         // use temporary address, to avoid muptiply create address without existing Adapter for token

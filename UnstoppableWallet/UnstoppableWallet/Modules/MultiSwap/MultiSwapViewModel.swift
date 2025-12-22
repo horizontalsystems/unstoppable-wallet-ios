@@ -23,6 +23,8 @@ class MultiSwapViewModel: ObservableObject {
     private let adapterManager = Core.shared.adapterManager
     private let decimalParser = AmountDecimalParser()
 
+    private let storage: MultiSwapSettingStorage
+
     @Published var currency: Currency
 
     private var enteringFiat = false
@@ -223,7 +225,7 @@ class MultiSwapViewModel: ObservableObject {
 
     @Published var currentQuote: Quote? {
         didSet {
-            amountOutString = currentQuote?.quote.amountOut.description
+            amountOutString = currentQuote?.quote.expectedBuyAmount.description
             syncFiatAmountOut()
             syncPrice()
         }
@@ -259,7 +261,7 @@ class MultiSwapViewModel: ObservableObject {
             if let featuredQuote = quotes.first(where: { $0.provider is OneInchMultiSwapProvider }) {
                 bestQuote = featuredQuote
             } else {
-                bestQuote = quotes.max { $0.quote.amountOut < $1.quote.amountOut }
+                bestQuote = quotes.max { $0.quote.expectedBuyAmount < $1.quote.expectedBuyAmount }
             }
 
             syncCurrentQuote()
@@ -292,8 +294,9 @@ class MultiSwapViewModel: ObservableObject {
 
     @Published var priceImpact: Decimal?
 
-    init(providers: [IMultiSwapProvider], token: Token? = nil) {
+    init(providers: [IMultiSwapProvider], storage: MultiSwapSettingStorage, token: Token? = nil) {
         self.providers = providers
+        self.storage = storage
         currency = currencyManager.baseCurrency
 
         defer {
@@ -366,7 +369,7 @@ class MultiSwapViewModel: ObservableObject {
             return
         }
 
-        fiatAmountOut = (currentQuote.quote.amountOut * rateOut).rounded(decimal: 2)
+        fiatAmountOut = (currentQuote.quote.expectedBuyAmount * rateOut).rounded(decimal: 2)
     }
 
     func syncPriceImpact() {
@@ -405,13 +408,15 @@ class MultiSwapViewModel: ObservableObject {
             quoting = true
         }
 
+        let slippage = storage.slippage
+
         quotesTask = Task { [weak self, validProviders] in
             let optionalQuotes: [Quote?] = await withTaskGroup(of: Quote?.self) { group in
                 for provider in validProviders {
                     group.addTask {
                         do {
                             let quoteTask = Task {
-                                try await provider.quote(tokenIn: internalTokenIn, tokenOut: internalTokenOut, amountIn: amountIn)
+                                try await provider.quote(tokenIn: internalTokenIn, tokenOut: internalTokenOut, amountIn: amountIn, slippage: slippage)
                             }
 
                             let timeoutTask = Task {
@@ -444,7 +449,7 @@ class MultiSwapViewModel: ObservableObject {
                 return quotes
             }
 
-            let quotes = optionalQuotes.compactMap { $0 }.sorted { $0.quote.amountOut > $1.quote.amountOut }
+            let quotes = optionalQuotes.compactMap { $0 }.sorted { $0.quote.expectedBuyAmount > $1.quote.expectedBuyAmount }
 
             if !Task.isCancelled {
                 await MainActor.run { [weak self, quotes] in
@@ -457,7 +462,7 @@ class MultiSwapViewModel: ObservableObject {
     }
 
     private func syncPrice() {
-        if let tokenIn, let tokenOut, let amountIn, amountIn != 0, let amountOut = currentQuote?.quote.amountOut {
+        if let tokenIn, let tokenOut, let amountIn, amountIn != 0, let amountOut = currentQuote?.quote.expectedBuyAmount {
             var showAsIn = amountIn < amountOut
 
             if priceFlipped {
@@ -478,9 +483,13 @@ class MultiSwapViewModel: ObservableObject {
 }
 
 extension MultiSwapViewModel {
+    var slippage: Decimal {
+        storage.slippage
+    }
+
     func interchange() {
         let currentFiatAmountOut = fiatAmountOut
-        let currentAmountOut = currentQuote?.quote.amountOut
+        let currentAmountOut = currentQuote?.quote.expectedBuyAmount
 
         let internalTokenIn = internalTokenIn
         self.internalTokenIn = internalTokenOut
@@ -538,7 +547,7 @@ extension MultiSwapViewModel {
 extension MultiSwapViewModel {
     struct Quote {
         let provider: IMultiSwapProvider
-        let quote: IMultiSwapQuote
+        let quote: MultiSwapQuote
     }
 
     enum PriceImpactLevel {

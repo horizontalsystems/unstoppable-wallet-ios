@@ -32,10 +32,6 @@ extension Token {
         "\(blockchainType.uid)_\(type.tokenProtocol)_32"
     }
 
-    var swappable: Bool {
-        BlockchainType.swappable.contains(blockchainType)
-    }
-
     var badge: String? {
         switch type {
         case let .derived(derivation): return derivation.mnemonicDerivation.rawValue.uppercased()

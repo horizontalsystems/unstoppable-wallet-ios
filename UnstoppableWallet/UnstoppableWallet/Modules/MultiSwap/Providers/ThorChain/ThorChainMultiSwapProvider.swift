@@ -12,7 +12,7 @@ class ThorChainMultiSwapProvider: BaseThorChainMultiSwapProvider {
     }
 
     override var icon: String {
-        "thorchain_32"
+        "swap_provider_thorchain"
     }
 
     override var affiliate: String? {

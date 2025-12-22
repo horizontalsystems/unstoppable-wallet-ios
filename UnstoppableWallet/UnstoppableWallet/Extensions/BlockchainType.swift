@@ -28,26 +28,6 @@ extension BlockchainType {
         .stellar,
     ]
 
-    static let swappable: [BlockchainType] = [
-        .arbitrumOne,
-        .avalanche,
-        .base,
-        .binanceSmartChain,
-        .bitcoin,
-        .bitcoinCash,
-        .dash,
-        .ethereum,
-        .fantom,
-        .gnosis,
-        .litecoin,
-        .optimism,
-        .polygon,
-        .stellar,
-        .tron,
-        .zkSync,
-        .zcash,
-    ]
-
     func placeholderImageName(tokenProtocol: TokenProtocol?) -> String {
         tokenProtocol.map { "\(uid)_\($0)_32" } ?? "placeholder_circle_32"
     }

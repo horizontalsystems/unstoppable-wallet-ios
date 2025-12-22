@@ -193,5 +193,7 @@
 	<string>${unstoppable_domains_api_key}</string>
 	<key>WallectConnectV2ProjectKey</key>
 	<string>${wallet_connect_v2_project_key}</string>
+	<key>USwapApiKey</key>
+	<string>${uswap_api_key}</string>
 </dict>
 </plist>
