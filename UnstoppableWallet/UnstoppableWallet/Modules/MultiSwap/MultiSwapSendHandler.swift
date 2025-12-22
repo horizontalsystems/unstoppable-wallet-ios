@@ -14,13 +14,15 @@ class MultiSwapSendHandler {
     let tokenIn: Token
     let tokenOut: Token
     let amountIn: Decimal
+    let slippage: Decimal
     let provider: IMultiSwapProvider
 
-    init(baseToken: Token, tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider) {
+    init(baseToken: Token, tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, provider: IMultiSwapProvider) {
         self.baseToken = baseToken
         self.tokenIn = tokenIn
         self.tokenOut = tokenOut
         self.amountIn = amountIn
+        self.slippage = slippage
         self.provider = provider
     }
 }
@@ -39,6 +41,8 @@ extension MultiSwapSendHandler: ISendHandler {
             tokenIn: tokenIn,
             tokenOut: tokenOut,
             amountIn: amountIn,
+            slippage: slippage,
+            recipient: nil, // TODO:
             transactionSettings: transactionSettings
         )
 
@@ -170,7 +174,7 @@ extension MultiSwapSendHandler {
 }
 
 extension MultiSwapSendHandler {
-    static func instance(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider) -> MultiSwapSendHandler? {
+    static func instance(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, provider: IMultiSwapProvider) -> MultiSwapSendHandler? {
         let baseToken: Token?
 
         switch tokenIn.type {
@@ -186,6 +190,6 @@ extension MultiSwapSendHandler {
             return nil
         }
 
-        return MultiSwapSendHandler(baseToken: baseToken, tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider)
+        return MultiSwapSendHandler(baseToken: baseToken, tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, provider: provider)
     }
 }

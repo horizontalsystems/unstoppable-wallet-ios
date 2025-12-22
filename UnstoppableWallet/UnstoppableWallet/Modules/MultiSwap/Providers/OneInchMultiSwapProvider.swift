@@ -13,10 +13,10 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     private let commission: Decimal? = AppConfig.oneInchCommission
     private let commissionAddress: String? = AppConfig.oneInchCommissionAddress
 
-    init(kit: OneInchKit.Kit, storage: MultiSwapSettingStorage) {
+    init(kit: OneInchKit.Kit) {
         self.kit = kit
 
-        super.init(storage: storage)
+        super.init()
     }
 
     override var id: String {
@@ -28,7 +28,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     }
 
     override var icon: String {
-        "1inch_32"
+        "swap_provider_1inch"
     }
 
     override func supports(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token) -> Bool {
@@ -42,7 +42,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         }
     }
 
-    override func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> IMultiSwapQuote {
+    override func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, slippage _: Decimal) async throws -> MultiSwapQuote {
         let blockchainType = tokenIn.blockchainType
         let chain = try evmBlockchainManager.chain(blockchainType: blockchainType)
 
@@ -62,15 +62,13 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
             fee: commission
         )
 
-        return await OneInchMultiSwapQuote(
-            quote: quote,
-            recipient: storage.recipient(blockchainType: blockchainType),
-            slippage: slippage,
+        return await EvmMultiSwapQuote(
+            expectedBuyAmount: quote.amountOut ?? 0,
             allowanceState: allowanceState(token: tokenIn, amount: amountIn)
         )
     }
 
-    override func confirmationQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+    override func confirmationQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, slippage: Decimal, recipient: Address?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
         let blockchainType = tokenIn.blockchainType
 
         guard let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
@@ -86,8 +84,6 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         }
 
         let evmKit = evmKitWrapper.evmKit
-        let recipient = storage.recipient(blockchainType: blockchainType)
-        let slippage = slippage
 
         let swap = try await kit.swap(
             networkManager: networkManager,
@@ -127,22 +123,6 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         )
     }
 
-    private func settingsView(tokenOut: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
-        let view = ThemeNavigationStack {
-            RecipientAndSlippageMultiSwapSettingsView(tokenOut: tokenOut, storage: storage, slippageMode: .adjustable, onChangeSettings: onChangeSettings)
-        }
-
-        return AnyView(view)
-    }
-
-    override func settingsView(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, quote _: IMultiSwapQuote, onChangeSettings: @escaping () -> Void) -> AnyView {
-        let view = ThemeNavigationStack {
-            RecipientAndSlippageMultiSwapSettingsView(tokenOut: tokenOut, storage: storage, slippageMode: .adjustable, onChangeSettings: onChangeSettings)
-        }
-
-        return AnyView(view)
-    }
-
     override func swap(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, amountIn _: Decimal, quote: IMultiSwapConfirmationQuote) async throws {
         guard let quote = quote as? OneInchMultiSwapConfirmationQuote else {
             throw SwapError.invalidQuote
@@ -171,10 +151,6 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         case let .eip20(address): return try EvmKit.Address(hex: address)
         default: throw SwapError.invalidAddress
         }
-    }
-
-    private var slippage: Decimal {
-        storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.default
     }
 }
 

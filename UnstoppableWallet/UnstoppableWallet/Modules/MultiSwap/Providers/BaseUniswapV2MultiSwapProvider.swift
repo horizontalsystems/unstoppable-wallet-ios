@@ -6,10 +6,10 @@ import UniswapKit
 class BaseUniswapV2MultiSwapProvider: BaseUniswapMultiSwapProvider {
     private let kit: UniswapKit.Kit
 
-    init(kit: UniswapKit.Kit, storage: MultiSwapSettingStorage) {
+    init(kit: UniswapKit.Kit) {
         self.kit = kit
 
-        super.init(storage: storage)
+        super.init()
     }
 
     override func spenderAddress(chain: Chain) throws -> EvmKit.Address {
@@ -24,13 +24,13 @@ class BaseUniswapV2MultiSwapProvider: BaseUniswapMultiSwapProvider {
         }
     }
 
-    override func trade(rpcSource: RpcSource, chain: Chain, tokenIn: UniswapKit.Token, tokenOut: UniswapKit.Token, amountIn: Decimal, tradeOptions: TradeOptions) async throws -> BaseUniswapMultiSwapQuote.Trade {
+    override func trade(rpcSource: RpcSource, chain: Chain, tokenIn: UniswapKit.Token, tokenOut: UniswapKit.Token, amountIn: Decimal, tradeOptions: TradeOptions) async throws -> UniswapMultiSwapQuote.Trade {
         let swapData = try await kit.swapData(rpcSource: rpcSource, chain: chain, tokenIn: tokenIn, tokenOut: tokenOut)
         let tradeData = try kit.bestTradeExactIn(swapData: swapData, amountIn: amountIn, options: tradeOptions)
         return .v2(tradeData: tradeData)
     }
 
-    override func transactionData(receiveAddress: EvmKit.Address, chain: Chain, trade: BaseUniswapMultiSwapQuote.Trade, tradeOptions _: TradeOptions) throws -> TransactionData {
+    override func transactionData(receiveAddress: EvmKit.Address, chain: Chain, trade: UniswapMultiSwapQuote.Trade, tradeOptions _: TradeOptions) throws -> TransactionData {
         guard case let .v2(tradeData) = trade else {
             throw SwapError.invalidTrade
         }

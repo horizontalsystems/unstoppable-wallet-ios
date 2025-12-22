@@ -8,14 +8,9 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
     private let adapterManager = Core.shared.adapterManager
     private let localStorage = Core.shared.localStorage
     let evmBlockchainManager = Core.shared.evmBlockchainManager
-    let storage: MultiSwapSettingStorage
     private let allowanceHelper = MultiSwapAllowanceHelper()
 
     @Published private var useMevProtection: Bool = false
-
-    init(storage: MultiSwapSettingStorage) {
-        self.storage = storage
-    }
 
     var id: String {
         fatalError("Must be implemented in subclass")
@@ -33,11 +28,11 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         fatalError("Must be implemented in subclass")
     }
 
-    func quote(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal) async throws -> IMultiSwapQuote {
+    func quote(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, slippage _: Decimal) async throws -> MultiSwapQuote {
         fatalError("Must be implemented in subclass")
     }
 
-    func confirmationQuote(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+    func confirmationQuote(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, slippage _: Decimal, recipient _: Address?, transactionSettings _: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
         fatalError("Must be implemented in subclass")
     }
 
@@ -74,7 +69,7 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         ], isList: false)]
     }
 
-    func settingsView(tokenIn _: Token, tokenOut _: Token, quote _: IMultiSwapQuote, onChangeSettings _: @escaping () -> Void) -> AnyView {
+    func settingsView(tokenIn _: Token, tokenOut _: Token, quote _: MultiSwapQuote, onChangeSettings _: @escaping () -> Void) -> AnyView {
         fatalError("settingsView(tokenIn:tokenOut:onChangeSettings:) has not been implemented")
     }
 

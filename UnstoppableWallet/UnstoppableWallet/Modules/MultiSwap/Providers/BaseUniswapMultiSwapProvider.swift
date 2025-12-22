@@ -9,12 +9,12 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
     let evmSyncSourceManager = Core.shared.evmSyncSourceManager
     let evmFeeEstimator = EvmFeeEstimator()
 
-    override func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> IMultiSwapQuote {
-        try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
+    override func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, slippage: Decimal) async throws -> MultiSwapQuote {
+        try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage)
     }
 
-    override func confirmationQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
-        let quote = try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
+    override func confirmationQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, slippage: Decimal, recipient: Address?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+        let quote = try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient)
 
         let blockchainType = tokenIn.blockchainType
         let gasPriceData = transactionSettings?.gasPriceData
@@ -41,18 +41,6 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
             evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce
         )
-    }
-
-    private func settingsView(tokenOut: MarketKit.Token, onChangeSettings: @escaping () -> Void) -> AnyView {
-        let view = ThemeNavigationStack {
-            RecipientAndSlippageMultiSwapSettingsView(tokenOut: tokenOut, storage: storage, slippageMode: .adjustable, onChangeSettings: onChangeSettings)
-        }
-
-        return AnyView(view)
-    }
-
-    override func settingsView(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, quote _: IMultiSwapQuote, onChangeSettings: @escaping () -> Void) -> AnyView {
-        settingsView(tokenOut: tokenOut, onChangeSettings: onChangeSettings)
     }
 
     override func swap(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, amountIn _: Decimal, quote: IMultiSwapConfirmationQuote) async throws {
@@ -85,15 +73,15 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
         fatalError("Must be implemented in subclass")
     }
 
-    func trade(rpcSource _: RpcSource, chain _: Chain, tokenIn _: UniswapKit.Token, tokenOut _: UniswapKit.Token, amountIn _: Decimal, tradeOptions _: TradeOptions) async throws -> BaseUniswapMultiSwapQuote.Trade {
+    func trade(rpcSource _: RpcSource, chain _: Chain, tokenIn _: UniswapKit.Token, tokenOut _: UniswapKit.Token, amountIn _: Decimal, tradeOptions _: TradeOptions) async throws -> UniswapMultiSwapQuote.Trade {
         fatalError("Must be implemented in subclass")
     }
 
-    func transactionData(receiveAddress _: EvmKit.Address, chain _: Chain, trade _: BaseUniswapMultiSwapQuote.Trade, tradeOptions _: TradeOptions) throws -> TransactionData {
+    func transactionData(receiveAddress _: EvmKit.Address, chain _: Chain, trade _: UniswapMultiSwapQuote.Trade, tradeOptions _: TradeOptions) throws -> TransactionData {
         fatalError("Must be implemented in subclass")
     }
 
-    private func internalQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> BaseUniswapMultiSwapQuote {
+    private func internalQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, slippage: Decimal, recipient: Address? = nil) async throws -> UniswapMultiSwapQuote {
         let blockchainType = tokenIn.blockchainType
         let chain = try evmBlockchainManager.chain(blockchainType: blockchainType)
 
@@ -103,9 +91,6 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
         guard let rpcSource = evmSyncSourceManager.httpSyncSource(blockchainType: blockchainType)?.rpcSource else {
             throw SwapError.noHttpRpcSource
         }
-
-        let recipient = storage.recipient(blockchainType: blockchainType)
-        let slippage: Decimal = storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage) ?? MultiSwapSlippage.default
 
         let kitRecipient = try recipient.map { try EvmKit.Address(hex: $0.raw) }
 
@@ -118,10 +103,9 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
 
         let trade = try await trade(rpcSource: rpcSource, chain: chain, tokenIn: kitTokenIn, tokenOut: kitTokenOut, amountIn: amountIn, tradeOptions: tradeOptions)
 
-        return await BaseUniswapMultiSwapQuote(
+        return await UniswapMultiSwapQuote(
             trade: trade,
             tradeOptions: tradeOptions,
-            recipient: recipient,
             providerName: name,
             allowanceState: allowanceState(token: tokenIn, amount: amountIn),
         )

@@ -62,7 +62,6 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                 if filter.isEmpty {
                     let enabledTokens = wallets
                         .map(\.token)
-                        .filter(\.swappable)
                         .sorted { lhsToken, rhsToken in
                             if let token {
                                 let lhsSameBlockchain = lhsToken.blockchainType == token.blockchainType
@@ -94,7 +93,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                     resultTokens.append(contentsOf: enabledTokens)
 
                     if let token {
-                        let topFullCoins = try marketKit.topFullCoins(limit: 100, allowedBlockchainTypes: BlockchainType.swappable)
+                        let topFullCoins = try marketKit.topFullCoins(limit: 100)
 
                         let tokens = topFullCoins
                             .map { $0.tokens.filter { $0.blockchainType == token.blockchainType } }
@@ -124,7 +123,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                     if case .hdExtendedKey = account.type {
                         tokenQueries = BtcBlockchainManager.blockchainTypes.map(\.nativeTokenQueries).flatMap { $0 }
                     } else {
-                        tokenQueries = BlockchainType.swappable.map(\.defaultTokenQuery)
+                        tokenQueries = BlockchainType.supported.map(\.defaultTokenQuery)
                     }
 
                     let tokens = try marketKit.tokens(queries: tokenQueries)
@@ -161,7 +160,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                             return lhsToken.badge ?? "" < rhsToken.badge ?? ""
                         }
                 } else {
-                    let allFullCoins = try marketKit.fullCoins(filter: filter, limit: 100, allowedBlockchainTypes: BlockchainType.swappable)
+                    let allFullCoins = try marketKit.fullCoins(filter: filter, limit: 100)
                     let tokens = allFullCoins.map(\.tokens).flatMap { $0 }
 
                     resultTokens = tokens
