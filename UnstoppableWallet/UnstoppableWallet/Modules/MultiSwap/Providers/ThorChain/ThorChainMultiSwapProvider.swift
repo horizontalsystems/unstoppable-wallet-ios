@@ -3,17 +3,10 @@ class ThorChainMultiSwapProvider: BaseThorChainMultiSwapProvider {
         "https://thornode.ninerealms.com/thorchain"
     }
 
-    override var id: String {
-        "thorchain"
-    }
-
-    override var name: String {
-        "THORChain"
-    }
-
-    override var icon: String {
-        "swap_provider_thorchain"
-    }
+    override var id: String { "thorchain" }
+    override var name: String { "THORChain" }
+    override var description: String { "DEX" }
+    override var icon: String { "swap_provider_thorchain" }
 
     override var affiliate: String? {
         AppConfig.thorchainAffiliate

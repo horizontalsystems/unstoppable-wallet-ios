@@ -15,17 +15,10 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         return "https://\(stagenet)mayanode.mayachain.info/mayachain"
     }
 
-    override var id: String {
-        "mayachain"
-    }
-
-    override var name: String {
-        "Maya Protocol"
-    }
-
-    override var icon: String {
-        "swap_provider_maya"
-    }
+    override var id: String { "mayachain" }
+    override var name: String { "Maya Protocol" }
+    override var description: String { "DEX" }
+    override var icon: String { "swap_provider_maya" }
 
     override var affiliate: String? {
         AppConfig.mayaAffiliate

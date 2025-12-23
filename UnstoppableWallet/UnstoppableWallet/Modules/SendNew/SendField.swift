@@ -94,7 +94,7 @@ enum SendField {
                     MiddleTextIcon(text: title)
                 },
                 right: {
-                    RightTextIcon(text: ComponentText(text: value, colorStyle: colorStyle(valueLevel: level)))
+                    RightTextIcon(text: ComponentText(text: value, colorStyle: level.colorStyle))
                 }
             )
         case let .note(iconName, title):
@@ -201,14 +201,6 @@ enum SendField {
                     }
                 }
             }
-        }
-    }
-
-    private func colorStyle(valueLevel: ValueLevel) -> ColorStyle {
-        switch valueLevel {
-        case .regular: return .primary
-        case .warning: return .yellow
-        case .error: return .red
         }
     }
 

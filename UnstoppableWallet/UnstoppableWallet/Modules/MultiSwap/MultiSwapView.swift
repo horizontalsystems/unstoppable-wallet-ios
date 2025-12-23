@@ -241,7 +241,7 @@ struct MultiSwapView: View {
                                     EmptyView()
                                 default:
                                     Text("(\(priceImpact.rounded(decimal: 2).description)%)")
-                                        .textBody(color: color(valueLevel: level.valueLevel))
+                                        .textBody(color: level.valueLevel.colorStyle.color)
                                 }
                             }
 
@@ -290,14 +290,6 @@ struct MultiSwapView: View {
 
                 Image("arrow_small_down_20").themeIcon(color: .themeGray)
             }
-        }
-    }
-
-    private func color(valueLevel: ValueLevel) -> Color {
-        switch valueLevel {
-        case .regular: return .themeLeah
-        case .warning: return .themeJacob
-        case .error: return .themeLucian
         }
     }
 

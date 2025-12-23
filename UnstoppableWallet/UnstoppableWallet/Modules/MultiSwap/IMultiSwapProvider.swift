@@ -6,6 +6,7 @@ import SwiftUI
 protocol IMultiSwapProvider {
     var id: String { get }
     var name: String { get }
+    var description: String { get }
     var icon: String { get }
     var syncPublisher: AnyPublisher<Void, Never>? { get }
     func supports(tokenIn: Token, tokenOut: Token) -> Bool
