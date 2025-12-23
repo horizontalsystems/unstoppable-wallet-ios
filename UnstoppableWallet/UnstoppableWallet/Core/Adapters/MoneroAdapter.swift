@@ -367,6 +367,18 @@ extension MoneroAdapter {
         default: return ""
         }
     }
+
+    static func address(accountType: AccountType) -> String {
+        switch accountType {
+        case let .mnemonic(words, passphrase, _):
+            return (try? Kit.address(wallet: .bip39(seed: words, passphrase: passphrase), account: 0, index: 1)) ?? ""
+
+        case let .moneroWatchAccount(address, viewKey, _):
+            return (try? Kit.address(wallet: .watch(address: address, viewKey: viewKey), account: 0, index: 0)) ?? ""
+
+        default: return ""
+        }
+    }
 }
 
 enum MoneroSendAmount {
