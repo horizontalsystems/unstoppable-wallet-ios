@@ -194,7 +194,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         return info.estimatedAmount.min.float
     }
 
-    func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage _: Decimal) async throws -> MultiSwapQuote {
+    func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote {
         guard let abTokenIn = tokenPairs[tokenIn] else {
             throw SwapError.unsupportedTokenIn
         }

@@ -10,7 +10,7 @@ protocol IMultiSwapProvider {
     var icon: String { get }
     var syncPublisher: AnyPublisher<Void, Never>? { get }
     func supports(tokenIn: Token, tokenOut: Token) -> Bool
-    func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal) async throws -> MultiSwapQuote
+    func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote
     func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: Address?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote
     func otherSections(tokenIn: Token, tokenOut: Token, amountIn: Decimal, transactionSettings: TransactionSettings?) -> [SendDataSection]
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView
