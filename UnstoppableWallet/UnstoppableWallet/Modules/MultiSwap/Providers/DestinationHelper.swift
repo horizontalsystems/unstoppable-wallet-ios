@@ -43,6 +43,10 @@ enum DestinationHelper {
         case .zcash:
             // provide transparent address for zcash swap
             address = try await ZcashAdapter.firstAddress(accountType: account.type, addressType: .transparent)
+        case .ton:
+            address = try TonKitManager.address(accountType: account.type)
+        case .monero:
+            throw SwapError.noDestinationAddress // TODO: get address from Monero adapter
         default:
             throw SwapError.noDestinationAddress
         }

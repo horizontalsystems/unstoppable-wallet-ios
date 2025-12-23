@@ -19,17 +19,10 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         super.init()
     }
 
-    override var id: String {
-        "1inch"
-    }
-
-    override var name: String {
-        "1Inch"
-    }
-
-    override var icon: String {
-        "swap_provider_1inch"
-    }
+    override var id: String { "1inch" }
+    override var name: String { "1Inch" }
+    override var description: String { "DEX" }
+    override var icon: String { "swap_provider_1inch" }
 
     override func supports(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token) -> Bool {
         guard tokenIn.blockchainType == tokenOut.blockchainType else {

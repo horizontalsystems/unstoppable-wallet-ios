@@ -44,11 +44,13 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         "42161": .arbitrumOne, // ARB
         "56": .binanceSmartChain, // BSC
         "137": .polygon, // POL
-        "bitcoin": .bitcoin, // BTC
         "1": .ethereum, // ETH
-        "zcash": .zcash, // ZEC
-        "bitcoincash": .bitcoinCash, // BCH
-        "litecoin": .litecoin, // LTC
+        "bitcoin": .bitcoin,
+        "zcash": .zcash,
+        "bitcoincash": .bitcoinCash,
+        "litecoin": .litecoin,
+        "ton": .ton,
+        "monero": .monero,
     ]
 
     init(provider: Provider, apiKey: String?) {
@@ -63,6 +65,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
     var id: String { provider.rawValue }
     var name: String { provider.title }
+    var description: String { provider.description }
     var icon: String { provider.icon }
 
     var syncPublisher: AnyPublisher<Void, Never>? {
@@ -87,7 +90,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             var tokenQueries: [TokenQuery] = []
 
             switch blockchainType {
-            case .arbitrumOne, .avalanche, .base, .binanceSmartChain, .ethereum, .optimism, .polygon:
+            case .arbitrumOne, .avalanche, .base, .binanceSmartChain, .ethereum, .optimism, .polygon, .tron:
                 let tokenType: TokenType
 
                 if let address = token.address, !address.isEmpty {
@@ -98,7 +101,18 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
                 tokenQueries = [TokenQuery(blockchainType: blockchainType, tokenType: tokenType)]
 
-            case .bitcoinCash, .bitcoin, .dash, .zcash:
+            case .ton:
+                let tokenType: TokenType
+
+                if let address = token.address, !address.isEmpty {
+                    tokenType = .jetton(address: address)
+                } else {
+                    tokenType = .native
+                }
+
+                tokenQueries = [TokenQuery(blockchainType: blockchainType, tokenType: tokenType)]
+
+            case .bitcoinCash, .bitcoin, .dash, .zcash, .monero:
                 tokenQueries = blockchainType.nativeTokenQueries
 
             case .litecoin:
@@ -173,9 +187,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     }
 
     func supports(tokenIn: Token, tokenOut: Token) -> Bool {
-        print("\(tokenIn.tokenQuery.id) -> \(tokenOut.tokenQuery.id)")
         let tokens = assets.map(\.token)
-        print("\(tokens.map(\.tokenQuery.id))")
         return tokens.contains(tokenIn) && tokens.contains(tokenOut)
     }
 
@@ -198,7 +210,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
             return EvmMultiSwapQuote(expectedBuyAmount: quote.expectedBuyAmount, allowanceState: allowanceState)
 
-        case .bitcoin, .bitcoinCash, .litecoin, .zcash:
+        case .bitcoin, .bitcoinCash, .litecoin, .zcash, .ton, .monero:
             return MultiSwapQuote(expectedBuyAmount: quote.expectedBuyAmount)
 
         default:
@@ -527,12 +539,14 @@ extension USwapMultiSwapProvider {
         case near = "NEAR"
         case quickEx = "QUICKEX"
         case letsExchange = "LETSEXCHANGE"
+        case stealthex = "STEALTHEX"
 
         var icon: String {
             switch self {
             case .near: return "swap_provider_near"
             case .quickEx: return "swap_provider_quickex"
             case .letsExchange: return "swap_provider_letsexchange"
+            case .stealthex: return "swap_provider_stealthex"
             }
         }
 
@@ -541,6 +555,16 @@ extension USwapMultiSwapProvider {
             case .near: return "Near"
             case .quickEx: return "QuickEx"
             case .letsExchange: return "Let's Exchange"
+            case .stealthex: return "StealthEX"
+            }
+        }
+
+        var description: String {
+            switch self {
+            case .near: return "DEX"
+            case .quickEx: return "P2P"
+            case .letsExchange: return "P2P"
+            case .stealthex: return "P2P"
             }
         }
     }

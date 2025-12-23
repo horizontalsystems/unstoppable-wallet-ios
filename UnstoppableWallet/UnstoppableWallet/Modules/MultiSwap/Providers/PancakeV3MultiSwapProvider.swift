@@ -1,17 +1,10 @@
 import MarketKit
 
 class PancakeV3MultiSwapProvider: BaseUniswapV3MultiSwapProvider {
-    override var id: String {
-        "pancake_v3"
-    }
-
-    override var name: String {
-        "PancakeSwap v.3"
-    }
-
-    override var icon: String {
-        "swap_provider_pancake"
-    }
+    override var id: String { "pancake_v3" }
+    override var name: String { "PancakeSwap v.3" }
+    override var description: String { "DEX" }
+    override var icon: String { "swap_provider_pancake" }
 
     override func supports(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token) -> Bool {
         guard tokenIn.blockchainType == tokenOut.blockchainType else {

@@ -12,17 +12,10 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
 
     @Published private var useMevProtection: Bool = false
 
-    var id: String {
-        fatalError("Must be implemented in subclass")
-    }
-
-    var name: String {
-        fatalError("Must be implemented in subclass")
-    }
-
-    var icon: String {
-        fatalError("Must be implemented in subclass")
-    }
+    var id: String { fatalError("Must be implemented in subclass") }
+    var name: String { fatalError("Must be implemented in subclass") }
+    var description: String { fatalError("Must be implemented in subclass") }
+    var icon: String { fatalError("Must be implemented in subclass") }
 
     func supports(tokenIn _: Token, tokenOut _: Token) -> Bool {
         fatalError("Must be implemented in subclass")

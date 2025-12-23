@@ -34,21 +34,11 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         syncPools()
     }
 
-    var baseUrl: String {
-        fatalError("Must be overridden by subclass")
-    }
-
-    var id: String {
-        fatalError("Must be overridden by subclass")
-    }
-
-    var name: String {
-        fatalError("Must be overridden by subclass")
-    }
-
-    var icon: String {
-        fatalError("Must be overridden by subclass")
-    }
+    var baseUrl: String { fatalError("Must be overridden by subclass") }
+    var id: String { fatalError("Must be overridden by subclass") }
+    var name: String { fatalError("Must be overridden by subclass") }
+    var description: String { fatalError("Must be overridden by subclass") }
+    var icon: String { fatalError("Must be overridden by subclass") }
 
     var syncPublisher: AnyPublisher<Void, Never>? {
         syncSubject.eraseToAnyPublisher()

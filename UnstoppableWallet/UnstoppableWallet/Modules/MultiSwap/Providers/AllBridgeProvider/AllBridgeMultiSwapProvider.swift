@@ -70,17 +70,10 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         syncPools()
     }
 
-    var id: String {
-        "allbridge"
-    }
-
-    var name: String {
-        "AllBridge"
-    }
-
-    var icon: String {
-        "swap_provider_allbridge"
-    }
+    var id: String { "allbridge" }
+    var name: String { "AllBridge" }
+    var description: String { "DEX" }
+    var icon: String { "swap_provider_allbridge" }
 
     private func syncPools() {
         Task { [weak self, networkManager, baseUrl] in

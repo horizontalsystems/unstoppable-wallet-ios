@@ -184,6 +184,13 @@ extension TonKitManager {
         let privateRaw = Data(privateKey.raw.bytes)
         return try TweetNacl.NaclSign.KeyPair.keyPair(fromSeed: privateRaw)
     }
+
+    static func address(accountType: AccountType) throws -> String {
+        let (publicKey, _) = try keyPair(accountType: accountType)
+        let contract = contract(publicKey: publicKey)
+        let address = try contract.address()
+        return address.toString(testOnly: isTestNet, bounceable: false)
+    }
 }
 
 extension Jetton {
