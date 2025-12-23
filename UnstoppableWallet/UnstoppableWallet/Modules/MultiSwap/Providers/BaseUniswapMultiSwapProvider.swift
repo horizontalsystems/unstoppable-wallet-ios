@@ -9,8 +9,8 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
     let evmSyncSourceManager = Core.shared.evmSyncSourceManager
     let evmFeeEstimator = EvmFeeEstimator()
 
-    override func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, slippage: Decimal) async throws -> MultiSwapQuote {
-        try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage)
+    override func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> MultiSwapQuote {
+        try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: MultiSwapSlippage.default)
     }
 
     override func confirmationQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, slippage: Decimal, recipient: Address?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {

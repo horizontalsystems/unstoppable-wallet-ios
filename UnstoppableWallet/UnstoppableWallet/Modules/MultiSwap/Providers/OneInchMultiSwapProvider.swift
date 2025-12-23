@@ -35,7 +35,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         }
     }
 
-    override func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, slippage _: Decimal) async throws -> MultiSwapQuote {
+    override func quote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal) async throws -> MultiSwapQuote {
         let blockchainType = tokenIn.blockchainType
         let chain = try evmBlockchainManager.chain(blockchainType: blockchainType)
 

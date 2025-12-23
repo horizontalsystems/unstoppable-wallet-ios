@@ -23,8 +23,6 @@ class MultiSwapViewModel: ObservableObject {
     private let adapterManager = Core.shared.adapterManager
     private let decimalParser = AmountDecimalParser()
 
-    private let storage: MultiSwapSettingStorage
-
     @Published var currency: Currency
 
     private var enteringFiat = false
@@ -290,9 +288,8 @@ class MultiSwapViewModel: ObservableObject {
 
     @Published var priceImpact: Decimal?
 
-    init(providers: [IMultiSwapProvider], storage: MultiSwapSettingStorage, token: Token? = nil) {
+    init(providers: [IMultiSwapProvider], token: Token? = nil) {
         self.providers = providers
-        self.storage = storage
         currency = currencyManager.baseCurrency
 
         defer {
@@ -300,7 +297,10 @@ class MultiSwapViewModel: ObservableObject {
             internalTokenOut = MultiSwapDefaultTokenResolver.default(for: token)
         }
 
-        currencyManager.$baseCurrency.sink { [weak self] in self?.currency = $0 }.store(in: &cancellables)
+        currencyManager.$baseCurrency
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.currency = $0 }
+            .store(in: &cancellables)
 
         syncFiatAmountIn()
         syncFiatAmountOut()
@@ -308,6 +308,7 @@ class MultiSwapViewModel: ObservableObject {
         for provider in providers {
             if let syncPublisher = provider.syncPublisher {
                 syncPublisher
+                    .receive(on: DispatchQueue.main)
                     .sink { [weak self] in
                         self?.syncValidProviders()
                         self?.syncQuotes(silent: true)
@@ -404,15 +405,13 @@ class MultiSwapViewModel: ObservableObject {
             quoting = true
         }
 
-        let slippage = storage.slippage
-
         quotesTask = Task { [weak self, validProviders] in
             let optionalQuotes: [Quote?] = await withTaskGroup(of: Quote?.self) { group in
                 for provider in validProviders {
                     group.addTask {
                         do {
                             let quoteTask = Task {
-                                try await provider.quote(tokenIn: internalTokenIn, tokenOut: internalTokenOut, amountIn: amountIn, slippage: slippage)
+                                try await provider.quote(tokenIn: internalTokenIn, tokenOut: internalTokenOut, amountIn: amountIn)
                             }
 
                             let timeoutTask = Task {
@@ -479,10 +478,6 @@ class MultiSwapViewModel: ObservableObject {
 }
 
 extension MultiSwapViewModel {
-    var slippage: Decimal {
-        storage.slippage
-    }
-
     func interchange() {
         let currentFiatAmountOut = fiatAmountOut
         let currentAmountOut = currentQuote?.quote.expectedBuyAmount

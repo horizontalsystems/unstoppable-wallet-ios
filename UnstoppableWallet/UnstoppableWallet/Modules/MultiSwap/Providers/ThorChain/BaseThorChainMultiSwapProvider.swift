@@ -57,8 +57,8 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         return tokens.contains(tokenIn) && tokens.contains(tokenOut)
     }
 
-    func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal) async throws -> MultiSwapQuote {
-        let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage)
+    func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote {
+        let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
 
         let blockchainType = tokenIn.blockchainType
 
@@ -254,7 +254,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: Address? = nil, params: Parameters? = nil) async throws -> SwapQuote {
+    func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil, recipient: Address? = nil, params: Parameters? = nil) async throws -> SwapQuote {
         guard let assetIn = assets.first(where: { $0.token == tokenIn }) else {
             throw SwapError.unsupportedTokenIn
         }
@@ -273,8 +273,11 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             "destination": destination,
             "streaming_interval": 1,
             "streaming_quantity": 0,
-            "liquidity_tolerance_bps": Int((slippage * 100).roundedDown(decimal: 0).description),
         ]
+
+        if let slippage {
+            parameters["liquidity_tolerance_bps"] = Int((slippage * 100).roundedDown(decimal: 0).description)
+        }
 
         if let affiliate, let affiliateBps {
             parameters["affiliate"] = affiliate

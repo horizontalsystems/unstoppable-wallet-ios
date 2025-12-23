@@ -17,8 +17,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     private var headers: HTTPHeaders?
 
     private let provider: Provider
-    // private let networkManager = Core.shared.networkManager
-    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
+    private let networkManager = Core.shared.networkManager
+    // private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
 
     private var assets = [Asset]()
     private let syncSubject = PassthroughSubject<Void, Never>()
@@ -191,8 +191,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         return tokens.contains(tokenIn) && tokens.contains(tokenOut)
     }
 
-    func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal) async throws -> MultiSwapQuote {
-        let quote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage)
+    func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote {
+        let quote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: MultiSwapSlippage.default)
 
         let blockchainType = tokenIn.blockchainType
 

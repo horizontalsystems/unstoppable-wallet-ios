@@ -4,8 +4,15 @@ import UniswapKit
 
 extension MultiSwapViewModel {
     static func instance(token: MarketKit.Token? = nil) -> MultiSwapViewModel {
-        let storage = MultiSwapSettingStorage()
-        var providers = [IMultiSwapProvider]()
+        var providers: [IMultiSwapProvider] = [
+            ThorChainMultiSwapProvider(),
+            MayaMultiSwapProvider(),
+            AllBridgeMultiSwapProvider(),
+            USwapMultiSwapProvider(provider: .near, apiKey: AppConfig.uswapApiKey),
+            USwapMultiSwapProvider(provider: .quickEx, apiKey: AppConfig.uswapApiKey),
+            USwapMultiSwapProvider(provider: .letsExchange, apiKey: AppConfig.uswapApiKey),
+            USwapMultiSwapProvider(provider: .stealthex, apiKey: AppConfig.uswapApiKey),
+        ]
 
         // if let kit = try? UniswapKit.Kit.instance() {
         //     providers.append(UniswapV2MultiSwapProvider(kit: kit))
@@ -25,14 +32,6 @@ extension MultiSwapViewModel {
             providers.append(OneInchMultiSwapProvider(kit: OneInchKit.Kit.instance(apiKey: apiKey)))
         }
 
-        providers.append(ThorChainMultiSwapProvider())
-        providers.append(MayaMultiSwapProvider())
-        providers.append(AllBridgeMultiSwapProvider())
-        providers.append(USwapMultiSwapProvider(provider: .near, apiKey: AppConfig.uswapApiKey))
-        providers.append(USwapMultiSwapProvider(provider: .quickEx, apiKey: AppConfig.uswapApiKey))
-        providers.append(USwapMultiSwapProvider(provider: .letsExchange, apiKey: AppConfig.uswapApiKey))
-        providers.append(USwapMultiSwapProvider(provider: .stealthex, apiKey: AppConfig.uswapApiKey))
-
-        return MultiSwapViewModel(providers: providers, storage: storage, token: token)
+        return MultiSwapViewModel(providers: providers, token: token)
     }
 }
