@@ -540,6 +540,7 @@ extension USwapMultiSwapProvider {
         case quickEx = "QUICKEX"
         case letsExchange = "LETSEXCHANGE"
         case stealthex = "STEALTHEX"
+        case swapuz = "SWAPUZ"
 
         var icon: String {
             switch self {
@@ -547,6 +548,7 @@ extension USwapMultiSwapProvider {
             case .quickEx: return "swap_provider_quickex"
             case .letsExchange: return "swap_provider_letsexchange"
             case .stealthex: return "swap_provider_stealthex"
+            case .swapuz: return "swap_provider_swapuz"
             }
         }
 
@@ -556,15 +558,14 @@ extension USwapMultiSwapProvider {
             case .quickEx: return "QuickEx"
             case .letsExchange: return "Let's Exchange"
             case .stealthex: return "StealthEX"
+            case .swapuz: return "Swapuz"
             }
         }
 
         var description: String {
             switch self {
             case .near: return "DEX"
-            case .quickEx: return "P2P"
-            case .letsExchange: return "P2P"
-            case .stealthex: return "P2P"
+            case .quickEx, .letsExchange, .stealthex, .swapuz: return "P2P"
             }
         }
     }
