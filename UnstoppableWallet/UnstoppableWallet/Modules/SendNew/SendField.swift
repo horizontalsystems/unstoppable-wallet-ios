@@ -6,12 +6,13 @@ import SwiftUI
 enum SendField {
     case amount(title: String, token: Token, appValueType: AppValueType, currencyValue: CurrencyValue?, type: AmountType)
     case amountNew(token: Token, appValueType: AppValueType, currencyValue: CurrencyValue?)
-    case value(title: String, description: InfoDescription?, appValue: AppValue?, currencyValue: CurrencyValue?, formatFull: Bool)
+    case value(title: CustomStringConvertible, appValue: AppValue?, currencyValue: CurrencyValue?, formatFull: Bool)
     case doubleValue(title: String, description: InfoDescription?, value1: String, value2: String?)
     case levelValue(title: String, value: String, level: ValueLevel)
     case note(iconName: String?, title: String)
-    case simpleValue(icon: String? = nil, title: String, value: String, copying: Bool)
-    case address(title: String, value: String, blockchainType: BlockchainType)
+    case simpleValue(icon: String? = nil, title: CustomStringConvertible, value: String)
+    case address(value: String, blockchainType: BlockchainType)
+    case selfAddress(value: String, blockchainType: BlockchainType)
     case price(title: String, tokenA: Token, tokenB: Token, amountA: Decimal, amountB: Decimal)
     case hex(title: String, value: String)
     case mevProtection(isOn: Binding<Bool>)
@@ -67,7 +68,9 @@ enum SendField {
                     )
                 }
             )
-        case let .value(title, infoDescription, appValue, currencyValue, formatFull):
+        case let .value(title, appValue, currencyValue, formatFull):
+            let infoDescription = (title as? SendField.InformedTitle)?.info
+
             Cell(
                 style: .secondary,
                 middle: {
@@ -105,37 +108,35 @@ enum SendField {
                 Text(title).textSubhead2()
                 Spacer()
             }
-        case let .address(title, value, blockchainType):
-            RecipientRowsView(title: title, value: value, blockchainType: blockchainType)
+        case let .address(value, blockchainType):
+            RecipientRowsView(value: value, blockchainType: blockchainType)
+        case let .selfAddress(value, blockchainType):
+            RecipientRowsView(value: value, customTitle: "send.confirmation.send_to_own".localized, blockchainType: blockchainType)
         case let .price(title, tokenA, tokenB, amountA, amountB):
             PriceRow(title: title, tokenA: tokenA, tokenB: tokenB, amountA: amountA, amountB: amountB)
-        case let .simpleValue(icon, title, value, copying):
-            ListRow {
-                if let icon {
-                    Image(icon).icon()
-                }
+        case let .simpleValue(icon, title, value):
+            let infoDescription = (title as? SendField.InformedTitle)?.info
 
-                Text(title).textSubhead2()
-
-                Spacer()
-
-                if copying {
-                    Button(action: {
-                        CopyHelper.copyAndNotify(value: value)
-                    }) {
-                        Text(value)
-                            .textSubhead1(color: .themeLeah)
-                            .lineLimit(1)
-                            .truncationMode(.middle)
+            Cell(
+                style: .secondary,
+                left: {
+                    if let icon {
+                        ThemeImage(icon, size: .iconSize20)
                     }
-                    .buttonStyle(SecondaryButtonStyle(style: .default))
-                } else {
-                    Text(value)
-                        .textSubhead1(color: .themeLeah)
-                        .lineLimit(3)
-                        .truncationMode(.middle)
+                },
+                middle: {
+                    if let infoDescription {
+                        MiddleTextIcon(text: title)
+                            .modifier(Informed(infoDescription: infoDescription, horizontalPadding: 0))
+
+                    } else {
+                        MiddleTextIcon(text: title)
+                    }
+                },
+                right: {
+                    RightMultiText(subtitle: ComponentText(text: value, colorStyle: .primary))
                 }
-            }
+            )
         case let .hex(title, value):
             ListRow {
                 Text(title).textSubhead2()
@@ -248,9 +249,22 @@ enum SendField {
 }
 
 extension SendField {
+    struct InformedTitle: CustomStringConvertible {
+        let title: String
+        let info: InfoDescription
+
+        var description: String { title }
+
+        init(_ title: String, info: InfoDescription) {
+            self.title = title
+            self.info = info
+        }
+    }
+}
+
+extension SendField {
     static func recipient(_ recipient: String, blockchainType: BlockchainType) -> Self {
         .address(
-            title: "swap.recipient".localized,
             value: recipient,
             blockchainType: blockchainType
         )

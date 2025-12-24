@@ -50,28 +50,6 @@ struct SendView: View {
     @ViewBuilder private func dataView(data: ISendData, handler: ISendHandler) -> some View {
         ScrollView {
             VStack(spacing: .margin16) {
-                let flowSection = data.flowSection(baseToken: handler.baseToken, currency: viewModel.currency, rates: viewModel.rates)
-
-                if let flowSection {
-                    ListSection {
-                        VStack(spacing: 0) {
-                            flowSection.0.listRow
-
-                            HorizontalDivider()
-                                .overlay(
-                                    Circle()
-                                        .fill(Color.themeLawrence)
-                                        .frame(width: 20, height: 20)
-                                        .overlay(
-                                            ThemeImage("arrow_m_down", size: .iconSize20)
-                                        )
-                                )
-
-                            flowSection.1.listRow
-                        }
-                    }
-                }
-
                 let sections = data.sections(baseToken: handler.baseToken, currency: viewModel.currency, rates: viewModel.rates)
 
                 if !sections.isEmpty {
@@ -82,16 +60,12 @@ struct SendView: View {
                             if section.isList {
                                 ListSection {
                                     VStack(spacing: 0) {
-                                        ForEach(section.fields.indices, id: \.self) { index in
-                                            section.fields[index].listRow
-                                        }
+                                        fieldList(section: section)
                                     }
                                     .padding(.vertical, 8)
                                 }
                             } else {
-                                ForEach(section.fields.indices, id: \.self) { index in
-                                    section.fields[index].listRow
-                                }
+                                fieldList(section: section)
                             }
                         }
                     }
@@ -109,6 +83,27 @@ struct SendView: View {
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
+    }
+
+    @ViewBuilder private func fieldList(section: SendDataSection) -> some View {
+        ForEach(section.fields.indices, id: \.self) { index in
+            section.fields[index].listRow
+            if section.isFlow, index < (section.fields.count - 1) {
+                flowDivider()
+            }
+        }
+    }
+
+    @ViewBuilder private func flowDivider() -> some View {
+        HorizontalDivider()
+            .overlay(
+                Circle()
+                    .fill(Color.themeLawrence)
+                    .frame(width: 20, height: 20)
+                    .overlay(
+                        ThemeImage("arrow_m_down", size: .iconSize20)
+                    )
+            )
     }
 
     @ViewBuilder private func errorView(error: Error) -> some View {

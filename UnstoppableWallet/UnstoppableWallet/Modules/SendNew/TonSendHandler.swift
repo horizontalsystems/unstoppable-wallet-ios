@@ -165,29 +165,30 @@ extension TonSendHandler {
             return cautions
         }
 
-        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
-            var fields: [SendField] = [
-                .amount(
-                    title: "send.confirmation.you_send".localized,
+        func flowSection(baseToken _: Token, currency: Currency, rates: [String: Decimal]) -> SendDataSection {
+            .init([
+                .amountNew(
                     token: token,
                     appValueType: .regular(appValue: AppValue(token: token, value: amount)),
                     currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) },
-                    type: .neutral
                 ),
                 .address(
-                    title: "send.confirmation.to".localized,
                     value: address.toString(),
                     blockchainType: .ton
                 ),
-            ]
+            ], isFlow: true)
+        }
+
+        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
+            var fields = [SendField]()
 
             if let memo {
                 fields.append(.levelValue(title: "send.confirmation.memo".localized, value: memo, level: .regular))
             }
 
             return [
-                .init(fields),
-                .init(feeFields(currency: currency, feeToken: baseToken, feeTokenRate: rates[token.coin.uid])),
+                flowSection(baseToken: baseToken, currency: currency, rates: rates),
+                .init(fields + feeFields(currency: currency, feeToken: baseToken, feeTokenRate: rates[token.coin.uid])),
             ]
         }
 
@@ -200,8 +201,7 @@ extension TonSendHandler {
 
                 viewItems.append(
                     .value(
-                        title: "fee_settings.network_fee".localized,
-                        description: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized),
+                        title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
                         appValue: appValue,
                         currencyValue: currencyValue,
                         formatFull: true

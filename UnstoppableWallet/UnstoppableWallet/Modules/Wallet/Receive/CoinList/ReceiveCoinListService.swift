@@ -24,16 +24,16 @@ class ReceiveCoinListService {
         let coins = provider.fetch(filter: filter)
 
         if filter.isEmpty {
-            self.coins = coins
+            update(coins: coins)
             return
         }
 
         if coins.isEmpty {
-            self.coins = []
+            update(coins: [])
             return
         }
 
-        self.coins = coins.sorted { lhsFullCoin, rhsFullCoin in
+        let sorted = coins.sorted { lhsFullCoin, rhsFullCoin in
             let filter = filter.lowercased()
 
             let lhsExactCode = lhsFullCoin.coin.code.lowercased() == filter
@@ -58,6 +58,14 @@ class ReceiveCoinListService {
             }
 
             return lhsFullCoin.coin.name.lowercased() < rhsFullCoin.coin.name.lowercased()
+        }
+
+        update(coins: sorted)
+    }
+
+    private func update(coins: [FullCoin]) {
+        DispatchQueue.main.async {
+            self.coins = coins
         }
     }
 

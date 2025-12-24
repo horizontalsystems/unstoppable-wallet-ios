@@ -529,7 +529,7 @@
 "send.confirmation.action" = "Action";
 "send.confirmation.status" = "Status";
 "send.confirmation.status.failed" = "Failed";
-"send.confirmation.send_to_own" = "Transaction will send to own address";
+"send.confirmation.send_to_own" = "To own address";
 "send.confirmation.operation" = "Operation";
 "send.confirmation.transaction_xdr" = "Transaction XDR";
 

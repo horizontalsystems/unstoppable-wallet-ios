@@ -43,18 +43,17 @@ class EvmSendData: BaseSendEvmData, ISendData {
     }
 
     func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
-        var sections = decoration.sections(baseToken: baseToken, currency: currency, rates: rates)
+        let flow = decoration.flowSection(baseToken: baseToken, currency: currency, rates: rates)
+        var fields = decoration.fields(baseToken: baseToken, currency: currency, rates: rates)
 
         if let nonce {
-            sections.append(
-                .init([
-                    .levelValue(title: "send.confirmation.nonce".localized, value: String(nonce), level: .regular),
-                ])
+            fields.append(
+                .simpleValue(title: "send.confirmation.nonce".localized, value: String(nonce)),
             )
         }
 
-        sections.append(.init(feeFields(feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid])))
+        fields.append(contentsOf: feeFields(feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid]))
 
-        return sections
+        return [flow, .init(fields)].compactMap { $0 }
     }
 }

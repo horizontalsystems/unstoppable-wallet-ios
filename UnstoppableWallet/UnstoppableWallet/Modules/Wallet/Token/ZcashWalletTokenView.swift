@@ -62,7 +62,7 @@ struct ZcashWalletTokenView: View {
 
                                         Coordinator.shared.present { _ in
                                             ThemeNavigationStack {
-                                                ShieldSendView(amount: viewModel.zCashBalanceData.transparent, address: nil)
+                                                ShieldSendView(amount: viewModel.zCashBalanceData.transparent, address: viewModel.ownAddress)
                                             }
                                         }
                                     },

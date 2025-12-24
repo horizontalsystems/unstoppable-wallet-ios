@@ -96,34 +96,38 @@ extension ZcashSendHandler {
             return cautions
         }
 
+        func flowSection(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> SendDataSection {
+            let appValue = AppValue(token: baseToken, value: amount)
+            let rate = rates[baseToken.coin.uid]
+
+            let from = SendField.amountNew(
+                token: baseToken,
+                appValueType: .regular(appValue: appValue),
+                currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * amount) },
+            )
+
+            let to = SendField.address(
+                value: recipient.stringEncoded,
+                blockchainType: .zcash
+            )
+
+            return .init([from, to], isFlow: true)
+        }
+
         func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
-            var fields: [SendField] = [
-                .amount(
-                    title: "send.confirmation.you_send".localized,
-                    token: token,
-                    appValueType: .regular(appValue: AppValue(token: token, value: amount)),
-                    currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) },
-                    type: .neutral
-                ),
-                .address(
-                    title: "send.confirmation.to".localized,
-                    value: recipient.stringEncoded,
-                    blockchainType: .zcash
-                ),
-            ]
+            var fields = [SendField]()
 
             if let memo {
-                fields.append(.levelValue(title: "send.confirmation.memo".localized, value: memo, level: .regular))
+                fields.append(.simpleValue(title: "send.confirmation.memo".localized, value: memo))
             }
 
             let fee = proposal.totalFeeRequired().decimalValue.decimalValue
 
             return [
-                .init(fields),
-                .init([
+                flowSection(baseToken: baseToken, currency: currency, rates: rates),
+                .init(fields + [
                     .value(
-                        title: "fee_settings.network_fee".localized,
-                        description: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized),
+                        title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
                         appValue: AppValue(token: baseToken, value: fee),
                         currencyValue: rates[baseToken.coin.uid].map { CurrencyValue(currency: currency, value: fee * $0) },
                         formatFull: true

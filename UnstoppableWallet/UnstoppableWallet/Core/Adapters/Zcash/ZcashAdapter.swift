@@ -406,6 +406,7 @@ class ZcashAdapter {
     }
 
     private func showShieldingAlert(balance: Decimal) {
+        let ownAddress = uAddress?.stringEncoded
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
             BottomSheetView(
                 items: [
@@ -420,7 +421,7 @@ class ZcashAdapter {
 
                                 Coordinator.shared.present { _ in
                                     ThemeNavigationStack {
-                                        ShieldSendView(amount: balance, address: nil)
+                                        ShieldSendView(amount: balance, address: ownAddress)
                                     }
                                 }
                             },

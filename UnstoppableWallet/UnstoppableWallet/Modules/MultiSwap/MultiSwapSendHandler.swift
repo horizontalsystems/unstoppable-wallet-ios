@@ -104,8 +104,8 @@ extension MultiSwapSendHandler {
             quote.cautions(baseToken: baseToken)
         }
 
-        func flowSection(baseToken _: Token, currency: Currency, rates: [String: Decimal]) -> (SendField, SendField)? {
-            (
+        func flowSection(baseToken _: Token, currency: Currency, rates: [String: Decimal]) -> SendDataSection {
+            .init([
                 .amountNew(
                     token: tokenIn,
                     appValueType: .regular(appValue: AppValue(token: tokenIn, value: amountIn)),
@@ -115,8 +115,8 @@ extension MultiSwapSendHandler {
                     token: tokenOut,
                     appValueType: .regular(appValue: AppValue(token: tokenOut, value: quote.amountOut)),
                     currencyValue: rates[tokenOut.coin.uid].map { CurrencyValue(currency: currency, value: quote.amountOut * $0) },
-                )
-            )
+                ),
+            ], isFlow: true)
         }
 
         func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
@@ -162,7 +162,10 @@ extension MultiSwapSendHandler {
                 baseTokenRate: rates[baseToken.coin.uid]
             ))
 
-            return [.init(fields)] + otherSections
+            return [
+                flowSection(baseToken: baseToken, currency: currency, rates: rates),
+                .init(fields),
+            ] + otherSections
         }
     }
 
