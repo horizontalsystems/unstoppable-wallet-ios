@@ -34,3 +34,9 @@ class ZcashWalletTokenViewModel: ObservableObject {
             .disposed(by: disposeBag)
     }
 }
+
+extension ZcashWalletTokenViewModel {
+    var ownAddress: String? {
+        adapter.uAddress?.stringEncoded
+    }
+}

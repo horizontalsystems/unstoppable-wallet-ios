@@ -27,8 +27,7 @@ class BaseSendBtcData {
 
         return [
             .value(
-                title: "fee_settings.network_fee".localized,
-                description: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized),
+                title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
                 appValue: amountData?.appValue,
                 currencyValue: amountData?.currencyValue,
                 formatFull: true

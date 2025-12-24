@@ -7,7 +7,6 @@ protocol ISendData {
     var rateCoins: [Coin] { get }
     var customSendButtonTitle: String? { get }
     func cautions(baseToken: Token) -> [CautionNew]
-    func flowSection(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> (SendField, SendField)?
     func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection]
 }
 
@@ -21,12 +20,14 @@ extension ISendData {
     }
 }
 
-struct SendDataSection {
+class SendDataSection {
     let fields: [SendField]
+    let isFlow: Bool
     let isList: Bool
 
-    init(_ fields: [SendField], isList: Bool = true) {
+    init(_ fields: [SendField], isFlow: Bool = false, isList: Bool = true) {
         self.fields = fields
+        self.isFlow = isFlow
         self.isList = isList
     }
 }

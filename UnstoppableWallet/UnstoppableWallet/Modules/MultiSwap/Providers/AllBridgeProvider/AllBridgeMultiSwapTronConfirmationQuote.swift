@@ -71,8 +71,7 @@ class AllBridgeMultiSwapTronConfirmationQuote: IMultiSwapConfirmationQuote {
 
         viewItems.append(
             .value(
-                title: "fee_settings.network_fee".localized,
-                description: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized),
+                title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
                 appValue: appValue,
                 currencyValue: currencyValue,
                 formatFull: true
@@ -89,10 +88,11 @@ class AllBridgeMultiSwapTronConfirmationQuote: IMultiSwapConfirmationQuote {
                 let appValue = AppValue(token: baseToken, value: decimalAmount)
                 let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: decimalAmount * $0) }
 
+                let info = InfoDescription(title: "tron.send.activation_fee".localized, description: "tron.send.activation_fee.info".localized)
+
                 viewItems.append(
                     .value(
-                        title: "tron.send.activation_fee".localized,
-                        description: .init(title: "tron.send.activation_fee".localized, description: "tron.send.activation_fee.info".localized),
+                        title: SendField.InformedTitle("tron.send.activation_fee".localized, info: info),
                         appValue: appValue,
                         currencyValue: currencyValue,
                         formatFull: true

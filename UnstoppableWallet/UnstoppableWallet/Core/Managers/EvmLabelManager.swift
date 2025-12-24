@@ -42,6 +42,7 @@ class EvmLabelManager {
             .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe(onSuccess: { [weak self] labels in
                 try? self?.storage.save(evmAddressLabels: labels)
+
                 self?.saveAddressLabels(timestamp: timestamp)
             }, onError: { error in
                 print("Address Labels sync error: \(error)")

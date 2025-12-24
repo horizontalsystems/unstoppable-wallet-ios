@@ -166,8 +166,7 @@ extension MoneroSendHandler {
 
             return [
                 .value(
-                    title: "fee_settings.network_fee".localized,
-                    description: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized),
+                    title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
                     appValue: feeData?.appValue,
                     currencyValue: feeData?.currencyValue,
                     formatFull: true
@@ -189,7 +188,6 @@ extension MoneroSendHandler {
                     type: .neutral
                 ),
                 .address(
-                    title: "send.confirmation.to".localized,
                     value: address,
                     blockchainType: .monero
                 ),

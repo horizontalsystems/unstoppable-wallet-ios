@@ -175,51 +175,46 @@ extension StellarSendHandler {
             return cautions
         }
 
-        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
-            var fields = [SendField]()
-
+        func flowSection(baseToken _: Token, currency: Currency, rates: [String: Decimal]) -> SendDataSection {
             switch data {
             case let .payment(_, amount, accountId):
-                fields.append(contentsOf: [
-                    .amount(
-                        title: "send.confirmation.you_send".localized,
+                return .init([
+                    .amountNew(
                         token: token,
                         appValueType: .regular(appValue: AppValue(token: token, value: amount)),
-                        currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) },
-                        type: .neutral
+                        currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) }
                     ),
                     .address(
-                        title: "send.confirmation.to".localized,
                         value: accountId,
                         blockchainType: .stellar
                     ),
-                ])
+                ], isFlow: true)
             case let .changeTrust(asset, limit):
                 let appValue = AppValue(token: token, value: limit)
-
-                fields.append(contentsOf: [
-                    .amount(
-                        title: "Change Trust",
+                return .init([
+                    .amountNew(
                         token: token,
                         appValueType: appValue.isMaxValue ? .infinity(code: appValue.code) : .regular(appValue: appValue),
                         currencyValue: appValue.isMaxValue ? nil : rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * limit) },
-                        type: .neutral
                     ),
                     .address(
-                        title: "Issuer",
                         value: asset.issuer ?? "",
                         blockchainType: .stellar
                     ),
-                ])
+                ], isFlow: true)
             }
+        }
+
+        func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
+            var fields = [SendField]()
 
             if let memo {
                 fields.append(.levelValue(title: "send.confirmation.memo".localized, value: memo, level: .regular))
             }
 
             return [
-                .init(fields),
-                .init(feeFields(currency: currency, feeToken: baseToken, feeTokenRate: rates[token.coin.uid])),
+                flowSection(baseToken: baseToken, currency: currency, rates: rates),
+                .init(fields + feeFields(currency: currency, feeToken: baseToken, feeTokenRate: rates[token.coin.uid])),
             ]
         }
 
@@ -232,8 +227,7 @@ extension StellarSendHandler {
 
                 viewItems.append(
                     .value(
-                        title: "fee_settings.network_fee".localized,
-                        description: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized),
+                        title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
                         appValue: appValue,
                         currencyValue: currencyValue,
                         formatFull: true
