@@ -19,11 +19,14 @@ struct RegularSendView: View {
             } bottomContent: {
                 switch sendViewModel.state {
                 case .syncing:
-                    EmptyView()
-                case let .success(data):
-                    if sendViewModel.canSend, sendViewModel.handler?.expirationDuration == nil || sendViewModel.timeLeft > 0 || sendViewModel.sending {
+                    if sendViewModel.sendData != nil {
+                        ThemeButton(text: "send.confirmation.refreshing".localized, spinner: true, style: .secondary) {}
+                            .disabled(true)
+                    }
+                case .success:
+                    if let sendData = sendViewModel.sendData, sendData.canSend {
                         SlideButton(
-                            styling: .text(start: data.customSendButtonTitle ?? "send.confirmation.slide_to_send".localized, end: "", success: ""),
+                            styling: .text(start: sendData.customSendButtonTitle ?? "send.confirmation.slide_to_send".localized, end: "", success: ""),
                             action: {
                                 try await sendViewModel.send()
                             }, completion: {
@@ -31,20 +34,14 @@ struct RegularSendView: View {
                             }
                         )
                     } else {
-                        Button(action: {
+                        ThemeButton(text: "send.confirmation.refresh".localized, style: .secondary) {
                             sendViewModel.sync()
-                        }) {
-                            Text("send.confirmation.refresh".localized)
                         }
-                        .buttonStyle(PrimaryButtonStyle(style: .gray))
                     }
                 case .failed:
-                    Button(action: {
+                    ThemeButton(text: "send.confirmation.refresh".localized, style: .secondary) {
                         sendViewModel.sync()
-                    }) {
-                        Text("send.confirmation.refresh".localized)
                     }
-                    .buttonStyle(PrimaryButtonStyle(style: .gray))
                 }
             }
         }

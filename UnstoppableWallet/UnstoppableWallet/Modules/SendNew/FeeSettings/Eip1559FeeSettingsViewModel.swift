@@ -1,6 +1,7 @@
 import EvmKit
 import Foundation
 import MarketKit
+import SwiftUI
 
 class Eip1559FeeSettingsViewModel: ObservableObject {
     let service: EvmTransactionService
@@ -19,43 +20,40 @@ class Eip1559FeeSettingsViewModel: ObservableObject {
         syncFromService()
     }
 
-    @Published var baseFee: String = ""
+    @Published var baseFee: String?
     @Published var maxFeeCautionState: FieldCautionState = .none
-    @Published var maxFee: String = "" {
-        didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.handleGasPrice()
-            }
-        }
-    }
-
     @Published var maxTipsCautionState: FieldCautionState = .none
-    @Published var maxTips: String = "" {
-        didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.handleGasPrice()
+
+    @Published private var _maxFee: String = ""
+    var maxFee: Binding<String> {
+        Binding(
+            get: { self._maxFee },
+            set: { newValue in
+                self._maxFee = newValue
+                self.handleChange()
             }
-        }
+        )
     }
 
-    @Published var nonceCautionState: FieldCautionState = .none
-    @Published var nonce: String = "" {
-        didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.handleNonce()
+    @Published private var _maxTips: String = ""
+    var maxTips: Binding<String> {
+        Binding(
+            get: { self._maxTips },
+            set: { newValue in
+                self._maxTips = newValue
+                self.handleChange()
             }
-        }
+        )
     }
 
     @Published var resetEnabled = false
 
     private func syncFromService() {
         if case let .eip1559(maxFee, maxTips) = service.gasPrice {
-            self.maxFee = feeViewItemFactory.decimalValue(value: maxFee).description
-            self.maxTips = feeViewItemFactory.decimalValue(value: maxTips).description
+            _maxFee = feeViewItemFactory.decimalValue(value: maxFee).description
+            _maxTips = feeViewItemFactory.decimalValue(value: maxTips).description
         }
 
-        nonce = "\(service.nonce ?? 0)"
         sync()
     }
 
@@ -69,17 +67,11 @@ class Eip1559FeeSettingsViewModel: ObservableObject {
             maxFeeCautionState = .none
             maxTipsCautionState = .none
         }
-
-        if service.errors.contains(where: { $0 is NonceService.NonceError }) {
-            nonceCautionState = .caution(.error)
-        } else {
-            nonceCautionState = .none
-        }
     }
 
-    private func handleGasPrice() {
-        guard let maxFeeDecimal = decimalParser.parseAnyDecimal(from: maxFee),
-              let maxTipsDecimal = decimalParser.parseAnyDecimal(from: maxTips)
+    private func handleChange() {
+        guard let maxFeeDecimal = decimalParser.parseAnyDecimal(from: _maxFee),
+              let maxTipsDecimal = decimalParser.parseAnyDecimal(from: _maxTips)
         else {
             maxFeeCautionState = .caution(.error)
             maxTipsCautionState = .caution(.error)
@@ -90,16 +82,7 @@ class Eip1559FeeSettingsViewModel: ObservableObject {
             maxFeePerGas: feeViewItemFactory.intValue(value: maxFeeDecimal),
             maxPriorityFeePerGas: feeViewItemFactory.intValue(value: maxTipsDecimal)
         ))
-        sync()
-    }
 
-    private func handleNonce() {
-        guard let intNonce = Int(nonce) else {
-            nonceCautionState = .caution(.error)
-            return
-        }
-
-        service.set(nonce: intNonce)
         sync()
     }
 
@@ -107,30 +90,26 @@ class Eip1559FeeSettingsViewModel: ObservableObject {
         guard let decimal = value.flatMap({ decimalParser.parseAnyDecimal(from: $0) }) else {
             return nil
         }
-        // TODO: we can recognize the smallest significand digit, and increase/decrease by smallest interval
+
+        let diff = decimal * 10 / 100
+
         switch direction {
-        case .down: return max(decimal - 1, 0)
-        case .up: return decimal + 1
+        case .down: return max(decimal - diff, 0)
+        case .up: return decimal + diff
         }
     }
 }
 
 extension Eip1559FeeSettingsViewModel {
     func stepChangeMaxFee(_ direction: StepChangeButtonsViewDirection) {
-        if let newValue = updateByStep(value: maxFee, direction: direction) {
-            maxFee = newValue.description
+        if let newValue = updateByStep(value: _maxFee, direction: direction) {
+            maxFee.wrappedValue = newValue.description
         }
     }
 
     func stepChangeMaxTips(_ direction: StepChangeButtonsViewDirection) {
-        if let newValue = updateByStep(value: maxTips, direction: direction) {
-            maxTips = newValue.description
-        }
-    }
-
-    func stepChangeNonce(_ direction: StepChangeButtonsViewDirection) {
-        if let newValue = updateByStep(value: nonce, direction: direction) {
-            nonce = newValue.description
+        if let newValue = updateByStep(value: _maxTips, direction: direction) {
+            maxTips.wrappedValue = newValue.description
         }
     }
 

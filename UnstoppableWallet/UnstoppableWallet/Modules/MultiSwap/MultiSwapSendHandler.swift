@@ -34,6 +34,17 @@ extension MultiSwapSendHandler: ISendHandler {
         15
     }
 
+    var menuItems: [SendMenuItem] {
+        [
+            .init(label: "swap.confirmation.slippage_tolerance".localized) {
+                // todo
+            },
+            .init(label: "swap.confirmation.set_recipient".localized) {
+                // todo
+            },
+        ]
+    }
+
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
         let quote = try await provider.confirmationQuote(
             tokenIn: tokenIn,

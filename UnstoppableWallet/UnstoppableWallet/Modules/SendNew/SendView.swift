@@ -1,4 +1,3 @@
-
 import Kingfisher
 import MarketKit
 import SwiftUI
@@ -11,15 +10,21 @@ struct SendView: View {
             if let handler = viewModel.handler {
                 switch viewModel.state {
                 case .syncing:
-                    VStack(spacing: .margin12) {
-                        ProgressView()
+                    if let sendData = viewModel.sendData {
+                        dataView(sendData: sendData, handler: handler)
+                    } else {
+                        VStack(spacing: .margin12) {
+                            ProgressView()
 
-                        if let syncingText = handler.syncingText {
-                            Text(syncingText).textSubhead2()
+                            if let syncingText = handler.syncingText {
+                                Text(syncingText).textSubhead2()
+                            }
                         }
                     }
-                case let .success(data):
-                    dataView(data: data, handler: handler)
+                case .success:
+                    if let sendData = viewModel.sendData {
+                        dataView(sendData: sendData, handler: handler)
+                    }
                 case let .failed(error):
                     errorView(error: error)
                 }
@@ -28,16 +33,29 @@ struct SendView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                if let transactionService = viewModel.transactionService, let feeToken = viewModel.handler?.baseToken {
-                    Button(action: {
-                        Coordinator.shared.present { _ in
-                            FeeSettingsViewFactory.createSettingsView(transactionService: transactionService, sendViewModel: viewModel, feeToken: feeToken)
+            if let handler = viewModel.handler {
+                let menuItems = menuItems(handler: handler)
+
+                if !menuItems.isEmpty {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Group {
+                            if menuItems.count > 1 {
+                                Menu {
+                                    ForEach(menuItems.indices, id: \.self) { index in
+                                        let menuItem = menuItems[index]
+                                        Button(menuItem.label, action: menuItem.action)
+                                    }
+                                } label: {
+                                    Image("manage").renderingMode(.template)
+                                }
+                            } else {
+                                Button(action: menuItems[0].action) {
+                                    Image("manage").renderingMode(.template)
+                                }
+                            }
                         }
-                    }) {
-                        Image("manage").renderingMode(.template)
+                        .disabled(viewModel.state.isSyncing)
                     }
-                    .disabled(viewModel.state.isSyncing)
                 }
             }
         }
@@ -47,10 +65,10 @@ struct SendView: View {
         .accentColor(.themeJacob)
     }
 
-    @ViewBuilder private func dataView(data: ISendData, handler: ISendHandler) -> some View {
+    @ViewBuilder private func dataView(sendData: ISendData, handler: ISendHandler) -> some View {
         ScrollView {
             VStack(spacing: .margin16) {
-                let sections = data.sections(baseToken: handler.baseToken, currency: viewModel.currency, rates: viewModel.rates)
+                let sections = sendData.sections(baseToken: handler.baseToken, currency: viewModel.currency, rates: viewModel.rates)
 
                 if !sections.isEmpty {
                     ForEach(sections.indices, id: \.self) { sectionIndex in
@@ -76,7 +94,7 @@ struct SendView: View {
                 if !cautions.isEmpty {
                     VStack(spacing: .margin12) {
                         ForEach(cautions.indices, id: \.self) { index in
-                            HighlightedTextView(caution: cautions[index])
+                            AlertCardView(caution: cautions[index])
                         }
                     }
                 }
@@ -113,5 +131,39 @@ struct SendView: View {
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
+    }
+
+    private func menuItems(handler: ISendHandler) -> [SendMenuItem] {
+        var menuItems = [SendMenuItem]()
+
+        if let transactionService = viewModel.transactionService {
+            menuItems.append(
+                .init(label: "send.confirmation.edit_fee".localized) {
+                    viewModel.stopAutoQuoting()
+
+                    Coordinator.shared.present { _ in
+                        FeeSettingsViewFactory.createSettingsView(transactionService: transactionService, sendViewModel: viewModel, feeToken: handler.baseToken)
+                    } onDismiss: {
+                        viewModel.autoQuoteIfRequired()
+                    }
+                }
+            )
+
+            if let service = transactionService as? EvmTransactionService {
+                menuItems.append(
+                    .init(label: "send.confirmation.transaction_nonce".localized) {
+                        viewModel.stopAutoQuoting()
+
+                        Coordinator.shared.present { _ in
+                            TransactionNonceView(service: service)
+                        } onDismiss: {
+                            viewModel.autoQuoteIfRequired()
+                        }
+                    }
+                )
+            }
+        }
+
+        return menuItems + handler.menuItems
     }
 }
