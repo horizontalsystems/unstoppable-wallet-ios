@@ -5,7 +5,7 @@ import MarketKit
 import RxSwift
 
 class MultiSwapViewModel: ObservableObject {
-    let autoRefreshDuration: Double = 20
+    private let autoRefreshDuration: Double = 20
 
     private var cancellables = Set<AnyCancellable>()
     private var quotesTask: AnyTask?
@@ -284,7 +284,7 @@ class MultiSwapViewModel: ObservableObject {
     private var priceFlipped = false
 
     @Published var quoting = false
-    @Published var nextQuoteTime: Double?
+    private var nextQuoteTime: Double?
 
     @Published var priceImpact: Decimal?
 

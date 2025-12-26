@@ -23,7 +23,7 @@ struct LegacyFeeSettingsView: View {
                     currency: sendViewModel.currency,
                     feeTokenRate: sendViewModel.rates[feeToken.coin.uid],
                     loading: sendViewModel.state.isSyncing,
-                    feeData: sendViewModel.state.data?.feeData,
+                    feeData: sendViewModel.sendData?.feeData,
                     gasPrice: viewModel.service.gasPrice
                 )
 
@@ -33,6 +33,8 @@ struct LegacyFeeSettingsView: View {
                         feeValue: l2FeeValue,
                         infoDescription: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized)
                     )
+                    .frame(minHeight: 68)
+
                     if let l1FeeValue {
                         helper.row(
                             title: "fee_settings.l1_fee".localized,
@@ -40,6 +42,7 @@ struct LegacyFeeSettingsView: View {
                             infoDescription: .init(title: "fee_settings.l1_fee".localized, description: "fee_settings.l1_fee.info".localized)
                         )
                     }
+
                     helper.row(
                         title: "fee_settings.gas_limit".localized,
                         feeValue: gasLimitValue,
@@ -49,33 +52,18 @@ struct LegacyFeeSettingsView: View {
 
                 VStack(spacing: 0) {
                     helper.headerRow(
-                        title: "fee_settings.gas_price".localized,
+                        title: "fee_settings.gas_price".localized + " (Gwei)",
                         infoDescription: .init(
                             title: "fee_settings.gas_price".localized,
                             description: "fee_settings.gas_price.info".localized
                         )
                     )
+
                     helper.inputNumberWithSteps(
                         placeholder: "",
-                        text: $viewModel.gasPrice,
+                        text: viewModel.gasPrice,
                         cautionState: $viewModel.gasPriceCautionState,
                         onTap: viewModel.stepChangeGasPrice
-                    )
-                }
-
-                VStack(spacing: 0) {
-                    helper.headerRow(
-                        title: "evm_send_settings.nonce".localized,
-                        infoDescription: .init(
-                            title: "evm_send_settings.nonce".localized,
-                            description: "evm_send_settings.nonce.info".localized
-                        )
-                    )
-                    helper.inputNumberWithSteps(
-                        placeholder: "",
-                        text: $viewModel.nonce,
-                        cautionState: $viewModel.nonceCautionState,
-                        onTap: viewModel.stepChangeNonce
                     )
                 }
 
@@ -83,16 +71,15 @@ struct LegacyFeeSettingsView: View {
                 if !cautions.isEmpty {
                     VStack(spacing: .margin12) {
                         ForEach(cautions.indices, id: \.self) { index in
-                            HighlightedTextView(caution: cautions[index])
+                            AlertCardView(caution: cautions[index])
                         }
                     }
                 }
             }
-            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+            .padding(EdgeInsets(top: 16, leading: 16, bottom: 32, trailing: 16))
         }
         .animation(.default, value: viewModel.gasPriceCautionState)
-        .animation(.default, value: viewModel.nonceCautionState)
-        .navigationTitle("fee_settings".localized)
+        .navigationTitle("fee_settings.title".localized)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -102,8 +89,8 @@ struct LegacyFeeSettingsView: View {
                 .foregroundStyle(viewModel.resetEnabled ? Color.themeJacob : Color.themeGray)
                 .disabled(!viewModel.resetEnabled)
             }
-            ToolbarItem(placement: .confirmationAction) {
-                Button("button.done".localized) {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("button.close".localized) {
                     presentationMode.wrappedValue.dismiss()
                 }
             }

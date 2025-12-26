@@ -26,50 +26,47 @@ struct MoneroFeeSettingsView: View {
                             currency: sendViewModel.currency,
                             feeTokenRate: sendViewModel.rates[feeToken.coin.uid],
                             loading: sendViewModel.state.isSyncing,
-                            feeData: sendViewModel.state.data?.feeData
+                            feeData: sendViewModel.sendData?.feeData
                         ),
                         infoDescription: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized)
                     )
+                    .frame(minHeight: 68)
                 }
 
                 ListSection {
-                    ListRow {
-                        HStack(spacing: .margin8) {
-                            Text("monero.priority".localized).textSubhead2()
-
-                            Spacer()
-
-                            Button(action: {
+                    Cell(
+                        middle: {
+                            MiddleTextIcon(text: "monero.priority".localized)
+                        },
+                        right: {
+                            RightButtonText(text: viewModel.priority.description, icon: "arrow_s_down") {
                                 Coordinator.shared.present(type: .alert) { isPresented in
                                     OptionAlertView(
                                         title: "monero.priority".localized,
-                                        viewItems: SendPriority.allCases.map { AlertViewItem(text: $0.description) },
-                                        onSelect: { viewModel.set(priorityAtIndex: $0) },
+                                        viewItems: SendPriority.allCases.map {
+                                            AlertViewItem(text: $0.description, selected: $0 == viewModel.priority)
+                                        },
+                                        onSelect: { viewModel.set(priority: SendPriority.allCases[$0]) },
                                         isPresented: isPresented
                                     )
                                 }
-                            }) {
-                                HStack(spacing: .margin8) {
-                                    Text(viewModel.priority).textCaption(color: .themeLeah)
-                                }
                             }
-                            .buttonStyle(SecondaryButtonStyle(rightAccessory: .dropDown))
                         }
-                    }
+                    )
                 }
 
                 let cautions = viewModel.service.cautions
                 if !cautions.isEmpty {
                     VStack(spacing: .margin12) {
                         ForEach(cautions.indices, id: \.self) { index in
-                            HighlightedTextView(caution: cautions[index])
+                            AlertCardView(caution: cautions[index])
                         }
                     }
                 }
             }
-            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+            .padding(EdgeInsets(top: 16, leading: 16, bottom: 32, trailing: 16))
         }
-        .navigationTitle("fee_settings".localized)
+        .navigationTitle("fee_settings.title".localized)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -79,8 +76,8 @@ struct MoneroFeeSettingsView: View {
                 .foregroundStyle(viewModel.resetEnabled ? Color.themeJacob : Color.themeGray)
                 .disabled(!viewModel.resetEnabled)
             }
-            ToolbarItem(placement: .confirmationAction) {
-                Button("button.done".localized) {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("button.close".localized) {
                     presentationMode.wrappedValue.dismiss()
                 }
             }

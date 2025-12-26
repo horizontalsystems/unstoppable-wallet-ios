@@ -5,7 +5,12 @@ struct Informed: ViewModifier {
     var horizontalPadding: CGFloat = 16
 
     func body(content: Content) -> some View {
-        Button(action: {
+        HStack(spacing: 8) {
+            content
+            ThemeImage("info_filled", size: 20)
+        }
+        .padding(.horizontal, horizontalPadding)
+        .onTapGesture {
             Coordinator.shared.present(type: .bottomSheet) { _ in
                 BottomSheetView(
                     items: [
@@ -14,12 +19,6 @@ struct Informed: ViewModifier {
                     ],
                 )
             }
-        }, label: {
-            HStack(spacing: 8) {
-                content
-                ThemeImage("info_filled", size: 20)
-            }
-            .padding(.horizontal, horizontalPadding)
-        })
+        }
     }
 }

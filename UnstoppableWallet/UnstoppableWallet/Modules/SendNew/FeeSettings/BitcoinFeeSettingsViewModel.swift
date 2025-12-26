@@ -1,6 +1,7 @@
 import EvmKit
 import Foundation
 import MarketKit
+import SwiftUI
 
 class BitcoinFeeSettingsViewModel: ObservableObject {
     let service: BitcoinTransactionService
@@ -9,18 +10,21 @@ class BitcoinFeeSettingsViewModel: ObservableObject {
         self.service = service
 
         if let satoshiPerByte = service.actualFeeRates?.recommended {
-            self.satoshiPerByte = satoshiPerByte.description
+            _satoshiPerByte = satoshiPerByte.description
         }
 
         syncFromService()
     }
 
-    @Published var satoshiPerByte: String = "" {
-        didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.handle()
+    @Published private var _satoshiPerByte: String = ""
+    var satoshiPerByte: Binding<String> {
+        Binding(
+            get: { self._satoshiPerByte },
+            set: { newValue in
+                self._satoshiPerByte = newValue
+                self.handleChange()
             }
-        }
+        )
     }
 
     @Published var satoshiPerByteCautionState: FieldCautionState = .none
@@ -28,7 +32,7 @@ class BitcoinFeeSettingsViewModel: ObservableObject {
 
     private func syncFromService() {
         if let satoshiPerByte = service.satoshiPerByte {
-            self.satoshiPerByte = satoshiPerByte.description
+            _satoshiPerByte = satoshiPerByte.description
         }
 
         sync()
@@ -44,13 +48,14 @@ class BitcoinFeeSettingsViewModel: ObservableObject {
         }
     }
 
-    private func handle() {
-        guard let satoshiPerByteInt = Int(satoshiPerByte) else {
+    private func handleChange() {
+        guard let satoshiPerByteInt = Int(_satoshiPerByte) else {
             satoshiPerByteCautionState = .caution(.error)
             return
         }
 
         service.set(satoshiPerByte: satoshiPerByteInt)
+
         sync()
     }
 
@@ -68,8 +73,8 @@ class BitcoinFeeSettingsViewModel: ObservableObject {
 
 extension BitcoinFeeSettingsViewModel {
     func stepChangesatoshiPerByte(_ direction: StepChangeButtonsViewDirection) {
-        if let newValue = updateByStep(value: satoshiPerByte, direction: direction) {
-            satoshiPerByte = newValue.description
+        if let newValue = updateByStep(value: _satoshiPerByte, direction: direction) {
+            satoshiPerByte.wrappedValue = newValue.description
         }
     }
 

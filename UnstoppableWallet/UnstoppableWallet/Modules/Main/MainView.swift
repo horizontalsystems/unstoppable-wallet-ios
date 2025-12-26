@@ -125,20 +125,9 @@ struct MainView: View {
                     }
                     stat(page: .transactions, event: .open(page: .transactionFilter))
                 }) {
-                    ZStack {
-                        Image("manage_2_24").themeIcon(color: .themeGray)
-
-                        if transactionsViewModel.transactionFilter.hasChanges {
-                            VStack {
-                                HStack {
-                                    Spacer()
-                                    Circle().fill(Color.red).frame(width: 8, height: 8)
-                                }
-                                Spacer()
-                            }
-                        }
-                    }
-                    .frame(width: 28, height: 28)
+                    Image("manage_2_24")
+                        .themeIcon(color: .themeGray)
+                        .modifier(ToolbarBadgeModifier(visible: transactionsViewModel.transactionFilter.hasChanges))
                 }
             }
         case .settings:
@@ -209,5 +198,26 @@ struct AccountsLostView: View {
                 ])),
             ],
         )
+    }
+}
+
+struct ToolbarBadgeModifier: ViewModifier {
+    let visible: Bool
+
+    func body(content: Content) -> some View {
+        ZStack {
+            content
+
+            if visible {
+                VStack {
+                    HStack {
+                        Spacer()
+                        Circle().fill(Color.red).frame(width: 8, height: 8)
+                    }
+                    Spacer()
+                }
+            }
+        }
+        .frame(width: 28, height: 28)
     }
 }

@@ -358,7 +358,6 @@
 		11B354FE5CD0F5658C7CCC69 /* RestoreViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353A64E88BD68714D4D07 /* RestoreViewController.swift */; };
 		11B354FF8C01ADB837FBAC82 /* RecoveryPhraseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3558ACECAA1C886FA82C0 /* RecoveryPhraseViewController.swift */; };
 		11B355028142F82D805752AF /* NftDoubleCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35FEC3027F45085959FBB /* NftDoubleCell.swift */; };
-		11B35503841E40909EF690B3 /* MultiSwapCircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358DF5802EBA3CC7782A7 /* MultiSwapCircularProgressView.swift */; };
 		11B35503B3E84FEFCDF1AFED /* ThemeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E7E7A5DBB09A2A5197D /* ThemeView.swift */; };
 		11B3550424326606B055D7E5 /* AboutModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B353E80D544DAF20B12B56 /* AboutModule.swift */; };
 		11B3550548CB49D32EAC1DF5 /* WatchlistWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35B0879F715C0777919AA /* WatchlistWidget.swift */; };
@@ -612,7 +611,6 @@
 		11B358A1409FB729B1C3013E /* PoolSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35EC9E0E936067225C787 /* PoolSource.swift */; };
 		11B358A6F7662B69D358069A /* SelfSizedSectionsTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3538D10D6256399A51F61 /* SelfSizedSectionsTableView.swift */; };
 		11B358A8C0BE6B957BDE1776 /* AlertViewControllerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B3511E005E93914B2A0759 /* AlertViewControllerNew.swift */; };
-		11B358A9EB8B15436E923FFA /* MultiSwapCircularProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B358DF5802EBA3CC7782A7 /* MultiSwapCircularProgressView.swift */; };
 		11B358AA46441AF0A7DCAA89 /* NftActivityModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35252F90F25774BDD2CB3 /* NftActivityModule.swift */; };
 		11B358AE1CCD292DF2D2AC42 /* PrivateKeysViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35A9DB4112F41D7FCAC12 /* PrivateKeysViewModel.swift */; };
 		11B358AE5241256C9AAFB588 /* SyncMode_v_0_24.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CB98A27269A510F40EE /* SyncMode_v_0_24.swift */; };
@@ -3261,6 +3259,10 @@
 		D38E5DF42EF964190049EB91 /* USwapMultiSwapZcashConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38E5DF22EF964190049EB91 /* USwapMultiSwapZcashConfirmationQuote.swift */; };
 		D38E5DF62EFA64770049EB91 /* RightTextCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38E5DF52EFA64770049EB91 /* RightTextCheckbox.swift */; };
 		D38E5DF72EFA64770049EB91 /* RightTextCheckbox.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38E5DF52EFA64770049EB91 /* RightTextCheckbox.swift */; };
+		D38E5DFA2EFEA0F20049EB91 /* TransactionNonceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38E5DF82EFEA0F20049EB91 /* TransactionNonceView.swift */; };
+		D38E5DFB2EFEA0F20049EB91 /* TransactionNonceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38E5DF92EFEA0F20049EB91 /* TransactionNonceViewModel.swift */; };
+		D38E5DFC2EFEA0F20049EB91 /* TransactionNonceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38E5DF82EFEA0F20049EB91 /* TransactionNonceView.swift */; };
+		D38E5DFD2EFEA0F20049EB91 /* TransactionNonceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38E5DF92EFEA0F20049EB91 /* TransactionNonceViewModel.swift */; };
 		D3948EF22ADA846400FAE566 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3948EF12ADA846400FAE566 /* WidgetKit.framework */; };
 		D3948EF42ADA846400FAE566 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3948EF32ADA846400FAE566 /* SwiftUI.framework */; };
 		D3948EF72ADA846400FAE566 /* AppWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3948EF62ADA846400FAE566 /* AppWidgetBundle.swift */; };
@@ -3968,7 +3970,6 @@
 		11B358CA18471A93188933B4 /* DashAdapter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DashAdapter.swift; sourceTree = "<group>"; };
 		11B358D98E1FBA6909D352DA /* FaqRepository.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaqRepository.swift; sourceTree = "<group>"; };
 		11B358DD4F0C5E4E5A4EEBA4 /* MultiSwapPreSwapStep.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiSwapPreSwapStep.swift; sourceTree = "<group>"; };
-		11B358DF5802EBA3CC7782A7 /* MultiSwapCircularProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiSwapCircularProgressView.swift; sourceTree = "<group>"; };
 		11B358F43250E5AD06D1748D /* MultiSwapTokenSelectViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiSwapTokenSelectViewModel.swift; sourceTree = "<group>"; };
 		11B3590ACA8DFA4196E8EC33 /* CreatePasscodeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreatePasscodeViewModel.swift; sourceTree = "<group>"; };
 		11B35912C37850929316F49C /* UniswapV3MultiSwapProvider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniswapV3MultiSwapProvider.swift; sourceTree = "<group>"; };
@@ -5216,6 +5217,8 @@
 		D38E5DEF2EF91CC60049EB91 /* MultiSwapQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSwapQuote.swift; sourceTree = "<group>"; };
 		D38E5DF22EF964190049EB91 /* USwapMultiSwapZcashConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = USwapMultiSwapZcashConfirmationQuote.swift; sourceTree = "<group>"; };
 		D38E5DF52EFA64770049EB91 /* RightTextCheckbox.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightTextCheckbox.swift; sourceTree = "<group>"; };
+		D38E5DF82EFEA0F20049EB91 /* TransactionNonceView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionNonceView.swift; sourceTree = "<group>"; };
+		D38E5DF92EFEA0F20049EB91 /* TransactionNonceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionNonceViewModel.swift; sourceTree = "<group>"; };
 		D3948EF02ADA846400FAE566 /* WidgetExtension Dev.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WidgetExtension Dev.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3948EF12ADA846400FAE566 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		D3948EF32ADA846400FAE566 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -5950,7 +5953,6 @@
 				ABC9A6EF6EB856EAAA8CFACB /* PrimaryCircleButtonStyle.swift */,
 				ABC9AC701F3F7FE0A21AFBF9 /* InformedModifier.swift */,
 				ABC9ABF7E87EF486BB21B0B6 /* SecondaryActiveButtonStyle.swift */,
-				11B358DF5802EBA3CC7782A7 /* MultiSwapCircularProgressView.swift */,
 				ABC9AE7F145C402C91AAB5A3 /* ShortcutButtonsView.swift */,
 				ABC9A02C808FCE6082E3F97A /* DebounceTextField.swift */,
 				D04DD5402B68C0EF00219B87 /* HighlightedTiltledTextView.swift */,
@@ -9547,6 +9549,8 @@
 			children = (
 				6B93AFAB2E5EF33800A55120 /* WalletConnect */,
 				D0B462F12B5A470F0027815D /* FeeSettings */,
+				D38E5DF82EFEA0F20049EB91 /* TransactionNonceView.swift */,
+				D38E5DF92EFEA0F20049EB91 /* TransactionNonceViewModel.swift */,
 				11B355166E437B7ADB8B8EBA /* ValueLevel.swift */,
 				11B3542B6FE4B4F0C0B65369 /* FeeData.swift */,
 				D0DEFF092BD1257F004C9DF0 /* BitcoinFeeData.swift */,
@@ -10499,6 +10503,8 @@
 				D36287AF2CA2BC9900ADAF3B /* TonConnectManifest.swift in Sources */,
 				58AAA393DF93EFFA5047589B /* FeeSlider.swift in Sources */,
 				58AAA1283FC7F83F62FC5961 /* FeeSliderValueView.swift in Sources */,
+				D38E5DFA2EFEA0F20049EB91 /* TransactionNonceView.swift in Sources */,
+				D38E5DFB2EFEA0F20049EB91 /* TransactionNonceViewModel.swift in Sources */,
 				58AAA0C0DB5C901FE58F5F9B /* FeeSliderWrapper.swift in Sources */,
 				11B3545A8A2A23ADB5BA1E0A /* WelcomeTextView.swift in Sources */,
 				1A56424B5327D4ADFD728B0B /* BlockchainSettingRecord.swift in Sources */,
@@ -11905,7 +11911,6 @@
 				11B35E433AC4217552A8D668 /* MultiSwapView.swift in Sources */,
 				11B3573416D73003798074F8 /* MultiSwapViewModel.swift in Sources */,
 				11B352907977D6279AD3D96B /* IMultiSwapProvider.swift in Sources */,
-				11B358A9EB8B15436E923FFA /* MultiSwapCircularProgressView.swift in Sources */,
 				11B35D2C16299881FE8BD910 /* MultiSwapQuotesView.swift in Sources */,
 				11B35D098F3E0435A3C4512B /* MultiSwapButtonState.swift in Sources */,
 				11B35ED4BE062F70D930F92C /* MultiSwapSettingStorage.swift in Sources */,
@@ -12031,6 +12036,8 @@
 				D023D26A2A24CD16004F65B0 /* BaseTronAdapter.swift in Sources */,
 				D384068121831B3D007D50AD /* SecuritySettingsViewModel.swift in Sources */,
 				D0DEFF042BD1253C004C9DF0 /* BitcoinFeeSettingsViewModel.swift in Sources */,
+				D38E5DFC2EFEA0F20049EB91 /* TransactionNonceView.swift in Sources */,
+				D38E5DFD2EFEA0F20049EB91 /* TransactionNonceViewModel.swift in Sources */,
 				D384068221831B3D007D50AD /* BitcoinAdapter.swift in Sources */,
 				6BA9719E2ECCCB8300DEC017 /* ZcashAdapter.swift in Sources */,
 				6B45874F2E290298008F87E7 /* MarketEtfViewModelFactory.swift in Sources */,
@@ -13547,7 +13554,6 @@
 				11B3594BEB2E05413B0DB30F /* MultiSwapView.swift in Sources */,
 				11B35A0D09133EF1B891B429 /* MultiSwapViewModel.swift in Sources */,
 				11B358EC68642C5A57ACB803 /* IMultiSwapProvider.swift in Sources */,
-				11B35503841E40909EF690B3 /* MultiSwapCircularProgressView.swift in Sources */,
 				11B356A34BC00A9BEB4C13C2 /* MultiSwapQuotesView.swift in Sources */,
 				D0DEFF062BD1253C004C9DF0 /* BitcoinFeeSettingsView.swift in Sources */,
 				D3FBC7142E55AB0C001083D8 /* LargeTextField.swift in Sources */,

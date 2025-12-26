@@ -533,9 +533,13 @@
 "send.confirmation.operation" = "Operation";
 "send.confirmation.transaction_xdr" = "Transaction XDR";
 
+"send.confirmation.edit_fee" = "Edit Fee";
+"send.confirmation.transaction_nonce" = "Transaction Nonce";
+
 "send.confirmation.sync_failed" = "Sync Failed";
 "send.confirmation.invalid_data" = "Invalid Data";
 "send.confirmation.refresh" = "Refresh";
+"send.confirmation.refreshing" = "Refreshing";
 "send.confirmation.please_wait" = "Please Wait";
 "send.confirmation.expires_in" = "Expires in %@";
 "send.confirmation.expired" = "Expired";
@@ -747,6 +751,9 @@
 "swap.confirmation.quote_expires_in" = "Quote expires in %@";
 "swap.confirmation.quote_expired" = "Quote expired";
 "swap.confirmation.quote_failed" = "Failed to quote";
+
+"swap.confirmation.slippage_tolerance" = "Slippage Tolerance";
+"swap.confirmation.set_recipient" = "Set Recipient";
 
 "swap.confirmation.slide_to_swap" = "Slide to Swap";
 "swap.confirmation.swapping" = "Swapping";
@@ -2146,7 +2153,7 @@
 // Send Settings
 
 "evm_send_settings.nonce" = "Transaction Nonce";
-"evm_send_settings.nonce.info" = "The nonce is a unique integer value for a transaction within the user's wallet. It normally increments with each submitted transaction and does not need changing. Advanced users can set it equal to a nonce of a pending transaction in order to cancel and replace that transaction, as long as the new transaction has a sufficiently higher fee to prevent the old one from being confirmed instead (for example, they may want to speed up its confirmation, or to change transaction parameters entirely). When multiple pending transactions have the same nonce, only one gets confirmed, typically the one with the highest fee.";
+"evm_send_settings.nonce.info" = "Custom nonce for EVM transactions. Controls the order of your transactions and can be used to replace pending ones.";
 "evm_send_settings.nonce.errors.already_in_use" = "Used Nonce";
 "evm_send_settings.nonce.errors.already_in_use.info" = "An executed transaction with this nonce already exists.";
 

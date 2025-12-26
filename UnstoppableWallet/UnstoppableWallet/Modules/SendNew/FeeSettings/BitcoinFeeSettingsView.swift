@@ -25,37 +25,25 @@ struct BitcoinFeeSettingsView: View {
                             currency: sendViewModel.currency,
                             feeTokenRate: sendViewModel.rates[feeToken.coin.uid],
                             loading: sendViewModel.state.isSyncing,
-                            feeData: sendViewModel.state.data?.feeData
+                            feeData: sendViewModel.sendData?.feeData
                         ),
                         infoDescription: .init(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized)
                     )
+                    .frame(minHeight: 68)
                 }
 
                 VStack(spacing: 0) {
-                    Button(action: {
-                        Coordinator.shared.present { isPresented in
-                            InfoView(
-                                items: [
-                                    .header1(text: "send.fee_info.title".localized),
-                                    .text(text: "send.fee_info.description".localized),
-                                ],
-                                isPresented: isPresented
-                            )
-                        }
-                    }, label: {
-                        HStack(spacing: .margin8) {
-                            HStack(spacing: .margin8) {
-                                Text("fee_settings.fee_rate".localized + " (Sat/Byte)".localized).textSubhead1()
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                Image("circle_information_20").themeIcon()
-                            }
-                            .padding(EdgeInsets(top: 5.5, leading: .margin16, bottom: 5.5, trailing: .margin16))
-                        }
-                    })
+                    helper.headerRow(
+                        title: "fee_settings.fee_rate".localized + " (Sat/Byte)".localized,
+                        infoDescription: .init(
+                            title: "send.fee_info.title".localized,
+                            description: "send.fee_info.description".localized
+                        )
+                    )
 
                     helper.inputNumberWithSteps(
                         placeholder: "",
-                        text: $viewModel.satoshiPerByte,
+                        text: viewModel.satoshiPerByte,
                         cautionState: $viewModel.satoshiPerByteCautionState,
                         onTap: viewModel.stepChangesatoshiPerByte
                     )
@@ -65,15 +53,15 @@ struct BitcoinFeeSettingsView: View {
                 if !cautions.isEmpty {
                     VStack(spacing: .margin12) {
                         ForEach(cautions.indices, id: \.self) { index in
-                            HighlightedTextView(caution: cautions[index])
+                            AlertCardView(caution: cautions[index])
                         }
                     }
                 }
             }
-            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+            .padding(EdgeInsets(top: 16, leading: 16, bottom: 32, trailing: 16))
         }
-        .animation(.default, value: viewModel.satoshiPerByte)
-        .navigationTitle("fee_settings".localized)
+        .animation(.default, value: viewModel.satoshiPerByteCautionState)
+        .navigationTitle("fee_settings.title".localized)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
@@ -83,8 +71,8 @@ struct BitcoinFeeSettingsView: View {
                 .foregroundStyle(viewModel.resetEnabled ? Color.themeJacob : Color.themeGray)
                 .disabled(!viewModel.resetEnabled)
             }
-            ToolbarItem(placement: .confirmationAction) {
-                Button("button.done".localized) {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("button.close".localized) {
                     presentationMode.wrappedValue.dismiss()
                 }
             }

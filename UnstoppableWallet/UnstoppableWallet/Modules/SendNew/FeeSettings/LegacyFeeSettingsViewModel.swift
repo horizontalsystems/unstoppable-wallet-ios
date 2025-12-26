@@ -1,6 +1,7 @@
 import EvmKit
 import Foundation
 import MarketKit
+import SwiftUI
 
 class LegacyFeeSettingsViewModel: ObservableObject {
     let service: EvmTransactionService
@@ -15,30 +16,25 @@ class LegacyFeeSettingsViewModel: ObservableObject {
     }
 
     @Published var gasPriceCautionState: FieldCautionState = .none
-    @Published var gasPrice: String = "" {
-        didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.handleGasPrice()
-            }
-        }
-    }
 
-    @Published var nonceCautionState: FieldCautionState = .none
-    @Published var nonce: String = "" {
-        didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.handleNonce()
+    @Published private var _gasPrice: String = ""
+    var gasPrice: Binding<String> {
+        Binding(
+            get: { self._gasPrice },
+            set: { newValue in
+                self._gasPrice = newValue
+                self.handleChange()
             }
-        }
+        )
     }
 
     @Published var resetEnabled = false
 
     private func syncFromService() {
         if case let .legacy(gasPrice) = service.gasPrice {
-            self.gasPrice = feeViewItemFactory.decimalValue(value: gasPrice).description
+            _gasPrice = feeViewItemFactory.decimalValue(value: gasPrice).description
         }
-        nonce = "\(service.nonce ?? 0)"
+
         sync()
     }
 
@@ -50,31 +46,16 @@ class LegacyFeeSettingsViewModel: ObservableObject {
         } else {
             gasPriceCautionState = .none
         }
-
-        if service.errors.contains(where: { $0 is NonceService.NonceError }) {
-            nonceCautionState = .caution(.error)
-        } else {
-            nonceCautionState = .none
-        }
     }
 
-    private func handleGasPrice() {
-        guard let gasPriceDecimal = decimalParser.parseAnyDecimal(from: gasPrice) else {
+    private func handleChange() {
+        guard let gasPriceDecimal = decimalParser.parseAnyDecimal(from: _gasPrice) else {
             gasPriceCautionState = .caution(.error)
             return
         }
 
         service.set(gasPrice: .legacy(gasPrice: feeViewItemFactory.intValue(value: gasPriceDecimal)))
-        sync()
-    }
 
-    private func handleNonce() {
-        guard let intNonce = Int(nonce) else {
-            nonceCautionState = .caution(.error)
-            return
-        }
-
-        service.set(nonce: intNonce)
         sync()
     }
 
@@ -82,24 +63,20 @@ class LegacyFeeSettingsViewModel: ObservableObject {
         guard let decimal = value.flatMap({ decimalParser.parseAnyDecimal(from: $0) }) else {
             return nil
         }
-        // TODO: we can recognize the smallest significand digit, and increase/decrease by smallest interval
+
+        let diff = decimal * 10 / 100
+
         switch direction {
-        case .down: return max(decimal - 1, 0)
-        case .up: return decimal + 1
+        case .down: return max(decimal - diff, 0)
+        case .up: return decimal + diff
         }
     }
 }
 
 extension LegacyFeeSettingsViewModel {
     func stepChangeGasPrice(_ direction: StepChangeButtonsViewDirection) {
-        if let newValue = updateByStep(value: gasPrice, direction: direction) {
-            gasPrice = newValue.description
-        }
-    }
-
-    func stepChangeNonce(_ direction: StepChangeButtonsViewDirection) {
-        if let newValue = updateByStep(value: nonce, direction: direction) {
-            nonce = newValue.description
+        if let newValue = updateByStep(value: _gasPrice, direction: direction) {
+            gasPrice.wrappedValue = newValue.description
         }
     }
 

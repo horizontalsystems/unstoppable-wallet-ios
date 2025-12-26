@@ -6,29 +6,13 @@ import MoneroKit
 class MoneroFeeSettingsViewModel: ObservableObject {
     let service: MoneroTransactionService
 
-    init(service: MoneroTransactionService) {
-        self.service = service
-        priority = SendPriority.default.description
-
-        syncFromService()
-    }
-
-    @Published var priority: String = "" {
-        didSet {
-            DispatchQueue.main.async { [weak self] in
-                self?.handle()
-            }
-        }
-    }
-
+    @Published var priority: SendPriority
     @Published var priorityCautionState: FieldCautionState = .none
     @Published var resetEnabled = false
 
-    private func syncFromService() {
-        if let priority = service.priority {
-            self.priority = priority.description
-        }
-
+    init(service: MoneroTransactionService) {
+        self.service = service
+        priority = service.priority ?? SendPriority.default
         sync()
     }
 
@@ -41,27 +25,18 @@ class MoneroFeeSettingsViewModel: ObservableObject {
             priorityCautionState = .none
         }
     }
-
-    private func handle() {
-        guard let priorityEnum = SendPriority.from(string: priority) else {
-            priorityCautionState = .caution(.error)
-            return
-        }
-
-        service.set(priority: priorityEnum)
-        sync()
-    }
 }
 
 extension MoneroFeeSettingsViewModel {
-    func set(priorityAtIndex: Int) {
-        if let newValue = SendPriority(rawValue: priorityAtIndex) {
-            priority = newValue.description
-        }
+    func set(priority: SendPriority) {
+        self.priority = priority
+        service.set(priority: priority)
+        sync()
     }
 
     func onReset() {
         service.useRecommended()
-        syncFromService()
+        priority = service.priority ?? SendPriority.default
+        sync()
     }
 }
