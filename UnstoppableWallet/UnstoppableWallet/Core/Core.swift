@@ -127,9 +127,13 @@ class Core {
             .appendingPathComponent("bank.sqlite")
         let dbPool = try DatabasePool(path: databaseURL.path)
 
+        let logRecordStorage = LogRecordStorage(dbPool: dbPool)
+        logRecordManager = LogRecordManager(storage: logRecordStorage)
+        logger = Logger(minLogLevel: .error, storage: logRecordManager)
+
         userDefaultsStorage = UserDefaultsStorage()
         localStorage = LocalStorage(userDefaultsStorage: userDefaultsStorage)
-        keychainStorage = KeychainStorage(service: "io.horizontalsystems.bank.dev")
+        keychainStorage = KeychainStorage(service: "io.horizontalsystems.bank.dev", logger: logger)
         let sharedLocalStorage = SharedLocalStorage()
 
         try StorageMigrator.migrate(dbPool: dbPool, localStorage: localStorage)
@@ -165,10 +169,6 @@ class Core {
         let appVersionRecordStorage = AppVersionRecordStorage(dbPool: dbPool)
         appVersionStorage = AppVersionStorage(storage: appVersionRecordStorage)
         appVersionManager = AppVersionManager(systemInfoManager: systemInfoManager, storage: appVersionStorage)
-
-        let logRecordStorage = LogRecordStorage(dbPool: dbPool)
-        logRecordManager = LogRecordManager(storage: logRecordStorage)
-        logger = Logger(minLogLevel: .error, storage: logRecordManager)
 
         currencyManager = CurrencyManager(storage: sharedLocalStorage)
         networkManager = NetworkManager(logger: logger)
