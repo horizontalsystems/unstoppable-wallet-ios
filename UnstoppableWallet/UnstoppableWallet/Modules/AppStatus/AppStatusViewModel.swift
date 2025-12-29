@@ -125,16 +125,16 @@ class AppStatusViewModel: ObservableObject {
             )
         )
 
-        let sendLogs = logRecordManager.logsGroupedBy(context: "Send")
+        let chainLogs = logRecordManager.logsGroupedBy(context: "Keychain")
 
-        if !sendLogs.isEmpty {
+        if !chainLogs.isEmpty {
             sections.append(
                 Section(
                     title: "Logs",
                     blocks: [
                         [
-                            .title(value: "Send"),
-                            .raw(text: build(logs: sendLogs, showBullet: true).trimmingCharacters(in: .whitespacesAndNewlines)),
+                            .title(value: "Keychain"),
+                            .raw(text: build(logs: chainLogs, showBullet: true).trimmingCharacters(in: .whitespacesAndNewlines)),
                         ],
                     ]
                 )
