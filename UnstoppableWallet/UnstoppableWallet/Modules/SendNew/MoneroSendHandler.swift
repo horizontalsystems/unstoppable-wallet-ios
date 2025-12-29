@@ -175,22 +175,25 @@ extension MoneroSendHandler {
         }
 
         func sections(baseToken _: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
-            var fields = [SendField]()
             let rate = rates[token.coin.uid]
             let amountData = amountData(amountToken: token, currency: currency, amountTokenRate: rate)
 
-            fields.append(contentsOf: [
-                .amount(
-                    title: "send.confirmation.you_send".localized,
+            var sections = [SendDataSection]()
+            sections.append(.init([
+                .amountNew(
                     token: token,
                     appValueType: .regular(appValue: amountData.appValue),
                     currencyValue: amountData.currencyValue,
-                    type: .neutral
                 ),
                 .address(
                     value: address,
                     blockchainType: .monero
                 ),
+            ], isFlow: true))
+
+            var fields = [SendField]()
+
+            fields.append(contentsOf: [
                 .levelValue(
                     title: "monero.priority".localized,
                     value: priority.description,
@@ -202,7 +205,11 @@ extension MoneroSendHandler {
                 fields.append(.levelValue(title: "send.confirmation.memo".localized, value: memo, level: .regular))
             }
 
-            return [.init(fields), .init(feeFields(feeToken: token, currency: currency, feeTokenRate: rate))]
+            sections.append(
+                .init(fields + feeFields(feeToken: token, currency: currency, feeTokenRate: rate))
+            )
+
+            return sections
         }
     }
 }
