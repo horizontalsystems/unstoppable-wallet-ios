@@ -111,7 +111,14 @@ enum SendField {
         case let .address(title, value, blockchainType):
             RecipientRowsView(title: title, value: value, blockchainType: blockchainType)
         case let .selfAddress(value, blockchainType):
-            RecipientRowsView(value: value, customTitle: "send.confirmation.send_to_own".localized, blockchainType: blockchainType)
+            Cell(
+                left: {
+                    ThemeImage("wallet_filled", size: .iconSize24)
+                },
+                middle: {
+                    MultiText(subtitle: ComponentText(text: "send.confirmation.send_to_own".localized, colorStyle: .primary), description: value)
+                }
+            )
         case let .price(title, tokenA, tokenB, amountA, amountB):
             PriceRow(title: title, tokenA: tokenA, tokenB: tokenB, amountA: amountA, amountB: amountB)
         case let .simpleValue(icon, title, value):

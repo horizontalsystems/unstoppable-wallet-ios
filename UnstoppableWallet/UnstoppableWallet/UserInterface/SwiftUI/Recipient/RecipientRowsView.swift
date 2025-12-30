@@ -5,8 +5,8 @@ struct RecipientRowsView: View {
     @StateObject var viewModel: RecipientRowsViewModel
     private let title: String?
 
-    init(title: String? = nil, value: String, customTitle: String? = nil, blockchainType: BlockchainType) {
-        _viewModel = StateObject(wrappedValue: RecipientRowsViewModel(address: value, customTitle: customTitle, blockchainType: blockchainType))
+    init(title: String? = nil, value: String, blockchainType: BlockchainType) {
+        _viewModel = StateObject(wrappedValue: RecipientRowsViewModel(address: value, blockchainType: blockchainType))
         self.title = title
     }
 
