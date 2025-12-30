@@ -54,7 +54,7 @@ struct SendView: View {
                                 }
                             }
                         }
-                        .disabled(viewModel.state.isSyncing)
+                        .disabled(!viewModel.state.isSuccess)
                     }
                 }
             }
@@ -125,11 +125,10 @@ struct SendView: View {
     }
 
     @ViewBuilder private func errorView(error: Error) -> some View {
-        ScrollView {
-            VStack(spacing: .margin16) {
-                HighlightedTextView(caution: CautionNew(text: error.smartDescription, type: .error))
+        PlaceholderViewNew(icon: "warning_filled", subtitle: "send.confirmation.failed_to_fetch_data".localized) {
+            ThemeButton(text: "button.report".localized, mode: .transparent, size: .small) {
+                CopyHelper.copyAndNotify(value: error.smartDescription)
             }
-            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
     }
 

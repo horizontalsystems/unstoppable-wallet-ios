@@ -537,7 +537,7 @@
 "send.confirmation.transaction_nonce" = "Transaction Nonce";
 
 "send.confirmation.sync_failed" = "Sync Failed";
-"send.confirmation.invalid_data" = "Invalid Data";
+"send.confirmation.failed_to_fetch_data" = "Failed to fetch data";
 "send.confirmation.refresh" = "Refresh";
 "send.confirmation.refreshing" = "Refreshing";
 "send.confirmation.please_wait" = "Please Wait";
@@ -750,7 +750,6 @@
 "swap.confirmation.please_wait" = "Please Wait";
 "swap.confirmation.quote_expires_in" = "Quote expires in %@";
 "swap.confirmation.quote_expired" = "Quote expired";
-"swap.confirmation.quote_failed" = "Failed to quote";
 
 "swap.confirmation.slippage_tolerance" = "Slippage Tolerance";
 "swap.confirmation.set_recipient" = "Set Recipient";

@@ -211,6 +211,13 @@ extension SendViewModel {
             default: return false
             }
         }
+
+        var isSuccess: Bool {
+            switch self {
+            case .success: return true
+            default: return false
+            }
+        }
     }
 
     enum SendError: Error {
