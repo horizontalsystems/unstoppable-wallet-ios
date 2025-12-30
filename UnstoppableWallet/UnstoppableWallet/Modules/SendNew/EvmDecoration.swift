@@ -97,8 +97,8 @@ struct EvmDecoration {
             .address(
                 value: spender.eip55,
                 blockchainType: token.blockchainType
-            )
-        ])                     
+            ),
+        ])
     }
 
     private func unknownFields(baseToken _: Token, to _: EvmKit.Address, value: Decimal, input: Data, method: String?, currency _: Currency, rates _: [String: Decimal]) -> [SendField] {
