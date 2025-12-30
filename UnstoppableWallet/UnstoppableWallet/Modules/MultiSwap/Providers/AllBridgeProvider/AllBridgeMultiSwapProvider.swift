@@ -328,15 +328,13 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 }
             }
 
-            return AllBridgeMultiSwapEvmConfirmationQuote(
-                amountIn: amountIn,
-                expectedAmountOut: amountOut,
-                recipient: recipient,
-                crosschain: crosschain,
-                slippage: slippage,
+            return EvmSwapFinalQuote(
+                expectedBuyAmount: amountOut,
                 transactionData: transactionData,
-                insufficientFeeBalance: insufficientFeeBalance,
                 transactionError: transactionError,
+                slippage: crosschain ? nil : slippage,
+                recipient: recipient,
+                insufficientFeeBalance: insufficientFeeBalance,
                 gasPrice: gasPriceData?.userDefined,
                 evmFeeData: evmFeeData,
                 nonce: transactionSettings?.nonce
@@ -484,7 +482,11 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
     }
 
     func swap(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, quote: IMultiSwapConfirmationQuote) async throws {
-        if let quote = quote as? AllBridgeMultiSwapEvmConfirmationQuote {
+        if let quote = quote as? EvmSwapFinalQuote {
+            guard let transactionData = quote.transactionData else {
+                throw SwapError.noTransactionData
+            }
+
             guard let gasLimit = quote.evmFeeData?.surchargedGasLimit else {
                 throw SwapError.noGasLimit
             }
@@ -499,7 +501,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
 
             do {
                 _ = try await evmKitWrapper.send(
-                    transactionData: quote.transactionData,
+                    transactionData: transactionData,
                     gasPrice: gasPrice,
                     gasLimit: gasLimit,
                     privateSend: useMevProtection,
@@ -549,6 +551,7 @@ extension AllBridgeMultiSwapProvider {
         case lessThanRequireFee
         case convertionError
         case invalidAmount
+        case noTransactionData
         case noGasPrice
         case noGasLimit
         case noEvmKitWrapper
