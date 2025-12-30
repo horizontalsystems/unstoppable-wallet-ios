@@ -128,12 +128,13 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 }
             }
 
-            return ThorChainMultiSwapEvmConfirmationQuote(
-                swapQuote: swapQuote,
-                recipient: recipient,
-                slippage: slippage,
+            return EvmSwapFinalQuote(
+                expectedBuyAmount: swapQuote.expectedAmountOut,
                 transactionData: transactionData,
                 transactionError: transactionError,
+                slippage: slippage,
+                recipient: recipient,
+                insufficientFeeBalance: false, // TODO:
                 gasPrice: gasPriceData?.userDefined,
                 evmFeeData: evmFeeData,
                 nonce: transactionSettings?.nonce
@@ -221,7 +222,11 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     }
 
     func swap(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, quote: IMultiSwapConfirmationQuote) async throws {
-        if let quote = quote as? ThorChainMultiSwapEvmConfirmationQuote {
+        if let quote = quote as? EvmSwapFinalQuote {
+            guard let transactionData = quote.transactionData else {
+                throw SwapError.noTransactionData
+            }
+
             guard let gasLimit = quote.evmFeeData?.surchargedGasLimit else {
                 throw SwapError.noGasLimit
             }
@@ -235,7 +240,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             }
 
             _ = try await evmKitWrapper.send(
-                transactionData: quote.transactionData,
+                transactionData: transactionData,
                 gasPrice: gasPrice,
                 gasLimit: gasLimit,
                 privateSend: useMevProtection,
@@ -427,6 +432,7 @@ extension BaseThorChainMultiSwapProvider {
         case noRouterAddress
         case invalidTokenInType
         case noDestinationAddress
+        case noTransactionData
         case noGasPrice
         case noGasLimit
         case noEvmKitWrapper

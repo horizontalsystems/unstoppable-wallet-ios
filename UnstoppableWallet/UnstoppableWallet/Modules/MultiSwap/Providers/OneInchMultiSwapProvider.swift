@@ -106,19 +106,29 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
             predefinedGasLimit: swap.transaction.gasLimit
         )
 
-        return OneInchMultiSwapConfirmationQuote(
-            swap: swap,
-            recipient: recipient,
+        return EvmSwapFinalQuote(
+            expectedBuyAmount: swap.amountOut ?? 0,
+            transactionData: swap.transactionData,
             slippage: slippage,
+            recipient: recipient,
             insufficientFeeBalance: insufficientFeeBalance,
+            gasPrice: swap.transaction.gasPrice,
             evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce
         )
     }
 
     override func swap(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, amountIn _: Decimal, quote: IMultiSwapConfirmationQuote) async throws {
-        guard let quote = quote as? OneInchMultiSwapConfirmationQuote else {
+        guard let quote = quote as? EvmSwapFinalQuote else {
             throw SwapError.invalidQuote
+        }
+
+        guard let transactionData = quote.transactionData else {
+            throw SwapError.noTransactionData
+        }
+
+        guard let gasPrice = quote.gasPrice else {
+            throw SwapError.noGasPrice
         }
 
         guard let gasLimit = quote.evmFeeData?.surchargedGasLimit else {
@@ -127,8 +137,8 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
 
         try await super.send(
             blockchainType: tokenIn.blockchainType,
-            transactionData: quote.swap.transactionData,
-            gasPrice: quote.swap.transaction.gasPrice,
+            transactionData: transactionData,
+            gasPrice: gasPrice,
             gasLimit: gasLimit,
             nonce: quote.nonce
         )
@@ -153,6 +163,8 @@ extension OneInchMultiSwapProvider {
         case invalidAmountIn
         case invalidQuote
         case noEvmKitWrapper
+        case noTransactionData
+        case noGasPrice
         case noGasLimit
         case noGasPriceData
     }

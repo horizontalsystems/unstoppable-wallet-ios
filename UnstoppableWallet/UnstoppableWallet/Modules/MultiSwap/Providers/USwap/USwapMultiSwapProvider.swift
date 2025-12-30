@@ -304,7 +304,11 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     }
 
     func swap(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, quote: IMultiSwapConfirmationQuote) async throws {
-        if let quote = quote as? USwapMultiSwapEvmConfirmationQuote {
+        if let quote = quote as? EvmSwapFinalQuote {
+            guard let transactionData = quote.transactionData else {
+                throw SwapError.invalidTransactionData
+            }
+
             guard let gasLimit = quote.evmFeeData?.surchargedGasLimit else {
                 throw SwapError.noGasLimit
             }
@@ -318,7 +322,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             }
 
             _ = try await evmKitWrapper.send(
-                transactionData: quote.transactionData,
+                transactionData: transactionData,
                 gasPrice: gasPrice,
                 gasLimit: gasLimit,
                 privateSend: useMevProtection,
@@ -372,7 +376,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         slippage: Decimal,
         recipient: String?,
         transactionSettings: TransactionSettings?
-    ) async throws -> USwapMultiSwapEvmConfirmationQuote {
+    ) async throws -> IMultiSwapConfirmationQuote {
         guard let jsonObject = quote.tx else {
             throw SwapError.noTransactionData
         }
@@ -411,12 +415,13 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             }
         }
 
-        return USwapMultiSwapEvmConfirmationQuote(
-            quote: quote,
-            recipient: recipient,
-            slippage: slippage,
+        return EvmSwapFinalQuote(
+            expectedBuyAmount: quote.expectedBuyAmount,
             transactionData: transactionData,
             transactionError: transactionError,
+            slippage: slippage,
+            recipient: recipient,
+            insufficientFeeBalance: false, // TODO:
             gasPrice: gasPriceData?.userDefined,
             evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce
@@ -433,7 +438,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         slippage: Decimal,
         recipient: String?,
         transactionSettings: TransactionSettings?
-    ) async throws -> USwapMultiSwapBtcConfirmationQuote {
+    ) async throws -> IMultiSwapConfirmationQuote {
         var transactionError: Error?
         var satoshiPerByte: Int?
         var sendInfo: SendInfo?
@@ -488,7 +493,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         quote: Quote,
         slippage: Decimal,
         recipient: String?
-    ) async throws -> USwapMultiSwapZcashConfirmationQuote {
+    ) async throws -> IMultiSwapConfirmationQuote {
         guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
             throw SwapError.noZcashAdapter
         }

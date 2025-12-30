@@ -33,10 +33,13 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
             }
         }
 
-        return BaseUniswapMultiSwapConfirmationQuote(
-            quote: quote,
+        return EvmSwapFinalQuote(
+            expectedBuyAmount: quote.trade.amountOut ?? 0,
             transactionData: txData,
             transactionError: transactionError,
+            slippage: quote.tradeOptions.allowedSlippage,
+            recipient: quote.tradeOptions.recipient?.eip55,
+            insufficientFeeBalance: false, // TODO:
             gasPrice: gasPriceData?.userDefined,
             evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce
@@ -44,7 +47,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
     }
 
     override func swap(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, amountIn _: Decimal, quote: IMultiSwapConfirmationQuote) async throws {
-        guard let quote = quote as? BaseUniswapMultiSwapConfirmationQuote else {
+        guard let quote = quote as? EvmSwapFinalQuote else {
             throw SwapError.invalidQuote
         }
 
