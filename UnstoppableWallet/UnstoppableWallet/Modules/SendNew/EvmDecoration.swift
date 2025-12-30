@@ -20,8 +20,8 @@ struct EvmDecoration {
             return outgoingFlow(token: baseToken, to: to, value: value, currency: currency, rates: rates)
         case let .outgoingEip20(to, value, token):
             return outgoingFlow(token: token, to: to, value: value, currency: currency, rates: rates)
-        case .approveEip20:
-            return nil
+        case let .approveEip20(spender, value, token):
+            return approveFlowSection(token: token, spender: spender, value: value, currency: currency, rates: rates)
         case let .unknown(to, value, _, _):
             return outgoingFlow(token: baseToken, to: to, value: value, currency: currency, rates: rates)
         }
@@ -29,10 +29,8 @@ struct EvmDecoration {
 
     func fields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
         switch type {
-        case .outgoingEvm, .outgoingEip20:
+        case .outgoingEvm, .outgoingEip20, .approveEip20:
             return []
-        case let .approveEip20(spender, value, token):
-            return approveFields(token: token, spender: spender, value: value, currency: currency, rates: rates)
         case let .unknown(to, value, input, method):
             return unknownFields(baseToken: baseToken, to: to, value: value, input: input, method: method, currency: currency, rates: rates)
         }
@@ -74,7 +72,7 @@ struct EvmDecoration {
         ], isFlow: true)
     }
 
-    private func approveFields(token: Token, spender: EvmKit.Address, value: Decimal, currency: Currency, rates: [String: Decimal]) -> [SendField] {
+    private func approveFlowSection(token: Token, spender: EvmKit.Address, value: Decimal, currency: Currency, rates: [String: Decimal]) -> SendDataSection {
         let isRevokeAllowance = value == 0 // Check approved new value or revoked last allowance
 
         let amountField: SendField
@@ -94,13 +92,13 @@ struct EvmDecoration {
             )
         }
 
-        return [
+        return .init([
             amountField,
             .address(
                 value: spender.eip55,
                 blockchainType: token.blockchainType
-            ),
-        ]
+            )
+        ])                     
     }
 
     private func unknownFields(baseToken _: Token, to _: EvmKit.Address, value: Decimal, input: Data, method: String?, currency _: Currency, rates _: [String: Decimal]) -> [SendField] {
