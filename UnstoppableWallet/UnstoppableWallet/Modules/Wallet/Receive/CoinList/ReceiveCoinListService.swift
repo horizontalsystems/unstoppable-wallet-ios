@@ -4,6 +4,7 @@ import MarketKit
 
 class ReceiveCoinListService {
     private let provider: CoinProvider
+    private let accountType: AccountType
     private let settingsService = RestoreSettingsService(manager: Core.shared.restoreSettingsManager)
 
     private var filter: String = "" {
@@ -14,8 +15,9 @@ class ReceiveCoinListService {
 
     @PostPublished private(set) var coins = [FullCoin]()
 
-    init(provider: CoinProvider) {
+    init(provider: CoinProvider, accountType: AccountType) {
         self.provider = provider
+        self.accountType = accountType
 
         sync()
     }
@@ -23,44 +25,12 @@ class ReceiveCoinListService {
     private func sync() {
         let coins = provider.fetch(filter: filter)
 
-        if filter.isEmpty {
+        if filter.isEmpty, !coins.isEmpty {
+            let sorted = CoinSorter.sort(coins, accountType: accountType, options: [.fiatValue, .blockchain, .name])
+            update(coins: sorted)
+        } else {
             update(coins: coins)
-            return
         }
-
-        if coins.isEmpty {
-            update(coins: [])
-            return
-        }
-
-        let sorted = coins.sorted { lhsFullCoin, rhsFullCoin in
-            let filter = filter.lowercased()
-
-            let lhsExactCode = lhsFullCoin.coin.code.lowercased() == filter
-            let rhsExactCode = rhsFullCoin.coin.code.lowercased() == filter
-
-            if lhsExactCode != rhsExactCode {
-                return lhsExactCode
-            }
-
-            let lhsStartsWithCode = lhsFullCoin.coin.code.lowercased().starts(with: filter)
-            let rhsStartsWithCode = rhsFullCoin.coin.code.lowercased().starts(with: filter)
-
-            if lhsStartsWithCode != rhsStartsWithCode {
-                return lhsStartsWithCode
-            }
-
-            let lhsStartsWithName = lhsFullCoin.coin.name.lowercased().starts(with: filter)
-            let rhsStartsWithName = rhsFullCoin.coin.name.lowercased().starts(with: filter)
-
-            if lhsStartsWithName != rhsStartsWithName {
-                return lhsStartsWithName
-            }
-
-            return lhsFullCoin.coin.name.lowercased() < rhsFullCoin.coin.name.lowercased()
-        }
-
-        update(coins: sorted)
     }
 
     private func update(coins: [FullCoin]) {

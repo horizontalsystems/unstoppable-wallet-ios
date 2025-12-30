@@ -15,7 +15,7 @@ struct ReceiveCoinListView: View {
             walletManager: Core.shared.walletManager,
             accountType: account.type
         )
-        let service = ReceiveCoinListService(provider: coinProvider)
+        let service = ReceiveCoinListService(provider: coinProvider, accountType: account.type)
         _viewModel = StateObject(wrappedValue: ReceiveCoinListViewModel(account: account, service: service))
     }
 
