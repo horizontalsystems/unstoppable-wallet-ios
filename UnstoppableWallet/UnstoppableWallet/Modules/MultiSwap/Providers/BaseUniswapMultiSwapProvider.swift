@@ -13,7 +13,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
         try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: MultiSwapSlippage.default)
     }
 
-    override func confirmationQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, slippage: Decimal, recipient: Address?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+    override func confirmationQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
         let quote = try await internalQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient)
 
         let blockchainType = tokenIn.blockchainType
@@ -81,7 +81,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
         fatalError("Must be implemented in subclass")
     }
 
-    private func internalQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, slippage: Decimal, recipient: Address? = nil) async throws -> UniswapMultiSwapQuote {
+    private func internalQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, slippage: Decimal, recipient: String? = nil) async throws -> UniswapMultiSwapQuote {
         let blockchainType = tokenIn.blockchainType
         let chain = try evmBlockchainManager.chain(blockchainType: blockchainType)
 
@@ -92,7 +92,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
             throw SwapError.noHttpRpcSource
         }
 
-        let kitRecipient = try recipient.map { try EvmKit.Address(hex: $0.raw) }
+        let kitRecipient = try recipient.map { try EvmKit.Address(hex: $0) }
 
         let tradeOptions = TradeOptions(
             allowedSlippage: slippage,

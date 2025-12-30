@@ -4,12 +4,12 @@ import MarketKit
 
 class ThorChainMultiSwapEvmConfirmationQuote: BaseEvmMultiSwapConfirmationQuote {
     let swapQuote: ThorChainMultiSwapProvider.SwapQuote
-    let recipient: Address?
+    let recipient: String?
     let slippage: Decimal
     let transactionData: TransactionData
     let transactionError: Error?
 
-    init(swapQuote: ThorChainMultiSwapProvider.SwapQuote, recipient: Address?, slippage: Decimal, transactionData: TransactionData, transactionError: Error?, gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?) {
+    init(swapQuote: ThorChainMultiSwapProvider.SwapQuote, recipient: String?, slippage: Decimal, transactionData: TransactionData, transactionError: Error?, gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?) {
         self.swapQuote = swapQuote
         self.recipient = recipient
         self.slippage = slippage
@@ -46,7 +46,7 @@ class ThorChainMultiSwapEvmConfirmationQuote: BaseEvmMultiSwapConfirmationQuote 
         }
 
         if let recipient {
-            fields.append(.recipient(recipient.title, blockchainType: tokenOut.blockchainType))
+            fields.append(.recipient(recipient, blockchainType: tokenOut.blockchainType))
         }
 
         return fields + super.fields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)

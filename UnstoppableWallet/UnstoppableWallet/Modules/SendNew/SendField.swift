@@ -11,7 +11,7 @@ enum SendField {
     case levelValue(title: String, value: String, level: ValueLevel)
     case note(iconName: String?, title: String)
     case simpleValue(icon: String? = nil, title: CustomStringConvertible, value: String)
-    case address(value: String, blockchainType: BlockchainType)
+    case address(title: String? = nil, value: String, blockchainType: BlockchainType)
     case selfAddress(value: String, blockchainType: BlockchainType)
     case price(title: String, tokenA: Token, tokenB: Token, amountA: Decimal, amountB: Decimal)
     case hex(title: String, value: String)
@@ -108,8 +108,8 @@ enum SendField {
                 Text(title).textSubhead2()
                 Spacer()
             }
-        case let .address(value, blockchainType):
-            RecipientRowsView(value: value, blockchainType: blockchainType)
+        case let .address(title, value, blockchainType):
+            RecipientRowsView(title: title, value: value, blockchainType: blockchainType)
         case let .selfAddress(value, blockchainType):
             RecipientRowsView(value: value, customTitle: "send.confirmation.send_to_own".localized, blockchainType: blockchainType)
         case let .price(title, tokenA, tokenB, amountA, amountB):
@@ -265,6 +265,7 @@ extension SendField {
 extension SendField {
     static func recipient(_ recipient: String, blockchainType: BlockchainType) -> Self {
         .address(
+            title: "swap.recipient".localized,
             value: recipient,
             blockchainType: blockchainType
         )

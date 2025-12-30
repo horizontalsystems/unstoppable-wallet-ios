@@ -4,12 +4,12 @@ import MarketKit
 
 class USwapMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirmationQuote {
     let quote: USwapMultiSwapProvider.Quote
-    let recipient: Address?
+    let recipient: String?
     let slippage: Decimal
     let sendParameters: SendParameters?
     let transactionError: Error?
 
-    init(quote: USwapMultiSwapProvider.Quote, recipient: Address?, slippage: Decimal, satoshiPerByte: Int?, fee: Decimal?, sendParameters: SendParameters?, transactionError: Error?) {
+    init(quote: USwapMultiSwapProvider.Quote, recipient: String?, slippage: Decimal, satoshiPerByte: Int?, fee: Decimal?, sendParameters: SendParameters?, transactionError: Error?) {
         self.quote = quote
         self.recipient = recipient
         self.slippage = slippage
@@ -50,7 +50,7 @@ class USwapMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirmatio
         }
 
         if let recipient {
-            fields.append(.recipient(recipient.title, blockchainType: tokenOut.blockchainType))
+            fields.append(.recipient(recipient, blockchainType: tokenOut.blockchainType))
         }
 
         fields.append(contentsOf: feeFields(feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate))

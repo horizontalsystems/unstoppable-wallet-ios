@@ -61,7 +61,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         )
     }
 
-    override func confirmationQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, slippage: Decimal, recipient: Address?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+    override func confirmationQuote(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
         let blockchainType = tokenIn.blockchainType
 
         guard let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
@@ -88,7 +88,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
             slippage: slippage,
             referrer: commissionAddress,
             fee: commission,
-            recipient: recipient.flatMap { try? EvmKit.Address(hex: $0.raw) },
+            recipient: recipient.flatMap { try? EvmKit.Address(hex: $0) },
             gasPrice: gasPriceData.userDefined
         )
 

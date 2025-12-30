@@ -17,6 +17,7 @@ struct TransactionNonceView: View {
             ScrollableThemeView {
                 VStack(spacing: 24) {
                     ThemeText("evm_send_settings.nonce.info".localized, style: .subhead)
+                        .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.horizontal, 16)
 
                     helper.inputNumberWithSteps(

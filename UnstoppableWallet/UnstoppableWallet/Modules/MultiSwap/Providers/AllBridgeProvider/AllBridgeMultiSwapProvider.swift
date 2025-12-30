@@ -121,9 +121,9 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         tokenPairs[tokenIn] != nil && tokenPairs[tokenOut] != nil
     }
 
-    private func resolveDestination(recipient: Address?, token: Token) async throws -> String {
+    private func resolveDestination(recipient: String?, token: Token) async throws -> String {
         if let recipient {
-            return recipient.raw
+            return recipient
         }
 
         return try await DestinationHelper.resolveDestination(token: token).address
@@ -226,7 +226,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         throw SwapError.unsupportedTokenIn
     }
 
-    private func transactionParameters(tokenIn: Token, tokenOut: Token, recipient: Address?, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> Parameters {
+    private func transactionParameters(tokenIn: Token, tokenOut: Token, recipient: String?, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> Parameters {
         guard let abTokenIn = tokenPairs[tokenIn] else {
             throw SwapError.unsupportedTokenIn
         }
@@ -264,7 +264,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         return parameters
     }
 
-    func fetchTransactionData<T: ImmutableMappable>(tokenIn: Token, tokenOut: Token, recipient: Address?, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> T {
+    func fetchTransactionData<T: ImmutableMappable>(tokenIn: Token, tokenOut: Token, recipient: String?, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> T {
         let parameters = try await transactionParameters(tokenIn: tokenIn, tokenOut: tokenOut, recipient: recipient, crosschain: crosschain, amountIn: amountIn, expectedAmountOutMin: expectedAmountOutMin)
 
         let path = crosschain ? "bridge" : "swap"
@@ -272,7 +272,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         return try await networkManager.fetch(url: "\(baseUrl)/raw/\(path)", parameters: parameters)
     }
 
-    func fetchStellarData(tokenIn: Token, tokenOut: Token, recipient: Address?, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> Data {
+    func fetchStellarData(tokenIn: Token, tokenOut: Token, recipient: String?, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> Data {
         let parameters = try await transactionParameters(tokenIn: tokenIn, tokenOut: tokenOut, recipient: recipient, crosschain: crosschain, amountIn: amountIn, expectedAmountOutMin: expectedAmountOutMin)
 
         let path = crosschain ? "bridge" : "swap"
@@ -280,7 +280,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         return try await networkManager.fetchData(url: "\(baseUrl)/raw/\(path)", parameters: parameters)
     }
 
-    func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: Address?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+    func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
         let crosschain = tokenIn.blockchainType != tokenOut.blockchainType
 
         let amountOut = try await estimateAmountOut(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)

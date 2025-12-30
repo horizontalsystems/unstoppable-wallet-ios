@@ -136,7 +136,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         syncSubject.send()
     }
 
-    private func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: Address? = nil, dry: Bool = true) async throws -> Quote {
+    private func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String? = nil, dry: Bool = true) async throws -> Quote {
         guard let assetIn = assets.first(where: { $0.token == tokenIn }) else {
             throw SwapError.unsupportedTokenIn
         }
@@ -218,7 +218,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: Address?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+    func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
         let quote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient, dry: false)
 
         let amountOut = quote.expectedBuyAmount
@@ -354,9 +354,9 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         return adapter.receiveAddress.address
     }
 
-    func resolveDestination(recipient: Address?, token: Token) async throws -> String {
+    func resolveDestination(recipient: String?, token: Token) async throws -> String {
         if let recipient {
-            return recipient.raw
+            return recipient
         }
 
         return try await DestinationHelper.resolveDestination(token: token).address
@@ -370,7 +370,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOutMin _: Decimal,
         quote: Quote,
         slippage: Decimal,
-        recipient: Address?,
+        recipient: String?,
         transactionSettings: TransactionSettings?
     ) async throws -> USwapMultiSwapEvmConfirmationQuote {
         guard let jsonObject = quote.tx else {
@@ -431,7 +431,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOutMin _: Decimal,
         quote: Quote,
         slippage: Decimal,
-        recipient: Address?,
+        recipient: String?,
         transactionSettings: TransactionSettings?
     ) async throws -> USwapMultiSwapBtcConfirmationQuote {
         var transactionError: Error?
@@ -487,7 +487,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         amountOutMin: Decimal,
         quote: Quote,
         slippage: Decimal,
-        recipient: Address?
+        recipient: String?
     ) async throws -> USwapMultiSwapZcashConfirmationQuote {
         guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
             throw SwapError.noZcashAdapter

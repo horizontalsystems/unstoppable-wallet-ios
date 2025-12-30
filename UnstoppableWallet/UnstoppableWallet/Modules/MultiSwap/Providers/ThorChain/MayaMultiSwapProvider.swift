@@ -28,7 +28,7 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         AppConfig.mayaAffiliateBps
     }
 
-    private func zcashSwapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: Address?) async throws -> SwapQuote {
+    private func zcashSwapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?) async throws -> SwapQuote {
         let refundAddress = try await resolveDestination(recipient: recipient, token: tokenIn)
         let params: Parameters = [
             "refund_address": refundAddress,
@@ -61,7 +61,7 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         return try await adapter.sendProposal(outputs: [transparentOutput, memoOutput])
     }
 
-    override func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: Address?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+    override func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
         // use base scenario for all tokens except zcash
         guard tokenIn.blockchainType == .zcash else {
             return try await super.confirmationQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient, transactionSettings: transactionSettings)
@@ -123,9 +123,9 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
     //     return AnyView(view)
     // }
 
-    override func resolveDestination(recipient: Address?, token: Token) async throws -> String {
+    override func resolveDestination(recipient: String?, token: Token) async throws -> String {
         if let recipient {
-            return recipient.raw
+            return recipient
         }
         // use temporary address, to avoid muptiply create address without existing Adapter for token
         if let temporaryDestinationAddress {

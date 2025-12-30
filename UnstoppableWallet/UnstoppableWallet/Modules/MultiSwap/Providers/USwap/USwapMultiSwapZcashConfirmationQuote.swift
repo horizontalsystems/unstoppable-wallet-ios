@@ -7,13 +7,13 @@ class USwapMultiSwapZcashConfirmationQuote: IMultiSwapConfirmationQuote {
     let amountIn: Decimal
     let expectedAmountOut: Decimal
     let amountOutMin: Decimal
-    let recipient: Address?
+    let recipient: String?
     let slippage: Decimal
     let totalFeeRequired: Zatoshi?
     let proposal: Proposal?
     let transactionError: Error?
 
-    init(amountIn: Decimal, expectedAmountOut: Decimal, amountOutMin: Decimal, recipient: Address?, slippage: Decimal, totalFeeRequired: Zatoshi?, proposal: Proposal?, transactionError: Error?) {
+    init(amountIn: Decimal, expectedAmountOut: Decimal, amountOutMin: Decimal, recipient: String?, slippage: Decimal, totalFeeRequired: Zatoshi?, proposal: Proposal?, transactionError: Error?) {
         self.amountIn = amountIn
         self.expectedAmountOut = expectedAmountOut
         self.amountOutMin = amountOutMin
@@ -55,7 +55,7 @@ class USwapMultiSwapZcashConfirmationQuote: IMultiSwapConfirmationQuote {
         }
 
         if let recipient {
-            fields.append(.recipient(recipient.title, blockchainType: tokenOut.blockchainType))
+            fields.append(.recipient(recipient, blockchainType: tokenOut.blockchainType))
         }
 
         if let amountData = amountData(feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate) {

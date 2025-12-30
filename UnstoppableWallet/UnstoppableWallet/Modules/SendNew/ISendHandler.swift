@@ -1,3 +1,4 @@
+import Combine
 import MarketKit
 
 protocol ISendHandler {
@@ -6,6 +7,7 @@ protocol ISendHandler {
     var expirationDuration: Int? { get }
     var initialTransactionSettings: InitialTransactionSettings? { get }
     var menuItems: [SendMenuItem] { get }
+    var refreshPublisher: AnyPublisher<Void, Never>? { get }
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData
     func send(data: ISendData) async throws
 }
@@ -15,6 +17,7 @@ extension ISendHandler {
     var expirationDuration: Int? { nil }
     var initialTransactionSettings: InitialTransactionSettings? { nil }
     var menuItems: [SendMenuItem] { [] }
+    var refreshPublisher: AnyPublisher<Void, Never>? { nil }
 }
 
 struct SendMenuItem {

@@ -8,6 +8,10 @@ extension String {
     }
 
     var shortened: String {
+        guard count > 9 else {
+            return self
+        }
+
         let excludedPrefixes = ["0x", "bc", "bnb", "ltc", "bitcoincash:", "ecash:", "xpub", "ypub", "zpub", "Ltub", "Mtub"]
 
         var extraPrefix = 0

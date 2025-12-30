@@ -3,102 +3,64 @@ import Foundation
 import MarketKit
 import UIKit
 
-class SlippageMultiSwapSettingsViewModel: ObservableObject, IMultiSwapSettingsField {
+class MultiSwapSlippageViewModel: ObservableObject {
     private let decimalParser = AmountDecimalParser()
-    var storage: MultiSwapSettingStorage
-    var mode: SlippageMode
-
-    var syncSubject = PassthroughSubject<Void, Never>()
+    private let initialSlippage: Decimal
 
     @Published var slippageCautionState: CautionState = .none
     @Published var slippageString: String = "" {
         didSet {
             if slippageString == oldValue { return }
-            guard let decimal = decimalParser.parseAnyDecimal(from: slippageString) else {
-                slippage = nil
-                return
+
+            if let decimal = decimalParser.parseAnyDecimal(from: slippageString) {
+                slippage = decimal
+            } else {
+                slippage = 0
             }
-            slippage = decimal
         }
     }
 
-    var slippage: Decimal? = nil {
+    var slippage: Decimal {
         didSet {
             if slippage == oldValue { return }
-            slippageString = slippage?.description ?? ""
-            syncSubject.send()
+            slippageString = slippage.description
+
             validateSlippage()
+            sync()
         }
     }
 
-    init(storage: MultiSwapSettingStorage, mode: SlippageMode) {
-        self.storage = storage
-        self.mode = mode
+    @Published var resetEnabled: Bool = false
+    @Published var applyEnabled: Bool = false
 
+    init(initialSlippage: Decimal) {
+        self.initialSlippage = initialSlippage
         slippage = initialSlippage
-        slippageString = slippage?.description ?? ""
+        slippageString = slippage.description
+
+        validateSlippage()
+        sync()
     }
 
     private func validateSlippage() {
-        guard let slippage else {
-            slippageCautionState = .none
-            return
-        }
-
         slippageCautionState = MultiSwapSlippage.validate(slippage: slippage)
     }
 
-    var state: BaseMultiSwapSettingsViewModel.FieldState {
-        MultiSwapSlippage.state(initial: initialSlippage, value: slippage)
-    }
-
-    func onReset() {
-        guard !mode.disabled else {
-            return
-        }
-        slippage = nil
-    }
-
-    func onDone() {
-        guard !mode.disabled else {
-            return
-        }
-
-        if slippage == nil {
-            storage.set(value: nil, for: MultiSwapSettingStorage.LegacySetting.slippage)
-        } else if let slippage, slippage != initialSlippage {
-            storage.set(value: slippage, for: MultiSwapSettingStorage.LegacySetting.slippage)
-        }
+    private func sync() {
+        resetEnabled = slippage != MultiSwapSlippage.default
+        applyEnabled = slippage != .zero && slippage != initialSlippage
     }
 }
 
-extension SlippageMultiSwapSettingsViewModel {
-    var syncPublisher: AnyPublisher<Void, Never> {
-        syncSubject.eraseToAnyPublisher()
-    }
-
-    var initialSlippage: Decimal? {
-        switch mode {
-        case let .fixed(slippage): return slippage
-        case .adjustable: return storage.value(for: MultiSwapSettingStorage.LegacySetting.slippage)
-        }
+extension MultiSwapSlippageViewModel {
+    func reset() {
+        slippage = MultiSwapSlippage.default
     }
 
     func stepSlippage(direction: StepChangeButtonsViewDirection) {
         switch direction {
-        case .down: slippage = max((slippage ?? MultiSwapSlippage.default) - 0.5, 0)
-        case .up: slippage = (slippage ?? MultiSwapSlippage.default) + 0.5
-        }
-    }
-}
-
-extension SlippageMultiSwapSettingsViewModel {
-    enum SlippageMode: Equatable {
-        case fixed(Decimal)
-        case adjustable
-
-        var disabled: Bool {
-            self != .adjustable
+        case .down: slippage = max(slippage - 0.5, 0)
+        case .up: slippage = slippage + 0.5
         }
     }
 }
@@ -155,15 +117,6 @@ enum MultiSwapSlippage {
         }
 
         return .none
-    }
-
-    static func state(initial: Decimal?, value: Decimal?) -> BaseMultiSwapSettingsViewModel.FieldState {
-        let changed = value != initial
-        let slippage = value ?? `default`
-        let valid = slippage < Self.limitBounds.upperBound
-        let resetEnabled = slippage != `default`
-
-        return .init(valid: valid, changed: changed, resetEnabled: resetEnabled)
     }
 }
 

@@ -5,7 +5,7 @@ import SwiftUI
 struct AddressView: View {
     @StateObject var viewModel: AddressViewModel
     private let buttonTitle: String
-    private let onFinish: (ResolvedAddress) -> Void
+    private let onFinish: (ResolvedAddress?) -> Void
 
     @Environment(\.presentationMode) private var presentationMode
     @Environment(\.addressParserFilter) private var parserFilter
@@ -17,7 +17,7 @@ struct AddressView: View {
         }
     }
 
-    init(token: Token, buttonTitle: String, destination: AddressViewModel.Destination, address: String? = nil, onFinish: @escaping (ResolvedAddress) -> Void) {
+    init(token: Token, buttonTitle: String, destination: AddressViewModel.Destination, address: String? = nil, onFinish: @escaping (ResolvedAddress?) -> Void) {
         _viewModel = StateObject(wrappedValue: AddressViewModel(token: token, destination: destination, address: address))
         self.buttonTitle = buttonTitle
         self.onFinish = onFinish
@@ -92,11 +92,15 @@ struct AddressView: View {
             let (title, disabled, showProgress) = buttonState()
 
             Button(action: {
-                guard case let .valid(resolvedAddress) = viewModel.state else {
-                    return
+                switch viewModel.state {
+                case .empty:
+                    if !viewModel.initialAddress.isEmpty {
+                        onFinish(nil)
+                    }
+                case let .valid(resolvedAddress):
+                    onFinish(resolvedAddress)
+                default: ()
                 }
-
-                onFinish(resolvedAddress)
             }) {
                 HStack(spacing: .margin8) {
                     if showProgress {
@@ -172,15 +176,20 @@ struct AddressView: View {
 
         switch viewModel.state {
         case .empty:
-            title = "send.address.enter_address".localized
+            if !viewModel.initialAddress.isEmpty {
+                title = buttonTitle
+                disabled = false
+            } else {
+                title = "send.address.enter_address".localized
+            }
         case .invalid:
             title = "send.address.invalid_address".localized
         case .checking:
             title = "send.address.checking".localized
             showProgress = true
-        case .valid:
+        case let .valid(resolvedAddress):
             title = buttonTitle
-            disabled = false
+            disabled = resolvedAddress.address.lowercased() == viewModel.initialAddress.lowercased()
         }
 
         return (title, disabled, showProgress)

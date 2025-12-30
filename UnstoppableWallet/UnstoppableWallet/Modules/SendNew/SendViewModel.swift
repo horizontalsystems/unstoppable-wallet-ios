@@ -65,6 +65,12 @@ class SendViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
+        handler?.refreshPublisher?
+            .sink { [weak self] in
+                self?.sync()
+            }
+            .store(in: &cancellables)
+
         sync()
     }
 

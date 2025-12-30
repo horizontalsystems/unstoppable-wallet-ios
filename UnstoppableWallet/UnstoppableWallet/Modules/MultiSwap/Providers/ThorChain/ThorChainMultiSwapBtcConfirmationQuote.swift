@@ -4,12 +4,12 @@ import MarketKit
 
 class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirmationQuote {
     let swapQuote: ThorChainMultiSwapProvider.SwapQuote
-    let recipient: Address?
+    let recipient: String?
     let slippage: Decimal
     let sendParameters: SendParameters?
     let transactionError: Error?
 
-    init(swapQuote: ThorChainMultiSwapProvider.SwapQuote, recipient: Address?, slippage: Decimal, satoshiPerByte: Int?, fee: Decimal?, sendParameters: SendParameters?, transactionError: Error?) {
+    init(swapQuote: ThorChainMultiSwapProvider.SwapQuote, recipient: String?, slippage: Decimal, satoshiPerByte: Int?, fee: Decimal?, sendParameters: SendParameters?, transactionError: Error?) {
         self.swapQuote = swapQuote
         self.recipient = recipient
         self.slippage = slippage
@@ -50,7 +50,7 @@ class ThorChainMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirm
         }
 
         if let recipient {
-            fields.append(.recipient(recipient.title, blockchainType: tokenOut.blockchainType))
+            fields.append(.recipient(recipient, blockchainType: tokenOut.blockchainType))
         }
 
         fields.append(contentsOf: feeFields(feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate))

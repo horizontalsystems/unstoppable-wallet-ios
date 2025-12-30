@@ -5,14 +5,14 @@ import MarketKit
 class AllBridgeMultiSwapEvmConfirmationQuote: BaseEvmMultiSwapConfirmationQuote {
     let amountIn: Decimal
     let expectedAmountOut: Decimal
-    let recipient: Address?
+    let recipient: String?
     let crosschain: Bool
     let slippage: Decimal
     let transactionData: TransactionData
     let insufficientFeeBalance: Bool
     let transactionError: Error?
 
-    init(amountIn: Decimal, expectedAmountOut: Decimal, recipient: Address?, crosschain: Bool, slippage: Decimal, transactionData: TransactionData, insufficientFeeBalance: Bool, transactionError: Error?, gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?) {
+    init(amountIn: Decimal, expectedAmountOut: Decimal, recipient: String?, crosschain: Bool, slippage: Decimal, transactionData: TransactionData, insufficientFeeBalance: Bool, transactionError: Error?, gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?) {
         self.amountIn = amountIn
         self.expectedAmountOut = expectedAmountOut
         self.recipient = recipient
@@ -66,7 +66,7 @@ class AllBridgeMultiSwapEvmConfirmationQuote: BaseEvmMultiSwapConfirmationQuote 
         }
 
         if let recipient {
-            fields.append(.recipient(recipient.title, blockchainType: tokenOut.blockchainType))
+            fields.append(.recipient(recipient, blockchainType: tokenOut.blockchainType))
         }
 
         return fields + super.fields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)

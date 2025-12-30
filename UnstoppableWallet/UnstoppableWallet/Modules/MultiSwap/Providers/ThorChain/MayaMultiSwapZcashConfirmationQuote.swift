@@ -5,13 +5,13 @@ import ZcashLightClientKit
 
 class MayaMultiSwapZcashConfirmationQuote: IMultiSwapConfirmationQuote {
     let swapQuote: MayaMultiSwapProvider.SwapQuote
-    let recipient: Address?
+    let recipient: String?
     let amountIn: Decimal
     let slippage: Decimal
     let totalFeeRequired: Zatoshi
     let transactionError: Error?
 
-    init(swapQuote: MayaMultiSwapProvider.SwapQuote, recipient: Address?, amountIn: Decimal, totalFeeRequired: Zatoshi, slippage: Decimal, transactionError: Error?) {
+    init(swapQuote: MayaMultiSwapProvider.SwapQuote, recipient: String?, amountIn: Decimal, totalFeeRequired: Zatoshi, slippage: Decimal, transactionError: Error?) {
         self.swapQuote = swapQuote
         self.recipient = recipient
         self.amountIn = amountIn
@@ -51,7 +51,7 @@ class MayaMultiSwapZcashConfirmationQuote: IMultiSwapConfirmationQuote {
         }
 
         if let recipient {
-            fields.append(.recipient(recipient.title, blockchainType: tokenOut.blockchainType))
+            fields.append(.recipient(recipient, blockchainType: tokenOut.blockchainType))
         }
 
         return fields
