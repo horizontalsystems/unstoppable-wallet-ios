@@ -9,6 +9,7 @@ class AddressViewModel: ObservableObject {
 
     let token: Token
     let destination: Destination
+    let initialAddress: String
     let issueTypes: [AddressSecurityIssueType]
     let contacts: [Contact]
     let recentContact: Contact?
@@ -38,6 +39,7 @@ class AddressViewModel: ObservableObject {
     init(token: Token, destination: AddressViewModel.Destination, address: String?) {
         self.token = token
         self.destination = destination
+        initialAddress = address ?? ""
         issueTypes = AddressSecurityIssueType.issueTypes(token: token)
 
         let contacts = Core.shared.contactManager.contacts(blockchainUid: token.blockchainType.uid)

@@ -27,7 +27,9 @@ struct SendAddressView: View {
     var body: some View {
         ThemeView {
             AddressView(token: wallet.token, buttonTitle: "send.next_button".localized, destination: .send(fromAddress: fromAddress), address: address) { resolvedAddress in
-                path.append(resolvedAddress)
+                if let resolvedAddress {
+                    path.append(resolvedAddress)
+                }
             }
         }
         .navigationTitle("address.title".localized)

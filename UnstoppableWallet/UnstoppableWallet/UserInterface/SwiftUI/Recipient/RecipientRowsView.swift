@@ -3,19 +3,33 @@ import SwiftUI
 
 struct RecipientRowsView: View {
     @StateObject var viewModel: RecipientRowsViewModel
+    private let title: String?
 
-    init(value: String, customTitle: String? = nil, blockchainType: BlockchainType) {
+    init(title: String? = nil, value: String, customTitle: String? = nil, blockchainType: BlockchainType) {
         _viewModel = StateObject(wrappedValue: RecipientRowsViewModel(address: value, customTitle: customTitle, blockchainType: blockchainType))
+        self.title = title
     }
 
     var body: some View {
-        Cell(
-            left: {
-                ThemeImage(viewModel.item.icon, size: .iconSize24)
-            },
-            middle: {
-                MultiText(subtitle: ComponentText(text: viewModel.item.title, colorStyle: .primary), description: viewModel.item.subtitle)
-            }
-        )
+        if let title {
+            Cell(
+                style: .secondary,
+                middle: {
+                    MiddleTextIcon(text: title)
+                },
+                right: {
+                    RightTextIcon(text: viewModel.item.title.shortened)
+                }
+            )
+        } else {
+            Cell(
+                left: {
+                    ThemeImage(viewModel.item.icon, size: .iconSize24)
+                },
+                middle: {
+                    MultiText(subtitle: ComponentText(text: viewModel.item.title, colorStyle: .primary), description: viewModel.item.subtitle)
+                }
+            )
+        }
     }
 }

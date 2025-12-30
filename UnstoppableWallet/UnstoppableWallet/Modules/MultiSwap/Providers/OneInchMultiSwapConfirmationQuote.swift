@@ -5,11 +5,11 @@ import OneInchKit
 
 class OneInchMultiSwapConfirmationQuote: BaseEvmMultiSwapConfirmationQuote {
     let swap: Swap
-    let recipient: Address?
+    let recipient: String?
     let slippage: Decimal
     let insufficientFeeBalance: Bool
 
-    init(swap: Swap, recipient: Address?, slippage: Decimal, insufficientFeeBalance: Bool, evmFeeData: EvmFeeData, nonce: Int?) {
+    init(swap: Swap, recipient: String?, slippage: Decimal, insufficientFeeBalance: Bool, evmFeeData: EvmFeeData, nonce: Int?) {
         self.swap = swap
         self.recipient = recipient
         self.slippage = slippage
@@ -55,7 +55,7 @@ class OneInchMultiSwapConfirmationQuote: BaseEvmMultiSwapConfirmationQuote {
         }
 
         if let recipient {
-            fields.append(.recipient(recipient.title, blockchainType: tokenOut.blockchainType))
+            fields.append(.recipient(recipient, blockchainType: tokenOut.blockchainType))
         }
 
         return fields + super.fields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)

@@ -1,4 +1,5 @@
 import BigInt
+import Combine
 import Eip20Kit
 import EvmKit
 import Foundation
@@ -15,6 +16,11 @@ class MultiSwapSendHandler {
     let tokenOut: Token
     let amountIn: Decimal
     let provider: IMultiSwapProvider
+
+    private var slippage = MultiSwapSlippage.default
+    private var recipient: String?
+
+    private let refreshSubject = PassthroughSubject<Void, Never>()
 
     init(baseToken: Token, tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider) {
         self.baseToken = baseToken
@@ -36,13 +42,36 @@ extension MultiSwapSendHandler: ISendHandler {
 
     var menuItems: [SendMenuItem] {
         [
-            .init(label: "swap.confirmation.slippage_tolerance".localized) {
-                // todo
+            .init(label: "swap.confirmation.slippage_tolerance".localized) { [weak self] in
+                guard let self else {
+                    return
+                }
+
+                Coordinator.shared.present { _ in
+                    MultiSwapSlippageView(slippage: self.slippage) { [weak self] slippage in
+                        self?.slippage = slippage
+                        self?.refreshSubject.send()
+                    }
+                }
             },
-            .init(label: "swap.confirmation.set_recipient".localized) {
-                // todo
+            .init(label: "swap.confirmation.set_recipient".localized) { [weak self] in
+                guard let self else {
+                    return
+                }
+
+                Coordinator.shared.present { _ in
+                    MultiSwapRecipientView(address: self.recipient, token: self.tokenOut) { [weak self] recipient in
+                        self?.recipient = recipient
+                        self?.refreshSubject.send()
+                    }
+                }
+
             },
         ]
+    }
+
+    var refreshPublisher: AnyPublisher<Void, Never>? {
+        refreshSubject.eraseToAnyPublisher()
     }
 
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
@@ -50,8 +79,8 @@ extension MultiSwapSendHandler: ISendHandler {
             tokenIn: tokenIn,
             tokenOut: tokenOut,
             amountIn: amountIn,
-            slippage: MultiSwapSlippage.default,
-            recipient: nil, // TODO:
+            slippage: slippage,
+            recipient: recipient,
             transactionSettings: transactionSettings
         )
 

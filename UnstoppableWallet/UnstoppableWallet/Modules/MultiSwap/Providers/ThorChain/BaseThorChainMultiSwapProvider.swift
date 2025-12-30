@@ -79,7 +79,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: Address?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+    func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
         let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient)
 
         switch tokenIn.blockchainType {
@@ -254,7 +254,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil, recipient: Address? = nil, params: Parameters? = nil) async throws -> SwapQuote {
+    func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil, recipient: String? = nil, params: Parameters? = nil) async throws -> SwapQuote {
         guard let assetIn = assets.first(where: { $0.token == tokenIn }) else {
             throw SwapError.unsupportedTokenIn
         }
@@ -293,9 +293,9 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         return try await networkManager.fetch(url: "\(baseUrl)/quote/swap", parameters: parameters)
     }
 
-    func resolveDestination(recipient: Address?, token: Token) async throws -> String {
+    func resolveDestination(recipient: String?, token: Token) async throws -> String {
         if let recipient {
-            return recipient.raw
+            return recipient
         }
 
         return try await DestinationHelper.resolveDestination(token: token).address
