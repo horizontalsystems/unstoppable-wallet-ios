@@ -155,7 +155,7 @@ extension TonSendHandler {
             return CautionNew(title: title, text: text, type: .error)
         }
 
-        func cautions(baseToken: Token) -> [CautionNew] {
+        func cautions(baseToken: Token, currency _: Currency, rates _: [String: Decimal]) -> [CautionNew] {
             var cautions = [CautionNew]()
 
             if let transactionError {
@@ -183,7 +183,7 @@ extension TonSendHandler {
             var fields = [SendField]()
 
             if let memo {
-                fields.append(.levelValue(title: "send.confirmation.memo".localized, value: memo, level: .regular))
+                fields.append(.simpleValue(title: "send.confirmation.memo".localized, value: memo))
             }
 
             return [

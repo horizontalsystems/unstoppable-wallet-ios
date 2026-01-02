@@ -10,7 +10,7 @@ enum SendField {
     case doubleValue(title: String, description: InfoDescription?, value1: String, value2: String?)
     case levelValue(title: String, value: String, level: ValueLevel)
     case note(iconName: String?, title: String)
-    case simpleValue(icon: String? = nil, title: CustomStringConvertible, value: String)
+    case simpleValue(icon: String? = nil, title: CustomStringConvertible, value: CustomStringConvertible)
     case address(title: String? = nil, value: String, blockchainType: BlockchainType)
     case selfAddress(value: String, blockchainType: BlockchainType)
     case price(title: String, tokenA: Token, tokenB: Token, amountA: Decimal, amountB: Decimal)
@@ -141,7 +141,7 @@ enum SendField {
                     }
                 },
                 right: {
-                    RightMultiText(subtitle: ComponentText(text: value, colorStyle: .primary))
+                    RightMultiText(subtitle: value.styled(.primary))
                 }
             )
         case let .hex(title, value):
@@ -283,10 +283,9 @@ extension SendField {
             return nil
         }
 
-        return .levelValue(
+        return .simpleValue(
             title: "swap.slippage".localized,
-            value: "\(slippage.description)%",
-            level: MultiSwapSlippage.validate(slippage: slippage).valueLevel
+            value: ComponentText(text: "\(slippage.description)%", colorStyle: MultiSwapSlippage.validate(slippage: slippage).valueLevel.colorStyle)
         )
     }
 
@@ -295,10 +294,9 @@ extension SendField {
             return nil
         }
 
-        return .levelValue(
+        return .simpleValue(
             title: "swap.confirmation.minimum_received".localized,
-            value: formatted,
-            level: .regular
+            value: formatted
         )
     }
 }

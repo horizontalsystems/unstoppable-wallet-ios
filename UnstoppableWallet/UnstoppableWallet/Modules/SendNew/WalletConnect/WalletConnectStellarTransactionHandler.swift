@@ -159,7 +159,7 @@ extension WalletConnectStellarTransactionHandler {
 
         var customSendButtonTitle: String? { "button.sign".localized }
 
-        func cautions(baseToken _: Token) -> [CautionNew] {
+        func cautions(baseToken _: Token, currency _: Currency, rates _: [String: Decimal]) -> [CautionNew] {
             []
         }
 
@@ -214,7 +214,7 @@ extension WalletConnectStellarTransactionHandler {
             return CautionNew(title: title, text: text, type: .error)
         }
 
-        func cautions(baseToken: Token) -> [CautionNew] {
+        func cautions(baseToken: Token, currency _: Currency, rates _: [String: Decimal]) -> [CautionNew] {
             transactionError.map { [caution(transactionError: $0, feeToken: baseToken)] } ?? []
         }
 

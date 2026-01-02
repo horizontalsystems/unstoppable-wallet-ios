@@ -228,10 +228,10 @@ struct MultiSwapView: View {
                                 let level = MultiSwapViewModel.PriceImpactLevel(priceImpact: abs(priceImpact))
 
                                 switch level {
-                                case .negligible:
+                                case .negligible, .low:
                                     EmptyView()
                                 default:
-                                    Text("(\(priceImpact.rounded(decimal: 2).description)%)")
+                                    Text(PriceImpact.display(value: priceImpact))
                                         .textBody(color: level.valueLevel.colorStyle.color)
                                 }
                             }
@@ -380,7 +380,7 @@ struct MultiSwapView: View {
     }
 
     @ViewBuilder private func quoteCautionsView(quote: MultiSwapViewModel.Quote) -> some View {
-        let cautions = quote.quote.cautions() + cautions(quote: quote)
+        let cautions = quote.quote.cautions()
 
         if !cautions.isEmpty {
             ForEach(cautions.indices, id: \.self) { index in
@@ -395,21 +395,6 @@ struct MultiSwapView: View {
         }
 
         return AppValue(token: tokenIn, value: availableBalance).formattedFull()
-    }
-
-    private func cautions(quote: MultiSwapViewModel.Quote) -> [CautionNew] {
-        var cautions = [CautionNew]()
-
-        if let priceImpact = viewModel.priceImpact {
-            let level = MultiSwapViewModel.PriceImpactLevel(priceImpact: abs(priceImpact))
-
-            switch level {
-            case .forbidden: cautions.append(.init(title: "swap.price_impact".localized, text: "swap.confirmation.impact_too_high".localized(AppConfig.appName, quote.provider.name), type: .error))
-            default: ()
-            }
-        }
-
-        return cautions
     }
 
     private func buttonState() -> (String, ThemeButton.Style, Bool, Bool, MultiSwapPreSwapStep?) {

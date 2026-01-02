@@ -1,3 +1,4 @@
+import Foundation
 import MarketKit
 import OneInchKit
 import UniswapKit
@@ -34,5 +35,11 @@ extension MultiSwapViewModel {
         }
 
         return MultiSwapViewModel(providers: providers, token: token)
+    }
+}
+
+enum PriceImpact {
+    static func display(value: Decimal) -> String {
+        "-\(abs(value).rounded(decimal: 2).description)%"
     }
 }

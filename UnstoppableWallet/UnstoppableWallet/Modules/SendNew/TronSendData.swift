@@ -230,7 +230,7 @@ class TronSendData: ISendData {
         return CautionNew(title: title, text: text, type: .error)
     }
 
-    func cautions(baseToken: Token) -> [CautionNew] {
+    func cautions(baseToken: Token, currency _: Currency, rates _: [String: Decimal]) -> [CautionNew] {
         var cautions = [CautionNew]()
 
         if let transactionError {

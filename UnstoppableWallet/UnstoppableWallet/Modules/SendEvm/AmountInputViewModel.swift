@@ -87,7 +87,7 @@ open class AmountInputViewModel {
     private func sync(amountWarning: AmountWarning?) {
         amountWarningRelay.accept(amountWarning.flatMap { warning in
             switch warning {
-            case let .highPriceImpact(priceImpact): return "-\(priceImpact.description)%"
+            case let .highPriceImpact(priceImpact): return PriceImpact.display(value: priceImpact)
             }
         })
     }

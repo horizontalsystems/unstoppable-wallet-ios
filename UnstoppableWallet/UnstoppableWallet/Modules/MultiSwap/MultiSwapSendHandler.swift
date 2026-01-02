@@ -140,8 +140,36 @@ extension MultiSwapSendHandler {
             nil
         }
 
-        func cautions(baseToken: Token) -> [CautionNew] {
-            quote.cautions(baseToken: baseToken)
+        func cautions(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [CautionNew] {
+            quote.cautions(baseToken: baseToken) + priceImpactCautions(baseToken: baseToken, currency: currency, rates: rates)
+        }
+
+        private func priceImpact(baseToken _: Token, currency _: Currency, rates: [String: Decimal]) -> Decimal? {
+            let fiatAmountIn = rates[tokenIn.coin.uid].map { amountIn * $0 }
+            let fiatAmountOut = rates[tokenOut.coin.uid].map { quote.amountOut * $0 }
+
+            if let fiatAmountIn, let fiatAmountOut, fiatAmountIn != 0, fiatAmountIn > fiatAmountOut {
+                let priceImpact = (fiatAmountOut * 100 / fiatAmountIn) - 100
+                return priceImpact
+            }
+
+            return nil
+        }
+
+        private func priceImpactCautions(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [CautionNew] {
+            var cautions = [CautionNew]()
+
+            if let priceImpact = priceImpact(baseToken: baseToken, currency: currency, rates: rates) {
+                let level = MultiSwapViewModel.PriceImpactLevel(priceImpact: abs(priceImpact))
+
+                switch level {
+                case .warning: cautions.append(.init(title: "swap.price_impact".localized, text: "swap.confirmation.impact_high".localized(PriceImpact.display(value: priceImpact)), type: .warning))
+                case .forbidden: cautions.append(.init(title: "swap.price_impact".localized, text: "swap.confirmation.impact_too_high".localized(PriceImpact.display(value: priceImpact)), type: .error))
+                default: ()
+                }
+            }
+
+            return cautions
         }
 
         func flowSection(baseToken _: Token, currency: Currency, rates: [String: Decimal]) -> SendDataSection {
@@ -172,20 +200,15 @@ extension MultiSwapSendHandler {
                 )
             )
 
-            let fiatAmountIn = rates[tokenIn.coin.uid].map { amountIn * $0 }
-            let fiatAmountOut = rates[tokenOut.coin.uid].map { quote.amountOut * $0 }
-
-            if let fiatAmountIn, let fiatAmountOut, fiatAmountIn != 0, fiatAmountIn > fiatAmountOut {
-                let priceImpact = (fiatAmountOut * 100 / fiatAmountIn) - 100
+            if let priceImpact = priceImpact(baseToken: baseToken, currency: currency, rates: rates) {
                 let level = MultiSwapViewModel.PriceImpactLevel(priceImpact: abs(priceImpact))
 
                 switch level {
-                case .warning, .forbidden:
+                case .normal, .warning, .forbidden:
                     fields.append(
-                        .levelValue(
+                        .simpleValue(
                             title: "swap.price_impact".localized,
-                            value: "\(priceImpact.rounded(decimal: 2))%",
-                            level: level.valueLevel
+                            value: ComponentText(text: PriceImpact.display(value: priceImpact), colorStyle: level.valueLevel.colorStyle)
                         )
                     )
                 default: ()
