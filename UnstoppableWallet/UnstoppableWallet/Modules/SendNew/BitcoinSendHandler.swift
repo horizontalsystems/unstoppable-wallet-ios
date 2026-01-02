@@ -165,7 +165,7 @@ extension BitcoinSendHandler {
             }
 
             sendFields.append(contentsOf: UtxoSendHelper.feeFields(fee: fee, feeToken: baseToken, currency: currency, feeTokenRate: rate))
-            sections.append(.init(sendFields))
+            sections.append(.init(sendFields, isMain: false))
 
             return sections
         }

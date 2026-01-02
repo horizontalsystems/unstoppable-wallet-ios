@@ -206,7 +206,7 @@ extension MoneroSendHandler {
             }
 
             sections.append(
-                .init(fields + feeFields(feeToken: token, currency: currency, feeTokenRate: rate))
+                .init(fields + feeFields(feeToken: token, currency: currency, feeTokenRate: rate), isMain: false)
             )
 
             return sections

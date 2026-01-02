@@ -12,7 +12,7 @@ enum SendField {
     case note(iconName: String?, title: String)
     case simpleValue(icon: String? = nil, title: CustomStringConvertible, value: CustomStringConvertible)
     case address(title: String? = nil, value: String, blockchainType: BlockchainType)
-    case selfAddress(value: String, blockchainType: BlockchainType)
+    case selfAddress(value: String)
     case price(title: String, tokenA: Token, tokenB: Token, amountA: Decimal, amountB: Decimal)
     case hex(title: String, value: String)
     case mevProtection(isOn: Binding<Bool>)
@@ -110,7 +110,7 @@ enum SendField {
             }
         case let .address(title, value, blockchainType):
             RecipientRowsView(title: title, value: value, blockchainType: blockchainType)
-        case let .selfAddress(value, blockchainType):
+        case let .selfAddress(value):
             Cell(
                 left: {
                     ThemeImage("wallet_filled", size: .iconSize24)

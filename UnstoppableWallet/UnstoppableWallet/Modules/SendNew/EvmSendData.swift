@@ -54,6 +54,6 @@ class EvmSendData: BaseSendEvmData, ISendData {
 
         fields.append(contentsOf: feeFields(feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid]))
 
-        return [flow, .init(fields)].compactMap { $0 }
+        return [flow, .init(fields, isMain: false)].compactMap { $0 }
     }
 }

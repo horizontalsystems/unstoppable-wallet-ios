@@ -188,7 +188,7 @@ extension TonSendHandler {
 
             return [
                 flowSection(baseToken: baseToken, currency: currency, rates: rates),
-                .init(fields + feeFields(currency: currency, feeToken: baseToken, feeTokenRate: rates[token.coin.uid])),
+                .init(fields + feeFields(currency: currency, feeToken: baseToken, feeTokenRate: rates[token.coin.uid]), isMain: false),
             ]
         }
 

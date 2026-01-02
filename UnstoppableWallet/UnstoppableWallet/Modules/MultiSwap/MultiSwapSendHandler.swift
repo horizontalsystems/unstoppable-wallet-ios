@@ -227,7 +227,7 @@ extension MultiSwapSendHandler {
 
             return [
                 flowSection(baseToken: baseToken, currency: currency, rates: rates),
-                .init(fields),
+                .init(fields, isMain: false),
             ] + otherSections
         }
     }

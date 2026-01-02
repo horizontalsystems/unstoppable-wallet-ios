@@ -80,7 +80,7 @@ struct SendView: View {
                                     VStack(spacing: 0) {
                                         fieldList(section: section)
                                     }
-                                    .padding(.vertical, 8)
+                                    .padding(.vertical, section.isMain ? 0 : 8)
                                 }
                             } else {
                                 fieldList(section: section)

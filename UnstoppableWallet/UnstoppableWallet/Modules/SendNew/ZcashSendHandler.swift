@@ -132,7 +132,7 @@ extension ZcashSendHandler {
                         currencyValue: rates[baseToken.coin.uid].map { CurrencyValue(currency: currency, value: fee * $0) },
                         formatFull: true
                     ),
-                ]),
+                ], isMain: false),
             ]
         }
 
