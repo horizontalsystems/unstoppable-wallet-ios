@@ -39,7 +39,6 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
             transactionError: transactionError,
             slippage: quote.tradeOptions.allowedSlippage,
             recipient: quote.tradeOptions.recipient?.eip55,
-            insufficientFeeBalance: false, // TODO:
             gasPrice: gasPriceData?.userDefined,
             evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce

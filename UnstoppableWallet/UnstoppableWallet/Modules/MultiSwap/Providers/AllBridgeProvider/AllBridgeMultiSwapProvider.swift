@@ -310,19 +310,15 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
             let gasPriceData = transactionSettings?.gasPriceData
             var evmFeeData: EvmFeeData?
             var transactionError: Error?
-            var insufficientFeeBalance = false
 
             if let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, let gasPriceData {
                 do {
-                    evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPriceData: gasPriceData)
-
-                    let evmBalance = evmKitWrapper.evmKit.accountState?.balance ?? 0
-                    let feeAmount = BigUInt((evmFeeData?.gasLimit ?? 0) * gasPriceData.userDefined.max)
-                    let txAmount = transactionData.value
-                    insufficientFeeBalance = txAmount + feeAmount > evmBalance
+                    let _evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPriceData: gasPriceData)
+                    evmFeeData = _evmFeeData
 
                     logger?.log(level: .debug, message: "AllBridge: EvmFeeData: \(evmFeeData?.gasLimit.description ?? "N/A") \(evmFeeData?.surchargedGasLimit.description ?? "N/A") \(evmFeeData?.l1Fee?.description ?? "N/A")")
-                    logger?.log(level: .debug, message: "AllBridge: EvmBalance = \(evmBalance.description) >= tx:\(txAmount.description) + fee:\(feeAmount.description)")
+
+                    try BaseEvmMultiSwapProvider.validateBalance(evmKitWrapper: evmKitWrapper, transactionData: transactionData, evmFeeData: _evmFeeData, gasPriceData: gasPriceData)
                 } catch {
                     transactionError = error
                 }
@@ -334,7 +330,6 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 transactionError: transactionError,
                 slippage: crosschain ? nil : slippage,
                 recipient: recipient,
-                insufficientFeeBalance: insufficientFeeBalance,
                 gasPrice: gasPriceData?.userDefined,
                 evmFeeData: evmFeeData,
                 nonce: transactionSettings?.nonce
