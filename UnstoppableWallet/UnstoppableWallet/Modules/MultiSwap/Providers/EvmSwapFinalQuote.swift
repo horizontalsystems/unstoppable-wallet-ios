@@ -2,7 +2,7 @@ import EvmKit
 import Foundation
 import MarketKit
 
-class EvmSwapFinalQuote: BaseSendEvmData, IMultiSwapConfirmationQuote {
+class EvmSwapFinalQuote: BaseSendEvmData, ISwapFinalQuote {
     private let expectedBuyAmount: Decimal
     let transactionData: TransactionData?
     private let transactionError: Error?

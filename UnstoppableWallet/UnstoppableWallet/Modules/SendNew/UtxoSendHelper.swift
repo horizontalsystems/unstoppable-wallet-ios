@@ -2,7 +2,7 @@ import BitcoinCore
 import Foundation
 import MarketKit
 
-class BaseSendBtcData {
+class UtxoSendHelper {
     let satoshiPerByte: Int?
     let fee: Decimal?
 
@@ -11,7 +11,7 @@ class BaseSendBtcData {
         self.fee = fee
     }
 
-    func amountData(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
+    static func amountData(fee: Decimal?, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
         guard let fee else {
             return nil
         }
@@ -22,8 +22,8 @@ class BaseSendBtcData {
         )
     }
 
-    func feeFields(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [SendField] {
-        let amountData = amountData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate)
+    static func feeFields(fee: Decimal?, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [SendField] {
+        let amountData = amountData(fee: fee, feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate)
 
         return [
             .value(
@@ -35,7 +35,7 @@ class BaseSendBtcData {
         ]
     }
 
-    func caution(transactionError: Error, feeToken: Token) -> CautionNew {
+    static func caution(transactionError: Error, feeToken: Token) -> CautionNew {
         let title: String
         let text: String
 

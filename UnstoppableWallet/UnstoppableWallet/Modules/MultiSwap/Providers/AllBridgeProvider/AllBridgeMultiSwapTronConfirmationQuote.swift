@@ -3,7 +3,7 @@ import Foundation
 import MarketKit
 import TronKit
 
-class AllBridgeMultiSwapTronConfirmationQuote: IMultiSwapConfirmationQuote {
+class AllBridgeMultiSwapTronConfirmationQuote: ISwapFinalQuote {
     let amountIn: Decimal
     let expectedAmountOut: Decimal
     let recipient: String?

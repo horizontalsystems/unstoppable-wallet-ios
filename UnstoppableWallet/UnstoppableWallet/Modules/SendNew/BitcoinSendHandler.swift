@@ -54,7 +54,6 @@ extension BitcoinSendHandler: ISendHandler {
             params: params,
             rbfAllowed: blockchainManager.transactionRbfAllowed(blockchainType: token.blockchainType),
             transactionError: transactionError,
-            satoshiPerByte: satoshiPerByte,
             feeData: feeData
         )
     }
@@ -69,11 +68,12 @@ extension BitcoinSendHandler: ISendHandler {
 }
 
 extension BitcoinSendHandler {
-    class SendData: BaseSendBtcData, ISendData {
+    class SendData: ISendData {
         private let token: Token
         private let transactionError: Error?
         let params: SendParameters
         let rbfAllowed: Bool
+        private let fee: Decimal?
 
         private var timeLock: String? {
             if let data = params.pluginData[HodlerPlugin.id] as? HodlerData {
@@ -83,13 +83,12 @@ extension BitcoinSendHandler {
             return nil
         }
 
-        init(token: Token, params: SendParameters, rbfAllowed: Bool, transactionError: Error?, satoshiPerByte: Int?, feeData: BitcoinFeeData?) {
+        init(token: Token, params: SendParameters, rbfAllowed: Bool, transactionError: Error?, feeData: BitcoinFeeData?) {
             self.token = token
             self.params = params
             self.rbfAllowed = rbfAllowed
             self.transactionError = transactionError
-
-            super.init(satoshiPerByte: satoshiPerByte, fee: feeData?.fee)
+            fee = feeData?.fee
         }
 
         var feeData: FeeData? {
@@ -112,7 +111,7 @@ extension BitcoinSendHandler {
             var cautions = [CautionNew]()
 
             if let transactionError {
-                cautions.append(caution(transactionError: transactionError, feeToken: baseToken))
+                cautions.append(UtxoSendHelper.caution(transactionError: transactionError, feeToken: baseToken))
             }
 
             return cautions
@@ -165,7 +164,7 @@ extension BitcoinSendHandler {
                 ))
             }
 
-            sendFields.append(contentsOf: feeFields(feeToken: baseToken, currency: currency, feeTokenRate: rate))
+            sendFields.append(contentsOf: UtxoSendHelper.feeFields(fee: fee, feeToken: baseToken, currency: currency, feeTokenRate: rate))
             sections.append(.init(sendFields))
 
             return sections
