@@ -2,25 +2,32 @@ import BitcoinCore
 import Foundation
 import MarketKit
 
-class USwapMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirmationQuote {
-    let quote: USwapMultiSwapProvider.Quote
-    let recipient: String?
-    let slippage: Decimal
+class UtxoSwapFinalQuote: ISwapFinalQuote {
+    private let expectedBuyAmount: Decimal
     let sendParameters: SendParameters?
-    let transactionError: Error?
+    private let slippage: Decimal
+    private let recipient: String?
+    private let transactionError: Error?
+    private let fee: Decimal?
 
-    init(quote: USwapMultiSwapProvider.Quote, recipient: String?, slippage: Decimal, satoshiPerByte: Int?, fee: Decimal?, sendParameters: SendParameters?, transactionError: Error?) {
-        self.quote = quote
-        self.recipient = recipient
-        self.slippage = slippage
+    init(
+        expectedBuyAmount: Decimal,
+        sendParameters: SendParameters?,
+        slippage: Decimal,
+        recipient: String?,
+        transactionError: Error?,
+        fee: Decimal?,
+    ) {
+        self.expectedBuyAmount = expectedBuyAmount
         self.sendParameters = sendParameters
+        self.slippage = slippage
+        self.recipient = recipient
         self.transactionError = transactionError
-
-        super.init(satoshiPerByte: satoshiPerByte, fee: fee)
+        self.fee = fee
     }
 
     var amountOut: Decimal {
-        quote.expectedBuyAmount
+        expectedBuyAmount
     }
 
     var feeData: FeeData? {
@@ -28,13 +35,15 @@ class USwapMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirmatio
     }
 
     var canSwap: Bool {
-        satoshiPerByte != nil && fee != nil
+        fee != nil && sendParameters != nil
     }
 
     func cautions(baseToken: MarketKit.Token) -> [CautionNew] {
-        transactionError.map { error in
-            [caution(transactionError: error, feeToken: baseToken)]
-        } ?? []
+        if let transactionError {
+            return [UtxoSendHelper.caution(transactionError: transactionError, feeToken: baseToken)]
+        } else {
+            return []
+        }
     }
 
     func fields(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, baseToken: MarketKit.Token, currency: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
@@ -53,7 +62,7 @@ class USwapMultiSwapBtcConfirmationQuote: BaseSendBtcData, IMultiSwapConfirmatio
             fields.append(.recipient(recipient, blockchainType: tokenOut.blockchainType))
         }
 
-        fields.append(contentsOf: feeFields(feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate))
+        fields.append(contentsOf: UtxoSendHelper.feeFields(fee: fee, feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate))
 
         return fields
     }

@@ -61,7 +61,7 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         return try await adapter.sendProposal(outputs: [transparentOutput, memoOutput])
     }
 
-    override func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+    override func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> ISwapFinalQuote {
         // use base scenario for all tokens except zcash
         guard tokenIn.blockchainType == .zcash else {
             return try await super.confirmationQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient, transactionSettings: transactionSettings)
@@ -78,22 +78,26 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
             transactionError = BitcoinCoreErrors.SendValueErrors.dust(dustThreshold + 1)
         }
 
-        return MayaMultiSwapZcashConfirmationQuote(
-            swapQuote: swapQuote,
-            recipient: recipient,
-            amountIn: amountIn,
-            totalFeeRequired: proposal.totalFeeRequired(),
+        return ZcashSwapFinalQuote(
+            expectedBuyAmount: swapQuote.quote.expectedAmountOut,
+            proposal: proposal,
             slippage: slippage,
-            transactionError: transactionError
+            recipient: recipient,
+            transactionError: transactionError,
+            fee: proposal.totalFeeRequired().decimalValue.decimalValue,
         )
     }
 
-    override func swap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, quote: IMultiSwapConfirmationQuote) async throws {
-        if let quote = quote as? MayaMultiSwapZcashConfirmationQuote {
+    override func swap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, quote: ISwapFinalQuote) async throws {
+        if let quote = quote as? ZcashSwapFinalQuote {
             guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
                 throw SwapError.noZcashAdapter
             }
-            let proposal = try await proposal(tokenIn: tokenIn, swapQuote: quote.swapQuote, amountIn: amountIn)
+
+            guard let proposal = quote.proposal else {
+                throw SwapError.noProposal
+            }
+
             try await adapter.send(proposal: proposal)
         } else {
             try await super.swap(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote)

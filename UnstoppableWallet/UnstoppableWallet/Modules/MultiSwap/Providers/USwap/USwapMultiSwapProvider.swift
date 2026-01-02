@@ -218,7 +218,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> IMultiSwapConfirmationQuote {
+    func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> ISwapFinalQuote {
         let quote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient, dry: false)
 
         let amountOut = quote.expectedBuyAmount
@@ -303,7 +303,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         allowanceHelper.preSwapView(step: step, tokenIn: tokenIn, amount: amount, isPresented: isPresented, onSuccess: onSuccess)
     }
 
-    func swap(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, quote: IMultiSwapConfirmationQuote) async throws {
+    func swap(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, quote: ISwapFinalQuote) async throws {
         if let quote = quote as? EvmSwapFinalQuote {
             guard let transactionData = quote.transactionData else {
                 throw SwapError.invalidTransactionData
@@ -328,7 +328,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 privateSend: useMevProtection,
                 nonce: quote.nonce
             )
-        } else if let quote = quote as? USwapMultiSwapBtcConfirmationQuote {
+        } else if let quote = quote as? UtxoSwapFinalQuote {
             guard let adapter = adapterManager.adapter(for: tokenIn) as? BitcoinBaseAdapter else {
                 throw SwapError.noBitcoinAdapter
             }
@@ -338,7 +338,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             }
 
             try adapter.send(params: sendParameters)
-        } else if let quote = quote as? USwapMultiSwapZcashConfirmationQuote {
+        } else if let quote = quote as? ZcashSwapFinalQuote {
             guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
                 throw SwapError.noZcashAdapter
             }
@@ -376,7 +376,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         slippage: Decimal,
         recipient: String?,
         transactionSettings: TransactionSettings?
-    ) async throws -> IMultiSwapConfirmationQuote {
+    ) async throws -> ISwapFinalQuote {
         guard let jsonObject = quote.tx else {
             throw SwapError.noTransactionData
         }
@@ -438,13 +438,12 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         slippage: Decimal,
         recipient: String?,
         transactionSettings: TransactionSettings?
-    ) async throws -> IMultiSwapConfirmationQuote {
+    ) async throws -> ISwapFinalQuote {
         var transactionError: Error?
-        var satoshiPerByte: Int?
         var sendInfo: SendInfo?
         var params: SendParameters?
 
-        if let _satoshiPerByte = transactionSettings?.satoshiPerByte,
+        if let satoshiPerByte = transactionSettings?.satoshiPerByte,
            let adapter = adapterManager.adapter(for: tokenIn) as? BitcoinBaseAdapter
         {
             do {
@@ -453,11 +452,10 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                     throw BitcoinCoreErrors.SendValueErrors.dust(dustThreshold + 1)
                 }
 
-                satoshiPerByte = _satoshiPerByte
                 let _params = SendParameters(
                     address: quote.inboundAddress,
                     value: value,
-                    feeRate: _satoshiPerByte,
+                    feeRate: satoshiPerByte,
                     sortType: .none,
                     rbfEnabled: true,
                     memo: quote.memo,
@@ -473,14 +471,13 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             }
         }
 
-        return USwapMultiSwapBtcConfirmationQuote(
-            quote: quote,
-            recipient: recipient,
-            slippage: slippage,
-            satoshiPerByte: satoshiPerByte,
-            fee: sendInfo?.fee,
+        return UtxoSwapFinalQuote(
+            expectedBuyAmount: quote.expectedBuyAmount,
             sendParameters: params,
-            transactionError: transactionError
+            slippage: slippage,
+            recipient: recipient,
+            transactionError: transactionError,
+            fee: sendInfo?.fee,
         )
     }
 
@@ -489,11 +486,11 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         tokenOut _: Token,
         amountIn: Decimal,
         amountOut: Decimal,
-        amountOutMin: Decimal,
+        amountOutMin _: Decimal,
         quote: Quote,
         slippage: Decimal,
         recipient: String?
-    ) async throws -> IMultiSwapConfirmationQuote {
+    ) async throws -> ISwapFinalQuote {
         guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
             throw SwapError.noZcashAdapter
         }
@@ -521,15 +518,13 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError = error
         }
 
-        return USwapMultiSwapZcashConfirmationQuote(
-            amountIn: amountIn,
-            expectedAmountOut: amountOut,
-            amountOutMin: amountOutMin,
-            recipient: recipient,
-            slippage: slippage,
-            totalFeeRequired: totalFeeRequired,
+        return ZcashSwapFinalQuote(
+            expectedBuyAmount: amountOut,
             proposal: proposal,
-            transactionError: transactionError
+            slippage: slippage,
+            recipient: recipient,
+            transactionError: transactionError,
+            fee: totalFeeRequired?.decimalValue.decimalValue,
         )
     }
 }

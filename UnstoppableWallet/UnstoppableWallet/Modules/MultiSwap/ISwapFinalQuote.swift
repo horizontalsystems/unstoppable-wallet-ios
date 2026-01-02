@@ -1,7 +1,7 @@
 import Foundation
 import MarketKit
 
-protocol IMultiSwapConfirmationQuote {
+protocol ISwapFinalQuote {
     var amountOut: Decimal { get }
     var feeData: FeeData? { get }
     var canSwap: Bool { get }
