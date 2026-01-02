@@ -32,7 +32,7 @@ class EvmSendData: BaseSendEvmData, ISendData {
         decoration.customSendButtonTitle
     }
 
-    func cautions(baseToken: Token) -> [CautionNew] {
+    func cautions(baseToken: Token, currency _: Currency, rates _: [String: Decimal]) -> [CautionNew] {
         var cautions = [CautionNew]()
 
         if let transactionError {

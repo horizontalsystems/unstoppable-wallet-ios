@@ -56,3 +56,30 @@ enum ComponentImage: CustomStringConvertible {
         }
     }
 }
+
+extension CustomStringConvertible {
+    func styled(_ colorStyle: ColorStyle, forced: Bool = false) -> CustomStringConvertible {
+        switch self {
+        case let component as ComponentText:
+            if component.colorStyle == nil || forced {
+                return ComponentText(text: component.text, colorStyle: colorStyle, dimmed: component.dimmed)
+            }
+        case let component as String:
+            return ComponentText(text: component, colorStyle: colorStyle)
+
+        case let component as ComponentBadge:
+            if component.colorStyle == nil || forced {
+                return ComponentBadge(text: component.text, change: component.change, mode: component.mode, colorStyle: colorStyle)
+            }
+
+        case let .icon(name, size, style) as ComponentImage:
+            if style == nil || forced {
+                return ComponentImage.icon(name: name, size: size, colorStyle: colorStyle)
+            }
+
+        default: return self
+        }
+
+        return self
+    }
+}

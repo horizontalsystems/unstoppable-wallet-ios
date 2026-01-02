@@ -23,9 +23,8 @@ class SwapViewItemHelper {
         guard var priceImpact, let impactLevel, impactLevel.rawValue >= minLevel.rawValue else {
             return nil
         }
-        priceImpact.negate()
         return UniswapModule.PriceImpactViewItem(
-            value: priceImpact.description + "%",
+            value: PriceImpact.display(value: priceImpact),
             level: impactLevel
         )
     }

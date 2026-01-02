@@ -78,7 +78,7 @@ class SendViewModel: ObservableObject {
         var cautions = transactionService?.cautions ?? []
 
         if let sendData, let baseToken = handler?.baseToken {
-            cautions.append(contentsOf: sendData.cautions(baseToken: baseToken))
+            cautions.append(contentsOf: sendData.cautions(baseToken: baseToken, currency: currency, rates: rates))
         }
 
         return cautions

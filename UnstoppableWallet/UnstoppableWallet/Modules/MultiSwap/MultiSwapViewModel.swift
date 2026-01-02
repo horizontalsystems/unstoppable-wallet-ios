@@ -543,17 +543,20 @@ extension MultiSwapViewModel {
 
     enum PriceImpactLevel {
         case negligible
+        case low
         case normal
         case warning
         case forbidden
 
-        private static let normalPriceImpact: Decimal = 1
-        private static let warningPriceImpact: Decimal = 5
-        private static let forbiddenPriceImpact: Decimal = 20
+        private static let lowPriceImpact: Decimal = 1
+        private static let normalPriceImpact: Decimal = 5
+        private static let warningPriceImpact: Decimal = 10
+        private static let forbiddenPriceImpact: Decimal = 50
 
         init(priceImpact: Decimal) {
             switch priceImpact {
-            case 0 ..< Self.normalPriceImpact: self = .negligible
+            case 0 ..< Self.lowPriceImpact: self = .negligible
+            case Self.lowPriceImpact ..< Self.normalPriceImpact: self = .low
             case Self.normalPriceImpact ..< Self.warningPriceImpact: self = .normal
             case Self.warningPriceImpact ..< Self.forbiddenPriceImpact: self = .warning
             default: self = .forbidden
@@ -562,9 +565,9 @@ extension MultiSwapViewModel {
 
         var valueLevel: ValueLevel {
             switch self {
-            case .warning: return .warning
-            case .forbidden: return .error
-            default: return .regular
+            case .negligible, .low: return .regular
+            case .normal: return .warning
+            case .warning, .forbidden: return .error
             }
         }
     }

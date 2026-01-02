@@ -757,7 +757,8 @@
 "swap.confirmation.slide_to_swap" = "Slide to Swap";
 "swap.confirmation.swapping" = "Swapping";
 "swap.confirmation.refresh" = "Refresh";
-"swap.confirmation.impact_too_high" = "%@ has disabled swap action for this trade because you're getting an extremely unfavorable price. This is due to extremely low liquidity.\n\nIf you still want to swap please use %@ website instead.";
+"swap.confirmation.impact_high" = "You’ll lose a big part (%@) of your funds on this swap.";
+"swap.confirmation.impact_too_high" = "This swap would result in a major loss (%@) due to very low liquidity.";
 "swap.confirmation.impact_warning" = "Important! You're getting an extremely unfavorable price. This is due to extremely low liquidity.";
 
 "swap.confirmation.minimum_received" = "Guaranteed Amount";
