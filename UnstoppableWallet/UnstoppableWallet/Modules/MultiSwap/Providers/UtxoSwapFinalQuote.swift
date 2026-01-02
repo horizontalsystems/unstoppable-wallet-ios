@@ -35,7 +35,7 @@ class UtxoSwapFinalQuote: ISwapFinalQuote {
     }
 
     var canSwap: Bool {
-        fee != nil && sendParameters != nil
+        fee != nil && sendParameters != nil && transactionError == nil
     }
 
     func cautions(baseToken: MarketKit.Token) -> [CautionNew] {

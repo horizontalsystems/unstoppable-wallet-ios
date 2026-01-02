@@ -105,6 +105,18 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
 }
 
 extension BaseEvmMultiSwapProvider {
+    static func validateBalance(evmKitWrapper: EvmKitWrapper, transactionData: TransactionData, evmFeeData: EvmFeeData, gasPriceData: GasPriceData) throws {
+        let evmBalance = evmKitWrapper.evmKit.accountState?.balance ?? 0
+        let txAmount = transactionData.value
+        let feeAmount = evmFeeData.totalFee(gasPrice: gasPriceData.userDefined)
+
+        if txAmount + feeAmount > evmBalance {
+            throw AppError.ethereum(reason: .insufficientBalanceWithFee)
+        }
+    }
+}
+
+extension BaseEvmMultiSwapProvider {
     enum SwapError: Error {
         case noEvmKitWrapper
     }

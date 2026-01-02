@@ -8,7 +8,6 @@ class EvmSwapFinalQuote: BaseSendEvmData, ISwapFinalQuote {
     private let transactionError: Error?
     private let slippage: Decimal?
     private let recipient: String?
-    private let insufficientFeeBalance: Bool
 
     init(
         expectedBuyAmount: Decimal,
@@ -16,7 +15,6 @@ class EvmSwapFinalQuote: BaseSendEvmData, ISwapFinalQuote {
         transactionError: Error? = nil,
         slippage: Decimal?,
         recipient: String?,
-        insufficientFeeBalance: Bool,
         gasPrice: GasPrice?,
         evmFeeData: EvmFeeData?,
         nonce: Int?
@@ -26,7 +24,6 @@ class EvmSwapFinalQuote: BaseSendEvmData, ISwapFinalQuote {
         self.transactionError = transactionError
         self.slippage = slippage
         self.recipient = recipient
-        self.insufficientFeeBalance = insufficientFeeBalance
 
         super.init(gasPrice: gasPrice, evmFeeData: evmFeeData, nonce: nonce)
     }
@@ -40,7 +37,7 @@ class EvmSwapFinalQuote: BaseSendEvmData, ISwapFinalQuote {
     }
 
     var canSwap: Bool {
-        gasPrice != nil && evmFeeData != nil && !insufficientFeeBalance && transactionData != nil
+        gasPrice != nil && evmFeeData != nil && transactionData != nil && transactionError == nil
     }
 
     func cautions(baseToken: Token) -> [CautionNew] {
@@ -48,16 +45,6 @@ class EvmSwapFinalQuote: BaseSendEvmData, ISwapFinalQuote {
 
         if let transactionError {
             cautions.append(caution(transactionError: transactionError, feeToken: baseToken))
-        }
-
-        if insufficientFeeBalance {
-            cautions.append(
-                .init(
-                    title: "fee_settings.errors.insufficient_balance".localized,
-                    text: "ethereum_transaction.error.insufficient_balance_with_fee".localized(baseToken.coin.code),
-                    type: .error
-                )
-            )
         }
 
         return cautions

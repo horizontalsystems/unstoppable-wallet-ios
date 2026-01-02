@@ -96,8 +96,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         let txAmount = swap.transaction.value
         let feeAmount = BigUInt(swap.transaction.gasLimit * gasPriceData.userDefined.max)
         let totalAmount = txAmount + feeAmount
-
-        let insufficientFeeBalance = totalAmount > evmBalance
+        let transactionError: Error? = totalAmount > evmBalance ? AppError.ethereum(reason: .insufficientBalanceWithFee) : nil
 
         let evmFeeData = try await evmFeeEstimator.estimateFee(
             evmKitWrapper: evmKitWrapper,
@@ -109,9 +108,9 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         return EvmSwapFinalQuote(
             expectedBuyAmount: swap.amountOut ?? 0,
             transactionData: swap.transactionData,
+            transactionError: transactionError,
             slippage: slippage,
             recipient: recipient,
-            insufficientFeeBalance: insufficientFeeBalance,
             gasPrice: swap.transaction.gasPrice,
             evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce
