@@ -22,11 +22,13 @@ extension ISendData {
 
 class SendDataSection {
     let fields: [SendField]
+    let isMain: Bool
     let isFlow: Bool
     let isList: Bool
 
-    init(_ fields: [SendField], isFlow: Bool = false, isList: Bool = true) {
+    init(_ fields: [SendField], isMain: Bool = true, isFlow: Bool = false, isList: Bool = true) {
         self.fields = fields
+        self.isMain = isMain
         self.isFlow = isFlow
         self.isList = isList
     }

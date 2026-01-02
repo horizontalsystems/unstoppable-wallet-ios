@@ -246,7 +246,7 @@ extension TonConnectSendHandler {
                     default: ()
                     }
 
-                    sections.append(.init(fields))
+                    sections.append(.init(fields, isMain: false))
                 }
             }
 

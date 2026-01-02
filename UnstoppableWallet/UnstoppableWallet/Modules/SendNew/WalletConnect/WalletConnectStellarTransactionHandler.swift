@@ -136,7 +136,7 @@ extension WalletConnectStellarTransactionHandler {
                 chainFields.append(.simpleValue(title: chainName, value: chain.address?.shortened ?? ""))
             }
 
-            sections.append(.init(chainFields))
+            sections.append(.init(chainFields, isMain: false))
 
             return sections
         }
@@ -231,7 +231,7 @@ extension WalletConnectStellarTransactionHandler {
                         currencyValue: rates[baseToken.coin.uid].map { CurrencyValue(currency: currency, value: fee * $0) },
                         formatFull: true
                     ),
-                ])
+                ], isMain: false)
                 sections.append(feeSection)
             }
 

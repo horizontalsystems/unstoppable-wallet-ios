@@ -249,7 +249,7 @@ class TronSendData: ISendData {
         let decorationFields = decorationFields(currency: currency, rates: rates)
         let feeFields = feeFields(currency: currency, feeTokenRate: rates[baseToken.coin.uid])
 
-        sections.append(.init(decorationFields + feeFields))
+        sections.append(.init(decorationFields + feeFields, isMain: false))
 
         return sections
     }

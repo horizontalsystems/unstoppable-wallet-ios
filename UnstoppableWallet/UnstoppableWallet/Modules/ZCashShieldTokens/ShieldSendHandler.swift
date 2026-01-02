@@ -111,7 +111,7 @@ extension ShieldSendHandler {
             ))
             if let recipient {
                 flowFields.append(
-                    .selfAddress(value: recipient.stringEncoded, blockchainType: token.blockchainType)
+                    .selfAddress(value: recipient.stringEncoded)
                 )
             }
 
@@ -124,7 +124,7 @@ extension ShieldSendHandler {
             let fee = proposal.totalFeeRequired().decimalValue.decimalValue
 
             return [
-                SendDataSection(flowFields, isFlow: true),
+                .init(flowFields, isFlow: true),
                 .init(fields + [
                     .value(
                         title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
@@ -132,7 +132,7 @@ extension ShieldSendHandler {
                         currencyValue: rates[baseToken.coin.uid].map { CurrencyValue(currency: currency, value: fee * $0) },
                         formatFull: true
                     ),
-                ]),
+                ], isMain: false),
             ]
         }
 
