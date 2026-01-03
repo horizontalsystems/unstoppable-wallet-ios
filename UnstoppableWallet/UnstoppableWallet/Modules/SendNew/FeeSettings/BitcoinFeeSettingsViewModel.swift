@@ -1,47 +1,55 @@
+import BitcoinCore
 import EvmKit
 import Foundation
 import MarketKit
 import SwiftUI
 
 class BitcoinFeeSettingsViewModel: ObservableObject {
-    let service: BitcoinTransactionService
+    private let service: BitcoinTransactionService
+    private let params: SendParameters
 
-    init(service: BitcoinTransactionService) {
-        self.service = service
+    @Published var satoshiPerByteCautionState: FieldCautionState = .none
+    @Published var applyEnabled = false
+    @Published var resetEnabled = false
+    @Published var cautions = [CautionNew]()
 
-        if let satoshiPerByte = service.actualFeeRates?.recommended {
-            _satoshiPerByte = satoshiPerByte.description
+    @Published var fee: Decimal?
+    @Published var satoshiPerByte: Int? {
+        didSet {
+            sync()
         }
-
-        syncFromService()
     }
 
-    @Published private var _satoshiPerByte: String = ""
-    var satoshiPerByte: Binding<String> {
+    @Published private var _satoshiPerByteValue: String = ""
+    var satoshiPerByteValue: Binding<String> {
         Binding(
-            get: { self._satoshiPerByte },
+            get: { self._satoshiPerByteValue },
             set: { newValue in
-                self._satoshiPerByte = newValue
+                self._satoshiPerByteValue = newValue
                 self.handleChange()
             }
         )
     }
 
-    @Published var satoshiPerByteCautionState: FieldCautionState = .none
-    @Published var resetEnabled = false
+    init(service: BitcoinTransactionService, params: SendParameters) {
+        self.service = service
+        self.params = params
+        satoshiPerByte = service.currentSatoshiPerByte
 
-    private func syncFromService() {
-        if let satoshiPerByte = service.satoshiPerByte {
-            _satoshiPerByte = satoshiPerByte.description
+        if let satoshiPerByte {
+            _satoshiPerByteValue = satoshiPerByte.description
         }
-
-        sync()
     }
 
     private func sync() {
-        resetEnabled = service.modified
+        fee = try? service.resolveFee(params: params, satoshiPerByte: satoshiPerByte)
 
-        if let caution = service.cautions.first {
+        applyEnabled = service.currentSatoshiPerByte != satoshiPerByte
+        resetEnabled = service.recommendedSatoshiPerByte != satoshiPerByte
+
+        cautions = BitcoinTransactionService.validate(actualFeeRates: service.actualFeeRates, satoshiPerByte: satoshiPerByte)
+
+        if let caution = cautions.first {
             satoshiPerByteCautionState = .caution(caution.type)
         } else {
             satoshiPerByteCautionState = .none
@@ -49,37 +57,44 @@ class BitcoinFeeSettingsViewModel: ObservableObject {
     }
 
     private func handleChange() {
-        guard let satoshiPerByteInt = Int(_satoshiPerByte) else {
+        guard let satoshiPerByteInt = Int(_satoshiPerByteValue) else {
             satoshiPerByteCautionState = .caution(.error)
             return
         }
 
-        service.set(satoshiPerByte: satoshiPerByteInt)
-
-        sync()
+        satoshiPerByte = satoshiPerByteInt
     }
 
-    private func updateByStep(value: String?, direction: StepChangeButtonsViewDirection) -> Int? {
-        guard let int = value.flatMap({ Int($0) }) else {
-            return nil
-        }
-
+    private func updateByStep(value: Int, direction: StepChangeButtonsViewDirection) -> Int {
         switch direction {
-        case .down: return max(int - 1, 0)
-        case .up: return int + 1
+        case .down: return max(value - 1, 0)
+        case .up: return value + 1
         }
     }
 }
 
 extension BitcoinFeeSettingsViewModel {
     func stepChangesatoshiPerByte(_ direction: StepChangeButtonsViewDirection) {
-        if let newValue = updateByStep(value: _satoshiPerByte, direction: direction) {
-            satoshiPerByte.wrappedValue = newValue.description
+        guard let satoshiPerByte else {
+            return
         }
+
+        satoshiPerByteValue.wrappedValue = updateByStep(value: satoshiPerByte, direction: direction).description
     }
 
     func onReset() {
-        service.useRecommended()
-        syncFromService()
+        if let satoshiPerByte = service.recommendedSatoshiPerByte {
+            _satoshiPerByteValue = satoshiPerByte.description
+        }
+
+        handleChange()
+    }
+
+    func apply() {
+        guard let satoshiPerByte, let recommendedSatoshiPerByte = service.recommendedSatoshiPerByte else {
+            return
+        }
+
+        service.set(satoshiPerByte: satoshiPerByte == recommendedSatoshiPerByte ? nil : satoshiPerByte)
     }
 }

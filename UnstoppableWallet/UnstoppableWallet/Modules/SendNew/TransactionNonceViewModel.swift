@@ -7,7 +7,15 @@ class TransactionNonceViewModel: ObservableObject {
     let service: EvmTransactionService
 
     @Published var nonceCautionState: FieldCautionState = .none
+    @Published var applyEnabled = false
     @Published var resetEnabled = false
+    @Published var cautions = [CautionNew]()
+
+    @Published var txNonce: Int? {
+        didSet {
+            sync()
+        }
+    }
 
     @Published private var _nonce: String = ""
     var nonce: Binding<String> {
@@ -22,14 +30,21 @@ class TransactionNonceViewModel: ObservableObject {
 
     init(service: EvmTransactionService) {
         self.service = service
-        _nonce = service.nonce?.description ?? ""
-        sync()
+        txNonce = service.currentNonce
+
+        if let txNonce {
+            _nonce = txNonce.description
+        }
     }
 
     private func sync() {
-        resetEnabled = service.modified
+        applyEnabled = service.currentNonce != txNonce
+        resetEnabled = service.nextNonce != txNonce
 
-        if service.errors.contains(where: { $0 is NonceService.NonceError }) {
+        let errors = EvmTransactionService.validateNonce(nonce: txNonce, minimumNonce: service.minimumNonce)
+        cautions = errors.map(\.caution)
+
+        if !errors.isEmpty {
             nonceCautionState = .caution(.error)
         } else {
             nonceCautionState = .none
@@ -42,8 +57,7 @@ class TransactionNonceViewModel: ObservableObject {
             return
         }
 
-        service.set(nonce: intNonce)
-        sync()
+        txNonce = intNonce
     }
 
     private func updateByStep(value: String?, direction: StepChangeButtonsViewDirection) -> Int? {
@@ -66,8 +80,19 @@ extension TransactionNonceViewModel {
     }
 
     func onReset() {
-        service.useRecommended()
-        _nonce = service.nonce?.description ?? ""
-        sync()
+        guard let nextNonce = service.nextNonce else {
+            return
+        }
+
+        _nonce = nextNonce.description
+        handleChange()
+    }
+
+    func apply() {
+        guard let txNonce, let nextNonce = service.nextNonce else {
+            return
+        }
+
+        service.set(nonce: txNonce == nextNonce ? nil : txNonce)
     }
 }

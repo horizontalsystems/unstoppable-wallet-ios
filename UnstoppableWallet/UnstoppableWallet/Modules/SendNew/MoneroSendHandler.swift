@@ -29,13 +29,12 @@ extension MoneroSendHandler: ISendHandler {
 
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
         let priority = transactionSettings?.priority
-        var feeData: BitcoinFeeData?
+        var fee: Decimal?
         var transactionError: Error?
 
         if let priority {
             do {
-                let fee = try adapter.estimateFee(amount: amount, address: address, priority: priority)
-                feeData = .init(fee: fee)
+                fee = try adapter.estimateFee(amount: amount, address: address, priority: priority)
             } catch {
                 transactionError = error
             }
@@ -48,7 +47,7 @@ extension MoneroSendHandler: ISendHandler {
             priority: priority ?? .default,
             memo: memo,
             transactionError: transactionError,
-            fee: feeData
+            fee: fee
         )
     }
 
@@ -69,9 +68,9 @@ extension MoneroSendHandler {
         let priority: SendPriority
         let memo: String?
         let transactionError: Error?
-        let fee: BitcoinFeeData?
+        let fee: Decimal?
 
-        init(token: Token, amount: MoneroSendAmount, address: String, priority: SendPriority, memo: String?, transactionError: Error?, fee: BitcoinFeeData?) {
+        init(token: Token, amount: MoneroSendAmount, address: String, priority: SendPriority, memo: String?, transactionError: Error?, fee: Decimal?) {
             self.token = token
             self.amount = amount
             self.address = address
@@ -82,7 +81,7 @@ extension MoneroSendHandler {
         }
 
         var feeData: FeeData? {
-            fee.map { .bitcoin(bitcoinFeeData: $0) }
+            .monero(amount: amount, address: address)
         }
 
         var canSend: Bool {
@@ -137,8 +136,8 @@ extension MoneroSendHandler {
             }
 
             return AmountData(
-                appValue: AppValue(token: feeToken, value: fee.fee),
-                currencyValue: feeTokenRate.map { CurrencyValue(currency: currency, value: fee.fee * $0) }
+                appValue: AppValue(token: feeToken, value: fee),
+                currencyValue: feeTokenRate.map { CurrencyValue(currency: currency, value: fee * $0) }
             )
         }
 
@@ -146,7 +145,7 @@ extension MoneroSendHandler {
             let value: Decimal
             switch amount {
             case let .all(_value):
-                if let fee = fee?.fee {
+                if let fee {
                     value = _value - fee
                 } else {
                     value = _value

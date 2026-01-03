@@ -53,7 +53,7 @@ class SendViewModel: ObservableObject {
         self.address = address
 
         if let handler {
-            transactionService = TransactionServiceFactory.transactionService(blockchainType: handler.baseToken.blockchainType, initialTransactionSettings: handler.initialTransactionSettings)
+            transactionService = TransactionServiceFactory.transactionService(baseToken: handler.baseToken, initialTransactionSettings: handler.initialTransactionSettings)
         } else {
             transactionService = nil
         }

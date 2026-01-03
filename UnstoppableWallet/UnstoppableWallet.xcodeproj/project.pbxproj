@@ -2864,8 +2864,6 @@
 		D0DEFF072BD1253C004C9DF0 /* BitcoinFeeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF032BD1253B004C9DF0 /* BitcoinFeeSettingsView.swift */; };
 		D0DEFF0A2BD1257F004C9DF0 /* BitcoinTransactionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF082BD1257E004C9DF0 /* BitcoinTransactionService.swift */; };
 		D0DEFF0B2BD1257F004C9DF0 /* BitcoinTransactionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF082BD1257E004C9DF0 /* BitcoinTransactionService.swift */; };
-		D0DEFF0C2BD1257F004C9DF0 /* BitcoinFeeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF092BD1257F004C9DF0 /* BitcoinFeeData.swift */; };
-		D0DEFF0D2BD1257F004C9DF0 /* BitcoinFeeData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF092BD1257F004C9DF0 /* BitcoinFeeData.swift */; };
 		D0E5E84F2BE22172005080A4 /* BitcoinSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5E84E2BE22172005080A4 /* BitcoinSendHandler.swift */; };
 		D0E5E8502BE22172005080A4 /* BitcoinSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5E84E2BE22172005080A4 /* BitcoinSendHandler.swift */; };
 		D0E5E8522BE260C8005080A4 /* BitcoinPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5E8512BE260C8005080A4 /* BitcoinPreSendHandler.swift */; };
@@ -5024,7 +5022,6 @@
 		D0DEFF022BD1253B004C9DF0 /* BitcoinFeeSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinFeeSettingsViewModel.swift; sourceTree = "<group>"; };
 		D0DEFF032BD1253B004C9DF0 /* BitcoinFeeSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinFeeSettingsView.swift; sourceTree = "<group>"; };
 		D0DEFF082BD1257E004C9DF0 /* BitcoinTransactionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinTransactionService.swift; sourceTree = "<group>"; };
-		D0DEFF092BD1257F004C9DF0 /* BitcoinFeeData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinFeeData.swift; sourceTree = "<group>"; };
 		D0E5E84E2BE22172005080A4 /* BitcoinSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinSendHandler.swift; sourceTree = "<group>"; };
 		D0E5E8512BE260C8005080A4 /* BitcoinPreSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinPreSendHandler.swift; sourceTree = "<group>"; };
 		D0E5E8542BE38AA2005080A4 /* TronSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronSendHandler.swift; sourceTree = "<group>"; };
@@ -9519,7 +9516,6 @@
 				D38E5DF92EFEA0F20049EB91 /* TransactionNonceViewModel.swift */,
 				11B355166E437B7ADB8B8EBA /* ValueLevel.swift */,
 				11B3542B6FE4B4F0C0B65369 /* FeeData.swift */,
-				D0DEFF092BD1257F004C9DF0 /* BitcoinFeeData.swift */,
 				D0DEFF082BD1257E004C9DF0 /* BitcoinTransactionService.swift */,
 				11B35B91B5EAF2E193FDC04E /* SendView.swift */,
 				11B35BEF6F80BDF166173819 /* SendViewModel.swift */,
@@ -11889,7 +11885,6 @@
 				ABC9ABB622E7AF7573E71C7A /* DebounceTextField.swift in Sources */,
 				ABC9AF8E2B0AC66EE65B81B9 /* BaseEvmMultiSwapProvider.swift in Sources */,
 				ABC9ABE0119C5E5EB43A9964 /* RightCheckingView.swift in Sources */,
-				D0DEFF0D2BD1257F004C9DF0 /* BitcoinFeeData.swift in Sources */,
 				11B35D24064D9CE75ACCD59A /* CoinAnalyticsIssuesView.swift in Sources */,
 				11B35498BAB60D962C9C1172 /* QuickSwapMultiSwapProvider.swift in Sources */,
 				ABC9A318507A815204BE5607 /* MultiSwapSlippageViewModel.swift in Sources */,
@@ -13518,7 +13513,6 @@
 				ABC9A41BF96061D136A1D397 /* ShortcutButtonsView.swift in Sources */,
 				ABC9AF86EF899AF417E1F4AE /* AddressViewNew.swift in Sources */,
 				ABC9AF3418D0B0DE5FE4EC14 /* AddressViewModelNew.swift in Sources */,
-				D0DEFF0C2BD1257F004C9DF0 /* BitcoinFeeData.swift in Sources */,
 				ABC9AB2CCF3AD358EA9F285C /* DebounceTextField.swift in Sources */,
 				ABC9AC3E675F159901A28E6F /* BaseEvmMultiSwapProvider.swift in Sources */,
 				ABC9A38568F5D28F0F48E44D /* RightCheckingView.swift in Sources */,

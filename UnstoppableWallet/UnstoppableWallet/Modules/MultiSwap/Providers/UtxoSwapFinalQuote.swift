@@ -31,7 +31,7 @@ class UtxoSwapFinalQuote: ISwapFinalQuote {
     }
 
     var feeData: FeeData? {
-        fee.map { .bitcoin(bitcoinFeeData: BitcoinFeeData(fee: $0)) }
+        sendParameters.map { .bitcoin(params: $0) }
     }
 
     var canSwap: Bool {

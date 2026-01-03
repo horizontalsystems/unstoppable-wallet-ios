@@ -50,4 +50,16 @@ extension FeeViewItemFactory {
     func intValue(value: Float) -> Int {
         Int(value * Float(scale.scaleValue))
     }
+
+    func updated(value: Decimal, percent: Decimal, direction: StepChangeButtonsViewDirection) -> Decimal {
+        let diff = value * percent / 100
+        let result: Decimal
+
+        switch direction {
+        case .down: result = max(value - diff, 0)
+        case .up: result = value + diff
+        }
+
+        return result.rounded(decimal: scale.scaleDecimals)
+    }
 }

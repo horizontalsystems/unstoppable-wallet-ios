@@ -1,77 +1,91 @@
+import BitcoinCore
 import Combine
 import MarketKit
 import SwiftUI
 
-class BitcoinTransactionService: ITransactionService {
+class BitcoinTransactionService {
     private let blockchainType: BlockchainType
+    private let adapter: BitcoinBaseAdapter
     private let feeRateProvider: IFeeRateProvider?
 
-    private(set) var usingRecommended: Bool = true
     private(set) var actualFeeRates: FeeRateProvider.FeeRates?
-    private(set) var cautions: [CautionNew] = []
-    private(set) var satoshiPerByte: Int? {
+    private var satoshiPerByte: Int? {
         didSet {
             validate()
         }
     }
 
+    private(set) var cautions: [CautionNew] = []
     private let updateSubject = PassthroughSubject<Void, Never>()
 
+    init(blockchainType: BlockchainType, adapter: BitcoinBaseAdapter) {
+        self.blockchainType = blockchainType
+        self.adapter = adapter
+        feeRateProvider = Core.shared.feeRateProviderFactory.provider(blockchainType: blockchainType)
+    }
+
+    private func validate() {
+        cautions = Self.validate(actualFeeRates: actualFeeRates, satoshiPerByte: satoshiPerByte)
+    }
+}
+
+extension BitcoinTransactionService: ITransactionService {
     var transactionSettings: TransactionSettings? {
-        guard let satoshiPerByte else {
+        guard let currentSatoshiPerByte else {
             return nil
         }
 
-        return .bitcoin(satoshiPerByte: satoshiPerByte)
+        return .bitcoin(satoshiPerByte: currentSatoshiPerByte)
     }
 
     var modified: Bool {
-        !usingRecommended
+        satoshiPerByte != nil
     }
 
     var updatePublisher: AnyPublisher<Void, Never> {
         updateSubject.eraseToAnyPublisher()
     }
 
-    init(blockchainType: BlockchainType) {
-        self.blockchainType = blockchainType
-        feeRateProvider = Core.shared.feeRateProviderFactory.provider(blockchainType: blockchainType)
+    func sync() async throws {
+        actualFeeRates = try await feeRateProvider?.feeRates()
+    }
+}
+
+extension BitcoinTransactionService {
+    var recommendedSatoshiPerByte: Int? {
+        actualFeeRates?.recommended
     }
 
-    private func validate() {
+    var currentSatoshiPerByte: Int? {
+        satoshiPerByte ?? recommendedSatoshiPerByte
+    }
+
+    func resolveFee(params: SendParameters, satoshiPerByte: Int?) throws -> Decimal {
+        let params = params.copy()
+        params.feeRate = satoshiPerByte
+        return try adapter.sendInfo(params: params).fee
+    }
+
+    func set(satoshiPerByte: Int?) {
+        self.satoshiPerByte = satoshiPerByte
+        updateSubject.send()
+    }
+}
+
+extension BitcoinTransactionService {
+    static func validate(actualFeeRates: FeeRateProvider.FeeRates?, satoshiPerByte: Int?) -> [CautionNew] {
         guard let actualFeeRates, let satoshiPerByte else {
-            return
+            return []
+        }
+
+        if actualFeeRates.minimum > satoshiPerByte {
+            return [.init(title: "send.fee_settings.fee_error.title".localized, text: "send.fee_settings.too_low".localized, type: .error)]
         }
 
         if actualFeeRates.recommended > satoshiPerByte {
-            if actualFeeRates.minimum <= satoshiPerByte {
-                cautions = [.init(title: "send.fee_settings.stuck_warning.title".localized, text: "send.fee_settings.stuck_warning".localized, type: .warning)]
-            } else {
-                cautions = [.init(title: "send.fee_settings.fee_error.title".localized, text: "send.fee_settings.too_low".localized, type: .error)]
-            }
-        } else {
-            cautions = []
+            return [.init(title: "send.fee_settings.stuck_warning.title".localized, text: "send.fee_settings.stuck_warning".localized, type: .warning)]
         }
-    }
 
-    func sync() async throws {
-        actualFeeRates = try await feeRateProvider?.feeRates()
-
-        if usingRecommended, let actualFeeRates {
-            satoshiPerByte = actualFeeRates.recommended
-        }
-    }
-
-    func set(satoshiPerByte: Int) {
-        self.satoshiPerByte = satoshiPerByte
-        usingRecommended = (satoshiPerByte == actualFeeRates?.recommended)
-
-        updateSubject.send()
-    }
-
-    func useRecommended() {
-        satoshiPerByte = actualFeeRates?.recommended
-        usingRecommended = true
-        updateSubject.send()
+        return []
     }
 }

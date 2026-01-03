@@ -1,9 +1,11 @@
+import BitcoinCore
 import Foundation
 import TronKit
 
 enum FeeData {
     case evm(evmFeeData: EvmFeeData)
-    case bitcoin(bitcoinFeeData: BitcoinFeeData)
+    case bitcoin(params: SendParameters)
+    case monero(amount: MoneroSendAmount, address: String)
     case tron(fees: [Fee])
     case zcash(fee: Decimal)
 
