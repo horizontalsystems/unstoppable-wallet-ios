@@ -136,17 +136,25 @@ struct SendView: View {
         var menuItems = [SendMenuItem]()
 
         if let transactionService = viewModel.transactionService {
-            menuItems.append(
-                .init(label: "send.confirmation.edit_fee".localized) {
-                    viewModel.stopAutoQuoting()
+            if let feeData = viewModel.sendData?.feeData {
+                menuItems.append(
+                    .init(label: "send.confirmation.edit_fee".localized) {
+                        viewModel.stopAutoQuoting()
 
-                    Coordinator.shared.present { _ in
-                        FeeSettingsViewFactory.createSettingsView(transactionService: transactionService, sendViewModel: viewModel, feeToken: handler.baseToken)
-                    } onDismiss: {
-                        viewModel.autoQuoteIfRequired()
+                        Coordinator.shared.present { _ in
+                            FeeSettingsViewFactory.createSettingsView(
+                                transactionService: transactionService,
+                                feeData: feeData,
+                                feeToken: handler.baseToken,
+                                currency: viewModel.currency,
+                                feeTokenRate: viewModel.rates[handler.baseToken.coin.uid]
+                            )
+                        } onDismiss: {
+                            viewModel.autoQuoteIfRequired()
+                        }
                     }
-                }
-            )
+                )
+            }
 
             if let service = transactionService as? EvmTransactionService {
                 menuItems.append(

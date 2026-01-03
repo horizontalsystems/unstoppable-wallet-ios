@@ -2,46 +2,60 @@ import MarketKit
 import SwiftUI
 
 class FeeSettingsViewFactory {
-    static func createSettingsView(transactionService: ITransactionService, sendViewModel: SendViewModel, feeToken: Token) -> AnyView? {
+    static func createSettingsView(transactionService: ITransactionService, feeData: FeeData, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AnyView? {
         switch transactionService {
         case let service as BitcoinTransactionService:
-            let view = BitcoinFeeSettingsView(service: service, feeToken: feeToken)
-                .environmentObject(sendViewModel)
+            if case let .bitcoin(params) = feeData {
+                let view = BitcoinFeeSettingsView(
+                    service: service,
+                    params: params,
+                    feeToken: feeToken,
+                    currency: currency,
+                    feeTokenRate: feeTokenRate
+                )
 
-            return AnyView(ThemeNavigationStack { view })
-        case let service as EvmTransactionService:
-            guard let blockchainType = sendViewModel.handler?.baseToken.blockchainType else {
-                return nil
+                return AnyView(view)
             }
+        case let service as EvmTransactionService:
+            if case let .evm(evmFeeData) = feeData {
+                if service.isEIP1559Supported {
+                    let view = Eip1559FeeSettingsView(
+                        service: service,
+                        evmFeeData: evmFeeData,
+                        feeToken: feeToken,
+                        currency: currency,
+                        feeTokenRate: feeTokenRate
+                    )
 
-            if service.isEIP1559Supported {
-                let view = Eip1559FeeSettingsView(
-                    service: service,
-                    blockchainType: blockchainType,
-                    feeToken: feeToken
-                )
-                .environmentObject(sendViewModel)
+                    return AnyView(view)
+                } else {
+                    let view = LegacyFeeSettingsView(
+                        service: service,
+                        evmFeeData: evmFeeData,
+                        feeToken: feeToken,
+                        currency: currency,
+                        feeTokenRate: feeTokenRate
+                    )
 
-                return AnyView(ThemeNavigationStack { view })
-            } else {
-                let view = LegacyFeeSettingsView(
-                    service: service,
-                    blockchainType: blockchainType,
-                    feeToken: feeToken
-                )
-                .environmentObject(sendViewModel)
-
-                return AnyView(ThemeNavigationStack { view })
+                    return AnyView(view)
+                }
             }
         case let service as MoneroTransactionService:
-            let view = MoneroFeeSettingsView(
-                service: service,
-                feeToken: feeToken,
-            )
-            .environmentObject(sendViewModel)
+            if case let .monero(amount, address) = feeData {
+                let view = MoneroFeeSettingsView(
+                    service: service,
+                    amount: amount,
+                    address: address,
+                    feeToken: feeToken,
+                    currency: currency,
+                    feeTokenRate: feeTokenRate
+                )
 
-            return AnyView(ThemeNavigationStack { view })
-        default: return nil
+                return AnyView(view)
+            }
+        default: ()
         }
+
+        return nil
     }
 }

@@ -4,44 +4,50 @@ import MarketKit
 import SwiftUI
 
 class LegacyFeeSettingsViewModel: ObservableObject {
-    let service: EvmTransactionService
+    private let service: EvmTransactionService
     private let feeViewItemFactory: FeeViewItemFactory
     private let decimalParser = AmountDecimalParser()
 
-    init(service: EvmTransactionService, feeViewItemFactory: FeeViewItemFactory) {
-        self.service = service
-        self.feeViewItemFactory = feeViewItemFactory
+    @Published var gasPriceCautionState: FieldCautionState = .none
+    @Published var applyEnabled = false
+    @Published var resetEnabled = false
+    @Published var cautions = [CautionNew]()
 
-        syncFromService()
+    @Published var gasPrice: GasPrice? {
+        didSet {
+            sync()
+        }
     }
 
-    @Published var gasPriceCautionState: FieldCautionState = .none
-
-    @Published private var _gasPrice: String = ""
-    var gasPrice: Binding<String> {
+    @Published private var _gasPriceValue: String = ""
+    var gasPriceValue: Binding<String> {
         Binding(
-            get: { self._gasPrice },
+            get: { self._gasPriceValue },
             set: { newValue in
-                self._gasPrice = newValue
+                self._gasPriceValue = newValue
                 self.handleChange()
             }
         )
     }
 
-    @Published var resetEnabled = false
+    init(service: EvmTransactionService, feeViewItemFactory: FeeViewItemFactory) {
+        self.service = service
+        self.feeViewItemFactory = feeViewItemFactory
+        gasPrice = service.currentGasPrice
 
-    private func syncFromService() {
-        if case let .legacy(gasPrice) = service.gasPrice {
-            _gasPrice = feeViewItemFactory.decimalValue(value: gasPrice).description
+        if case let .legacy(gasPrice) = gasPrice {
+            _gasPriceValue = feeViewItemFactory.decimalValue(value: gasPrice).description
         }
-
-        sync()
     }
 
     private func sync() {
-        resetEnabled = service.modified
+        applyEnabled = service.currentGasPrice != gasPrice
+        resetEnabled = service.recommendedGasPrice != gasPrice
 
-        if service.warnings.contains(where: { $0 is EvmFeeModule.GasDataWarning }) {
+        let warnings = EvmTransactionService.validateGasPrice(recommended: service.recommendedGasPrice, current: gasPrice)
+        cautions = warnings.map(\.caution)
+
+        if !warnings.isEmpty {
             gasPriceCautionState = .caution(.warning)
         } else {
             gasPriceCautionState = .none
@@ -49,14 +55,12 @@ class LegacyFeeSettingsViewModel: ObservableObject {
     }
 
     private func handleChange() {
-        guard let gasPriceDecimal = decimalParser.parseAnyDecimal(from: _gasPrice) else {
+        guard let gasPriceDecimal = decimalParser.parseAnyDecimal(from: _gasPriceValue) else {
             gasPriceCautionState = .caution(.error)
             return
         }
 
-        service.set(gasPrice: .legacy(gasPrice: feeViewItemFactory.intValue(value: gasPriceDecimal)))
-
-        sync()
+        gasPrice = .legacy(gasPrice: feeViewItemFactory.intValue(value: gasPriceDecimal))
     }
 
     private func updateByStep(value: String?, direction: StepChangeButtonsViewDirection) -> Decimal? {
@@ -64,24 +68,29 @@ class LegacyFeeSettingsViewModel: ObservableObject {
             return nil
         }
 
-        let diff = decimal * 10 / 100
-
-        switch direction {
-        case .down: return max(decimal - diff, 0)
-        case .up: return decimal + diff
-        }
+        return feeViewItemFactory.updated(value: decimal, percent: 10, direction: direction)
     }
 }
 
 extension LegacyFeeSettingsViewModel {
     func stepChangeGasPrice(_ direction: StepChangeButtonsViewDirection) {
-        if let newValue = updateByStep(value: _gasPrice, direction: direction) {
-            gasPrice.wrappedValue = newValue.description
+        if let newValue = updateByStep(value: _gasPriceValue, direction: direction) {
+            gasPriceValue.wrappedValue = newValue.description
         }
     }
 
     func onReset() {
-        service.useRecommended()
-        syncFromService()
+        if case let .legacy(gasPrice) = service.recommendedGasPrice {
+            _gasPriceValue = feeViewItemFactory.decimalValue(value: gasPrice).description
+            handleChange()
+        }
+    }
+
+    func apply() {
+        guard let gasPrice, let recommendedGasPrice = service.recommendedGasPrice else {
+            return
+        }
+
+        service.set(gasPrice: gasPrice == recommendedGasPrice ? nil : gasPrice)
     }
 }

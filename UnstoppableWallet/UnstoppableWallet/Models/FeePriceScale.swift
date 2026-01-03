@@ -12,6 +12,13 @@ enum FeePriceScale {
         }
     }
 
+    var scaleDecimals: Int {
+        switch self {
+        case .satoshi: return 0
+        case .gwei, .nAvax: return 9
+        }
+    }
+
     var unit: String {
         switch self {
         case .satoshi: return "sat/byte"

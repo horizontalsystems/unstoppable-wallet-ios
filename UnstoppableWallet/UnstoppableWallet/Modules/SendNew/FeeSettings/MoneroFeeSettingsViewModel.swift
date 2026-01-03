@@ -4,39 +4,46 @@ import MarketKit
 import MoneroKit
 
 class MoneroFeeSettingsViewModel: ObservableObject {
-    let service: MoneroTransactionService
+    private let service: MoneroTransactionService
+    private let amount: MoneroSendAmount
+    private let address: String
 
-    @Published var priority: SendPriority
     @Published var priorityCautionState: FieldCautionState = .none
     @Published var resetEnabled = false
+    @Published var applyEnabled = false
 
-    init(service: MoneroTransactionService) {
+    @Published var fee: Decimal?
+    @Published var priority: SendPriority {
+        didSet {
+            sync()
+        }
+    }
+
+    init(service: MoneroTransactionService, amount: MoneroSendAmount, address: String) {
         self.service = service
-        priority = service.priority ?? SendPriority.default
+        self.amount = amount
+        self.address = address
+
+        priority = service.priority
+
         sync()
     }
 
     private func sync() {
-        resetEnabled = service.modified
+        fee = try? service.resolveFee(amount: amount, address: address, priority: priority)
 
-        if let caution = service.cautions.first {
-            priorityCautionState = .caution(caution.type)
-        } else {
-            priorityCautionState = .none
-        }
+        applyEnabled = service.priority != priority
+        resetEnabled = priority != .default
     }
 }
 
 extension MoneroFeeSettingsViewModel {
-    func set(priority: SendPriority) {
-        self.priority = priority
-        service.set(priority: priority)
+    func onReset() {
+        priority = .default
         sync()
     }
 
-    func onReset() {
-        service.useRecommended()
-        priority = service.priority ?? SendPriority.default
-        sync()
+    func apply() {
+        service.set(priority: priority)
     }
 }

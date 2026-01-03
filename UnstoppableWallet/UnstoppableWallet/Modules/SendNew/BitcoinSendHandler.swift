@@ -28,7 +28,7 @@ extension BitcoinSendHandler: ISendHandler {
 
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
         let satoshiPerByte = transactionSettings?.satoshiPerByte
-        var feeData: BitcoinFeeData?
+        var fee: Decimal?
         var transactionError: Error?
         let params = params.copy()
 
@@ -43,7 +43,7 @@ extension BitcoinSendHandler: ISendHandler {
 
             do {
                 let sendInfo = try adapter.sendInfo(params: params)
-                feeData = .init(fee: sendInfo.fee)
+                fee = sendInfo.fee
             } catch {
                 transactionError = error
             }
@@ -54,7 +54,7 @@ extension BitcoinSendHandler: ISendHandler {
             params: params,
             rbfAllowed: blockchainManager.transactionRbfAllowed(blockchainType: token.blockchainType),
             transactionError: transactionError,
-            feeData: feeData
+            fee: fee
         )
     }
 
@@ -83,16 +83,16 @@ extension BitcoinSendHandler {
             return nil
         }
 
-        init(token: Token, params: SendParameters, rbfAllowed: Bool, transactionError: Error?, feeData: BitcoinFeeData?) {
+        init(token: Token, params: SendParameters, rbfAllowed: Bool, transactionError: Error?, fee: Decimal?) {
             self.token = token
             self.params = params
             self.rbfAllowed = rbfAllowed
             self.transactionError = transactionError
-            fee = feeData?.fee
+            self.fee = fee
         }
 
         var feeData: FeeData? {
-            fee.map { .bitcoin(bitcoinFeeData: BitcoinFeeData(fee: $0)) }
+            .bitcoin(params: params)
         }
 
         var canSend: Bool {
