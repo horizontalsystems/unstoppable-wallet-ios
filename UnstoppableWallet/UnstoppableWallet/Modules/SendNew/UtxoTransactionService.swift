@@ -3,7 +3,7 @@ import Combine
 import MarketKit
 import SwiftUI
 
-class BitcoinTransactionService {
+class UtxoTransactionService {
     private let blockchainType: BlockchainType
     private let adapter: BitcoinBaseAdapter
     private let feeRateProvider: IFeeRateProvider?
@@ -29,7 +29,7 @@ class BitcoinTransactionService {
     }
 }
 
-extension BitcoinTransactionService: ITransactionService {
+extension UtxoTransactionService: ITransactionService {
     var transactionSettings: TransactionSettings? {
         guard let currentSatoshiPerByte else {
             return nil
@@ -51,7 +51,7 @@ extension BitcoinTransactionService: ITransactionService {
     }
 }
 
-extension BitcoinTransactionService {
+extension UtxoTransactionService {
     var recommendedSatoshiPerByte: Int? {
         actualFeeRates?.recommended
     }
@@ -72,7 +72,7 @@ extension BitcoinTransactionService {
     }
 }
 
-extension BitcoinTransactionService {
+extension UtxoTransactionService {
     static func validate(actualFeeRates: FeeRateProvider.FeeRates?, satoshiPerByte: Int?) -> [CautionNew] {
         guard let actualFeeRates, let satoshiPerByte else {
             return []

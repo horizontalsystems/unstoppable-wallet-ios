@@ -4,8 +4,8 @@ import Foundation
 import MarketKit
 import SwiftUI
 
-class BitcoinFeeSettingsViewModel: ObservableObject {
-    private let service: BitcoinTransactionService
+class UtxoFeeSettingsViewModel: ObservableObject {
+    private let service: UtxoTransactionService
     private let params: SendParameters
 
     @Published var satoshiPerByteCautionState: FieldCautionState = .none
@@ -31,7 +31,7 @@ class BitcoinFeeSettingsViewModel: ObservableObject {
         )
     }
 
-    init(service: BitcoinTransactionService, params: SendParameters) {
+    init(service: UtxoTransactionService, params: SendParameters) {
         self.service = service
         self.params = params
         satoshiPerByte = service.currentSatoshiPerByte
@@ -44,7 +44,7 @@ class BitcoinFeeSettingsViewModel: ObservableObject {
     private func sync() {
         fee = try? service.resolveFee(params: params, satoshiPerByte: satoshiPerByte)
 
-        cautions = BitcoinTransactionService.validate(actualFeeRates: service.actualFeeRates, satoshiPerByte: satoshiPerByte)
+        cautions = UtxoTransactionService.validate(actualFeeRates: service.actualFeeRates, satoshiPerByte: satoshiPerByte)
 
         applyEnabled = service.currentSatoshiPerByte != satoshiPerByte && !cautions.contains(where: { $0.type == .error })
         resetEnabled = service.recommendedSatoshiPerByte != satoshiPerByte
@@ -73,7 +73,7 @@ class BitcoinFeeSettingsViewModel: ObservableObject {
     }
 }
 
-extension BitcoinFeeSettingsViewModel {
+extension UtxoFeeSettingsViewModel {
     func stepChangesatoshiPerByte(_ direction: StepChangeButtonsViewDirection) {
         guard let satoshiPerByte else {
             return

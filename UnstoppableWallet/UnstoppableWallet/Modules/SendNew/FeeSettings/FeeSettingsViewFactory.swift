@@ -4,9 +4,9 @@ import SwiftUI
 class FeeSettingsViewFactory {
     static func createSettingsView(transactionService: ITransactionService, feeData: FeeData, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AnyView? {
         switch transactionService {
-        case let service as BitcoinTransactionService:
+        case let service as UtxoTransactionService:
             if case let .bitcoin(params) = feeData {
-                let view = BitcoinFeeSettingsView(
+                let view = UtxoFeeSettingsView(
                     service: service,
                     params: params,
                     feeToken: feeToken,
