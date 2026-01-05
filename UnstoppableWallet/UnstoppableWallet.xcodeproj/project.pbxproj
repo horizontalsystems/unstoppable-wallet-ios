@@ -1933,8 +1933,6 @@
 		6B6E14282DEDB58A007F4A39 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6B6E14272DEDB58A007F4A39 /* Kingfisher */; };
 		6B71E9BF2E4CC6700097E234 /* MultiSwapRecipientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B71E9BE2E4CC6700097E234 /* MultiSwapRecipientView.swift */; };
 		6B71E9C02E4CC6700097E234 /* MultiSwapRecipientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B71E9BE2E4CC6700097E234 /* MultiSwapRecipientView.swift */; };
-		6B71E9C22E4DB9FC0097E234 /* AllBridgeMultiSwapTronConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B71E9C12E4DB9FC0097E234 /* AllBridgeMultiSwapTronConfirmationQuote.swift */; };
-		6B71E9C32E4DB9FC0097E234 /* AllBridgeMultiSwapTronConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B71E9C12E4DB9FC0097E234 /* AllBridgeMultiSwapTronConfirmationQuote.swift */; };
 		6B7EB8262D0D11E900783F66 /* RoundedCorner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B7EB8252D0D11E900783F66 /* RoundedCorner.swift */; };
 		6B8135842F03C8E900A3FFB6 /* CoinSorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8135832F03C8E100A3FFB6 /* CoinSorter.swift */; };
 		6B8135852F03C8E900A3FFB6 /* CoinSorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B8135832F03C8E100A3FFB6 /* CoinSorter.swift */; };
@@ -2055,8 +2053,6 @@
 		6BBB92BB2D11648E00112409 /* PromoCodeBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBB92B92D11648E00112409 /* PromoCodeBottomSheetViewModel.swift */; };
 		6BBCE4A32BDA419200ABBD55 /* Web3Wallet in Frameworks */ = {isa = PBXBuildFile; productRef = 6BBCE4A22BDA419200ABBD55 /* Web3Wallet */; };
 		6BBCE4A52BDA419B00ABBD55 /* Web3Wallet in Frameworks */ = {isa = PBXBuildFile; productRef = 6BBCE4A42BDA419B00ABBD55 /* Web3Wallet */; };
-		6BBD462D2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBD462C2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift */; };
-		6BBD462E2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBD462C2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift */; };
 		6BCAADD02ED9630E00ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAADCF2ED962F400ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift */; };
 		6BCAADD12ED9630E00ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAADCF2ED962F400ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift */; };
 		6BCAADD52EDC08A100ECB0F1 /* PremiumFeaturesWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAADD42EDC089400ECB0F1 /* PremiumFeaturesWrapper.swift */; };
@@ -2103,6 +2099,12 @@
 		6BD766662EA6442D008DDEA7 /* ReceiveAddressBodyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD766642EA64422008DDEA7 /* ReceiveAddressBodyView.swift */; };
 		6BDA29AB29D6F37C003847ED /* ECashKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDA29AA29D6F37C003847ED /* ECashKit */; };
 		6BDA29AD29D6F384003847ED /* ECashKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDA29AC29D6F384003847ED /* ECashKit */; };
+		6BDB59CF2F0B5C5F005FA626 /* StellarSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59CE2F0B5C53005FA626 /* StellarSwapFinalQuote.swift */; };
+		6BDB59D02F0B5C5F005FA626 /* StellarSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59CE2F0B5C53005FA626 /* StellarSwapFinalQuote.swift */; };
+		6BDB59D22F0B5DF9005FA626 /* TronSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59D12F0B5DF1005FA626 /* TronSwapFinalQuote.swift */; };
+		6BDB59D32F0B5DF9005FA626 /* TronSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59D12F0B5DF1005FA626 /* TronSwapFinalQuote.swift */; };
+		6BDB59D52F0B5F6D005FA626 /* MevProtectionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59D42F0B5F61005FA626 /* MevProtectionHelper.swift */; };
+		6BDB59D62F0B5F6D005FA626 /* MevProtectionHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59D42F0B5F61005FA626 /* MevProtectionHelper.swift */; };
 		6BDDB59C2C1816B500DE9D56 /* TonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDDB59B2C1816B500DE9D56 /* TonKit */; };
 		6BDDB5A12C1AC73D00DE9D56 /* TonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDDB5A02C1AC73D00DE9D56 /* TonKit */; };
 		6BDFC0832E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDFC0822E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift */; };
@@ -4565,7 +4567,6 @@
 		6B6E13E42DEDABDE007F4A39 /* HUDViewTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDViewTheme.swift; sourceTree = "<group>"; };
 		6B6E13E52DEDABDE007F4A39 /* NativeProgressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeProgressView.swift; sourceTree = "<group>"; };
 		6B71E9BE2E4CC6700097E234 /* MultiSwapRecipientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSwapRecipientView.swift; sourceTree = "<group>"; };
-		6B71E9C12E4DB9FC0097E234 /* AllBridgeMultiSwapTronConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBridgeMultiSwapTronConfirmationQuote.swift; sourceTree = "<group>"; };
 		6B7EB8252D0D11E900783F66 /* RoundedCorner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedCorner.swift; sourceTree = "<group>"; };
 		6B8135832F03C8E100A3FFB6 /* CoinSorter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinSorter.swift; sourceTree = "<group>"; };
 		6B8BD39D2C11B959003ADE10 /* TextFieldAlert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldAlert.swift; sourceTree = "<group>"; };
@@ -4626,7 +4627,6 @@
 		6BBB92B22D10142900112409 /* PurchaseBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		6BBB92B62D11646600112409 /* PromoCodeBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCodeBottomSheetView.swift; sourceTree = "<group>"; };
 		6BBB92B92D11648E00112409 /* PromoCodeBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCodeBottomSheetViewModel.swift; sourceTree = "<group>"; };
-		6BBD462C2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBridgeMultiSwapStellarConfirmationQuote.swift; sourceTree = "<group>"; };
 		6BCAADCF2ED962F400ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumFeaturesInfoBottomSheetView.swift; sourceTree = "<group>"; };
 		6BCAADD42EDC089400ECB0F1 /* PremiumFeaturesWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumFeaturesWrapper.swift; sourceTree = "<group>"; };
 		6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupCloudModule.swift; sourceTree = "<group>"; };
@@ -4648,6 +4648,9 @@
 		6BD7665B2EA62E1E008DDEA7 /* BaseReceiveAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseReceiveAddressView.swift; sourceTree = "<group>"; };
 		6BD7665E2EA637EA008DDEA7 /* HDReceiveAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HDReceiveAddressView.swift; sourceTree = "<group>"; };
 		6BD766642EA64422008DDEA7 /* ReceiveAddressBodyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiveAddressBodyView.swift; sourceTree = "<group>"; };
+		6BDB59CE2F0B5C53005FA626 /* StellarSwapFinalQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarSwapFinalQuote.swift; sourceTree = "<group>"; };
+		6BDB59D12F0B5DF1005FA626 /* TronSwapFinalQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronSwapFinalQuote.swift; sourceTree = "<group>"; };
+		6BDB59D42F0B5F61005FA626 /* MevProtectionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MevProtectionHelper.swift; sourceTree = "<group>"; };
 		6BDFC0822E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelTransactionJsonRpc.swift; sourceTree = "<group>"; };
 		6BDFC0852E3C8F0700CC28DD /* MerkleGetTransactionByHashJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleGetTransactionByHashJsonRpc.swift; sourceTree = "<group>"; };
 		6BDFC0882E3CDC1300CC28DD /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
@@ -6488,6 +6491,9 @@
 		11B35733E1033052E6CA46C3 /* Providers */ = {
 			isa = PBXGroup;
 			children = (
+				6BDB59D42F0B5F61005FA626 /* MevProtectionHelper.swift */,
+				6BDB59D12F0B5DF1005FA626 /* TronSwapFinalQuote.swift */,
+				6BDB59CE2F0B5C53005FA626 /* StellarSwapFinalQuote.swift */,
 				D38E5DF22EF964190049EB91 /* ZcashSwapFinalQuote.swift */,
 				D38E5E012F03F2800049EB91 /* UtxoSwapFinalQuote.swift */,
 				D38E5DEF2EF91CC60049EB91 /* MultiSwapQuote.swift */,
@@ -8402,8 +8408,6 @@
 		6BF655842E49BF400055A9D5 /* AllBridgeProvider */ = {
 			isa = PBXGroup;
 			children = (
-				6B71E9C12E4DB9FC0097E234 /* AllBridgeMultiSwapTronConfirmationQuote.swift */,
-				6BBD462C2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift */,
 				6B5FD7DA2E43161F00FEF510 /* AllBridgeMultiSwapProvider.swift */,
 			);
 			path = AllBridgeProvider;
@@ -10633,7 +10637,6 @@
 				11B35B501A30615698B04C96 /* AddEvmTokenBlockchainService.swift in Sources */,
 				11B35E57C6406D2249A23E6F /* SendEvmTransactionService.swift in Sources */,
 				11B352AB213E0F3C147EAEE9 /* SendEvmTransactionViewController.swift in Sources */,
-				6BBD462E2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift in Sources */,
 				D06669032A31B559004B048D /* TronRecipientAddressViewModel.swift in Sources */,
 				11B350B7D3DDBEE4F5B6E914 /* SendEvmTransactionViewModel.swift in Sources */,
 				11B354A6D78AA69DC3B8E496 /* SwapApproveConfirmationViewController.swift in Sources */,
@@ -10965,6 +10968,7 @@
 				D34DB1752E12A7E200DD30D3 /* AppSceneDelegate.swift in Sources */,
 				ABC9A85FAA53B6FB01F94171 /* WalletConnectScanQrViewModel.swift in Sources */,
 				ABC9AEA5C042362B5B5BE81C /* WalletConnectMainModule.swift in Sources */,
+				6BDB59D22F0B5DF9005FA626 /* TronSwapFinalQuote.swift in Sources */,
 				ABC9AE863B44E921F58DF3EA /* WalletConnectMainViewController.swift in Sources */,
 				ABC9A4801E4964F6AED1E667 /* WalletConnectMainViewModel.swift in Sources */,
 				ABC9A251119A2486465B315E /* WalletConnectService.swift in Sources */,
@@ -11271,6 +11275,7 @@
 				11B3500BC7034A23586A1303 /* BlockchainSettingsModule.swift in Sources */,
 				D371A22D2E588DBF00D7D7F6 /* MiddleTextIcon.swift in Sources */,
 				11B3524E749AEC08F13CF4AE /* BlockchainSettingsViewModel.swift in Sources */,
+				6BDB59D52F0B5F6D005FA626 /* MevProtectionHelper.swift in Sources */,
 				6BA8D23A2D5A1DB00093D5C2 /* MarketSectorsViewModel.swift in Sources */,
 				11B35446CFD6FBB7C3B64B55 /* SingleSelectorViewController.swift in Sources */,
 				11B3577BDCF978797E6C283E /* RestoreService.swift in Sources */,
@@ -11316,7 +11321,6 @@
 				11B35CCC9D6B7596502B4381 /* CoinInvestment.swift in Sources */,
 				11B356DA0B90ECAB25C520B7 /* CoinTreasury.swift in Sources */,
 				11B35F1440C5946E9C3D94ED /* Auditor.swift in Sources */,
-				6B71E9C32E4DB9FC0097E234 /* AllBridgeMultiSwapTronConfirmationQuote.swift in Sources */,
 				11B354EB71E52DF79A003231 /* FaqUrlHelper.swift in Sources */,
 				11B3503456D10F362D8CC855 /* RestoreSettingsModule.swift in Sources */,
 				D3AFAACE2E2F902E004AB074 /* MarketVaultViewModel.swift in Sources */,
@@ -11530,6 +11534,7 @@
 				11B354B499FB939FE08AB111 /* BlockchainTokensModule.swift in Sources */,
 				11B351F2BE118946AD633035 /* BlockchainTokensService.swift in Sources */,
 				11B3572C418CAD9739CAE3EC /* BlockchainTokensViewModel.swift in Sources */,
+				6BDB59CF2F0B5C5F005FA626 /* StellarSwapFinalQuote.swift in Sources */,
 				D3384D172BFDEF6800515664 /* Etf.swift in Sources */,
 				D313698A2BEA188D00BA6B5B /* ZcashPreSendHandler.swift in Sources */,
 				D3C598812C187F2E00789D69 /* Color.swift in Sources */,
@@ -12069,8 +12074,10 @@
 				D3E36BB82DFAEC4D007F99CA /* WalletViewModel.swift in Sources */,
 				1A5646C3220E1735309D2927 /* AppVersion.swift in Sources */,
 				1A5648ACB0A6B11E0E39A1B0 /* AppVersionManager.swift in Sources */,
+				6BDB59D02F0B5C5F005FA626 /* StellarSwapFinalQuote.swift in Sources */,
 				2FA5D2A2E81E947B2CF15889 /* BitcoinCore+Hodler.swift in Sources */,
 				D36DE0E1272FD887000BC916 /* OneInchProvider.swift in Sources */,
+				6BDB59D32F0B5DF9005FA626 /* TronSwapFinalQuote.swift in Sources */,
 				2FA5DCD660736071655E8059 /* SelectableValueView.swift in Sources */,
 				3A73FC69258B1AD100FE4D34 /* MarketModule.swift in Sources */,
 				D36DE0B3272FD689000BC916 /* SwapProviderManager.swift in Sources */,
@@ -12513,7 +12520,6 @@
 				2FA5DCC4695C6D90275575A3 /* TransactionAdapterManager.swift in Sources */,
 				D34637EF2DDB05DC00187698 /* WalletConnectVerificationModel.swift in Sources */,
 				2FA5D2702CFF36E1608A1C8E /* HistoricalRateService.swift in Sources */,
-				6B71E9C22E4DB9FC0097E234 /* AllBridgeMultiSwapTronConfirmationQuote.swift in Sources */,
 				D36DE0CF272FD864000BC916 /* UniswapDataSource.swift in Sources */,
 				11B35E4FE3117F6B681F6748 /* Wallet.swift in Sources */,
 				11B35CAD5A7E0C8709559FD2 /* WalletManager.swift in Sources */,
@@ -13052,7 +13058,6 @@
 				D34338EE2C885895001FCAD2 /* JettonAdapter.swift in Sources */,
 				11B35521FDF21F9B1667AF72 /* Eip20Kit.swift in Sources */,
 				11B355734D16C412220BBEBD /* NftKit.swift in Sources */,
-				6BBD462D2E5467FA008D1B30 /* AllBridgeMultiSwapStellarConfirmationQuote.swift in Sources */,
 				11B352309B81355B88BF6B66 /* OneInchKit.swift in Sources */,
 				D3833AD72BEE1A7900ACECFB /* MarketWatchlistView.swift in Sources */,
 				D3384D1A2BFF0CAF00515664 /* MarketMarketCapView.swift in Sources */,
@@ -13114,6 +13119,7 @@
 				ABC9A0B5A5577704AC99F47B /* ChartIndicatorsViewModel.swift in Sources */,
 				ABC9A47D4666FA5115F98629 /* ChartIndicatorsRepository.swift in Sources */,
 				D36287A72CA2B89200ADAF3B /* TonConnectParameters.swift in Sources */,
+				6BDB59D62F0B5F6D005FA626 /* MevProtectionHelper.swift in Sources */,
 				ABC9A4FF1E1964FB77700C4E /* ChartIndicatorFactory.swift in Sources */,
 				D0118E482B7C9A5200D55CE6 /* ResendBitcoinModule.swift in Sources */,
 				D34637FB2DDDD68800187698 /* AddressCheckerViewModel.swift in Sources */,

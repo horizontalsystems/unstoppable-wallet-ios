@@ -10,7 +10,7 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
     let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let allowanceHelper = MultiSwapAllowanceHelper()
 
-    @Published private var useMevProtection: Bool = false
+    private let mevProtectionHelper = MevProtectionHelper()
 
     var id: String { fatalError("Must be implemented in subclass") }
     var name: String { fatalError("Must be implemented in subclass") }
@@ -30,36 +30,7 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
     }
 
     func otherSections(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: TransactionSettings?) -> [SendDataSection] {
-        guard MerkleTransactionAdapter.allowProtection(blockchainType: tokenIn.blockchainType) else {
-            useMevProtection = false
-            return []
-        }
-
-        useMevProtection = localStorage.useMevProtection
-
-        let binding = Binding<Bool>(
-            get: { [weak self] in
-                if Core.shared.purchaseManager.activated(.vipSupport) {
-                    self?.useMevProtection ?? false
-                } else {
-                    false
-                }
-            },
-            set: { [weak self] newValue in
-                let successBlock = { [weak self] in
-                    self?.useMevProtection = newValue
-                    self?.localStorage.useMevProtection = newValue
-                }
-
-                Coordinator.shared.performAfterPurchase(premiumFeature: .vipSupport, page: .swap, trigger: .mevProtection) {
-                    successBlock()
-                }
-            }
-        )
-
-        return [.init([
-            .mevProtection(isOn: binding),
-        ], isList: false)]
+        [mevProtectionHelper.section(tokenIn: tokenIn)].compactMap { $0 }
     }
 
     func settingsView(tokenIn _: Token, tokenOut _: Token, quote _: MultiSwapQuote, onChangeSettings _: @escaping () -> Void) -> AnyView {
@@ -83,7 +54,7 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
             transactionData: transactionData,
             gasPrice: gasPrice,
             gasLimit: gasLimit,
-            privateSend: useMevProtection,
+            privateSend: mevProtectionHelper.isActive,
             nonce: nonce
         )
     }

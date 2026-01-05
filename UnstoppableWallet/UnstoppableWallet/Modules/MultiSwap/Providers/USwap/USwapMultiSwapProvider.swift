@@ -34,7 +34,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         maxOutputsCountForInputs: 10
     )
 
-    @Published private var useMevProtection: Bool = false
+    private let mevProtectionHelper = MevProtectionHelper()
 
     private let blockchainTypeMap: [String: BlockchainType] = [
         "43114": .avalanche, // AVAX
@@ -271,32 +271,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     }
 
     func otherSections(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: TransactionSettings?) -> [SendDataSection] {
-        guard MerkleTransactionAdapter.allowProtection(blockchainType: tokenIn.blockchainType) else {
-            useMevProtection = false
-            return []
-        }
-
-        useMevProtection = localStorage.useMevProtection
-
-        let binding = Binding<Bool>(
-            get: { [weak self] in
-                if Core.shared.purchaseManager.activated(.vipSupport) {
-                    self?.useMevProtection ?? false
-                } else {
-                    false
-                }
-            },
-            set: { [weak self] newValue in
-                Coordinator.shared.performAfterPurchase(premiumFeature: .vipSupport, page: .swap, trigger: .mevProtection) {
-                    self?.useMevProtection = newValue
-                    self?.localStorage.useMevProtection = newValue
-                }
-            }
-        )
-
-        return [.init([
-            .mevProtection(isOn: binding),
-        ], isList: false)]
+        [mevProtectionHelper.section(tokenIn: tokenIn)].compactMap { $0 }
     }
 
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
@@ -325,7 +300,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 transactionData: transactionData,
                 gasPrice: gasPrice,
                 gasLimit: gasLimit,
-                privateSend: useMevProtection,
+                privateSend: mevProtectionHelper.isActive,
                 nonce: quote.nonce
             )
         } else if let quote = quote as? UtxoSwapFinalQuote {

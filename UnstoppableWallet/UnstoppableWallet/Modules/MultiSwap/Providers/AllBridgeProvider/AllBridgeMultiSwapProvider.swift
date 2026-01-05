@@ -64,7 +64,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
     private var logger: Logger?
 
     private var tokenPairs: [Token: AbToken] = [:]
-    @Published private var useMevProtection: Bool = false
+    private var mevProtectionHelper = MevProtectionHelper()
 
     init() {
         syncPools()
@@ -378,7 +378,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 }
             }
 
-            return AllBridgeMultiSwapTronConfirmationQuote(
+            return TronSwapFinalQuote(
                 amountIn: amountIn,
                 expectedAmountOut: amountOut,
                 recipient: recipient,
@@ -424,7 +424,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 transactionError = error
             }
 
-            return AllBridgeMultiSwapStellarConfirmationQuote(
+            return StellarSwapFinalQuote(
                 amountIn: amountIn,
                 expectedAmountOut: amountOut,
                 recipient: recipient,
@@ -440,36 +440,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
     }
 
     func otherSections(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: TransactionSettings?) -> [SendDataSection] {
-        guard MerkleTransactionAdapter.allowProtection(blockchainType: tokenIn.blockchainType) else {
-            useMevProtection = false
-            return []
-        }
-
-        useMevProtection = localStorage.useMevProtection
-
-        let binding = Binding<Bool>(
-            get: { [weak self] in
-                if Core.shared.purchaseManager.activated(.vipSupport) {
-                    self?.useMevProtection ?? false
-                } else {
-                    false
-                }
-            },
-            set: { [weak self] newValue in
-                let successBlock = { [weak self] in
-                    self?.useMevProtection = newValue
-                    self?.localStorage.useMevProtection = newValue
-                }
-
-                Coordinator.shared.performAfterPurchase(premiumFeature: .vipSupport, page: .swap, trigger: .mevProtection) {
-                    successBlock()
-                }
-            }
-        )
-
-        return [.init([
-            .mevProtection(isOn: binding),
-        ], isList: false)]
+        [mevProtectionHelper.section(tokenIn: tokenIn)].compactMap { $0 }
     }
 
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
@@ -499,14 +470,14 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                     transactionData: transactionData,
                     gasPrice: gasPrice,
                     gasLimit: gasLimit,
-                    privateSend: useMevProtection,
+                    privateSend: mevProtectionHelper.isActive,
                     nonce: quote.nonce
                 )
             } catch {
                 logger?.log(level: .error, message: "AllBridge SendEVM Error: \(error)")
                 throw error
             }
-        } else if let quote = quote as? AllBridgeMultiSwapTronConfirmationQuote {
+        } else if let quote = quote as? TronSwapFinalQuote {
             guard let tronKitWrapper = tronKitManager.tronKitWrapper else {
                 throw SwapError.noEvmKitWrapper
             }
@@ -518,7 +489,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
 
                 throw error
             }
-        } else if let quote = quote as? AllBridgeMultiSwapStellarConfirmationQuote {
+        } else if let quote = quote as? StellarSwapFinalQuote {
             guard let account = Core.shared.accountManager.activeAccount, let keyPair = try? StellarKitManager.keyPair(accountType: account.type) else {
                 throw SwapError.noStellarKit
             }
