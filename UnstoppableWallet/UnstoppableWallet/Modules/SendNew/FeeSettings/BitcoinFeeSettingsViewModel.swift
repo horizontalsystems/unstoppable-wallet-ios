@@ -44,10 +44,10 @@ class BitcoinFeeSettingsViewModel: ObservableObject {
     private func sync() {
         fee = try? service.resolveFee(params: params, satoshiPerByte: satoshiPerByte)
 
-        applyEnabled = service.currentSatoshiPerByte != satoshiPerByte
-        resetEnabled = service.recommendedSatoshiPerByte != satoshiPerByte
-
         cautions = BitcoinTransactionService.validate(actualFeeRates: service.actualFeeRates, satoshiPerByte: satoshiPerByte)
+
+        applyEnabled = service.currentSatoshiPerByte != satoshiPerByte && !cautions.contains(where: { $0.type == .error })
+        resetEnabled = service.recommendedSatoshiPerByte != satoshiPerByte
 
         if let caution = cautions.first {
             satoshiPerByteCautionState = .caution(caution.type)
