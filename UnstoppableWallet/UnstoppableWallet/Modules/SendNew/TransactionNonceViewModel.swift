@@ -38,11 +38,11 @@ class TransactionNonceViewModel: ObservableObject {
     }
 
     private func sync() {
-        applyEnabled = service.currentNonce != txNonce
-        resetEnabled = service.nextNonce != txNonce
-
         let errors = EvmTransactionService.validateNonce(nonce: txNonce, minimumNonce: service.minimumNonce)
         cautions = errors.map(\.caution)
+
+        applyEnabled = service.currentNonce != txNonce && errors.isEmpty
+        resetEnabled = service.nextNonce != txNonce
 
         if !errors.isEmpty {
             nonceCautionState = .caution(.error)
