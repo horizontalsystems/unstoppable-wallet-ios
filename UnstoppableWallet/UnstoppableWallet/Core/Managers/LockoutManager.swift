@@ -2,9 +2,11 @@ import Foundation
 import HsExtensions
 
 class LockoutManager {
-    private let unlockAttemptsKey = "unlock_attempts_keychain_key"
-    private let lockTimestampKey = "lock_timestamp_keychain_key"
     private let maxAttempts = 5
+
+    private let unlockAttemptsKey = "unlock_attempts_keychain_key"
+    private let unlockUptimeKey = "unlock_uptime_keychain_key"
+    private let lastKnownUptimeKey = "last_known_uptime_keychain_key"
 
     private var keychainStorage: KeychainStorage
     private var timer: Timer?
@@ -17,9 +19,15 @@ class LockoutManager {
         }
     }
 
-    private var lockTimestamp: TimeInterval {
+    private var unlockUptime: TimeInterval {
         didSet {
-            try? keychainStorage.set(value: lockTimestamp, for: lockTimestampKey)
+            try? keychainStorage.set(value: unlockUptime, for: unlockUptimeKey)
+        }
+    }
+
+    private var lastKnownUptime: TimeInterval {
+        didSet {
+            try? keychainStorage.set(value: lastKnownUptime, for: lastKnownUptimeKey)
         }
     }
 
@@ -27,15 +35,14 @@ class LockoutManager {
         self.keychainStorage = keychainStorage
 
         unlockAttempts = keychainStorage.value(for: unlockAttemptsKey) ?? 0
-        lockTimestamp = keychainStorage.value(for: lockTimestampKey) ?? Self.uptime
+        unlockUptime = keychainStorage.value(for: unlockUptimeKey) ?? Self.uptime
+        lastKnownUptime = keychainStorage.value(for: lastKnownUptimeKey) ?? Self.uptime
 
         syncState()
     }
 
     private static var uptime: TimeInterval {
-        var uptime = timespec()
-        clock_gettime(CLOCK_MONOTONIC_RAW, &uptime)
-        return TimeInterval(uptime.tv_sec)
+        ProcessInfo.processInfo.systemUptime
     }
 
     private var lockoutInterval: TimeInterval {
@@ -58,17 +65,27 @@ extension LockoutManager {
         if unlockAttempts < maxAttempts {
             lockoutState = .unlocked(attemptsLeft: maxAttempts - unlockAttempts, maxAttempts: maxAttempts)
         } else {
-            let timePast = max(0, Self.uptime - lockTimestamp)
-            let lockoutInterval = lockoutInterval
+            let uptime = Self.uptime
 
-            if timePast > lockoutInterval {
-                lockoutState = .unlocked(attemptsLeft: 1, maxAttempts: maxAttempts)
-            } else {
-                let timeInterval = lockoutInterval - timePast
-                lockoutState = .locked(unlockDate: Date().addingTimeInterval(timeInterval))
-                timer = Timer.scheduledTimer(withTimeInterval: timeInterval, repeats: false) { [weak self] _ in
+            // detect device reboot (when rebooted - uptime resets)
+            if lastKnownUptime > uptime {
+                let previousRemaining = unlockUptime - lastKnownUptime
+
+                unlockUptime = uptime + previousRemaining
+                lastKnownUptime = uptime
+            }
+
+            let timeRemaining = max(0, unlockUptime - uptime)
+
+            if timeRemaining > 0 {
+                lastKnownUptime = uptime
+
+                lockoutState = .locked(unlockDate: Date().addingTimeInterval(timeRemaining))
+                timer = Timer.scheduledTimer(withTimeInterval: timeRemaining, repeats: false) { [weak self] _ in
                     self?.syncState()
                 }
+            } else {
+                lockoutState = .unlocked(attemptsLeft: 1, maxAttempts: maxAttempts)
             }
         }
     }
@@ -80,7 +97,11 @@ extension LockoutManager {
 
     func didFailUnlock() {
         unlockAttempts += 1
-        lockTimestamp = Self.uptime
+
+        let uptime = Self.uptime
+        unlockUptime = uptime + lockoutInterval
+        lastKnownUptime = uptime
+
         syncState()
     }
 }
