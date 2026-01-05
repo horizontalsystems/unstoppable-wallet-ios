@@ -1,17 +1,18 @@
+
 import EvmKit
 import Foundation
 import MarketKit
 import TronKit
 
-class AllBridgeMultiSwapTronConfirmationQuote: ISwapFinalQuote {
-    let amountIn: Decimal
-    let expectedAmountOut: Decimal
-    let recipient: String?
-    let crosschain: Bool
-    let slippage: Decimal
+class TronSwapFinalQuote: ISwapFinalQuote {
+    private let amountIn: Decimal
+    private let expectedAmountOut: Decimal
+    private let recipient: String?
+    private let crosschain: Bool
+    private let slippage: Decimal
     let createdTransaction: CreatedTransactionResponse
-    let fees: [Fee]
-    let transactionError: Error?
+    private let fees: [Fee]
+    private let transactionError: Error?
 
     init(amountIn: Decimal, expectedAmountOut: Decimal, recipient: String?, crosschain: Bool, slippage: Decimal, createdTransaction: CreatedTransactionResponse, fees: [Fee], transactionError: Error?) {
         self.amountIn = amountIn

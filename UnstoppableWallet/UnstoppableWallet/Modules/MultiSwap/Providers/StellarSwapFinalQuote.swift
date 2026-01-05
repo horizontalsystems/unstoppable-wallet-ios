@@ -1,17 +1,15 @@
-import EvmKit
 import Foundation
 import MarketKit
-import TronKit
 
-class AllBridgeMultiSwapStellarConfirmationQuote: ISwapFinalQuote {
-    let amountIn: Decimal
-    let expectedAmountOut: Decimal
-    let recipient: String?
-    let crosschain: Bool
-    let slippage: Decimal
+class StellarSwapFinalQuote: ISwapFinalQuote {
+    private let amountIn: Decimal
+    private let expectedAmountOut: Decimal
+    private let recipient: String?
+    private let crosschain: Bool
+    private let slippage: Decimal
     let transactionEnvelope: String
-    let fee: Decimal?
-    let transactionError: Error?
+    private let fee: Decimal?
+    private let transactionError: Error?
 
     init(amountIn: Decimal, expectedAmountOut: Decimal, recipient: String?, crosschain: Bool, slippage: Decimal, transactionEnvelope: String, fee: Decimal?, transactionError: Error?) {
         self.amountIn = amountIn
@@ -55,31 +53,10 @@ class AllBridgeMultiSwapStellarConfirmationQuote: ISwapFinalQuote {
             fields.append(.recipient(recipient, blockchainType: tokenOut.blockchainType))
         }
 
-        fields.append(contentsOf: feeFields(currency: currency, baseToken: baseToken, feeTokenRate: baseTokenRate))
+        // We can use utxo fee fields because it's same parameters.
+        fields.append(contentsOf: UtxoSendHelper.feeFields(fee: fee, feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate))
 
         return fields
-    }
-
-    private func feeFields(currency: Currency, baseToken: Token, feeTokenRate: Decimal?) -> [SendField] {
-        var viewItems = [SendField]()
-
-        guard let fee else {
-            return []
-        }
-
-        let appValue = AppValue(token: baseToken, value: fee)
-        let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: fee * $0) }
-
-        viewItems.append(
-            .value(
-                title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
-                appValue: appValue,
-                currencyValue: currencyValue,
-                formatFull: true
-            )
-        )
-
-        return viewItems
     }
 
     private func caution(transactionError: Error, feeToken: Token) -> CautionNew {
