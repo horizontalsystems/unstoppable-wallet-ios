@@ -2860,12 +2860,12 @@
 		D0D5BCBD2976CB9F00587FDB /* PasswordInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D5BCBB2976CB9F00587FDB /* PasswordInputView.swift */; };
 		D0D5BCC02976D3B300587FDB /* PsswordInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D5BCBF2976D3B300587FDB /* PsswordInputCell.swift */; };
 		D0D5BCC12976D3B300587FDB /* PsswordInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0D5BCBF2976D3B300587FDB /* PsswordInputCell.swift */; };
-		D0DEFF042BD1253C004C9DF0 /* BitcoinFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF022BD1253B004C9DF0 /* BitcoinFeeSettingsViewModel.swift */; };
-		D0DEFF052BD1253C004C9DF0 /* BitcoinFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF022BD1253B004C9DF0 /* BitcoinFeeSettingsViewModel.swift */; };
-		D0DEFF062BD1253C004C9DF0 /* BitcoinFeeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF032BD1253B004C9DF0 /* BitcoinFeeSettingsView.swift */; };
-		D0DEFF072BD1253C004C9DF0 /* BitcoinFeeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF032BD1253B004C9DF0 /* BitcoinFeeSettingsView.swift */; };
-		D0DEFF0A2BD1257F004C9DF0 /* BitcoinTransactionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF082BD1257E004C9DF0 /* BitcoinTransactionService.swift */; };
-		D0DEFF0B2BD1257F004C9DF0 /* BitcoinTransactionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF082BD1257E004C9DF0 /* BitcoinTransactionService.swift */; };
+		D0DEFF042BD1253C004C9DF0 /* UtxoFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF022BD1253B004C9DF0 /* UtxoFeeSettingsViewModel.swift */; };
+		D0DEFF052BD1253C004C9DF0 /* UtxoFeeSettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF022BD1253B004C9DF0 /* UtxoFeeSettingsViewModel.swift */; };
+		D0DEFF062BD1253C004C9DF0 /* UtxoFeeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF032BD1253B004C9DF0 /* UtxoFeeSettingsView.swift */; };
+		D0DEFF072BD1253C004C9DF0 /* UtxoFeeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF032BD1253B004C9DF0 /* UtxoFeeSettingsView.swift */; };
+		D0DEFF0A2BD1257F004C9DF0 /* UtxoTransactionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF082BD1257E004C9DF0 /* UtxoTransactionService.swift */; };
+		D0DEFF0B2BD1257F004C9DF0 /* UtxoTransactionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF082BD1257E004C9DF0 /* UtxoTransactionService.swift */; };
 		D0E5E84F2BE22172005080A4 /* BitcoinSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5E84E2BE22172005080A4 /* BitcoinSendHandler.swift */; };
 		D0E5E8502BE22172005080A4 /* BitcoinSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5E84E2BE22172005080A4 /* BitcoinSendHandler.swift */; };
 		D0E5E8522BE260C8005080A4 /* BitcoinPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5E8512BE260C8005080A4 /* BitcoinPreSendHandler.swift */; };
@@ -5022,9 +5022,9 @@
 		D0A980AE2B60E73F00127AF4 /* LegacyFeeSettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LegacyFeeSettingsView.swift; sourceTree = "<group>"; };
 		D0D5BCBB2976CB9F00587FDB /* PasswordInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasswordInputView.swift; sourceTree = "<group>"; };
 		D0D5BCBF2976D3B300587FDB /* PsswordInputCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PsswordInputCell.swift; sourceTree = "<group>"; };
-		D0DEFF022BD1253B004C9DF0 /* BitcoinFeeSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinFeeSettingsViewModel.swift; sourceTree = "<group>"; };
-		D0DEFF032BD1253B004C9DF0 /* BitcoinFeeSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinFeeSettingsView.swift; sourceTree = "<group>"; };
-		D0DEFF082BD1257E004C9DF0 /* BitcoinTransactionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BitcoinTransactionService.swift; sourceTree = "<group>"; };
+		D0DEFF022BD1253B004C9DF0 /* UtxoFeeSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtxoFeeSettingsViewModel.swift; sourceTree = "<group>"; };
+		D0DEFF032BD1253B004C9DF0 /* UtxoFeeSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtxoFeeSettingsView.swift; sourceTree = "<group>"; };
+		D0DEFF082BD1257E004C9DF0 /* UtxoTransactionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtxoTransactionService.swift; sourceTree = "<group>"; };
 		D0E5E84E2BE22172005080A4 /* BitcoinSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinSendHandler.swift; sourceTree = "<group>"; };
 		D0E5E8512BE260C8005080A4 /* BitcoinPreSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinPreSendHandler.swift; sourceTree = "<group>"; };
 		D0E5E8542BE38AA2005080A4 /* TronSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronSendHandler.swift; sourceTree = "<group>"; };
@@ -9421,8 +9421,8 @@
 			isa = PBXGroup;
 			children = (
 				6BEEBAB52E83F38100DB8B27 /* FeeSettingsViewFactory.swift */,
-				D0DEFF032BD1253B004C9DF0 /* BitcoinFeeSettingsView.swift */,
-				D0DEFF022BD1253B004C9DF0 /* BitcoinFeeSettingsViewModel.swift */,
+				D0DEFF032BD1253B004C9DF0 /* UtxoFeeSettingsView.swift */,
+				D0DEFF022BD1253B004C9DF0 /* UtxoFeeSettingsViewModel.swift */,
 				D06A171A2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift */,
 				ABC9ABCA9E26E2B6A5E0D43E /* Eip1559FeeSettingsView.swift */,
 				ABC9A8E02C3486492E3B12F2 /* Eip1559FeeSettingsViewModel.swift */,
@@ -9520,7 +9520,7 @@
 				D38E5DF92EFEA0F20049EB91 /* TransactionNonceViewModel.swift */,
 				11B355166E437B7ADB8B8EBA /* ValueLevel.swift */,
 				11B3542B6FE4B4F0C0B65369 /* FeeData.swift */,
-				D0DEFF082BD1257E004C9DF0 /* BitcoinTransactionService.swift */,
+				D0DEFF082BD1257E004C9DF0 /* UtxoTransactionService.swift */,
 				11B35B91B5EAF2E193FDC04E /* SendView.swift */,
 				11B35BEF6F80BDF166173819 /* SendViewModel.swift */,
 				11B35B0F9BC5C4CDBC5B041D /* EvmSendHandler.swift */,
@@ -10355,7 +10355,7 @@
 				D384058C218317DF007D50AD /* LocalStorage.swift in Sources */,
 				D023D26B2A24CD16004F65B0 /* BaseTronAdapter.swift in Sources */,
 				D384058F218317DF007D50AD /* SecuritySettingsModule.swift in Sources */,
-				D0DEFF052BD1253C004C9DF0 /* BitcoinFeeSettingsViewModel.swift in Sources */,
+				D0DEFF052BD1253C004C9DF0 /* UtxoFeeSettingsViewModel.swift in Sources */,
 				D3840592218317DF007D50AD /* SecuritySettingsViewModel.swift in Sources */,
 				6B45874E2E290298008F87E7 /* MarketEtfViewModelFactory.swift in Sources */,
 				D3840593218317DF007D50AD /* BitcoinAdapter.swift in Sources */,
@@ -10562,7 +10562,7 @@
 				11B355F32686B8689B4EC105 /* WalletConnectRequest.swift in Sources */,
 				6B2907222AF0CB8A006157D6 /* WalletConnectHandlerModule.swift in Sources */,
 				D008CA5B267C8DDF00001E0A /* EvmIncomingTransactionRecord.swift in Sources */,
-				D0DEFF0B2BD1257F004C9DF0 /* BitcoinTransactionService.swift in Sources */,
+				D0DEFF0B2BD1257F004C9DF0 /* UtxoTransactionService.swift in Sources */,
 				11B35C2FBF875F81E13CC575 /* CoinService.swift in Sources */,
 				1A5647072B937BE4B69FFA1D /* SendEthereumErrorCell.swift in Sources */,
 				58AAAAE261DEB08128441641 /* AmountDecimalParser.swift in Sources */,
@@ -11869,7 +11869,7 @@
 				11B35D2C16299881FE8BD910 /* MultiSwapQuotesView.swift in Sources */,
 				11B35D098F3E0435A3C4512B /* MultiSwapButtonState.swift in Sources */,
 				11B35ED4BE062F70D930F92C /* MultiSwapSettingStorage.swift in Sources */,
-				D0DEFF072BD1253C004C9DF0 /* BitcoinFeeSettingsView.swift in Sources */,
+				D0DEFF072BD1253C004C9DF0 /* UtxoFeeSettingsView.swift in Sources */,
 				D0740B1C2B87585100B085F9 /* ResendBitcoinService.swift in Sources */,
 				D3FBC7152E55AB0C001083D8 /* LargeTextField.swift in Sources */,
 				11B35CFBC57B9DF24CE0665C /* UniswapV2MultiSwapProvider.swift in Sources */,
@@ -11986,7 +11986,7 @@
 				D384067E21831B3D007D50AD /* SecuritySettingsModule.swift in Sources */,
 				D023D26A2A24CD16004F65B0 /* BaseTronAdapter.swift in Sources */,
 				D384068121831B3D007D50AD /* SecuritySettingsViewModel.swift in Sources */,
-				D0DEFF042BD1253C004C9DF0 /* BitcoinFeeSettingsViewModel.swift in Sources */,
+				D0DEFF042BD1253C004C9DF0 /* UtxoFeeSettingsViewModel.swift in Sources */,
 				D38E5DFC2EFEA0F20049EB91 /* TransactionNonceView.swift in Sources */,
 				D38E5DFD2EFEA0F20049EB91 /* TransactionNonceViewModel.swift in Sources */,
 				D384068221831B3D007D50AD /* BitcoinAdapter.swift in Sources */,
@@ -12199,7 +12199,7 @@
 				D05E968D2A25D6C6002CCD71 /* Trc20Adapter.swift in Sources */,
 				11B350D6CBB602F510882F1E /* WalletConnectRequest.swift in Sources */,
 				D008CA5A267C8DDF00001E0A /* EvmIncomingTransactionRecord.swift in Sources */,
-				D0DEFF0A2BD1257F004C9DF0 /* BitcoinTransactionService.swift in Sources */,
+				D0DEFF0A2BD1257F004C9DF0 /* UtxoTransactionService.swift in Sources */,
 				11B358902CE8D7EF2AD38448 /* CoinService.swift in Sources */,
 				1A5643BCA38A75A63D57F1AB /* SendEthereumErrorCell.swift in Sources */,
 				58AAA0642CB9B7B19C6235B5 /* AmountDecimalParser.swift in Sources */,
@@ -13500,7 +13500,7 @@
 				11B35A0D09133EF1B891B429 /* MultiSwapViewModel.swift in Sources */,
 				11B358EC68642C5A57ACB803 /* IMultiSwapProvider.swift in Sources */,
 				11B356A34BC00A9BEB4C13C2 /* MultiSwapQuotesView.swift in Sources */,
-				D0DEFF062BD1253C004C9DF0 /* BitcoinFeeSettingsView.swift in Sources */,
+				D0DEFF062BD1253C004C9DF0 /* UtxoFeeSettingsView.swift in Sources */,
 				D3FBC7142E55AB0C001083D8 /* LargeTextField.swift in Sources */,
 				11B355D89EADD907D4FC3273 /* MultiSwapButtonState.swift in Sources */,
 				11B356075F51B38338958A4A /* MultiSwapSettingStorage.swift in Sources */,

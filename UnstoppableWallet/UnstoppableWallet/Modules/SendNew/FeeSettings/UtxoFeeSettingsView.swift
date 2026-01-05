@@ -2,8 +2,8 @@ import BitcoinCore
 import MarketKit
 import SwiftUI
 
-struct BitcoinFeeSettingsView: View {
-    @StateObject private var viewModel: BitcoinFeeSettingsViewModel
+struct UtxoFeeSettingsView: View {
+    @StateObject private var viewModel: UtxoFeeSettingsViewModel
     private let feeToken: Token
     private let currency: Currency
     private let feeTokenRate: Decimal?
@@ -12,8 +12,8 @@ struct BitcoinFeeSettingsView: View {
     @Environment(\.presentationMode) private var presentationMode
     @FocusState private var isFocused: Bool
 
-    init(service: BitcoinTransactionService, params: SendParameters, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) {
-        _viewModel = .init(wrappedValue: BitcoinFeeSettingsViewModel(service: service, params: params))
+    init(service: UtxoTransactionService, params: SendParameters, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) {
+        _viewModel = .init(wrappedValue: UtxoFeeSettingsViewModel(service: service, params: params))
         self.feeToken = feeToken
         self.currency = currency
         self.feeTokenRate = feeTokenRate
