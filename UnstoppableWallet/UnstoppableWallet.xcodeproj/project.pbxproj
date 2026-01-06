@@ -3253,6 +3253,12 @@
 		D38E5E002F03EB870049EB91 /* EvmSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38E5DFE2F03EB870049EB91 /* EvmSwapFinalQuote.swift */; };
 		D38E5E022F03F2800049EB91 /* UtxoSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38E5E012F03F2800049EB91 /* UtxoSwapFinalQuote.swift */; };
 		D38E5E032F03F2800049EB91 /* UtxoSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38E5E012F03F2800049EB91 /* UtxoSwapFinalQuote.swift */; };
+		D38E5E052F0CDBB90049EB91 /* SwapAssetStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38E5E042F0CDBB90049EB91 /* SwapAssetStorage.swift */; };
+		D38E5E062F0CDBB90049EB91 /* SwapAssetStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38E5E042F0CDBB90049EB91 /* SwapAssetStorage.swift */; };
+		D38E5E082F0CE2740049EB91 /* SwapAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38E5E072F0CE2740049EB91 /* SwapAsset.swift */; };
+		D38E5E092F0CE2740049EB91 /* SwapAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38E5E072F0CE2740049EB91 /* SwapAsset.swift */; };
+		D38E5E0E2F0CFE020049EB91 /* SwapAssetSyncInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38E5E0D2F0CFE020049EB91 /* SwapAssetSyncInfo.swift */; };
+		D38E5E0F2F0CFE020049EB91 /* SwapAssetSyncInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38E5E0D2F0CFE020049EB91 /* SwapAssetSyncInfo.swift */; };
 		D3948EF22ADA846400FAE566 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3948EF12ADA846400FAE566 /* WidgetKit.framework */; };
 		D3948EF42ADA846400FAE566 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3948EF32ADA846400FAE566 /* SwiftUI.framework */; };
 		D3948EF72ADA846400FAE566 /* AppWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3948EF62ADA846400FAE566 /* AppWidgetBundle.swift */; };
@@ -5194,6 +5200,9 @@
 		D38E5DF92EFEA0F20049EB91 /* TransactionNonceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionNonceViewModel.swift; sourceTree = "<group>"; };
 		D38E5DFE2F03EB870049EB91 /* EvmSwapFinalQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvmSwapFinalQuote.swift; sourceTree = "<group>"; };
 		D38E5E012F03F2800049EB91 /* UtxoSwapFinalQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtxoSwapFinalQuote.swift; sourceTree = "<group>"; };
+		D38E5E042F0CDBB90049EB91 /* SwapAssetStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapAssetStorage.swift; sourceTree = "<group>"; };
+		D38E5E072F0CE2740049EB91 /* SwapAsset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapAsset.swift; sourceTree = "<group>"; };
+		D38E5E0D2F0CFE020049EB91 /* SwapAssetSyncInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapAssetSyncInfo.swift; sourceTree = "<group>"; };
 		D3948EF02ADA846400FAE566 /* WidgetExtension Dev.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WidgetExtension Dev.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3948EF12ADA846400FAE566 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		D3948EF32ADA846400FAE566 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -6307,6 +6316,8 @@
 		11B356605394189E9B5EBEE0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				D38E5E0D2F0CFE020049EB91 /* SwapAssetSyncInfo.swift */,
+				D38E5E072F0CE2740049EB91 /* SwapAsset.swift */,
 				6B5FA0122E701BEB00745DE1 /* WhitelistDapp.swift */,
 				D01513D02D1EA6A400FD9816 /* SpamScanState.swift */,
 				D02C85A72D1A93A60096A84D /* SpamAddress.swift */,
@@ -6523,6 +6534,7 @@
 		11B3573D2F4B70997D4BBAD3 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				D38E5E042F0CDBB90049EB91 /* SwapAssetStorage.swift */,
 				D02C85AD2D1A969C0096A84D /* SpamAddressStorage.swift */,
 				11B352044BCE494491257933 /* LocalStorage.swift */,
 				11B35A1AE56A94BEB52AC4D1 /* StorageMigrator.swift */,
@@ -10799,6 +10811,7 @@
 				11B3517F94025A2390B8FF15 /* EvmNetworkModule.swift in Sources */,
 				11B352D006136B42D2705778 /* BalanceData.swift in Sources */,
 				D36DE0DF272FD887000BC916 /* OneInchViewModel.swift in Sources */,
+				D38E5E062F0CDBB90049EB91 /* SwapAssetStorage.swift in Sources */,
 				6B67F0F32D1C06F2003452DC /* SuccessfulSubscriptionView.swift in Sources */,
 				6BB14F732BFE550600E879B2 /* MarketEtfFetcher.swift in Sources */,
 				D30D7E692CAACD0400B8CAA7 /* TonConnectSendHandler.swift in Sources */,
@@ -11073,6 +11086,7 @@
 				ABC9A6BC79804B3D3AAFA8F1 /* SendZcashService.swift in Sources */,
 				ABC9A55FD66CB6374F2D520D /* SendZcashViewController.swift in Sources */,
 				ABC9A852D667D38030B7EF39 /* SendConfirmationModule.swift in Sources */,
+				D38E5E092F0CE2740049EB91 /* SwapAsset.swift in Sources */,
 				D3E36B8E2DF94B73007F99CA /* StellarWalletTokenView.swift in Sources */,
 				D3A12E962CC8C5B6008D5F99 /* EducationViewModel.swift in Sources */,
 				D34338E62C8703F6001FCAD2 /* TonKitManager.swift in Sources */,
@@ -11752,6 +11766,7 @@
 				D34DB1AC2E24E59000DD30D3 /* CloudNotAvailableView.swift in Sources */,
 				11B359F812683F62595AFEE2 /* DateFormatterCache.swift in Sources */,
 				D3AFAB0F2E460200004AB074 /* IconButton.swift in Sources */,
+				D38E5E0F2F0CFE020049EB91 /* SwapAssetSyncInfo.swift in Sources */,
 				11B35483AFC1088E56BC7F37 /* LanguageHourFormatter.swift in Sources */,
 				D36E50852BF75B6900C361BD /* WatchlistTimePeriod.swift in Sources */,
 				D3F9B03B2BE3BB36009FFA95 /* WalletConnectSendViewModel.swift in Sources */,
@@ -12544,6 +12559,7 @@
 				D06F60032D195FBC0033A288 /* AddressSecurityIssueType.swift in Sources */,
 				D0118E4B2B7CC63300D55CE6 /* ResendBitcoinViewController.swift in Sources */,
 				6BB14F752C01D04200E879B2 /* CheckBoxUiView.swift in Sources */,
+				D38E5E082F0CE2740049EB91 /* SwapAsset.swift in Sources */,
 				11B3551E5E9A6D167F7BA078 /* LaunchScreenManager.swift in Sources */,
 				11B35FA6F9EE876BD65E9AD6 /* LaunchScreen.swift in Sources */,
 				D07157DB2A2DD968006F141F /* SendTronModule.swift in Sources */,
@@ -12685,6 +12701,7 @@
 				11B35CCAC0A3C35C1B9BD918 /* NftActivityViewModel.swift in Sources */,
 				11B35AC60BE4DC210C3C2312 /* NftActivityService.swift in Sources */,
 				11B35DC513240DBF0C78ED92 /* NftAssetButtonCell.swift in Sources */,
+				D38E5E052F0CDBB90049EB91 /* SwapAssetStorage.swift in Sources */,
 				D36287BB2CA3D50F00ADAF3B /* TonConnect.swift in Sources */,
 				11B351DDFD1A7BC393EFA6E1 /* CustomToken.swift in Sources */,
 				D3A580972BE8AA90003953F4 /* BitcoinSendSettingsViewModel.swift in Sources */,
@@ -13546,6 +13563,7 @@
 				6BA971C72ED56C5F00DEC017 /* SectionHeader.swift in Sources */,
 				D02C85AF2D1A969C0096A84D /* SpamAddressStorage.swift in Sources */,
 				11B3584A053BC5DAE6E434F8 /* ISwapFinalQuote.swift in Sources */,
+				D38E5E0E2F0CFE020049EB91 /* SwapAssetSyncInfo.swift in Sources */,
 				6B50FDB52EAA20E0004CD0A0 /* ReceiveSettingsListView.swift in Sources */,
 				6BEF09562E12848E004F4514 /* DeepLinkViewManager.swift in Sources */,
 				11B3557AF8D64E9897965526 /* ISendData.swift in Sources */,
