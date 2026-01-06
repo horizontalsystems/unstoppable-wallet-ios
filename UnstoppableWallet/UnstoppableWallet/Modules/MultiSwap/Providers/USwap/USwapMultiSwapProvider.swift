@@ -12,6 +12,8 @@ import TronKit
 import ZcashLightClientKit
 
 class USwapMultiSwapProvider: IMultiSwapProvider {
+    private let assetMapExpiration: TimeInterval = 60 * 60
+
     // private let baseUrl = "https://swap-api.unstoppable.money/v1"
     private let baseUrl = "https://swap-dev.unstoppable.money/api/v1"
     private var headers: HTTPHeaders?
@@ -19,20 +21,19 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     private let provider: Provider
     private let networkManager = Core.shared.networkManager
     // private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
-
-    private var assets = [Asset]()
-    private let syncSubject = PassthroughSubject<Void, Never>()
-
-    private let marketKit = Core.shared.marketKit
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let adapterManager = Core.shared.adapterManager
-    private let localStorage = Core.shared.localStorage
+    private let swapAssetStorage = Core.shared.swapAssetStorage
     private let allowanceHelper = MultiSwapAllowanceHelper()
     private let evmFeeEstimator = EvmFeeEstimator()
+
     private let utxoFilters = UtxoFilters(
         scriptTypes: [.p2pkh, .p2wpkhSh, .p2wpkh],
         maxOutputsCountForInputs: 10
     )
+
+    private var assetMap = [String: String]()
+    private let syncSubject = PassthroughSubject<Void, Never>()
 
     private let mevProtectionHelper = MevProtectionHelper()
 
@@ -60,7 +61,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             headers = HTTPHeaders([HTTPHeader(name: "x-api-key", value: apiKey)])
         }
 
-        syncTokens()
+        assetMap = (try? swapAssetStorage.swapAssetMap(provider: id, as: String.self)) ?? [:]
+        syncAssets()
     }
 
     var id: String { provider.rawValue }
@@ -72,7 +74,13 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         syncSubject.eraseToAnyPublisher()
     }
 
-    private func syncTokens() {
+    private func syncAssets() {
+        let lastSyncTimetamp = try? swapAssetStorage.lastSyncTimetamp(provider: id)
+
+        if let lastSyncTimetamp, Date().timeIntervalSince1970 - lastSyncTimetamp < assetMapExpiration {
+            return
+        }
+
         Task { [weak self, networkManager, baseUrl, provider, headers] in
             let response: ProviderResponse = try await networkManager.fetch(url: "\(baseUrl)/tokens", parameters: ["provider": provider.rawValue], headers: headers)
             self?.sync(tokens: response.tokens)
@@ -80,7 +88,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     }
 
     private func sync(tokens: [TokenResponse]) {
-        assets = []
+        var assetMap = [String: String]()
 
         for token in tokens {
             guard let blockchainType = blockchainTypeMap[token.chainId] else {
@@ -124,24 +132,26 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             default: ()
             }
 
-            guard !tokenQueries.isEmpty else {
-                continue
-            }
-
-            if let marketTokens = try? marketKit.tokens(queries: tokenQueries) {
-                assets.append(contentsOf: marketTokens.map { Asset(identifier: token.identifier, token: $0) })
+            for tokenQuery in tokenQueries {
+                assetMap[tokenQuery.id.lowercased()] = token.identifier
             }
         }
 
-        syncSubject.send()
+        try? swapAssetStorage.save(swapAssetMap: assetMap, provider: id)
+        try? swapAssetStorage.save(lastSyncTimestamp: Date().timeIntervalSince1970, provider: id)
+
+        DispatchQueue.main.async {
+            self.assetMap = assetMap
+            self.syncSubject.send()
+        }
     }
 
     private func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String? = nil, dry: Bool = true) async throws -> Quote {
-        guard let assetIn = assets.first(where: { $0.token == tokenIn }) else {
+        guard let assetIn = assetMap[tokenIn.tokenQuery.id.lowercased()] else {
             throw SwapError.unsupportedTokenIn
         }
 
-        guard let assetOut = assets.first(where: { $0.token == tokenOut }) else {
+        guard let assetOut = assetMap[tokenOut.tokenQuery.id.lowercased()] else {
             throw SwapError.unsupportedTokenOut
         }
 
@@ -160,8 +170,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         }
 
         var parameters: [String: Any] = [
-            "sellAsset": assetIn.identifier,
-            "buyAsset": assetOut.identifier,
+            "sellAsset": assetIn,
+            "buyAsset": assetOut,
             "sellAmount": amountIn.description,
             "slippage": slippage,
             "destinationAddress": destination,
@@ -187,8 +197,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     }
 
     func supports(tokenIn: Token, tokenOut: Token) -> Bool {
-        let tokens = assets.map(\.token)
-        return tokens.contains(tokenIn) && tokens.contains(tokenOut)
+        assetMap[tokenIn.tokenQuery.id.lowercased()] != nil && assetMap[tokenOut.tokenQuery.id.lowercased()] != nil
     }
 
     func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote {

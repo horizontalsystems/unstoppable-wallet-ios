@@ -10,28 +10,27 @@ import ObjectMapper
 import SwiftUI
 
 class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
+    private let assetMapExpiration: TimeInterval = 60 * 60
+
     let networkManager = Core.shared.networkManager
     let adapterManager = Core.shared.adapterManager
     // private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
-    private let marketKit = Core.shared.marketKit
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
-    private let btcBlockchainManager = Core.shared.btcBlockchainManager
-    private let accountManager = Core.shared.accountManager
-    private let localStorage = Core.shared.localStorage
+    private let swapAssetStorage = Core.shared.swapAssetStorage
     private let allowanceHelper = MultiSwapAllowanceHelper()
     private let evmFeeEstimator = EvmFeeEstimator()
     private let utxoFilters = UtxoFilters(
         scriptTypes: [.p2pkh, .p2wpkhSh, .p2wpkh]
     )
 
+    private var assetMap = [String: String]()
     private let syncSubject = PassthroughSubject<Void, Never>()
-
-    var assets = [Asset]()
 
     private let mevProtectionHelper = MevProtectionHelper()
 
     init() {
-        syncPools()
+        assetMap = (try? swapAssetStorage.swapAssetMap(provider: id, as: String.self)) ?? [:]
+        syncAssets()
     }
 
     var baseUrl: String { fatalError("Must be overridden by subclass") }
@@ -53,8 +52,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     }
 
     func supports(tokenIn: Token, tokenOut: Token) -> Bool {
-        let tokens = assets.map(\.token)
-        return tokens.contains(tokenIn) && tokens.contains(tokenOut)
+        assetMap[tokenIn.tokenQuery.id.lowercased()] != nil && assetMap[tokenOut.tokenQuery.id.lowercased()] != nil
     }
 
     func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote {
@@ -234,11 +232,11 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     }
 
     func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil, recipient: String? = nil, params: Parameters? = nil) async throws -> SwapQuote {
-        guard let assetIn = assets.first(where: { $0.token == tokenIn }) else {
+        guard let assetIn = assetMap[tokenIn.tokenQuery.id.lowercased()] else {
             throw SwapError.unsupportedTokenIn
         }
 
-        guard let assetOut = assets.first(where: { $0.token == tokenOut }) else {
+        guard let assetOut = assetMap[tokenOut.tokenQuery.id.lowercased()] else {
             throw SwapError.unsupportedTokenOut
         }
 
@@ -246,8 +244,8 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         let destination = try await resolveDestination(recipient: recipient, token: tokenOut)
 
         var parameters: Parameters = [
-            "from_asset": assetIn.id,
-            "to_asset": assetOut.id,
+            "from_asset": assetIn,
+            "to_asset": assetOut,
             "amount": amount.description,
             "destination": destination,
             "streaming_interval": 1,
@@ -280,7 +278,13 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         return try await DestinationHelper.resolveDestination(token: token).address
     }
 
-    private func syncPools() {
+    private func syncAssets() {
+        let lastSyncTimetamp = try? swapAssetStorage.lastSyncTimetamp(provider: id)
+
+        if let lastSyncTimetamp, Date().timeIntervalSince1970 - lastSyncTimetamp < assetMapExpiration {
+            return
+        }
+
         Task { [weak self, networkManager, baseUrl] in
             let pools: [Pool] = try await networkManager.fetch(url: "\(baseUrl)/pools")
             self?.sync(pools: pools)
@@ -288,7 +292,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     }
 
     private func sync(pools: [Pool]) {
-        assets = []
+        var assetMap = [String: String]()
 
         let availablePools = pools.filter { $0.status.caseInsensitiveCompare("available") == .orderedSame }
 
@@ -331,12 +335,18 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             default: ()
             }
 
-            if let tokens = try? marketKit.tokens(queries: tokenQueries) {
-                assets.append(contentsOf: tokens.map { Asset(id: pool.asset, token: $0) })
+            for tokenQuery in tokenQueries {
+                assetMap[tokenQuery.id.lowercased()] = pool.asset
             }
         }
 
-        syncSubject.send()
+        try? swapAssetStorage.save(swapAssetMap: assetMap, provider: id)
+        try? swapAssetStorage.save(lastSyncTimestamp: Date().timeIntervalSince1970, provider: id)
+
+        DispatchQueue.main.async {
+            self.assetMap = assetMap
+            self.syncSubject.send()
+        }
     }
 
     private func blockchainType(assetBlockchainId: String) -> BlockchainType? {

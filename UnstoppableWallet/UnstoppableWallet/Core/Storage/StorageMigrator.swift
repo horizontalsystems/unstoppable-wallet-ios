@@ -854,6 +854,23 @@ enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Create SwapAsset") { db in
+            try db.create(table: SwapAsset.databaseTableName) { t in
+                t.column(SwapAsset.Columns.provider.name, .text).notNull()
+                t.column(SwapAsset.Columns.tokenQueryId.name, .text).notNull()
+                t.column(SwapAsset.Columns.data.name, .blob).notNull()
+
+                t.primaryKey([SwapAsset.Columns.provider.name, SwapAsset.Columns.tokenQueryId.name], onConflict: .replace)
+            }
+        }
+
+        migrator.registerMigration("Create SwapAssetSyncInfo") { db in
+            try db.create(table: SwapAssetSyncInfo.databaseTableName) { t in
+                t.column(SwapAssetSyncInfo.Columns.provider.name, .text).primaryKey(onConflict: .replace)
+                t.column(SwapAssetSyncInfo.Columns.lastSyncTimestamp.name, .double).notNull()
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 

@@ -121,6 +121,8 @@ class Core {
 
     let valueFormatter: CurrencyValueFormatter
 
+    let swapAssetStorage: SwapAssetStorage
+
     init() throws {
         let databaseURL = try FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -414,6 +416,8 @@ class Core {
             tonKitManager: tonKitManager,
             stellarKitManager: stellarKitManager
         )
+
+        swapAssetStorage = SwapAssetStorage(dbPool: dbPool)
     }
 
     func newSendEnabled(wallet _: Wallet) -> Bool {

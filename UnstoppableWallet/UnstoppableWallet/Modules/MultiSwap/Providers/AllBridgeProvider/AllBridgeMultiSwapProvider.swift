@@ -1,5 +1,6 @@
 import Alamofire
 import BigInt
+import Combine
 import EvmKit
 import Foundation
 import HsToolKit
@@ -10,6 +11,8 @@ import SwiftUI
 import TronKit
 
 class AllBridgeMultiSwapProvider: IMultiSwapProvider {
+    private let assetMapExpiration: TimeInterval = 60 * 60
+
     //    private let baseUrl = "https://allbridge.io/"
     private let baseUrl = "https://allbridge.blocksdecoded.com"
     private let blockchainTypes: [String: BlockchainType] = [
@@ -59,15 +62,18 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let tronKitManager = Core.shared.tronAccountManager.tronKitManager
     private let stellarKitManager = Core.shared.stellarKitManager
-    private let localStorage = Core.shared.localStorage
+    private let swapAssetStorage = Core.shared.swapAssetStorage
     private let evmFeeEstimator = EvmFeeEstimator()
     private var logger: Logger?
 
-    private var tokenPairs: [Token: AbToken] = [:]
+    private var assetMap = [String: Asset]()
+    private let syncSubject = PassthroughSubject<Void, Never>()
+
     private var mevProtectionHelper = MevProtectionHelper()
 
     init() {
-        syncPools()
+        assetMap = (try? swapAssetStorage.swapAssetMap(provider: id, as: Asset.self)) ?? [:]
+        syncAssets()
     }
 
     var id: String { "allbridge" }
@@ -75,7 +81,17 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
     var description: String { "DEX" }
     var icon: String { "swap_provider_allbridge" }
 
-    private func syncPools() {
+    var syncPublisher: AnyPublisher<Void, Never>? {
+        syncSubject.eraseToAnyPublisher()
+    }
+
+    private func syncAssets() {
+        let lastSyncTimetamp = try? swapAssetStorage.lastSyncTimetamp(provider: id)
+
+        if let lastSyncTimetamp, Date().timeIntervalSince1970 - lastSyncTimetamp < assetMapExpiration {
+            return
+        }
+
         Task { [weak self, networkManager, baseUrl] in
             do {
                 let abTokens: [AbToken] = try await networkManager.fetch(url: "\(baseUrl)/tokens")
@@ -88,7 +104,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
     }
 
     private func sync(abTokens: [AbToken]) {
-        var pairs = [Token: AbToken]()
+        var assetMap = [String: Asset]()
 
         for abToken in abTokens {
             guard let blockchainType = blockchainTypes[abToken.chainSymbol] else {
@@ -108,17 +124,25 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 }
             }
 
-            if let tokenType, let token = try? marketKit.token(query: .init(blockchainType: blockchainType, tokenType: tokenType)) {
-                pairs[token] = abToken
+            if let tokenType {
+                let tokenQuery = TokenQuery(blockchainType: blockchainType, tokenType: tokenType)
+                assetMap[tokenQuery.id.lowercased()] = Asset(tokenAddress: abToken.tokenAddress, bridgeAddress: abToken.bridgeAddress)
             }
         }
 
-        logger?.log(level: .debug, message: "AllBridge: Create \(pairs.count) pairs.")
-        tokenPairs = pairs
+        logger?.log(level: .debug, message: "AllBridge: Create \(assetMap.count) pairs.")
+
+        try? swapAssetStorage.save(swapAssetMap: assetMap, provider: id)
+        try? swapAssetStorage.save(lastSyncTimestamp: Date().timeIntervalSince1970, provider: id)
+
+        DispatchQueue.main.async {
+            self.assetMap = assetMap
+            self.syncSubject.send()
+        }
     }
 
     func supports(tokenIn: Token, tokenOut: Token) -> Bool {
-        tokenPairs[tokenIn] != nil && tokenPairs[tokenOut] != nil
+        assetMap[tokenIn.tokenQuery.id.lowercased()] != nil && assetMap[tokenOut.tokenQuery.id.lowercased()] != nil
     }
 
     private func resolveDestination(recipient: String?, token: Token) async throws -> String {
@@ -155,19 +179,19 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
     }
 
     private func estimateAmountOut(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> Decimal {
-        guard let abTokenIn = tokenPairs[tokenIn] else {
+        guard let assetIn = assetMap[tokenIn.tokenQuery.id.lowercased()] else {
             throw SwapError.unsupportedTokenIn
         }
 
-        guard let abTokenOut = tokenPairs[tokenOut] else {
+        guard let assetOut = assetMap[tokenOut.tokenQuery.id.lowercased()] else {
             throw SwapError.unsupportedTokenOut
         }
 
-        let sourceToken = abTokenIn.tokenAddress
-        let destinationToken = abTokenOut.tokenAddress
+        let sourceToken = assetIn.tokenAddress
+        let destinationToken = assetOut.tokenAddress
 
         var resAmountIn = amountIn
-        let bridgeAddress = abTokenIn.bridgeAddress
+        let bridgeAddress = assetIn.bridgeAddress
 
         if let proxyAddress = proxies[bridgeAddress] {
             let proxyFee = proxyFee(proxyAddress: proxyAddress, amountIn: amountIn)
@@ -195,7 +219,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
     }
 
     func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote {
-        guard let abTokenIn = tokenPairs[tokenIn] else {
+        guard let assetIn = assetMap[tokenIn.tokenQuery.id.lowercased()] else {
             throw SwapError.unsupportedTokenIn
         }
 
@@ -205,7 +229,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         logger?.log(level: .debug, message: "AllBridge: TokenIn: \(tokenIn.coin.code) | TokenOut: \(tokenOut.coin.code)")
         logger?.log(level: .debug, message: "AllBridge: Quote Crosschain: \(crosschain) | amountOut = \(amountOut.description)")
 
-        let bridgeAddress = abTokenIn.bridgeAddress
+        let bridgeAddress = assetIn.bridgeAddress
 
         if tokenIn.blockchainType.isEvm {
             let router = proxies[bridgeAddress] ?? bridgeAddress
@@ -227,11 +251,11 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
     }
 
     private func transactionParameters(tokenIn: Token, tokenOut: Token, recipient: String?, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> Parameters {
-        guard let abTokenIn = tokenPairs[tokenIn] else {
+        guard let assetIn = assetMap[tokenIn.tokenQuery.id.lowercased()] else {
             throw SwapError.unsupportedTokenIn
         }
 
-        guard let abTokenOut = tokenPairs[tokenOut] else {
+        guard let assetOut = assetMap[tokenOut.tokenQuery.id.lowercased()] else {
             throw SwapError.unsupportedTokenOut
         }
 
@@ -250,8 +274,8 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
             "amount": amount.description,
             "sender": sender,
             "recipient": recipient,
-            "sourceToken": abTokenIn.tokenAddress,
-            "destinationToken": abTokenOut.tokenAddress,
+            "sourceToken": assetIn.tokenAddress,
+            "destinationToken": assetOut.tokenAddress,
         ]
 
         if crosschain {
@@ -522,6 +546,11 @@ extension AllBridgeMultiSwapProvider {
         case noGasLimit
         case noEvmKitWrapper
         case noStellarKit
+    }
+
+    struct Asset: Codable {
+        let tokenAddress: String
+        let bridgeAddress: String
     }
 
     struct AbToken: ImmutableMappable {
