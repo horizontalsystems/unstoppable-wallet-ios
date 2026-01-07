@@ -119,6 +119,13 @@ extension TonAdapter {
         }
     }
 
+    static func kitAmount(amount: Decimal) -> BigUInt {
+        let multiplier = pow(10, decimals)
+        let value = (amount * multiplier).rounded(decimal: 0)
+
+        return BigUInt(value.description) ?? 0
+    }
+
     static func amount(kitAmount: BigUInt?) -> Decimal {
         guard let kitAmount, let significand = Decimal(string: kitAmount.description) else {
             return 0
