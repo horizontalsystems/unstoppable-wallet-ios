@@ -41,19 +41,26 @@ extension MultiSwapSendHandler: ISendHandler {
     }
 
     var menuItems: [SendMenuItem] {
-        [
-            .init(label: "swap.confirmation.slippage_tolerance".localized) { [weak self] in
-                guard let self else {
-                    return
-                }
+        var menuItems = [SendMenuItem]()
 
-                Coordinator.shared.present { _ in
-                    MultiSwapSlippageView(slippage: self.slippage) { [weak self] slippage in
-                        self?.slippage = slippage
-                        self?.refreshSubject.send()
+        if provider.slippageSupported(tokenIn: tokenIn, tokenOut: tokenOut) {
+            menuItems.append(
+                .init(label: "swap.confirmation.slippage_tolerance".localized) { [weak self] in
+                    guard let self else {
+                        return
+                    }
+
+                    Coordinator.shared.present { _ in
+                        MultiSwapSlippageView(slippage: self.slippage) { [weak self] slippage in
+                            self?.slippage = slippage
+                            self?.refreshSubject.send()
+                        }
                     }
                 }
-            },
+            )
+        }
+
+        menuItems.append(
             .init(label: "swap.confirmation.set_recipient".localized) { [weak self] in
                 guard let self else {
                     return
@@ -65,9 +72,10 @@ extension MultiSwapSendHandler: ISendHandler {
                         self?.refreshSubject.send()
                     }
                 }
+            }
+        )
 
-            },
-        ]
+        return menuItems
     }
 
     var refreshPublisher: AnyPublisher<Void, Never>? {

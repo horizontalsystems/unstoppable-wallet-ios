@@ -85,6 +85,10 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         syncSubject.eraseToAnyPublisher()
     }
 
+    func slippageSupported(tokenIn: Token, tokenOut: Token) -> Bool {
+        tokenIn.blockchainType == tokenOut.blockchainType
+    }
+
     private func syncAssets() {
         let lastSyncTimetamp = try? swapAssetStorage.lastSyncTimetamp(provider: id)
 
