@@ -310,12 +310,14 @@ public struct SendTransactionParam: Decodable {
 
     public struct Message: Decodable {
         let address: TonSwift.Address
+        let bounceable: Bool?
         let amount: Int64
         let stateInit: String?
         let payload: String?
 
         enum CodingKeys: String, CodingKey {
             case address
+            case bounceable
             case amount
             case stateInit
             case payload
@@ -323,7 +325,9 @@ public struct SendTransactionParam: Decodable {
 
         public init(from decoder: Decoder) throws {
             let container = try decoder.container(keyedBy: CodingKeys.self)
-            address = try TonSwift.Address.parse(container.decode(String.self, forKey: .address))
+            let containerAddress = try container.decode(String.self, forKey: .address)
+            address = try TonSwift.Address.parse(containerAddress)
+            bounceable = (try? FriendlyAddress(string: containerAddress)).map(\.isBounceable)
             amount = try Int64(container.decode(String.self, forKey: .amount)) ?? 0
             stateInit = try container.decodeIfPresent(String.self, forKey: .stateInit)
             payload = try container.decodeIfPresent(String.self, forKey: .payload)

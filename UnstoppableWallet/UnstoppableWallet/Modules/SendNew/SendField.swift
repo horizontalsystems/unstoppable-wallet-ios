@@ -11,7 +11,8 @@ enum SendField {
     case levelValue(title: String, value: String, level: ValueLevel)
     case note(iconName: String?, title: String)
     case simpleValue(icon: String? = nil, title: CustomStringConvertible, value: CustomStringConvertible)
-    case address(title: String? = nil, value: String, blockchainType: BlockchainType)
+    case address(value: String, blockchainType: BlockchainType)
+    case recipient(title: String, value: String, copyable: Bool, blockchainType: BlockchainType)
     case selfAddress(value: String)
     case price(title: String, tokenA: Token, tokenB: Token, amountA: Decimal, amountB: Decimal)
     case hex(title: String, value: String)
@@ -108,8 +109,10 @@ enum SendField {
                 Text(title).textSubhead2()
                 Spacer()
             }
-        case let .address(title, value, blockchainType):
-            RecipientRowsView(title: title, value: value, blockchainType: blockchainType)
+        case let .address(value, blockchainType):
+            AddressRowsView(value: value, blockchainType: blockchainType)
+        case let .recipient(title, value, copyable, blockchainType):
+            RecipientRowsView(title: title, value: value, copyable: copyable, blockchainType: blockchainType)
         case let .selfAddress(value):
             Cell(
                 left: {
@@ -220,7 +223,7 @@ enum SendField {
         private func formatted(full: Bool, showCode: Bool = true) -> String? {
             switch self {
             case let .regular(appValue): return full ? appValue.formattedFull(showCode: showCode) : appValue.formattedShort()
-            case let .infinity(code): return showCode ? "∞ \(code)" : "∞"
+            case let .infinity(code): return "swap.unlock.unlimited".localized + (showCode ? "\(code)" : "")
             case let .withoutAmount(code): return "\(code)"
             }
         }
@@ -270,10 +273,11 @@ extension SendField {
 }
 
 extension SendField {
-    static func recipient(_ recipient: String, blockchainType: BlockchainType) -> Self {
-        .address(
+    static func recipient(_ recipient: String, copyable: Bool = false, blockchainType: BlockchainType) -> Self {
+        .recipient(
             title: "swap.recipient".localized,
             value: recipient,
+            copyable: copyable,
             blockchainType: blockchainType
         )
     }

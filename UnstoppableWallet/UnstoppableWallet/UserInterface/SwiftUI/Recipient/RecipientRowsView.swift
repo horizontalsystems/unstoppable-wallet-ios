@@ -1,35 +1,53 @@
 import MarketKit
 import SwiftUI
 
-struct RecipientRowsView: View {
+struct AddressRowsView: View {
     @StateObject var viewModel: RecipientRowsViewModel
-    private let title: String?
 
-    init(title: String? = nil, value: String, blockchainType: BlockchainType) {
+    init(value: String, blockchainType: BlockchainType) {
         _viewModel = StateObject(wrappedValue: RecipientRowsViewModel(address: value, blockchainType: blockchainType))
-        self.title = title
     }
 
     var body: some View {
-        if let title {
-            Cell(
-                style: .secondary,
-                middle: {
-                    MiddleTextIcon(text: title)
-                },
-                right: {
+        Cell(
+            left: {
+                ThemeImage(viewModel.item.icon, size: .iconSize24)
+            },
+            middle: {
+                MultiText(subtitle: ComponentText(text: viewModel.item.title, colorStyle: .primary), description: viewModel.item.subtitle)
+            }
+        )
+    }
+}
+
+struct RecipientRowsView: View {
+    @StateObject var viewModel: RecipientRowsViewModel
+    private let title: String
+    private let value: String
+    private let copyable: Bool
+
+    init(title: String, value: String, copyable: Bool, blockchainType: BlockchainType) {
+        _viewModel = StateObject(wrappedValue: RecipientRowsViewModel(address: value, blockchainType: blockchainType))
+        self.title = title
+        self.value = value
+        self.copyable = copyable
+    }
+
+    var body: some View {
+        Cell(
+            style: .secondary,
+            middle: {
+                MiddleTextIcon(text: title)
+            },
+            right: {
+                if copyable {
+                    RightButtonText(text: viewModel.item.title.shortened, icon: "copy_filled") {
+                        CopyHelper.copyAndNotify(value: value)
+                    }
+                } else {
                     RightTextIcon(text: viewModel.item.title.shortened)
                 }
-            )
-        } else {
-            Cell(
-                left: {
-                    ThemeImage(viewModel.item.icon, size: .iconSize24)
-                },
-                middle: {
-                    MultiText(subtitle: ComponentText(text: viewModel.item.title, colorStyle: .primary), description: viewModel.item.subtitle)
-                }
-            )
-        }
+            }
+        )
     }
 }

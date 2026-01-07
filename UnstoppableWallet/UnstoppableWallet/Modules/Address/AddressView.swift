@@ -5,6 +5,7 @@ import SwiftUI
 struct AddressView: View {
     @StateObject var viewModel: AddressViewModel
     private let buttonTitle: String
+    private let mustChangeAddress: Bool
     private let onFinish: (ResolvedAddress?) -> Void
 
     @Environment(\.presentationMode) private var presentationMode
@@ -17,9 +18,10 @@ struct AddressView: View {
         }
     }
 
-    init(token: Token, buttonTitle: String, destination: AddressViewModel.Destination, address: String? = nil, onFinish: @escaping (ResolvedAddress?) -> Void) {
+    init(token: Token, buttonTitle: String, destination: AddressViewModel.Destination, address: String? = nil, mustChangeAddress: Bool = false, onFinish: @escaping (ResolvedAddress?) -> Void) {
         _viewModel = StateObject(wrappedValue: AddressViewModel(token: token, destination: destination, address: address))
         self.buttonTitle = buttonTitle
+        self.mustChangeAddress = mustChangeAddress
         self.onFinish = onFinish
     }
 
@@ -189,7 +191,7 @@ struct AddressView: View {
             showProgress = true
         case let .valid(resolvedAddress):
             title = buttonTitle
-            disabled = resolvedAddress.address.lowercased() == viewModel.initialAddress.lowercased()
+            disabled = mustChangeAddress && resolvedAddress.address.lowercased() == viewModel.initialAddress.lowercased()
         }
 
         return (title, disabled, showProgress)

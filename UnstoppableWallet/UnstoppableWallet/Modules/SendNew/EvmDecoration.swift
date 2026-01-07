@@ -29,8 +29,10 @@ struct EvmDecoration {
 
     func fields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
         switch type {
-        case .outgoingEvm, .outgoingEip20, .approveEip20:
+        case .outgoingEvm, .outgoingEip20:
             return []
+        case let .approveEip20(spender, _, _):
+            return approveFields(baseToken: baseToken, spender: spender)
         case let .unknown(to, value, input, method):
             return unknownFields(baseToken: baseToken, to: to, value: value, input: input, method: method, currency: currency, rates: rates)
         }
@@ -72,7 +74,7 @@ struct EvmDecoration {
         ], isFlow: true)
     }
 
-    private func approveFlowSection(token: Token, spender: EvmKit.Address, value: Decimal, currency: Currency, rates: [String: Decimal]) -> SendDataSection {
+    private func approveFlowSection(token: Token, spender _: EvmKit.Address, value: Decimal, currency: Currency, rates: [String: Decimal]) -> SendDataSection {
         let isRevokeAllowance = value == 0 // Check approved new value or revoked last allowance
 
         let amountField: SendField
@@ -92,13 +94,7 @@ struct EvmDecoration {
             )
         }
 
-        return .init([
-            amountField,
-            .address(
-                value: spender.eip55,
-                blockchainType: token.blockchainType
-            ),
-        ])
+        return .init([amountField])
     }
 
     private func unknownFields(baseToken _: Token, to _: EvmKit.Address, value: Decimal, input: Data, method: String?, currency _: Currency, rates _: [String: Decimal]) -> [SendField] {
@@ -111,6 +107,12 @@ struct EvmDecoration {
         }
 
         return fields
+    }
+
+    private func approveFields(baseToken: Token, spender: EvmKit.Address) -> [SendField] {
+        [
+            .recipient(spender.eip55, copyable: true, blockchainType: baseToken.blockchainType),
+        ]
     }
 
     private func amountField(token: Token, value: Decimal, currency: Currency, rate: Decimal?) -> SendField {

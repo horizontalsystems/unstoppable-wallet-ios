@@ -18,7 +18,7 @@ struct MultiSwapRecipientView: View {
     var body: some View {
         ThemeNavigationStack {
             ThemeView {
-                AddressView(token: token, buttonTitle: "button.apply".localized, destination: .swap, address: address) { address in
+                AddressView(token: token, buttonTitle: "button.apply".localized, destination: .swap, address: address, mustChangeAddress: true) { address in
                     onChange(address?.address)
                     presentationMode.wrappedValue.dismiss()
                 }

@@ -161,7 +161,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         var refundAddress: String?
 
         if !dry {
-            if tokenIn.blockchainType.isEvm || tokenIn.blockchainType == .tron {
+            if tokenIn.blockchainType.isEvm || tokenIn.blockchainType == .tron || tokenIn.blockchainType == .ton {
                 sourceAddress = try await DestinationHelper.resolveDestination(token: tokenIn).address
                 refundAddress = sendingAddress(token: tokenIn)
             } else {
@@ -273,7 +273,17 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 slippage: slippage,
                 recipient: recipient,
             )
-
+        case .ton:
+            return try await buildTonConfirmationQuote(
+                tokenIn: tokenIn,
+                tokenOut: tokenOut,
+                amountIn: amountIn,
+                amountOut: amountOut,
+                amountOutMin: amountOutMin,
+                quote: quote,
+                slippage: slippage,
+                recipient: recipient
+            )
         default:
             throw SwapError.unsupportedTokenIn
         }
@@ -332,6 +342,24 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             }
 
             try await adapter.send(proposal: proposal)
+        } else if let quote = quote as? TonSwapFinalQuote {
+            guard let account = Core.shared.accountManager.activeAccount else {
+                throw SwapError.noTonAdapter
+            }
+
+            let (publicKey, secretKey) = try TonKitManager.keyPair(accountType: account.type)
+            let contract = TonKitManager.contract(publicKey: publicKey)
+
+            let transferData = try TonSendHelper.transferData(
+                param: quote.transactionParam,
+                contract: contract
+            )
+
+            _ = try await TonSendHelper.send(
+                transferData: transferData,
+                contract: contract,
+                secretKey: secretKey
+            )
         }
     }
 
@@ -378,7 +406,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             return Int(hex, radix: 16)
         }
 
-        let value = BigUInt(valueString) ?? BigUInt(0)
+        let value = BigUInt(valueString.stripping(prefix: "0x"), radix: 16) ?? BigUInt(0)
 
         let transactionData = try TransactionData(
             to: .init(hex: to),
@@ -513,6 +541,68 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             fee: totalFeeRequired?.decimalValue.decimalValue,
         )
     }
+
+    private func buildTonConfirmationQuote(
+        tokenIn _: Token,
+        tokenOut _: Token,
+        amountIn: Decimal,
+        amountOut: Decimal,
+        amountOutMin _: Decimal,
+        quote: Quote,
+        slippage: Decimal,
+        recipient: String?
+    ) async throws -> ISwapFinalQuote {
+        guard let jsonObject = quote.tx else {
+            throw SwapError.noTransactionData
+        }
+
+        let jsonData = try JSONSerialization.data(withJSONObject: jsonObject)
+        let transactionParam = try JSONDecoder().decode(SendTransactionParam.self, from: jsonData)
+
+        var transactionError: Error?
+        var fee: Decimal?
+
+        guard let account = Core.shared.accountManager.activeAccount else {
+            throw SwapError.noTonAdapter
+        }
+
+        do {
+            let (publicKey, _) = try TonKitManager.keyPair(accountType: account.type)
+            let contract = TonKitManager.contract(publicKey: publicKey)
+
+            let transferData = try TonSendHelper.transferData(
+                param: transactionParam,
+                contract: contract
+            )
+
+            let emulationResult = try await TonSendHelper.emulate(
+                transferData: transferData,
+                contract: contract,
+                converter: nil
+            )
+
+            fee = emulationResult.fee
+
+            try await TonSendHelper.validateBalance(
+                address: contract.address(),
+                totalValue: emulationResult.totalValue,
+                fee: TonAdapter.kitAmount(amount: emulationResult.fee)
+            )
+
+        } catch {
+            transactionError = error
+        }
+
+        return TonSwapFinalQuote(
+            amountIn: amountIn,
+            expectedAmountOut: amountOut,
+            recipient: recipient,
+            slippage: slippage,
+            transactionParam: transactionParam,
+            fee: fee,
+            transactionError: transactionError,
+        )
+    }
 }
 
 extension USwapMultiSwapProvider {
@@ -620,6 +710,8 @@ extension USwapMultiSwapProvider {
         case noEvmKitWrapper
         case noBitcoinAdapter
         case noZcashAdapter
+        case noTonAdapter
+        case noJettonAdapter
         case noSendParameters
         case noProposal
         case noInboundAddress
