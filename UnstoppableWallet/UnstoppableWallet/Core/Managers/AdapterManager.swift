@@ -159,7 +159,7 @@ extension AdapterManager {
     }
 
     func refresh() {
-        queue.async {
+        DispatchQueue.global(qos: .background).async {
             for blockchain in self.evmBlockchainManager.allBlockchains {
                 try? self.evmBlockchainManager.evmKitManager(blockchainType: blockchain.type).evmKitWrapper?.evmKit.refresh()
             }
@@ -175,7 +175,7 @@ extension AdapterManager {
     }
 
     func refresh(wallet: Wallet) {
-        queue.async {
+        DispatchQueue.global(qos: .background).async {
             if let blockchainType = self.evmBlockchainManager.blockchain(token: wallet.token)?.type {
                 try? self.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper?.evmKit.refresh()
             } else if wallet.token.blockchainType == .tron {
