@@ -3153,6 +3153,10 @@
 		D36E508E2BF76FB400C361BD /* WatchlistProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E508C2BF76FB400C361BD /* WatchlistProvider.swift */; };
 		D36E50932BF7852D00C361BD /* CoinListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E50922BF7852D00C361BD /* CoinListView.swift */; };
 		D36E50942BF7852D00C361BD /* CoinListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36E50922BF7852D00C361BD /* CoinListView.swift */; };
+		D37046702F1123BF00C990BE /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D370466F2F1123BB00C990BE /* BubbleView.swift */; };
+		D37046712F1123BF00C990BE /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D370466F2F1123BB00C990BE /* BubbleView.swift */; };
+		D37046732F1123D900C990BE /* DefenseSystemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37046722F1123D200C990BE /* DefenseSystemView.swift */; };
+		D37046742F1123D900C990BE /* DefenseSystemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D37046722F1123D200C990BE /* DefenseSystemView.swift */; };
 		D371A22C2E588DBF00D7D7F6 /* MiddleTextIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D371A22B2E588DB800D7D7F6 /* MiddleTextIcon.swift */; };
 		D371A22D2E588DBF00D7D7F6 /* MiddleTextIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D371A22B2E588DB800D7D7F6 /* MiddleTextIcon.swift */; };
 		D371A22F2E588E9C00D7D7F6 /* RightTextIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = D371A22E2E588E9C00D7D7F6 /* RightTextIcon.swift */; };
@@ -5174,6 +5178,8 @@
 		D36E50892BF76FA700C361BD /* WatchlistEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistEntry.swift; sourceTree = "<group>"; };
 		D36E508C2BF76FB400C361BD /* WatchlistProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistProvider.swift; sourceTree = "<group>"; };
 		D36E50922BF7852D00C361BD /* CoinListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinListView.swift; sourceTree = "<group>"; };
+		D370466F2F1123BB00C990BE /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
+		D37046722F1123D200C990BE /* DefenseSystemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DefenseSystemView.swift; sourceTree = "<group>"; };
 		D371A22B2E588DB800D7D7F6 /* MiddleTextIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MiddleTextIcon.swift; sourceTree = "<group>"; };
 		D371A22E2E588E9C00D7D7F6 /* RightTextIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RightTextIcon.swift; sourceTree = "<group>"; };
 		D371A2312E589A7200D7D7F6 /* ErrorMessage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorMessage.swift; sourceTree = "<group>"; };
@@ -5876,6 +5882,8 @@
 		11B3546A6E6F3CC013C9FF44 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				D37046722F1123D200C990BE /* DefenseSystemView.swift */,
+				D370466F2F1123BB00C990BE /* BubbleView.swift */,
 				6BA971C52ED56C5D00DEC017 /* SectionHeader.swift */,
 				6B5ABEFF2EC2D1EF0061D2AA /* ThemeImage.swift */,
 				6B44BE7B2EB4B86300257FD7 /* Components */,
@@ -10628,6 +10636,7 @@
 				D3AFAAFC2E45FF06004AB074 /* ThemeText.swift in Sources */,
 				11B3533FFB85258ED5A90401 /* FormValidatedView.swift in Sources */,
 				11B352210BEEE91481291D4C /* FormCautionView.swift in Sources */,
+				D37046712F1123BF00C990BE /* BubbleView.swift in Sources */,
 				D3AFAB142E460328004AB074 /* CellButtonStyle.swift in Sources */,
 				D3AFAB092E45FF76004AB074 /* RightMultiText.swift in Sources */,
 				11B35B6C15E23CB81DFF5B9E /* FormCautionCell.swift in Sources */,
@@ -11635,6 +11644,7 @@
 				6BDB59DF2F0F576C005FA626 /* StellarSendHelper.swift in Sources */,
 				11B359E225E30E97A6354FAC /* ListSectionInfoHeader.swift in Sources */,
 				6B4587462E27B20E008F87E7 /* DonateAddressesView.swift in Sources */,
+				D37046742F1123D900C990BE /* DefenseSystemView.swift in Sources */,
 				11B35FE0809AC8A716C41427 /* PrimaryButtonStyle.swift in Sources */,
 				11B35193A8E75B6D6117FBC7 /* View.swift in Sources */,
 				11B357F36D1D90B2C54999AE /* BottomGradientWrapper.swift in Sources */,
@@ -12300,6 +12310,7 @@
 				11B3500B2BFCC3F83C19BC4C /* SwapApproveConfirmationViewController.swift in Sources */,
 				11B35E4AEE28763AF3C3BA38 /* SwapApproveConfirmationModule.swift in Sources */,
 				11B35953404F5C8903DDA70D /* RecipientAddressCautionCell.swift in Sources */,
+				D37046732F1123D900C990BE /* DefenseSystemView.swift in Sources */,
 				11B357F22958C3AB3818F20A /* AmountInputCell.swift in Sources */,
 				11B35D05FF90E999110698C0 /* RecipientAddressInputCell.swift in Sources */,
 				11B35FFE6FBDA949184E2BF2 /* AmountInputViewModel.swift in Sources */,
@@ -13311,6 +13322,7 @@
 				D3E36BF02E0BCEBE007F99CA /* TermsView.swift in Sources */,
 				6B6E14042DEDABDE007F4A39 /* ActionTimer.swift in Sources */,
 				6B6E14052DEDABDE007F4A39 /* TopHUDContentView.swift in Sources */,
+				D37046702F1123BF00C990BE /* BubbleView.swift in Sources */,
 				6B6E14062DEDABDE007F4A39 /* HUDContainerView.swift in Sources */,
 				6B6E14072DEDABDE007F4A39 /* HUDViewModule.swift in Sources */,
 				6B6E14082DEDABDE007F4A39 /* HUDStatusFactory.swift in Sources */,
