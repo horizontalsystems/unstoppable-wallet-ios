@@ -98,6 +98,7 @@ class TonSendHelper {
 }
 
 // UI Part
+
 extension TonSendHelper {
     static func caution(transactionError: Error, feeToken: Token) -> CautionNew {
         let title: String

@@ -2109,6 +2109,8 @@
 		6BDB59D92F0B7600005FA626 /* TonSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59D72F0B7600005FA626 /* TonSwapFinalQuote.swift */; };
 		6BDB59DB2F0BB198005FA626 /* TonSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59DA2F0BB195005FA626 /* TonSendHelper.swift */; };
 		6BDB59DC2F0BB198005FA626 /* TonSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59DA2F0BB195005FA626 /* TonSendHelper.swift */; };
+		6BDB59DE2F0F576C005FA626 /* StellarSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59DD2F0F576C005FA626 /* StellarSendHelper.swift */; };
+		6BDB59DF2F0F576C005FA626 /* StellarSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59DD2F0F576C005FA626 /* StellarSendHelper.swift */; };
 		6BDDB59C2C1816B500DE9D56 /* TonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDDB59B2C1816B500DE9D56 /* TonKit */; };
 		6BDDB5A12C1AC73D00DE9D56 /* TonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDDB5A02C1AC73D00DE9D56 /* TonKit */; };
 		6BDFC0832E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDFC0822E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift */; };
@@ -4663,6 +4665,7 @@
 		6BDB59D42F0B5F61005FA626 /* MevProtectionHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MevProtectionHelper.swift; sourceTree = "<group>"; };
 		6BDB59D72F0B7600005FA626 /* TonSwapFinalQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonSwapFinalQuote.swift; sourceTree = "<group>"; };
 		6BDB59DA2F0BB195005FA626 /* TonSendHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonSendHelper.swift; sourceTree = "<group>"; };
+		6BDB59DD2F0F576C005FA626 /* StellarSendHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarSendHelper.swift; sourceTree = "<group>"; };
 		6BDFC0822E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelTransactionJsonRpc.swift; sourceTree = "<group>"; };
 		6BDFC0852E3C8F0700CC28DD /* MerkleGetTransactionByHashJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleGetTransactionByHashJsonRpc.swift; sourceTree = "<group>"; };
 		6BDFC0882E3CDC1300CC28DD /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
@@ -7078,7 +7081,6 @@
 		11B35E1EBCA59D0D1DD9ABCD /* Adapters */ = {
 			isa = PBXGroup;
 			children = (
-				6BDB59DA2F0BB195005FA626 /* TonSendHelper.swift */,
 				6BA9718E2ECB3B7B00DEC017 /* Zcash */,
 				D05E96AB2A287155002CCD71 /* Evm */,
 				D023D26F2A25CF18004F65B0 /* Tron */,
@@ -7093,10 +7095,12 @@
 				11B35F9B75F6663FAFCA3177 /* TonAdapter.swift */,
 				D34338E72C871344001FCAD2 /* TonTransactionAdapter.swift */,
 				D34338EA2C8714A2001FCAD2 /* TonEventConverter.swift */,
+				6BDB59DA2F0BB195005FA626 /* TonSendHelper.swift */,
 				D34338ED2C885895001FCAD2 /* JettonAdapter.swift */,
 				D3AEB87B2DB8FE7A00E385C8 /* StellarAdapter.swift */,
 				D3AEB87E2DBA063200E385C8 /* StellarTransactionAdapter.swift */,
 				D3AEB8852DBA123D00E385C8 /* StellarOperationConverter.swift */,
+				6BDB59DD2F0F576C005FA626 /* StellarSendHelper.swift */,
 				D092D6402E3117280039BDB4 /* MoneroAdapter.swift */,
 			);
 			path = Adapters;
@@ -11628,6 +11632,7 @@
 				11B356C983C2A2B552D214A4 /* ListSectionFooter.swift in Sources */,
 				11B35C7425B861D2F32384E8 /* ListSectionHeader.swift in Sources */,
 				6B8135852F03C8E900A3FFB6 /* CoinSorter.swift in Sources */,
+				6BDB59DF2F0F576C005FA626 /* StellarSendHelper.swift in Sources */,
 				11B359E225E30E97A6354FAC /* ListSectionInfoHeader.swift in Sources */,
 				6B4587462E27B20E008F87E7 /* DonateAddressesView.swift in Sources */,
 				11B35FE0809AC8A716C41427 /* PrimaryButtonStyle.swift in Sources */,
@@ -13122,6 +13127,7 @@
 				ABC9A7EACB2FA65355C2BA4E /* AppBackupProvider.swift in Sources */,
 				D02447D92C09FA5200A04BBC /* CoinTreasuriesView.swift in Sources */,
 				ABC9AF5B0B1D5FE002288AE1 /* FileStorage.swift in Sources */,
+				6BDB59DE2F0F576C005FA626 /* StellarSendHelper.swift in Sources */,
 				ABC9AF371FBB4BEA654A78B6 /* MetadataMonitor.swift in Sources */,
 				ABC9AA27A42D7E2A72B4A932 /* RestoreTypeModule.swift in Sources */,
 				ABC9AA0E63188150CD9A8D03 /* RestoreTypeViewModel.swift in Sources */,

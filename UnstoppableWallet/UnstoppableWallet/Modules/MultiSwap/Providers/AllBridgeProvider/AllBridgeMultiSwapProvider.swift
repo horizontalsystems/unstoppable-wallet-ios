@@ -456,9 +456,9 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 amountIn: amountIn,
                 expectedAmountOut: amountOut,
                 recipient: recipient,
-                crosschain: crosschain,
-                slippage: slippage,
-                transactionEnvelope: transactionEnvelope,
+                slippage: crosschain ? nil : slippage,
+                transactionData: .envelope(transactionEnvelope),
+                token: tokenIn,
                 fee: fee,
                 transactionError: transactionError
             )
@@ -518,17 +518,16 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 throw error
             }
         } else if let quote = quote as? StellarSwapFinalQuote {
-            guard let account = Core.shared.accountManager.activeAccount, let keyPair = try? StellarKitManager.keyPair(accountType: account.type) else {
-                throw SwapError.noStellarKit
+            guard let account = Core.shared.accountManager.activeAccount else {
+                throw SwapError.noActiveAccount
             }
 
-            do {
-                _ = try await StellarKit.Kit.send(transactionEnvelope: quote.transactionEnvelope, keyPair: keyPair, testNet: false)
-            } catch {
-                logger?.log(level: .error, message: "AllBridge SendStellar Error: \(error)")
-
-                throw error
-            }
+            let keyPair = try StellarKitManager.keyPair(accountType: account.type)
+            try await StellarSendHelper.send(
+                transactionData: quote.transactionData,
+                token: tokenIn,
+                keyPair: keyPair
+            )
         }
     }
 }
@@ -549,7 +548,7 @@ extension AllBridgeMultiSwapProvider {
         case noGasPrice
         case noGasLimit
         case noEvmKitWrapper
-        case noStellarKit
+        case noActiveAccount
     }
 
     struct Asset: Codable {

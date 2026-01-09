@@ -310,7 +310,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             var tokenQueries: [TokenQuery] = []
 
             switch blockchainType {
-            case .arbitrumOne, .avalanche, .base, .binanceSmartChain, .ethereum:
+            case .arbitrumOne, .avalanche, .base, .binanceSmartChain, .ethereum, .stellar:
                 let components = assetId.components(separatedBy: "-")
 
                 let tokenType: TokenType
