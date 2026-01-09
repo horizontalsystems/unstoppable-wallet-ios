@@ -51,6 +51,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         "bitcoincash": .bitcoinCash,
         "litecoin": .litecoin,
         "ton": .ton,
+        "stellar": .stellar,
         "monero": .monero,
     ]
 
@@ -120,7 +121,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
                 tokenQueries = [TokenQuery(blockchainType: blockchainType, tokenType: tokenType)]
 
-            case .bitcoinCash, .bitcoin, .dash, .zcash, .monero:
+            case .bitcoinCash, .bitcoin, .dash, .zcash, .monero, .stellar:
                 tokenQueries = blockchainType.nativeTokenQueries
 
             case .litecoin:
@@ -219,7 +220,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
             return EvmMultiSwapQuote(expectedBuyAmount: quote.expectedBuyAmount, allowanceState: allowanceState)
 
-        case .bitcoin, .bitcoinCash, .litecoin, .zcash, .ton, .monero:
+        case .bitcoin, .bitcoinCash, .litecoin, .zcash, .ton, .monero, .stellar:
             return MultiSwapQuote(expectedBuyAmount: quote.expectedBuyAmount)
 
         default:
@@ -275,6 +276,17 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             )
         case .ton:
             return try await buildTonConfirmationQuote(
+                tokenIn: tokenIn,
+                tokenOut: tokenOut,
+                amountIn: amountIn,
+                amountOut: amountOut,
+                amountOutMin: amountOutMin,
+                quote: quote,
+                slippage: slippage,
+                recipient: recipient
+            )
+        case .stellar:
+            return try await buildStellarConfirmationQuote(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
                 amountIn: amountIn,
@@ -359,6 +371,17 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 transferData: transferData,
                 contract: contract,
                 secretKey: secretKey
+            )
+        } else if let quote = quote as? StellarSwapFinalQuote {
+            guard let account = Core.shared.accountManager.activeAccount else {
+                throw SwapError.noActiveAccount
+            }
+
+            let keyPair = try StellarKitManager.keyPair(accountType: account.type)
+            try await StellarSendHelper.send(
+                transactionData: quote.transactionData,
+                token: tokenIn,
+                keyPair: keyPair
             )
         }
     }
@@ -603,6 +626,59 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError: transactionError,
         )
     }
+    
+    private func buildStellarConfirmationQuote(
+        tokenIn: Token,
+        tokenOut: Token,
+        amountIn: Decimal,
+        amountOut: Decimal,
+        amountOutMin: Decimal,
+        quote: Quote,
+        slippage: Decimal,
+        recipient: String?
+    ) async throws -> ISwapFinalQuote {
+        guard let adapter = adapterManager.adapter(for: tokenIn) as? StellarAdapter else {
+            throw SwapError.noStellarAdapter
+        }
+        
+        let asset = adapter.asset
+        
+        let memo: String? = quote.txExtraAttribute?["memo"] as? String
+        
+        let transactionData = StellarSendHelper.TransactionData.payment(
+            asset: asset,
+            amount: amountIn,
+            accountId: quote.inboundAddress,
+            memo: memo
+        )
+        
+        var transactionError: Error?
+        var fee: Decimal?
+        
+        do {
+            let result = try await StellarSendHelper.preparePayment(
+                asset: asset,
+                amount: amountIn,
+                accountId: quote.inboundAddress,
+                stellarKit: adapter.stellarKit
+            )
+            
+            fee = result.fee
+        } catch {
+            transactionError = error
+        }
+        
+        return StellarSwapFinalQuote(
+            amountIn: amountIn,
+            expectedAmountOut: amountOut,
+            recipient: recipient,
+            slippage: slippage,
+            transactionData: transactionData,
+            token: tokenIn,
+            fee: fee,
+            transactionError: transactionError
+        )
+    }
 }
 
 extension USwapMultiSwapProvider {
@@ -681,6 +757,7 @@ extension USwapMultiSwapProvider {
         let inboundAddress: String
         let approvalAddress: String?
         let tx: [String: Any]?
+        let txExtraAttribute: [String: Any]?
         let memo: String?
         let shieldedMemoAddress: String?
         let dustThreshold: Int?
@@ -691,6 +768,7 @@ extension USwapMultiSwapProvider {
             inboundAddress = try map.value("inboundAddress")
             approvalAddress = try? map.value("meta.approvalAddress")
             tx = try? map.value("tx")
+            txExtraAttribute = try? map.value("txExtraAttribute")
             memo = try? map.value("memo")
             shieldedMemoAddress = try? map.value("shielded_memo_address")
             dustThreshold = try? map.value("dustThreshold", using: Transform.stringToIntTransform)
@@ -715,5 +793,7 @@ extension USwapMultiSwapProvider {
         case noSendParameters
         case noProposal
         case noInboundAddress
+        case noActiveAccount
+        case noStellarAdapter
     }
 }

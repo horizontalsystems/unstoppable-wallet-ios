@@ -5,21 +5,35 @@ class StellarSwapFinalQuote: ISwapFinalQuote {
     private let amountIn: Decimal
     private let expectedAmountOut: Decimal
     private let recipient: String?
-    private let crosschain: Bool
-    private let slippage: Decimal
-    let transactionEnvelope: String
+    private let slippage: Decimal?
+    let transactionData: StellarSendHelper.TransactionData
+    private let token: Token
     private let fee: Decimal?
     private let transactionError: Error?
 
-    init(amountIn: Decimal, expectedAmountOut: Decimal, recipient: String?, crosschain: Bool, slippage: Decimal, transactionEnvelope: String, fee: Decimal?, transactionError: Error?) {
+    init(
+        amountIn: Decimal,
+        expectedAmountOut: Decimal,
+        recipient: String?,
+        slippage: Decimal?,
+        transactionData: StellarSendHelper.TransactionData,
+        token: Token,
+        fee: Decimal?,
+        transactionError: Error?
+    ) {
         self.amountIn = amountIn
         self.expectedAmountOut = expectedAmountOut
         self.recipient = recipient
-        self.crosschain = crosschain
         self.slippage = slippage
-        self.transactionEnvelope = transactionEnvelope
+        self.transactionData = transactionData
+        self.token = token
         self.fee = fee
         self.transactionError = transactionError
+
+        switch transactionData {
+        case let .envelope(str): print(str)
+        case let .payment(asset: asset, amount: amount, accountId: account, memo: memo): print("AMOUNT: \(amount.description) | aacount: \(account) | memo: \(memo)")
+        }
     }
 
     var amountOut: Decimal {
@@ -35,45 +49,46 @@ class StellarSwapFinalQuote: ISwapFinalQuote {
     }
 
     func cautions(baseToken: Token) -> [CautionNew] {
-        if let transactionError {
-            return [caution(transactionError: transactionError, feeToken: baseToken)]
+        guard let transactionError else {
+            return []
         }
 
-        return []
+        return [StellarSendHelper.caution(transactionError: transactionError, feeToken: baseToken)]
     }
 
-    func fields(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, baseToken: MarketKit.Token, currency: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
+    func fields(
+        tokenIn _: MarketKit.Token,
+        tokenOut: MarketKit.Token,
+        baseToken: MarketKit.Token,
+        currency: Currency,
+        tokenInRate _: Decimal?,
+        tokenOutRate _: Decimal?,
+        baseTokenRate: Decimal?
+    ) -> [SendField] {
         var fields = [SendField]()
 
-        if !crosschain, let slippage = SendField.slippage(slippage) {
-            fields.append(slippage)
+        if let slippage {
+            let minAmountOut = amountOut * (1 - slippage / 100)
+            if let minRecieve = SendField.minRecieve(token: tokenOut, value: minAmountOut) {
+                fields.append(minRecieve)
+            }
+
+            if let slippage = SendField.slippage(slippage) {
+                fields.append(slippage)
+            }
         }
 
         if let recipient {
             fields.append(.recipient(recipient, blockchainType: tokenOut.blockchainType))
         }
 
-        // We can use utxo fee fields because it's same parameters.
-        fields.append(contentsOf: UtxoSendHelper.feeFields(fee: fee, feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate))
+        fields.append(contentsOf: StellarSendHelper.feeFields(
+            fee: fee,
+            feeToken: baseToken,
+            currency: currency,
+            feeTokenRate: baseTokenRate
+        ))
 
         return fields
-    }
-
-    private func caution(transactionError: Error, feeToken: Token) -> CautionNew {
-        let title: String
-        let text: String
-
-        if case let StellarSendHandler.TransactionError.insufficientStellarBalance(balance: balance) = transactionError.convertedError {
-            let appValue = AppValue(token: feeToken, value: balance)
-            let balanceString = appValue.formattedShort()
-
-            title = "fee_settings.errors.insufficient_balance".localized
-            text = "fee_settings.errors.insufficient_balance.info".localized(balanceString ?? feeToken.coin.code)
-        } else {
-            title = "fee_settings.errors.unexpected_error".localized
-            text = transactionError.convertedError.smartDescription
-        }
-
-        return CautionNew(title: title, text: text, type: .error)
     }
 }
