@@ -35,8 +35,6 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     private var assetMap = [String: String]()
     private let syncSubject = PassthroughSubject<Void, Never>()
 
-    private let mevProtectionHelper = MevProtectionHelper()
-
     private let blockchainTypeMap: [String: BlockchainType] = [
         "43114": .avalanche, // AVAX
         "10": .optimism, // OP
@@ -301,89 +299,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    func otherSections(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: TransactionSettings?) -> [SendDataSection] {
-        [mevProtectionHelper.section(tokenIn: tokenIn)].compactMap { $0 }
-    }
-
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
         allowanceHelper.preSwapView(step: step, tokenIn: tokenIn, amount: amount, isPresented: isPresented, onSuccess: onSuccess)
-    }
-
-    func swap(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, quote: ISwapFinalQuote) async throws {
-        if let quote = quote as? EvmSwapFinalQuote {
-            guard let transactionData = quote.transactionData else {
-                throw SwapError.invalidTransactionData
-            }
-
-            guard let gasLimit = quote.evmFeeData?.surchargedGasLimit else {
-                throw SwapError.noGasLimit
-            }
-
-            guard let gasPrice = quote.gasPrice else {
-                throw SwapError.noGasPrice
-            }
-
-            guard let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: tokenIn.blockchainType).evmKitWrapper else {
-                throw SwapError.noEvmKitWrapper
-            }
-
-            _ = try await evmKitWrapper.send(
-                transactionData: transactionData,
-                gasPrice: gasPrice,
-                gasLimit: gasLimit,
-                privateSend: mevProtectionHelper.isActive,
-                nonce: quote.nonce
-            )
-        } else if let quote = quote as? UtxoSwapFinalQuote {
-            guard let adapter = adapterManager.adapter(for: tokenIn) as? BitcoinBaseAdapter else {
-                throw SwapError.noBitcoinAdapter
-            }
-
-            guard let sendParameters = quote.sendParameters else {
-                throw SwapError.noSendParameters
-            }
-
-            try adapter.send(params: sendParameters)
-        } else if let quote = quote as? ZcashSwapFinalQuote {
-            guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
-                throw SwapError.noZcashAdapter
-            }
-
-            guard let proposal = quote.proposal else {
-                throw SwapError.noProposal
-            }
-
-            try await adapter.send(proposal: proposal)
-        } else if let quote = quote as? TonSwapFinalQuote {
-            guard let account = Core.shared.accountManager.activeAccount else {
-                throw SwapError.noTonAdapter
-            }
-
-            let (publicKey, secretKey) = try TonKitManager.keyPair(accountType: account.type)
-            let contract = TonKitManager.contract(publicKey: publicKey)
-
-            let transferData = try TonSendHelper.transferData(
-                param: quote.transactionParam,
-                contract: contract
-            )
-
-            _ = try await TonSendHelper.send(
-                transferData: transferData,
-                contract: contract,
-                secretKey: secretKey
-            )
-        } else if let quote = quote as? StellarSwapFinalQuote {
-            guard let account = Core.shared.accountManager.activeAccount else {
-                throw SwapError.noActiveAccount
-            }
-
-            let keyPair = try StellarKitManager.keyPair(accountType: account.type)
-            try await StellarSendHelper.send(
-                transactionData: quote.transactionData,
-                token: tokenIn,
-                keyPair: keyPair
-            )
-        }
     }
 
     private func sendingAddress(token: Token) -> String? {
@@ -779,21 +696,11 @@ extension USwapMultiSwapProvider {
     enum SwapError: Error {
         case unsupportedTokenIn
         case unsupportedTokenOut
-        case noCommonProvider
         case noRoutes
         case noTransactionData
         case invalidTransactionData
-        case noGasPrice
-        case noGasLimit
-        case noEvmKitWrapper
-        case noBitcoinAdapter
         case noZcashAdapter
         case noTonAdapter
-        case noJettonAdapter
-        case noSendParameters
-        case noProposal
-        case noInboundAddress
-        case noActiveAccount
         case noStellarAdapter
     }
 }

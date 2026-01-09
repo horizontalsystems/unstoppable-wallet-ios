@@ -26,8 +26,6 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     private var assetMap = [String: String]()
     private let syncSubject = PassthroughSubject<Void, Never>()
 
-    private let mevProtectionHelper = MevProtectionHelper()
-
     init() {
         assetMap = (try? swapAssetStorage.swapAssetMap(provider: id, as: String.self)) ?? [:]
         syncAssets()
@@ -185,50 +183,8 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    func otherSections(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: TransactionSettings?) -> [SendDataSection] {
-        [mevProtectionHelper.section(tokenIn: tokenIn)].compactMap { $0 }
-    }
-
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
         allowanceHelper.preSwapView(step: step, tokenIn: tokenIn, amount: amount, isPresented: isPresented, onSuccess: onSuccess)
-    }
-
-    func swap(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, quote: ISwapFinalQuote) async throws {
-        if let quote = quote as? EvmSwapFinalQuote {
-            guard let transactionData = quote.transactionData else {
-                throw SwapError.noTransactionData
-            }
-
-            guard let gasLimit = quote.evmFeeData?.surchargedGasLimit else {
-                throw SwapError.noGasLimit
-            }
-
-            guard let gasPrice = quote.gasPrice else {
-                throw SwapError.noGasPrice
-            }
-
-            guard let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: tokenIn.blockchainType).evmKitWrapper else {
-                throw SwapError.noEvmKitWrapper
-            }
-
-            _ = try await evmKitWrapper.send(
-                transactionData: transactionData,
-                gasPrice: gasPrice,
-                gasLimit: gasLimit,
-                privateSend: mevProtectionHelper.isActive,
-                nonce: quote.nonce
-            )
-        } else if let quote = quote as? UtxoSwapFinalQuote {
-            guard let adapter = adapterManager.adapter(for: tokenIn) as? BitcoinBaseAdapter else {
-                throw SwapError.noBitcoinAdapter
-            }
-
-            guard let sendParameters = quote.sendParameters else {
-                throw SwapError.noSendParameters
-            }
-
-            try adapter.send(params: sendParameters)
-        }
     }
 
     func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil, recipient: String? = nil, params: Parameters? = nil) async throws -> SwapQuote {
@@ -415,15 +371,7 @@ extension BaseThorChainMultiSwapProvider {
         case unsupportedTokenOut
         case noRouterAddress
         case invalidTokenInType
-        case noDestinationAddress
-        case noTransactionData
-        case noGasPrice
-        case noGasLimit
-        case noEvmKitWrapper
-        case noBitcoinAdapter
         case noZcashAdapter
-        case noSendParameters
-        case noProposal
     }
 }
 

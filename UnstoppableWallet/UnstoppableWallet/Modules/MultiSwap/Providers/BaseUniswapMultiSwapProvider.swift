@@ -45,32 +45,6 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
         )
     }
 
-    override func swap(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, amountIn _: Decimal, quote: ISwapFinalQuote) async throws {
-        guard let quote = quote as? EvmSwapFinalQuote else {
-            throw SwapError.invalidQuote
-        }
-
-        guard let transactionData = quote.transactionData else {
-            throw SwapError.noTransactionData
-        }
-
-        guard let gasPrice = quote.gasPrice else {
-            throw SwapError.noGasPrice
-        }
-
-        guard let gasLimit = quote.evmFeeData?.surchargedGasLimit else {
-            throw SwapError.noGasLimit
-        }
-
-        try await super.send(
-            blockchainType: tokenIn.blockchainType,
-            transactionData: transactionData,
-            gasPrice: gasPrice,
-            gasLimit: gasLimit,
-            nonce: quote.nonce
-        )
-    }
-
     func kitToken(chain _: Chain, token _: MarketKit.Token) throws -> UniswapKit.Token {
         fatalError("Must be implemented in subclass")
     }
@@ -118,11 +92,6 @@ extension BaseUniswapMultiSwapProvider {
     enum SwapError: Error {
         case invalidToken
         case noHttpRpcSource
-        case invalidQuote
         case invalidTrade
-        case noTransactionData
-        case noGasPrice
-        case noGasLimit
-        case noEvmKitWrapper
     }
 }

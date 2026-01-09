@@ -10,8 +10,6 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
     let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let allowanceHelper = MultiSwapAllowanceHelper()
 
-    private let mevProtectionHelper = MevProtectionHelper()
-
     var id: String { fatalError("Must be implemented in subclass") }
     var name: String { fatalError("Must be implemented in subclass") }
     var description: String { fatalError("Must be implemented in subclass") }
@@ -29,34 +27,12 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         fatalError("Must be implemented in subclass")
     }
 
-    func otherSections(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: TransactionSettings?) -> [SendDataSection] {
-        [mevProtectionHelper.section(tokenIn: tokenIn)].compactMap { $0 }
-    }
-
     func settingsView(tokenIn _: Token, tokenOut _: Token, quote _: MultiSwapQuote, onChangeSettings _: @escaping () -> Void) -> AnyView {
         fatalError("settingsView(tokenIn:tokenOut:onChangeSettings:) has not been implemented")
     }
 
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
         allowanceHelper.preSwapView(step: step, tokenIn: tokenIn, amount: amount, isPresented: isPresented, onSuccess: onSuccess)
-    }
-
-    func swap(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, quote _: ISwapFinalQuote) async throws {
-        fatalError("Must be implemented in subclass")
-    }
-
-    func send(blockchainType: BlockchainType, transactionData: TransactionData, gasPrice: GasPrice, gasLimit: Int, nonce: Int? = nil) async throws {
-        guard let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
-            throw SwapError.noEvmKitWrapper
-        }
-
-        _ = try await evmKitWrapper.send(
-            transactionData: transactionData,
-            gasPrice: gasPrice,
-            gasLimit: gasLimit,
-            privateSend: mevProtectionHelper.isActive,
-            nonce: nonce
-        )
     }
 
     func spenderAddress(chain _: Chain) throws -> EvmKit.Address {
@@ -84,11 +60,5 @@ extension BaseEvmMultiSwapProvider {
         if txAmount + feeAmount > evmBalance {
             throw AppError.ethereum(reason: .insufficientBalanceWithFee)
         }
-    }
-}
-
-extension BaseEvmMultiSwapProvider {
-    enum SwapError: Error {
-        case noEvmKitWrapper
     }
 }

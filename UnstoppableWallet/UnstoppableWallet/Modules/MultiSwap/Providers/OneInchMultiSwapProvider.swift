@@ -117,32 +117,6 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
         )
     }
 
-    override func swap(tokenIn: MarketKit.Token, tokenOut _: MarketKit.Token, amountIn _: Decimal, quote: ISwapFinalQuote) async throws {
-        guard let quote = quote as? EvmSwapFinalQuote else {
-            throw SwapError.invalidQuote
-        }
-
-        guard let transactionData = quote.transactionData else {
-            throw SwapError.noTransactionData
-        }
-
-        guard let gasPrice = quote.gasPrice else {
-            throw SwapError.noGasPrice
-        }
-
-        guard let gasLimit = quote.evmFeeData?.surchargedGasLimit else {
-            throw SwapError.noGasLimit
-        }
-
-        try await super.send(
-            blockchainType: tokenIn.blockchainType,
-            transactionData: transactionData,
-            gasPrice: gasPrice,
-            gasLimit: gasLimit,
-            nonce: quote.nonce
-        )
-    }
-
     override func spenderAddress(chain: Chain) throws -> EvmKit.Address {
         try OneInchKit.Kit.routerAddress(chain: chain)
     }
@@ -162,9 +136,6 @@ extension OneInchMultiSwapProvider {
         case invalidAmountIn
         case invalidQuote
         case noEvmKitWrapper
-        case noTransactionData
-        case noGasPrice
-        case noGasLimit
         case noGasPriceData
     }
 }

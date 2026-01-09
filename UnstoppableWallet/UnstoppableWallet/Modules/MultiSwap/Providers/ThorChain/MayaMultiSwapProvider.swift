@@ -88,22 +88,6 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         )
     }
 
-    override func swap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, quote: ISwapFinalQuote) async throws {
-        if let quote = quote as? ZcashSwapFinalQuote {
-            guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
-                throw SwapError.noZcashAdapter
-            }
-
-            guard let proposal = quote.proposal else {
-                throw SwapError.noProposal
-            }
-
-            try await adapter.send(proposal: proposal)
-        } else {
-            try await super.swap(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote)
-        }
-    }
-
     private func inboundUnifiedAddress(tokenIn: Token) async throws -> String {
         let json = try await networkManager.fetchJson(url: "\(baseUrl)/inbound_addresses")
 
