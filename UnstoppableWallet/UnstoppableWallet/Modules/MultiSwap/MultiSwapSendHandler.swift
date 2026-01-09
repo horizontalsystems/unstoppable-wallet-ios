@@ -10,6 +10,10 @@ class MultiSwapSendHandler {
     private let marketKit = Core.shared.marketKit
     private let accountManager = Core.shared.accountManager
     private let walletManager = Core.shared.walletManager
+    private let evmBlockchainManager = Core.shared.evmBlockchainManager
+    private let adapterManager = Core.shared.adapterManager
+    private let tronKitManager = Core.shared.tronAccountManager.tronKitManager
+    private let mevProtectionHelper = MevProtectionHelper()
 
     let baseToken: Token
     let tokenIn: Token
@@ -92,12 +96,7 @@ extension MultiSwapSendHandler: ISendHandler {
             transactionSettings: transactionSettings
         )
 
-        let otherSections = provider.otherSections(
-            tokenIn: tokenIn,
-            tokenOut: tokenOut,
-            amountIn: amountIn,
-            transactionSettings: transactionSettings
-        )
+        let otherSections: [SendDataSection] = [mevProtectionHelper.section(tokenIn: tokenIn)].compactMap { $0 }
 
         return SendData(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote, otherSections: otherSections)
     }
@@ -107,7 +106,86 @@ extension MultiSwapSendHandler: ISendHandler {
             throw SendError.invalidData
         }
 
-        try await provider.swap(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: data.quote)
+        if let quote = data.quote as? EvmSwapFinalQuote {
+            guard let transactionData = quote.transactionData else {
+                throw SendError.invalidTransactionData
+            }
+
+            guard let gasLimit = quote.evmFeeData?.surchargedGasLimit else {
+                throw SendError.noGasLimit
+            }
+
+            guard let gasPrice = quote.gasPrice else {
+                throw SendError.noGasPrice
+            }
+
+            guard let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: tokenIn.blockchainType).evmKitWrapper else {
+                throw SendError.noEvmKitWrapper
+            }
+
+            _ = try await evmKitWrapper.send(
+                transactionData: transactionData,
+                gasPrice: gasPrice,
+                gasLimit: gasLimit,
+                privateSend: mevProtectionHelper.isActive,
+                nonce: quote.nonce
+            )
+        } else if let quote = data.quote as? UtxoSwapFinalQuote {
+            guard let adapter = adapterManager.adapter(for: tokenIn) as? BitcoinBaseAdapter else {
+                throw SendError.noBitcoinAdapter
+            }
+
+            guard let sendParameters = quote.sendParameters else {
+                throw SendError.noSendParameters
+            }
+
+            try adapter.send(params: sendParameters)
+        } else if let quote = data.quote as? ZcashSwapFinalQuote {
+            guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
+                throw SendError.noZcashAdapter
+            }
+
+            guard let proposal = quote.proposal else {
+                throw SendError.noProposal
+            }
+
+            try await adapter.send(proposal: proposal)
+        } else if let quote = data.quote as? TonSwapFinalQuote {
+            guard let account = Core.shared.accountManager.activeAccount else {
+                throw SendError.noTonAdapter
+            }
+
+            let (publicKey, secretKey) = try TonKitManager.keyPair(accountType: account.type)
+            let contract = TonKitManager.contract(publicKey: publicKey)
+
+            let transferData = try TonSendHelper.transferData(
+                param: quote.transactionParam,
+                contract: contract
+            )
+
+            _ = try await TonSendHelper.send(
+                transferData: transferData,
+                contract: contract,
+                secretKey: secretKey
+            )
+        } else if let quote = data.quote as? TronSwapFinalQuote {
+            guard let tronKitWrapper = tronKitManager.tronKitWrapper else {
+                throw SendError.noTronKitWrapper
+            }
+
+            _ = try await tronKitWrapper.send(createdTranaction: quote.createdTransaction)
+        } else if let quote = data.quote as? StellarSwapFinalQuote {
+            guard let account = accountManager.activeAccount else {
+                throw SendError.noActiveAccount
+            }
+
+            let keyPair = try StellarKitManager.keyPair(accountType: account.type)
+            try await StellarSendHelper.send(
+                transactionData: quote.transactionData,
+                token: tokenIn,
+                keyPair: keyPair
+            )
+        }
 
         if !walletManager.activeWallets.contains(where: { $0.token == tokenOut }), let activeAccount = accountManager.activeAccount {
             let wallet = Wallet(token: tokenOut, account: activeAccount)
@@ -242,6 +320,25 @@ extension MultiSwapSendHandler {
 
     enum SendError: Error {
         case invalidData
+        case invalidTransactionData
+        case noGasLimit
+        case noGasPrice
+        case noEvmKitWrapper
+        case noTronKitWrapper
+        case noBitcoinAdapter
+        case noSendParameters
+        case noZcashAdapter
+        case noProposal
+        case noTonAdapter
+        case noActiveAccount
+
+        case unsupportedTokenIn
+        case unsupportedTokenOut
+        case noCommonProvider
+        case noRoutes
+        case noTransactionData
+        case noJettonAdapter
+        case noInboundAddress
     }
 }
 

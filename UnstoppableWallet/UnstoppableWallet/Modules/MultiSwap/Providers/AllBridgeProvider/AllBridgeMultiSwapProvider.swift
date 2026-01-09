@@ -69,8 +69,6 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
     private var assetMap = [String: Asset]()
     private let syncSubject = PassthroughSubject<Void, Never>()
 
-    private var mevProtectionHelper = MevProtectionHelper()
-
     init() {
         assetMap = (try? swapAssetStorage.swapAssetMap(provider: id, as: Asset.self)) ?? [:]
         syncAssets()
@@ -467,68 +465,8 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         throw SwapError.convertionError
     }
 
-    func otherSections(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, transactionSettings _: TransactionSettings?) -> [SendDataSection] {
-        [mevProtectionHelper.section(tokenIn: tokenIn)].compactMap { $0 }
-    }
-
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
         allowanceHelper.preSwapView(step: step, tokenIn: tokenIn, amount: amount, isPresented: isPresented, onSuccess: onSuccess)
-    }
-
-    func swap(tokenIn: Token, tokenOut _: Token, amountIn _: Decimal, quote: ISwapFinalQuote) async throws {
-        if let quote = quote as? EvmSwapFinalQuote {
-            guard let transactionData = quote.transactionData else {
-                throw SwapError.noTransactionData
-            }
-
-            guard let gasLimit = quote.evmFeeData?.surchargedGasLimit else {
-                throw SwapError.noGasLimit
-            }
-
-            guard let gasPrice = quote.gasPrice else {
-                throw SwapError.noGasPrice
-            }
-
-            guard let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: tokenIn.blockchainType).evmKitWrapper else {
-                throw SwapError.noEvmKitWrapper
-            }
-
-            do {
-                _ = try await evmKitWrapper.send(
-                    transactionData: transactionData,
-                    gasPrice: gasPrice,
-                    gasLimit: gasLimit,
-                    privateSend: mevProtectionHelper.isActive,
-                    nonce: quote.nonce
-                )
-            } catch {
-                logger?.log(level: .error, message: "AllBridge SendEVM Error: \(error)")
-                throw error
-            }
-        } else if let quote = quote as? TronSwapFinalQuote {
-            guard let tronKitWrapper = tronKitManager.tronKitWrapper else {
-                throw SwapError.noEvmKitWrapper
-            }
-
-            do {
-                _ = try await tronKitWrapper.send(createdTranaction: quote.createdTransaction)
-            } catch {
-                logger?.log(level: .error, message: "AllBridge SendTron Error: \(error)")
-
-                throw error
-            }
-        } else if let quote = quote as? StellarSwapFinalQuote {
-            guard let account = Core.shared.accountManager.activeAccount else {
-                throw SwapError.noActiveAccount
-            }
-
-            let keyPair = try StellarKitManager.keyPair(accountType: account.type)
-            try await StellarSendHelper.send(
-                transactionData: quote.transactionData,
-                token: tokenIn,
-                keyPair: keyPair
-            )
-        }
     }
 }
 
@@ -544,11 +482,6 @@ extension AllBridgeMultiSwapProvider {
         case lessThanRequireFee
         case convertionError
         case invalidAmount
-        case noTransactionData
-        case noGasPrice
-        case noGasLimit
-        case noEvmKitWrapper
-        case noActiveAccount
     }
 
     struct Asset: Codable {
