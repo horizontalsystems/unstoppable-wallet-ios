@@ -115,6 +115,10 @@ class SendViewModel: ObservableObject {
 }
 
 extension SendViewModel {
+    var errorPublisher: AnyPublisher<String, Never> {
+        errorSubject.receive(on: DispatchQueue.main).eraseToAnyPublisher()
+    }
+
     func stopAutoQuoting() {
         timer?.invalidate()
     }

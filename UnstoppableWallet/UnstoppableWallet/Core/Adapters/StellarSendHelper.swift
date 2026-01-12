@@ -75,10 +75,10 @@ class StellarSendHelper {
             keyPair: keyPair,
         )
     }
-    
+
     static func send(
         transactionData: TransactionData,
-        token: Token,
+        token _: Token,
         adjustNativeBalance: Bool,
         keyPair: KeyPair
     ) async throws {
@@ -88,12 +88,12 @@ class StellarSendHelper {
                 transactionEnvelope: envelope,
                 keyPair: keyPair,
             )
-            
+
         case let .payment(asset, amount, accountId, memo):
             guard let stellarKit = Core.shared.stellarKitManager.stellarKit else {
                 throw SendError.noStellarKit
             }
-            
+
             let result = try await preparePayment(
                 asset: asset,
                 amount: amount,
@@ -101,9 +101,9 @@ class StellarSendHelper {
                 accountId: accountId,
                 stellarKit: stellarKit
             )
-            
+
             let memoObject = memo.map { Memo.text($0) } ?? Memo.none
-            
+
             _ = try await send(
                 operations: result.operations,
                 memo: memoObject,
@@ -171,7 +171,7 @@ extension StellarSendHelper {
         case envelope(String)
         case payment(asset: StellarKit.Asset, amount: Decimal, accountId: String, memo: String?)
     }
-    
+
     struct PaymentResult {
         let operations: [stellarsdk.Operation]
         let fee: Decimal

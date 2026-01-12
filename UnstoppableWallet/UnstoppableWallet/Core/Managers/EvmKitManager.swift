@@ -222,10 +222,11 @@ class EvmKitWrapper {
         let rawTransaction = try await evmKit.fetchRawTransaction(transactionData: transactionData, gasPrice: gasPrice, gasLimit: gasLimit, nonce: nonce)
         let signature = try signer.signature(rawTransaction: rawTransaction)
 
-        guard privateSend, let merkleTransactionAdapter else {
-            return try await evmKit.send(rawTransaction: rawTransaction, signature: signature)
+        if privateSend, let merkleTransactionAdapter {
+            return try await merkleTransactionAdapter.send(rawTransaction: rawTransaction, signature: signature)
         }
-        return try await merkleTransactionAdapter.send(rawTransaction: rawTransaction, signature: signature)
+
+        return try await evmKit.send(rawTransaction: rawTransaction, signature: signature)
     }
 }
 

@@ -4,7 +4,7 @@ import MoneroKit
 
 class MoneroSendHelper {
     // UI part
-    
+
     static func caution(transactionError: Error, feeToken: Token) -> CautionNew {
         let title: String
         let text: String
@@ -33,20 +33,33 @@ class MoneroSendHelper {
         fee: Decimal?,
         feeToken: Token,
         currency: Currency,
-        feeTokenRate: Decimal?
+        feeTokenRate: Decimal?,
+        priority: SendPriority
     ) -> [SendField] {
         guard let fee else { return [] }
-        
+
         let appValue = AppValue(token: feeToken, value: fee)
         let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: fee * $0) }
 
-        return [
+        var fields = [SendField]()
+
+        if priority != .default {
+            fields.append(contentsOf: [
+                .levelValue(
+                    title: "monero.priority".localized,
+                    value: priority.description,
+                    level: priority.level
+                ),
+            ])
+        }
+
+        return fields + [
             .value(
                 title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
                 appValue: appValue,
                 currencyValue: currencyValue,
                 formatFull: true
-            )
+            ),
         ]
     }
 }
