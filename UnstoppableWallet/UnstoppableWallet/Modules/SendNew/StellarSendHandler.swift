@@ -40,6 +40,7 @@ extension StellarSendHandler: ISendHandler {
                 let result = try await StellarSendHelper.preparePayment(
                     asset: asset,
                     amount: amount,
+                    adjustNativeBalance: true,
                     accountId: accountId,
                     stellarKit: stellarKit
                 )

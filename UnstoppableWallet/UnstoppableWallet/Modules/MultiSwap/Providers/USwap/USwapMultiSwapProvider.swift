@@ -10,6 +10,7 @@ import ObjectMapper
 import SwiftUI
 import TronKit
 import ZcashLightClientKit
+import MoneroKit
 
 class USwapMultiSwapProvider: IMultiSwapProvider {
     private let assetMapExpiration: TimeInterval = 60 * 60
@@ -285,6 +286,17 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             )
         case .stellar:
             return try await buildStellarConfirmationQuote(
+                tokenIn: tokenIn,
+                tokenOut: tokenOut,
+                amountIn: amountIn,
+                amountOut: amountOut,
+                amountOutMin: amountOutMin,
+                quote: quote,
+                slippage: slippage,
+                recipient: recipient
+            )
+        case .monero:
+            return try await buildMoneroConfirmationQuote(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
                 amountIn: amountIn,
@@ -576,6 +588,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             let result = try await StellarSendHelper.preparePayment(
                 asset: asset,
                 amount: amountIn,
+                adjustNativeBalance: false,
                 accountId: quote.inboundAddress,
                 stellarKit: adapter.stellarKit
             )
@@ -591,6 +604,54 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             recipient: recipient,
             slippage: slippage,
             transactionData: transactionData,
+            token: tokenIn,
+            fee: fee,
+            transactionError: transactionError
+        )
+    }
+
+    private func buildMoneroConfirmationQuote(
+        tokenIn: Token,
+        tokenOut: Token,
+        amountIn: Decimal,
+        amountOut: Decimal,
+        amountOutMin: Decimal,
+        quote: Quote,
+        slippage: Decimal,
+        recipient: String?
+    ) async throws -> ISwapFinalQuote {
+        guard let adapter = adapterManager.adapter(for: tokenIn) as? MoneroAdapter else {
+            throw SwapError.noMoneroAdapter
+        }
+
+        
+        let amount: MoneroSendAmount = adapter.balanceData.available == amountIn ? .all(amountIn) : .value(amountIn)
+        var fee: Decimal?
+        var transactionError: Error?
+
+        do {
+            let estimatedFee = try adapter.estimateFee(
+                amount: amount,
+                address: quote.inboundAddress,
+                priority: MoneroSwapFinalQuote.priority,
+            )
+            
+            fee = estimatedFee
+            if amountIn + estimatedFee > adapter.balanceData.available {
+                throw MoneroKit.MoneroCoreError.insufficientFunds(adapter.balanceData.available.description)
+            }
+        } catch {
+            transactionError = error
+        }
+
+        return MoneroSwapFinalQuote(
+            amountIn: amountIn,
+            expectedAmountOut: amountOut,
+            recipient: recipient,
+            slippage: slippage,
+            amount: amount,
+            address: quote.inboundAddress,
+            memo: quote.memo,
             token: tokenIn,
             fee: fee,
             transactionError: transactionError
@@ -702,5 +763,6 @@ extension USwapMultiSwapProvider {
         case noZcashAdapter
         case noTonAdapter
         case noStellarAdapter
+        case noMoneroAdapter
     }
 }

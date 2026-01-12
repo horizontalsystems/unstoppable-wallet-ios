@@ -4,23 +4,20 @@ import StellarKit
 import stellarsdk
 
 class StellarSendHelper {
-    static func validate(accountId: String) throws {
-        try StellarKit.Kit.validate(accountId: accountId)
-    }
-
     static func preparePayment(
         asset: StellarKit.Asset,
         amount: Decimal,
+        adjustNativeBalance: Bool,
         accountId: String,
         stellarKit: StellarKit.Kit
     ) async throws -> PaymentResult {
         let baseFee = try await stellarKit.baseFee()
-        let stellarBalance = stellarKit.account?.assetBalanceMap[.native]?.balance ?? 0
+        let stellarBalance = stellarKit.account?.availableBalance ?? 0
 
         var adjustedAmount = amount
 
         // Adjust amount if sending all native balance
-        if asset.isNative, amount == stellarBalance {
+        if asset.isNative, adjustNativeBalance, amount == stellarBalance {
             adjustedAmount -= baseFee
         }
 
@@ -82,6 +79,7 @@ class StellarSendHelper {
     static func send(
         transactionData: TransactionData,
         token: Token,
+        adjustNativeBalance: Bool,
         keyPair: KeyPair
     ) async throws {
         switch transactionData {
@@ -99,6 +97,7 @@ class StellarSendHelper {
             let result = try await preparePayment(
                 asset: asset,
                 amount: amount,
+                adjustNativeBalance: adjustNativeBalance,
                 accountId: accountId,
                 stellarKit: stellarKit
             )
