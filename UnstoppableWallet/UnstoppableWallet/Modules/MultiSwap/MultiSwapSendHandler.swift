@@ -183,7 +183,19 @@ extension MultiSwapSendHandler: ISendHandler {
             try await StellarSendHelper.send(
                 transactionData: quote.transactionData,
                 token: tokenIn,
+                adjustNativeBalance: false,
                 keyPair: keyPair
+            )
+        } else if let quote = data.quote as? MoneroSwapFinalQuote {
+            guard let adapter = adapterManager.adapter(for: tokenIn) as? MoneroAdapter else {
+                throw SendError.noMoneroAdapter
+            }
+
+            try adapter.send(
+                to: quote.address,
+                amount: quote.amount,
+                priority: MoneroSwapFinalQuote.priority,
+                memo: quote.memo
             )
         }
 
@@ -328,6 +340,7 @@ extension MultiSwapSendHandler {
         case noBitcoinAdapter
         case noSendParameters
         case noZcashAdapter
+        case noMoneroAdapter
         case noProposal
         case noTonAdapter
         case noActiveAccount

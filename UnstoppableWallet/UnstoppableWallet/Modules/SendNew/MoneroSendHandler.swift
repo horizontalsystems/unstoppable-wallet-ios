@@ -96,38 +96,12 @@ extension MoneroSendHandler {
             [token.coin]
         }
 
-        private func caution(transactionError: Error, feeToken: Token) -> CautionNew {
-            let title: String
-            let text: String
-
-            if let moneroError = transactionError as? MoneroCoreError {
-                switch moneroError {
-                case let .insufficientFunds(balance):
-                    let appValue = AppValue(token: feeToken, value: Decimal(string: balance) ?? 0)
-                    let balanceString = appValue.formattedShort()
-
-                    title = "fee_settings.errors.insufficient_balance".localized
-                    text = "fee_settings.errors.insufficient_balance.info".localized(balanceString ?? "")
-                default:
-                    title = "ethereum_transaction.error.title".localized
-                    text = transactionError.convertedError.smartDescription
-                }
-            } else {
-                title = "ethereum_transaction.error.title".localized
-                text = transactionError.convertedError.smartDescription
-            }
-
-            return CautionNew(title: title, text: text, type: .error)
-        }
-
         func cautions(baseToken: Token, currency _: Currency, rates _: [String: Decimal]) -> [CautionNew] {
-            var cautions = [CautionNew]()
-
-            if let transactionError {
-                cautions.append(caution(transactionError: transactionError, feeToken: baseToken))
+            guard let transactionError else {
+                return []
             }
 
-            return cautions
+            return [MoneroSendHelper.caution(transactionError: transactionError, feeToken: baseToken)]
         }
 
         func feeData(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
@@ -158,19 +132,6 @@ extension MoneroSendHandler {
                 appValue: AppValue(token: amountToken, value: value),
                 currencyValue: amountTokenRate.map { CurrencyValue(currency: currency, value: value * $0) }
             )
-        }
-
-        func feeFields(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [SendField] {
-            let feeData = feeData(feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate)
-
-            return [
-                .value(
-                    title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
-                    appValue: feeData?.appValue,
-                    currencyValue: feeData?.currencyValue,
-                    formatFull: true
-                ),
-            ]
         }
 
         func sections(baseToken _: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
@@ -205,7 +166,7 @@ extension MoneroSendHandler {
             }
 
             sections.append(
-                .init(fields + feeFields(feeToken: token, currency: currency, feeTokenRate: rate), isMain: false)
+                .init(fields + MoneroSendHelper.feeFields(fee: fee, feeToken: token, currency: currency, feeTokenRate: rate), isMain: false)
             )
 
             return sections

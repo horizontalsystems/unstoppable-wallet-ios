@@ -2111,6 +2111,10 @@
 		6BDB59DC2F0BB198005FA626 /* TonSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59DA2F0BB195005FA626 /* TonSendHelper.swift */; };
 		6BDB59DE2F0F576C005FA626 /* StellarSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59DD2F0F576C005FA626 /* StellarSendHelper.swift */; };
 		6BDB59DF2F0F576C005FA626 /* StellarSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59DD2F0F576C005FA626 /* StellarSendHelper.swift */; };
+		6BDB59E12F14B6B8005FA626 /* MoneroSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59E02F14B6B8005FA626 /* MoneroSwapFinalQuote.swift */; };
+		6BDB59E22F14B6B8005FA626 /* MoneroSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59E02F14B6B8005FA626 /* MoneroSwapFinalQuote.swift */; };
+		6BDB59E42F14B8F1005FA626 /* MoneroSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59E32F14B8EC005FA626 /* MoneroSendHelper.swift */; };
+		6BDB59E52F14B8F1005FA626 /* MoneroSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59E32F14B8EC005FA626 /* MoneroSendHelper.swift */; };
 		6BDDB59C2C1816B500DE9D56 /* TonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDDB59B2C1816B500DE9D56 /* TonKit */; };
 		6BDDB5A12C1AC73D00DE9D56 /* TonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDDB5A02C1AC73D00DE9D56 /* TonKit */; };
 		6BDFC0832E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDFC0822E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift */; };
@@ -4670,6 +4674,8 @@
 		6BDB59D72F0B7600005FA626 /* TonSwapFinalQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonSwapFinalQuote.swift; sourceTree = "<group>"; };
 		6BDB59DA2F0BB195005FA626 /* TonSendHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonSendHelper.swift; sourceTree = "<group>"; };
 		6BDB59DD2F0F576C005FA626 /* StellarSendHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarSendHelper.swift; sourceTree = "<group>"; };
+		6BDB59E02F14B6B8005FA626 /* MoneroSwapFinalQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroSwapFinalQuote.swift; sourceTree = "<group>"; };
+		6BDB59E32F14B8EC005FA626 /* MoneroSendHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroSendHelper.swift; sourceTree = "<group>"; };
 		6BDFC0822E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelTransactionJsonRpc.swift; sourceTree = "<group>"; };
 		6BDFC0852E3C8F0700CC28DD /* MerkleGetTransactionByHashJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleGetTransactionByHashJsonRpc.swift; sourceTree = "<group>"; };
 		6BDFC0882E3CDC1300CC28DD /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
@@ -6523,6 +6529,7 @@
 				6BDB59D12F0B5DF1005FA626 /* TronSwapFinalQuote.swift */,
 				6BDB59D72F0B7600005FA626 /* TonSwapFinalQuote.swift */,
 				6BDB59CE2F0B5C53005FA626 /* StellarSwapFinalQuote.swift */,
+				6BDB59E02F14B6B8005FA626 /* MoneroSwapFinalQuote.swift */,
 				D38E5DF22EF964190049EB91 /* ZcashSwapFinalQuote.swift */,
 				D38E5E012F03F2800049EB91 /* UtxoSwapFinalQuote.swift */,
 				D38E5DEF2EF91CC60049EB91 /* MultiSwapQuote.swift */,
@@ -7089,6 +7096,7 @@
 		11B35E1EBCA59D0D1DD9ABCD /* Adapters */ = {
 			isa = PBXGroup;
 			children = (
+				6BDB59E32F14B8EC005FA626 /* MoneroSendHelper.swift */,
 				6BA9718E2ECB3B7B00DEC017 /* Zcash */,
 				D05E96AB2A287155002CCD71 /* Evm */,
 				D023D26F2A25CF18004F65B0 /* Tron */,
@@ -11698,6 +11706,7 @@
 				6B6E13F62DEDABDE007F4A39 /* HUD.swift in Sources */,
 				6B6E13F72DEDABDE007F4A39 /* HUDViewPresenter.swift in Sources */,
 				6B6E13F82DEDABDE007F4A39 /* HUDActivityView.swift in Sources */,
+				6BDB59E22F14B6B8005FA626 /* MoneroSwapFinalQuote.swift in Sources */,
 				6B6E13F92DEDABDE007F4A39 /* HUDKeyboardHelper.swift in Sources */,
 				D3E36BC62E0145AE007F99CA /* WalletListItemView.swift in Sources */,
 				6B6E13FA2DEDABDE007F4A39 /* NativeProgressView.swift in Sources */,
@@ -11943,6 +11952,7 @@
 				ABC9AD02AD6340C230AC4F9D /* TransactionContactSelectViewModel.swift in Sources */,
 				D0A690292BFF50D900E59296 /* TronSendData.swift in Sources */,
 				ABC9AC0F2A4A48BB223005EA /* TransactionBlockchainSelectViewModel.swift in Sources */,
+				6BDB59E42F14B8F1005FA626 /* MoneroSendHelper.swift in Sources */,
 				ABC9A24A0A2F6C7C476D7F69 /* TransactionTokenSelectViewModel.swift in Sources */,
 				11B35EFEEB7F361BD5FCCC3D /* SendView.swift in Sources */,
 				11B3525F2CAA4B98F29705A7 /* SendViewModel.swift in Sources */,
@@ -12175,6 +12185,7 @@
 				1A564D3DB55C8CB8B5AED664 /* BalanceErrorViewModel.swift in Sources */,
 				D36DE0DE272FD887000BC916 /* OneInchViewModel.swift in Sources */,
 				D36287A32CA2B35A00ADAF3B /* TonConnectListViewModel.swift in Sources */,
+				6BDB59E52F14B8F1005FA626 /* MoneroSendHelper.swift in Sources */,
 				D3AFAB1B2E4A0D7B004AB074 /* ScrollHeaderModifier.swift in Sources */,
 				1A5649926B0064083045BEEB /* BalanceErrorService.swift in Sources */,
 				1A564001701A1E77AF7A651B /* BalanceErrorModule.swift in Sources */,
@@ -12341,6 +12352,7 @@
 				6B1D8D1D2DE98F2600A52B01 /* ThemeWindow.swift in Sources */,
 				6B1D8D1E2DE98F2600A52B01 /* Styles.swift in Sources */,
 				6B1D8D202DE98F2600A52B01 /* LightTheme.swift in Sources */,
+				6BDB59E12F14B6B8005FA626 /* MoneroSwapFinalQuote.swift in Sources */,
 				6B1D8D212DE98F2600A52B01 /* ThemeManager.swift in Sources */,
 				6B1D8D222DE98F2600A52B01 /* DarkTheme.swift in Sources */,
 				6B1D8D232DE98F2600A52B01 /* Margins.swift in Sources */,
