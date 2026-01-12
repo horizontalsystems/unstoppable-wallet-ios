@@ -3,8 +3,6 @@ import MarketKit
 import MoneroKit
 
 class MoneroSwapFinalQuote: ISwapFinalQuote {
-    static let priority: SendPriority = .default
-
     private let amountIn: Decimal
     private let expectedAmountOut: Decimal
     private let recipient: String?
@@ -13,6 +11,7 @@ class MoneroSwapFinalQuote: ISwapFinalQuote {
     let address: String
     let memo: String?
     private let token: Token
+    let priority: SendPriority
     private let fee: Decimal?
     private let transactionError: Error?
 
@@ -25,6 +24,7 @@ class MoneroSwapFinalQuote: ISwapFinalQuote {
         address: String,
         memo: String?,
         token: Token,
+        priority: SendPriority,
         fee: Decimal?,
         transactionError: Error?
     ) {
@@ -36,6 +36,7 @@ class MoneroSwapFinalQuote: ISwapFinalQuote {
         self.address = address
         self.memo = memo
         self.token = token
+        self.priority = priority
         self.fee = fee
         self.transactionError = transactionError
     }
@@ -49,14 +50,14 @@ class MoneroSwapFinalQuote: ISwapFinalQuote {
     }
 
     var feeData: FeeData? {
-        nil
+        .monero(amount: amount, address: address)
     }
 
     func cautions(baseToken: Token) -> [CautionNew] {
         guard let transactionError else {
             return []
         }
-        
+
         return [MoneroSendHelper.caution(transactionError: transactionError, feeToken: baseToken)]
     }
 
@@ -90,7 +91,8 @@ class MoneroSwapFinalQuote: ISwapFinalQuote {
             fee: fee,
             feeToken: baseToken,
             currency: currency,
-            feeTokenRate: baseTokenRate
+            feeTokenRate: baseTokenRate,
+            priority: priority
         ))
 
         return fields

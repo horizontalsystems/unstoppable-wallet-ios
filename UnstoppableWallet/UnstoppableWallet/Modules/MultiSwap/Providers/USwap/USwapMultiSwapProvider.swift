@@ -6,11 +6,11 @@ import EvmKit
 import Foundation
 import HsToolKit
 import MarketKit
+import MoneroKit
 import ObjectMapper
 import SwiftUI
 import TronKit
 import ZcashLightClientKit
-import MoneroKit
 
 class USwapMultiSwapProvider: IMultiSwapProvider {
     private let assetMapExpiration: TimeInterval = 60 * 60
@@ -304,7 +304,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 amountOutMin: amountOutMin,
                 quote: quote,
                 slippage: slippage,
-                recipient: recipient
+                recipient: recipient,
+                priority: transactionSettings?.priority ?? .default
             )
         default:
             throw SwapError.unsupportedTokenIn
@@ -555,13 +556,13 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError: transactionError,
         )
     }
-    
+
     private func buildStellarConfirmationQuote(
         tokenIn: Token,
-        tokenOut: Token,
+        tokenOut _: Token,
         amountIn: Decimal,
         amountOut: Decimal,
-        amountOutMin: Decimal,
+        amountOutMin _: Decimal,
         quote: Quote,
         slippage: Decimal,
         recipient: String?
@@ -569,21 +570,21 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         guard let adapter = adapterManager.adapter(for: tokenIn) as? StellarAdapter else {
             throw SwapError.noStellarAdapter
         }
-        
+
         let asset = adapter.asset
-        
+
         let memo: String? = quote.txExtraAttribute?["memo"] as? String
-        
+
         let transactionData = StellarSendHelper.TransactionData.payment(
             asset: asset,
             amount: amountIn,
             accountId: quote.inboundAddress,
             memo: memo
         )
-        
+
         var transactionError: Error?
         var fee: Decimal?
-        
+
         do {
             let result = try await StellarSendHelper.preparePayment(
                 asset: asset,
@@ -592,12 +593,12 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 accountId: quote.inboundAddress,
                 stellarKit: adapter.stellarKit
             )
-            
+
             fee = result.fee
         } catch {
             transactionError = error
         }
-        
+
         return StellarSwapFinalQuote(
             amountIn: amountIn,
             expectedAmountOut: amountOut,
@@ -612,19 +613,19 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
     private func buildMoneroConfirmationQuote(
         tokenIn: Token,
-        tokenOut: Token,
+        tokenOut _: Token,
         amountIn: Decimal,
         amountOut: Decimal,
-        amountOutMin: Decimal,
+        amountOutMin _: Decimal,
         quote: Quote,
         slippage: Decimal,
-        recipient: String?
+        recipient: String?,
+        priority: SendPriority
     ) async throws -> ISwapFinalQuote {
         guard let adapter = adapterManager.adapter(for: tokenIn) as? MoneroAdapter else {
             throw SwapError.noMoneroAdapter
         }
 
-        
         let amount: MoneroSendAmount = adapter.balanceData.available == amountIn ? .all(amountIn) : .value(amountIn)
         var fee: Decimal?
         var transactionError: Error?
@@ -633,9 +634,9 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             let estimatedFee = try adapter.estimateFee(
                 amount: amount,
                 address: quote.inboundAddress,
-                priority: MoneroSwapFinalQuote.priority,
+                priority: priority,
             )
-            
+
             fee = estimatedFee
             if amountIn + estimatedFee > adapter.balanceData.available {
                 throw MoneroKit.MoneroCoreError.insufficientFunds(adapter.balanceData.available.description)
@@ -653,6 +654,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             address: quote.inboundAddress,
             memo: quote.memo,
             token: tokenIn,
+            priority: priority,
             fee: fee,
             transactionError: transactionError
         )

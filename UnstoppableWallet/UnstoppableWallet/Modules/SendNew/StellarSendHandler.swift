@@ -46,7 +46,7 @@ extension StellarSendHandler: ISendHandler {
                 )
                 operations = result.operations
                 fee = result.fee
-                
+
                 if result.adjustedAmount != amount {
                     data = .payment(asset: asset, amount: result.adjustedAmount, accountId: accountId)
                 }

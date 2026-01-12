@@ -59,7 +59,7 @@ struct SendView: View {
                 }
             }
         }
-        .onReceive(viewModel.errorSubject) { error in
+        .onReceive(viewModel.errorPublisher) { error in
             HudHelper.instance.show(banner: .error(string: error))
         }
         .accentColor(.themeJacob)

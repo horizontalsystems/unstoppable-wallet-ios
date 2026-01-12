@@ -153,20 +153,12 @@ extension MoneroSendHandler {
 
             var fields = [SendField]()
 
-            fields.append(contentsOf: [
-                .levelValue(
-                    title: "monero.priority".localized,
-                    value: priority.description,
-                    level: priority.level
-                ),
-            ])
-
             if let memo {
                 fields.append(.simpleValue(title: "send.confirmation.memo".localized, value: memo))
             }
 
             sections.append(
-                .init(fields + MoneroSendHelper.feeFields(fee: fee, feeToken: token, currency: currency, feeTokenRate: rate), isMain: false)
+                .init(fields + MoneroSendHelper.feeFields(fee: fee, feeToken: token, currency: currency, feeTokenRate: rate, priority: priority), isMain: false)
             )
 
             return sections

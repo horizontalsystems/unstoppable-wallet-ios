@@ -194,7 +194,7 @@ extension MultiSwapSendHandler: ISendHandler {
             try adapter.send(
                 to: quote.address,
                 amount: quote.amount,
-                priority: MoneroSwapFinalQuote.priority,
+                priority: quote.priority,
                 memo: quote.memo
             )
         }
