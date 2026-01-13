@@ -535,13 +535,13 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.confirmation.operation" = "Vorgang";
 "send.confirmation.transaction_xdr" = "Transaktion XDR";
 
-"send.confirmation.edit_fee" = "Edit Fee";
+"send.confirmation.edit_fee" = "Gebühr bearbeiten";
 "send.confirmation.transaction_nonce" = "Transaktion Nonce";
 
 "send.confirmation.sync_failed" = "Synchronisation fehlgeschlagen";
-"send.confirmation.failed_to_fetch_data" = "Failed to fetch data";
+"send.confirmation.failed_to_fetch_data" = "Daten konnten nicht abgerufen werden";
 "send.confirmation.refresh" = "Aktualisieren";
-"send.confirmation.refreshing" = "Refreshing";
+"send.confirmation.refreshing" = "Aktualisierung läuft";
 "send.confirmation.please_wait" = "Bitte warten";
 "send.confirmation.expires_in" = "Läuft ab in %@";
 "send.confirmation.expired" = "Abgelaufen";
@@ -716,7 +716,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "Slippage-Toleranz";
-"swap.advanced_settings.slippage.info" = "The maximum acceptable price deviation for your swap. Beyond this limit the transaction is reverted.";
+"swap.advanced_settings.slippage.info" = "Die maximal zulässige Preisabweichung für deinen swap. Wird dieses Limit überschritten, wird die Transaktion rückgängig gemacht.";
 "swap.advanced_settings.deadline" = "Transaktionsfrist";
 "swap.advanced_settings.deadline.footer" = "Ihre Transaktion wird rückgängig gemacht, wenn sie länger als diese aussteht.";
 "swap.advanced_settings.recipient.footer" = "Nach dem Umtauschvorgang wird der Betrag an die angegebene Adresse überwiesen";
@@ -754,12 +754,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "swap.confirmation.quote_expired" = "Angebot abgelaufen";
 
 "swap.confirmation.slippage_tolerance" = "Slippage-Toleranz";
-"swap.confirmation.set_recipient" = "Set Recipient";
+"swap.confirmation.set_recipient" = "Empfänger festlegen";
 
 "swap.confirmation.slide_to_swap" = "Wischen zum Tauschen";
 "swap.confirmation.swapping" = "Swapping";
 "swap.confirmation.refresh" = "Aktualisieren";
-"swap.confirmation.impact_high" = "You’ll lose a big part (%@) of your funds on this swap.";
+"swap.confirmation.impact_high" = "Du wirst bei diesem Swap einen großen Teil (%@) deiner Mittel verlieren.";
 "swap.confirmation.impact_too_high" = "%@ hat Swap-Aktion für diesen Handel deaktiviert, da du einen extrem ungünstigen Preis bekommst. Dies ist auf extrem niedrige Liquidität zurückzuführen.\nWenn Sie trotzdem wechseln möchten, verwenden Sie stattdessen %@ Webseite.";
 "swap.confirmation.impact_warning" = "Wichtig! Du bekommst einen extrem ungünstigen Preis. Dies ist auf die extrem niedrige Liquidität zurückzuführen.";
 
@@ -1519,11 +1519,11 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "terms.item.device_pin" = "Das Deaktivieren des Entsperr-PINs (oder -Passcodes) Ihres Smartphones löscht alle Wallets aus der App. Sie benötigen Ihre Wiederherstellungsphrasen, um wieder Zugriff zu erhalten.";
 "terms.item.privacy_notice" = "Die App überwacht oder sammelt keine Daten über Ihre Guthaben oder Transaktionen – wir wissen nicht einmal, wie viele Personen sie verwenden. Sie verfolgt nur anonyme Nutzungsmuster (geöffnete Seiten, angeklickte Schaltflächen), um die Benutzerfreundlichkeit zu verbessern. Sie können dies unter Einstellungen → Datenschutz deaktivieren.";
 
-"terms.item.decentralized" = "We do not hold your assets, access your private keys, or execute transactions on your behalf. The app does not provide brokerage, exchange, custody, escrow, or money-transmission services. All transactions are initiated, signed, and broadcast directly by you to public blockchain networks. We do not control, relay, modify, or process your transactions.";
-"terms.item.commission" = "To support ongoing development and remain open source, the app may receive a small commission from certain swap integrations. Any such commission does not involve custody of user funds and does not give us access to or control over your assets.";
-"terms.item.irreversibility" = "Blockchain transactions are irreversible. Always review transaction details before confirming.";
-"terms.item.software" = "The app is provided “as is.” While it is built with care, software may contain unintended bugs or vulnerabilities that could result in loss of funds. The app is open source and can be independently reviewed and audited by anyone.";
-"terms.item.compliance" = "You are solely responsible for the security of your funds, your conduct, and compliance with applicable laws in your jurisdiction. Use of the app does not exempt you from tax, financial reporting, or other legal obligations.";
+"terms.item.decentralized" = "Wir verwahren keine Assets, greifen nicht auf deine private keys zu und führen keine Transaktionen in deinem Namen aus. Die App bietet keine Brokerage-, Exchange-, Custody-, Escrow- oder Geldübermittlungsdienste an. Alle Transaktionen werden ausschließlich von dir selbst initiiert, signiert und direkt an öffentliche Blockchain-Netze übertragen. Wir kontrollieren, vermitteln, verändern oder verarbeiten deine Transaktionen nicht.";
+"terms.item.commission" = "Zur Unterstützung der laufenden Entwicklung und, um Open Source zu bleiben, kann die App aus bestimmten Swap-Integrationen eine kleine Provision erhalten. Eine solche Provision beinhaltet keine Verwahrung von Nutzergeldern und verschafft uns keinen Zugriff auf oder keine Kontrolle über deine Assets.";
+"terms.item.irreversibility" = "Blockchain-Transaktionen sind unumkehrbar. Überprüfe immer alle Transaktionsdetails, bevor du bestätigst.";
+"terms.item.software" = "Die App wird „as is“ bereitgestellt. Trotz sorgfältiger Entwicklung kann Software unbeabsichtigte Bugs oder Sicherheitslücken enthalten, die zu einem Verlust von Geldern führen können. Die App ist Open Source und kann von jeder Person unabhängig eingesehen und geprüft werden.";
+"terms.item.compliance" = "Du trägst die alleinige Verantwortung für die Sicherheit deiner Gelder, dein eigenes Handeln sowie die Einhaltung der in deiner Rechtsordnung geltenden Gesetze. Die Nutzung der App entbindet dich nicht von steuerlichen, finanziellen, Melde- oder sonstigen rechtlichen Verpflichtungen.";
 
 
 // Settings -> Tell Friends
@@ -1733,12 +1733,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "appearance.hide_markets" = "Märkte ausblenden";
 "appearance.hide_markets.description" = "Ocultar por completo la pestaña Mercados.";
 "appearance.price_change" = "Preisänderung";
-"appearance.price_change.description" = "Wählen Sie den Zeitraum für die Anzeige der Token-Preisentwicklung aus.";
+"appearance.price_change.description" = "Select the time period for token price change display.";
 "appearance.price_change.24h" = "24Std";
 "appearance.price_change.1d" = "Mitternacht UTC";
 
 "appearance.launch_screen" = "Startbildschirm";
-"appearance.launch_screen.description" = "Wählen Sie den Standardbildschirm aus, den die App beim Start öffnet.";
+"appearance.launch_screen.description" = "Choose which screen the app opens on by default.";
 "appearance.launch_screen.auto" = "Auto";
 "appearance.launch_screen.balance" = "Guthaben";
 "appearance.launch_screen.market_overview" = "Marktübersicht";
@@ -1746,13 +1746,13 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 "appearance.balance_tab" = "Balance Tab";
 "appearance.amount_rounding" = "Betragsrundung";
-"appearance.amount_rounding.description" = "Kontostände und Transaktionsbeträge als gerundete Werte anzeigen.";
+"appearance.amount_rounding.description" = "Display rounded balances and transaction amounts.";
 "appearance.recently_sent" = "Kürzlich gesendet";
 "appearance.recently_sent.description" = "Zuletzt verwendete Empfängeradresse für den Token anzeigen.";
 "appearance.hide_buttons" = "Schaltflächen ausblenden";
 "appearance.hide_buttons.description" = "Die Schaltflächen „Senden“, „Empfangen“ und „Tauschen“ im Reiter „Kontostand“ ausblenden.";
-"appearance.balance_value" = "Saldo Wert";
-"appearance.balance_value.description" = "Kontostände wahlweise in Krypto oder Fiat hervorgehoben anzeigen.";
+"appearance.balance_value" = "Coin Balances";
+"appearance.balance_value.description" = "Show balances highlighted in either crypto or fiat.";
 "appearance.balance_value.coin_fiat" = "Münze / Fiat";
 "appearance.balance_value.fiat_coin" = "Fiat / Münze";
 
@@ -2476,11 +2476,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 // Monero
 
 "monero.priority" = "Sendepriorität";
-"monero.priority.default" = "Standard";
+"monero.priority.default" = "Auto";
 "monero.priority.low" = "Niedrig";
 "monero.priority.medium" = "Mittel";
 "monero.priority.high" = "Hoch";
-"monero.priority.last" = "Zuletzt";
 
 // MEV Protection
 
