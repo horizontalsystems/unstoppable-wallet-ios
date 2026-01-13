@@ -541,7 +541,7 @@
 "send.confirmation.transaction_nonce" = "Nonce транзакции";
 
 "send.confirmation.sync_failed" = "Ошибка синхронизации";
-"send.confirmation.failed_to_fetch_data" = "Failed to fetch data";
+"send.confirmation.failed_to_fetch_data" = "Не удалось получить данные";
 "send.confirmation.refresh" = "Обновить";
 "send.confirmation.refreshing" = "Refreshing";
 "send.confirmation.please_wait" = "Пожалуйста, подождите";
@@ -718,7 +718,7 @@
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "Допустимое отклонение";
-"swap.advanced_settings.slippage.info" = "The maximum acceptable price deviation for your swap. Beyond this limit the transaction is reverted.";
+"swap.advanced_settings.slippage.info" = "Максимально допустимое отклонение цены для вашего обмена. При превышении этого лимита транзакция будет отменена.";
 "swap.advanced_settings.deadline" = "Срок выполнения транзакции";
 "swap.advanced_settings.deadline.footer" = "Ваша транзакция будет отменена, если она останется в ожидании дольше этого времени.";
 "swap.advanced_settings.recipient.footer" = "После операции обмена сумма будет переведена на указанный адрес";
@@ -761,7 +761,7 @@
 "swap.confirmation.slide_to_swap" = "Проведите для обмена";
 "swap.confirmation.swapping" = "Обмен";
 "swap.confirmation.refresh" = "Обновить";
-"swap.confirmation.impact_high" = "You’ll lose a big part (%@) of your funds on this swap.";
+"swap.confirmation.impact_high" = "При этом обмене вы потеряете значительную часть (%@) своих средств.";
 "swap.confirmation.impact_too_high" = "%@ отключил действие обмена для этой сделки, потому что вы получаете крайне невыгодную цену. Это связано с крайне низкой ликвидностью.Если вы все равно хотите выполнить обмен, используйте вместо этого веб-сайт %@.";
 "swap.confirmation.impact_warning" = "Важно! Вы получаете крайне невыгодную цену из-за низкой ликвидности.";
 
@@ -1736,12 +1736,12 @@
 "appearance.hide_markets" = "Скрыть рынки";
 "appearance.hide_markets.description" = "Полностью скрыть вкладку «Рынки».";
 "appearance.price_change" = "Изменение цены (%)";
-"appearance.price_change.description" = "Select the time period for token price change display.";
+"appearance.price_change.description" = "Выберите период времени для отображения изменения цены токена.";
 "appearance.price_change.24h" = "24ч";
 "appearance.price_change.1d" = "Полночь по UTC";
 
 "appearance.launch_screen" = "Запуск экрана";
-"appearance.launch_screen.description" = "Choose which screen the app opens on by default.";
+"appearance.launch_screen.description" = "Выберите, какой экран будет открываться в приложении по умолчанию.";
 "appearance.launch_screen.auto" = "По умолчанию";
 "appearance.launch_screen.balance" = "Баланс";
 "appearance.launch_screen.market_overview" = "Обзор рынка";
@@ -1749,7 +1749,7 @@
 
 "appearance.balance_tab" = "Вкладка баланс";
 "appearance.amount_rounding" = "Округление суммы";
-"appearance.amount_rounding.description" = "Display rounded balances and transaction amounts.";
+"appearance.amount_rounding.description" = "Отображать округлённые балансы и суммы транзакций.";
 "appearance.recently_sent" = "Недавно отправленные";
 "appearance.recently_sent.description" = "Показывать недавно отправленный адрес для токена.";
 "appearance.hide_buttons" = "Скрыть кнопки";
