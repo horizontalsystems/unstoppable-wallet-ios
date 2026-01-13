@@ -1733,12 +1733,12 @@
 "appearance.hide_markets" = "隐藏市场";
 "appearance.hide_markets.description" = "完全隐藏“市场”标签页。";
 "appearance.price_change" = "价格变动";
-"appearance.price_change.description" = "Select the time period for token price change display.";
+"appearance.price_change.description" = "选择用于显示 token 价格变动的时间周期。";
 "appearance.price_change.24h" = "24时";
 "appearance.price_change.1d" = "午夜UTC";
 
 "appearance.launch_screen" = "启动屏幕";
-"appearance.launch_screen.description" = "Choose which screen the app opens on by default.";
+"appearance.launch_screen.description" = "选择应用默认打开的界面。";
 "appearance.launch_screen.auto" = "自动";
 "appearance.launch_screen.balance" = "余额";
 "appearance.launch_screen.market_overview" = "行情";
@@ -1746,13 +1746,13 @@
 
 "appearance.balance_tab" = "余额标签";
 "appearance.amount_rounding" = "金额取整";
-"appearance.amount_rounding.description" = "Display rounded balances and transaction amounts.";
+"appearance.amount_rounding.description" = "显示经过取整处理的余额和交易金额。";
 "appearance.recently_sent" = "最近发送";
 "appearance.recently_sent.description" = "显示该代币最近发送的地址。";
 "appearance.hide_buttons" = "隐藏按钮";
 "appearance.hide_buttons.description" = "在“余额”标签页隐藏发送、接收和兑换按钮。";
-"appearance.balance_value" = "Coin Balances";
-"appearance.balance_value.description" = "Show balances highlighted in either crypto or fiat.";
+"appearance.balance_value" = "币种余额";
+"appearance.balance_value.description" = "以 crypto 或法币方式高亮显示余额。";
 "appearance.balance_value.coin_fiat" = "加密货币 / 法定货币";
 "appearance.balance_value.fiat_coin" = "法定货币 / 加密货币";
 
