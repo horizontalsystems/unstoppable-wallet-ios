@@ -1734,12 +1734,12 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "appearance.hide_markets" = "Ocultar Mercados";
 "appearance.hide_markets.description" = "Ocultar por completo la pestaña Mercados.";
 "appearance.price_change" = "Cambio de Precio";
-"appearance.price_change.description" = "Select the time period for token price change display.";
+"appearance.price_change.description" = "Selecciona el período de tiempo para mostrar el cambio de precio del token.";
 "appearance.price_change.24h" = "24H";
 "appearance.price_change.1d" = "Medianoche UTC";
 
 "appearance.launch_screen" = "Pantalla de lanzamiento";
-"appearance.launch_screen.description" = "Choose which screen the app opens on by default.";
+"appearance.launch_screen.description" = "Elige qué pantalla se abre por defecto al iniciar la app.";
 "appearance.launch_screen.auto" = "Auto";
 "appearance.launch_screen.balance" = "Saldo";
 "appearance.launch_screen.market_overview" = "Visión General del Mercado";
@@ -1747,13 +1747,13 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "appearance.balance_tab" = "Pestaña de saldo";
 "appearance.amount_rounding" = "Redondeo de montos";
-"appearance.amount_rounding.description" = "Display rounded balances and transaction amounts.";
+"appearance.amount_rounding.description" = "Mostrar saldos y montos de transacciones redondeados.";
 "appearance.recently_sent" = "Enviados recientemente";
 "appearance.recently_sent.description" = "Mostrar la dirección usada recientemente para enviar este token.";
 "appearance.hide_buttons" = "Ocultar Botones";
 "appearance.hide_buttons.description" = "Ocultar los botones de Enviar, Recibir e Intercambiar en la pestaña de Saldo.";
-"appearance.balance_value" = "Coin Balances";
-"appearance.balance_value.description" = "Show balances highlighted in either crypto or fiat.";
+"appearance.balance_value" = "Saldos de monedas";
+"appearance.balance_value.description" = "Mostrar los saldos destacados en crypto o en fiat.";
 "appearance.balance_value.coin_fiat" = "Moneda / Fiat";
 "appearance.balance_value.fiat_coin" = "Fiat / Moneda";
 
