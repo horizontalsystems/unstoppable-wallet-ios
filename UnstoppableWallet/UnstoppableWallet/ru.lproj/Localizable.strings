@@ -537,13 +537,13 @@
 "send.confirmation.operation" = "Операция";
 "send.confirmation.transaction_xdr" = "Транзакция XDR";
 
-"send.confirmation.edit_fee" = "Edit Fee";
+"send.confirmation.edit_fee" = "Изменить комиссию";
 "send.confirmation.transaction_nonce" = "Nonce транзакции";
 
 "send.confirmation.sync_failed" = "Ошибка синхронизации";
 "send.confirmation.failed_to_fetch_data" = "Не удалось получить данные";
 "send.confirmation.refresh" = "Обновить";
-"send.confirmation.refreshing" = "Refreshing";
+"send.confirmation.refreshing" = "Перезагрузка";
 "send.confirmation.please_wait" = "Пожалуйста, подождите";
 "send.confirmation.expires_in" = "Истекает через %@";
 "send.confirmation.expired" = "Истёк";
@@ -715,6 +715,18 @@
 "swap.outbound_fee" = "Исходящая комиссия";
 "swap.total_fee" = "Итоговая комиссия";
 
+"swap.aml" = "AML";
+
+// Swap Terms
+
+"swap.terms.title" = "Swap Terms";
+"swap.terms.description" = "Unstoppable aggregates multiple decentralized (DEX) and centralized swap providers to offer competitive rates and broad asset support.";
+"swap.terms.risk_of_restrictions" = "Risk of restrictions";
+"swap.terms.risk_of_restrictions.description" = "I understand that some non-DEX swap providers apply transaction screening %@. Such providers may reject (and refund) swaps, or, in rare cases (CSAM and terrorism), freeze funds and request KYC data.";
+"swap.terms.user_responsibility" = "User responsibility";
+"swap.terms.user_responsibility.description" = "I understand that using non-DEX providers introduces additional risks and that these risks are my responsibility. Unstoppable can not guarantee provider behavior.";
+"swap.terms.footer" = "Always choose a swap provider that aligns with your requirements.";
+
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "Допустимое отклонение";
@@ -756,7 +768,7 @@
 "swap.confirmation.quote_expired" = "Котировка истекла";
 
 "swap.confirmation.slippage_tolerance" = "Допустимое отклонение";
-"swap.confirmation.set_recipient" = "Set Recipient";
+"swap.confirmation.set_recipient" = "Указать получателя";
 
 "swap.confirmation.slide_to_swap" = "Проведите для обмена";
 "swap.confirmation.swapping" = "Обмен";
@@ -1448,6 +1460,7 @@
 "tx_info.recipient_hash" = "Получатель";
 "tx_info.raw_transaction" = "Неподтвержденная транзакция";
 "tx_info.memo" = "Мемо";
+"tx_info.tx_secret_key" = "Tx Secret Key";
 "tx_info.service" = "Сервис";
 "tx_info.view_on" = "Просмотреть на %@";
 "tx_info.you_pay" = "Вы платите";
@@ -1522,11 +1535,11 @@
 "terms.item.privacy_notice" = "Приложение не отслеживает и не собирает данные о ваших балансах и транзакциях - мы даже не знаем, сколько людей им пользуется.
 Оно фиксирует только анонимную статистику использования (открытые страницы, нажатия кнопок), чтобы улучшать интерфейс. Это можно отключить в Настройки → Конфиденциальность.";
 
-"terms.item.decentralized" = "We do not hold your assets, access your private keys, or execute transactions on your behalf. The app does not provide brokerage, exchange, custody, escrow, or money-transmission services. All transactions are initiated, signed, and broadcast directly by you to public blockchain networks. We do not control, relay, modify, or process your transactions.";
-"terms.item.commission" = "To support ongoing development and remain open source, the app may receive a small commission from certain swap integrations. Any such commission does not involve custody of user funds and does not give us access to or control over your assets.";
-"terms.item.irreversibility" = "Blockchain transactions are irreversible. Always review transaction details before confirming.";
-"terms.item.software" = "The app is provided “as is.” While it is built with care, software may contain unintended bugs or vulnerabilities that could result in loss of funds. The app is open source and can be independently reviewed and audited by anyone.";
-"terms.item.compliance" = "You are solely responsible for the security of your funds, your conduct, and compliance with applicable laws in your jurisdiction. Use of the app does not exempt you from tax, financial reporting, or other legal obligations.";
+"terms.item.decentralized" = "Мы не храним ваши активы, не имеем доступа к вашим приватным ключам и не совершаем транзакции от вашего имени. Приложение не оказывает брокерские, обменные, кастодиальные, эскроу-сервис или услуги по переводу денежных средств. Все транзакции инициируются, подписываются и отправляются вами напрямую в публичные blockchain-сети. Мы не контролируем, не передаём, не изменяем и не обрабатываем ваши транзакции.";
+"terms.item.commission" = "Для поддержки дальнейшей разработки и сохранения статуса open source приложение может получать небольшую комиссию от некоторых обмен-интеграций. Такая комиссия не предполагает хранение средств пользователей и не предоставляет нам доступ к вашим активам или контроль над ними.";
+"terms.item.irreversibility" = "Транзакции в блокчейн являются необратимыми. Перед подтверждением всегда внимательно проверяйте детали транзакции.";
+"terms.item.software" = "Приложение предоставляется в текущем виде. Несмотря на внимательный подход к разработке, программное обеспечение может содержать непреднамеренные ошибки или уязвимости, которые потенциально могут привести к потере средств. Приложение является проектом с открытым исходным кодом и может быть независимо проверено и проаудировано любым пользователем.";
+"terms.item.compliance" = "Вы несёте полную ответственность за безопасность своих средств, свои действия и соблюдение применимого законодательства в вашей юрисдикции. Использование приложения не освобождает вас от налоговых, финансовых отчётных или иных юридических обязательств.";
 
 
 // Settings -> Tell Friends
@@ -1754,8 +1767,8 @@
 "appearance.recently_sent.description" = "Показывать недавно отправленный адрес для токена.";
 "appearance.hide_buttons" = "Скрыть кнопки";
 "appearance.hide_buttons.description" = "Отображать округлённые балансы и суммы транзакций.";
-"appearance.balance_value" = "Coin Balances";
-"appearance.balance_value.description" = "Show balances highlighted in either crypto or fiat.";
+"appearance.balance_value" = "Балансы токенов";
+"appearance.balance_value.description" = "Отображать балансы с выделением в криптовалюте или фиате.";
 "appearance.balance_value.coin_fiat" = "Монета / Фиат";
 "appearance.balance_value.fiat_coin" = "Фиат / Монета";
 
