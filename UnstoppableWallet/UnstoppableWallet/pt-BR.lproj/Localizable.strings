@@ -1733,12 +1733,12 @@ Go to Settings - > %@ and allow access to the camera.";
 "appearance.hide_markets" = "Esconder Mercados";
 "appearance.hide_markets.description" = "Ocultar completamente a aba de Mercados.";
 "appearance.price_change" = "Mudança de Preço";
-"appearance.price_change.description" = "Select the time period for token price change display.";
+"appearance.price_change.description" = "Selecione o período de tempo para exibir a variação de preço do token.";
 "appearance.price_change.24h" = "24h";
 "appearance.price_change.1d" = "Meia-noite UTC";
 
 "appearance.launch_screen" = "Tela Inicial";
-"appearance.launch_screen.description" = "Choose which screen the app opens on by default.";
+"appearance.launch_screen.description" = "Escolha qual tela o app abre por padrão.";
 "appearance.launch_screen.auto" = "Automático";
 "appearance.launch_screen.balance" = "Saldo";
 "appearance.launch_screen.market_overview" = "Visão geral do mercado";
@@ -1746,13 +1746,13 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "appearance.balance_tab" = "Aba de Saldo";
 "appearance.amount_rounding" = "Arredondamento de Valores";
-"appearance.amount_rounding.description" = "Display rounded balances and transaction amounts.";
+"appearance.amount_rounding.description" = "Exibir saldos e valores de transações arredondados.";
 "appearance.recently_sent" = "Enviados Recentemente";
 "appearance.recently_sent.description" = "Exibir o endereço recentemente usado para envio do token.";
 "appearance.hide_buttons" = "Ocultar Botões";
 "appearance.hide_buttons.description" = "Ocultar os botões Enviar, Receber e Swap na aba de Saldo.";
-"appearance.balance_value" = "Coin Balances";
-"appearance.balance_value.description" = "Show balances highlighted in either crypto or fiat.";
+"appearance.balance_value" = "Saldos de Moedas";
+"appearance.balance_value.description" = "Mostrar saldos destacados em cripto ou em fiat.";
 "appearance.balance_value.coin_fiat" = "Criptomoeda/Moeda Fiat";
 "appearance.balance_value.fiat_coin" = "Moeda Fiat / Criptomoeda";
 
