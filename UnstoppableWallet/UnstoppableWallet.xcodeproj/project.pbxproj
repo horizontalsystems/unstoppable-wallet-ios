@@ -2952,6 +2952,8 @@
 		D31C4761238BF176008CB818 /* MnemonicDerivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C4759238BF175008CB818 /* MnemonicDerivation.swift */; };
 		D31C4763238BF176008CB818 /* FeeRateState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C475A238BF175008CB818 /* FeeRateState.swift */; };
 		D31C4764238BF176008CB818 /* FeeRateState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C475A238BF175008CB818 /* FeeRateState.swift */; };
+		D31C99C92F16461E00A82358 /* SwapTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C99C82F16461E00A82358 /* SwapTermsView.swift */; };
+		D31C99CA2F16461E00A82358 /* SwapTermsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C99C82F16461E00A82358 /* SwapTermsView.swift */; };
 		D3384D092BFCB43800515664 /* MarketWatchlistSignalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D082BFCB43800515664 /* MarketWatchlistSignalsView.swift */; };
 		D3384D0A2BFCB43800515664 /* MarketWatchlistSignalsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D082BFCB43800515664 /* MarketWatchlistSignalsView.swift */; };
 		D3384D102BFDCBDE00515664 /* MarketEtfView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D0F2BFDCBDE00515664 /* MarketEtfView.swift */; };
@@ -5094,6 +5096,7 @@
 		D31369882BEA188D00BA6B5B /* ZcashPreSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashPreSendHandler.swift; sourceTree = "<group>"; };
 		D31C4759238BF175008CB818 /* MnemonicDerivation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicDerivation.swift; sourceTree = "<group>"; };
 		D31C475A238BF175008CB818 /* FeeRateState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeRateState.swift; sourceTree = "<group>"; };
+		D31C99C82F16461E00A82358 /* SwapTermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapTermsView.swift; sourceTree = "<group>"; };
 		D3285F4520BD158E00644076 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		D3285F4C20BD158F00644076 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		D3285F5120BD158F00644076 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -6856,6 +6859,7 @@
 		11B35B779976BD7D47FFD40C /* MultiSwap */ = {
 			isa = PBXGroup;
 			children = (
+				D31C99C82F16461E00A82358 /* SwapTermsView.swift */,
 				11B35FC4CD29F471F497819B /* MultiSwapView.swift */,
 				11B35C33CEF7D4C2C7B4C133 /* MultiSwapViewModel.swift */,
 				11B357975CCFB31CCEF29F97 /* IMultiSwapProvider.swift */,
@@ -11642,6 +11646,7 @@
 				6B1D8E532DEADF7F00A52B01 /* PrimaryCircleButtonComponent.swift in Sources */,
 				6B1D8E542DEADF7F00A52B01 /* BaseThemeCell.swift in Sources */,
 				6B1D8E552DEADF7F00A52B01 /* SecondaryCircleButtonComponent.swift in Sources */,
+				D31C99CA2F16461E00A82358 /* SwapTermsView.swift in Sources */,
 				6B1D8E562DEADF7F00A52B01 /* SliderButton.swift in Sources */,
 				6B1D8E572DEADF7F00A52B01 /* PrimaryButtonComponent.swift in Sources */,
 				6B1D8E582DEADF7F00A52B01 /* SpinnerComponent.swift in Sources */,
@@ -13075,6 +13080,7 @@
 				11B351DB86D936CC17C4A635 /* PrivateKeysModule.swift in Sources */,
 				11B3540BCA5A3ED9B16B540D /* PrivateKeysService.swift in Sources */,
 				11B3514C6EC2B0BB2C6788BF /* PrivateKeysViewController.swift in Sources */,
+				D31C99C92F16461E00A82358 /* SwapTermsView.swift in Sources */,
 				11B35F7DB194FB9F41EBF7B8 /* EvmAddressViewController.swift in Sources */,
 				11B35731646CF45FD1A564AB /* EvmAddressModule.swift in Sources */,
 				11B3588E7AD4092A7120514C /* EvmAddressService.swift in Sources */,

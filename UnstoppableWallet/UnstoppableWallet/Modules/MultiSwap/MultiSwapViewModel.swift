@@ -21,6 +21,7 @@ class MultiSwapViewModel: ObservableObject {
     private let marketKit = Core.shared.marketKit
     private let walletManager = Core.shared.walletManager
     private let adapterManager = Core.shared.adapterManager
+    private let localStorage = Core.shared.localStorage
     private let decimalParser = AmountDecimalParser()
 
     @Published var currency: Currency
@@ -478,6 +479,18 @@ class MultiSwapViewModel: ObservableObject {
 }
 
 extension MultiSwapViewModel {
+    var shouldShowTerms: Bool {
+        guard let currentQuote else {
+            return false
+        }
+
+        return currentQuote.provider.aml && !localStorage.swapTermsAccepted
+    }
+
+    func onAcceptTerms() {
+        localStorage.swapTermsAccepted = true
+    }
+
     func interchange() {
         let currentFiatAmountOut = fiatAmountOut
         let currentAmountOut = currentQuote?.quote.expectedBuyAmount

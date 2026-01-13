@@ -76,7 +76,8 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
 
     var id: String { "allbridge" }
     var name: String { "AllBridge" }
-    var description: String { "DEX" }
+    var type: SwapProviderType { .dex }
+    var aml: Bool { true }
     var icon: String { "swap_provider_allbridge" }
 
     var syncPublisher: AnyPublisher<Void, Never>? {

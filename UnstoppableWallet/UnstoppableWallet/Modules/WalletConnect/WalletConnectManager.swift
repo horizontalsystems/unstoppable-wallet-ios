@@ -1,8 +1,8 @@
 import Combine
 import EvmKit
 import Foundation
-import StellarKit
 import ReownWalletKit
+import StellarKit
 
 class WalletConnectManager {
     private let timeOut = 5
