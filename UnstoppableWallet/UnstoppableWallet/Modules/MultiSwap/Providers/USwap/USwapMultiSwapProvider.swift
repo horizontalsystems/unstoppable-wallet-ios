@@ -27,12 +27,6 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     private let swapAssetStorage = Core.shared.swapAssetStorage
     private let allowanceHelper = MultiSwapAllowanceHelper()
     private let evmFeeEstimator = EvmFeeEstimator()
-
-    private let utxoFilters = UtxoFilters(
-        scriptTypes: [.p2pkh, .p2wpkhSh, .p2wpkh],
-        maxOutputsCountForInputs: 10
-    )
-
     private var assetMap = [String: String]()
     private let syncSubject = PassthroughSubject<Void, Never>()
 
@@ -67,7 +61,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
     var id: String { provider.rawValue }
     var name: String { provider.title }
-    var description: String { provider.description }
+    var type: SwapProviderType { provider.type }
+    var aml: Bool { provider.aml }
     var icon: String { provider.icon }
 
     var syncPublisher: AnyPublisher<Void, Never>? {
@@ -421,12 +416,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                     address: quote.inboundAddress,
                     value: value,
                     feeRate: satoshiPerByte,
-                    sortType: .none,
-                    rbfEnabled: true,
-                    memo: quote.memo,
-                    unspentOutputs: nil,
-                    utxoFilters: utxoFilters,
-                    changeToFirstInput: true
+                    memo: quote.memo
                 )
 
                 sendInfo = try adapter.sendInfo(params: _params)
@@ -692,10 +682,17 @@ extension USwapMultiSwapProvider {
             }
         }
 
-        var description: String {
+        var type: SwapProviderType {
             switch self {
-            case .near: return "DEX"
-            case .quickEx, .letsExchange, .stealthex, .swapuz: return "P2P"
+            case .near: return .dex
+            case .quickEx, .letsExchange, .stealthex, .swapuz: return .p2p
+            }
+        }
+
+        var aml: Bool {
+            switch self {
+            case .near: return false
+            case .quickEx, .letsExchange, .stealthex, .swapuz: return true
             }
         }
     }

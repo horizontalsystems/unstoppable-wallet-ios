@@ -1,8 +1,8 @@
 import Foundation
-import WalletConnectRelay
 import Starscream
+import WalletConnectRelay
 
-extension WebSocket: WebSocketConnecting { }
+extension WebSocket: WebSocketConnecting {}
 
 struct DefaultSocketFactory: WebSocketFactory {
     func create(with url: URL) -> WebSocketConnecting {

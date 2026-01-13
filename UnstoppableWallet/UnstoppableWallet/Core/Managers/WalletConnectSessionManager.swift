@@ -1,8 +1,8 @@
 import Combine
 import MarketKit
+import ReownWalletKit
 import RxCocoa
 import RxSwift
-import ReownWalletKit
 
 class WalletConnectSessionManager {
     private let disposeBag = DisposeBag()

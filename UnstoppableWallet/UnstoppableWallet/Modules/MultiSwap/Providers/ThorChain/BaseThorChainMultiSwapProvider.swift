@@ -34,7 +34,8 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     var baseUrl: String { fatalError("Must be overridden by subclass") }
     var id: String { fatalError("Must be overridden by subclass") }
     var name: String { fatalError("Must be overridden by subclass") }
-    var description: String { fatalError("Must be overridden by subclass") }
+    var type: SwapProviderType { fatalError("Must be overridden by subclass") }
+    var aml: Bool { false }
     var icon: String { fatalError("Must be overridden by subclass") }
 
     var syncPublisher: AnyPublisher<Void, Never>? {
@@ -155,10 +156,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                         address: swapQuote.inboundAddress,
                         value: value,
                         feeRate: satoshiPerByte,
-                        sortType: .none,
-                        rbfEnabled: true,
                         memo: swapQuote.memo,
-                        unspentOutputs: nil,
                         utxoFilters: utxoFilters,
                         changeToFirstInput: true
                     )

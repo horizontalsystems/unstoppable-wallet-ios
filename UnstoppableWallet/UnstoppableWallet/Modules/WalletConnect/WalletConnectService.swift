@@ -6,8 +6,8 @@ import HsToolKit
 import RxRelay
 import RxSwift
 
-import ReownWalletKit
 import ReownRouter
+import ReownWalletKit
 
 class WalletConnectService {
     private let logger: Logger?
@@ -40,7 +40,7 @@ class WalletConnectService {
         )
 
         self.logger = logger
-        
+
         let metadata = AppMetadata(
             name: info.name,
             description: info.description,

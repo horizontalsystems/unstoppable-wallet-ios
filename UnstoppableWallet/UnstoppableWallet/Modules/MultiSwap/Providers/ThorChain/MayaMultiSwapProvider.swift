@@ -17,7 +17,7 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
 
     override var id: String { "mayachain" }
     override var name: String { "Maya Protocol" }
-    override var description: String { "DEX" }
+    override var type: SwapProviderType { .dex }
     override var icon: String { "swap_provider_maya" }
 
     override var affiliate: String? {

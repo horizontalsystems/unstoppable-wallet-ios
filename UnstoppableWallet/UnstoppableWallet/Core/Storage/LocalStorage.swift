@@ -24,6 +24,7 @@ class LocalStorage {
     private let keyAmountRounding = "amount-rounding"
     private let keyRecentlySent = "recently-sent"
     private let keyUseMevProtection = "use-mev-protection"
+    private let keySwapTermsAccepted = "swap-terms-accepted"
 
     private let userDefaultsStorage: UserDefaultsStorage
 
@@ -148,6 +149,13 @@ extension LocalStorage {
         get { userDefaultsStorage.value(for: keyUseMevProtection) ?? false }
         set {
             userDefaultsStorage.set(value: newValue, for: keyUseMevProtection)
+        }
+    }
+
+    var swapTermsAccepted: Bool {
+        get { userDefaultsStorage.value(for: keySwapTermsAccepted) ?? false }
+        set {
+            userDefaultsStorage.set(value: newValue, for: keySwapTermsAccepted)
         }
     }
 }

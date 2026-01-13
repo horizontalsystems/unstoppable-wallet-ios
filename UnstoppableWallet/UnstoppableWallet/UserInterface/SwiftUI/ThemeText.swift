@@ -27,6 +27,13 @@ struct ThemeText: View {
         self.dimmed = dimmed
     }
 
+    init(_ text: TextType, style: TextStyle, colorStyle: ColorStyle? = nil, dimmed: Bool = false) {
+        self.text = text
+        self.style = style
+        self.colorStyle = colorStyle ?? style.defaultColorStyle
+        self.dimmed = dimmed
+    }
+
     var body: some View {
         Group {
             switch text {

@@ -20,7 +20,7 @@ struct MultiSwapQuotesView: View {
                             middle: {
                                 MultiText(
                                     subtitle: ComponentText(text: quote.provider.name, colorStyle: .primary),
-                                    description: quote.provider.description,
+                                    description: ([quote.provider.type.title] + (quote.provider.aml ? ["swap.aml".localized] : [])).joined(separator: ", "),
                                 )
                             },
                             right: {

@@ -311,6 +311,13 @@ struct MultiSwapView: View {
                         viewModel.autoQuoteIfRequired()
                     }
                 }
+            } else if viewModel.shouldShowTerms {
+                Coordinator.shared.present { isPresented in
+                    SwapTermsView(isPresented: isPresented) {
+                        viewModel.onAcceptTerms()
+                        sendPresented = true
+                    }
+                }
             } else {
                 sendPresented = true
             }
