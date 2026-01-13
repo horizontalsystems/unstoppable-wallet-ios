@@ -535,9 +535,13 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.confirmation.operation" = "Operação";
 "send.confirmation.transaction_xdr" = "Transação XDR";
 
+"send.confirmation.edit_fee" = "Edit Fee";
+"send.confirmation.transaction_nonce" = "Nonce de Transação";
+
 "send.confirmation.sync_failed" = "Falha na Sincronização";
-"send.confirmation.invalid_data" = "Dados Inválidos";
+"send.confirmation.failed_to_fetch_data" = "Failed to fetch data";
 "send.confirmation.refresh" = "Atualizar";
+"send.confirmation.refreshing" = "Refreshing";
 "send.confirmation.please_wait" = "Por Favor, Aguarde";
 "send.confirmation.expires_in" = "Expira em %@";
 "send.confirmation.expired" = "Expirado";
@@ -712,7 +716,7 @@ Go to Settings - > %@ and allow access to the camera.";
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "Tolerância de Slippage";
-"swap.advanced_settings.slippage.footer" = "Sua transação será revertida se o preço mudar desfavoravelmente em mais do que esta porcentagem";
+"swap.advanced_settings.slippage.info" = "The maximum acceptable price deviation for your swap. Beyond this limit the transaction is reverted.";
 "swap.advanced_settings.deadline" = "Data-limite da operação";
 "swap.advanced_settings.deadline.footer" = "Sua transação será revertida se ficar pendente por mais tempo.";
 "swap.advanced_settings.recipient.footer" = "Após a operação de câmbio, o valor será transferido para o endereço especificado";
@@ -748,11 +752,14 @@ Go to Settings - > %@ and allow access to the camera.";
 "swap.confirmation.please_wait" = "Por Favor, Aguarde";
 "swap.confirmation.quote_expires_in" = "O prazo da cotação expira em %@";
 "swap.confirmation.quote_expired" = "A cotação expirou";
-"swap.confirmation.quote_failed" = "Erro ao cotar";
+
+"swap.confirmation.slippage_tolerance" = "Tolerância de Slippage";
+"swap.confirmation.set_recipient" = "Set Recipient";
 
 "swap.confirmation.slide_to_swap" = "Deslize para trocar";
 "swap.confirmation.swapping" = "Trocando";
 "swap.confirmation.refresh" = "Atualizar";
+"swap.confirmation.impact_high" = "You’ll lose a big part (%@) of your funds on this swap.";
 "swap.confirmation.impact_too_high" = "%@ desativou a ação de troca para essa troca porque você está obtendo um preço extremamente desfavorável. Isso se deve a liquidez extremamente baixa.\nSe você ainda quiser trocar, use o site %@.";
 "swap.confirmation.impact_warning" = "Importante! Você está recebendo um preço extremamente desfavorável. Isso se deve a uma liquidez extremamente baixa.";
 
@@ -1511,8 +1518,12 @@ Go to Settings - > %@ and allow access to the camera.";
 "terms.item.backup_recovery" = "Faça backup com segurança da frase de recuperação de cada carteira. É a única forma de recuperar o acesso aos seus fundos se o app for excluído, perdido ou apresentar falhas. Ninguém pode restaurá-la por você.";
 "terms.item.device_pin" = "Desativar o PIN (ou senha) de desbloqueio do seu smartphone apaga todas as carteiras do app. Você precisará das frases de recuperação para restaurar o acesso.";
 "terms.item.privacy_notice" = "O app não espiona nem coleta dados sobre seus saldos ou transações — nem sequer sabemos quantas pessoas o utilizam. Ele apenas registra padrões de uso anônimos (páginas abertas, botões tocados) para melhorar a usabilidade. Você pode desativar isso em Configurações → Privacidade.";
-"terms.item.monetization" = "Como parte de seu modelo de monetização, o app recebe pequenas comissões de swaps realizados em DEXs dentro da carteira. Isso nos ajuda a permanecer independentes, de código aberto e sem financiamento de capital de risco.";
-"terms.item.open_source" = "O app é comprovadamente open source, com todo o código-fonte publicado online. Tudo o que foi mencionado acima pode ser verificado publicamente por qualquer pessoa.";
+
+"terms.item.decentralized" = "We do not hold your assets, access your private keys, or execute transactions on your behalf. The app does not provide brokerage, exchange, custody, escrow, or money-transmission services. All transactions are initiated, signed, and broadcast directly by you to public blockchain networks. We do not control, relay, modify, or process your transactions.";
+"terms.item.commission" = "To support ongoing development and remain open source, the app may receive a small commission from certain swap integrations. Any such commission does not involve custody of user funds and does not give us access to or control over your assets.";
+"terms.item.irreversibility" = "Blockchain transactions are irreversible. Always review transaction details before confirming.";
+"terms.item.software" = "The app is provided “as is.” While it is built with care, software may contain unintended bugs or vulnerabilities that could result in loss of funds. The app is open source and can be independently reviewed and audited by anyone.";
+"terms.item.compliance" = "You are solely responsible for the security of your funds, your conduct, and compliance with applicable laws in your jurisdiction. Use of the app does not exempt you from tax, financial reporting, or other legal obligations.";
 
 
 // Settings -> Tell Friends
