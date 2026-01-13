@@ -87,7 +87,6 @@ class Core {
 
     let walletConnectRequestHandler: WalletConnectRequestChain
     let walletConnectManager: WalletConnectManager
-    let walletConnectSocketConnectionService: WalletConnectSocketConnectionService
     let walletConnectSessionManager: WalletConnectSessionManager
 
     let adapterManager: AdapterManager
@@ -254,9 +253,7 @@ class Core {
             icons: ["https://raw.githubusercontent.com/horizontalsystems/HS-Design/master/PressKit/UW-AppIcon-on-light.png"]
         )
 
-        walletConnectSocketConnectionService = WalletConnectSocketConnectionService(reachabilityManager: reachabilityManager, logger: logger)
         let walletConnectService = WalletConnectService(
-            connectionService: walletConnectSocketConnectionService,
             info: walletClientInfo,
             logger: logger
         )
@@ -411,7 +408,6 @@ class Core {
             evmLabelManager: evmLabelManager,
             balanceHiddenManager: balanceHiddenManager,
             statManager: statManager,
-            walletConnectSocketConnectionService: walletConnectSocketConnectionService,
             nftMetadataSyncer: nftMetadataSyncer,
             tonKitManager: tonKitManager,
             stellarKitManager: stellarKitManager

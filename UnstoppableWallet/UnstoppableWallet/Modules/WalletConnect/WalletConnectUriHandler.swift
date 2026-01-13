@@ -1,16 +1,15 @@
 import Combine
 import Foundation
-import WalletConnectUtils
-import Web3Wallet
+import ReownWalletKit
 
 enum WalletConnectUriHelper {
     public static func pair(uri: String) async throws {
         let uri = try validate(uri: uri)
-        try await Web3Wallet.instance.pair(uri: uri)
+        try await WalletKit.instance.pair(uri: uri)
     }
 
-    public static func validate(uri: String) throws -> WalletConnectUtils.WalletConnectURI {
-        guard let uri = try? WalletConnectUtils.WalletConnectURI(uriString: uri) else {
+    public static func validate(uri: String) throws -> WalletConnectURI {
+        guard let uri = try? WalletConnectURI(uriString: uri) else {
             throw WalletConnectUriHelper.ConnectionError.wrongUri
         }
         return uri
