@@ -535,9 +535,13 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.operation" = "İşlem";
 "send.confirmation.transaction_xdr" = "İşlem XDR";
 
+"send.confirmation.edit_fee" = "Edit Fee";
+"send.confirmation.transaction_nonce" = "İşlem Nonce";
+
 "send.confirmation.sync_failed" = "Senkronizasyon Başarısız";
-"send.confirmation.invalid_data" = "Geçersiz Veri";
+"send.confirmation.failed_to_fetch_data" = "Failed to fetch data";
 "send.confirmation.refresh" = "Yenile";
+"send.confirmation.refreshing" = "Refreshing";
 "send.confirmation.please_wait" = "Lütfen Bekleyin";
 "send.confirmation.expires_in" = "%@ içinde sona erer";
 "send.confirmation.expired" = "Süresi Dolmuş";
@@ -712,7 +716,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "Slipaj Toleransı";
-"swap.advanced_settings.slippage.footer" = "Fiyat bu yüzde oranından daha fazla olumsuz olarak değişirse, İşleminiz geri alınacaktır";
+"swap.advanced_settings.slippage.info" = "The maximum acceptable price deviation for your swap. Beyond this limit the transaction is reverted.";
 "swap.advanced_settings.deadline" = "İşlem Son Günü";
 "swap.advanced_settings.deadline.footer" = "Bundan daha uzun süre beklemede olursa, İşleminiz geri alınacaktır.";
 "swap.advanced_settings.recipient.footer" = "Takas etme işleminden sonra, tutar belirtilen adrese transfer edilecektir";
@@ -748,11 +752,14 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.confirmation.please_wait" = "Lütfen Bekleyin";
 "swap.confirmation.quote_expires_in" = "Alıntının geçerlilik süresi %@ sonra sona erecek";
 "swap.confirmation.quote_expired" = "Alıntı süresi doldu";
-"swap.confirmation.quote_failed" = "Alıntı yaparken hata";
+
+"swap.confirmation.slippage_tolerance" = "Slipaj Toleransı";
+"swap.confirmation.set_recipient" = "Set Recipient";
 
 "swap.confirmation.slide_to_swap" = "Değiştirmek için kaydır";
 "swap.confirmation.swapping" = "Takas";
 "swap.confirmation.refresh" = "Yenile";
+"swap.confirmation.impact_high" = "You’ll lose a big part (%@) of your funds on this swap.";
 "swap.confirmation.impact_too_high" = "%@, son derece elverişsiz bir fiyat aldığınız için bu ticaret için takas işlemini devre dışı bıraktı. Bunun nedeni son derece düşük likiditedir.\nHala takas yapmak istiyorsanız lütfen bunun yerine %@ web sitesini kullanın.";
 "swap.confirmation.impact_warning" = "Önemli! Son derece olumsuz bir fiyat alıyorsunuz. Bunun nedeni son derece düşük likiditedir.";
 
@@ -1515,8 +1522,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "terms.item.backup_recovery" = "Her cüzdanın kurtarma ifadesini güvenli şekilde yedekleyin. Uygulama silinir, kaybolur veya bozulursa fonlarınıza yeniden erişmenin tek yolu budur. Kimse bunu sizin yerinize geri yükleyemez.";
 "terms.item.device_pin" = "Telefonunuzun kilit açma PIN’ini (veya şifresini) devre dışı bırakmak, uygulamadaki tüm cüzdanları siler. Erişimi geri yüklemek için kurtarma ifadelerinize ihtiyaç duyarsınız.";
 "terms.item.privacy_notice" = "Uygulama bakiye veya işlemlerinizle ilgili veri toplamaz veya sizi takip etmez — kaç kişinin uygulamayı kullandığını bile bilmiyoruz. Sadece anonim kullanım verilerini (açılan sayfalar, tıklanan butonlar) toplar ve bu da sadece kullanılabilirliği geliştirmek içindir. Ayarlar → Gizlilik bölümünden bunu kapatabilirsiniz.";
-"terms.item.monetization" = "Para kazanma modeli kapsamında uygulama, cüzdan içinden yapılan DEX takaslarından küçük komisyonlar alır. Bu, bağımsız, açık kaynaklı ve VC fonlarından uzak kalmamıza yardımcı olur.";
-"terms.item.open_source" = "Uygulama doğrulanabilir şekilde açık kaynaklıdır; tüm kaynak kodu çevrimiçi olarak yayımlanmıştır. Yukarıdaki tüm bilgiler herkes tarafından kamuya açık olarak doğrulanabilir.";
+
+"terms.item.decentralized" = "We do not hold your assets, access your private keys, or execute transactions on your behalf. The app does not provide brokerage, exchange, custody, escrow, or money-transmission services. All transactions are initiated, signed, and broadcast directly by you to public blockchain networks. We do not control, relay, modify, or process your transactions.";
+"terms.item.commission" = "To support ongoing development and remain open source, the app may receive a small commission from certain swap integrations. Any such commission does not involve custody of user funds and does not give us access to or control over your assets.";
+"terms.item.irreversibility" = "Blockchain transactions are irreversible. Always review transaction details before confirming.";
+"terms.item.software" = "The app is provided “as is.” While it is built with care, software may contain unintended bugs or vulnerabilities that could result in loss of funds. The app is open source and can be independently reviewed and audited by anyone.";
+"terms.item.compliance" = "You are solely responsible for the security of your funds, your conduct, and compliance with applicable laws in your jurisdiction. Use of the app does not exempt you from tax, financial reporting, or other legal obligations.";
 
 
 // Settings -> Tell Friends
