@@ -713,6 +713,18 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "swap.outbound_fee" = "Frais sortants";
 "swap.total_fee" = "Frais totaux";
 
+"swap.aml" = "AML";
+
+// Swap Terms
+
+"swap.terms.title" = "Swap Terms";
+"swap.terms.description" = "Unstoppable aggregates multiple decentralized (DEX) and centralized swap providers to offer competitive rates and broad asset support.";
+"swap.terms.risk_of_restrictions" = "Risk of restrictions";
+"swap.terms.risk_of_restrictions.description" = "I understand that some non-DEX swap providers apply transaction screening %@. Such providers may reject (and refund) swaps, or, in rare cases (CSAM and terrorism), freeze funds and request KYC data.";
+"swap.terms.user_responsibility" = "User responsibility";
+"swap.terms.user_responsibility.description" = "I understand that using non-DEX providers introduces additional risks and that these risks are my responsibility. Unstoppable can not guarantee provider behavior.";
+"swap.terms.footer" = "Always choose a swap provider that aligns with your requirements.";
+
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "Effet de glissement";
@@ -1446,6 +1458,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "tx_info.recipient_hash" = "Destinataire";
 "tx_info.raw_transaction" = "Transaction raw";
 "tx_info.memo" = "Memo";
+"tx_info.tx_secret_key" = "Tx Secret Key";
 "tx_info.service" = "Service";
 "tx_info.view_on" = "Afficher sur %@";
 "tx_info.you_pay" = "Vous payez";
