@@ -2474,11 +2474,10 @@
 // Monero
 
 "monero.priority" = "Send Priority";
-"monero.priority.default" = "Default";
+"monero.priority.default" = "Auto";
 "monero.priority.low" = "Low";
 "monero.priority.medium" = "Medium";
 "monero.priority.high" = "High";
-"monero.priority.last" = "Last";
 
 // MEV Protection
 
