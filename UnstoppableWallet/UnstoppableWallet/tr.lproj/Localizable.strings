@@ -1737,12 +1737,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "appearance.hide_markets" = "Piyasaları Gizle";
 "appearance.hide_markets.description" = "Piyasalar sekmesini tamamen gizle.";
 "appearance.price_change" = "Fiyat Değişimi";
-"appearance.price_change.description" = "Token fiyat değişimlerini görüntülemek için zaman aralığını seçin.";
+"appearance.price_change.description" = "Select the time period for token price change display.";
 "appearance.price_change.24h" = "24S";
 "appearance.price_change.1d" = "Gece Yarısı UTC";
 
 "appearance.launch_screen" = "Başlangıç Ekranı";
-"appearance.launch_screen.description" = "Uygulamanın varsayılan olarak açacağı ekranı seçin.";
+"appearance.launch_screen.description" = "Choose which screen the app opens on by default.";
 "appearance.launch_screen.auto" = "Oto";
 "appearance.launch_screen.balance" = "Bakiye";
 "appearance.launch_screen.market_overview" = "Piyasaya Genel Bakış";
@@ -1750,13 +1750,13 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 "appearance.balance_tab" = "Bakiye Sekmesi";
 "appearance.amount_rounding" = "Tutar Yuvarlama";
-"appearance.amount_rounding.description" = "Bakiyeleri ve işlem tutarlarını yuvarlanmış değerler olarak göster.";
+"appearance.amount_rounding.description" = "Display rounded balances and transaction amounts.";
 "appearance.recently_sent" = "Son Gönderilenler";
 "appearance.recently_sent.description" = "Token için son gönderilen adresi görüntüle.";
 "appearance.hide_buttons" = "Düğmeleri Gizle";
 "appearance.hide_buttons.description" = "Bakiye sekmesinde Gönder, Al ve Takas butonlarını gizle.";
-"appearance.balance_value" = "Bakiye değeri";
-"appearance.balance_value.description" = "Bakiyeleri kripto ya da itibari para biriminde vurgulanmış olarak göster.";
+"appearance.balance_value" = "Coin Balances";
+"appearance.balance_value.description" = "Show balances highlighted in either crypto or fiat.";
 "appearance.balance_value.coin_fiat" = "Coin/Fiat";
 "appearance.balance_value.fiat_coin" = "Fiat/Coin";
 
@@ -2484,11 +2484,10 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 // Monero
 
 "monero.priority" = "Gönderim Önceliği";
-"monero.priority.default" = "Varsayılan";
+"monero.priority.default" = "Oto";
 "monero.priority.low" = "Düşük";
 "monero.priority.medium" = "Orta";
 "monero.priority.high" = "Yüksek";
-"monero.priority.last" = "Son";
 
 // MEV Protection
 
