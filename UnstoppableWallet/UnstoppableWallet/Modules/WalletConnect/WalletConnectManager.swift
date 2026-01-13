@@ -2,7 +2,7 @@ import Combine
 import EvmKit
 import Foundation
 import StellarKit
-import Web3Wallet
+import ReownWalletKit
 
 class WalletConnectManager {
     private let timeOut = 5
@@ -19,9 +19,9 @@ class WalletConnectManager {
     init(walletConnectSessionManager: WalletConnectSessionManager) {
         self.walletConnectSessionManager = walletConnectSessionManager
 
-        Web3Wallet.instance.sessionProposalPublisher
+        WalletKit.instance.sessionProposalPublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] sessionProposal in
+            .sink { [weak self] (sessionProposal: (proposal: Session.Proposal, context: VerifyContext?)) in
                 self?.didReceive(sessionProposal: sessionProposal.proposal)
             }.store(in: &cancellables)
     }
