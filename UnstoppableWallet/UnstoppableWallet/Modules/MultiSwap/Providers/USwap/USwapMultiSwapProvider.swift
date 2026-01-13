@@ -248,7 +248,6 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 recipient: recipient,
                 transactionSettings: transactionSettings
             )
-
         case .bitcoin, .bitcoinCash, .litecoin, .dash:
             return try await buildBtcConfirmationQuote(
                 tokenIn: tokenIn,
@@ -261,7 +260,6 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 recipient: recipient,
                 transactionSettings: transactionSettings
             )
-
         case .zcash:
             return try await buildZcashConfirmationQuote(
                 tokenIn: tokenIn,

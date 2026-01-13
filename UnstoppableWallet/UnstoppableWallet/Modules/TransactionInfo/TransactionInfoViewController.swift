@@ -279,27 +279,37 @@ class TransactionInfoViewController: ThemeViewController {
         )
     }
 
-    private func multiLineValueRow(rowInfo: RowInfo, id: String, title: String, value: String) -> RowProtocol {
+    private func multiLineValueRow(rowInfo: RowInfo, id: String, title: String, value: String, copyable: Bool = false) -> RowProtocol {
         let backgroundStyle: BaseThemeCell.BackgroundStyle = .lawrence
         let titleFont: UIFont = .subhead2
         let valueFont: UIFont = .subhead1I
+        var cellElements: [CellBuilderNew.CellElement] = [
+            .text { (component: TextComponent) in
+                component.font = titleFont
+                component.textColor = .themeGray
+                component.text = title
+                component.setContentCompressionResistancePriority(.required, for: .horizontal)
+            },
+            .text { (component: TextComponent) in
+                component.font = valueFont
+                component.textColor = .themeLeah
+                component.text = value
+                component.textAlignment = .right
+                component.numberOfLines = 0
+            },
+        ]
+
+        if copyable {
+            cellElements.append(
+                .secondaryCircleButton { component in
+                    component.button.set(image: UIImage(named: "copy_20"))
+                    component.onTap = { CopyHelper.copyAndNotify(value: value) }
+                }
+            )
+        }
 
         return CellBuilderNew.row(
-            rootElement: .hStack([
-                .text { (component: TextComponent) in
-                    component.font = titleFont
-                    component.textColor = .themeGray
-                    component.text = title
-                    component.setContentCompressionResistancePriority(.required, for: .horizontal)
-                },
-                .text { (component: TextComponent) in
-                    component.font = valueFont
-                    component.textColor = .themeLeah
-                    component.text = value
-                    component.textAlignment = .right
-                    component.numberOfLines = 0
-                },
-            ]),
+            rootElement: .hStack(cellElements),
             tableView: tableView,
             id: id,
             dynamicHeight: { containerWidth in
@@ -537,6 +547,8 @@ class TransactionInfoViewController: ThemeViewController {
             return rawTransactionRow(rowInfo: rowInfo)
         case let .memo(value):
             return multiLineValueRow(rowInfo: rowInfo, id: "memo", title: "tx_info.memo".localized, value: value)
+        case let .txSecretKey(value):
+            return multiLineValueRow(rowInfo: rowInfo, id: "tx_secret_key", title: "tx_info.tx_secret_key".localized, value: value, copyable: true)
         case let .service(value):
             return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: nil, title: "tx_info.service".localized, value: value)
         case let .explorer(title, url):

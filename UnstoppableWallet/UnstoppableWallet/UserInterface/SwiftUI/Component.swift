@@ -64,6 +64,7 @@ extension CustomStringConvertible {
             if component.colorStyle == nil || forced {
                 return ComponentText(text: component.text, colorStyle: colorStyle, dimmed: component.dimmed)
             }
+
         case let component as String:
             return ComponentText(text: component, colorStyle: colorStyle)
 

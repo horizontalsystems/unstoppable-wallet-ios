@@ -16,7 +16,7 @@ class MoneroAdapter {
     private let moneroBalanceDataSubject = PublishSubject<MoneroBalanceData>()
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
     private let balanceStateSubject = PublishSubject<AdapterState>()
-    let transactionRecordsSubject = PublishSubject<[BitcoinTransactionRecord]>()
+    let transactionRecordsSubject = PublishSubject<[MoneroTransactionRecord]>()
     private let depositAddressSubject = PassthroughSubject<DataStatus<DepositAddress>, Never>()
 
     private(set) var balanceState: AdapterState {
@@ -70,12 +70,12 @@ class MoneroAdapter {
         kit.delegate = self
     }
 
-    func transactionRecord(fromTransaction transaction: TransactionInfo) -> BitcoinTransactionRecord {
+    func transactionRecord(fromTransaction transaction: TransactionInfo) -> MoneroTransactionRecord {
         let blockHeight = transaction.blockHeight > 0 ? Int(transaction.blockHeight) : nil
 
         switch transaction.type {
         case .outgoing, .sentToSelf:
-            return BitcoinOutgoingTransactionRecord(
+            return MoneroOutgoingTransactionRecord(
                 token: token,
                 source: transactionSource,
                 uid: transaction.uid,
@@ -86,17 +86,14 @@ class MoneroAdapter {
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
                 fee: Decimal(transaction.fee) / coinRate,
                 failed: transaction.isFailed,
-                lockInfo: nil,
-                conflictingHash: nil,
-                showRawTransaction: false,
                 amount: Decimal(transaction.amount) / coinRate,
                 to: transaction.recipientAddress,
                 sentToSelf: transaction.type == TransactionType.sentToSelf,
                 memo: transaction.memo,
-                replaceable: false
+                txSecretKey: transaction.txKey
             )
         case .incoming:
-            return BitcoinIncomingTransactionRecord(
+            return MoneroIncomingTransactionRecord(
                 token: token,
                 source: transactionSource,
                 uid: transaction.uid,
@@ -107,9 +104,6 @@ class MoneroAdapter {
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
                 fee: Decimal(transaction.fee) / coinRate,
                 failed: transaction.isFailed,
-                lockInfo: nil,
-                conflictingHash: nil,
-                showRawTransaction: false,
                 amount: Decimal(transaction.amount) / coinRate,
                 from: nil,
                 to: transaction.recipientAddress,
@@ -204,7 +198,7 @@ extension MoneroAdapter: MoneroKitDelegate {
     }
 
     func transactionsUpdated(inserted: [TransactionInfo], updated: [TransactionInfo]) {
-        var records = [BitcoinTransactionRecord]()
+        var records = [MoneroTransactionRecord]()
 
         for info in inserted {
             records.append(transactionRecord(fromTransaction: info))
@@ -293,9 +287,9 @@ extension MoneroAdapter: ITransactionsAdapter {
                 transactions.compactMap { transaction -> TransactionRecord? in
                     switch (transaction, filter) {
                     case (_, .all): return transaction
-                    case (is BitcoinIncomingTransactionRecord, .incoming): return transaction
-                    case (is BitcoinOutgoingTransactionRecord, .outgoing): return transaction
-                    case let (tx as BitcoinOutgoingTransactionRecord, .incoming): return tx.sentToSelf ? transaction : nil
+                    case (is MoneroIncomingTransactionRecord, .incoming): return transaction
+                    case (is MoneroOutgoingTransactionRecord, .outgoing): return transaction
+                    case let (tx as MoneroOutgoingTransactionRecord, .incoming): return tx.sentToSelf ? transaction : nil
                     default: return nil
                     }
                 }
@@ -304,15 +298,15 @@ extension MoneroAdapter: ITransactionsAdapter {
     }
 
     func transactionsSingle(paginationData: String?, token _: Token?, filter: TransactionTypeFilter, address _: String?, limit: Int) -> Single<[TransactionRecord]> {
-        let bitcoinFilter: TransactionFilterType?
+        let moneroFilter: TransactionFilterType?
         switch filter {
-        case .all: bitcoinFilter = nil
-        case .incoming: bitcoinFilter = .incoming
-        case .outgoing: bitcoinFilter = .outgoing
+        case .all: moneroFilter = nil
+        case .incoming: moneroFilter = .incoming
+        case .outgoing: moneroFilter = .outgoing
         default: return Single.just([])
         }
 
-        let transactions = kit.transactions(fromHash: paginationData, descending: true, type: bitcoinFilter, limit: limit).map {
+        let transactions = kit.transactions(fromHash: paginationData, descending: true, type: moneroFilter, limit: limit).map {
             transactionRecord(fromTransaction: $0)
         }
 

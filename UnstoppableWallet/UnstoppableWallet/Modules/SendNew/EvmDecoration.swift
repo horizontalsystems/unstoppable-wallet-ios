@@ -97,7 +97,7 @@ struct EvmDecoration {
         return .init([amountField])
     }
 
-    private func unknownFields(baseToken _: Token, to _: EvmKit.Address, value: Decimal, input: Data, method: String?, currency _: Currency, rates _: [String: Decimal]) -> [SendField] {
+    private func unknownFields(baseToken _: Token, to _: EvmKit.Address, value _: Decimal, input: Data, method: String?, currency _: Currency, rates _: [String: Decimal]) -> [SendField] {
         var fields: [SendField] = [
             .simpleValue(title: "send.confirmation.input".localized, value: input.toHexString()),
         ]
