@@ -535,9 +535,13 @@
 "send.confirmation.operation" = "操作";
 "send.confirmation.transaction_xdr" = "交易 XDR";
 
+"send.confirmation.edit_fee" = "Edit Fee";
+"send.confirmation.transaction_nonce" = "交易nonce";
+
 "send.confirmation.sync_failed" = "同步失败";
-"send.confirmation.invalid_data" = "无效数据";
+"send.confirmation.failed_to_fetch_data" = "Failed to fetch data";
 "send.confirmation.refresh" = "刷新";
+"send.confirmation.refreshing" = "Refreshing";
 "send.confirmation.please_wait" = "请稍候";
 "send.confirmation.expires_in" = "将在%@后过期";
 "send.confirmation.expired" = "过期";
@@ -712,7 +716,7 @@
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "下跌容忍度";
-"swap.advanced_settings.slippage.footer" = "如果价格的不利变化超过这个百分比，您的交易将被退回。";
+"swap.advanced_settings.slippage.info" = "The maximum acceptable price deviation for your swap. Beyond this limit the transaction is reverted.";
 "swap.advanced_settings.deadline" = "交易截止日期";
 "swap.advanced_settings.deadline.footer" = "如果您交易的待定时间多于此时间，您的交易将恢复原有的状态。";
 "swap.advanced_settings.recipient.footer" = "在兑换操作之后，金额将转移至指定地址";
@@ -748,11 +752,14 @@
 "swap.confirmation.please_wait" = "请稍候";
 "swap.confirmation.quote_expires_in" = "报价在 %@ 后失效";
 "swap.confirmation.quote_expired" = "报价已过期";
-"swap.confirmation.quote_failed" = "无法提供报价";
+
+"swap.confirmation.slippage_tolerance" = "下跌容忍度";
+"swap.confirmation.set_recipient" = "Set Recipient";
 
 "swap.confirmation.slide_to_swap" = "滑动切换";
 "swap.confirmation.swapping" = "交易";
 "swap.confirmation.refresh" = "刷新";
+"swap.confirmation.impact_high" = "You’ll lose a big part (%@) of your funds on this swap.";
 "swap.confirmation.impact_too_high" = "%@ 已禁用此交易的掉期操作，因为您得到的价格极其不利。 这是由于流动性极低造成的。\n如果您仍想兑换，请使用 %@ 网站。";
 "swap.confirmation.impact_warning" = "重要提示！您正在以极其不利的价格进行交易。这是因为流动性非常低。";
 
@@ -1511,8 +1518,12 @@
 "terms.item.backup_recovery" = "请安全备份每个钱包的恢复助记词。如果应用被删除、丢失或出现故障，这是唯一恢复资金访问的方式。无人能为您恢复。";
 "terms.item.device_pin" = "禁用手机解锁 PIN（或密码）会清除应用中的所有钱包。您需要使用恢复助记词来重新访问钱包。";
 "terms.item.privacy_notice" = "本应用不会监视或收集您的余额和交易数据——我们甚至不知道有多少人在使用。应用仅收集匿名使用统计（如打开的页面、点击的按钮），以改进用户体验。您可在“设置 → 隐私”中关闭此功能。";
-"terms.item.monetization" = "作为盈利模式的-部分，应用会从钱包内执行的 DEX 兑换中获得少量佣金。这有助于我们保持独立、开源，并远离风险投资资金。";
-"terms.item.open_source" = "本应用完全开源，所有源代码均已公开发布。上述内容任何人都可公开验证。";
+
+"terms.item.decentralized" = "We do not hold your assets, access your private keys, or execute transactions on your behalf. The app does not provide brokerage, exchange, custody, escrow, or money-transmission services. All transactions are initiated, signed, and broadcast directly by you to public blockchain networks. We do not control, relay, modify, or process your transactions.";
+"terms.item.commission" = "To support ongoing development and remain open source, the app may receive a small commission from certain swap integrations. Any such commission does not involve custody of user funds and does not give us access to or control over your assets.";
+"terms.item.irreversibility" = "Blockchain transactions are irreversible. Always review transaction details before confirming.";
+"terms.item.software" = "The app is provided “as is.” While it is built with care, software may contain unintended bugs or vulnerabilities that could result in loss of funds. The app is open source and can be independently reviewed and audited by anyone.";
+"terms.item.compliance" = "You are solely responsible for the security of your funds, your conduct, and compliance with applicable laws in your jurisdiction. Use of the app does not exempt you from tax, financial reporting, or other legal obligations.";
 
 
 // Settings -> Tell Friends
