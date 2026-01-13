@@ -2848,6 +2848,12 @@
 		D092D6422E31172E0039BDB4 /* MoneroAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092D6402E3117280039BDB4 /* MoneroAdapter.swift */; };
 		D09C5C632C076C0E00E6909E /* CoinIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09C5C622C076C0E00E6909E /* CoinIconView.swift */; };
 		D09C5C642C076C0E00E6909E /* CoinIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09C5C622C076C0E00E6909E /* CoinIconView.swift */; };
+		D09CDA322F1653770068B1B7 /* MoneroIncomingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09CDA302F1653770068B1B7 /* MoneroIncomingTransactionRecord.swift */; };
+		D09CDA332F1653770068B1B7 /* MoneroOutgoingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09CDA312F1653770068B1B7 /* MoneroOutgoingTransactionRecord.swift */; };
+		D09CDA342F1653770068B1B7 /* MoneroTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09CDA2F2F1653770068B1B7 /* MoneroTransactionRecord.swift */; };
+		D09CDA352F1653770068B1B7 /* MoneroIncomingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09CDA302F1653770068B1B7 /* MoneroIncomingTransactionRecord.swift */; };
+		D09CDA362F1653770068B1B7 /* MoneroOutgoingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09CDA312F1653770068B1B7 /* MoneroOutgoingTransactionRecord.swift */; };
+		D09CDA372F1653770068B1B7 /* MoneroTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09CDA2F2F1653770068B1B7 /* MoneroTransactionRecord.swift */; };
 		D09D768C2A2E066E004311E6 /* SendTronConfirmationModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D768B2A2E066E004311E6 /* SendTronConfirmationModule.swift */; };
 		D09D768E2A2E06D6004311E6 /* SendTronConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D768D2A2E06D6004311E6 /* SendTronConfirmationViewController.swift */; };
 		D09D768F2A2E06D6004311E6 /* SendTronConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09D768D2A2E06D6004311E6 /* SendTronConfirmationViewController.swift */; };
@@ -5036,6 +5042,9 @@
 		D092C58A2C12DE3D0060D915 /* PriceChangeManager+HsTimePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PriceChangeManager+HsTimePeriod.swift"; sourceTree = "<group>"; };
 		D092D6402E3117280039BDB4 /* MoneroAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroAdapter.swift; sourceTree = "<group>"; };
 		D09C5C622C076C0E00E6909E /* CoinIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinIconView.swift; sourceTree = "<group>"; };
+		D09CDA2F2F1653770068B1B7 /* MoneroTransactionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroTransactionRecord.swift; sourceTree = "<group>"; };
+		D09CDA302F1653770068B1B7 /* MoneroIncomingTransactionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroIncomingTransactionRecord.swift; sourceTree = "<group>"; };
+		D09CDA312F1653770068B1B7 /* MoneroOutgoingTransactionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroOutgoingTransactionRecord.swift; sourceTree = "<group>"; };
 		D09D768B2A2E066E004311E6 /* SendTronConfirmationModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationModule.swift; sourceTree = "<group>"; };
 		D09D768D2A2E06D6004311E6 /* SendTronConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationViewController.swift; sourceTree = "<group>"; };
 		D09D76902A2E0753004311E6 /* SendTronConfirmationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendTronConfirmationViewModel.swift; sourceTree = "<group>"; };
@@ -9282,6 +9291,7 @@
 		D008CA58267C8DB300001E0A /* TransactionRecords */ = {
 			isa = PBXGroup;
 			children = (
+				D09CDA2E2F16536C0068B1B7 /* Monero */,
 				6BEA17752DE5B9D500BF73DD /* Zcash */,
 				D04D98E9268055A2001A3135 /* TransactionRecord.swift */,
 				D04D98EE2680620F001A3135 /* Evm */,
@@ -9444,6 +9454,16 @@
 				2FA5D5BC7249DDB680769ADD /* Eip1559EvmFeeDataSource.swift */,
 			);
 			path = Eip1559;
+			sourceTree = "<group>";
+		};
+		D09CDA2E2F16536C0068B1B7 /* Monero */ = {
+			isa = PBXGroup;
+			children = (
+				D09CDA2F2F1653770068B1B7 /* MoneroTransactionRecord.swift */,
+				D09CDA302F1653770068B1B7 /* MoneroIncomingTransactionRecord.swift */,
+				D09CDA312F1653770068B1B7 /* MoneroOutgoingTransactionRecord.swift */,
+			);
+			path = Monero;
 			sourceTree = "<group>";
 		};
 		D09D768A2A2E05D8004311E6 /* Confirmation */ = {
@@ -10392,6 +10412,9 @@
 				D3840583218317DF007D50AD /* CoverManager.swift in Sources */,
 				D3B73E312BDFC5580067429D /* PriceRow.swift in Sources */,
 				D384058B218317DF007D50AD /* LanguageManager.swift in Sources */,
+				D09CDA322F1653770068B1B7 /* MoneroIncomingTransactionRecord.swift in Sources */,
+				D09CDA332F1653770068B1B7 /* MoneroOutgoingTransactionRecord.swift in Sources */,
+				D09CDA342F1653770068B1B7 /* MoneroTransactionRecord.swift in Sources */,
 				D384058C218317DF007D50AD /* LocalStorage.swift in Sources */,
 				D023D26B2A24CD16004F65B0 /* BaseTronAdapter.swift in Sources */,
 				D384058F218317DF007D50AD /* SecuritySettingsModule.swift in Sources */,
@@ -12465,6 +12488,9 @@
 				1A56464440899E3299F79D32 /* JailbreakService.swift in Sources */,
 				58AAAE5341084CFA30D4832C /* CoinPageMarkdownParser.swift in Sources */,
 				D3833AFC2BF335C700ACECFB /* MarketNewsView.swift in Sources */,
+				D09CDA352F1653770068B1B7 /* MoneroIncomingTransactionRecord.swift in Sources */,
+				D09CDA362F1653770068B1B7 /* MoneroOutgoingTransactionRecord.swift in Sources */,
+				D09CDA372F1653770068B1B7 /* MoneroTransactionRecord.swift in Sources */,
 				D05E96A62A2627E5002CCD71 /* TronOutgoingTransactionRecord.swift in Sources */,
 				1A5640D6FDF86EDB54213F9B /* DeepLinkManager.swift in Sources */,
 				D36DE0EC272FD89B000BC916 /* SwapSettingsModule.swift in Sources */,
@@ -14597,7 +14623,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MoneroKit.Swift.git";
 			requirement = {
 				kind = exactVersion;
-				version = 0.1.16;
+				version = 0.1.17;
 			};
 		};
 		D0EC34D92A4450B100BB308B /* XCRemoteSwiftPackageReference "HCaptcha-ios-sdk" */ = {

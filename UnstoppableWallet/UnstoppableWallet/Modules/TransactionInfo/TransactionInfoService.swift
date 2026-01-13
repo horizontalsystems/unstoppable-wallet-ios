@@ -66,6 +66,8 @@ class TransactionInfoService {
         case let tx as BitcoinOutgoingTransactionRecord:
             tx.fee.flatMap { tokens.append($0.token) }
             tokens.append(tx.value.token)
+        case let tx as MoneroIncomingTransactionRecord: tokens.append(tx.value.token)
+        case let tx as MoneroOutgoingTransactionRecord: tokens.append(tx.value.token)
         case let tx as TonTransactionRecord:
             for action in tx.actions {
                 switch action.type {
