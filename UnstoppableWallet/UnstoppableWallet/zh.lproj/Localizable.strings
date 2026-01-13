@@ -535,9 +535,13 @@
 "send.confirmation.operation" = "操作";
 "send.confirmation.transaction_xdr" = "交易 XDR";
 
+"send.confirmation.edit_fee" = "编辑手续费";
+"send.confirmation.transaction_nonce" = "交易nonce";
+
 "send.confirmation.sync_failed" = "同步失败";
-"send.confirmation.invalid_data" = "无效数据";
+"send.confirmation.failed_to_fetch_data" = "获取数据失败";
 "send.confirmation.refresh" = "刷新";
+"send.confirmation.refreshing" = "正在刷新";
 "send.confirmation.please_wait" = "请稍候";
 "send.confirmation.expires_in" = "将在%@后过期";
 "send.confirmation.expired" = "过期";
@@ -712,7 +716,7 @@
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "下跌容忍度";
-"swap.advanced_settings.slippage.footer" = "如果价格的不利变化超过这个百分比，您的交易将被退回。";
+"swap.advanced_settings.slippage.info" = "您的 swap 可接受的最大价格偏差。超过此限制，交易将被 reverted（回滚）。";
 "swap.advanced_settings.deadline" = "交易截止日期";
 "swap.advanced_settings.deadline.footer" = "如果您交易的待定时间多于此时间，您的交易将恢复原有的状态。";
 "swap.advanced_settings.recipient.footer" = "在兑换操作之后，金额将转移至指定地址";
@@ -748,11 +752,14 @@
 "swap.confirmation.please_wait" = "请稍候";
 "swap.confirmation.quote_expires_in" = "报价在 %@ 后失效";
 "swap.confirmation.quote_expired" = "报价已过期";
-"swap.confirmation.quote_failed" = "无法提供报价";
+
+"swap.confirmation.slippage_tolerance" = "下跌容忍度";
+"swap.confirmation.set_recipient" = "设置接收方";
 
 "swap.confirmation.slide_to_swap" = "滑动切换";
 "swap.confirmation.swapping" = "交易";
 "swap.confirmation.refresh" = "刷新";
+"swap.confirmation.impact_high" = "在此次兑换交易中，您将损失您资金中的很大一部分（%@）。";
 "swap.confirmation.impact_too_high" = "%@ 已禁用此交易的掉期操作，因为您得到的价格极其不利。 这是由于流动性极低造成的。\n如果您仍想兑换，请使用 %@ 网站。";
 "swap.confirmation.impact_warning" = "重要提示！您正在以极其不利的价格进行交易。这是因为流动性非常低。";
 
@@ -1511,8 +1518,12 @@
 "terms.item.backup_recovery" = "请安全备份每个钱包的恢复助记词。如果应用被删除、丢失或出现故障，这是唯一恢复资金访问的方式。无人能为您恢复。";
 "terms.item.device_pin" = "禁用手机解锁 PIN（或密码）会清除应用中的所有钱包。您需要使用恢复助记词来重新访问钱包。";
 "terms.item.privacy_notice" = "本应用不会监视或收集您的余额和交易数据——我们甚至不知道有多少人在使用。应用仅收集匿名使用统计（如打开的页面、点击的按钮），以改进用户体验。您可在“设置 → 隐私”中关闭此功能。";
-"terms.item.monetization" = "作为盈利模式的-部分，应用会从钱包内执行的 DEX 兑换中获得少量佣金。这有助于我们保持独立、开源，并远离风险投资资金。";
-"terms.item.open_source" = "本应用完全开源，所有源代码均已公开发布。上述内容任何人都可公开验证。";
+
+"terms.item.decentralized" = "我们不持有您的资产，不会访问您的私钥，也不会代表您执行交易。该 app 不提供经纪、交易所、托管、第三方托管或资金转移服务。所有交易均由您本人直接发起、签名并广播至公共区块链网络。我们不控制、转发、修改或处理您的交易。";
+"terms.item.commission" = "为支持持续开发并保持开源，该应用可能会从部分兑换交易集成中获得少量佣金。任何此类佣金均不涉及用户资金托管，也不会赋予我们对您资产的访问权或控制权。";
+"terms.item.irreversibility" = "区块链交易是不可逆的。请在确认前务必仔细核对交易详情。";
+"terms.item.software" = "该应用按“按现状提供”。尽管在开发过程中已尽力确保质量，但软件仍可能包含非预期的缺陷或漏洞，从而导致资金损失。该应用为开源项目，任何人均可对其进行独立审查和审计。";
+"terms.item.compliance" = "您需对您的资金安全、个人行为以及遵守您所在司法辖区的适用法律承担全部责任。使用该应用并不免除您在税务、财务申报或其他法律方面的义务。";
 
 
 // Settings -> Tell Friends
@@ -1722,12 +1733,12 @@
 "appearance.hide_markets" = "隐藏市场";
 "appearance.hide_markets.description" = "完全隐藏“市场”标签页。";
 "appearance.price_change" = "价格变动";
-"appearance.price_change.description" = "选择代币价格变动的显示周期。";
+"appearance.price_change.description" = "选择用于显示 token 价格变动的时间周期。";
 "appearance.price_change.24h" = "24时";
 "appearance.price_change.1d" = "午夜UTC";
 
 "appearance.launch_screen" = "启动屏幕";
-"appearance.launch_screen.description" = "选择应用启动时默认打开的界面。";
+"appearance.launch_screen.description" = "选择应用默认打开的界面。";
 "appearance.launch_screen.auto" = "自动";
 "appearance.launch_screen.balance" = "余额";
 "appearance.launch_screen.market_overview" = "行情";
@@ -1735,13 +1746,13 @@
 
 "appearance.balance_tab" = "余额标签";
 "appearance.amount_rounding" = "金额取整";
-"appearance.amount_rounding.description" = "将余额和交易金额显示为取整后的数值。";
+"appearance.amount_rounding.description" = "显示经过取整处理的余额和交易金额。";
 "appearance.recently_sent" = "最近发送";
 "appearance.recently_sent.description" = "显示该代币最近发送的地址。";
 "appearance.hide_buttons" = "隐藏按钮";
 "appearance.hide_buttons.description" = "在“余额”标签页隐藏发送、接收和兑换按钮。";
-"appearance.balance_value" = "余额值";
-"appearance.balance_value.description" = "余额可高亮显示为加密货币或法币。";
+"appearance.balance_value" = "币种余额";
+"appearance.balance_value.description" = "以 crypto 或法币方式高亮显示余额。";
 "appearance.balance_value.coin_fiat" = "加密货币 / 法定货币";
 "appearance.balance_value.fiat_coin" = "法定货币 / 加密货币";
 
@@ -2466,11 +2477,10 @@
 // Monero
 
 "monero.priority" = "发送优先级";
-"monero.priority.default" = "默认";
+"monero.priority.default" = "自动";
 "monero.priority.low" = "低";
 "monero.priority.medium" = "中";
 "monero.priority.high" = "高";
-"monero.priority.last" = "最低";
 
 // MEV Protection
 
