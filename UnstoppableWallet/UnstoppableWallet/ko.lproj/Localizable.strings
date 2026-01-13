@@ -1732,12 +1732,12 @@
 "appearance.hide_markets" = "마켓 숨기기";
 "appearance.hide_markets.description" = "마켓 탭을 완전히 숨기기.";
 "appearance.price_change" = "가격 변경";
-"appearance.price_change.description" = "Select the time period for token price change display.";
+"appearance.price_change.description" = "토큰 가격 변동을 표시할 기간을 선택하세요.";
 "appearance.price_change.24h" = "24시";
 "appearance.price_change.1d" = "UTC 자정";
 
 "appearance.launch_screen" = "시작 화면";
-"appearance.launch_screen.description" = "Choose which screen the app opens on by default.";
+"appearance.launch_screen.description" = "앱이 기본적으로 열릴 화면을 선택하세요.";
 "appearance.launch_screen.auto" = "자동";
 "appearance.launch_screen.balance" = "잔액";
 "appearance.launch_screen.market_overview" = "시장 개요";
@@ -1745,13 +1745,13 @@
 
 "appearance.balance_tab" = "잔고 탭";
 "appearance.amount_rounding" = "금액 반올림";
-"appearance.amount_rounding.description" = "Display rounded balances and transaction amounts.";
+"appearance.amount_rounding.description" = "잔액 및 트랜잭션 금액을 반올림하여 표시합니다.";
 "appearance.recently_sent" = "최근 전송";
 "appearance.recently_sent.description" = "토큰의 최근 전송 주소를 표시합니다.";
 "appearance.hide_buttons" = "숨김 버튼";
 "appearance.hide_buttons.description" = "잔액 탭에서 보내기, 받기, 교환 버튼 숨기기.";
-"appearance.balance_value" = "Coin Balances";
-"appearance.balance_value.description" = "Show balances highlighted in either crypto or fiat.";
+"appearance.balance_value" = "코인 잔액";
+"appearance.balance_value.description" = "잔액을 crypto 또는 fiat 기준으로 강조 표시합니다.";
 "appearance.balance_value.coin_fiat" = "코인/피아트";
 "appearance.balance_value.fiat_coin" = "피아트/코인";
 
