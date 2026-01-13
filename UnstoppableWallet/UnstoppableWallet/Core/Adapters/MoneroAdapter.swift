@@ -404,8 +404,6 @@ extension SendPriority {
             return SendPriority.medium
         case SendPriority.high.description:
             return SendPriority.high
-        case SendPriority.last.description:
-            return SendPriority.last
         default:
             return nil
         }
@@ -421,8 +419,6 @@ extension SendPriority {
             return "monero.priority.medium".localized()
         case .high:
             return "monero.priority.high".localized()
-        case .last:
-            return "monero.priority.last".localized()
         }
     }
 
@@ -432,8 +428,6 @@ extension SendPriority {
             return .warning
         case .medium, .default:
             return .regular
-        case .last:
-            return .error
         }
     }
 }
