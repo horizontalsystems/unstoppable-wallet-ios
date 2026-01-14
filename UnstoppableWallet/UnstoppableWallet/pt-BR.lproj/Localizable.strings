@@ -508,7 +508,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.select_all" = "Selecionar Tudo";
 "send.unselect_all" = "Desmarcar Tudo";
 
-"send.confirmation.title" = "Confirm Send";
+"send.confirmation.title" = "Confirmar Envio";
 "send.confirmation.you_send" = "Enviar";
 "send.confirmation.you_receive" = "Você Recebe";
 "send.confirmation.transfer" = "Transferir";
@@ -2369,7 +2369,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "transaction_filter.contact" = "Contato";
 "transaction_filter.all_contacts" = "Todos os Contatos";
 "transaction_filter.hide_suspicious_txs" = "Ocultar Transações Suspeitas";
-"transaction_filter.hide_suspicious_txs.description" = "Hides small-value incoming transfers (e.g. USDT below $1.5). These transactions are often used for phishing and address-poisoning attacks.";
+"transaction_filter.hide_suspicious_txs.description" = "Oculta transferências de entrada de baixo valor (por exemplo, USDT abaixo de US$ 1,5). Essas transações são frequentemente usadas para ataques de phishing e address poisoning.";
 
 // Black Friday
 
