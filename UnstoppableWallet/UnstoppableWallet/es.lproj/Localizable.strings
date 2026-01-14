@@ -508,7 +508,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "send.select_all" = "Seleccionar Todo";
 "send.unselect_all" = "Deseleccionar Todo";
 
-"send.confirmation.title" = "Confirmar";
+"send.confirmation.title" = "Confirm Send";
 "send.confirmation.you_send" = "Usted envía";
 "send.confirmation.you_receive" = "Recibirás";
 "send.confirmation.transfer" = "Transferencia";
@@ -2370,7 +2370,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "transaction_filter.contact" = "Contacto";
 "transaction_filter.all_contacts" = "Todos los contactos";
 "transaction_filter.hide_suspicious_txs" = "Ocultar Transacciones Sospechosas";
-"transaction_filter.hide_suspicious_txs.description" = "Ocultando transacciones entrantes con montos mínimos en stablecoins, esto resuelve parcialmente los problemas de ataques de envenenamiento de direcciones.";
+"transaction_filter.hide_suspicious_txs.description" = "Hides small-value incoming transfers (e.g. USDT below $1.5). These transactions are often used for phishing and address-poisoning attacks.";
 
 // Black Friday
 
