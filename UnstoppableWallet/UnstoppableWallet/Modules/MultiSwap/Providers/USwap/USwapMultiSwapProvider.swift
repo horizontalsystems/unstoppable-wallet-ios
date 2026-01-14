@@ -15,8 +15,7 @@ import ZcashLightClientKit
 class USwapMultiSwapProvider: IMultiSwapProvider {
     private let assetMapExpiration: TimeInterval = 60 * 60
 
-    // private let baseUrl = "https://swap-api.unstoppable.money/v1"
-    private let baseUrl = "https://swap-dev.unstoppable.money/api/v1"
+    private let baseUrl = "\(AppConfig.swapApiUrl)/v1"
     private var headers: HTTPHeaders?
 
     private let provider: Provider

@@ -75,6 +75,10 @@ enum AppConfig {
         (Bundle.main.object(forInfoDictionaryKey: "MarketApiUrl") as? String) ?? ""
     }
 
+    static var swapApiUrl: String {
+        (Bundle.main.object(forInfoDictionaryKey: "SwapApiUrl") as? String) ?? ""
+    }
+
     static var etherscanKeys: [String] {
         ((Bundle.main.object(forInfoDictionaryKey: "EtherscanApiKeys") as? String) ?? "").components(separatedBy: ",")
     }
