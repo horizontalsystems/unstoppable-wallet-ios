@@ -508,7 +508,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.select_all" = "Hepsini Seç";
 "send.unselect_all" = "Tüm Seçimleri Kaldır";
 
-"send.confirmation.title" = "Onayla";
+"send.confirmation.title" = "Confirm Send";
 "send.confirmation.you_send" = "Gönderdiğiniz";
 "send.confirmation.you_receive" = "Alacağınız";
 "send.confirmation.transfer" = "Aktar";
@@ -2379,7 +2379,7 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "transaction_filter.contact" = "Kişi";
 "transaction_filter.all_contacts" = "Tüm Kişiler";
 "transaction_filter.hide_suspicious_txs" = "Şüpheli İşlemleri Gizle";
-"transaction_filter.hide_suspicious_txs.description" = "Gelen işlemleri, stablecoin'lerdeki toz miktarı ile gizlemek, adres zehirleme saldırısı sorunlarını kısmen çözer.";
+"transaction_filter.hide_suspicious_txs.description" = "Hides small-value incoming transfers (e.g. USDT below $1.5). These transactions are often used for phishing and address-poisoning attacks.";
 
 // Black Friday
 
