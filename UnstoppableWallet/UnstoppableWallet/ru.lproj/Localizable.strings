@@ -510,7 +510,7 @@
 "send.select_all" = "Выбрать все";
 "send.unselect_all" = "Снять выделение";
 
-"send.confirmation.title" = "Confirm Send";
+"send.confirmation.title" = "Подтвердить отправку";
 "send.confirmation.you_send" = "Вы отправляете";
 "send.confirmation.you_receive" = "Вы получите";
 "send.confirmation.transfer" = "Перевод";
@@ -2373,7 +2373,7 @@
 "transaction_filter.contact" = "Kонтакты";
 "transaction_filter.all_contacts" = "Все контакты";
 "transaction_filter.hide_suspicious_txs" = "Скрыть подозрительные транзакции";
-"transaction_filter.hide_suspicious_txs.description" = "Hides small-value incoming transfers (e.g. USDT below $1.5). These transactions are often used for phishing and address-poisoning attacks.";
+"transaction_filter.hide_suspicious_txs.description" = "Скрывает входящие переводы с небольшой суммой (например, USDT менее $1.5). Такие транзакции часто используются для фишинга и атак с подменой адреса.";
 
 // Black Friday
 
