@@ -717,13 +717,15 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Swap Terms
 
-"swap.terms.title" = "Swap Terms";
-"swap.terms.description" = "Unstoppable aggregates multiple decentralized (DEX) and centralized swap providers to offer competitive rates and broad asset support.";
-"swap.terms.risk_of_restrictions" = "Risk of restrictions";
-"swap.terms.risk_of_restrictions.description" = "I understand that some non-DEX swap providers apply transaction screening %@. Such providers may reject (and refund) swaps, or, in rare cases (CSAM and terrorism), freeze funds and request KYC data.";
-"swap.terms.user_responsibility" = "User responsibility";
-"swap.terms.user_responsibility.description" = "I understand that using non-DEX providers introduces additional risks and that these risks are my responsibility. Unstoppable can not guarantee provider behavior.";
-"swap.terms.footer" = "Always choose a swap provider that aligns with your requirements.";
+"swap.terms.title" = "Swap Koşulları";
+"swap.terms.description" = "Unstoppable, rekabetçi oranlar ve geniş varlık desteği sunmak için birden fazla merkeziyetsiz (DEX) ve merkezi swap sağlayıcısını bir araya getirir.";
+"swap.terms.risk_of_restrictions" = "Kısıtlama riski";
+"swap.terms.risk_of_restrictions.description" = "Bazı DEX olmayan swap sağlayıcılarının %@ oranında işlem taraması (transaction screening) uyguladığını anlıyorum.
+Bu tür sağlayıcılar swap işlemlerini reddedebilir (ve fonları iade edebilir) veya nadir durumlarda (CSAM ve terörizm ile ilişkili işlemler gibi) fonları dondurarak KYC bilgileri talep edebilir.";
+"swap.terms.user_responsibility" = "Kullanıcı sorumluluğu";
+"swap.terms.user_responsibility.description" = "DEX olmayan sağlayıcıları kullanmanın ek riskler içerdiğini ve bu risklerin tamamen benim sorumluluğumda olduğunu anlıyorum.
+Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını garanti edemez.";
+"swap.terms.footer" = "Her zaman kendi gereksinimlerinize ve risk toleransınıza uygun bir swap sağlayıcısı seçin.";
 
 // Swap Advanced Settings
 
