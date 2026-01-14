@@ -167,7 +167,7 @@ extension TonSendHandler {
 
         func flowSection(baseToken _: Token, currency: Currency, rates: [String: Decimal]) -> SendDataSection {
             .init([
-                .amountNew(
+                .amount(
                     token: token,
                     appValueType: .regular(appValue: AppValue(token: token, value: amount)),
                     currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) },

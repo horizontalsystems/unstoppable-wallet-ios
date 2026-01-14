@@ -272,12 +272,12 @@ extension MultiSwapSendHandler {
 
         func flowSection(baseToken _: Token, currency: Currency, rates: [String: Decimal]) -> SendDataSection {
             .init([
-                .amountNew(
+                .amount(
                     token: tokenIn,
                     appValueType: .regular(appValue: AppValue(token: tokenIn, value: amountIn)),
                     currencyValue: rates[tokenIn.coin.uid].map { CurrencyValue(currency: currency, value: amountIn * $0) },
                 ),
-                .amountNew(
+                .amount(
                     token: tokenOut,
                     appValueType: .regular(appValue: AppValue(token: tokenOut, value: quote.amountOut)),
                     currencyValue: rates[tokenOut.coin.uid].map { CurrencyValue(currency: currency, value: quote.amountOut * $0) },

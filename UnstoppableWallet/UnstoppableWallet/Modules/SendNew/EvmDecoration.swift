@@ -44,7 +44,7 @@ struct EvmDecoration {
         let currencyValue = rate.map { CurrencyValue(currency: currency, value: $0 * value) }
 
         return .init([
-            .amountNew(
+            .amount(
                 token: token,
                 appValueType: .regular(appValue: appValue),
                 currencyValue: currencyValue,
@@ -62,7 +62,7 @@ struct EvmDecoration {
         let currencyValue = rate.map { CurrencyValue(currency: currency, value: $0 * value) }
 
         return .init([
-            .amountNew(
+            .amount(
                 token: token,
                 appValueType: .regular(appValue: appValue),
                 currencyValue: currencyValue,
@@ -80,7 +80,7 @@ struct EvmDecoration {
         let amountField: SendField
 
         if isRevokeAllowance {
-            amountField = .amountNew(
+            amountField = .amount(
                 token: token,
                 appValueType: .withoutAmount(code: token.coin.code),
                 currencyValue: nil,
@@ -118,7 +118,7 @@ struct EvmDecoration {
     private func amountField(token: Token, value: Decimal, currency: Currency, rate: Decimal?) -> SendField {
         let appValue = AppValue(token: token, value: Decimal(sign: .plus, exponent: value.exponent, significand: value.significand))
 
-        return .amountNew(
+        return .amount(
             token: token,
             appValueType: appValue.isMaxValue ? .infinity(code: appValue.code) : .regular(appValue: appValue),
             currencyValue: appValue.isMaxValue ? nil : rate.map { CurrencyValue(currency: currency, value: $0 * value) },

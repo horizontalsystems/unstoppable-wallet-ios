@@ -104,7 +104,7 @@ extension ShieldSendHandler {
 
         func sections(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
             var flowFields = [SendField]()
-            flowFields.append(.amountNew(
+            flowFields.append(.amount(
                 token: token,
                 appValueType: .regular(appValue: AppValue(token: token, value: amount)),
                 currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) },

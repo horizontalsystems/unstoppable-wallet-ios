@@ -14,7 +14,7 @@ struct AddressRowsView: View {
                 ThemeImage(viewModel.item.icon, size: .iconSize24)
             },
             middle: {
-                MultiText(subtitle: ComponentText(text: viewModel.item.title, colorStyle: .primary), description: viewModel.item.subtitle)
+                MultiText(eyebrow: ComponentText(text: viewModel.item.title, colorStyle: .primary), subtitle: viewModel.item.subtitle)
             }
         )
     }
@@ -45,7 +45,7 @@ struct RecipientRowsView: View {
                         CopyHelper.copyAndNotify(value: value)
                     }
                 } else {
-                    RightTextIcon(text: viewModel.item.title.shortened)
+                    RightMultiText(subtitle: ComponentText(text: viewModel.item.title.shortened, colorStyle: .primary))
                 }
             }
         )

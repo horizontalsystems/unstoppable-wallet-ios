@@ -140,7 +140,7 @@ extension MoneroSendHandler {
 
             var sections = [SendDataSection]()
             sections.append(.init([
-                .amountNew(
+                .amount(
                     token: token,
                     appValueType: .regular(appValue: amountData.appValue),
                     currencyValue: amountData.currencyValue,

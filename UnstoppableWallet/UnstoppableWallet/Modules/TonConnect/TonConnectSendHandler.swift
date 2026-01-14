@@ -134,7 +134,7 @@ extension TonConnectSendHandler {
                     case let .send(value, to, _, comment):
                         if let token = value.token {
                             sections.append(SendDataSection([
-                                .amountNew(
+                                .amount(
                                     token: token,
                                     appValueType: .regular(appValue: AppValue(token: token, value: value.value)),
                                     currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * value.value) },
@@ -155,7 +155,7 @@ extension TonConnectSendHandler {
                     case let .receive(value, from, comment):
                         if let token = value.token {
                             sections.append(SendDataSection([ // TODO: YOU RECEIVE not SEND
-                                .amountNew(
+                                .amount(
                                     token: token,
                                     appValueType: .regular(appValue: AppValue(token: token, value: value.value)),
                                     currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * value.value) },
@@ -182,12 +182,12 @@ extension TonConnectSendHandler {
                     case let .swap(_, _, valueIn, valueOut):
                         if let tokenIn = valueIn.token, let tokenOut = valueOut.token {
                             sections.append(SendDataSection([
-                                .amountNew(
+                                .amount(
                                     token: tokenIn,
                                     appValueType: .regular(appValue: AppValue(token: tokenIn, value: valueIn.value)),
                                     currencyValue: rates[tokenIn.coin.uid].map { CurrencyValue(currency: currency, value: valueIn.value * $0) },
                                 ),
-                                .amountNew(
+                                .amount(
                                     token: tokenOut,
                                     appValueType: .regular(appValue: AppValue(token: tokenOut, value: valueOut.value)),
                                     currencyValue: rates[tokenOut.coin.uid].map { CurrencyValue(currency: currency, value: valueOut.value * $0) },

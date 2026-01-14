@@ -4,8 +4,7 @@ import MarketKit
 import SwiftUI
 
 enum SendField {
-    case amount(title: String, token: Token, appValueType: AppValueType, currencyValue: CurrencyValue?, type: AmountType)
-    case amountNew(token: Token, appValueType: AppValueType, currencyValue: CurrencyValue?)
+    case amount(token: Token, appValueType: AppValueType, currencyValue: CurrencyValue?)
     case value(title: CustomStringConvertible, appValue: AppValue?, currencyValue: CurrencyValue?, formatFull: Bool)
     case doubleValue(title: String, description: InfoDescription?, value1: String, value2: String?)
     case levelValue(title: String, value: String, level: ValueLevel)
@@ -20,38 +19,7 @@ enum SendField {
 
     @ViewBuilder var listRow: some View {
         switch self {
-        case let .amount(title, token, appValueType, currencyValue, type):
-            ListRow {
-                CoinIconView(coin: token.coin)
-
-                HStack(spacing: .margin4) {
-                    VStack(alignment: .leading, spacing: 1) {
-                        Text(title).textSubhead2(color: .themeLeah)
-                        Text(token.fullBadge).textCaption()
-                    }
-
-                    Spacer()
-
-                    VStack(alignment: .trailing, spacing: 1) {
-                        if let formatted = appValueType.formattedFull() {
-                            Text(formatted)
-                                .textSubhead1(color: type.color)
-                                .multilineTextAlignment(.trailing)
-                        } else {
-                            Text("n/a".localized)
-                                .textSubhead1(color: .themeGray50)
-                                .multilineTextAlignment(.trailing)
-                        }
-
-                        if let formatted = currencyValue?.formattedFull {
-                            Text(formatted)
-                                .textCaption()
-                                .multilineTextAlignment(.trailing)
-                        }
-                    }
-                }
-            }
-        case let .amountNew(token, appValueType, currencyValue):
+        case let .amount(token, appValueType, currencyValue):
             Cell(
                 left: {
                     CoinIconView(token: token)
@@ -86,8 +54,8 @@ enum SendField {
                     let formatted = (formatFull ? appValue?.formattedFull() : appValue?.formattedShort())
 
                     RightMultiText(
-                        subtitleSB: ComponentText(text: formatted ?? "n/a".localized, colorStyle: formatted != nil ? .primary : .secondary),
-                        subtitle: formatFull ? currencyValue?.formattedFull : currencyValue?.formattedShort
+                        eyebrow: ComponentText(text: formatted ?? "n/a".localized, colorStyle: formatted != nil ? .primary : .secondary),
+                        subtitleSB: (formatFull ? currencyValue?.formattedFull : currencyValue?.formattedShort).map { ComponentText(text: $0, colorStyle: .secondary) }
                     )
                 }
             )
@@ -98,7 +66,7 @@ enum SendField {
                     MiddleTextIcon(text: title)
                 },
                 right: {
-                    RightTextIcon(text: ComponentText(text: value, colorStyle: level.colorStyle))
+                    RightMultiText(subtitle: ComponentText(text: value, colorStyle: level.colorStyle))
                 }
             )
         case let .note(iconName, title):
