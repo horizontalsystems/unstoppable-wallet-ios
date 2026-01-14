@@ -88,5 +88,5 @@ jobs:
         if: success()
         with:
           name: dsym-files-build-${{ github.run_number }}
-          path: "**/*.dSYM"
+          path: "**/*.dSYM.zip"
           retention-days: 90
