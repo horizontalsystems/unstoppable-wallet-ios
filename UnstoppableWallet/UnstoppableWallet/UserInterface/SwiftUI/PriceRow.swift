@@ -19,7 +19,7 @@ struct PriceRow: View {
                     MiddleTextIcon(text: title)
                 },
                 right: {
-                    RightTextIcon(text: text)
+                    RightMultiText(subtitle: ComponentText(text: text, colorStyle: .primary))
                         .id(text)
                         .transition(.opacity)
                         .onTapGesture {

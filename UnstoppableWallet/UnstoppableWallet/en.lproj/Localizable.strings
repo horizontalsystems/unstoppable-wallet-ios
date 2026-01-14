@@ -506,7 +506,7 @@
 "send.select_all" = "Select All";
 "send.unselect_all" = "Unselect All";
 
-"send.confirmation.title" = "Confirm";
+"send.confirmation.title" = "Confirm Send";
 "send.confirmation.you_send" = "You Send";
 "send.confirmation.you_receive" = "You Receive";
 "send.confirmation.transfer" = "Transfer";

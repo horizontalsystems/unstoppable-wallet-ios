@@ -145,7 +145,7 @@ class TronSendData: ISendData {
 
         return .init(
             [
-                .amountNew(
+                .amount(
                     token: token,
                     appValueType: appValue.isMaxValue ? .infinity(code: appValue.code) : .regular(appValue: appValue),
                     currencyValue: appValue.isMaxValue ? nil : rate.map { CurrencyValue(currency: currency, value: $0 * value) }
@@ -179,7 +179,7 @@ class TronSendData: ISendData {
         var fields: [SendField] = []
         if isRevokeAllowance {
             fields.append(
-                .amountNew(
+                .amount(
                     token: coinService.token,
                     appValueType: .withoutAmount(code: coinService.token.coin.code),
                     currencyValue: nil,
@@ -187,7 +187,7 @@ class TronSendData: ISendData {
             )
         } else {
             fields.append(
-                .amountNew(
+                .amount(
                     token: coinService.token,
                     appValueType: approveValue.isMaxValue ? .infinity(code: approveValue.code) : .regular(appValue: approveValue),
                     currencyValue: approveValue.isMaxValue ? nil : rates[contractAddress.base58].map { CurrencyValue(currency: currency, value: $0 * value) },

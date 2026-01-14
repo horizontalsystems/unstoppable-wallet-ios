@@ -126,7 +126,7 @@ extension BitcoinSendHandler {
             let appValue = AppValue(token: baseToken, value: -decimalValue)
             let rate = rates[baseToken.coin.uid]
 
-            let from = SendField.amountNew(
+            let from = SendField.amount(
                 token: baseToken,
                 appValueType: .regular(appValue: appValue),
                 currencyValue: rate.map { CurrencyValue(currency: currency, value: $0 * decimalValue) },

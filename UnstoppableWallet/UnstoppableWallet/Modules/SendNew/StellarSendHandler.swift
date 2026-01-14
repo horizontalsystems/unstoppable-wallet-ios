@@ -137,7 +137,7 @@ extension StellarSendHandler {
             switch data {
             case let .payment(_, amount, accountId):
                 return .init([
-                    .amountNew(
+                    .amount(
                         token: token,
                         appValueType: .regular(appValue: AppValue(token: token, value: amount)),
                         currencyValue: rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * amount) }
@@ -150,7 +150,7 @@ extension StellarSendHandler {
             case let .changeTrust(asset, limit):
                 let appValue = AppValue(token: token, value: limit)
                 return .init([
-                    .amountNew(
+                    .amount(
                         token: token,
                         appValueType: appValue.isMaxValue ? .infinity(code: appValue.code) : .regular(appValue: appValue),
                         currencyValue: appValue.isMaxValue ? nil : rates[token.coin.uid].map { CurrencyValue(currency: currency, value: $0 * limit) },
