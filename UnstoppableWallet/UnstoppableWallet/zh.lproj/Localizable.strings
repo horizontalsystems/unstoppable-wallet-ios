@@ -508,7 +508,7 @@
 "send.select_all" = "选择所有";
 "send.unselect_all" = "取消选择所有";
 
-"send.confirmation.title" = "确认";
+"send.confirmation.title" = "Confirm Send";
 "send.confirmation.you_send" = "您发送";
 "send.confirmation.you_receive" = "您收到";
 "send.confirmation.transfer" = "转帐";
@@ -2369,7 +2369,7 @@
 "transaction_filter.contact" = "联系";
 "transaction_filter.all_contacts" = "所有联系人";
 "transaction_filter.hide_suspicious_txs" = "隐藏可疑Txs";
-"transaction_filter.hide_suspicious_txs.description" = "隐藏到达的沙尘群交易，这部分解决了地址中毒攻击问题。";
+"transaction_filter.hide_suspicious_txs.description" = "Hides small-value incoming transfers (e.g. USDT below $1.5). These transactions are often used for phishing and address-poisoning attacks.";
 
 // Black Friday
 
