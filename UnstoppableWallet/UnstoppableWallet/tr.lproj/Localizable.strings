@@ -713,6 +713,20 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "swap.outbound_fee" = "Dışa Çıkış Ücreti";
 "swap.total_fee" = "Toplam Ücret";
 
+"swap.aml" = "AML";
+
+// Swap Terms
+
+"swap.terms.title" = "Swap Koşulları";
+"swap.terms.description" = "Unstoppable, rekabetçi oranlar ve geniş varlık desteği sunmak için birden fazla merkeziyetsiz (DEX) ve merkezi swap sağlayıcısını bir araya getirir.";
+"swap.terms.risk_of_restrictions" = "Kısıtlama riski";
+"swap.terms.risk_of_restrictions.description" = "Bazı DEX olmayan swap sağlayıcılarının %@ oranında işlem taraması (transaction screening) uyguladığını anlıyorum.
+Bu tür sağlayıcılar swap işlemlerini reddedebilir (ve fonları iade edebilir) veya nadir durumlarda (CSAM ve terörizm ile ilişkili işlemler gibi) fonları dondurarak KYC bilgileri talep edebilir.";
+"swap.terms.user_responsibility" = "Kullanıcı sorumluluğu";
+"swap.terms.user_responsibility.description" = "DEX olmayan sağlayıcıları kullanmanın ek riskler içerdiğini ve bu risklerin tamamen benim sorumluluğumda olduğunu anlıyorum.
+Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını garanti edemez.";
+"swap.terms.footer" = "Her zaman kendi gereksinimlerinize ve risk toleransınıza uygun bir swap sağlayıcısı seçin.";
+
 // Swap Advanced Settings
 
 "swap.advanced_settings.slippage" = "Slipaj Toleransı";
@@ -1446,6 +1460,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "tx_info.recipient_hash" = "Alıcı";
 "tx_info.raw_transaction" = "Ham işlem";
 "tx_info.memo" = "Not";
+"tx_info.tx_secret_key" = "Tx Secret Key";
 "tx_info.service" = "Hizmet";
 "tx_info.view_on" = "%@ ile görüntüle";
 "tx_info.you_pay" = "Ödediğiniz";
