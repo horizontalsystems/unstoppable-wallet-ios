@@ -717,13 +717,13 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 // Swap Terms
 
-"swap.terms.title" = "Swap Terms";
-"swap.terms.description" = "Unstoppable aggregates multiple decentralized (DEX) and centralized swap providers to offer competitive rates and broad asset support.";
-"swap.terms.risk_of_restrictions" = "Risk of restrictions";
-"swap.terms.risk_of_restrictions.description" = "I understand that some non-DEX swap providers apply transaction screening %@. Such providers may reject (and refund) swaps, or, in rare cases (CSAM and terrorism), freeze funds and request KYC data.";
-"swap.terms.user_responsibility" = "User responsibility";
-"swap.terms.user_responsibility.description" = "I understand that using non-DEX providers introduces additional risks and that these risks are my responsibility. Unstoppable can not guarantee provider behavior.";
-"swap.terms.footer" = "Always choose a swap provider that aligns with your requirements.";
+"swap.terms.title" = "Conditions de swap";
+"swap.terms.description" = "Unstoppable agrège plusieurs fournisseurs de swap décentralisés (DEX) et centralisés afin d’offrir des taux compétitifs et une large prise en charge des actifs.";
+"swap.terms.risk_of_restrictions" = "Risque de restrictions";
+"swap.terms.risk_of_restrictions.description" = "Je comprends que certains fournisseurs de swap non DEX appliquent un screening des transactions %@. Ces fournisseurs peuvent rejeter (et rembourser) les swaps ou, dans de rares cas (CSAM et terrorisme), geler les fonds et demander des données KYC.";
+"swap.terms.user_responsibility" = "Responsabilité de l’utilisateur";
+"swap.terms.user_responsibility.description" = "Je comprends que l’utilisation de fournisseurs non DEX introduit des risques supplémentaires et que ces risques relèvent de ma responsabilité. Unstoppable ne peut pas garantir le comportement des fournisseurs.";
+"swap.terms.footer" = "Choisissez toujours un fournisseur de swap qui correspond à vos exigences.";
 
 // Swap Advanced Settings
 
