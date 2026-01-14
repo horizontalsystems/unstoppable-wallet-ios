@@ -715,13 +715,13 @@
 
 // Swap Terms
 
-"swap.terms.title" = "Swap Terms";
-"swap.terms.description" = "Unstoppable aggregates multiple decentralized (DEX) and centralized swap providers to offer competitive rates and broad asset support.";
-"swap.terms.risk_of_restrictions" = "Risk of restrictions";
-"swap.terms.risk_of_restrictions.description" = "I understand that some non-DEX swap providers apply transaction screening %@. Such providers may reject (and refund) swaps, or, in rare cases (CSAM and terrorism), freeze funds and request KYC data.";
-"swap.terms.user_responsibility" = "User responsibility";
-"swap.terms.user_responsibility.description" = "I understand that using non-DEX providers introduces additional risks and that these risks are my responsibility. Unstoppable can not guarantee provider behavior.";
-"swap.terms.footer" = "Always choose a swap provider that aligns with your requirements.";
+"swap.terms.title" = "스왑 약관";
+"swap.terms.description" = "Unstoppable은 경쟁력 있는 환율과 폭넓은 자산 지원을 제공하기 위해 여러 탈중앙화(DEX) 및 중앙화 스왑 제공업체를 통합합니다.";
+"swap.terms.risk_of_restrictions" = "제한 위험";
+"swap.terms.risk_of_restrictions.description" = "일부 비-DEX 스왑 제공업체는 트랜잭션 스크리닝 %@을 적용한다는 점을 이해합니다. 이러한 제공업체는 스왑을 거부(및 환불)할 수 있으며, 드문 경우(CSAM 및 테러리즘)에는 자금을 동결하고 KYC 데이터를 요청할 수 있습니다.";
+"swap.terms.user_responsibility" = "사용자 책임";
+"swap.terms.user_responsibility.description" = "비-DEX 제공업체를 사용하는 것은 추가적인 위험을 수반하며, 이러한 위험은 전적으로 본인의 책임임을 이해합니다. Unstoppable은 제공업체의 행위를 보장할 수 없습니다.";
+"swap.terms.footer" = "항상 자신의 요구사항에 부합하는 스왑 제공업체를 선택하세요.";
 
 // Swap Advanced Settings
 
@@ -1457,7 +1457,7 @@
 "tx_info.recipient_hash" = "수령인";
 "tx_info.raw_transaction" = "로우 트랜잭션";
 "tx_info.memo" = "Memo";
-"tx_info.tx_secret_key" = "Tx Secret Key";
+"tx_info.tx_secret_key" = "트랜잭션 시크릿 키";
 "tx_info.service" = "서비스";
 "tx_info.view_on" = "%@에서 보기";
 "tx_info.you_pay" = "지불하기";
