@@ -506,7 +506,7 @@
 "send.select_all" = "전체 선택";
 "send.unselect_all" = "전체 선택 해제";
 
-"send.confirmation.title" = "Confirm Send";
+"send.confirmation.title" = "전송 확인";
 "send.confirmation.you_send" = "보냅니다";
 "send.confirmation.you_receive" = "수신 주소";
 "send.confirmation.transfer" = "전송";
@@ -2370,7 +2370,7 @@
 "transaction_filter.contact" = "연락처";
 "transaction_filter.all_contacts" = "모든 연락처";
 "transaction_filter.hide_suspicious_txs" = "의심스러운 거래 숨기기";
-"transaction_filter.hide_suspicious_txs.description" = "Hides small-value incoming transfers (e.g. USDT below $1.5). These transactions are often used for phishing and address-poisoning attacks.";
+"transaction_filter.hide_suspicious_txs.description" = "소액의 수신 트랜잭션(예: $1.5 미만의 USDT)을 숨깁니다. 이러한 트랜잭션은 피싱 및 주소 포이즈닝 공격에 자주 사용됩니다.";
 
 // Black Friday
 
