@@ -201,6 +201,7 @@ def deploy_production
     scheme: "Production",
     export_method: "app-store",
     clean: true,
+    include_symbols: true,
     export_options: {
       compileBitcode: false,
       provisioningProfiles: {
@@ -249,6 +250,7 @@ platform :ios do
       scheme: "Development",
       export_method: "ad-hoc",
       clean: true,
+      include_symbols: true,
       export_options: {
         compileBitcode: false,
         provisioningProfiles: {

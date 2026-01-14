@@ -82,4 +82,11 @@ jobs:
           XCCONFIG_DEV_UNSTOPPABLE_DOMAINS_API_KEY: ${{ secrets.XCCONFIG_DEV_UNSTOPPABLE_DOMAINS_API_KEY }}
           XCCONFIG_DEV_USWAP_API_KEY: ${{ secrets.XCCONFIG_DEV_USWAP_API_KEY }}
           XCCONFIG_DEV_WALLET_CONNECT_V2_PROJECT_KEY: ${{ secrets.XCCONFIG_DEV_WALLET_CONNECT_V2_PROJECT_KEY }}
-          
+
+      - name: Upload dSYM files
+        uses: actions/upload-artifact@v4
+        if: success()
+        with:
+          name: dsym-files-build-${{ github.run_number }}
+          path: "**/*.dSYM"
+          retention-days: 90
