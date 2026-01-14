@@ -152,18 +152,6 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
         let destination = try await resolveDestination(recipient: recipient, token: tokenOut)
 
-        var sourceAddress: String?
-        var refundAddress: String?
-
-        if !dry {
-            if tokenIn.blockchainType.isEvm || tokenIn.blockchainType == .tron || tokenIn.blockchainType == .ton {
-                sourceAddress = try await DestinationHelper.resolveDestination(token: tokenIn).address
-                refundAddress = sendingAddress(token: tokenIn)
-            } else {
-                refundAddress = sendingAddress(token: tokenIn)
-            }
-        }
-
         var parameters: [String: Any] = [
             "sellAsset": assetIn,
             "buyAsset": assetOut,
@@ -174,12 +162,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             "dry": dry,
         ]
 
-        if let sourceAddress {
-            parameters["sourceAddress"] = sourceAddress
-        }
-
-        if let refundAddress {
-            parameters["refundAddress"] = refundAddress
+        if !dry {
+            try await appendAddresses(tokenIn: tokenIn, parameters: &parameters)
         }
 
         let response: QuoteResponse = try await networkManager.fetch(url: "\(baseUrl)/quote", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
@@ -189,6 +173,23 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         }
 
         return quote
+    }
+
+    private func appendAddresses(tokenIn: Token, parameters: inout [String: Any]) async throws {
+        // must provide address for calculate tx-data
+        if tokenIn.blockchain.type.isEvm ||
+            tokenIn.blockchainType == .tron ||
+            tokenIn.blockchainType == .ton
+        {
+            parameters["sourceAddress"] = try await DestinationHelper.resolveDestination(token: tokenIn).address
+        }
+
+        // must provide public address for zcash if needed. For all other states provide deposit address.
+        if tokenIn.blockchain.type == .zcash, provider == .stealthex || provider == .quickEx {
+            parameters["refundAddress"] = try await DestinationHelper.resolveDestination(token: tokenIn).address
+        } else {
+            parameters["refundAddress"] = sendingAddress(token: tokenIn)
+        }
     }
 
     func supports(tokenIn: Token, tokenOut: Token) -> Bool {
@@ -691,8 +692,8 @@ extension USwapMultiSwapProvider {
 
         var aml: Bool {
             switch self {
-            case .near: return false
-            case .quickEx, .letsExchange, .stealthex, .swapuz: return true
+            case .near, .swapuz: return false
+            case .quickEx, .letsExchange, .stealthex: return true
             }
         }
     }
