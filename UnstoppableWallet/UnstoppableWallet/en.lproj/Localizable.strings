@@ -2367,7 +2367,7 @@
 "transaction_filter.contact" = "Contact";
 "transaction_filter.all_contacts" = "All Contacts";
 "transaction_filter.hide_suspicious_txs" = "Hide Suspicious Txs";
-"transaction_filter.hide_suspicious_txs.description" = "Hiding incoming transactions with the dust amount in stablecoins, this partially solves the  address poisoning attack problems.";
+"transaction_filter.hide_suspicious_txs.description" = "Hides small-value incoming transfers (e.g. USDT below $1.5). These transactions are often used for phishing and address-poisoning attacks.";
 
 // Black Friday
 
