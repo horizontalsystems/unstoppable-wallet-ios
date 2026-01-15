@@ -58,7 +58,6 @@ class MoneroNetworkService {
         }
 
         moneroNodeManager.setCurrent(node: node, blockchainType: blockchain.type)
-        syncState()
     }
 }
 
