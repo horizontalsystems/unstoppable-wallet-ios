@@ -55,7 +55,6 @@ enum AppConfig {
         "BSC-USD": 1.5,
         "TRX": 0.1,
         "ETH": 0.0005,
-
     ]
 
     static var appVersion: String {

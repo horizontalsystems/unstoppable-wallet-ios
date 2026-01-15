@@ -19,7 +19,7 @@ enum PremiumFactory {
 
     // Purchase select type bottom sheet
     static var productItemFactory: PurchaseProductItemFactory {
-        return PurchaseProductItemFactory()
+        PurchaseProductItemFactory()
     }
 
     @ViewBuilder static func subscribePeriodView(item: PurchaseProductItemFactory.Item, isSelected: Bool, action: @escaping () -> Void) -> some View {

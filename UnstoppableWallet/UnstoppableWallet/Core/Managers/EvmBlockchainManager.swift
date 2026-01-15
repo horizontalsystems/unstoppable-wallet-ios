@@ -1,4 +1,5 @@
 import EvmKit
+import Foundation
 import HsToolKit
 import MarketKit
 
@@ -21,36 +22,40 @@ class EvmBlockchainManager {
     private let marketKit: MarketKit.Kit
     private let accountManagerFactory: EvmAccountManagerFactory
 
+    let allBlockchains: [Blockchain]
+
     private var evmKitManagerMap = [BlockchainType: EvmKitManager]()
     private var evmAccountManagerMap = [BlockchainType: EvmAccountManager]()
 
-    var allBlockchains: [Blockchain] {
-        do {
-            return try marketKit.blockchains(uids: EvmBlockchainManager.blockchainTypes.map(\.uid))
-        } catch {
-            return []
-        }
-    }
+    private let queue = DispatchQueue(label: "\(AppConfig.label).evm_blockchain_manager", qos: .userInitiated)
 
     init(syncSourceManager: EvmSyncSourceManager, testNetManager: TestNetManager, marketKit: MarketKit.Kit, accountManagerFactory: EvmAccountManagerFactory) {
         self.syncSourceManager = syncSourceManager
         self.testNetManager = testNetManager
         self.marketKit = marketKit
         self.accountManagerFactory = accountManagerFactory
+
+        do {
+            allBlockchains = try marketKit.blockchains(uids: Self.blockchainTypes.map(\.uid))
+        } catch {
+            allBlockchains = []
+        }
     }
 
     private func evmManagers(blockchainType: BlockchainType) throws -> (EvmKitManager, EvmAccountManager) {
-        if let evmKitManager = evmKitManagerMap[blockchainType], let evmAccountManager = evmAccountManagerMap[blockchainType] {
+        try queue.sync {
+            if let evmKitManager = evmKitManagerMap[blockchainType], let evmAccountManager = evmAccountManagerMap[blockchainType] {
+                return (evmKitManager, evmAccountManager)
+            }
+
+            let evmKitManager = try EvmKitManager(chain: chain(blockchainType: blockchainType), syncSourceManager: syncSourceManager)
+            let evmAccountManager = accountManagerFactory.evmAccountManager(blockchainType: blockchainType, evmKitManager: evmKitManager)
+
+            evmKitManagerMap[blockchainType] = evmKitManager
+            evmAccountManagerMap[blockchainType] = evmAccountManager
+
             return (evmKitManager, evmAccountManager)
         }
-
-        let evmKitManager = try EvmKitManager(chain: chain(blockchainType: blockchainType), syncSourceManager: syncSourceManager)
-        let evmAccountManager = accountManagerFactory.evmAccountManager(blockchainType: blockchainType, evmKitManager: evmKitManager)
-
-        evmKitManagerMap[blockchainType] = evmKitManager
-        evmAccountManagerMap[blockchainType] = evmAccountManager
-
-        return (evmKitManager, evmAccountManager)
     }
 }
 
