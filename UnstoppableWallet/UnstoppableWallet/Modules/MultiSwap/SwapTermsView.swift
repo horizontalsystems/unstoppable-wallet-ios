@@ -56,7 +56,7 @@ struct SwapTermsView: View {
             middle: {
                 VStack(alignment: .leading, spacing: 0) {
                     ThemeText(item.title, style: .subhead, colorStyle: .primary)
-                    ThemeText(item.description, style: .caption)
+                    ThemeText(item.description, style: .subhead)
                 }
             },
         )

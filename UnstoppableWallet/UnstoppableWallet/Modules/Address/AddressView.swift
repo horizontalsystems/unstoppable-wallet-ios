@@ -11,6 +11,8 @@ struct AddressView: View {
     @Environment(\.presentationMode) private var presentationMode
     @Environment(\.addressParserFilter) private var parserFilter
 
+    @FocusState var isInputActive: Bool
+
     var borderColor: Color {
         switch viewModel.addressResult {
         case .invalid: return .themeLucian
@@ -39,6 +41,7 @@ struct AddressView: View {
                         parserFilter: parserFilter,
                         borderColor: Binding(get: { borderColor }, set: { _ in })
                     )
+                    .focused($isInputActive)
                     .padding(.bottom, .margin12)
 
                     if case let .invalid(caution) = viewModel.state, let caution {
@@ -89,6 +92,9 @@ struct AddressView: View {
                     }
                 }
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin16, trailing: .margin16))
+            }
+            .onTapGesture {
+                isInputActive = false
             }
         } bottomContent: {
             let (title, disabled, showProgress) = buttonState()

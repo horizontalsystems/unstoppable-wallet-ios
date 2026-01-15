@@ -39,6 +39,9 @@ struct MultiSwapView: View {
                     }
                     .padding(EdgeInsets(top: 8, leading: 16, bottom: 32, trailing: 16))
                 }
+                .onTapGesture {
+                    isInputActive = false
+                }
             }
             .navigationTitle("swap.title".localized)
             .navigationDestination(isPresented: $sendPresented) {

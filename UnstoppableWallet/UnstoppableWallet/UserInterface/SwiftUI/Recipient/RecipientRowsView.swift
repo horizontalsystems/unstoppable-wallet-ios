@@ -12,6 +12,7 @@ struct AddressRowsView: View {
         Cell(
             left: {
                 ThemeImage(viewModel.item.icon, size: .iconSize24)
+                    .padding(4)
             },
             middle: {
                 MultiText(eyebrow: ComponentText(text: viewModel.item.title, colorStyle: .primary), subtitle: viewModel.item.subtitle)
