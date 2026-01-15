@@ -15,6 +15,7 @@
 "button.backup" = "백업";
 "button.restore" = "복구";
 "button.copy" = "복사";
+"button.copy_error" = "Copy Error";
 "button.retry" = "재시도";
 "button.report" = "보고";
 "button.add" = "추가";
@@ -546,6 +547,8 @@
 "send.confirmation.slide_to_send" = "슬라이드하여 보내기";
 "send.confirmation.sending" = "전송중";
 "send.confirmation.sent" = "전송됨";
+"send.confirmation.unexpected_error" = "예기치 못한 오류";
+"send.confirmation.unexpected_error.text" = "Something went wrong while sending your transaction. Please try again or copy the error code and contact support.";
 
 "send.confirmation.slide_to_approve" = "승인하기 위해 슬라이드하십시오";
 "send.confirmation.slide_to_revoke" = "취소하기 위해 슬라이드하십시오";
