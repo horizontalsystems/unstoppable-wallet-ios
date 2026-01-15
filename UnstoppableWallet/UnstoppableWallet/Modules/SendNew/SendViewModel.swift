@@ -29,7 +29,7 @@ class SendViewModel: ObservableObject {
 
     private var nextRefreshTime: Double?
 
-    let errorSubject = PassthroughSubject<String, Never>()
+    private let errorSubject = PassthroughSubject<String, Never>()
 
     @Published var state: State = .syncing {
         didSet {
@@ -112,11 +112,15 @@ class SendViewModel: ObservableObject {
     @MainActor private func set(sending: Bool) {
         self.sending = sending
     }
+
+    @MainActor private func report(error: Error) {
+        errorSubject.send(error.smartDescription)
+    }
 }
 
 extension SendViewModel {
     var errorPublisher: AnyPublisher<String, Never> {
-        errorSubject.receive(on: DispatchQueue.main).eraseToAnyPublisher()
+        errorSubject.eraseToAnyPublisher()
     }
 
     func stopAutoQuoting() {
@@ -197,7 +201,7 @@ extension SendViewModel {
             }
         } catch {
             await set(sending: false)
-            errorSubject.send(error.smartDescription)
+            await report(error: error)
             throw error
         }
     }

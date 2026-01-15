@@ -60,7 +60,22 @@ struct SendView: View {
             }
         }
         .onReceive(viewModel.errorPublisher) { error in
-            HudHelper.instance.show(banner: .error(string: error))
+            Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                BottomSheetView(
+                    items: [
+                        .title(icon: ThemeImage.error, title: "send.confirmation.unexpected_error".localized),
+                        .text(text: "send.confirmation.unexpected_error.text".localized),
+                        .buttonGroup(.init(buttons: [
+                            .init(style: .gray, title: "button.copy_error".localized, action: {
+                                CopyHelper.copyAndNotify(value: error)
+                                isPresented.wrappedValue = false
+                            }),
+                        ])),
+                    ],
+                )
+            }
+
+            UINotificationFeedbackGenerator().notificationOccurred(.error)
         }
         .accentColor(.themeJacob)
     }
@@ -126,7 +141,7 @@ struct SendView: View {
 
     @ViewBuilder private func errorView(error: Error) -> some View {
         PlaceholderViewNew(icon: "warning_filled", subtitle: "send.confirmation.failed_to_fetch_data".localized) {
-            ThemeButton(text: "button.report".localized, mode: .transparent, size: .small) {
+            ThemeButton(text: "button.copy_error".localized, mode: .transparent, size: .small) {
                 CopyHelper.copyAndNotify(value: error.smartDescription)
             }
         }

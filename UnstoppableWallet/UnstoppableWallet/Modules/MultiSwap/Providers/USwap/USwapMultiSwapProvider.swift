@@ -30,21 +30,27 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     private let syncSubject = PassthroughSubject<Void, Never>()
 
     private let blockchainTypeMap: [String: BlockchainType] = [
-        "43114": .avalanche, // AVAX
-        "10": .optimism, // OP
-        "8453": .base, // BASE
-        "728126428": .tron, // TRON
-        "42161": .arbitrumOne, // ARB
-        "56": .binanceSmartChain, // BSC
-        "137": .polygon, // POL
-        "1": .ethereum, // ETH
         "bitcoin": .bitcoin,
-        "zcash": .zcash,
         "bitcoincash": .bitcoinCash,
+        "ecash": .ecash,
         "litecoin": .litecoin,
-        "ton": .ton,
-        "stellar": .stellar,
+        "dash": .dash,
+        "zcash": .zcash,
         "monero": .monero,
+        "1": .ethereum,
+        "56": .binanceSmartChain,
+        "137": .polygon,
+        "43114": .avalanche,
+        "10": .optimism,
+        "42161": .arbitrumOne,
+        "100": .gnosis,
+        "250": .fantom,
+        "728126428": .tron,
+        "solana": .solana,
+        "ton": .ton,
+        "8453": .base,
+        "324": .zkSync,
+        "stellar": .stellar,
     ]
 
     init(provider: Provider, apiKey: String?) {
@@ -92,7 +98,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             var tokenQueries: [TokenQuery] = []
 
             switch blockchainType {
-            case .arbitrumOne, .avalanche, .base, .binanceSmartChain, .ethereum, .optimism, .polygon, .tron:
+            case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .tron, .base, .zkSync:
                 let tokenType: TokenType
 
                 if let address = token.address, !address.isEmpty {
@@ -114,7 +120,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
                 tokenQueries = [TokenQuery(blockchainType: blockchainType, tokenType: tokenType)]
 
-            case .bitcoinCash, .bitcoin, .dash, .zcash, .monero, .stellar:
+            case .bitcoin, .bitcoinCash, .ecash, .dash, .zcash, .monero, .stellar:
                 tokenQueries = blockchainType.nativeTokenQueries
 
             case .litecoin:
@@ -201,7 +207,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         let blockchainType = tokenIn.blockchainType
 
         switch blockchainType {
-        case .arbitrumOne, .avalanche, .base, .binanceSmartChain, .ethereum, .optimism, .polygon:
+        case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .tron, .base, .zkSync:
             var allowanceState: MultiSwapAllowanceHelper.AllowanceState = .notRequired
 
             if let approvalAddress = quote.approvalAddress {
@@ -214,7 +220,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
             return EvmMultiSwapQuote(expectedBuyAmount: quote.expectedBuyAmount, allowanceState: allowanceState)
 
-        case .bitcoin, .bitcoinCash, .litecoin, .zcash, .ton, .monero, .stellar:
+        case .bitcoin, .bitcoinCash, .ecash, .litecoin, .dash, .zcash, .monero, .ton, .stellar:
             return MultiSwapQuote(expectedBuyAmount: quote.expectedBuyAmount)
 
         default:
@@ -231,7 +237,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         let blockchainType = tokenIn.blockchainType
 
         switch blockchainType {
-        case .arbitrumOne, .avalanche, .base, .binanceSmartChain, .ethereum, .optimism, .polygon, .tron:
+        case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .tron, .base, .zkSync:
             return try await buildEvmConfirmationQuote(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
@@ -243,7 +249,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 recipient: recipient,
                 transactionSettings: transactionSettings
             )
-        case .bitcoin, .bitcoinCash, .litecoin, .dash:
+        case .bitcoin, .bitcoinCash, .ecash, .litecoin, .dash:
             return try await buildBtcConfirmationQuote(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
