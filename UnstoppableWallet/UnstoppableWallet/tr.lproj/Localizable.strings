@@ -15,6 +15,7 @@
 "button.backup" = "Yedekle";
 "button.restore" = "Geri Yükle";
 "button.copy" = "Kopyala";
+"button.copy_error" = "Copy Error";
 "button.retry" = "Yeniden Dene";
 "button.report" = "Şikayet Et";
 "button.add" = "Ekle";
@@ -548,6 +549,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.slide_to_send" = "Göndermek için Kaydırın";
 "send.confirmation.sending" = "Gönderiliyor";
 "send.confirmation.sent" = "Gönderildi";
+"send.confirmation.unexpected_error" = "Beklenmeyen hata";
+"send.confirmation.unexpected_error.text" = "Something went wrong while sending your transaction. Please try again or copy the error code and contact support.";
 
 "send.confirmation.slide_to_approve" = "Onaylamak İçin Kaydır";
 "send.confirmation.slide_to_revoke" = "İptal Etmek İçin Kaydır";
