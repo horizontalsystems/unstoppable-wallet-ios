@@ -26,13 +26,13 @@ enum SendField {
                 },
                 middle: {
                     MultiText(
-                        title: token.coin.code,
+                        eyebrow: ComponentText(text: token.coin.code, colorStyle: .primary),
                         subtitle: token.fullBadge,
                     )
                 },
                 right: {
                     RightMultiText(
-                        title: appValueType.formattedFull(showCode: false),
+                        eyebrow: appValueType.formattedFull(showCode: false).map { ComponentText(text: $0, colorStyle: .primary) },
                         subtitle: currencyValue?.formattedFull
                     )
                 }
@@ -55,7 +55,7 @@ enum SendField {
 
                     RightMultiText(
                         eyebrow: ComponentText(text: formatted ?? "n/a".localized, colorStyle: formatted != nil ? .primary : .secondary),
-                        subtitleSB: (formatFull ? currencyValue?.formattedFull : currencyValue?.formattedShort).map { ComponentText(text: $0, colorStyle: .secondary) }
+                        subtitle: formatFull ? currencyValue?.formattedFull : currencyValue?.formattedShort
                     )
                 }
             )
