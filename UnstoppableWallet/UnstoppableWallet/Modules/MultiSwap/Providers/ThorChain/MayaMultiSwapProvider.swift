@@ -7,8 +7,10 @@ import SwiftUI
 import ZcashLightClientKit
 
 class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
+    private static let insufficientBalanceError = "insufficient balance"
+
     private let testNetManager = Core.shared.testNetManager
-    private var temporaryDestinationAddress: String?
+    private var temporaryDestinationAddresses = [BlockchainType: String]()
 
     override var baseUrl: String {
         let stagenet = testNetManager.mayaStagenetEnabled ? "stagenet." : ""
@@ -28,8 +30,8 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         AppConfig.mayaAffiliateBps
     }
 
-    private func zcashSwapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?) async throws -> SwapQuote {
-        let refundAddress = try await resolveDestination(recipient: recipient, token: tokenIn)
+    private func zcashSwapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal) async throws -> SwapQuote {
+        let refundAddress = try await resolveDestination(recipient: nil, token: tokenIn)
         let params: Parameters = [
             "refund_address": refundAddress,
         ]
@@ -67,10 +69,20 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
             return try await super.confirmationQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient, transactionSettings: transactionSettings)
         }
 
-        let swapQuote = try await zcashSwapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient)
+        let swapQuote = try await zcashSwapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage)
 
         var transactionError: Error?
-        let proposal = try await proposal(tokenIn: tokenIn, swapQuote: swapQuote, amountIn: amountIn)
+
+        var result: Proposal?
+        do {
+            result = try await proposal(tokenIn: tokenIn, swapQuote: swapQuote, amountIn: amountIn)
+        } catch {
+            if case let .rustProposeTransferFromURI(text) = error as? ZcashLightClientKit.ZcashError,
+               text.range(of: Self.insufficientBalanceError, options: .caseInsensitive) != nil {
+
+                transactionError = BitcoinCoreErrors.SendValueErrors.notEnough
+            }
+        }
 
         if let dustThreshold = swapQuote.quote.dustThreshold,
            Int(Zatoshi.from(decimal: amountIn).amount) <= dustThreshold
@@ -80,11 +92,11 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
 
         return ZcashSwapFinalQuote(
             expectedBuyAmount: swapQuote.quote.expectedAmountOut,
-            proposal: proposal,
+            proposal: result,
             slippage: slippage,
             recipient: recipient,
             transactionError: transactionError,
-            fee: proposal.totalFeeRequired().decimalValue.decimalValue,
+            fee: result?.totalFeeRequired().decimalValue.decimalValue,
         )
     }
 
@@ -116,15 +128,12 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
             return recipient
         }
         // use temporary address, to avoid muptiply create address without existing Adapter for token
-        if let temporaryDestinationAddress {
-            return temporaryDestinationAddress
-        }
-
-        let destination = try await DestinationHelper.resolveDestination(token: token)
+        let temporaryDestination = temporaryDestinationAddresses[token.blockchainType].map { DestinationHelper.Destination(address: $0, type: .nonExisting) }
+        let destination = try await DestinationHelper.resolveDestination(token: token, temporary: temporaryDestination)
 
         // if token not enabled, just save first address to avoid repeatly getter.
         if destination.type == .nonExisting {
-            temporaryDestinationAddress = destination.address
+            temporaryDestinationAddresses[token.blockchainType] = destination.address
         }
 
         return destination.address
