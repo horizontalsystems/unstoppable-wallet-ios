@@ -15,6 +15,7 @@
 "button.backup" = "备份";
 "button.restore" = "恢复";
 "button.copy" = "复制";
+"button.copy_error" = "Copy Error";
 "button.retry" = "重试";
 "button.report" = "报告";
 "button.add" = "添加";
@@ -548,6 +549,8 @@
 "send.confirmation.slide_to_send" = "滑动发送";
 "send.confirmation.sending" = "发送中";
 "send.confirmation.sent" = "已发送";
+"send.confirmation.unexpected_error" = "异常错误";
+"send.confirmation.unexpected_error.text" = "Something went wrong while sending your transaction. Please try again or copy the error code and contact support.";
 
 "send.confirmation.slide_to_approve" = "滑动以批准";
 "send.confirmation.slide_to_revoke" = "滑动以撤销";
