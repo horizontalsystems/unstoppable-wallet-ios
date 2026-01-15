@@ -78,8 +78,8 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
             result = try await proposal(tokenIn: tokenIn, swapQuote: swapQuote, amountIn: amountIn)
         } catch {
             if case let .rustProposeTransferFromURI(text) = error as? ZcashLightClientKit.ZcashError,
-               text.range(of: Self.insufficientBalanceError, options: .caseInsensitive) != nil {
-
+               text.range(of: Self.insufficientBalanceError, options: .caseInsensitive) != nil
+            {
                 transactionError = BitcoinCoreErrors.SendValueErrors.notEnough
             }
         }
