@@ -46,13 +46,16 @@ enum AppConfig {
     ]
     static var spamCoinValueLimits: [String: Decimal] = [
         "XLM": 0.01,
-        "USDT": 0.01,
-        "USDC": 0.01,
-        "USDD": 0.01,
-        "DAI": 0.01,
-        "BUSD": 0.01,
-        "EURS": 0.01,
-        "BSC-USD": 0.01,
+        "USDT": 1.5,
+        "USDC": 1.5,
+        "USDD": 1.5,
+        "DAI": 1.5,
+        "BUSD": 1.5,
+        "EURS": 1.5,
+        "BSC-USD": 1.5,
+        "TRX": 0.1,
+        "ETH": 0.0005,
+
     ]
 
     static var appVersion: String {
