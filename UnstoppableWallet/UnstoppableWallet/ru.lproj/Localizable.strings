@@ -15,6 +15,7 @@
 "button.backup" = "Резервная копия";
 "button.restore" = "Восстановить";
 "button.copy" = "Копировать";
+"button.copy_error" = "Copy Error";
 "button.retry" = "Повторить";
 "button.report" = "Пожаловаться";
 "button.add" = "Добавить";
@@ -550,6 +551,8 @@
 "send.confirmation.slide_to_send" = "Проведите для отправки";
 "send.confirmation.sending" = "Отправка";
 "send.confirmation.sent" = "Отправлено";
+"send.confirmation.unexpected_error" = "Непредвиденная ошибка";
+"send.confirmation.unexpected_error.text" = "Something went wrong while sending your transaction. Please try again or copy the error code and contact support.";
 
 "send.confirmation.slide_to_approve" = "Проведите для разрешения";
 "send.confirmation.slide_to_revoke" = "Проведите чтобы отозвать";
