@@ -15,6 +15,7 @@
 "button.backup" = "Cópia de segurança";
 "button.restore" = "Restaurar";
 "button.copy" = "Copiar";
+"button.copy_error" = "Copy Error";
 "button.retry" = "Tentar de Novo";
 "button.report" = "Reportar";
 "button.add" = "Adicionar";
@@ -548,6 +549,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.confirmation.slide_to_send" = "Deslize para enviar";
 "send.confirmation.sending" = "Enviando";
 "send.confirmation.sent" = "Enviado";
+"send.confirmation.unexpected_error" = "Erro inesperado";
+"send.confirmation.unexpected_error.text" = "Something went wrong while sending your transaction. Please try again or copy the error code and contact support.";
 
 "send.confirmation.slide_to_approve" = "Deslize para Aprovar";
 "send.confirmation.slide_to_revoke" = "Deslize para Revogar";
