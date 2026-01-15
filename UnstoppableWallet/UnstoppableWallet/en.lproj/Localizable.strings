@@ -15,6 +15,7 @@
 "button.backup" = "Backup";
 "button.restore" = "Restore";
 "button.copy" = "Copy";
+"button.copy_error" = "Copy Error";
 "button.retry" = "Retry";
 "button.report" = "Report";
 "button.add" = "Add";
@@ -546,6 +547,8 @@
 "send.confirmation.slide_to_send" = "Slide to Send";
 "send.confirmation.sending" = "Sending";
 "send.confirmation.sent" = "Sent";
+"send.confirmation.unexpected_error" = "Unexpected Error";
+"send.confirmation.unexpected_error.text" = "Something went wrong while sending your transaction. Please try again or copy the error code and contact support.";
 
 "send.confirmation.slide_to_approve" = "Slide to Approve";
 "send.confirmation.slide_to_revoke" = "Slide to Revoke";
