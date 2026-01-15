@@ -1,7 +1,7 @@
 import MarketKit
 
 enum DestinationHelper {
-    static func resolveDestination(token: Token) async throws -> Destination {
+    static func resolveDestination(token: Token, temporary: Destination? = nil) async throws -> Destination {
         let blockchainType = token.blockchainType
 
         switch Core.shared.adapterManager.adapter(for: token) {
@@ -24,6 +24,10 @@ enum DestinationHelper {
             }
 
             return .init(address: address.eip55, type: .existing)
+        }
+
+        if let temporary {
+            return temporary
         }
 
         let address: String
