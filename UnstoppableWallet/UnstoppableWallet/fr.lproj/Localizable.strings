@@ -128,6 +128,8 @@
 
 "filter.all" = "Tout";
 
+"not_activated" = "Not Activated";
+
 // Access Camera
 
 "access_camera.message" = "%@ a besoin d'accéder à votre caméra pour scanner le code QR.
@@ -378,8 +380,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.token.frozen" = "Gelée";
 "balance.token.frozen.info.title" = "Titre gelé";
 "balance.token.frozen.info.description" = "Texte de description gelé";
-"balance.token.account.inactive.title" = "Compte non actif";
-"balance.token.account.inactive.description" = "Supports addresses from EVM, Tron, TON, Stellar, Bitcoin-family(BTC, LTC, BCH, Dash), and XPUB keys.";
+"balance.token.account.inactive.description" = "Transactions will appear after activation";
 
 // Account switcher
 
@@ -430,8 +431,9 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "deposit.memo_warning.description" = "A la fois un mémo (tag) et l'adresse sont nécessaires pour s'assurer que les actifs sont reçus. Sinon, vos fonds seront perdus.";
 
 "deposit.not_active" = "non actif";
-"deposit.not_active.title" = "Compte non actif";
-"deposit.not_active.tron_description" = "Les nouveaux portefeuilles TRON nécessitent au moins 1 TRX pour être activés. D’ici là, ils peuvent recevoir des tokens, mais les soldes affichés ne seront pas exacts.";
+"deposit.not_active.title" = "TRON Not Activated";
+"deposit.not_active.tron_description" = "TRON requires at least 1 TRX for activation. Until the wallet is activated, tokens can be received, but balances may not be shown.";
+"deposit.not_active.view_address" = "View my address";
 "deposit.stellar.inactive_asset.title" = "Activer le jeton";
 "deposit.stellar.inactive_asset.description" = "Pour recevoir %@, vous devez activer le jeton. Le réseau Stellar exige qu’une trustline soit établie pour chaque jeton. Sans cela, votre portefeuille ne pourra pas recevoir %@ — la transaction sera rejetée et les fonds ne seront pas crédités.";
 
