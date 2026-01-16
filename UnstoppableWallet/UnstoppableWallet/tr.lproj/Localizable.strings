@@ -128,6 +128,8 @@
 
 "filter.all" = "Hepsi";
 
+"not_activated" = "Not Activated";
+
 // Access Camera
 
 "access_camera.message" = "%@, QR kodunu okuyabilmek için kameranıza erişime ihtiyaç duyuyor.
@@ -378,8 +380,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.token.frozen" = "Frozen";
 "balance.token.frozen.info.title" = "Frozen Title";
 "balance.token.frozen.info.description" = "Frozen Description Text";
-"balance.token.account.inactive.title" = "Hesap aktif değil";
-"balance.token.account.inactive.description" = "Yeni TRON cüzdanlarının aktif hale gelmesi için en az 1 TRX yatırılması gerekir. Aktif olmayan cüzdanlar token tutabilir ve alabilir, ancak bakiyeler aktive edilene kadar güncellenmez.";
+"balance.token.account.inactive.description" = "Transactions will appear after activation";
 
 // Account switcher
 
@@ -430,8 +431,9 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "deposit.memo_warning.description" = "Varlıkların alındığından emin olmak için hem not (etiket) hem de adres gereklidir. Aksi takdirde paranız kaybolacaktır.";
 
 "deposit.not_active" = "aktif değil";
-"deposit.not_active.title" = "Hesap aktif değil";
-"deposit.not_active.tron_description" = "Yeni TRON cüzdanlarının etkinleşmesi için en az 1 TRX gerekir. O zamana kadar token alabilirler fakat bakiyeleri doğru görüntülenmez.";
+"deposit.not_active.title" = "TRON Not Activated";
+"deposit.not_active.tron_description" = "TRON requires at least 1 TRX for activation. Until the wallet is activated, tokens can be received, but balances may not be shown.";
+"deposit.not_active.view_address" = "View my address";
 "deposit.stellar.inactive_asset.title" = "Token’i Aktive Et";
 "deposit.stellar.inactive_asset.description" = "%@ almak için token’i aktive etmeniz gerekiyor. Stellar ağı, her bir token için trustline kurulmasını gerektirir. Bu kurulmazsa, cüzdan %@ alamaz — işlem reddedilir ve fonlar teslim edilmez.";
 
