@@ -237,7 +237,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         let blockchainType = tokenIn.blockchainType
 
         switch blockchainType {
-        case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .tron, .base, .zkSync:
+        case .ethereum, .binanceSmartChain, .polygon, .avalanche, .optimism, .arbitrumOne, .gnosis, .fantom, .base, .zkSync:
             return try await buildEvmConfirmationQuote(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
@@ -260,6 +260,17 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 slippage: slippage,
                 recipient: recipient,
                 transactionSettings: transactionSettings
+            )
+        case .tron:
+            return try await buildTronConfirmationQuote(
+                tokenIn: tokenIn,
+                tokenOut: tokenOut,
+                amountIn: amountIn,
+                amountOut: amountOut,
+                amountOutMin: amountOutMin,
+                quote: quote,
+                slippage: slippage,
+                recipient: recipient
             )
         case .zcash:
             return try await buildZcashConfirmationQuote(
@@ -601,6 +612,52 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionData: transactionData,
             token: tokenIn,
             fee: fee,
+            transactionError: transactionError
+        )
+    }
+
+    private func buildTronConfirmationQuote(
+        tokenIn: Token,
+        tokenOut _: Token,
+        amountIn: Decimal,
+        amountOut: Decimal,
+        amountOutMin _: Decimal,
+        quote: Quote,
+        slippage: Decimal,
+        recipient: String?
+    ) async throws -> ISwapFinalQuote {
+        guard let jsonObject = quote.tx else {
+            throw SwapError.noTransactionData
+        }
+
+        let transaction = try Mapper<CreatedTransactionResponse>().map(JSON: jsonObject)
+
+        var fees: [TronKit.Fee] = []
+        var transactionError: Error?
+
+        if let tronKitWrapper = Core.shared.tronAccountManager.tronKitManager.tronKitWrapper {
+            do {
+                let result = try await TronSendHelper.estimateFees(
+                    createdTransaction: transaction,
+                    tronKit: tronKitWrapper.tronKit,
+                    tokenIn: tokenIn,
+                    amountIn: amountIn
+                )
+
+                fees = result.fees
+                transactionError = result.transactionError
+            } catch {
+                transactionError = error
+            }
+        }
+
+        return TronSwapFinalQuote(
+            amountIn: amountIn,
+            expectedAmountOut: amountOut,
+            recipient: recipient,
+            slippage: slippage,
+            createdTransaction: transaction,
+            fees: fees,
             transactionError: transactionError
         )
     }

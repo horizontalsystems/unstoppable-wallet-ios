@@ -44,7 +44,7 @@ extension TronSendHandler: ISendHandler {
                     sentAmount = sentAmount - _totalFees
 
                     guard sentAmount > 0 else {
-                        throw TransactionError.zeroAmount
+                        throw TronSendHelper.TransactionError.zeroAmount
                     }
 
                     contract = tronKit.transferContract(toAddress: transfer.toAddress, value: sentAmount)
@@ -57,7 +57,7 @@ extension TronSendHandler: ISendHandler {
             totalFees = _totalFees
 
             if trxBalance < totalAmount {
-                throw TransactionError.insufficientBalance(balance: trxBalance)
+                throw TronSendHelper.TransactionError.insufficientBalance(balance: trxBalance)
             }
         } catch {
             transactionError = error
@@ -100,11 +100,6 @@ extension TronSendHandler {
         case invalidData
         case noFees
         case noContract
-    }
-
-    enum TransactionError: Error {
-        case insufficientBalance(balance: BigUInt)
-        case zeroAmount
     }
 }
 

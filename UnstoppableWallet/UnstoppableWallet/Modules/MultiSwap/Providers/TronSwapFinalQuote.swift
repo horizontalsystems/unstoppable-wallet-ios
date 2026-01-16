@@ -8,17 +8,15 @@ class TronSwapFinalQuote: ISwapFinalQuote {
     private let amountIn: Decimal
     private let expectedAmountOut: Decimal
     private let recipient: String?
-    private let crosschain: Bool
-    private let slippage: Decimal
+    private let slippage: Decimal?
     let createdTransaction: CreatedTransactionResponse
     private let fees: [Fee]
     private let transactionError: Error?
 
-    init(amountIn: Decimal, expectedAmountOut: Decimal, recipient: String?, crosschain: Bool, slippage: Decimal, createdTransaction: CreatedTransactionResponse, fees: [Fee], transactionError: Error?) {
+    init(amountIn: Decimal, expectedAmountOut: Decimal, recipient: String?, slippage: Decimal?, createdTransaction: CreatedTransactionResponse, fees: [Fee], transactionError: Error?) {
         self.amountIn = amountIn
         self.expectedAmountOut = expectedAmountOut
         self.recipient = recipient
-        self.crosschain = crosschain
         self.slippage = slippage
         self.createdTransaction = createdTransaction
         self.fees = fees
@@ -39,7 +37,7 @@ class TronSwapFinalQuote: ISwapFinalQuote {
 
     func cautions(baseToken: Token) -> [CautionNew] {
         if let transactionError {
-            return [caution(transactionError: transactionError, feeToken: baseToken)]
+            return [TronSendHelper.caution(transactionError: transactionError, feeToken: baseToken)]
         }
 
         return []
@@ -48,94 +46,23 @@ class TronSwapFinalQuote: ISwapFinalQuote {
     func fields(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, baseToken: MarketKit.Token, currency: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
         var fields = [SendField]()
 
-        if !crosschain, let slippage = SendField.slippage(slippage) {
-            fields.append(slippage)
+        if let slippage {
+            let minAmountOut = amountOut * (1 - slippage / 100)
+            if let minRecieve = SendField.minRecieve(token: tokenOut, value: minAmountOut) {
+                fields.append(minRecieve)
+            }
+
+            if let slippage = SendField.slippage(slippage) {
+                fields.append(slippage)
+            }
         }
 
         if let recipient {
             fields.append(.recipient(recipient, blockchainType: tokenOut.blockchainType))
         }
 
-        fields.append(contentsOf: feeFields(currency: currency, baseToken: baseToken, feeTokenRate: baseTokenRate))
+        fields.append(contentsOf: TronSendHelper.feeFields(baseToken: baseToken, totalFees: fees.calculateTotalFees(), fees: fees, currency: currency, feeTokenRate: baseTokenRate))
 
         return fields
-    }
-
-    private func feeFields(currency: Currency, baseToken: Token, feeTokenRate: Decimal?) -> [SendField] {
-        var viewItems = [SendField]()
-
-        let totalFees = fees.calculateTotalFees()
-
-        let decimalAmount = Decimal(totalFees) / pow(10, baseToken.decimals)
-        let appValue = AppValue(token: baseToken, value: decimalAmount)
-        let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: decimalAmount * $0) }
-
-        viewItems.append(
-            .value(
-                title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
-                appValue: appValue,
-                currencyValue: currencyValue,
-                formatFull: true
-            )
-        )
-
-        var bandwidth: String?
-        var energy: String?
-
-        for fee in fees {
-            switch fee {
-            case let .accountActivation(amount):
-                let decimalAmount = Decimal(amount) / pow(10, baseToken.decimals)
-                let appValue = AppValue(token: baseToken, value: decimalAmount)
-                let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: decimalAmount * $0) }
-
-                let info = InfoDescription(title: "tron.send.activation_fee".localized, description: "tron.send.activation_fee.info".localized)
-
-                viewItems.append(
-                    .value(
-                        title: SendField.InformedTitle("tron.send.activation_fee".localized, info: info),
-                        appValue: appValue,
-                        currencyValue: currencyValue,
-                        formatFull: true
-                    )
-                )
-
-            case let .bandwidth(points, _):
-                bandwidth = ValueFormatter.instance.formatShort(value: Decimal(points), decimalCount: 0)
-
-            case let .energy(required, _):
-                energy = ValueFormatter.instance.formatShort(value: Decimal(required), decimalCount: 0)
-            }
-        }
-
-        if bandwidth != nil || energy != nil {
-            viewItems.append(
-                .doubleValue(
-                    title: "tron.send.resources_consumed".localized,
-                    description: .init(title: "tron.send.resources_consumed".localized, description: "tron.send.resources_consumed.info".localized),
-                    value1: bandwidth.flatMap { "\($0) \("tron.send.bandwidth".localized)" } ?? "",
-                    value2: energy.flatMap { "\($0) \("tron.send.energy".localized)" }
-                )
-            )
-        }
-        return viewItems
-    }
-
-    private func caution(transactionError: Error, feeToken: Token) -> CautionNew {
-        let title: String
-        let text: String
-
-        if case let TronSendHandler.TransactionError.insufficientBalance(balance: balance) = transactionError.convertedError {
-            let appValue = AppValue(token: feeToken, value: balance.toDecimal(decimals: feeToken.decimals) ?? 0)
-            let balanceString = appValue.formattedShort()
-
-            title = "fee_settings.errors.insufficient_balance".localized
-            text = "fee_settings.errors.insufficient_balance.info".localized(balanceString ?? feeToken.coin.code)
-        } else {
-            title = "fee_settings.errors.unexpected_error".localized
-            text = transactionError.convertedError.smartDescription
-        }
-
-        return CautionNew(title: title, text: text, type: .error)
     }
 }
