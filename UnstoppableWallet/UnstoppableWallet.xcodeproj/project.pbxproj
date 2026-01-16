@@ -2043,6 +2043,8 @@
 		6BCAADD12ED9630E00ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAADCF2ED962F400ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift */; };
 		6BCAADD52EDC08A100ECB0F1 /* PremiumFeaturesWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAADD42EDC089400ECB0F1 /* PremiumFeaturesWrapper.swift */; };
 		6BCAADD62EDC08A100ECB0F1 /* PremiumFeaturesWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAADD42EDC089400ECB0F1 /* PremiumFeaturesWrapper.swift */; };
+		6BCAB39B2F1A115200820806 /* TronSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB39A2F1A114E00820806 /* TronSendHelper.swift */; };
+		6BCAB39C2F1A115200820806 /* TronSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB39A2F1A114E00820806 /* TronSendHelper.swift */; };
 		6BCD53002A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
 		6BCD53012A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
 		6BCD53022A161F4100993F20 /* ICloudBackupTermsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F92A161F4100993F20 /* ICloudBackupTermsViewModel.swift */; };
@@ -4639,6 +4641,7 @@
 		6BBB92B92D11648E00112409 /* PromoCodeBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCodeBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		6BCAADCF2ED962F400ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumFeaturesInfoBottomSheetView.swift; sourceTree = "<group>"; };
 		6BCAADD42EDC089400ECB0F1 /* PremiumFeaturesWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumFeaturesWrapper.swift; sourceTree = "<group>"; };
+		6BCAB39A2F1A114E00820806 /* TronSendHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronSendHelper.swift; sourceTree = "<group>"; };
 		6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupCloudModule.swift; sourceTree = "<group>"; };
 		6BCD52F92A161F4100993F20 /* ICloudBackupTermsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewModel.swift; sourceTree = "<group>"; };
 		6BCD52FA2A161F4100993F20 /* ICloudBackupTermsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewController.swift; sourceTree = "<group>"; };
@@ -7112,6 +7115,7 @@
 				D3AEB87E2DBA063200E385C8 /* StellarTransactionAdapter.swift */,
 				D3AEB8852DBA123D00E385C8 /* StellarOperationConverter.swift */,
 				6BDB59DD2F0F576C005FA626 /* StellarSendHelper.swift */,
+				6BCAB39A2F1A114E00820806 /* TronSendHelper.swift */,
 				D092D6402E3117280039BDB4 /* MoneroAdapter.swift */,
 			);
 			path = Adapters;
@@ -11770,6 +11774,7 @@
 				6B5D851C2EA77DD900F13E2C /* StellarReceiveAddressService.swift in Sources */,
 				11B35538EF749777CF7B2E8B /* ChartUiView.swift in Sources */,
 				11B35FA1970606C12E57C2EA /* ChartView.swift in Sources */,
+				6BCAB39B2F1A115200820806 /* TronSendHelper.swift in Sources */,
 				D34DB1A92E1BEC1800DD30D3 /* Coordinator.swift in Sources */,
 				11B3596AE38880C5899769D5 /* CoinOverviewView.swift in Sources */,
 				11B357BA09F0FA21477F0A59 /* CoinOverviewViewModel.swift in Sources */,
@@ -12238,6 +12243,7 @@
 				50701ACE25B041E600EDE51B /* JailbreakTestManager.swift in Sources */,
 				D36DE0F6272FD92F000BC916 /* SwapSelectProviderViewController.swift in Sources */,
 				D05E968D2A25D6C6002CCD71 /* Trc20Adapter.swift in Sources */,
+				6BCAB39C2F1A115200820806 /* TronSendHelper.swift in Sources */,
 				11B350D6CBB602F510882F1E /* WalletConnectRequest.swift in Sources */,
 				D008CA5A267C8DDF00001E0A /* EvmIncomingTransactionRecord.swift in Sources */,
 				D0DEFF0A2BD1257F004C9DF0 /* UtxoTransactionService.swift in Sources */,
@@ -14569,7 +14575,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/TronKit.Swift.git";
 			requirement = {
 				kind = exactVersion;
-				version = 1.2.2;
+				version = 1.2.3;
 			};
 		};
 		D08C93AD2B91E37E00A7D1D5 /* XCRemoteSwiftPackageReference "Hodler" */ = {

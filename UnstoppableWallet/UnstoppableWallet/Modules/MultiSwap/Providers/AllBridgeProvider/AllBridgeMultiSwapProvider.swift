@@ -377,28 +377,19 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
 
             if let tronKitWrapper = tronKitManager.tronKitWrapper {
                 do {
-                    let tronKit = tronKitWrapper.tronKit
-                    let trxBalance = tronKit.trxBalance
+                    let result = try await TronSendHelper.estimateFees(
+                        createdTransaction: createdTransaction,
+                        tronKit: tronKitWrapper.tronKit,
+                        tokenIn: tokenIn,
+                        amountIn: amountIn
+                    )
 
-                    let _fees = try await tronKit.estimateFee(createdTransaction: createdTransaction)
-                    let _totalFees = _fees.calculateTotalFees()
+                    fees = result.fees
+                    totalFees = result.totalFees
+                    transactionError = result.transactionError
 
-                    var totalAmount = 0
-                    if tokenIn.type.isNative, let sendAmount = tokenIn.rawAmount(amountIn), let sendAmountInt = Int(sendAmount.description) {
-                        totalAmount += sendAmountInt
-                        logger?.log(level: .debug, message: "Append to total amount TXR amountIn: \(sendAmountInt)")
-                    }
-
-                    totalAmount += _totalFees
-                    fees = _fees
-                    totalFees = _totalFees
-
-                    if trxBalance < totalAmount {
-                        throw TronSendHandler.TransactionError.insufficientBalance(balance: trxBalance)
-                    }
-
-                    logger?.log(level: .debug, message: "AllBridge: TronFeeData: \(totalFees?.description ?? "N/A") | totalAmount: \(totalAmount.description)")
-                    logger?.log(level: .debug, message: "AllBridge: TronBalance = \(trxBalance.description) >= tx:\(totalAmount.description)")
+                    logger?.log(level: .debug, message: "AllBridge: TronFeeData: \(totalFees?.description ?? "N/A") | totalAmount: \(result.totalAmount.description)")
+                    logger?.log(level: .debug, message: "AllBridge: TronBalance = \(tronKitWrapper.tronKit.trxBalance.description) >= tx:\(result.totalAmount.description)")
                 } catch {
                     logger?.log(level: .error, message: "AllBridge: error = \(error)")
                     transactionError = error
@@ -409,8 +400,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 amountIn: amountIn,
                 expectedAmountOut: amountOut,
                 recipient: recipient,
-                crosschain: crosschain,
-                slippage: slippage,
+                slippage: crosschain ? nil : slippage,
                 createdTransaction: createdTransaction,
                 fees: fees,
                 transactionError: transactionError
