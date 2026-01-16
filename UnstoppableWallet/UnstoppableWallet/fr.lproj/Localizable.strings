@@ -15,7 +15,7 @@
 "button.backup" = "Sauvegarde";
 "button.restore" = "Restaurer";
 "button.copy" = "Copier";
-"button.copy_error" = "Copy Error";
+"button.copy_error" = "Copier l’erreur";
 "button.retry" = "Réessayer";
 "button.report" = "Signaler";
 "button.add" = "Ajouter";
@@ -128,7 +128,7 @@
 
 "filter.all" = "Tout";
 
-"not_activated" = "Not Activated";
+"not_activated" = "Non activé";
 
 // Access Camera
 
@@ -380,7 +380,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.token.frozen" = "Gelée";
 "balance.token.frozen.info.title" = "Titre gelé";
 "balance.token.frozen.info.description" = "Texte de description gelé";
-"balance.token.account.inactive.description" = "Transactions will appear after activation";
+"balance.token.account.inactive.description" = "Les transactions apparaîtront après l’activation";
 
 // Account switcher
 
@@ -431,9 +431,10 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "deposit.memo_warning.description" = "A la fois un mémo (tag) et l'adresse sont nécessaires pour s'assurer que les actifs sont reçus. Sinon, vos fonds seront perdus.";
 
 "deposit.not_active" = "non actif";
-"deposit.not_active.title" = "TRON Not Activated";
-"deposit.not_active.tron_description" = "TRON requires at least 1 TRX for activation. Until the wallet is activated, tokens can be received, but balances may not be shown.";
-"deposit.not_active.view_address" = "View my address";
+"deposit.not_active.title" = "TRON non activé";
+"deposit.not_active.tron_description" = "TRON nécessite au moins 1 TRX pour l’activation.
+Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais les soldes peuvent ne pas s’afficher.";
+"deposit.not_active.view_address" = "Voir mon adresse";
 "deposit.stellar.inactive_asset.title" = "Activer le jeton";
 "deposit.stellar.inactive_asset.description" = "Pour recevoir %@, vous devez activer le jeton. Le réseau Stellar exige qu’une trustline soit établie pour chaque jeton. Sans cela, votre portefeuille ne pourra pas recevoir %@ — la transaction sera rejetée et les fonds ne seront pas crédités.";
 
@@ -552,7 +553,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.confirmation.sending" = "En attente";
 "send.confirmation.sent" = "Envoyée";
 "send.confirmation.unexpected_error" = "Erreur inattendue";
-"send.confirmation.unexpected_error.text" = "Something went wrong while sending your transaction. Please try again or copy the error code and contact support.";
+"send.confirmation.unexpected_error.text" = "Une erreur s’est produite lors de l’envoi de votre transaction. Veuillez réessayer ou copier le code d’erreur et contacter le support.";
 
 "send.confirmation.slide_to_approve" = "Glisser pour approuver";
 "send.confirmation.slide_to_revoke" = "Glisser pour révoquer";
