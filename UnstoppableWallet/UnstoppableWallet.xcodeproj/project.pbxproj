@@ -1797,8 +1797,6 @@
 		6B5D851D2EA77DD900F13E2C /* StellarReceiveAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85162EA77DD900F13E2C /* StellarReceiveAddressView.swift */; };
 		6B5D851F2EA793E500F13E2C /* StellarReceiveAddressViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D851E2EA793D400F13E2C /* StellarReceiveAddressViewItemFactory.swift */; };
 		6B5D85202EA793E500F13E2C /* StellarReceiveAddressViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D851E2EA793D400F13E2C /* StellarReceiveAddressViewItemFactory.swift */; };
-		6B5D85222EA794C600F13E2C /* TronReceiveAddressViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85212EA794BA00F13E2C /* TronReceiveAddressViewItemFactory.swift */; };
-		6B5D85232EA794C600F13E2C /* TronReceiveAddressViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85212EA794BA00F13E2C /* TronReceiveAddressViewItemFactory.swift */; };
 		6B5D85292EA7A59900F13E2C /* MoneroReceiveAddressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85252EA7A59900F13E2C /* MoneroReceiveAddressView.swift */; };
 		6B5D852A2EA7A59900F13E2C /* MoneroReceiveAddressService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85272EA7A59900F13E2C /* MoneroReceiveAddressService.swift */; };
 		6B5D852B2EA7A59900F13E2C /* MoneroReceiveAddressViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5D85262EA7A59900F13E2C /* MoneroReceiveAddressViewModel.swift */; };
@@ -4534,7 +4532,6 @@
 		6B5D85152EA77DD900F13E2C /* StellarReceiveAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarReceiveAddressViewModel.swift; sourceTree = "<group>"; };
 		6B5D85162EA77DD900F13E2C /* StellarReceiveAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarReceiveAddressView.swift; sourceTree = "<group>"; };
 		6B5D851E2EA793D400F13E2C /* StellarReceiveAddressViewItemFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarReceiveAddressViewItemFactory.swift; sourceTree = "<group>"; };
-		6B5D85212EA794BA00F13E2C /* TronReceiveAddressViewItemFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronReceiveAddressViewItemFactory.swift; sourceTree = "<group>"; };
 		6B5D85252EA7A59900F13E2C /* MoneroReceiveAddressView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroReceiveAddressView.swift; sourceTree = "<group>"; };
 		6B5D85262EA7A59900F13E2C /* MoneroReceiveAddressViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroReceiveAddressViewModel.swift; sourceTree = "<group>"; };
 		6B5D85272EA7A59900F13E2C /* MoneroReceiveAddressService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroReceiveAddressService.swift; sourceTree = "<group>"; };
@@ -8051,7 +8048,6 @@
 		6B5D850A2EA772CD00F13E2C /* Tron */ = {
 			isa = PBXGroup;
 			children = (
-				6B5D85212EA794BA00F13E2C /* TronReceiveAddressViewItemFactory.swift */,
 				6B5D85112EA7738D00F13E2C /* TronReceiveAddressService.swift */,
 				6B5D850E2EA7730E00F13E2C /* TronReceiveAddressViewModel.swift */,
 				6B5D850B2EA772DB00F13E2C /* TronReceiveAddressView.swift */,
@@ -11352,7 +11348,6 @@
 				11B35FC689D745FFBB3684C4 /* TokenType.swift in Sources */,
 				D3E36BBE2E00388C007F99CA /* SendTokenListView.swift in Sources */,
 				11B354F237E59C24ED8F3759 /* TokenQuery.swift in Sources */,
-				6B5D85222EA794C600F13E2C /* TronReceiveAddressViewItemFactory.swift in Sources */,
 				11B35D106185086B3BEC5119 /* Blockchain.swift in Sources */,
 				11B35E9CEC6187783834860E /* BlockchainType.swift in Sources */,
 				11B3520C2D5B798791FC6223 /* Coin.swift in Sources */,
@@ -12996,7 +12991,6 @@
 				D3E36BBD2E00388C007F99CA /* SendTokenListView.swift in Sources */,
 				11B35DDD77B56489D1EB72C5 /* Token.swift in Sources */,
 				11B35C7BB534F9FFE5B6B3A6 /* TokenType.swift in Sources */,
-				6B5D85232EA794C600F13E2C /* TronReceiveAddressViewItemFactory.swift in Sources */,
 				11B358DC6827FC6035BF3225 /* TokenQuery.swift in Sources */,
 				11B3536884FEE247C144B395 /* Blockchain.swift in Sources */,
 				11B35E5F3C6070DF6E1F6BAD /* BlockchainType.swift in Sources */,
@@ -14575,7 +14569,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/TronKit.Swift.git";
 			requirement = {
 				kind = exactVersion;
-				version = 1.2.1;
+				version = 1.2.2;
 			};
 		};
 		D08C93AD2B91E37E00A7D1D5 /* XCRemoteSwiftPackageReference "Hodler" */ = {

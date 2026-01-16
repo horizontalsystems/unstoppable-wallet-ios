@@ -102,7 +102,7 @@ struct WalletTokenTopView: View {
 
     private var secondaryValue: CustomStringConvertible {
         switch viewModel.state {
-        case let .syncing(progress, remaining, lastBlockDate):
+        case let .syncing(_, remaining, _):
             var text = ""
             if let remaining {
                 text = "balance.remaining".localized(remaining.description)
@@ -122,6 +122,10 @@ struct WalletTokenTopView: View {
         default: ()
             if viewModel.balanceHidden {
                 return " "
+            }
+
+            if let caution = viewModel.caution {
+                return ComponentText(text: caution.text, colorStyle: caution.type.colorStyle)
             }
 
             guard let priceItem = viewModel.priceItem else {

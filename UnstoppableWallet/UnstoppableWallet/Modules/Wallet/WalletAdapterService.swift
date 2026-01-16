@@ -6,6 +6,7 @@ protocol IWalletAdapterServiceDelegate: AnyObject {
     func didPrepareAdapters()
     func didUpdate(balanceData: BalanceData, wallet: Wallet)
     func didUpdate(state: AdapterState, wallet: Wallet)
+    func didUpdate(caution: CautionNew?, wallet: Wallet)
 }
 
 class WalletAdapterService {
@@ -57,6 +58,10 @@ class WalletAdapterService {
             subscribe(adaptersDisposeBag, adapter.balanceStateUpdatedObservable) { [weak self] in
                 self?.delegate?.didUpdate(state: $0, wallet: wallet)
             }
+
+            subscribe(adaptersDisposeBag, adapter.cautionUpdatedObservable) { [weak self] in
+                self?.delegate?.didUpdate(caution: $0, wallet: wallet)
+            }
         }
     }
 }
@@ -68,6 +73,10 @@ extension WalletAdapterService {
 
     func balanceData(wallet: Wallet) -> BalanceData? {
         queue.sync { adapterMap[wallet]?.balanceData }
+    }
+
+    func balanceCaution(wallet: Wallet) -> CautionNew? {
+        queue.sync { adapterMap[wallet]?.caution }
     }
 
     func state(wallet: Wallet) -> AdapterState? {

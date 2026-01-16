@@ -20,6 +20,7 @@ class WalletTokenViewModel: ObservableObject {
     @Published var isMainNet: Bool
     @Published var balanceData: BalanceData
     @Published var state: AdapterState
+    @Published var caution: CautionNew?
     @Published var priceItem: WalletCoinPriceService.Item?
     @Published private(set) var isReachable: Bool = true
 
@@ -32,6 +33,7 @@ class WalletTokenViewModel: ObservableObject {
         isMainNet = walletService.isMainNet(wallet: wallet) ?? true
         balanceData = walletService.balanceData(wallet: wallet) ?? BalanceData(balance: 0)
         state = walletService.state(wallet: wallet) ?? .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
+        caution = walletService.caution(wallet: wallet)
         priceItem = wallet.priceCoinUid.flatMap { coinPriceService.item(coinUid: $0) }
 
         walletService.delegate = self
@@ -100,6 +102,16 @@ extension WalletTokenViewModel: IWalletServiceDelegate {
             self.state = state
         }
     }
+
+    func didUpdate(caution: CautionNew?, wallet: Wallet) {
+        guard wallet == self.wallet else {
+            return
+        }
+
+        DispatchQueue.main.async {
+            self.caution = caution
+        }
+    }
 }
 
 extension WalletTokenViewModel: IWalletCoinPriceServiceDelegate {
@@ -134,8 +146,8 @@ extension WalletTokenViewModel {
     func onTapReceive() {
         if wallet.account.backedUp || cloudBackupManager.backedUp(uniqueId: wallet.account.type.uniqueId()) {
             Coordinator.shared.present { [wallet] _ in
-                ThemeNavigationStack {
-                    ReceiveAddressView(wallet: wallet)
+                ThemeNavigationStack { path in
+                    ReceiveAddressModule.instance(wallet: wallet, path: path)
                 }
             }
 

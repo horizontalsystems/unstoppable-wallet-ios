@@ -50,6 +50,14 @@ class BaseTronAdapter {
     func accountActive(address: TronKit.Address) async -> Bool {
         await (try? tronKit.accountActive(address: address)) ?? true
     }
+
+    func balanceCaution(active: Bool) -> CautionNew? {
+        if !active {
+            return .init(text: "not_activated".localized, type: .warning)
+        }
+
+        return nil
+    }
 }
 
 // IAdapter

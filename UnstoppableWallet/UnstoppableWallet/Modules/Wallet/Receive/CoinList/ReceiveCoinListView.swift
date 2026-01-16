@@ -123,22 +123,3 @@ struct ReceiveCoinListView: View {
         }
     }
 }
-
-struct ReceiveAddressView: View {
-    @State var path = NavigationPath()
-    let wallet: Wallet
-
-    @Environment(\.presentationMode) private var presentationMode
-
-    init(wallet: Wallet) {
-        self.wallet = wallet
-    }
-
-    var body: some View {
-        ThemeNavigationStack(path: $path) {
-            ReceiveAddressModule.instance(wallet: wallet, path: $path, onDismiss: {
-                presentationMode.wrappedValue.dismiss()
-            })
-        }
-    }
-}
