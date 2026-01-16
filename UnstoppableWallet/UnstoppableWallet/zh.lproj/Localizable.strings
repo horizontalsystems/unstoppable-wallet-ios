@@ -15,7 +15,7 @@
 "button.backup" = "备份";
 "button.restore" = "恢复";
 "button.copy" = "复制";
-"button.copy_error" = "Copy Error";
+"button.copy_error" = "复制错误";
 "button.retry" = "重试";
 "button.report" = "报告";
 "button.add" = "添加";
@@ -128,7 +128,7 @@
 
 "filter.all" = "所有";
 
-"not_activated" = "Not Activated";
+"not_activated" = "未激活";
 
 // Access Camera
 
@@ -380,7 +380,7 @@
 "balance.token.frozen" = "冰雪奇缘";
 "balance.token.frozen.info.title" = "冰冻标题";
 "balance.token.frozen.info.description" = "冻结描述文本";
-"balance.token.account.inactive.description" = "Transactions will appear after activation";
+"balance.token.account.inactive.description" = "激活后将显示交易记录";
 
 // Account switcher
 
@@ -431,9 +431,10 @@
 "deposit.memo_warning.description" = "需要填写备注(标签)和地址以确保收到资产。否则您的资金将丢失。";
 
 "deposit.not_active" = "不活动";
-"deposit.not_active.title" = "TRON Not Activated";
-"deposit.not_active.tron_description" = "TRON requires at least 1 TRX for activation. Until the wallet is activated, tokens can be received, but balances may not be shown.";
-"deposit.not_active.view_address" = "View my address";
+"deposit.not_active.title" = "TRON 未激活";
+"deposit.not_active.tron_description" = "TRON 需要至少 1 TRX 才能完成激活。
+在钱包激活之前，仍可接收 token，但余额可能不会显示。";
+"deposit.not_active.view_address" = "查看我的地址";
 "deposit.stellar.inactive_asset.title" = "啟用代幣";
 "deposit.stellar.inactive_asset.description" = "若要接收 %@，需先激活该代币。Stellar 网络要求为每个代币建立信任线；若未建立，您的钱包将无法接收 %@，交易会被拒绝且资金无法到账。";
 
@@ -552,7 +553,7 @@
 "send.confirmation.sending" = "发送中";
 "send.confirmation.sent" = "已发送";
 "send.confirmation.unexpected_error" = "异常错误";
-"send.confirmation.unexpected_error.text" = "Something went wrong while sending your transaction. Please try again or copy the error code and contact support.";
+"send.confirmation.unexpected_error.text" = "发送交易时发生错误。请重试，或复制错误代码并联系支持团队。";
 
 "send.confirmation.slide_to_approve" = "滑动以批准";
 "send.confirmation.slide_to_revoke" = "滑动以撤销";
