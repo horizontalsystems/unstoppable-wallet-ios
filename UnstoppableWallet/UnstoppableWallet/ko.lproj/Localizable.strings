@@ -15,7 +15,7 @@
 "button.backup" = "백업";
 "button.restore" = "복구";
 "button.copy" = "복사";
-"button.copy_error" = "Copy Error";
+"button.copy_error" = "오류 복사";
 "button.retry" = "재시도";
 "button.report" = "보고";
 "button.add" = "추가";
@@ -128,7 +128,7 @@
 
 "filter.all" = "전체";
 
-"not_activated" = "Not Activated";
+"not_activated" = "활성화되지 않음";
 
 // Access Camera
 
@@ -378,7 +378,7 @@
 "balance.token.frozen" = "잠김";
 "balance.token.frozen.info.title" = "겨울왕국 제목";
 "balance.token.frozen.info.description" = "고정된 설명 텍스트";
-"balance.token.account.inactive.description" = "Transactions will appear after activation";
+"balance.token.account.inactive.description" = "활성화 후 트랜잭션이 표시됩니다";
 
 // Account switcher
 
@@ -429,9 +429,10 @@
 "deposit.memo_warning.description" = "자산을 수령하기 위해서는 메모(태그)와 주소 모두가 필요합니다. 그렇지 않으면 자금이 손실될 수 있습니다.";
 
 "deposit.not_active" = "비활성화됨";
-"deposit.not_active.title" = "TRON Not Activated";
-"deposit.not_active.tron_description" = "TRON requires at least 1 TRX for activation. Until the wallet is activated, tokens can be received, but balances may not be shown.";
-"deposit.not_active.view_address" = "View my address";
+"deposit.not_active.title" = "TRON이 활성화되지 않음";
+"deposit.not_active.tron_description" = "TRON을 활성화하려면 최소 1 TRX가 필요합니다.
+지갑이 활성화되기 전까지 토큰을 수신할 수는 있지만, 잔액이 표시되지 않을 수 있습니다.";
+"deposit.not_active.view_address" = "내 주소 보기";
 "deposit.stellar.inactive_asset.title" = "토큰 활성화";
 "deposit.stellar.inactive_asset.description" = "%@을(를) 수신하려면 해당 토큰을 활성화해야 합니다. Stellar 네트워크는 각 토큰마다 신뢰 라인을 설정해야 하며, 설정되지 않으면 %@을 받을 수 없습니다. 거래는 거부되고 자금은 전달되지 않습니다.";
 
@@ -550,7 +551,7 @@
 "send.confirmation.sending" = "전송중";
 "send.confirmation.sent" = "전송됨";
 "send.confirmation.unexpected_error" = "예기치 못한 오류";
-"send.confirmation.unexpected_error.text" = "Something went wrong while sending your transaction. Please try again or copy the error code and contact support.";
+"send.confirmation.unexpected_error.text" = "트랜잭션 전송 중 문제가 발생했습니다. 다시 시도하거나 오류 코드를 복사하여 지원팀에 문의하세요.";
 
 "send.confirmation.slide_to_approve" = "승인하기 위해 슬라이드하십시오";
 "send.confirmation.slide_to_revoke" = "취소하기 위해 슬라이드하십시오";
