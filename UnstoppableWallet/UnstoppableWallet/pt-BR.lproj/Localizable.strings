@@ -128,6 +128,8 @@
 
 "filter.all" = "Todos";
 
+"not_activated" = "Not Activated";
+
 // Access Camera
 
 "access_camera.message" = "%@ absolutely needs access to your tremendous camera for scanning that fantastic QR code. Believe me!.
@@ -378,8 +380,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.token.frozen" = "Travado";
 "balance.token.frozen.info.title" = "Tempo de congelamento";
 "balance.token.frozen.info.description" = "Texto de Descrição Congelada";
-"balance.token.account.inactive.title" = "Conta Não Ativa";
-"balance.token.account.inactive.description" = "Novas carteiras TRON exigem um depósito mínimo de 1 TRX para serem ativadas. Carteiras inativas podem armazenar e receber tokens, mas os saldos não serão atualizados até que a ativação ocorra.";
+"balance.token.account.inactive.description" = "Transactions will appear after activation";
 
 // Account switcher
 
@@ -430,8 +431,9 @@ Go to Settings - > %@ and allow access to the camera.";
 "deposit.memo_warning.description" = "Ambos os memorandos (tag) e o endereço são necessários para garantir que as ativos são recebidas. Caso contrário, seus fundos serão perdidos.";
 
 "deposit.not_active" = "Não ativo";
-"deposit.not_active.title" = "Conta Não Ativa";
-"deposit.not_active.tron_description" = "Novas carteiras TRON precisam de pelo menos 1 TRX para serem ativadas. Até lá, podem receber tokens, mas os saldos podem não ser exibidos corretamente.";
+"deposit.not_active.title" = "TRON Not Activated";
+"deposit.not_active.tron_description" = "TRON requires at least 1 TRX for activation. Until the wallet is activated, tokens can be received, but balances may not be shown.";
+"deposit.not_active.view_address" = "View my address";
 "deposit.stellar.inactive_asset.title" = "Ativar Token";
 "deposit.stellar.inactive_asset.description" = "Para receber %@, você precisa ativar o token. A rede Stellar exige o estabelecimento de uma trustline para cada token. Sem ela, sua carteira não poderá receber %@ — a transação será rejeitada e os fundos não serão entregues.";
 
