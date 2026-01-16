@@ -15,6 +15,7 @@
 "button.backup" = "Sicherung";
 "button.restore" = "Wiederherstellen";
 "button.copy" = "Kopieren";
+"button.copy_error" = "Fehler kopieren";
 "button.retry" = "Wiederholen";
 "button.report" = "Melden";
 "button.add" = "Hinzufügen";
@@ -126,6 +127,8 @@
 "powered_by" = "Angetrieben von %@";
 
 "filter.all" = "Alle";
+
+"not_activated" = "Nicht aktiviert";
 
 // Access Camera
 
@@ -377,8 +380,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance.token.frozen" = "Eingefroren";
 "balance.token.frozen.info.title" = "gefrorener Titel";
 "balance.token.frozen.info.description" = "gefrorener Beschreibungstext";
-"balance.token.account.inactive.title" = "Konto nicht aktiv";
-"balance.token.account.inactive.description" = "Neue TRON-Wallets erfordern eine Einzahlung von mindestens 1 TRX, um aktiviert zu werden. Inaktive Wallets können Token halten und empfangen, aber die Salden werden erst nach der Aktivierung aktualisiert.";
+"balance.token.account.inactive.description" = "Transaktionen werden nach der Aktivierung angezeigt";
 
 // Account switcher
 
@@ -429,8 +431,10 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "deposit.memo_warning.description" = "Sowohl eine Memo (Tag) als auch die Adresse werden benötigt, um sicherzustellen, dass Vermögenswerte empfangen werden. Andernfalls gehen Ihre Gelder verloren.";
 
 "deposit.not_active" = "nicht aktiv";
-"deposit.not_active.title" = "Konto nicht aktiv";
-"deposit.not_active.tron_description" = "Neue TRON-Wallets benötigen mindestens 1 TRX zur Aktivierung. Bis dahin können sie zwar Tokens empfangen, zeigen jedoch keine korrekten Guthaben an.";
+"deposit.not_active.title" = "TRON nicht aktiviert";
+"deposit.not_active.tron_description" = "TRON erfordert mindestens 1 TRX zur Aktivierung.
+Bis die wallet aktiviert ist, können Token empfangen werden, jedoch werden die Salden möglicherweise nicht angezeigt.";
+"deposit.not_active.view_address" = "Meine Adresse anzeigen";
 "deposit.stellar.inactive_asset.title" = "Token aktivieren";
 "deposit.stellar.inactive_asset.description" = "Um %@ zu empfangen, müssen Sie das Token aktivieren. Das Stellar-Netzwerk verlangt, dass für jedes Token eine Trustline eingerichtet wird. Ohne diese kann Ihre Wallet %@ nicht empfangen — die Transaktion wird abgelehnt und die Gelder nicht gutgeschrieben.";
 
@@ -508,7 +512,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.select_all" = "Alles Auswählen";
 "send.unselect_all" = "Alle abwählen";
 
-"send.confirmation.title" = "Bestätigen";
+"send.confirmation.title" = "Senden bestätigen";
 "send.confirmation.you_send" = "Sie Senden";
 "send.confirmation.you_receive" = "Sie erhalten";
 "send.confirmation.transfer" = "Überweisung";
@@ -548,6 +552,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "send.confirmation.slide_to_send" = "Zum Senden wischen";
 "send.confirmation.sending" = "Wird gesendet";
 "send.confirmation.sent" = "Gesendet";
+"send.confirmation.unexpected_error" = "Unerwarteter Fehler";
+"send.confirmation.unexpected_error.text" = "Beim Senden deiner Transaktion ist ein Fehler aufgetreten. Bitte versuche es erneut oder kopiere den Fehlercode und kontaktiere den Support.";
 
 "send.confirmation.slide_to_approve" = "Zum Genehmigen wischen";
 "send.confirmation.slide_to_revoke" = "Zum Widerrufen wischen";
@@ -2369,7 +2375,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "transaction_filter.contact" = "Kontakt";
 "transaction_filter.all_contacts" = "Alle Kontakte";
 "transaction_filter.hide_suspicious_txs" = "Verdächtige Txs ausblenden";
-"transaction_filter.hide_suspicious_txs.description" = "Das Verstecken eingehender Transaktionen mit dem Staub in Stablecoins löst teilweise die Adressenvergiftungsprobleme.";
+"transaction_filter.hide_suspicious_txs.description" = "Blendet eingehende Transfers mit geringem Wert aus (z. B. USDT unter 1,5 $). Solche Transaktionen werden häufig für Phishing- und Address-poisoning-Angriffe verwendet.";
 
 // Black Friday
 

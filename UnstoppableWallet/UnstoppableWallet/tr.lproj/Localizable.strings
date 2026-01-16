@@ -15,6 +15,7 @@
 "button.backup" = "Yedekle";
 "button.restore" = "Geri Yükle";
 "button.copy" = "Kopyala";
+"button.copy_error" = "Hata Kopyala";
 "button.retry" = "Yeniden Dene";
 "button.report" = "Şikayet Et";
 "button.add" = "Ekle";
@@ -126,6 +127,8 @@
 "powered_by" = "%@ tarafından destekleniyor";
 
 "filter.all" = "Hepsi";
+
+"not_activated" = "Aktif Değil";
 
 // Access Camera
 
@@ -377,8 +380,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.token.frozen" = "Frozen";
 "balance.token.frozen.info.title" = "Frozen Title";
 "balance.token.frozen.info.description" = "Frozen Description Text";
-"balance.token.account.inactive.title" = "Hesap aktif değil";
-"balance.token.account.inactive.description" = "Yeni TRON cüzdanlarının aktif hale gelmesi için en az 1 TRX yatırılması gerekir. Aktif olmayan cüzdanlar token tutabilir ve alabilir, ancak bakiyeler aktive edilene kadar güncellenmez.";
+"balance.token.account.inactive.description" = "Cüzdan etkinleştirildikten sonra işlemler görünecektir.";
 
 // Account switcher
 
@@ -429,8 +431,10 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "deposit.memo_warning.description" = "Varlıkların alındığından emin olmak için hem not (etiket) hem de adres gereklidir. Aksi takdirde paranız kaybolacaktır.";
 
 "deposit.not_active" = "aktif değil";
-"deposit.not_active.title" = "Hesap aktif değil";
-"deposit.not_active.tron_description" = "Yeni TRON cüzdanlarının etkinleşmesi için en az 1 TRX gerekir. O zamana kadar token alabilirler fakat bakiyeleri doğru görüntülenmez.";
+"deposit.not_active.title" = "TRON Aktif Değil";
+"deposit.not_active.tron_description" = "TRON’un etkinleştirilebilmesi için en az 1 TRX gereklidir.
+Cüzdan etkinleştirilene kadar token’lar alınabilir, ancak bakiyeler görüntülenmeyebilir.";
+"deposit.not_active.view_address" = "Adresimi görüntüle";
 "deposit.stellar.inactive_asset.title" = "Token’i Aktive Et";
 "deposit.stellar.inactive_asset.description" = "%@ almak için token’i aktive etmeniz gerekiyor. Stellar ağı, her bir token için trustline kurulmasını gerektirir. Bu kurulmazsa, cüzdan %@ alamaz — işlem reddedilir ve fonlar teslim edilmez.";
 
@@ -508,7 +512,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.select_all" = "Hepsini Seç";
 "send.unselect_all" = "Tüm Seçimleri Kaldır";
 
-"send.confirmation.title" = "Onayla";
+"send.confirmation.title" = "Gönderimi Onayla";
 "send.confirmation.you_send" = "Gönderdiğiniz";
 "send.confirmation.you_receive" = "Alacağınız";
 "send.confirmation.transfer" = "Aktar";
@@ -548,6 +552,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "send.confirmation.slide_to_send" = "Göndermek için Kaydırın";
 "send.confirmation.sending" = "Gönderiliyor";
 "send.confirmation.sent" = "Gönderildi";
+"send.confirmation.unexpected_error" = "Beklenmeyen hata";
+"send.confirmation.unexpected_error.text" = "İşleminiz gönderilirken bir hata oluştu. Lütfen tekrar deneyin veya hata kodunu kopyalayıp destek ekibiyle iletişime geçin.";
 
 "send.confirmation.slide_to_approve" = "Onaylamak İçin Kaydır";
 "send.confirmation.slide_to_revoke" = "İptal Etmek İçin Kaydır";
@@ -2379,7 +2385,8 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "transaction_filter.contact" = "Kişi";
 "transaction_filter.all_contacts" = "Tüm Kişiler";
 "transaction_filter.hide_suspicious_txs" = "Şüpheli İşlemleri Gizle";
-"transaction_filter.hide_suspicious_txs.description" = "Gelen işlemleri, stablecoin'lerdeki toz miktarı ile gizlemek, adres zehirleme saldırısı sorunlarını kısmen çözer.";
+"transaction_filter.hide_suspicious_txs.description" = "Küçük tutarlı gelen transferleri gizler (ör. $1.5 altındaki USDT).
+Bu tür işlemler genellikle kimlik avı (phishing) ve adres zehirleme (address-poisoning) saldırıları için kullanılır.";
 
 // Black Friday
 

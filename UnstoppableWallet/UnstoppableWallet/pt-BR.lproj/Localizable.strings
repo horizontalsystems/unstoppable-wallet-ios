@@ -15,6 +15,7 @@
 "button.backup" = "Cópia de segurança";
 "button.restore" = "Restaurar";
 "button.copy" = "Copiar";
+"button.copy_error" = "Copiar Erro";
 "button.retry" = "Tentar de Novo";
 "button.report" = "Reportar";
 "button.add" = "Adicionar";
@@ -126,6 +127,8 @@
 "powered_by" = "Impulsionado por %@";
 
 "filter.all" = "Todos";
+
+"not_activated" = "Não Ativado";
 
 // Access Camera
 
@@ -377,8 +380,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "balance.token.frozen" = "Travado";
 "balance.token.frozen.info.title" = "Tempo de congelamento";
 "balance.token.frozen.info.description" = "Texto de Descrição Congelada";
-"balance.token.account.inactive.title" = "Conta Não Ativa";
-"balance.token.account.inactive.description" = "Novas carteiras TRON exigem um depósito mínimo de 1 TRX para serem ativadas. Carteiras inativas podem armazenar e receber tokens, mas os saldos não serão atualizados até que a ativação ocorra.";
+"balance.token.account.inactive.description" = "As transações aparecerão após a ativação";
 
 // Account switcher
 
@@ -429,8 +431,11 @@ Go to Settings - > %@ and allow access to the camera.";
 "deposit.memo_warning.description" = "Ambos os memorandos (tag) e o endereço são necessários para garantir que as ativos são recebidas. Caso contrário, seus fundos serão perdidos.";
 
 "deposit.not_active" = "Não ativo";
-"deposit.not_active.title" = "Conta Não Ativa";
-"deposit.not_active.tron_description" = "Novas carteiras TRON precisam de pelo menos 1 TRX para serem ativadas. Até lá, podem receber tokens, mas os saldos podem não ser exibidos corretamente.";
+"deposit.not_active.title" = "TRON Não Ativado";
+"deposit.not_active.tron_description" = "A TRON requer pelo menos 1 TRX para ativação.
+Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos podem não ser exibidos.
+";
+"deposit.not_active.view_address" = "Ver meu endereço";
 "deposit.stellar.inactive_asset.title" = "Ativar Token";
 "deposit.stellar.inactive_asset.description" = "Para receber %@, você precisa ativar o token. A rede Stellar exige o estabelecimento de uma trustline para cada token. Sem ela, sua carteira não poderá receber %@ — a transação será rejeitada e os fundos não serão entregues.";
 
@@ -508,7 +513,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.select_all" = "Selecionar Tudo";
 "send.unselect_all" = "Desmarcar Tudo";
 
-"send.confirmation.title" = "Confirmar";
+"send.confirmation.title" = "Confirmar Envio";
 "send.confirmation.you_send" = "Enviar";
 "send.confirmation.you_receive" = "Você Recebe";
 "send.confirmation.transfer" = "Transferir";
@@ -548,6 +553,8 @@ Go to Settings - > %@ and allow access to the camera.";
 "send.confirmation.slide_to_send" = "Deslize para enviar";
 "send.confirmation.sending" = "Enviando";
 "send.confirmation.sent" = "Enviado";
+"send.confirmation.unexpected_error" = "Erro inesperado";
+"send.confirmation.unexpected_error.text" = "Algo deu errado ao enviar sua transação. Tente novamente ou copie o código de erro e entre em contato com o suporte.";
 
 "send.confirmation.slide_to_approve" = "Deslize para Aprovar";
 "send.confirmation.slide_to_revoke" = "Deslize para Revogar";
@@ -2369,7 +2376,7 @@ Go to Settings - > %@ and allow access to the camera.";
 "transaction_filter.contact" = "Contato";
 "transaction_filter.all_contacts" = "Todos os Contatos";
 "transaction_filter.hide_suspicious_txs" = "Ocultar Transações Suspeitas";
-"transaction_filter.hide_suspicious_txs.description" = "Ocultando transações de entrada com montantes ínfimos em stablecoins, isso resolve parcialmente os problemas de ataques de envenenamento de endereço.";
+"transaction_filter.hide_suspicious_txs.description" = "Oculta transferências de entrada de baixo valor (por exemplo, USDT abaixo de US$ 1,5). Essas transações são frequentemente usadas para ataques de phishing e address poisoning.";
 
 // Black Friday
 

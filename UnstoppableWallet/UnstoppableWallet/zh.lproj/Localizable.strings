@@ -15,6 +15,7 @@
 "button.backup" = "备份";
 "button.restore" = "恢复";
 "button.copy" = "复制";
+"button.copy_error" = "复制错误";
 "button.retry" = "重试";
 "button.report" = "报告";
 "button.add" = "添加";
@@ -126,6 +127,8 @@
 "powered_by" = "由 %@ 提供支持";
 
 "filter.all" = "所有";
+
+"not_activated" = "未激活";
 
 // Access Camera
 
@@ -377,8 +380,7 @@
 "balance.token.frozen" = "冰雪奇缘";
 "balance.token.frozen.info.title" = "冰冻标题";
 "balance.token.frozen.info.description" = "冻结描述文本";
-"balance.token.account.inactive.title" = "帐户未激活";
-"balance.token.account.inactive.description" = "新创建的 TRON 钱包需要至少存入 1 TRX 才能激活。未激活的钱包可以接收和持有代币，但余额不会更新，直到被激活为止。";
+"balance.token.account.inactive.description" = "激活后将显示交易记录";
 
 // Account switcher
 
@@ -429,8 +431,10 @@
 "deposit.memo_warning.description" = "需要填写备注(标签)和地址以确保收到资产。否则您的资金将丢失。";
 
 "deposit.not_active" = "不活动";
-"deposit.not_active.title" = "帐户未激活";
-"deposit.not_active.tron_description" = "新创建的 TRON 钱包至少需要 1 个 TRX 才能激活。在此之前可接收代币，但余额显示可能不正确。";
+"deposit.not_active.title" = "TRON 未激活";
+"deposit.not_active.tron_description" = "TRON 需要至少 1 TRX 才能完成激活。
+在钱包激活之前，仍可接收 token，但余额可能不会显示。";
+"deposit.not_active.view_address" = "查看我的地址";
 "deposit.stellar.inactive_asset.title" = "啟用代幣";
 "deposit.stellar.inactive_asset.description" = "若要接收 %@，需先激活该代币。Stellar 网络要求为每个代币建立信任线；若未建立，您的钱包将无法接收 %@，交易会被拒绝且资金无法到账。";
 
@@ -508,7 +512,7 @@
 "send.select_all" = "选择所有";
 "send.unselect_all" = "取消选择所有";
 
-"send.confirmation.title" = "确认";
+"send.confirmation.title" = "确认发送";
 "send.confirmation.you_send" = "您发送";
 "send.confirmation.you_receive" = "您收到";
 "send.confirmation.transfer" = "转帐";
@@ -548,6 +552,8 @@
 "send.confirmation.slide_to_send" = "滑动发送";
 "send.confirmation.sending" = "发送中";
 "send.confirmation.sent" = "已发送";
+"send.confirmation.unexpected_error" = "异常错误";
+"send.confirmation.unexpected_error.text" = "发送交易时发生错误。请重试，或复制错误代码并联系支持团队。";
 
 "send.confirmation.slide_to_approve" = "滑动以批准";
 "send.confirmation.slide_to_revoke" = "滑动以撤销";
@@ -2369,7 +2375,7 @@
 "transaction_filter.contact" = "联系";
 "transaction_filter.all_contacts" = "所有联系人";
 "transaction_filter.hide_suspicious_txs" = "隐藏可疑Txs";
-"transaction_filter.hide_suspicious_txs.description" = "隐藏到达的沙尘群交易，这部分解决了地址中毒攻击问题。";
+"transaction_filter.hide_suspicious_txs.description" = "隐藏小额入账转账（例如低于 $1.5 的 USDT）。此类交易常被用于钓鱼攻击和地址投毒攻击。";
 
 // Black Friday
 

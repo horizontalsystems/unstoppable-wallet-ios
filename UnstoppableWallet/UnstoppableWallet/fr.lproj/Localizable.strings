@@ -15,6 +15,7 @@
 "button.backup" = "Sauvegarde";
 "button.restore" = "Restaurer";
 "button.copy" = "Copier";
+"button.copy_error" = "Copier l’erreur";
 "button.retry" = "Réessayer";
 "button.report" = "Signaler";
 "button.add" = "Ajouter";
@@ -126,6 +127,8 @@
 "powered_by" = "Alimenté par %@";
 
 "filter.all" = "Tout";
+
+"not_activated" = "Non activé";
 
 // Access Camera
 
@@ -377,8 +380,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "balance.token.frozen" = "Gelée";
 "balance.token.frozen.info.title" = "Titre gelé";
 "balance.token.frozen.info.description" = "Texte de description gelé";
-"balance.token.account.inactive.title" = "Compte non actif";
-"balance.token.account.inactive.description" = "Supports addresses from EVM, Tron, TON, Stellar, Bitcoin-family(BTC, LTC, BCH, Dash), and XPUB keys.";
+"balance.token.account.inactive.description" = "Les transactions apparaîtront après l’activation";
 
 // Account switcher
 
@@ -429,8 +431,10 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "deposit.memo_warning.description" = "A la fois un mémo (tag) et l'adresse sont nécessaires pour s'assurer que les actifs sont reçus. Sinon, vos fonds seront perdus.";
 
 "deposit.not_active" = "non actif";
-"deposit.not_active.title" = "Compte non actif";
-"deposit.not_active.tron_description" = "Les nouveaux portefeuilles TRON nécessitent au moins 1 TRX pour être activés. D’ici là, ils peuvent recevoir des tokens, mais les soldes affichés ne seront pas exacts.";
+"deposit.not_active.title" = "TRON non activé";
+"deposit.not_active.tron_description" = "TRON nécessite au moins 1 TRX pour l’activation.
+Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais les soldes peuvent ne pas s’afficher.";
+"deposit.not_active.view_address" = "Voir mon adresse";
 "deposit.stellar.inactive_asset.title" = "Activer le jeton";
 "deposit.stellar.inactive_asset.description" = "Pour recevoir %@, vous devez activer le jeton. Le réseau Stellar exige qu’une trustline soit établie pour chaque jeton. Sans cela, votre portefeuille ne pourra pas recevoir %@ — la transaction sera rejetée et les fonds ne seront pas crédités.";
 
@@ -508,7 +512,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.select_all" = "Tout sélectionner";
 "send.unselect_all" = "Désélectionner tout";
 
-"send.confirmation.title" = "Confirmer";
+"send.confirmation.title" = "Confirmer l’envoi";
 "send.confirmation.you_send" = "Vous envoyez";
 "send.confirmation.you_receive" = "Vous Recevez";
 "send.confirmation.transfer" = "Transfert";
@@ -548,6 +552,8 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "send.confirmation.slide_to_send" = "Glisser pour envoyer";
 "send.confirmation.sending" = "En attente";
 "send.confirmation.sent" = "Envoyée";
+"send.confirmation.unexpected_error" = "Erreur inattendue";
+"send.confirmation.unexpected_error.text" = "Une erreur s’est produite lors de l’envoi de votre transaction. Veuillez réessayer ou copier le code d’erreur et contacter le support.";
 
 "send.confirmation.slide_to_approve" = "Glisser pour approuver";
 "send.confirmation.slide_to_revoke" = "Glisser pour révoquer";
@@ -2369,7 +2375,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "transaction_filter.contact" = "Contacter";
 "transaction_filter.all_contacts" = "Tous les contacts";
 "transaction_filter.hide_suspicious_txs" = "Masquer les transactions suspectes";
-"transaction_filter.hide_suspicious_txs.description" = "Masquer les transactions entrantes avec des montants infimes en stablecoins, cela résout partiellement les problèmes d'attaques de poisoning d'adresse.";
+"transaction_filter.hide_suspicious_txs.description" = "Masque les transferts entrants de faible montant (par exemple, des USDT inférieurs à 1,5 $). Ces transactions sont souvent utilisées pour des attaques de phishing et d’empoisonnement d’adresses.";
 
 // Black Friday
 
