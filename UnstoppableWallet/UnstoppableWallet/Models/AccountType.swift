@@ -351,7 +351,7 @@ extension AccountType {
             }
         case .btcAddress:
             let (address, details) = split(string, separator: "&")
-            let (tokenTypeValue, blockchainTypeUid) = split(details, separator: "|")
+            let (blockchainTypeUid, tokenTypeValue) = split(details, separator: "|")
             guard let tokenType = TokenType(id: tokenTypeValue) else {
                 return nil
             }
