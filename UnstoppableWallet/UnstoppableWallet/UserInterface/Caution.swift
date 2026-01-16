@@ -51,7 +51,7 @@ enum FieldCautionState: Equatable {
     }
 }
 
-struct Caution: Equatable {
+struct Caution: Equatable, Hashable {
     let text: String
     let type: CautionType
 
@@ -60,7 +60,7 @@ struct Caution: Equatable {
     }
 }
 
-enum CautionType: Equatable {
+enum CautionType: Equatable, Hashable {
     case error
     case warning
 
@@ -75,6 +75,13 @@ enum CautionType: Equatable {
         switch self {
         case .error: return .themeLucian
         case .warning: return .themeYellowD
+        }
+    }
+
+    var colorStyle: ColorStyle {
+        switch self {
+        case .error: return .red
+        case .warning: return .yellow
         }
     }
 

@@ -52,6 +52,16 @@ extension TronAdapter: IBalanceAdapter {
             self?.balanceData(balance: $0) ?? BalanceData(balance: 0)
         }
     }
+
+    var caution: CautionNew? {
+        balanceCaution(active: tronKit.accountActive)
+    }
+
+    var cautionUpdatedObservable: Observable<CautionNew?> {
+        tronKitWrapper.tronKit.accountActivePublisher.asObservable().map { [weak self] in
+            self?.balanceCaution(active: $0)
+        }
+    }
 }
 
 extension TronAdapter: ISendTronAdapter {

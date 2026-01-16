@@ -12,41 +12,13 @@ struct TronReceiveAddressView: View {
         _viewModel = StateObject(
             wrappedValue: TronReceiveAddressViewModel(
                 service: TronReceiveAddressService(wallet: wallet),
-                viewItemFactory: TronReceiveAddressViewItemFactory(),
+                viewItemFactory: ReceiveAddressViewItemFactory(),
                 decimalParser: AmountDecimalParser()
             )
         )
     }
 
     var body: some View {
-        BaseReceiveAddressView(viewModel: viewModel, content: { [weak viewModel] in
-            if let viewModel, let activated = viewModel.activated.data, !activated {
-                notActive()
-            }
-        }, onDismiss: onDismiss)
-    }
-
-    @ViewBuilder func notActive() -> some View {
-        Cell(
-            middle: {
-                MiddleTextIcon(text: "deposit.account".localized, icon: "info_filled")
-            }, right: {
-                ThemeText("deposit.not_active".localized, style: .subheadSB, colorStyle: .yellow)
-            }
-        ) {
-            Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                BottomSheetView(
-                    items: [
-                        .title(icon: ThemeImage.warning, title: "deposit.not_active.title".localized),
-                        .text(text: "deposit.not_active.tron_description".localized),
-                        .buttonGroup(.init(buttons: [
-                            .init(style: .gray, title: "button.understood".localized) {
-                                isPresented.wrappedValue = false
-                            },
-                        ])),
-                    ],
-                )
-            }
-        }
+        BaseReceiveAddressView(viewModel: viewModel, content: {}, onDismiss: onDismiss)
     }
 }

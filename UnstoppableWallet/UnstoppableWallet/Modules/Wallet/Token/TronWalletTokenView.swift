@@ -24,14 +24,16 @@ struct TronWalletTokenView: View {
                 }
             )
         }
+        .onFirstAppear {
+            viewModel.onFirstAppear()
+        }
     }
 }
 
 extension TransactionListStatus {
     static let inactiveWallet = TransactionListStatus(
         id: "inactive_wallet",
-        icon: "warning_filled",
-        title: "balance.token.account.inactive.title".localized,
+        icon: "outgoingraw",
         subtitle: "balance.token.account.inactive.description".localized
     )
 }

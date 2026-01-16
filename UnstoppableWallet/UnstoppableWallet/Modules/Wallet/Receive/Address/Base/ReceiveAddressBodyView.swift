@@ -91,6 +91,7 @@ struct ReceiveAddressBodyView<Content: View>: View {
                         .multilineTextAlignment(.center)
                 }
             }
+            .frame(maxWidth: .infinity)
         }
         .gesture(
             TapGesture()

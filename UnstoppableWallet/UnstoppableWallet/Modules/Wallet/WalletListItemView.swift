@@ -41,7 +41,7 @@ struct WalletListItemView: View, Equatable {
         }
 
         switch item.state {
-        case let .syncing(progress, remaining, _):
+        case let .syncing(_, remaining, _):
             return remaining.map { "balance.remaining".localized("\($0)") } ?? "balance.syncing".localized
         case let .customSyncing(main, _, _):
             return main
@@ -109,9 +109,13 @@ struct WalletListItemView: View, Equatable {
         }
     }
 
-    private var primaryValue: CustomStringConvertible {
+    private var primaryValue: CustomStringConvertible? {
         if balanceHidden {
             return BalanceHiddenManager.placeholder
+        }
+
+        if item.caution != nil {
+            return nil
         }
 
         switch balancePrimaryValue {
@@ -123,6 +127,10 @@ struct WalletListItemView: View, Equatable {
     private var secondaryValue: CustomStringConvertible? {
         if balanceHidden {
             return nil
+        }
+
+        if let caution = item.caution {
+            return ComponentText(text: caution.text, colorStyle: caution.type.colorStyle)
         }
 
         switch balancePrimaryValue {
