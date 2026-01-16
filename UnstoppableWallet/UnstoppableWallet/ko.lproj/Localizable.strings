@@ -128,6 +128,8 @@
 
 "filter.all" = "전체";
 
+"not_activated" = "Not Activated";
+
 // Access Camera
 
 "access_camera.message" = "%@이 QR코드를 스캔하기 위해선 카메라에 대한 접근이 필요합니다. \n\n설정 -> %@으로 가서 카메라 접근을 허용해 주세요.";
@@ -376,8 +378,7 @@
 "balance.token.frozen" = "잠김";
 "balance.token.frozen.info.title" = "겨울왕국 제목";
 "balance.token.frozen.info.description" = "고정된 설명 텍스트";
-"balance.token.account.inactive.title" = "계정이 활성화되지 않음";
-"balance.token.account.inactive.description" = "새로운 TRON 지갑은 활성화를 위해 최소 1 TRX의 입금이 필요합니다. 비활성 지갑도 토큰을 보관하고 수신할 수 있지만, 활성화 전까지 잔액은 업데이트되지 않습니다.";
+"balance.token.account.inactive.description" = "Transactions will appear after activation";
 
 // Account switcher
 
@@ -428,8 +429,9 @@
 "deposit.memo_warning.description" = "자산을 수령하기 위해서는 메모(태그)와 주소 모두가 필요합니다. 그렇지 않으면 자금이 손실될 수 있습니다.";
 
 "deposit.not_active" = "비활성화됨";
-"deposit.not_active.title" = "계정이 활성화되지 않음";
-"deposit.not_active.tron_description" = "새로운 TRON 지갑을 활성화하려면 최소 1 TRX가 필요합니다. 그 전까지는 토큰 수신은 가능하지만, 잔액이 올바르게 표시되지 않습니다.";
+"deposit.not_active.title" = "TRON Not Activated";
+"deposit.not_active.tron_description" = "TRON requires at least 1 TRX for activation. Until the wallet is activated, tokens can be received, but balances may not be shown.";
+"deposit.not_active.view_address" = "View my address";
 "deposit.stellar.inactive_asset.title" = "토큰 활성화";
 "deposit.stellar.inactive_asset.description" = "%@을(를) 수신하려면 해당 토큰을 활성화해야 합니다. Stellar 네트워크는 각 토큰마다 신뢰 라인을 설정해야 하며, 설정되지 않으면 %@을 받을 수 없습니다. 거래는 거부되고 자금은 전달되지 않습니다.";
 
