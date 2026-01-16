@@ -15,7 +15,7 @@
 "button.backup" = "Резервная копия";
 "button.restore" = "Восстановить";
 "button.copy" = "Копировать";
-"button.copy_error" = "Copy Error";
+"button.copy_error" = "Скопировать ошибку";
 "button.retry" = "Повторить";
 "button.report" = "Пожаловаться";
 "button.add" = "Добавить";
@@ -128,7 +128,7 @@
 
 "filter.all" = "Все";
 
-"not_activated" = "Not Activated";
+"not_activated" = "Не активирован";
 
 // Access Camera
 
@@ -382,7 +382,7 @@
 "balance.token.frozen" = "Frozen";
 "balance.token.frozen.info.title" = "Frozen title";
 "balance.token.frozen.info.description" = "Frozen Description Text";
-"balance.token.account.inactive.description" = "Transactions will appear after activation";
+"balance.token.account.inactive.description" = "Транзакции появятся после активации";
 
 // Account switcher
 
@@ -433,9 +433,10 @@
 "deposit.memo_warning.description" = "Для получения активов необходимы memo(tag) и адрес. В противном случае Ваши средства будут утеряны.";
 
 "deposit.not_active" = "Не активен";
-"deposit.not_active.title" = "TRON Not Activated";
-"deposit.not_active.tron_description" = "TRON requires at least 1 TRX for activation. Until the wallet is activated, tokens can be received, but balances may not be shown.";
-"deposit.not_active.view_address" = "View my address";
+"deposit.not_active.title" = "TRON не активирован";
+"deposit.not_active.tron_description" = "Для активации TRON требуется не менее 1 TRX.
+Пока wallet не активирован, токены могут поступать, но их балансы могут не отображаться.";
+"deposit.not_active.view_address" = "Посмотреть мой адрес";
 "deposit.stellar.inactive_asset.title" = "Активировать токен";
 "deposit.stellar.inactive_asset.description" = "Чтобы получить %@, необходимо активировать токен. Сеть Stellar требует установить доверительную линию (trustline) для каждого токена. Без этого ваш кошелёк не сможет принять %@ — транзакция будет отклонена, и средства не будут доставлены.";
 
@@ -554,7 +555,7 @@
 "send.confirmation.sending" = "Отправка";
 "send.confirmation.sent" = "Отправлено";
 "send.confirmation.unexpected_error" = "Непредвиденная ошибка";
-"send.confirmation.unexpected_error.text" = "Something went wrong while sending your transaction. Please try again or copy the error code and contact support.";
+"send.confirmation.unexpected_error.text" = "При отправке транзакции произошла ошибка. Пожалуйста, попробуйте ещё раз или скопируйте код ошибки и обратитесь в службу поддержки.";
 
 "send.confirmation.slide_to_approve" = "Проведите для разрешения";
 "send.confirmation.slide_to_revoke" = "Проведите чтобы отозвать";
