@@ -128,6 +128,8 @@
 
 "filter.all" = "Alle";
 
+"not_activated" = "Not Activated";
+
 // Access Camera
 
 "access_camera.message" = "%@ benötigt Zugriff auf Ihre Kamera, um den QR-Code zu scannen.
@@ -378,8 +380,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance.token.frozen" = "Eingefroren";
 "balance.token.frozen.info.title" = "gefrorener Titel";
 "balance.token.frozen.info.description" = "gefrorener Beschreibungstext";
-"balance.token.account.inactive.title" = "Konto nicht aktiv";
-"balance.token.account.inactive.description" = "Neue TRON-Wallets erfordern eine Einzahlung von mindestens 1 TRX, um aktiviert zu werden. Inaktive Wallets können Token halten und empfangen, aber die Salden werden erst nach der Aktivierung aktualisiert.";
+"balance.token.account.inactive.description" = "Transactions will appear after activation";
 
 // Account switcher
 
@@ -430,8 +431,9 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "deposit.memo_warning.description" = "Sowohl eine Memo (Tag) als auch die Adresse werden benötigt, um sicherzustellen, dass Vermögenswerte empfangen werden. Andernfalls gehen Ihre Gelder verloren.";
 
 "deposit.not_active" = "nicht aktiv";
-"deposit.not_active.title" = "Konto nicht aktiv";
-"deposit.not_active.tron_description" = "Neue TRON-Wallets benötigen mindestens 1 TRX zur Aktivierung. Bis dahin können sie zwar Tokens empfangen, zeigen jedoch keine korrekten Guthaben an.";
+"deposit.not_active.title" = "TRON Not Activated";
+"deposit.not_active.tron_description" = "TRON requires at least 1 TRX for activation. Until the wallet is activated, tokens can be received, but balances may not be shown.";
+"deposit.not_active.view_address" = "View my address";
 "deposit.stellar.inactive_asset.title" = "Token aktivieren";
 "deposit.stellar.inactive_asset.description" = "Um %@ zu empfangen, müssen Sie das Token aktivieren. Das Stellar-Netzwerk verlangt, dass für jedes Token eine Trustline eingerichtet wird. Ohne diese kann Ihre Wallet %@ nicht empfangen — die Transaktion wird abgelehnt und die Gelder nicht gutgeschrieben.";
 
