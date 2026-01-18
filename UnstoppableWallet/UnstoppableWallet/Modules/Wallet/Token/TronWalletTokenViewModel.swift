@@ -71,7 +71,7 @@ class TronWalletTokenViewModel: ObservableObject {
         }
 
         Coordinator.shared.present { _ in
-            ThemeNavigationStack { path in
+            EmptyThemeNavigationStack { path in
                 ReceiveModule.view(token: trxToken, account: account, path: path, onDismiss: nil)
             }
         }

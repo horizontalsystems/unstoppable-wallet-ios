@@ -46,11 +46,15 @@ class BaseReceiveAddressService {
         prepare(adapter: adapter)
     }
 
-    private func prepare(adapter: IDepositAdapter) {
+    func clearCancellables() {
         for cancellable in cancellables {
             cancellable.cancel()
         }
         cancellables.removeAll()
+    }
+
+    func prepare(adapter: IDepositAdapter) {
+        clearCancellables()
 
         let isMainNet = adapter.isMainNet
         adapter.receiveAddressPublisher

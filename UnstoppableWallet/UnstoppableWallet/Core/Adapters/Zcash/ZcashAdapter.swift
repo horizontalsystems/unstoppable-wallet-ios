@@ -75,6 +75,22 @@ class ZcashAdapter {
         state.adapterState
     }
 
+    func getSingleUseTransparentAddress() async throws -> SingleUseTransparentAddress? {
+        guard let account = try await synchronizer.listAccounts().first else {
+            throw AppError.ZcashError.noReceiveAddress
+        }
+
+        return try await synchronizer.getSingleUseTransparentAddress(accountUUID: account.id)
+    }
+
+    func getCustomUnifiedAddress() async throws -> UnifiedAddress? {
+        guard let account = try await synchronizer.listAccounts().first else {
+            throw AppError.ZcashError.noReceiveAddress
+        }
+
+        return try await synchronizer.getCustomUnifiedAddress(accountUUID: account.id, receivers: [.orchard, .sapling])
+    }
+
     private(set) var syncing: Bool = true
 
     init(wallet: Wallet, restoreSettings: RestoreSettings) throws {

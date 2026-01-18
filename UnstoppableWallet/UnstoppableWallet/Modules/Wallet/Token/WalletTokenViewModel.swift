@@ -146,7 +146,7 @@ extension WalletTokenViewModel {
     func onTapReceive() {
         if wallet.account.backedUp || cloudBackupManager.backedUp(uniqueId: wallet.account.type.uniqueId()) {
             Coordinator.shared.present { [wallet] _ in
-                ThemeNavigationStack { path in
+                EmptyThemeNavigationStack { path in
                     ReceiveAddressModule.instance(wallet: wallet, path: path)
                 }
             }

@@ -152,21 +152,18 @@ struct ThemeNavigationStack<Content: View>: View {
     }
 }
 
-extension ThemeNavigationStack {
-    init<PathContent: View>(
-        @ViewBuilder content: @escaping (Binding<NavigationPath>) -> PathContent
-    ) where Content == _AutoPathWrapper<PathContent> {
-        self.init {
-            _AutoPathWrapper(content: content)
-        }
-    }
-}
-
-struct _AutoPathWrapper<Content: View>: View {
+struct EmptyThemeNavigationStack<Content: View>: View {
     @State private var path = NavigationPath()
     let content: (Binding<NavigationPath>) -> Content
 
+    init(@ViewBuilder content: @escaping (Binding<NavigationPath>) -> Content) {
+        self.content = content
+    }
+
     var body: some View {
-        content($path)
+        NavigationStack(path: $path) {
+            content($path)
+        }
+        .tint(.themeGray)
     }
 }
