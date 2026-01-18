@@ -38,8 +38,8 @@ struct ZcashReceiveAddressSelectView: View {
         }
         .navigationTitle("deposit.zcash.title".localized)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(for: ZcashAdapter.AddressType.self, destination: { addresType in
-            destinationView(for: addresType)
+        .navigationDestination(for: ZcashAdapter.AddressType.self, destination: { addressType in
+            destinationView(for: addressType)
         })
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
