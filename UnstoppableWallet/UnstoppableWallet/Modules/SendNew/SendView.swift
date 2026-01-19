@@ -20,6 +20,7 @@ struct SendView: View {
                                 Text(syncingText).textSubhead2()
                             }
                         }
+                        .frame(maxHeight: .infinity)
                     }
                 case .success:
                     if let sendData = viewModel.sendData {

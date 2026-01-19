@@ -16,7 +16,7 @@ class MevProtectionHelper {
 
         let binding = Binding<Bool>(
             get: { [weak self] in
-                if Core.shared.purchaseManager.activated(.vipSupport) {
+                if Core.shared.purchaseManager.activated(.swapProtection) {
                     self?.isActive ?? false
                 } else {
                     false
@@ -28,7 +28,7 @@ class MevProtectionHelper {
                     self?.localStorage.useMevProtection = newValue
                 }
 
-                Coordinator.shared.performAfterPurchase(premiumFeature: .vipSupport, page: .swap, trigger: .mevProtection) {
+                Coordinator.shared.performAfterPurchase(premiumFeature: .swapProtection, page: .swap, trigger: .mevProtection) {
                     successBlock()
                 }
             }

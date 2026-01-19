@@ -358,7 +358,7 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func vipSupport() -> some View {
         ClickableRow(action: {
-            Coordinator.shared.performAfterPurchase(premiumFeature: .vipSupport, page: .settings, trigger: .vipSupport) {
+            Coordinator.shared.performAfterPurchase(premiumFeature: .prioritySupport, page: .settings, trigger: .vipSupport) {
                 UrlManager.open(url: MainSettingsViewModel.supportLink)
                 stat(page: .settings, event: .open(page: .vipSupport))
             }

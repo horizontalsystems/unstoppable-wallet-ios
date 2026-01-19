@@ -32,8 +32,10 @@ struct MultiSwapQuotesView: View {
                                 )
                             },
                             action: {
-                                viewModel.userSelectedProviderId = quote.provider.id
-                                isPresented = false
+                                Coordinator.shared.performAfterPurchase(premiumFeature: .swapControl, page: .swap, trigger: .swapQuoteSelect, onPurchase: {
+                                    viewModel.userSelectedProviderId = quote.provider.id
+                                    isPresented = false
+                                })
                             }
                         )
                     }

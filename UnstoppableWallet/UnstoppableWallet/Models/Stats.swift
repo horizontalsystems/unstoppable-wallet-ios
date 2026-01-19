@@ -508,6 +508,7 @@ enum StatPremiumTrigger: String {
     case projectRevenue = "project_revenue"
     case sectors
     case sortBy = "sort_by"
+    case swapQuoteSelect = "swap_quote_select"
     case timePeriod = "time_period"
     case tokenChange = "token_change"
     case tradingAssistant = "trading_assistant"
