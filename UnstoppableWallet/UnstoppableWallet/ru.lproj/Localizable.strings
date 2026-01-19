@@ -1536,16 +1536,17 @@
 "terms.title" = "Условия использования";
 "terms.i_agree" = "Я принимаю";
 
-"terms.item.backup_recovery" = "Надёжно сохраните фразу восстановления для каждого кошелька. Это единственный способ восстановить доступ к средствам, если приложение будет удалено, утеряно или выйдет из строя. Никто не сможет восстановить её за вас.";
-"terms.item.device_pin" = "Отключение PIN-кода (или пароля) разблокировки телефона полностью удалит все кошельки из приложения. Вам потребуется фраза восстановления, чтобы вернуть доступ.";
-"terms.item.privacy_notice" = "Приложение не отслеживает и не собирает данные о ваших балансах и транзакциях - мы даже не знаем, сколько людей им пользуется.
-Оно фиксирует только анонимную статистику использования (открытые страницы, нажатия кнопок), чтобы улучшать интерфейс. Это можно отключить в Настройки → Конфиденциальность.";
-
+"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It's the only way to regain access to your funds if the app is deleted, lost or malfunctions. No one can restore it for you.";
+"terms.item.device_pin" = "Disabling your smartphone's unlock PIN (or passcode) wipes all wallets from the app. You'll need your recovery phrases to restore access.";
+"terms.item.privacy_notice" = "The app doesn't spy or collect data about your balances or transactions - we don't even know how many people use it. It only tracks anonymous usage patterns (pages opened, buttons tapped) to improve usability. You can turn this off in Settings → Privacy";
 "terms.item.decentralized" = "Мы не храним ваши активы, не имеем доступа к вашим приватным ключам и не совершаем транзакции от вашего имени. Приложение не оказывает брокерские, обменные, кастодиальные, эскроу-сервис или услуги по переводу денежных средств. Все транзакции инициируются, подписываются и отправляются вами напрямую в публичные blockchain-сети. Мы не контролируем, не передаём, не изменяем и не обрабатываем ваши транзакции.";
-"terms.item.commission" = "Для поддержки дальнейшей разработки и сохранения статуса open source приложение может получать небольшую комиссию от некоторых обмен-интеграций. Такая комиссия не предполагает хранение средств пользователей и не предоставляет нам доступ к вашим активам или контроль над ними.";
+"terms.item.commission" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet.This helps us stay independent, open source, and free of VC money.";
 "terms.item.irreversibility" = "Транзакции в блокчейн являются необратимыми. Перед подтверждением всегда внимательно проверяйте детали транзакции.";
-"terms.item.software" = "Приложение предоставляется в текущем виде. Несмотря на внимательный подход к разработке, программное обеспечение может содержать непреднамеренные ошибки или уязвимости, которые потенциально могут привести к потере средств. Приложение является проектом с открытым исходным кодом и может быть независимо проверено и проаудировано любым пользователем.";
+"terms.item.software" = "The app is verifiably open source, with all source code published online. Everything stated above can be publicly verified by anyone.";
 "terms.item.compliance" = "Вы несёте полную ответственность за безопасность своих средств, свои действия и соблюдение применимого законодательства в вашей юрисдикции. Использование приложения не освобождает вас от налоговых, финансовых отчётных или иных юридических обязательств.";
+"terms.item.prohibite_use" = "To maintain a safe ecosystem, you agree not to use the app for any illegal activity, including money laundering or sanction evasion, fraud, scams, hiding stolen assets, or the financing of prohibited organizations.";
+"terms.item.user_responsibility" = "By proceeding, you acknowledge that security of your funds and legal compliance are ultimately your responsibility.";
+
 
 
 // Settings -> Tell Friends
@@ -1772,7 +1773,7 @@
 "appearance.recently_sent" = "Недавно отправленные";
 "appearance.recently_sent.description" = "Показывать недавно отправленный адрес для токена.";
 "appearance.hide_buttons" = "Скрыть кнопки";
-"appearance.hide_buttons.description" = "Отображать округлённые балансы и суммы транзакций.";
+"appearance.hide_buttons.description" = "Hide the Send, Receive, and Swap buttons from the Balance tab.";
 "appearance.balance_value" = "Балансы токенов";
 "appearance.balance_value.description" = "Отображать балансы с выделением в криптовалюте или фиате.";
 "appearance.balance_value.coin_fiat" = "Монета / Фиат";
@@ -2407,37 +2408,38 @@
 // Defense System
 "purchases.defense_system" = "Система защиты";
 "purchases.secure_send" = "Безопасная отправка";
-"purchases.secure_send.description" = "Предупреждает о рискованных адресах.";
+"purchases.secure_send.description" = "Prevents sending funds to risky or phishing addresses.";
 "purchases.secure_send.info" = "Проверяет адреса получателей на фишинг и мошенничество. Предупреждает перед отправкой средств на подозрительные адреса.";
 "purchases.scam_protection" = "Scam-защита";
-"purchases.scam_protection.description" = "Сообщает, если сайт dApp - фальшивый.";
+"purchases.scam_protection.description" = "Warns you when connecting to fake or malicious dApps.";
 "purchases.scam_protection.info" = "Обнаруживает поддельные или вредоносные dApp до подключения. Предотвращает фишинг и защищает ваши активы.";
-"purchases.loss_protection" = "Защита от потери";
-"purchases.loss_protection.description" = "Блокирует действия ботов, ворующих средства во время свапов.";
-"purchases.loss_protection.info" = "Останавливает ботов и атак на передний план во время подкачки. Сохраняет ваши транзакции честно и безопасно.";
+"purchases.swap_protection" = "Swap Protection";
+"purchases.swap_protection.description" = "Prevents bots and MEV attacks during swaps.";
+"purchases.swap_protection.info" = "Stops bots and front-running attacks during swaps. Keeps your transactions fair and secure.";
 "purchases.robbery_protection" = "Защита при ограблении";
-"purchases.robbery_protection.description" = "Сохраняет средства, если вас заставили открыть приложение.";
+"purchases.robbery_protection.description" = "Safeguards your funds if you’re forced to unlock the app.";
 "purchases.robbery_protection.info" = "Позволяет создать ложный кошелёк с отдельным PIN-кодом. Скрывает реальные активы в рискованных ситуациях.";
+
+// Advanced Controls
+"purchases.advanced_controls" = "Advanced Controls";
+"purchases.swap_control" = "Swap Control";
+"purchases.swap_control.description" = "Advanced settings to control how and where swaps execute.";
+"purchases.swap_control.info" = "By default, we select the best available offer. With Premium, you can choose a different provider.";
+"purchases.priority_support" = "Priority Support";
+"purchases.priority_support.description" = "Direct access to our support team.";
+"purchases.priority_support.info" = "Gives you direct access to priority support. Get fast, personal help from the Unstoppable team.";
 
 // Market Insights
 "purchases.market_insights" = "Аналитика рынка";
 "purchases.token_insights" = "Аналитика";
-"purchases.token_insights.description" = "Доступ к топ-100 спискам по ключевым критериям";
+"purchases.token_insights.description" = "In-depth analytics and token data.";
 "purchases.token_insights.info" = "Показывает подробные данные о токене - объём, ликвидность и тренды. Помогает принимать более разумные инвестиционные решения.";
-
 "purchases.advanced_search" = "Расширенный поиск";
-"purchases.advanced_search.description" = "Многоуровневая фильтрация по множеству параметров";
+"purchases.advanced_search.description" = "Powerful filters for smarter token discovery.";
 "purchases.advanced_search.info" = "Находит токены с фильтрацией по объёму, блокчейну или сектору. Включает метрики активности на CEX/DEX и данные о листингах.";
-
 "purchases.trade_signals" = "Сигналы и тренды";
-"purchases.trade_signals.description" = "Авто-мониторинг рыночных трендов для ваших токенов";
+"purchases.trade_signals.description" = "Actionable signals for more confident trading.";
 "purchases.trade_signals.info" = "Отправляет уведомления в реальном времени о торговых возможностях. Показывает прибыльные шансы или рыночные риски.";
-
-// Vip Support
-"purchases.vip" = "VIP";
-"purchases.vip_support" = "VIP-поддержка";
-"purchases.vip_support.description" = "Доступ к команде кошелька для быстрой технической поддержки.";
-"purchases.vip_support.info" = "Предоставляет прямой доступ к приоритетной поддержке. Получайте быструю и персональную помощь от команды Unstoppable.";
 
 "purchase.bottom_sheet.description" = "Одна покупка открывает все функции Premium.";
 
