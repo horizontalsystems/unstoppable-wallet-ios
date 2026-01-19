@@ -26,6 +26,6 @@ struct SectionHeader<ImageContent: View>: View {
 
             Spacer()
         }
-        .padding(EdgeInsets(top: .margin16, leading: .margin16, bottom: .margin12, trailing: .margin16))
+        .padding(EdgeInsets(top: 16, leading: 32, bottom: 12, trailing: 32))
     }
 }

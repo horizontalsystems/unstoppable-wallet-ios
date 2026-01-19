@@ -87,7 +87,7 @@ struct PremiumFeaturesInfoBottomSheetView: View {
 private extension PremiumFeature {
     var topPadding: CGFloat {
         switch self {
-        case .secureSend, .robberyProtection, .tokenInsights, .advancedSearch, .tradeSignals, .vipSupport: return .margin24
+        case .secureSend, .robberyProtection, .tokenInsights, .advancedSearch, .tradeSignals, .prioritySupport, .swapControl: return .margin24
         default: return 0
         }
     }

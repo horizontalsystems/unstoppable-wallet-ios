@@ -64,7 +64,7 @@ class WalletConnectMainService {
         self.accountManager = accountManager
         self.proposalHandler = proposalHandler
 
-        premiumEnabled = purchaseManager.activated(.vipSupport)
+        premiumEnabled = purchaseManager.activated(.scamProtection)
         loadWhitelist()
 
         subscribe(disposeBag, service.receiveProposalObservable) { [weak self] in
@@ -86,7 +86,7 @@ class WalletConnectMainService {
 
         purchaseManager.$activeFeatures
             .sink { [weak self] features in
-                self?.premiumEnabled = features.contains(.vipSupport)
+                self?.premiumEnabled = features.contains(.scamProtection)
             }
             .store(in: &cancellables)
 

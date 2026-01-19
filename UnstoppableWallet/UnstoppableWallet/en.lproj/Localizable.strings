@@ -2402,37 +2402,38 @@
 // Defense System
 "purchases.defense_system" = "Defense System";
 "purchases.secure_send" = "Secure Send";
-"purchases.secure_send.description" = "Warns you about risky addresses.";
+"purchases.secure_send.description" = "Prevents sending funds to risky or phishing addresses.";
 "purchases.secure_send.info" = "Checks recipient wallets for phishing or fraud. Alerts you before sending to risky addresses.";
 "purchases.scam_protection" = "Scam Protection";
-"purchases.scam_protection.description" = "Lets you know if a dApp site is fake.";
+"purchases.scam_protection.description" = "Warns you when connecting to fake or malicious dApps.";
 "purchases.scam_protection.info" = "Detects fake or malicious dApps before connection. Prevents phishing and keeps your assets safe.";
-"purchases.loss_protection" = "Loss Protection";
-"purchases.loss_protection.description" = "Stops bots from stealing in swaps.";
-"purchases.loss_protection.info" = "Stops bots and front-running attacks during swaps. Keeps your transactions fair and secure.";
+"purchases.swap_protection" = "Swap Protection";
+"purchases.swap_protection.description" = "Prevents bots and MEV attacks during swaps.";
+"purchases.swap_protection.info" = "Stops bots and front-running attacks during swaps. Keeps your transactions fair and secure.";
 "purchases.robbery_protection" = "Robbery Protection";
-"purchases.robbery_protection.description" = "Protects funds if you’re forced to open the app.";
+"purchases.robbery_protection.description" = "Safeguards your funds if you’re forced to unlock the app.";
 "purchases.robbery_protection.info" = "Lets you create a decoy wallet with a separate PIN. Keeps real assets hidden in high-risk situations.";
+
+// Advanced Controls
+"purchases.advanced_controls" = "Advanced Controls";
+"purchases.swap_control" = "Swap Control";
+"purchases.swap_control.description" = "Advanced settings to control how and where swaps execute.";
+"purchases.swap_control.info" = "By default, we select the best available offer. With Premium, you can choose a different provider.";
+"purchases.priority_support" = "Priority Support";
+"purchases.priority_support.description" = "Direct access to our support team.";
+"purchases.priority_support.info" = "Gives you direct access to priority support. Get fast, personal help from the Unstoppable team.";
 
 // Market Insights
 "purchases.market_insights" = "Market Insights";
 "purchases.token_insights" = "Token Insights";
-"purchases.token_insights.description" = "Full analytics and data about tokens.";
+"purchases.token_insights.description" = "In-depth analytics and token data.";
 "purchases.token_insights.info" = "Shows detailed token data — volume, liquidity, and trends. Helps you make smarter investment decisions.";
-
 "purchases.advanced_search" = "Advanced Search";
-"purchases.advanced_search.description" = "Custom filters for token searches.";
+"purchases.advanced_search.description" = "Powerful filters for smarter token discovery.";
 "purchases.advanced_search.info" = "Find tokens with filters by volume, chain, or sector. Includes metrics for CEX/DEX activity and listings.";
-
 "purchases.trade_signals" = "Trade Signals";
-"purchases.trade_signals.description" = "Signals for confident trading.";
+"purchases.trade_signals.description" = "Actionable signals for more confident trading.";
 "purchases.trade_signals.info" = "Sends real-time alerts on trading opportunities. Highlights profit chances or market risks instantly.";
-
-// Vip Support
-"purchases.vip" = "VIP";
-"purchases.vip_support" = "Priority Support";
-"purchases.vip_support.description" = "Direct chat.";
-"purchases.vip_support.info" = "Gives you direct access to priority support. Get fast, personal help from the Unstoppable team.";
 
 "purchase.bottom_sheet.description" = "One purchase unlocks all Premium features.";
 
