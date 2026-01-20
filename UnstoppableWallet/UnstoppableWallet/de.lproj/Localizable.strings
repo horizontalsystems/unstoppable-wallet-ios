@@ -1771,7 +1771,7 @@ Bis die wallet aktiviert ist, können Token empfangen werden, jedoch werden die 
 "appearance.recently_sent" = "Kürzlich gesendet";
 "appearance.recently_sent.description" = "Zuletzt verwendete Empfängeradresse für den Token anzeigen.";
 "appearance.hide_buttons" = "Schaltflächen ausblenden";
-"appearance.hide_buttons.description" = "Verstecken Sie die Sende-, Empfangs- und Swap-Schaltflächen aus der Registerkarte Guthaben.";
+"appearance.hide_buttons.description" = "Blende die Schaltflächen Send, Receive und Swap im Balance-Tab aus.";
 "appearance.balance_value" = "Coin-Salden";
 "appearance.balance_value.description" = "Salden entweder in Krypto oder Fiat hervorgehoben anzeigen.";
 "appearance.balance_value.coin_fiat" = "Münze / Fiat";
