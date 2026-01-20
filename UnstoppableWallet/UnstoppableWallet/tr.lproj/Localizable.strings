@@ -1540,16 +1540,16 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "terms.title" = "Şartlar";
 "terms.i_agree" = "Kabul Ediyorum";
 
-"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It's the only way to regain access to your funds if the app is deleted, lost or malfunctions. No one can restore it for you.";
-"terms.item.device_pin" = "Disabling your smartphone's unlock PIN (or passcode) wipes all wallets from the app. You'll need your recovery phrases to restore access.";
-"terms.item.privacy_notice" = "The app doesn't spy or collect data about your balances or transactions - we don't even know how many people use it. It only tracks anonymous usage patterns (pages opened, buttons tapped) to improve usability. You can turn this off in Settings → Privacy";
+"terms.item.backup_recovery" = "Her cüzdan için kurtarma ifadelerini güvenli bir şekilde yedekleyin. Uygulama arızalanırsa fonlara yeniden erişmenin tek yolu budur.";
+"terms.item.device_pin" = "Akıllı telefon kilit açma PIN'ini devre dışı bırakmak, tüm cüzdanları uygulamadan siler. Fonlara yeniden erişim sağlamak için kurtarma ifadelerine ihtiyaç duyulacaktır.";
+"terms.item.privacy_notice" = "Uygulama bakiye veya işlemlerinizle ilgili veri toplamaz veya sizi takip etmez — kaç kişinin uygulamayı kullandığını bile bilmiyoruz. Sadece anonim kullanım verilerini (açılan sayfalar, tıklanan butonlar) toplar ve bu da sadece kullanılabilirliği geliştirmek içindir. Ayarlar → Gizlilik bölümünden bunu kapatabilirsiniz";
 "terms.item.decentralized" = "Varlıklarınızı tutmayız, private key’lerinize erişmeyiz ve sizin adınıza işlem gerçekleştirmeyiz. Uygulama; aracılık, exchange, saklama (custody), escrow veya para transferi hizmetleri sunmaz. Tüm işlemler, public blockchain ağlarına doğrudan sizin tarafınızdan başlatılır, imzalanır ve yayınlanır. İşlemlerinizi kontrol etmeyiz, iletmeyiz, değiştirmeyiz veya işlemden geçirmeyiz.";
-"terms.item.commission" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet.This helps us stay independent, open source, and free of VC money.";
+"terms.item.commission" = "Para kazanma modeli kapsamında uygulama, cüzdan içinden yapılan DEX takaslarından küçük komisyonlar alır. Bu, bağımsız, açık kaynaklı ve VC fonlarından uzak kalmamıza yardımcı olur.";
 "terms.item.irreversibility" = "Blockchain işlemleri geri döndürülemez. Onaylamadan önce işlem detaylarını her zaman dikkatlice kontrol edin.";
-"terms.item.software" = "The app is verifiably open source, with all source code published online. Everything stated above can be publicly verified by anyone.";
+"terms.item.software" = "Uygulama doğrulanabilir şekilde açık kaynaklıdır; tüm kaynak kodu çevrimiçi olarak yayımlanmıştır. Yukarıdaki tüm bilgiler herkes tarafından kamuya açık olarak doğrulanabilir.";
 "terms.item.compliance" = "Fonlarınızın güvenliğinden, kendi davranışlarınızdan ve bulunduğunuz yargı alanında geçerli olan yasalara uyumdan yalnızca siz sorumlusunuz. Uygulamanın kullanımı, sizi vergi, finansal raporlama veya diğer yasal yükümlülüklerden muaf tutmaz.";
-"terms.item.prohibite_use" = "To maintain a safe ecosystem, you agree not to use the app for any illegal activity, including money laundering or sanction evasion, fraud, scams, hiding stolen assets, or the financing of prohibited organizations.";
-"terms.item.user_responsibility" = "By proceeding, you acknowledge that security of your funds and legal compliance are ultimately your responsibility.";
+"terms.item.prohibite_use" = "Güvenli bir ekosistemi korumak amacıyla, uygulamayı kara para aklama veya yaptırımları aşma, dolandırıcılık, scam faaliyetleri, çalıntı varlıkları gizleme ya da yasaklı kuruluşların finansmanı dahil olmak üzere herhangi bir yasa dışı faaliyet için kullanmamayı kabul edersiniz.";
+"terms.item.user_responsibility" = "Devam ederek, fonlarınızın güvenliği ve yasal mevzuata uyumun nihai olarak sizin sorumluluğunuzda olduğunu kabul edersiniz.";
 
 
 
@@ -1777,7 +1777,7 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "appearance.recently_sent" = "Son Gönderilenler";
 "appearance.recently_sent.description" = "Token için son gönderilen adresi görüntüle.";
 "appearance.hide_buttons" = "Düğmeleri Gizle";
-"appearance.hide_buttons.description" = "Hide the Send, Receive, and Swap buttons from the Balance tab.";
+"appearance.hide_buttons.description" = "Balance sekmesindeki Send, Receive ve Swap butonlarını gizler.";
 "appearance.balance_value" = "Coin Bakiyeleri";
 "appearance.balance_value.description" = "Bakiyeleri crypto veya fiat cinsinden vurgulanmış şekilde gösterin.";
 "appearance.balance_value.coin_fiat" = "Coin/Fiat";
@@ -2416,37 +2416,37 @@ Bu tür işlemler genellikle kimlik avı (phishing) ve adres zehirleme (address-
 // Defense System
 "purchases.defense_system" = "Savunma Sistemi";
 "purchases.secure_send" = "Güvenli Gönderim";
-"purchases.secure_send.description" = "Prevents sending funds to risky or phishing addresses.";
+"purchases.secure_send.description" = "Riskli veya phishing amaçlı adreslere fon gönderilmesini engeller.";
 "purchases.secure_send.info" = "Alıcı cüzdanları oltalama veya dolandırıcılık açısından kontrol eder. Riskli adreslere göndermeden önce sizi uyarır.";
 "purchases.scam_protection" = "Dolandırıcılık Koruması";
-"purchases.scam_protection.description" = "Warns you when connecting to fake or malicious dApps.";
+"purchases.scam_protection.description" = "Sahte veya kötü amaçlı dApp’lere bağlanırken sizi uyarır.";
 "purchases.scam_protection.info" = "Bağlanmadan önce sahte veya kötü amaçlı dApp’leri tespit eder. Oltalama saldırılarını önler ve varlıklarınızı korur.";
 "purchases.swap_protection" = "Swap Protection";
-"purchases.swap_protection.description" = "Prevents bots and MEV attacks during swaps.";
-"purchases.swap_protection.info" = "Stops bots and front-running attacks during swaps. Keeps your transactions fair and secure.";
+"purchases.swap_protection.description" = "Swap işlemleri sırasında botları ve MEV saldırılarını engeller.";
+"purchases.swap_protection.info" = "Swap işlemleri sırasında botları ve front-running saldırılarını durdurur. İşlemlerinizin adil ve güvenli kalmasını sağlar.";
 "purchases.robbery_protection" = "Zorla Açtırma Koruması";
-"purchases.robbery_protection.description" = "Safeguards your funds if you’re forced to unlock the app.";
+"purchases.robbery_protection.description" = "Uygulamayı zorla kilidini açmanız durumunda fonlarınızı korur.";
 "purchases.robbery_protection.info" = "Ayrı bir PIN ile sahte (yem) cüzdan oluşturmanıza olanak tanır. Yüksek riskli durumlarda gerçek varlıklarınızı gizli tutar.";
 
 // Advanced Controls
 "purchases.advanced_controls" = "Advanced Controls";
 "purchases.swap_control" = "Swap Control";
-"purchases.swap_control.description" = "Advanced settings to control how and where swaps execute.";
-"purchases.swap_control.info" = "By default, we select the best available offer. With Premium, you can choose a different provider.";
-"purchases.priority_support" = "Priority Support";
-"purchases.priority_support.description" = "Direct access to our support team.";
-"purchases.priority_support.info" = "Gives you direct access to priority support. Get fast, personal help from the Unstoppable team.";
+"purchases.swap_control.description" = "Swap işlemlerinin nasıl ve nerede gerçekleştirileceğini kontrol etmenizi sağlayan gelişmiş ayarlar.";
+"purchases.swap_control.info" = "Varsayılan olarak mevcut en iyi teklifi seçeriz. Premium ile farklı bir sağlayıcı seçebilirsiniz.";
+"purchases.priority_support" = "Öncelikli destek";
+"purchases.priority_support.description" = "Destek ekibimize doğrudan erişim.";
+"purchases.priority_support.info" = "Öncelikli destek ekibimize doğrudan erişim sağlar. Unstoppable ekibinden hızlı ve kişisel destek alırsınız.";
 
 // Market Insights
 "purchases.market_insights" = "Piyasa İçgörüleri";
 "purchases.token_insights" = "Analitik";
-"purchases.token_insights.description" = "In-depth analytics and token data.";
+"purchases.token_insights.description" = "Detaylı analizler ve token verileri.";
 "purchases.token_insights.info" = "Token için ayrıntılı veriler gösterir - hacim, likidite ve trendler. Daha akıllı yatırım kararları almanıza yardımcı olur.";
 "purchases.advanced_search" = "Gelişmiş Arama";
-"purchases.advanced_search.description" = "Powerful filters for smarter token discovery.";
+"purchases.advanced_search.description" = "Daha akıllı token keşfi için güçlü filtreler.";
 "purchases.advanced_search.info" = "Token’ları hacim, ağ veya sektör filtreleriyle bulun. CEX/DEX aktiviteleri ve listelemeler için metrikler içerir.";
 "purchases.trade_signals" = "Sinyaller ve Trendler";
-"purchases.trade_signals.description" = "Actionable signals for more confident trading.";
+"purchases.trade_signals.description" = "Daha güvenli ve bilinçli işlem yapmanıza yardımcı olan aksiyon alınabilir sinyaller.";
 "purchases.trade_signals.info" = "Alım-satım fırsatları için gerçek zamanlı bildirimler gönderir. Kâr fırsatlarını veya piyasa risklerini anında vurgular.";
 
 "purchase.bottom_sheet.description" = "Tek bir satın alım tüm Premium özelliklerin kilidini açar.";
