@@ -1534,16 +1534,16 @@
 "terms.title" = "条款";
 "terms.i_agree" = "我同意";
 
-"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It's the only way to regain access to your funds if the app is deleted, lost or malfunctions. No one can restore it for you.";
-"terms.item.device_pin" = "Disabling your smartphone's unlock PIN (or passcode) wipes all wallets from the app. You'll need your recovery phrases to restore access.";
-"terms.item.privacy_notice" = "The app doesn't spy or collect data about your balances or transactions - we don't even know how many people use it. It only tracks anonymous usage patterns (pages opened, buttons tapped) to improve usability. You can turn this off in Settings → Privacy";
+"terms.item.backup_recovery" = "安全地备份每个钱包的恢复短语。这是在应用程序发生故障时重新获得资金的唯一途径。";
+"terms.item.device_pin" = "在智能手机上禁用解锁 PIN (代码)会删除应用程序中的所有钱包。恢复资金访问将需要恢复短语。";
+"terms.item.privacy_notice" = "应用没有间接或收集关于您的余额或交易的数据 — — 我们甚至不知道有多少人使用它。 它只跟踪匿名使用模式(打开的页面、点击的按钮)以提高可用性。您可以在设置 -&gt; 隐私中关闭此功能。";
 "terms.item.decentralized" = "我们不持有您的资产，不会访问您的私钥，也不会代表您执行交易。该 app 不提供经纪、交易所、托管、第三方托管或资金转移服务。所有交易均由您本人直接发起、签名并广播至公共区块链网络。我们不控制、转发、修改或处理您的交易。";
-"terms.item.commission" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet.This helps us stay independent, open source, and free of VC money.";
+"terms.item.commission" = "作为盈利模式的-部分，应用会从钱包内执行的 DEX 兑换中获得少量佣金。这有助于我们保持独立、开源，并远离风险投资资金。";
 "terms.item.irreversibility" = "区块链交易是不可逆的。请在确认前务必仔细核对交易详情。";
-"terms.item.software" = "The app is verifiably open source, with all source code published online. Everything stated above can be publicly verified by anyone.";
+"terms.item.software" = "本应用完全开源，所有源代码均已公开发布。上述内容任何人都可公开验证。";
 "terms.item.compliance" = "您需对您的资金安全、个人行为以及遵守您所在司法辖区的适用法律承担全部责任。使用该应用并不免除您在税务、财务申报或其他法律方面的义务。";
-"terms.item.prohibite_use" = "To maintain a safe ecosystem, you agree not to use the app for any illegal activity, including money laundering or sanction evasion, fraud, scams, hiding stolen assets, or the financing of prohibited organizations.";
-"terms.item.user_responsibility" = "By proceeding, you acknowledge that security of your funds and legal compliance are ultimately your responsibility.";
+"terms.item.prohibite_use" = "为维护安全的生态系统，您同意不将该应用用于任何非法活动，包括洗钱或规避制裁、欺诈、诈骗、隐藏被盗资产，或为被禁止的组织提供资金支持。";
+"terms.item.user_responsibility" = "继续使用即表示您确认，您的资金安全以及遵守相关法律法规最终由您自行负责。";
 
 
 
@@ -1771,7 +1771,7 @@
 "appearance.recently_sent" = "最近发送";
 "appearance.recently_sent.description" = "显示该代币最近发送的地址。";
 "appearance.hide_buttons" = "隐藏按钮";
-"appearance.hide_buttons.description" = "Hide the Send, Receive, and Swap buttons from the Balance tab.";
+"appearance.hide_buttons.description" = "在余额页面中隐藏“发送”、“接收”和“兑换”按钮。";
 "appearance.balance_value" = "币种余额";
 "appearance.balance_value.description" = "以 crypto 或法币方式高亮显示余额。";
 "appearance.balance_value.coin_fiat" = "加密货币 / 法定货币";
@@ -2405,38 +2405,38 @@
 // Defense System
 "purchases.defense_system" = "防御系统";
 "purchases.secure_send" = "安全发送";
-"purchases.secure_send.description" = "Prevents sending funds to risky or phishing addresses.";
+"purchases.secure_send.description" = "防止将资金发送至高风险或钓鱼地址。";
 "purchases.secure_send.info" = "检查收款钱包是否存在钓鱼或欺诈风险，并在您向高风险地址转账前发出提醒。";
 "purchases.scam_protection" = "防骗保护";
-"purchases.scam_protection.description" = "Warns you when connecting to fake or malicious dApps.";
+"purchases.scam_protection.description" = "在连接到虚假或恶意 dApps 时向您发出警告。";
 "purchases.scam_protection.info" = "在连接前检测伪造或恶意的 dApp，防止钓鱼攻击，保障您的资产安全。
 ";
-"purchases.swap_protection" = "Swap Protection";
-"purchases.swap_protection.description" = "Prevents bots and MEV attacks during swaps.";
-"purchases.swap_protection.info" = "Stops bots and front-running attacks during swaps. Keeps your transactions fair and secure.";
+"purchases.swap_protection" = "兑换保护";
+"purchases.swap_protection.description" = "在兑换过程中防止 bots 和 MEV 攻击。";
+"purchases.swap_protection.info" = "在兑换过程中阻止 bots 和抢跑（front-running）攻击，确保您的交易公平且安全。";
 "purchases.robbery_protection" = "抢劫保护";
-"purchases.robbery_protection.description" = "Safeguards your funds if you’re forced to unlock the app.";
+"purchases.robbery_protection.description" = "在您被迫解锁应用的情况下保护您的资金安全。";
 "purchases.robbery_protection.info" = "允许您创建一个带独立 PIN 的诱饵钱包，在高风险情况下隐藏真实资产。";
 
 // Advanced Controls
-"purchases.advanced_controls" = "Advanced Controls";
-"purchases.swap_control" = "Swap Control";
-"purchases.swap_control.description" = "Advanced settings to control how and where swaps execute.";
-"purchases.swap_control.info" = "By default, we select the best available offer. With Premium, you can choose a different provider.";
-"purchases.priority_support" = "Priority Support";
-"purchases.priority_support.description" = "Direct access to our support team.";
-"purchases.priority_support.info" = "Gives you direct access to priority support. Get fast, personal help from the Unstoppable team.";
+"purchases.advanced_controls" = "高级控制";
+"purchases.swap_control" = "兑换控制";
+"purchases.swap_control.description" = "用于控制兑换如何以及通过何处执行的高级设置。";
+"purchases.swap_control.info" = "默认情况下，我们会选择当前可用的最佳报价。使用 Premium 后，您可以选择其他提供方。";
+"purchases.priority_support" = "优先支持";
+"purchases.priority_support.description" = "直接联系支持团队。";
+"purchases.priority_support.info" = "为您提供优先级支持的直接通道，获得来自 Unstoppable 团队快速且个性化的帮助。";
 
 // Market Insights
 "purchases.market_insights" = "市场洞察";
 "purchases.token_insights" = "分析";
-"purchases.token_insights.description" = "In-depth analytics and token data.";
+"purchases.token_insights.description" = "深入的分析和代币数据。";
 "purchases.token_insights.info" = "显示代币的详细数据—包括交易量、流动性和趋势，帮助您做出更明智的投资决策。";
 "purchases.advanced_search" = "進階搜尋";
-"purchases.advanced_search.description" = "Powerful filters for smarter token discovery.";
+"purchases.advanced_search.description" = "强大的筛选功能，助您更智能地发现代币。";
 "purchases.advanced_search.info" = "通过交易量、链或行业等筛选条件查找代币，并包含 CEX/DEX 活跃度及上架相关指标。";
 "purchases.trade_signals" = "信號與趨勢";
-"purchases.trade_signals.description" = "Actionable signals for more confident trading.";
+"purchases.trade_signals.description" = "可执行的信号，帮助您更自信地进行交易。";
 "purchases.trade_signals.info" = "实时推送交易机会提醒，及时提示潜在盈利机会或市场风险。";
 
 "purchase.bottom_sheet.description" = "购买即可解锁所有高级功能。";
