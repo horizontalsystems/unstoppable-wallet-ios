@@ -3,17 +3,21 @@ import Foundation
 import MarketKit
 import SwiftUI
 
-class EvmSendData: BaseSendEvmData, ISendData {
+class EvmSendData: ISendData {
     let decoration: EvmDecoration
     let transactionData: TransactionData?
     let transactionError: Error?
+    let gasPrice: GasPrice?
+    let evmFeeData: EvmFeeData?
+    let nonce: Int?
 
     init(decoration: EvmDecoration, transactionData: TransactionData?, transactionError: Error?, gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?) {
         self.decoration = decoration
         self.transactionData = transactionData
         self.transactionError = transactionError
-
-        super.init(gasPrice: gasPrice, evmFeeData: evmFeeData, nonce: nonce)
+        self.gasPrice = gasPrice
+        self.evmFeeData = evmFeeData
+        self.nonce = nonce
     }
 
     var feeData: FeeData? {
@@ -36,7 +40,7 @@ class EvmSendData: BaseSendEvmData, ISendData {
         var cautions = [CautionNew]()
 
         if let transactionError {
-            cautions.append(caution(transactionError: transactionError, feeToken: baseToken))
+            cautions.append(EvmSendHelper.caution(transactionError: transactionError, feeToken: baseToken))
         }
 
         return cautions
@@ -52,7 +56,7 @@ class EvmSendData: BaseSendEvmData, ISendData {
             )
         }
 
-        fields.append(contentsOf: feeFields(feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid]))
+        fields.append(contentsOf: EvmSendHelper.feeFields(evmFeeData: evmFeeData, gasPrice: gasPrice, feeToken: baseToken, currency: currency, feeTokenRate: rates[baseToken.coin.uid]))
 
         return [flow, .init(fields, isMain: false)].compactMap { $0 }
     }

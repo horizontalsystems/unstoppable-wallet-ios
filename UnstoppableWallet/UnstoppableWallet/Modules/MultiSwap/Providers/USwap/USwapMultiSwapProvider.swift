@@ -228,7 +228,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> ISwapFinalQuote {
+    func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote {
         let quote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient, dry: false)
 
         let amountOut = quote.expectedBuyAmount
@@ -351,7 +351,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         slippage: Decimal,
         recipient: String?,
         transactionSettings: TransactionSettings?
-    ) async throws -> ISwapFinalQuote {
+    ) async throws -> SwapFinalQuote {
         guard let jsonObject = quote.tx else {
             throw SwapError.noTransactionData
         }
@@ -415,7 +415,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         slippage: Decimal,
         recipient: String?,
         transactionSettings: TransactionSettings?
-    ) async throws -> ISwapFinalQuote {
+    ) async throws -> SwapFinalQuote {
         var transactionError: Error?
         var sendInfo: SendInfo?
         var params: SendParameters?
@@ -462,7 +462,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         quote: Quote,
         slippage: Decimal,
         recipient: String?
-    ) async throws -> ISwapFinalQuote {
+    ) async throws -> SwapFinalQuote {
         guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
             throw SwapError.noZcashAdapter
         }
@@ -509,7 +509,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         quote: Quote,
         slippage: Decimal,
         recipient: String?
-    ) async throws -> ISwapFinalQuote {
+    ) async throws -> SwapFinalQuote {
         guard let jsonObject = quote.tx else {
             throw SwapError.noTransactionData
         }
@@ -571,7 +571,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         quote: Quote,
         slippage: Decimal,
         recipient: String?
-    ) async throws -> ISwapFinalQuote {
+    ) async throws -> SwapFinalQuote {
         guard let adapter = adapterManager.adapter(for: tokenIn) as? StellarAdapter else {
             throw SwapError.noStellarAdapter
         }
@@ -625,7 +625,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         quote: Quote,
         slippage: Decimal,
         recipient: String?
-    ) async throws -> ISwapFinalQuote {
+    ) async throws -> SwapFinalQuote {
         guard let jsonObject = quote.tx else {
             throw SwapError.noTransactionData
         }
@@ -672,7 +672,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         slippage: Decimal,
         recipient: String?,
         priority: SendPriority
-    ) async throws -> ISwapFinalQuote {
+    ) async throws -> SwapFinalQuote {
         guard let adapter = adapterManager.adapter(for: tokenIn) as? MoneroAdapter else {
             throw SwapError.noMoneroAdapter
         }

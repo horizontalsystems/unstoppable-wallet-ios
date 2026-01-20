@@ -24,7 +24,7 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         fatalError("Must be implemented in subclass")
     }
 
-    func confirmationQuote(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, slippage _: Decimal, recipient _: String?, transactionSettings _: TransactionSettings?) async throws -> ISwapFinalQuote {
+    func confirmationQuote(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal, slippage _: Decimal, recipient _: String?, transactionSettings _: TransactionSettings?) async throws -> SwapFinalQuote {
         fatalError("Must be implemented in subclass")
     }
 

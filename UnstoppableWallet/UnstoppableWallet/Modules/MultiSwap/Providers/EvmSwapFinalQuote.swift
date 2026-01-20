@@ -2,12 +2,11 @@ import EvmKit
 import Foundation
 import MarketKit
 
-class EvmSwapFinalQuote: BaseSendEvmData, ISwapFinalQuote {
-    private let expectedBuyAmount: Decimal
+class EvmSwapFinalQuote: SwapFinalQuote {
     let transactionData: TransactionData?
-    private let transactionError: Error?
-    private let slippage: Decimal?
-    private let recipient: String?
+    let gasPrice: GasPrice?
+    let evmFeeData: EvmFeeData?
+    let nonce: Int?
 
     init(
         expectedBuyAmount: Decimal,
@@ -19,54 +18,28 @@ class EvmSwapFinalQuote: BaseSendEvmData, ISwapFinalQuote {
         evmFeeData: EvmFeeData?,
         nonce: Int?
     ) {
-        self.expectedBuyAmount = expectedBuyAmount
         self.transactionData = transactionData
-        self.transactionError = transactionError
-        self.slippage = slippage
-        self.recipient = recipient
+        self.gasPrice = gasPrice
+        self.evmFeeData = evmFeeData
+        self.nonce = nonce
 
-        super.init(gasPrice: gasPrice, evmFeeData: evmFeeData, nonce: nonce)
+        super.init(expectedBuyAmount: expectedBuyAmount, slippage: slippage, recipient: recipient, transactionError: transactionError)
     }
 
-    var amountOut: Decimal {
-        expectedBuyAmount
-    }
-
-    var feeData: FeeData? {
+    override var feeData: FeeData? {
         evmFeeData.map { .evm(evmFeeData: $0) }
     }
 
-    var canSwap: Bool {
-        gasPrice != nil && evmFeeData != nil && transactionData != nil && transactionError == nil
+    override var canSwap: Bool {
+        super.canSwap && gasPrice != nil && evmFeeData != nil && transactionData != nil
     }
 
-    func cautions(baseToken: Token) -> [CautionNew] {
-        var cautions = [CautionNew]()
-
-        if let transactionError {
-            cautions.append(caution(transactionError: transactionError, feeToken: baseToken))
-        }
-
-        return cautions
+    override func caution(transactionError: Error, baseToken: Token) -> CautionNew? {
+        EvmSendHelper.caution(transactionError: transactionError, feeToken: baseToken)
     }
 
-    func fields(tokenIn _: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
-        var fields = [SendField]()
-
-        if let slippage {
-            let minAmountOut = amountOut * (1 - slippage / 100)
-            if let minRecieve = SendField.minRecieve(token: tokenOut, value: minAmountOut) {
-                fields.append(minRecieve)
-            }
-
-            if let slippage = SendField.slippage(slippage) {
-                fields.append(slippage)
-            }
-        }
-
-        if let recipient {
-            fields.append(.recipient(recipient, blockchainType: tokenOut.blockchainType))
-        }
+    override func fields(tokenIn: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
+        var fields = super.fields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
 
         if let nonce {
             fields.append(
@@ -74,7 +47,7 @@ class EvmSwapFinalQuote: BaseSendEvmData, ISwapFinalQuote {
             )
         }
 
-        fields.append(contentsOf: feeFields(feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate))
+        fields.append(contentsOf: EvmSendHelper.feeFields(evmFeeData: evmFeeData, gasPrice: gasPrice, feeToken: baseToken, currency: currency, feeTokenRate: baseTokenRate))
 
         return fields
     }

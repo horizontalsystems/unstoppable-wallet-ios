@@ -2,14 +2,10 @@ import Foundation
 import MarketKit
 import TonKit
 
-class TonSwapFinalQuote: ISwapFinalQuote {
+class TonSwapFinalQuote: SwapFinalQuote {
     private let amountIn: Decimal
-    private let expectedAmountOut: Decimal
-    private let recipient: String?
-    private let slippage: Decimal
     let transactionParam: SendTransactionParam
     private let fee: Decimal?
-    private let transactionError: Error?
 
     init(
         amountIn: Decimal,
@@ -21,44 +17,22 @@ class TonSwapFinalQuote: ISwapFinalQuote {
         transactionError: Error?,
     ) {
         self.amountIn = amountIn
-        self.expectedAmountOut = expectedAmountOut
-        self.recipient = recipient
-        self.slippage = slippage
         self.transactionParam = transactionParam
         self.fee = fee
-        self.transactionError = transactionError
+
+        super.init(expectedBuyAmount: expectedAmountOut, slippage: slippage, recipient: recipient, transactionError: transactionError)
     }
 
-    var amountOut: Decimal {
-        expectedAmountOut
+    override var canSwap: Bool {
+        super.canSwap && fee != nil
     }
 
-    var canSwap: Bool {
-        transactionError == nil && fee != nil
+    override func caution(transactionError: Error, baseToken: Token) -> CautionNew? {
+        TonSendHelper.caution(transactionError: transactionError, feeToken: baseToken)
     }
 
-    var feeData: FeeData? {
-        nil
-    }
-
-    func cautions(baseToken: Token) -> [CautionNew] {
-        if let transactionError {
-            return [TonSendHelper.caution(transactionError: transactionError, feeToken: baseToken)]
-        }
-
-        return []
-    }
-
-    func fields(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, baseToken: MarketKit.Token, currency: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
-        var fields = [SendField]()
-
-        if let slippage = SendField.slippage(slippage) {
-            fields.append(slippage)
-        }
-
-        if let recipient {
-            fields.append(.recipient(recipient, blockchainType: tokenOut.blockchainType))
-        }
+    override func fields(tokenIn: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
+        var fields = super.fields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
 
         fields.append(contentsOf: TonSendHelper.feeFields(
             fee: fee,
