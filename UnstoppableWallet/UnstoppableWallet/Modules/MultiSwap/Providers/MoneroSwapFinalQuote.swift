@@ -2,18 +2,14 @@ import Foundation
 import MarketKit
 import MoneroKit
 
-class MoneroSwapFinalQuote: ISwapFinalQuote {
+class MoneroSwapFinalQuote: SwapFinalQuote {
     private let amountIn: Decimal
-    private let expectedAmountOut: Decimal
-    private let recipient: String?
-    private let slippage: Decimal?
     let amount: MoneroSendAmount
     let address: String
     let memo: String?
     private let token: Token
     let priority: SendPriority
     private let fee: Decimal?
-    private let transactionError: Error?
 
     init(
         amountIn: Decimal,
@@ -29,63 +25,26 @@ class MoneroSwapFinalQuote: ISwapFinalQuote {
         transactionError: Error?
     ) {
         self.amountIn = amountIn
-        self.expectedAmountOut = expectedAmountOut
-        self.recipient = recipient
-        self.slippage = slippage
         self.amount = amount
         self.address = address
         self.memo = memo
         self.token = token
         self.priority = priority
         self.fee = fee
-        self.transactionError = transactionError
+
+        super.init(expectedBuyAmount: expectedAmountOut, slippage: slippage, recipient: recipient, transactionError: transactionError)
     }
 
-    var amountOut: Decimal {
-        expectedAmountOut
-    }
-
-    var canSwap: Bool {
-        transactionError == nil
-    }
-
-    var feeData: FeeData? {
+    override var feeData: FeeData? {
         .monero(amount: amount, address: address)
     }
 
-    func cautions(baseToken: Token) -> [CautionNew] {
-        guard let transactionError else {
-            return []
-        }
-
-        return [MoneroSendHelper.caution(transactionError: transactionError, feeToken: baseToken)]
+    override func caution(transactionError: Error, baseToken: Token) -> CautionNew? {
+        MoneroSendHelper.caution(transactionError: transactionError, feeToken: baseToken)
     }
 
-    func fields(
-        tokenIn _: MarketKit.Token,
-        tokenOut: MarketKit.Token,
-        baseToken: MarketKit.Token,
-        currency: Currency,
-        tokenInRate _: Decimal?,
-        tokenOutRate _: Decimal?,
-        baseTokenRate: Decimal?
-    ) -> [SendField] {
-        var fields = [SendField]()
-
-        if let slippage {
-            let minAmountOut = amountOut * (1 - slippage / 100)
-            if let minRecieve = SendField.minRecieve(token: tokenOut, value: minAmountOut) {
-                fields.append(minRecieve)
-            }
-
-            if let slippage = SendField.slippage(slippage) {
-                fields.append(slippage)
-            }
-        }
-
-        if let recipient {
-            fields.append(.recipient(recipient, blockchainType: tokenOut.blockchainType))
-        }
+    override func fields(tokenIn: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
+        var fields = super.fields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
 
         fields.append(contentsOf: MoneroSendHelper.feeFields(
             fee: fee,

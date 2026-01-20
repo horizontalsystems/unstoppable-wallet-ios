@@ -63,7 +63,7 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         return try await adapter.sendProposal(outputs: [transparentOutput, memoOutput])
     }
 
-    override func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> ISwapFinalQuote {
+    override func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote {
         // use base scenario for all tokens except zcash
         guard tokenIn.blockchainType == .zcash else {
             return try await super.confirmationQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient, transactionSettings: transactionSettings)

@@ -3,14 +3,6 @@ import Foundation
 import MarketKit
 
 class UtxoSendHelper {
-    let satoshiPerByte: Int?
-    let fee: Decimal?
-
-    init(satoshiPerByte: Int?, fee: Decimal?) {
-        self.satoshiPerByte = satoshiPerByte
-        self.fee = fee
-    }
-
     static func amountData(fee: Decimal?, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
         guard let fee else {
             return nil

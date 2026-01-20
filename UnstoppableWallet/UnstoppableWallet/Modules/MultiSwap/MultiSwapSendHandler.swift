@@ -211,10 +211,10 @@ extension MultiSwapSendHandler {
         let tokenIn: Token
         let tokenOut: Token
         let amountIn: Decimal
-        let quote: ISwapFinalQuote
+        let quote: SwapFinalQuote
         let otherSections: [SendDataSection]
 
-        init(tokenIn: Token, tokenOut: Token, amountIn: Decimal, quote: ISwapFinalQuote, otherSections: [SendDataSection]) {
+        init(tokenIn: Token, tokenOut: Token, amountIn: Decimal, quote: SwapFinalQuote, otherSections: [SendDataSection]) {
             self.tokenIn = tokenIn
             self.tokenOut = tokenOut
             self.amountIn = amountIn

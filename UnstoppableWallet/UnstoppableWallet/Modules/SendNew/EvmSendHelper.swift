@@ -2,18 +2,8 @@ import EvmKit
 import Foundation
 import MarketKit
 
-class BaseSendEvmData {
-    let gasPrice: GasPrice?
-    let evmFeeData: EvmFeeData?
-    let nonce: Int?
-
-    init(gasPrice: GasPrice?, evmFeeData: EvmFeeData?, nonce: Int?) {
-        self.gasPrice = gasPrice
-        self.evmFeeData = evmFeeData
-        self.nonce = nonce
-    }
-
-    func feeFields(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [SendField] {
+class EvmSendHelper {
+    static func feeFields(evmFeeData: EvmFeeData?, gasPrice: GasPrice?, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [SendField] {
         let amountData = evmFeeData.flatMap { $0.totalAmountData(gasPrice: gasPrice, feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate) }
 
         return [
@@ -26,7 +16,7 @@ class BaseSendEvmData {
         ]
     }
 
-    func caution(transactionError: Error, feeToken: Token) -> CautionNew {
+    static func caution(transactionError: Error, feeToken: Token) -> CautionNew {
         let title: String
         let text: String
 

@@ -4,62 +4,29 @@ import Foundation
 import MarketKit
 import TronKit
 
-class TronSwapFinalQuote: ISwapFinalQuote {
+class TronSwapFinalQuote: SwapFinalQuote {
     private let amountIn: Decimal
-    private let expectedAmountOut: Decimal
-    private let recipient: String?
-    private let slippage: Decimal?
     let createdTransaction: CreatedTransactionResponse
     private let fees: [Fee]
-    private let transactionError: Error?
 
     init(amountIn: Decimal, expectedAmountOut: Decimal, recipient: String?, slippage: Decimal?, createdTransaction: CreatedTransactionResponse, fees: [Fee], transactionError: Error?) {
         self.amountIn = amountIn
-        self.expectedAmountOut = expectedAmountOut
-        self.recipient = recipient
-        self.slippage = slippage
         self.createdTransaction = createdTransaction
         self.fees = fees
-        self.transactionError = transactionError
+
+        super.init(expectedBuyAmount: expectedAmountOut, slippage: slippage, recipient: recipient, transactionError: transactionError)
     }
 
-    var amountOut: Decimal {
-        expectedAmountOut
-    }
-
-    var canSwap: Bool {
-        transactionError == nil
-    }
-
-    var feeData: FeeData? {
+    override var feeData: FeeData? {
         .tron(fees: fees)
     }
 
-    func cautions(baseToken: Token) -> [CautionNew] {
-        if let transactionError {
-            return [TronSendHelper.caution(transactionError: transactionError, feeToken: baseToken)]
-        }
-
-        return []
+    override func caution(transactionError: Error, baseToken: Token) -> CautionNew? {
+        TronSendHelper.caution(transactionError: transactionError, feeToken: baseToken)
     }
 
-    func fields(tokenIn _: MarketKit.Token, tokenOut: MarketKit.Token, baseToken: MarketKit.Token, currency: Currency, tokenInRate _: Decimal?, tokenOutRate _: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
-        var fields = [SendField]()
-
-        if let slippage {
-            let minAmountOut = amountOut * (1 - slippage / 100)
-            if let minRecieve = SendField.minRecieve(token: tokenOut, value: minAmountOut) {
-                fields.append(minRecieve)
-            }
-
-            if let slippage = SendField.slippage(slippage) {
-                fields.append(slippage)
-            }
-        }
-
-        if let recipient {
-            fields.append(.recipient(recipient, blockchainType: tokenOut.blockchainType))
-        }
+    override func fields(tokenIn: Token, tokenOut: Token, baseToken: Token, currency: Currency, tokenInRate: Decimal?, tokenOutRate: Decimal?, baseTokenRate: Decimal?) -> [SendField] {
+        var fields = super.fields(tokenIn: tokenIn, tokenOut: tokenOut, baseToken: baseToken, currency: currency, tokenInRate: tokenInRate, tokenOutRate: tokenOutRate, baseTokenRate: baseTokenRate)
 
         fields.append(contentsOf: TronSendHelper.feeFields(baseToken: baseToken, totalFees: fees.calculateTotalFees(), fees: fees, currency: currency, feeTokenRate: baseTokenRate))
 
