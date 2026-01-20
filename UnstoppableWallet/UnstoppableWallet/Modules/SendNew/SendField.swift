@@ -267,7 +267,10 @@ extension SendField {
         }
 
         return .simpleValue(
-            title: "swap.confirmation.minimum_received".localized,
+            title: SendField.InformedTitle("swap.confirmation.minimum_received".localized, info: InfoDescription(
+                title: "swap.confirmation.minimum_received".localized,
+                description: "swap.confirmation.minimum_received.info".localized
+            )),
             value: formatted
         )
     }
