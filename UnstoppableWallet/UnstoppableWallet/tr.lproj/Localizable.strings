@@ -1540,15 +1540,17 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "terms.title" = "Şartlar";
 "terms.i_agree" = "Kabul Ediyorum";
 
-"terms.item.backup_recovery" = "Her cüzdanın kurtarma ifadesini güvenli şekilde yedekleyin. Uygulama silinir, kaybolur veya bozulursa fonlarınıza yeniden erişmenin tek yolu budur. Kimse bunu sizin yerinize geri yükleyemez.";
-"terms.item.device_pin" = "Telefonunuzun kilit açma PIN’ini (veya şifresini) devre dışı bırakmak, uygulamadaki tüm cüzdanları siler. Erişimi geri yüklemek için kurtarma ifadelerinize ihtiyaç duyarsınız.";
-"terms.item.privacy_notice" = "Uygulama bakiye veya işlemlerinizle ilgili veri toplamaz veya sizi takip etmez — kaç kişinin uygulamayı kullandığını bile bilmiyoruz. Sadece anonim kullanım verilerini (açılan sayfalar, tıklanan butonlar) toplar ve bu da sadece kullanılabilirliği geliştirmek içindir. Ayarlar → Gizlilik bölümünden bunu kapatabilirsiniz.";
-
+"terms.item.backup_recovery" = "Her cüzdan için kurtarma ifadelerini güvenli bir şekilde yedekleyin. Uygulama arızalanırsa fonlara yeniden erişmenin tek yolu budur.";
+"terms.item.device_pin" = "Akıllı telefon kilit açma PIN'ini devre dışı bırakmak, tüm cüzdanları uygulamadan siler. Fonlara yeniden erişim sağlamak için kurtarma ifadelerine ihtiyaç duyulacaktır.";
+"terms.item.privacy_notice" = "Uygulama bakiye veya işlemlerinizle ilgili veri toplamaz veya sizi takip etmez — kaç kişinin uygulamayı kullandığını bile bilmiyoruz. Sadece anonim kullanım verilerini (açılan sayfalar, tıklanan butonlar) toplar ve bu da sadece kullanılabilirliği geliştirmek içindir. Ayarlar → Gizlilik bölümünden bunu kapatabilirsiniz";
 "terms.item.decentralized" = "Varlıklarınızı tutmayız, private key’lerinize erişmeyiz ve sizin adınıza işlem gerçekleştirmeyiz. Uygulama; aracılık, exchange, saklama (custody), escrow veya para transferi hizmetleri sunmaz. Tüm işlemler, public blockchain ağlarına doğrudan sizin tarafınızdan başlatılır, imzalanır ve yayınlanır. İşlemlerinizi kontrol etmeyiz, iletmeyiz, değiştirmeyiz veya işlemden geçirmeyiz.";
-"terms.item.commission" = "Sürekli geliştirmeyi desteklemek ve open source olarak kalmak amacıyla, uygulama belirli swap entegrasyonlarından küçük bir komisyon alabilir. Bu tür bir komisyon, kullanıcı fonlarının saklanmasını içermez ve varlıklarınıza erişim veya kontrol yetkisi vermez.";
+"terms.item.commission" = "Para kazanma modeli kapsamında uygulama, cüzdan içinden yapılan DEX takaslarından küçük komisyonlar alır. Bu, bağımsız, açık kaynaklı ve VC fonlarından uzak kalmamıza yardımcı olur.";
 "terms.item.irreversibility" = "Blockchain işlemleri geri döndürülemez. Onaylamadan önce işlem detaylarını her zaman dikkatlice kontrol edin.";
-"terms.item.software" = "Uygulama “as is” (olduğu gibi) sunulmaktadır. Özenle geliştirilmiş olsa da, yazılım istenmeyen bug’lar veya güvenlik açıkları içerebilir ve bu durum fon kaybına yol açabilir. Uygulama open source’tur ve herkes tarafından bağımsız olarak incelenebilir ve denetlenebilir.";
+"terms.item.software" = "Uygulama doğrulanabilir şekilde açık kaynaklıdır; tüm kaynak kodu çevrimiçi olarak yayımlanmıştır. Yukarıdaki tüm bilgiler herkes tarafından kamuya açık olarak doğrulanabilir.";
 "terms.item.compliance" = "Fonlarınızın güvenliğinden, kendi davranışlarınızdan ve bulunduğunuz yargı alanında geçerli olan yasalara uyumdan yalnızca siz sorumlusunuz. Uygulamanın kullanımı, sizi vergi, finansal raporlama veya diğer yasal yükümlülüklerden muaf tutmaz.";
+"terms.item.prohibite_use" = "Güvenli bir ekosistemi korumak amacıyla, uygulamayı kara para aklama veya yaptırımları aşma, dolandırıcılık, scam faaliyetleri, çalıntı varlıkları gizleme ya da yasaklı kuruluşların finansmanı dahil olmak üzere herhangi bir yasa dışı faaliyet için kullanmamayı kabul edersiniz.";
+"terms.item.user_responsibility" = "Devam ederek, fonlarınızın güvenliği ve yasal mevzuata uyumun nihai olarak sizin sorumluluğunuzda olduğunu kabul edersiniz.";
+
 
 
 // Settings -> Tell Friends
@@ -1775,7 +1777,7 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "appearance.recently_sent" = "Son Gönderilenler";
 "appearance.recently_sent.description" = "Token için son gönderilen adresi görüntüle.";
 "appearance.hide_buttons" = "Düğmeleri Gizle";
-"appearance.hide_buttons.description" = "Bakiye sekmesinde Gönder, Al ve Takas butonlarını gizle.";
+"appearance.hide_buttons.description" = "Balance sekmesindeki Send, Receive ve Swap butonlarını gizler.";
 "appearance.balance_value" = "Coin Bakiyeleri";
 "appearance.balance_value.description" = "Bakiyeleri crypto veya fiat cinsinden vurgulanmış şekilde gösterin.";
 "appearance.balance_value.coin_fiat" = "Coin/Fiat";
@@ -2414,37 +2416,38 @@ Bu tür işlemler genellikle kimlik avı (phishing) ve adres zehirleme (address-
 // Defense System
 "purchases.defense_system" = "Savunma Sistemi";
 "purchases.secure_send" = "Güvenli Gönderim";
-"purchases.secure_send.description" = "Riskli adresler konusunda sizi uyarır.";
+"purchases.secure_send.description" = "Riskli veya phishing amaçlı adreslere fon gönderilmesini engeller.";
 "purchases.secure_send.info" = "Alıcı cüzdanları oltalama veya dolandırıcılık açısından kontrol eder. Riskli adreslere göndermeden önce sizi uyarır.";
 "purchases.scam_protection" = "Dolandırıcılık Koruması";
-"purchases.scam_protection.description" = "Bir dApp sitesinin sahte olup olmadığını bildirir.";
+"purchases.scam_protection.description" = "Sahte veya kötü amaçlı dApp’lere bağlanırken sizi uyarır.";
 "purchases.scam_protection.info" = "Bağlanmadan önce sahte veya kötü amaçlı dApp’leri tespit eder. Oltalama saldırılarını önler ve varlıklarınızı korur.";
-"purchases.loss_protection" = "Kayıp Koruması";
-"purchases.loss_protection.description" = "Botların takas işlemlerinde sizi zarara uğratmasını engeller.";
-"purchases.loss_protection.info" = "Takas sırasında botları ve front-running saldırılarını engeller. İşlemlerinizi adil ve güvenli tutar.";
+"purchases.swap_protection" = "Swap Protection";
+"purchases.swap_protection.description" = "Swap işlemleri sırasında botları ve MEV saldırılarını engeller.";
+"purchases.swap_protection.info" = "Swap işlemleri sırasında botları ve front-running saldırılarını durdurur. İşlemlerinizin adil ve güvenli kalmasını sağlar.";
 "purchases.robbery_protection" = "Zorla Açtırma Koruması";
-"purchases.robbery_protection.description" = "Uygulamayı zorla açmanız gereken durumlarda fonlarınızı korur.";
+"purchases.robbery_protection.description" = "Uygulamayı zorla kilidini açmanız durumunda fonlarınızı korur.";
 "purchases.robbery_protection.info" = "Ayrı bir PIN ile sahte (yem) cüzdan oluşturmanıza olanak tanır. Yüksek riskli durumlarda gerçek varlıklarınızı gizli tutar.";
+
+// Advanced Controls
+"purchases.advanced_controls" = "Advanced Controls";
+"purchases.swap_control" = "Swap Control";
+"purchases.swap_control.description" = "Swap işlemlerinin nasıl ve nerede gerçekleştirileceğini kontrol etmenizi sağlayan gelişmiş ayarlar.";
+"purchases.swap_control.info" = "Varsayılan olarak mevcut en iyi teklifi seçeriz. Premium ile farklı bir sağlayıcı seçebilirsiniz.";
+"purchases.priority_support" = "Öncelikli destek";
+"purchases.priority_support.description" = "Destek ekibimize doğrudan erişim.";
+"purchases.priority_support.info" = "Öncelikli destek ekibimize doğrudan erişim sağlar. Unstoppable ekibinden hızlı ve kişisel destek alırsınız.";
 
 // Market Insights
 "purchases.market_insights" = "Piyasa İçgörüleri";
 "purchases.token_insights" = "Analitik";
-"purchases.token_insights.description" = "Önemli kriterlere göre ilk 100 listelerine erişim";
+"purchases.token_insights.description" = "Detaylı analizler ve token verileri.";
 "purchases.token_insights.info" = "Token için ayrıntılı veriler gösterir - hacim, likidite ve trendler. Daha akıllı yatırım kararları almanıza yardımcı olur.";
-
 "purchases.advanced_search" = "Gelişmiş Arama";
-"purchases.advanced_search.description" = "Çoklu parametreler üzerinden çok seviyeli filtreleme";
+"purchases.advanced_search.description" = "Daha akıllı token keşfi için güçlü filtreler.";
 "purchases.advanced_search.info" = "Token’ları hacim, ağ veya sektör filtreleriyle bulun. CEX/DEX aktiviteleri ve listelemeler için metrikler içerir.";
-
 "purchases.trade_signals" = "Sinyaller ve Trendler";
-"purchases.trade_signals.description" = "Tokenleriniz için piyasa trendlerinin otomatik takibi";
+"purchases.trade_signals.description" = "Daha güvenli ve bilinçli işlem yapmanıza yardımcı olan aksiyon alınabilir sinyaller.";
 "purchases.trade_signals.info" = "Alım-satım fırsatları için gerçek zamanlı bildirimler gönderir. Kâr fırsatlarını veya piyasa risklerini anında vurgular.";
-
-// Vip Support
-"purchases.vip" = "VIP";
-"purchases.vip_support" = "Öncelikli destek";
-"purchases.vip_support.description" = "Hızlı teknik destek için cüzdan ekibine erişim.";
-"purchases.vip_support.info" = "Size doğrudan öncelikli desteğe erişim sağlar. Unstoppable ekibinden hızlı ve kişisel yardım alın.";
 
 "purchase.bottom_sheet.description" = "Tek bir satın alım tüm Premium özelliklerin kilidini açar.";
 

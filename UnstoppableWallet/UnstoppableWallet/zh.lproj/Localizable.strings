@@ -1534,15 +1534,17 @@
 "terms.title" = "条款";
 "terms.i_agree" = "我同意";
 
-"terms.item.backup_recovery" = "请安全备份每个钱包的恢复助记词。如果应用被删除、丢失或出现故障，这是唯一恢复资金访问的方式。无人能为您恢复。";
-"terms.item.device_pin" = "禁用手机解锁 PIN（或密码）会清除应用中的所有钱包。您需要使用恢复助记词来重新访问钱包。";
-"terms.item.privacy_notice" = "本应用不会监视或收集您的余额和交易数据——我们甚至不知道有多少人在使用。应用仅收集匿名使用统计（如打开的页面、点击的按钮），以改进用户体验。您可在“设置 → 隐私”中关闭此功能。";
-
+"terms.item.backup_recovery" = "安全地备份每个钱包的恢复短语。这是在应用程序发生故障时重新获得资金的唯一途径。";
+"terms.item.device_pin" = "在智能手机上禁用解锁 PIN (代码)会删除应用程序中的所有钱包。恢复资金访问将需要恢复短语。";
+"terms.item.privacy_notice" = "应用没有间接或收集关于您的余额或交易的数据 — — 我们甚至不知道有多少人使用它。 它只跟踪匿名使用模式(打开的页面、点击的按钮)以提高可用性。您可以在设置 -&gt; 隐私中关闭此功能。";
 "terms.item.decentralized" = "我们不持有您的资产，不会访问您的私钥，也不会代表您执行交易。该 app 不提供经纪、交易所、托管、第三方托管或资金转移服务。所有交易均由您本人直接发起、签名并广播至公共区块链网络。我们不控制、转发、修改或处理您的交易。";
-"terms.item.commission" = "为支持持续开发并保持开源，该应用可能会从部分兑换交易集成中获得少量佣金。任何此类佣金均不涉及用户资金托管，也不会赋予我们对您资产的访问权或控制权。";
+"terms.item.commission" = "作为盈利模式的-部分，应用会从钱包内执行的 DEX 兑换中获得少量佣金。这有助于我们保持独立、开源，并远离风险投资资金。";
 "terms.item.irreversibility" = "区块链交易是不可逆的。请在确认前务必仔细核对交易详情。";
-"terms.item.software" = "该应用按“按现状提供”。尽管在开发过程中已尽力确保质量，但软件仍可能包含非预期的缺陷或漏洞，从而导致资金损失。该应用为开源项目，任何人均可对其进行独立审查和审计。";
+"terms.item.software" = "本应用完全开源，所有源代码均已公开发布。上述内容任何人都可公开验证。";
 "terms.item.compliance" = "您需对您的资金安全、个人行为以及遵守您所在司法辖区的适用法律承担全部责任。使用该应用并不免除您在税务、财务申报或其他法律方面的义务。";
+"terms.item.prohibite_use" = "为维护安全的生态系统，您同意不将该应用用于任何非法活动，包括洗钱或规避制裁、欺诈、诈骗、隐藏被盗资产，或为被禁止的组织提供资金支持。";
+"terms.item.user_responsibility" = "继续使用即表示您确认，您的资金安全以及遵守相关法律法规最终由您自行负责。";
+
 
 
 // Settings -> Tell Friends
@@ -1769,7 +1771,7 @@
 "appearance.recently_sent" = "最近发送";
 "appearance.recently_sent.description" = "显示该代币最近发送的地址。";
 "appearance.hide_buttons" = "隐藏按钮";
-"appearance.hide_buttons.description" = "在“余额”标签页隐藏发送、接收和兑换按钮。";
+"appearance.hide_buttons.description" = "在余额页面中隐藏“发送”、“接收”和“兑换”按钮。";
 "appearance.balance_value" = "币种余额";
 "appearance.balance_value.description" = "以 crypto 或法币方式高亮显示余额。";
 "appearance.balance_value.coin_fiat" = "加密货币 / 法定货币";
@@ -2403,38 +2405,39 @@
 // Defense System
 "purchases.defense_system" = "防御系统";
 "purchases.secure_send" = "安全发送";
-"purchases.secure_send.description" = "提醒您注意高风险地址。";
+"purchases.secure_send.description" = "防止将资金发送至高风险或钓鱼地址。";
 "purchases.secure_send.info" = "检查收款钱包是否存在钓鱼或欺诈风险，并在您向高风险地址转账前发出提醒。";
 "purchases.scam_protection" = "防骗保护";
-"purchases.scam_protection.description" = "识别并提示伪造的 dApp 网站。";
+"purchases.scam_protection.description" = "在连接到虚假或恶意 dApps 时向您发出警告。";
 "purchases.scam_protection.info" = "在连接前检测伪造或恶意的 dApp，防止钓鱼攻击，保障您的资产安全。
 ";
-"purchases.loss_protection" = "损失保护";
-"purchases.loss_protection.description" = "防止机器人在兑换过程中窃取资产。";
-"purchases.loss_protection.info" = "在兑换过程中阻止机器人和抢跑攻击，确保您的交易公平且安全。";
+"purchases.swap_protection" = "兑换保护";
+"purchases.swap_protection.description" = "在兑换过程中防止 bots 和 MEV 攻击。";
+"purchases.swap_protection.info" = "在兑换过程中阻止 bots 和抢跑（front-running）攻击，确保您的交易公平且安全。";
 "purchases.robbery_protection" = "抢劫保护";
-"purchases.robbery_protection.description" = "在您被迫打开应用时保护资金安全。";
+"purchases.robbery_protection.description" = "在您被迫解锁应用的情况下保护您的资金安全。";
 "purchases.robbery_protection.info" = "允许您创建一个带独立 PIN 的诱饵钱包，在高风险情况下隐藏真实资产。";
+
+// Advanced Controls
+"purchases.advanced_controls" = "高级控制";
+"purchases.swap_control" = "兑换控制";
+"purchases.swap_control.description" = "用于控制兑换如何以及通过何处执行的高级设置。";
+"purchases.swap_control.info" = "默认情况下，我们会选择当前可用的最佳报价。使用 Premium 后，您可以选择其他提供方。";
+"purchases.priority_support" = "优先支持";
+"purchases.priority_support.description" = "直接联系支持团队。";
+"purchases.priority_support.info" = "为您提供优先级支持的直接通道，获得来自 Unstoppable 团队快速且个性化的帮助。";
 
 // Market Insights
 "purchases.market_insights" = "市场洞察";
 "purchases.token_insights" = "分析";
-"purchases.token_insights.description" = "按關鍵標準獲取前100名列表";
+"purchases.token_insights.description" = "深入的分析和代币数据。";
 "purchases.token_insights.info" = "显示代币的详细数据—包括交易量、流动性和趋势，帮助您做出更明智的投资决策。";
-
 "purchases.advanced_search" = "進階搜尋";
-"purchases.advanced_search.description" = "多參數多層級篩選";
+"purchases.advanced_search.description" = "强大的筛选功能，助您更智能地发现代币。";
 "purchases.advanced_search.info" = "通过交易量、链或行业等筛选条件查找代币，并包含 CEX/DEX 活跃度及上架相关指标。";
-
 "purchases.trade_signals" = "信號與趨勢";
-"purchases.trade_signals.description" = "自動監控您代幣的市場趨勢";
+"purchases.trade_signals.description" = "可执行的信号，帮助您更自信地进行交易。";
 "purchases.trade_signals.info" = "实时推送交易机会提醒，及时提示潜在盈利机会或市场风险。";
-
-// Vip Support
-"purchases.vip" = "VIP";
-"purchases.vip_support" = "优先支持";
-"purchases.vip_support.description" = "直接聯繫錢包團隊獲取快速技術支援。";
-"purchases.vip_support.info" = "为您提供直接访问的优先支持服务，可快速获得 Unstoppable 团队的个性化协助。";
 
 "purchase.bottom_sheet.description" = "购买即可解锁所有高级功能。";
 

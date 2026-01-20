@@ -1534,15 +1534,17 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 "terms.title" = "Conditions";
 "terms.i_agree" = "J'accepte";
 
-"terms.item.backup_recovery" = "Sauvegardez soigneusement la phrase de récupération de chaque portefeuille. C’est le seul moyen de retrouver l’accès à vos fonds si l’application est supprimée, perdue ou défectueuse. Personne ne peut la restaurer à votre place.";
-"terms.item.device_pin" = "La désactivation du code PIN (de déverrouillage du téléphone) efface tous les portefeuilles de l’application. Vous aurez besoin de vos phrases de récupération pour les restaurer.";
-"terms.item.privacy_notice" = "L’application n’espionne pas et ne collecte aucune donnée sur vos soldes ou transactions — nous ne savons même pas combien d’utilisateurs l’utilisent. Elle suit uniquement de manière anonyme certaines statistiques d’utilisation (pages ouvertes, boutons utilisés) pour améliorer l’ergonomie. Vous pouvez désactiver cette option dans Paramètres → Confidentialité.";
-
+"terms.item.backup_recovery" = "Sauvegarde sécurisée des phrases de récupération pour chaque portefeuille. C'est le seul moyen de récupérer l'accès aux fonds si l'application ne fonctionne pas.";
+"terms.item.device_pin" = "La désactivation du code PIN (code) sur le smartphone supprime tous les portefeuilles de l'application. Des phrases de récupération seront nécessaires pour restaurer l'accès aux fonds.";
+"terms.item.privacy_notice" = "L'application n'espionne pas ou ne collecte pas de données sur vos balances ou vos transactions - nous ne savons même pas combien de personnes l'utilisent. Il ne suit que les modèles d'utilisation anonymes (pages ouvertes, boutons appuyés) pour améliorer la convivialité. Vous pouvez désactiver cette option dans Paramètres → Confidentialité";
 "terms.item.decentralized" = "Nous ne détenons pas vos actifs, n’avons pas accès à vos private keys et n’exécutons pas de transactions en votre nom. L’application ne fournit pas de services de courtage, d’échange, de custody, d’escrow ni de transmission de fonds. Toutes les transactions sont initiées, signées et diffusées directement par vous vers des réseaux blockchain publics. Nous ne contrôlons pas, ne relayons pas, ne modifions pas et ne traitons pas vos transactions.";
-"terms.item.commission" = "Afin de soutenir le développement continu et de rester open source, l’application peut percevoir une faible commission provenant de certaines intégrations de swap. Une telle commission n’implique aucune custody des fonds des utilisateurs et ne nous donne aucun accès ni contrôle sur vos actifs.";
+"terms.item.commission" = "Dans le cadre de son modèle de monétisation, l'application gagne de petites commissions grâce aux swaps DEX exécutés dans le portefeuille. Cela nous aide à rester indépendants, open source, et sans argent VC.";
 "terms.item.irreversibility" = "Les transactions blockchain sont irréversibles. Vérifiez toujours les détails de la transaction avant de confirmer.";
-"terms.item.software" = "L’application est fournie « en l’état ». Bien qu’elle soit développée avec soin, le logiciel peut contenir des bugs ou des vulnérabilités non intentionnels pouvant entraîner une perte de fonds. L’application est open source et peut être examinée et auditée indépendamment par quiconque.";
+"terms.item.software" = "L'application est un code source ouvert vérifiable, avec tout le code source publié en ligne. Tout ce qui est indiqué ci-dessus peut être vérifié publiquement par n'importe qui.";
 "terms.item.compliance" = "Vous êtes seul responsable de la sécurité de vos fonds, de votre comportement et du respect des lois applicables dans votre juridiction. L’utilisation de l’application ne vous exonère pas des obligations fiscales, de reporting financier ou d’autres obligations légales.";
+"terms.item.prohibite_use" = "Afin de maintenir un écosystème sûr, vous acceptez de ne pas utiliser l’application à des fins illégales, notamment le blanchiment d’argent ou le contournement de sanctions, la fraude, les arnaques, la dissimulation d’actifs volés ou le financement d’organisations interdites.";
+"terms.item.user_responsibility" = "En poursuivant, vous reconnaissez que la sécurité de vos fonds et le respect des obligations légales relèvent en dernier ressort de votre responsabilité.";
+
 
 
 // Settings -> Tell Friends
@@ -1769,7 +1771,7 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 "appearance.recently_sent" = "Envoyés récemment";
 "appearance.recently_sent.description" = "Afficher l’adresse récemment utilisée pour l’envoi de ce jeton.";
 "appearance.hide_buttons" = "Masquer les boutons";
-"appearance.hide_buttons.description" = "Masquer les boutons Envoyer, Recevoir et Échanger dans l’onglet Solde.";
+"appearance.hide_buttons.description" = "Masquer les boutons Envoyer, Recevoir et Permuter de l'onglet Solde.";
 "appearance.balance_value" = "Soldes des coins";
 "appearance.balance_value.description" = "Afficher les soldes mis en évidence en crypto ou en fiat.";
 "appearance.balance_value.coin_fiat" = "Pièce / Fiat";
@@ -2403,37 +2405,38 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 // Defense System
 "purchases.defense_system" = "Système de défense";
 "purchases.secure_send" = "Envoi sécurisé";
-"purchases.secure_send.description" = "Vous avertit des adresses à risque.";
+"purchases.secure_send.description" = "Empêche l’envoi de fonds vers des adresses risquées ou de phishing.";
 "purchases.secure_send.info" = "Vérifie les portefeuilles destinataires pour détecter le phishing ou la fraude. Vous avertit avant d’envoyer vers des adresses à risque.";
 "purchases.scam_protection" = "Protection anti-fraude";
-"purchases.scam_protection.description" = "Vous informe si un site dApp est frauduleux.";
+"purchases.scam_protection.description" = "Vous avertit lors de la connexion à des dApps fausses ou malveillantes.";
 "purchases.scam_protection.info" = "Détecte les dApps frauduleuses ou malveillantes avant la connexion. Prévient le phishing et protège vos actifs.";
-"purchases.loss_protection" = "Protection contre les pertes";
-"purchases.loss_protection.description" = "Empêche les bots de voler vos fonds lors des échanges.";
-"purchases.loss_protection.info" = "Bloque les bots et les attaques de front-running pendant les échanges. Garantit des transactions équitables et sécurisées.";
+"purchases.swap_protection" = "Protection des swap";
+"purchases.swap_protection.description" = "Empêche les bots et les attaques MEV lors des swaps.";
+"purchases.swap_protection.info" = "Bloque les bots et les attaques de front-running lors des swaps. Garantit des transactions équitables et sécurisées.";
 "purchases.robbery_protection" = "Protection contre le vol";
-"purchases.robbery_protection.description" = "Protège vos fonds si vous êtes contraint d’ouvrir l’application.";
+"purchases.robbery_protection.description" = "Protège vos fonds si vous êtes contraint de déverrouiller l’application.";
 "purchases.robbery_protection.info" = "Vous permet de créer un portefeuille leurre avec un code PIN distinct. Vos véritables actifs restent cachés dans les situations à risque. ";
+
+// Advanced Controls
+"purchases.advanced_controls" = "Contrôles avancés";
+"purchases.swap_control" = "Contrôle des swaps";
+"purchases.swap_control.description" = "Paramètres avancés pour contrôler la manière et l’endroit où les swaps sont exécutés.";
+"purchases.swap_control.info" = "Par défaut, nous sélectionnons la meilleure offre disponible. Avec Premium, vous pouvez choisir un autre fournisseur.";
+"purchases.priority_support" = "Support prioritaire";
+"purchases.priority_support.description" = "Accès direct à notre équipe de support.";
+"purchases.priority_support.info" = "Vous donne un accès direct au support prioritaire. Bénéficiez d’une assistance rapide et personnalisée de l’équipe Unstoppable.";
 
 // Market Insights
 "purchases.market_insights" = "Aperçus du marché";
 "purchases.token_insights" = "Analyses";
-"purchases.token_insights.description" = "Accès aux listes top-100 selon des critères clés";
+"purchases.token_insights.description" = "Analyses approfondies et données détaillées sur les tokens.";
 "purchases.token_insights.info" = "Affiche des données détaillées sur les tokens - volume, liquidité et tendances. Vous aide à prendre des décisions d’investissement plus éclairées.";
-
 "purchases.advanced_search" = "Recherche Avancée";
-"purchases.advanced_search.description" = "Filtrage multi-niveaux sur plusieurs paramètres";
+"purchases.advanced_search.description" = "Filtres puissants pour une découverte des tokens plus intelligente.";
 "purchases.advanced_search.info" = "Trouvez des tokens grâce à des filtres par volume, blockchain ou secteur. Inclut des métriques liées à l’activité CEX/DEX et aux nouvelles cotations.";
-
 "purchases.trade_signals" = "Signaux et Tendances";
-"purchases.trade_signals.description" = "Surveillance automatique des tendances du marché pour vos tokens";
+"purchases.trade_signals.description" = "Signaux exploitables pour trader avec plus de confiance.";
 "purchases.trade_signals.info" = "Envoie des alertes en temps réel sur les opportunités de trading. Met immédiatement en évidence les occasions de profit ou les risques de marché.";
-
-// Vip Support
-"purchases.vip" = "VIP";
-"purchases.vip_support" = "Support prioritaire";
-"purchases.vip_support.description" = "Accès à l'équipe du portefeuille pour un support technique rapide.";
-"purchases.vip_support.info" = "Vous donne un accès direct au support prioritaire. Recevez une aide rapide et personnalisée de l’équipe Unstoppable.";
 
 "purchase.bottom_sheet.description" = "Un seul achat débloque toutes les fonctionnalités Premium.";
 
