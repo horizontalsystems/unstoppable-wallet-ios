@@ -1535,16 +1535,16 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "terms.title" = "Términos";
 "terms.i_agree" = "Acepto";
 
-"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It's the only way to regain access to your funds if the app is deleted, lost or malfunctions. No one can restore it for you.";
-"terms.item.device_pin" = "Disabling your smartphone's unlock PIN (or passcode) wipes all wallets from the app. You'll need your recovery phrases to restore access.";
-"terms.item.privacy_notice" = "The app doesn't spy or collect data about your balances or transactions - we don't even know how many people use it. It only tracks anonymous usage patterns (pages opened, buttons tapped) to improve usability. You can turn this off in Settings → Privacy";
+"terms.item.backup_recovery" = "Copia de seguridad frases de recuperación para cada cartera. Es la única manera de recuperar el acceso a los fondos si la aplicación no funciona correctamente.";
+"terms.item.device_pin" = "Desactivar el PIN de desbloqueo (código) en el smartphone elimina todas las carteras de la aplicación. Se necesitarán frases de recuperación para restaurar el acceso a los fondos.";
+"terms.item.privacy_notice" = "La aplicación no espía ni recopila datos sobre tus balances o transacciones - ni siquiera sabemos cuántas personas lo utilizan. Solo registra patrones de uso anónimos (páginas abiertas, botones pulsados) para mejorar la usabilidad. Puede desactivarlo en Ajustes → Privacidad";
 "terms.item.decentralized" = "No retenemos tus activos, no accedemos a tus private keys ni ejecutamos transacciones en tu nombre. La app no proporciona servicios de corretaje, exchange, custodia, escrow ni transmisión de dinero. Todas las transacciones son iniciadas, firmadas y difundidas directamente por ti en redes blockchain públicas. No controlamos, retransmitimos, modificamos ni procesamos tus transacciones.";
-"terms.item.commission" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet.This helps us stay independent, open source, and free of VC money.";
+"terms.item.commission" = "Como parte de su modelo de monetización, la aplicación gana pequeñas comisiones por los swaps DEX ejecutados dentro de la cartera. Esto nos ayuda a mantenernos independientes, de código abierto y libres de dinero VC.";
 "terms.item.irreversibility" = "Las transacciones en blockchain son irreversibles. Revisa siempre los detalles de la transacción antes de confirmar.";
-"terms.item.software" = "The app is verifiably open source, with all source code published online. Everything stated above can be publicly verified by anyone.";
+"terms.item.software" = "La aplicación es de código abierto verificable, con todo el código fuente publicado en línea. Todo lo indicado anteriormente puede ser verificado públicamente por cualquiera.";
 "terms.item.compliance" = "Eres el único responsable de la seguridad de tus fondos, de tu conducta y del cumplimiento de las leyes aplicables en tu jurisdicción. El uso de la app no te exime de obligaciones fiscales, de reporte financiero ni de otras obligaciones legales.";
-"terms.item.prohibite_use" = "To maintain a safe ecosystem, you agree not to use the app for any illegal activity, including money laundering or sanction evasion, fraud, scams, hiding stolen assets, or the financing of prohibited organizations.";
-"terms.item.user_responsibility" = "By proceeding, you acknowledge that security of your funds and legal compliance are ultimately your responsibility.";
+"terms.item.prohibite_use" = "Para mantener un ecosistema seguro, aceptas no utilizar la app para ninguna actividad ilegal, incluida el lavado de dinero o la evasión de sanciones, el fraude, las estafas, la ocultación de activos robados o la financiación de organizaciones prohibidas.";
+"terms.item.user_responsibility" = "Al continuar, reconoces que la seguridad de tus fondos y el cumplimiento legal son, en última instancia, tu responsabilidad.";
 
 
 
@@ -2406,37 +2406,37 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 // Defense System
 "purchases.defense_system" = "Sistema de defensa";
 "purchases.secure_send" = "Envío seguro";
-"purchases.secure_send.description" = "Prevents sending funds to risky or phishing addresses.";
+"purchases.secure_send.description" = "Evita el envío de fondos a direcciones de riesgo o de phishing.";
 "purchases.secure_send.info" = "Verifica las wallets del destinatario en busca de phishing o fraude. Te alerta antes de enviar a direcciones de alto riesgo.";
 "purchases.scam_protection" = "Protección contra estafas";
-"purchases.scam_protection.description" = "Warns you when connecting to fake or malicious dApps.";
+"purchases.scam_protection.description" = "Te advierte cuando te conectas a dApps falsas o maliciosas.";
 "purchases.scam_protection.info" = "Detecta dApps falsas o maliciosas antes de la conexión. Previene el phishing y mantiene tus activos seguros.";
-"purchases.swap_protection" = "Swap Protection";
-"purchases.swap_protection.description" = "Prevents bots and MEV attacks during swaps.";
-"purchases.swap_protection.info" = "Stops bots and front-running attacks during swaps. Keeps your transactions fair and secure.";
+"purchases.swap_protection" = "Protección de swap";
+"purchases.swap_protection.description" = "Previene bots y ataques MEV durante los swaps.";
+"purchases.swap_protection.info" = "Detiene bots y ataques de front-running durante los swaps. Mantiene tus transacciones justas y seguras.";
 "purchases.robbery_protection" = "Protección contra robo";
-"purchases.robbery_protection.description" = "Safeguards your funds if you’re forced to unlock the app.";
+"purchases.robbery_protection.description" = "Protege tus fondos si te ves obligado a desbloquear la app.";
 "purchases.robbery_protection.info" = "Te permite crear una wallet señuelo con un PIN diferente. Mantiene tus activos reales ocultos en situaciones de alto riesgo.";
 
 // Advanced Controls
-"purchases.advanced_controls" = "Advanced Controls";
-"purchases.swap_control" = "Swap Control";
-"purchases.swap_control.description" = "Advanced settings to control how and where swaps execute.";
-"purchases.swap_control.info" = "By default, we select the best available offer. With Premium, you can choose a different provider.";
-"purchases.priority_support" = "Priority Support";
-"purchases.priority_support.description" = "Direct access to our support team.";
-"purchases.priority_support.info" = "Gives you direct access to priority support. Get fast, personal help from the Unstoppable team.";
+"purchases.advanced_controls" = "Controles avanzados";
+"purchases.swap_control" = "Control de swap";
+"purchases.swap_control.description" = "Configuraciones avanzadas para controlar cómo y dónde se ejecutan los swaps.";
+"purchases.swap_control.info" = "Por defecto, seleccionamos la mejor oferta disponible. Con Premium, puedes elegir un proveedor diferente.";
+"purchases.priority_support" = "Soporte prioritario";
+"purchases.priority_support.description" = "Acceso directo a nuestro equipo de soporte.";
+"purchases.priority_support.info" = "Te da acceso directo a soporte prioritario. Obtén ayuda rápida y personalizada del equipo de Unstoppable.";
 
 // Market Insights
 "purchases.market_insights" = "Análisis del mercado";
 "purchases.token_insights" = "Estadísticas";
-"purchases.token_insights.description" = "In-depth analytics and token data.";
+"purchases.token_insights.description" = "Analíticas detalladas y datos de tokens.";
 "purchases.token_insights.info" = "Muestra datos detallados del token - volumen, liquidez y tendencias. Te ayuda a tomar decisiones de inversión más inteligentes.";
 "purchases.advanced_search" = "Búsqueda Avanzada";
-"purchases.advanced_search.description" = "Powerful filters for smarter token discovery.";
+"purchases.advanced_search.description" = "Filtros potentes para un descubrimiento de tokens más inteligente.";
 "purchases.advanced_search.info" = "Encuentra tokens usando filtros por volumen, cadena o sector. Incluye métricas de actividad en CEX/DEX y listados.";
 "purchases.trade_signals" = "Señales y Tendencias";
-"purchases.trade_signals.description" = "Actionable signals for more confident trading.";
+"purchases.trade_signals.description" = "Señales accionables para operar con mayor confianza.";
 "purchases.trade_signals.info" = "Envía alertas en tiempo real sobre oportunidades de trading. Destaca al instante posibles ganancias o riesgos del mercado.";
 
 "purchase.bottom_sheet.description" = "Una sola compra desbloquea todas las funciones Premium.";
