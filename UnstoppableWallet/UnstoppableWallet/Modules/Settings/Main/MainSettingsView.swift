@@ -364,7 +364,7 @@ struct MainSettingsView: View {
             }
         }) {
             Image("support_2_24").themeIcon(color: .themeJacob)
-            Text("purchases.vip_support".localized).themeBody()
+            Text("purchases.priority_support".localized).themeBody()
             Image.disclosureIcon
         }
     }
