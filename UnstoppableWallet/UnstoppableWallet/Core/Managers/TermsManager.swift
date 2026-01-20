@@ -145,6 +145,21 @@ extension TermsManager {
                     Term(id: "compliance", version: 1),
                 ]
             ),
+            TermsConfiguration(
+                version: 4,
+                terms: [
+                    Term(id: "backup_recovery", version: 1),
+                    Term(id: "device_pin", version: 1),
+                    Term(id: "privacy_notice", version: 1),
+                    Term(id: "decentralized", version: 1),
+                    Term(id: "commission", version: 1),
+                    Term(id: "irreversibility", version: 1),
+                    Term(id: "software", version: 1),
+                    Term(id: "compliance", version: 1),
+                    Term(id: "prohibite_use", version: 1),
+                    Term(id: "user_responsibility", version: 1),
+                ]
+            ),
         ]
 
         var all: Set<String> {
