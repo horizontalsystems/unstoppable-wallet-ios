@@ -47,7 +47,7 @@ public struct SlideButton: View {
                         .foregroundColor(styling.textColor)
                         .frame(maxWidth: max(0, reading.size.width), alignment: .center)
                         .padding(.horizontal, styling.indicatorSize)
-                        .shimmerEffect(isEnabled && styling.textShimmers)
+                    // .shimmerEffect(isEnabled && styling.textShimmers) // it causes app crash on iOS 18
 
                     Capsule()
                         .fill(isEnabled ? styling.indicatorColor : .gray)

@@ -59,6 +59,7 @@ class SendViewModel: ObservableObject {
         }
 
         transactionService?.updatePublisher
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.syncTransactionSettingsModified()
                 self?.sync()
@@ -66,6 +67,7 @@ class SendViewModel: ObservableObject {
             .store(in: &cancellables)
 
         handler?.refreshPublisher?
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.sync()
             }
