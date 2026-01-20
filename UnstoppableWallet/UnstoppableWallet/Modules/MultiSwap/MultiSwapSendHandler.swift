@@ -305,7 +305,10 @@ extension MultiSwapSendHandler {
                 case .normal, .warning, .forbidden:
                     fields.append(
                         .simpleValue(
-                            title: "swap.price_impact".localized,
+                            title: SendField.InformedTitle("swap.price_impact".localized, info: InfoDescription(
+                                title: "swap.price_impact".localized,
+                                description: "swap.price_impact.info".localized
+                            )),
                             value: ComponentText(text: PriceImpact.display(value: priceImpact), colorStyle: level.valueLevel.colorStyle)
                         )
                     )
