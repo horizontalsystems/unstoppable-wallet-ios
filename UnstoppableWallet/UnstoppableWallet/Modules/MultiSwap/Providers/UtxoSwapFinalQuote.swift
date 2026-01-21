@@ -11,13 +11,14 @@ class UtxoSwapFinalQuote: SwapFinalQuote {
         sendParameters: SendParameters?,
         slippage: Decimal,
         recipient: String?,
+        estimatedTime: TimeInterval? = nil,
         transactionError: Error?,
         fee: Decimal?,
     ) {
         self.sendParameters = sendParameters
         self.fee = fee
 
-        super.init(expectedBuyAmount: expectedBuyAmount, slippage: slippage, recipient: recipient, transactionError: transactionError)
+        super.init(expectedBuyAmount: expectedBuyAmount, slippage: slippage, recipient: recipient, estimatedTime: estimatedTime, transactionError: transactionError)
     }
 
     override var feeData: FeeData? {

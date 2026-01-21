@@ -249,6 +249,16 @@ extension BlockchainType {
         default: return false
         }
     }
+
+    var blockTime: TimeInterval? {
+        switch self {
+        case .ethereum: return 15
+        case .binanceSmartChain, .tron: return 3
+        case .polygon, .avalanche, .optimism, .arbitrumOne, .fantom, .base, .zkSync: return 2
+        case .gnosis, .stellar: return 5
+        default: return nil
+        }
+    }
 }
 
 extension Array where Array.Element == BlockchainType {

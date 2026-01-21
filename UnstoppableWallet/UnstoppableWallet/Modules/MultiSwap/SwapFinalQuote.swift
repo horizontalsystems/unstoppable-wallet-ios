@@ -5,17 +5,20 @@ class SwapFinalQuote {
     private let expectedBuyAmount: Decimal
     private let slippage: Decimal?
     private let recipient: String?
+    private let estimatedTime: TimeInterval?
     private let transactionError: Error?
 
     init(
         expectedBuyAmount: Decimal,
         slippage: Decimal?,
         recipient: String?,
+        estimatedTime: TimeInterval? = nil,
         transactionError: Error?,
     ) {
         self.expectedBuyAmount = expectedBuyAmount
         self.slippage = slippage
         self.recipient = recipient
+        self.estimatedTime = estimatedTime
         self.transactionError = transactionError
     }
 
@@ -61,6 +64,16 @@ class SwapFinalQuote {
 
         if let recipient {
             fields.append(.recipient(recipient, blockchainType: tokenOut.blockchainType))
+        }
+
+        if let estimatedTime {
+            fields.append(.simpleValue(
+                title: SendField.InformedTitle("swap.estimated_time".localized, info: InfoDescription(
+                    title: "swap.estimated_time".localized,
+                    description: "swap.estimated_time.info".localized
+                )),
+                value: Duration.seconds(estimatedTime).formatted(.units(allowed: [.hours, .minutes, .seconds], width: .narrow))
+            ))
         }
 
         return fields

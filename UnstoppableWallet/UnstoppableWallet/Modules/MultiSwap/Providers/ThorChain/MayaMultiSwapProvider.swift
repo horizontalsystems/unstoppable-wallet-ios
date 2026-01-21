@@ -95,6 +95,7 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
             proposal: result,
             slippage: slippage,
             recipient: recipient,
+            estimatedTime: swapQuote.quote.totalSwapSeconds,
             transactionError: transactionError,
             fee: result?.totalFeeRequired().decimalValue.decimalValue,
         )

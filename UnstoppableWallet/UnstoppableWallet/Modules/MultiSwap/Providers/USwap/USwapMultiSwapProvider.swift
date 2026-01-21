@@ -399,6 +399,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError: transactionError,
             slippage: slippage,
             recipient: recipient,
+            estimatedTime: quote.esimatedTime,
             gasPrice: gasPriceData?.userDefined,
             evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce
@@ -448,6 +449,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             sendParameters: params,
             slippage: slippage,
             recipient: recipient,
+            estimatedTime: quote.esimatedTime,
             transactionError: transactionError,
             fee: sendInfo?.fee,
         )
@@ -495,6 +497,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             proposal: proposal,
             slippage: slippage,
             recipient: recipient,
+            estimatedTime: quote.esimatedTime,
             transactionError: transactionError,
             fee: totalFeeRequired?.decimalValue.decimalValue,
         )
@@ -556,6 +559,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             expectedAmountOut: amountOut,
             recipient: recipient,
             slippage: slippage,
+            estimatedTime: quote.esimatedTime,
             transactionParam: transactionParam,
             fee: fee,
             transactionError: transactionError,
@@ -609,6 +613,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             expectedAmountOut: amountOut,
             recipient: recipient,
             slippage: slippage,
+            estimatedTime: quote.esimatedTime,
             transactionData: transactionData,
             token: tokenIn,
             fee: fee,
@@ -656,6 +661,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             expectedAmountOut: amountOut,
             recipient: recipient,
             slippage: slippage,
+            estimatedTime: quote.esimatedTime,
             createdTransaction: transaction,
             fees: fees,
             transactionError: transactionError
@@ -701,6 +707,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             expectedAmountOut: amountOut,
             recipient: recipient,
             slippage: slippage,
+            estimatedTime: quote.esimatedTime,
             amount: amount,
             address: quote.inboundAddress,
             memo: quote.memo,
@@ -800,6 +807,7 @@ extension USwapMultiSwapProvider {
         let shieldedMemoAddress: String?
         let dustThreshold: Int?
         let providers: [String]?
+        let esimatedTime: TimeInterval?
 
         required init(map: Map) throws {
             expectedBuyAmount = try map.value("expectedBuyAmount", using: Transform.stringToDecimalTransform)
@@ -811,6 +819,7 @@ extension USwapMultiSwapProvider {
             shieldedMemoAddress = try? map.value("shielded_memo_address")
             dustThreshold = try? map.value("dustThreshold", using: Transform.stringToIntTransform)
             providers = try? map.value("providers")
+            esimatedTime = try? map.value("estimatedTime.total")
         }
     }
 
