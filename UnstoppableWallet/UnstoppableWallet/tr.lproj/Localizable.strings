@@ -709,10 +709,12 @@ Cüzdan etkinleştirilene kadar token’lar alınabilir, ancak bakiyeler görün
 "swap.unlock.unlimited" = "Sınırsız";
 
 "swap.price_impact" = "Fiyat Etkisi";
-"swap.price_impact.description" = "Gösterilen fiyattan beklenen fiyat sapması, genellikle takas miktarıyla artar.";
+"swap.price_impact.info" = "The expected price deviation from a shown price, typically increases with the swap amount.";
 "swap.high_price_impact" = "Yüksek Fiyat Etkisi";
 "swap.recipient" = "Alıcı";
 "swap.slippage" = "Kayma";
+"swap.estimated_time" = "Estimated Time";
+"swap.estimated_time.info" = "Approximate time to receive funds. Swap processing and transaction confirmations may take some time depending on the network and provider.";
 
 "swap.affiliate_fee" = "Ortaklık Ücreti";
 "swap.liquidity_fee" = "Likidite Ücreti";
@@ -784,6 +786,7 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "swap.confirmation.impact_warning" = "Önemli! Son derece olumsuz bir fiyat alıyorsunuz. Bunun nedeni son derece düşük likiditedir.";
 
 "swap.confirmation.minimum_received" = "Minimum Kazanılan";
+"swap.confirmation.minimum_received.info" = "The minimum amount you will receive after the swap is completed. This amount is guaranteed by the provider and is not affected by price changes during processing.";
 "swap.confirmation.maximum_sent" = "Maksimum Harcama";
 
 "swap.dex_info.description" = "Bu takas etme hizmeti, %@ blok zinciri üzerine inşa edilmiş ve merkezi olmayan jeton takas etme protokolü olan %@ tarafından desteklenmektedir.\n\n%@, tamamen otomatiktir ve hile yapmadan jeton takaslarını güvenilir bir şekilde kolaylaştıran akıllı sözleşmelerle yönetilir.";
@@ -2201,7 +2204,7 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "fee_settings.time_lock.description" = "TimeLock yalnızca BIP44 adreslerine (1 ile başlar) göndermek için çalışır";
 
 "fee_settings.network_fee" = "Ücret";
-"fee_settings.network_fee.info" = "Ağda belirli bir işlemi göndermenin tahmini maliyeti.";
+"fee_settings.network_fee.info" = "Fee charged by the network for transaction execution and confirmation. The amount depends on network conditions and current congestion.";
 "fee_settings.l1_fee" = "L1 Ücret";
 "fee_settings.l1_fee.info" = "Katman 1 ağında belirtilen işlemin gönderim tahmini maliyeti.";
 "fee_settings.gas_limit" = "Gas Limit";
