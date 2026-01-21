@@ -709,10 +709,12 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "swap.unlock.unlimited" = "Ilimitado";
 
 "swap.price_impact" = "Impacto en el precio";
-"swap.price_impact.description" = "La desviación esperada del precio mostrado, típicamente aumenta con la cantidad de intercambio.";
+"swap.price_impact.info" = "The expected price deviation from a shown price, typically increases with the swap amount.";
 "swap.high_price_impact" = "Alto impacto en el precio";
 "swap.recipient" = "Destinatario";
 "swap.slippage" = "Deslizamiento";
+"swap.estimated_time" = "Estimated Time";
+"swap.estimated_time.info" = "Approximate time to receive funds. Swap processing and transaction confirmations may take some time depending on the network and provider.";
 
 "swap.affiliate_fee" = "Tarifa de afiliado";
 "swap.liquidity_fee" = "Tarifa de liquidez";
@@ -782,6 +784,7 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "swap.confirmation.impact_warning" = "¡Importante! Has obtenido un precio extremadamente desfavorable debido a la baja liquidez del mercado.";
 
 "swap.confirmation.minimum_received" = "Mínimo Obtenido";
+"swap.confirmation.minimum_received.info" = "The minimum amount you will receive after the swap is completed. This amount is guaranteed by the provider and is not affected by price changes during processing.";
 "swap.confirmation.maximum_sent" = "Gasto máximo";
 
 "swap.dex_info.description" = "Este servicio de intercambio está impulsado por %@, un intercambio de token descentralizado construido en %@ blockchain.\n\n%@ está completamente automatizado y administrado por contratos inteligentes que facilitan los intercambios de token de una manera conflaible y sin ninguna intención para hacer estafas.";
@@ -2196,7 +2199,7 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "fee_settings.time_lock.description" = "TimeLock sólo funciona para enviar a direcciones BIP44 (comenzando con 1)";
 
 "fee_settings.network_fee" = "Comisión";
-"fee_settings.network_fee.info" = "El coste estimado del envío de una transacción en la red.";
+"fee_settings.network_fee.info" = "Fee charged by the network for transaction execution and confirmation. The amount depends on network conditions and current congestion.";
 "fee_settings.l1_fee" = "Tarifa L1";
 "fee_settings.l1_fee.info" = "El costo estimado de enviar una transacción dada en la red de capa 1.";
 "fee_settings.gas_limit" = "Gas Limit";
