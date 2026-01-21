@@ -45,17 +45,30 @@ class ZCashReceiveAddressService: BaseReceiveAddressService {
     }
 
     private func updateTransparent(adapter: ZcashAdapter) {
-        // Load single-use transparent address asynchronously or fallback on first address
         Task { [weak self, weak adapter] in
             guard let self, let adapter else { return }
 
-            if let transparent = await (try? adapter.getSingleUseTransparentAddress())?.addressString ?? adapter.tAddress?.stringEncoded {
+            if let transparent = adapter.tAddress?.stringEncoded {
                 await MainActor.run {
                     self.resolvedAddress = transparent
                     self.updateState(isMainNet: adapter.isMainNet)
                 }
+            } else {
+                resolvedAddress = "n/a".localized
             }
         }
+
+        // Load single-use transparent address asynchronously or fallback on first address
+//        Task { [weak self, weak adapter] in
+//            guard let self, let adapter else { return }
+//
+//            if let transparent = await (try? adapter.getSingleUseTransparentAddress())?.addressString ?? adapter.tAddress?.stringEncoded {
+//                await MainActor.run {
+//                    self.resolvedAddress = transparent
+//                    self.updateState(isMainNet: adapter.isMainNet)
+//                }
+//            }
+//        }
     }
 
     private func updateState(isMainNet: Bool) {
