@@ -14,6 +14,7 @@ class EvmSwapFinalQuote: SwapFinalQuote {
         transactionError: Error? = nil,
         slippage: Decimal?,
         recipient: String?,
+        estimatedTime: TimeInterval? = nil,
         gasPrice: GasPrice?,
         evmFeeData: EvmFeeData?,
         nonce: Int?
@@ -23,7 +24,7 @@ class EvmSwapFinalQuote: SwapFinalQuote {
         self.evmFeeData = evmFeeData
         self.nonce = nonce
 
-        super.init(expectedBuyAmount: expectedBuyAmount, slippage: slippage, recipient: recipient, transactionError: transactionError)
+        super.init(expectedBuyAmount: expectedBuyAmount, slippage: slippage, recipient: recipient, estimatedTime: estimatedTime, transactionError: transactionError)
     }
 
     override var feeData: FeeData? {

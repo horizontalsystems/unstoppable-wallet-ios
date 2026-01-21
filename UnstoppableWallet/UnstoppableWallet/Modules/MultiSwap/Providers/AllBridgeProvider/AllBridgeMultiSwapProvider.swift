@@ -59,6 +59,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
     private let allowanceHelper = MultiSwapAllowanceHelper()
     private let marketKit = Core.shared.marketKit
     private let networkManager = Core.shared.networkManager
+//    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let tronKitManager = Core.shared.tronAccountManager.tronKitManager
     private let stellarKitManager = Core.shared.stellarKitManager
@@ -357,6 +358,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 transactionError: transactionError,
                 slippage: crosschain ? nil : slippage,
                 recipient: recipient,
+                estimatedTime: crosschain ? nil : blockchainType.blockTime,
                 gasPrice: gasPriceData?.userDefined,
                 evmFeeData: evmFeeData,
                 nonce: transactionSettings?.nonce
@@ -401,6 +403,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 expectedAmountOut: amountOut,
                 recipient: recipient,
                 slippage: crosschain ? nil : slippage,
+                estimatedTime: crosschain ? nil : BlockchainType.tron.blockTime,
                 createdTransaction: createdTransaction,
                 fees: fees,
                 transactionError: transactionError
@@ -446,6 +449,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 expectedAmountOut: amountOut,
                 recipient: recipient,
                 slippage: crosschain ? nil : slippage,
+                estimatedTime: crosschain ? nil : BlockchainType.stellar.blockTime,
                 transactionData: .envelope(transactionEnvelope),
                 token: tokenIn,
                 fee: fee,

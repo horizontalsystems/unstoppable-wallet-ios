@@ -710,6 +710,8 @@
 "swap.high_price_impact" = "High Price Impact";
 "swap.recipient" = "Recipient";
 "swap.slippage" = "Slippage";
+"swap.estimated_time" = "Estimated Time";
+"swap.estimated_time.info" = "Approximate time to receive funds. Swap processing and transaction confirmations may take some time depending on the network and provider.";
 
 "swap.affiliate_fee" = "Affiliate Fee";
 "swap.liquidity_fee" = "Liquidity Fee";

@@ -9,6 +9,7 @@ import SwiftUI
 class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     private let kit: OneInchKit.Kit
     private let networkManager = Core.shared.networkManager
+//    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
     private let evmFeeEstimator = EvmFeeEstimator()
     private let commission: Decimal? = AppConfig.oneInchCommission
     private let commissionAddress: String? = AppConfig.oneInchCommissionAddress
@@ -111,6 +112,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
             transactionError: transactionError,
             slippage: slippage,
             recipient: recipient,
+            estimatedTime: blockchainType.blockTime,
             gasPrice: swap.transaction.gasPrice,
             evmFeeData: evmFeeData,
             nonce: transactionSettings?.nonce

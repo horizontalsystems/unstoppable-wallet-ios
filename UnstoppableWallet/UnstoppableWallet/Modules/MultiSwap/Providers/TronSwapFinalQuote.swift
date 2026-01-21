@@ -9,12 +9,12 @@ class TronSwapFinalQuote: SwapFinalQuote {
     let createdTransaction: CreatedTransactionResponse
     private let fees: [Fee]
 
-    init(amountIn: Decimal, expectedAmountOut: Decimal, recipient: String?, slippage: Decimal?, createdTransaction: CreatedTransactionResponse, fees: [Fee], transactionError: Error?) {
+    init(amountIn: Decimal, expectedAmountOut: Decimal, recipient: String?, slippage: Decimal?, estimatedTime: TimeInterval? = nil, createdTransaction: CreatedTransactionResponse, fees: [Fee], transactionError: Error?) {
         self.amountIn = amountIn
         self.createdTransaction = createdTransaction
         self.fees = fees
 
-        super.init(expectedBuyAmount: expectedAmountOut, slippage: slippage, recipient: recipient, transactionError: transactionError)
+        super.init(expectedBuyAmount: expectedAmountOut, slippage: slippage, recipient: recipient, estimatedTime: estimatedTime, transactionError: transactionError)
     }
 
     override var feeData: FeeData? {

@@ -12,6 +12,7 @@ class TonSwapFinalQuote: SwapFinalQuote {
         expectedAmountOut: Decimal,
         recipient: String?,
         slippage: Decimal,
+        estimatedTime: TimeInterval? = nil,
         transactionParam: SendTransactionParam,
         fee: Decimal?,
         transactionError: Error?,
@@ -20,7 +21,7 @@ class TonSwapFinalQuote: SwapFinalQuote {
         self.transactionParam = transactionParam
         self.fee = fee
 
-        super.init(expectedBuyAmount: expectedAmountOut, slippage: slippage, recipient: recipient, transactionError: transactionError)
+        super.init(expectedBuyAmount: expectedAmountOut, slippage: slippage, recipient: recipient, estimatedTime: estimatedTime, transactionError: transactionError)
     }
 
     override var canSwap: Bool {

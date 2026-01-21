@@ -134,6 +134,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 transactionError: transactionError,
                 slippage: slippage,
                 recipient: recipient,
+                estimatedTime: swapQuote.totalSwapSeconds,
                 gasPrice: gasPriceData?.userDefined,
                 evmFeeData: evmFeeData,
                 nonce: transactionSettings?.nonce
@@ -173,6 +174,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 sendParameters: params,
                 slippage: slippage,
                 recipient: recipient,
+                estimatedTime: swapQuote.totalSwapSeconds,
                 transactionError: transactionError,
                 fee: sendInfo?.fee
             )
@@ -348,6 +350,7 @@ extension BaseThorChainMultiSwapProvider {
         let totalFee: Decimal
 
         let dustThreshold: Int?
+        let totalSwapSeconds: TimeInterval?
 
         init(map: Map) throws {
             inboundAddress = try map.value("inbound_address")
@@ -361,6 +364,7 @@ extension BaseThorChainMultiSwapProvider {
             totalFee = try map.value("fees.total", using: Transform.stringToDecimalTransform) / pow(10, 8)
 
             dustThreshold = try? map.value("dust_threshold", using: Transform.stringToIntTransform)
+            totalSwapSeconds = try? map.value("total_swap_seconds")
         }
     }
 
