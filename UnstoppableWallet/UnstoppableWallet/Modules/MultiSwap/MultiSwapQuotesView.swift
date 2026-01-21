@@ -83,7 +83,7 @@ struct MultiSwapQuotesView: View {
         let level = MultiSwapViewModel.PriceImpactLevel(priceImpact: abs(priceImpact))
 
         switch level {
-        case .negligible:
+        case .negligible, .low:
             return nil
         default:
             return (priceImpact, level.valueLevel)

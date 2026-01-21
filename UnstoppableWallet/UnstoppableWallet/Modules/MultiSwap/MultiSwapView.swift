@@ -234,7 +234,7 @@ struct MultiSwapView: View {
                                 case .negligible, .low:
                                     EmptyView()
                                 default:
-                                    Text(PriceImpact.display(value: priceImpact))
+                                    Text("(\(PriceImpact.display(value: priceImpact)))")
                                         .textBody(color: level.valueLevel.colorStyle.color)
                                 }
                             }
