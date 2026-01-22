@@ -1,5 +1,6 @@
 import Combine
 import EvmKit
+import HsToolKit
 import MarketKit
 import SwiftUI
 
@@ -12,6 +13,7 @@ class EvmTransactionService {
     private let chain: Chain
     private let rpcSource: RpcSource
     private let networkManager = Core.shared.networkManager
+//    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
 
     private let updateSubject = PassthroughSubject<Void, Never>()
 
@@ -141,7 +143,7 @@ extension EvmTransactionService {
 
         switch (recommended, current) {
         case (let .eip1559(recommendedMaxFee, recommendedTips), let .eip1559(maxFee, tips)):
-            let recommendedBaseFee = recommendedMaxFee - recommendedTips
+            let recommendedBaseFee = (recommendedMaxFee - recommendedTips) * 100 / GasPrice.eip1559SurchargeBasis
             let actualTips = min(maxFee - recommendedBaseFee, tips)
             let tipsSafeRange = Self.tipsSafeRangeBounds.range(around: recommendedTips)
 

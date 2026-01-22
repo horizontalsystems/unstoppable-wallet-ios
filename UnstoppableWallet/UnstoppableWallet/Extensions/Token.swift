@@ -41,7 +41,7 @@ extension Token {
     }
 
     var fullBadge: String {
-        (badge ?? "coin_platforms.native".localized).uppercased()
+        badge ?? "coin_platforms.native".localized
     }
 
     var sendToSelfAllowed: Bool {

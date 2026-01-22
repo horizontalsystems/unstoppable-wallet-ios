@@ -318,7 +318,10 @@ struct MultiSwapView: View {
                 Coordinator.shared.present { isPresented in
                     SwapTermsView(isPresented: isPresented) {
                         viewModel.onAcceptTerms()
-                        sendPresented = true
+
+                        DispatchQueue.main.async {
+                            sendPresented = true
+                        }
                     }
                 }
             } else {
