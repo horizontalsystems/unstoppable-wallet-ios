@@ -48,9 +48,9 @@ class Eip1559FeeSettingsViewModel: ObservableObject {
         self.feeViewItemFactory = feeViewItemFactory
         gasPrice = service.currentGasPrice
 
-        if case let .eip1559(recommendedMaxFeePerGas, _) = service.recommendedGasPrice {
-            let baseStep = recommendedMaxFeePerGas.significant(depth: FeeViewItemFactory.stepDepth)
-            baseFee = feeViewItemFactory.description(value: recommendedMaxFeePerGas, step: baseStep)
+        if case let .eip1559(maxFee, maxTips) = service.recommendedGasPrice {
+            let baseFeePerGas = (maxFee - maxTips) * 100 / GasPrice.eip1559SurchargeBasis
+            baseFee = feeViewItemFactory.decimalValue(value: baseFeePerGas).description
         }
 
         if case let .eip1559(maxFee, maxTips) = gasPrice {

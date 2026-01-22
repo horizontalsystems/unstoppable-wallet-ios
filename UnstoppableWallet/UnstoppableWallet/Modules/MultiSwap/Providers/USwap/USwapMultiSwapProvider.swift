@@ -68,6 +68,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     var name: String { provider.title }
     var type: SwapProviderType { provider.type }
     var aml: Bool { provider.aml }
+    var requireTerms: Bool { provider.requireTerms }
     var icon: String { provider.icon }
 
     var syncPublisher: AnyPublisher<Void, Never>? {
@@ -761,8 +762,15 @@ extension USwapMultiSwapProvider {
 
         var aml: Bool {
             switch self {
-            case .near, .swapuz: return false
             case .quickEx, .letsExchange, .stealthex: return true
+            default: return false
+            }
+        }
+
+        var requireTerms: Bool {
+            switch self {
+            case .quickEx, .letsExchange, .stealthex: return true
+            default: return false
             }
         }
     }

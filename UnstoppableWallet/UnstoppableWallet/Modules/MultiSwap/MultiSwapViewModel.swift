@@ -484,7 +484,7 @@ extension MultiSwapViewModel {
             return false
         }
 
-        return currentQuote.provider.aml && !localStorage.swapTermsAccepted
+        return currentQuote.provider.requireTerms && !localStorage.swapTermsAccepted
     }
 
     func onAcceptTerms() {
