@@ -711,10 +711,12 @@
 "swap.unlock.unlimited" = "Безлимит";
 
 "swap.price_impact" = "Отклонение от рын. цены";
-"swap.price_impact.description" = "Ожидаемое отклонение цены от показанной цены обычно увеличивается с объемом обмена.";
+"swap.price_impact.info" = "The expected price deviation from a shown price, typically increases with the swap amount.";
 "swap.high_price_impact" = "Высокое отклонение цены";
 "swap.recipient" = "Получатель";
 "swap.slippage" = "Отклонение от курса";
+"swap.estimated_time" = "Estimated Time";
+"swap.estimated_time.info" = "Approximate time to receive funds. Swap processing and transaction confirmations may take some time depending on the network and provider.";
 
 "swap.affiliate_fee" = "Партнерская плата";
 "swap.liquidity_fee" = "Плата за ликвидность";
@@ -784,6 +786,7 @@
 "swap.confirmation.impact_warning" = "Важно! Вы получаете крайне невыгодную цену из-за низкой ликвидности.";
 
 "swap.confirmation.minimum_received" = "Гарантированная сумма";
+"swap.confirmation.minimum_received.info" = "The minimum amount you will receive after the swap is completed. This amount is guaranteed by the provider and is not affected by price changes during processing.";
 "swap.confirmation.maximum_sent" = "Максимальная трата";
 
 "swap.dex_info.description" = "Этот обменный сервис работает при поддержке %@ - децентрализованного протокола обмена токенов, созданного в блокчейне %@.\n\n%@ полностью автоматизирован и управляется смарт-контрактами, которые надежным способом упрощают обмен токенами без осуществления каких-либо махинаций.";
@@ -2198,7 +2201,7 @@
 ";
 
 "fee_settings.network_fee" = "Комиссия";
-"fee_settings.network_fee.info" = "Ориентировочная стоимость отправки данной транзакции по сети.";
+"fee_settings.network_fee.info" = "Fee charged by the network for transaction execution and confirmation. The amount depends on network conditions and current congestion.";
 "fee_settings.l1_fee" = "L1 комиссия";
 "fee_settings.l1_fee.info" = "Оценочная стоимость отправки указанной транзакции по сети уровня 1.";
 "fee_settings.gas_limit" = "Gas Limit";

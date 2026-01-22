@@ -709,10 +709,12 @@
 "swap.unlock.unlimited" = "无限";
 
 "swap.price_impact" = "价格影响";
-"swap.price_impact.description" = "从显示的价格预期的价格偏差通常随着交换金额的增加而增加。";
+"swap.price_impact.info" = "The expected price deviation from a shown price, typically increases with the swap amount.";
 "swap.high_price_impact" = "高价格影响";
 "swap.recipient" = "收款人";
 "swap.slippage" = "滑点";
+"swap.estimated_time" = "Estimated Time";
+"swap.estimated_time.info" = "Approximate time to receive funds. Swap processing and transaction confirmations may take some time depending on the network and provider.";
 
 "swap.affiliate_fee" = "联盟费";
 "swap.liquidity_fee" = "流动性费用";
@@ -782,6 +784,7 @@
 "swap.confirmation.impact_warning" = "重要提示！您正在以极其不利的价格进行交易。这是因为流动性非常低。";
 
 "swap.confirmation.minimum_received" = "最小获取金额";
+"swap.confirmation.minimum_received.info" = "The minimum amount you will receive after the swap is completed. This amount is guaranteed by the provider and is not affected by price changes during processing.";
 "swap.confirmation.maximum_sent" = "最大支出";
 
 "swap.dex_info.description" = "此兑换服务由基于%@区块链的分散式代币兑换协议%@提供。\n\n%@由不存在任何欺诈手段、以可靠方式推动代币兑换的智能合约来实现完全自动化并管理。";
@@ -2195,7 +2198,7 @@
 "fee_settings.time_lock.description" = "时间锁（TimeLock）只适用于发送到BIP44地址（从1开始）";
 
 "fee_settings.network_fee" = "费用";
-"fee_settings.network_fee.info" = "在网络上发送给定交易的估计费用。";
+"fee_settings.network_fee.info" = "Fee charged by the network for transaction execution and confirmation. The amount depends on network conditions and current congestion.";
 "fee_settings.l1_fee" = "L1费用";
 "fee_settings.l1_fee.info" = "给定交易在第1层网络上发送的预估成本。";
 "fee_settings.gas_limit" = "燃料限制";

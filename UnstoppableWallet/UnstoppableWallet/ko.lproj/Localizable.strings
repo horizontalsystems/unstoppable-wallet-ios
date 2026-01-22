@@ -707,10 +707,12 @@
 "swap.unlock.unlimited" = "무제한";
 
 "swap.price_impact" = "가격 영향";
-"swap.price_impact.description" = "일반적으로 보여진 가격으로부터 예상되는 가격 편차는 스왑 금액에 따라 증가합니다.";
+"swap.price_impact.info" = "The expected price deviation from a shown price, typically increases with the swap amount.";
 "swap.high_price_impact" = "높은 가격 영향";
 "swap.recipient" = "수령인";
 "swap.slippage" = "미끄러짐";
+"swap.estimated_time" = "Estimated Time";
+"swap.estimated_time.info" = "Approximate time to receive funds. Swap processing and transaction confirmations may take some time depending on the network and provider.";
 
 "swap.affiliate_fee" = "제휴 수수료";
 "swap.liquidity_fee" = "유동성 수수료";
@@ -780,6 +782,7 @@
 "swap.confirmation.impact_warning" = "중요한 사항입니다! 매우 불리한 가격을 받고 있습니다. 이는 유동성이 극도로 낮기 때문입니다.";
 
 "swap.confirmation.minimum_received" = "최대 지급액";
+"swap.confirmation.minimum_received.info" = "The minimum amount you will receive after the swap is completed. This amount is guaranteed by the provider and is not affected by price changes during processing.";
 "swap.confirmation.maximum_sent" = "최대 속도";
 
 "swap.dex_info.description" = "이 거래소 서비스는 %@ 블록체인에 구축된 분산형 토큰 교환 프로토콜인 %@에 의해 구동됩니다.\n\n%@는 스마트 계약에 의해 완전 자동화되고 관리되므로 부정 행위 없이 토큰 교환을 안정적으로 수행할 수 있습니다.";
@@ -2196,7 +2199,7 @@
 "fee_settings.time_lock.description" = "TimeLock은 BIP44 주소(1부터 시작)로 전송하는 경우에만 작동합니다.";
 
 "fee_settings.network_fee" = "수수료";
-"fee_settings.network_fee.info" = "네트워크에서 주어진 거래를 보내는 데 예상되는 비용.";
+"fee_settings.network_fee.info" = "Fee charged by the network for transaction execution and confirmation. The amount depends on network conditions and current congestion.";
 "fee_settings.l1_fee" = "L1 수수료";
 "fee_settings.l1_fee.info" = "계층 1 네트워크에서 특정 거래를 전송하는 예상 비용.";
 "fee_settings.gas_limit" = "Gas Limit";
