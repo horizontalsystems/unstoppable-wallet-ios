@@ -1,14 +1,31 @@
+import Combine
 import ZcashLightClientKit
 
 class ZCashReceiveAddressService: BaseReceiveAddressService {
     var zcashAdapter: ZcashAdapter? { super.adapter as? ZcashAdapter }
 
-    let addressType: ZcashAdapter.AddressType
+    private var cancellables = Set<AnyCancellable>()
+
+    let addressType: ZcashAdapter.ReceiveAddressType
     private var resolvedAddress: String?
 
-    init(wallet: Wallet, addressType: ZcashAdapter.AddressType) {
+    private var addressesSubject = PassthroughSubject<[SingleUseAddress], Never>()
+    var addressesPublisher: AnyPublisher<[SingleUseAddress], Never> {
+        addressesSubject.eraseToAnyPublisher()
+    }
+
+    init(wallet: Wallet, addressType: ZcashAdapter.ReceiveAddressType) {
         self.addressType = addressType
         super.init(wallet: wallet)
+
+        if let zcashAdapter, addressType == .singleUseTransparent {
+            zcashAdapter
+                .singleUseAddressManager
+                .handleNewUsedAddressPublisher
+                .sink(receiveValue: { [weak self] in
+                    self?.handleNewUsedAddress(address: $0)
+                }).store(in: &cancellables)
+        }
     }
 
     override func prepare(adapter: IDepositAdapter) {
@@ -25,7 +42,20 @@ class ZCashReceiveAddressService: BaseReceiveAddressService {
 
         case .transparent:
             updateTransparent(adapter: zcashAdapter)
+
+        case .singleUseTransparent:
+            updateSingleUse(adapter: zcashAdapter)
         }
+    }
+
+    private func handleNewUsedAddress(address _: SingleUseAddress) {
+        if let zcashAdapter {
+            updateSingleUse(adapter: zcashAdapter)
+        }
+    }
+
+    private func updateAddresses(_ addresses: [SingleUseAddress]) {
+        addressesSubject.send(addresses)
     }
 
     private func updateUnified(adapter: ZcashAdapter) {
@@ -57,30 +87,26 @@ class ZCashReceiveAddressService: BaseReceiveAddressService {
                 resolvedAddress = "n/a".localized
             }
         }
+    }
 
-        // Load single-use transparent address asynchronously or fallback on first address
-//        Task { [weak self, weak adapter] in
-//            guard let self, let adapter else { return }
-//
-//            if let transparent = await (try? adapter.getSingleUseTransparentAddress())?.addressString ?? adapter.tAddress?.stringEncoded {
-//                await MainActor.run {
-//                    self.resolvedAddress = transparent
-//                    self.updateState(isMainNet: adapter.isMainNet)
-//                }
-//            }
-//        }
+    private func updateSingleUse(adapter: ZcashAdapter) {
+        Task { [weak self, weak adapter] in
+            guard let self, let adapter else { return }
+
+            let firstUnused = try? adapter.singleUseAddressManager.firstUnused()?.address
+            if let transparent = firstUnused ?? adapter.tAddress?.stringEncoded {
+                await MainActor.run {
+                    self.resolvedAddress = transparent
+                    self.updateState(isMainNet: adapter.isMainNet)
+                }
+            } else {
+                resolvedAddress = "n/a".localized
+            }
+        }
     }
 
     private func updateState(isMainNet: Bool) {
         let status = resolvedAddress.map { DataStatus.completed(DepositAddress($0)) }
         handleStatus(status: status ?? .loading, isMainNet: isMainNet)
-    }
-}
-
-// TODO: use public property when sdk will change accessibility
-extension SingleUseTransparentAddress {
-    var addressString: String? {
-        let mirror = Mirror(reflecting: self)
-        return mirror.children.first(where: { $0.label == "address" })?.value as? String
     }
 }

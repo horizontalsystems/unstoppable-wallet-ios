@@ -400,6 +400,8 @@
 "deposit.address_type.unified.description" = "Use for personal and private transfers between wallets.";
 "deposit.address_type.transparent" = "Transparent";
 "deposit.address_type.transparent.description" = "Use for receiving from exchanges or services that don’t support unified addresses.";
+"deposit.address_type.single_use_transparent" = "Single Use Transparent";
+"deposit.address_type.single_use_transparent.description" = "Use to increase privacy when receiving via a transparent address.";
 "deposit.address_type.transparent.caution" = "You can receive ZEC to this Transparent address. To send, transfer it to a Shielded one.";
 "deposit.address_type.legacy" = "Legacy";
 

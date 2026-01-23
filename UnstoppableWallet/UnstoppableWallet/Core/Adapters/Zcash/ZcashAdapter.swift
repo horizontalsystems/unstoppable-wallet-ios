@@ -31,6 +31,8 @@ class ZcashAdapter {
     private(set) var tAddress: TransparentAddress?
     private var transactionPool: ZcashTransactionPool?
 
+    let singleUseAddressManager: SingleUseAddressManager
+
     private let uniqueId: String
     private let seedData: [UInt8]
     private let birthday: BlockHeight
@@ -73,14 +75,6 @@ class ZcashAdapter {
 
     var balanceState: AdapterState {
         state.adapterState
-    }
-
-    func getSingleUseTransparentAddress() async throws -> SingleUseTransparentAddress? {
-        guard let account = try await synchronizer.listAccounts().first else {
-            throw AppError.ZcashError.noReceiveAddress
-        }
-
-        return try await synchronizer.getSingleUseTransparentAddress(accountUUID: account.id)
     }
 
     func getCustomUnifiedAddress() async throws -> UnifiedAddress? {
@@ -139,6 +133,14 @@ class ZcashAdapter {
 
         let initializer = try ZcashAdapter.initializer(network: network, uniqueId: uniqueId)
         synchronizer = SDKSynchronizer(initializer: initializer)
+
+        singleUseAddressManager = SingleUseAddressManager(
+            synchronizer: synchronizer,
+            storage: zCashAdapterStorage,
+            walletId: uniqueId,
+            logger: HsToolKit.Logger(minLogLevel: .debug)
+        )
+
         // subscribe on sync states
         synchronizer
             .stateStream
@@ -199,6 +201,8 @@ class ZcashAdapter {
                 }
 
                 self?.accountId = account.id
+                await self?.singleUseAddressManager.set(accountId: account.id)
+
                 self?.uAddress = uAddress
                 self?.tAddress = tAddress
 
@@ -240,6 +244,25 @@ class ZcashAdapter {
 
         logger?.log(level: .debug, message: "Start kit after finish preparing!")
         startSynchronizer()
+
+        logger?.log(level: .debug, message: "ZcashAdapter.finishPrepare: Attempting to start SingleUseAddressManager")
+
+        if let accountId {
+            logger?.log(level: .debug, message: "ZcashAdapter.finishPrepare: AccountId available: \(accountId)")
+
+            Task { [weak self] in
+                guard let self else {
+                    self?.logger?.log(level: .warning, message: "ZcashAdapter.finishPrepare: self is nil during SingleUseAddressManager start")
+                    return
+                }
+
+                logger?.log(level: .debug, message: "ZcashAdapter.finishPrepare: Calling singleUseAddressManager.start()...")
+                await singleUseAddressManager.start()
+                logger?.log(level: .debug, message: "ZcashAdapter.finishPrepare: ✅ SingleUseAddressManager started successfully")
+            }
+        } else {
+            logger?.log(level: .error, message: "ZcashAdapter.finishPrepare: Cannot start SingleUseAddressManager - accountId is nil")
+        }
     }
 
     private func startSynchronizer() {
@@ -336,6 +359,11 @@ class ZcashAdapter {
     private func sync(event: SynchronizerEvent) {
         switch event {
         case let .foundTransactions(transactions, inRange):
+            logger?.log(level: .debug, message: "ZcashAdapter.sync(event): Transactions found, checking single-use addresses...")
+            Task { [weak self] in
+                await self?.singleUseAddressManager.start()
+            }
+
             logger?.log(level: .debug, message: "found \(transactions.count) mined txs in range: \(String(describing: inRange))")
             for overview in transactions {
                 logger?.log(level: .debug, message: "tx: v =\(overview.value.decimalValue.decimalString) : fee = \(overview.fee?.decimalString() ?? "N/A") : height = \(overview.minedHeight?.description ?? "N/A")")
@@ -626,6 +654,9 @@ class ZcashAdapter {
     deinit {
         NotificationCenter.default.removeObserver(self)
         Task { [weak self] in
+            await self?.singleUseAddressManager.stop()
+            self?.logger?.log(level: .debug, message: "ZcashAdapter.deinit: SingleUseAddressManager stopped")
+
             self?.synchronizer.stop()
             self?.logger?.log(level: .debug, message: "Synchronizer Was Stopped")
         }
@@ -706,7 +737,7 @@ extension ZcashAdapter {
             saplingParamsSourceURL: SaplingParamsSourceURL.default,
             alias: .custom(uniqueId),
             loggingPolicy: .noLogging,
-            isTorEnabled: false,
+            isTorEnabled: true,
             isExchangeRateEnabled: false
         )
     }
@@ -936,6 +967,12 @@ extension ZcashAdapter: ISendZcashAdapter {
     enum AddressType {
         case shielded
         case transparent
+    }
+
+    enum ReceiveAddressType {
+        case shielded
+        case transparent
+        case singleUseTransparent
     }
 
     var availableBalance: Decimal {

@@ -1,9 +1,9 @@
 import Foundation
 
 class ZCashReceiveAddressViewItemFactory: ReceiveAddressViewItemFactory {
-    private let addressType: ZcashAdapter.AddressType
+    private let addressType: ZcashAdapter.ReceiveAddressType
 
-    init(addressType: ZcashAdapter.AddressType) {
+    init(addressType: ZcashAdapter.ReceiveAddressType) {
         self.addressType = addressType
     }
 
@@ -12,11 +12,12 @@ class ZCashReceiveAddressViewItemFactory: ReceiveAddressViewItemFactory {
     }
 }
 
-extension ZcashAdapter.AddressType {
+extension ZcashAdapter.ReceiveAddressType {
     var title: String {
         switch self {
         case .shielded: return "deposit.address_type.unified".localized
         case .transparent: return "deposit.address_type.transparent".localized
+        case .singleUseTransparent: return "deposit.address_type.single_use_transparent".localized
         }
     }
 }

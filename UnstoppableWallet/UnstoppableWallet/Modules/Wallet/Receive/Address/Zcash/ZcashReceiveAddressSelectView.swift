@@ -38,7 +38,7 @@ struct ZcashReceiveAddressSelectView: View {
         }
         .navigationTitle("deposit.zcash.title".localized)
         .navigationBarTitleDisplayMode(.inline)
-        .navigationDestination(for: ZcashAdapter.AddressType.self, destination: { addressType in
+        .navigationDestination(for: ZcashAdapter.ReceiveAddressType.self, destination: { addressType in
             destinationView(for: addressType)
         })
         .toolbar {
@@ -70,15 +70,8 @@ struct ZcashReceiveAddressSelectView: View {
     }
 
     @ViewBuilder
-    private func destinationView(for addressType: ZcashAdapter.AddressType) -> some View {
-        let service = ZCashReceiveAddressService(wallet: wallet, addressType: addressType)
-        let viewModel = BaseReceiveAddressViewModel(
-            service: service,
-            viewItemFactory: ZCashReceiveAddressViewItemFactory(addressType: addressType),
-            decimalParser: AmountDecimalParser()
-        )
-
-        BaseReceiveAddressView(viewModel: viewModel, content: {}, onDismiss: onDismiss)
+    private func destinationView(for addressType: ZcashAdapter.ReceiveAddressType) -> some View {
+        ZCashReceiveAddressView(wallet: wallet, addressType: addressType, onDismiss: onDismiss)
             .navigationBarTitleDisplayMode(.inline)
     }
 }
