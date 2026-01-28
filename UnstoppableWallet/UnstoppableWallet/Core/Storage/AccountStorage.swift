@@ -100,13 +100,11 @@ class AccountStorage {
             type = .btcAddress(address: address, blockchainType: BlockchainType(uid: blockchainTypeUid), tokenType: tokenType)
         case .moneroWatchAccount:
             let viewKey: String? = recover(id: id, typeName: typeName, keyName: .data)
-            guard let address = record.wordsKey, let viewKey,
-                  let restoreHeightString = record.saltKey, let restoreHeight = Int(restoreHeightString)
-            else {
+            guard let address = record.wordsKey, let viewKey else {
                 return nil
             }
 
-            type = .moneroWatchAccount(address: address, viewKey: viewKey, restoreHeight: restoreHeight)
+            type = .moneroWatchAccount(address: address, viewKey: viewKey)
         }
 
         return Account(
@@ -161,10 +159,9 @@ class AccountStorage {
             wordsKey = address
             saltKey = blockchainType.uid
             dataKey = tokenType.id
-        case let .moneroWatchAccount(address, viewKey, restoreHeight):
+        case let .moneroWatchAccount(address, viewKey):
             typeName = .moneroWatchAccount
             wordsKey = address
-            saltKey = String(restoreHeight)
             dataKey = try store(viewKey, id: id, typeName: typeName, keyName: .data)
         }
 

@@ -100,13 +100,13 @@ struct ReceiveCoinListView: View {
                             isPresented.wrappedValue = false
                             viewModel.enableTokenWithBirthday = nil
 
-                            showRestoreZcash(token: token)
+                            showBirthdayInput(token: token)
                         }),
                         .init(style: .transparent, title: "deposit.restore.enabled.dont_have".localized, action: {
                             isPresented.wrappedValue = false
                             viewModel.enableTokenWithBirthday = nil
 
-                            viewModel.createZcashWallet(token: token, height: nil)
+                            viewModel.createWallet(token: token, height: nil)
                         }),
                     ])),
                 ],
@@ -114,12 +114,19 @@ struct ReceiveCoinListView: View {
         }
     }
 
-    private func showRestoreZcash(token: Token) {
+    private func showBirthdayInput(token: Token) {
+        let blockchain = token.blockchain
+
+        guard let provider = BirthdayInputProviderFactory.provider(blockchainType: blockchain.type) else {
+            return
+        }
+
         Coordinator.shared.present { _ in
-            BirthdayInputView(token: token) { height in
-                viewModel.createZcashWallet(token: token, height: height)
-            }
-            .ignoresSafeArea()
+            BirthdayInputView(blockchain: blockchain, provider: provider, onEnterBirthdayHeight: { height in
+                DispatchQueue.main.async {
+                    viewModel.createWallet(token: token, height: height)
+                }
+            })
         }
     }
 }

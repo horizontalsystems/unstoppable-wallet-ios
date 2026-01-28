@@ -67,7 +67,7 @@ extension ReceiveCoinListViewModel {
         block(fullCoin)
     }
 
-    func createZcashWallet(token: Token, height: Int?) {
+    func createWallet(token: Token, height: Int?) {
         service.onRestoreWithBirthdayHeight(account: account, token: token, height: height)
         pushCoinUid = token.coin.uid
     }
