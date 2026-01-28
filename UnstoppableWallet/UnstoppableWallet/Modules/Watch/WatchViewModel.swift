@@ -70,21 +70,8 @@ class WatchViewModel: ObservableObject {
     }
 
     @Published var viewKeyCaution: CautionState = .none
-    @Published var height = "" {
-        didSet {
-            guard oldValue != height else {
-                return
-            }
 
-            guard let address else {
-                return
-            }
-
-            sync(address: address)
-        }
-    }
-
-    @Published var heightCaution: CautionState = .none
+    var birthdayHeight: Int?
 
     private var syncingTextWithAddress: Bool = false
     private var address: Address? {
@@ -133,7 +120,7 @@ class WatchViewModel: ObservableObject {
         if let (address, viewKey, height) = moneroParser.parse(uri: addressUri) {
             self.address = address
             self.viewKey = viewKey
-            self.height = height
+            birthdayHeight = Int(height)
         } else {
             parseAddress(text: addressUri.address)
         }
@@ -186,7 +173,7 @@ class WatchViewModel: ObservableObject {
 
     private func sync(address: Address, forceRequiredFields: Bool = false) {
         if address.blockchainType == .monero {
-            requiredFields = [.viewKey, .height]
+            requiredFields = [.viewKey]
         } else {
             clearRequiredFields()
         }
@@ -206,8 +193,8 @@ class WatchViewModel: ObservableObject {
                 case .stellar:
                     accountType = .stellarAccount(accountId: address.raw)
                 case .monero:
-                    (state, viewKeyCaution, heightCaution) = moneroParser.parseAndValidate(
-                        address: address, viewKey: viewKey, height: height, forceRequiredFields: forceRequiredFields
+                    (state, viewKeyCaution) = moneroParser.parseAndValidate(
+                        address: address, viewKey: viewKey, forceRequiredFields: forceRequiredFields
                     )
                     return
                 default: return
@@ -317,12 +304,19 @@ class WatchViewModel: ObservableObject {
         requiredFields = []
         viewKey = ""
         viewKeyCaution = .none
-        height = ""
-        heightCaution = .none
+        birthdayHeight = nil
     }
 }
 
 extension WatchViewModel {
+    var birthdayHeightBlockchain: Blockchain? {
+        if case let .ready(accountType) = state, case .moneroWatchAccount = accountType, birthdayHeight == nil {
+            return try? marketKit.blockchain(uid: BlockchainType.monero.uid)
+        }
+
+        return nil
+    }
+
     func onProceed() {
         guard let accountType = validateAndGetAccount() else {
             return
@@ -348,8 +342,8 @@ extension WatchViewModel {
 
         accountManager.save(account: account)
 
-        if case let .moneroWatchAccount(_, _, restoreHeight) = accountType {
-            restoreSettingsManager.save(settings: [.birthdayHeight: String(restoreHeight)], account: account, blockchainType: .monero)
+        if case .moneroWatchAccount = accountType, let birthdayHeight {
+            restoreSettingsManager.save(settings: [.birthdayHeight: String(birthdayHeight)], account: account, blockchainType: .monero)
         }
 
         enableWallets(account: account, items: items, enabledUids: enabledUids)
@@ -370,7 +364,6 @@ extension WatchViewModel {
 
     enum RequiredField {
         case viewKey
-        case height
     }
 
     enum Items: Hashable {

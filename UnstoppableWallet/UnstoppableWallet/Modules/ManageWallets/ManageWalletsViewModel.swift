@@ -12,7 +12,6 @@ class ManageWalletsViewModel {
     private let notFoundVisibleRelay = BehaviorRelay<Bool>(value: false)
     private let disableItemRelay = PublishRelay<Int>()
     private let showInfoRelay = PublishRelay<InfoViewItem>()
-    private let showBirthdayHeightRelay = PublishRelay<BirthdayHeightViewItem>()
     private let showContractRelay = PublishRelay<ContractViewItem>()
 
     init(service: ManageWalletsService) {
@@ -60,10 +59,6 @@ extension ManageWalletsViewModel {
         showInfoRelay.asSignal()
     }
 
-    var showBirthdayHeightSignal: Signal<BirthdayHeightViewItem> {
-        showBirthdayHeightRelay.asSignal()
-    }
-
     var showContractSignal: Signal<ContractViewItem> {
         showContractRelay.asSignal()
     }
@@ -96,8 +91,6 @@ extension ManageWalletsViewModel {
             showInfoRelay.accept(InfoViewItem(coin: coinViewItem, text: "manage_wallets.derivation_description".localized(coinName, AppConfig.appName, coinName)))
         case .bitcoinCashCoinType:
             showInfoRelay.accept(InfoViewItem(coin: coinViewItem, text: "manage_wallets.bitcoin_cash_coin_type_description".localized(AppConfig.appName)))
-        case let .birthdayHeight(height):
-            showBirthdayHeightRelay.accept(BirthdayHeightViewItem(coin: coinViewItem, height: String(height)))
         case let .contractAddress(value, explorerUrl):
             showContractRelay.accept(ContractViewItem(coin: coinViewItem, blockchainImageUrl: infoItem.token.blockchainType.imageUrl, value: value, explorerUrl: explorerUrl))
         }
@@ -130,11 +123,6 @@ extension ManageWalletsViewModel {
     struct InfoViewItem {
         let coin: CoinViewItem
         let text: String
-    }
-
-    struct BirthdayHeightViewItem {
-        let coin: CoinViewItem
-        let height: String
     }
 
     struct ContractViewItem {

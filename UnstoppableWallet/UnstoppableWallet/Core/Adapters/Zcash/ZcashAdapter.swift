@@ -633,6 +633,14 @@ class ZcashAdapter {
 }
 
 extension ZcashAdapter {
+    static func estimateBirthdayHeight(date: Date, isMainnet: Bool = true) -> BlockHeight {
+        SDKSynchronizer.estimateBirthdayHeight(for: date, isMainnet: isMainnet)
+    }
+
+    public static func estimateBirthdayTime(for height: BlockHeight, isMainnet: Bool = true) -> UInt32 {
+        SDKSynchronizer.birthdayTime(for: height, isMainnet: isMainnet)
+    }
+
     static func addresses(for accountType: AccountType, network: ZcashNetwork) async throws -> (unified: UnifiedAddress, transparent: TransparentAddress) {
         guard let seed = accountType.mnemonicSeed else {
             throw AdapterError.unsupportedAccount
