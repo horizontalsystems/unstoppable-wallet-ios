@@ -14,6 +14,12 @@ struct ZcashWalletTokenView: View {
                 content: {
                     VStack(spacing: 0) {
                         WalletTokenTopView(viewModel: walletTokenViewModel)
+
+                        if let birthdayHeight = viewModel.birthdayHeight {
+                            view(birthdayHeight: birthdayHeight)
+                            HorizontalDivider()
+                        }
+
                         if viewModel.zCashBalanceData.transparent > ZcashAdapter.minimalThreshold {
                             view(transparent: viewModel.zCashBalanceData.transparent)
                             HorizontalDivider()
@@ -70,6 +76,30 @@ struct ZcashWalletTokenView: View {
                                 alignment: .horizontal)),
                         ],
                     )
+                }
+            }
+        )
+    }
+
+    @ViewBuilder private func view(birthdayHeight: Int) -> some View {
+        Cell(
+            middle: {
+                MiddleTextIcon(text: "birthday_height.title".localized)
+            },
+            right: {
+                RightTextIcon(text: String(birthdayHeight), icon: "arrow_b_right")
+            },
+            action: {
+                let blockchain = viewModel.wallet.token.blockchain
+
+                guard let provider = BirthdayInputProviderFactory.provider(blockchainType: blockchain.type) else {
+                    return
+                }
+
+                Coordinator.shared.present { _ in
+                    BirthdayInputView(blockchain: blockchain, initialHeight: birthdayHeight, provider: provider) { birthdayHeight in
+                        viewModel.onChange(birthdayHeight: birthdayHeight)
+                    }
                 }
             }
         )

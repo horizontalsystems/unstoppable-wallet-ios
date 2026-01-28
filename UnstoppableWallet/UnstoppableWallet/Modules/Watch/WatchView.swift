@@ -56,18 +56,6 @@ struct WatchView: View {
                                         .focused($focusedField, equals: .viewKey)
                                         .modifier(CautionBorder(cautionState: $viewModel.viewKeyCaution))
                                         .modifier(CautionPrompt(cautionState: $viewModel.viewKeyCaution))
-                                    case .height:
-                                        SingleLineLargeTextField(
-                                            placeholder: "watch_address.birthday_height.placeholder".localized,
-                                            text: $viewModel.height,
-                                            statPage: .watchWallet,
-                                            statEntity: .height,
-                                            keyboardType: UIKeyboardType.numberPad,
-                                            onButtonTap: { focusedField = nil }
-                                        )
-                                        .focused($focusedField, equals: .height)
-                                        .modifier(CautionBorder(cautionState: $viewModel.heightCaution))
-                                        .modifier(CautionPrompt(cautionState: $viewModel.heightCaution))
                                     }
                                 }
                             }
@@ -81,7 +69,7 @@ struct WatchView: View {
                     }
                 } bottomContent: {
                     ThemeButton(text: "watch_address.watch".localized) {
-                        viewModel.onProceed()
+                        proceed()
                     }
                 }
             }
@@ -95,7 +83,7 @@ struct WatchView: View {
 
                 ToolbarItem(placement: .confirmationAction) {
                     Button("watch_address.watch".localized) {
-                        viewModel.onProceed()
+                        proceed()
                     }
                 }
             }
@@ -116,6 +104,26 @@ struct WatchView: View {
                     viewModel.watch(items: items, enabledUids: uids)
                 }
             }
+        }
+    }
+
+    private func proceed() {
+        if let blockchain = viewModel.birthdayHeightBlockchain {
+            guard let provider = BirthdayInputProviderFactory.provider(blockchainType: blockchain.type) else {
+                return
+            }
+
+            Coordinator.shared.present { _ in
+                BirthdayInputView(blockchain: blockchain, provider: provider, onEnterBirthdayHeight: { height in
+                    viewModel.birthdayHeight = height
+
+                    DispatchQueue.main.async {
+                        viewModel.onProceed()
+                    }
+                })
+            }
+        } else {
+            viewModel.onProceed()
         }
     }
 }

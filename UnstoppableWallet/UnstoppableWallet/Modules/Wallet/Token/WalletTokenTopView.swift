@@ -1,7 +1,16 @@
 import SwiftUI
 
-struct WalletTokenTopView: View {
+struct WalletTokenTopView<Content: View>: View {
     @ObservedObject var viewModel: WalletTokenViewModel
+    let content: () -> Content
+
+    init(
+        viewModel: WalletTokenViewModel,
+        @ViewBuilder content: @escaping () -> Content = { EmptyView() }
+    ) {
+        self.viewModel = viewModel
+        self.content = content
+    }
 
     var body: some View {
         VStack(alignment: .leading, spacing: .margin24) {
@@ -17,32 +26,30 @@ struct WalletTokenTopView: View {
                 ThemeText(secondaryValue, style: .body, colorStyle: .secondary)
             }
 
-            if !viewModel.wallet.account.watchAccount {
-                let buttons = viewModel.buttons
+            VStack(spacing: 0) {
+                if !viewModel.wallet.account.watchAccount {
+                    let buttons = viewModel.buttons
 
-                HStack(spacing: 0) {
-                    ForEach(buttons, id: \.self) { button in
-                        buttonView(button: button)
+                    HStack(spacing: 0) {
+                        ForEach(buttons, id: \.self) { button in
+                            buttonView(button: button)
 
-                        if button != buttons.last {
-                            Spacer()
+                            if button != buttons.last {
+                                Spacer()
+                            }
                         }
                     }
-                }
-                .padding(.bottom, .margin24)
-            } else {
-                VStack(spacing: .margin16) {
+                    .padding(.bottom, .margin24)
+                } else {
                     Button(action: {
                         viewModel.onTapReceive()
                     }) {
                         WatchAddressView(wallet: viewModel.wallet)
                     }
-
-                    if case .moneroWatchAccount = viewModel.wallet.account.type {
-                        AlertCardView(.init(text: "watch_address.monero_warning.description".localized))
-                    }
+                    .padding(.vertical, .margin16)
                 }
-                .padding(.vertical, .margin16)
+
+                content()
             }
         }
         .padding(.top, .margin24)

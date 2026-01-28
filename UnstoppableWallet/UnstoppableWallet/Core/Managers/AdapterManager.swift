@@ -44,7 +44,7 @@ class AdapterManager {
             }
         }
         subscribe(disposeBag, btcBlockchainManager.restoreModeUpdatedObservable) { [weak self] in self?.handleUpdatedRestoreMode(blockchainType: $0) }
-        subscribe(disposeBag, moneroNodeManager.nodeObservable) { [weak self] in self?.handleUpdatedMoneroNode(blockchainType: $0) }
+        subscribe(disposeBag, moneroNodeManager.nodeObservable) { [weak self] in self?.recreateAdapter(blockchainType: $0) }
     }
 
     private func initAdapters(wallets: [Wallet], account: Account?) {
@@ -102,14 +102,6 @@ class AdapterManager {
         })
     }
 
-    private func handleUpdatedMoneroNode(blockchainType: BlockchainType) {
-        let wallets = queue.sync { _adapterData.adapterMap.keys }
-
-        refreshAdapters(wallets: wallets.filter {
-            $0.token.blockchain.type == blockchainType
-        })
-    }
-
     private func refreshAdapters(wallets: [Wallet]) {
         guard !wallets.isEmpty else {
             return
@@ -156,6 +148,16 @@ extension AdapterManager {
 
     func depositAdapter(for wallet: Wallet) -> IDepositAdapter? {
         queue.sync { _adapterData.adapterMap[wallet] as? IDepositAdapter }
+    }
+
+    func recreateAdapter(blockchainType: BlockchainType) {
+        Task {
+            let wallets = queue.sync { _adapterData.adapterMap.keys }
+
+            refreshAdapters(wallets: wallets.filter {
+                $0.token.blockchain.type == blockchainType
+            })
+        }
     }
 
     func refresh() {

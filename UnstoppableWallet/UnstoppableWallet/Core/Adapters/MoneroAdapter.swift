@@ -47,11 +47,11 @@ class MoneroAdapter {
                 logger: logger
             )
 
-        case let .moneroWatchAccount(address, viewKey, restoreHeight):
+        case let .moneroWatchAccount(address, viewKey):
             kit = try MoneroKit.Kit(
                 wallet: .watch(address: address, viewKey: viewKey),
                 account: 0,
-                restoreHeight: UInt64(restoreHeight),
+                restoreHeight: UInt64(restoreSettings.birthdayHeight ?? 0),
                 walletId: wallet.account.id,
                 node: node,
                 networkType: Self.networkType,
@@ -355,7 +355,7 @@ extension MoneroAdapter {
         case let .mnemonic(words, passphrase, _):
             return (try? Kit.key(wallet: .bip39(seed: words, passphrase: passphrase), privateKey: privateKey, spendKey: spendKey)) ?? ""
 
-        case let .moneroWatchAccount(address, viewKey, _):
+        case let .moneroWatchAccount(address, viewKey):
             return (try? Kit.key(wallet: .watch(address: address, viewKey: viewKey), privateKey: privateKey, spendKey: spendKey)) ?? ""
 
         default: return ""
@@ -367,7 +367,7 @@ extension MoneroAdapter {
         case let .mnemonic(words, passphrase, _):
             return (try? Kit.address(wallet: .bip39(seed: words, passphrase: passphrase), account: 0, index: 1)) ?? ""
 
-        case let .moneroWatchAccount(address, viewKey, _):
+        case let .moneroWatchAccount(address, viewKey):
             return (try? Kit.address(wallet: .watch(address: address, viewKey: viewKey), account: 0, index: 0)) ?? ""
 
         default: return ""

@@ -130,8 +130,8 @@ class AddressViewModelNew: ObservableObject {
 extension AddressViewModelNew {
     // Shortcut section
     var shortcuts: [ShortCutButtonType] {
-        let items: [ShortCutButtonType] = showContacts ? [.icon("user_20")] : []
-        return items + [.icon("qr_scan_20"), .text("button.paste".localized)]
+        let items: [ShortCutButtonType] = showContacts ? [.icon("user")] : []
+        return items + [.icon("scan"), .text("button.paste".localized)]
     }
 
     func onTap(index: Int) {
