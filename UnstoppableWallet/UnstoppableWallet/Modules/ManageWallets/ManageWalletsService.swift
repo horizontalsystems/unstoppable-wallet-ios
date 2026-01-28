@@ -160,14 +160,10 @@ class ManageWalletsService {
         }
     }
 
-    private func hasInfo(token: Token, enabled: Bool) -> Bool {
+    private func hasInfo(token: Token) -> Bool {
         switch token.type {
         case .derived, .addressType: return true
         default: ()
-        }
-
-        if !token.blockchainType.restoreSettingTypes.isEmpty, enabled {
-            return true
         }
 
         switch token.type {
@@ -182,7 +178,7 @@ class ManageWalletsService {
         return Item(
             token: token,
             enabled: enabled,
-            hasInfo: hasInfo(token: token, enabled: enabled)
+            hasInfo: hasInfo(token: token)
         )
     }
 
@@ -243,22 +239,11 @@ extension ManageWalletsService {
 
     func infoItem(index: Int) -> InfoItem? {
         let token = tokens[index]
-        let blockchainType = token.blockchainType
 
         switch token.type {
         case .derived: return InfoItem(token: token, type: .derivation)
         case .addressType: return InfoItem(token: token, type: .bitcoinCashCoinType)
         default: ()
-        }
-
-        for restoreSettingType in blockchainType.restoreSettingTypes {
-            switch restoreSettingType {
-            case .birthdayHeight:
-                let settings = restoreSettingsService.settings(accountId: account.id, blockchainType: blockchainType)
-                if let birthdayHeight = settings.birthdayHeight {
-                    return InfoItem(token: token, type: .birthdayHeight(height: birthdayHeight))
-                }
-            }
         }
 
         switch token.type {
@@ -290,7 +275,6 @@ extension ManageWalletsService {
     enum InfoType {
         case derivation
         case bitcoinCashCoinType
-        case birthdayHeight(height: Int)
         case contractAddress(value: String, explorerUrl: String?)
     }
 }

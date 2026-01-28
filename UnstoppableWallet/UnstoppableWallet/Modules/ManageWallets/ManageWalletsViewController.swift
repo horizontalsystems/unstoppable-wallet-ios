@@ -62,15 +62,10 @@ class ManageWalletsViewController: ThemeSearchViewController {
         notFoundPlaceholder.image = UIImage(named: "not_found_48")
         notFoundPlaceholder.text = "manage_wallets.not_found".localized
 
-        restoreSettingsView.onOpenController = { [weak self] controller in
-            self?.open(controller: controller)
-        }
-
         subscribe(disposeBag, viewModel.viewItemsDriver) { [weak self] in self?.onUpdate(viewItems: $0) }
         subscribe(disposeBag, viewModel.notFoundVisibleDriver) { [weak self] in self?.setNotFound(visible: $0) }
         subscribe(disposeBag, viewModel.disableItemSignal) { [weak self] in self?.setToggle(on: false, index: $0) }
         subscribe(disposeBag, viewModel.showInfoSignal) { [weak self] in self?.showInfo(viewItem: $0) }
-        subscribe(disposeBag, viewModel.showBirthdayHeightSignal) { [weak self] in self?.showBirthdayHeight(viewItem: $0) }
         subscribe(disposeBag, viewModel.showContractSignal) { [weak self] in self?.showContract(viewItem: $0) }
 
         $filter
@@ -118,12 +113,6 @@ class ManageWalletsViewController: ThemeSearchViewController {
     private func showInfo(viewItem: ManageWalletsViewModel.InfoViewItem) {
         showBottomSheet(viewItem: viewItem.coin, items: [
             .description(text: viewItem.text),
-        ])
-    }
-
-    private func showBirthdayHeight(viewItem: ManageWalletsViewModel.BirthdayHeightViewItem) {
-        showBottomSheet(viewItem: viewItem.coin, items: [
-            .copyableValue(title: "birthday_height.title".localized, value: viewItem.height),
         ])
     }
 

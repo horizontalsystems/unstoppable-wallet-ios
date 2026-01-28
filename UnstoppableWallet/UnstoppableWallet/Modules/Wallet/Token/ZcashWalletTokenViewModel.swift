@@ -14,12 +14,15 @@ class ZcashWalletTokenViewModel: ObservableObject {
 
     @Published var zCashBalanceData: ZcashBalanceData
     @Published var balanceHidden: Bool
+    @Published var birthdayHeight: Int?
 
     init(adapter: ZcashAdapter, wallet: Wallet) {
         self.adapter = adapter
         self.wallet = wallet
         zCashBalanceData = adapter.zCashBalanceData
         balanceHidden = balanceHiddenManager.balanceHidden
+
+        birthdayHeight = restoreSettingsService.settings(accountId: wallet.account.id, blockchainType: wallet.token.blockchainType).birthdayHeight
 
         adapter.$zCashBalanceData
             .receive(on: DispatchQueue.main)
@@ -38,5 +41,12 @@ class ZcashWalletTokenViewModel: ObservableObject {
 extension ZcashWalletTokenViewModel {
     var ownAddress: String? {
         adapter.uAddress?.stringEncoded
+    }
+
+    func onChange(birthdayHeight _: Int) {
+        // let blockchainType = wallet.token.blockchainType
+        // restoreSettingsService.set(birthdayHeight: birthdayHeight, account: wallet.account, blokcchainType: blockchainType)
+
+        // TODO: after setting new birthday height - resync Zcash
     }
 }

@@ -1,9 +1,8 @@
 import MoneroKit
 
 class MoneroWatchWalletParser {
-    func parseAndValidate(address: Address, viewKey: String, height: String, forceRequiredFields: Bool) -> (WatchViewModel.State, CautionState, CautionState) {
+    func parseAndValidate(address: Address, viewKey: String, forceRequiredFields: Bool) -> (WatchViewModel.State, CautionState) {
         var validViewKey: String?
-        var validHeight: Int?
 
         let viewKeyCautionState: CautionState
         if viewKey.isEmpty {
@@ -28,30 +27,11 @@ class MoneroWatchWalletParser {
             }
         }
 
-        let heightCautionState: CautionState
-        if height.isEmpty {
-            heightCautionState = .none
-        } else {
-            let parsedHeight = Int(height) ?? 0
-            let maxHeight = MoneroKit.RestoreHeight.maximumEstimatedHeight()
-
-            if parsedHeight > maxHeight || String(parsedHeight) != height {
-                heightCautionState = .caution(.init(text: "watch_address.birthday_height.error.invalid".localized, type: .error))
-            } else {
-                validHeight = parsedHeight
-                heightCautionState = .none
-            }
-        }
-
         if let validViewKey {
-            if height.isEmpty || validHeight != nil {
-                let accountType = AccountType.moneroWatchAccount(address: address.raw, viewKey: validViewKey, restoreHeight: validHeight ?? 1)
-                return (.ready(accountType: accountType), viewKeyCautionState, heightCautionState)
-            } else {
-                return (.incomplete, viewKeyCautionState, heightCautionState)
-            }
+            let accountType = AccountType.moneroWatchAccount(address: address.raw, viewKey: validViewKey)
+            return (.ready(accountType: accountType), viewKeyCautionState)
         } else {
-            return (.incomplete, viewKeyCautionState, heightCautionState)
+            return (.incomplete, viewKeyCautionState)
         }
     }
 

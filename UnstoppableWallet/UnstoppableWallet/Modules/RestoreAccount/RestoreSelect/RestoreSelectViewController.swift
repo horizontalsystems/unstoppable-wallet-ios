@@ -39,9 +39,6 @@ class RestoreSelectViewController: CoinToggleViewController {
         blockchainTokensView.onOpenController = { [weak self] controller in
             self?.open(controller: controller)
         }
-        restoreSettingsView.onOpenController = { [weak self] controller in
-            self?.open(controller: controller)
-        }
 
         subscribe(disposeBag, viewModel.restoreEnabledDriver) { [weak self] in self?.navigationItem.rightBarButtonItem?.isEnabled = $0 }
         subscribe(disposeBag, viewModel.disableBlockchainSignal) { [weak self] in self?.setToggle(on: false, uid: $0) }
