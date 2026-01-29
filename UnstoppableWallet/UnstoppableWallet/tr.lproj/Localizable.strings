@@ -449,10 +449,6 @@ Cüzdan etkinleştirilene kadar token’lar alınabilir, ancak bakiyeler görün
 "deposit.subaddresses.description" = "Tek bir cüzdanda birden fazla benzersiz adresi yönetmek için alt adresleri kullanın – düzenlemeyi kolaylaştırır, gizliliğinizi daha güvenli hale getirir.";
 "deposit.subaddresses.transactions_count" = "İşlemler: %@";
 
-"deposit.restore.enabled.description" = "Daha önce %@ coinlerine sahip oldunuz mu?";
-"deposit.restore.enabled.already_own" = "Evet, zaten sahibim";
-"deposit.restore.enabled.dont_have" = "Hayır, bende yok";
-
 "deposit.warning" = "Sadece ağ uyumlu jetonlar. Diğerleri kaybedilecek.";
 "deposit.warning.watch_account" = "Bu adres izlenen hesabın adresidir";
 
@@ -1543,14 +1539,14 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "terms.title" = "Şartlar";
 "terms.i_agree" = "Kabul Ediyorum";
 
-"terms.item.backup_recovery" = "Her cüzdan için kurtarma ifadelerini güvenli bir şekilde yedekleyin. Uygulama arızalanırsa fonlara yeniden erişmenin tek yolu budur.";
+"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It's the only way to regain access to your funds if the app is deleted or malfunctions. No one can restore it for you.";
 "terms.item.device_pin" = "Akıllı telefon kilit açma PIN'ini devre dışı bırakmak, tüm cüzdanları uygulamadan siler. Fonlara yeniden erişim sağlamak için kurtarma ifadelerine ihtiyaç duyulacaktır.";
 "terms.item.privacy_notice" = "Uygulama bakiye veya işlemlerinizle ilgili veri toplamaz veya sizi takip etmez — kaç kişinin uygulamayı kullandığını bile bilmiyoruz. Sadece anonim kullanım verilerini (açılan sayfalar, tıklanan butonlar) toplar ve bu da sadece kullanılabilirliği geliştirmek içindir. Ayarlar → Gizlilik bölümünden bunu kapatabilirsiniz";
-"terms.item.decentralized" = "Varlıklarınızı tutmayız, private key’lerinize erişmeyiz ve sizin adınıza işlem gerçekleştirmeyiz. Uygulama; aracılık, exchange, saklama (custody), escrow veya para transferi hizmetleri sunmaz. Tüm işlemler, public blockchain ağlarına doğrudan sizin tarafınızdan başlatılır, imzalanır ve yayınlanır. İşlemlerinizi kontrol etmeyiz, iletmeyiz, değiştirmeyiz veya işlemden geçirmeyiz.";
-"terms.item.commission" = "Para kazanma modeli kapsamında uygulama, cüzdan içinden yapılan DEX takaslarından küçük komisyonlar alır. Bu, bağımsız, açık kaynaklı ve VC fonlarından uzak kalmamıza yardımcı olur.";
+"terms.item.decentralized" = "We do not hold your assets, access your private keys, or execute transactions on your behalf. The app does not provide brokerage, exchange, custody, escrow, or money-transmission services. All transactions are initiated, signed, and broadcast directly by you to public blockchain networks.";
+"terms.item.commission" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet. This helps us stay independent, open source, and free of VC money.";
 "terms.item.irreversibility" = "Blockchain işlemleri geri döndürülemez. Onaylamadan önce işlem detaylarını her zaman dikkatlice kontrol edin.";
 "terms.item.software" = "Uygulama doğrulanabilir şekilde açık kaynaklıdır; tüm kaynak kodu çevrimiçi olarak yayımlanmıştır. Yukarıdaki tüm bilgiler herkes tarafından kamuya açık olarak doğrulanabilir.";
-"terms.item.compliance" = "Fonlarınızın güvenliğinden, kendi davranışlarınızdan ve bulunduğunuz yargı alanında geçerli olan yasalara uyumdan yalnızca siz sorumlusunuz. Uygulamanın kullanımı, sizi vergi, finansal raporlama veya diğer yasal yükümlülüklerden muaf tutmaz.";
+"terms.item.compliance" = "You are solely responsible for the security of your funds, your conduct, and compliance with applicable laws in your jurisdiction as well as globally. ";
 "terms.item.user_responsibility" = "Devam ederek, fonlarınızın güvenliği ve yasal mevzuata uyumun nihai olarak sizin sorumluluğunuzda olduğunu kabul edersiniz.";
 
 // Settings -> Tell Friends
