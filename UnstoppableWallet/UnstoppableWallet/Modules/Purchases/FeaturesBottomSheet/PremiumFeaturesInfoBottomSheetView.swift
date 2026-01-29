@@ -8,7 +8,7 @@ struct PremiumFeaturesInfoBottomSheetView: View {
     @State private var currentSlideIndex: Int
     var buttonTitle: String
 
-    init(isPresented: Binding<Bool>, currentSlideIndex: Int = 0, buttonTitle: String = "button.done".localized, action: @escaping () -> Void) {
+    init(isPresented: Binding<Bool>, currentSlideIndex: Int = 0, buttonTitle: String, action: @escaping () -> Void) {
         _isPresented = isPresented
         self.currentSlideIndex = currentSlideIndex
         self.buttonTitle = buttonTitle
