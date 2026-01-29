@@ -8,8 +8,7 @@ struct SubscriptionView: View {
             ScrollView {
                 VStack(spacing: 0) {
                     PremiumFactory.header
-
-                    PremiumFeaturesListView(categories: viewModel.viewItems)
+                    PremiumFeaturesListView(categories: viewModel.viewItems, onPurchase: showPurchase)
                     walletDescription()
                 }
             }
@@ -75,13 +74,7 @@ struct SubscriptionView: View {
     @ViewBuilder private func actionButtonView() -> some View {
         let (title, disabled) = buttonState()
 
-        Button(action: {
-            Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                PurchaseBottomSheetView(isPresented: isPresented) { [weak viewModel] _ in
-                    viewModel?.didSubscribeSuccessful()
-                }
-            }
-        }) {
+        Button(action: showPurchase) {
             Text(title)
         }
         .disabled(disabled)
@@ -103,6 +96,14 @@ struct SubscriptionView: View {
         }
 
         return (title, disabled)
+    }
+
+    private func showPurchase() {
+        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+            PurchaseBottomSheetView(isPresented: isPresented) { [weak viewModel] _ in
+                viewModel?.didSubscribeSuccessful()
+            }
+        }
     }
 }
 
