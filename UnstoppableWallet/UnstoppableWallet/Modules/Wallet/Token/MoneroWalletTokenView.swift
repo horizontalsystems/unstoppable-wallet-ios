@@ -16,7 +16,7 @@ struct MoneroWalletTokenView: View {
                         WalletTokenTopView(viewModel: walletTokenViewModel) {
                             if case .moneroWatchAccount = viewModel.wallet.account.type {
                                 AlertCardView(.init(text: "watch_address.monero_warning.description".localized))
-                                    .padding(.vertical, 16)
+                                    .padding(16)
                             }
                         }
 
