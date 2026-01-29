@@ -13,7 +13,7 @@ struct WalletTokenTopView<Content: View>: View {
     }
 
     var body: some View {
-        VStack(alignment: .leading, spacing: .margin24) {
+        VStack(alignment: .leading, spacing: 24) {
             VStack(alignment: .leading, spacing: 0) {
                 ThemeText(primaryValue, style: .title2)
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -25,6 +25,7 @@ struct WalletTokenTopView<Content: View>: View {
 
                 ThemeText(secondaryValue, style: .body, colorStyle: .secondary)
             }
+            .padding(.horizontal, 16)
 
             VStack(spacing: 0) {
                 if !viewModel.wallet.account.watchAccount {
@@ -39,21 +40,26 @@ struct WalletTokenTopView<Content: View>: View {
                             }
                         }
                     }
-                    .padding(.bottom, .margin24)
-                } else {
-                    Button(action: {
-                        viewModel.onTapReceive()
-                    }) {
-                        WatchAddressView(wallet: viewModel.wallet)
-                    }
-                    .padding(.vertical, .margin16)
+                    .padding(.bottom, 24)
+                    .padding(.horizontal, 16)
+                } else if let address = viewModel.wallet.account.type.watchAddress {
+                    Cell(
+                        middle: {
+                            MiddleTextIcon(text: "balance.token.receive_address".localized)
+                        },
+                        right: {
+                            RightTextIcon(text: address.shortened, icon: "arrow_b_right")
+                        },
+                        action: {
+                            viewModel.onTapReceive()
+                        }
+                    )
                 }
 
                 content()
             }
         }
-        .padding(.top, .margin24)
-        .padding(.horizontal, .margin16)
+        .padding(.top, 24)
         .background(Color.themeTyler)
         .listRowBackground(Color.clear)
         .listRowInsets(EdgeInsets())
