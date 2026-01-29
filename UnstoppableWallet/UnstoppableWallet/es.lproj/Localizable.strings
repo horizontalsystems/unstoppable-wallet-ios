@@ -709,10 +709,12 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "swap.unlock.unlimited" = "Ilimitado";
 
 "swap.price_impact" = "Impacto en el precio";
-"swap.price_impact.description" = "La desviación esperada del precio mostrado, típicamente aumenta con la cantidad de intercambio.";
+"swap.price_impact.info" = "The expected price deviation from a shown price, typically increases with the swap amount.";
 "swap.high_price_impact" = "Alto impacto en el precio";
 "swap.recipient" = "Destinatario";
 "swap.slippage" = "Deslizamiento";
+"swap.estimated_time" = "Estimated Time";
+"swap.estimated_time.info" = "Approximate time to receive funds. Swap processing and transaction confirmations may take some time depending on the network and provider.";
 
 "swap.affiliate_fee" = "Tarifa de afiliado";
 "swap.liquidity_fee" = "Tarifa de liquidez";
@@ -782,6 +784,7 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "swap.confirmation.impact_warning" = "¡Importante! Has obtenido un precio extremadamente desfavorable debido a la baja liquidez del mercado.";
 
 "swap.confirmation.minimum_received" = "Mínimo Obtenido";
+"swap.confirmation.minimum_received.info" = "The minimum amount you will receive after the swap is completed. This amount is guaranteed by the provider and is not affected by price changes during processing.";
 "swap.confirmation.maximum_sent" = "Gasto máximo";
 
 "swap.dex_info.description" = "Este servicio de intercambio está impulsado por %@, un intercambio de token descentralizado construido en %@ blockchain.\n\n%@ está completamente automatizado y administrado por contratos inteligentes que facilitan los intercambios de token de una manera conflaible y sin ninguna intención para hacer estafas.";
@@ -1543,10 +1546,7 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "terms.item.irreversibility" = "Las transacciones en blockchain son irreversibles. Revisa siempre los detalles de la transacción antes de confirmar.";
 "terms.item.software" = "La aplicación es de código abierto verificable, con todo el código fuente publicado en línea. Todo lo indicado anteriormente puede ser verificado públicamente por cualquiera.";
 "terms.item.compliance" = "Eres el único responsable de la seguridad de tus fondos, de tu conducta y del cumplimiento de las leyes aplicables en tu jurisdicción. El uso de la app no te exime de obligaciones fiscales, de reporte financiero ni de otras obligaciones legales.";
-"terms.item.prohibite_use" = "Para mantener un ecosistema seguro, aceptas no utilizar la app para ninguna actividad ilegal, incluida el lavado de dinero o la evasión de sanciones, el fraude, las estafas, la ocultación de activos robados o la financiación de organizaciones prohibidas.";
 "terms.item.user_responsibility" = "Al continuar, reconoces que la seguridad de tus fondos y el cumplimiento legal son, en última instancia, tu responsabilidad.";
-
-
 
 // Settings -> Tell Friends
 
@@ -2126,16 +2126,12 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 
 // Birthday Input
 
-"birthday_input.title" = "Altura de Cumpleaños";
 "birthday_input.description" = "Introduzca la altura del cumpleaños del monedero para una sincronización más rápida.";
-"birthday_input.new_wallet" = "Cartera nueva";
-"birthday_input.new_wallet.description" = "No tiene ninguna transacción";
-"birthday_input.old_wallet" = "Cartera existente";
-"birthday_input.old_wallet.description" = "Tiene transacciones";
-"birthday_input.input_placeholder" = "%@ (opcional)";
-
-"restore_setting.birthday_height" = "%@ Altura de Cumpleaños";
-"restore_setting.download.disclaimer" = "La sincronización inicial con el blockchain puede consumir mucho tráfico de Internet.";
+"birthday_input.block_date" = "Block Date";
+"birthday_input.invalid_block" = "Invalid Block";
+"birthday_input.rescan" = "Rescan";
+"birthday_input.picker.select_date" = "Select Date";
+"birthday_input.picker.description" = "Choose an approximate wallet creation date. The block height will be calculated automatically.";
 
 // EVM Network
 
