@@ -710,10 +710,12 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 "swap.unlock.unlimited" = "Ilimitado";
 
 "swap.price_impact" = "Impacto de preço";
-"swap.price_impact.description" = "O desvio de preço esperado de um valor mostrado, normalmente aumenta com o montante de swap.";
+"swap.price_impact.info" = "The expected price deviation from a shown price, typically increases with the swap amount.";
 "swap.high_price_impact" = "Impacto de preços altos";
 "swap.recipient" = "Destinatário";
 "swap.slippage" = "Slippage";
+"swap.estimated_time" = "Estimated Time";
+"swap.estimated_time.info" = "Approximate time to receive funds. Swap processing and transaction confirmations may take some time depending on the network and provider.";
 
 "swap.affiliate_fee" = "Taxa de afiliado";
 "swap.liquidity_fee" = "Taxa de Liquidez";
@@ -783,6 +785,7 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 "swap.confirmation.impact_warning" = "Importante! Você está recebendo um preço extremamente desfavorável. Isso se deve a uma liquidez extremamente baixa.";
 
 "swap.confirmation.minimum_received" = "Valor garantido";
+"swap.confirmation.minimum_received.info" = "The minimum amount you will receive after the swap is completed. This amount is guaranteed by the provider and is not affected by price changes during processing.";
 "swap.confirmation.maximum_sent" = "Gastos máximos";
 
 "swap.dex_info.description" = "Este serviço de troca é fornecido por %@, um protocolo descentralizado de troca de tokens construído na blockchain %@. \n\n%@ É totalmente automatizado e gerenciado por contratos inteligentes que facilitam a troca de tokens de uma forma confiável sem qualquer meio de trapaça.";
@@ -1543,10 +1546,7 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 "terms.item.irreversibility" = "As transações em blockchain são irreversíveis. Sempre revise os detalhes da transação antes de confirmar.";
 "terms.item.software" = "O app é comprovadamente open source, com todo o código-fonte publicado online. Tudo o que foi mencionado acima pode ser verificado publicamente por qualquer pessoa.";
 "terms.item.compliance" = "Você é o único responsável pela segurança dos seus fundos, pela sua conduta e pelo cumprimento das leis aplicáveis em sua jurisdição. O uso do app não o isenta de obrigações fiscais, de relatórios financeiros ou de outras obrigações legais.";
-"terms.item.prohibite_use" = "Para manter um ecossistema seguro, você concorda em não usar o app para qualquer atividade ilegal, incluindo lavagem de dinheiro ou evasão de sanções, fraude, golpes, ocultação de ativos roubados ou financiamento de organizações proibidas.";
 "terms.item.user_responsibility" = "Ao prosseguir, você reconhece que a segurança dos seus fundos e a conformidade legal são, em última instância, de sua responsabilidade.";
-
-
 
 // Settings -> Tell Friends
 
@@ -2126,16 +2126,12 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 
 // Birthday Input
 
-"birthday_input.title" = "Aniversário";
 "birthday_input.description" = "Insira a data da criação da carteira para uma sincronização mais rápida.";
-"birthday_input.new_wallet" = "Nova Carteira";
-"birthday_input.new_wallet.description" = "Não tem nenhuma transação";
-"birthday_input.old_wallet" = "Carteira existente";
-"birthday_input.old_wallet.description" = "Tem transações";
-"birthday_input.input_placeholder" = "%@ (opcional)";
-
-"restore_setting.birthday_height" = "%@ Aniversário";
-"restore_setting.download.disclaimer" = "A sincronização inicial com o blockchain pode consumir muito tráfego na internet.";
+"birthday_input.block_date" = "Block Date";
+"birthday_input.invalid_block" = "Invalid Block";
+"birthday_input.rescan" = "Rescan";
+"birthday_input.picker.select_date" = "Select Date";
+"birthday_input.picker.description" = "Choose an approximate wallet creation date. The block height will be calculated automatically.";
 
 // EVM Network
 
