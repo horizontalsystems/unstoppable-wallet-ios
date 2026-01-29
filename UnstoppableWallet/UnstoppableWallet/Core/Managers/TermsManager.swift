@@ -156,7 +156,6 @@ extension TermsManager {
                     Term(id: "irreversibility", version: 1),
                     Term(id: "software", version: 1),
                     Term(id: "compliance", version: 1),
-                    Term(id: "prohibite_use", version: 1),
                     Term(id: "user_responsibility", version: 1),
                 ]
             ),
