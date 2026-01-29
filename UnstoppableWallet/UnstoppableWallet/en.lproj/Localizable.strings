@@ -446,10 +446,6 @@
 "deposit.subaddresses.description" = "Use subaddresses to manage multiple unique addresses in one wallet - easier to organize, safer for your privacy.";
 "deposit.subaddresses.transactions_count" = "Transactions: %@";
 
-"deposit.restore.enabled.description" = "Have you previously owned any %@ coins?";
-"deposit.restore.enabled.already_own" = "Yes, I already own";
-"deposit.restore.enabled.dont_have" = "No, I don’t have";
-
 "deposit.warning" = "Network-compatible tokens only. Others will be lost.";
 "deposit.warning.watch_account" = "This address is the address of the watched account";
 
