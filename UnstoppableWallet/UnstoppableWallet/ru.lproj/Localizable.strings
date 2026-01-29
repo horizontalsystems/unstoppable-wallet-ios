@@ -451,10 +451,6 @@
 "deposit.subaddresses.description" = "Используйте субадреса, чтобы управлять несколькими уникальными адресами в одном кошельке - это удобнее и надёжнее для вашей конфиденциальности.";
 "deposit.subaddresses.transactions_count" = "Транзакций: %@";
 
-"deposit.restore.enabled.description" = "Ранее у вас уже были %@ монеты?";
-"deposit.restore.enabled.already_own" = "Да, у меня уже есть";
-"deposit.restore.enabled.dont_have" = "Нет, у меня нет";
-
 "deposit.warning" = "Только совместимые с сетью токены. Другие будут потеряны.";
 "deposit.warning.watch_account" = "Этот адрес - адрес наблюдаемого аккаунта";
 
@@ -1539,14 +1535,14 @@
 "terms.title" = "Условия использования";
 "terms.i_agree" = "Я принимаю";
 
-"terms.item.backup_recovery" = "Безопасное резервное копирование фраз для каждого кошелька. Это единственный способ восстановить доступ к средствам, если приложение будет удалено, утеряно или выйдет из строя. Никто не сможет восстановить её за вас.";
+"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It's the only way to regain access to your funds if the app is deleted or malfunctions. No one can restore it for you.";
 "terms.item.device_pin" = "Отключение PIN-кода (или пароля) разблокировки телефона полностью удалит все кошельки из приложения. Вам потребуется фраза восстановления, чтобы вернуть доступ.";
 "terms.item.privacy_notice" = "Приложение не отслеживает и не собирает данные о ваших балансах и транзакциях - мы даже не знаем, сколько людей им пользуется. Оно фиксирует только анонимную статистику использования (открытые страницы, нажатия кнопок), чтобы улучшать интерфейс. Это можно отключить в Настройки → Конфиденциальность";
-"terms.item.decentralized" = "Мы не храним ваши активы, не имеем доступа к вашим приватным ключам и не совершаем транзакции от вашего имени. Приложение не оказывает брокерские, обменные, кастодиальные, эскроу-сервис или услуги по переводу денежных средств. Все транзакции инициируются, подписываются и отправляются вами напрямую в публичные blockchain-сети. Мы не контролируем, не передаём, не изменяем и не обрабатываем ваши транзакции.";
-"terms.item.commission" = "В рамках своей модели монетизации приложение получает небольшие комиссии с DEX-свапов, выполненных внутри кошелька. Это помогает нам оставаться независимыми, открытым исходным кодом и без венчурного финансирования.";
+"terms.item.decentralized" = "We do not hold your assets, access your private keys, or execute transactions on your behalf. The app does not provide brokerage, exchange, custody, escrow, or money-transmission services. All transactions are initiated, signed, and broadcast directly by you to public blockchain networks.";
+"terms.item.commission" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet. This helps us stay independent, open source, and free of VC money.";
 "terms.item.irreversibility" = "Транзакции в блокчейн являются необратимыми. Перед подтверждением всегда внимательно проверяйте детали транзакции.";
 "terms.item.software" = "Приложение имеет открытый исходный код, и всё, что указано выше, может быть публично проверено любым пользователем.";
-"terms.item.compliance" = "Вы несёте полную ответственность за безопасность своих средств, свои действия и соблюдение применимого законодательства в вашей юрисдикции. Использование приложения не освобождает вас от налоговых, финансовых отчётных или иных юридических обязательств.";
+"terms.item.compliance" = "You are solely responsible for the security of your funds, your conduct, and compliance with applicable laws in your jurisdiction as well as globally. ";
 "terms.item.user_responsibility" = "Продолжая, вы подтверждаете, что безопасность ваших средств и соблюдение законодательства являются вашей личной ответственностью.";
 
 // Settings -> Tell Friends
