@@ -707,10 +707,12 @@
 "swap.unlock.unlimited" = "무제한";
 
 "swap.price_impact" = "가격 영향";
-"swap.price_impact.description" = "일반적으로 보여진 가격으로부터 예상되는 가격 편차는 스왑 금액에 따라 증가합니다.";
+"swap.price_impact.info" = "The expected price deviation from a shown price, typically increases with the swap amount.";
 "swap.high_price_impact" = "높은 가격 영향";
 "swap.recipient" = "수령인";
 "swap.slippage" = "미끄러짐";
+"swap.estimated_time" = "Estimated Time";
+"swap.estimated_time.info" = "Approximate time to receive funds. Swap processing and transaction confirmations may take some time depending on the network and provider.";
 
 "swap.affiliate_fee" = "제휴 수수료";
 "swap.liquidity_fee" = "유동성 수수료";
@@ -780,6 +782,7 @@
 "swap.confirmation.impact_warning" = "중요한 사항입니다! 매우 불리한 가격을 받고 있습니다. 이는 유동성이 극도로 낮기 때문입니다.";
 
 "swap.confirmation.minimum_received" = "최대 지급액";
+"swap.confirmation.minimum_received.info" = "The minimum amount you will receive after the swap is completed. This amount is guaranteed by the provider and is not affected by price changes during processing.";
 "swap.confirmation.maximum_sent" = "최대 속도";
 
 "swap.dex_info.description" = "이 거래소 서비스는 %@ 블록체인에 구축된 분산형 토큰 교환 프로토콜인 %@에 의해 구동됩니다.\n\n%@는 스마트 계약에 의해 완전 자동화되고 관리되므로 부정 행위 없이 토큰 교환을 안정적으로 수행할 수 있습니다.";
@@ -1541,10 +1544,7 @@
 "terms.item.irreversibility" = "블록체인 트랜잭션은 되돌릴 수 없습니다. 항상 확인 전에 트랜잭션 세부 정보를 검토하세요.";
 "terms.item.software" = "이 앱은 검증 가능한 오픈 소스로, 모든 소스 코드를 온라인에 공개하고 있습니다. 위의 모든 내용은 누구나 직접 확인할 수 있습니다.";
 "terms.item.compliance" = "자금의 보안, 사용자의 행위, 그리고 거주 관할 지역의 관련 법률 준수에 대한 책임은 전적으로 사용자에게 있습니다. 이 앱을 사용한다고 해서 세금, 재무 보고 또는 기타 법적 의무에서 면제되는 것은 아닙니다.";
-"terms.item.prohibite_use" = "안전한 생태계를 유지하기 위해, 사용자는 자금세탁 또는 제재 회피, 사기, 스캠, 도난 자산 은닉, 금지된 조직의 자금 조달을 포함한 어떠한 불법 행위에도 이 앱을 사용하지 않기로 동의합니다.";
 "terms.item.user_responsibility" = "계속 진행함으로써, 자금의 보안과 법적 준수에 대한 최종 책임이 사용자 본인에게 있음을 인정합니다.";
-
-
 
 // Settings -> Tell Friends
 
@@ -2126,16 +2126,12 @@
 
 // Birthday Input
 
-"birthday_input.title" = "생일 신장";
 "birthday_input.description" = "더 빠른 동기화를 위해 지갑의 생일 키를 입력하세요.";
-"birthday_input.new_wallet" = "새 지갑";
-"birthday_input.new_wallet.description" = "거래 내역이 없습니다";
-"birthday_input.old_wallet" = "기존 지갑";
-"birthday_input.old_wallet.description" = "거래 있음";
-"birthday_input.input_placeholder" = "%@ (선택사항)";
-
-"restore_setting.birthday_height" = "생일 높이 %@";
-"restore_setting.download.disclaimer" = "블록체인과의 초기 동기화는 많은 인터넷 트래픽을 소비할 수 있습니다.";
+"birthday_input.block_date" = "Block Date";
+"birthday_input.invalid_block" = "Invalid Block";
+"birthday_input.rescan" = "Rescan";
+"birthday_input.picker.select_date" = "Select Date";
+"birthday_input.picker.description" = "Choose an approximate wallet creation date. The block height will be calculated automatically.";
 
 // EVM Network
 
