@@ -76,7 +76,7 @@ enum ReceiveModule {
             .first { $0.token == token } != nil
     }
 
-    @discardableResult static func createWallet(account: Account, token: Token) -> Wallet {
+    private static func createWallet(account: Account, token: Token) -> Wallet {
         let wallet = Wallet(token: token, account: account)
         Core.shared.walletManager.save(wallets: [wallet])
 
@@ -91,10 +91,7 @@ enum ReceiveModule {
         if let wallet {
             return wallet
         } else {
-            let wallet = Wallet(token: token, account: account)
-            Core.shared.walletManager.save(wallets: [wallet])
-
-            return wallet
+            return createWallet(account: account, token: token)
         }
     }
 }

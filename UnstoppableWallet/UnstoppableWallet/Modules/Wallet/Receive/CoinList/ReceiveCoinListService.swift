@@ -38,15 +38,6 @@ class ReceiveCoinListService {
             self.coins = coins
         }
     }
-
-    func onRestoreWithBirthdayHeight(account: Account, token: Token, height: Int?) {
-        // create token with birthdayHeight
-        let tokenWithSettings = settingsService.enter(birthdayHeight: height, token: token)
-        settingsService.save(settings: tokenWithSettings.settings, account: account, blockchainType: token.blockchainType)
-
-        // create wallet for token
-        ReceiveModule.createWallet(account: account, token: token)
-    }
 }
 
 extension ReceiveCoinListService {
@@ -57,6 +48,26 @@ extension ReceiveCoinListService {
     func fullCoin(uid: String) -> FullCoin? {
         coins.first { coin in
             coin.coin.uid == uid
+        }
+    }
+
+    func prepareEnable(fullCoin: FullCoin, account: Account) {
+        let eligibleTokens = fullCoin.tokens.filter { account.type.supports(token: $0) }
+
+        guard let token = eligibleTokens.first else {
+            return
+        }
+
+        let blockchainType = token.blockchainType
+
+        switch blockchainType {
+        case .zcash, .monero:
+            let settings = settingsService.settings(accountId: account.id, blockchainType: blockchainType)
+
+            if settings[.birthdayHeight] == nil, let birthdayHeight = RestoreSettingType.birthdayHeight.createdAccountValue(blockchainType: blockchainType) {
+                settingsService.set(birthdayHeight: birthdayHeight, account: account, blokcchainType: blockchainType)
+            }
+        default: ()
         }
     }
 }
