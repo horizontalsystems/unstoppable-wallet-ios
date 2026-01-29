@@ -449,10 +449,6 @@ Bis die wallet aktiviert ist, können Token empfangen werden, jedoch werden die 
 "deposit.subaddresses.description" = "Verwenden Sie Subadressen, um mehrere eindeutige Adressen in einer Wallet zu verwalten – einfacher zu organisieren und sicherer für Ihre Privatsphäre.";
 "deposit.subaddresses.transactions_count" = "Transaktionen: %@";
 
-"deposit.restore.enabled.description" = "Haben Sie zuvor %@ Coins besessen?";
-"deposit.restore.enabled.already_own" = "Ja, ich besitze bereits";
-"deposit.restore.enabled.dont_have" = "Nein, ich habe nicht";
-
 "deposit.warning" = "Nur Netzwerk-kompatible Tokens. Andere gehen verloren.";
 "deposit.warning.watch_account" = "Diese Adresse ist die Adresse des überwachten Kontos";
 
@@ -1537,14 +1533,14 @@ Bis die wallet aktiviert ist, können Token empfangen werden, jedoch werden die 
 "terms.title" = "Bedingungen";
 "terms.i_agree" = "Ich stimme zu";
 
-"terms.item.backup_recovery" = "Sicheres Backup der Wiederherstellungsausdrücke für jede Wallet. Dies ist die einzige Möglichkeit, den Zugriff auf Gelder zurückzugewinnen, wenn die App nicht funktioniert.";
+"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It's the only way to regain access to your funds if the app is deleted or malfunctions. No one can restore it for you.";
 "terms.item.device_pin" = "Das Deaktivieren der PIN (Code) auf dem Smartphone löscht alle Brieftaschen aus der App. Wiederherstellungs-Phrasen werden benötigt, um den Zugriff auf Gelder wiederherzustellen.";
 "terms.item.privacy_notice" = "Die App spioniert oder sammelt keine Daten über Ihr Guthaben oder Ihre Transaktionen - wir wissen nicht einmal, wie viele Menschen es nutzen. Es verfolgt nur anonyme Nutzungsmuster (geöffnete Seiten, getappte Schaltfläche), um die Benutzerfreundlichkeit zu verbessern. Sie können dies unter Einstellungen → Privatsphäre deaktivieren";
-"terms.item.decentralized" = "Wir verwahren keine Assets, greifen nicht auf deine private keys zu und führen keine Transaktionen in deinem Namen aus. Die App bietet keine Brokerage-, Exchange-, Custody-, Escrow- oder Geldübermittlungsdienste an. Alle Transaktionen werden ausschließlich von dir selbst initiiert, signiert und direkt an öffentliche Blockchain-Netze übertragen. Wir kontrollieren, vermitteln, verändern oder verarbeiten deine Transaktionen nicht.";
-"terms.item.commission" = "Als Teil ihres Monetarisierungsmodells verdient die App kleine Provisionen von DEX-Swaps, die innerhalb der Brieftasche ausgeführt werden. Dies hilft uns, unabhängig zu bleiben, Open Source und frei von VC-Geld.";
+"terms.item.decentralized" = "We do not hold your assets, access your private keys, or execute transactions on your behalf. The app does not provide brokerage, exchange, custody, escrow, or money-transmission services. All transactions are initiated, signed, and broadcast directly by you to public blockchain networks.";
+"terms.item.commission" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet. This helps us stay independent, open source, and free of VC money.";
 "terms.item.irreversibility" = "Blockchain-Transaktionen sind unumkehrbar. Überprüfe immer alle Transaktionsdetails, bevor du bestätigst.";
 "terms.item.software" = "Die App ist nachprüfbar Open Source, mit dem gesamten online veröffentlichten Quellcode. Alles oben Angeführte kann von jedem öffentlich überprüft werden.";
-"terms.item.compliance" = "Du trägst die alleinige Verantwortung für die Sicherheit deiner Gelder, dein eigenes Handeln sowie die Einhaltung der in deiner Rechtsordnung geltenden Gesetze. Die Nutzung der App entbindet dich nicht von steuerlichen, finanziellen, Melde- oder sonstigen rechtlichen Verpflichtungen.";
+"terms.item.compliance" = "You are solely responsible for the security of your funds, your conduct, and compliance with applicable laws in your jurisdiction as well as globally. ";
 "terms.item.user_responsibility" = "Mit dem Fortfahren erkennst du an, dass die Sicherheit deiner Gelder und die Einhaltung gesetzlicher Vorschriften letztlich in deiner Verantwortung liegen.";
 
 // Settings -> Tell Friends
