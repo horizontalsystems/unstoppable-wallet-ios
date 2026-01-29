@@ -449,10 +449,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "deposit.subaddresses.description" = "Usa subdirecciones para gestionar múltiples direcciones únicas dentro de una misma wallet: más fácil de organizar y más seguro para tu privacidad.";
 "deposit.subaddresses.transactions_count" = "Transacciones: %@";
 
-"deposit.restore.enabled.description" = "¿Has tenido previamente monedas %@?";
-"deposit.restore.enabled.already_own" = "Sí, ya tengo";
-"deposit.restore.enabled.dont_have" = "No, no tengo";
-
 "deposit.warning" = "Sólo tokens compatibles con la red. Otros se perderán.";
 "deposit.warning.watch_account" = "Esta dirección es la dirección de la cuenta observada";
 
@@ -1538,14 +1534,14 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "terms.title" = "Términos";
 "terms.i_agree" = "Acepto";
 
-"terms.item.backup_recovery" = "Copia de seguridad frases de recuperación para cada cartera. Es la única manera de recuperar el acceso a los fondos si la aplicación no funciona correctamente.";
+"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It's the only way to regain access to your funds if the app is deleted or malfunctions. No one can restore it for you.";
 "terms.item.device_pin" = "Desactivar el PIN de desbloqueo (código) en el smartphone elimina todas las carteras de la aplicación. Se necesitarán frases de recuperación para restaurar el acceso a los fondos.";
 "terms.item.privacy_notice" = "La aplicación no espía ni recopila datos sobre tus balances o transacciones - ni siquiera sabemos cuántas personas lo utilizan. Solo registra patrones de uso anónimos (páginas abiertas, botones pulsados) para mejorar la usabilidad. Puede desactivarlo en Ajustes → Privacidad";
-"terms.item.decentralized" = "No retenemos tus activos, no accedemos a tus private keys ni ejecutamos transacciones en tu nombre. La app no proporciona servicios de corretaje, exchange, custodia, escrow ni transmisión de dinero. Todas las transacciones son iniciadas, firmadas y difundidas directamente por ti en redes blockchain públicas. No controlamos, retransmitimos, modificamos ni procesamos tus transacciones.";
-"terms.item.commission" = "Como parte de su modelo de monetización, la aplicación gana pequeñas comisiones por los swaps DEX ejecutados dentro de la cartera. Esto nos ayuda a mantenernos independientes, de código abierto y libres de dinero VC.";
+"terms.item.decentralized" = "We do not hold your assets, access your private keys, or execute transactions on your behalf. The app does not provide brokerage, exchange, custody, escrow, or money-transmission services. All transactions are initiated, signed, and broadcast directly by you to public blockchain networks.";
+"terms.item.commission" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet. This helps us stay independent, open source, and free of VC money.";
 "terms.item.irreversibility" = "Las transacciones en blockchain son irreversibles. Revisa siempre los detalles de la transacción antes de confirmar.";
 "terms.item.software" = "La aplicación es de código abierto verificable, con todo el código fuente publicado en línea. Todo lo indicado anteriormente puede ser verificado públicamente por cualquiera.";
-"terms.item.compliance" = "Eres el único responsable de la seguridad de tus fondos, de tu conducta y del cumplimiento de las leyes aplicables en tu jurisdicción. El uso de la app no te exime de obligaciones fiscales, de reporte financiero ni de otras obligaciones legales.";
+"terms.item.compliance" = "You are solely responsible for the security of your funds, your conduct, and compliance with applicable laws in your jurisdiction as well as globally. ";
 "terms.item.user_responsibility" = "Al continuar, reconoces que la seguridad de tus fondos y el cumplimiento legal son, en última instancia, tu responsabilidad.";
 
 // Settings -> Tell Friends
