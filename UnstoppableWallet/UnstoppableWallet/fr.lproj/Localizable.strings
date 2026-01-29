@@ -709,10 +709,12 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 "swap.unlock.unlimited" = "Illimité";
 
 "swap.price_impact" = "Impact prix";
-"swap.price_impact.description" = "L'écart de prix attendu par rapport à un prix affiché, augmente généralement avec le montant de l\'échange.";
+"swap.price_impact.info" = "The expected price deviation from a shown price, typically increases with the swap amount.";
 "swap.high_price_impact" = "Impact de prix élevé";
 "swap.recipient" = "Destinataire";
 "swap.slippage" = "Glissement";
+"swap.estimated_time" = "Estimated Time";
+"swap.estimated_time.info" = "Approximate time to receive funds. Swap processing and transaction confirmations may take some time depending on the network and provider.";
 
 "swap.affiliate_fee" = "Frais d'affiliation";
 "swap.liquidity_fee" = "Frais de liquidité";
@@ -782,6 +784,7 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 "swap.confirmation.impact_warning" = "Important ! Vous avez reçu un prix extrêmement défavorable en raison d'une liquidité extrêmement faible.";
 
 "swap.confirmation.minimum_received" = "Montant minimum reçu";
+"swap.confirmation.minimum_received.info" = "The minimum amount you will receive after the swap is completed. This amount is guaranteed by the provider and is not affected by price changes during processing.";
 "swap.confirmation.maximum_sent" = "Dépense maximale";
 
 "swap.dex_info.description" = "Ce service d'échange est assuré par %@, un protocole d'échange de tokens décentralisé construit sur la blockchain %@.\n\n%@ est entièrement automatisé et géré par des contrats intelligents qui facilitent les échanges de tokens de manière fiable sans aucune possibilité de tricher.";
@@ -1542,10 +1545,7 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 "terms.item.irreversibility" = "Les transactions blockchain sont irréversibles. Vérifiez toujours les détails de la transaction avant de confirmer.";
 "terms.item.software" = "L'application est un code source ouvert vérifiable, avec tout le code source publié en ligne. Tout ce qui est indiqué ci-dessus peut être vérifié publiquement par n'importe qui.";
 "terms.item.compliance" = "Vous êtes seul responsable de la sécurité de vos fonds, de votre comportement et du respect des lois applicables dans votre juridiction. L’utilisation de l’application ne vous exonère pas des obligations fiscales, de reporting financier ou d’autres obligations légales.";
-"terms.item.prohibite_use" = "Afin de maintenir un écosystème sûr, vous acceptez de ne pas utiliser l’application à des fins illégales, notamment le blanchiment d’argent ou le contournement de sanctions, la fraude, les arnaques, la dissimulation d’actifs volés ou le financement d’organisations interdites.";
 "terms.item.user_responsibility" = "En poursuivant, vous reconnaissez que la sécurité de vos fonds et le respect des obligations légales relèvent en dernier ressort de votre responsabilité.";
-
-
 
 // Settings -> Tell Friends
 
@@ -2125,16 +2125,12 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 
 // Birthday Input
 
-"birthday_input.title" = "Hauteur de l'anniversaire";
 "birthday_input.description" = "Saisissez la hauteur de l'anniversaire du portefeuille pour une synchronisation plus rapide.";
-"birthday_input.new_wallet" = "Nouveau porte-monnaie";
-"birthday_input.new_wallet.description" = "N'a aucune transaction";
-"birthday_input.old_wallet" = "Portefeuille existant";
-"birthday_input.old_wallet.description" = "A des transactions";
-"birthday_input.input_placeholder" = "%@ (optionnel)";
-
-"restore_setting.birthday_height" = "Hauteur de l'anniversaire %@";
-"restore_setting.download.disclaimer" = "La synchronisation initiale avec la blockchain peut consommer beaucoup de trafic Internet.";
+"birthday_input.block_date" = "Block Date";
+"birthday_input.invalid_block" = "Invalid Block";
+"birthday_input.rescan" = "Rescan";
+"birthday_input.picker.select_date" = "Select Date";
+"birthday_input.picker.description" = "Choose an approximate wallet creation date. The block height will be calculated automatically.";
 
 // EVM Network
 
