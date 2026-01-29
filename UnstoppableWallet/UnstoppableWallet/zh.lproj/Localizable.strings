@@ -449,10 +449,6 @@
 "deposit.subaddresses.description" = "使用子地址来管理一个钱包中的多个独特地址——更容易组织起来，对您的隐私更安全。";
 "deposit.subaddresses.transactions_count" = "交易：%@";
 
-"deposit.restore.enabled.description" = "您之前是否持有过 %@ 币？";
-"deposit.restore.enabled.already_own" = "是的，我已经拥有了";
-"deposit.restore.enabled.dont_have" = "不，我没有";
-
 "deposit.warning" = "仅支持与网络兼容的代币，其他将会丧失。";
 "deposit.warning.watch_account" = "该地址是被监视账户的地址";
 
@@ -1537,14 +1533,14 @@
 "terms.title" = "条款";
 "terms.i_agree" = "我同意";
 
-"terms.item.backup_recovery" = "安全地备份每个钱包的恢复短语。这是在应用程序发生故障时重新获得资金的唯一途径。";
+"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It's the only way to regain access to your funds if the app is deleted or malfunctions. No one can restore it for you.";
 "terms.item.device_pin" = "在智能手机上禁用解锁 PIN (代码)会删除应用程序中的所有钱包。恢复资金访问将需要恢复短语。";
 "terms.item.privacy_notice" = "应用没有间接或收集关于您的余额或交易的数据 — — 我们甚至不知道有多少人使用它。 它只跟踪匿名使用模式(打开的页面、点击的按钮)以提高可用性。您可以在设置 -&gt; 隐私中关闭此功能。";
-"terms.item.decentralized" = "我们不持有您的资产，不会访问您的私钥，也不会代表您执行交易。该 app 不提供经纪、交易所、托管、第三方托管或资金转移服务。所有交易均由您本人直接发起、签名并广播至公共区块链网络。我们不控制、转发、修改或处理您的交易。";
-"terms.item.commission" = "作为盈利模式的-部分，应用会从钱包内执行的 DEX 兑换中获得少量佣金。这有助于我们保持独立、开源，并远离风险投资资金。";
+"terms.item.decentralized" = "We do not hold your assets, access your private keys, or execute transactions on your behalf. The app does not provide brokerage, exchange, custody, escrow, or money-transmission services. All transactions are initiated, signed, and broadcast directly by you to public blockchain networks.";
+"terms.item.commission" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet. This helps us stay independent, open source, and free of VC money.";
 "terms.item.irreversibility" = "区块链交易是不可逆的。请在确认前务必仔细核对交易详情。";
 "terms.item.software" = "本应用完全开源，所有源代码均已公开发布。上述内容任何人都可公开验证。";
-"terms.item.compliance" = "您需对您的资金安全、个人行为以及遵守您所在司法辖区的适用法律承担全部责任。使用该应用并不免除您在税务、财务申报或其他法律方面的义务。";
+"terms.item.compliance" = "You are solely responsible for the security of your funds, your conduct, and compliance with applicable laws in your jurisdiction as well as globally. ";
 "terms.item.user_responsibility" = "继续使用即表示您确认，您的资金安全以及遵守相关法律法规最终由您自行负责。";
 
 // Settings -> Tell Friends
