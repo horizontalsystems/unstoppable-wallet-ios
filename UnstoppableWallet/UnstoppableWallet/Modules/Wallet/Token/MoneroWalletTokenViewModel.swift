@@ -21,7 +21,7 @@ class MoneroWalletTokenViewModel: ObservableObject {
 extension MoneroWalletTokenViewModel {
     func onChange(birthdayHeight: Int) {
         let blockchainType = wallet.token.blockchainType
-        restoreSettingsService.set(birthdayHeight: birthdayHeight, account: wallet.account, blokcchainType: blockchainType)
+        restoreSettingsService.set(birthdayHeight: String(birthdayHeight), account: wallet.account, blokcchainType: blockchainType)
         self.birthdayHeight = birthdayHeight
 
         adapterManager.recreateAdapter(blockchainType: blockchainType)

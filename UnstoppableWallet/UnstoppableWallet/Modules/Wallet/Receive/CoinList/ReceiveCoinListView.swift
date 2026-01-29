@@ -44,17 +44,6 @@ struct ReceiveCoinListView: View {
                     presentationMode.wrappedValue.dismiss()
                 })
             }
-            .onChange(of: viewModel.enableTokenWithBirthday) { token in
-                if let token {
-                    showBirthdayEnableSheet(token: token)
-                }
-            }
-            .onChange(of: viewModel.pushCoinUid) { uid in
-                if let uid {
-                    push(uid: uid)
-                    viewModel.pushCoinUid = nil
-                }
-            }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("button.cancel".localized) {
@@ -78,55 +67,13 @@ struct ReceiveCoinListView: View {
                 Image.disclosureIcon
             },
             action: {
-                push(uid: viewItem.uid)
+                guard let fullCoin = viewModel.fullCoin(uid: viewItem.uid) else {
+                    return
+                }
+
+                viewModel.prepareEnable(fullCoin: fullCoin)
+                path.append(fullCoin)
             }
         )
-    }
-
-    private func push(uid: String) {
-        viewModel.handleAfterEnable(uid: uid) {
-            path.append($0)
-        }
-    }
-
-    private func showBirthdayEnableSheet(token: Token) {
-        Coordinator.shared.present(type: .bottomSheet) { isPresented in
-            BottomSheetView(
-                items: [
-                    .title(title: token.coin.name),
-                    .text(text: "deposit.restore.enabled.description".localized(token.coin.code)),
-                    .buttonGroup(.init(buttons: [
-                        .init(style: .yellow, title: "deposit.restore.enabled.already_own".localized, action: {
-                            isPresented.wrappedValue = false
-                            viewModel.enableTokenWithBirthday = nil
-
-                            showBirthdayInput(token: token)
-                        }),
-                        .init(style: .transparent, title: "deposit.restore.enabled.dont_have".localized, action: {
-                            isPresented.wrappedValue = false
-                            viewModel.enableTokenWithBirthday = nil
-
-                            viewModel.createWallet(token: token, height: nil)
-                        }),
-                    ])),
-                ],
-            )
-        }
-    }
-
-    private func showBirthdayInput(token: Token) {
-        let blockchain = token.blockchain
-
-        guard let provider = BirthdayInputProviderFactory.provider(blockchainType: blockchain.type) else {
-            return
-        }
-
-        Coordinator.shared.present { _ in
-            BirthdayInputView(blockchain: blockchain, provider: provider, onEnterBirthdayHeight: { height in
-                DispatchQueue.main.async {
-                    viewModel.createWallet(token: token, height: height)
-                }
-            })
-        }
     }
 }
