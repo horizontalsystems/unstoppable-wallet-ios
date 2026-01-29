@@ -2,6 +2,7 @@ import SwiftUI
 
 struct PremiumFeaturesListView: View {
     let categories: [PremiumCategory]
+    let onPurchase: () -> Void
 
     var body: some View {
         ForEach(categories) { category in
@@ -30,9 +31,17 @@ struct PremiumFeaturesListView: View {
                         icon: feature.icon,
                         action: {
                             Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                                PremiumFeaturesInfoBottomSheetView(isPresented: isPresented, currentSlideIndex: feature.index, action: {
+                                PremiumFeaturesInfoBottomSheetView(
+                                    isPresented: isPresented,
+                                    currentSlideIndex: feature.index,
+                                    buttonTitle: "purchases.button.try".localized
+                                ) {
                                     isPresented.wrappedValue = false
-                                })
+
+                                    DispatchQueue.main.async {
+                                        onPurchase()
+                                    }
+                                }
                             }
                         }
                     )
