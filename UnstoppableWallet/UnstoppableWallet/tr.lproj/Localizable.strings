@@ -705,12 +705,12 @@ Cüzdan etkinleştirilene kadar token’lar alınabilir, ancak bakiyeler görün
 "swap.unlock.unlimited" = "Sınırsız";
 
 "swap.price_impact" = "Fiyat Etkisi";
-"swap.price_impact.info" = "The expected price deviation from a shown price, typically increases with the swap amount.";
+"swap.price_impact.info" = "Gösterilen fiyattan beklenen fiyat sapması, genellikle takas miktarıyla artar.";
 "swap.high_price_impact" = "Yüksek Fiyat Etkisi";
 "swap.recipient" = "Alıcı";
 "swap.slippage" = "Kayma";
-"swap.estimated_time" = "Estimated Time";
-"swap.estimated_time.info" = "Approximate time to receive funds. Swap processing and transaction confirmations may take some time depending on the network and provider.";
+"swap.estimated_time" = "Tahmini Süre";
+"swap.estimated_time.info" = "Fonların alınması için gereken tahmini süre. Swap işleminin işlenmesi ve işlem onayları, ağ ve sağlayıcıya bağlı olarak zaman alabilir.";
 
 "swap.affiliate_fee" = "Ortaklık Ücreti";
 "swap.liquidity_fee" = "Likidite Ücreti";
@@ -782,7 +782,7 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "swap.confirmation.impact_warning" = "Önemli! Son derece olumsuz bir fiyat alıyorsunuz. Bunun nedeni son derece düşük likiditedir.";
 
 "swap.confirmation.minimum_received" = "Minimum Kazanılan";
-"swap.confirmation.minimum_received.info" = "The minimum amount you will receive after the swap is completed. This amount is guaranteed by the provider and is not affected by price changes during processing.";
+"swap.confirmation.minimum_received.info" = "Swap tamamlandıktan sonra alacağınız minimum tutar. Bu tutar sağlayıcı tarafından garanti edilir ve işlem sırasında fiyat değişikliklerinden etkilenmez.";
 "swap.confirmation.maximum_sent" = "Maksimum Harcama";
 
 "swap.dex_info.description" = "Bu takas etme hizmeti, %@ blok zinciri üzerine inşa edilmiş ve merkezi olmayan jeton takas etme protokolü olan %@ tarafından desteklenmektedir.\n\n%@, tamamen otomatiktir ve hile yapmadan jeton takaslarını güvenilir bir şekilde kolaylaştıran akıllı sözleşmelerle yönetilir.";
@@ -1539,14 +1539,14 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "terms.title" = "Şartlar";
 "terms.i_agree" = "Kabul Ediyorum";
 
-"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It's the only way to regain access to your funds if the app is deleted or malfunctions. No one can restore it for you.";
+"terms.item.backup_recovery" = "Her cüzdan için recovery phrase’i güvenli bir şekilde yedekleyin. Uygulama silinirse veya düzgün çalışmazsa fonlarınıza yeniden erişmenin tek yolu budur. Hiç kimse bunu sizin yerinize geri yükleyemez.";
 "terms.item.device_pin" = "Akıllı telefon kilit açma PIN'ini devre dışı bırakmak, tüm cüzdanları uygulamadan siler. Fonlara yeniden erişim sağlamak için kurtarma ifadelerine ihtiyaç duyulacaktır.";
 "terms.item.privacy_notice" = "Uygulama bakiye veya işlemlerinizle ilgili veri toplamaz veya sizi takip etmez — kaç kişinin uygulamayı kullandığını bile bilmiyoruz. Sadece anonim kullanım verilerini (açılan sayfalar, tıklanan butonlar) toplar ve bu da sadece kullanılabilirliği geliştirmek içindir. Ayarlar → Gizlilik bölümünden bunu kapatabilirsiniz";
-"terms.item.decentralized" = "We do not hold your assets, access your private keys, or execute transactions on your behalf. The app does not provide brokerage, exchange, custody, escrow, or money-transmission services. All transactions are initiated, signed, and broadcast directly by you to public blockchain networks.";
-"terms.item.commission" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet. This helps us stay independent, open source, and free of VC money.";
+"terms.item.decentralized" = "Varlıklarınızı tutmayız, private key’lerinize erişmeyiz ve sizin adınıza işlem gerçekleştirmeyiz. Uygulama; aracılık, borsa, saklama (custody), emanet (escrow) veya para transferi hizmetleri sunmaz. Tüm işlemler, doğrudan sizin tarafınızdan başlatılır, imzalanır ve herkese açık blockchain ağlarına yayınlanır.";
+"terms.item.commission" = "Gelir modeli kapsamında, uygulama cüzdan içinde gerçekleştirilen DEX swap işlemlerinden küçük komisyonlar kazanır. Bu, bağımsız, open source ve VC fonlarından bağımsız kalmamıza yardımcı olur.";
 "terms.item.irreversibility" = "Blockchain işlemleri geri döndürülemez. Onaylamadan önce işlem detaylarını her zaman dikkatlice kontrol edin.";
 "terms.item.software" = "Uygulama doğrulanabilir şekilde açık kaynaklıdır; tüm kaynak kodu çevrimiçi olarak yayımlanmıştır. Yukarıdaki tüm bilgiler herkes tarafından kamuya açık olarak doğrulanabilir.";
-"terms.item.compliance" = "You are solely responsible for the security of your funds, your conduct, and compliance with applicable laws in your jurisdiction as well as globally. ";
+"terms.item.compliance" = "Fonlarınızın güvenliği, davranışlarınız ve bulunduğunuz yargı bölgesinde ve küresel olarak geçerli yasalara uyum tamamen sizin sorumluluğunuzdadır.";
 "terms.item.user_responsibility" = "Devam ederek, fonlarınızın güvenliği ve yasal mevzuata uyumun nihai olarak sizin sorumluluğunuzda olduğunu kabul edersiniz.";
 
 // Settings -> Tell Friends
@@ -1962,7 +1962,7 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 
 // Wallet Connect
 
-"wallet_connect.title" = "WalletConnect";
+"wallet_connect.title" = "Wallet Connect";
 "wallet_connect.error.invalid_url" = "Geçersiz URL Adresi";
 "wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Aktif Cüzdan";
@@ -2007,7 +2007,7 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 
 "wallet_connect.send.transaction" = "İşlem Gönder";
 
-"wallet_connect_list.title" = "WalletConnect";
+"wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect.list.empty_view_text" = "Başka bir aktif oturum yok";
 
 "wallet_connect.list.v1_bottom_text" = "WalletConnect'in ilk sürümünde, talebi görmek ve onaylamak için oturumlara gitmeniz gerekir";
@@ -2128,11 +2128,12 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 // Birthday Input
 
 "birthday_input.description" = "Daha hızlı senkronizasyon için cüzdanın doğum günü yüksekliğini girin.";
-"birthday_input.block_date" = "Block Date";
-"birthday_input.invalid_block" = "Invalid Block";
-"birthday_input.rescan" = "Rescan";
-"birthday_input.picker.select_date" = "Select Date";
-"birthday_input.picker.description" = "Choose an approximate wallet creation date. The block height will be calculated automatically.";
+"birthday_input.description.rescan" = "You can change the block height or select an approximate date to rescan your transaction history.";
+"birthday_input.block_date" = "Blok Tarihi";
+"birthday_input.invalid_block" = "Geçersiz Blok";
+"birthday_input.rescan" = "Yeniden Tara";
+"birthday_input.picker.select_date" = "Tarih Seç";
+"birthday_input.picker.description" = "Cüzdanın oluşturulduğu yaklaşık tarihi seçin. Blok yüksekliği otomatik olarak hesaplanacaktır.";
 
 // EVM Network
 
@@ -2341,9 +2342,9 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "activate_subscription.address" = "Adres";
 "activate_subscription.message" = "İmza için mesaj";
 "activate_subscription.sign" = "kaydol";
-"activate_subscription.activating" = "Activating...";
-"activate_subscription.failed_to_activate" = "Failed to activate subscription";
-"activate_subscription.activated" = "Activated";
+"activate_subscription.activating" = "Etkinleştiriliyor...";
+"activate_subscription.failed_to_activate" = "Abonelik etkinleştirilemedi";
+"activate_subscription.activated" = "Etkinleştirildi";
 "activate_subscription.no_subscriptions" = "Cüzdan adresinizin premium özelliklere aboneliği yok, aboneliği etkinleştirmek için satın almanız gerekiyor.";
 
 // Launch
@@ -2421,8 +2422,8 @@ Bu tür işlemler genellikle kimlik avı (phishing) ve adres zehirleme (address-
 "purchases.robbery_protection.info" = "Ayrı bir PIN ile sahte (yem) cüzdan oluşturmanıza olanak tanır. Yüksek riskli durumlarda gerçek varlıklarınızı gizli tutar.";
 
 // Advanced Controls
-"purchases.advanced_controls" = "Advanced Controls";
-"purchases.swap_control" = "Swap Control";
+"purchases.advanced_controls" = "Gelişmiş Kontroller";
+"purchases.swap_control" = "Swap Kontrolü";
 "purchases.swap_control.description" = "Swap işlemlerinin nasıl ve nerede gerçekleştirileceğini kontrol etmenizi sağlayan gelişmiş ayarlar.";
 "purchases.swap_control.info" = "Varsayılan olarak mevcut en iyi teklifi seçeriz. Premium ile farklı bir sağlayıcı seçebilirsiniz.";
 "purchases.priority_support" = "Öncelikli destek";
@@ -2447,7 +2448,7 @@ Bu tür işlemler genellikle kimlik avı (phishing) ve adres zehirleme (address-
 "purchases.wallet_description.approved" = "Tarafından Onaylanmış ve Denetlenmiş:";
 
 "purchases.button.try" = "ÜCRETSİZ Deneyin";
-"purchases.button.activated" = "Activated";
+"purchases.button.activated" = "Etkinleştirildi";
 "purchases.button.upgrade" = "Yükselt";
 
 "purchase.period.title" = "Abonelik Seçin";
@@ -2491,8 +2492,8 @@ Bu tür işlemler genellikle kimlik avı (phishing) ve adres zehirleme (address-
 
 // Check Address
 
-"check_address.sanctions_check" = "Sanctions Check";
-"check_address.coin_blacklist_check" = "%@ Blacklist Check";
+"check_address.sanctions_check" = "Yaptırım Kontrolü";
+"check_address.coin_blacklist_check" = "%@ Kara Liste Kontrolü";
 "check_address.on_blockchain" = "%@ üzerinde";
 "check_address.chainalysis.description" = "Chainalysis, kripto para adreslerini izleme, araştırma ve risk değerlendirmesi için araçlar sağlayan bir blockchain analiz platformudur. Yaptırımlar, dolandırıcılık ve diğer yasa dışı faaliyetlerle ilişkili adresleri belirlemeye yardımcı olur.";
 "check_address.hashdit.description" = "HashDit, kullanıcıların cüzdan adreslerini yaptırımlar ve kara liste durumu gibi riskler açısından kontrol etmesini sağlayan bir güvenlik platformudur. Kullanıcıların kötü niyetli veya engellenmiş adreslerle etkileşimini önlemeye yardımcı olur.";
