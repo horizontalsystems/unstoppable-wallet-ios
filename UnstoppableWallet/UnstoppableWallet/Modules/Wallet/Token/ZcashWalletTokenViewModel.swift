@@ -4,6 +4,7 @@ import RxSwift
 
 class ZcashWalletTokenViewModel: ObservableObject {
     private let balanceHiddenManager = Core.shared.balanceHiddenManager
+    private let adapterManager = Core.shared.adapterManager
     private let restoreSettingsService = RestoreSettingsService(manager: Core.shared.restoreSettingsManager)
     private let adapter: ZcashAdapter
 
@@ -36,6 +37,15 @@ class ZcashWalletTokenViewModel: ObservableObject {
             })
             .disposed(by: disposeBag)
     }
+
+    private func recreateAdapter(birthdayHeight: Int) {
+        let blockchainType = wallet.token.blockchainType
+        restoreSettingsService.set(birthdayHeight: birthdayHeight.description, account: wallet.account, blokcchainType: blockchainType)
+
+        self.birthdayHeight = birthdayHeight
+
+        adapterManager.recreateAdapter(blockchainType: blockchainType)
+    }
 }
 
 extension ZcashWalletTokenViewModel {
@@ -43,10 +53,18 @@ extension ZcashWalletTokenViewModel {
         adapter.uAddress?.stringEncoded
     }
 
-    func onChange(birthdayHeight _: Int) {
-        // let blockchainType = wallet.token.blockchainType
-        // restoreSettingsService.set(birthdayHeight: birthdayHeight, account: wallet.account, blokcchainType: blockchainType)
-
-        // TODO: after setting new birthday height - resync Zcash
+    func onChange(birthdayHeight: Int) {
+        adapter
+            .wipe()
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { [weak self] result in
+                switch result {
+                case .finished:
+                    self?.recreateAdapter(birthdayHeight: birthdayHeight)
+                case let .failure(error):
+                    print("ZCash wipe has error!: \(error)")
+                }
+            }, receiveValue: { _ in })
+            .store(in: &cancellables)
     }
 }

@@ -601,6 +601,57 @@ class ZcashAdapter {
             .store(in: &cancellables)
     }
 
+    public func wipe() -> AnyPublisher<Void, Error> {
+        synchronizer.stop()
+
+        let synchronizer = synchronizer
+        let uniqueId = uniqueId
+        let network = network
+        let logger = logger
+
+        return Future<Void, Error> { promise in
+            var cancellable: AnyCancellable?
+            cancellable = synchronizer.stateStream
+                .receive(on: DispatchQueue.main)
+                .sink { state in
+                    if case .stopped = state.syncStatus {
+                        cancellable?.cancel()
+                        cancellable = nil
+
+                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+                            do {
+                                let fileManager = FileManager.default
+
+                                let urlsToDelete: [URL] = [
+                                    try? Self.fsBlockDbRootURL(uniqueId: uniqueId, network: network),
+                                    try? Self.generalStorageURL(uniqueId: uniqueId, network: network),
+                                    try? Self.dataDbURL(uniqueId: uniqueId, network: network),
+                                    try? Self.cacheDbURL(uniqueId: uniqueId, network: network),
+                                    try? Self.torDirURL(uniqueId: uniqueId, network: network),
+                                ].compactMap { $0 }
+
+                                for url in urlsToDelete {
+                                    if fileManager.fileExists(atPath: url.path) {
+                                        try fileManager.removeItem(at: url)
+                                        logger?.log(level: .debug, message: "Deleted: \(url.lastPathComponent)")
+                                    }
+                                }
+
+                                promise(.success(()))
+                            } catch {
+                                logger?.log(level: .error, message: "Wipe failed: \(error)")
+                                promise(.failure(error))
+                            }
+                        }
+                    }
+                }
+        }
+        .flatMap { _ in
+            synchronizer.wipe()
+        }
+        .eraseToAnyPublisher()
+    }
+
     private func syncZcashBalanceData() {
         guard let synchronizerState, let accountId, let balances = synchronizerState.accountsBalances[accountId] else {
             zCashBalanceData = (try? zCashAdapterStorage.balanceData(id: uniqueId)) ?? .empty(id: uniqueId)
@@ -714,6 +765,7 @@ extension ZcashAdapter {
             saplingParamsSourceURL: SaplingParamsSourceURL.default,
             alias: .custom(uniqueId),
             loggingPolicy: .noLogging,
+//          loggingPolicy: .default(.debug),
             isTorEnabled: false,
             isExchangeRateEnabled: false
         )
