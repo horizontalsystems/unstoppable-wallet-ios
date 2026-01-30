@@ -5,7 +5,7 @@ class BirthdayInputViewModel: ObservableObject {
     private let provider: IBirthdayInputProvider
     private let onEnterBirthdayHeight: (Int) -> Void
     private let lastHeight: Int
-    private let initialHeight: Int?
+    let initialHeight: Int?
 
     @Published var heightString: String = "" {
         didSet {

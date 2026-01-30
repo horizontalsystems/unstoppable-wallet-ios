@@ -20,7 +20,8 @@ struct BirthdayInputView: View {
                 BottomGradientWrapper {
                     ScrollView {
                         VStack(spacing: 24) {
-                            ThemeText("birthday_input.description".localized, style: .subhead)
+                            ThemeText(viewModel.initialHeight == nil ? "birthday_input.description".localized : "birthday_input.description.rescan".localized, style: .subhead)
+                                .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.horizontal, 16)
 
                             VStack(spacing: 8) {
@@ -85,7 +86,7 @@ struct BirthdayInputView: View {
                     .disabled(!viewModel.buttonEnabled)
                 }
             }
-            .navigationTitle(blockchain.name)
+            .navigationTitle(viewModel.initialHeight == nil ? blockchain.name : "birthday_height.title".localized)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("button.cancel".localized) {
