@@ -2123,6 +2123,7 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 // Birthday Input
 
 "birthday_input.description" = "Insira a data da criação da carteira para uma sincronização mais rápida.";
+"birthday_input.description.rescan" = "You can change the block height or select an approximate date to rescan your transaction history.";
 "birthday_input.block_date" = "Block Date";
 "birthday_input.invalid_block" = "Bloco inválido";
 "birthday_input.rescan" = "Rescan";
