@@ -13,9 +13,17 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
     private let evmTransactionSource: EvmKit.TransactionSource
     private let transactionConverter: EvmTransactionConverter
 
-    init(evmKitWrapper: EvmKitWrapper, source: TransactionSource, baseToken: MarketKit.Token, evmTransactionSource: EvmKit.TransactionSource, coinManager: CoinManager, evmLabelManager: EvmLabelManager) {
+    init(evmKitWrapper: EvmKitWrapper, source: TransactionSource, baseToken: MarketKit.Token, evmTransactionSource: EvmKit.TransactionSource, coinManager: CoinManager, spamManager: SpamManagerNew, evmLabelManager: EvmLabelManager) {
         self.evmTransactionSource = evmTransactionSource
-        transactionConverter = EvmTransactionConverter(source: source, baseToken: baseToken, coinManager: coinManager, blockchainType: evmKitWrapper.blockchainType, userAddress: evmKitWrapper.evmKit.address, evmLabelManager: evmLabelManager)
+        transactionConverter = EvmTransactionConverter(
+            source: source,
+            baseToken: baseToken,
+            coinManager: coinManager,
+            spamManager: spamManager,
+            blockchainType: evmKitWrapper.blockchainType,
+            userAddress: evmKitWrapper.evmKit.address,
+            evmLabelManager: evmLabelManager
+        )
 
         super.init(evmKitWrapper: evmKitWrapper, decimals: EvmAdapter.decimals)
     }

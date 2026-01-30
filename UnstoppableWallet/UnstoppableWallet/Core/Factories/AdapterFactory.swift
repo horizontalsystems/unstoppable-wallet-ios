@@ -15,11 +15,12 @@ class AdapterFactory {
     private let stellarKitManager: StellarKitManager
     private let restoreSettingsManager: RestoreSettingsManager
     private let coinManager: CoinManager
+    private let spamManager: SpamManagerNew
     private let evmLabelManager: EvmLabelManager
 
     init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager,
          btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager,
-         restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager, evmLabelManager: EvmLabelManager)
+         restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager, spamManager: SpamManagerNew, evmLabelManager: EvmLabelManager)
     {
         self.evmBlockchainManager = evmBlockchainManager
         self.evmSyncSourceManager = evmSyncSourceManager
@@ -30,6 +31,7 @@ class AdapterFactory {
         self.stellarKitManager = stellarKitManager
         self.restoreSettingsManager = restoreSettingsManager
         self.coinManager = coinManager
+        self.spamManager = spamManager
         self.evmLabelManager = evmLabelManager
     }
 
@@ -55,7 +57,15 @@ class AdapterFactory {
             return nil
         }
 
-        return try? Eip20Adapter(evmKitWrapper: evmKitWrapper, contractAddress: address, wallet: wallet, baseToken: baseToken, coinManager: coinManager, evmLabelManager: evmLabelManager)
+        return try? Eip20Adapter(
+            evmKitWrapper: evmKitWrapper,
+            contractAddress: address,
+            wallet: wallet,
+            baseToken: baseToken,
+            coinManager: coinManager,
+            spamManager: spamManager,
+            evmLabelManager: evmLabelManager
+        )
     }
 
     private func tronAdapter(wallet: Wallet) -> IAdapter? {
@@ -79,6 +89,7 @@ class AdapterFactory {
             wallet: wallet,
             baseToken: baseToken,
             coinManager: coinManager,
+            spamManager: spamManager,
             evmLabelManager: evmLabelManager
         )
     }
@@ -92,7 +103,15 @@ extension AdapterFactory {
            let baseToken = evmBlockchainManager.baseToken(blockchainType: blockchainType)
         {
             let syncSource = evmSyncSourceManager.syncSource(blockchainType: blockchainType)
-            return EvmTransactionsAdapter(evmKitWrapper: evmKitWrapper, source: transactionSource, baseToken: baseToken, evmTransactionSource: syncSource.transactionSource, coinManager: coinManager, evmLabelManager: evmLabelManager)
+            return EvmTransactionsAdapter(
+                evmKitWrapper: evmKitWrapper,
+                source: transactionSource,
+                baseToken: baseToken,
+                evmTransactionSource: syncSource.transactionSource,
+                coinManager: coinManager,
+                spamManager: spamManager,
+                evmLabelManager: evmLabelManager
+            )
         }
 
         return nil
@@ -102,7 +121,14 @@ extension AdapterFactory {
         let query = TokenQuery(blockchainType: .tron, tokenType: .native)
 
         if let tronKitWrapper = tronKitManager.tronKitWrapper, let baseToken = try? coinManager.token(query: query) {
-            return TronTransactionsAdapter(tronKitWrapper: tronKitWrapper, source: transactionSource, baseToken: baseToken, coinManager: coinManager, evmLabelManager: evmLabelManager)
+            return TronTransactionsAdapter(
+                tronKitWrapper: tronKitWrapper,
+                source: transactionSource,
+                baseToken: baseToken,
+                coinManager: coinManager,
+                spamManager: spamManager,
+                evmLabelManager: evmLabelManager
+            )
         }
 
         return nil
@@ -122,7 +148,7 @@ extension AdapterFactory {
         let query = TokenQuery(blockchainType: .stellar, tokenType: .native)
 
         if let stellarKit = stellarKitManager.stellarKit, let baseToken = try? coinManager.token(query: query) {
-            return StellarTransactionAdapter(stellarKit: stellarKit, source: transactionSource, baseToken: baseToken, coinManager: coinManager)
+            return StellarTransactionAdapter(stellarKit: stellarKit, source: transactionSource, baseToken: baseToken, coinManager: coinManager, spamManager: spamManager)
         }
 
         return nil

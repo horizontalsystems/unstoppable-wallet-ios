@@ -17,9 +17,15 @@ class StellarTransactionAdapter {
         }
     }
 
-    init(stellarKit: StellarKit.Kit, source: TransactionSource, baseToken: Token, coinManager: CoinManager) {
+    init(stellarKit: StellarKit.Kit, source: TransactionSource, baseToken: Token, coinManager: CoinManager, spamManager: SpamManagerNew) {
         self.stellarKit = stellarKit
-        converter = StellarOperationConverter(accountId: stellarKit.receiveAddress, source: source, baseToken: baseToken, coinManager: coinManager)
+        converter = StellarOperationConverter(
+            accountId: stellarKit.receiveAddress,
+            source: source,
+            baseToken: baseToken,
+            coinManager: coinManager,
+            spamManager: spamManager
+        )
 
         adapterState = Self.adapterState(kitSyncState: stellarKit.operationSyncState)
 

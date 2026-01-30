@@ -10,10 +10,17 @@ class Trc20Adapter: BaseTronAdapter {
 
     private let transactionConverter: TronTransactionConverter
 
-    init(tronKitWrapper: TronKitWrapper, contractAddress: String, wallet: Wallet, baseToken: Token, coinManager: CoinManager, evmLabelManager: EvmLabelManager) throws {
+    init(tronKitWrapper: TronKitWrapper, contractAddress: String, wallet: Wallet, baseToken: Token, coinManager: CoinManager, spamManager: SpamManagerNew, evmLabelManager: EvmLabelManager) throws {
         self.contractAddress = try TronKit.Address(address: contractAddress)
 
-        transactionConverter = TronTransactionConverter(source: wallet.transactionSource, baseToken: baseToken, coinManager: coinManager, tronKitWrapper: tronKitWrapper, evmLabelManager: evmLabelManager)
+        transactionConverter = TronTransactionConverter(
+            source: wallet.transactionSource,
+            baseToken: baseToken,
+            coinManager: coinManager,
+            spamManager: spamManager,
+            tronKitWrapper: tronKitWrapper,
+            evmLabelManager: evmLabelManager
+        )
 
         super.init(tronKitWrapper: tronKitWrapper, decimals: wallet.decimals)
     }

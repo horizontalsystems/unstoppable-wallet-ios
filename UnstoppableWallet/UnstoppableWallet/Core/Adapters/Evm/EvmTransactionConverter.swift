@@ -9,14 +9,16 @@ import UniswapKit
 
 class EvmTransactionConverter {
     private let coinManager: CoinManager
+    private let spamManager: SpamManagerNew
     private let blockchainType: BlockchainType
     private let userAddress: EvmKit.Address
     private let evmLabelManager: EvmLabelManager
     private let source: TransactionSource
     private let baseToken: MarketKit.Token
 
-    init(source: TransactionSource, baseToken: MarketKit.Token, coinManager: CoinManager, blockchainType: BlockchainType, userAddress: EvmKit.Address, evmLabelManager: EvmLabelManager) {
+    init(source: TransactionSource, baseToken: MarketKit.Token, coinManager: CoinManager, spamManager: SpamManagerNew, blockchainType: BlockchainType, userAddress: EvmKit.Address, evmLabelManager: EvmLabelManager) {
         self.coinManager = coinManager
+        self.spamManager = spamManager
         self.blockchainType = blockchainType
         self.userAddress = userAddress
         self.evmLabelManager = evmLabelManager
@@ -192,7 +194,15 @@ extension EvmTransactionConverter {
 
         case let decoration as IncomingDecoration:
             let appValue = baseAppValue(value: decoration.value, sign: .plus)
-            let spam = SpamManager.isSpam(events: [.init(address: decoration.from.eip55, value: appValue)])
+
+            let spamInfo = SpamTransactionInfo(
+                hash: transaction.hash.hs.hexString,
+                blockchainType: blockchainType,
+                timestamp: transaction.timestamp,
+                blockHeight: transaction.blockNumber,
+                events: .init(incoming: [.init(address: decoration.from.eip55, value: appValue)])
+            )
+            let spam = spamManager.checkIsSpam(spamInfo: spamInfo)
 
             return EvmIncomingTransactionRecord(
                 source: source,
@@ -343,7 +353,14 @@ extension EvmTransactionConverter {
                     outgoingEvents: transferEvents(contractAddress: contractAddress, value: value) + outgoingEvents, protected: protected
                 )
             } else if transaction.from != userAddress, transaction.to != userAddress {
-                let spam = SpamManager.isSpam(events: incomingEvents + outgoingEvents)
+                let spamInfo = SpamTransactionInfo(
+                    hash: transaction.hash.hs.hexString,
+                    blockchainType: blockchainType,
+                    timestamp: transaction.timestamp,
+                    blockHeight: transaction.blockNumber,
+                    events: .init(incoming: incomingEvents, outgoing: outgoingEvents)
+                )
+                let spam = spamManager.checkIsSpam(spamInfo: spamInfo)
 
                 return ExternalContractCallTransactionRecord(
                     source: source,
