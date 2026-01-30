@@ -115,6 +115,8 @@ struct WalletTokenTopView<Content: View>: View {
 
     private var secondaryValue: CustomStringConvertible {
         switch viewModel.state {
+        case .connecting:
+            return ComponentText(text: "balance.connecting".localized, dimmed: true)
         case let .syncing(_, remaining, _):
             var text = ""
             if let remaining {
