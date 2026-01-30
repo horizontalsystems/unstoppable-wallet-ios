@@ -871,6 +871,22 @@ enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Migrate Stellar secret key to keychain") { db in
+            let keychain = Keychain(service: "io.horizontalsystems.bank.dev")
+            let records = try AccountRecord.fetchAll(db)
+
+            for record in records {
+                if record.type == "stellarSecretKey", let data = record.dataKey {
+                    let key = "stellarSecretKey_\(record.id)_data"
+
+                    try keychain.set(data, key: key)
+
+                    record.dataKey = key
+                    try record.insert(db)
+                }
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 
