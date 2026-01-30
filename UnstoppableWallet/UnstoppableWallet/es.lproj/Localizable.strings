@@ -2123,6 +2123,7 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 // Birthday Input
 
 "birthday_input.description" = "Introduzca la altura del cumpleaños del monedero para una sincronización más rápida.";
+"birthday_input.description.rescan" = "You can change the block height or select an approximate date to rescan your transaction history.";
 "birthday_input.block_date" = "Fecha de bloque";
 "birthday_input.invalid_block" = "Bloque no válido";
 "birthday_input.rescan" = "Reescanear";
