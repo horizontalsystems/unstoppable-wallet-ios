@@ -705,12 +705,12 @@ Bis die wallet aktiviert ist, können Token empfangen werden, jedoch werden die 
 "swap.unlock.unlimited" = "Unbegrenzt";
 
 "swap.price_impact" = "Preisauswirkungen";
-"swap.price_impact.info" = "The expected price deviation from a shown price, typically increases with the swap amount.";
+"swap.price_impact.info" = "Die erwartete Preisabweichung vom angezeigten Preis, die sich in der Regel mit der Swap-Menge erhöht.";
 "swap.high_price_impact" = "Hohe Preisbeeinflussung";
 "swap.recipient" = "Empfänger";
 "swap.slippage" = "Preisabweichung";
-"swap.estimated_time" = "Estimated Time";
-"swap.estimated_time.info" = "Approximate time to receive funds. Swap processing and transaction confirmations may take some time depending on the network and provider.";
+"swap.estimated_time" = "Geschätzte Zeit";
+"swap.estimated_time.info" = "Ungefähre Zeit bis zum Erhalt der Gelder. Die Verarbeitung des Swaps und die Transaktionsbestätigungen können je nach Netzwerk und Provider etwas Zeit in Anspruch nehmen.";
 
 "swap.affiliate_fee" = "Affiliate-Gebühr";
 "swap.liquidity_fee" = "Liquiditätsgebühren";
@@ -780,7 +780,7 @@ Bis die wallet aktiviert ist, können Token empfangen werden, jedoch werden die 
 "swap.confirmation.impact_warning" = "Wichtig! Du bekommst einen extrem ungünstigen Preis. Dies ist auf die extrem niedrige Liquidität zurückzuführen.";
 
 "swap.confirmation.minimum_received" = "Mindestens erhalten";
-"swap.confirmation.minimum_received.info" = "The minimum amount you will receive after the swap is completed. This amount is guaranteed by the provider and is not affected by price changes during processing.";
+"swap.confirmation.minimum_received.info" = "Der Mindestbetrag, den du nach Abschluss des Swaps erhältst. Dieser Betrag wird vom Provider garantiert und ist während der Verarbeitung nicht von Preisänderungen betroffen.";
 "swap.confirmation.maximum_sent" = "Maximale Ausgaben";
 
 "swap.dex_info.description" = "Dieser Tauschdienst wird von %@ betrieben, einem dezentralen Token-Tauschprotokoll, das auf der %@ Blockchain basiert.\n\n%@ ist vollständig automatisiert und wird von intelligenten Verträgen verwaltet, die den Token-Tausch in einer zuverlässigen Art und Weise ermöglichen, ohne dass Betrug betrieben werden kann.";
@@ -1533,14 +1533,14 @@ Bis die wallet aktiviert ist, können Token empfangen werden, jedoch werden die 
 "terms.title" = "Bedingungen";
 "terms.i_agree" = "Ich stimme zu";
 
-"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It's the only way to regain access to your funds if the app is deleted or malfunctions. No one can restore it for you.";
+"terms.item.backup_recovery" = "Sichere die recovery phrase für jede wallet sorgfältig. Sie ist die einzige Möglichkeit, wieder Zugriff auf deine Gelder zu erhalten, falls die App gelöscht wird oder nicht richtig funktioniert. Niemand kann sie für dich wiederherstellen.";
 "terms.item.device_pin" = "Das Deaktivieren der PIN (Code) auf dem Smartphone löscht alle Brieftaschen aus der App. Wiederherstellungs-Phrasen werden benötigt, um den Zugriff auf Gelder wiederherzustellen.";
 "terms.item.privacy_notice" = "Die App spioniert oder sammelt keine Daten über Ihr Guthaben oder Ihre Transaktionen - wir wissen nicht einmal, wie viele Menschen es nutzen. Es verfolgt nur anonyme Nutzungsmuster (geöffnete Seiten, getappte Schaltfläche), um die Benutzerfreundlichkeit zu verbessern. Sie können dies unter Einstellungen → Privatsphäre deaktivieren";
-"terms.item.decentralized" = "We do not hold your assets, access your private keys, or execute transactions on your behalf. The app does not provide brokerage, exchange, custody, escrow, or money-transmission services. All transactions are initiated, signed, and broadcast directly by you to public blockchain networks.";
-"terms.item.commission" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet. This helps us stay independent, open source, and free of VC money.";
+"terms.item.decentralized" = "Wir verwahren keine Assets, greifen nicht auf deine private keys zu und führen keine Transaktionen in deinem Namen aus. Die App bietet keine Brokerage-, Exchange-, Custody-, Escrow- oder Geldübermittlungsdienste an. Alle Transaktionen werden direkt von dir selbst initiiert, signiert und an öffentliche blockchain networks übertragen.";
+"terms.item.commission" = "Als Teil des Monetarisierungsmodells verdient die App kleine Provisionen aus DEX swaps, die innerhalb der wallet ausgeführt werden. Das hilft uns, unabhängig, Open Source und frei von VC-Geldern zu bleiben.";
 "terms.item.irreversibility" = "Blockchain-Transaktionen sind unumkehrbar. Überprüfe immer alle Transaktionsdetails, bevor du bestätigst.";
 "terms.item.software" = "Die App ist nachprüfbar Open Source, mit dem gesamten online veröffentlichten Quellcode. Alles oben Angeführte kann von jedem öffentlich überprüft werden.";
-"terms.item.compliance" = "You are solely responsible for the security of your funds, your conduct, and compliance with applicable laws in your jurisdiction as well as globally. ";
+"terms.item.compliance" = "Du trägst die alleinige Verantwortung für die Sicherheit deiner Gelder, dein Verhalten sowie die Einhaltung der in deiner Rechtsordnung und weltweit geltenden Gesetze.";
 "terms.item.user_responsibility" = "Mit dem Fortfahren erkennst du an, dass die Sicherheit deiner Gelder und die Einhaltung gesetzlicher Vorschriften letztlich in deiner Verantwortung liegen.";
 
 // Settings -> Tell Friends
@@ -2122,11 +2122,11 @@ Bis die wallet aktiviert ist, können Token empfangen werden, jedoch werden die 
 // Birthday Input
 
 "birthday_input.description" = "Geben Sie die Geburtstagshöhe der Brieftasche für eine schnellere Synchronisierung ein.";
-"birthday_input.block_date" = "Block Date";
-"birthday_input.invalid_block" = "Invalid Block";
+"birthday_input.block_date" = "Blockdatum";
+"birthday_input.invalid_block" = "Ungültiger Block";
 "birthday_input.rescan" = "Rescan";
-"birthday_input.picker.select_date" = "Select Date";
-"birthday_input.picker.description" = "Choose an approximate wallet creation date. The block height will be calculated automatically.";
+"birthday_input.picker.select_date" = "Datum auswählen";
+"birthday_input.picker.description" = "Wähle ein ungefähres Erstellungsdatum der wallet aus. Die Blockhöhe wird automatisch berechnet.";
 
 // EVM Network
 
