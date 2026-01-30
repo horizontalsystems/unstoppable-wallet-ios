@@ -6,7 +6,7 @@ class EvmIncomingTransactionRecord: EvmTransactionRecord {
     let from: String
     let value: AppValue
 
-    init(source: TransactionSource, transaction: Transaction, baseToken: Token, from: String, value: AppValue, spam: Bool) {
+    init(source: TransactionSource, transaction: Transaction, baseToken: Token, from: String, value: AppValue, spam: Bool = false) {
         self.from = from
         self.value = value
 

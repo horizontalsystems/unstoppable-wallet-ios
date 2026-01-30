@@ -9,16 +9,14 @@ import UniswapKit
 
 class EvmTransactionConverter {
     private let coinManager: CoinManager
-    private let spamManager: SpamManagerNew
     private let blockchainType: BlockchainType
     private let userAddress: EvmKit.Address
     private let evmLabelManager: EvmLabelManager
     private let source: TransactionSource
     private let baseToken: MarketKit.Token
 
-    init(source: TransactionSource, baseToken: MarketKit.Token, coinManager: CoinManager, spamManager: SpamManagerNew, blockchainType: BlockchainType, userAddress: EvmKit.Address, evmLabelManager: EvmLabelManager) {
+    init(source: TransactionSource, baseToken: MarketKit.Token, coinManager: CoinManager, blockchainType: BlockchainType, userAddress: EvmKit.Address, evmLabelManager: EvmLabelManager) {
         self.coinManager = coinManager
-        self.spamManager = spamManager
         self.blockchainType = blockchainType
         self.userAddress = userAddress
         self.evmLabelManager = evmLabelManager
@@ -179,7 +177,7 @@ class EvmTransactionConverter {
 }
 
 extension EvmTransactionConverter {
-    func transactionRecord(fromTransaction fullTransaction: FullTransaction) -> EvmTransactionRecord {
+    func transactionRecord(fromTransaction fullTransaction: FullTransaction) -> TransactionRecord {
         let transaction = fullTransaction.transaction
         let protected = MerkleTransactionAdapter.isProtected(transaction: fullTransaction)
 
@@ -195,22 +193,12 @@ extension EvmTransactionConverter {
         case let decoration as IncomingDecoration:
             let appValue = baseAppValue(value: decoration.value, sign: .plus)
 
-            let spamInfo = SpamTransactionInfo(
-                hash: transaction.hash.hs.hexString,
-                blockchainType: blockchainType,
-                timestamp: transaction.timestamp,
-                blockHeight: transaction.blockNumber,
-                events: .init(incoming: [.init(address: decoration.from.eip55, value: appValue)])
-            )
-            let spam = spamManager.checkIsSpam(spamInfo: spamInfo)
-
             return EvmIncomingTransactionRecord(
                 source: source,
                 transaction: transaction,
                 baseToken: baseToken,
                 from: decoration.from.eip55,
                 value: appValue,
-                spam: spam
             )
 
         case let decoration as OutgoingDecoration:
@@ -360,7 +348,6 @@ extension EvmTransactionConverter {
                     blockHeight: transaction.blockNumber,
                     events: .init(incoming: incomingEvents, outgoing: outgoingEvents)
                 )
-                let spam = spamManager.checkIsSpam(spamInfo: spamInfo)
 
                 return ExternalContractCallTransactionRecord(
                     source: source,
@@ -368,7 +355,6 @@ extension EvmTransactionConverter {
                     baseToken: baseToken,
                     incomingEvents: incomingEvents,
                     outgoingEvents: outgoingEvents,
-                    spam: spam,
                     protected: protected
                 )
             }
@@ -383,5 +369,51 @@ extension EvmTransactionConverter {
             ownTransaction: transaction.from == userAddress,
             protected: protected
         )
+    }
+
+    func spamTransactionInfo(fromTransaction fullTransaction: FullTransaction) -> SpamTransactionInfo? {
+        switch fullTransaction.decoration {
+        case let decoration as IncomingDecoration:
+            let appValue = baseAppValue(value: decoration.value, sign: .plus)
+
+            return SpamTransactionInfo(
+                hash: fullTransaction.transaction.hash.hs.hexString,
+                blockchainType: blockchainType,
+                timestamp: fullTransaction.transaction.timestamp,
+                blockHeight: fullTransaction.transaction.blockNumber,
+                events: .init(incoming: [.init(address: decoration.from.eip55, value: appValue)])
+            )
+
+        case let decoration as UnknownTransactionDecoration:
+            let internalTransactions = decoration.internalTransactions.filter { $0.to == userAddress }
+
+            let eip20Transfers = decoration.eventInstances.compactMap { $0 as? TransferEventInstance }
+            let incomingEip20Transfers = eip20Transfers.filter { $0.to == userAddress && $0.from != userAddress }
+            let outgoingEip20Transfers = eip20Transfers.filter { $0.from == userAddress }
+
+            let eip721Transfers = decoration.eventInstances.compactMap { $0 as? Eip721TransferEventInstance }
+            let incomingEip721Transfers = eip721Transfers.filter { $0.to == userAddress && $0.from != userAddress }
+            let outgoingEip721Transfers = eip721Transfers.filter { $0.from == userAddress }
+
+            let eip1155Transfers = decoration.eventInstances.compactMap { $0 as? Eip1155TransferEventInstance }
+            let incomingEip1155Transfers = eip1155Transfers.filter { $0.to == userAddress && $0.from != userAddress }
+            let outgoingEip1155Transfers = eip1155Transfers.filter { $0.from == userAddress }
+
+            let incomingEvents = transferEvents(internalTransactions: internalTransactions) + transferEvents(incomingEip20Transfers: incomingEip20Transfers) + transferEvents(incomingEip721Transfers: incomingEip721Transfers) + transferEvents(incomingEip1155Transfers: incomingEip1155Transfers)
+            let outgoingEvents = transferEvents(outgoingEip20Transfers: outgoingEip20Transfers) + transferEvents(outgoingEip721Transfers: outgoingEip721Transfers) + transferEvents(outgoingEip1155Transfers: outgoingEip1155Transfers)
+
+            if fullTransaction.transaction.from != userAddress, fullTransaction.transaction.to != userAddress {
+                return SpamTransactionInfo(
+                    hash: fullTransaction.transaction.hash.hs.hexString,
+                    blockchainType: blockchainType,
+                    timestamp: fullTransaction.transaction.timestamp,
+                    blockHeight: fullTransaction.transaction.blockNumber,
+                    events: .init(incoming: incomingEvents, outgoing: outgoingEvents)
+                )
+            }
+        default: ()
+        }
+
+        return nil
     }
 }

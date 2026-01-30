@@ -10,8 +10,8 @@ class TransactionRecord {
     let confirmationsThreshold: Int?
     let date: Date
     let failed: Bool
-    let spam: Bool
 
+    var spam: Bool
     var paginationRaw: String
 
     init(source: TransactionSource, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, failed: Bool, paginationRaw: String? = nil, spam: Bool = false) {

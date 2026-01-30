@@ -99,7 +99,7 @@ class Core {
     let statManager: StatManager
 
     let tonConnectManager: TonConnectManager
-    let spamManager: SpamManagerNew
+    let spamWrapper: SpamWrapper
 
     let purchaseManager: PurchaseManager
 
@@ -269,10 +269,11 @@ class Core {
         walletConnectManager = WalletConnectManager(walletConnectSessionManager: walletConnectSessionManager)
 
         let scannedTransactionStorage = try ScannedTransactionStorage(dbPool: dbPool)
-        spamManager = SpamManagerNew.instance(
+        spamWrapper = SpamWrapper(
             storage: scannedTransactionStorage,
+            contactBookManager: contactManager,
             accountManager: accountManager,
-            contactManager: contactManager
+            logger: logger
         )
 
         let adapterFactory = AdapterFactory(
@@ -285,7 +286,7 @@ class Core {
             stellarKitManager: stellarKitManager,
             restoreSettingsManager: restoreSettingsManager,
             coinManager: coinManager,
-            spamManager: spamManager,
+            spamWrapper: spamWrapper,
             evmLabelManager: evmLabelManager
         )
         adapterManager = AdapterManager(
@@ -303,8 +304,6 @@ class Core {
             evmBlockchainManager: evmBlockchainManager,
             adapterFactory: adapterFactory
         )
-        
-        spamManager.set(transactionAdapterManager: transactionAdapterManager)
 
         rateAppManager = RateAppManager(walletManager: walletManager, adapterManager: adapterManager, localStorage: localStorage)
 

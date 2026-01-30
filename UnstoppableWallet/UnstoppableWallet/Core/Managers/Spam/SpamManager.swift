@@ -1,17 +1,17 @@
-//import BigInt
-//import Combine
-//import Eip20Kit
-//import EvmKit
-//import Foundation
-//import HsToolKit
-//import NftKit
-//import RxSwift
+// import BigInt
+// import Combine
+// import Eip20Kit
+// import EvmKit
+// import Foundation
+// import HsToolKit
+// import NftKit
+// import RxSwift
 //
-//protocol IIncomingTransaction {
+// protocol IIncomingTransaction {
 //    var incomingValue: AppValue { get }
-//}
+// }
 //
-//class SpamManager {
+// class SpamManager {
 //    private let queue = DispatchQueue(label: "\(AppConfig.label).spam-manager", qos: .userInitiated)
 //
 //    private let allowedTransactionSources: [TransactionSource] = EvmBlockchainManager.blockchainTypes.map { .init(blockchainType: $0, meta: nil) } + [.init(blockchainType: .stellar, meta: nil), .init(blockchainType: .tron, meta: nil)]
@@ -123,15 +123,15 @@
 //
 //        return transactions.sorted().first?.paginationRaw
 //    }
-//}
+// }
 //
-//extension SpamManager {
+// extension SpamManager {
 //    func find(address: String) -> SpamAddress? {
 //        try? storage.find(address: address)
 //    }
-//}
+// }
 //
-//extension SpamManager {
+// extension SpamManager {
 //    private static func isSpam(appValue: AppValue) -> Bool {
 //        let spamCoinLimits = AppConfig.spamCoinValueLimits
 //        let value = appValue.value
@@ -189,4 +189,4 @@
 //    static func isSpam(events: TransferEvents) -> Bool {
 //        !handleSpamAddresses(events: events).isEmpty
 //    }
-//}
+// }

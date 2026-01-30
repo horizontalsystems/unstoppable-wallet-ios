@@ -12,20 +12,28 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
 
     private let evmTransactionSource: EvmKit.TransactionSource
     private let transactionConverter: EvmTransactionConverter
+    private let spamManager: SpamManagerNew2?
 
-    init(evmKitWrapper: EvmKitWrapper, source: TransactionSource, baseToken: MarketKit.Token, evmTransactionSource: EvmKit.TransactionSource, coinManager: CoinManager, spamManager: SpamManagerNew, evmLabelManager: EvmLabelManager) {
+    init(evmKitWrapper: EvmKitWrapper, source: TransactionSource, baseToken: MarketKit.Token, evmTransactionSource: EvmKit.TransactionSource, coinManager: CoinManager, spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager) {
         self.evmTransactionSource = evmTransactionSource
+        spamManager = spamWrapper.spamManager(source: source)
+
         transactionConverter = EvmTransactionConverter(
             source: source,
             baseToken: baseToken,
             coinManager: coinManager,
-            spamManager: spamManager,
             blockchainType: evmKitWrapper.blockchainType,
             userAddress: evmKitWrapper.evmKit.address,
             evmLabelManager: evmLabelManager
         )
 
         super.init(evmKitWrapper: evmKitWrapper, decimals: EvmAdapter.decimals)
+
+        initializeSpamManager()
+    }
+
+    private func initializeSpamManager() {
+        spamManager?.initialize(adapter: self)
     }
 
     private func tagQuery(token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> TransactionTagQuery {
@@ -98,17 +106,42 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
         evmTransactionSource.transactionUrl(hash: transactionHash)
     }
 
+    private func handleTransactions(_ transactions: [FullTransaction], checkSpam: Bool) -> [TransactionRecord] {
+        let records = transactions.map {
+            (record: transactionConverter.transactionRecord(fromTransaction: $0),
+             spamInfo: transactionConverter.spamTransactionInfo(fromTransaction: $0))
+        }
+
+        if !checkSpam {
+            return records.map(\.record)
+        }
+
+        // update transactions with spam flags.
+        let recordsWithSpam = spamManager?.update(items: records)
+        return recordsWithSpam ?? records.map(\.record)
+    }
+
     func transactionsObservable(token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {
-        evmKit.transactionsObservable(tagQueries: [tagQuery(token: token, filter: filter, address: address?.lowercased())]).map { [weak self] in
-            $0.compactMap { self?.transactionConverter.transactionRecord(fromTransaction: $0) }
+        print("EmvTxAdapter: get Observable!")
+        return evmKit.transactionsObservable(tagQueries: [tagQuery(token: token, filter: filter, address: address?.lowercased())]).map { [weak self] in
+
+            print("EmvTxAdapter|TxObservable: got \($0.count) txs")
+            return self?.handleTransactions($0, checkSpam: true) ?? []
         }
     }
 
     func transactionsSingle(paginationData: String?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
         let hash = paginationData?.hs.hexData
+
         return evmKit.transactionsSingle(tagQueries: [tagQuery(token: token, filter: filter, address: address?.lowercased())], fromHash: hash, limit: limit)
             .map { [weak self] transactions -> [TransactionRecord] in
-                transactions.compactMap { self?.transactionConverter.transactionRecord(fromTransaction: $0) }
+                print("EmvTxAdapter|TxSingle: got \(transactions.count) txs")
+
+                guard !transactions.isEmpty else {
+                    return []
+                }
+
+                return self?.handleTransactions(transactions, checkSpam: false) ?? []
             }
     }
 

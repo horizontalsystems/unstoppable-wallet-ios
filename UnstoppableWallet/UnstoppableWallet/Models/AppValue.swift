@@ -218,12 +218,12 @@ extension AppValue: Equatable {
 struct TransferEvents {
     let incoming: [TransferEvent]
     let outgoing: [TransferEvent]
-    
+
     init(incoming: [TransferEvent] = [], outgoing: [TransferEvent] = []) {
         self.incoming = incoming
         self.outgoing = outgoing
     }
-    
+
     var isEmpty: Bool {
         incoming.isEmpty && outgoing.isEmpty
     }
