@@ -2122,6 +2122,7 @@ Bis die wallet aktiviert ist, können Token empfangen werden, jedoch werden die 
 // Birthday Input
 
 "birthday_input.description" = "Geben Sie die Geburtstagshöhe der Brieftasche für eine schnellere Synchronisierung ein.";
+"birthday_input.description.rescan" = "You can change the block height or select an approximate date to rescan your transaction history.";
 "birthday_input.block_date" = "Blockdatum";
 "birthday_input.invalid_block" = "Ungültiger Block";
 "birthday_input.rescan" = "Rescan";
