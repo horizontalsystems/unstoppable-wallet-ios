@@ -2123,6 +2123,7 @@
 // Birthday Input
 
 "birthday_input.description" = "더 빠른 동기화를 위해 지갑의 생일 키를 입력하세요.";
+"birthday_input.description.rescan" = "You can change the block height or select an approximate date to rescan your transaction history.";
 "birthday_input.block_date" = "블록 날짜";
 "birthday_input.invalid_block" = "유효하지 않은 블록";
 "birthday_input.rescan" = "재스캔";
