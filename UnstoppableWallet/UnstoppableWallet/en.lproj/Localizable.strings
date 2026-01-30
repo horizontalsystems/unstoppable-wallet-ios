@@ -2119,6 +2119,7 @@
 // Birthday Input
 
 "birthday_input.description" = "Your wallet will be restored from a default starting point. You can change the block height or select an approximate wallet creation date.";
+"birthday_input.description.rescan" = "You can change the block height or select an approximate date to rescan your transaction history.";
 "birthday_input.block_date" = "Block Date";
 "birthday_input.invalid_block" = "Invalid Block";
 "birthday_input.rescan" = "Rescan";
