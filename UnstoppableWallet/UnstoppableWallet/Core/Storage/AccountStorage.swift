@@ -46,7 +46,7 @@ class AccountStorage {
 
             type = .evmPrivateKey(data: data)
         case .stellarSecretKey:
-            guard let secretSeed = record.dataKey else {
+            guard let secretSeed: String = recover(id: id, typeName: typeName, keyName: .data) else {
                 return nil
             }
 
@@ -138,7 +138,7 @@ class AccountStorage {
             dataKey = try store(data: data, id: id, typeName: typeName, keyName: .data)
         case let .stellarSecretKey(secretSeed):
             typeName = .stellarSecretKey
-            dataKey = secretSeed
+            dataKey = try store(secretSeed, id: id, typeName: typeName, keyName: .data)
         case let .evmAddress(address):
             typeName = .evmAddress
             dataKey = try store(data: address.raw, id: id, typeName: typeName, keyName: .data)
