@@ -82,7 +82,7 @@ extension SwapPendingAllowanceService {
                     self?.pendingAllowance = approve.value.value
                 }
             }
-            
+
             self?.sync()
         }
     }

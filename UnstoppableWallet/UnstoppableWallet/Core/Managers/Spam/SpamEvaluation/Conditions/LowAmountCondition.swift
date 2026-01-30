@@ -3,34 +3,34 @@ import HsToolKit
 
 class LowAmountCondition: SpamCondition {
     var identifier: String { "low_amount" }
-    
+
     private let dangerScore: Int
     private let riskScore: Int
     private let logger: Logger?
-    
-    init(dangerScore: Int = 3, riskScore: Int = 2, logger: Logger? = nil) {
+
+    init(dangerScore: Int = 7, riskScore: Int = 2, logger: Logger? = nil) {
         self.dangerScore = dangerScore
         self.riskScore = riskScore
         self.logger = logger
     }
-    
+
     func evaluate(_ context: SpamEvaluationContext) -> Int {
         var maxScore = 0
-        
+
         for event in context.transaction.events.incoming {
             let score = evaluateEvent(event)
             if score > maxScore {
                 maxScore = score
             }
         }
-        
+
         logger?.log(level: .debug, message: "LACondition: score=\(maxScore)")
         return maxScore
     }
-    
+
     private func evaluateEvent(_ event: TransferEvent) -> Int {
         let value = event.value.value
-        
+
         switch event.value.kind {
         case let .token(token):
             return evaluateWithLimits(code: token.coin.code, value: value)
@@ -46,18 +46,18 @@ class LowAmountCondition: SpamCondition {
             return dangerScore
         }
     }
-    
+
     private func evaluateWithLimits(code: String, value: Decimal) -> Int {
         guard let limit = Self.defaultLimits[code] else {
             return 0
         }
-        
+
         if value < limit.danger {
             return dangerScore
         } else if value < limit.risk {
             return riskScore
         }
-        
+
         return 0
     }
 }

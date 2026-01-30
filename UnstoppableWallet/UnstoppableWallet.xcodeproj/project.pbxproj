@@ -2069,6 +2069,10 @@
 		6BCAB3F32F2B7A6700820806 /* ScannedTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3F12F2B7A6000820806 /* ScannedTransaction.swift */; };
 		6BCAB3F52F2C58A100820806 /* ScannedTransactionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3F42F2C589700820806 /* ScannedTransactionStorage.swift */; };
 		6BCAB3F62F2C58A100820806 /* ScannedTransactionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3F42F2C589700820806 /* ScannedTransactionStorage.swift */; };
+		6BCAB3F82F2C806F00820806 /* SpamManagerNew2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3F72F2C806F00820806 /* SpamManagerNew2.swift */; };
+		6BCAB3F92F2C806F00820806 /* SpamManagerNew2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3F72F2C806F00820806 /* SpamManagerNew2.swift */; };
+		6BCAB3FB2F2C813100820806 /* SpamWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3FA2F2C812300820806 /* SpamWrapper.swift */; };
+		6BCAB3FC2F2C813100820806 /* SpamWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3FA2F2C812300820806 /* SpamWrapper.swift */; };
 		6BCD53002A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
 		6BCD53012A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
 		6BCD53022A161F4100993F20 /* ICloudBackupTermsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F92A161F4100993F20 /* ICloudBackupTermsViewModel.swift */; };
@@ -4684,6 +4688,8 @@
 		6BCAB3EE2F2B5EE600820806 /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		6BCAB3F12F2B7A6000820806 /* ScannedTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedTransaction.swift; sourceTree = "<group>"; };
 		6BCAB3F42F2C589700820806 /* ScannedTransactionStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedTransactionStorage.swift; sourceTree = "<group>"; };
+		6BCAB3F72F2C806F00820806 /* SpamManagerNew2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamManagerNew2.swift; sourceTree = "<group>"; };
+		6BCAB3FA2F2C812300820806 /* SpamWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamWrapper.swift; sourceTree = "<group>"; };
 		6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupCloudModule.swift; sourceTree = "<group>"; };
 		6BCD52F92A161F4100993F20 /* ICloudBackupTermsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewModel.swift; sourceTree = "<group>"; };
 		6BCD52FA2A161F4100993F20 /* ICloudBackupTermsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewController.swift; sourceTree = "<group>"; };
@@ -7853,7 +7859,9 @@
 		6B0B6E732E092BF700A0F0C9 /* Spam */ = {
 			isa = PBXGroup;
 			children = (
+				6BCAB3FA2F2C812300820806 /* SpamWrapper.swift */,
 				6BCAB3EB2F2B33E700820806 /* SpamManagerNew.swift */,
+				6BCAB3F72F2C806F00820806 /* SpamManagerNew2.swift */,
 				6BCAB3C12F285CCC00820806 /* SpamModule.swift */,
 				6BCAB3C02F285CB000820806 /* SpamFilter */,
 				6BCAB3CE2F28B2BF00820806 /* SpamEvaluation */,
@@ -11306,6 +11314,7 @@
 				11B35052C5059CDD8E4BA940 /* BackupMnemonicWordCell.swift in Sources */,
 				D3E36B882DF6E1E2007F99CA /* WalletTokenView.swift in Sources */,
 				11B35DF1D8B5125CF13A1812 /* RestoreMnemonicHintView.swift in Sources */,
+				6BCAB3FC2F2C813100820806 /* SpamWrapper.swift in Sources */,
 				6B4587552E2F476D008F87E7 /* AmountRoundingManager.swift in Sources */,
 				D3E36BC12E003892007F99CA /* WalletListViewModel.swift in Sources */,
 				11B35C8A1082D0A8F0B354B1 /* RestoreMnemonicHintCell.swift in Sources */,
@@ -12087,6 +12096,7 @@
 				ABC9A7908BE99782BFDC558E /* TransparentFullScreenCover.swift in Sources */,
 				D3AFAAF62E45FEEA004AB074 /* TextStyle.swift in Sources */,
 				11B3538BF3283868DD8D107F /* MultiSwapModule.swift in Sources */,
+				6BCAB3F92F2C806F00820806 /* SpamManagerNew2.swift in Sources */,
 				11B3568ED01B671E6C914EA5 /* StatExtensions.swift in Sources */,
 				11B352EC3DD266F5835E8537 /* StatStorage.swift in Sources */,
 				11B35DAA8E2BADCF4FC2AA7F /* StatRecord.swift in Sources */,
@@ -12968,6 +12978,7 @@
 				11B359C829669CC55E530476 /* ExtendedKeyModule.swift in Sources */,
 				D36287C42CA3DC8F00ADAF3B /* TonConnectSessionCrypto.swift in Sources */,
 				11B35F6CD2706B10781456E8 /* ExtendedKeyViewModel.swift in Sources */,
+				6BCAB3F82F2C806F00820806 /* SpamManagerNew2.swift in Sources */,
 				6BCD53022A161F4100993F20 /* ICloudBackupTermsViewModel.swift in Sources */,
 				D3E36B872DF6E1E2007F99CA /* WalletTokenView.swift in Sources */,
 				11B35066480B6EB9F124EBC0 /* ExtendedKeyService.swift in Sources */,
@@ -13032,6 +13043,7 @@
 				6BCAB3CC2F28B01500820806 /* ContactsFilter.swift in Sources */,
 				ABC9AE44EF7D6B6419955B9B /* SendEip721Service.swift in Sources */,
 				ABC9A0C6E37779D3F3602EEC /* SendEip1155AvailableBalanceViewModel.swift in Sources */,
+				6BCAB3FB2F2C813100820806 /* SpamWrapper.swift in Sources */,
 				ABC9A3160546BCE6ECD32669 /* IntegerAmountInputViewModel.swift in Sources */,
 				ABC9AE2C026D04B679644279 /* IntegerAmountInputCell.swift in Sources */,
 				ABC9ADD1A3E8C0B54E0B5014 /* IntegerAmountInputView.swift in Sources */,

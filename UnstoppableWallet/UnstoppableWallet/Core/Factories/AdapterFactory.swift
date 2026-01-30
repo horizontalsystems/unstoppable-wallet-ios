@@ -15,12 +15,12 @@ class AdapterFactory {
     private let stellarKitManager: StellarKitManager
     private let restoreSettingsManager: RestoreSettingsManager
     private let coinManager: CoinManager
-    private let spamManager: SpamManagerNew
+    private let spamWrapper: SpamWrapper
     private let evmLabelManager: EvmLabelManager
 
     init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager,
          btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager,
-         restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager, spamManager: SpamManagerNew, evmLabelManager: EvmLabelManager)
+         restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager, spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager)
     {
         self.evmBlockchainManager = evmBlockchainManager
         self.evmSyncSourceManager = evmSyncSourceManager
@@ -31,7 +31,7 @@ class AdapterFactory {
         self.stellarKitManager = stellarKitManager
         self.restoreSettingsManager = restoreSettingsManager
         self.coinManager = coinManager
-        self.spamManager = spamManager
+        self.spamWrapper = spamWrapper
         self.evmLabelManager = evmLabelManager
     }
 
@@ -63,7 +63,6 @@ class AdapterFactory {
             wallet: wallet,
             baseToken: baseToken,
             coinManager: coinManager,
-            spamManager: spamManager,
             evmLabelManager: evmLabelManager
         )
     }
@@ -89,7 +88,6 @@ class AdapterFactory {
             wallet: wallet,
             baseToken: baseToken,
             coinManager: coinManager,
-            spamManager: spamManager,
             evmLabelManager: evmLabelManager
         )
     }
@@ -109,7 +107,7 @@ extension AdapterFactory {
                 baseToken: baseToken,
                 evmTransactionSource: syncSource.transactionSource,
                 coinManager: coinManager,
-                spamManager: spamManager,
+                spamWrapper: spamWrapper,
                 evmLabelManager: evmLabelManager
             )
         }
@@ -126,7 +124,7 @@ extension AdapterFactory {
                 source: transactionSource,
                 baseToken: baseToken,
                 coinManager: coinManager,
-                spamManager: spamManager,
+                spamWrapper: spamWrapper,
                 evmLabelManager: evmLabelManager
             )
         }
@@ -148,7 +146,7 @@ extension AdapterFactory {
         let query = TokenQuery(blockchainType: .stellar, tokenType: .native)
 
         if let stellarKit = stellarKitManager.stellarKit, let baseToken = try? coinManager.token(query: query) {
-            return StellarTransactionAdapter(stellarKit: stellarKit, source: transactionSource, baseToken: baseToken, coinManager: coinManager, spamManager: spamManager)
+            return StellarTransactionAdapter(stellarKit: stellarKit, source: transactionSource, baseToken: baseToken, coinManager: coinManager, spamWrapper: spamWrapper)
         }
 
         return nil

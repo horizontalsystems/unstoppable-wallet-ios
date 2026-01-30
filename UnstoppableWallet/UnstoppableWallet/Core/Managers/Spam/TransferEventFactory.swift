@@ -6,18 +6,18 @@ import StellarKit
 
 class SpamTransactionInfoFactory {
     private let eventFactory: TransferEventFactory
-    
+
     init(eventFactory: TransferEventFactory = TransferEventFactory()) {
         self.eventFactory = eventFactory
     }
-    
+
     func spamTransactionInfo(from record: TransactionRecord) -> SpamTransactionInfo? {
         let events = eventFactory.transferEvents(transactionRecord: record)
-        
+
         guard !events.isEmpty else {
             return nil
         }
-        
+
         return SpamTransactionInfo(
             hash: record.transactionHash,
             blockchainType: record.source.blockchainType,

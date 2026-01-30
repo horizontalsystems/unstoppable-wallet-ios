@@ -9,13 +9,15 @@ class TronTransactionsAdapter: BaseTronAdapter {
     static let decimal = 6
 
     private let transactionConverter: TronTransactionConverter
-    
-    init(tronKitWrapper: TronKitWrapper, source: TransactionSource, baseToken: MarketKit.Token, coinManager: CoinManager, spamManager: SpamManagerNew, evmLabelManager: EvmLabelManager) {
+    private let spamWrapper: SpamWrapper
+
+    init(tronKitWrapper: TronKitWrapper, source: TransactionSource, baseToken: MarketKit.Token, coinManager: CoinManager, spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager) {
+        self.spamWrapper = spamWrapper
+
         transactionConverter = TronTransactionConverter(
             source: source,
             baseToken: baseToken,
             coinManager: coinManager,
-            spamManager: spamManager,
             tronKitWrapper: tronKitWrapper,
             evmLabelManager: evmLabelManager
         )

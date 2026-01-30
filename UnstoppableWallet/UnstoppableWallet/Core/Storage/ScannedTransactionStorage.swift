@@ -7,6 +7,8 @@ class ScannedTransactionStorage {
     init(dbPool: DatabasePool) throws {
         self.dbPool = dbPool
         try migrator.migrate(dbPool)
+
+        try clearAll()
     }
 
     var migrator: DatabaseMigrator {
@@ -19,7 +21,7 @@ class ScannedTransactionStorage {
                 t.column(ScannedTransaction.Columns.isSpam.name, .boolean).notNull()
                 t.column(ScannedTransaction.Columns.spamAddress.name, .text)
             }
-            
+
             // Index for spam address lookups
             try db.create(
                 index: "scannedTransactions_spamAddress",
@@ -51,7 +53,7 @@ extension ScannedTransactionStorage {
             try scannedTransaction.save(db)
         }
     }
-    
+
     func save(scannedTransactions: [ScannedTransaction]) throws {
         try dbPool.write { db in
             for transaction in scannedTransactions {
@@ -67,7 +69,7 @@ extension ScannedTransactionStorage {
                 .fetchOne(db)
         }
     }
-    
+
     func findScanned(address: String) throws -> ScannedTransaction? {
         try dbPool.read { db in
             try ScannedTransaction
@@ -85,7 +87,7 @@ extension ScannedTransactionStorage {
                 .fetchOne(db) != nil
         }
     }
-    
+
     func allSpamAddresses(blockchainTypeUid: String) throws -> [String] {
         try dbPool.read { db in
             try ScannedTransaction
@@ -96,13 +98,13 @@ extension ScannedTransactionStorage {
                 .fetchAll(db)
         }
     }
-    
+
     func clearScannedTransactions() throws {
         _ = try dbPool.write { db in
             try ScannedTransaction.deleteAll(db)
         }
     }
-    
+
     func clearScannedTransactions(blockchainTypeUid: String) throws {
         _ = try dbPool.write { db in
             try ScannedTransaction
@@ -127,13 +129,13 @@ extension ScannedTransactionStorage {
                 .fetchOne(db)
         }
     }
-    
+
     func clearScanStates() throws {
         _ = try dbPool.write { db in
             try SpamScanState.deleteAll(db)
         }
     }
-    
+
     func clearScanState(blockchainTypeUid: String, accountUid: String) throws {
         _ = try dbPool.write { db in
             try SpamScanState

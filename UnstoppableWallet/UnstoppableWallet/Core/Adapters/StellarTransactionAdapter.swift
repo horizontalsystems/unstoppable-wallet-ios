@@ -8,6 +8,8 @@ import StellarKit
 class StellarTransactionAdapter {
     private let stellarKit: StellarKit.Kit
     private let converter: StellarOperationConverter
+    private let spamWrapper: SpamWrapper
+
     private var cancellables = Set<AnyCancellable>()
 
     private let adapterStateSubject = PublishSubject<AdapterState>()
@@ -17,14 +19,14 @@ class StellarTransactionAdapter {
         }
     }
 
-    init(stellarKit: StellarKit.Kit, source: TransactionSource, baseToken: Token, coinManager: CoinManager, spamManager: SpamManagerNew) {
+    init(stellarKit: StellarKit.Kit, source: TransactionSource, baseToken: Token, coinManager: CoinManager, spamWrapper: SpamWrapper) {
         self.stellarKit = stellarKit
+        self.spamWrapper = spamWrapper
         converter = StellarOperationConverter(
             accountId: stellarKit.receiveAddress,
             source: source,
             baseToken: baseToken,
-            coinManager: coinManager,
-            spamManager: spamManager
+            coinManager: coinManager
         )
 
         adapterState = Self.adapterState(kitSyncState: stellarKit.operationSyncState)
