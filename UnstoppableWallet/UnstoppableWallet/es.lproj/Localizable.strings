@@ -705,12 +705,12 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "swap.unlock.unlimited" = "Ilimitado";
 
 "swap.price_impact" = "Impacto en el precio";
-"swap.price_impact.info" = "The expected price deviation from a shown price, typically increases with the swap amount.";
+"swap.price_impact.info" = "La desviación esperada del precio mostrado, típicamente aumenta con la cantidad de intercambio.";
 "swap.high_price_impact" = "Alto impacto en el precio";
 "swap.recipient" = "Destinatario";
 "swap.slippage" = "Deslizamiento";
-"swap.estimated_time" = "Estimated Time";
-"swap.estimated_time.info" = "Approximate time to receive funds. Swap processing and transaction confirmations may take some time depending on the network and provider.";
+"swap.estimated_time" = "Tiempo estimado";
+"swap.estimated_time.info" = "Tiempo aproximado para recibir los fondos. El procesamiento del swap y las confirmaciones de la transacción pueden tardar algún tiempo según la red y el proveedor.";
 
 "swap.affiliate_fee" = "Tarifa de afiliado";
 "swap.liquidity_fee" = "Tarifa de liquidez";
@@ -780,7 +780,7 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "swap.confirmation.impact_warning" = "¡Importante! Has obtenido un precio extremadamente desfavorable debido a la baja liquidez del mercado.";
 
 "swap.confirmation.minimum_received" = "Mínimo Obtenido";
-"swap.confirmation.minimum_received.info" = "The minimum amount you will receive after the swap is completed. This amount is guaranteed by the provider and is not affected by price changes during processing.";
+"swap.confirmation.minimum_received.info" = "La cantidad mínima que recibirás una vez completado el swap. Esta cantidad está garantizada por el proveedor y no se ve afectada por cambios de precio durante el procesamiento.";
 "swap.confirmation.maximum_sent" = "Gasto máximo";
 
 "swap.dex_info.description" = "Este servicio de intercambio está impulsado por %@, un intercambio de token descentralizado construido en %@ blockchain.\n\n%@ está completamente automatizado y administrado por contratos inteligentes que facilitan los intercambios de token de una manera conflaible y sin ninguna intención para hacer estafas.";
@@ -1534,14 +1534,14 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "terms.title" = "Términos";
 "terms.i_agree" = "Acepto";
 
-"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It's the only way to regain access to your funds if the app is deleted or malfunctions. No one can restore it for you.";
+"terms.item.backup_recovery" = "Guarda de forma segura la recovery phrase de cada wallet. Es la única manera de recuperar el acceso a tus fondos si la app se elimina o presenta fallos. Nadie puede restaurarla por ti.";
 "terms.item.device_pin" = "Desactivar el PIN de desbloqueo (código) en el smartphone elimina todas las carteras de la aplicación. Se necesitarán frases de recuperación para restaurar el acceso a los fondos.";
 "terms.item.privacy_notice" = "La aplicación no espía ni recopila datos sobre tus balances o transacciones - ni siquiera sabemos cuántas personas lo utilizan. Solo registra patrones de uso anónimos (páginas abiertas, botones pulsados) para mejorar la usabilidad. Puede desactivarlo en Ajustes → Privacidad";
-"terms.item.decentralized" = "We do not hold your assets, access your private keys, or execute transactions on your behalf. The app does not provide brokerage, exchange, custody, escrow, or money-transmission services. All transactions are initiated, signed, and broadcast directly by you to public blockchain networks.";
-"terms.item.commission" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet. This helps us stay independent, open source, and free of VC money.";
+"terms.item.decentralized" = "No retenemos tus activos, no accedemos a tus private keys ni ejecutamos transacciones en tu nombre. La app no proporciona servicios de corretaje, exchange, custodia, escrow ni transmisión de dinero. Todas las transacciones son iniciadas, firmadas y difundidas directamente por ti en redes blockchain públicas.";
+"terms.item.commission" = "Como parte de su modelo de monetización, la app obtiene pequeñas comisiones de los swaps DEX ejecutados dentro del wallet. Esto nos ayuda a mantenernos independientes, open source y libres de financiación de VC.";
 "terms.item.irreversibility" = "Las transacciones en blockchain son irreversibles. Revisa siempre los detalles de la transacción antes de confirmar.";
 "terms.item.software" = "La aplicación es de código abierto verificable, con todo el código fuente publicado en línea. Todo lo indicado anteriormente puede ser verificado públicamente por cualquiera.";
-"terms.item.compliance" = "You are solely responsible for the security of your funds, your conduct, and compliance with applicable laws in your jurisdiction as well as globally. ";
+"terms.item.compliance" = "Eres el único responsable de la seguridad de tus fondos, de tu conducta y del cumplimiento de las leyes aplicables tanto en tu jurisdicción como a nivel global.";
 "terms.item.user_responsibility" = "Al continuar, reconoces que la seguridad de tus fondos y el cumplimiento legal son, en última instancia, tu responsabilidad.";
 
 // Settings -> Tell Friends
@@ -1768,7 +1768,7 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "appearance.recently_sent" = "Enviados recientemente";
 "appearance.recently_sent.description" = "Mostrar la dirección usada recientemente para enviar este token.";
 "appearance.hide_buttons" = "Ocultar Botones";
-"appearance.hide_buttons.description" = "Hide the Send, Receive, and Swap buttons from the Balance tab.";
+"appearance.hide_buttons.description" = "Ocultar los botones Send, Receive y Swap de la pestaña Balance.";
 "appearance.balance_value" = "Saldos de monedas";
 "appearance.balance_value.description" = "Mostrar los saldos destacados en crypto o en fiat.";
 "appearance.balance_value.coin_fiat" = "Moneda / Fiat";
@@ -2123,11 +2123,11 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 // Birthday Input
 
 "birthday_input.description" = "Introduzca la altura del cumpleaños del monedero para una sincronización más rápida.";
-"birthday_input.block_date" = "Block Date";
-"birthday_input.invalid_block" = "Invalid Block";
-"birthday_input.rescan" = "Rescan";
-"birthday_input.picker.select_date" = "Select Date";
-"birthday_input.picker.description" = "Choose an approximate wallet creation date. The block height will be calculated automatically.";
+"birthday_input.block_date" = "Fecha de bloque";
+"birthday_input.invalid_block" = "Bloque no válido";
+"birthday_input.rescan" = "Reescanear";
+"birthday_input.picker.select_date" = "Seleccionar fecha";
+"birthday_input.picker.description" = "Elige una fecha aproximada de creación del wallet. La altura del bloque se calculará automáticamente.";
 
 // EVM Network
 
@@ -2482,7 +2482,7 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 // Check Address
 
 "check_address.sanctions_check" = "Verificación de sanciones";
-"check_address.coin_blacklist_check" = "%@ Blacklist Check";
+"check_address.coin_blacklist_check" = "Comprobación de lista negra %@";
 "check_address.on_blockchain" = "en %@";
 "check_address.chainalysis.description" = "Chainalysis es una plataforma de análisis blockchain que proporciona herramientas para rastrear, investigar y evaluar el riesgo de direcciones de criptomonedas. Ayuda a identificar direcciones asociadas a sanciones, fraudes y otras actividades ilícitas.";
 "check_address.hashdit.description" = "HashDit es una plataforma de seguridad que permite a los usuarios verificar direcciones de billeteras para detectar riesgos como sanciones o inclusión en listas negras. Ayuda a los usuarios a evitar interactuar con direcciones potencialmente maliciosas o bloqueadas.";
