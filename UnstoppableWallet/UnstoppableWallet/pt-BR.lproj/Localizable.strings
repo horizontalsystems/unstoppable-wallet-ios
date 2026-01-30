@@ -706,12 +706,12 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 "swap.unlock.unlimited" = "Ilimitado";
 
 "swap.price_impact" = "Impacto de preço";
-"swap.price_impact.info" = "The expected price deviation from a shown price, typically increases with the swap amount.";
+"swap.price_impact.info" = "O desvio de preço esperado em relação ao preço exibido, que normalmente aumenta conforme o valor do swap.";
 "swap.high_price_impact" = "Impacto de preços altos";
 "swap.recipient" = "Destinatário";
 "swap.slippage" = "Slippage";
-"swap.estimated_time" = "Estimated Time";
-"swap.estimated_time.info" = "Approximate time to receive funds. Swap processing and transaction confirmations may take some time depending on the network and provider.";
+"swap.estimated_time" = "Tempo estimado";
+"swap.estimated_time.info" = "Tempo aproximado para receber os fundos. O processamento do swap e as confirmações da transação podem levar algum tempo, dependendo da rede e do provedor.";
 
 "swap.affiliate_fee" = "Taxa de afiliado";
 "swap.liquidity_fee" = "Taxa de Liquidez";
@@ -781,7 +781,7 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 "swap.confirmation.impact_warning" = "Importante! Você está recebendo um preço extremamente desfavorável. Isso se deve a uma liquidez extremamente baixa.";
 
 "swap.confirmation.minimum_received" = "Valor garantido";
-"swap.confirmation.minimum_received.info" = "The minimum amount you will receive after the swap is completed. This amount is guaranteed by the provider and is not affected by price changes during processing.";
+"swap.confirmation.minimum_received.info" = "O valor mínimo que você receberá após a conclusão do swap. Esse valor é garantido pelo provedor e não é afetado por variações de preço durante o processamento.";
 "swap.confirmation.maximum_sent" = "Gastos máximos";
 
 "swap.dex_info.description" = "Este serviço de troca é fornecido por %@, um protocolo descentralizado de troca de tokens construído na blockchain %@. \n\n%@ É totalmente automatizado e gerenciado por contratos inteligentes que facilitam a troca de tokens de uma forma confiável sem qualquer meio de trapaça.";
@@ -1534,14 +1534,14 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 "terms.title" = "Termos";
 "terms.i_agree" = "Eu concordo";
 
-"terms.item.backup_recovery" = "Securely back up the recovery phrase for each wallet. It's the only way to regain access to your funds if the app is deleted or malfunctions. No one can restore it for you.";
+"terms.item.backup_recovery" = "Faça o backup da recovery phrase de cada wallet de forma segura. Essa é a única maneira de recuperar o acesso aos seus fundos caso o app seja excluído ou apresente falhas. Ninguém pode restaurá-la para você.";
 "terms.item.device_pin" = "Desabilitando o PIN (código) no smartphone, exclui todas as carteiras do aplicativo. As frases de recuperação serão necessárias para restaurar o acesso aos fundos.";
 "terms.item.privacy_notice" = "O app não espiona nem coleta dados sobre seus saldos ou transações — nem sequer sabemos quantas pessoas o utilizam. Ele apenas registra padrões de uso anônimos (páginas abertas, botões tocados) para melhorar a usabilidade. Você pode desativar isso em Configurações → Privacidade";
-"terms.item.decentralized" = "We do not hold your assets, access your private keys, or execute transactions on your behalf. The app does not provide brokerage, exchange, custody, escrow, or money-transmission services. All transactions are initiated, signed, and broadcast directly by you to public blockchain networks.";
-"terms.item.commission" = "As part of its monetization model, the app earns small commissions from DEX swaps executed within the wallet. This helps us stay independent, open source, and free of VC money.";
+"terms.item.decentralized" = "Não mantemos seus ativos, não acessamos suas private keys nem executamos transações em seu nome. O app não fornece serviços de corretagem, exchange, custódia, escrow ou transmissão de dinheiro. Todas as transações são iniciadas, assinadas e transmitidas diretamente por você para redes públicas de blockchain.";
+"terms.item.commission" = "Como parte do seu modelo de monetização, o app recebe pequenas comissões de swaps DEX executados dentro da wallet. Isso nos ajuda a permanecer independentes, open source e livres de capital de VC.";
 "terms.item.irreversibility" = "As transações em blockchain são irreversíveis. Sempre revise os detalhes da transação antes de confirmar.";
 "terms.item.software" = "O app é comprovadamente open source, com todo o código-fonte publicado online. Tudo o que foi mencionado acima pode ser verificado publicamente por qualquer pessoa.";
-"terms.item.compliance" = "You are solely responsible for the security of your funds, your conduct, and compliance with applicable laws in your jurisdiction as well as globally. ";
+"terms.item.compliance" = "Você é o único responsável pela segurança dos seus fundos, pela sua conduta e pelo cumprimento das leis aplicáveis em sua jurisdição, bem como em nível global.";
 "terms.item.user_responsibility" = "Ao prosseguir, você reconhece que a segurança dos seus fundos e a conformidade legal são, em última instância, de sua responsabilidade.";
 
 // Settings -> Tell Friends
@@ -2124,10 +2124,10 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 
 "birthday_input.description" = "Insira a data da criação da carteira para uma sincronização mais rápida.";
 "birthday_input.block_date" = "Block Date";
-"birthday_input.invalid_block" = "Invalid Block";
+"birthday_input.invalid_block" = "Bloco inválido";
 "birthday_input.rescan" = "Rescan";
-"birthday_input.picker.select_date" = "Select Date";
-"birthday_input.picker.description" = "Choose an approximate wallet creation date. The block height will be calculated automatically.";
+"birthday_input.picker.select_date" = "Selecionar data";
+"birthday_input.picker.description" = "Escolha uma data aproximada de criação da wallet. A altura do bloco será calculada automaticamente.";
 
 // EVM Network
 
