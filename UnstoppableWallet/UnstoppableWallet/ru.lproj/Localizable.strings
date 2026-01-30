@@ -2124,6 +2124,7 @@
 // Birthday Input
 
 "birthday_input.description" = "Введите блок создания кошелька для ускорения синхронизации.";
+"birthday_input.description.rescan" = "You can change the block height or select an approximate date to rescan your transaction history.";
 "birthday_input.block_date" = "Block Date";
 "birthday_input.invalid_block" = "Invalid Block";
 "birthday_input.rescan" = "Rescan";
