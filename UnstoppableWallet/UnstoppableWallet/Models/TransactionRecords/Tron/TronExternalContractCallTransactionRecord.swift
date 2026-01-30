@@ -6,7 +6,7 @@ class TronExternalContractCallTransactionRecord: TronTransactionRecord {
     let incomingEvents: [TransferEvent]
     let outgoingEvents: [TransferEvent]
 
-    init(source: TransactionSource, transaction: Transaction, baseToken: Token, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent], spam: Bool) {
+    init(source: TransactionSource, transaction: Transaction, baseToken: Token, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent], spam: Bool = false) {
         self.incomingEvents = incomingEvents
         self.outgoingEvents = outgoingEvents
 

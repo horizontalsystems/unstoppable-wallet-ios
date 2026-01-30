@@ -1,15 +1,15 @@
 import MarketKit
 
 class SpamAddressDetector {
-    private let spamManager: SpamManagerNew
+    private let spamWrapper: SpamWrapper
 
     init() {
-        spamManager = Core.shared.spamManager
+        spamWrapper = Core.shared.spamWrapper
     }
 }
 
 extension SpamAddressDetector: IAddressSecurityChecker {
     func isClear(address: Address, token _: Token) async throws -> Bool {
-        !spamManager.isSpam(address: address.raw.lowercased())
+        !spamWrapper.isSpam(address: address.raw.lowercased())
     }
 }

@@ -27,7 +27,7 @@ extension PrimitiveSequenceType where Trait == SingleTrait {
             }
         }
     }
-    
+
     static func async(_ work: @escaping () async -> Element) -> Single<Element> {
         Single.create { single in
             Task {
@@ -48,7 +48,7 @@ extension Sequence {
         }
         return results
     }
-    
+
     func compactMapAsync<T>(_ transform: (Element) async -> T?) async -> [T] {
         var results = [T]()
         for element in self {

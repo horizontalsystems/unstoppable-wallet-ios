@@ -6,7 +6,7 @@ final class SpamScoreEvaluator {
     private let spamThreshold: Int
     private let suspiciousThreshold: Int
     private let logger: Logger?
-    
+
     init(
         conditions: [SpamCondition] = [],
         spamThreshold: Int = 7,
@@ -18,28 +18,28 @@ final class SpamScoreEvaluator {
         self.suspiciousThreshold = suspiciousThreshold
         self.logger = logger
     }
-    
+
     @discardableResult
     func append(_ condition: SpamCondition) -> Self {
         conditions.append(condition)
         return self
     }
-    
+
     /// Synchronous evaluation of all conditions
     func evaluate(_ context: SpamEvaluationContext) -> SpamDecision {
         var totalScore = 0
-        
+
         for condition in conditions {
             let score = condition.evaluate(context)
             totalScore += score
-            
+
             // Early exit if already spam
             if totalScore >= spamThreshold {
                 logger?.log(level: .debug, message: "SSEvaluator: early exit, score=\(totalScore) >= threshold=\(spamThreshold)")
                 return .spam
             }
         }
-        
+
         let decision: SpamDecision
         if totalScore >= spamThreshold {
             decision = .spam
@@ -48,7 +48,7 @@ final class SpamScoreEvaluator {
         } else {
             decision = .trusted
         }
-        
+
         logger?.log(level: .debug, message: "SSEvaluator: total=\(totalScore), decision=\(decision)")
         return decision
     }

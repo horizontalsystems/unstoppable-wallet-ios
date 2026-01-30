@@ -28,9 +28,9 @@ struct SpamTransactionInfo {
 }
 
 enum SpamFilterResult {
-    case ignore    // Filter not applicable, pass to next
-    case spam      // Definitely spam, stop chain
-    case trusted   // Definitely not spam, stop chain
+    case ignore // Filter not applicable, pass to next
+    case spam // Definitely spam, stop chain
+    case trusted // Definitely not spam, stop chain
 }
 
 enum SpamDecision {

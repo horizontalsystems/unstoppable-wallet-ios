@@ -7,14 +7,12 @@ class StellarOperationConverter {
     private let source: TransactionSource
     private let baseToken: Token
     private let coinManager: CoinManager
-    private let spamManager: SpamManagerNew
 
-    init(accountId: String, source: TransactionSource, baseToken: Token, coinManager: CoinManager, spamManager: SpamManagerNew) {
+    init(accountId: String, source: TransactionSource, baseToken: Token, coinManager: CoinManager) {
         self.accountId = accountId
         self.source = source
         self.baseToken = baseToken
         self.coinManager = coinManager
-        self.spamManager = spamManager
     }
 
     private func assetValue(asset: Asset, value: Decimal) -> AppValue {
@@ -63,15 +61,15 @@ class StellarOperationConverter {
 extension StellarOperationConverter {
     func transactionRecord(operation: TxOperation) -> StellarTransactionRecord {
         let type = type(type: operation.type)
-        let spamInfo = SpamTransactionInfo(
-            hash: operation.transactionHash,
-            blockchainType: source.blockchainType,
-            timestamp: Int(operation.createdAt.timeIntervalSince1970),
-            blockHeight: nil,
-            events: .init(incoming: StellarTransactionRecord.doubtfulEvents(type: type))
-        )
-        let spam = spamManager.checkIsSpam(spamInfo: spamInfo)
+//        let spamInfo = SpamTransactionInfo(
+//            hash: operation.transactionHash,
+//            blockchainType: source.blockchainType,
+//            timestamp: Int(operation.createdAt.timeIntervalSince1970),
+//            blockHeight: nil,
+//            events: .init(incoming: StellarTransactionRecord.doubtfulEvents(type: type))
+//        )
+//        let spam = spamManager.isSpam(spamInfo: spamInfo)
 
-        return StellarTransactionRecord(source: source, operation: operation, baseToken: baseToken, type: type, spam: spam)
+        return StellarTransactionRecord(source: source, operation: operation, baseToken: baseToken, type: type, spam: false)
     }
 }
