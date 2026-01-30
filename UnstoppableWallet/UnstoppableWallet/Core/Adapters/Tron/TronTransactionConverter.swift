@@ -5,13 +5,15 @@ import TronKit
 
 class TronTransactionConverter {
     private let coinManager: CoinManager
+    private let spamManager: SpamManagerNew
     private let tronKitWrapper: TronKitWrapper
     private let evmLabelManager: EvmLabelManager
     private let source: TransactionSource
     private let baseToken: MarketKit.Token
 
-    init(source: TransactionSource, baseToken: MarketKit.Token, coinManager: CoinManager, tronKitWrapper: TronKitWrapper, evmLabelManager: EvmLabelManager) {
+    init(source: TransactionSource, baseToken: MarketKit.Token, coinManager: CoinManager, spamManager: SpamManagerNew, tronKitWrapper: TronKitWrapper, evmLabelManager: EvmLabelManager) {
         self.coinManager = coinManager
+        self.spamManager = spamManager
         self.tronKitWrapper = tronKitWrapper
         self.evmLabelManager = evmLabelManager
         self.source = source
@@ -100,7 +102,15 @@ extension TronTransactionConverter {
             case let transfer as TransferContract:
                 if transfer.ownerAddress != tronKit.address {
                     let appValue = baseAppValue(value: transfer.amount, sign: .plus)
-                    let spam = SpamManager.isSpam(events: [.init(address: transfer.ownerAddress.base58, value: appValue)])
+
+                    let spamInfo = SpamTransactionInfo(
+                        hash: transaction.hash.hs.hexString,
+                        blockchainType: .tron,
+                        timestamp: transaction.timestamp,
+                        blockHeight: transaction.blockNumber,
+                        events: .init(incoming: [.init(address: transfer.ownerAddress.base58, value: appValue)])
+                    )
+                    let spam = spamManager.checkIsSpam(spamInfo: spamInfo)
 
                     return TronIncomingTransactionRecord(
                         source: source,
@@ -174,7 +184,14 @@ extension TronTransactionConverter {
                     outgoingEvents: transferEvents(contractAddress: contractAddress, value: value) + outgoingEvents
                 )
             } else if decoration.fromAddress != address, decoration.toAddress != address {
-                let spam = SpamManager.isSpam(events: incomingEvents + outgoingEvents)
+                let spamInfo = SpamTransactionInfo(
+                    hash: transaction.hash.hs.hexString,
+                    blockchainType: .tron,
+                    timestamp: transaction.timestamp,
+                    blockHeight: transaction.blockNumber,
+                    events: .init(incoming: incomingEvents, outgoing: outgoingEvents)
+                )
+                let spam = spamManager.checkIsSpam(spamInfo: spamInfo)
 
                 return TronExternalContractCallTransactionRecord(
                     source: source,

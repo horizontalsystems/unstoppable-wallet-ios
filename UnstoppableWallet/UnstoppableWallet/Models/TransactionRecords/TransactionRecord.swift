@@ -1,4 +1,5 @@
 import Foundation
+import MarketKit
 
 class TransactionRecord {
     let source: TransactionSource

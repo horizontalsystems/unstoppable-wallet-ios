@@ -2034,6 +2034,38 @@
 		6BCAADD62EDC08A100ECB0F1 /* PremiumFeaturesWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAADD42EDC089400ECB0F1 /* PremiumFeaturesWrapper.swift */; };
 		6BCAB39B2F1A115200820806 /* TronSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB39A2F1A114E00820806 /* TronSendHelper.swift */; };
 		6BCAB39C2F1A115200820806 /* TronSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB39A2F1A114E00820806 /* TronSendHelper.swift */; };
+		6BCAB3C22F285CD000820806 /* SpamModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3C12F285CCC00820806 /* SpamModule.swift */; };
+		6BCAB3C32F285CD000820806 /* SpamModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3C12F285CCC00820806 /* SpamModule.swift */; };
+		6BCAB3C52F285E3A00820806 /* SpamFilterChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3C42F285E3100820806 /* SpamFilterChain.swift */; };
+		6BCAB3C62F285E3A00820806 /* SpamFilterChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3C42F285E3100820806 /* SpamFilterChain.swift */; };
+		6BCAB3C82F2864DE00820806 /* ZeroValueFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3C72F2864D800820806 /* ZeroValueFilter.swift */; };
+		6BCAB3C92F2864DE00820806 /* ZeroValueFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3C72F2864D800820806 /* ZeroValueFilter.swift */; };
+		6BCAB3CB2F28B01500820806 /* ContactsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3CA2F28B00D00820806 /* ContactsFilter.swift */; };
+		6BCAB3CC2F28B01500820806 /* ContactsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3CA2F28B00D00820806 /* ContactsFilter.swift */; };
+		6BCAB3D02F28B2D400820806 /* SpamEvaluationContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3CF2F28B2D000820806 /* SpamEvaluationContext.swift */; };
+		6BCAB3D12F28B2D400820806 /* SpamEvaluationContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3CF2F28B2D000820806 /* SpamEvaluationContext.swift */; };
+		6BCAB3D32F28B30C00820806 /* SpamScoreEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3D22F28B30500820806 /* SpamScoreEvaluator.swift */; };
+		6BCAB3D42F28B30C00820806 /* SpamScoreEvaluator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3D22F28B30500820806 /* SpamScoreEvaluator.swift */; };
+		6BCAB3D62F28B5B800820806 /* OutputTransactionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3D52F28B5B000820806 /* OutputTransactionFactory.swift */; };
+		6BCAB3D72F28B5B800820806 /* OutputTransactionFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3D52F28B5B000820806 /* OutputTransactionFactory.swift */; };
+		6BCAB3D92F28B65A00820806 /* OutputTransactionCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3D82F28B65400820806 /* OutputTransactionCache.swift */; };
+		6BCAB3DA2F28B65A00820806 /* OutputTransactionCache.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3D82F28B65400820806 /* OutputTransactionCache.swift */; };
+		6BCAB3DC2F29F5AA00820806 /* AddressSimilarityCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3DB2F29F5A800820806 /* AddressSimilarityCondition.swift */; };
+		6BCAB3DD2F29F5AA00820806 /* AddressSimilarityCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3DB2F29F5A800820806 /* AddressSimilarityCondition.swift */; };
+		6BCAB3E02F29FF4000820806 /* ZeroValueCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3DF2F29FF3F00820806 /* ZeroValueCondition.swift */; };
+		6BCAB3E12F29FF4000820806 /* ZeroValueCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3DF2F29FF3F00820806 /* ZeroValueCondition.swift */; };
+		6BCAB3E32F2A22A900820806 /* LowAmountCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3E22F2A22A200820806 /* LowAmountCondition.swift */; };
+		6BCAB3E42F2A22A900820806 /* LowAmountCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3E22F2A22A200820806 /* LowAmountCondition.swift */; };
+		6BCAB3E62F2A2E6800820806 /* TimeCorrelationCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3E52F2A2E6100820806 /* TimeCorrelationCondition.swift */; };
+		6BCAB3E72F2A2E6800820806 /* TimeCorrelationCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3E52F2A2E6100820806 /* TimeCorrelationCondition.swift */; };
+		6BCAB3EC2F2B33EB00820806 /* SpamManagerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3EB2F2B33E700820806 /* SpamManagerNew.swift */; };
+		6BCAB3ED2F2B33EB00820806 /* SpamManagerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3EB2F2B33E700820806 /* SpamManagerNew.swift */; };
+		6BCAB3EF2F2B5EEB00820806 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3EE2F2B5EE600820806 /* Map.swift */; };
+		6BCAB3F02F2B5EEB00820806 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3EE2F2B5EE600820806 /* Map.swift */; };
+		6BCAB3F22F2B7A6700820806 /* ScannedTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3F12F2B7A6000820806 /* ScannedTransaction.swift */; };
+		6BCAB3F32F2B7A6700820806 /* ScannedTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3F12F2B7A6000820806 /* ScannedTransaction.swift */; };
+		6BCAB3F52F2C58A100820806 /* ScannedTransactionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3F42F2C589700820806 /* ScannedTransactionStorage.swift */; };
+		6BCAB3F62F2C58A100820806 /* ScannedTransactionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3F42F2C589700820806 /* ScannedTransactionStorage.swift */; };
 		6BCD53002A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
 		6BCD53012A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
 		6BCD53022A161F4100993F20 /* ICloudBackupTermsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F92A161F4100993F20 /* ICloudBackupTermsViewModel.swift */; };
@@ -2696,10 +2728,6 @@
 		D023D2722A25CF61004F65B0 /* TronAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D023D2702A25CF61004F65B0 /* TronAdapter.swift */; };
 		D02447D92C09FA5200A04BBC /* CoinTreasuriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02447D82C09FA5200A04BBC /* CoinTreasuriesView.swift */; };
 		D02447DA2C09FA5200A04BBC /* CoinTreasuriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02447D82C09FA5200A04BBC /* CoinTreasuriesView.swift */; };
-		D02C85A82D1A93A60096A84D /* SpamAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02C85A72D1A93A60096A84D /* SpamAddress.swift */; };
-		D02C85A92D1A93A60096A84D /* SpamAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02C85A72D1A93A60096A84D /* SpamAddress.swift */; };
-		D02C85AE2D1A969C0096A84D /* SpamAddressStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02C85AD2D1A969C0096A84D /* SpamAddressStorage.swift */; };
-		D02C85AF2D1A969C0096A84D /* SpamAddressStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = D02C85AD2D1A969C0096A84D /* SpamAddressStorage.swift */; };
 		D033289F2BF6199600BBB364 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D033289E2BF6199600BBB364 /* InfoView.swift */; };
 		D03328A02BF6199600BBB364 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D033289E2BF6199600BBB364 /* InfoView.swift */; };
 		D03F74822BF76D0A004FBCFA /* GasPriceData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D03F74812BF76D0A004FBCFA /* GasPriceData.swift */; };
@@ -4635,6 +4663,22 @@
 		6BCAADCF2ED962F400ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumFeaturesInfoBottomSheetView.swift; sourceTree = "<group>"; };
 		6BCAADD42EDC089400ECB0F1 /* PremiumFeaturesWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumFeaturesWrapper.swift; sourceTree = "<group>"; };
 		6BCAB39A2F1A114E00820806 /* TronSendHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronSendHelper.swift; sourceTree = "<group>"; };
+		6BCAB3C12F285CCC00820806 /* SpamModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamModule.swift; sourceTree = "<group>"; };
+		6BCAB3C42F285E3100820806 /* SpamFilterChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamFilterChain.swift; sourceTree = "<group>"; };
+		6BCAB3C72F2864D800820806 /* ZeroValueFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroValueFilter.swift; sourceTree = "<group>"; };
+		6BCAB3CA2F28B00D00820806 /* ContactsFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFilter.swift; sourceTree = "<group>"; };
+		6BCAB3CF2F28B2D000820806 /* SpamEvaluationContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamEvaluationContext.swift; sourceTree = "<group>"; };
+		6BCAB3D22F28B30500820806 /* SpamScoreEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamScoreEvaluator.swift; sourceTree = "<group>"; };
+		6BCAB3D52F28B5B000820806 /* OutputTransactionFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputTransactionFactory.swift; sourceTree = "<group>"; };
+		6BCAB3D82F28B65400820806 /* OutputTransactionCache.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutputTransactionCache.swift; sourceTree = "<group>"; };
+		6BCAB3DB2F29F5A800820806 /* AddressSimilarityCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSimilarityCondition.swift; sourceTree = "<group>"; };
+		6BCAB3DF2F29FF3F00820806 /* ZeroValueCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroValueCondition.swift; sourceTree = "<group>"; };
+		6BCAB3E22F2A22A200820806 /* LowAmountCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LowAmountCondition.swift; sourceTree = "<group>"; };
+		6BCAB3E52F2A2E6100820806 /* TimeCorrelationCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCorrelationCondition.swift; sourceTree = "<group>"; };
+		6BCAB3EB2F2B33E700820806 /* SpamManagerNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamManagerNew.swift; sourceTree = "<group>"; };
+		6BCAB3EE2F2B5EE600820806 /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
+		6BCAB3F12F2B7A6000820806 /* ScannedTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedTransaction.swift; sourceTree = "<group>"; };
+		6BCAB3F42F2C589700820806 /* ScannedTransactionStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedTransactionStorage.swift; sourceTree = "<group>"; };
 		6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupCloudModule.swift; sourceTree = "<group>"; };
 		6BCD52F92A161F4100993F20 /* ICloudBackupTermsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewModel.swift; sourceTree = "<group>"; };
 		6BCD52FA2A161F4100993F20 /* ICloudBackupTermsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewController.swift; sourceTree = "<group>"; };
@@ -4960,8 +5004,6 @@
 		D023D26C2A24CD4F004F65B0 /* TronKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronKitManager.swift; sourceTree = "<group>"; };
 		D023D2702A25CF61004F65B0 /* TronAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronAdapter.swift; sourceTree = "<group>"; };
 		D02447D82C09FA5200A04BBC /* CoinTreasuriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinTreasuriesView.swift; sourceTree = "<group>"; };
-		D02C85A72D1A93A60096A84D /* SpamAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamAddress.swift; sourceTree = "<group>"; };
-		D02C85AD2D1A969C0096A84D /* SpamAddressStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamAddressStorage.swift; sourceTree = "<group>"; };
 		D033289E2BF6199600BBB364 /* InfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		D03F74812BF76D0A004FBCFA /* GasPriceData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasPriceData.swift; sourceTree = "<group>"; };
 		D04BC2CC2E7043B5001E1C52 /* MoneroWatchWalletParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroWatchWalletParser.swift; sourceTree = "<group>"; };
@@ -5775,6 +5817,7 @@
 		11B3536AC60F1C461DE4CD2B /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				6BCAB3EE2F2B5EE600820806 /* Map.swift */,
 				11B3569F2E6BD5E9CBCFCA1F /* Token.swift */,
 				11B3519AE11DC423E0D078E2 /* TokenType.swift */,
 				11B353684493AFDF3711DF2B /* TokenQuery.swift */,
@@ -6329,11 +6372,11 @@
 		11B356605394189E9B5EBEE0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6BCAB3F12F2B7A6000820806 /* ScannedTransaction.swift */,
 				D38E5E0D2F0CFE020049EB91 /* SwapAssetSyncInfo.swift */,
 				D38E5E072F0CE2740049EB91 /* SwapAsset.swift */,
 				6B5FA0122E701BEB00745DE1 /* WhitelistDapp.swift */,
 				D01513D02D1EA6A400FD9816 /* SpamScanState.swift */,
-				D02C85A72D1A93A60096A84D /* SpamAddress.swift */,
 				6BE8A07D2ADE2F950012DE7F /* CurrencyValue.swift */,
 				6BE8A07A2ADE2F8D0012DE7F /* Currency.swift */,
 				11B3526E3BCED7FF55C3CAD2 /* Deprecated */,
@@ -6549,8 +6592,8 @@
 		11B3573D2F4B70997D4BBAD3 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				6BCAB3F42F2C589700820806 /* ScannedTransactionStorage.swift */,
 				D38E5E042F0CDBB90049EB91 /* SwapAssetStorage.swift */,
-				D02C85AD2D1A969C0096A84D /* SpamAddressStorage.swift */,
 				11B352044BCE494491257933 /* LocalStorage.swift */,
 				11B35A1AE56A94BEB52AC4D1 /* StorageMigrator.swift */,
 				11B35E87C15A3AE82F471007 /* AccountStorage.swift */,
@@ -7800,6 +7843,10 @@
 		6B0B6E732E092BF700A0F0C9 /* Spam */ = {
 			isa = PBXGroup;
 			children = (
+				6BCAB3EB2F2B33E700820806 /* SpamManagerNew.swift */,
+				6BCAB3C12F285CCC00820806 /* SpamModule.swift */,
+				6BCAB3C02F285CB000820806 /* SpamFilter */,
+				6BCAB3CE2F28B2BF00820806 /* SpamEvaluation */,
 				6B0B6E7B2E09507E00A0F0C9 /* TransferEventFactory.swift */,
 				6B0B6E742E092C0200A0F0C9 /* SpamManager.swift */,
 			);
@@ -8299,6 +8346,39 @@
 				6BCAADCF2ED962F400ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift */,
 			);
 			path = FeaturesBottomSheet;
+			sourceTree = "<group>";
+		};
+		6BCAB3C02F285CB000820806 /* SpamFilter */ = {
+			isa = PBXGroup;
+			children = (
+				6BCAB3CA2F28B00D00820806 /* ContactsFilter.swift */,
+				6BCAB3C72F2864D800820806 /* ZeroValueFilter.swift */,
+				6BCAB3C42F285E3100820806 /* SpamFilterChain.swift */,
+			);
+			path = SpamFilter;
+			sourceTree = "<group>";
+		};
+		6BCAB3CE2F28B2BF00820806 /* SpamEvaluation */ = {
+			isa = PBXGroup;
+			children = (
+				6BCAB3DE2F29FF2A00820806 /* Conditions */,
+				6BCAB3D82F28B65400820806 /* OutputTransactionCache.swift */,
+				6BCAB3D52F28B5B000820806 /* OutputTransactionFactory.swift */,
+			);
+			path = SpamEvaluation;
+			sourceTree = "<group>";
+		};
+		6BCAB3DE2F29FF2A00820806 /* Conditions */ = {
+			isa = PBXGroup;
+			children = (
+				6BCAB3E52F2A2E6100820806 /* TimeCorrelationCondition.swift */,
+				6BCAB3E22F2A22A200820806 /* LowAmountCondition.swift */,
+				6BCAB3DF2F29FF3F00820806 /* ZeroValueCondition.swift */,
+				6BCAB3DB2F29F5A800820806 /* AddressSimilarityCondition.swift */,
+				6BCAB3D22F28B30500820806 /* SpamScoreEvaluator.swift */,
+				6BCAB3CF2F28B2D000820806 /* SpamEvaluationContext.swift */,
+			);
+			path = Conditions;
 			sourceTree = "<group>";
 		};
 		6BCD52F62A161F4100993F20 /* ICloud */ = {
@@ -10391,6 +10471,7 @@
 				11B35BCC6C00E857CE562F16 /* EvmAdapter.swift in Sources */,
 				11B35E0BEC5BE604ACE59BC2 /* PasteboardManager.swift in Sources */,
 				D04BC2CE2E7043EB001E1C52 /* MoneroWatchWalletParser.swift in Sources */,
+				6BCAB3C62F285E3A00820806 /* SpamFilterChain.swift in Sources */,
 				58AAA8D40B3399937CFEB0F2 /* PaymentRequestAddress.swift in Sources */,
 				11B35BDBD856C645045553D2 /* UIImage.swift in Sources */,
 				11B35EBB0DC7C0CE6F51E9DA /* BarsProgressView.swift in Sources */,
@@ -10417,6 +10498,7 @@
 				11B359F074038D1507C23747 /* EnabledWallet.swift in Sources */,
 				11B358B0576F63BE43947DD5 /* Account.swift in Sources */,
 				11B35BEB439509EACB41AB06 /* AccountType.swift in Sources */,
+				6BCAB3D02F28B2D400820806 /* SpamEvaluationContext.swift in Sources */,
 				11B35F663F7E12BFDDE3C88B /* AccountManager.swift in Sources */,
 				11B353AA4AFFB020A68E09B6 /* AccountFactory.swift in Sources */,
 				3C7B9BAF807355796DCA80C4 /* WelcomeScreenViewController.swift in Sources */,
@@ -10522,6 +10604,7 @@
 				D34D3E092DD614B7005C9ACC /* StellarSecretKeyViewController.swift in Sources */,
 				D066CC2F2E60579D0086DD12 /* MoneroNetworkSettingsViewController.swift in Sources */,
 				11B35D270BF38B1478789B5E /* MarkdownService.swift in Sources */,
+				6BCAB3EF2F2B5EEB00820806 /* Map.swift in Sources */,
 				11B353917D2223D2B275429A /* Error.swift in Sources */,
 				D36DE0F7272FD92F000BC916 /* SwapSelectProviderViewController.swift in Sources */,
 				1A564EE727CD892E7F2E5715 /* ScanQrViewController.swift in Sources */,
@@ -10600,6 +10683,7 @@
 				11B3563BF84B730CB695FAB4 /* FaqViewModel.swift in Sources */,
 				D05E96A12A2627C8002CCD71 /* TronExternalContractCallTransactionRecord.swift in Sources */,
 				11B35F27274120E53E2C1ADE /* Faq.swift in Sources */,
+				6BCAB3DA2F28B65A00820806 /* OutputTransactionCache.swift in Sources */,
 				D008CA63267C8DFD00001E0A /* SwapTransactionRecord.swift in Sources */,
 				D30C4D4B2D3A2B1C0082B487 /* SendAddressView.swift in Sources */,
 				11B35B077A52041C9939C6E8 /* FaqCell.swift in Sources */,
@@ -10638,6 +10722,7 @@
 				11B35C1743DC5866EBD16A90 /* Address.swift in Sources */,
 				D011A4922E3A5C24004F58DC /* MoneroSendHandler.swift in Sources */,
 				D0709C182E50A9180012C0E7 /* MoneroNetworkService.swift in Sources */,
+				6BCAB3DD2F29F5AA00820806 /* AddressSimilarityCondition.swift in Sources */,
 				D0709C192E50A9180012C0E7 /* MoneroNetworkModule.swift in Sources */,
 				D0709C1A2E50A9180012C0E7 /* AddMoneroNodeViewController.swift in Sources */,
 				D0709C1B2E50A9180012C0E7 /* AddMoneroNodeService.swift in Sources */,
@@ -10689,6 +10774,7 @@
 				6B1D8CFC2DE98F2600A52B01 /* Fonts.swift in Sources */,
 				6B1D8CFD2DE98F2600A52B01 /* SystemTheme.swift in Sources */,
 				6B1D8CFE2DE98F2600A52B01 /* ThemeWindow.swift in Sources */,
+				6BCAB3E72F2A2E6800820806 /* TimeCorrelationCondition.swift in Sources */,
 				6B1D8CFF2DE98F2600A52B01 /* Styles.swift in Sources */,
 				6B1D8D012DE98F2600A52B01 /* LightTheme.swift in Sources */,
 				6B1D8D022DE98F2600A52B01 /* ThemeManager.swift in Sources */,
@@ -10714,6 +10800,7 @@
 				6BCD53152A161F4800993F20 /* BackupViewModel.swift in Sources */,
 				11B35D10A6A15EFA47FCE6D0 /* TextCell.swift in Sources */,
 				6BCD53012A161F4100993F20 /* BackupCloudModule.swift in Sources */,
+				6BCAB3D62F28B5B800820806 /* OutputTransactionFactory.swift in Sources */,
 				D36DE0E8272FD887000BC916 /* OneInchModule.swift in Sources */,
 				58AAA1EC97682F9347B8CA32 /* ChartModule.swift in Sources */,
 				D0532CBF2B149DEE0015DF40 /* WatchViewModel.swift in Sources */,
@@ -10807,7 +10894,6 @@
 				11B357118379A537844A83D0 /* EvmSyncSource.swift in Sources */,
 				11B354CAD4BC4FAB3889838D /* EvmSyncSourceManager.swift in Sources */,
 				D316BB9C2F2891A500D37755 /* BirthdayInputViewModel.swift in Sources */,
-				D02C85A82D1A93A60096A84D /* SpamAddress.swift in Sources */,
 				D36287B62CA2CC8600ADAF3B /* TonConnectConnectViewModel.swift in Sources */,
 				11B3573B8B8DA5C1DE332EB6 /* EvmNetworkViewController.swift in Sources */,
 				11B3558589D57B3EAD53919F /* EvmNetworkViewModel.swift in Sources */,
@@ -10832,6 +10918,7 @@
 				58AAA8D086D1DCFADA9A0938 /* OneInchSettingsViewModel.swift in Sources */,
 				D36DE0ED272FD89B000BC916 /* SwapSettingsModule.swift in Sources */,
 				58AAA696C47479181333FBA5 /* UniswapSettingsDataSource.swift in Sources */,
+				6BCAB3E02F29FF4000820806 /* ZeroValueCondition.swift in Sources */,
 				58AAA604A4728EF375F8937D /* OneInchSettingsDataSource.swift in Sources */,
 				58AAA5D1FB4312F714C1D097 /* OneInchSettingsModule.swift in Sources */,
 				D0D5BCBD2976CB9F00587FDB /* PasswordInputView.swift in Sources */,
@@ -11219,6 +11306,7 @@
 				11B35B6C74E672B2699E8207 /* NftModule.swift in Sources */,
 				11B35F8649859802080BA580 /* NftViewModel.swift in Sources */,
 				6B5A13F62DF93DED006E609C /* PerformanceDataSelectViewModel.swift in Sources */,
+				6BCAB3F52F2C58A100820806 /* ScannedTransactionStorage.swift in Sources */,
 				11B35DBD3329CD28158E4D6A /* NftHeaderViewModel.swift in Sources */,
 				11B35B36FB559CDEB1B496EC /* NftHeaderView.swift in Sources */,
 				11B358F2CD17616038016E59 /* NftRecord.swift in Sources */,
@@ -11274,6 +11362,7 @@
 				6BD766522EA62121008DDEA7 /* HDReceiveAddressService.swift in Sources */,
 				11B3529D506ADAEB715BF0D1 /* RestorePrivateKeyViewModel.swift in Sources */,
 				11B35A5C28DF128893703B6C /* RestoreViewModel.swift in Sources */,
+				6BCAB3F22F2B7A6700820806 /* ScannedTransaction.swift in Sources */,
 				11B35FF072E32C5D4028D0F6 /* TextInputCell.swift in Sources */,
 				2FA5D47663BD8C2F6E4DE912 /* PassphraseValidator.swift in Sources */,
 				ABC9A1FFFB4F9EC58BF78661 /* AccountRestoreWarningManager.swift in Sources */,
@@ -11327,6 +11416,7 @@
 				6B5A13F82DF97B5E006E609C /* PerformanceDataManager.swift in Sources */,
 				11B3588C582E45D149BB42BB /* Token.swift in Sources */,
 				D3E36BA22DF98B91007F99CA /* TronWalletTokenView.swift in Sources */,
+				6BCAB3D42F28B30C00820806 /* SpamScoreEvaluator.swift in Sources */,
 				11B35FC689D745FFBB3684C4 /* TokenType.swift in Sources */,
 				D3E36BBE2E00388C007F99CA /* SendTokenListView.swift in Sources */,
 				11B354F237E59C24ED8F3759 /* TokenQuery.swift in Sources */,
@@ -11390,6 +11480,7 @@
 				2FA5D20BC28280786A0FC3FE /* DropDownListCell.swift in Sources */,
 				D3C845AA2C1B08E3004F9DD9 /* CoinMajorHoldersViewModel.swift in Sources */,
 				2FA5D707CD9B268FA3CA8D8F /* TimeLockViewModel.swift in Sources */,
+				6BCAB3C92F2864DE00820806 /* ZeroValueFilter.swift in Sources */,
 				2FA5D06916F84E180B2AF357 /* InputOutputOrderService.swift in Sources */,
 				6BE57E732E339C3A003C4C01 /* MerkleTransactionAdapter.swift in Sources */,
 				2FA5DBD4F56DCAE4CDCAAB61 /* InputOutputOrderDataSource.swift in Sources */,
@@ -11438,6 +11529,7 @@
 				ABC9AE0D23A7B54521E77052 /* ECashAdapter.swift in Sources */,
 				11B35D6646585145422DA2AD /* HsToolKit.swift in Sources */,
 				11B35DB3DC5CAC18264E82D7 /* Publisher.swift in Sources */,
+				6BCAB3CB2F28B01500820806 /* ContactsFilter.swift in Sources */,
 				11B3508877059D245C78131E /* EvmKit.swift in Sources */,
 				D34338EF2C885895001FCAD2 /* JettonAdapter.swift in Sources */,
 				11B35819C7596909297311B2 /* Eip20Kit.swift in Sources */,
@@ -11453,6 +11545,7 @@
 				ABC9A4686BB11B772E834BCD /* UniswapV3Service.swift in Sources */,
 				ABC9AAEF5D444F5BCB9D0CE2 /* UniswapV3ViewModel.swift in Sources */,
 				ABC9AC011EA9D58866999D88 /* UniswapV3DataSource.swift in Sources */,
+				6BCAB3E32F2A22A900820806 /* LowAmountCondition.swift in Sources */,
 				6B93AFB12E5EF40100A55120 /* WalletConnectStellarTransactionHandler.swift in Sources */,
 				6BA8D2432D5B0D2C0093D5C2 /* MarketSectorViewModel.swift in Sources */,
 				ABC9A739B2E6FC4DFBD3ABC9 /* UniswapV3Module.swift in Sources */,
@@ -11587,6 +11680,7 @@
 				6B1D8E4E2DEADF7F00A52B01 /* BottomDescriptionView.swift in Sources */,
 				6B1D8E4F2DEADF7F00A52B01 /* CornerPath.swift in Sources */,
 				6B1D8E502DEADF7F00A52B01 /* TopDescriptionView.swift in Sources */,
+				6BCAB3ED2F2B33EB00820806 /* SpamManagerNew.swift in Sources */,
 				6B1D8E512DEADF7F00A52B01 /* HudHelper.swift in Sources */,
 				6B1D8E522DEADF7F00A52B01 /* MultiTextComponent.swift in Sources */,
 				6B1D8E532DEADF7F00A52B01 /* PrimaryCircleButtonComponent.swift in Sources */,
@@ -11706,6 +11800,7 @@
 				ABC9AD46006A85E907826E2B /* EnabledWalletCache_v_0_36.swift in Sources */,
 				11B35309CE9FBDA200067C4F /* ActiveAccount_v_0_36.swift in Sources */,
 				11B357FF80E87451A99BEE4A /* AccountRecord_v_0_36.swift in Sources */,
+				6BCAB3C22F285CD000820806 /* SpamModule.swift in Sources */,
 				D34DB1A32E1BEBF400DD30D3 /* CoordinatorViewModifier.swift in Sources */,
 				11B35DF625EA2A1412C2D984 /* DuressModeIntroView.swift in Sources */,
 				11B35A48CF68A2A45E1A429E /* PageDescription.swift in Sources */,
@@ -11937,7 +12032,6 @@
 				11B35488B94F239EB58F8769 /* EvmSendHelper.swift in Sources */,
 				11B35772618CDA2F19CCDB2C /* SwapFinalQuote.swift in Sources */,
 				11B354B484C4785A27216BEC /* ISendData.swift in Sources */,
-				D02C85AE2D1A969C0096A84D /* SpamAddressStorage.swift in Sources */,
 				11B35A4428B94FF4E4F01AA9 /* SendData.swift in Sources */,
 				6B50FDB42EAA20E0004CD0A0 /* ReceiveSettingsListView.swift in Sources */,
 				6BEF09572E12848E004F4514 /* DeepLinkViewManager.swift in Sources */,
@@ -12023,6 +12117,7 @@
 				D384069121831B3D007D50AD /* UIAlertController.swift in Sources */,
 				D384069421831B3D007D50AD /* DateHelper.swift in Sources */,
 				D384069521831B3D007D50AD /* SystemInfoManager.swift in Sources */,
+				6BCAB3C52F285E3A00820806 /* SpamFilterChain.swift in Sources */,
 				D3DB51A52BD685B40091BBDB /* MarketTabView.swift in Sources */,
 				D384069621831B3D007D50AD /* PermissionsHelper.swift in Sources */,
 				6B50FD9F2EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift in Sources */,
@@ -12069,6 +12164,7 @@
 				11B35262A6D3AB8C41E2E245 /* AccountStorage.swift in Sources */,
 				1A56416B9DC6DA281AD34575 /* AdapterState.swift in Sources */,
 				1A564D53F049C4784CAC814D /* BtcRestoreMode.swift in Sources */,
+				6BCAB3F62F2C58A100820806 /* ScannedTransactionStorage.swift in Sources */,
 				1A5643D7C72CDCB87E3D5F17 /* SendTransactionError.swift in Sources */,
 				1A564A2B23326B3057C37962 /* AdapterError.swift in Sources */,
 				D003297A26CD2E89002EC21D /* TransactionDateHeaderView.swift in Sources */,
@@ -12324,9 +12420,11 @@
 				6B1D8D1A2DE98F2600A52B01 /* ITheme.swift in Sources */,
 				6B1D8D1B2DE98F2600A52B01 /* Fonts.swift in Sources */,
 				6B1D8D1C2DE98F2600A52B01 /* SystemTheme.swift in Sources */,
+				6BCAB3D92F28B65A00820806 /* OutputTransactionCache.swift in Sources */,
 				6B1D8D1D2DE98F2600A52B01 /* ThemeWindow.swift in Sources */,
 				6B1D8D1E2DE98F2600A52B01 /* Styles.swift in Sources */,
 				6B1D8D202DE98F2600A52B01 /* LightTheme.swift in Sources */,
+				6BCAB3C82F2864DE00820806 /* ZeroValueFilter.swift in Sources */,
 				6BDB59E12F14B6B8005FA626 /* MoneroSwapFinalQuote.swift in Sources */,
 				6B1D8D212DE98F2600A52B01 /* ThemeManager.swift in Sources */,
 				6B1D8D222DE98F2600A52B01 /* DarkTheme.swift in Sources */,
@@ -12427,6 +12525,7 @@
 				58AAAD10078FF803A3C27F7C /* MetricChartService.swift in Sources */,
 				58AAAFD1F07293D4691F2294 /* MetricChartFactory.swift in Sources */,
 				58AAAAE64799E5DD40D4C54A /* MetricChartModule.swift in Sources */,
+				6BCAB3F32F2B7A6700820806 /* ScannedTransaction.swift in Sources */,
 				58AAA0CA81351C80C4F2E168 /* MetricChartViewController.swift in Sources */,
 				6BB14F7B2C05FBAC00E879B2 /* MarketTvlViewModel.swift in Sources */,
 				D3E36BEA2E0A8488007F99CA /* ManageAccountsView.swift in Sources */,
@@ -12447,7 +12546,6 @@
 				1A564032D3C011BCAA7D44A8 /* DeepLinkStorage.swift in Sources */,
 				11B35804545D048C0EDB8089 /* EvmSyncSource.swift in Sources */,
 				11B352F14D96C26D946E3877 /* EvmSyncSourceManager.swift in Sources */,
-				D02C85A92D1A93A60096A84D /* SpamAddress.swift in Sources */,
 				D36287B52CA2CC8600ADAF3B /* TonConnectConnectViewModel.swift in Sources */,
 				11B35F73153DEE805DD539CE /* EvmNetworkViewController.swift in Sources */,
 				11B35B507F2F843A5B3E4C7C /* EvmNetworkViewModel.swift in Sources */,
@@ -12506,6 +12604,7 @@
 				6BDB59D82F0B7600005FA626 /* TonSwapFinalQuote.swift in Sources */,
 				6BA971C02ED560D800DEC017 /* PremiumFeature.swift in Sources */,
 				D36287BF2CA3D7B100ADAF3B /* TonConnect+Encodable.swift in Sources */,
+				6BCAB3F02F2B5EEB00820806 /* Map.swift in Sources */,
 				58AAA926E1D95F61CA06EFB8 /* SwapConfirmationModule.swift in Sources */,
 				58AAA1152EEEBC93FCC3CAAC /* SwapConfirmationViewController.swift in Sources */,
 				58AAAC9A4813120F3B786D18 /* SwapConfirmationAmountCell.swift in Sources */,
@@ -12571,6 +12670,7 @@
 				D36DE0C9272FD864000BC916 /* UniswapProvider.swift in Sources */,
 				11B35ED9D5F95988E9335440 /* CoinAnalyticsModule.swift in Sources */,
 				D389BC4C2C0DDCF500724504 /* MarketAdvancedSearchBlockchainsView.swift in Sources */,
+				6BCAB3E42F2A22A900820806 /* LowAmountCondition.swift in Sources */,
 				D06F60032D195FBC0033A288 /* AddressSecurityIssueType.swift in Sources */,
 				D0118E4B2B7CC63300D55CE6 /* ResendBitcoinViewController.swift in Sources */,
 				6BB14F752C01D04200E879B2 /* CheckBoxUiView.swift in Sources */,
@@ -12912,6 +13012,7 @@
 				ABC9ACA04EBC7AF903A01FE3 /* SendEip1155ViewController.swift in Sources */,
 				ABC9A9A9FE5A83A6F0C3BFE9 /* SendEip721ViewModel.swift in Sources */,
 				ABC9A13F4C814FFB31FF13CA /* SendEip721ViewController.swift in Sources */,
+				6BCAB3CC2F28B01500820806 /* ContactsFilter.swift in Sources */,
 				ABC9AE44EF7D6B6419955B9B /* SendEip721Service.swift in Sources */,
 				ABC9A0C6E37779D3F3602EEC /* SendEip1155AvailableBalanceViewModel.swift in Sources */,
 				ABC9A3160546BCE6ECD32669 /* IntegerAmountInputViewModel.swift in Sources */,
@@ -12992,6 +13093,7 @@
 				D34637E92DD7493A00187698 /* SwitchAccountViewModel.swift in Sources */,
 				2FA5DF494C667E041B22C804 /* EvmSendSettingsModule.swift in Sources */,
 				D03F74822BF76D0A004FBCFA /* GasPriceData.swift in Sources */,
+				6BCAB3D72F28B5B800820806 /* OutputTransactionFactory.swift in Sources */,
 				D05E96A92A28657F002CCD71 /* TronAccountManager.swift in Sources */,
 				2FA5DBD32AA258A75A2FDD95 /* EvmSendSettingsService.swift in Sources */,
 				D011A4962E3B5D4F004F58DC /* MoneroFeeSettingsView.swift in Sources */,
@@ -13025,6 +13127,7 @@
 				11B351DB86D936CC17C4A635 /* PrivateKeysModule.swift in Sources */,
 				11B3540BCA5A3ED9B16B540D /* PrivateKeysService.swift in Sources */,
 				11B3514C6EC2B0BB2C6788BF /* PrivateKeysViewController.swift in Sources */,
+				6BCAB3E62F2A2E6800820806 /* TimeCorrelationCondition.swift in Sources */,
 				D31C99C92F16461E00A82358 /* SwapTermsView.swift in Sources */,
 				11B35F7DB194FB9F41EBF7B8 /* EvmAddressViewController.swift in Sources */,
 				11B35731646CF45FD1A564AB /* EvmAddressModule.swift in Sources */,
@@ -13120,6 +13223,7 @@
 				ABC9AB83EE3F909BD80E0539 /* BackupCryptoHelper.swift in Sources */,
 				ABC9A60BA5DF119C7FC8A859 /* KdfParams.swift in Sources */,
 				ABC9A6887B716464A5813EE9 /* BackupCrypto.swift in Sources */,
+				6BCAB3E12F29FF4000820806 /* ZeroValueCondition.swift in Sources */,
 				6B93AFAD2E5EF3E000A55120 /* WalletConnectEvmSendHandler.swift in Sources */,
 				ABC9AB6EB596E2F8B15D00E4 /* CipherParams.swift in Sources */,
 				ABC9AF9C828BEBB740468204 /* WalletBackup.swift in Sources */,
@@ -13199,6 +13303,7 @@
 				D3AFAB082E45FF76004AB074 /* RightMultiText.swift in Sources */,
 				6B9032C82D1D6FD400F3F5AC /* PurchaseListView.swift in Sources */,
 				D30C4D522D537E7B0082B487 /* RecentAddressStorage.swift in Sources */,
+				6BCAB3C32F285CD000820806 /* SpamModule.swift in Sources */,
 				11B35E553176CF41B5CB83C0 /* BlockchainTokensView.swift in Sources */,
 				11B35B26C32F47DE6E83FC82 /* BlockchainTokensModule.swift in Sources */,
 				11B35ED89BE760771022E8A8 /* BlockchainTokensService.swift in Sources */,
@@ -13286,6 +13391,7 @@
 				6B2907292AF0CB8A006157D6 /* EventHandler.swift in Sources */,
 				11B35A18AA61F8C06AB1C15B /* AppearanceViewModel.swift in Sources */,
 				ABC9A2C4301447E0EEA1D16F /* FullBackup.swift in Sources */,
+				6BCAB3D32F28B30C00820806 /* SpamScoreEvaluator.swift in Sources */,
 				ABC9A99861B1F83A19EA370D /* SettingsBackup.swift in Sources */,
 				ABC9A5A4C6213D58CDA2EB73 /* ThemeMode.swift in Sources */,
 				11B3591C77EE71054BF819D0 /* SetPasscodeView.swift in Sources */,
@@ -13476,6 +13582,7 @@
 				D38E5E032F03F2800049EB91 /* UtxoSwapFinalQuote.swift in Sources */,
 				11B35ED9F3C0EA3CCC4C0FF4 /* SyncErrorView.swift in Sources */,
 				D3384D4E2C07020300515664 /* PriceChangeMode.swift in Sources */,
+				6BCAB3EC2F2B33EB00820806 /* SpamManagerNew.swift in Sources */,
 				ABC9AE362775FBF83C15C231 /* ActionSheetExtensions.swift in Sources */,
 				ABC9A1109D59CD5F71FBC153 /* BaseAnimation.swift in Sources */,
 				ABC9A9A71EA9758D096AAA68 /* AlphaDismissAnimation.swift in Sources */,
@@ -13544,6 +13651,7 @@
 				11B35CA4F61231F536BE9A24 /* PancakeV2MultiSwapProvider.swift in Sources */,
 				6BD766552EA625EC008DDEA7 /* HDReceiveAddressViewModel.swift in Sources */,
 				11B352D47A0F5A3E4AF8F948 /* BaseUniswapV3MultiSwapProvider.swift in Sources */,
+				6BCAB3D12F28B2D400820806 /* SpamEvaluationContext.swift in Sources */,
 				11B35FB2259B3BB16AFE5624 /* UniswapV3MultiSwapProvider.swift in Sources */,
 				D36287AD2CA2BA2700ADAF3B /* TonConnectManager.swift in Sources */,
 				11B35BD170E89520DF7D384E /* BaseUniswapMultiSwapProvider.swift in Sources */,
@@ -13578,7 +13686,6 @@
 				D38E5DF32EF964190049EB91 /* ZcashSwapFinalQuote.swift in Sources */,
 				11B35A3B506EDD1EFB7D913E /* EvmSendHelper.swift in Sources */,
 				6BA971C72ED56C5F00DEC017 /* SectionHeader.swift in Sources */,
-				D02C85AF2D1A969C0096A84D /* SpamAddressStorage.swift in Sources */,
 				11B3584A053BC5DAE6E434F8 /* SwapFinalQuote.swift in Sources */,
 				D38E5E0E2F0CFE020049EB91 /* SwapAssetSyncInfo.swift in Sources */,
 				6B50FDB52EAA20E0004CD0A0 /* ReceiveSettingsListView.swift in Sources */,
@@ -13612,6 +13719,7 @@
 				6B5D85202EA793E500F13E2C /* StellarReceiveAddressViewItemFactory.swift in Sources */,
 				D3E1E8742C21859000E07052 /* PurchasesView.swift in Sources */,
 				6B5A13F32DF93DD3006E609C /* PerformanceDataSelectView.swift in Sources */,
+				6BCAB3DC2F29F5AA00820806 /* AddressSimilarityCondition.swift in Sources */,
 				ABC9AF8603F37760F2D40A6E /* TransparentFullScreenCover.swift in Sources */,
 				D3AFAB0E2E460200004AB074 /* IconButton.swift in Sources */,
 				11B3569338D57D5CCF55E28E /* MultiSwapModule.swift in Sources */,

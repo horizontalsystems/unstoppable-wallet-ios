@@ -75,13 +75,16 @@ extension SwapPendingAllowanceService {
             return
         }
 
-        for transaction in adapter.pendingTransactions {
-            if let approve = transaction as? ApproveTransactionRecord {
-                pendingAllowance = approve.value.value
+        Task { [weak self] in
+            let pending = adapter.pendingTransactions
+            for transaction in pending {
+                if let approve = transaction as? ApproveTransactionRecord {
+                    self?.pendingAllowance = approve.value.value
+                }
             }
+            
+            self?.sync()
         }
-
-        sync()
     }
 }
 
