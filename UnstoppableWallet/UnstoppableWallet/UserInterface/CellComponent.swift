@@ -94,7 +94,7 @@ enum CellComponent {
         CellBuilderNew.row(
             rootElement: .hStack([
                 .image32 { component in
-                    component.imageView.kf.setImage(with: iconUrl.flatMap { URL(string: $0) }, placeholder: UIImage(named: iconPlaceholderImageName), options: [.onlyLoadFirstFrame, .transition(.fade(0.5))])
+                    component.imageView.setImage(url: iconUrl, placeholder: UIImage(named: iconPlaceholderImageName))
                     component.imageView.cornerRadius = .cornerRadius4
                     component.imageView.contentMode = .scaleAspectFill
                 },
