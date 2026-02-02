@@ -1549,10 +1549,6 @@
 		58AAAFD1F07293D4691F2294 /* MetricChartFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAC7C8A0B2AECDD436A14 /* MetricChartFactory.swift */; };
 		58AAAFDBA357FC699C07C334 /* AdditionalDataWithErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8483BC1E85730F04CA3 /* AdditionalDataWithErrorView.swift */; };
 		58AAAFE644C1B236B9714B47 /* CoinSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB692B7C326319D186E4 /* CoinSelectViewModel.swift */; };
-		6B0B6E752E092C0600A0F0C9 /* SpamManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0B6E742E092C0200A0F0C9 /* SpamManager.swift */; };
-		6B0B6E762E092C0600A0F0C9 /* SpamManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0B6E742E092C0200A0F0C9 /* SpamManager.swift */; };
-		6B0B6E7C2E09508600A0F0C9 /* TransferEventFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0B6E7B2E09507E00A0F0C9 /* TransferEventFactory.swift */; };
-		6B0B6E7D2E09508600A0F0C9 /* TransferEventFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B0B6E7B2E09507E00A0F0C9 /* TransferEventFactory.swift */; };
 		6B146A972A52A69400648C10 /* ChartIndicatorSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B146A932A52A69400648C10 /* ChartIndicatorSettingsViewController.swift */; };
 		6B146A982A52A69400648C10 /* ChartIndicatorSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B146A932A52A69400648C10 /* ChartIndicatorSettingsViewController.swift */; };
 		6B146A9B2A52A69400648C10 /* ChartIndicatorSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B146A952A52A69400648C10 /* ChartIndicatorSettingsModule.swift */; };
@@ -2028,6 +2024,8 @@
 		6BBB92B82D11646600112409 /* PromoCodeBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBB92B62D11646600112409 /* PromoCodeBottomSheetView.swift */; };
 		6BBB92BA2D11648E00112409 /* PromoCodeBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBB92B92D11648E00112409 /* PromoCodeBottomSheetViewModel.swift */; };
 		6BBB92BB2D11648E00112409 /* PromoCodeBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBB92B92D11648E00112409 /* PromoCodeBottomSheetViewModel.swift */; };
+		6BBE19102F306E9200B9E67D /* OutgoingAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBE190F2F306E8D00B9E67D /* OutgoingAddress.swift */; };
+		6BBE19112F306E9200B9E67D /* OutgoingAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBE190F2F306E8D00B9E67D /* OutgoingAddress.swift */; };
 		6BCAADD02ED9630E00ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAADCF2ED962F400ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift */; };
 		6BCAADD12ED9630E00ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAADCF2ED962F400ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift */; };
 		6BCAADD52EDC08A100ECB0F1 /* PremiumFeaturesWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAADD42EDC089400ECB0F1 /* PremiumFeaturesWrapper.swift */; };
@@ -2058,16 +2056,14 @@
 		6BCAB3E42F2A22A900820806 /* LowAmountCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3E22F2A22A200820806 /* LowAmountCondition.swift */; };
 		6BCAB3E62F2A2E6800820806 /* TimeCorrelationCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3E52F2A2E6100820806 /* TimeCorrelationCondition.swift */; };
 		6BCAB3E72F2A2E6800820806 /* TimeCorrelationCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3E52F2A2E6100820806 /* TimeCorrelationCondition.swift */; };
-		6BCAB3EC2F2B33EB00820806 /* SpamManagerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3EB2F2B33E700820806 /* SpamManagerNew.swift */; };
-		6BCAB3ED2F2B33EB00820806 /* SpamManagerNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3EB2F2B33E700820806 /* SpamManagerNew.swift */; };
 		6BCAB3EF2F2B5EEB00820806 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3EE2F2B5EE600820806 /* Map.swift */; };
 		6BCAB3F02F2B5EEB00820806 /* Map.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3EE2F2B5EE600820806 /* Map.swift */; };
 		6BCAB3F22F2B7A6700820806 /* ScannedTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3F12F2B7A6000820806 /* ScannedTransaction.swift */; };
 		6BCAB3F32F2B7A6700820806 /* ScannedTransaction.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3F12F2B7A6000820806 /* ScannedTransaction.swift */; };
 		6BCAB3F52F2C58A100820806 /* ScannedTransactionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3F42F2C589700820806 /* ScannedTransactionStorage.swift */; };
 		6BCAB3F62F2C58A100820806 /* ScannedTransactionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3F42F2C589700820806 /* ScannedTransactionStorage.swift */; };
-		6BCAB3F82F2C806F00820806 /* SpamManagerNew2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3F72F2C806F00820806 /* SpamManagerNew2.swift */; };
-		6BCAB3F92F2C806F00820806 /* SpamManagerNew2.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3F72F2C806F00820806 /* SpamManagerNew2.swift */; };
+		6BCAB3F82F2C806F00820806 /* SpamManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3F72F2C806F00820806 /* SpamManager.swift */; };
+		6BCAB3F92F2C806F00820806 /* SpamManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3F72F2C806F00820806 /* SpamManager.swift */; };
 		6BCAB3FB2F2C813100820806 /* SpamWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3FA2F2C812300820806 /* SpamWrapper.swift */; };
 		6BCAB3FC2F2C813100820806 /* SpamWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3FA2F2C812300820806 /* SpamWrapper.swift */; };
 		6BCD53002A161F4100993F20 /* BackupCloudModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */; };
@@ -4466,8 +4462,6 @@
 		58AAAFBDA192A490C33DBB95 /* UITextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
 		58AAAFF25BF263B5EC4188F7 /* SwapDeadlineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapDeadlineViewModel.swift; sourceTree = "<group>"; };
 		58AAAFF6E494F623AD62AF95 /* UniswapSettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniswapSettingsService.swift; sourceTree = "<group>"; };
-		6B0B6E742E092C0200A0F0C9 /* SpamManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamManager.swift; sourceTree = "<group>"; };
-		6B0B6E7B2E09507E00A0F0C9 /* TransferEventFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransferEventFactory.swift; sourceTree = "<group>"; };
 		6B146A932A52A69400648C10 /* ChartIndicatorSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartIndicatorSettingsViewController.swift; sourceTree = "<group>"; };
 		6B146A952A52A69400648C10 /* ChartIndicatorSettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartIndicatorSettingsModule.swift; sourceTree = "<group>"; };
 		6B1D8CD82DE98F2600A52B01 /* Colors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Colors.swift; sourceTree = "<group>"; };
@@ -4664,6 +4658,7 @@
 		6BBB92B22D10142900112409 /* PurchaseBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PurchaseBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		6BBB92B62D11646600112409 /* PromoCodeBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCodeBottomSheetView.swift; sourceTree = "<group>"; };
 		6BBB92B92D11648E00112409 /* PromoCodeBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCodeBottomSheetViewModel.swift; sourceTree = "<group>"; };
+		6BBE190F2F306E8D00B9E67D /* OutgoingAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutgoingAddress.swift; sourceTree = "<group>"; };
 		6BCAADCF2ED962F400ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumFeaturesInfoBottomSheetView.swift; sourceTree = "<group>"; };
 		6BCAADD42EDC089400ECB0F1 /* PremiumFeaturesWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumFeaturesWrapper.swift; sourceTree = "<group>"; };
 		6BCAB39A2F1A114E00820806 /* TronSendHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronSendHelper.swift; sourceTree = "<group>"; };
@@ -4679,11 +4674,10 @@
 		6BCAB3DF2F29FF3F00820806 /* ZeroValueCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroValueCondition.swift; sourceTree = "<group>"; };
 		6BCAB3E22F2A22A200820806 /* LowAmountCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LowAmountCondition.swift; sourceTree = "<group>"; };
 		6BCAB3E52F2A2E6100820806 /* TimeCorrelationCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeCorrelationCondition.swift; sourceTree = "<group>"; };
-		6BCAB3EB2F2B33E700820806 /* SpamManagerNew.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamManagerNew.swift; sourceTree = "<group>"; };
 		6BCAB3EE2F2B5EE600820806 /* Map.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Map.swift; sourceTree = "<group>"; };
 		6BCAB3F12F2B7A6000820806 /* ScannedTransaction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedTransaction.swift; sourceTree = "<group>"; };
 		6BCAB3F42F2C589700820806 /* ScannedTransactionStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScannedTransactionStorage.swift; sourceTree = "<group>"; };
-		6BCAB3F72F2C806F00820806 /* SpamManagerNew2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamManagerNew2.swift; sourceTree = "<group>"; };
+		6BCAB3F72F2C806F00820806 /* SpamManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamManager.swift; sourceTree = "<group>"; };
 		6BCAB3FA2F2C812300820806 /* SpamWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamWrapper.swift; sourceTree = "<group>"; };
 		6BCD52F72A161F4100993F20 /* BackupCloudModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupCloudModule.swift; sourceTree = "<group>"; };
 		6BCD52F92A161F4100993F20 /* ICloudBackupTermsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ICloudBackupTermsViewModel.swift; sourceTree = "<group>"; };
@@ -6378,6 +6372,7 @@
 		11B356605394189E9B5EBEE0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6BBE190F2F306E8D00B9E67D /* OutgoingAddress.swift */,
 				6BCAB3F12F2B7A6000820806 /* ScannedTransaction.swift */,
 				D38E5E0D2F0CFE020049EB91 /* SwapAssetSyncInfo.swift */,
 				D38E5E072F0CE2740049EB91 /* SwapAsset.swift */,
@@ -7850,13 +7845,10 @@
 			isa = PBXGroup;
 			children = (
 				6BCAB3FA2F2C812300820806 /* SpamWrapper.swift */,
-				6BCAB3EB2F2B33E700820806 /* SpamManagerNew.swift */,
-				6BCAB3F72F2C806F00820806 /* SpamManagerNew2.swift */,
+				6BCAB3F72F2C806F00820806 /* SpamManager.swift */,
 				6BCAB3C12F285CCC00820806 /* SpamModule.swift */,
 				6BCAB3C02F285CB000820806 /* SpamFilter */,
 				6BCAB3CE2F28B2BF00820806 /* SpamEvaluation */,
-				6B0B6E7B2E09507E00A0F0C9 /* TransferEventFactory.swift */,
-				6B0B6E742E092C0200A0F0C9 /* SpamManager.swift */,
 			);
 			path = Spam;
 			sourceTree = "<group>";
@@ -11137,7 +11129,6 @@
 				11B350ADB6D0D0C3E97F73D6 /* NftCollectionViewController.swift in Sources */,
 				D07157E22A2DDA17006F141F /* SendTronViewModel.swift in Sources */,
 				11B35E4E9EA0B6F6A1157E17 /* NftCollectionService.swift in Sources */,
-				6B0B6E7C2E09508600A0F0C9 /* TransferEventFactory.swift in Sources */,
 				11B35AB1A8FB2E49C98FCBEB /* NftCollectionViewModel.swift in Sources */,
 				D0D5BCC12976D3B300587FDB /* PsswordInputCell.swift in Sources */,
 				11B35633B952154A098532A4 /* NftCollectionModule.swift in Sources */,
@@ -11563,7 +11554,6 @@
 				11B35D5C090A1C74C49A8405 /* ActivateSubscriptionModule.swift in Sources */,
 				11B351BB835C2EE7144D8D7E /* ActivateSubscriptionViewController.swift in Sources */,
 				11B358B55D517A8999843B5F /* ActivateSubscriptionViewModel.swift in Sources */,
-				6B0B6E762E092C0600A0F0C9 /* SpamManager.swift in Sources */,
 				11B35F8BF4BD6481E6AF72AF /* TestNetManager.swift in Sources */,
 				ABC9A0073333D3DEC2797D15 /* BackupCloudPassphraseViewController.swift in Sources */,
 				ABC9AE472D9105F6FDAECD42 /* BackupCloudPassphraseService.swift in Sources */,
@@ -11640,6 +11630,7 @@
 				D34338E92C871344001FCAD2 /* TonTransactionAdapter.swift in Sources */,
 				11B35AC1D930F8C6ECC536FC /* RecieveSettingsViewModel.swift in Sources */,
 				11B35434C09F1E3818DC857B /* ReceiveDerivationViewModel.swift in Sources */,
+				6BBE19112F306E9200B9E67D /* OutgoingAddress.swift in Sources */,
 				11B3580ABF4CD61826D0FCBB /* ReceiveBitcoinCashCoinTypeViewModel.swift in Sources */,
 				11B35CFE221F95141FAEB880 /* CoinProvider.swift in Sources */,
 				11B3516B3978D80735E949B4 /* ReceiveCoinListService.swift in Sources */,
@@ -11689,7 +11680,6 @@
 				6B1D8E4E2DEADF7F00A52B01 /* BottomDescriptionView.swift in Sources */,
 				6B1D8E4F2DEADF7F00A52B01 /* CornerPath.swift in Sources */,
 				6B1D8E502DEADF7F00A52B01 /* TopDescriptionView.swift in Sources */,
-				6BCAB3ED2F2B33EB00820806 /* SpamManagerNew.swift in Sources */,
 				6B1D8E512DEADF7F00A52B01 /* HudHelper.swift in Sources */,
 				6B1D8E522DEADF7F00A52B01 /* MultiTextComponent.swift in Sources */,
 				6B1D8E532DEADF7F00A52B01 /* PrimaryCircleButtonComponent.swift in Sources */,
@@ -12079,7 +12069,7 @@
 				ABC9A7908BE99782BFDC558E /* TransparentFullScreenCover.swift in Sources */,
 				D3AFAAF62E45FEEA004AB074 /* TextStyle.swift in Sources */,
 				11B3538BF3283868DD8D107F /* MultiSwapModule.swift in Sources */,
-				6BCAB3F92F2C806F00820806 /* SpamManagerNew2.swift in Sources */,
+				6BCAB3F92F2C806F00820806 /* SpamManager.swift in Sources */,
 				11B3568ED01B671E6C914EA5 /* StatExtensions.swift in Sources */,
 				11B352EC3DD266F5835E8537 /* StatStorage.swift in Sources */,
 				11B35DAA8E2BADCF4FC2AA7F /* StatRecord.swift in Sources */,
@@ -12567,6 +12557,7 @@
 				D36DE0C0272FD864000BC916 /* UniswapService.swift in Sources */,
 				11B35ED22837284580055F0A /* BalanceData.swift in Sources */,
 				6B67F0F22D1C06F2003452DC /* SuccessfulSubscriptionView.swift in Sources */,
+				6BBE19102F306E9200B9E67D /* OutgoingAddress.swift in Sources */,
 				11B3534B567884E30A871F32 /* AddTokenModule.swift in Sources */,
 				D30D7E682CAACD0400B8CAA7 /* TonConnectSendHandler.swift in Sources */,
 				6BB14F722BFE550600E879B2 /* MarketEtfFetcher.swift in Sources */,
@@ -12800,7 +12791,6 @@
 				11B35727A4950C1E066F2244 /* LogRecordStorage.swift in Sources */,
 				11B35262B98EA59CDA12DF97 /* WalletConnectSessionStorage.swift in Sources */,
 				11B350ACC851B0F8C911AC3E /* ActiveAccountStorage.swift in Sources */,
-				6B0B6E7D2E09508600A0F0C9 /* TransferEventFactory.swift in Sources */,
 				11B35A2DC1B9521150F81EA6 /* RestoreSettingsStorage.swift in Sources */,
 				11B35D5B873123BC2D3909EF /* AppVersionRecordStorage.swift in Sources */,
 				11B3564706CBCF6F6A30FF65 /* EnabledWalletCacheStorage.swift in Sources */,
@@ -12961,7 +12951,7 @@
 				11B359C829669CC55E530476 /* ExtendedKeyModule.swift in Sources */,
 				D36287C42CA3DC8F00ADAF3B /* TonConnectSessionCrypto.swift in Sources */,
 				11B35F6CD2706B10781456E8 /* ExtendedKeyViewModel.swift in Sources */,
-				6BCAB3F82F2C806F00820806 /* SpamManagerNew2.swift in Sources */,
+				6BCAB3F82F2C806F00820806 /* SpamManager.swift in Sources */,
 				6BCD53022A161F4100993F20 /* ICloudBackupTermsViewModel.swift in Sources */,
 				D3E36B872DF6E1E2007F99CA /* WalletTokenView.swift in Sources */,
 				11B35066480B6EB9F124EBC0 /* ExtendedKeyService.swift in Sources */,
@@ -13224,7 +13214,6 @@
 				11B35C2F43F8135F22DD7FDF /* ActivateSubscriptionModule.swift in Sources */,
 				11B356655BCF0A3919AD5120 /* ActivateSubscriptionViewController.swift in Sources */,
 				11B356D9DACA3E988BEDB3B4 /* ActivateSubscriptionViewModel.swift in Sources */,
-				6B0B6E752E092C0600A0F0C9 /* SpamManager.swift in Sources */,
 				11B35357032B368120BA1C06 /* TestNetManager.swift in Sources */,
 				ABC9A2B6F1CF39D5CE9EA489 /* BackupCloudPassphraseViewController.swift in Sources */,
 				D092D6422E31172E0039BDB4 /* MoneroAdapter.swift in Sources */,
@@ -13594,7 +13583,6 @@
 				D38E5E032F03F2800049EB91 /* UtxoSwapFinalQuote.swift in Sources */,
 				11B35ED9F3C0EA3CCC4C0FF4 /* SyncErrorView.swift in Sources */,
 				D3384D4E2C07020300515664 /* PriceChangeMode.swift in Sources */,
-				6BCAB3EC2F2B33EB00820806 /* SpamManagerNew.swift in Sources */,
 				ABC9AE362775FBF83C15C231 /* ActionSheetExtensions.swift in Sources */,
 				ABC9A1109D59CD5F71FBC153 /* BaseAnimation.swift in Sources */,
 				ABC9A9A71EA9758D096AAA68 /* AlphaDismissAnimation.swift in Sources */,

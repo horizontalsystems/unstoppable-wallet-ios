@@ -1,192 +1,330 @@
-// import BigInt
-// import Combine
-// import Eip20Kit
-// import EvmKit
-// import Foundation
-// import HsToolKit
-// import NftKit
-// import RxSwift
-//
-// protocol IIncomingTransaction {
-//    var incomingValue: AppValue { get }
-// }
-//
-// class SpamManager {
-//    private let queue = DispatchQueue(label: "\(AppConfig.label).spam-manager", qos: .userInitiated)
-//
-//    private let allowedTransactionSources: [TransactionSource] = EvmBlockchainManager.blockchainTypes.map { .init(blockchainType: $0, meta: nil) } + [.init(blockchainType: .stellar, meta: nil), .init(blockchainType: .tron, meta: nil)]
-//
-//    private let disposeBag = DisposeBag()
-//    private var adaptersDisposeBag = DisposeBag()
-//
-//    private var cancellables = Set<AnyCancellable>()
-//    private let coinValueLimits: [String: Decimal] = AppConfig.spamCoinValueLimits
-//
-//    private let storage: SpamAddressStorage
-//    private let accountManager: AccountManager
-//    private let transactionAdapterManager: TransactionAdapterManager
-//    private var logger: Logger?
-//
-//    private let factory = TransferEventFactory()
-//
-//    init(storage: SpamAddressStorage, accountManager: AccountManager, transactionAdapterManager: TransactionAdapterManager, logger: Logger? = nil) {
-//        self.storage = storage
-//        self.accountManager = accountManager
-//        self.transactionAdapterManager = transactionAdapterManager
-//        self.logger = logger
-//
-//        subscribe(disposeBag, transactionAdapterManager.adaptersReadyObservable) { [weak self] in
-//            self?.subscribeAdapters()
-//        }
-//    }
-//
-//    private func subscribeAdapters() {
-//        adaptersDisposeBag = DisposeBag()
-//        logger?.log(level: .debug, message: "Total adapters to subscribe: \(transactionAdapterManager.adapterMap.count)")
-//        for (source, adapter) in transactionAdapterManager.adapterMap {
-//            subscribeAdapter(adapter: adapter, source: source)
-//        }
-//    }
-//
-//    private func subscribeAdapter(adapter: ITransactionsAdapter, source: TransactionSource) {
-//        // subscribe for updates. For each updates we must handle all new transactions from database
-//        subscribe(adaptersDisposeBag, adapter.transactionsObservable(token: nil, filter: .all, address: nil)) { [weak self] records in
-//            self?.logger?.log(level: .debug, message: "Handle NEW \(records.count) records. For \(source.blockchainType.uid)")
-//            self?.serialSync(source: source)
-//        }
-//
-//        logger?.log(level: .debug, message: "Handle OLD records from DB. For \(source.blockchainType.uid)")
-//        serialSync(source: source)
-//    }
-//
-//    private func serialSync(source: TransactionSource) {
-//        queue.async { [weak self] in
-//            Task { [weak self] in
-//                await self?.sync(source: source)
-//            }
-//        }
-//    }
-//
-//    private func sync(source: TransactionSource) async {
-//        guard let adapter = transactionAdapterManager.adapter(for: source) else {
-//            logger?.log(level: .error, message: "Can't found adapter. For \(source.blockchainType.uid)")
-//            return
-//        }
-//        guard let accountUid = accountManager.activeAccount?.id else {
-//            logger?.log(level: .error, message: "Can't found accountID")
-//            return
-//        }
-//
-//        let spamScanState = try? storage.find(blockchainTypeUid: source.blockchainType.uid, accountUid: accountUid)
-//
-//        let transactions = await withCheckedContinuation { continuation in
-//            adapter
-//                .allTransactionsAfter(paginationData: spamScanState?.lastPaginationData)
-//                .subscribe(
-//                    onSuccess: { transactions in
-//                        continuation.resume(returning: transactions)
-//                    }
-//                )
-//                .disposed(by: disposeBag)
-//        }
-//
-//        let lastPaginationData = handle(transactions: transactions, source: source)
-//
-//        if let lastPaginationData {
-//            let spamScanState = SpamScanState(blockchainTypeUid: source.blockchainType.uid, accountUid: accountUid, lastPaginationData: lastPaginationData)
-//            try? storage.save(spamScanState: spamScanState)
-//        }
-//    }
-//
-//    private func handle(transactions: [TransactionRecord], source: TransactionSource) -> String? {
-//        let txWithEvents = transactions.map { (hash: $0.transactionHash, events: factory.transferEvents(transactionRecord: $0)) }
-//
-//        var spamAddresses = [SpamAddress]()
-//        for item in txWithEvents {
-//            guard !item.events.isEmpty, let hash = item.hash.hs.hexData else { // convert string hash to data
-//                continue
-//            }
-//
-//            let result = Self.handleSpamAddresses(events: item.events)
-//
-//            if !result.isEmpty {
-//                for address in result { // save all addresses with tx Hash
-//                    let address = Address(raw: address, blockchainType: source.blockchainType)
-//                    spamAddresses.append(SpamAddress(transactionHash: hash, address: address))
-//                }
-//            }
-//        }
-//
-//        do {
-//            try storage.save(spamAddresses: spamAddresses)
-//        } catch {}
-//
-//        return transactions.sorted().first?.paginationRaw
-//    }
-// }
-//
-// extension SpamManager {
-//    func find(address: String) -> SpamAddress? {
-//        try? storage.find(address: address)
-//    }
-// }
-//
-// extension SpamManager {
-//    private static func isSpam(appValue: AppValue) -> Bool {
-//        let spamCoinLimits = AppConfig.spamCoinValueLimits
-//        let value = appValue.value
-//
-//        var limit: Decimal = 0
-//        switch appValue.kind {
-//        case let .token(token):
-//            limit = spamCoinLimits[token.coin.code] ?? 0
-//        case let .coin(coin, _):
-//            limit = spamCoinLimits[coin.code] ?? 0
-//        case let .jetton(jetton):
-//            limit = spamCoinLimits[jetton.symbol] ?? 0
-//        case let .stellar(asset):
-//            limit = spamCoinLimits[asset.code] ?? 0
-//        case .nft:
-//            if value > 0 {
-//                return false
-//            }
-//        case .raw, .eip20Token: return true
-//        }
-//
-//        return limit > value
-//    }
-//
-//    private static func handleSpamAddresses(events: TransferEvents) -> [String] {
-//        var spamTokenSenders = [String]()
-//
-//        var nativeSenders = [String]()
-//        var nativeKind: AppValue.Kind?
-//        var nativeSpendedValue: Decimal = 0
-//
-//        for event in (events.incoming + events.outgoing) {
-//            if case let .token(token) = event.value.kind, token.type == .native { // handle native transaction values
-//                nativeKind = event.value.kind
-//                nativeSenders.append(event.address)
-//                nativeSpendedValue += event.value.value
-//            } else {
-//                if isSpam(appValue: event.value) {
-//                    spamTokenSenders.append(event.address)
-//                }
-//            }
-//        }
-//
-//        if let nativeKind, !nativeSenders.isEmpty { // if all native received money < minimal limit add all addresses to spam
-//            let nativeAppValue = AppValue(kind: nativeKind, value: nativeSpendedValue)
-//
-//            if isSpam(appValue: nativeAppValue) {
-//                spamTokenSenders.append(contentsOf: nativeSenders)
-//            }
-//        }
-//
-//        return spamTokenSenders
-//    }
-//
-//    static func isSpam(events: TransferEvents) -> Bool {
-//        !handleSpamAddresses(events: events).isEmpty
-//    }
-// }
+import Foundation
+import HsToolKit
+import MarketKit
+
+/// Per-adapter spam manager with serial queue processing.
+///
+/// Flow:
+/// 1. Adapter creates SpamManager via SpamWrapper
+/// 2. Adapter calls initialize(adapter:) to load cache from DB and process unscanned transactions
+/// 3. Adapter calls update(records:) for each transactionsSingle/transactionsObservable response
+///
+/// All operations are serialized in a single queue to ensure consistent cache state.
+final class SpamManager {
+    private let queue: DispatchQueue
+
+    private let accountId: String
+    private let blockchainType: BlockchainType
+    private let storage: ScannedTransactionStorage
+    private let filterChain: SpamFilterChain
+    private let scoreEvaluator: SpamScoreEvaluator
+    private let outputCache: OutputTransactionCache
+    private let logger: Logger?
+
+    // MARK: - Initialization State
+
+    private var isInitialized = false
+    private let initCondition = NSCondition()
+    private let initTimeout: TimeInterval = 30
+
+    // MARK: - Init
+
+    init(
+        accountId: String,
+        blockchainType: BlockchainType,
+        storage: ScannedTransactionStorage,
+        filterChain: SpamFilterChain,
+        scoreEvaluator: SpamScoreEvaluator,
+        outputCache: OutputTransactionCache,
+        logger: Logger? = nil
+    ) {
+        self.accountId = accountId
+        self.blockchainType = blockchainType
+        self.storage = storage
+        self.filterChain = filterChain
+        self.scoreEvaluator = scoreEvaluator
+        self.outputCache = outputCache
+        self.logger = logger
+
+        queue = DispatchQueue(label: "io.horizontalsystems.spam-manager.\(blockchainType.uid)", qos: .userInitiated)
+    }
+
+    // MARK: - Public API
+
+    /// Initialize spam manager: load output cache from DB and process unscanned transactions.
+    /// Called once from adapter's init.
+    /// Non-blocking — runs in background queue.
+    func initialize(adapter: ITransactionsAdapter) {
+        logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: initialize() called")
+        queue.async { [weak self] in
+            self?.performInitialize(adapter: adapter)
+        }
+    }
+
+    /// Mutates .spam flag on each record in-place.
+    /// Records are reference types (class), so the caller's original array
+    /// retains its order (e.g. descending from evmKit) while .spam is set
+    /// by processing in ascending (oldest-first) order internally.
+    func update(records: [TransactionRecord]) {
+        logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: update() called with \(records.count) items")
+
+        waitForInitialization()
+
+        // Sort ascending for correct spam detection
+        // (output cache builds sequentially, AddressSimilarity + TimeCorrelation depend on order)
+        let sorted = sorted(records)
+
+        queue.sync { [weak self] in
+            guard let self else { return }
+            performUpdate(records: sorted)
+        }
+
+        logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: update() done")
+    }
+
+    /// Check if address is known spam (from previously scanned transactions)
+    func isSpam(address: String) -> Bool {
+        (try? storage.findScanned(address: address))?.isSpam ?? false
+    }
+
+    // MARK: - Initialization
+
+    private func performInitialize(adapter: ITransactionsAdapter) {
+        logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: performInitialize started")
+
+        // Step 1: Load output cache from DB (no adapter needed)
+        outputCache.loadCache(for: blockchainType, accountId: accountId)
+
+        // Step 2: Load and process unscanned transactions
+        let spamScanState = try? storage.find(blockchainTypeUid: blockchainType.uid, accountUid: accountId)
+        let transactions = loadTransactionsSync(adapter: adapter, afterPaginationData: spamScanState?.lastPaginationData)
+        logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: loaded \(transactions.count) unscanned transactions")
+
+        if !transactions.isEmpty {
+            let sorted = sorted(transactions)
+            let lastPaginationData = processTransactionsInternal(transactions: sorted)
+
+            if let lastPaginationData {
+                let newState = SpamScanState(
+                    blockchainTypeUid: blockchainType.uid,
+                    accountUid: accountId,
+                    lastPaginationData: lastPaginationData
+                )
+                try? storage.save(spamScanState: newState)
+            }
+        }
+
+        markInitialized()
+        logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: initialized")
+    }
+
+    private func loadTransactionsSync(adapter: ITransactionsAdapter, afterPaginationData: String?) -> [TransactionRecord] {
+        let semaphore = DispatchSemaphore(value: 0)
+        var transactions = [TransactionRecord]()
+
+        _ = adapter
+            .allTransactionsAfter(paginationData: afterPaginationData)
+            .subscribe(
+                onSuccess: { result in
+                    transactions = result
+                    semaphore.signal()
+                },
+                onError: { [weak self] error in
+                    self?.logger?.log(level: .error, message: "SM: load error: \(error)")
+                    semaphore.signal()
+                }
+            )
+
+        semaphore.wait()
+        return transactions
+    }
+
+    // MARK: - Initialization Synchronization
+
+    private func markInitialized() {
+        initCondition.lock()
+        isInitialized = true
+        initCondition.broadcast()
+        initCondition.unlock()
+    }
+
+    private func waitForInitialization() {
+        initCondition.lock()
+        defer { initCondition.unlock() }
+
+        if isInitialized { return }
+
+        let deadline = Date().addingTimeInterval(initTimeout)
+        while !isInitialized {
+            if !initCondition.wait(until: deadline) {
+                logger?.log(level: .warning, message: "SM[\(blockchainType.uid)]: init TIMEOUT")
+                break
+            }
+        }
+    }
+
+    // MARK: - Update Records
+
+    /// Mutates .spam on each record. No return value needed —
+    /// caller holds references to the same objects.
+    private func performUpdate(records: [TransactionRecord]) {
+        for record in records {
+            guard let hashData = record.transactionHash.hs.hexData else {
+                continue
+            }
+
+            // Check DB cache first
+            if let scanned = try? storage.findScanned(transactionHash: hashData) {
+                record.spam = scanned.isSpam
+                continue
+            }
+
+            let spamInfo = makeSpamInfo(from: record)
+            record.spam = processRecord(record: record, hashData: hashData, spamInfo: spamInfo)
+        }
+    }
+
+    // MARK: - Internal Processing (for initialize)
+
+    private func processTransactionsInternal(transactions: [TransactionRecord]) -> String? {
+        var lastPaginationData: String?
+
+        for record in transactions {
+            guard let hashData = record.transactionHash.hs.hexData else {
+                continue
+            }
+
+            // Already scanned — skip
+            if (try? storage.findScanned(transactionHash: hashData)) != nil {
+                lastPaginationData = record.paginationRaw
+                continue
+            }
+
+            let spamInfo = makeSpamInfo(from: record)
+            _ = processRecord(record: record, hashData: hashData, spamInfo: spamInfo)
+            lastPaginationData = record.paginationRaw
+        }
+
+        return lastPaginationData
+    }
+
+    // MARK: - Process Single Record
+
+    /// Process single record: check spam, update caches, save to DB.
+    /// Returns isSpam result.
+    private func processRecord(record: TransactionRecord, hashData: Data, spamInfo: SpamTransactionInfo?) -> Bool {
+        // Outgoing transactions: save addresses to cache/DB, mark not spam
+        if let outgoingAddresses = OutputTransactionFactory.outgoingAddresses(from: record), !outgoingAddresses.isEmpty {
+            outputCache.add(record: record, accountId: accountId)
+
+            let scanned = ScannedTransaction(
+                transactionHash: hashData,
+                blockchainTypeUid: blockchainType.uid,
+                isSpam: false,
+                spamAddress: nil
+            )
+            try? storage.save(scannedTransaction: scanned)
+
+            logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: outgoing \(record.transactionHash.prefix(12))... -> \(outgoingAddresses.count) addresses cached")
+            return false
+        }
+
+        // Outgoing without addresses (Bitcoin/Monero UTXO): mark not spam, no cache
+        if OutputTransactionFactory.outgoingAddresses(from: record) != nil {
+            let scanned = ScannedTransaction(
+                transactionHash: hashData,
+                blockchainTypeUid: blockchainType.uid,
+                isSpam: false,
+                spamAddress: nil
+            )
+            try? storage.save(scannedTransaction: scanned)
+            return false
+        }
+
+        // No spam info: save as not spam
+        guard let spamInfo else {
+            let scanned = ScannedTransaction(
+                transactionHash: hashData,
+                blockchainTypeUid: blockchainType.uid,
+                isSpam: false,
+                spamAddress: nil
+            )
+            try? storage.save(scannedTransaction: scanned)
+            return false
+        }
+
+        // Evaluate spam
+        let isSpam = evaluateSpam(spamInfo: spamInfo)
+        let spamAddress = isSpam ? spamInfo.events.incoming.first?.address : nil
+
+        let scanned = ScannedTransaction(
+            transactionHash: hashData,
+            blockchainTypeUid: blockchainType.uid,
+            isSpam: isSpam,
+            spamAddress: spamAddress
+        )
+        try? storage.save(scannedTransaction: scanned)
+
+        logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: \(record.transactionHash.prefix(12))... isSpam=\(isSpam)")
+        return isSpam
+    }
+
+    // MARK: - Helpers
+
+    /// Deterministic sort: oldest first → block position → hash as tiebreaker
+    private func sorted(_ records: [TransactionRecord]) -> [TransactionRecord] {
+        records.sorted { lhs, rhs in
+            if lhs.date != rhs.date {
+                return lhs.date < rhs.date
+            }
+            if lhs.transactionIndex != rhs.transactionIndex {
+                return lhs.transactionIndex < rhs.transactionIndex
+            }
+            return lhs.transactionHash < rhs.transactionHash
+        }
+    }
+
+    private func makeSpamInfo(from record: TransactionRecord) -> SpamTransactionInfo? {
+        guard let eventProvider = record as? TransferEventsProvider else {
+            return nil
+        }
+        return SpamTransactionInfo(
+            hash: record.transactionHash,
+            blockchainType: record.source.blockchainType,
+            timestamp: Int(record.date.timeIntervalSince1970),
+            blockHeight: record.blockHeight,
+            events: eventProvider.transferEvents
+        )
+    }
+
+    private func evaluateSpam(spamInfo: SpamTransactionInfo) -> Bool {
+        // Step 1: Filters (fast checks)
+        if let filterResult = filterChain.evaluate(spamInfo) {
+            switch filterResult {
+            case .spam:
+                logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: filter -> spam")
+                return true
+            case .trusted:
+                logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: filter -> trusted")
+                return false
+            case .ignore:
+                break
+            }
+        }
+
+        // Step 2: Score evaluation
+        let context = SpamEvaluationContext(transaction: spamInfo)
+        let decision = scoreEvaluator.evaluate(context)
+
+        switch decision {
+        case .spam:
+            logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: score -> spam")
+            return true
+        case let .suspicious(score):
+            logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: score -> suspicious(\(score))")
+            return false
+        case .trusted:
+            return false
+        }
+    }
+}

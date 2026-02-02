@@ -51,6 +51,8 @@ class TimeCorrelationCondition: SpamCondition {
             if timeDiff < thresholdSeconds {
                 logger?.log(level: .debug, message: "TCCondition: time match, diff=\(timeDiff)s, score=\(timeScore)")
                 return timeScore
+            } else {
+                logger?.log(level: .debug, message: "TCCondition: diff=\(timeDiff)s")
             }
         }
 

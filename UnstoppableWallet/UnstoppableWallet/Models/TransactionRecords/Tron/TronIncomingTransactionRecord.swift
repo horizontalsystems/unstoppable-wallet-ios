@@ -2,7 +2,7 @@ import Foundation
 import MarketKit
 import TronKit
 
-class TronIncomingTransactionRecord: TronTransactionRecord {
+class TronIncomingTransactionRecord: TronTransactionRecord, TransferEventsProvider {
     let from: String
     let value: AppValue
 
@@ -15,5 +15,9 @@ class TronIncomingTransactionRecord: TronTransactionRecord {
 
     override var mainValue: AppValue? {
         value
+    }
+
+    var transferEvents: TransferEvents {
+        .init(incoming: [.init(address: from, value: value)])
     }
 }

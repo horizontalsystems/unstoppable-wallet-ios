@@ -1,113 +1,115 @@
 import Foundation
 import HsToolKit
 import MarketKit
-import RxSwift
 
-// Synchronous cache of outgoing transactions for address poisoning detection
+/// In-memory cache backed by DB storage.
+/// All writes go to both DB and memory.
+/// Initial load from DB — no adapter dependency.
 final class OutputTransactionCache {
     private let cacheSize: Int
     private let factory: OutputTransactionFactory
+    private let storage: ScannedTransactionStorage
     private let logger: Logger?
 
-    // In-memory cache by blockchainType
     private var cache: [BlockchainType: [CachedOutputTransaction]] = [:]
 
-    private let disposeBag = DisposeBag()
-
-    init(factory: OutputTransactionFactory = OutputTransactionFactory(), cacheSize: Int = 10, logger: Logger? = nil) {
+    init(
+        storage: ScannedTransactionStorage,
+        factory: OutputTransactionFactory = OutputTransactionFactory(),
+        cacheSize: Int = 10,
+        logger: Logger? = nil
+    ) {
+        self.storage = storage
         self.factory = factory
         self.cacheSize = cacheSize
         self.logger = logger
     }
 
-    /// Synchronously retrieves cached transactions for a blockchain.
-    /// If no cache exists — returns empty array (cache should be pre-loaded)
+    // MARK: - Read
+
+    /// Returns cached outgoing addresses for blockchain.
+    /// Must be called after loadCache().
     func get(blockchainType: BlockchainType) -> [CachedOutputTransaction] {
-        if let cached = cache[blockchainType] {
-            return cached
-        }
-
-        return []
+        cache[blockchainType] ?? []
     }
 
-    /// Synchronously loads cache for a blockchain from adapter.
-    /// Called during SpamManager initialization in its queue.
-    func loadCache(for blockchainType: BlockchainType, adapter: ITransactionsAdapter) {
-        let semaphore = DispatchSemaphore(value: 0)
-        var records = [TransactionRecord]()
+    // MARK: - Load from DB
 
-        adapter.transactionsSingle(
-            paginationData: nil,
-            token: nil,
-            filter: .outgoing,
-            address: nil,
-            limit: cacheSize
-        )
-        .subscribe(
-            onSuccess: { result in
-                records = result
-                semaphore.signal()
-            },
-            onError: { [weak self] error in
-                self?.logger?.log(level: .error, message: "OTCache: Failed to load for \(blockchainType.uid): \(error)")
-                semaphore.signal()
+    /// Loads cache from DB. Called during SpamManager initialization (in its serial queue).
+    /// No semaphores, no adapter — pure DB read.
+    func loadCache(for blockchainType: BlockchainType, accountId: String) {
+        do {
+            let rows = try storage.loadOutgoingAddresses(
+                blockchainTypeUid: blockchainType.uid,
+                accountUid: accountId,
+                limit: cacheSize
+            )
+
+            cache[blockchainType] = rows.map {
+                CachedOutputTransaction(
+                    address: $0.address,
+                    timestamp: $0.timestamp,
+                    blockHeight: $0.blockHeight
+                )
             }
-        )
-        .disposed(by: disposeBag)
 
-        semaphore.wait()
-
-        let cached = records.compactMap { factory.cachedOutput(from: $0) }
-        cache[blockchainType] = cached
-
-        logger?.log(level: .debug, message: "OTCache: loaded for \(blockchainType.uid): \(cached.count) items")
+            logger?.log(level: .debug, message: "OTCache: loaded from DB for \(blockchainType.uid): \(rows.count) items")
+        } catch {
+            logger?.log(level: .error, message: "OTCache: DB load failed for \(blockchainType.uid): \(error)")
+            cache[blockchainType] = []
+        }
     }
 
-    /// Synchronously adds transaction to cache (maintains timestamp sorting)
-    func add(record: TransactionRecord) {
-        let blockchainType = record.source.blockchainType
+    // MARK: - Write
 
-        guard let cached = factory.cachedOutput(from: record) else {
-            logger?.log(level: .debug, message: "OTCache: Cannot create cached output from record")
+    /// Saves outgoing record to DB and updates in-memory cache.
+    func add(record: TransactionRecord, accountId: String) {
+        let blockchainType = record.source.blockchainType
+        let outputs = factory.cachedOutputs(from: record)
+
+        guard !outputs.isEmpty else {
             return
         }
 
+        // Save to DB
+        let dbRecords = outputs.map {
+            OutgoingAddress(
+                address: $0.address,
+                blockchainTypeUid: blockchainType.uid,
+                accountUid: accountId,
+                timestamp: $0.timestamp,
+                blockHeight: $0.blockHeight
+            )
+        }
+
+        do {
+            try storage.save(outgoingAddresses: dbRecords)
+        } catch {
+            logger?.log(level: .error, message: "OTCache: DB save failed: \(error)")
+        }
+
+        // Update in-memory cache
         var transactions = cache[blockchainType] ?? []
 
-        // Check duplicate
-        if transactions.contains(where: { $0.address == cached.address && $0.timestamp == cached.timestamp }) {
-            return
+        for cached in outputs {
+            transactions.removeAll { $0.address == cached.address }
+            transactions.insert(cached, at: 0)
         }
 
-        // Insert in sorted order (newest first)
-        let insertIndex = transactions.firstIndex { cached.timestamp > $0.timestamp } ?? transactions.endIndex
-        transactions.insert(cached, at: insertIndex)
-
-        // Trim to cache size
         if transactions.count > cacheSize {
             transactions = Array(transactions.prefix(cacheSize))
         }
 
         cache[blockchainType] = transactions
-
-        logger?.log(level: .debug, message: "============ New Output List ==============")
-        for transaction in transactions {
-            logger?.log(level: .debug, message: "OUTPUT: \(transaction.address) : \(transaction.timestamp) : \(transaction.blockHeight?.description ?? "N/A")")
-        }
-        logger?.log(level: .debug, message: "============ =============== ==============")
     }
 
-    /// Clears entire cache
+    // MARK: - Clear
+
     func clear() {
-        let count = cache.values.reduce(0) { $0 + $1.count }
         cache.removeAll()
-        logger?.log(level: .debug, message: "OTCache: cleared: \(count) items removed")
     }
 
-    /// Clears cache for specific blockchain
     func clear(blockchainType: BlockchainType) {
-        let count = cache[blockchainType]?.count ?? 0
         cache[blockchainType] = nil
-        logger?.log(level: .debug, message: "OTCache: cleared for \(blockchainType.uid): \(count) items removed")
     }
 }

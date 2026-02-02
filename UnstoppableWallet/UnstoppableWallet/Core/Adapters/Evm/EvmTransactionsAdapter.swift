@@ -12,7 +12,7 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
 
     private let evmTransactionSource: EvmKit.TransactionSource
     private let transactionConverter: EvmTransactionConverter
-    private let spamManager: SpamManagerNew2?
+    private let spamManager: SpamManager?
 
     init(evmKitWrapper: EvmKitWrapper, source: TransactionSource, baseToken: MarketKit.Token, evmTransactionSource: EvmKit.TransactionSource, coinManager: CoinManager, spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager) {
         self.evmTransactionSource = evmTransactionSource
@@ -106,19 +106,16 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
         evmTransactionSource.transactionUrl(hash: transactionHash)
     }
 
-    private func handleTransactions(_ transactions: [FullTransaction], checkSpam: Bool) -> [TransactionRecord] {
-        let records = transactions.map {
-            (record: transactionConverter.transactionRecord(fromTransaction: $0),
-             spamInfo: transactionConverter.spamTransactionInfo(fromTransaction: $0))
-        }
+    private func handleTransactions(_ transactions: [FullTransaction]) -> [TransactionRecord] {
+        // Preserve evmKit order (descending — newest first)
+        let records = transactions.map { transactionConverter.transactionRecord(fromTransaction: $0) }
 
-        if !checkSpam {
-            return records.map(\.record)
-        }
+        // Mutates .spam in-place via reference type.
+        // Internally sorts ascending for correct detection,
+        // but records array keeps its original order.
+        spamManager?.update(records: records)
 
-        // update transactions with spam flags.
-        let recordsWithSpam = spamManager?.update(items: records)
-        return recordsWithSpam ?? records.map(\.record)
+        return records
     }
 
     func transactionsObservable(token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {
@@ -126,7 +123,7 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
         return evmKit.transactionsObservable(tagQueries: [tagQuery(token: token, filter: filter, address: address?.lowercased())]).map { [weak self] in
 
             print("EmvTxAdapter|TxObservable: got \($0.count) txs")
-            return self?.handleTransactions($0, checkSpam: true) ?? []
+            return self?.handleTransactions($0) ?? []
         }
     }
 
@@ -141,7 +138,7 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
                     return []
                 }
 
-                return self?.handleTransactions(transactions, checkSpam: false) ?? []
+                return self?.handleTransactions(transactions) ?? []
             }
     }
 
