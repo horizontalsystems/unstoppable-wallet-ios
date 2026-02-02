@@ -55,7 +55,7 @@ struct MultiSwapQuotesView: View {
             return nil
         }
 
-        return AppValue(token: tokenOut, value: quote.quote.expectedBuyAmount).formattedShort()
+        return AppValue(token: tokenOut, value: quote.quote.expectedBuyAmount).formattedFull()
     }
 
     private func quoteCurrencyValue(quote: MultiSwapViewModel.Quote) -> String? {
@@ -63,7 +63,7 @@ struct MultiSwapQuotesView: View {
             return nil
         }
 
-        return ValueFormatter.instance.formatShort(currency: viewModel.currency, value: quote.quote.expectedBuyAmount * rateOut)
+        return ValueFormatter.instance.formatFull(currency: viewModel.currency, value: quote.quote.expectedBuyAmount * rateOut)
     }
 
     private func priceImpact(quote: MultiSwapViewModel.Quote) -> (Decimal, ValueLevel)? {
