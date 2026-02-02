@@ -151,7 +151,7 @@
 "restore_error.mnemonic_word_count" = "Неверное количество слов. Должно быть от 12 до 24 слов. Вы ввели: %@";
 "restore.checksum_error" = "Неверная контрольная сумма";
 "restore.passphrase" = "Кодовая фраза";
-"restore.input.passphrase" = "Кодовая фраза";
+"restore.input.passphrase" = "Пароль";
 "restore.wallet.passphrase_description" = "Введите кодовую фразу, которую вы использовали при создании этой фразы восстановления. Импорт существующего кошелька с новой кодой фразой создаст совершенно новый кошелек.";
 "restore.passphrase_description" = "Этот пароль используется для шифрования файлов резервной копии вашего кошелька. Он не связан с вашим паролем Apple iCloud. Если вы потеряете или забудете этот пароль, его нельзя будет восстановить или сбросить.";
 "restore.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
@@ -2429,7 +2429,7 @@
 "purchases.token_insights.info" = "Показывает подробные данные о токене - объём, ликвидность и тренды. Помогает принимать более разумные инвестиционные решения.";
 "purchases.advanced_search" = "Расширенный поиск";
 "purchases.advanced_search.description" = "Мощные фильтры для более удобного поиска токенов.";
-"purchases.advanced_search.info" = "Find tokens with filters by volume, chain, or sector. Includes metrics for CEX/DEX activity and listings.";
+"purchases.advanced_search.info" = "Поиск токенов по объёму, сети и сектору с метриками CEX/DEX.";
 "purchases.trade_signals" = "Сигналы и тренды";
 "purchases.trade_signals.description" = "Практические сигналы для более уверенной торговли.";
 "purchases.trade_signals.info" = "Уведомления в реальном времени о торговых возможностях и рисках.";
