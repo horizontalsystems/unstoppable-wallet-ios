@@ -449,10 +449,6 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 "deposit.subaddresses.description" = "Utilisez des sous-adresses pour gérer plusieurs adresses uniques dans un seul portefeuille — plus facile à organiser et plus sûr pour votre confidentialité.";
 "deposit.subaddresses.transactions_count" = "Transactions : %@";
 
-"deposit.restore.enabled.description" = "Avez-vous déjà possédé des coins %@ ?";
-"deposit.restore.enabled.already_own" = "Oui, je suis déjà propriétaire";
-"deposit.restore.enabled.dont_have" = "Non, je n'ai pas";
-
 "deposit.warning" = "Seuls les jetons compatibles avec le réseau seront conservés. Les autres seront perdus.";
 "deposit.warning.watch_account" = "Cette adresse est l'adresse du compte surveillé";
 
@@ -709,10 +705,12 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 "swap.unlock.unlimited" = "Illimité";
 
 "swap.price_impact" = "Impact prix";
-"swap.price_impact.description" = "L'écart de prix attendu par rapport à un prix affiché, augmente généralement avec le montant de l\'échange.";
+"swap.price_impact.info" = "L'écart de prix attendu par rapport à un prix affiché, augmente généralement avec le montant de l\'échange.";
 "swap.high_price_impact" = "Impact de prix élevé";
 "swap.recipient" = "Destinataire";
 "swap.slippage" = "Glissement";
+"swap.estimated_time" = "Temps estimé";
+"swap.estimated_time.info" = "Temps approximatif pour recevoir les fonds. Le traitement du swap et les confirmations de transaction peuvent prendre un certain temps, selon le réseau et le fournisseur.";
 
 "swap.affiliate_fee" = "Frais d'affiliation";
 "swap.liquidity_fee" = "Frais de liquidité";
@@ -782,6 +780,7 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 "swap.confirmation.impact_warning" = "Important ! Vous avez reçu un prix extrêmement défavorable en raison d'une liquidité extrêmement faible.";
 
 "swap.confirmation.minimum_received" = "Montant minimum reçu";
+"swap.confirmation.minimum_received.info" = "Le montant minimum que vous recevrez une fois le swap terminé. Ce montant est garanti par le fournisseur et n’est pas affecté par les variations de prix pendant le traitement.";
 "swap.confirmation.maximum_sent" = "Dépense maximale";
 
 "swap.dex_info.description" = "Ce service d'échange est assuré par %@, un protocole d'échange de tokens décentralisé construit sur la blockchain %@.\n\n%@ est entièrement automatisé et géré par des contrats intelligents qui facilitent les échanges de tokens de manière fiable sans aucune possibilité de tricher.";
@@ -1534,18 +1533,15 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 "terms.title" = "Conditions";
 "terms.i_agree" = "J'accepte";
 
-"terms.item.backup_recovery" = "Sauvegarde sécurisée des phrases de récupération pour chaque portefeuille. C'est le seul moyen de récupérer l'accès aux fonds si l'application ne fonctionne pas.";
+"terms.item.backup_recovery" = "Sauvegardez de manière sécurisée la recovery phrase de chaque wallet. C’est le seul moyen de récupérer l’accès à vos fonds si l’application est supprimée ou rencontre un dysfonctionnement. Personne ne peut la restaurer à votre place.";
 "terms.item.device_pin" = "La désactivation du code PIN (code) sur le smartphone supprime tous les portefeuilles de l'application. Des phrases de récupération seront nécessaires pour restaurer l'accès aux fonds.";
 "terms.item.privacy_notice" = "L'application n'espionne pas ou ne collecte pas de données sur vos balances ou vos transactions - nous ne savons même pas combien de personnes l'utilisent. Il ne suit que les modèles d'utilisation anonymes (pages ouvertes, boutons appuyés) pour améliorer la convivialité. Vous pouvez désactiver cette option dans Paramètres → Confidentialité";
-"terms.item.decentralized" = "Nous ne détenons pas vos actifs, n’avons pas accès à vos private keys et n’exécutons pas de transactions en votre nom. L’application ne fournit pas de services de courtage, d’échange, de custody, d’escrow ni de transmission de fonds. Toutes les transactions sont initiées, signées et diffusées directement par vous vers des réseaux blockchain publics. Nous ne contrôlons pas, ne relayons pas, ne modifions pas et ne traitons pas vos transactions.";
-"terms.item.commission" = "Dans le cadre de son modèle de monétisation, l'application gagne de petites commissions grâce aux swaps DEX exécutés dans le portefeuille. Cela nous aide à rester indépendants, open source, et sans argent VC.";
+"terms.item.decentralized" = "Nous ne détenons pas vos actifs, n’avons pas accès à vos private keys et n’exécutons pas de transactions en votre nom. L’application ne fournit pas de services de courtage, d’échange, de custody, d’escrow ni de transmission de fonds. Toutes les transactions sont initiées, signées et diffusées directement par vous vers des réseaux blockchain publics.";
+"terms.item.commission" = "Dans le cadre de son modèle de monétisation, l’application perçoit de faibles commissions sur les swaps DEX exécutés au sein du wallet. Cela nous permet de rester indépendants, open source et sans financement de capital-risque.";
 "terms.item.irreversibility" = "Les transactions blockchain sont irréversibles. Vérifiez toujours les détails de la transaction avant de confirmer.";
 "terms.item.software" = "L'application est un code source ouvert vérifiable, avec tout le code source publié en ligne. Tout ce qui est indiqué ci-dessus peut être vérifié publiquement par n'importe qui.";
-"terms.item.compliance" = "Vous êtes seul responsable de la sécurité de vos fonds, de votre comportement et du respect des lois applicables dans votre juridiction. L’utilisation de l’application ne vous exonère pas des obligations fiscales, de reporting financier ou d’autres obligations légales.";
-"terms.item.prohibite_use" = "Afin de maintenir un écosystème sûr, vous acceptez de ne pas utiliser l’application à des fins illégales, notamment le blanchiment d’argent ou le contournement de sanctions, la fraude, les arnaques, la dissimulation d’actifs volés ou le financement d’organisations interdites.";
+"terms.item.compliance" = "Vous êtes seul responsable de la sécurité de vos fonds, de votre comportement et du respect des lois applicables dans votre juridiction ainsi qu’au niveau international.";
 "terms.item.user_responsibility" = "En poursuivant, vous reconnaissez que la sécurité de vos fonds et le respect des obligations légales relèvent en dernier ressort de votre responsabilité.";
-
-
 
 // Settings -> Tell Friends
 
@@ -2125,16 +2121,13 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 
 // Birthday Input
 
-"birthday_input.title" = "Hauteur de l'anniversaire";
 "birthday_input.description" = "Saisissez la hauteur de l'anniversaire du portefeuille pour une synchronisation plus rapide.";
-"birthday_input.new_wallet" = "Nouveau porte-monnaie";
-"birthday_input.new_wallet.description" = "N'a aucune transaction";
-"birthday_input.old_wallet" = "Portefeuille existant";
-"birthday_input.old_wallet.description" = "A des transactions";
-"birthday_input.input_placeholder" = "%@ (optionnel)";
-
-"restore_setting.birthday_height" = "Hauteur de l'anniversaire %@";
-"restore_setting.download.disclaimer" = "La synchronisation initiale avec la blockchain peut consommer beaucoup de trafic Internet.";
+"birthday_input.description.rescan" = "Vous pouvez modifier la hauteur de bloc ou sélectionner une date approximative afin de rescanner l’historique de vos transactions.";
+"birthday_input.block_date" = "Date du bloc";
+"birthday_input.invalid_block" = "Bloc invalide";
+"birthday_input.rescan" = "Rescanner";
+"birthday_input.picker.select_date" = "Sélectionner une date";
+"birthday_input.picker.description" = "Choisissez une date approximative de création du wallet. La hauteur de bloc sera calculée automatiquement.";
 
 // EVM Network
 
