@@ -101,15 +101,6 @@ extension TronTransactionConverter {
                 if transfer.ownerAddress != tronKit.address {
                     let appValue = baseAppValue(value: transfer.amount, sign: .plus)
 
-//                    let spamInfo = SpamTransactionInfo(
-//                        hash: transaction.hash.hs.hexString,
-//                        blockchainType: .tron,
-//                        timestamp: transaction.timestamp,
-//                        blockHeight: transaction.blockNumber,
-//                        events: .init(incoming: [.init(address: transfer.ownerAddress.base58, value: appValue)])
-//                    )
-//                    let spam = spamManager.isSpam(spamInfo: spamInfo)
-
                     return TronIncomingTransactionRecord(
                         source: source,
                         transaction: transaction,
@@ -181,15 +172,6 @@ extension TronTransactionConverter {
                     outgoingEvents: transferEvents(contractAddress: contractAddress, value: value) + outgoingEvents
                 )
             } else if decoration.fromAddress != address, decoration.toAddress != address {
-//                let spamInfo = SpamTransactionInfo(
-//                    hash: transaction.hash.hs.hexString,
-//                    blockchainType: .tron,
-//                    timestamp: transaction.timestamp,
-//                    blockHeight: transaction.blockNumber,
-//                    events: .init(incoming: incomingEvents, outgoing: outgoingEvents)
-//                )
-//                let spam = spamManager.isSpam(spamInfo: spamInfo)
-
                 return TronExternalContractCallTransactionRecord(
                     source: source,
                     transaction: transaction,

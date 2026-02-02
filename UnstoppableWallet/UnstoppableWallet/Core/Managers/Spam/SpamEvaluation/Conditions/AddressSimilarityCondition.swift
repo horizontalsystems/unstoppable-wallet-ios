@@ -52,7 +52,7 @@ final class AddressSimilarityCondition: SpamCondition {
                 context.set(SpamContextKeys.matchedBlockHeight, value: blockHeight)
             }
 
-            logger?.log(level: .debug, message: "ASCondition: \(matchedOutput != nil ? "Matched Found!" : "First Tx setted"), score=\(score), addr=\(matched.address.prefix(8))...")
+            logger?.log(level: .debug, message: "ASCondition: \(matchedOutput != nil ? "Matched Found!" : "First Tx setted"), score=\(score), addr=\(matched.address)...")
         } else {
             logger?.log(level: .debug, message: "ASCondition: No any addresses to matching!")
         }

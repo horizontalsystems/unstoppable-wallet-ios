@@ -2,7 +2,7 @@ import EvmKit
 import Foundation
 import MarketKit
 
-class ExternalContractCallTransactionRecord: EvmTransactionRecord {
+class ExternalContractCallTransactionRecord: EvmTransactionRecord, TransferEventsProvider {
     let incomingEvents: [TransferEvent]
     let outgoingEvents: [TransferEvent]
 
@@ -27,5 +27,9 @@ class ExternalContractCallTransactionRecord: EvmTransactionRecord {
         } else {
             return nil
         }
+    }
+
+    var transferEvents: TransferEvents {
+        .init(incoming: incomingEvents, outgoing: outgoingEvents)
     }
 }

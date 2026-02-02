@@ -215,6 +215,10 @@ extension AppValue: Equatable {
     }
 }
 
+protocol TransferEventsProvider {
+    var transferEvents: TransferEvents { get }
+}
+
 struct TransferEvents {
     let incoming: [TransferEvent]
     let outgoing: [TransferEvent]
