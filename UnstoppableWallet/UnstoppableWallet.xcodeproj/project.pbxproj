@@ -1831,9 +1831,6 @@
 		6B5FD7DC2E43162F00FEF510 /* AllBridgeMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FD7DA2E43161F00FEF510 /* AllBridgeMultiSwapProvider.swift */; };
 		6B67F0F22D1C06F2003452DC /* SuccessfulSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B67F0F12D1C06F2003452DC /* SuccessfulSubscriptionView.swift */; };
 		6B67F0F32D1C06F2003452DC /* SuccessfulSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B67F0F12D1C06F2003452DC /* SuccessfulSubscriptionView.swift */; };
-		6B6D3F292DED72AE00AB2915 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 6B6D3F282DED72AE00AB2915 /* SkeletonView */; };
-		6B6D3F2B2DED72B700AB2915 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 6B6D3F2A2DED72B700AB2915 /* SkeletonView */; };
-		6B6D3F2D2DED72BF00AB2915 /* SkeletonView in Frameworks */ = {isa = PBXBuildFile; productRef = 6B6D3F2C2DED72BF00AB2915 /* SkeletonView */; };
 		6B6D3F2F2DED732100AB2915 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		6B6D3F302DED757F00AB2915 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4FFB99D10A8F343E9C /* LanguageManager.swift */; };
 		6B6D3F312DED757F00AB2915 /* LanguageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35C4FFB99D10A8F343E9C /* LanguageManager.swift */; };
@@ -3394,8 +3391,6 @@
 		D3BA25A72ADFB042002B13EA /* IntentExtension Prod.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D3BA25A52ADFAF23002B13EA /* IntentExtension Prod.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D3BF1E5C274BC29D00229A00 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E5B274BC29D00229A00 /* Down */; };
 		D3BF1E5E274CAF1C00229A00 /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E5D274CAF1C00229A00 /* Down */; };
-		D3BF1E63274CBBCE00229A00 /* DeepDiff in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E62274CBBCE00229A00 /* DeepDiff */; };
-		D3BF1E65274CBBE400229A00 /* DeepDiff in Frameworks */ = {isa = PBXBuildFile; productRef = D3BF1E64274CBBE400229A00 /* DeepDiff */; };
 		D3C187B32907A60800FE1900 /* HdWalletKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187B22907A60800FE1900 /* HdWalletKit */; };
 		D3C187B52907A63600FE1900 /* HdWalletKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187B42907A63600FE1900 /* HdWalletKit */; };
 		D3C187BA2907CFAB00FE1900 /* Checkpoints in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187B92907CFAB00FE1900 /* Checkpoints */; };
@@ -5388,7 +5383,6 @@
 				D3DDFA342DDF2D02003CADDF /* TonConnectAPI in Frameworks */,
 				D3604E5528F02B280066C366 /* Eip20Kit in Frameworks */,
 				D3604E4528F02A260066C366 /* EvmKit in Frameworks */,
-				6B6D3F2D2DED72BF00AB2915 /* SkeletonView in Frameworks */,
 				D3604E9028F03DC00066C366 /* MarketKit in Frameworks */,
 				D36E0C2C28D084CB00B622B9 /* CollectionViewCenteredFlowLayout in Frameworks */,
 				D3604E8A28F03DBF0066C366 /* BitcoinKit in Frameworks */,
@@ -5403,7 +5397,6 @@
 				D3604EA028F03DC00066C366 /* DashKit in Frameworks */,
 				D3C187B52907A63600FE1900 /* HdWalletKit in Frameworks */,
 				D3604E5928F02B280066C366 /* UniswapKit in Frameworks */,
-				D3BF1E65274CBBE400229A00 /* DeepDiff in Frameworks */,
 				6BDB59E92F151A32005FA626 /* ReownWalletKit in Frameworks */,
 				D3C187E4290FD00E00FE1900 /* (null) in Frameworks */,
 				D3604E9C28F03DC00066C366 /* FeeRateKit in Frameworks */,
@@ -5420,7 +5413,6 @@
 				D3C187DB290FCFBC00FE1900 /* SectionsTableView in Frameworks */,
 				6B55E33B2AF26D6400616B60 /* Starscream in Frameworks */,
 				6B6E14282DEDB58A007F4A39 /* Kingfisher in Frameworks */,
-				6B6D3F2B2DED72B700AB2915 /* SkeletonView in Frameworks */,
 				D3AF5A8929FFD85800C1399E /* RxCocoa in Frameworks */,
 				500F1D1127AA87BC002AA419 /* AlignedCollectionViewFlowLayout in Frameworks */,
 				D3AEB8772DB8FAB600E385C8 /* StellarKit in Frameworks */,
@@ -5451,7 +5443,6 @@
 				D3604E8828F03D9E0066C366 /* DashKit in Frameworks */,
 				D3C187B32907A60800FE1900 /* HdWalletKit in Frameworks */,
 				D3604E5028F02AE70066C366 /* UniswapKit in Frameworks */,
-				D3BF1E63274CBBCE00229A00 /* DeepDiff in Frameworks */,
 				D023D2632A249E59004F65B0 /* TronKit in Frameworks */,
 				D3C187D5290FCF7D00FE1900 /* (null) in Frameworks */,
 				D3604E8228F03C6B0066C366 /* FeeRateKit in Frameworks */,
@@ -5495,7 +5486,6 @@
 				6B1D8E0A2DEADA2B00A52B01 /* SectionsTableView in Frameworks */,
 				D3BA25892ADFAD7C002B13EA /* WidgetKit.framework in Frameworks */,
 				D3BA258A2ADFAD7C002B13EA /* HsToolKit in Frameworks */,
-				6B6D3F292DED72AE00AB2915 /* SkeletonView in Frameworks */,
 				6B1D8DFE2DEAD8D600A52B01 /* SnapKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -9988,7 +9978,6 @@
 			name = Development;
 			packageProductDependencies = (
 				D3BF1E5D274CAF1C00229A00 /* Down */,
-				D3BF1E64274CBBE400229A00 /* DeepDiff */,
 				500F1D1227AA87D1002AA419 /* AlignedCollectionViewFlowLayout */,
 				D36E0C2B28D084CB00B622B9 /* CollectionViewCenteredFlowLayout */,
 				D3604E4428F02A260066C366 /* EvmKit */,
@@ -10021,7 +10010,6 @@
 				D36287C72CA3DF7A00ADAF3B /* TonConnectAPI */,
 				D3AEB8742DB8FAA200E385C8 /* StellarKit */,
 				D3DDFA332DDF2D02003CADDF /* TonConnectAPI */,
-				6B6D3F2C2DED72BF00AB2915 /* SkeletonView */,
 				6B6E14252DEDB57B007F4A39 /* Kingfisher */,
 				D092D63C2E3116780039BDB4 /* MoneroKit */,
 				6BD7663F2EA0E100008DDEA7 /* ZcashLightClientKit */,
@@ -10051,7 +10039,6 @@
 			name = Production;
 			packageProductDependencies = (
 				D3BF1E5B274BC29D00229A00 /* Down */,
-				D3BF1E62274CBBCE00229A00 /* DeepDiff */,
 				500F1D1027AA87BC002AA419 /* AlignedCollectionViewFlowLayout */,
 				D36E0C2928D084AB00B622B9 /* CollectionViewCenteredFlowLayout */,
 				D3604E4228F02A020066C366 /* EvmKit */,
@@ -10083,7 +10070,6 @@
 				6BDDB5A02C1AC73D00DE9D56 /* TonKit */,
 				D3AEB8762DB8FAB600E385C8 /* StellarKit */,
 				D3DDFA352DDF2D14003CADDF /* TonConnectAPI */,
-				6B6D3F2A2DED72B700AB2915 /* SkeletonView */,
 				6B6E14272DEDB58A007F4A39 /* Kingfisher */,
 				D092D63E2E3116A90039BDB4 /* MoneroKit */,
 				6BD766412EA0E109008DDEA7 /* ZcashLightClientKit */,
@@ -10157,7 +10143,6 @@
 				6B1D8DFD2DEAD8D600A52B01 /* SnapKit */,
 				6B1D8E032DEAD98900A52B01 /* UIExtensions */,
 				6B1D8E092DEADA2B00A52B01 /* SectionsTableView */,
-				6B6D3F282DED72AE00AB2915 /* SkeletonView */,
 			);
 			productName = WidgetExtension;
 			productReference = D3BA25912ADFAD7C002B13EA /* WidgetExtension Prod.appex */;
@@ -10227,7 +10212,6 @@
 			mainGroup = D3285F3920BD158E00644076;
 			packageReferences = (
 				D3BF1E5A274BC29D00229A00 /* XCRemoteSwiftPackageReference "Down" */,
-				D3BF1E61274CBBCE00229A00 /* XCRemoteSwiftPackageReference "DeepDiff" */,
 				500F1D0F27AA87BC002AA419 /* XCRemoteSwiftPackageReference "AlignedCollectionViewFlowLayout" */,
 				D36E0C2828D084AB00B622B9 /* XCRemoteSwiftPackageReference "CollectionViewCenteredFlowLayout" */,
 				D3604E4128F02A020066C366 /* XCRemoteSwiftPackageReference "EvmKit" */,
@@ -10262,7 +10246,6 @@
 				6BDDB59F2C1AC73200DE9D56 /* XCRemoteSwiftPackageReference "TonKit" */,
 				D3AEB8732DB8FAA200E385C8 /* XCRemoteSwiftPackageReference "StellarKit" */,
 				D3DDFA322DDF2D02003CADDF /* XCRemoteSwiftPackageReference "TonConnectAPI" */,
-				6B1D8DF32DEACF6A00A52B01 /* XCRemoteSwiftPackageReference "SkeletonView" */,
 				6B1D8DF42DEACFA200A52B01 /* XCRemoteSwiftPackageReference "SnapKit" */,
 				6B1D8DF62DEAD10900A52B01 /* XCRemoteSwiftPackageReference "Kingfisher" */,
 				D092D63B2E3116780039BDB4 /* XCRemoteSwiftPackageReference "MoneroKit.Swift" */,
@@ -14480,14 +14463,6 @@
 				kind = branch;
 			};
 		};
-		6B1D8DF32DEACF6A00A52B01 /* XCRemoteSwiftPackageReference "SkeletonView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Juanpe/SkeletonView.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.7.0;
-			};
-		};
 		6B1D8DF42DEACFA200A52B01 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
@@ -14501,7 +14476,7 @@
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
 			requirement = {
 				kind = upToNextMajorVersion;
-				minimumVersion = 7.6.2;
+				minimumVersion = 8.6.2;
 			};
 		};
 		6B423FD22913785800EE5E70 /* XCRemoteSwiftPackageReference "BitcoinCore" */ = {
@@ -14768,14 +14743,6 @@
 				minimumVersion = 0.11.0;
 			};
 		};
-		D3BF1E61274CBBCE00229A00 /* XCRemoteSwiftPackageReference "DeepDiff" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/onmyway133/DeepDiff";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 2.3.3;
-			};
-		};
 		D3C187B12907A60700FE1900 /* XCRemoteSwiftPackageReference "HdWalletKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/HdWalletKit.Swift";
@@ -14886,21 +14853,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6B55E3392AF26D6400616B60 /* XCRemoteSwiftPackageReference "Starscream" */;
 			productName = Starscream;
-		};
-		6B6D3F282DED72AE00AB2915 /* SkeletonView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6B1D8DF32DEACF6A00A52B01 /* XCRemoteSwiftPackageReference "SkeletonView" */;
-			productName = SkeletonView;
-		};
-		6B6D3F2A2DED72B700AB2915 /* SkeletonView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6B1D8DF32DEACF6A00A52B01 /* XCRemoteSwiftPackageReference "SkeletonView" */;
-			productName = SkeletonView;
-		};
-		6B6D3F2C2DED72BF00AB2915 /* SkeletonView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 6B1D8DF32DEACF6A00A52B01 /* XCRemoteSwiftPackageReference "SkeletonView" */;
-			productName = SkeletonView;
 		};
 		6B6E14252DEDB57B007F4A39 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -15223,16 +15175,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D3BF1E5A274BC29D00229A00 /* XCRemoteSwiftPackageReference "Down" */;
 			productName = Down;
-		};
-		D3BF1E62274CBBCE00229A00 /* DeepDiff */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D3BF1E61274CBBCE00229A00 /* XCRemoteSwiftPackageReference "DeepDiff" */;
-			productName = DeepDiff;
-		};
-		D3BF1E64274CBBE400229A00 /* DeepDiff */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D3BF1E61274CBBCE00229A00 /* XCRemoteSwiftPackageReference "DeepDiff" */;
-			productName = DeepDiff;
 		};
 		D3C187B22907A60800FE1900 /* HdWalletKit */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -1,4 +1,3 @@
-import SkeletonView
 import SnapKit
 import UIKit
 
@@ -18,8 +17,6 @@ open class BaseThemeCell: UITableViewCell {
 
     override public init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-
-        isSkeletonable = true
 
         backgroundColor = .clear
         contentView.backgroundColor = .clear
