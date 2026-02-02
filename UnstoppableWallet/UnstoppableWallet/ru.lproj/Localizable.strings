@@ -1612,7 +1612,7 @@
 "settings_security.enable_passcode" = "Включить код доступа";
 "settings_security.edit_passcode" = "Изменить код";
 "settings_security.disable_passcode" = "Отключить код доступа";
-"settings_security.auto_lock" = "Блокировка";
+"settings_security.auto_lock" = "Автоблокировка";
 "settings_security.balance_auto_hide" = "Автоскрытие баланса";
 "settings_security.balance_auto_hide.description" = "Автоматически скрывает баланс при открытии приложения, независимо от предыдущих настроек.";
 "settings_security.enable_duress_mode" = "Установить режим Duress";
@@ -2119,7 +2119,7 @@
 
 // Birthday Height
 
-"birthday_height.title" = "Блок создания";
+"birthday_height.title" = "Блок создания кошелька";
 
 // Birthday Input
 
@@ -2402,13 +2402,13 @@
 "purchases.defense_system" = "Система защиты";
 "purchases.secure_send" = "Безопасная отправка";
 "purchases.secure_send.description" = "Предотвращает отправку средств на рискованные или фишинговые адреса.";
-"purchases.secure_send.info" = "Проверяет адреса получателей на фишинг и мошенничество. Предупреждает перед отправкой средств на подозрительные адреса.";
+"purchases.secure_send.info" = "Проверяет адреса получателей на фишинг и мошенничество и предупреждает о рисках перед отправкой.";
 "purchases.scam_protection" = "Scam-защита";
 "purchases.scam_protection.description" = "Предупреждает при подключении к поддельным или вредоносным dApps.";
-"purchases.scam_protection.info" = "Обнаруживает поддельные или вредоносные dApp до подключения. Предотвращает фишинг и защищает ваши активы.";
+"purchases.scam_protection.info" = "Обнаруживает поддельные dApp до подключения. Предотвращает фишинг и защищает активы.";
 "purchases.swap_protection" = "Защита при обмене";
 "purchases.swap_protection.description" = "Предотвращает атаки ботов и MEV во время swap-операций.";
-"purchases.swap_protection.info" = "Останавливает ботов и front-running атаки при выполнении swap. Обеспечивает честность и безопасность ваших транзакций.";
+"purchases.swap_protection.info" = "Защищает от ботов и front-running атак при обмене.";
 "purchases.robbery_protection" = "Защита при ограблении";
 "purchases.robbery_protection.description" = "Защищает ваши средства, если вас вынуждают разблокировать приложение.";
 "purchases.robbery_protection.info" = "Позволяет создать ложный кошелёк с отдельным PIN-кодом. Скрывает реальные активы в рискованных ситуациях.";
@@ -2420,7 +2420,7 @@
 "purchases.swap_control.info" = "По умолчанию мы выбираем лучшее доступное предложение. С Premium вы можете выбрать другого провайдера.";
 "purchases.priority_support" = "Поддержка Premium";
 "purchases.priority_support.description" = "Прямой доступ к нашей службе поддержки.";
-"purchases.priority_support.info" = "Предоставляет прямой доступ к приоритетной поддержке. Получайте быструю и персональную помощь от команды Unstoppable.";
+"purchases.priority_support.info" = "Прямой доступ к приоритетной поддержке от команды Unstoppable.";
 
 // Market Insights
 "purchases.market_insights" = "Аналитика рынка";
@@ -2429,10 +2429,10 @@
 "purchases.token_insights.info" = "Показывает подробные данные о токене - объём, ликвидность и тренды. Помогает принимать более разумные инвестиционные решения.";
 "purchases.advanced_search" = "Расширенный поиск";
 "purchases.advanced_search.description" = "Мощные фильтры для более удобного поиска токенов.";
-"purchases.advanced_search.info" = "Находит токены с фильтрацией по объёму, блокчейну или сектору. Включает метрики активности на CEX/DEX и данные о листингах.";
+"purchases.advanced_search.info" = "Find tokens with filters by volume, chain, or sector. Includes metrics for CEX/DEX activity and listings.";
 "purchases.trade_signals" = "Сигналы и тренды";
 "purchases.trade_signals.description" = "Практические сигналы для более уверенной торговли.";
-"purchases.trade_signals.info" = "Отправляет уведомления в реальном времени о торговых возможностях. Показывает прибыльные шансы или рыночные риски.";
+"purchases.trade_signals.info" = "Уведомления в реальном времени о торговых возможностях и рисках.";
 
 "purchase.bottom_sheet.description" = "Одна покупка открывает все функции Premium.";
 
@@ -2488,7 +2488,7 @@
 "check_address.coin_blacklist_check" = "%@ Blacklist Check";
 "check_address.on_blockchain" = "на %@";
 "check_address.chainalysis.description" = "Chainalysis — это аналитическая платформа для блокчейна, предоставляющая инструменты для отслеживания, расследования и оценки рисков криптовалютных адресов. Помогает выявлять адреса, связанные с санкциями, мошенничеством и другими противоправными действиями.";
-"check_address.hashdit.description" = "HashDit — это платформа безопасности, позволяющая проверять криптовалютные адреса на предмет рисков, включая санкции и наличие в черных списках. Помогает пользователям избегать взаимодействия с потенциально вредоносными или заблокированными адресами.";
+"check_address.hashdit.description" = "HashDit - это платформа безопасности, позволяющая проверять криптовалютные адреса на предмет рисков, включая санкции и наличие в черных списках. Помогает пользователям избегать взаимодействия с потенциально вредоносными или заблокированными адресами.";
 "check_address.coin_blacklist.description" = "Позволяет проверить, занесён ли криптовалютный адрес в чёрный список %@ (%@). Если адрес находится в списке, все связанные с ним токены %@ могут быть заморожены, сделав их недоступными и непереводимыми. Эта проверка помогает избежать взаимодействия с адресами с высоким уровнем риска или ограничениями.";
 
 // Monero
