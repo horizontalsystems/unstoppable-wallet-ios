@@ -55,7 +55,6 @@ final class SpamManager {
     /// Called once from adapter's init.
     /// Non-blocking — runs in background queue.
     func initialize(adapter: ITransactionsAdapter) {
-        logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: initialize() called")
         queue.async { [weak self] in
             self?.performInitialize(adapter: adapter)
         }
@@ -66,8 +65,6 @@ final class SpamManager {
     /// retains its order (e.g. descending from evmKit) while .spam is set
     /// by processing in ascending (oldest-first) order internally.
     func update(records: [TransactionRecord]) {
-        logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: update() called with \(records.count) items")
-
         waitForInitialization()
 
         // Sort ascending for correct spam detection
@@ -78,8 +75,6 @@ final class SpamManager {
             guard let self else { return }
             performUpdate(records: sorted)
         }
-
-        logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: update() done")
     }
 
     /// Check if address is known spam (from previously scanned transactions)
@@ -90,15 +85,12 @@ final class SpamManager {
     // MARK: - Initialization
 
     private func performInitialize(adapter: ITransactionsAdapter) {
-        logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: performInitialize started")
-
         // Step 1: Load output cache from DB (no adapter needed)
         outputCache.loadCache(for: blockchainType, accountId: accountId)
 
         // Step 2: Load and process unscanned transactions
         let spamScanState = try? storage.find(blockchainTypeUid: blockchainType.uid, accountUid: accountId)
         let transactions = loadTransactionsSync(adapter: adapter, afterPaginationData: spamScanState?.lastPaginationData)
-        logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: loaded \(transactions.count) unscanned transactions")
 
         if !transactions.isEmpty {
             let sorted = sorted(transactions)
@@ -115,7 +107,6 @@ final class SpamManager {
         }
 
         markInitialized()
-        logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: initialized")
     }
 
     private func loadTransactionsSync(adapter: ITransactionsAdapter, afterPaginationData: String?) -> [TransactionRecord] {
@@ -130,7 +121,7 @@ final class SpamManager {
                     semaphore.signal()
                 },
                 onError: { [weak self] error in
-                    self?.logger?.log(level: .error, message: "SM: load error: \(error)")
+                    self?.logger?.log(level: .error, message: "SpamManager: load error: \(error)", context: ["SpamManager"], save: true)
                     semaphore.signal()
                 }
             )
@@ -225,7 +216,6 @@ final class SpamManager {
             )
             try? storage.save(scannedTransaction: scanned)
 
-            logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: outgoing \(record.transactionHash.prefix(12))... -> \(outgoingAddresses.count) addresses cached")
             return false
         }
 
@@ -265,7 +255,6 @@ final class SpamManager {
         )
         try? storage.save(scannedTransaction: scanned)
 
-        logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: \(record.transactionHash.prefix(12))... isSpam=\(isSpam)")
         return isSpam
     }
 
@@ -302,10 +291,8 @@ final class SpamManager {
         if let filterResult = filterChain.evaluate(spamInfo) {
             switch filterResult {
             case .spam:
-                logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: filter -> spam")
                 return true
             case .trusted:
-                logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: filter -> trusted")
                 return false
             case .ignore:
                 break
@@ -318,10 +305,8 @@ final class SpamManager {
 
         switch decision {
         case .spam:
-            logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: score -> spam")
             return true
         case let .suspicious(score):
-            logger?.log(level: .debug, message: "SM[\(blockchainType.uid)]: score -> suspicious(\(score))")
             return false
         case .trusted:
             return false

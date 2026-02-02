@@ -29,7 +29,6 @@ class TimeCorrelationCondition: SpamCondition {
         let matchedBlockHeight: Int? = context.get(SpamContextKeys.matchedBlockHeight)
 
         guard matchedTimestamp != nil || matchedBlockHeight != nil else {
-            logger?.log(level: .debug, message: "TCCondition: no matched data from previous conditions")
             return 0
         }
 
@@ -39,7 +38,6 @@ class TimeCorrelationCondition: SpamCondition {
         {
             let blockDiff = abs(txBlock - matchedBlock)
             if blockDiff < blockThreshold {
-                logger?.log(level: .debug, message: "TCCondition: block match, diff=\(blockDiff), score=\(blockScore)")
                 return blockScore
             }
         }
@@ -49,14 +47,10 @@ class TimeCorrelationCondition: SpamCondition {
             let timeDiff = abs(context.transaction.timestamp - matchedTime)
             let thresholdSeconds = timeThresholdMinutes * 60
             if timeDiff < thresholdSeconds {
-                logger?.log(level: .debug, message: "TCCondition: time match, diff=\(timeDiff)s, score=\(timeScore)")
                 return timeScore
-            } else {
-                logger?.log(level: .debug, message: "TCCondition: diff=\(timeDiff)s")
             }
         }
 
-        logger?.log(level: .debug, message: "TCCondition: no correlation found")
         return 0
     }
 }

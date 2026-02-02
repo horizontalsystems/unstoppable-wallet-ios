@@ -20,7 +20,6 @@ final class ZeroValueFilter: SpamFilter {
         }
 
         if transaction.events.outgoing.contains(where: \.value.zeroValue) {
-            logger?.log(level: .debug, message: "ZVPFilter: zero value outgoing detected")
             return .spam
         }
 

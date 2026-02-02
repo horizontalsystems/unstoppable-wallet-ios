@@ -35,7 +35,6 @@ final class SpamScoreEvaluator {
 
             // Early exit if already spam
             if totalScore >= spamThreshold {
-                logger?.log(level: .debug, message: "SSEvaluator: early exit, score=\(totalScore) >= threshold=\(spamThreshold)")
                 return .spam
             }
         }
@@ -49,7 +48,6 @@ final class SpamScoreEvaluator {
             decision = .trusted
         }
 
-        logger?.log(level: .debug, message: "SSEvaluator: total=\(totalScore), decision=\(decision)")
         return decision
     }
 }

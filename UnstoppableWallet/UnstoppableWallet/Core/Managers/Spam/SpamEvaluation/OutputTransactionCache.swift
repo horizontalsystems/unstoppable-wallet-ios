@@ -52,10 +52,8 @@ final class OutputTransactionCache {
                     blockHeight: $0.blockHeight
                 )
             }
-
-            logger?.log(level: .debug, message: "OTCache: loaded from DB for \(blockchainType.uid): \(rows.count) items")
         } catch {
-            logger?.log(level: .error, message: "OTCache: DB load failed for \(blockchainType.uid): \(error)")
+            logger?.log(level: .error, message: "OTCache: DB load failed for \(blockchainType.uid): \(error)", context: ["SpamManager"], save: true)
             cache[blockchainType] = []
         }
     }
@@ -85,7 +83,7 @@ final class OutputTransactionCache {
         do {
             try storage.save(outgoingAddresses: dbRecords)
         } catch {
-            logger?.log(level: .error, message: "OTCache: DB save failed: \(error)")
+            logger?.log(level: .error, message: "OTCache: DB save failed: \(error)", context: ["SpamManager"], save: true)
         }
 
         // Update in-memory cache
