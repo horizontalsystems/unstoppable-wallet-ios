@@ -38,14 +38,12 @@ class LowAmountCondition: SpamCondition {
 
         if let nativeCode {
             let score = evaluateWithLimits(code: nativeCode, value: nativeTotal)
-            logger?.log(level: .debug, message: "LACondition: native aggregated \(nativeCode)=\(nativeTotal), score=\(score)")
             if score >= spamScore {
                 return spamScore
             }
             maxScore = max(maxScore, score)
         }
 
-        logger?.log(level: .debug, message: "LACondition: score=\(maxScore)")
         return maxScore
     }
 

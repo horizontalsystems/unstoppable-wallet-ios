@@ -16,7 +16,6 @@ class ZeroValueCondition: SpamCondition {
         let hasZeroValueIncoming = context.transaction.events.incoming.contains { $0.value.zeroValue }
 
         if hasZeroValueIncoming {
-            logger?.log(level: .debug, message: "ZVCondition: zero value detected, score=\(score)")
             return score
         }
 

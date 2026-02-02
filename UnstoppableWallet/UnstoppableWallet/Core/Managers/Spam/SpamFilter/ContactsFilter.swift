@@ -14,16 +14,8 @@ final class ContactsFilter: SpamFilter {
     }
 
     func evaluate(_ transaction: SpamTransactionInfo) -> SpamFilterResult {
-        for event in transaction.events.incoming {
+        for event in transaction.events.incoming + transaction.events.outgoing {
             if isContact(address: event.address, blockchainType: transaction.blockchainType) {
-                logger?.log(level: .debug, message: "CFilter: incoming from contact \(event.address.prefix(8))...")
-                return .trusted
-            }
-        }
-
-        for event in transaction.events.outgoing {
-            if isContact(address: event.address, blockchainType: transaction.blockchainType) {
-                logger?.log(level: .debug, message: "CFilter: outgoing to contact \(event.address.prefix(8))...")
                 return .trusted
             }
         }

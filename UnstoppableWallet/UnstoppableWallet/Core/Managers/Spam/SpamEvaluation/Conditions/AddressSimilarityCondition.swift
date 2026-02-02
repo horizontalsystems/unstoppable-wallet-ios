@@ -29,12 +29,10 @@ final class AddressSimilarityCondition: SpamCondition {
         let cachedOutputs = cache.get(blockchainType: blockchainType)
 
         guard !cachedOutputs.isEmpty else {
-            logger?.log(level: .debug, message: "ASCondition: no cached outputs for \(blockchainType.uid)")
             return 0
         }
 
         guard !context.transaction.events.incoming.isEmpty else {
-            logger?.log(level: .debug, message: "ASCondition: no incoming events")
             return 0
         }
 
@@ -51,10 +49,6 @@ final class AddressSimilarityCondition: SpamCondition {
             if let blockHeight = matched.blockHeight {
                 context.set(SpamContextKeys.matchedBlockHeight, value: blockHeight)
             }
-
-            logger?.log(level: .debug, message: "ASCondition: \(matchedOutput != nil ? "Matched Found!" : "First Tx setted"), score=\(score), addr=\(matched.address)...")
-        } else {
-            logger?.log(level: .debug, message: "ASCondition: No any addresses to matching!")
         }
 
         return score

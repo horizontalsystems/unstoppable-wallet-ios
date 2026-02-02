@@ -24,12 +24,10 @@ final class SpamFilterChain {
             case .ignore:
                 continue
             case .spam, .trusted:
-                logger?.log(level: .debug, message: "SFChain: \(filter.identifier) -> \(result)")
                 return result
             }
         }
 
-        logger?.log(level: .debug, message: "SFChain: no definitive result")
         return nil
     }
 }

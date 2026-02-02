@@ -119,11 +119,9 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
     }
 
     func transactionsObservable(token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {
-        print("EmvTxAdapter: get Observable!")
-        return evmKit.transactionsObservable(tagQueries: [tagQuery(token: token, filter: filter, address: address?.lowercased())]).map { [weak self] in
+        evmKit.transactionsObservable(tagQueries: [tagQuery(token: token, filter: filter, address: address?.lowercased())]).map { [weak self] in
 
-            print("EmvTxAdapter|TxObservable: got \($0.count) txs")
-            return self?.handleTransactions($0) ?? []
+            self?.handleTransactions($0) ?? []
         }
     }
 
@@ -132,7 +130,6 @@ extension EvmTransactionsAdapter: ITransactionsAdapter {
 
         return evmKit.transactionsSingle(tagQueries: [tagQuery(token: token, filter: filter, address: address?.lowercased())], fromHash: hash, limit: limit)
             .map { [weak self] transactions -> [TransactionRecord] in
-                print("EmvTxAdapter|TxSingle: got \(transactions.count) txs")
 
                 guard !transactions.isEmpty else {
                     return []

@@ -122,20 +122,16 @@ extension TronTransactionsAdapter: ITransactionsAdapter {
     func transactionsObservable(token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {
         let address = address.flatMap { try? TronKit.Address(address: $0) }?.hex
 
-        print("TronTxAdapter: get Observable!")
         return tronKit.transactionsPublisher(tagQueries: [tagQuery(token: token, filter: filter, address: address)]).asObservable()
             .map { [weak self] in
 
-                print("TronTxAdapter|TxObservable: got \($0.count) txs")
-                return self?.handleTransactions($0) ?? []
+                self?.handleTransactions($0) ?? []
             }
     }
 
     func transactionsSingle(paginationData: String?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]> {
         let address = address.flatMap { try? TronKit.Address(address: $0) }?.hex
         let transactions = tronKit.transactions(tagQueries: [tagQuery(token: token, filter: filter, address: address)], hash: paginationData?.hs.hexData, descending: true, limit: limit)
-
-        print("TronTxAdapter|TxSingle: got \(transactions.count) txs")
 
         guard !transactions.isEmpty else {
             return .just([])
