@@ -2122,7 +2122,7 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 // Birthday Input
 
 "birthday_input.description" = "Saisissez la hauteur de l'anniversaire du portefeuille pour une synchronisation plus rapide.";
-"birthday_input.description.rescan" = "You can change the block height or select an approximate date to rescan your transaction history.";
+"birthday_input.description.rescan" = "Vous pouvez modifier la hauteur de bloc ou sélectionner une date approximative afin de rescanner l’historique de vos transactions.";
 "birthday_input.block_date" = "Date du bloc";
 "birthday_input.invalid_block" = "Bloc invalide";
 "birthday_input.rescan" = "Rescanner";
