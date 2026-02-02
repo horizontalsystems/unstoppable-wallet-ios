@@ -449,10 +449,6 @@
 "deposit.subaddresses.description" = "使用子地址来管理一个钱包中的多个独特地址——更容易组织起来，对您的隐私更安全。";
 "deposit.subaddresses.transactions_count" = "交易：%@";
 
-"deposit.restore.enabled.description" = "您之前是否持有过 %@ 币？";
-"deposit.restore.enabled.already_own" = "是的，我已经拥有了";
-"deposit.restore.enabled.dont_have" = "不，我没有";
-
 "deposit.warning" = "仅支持与网络兼容的代币，其他将会丧失。";
 "deposit.warning.watch_account" = "该地址是被监视账户的地址";
 
@@ -709,10 +705,12 @@
 "swap.unlock.unlimited" = "无限";
 
 "swap.price_impact" = "价格影响";
-"swap.price_impact.description" = "从显示的价格预期的价格偏差通常随着交换金额的增加而增加。";
+"swap.price_impact.info" = "相对于所显示价格的预期价格偏差，通常会随着兑换金额的增加而增大。";
 "swap.high_price_impact" = "高价格影响";
 "swap.recipient" = "收款人";
 "swap.slippage" = "滑点";
+"swap.estimated_time" = "预计时间";
+"swap.estimated_time.info" = "预计到账时间。兑换处理和交易确认所需时间可能会因网络和服务提供方而有所不同。";
 
 "swap.affiliate_fee" = "联盟费";
 "swap.liquidity_fee" = "流动性费用";
@@ -782,6 +780,7 @@
 "swap.confirmation.impact_warning" = "重要提示！您正在以极其不利的价格进行交易。这是因为流动性非常低。";
 
 "swap.confirmation.minimum_received" = "最小获取金额";
+"swap.confirmation.minimum_received.info" = "兑换完成后您将收到的最小金额。该金额由服务提供方保证，不受处理过程中价格波动的影响。";
 "swap.confirmation.maximum_sent" = "最大支出";
 
 "swap.dex_info.description" = "此兑换服务由基于%@区块链的分散式代币兑换协议%@提供。\n\n%@由不存在任何欺诈手段、以可靠方式推动代币兑换的智能合约来实现完全自动化并管理。";
@@ -1534,18 +1533,15 @@
 "terms.title" = "条款";
 "terms.i_agree" = "我同意";
 
-"terms.item.backup_recovery" = "安全地备份每个钱包的恢复短语。这是在应用程序发生故障时重新获得资金的唯一途径。";
+"terms.item.backup_recovery" = "请安全备份每个钱包的助记词。这是当应用被删除或发生故障时恢复资金访问的唯一方式。任何人都无法为您恢复助记词。";
 "terms.item.device_pin" = "在智能手机上禁用解锁 PIN (代码)会删除应用程序中的所有钱包。恢复资金访问将需要恢复短语。";
 "terms.item.privacy_notice" = "应用没有间接或收集关于您的余额或交易的数据 — — 我们甚至不知道有多少人使用它。 它只跟踪匿名使用模式(打开的页面、点击的按钮)以提高可用性。您可以在设置 -&gt; 隐私中关闭此功能。";
-"terms.item.decentralized" = "我们不持有您的资产，不会访问您的私钥，也不会代表您执行交易。该 app 不提供经纪、交易所、托管、第三方托管或资金转移服务。所有交易均由您本人直接发起、签名并广播至公共区块链网络。我们不控制、转发、修改或处理您的交易。";
-"terms.item.commission" = "作为盈利模式的-部分，应用会从钱包内执行的 DEX 兑换中获得少量佣金。这有助于我们保持独立、开源，并远离风险投资资金。";
+"terms.item.decentralized" = "我们不持有您的资产，不会访问您的私钥，也不会代表您执行交易。该应用不提供经纪、交易所、托管、第三方托管或资金转移服务。所有交易均由您本人直接发起、签名并广播至公共区块链网络。";
+"terms.item.commission" = "作为其变现模式的一部分，该应用会从在钱包内执行的 DEX 兑换中获得少量佣金。这有助于我们保持独立、开源，并避免依赖风险投资资金。";
 "terms.item.irreversibility" = "区块链交易是不可逆的。请在确认前务必仔细核对交易详情。";
 "terms.item.software" = "本应用完全开源，所有源代码均已公开发布。上述内容任何人都可公开验证。";
-"terms.item.compliance" = "您需对您的资金安全、个人行为以及遵守您所在司法辖区的适用法律承担全部责任。使用该应用并不免除您在税务、财务申报或其他法律方面的义务。";
-"terms.item.prohibite_use" = "为维护安全的生态系统，您同意不将该应用用于任何非法活动，包括洗钱或规避制裁、欺诈、诈骗、隐藏被盗资产，或为被禁止的组织提供资金支持。";
+"terms.item.compliance" = "您需对您的资金安全、个人行为以及遵守您所在司法辖区及全球适用法律承担全部责任。";
 "terms.item.user_responsibility" = "继续使用即表示您确认，您的资金安全以及遵守相关法律法规最终由您自行负责。";
-
-
 
 // Settings -> Tell Friends
 
@@ -2125,16 +2121,13 @@
 
 // Birthday Input
 
-"birthday_input.title" = "生日高度";
 "birthday_input.description" = "输入钱包的生日高度以便实现更快同步。";
-"birthday_input.new_wallet" = "新钱包";
-"birthday_input.new_wallet.description" = "没有任何交易";
-"birthday_input.old_wallet" = "现有钱包";
-"birthday_input.old_wallet.description" = "有交易";
-"birthday_input.input_placeholder" = "%@ （可选）";
-
-"restore_setting.birthday_height" = "%@ 生日高度";
-"restore_setting.download.disclaimer" = "初始化与区块链的同步可以消耗大量的网络流量。";
+"birthday_input.description.rescan" = "您可以更改区块高度，或选择一个大致的日期来重新扫描您的交易历史记录。";
+"birthday_input.block_date" = "区块日期";
+"birthday_input.invalid_block" = "无效区块";
+"birthday_input.rescan" = "重新扫描";
+"birthday_input.picker.select_date" = "选择日期";
+"birthday_input.picker.description" = "选择大致的钱包创建日期。区块高度将自动计算。";
 
 // EVM Network
 
