@@ -2122,7 +2122,7 @@
 // Birthday Input
 
 "birthday_input.description" = "输入钱包的生日高度以便实现更快同步。";
-"birthday_input.description.rescan" = "You can change the block height or select an approximate date to rescan your transaction history.";
+"birthday_input.description.rescan" = "您可以更改区块高度，或选择一个大致的日期来重新扫描您的交易历史记录。";
 "birthday_input.block_date" = "区块日期";
 "birthday_input.invalid_block" = "无效区块";
 "birthday_input.rescan" = "重新扫描";
