@@ -2128,7 +2128,7 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 // Birthday Input
 
 "birthday_input.description" = "Daha hızlı senkronizasyon için cüzdanın doğum günü yüksekliğini girin.";
-"birthday_input.description.rescan" = "You can change the block height or select an approximate date to rescan your transaction history.";
+"birthday_input.description.rescan" = "İşlem geçmişinizi yeniden taramak için blok yüksekliğini değiştirebilir veya yaklaşık bir tarih seçebilirsiniz.";
 "birthday_input.block_date" = "Blok Tarihi";
 "birthday_input.invalid_block" = "Geçersiz Blok";
 "birthday_input.rescan" = "Yeniden Tara";
