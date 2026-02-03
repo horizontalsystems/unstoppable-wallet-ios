@@ -10,47 +10,13 @@ struct BlockchainSettingsView: View {
             VStack(spacing: .margin32) {
                 ListSection {
                     ForEach(viewModel.btcItems, id: \.blockchain.uid) { item in
-                        ClickableRow(action: {
-                            Coordinator.shared.present { _ in
-                                ThemeNavigationStack { BtcBlockchainSettingsModule.view(blockchain: item.blockchain) }
-                            }
-                            stat(page: .blockchainSettings, event: .openBlockchainSettingsBtc(chainUid: item.blockchain.uid))
-                        }) {
-                            ItemView(
-                                blockchain: item.blockchain,
-                                value: item.title
-                            )
-                        }
-                    }
-
-                    if let item = viewModel.moneroItem {
-                        ClickableRow(action: {
-                            Coordinator.shared.present { _ in
-                                MoneroNetworkView(blockchain: item.blockchain).ignoresSafeArea()
-                            }
-                            stat(page: .blockchainSettings, event: .openBlockchainSettingsEvm(chainUid: item.blockchain.uid))
-                        }) {
-                            ItemView(
-                                blockchain: item.blockchain,
-                                value: item.node.name
-                            )
-                        }
+                        ItemView(item: item)
                     }
                 }
 
                 ListSection {
                     ForEach(viewModel.evmItems, id: \.blockchain.uid) { item in
-                        ClickableRow(action: {
-                            Coordinator.shared.present { _ in
-                                EvmNetworkView(blockchain: item.blockchain).ignoresSafeArea()
-                            }
-                            stat(page: .blockchainSettings, event: .openBlockchainSettingsEvm(chainUid: item.blockchain.uid))
-                        }) {
-                            ItemView(
-                                blockchain: item.blockchain,
-                                value: item.syncSource.name
-                            )
-                        }
+                        ItemView(item: item)
                     }
                 }
             }
@@ -60,20 +26,43 @@ struct BlockchainSettingsView: View {
     }
 
     struct ItemView: View {
-        let blockchain: Blockchain
-        let value: String
+        let item: BlockchainSettingsViewModel.Item
 
         var body: some View {
-            KFImage.url(URL(string: blockchain.type.imageUrl))
-                .resizable()
-                .frame(width: .iconSize32, height: .iconSize32)
+            ClickableRow(action: {
+                switch item.type {
+                case .evm:
+                    Coordinator.shared.present { _ in
+                        EvmNetworkView(blockchain: item.blockchain).ignoresSafeArea()
+                    }
 
-            VStack(spacing: 1) {
-                Text(blockchain.name).themeBody()
-                Text(value).themeSubhead2()
+                    stat(page: .blockchainSettings, event: .openBlockchainSettingsEvm(chainUid: item.blockchain.uid))
+                case .btc:
+                    Coordinator.shared.present { _ in
+                        ThemeNavigationStack { BtcBlockchainSettingsModule.view(blockchain: item.blockchain) }
+                    }
+
+                    stat(page: .blockchainSettings, event: .openBlockchainSettingsBtc(chainUid: item.blockchain.uid))
+                case .monero:
+                    Coordinator.shared.present { _ in
+                        MoneroNetworkView(blockchain: item.blockchain).ignoresSafeArea()
+                    }
+
+                    stat(page: .blockchainSettings, event: .openBlockchainSettingsMonero)
+                }
+
+            }) {
+                KFImage.url(URL(string: item.blockchain.type.imageUrl))
+                    .resizable()
+                    .frame(width: .iconSize32, height: .iconSize32)
+
+                VStack(spacing: 1) {
+                    Text(item.blockchain.name).themeBody()
+                    Text(item.title).themeSubhead2()
+                }
+
+                Image.disclosureIcon
             }
-
-            Image.disclosureIcon
         }
     }
 }

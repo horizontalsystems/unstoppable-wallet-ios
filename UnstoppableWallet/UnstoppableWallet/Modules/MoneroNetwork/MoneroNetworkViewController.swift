@@ -1,6 +1,5 @@
 import RxSwift
 import SectionsTableView
-
 import UIKit
 
 class MoneroNetworkViewController: ThemeViewController {
@@ -31,7 +30,7 @@ class MoneroNetworkViewController: ThemeViewController {
         super.viewDidLoad()
 
         title = viewModel.title
-        navigationItem.largeTitleDisplayMode = .always
+        navigationItem.largeTitleDisplayMode = .never
 
         navigationItem.leftBarButtonItem = UIBarButtonItem(customView: iconImageView)
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "button.done".localized, style: .plain, target: self, action: #selector(onTapDone))

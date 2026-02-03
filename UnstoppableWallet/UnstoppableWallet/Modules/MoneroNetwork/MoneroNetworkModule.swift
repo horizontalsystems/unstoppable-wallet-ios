@@ -1,6 +1,5 @@
 import MarketKit
 import SwiftUI
-
 import UIKit
 
 enum MoneroNetworkModule {
