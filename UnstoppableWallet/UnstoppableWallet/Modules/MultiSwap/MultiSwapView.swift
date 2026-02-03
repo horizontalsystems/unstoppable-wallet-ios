@@ -5,77 +5,62 @@ import SwiftUI
 
 struct MultiSwapView: View {
     @StateObject var viewModel: MultiSwapViewModel
+    private let onFinish: (() -> Void)?
 
-    @Environment(\.presentationMode) private var presentationMode
     @State private var sendPresented = false
-
     @FocusState var isInputActive: Bool
 
-    @State private var shouldPresentTokenIn: Bool
-
-    init(token: Token? = nil) {
+    init(token: Token? = nil, onFinish: (() -> Void)? = nil) {
         _viewModel = StateObject(wrappedValue: MultiSwapViewModel.instance(token: token))
-        shouldPresentTokenIn = token == nil
+        self.onFinish = onFinish
     }
 
     var body: some View {
-        ThemeNavigationStack {
-            ThemeView {
-                ScrollView {
-                    VStack(spacing: 12) {
-                        VStack(spacing: 16) {
-                            VStack(spacing: 8) {
-                                amountsView()
-                                availableBalanceView(value: balanceValue())
-                            }
-
-                            buttonView()
+        ThemeView {
+            ScrollView {
+                VStack(spacing: 12) {
+                    VStack(spacing: 16) {
+                        VStack(spacing: 8) {
+                            amountsView()
+                            availableBalanceView(value: balanceValue())
                         }
 
-                        if let currentQuote = viewModel.currentQuote {
-                            quoteView(quote: currentQuote)
-                            quoteCautionsView(quote: currentQuote)
-                        }
+                        buttonView()
                     }
-                    .padding(EdgeInsets(top: 8, leading: 16, bottom: 32, trailing: 16))
-                }
-                .onTapGesture {
-                    isInputActive = false
-                }
-            }
-            .navigationTitle("swap.title".localized)
-            .navigationDestination(isPresented: $sendPresented) {
-                if let tokenIn = viewModel.tokenIn,
-                   let tokenOut = viewModel.tokenOut,
-                   let amountIn = viewModel.amountIn,
-                   let currentQuote = viewModel.currentQuote
-                {
-                    MultiSwapSendView(
-                        tokenIn: tokenIn,
-                        tokenOut: tokenOut,
-                        amountIn: amountIn,
-                        provider: currentQuote.provider,
-                        swapPresentationMode: presentationMode
-                    )
-                }
-            }
-            .onChange(of: sendPresented) { presented in
-                if !presented {
-                    viewModel.autoQuoteIfRequired()
-                }
-            }
-            .toolbar {
-                ToolbarItem {
-                    Button("button.cancel".localized) {
-                        presentationMode.wrappedValue.dismiss()
+
+                    if let currentQuote = viewModel.currentQuote {
+                        quoteView(quote: currentQuote)
+                        quoteCautionsView(quote: currentQuote)
                     }
                 }
+                .padding(EdgeInsets(top: 8, leading: 16, bottom: 32, trailing: 16))
+            }
+            .onTapGesture {
+                isInputActive = false
             }
         }
         .onAppear {
-            if shouldPresentTokenIn {
-                presentTokenIn()
-                shouldPresentTokenIn = false
+            viewModel.autoQuoteIfRequired()
+        }
+        .onDisappear {
+            viewModel.stopAutoQuoting()
+        }
+        .navigationDestination(isPresented: $sendPresented) {
+            if let tokenIn = viewModel.tokenIn,
+               let tokenOut = viewModel.tokenOut,
+               let amountIn = viewModel.amountIn,
+               let currentQuote = viewModel.currentQuote
+            {
+                MultiSwapSendView(
+                    tokenIn: tokenIn,
+                    tokenOut: tokenOut,
+                    amountIn: amountIn,
+                    provider: currentQuote.provider,
+                    onFinish: onFinish ?? {
+                        viewModel.reset()
+                        sendPresented = false
+                    }
+                )
             }
         }
     }
@@ -183,7 +168,14 @@ struct MultiSwapView: View {
             Spacer()
 
             selectorButton(token: viewModel.tokenIn) {
-                presentTokenIn()
+                Coordinator.shared.present { isPresented in
+                    MultiSwapTokenSelectView(
+                        title: "swap.you_pay".localized,
+                        currentToken: $viewModel.tokenIn,
+                        otherToken: viewModel.tokenOut,
+                        isPresented: isPresented
+                    )
+                }
             }
         }
     }
@@ -451,16 +443,5 @@ struct MultiSwapView: View {
         }
 
         return (title, style, disabled, showProgress, preSwapStep)
-    }
-
-    private func presentTokenIn() {
-        Coordinator.shared.present { isPresented in
-            MultiSwapTokenSelectView(
-                title: "swap.you_pay".localized,
-                currentToken: $viewModel.tokenIn,
-                otherToken: viewModel.tokenOut,
-                isPresented: isPresented
-            )
-        }
     }
 }

@@ -3,11 +3,12 @@ import SwiftUI
 
 struct MultiSwapSendView: View {
     @StateObject var sendViewModel: SendViewModel
-    @Binding private var swapPresentationMode: PresentationMode
 
-    init(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider, swapPresentationMode: Binding<PresentationMode>) {
+    private let onFinish: () -> Void
+
+    init(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider, onFinish: @escaping () -> Void) {
         _sendViewModel = .init(wrappedValue: SendViewModel(sendData: .swap(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider)))
-        _swapPresentationMode = swapPresentationMode
+        self.onFinish = onFinish
     }
 
     var body: some View {
@@ -29,7 +30,7 @@ struct MultiSwapSendView: View {
                                 try await sendViewModel.send()
                             }, completion: {
                                 HudHelper.instance.show(banner: .swapped)
-                                swapPresentationMode.dismiss()
+                                onFinish()
                             }
                         )
                     } else {

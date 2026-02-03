@@ -546,6 +546,12 @@ extension MultiSwapViewModel {
             }
         }
     }
+
+    func reset() {
+        amountIn = nil
+        internalTokenIn = nil
+        internalTokenOut = nil
+    }
 }
 
 extension MultiSwapViewModel {

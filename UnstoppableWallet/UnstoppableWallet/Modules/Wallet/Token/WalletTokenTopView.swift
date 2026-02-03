@@ -77,7 +77,7 @@ struct WalletTokenTopView<Content: View>: View {
             case .receive: viewModel.onTapReceive()
             case .swap:
                 Coordinator.shared.present { _ in
-                    MultiSwapView(token: viewModel.wallet.token)
+                    RegularMultiSwapView(token: viewModel.wallet.token)
                 }
                 stat(page: .tokenPage, event: .open(page: .swap))
             case .chart: Coordinator.shared.presentCoinPage(coin: viewModel.wallet.coin, page: .tokenPage)

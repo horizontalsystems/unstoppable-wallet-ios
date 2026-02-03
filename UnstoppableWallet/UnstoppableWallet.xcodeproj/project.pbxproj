@@ -3093,6 +3093,8 @@
 		D3617A782F28F45D00CB8F90 /* MoneroWalletTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3617A752F28F45D00CB8F90 /* MoneroWalletTokenViewModel.swift */; };
 		D3617A792F28F45D00CB8F90 /* MoneroWalletTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3617A762F28F45D00CB8F90 /* MoneroWalletTokenView.swift */; };
 		D3617A7A2F28F45D00CB8F90 /* MoneroWalletTokenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3617A752F28F45D00CB8F90 /* MoneroWalletTokenViewModel.swift */; };
+		D3617A8E2F31F20900CB8F90 /* RegularMultiSwapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3617A8D2F31F20900CB8F90 /* RegularMultiSwapView.swift */; };
+		D3617A8F2F31F20900CB8F90 /* RegularMultiSwapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3617A8D2F31F20900CB8F90 /* RegularMultiSwapView.swift */; };
 		D362879F2CA2B34E00ADAF3B /* TonConnectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D362879E2CA2B34E00ADAF3B /* TonConnectListView.swift */; };
 		D36287A02CA2B34E00ADAF3B /* TonConnectListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D362879E2CA2B34E00ADAF3B /* TonConnectListView.swift */; };
 		D36287A22CA2B35A00ADAF3B /* TonConnectListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D36287A12CA2B35A00ADAF3B /* TonConnectListViewModel.swift */; };
@@ -5179,6 +5181,7 @@
 		D3617A6C2F28D9D900CB8F90 /* BirthdayPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayPickerView.swift; sourceTree = "<group>"; };
 		D3617A752F28F45D00CB8F90 /* MoneroWalletTokenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroWalletTokenViewModel.swift; sourceTree = "<group>"; };
 		D3617A762F28F45D00CB8F90 /* MoneroWalletTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroWalletTokenView.swift; sourceTree = "<group>"; };
+		D3617A8D2F31F20900CB8F90 /* RegularMultiSwapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegularMultiSwapView.swift; sourceTree = "<group>"; };
 		D362879E2CA2B34E00ADAF3B /* TonConnectListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonConnectListView.swift; sourceTree = "<group>"; };
 		D36287A12CA2B35A00ADAF3B /* TonConnectListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonConnectListViewModel.swift; sourceTree = "<group>"; };
 		D36287A52CA2B89200ADAF3B /* TonConnectParameters.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonConnectParameters.swift; sourceTree = "<group>"; };
@@ -6882,6 +6885,7 @@
 		11B35B779976BD7D47FFD40C /* MultiSwap */ = {
 			isa = PBXGroup;
 			children = (
+				D3617A8D2F31F20900CB8F90 /* RegularMultiSwapView.swift */,
 				D31C99C82F16461E00A82358 /* SwapTermsView.swift */,
 				11B35FC4CD29F471F497819B /* MultiSwapView.swift */,
 				11B35C33CEF7D4C2C7B4C133 /* MultiSwapViewModel.swift */,
@@ -10928,6 +10932,7 @@
 				D36DE0E2272FD887000BC916 /* OneInchProvider.swift in Sources */,
 				D3DB51A02BD6854A0091BBDB /* MarketSearchView.swift in Sources */,
 				D0709C072E507FB10012C0E7 /* MoneroNodeStorage.swift in Sources */,
+				D3617A8F2F31F20900CB8F90 /* RegularMultiSwapView.swift in Sources */,
 				D3AFAAF92E45FEF5004AB074 /* ColorStyle.swift in Sources */,
 				D36DE100272FD92F000BC916 /* SwapSelectProviderViewModel.swift in Sources */,
 				58AAAAEDC64AE5716BC07673 /* SwapSlippageViewModel.swift in Sources */,
@@ -12615,6 +12620,7 @@
 				D3AFAAFF2E45FF12004AB074 /* Cell.swift in Sources */,
 				2FA5D5E5AD1073BFE7A027C8 /* TransactionInfoViewItemFactory.swift in Sources */,
 				6B146A9B2A52A69400648C10 /* ChartIndicatorSettingsModule.swift in Sources */,
+				D3617A8E2F31F20900CB8F90 /* RegularMultiSwapView.swift in Sources */,
 				2FA5D89EECB981FAA8B179C3 /* TransactionInfoViewModel.swift in Sources */,
 				D36DE0BD272FD864000BC916 /* SwapViewItemHelper.swift in Sources */,
 				D3FBC71B2E55E93C001083D8 /* ThorChainMultiSwapProvider.swift in Sources */,

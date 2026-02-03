@@ -171,7 +171,7 @@ struct WalletView: View {
                 if !item.wallet.account.watchAccount {
                     Button {
                         Coordinator.shared.present { _ in
-                            MultiSwapView(token: item.wallet.token)
+                            RegularMultiSwapView(token: item.wallet.token)
                         }
                         stat(page: .tokenPage, event: .open(page: .swap))
                     } label: {
@@ -246,7 +246,7 @@ struct WalletView: View {
             case .receive: viewModel.onTapReceive()
             case .swap:
                 Coordinator.shared.present { _ in
-                    MultiSwapView()
+                    RegularMultiSwapView()
                 }
                 stat(page: .balance, event: .open(page: .swap))
             case .scan:
