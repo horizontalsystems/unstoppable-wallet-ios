@@ -306,7 +306,7 @@ final class SpamManager {
         switch decision {
         case .spam:
             return true
-        case let .suspicious(score):
+        case .suspicious:
             return false
         case .trusted:
             return false
