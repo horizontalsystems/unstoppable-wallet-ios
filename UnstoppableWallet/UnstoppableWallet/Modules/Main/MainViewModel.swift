@@ -73,7 +73,7 @@ extension MainViewModel {
     }
 
     var tabs: [Tab] {
-        (showMarket ? [.markets] : []) + [.wallet, .transactions, .settings]
+        (showMarket ? [.markets] : []) + [.wallet, .swap, .transactions, .settings]
     }
 }
 
@@ -81,6 +81,7 @@ extension MainViewModel {
     enum Tab: String, Hashable, CaseIterable, Identifiable {
         case markets
         case wallet
+        case swap
         case transactions
         case settings
 
@@ -92,6 +93,7 @@ extension MainViewModel {
             switch self {
             case .markets: return "market_filled"
             case .wallet: return "wallet_filled"
+            case .swap: return "swap_filled"
             case .transactions: return "transaction_filled"
             case .settings: return "settings_filled"
             }

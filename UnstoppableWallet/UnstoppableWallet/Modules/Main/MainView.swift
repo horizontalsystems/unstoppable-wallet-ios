@@ -20,6 +20,7 @@ struct MainView: View {
                         }
 
                         WalletView(viewModel: walletViewModel, path: $path).tag(MainViewModel.Tab.wallet)
+                        MultiSwapView().tag(MainViewModel.Tab.swap)
                         MainTransactionsView(transactionsViewModel: transactionsViewModel).tag(MainViewModel.Tab.transactions)
                         MainSettingsView().tag(MainViewModel.Tab.settings)
                     }
@@ -51,7 +52,6 @@ struct MainView: View {
             .navigationDestination(for: Wallet.self) { wallet in
                 WalletTokenModule.view(wallet: wallet)
             }
-            .tint(.themeJacob)
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar { toolbar() }
@@ -111,6 +111,8 @@ struct MainView: View {
                     }
                 }
             }
+        case .swap:
+            ToolbarItem(placement: .navigationBarTrailing) {}
         case .transactions:
             ToolbarItem(placement: .navigationBarLeading) {
                 if transactionsViewModel.syncing {
@@ -141,6 +143,8 @@ struct MainView: View {
             return "market.title".localized
         case .wallet:
             return walletViewModel.account?.name ?? "balance.title".localized
+        case .swap:
+            return "swap.title".localized
         case .transactions:
             return "transactions.title".localized
         case .settings:
