@@ -2036,8 +2036,8 @@
 		6BCAB3C32F285CD000820806 /* SpamModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3C12F285CCC00820806 /* SpamModule.swift */; };
 		6BCAB3C52F285E3A00820806 /* SpamFilterChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3C42F285E3100820806 /* SpamFilterChain.swift */; };
 		6BCAB3C62F285E3A00820806 /* SpamFilterChain.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3C42F285E3100820806 /* SpamFilterChain.swift */; };
-		6BCAB3C82F2864DE00820806 /* ZeroValueFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3C72F2864D800820806 /* ZeroValueFilter.swift */; };
-		6BCAB3C92F2864DE00820806 /* ZeroValueFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3C72F2864D800820806 /* ZeroValueFilter.swift */; };
+		6BCAB3C82F2864DE00820806 /* OutgoingPoisoningFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3C72F2864D800820806 /* OutgoingPoisoningFilter.swift */; };
+		6BCAB3C92F2864DE00820806 /* OutgoingPoisoningFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3C72F2864D800820806 /* OutgoingPoisoningFilter.swift */; };
 		6BCAB3CB2F28B01500820806 /* ContactsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3CA2F28B00D00820806 /* ContactsFilter.swift */; };
 		6BCAB3CC2F28B01500820806 /* ContactsFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3CA2F28B00D00820806 /* ContactsFilter.swift */; };
 		6BCAB3D02F28B2D400820806 /* SpamEvaluationContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAB3CF2F28B2D000820806 /* SpamEvaluationContext.swift */; };
@@ -4664,7 +4664,7 @@
 		6BCAB39A2F1A114E00820806 /* TronSendHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronSendHelper.swift; sourceTree = "<group>"; };
 		6BCAB3C12F285CCC00820806 /* SpamModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamModule.swift; sourceTree = "<group>"; };
 		6BCAB3C42F285E3100820806 /* SpamFilterChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamFilterChain.swift; sourceTree = "<group>"; };
-		6BCAB3C72F2864D800820806 /* ZeroValueFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZeroValueFilter.swift; sourceTree = "<group>"; };
+		6BCAB3C72F2864D800820806 /* OutgoingPoisoningFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutgoingPoisoningFilter.swift; sourceTree = "<group>"; };
 		6BCAB3CA2F28B00D00820806 /* ContactsFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsFilter.swift; sourceTree = "<group>"; };
 		6BCAB3CF2F28B2D000820806 /* SpamEvaluationContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamEvaluationContext.swift; sourceTree = "<group>"; };
 		6BCAB3D22F28B30500820806 /* SpamScoreEvaluator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpamScoreEvaluator.swift; sourceTree = "<group>"; };
@@ -8352,7 +8352,7 @@
 			isa = PBXGroup;
 			children = (
 				6BCAB3CA2F28B00D00820806 /* ContactsFilter.swift */,
-				6BCAB3C72F2864D800820806 /* ZeroValueFilter.swift */,
+				6BCAB3C72F2864D800820806 /* OutgoingPoisoningFilter.swift */,
 				6BCAB3C42F285E3100820806 /* SpamFilterChain.swift */,
 			);
 			path = SpamFilter;
@@ -11480,7 +11480,7 @@
 				2FA5D20BC28280786A0FC3FE /* DropDownListCell.swift in Sources */,
 				D3C845AA2C1B08E3004F9DD9 /* CoinMajorHoldersViewModel.swift in Sources */,
 				2FA5D707CD9B268FA3CA8D8F /* TimeLockViewModel.swift in Sources */,
-				6BCAB3C92F2864DE00820806 /* ZeroValueFilter.swift in Sources */,
+				6BCAB3C92F2864DE00820806 /* OutgoingPoisoningFilter.swift in Sources */,
 				2FA5D06916F84E180B2AF357 /* InputOutputOrderService.swift in Sources */,
 				6BE57E732E339C3A003C4C01 /* MerkleTransactionAdapter.swift in Sources */,
 				2FA5DBD4F56DCAE4CDCAAB61 /* InputOutputOrderDataSource.swift in Sources */,
@@ -12424,7 +12424,7 @@
 				6B1D8D1D2DE98F2600A52B01 /* ThemeWindow.swift in Sources */,
 				6B1D8D1E2DE98F2600A52B01 /* Styles.swift in Sources */,
 				6B1D8D202DE98F2600A52B01 /* LightTheme.swift in Sources */,
-				6BCAB3C82F2864DE00820806 /* ZeroValueFilter.swift in Sources */,
+				6BCAB3C82F2864DE00820806 /* OutgoingPoisoningFilter.swift in Sources */,
 				6BDB59E12F14B6B8005FA626 /* MoneroSwapFinalQuote.swift in Sources */,
 				6B1D8D212DE98F2600A52B01 /* ThemeManager.swift in Sources */,
 				6B1D8D222DE98F2600A52B01 /* DarkTheme.swift in Sources */,

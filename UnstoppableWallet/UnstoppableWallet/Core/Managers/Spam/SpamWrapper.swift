@@ -41,7 +41,7 @@ class SpamWrapper {
 
         let filterChain = SpamFilterChain(logger: logger)
             .append(ContactsFilter(contactManager: contactBookManager, logger: logger))
-            .append(ZeroValueFilter(logger: logger))
+            .append(OutgoingPoisoningFilter(logger: logger))
 
         let evaluator = SpamScoreEvaluator(spamThreshold: Self.spamThreshold, suspiciousThreshold: Self.suspiciousThreshold, logger: logger)
             .append(ZeroValueCondition(score: Self.zeroValueIncoming, logger: logger))
