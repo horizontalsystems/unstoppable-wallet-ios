@@ -207,6 +207,7 @@ enum StatEvent {
     case openArticle(relativeUrl: String)
     case openBlockchainSettingsBtc(chainUid: String)
     case openBlockchainSettingsEvm(chainUid: String)
+    case openBlockchainSettingsMonero
     case openBlockchainSettingsEvmAdd(chainUid: String)
     case openBlockchainSettingsMoneroAdd(chainUid: String)
     case openCategory(categoryUid: String)
@@ -293,8 +294,7 @@ enum StatEvent {
         case .importFull: return "import_full"
         case .importWallet: return "import_wallet"
         case .open, .openCategory, .openCoin, .openPlatform, .openReceive, .openResend, .openSector, .openSend, .openSendTokenList, .openTokenPage,
-             .openBlockchainSettingsBtc,
-             .openBlockchainSettingsEvm, .openBlockchainSettingsEvmAdd,
+             .openBlockchainSettingsBtc, .openBlockchainSettingsEvm, .openBlockchainSettingsMonero, .openBlockchainSettingsEvmAdd,
              .openBlockchainSettingsMoneroAdd: return "open_page"
         case .openPremium: return "open_premium_from"
         case .openTokenInfo: return "open_token_info"
@@ -372,6 +372,7 @@ enum StatEvent {
         case let .open(page): return [.page: page.rawValue]
         case let .openBlockchainSettingsBtc(chainUid: chainUid): return [.page: StatPage.blockchainSettingsBtc.rawValue, .chainUid: chainUid]
         case let .openBlockchainSettingsEvm(chainUid: chainUid): return [.page: StatPage.blockchainSettingsEvm.rawValue, .chainUid: chainUid]
+        case .openBlockchainSettingsMonero: return [.page: StatPage.blockchainSettingsMonero.rawValue]
         case let .openBlockchainSettingsEvmAdd(chainUid: chainUid): return [.page: StatPage.blockchainSettingsEvmAdd.rawValue, .chainUid: chainUid]
         case let .openCategory(categoryUid): return [.page: StatPage.coinCategory.rawValue, .categoryUid: categoryUid]
         case let .openCoin(coinUid): return [.page: StatPage.coinPage.rawValue, .coinUid: coinUid]

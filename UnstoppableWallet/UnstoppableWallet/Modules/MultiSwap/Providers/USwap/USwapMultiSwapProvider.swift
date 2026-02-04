@@ -747,7 +747,7 @@ extension USwapMultiSwapProvider {
             switch self {
             case .near: return "Near"
             case .quickEx: return "QuickEx"
-            case .letsExchange: return "Let's Exchange"
+            case .letsExchange: return "LetsExchange"
             case .stealthex: return "StealthEX"
             case .swapuz: return "Swapuz"
             }
