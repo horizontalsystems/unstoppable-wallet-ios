@@ -448,6 +448,20 @@ class ZcashAdapter {
         }
     }
 
+    private func isOwner(address: String?) -> Bool {
+        if let uAddress {
+            if uAddress.stringEncoded.lowercased() == address?.lowercased() {
+                return true
+            }
+        }
+        if let tAddress {
+            if tAddress.stringEncoded.lowercased() == address?.lowercased() {
+                return true
+            }
+        }
+        return false
+    }
+
     func transactionRecord(fromTransaction transaction: ZcashTransactionWrapper) -> TransactionRecord {
         let showRawTransaction = transaction.minedHeight == nil || transaction.failed
 
@@ -473,6 +487,7 @@ class ZcashAdapter {
             )
         }
         if !transaction.isSentTransaction {
+            let isOwner = isOwner(address: transaction.recipientAddress)
             return BitcoinIncomingTransactionRecord(
                 token: token,
                 source: transactionSource,
@@ -488,7 +503,8 @@ class ZcashAdapter {
                 conflictingHash: nil,
                 showRawTransaction: showRawTransaction,
                 amount: abs(transaction.value.decimalValue.decimalValue),
-                from: transaction.recipientAddress,
+                from: isOwner ? nil : transaction.recipientAddress,
+                to: isOwner ? transaction.recipientAddress : nil,
                 memo: transaction.memo
             )
         } else {
