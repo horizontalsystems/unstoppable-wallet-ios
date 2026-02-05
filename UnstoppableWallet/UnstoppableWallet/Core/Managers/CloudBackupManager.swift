@@ -208,7 +208,7 @@ extension CloudBackupManager {
         try delete(uniqueId: hex)
     }
 
-    func delete(name: String) throws {
+    private func delete(name: String) throws {
         guard let iCloudUrl else {
             throw BackupError.urlNotAvailable
         }
@@ -227,11 +227,13 @@ extension CloudBackupManager {
     }
 
     func delete(uniqueId: String) throws {
-        guard let item = oneWalletItems.first(where: { _, backup in backup.id == uniqueId }) else {
+        if let item = oneWalletItems.first(where: { _, backup in backup.id == uniqueId }) {
+            try delete(name: item.key)
+        } else if let item = fullBackupItems.first(where: { _, backup in backup.id == uniqueId }) {
+            try delete(name: item.key)
+        } else {
             throw BackupError.itemNotFound
         }
-
-        try delete(name: item.key)
     }
 }
 
