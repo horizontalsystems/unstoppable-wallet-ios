@@ -158,25 +158,26 @@ extension CloudBackupManager {
         iCloudUrl != nil
     }
 
-    func save(account: Account, passphrase: String, name: String) throws {
+    func save(account: Account, passphrase: String, name: String, keyBased: Bool = false) throws {
         let backup = try AppBackupProvider.encrypt(
             account: account,
             wallets: appBackupProvider.enabledWallets(account: account),
-            passphrase: passphrase
+            passphrase: passphrase,
+            keyBased: keyBased
         )
 
         do {
             let encoded = try JSONEncoder().encode(backup)
             try save(encoded: encoded, name: name)
         } catch {
-            logger?.log(level: .debug, message: "CloudAccountManager.downloadItems, can't save \(name). Because: \(error)")
+            logger?.log(level: .debug, message: "CloudAccountManager: can't save \(name). Because: \(error)")
             throw error
         }
     }
 
-    private func data(accountIds: [String], passphrase: String) throws -> Data {
+    private func data(accountIds: [String], passphrase: String, keyBased: Bool = false) throws -> Data {
         let rawBackup = appBackupProvider.fullBackup(accountIds: accountIds)
-        let backup = try appBackupProvider.encrypt(raw: rawBackup, passphrase: passphrase)
+        let backup = try appBackupProvider.encrypt(raw: rawBackup, passphrase: passphrase, keyBased: keyBased)
         return try JSONEncoder().encode(backup)
     }
 
@@ -192,12 +193,12 @@ extension CloudBackupManager {
         return temporaryFileUrl
     }
 
-    func save(accountIds: [String], passphrase: String, name: String) throws {
+    func save(accountIds: [String], passphrase: String, name: String, keyBased: Bool = false) throws {
         do {
-            let encoded = try data(accountIds: accountIds, passphrase: passphrase)
+            let encoded = try data(accountIds: accountIds, passphrase: passphrase, keyBased: keyBased)
             try save(encoded: encoded, name: name)
         } catch {
-            logger?.log(level: .debug, message: "CloudAccountManager.downloadItems, can't save \(name). Because: \(error)")
+            logger?.log(level: .debug, message: "CloudAccountManager: can't save \(name). Because: \(error)")
             throw error
         }
     }
@@ -207,7 +208,7 @@ extension CloudBackupManager {
         try delete(uniqueId: hex)
     }
 
-    func delete(name: String) throws {
+    private func delete(name: String) throws {
         guard let iCloudUrl else {
             throw BackupError.urlNotAvailable
         }
@@ -226,11 +227,13 @@ extension CloudBackupManager {
     }
 
     func delete(uniqueId: String) throws {
-        guard let item = oneWalletItems.first(where: { _, backup in backup.id == uniqueId }) else {
+        if let item = oneWalletItems.first(where: { _, backup in backup.id == uniqueId }) {
+            try delete(name: item.key)
+        } else if let item = fullBackupItems.first(where: { _, backup in backup.id == uniqueId }) {
+            try delete(name: item.key)
+        } else {
             throw BackupError.itemNotFound
         }
-
-        try delete(name: item.key)
     }
 }
 

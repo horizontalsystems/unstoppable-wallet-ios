@@ -6,6 +6,8 @@ enum RestoreCloudModule {
     static func viewController(sourceType: BackupModule.Source.Abstract, onRestore: @escaping () -> Void) -> UIViewController {
         let service = RestoreCloudService(
             cloudAccountBackupManager: Core.shared.cloudBackupManager,
+            cloudBackupKeyManager: Core.shared.cloudBackupKeyManager,
+            appBackupProvider: Core.shared.appBackupProvider,
             accountManager: Core.shared.accountManager
         )
         let viewModel = RestoreCloudViewModel(service: service, sourceType: sourceType)

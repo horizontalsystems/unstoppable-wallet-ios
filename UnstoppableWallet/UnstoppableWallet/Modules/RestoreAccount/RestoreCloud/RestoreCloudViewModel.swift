@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import LocalAuthentication
 
 class RestoreCloudViewModel {
     private let service: RestoreCloudService
@@ -7,7 +8,15 @@ class RestoreCloudViewModel {
 
     @Published private(set) var walletViewItem: ViewItem = .empty
     @Published private(set) var fullBackupViewItem: ViewItem = .empty
+    @Published private(set) var processing: Bool = false
     private let restoreSubject = PassthroughSubject<BackupModule.NamedSource, Never>()
+
+    private let openSelectCoinsSubject = PassthroughSubject<RawWalletBackup, Never>()
+    private let openConfigurationSubject = PassthroughSubject<RawFullBackup, Never>()
+    private let successSubject = PassthroughSubject<Void, Never>()
+    private let showErrorSubject = PassthroughSubject<String, Never>()
+    private let showLoadingSubject = PassthroughSubject<Bool, Never>()
+    private let fallbackToPassphraseSubject = PassthroughSubject<BackupModule.NamedSource, Never>()
 
     let sourceType: BackupModule.Source.Abstract
 
@@ -57,6 +66,30 @@ extension RestoreCloudViewModel {
         restoreSubject.eraseToAnyPublisher()
     }
 
+    var openSelectCoinsPublisher: AnyPublisher<RawWalletBackup, Never> {
+        openSelectCoinsSubject.eraseToAnyPublisher()
+    }
+
+    var openConfigurationPublisher: AnyPublisher<RawFullBackup, Never> {
+        openConfigurationSubject.eraseToAnyPublisher()
+    }
+
+    var successPublisher: AnyPublisher<Void, Never> {
+        successSubject.eraseToAnyPublisher()
+    }
+
+    var showErrorPublisher: AnyPublisher<String, Never> {
+        showErrorSubject.eraseToAnyPublisher()
+    }
+
+    var showLoadingPublisher: AnyPublisher<Bool, Never> {
+        showLoadingSubject.eraseToAnyPublisher()
+    }
+
+    var fallbackToPassphrasePublisher: AnyPublisher<BackupModule.NamedSource, Never> {
+        fallbackToPassphraseSubject.eraseToAnyPublisher()
+    }
+
     var deleteItemCompletedPublisher: AnyPublisher<Bool, Never> {
         service.deleteItemCompletedPublisher
     }
@@ -72,6 +105,54 @@ extension RestoreCloudViewModel {
 
         if let item = service.fullBackupItems.first(where: { item in item.source.id == id }) {
             restoreSubject.send(BackupModule.NamedSource(name: item.name, source: item.source))
+        }
+    }
+
+    func restoreWithBiometry(item: BackupModule.NamedSource) {
+        processing = true
+        showLoadingSubject.send(true)
+
+        Task { [weak self] in
+            guard let self else { return }
+            do {
+                let result = try await service.nextWithBiometricKey(restoredBackup: item)
+                processing = false
+                showLoadingSubject.send(false)
+                handleRestoreResult(result)
+            } catch let error as CloudBackupKeyManager.KeyError {
+                processing = false
+                showLoadingSubject.send(false)
+                if let description = error.errorDescription {
+                    showErrorSubject.send(description)
+                }
+
+                if error == .passphraseNotFound {
+                    fallbackToPassphraseSubject.send(item)
+                }
+            } catch is LAError {
+                // User cancelled biometric prompt -- do nothing
+                processing = false
+                showLoadingSubject.send(false)
+            } catch {
+                processing = false
+                showLoadingSubject.send(false)
+                showErrorSubject.send(error.localizedDescription)
+            }
+        }
+    }
+
+    private func handleRestoreResult(_ result: AppBackupProvider.RestoreResult) {
+        switch result {
+        case let .restoredAccount(rawBackup):
+            if rawBackup.enabledWallets.isEmpty {
+                openSelectCoinsSubject.send(rawBackup)
+            } else {
+                successSubject.send()
+            }
+        case let .restoredFullBackup(rawBackup):
+            openConfigurationSubject.send(rawBackup)
+        case .success:
+            successSubject.send()
         }
     }
 }

@@ -3,6 +3,8 @@ import Foundation
 
 class RestoreCloudService {
     private let cloudAccountBackupManager: CloudBackupManager
+    private let cloudBackupKeyManager: CloudBackupKeyManager
+    private let appBackupProvider: AppBackupProvider
     private let accountManager: AccountManager
 
     private var cancellables = Set<AnyCancellable>()
@@ -11,8 +13,10 @@ class RestoreCloudService {
     @Published var oneWalletItems = [Item]()
     @Published var fullBackupItems = [Item]()
 
-    init(cloudAccountBackupManager: CloudBackupManager, accountManager: AccountManager) {
+    init(cloudAccountBackupManager: CloudBackupManager, cloudBackupKeyManager: CloudBackupKeyManager, appBackupProvider: AppBackupProvider, accountManager: AccountManager) {
         self.cloudAccountBackupManager = cloudAccountBackupManager
+        self.cloudBackupKeyManager = cloudBackupKeyManager
+        self.appBackupProvider = appBackupProvider
         self.accountManager = accountManager
 
         cloudAccountBackupManager.$oneWalletItems
@@ -73,6 +77,12 @@ class RestoreCloudService {
 }
 
 extension RestoreCloudService {
+    func nextWithBiometricKey(restoredBackup: BackupModule.NamedSource) async throws -> AppBackupProvider.RestoreResult {
+        let passphrase = try await cloudBackupKeyManager.authenticateAndGetExistingPassphrase()
+
+        return try appBackupProvider.restore(restoredBackup: restoredBackup, passphrase: passphrase)
+    }
+
     func remove(id: String) {
         do {
             try cloudAccountBackupManager.delete(uniqueId: id)

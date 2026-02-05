@@ -28,13 +28,29 @@ struct BackupNameView: View {
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                 }
             } bottomContent: {
-                Button(action: {
-                    viewModel.passwordPushed = true
-                }) {
-                    Text("button.next".localized)
+                if viewModel.destination == .cloud && Core.shared.cloudBackupKeyManager.isAvailable {
+                    Button(action: {
+                        viewModel.onTapSaveBiometric()
+                    }) {
+                        HStack(spacing: .margin8) {
+                            if viewModel.passwordButtonProcessing {
+                                ProgressView()
+                                    .progressViewStyle(.circular)
+                            }
+                            Text("button.save".localized)
+                        }
+                    }
+                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                    .disabled(viewModel.nameCautionState != .none || viewModel.passwordButtonProcessing)
+                } else {
+                    Button(action: {
+                        viewModel.passwordPushed = true
+                    }) {
+                        Text("button.next".localized)
+                    }
+                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                    .disabled(viewModel.nameCautionState != .none)
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                .disabled(viewModel.nameCautionState != .none)
             }
             .navigationTitle("backup_app.backup.name.title".localized)
             .navigationBarTitleDisplayMode(.inline)
@@ -47,6 +63,9 @@ struct BackupNameView: View {
                 }
             }
             .toolbarRole(.editor)
+            .onReceive(viewModel.dismissPublisher) {
+                isPresented = false
+            }
         }
     }
 }

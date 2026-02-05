@@ -8,6 +8,7 @@ struct FullBackup {
     let settings: SettingsBackup
     let version: Int
     let timestamp: TimeInterval?
+    let keyBased: Bool?
 }
 
 extension FullBackup: Codable {
@@ -19,6 +20,7 @@ extension FullBackup: Codable {
         case settings
         case version
         case timestamp
+        case keyBased = "key_based"
     }
 
     init(from decoder: Decoder) throws {
@@ -35,6 +37,7 @@ extension FullBackup: Codable {
         settings = try container.decode(SettingsBackup.self, forKey: .settings)
         version = try container.decode(Int.self, forKey: .version)
         timestamp = try? container.decode(TimeInterval.self, forKey: .timestamp)
+        keyBased = try? container.decode(Bool.self, forKey: .keyBased)
     }
 
     func encode(to encoder: Encoder) throws {
@@ -46,6 +49,9 @@ extension FullBackup: Codable {
         try container.encode(settings, forKey: .settings)
         try container.encode(version, forKey: .version)
         try? container.encode(timestamp, forKey: .timestamp)
+        if let keyBased {
+            try container.encode(keyBased, forKey: .keyBased)
+        }
     }
 }
 
