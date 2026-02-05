@@ -1,4 +1,3 @@
-
 import Kingfisher
 import SwiftUI
 
@@ -21,35 +20,56 @@ struct PreSendView: View {
 
     var body: some View {
         ThemeView {
-            ScrollView {
-                VStack(spacing: .margin16) {
-                    if addressVisible {
-                        if viewModel.resolvedAddress.issueTypes.isEmpty {
-                            addressView()
-                        } else {
-                            addressView()
-                                .overlay(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).stroke(Color.themeRed50, lineWidth: .heightOneDp))
+            BottomGradientWrapper {
+                ScrollView {
+                    VStack(spacing: .margin16) {
+                        if addressVisible {
+                            if viewModel.resolvedAddress.issueTypes.isEmpty {
+                                addressView()
+                            } else {
+                                addressView()
+                                    .overlay(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).stroke(Color.themeRed50, lineWidth: .heightOneDp))
+                            }
+                        }
+
+                        VStack(spacing: .margin8) {
+                            inputView()
+                            availableBalanceView(value: balanceValue())
+                        }
+
+                        if viewModel.hasMemo {
+                            memoView()
+                        }
+
+                        if !viewModel.cautions.isEmpty {
+                            cautionsView()
                         }
                     }
-
-                    VStack(spacing: .margin8) {
-                        inputView()
-                        availableBalanceView(value: balanceValue())
-                    }
-
-                    if viewModel.hasMemo {
-                        memoView()
-                    }
-
-                    buttonView()
-
-                    if !viewModel.cautions.isEmpty {
-                        cautionsView()
-                    }
+                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin16, trailing: .margin16))
+                    .animation(.linear, value: viewModel.hasMemo)
                 }
-                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin16, trailing: .margin16))
-                .animation(.linear, value: viewModel.hasMemo)
+                .onTapGesture {
+                    focusField = nil
+                }
+            } bottomContent: {
+                buttonView()
+            } keyboardContent: {
+                AmountAccessoryView(
+                    visible: focusField != nil,
+                    hasPercents: viewModel.availableBalance != nil,
+                    onPercent: { percent in
+                        viewModel.setAmountIn(percent: percent)
+                        focusField = nil
+                    },
+                    onTrash: {
+                        viewModel.clearAmountIn()
+                    }
+                )
             }
+            .animation(.easeOut(duration: 0.25), value: focusField)
+        }
+        .onFirstAppear {
+            focusField = .amount
         }
         .navigationDestination(for: ConfirmationData.self) { data in
             RegularSendView(sendData: data.sendData, address: data.address) {
@@ -126,62 +146,6 @@ struct PreSendView: View {
         .padding(.horizontal, .margin16)
         .padding(.vertical, 20)
         .modifier(ThemeListStyleModifier(cornerRadius: 18))
-        .onFirstAppear {
-            focusField = .amount
-        }
-        .toolbar {
-            ToolbarItemGroup(placement: .keyboard) {
-                if focusField != nil {
-                    HStack(spacing: 0) {
-                        if viewModel.availableBalance != nil {
-                            ForEach(1 ... 4, id: \.self) { multiplier in
-                                let percent = multiplier * 25
-
-                                Button(action: {
-                                    viewModel.setAmountIn(percent: percent)
-                                    focusField = nil
-                                }) {
-                                    Text("\(percent)%").textSubhead1(color: .themeLeah)
-                                }
-                                .frame(maxWidth: .infinity)
-
-                                RoundedRectangle(cornerRadius: 0.5, style: .continuous)
-                                    .fill(Color.themeBlade)
-                                    .frame(width: 1)
-                                    .frame(maxHeight: .infinity)
-                            }
-                        } else {
-                            Spacer()
-                        }
-
-                        Button(action: {
-                            viewModel.clearAmountIn()
-                        }) {
-                            Image(systemName: "trash")
-                                .font(.themeSubhead1)
-                                .foregroundColor(.themeLeah)
-                        }
-                        .frame(maxWidth: .infinity)
-
-                        RoundedRectangle(cornerRadius: 0.5, style: .continuous)
-                            .fill(Color.themeBlade)
-                            .frame(width: 1)
-                            .frame(maxHeight: .infinity)
-
-                        Button(action: {
-                            focusField = nil
-                        }) {
-                            Image(systemName: "keyboard.chevron.compact.down")
-                                .font(.themeSubhead1)
-                                .foregroundColor(.themeLeah)
-                        }
-                        .frame(maxWidth: .infinity)
-                    }
-                    .padding(.horizontal, -16)
-                    .frame(maxWidth: .infinity)
-                }
-            }
-        }
     }
 
     @ViewBuilder private func addressView() -> some View {
@@ -224,6 +188,7 @@ struct PreSendView: View {
             guard let sendData = viewModel.sendData else { return }
             let proceedToSend = {
                 if #available(iOS 17.0, *) {
+                    focusField = nil
                     path.append(ConfirmationData(
                         sendData: sendData.sendData,
                         address: sendData.address

@@ -7,57 +7,57 @@ struct MarketAdvancedSearchBlockchainsView: View {
     @Binding var isPresented: Bool
 
     var body: some View {
-        VStack(spacing: 0) {
-            HStack(spacing: .margin16) {
-                Image("circle_portfolio_24").themeIcon(color: .themeJacob)
-                Text("market.advanced_search.blockchains".localized).themeHeadline2()
-                Button(action: { isPresented = false }) { Image("close_3_24").themeIcon() }
-            }
-            .padding(.horizontal, .margin32)
-            .padding(.vertical, .margin24)
-
-            BottomGradientWrapper(backgroundColor: .themeLawrence) {
-                ScrollView {
-                    VStack(spacing: .margin24) {
-                        ListSection {
-                            ClickableRow {
-                                viewModel.blockchains = Set()
-                            } content: {
-                                Text("selector.any".localized).themeBody(color: .themeGray)
-
-                                if viewModel.blockchains.isEmpty {
-                                    Image("check_1_20").themeIcon(color: .themeJacob)
-                                }
-                            }
-
-                            ForEach(viewModel.allBlockchains) { blockchain in
+        ThemeNavigationStack {
+            ThemeView {
+                BottomGradientWrapper {
+                    ScrollView {
+                        VStack(spacing: .margin24) {
+                            ListSection {
                                 ClickableRow {
-                                    if viewModel.blockchains.contains(blockchain) {
-                                        viewModel.blockchains.remove(blockchain)
-                                    } else {
-                                        viewModel.blockchains.insert(blockchain)
-                                    }
+                                    viewModel.blockchains = Set()
                                 } content: {
-                                    Text(blockchain.name).themeBody()
+                                    Text("selector.any".localized).themeBody(color: .themeGray)
 
-                                    if viewModel.blockchains.contains(blockchain) {
+                                    if viewModel.blockchains.isEmpty {
                                         Image("check_1_20").themeIcon(color: .themeJacob)
+                                    }
+                                }
+
+                                ForEach(viewModel.allBlockchains) { blockchain in
+                                    ClickableRow {
+                                        if viewModel.blockchains.contains(blockchain) {
+                                            viewModel.blockchains.remove(blockchain)
+                                        } else {
+                                            viewModel.blockchains.insert(blockchain)
+                                        }
+                                    } content: {
+                                        Text(blockchain.name).themeBody()
+
+                                        if viewModel.blockchains.contains(blockchain) {
+                                            Image("check_1_20").themeIcon(color: .themeJacob)
+                                        }
                                     }
                                 }
                             }
                         }
+                        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                     }
-                    .themeListStyle(.bordered)
-                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+                } bottomContent: {
+                    Button(buttonTitle()) {
+                        isPresented = false
+                    }
+                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 }
-            } bottomContent: {
-                Button(buttonTitle()) {
-                    isPresented = false
+            }
+            .navigationTitle("market.advanced_search.blockchains".localized)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button("button.cancel".localized) {
+                        isPresented = false
+                    }
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
             }
         }
-        .background(Color.themeLawrence)
     }
 
     func buttonTitle() -> String {

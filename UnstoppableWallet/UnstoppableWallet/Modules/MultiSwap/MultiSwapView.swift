@@ -17,27 +17,43 @@ struct MultiSwapView: View {
 
     var body: some View {
         ThemeView {
-            ScrollView {
-                VStack(spacing: 12) {
-                    VStack(spacing: 16) {
+            BottomGradientWrapper {
+                ScrollView {
+                    VStack(spacing: 12) {
                         VStack(spacing: 8) {
                             amountsView()
-                            availableBalanceView(value: balanceValue())
+
+                            if viewModel.currentQuote == nil {
+                                availableBalanceView(value: balanceValue())
+                            }
                         }
 
-                        buttonView()
+                        if let currentQuote = viewModel.currentQuote {
+                            quoteView(quote: currentQuote)
+                            quoteCautionsView(quote: currentQuote)
+                        }
                     }
-
-                    if let currentQuote = viewModel.currentQuote {
-                        quoteView(quote: currentQuote)
-                        quoteCautionsView(quote: currentQuote)
-                    }
+                    .padding(EdgeInsets(top: 8, leading: 16, bottom: 32, trailing: 16))
                 }
-                .padding(EdgeInsets(top: 8, leading: 16, bottom: 32, trailing: 16))
+                .onTapGesture {
+                    isInputActive = false
+                }
+            } bottomContent: {
+                buttonView()
+            } keyboardContent: {
+                AmountAccessoryView(
+                    visible: isInputActive,
+                    hasPercents: viewModel.availableBalance != nil,
+                    onPercent: { percent in
+                        viewModel.setAmountIn(percent: percent)
+                        isInputActive = false
+                    },
+                    onTrash: {
+                        viewModel.clearAmountIn()
+                    }
+                )
             }
-            .onTapGesture {
-                isInputActive = false
-            }
+            .animation(.easeOut(duration: 0.25), value: isInputActive)
         }
         .onAppear {
             viewModel.autoQuoteIfRequired()
@@ -109,59 +125,6 @@ struct MultiSwapView: View {
                     Text("\(viewModel.currency.symbol)0")
                         .themeBody(color: .themeAndy)
                         .frame(height: 22)
-                }
-            }
-            .toolbar {
-                ToolbarItemGroup(placement: .keyboard) {
-                    if isInputActive {
-                        HStack(spacing: 0) {
-                            if viewModel.availableBalance != nil {
-                                ForEach(1 ... 4, id: \.self) { multiplier in
-                                    let percent = multiplier * 25
-
-                                    Button(action: {
-                                        viewModel.setAmountIn(percent: percent)
-                                        isInputActive = false
-                                    }) {
-                                        Text("\(percent)%").textSubhead1(color: .themeLeah)
-                                    }
-                                    .frame(maxWidth: .infinity)
-
-                                    RoundedRectangle(cornerRadius: 0.5, style: .continuous)
-                                        .fill(Color.themeBlade)
-                                        .frame(width: 1)
-                                        .frame(maxHeight: .infinity)
-                                }
-                            } else {
-                                Spacer()
-                            }
-
-                            Button(action: {
-                                viewModel.clearAmountIn()
-                            }) {
-                                Image(systemName: "trash")
-                                    .font(.themeSubhead1)
-                                    .foregroundColor(.themeLeah)
-                            }
-                            .frame(maxWidth: .infinity)
-
-                            RoundedRectangle(cornerRadius: 0.5, style: .continuous)
-                                .fill(Color.themeBlade)
-                                .frame(width: 1)
-                                .frame(maxHeight: .infinity)
-
-                            Button(action: {
-                                isInputActive = false
-                            }) {
-                                Image(systemName: "keyboard.chevron.compact.down")
-                                    .font(.themeSubhead1)
-                                    .foregroundColor(.themeLeah)
-                            }
-                            .frame(maxWidth: .infinity)
-                        }
-                        .padding(.horizontal, -16)
-                        .frame(maxWidth: .infinity)
-                    }
                 }
             }
 
@@ -312,11 +275,13 @@ struct MultiSwapView: View {
                         viewModel.onAcceptTerms()
 
                         DispatchQueue.main.async {
+                            isInputActive = false
                             sendPresented = true
                         }
                     }
                 }
             } else {
+                isInputActive = false
                 sendPresented = true
             }
         }

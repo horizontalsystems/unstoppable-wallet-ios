@@ -2959,6 +2959,8 @@
 		D316BB992F28915600D37755 /* BirthdayInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D316BB972F28914900D37755 /* BirthdayInputView.swift */; };
 		D316BB9B2F2891A500D37755 /* BirthdayInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D316BB9A2F28919E00D37755 /* BirthdayInputViewModel.swift */; };
 		D316BB9C2F2891A500D37755 /* BirthdayInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D316BB9A2F28919E00D37755 /* BirthdayInputViewModel.swift */; };
+		D31C167A2F34C0350084B308 /* AmountAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C16792F34C0340084B308 /* AmountAccessoryView.swift */; };
+		D31C167B2F34C0350084B308 /* AmountAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C16792F34C0340084B308 /* AmountAccessoryView.swift */; };
 		D31C4760238BF176008CB818 /* MnemonicDerivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C4759238BF175008CB818 /* MnemonicDerivation.swift */; };
 		D31C4761238BF176008CB818 /* MnemonicDerivation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C4759238BF175008CB818 /* MnemonicDerivation.swift */; };
 		D31C4763238BF176008CB818 /* FeeRateState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D31C475A238BF175008CB818 /* FeeRateState.swift */; };
@@ -5118,6 +5120,7 @@
 		D31369882BEA188D00BA6B5B /* ZcashPreSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashPreSendHandler.swift; sourceTree = "<group>"; };
 		D316BB972F28914900D37755 /* BirthdayInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayInputView.swift; sourceTree = "<group>"; };
 		D316BB9A2F28919E00D37755 /* BirthdayInputViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayInputViewModel.swift; sourceTree = "<group>"; };
+		D31C16792F34C0340084B308 /* AmountAccessoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountAccessoryView.swift; sourceTree = "<group>"; };
 		D31C4759238BF175008CB818 /* MnemonicDerivation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MnemonicDerivation.swift; sourceTree = "<group>"; };
 		D31C475A238BF175008CB818 /* FeeRateState.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeeRateState.swift; sourceTree = "<group>"; };
 		D31C99C82F16461E00A82358 /* SwapTermsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapTermsView.swift; sourceTree = "<group>"; };
@@ -5924,6 +5927,7 @@
 		11B3546A6E6F3CC013C9FF44 /* SwiftUI */ = {
 			isa = PBXGroup;
 			children = (
+				D31C16792F34C0340084B308 /* AmountAccessoryView.swift */,
 				D37046722F1123D200C990BE /* DefenseSystemView.swift */,
 				D370466F2F1123BB00C990BE /* BubbleView.swift */,
 				6BA971C52ED56C5D00DEC017 /* SectionHeader.swift */,
@@ -11480,6 +11484,7 @@
 				11B358623111DC1A8ED499DC /* EvmAddressViewModel.swift in Sources */,
 				11B351FC393EDD17C3487796 /* SelectorModule.swift in Sources */,
 				D3E1E86B2C1C3AD600E07052 /* CoinReportsViewModel.swift in Sources */,
+				D31C167A2F34C0350084B308 /* AmountAccessoryView.swift in Sources */,
 				11B356D9182DD8D8ACFC97D5 /* BottomSheetModule.swift in Sources */,
 				11B35197E2FD1BD9E533E967 /* BottomSheetViewController.swift in Sources */,
 				2FA5D20BC28280786A0FC3FE /* DropDownListCell.swift in Sources */,
@@ -12519,6 +12524,7 @@
 				1A5645D6AC7D344E6D3D0CAF /* AppVersion_v_0_20.swift in Sources */,
 				1A564699CFB7CCE8BD3E5245 /* AppVersionStorage.swift in Sources */,
 				11B35C59583AFCDFD828B9D1 /* TextFieldStackView.swift in Sources */,
+				D31C167B2F34C0350084B308 /* AmountAccessoryView.swift in Sources */,
 				11B356B6BEB9562F670DFAC5 /* Caution.swift in Sources */,
 				6B93AF9A2E5D901000A55120 /* StellarProposalHandler.swift in Sources */,
 				11B350F9484020EFF74EFF1F /* MnemonicInputCell.swift in Sources */,
