@@ -1,17 +1,26 @@
 import SwiftUI
 
-struct BottomGradientWrapper<Content: View, BottomContent: View>: View {
-    var backgroundColor: Color = .themeTyler
+struct BottomGradientWrapper<Content: View, BottomContent: View, KeyboardContent: View>: View {
+    private let content: Content
+    private let bottomContent: BottomContent
+    private let keyboardContent: KeyboardContent
 
-    @ViewBuilder let content: Content
-    @ViewBuilder let bottomContent: BottomContent
+    init(
+        @ViewBuilder content: () -> Content,
+        @ViewBuilder bottomContent: () -> BottomContent,
+        @ViewBuilder keyboardContent: () -> KeyboardContent = { EmptyView() }
+    ) {
+        self.content = content()
+        self.bottomContent = bottomContent()
+        self.keyboardContent = keyboardContent()
+    }
 
     var body: some View {
         VStack(spacing: 0) {
             content
                 .overlay(alignment: .bottom) {
                     LinearGradient(
-                        colors: [backgroundColor, .clear],
+                        colors: [.themeTyler, .clear],
                         startPoint: .bottom,
                         endPoint: .top
                     )
@@ -20,9 +29,9 @@ struct BottomGradientWrapper<Content: View, BottomContent: View>: View {
                 }
 
             bottomContent
-                .padding(.horizontal, 24)
-                .padding(.top, 8)
-                .padding(.bottom, 12)
+                .padding(EdgeInsets(top: 8, leading: 24, bottom: 16, trailing: 24))
+
+            keyboardContent
         }
     }
 }

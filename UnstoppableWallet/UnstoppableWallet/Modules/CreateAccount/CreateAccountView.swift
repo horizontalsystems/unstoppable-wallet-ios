@@ -130,14 +130,12 @@ struct CreateAccountView: View {
                         focusedField = nil
                     }
                 } bottomContent: {
-                    VStack(spacing: .margin16) {
-                        Button(action: {
-                            createAccount()
-                        }) {
-                            Text("create_wallet.create".localized)
-                        }
-                        .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                    Button(action: {
+                        createAccount()
+                    }) {
+                        Text("create_wallet.create".localized)
                     }
+                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 }
             }
             .onChange(of: viewModel.passphrase) { _ in clearCautions() }
