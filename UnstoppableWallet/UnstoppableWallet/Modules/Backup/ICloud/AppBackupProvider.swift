@@ -145,7 +145,7 @@ class AppBackupProvider {
 }
 
 extension AppBackupProvider {
-    func restore(raws: [RawWalletBackup]) {
+    private func restore(raws: [RawWalletBackup]) {
         let updated = raws.map { raw in
             let account = accountFactory.account(
                 type: raw.account.type,
@@ -226,7 +226,7 @@ extension AppBackupProvider {
 }
 
 extension AppBackupProvider {
-    func decrypt(walletBackup: WalletBackup, name: String, passphrase: String) throws -> RawWalletBackup {
+    private func decrypt(walletBackup: WalletBackup, name: String, passphrase: String) throws -> RawWalletBackup {
         let accountType = try AccountType.decrypt(
             crypto: walletBackup.crypto,
             type: walletBackup.type,
@@ -243,7 +243,7 @@ extension AppBackupProvider {
         return RawWalletBackup(account: account, enabledWallets: walletBackup.enabledWallets)
     }
 
-    func decrypt(fullBackup: FullBackup, passphrase: String) throws -> RawFullBackup {
+    private func decrypt(fullBackup: FullBackup, passphrase: String) throws -> RawFullBackup {
         let wallets = try fullBackup.wallets
             .map { try decrypt(walletBackup: $0.walletBackup, name: $0.name, passphrase: passphrase) }
 
@@ -262,7 +262,22 @@ extension AppBackupProvider {
         )
     }
 
-    func encrypt(raw: RawFullBackup, passphrase: String) throws -> FullBackup {
+    func restore(restoredBackup: BackupModule.NamedSource, passphrase: String) throws -> RestoreResult {
+        switch restoredBackup.source {
+        case let .wallet(walletBackup):
+            let rawBackup = try decrypt(walletBackup: walletBackup, name: restoredBackup.name, passphrase: passphrase)
+            if walletBackup.version == 2 { // in 2th version we use enabled_wallets and just restore wallet.
+                restore(raws: [rawBackup])
+            }
+
+            return .restoredAccount(rawBackup)
+        case let .full(fullBackup):
+            let rawBackup = try decrypt(fullBackup: fullBackup, passphrase: passphrase)
+            return .restoredFullBackup(rawBackup)
+        }
+    }
+
+    func encrypt(raw: RawFullBackup, passphrase: String, keyBased: Bool = false) throws -> FullBackup {
         let wallets = try raw.accounts.map {
             let walletBackup = try Self.encrypt(account: $0.account, wallets: $0.enabledWallets, passphrase: passphrase)
             return RestoreCloudModule.RestoredBackup(name: $0.account.name, walletBackup: walletBackup)
@@ -283,11 +298,12 @@ extension AppBackupProvider {
             contacts: contacts,
             settings: settingsBackup,
             version: AppBackupProvider.version,
-            timestamp: Date().timeIntervalSince1970.rounded()
+            timestamp: Date().timeIntervalSince1970.rounded(),
+            keyBased: keyBased ? true : nil
         )
     }
 
-    static func encrypt(account: Account, wallets: [WalletBackup.EnabledWallet], passphrase: String) throws -> WalletBackup {
+    static func encrypt(account: Account, wallets: [WalletBackup.EnabledWallet], passphrase: String, keyBased: Bool = false) throws -> WalletBackup {
         let message = account.type.uniqueId(hashed: false)
         let crypto = try BackupCrypto.encrypt(data: message, passphrase: passphrase)
 
@@ -299,12 +315,19 @@ extension AppBackupProvider {
             isManualBackedUp: account.backedUp,
             isFileBackedUp: account.fileBackedUp,
             version: Self.version,
-            timestamp: Date().timeIntervalSince1970.rounded()
+            timestamp: Date().timeIntervalSince1970.rounded(),
+            keyBased: keyBased ? true : nil
         )
     }
 }
 
 extension AppBackupProvider {
+    enum RestoreResult {
+        case restoredAccount(RawWalletBackup)
+        case restoredFullBackup(RawFullBackup)
+        case success(AccountType)
+    }
+
     enum CodingError: Error {
         case invalidPassword
         case emptyParameters

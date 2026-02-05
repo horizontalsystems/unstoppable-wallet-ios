@@ -1,8 +1,6 @@
 import Combine
-
 import Foundation
 import SectionsTableView
-
 import UIKit
 
 class RestoreCloudViewController: ThemeViewController {
@@ -83,6 +81,53 @@ class RestoreCloudViewController: ThemeViewController {
                 self?.deleteBackupCompleted(successful: $0)
             }.store(in: &cancellables)
 
+        viewModel.openSelectCoinsPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.openSelectCoins(rawBackup: $0)
+            }.store(in: &cancellables)
+
+        viewModel.openConfigurationPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.openConfiguration(rawBackup: $0)
+            }.store(in: &cancellables)
+
+        viewModel.successPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                HudHelper.instance.show(banner: .imported)
+                self?.onRestore()
+            }.store(in: &cancellables)
+
+        viewModel.showErrorPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { error in
+                HudHelper.instance.show(banner: .error(string: error))
+            }.store(in: &cancellables)
+
+        viewModel.fallbackToPassphrasePublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.openPassphraseScreen(item: $0)
+            }.store(in: &cancellables)
+
+        viewModel.$processing
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] processing in
+                self?.tableView.isUserInteractionEnabled = !processing
+            }.store(in: &cancellables)
+
+        viewModel.showLoadingPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { show in
+                if show {
+                    HudHelper.instance.show(banner: .decrypting)
+                } else {
+                    HudHelper.instance.hide()
+                }
+            }.store(in: &cancellables)
+
         tableView.buildSections()
     }
 
@@ -96,9 +141,40 @@ class RestoreCloudViewController: ThemeViewController {
     }
 
     private func restore(item: BackupModule.NamedSource) {
+        let isKeyBased: Bool
+        switch item.source {
+        case let .wallet(backup): isKeyBased = backup.keyBased ?? false
+        case let .full(backup): isKeyBased = backup.keyBased ?? false
+        }
+
+        if isKeyBased {
+            viewModel.restoreWithBiometry(item: item)
+        } else {
+            openPassphraseScreen(item: item)
+        }
+    }
+
+    private func openSelectCoins(rawBackup: RawWalletBackup) {
+        let statPage: StatPage = viewModel.sourceType == .wallet ? .importWalletFromCloud : .importFullFromCloud
+        let viewController = RestoreSelectModule.viewController(
+            accountName: rawBackup.account.name,
+            accountType: rawBackup.account.type,
+            statPage: statPage,
+            isManualBackedUp: rawBackup.account.backedUp,
+            isFileBackedUp: rawBackup.account.fileBackedUp,
+            onRestore: onRestore
+        )
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    private func openConfiguration(rawBackup: RawFullBackup) {
+        let viewController = RestoreFileConfigurationModule.viewController(rawBackup: rawBackup, statPage: .importFullFromCloud, onRestore: onRestore)
+        navigationController?.pushViewController(viewController, animated: true)
+    }
+
+    private func openPassphraseScreen(item: BackupModule.NamedSource) {
         let statPage: StatPage = viewModel.sourceType == .wallet ? .importWalletFromCloud : .importFullFromCloud
         let viewController = RestorePassphraseModule.viewController(item: item, statPage: statPage, onRestore: onRestore)
-
         navigationController?.pushViewController(viewController, animated: true)
     }
 

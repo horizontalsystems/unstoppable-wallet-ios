@@ -2088,6 +2088,8 @@
 		6BCD531A2A161F9200993F20 /* BackupService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD53182A161F9100993F20 /* BackupService.swift */; };
 		6BCD531C2A16203F00993F20 /* CloudBackupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD531B2A16203F00993F20 /* CloudBackupManager.swift */; };
 		6BCD531D2A16203F00993F20 /* CloudBackupManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCD531B2A16203F00993F20 /* CloudBackupManager.swift */; };
+		A1B2C3D4E5F60001AABBCC01 /* CloudBackupKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60001AABBCC00 /* CloudBackupKeyManager.swift */; };
+		A1B2C3D4E5F60001AABBCC02 /* CloudBackupKeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1B2C3D4E5F60001AABBCC00 /* CloudBackupKeyManager.swift */; };
 		6BD766402EA0E100008DDEA7 /* ZcashLightClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BD7663F2EA0E100008DDEA7 /* ZcashLightClientKit */; };
 		6BD766422EA0E109008DDEA7 /* ZcashLightClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BD766412EA0E109008DDEA7 /* ZcashLightClientKit */; };
 		6BD766442EA239CF008DDEA7 /* RecentlySentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BD766432EA239CF008DDEA7 /* RecentlySentManager.swift */; };
@@ -4692,6 +4694,7 @@
 		6BCD53112A161F4800993F20 /* BackupViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupViewController.swift; sourceTree = "<group>"; };
 		6BCD53182A161F9100993F20 /* BackupService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupService.swift; sourceTree = "<group>"; };
 		6BCD531B2A16203F00993F20 /* CloudBackupManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CloudBackupManager.swift; sourceTree = "<group>"; };
+		A1B2C3D4E5F60001AABBCC00 /* CloudBackupKeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudBackupKeyManager.swift; sourceTree = "<group>"; };
 		6BD766432EA239CF008DDEA7 /* RecentlySentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecentlySentManager.swift; sourceTree = "<group>"; };
 		6BD766462EA25667008DDEA7 /* ZcashReceiveAddressSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashReceiveAddressSelectView.swift; sourceTree = "<group>"; };
 		6BD766492EA25ABF008DDEA7 /* ZcashReceiveAddressSelectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZcashReceiveAddressSelectViewModel.swift; sourceTree = "<group>"; };
@@ -6059,6 +6062,7 @@
 				11B35FA360A91FDE3EB0B85C /* RateAppManager.swift */,
 				1A5646B6231F2C52F27526F7 /* BtcBlockchainManager.swift */,
 				6BCD531B2A16203F00993F20 /* CloudBackupManager.swift */,
+				A1B2C3D4E5F60001AABBCC00 /* CloudBackupKeyManager.swift */,
 				11B35EB9BA551F2F1AF7739D /* TermsManager.swift */,
 				2FA5D690E78A4568F9FD9554 /* LogRecordManager.swift */,
 				58AAA2B7F82F42442ED27A67 /* DownloadService.swift */,
@@ -10651,6 +10655,7 @@
 				2FA5D7DC6E8D68CD487D0825 /* LogRecordManager.swift in Sources */,
 				11B35A228EFA7F36B12A1FC9 /* UITabBarItem.swift in Sources */,
 				6BCD531D2A16203F00993F20 /* CloudBackupManager.swift in Sources */,
+				A1B2C3D4E5F60001AABBCC02 /* CloudBackupKeyManager.swift in Sources */,
 				58AAAF4236075971CC88F7ED /* SwapApproveService.swift in Sources */,
 				6BD766662EA6442D008DDEA7 /* ReceiveAddressBodyView.swift in Sources */,
 				D3C5986F2C1315AF00789D69 /* AttributedStringView.swift in Sources */,
@@ -12310,6 +12315,7 @@
 				2FA5D8190A8858830880C114 /* LogRecordManager.swift in Sources */,
 				11B357BD9D9681D0D79DDEBE /* UITabBarItem.swift in Sources */,
 				6BCD531C2A16203F00993F20 /* CloudBackupManager.swift in Sources */,
+				A1B2C3D4E5F60001AABBCC01 /* CloudBackupKeyManager.swift in Sources */,
 				58AAA996A8547DBE1BF378CE /* SwapApproveService.swift in Sources */,
 				6BD766652EA6442D008DDEA7 /* ReceiveAddressBodyView.swift in Sources */,
 				D3C5986E2C1315AF00789D69 /* AttributedStringView.swift in Sources */,

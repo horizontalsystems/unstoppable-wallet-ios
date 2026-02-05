@@ -1,6 +1,6 @@
 import Combine
-
 import Foundation
+import LocalAuthentication
 
 class BackupAppViewModel: ObservableObject {
     static let backupNamePrefix = "App Backup"
@@ -237,6 +237,28 @@ extension BackupAppViewModel {
     @MainActor
     private func show(error: Error) {
         HudHelper.instance.show(banner: .error(string: error.localizedDescription))
+    }
+
+    func onTapSaveBiometric() {
+        passwordButtonProcessing = true
+
+        let selectedIds = accountIds.filter { selected[$0] ?? false } + accounts(watch: true).map(\.id)
+        Task {
+            do {
+                let passphrase = try await Core.shared.cloudBackupKeyManager.authenticateAndGetPassphrase()
+                try cloudBackupManager.save(accountIds: selectedIds, passphrase: passphrase, name: name, keyBased: true)
+                passwordButtonProcessing = false
+                await showSuccess()
+
+                stat(page: .exportFullToCloud, event: .exportFull)
+                dismissSubject.send()
+            } catch {
+                passwordButtonProcessing = false
+                if !(error is LAError) {
+                    await show(error: error)
+                }
+            }
+        }
     }
 
     func onTapSave() {

@@ -9,6 +9,7 @@ class WalletBackup: Codable {
     let version: Int
     let timestamp: TimeInterval?
     let enabledWallets: [EnabledWallet]
+    let keyBased: Bool?
 
     enum CodingKeys: String, CodingKey {
         case crypto
@@ -19,9 +20,10 @@ class WalletBackup: Codable {
         case isFileBackedUp = "file_backup"
         case version
         case timestamp
+        case keyBased = "key_based"
     }
 
-    init(crypto: BackupCrypto, enabledWallets: [EnabledWallet], id: String, type: AccountType.Abstract, isManualBackedUp: Bool, isFileBackedUp: Bool, version: Int, timestamp: TimeInterval) {
+    init(crypto: BackupCrypto, enabledWallets: [EnabledWallet], id: String, type: AccountType.Abstract, isManualBackedUp: Bool, isFileBackedUp: Bool, version: Int, timestamp: TimeInterval, keyBased: Bool? = nil) {
         self.crypto = crypto
         self.enabledWallets = enabledWallets
         self.id = id
@@ -30,6 +32,7 @@ class WalletBackup: Codable {
         self.isFileBackedUp = isFileBackedUp
         self.version = version
         self.timestamp = timestamp
+        self.keyBased = keyBased
     }
 
     required init(from decoder: Decoder) throws {
@@ -44,6 +47,7 @@ class WalletBackup: Codable {
         self.isFileBackedUp = isFileBackedUp ?? false
         version = try container.decode(Int.self, forKey: .version)
         timestamp = try? container.decode(TimeInterval.self, forKey: .timestamp)
+        keyBased = try? container.decode(Bool.self, forKey: .keyBased)
     }
 
     func encode(to encoder: Encoder) throws {
@@ -56,6 +60,9 @@ class WalletBackup: Codable {
         try container.encode(isFileBackedUp, forKey: .isFileBackedUp)
         try container.encode(version, forKey: .version)
         try container.encode(timestamp, forKey: .timestamp)
+        if let keyBased {
+            try container.encode(keyBased, forKey: .keyBased)
+        }
     }
 }
 

@@ -95,6 +95,7 @@ class Core {
 
     let appBackupProvider: AppBackupProvider
     let cloudBackupManager: CloudBackupManager
+    let cloudBackupKeyManager: CloudBackupKeyManager
 
     let statManager: StatManager
 
@@ -334,6 +335,10 @@ class Core {
         cloudBackupManager = CloudBackupManager(
             ubiquityContainerIdentifier: AppConfig.sharedCloudContainer,
             appBackupProvider: appBackupProvider,
+            logger: logger
+        )
+        cloudBackupKeyManager = CloudBackupKeyManager(
+            biometryManager: biometryManager,
             logger: logger
         )
 

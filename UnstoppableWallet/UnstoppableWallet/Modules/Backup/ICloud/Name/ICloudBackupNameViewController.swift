@@ -1,5 +1,5 @@
 import Combine
-
+import LocalAuthentication
 import SectionsTableView
 import SnapKit
 import UIExtensions
@@ -110,8 +110,33 @@ class ICloudBackupNameViewController: KeyboardAwareViewController {
             return
         }
 
-        let controller = BackupCloudModule.backupPassword(account: viewModel.account, name: name)
-        navigationController?.pushViewController(controller, animated: true)
+        let cloudBackupKeyManager = Core.shared.cloudBackupKeyManager
+        if cloudBackupKeyManager.isAvailable {
+            performBiometricBackup(name: name)
+        } else {
+            let controller = BackupCloudModule.backupPassword(account: viewModel.account, name: name)
+            navigationController?.pushViewController(controller, animated: true)
+        }
+    }
+
+    private func performBiometricBackup(name: String) {
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        nextButton.isEnabled = false
+
+        Task { @MainActor in
+            do {
+                let passphrase = try await Core.shared.cloudBackupKeyManager.authenticateAndGetPassphrase()
+                try Core.shared.cloudBackupManager.save(account: viewModel.account, passphrase: passphrase, name: name, keyBased: true)
+                HudHelper.instance.show(banner: .savedToCloud)
+                dismiss(animated: true)
+            } catch {
+                navigationItem.rightBarButtonItem?.isEnabled = true
+                nextButton.isEnabled = true
+                if !(error is LAError) {
+                    HudHelper.instance.show(banner: .error(string: error.localizedDescription))
+                }
+            }
+        }
     }
 }
 
