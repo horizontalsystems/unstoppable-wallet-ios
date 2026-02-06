@@ -10,10 +10,10 @@ extension MultiSwapViewModel {
             MayaMultiSwapProvider(),
             AllBridgeMultiSwapProvider(),
             USwapMultiSwapProvider(provider: .near, apiKey: AppConfig.uswapApiKey),
-            USwapMultiSwapProvider(provider: .quickEx, apiKey: AppConfig.uswapApiKey),
-            USwapMultiSwapProvider(provider: .letsExchange, apiKey: AppConfig.uswapApiKey),
-            USwapMultiSwapProvider(provider: .stealthex, apiKey: AppConfig.uswapApiKey),
-            USwapMultiSwapProvider(provider: .swapuz, apiKey: AppConfig.uswapApiKey),
+            // USwapMultiSwapProvider(provider: .quickEx, apiKey: AppConfig.uswapApiKey),
+            // USwapMultiSwapProvider(provider: .letsExchange, apiKey: AppConfig.uswapApiKey),
+            // USwapMultiSwapProvider(provider: .stealthex, apiKey: AppConfig.uswapApiKey),
+            // USwapMultiSwapProvider(provider: .swapuz, apiKey: AppConfig.uswapApiKey),
         ]
 
         // if let kit = try? UniswapKit.Kit.instance() {
