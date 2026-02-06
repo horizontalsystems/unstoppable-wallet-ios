@@ -43,35 +43,3 @@ enum PriceImpact {
         "-\(abs(value).rounded(decimal: 2).description)%"
     }
 }
-
-struct SwapMemo {
-    var function: String
-    var asset: String
-    var destination: String
-    var refund: String?
-    var params: [String]
-
-    static func parse(_ memo: String) -> SwapMemo? {
-        let parts = memo.components(separatedBy: ":")
-        guard parts.count >= 3 else { return nil }
-
-        let destinationParts = parts[2].components(separatedBy: "/")
-
-        return SwapMemo(
-            function: parts[0],
-            asset: parts[1],
-            destination: destinationParts[0],
-            refund: destinationParts.at(index: 1),
-            params: parts.count > 3 ? Array(parts[3...]) : []
-        )
-    }
-
-    func build() -> String {
-        var components = [String]()
-        components.append(contentsOf: [function, asset])
-        components.append([destination, refund].compactMap { $0 }.joined(separator: "/"))
-        components.append(contentsOf: params)
-
-        return components.joined(separator: ":")
-    }
-}
