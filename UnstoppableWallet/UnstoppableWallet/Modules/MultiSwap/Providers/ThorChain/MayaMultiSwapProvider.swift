@@ -8,6 +8,7 @@ import ZcashLightClientKit
 
 class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
     private static let insufficientBalanceError = "insufficient balance"
+    private static let appendRefundManually = true
 
     private let testNetManager = Core.shared.testNetManager
     private var temporaryDestinationAddresses = [BlockchainType: String]()
@@ -32,14 +33,25 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
 
     private func zcashSwapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal) async throws -> SwapQuote {
         let refundAddress = try await resolveDestination(recipient: nil, token: tokenIn)
-        let params: Parameters = [
-            "refund_address": refundAddress,
-        ]
+        var params = Parameters()
+
+        // add refund_address for automatic request full memo field. Avoid issue with long memo > 80 bytes
+        if !Self.appendRefundManually {
+            params["refund_address"] = refundAddress
+        }
 
         let swapQuote = try await super.swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, params: params)
 
         let unifiedAddress = try await inboundUnifiedAddress(tokenIn: tokenIn)
-        return SwapQuote(quote: swapQuote, unifiedAddress: unifiedAddress)
+
+        // if we provide refund automatically just use memo from response, otherwise append refund_address manually
+        var memo: String = swapQuote.memo
+        if Self.appendRefundManually, var swapMemo = SwapMemo.parse(swapQuote.memo) {
+            swapMemo.refund = refundAddress
+            memo = swapMemo.build()
+        }
+
+        return SwapQuote(quote: swapQuote, memo: memo, unifiedAddress: unifiedAddress)
     }
 
     private func proposal(tokenIn: Token, swapQuote: SwapQuote, amountIn: Decimal) async throws -> Proposal {
@@ -53,7 +65,7 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
             throw SendTransactionError.invalidAddress
         }
 
-        let transparentOutput = ZcashAdapter.TransferOutput(amount: amountIn, address: tRecipient, memo: nil)
+        let transparentOutput = ZcashAdapter.TransferOutput(amount: amountIn.rounded(decimal: 8), address: tRecipient, memo: nil)
         let memoOutput = try ZcashAdapter.TransferOutput(
             amount: 0,
             address: uRecipient,
@@ -146,9 +158,20 @@ extension MayaMultiSwapProvider {
         let unifiedAddress: String
         let quote: BaseThorChainMultiSwapProvider.SwapQuote
 
-        init(quote: BaseThorChainMultiSwapProvider.SwapQuote, unifiedAddress: String) {
+        init(quote: BaseThorChainMultiSwapProvider.SwapQuote, memo: String, unifiedAddress: String) {
             self.unifiedAddress = unifiedAddress
-            self.quote = quote
+            self.quote = .init(
+                inboundAddress: quote.inboundAddress,
+                expectedAmountOut: quote.expectedAmountOut,
+                memo: memo,
+                router: quote.router,
+                affiliateFee: quote.affiliateFee,
+                outboundFee: quote.outboundFee,
+                liquidityFee: quote.liquidityFee,
+                totalFee: quote.totalFee,
+                dustThreshold: quote.dustThreshold,
+                totalSwapSeconds: quote.totalSwapSeconds
+            )
         }
     }
 }
