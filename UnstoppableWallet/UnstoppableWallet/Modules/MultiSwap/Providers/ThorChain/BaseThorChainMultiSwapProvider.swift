@@ -352,19 +352,6 @@ extension BaseThorChainMultiSwapProvider {
         let dustThreshold: Int?
         let totalSwapSeconds: TimeInterval?
 
-        init(inboundAddress: String, expectedAmountOut: Decimal, memo: String, router: String?, affiliateFee: Decimal, outboundFee: Decimal, liquidityFee: Decimal, totalFee: Decimal, dustThreshold: Int?, totalSwapSeconds: TimeInterval?) {
-            self.inboundAddress = inboundAddress
-            self.expectedAmountOut = expectedAmountOut
-            self.memo = memo
-            self.router = router
-            self.affiliateFee = affiliateFee
-            self.outboundFee = outboundFee
-            self.liquidityFee = liquidityFee
-            self.totalFee = totalFee
-            self.dustThreshold = dustThreshold
-            self.totalSwapSeconds = totalSwapSeconds
-        }
-
         init(map: Map) throws {
             inboundAddress = try map.value("inbound_address")
             expectedAmountOut = try map.value("expected_amount_out", using: Transform.stringToDecimalTransform) / pow(10, 8)
