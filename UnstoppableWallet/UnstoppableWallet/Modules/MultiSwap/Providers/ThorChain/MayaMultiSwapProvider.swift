@@ -8,7 +8,6 @@ import ZcashLightClientKit
 
 class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
     private static let insufficientBalanceError = "insufficient balance"
-    private static let appendRefundManually = true
 
     private let testNetManager = Core.shared.testNetManager
     private var temporaryDestinationAddresses = [BlockchainType: String]()
@@ -35,23 +34,23 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         let refundAddress = try await resolveDestination(recipient: nil, token: tokenIn)
         var params = Parameters()
 
-        // add refund_address for automatic request full memo field. Avoid issue with long memo > 80 bytes
-        if !Self.appendRefundManually {
-            params["refund_address"] = refundAddress
+        // add refund_address for automatic request full memo field. Avoid issue with long memo using from_address=your unified_address
+        guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
+            throw SwapError.noZcashAdapter
         }
+
+        guard let fromAddress = adapter.uAddress?.stringEncoded else {
+            throw SendTransactionError.invalidAddress
+        }
+
+        params["from_address"] = fromAddress
+        params["refund_address"] = refundAddress
 
         let swapQuote = try await super.swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, params: params)
 
         let unifiedAddress = try await inboundUnifiedAddress(tokenIn: tokenIn)
 
-        // if we provide refund automatically just use memo from response, otherwise append refund_address manually
-        var memo: String = swapQuote.memo
-        if Self.appendRefundManually, var swapMemo = SwapMemo.parse(swapQuote.memo) {
-            swapMemo.refund = refundAddress
-            memo = swapMemo.build()
-        }
-
-        return SwapQuote(quote: swapQuote, memo: memo, unifiedAddress: unifiedAddress)
+        return SwapQuote(quote: swapQuote, unifiedAddress: unifiedAddress)
     }
 
     private func proposal(tokenIn: Token, swapQuote: SwapQuote, amountIn: Decimal) async throws -> Proposal {
@@ -158,20 +157,9 @@ extension MayaMultiSwapProvider {
         let unifiedAddress: String
         let quote: BaseThorChainMultiSwapProvider.SwapQuote
 
-        init(quote: BaseThorChainMultiSwapProvider.SwapQuote, memo: String, unifiedAddress: String) {
+        init(quote: BaseThorChainMultiSwapProvider.SwapQuote, unifiedAddress: String) {
             self.unifiedAddress = unifiedAddress
-            self.quote = .init(
-                inboundAddress: quote.inboundAddress,
-                expectedAmountOut: quote.expectedAmountOut,
-                memo: memo,
-                router: quote.router,
-                affiliateFee: quote.affiliateFee,
-                outboundFee: quote.outboundFee,
-                liquidityFee: quote.liquidityFee,
-                totalFee: quote.totalFee,
-                dustThreshold: quote.dustThreshold,
-                totalSwapSeconds: quote.totalSwapSeconds
-            )
+            self.quote = quote
         }
     }
 }
@@ -184,38 +172,6 @@ extension MayaMultiSwapProvider {
             switch self {
             case .noShieldedAddress: return "swap.maya.shielded_address.error".localized
             }
-        }
-    }
-
-    struct SwapMemo {
-        var function: String
-        var asset: String
-        var destination: String
-        var refund: String?
-        var params: [String]
-
-        static func parse(_ memo: String) -> SwapMemo? {
-            let parts = memo.components(separatedBy: ":")
-            guard parts.count >= 3 else { return nil }
-
-            let destinationParts = parts[2].components(separatedBy: "/")
-
-            return SwapMemo(
-                function: parts[0],
-                asset: parts[1],
-                destination: destinationParts[0],
-                refund: destinationParts.at(index: 1),
-                params: parts.count > 3 ? Array(parts[3...]) : []
-            )
-        }
-
-        func build() -> String {
-            var components = [String]()
-            components.append(contentsOf: [function, asset])
-            components.append([destination, refund].compactMap { $0 }.joined(separator: "/"))
-            components.append(contentsOf: params)
-
-            return components.joined(separator: ":")
         }
     }
 }
