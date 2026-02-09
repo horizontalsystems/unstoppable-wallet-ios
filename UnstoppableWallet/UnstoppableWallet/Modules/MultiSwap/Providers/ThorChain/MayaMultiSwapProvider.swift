@@ -32,13 +32,24 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
 
     private func zcashSwapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal) async throws -> SwapQuote {
         let refundAddress = try await resolveDestination(recipient: nil, token: tokenIn)
-        let params: Parameters = [
-            "refund_address": refundAddress,
-        ]
+        var params = Parameters()
+
+        // add refund_address for automatic request full memo field. Avoid issue with long memo using from_address=your unified_address
+        guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
+            throw SwapError.noZcashAdapter
+        }
+
+        guard let fromAddress = adapter.uAddress?.stringEncoded else {
+            throw SendTransactionError.invalidAddress
+        }
+
+        params["from_address"] = fromAddress
+        params["refund_address"] = refundAddress
 
         let swapQuote = try await super.swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, params: params)
 
         let unifiedAddress = try await inboundUnifiedAddress(tokenIn: tokenIn)
+
         return SwapQuote(quote: swapQuote, unifiedAddress: unifiedAddress)
     }
 
@@ -53,7 +64,7 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
             throw SendTransactionError.invalidAddress
         }
 
-        let transparentOutput = ZcashAdapter.TransferOutput(amount: amountIn, address: tRecipient, memo: nil)
+        let transparentOutput = ZcashAdapter.TransferOutput(amount: amountIn.rounded(decimal: 8), address: tRecipient, memo: nil)
         let memoOutput = try ZcashAdapter.TransferOutput(
             amount: 0,
             address: uRecipient,

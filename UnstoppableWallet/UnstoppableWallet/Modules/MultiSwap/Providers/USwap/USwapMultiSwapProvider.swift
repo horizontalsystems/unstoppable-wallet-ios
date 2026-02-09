@@ -480,7 +480,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
         do {
             let memo = quote.memo.flatMap { try? Memo(string: $0) }
-            let output = ZcashAdapter.TransferOutput(amount: amountIn, address: adapterRecipient, memo: memo)
+            let output = ZcashAdapter.TransferOutput(amount: amountIn.rounded(decimal: 8), address: adapterRecipient, memo: memo)
             proposal = try await adapter.sendProposal(outputs: [output])
             totalFeeRequired = proposal?.totalFeeRequired()
 

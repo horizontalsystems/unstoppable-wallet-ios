@@ -121,6 +121,7 @@ class Core {
     let valueFormatter: CurrencyValueFormatter
 
     let swapAssetStorage: SwapAssetStorage
+    let swapProviderManager: MultiSwapProviderManager
 
     init() throws {
         let databaseURL = try FileManager.default
@@ -420,13 +421,6 @@ class Core {
         )
 
         swapAssetStorage = SwapAssetStorage(dbPool: dbPool)
-    }
-
-    func newSendEnabled(wallet _: Wallet) -> Bool {
-        true
-        // switch wallet.token.blockchainType {
-        // case .ton: return true
-        // default: return localStorage.newSendEnabled
-        // }
+        swapProviderManager = MultiSwapProviderManager(localStorage: localStorage, networkManager: networkManager, apiKey: AppConfig.uswapApiKey)
     }
 }

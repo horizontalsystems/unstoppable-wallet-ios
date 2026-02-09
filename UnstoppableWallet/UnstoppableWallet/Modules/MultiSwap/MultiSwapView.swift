@@ -11,7 +11,7 @@ struct MultiSwapView: View {
     @FocusState var isInputActive: Bool
 
     init(token: Token? = nil, onFinish: (() -> Void)? = nil) {
-        _viewModel = StateObject(wrappedValue: MultiSwapViewModel.instance(token: token))
+        _viewModel = StateObject(wrappedValue: MultiSwapViewModel(token: token))
         self.onFinish = onFinish
     }
 

@@ -8,6 +8,7 @@ class MultiSwapViewModel: ObservableObject {
     private let autoRefreshDuration: Double = 20
 
     private var cancellables = Set<AnyCancellable>()
+    private var providerCancellables = Set<AnyCancellable>()
     private var quotesTask: AnyTask?
     private var swapTask: AnyTask?
     private var rateInCancellable: AnyCancellable?
@@ -16,7 +17,8 @@ class MultiSwapViewModel: ObservableObject {
 
     private var balanceDisposeBag = DisposeBag()
 
-    private let providers: [IMultiSwapProvider]
+    private var providers: [IMultiSwapProvider]
+    private let swapProviderManager = Core.shared.swapProviderManager
     private let currencyManager = Core.shared.currencyManager
     private let marketKit = Core.shared.marketKit
     private let walletManager = Core.shared.walletManager
@@ -289,8 +291,8 @@ class MultiSwapViewModel: ObservableObject {
 
     @Published var priceImpact: Decimal?
 
-    init(providers: [IMultiSwapProvider], token: Token? = nil) {
-        self.providers = providers
+    init(token: Token? = nil) {
+        providers = swapProviderManager.providers
         currency = currencyManager.baseCurrency
 
         defer {
@@ -303,8 +305,26 @@ class MultiSwapViewModel: ObservableObject {
             .sink { [weak self] in self?.currency = $0 }
             .store(in: &cancellables)
 
+        swapProviderManager.$providers
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in
+                self?.providers = $0
+                self?.syncValidProviders()
+                self?.syncQuotes(silent: true)
+                self?.subscribeToProviders()
+            }
+            .store(in: &cancellables)
+
+        subscribeToProviders()
+
         syncFiatAmountIn()
         syncFiatAmountOut()
+
+        swapProviderManager.sync()
+    }
+
+    func subscribeToProviders() {
+        providerCancellables = Set<AnyCancellable>()
 
         for provider in providers {
             if let syncPublisher = provider.syncPublisher {
@@ -314,7 +334,7 @@ class MultiSwapViewModel: ObservableObject {
                         self?.syncValidProviders()
                         self?.syncQuotes(silent: true)
                     }
-                    .store(in: &cancellables)
+                    .store(in: &providerCancellables)
             }
         }
     }
@@ -589,5 +609,11 @@ extension MultiSwapViewModel {
             case .warning, .forbidden: return .error
             }
         }
+    }
+}
+
+enum PriceImpact {
+    static func display(value: Decimal) -> String {
+        "-\(abs(value).rounded(decimal: 2).description)%"
     }
 }
