@@ -87,6 +87,8 @@ extension LowAmountCondition {
         "BSC-USD": .init(1),
         "TRX": .init(1),
         "ETH": .init(0.0005),
+        "BNB": .init(0.002),
+        "POL": .init(1),
     ]
 
     struct AmountLimit {
