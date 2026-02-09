@@ -12,7 +12,7 @@ struct StellarWalletTokenView: View {
     }
 
     var body: some View {
-        BaseWalletTokenView(wallet: wallet) { walletTokenViewModel, transactionsViewModel in
+        ToolbarWalletTokenView(wallet: wallet) { walletTokenViewModel, transactionsViewModel in
             ViewWithTransactionList(
                 transactionListStatus: transactionsViewModel.transactionListStatus,
                 content: {
