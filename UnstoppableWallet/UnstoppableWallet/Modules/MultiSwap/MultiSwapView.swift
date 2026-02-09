@@ -14,7 +14,7 @@ struct MultiSwapView: View {
     @State private var shouldPresentTokenIn: Bool
 
     init(token: Token? = nil) {
-        _viewModel = StateObject(wrappedValue: MultiSwapViewModel.instance(token: token))
+        _viewModel = StateObject(wrappedValue: MultiSwapViewModel(token: token))
         shouldPresentTokenIn = token == nil
     }
 
