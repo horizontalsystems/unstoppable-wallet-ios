@@ -2026,6 +2026,10 @@
 		6BBB92BB2D11648E00112409 /* PromoCodeBottomSheetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBB92B92D11648E00112409 /* PromoCodeBottomSheetViewModel.swift */; };
 		6BBE19102F306E9200B9E67D /* OutgoingAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBE190F2F306E8D00B9E67D /* OutgoingAddress.swift */; };
 		6BBE19112F306E9200B9E67D /* OutgoingAddress.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBE190F2F306E8D00B9E67D /* OutgoingAddress.swift */; };
+		6BBE191D2F39AFAA00B9E67D /* ToolbarWalletTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBE191B2F39AFAA00B9E67D /* ToolbarWalletTokenView.swift */; };
+		6BBE191E2F39AFAA00B9E67D /* TronToolbarWalletTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBE191C2F39AFAA00B9E67D /* TronToolbarWalletTokenView.swift */; };
+		6BBE191F2F39AFAA00B9E67D /* ToolbarWalletTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBE191B2F39AFAA00B9E67D /* ToolbarWalletTokenView.swift */; };
+		6BBE19202F39AFAA00B9E67D /* TronToolbarWalletTokenView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BBE191C2F39AFAA00B9E67D /* TronToolbarWalletTokenView.swift */; };
 		6BCAADD02ED9630E00ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAADCF2ED962F400ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift */; };
 		6BCAADD12ED9630E00ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAADCF2ED962F400ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift */; };
 		6BCAADD52EDC08A100ECB0F1 /* PremiumFeaturesWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BCAADD42EDC089400ECB0F1 /* PremiumFeaturesWrapper.swift */; };
@@ -4663,6 +4667,8 @@
 		6BBB92B62D11646600112409 /* PromoCodeBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCodeBottomSheetView.swift; sourceTree = "<group>"; };
 		6BBB92B92D11648E00112409 /* PromoCodeBottomSheetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PromoCodeBottomSheetViewModel.swift; sourceTree = "<group>"; };
 		6BBE190F2F306E8D00B9E67D /* OutgoingAddress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OutgoingAddress.swift; sourceTree = "<group>"; };
+		6BBE191B2F39AFAA00B9E67D /* ToolbarWalletTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarWalletTokenView.swift; sourceTree = "<group>"; };
+		6BBE191C2F39AFAA00B9E67D /* TronToolbarWalletTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronToolbarWalletTokenView.swift; sourceTree = "<group>"; };
 		6BCAADCF2ED962F400ECB0F1 /* PremiumFeaturesInfoBottomSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumFeaturesInfoBottomSheetView.swift; sourceTree = "<group>"; };
 		6BCAADD42EDC089400ECB0F1 /* PremiumFeaturesWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumFeaturesWrapper.swift; sourceTree = "<group>"; };
 		6BCAB39A2F1A114E00820806 /* TronSendHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronSendHelper.swift; sourceTree = "<group>"; };
@@ -8592,6 +8598,8 @@
 		ABC9A15DEE3E0185266FF14F /* Token */ = {
 			isa = PBXGroup;
 			children = (
+				6BBE191B2F39AFAA00B9E67D /* ToolbarWalletTokenView.swift */,
+				6BBE191C2F39AFAA00B9E67D /* TronToolbarWalletTokenView.swift */,
 				6B93AFD72E67138700A55120 /* ViewWithTransactionList.swift */,
 				6B93AFD42E66C46100A55120 /* WalletInfoView.swift */,
 				D371A23A2E5C36F900D7D7F6 /* WalletTokenTopView.swift */,
@@ -10940,6 +10948,8 @@
 				D3AFAAF92E45FEF5004AB074 /* ColorStyle.swift in Sources */,
 				D36DE100272FD92F000BC916 /* SwapSelectProviderViewModel.swift in Sources */,
 				58AAAAEDC64AE5716BC07673 /* SwapSlippageViewModel.swift in Sources */,
+				6BBE191F2F39AFAA00B9E67D /* ToolbarWalletTokenView.swift in Sources */,
+				6BBE19202F39AFAA00B9E67D /* TronToolbarWalletTokenView.swift in Sources */,
 				D3E36B4F2DE9CCA7007F99CA /* TransactionsView.swift in Sources */,
 				58AAA56C780EF5C92C1D1A32 /* AddressResolutionProvider.swift in Sources */,
 				D38E5DEB2EF91C080049EB91 /* EvmMultiSwapQuote.swift in Sources */,
@@ -13063,6 +13073,8 @@
 				6BA8D2392D5A1DB00093D5C2 /* MarketSectorsViewModel.swift in Sources */,
 				11B354A3BC2968C083771FC1 /* BlockchainSettingsModule.swift in Sources */,
 				11B352841C5901ABCC0096C2 /* BlockchainSettingsViewModel.swift in Sources */,
+				6BBE191D2F39AFAA00B9E67D /* ToolbarWalletTokenView.swift in Sources */,
+				6BBE191E2F39AFAA00B9E67D /* TronToolbarWalletTokenView.swift in Sources */,
 				11B357C5FC1B7FDE86244DA5 /* SingleSelectorViewController.swift in Sources */,
 				D3DB51A82BD787490091BBDB /* MarketCoinsView.swift in Sources */,
 				11B35BE5E6974F580927CAFA /* RestoreService.swift in Sources */,

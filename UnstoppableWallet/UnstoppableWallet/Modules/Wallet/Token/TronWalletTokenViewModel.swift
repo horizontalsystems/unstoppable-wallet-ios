@@ -7,10 +7,12 @@ class TronWalletTokenViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     private var hasAppeared = false
+    private let watchAccount: Bool
     @Published var accountActive: Bool
 
-    init(tronKit: TronKit.Kit) {
+    init(tronKit: TronKit.Kit, wallet: Wallet) {
         self.tronKit = tronKit
+        watchAccount = wallet.account.watchAccount
         accountActive = tronKit.accountActive
 
         tronKit.trxBalancePublisher
@@ -34,12 +36,12 @@ class TronWalletTokenViewModel: ObservableObject {
 
         hasAppeared = true
 
-        if !accountActive {
+        if !accountActive, !watchAccount {
             showPopup()
         }
     }
 
-    private func showPopup() {
+    func showPopup() {
         DispatchQueue.main.async {
             Coordinator.shared.present(type: .bottomSheet) { isPresented in
                 BottomSheetView(

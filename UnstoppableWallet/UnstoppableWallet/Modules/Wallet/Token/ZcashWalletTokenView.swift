@@ -8,7 +8,7 @@ struct ZcashWalletTokenView: View {
     }
 
     var body: some View {
-        BaseWalletTokenView(wallet: viewModel.wallet) { walletTokenViewModel, transactionsViewModel in
+        ToolbarWalletTokenView(wallet: viewModel.wallet) { walletTokenViewModel, transactionsViewModel in
             ViewWithTransactionList(
                 transactionListStatus: transactionsViewModel.transactionListStatus,
                 content: {
