@@ -14,7 +14,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
 
     let networkManager = Core.shared.networkManager
     let adapterManager = Core.shared.adapterManager
-    // private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
+    // let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let swapAssetStorage = Core.shared.swapAssetStorage
     private let allowanceHelper = MultiSwapAllowanceHelper()
