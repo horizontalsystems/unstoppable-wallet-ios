@@ -716,6 +716,11 @@
 
 "swap.aml" = "AML";
 
+// Swap options
+
+"swap_options.title" = "Swap Options";
+"swap_options.description" = "Apple App Store policies no longer allow us to provide access to swap services inside wallet app. So, to swap you may use following options:";
+
 // Swap Terms
 
 "swap.terms.title" = "Swap Terms";

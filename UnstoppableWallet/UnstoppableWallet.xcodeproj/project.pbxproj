@@ -3596,6 +3596,10 @@
 		D3FBC71C2E55E93C001083D8 /* ThorChainMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FBC71A2E55E93C001083D8 /* ThorChainMultiSwapProvider.swift */; };
 		D3FBC71E2E55E947001083D8 /* MayaMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FBC71D2E55E947001083D8 /* MayaMultiSwapProvider.swift */; };
 		D3FBC71F2E55E947001083D8 /* MayaMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FBC71D2E55E947001083D8 /* MayaMultiSwapProvider.swift */; };
+		D3FFFCB52F3F3F090051D743 /* AppStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FFFCB42F3F3F040051D743 /* AppStateManager.swift */; };
+		D3FFFCB62F3F3F090051D743 /* AppStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FFFCB42F3F3F040051D743 /* AppStateManager.swift */; };
+		D3FFFCB82F3F45CD0051D743 /* SwapOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FFFCB72F3F45C70051D743 /* SwapOptionsView.swift */; };
+		D3FFFCB92F3F45CD0051D743 /* SwapOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FFFCB72F3F45C70051D743 /* SwapOptionsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -5407,6 +5411,8 @@
 		D3FBC7132E55AB00001083D8 /* LargeTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LargeTextField.swift; sourceTree = "<group>"; };
 		D3FBC71A2E55E93C001083D8 /* ThorChainMultiSwapProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThorChainMultiSwapProvider.swift; sourceTree = "<group>"; };
 		D3FBC71D2E55E947001083D8 /* MayaMultiSwapProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MayaMultiSwapProvider.swift; sourceTree = "<group>"; };
+		D3FFFCB42F3F3F040051D743 /* AppStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateManager.swift; sourceTree = "<group>"; };
+		D3FFFCB72F3F45C70051D743 /* SwapOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapOptionsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -6048,6 +6054,7 @@
 		11B35480153660045A6CF9AC /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				D3FFFCB42F3F3F040051D743 /* AppStateManager.swift */,
 				6BA971BD2ED560C900DEC017 /* Premium */,
 				6B4587532E2F475E008F87E7 /* AmountRoundingManager.swift */,
 				6BD766432EA239CF008DDEA7 /* RecentlySentManager.swift */,
@@ -6895,6 +6902,7 @@
 		11B35B779976BD7D47FFD40C /* MultiSwap */ = {
 			isa = PBXGroup;
 			children = (
+				D3FFFCB72F3F45C70051D743 /* SwapOptionsView.swift */,
 				D3617A8D2F31F20900CB8F90 /* RegularMultiSwapView.swift */,
 				D3F185D82F39B5F0001063BD /* MultiSwapProviderManager.swift */,
 				D31C99C82F16461E00A82358 /* SwapTermsView.swift */,
@@ -11517,6 +11525,7 @@
 				11B3593B114BFE4B6CCD6E19 /* MarketWideCardCell.swift in Sources */,
 				11B351245348DFCE20EC6D4B /* PlaceholderCell.swift in Sources */,
 				ABC9AFA89983A9BCB78E4575 /* Contact.swift in Sources */,
+				D3FFFCB92F3F45CD0051D743 /* SwapOptionsView.swift in Sources */,
 				D3E36BE22E05887B007F99CA /* MainBadgeViewModel.swift in Sources */,
 				ABC9A57DE6436FB8795F50E4 /* ContactBookViewController.swift in Sources */,
 				D3384D142BFDCBE700515664 /* MarketEtfViewModel.swift in Sources */,
@@ -12042,6 +12051,7 @@
 				ABC9AD02AD6340C230AC4F9D /* TransactionContactSelectViewModel.swift in Sources */,
 				D0A690292BFF50D900E59296 /* TronSendData.swift in Sources */,
 				ABC9AC0F2A4A48BB223005EA /* TransactionBlockchainSelectViewModel.swift in Sources */,
+				D3FFFCB62F3F3F090051D743 /* AppStateManager.swift in Sources */,
 				6BDB59E42F14B8F1005FA626 /* MoneroSendHelper.swift in Sources */,
 				ABC9A24A0A2F6C7C476D7F69 /* TransactionTokenSelectViewModel.swift in Sources */,
 				11B35EFEEB7F361BD5FCCC3D /* SendView.swift in Sources */,
@@ -12788,6 +12798,7 @@
 				11B35696E9CD808522BEFCD6 /* BlockchainSettingRecordStorage.swift in Sources */,
 				11B3581F4D975FC21B9A25F2 /* BtcBlockchainSettingsModule.swift in Sources */,
 				11B359131D838F3191A8C520 /* BtcBlockchainSettingsViewModel.swift in Sources */,
+				D3FFFCB52F3F3F090051D743 /* AppStateManager.swift in Sources */,
 				D30D7E662CAACCFB00B8CAA7 /* TonConnectSendViewModel.swift in Sources */,
 				6BE57E7D2E339D4A003C4C01 /* MerkleTransactionSyncer.swift in Sources */,
 				6B5A13ED2DF7F77F006E609C /* MultiSwapDefaultTokenResolver.swift in Sources */,
@@ -13452,6 +13463,7 @@
 				6B6E140C2DEDABDE007F4A39 /* DimViewController.swift in Sources */,
 				6B6E140D2DEDABDE007F4A39 /* HapticGenerator.swift in Sources */,
 				6BEEBAB62E83F38700DB8B27 /* FeeSettingsViewFactory.swift in Sources */,
+				D3FFFCB82F3F45CD0051D743 /* SwapOptionsView.swift in Sources */,
 				6B6E140E2DEDABDE007F4A39 /* BackgroundHUDWindow.swift in Sources */,
 				6B6E140F2DEDABDE007F4A39 /* HUDViewInteractor.swift in Sources */,
 				6B6E14102DEDABDE007F4A39 /* HUD.swift in Sources */,
@@ -14077,7 +14089,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.48;
+				MARKETING_VERSION = 0.47;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -14148,7 +14160,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.48;
+				MARKETING_VERSION = 0.47;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;

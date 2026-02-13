@@ -10,6 +10,7 @@ class WalletTokenViewModel: ObservableObject {
     private let balanceHiddenManager = Core.shared.balanceHiddenManager
     private let appManager = Core.shared.appManager
     private let reachabilityManager = Core.shared.reachabilityManager
+    private let appStateManager = Core.shared.appStateManager
 
     private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
@@ -139,8 +140,12 @@ extension WalletTokenViewModel {
         if wallet.account.watchAccount {
             return []
         } else {
-            return [.chart, .receive, .send] + (AppConfig.swapEnabled ? [.swap] : [])
+            return [.chart, .receive, .send, .swap]
         }
+    }
+
+    var swapEnabled: Bool {
+        appStateManager.swapEnabled
     }
 
     func onTapReceive() {

@@ -20,7 +20,7 @@ struct MainView: View {
                         }
 
                         WalletView(viewModel: walletViewModel, path: $path).tag(MainViewModel.Tab.wallet)
-                        MultiSwapView().tag(MainViewModel.Tab.swap)
+                        // MultiSwapView().tag(MainViewModel.Tab.swap)
                         MainTransactionsView(transactionsViewModel: transactionsViewModel).tag(MainViewModel.Tab.transactions)
                         MainSettingsView().tag(MainViewModel.Tab.settings)
                     }
