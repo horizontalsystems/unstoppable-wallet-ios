@@ -74,13 +74,11 @@ struct MainSettingsView: View {
                         }
                     }
 
-                    if AppConfig.donateEnabled {
-                        Spacer().frame(height: .margin32)
+                    // Spacer().frame(height: .margin32)
 
-                        ListSection {
-                            donate()
-                        }
-                    }
+                    // ListSection {
+                    //     donate()
+                    // }
 
                     Spacer().frame(height: .margin32)
 
@@ -519,6 +517,13 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func testSwitchersSection() -> some View {
         ListSection {
+            ListRow {
+                Toggle(isOn: $viewModel.forceEnableSwap) {
+                    Text("Force Enable Swap").themeBody()
+                }
+                .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
+            }
+
             ListRow {
                 Toggle(isOn: $viewModel.emulatePurchase) {
                     Text("Emulate Purchase").themeBody()

@@ -170,10 +170,16 @@ struct WalletView: View {
                 }
                 if !item.wallet.account.watchAccount {
                     Button {
-                        Coordinator.shared.present { _ in
-                            RegularMultiSwapView(token: item.wallet.token)
+                        if viewModel.swapEnabled {
+                            Coordinator.shared.present { _ in
+                                RegularMultiSwapView(token: item.wallet.token)
+                            }
+                            stat(page: .balance, event: .open(page: .swap))
+                        } else {
+                            Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                                SwapOptionsView(isPresented: isPresented)
+                            }
                         }
-                        stat(page: .tokenPage, event: .open(page: .swap))
                     } label: {
                         Label("balance.swap".localized, image: "swap_e")
                     }
@@ -245,10 +251,16 @@ struct WalletView: View {
                 stat(page: .balance, event: .open(page: .sendTokenList))
             case .receive: viewModel.onTapReceive()
             case .swap:
-                Coordinator.shared.present { _ in
-                    RegularMultiSwapView()
+                if viewModel.swapEnabled {
+                    Coordinator.shared.present { _ in
+                        RegularMultiSwapView()
+                    }
+                    stat(page: .balance, event: .open(page: .swap))
+                } else {
+                    Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                        SwapOptionsView(isPresented: isPresented)
+                    }
                 }
-                stat(page: .balance, event: .open(page: .swap))
             case .scan:
                 Coordinator.shared.present { _ in
                     ScanQrViewNew(reportAfterDismiss: true, pasteEnabled: true) { text in

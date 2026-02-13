@@ -30,8 +30,6 @@ thorchain_affiliate_bps =
 maya_affiliate =
 maya_affiliate_bps =
 uswap_api_key =
-swap_enabled = true
-donate_enabled = true
 
 default_words =
 referral_app_server_url =

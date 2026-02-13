@@ -21,6 +21,7 @@ class MainSettingsViewModel: ObservableObject {
     private let localStorage = Core.shared.localStorage
     private let testNetManager = Core.shared.testNetManager
     private let purchaseManager = Core.shared.purchaseManager
+    private let appStateManager = Core.shared.appStateManager
 
     @Published var manageWalletsAlert: Bool = false
     @Published var walletConnectSessionCount: Int = 0
@@ -32,6 +33,13 @@ class MainSettingsViewModel: ObservableObject {
     @Published var introductoryOffer: String?
 
     let showTestSwitchers: Bool
+
+    @Published var forceEnableSwap: Bool {
+        didSet {
+            localStorage.forceEnableSwap = forceEnableSwap
+            appStateManager.sync()
+        }
+    }
 
     @Published var emulatePurchase: Bool {
         didSet {
@@ -55,6 +63,7 @@ class MainSettingsViewModel: ObservableObject {
 
     init() {
         showTestSwitchers = Bundle.main.object(forInfoDictionaryKey: "ShowTestNetSwitcher") as? String == "true"
+        forceEnableSwap = localStorage.forceEnableSwap
         emulatePurchase = localStorage.emulatePurchase
         testNetEnabled = testNetManager.testNetEnabled
         mayaStagenetEnabled = testNetManager.mayaStagenetEnabled

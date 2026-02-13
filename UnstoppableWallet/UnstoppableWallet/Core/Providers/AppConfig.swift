@@ -202,12 +202,4 @@ enum AppConfig {
     static var hashDitApiKey: String {
         (Bundle.main.object(forInfoDictionaryKey: "HashDitApiKey") as? String) ?? ""
     }
-
-    static var swapEnabled: Bool {
-        Bundle.main.object(forInfoDictionaryKey: "SwapEnabled") as? String == "true"
-    }
-
-    static var donateEnabled: Bool {
-        Bundle.main.object(forInfoDictionaryKey: "DonateEnabled") as? String == "true"
-    }
 }
