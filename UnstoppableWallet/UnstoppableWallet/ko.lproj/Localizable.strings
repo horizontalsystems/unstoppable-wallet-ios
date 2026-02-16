@@ -717,6 +717,11 @@
 
 "swap.aml" = "AML";
 
+// Swap options
+
+"swap_options.title" = "스왑 옵션";
+"swap_options.description" = "Apple App Store 정책에 따라 더 이상 wallet 앱 내에서 스왑 서비스에 대한 접근을 제공할 수 없습니다. 따라서 스왑을 진행하려면 다음 옵션을 사용할 수 있습니다:";
+
 // Swap Terms
 
 "swap.terms.title" = "스왑 약관";
@@ -1495,7 +1500,7 @@
 "settings.social_networks.label" = "Be Unstoppable";
 "settings.get_your_tokens" = "Get UWT Tokens";
 "settings.dapp_connection" = "디앱 연결";
-"settings.app_settings" = "앱 설정";
+"settings.appearance" = "디자인";
 
 // Settings -> Base Currency
 

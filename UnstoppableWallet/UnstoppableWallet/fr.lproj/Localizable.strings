@@ -719,6 +719,11 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 
 "swap.aml" = "AML";
 
+// Swap options
+
+"swap_options.title" = "Options de swap";
+"swap_options.description" = "Les politiques de l’Apple App Store ne nous autorisent plus à fournir un accès aux services de swap dans l’application wallet. Pour effectuer un swap, vous pouvez utiliser les options suivantes :";
+
 // Swap Terms
 
 "swap.terms.title" = "Conditions de swap";
@@ -1496,7 +1501,7 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 "settings.social_networks.label" = "Soyez Unstoppable";
 "settings.get_your_tokens" = "Get UWT Tokens";
 "settings.dapp_connection" = "Connexion DApp";
-"settings.app_settings" = "Paramètres de l'application";
+"settings.appearance" = "Apparence";
 
 // Settings -> Base Currency
 
