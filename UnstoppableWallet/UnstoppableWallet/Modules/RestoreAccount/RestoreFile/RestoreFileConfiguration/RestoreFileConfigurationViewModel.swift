@@ -1,7 +1,7 @@
 import Combine
 import Foundation
 
-class RestoreFileConfigurationViewModel {
+class RestoreFileConfigurationViewModel: ObservableObject {
     private let cloudBackupManager: CloudBackupManager
     private let appBackupProvider: AppBackupProvider
     private let contactBookManager: ContactBookManager

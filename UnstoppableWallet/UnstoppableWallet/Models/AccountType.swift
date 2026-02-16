@@ -489,7 +489,7 @@ extension AccountType {
         let data = try crypto.decrypt(passphrase: passphrase)
 
         guard let accountType = AccountType.decode(uniqueId: data, type: type) else {
-            throw RestoreCloudModule.RestoreError.invalidBackup
+            throw CloudRestoreBackupListModule.RestoreError.invalidBackup
         }
 
         return accountType

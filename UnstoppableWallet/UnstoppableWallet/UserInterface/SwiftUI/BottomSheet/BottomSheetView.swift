@@ -32,6 +32,8 @@ enum BSModule {
                 .padding(.bottom, .margin24)
         case let .highlightedDescription(text, type, style):
             AlertCardView(.init(text: text, type: type, style: style))
+                .padding(.vertical, .margin16)
+                .padding(.horizontal, .margin16)
         case let .list(items):
             VStack(spacing: 0) {
                 ForEach(items.indices, id: \.self) { index in

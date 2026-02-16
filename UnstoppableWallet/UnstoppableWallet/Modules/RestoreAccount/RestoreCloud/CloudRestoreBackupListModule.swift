@@ -2,16 +2,7 @@ import MarketKit
 import RxSwift
 import UIKit
 
-enum RestoreCloudModule {
-    static func viewController(sourceType: BackupModule.Source.Abstract, onRestore: @escaping () -> Void) -> UIViewController {
-        let service = RestoreCloudService(
-            cloudAccountBackupManager: Core.shared.cloudBackupManager,
-            accountManager: Core.shared.accountManager
-        )
-        let viewModel = RestoreCloudViewModel(service: service, sourceType: sourceType)
-        return RestoreCloudViewController(viewModel: viewModel, onRestore: onRestore)
-    }
-
+enum CloudRestoreBackupListModule {
     struct RestoredBackup: Codable {
         let name: String
         let walletBackup: WalletBackup
@@ -36,7 +27,7 @@ enum RestoreCloudModule {
     }
 }
 
-extension RestoreCloudModule {
+extension CloudRestoreBackupListModule {
     enum RestoreError: Error {
         case emptyPassphrase
         case simplePassword

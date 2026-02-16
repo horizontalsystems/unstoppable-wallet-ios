@@ -117,12 +117,12 @@ class AppBackupProvider {
         )
     }
 
-    func encrypt(accountIds: [String], passphrase: String) throws -> [RestoreCloudModule.RestoredBackup] {
+    func encrypt(accountIds: [String], passphrase: String) throws -> [CloudRestoreBackupListModule.RestoredBackup] {
         try accountIds.compactMap {
             accountManager.account(id: $0)
         }.compactMap {
             let walletBackup = try Self.encrypt(account: $0, wallets: enabledWallets(account: $0), passphrase: passphrase)
-            return RestoreCloudModule.RestoredBackup(name: $0.name, walletBackup: walletBackup)
+            return CloudRestoreBackupListModule.RestoredBackup(name: $0.name, walletBackup: walletBackup)
         }
     }
 
@@ -265,7 +265,7 @@ extension AppBackupProvider {
     func encrypt(raw: RawFullBackup, passphrase: String) throws -> FullBackup {
         let wallets = try raw.accounts.map {
             let walletBackup = try Self.encrypt(account: $0.account, wallets: $0.enabledWallets, passphrase: passphrase)
-            return RestoreCloudModule.RestoredBackup(name: $0.account.name, walletBackup: walletBackup)
+            return CloudRestoreBackupListModule.RestoredBackup(name: $0.account.name, walletBackup: walletBackup)
         }
 
         let contacts = try ContactBookManager.encrypt(contacts: raw.contacts, passphrase: passphrase)
