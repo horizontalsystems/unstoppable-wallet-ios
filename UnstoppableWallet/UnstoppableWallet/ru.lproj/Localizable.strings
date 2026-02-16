@@ -1933,12 +1933,12 @@
 
 // Intro
 
-"intro.unchain_assets.title" = "Непривязанные активы";
-"intro.unchain_assets.description" = "Распоряжайтесь активами свободно и без ограничений";
-"intro.go_borderless.title" = "Избавьтесь от границ";
-"intro.go_borderless.description" = "Обходите условные барьеры и получайте доступ к мировым рынкам.";
-"intro.stay_private.title" = "Сохраняйте конфиденциальность";
-"intro.stay_private.description" = "Не раскрывайте свои личные и финансовые данные миру";
+"intro.unchain_assets.title" = "Полный контроль над активами";
+"intro.unchain_assets.description" = "Контроль только у вас. Без ограничений со стороны третьих лиц.";
+"intro.go_borderless.title" = "Без границ";
+"intro.go_borderless.description" = "Свободный доступ к глобальным рынкам.";
+"intro.stay_private.title" = "Сохраняйте приватность";
+"intro.stay_private.description" = "Ваши данные остаются под вашим контролем.";
 
 // Education
 
@@ -2405,12 +2405,12 @@
 // Defense System
 "purchases.defense_system" = "Система защиты";
 "purchases.secure_send" = "Безопасная отправка";
-"purchases.secure_send.description" = "Предотвращает отправку средств на рискованные или фишинговые адреса.";
-"purchases.secure_send.info" = "Проверяет адреса получателей на фишинг и мошенничество и предупреждает о рисках перед отправкой.";
-"purchases.scam_protection" = "Scam-защита";
-"purchases.scam_protection.description" = "Предупреждает при подключении к поддельным или вредоносным dApps.";
+"purchases.secure_send.description" = "Предупреждает и защищает от отправки средств на опасные адреса.";
+"purchases.secure_send.info" = "Проверяет адрес получателя и предупреждает о риске перед отправкой средств.";
+"purchases.scam_protection" = "Скам-защита";
+"purchases.scam_protection.description" = "Обнаруживает поддельные и вредоносные dApps перед подключением.";
 "purchases.scam_protection.info" = "Обнаруживает поддельные dApp до подключения. Предотвращает фишинг и защищает активы.";
-"purchases.swap_protection" = "Защита при обмене";
+"purchases.swap_protection" = "Защита обмена";
 "purchases.swap_protection.description" = "Предотвращает атаки ботов и MEV во время swap-операций.";
 "purchases.swap_protection.info" = "Защищает от ботов и front-running атак при обмене.";
 "purchases.robbery_protection" = "Защита при ограблении";
@@ -2432,7 +2432,7 @@
 "purchases.token_insights.description" = "Расширенная аналитика и данные по токенам.";
 "purchases.token_insights.info" = "Показывает подробные данные о токене - объём, ликвидность и тренды. Помогает принимать более разумные инвестиционные решения.";
 "purchases.advanced_search" = "Расширенный поиск";
-"purchases.advanced_search.description" = "Мощные фильтры для более удобного поиска токенов.";
+"purchases.advanced_search.description" = "Расширенные фильтры для удобного поиска токенов.";
 "purchases.advanced_search.info" = "Поиск токенов по объёму, сети и сектору с метриками CEX/DEX.";
 "purchases.trade_signals" = "Сигналы и тренды";
 "purchases.trade_signals.description" = "Практические сигналы для более уверенной торговли.";
@@ -2440,7 +2440,7 @@
 
 "purchase.bottom_sheet.description" = "Одна покупка открывает все функции Premium.";
 
-"purchases.wallet_description.title" = "Высоко оцененная безопасность, исключительная приватность и по-настоящему некастодиальный кошелек.";
+"purchases.wallet_description.title" = "Надёжная безопасность, высокий уровень конфиденциальности и полностью некастодиальный кошелёк.";
 "purchases.wallet_description.approved" = "Одобрено и проверено:";
 
 "purchases.button.try" = "Попробовать БЕСПЛАТНО";
