@@ -7,8 +7,6 @@ import SwiftUI
 import ZcashLightClientKit
 
 class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
-    private static let insufficientBalanceError = "insufficient balance"
-
     private let testNetManager = Core.shared.testNetManager
     private var temporaryDestinationAddresses = [BlockchainType: String]()
 
@@ -88,11 +86,7 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         do {
             result = try await proposal(tokenIn: tokenIn, swapQuote: swapQuote, amountIn: amountIn)
         } catch {
-            if case let .rustProposeTransferFromURI(text) = error as? ZcashLightClientKit.ZcashError,
-               text.range(of: Self.insufficientBalanceError, options: .caseInsensitive) != nil
-            {
-                transactionError = BitcoinCoreErrors.SendValueErrors.notEnough
-            }
+            transactionError = error
         }
 
         if let dustThreshold = swapQuote.quote.dustThreshold,

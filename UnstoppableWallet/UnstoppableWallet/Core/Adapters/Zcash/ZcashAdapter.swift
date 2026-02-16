@@ -1025,7 +1025,11 @@ extension ZcashAdapter: ISendZcashAdapter {
 
         let amountInZatoshi = Zatoshi.from(decimal: amount)
 
-        return try await synchronizer.proposeTransfer(accountUUID: accountId, recipient: address, amount: amountInZatoshi, memo: memo)
+        do {
+            return try await synchronizer.proposeTransfer(accountUUID: accountId, recipient: address, amount: amountInZatoshi, memo: memo)
+        } catch {
+            throw ZcashSendHelper.converted(error)
+        }
     }
 
     func sendProposal(outputs: [TransferOutput]) async throws -> Proposal {
@@ -1035,10 +1039,14 @@ extension ZcashAdapter: ISendZcashAdapter {
 
         let paymentURI = createPaymentURI(outputs: outputs)
 
-        return try await synchronizer.proposefulfillingPaymentURI(
-            paymentURI,
-            accountUUID: accountId
-        )
+        do {
+            return try await synchronizer.proposefulfillingPaymentURI(
+                paymentURI,
+                accountUUID: accountId
+            )
+        } catch {
+            throw ZcashSendHelper.converted(error)
+        }
     }
 
     private func createPaymentURI(outputs: [TransferOutput]) -> String {
