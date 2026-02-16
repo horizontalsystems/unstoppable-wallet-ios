@@ -2385,8 +2385,7 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "transaction_filter.contact" = "Kişi";
 "transaction_filter.all_contacts" = "Tüm Kişiler";
 "transaction_filter.hide_suspicious_txs" = "Şüpheli İşlemleri Gizle";
-"transaction_filter.hide_suspicious_txs.description" = "Küçük tutarlı gelen transferleri gizler (ör. $1.5 altındaki USDT).
-Bu tür işlemler genellikle kimlik avı (phishing) ve adres zehirleme (address-poisoning) saldırıları için kullanılır.";
+"transaction_filter.hide_suspicious_txs.description" = "Küçük tutarlı gelen transferleri gizler (ör. $1.5 altındaki USDT). Bu tür işlemler genellikle phishing ve adres zehirleme (address poisoning) saldırılarında kullanılır.";
 
 // Black Friday
 
