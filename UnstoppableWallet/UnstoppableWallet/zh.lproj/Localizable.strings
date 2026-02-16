@@ -719,6 +719,11 @@
 
 "swap.aml" = "反洗钱（AML）";
 
+// Swap options
+
+"swap_options.title" = "兑换选项";
+"swap_options.description" = "根据 Apple App Store 政策，我们已无法在钱包应用内提供兑换服务。因此，如需进行兑换，您可以使用以下选项：";
+
 // Swap Terms
 
 "swap.terms.title" = "兑换条款";
@@ -1496,7 +1501,7 @@
 "settings.social_networks.label" = "Be Unstoppable";
 "settings.get_your_tokens" = "Get UWT Tokens";
 "settings.dapp_connection" = "dApp 连接";
-"settings.app_settings" = "应用设置";
+"settings.appearance" = "外观";
 
 // Settings -> Base Currency
 

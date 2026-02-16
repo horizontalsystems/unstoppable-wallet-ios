@@ -720,6 +720,10 @@
 "swap.total_fee" = "Итоговая комиссия";
 
 "swap.aml" = "AML";
+// Swap options
+
+"swap_options.title" = "Варианты обмена";
+"swap_options.description" = "Политика Apple App Store больше не позволяет предоставлять доступ к сервисам обмена внутри приложения кошелька. Чтобы выполнить обмен, вы можете воспользоваться следующими вариантами:";
 
 // Swap Terms
 
@@ -1498,7 +1502,7 @@
 "settings.social_networks.label" = "Be Unstoppable";
 "settings.get_your_tokens" = "Get UWT Tokens";
 "settings.dapp_connection" = "Подключение к DApp";
-"settings.app_settings" = "Настройки приложения";
+"settings.appearance" = "Настройки интерфейса";
 
 // Settings -> Base Currency
 

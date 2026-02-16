@@ -719,6 +719,11 @@ Cüzdan etkinleştirilene kadar token’lar alınabilir, ancak bakiyeler görün
 
 "swap.aml" = "AML";
 
+// Swap options
+
+"swap_options.title" = "Swap Seçenekleri";
+"swap_options.description" = "Apple App Store politikaları artık wallet uygulaması içinde swap hizmetlerine erişim sunmamıza izin vermiyor. Bu nedenle, swap işlemi yapmak için aşağıdaki seçenekleri kullanabilirsiniz:";
+
 // Swap Terms
 
 "swap.terms.title" = "Swap Koşulları";
@@ -1502,7 +1507,7 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "settings.social_networks.label" = "Be Unstoppable";
 "settings.get_your_tokens" = "Get UWT Tokens";
 "settings.dapp_connection" = "DApp Bağlantısı";
-"settings.app_settings" = "Uygulama Ayarları";
+"settings.appearance" = "Görünüm";
 
 // Settings -> Base Currency
 

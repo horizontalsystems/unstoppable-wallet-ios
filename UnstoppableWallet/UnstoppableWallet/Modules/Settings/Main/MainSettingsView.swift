@@ -289,7 +289,7 @@ struct MainSettingsView: View {
                 }
         }) {
             Image("uw_24").themeIcon()
-            Text("settings.app_settings".localized).themeBody()
+            Text("settings.appearance".localized).themeBody()
             Image.disclosureIcon
         }
     }
