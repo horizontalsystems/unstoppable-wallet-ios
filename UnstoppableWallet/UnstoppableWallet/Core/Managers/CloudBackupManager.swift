@@ -73,7 +73,7 @@ class CloudBackupManager {
             forceDownloadContainerFiles(url: url)
 
             var oneWalletItems: [String: WalletBackup] = try Self.downloadItems(url: url, fileStorage: fileStorage, logger: logger)
-            let oneWalletItemsV2: [String: RestoreCloudModule.RestoredBackup] = try Self.downloadItems(url: url, fileStorage: fileStorage, logger: logger)
+            let oneWalletItemsV2: [String: CloudRestoreBackupListModule.RestoredBackup] = try Self.downloadItems(url: url, fileStorage: fileStorage, logger: logger)
             let mapped = oneWalletItemsV2.reduce(into: [:]) { $0[$1.value.name] = $1.value.walletBackup }
 
             oneWalletItems.merge(mapped) { _, backup2 in backup2 }

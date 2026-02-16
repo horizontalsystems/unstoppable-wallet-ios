@@ -2,14 +2,19 @@ import Combine
 import Foundation
 import HsExtensions
 
-class RestorePassphraseViewModel {
-    private var cancellables = Set<AnyCancellable>()
-
+class RestorePassphraseViewModel: ObservableObject {
     private let service: RestorePassphraseService
-    @Published public var passphraseCaution: Caution?
-    @Published public var processing: Bool = false
 
-    private let clearInputsSubject = PassthroughSubject<Void, Never>()
+    @Published var passphrase: String = AppConfig.defaultPassphrase {
+        didSet {
+            service.passphrase = passphrase
+            clearCautions()
+        }
+    }
+
+    @Published var passphraseCautionState: CautionState = .none
+    @Published var processing = false
+
     private let showErrorSubject = PassthroughSubject<String, Never>()
     private let openSelectCoinsSubject = PassthroughSubject<Account, Never>()
     private let openConfigurationSubject = PassthroughSubject<RawFullBackup, Never>()
@@ -20,17 +25,47 @@ class RestorePassphraseViewModel {
     }
 
     private func clearCautions() {
-        if passphraseCaution != nil {
-            passphraseCaution = nil
+        if passphraseCautionState != .none {
+            passphraseCautionState = .none
+        }
+    }
+
+    @MainActor
+    private func handle(_ result: RestorePassphraseService.RestoreResult) {
+        processing = false
+        switch result {
+        case let .success(accountType):
+            successSubject.send(accountType)
+        case let .restoredAccount(rawBackup):
+            if rawBackup.enabledWallets.isEmpty {
+                openSelectCoinsSubject.send(rawBackup.account)
+            } else {
+                successSubject.send(rawBackup.account.type)
+            }
+        case let .restoredFullBackup(rawBackup):
+            openConfigurationSubject.send(rawBackup)
+        }
+    }
+
+    @MainActor
+    private func handle(_ error: Error) async {
+        processing = false
+        switch error as? CloudRestoreBackupListModule.RestoreError {
+        case .emptyPassphrase:
+            passphraseCautionState = .caution(Caution(text: "backup.cloud.password.error.empty_passphrase".localized, type: .error))
+        case .simplePassword:
+            passphraseCautionState = .caution(Caution(text: "backup.cloud.password.error.minimum_requirement".localized, type: .error))
+        case .invalidPassword:
+            passphraseCautionState = .caution(Caution(text: "backup.cloud.password.error.invalid_password".localized, type: .error))
+        case .invalidBackup:
+            showErrorSubject.send("backup.cloud.password.error.invalid_backup".localized)
+        case .none:
+            showErrorSubject.send(error.smartDescription)
         }
     }
 }
 
 extension RestorePassphraseViewModel {
-    var clearInputsPublisher: AnyPublisher<Void, Never> {
-        clearInputsSubject.eraseToAnyPublisher()
-    }
-
     var showErrorPublisher: AnyPublisher<String, Never> {
         showErrorSubject.eraseToAnyPublisher()
     }
@@ -47,60 +82,20 @@ extension RestorePassphraseViewModel {
         successSubject.eraseToAnyPublisher()
     }
 
-    func onChange(passphrase: String) {
-        service.passphrase = passphrase
-        clearCautions()
-    }
-
-    func validatePassphrase(text: String?) -> Bool {
-        let validated = service.validate(text: text)
-        if !validated {
-            passphraseCaution = Caution(text: "backup.cloud.password.error.forbidden_symbols".localized, type: .warning)
-        }
-        return validated
-    }
-
     func onTapNext() {
-        passphraseCaution = nil
-
+        passphraseCautionState = .none
         processing = true
+
         Task { [weak self, service] in
             do {
                 let result = try await service.next()
-                self?.processing = false
-
-                switch result {
-                case let .success(accountType):
-                    self?.successSubject.send(accountType)
-                case let .restoredAccount(rawBackup):
-                    if rawBackup.enabledWallets.isEmpty {
-                        self?.openSelectCoinsSubject.send(rawBackup.account)
-                    } else {
-                        self?.successSubject.send(rawBackup.account.type)
-                    }
-                case let .restoredFullBackup(rawBackup):
-                    self?.openConfigurationSubject.send(rawBackup)
-                }
+                await self?.handle(result)
             } catch {
-                switch error as? RestoreCloudModule.RestoreError {
-                case .emptyPassphrase:
-                    self?.passphraseCaution = Caution(text: "backup.cloud.password.error.empty_passphrase".localized, type: .error)
-                case .simplePassword:
-                    self?.passphraseCaution = Caution(text: "backup.cloud.password.error.minimum_requirement".localized, type: .error)
-                case .invalidPassword:
-                    self?.passphraseCaution = Caution(text: "backup.cloud.password.error.invalid_password".localized, type: .error)
-                case .invalidBackup:
-                    self?.showErrorSubject.send("backup.cloud.password.error.invalid_backup".localized)
-                case .none:
-                    self?.showErrorSubject.send(error.smartDescription)
-                }
-                self?.processing = false
+                await self?.handle(error)
             }
         }
     }
-}
 
-extension RestorePassphraseViewModel {
     var buttonTitle: String {
         switch service.restoredBackup.source {
         case .wallet: return "button.import".localized

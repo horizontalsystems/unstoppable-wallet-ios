@@ -54,7 +54,7 @@ extension BackupCrypto {
         try Self.validate(passphrase: passphrase)
         // Validation data
         guard let data = Data(base64Encoded: cipherText) else {
-            throw RestoreCloudModule.RestoreError.invalidBackup
+            throw CloudRestoreBackupListModule.RestoreError.invalidBackup
         }
 
         // validation passphrase
@@ -65,7 +65,7 @@ extension BackupCrypto {
             kdf: kdfParams
         )
         guard isValid else {
-            throw RestoreCloudModule.RestoreError.invalidPassword
+            throw CloudRestoreBackupListModule.RestoreError.invalidPassword
         }
 
         return try BackupCryptoHelper.AES128(

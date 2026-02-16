@@ -1,7 +1,8 @@
+
 import Combine
 import UIKit
 
-class RestoreTypeViewModel {
+class RestoreTypeViewModel: ObservableObject {
     private let cloudAccountBackupManager: CloudBackupManager
     let sourceType: BackupModule.Source.Abstract
 

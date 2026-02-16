@@ -2,7 +2,7 @@ import Foundation
 
 struct FullBackup {
     let id: String
-    let wallets: [RestoreCloudModule.RestoredBackup]
+    let wallets: [CloudRestoreBackupListModule.RestoredBackup]
     let watchlistIds: [String]
     let contacts: BackupCrypto?
     let settings: SettingsBackup
@@ -25,7 +25,7 @@ extension FullBackup: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         id = try container.decode(String.self, forKey: .id)
         do {
-            wallets = try (container.decode([FailableDecodable<RestoreCloudModule.RestoredBackup>].self, forKey: .wallets))
+            wallets = try (container.decode([FailableDecodable<CloudRestoreBackupListModule.RestoredBackup>].self, forKey: .wallets))
                 .compactMap(\.base)
         } catch {
             wallets = []

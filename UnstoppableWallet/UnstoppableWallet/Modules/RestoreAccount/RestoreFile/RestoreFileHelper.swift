@@ -9,7 +9,7 @@ enum RestoreFileHelper {
             return .init(name: filename, source: .wallet(oneWallet))
         }
 
-        if let oneWalletV2 = try? JSONDecoder().decode(RestoreCloudModule.RestoredBackup.self, from: data) {
+        if let oneWalletV2 = try? JSONDecoder().decode(CloudRestoreBackupListModule.RestoredBackup.self, from: data) {
             return .init(name: oneWalletV2.name, source: .wallet(oneWalletV2.walletBackup))
         }
 
