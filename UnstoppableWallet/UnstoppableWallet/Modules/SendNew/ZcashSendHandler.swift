@@ -25,21 +25,18 @@ extension ZcashSendHandler: ISendHandler {
 
     func sendData(transactionSettings _: TransactionSettings?) async throws -> ISendData {
         let memoText = memo.flatMap { try? Memo(string: $0) }
-        var amountWithoutFee: Decimal = amount
-        if adapter.availableBalance == amount {
-            let proposal = try await adapter.sendProposal(amount: amount, address: recipient, memo: memoText)
-            amountWithoutFee -= proposal.totalFeeRequired().decimalValue.decimalValue
-        }
-        let proposal = try await adapter.sendProposal(amount: amountWithoutFee, address: recipient, memo: memoText)
 
         var transactionError: Error?
-        if (amountWithoutFee + proposal.totalFeeRequired().decimalValue.decimalValue) > adapter.availableBalance {
-            transactionError = AppError.zcash(reason: .notEnough)
+        var proposal: Proposal?
+        do {
+            proposal = try await adapter.sendProposal(amount: amount, address: recipient, memo: memoText)
+        } catch {
+            transactionError = error
         }
 
         return SendData(
             token: token,
-            amount: amountWithoutFee,
+            amount: amount,
             recipient: recipient,
             memo: memo,
             transactionError: transactionError,
@@ -48,11 +45,11 @@ extension ZcashSendHandler: ISendHandler {
     }
 
     func send(data: ISendData) async throws {
-        guard let data = data as? SendData else {
+        guard let data = data as? SendData, let proposal = data.proposal else {
             throw SendError.invalidData
         }
 
-        try await adapter.send(proposal: data.proposal)
+        try await adapter.send(proposal: proposal)
     }
 }
 
@@ -63,9 +60,9 @@ extension ZcashSendHandler {
         let recipient: Recipient
         let memo: String?
         var transactionError: Error?
-        let proposal: Proposal
+        let proposal: Proposal?
 
-        init(token: Token, amount: Decimal, recipient: Recipient, memo: String?, transactionError: Error?, proposal: Proposal) {
+        init(token: Token, amount: Decimal, recipient: Recipient, memo: String?, transactionError: Error?, proposal: Proposal?) {
             self.token = token
             self.amount = amount
             self.recipient = recipient
@@ -90,7 +87,7 @@ extension ZcashSendHandler {
             var cautions = [CautionNew]()
 
             if let transactionError {
-                cautions.append(caution(transactionError: transactionError, feeToken: baseToken))
+                cautions.append(UtxoSendHelper.caution(transactionError: transactionError, feeToken: baseToken))
             }
 
             return cautions
@@ -121,41 +118,22 @@ extension ZcashSendHandler {
                 fields.append(.simpleValue(title: "send.confirmation.memo".localized, value: memo))
             }
 
-            let fee = proposal.totalFeeRequired().decimalValue.decimalValue
+            var feeFields = [SendField]()
+            if let proposal {
+                let fee = proposal.totalFeeRequired().decimalValue.decimalValue
+                feeFields.append(.value(
+                    title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
+                    appValue: AppValue(token: baseToken, value: fee),
+                    currencyValue: rates[baseToken.coin.uid].map { CurrencyValue(currency: currency, value: fee * $0) },
+                    formatFull: true
+                )
+                )
+            }
 
             return [
                 flowSection(baseToken: baseToken, currency: currency, rates: rates),
-                .init(fields + [
-                    .value(
-                        title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
-                        appValue: AppValue(token: baseToken, value: fee),
-                        currencyValue: rates[baseToken.coin.uid].map { CurrencyValue(currency: currency, value: fee * $0) },
-                        formatFull: true
-                    ),
-                ], isMain: false),
+                .init(fields + feeFields, isMain: false),
             ]
-        }
-
-        func caution(transactionError: Error, feeToken: Token) -> CautionNew {
-            let title: String
-            let text: String
-
-            if let error = transactionError as? AppError {
-                switch error {
-                case .zcash:
-                    title = error.localizedDescription
-                    text = "fee_settings.errors.insufficient_balance.info".localized(feeToken.coin.code)
-
-                default:
-                    title = "Send Info error"
-                    text = "Send Info error description"
-                }
-            } else {
-                title = "alert.error".localized
-                text = transactionError.convertedError.smartDescription
-            }
-
-            return CautionNew(title: title, text: text, type: .error)
         }
     }
 }
