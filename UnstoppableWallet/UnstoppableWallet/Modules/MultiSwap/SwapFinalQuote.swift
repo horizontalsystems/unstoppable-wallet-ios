@@ -68,9 +68,9 @@ class SwapFinalQuote {
 
         if let estimatedTime {
             fields.append(.simpleValue(
-                title: SendField.InformedTitle("swap.estimated_time".localized, info: InfoDescription(
-                    title: "swap.estimated_time".localized,
-                    description: "swap.estimated_time.info".localized
+                title: SendField.InformedTitle("swap.swapped_time".localized, info: InfoDescription(
+                    title: "swap.swapped_time".localized,
+                    description: "swap.swapped_time.info".localized
                 )),
                 value: Duration.seconds(estimatedTime).formatted(.units(allowed: [.hours, .minutes, .seconds], width: .narrow))
             ))
