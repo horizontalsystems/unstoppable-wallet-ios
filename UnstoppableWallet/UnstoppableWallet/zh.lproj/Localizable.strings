@@ -709,8 +709,8 @@
 "swap.high_price_impact" = "高价格影响";
 "swap.recipient" = "收款人";
 "swap.slippage" = "滑点";
-"swap.estimated_time" = "预计时间";
-"swap.estimated_time.info" = "预计到账时间。兑换处理和交易确认所需时间可能会因网络和服务提供方而有所不同。";
+"swap.swapped_time" = "兑换时间";
+"swap.swapped_time.info" = "预计到账时间。兑换处理和交易确认所需时间可能会因网络和服务提供方而有所不同。";
 
 "swap.affiliate_fee" = "联盟费";
 "swap.liquidity_fee" = "流动性费用";

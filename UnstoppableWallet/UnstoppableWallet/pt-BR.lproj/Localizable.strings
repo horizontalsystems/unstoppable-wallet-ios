@@ -710,8 +710,8 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 "swap.high_price_impact" = "Impacto de preços altos";
 "swap.recipient" = "Destinatário";
 "swap.slippage" = "Slippage";
-"swap.estimated_time" = "Tempo estimado";
-"swap.estimated_time.info" = "Tempo aproximado para receber os fundos. O processamento do swap e as confirmações da transação podem levar algum tempo, dependendo da rede e do provedor.";
+"swap.swapped_time" = "Horário do Swap";
+"swap.swapped_time.info" = "Tempo aproximado para receber os fundos. O processamento do swap e as confirmações da transação podem levar algum tempo, dependendo da rede e do provedor.";
 
 "swap.affiliate_fee" = "Taxa de afiliado";
 "swap.liquidity_fee" = "Taxa de Liquidez";

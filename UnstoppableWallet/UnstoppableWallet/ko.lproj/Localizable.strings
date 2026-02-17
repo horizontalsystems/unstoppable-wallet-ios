@@ -707,8 +707,8 @@
 "swap.high_price_impact" = "높은 가격 영향";
 "swap.recipient" = "수령인";
 "swap.slippage" = "미끄러짐";
-"swap.estimated_time" = "예상 시간";
-"swap.estimated_time.info" = "자금을 수령하기까지의 예상 시간입니다. 네트워크와 제공업체에 따라 스왑 처리 및 트랜잭션 확인에 시간이 걸릴 수 있습니다.";
+"swap.swapped_time" = "스왑 완료 시간";
+"swap.swapped_time.info" = "자금을 수령하기까지의 예상 시간입니다. 네트워크와 제공업체에 따라 스왑 처리 및 트랜잭션 확인에 시간이 걸릴 수 있습니다.";
 
 "swap.affiliate_fee" = "제휴 수수료";
 "swap.liquidity_fee" = "유동성 수수료";
