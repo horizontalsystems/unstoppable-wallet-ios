@@ -7,7 +7,10 @@ class Core {
     static var instance: Core?
 
     static func initApp() throws {
-        instance = try Core()
+        let core = try Core()
+        instance = core
+
+        core.finishInitialize()
     }
 
     static var shared: Core {
@@ -426,5 +429,9 @@ class Core {
         swapProviderManager = MultiSwapProviderManager(localStorage: localStorage, networkManager: networkManager, apiKey: AppConfig.uswapApiKey)
 
         appStateManager = AppStateManager(localStorage: localStorage, networkManager: networkManager, appManager: appManager)
+    }
+
+    func finishInitialize() {
+        swapProviderManager.onCoreInitialization()
     }
 }
