@@ -24,11 +24,10 @@ class MultiSwapProviderManager {
         if let apiKey {
             headers = HTTPHeaders([HTTPHeader(name: "x-api-key", value: apiKey)])
         }
+    }
 
-        Task { [weak self] in
-            self?.syncProviders(uSwapProviderRawValues: localStorage.uSwapProviders.map { $0.components(separatedBy: ",") } ?? [])
-        }
-
+    func onCoreInitialization() {
+        syncProviders(uSwapProviderRawValues: localStorage.uSwapProviders.map { $0.components(separatedBy: ",") } ?? [])
         sync()
     }
 
