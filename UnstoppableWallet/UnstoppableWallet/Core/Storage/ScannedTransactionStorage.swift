@@ -99,8 +99,7 @@ extension ScannedTransactionStorage {
     func findScanned(address: String) throws -> ScannedTransaction? {
         try dbPool.read { db in
             try ScannedTransaction
-                .filter(ScannedTransaction.Columns.spamAddress == address)
-                .filter(ScannedTransaction.Columns.isSpam == true)
+                .filter(ScannedTransaction.Columns.spamAddress.collating(.nocase) == address)
                 .fetchOne(db)
         }
     }
