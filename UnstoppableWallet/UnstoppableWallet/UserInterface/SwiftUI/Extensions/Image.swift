@@ -42,4 +42,13 @@ extension Image {
     static var warningIcon: some View {
         Image("warning_2_20").themeIcon(color: .themeLucian)
     }
+
+    static func checkbox(active: Bool, size: CGFloat = .margin24) -> some View {
+        ThemeImage(
+            active ?
+                ComponentImage(image: "checkbox_active", size: CGSize(width: size, height: size)) :
+                "checkbox_diactive",
+            size: size
+        )
+    }
 }

@@ -1,17 +1,18 @@
 
 import SectionsTableView
 import SnapKit
+import SwiftUI
 import UIKit
 
-class BackupViewController: ThemeViewController {
-    private let viewModel: BackupViewModel
+class BackupManualViewController: ThemeViewController {
+    private let viewModel: BackupManualViewModel
     var onComplete: (() -> Void)?
 
     private let tableView = SectionsTableView(style: .grouped)
 
     private var visible = false
 
-    init(viewModel: BackupViewModel) {
+    init(viewModel: BackupManualViewModel) {
         self.viewModel = viewModel
 
         super.init()
@@ -85,7 +86,7 @@ class BackupViewController: ThemeViewController {
     }
 }
 
-extension BackupViewController: SectionsDataSource {
+extension BackupManualViewController: SectionsDataSource {
     private func marginRow(id: String, height: CGFloat) -> RowProtocol {
         Row<EmptyCell>(id: id, height: height)
     }
@@ -154,4 +155,35 @@ extension BackupViewController: SectionsDataSource {
             ),
         ]
     }
+}
+
+extension BackupManualViewController {
+    static func instance(account: Account, onComplete: (() -> Void)? = nil) -> UIViewController? {
+        guard let service = BackupManualService(account: account) else {
+            return nil
+        }
+        let viewModel = BackupManualViewModel(service: service)
+        let viewController = BackupManualViewController(viewModel: viewModel)
+        viewController.onComplete = onComplete
+
+        return ThemeNavigationController(rootViewController: viewController)
+    }
+}
+
+struct BackupManualView: UIViewControllerRepresentable {
+    typealias UIViewControllerType = UIViewController
+
+    private let account: Account
+    private let onComplete: (() -> Void)?
+
+    init(account: Account, onComplete: (() -> Void)? = nil) {
+        self.account = account
+        self.onComplete = onComplete
+    }
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        BackupManualViewController.instance(account: account, onComplete: onComplete) ?? UIViewController()
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

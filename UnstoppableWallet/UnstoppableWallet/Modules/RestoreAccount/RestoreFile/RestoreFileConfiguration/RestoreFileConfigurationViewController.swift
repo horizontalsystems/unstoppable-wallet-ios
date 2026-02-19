@@ -103,7 +103,7 @@ class RestoreFileConfigurationViewController: KeyboardAwareViewController {
         present(viewController, animated: true)
     }
 
-    private func row(accountItem: BackupAppModule.AccountItem, rowInfo: RowInfo) -> RowProtocol {
+    private func row(accountItem: BackupModule.AccountItem, rowInfo: RowInfo) -> RowProtocol {
         let subtitleColor: UIColor = accountItem.cautionType?.labelColor ?? .themeGray
 
         return tableView.universalRow62(
@@ -115,7 +115,7 @@ class RestoreFileConfigurationViewController: KeyboardAwareViewController {
         )
     }
 
-    private func row(item: BackupAppModule.Item, rowInfo: RowInfo) -> RowProtocol {
+    private func row(item: BackupModule.ContentItem, rowInfo: RowInfo) -> RowProtocol {
         if let description = item.description {
             return tableView.universalRow62(
                 id: item.title,

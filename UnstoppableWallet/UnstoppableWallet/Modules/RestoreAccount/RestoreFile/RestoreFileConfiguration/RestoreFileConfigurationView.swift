@@ -87,7 +87,7 @@ struct RestoreFileConfigurationView: View {
         }
     }
 
-    @ViewBuilder private func section(header: String, items: [BackupAppModule.AccountItem]) -> some View {
+    @ViewBuilder private func section(header: String, items: [BackupModule.AccountItem]) -> some View {
         ListSection(header: header) {
             ForEach(items, id: \.accountId) {
                 item in row(

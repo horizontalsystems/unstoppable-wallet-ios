@@ -33,7 +33,9 @@ class MultiSwapProviderManager {
 
     private func syncProviders(uSwapProviderRawValues: [String]) {
         let uSwapProviders = uSwapProviderRawValues.compactMap { USwapMultiSwapProvider.Provider(rawValue: $0) }
-        providers = Self.providers(uSwapProviders: uSwapProviders)
+        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
+            self.providers = Self.providers(uSwapProviders: uSwapProviders)
+        }
     }
 
     func sync() {

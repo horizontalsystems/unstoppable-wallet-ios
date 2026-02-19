@@ -119,12 +119,7 @@ struct ManageAccountView: View {
                                 }
                             } else {
                                 ClickableRow {
-                                    Coordinator.shared.presentAfterUnlock { _ in
-                                        ICloudBackupTermsView(account: viewModel.account)
-                                            .ignoresSafeArea()
-                                    } onPresent: {
-                                        stat(page: .manageWallet, event: .open(page: .cloudBackup))
-                                    }
+                                    Coordinator.shared.presentWalletBackup(account: viewModel.account, statPage: .manageWallet)
                                 } content: {
                                     Image("icloud_24").themeIcon(color: .themeJacob)
                                     Text("manage_account.cloud_backup_recovery_phrase".localized).themeBody(color: .themeJacob)
@@ -244,7 +239,7 @@ struct ManageAccountView: View {
 
     private func presentBackup(reason: BackupReason) {
         Coordinator.shared.present { _ in
-            BackupView(account: viewModel.account) {
+            BackupManualView(account: viewModel.account) {
                 switch reason {
                 case .deleteCloudBackup: deleteCloudBackup()
                 default: ()

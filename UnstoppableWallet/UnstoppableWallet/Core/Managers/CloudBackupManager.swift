@@ -192,6 +192,20 @@ extension CloudBackupManager {
         return temporaryFileUrl
     }
 
+    func file(account: Account, passphrase: String, name: String) throws -> URL {
+        let wallets = appBackupProvider.enabledWallets(account: account)
+        let backup = try AppBackupProvider.encrypt(account: account, wallets: wallets, passphrase: passphrase)
+
+        let fileName = "\(name).json"
+        guard let temporaryFileUrl = ContactBookManager.localUrl?.appendingPathComponent(fileName) else {
+            throw FileStorage.StorageError.cantCreateFile
+        }
+
+        let data = try JSONEncoder().encode(backup)
+        try data.write(to: temporaryFileUrl)
+        return temporaryFileUrl
+    }
+
     func save(accountIds: [String], passphrase: String, name: String) throws {
         do {
             let encoded = try data(accountIds: accountIds, passphrase: passphrase)

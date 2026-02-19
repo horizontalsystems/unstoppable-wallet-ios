@@ -84,11 +84,11 @@ extension BackupCrypto {
         guard !passphrase.isEmpty else {
             throw ValidationError.emptyPassphrase
         }
-        guard passphrase.count >= BackupCloudModule.minimumPassphraseLength else {
+        guard passphrase.count >= BackupModule.minimumPassphraseLength else {
             throw ValidationError.simplePassword
         }
 
-        let allSatisfy = BackupCloudModule.PassphraseCharacterSet.allCases.allSatisfy { set in set.contains(passphrase) }
+        let allSatisfy = BackupModule.PassphraseCharacterSet.allCases.allSatisfy { set in set.contains(passphrase) }
         if !allSatisfy {
             throw ValidationError.simplePassword
         }

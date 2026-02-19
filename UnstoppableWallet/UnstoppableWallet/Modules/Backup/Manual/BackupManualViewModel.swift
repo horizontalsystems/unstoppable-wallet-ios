@@ -1,12 +1,12 @@
-class BackupViewModel {
-    private let service: BackupService
+class BackupManualViewModel {
+    private let service: BackupManualService
 
-    init(service: BackupService) {
+    init(service: BackupManualService) {
         self.service = service
     }
 }
 
-extension BackupViewModel {
+extension BackupManualViewModel {
     var account: Account {
         service.account
     }
