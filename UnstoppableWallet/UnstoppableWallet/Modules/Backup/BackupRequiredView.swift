@@ -19,17 +19,14 @@ struct BackupRequiredView: View {
                         isPresented = false
 
                         Coordinator.shared.present { _ in
-                            BackupView(account: account).ignoresSafeArea()
+                            BackupManualView(account: account).ignoresSafeArea()
                         }
                         stat(page: statPage, event: .open(page: .manualBackup))
                     },
                     .init(style: .transparent, title: "backup_prompt.backup_cloud".localized, icon: "icloud_24") {
                         isPresented = false
 
-                        Coordinator.shared.present { _ in
-                            ICloudBackupTermsView(account: account).ignoresSafeArea()
-                        }
-                        stat(page: statPage, event: .open(page: .cloudBackup))
+                        Coordinator.shared.presentWalletBackup(account: account, statPage: statPage)
                     },
                 ])),
             ],

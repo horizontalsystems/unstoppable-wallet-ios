@@ -1,4 +1,4 @@
-class BackupService {
+class BackupManualService {
     let account: Account
     let words: [String]
     let salt: String

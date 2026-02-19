@@ -1,10 +1,17 @@
 import SwiftUI
 
 struct BackupPasswordView: View {
-    @ObservedObject var viewModel: BackupAppViewModel
-    @Binding var isPresented: Bool
+    @ObservedObject var viewModel: BackupViewModel
+    @StateObject private var passwordViewModel: BackupPasswordViewModel
+    @Binding var path: NavigationPath
 
-    @State var secureLock = true
+    @State private var secureLock = true
+
+    init(viewModel: BackupViewModel, path: Binding<NavigationPath>) {
+        self.viewModel = viewModel
+        _passwordViewModel = StateObject(wrappedValue: BackupPasswordViewModel())
+        _path = path
+    }
 
     var body: some View {
         ThemeView {
@@ -19,43 +26,43 @@ struct BackupPasswordView: View {
                             InputTextRow {
                                 InputTextView(
                                     placeholder: "backup.cloud.password.placeholder".localized,
-                                    text: $viewModel.password,
-                                    isValidText: { text in PassphraseValidator.validate(text: text) }
+                                    text: $passwordViewModel.password,
+                                    isValidText: { PassphraseValidator.validate(text: $0) }
                                 )
                                 .secure($secureLock)
                                 .autocapitalization(.none)
                                 .autocorrectionDisabled()
                             }
-                            .modifier(CautionBorder(cautionState: $viewModel.passwordCautionState))
-                            .modifier(CautionPrompt(cautionState: $viewModel.passwordCautionState))
+                            .modifier(CautionBorder(cautionState: $passwordViewModel.passwordCautionState))
+                            .modifier(CautionPrompt(cautionState: $passwordViewModel.passwordCautionState))
 
                             InputTextRow {
                                 InputTextView(
                                     placeholder: "backup.cloud.password.confirm.placeholder".localized,
-                                    text: $viewModel.confirm,
-                                    isValidText: { text in PassphraseValidator.validate(text: text) }
+                                    text: $passwordViewModel.confirm,
+                                    isValidText: { PassphraseValidator.validate(text: $0) }
                                 )
                                 .secure($secureLock)
                                 .autocapitalization(.none)
                                 .autocorrectionDisabled()
                             }
-                            .modifier(CautionBorder(cautionState: $viewModel.confirmCautionState))
-                            .modifier(CautionPrompt(cautionState: $viewModel.confirmCautionState))
+                            .modifier(CautionBorder(cautionState: $passwordViewModel.confirmCautionState))
+                            .modifier(CautionPrompt(cautionState: $passwordViewModel.confirmCautionState))
                         }
                         .animation(.default, value: secureLock)
 
                         HighlightedTextView(text: "backup_app.backup.password.highlighted_description".localized, style: .warning)
                     }
-                    .animation(.default, value: viewModel.passwordCautionState)
-                    .animation(.default, value: viewModel.confirmCautionState)
+                    .animation(.default, value: passwordViewModel.passwordCautionState)
+                    .animation(.default, value: passwordViewModel.confirmCautionState)
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                 }
             } bottomContent: {
                 Button(action: {
-                    viewModel.onTapSave()
+                    onSave()
                 }) {
                     HStack(spacing: .margin8) {
-                        if viewModel.passwordButtonProcessing {
+                        if viewModel.processing {
                             ProgressView().progressViewStyle(.circular)
                         }
 
@@ -63,21 +70,26 @@ struct BackupPasswordView: View {
                     }
                 }
                 .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                .disabled(viewModel.passwordButtonProcessing)
-                .animation(.default, value: viewModel.passwordButtonProcessing)
+                .disabled(viewModel.processing)
+                .animation(.default, value: viewModel.processing)
             }
-            .onReceive(viewModel.dismissPublisher) {
-                isPresented = false
-            }
-            .navigationBarTitle("backup_app.backup.password.title".localized)
-            .navigationBarTitleDisplayMode(.inline)
-            .toolbar {
-                Button("button.cancel".localized) {
-                    isPresented = false
-                }
-                .disabled(viewModel.passwordButtonProcessing)
-            }
-            .toolbarRole(.editor)
         }
+        .navigationTitle("backup_app.backup.password.title".localized)
+        .navigationBarTitleDisplayMode(.inline)
+        .toolbar {
+            Button("button.cancel".localized) {
+                viewModel.cancel()
+            }
+            .disabled(viewModel.processing)
+        }
+    }
+
+    private func onSave() {
+        passwordViewModel.validate()
+
+        guard passwordViewModel.isValid else { return }
+
+        viewModel.setPassword(passwordViewModel.password)
+        viewModel.save()
     }
 }

@@ -1,28 +1,19 @@
 import SwiftUI
 
-struct BackupTypeView: View {
-    @StateObject private var viewModel = BackupAppViewModel()
-    @Binding var isPresented: Bool
-
-    @State var navigationPushed = false
+struct BackupSelectDestinationView: View {
+    @ObservedObject var viewModel: BackupViewModel
+    @Binding var path: NavigationPath
 
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin12) {
                 ListSection {
                     ClickableRow(action: {
-                        if viewModel.cloudAvailable {
-                            viewModel.destination = .cloud
-                            navigationPushed = true
-                        } else {
-                            Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                                CloudNotAvailableView(isPresented: isPresented)
-                            }
-                        }
+                        selectDestination(.cloud)
                     }) {
                         row(
                             image: "icloud_24",
-                            text: "backup_app.backup_type.cloud".localized,
+                            title: "backup_app.backup_type.cloud".localized,
                             description: "backup_app.backup_type.cloud.description".localized
                         )
                     }
@@ -31,12 +22,11 @@ struct BackupTypeView: View {
 
                 ListSection {
                     ClickableRow(action: {
-                        viewModel.destination = .local
-                        navigationPushed = true
+                        selectDestination(.files)
                     }) {
                         row(
                             image: "file_24",
-                            text: "backup_app.backup_type.file".localized,
+                            title: "backup_app.backup_type.file".localized,
                             description: "backup_app.backup_type.file.description".localized
                         )
                     }
@@ -46,25 +36,42 @@ struct BackupTypeView: View {
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
         .navigationTitle("backup_app.backup_type.title".localized)
-        .navigationDestination(isPresented: $navigationPushed) {
-            BackupListView(viewModel: viewModel, isPresented: $isPresented)
-                .onFirstAppear { stat(page: .exportFull, event: .open(page: viewModel.statPage)) }
-        }
         .toolbar {
             Button("button.cancel".localized) {
-                isPresented = false
+                viewModel.cancel()
             }
         }
     }
 
-    @ViewBuilder func row(image: String, text: String, description: String) -> some View {
+    @ViewBuilder
+    private func row(image: String, title: String, description: String) -> some View {
         HStack(spacing: .margin16) {
             Image(image).themeIcon()
             VStack(spacing: .margin4) {
-                Text(text).themeBody()
+                Text(title).themeBody()
                 Text(description).themeSubhead2()
             }
         }
         .padding(EdgeInsets(top: .margin12, leading: 0, bottom: .margin12, trailing: 0))
+    }
+
+    private func selectDestination(_ destination: BackupModule.Destination) {
+        if destination == .cloud {
+            guard viewModel.cloudAvailable else {
+                Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                    CloudNotAvailableView(isPresented: isPresented)
+                }
+                return
+            }
+        }
+
+        viewModel.setDestination(destination)
+
+        switch viewModel.type {
+        case .wallet:
+            path.append(BackupModule.Step.disclaimer)
+        case .app:
+            path.append(BackupModule.Step.selectContent)
+        }
     }
 }

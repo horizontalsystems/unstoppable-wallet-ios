@@ -18,9 +18,7 @@ struct BackupManagerView: View {
 
                     ClickableRow(action: {
                         Coordinator.shared.presentAfterUnlock { isPresented in
-                            ThemeNavigationStack {
-                                BackupTypeView(isPresented: isPresented)
-                            }
+                            BackupModule.backupApp(isPresented: isPresented)
                         }
                     }) {
                         Image("plus_24").themeIcon(color: .themeJacob)

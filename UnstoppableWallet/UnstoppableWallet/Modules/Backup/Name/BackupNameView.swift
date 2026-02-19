@@ -1,8 +1,15 @@
 import SwiftUI
 
 struct BackupNameView: View {
-    @ObservedObject var viewModel: BackupAppViewModel
-    @Binding var isPresented: Bool
+    @ObservedObject var viewModel: BackupViewModel
+    @StateObject private var nameViewModel: BackupNameViewModel
+    @Binding var path: NavigationPath
+
+    init(viewModel: BackupViewModel, path: Binding<NavigationPath>) {
+        self.viewModel = viewModel
+        _nameViewModel = StateObject(wrappedValue: BackupNameViewModel(type: viewModel.type, destination: viewModel.destination ?? .files))
+        _path = path
+    }
 
     var body: some View {
         ThemeView {
@@ -16,37 +23,32 @@ struct BackupNameView: View {
                         InputTextRow {
                             InputTextView(
                                 placeholder: "backup.cloud.name.placeholder".localized,
-                                text: $viewModel.name
+                                text: $nameViewModel.name
                             )
                             .autocapitalization(.words)
                             .autocorrectionDisabled()
                         }
-                        .modifier(CautionBorder(cautionState: $viewModel.nameCautionState))
-                        .modifier(CautionPrompt(cautionState: $viewModel.nameCautionState))
+                        .modifier(CautionBorder(cautionState: $nameViewModel.cautionState))
+                        .modifier(CautionPrompt(cautionState: $nameViewModel.cautionState))
                     }
-                    .animation(.default, value: viewModel.nameCautionState)
+                    .animation(.default, value: nameViewModel.cautionState)
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                 }
             } bottomContent: {
                 Button(action: {
-                    viewModel.passwordPushed = true
+                    onNext()
                 }) {
                     Text("button.next".localized)
                 }
                 .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                .disabled(viewModel.nameCautionState != .none)
+                .disabled(!nameViewModel.isValid)
             }
-            .navigationTitle("backup_app.backup.name.title".localized)
-            .navigationBarTitleDisplayMode(.inline)
-            .navigationDestination(isPresented: $viewModel.passwordPushed) {
-                BackupPasswordView(viewModel: viewModel, isPresented: $isPresented)
-            }
-            .toolbar {
-                Button("button.cancel".localized) {
-                    isPresented = false
-                }
-            }
-            .toolbarRole(.editor)
         }
+        .navigationTitle("backup_app.backup.name.title".localized)
+    }
+
+    private func onNext() {
+        viewModel.setName(nameViewModel.name)
+        path.append(BackupModule.Step.password)
     }
 }

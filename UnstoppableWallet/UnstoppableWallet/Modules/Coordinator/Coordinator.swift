@@ -159,6 +159,26 @@ extension Coordinator {
         }
     }
 
+    func presentWalletBackup(account: Account, statPage: StatPage) {
+        let cloudBackupManager = Core.shared.cloudBackupManager
+
+        guard cloudBackupManager.iCloudUrl != nil else {
+            Coordinator.shared.present(type: .bottomSheet) { sheetPresented in
+                CloudNotAvailableView(isPresented: sheetPresented)
+            }
+            return
+        }
+
+        Coordinator.shared.present { isPresented in
+            BackupModule.backupWallet(
+                accountId: account.id,
+                destination: .cloud,
+                isPresented: isPresented
+            )
+        }
+        stat(page: statPage, event: .open(page: .cloudBackup))
+    }
+
     func presentAfterUnlock(@ViewBuilder content: @escaping (Binding<Bool>) -> some View, onDismiss: (() -> Void)? = nil, onPresent: (() -> Void)? = nil) {
         performAfterUnlock {
             Coordinator.shared.present(content: content, onDismiss: onDismiss)
