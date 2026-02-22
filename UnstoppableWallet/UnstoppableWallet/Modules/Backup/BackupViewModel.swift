@@ -79,26 +79,29 @@ class BackupViewModel: ObservableObject {
         self.name = name
     }
 
-    func setPassword(_ password: String) {
+    @MainActor
+    func set(password: String) {
         self.password = password
     }
+    
+    @MainActor
+    func set(processing: Bool) {
+        self.processing = processing
+    }
 
-    func save() {
+    func save() async throws {
         guard let destination else { return }
 
-        processing = true
-
         let service = BackupServiceFactory.create(destination: destination)
-        let backupType = currentBackupType
-        let name = name
-        let password = password
+        let result = try await service.save(type: currentBackupType, name: name, password: password)
 
-        Task { [weak self] in
-            do {
-                let result = try await service.save(type: backupType, name: name, password: password)
-                await self?.handleSuccess(result: result)
-            } catch {
-                await self?.handleError(error)
+        await MainActor.run {
+            switch result {
+            case .saved:
+                HudHelper.instance.show(banner: .savedToCloud)
+                dismissSubject.send()
+            case let .share(url):
+                shareSubject.send(url)
             }
         }
     }

@@ -7,6 +7,7 @@
 	<key>com.apple.developer.associated-domains</key>
 	<array>
 		<string>applinks:unstoppable.money</string>
+		<string>webcredentials:unstoppable.money?mode=developer</string>
 	</array>
 	<key>com.apple.developer.icloud-container-identifiers</key>
 	<array>

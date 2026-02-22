@@ -8,8 +8,8 @@ struct BackupPasswordView: View {
     @State private var secureLock = true
 
     init(viewModel: BackupViewModel, path: Binding<NavigationPath>) {
+        _passwordViewModel = StateObject(wrappedValue: BackupPasswordViewModel(destination: viewModel.destination ?? .files))
         self.viewModel = viewModel
-        _passwordViewModel = StateObject(wrappedValue: BackupPasswordViewModel())
         _path = path
     }
 
@@ -51,7 +51,10 @@ struct BackupPasswordView: View {
                         }
                         .animation(.default, value: secureLock)
 
-                        HighlightedTextView(text: "backup_app.backup.password.highlighted_description".localized, style: .warning)
+                        HighlightedTextView(
+                            text: "backup_app.backup.password.highlighted_description".localized,
+                            style: .warning
+                        )
                     }
                     .animation(.default, value: passwordViewModel.passwordCautionState)
                     .animation(.default, value: passwordViewModel.confirmCautionState)
@@ -65,7 +68,6 @@ struct BackupPasswordView: View {
                         if viewModel.processing {
                             ProgressView().progressViewStyle(.circular)
                         }
-
                         Text("button.save".localized)
                     }
                 }
@@ -82,14 +84,92 @@ struct BackupPasswordView: View {
             }
             .disabled(viewModel.processing)
         }
+        .onAppear {
+            showGeneratePasswordSheet()
+        }
+    }
+
+    private func showGeneratePasswordSheet() {
+        let name = viewModel.name
+        guard !name.isEmpty else { return }
+
+        passwordViewModel.prepareKeychain(name: name)
+
+        let destination = viewModel.destination ?? .files
+
+        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+            BottomSheetView(items: [
+                .title(icon: ThemeImage.cloud, title: destination.passwordTitle),
+                .text(text: destination.passwordDescription),
+                .buttonGroup(.init(buttons: [
+                    .init(style: .yellow, title: destination.passwordAction) {
+                        do {
+                            try passwordViewModel.useGeneratedPassword()
+                        } catch {
+                            HudHelper.instance.show(banner: .error(string: error.localizedDescription))
+                        }
+                        isPresented.wrappedValue = false
+                    },
+                ])),
+            ])
+        }
     }
 
     private func onSave() {
-        passwordViewModel.validate()
+        Task {
+            defer { viewModel.set(processing: false) }
 
-        guard passwordViewModel.isValid else { return }
+            do {
+                try await passwordViewModel.saveIfNeeded()
 
-        viewModel.setPassword(passwordViewModel.password)
-        viewModel.save()
+                viewModel.set(password: passwordViewModel.password)
+                try await viewModel.save()
+                
+                viewModel.set(processing: false)    // discard processing after successful
+            } catch {
+                await handle(error: error)
+            }
+        }
+    }
+    
+    private func handle(error: Error) async {
+        var errorDescription: String?
+        if let error = error as? BackupPasswordViewModel.ValidationError {  // check if not validated
+            switch error {
+            case .invalid: ()
+            case .emptyKeychainAccount: errorDescription = "Keychain Empty Error!"
+            }
+        } else {
+            errorDescription = error.localizedDescription
+        }
+
+        if let errorDescription {
+            await MainActor.run {
+                HudHelper.instance.show(banner: .error(string: errorDescription))
+            }
+        }
+    }
+}
+
+extension BackupModule.Destination {
+    fileprivate var passwordTitle: String {
+        switch self {
+        case .cloud: return "backup.password.generate.title.cloud".localized
+        case .files: return "backup.password.generate.title.files".localized
+        }
+    }
+
+    fileprivate var passwordDescription: String {
+        switch self {
+        case .cloud: return "backup.password.generate.description.cloud".localized
+        case .files: return "backup.password.generate.description.files".localized
+        }
+    }
+
+    fileprivate var passwordAction: String {
+        switch self {
+        case .cloud: return "backup.password.generate.action.cloud".localized
+        case .files: return "backup.password.generate.action.files".localized
+        }
     }
 }
