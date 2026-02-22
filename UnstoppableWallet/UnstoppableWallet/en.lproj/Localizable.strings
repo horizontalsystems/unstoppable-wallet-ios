@@ -1606,6 +1606,17 @@
 "backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
 "backup.password.highlighted_description" = "This password is used to encrypt the backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
 
+"backup.password.generate.title.cloud" = "Strong Password";
+"backup.password.generate.title.files" = "Strong Password";
+"backup.password.generate.description.cloud" = "We can generate safety password and save it in Keychain";
+"backup.password.generate.description.files" = "We can generate safety password for you";
+"backup.password.generate.action.cloud" = "Create and Save";
+"backup.password.generate.action.files" = "Create";
+"backup.password.generator.error.invalid_length" = "Invalid Password Length (must be >8)";
+"backup.password.generator.error.random_failed" = "Can't generate safety random password";
+"backup.password.keychain.error.encoding" = "Keychain encoding error";
+"backup.password.keychain.error.save_failed" = "Keychain error! %@";
+
 // Settings -> Security
 
 "settings_security.title" = "Security";

@@ -2,6 +2,10 @@ import Combine
 import Foundation
 
 class BackupPasswordViewModel: ObservableObject {
+    private let storage: IBackupPasswordStorage = BackupPasswordStorageFactory.create(type: .webCredentials)
+    private let destination: BackupModule.Destination
+    private var keychainAccount: String = ""
+
     @Published var password: String = "" {
         didSet { clearCautions() }
     }
@@ -13,12 +17,17 @@ class BackupPasswordViewModel: ObservableObject {
     @Published var passwordCautionState: CautionState = .none
     @Published var confirmCautionState: CautionState = .none
 
+    // True only when user explicitly chose generated password with .cloud destination
+    private(set) var shouldSaveToKeychain = false
+
     var isValid: Bool {
         passwordCautionState == .none && !password.isEmpty &&
             confirmCautionState == .none && !confirm.isEmpty
     }
 
-    init() {
+    init(destination: BackupModule.Destination) {
+        self.destination = destination
+
         let defaultPassphrase = AppConfig.defaultPassphrase
         if !defaultPassphrase.isEmpty {
             password = defaultPassphrase
@@ -26,6 +35,33 @@ class BackupPasswordViewModel: ObservableObject {
         }
     }
 
+    func prepareKeychain(name: String) {
+        keychainAccount = name
+    }
+
+    func useGeneratedPassword() throws {
+        let generated = try BackupPasswordGenerator.generate()
+        password = generated
+        confirm = generated
+        // Save to Keychain only for cloud backups
+        shouldSaveToKeychain = destination == .cloud
+    }
+
+    func saveIfNeeded() async throws {
+        validate()
+        guard isValid else {
+            throw ValidationError.invalid
+        }
+
+        guard shouldSaveToKeychain else { return }
+
+        guard !keychainAccount.isEmpty else {
+            throw ValidationError.emptyKeychainAccount
+        }
+
+        try await storage.save(password: password, account: keychainAccount)
+    }
+    
     func validate() {
         validatePassword()
         validateConfirm()
@@ -64,5 +100,12 @@ class BackupPasswordViewModel: ObservableObject {
         if confirmCautionState != .none {
             confirmCautionState = .none
         }
+    }
+}
+
+extension BackupPasswordViewModel {
+    enum ValidationError: Error {
+        case invalid
+        case emptyKeychainAccount
     }
 }
