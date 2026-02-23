@@ -152,7 +152,6 @@ extension TermsManager {
                     Term(id: "device_pin", version: 1),
                     Term(id: "privacy_notice", version: 1),
                     Term(id: "decentralized", version: 1),
-                    Term(id: "commission", version: 1),
                     Term(id: "irreversibility", version: 1),
                     Term(id: "software", version: 1),
                     Term(id: "compliance", version: 1),

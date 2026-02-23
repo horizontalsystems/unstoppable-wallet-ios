@@ -38,8 +38,8 @@ enum PremiumFeature: String, CaseIterable, Identifiable {
 extension PremiumCategory {
     var features: [PremiumFeature] {
         switch self {
-        case .defenseSystem: return [.secureSend, .scamProtection, .swapProtection, .robberyProtection]
-        case .advancedControls: return [.swapControl, .prioritySupport]
+        case .defenseSystem: return [.secureSend, .scamProtection] + (Core.shared.appStateManager.swapEnabled ? [.swapProtection] : []) + [.robberyProtection]
+        case .advancedControls: return (Core.shared.appStateManager.swapEnabled ? [.swapControl] : []) + [.prioritySupport]
         case .marketInsights: return [.tokenInsights, .advancedSearch, .tradeSignals]
         }
     }
