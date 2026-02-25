@@ -83,7 +83,7 @@ class BackupViewModel: ObservableObject {
     func set(password: String) {
         self.password = password
     }
-    
+
     @MainActor
     func set(processing: Bool) {
         self.processing = processing

@@ -5,10 +5,11 @@ struct BackupPasswordView: View {
     @StateObject private var passwordViewModel: BackupPasswordViewModel
     @Binding var path: NavigationPath
 
-    @State private var secureLock = true
+    @FocusState private var passwordFocused: Bool
 
     init(viewModel: BackupViewModel, path: Binding<NavigationPath>) {
-        _passwordViewModel = StateObject(wrappedValue: BackupPasswordViewModel(destination: viewModel.destination ?? .files))
+        let destination = viewModel.destination ?? .files
+        _passwordViewModel = StateObject(wrappedValue: BackupPasswordViewModel(destination: destination, backupViewModel: viewModel))
         self.viewModel = viewModel
         _path = path
     }
@@ -29,9 +30,10 @@ struct BackupPasswordView: View {
                                     text: $passwordViewModel.password,
                                     isValidText: { PassphraseValidator.validate(text: $0) }
                                 )
-                                .secure($secureLock)
+                                .secure($passwordViewModel.secureLock)
                                 .autocapitalization(.none)
                                 .autocorrectionDisabled()
+                                .focused($passwordFocused)
                             }
                             .modifier(CautionBorder(cautionState: $passwordViewModel.passwordCautionState))
                             .modifier(CautionPrompt(cautionState: $passwordViewModel.passwordCautionState))
@@ -42,14 +44,14 @@ struct BackupPasswordView: View {
                                     text: $passwordViewModel.confirm,
                                     isValidText: { PassphraseValidator.validate(text: $0) }
                                 )
-                                .secure($secureLock)
+                                .secure($passwordViewModel.secureLock)
                                 .autocapitalization(.none)
                                 .autocorrectionDisabled()
                             }
                             .modifier(CautionBorder(cautionState: $passwordViewModel.confirmCautionState))
                             .modifier(CautionPrompt(cautionState: $passwordViewModel.confirmCautionState))
                         }
-                        .animation(.default, value: secureLock)
+                        .animation(.default, value: passwordViewModel.secureLock)
 
                         HighlightedTextView(
                             text: "backup_app.backup.password.highlighted_description".localized,
@@ -62,18 +64,18 @@ struct BackupPasswordView: View {
                 }
             } bottomContent: {
                 Button(action: {
-                    onSave()
+                    passwordViewModel.onTapSave()
                 }) {
                     HStack(spacing: .margin8) {
-                        if viewModel.processing {
+                        if passwordViewModel.processing {
                             ProgressView().progressViewStyle(.circular)
                         }
                         Text("button.save".localized)
                     }
                 }
                 .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                .disabled(viewModel.processing)
-                .animation(.default, value: viewModel.processing)
+                .disabled(passwordViewModel.processing)
+                .animation(.default, value: passwordViewModel.processing)
             }
         }
         .navigationTitle("backup_app.backup.password.title".localized)
@@ -82,19 +84,23 @@ struct BackupPasswordView: View {
             Button("button.cancel".localized) {
                 viewModel.cancel()
             }
-            .disabled(viewModel.processing)
+            .disabled(passwordViewModel.processing)
         }
         .onAppear {
-            showGeneratePasswordSheet()
+            passwordViewModel.onAppear()
+        }
+        .onReceive(passwordViewModel.showGenerateSheetPublisher) {
+            showGenerateSheet()
+        }
+        .onReceive(passwordViewModel.showWarningSheetPublisher) {
+            showWarningSheet()
+        }
+        .onReceive(passwordViewModel.focusPasswordPublisher) {
+            passwordFocused = true
         }
     }
 
-    private func showGeneratePasswordSheet() {
-        let name = viewModel.name
-        guard !name.isEmpty else { return }
-
-        passwordViewModel.prepareKeychain(name: name)
-
+    private func showGenerateSheet() {
         let destination = viewModel.destination ?? .files
 
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
@@ -112,61 +118,46 @@ struct BackupPasswordView: View {
                     },
                 ])),
             ])
+        } onDismiss: {
+            passwordViewModel.onGenerateSheetDismissed()
         }
     }
 
-    private func onSave() {
-        Task {
-            defer { viewModel.set(processing: false) }
-
-            do {
-                try await passwordViewModel.saveIfNeeded()
-
-                viewModel.set(password: passwordViewModel.password)
-                try await viewModel.save()
-                
-                viewModel.set(processing: false)    // discard processing after successful
-            } catch {
-                await handle(error: error)
-            }
-        }
-    }
-    
-    private func handle(error: Error) async {
-        var errorDescription: String?
-        if let error = error as? BackupPasswordViewModel.ValidationError {  // check if not validated
-            switch error {
-            case .invalid: ()
-            case .emptyKeychainAccount: errorDescription = "Keychain Empty Error!"
-            }
-        } else {
-            errorDescription = error.localizedDescription
-        }
-
-        if let errorDescription {
-            await MainActor.run {
-                HudHelper.instance.show(banner: .error(string: errorDescription))
-            }
+    private func showWarningSheet() {
+        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+            BottomSheetView(items: [
+                .title(icon: ThemeImage.warning, title: "Save Password"),
+                .text(text: "Make sure you saved the password. Without it, access to the backup file will be lost."),
+                .buttonGroup(.init(buttons: [
+                    .init(style: .gray, title: "Check Again") {
+                        isPresented.wrappedValue = false
+                    },
+                    .init(style: .yellow, title: "Just Make Backup") {
+                        isPresented.wrappedValue = false
+                        passwordViewModel.confirmSave()
+                    },
+                ])),
+            ])
         }
     }
 }
 
-extension BackupModule.Destination {
-    fileprivate var passwordTitle: String {
+private extension BackupModule.Destination {
+    var passwordTitle: String {
         switch self {
         case .cloud: return "backup.password.generate.title.cloud".localized
         case .files: return "backup.password.generate.title.files".localized
         }
     }
 
-    fileprivate var passwordDescription: String {
+    var passwordDescription: String {
         switch self {
         case .cloud: return "backup.password.generate.description.cloud".localized
         case .files: return "backup.password.generate.description.files".localized
         }
     }
 
-    fileprivate var passwordAction: String {
+    var passwordAction: String {
         switch self {
         case .cloud: return "backup.password.generate.action.cloud".localized
         case .files: return "backup.password.generate.action.files".localized

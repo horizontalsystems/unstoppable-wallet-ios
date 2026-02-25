@@ -1,9 +1,11 @@
-import Foundation
 import AuthenticationServices
+import Foundation
 import UIKit
 
 class BackupSharedWebCredentialsService: NSObject, IBackupPasswordStorage {
     private static let server = "unstoppable.money"
+
+    private var loadContinuation: CheckedContinuation<String?, Never>?
 
     func save(password: String, account: String) async throws {
         let _: Void = try await withCheckedThrowingContinuation { continuation in
@@ -24,8 +26,10 @@ class BackupSharedWebCredentialsService: NSObject, IBackupPasswordStorage {
         }
     }
 
-    func load(account: String) async -> String? {
+    func load(account _: String) async -> String? {
         await withCheckedContinuation { continuation in
+            loadContinuation = continuation
+
             let provider = ASAuthorizationPasswordProvider()
             let request = provider.createRequest()
 
@@ -33,9 +37,9 @@ class BackupSharedWebCredentialsService: NSObject, IBackupPasswordStorage {
             controller.delegate = self
             controller.presentationContextProvider = self
 
-            // Store continuation to use in delegate
-            self.loadContinuation = continuation
-            controller.performRequests()
+            objc_setAssociatedObject(controller, "delegate", self, .OBJC_ASSOCIATION_RETAIN)
+
+            controller.performRequests(options: .preferImmediatelyAvailableCredentials)
         }
     }
 
@@ -51,12 +55,10 @@ class BackupSharedWebCredentialsService: NSObject, IBackupPasswordStorage {
             }
         }
     }
-
-    private var loadContinuation: CheckedContinuation<String?, Never>?
 }
 
 extension BackupSharedWebCredentialsService: ASAuthorizationControllerDelegate {
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
+    func authorizationController(controller _: ASAuthorizationController, didCompleteWithAuthorization authorization: ASAuthorization) {
         guard let credential = authorization.credential as? ASPasswordCredential else {
             loadContinuation?.resume(returning: nil)
             loadContinuation = nil
@@ -67,17 +69,17 @@ extension BackupSharedWebCredentialsService: ASAuthorizationControllerDelegate {
         loadContinuation = nil
     }
 
-    func authorizationController(controller: ASAuthorizationController, didCompleteWithError error: Error) {
+    func authorizationController(controller _: ASAuthorizationController, didCompleteWithError _: Error) {
         loadContinuation?.resume(returning: nil)
         loadContinuation = nil
     }
 }
 
 extension BackupSharedWebCredentialsService: ASAuthorizationControllerPresentationContextProviding {
-    func presentationAnchor(for controller: ASAuthorizationController) -> ASPresentationAnchor {
+    func presentationAnchor(for _: ASAuthorizationController) -> ASPresentationAnchor {
         UIApplication.shared.connectedScenes
             .compactMap { $0 as? UIWindowScene }
-            .flatMap { $0.windows }
+            .flatMap(\.windows)
             .first { $0.isKeyWindow } ?? ASPresentationAnchor()
     }
 }
