@@ -61,7 +61,7 @@ extension ReceiveCoinListService {
         let blockchainType = token.blockchainType
 
         switch blockchainType {
-        case .zcash, .monero:
+        case .zcash, .monero, .zano:
             let settings = settingsService.settings(accountId: account.id, blockchainType: blockchainType)
 
             if settings[.birthdayHeight] == nil, let birthdayHeight = RestoreSettingType.birthdayHeight.createdAccountValue(blockchainType: blockchainType) {

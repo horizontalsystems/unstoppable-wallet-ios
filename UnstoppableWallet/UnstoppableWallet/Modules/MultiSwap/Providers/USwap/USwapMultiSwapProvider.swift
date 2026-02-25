@@ -316,7 +316,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 quote: quote,
                 slippage: slippage,
                 recipient: recipient,
-                priority: transactionSettings?.priority ?? .default
+                priority: transactionSettings?.moneroPriority ?? .default
             )
         default:
             throw SwapError.unsupportedTokenIn

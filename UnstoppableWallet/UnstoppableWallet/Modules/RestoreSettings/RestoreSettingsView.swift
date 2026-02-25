@@ -3,6 +3,7 @@ import MarketKit
 import MoneroKit
 import RxCocoa
 import RxSwift
+import ZanoKit
 import ZcashLightClientKit
 
 class RestoreSettingsView {
@@ -46,6 +47,7 @@ class RestoreSettingsView {
         switch token.blockchainType {
         case .zcash: return ZCashBirthdayInputProvider()
         case .monero: return MoneroBirthdayInputProvider()
+        case .zano: return ZanoBirthdayInputProvider()
         default: return nil
         }
     }
@@ -62,6 +64,7 @@ enum BirthdayInputProviderFactory {
         switch blockchainType {
         case .zcash: return ZCashBirthdayInputProvider()
         case .monero: return MoneroBirthdayInputProvider()
+        case .zano: return ZanoBirthdayInputProvider()
         default: return nil
         }
     }
@@ -92,5 +95,19 @@ class MoneroBirthdayInputProvider: IBirthdayInputProvider {
 
     func date(height: Int) -> Date {
         MoneroKit.RestoreHeight.getDate(height: Int64(height))
+    }
+}
+
+class ZanoBirthdayInputProvider: IBirthdayInputProvider {
+    var lastBlockHeight: Int {
+        height(date: Date())
+    }
+
+    func height(date: Date) -> Int {
+        Int(ZanoKit.RestoreHeight.getHeight(date: date))
+    }
+
+    func date(height: Int) -> Date {
+        ZanoKit.RestoreHeight.getDate(height: Int64(height))
     }
 }

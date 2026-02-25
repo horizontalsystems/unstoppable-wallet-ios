@@ -573,6 +573,34 @@ class TransactionInfoViewItemFactory {
                 feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(appValue: fee, rate: _rate(fee.coin)))
             }
 
+        case let record as ZanoIncomingTransactionRecord:
+            sections.append(.init(receiveSection(source: record.source, appValue: record.value, from: record.from, rates: item.rates, to: record.to, balanceHidden: balanceHidden)))
+
+            if let memo = record.memo {
+                sections.append(.init([.memo(text: memo)]))
+            }
+
+        case let record as ZanoOutgoingTransactionRecord:
+            sections.append(.init(sendSection(source: record.source, appValue: record.value, to: record.to, rates: item.rates, sentToSelf: record.sentToSelf, balanceHidden: balanceHidden)))
+
+            var additionalViewItems = [TransactionInfoModule.ViewItem]()
+
+            if let memo = record.memo {
+                additionalViewItems.append(.memo(text: memo))
+            }
+
+            if record.sentToSelf {
+                additionalViewItems.insert(.sentToSelf, at: 0)
+            }
+
+            if !additionalViewItems.isEmpty {
+                sections.append(.init(additionalViewItems))
+            }
+
+            if let fee = record.fee {
+                feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(appValue: fee, rate: _rate(fee.coin)))
+            }
+
         case let record as TonTransactionRecord:
             for action in record.actions {
                 var viewItems: [TransactionInfoModule.ViewItem]

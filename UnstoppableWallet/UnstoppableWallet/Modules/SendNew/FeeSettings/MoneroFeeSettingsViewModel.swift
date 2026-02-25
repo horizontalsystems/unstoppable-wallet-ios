@@ -13,7 +13,7 @@ class MoneroFeeSettingsViewModel: ObservableObject {
     @Published var applyEnabled = false
 
     @Published var fee: Decimal?
-    @Published var priority: SendPriority {
+    @Published var priority: MoneroKit.SendPriority {
         didSet {
             sync()
         }

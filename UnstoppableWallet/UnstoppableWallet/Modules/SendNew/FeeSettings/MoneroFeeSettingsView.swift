@@ -48,10 +48,10 @@ struct MoneroFeeSettingsView: View {
                                             Coordinator.shared.present(type: .alert) { isPresented in
                                                 OptionAlertView(
                                                     title: "monero.priority".localized,
-                                                    viewItems: SendPriority.allCases.map {
+                                                    viewItems: MoneroKit.SendPriority.allCases.map {
                                                         AlertViewItem(text: $0.description, selected: $0 == viewModel.priority)
                                                     },
-                                                    onSelect: { viewModel.priority = SendPriority.allCases[$0] },
+                                                    onSelect: { viewModel.priority = MoneroKit.SendPriority.allCases[$0] },
                                                     isPresented: isPresented
                                                 )
                                             }

@@ -188,6 +188,8 @@ extension AdapterManager {
                 self.stellarKitManager.stellarKit?.sync()
             } else if wallet.token.blockchainType == .monero {
                 (self._adapterData.adapterMap[wallet] as? MoneroAdapter)?.restart()
+            } else if wallet.token.blockchainType == .zano {
+                (self._adapterData.adapterMap[wallet] as? ZanoAdapter)?.restart()
             } else {
                 self._adapterData.adapterMap[wallet]?.refresh()
             }

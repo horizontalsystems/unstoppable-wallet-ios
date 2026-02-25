@@ -4,7 +4,7 @@ import MoneroKit
 enum TransactionSettings {
     case evm(gasPriceData: GasPriceData, nonce: Int?)
     case bitcoin(satoshiPerByte: Int)
-    case monero(priority: SendPriority)
+    case monero(priority: MoneroKit.SendPriority)
 
     var gasPriceData: GasPriceData? {
         switch self {
@@ -27,7 +27,7 @@ enum TransactionSettings {
         }
     }
 
-    var priority: SendPriority? {
+    var moneroPriority: MoneroKit.SendPriority? {
         switch self {
         case let .monero(priority): return priority
         default: return nil

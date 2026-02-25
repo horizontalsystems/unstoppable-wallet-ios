@@ -13,6 +13,7 @@ extension BlockchainType {
         .dash,
         .zcash,
         .monero,
+        .zano,
         .ethereum,
         .polygon,
         .avalanche,
@@ -43,7 +44,7 @@ extension BlockchainType {
 
     var restoreSettingTypes: [RestoreSettingType] {
         switch self {
-        case .zcash, .monero: return [.birthdayHeight]
+        case .zcash, .monero, .zano: return [.birthdayHeight]
         default: return []
         }
     }
@@ -56,6 +57,7 @@ extension BlockchainType {
             .tron,
             .zcash,
             .dash,
+            .zano,
             .litecoin,
             .binanceSmartChain,
             .polygon,
@@ -168,6 +170,7 @@ extension BlockchainType {
         case .arbitrumOne: return "L2 chain"
         case .zcash: return "ZEC"
         case .monero: return "XMR"
+        case .zano: return "ZANO"
         case .dash: return "DASH"
         case .bitcoinCash: return "BCH (Legacy, CashAddress)"
         case .ecash: return "XEC"

@@ -22,6 +22,7 @@ extension KitCleaner {
             try? ZcashAdapter.clear(except: accountIds)
             try? TronAdapter.clear(except: accountIds)
             try? MoneroAdapter.clear(except: accountIds)
+            try? ZanoAdapter.clear(except: accountIds)
         }
     }
 }

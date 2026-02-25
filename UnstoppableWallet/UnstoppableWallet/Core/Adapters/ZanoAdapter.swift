@@ -1,22 +1,21 @@
 import Combine
 import Foundation
-import HdWalletKit
 import HsToolKit
 import MarketKit
-import MoneroKit
 import RxSwift
+import ZanoKit
 
-class MoneroAdapter {
-    static let networkType: MoneroKit.NetworkType = .mainnet
+class ZanoAdapter {
+    static let networkType: ZanoKit.NetworkType = .mainnet
     static let confirmationsThreshold = Int(Kit.confirmationsThreshold)
 
     var coinRate: Decimal { 1_000_000_000_000 } // pow(10, 12)
 
-    private let kit: MoneroKit.Kit
-    private let moneroBalanceDataSubject = PublishSubject<MoneroBalanceData>()
+    private let kit: ZanoKit.Kit
+    private let zanoBalanceDataSubject = PublishSubject<ZanoBalanceData>()
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
     private let balanceStateSubject = PublishSubject<AdapterState>()
-    let transactionRecordsSubject = PublishSubject<[MoneroTransactionRecord]>()
+    let transactionRecordsSubject = PublishSubject<[ZanoTransactionRecord]>()
     private let depositAddressSubject = PassthroughSubject<DataStatus<DepositAddress>, Never>()
 
     private(set) var balanceState: AdapterState {
@@ -31,32 +30,21 @@ class MoneroAdapter {
     let token: Token
     private let transactionSource: TransactionSource
 
-    init(wallet: Wallet, restoreSettings: RestoreSettings, node: Node) throws {
-        let logger = Core.shared.logger.scoped(with: "MoneroKit")
+    init(wallet: Wallet, restoreSettings: RestoreSettings, nodeUrl: String) throws {
+        let logger = Core.shared.logger.scoped(with: "ZanoKit")
 
         switch wallet.account.type {
         case let .mnemonic(words, passphrase, _):
-            kit = try MoneroKit.Kit(
-                wallet: .bip39(seed: words, passphrase: passphrase),
-                account: 0,
-                restoreHeight: UInt64(restoreSettings.birthdayHeight ?? 0),
+            let creationDate = RestoreHeight.getDate(height: Int64(restoreSettings.birthdayHeight ?? 0))
+            let creationTimestamp = UInt64(creationDate.timeIntervalSince1970)
+            kit = try ZanoKit.Kit(
+                wallet: .bip39(seed: words, passphrase: passphrase, creationTimestamp: creationTimestamp),
                 walletId: wallet.account.id,
-                node: node,
+                daemonAddress: nodeUrl,
                 networkType: Self.networkType,
                 reachabilityManager: Core.shared.reachabilityManager,
-                logger: logger
-            )
-
-        case let .moneroWatchAccount(address, viewKey):
-            kit = try MoneroKit.Kit(
-                wallet: .watch(address: address, viewKey: viewKey),
-                account: 0,
-                restoreHeight: UInt64(restoreSettings.birthdayHeight ?? 0),
-                walletId: wallet.account.id,
-                node: node,
-                networkType: Self.networkType,
-                reachabilityManager: Core.shared.reachabilityManager,
-                logger: logger
+                logger: logger,
+                zanoCoreLogLevel: -1
             )
 
         default:
@@ -70,12 +58,12 @@ class MoneroAdapter {
         kit.delegate = self
     }
 
-    func transactionRecord(fromTransaction transaction: TransactionInfo) -> MoneroTransactionRecord {
+    func transactionRecord(fromTransaction transaction: TransactionInfo) -> ZanoTransactionRecord {
         let blockHeight = transaction.blockHeight > 0 ? Int(transaction.blockHeight) : nil
 
         switch transaction.type {
         case .outgoing, .sentToSelf:
-            return MoneroOutgoingTransactionRecord(
+            return ZanoOutgoingTransactionRecord(
                 token: token,
                 source: transactionSource,
                 uid: transaction.uid,
@@ -89,11 +77,10 @@ class MoneroAdapter {
                 amount: Decimal(transaction.amount) / coinRate,
                 to: transaction.recipientAddress,
                 sentToSelf: transaction.type == TransactionType.sentToSelf,
-                memo: transaction.memo,
-                txSecretKey: transaction.txKey
+                memo: transaction.memo
             )
         case .incoming:
-            return MoneroIncomingTransactionRecord(
+            return ZanoIncomingTransactionRecord(
                 token: token,
                 source: transactionSource,
                 uid: transaction.uid,
@@ -112,9 +99,9 @@ class MoneroAdapter {
         }
     }
 
-    private func moneroBalanceData(balanceInfo: BalanceInfo) -> MoneroBalanceData {
-        MoneroBalanceData(
-            all: Decimal(balanceInfo.all) / coinRate,
+    private func zanoBalanceData(balanceInfo: BalanceInfo) -> ZanoBalanceData {
+        ZanoBalanceData(
+            all: Decimal(balanceInfo.total) / coinRate,
             unlocked: Decimal(balanceInfo.unlocked) / coinRate
         )
     }
@@ -141,11 +128,11 @@ class MoneroAdapter {
     }
 
     public var explorerTitle: String {
-        "Blockchair"
+        "Zano Explorer"
     }
 
     public func explorerUrl(transactionHash: String) -> String? {
-        "https://blockchair.com/monero/transaction/\(transactionHash)"
+        "https://explorer.zano.org/transaction/\(transactionHash)"
     }
 
     public func explorerUrl(address _: String) -> String? {
@@ -153,7 +140,7 @@ class MoneroAdapter {
     }
 }
 
-extension MoneroAdapter: IAdapter {
+extension ZanoAdapter: IAdapter {
     var isMainNet: Bool {
         true
     }
@@ -183,84 +170,81 @@ extension MoneroAdapter: IAdapter {
     }
 }
 
-extension MoneroAdapter: MoneroKitDelegate {
-    func subAddressesUpdated(subaddresses _: [MoneroKit.SubAddress]) {
-        depositAddressSubject.send(.completed(receiveAddress))
+extension ZanoAdapter: ZanoKitDelegate {
+    func assetsDidChange(assets _: [AssetInfo]) {
+        // For now, we only handle native ZANO asset
     }
 
-    func balanceDidChange(balanceInfo: MoneroKit.BalanceInfo) {
-        moneroBalanceDataSubject.onNext(moneroBalanceData(balanceInfo: balanceInfo))
+    func balancesDidChange(balances: [BalanceInfo]) {
+        if let nativeBalance = balances.first(where: { $0.isNative }) {
+            zanoBalanceDataSubject.onNext(zanoBalanceData(balanceInfo: nativeBalance))
+        }
     }
 
-    func walletStateDidChange(state _: MoneroKit.WalletState) {
+    func walletStateDidChange(state _: WalletState) {
         balanceState = adapterStateFromKit()
         lastBlockUpdatedSubject.onNext(())
     }
 
-    func transactionsUpdated(inserted: [TransactionInfo], updated: [TransactionInfo]) {
-        var records = [MoneroTransactionRecord]()
-
-        for info in inserted {
-            records.append(transactionRecord(fromTransaction: info))
+    func transactionsDidChange(transactions: [TransactionInfo]) {
+        let nativeTransactions = transactions.filter(\.isNative)
+        let records = nativeTransactions.map { transactionRecord(fromTransaction: $0) }
+        if !records.isEmpty {
+            transactionRecordsSubject.onNext(records)
         }
-        for info in updated {
-            records.append(transactionRecord(fromTransaction: info))
-        }
-
-        transactionRecordsSubject.onNext(records)
     }
 }
 
-extension MoneroAdapter: IBalanceAdapter {
+extension ZanoAdapter: IBalanceAdapter {
     var balanceStateUpdatedObservable: Observable<AdapterState> {
         balanceStateSubject.asObservable()
     }
 
     var balanceData: BalanceData {
-        moneroBalanceData.balanceData
+        zanoBalanceData.balanceData
     }
 
     var balanceDataUpdatedObservable: Observable<BalanceData> {
-        moneroBalanceDataSubject.map(\.balanceData).asObservable()
+        zanoBalanceDataSubject.map(\.balanceData).asObservable()
     }
 }
 
-extension MoneroAdapter {
-    var moneroBalanceData: MoneroBalanceData {
-        moneroBalanceData(balanceInfo: kit.balanceInfo)
+extension ZanoAdapter {
+    var zanoBalanceData: ZanoBalanceData {
+        zanoBalanceData(balanceInfo: kit.nativeBalance)
     }
 
-    var moneroBalanceDataObservable: Observable<MoneroBalanceData> {
-        moneroBalanceDataSubject.asObservable()
+    var zanoBalanceDataObservable: Observable<ZanoBalanceData> {
+        zanoBalanceDataSubject.asObservable()
     }
 
     var minimumSendAmount: Decimal {
         0.0
     }
 
-    func estimateFee(amount: MoneroSendAmount, address: String, priority: MoneroKit.SendPriority) throws -> Decimal {
-        let fee = try kit.estimateFee(address: address, amount: convertToPiconero(amount: amount), priority: priority)
+    func estimateFee() -> Decimal {
+        let fee = kit.estimateFee(priority: .default)
         return Decimal(fee) / coinRate
     }
 
-    func send(to address: String, amount: MoneroSendAmount, priority: MoneroKit.SendPriority, memo: String?) throws {
-        _ = try kit.send(to: address, amount: convertToPiconero(amount: amount), priority: priority, memo: memo)
+    func send(to address: String, amount: ZanoSendAmount, memo: String?) throws {
+        _ = try kit.send(to: address, assetId: ZanoAssetId, amount: convertToAtomic(amount: amount), priority: .default, memo: memo)
     }
 
-    func convertToPiconero(amount: MoneroSendAmount) -> SendAmount {
+    func convertToAtomic(amount: ZanoSendAmount) -> SendAmount {
         switch amount {
         case .all:
             return .all
         case let .value(value):
             let coinValue: Decimal = value * coinRate
             let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: Int16(truncatingIfNeeded: 0), raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
-            let piconeroValue = NSDecimalNumber(decimal: coinValue).rounding(accordingToBehavior: handler).intValue
-            return .value(piconeroValue)
+            let atomicValue = NSDecimalNumber(decimal: coinValue).rounding(accordingToBehavior: handler).intValue
+            return .value(atomicValue)
         }
     }
 }
 
-extension MoneroAdapter: ITransactionsAdapter {
+extension ZanoAdapter: ITransactionsAdapter {
     func rawTransaction(hash _: String) -> String? {
         nil
     }
@@ -287,9 +271,9 @@ extension MoneroAdapter: ITransactionsAdapter {
                 transactions.compactMap { transaction -> TransactionRecord? in
                     switch (transaction, filter) {
                     case (_, .all): return transaction
-                    case (is MoneroIncomingTransactionRecord, .incoming): return transaction
-                    case (is MoneroOutgoingTransactionRecord, .outgoing): return transaction
-                    case let (tx as MoneroOutgoingTransactionRecord, .incoming): return tx.sentToSelf ? transaction : nil
+                    case (is ZanoIncomingTransactionRecord, .incoming): return transaction
+                    case (is ZanoOutgoingTransactionRecord, .outgoing): return transaction
+                    case let (tx as ZanoOutgoingTransactionRecord, .incoming): return tx.sentToSelf ? transaction : nil
                     default: return nil
                     }
                 }
@@ -298,15 +282,15 @@ extension MoneroAdapter: ITransactionsAdapter {
     }
 
     func transactionsSingle(paginationData: String?, token _: Token?, filter: TransactionTypeFilter, address _: String?, limit: Int) -> Single<[TransactionRecord]> {
-        let moneroFilter: TransactionFilterType?
+        let zanoFilter: TransactionFilterType?
         switch filter {
-        case .all: moneroFilter = nil
-        case .incoming: moneroFilter = .incoming
-        case .outgoing: moneroFilter = .outgoing
+        case .all: zanoFilter = nil
+        case .incoming: zanoFilter = .incoming
+        case .outgoing: zanoFilter = .outgoing
         default: return Single.just([])
         }
 
-        let transactions = kit.transactions(fromHash: paginationData, descending: true, type: moneroFilter, limit: limit).map {
+        let transactions = kit.transactions(assetId: ZanoAssetId, fromHash: paginationData, descending: true, type: zanoFilter, limit: limit).map {
             transactionRecord(fromTransaction: $0)
         }
 
@@ -318,7 +302,7 @@ extension MoneroAdapter: ITransactionsAdapter {
     }
 }
 
-extension MoneroAdapter: IDepositAdapter {
+extension ZanoAdapter: IDepositAdapter {
     var receiveAddress: DepositAddress {
         DepositAddress(kit.receiveAddress)
     }
@@ -328,14 +312,12 @@ extension MoneroAdapter: IDepositAdapter {
     }
 
     var usedAddresses: [UsedAddress] {
-        kit.usedAddresses.map {
-            UsedAddress(index: $0.index, address: $0.address, explorerUrl: nil, transactionsCount: $0.transactionsCount)
-        }
+        []
     }
 }
 
-extension MoneroAdapter {
-    struct MoneroBalanceData {
+extension ZanoAdapter {
+    struct ZanoBalanceData {
         let all: Decimal
         let unlocked: Decimal
 
@@ -345,37 +327,17 @@ extension MoneroAdapter {
     }
 }
 
-extension MoneroAdapter {
+extension ZanoAdapter {
     static func clear(except excludedWalletIds: [String]) throws {
         try Kit.removeAll(except: excludedWalletIds)
     }
 
-    static func key(accountType: AccountType, privateKey: Bool, spendKey: Bool) -> String {
-        switch accountType {
-        case let .mnemonic(words, passphrase, _):
-            return (try? Kit.key(wallet: .bip39(seed: words, passphrase: passphrase), privateKey: privateKey, spendKey: spendKey)) ?? ""
-
-        case let .moneroWatchAccount(address, viewKey):
-            return (try? Kit.key(wallet: .watch(address: address, viewKey: viewKey), privateKey: privateKey, spendKey: spendKey)) ?? ""
-
-        default: return ""
-        }
-    }
-
-    static func address(accountType: AccountType) -> String {
-        switch accountType {
-        case let .mnemonic(words, passphrase, _):
-            return (try? Kit.address(wallet: .bip39(seed: words, passphrase: passphrase), account: 0, index: 1)) ?? ""
-
-        case let .moneroWatchAccount(address, viewKey):
-            return (try? Kit.address(wallet: .watch(address: address, viewKey: viewKey), account: 0, index: 0)) ?? ""
-
-        default: return ""
-        }
+    static func isValidAddress(_ address: String) -> Bool {
+        Kit.isValid(address: address, networkType: networkType)
     }
 }
 
-enum MoneroSendAmount {
+enum ZanoSendAmount {
     case value(Decimal)
     case all(Decimal)
 
@@ -383,45 +345,6 @@ enum MoneroSendAmount {
         switch self {
         case let .all(value): return value
         case let .value(value): return value
-        }
-    }
-}
-
-extension MoneroKit.SendPriority {
-    static func from(string: String) -> MoneroKit.SendPriority? {
-        switch string {
-        case MoneroKit.SendPriority.default.description:
-            return MoneroKit.SendPriority.default
-        case MoneroKit.SendPriority.low.description:
-            return MoneroKit.SendPriority.low
-        case MoneroKit.SendPriority.medium.description:
-            return MoneroKit.SendPriority.medium
-        case MoneroKit.SendPriority.high.description:
-            return MoneroKit.SendPriority.high
-        default:
-            return nil
-        }
-    }
-
-    var description: String {
-        switch self {
-        case .default:
-            return "monero.priority.default".localized()
-        case .low:
-            return "monero.priority.low".localized()
-        case .medium:
-            return "monero.priority.medium".localized()
-        case .high:
-            return "monero.priority.high".localized()
-        }
-    }
-
-    var level: ValueLevel {
-        switch self {
-        case .low, .high:
-            return .warning
-        case .medium, .default:
-            return .regular
         }
     }
 }

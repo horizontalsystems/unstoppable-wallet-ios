@@ -4,14 +4,12 @@ import Foundation
 class MoneroWalletTokenViewModel: ObservableObject {
     private let adapterManager = Core.shared.adapterManager
     private let restoreSettingsService = RestoreSettingsService(manager: Core.shared.restoreSettingsManager)
-    private let adapter: MoneroAdapter
 
     let wallet: Wallet
 
     @Published var birthdayHeight: Int?
 
-    init(adapter: MoneroAdapter, wallet: Wallet) {
-        self.adapter = adapter
+    init(wallet: Wallet) {
         self.wallet = wallet
 
         birthdayHeight = restoreSettingsService.settings(accountId: wallet.account.id, blockchainType: wallet.token.blockchainType).birthdayHeight

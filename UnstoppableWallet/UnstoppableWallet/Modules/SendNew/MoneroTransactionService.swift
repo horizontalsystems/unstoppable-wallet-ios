@@ -6,7 +6,7 @@ import SwiftUI
 class MoneroTransactionService {
     private let adapter: MoneroAdapter
 
-    private(set) var priority: SendPriority = .default
+    private(set) var priority: MoneroKit.SendPriority = .default
     private let updateSubject = PassthroughSubject<Void, Never>()
 
     init(adapter: MoneroAdapter) {
@@ -15,11 +15,11 @@ class MoneroTransactionService {
 }
 
 extension MoneroTransactionService {
-    func resolveFee(amount: MoneroSendAmount, address: String, priority: SendPriority) throws -> Decimal {
+    func resolveFee(amount: MoneroSendAmount, address: String, priority: MoneroKit.SendPriority) throws -> Decimal {
         try adapter.estimateFee(amount: amount, address: address, priority: priority)
     }
 
-    func set(priority: SendPriority) {
+    func set(priority: MoneroKit.SendPriority) {
         self.priority = priority
         updateSubject.send()
     }

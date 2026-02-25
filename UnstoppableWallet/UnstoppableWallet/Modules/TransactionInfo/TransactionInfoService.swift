@@ -68,6 +68,8 @@ class TransactionInfoService {
             tokens.append(tx.value.token)
         case let tx as MoneroIncomingTransactionRecord: tokens.append(tx.value.token)
         case let tx as MoneroOutgoingTransactionRecord: tokens.append(tx.value.token)
+        case let tx as ZanoIncomingTransactionRecord: tokens.append(tx.value.token)
+        case let tx as ZanoOutgoingTransactionRecord: tokens.append(tx.value.token)
         case let tx as TonTransactionRecord:
             for action in tx.actions {
                 switch action.type {
