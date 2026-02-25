@@ -183,6 +183,10 @@ extension AdapterFactory {
             let moneroNode = moneroNodeManager.node(blockchainType: .monero)
             return try? MoneroAdapter(wallet: wallet, restoreSettings: restoreSettings, node: moneroNode.node)
 
+        case (.native, .zano):
+            let restoreSettings = restoreSettingsManager.settings(accountId: wallet.account.id, blockchainType: .zano)
+            return try? ZanoAdapter(wallet: wallet, restoreSettings: restoreSettings, nodeUrl: "http://37.27.100.59:10500")
+
         case (.native, .ethereum), (.native, .binanceSmartChain), (.native, .polygon), (.native, .avalanche), (.native, .optimism), (.native, .arbitrumOne), (.native, .gnosis), (.native, .fantom), (.native, .base), (.native, .zkSync):
             return evmAdapter(wallet: wallet)
 

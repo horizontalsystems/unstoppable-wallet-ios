@@ -353,6 +353,35 @@ class TransactionsViewItemFactory {
 
             sentToSelf = record.sentToSelf
 
+        case let record as ZanoIncomingTransactionRecord:
+            iconType = singleValueIconType(source: record.source, kind: record.value.kind)
+            title = "transactions.receive".localized
+            if let from = record.from {
+                subTitle = "transactions.from".localized(mapped(address: from, blockchainType: item.record.source.blockchainType))
+            } else if let to = record.to {
+                subTitle = "transactions.to".localized(mapped(address: to, blockchainType: item.record.source.blockchainType))
+            } else {
+                subTitle = "---"
+            }
+
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value), type: type(value: record.value, .incoming))
+            if let currencyValue = item.currencyValue {
+                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+            }
+
+        case let record as ZanoOutgoingTransactionRecord:
+            iconType = singleValueIconType(source: record.source, kind: record.value.kind)
+            title = "transactions.send".localized
+            subTitle = record.to.flatMap { "transactions.to".localized(mapped(address: $0, blockchainType: item.record.source.blockchainType)) } ?? "---"
+
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, signType: record.sentToSelf ? .never : .always), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
+
+            if let currencyValue = item.currencyValue {
+                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+            }
+
+            sentToSelf = record.sentToSelf
+
         case let record as TronIncomingTransactionRecord:
             iconType = singleValueIconType(source: record.source, kind: record.value.kind)
             title = "transactions.receive".localized

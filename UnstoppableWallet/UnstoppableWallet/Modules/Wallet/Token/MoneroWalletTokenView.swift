@@ -3,8 +3,8 @@ import SwiftUI
 struct MoneroWalletTokenView: View {
     @StateObject var viewModel: MoneroWalletTokenViewModel
 
-    init(wallet: Wallet, adapter: MoneroAdapter) {
-        _viewModel = StateObject(wrappedValue: MoneroWalletTokenViewModel(adapter: adapter, wallet: wallet))
+    init(wallet: Wallet) {
+        _viewModel = StateObject(wrappedValue: MoneroWalletTokenViewModel(wallet: wallet))
     }
 
     var body: some View {

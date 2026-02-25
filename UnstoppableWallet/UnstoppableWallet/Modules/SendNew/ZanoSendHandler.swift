@@ -1,15 +1,14 @@
 import Foundation
 import MarketKit
-import MoneroKit
 
-class MoneroSendHandler {
+class ZanoSendHandler {
     private let token: Token
-    private let adapter: MoneroAdapter
-    private let amount: MoneroSendAmount
+    private let adapter: ZanoAdapter
+    private let amount: ZanoSendAmount
     private let address: String
     private let memo: String?
 
-    init(token: Token, adapter: MoneroAdapter, amount: MoneroSendAmount, address: String, memo: String?) {
+    init(token: Token, adapter: ZanoAdapter, amount: ZanoSendAmount, address: String, memo: String?) {
         self.token = token
         self.adapter = adapter
         self.amount = amount
@@ -18,7 +17,7 @@ class MoneroSendHandler {
     }
 }
 
-extension MoneroSendHandler: ISendHandler {
+extension ZanoSendHandler: ISendHandler {
     var baseToken: MarketKit.Token {
         token
     }
@@ -27,26 +26,15 @@ extension MoneroSendHandler: ISendHandler {
         60
     }
 
-    func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
-        let priority = transactionSettings?.moneroPriority
-        var fee: Decimal?
-        var transactionError: Error?
-
-        if let priority {
-            do {
-                fee = try adapter.estimateFee(amount: amount, address: address, priority: priority)
-            } catch {
-                transactionError = error
-            }
-        }
+    func sendData(transactionSettings _: TransactionSettings?) async throws -> ISendData {
+        let fee = adapter.estimateFee()
 
         return SendData(
             token: token,
             amount: amount,
             address: address,
-            priority: priority ?? .default,
             memo: memo,
-            transactionError: transactionError,
+            transactionError: nil,
             fee: fee
         )
     }
@@ -56,32 +44,30 @@ extension MoneroSendHandler: ISendHandler {
             throw SendError.invalidData
         }
 
-        try adapter.send(to: data.address, amount: data.amount, priority: data.priority, memo: data.memo)
+        try adapter.send(to: data.address, amount: data.amount, memo: data.memo)
     }
 }
 
-extension MoneroSendHandler {
+extension ZanoSendHandler {
     class SendData: ISendData {
         let token: Token
-        let amount: MoneroSendAmount
+        let amount: ZanoSendAmount
         let address: String
-        let priority: MoneroKit.SendPriority
         let memo: String?
         let transactionError: Error?
         let fee: Decimal?
 
-        init(token: Token, amount: MoneroSendAmount, address: String, priority: MoneroKit.SendPriority, memo: String?, transactionError: Error?, fee: Decimal?) {
+        init(token: Token, amount: ZanoSendAmount, address: String, memo: String?, transactionError: Error?, fee: Decimal?) {
             self.token = token
             self.amount = amount
             self.address = address
-            self.priority = priority
             self.memo = memo
             self.transactionError = transactionError
             self.fee = fee
         }
 
         var feeData: FeeData? {
-            .monero(amount: amount, address: address)
+            nil
         }
 
         var canSend: Bool {
@@ -101,7 +87,7 @@ extension MoneroSendHandler {
                 return []
             }
 
-            return [MoneroSendHelper.caution(transactionError: transactionError, feeToken: baseToken)]
+            return [ZanoSendHelper.caution(transactionError: transactionError, feeToken: baseToken)]
         }
 
         func feeData(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
@@ -143,11 +129,11 @@ extension MoneroSendHandler {
                 .amount(
                     token: token,
                     appValueType: .regular(appValue: amountData.appValue),
-                    currencyValue: amountData.currencyValue,
+                    currencyValue: amountData.currencyValue
                 ),
                 .address(
                     value: address,
-                    blockchainType: .monero
+                    blockchainType: .zano
                 ),
             ], isFlow: true))
 
@@ -158,7 +144,7 @@ extension MoneroSendHandler {
             }
 
             sections.append(
-                .init(fields + MoneroSendHelper.feeFields(fee: fee, feeToken: token, currency: currency, feeTokenRate: rate, priority: priority), isMain: false)
+                .init(fields + ZanoSendHelper.feeFields(fee: fee, feeToken: token, currency: currency, feeTokenRate: rate), isMain: false)
             )
 
             return sections
@@ -166,25 +152,24 @@ extension MoneroSendHandler {
     }
 }
 
-extension MoneroSendHandler {
+extension ZanoSendHandler {
     enum SendError: Error {
         case invalidFee
         case invalidData
     }
 
     enum TransactionError: Error {
-        case insufficientMoneroBalance(balance: Decimal)
-        case noTrustline
+        case insufficientZanoBalance(balance: Decimal)
     }
 }
 
-extension MoneroSendHandler {
-    static func instance(token: Token, amount: MoneroSendAmount, address: String, memo: String?) -> MoneroSendHandler? {
-        guard let adapter = Core.shared.adapterManager.adapter(for: token) as? MoneroAdapter else {
+extension ZanoSendHandler {
+    static func instance(token: Token, amount: ZanoSendAmount, address: String, memo: String?) -> ZanoSendHandler? {
+        guard let adapter = Core.shared.adapterManager.adapter(for: token) as? ZanoAdapter else {
             return nil
         }
 
-        return MoneroSendHandler(
+        return ZanoSendHandler(
             token: token,
             adapter: adapter,
             amount: amount,

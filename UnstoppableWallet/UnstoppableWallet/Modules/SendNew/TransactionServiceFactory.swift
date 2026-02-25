@@ -17,6 +17,10 @@ enum TransactionServiceFactory {
             return MoneroTransactionService(adapter: adapter)
         }
 
+        if baseToken.blockchainType == .zano, let adapter = Core.shared.adapterManager.adapter(for: baseToken) as? ZanoAdapter {
+            return ZanoTransactionService(adapter: adapter)
+        }
+
         return nil
     }
 }

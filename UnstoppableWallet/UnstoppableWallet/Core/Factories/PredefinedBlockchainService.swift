@@ -13,7 +13,7 @@ extension PredefinedBlockchainService {
         var restoreSettings: RestoreSettings = [:]
 
         switch blockchainType {
-        case .zcash, .monero:
+        case .zcash, .monero, .zano:
             if let birthdayHeight = RestoreSettingType.birthdayHeight.createdAccountValue(blockchainType: blockchainType) {
                 restoreSettings[.birthdayHeight] = birthdayHeight
             }

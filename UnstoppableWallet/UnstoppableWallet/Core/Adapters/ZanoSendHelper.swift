@@ -1,16 +1,14 @@
 import Foundation
 import MarketKit
-import MoneroKit
+import ZanoKit
 
-class MoneroSendHelper {
-    // UI part
-
+class ZanoSendHelper {
     static func caution(transactionError: Error, feeToken: Token) -> CautionNew {
         let title: String
         let text: String
 
-        if let moneroError = transactionError as? MoneroCoreError {
-            switch moneroError {
+        if let zanoError = transactionError as? ZanoCoreError {
+            switch zanoError {
             case let .insufficientFunds(balance):
                 let appValue = AppValue(token: feeToken, value: Decimal(string: balance) ?? 0)
                 let balanceString = appValue.formattedShort()
@@ -33,27 +31,14 @@ class MoneroSendHelper {
         fee: Decimal?,
         feeToken: Token,
         currency: Currency,
-        feeTokenRate: Decimal?,
-        priority: MoneroKit.SendPriority
+        feeTokenRate: Decimal?
     ) -> [SendField] {
         guard let fee else { return [] }
 
         let appValue = AppValue(token: feeToken, value: fee)
         let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: fee * $0) }
 
-        var fields = [SendField]()
-
-        if priority != .default {
-            fields.append(contentsOf: [
-                .levelValue(
-                    title: "monero.priority".localized,
-                    value: priority.description,
-                    level: priority.level
-                ),
-            ])
-        }
-
-        return fields + [
+        return [
             .value(
                 title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
                 appValue: appValue,
