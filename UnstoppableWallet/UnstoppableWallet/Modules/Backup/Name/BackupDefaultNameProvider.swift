@@ -18,7 +18,7 @@ class WalletBackupNameProvider: IBackupNameProvider {
         let accountName = accountManager.account(id: accountId)?.name ?? "Wallet Backup"
 
         if destination == .cloud {
-            return RestoreFileHelper.resolve(name: accountName, elements: cloudBackupManager.existFilenames)
+            return RestoreFileHelper.resolve(name: accountName, elements: cloudBackupManager.existFilenames, checkRaw: true)
         } else {
             return accountName
         }

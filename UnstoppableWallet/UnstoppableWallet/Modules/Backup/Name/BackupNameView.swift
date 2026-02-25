@@ -15,24 +15,7 @@ struct BackupNameView: View {
         ThemeView {
             BottomGradientWrapper {
                 ScrollView {
-                    VStack(spacing: .margin24) {
-                        Text("backup_app.backup.name.description".localized)
-                            .themeSubhead2()
-                            .padding(EdgeInsets(top: 0, leading: .margin16, bottom: .margin12, trailing: .margin16))
-
-                        InputTextRow {
-                            InputTextView(
-                                placeholder: "backup.cloud.name.placeholder".localized,
-                                text: $nameViewModel.name
-                            )
-                            .autocapitalization(.words)
-                            .autocorrectionDisabled()
-                        }
-                        .modifier(CautionBorder(cautionState: $nameViewModel.cautionState))
-                        .modifier(CautionPrompt(cautionState: $nameViewModel.cautionState))
-                    }
-                    .animation(.default, value: nameViewModel.cautionState)
-                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+                    BackupNameContentView(viewModel: nameViewModel)
                 }
             } bottomContent: {
                 Button(action: {
@@ -49,6 +32,6 @@ struct BackupNameView: View {
 
     private func onNext() {
         viewModel.setName(nameViewModel.name)
-        path.append(BackupModule.Step.password)
+        path.append(BackupModule.Step.form)
     }
 }

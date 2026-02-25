@@ -1829,6 +1829,10 @@
 		6B5FD7D92E42169600FEF510 /* DestinationHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FD7D72E42166C00FEF510 /* DestinationHelper.swift */; };
 		6B5FD7DB2E43162F00FEF510 /* AllBridgeMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FD7DA2E43161F00FEF510 /* AllBridgeMultiSwapProvider.swift */; };
 		6B5FD7DC2E43162F00FEF510 /* AllBridgeMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B5FD7DA2E43161F00FEF510 /* AllBridgeMultiSwapProvider.swift */; };
+		6B6223022F4EEAF000972532 /* BackupNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6223012F4EEAE800972532 /* BackupNameView.swift */; };
+		6B6223032F4EEAF000972532 /* BackupNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6223012F4EEAE800972532 /* BackupNameView.swift */; };
+		6B6223082F4EF02500972532 /* BackupPasswordContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6223072F4EF02500972532 /* BackupPasswordContentView.swift */; };
+		6B6223092F4EF02500972532 /* BackupPasswordContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6223072F4EF02500972532 /* BackupPasswordContentView.swift */; };
 		6B67F0F22D1C06F2003452DC /* SuccessfulSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B67F0F12D1C06F2003452DC /* SuccessfulSubscriptionView.swift */; };
 		6B67F0F32D1C06F2003452DC /* SuccessfulSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B67F0F12D1C06F2003452DC /* SuccessfulSubscriptionView.swift */; };
 		6B6D3F2F2DED732100AB2915 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
@@ -1987,10 +1991,10 @@
 		6B954B5B2F44505C008A1A16 /* BackupSelectContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B592F445056008A1A16 /* BackupSelectContentView.swift */; };
 		6B954B5F2F44522C008A1A16 /* BackupDisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B5E2F44522B008A1A16 /* BackupDisclaimerView.swift */; };
 		6B954B602F44522C008A1A16 /* BackupDisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B5E2F44522B008A1A16 /* BackupDisclaimerView.swift */; };
-		6B954B622F4453F2008A1A16 /* BackupNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B612F4453E0008A1A16 /* BackupNameView.swift */; };
-		6B954B632F4453F2008A1A16 /* BackupNameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B612F4453E0008A1A16 /* BackupNameView.swift */; };
-		6B954B652F44555E008A1A16 /* BackupPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B642F44555D008A1A16 /* BackupPasswordView.swift */; };
-		6B954B662F44555E008A1A16 /* BackupPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B642F44555D008A1A16 /* BackupPasswordView.swift */; };
+		6B954B622F4453F2008A1A16 /* BackupNameContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B612F4453E0008A1A16 /* BackupNameContentView.swift */; };
+		6B954B632F4453F2008A1A16 /* BackupNameContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B612F4453E0008A1A16 /* BackupNameContentView.swift */; };
+		6B954B652F44555E008A1A16 /* BackupFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B642F44555D008A1A16 /* BackupFormView.swift */; };
+		6B954B662F44555E008A1A16 /* BackupFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B642F44555D008A1A16 /* BackupFormView.swift */; };
 		6B954B6B2F457E04008A1A16 /* BackupDefaultNameProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B6A2F457DF9008A1A16 /* BackupDefaultNameProvider.swift */; };
 		6B954B6C2F457E04008A1A16 /* BackupDefaultNameProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B6A2F457DF9008A1A16 /* BackupDefaultNameProvider.swift */; };
 		6BA5117D2BCFA06F00CB5A54 /* FirstAppearModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BA5117C2BCFA06F00CB5A54 /* FirstAppearModifier.swift */; };
@@ -2221,7 +2225,6 @@
 		ABC9A001F335B695CD066218 /* NftAssetModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD35D41AEEBD38AA08B5 /* NftAssetModule.swift */; };
 		ABC9A00DA1F4148859D9D1AB /* Eip1559FeeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ABCA9E26E2B6A5E0D43E /* Eip1559FeeSettingsView.swift */; };
 		ABC9A0248195A85CA00D6A13 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A7FC41B9F98871246E0E /* ImageCell.swift */; };
-		ABC9A029AFF2F178AF5AD11B /* RestoreTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A939DD222D4A2BD3D71C /* RestoreTypeViewController.swift */; };
 		ABC9A043F82D9F5945C5FAFA /* PseudoAccessoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AEC034DE5784F55BD5F3 /* PseudoAccessoryView.swift */; };
 		ABC9A04655D81FE5198B786F /* SendEip1155ViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A23CB332521C0607CC6B /* SendEip1155ViewModel.swift */; };
 		ABC9A05D9F96BE464CFC90CC /* ContactBookModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A5518367F0DDDB94D320 /* ContactBookModule.swift */; };
@@ -2548,7 +2551,6 @@
 		ABC9AB2E235EA006E2DAD8DD /* EnabledWalletCache_v_0_36.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A68AFE3CF24D2B88808F /* EnabledWalletCache_v_0_36.swift */; };
 		ABC9AB3C239A182E9B93AFDA /* MultiSwapApproveViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A952569E5DBD20B48F47 /* MultiSwapApproveViewModel.swift */; };
 		ABC9AB3DAD30AA400DEB719C /* SendBitcoinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A696DCBBE4761E77311C /* SendBitcoinService.swift */; };
-		ABC9AB401FD98F99EF6B07C6 /* RestoreTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A939DD222D4A2BD3D71C /* RestoreTypeViewController.swift */; };
 		ABC9AB4DF4CCEA2C51DD4AB6 /* SingleLineFormTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A03401172C4C65D66764 /* SingleLineFormTextView.swift */; };
 		ABC9AB6EB596E2F8B15D00E4 /* CipherParams.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A89726499CDB4F697EDD /* CipherParams.swift */; };
 		ABC9AB6FF4DCBE7EFB5B8B7B /* ActionSheetModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A11CD2809DBD5FEEC63C /* ActionSheetModule.swift */; };
@@ -4608,6 +4610,8 @@
 		6B5FD7D42E42004D00FEF510 /* MerkleSendRawTransactionJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleSendRawTransactionJsonRpc.swift; sourceTree = "<group>"; };
 		6B5FD7D72E42166C00FEF510 /* DestinationHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DestinationHelper.swift; sourceTree = "<group>"; };
 		6B5FD7DA2E43161F00FEF510 /* AllBridgeMultiSwapProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AllBridgeMultiSwapProvider.swift; sourceTree = "<group>"; };
+		6B6223012F4EEAE800972532 /* BackupNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupNameView.swift; sourceTree = "<group>"; };
+		6B6223072F4EF02500972532 /* BackupPasswordContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupPasswordContentView.swift; sourceTree = "<group>"; };
 		6B67F0F12D1C06F2003452DC /* SuccessfulSubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuccessfulSubscriptionView.swift; sourceTree = "<group>"; };
 		6B6E138E2DED8159007F4A39 /* UIButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIButton.swift; sourceTree = "<group>"; };
 		6B6E13912DED8176007F4A39 /* UIView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIView.swift; sourceTree = "<group>"; };
@@ -4672,8 +4676,8 @@
 		6B954B562F444C27008A1A16 /* BackupSelectContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupSelectContentViewModel.swift; sourceTree = "<group>"; };
 		6B954B592F445056008A1A16 /* BackupSelectContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupSelectContentView.swift; sourceTree = "<group>"; };
 		6B954B5E2F44522B008A1A16 /* BackupDisclaimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupDisclaimerView.swift; sourceTree = "<group>"; };
-		6B954B612F4453E0008A1A16 /* BackupNameView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupNameView.swift; sourceTree = "<group>"; };
-		6B954B642F44555D008A1A16 /* BackupPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupPasswordView.swift; sourceTree = "<group>"; };
+		6B954B612F4453E0008A1A16 /* BackupNameContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupNameContentView.swift; sourceTree = "<group>"; };
+		6B954B642F44555D008A1A16 /* BackupFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupFormView.swift; sourceTree = "<group>"; };
 		6B954B6A2F457DF9008A1A16 /* BackupDefaultNameProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupDefaultNameProvider.swift; sourceTree = "<group>"; };
 		6BA5117C2BCFA06F00CB5A54 /* FirstAppearModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstAppearModifier.swift; sourceTree = "<group>"; };
 		6BA8D2332D5A1DB00093D5C2 /* MarketSectorsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarketSectorsView.swift; sourceTree = "<group>"; };
@@ -4913,7 +4917,6 @@
 		ABC9A90781302D793E0773CB /* NftAssetOverviewModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftAssetOverviewModule.swift; sourceTree = "<group>"; };
 		ABC9A90E8831B7B909124AB2 /* SwapInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapInputCell.swift; sourceTree = "<group>"; };
 		ABC9A916C64B5EA9D96B8FDA /* DiffLabel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DiffLabel.swift; sourceTree = "<group>"; };
-		ABC9A939DD222D4A2BD3D71C /* RestoreTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreTypeViewController.swift; sourceTree = "<group>"; };
 		ABC9A952569E5DBD20B48F47 /* MultiSwapApproveViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MultiSwapApproveViewModel.swift; sourceTree = "<group>"; };
 		ABC9A9628A708749A31EEA70 /* ProFeaturesAuthorizationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProFeaturesAuthorizationManager.swift; sourceTree = "<group>"; };
 		ABC9A99184EE1D5D052C52E9 /* ContactBookSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContactBookSettingsViewController.swift; sourceTree = "<group>"; };
@@ -8331,7 +8334,8 @@
 		6B954B3E2F442E68008A1A16 /* Name */ = {
 			isa = PBXGroup;
 			children = (
-				6B954B612F4453E0008A1A16 /* BackupNameView.swift */,
+				6B6223012F4EEAE800972532 /* BackupNameView.swift */,
+				6B954B612F4453E0008A1A16 /* BackupNameContentView.swift */,
 				6B954B422F442F4C008A1A16 /* BackupNameViewModel.swift */,
 				6B954B3F2F442E73008A1A16 /* BackupFilenameValidator.swift */,
 				6B954B6A2F457DF9008A1A16 /* BackupDefaultNameProvider.swift */,
@@ -8344,7 +8348,8 @@
 			children = (
 				6BBD38D82F48035700A0B9AB /* Storage */,
 				6BBD38CF2F47270000A0B9AB /* BackupPasswordGenerator.swift */,
-				6B954B642F44555D008A1A16 /* BackupPasswordView.swift */,
+				6B954B642F44555D008A1A16 /* BackupFormView.swift */,
+				6B6223072F4EF02500972532 /* BackupPasswordContentView.swift */,
 				6B954B472F442FDF008A1A16 /* BackupPasswordViewModel.swift */,
 			);
 			path = Password;
@@ -8808,7 +8813,6 @@
 				6B954B262F3F1580008A1A16 /* RestoreTypeView.swift */,
 				ABC9AAC741F9A54293CD21B1 /* RestoreTypeModule.swift */,
 				ABC9A13DB598B22516E5AD76 /* RestoreTypeViewModel.swift */,
-				ABC9A939DD222D4A2BD3D71C /* RestoreTypeViewController.swift */,
 			);
 			path = RestoreType;
 			sourceTree = "<group>";
@@ -10964,6 +10968,7 @@
 				58AAA56C780EF5C92C1D1A32 /* AddressResolutionProvider.swift in Sources */,
 				D38E5DEB2EF91C080049EB91 /* EvmMultiSwapQuote.swift in Sources */,
 				58AAA3762D78142A83A22F50 /* SwapViewModel.swift in Sources */,
+				6B6223032F4EEAF000972532 /* BackupNameView.swift in Sources */,
 				58AAA8395FE1310712EAA82C /* OneInchFeeService.swift in Sources */,
 				58AAA6EBB2D6B2251A9CB43C /* OneInchSendEvmTransactionService.swift in Sources */,
 				11B35E24B2F98C74E95DA3BE /* WalletAdapterService.swift in Sources */,
@@ -11087,6 +11092,7 @@
 				2FA5DC4BBDF469873662BDEE /* Eip1559EvmFeeViewModel.swift in Sources */,
 				2FA5D3C3D3AB41202B592640 /* Eip1559EvmFeeDataSource.swift in Sources */,
 				6BE8A07C2ADE2F8D0012DE7F /* Currency.swift in Sources */,
+				6B6223092F4EF02500972532 /* BackupPasswordContentView.swift in Sources */,
 				ABC9ABC09321233E1727A8DD /* WalletConnectSession.swift in Sources */,
 				11B359C05619611CBCFC89AC /* EvmBlockchainManager.swift in Sources */,
 				D3AFAAF42E45FE4A004AB074 /* Diff.swift in Sources */,
@@ -11281,7 +11287,7 @@
 				ABC9A0CEBC41CCE5AB205B3C /* NftAssetOverviewModule.swift in Sources */,
 				6BD766452EA239CF008DDEA7 /* RecentlySentManager.swift in Sources */,
 				ABC9A2462F3F928644435B86 /* NftAssetModule.swift in Sources */,
-				6B954B662F44555E008A1A16 /* BackupPasswordView.swift in Sources */,
+				6B954B662F44555E008A1A16 /* BackupFormView.swift in Sources */,
 				ABC9A9EBBC60A709836DE237 /* NftAssetViewController.swift in Sources */,
 				6BBB92B82D11646600112409 /* PromoCodeBottomSheetView.swift in Sources */,
 				ABC9A89499016C8AC8341238 /* NftCollectionCellFactory.swift in Sources */,
@@ -11608,9 +11614,8 @@
 				D38E5DDC2EF54D390049EB91 /* USwapMultiSwapProvider.swift in Sources */,
 				ABC9A8CBDB7CF4E781896C49 /* RestoreTypeModule.swift in Sources */,
 				ABC9A8FAB37E2049DC58FF14 /* RestoreTypeViewModel.swift in Sources */,
-				ABC9A029AFF2F178AF5AD11B /* RestoreTypeViewController.swift in Sources */,
 				D04DD5422B68C0EF00219B87 /* HighlightedTiltledTextView.swift in Sources */,
-				6B954B632F4453F2008A1A16 /* BackupNameView.swift in Sources */,
+				6B954B632F4453F2008A1A16 /* BackupNameContentView.swift in Sources */,
 				ABC9A3C13073DDFABF8C0679 /* CloudRestoreBackupListViewModel.swift in Sources */,
 				ABC9A8A74C527C4E01EBB8A5 /* CloudRestoreBackupListModule.swift in Sources */,
 				ABC9A712F6389F5C2B0D63E3 /* CloudRestoreBackupService.swift in Sources */,
@@ -12159,6 +12164,7 @@
 				D384069421831B3D007D50AD /* DateHelper.swift in Sources */,
 				D384069521831B3D007D50AD /* SystemInfoManager.swift in Sources */,
 				6BCAB3C52F285E3A00820806 /* SpamFilterChain.swift in Sources */,
+				6B6223082F4EF02500972532 /* BackupPasswordContentView.swift in Sources */,
 				D3DB51A52BD685B40091BBDB /* MarketTabView.swift in Sources */,
 				D384069621831B3D007D50AD /* PermissionsHelper.swift in Sources */,
 				6B50FD9F2EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift in Sources */,
@@ -12172,7 +12178,7 @@
 				11B35D0542ACB56A31C61143 /* UIImage.swift in Sources */,
 				11B350E923A4E51AAF9D2828 /* BarsProgressView.swift in Sources */,
 				D31C4764238BF176008CB818 /* FeeRateState.swift in Sources */,
-				6B954B622F4453F2008A1A16 /* BackupNameView.swift in Sources */,
+				6B954B622F4453F2008A1A16 /* BackupNameContentView.swift in Sources */,
 				11B35133B5C8937A33A0208C /* StorageMigrator.swift in Sources */,
 				11B35A3495FF00B1A3FF4197 /* AuthData.swift in Sources */,
 				5046E671259C491000A941E5 /* InfoSeparatorHeaderView.swift in Sources */,
@@ -12420,7 +12426,7 @@
 				6B44BE842EB4D5B600257FD7 /* UnlinkBottomSheetView.swift in Sources */,
 				6B5FD7D52E42005D00FEF510 /* MerkleSendRawTransactionJsonRpc.swift in Sources */,
 				11B3581F7CCCEE9F956266E8 /* InputStateWrapperView.swift in Sources */,
-				6B954B652F44555E008A1A16 /* BackupPasswordView.swift in Sources */,
+				6B954B652F44555E008A1A16 /* BackupFormView.swift in Sources */,
 				11B356E87B4A9AACBFEC7506 /* Address.swift in Sources */,
 				D36DE0DB272FD887000BC916 /* OneInchTradeService.swift in Sources */,
 				11B35F9E1AF528B31C6F383C /* InputView.swift in Sources */,
@@ -12954,6 +12960,7 @@
 				D0E5E8552BE38AA2005080A4 /* TronSendHandler.swift in Sources */,
 				D09200BC293F21520091981A /* RestoreMnemonicNonStandardViewModel.swift in Sources */,
 				11B35AB0C3F757E23D249330 /* TransactionTypeFilter.swift in Sources */,
+				6B6223022F4EEAF000972532 /* BackupNameView.swift in Sources */,
 				11B35A3FD624D80C6D98A1CF /* TransactionSource.swift in Sources */,
 				11B3515A1106B2AE8509263E /* Pool.swift in Sources */,
 				D3F9B0342BE3B3A7009FFA95 /* EvmDecorator.swift in Sources */,
@@ -13289,7 +13296,6 @@
 				ABC9AF371FBB4BEA654A78B6 /* MetadataMonitor.swift in Sources */,
 				ABC9AA27A42D7E2A72B4A932 /* RestoreTypeModule.swift in Sources */,
 				ABC9AA0E63188150CD9A8D03 /* RestoreTypeViewModel.swift in Sources */,
-				ABC9AB401FD98F99EF6B07C6 /* RestoreTypeViewController.swift in Sources */,
 				ABC9A1EC656488FF79F458EC /* CloudRestoreBackupListViewModel.swift in Sources */,
 				ABC9A4929EFBFAD0B595A4E8 /* CloudRestoreBackupListModule.swift in Sources */,
 				D0709C012E507DB40012C0E7 /* MoneroNode.swift in Sources */,

@@ -77,7 +77,7 @@ struct RestorePassphraseView: View {
         }
         .onReceive(viewModel.unlockAndSetPasswordPublisher) { password in
             Coordinator.shared.performAfterUnlock { [weak viewModel] in
-                HudHelper.instance.show(banner: .passwordFromKeychain)
+//                HudHelper.instance.show(banner: .passwordFromKeychain)
                 viewModel?.setPassphrase(password)
             }
         }

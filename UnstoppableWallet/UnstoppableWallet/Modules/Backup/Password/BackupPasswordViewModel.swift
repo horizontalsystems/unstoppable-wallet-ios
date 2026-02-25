@@ -2,7 +2,7 @@ import Combine
 import Foundation
 
 class BackupPasswordViewModel: ObservableObject {
-    private let storage: IBackupPasswordStorage = BackupPasswordStorageFactory.create(type: .keychain)
+    private let storage: IBackupPasswordStorage = BackupPasswordStorageFactory.create(type: .webCredentials)
     private let destination: BackupModule.Destination
     private let backupViewModel: BackupViewModel
     private var keychainAccount: String = ""
@@ -25,11 +25,6 @@ class BackupPasswordViewModel: ObservableObject {
     private let showGenerateSheetSubject = PassthroughSubject<Void, Never>()
     var showGenerateSheetPublisher: AnyPublisher<Void, Never> {
         showGenerateSheetSubject.eraseToAnyPublisher()
-    }
-
-    private let showWarningSheetSubject = PassthroughSubject<Void, Never>()
-    var showWarningSheetPublisher: AnyPublisher<Void, Never> {
-        showWarningSheetSubject.eraseToAnyPublisher()
     }
 
     private let focusPasswordSubject = PassthroughSubject<Void, Never>()
@@ -58,11 +53,11 @@ class BackupPasswordViewModel: ObservableObject {
     }
 
     func onAppear() {
-        let name = backupViewModel.name
-        guard !name.isEmpty else { return }
-
-        keychainAccount = name
-        showGenerateSheetSubject.send()
+        if destination == .cloud {
+            showGenerateSheetSubject.send()
+        } else {
+            focusPasswordSubject.send()
+        }
     }
 
     func onGenerateSheetDismissed() {
@@ -81,26 +76,16 @@ class BackupPasswordViewModel: ObservableObject {
         case .cloud:
             shouldSaveToKeychain = true
             secureLock = true
-        case .files:
-            shouldSaveToKeychain = false
-            secureLock = false
-
-            CopyHelper.copyAndNotify(value: password)
+        case .files: ()
         }
+    }
+
+    func setKeychainAccount(_ account: String) {
+        keychainAccount = account
     }
 
     @MainActor
     func onTapSave() {
-        if destination == .files, generatedPassword {
-            showWarningSheetSubject.send()
-            return
-        }
-
-        performSave()
-    }
-
-    @MainActor
-    func confirmSave() {
         performSave()
     }
 
@@ -122,6 +107,7 @@ class BackupPasswordViewModel: ObservableObject {
         }
     }
 
+    @MainActor
     private func saveIfNeeded() async throws {
         validate()
         guard isValid else {
@@ -137,6 +123,7 @@ class BackupPasswordViewModel: ObservableObject {
         try await storage.save(password: password, account: keychainAccount)
     }
 
+    @MainActor
     func validate() {
         validatePassword()
         validateConfirm()
@@ -161,6 +148,7 @@ class BackupPasswordViewModel: ObservableObject {
         }
     }
 
+    @MainActor
     private func validatePassword() {
         do {
             try BackupCrypto.validate(passphrase: password)
@@ -170,6 +158,7 @@ class BackupPasswordViewModel: ObservableObject {
         }
     }
 
+    @MainActor
     private func validateConfirm() {
         do {
             try BackupCrypto.validate(passphrase: confirm)

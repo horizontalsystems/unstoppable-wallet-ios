@@ -1,6 +1,7 @@
 import Combine
 
 protocol IBackupPasswordStorage {
+    var requiresUnlock: Bool { get }
     func save(password: String, account: String) async throws
     func load(account: String) async -> String?
     func delete(account: String) async -> Bool

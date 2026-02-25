@@ -45,10 +45,8 @@ struct BackupView: View {
             BackupSelectContentView(viewModel: viewModel, path: $path)
         case .disclaimer:
             BackupDisclaimerView(viewModel: viewModel, path: $path)
-        case .name:
-            BackupNameView(viewModel: viewModel, path: $path)
-        case .password:
-            BackupPasswordView(viewModel: viewModel, path: $path)
+        case .form:
+            BackupFormView(viewModel: viewModel, path: $path)
         }
     }
 }

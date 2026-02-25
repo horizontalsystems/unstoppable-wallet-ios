@@ -65,11 +65,11 @@ extension CloudRestoreBackupListViewModel {
 
     func didTap(id: String) {
         if let item = service.oneWalletItems.first(where: { item in item.id == id }) {
-            restoreSubject.send(BackupModule.NamedSource(name: item.name, source: .wallet(item.backup)))
+            restoreSubject.send(BackupModule.NamedSource(name: item.name, source: .wallet(item.backup), origin: .cloud))
         }
 
         if let item = service.fullBackupItems.first(where: { item in item.id == id }) {
-            restoreSubject.send(BackupModule.NamedSource(name: item.name, source: .full(item.backup)))
+            restoreSubject.send(BackupModule.NamedSource(name: item.name, source: .full(item.backup), origin: .cloud))
         }
     }
 }

@@ -7,6 +7,8 @@ class BackupSharedWebCredentialsService: NSObject, IBackupPasswordStorage {
 
     private var loadContinuation: CheckedContinuation<String?, Never>?
 
+    var requiresUnlock: Bool { false }
+
     func save(password: String, account: String) async throws {
         let _: Void = try await withCheckedThrowingContinuation { continuation in
             SecAddSharedWebCredential(
