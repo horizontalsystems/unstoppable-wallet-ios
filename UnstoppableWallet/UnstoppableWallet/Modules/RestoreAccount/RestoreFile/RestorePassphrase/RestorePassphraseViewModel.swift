@@ -4,7 +4,7 @@ import HsExtensions
 
 class RestorePassphraseViewModel: ObservableObject {
     private let appBackupProvider = Core.shared.appBackupProvider
-    private let storage: IBackupPasswordStorage = BackupPasswordStorageFactory.create(type: .keychain)
+    private let storage: IBackupPasswordStorage = BackupPasswordStorageFactory.create(type: .webCredentials)
 
     let restoredBackup: BackupModule.NamedSource
 
@@ -35,16 +35,30 @@ class RestorePassphraseViewModel: ObservableObject {
     }
 
     func onAppear() {
+        guard restoredBackup.origin == .cloud else {
+            focusSubject.send(true)
+            return
+        }
+
         Task { [weak self] in
             guard let self else { return }
             let password = await storage.load(account: restoredBackup.name)
-            await MainActor.run {
-                if let password {
-                    self.unlockAndSetPasswordSubject.send(password)
-                } else {
-                    self.focusSubject.send(true)
-                }
+            await handleLoadedPassword(password)
+        }
+    }
+
+    @MainActor
+    private func handleLoadedPassword(_ password: String?) {
+        if let password {
+            if storage.requiresUnlock {
+                unlockAndSetPasswordSubject.send(password)
+            } else {
+                passphrase = password
+                focusSubject.send(false)
+//                HudHelper.instance.show(banner: .passwordFromKeychain)
             }
+        } else {
+            focusSubject.send(true)
         }
     }
 

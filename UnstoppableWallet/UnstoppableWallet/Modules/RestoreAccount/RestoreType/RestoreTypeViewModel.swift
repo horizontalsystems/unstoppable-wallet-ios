@@ -46,9 +46,9 @@ extension RestoreTypeViewModel {
         }
     }
 
-    func didPick(url: URL) {
+    func didPick(url: URL, destination: BackupModule.Destination) {
         do {
-            let namedSource = try RestoreFileHelper.parse(url: url)
+            let namedSource = try RestoreFileHelper.parse(url: url, destination: destination)
             showRestoreBackupSubject.send(namedSource)
         } catch {
             showWrongFileSubject.send()

@@ -16,8 +16,7 @@ enum BackupModule {
         case selectDestination // choose cloud/files (shown when destination is nil)
         case selectContent // choose accounts and settings (app only)
         case disclaimer // warning with terms checkboxes
-        case name // enter backup name
-        case password // enter password and confirm
+        case form // enter password and confirm
     }
 
     enum BackupResult {
@@ -74,6 +73,7 @@ enum BackupModule {
     struct NamedSource {
         let name: String
         let source: Source
+        let origin: Destination
     }
 }
 

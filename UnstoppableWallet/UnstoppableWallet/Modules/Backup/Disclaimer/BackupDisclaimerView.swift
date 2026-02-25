@@ -75,6 +75,6 @@ struct BackupDisclaimerView: View {
     }
 
     private func onNext() {
-        path.append(BackupModule.Step.name)
+        path.append(BackupModule.Step.form)
     }
 }

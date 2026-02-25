@@ -1,20 +1,20 @@
 import Foundation
 
 enum RestoreFileHelper {
-    static func parse(url: URL) throws -> BackupModule.NamedSource {
+    static func parse(url: URL, destination: BackupModule.Destination) throws -> BackupModule.NamedSource {
         let data = try FileManager.default.contentsOfFile(coordinatingAccessAt: url)
         let filename = NSString(string: url.lastPathComponent).deletingPathExtension
 
         if let oneWallet = try? JSONDecoder().decode(WalletBackup.self, from: data) {
-            return .init(name: filename, source: .wallet(oneWallet))
+            return .init(name: filename, source: .wallet(oneWallet), origin: destination)
         }
 
         if let oneWalletV2 = try? JSONDecoder().decode(CloudRestoreBackupListModule.RestoredBackup.self, from: data) {
-            return .init(name: oneWalletV2.name, source: .wallet(oneWalletV2.walletBackup))
+            return .init(name: oneWalletV2.name, source: .wallet(oneWalletV2.walletBackup), origin: destination)
         }
 
         if let fullBackup = try? JSONDecoder().decode(FullBackup.self, from: data) {
-            return .init(name: filename, source: .full(fullBackup))
+            return .init(name: filename, source: .full(fullBackup), origin: destination)
         }
 
         throw ParseError.wrongFile

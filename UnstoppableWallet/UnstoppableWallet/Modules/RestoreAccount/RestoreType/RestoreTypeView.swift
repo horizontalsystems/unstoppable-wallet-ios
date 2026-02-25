@@ -91,7 +91,7 @@ struct RestoreTypeView: View {
         }
         .fileImporter(isPresented: $showFilePicker, allowedContentTypes: [.json]) { result in
             if case let .success(url) = result {
-                viewModel.didPick(url: url)
+                viewModel.didPick(url: url, destination: .files)
             }
         }
         .onReceive(viewModel.showModulePublisher) { type in
