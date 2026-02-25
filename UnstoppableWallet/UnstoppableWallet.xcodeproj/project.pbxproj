@@ -2422,7 +2422,6 @@
 		ABC9A6C99739F0AC308F0574 /* TransactionContactSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6359DA9DA078C8F92CB /* TransactionContactSelectViewModel.swift */; };
 		ABC9A6D1C4EF73D4A8D6F3BD /* CoinProChartModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A021D71EDD24DFB6BA62 /* CoinProChartModule.swift */; };
 		ABC9A6E939BDC0269313A66D /* SendModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD1F2311CC6425CF9D90 /* SendModule.swift */; };
-		ABC9A6EFD77E59AA6B4C5070 /* RestorePassphraseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE5CAD06644F52170C72 /* RestorePassphraseService.swift */; };
 		ABC9A6F265D51BD94CB43209 /* WCWalletHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A9BCCCE1CF80E10A174C /* WCWalletHandler.swift */; };
 		ABC9A6F88E51293F2605CACD /* ContactBookContactModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AB2ED4E48D4FCEDBE769 /* ContactBookContactModule.swift */; };
 		ABC9A70AE588307EA1D3A414 /* SendConfirmationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A2FD4A59DB53631435BA /* SendConfirmationService.swift */; };
@@ -2489,7 +2488,6 @@
 		ABC9A929CE4DC2F1569658D6 /* UnspentOutputsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A8C0A9FBFB57996E8A8C /* UnspentOutputsCell.swift */; };
 		ABC9A932AD114A779BF4EC16 /* Eip155RequestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A6D3F5BA199C53A5D955 /* Eip155RequestFactory.swift */; };
 		ABC9A933C2603486BA181B19 /* SendFeeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ADB77831DCB474B24C8A /* SendFeeService.swift */; };
-		ABC9A93E05AAF5D98C1DF4D6 /* RestorePassphraseService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AE5CAD06644F52170C72 /* RestorePassphraseService.swift */; };
 		ABC9A9493F250B81E1152012 /* SendBitcoinService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A696DCBBE4761E77311C /* SendBitcoinService.swift */; };
 		ABC9A9562DD283B6FCACBCF9 /* MarketCardTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AC7983E4A81E421AB639 /* MarketCardTitleView.swift */; };
 		ABC9A95E667DD7BD26602D8E /* SendEip721Service.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ACE7CB7CC9C118C72559 /* SendEip721Service.swift */; };
@@ -4967,7 +4965,6 @@
 		ABC9AE3DDA832FDF203EB9B7 /* TransactionTokenSelectViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTokenSelectViewModel.swift; sourceTree = "<group>"; };
 		ABC9AE522F09C5E7029CA86E /* CheckboxStyle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CheckboxStyle.swift; sourceTree = "<group>"; };
 		ABC9AE5B5F3F21C12DD17A95 /* WCWalletPayload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WCWalletPayload.swift; sourceTree = "<group>"; };
-		ABC9AE5CAD06644F52170C72 /* RestorePassphraseService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestorePassphraseService.swift; sourceTree = "<group>"; };
 		ABC9AE5FD79ECC4AC85B86FA /* WalletConnectListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WalletConnectListViewController.swift; sourceTree = "<group>"; };
 		ABC9AE6D2CD14194802E7976 /* SendZcashService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendZcashService.swift; sourceTree = "<group>"; };
 		ABC9AE7F145C402C91AAB5A3 /* ShortcutButtonsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ShortcutButtonsView.swift; sourceTree = "<group>"; };
@@ -8987,7 +8984,6 @@
 			children = (
 				6B954B232F3EE47B008A1A16 /* RestorePassphraseView.swift */,
 				ABC9AE8D5944EB202A471C80 /* RestorePassphraseViewModel.swift */,
-				ABC9AE5CAD06644F52170C72 /* RestorePassphraseService.swift */,
 			);
 			path = RestorePassphrase;
 			sourceTree = "<group>";
@@ -11820,7 +11816,6 @@
 				D3E36BA52DF99DAD007F99CA /* BalanceErrorBottomView.swift in Sources */,
 				ABC9AE7DA8EFD812710C7BE4 /* RestorePassphraseViewModel.swift in Sources */,
 				D3384D222BFF0CCA00515664 /* MarketVolumeView.swift in Sources */,
-				ABC9A93E05AAF5D98C1DF4D6 /* RestorePassphraseService.swift in Sources */,
 				D3617A792F28F45D00CB8F90 /* MoneroWalletTokenView.swift in Sources */,
 				ABC9A481F1C13DBAAD3F632B /* RestoreFileConfigurationViewModel.swift in Sources */,
 				ABC9AF309AAE5C54D2020B23 /* RawFullBackup.swift in Sources */,
@@ -13489,7 +13484,6 @@
 				D3E36BA62DF99DAD007F99CA /* BalanceErrorBottomView.swift in Sources */,
 				D3384D212BFF0CCA00515664 /* MarketVolumeView.swift in Sources */,
 				ABC9AF04946C86FA6DBD4225 /* RestorePassphraseViewModel.swift in Sources */,
-				ABC9A6EFD77E59AA6B4C5070 /* RestorePassphraseService.swift in Sources */,
 				ABC9A2F6D2A2AAFA31C64BAB /* RestoreFileConfigurationViewModel.swift in Sources */,
 				ABC9A37FB71FA7DA14553EFC /* RawFullBackup.swift in Sources */,
 				ABC9A0C5DE01B3C50D4C7FF2 /* RestoreFileConfigurationViewController.swift in Sources */,

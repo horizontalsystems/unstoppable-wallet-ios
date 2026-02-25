@@ -1,7 +1,7 @@
 import Foundation
 import Security
 
-struct BackupPasswordGenerator {
+enum BackupPasswordGenerator {
     private static let lowercase = Array("abcdefghijklmnopqrstuvwxyz")
     private static let uppercase = Array("ABCDEFGHIJKLMNOPQRSTUVWXYZ")
     private static let digits = Array("0123456789")
@@ -20,13 +20,13 @@ struct BackupPasswordGenerator {
         // Guarantee one character from each pool to satisfy PassphraseCharacterSet validation
         var characters: [Character] = []
         for pool in pools {
-            characters.append(try randomElement(from: pool))
+            try characters.append(randomElement(from: pool))
         }
 
         // Fill remaining positions from flat alphabet for maximum entropy
         let remaining = length - characters.count
         for _ in 0 ..< remaining {
-            characters.append(try randomElement(from: alphabet))
+            try characters.append(randomElement(from: alphabet))
         }
 
         // Fisher-Yates shuffle to eliminate positional bias
@@ -36,7 +36,7 @@ struct BackupPasswordGenerator {
     // MARK: - Private
 
     private static func randomElement(from array: [Character]) throws -> Character {
-        array[try secureRandomIndex(upperBound: array.count)]
+        try array[secureRandomIndex(upperBound: array.count)]
     }
 
     private static func secureRandomIndex(upperBound: Int) throws -> Int {

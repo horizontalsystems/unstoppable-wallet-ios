@@ -82,6 +82,8 @@
 "alert.unable_to_replace" = "Unable to replace";
 "alert.already_replaced" = "Already replaced";
 
+"alert.fetched_from_keychain" = "Get Password from Keychain";
+
 "alert_card.title.critical" = "Warning!";
 "alert_card.title.caution" = "Attention!";
 

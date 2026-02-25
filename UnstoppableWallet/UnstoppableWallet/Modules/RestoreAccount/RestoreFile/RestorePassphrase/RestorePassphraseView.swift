@@ -20,8 +20,7 @@ struct RestorePassphraseView: View {
         onConfiguration: @escaping (RawFullBackup) -> Void,
         onRestore: @escaping () -> Void
     ) {
-        let service = RestorePassphraseService(appBackupProvider: Core.shared.appBackupProvider, restoredBackup: item)
-        _viewModel = StateObject(wrappedValue: RestorePassphraseViewModel(service: service))
+        _viewModel = StateObject(wrappedValue: RestorePassphraseViewModel(restoredBackup: item))
         _isPresented = isPresented
         self.statPage = statPage
         self.onSelectCoins = onSelectCoins
@@ -70,7 +69,18 @@ struct RestorePassphraseView: View {
                 .animation(.default, value: viewModel.processing)
             }
         }
-        .onAppear { focused = true }
+        .onAppear {
+            viewModel.onAppear()
+        }
+        .onReceive(viewModel.focusPublisher) { shouldFocus in
+            focused = shouldFocus
+        }
+        .onReceive(viewModel.unlockAndSetPasswordPublisher) { password in
+            Coordinator.shared.performAfterUnlock { [weak viewModel] in
+                HudHelper.instance.show(banner: .passwordFromKeychain)
+                viewModel?.setPassphrase(password)
+            }
+        }
         .onReceive(viewModel.showErrorPublisher) { error in
             HudHelper.instance.show(banner: .error(string: error))
         }

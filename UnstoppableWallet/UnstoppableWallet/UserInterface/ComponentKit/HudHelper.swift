@@ -78,6 +78,7 @@ extension HudHelper {
         case copied
         case saved
         case savedToCloud
+        case passwordFromKeychain
         case done
         case restored
         case created
@@ -115,6 +116,7 @@ extension HudHelper {
             case .copied: image = UIImage(named: "copy_24")
             case .saved: image = UIImage(named: "download_24")
             case .savedToCloud: image = UIImage(named: "icloud_24")
+            case .passwordFromKeychain: image = UIImage(named: "icloud_24")
             case .done: image = UIImage(named: "circle_check_24")
             case .restored: image = UIImage(named: "download_24")
             case .created: image = UIImage(named: "add_to_wallet_24")
@@ -141,7 +143,7 @@ extension HudHelper {
             switch self {
             case .addedToWatchlist, .alreadyAddedToWallet, .notSupportedYet, .sent, .swapped, .approved, .revoked, .attention: return .themeJacob
             case .removedFromWallet, .removedFromWatchlist, .deleted, .noInternet, .disconnectedWalletConnect, .error: return .themeLucian
-            case .addedToWallet, .copied, .saved, .savedToCloud, .done, .restored, .created, .imported, .walletAdded, .enabled, .success, .connectedWalletConnect: return .themeRemus
+            case .addedToWallet, .copied, .saved, .savedToCloud, .done, .restored, .created, .imported, .walletAdded, .enabled, .success, .connectedWalletConnect, .passwordFromKeychain: return .themeRemus
             case .waitingForSession, .disconnectingWalletConnect, .enabling, .sending, .swapping, .approving, .revoking: return .themeGray
             }
         }
@@ -157,6 +159,7 @@ extension HudHelper {
             case .copied: return "alert.copied".localized
             case .saved: return "alert.saved".localized
             case .savedToCloud: return "alert.saved_to_icloud".localized
+            case .passwordFromKeychain: return "alert.fetched_from_keychain".localized
             case .done: return "alert.success_action".localized
             case .restored: return "alert.restored".localized
             case .created: return "alert.created".localized
