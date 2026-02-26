@@ -145,8 +145,8 @@ extension AddressViewModelNew {
                 }
             }
         case 0:
-            Coordinator.shared.present { _ in
-                ScanQrViewNew(pasteEnabled: true) { [weak self] in
+            Coordinator.shared.present { isPresented in
+                ScanQrViewNew(isPresented: isPresented) { [weak self] in
                     self?.didFetch(qrText: $0)
                 }
                 .ignoresSafeArea()

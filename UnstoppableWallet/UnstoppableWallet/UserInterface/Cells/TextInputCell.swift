@@ -61,6 +61,7 @@ class TextInputCell: UITableViewCell {
         textView.autocapitalizationType = .none
         textView.autocorrectionType = .no
         textView.spellCheckingType = .no
+        textView.textContentType = .none
 
         textView.delegate = self
 

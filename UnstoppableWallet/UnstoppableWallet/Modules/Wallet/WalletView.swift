@@ -262,8 +262,8 @@ struct WalletView: View {
                     }
                 }
             case .scan:
-                Coordinator.shared.present { _ in
-                    ScanQrViewNew(reportAfterDismiss: true, pasteEnabled: true) { text in
+                Coordinator.shared.present { isPresented in
+                    ScanQrViewNew(reportAfterDismiss: true, isPresented: isPresented) { text in
                         viewModel.process(scanned: text)
                     }
                     .ignoresSafeArea()
