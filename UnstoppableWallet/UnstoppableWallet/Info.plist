@@ -24,26 +24,51 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleURLTypes</key>
 	<array>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>io.horizontalsystems.bank-wallet</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>unstoppable.money</string>
-			</array>
-		</dict>
-		<dict>
-			<key>CFBundleTypeRole</key>
-			<string>Editor</string>
-			<key>CFBundleURLName</key>
-			<string>toncoin.deeplink</string>
-			<key>CFBundleURLSchemes</key>
-			<array>
-				<string>ton</string>
-			</array>
-		</dict>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLName</key>
+            <string>io.horizontalsystems.bank-wallet</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>unstoppable.money</string>
+            </array>
+        </dict>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLName</key>
+            <string>toncoin.deeplink</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>ton</string>
+            </array>
+        </dict>
+        <dict>
+            <key>CFBundleTypeRole</key>
+            <string>Editor</string>
+            <key>CFBundleURLName</key>
+            <string>crypto.deeplinks</string>
+            <key>CFBundleURLSchemes</key>
+            <array>
+                <string>ethereum</string>
+                <string>bitcoin</string>
+                <string>litecoin</string>
+                <string>bitcoincash</string>
+                <string>ecash</string>
+                <string>tron</string>
+                <string>cosmos</string>
+                <string>dogecoin</string>
+                <string>xrpl</string>
+                <string>solana</string>
+                <string>near</string>
+                <string>zcash</string>
+                <string>monero</string>
+                <string>thorchain</string>
+                <string>maya</string>
+                <string>stellar</string>
+            </array>
+        </dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
