@@ -2,7 +2,7 @@ enum TransactionTypeFilter: String {
     case all, incoming, outgoing, swap, approve
 
     static var allCases: [TransactionTypeFilter] {
-        [all, incoming, outgoing, swap, approve]
+        [all, incoming, outgoing] + (AppStateManager.instance.swapEnabled ? [swap] : []) + [approve]
     }
 
     var title: String {

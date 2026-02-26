@@ -12,7 +12,7 @@ enum PremiumCategory: Int, CaseIterable, Identifiable, Hashable {
     }
 }
 
-enum PremiumFeature: String, CaseIterable, Identifiable {
+enum PremiumFeature: String, Identifiable {
     // defense system
     case secureSend = "secure_send"
     case scamProtection = "scam_protection"
@@ -33,13 +33,18 @@ enum PremiumFeature: String, CaseIterable, Identifiable {
     var index: Int {
         Self.allCases.firstIndex(of: self) ?? 0
     }
+
+    static var allCases: [PremiumFeature] {
+        [.secureSend, .scamProtection] + (AppStateManager.instance.swapEnabled ? [.swapProtection] : []) + [.robberyProtection] +
+            (AppStateManager.instance.swapEnabled ? [.swapControl] : []) + [.prioritySupport, .tokenInsights, .advancedSearch, .tradeSignals]
+    }
 }
 
 extension PremiumCategory {
     var features: [PremiumFeature] {
         switch self {
-        case .defenseSystem: return [.secureSend, .scamProtection] + (Core.shared.appStateManager.swapEnabled ? [.swapProtection] : []) + [.robberyProtection]
-        case .advancedControls: return (Core.shared.appStateManager.swapEnabled ? [.swapControl] : []) + [.prioritySupport]
+        case .defenseSystem: return [.secureSend, .scamProtection] + (AppStateManager.instance.swapEnabled ? [.swapProtection] : []) + [.robberyProtection]
+        case .advancedControls: return (AppStateManager.instance.swapEnabled ? [.swapControl] : []) + [.prioritySupport]
         case .marketInsights: return [.tokenInsights, .advancedSearch, .tradeSignals]
         }
     }

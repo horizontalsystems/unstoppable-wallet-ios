@@ -126,8 +126,6 @@ class Core {
     let swapAssetStorage: SwapAssetStorage
     let swapProviderManager: MultiSwapProviderManager
 
-    let appStateManager: AppStateManager
-
     init() throws {
         let databaseURL = try FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
@@ -427,8 +425,6 @@ class Core {
 
         swapAssetStorage = SwapAssetStorage(dbPool: dbPool)
         swapProviderManager = MultiSwapProviderManager(localStorage: localStorage, networkManager: networkManager, apiKey: AppConfig.uswapApiKey)
-
-        appStateManager = AppStateManager(localStorage: localStorage, networkManager: networkManager, appManager: appManager)
     }
 
     func finishInitialize() {
