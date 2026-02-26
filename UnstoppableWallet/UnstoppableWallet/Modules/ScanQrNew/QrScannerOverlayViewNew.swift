@@ -21,16 +21,23 @@ struct QrScannerOverlayViewNew: View {
 
 private struct QrBlurOverlay: UIViewRepresentable {
     let holeRect: CGRect
+    @Environment(\.colorScheme) var colorScheme
 
-    func makeUIView(context _: Context) -> CustomIntensityVisualEffectView {
-        let view = CustomIntensityVisualEffectView(effect: UIBlurEffect(style: .themeHud), intensity: 0.7)
-        view.clipsToBounds = true
-        return view
+    func makeUIView(context _: Context) -> UIView {
+        UIView()
     }
 
-    func updateUIView(_ uiView: CustomIntensityVisualEffectView, context _: Context) {
+    func updateUIView(_ container: UIView, context _: Context) {
+        container.subviews.forEach { $0.removeFromSuperview() }
+
+        let blurView = CustomIntensityVisualEffectView(effect: UIBlurEffect(style: .themeHud), intensity: 0.7)
+        blurView.clipsToBounds = true
+        blurView.frame = container.bounds
+        blurView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        container.addSubview(blurView)
+
         DispatchQueue.main.async {
-            let bounds = uiView.bounds
+            let bounds = container.bounds
             guard !bounds.isEmpty else { return }
 
             let fullPath = UIBezierPath(rect: bounds)
@@ -42,7 +49,7 @@ private struct QrBlurOverlay: UIViewRepresentable {
             maskLayer.path = fullPath.cgPath
             maskLayer.fillRule = .evenOdd
 
-            uiView.layer.mask = maskLayer
+            blurView.layer.mask = maskLayer
         }
     }
 }
