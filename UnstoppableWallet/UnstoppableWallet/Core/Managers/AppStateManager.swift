@@ -1,39 +1,25 @@
 import Alamofire
-import Combine
 import Foundation
-import HsExtensions
 import HsToolKit
 import ObjectMapper
 
 class AppStateManager {
+    static let instance = AppStateManager()
+
     private let syncInterval: TimeInterval = 60 * 60
 
-    private let localStorage: LocalStorage
-    private let networkManager: NetworkManager
-    private let appManager: AppManager
-    private var cancellables = Set<AnyCancellable>()
+    private let localStorage = LocalStorage(userDefaultsStorage: UserDefaultsStorage())
+    private let networkManager = NetworkManager()
 
     private(set) var swapEnabled: Bool
 
-    init(localStorage: LocalStorage, networkManager: NetworkManager, appManager: AppManager) {
-        self.localStorage = localStorage
-        self.networkManager = networkManager
-        // networkManager = NetworkManager(logger: .init(minLogLevel: .debug))
-        self.appManager = appManager
-
+    init() {
         swapEnabled = localStorage.swapEnabled
-
-        appManager.willEnterForegroundPublisher
-            .receive(on: DispatchQueue.main)
-            .sink { [weak self] in
-                self?.syncIfRequired()
-            }
-            .store(in: &cancellables)
 
         sync()
     }
 
-    private func syncIfRequired() {
+    func syncIfRequired() {
         let lastSyncTimetamp = localStorage.appStateLastSyncTimestamp
 
         if let lastSyncTimetamp, Date().timeIntervalSince1970 - lastSyncTimetamp < syncInterval {

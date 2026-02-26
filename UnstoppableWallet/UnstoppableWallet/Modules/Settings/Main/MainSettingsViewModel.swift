@@ -21,7 +21,7 @@ class MainSettingsViewModel: ObservableObject {
     private let localStorage = Core.shared.localStorage
     private let testNetManager = Core.shared.testNetManager
     private let purchaseManager = Core.shared.purchaseManager
-    private let appStateManager = Core.shared.appStateManager
+    private let appStateManager = AppStateManager.instance
 
     @Published var manageWalletsAlert: Bool = false
     @Published var walletConnectSessionCount: Int = 0

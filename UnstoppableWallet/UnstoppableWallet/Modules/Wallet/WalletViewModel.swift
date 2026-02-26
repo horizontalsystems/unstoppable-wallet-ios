@@ -10,7 +10,7 @@ class WalletViewModel: WalletListViewModel {
     private let appManager = Core.shared.appManager
     private let eventHandler = Core.shared.appEventHandler
     private let rateAppManager = Core.shared.rateAppManager
-    private let appStateManager = Core.shared.appStateManager
+    private let appStateManager = AppStateManager.instance
 
     @Published private(set) var buttonHidden: Bool
     @Published private(set) var totalItem: TotalItem

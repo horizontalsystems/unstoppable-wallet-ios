@@ -10,7 +10,7 @@ class WalletTokenViewModel: ObservableObject {
     private let balanceHiddenManager = Core.shared.balanceHiddenManager
     private let appManager = Core.shared.appManager
     private let reachabilityManager = Core.shared.reachabilityManager
-    private let appStateManager = Core.shared.appStateManager
+    private let appStateManager = AppStateManager.instance
 
     private let disposeBag = DisposeBag()
     private var cancellables = Set<AnyCancellable>()
