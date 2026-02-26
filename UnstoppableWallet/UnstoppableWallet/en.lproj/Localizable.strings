@@ -11,6 +11,7 @@
 "button.delete" = "Delete";
 "button.share" = "Share";
 "button.paste" = "Paste";
+"button.photos" = "Photos";
 "button.resend" = "Resend";
 "button.backup" = "Backup";
 "button.restore" = "Restore";
