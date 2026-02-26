@@ -60,7 +60,7 @@ class AddressViewModel: ObservableObject {
 
         self.contacts = contacts
 
-        premiumEnabled = purchaseManager.activated(.scamProtection)
+        premiumEnabled = purchaseManager.activated(.secureSend)
 
         defer {
             if let address {
@@ -70,7 +70,7 @@ class AddressViewModel: ObservableObject {
 
         purchaseManager.$activeFeatures
             .sink { [weak self] features in
-                self?.premiumEnabled = features.contains(.scamProtection)
+                self?.premiumEnabled = features.contains(.secureSend)
             }
             .store(in: &cancellables)
     }
@@ -92,14 +92,16 @@ class AddressViewModel: ObservableObject {
                 )
                 )
             } else {
-                if !appSettingManager.recipientAddressCheck {
-                    for type in issueTypes {
-                        checkStates[type] = .disabled
-                    }
+                if premiumEnabled {
+                    if appSettingManager.recipientAddressCheck {
+                        check(address: success.address)
+                    } else {
+                        for type in issueTypes {
+                            checkStates[type] = .disabled
+                        }
 
-                    state = .valid(resolvedAddress: ResolvedAddress(address: address, issueTypes: []))
-                } else if premiumEnabled {
-                    check(address: success.address)
+                        state = .valid(resolvedAddress: ResolvedAddress(address: address, issueTypes: []))
+                    }
                 } else {
                     for type in issueTypes {
                         checkStates[type] = .locked

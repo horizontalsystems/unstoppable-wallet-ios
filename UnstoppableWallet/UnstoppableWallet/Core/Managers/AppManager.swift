@@ -126,6 +126,8 @@ extension AppManager {
         tonKitManager.tonKit?.startListener()
         stellarKitManager.stellarKit?.startListener()
 
+        AppStateManager.instance.syncIfRequired()
+
         AppWidgetConstants.allKinds.forEach { WidgetCenter.shared.reloadTimelines(ofKind: $0) }
     }
 

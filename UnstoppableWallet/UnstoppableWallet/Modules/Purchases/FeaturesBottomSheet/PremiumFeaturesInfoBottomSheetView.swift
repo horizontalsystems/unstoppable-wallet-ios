@@ -18,6 +18,8 @@ struct PremiumFeaturesInfoBottomSheetView: View {
     var body: some View {
         ThemeView(style: .list) {
             VStack(spacing: 0) {
+                let features = PremiumFeature.allCases
+
                 ZStack {
                     VStack {
                         ThemeRadialView(radialPositions: .corners, right: 0x00E1FF) {
@@ -30,8 +32,8 @@ struct PremiumFeaturesInfoBottomSheetView: View {
                     }
 
                     TabView(selection: $currentSlideIndex) {
-                        ForEach(0 ..< PremiumFeature.allCases.count, id: \.self) { index in
-                            let feature = PremiumFeature.allCases[index]
+                        ForEach(0 ..< features.count, id: \.self) { index in
+                            let feature = features[index]
                             VStack(spacing: 0) {
                                 Image("premium_\(feature.rawValue)")
                                     .padding(.top, feature.topPadding)
@@ -56,7 +58,7 @@ struct PremiumFeaturesInfoBottomSheetView: View {
                 }
 
                 HStack(spacing: .margin4) {
-                    ForEach(0 ..< PremiumFeature.allCases.count, id: \.self) { index in
+                    ForEach(0 ..< features.count, id: \.self) { index in
                         Capsule()
                             .fill(currentSlideIndex == index ? Color.themeJacob : Color.themeAndy)
                             .frame(width: currentSlideIndex == index ? 20 : 8, height: 4)

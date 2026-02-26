@@ -20,13 +20,13 @@ class AddressCheckerViewModel: ObservableObject {
 
     init() {
         recipientAddressCheck = appSettingManager.recipientAddressCheck
-        activated = purchaseManager.activated(.scamProtection)
+        activated = purchaseManager.activated(.secureSend)
 
         purchaseManager
             .$activeFeatures
             .receive(on: DispatchQueue.main)
             .sink { [weak self] features in
-                self?.activated = features.contains(.scamProtection)
+                self?.activated = features.contains(.secureSend)
             }
             .store(in: &cancellables)
     }

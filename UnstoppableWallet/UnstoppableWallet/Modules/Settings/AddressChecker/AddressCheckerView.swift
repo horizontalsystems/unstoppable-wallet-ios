@@ -16,7 +16,7 @@ struct AddressCheckerView: View {
                             }
                         } else {
                             ClickableRow(action: {
-                                Coordinator.shared.performAfterPurchase(premiumFeature: .scamProtection, page: .addressChecker, trigger: .disableAddressChecker) {
+                                Coordinator.shared.performAfterPurchase(premiumFeature: .secureSend, page: .addressChecker, trigger: .disableAddressChecker) {
                                     viewModel.recipientAddressCheck.toggle()
                                 }
                             }) {
@@ -35,7 +35,7 @@ struct AddressCheckerView: View {
                             if viewModel.activated {
                                 checkAddressPresented = true
                             } else {
-                                Coordinator.shared.performAfterPurchase(premiumFeature: .scamProtection, page: .addressChecker, trigger: .addressChecker, onPurchase: {
+                                Coordinator.shared.performAfterPurchase(premiumFeature: .secureSend, page: .addressChecker, trigger: .addressChecker, onPurchase: {
                                     checkAddressPresented = true
                                 })
                             }

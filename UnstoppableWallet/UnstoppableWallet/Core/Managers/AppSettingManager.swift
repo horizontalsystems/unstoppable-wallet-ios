@@ -30,7 +30,7 @@ class AppSettingManager {
             balancePrimaryValue = .coin
         }
 
-        recipientAddressCheck = userDefaultsStorage.value(for: keyRecipientAddressCheck) ?? false
+        recipientAddressCheck = userDefaultsStorage.value(for: keyRecipientAddressCheck) ?? true
     }
 }
 
