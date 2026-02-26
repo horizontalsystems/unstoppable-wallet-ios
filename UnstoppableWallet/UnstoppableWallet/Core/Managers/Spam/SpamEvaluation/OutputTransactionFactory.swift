@@ -42,7 +42,14 @@ class OutputTransactionFactory {
     }
 
     private static func filterZeroPoisoningEvents(_ events: [TransferEvent]) -> [TransferEvent] {
-        events.filter { !$0.value.zeroValue }
+        events.filter {
+            switch $0.value.kind { // check if token not is coinGecko (not valid)
+            case .raw, .eip20Token: return false
+            default: ()
+            }
+
+            return !$0.value.zeroValue // check if sended balance != 0
+        }
     }
 
     /// Creates CachedOutputTransaction entries from a TransactionRecord

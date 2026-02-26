@@ -141,8 +141,8 @@ extension StellarTransactionAdapter: ITransactionsAdapter {
     func transactionsObservable(token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]> {
         stellarKit.operationPublisher(tagQuery: tagQuery(token: token, filter: filter, address: address))
             .asObservable()
-            .map { [converter] in
-                $0.operations.map { converter.transactionRecord(operation: $0) }
+            .map { [weak self] in
+                self?.handleTransactions($0.operations) ?? []
             }
     }
 
@@ -170,7 +170,7 @@ extension StellarTransactionAdapter: ITransactionsAdapter {
             Task { [weak self, stellarKit] in
 
                 let operations = stellarKit.operations(tagQuery: .init(), pagingToken: pagingToken, descending: false, limit: nil)
-                let records = self?.handleTransactions(operations) ?? []
+                let records = operations.compactMap { self?.converter.transactionRecord(operation: $0) }
 
                 observer(.success(records))
             }
