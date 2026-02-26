@@ -16,8 +16,8 @@ struct ScanQrViewNew: View {
     }
 
     var body: some View {
-        ThemeView {
-            ZStack(alignment: .topTrailing) {
+        ThemeNavigationStack {
+            ZStack {
                 QrCameraPreviewNew(session: viewModel.session)
                     .ignoresSafeArea()
 
@@ -27,17 +27,6 @@ struct ScanQrViewNew: View {
                     permissionDeniedView
                 }
 
-                if options.contains(.picker) {
-                    PhotosPicker(
-                        selection: $viewModel.pickerItem,
-                        matching: .images
-                    ) {
-                        Image("scan").icon(size: .size24, colorStyle: .yellow)
-                    }
-                    .padding(.trailing, .margin24)
-                    .padding(.top, .margin24)
-                }
-
                 VStack {
                     Spacer()
                     buttons
@@ -45,41 +34,62 @@ struct ScanQrViewNew: View {
                 .padding(.horizontal, .margin24)
                 .padding(.bottom, .margin24)
             }
-        }
-        .onAppear {
-            viewModel.requestCameraAccess()
-        }
-        .onDisappear {
-            viewModel.stopSession()
-        }
-        .onReceive(viewModel.resultPublisher) { string in
-            if reportAfterDismiss {
-                isPresented = false
-                DispatchQueue.main.async {
-                    viewModel.didFetch?(string)
+            .navigationBarTitleDisplayMode(.inline)
+            .navigationTitle("balance.scan".localized)
+            .toolbarBackground(.hidden, for: .navigationBar)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    Button("button.cancel".localized) {
+                        isPresented = false
+                    }
                 }
-            } else {
-                viewModel.didFetch?(string)
-                isPresented = false
+            }
+            .onAppear {
+                viewModel.requestCameraAccess()
+            }
+            .onDisappear {
+                viewModel.stopSession()
+            }
+            .onReceive(viewModel.resultPublisher) { string in
+                if reportAfterDismiss {
+                    isPresented = false
+                    DispatchQueue.main.async {
+                        viewModel.didFetch?(string)
+                    }
+                } else {
+                    viewModel.didFetch?(string)
+                    isPresented = false
+                }
             }
         }
     }
 
     @ViewBuilder private var buttons: some View {
-        VStack(spacing: .margin16) {
-            if options.contains(.paste) {
-                Button(action: { viewModel.onPaste() }) {
-                    Text("button.paste".localized)
+        if options.contains(.picker) || options.contains(.paste) {
+            HStack(spacing: .margin16) {
+                if options.contains(.picker) {
+                    PhotosPicker(
+                        selection: $viewModel.pickerItem,
+                        matching: .images
+                    ) {
+                        HStack(spacing: .margin8) {
+                            Image("gallery").renderingMode(.template)
+                            Text("button.photos".localized)
+                        }
+                    }
+                    .buttonStyle(PrimaryButtonStyle(style: .gray))
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
-            }
 
-            Button(action: {
-                $isPresented.wrappedValue = false
-            }) {
-                Text("button.cancel".localized)
+                if options.contains(.paste) {
+                    Button(action: { viewModel.onPaste() }) {
+                        HStack(spacing: .margin8) {
+                            Image("copy").renderingMode(.template)
+                            Text("button.paste".localized)
+                        }
+                    }
+                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                }
             }
-            .buttonStyle(PrimaryButtonStyle(style: .gray))
         }
     }
 
@@ -101,10 +111,9 @@ struct ScanQrViewNew: View {
     }
 
     private var bottomInset: CGFloat {
-        var height: CGFloat = .margin24 + PrimaryButton.height
-        if options.contains(.paste) {
-            height += .margin16 + PrimaryButton.height
+        guard options.contains(.picker) || options.contains(.paste) else {
+            return 0
         }
-        return height
+        return PrimaryButton.height
     }
 }
