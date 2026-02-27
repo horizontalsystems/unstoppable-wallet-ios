@@ -121,12 +121,14 @@ extension ZcashSendHandler {
             var feeFields = [SendField]()
             if let proposal {
                 let fee = proposal.totalFeeRequired().decimalValue.decimalValue
-                feeFields.append(.value(
-                    title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
-                    appValue: AppValue(token: baseToken, value: fee),
-                    currencyValue: rates[baseToken.coin.uid].map { CurrencyValue(currency: currency, value: fee * $0) },
-                    formatFull: true
-                )
+                let appValue = AppValue(token: baseToken, value: fee)
+                let currencyValue = rates[baseToken.coin.uid].map { CurrencyValue(currency: currency, value: fee * $0) }
+
+                feeFields.append(
+                    .fee(
+                        title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
+                        amountData: .init(appValue: appValue, currencyValue: currencyValue)
+                    )
                 )
             }
 
