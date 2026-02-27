@@ -14,6 +14,7 @@ enum SendField {
     case recipient(title: String, value: String, copyable: Bool, blockchainType: BlockchainType)
     case selfAddress(value: String)
     case price(title: String, tokenA: Token, tokenB: Token, amountA: Decimal, amountB: Decimal)
+    case fee(title: CustomStringConvertible, amountData: AmountData?)
     case hex(title: String, value: String)
     case mevProtection(isOn: Binding<Bool>)
 
@@ -91,7 +92,13 @@ enum SendField {
                 }
             )
         case let .price(title, tokenA, tokenB, amountA, amountB):
-            PriceRow(title: title, tokenA: tokenA, tokenB: tokenB, amountA: amountA, amountB: amountB)
+            let priceData = FlipRow.TokenPriceData(tokenA: tokenA, tokenB: tokenB, amountA: amountA, amountB: amountB)
+            FlipRow(title: title, flipData: priceData)
+
+        case let .fee(title, amountData):
+            let feeData = FlipRow.TokenFeeData(amountData: amountData)
+            FlipRow(title: title, flipData: feeData)
+
         case let .simpleValue(icon, title, value):
             let infoDescription = (title as? SendField.InformedTitle)?.info
 

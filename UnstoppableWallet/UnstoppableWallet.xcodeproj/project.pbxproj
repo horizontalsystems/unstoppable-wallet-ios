@@ -3436,8 +3436,8 @@
 		D3B73E2B2BDBC61D0067429D /* EvmPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B73E292BDBC61D0067429D /* EvmPreSendHandler.swift */; };
 		D3B73E2D2BDF6B6D0067429D /* MultiSwapSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B73E2C2BDF6B6D0067429D /* MultiSwapSendHandler.swift */; };
 		D3B73E2E2BDF6B6D0067429D /* MultiSwapSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B73E2C2BDF6B6D0067429D /* MultiSwapSendHandler.swift */; };
-		D3B73E302BDFC5580067429D /* PriceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B73E2F2BDFC5580067429D /* PriceRow.swift */; };
-		D3B73E312BDFC5580067429D /* PriceRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B73E2F2BDFC5580067429D /* PriceRow.swift */; };
+		D3B73E302BDFC5580067429D /* FlipRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B73E2F2BDFC5580067429D /* FlipRow.swift */; };
+		D3B73E312BDFC5580067429D /* FlipRow.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3B73E2F2BDFC5580067429D /* FlipRow.swift */; };
 		D3BA257F2ADFAD7C002B13EA /* AppWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3948EF62ADA846400FAE566 /* AppWidgetBundle.swift */; };
 		D3BA25842ADFAD7C002B13EA /* SingleCoinPriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CFAA2B156E439EB18B3 /* SingleCoinPriceView.swift */; };
 		D3BA25852ADFAD7C002B13EA /* SingleCoinPriceEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35E514EF2784402C7DC2A /* SingleCoinPriceEntry.swift */; };
@@ -5380,7 +5380,7 @@
 		D3B73E262BDBC6120067429D /* IPreSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IPreSendHandler.swift; sourceTree = "<group>"; };
 		D3B73E292BDBC61D0067429D /* EvmPreSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvmPreSendHandler.swift; sourceTree = "<group>"; };
 		D3B73E2C2BDF6B6D0067429D /* MultiSwapSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultiSwapSendHandler.swift; sourceTree = "<group>"; };
-		D3B73E2F2BDFC5580067429D /* PriceRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceRow.swift; sourceTree = "<group>"; };
+		D3B73E2F2BDFC5580067429D /* FlipRow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlipRow.swift; sourceTree = "<group>"; };
 		D3BA25912ADFAD7C002B13EA /* WidgetExtension Prod.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WidgetExtension Prod.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3BA25A52ADFAF23002B13EA /* IntentExtension Prod.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "IntentExtension Prod.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
 		D3C5986D2C1315AF00789D69 /* AttributedStringView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttributedStringView.swift; sourceTree = "<group>"; };
@@ -6073,7 +6073,7 @@
 				D311DA242BD23C890013DB8F /* ScrollableTabHeaderView.swift */,
 				D3DB519B2BD685180091BBDB /* RedactedModifier.swift */,
 				D3DB51AE2BD7AF860091BBDB /* DiffText.swift */,
-				D3B73E2F2BDFC5580067429D /* PriceRow.swift */,
+				D3B73E2F2BDFC5580067429D /* FlipRow.swift */,
 				D3833B042BF4AFB800ACECFB /* MarqueeView.swift */,
 				6BB14F742C01D04200E879B2 /* CheckBoxUiView.swift */,
 				D09C5C622C076C0E00E6909E /* CoinIconView.swift */,
@@ -10512,7 +10512,7 @@
 				6B5D850F2EA7731000F13E2C /* TronReceiveAddressViewModel.swift in Sources */,
 				D3840581218317DF007D50AD /* Core.swift in Sources */,
 				D3840583218317DF007D50AD /* CoverManager.swift in Sources */,
-				D3B73E312BDFC5580067429D /* PriceRow.swift in Sources */,
+				D3B73E312BDFC5580067429D /* FlipRow.swift in Sources */,
 				D384058B218317DF007D50AD /* LanguageManager.swift in Sources */,
 				D09CDA322F1653770068B1B7 /* MoneroIncomingTransactionRecord.swift in Sources */,
 				D09CDA332F1653770068B1B7 /* MoneroOutgoingTransactionRecord.swift in Sources */,
@@ -12187,7 +12187,7 @@
 				D384067021831B3D007D50AD /* Core.swift in Sources */,
 				6B5D85102EA7731000F13E2C /* TronReceiveAddressViewModel.swift in Sources */,
 				D384067221831B3D007D50AD /* CoverManager.swift in Sources */,
-				D3B73E302BDFC5580067429D /* PriceRow.swift in Sources */,
+				D3B73E302BDFC5580067429D /* FlipRow.swift in Sources */,
 				D384067A21831B3D007D50AD /* LanguageManager.swift in Sources */,
 				D384067B21831B3D007D50AD /* LocalStorage.swift in Sources */,
 				D38E5DFF2F03EB870049EB91 /* EvmSwapFinalQuote.swift in Sources */,

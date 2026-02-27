@@ -122,15 +122,15 @@ extension ShieldSendHandler {
             }
 
             let fee = proposal.totalFeeRequired().decimalValue.decimalValue
+            let appValue = AppValue(token: baseToken, value: fee)
+            let currencyValue = rates[baseToken.coin.uid].map { CurrencyValue(currency: currency, value: fee * $0) }
 
             return [
                 .init(flowFields, isFlow: true),
                 .init(fields + [
-                    .value(
+                    .fee(
                         title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
-                        appValue: AppValue(token: baseToken, value: fee),
-                        currencyValue: rates[baseToken.coin.uid].map { CurrencyValue(currency: currency, value: fee * $0) },
-                        formatFull: true
+                        amountData: .init(appValue: appValue, currencyValue: currencyValue)
                     ),
                 ], isMain: false),
             ]

@@ -7,11 +7,9 @@ class EvmSendHelper {
         let amountData = evmFeeData.flatMap { $0.totalAmountData(gasPrice: gasPrice, feeToken: feeToken, currency: currency, feeTokenRate: feeTokenRate) }
 
         return [
-            .value(
+            .fee(
                 title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
-                appValue: amountData?.appValue,
-                currencyValue: amountData?.currencyValue,
-                formatFull: true
+                amountData: amountData
             ),
         ]
     }
