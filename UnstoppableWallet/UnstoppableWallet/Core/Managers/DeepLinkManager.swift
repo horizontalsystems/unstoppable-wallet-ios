@@ -8,6 +8,7 @@ class DeepLinkManager {
     static let tonUniversalHost = "ton-connect"
     static let tonDeepLinkHost = "tc"
 
+    private let addressUriParser = AddressUriParser(blockchainType: nil, tokenType: nil)
     private let newSchemeSubject = CurrentValueSubject<DeepLink?, Never>(nil)
 }
 
@@ -70,6 +71,13 @@ extension DeepLinkManager {
             newSchemeSubject.send(.referral(telegramUserId: userId, referralCode: referralCode))
             return
         }
+
+        if let uri = try? addressUriParser.parse(url: url.absoluteString) {
+            newSchemeSubject.send(.transfer(addressUri: uri))
+            return
+        }
+
+        HudHelper.instance.show(banner: .error(string: "alert.cant_recognize".localized))
     }
 
     func setDeepLinkShown() {
