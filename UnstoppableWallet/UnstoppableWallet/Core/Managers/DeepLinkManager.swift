@@ -72,7 +72,8 @@ extension DeepLinkManager {
             return
         }
 
-        if let uri = try? addressUriParser.parse(url: url.absoluteString) {
+        let encoded = url.absoluteString.removingPercentEncoding ?? url.absoluteString
+        if let uri = try? addressUriParser.parse(url: encoded) {
             newSchemeSubject.send(.transfer(addressUri: uri))
             return
         }
