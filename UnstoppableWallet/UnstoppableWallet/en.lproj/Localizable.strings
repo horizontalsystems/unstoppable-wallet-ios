@@ -1780,6 +1780,7 @@
 "appearance.balance_tab" = "Balance Tab";
 "appearance.amount_rounding" = "Amount Rounding";
 "appearance.amount_rounding.description" = "Display rounded balances and transaction amounts.";
+"appearance.send_screen" = "Send Screen";
 "appearance.recently_sent" = "Recently Sent";
 "appearance.recently_sent.description" = "Display recently sent address for token.";
 "appearance.hide_buttons" = "Hide Buttons";
