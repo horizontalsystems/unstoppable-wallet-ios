@@ -153,14 +153,6 @@ struct AppearanceView: View {
                         )
                         Cell(
                             middle: {
-                                MultiText(title: "appearance.recently_sent".localized, subtitle: "appearance.recently_sent.description".localized)
-                            },
-                            right: {
-                                ThemeToggle(isOn: $viewModel.showRecentlySent.animation(), style: .yellow)
-                            }
-                        )
-                        Cell(
-                            middle: {
                                 MultiText(title: "appearance.balance_value".localized, subtitle: "appearance.balance_value.description".localized)
                             },
                             right: {
@@ -177,6 +169,20 @@ struct AppearanceView: View {
                                         isPresented: isPresented
                                     )
                                 }
+                            }
+                        )
+                    }
+                }
+
+                VStack(spacing: 0) {
+                    ListSectionHeader(text: "appearance.send_screen".localized)
+                    ListSection {
+                        Cell(
+                            middle: {
+                                MultiText(title: "appearance.recently_sent".localized, subtitle: "appearance.recently_sent.description".localized)
+                            },
+                            right: {
+                                ThemeToggle(isOn: $viewModel.showRecentlySent.animation(), style: .yellow)
                             }
                         )
                     }
