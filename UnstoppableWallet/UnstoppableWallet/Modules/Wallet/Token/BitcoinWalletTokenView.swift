@@ -17,7 +17,7 @@ struct BitcoinWalletTokenView: View {
                 content: {
                     Group {
                         WalletTokenTopView(viewModel: walletTokenViewModel).themeListTopView()
-                        view(locked: viewModel.bitcoinBalanceData.locked, notRelayed: viewModel.bitcoinBalanceData.notRelayed)
+                        view(locked: viewModel.bitcoinBalanceData.locked)
                     }
                 },
                 transactionList: {
@@ -27,27 +27,16 @@ struct BitcoinWalletTokenView: View {
         }
     }
 
-    @ViewBuilder private func view(locked: Decimal, notRelayed: Decimal) -> some View {
-        if locked != 0 || notRelayed != 0 {
-            VStack(spacing: 0) {
-                view(
-                    value: locked,
-                    title: "balance.token.locked".localized,
-                    info: .init(
-                        title: "balance.token.locked.info.title".localized,
-                        description: "balance.token.locked.info.description".localized
-                    ),
-                )
-
-                view(
-                    value: notRelayed,
-                    title: "balance.token.not_relayed".localized,
-                    info: .init(
-                        title: "balance.token.not_relayed.info.title".localized,
-                        description: "balance.token.not_relayed.info.description".localized
-                    ),
-                )
-            }
+    @ViewBuilder private func view(locked: Decimal) -> some View {
+        if locked != 0 {
+            view(
+                value: locked,
+                title: "balance.token.locked".localized,
+                info: .init(
+                    title: "balance.token.locked.info.title".localized,
+                    description: "balance.token.locked.info.description".localized
+                ),
+            )
             .listRowBackground(Color.clear)
             .listRowInsets(EdgeInsets())
             .listRowSeparator(.hidden)
