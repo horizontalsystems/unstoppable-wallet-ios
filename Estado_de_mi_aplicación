@@ -1,0 +1,596 @@
+ Info: 
+     - Current Time: 08 feb. 2023, 08:45
+     - App Version: 0.30
+     - Phone Model: iPhone13,2
+     - Os Version: 16.3
+
+App Log: 
+Version History: 
+     - 0.28.3: 16 dic. 2022, 19:01
+     - 0.29: 02 ene. 2023, 10:32
+     - 0.29.2: 04 feb. 2023, 04:30
+     - 0.30: 08 feb. 2023, 07:36
+
+Market Last Sync Timestamps: 
+     - Coins: 1675853361
+     - Blockchains: 1675767690
+     - Tokens: 1675852913
+
+Wallets Status: 
+     - Newlife08-.Wallet/Newlife08-Wallet.Eth: 
+         - Origin: restored
+         - Type: mnemonic (12 words)
+         - Restore Settings: 
+             - Zcash - Birthdayheight: 1685566965
+
+
+Blockchains Status: 
+     - Bitcoin: 
+         - State: Syncing-5
+         - Synced Until: 07 oct. 2014, 04:00
+         - Syncing Peer: 142.198.179.214
+         - Derivation: bip84
+         - Peer 1: 
+             - Status: not synced
+             - Host: 142.198.179.214
+             - Best Block: 775583
+             - Tasks: 
+                 - Bitcoincore.Getmerkleblockstask: minMerkleBlocksCount: 500.0; minTransactionsCount: 50000.0; minTransactionsSize: 100000.0
+                 - Bitcoincore.Getblockhashestask: expectedHashesMinCount: 500; allowedIdleTime: 10.0
+         - Peer 2: 
+             - Status: not synced
+             - Host: 3.83.51.207
+             - Best Block: 775583
+             - Tasks: no tasks
+         - Peer 3: 
+             - Status: not synced
+             - Host: 174.138.35.229
+             - Best Block: 775583
+             - Tasks: no tasks
+         - Peer 4: 
+             - Status: not synced
+             - Host: 74.80.34.180
+             - Best Block: 775583
+             - Tasks: no tasks
+         - Peer 5: 
+             - Status: not synced
+             - Host: 3.238.8.21
+             - Best Block: 775583
+             - Tasks: no tasks
+         - Peer 6: 
+             - Status: not synced
+             - Host: 52.53.184.110
+             - Best Block: 775583
+             - Tasks: no tasks
+         - Peer 7: 
+             - Status: not synced
+             - Host: 148.251.48.231
+             - Best Block: 775584
+             - Tasks: no tasks
+         - Peer 8: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:5.39.74.166
+             - Best Block: 775584
+             - Tasks: no tasks
+         - Peer 9: 
+             - Status: not synced
+             - Host: 177.215.65.37
+             - Best Block: 775584
+             - Tasks: no tasks
+         - Peer 10: 
+             - Status: not synced
+             - Host: 79.116.24.196
+             - Best Block: 775583
+             - Tasks: no tasks
+
+     - Bitcoin: 
+         - State: Syncing-3
+         - Synced Until: 12 ago. 2014, 01:51
+         - Syncing Peer: 142.198.179.214
+         - Derivation: bip49
+         - Peer 1: 
+             - Status: not synced
+             - Host: 3.83.51.207
+             - Best Block: 775583
+             - Tasks: 
+                 - Bitcoincore.Requesttransactionstask: hashesCount: 1; receivedTransactionsCount: 1
+         - Peer 2: 
+             - Status: not synced
+             - Host: 142.198.179.214
+             - Best Block: 775583
+             - Tasks: 
+                 - Bitcoincore.Getmerkleblockstask: minMerkleBlocksCount: 500.0; minTransactionsCount: 50000.0; minTransactionsSize: 100000.0
+                 - Bitcoincore.Getblockhashestask: expectedHashesMinCount: 500; allowedIdleTime: 10.0
+         - Peer 3: 
+             - Status: not synced
+             - Host: 174.138.35.229
+             - Best Block: 775583
+             - Tasks: no tasks
+         - Peer 4: 
+             - Status: not synced
+             - Host: 45.137.20.7
+             - Best Block: 775583
+             - Tasks: no tasks
+         - Peer 5: 
+             - Status: not synced
+             - Host: 74.80.34.180
+             - Best Block: 775583
+             - Tasks: no tasks
+         - Peer 6: 
+             - Status: not synced
+             - Host: 24.141.166.152
+             - Best Block: 775583
+             - Tasks: no tasks
+         - Peer 7: 
+             - Status: not synced
+             - Host: 148.251.48.231
+             - Best Block: 775584
+             - Tasks: no tasks
+         - Peer 8: 
+             - Status: not synced
+             - Host: 177.215.65.37
+             - Best Block: 775584
+             - Tasks: no tasks
+         - Peer 9: 
+             - Status: not synced
+             - Host: 79.116.24.196
+             - Best Block: 775583
+             - Tasks: no tasks
+         - Peer 10: 
+             - Status: not synced
+             - Host: 66.114.33.49
+             - Best Block: 775584
+             - Tasks: no tasks
+
+     - Zcash: 
+     - Litecoin: 
+         - State: Syncing-6
+         - Synced Until: 30 oct. 2014, 02:02
+         - Syncing Peer: 99.240.214.149
+         - Derivation: bip84
+         - Peer 1: 
+             - Status: not synced
+             - Host: 64.227.105.219
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 2: 
+             - Status: not synced
+             - Host: 99.240.214.149
+             - Best Block: 2418948
+             - Tasks: 
+                 - Bitcoincore.Getmerkleblockstask: minMerkleBlocksCount: 500.0; minTransactionsCount: 50000.0; minTransactionsSize: 100000.0
+                 - Bitcoincore.Getblockhashestask: expectedHashesMinCount: 500; allowedIdleTime: 10.0
+         - Peer 3: 
+             - Status: not synced
+             - Host: 72.15.59.177
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 4: 
+             - Status: not synced
+             - Host: 34.206.199.154
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 5: 
+             - Status: not synced
+             - Host: 35.184.103.190
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 6: 
+             - Status: not synced
+             - Host: 108.61.23.46
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 7: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:99.240.214.149
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 8: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:64.227.105.219
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 9: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:72.15.59.177
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 10: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:108.61.23.46
+             - Best Block: 2418948
+             - Tasks: no tasks
+
+     - Litecoin: 
+         - State: Syncing-6
+         - Synced Until: 29 oct. 2014, 08:29
+         - Syncing Peer: 99.240.214.149
+         - Derivation: bip44
+         - Peer 1: 
+             - Status: not synced
+             - Host: 64.227.105.219
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 2: 
+             - Status: not synced
+             - Host: 99.240.214.149
+             - Best Block: 2418948
+             - Tasks: 
+                 - Bitcoincore.Getmerkleblockstask: minMerkleBlocksCount: 500.0; minTransactionsCount: 50000.0; minTransactionsSize: 100000.0
+                 - Bitcoincore.Getblockhashestask: expectedHashesMinCount: 500; allowedIdleTime: 10.0
+         - Peer 3: 
+             - Status: not synced
+             - Host: 72.15.59.177
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 4: 
+             - Status: not synced
+             - Host: 108.61.23.46
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 5: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:99.240.214.149
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 6: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:64.227.105.219
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 7: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:45.63.49.169
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 8: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:72.15.59.177
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 9: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:108.61.23.46
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 10: 
+             - Status: not synced
+             - Host: 45.63.49.169
+             - Best Block: 2418948
+             - Tasks: no tasks
+
+     - Litecoin: 
+         - State: Syncing-1
+         - Synced Until: 08 jun. 2014, 14:48
+         - Syncing Peer: 72.15.59.177
+         - Derivation: bip49
+         - Peer 1: 
+             - Status: not synced
+             - Host: 99.240.214.149
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 2: 
+             - Status: not synced
+             - Host: 72.15.59.177
+             - Best Block: 2418948
+             - Tasks: 
+                 - Bitcoincore.Getmerkleblockstask: minMerkleBlocksCount: 500.0; minTransactionsCount: 50000.0; minTransactionsSize: 100000.0
+                 - Bitcoincore.Getblockhashestask: expectedHashesMinCount: 500; allowedIdleTime: 10.0
+         - Peer 3: 
+             - Status: not synced
+             - Host: 34.206.199.154
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 4: 
+             - Status: not synced
+             - Host: 54.224.94.37
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 5: 
+             - Status: not synced
+             - Host: 108.61.23.46
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 6: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:99.240.214.149
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 7: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:64.227.105.219
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 8: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:72.15.59.177
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 9: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:108.61.23.46
+             - Best Block: 2418948
+             - Tasks: no tasks
+         - Peer 10: 
+             - Status: not synced
+             - Host: 45.63.49.169
+             - Best Block: 2418948
+             - Tasks: no tasks
+
+     - Dash: 
+         - State: Synced
+         - Synced Until: 08 feb. 2023, 08:44
+         - Syncing Peer: 0000:0000:0000:0000:0000:ffff:142.93.103.146
+         - Derivation: bip44
+         - Peer 1: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:167.71.60.70
+             - Best Block: 1818686
+             - Tasks: no tasks
+         - Peer 2: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:142.93.103.146
+             - Best Block: 1818686
+             - Tasks: 
+                 - Bitcoincore.Getblockhashestask: expectedHashesMinCount: 6; allowedIdleTime: 1.0
+         - Peer 3: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:165.22.22.156
+             - Best Block: 1818686
+             - Tasks: no tasks
+         - Peer 4: 
+             - Status: synced
+             - Host: 0000:0000:0000:0000:0000:ffff:188.40.182.209
+             - Best Block: 1818686
+             - Tasks: no tasks
+         - Peer 5: 
+             - Status: synced
+             - Host: 0000:0000:0000:0000:0000:ffff:195.181.243.154
+             - Best Block: 1818686
+             - Tasks: no tasks
+         - Peer 6: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:143.110.191.13
+             - Best Block: 1818686
+             - Tasks: no tasks
+         - Peer 7: 
+             - Status: synced
+             - Host: 0000:0000:0000:0000:0000:ffff:188.40.185.145
+             - Best Block: 1818686
+             - Tasks: no tasks
+         - Peer 8: 
+             - Status: synced
+             - Host: 0000:0000:0000:0000:0000:ffff:54.218.218.43
+             - Best Block: 1818686
+             - Tasks: no tasks
+         - Peer 9: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:212.24.110.163
+             - Best Block: 1818686
+             - Tasks: no tasks
+         - Peer 10: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:5.183.95.193
+             - Best Block: 1818686
+             - Tasks: no tasks
+
+     - Bitcoin Cash: 
+         - State: Syncing-5
+         - Synced Until: 18 sep. 2014, 02:08
+         - Syncing Peer: 76.64.165.78
+         - Derivation: bip44
+         - Peer 1: 
+             - Status: not synced
+             - Host: 76.64.165.78
+             - Best Block: 778999
+             - Tasks: 
+                 - Bitcoincore.Getmerkleblockstask: minMerkleBlocksCount: 500.0; minTransactionsCount: 50000.0; minTransactionsSize: 100000.0
+         - Peer 2: 
+             - Status: not synced
+             - Host: 4.246.195.240
+             - Best Block: 778999
+             - Tasks: no tasks
+         - Peer 3: 
+             - Status: not synced
+             - Host: 144.126.140.191
+             - Best Block: 778445
+             - Tasks: no tasks
+         - Peer 4: 
+             - Status: not synced
+             - Host: 134.209.120.206
+             - Best Block: 778999
+             - Tasks: no tasks
+         - Peer 5: 
+             - Status: not synced
+             - Host: 67.43.230.42
+             - Best Block: 778999
+             - Tasks: no tasks
+         - Peer 6: 
+             - Status: not synced
+             - Host: 3.235.147.47
+             - Best Block: 778999
+             - Tasks: no tasks
+         - Peer 7: 
+             - Status: not synced
+             - Host: 18.117.148.228
+             - Best Block: 740238
+             - Tasks: no tasks
+         - Peer 8: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:67.43.230.42
+             - Best Block: 778999
+             - Tasks: no tasks
+         - Peer 9: 
+             - Status: not synced
+             - Host: 144.126.142.227
+             - Best Block: 778445
+             - Tasks: no tasks
+         - Peer 10: 
+             - Status: not synced
+             - Host: 13.251.162.94
+             - Best Block: 778999
+             - Tasks: no tasks
+
+     - Bitcoin Cash: 
+         - State: Syncing-5
+         - Synced Until: 15 sep. 2014, 22:54
+         - Syncing Peer: 76.64.165.78
+         - Derivation: bip44
+         - Peer 1: 
+             - Status: not synced
+             - Host: 76.64.165.78
+             - Best Block: 778999
+             - Tasks: 
+                 - Bitcoincore.Getmerkleblockstask: minMerkleBlocksCount: 500.0; minTransactionsCount: 50000.0; minTransactionsSize: 100000.0
+         - Peer 2: 
+             - Status: not synced
+             - Host: 144.126.140.191
+             - Best Block: 778445
+             - Tasks: no tasks
+         - Peer 3: 
+             - Status: not synced
+             - Host: 134.209.120.206
+             - Best Block: 778999
+             - Tasks: no tasks
+         - Peer 4: 
+             - Status: not synced
+             - Host: 4.246.195.240
+             - Best Block: 778999
+             - Tasks: no tasks
+         - Peer 5: 
+             - Status: not synced
+             - Host: 67.43.230.42
+             - Best Block: 778999
+             - Tasks: no tasks
+         - Peer 6: 
+             - Status: not synced
+             - Host: 3.235.147.47
+             - Best Block: 778999
+             - Tasks: no tasks
+         - Peer 7: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:67.43.230.42
+             - Best Block: 778999
+             - Tasks: no tasks
+         - Peer 8: 
+             - Status: not synced
+             - Host: 0000:0000:0000:0000:0000:ffff:35.209.186.110
+             - Best Block: 778999
+             - Tasks: no tasks
+         - Peer 9: 
+             - Status: not synced
+             - Host: 34.162.92.172
+             - Best Block: 778999
+             - Tasks: no tasks
+         - Peer 10: 
+             - Status: not synced
+             - Host: 13.251.162.94
+             - Best Block: 778999
+             - Tasks: no tasks
+
+     - Bitcoin: 
+         - State: Syncing-4
+         - Synced Until: 17 ago. 2014, 03:30
+         - Syncing Peer: 142.198.179.214
+         - Derivation: bip44
+         - Peer 1: 
+             - Status: not synced
+             - Host: 3.83.51.207
+             - Best Block: 775583
+             - Tasks: 
+                 - Bitcoincore.Requesttransactionstask: hashesCount: 1; receivedTransactionsCount: 0
+         - Peer 2: 
+             - Status: not synced
+             - Host: 142.198.179.214
+             - Best Block: 775583
+             - Tasks: 
+                 - Bitcoincore.Getmerkleblockstask: minMerkleBlocksCount: 500.0; minTransactionsCount: 50000.0; minTransactionsSize: 100000.0
+                 - Bitcoincore.Getblockhashestask: expectedHashesMinCount: 500; allowedIdleTime: 10.0
+         - Peer 3: 
+             - Status: not synced
+             - Host: 174.138.35.229
+             - Best Block: 775583
+             - Tasks: no tasks
+         - Peer 4: 
+             - Status: not synced
+             - Host: 74.80.34.180
+             - Best Block: 775583
+             - Tasks: no tasks
+         - Peer 5: 
+             - Status: not synced
+             - Host: 162.247.90.181
+             - Best Block: 775583
+             - Tasks: no tasks
+         - Peer 6: 
+             - Status: not synced
+             - Host: 159.89.182.64
+             - Best Block: 775583
+             - Tasks: no tasks
+         - Peer 7: 
+             - Status: not synced
+             - Host: 88.14.122.137
+             - Best Block: 775583
+             - Tasks: no tasks
+         - Peer 8: 
+             - Status: not synced
+             - Host: 89.233.207.67
+             - Best Block: 775584
+             - Tasks: no tasks
+         - Peer 9: 
+             - Status: not synced
+             - Host: 148.251.48.231
+             - Best Block: 775584
+             - Tasks: no tasks
+         - Peer 10: 
+             - Status: not synced
+             - Host: 64.225.74.251
+             - Best Block: 775584
+             - Tasks: no tasks
+
+     - Arbitrum: 
+         - Last Block Height: 59119776
+         - Sync State: synced
+         - Blockchain Source: RPC API arb1.arbitrum.io
+         - Transactions Source: Infura.io, Etherscan.io
+
+     - Avalanche: 
+         - Last Block Height: 25995311
+         - Sync State: synced
+         - Blockchain Source: RPC API api.avax.network
+         - Transactions Source: Infura.io, Etherscan.io
+
+     - Bnb Smart Chain: 
+         - Last Block Height: 25490413
+         - Sync State: synced
+         - Blockchain Source: RPC API bsc-dataseed.binance.org, bsc-dataseed1.binance.org, bsc-dataseed2.binance.org, bsc-dataseed3.binance.org, bsc-dataseed4.binance.org
+         - Transactions Source: Infura.io, Etherscan.io
+
+     - Ethereum: 
+         - Last Block Height: 16584439
+         - Sync State: synced
+         - Blockchain Source: RPC WebSocket mainnet.infura.io
+         - Transactions Source: Infura.io, Etherscan.io
+
+     - Gnosis: 
+         - Last Block Height: 26374887
+         - Sync State: synced
+         - Blockchain Source: RPC API rpc.gnosischain.com
+         - Transactions Source: Infura.io, Etherscan.io
+
+     - Optimism: 
+         - Last Block Height: 72947203
+         - Sync State: synced
+         - Blockchain Source: RPC API mainnet.optimism.io
+         - Transactions Source: Infura.io, Etherscan.io
+
+     - Polygon: 
+         - Last Block Height: 39058847
+         - Sync State: synced
+         - Blockchain Source: RPC API polygon.llamarpc.com
+         - Transactions Source: Infura.io, Etherscan.io
+
+     - Binance Chain: 
+         - Synced Until: 08 feb. 2023, 08:45
+         - Last Block Height: 295496330
+         - Sync State: synced
+         - Rpc Host: https://dex.binance.org
