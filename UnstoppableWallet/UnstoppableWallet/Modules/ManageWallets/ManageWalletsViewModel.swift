@@ -1,10 +1,10 @@
-//import Foundation
-//import MarketKit
-//import RxCocoa
-//import RxRelay
-//import RxSwift
+// import Foundation
+// import MarketKit
+// import RxCocoa
+// import RxRelay
+// import RxSwift
 //
-//class ManageWalletsViewModel {
+// class ManageWalletsViewModel {
 //    private let service: ManageWalletsService
 //    private let disposeBag = DisposeBag()
 //
@@ -40,9 +40,9 @@
 //        viewItemsRelay.accept(items.map { viewItem(item: $0) })
 //        notFoundVisibleRelay.accept(items.isEmpty)
 //    }
-//}
+// }
 //
-//extension ManageWalletsViewModel {
+// extension ManageWalletsViewModel {
 //    var viewItemsDriver: Driver<[ViewItem]> {
 //        viewItemsRelay.asDriver()
 //    }
@@ -103,9 +103,9 @@
 //            self?.service.set(filter: filter)
 //        }
 //    }
-//}
+// }
 //
-//extension ManageWalletsViewModel {
+// extension ManageWalletsViewModel {
 //    struct ViewItem {
 //        let uid: String
 //        let coin: Coin
@@ -131,4 +131,4 @@
 //        let value: String
 //        let explorerUrl: String?
 //    }
-//}
+// }

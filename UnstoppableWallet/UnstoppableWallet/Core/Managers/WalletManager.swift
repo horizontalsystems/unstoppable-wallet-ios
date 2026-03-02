@@ -71,7 +71,7 @@ extension WalletManager {
     var activeWalletDataUpdatedObservable: Observable<WalletData> {
         activeWalletDataRelay.asObservable()
     }
-    
+
     var activeWalletDataUpdatedPublisher: AnyPublisher<WalletData, Never> {
         activeWalletDataSubject.eraseToAnyPublisher()
     }

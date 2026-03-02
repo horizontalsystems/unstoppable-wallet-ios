@@ -21,7 +21,7 @@ enum ManageWalletsModule {
 //    }
 }
 
-//struct ManageWalletsView: UIViewControllerRepresentable {
+// struct ManageWalletsView: UIViewControllerRepresentable {
 //    typealias UIViewControllerType = UIViewController
 //
 //    let account: Account
@@ -31,4 +31,4 @@ enum ManageWalletsModule {
 //    }
 //
 //    func updateUIViewController(_: UIViewController, context _: Context) {}
-//}
+// }

@@ -2,7 +2,7 @@ import Combine
 import Foundation
 import MarketKit
 
-class ManageWalletsViewModel2: ObservableObject {
+class ManageWalletsViewModel: ObservableObject {
     private let account: Account
     private let walletManager = Core.shared.walletManager
     private let restoreSettingsService: RestoreSettingsService
@@ -38,12 +38,12 @@ class ManageWalletsViewModel2: ObservableObject {
     init(account: Account, restoreSettingsService: RestoreSettingsService) {
         self.account = account
         self.restoreSettingsService = restoreSettingsService
-        self.tokenInfoProvider = ManageWalletsTokenInfoProvider(restoreSettingsService: restoreSettingsService)
+        tokenInfoProvider = ManageWalletsTokenInfoProvider(restoreSettingsService: restoreSettingsService)
 
         wallets = Set(walletManager.activeWallets)
 
         let supported = (try? Core.shared.marketKit.blockchains(uids: BlockchainType.supported.map(\.uid))) ?? []
-        
+
         blockchains = supported.sorted(by: { $0.type.order < $1.type.order })
         setupBindings()
         reloadTokens()
@@ -83,7 +83,7 @@ class ManageWalletsViewModel2: ObservableObject {
     private func reloadTokens() {
         let enabledTokens = wallets
             .map(\.token)
-            
+
         let fetched = tokenFetcher.fetch(
             filter: filter,
             account: account,
@@ -95,7 +95,7 @@ class ManageWalletsViewModel2: ObservableObject {
         tokens = sorted
         reloadItems()
     }
-    
+
     private func reloadItems() {
         var enabled: [Int: Bool] = [:]
         let items = tokens.map { token in
@@ -104,7 +104,7 @@ class ManageWalletsViewModel2: ObservableObject {
 
             return item
         }
-        
+
         DispatchQueue.main.async {
             self.items = items
             self.enabledTokens = enabled
@@ -142,7 +142,7 @@ class ManageWalletsViewModel2: ObservableObject {
     }
 }
 
-extension ManageWalletsViewModel2 {
+extension ManageWalletsViewModel {
     var blockchainFilterIndex: Int {
         guard let blockchainFilter, let index = blockchains.firstIndex(of: blockchainFilter) else { // all
             return 0
@@ -150,7 +150,7 @@ extension ManageWalletsViewModel2 {
 
         return index + 1
     }
-    
+
     func setBlockchainFilter(index: Int) {
         if index <= 0 {
             blockchainFilter = nil
@@ -193,7 +193,7 @@ extension ManageWalletsViewModel2 {
     }
 }
 
-extension ManageWalletsViewModel2 {
+extension ManageWalletsViewModel {
     struct Item: Identifiable, Equatable, Hashable {
         let token: Token
         let hasInfo: Bool

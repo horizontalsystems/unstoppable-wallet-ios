@@ -87,7 +87,7 @@ struct ListForEach<Content: View, Item: Hashable>: View {
         }
         .onMove(perform: onMove)
     }
-    
+
     @ViewBuilder private func view(_ item: Item) -> some View {
         VStack(spacing: 0) {
             if items.first == item {

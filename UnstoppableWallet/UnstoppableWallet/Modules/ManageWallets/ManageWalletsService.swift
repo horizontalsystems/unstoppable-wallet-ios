@@ -1,9 +1,9 @@
-//import EvmKit
-//import Foundation
-//import MarketKit
-//import Combine
+// import EvmKit
+// import Foundation
+// import MarketKit
+// import Combine
 //
-//class ManageWalletsService {
+// class ManageWalletsService {
 //    private var queue = DispatchQueue(label: "\(AppConfig.label).manage-wallets-service.tokens", qos: .userInitiated)
 //
 //    private let account: Account
@@ -202,9 +202,9 @@
 //        let wallet = Wallet(token: token, account: account)
 //        walletManager.save(wallets: [wallet])
 //    }
-//}
+// }
 //
-//extension ManageWalletsService {
+// extension ManageWalletsService {
 //    var itemsObservable: Observable<[Item]> {
 //        itemsRelay.asObservable()
 //    }
@@ -275,9 +275,9 @@
 //            return nil
 //        }
 //    }
-//}
+// }
 //
-//extension ManageWalletsService {
+// extension ManageWalletsService {
 //    struct Item {
 //        let token: Token
 //        let enabled: Bool
@@ -295,4 +295,4 @@
 //        case birthdayHeight(height: Int)
 //        case contractAddress(value: String, explorerUrl: String?)
 //    }
-//}
+// }

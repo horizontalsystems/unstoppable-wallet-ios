@@ -1,5 +1,5 @@
-import MarketKit
 import Combine
+import MarketKit
 
 protocol ICoinToggleViewModel {
     var viewItemsPublisher: AnyPublisher<[CoinToggleViewModel.ViewItem], Never> { get }

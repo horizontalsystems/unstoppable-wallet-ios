@@ -1,7 +1,6 @@
 import Foundation
 import HsToolKit
 import MarketKit
-import RxSwift
 import TronKit
 
 class AddTronTokenBlockchainService {
@@ -33,57 +32,38 @@ extension AddTronTokenBlockchainService: IAddTokenBlockchainService {
         TokenQuery(blockchainType: blockchain.type, tokenType: .eip20(address: reference))
     }
 
-    func tokenSingle(reference: String) -> Single<Token> {
+    func token(reference: String) async throws -> Token {
         guard let address = try? TronKit.Address(address: reference) else {
-            return Single.error(TokenError.invalidAddress)
+            throw TokenError.invalidAddress
         }
 
         let tokenQuery = tokenQuery(reference: reference)
-        let blockchain = blockchain
         let apiKey = AppConfig.tronGridApiKey
 
-        return Single<Token>.create { observer in
-            let task = Task { [weak self] in
-                guard let strongSelf = self else {
-                    observer(.error(TokenError.disposableError))
-                    return
-                }
+        do {
+            async let name = Trc20DataProvider.fetchName(networkManager: networkManager, network: network, apiKey: apiKey, contractAddress: address)
+            async let symbol = Trc20DataProvider.fetchSymbol(networkManager: networkManager, network: network, apiKey: apiKey, contractAddress: address)
+            async let decimals = Trc20DataProvider.fetchDecimals(networkManager: networkManager, network: network, apiKey: apiKey, contractAddress: address)
 
-                do {
-                    async let name = try Trc20DataProvider.fetchName(networkManager: strongSelf.networkManager, network: strongSelf.network, apiKey: apiKey, contractAddress: address)
-                    async let symbol = try Trc20DataProvider.fetchSymbol(networkManager: strongSelf.networkManager, network: strongSelf.network, apiKey: apiKey, contractAddress: address)
-                    async let decimals = try Trc20DataProvider.fetchDecimals(networkManager: strongSelf.networkManager, network: strongSelf.network, apiKey: apiKey, contractAddress: address)
-
-                    let token = try await Token(
-                        coin: Coin(uid: tokenQuery.customCoinUid, name: name, code: symbol),
-                        blockchain: blockchain,
-                        type: tokenQuery.tokenType,
-                        decimals: decimals
-                    )
-
-                    observer(.success(token))
-                } catch {
-                    print("ERROR: \(error)")
-                    observer(.error(TokenError.notFound(blockchainName: blockchain.name)))
-                }
-            }
-
-            return Disposables.create {
-                task.cancel()
-            }
+            return try await Token(
+                coin: Coin(uid: tokenQuery.customCoinUid, name: name, code: symbol),
+                blockchain: blockchain,
+                type: tokenQuery.tokenType,
+                decimals: decimals
+            )
+        } catch {
+            throw TokenError.notFound(blockchainName: blockchain.name)
         }
     }
 }
 
 extension AddTronTokenBlockchainService {
     enum TokenError: LocalizedError {
-        case disposableError
         case invalidAddress
         case notFound(blockchainName: String)
 
         var errorDescription: String? {
             switch self {
-            case .disposableError: return ""
             case .invalidAddress: return "add_token.invalid_contract_address".localized
             case let .notFound(blockchainName): return "add_token.contract_address_not_found".localized(blockchainName)
             }

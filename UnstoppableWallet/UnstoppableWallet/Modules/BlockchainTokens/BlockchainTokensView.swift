@@ -1,5 +1,5 @@
-import UIKit
 import Combine
+import UIKit
 
 class BlockchainTokensView {
     private let viewModel: BlockchainTokensViewModel

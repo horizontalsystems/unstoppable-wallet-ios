@@ -1,8 +1,8 @@
-import SwiftUI
 import MarketKit
+import SwiftUI
 
 struct ManageWalletsView: View {
-    @StateObject var viewModel: ManageWalletsViewModel2
+    @StateObject var viewModel: ManageWalletsViewModel
 
     @State private var path = NavigationPath()
     @Binding var isPresented: Bool
@@ -10,11 +10,11 @@ struct ManageWalletsView: View {
 
     init(account: Account, isPresented: Binding<Bool>) {
         let service = RestoreSettingsService(manager: Core.shared.restoreSettingsManager)
-        _viewModel = .init(wrappedValue: ManageWalletsViewModel2(account: account, restoreSettingsService: service))
-        
+        _viewModel = .init(wrappedValue: ManageWalletsViewModel(account: account, restoreSettingsService: service))
+
         _isPresented = isPresented
     }
-    
+
     var body: some View {
         ThemeNavigationStack(path: $path) {
             ThemeView(style: .list) {
@@ -30,7 +30,7 @@ struct ManageWalletsView: View {
                             }
                         )
                     )
-                    
+
                     if viewModel.items.isEmpty {
                         PlaceholderViewNew(icon: "warning_filled", subtitle: "manage_wallets.not_found".localized)
                     } else {
@@ -47,8 +47,32 @@ struct ManageWalletsView: View {
                         isPresented = false
                     }
                 }
+
+                if viewModel.canAddToken {
+                    ToolbarItem(placement: .primaryAction) {
+                        Button(action: {
+                            openAddToken()
+                        }) {
+                            Image(systemName: "plus")
+                        }
+                    }
+                }
             }
             .navigationTitle("manage_wallets.title".localized)
         }
+    }
+
+    private func openAddToken() {
+        guard let (account, items) = AddTokenModule.items() else {
+            return
+        }
+
+        let viewModel = AddTokenViewModel(account: account, items: items, coinManager: Core.shared.coinManager, walletManager: Core.shared.walletManager)
+
+        Coordinator.shared.present { isPresented in
+            AddTokenView(viewModel: viewModel, isPresented: isPresented)
+        }
+
+        stat(page: .coinManager, event: .open(page: .addToken))
     }
 }

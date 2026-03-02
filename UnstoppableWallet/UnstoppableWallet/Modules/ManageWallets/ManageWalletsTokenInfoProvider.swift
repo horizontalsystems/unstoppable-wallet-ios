@@ -68,7 +68,7 @@ extension ManageWalletsTokenInfoProvider {
             break
         }
 
-        if isEnabled && !token.blockchainType.restoreSettingTypes.isEmpty {
+        if isEnabled, !token.blockchainType.restoreSettingTypes.isEmpty {
             return true
         }
 
