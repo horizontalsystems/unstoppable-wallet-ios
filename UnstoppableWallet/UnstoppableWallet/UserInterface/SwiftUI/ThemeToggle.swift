@@ -8,7 +8,7 @@ struct ThemeToggle: View {
         self.isOn = isOn
         self.style = style
     }
-    
+
     init(isOn: Bool, style: ThemeToggleStyle, onToggle: @escaping (Bool) -> Void) {
         self.isOn = Binding(
             get: { isOn },

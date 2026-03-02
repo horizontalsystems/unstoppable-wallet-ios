@@ -9,7 +9,7 @@ struct InnerHeightPreferenceKey: PreferenceKey {
 
 struct LeveledHeightPreferenceKey: PreferenceKey {
     static var defaultValue: [Int: CGFloat] = [:]
-    
+
     static func reduce(value: inout [Int: CGFloat], nextValue: () -> [Int: CGFloat]) {
         value.merge(nextValue()) { _, new in new }
     }

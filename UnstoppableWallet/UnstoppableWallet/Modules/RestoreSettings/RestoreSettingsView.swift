@@ -1,9 +1,9 @@
+import Combine
 import Foundation
 import MarketKit
 import MoneroKit
 import ZanoKit
 import ZcashLightClientKit
-import Combine
 
 class RestoreSettingsView {
     private let viewModel: RestoreSettingsViewModel

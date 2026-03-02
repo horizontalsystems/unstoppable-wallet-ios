@@ -1,131 +1,180 @@
+import Combine
+import Foundation
 import MarketKit
-import RxCocoa
-import RxRelay
-import RxSwift
 
-class AddTokenViewModel {
-    private let service: AddTokenService
-    private let disposeBag = DisposeBag()
+class AddTokenViewModel: ObservableObject {
+    private let account: Account
+    private let items: [AddTokenModule.Item]
+    private let coinManager: CoinManager
+    private let walletManager: WalletManager
 
-    private let blockchainRelay = BehaviorRelay<String>(value: "")
-    private let loadingRelay = BehaviorRelay<Bool>(value: false)
-    private let viewItemRelay = BehaviorRelay<ViewItem?>(value: nil)
-    private let buttonEnabledRelay = BehaviorRelay<Bool>(value: false)
-    private let placeholderRelay = BehaviorRelay<String>(value: "")
-    private let cautionRelay = BehaviorRelay<Caution?>(value: nil)
-    private let finishRelay = PublishRelay<Void>()
+    private var fetchTask: Task<Void, Never>?
 
-    init(service: AddTokenService) {
-        self.service = service
+    @Published private(set) var state: State = .idle
+    @Published private(set) var currentBlockchainItem: CurrentBlockchainItem
+    @Published var reference: String = ""
 
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
-        subscribe(disposeBag, service.currentBlockchainItemObservable) { [weak self] in self?.sync(currentBlockchainItem: $0) }
+    private var cancellables = Set<AnyCancellable>()
 
-        sync(state: service.state)
-        sync(currentBlockchainItem: service.currentBlockchainItem)
+    private let finishSubject = PassthroughSubject<Void, Never>()
+    var finishPublisher: AnyPublisher<Void, Never> {
+        finishSubject.eraseToAnyPublisher()
     }
 
-    private func sync(currentBlockchainItem: AddTokenService.CurrentBlockchainItem) {
-        blockchainRelay.accept(currentBlockchainItem.blockchain.name)
-        placeholderRelay.accept(currentBlockchainItem.placeholder)
+    init(account: Account, items: [AddTokenModule.Item], coinManager: CoinManager, walletManager: WalletManager) {
+        let sortedItems = items.sorted(by: { $0.blockchain.type.order < $1.blockchain.type.order })
+
+        self.account = account
+        self.items = sortedItems
+        self.coinManager = coinManager
+        self.walletManager = walletManager
+
+        currentBlockchainItem = CurrentBlockchainItem(item: sortedItems[0])
+
+        $reference
+            .debounce(for: .milliseconds(300), scheduler: DispatchQueue.main)
+            .removeDuplicates()
+            .sink { [weak self] _ in
+                self?.syncState()
+            }
+            .store(in: &cancellables)
     }
 
-    private func sync(state: AddTokenService.State) {
+    private func syncState() {
+        fetchTask?.cancel()
+        fetchTask = nil
+
+        let trimmed = reference.trimmingCharacters(in: .whitespaces)
+
+        guard !trimmed.isEmpty else {
+            state = .idle
+            return
+        }
+
+        let service = items.by(currentBlockchainItem.blockchain).service
+
+        do {
+            try service.validate(reference: trimmed)
+        } catch {
+            state = .failed(error: error)
+            return
+        }
+
+        let tokenQuery = service.tokenQuery(reference: trimmed)
+
+        if let existingToken = try? coinManager.token(query: tokenQuery) {
+            state = .alreadyExists(token: existingToken)
+            return
+        }
+
+        state = .loading
+
+        fetchTask = Task { [weak self, service, trimmed] in
+            do {
+                let token = try await service.token(reference: trimmed)
+                await MainActor.run { [weak self] in self?.state = .fetched(token: token) }
+            } catch {
+                if !Task.isCancelled {
+                    await MainActor.run { [weak self] in self?.state = .failed(error: error) }
+                }
+            }
+        }
+    }
+}
+
+extension AddTokenViewModel {
+    var canAddToken: Bool {
+        account.type.canAddTokens
+    }
+
+    var blockchains: [Blockchain] {
+        items.map(\.blockchain)
+    }
+
+    var placeholder: String {
+        currentBlockchainItem.placeholder
+    }
+
+    var loading: Bool {
+        if case .loading = state { return true }
+        return false
+    }
+
+    var buttonEnabled: Bool {
+        if case .fetched = state { return true }
+        return false
+    }
+
+    var cautionState: CautionState {
         switch state {
-        case .idle:
-            loadingRelay.accept(false)
-            viewItemRelay.accept(nil)
-            buttonEnabledRelay.accept(false)
-            cautionRelay.accept(nil)
-        case .loading:
-            loadingRelay.accept(true)
-            viewItemRelay.accept(nil)
-            buttonEnabledRelay.accept(false)
-            cautionRelay.accept(nil)
-        case let .alreadyExists(token):
-            loadingRelay.accept(false)
-            viewItemRelay.accept(viewItem(token: token))
-            buttonEnabledRelay.accept(false)
-            cautionRelay.accept(Caution(text: "add_token.already_added".localized, type: .warning))
-        case let .fetched(token):
-            loadingRelay.accept(false)
-            viewItemRelay.accept(viewItem(token: token))
-            buttonEnabledRelay.accept(true)
-            cautionRelay.accept(nil)
+        case .alreadyExists:
+            return .caution(Caution(text: "add_token.already_added".localized, type: .warning))
         case let .failed(error):
-            loadingRelay.accept(false)
-            viewItemRelay.accept(nil)
-            buttonEnabledRelay.accept(false)
-            cautionRelay.accept(Caution(text: error.convertedError.localizedDescription, type: .error))
+            return .caution(Caution(text: error.convertedError.localizedDescription, type: .error))
+        default:
+            return .none
         }
     }
 
-    private func viewItem(token: Token) -> ViewItem {
-        ViewItem(
-            name: token.coin.name,
-            code: token.coin.code,
-            decimals: String(token.decimals)
-        )
+    var viewItem: ViewItem? {
+        switch state {
+        case let .alreadyExists(token):
+            return ViewItem(name: token.coin.name, code: token.coin.code, decimals: String(token.decimals))
+        case let .fetched(token):
+            return ViewItem(name: token.coin.name, code: token.coin.code, decimals: String(token.decimals))
+        default:
+            return nil
+        }
+    }
+
+    func set(blockchain: Blockchain) {
+        currentBlockchainItem = CurrentBlockchainItem(item: items.by(blockchain))
+        syncState()
+    }
+
+    func save() {
+        guard case let .fetched(token) = state else {
+            return
+        }
+
+        let wallet = Wallet(token: token, account: account)
+        walletManager.save(wallets: [wallet])
+
+        stat(page: .addToken, event: .addToken(token: token))
+        finishSubject.send()
     }
 }
 
 extension AddTokenViewModel {
-    var blockchainDriver: Driver<String> {
-        blockchainRelay.asDriver()
+    enum State {
+        case idle
+        case loading
+        case alreadyExists(token: Token)
+        case fetched(token: Token)
+        case failed(error: Error)
     }
 
-    var loadingDriver: Driver<Bool> {
-        loadingRelay.asDriver()
-    }
-
-    var viewItemDriver: Driver<ViewItem?> {
-        viewItemRelay.asDriver()
-    }
-
-    var buttonEnabledDriver: Driver<Bool> {
-        buttonEnabledRelay.asDriver()
-    }
-
-    var placeholderDriver: Driver<String> {
-        placeholderRelay.asDriver()
-    }
-
-    var cautionDriver: Driver<Caution?> {
-        cautionRelay.asDriver()
-    }
-
-    var finishSignal: Signal<Void> {
-        finishRelay.asSignal()
-    }
-
-    var blockchainViewItems: [SelectorModule.ViewItem] {
-        service.blockchainItems.map { item in
-            SelectorModule.ViewItem(
-                image: .url(item.blockchain.type.imageUrl, placeholder: "placeholder_rectangle_32"),
-                title: item.blockchain.name,
-                selected: item.current
-            )
-        }
-    }
-
-    func onSelectBlockchain(index: Int) {
-        service.setBlockchain(index: index)
-    }
-
-    func onEnter(reference: String?) {
-        service.set(reference: reference)
-    }
-
-    func onTapButton() {
-        service.save()
-        finishRelay.accept(())
-    }
-}
-
-extension AddTokenViewModel {
     struct ViewItem {
         let name: String
         let code: String
         let decimals: String
+
+        var fields: [(String, String)] {
+            [
+                ("add_token.coin_name".localized, name),
+                ("add_token.symbol".localized, code),
+                ("add_token.decimals".localized, decimals),
+            ]
+        }
+    }
+
+    struct CurrentBlockchainItem {
+        let blockchain: Blockchain
+        let placeholder: String
+
+        init(item: AddTokenModule.Item) {
+            blockchain = item.blockchain
+            placeholder = item.service.placeholder
+        }
     }
 }

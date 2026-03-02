@@ -1,16 +1,16 @@
-import SwiftUI
 import MarketKit
+import SwiftUI
 
 struct ManageWalletListView: View {
-    @ObservedObject var viewModel: ManageWalletsViewModel2
-    
+    @ObservedObject var viewModel: ManageWalletsViewModel
+
     var body: some View {
         ThemeList(viewModel.items) { item in
             view(item: item, forceToggleOn: nil)
         }
     }
-    
-    @ViewBuilder private func view(item: ManageWalletsViewModel2.Item, forceToggleOn: Bool? = nil) -> some View {
+
+    @ViewBuilder private func view(item: ManageWalletsViewModel.Item, forceToggleOn _: Bool? = nil) -> some View {
         Cell(
             left: {
                 CoinIconView(coin: item.token.coin)
@@ -35,12 +35,12 @@ struct ManageWalletListView: View {
             }
         )
     }
-    
-    private func showInfo(item: ManageWalletsViewModel2.Item) {
+
+    private func showInfo(item: ManageWalletsViewModel.Item) {
         guard let infoItem = viewModel.showInfo(item: item) else {
             return
         }
-        
+
         switch infoItem.type {
         case .derivation: showDerivation(coin: infoItem.token.coin)
         case let .birthdayHeight(height): showBirthdayHeight(coin: infoItem.token.coin, height: height)
@@ -68,13 +68,13 @@ struct ManageWalletListView: View {
             ])
         }
     }
-        
+
     private func showBirthdayHeight(coin: Coin, height: Int) {
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
             BottomSheetView(items: [
                 .title(icon: ComponentImage(url: coin.imageUrl), title: coin.code),
                 .list(items: [
-                    .init(title: "birthday_height.title".localized, value: height.description)
+                    .init(title: "birthday_height.title".localized, value: height.description),
                 ]),
                 .buttonGroup(.init(buttons: [
                     .init(style: .gray, title: "button.close".localized) {
@@ -98,12 +98,7 @@ struct ManageWalletListView: View {
 //                )
 //            }
 //        }
-    
-        
 }
-
-
-
 
 //        private func rootElement(index: Int, viewItem: ManageWalletsViewModel.ViewItem, forceToggleOn: Bool? = nil) -> CellBuilderNew.CellElement {
 //            .hStack([
