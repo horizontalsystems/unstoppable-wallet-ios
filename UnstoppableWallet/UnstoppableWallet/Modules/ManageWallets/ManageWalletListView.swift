@@ -1,8 +1,11 @@
+import Kingfisher
 import MarketKit
 import SwiftUI
 
 struct ManageWalletListView: View {
     @ObservedObject var viewModel: ManageWalletsViewModel
+
+    @Environment(\.openURL) private var openURL
 
     var body: some View {
         ThemeList(viewModel.items) { item in
@@ -21,7 +24,7 @@ struct ManageWalletListView: View {
             right: {
                 HStack(spacing: .margin12) {
                     if item.hasInfo {
-                        IconButton(icon: "info_filled", style: .secondary, mode: .transparent, size: .small) {
+                        IconButton(icon: "information", style: .secondary, mode: .transparent, size: .small) {
                             showInfo(item: item)
                         }
                     }
@@ -42,24 +45,27 @@ struct ManageWalletListView: View {
         }
 
         switch infoItem.type {
-        case .derivation: showDerivation(coin: infoItem.token.coin)
+        case .derivation, .bitcoinCashCoinType: showDescription(coin: infoItem.token.coin, type: infoItem.type)
         case let .birthdayHeight(height): showBirthdayHeight(coin: infoItem.token.coin, height: height)
-        default: ()
-            //        case .birthdayHeight(let coin, let height):
-            //            showBirthdayHeightBottomSheet(coin: coin, height: height)
-            //
-            //        case .contractAddress(let coin, let blockchainImageUrl, let value, let explorerUrl):
-            //            showContractBottomSheet(coin: coin, blockchainImageUrl: blockchainImageUrl, value: value, explorerUrl: explorerUrl)
-            //        }
+        case let .contractAddress(value, explorerUrl): showContract(token: infoItem.token, value: value, explorerUrl: explorerUrl)
         }
     }
 
-    private func showDerivation(coin: Coin) {
+    private func showDescription(coin: Coin, type: ManageWalletsTokenInfoProvider.InfoType) {
+        let text: String
+        switch type {
+        case .derivation:
+            text = "manage_wallets.derivation_description".localized(coin.name, AppConfig.appName, coin.name)
+        case .bitcoinCashCoinType:
+            text = "manage_wallets.bitcoin_cash_coin_type_description".localized(AppConfig.appName)
+        default:
+            return
+        }
+
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
-            let coinName = coin.name
             BottomSheetView(items: [
                 .title(icon: ComponentImage(url: coin.imageUrl), title: coin.code),
-                .footer(text: "manage_wallets.derivation_description".localized(coinName, AppConfig.appName, coinName)),
+                .footer(text: text),
                 .buttonGroup(.init(buttons: [
                     .init(style: .gray, title: "button.close".localized) {
                         isPresented.wrappedValue = false
@@ -74,7 +80,7 @@ struct ManageWalletListView: View {
             BottomSheetView(items: [
                 .title(icon: ComponentImage(url: coin.imageUrl), title: coin.code),
                 .list(items: [
-                    .init(title: "birthday_height.title".localized, value: height.description),
+                    .init(title: "birthday_height.title".localized, value: ComponentCopyableValue(height.description)),
                 ]),
                 .buttonGroup(.init(buttons: [
                     .init(style: .gray, title: "button.close".localized) {
@@ -85,58 +91,52 @@ struct ManageWalletListView: View {
         }
     }
 
-//
-//        private func showContractBottomSheet(coin: Coin, blockchainImageUrl: String, value: String, explorerUrl: String?) {
-//            Coordinator.shared.present(type: .bottomSheet) { isPresented in
-//                BottomSheetView(
-//                    image: .remote(url: coin.imageUrl, placeholder: coin.placeholderImageName),
-//                    title: coin.code,
-//                    subtitle: coin.name,
-//                    items: [
-//                        .contractAddress(imageUrl: blockchainImageUrl, value: value, explorerUrl: explorerUrl)
-//                    ]
-//                )
-//            }
-//        }
-}
+    private func showContract(token: Token, value: String, explorerUrl: String?) {
+        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+            BottomSheetView(items: [
+                .title(icon: ComponentImage(url: token.coin.imageUrl), title: token.coin.code),
+                .customList(views: [
+                    AnyView(contractRow(token: token, value: value, explorerUrl: explorerUrl)),
+                ]),
+                .buttonGroup(.init(buttons: [
+                    .init(style: .gray, title: "button.close".localized) {
+                        isPresented.wrappedValue = false
+                    },
+                ])),
+            ])
+        }
+    }
 
-//        private func rootElement(index: Int, viewItem: ManageWalletsViewModel.ViewItem, forceToggleOn: Bool? = nil) -> CellBuilderNew.CellElement {
-//            .hStack([
-//                .image32 { component in
-//                    component.imageView.setImage(coin: viewItem.coin, placeholder: viewItem.placeholderImageName)
-//                },
-//                .vStackCentered([
-//                    .hStack([
-//                        .textElement(text: .body(viewItem.coin.code), parameters: .highHugging),
-//                        .margin8,
-//                        .badge { component in
-//                            component.isHidden = viewItem.badge == nil
-//                            component.badgeView.set(style: .small)
-//                            component.badgeView.text = viewItem.badge
-//                        },
-//                        .margin0,
-//                        .text { _ in },
-//                    ]),
-//                    .margin(1),
-//                    .textElement(text: .subhead2(viewItem.coin.name)),
-//                ]),
-//                .secondaryCircleButton { [weak self] component in
-//                    component.isHidden = !viewItem.hasInfo
-//                    component.button.set(image: UIImage(named: "circle_information_20"), style: .transparent)
-//                    component.onTap = {
-//                        self?.viewModel.onTapInfo(index: index)
-//                    }
-//                },
-//                .switch { component in
-//                    if let forceOn = forceToggleOn {
-//                        component.switchView.setOn(forceOn, animated: true)
-//                    } else {
-//                        component.switchView.isOn = viewItem.enabled
-//                    }
-//
-//                    component.onSwitch = { [weak self] enabled in
-//                        self?.onToggle(index: index, enabled: enabled)
-//                    }
-//                },
-//            ])
-//        }
+    @ViewBuilder private func contractRow(token: Token, value: String, explorerUrl: String?) -> some View {
+        Cell(
+            left: {
+                KFImage.url(URL(string: token.blockchain.type.imageUrl))
+                    .resizable()
+                    .frame(width: .iconSize32, height: .iconSize32)
+            },
+            middle: {
+                MiddleTextIcon(text: value)
+            },
+            right: {
+                if let explorerUrl {
+                    Button {
+                        open(url: explorerUrl, statPage: .manageWallets)
+                    } label: {
+                        Image("globe_20").renderingMode(.template)
+                    }
+                    .buttonStyle(SecondaryCircleButtonStyle())
+                }
+            }
+        )
+    }
+
+    private func open(url: String, statPage: StatPage) {
+        guard let url = URL(string: url) else {
+            return
+        }
+
+        openURL(url)
+
+        stat(page: .info, event: .open(page: statPage))
+    }
+}

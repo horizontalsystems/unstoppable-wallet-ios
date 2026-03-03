@@ -35,32 +35,46 @@ enum BSModule {
                 .padding(.vertical, .margin16)
                 .padding(.horizontal, .margin16)
         case let .list(items):
-            VStack(spacing: 0) {
+            listContainer {
                 ForEach(items.indices, id: \.self) { index in
                     listView(item: items[index])
                 }
             }
-            .padding(.vertical, .margin8)
-            .clipShape(RoundedRectangle(cornerRadius: .cornerRadius16, style: .continuous))
-            .overlay(
-                RoundedRectangle(cornerRadius: .cornerRadius16, style: .continuous)
-                    .stroke(Color.themeBlade, lineWidth: .heightOneDp)
-            )
-            .padding(.horizontal, .margin16)
-            .padding(.vertical, .margin8)
+        case let .customList(views):
+            listContainer(insets: .zero) {
+                ForEach(views.indices, id: \.self) { index in
+                    views[index]
+                }
+            }
         case let .buttonGroup(group):
             ButtonGroupView(group: group)
         }
+    }
+
+    private static let listVerticalInsets = EdgeInsets(top: .margin8, leading: 0, bottom: .margin8, trailing: 0)
+
+    private static func listContainer(insets: EdgeInsets = Self.listVerticalInsets, @ViewBuilder content: () -> some View) -> some View {
+        VStack(spacing: 0) {
+            content()
+        }
+        .padding(insets)
+        .clipShape(RoundedRectangle(cornerRadius: .cornerRadius16, style: .continuous))
+        .overlay(
+            RoundedRectangle(cornerRadius: .cornerRadius16, style: .continuous)
+                .stroke(Color.themeBlade, lineWidth: .heightOneDp)
+        )
+        .padding(.horizontal, .margin16)
+        .padding(.vertical, .margin8)
     }
 
     private static func listView(item: ListItem) -> some View {
         Cell(
             style: .secondary,
             middle: {
-                MiddleTextIcon(text: item.title)
+                MiddleTextIcon(text: item.title).styled(item.title)
             },
             right: {
-                RightTextIcon(text: item.value)
+                RightTextIcon(text: item.value).styled(item.value)
             }
         )
     }
@@ -76,6 +90,7 @@ extension BSModule {
         case footer(text: CustomStringConvertible)
         case highlightedDescription(text: String, type: AlertCardView.CardType, style: AlertCardView.Style)
         case list(items: [ListItem])
+        case customList(views: [AnyView])
         case buttonGroup(ButtonGroupViewModel.ButtonGroup)
 
         static func title(icon: CustomStringConvertible? = nil, title: CustomStringConvertible) -> Self {
@@ -113,12 +128,6 @@ struct BottomSheetView: View {
                     BSModule.view(for: items[index])
                 }
             }
-        }
-        .onAppear {
-            print("🎨 [BottomSheet Content \(id)] appeared")
-        }
-        .onDisappear {
-            print("🎨 [BottomSheet Content \(id)] disappeared")
         }
     }
 }

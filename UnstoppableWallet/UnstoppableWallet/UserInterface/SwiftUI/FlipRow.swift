@@ -14,16 +14,10 @@ struct FlipRow: View {
 
     var body: some View {
         if let text = flipData.text(flipped: flipped) {
-            let infoDescription = (title as? SendField.InformedTitle)?.info
             Cell(
                 style: .secondary,
                 middle: {
-                    if let infoDescription {
-                        MiddleTextIcon(text: title)
-                            .modifier(Informed(infoDescription: infoDescription, horizontalPadding: 0))
-                    } else {
-                        MiddleTextIcon(text: title)
-                    }
+                    MiddleTextIcon(text: title).styled(title)
                 },
                 right: {
                     RightMultiText(subtitle: ComponentText(text: text, colorStyle: .primary))

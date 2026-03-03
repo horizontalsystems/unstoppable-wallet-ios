@@ -8,7 +8,7 @@ class EvmSendHelper {
 
         return [
             .fee(
-                title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
+                title: ComponentInformedTitle("fee_settings.network_fee".localized, info: .fee),
                 amountData: amountData
             ),
         ]

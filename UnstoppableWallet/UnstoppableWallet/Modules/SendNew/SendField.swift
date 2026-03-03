@@ -39,17 +39,10 @@ enum SendField {
                 }
             )
         case let .value(title, appValue, currencyValue, formatFull):
-            let infoDescription = (title as? SendField.InformedTitle)?.info
-
             Cell(
                 style: .secondary,
                 middle: {
-                    if let infoDescription {
-                        MiddleTextIcon(text: title)
-                            .modifier(Informed(infoDescription: infoDescription, horizontalPadding: 0))
-                    } else {
-                        MiddleTextIcon(text: title)
-                    }
+                    MiddleTextIcon(text: title).styled(title)
                 },
                 right: {
                     let formatted = (formatFull ? appValue?.formattedFull() : appValue?.formattedShort())
@@ -100,8 +93,6 @@ enum SendField {
             FlipRow(title: title, flipData: feeData)
 
         case let .simpleValue(icon, title, value):
-            let infoDescription = (title as? SendField.InformedTitle)?.info
-
             Cell(
                 style: .secondary,
                 left: {
@@ -110,13 +101,7 @@ enum SendField {
                     }
                 },
                 middle: {
-                    if let infoDescription {
-                        MiddleTextIcon(text: title)
-                            .modifier(Informed(infoDescription: infoDescription, horizontalPadding: 0))
-
-                    } else {
-                        MiddleTextIcon(text: title)
-                    }
+                    MiddleTextIcon(text: title).styled(title)
                 },
                 right: {
                     RightMultiText(subtitle: value.styled(.primary))
@@ -234,20 +219,6 @@ enum SendField {
 }
 
 extension SendField {
-    struct InformedTitle: CustomStringConvertible {
-        let title: String
-        let info: InfoDescription
-
-        var description: String { title }
-
-        init(_ title: String, info: InfoDescription) {
-            self.title = title
-            self.info = info
-        }
-    }
-}
-
-extension SendField {
     static func recipient(_ recipient: String, copyable: Bool = false, blockchainType: BlockchainType) -> Self {
         .recipient(
             title: "swap.recipient".localized,
@@ -274,7 +245,7 @@ extension SendField {
         }
 
         return .simpleValue(
-            title: SendField.InformedTitle("swap.confirmation.minimum_received".localized, info: InfoDescription(
+            title: ComponentInformedTitle("swap.confirmation.minimum_received".localized, info: InfoDescription(
                 title: "swap.confirmation.minimum_received".localized,
                 description: "swap.confirmation.minimum_received.info".localized
             )),
