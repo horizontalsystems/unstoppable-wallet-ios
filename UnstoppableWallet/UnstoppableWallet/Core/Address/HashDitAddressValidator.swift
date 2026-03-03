@@ -7,7 +7,7 @@ import RxSwift
 
 class HashDitAddressValidator {
     static let supportedBlockchainTypes: [BlockchainType] = [.ethereum, .binanceSmartChain, .polygon]
-    private let url = "https://service.hashdit.io/v2/hashdit/transaction-security"
+    private let url = "https://service.hashdit.io/v2/hashdit/address-security-v2"
     private let networkManager = Core.shared.networkManager
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let headers: HTTPHeaders
@@ -29,12 +29,16 @@ extension HashDitAddressValidator {
 
         let parameters: [String: Any] = try [
             "chainId": evmBlockchainManager.chain(blockchainType: blockchainType).id,
-            "to": address.raw,
+            "address": address.raw,
         ]
 
         let response: HashDitAddressValidatorResponse = try await networkManager.fetch(url: url, method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
 
-        return response.data.risk_level < 4
+        guard let score = Int(response.data.overallScore) else {
+            throw CheckError.invalidScore
+        }
+
+        return score > 60
     }
 }
 
@@ -47,6 +51,7 @@ extension HashDitAddressValidator: IAddressSecurityChecker {
 extension HashDitAddressValidator {
     enum CheckError: Error {
         case unsupportedBlockchainType
+        case invalidScore
     }
 }
 
@@ -62,24 +67,10 @@ public struct HashDitAddressValidatorResponse: ImmutableMappable {
     }
 
     public struct ResponseData: ImmutableMappable {
-        public let has_result: Bool
-        public let risk_level: Int
-        public let risk_detail: [RiskDetail]
+        public let overallScore: String
 
         public init(map: Map) throws {
-            has_result = try map.value("has_result")
-            risk_level = try map.value("risk_level")
-            risk_detail = try map.value("risk_detail")
-        }
-    }
-
-    public struct RiskDetail: ImmutableMappable {
-        public let name: String
-        public let value: String
-
-        public init(map: Map) throws {
-            name = try map.value("name")
-            value = try map.value("value")
+            overallScore = try map.value("overall_score")
         }
     }
 }
