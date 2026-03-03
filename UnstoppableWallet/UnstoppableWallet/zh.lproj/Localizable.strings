@@ -12,7 +12,6 @@
 "button.share" = "分享";
 "button.paste" = "粘帖";
 "button.resend" = "重新发送";
-"button.backup" = "备份";
 "button.restore" = "恢复";
 "button.copy" = "复制";
 "button.copy_error" = "复制错误";
@@ -26,11 +25,8 @@
 "button.save" = "保存";
 "button.send" = "发送​​";
 "button.sign" = "签名";
-"button.more" = "显示更多";
 "button.i_understand" = "我理解";
 "button.understood" = "明白";
-"button.learn_more" = "了解更多";
-"button.unlock" = "解锁​​​​";
 "button.select" = "选择";
 "button.later" = "稍后";
 
@@ -85,8 +81,6 @@
 "alert_card.title.critical" = "警告!";
 "alert_card.title.caution" = "注意!";
 
-"no_results_found" = "未发现结果";
-"action.loading" = "正在加载...";
 "placeholder.search" = "搜索​​​​";
 
 "status" = "状态";
@@ -117,13 +111,6 @@
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
 
-"auto_lock.immediate" = "即时的";
-"auto_lock.minute1" = "1 分钟";
-"auto_lock.minute5" = "5 分钟";
-"auto_lock.minute15" = "15 分钟";
-"auto_lock.minute30" = "30 分钟";
-"auto_lock.hour1" = "1 小时";
-
 "powered_by" = "由 %@ 提供支持";
 
 "filter.all" = "所有";
@@ -153,7 +140,6 @@
 "restore.passphrase" = "密码";
 "restore.input.passphrase" = "密码";
 "restore.wallet.passphrase_description" = "请输入您在创建恢复短语时使用的密码。使用新密码恢复现有钱包将生成全新的钱包。";
-"restore.passphrase_description" = "此密码用于加密您的钱包备份文件。与您的 Apple iCloud 密码无关。如果丢失或遗忘，将无法恢复或重置。";
 "restore.error.empty_passphrase" = "密码不能为空白";
 "restore.non_standard_import" = "非标准还原";
 "restore.non_standard_import.description" = "此页面为拥有非标准钱包的 %@ 用户提供一个特殊的钱包导入机制。 此钱包可能已在 %@ 版本 0中创建。 7 - 0.28 使用非英文恢复短语和/或钱包密码中的特殊字符(例如拨号符号)。\n\n如果您是受影响的用户，那么您的钱包余额将会在导入此钱包版本0.29或以上后显示0。 此页面将使您能够恢复对非标准钱包的访问。 一旦导入，您建议创建一个新的钱包(它将符合标准)，并将资金转移到那里。";
@@ -188,9 +174,6 @@
 
 // Coin Settings
 
-"coin_settings.title" = "区块链设置";
-"coin_settings.bitcoin_cash_coin_type.title.type0" = "遗留问题";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "资金地址（推荐）";
 "sync_mode.hybrid" = "混合型";
 "sync_mode.from_blockchain" = "来自区块链";
 "blockchain_settings.description" = "请选择该币种的地址格式。";
@@ -213,8 +196,6 @@
 "recovery_phrase.warning" = "切勿与任何人共享此密钥。 %@ 钱包支持团队永远不会要求它。";
 "recovery_phrase.tap_to_show" = "点击显示恢复密语";
 "recovery_phrase.passphrase" = "密码";
-"recovery_phrase.copy_warning.title" = "恢复短语复制的风险";
-"recovery_phrase.copy_warning.description" = "作为一项安全措施，我们建议不要复制私钥。";
 
 // EVM Private Key
 
@@ -232,8 +213,6 @@
 "monero_private_key.title" = "Monero 私钥";
 "monero_private_key.tap_to_show" = "点击显示私钥";
 "monero.key_types" = "类型";
-"monero.key_types.spend" = "支出";
-"monero.key_types.view" = "查看";
 
 // Extended Key
 
@@ -261,12 +240,6 @@
 "backup_verify_words.description" = "从你的钱包恢复短语中选择两个请求的单词";
 "backup_verify_words.incorrect_word" = "不准确的字";
 
-// Backup Verify Passphrase
-
-"backup_verify_passphrase.title" = "验证";
-"backup_verify_passphrase.description" = "输入密码";
-"backup_verify_passphrase.incorrect_passphrase" = "密码不正确";
-
 // Backup Prompt
 
 "backup_prompt.backup_recovery_phrase" = "备份钱包";
@@ -279,32 +252,18 @@
 
 // Backup to iCloud
 
-"backup.cloud.title" = "备份到iCloud";
-"backup.cloud.description" = "iCloud 存储是 Apple 提供的第三方云存储服务。请注意，您的数据将存储在 Apple 的服务器上，而不是您的个人设备上。这意味着您正在委托您的数据并将信息的安全性移交给第三方服务。";
-"backup.cloud.terms.item.1" = "我了解无法访问我的 iCloud 将导致无法访问相应钱包的备份。";
-
-"backup.cloud.name.title" = "备份名称";
-"backup.cloud.name.description" = "请输入备份文件的名称。";
-"backup.cloud.name.empty" = "备份名称不能为空！";
 "backup.cloud.name.error.empty" = "备份名称不能为空";
 "backup.cloud.name.error.already_exist" = "备份名称已经存在！";
 "backup.cloud.name.placeholder" = "名称";
 
-"backup.cloud.password.title" = "设置密码";
-"backup.cloud.password.description" = "为您的备份设置解锁密码。密码长度必须至少为8个字符，并且包含至少一个小写字母、大写字母、数字和特殊字符。";
-"backup.cloud.password.highlighted_description" = "请不要忘记这个密码！它与您的 Apple iCloud 密码不同，无法恢复或重置。";
 "backup.cloud.password.placeholder" = "密码";
 "backup.cloud.password.confirm.placeholder" = "确认";
-"backup.cloud.password.save" = "保存并备份";
 
 "backup.cloud.password.error.empty_passphrase" = "密码不能为空";
-"backup.cloud.password.error.forbidden_symbols" = "请只使用支持的符号：A-Z a-z 0-9 ' \" & / ? , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "backup.cloud.password.error.minimum_requirement" = "密码需要至少8个字符，包括一个大写字母、一个小写字母、一个数字和一个符号。";
 "backup.cloud.password.error.invalid_password" = "密码错误";
 "backup.cloud.password.error.invalid_backup" = "备份已损坏";
 "backup.cloud.password.confirm.error.doesnt_match" = "密码不匹配";
-"backup.cloud.not_available" = "iCloud 服务不可用";
-"backup.cloud.cant_create_file" = "无法将文件保存到iCloud。";
 "backup.cloud.cant_delete_file" = "无法从 iCloud 删除";
 "backup.cloud.no_access.title" = "访问 iCloud";
 "backup.cloud.no_access.description" = "要创建备份，您需要提供访问 iCloud 存储。";
@@ -314,17 +273,13 @@
 "error.send.self_transfer" = "不支持发送给自己";
 "error.send_binance.memo_required" = "收款人要求在转账交易中包含非空的备注";
 "error.send_binance.only_digits_allowed" = "要求备注仅包含数字";
-"error.send_z_cash.transparent_address" = "%@ 不支持付款到一个透明地址";
 
 // Balance
 
 "balance.title" = "钱包";
-"balance.tab_bar_item" = "余额";
 "balance.send" = "发送​​";
-"balance.withdraw" = "提取";
 "balance.swap" = "掉期交易";
 "balance.receive" = "接收";
-"balance.deposit" = "接收";
 "balance.chart" = "图表";
 "balance.scan" = "扫描";
 "balance.copy_address" = "复制地址";
@@ -341,7 +296,6 @@
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "剩余区块数 - %@";
 "balance.synced_through" = "直到 %@";
-"balance.empty.description" = "您还没有添加任何代币到此钱包中。";
 "balance.sort.header" = "排序方式";
 "balance.sort.valueHighToLow" = "余额";
 "balance.sort.az" = "名称";
@@ -356,9 +310,7 @@
 
 // Token Balance Page
 "balance.token.locked" = "锁住";
-"balance.token.locked.stellar.title" = "鎖定金額";
 "balance.token.locked.stellar.description" = "Stellar 網路會鎖定 1 XLM 以啟用錢包，並為您啟用的每個代幣額外保留 0.5 XLM 作為儲備金。";
-"balance.token.locked.stellar.description.currently_locked" = "當前鎖定：";
 "balance.token.locked.stellar.description.wallet_activation" = "錢包啟用";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "汇款人通过将在所显示日期失效的消费锁定汇出这些资金。\n\n无需担心，收到的比特币已经属于您，但在锁定期限结束前，您无法在比特币网络上消费它们。";
@@ -367,7 +319,6 @@
 "balance.token.not_relayed.info.description" = "此金额的交易已广播，但尚未被网络接受。";
 "balance.token.transparent" = "透明";
 "balance.token.transparent.info.title" = "透明余额";
-"balance.token.transparent.info.item" = "透明余额";
 "balance.token.transparent.info.description" = "您在透明地址中持有 ZEC 余额。要在 Unstoppable 中使用，必须将其屏蔽（shield）以实现完全隐私。";
 "balance.token.transparent.detected.title" = "检测到透明 ZEC 地址";
 "balance.token.transparent.detected.description" = "您在透明地址中持有 ZEC 余额。要在 Unstoppable 中使用，必须将其屏蔽（shield）以实现完全隐私。";
@@ -375,11 +326,6 @@
 
 "balance.token.receive_address" = "收款地址";
 "balance.token.staked" = "已关注";
-"balance.token.staked.info.title" = "关注的标题";
-"balance.token.staked.info.description" = "相关的描述文本";
-"balance.token.frozen" = "冰雪奇缘";
-"balance.token.frozen.info.title" = "冰冻标题";
-"balance.token.frozen.info.description" = "冻结描述文本";
 "balance.token.account.inactive.description" = "激活后将显示交易记录";
 
 // Account switcher
@@ -402,20 +348,14 @@
 "deposit.address_type.unified.description" = "适用于钱包之间的个人和隐私转账。";
 "deposit.address_type.transparent" = "透明";
 "deposit.address_type.transparent.description" = "适用于从不支持统一地址的交易所或服务接收资金。";
-"deposit.address_type.transparent.caution" = "您可以接收 ZEC 到此透明地址。若要发送，请先转入屏蔽地址。";
-"deposit.address_type.legacy" = "遗留问题";
 
 "deposit.address" = "地址";
-"deposit.your_address" = "您的地址";
 "receive_alert.not_backed_up_description" = "您必须在接收%@之前先备份%@。";
 "receive_alert.any_coins.not_backed_up_description" = "您需要在收到任何硬币之前备份 %@。";
 "deposit.no_adapter.error" = "无法提供地址";
 
 "deposit.address_format" = "格式";
 "deposit.address_network" = "網絡";
-"deposit.qr_code_description" = "您存放 %@ 的地址";
-"deposit.qr_code_description.watch" = "观看 %@ 的地址";
-"deposit.account" = "账户";
 "deposit.trustline" = "信任線";
 "deposit.trustline.not_activated" = "尚未啟用";
 "deposit.activate" = "激活";
@@ -424,11 +364,8 @@
 "deposit.set_amount" = "设定金额";
 "deposit.enter_amount" = "输入金额";
 
-"deposit.memo" = "Memo (Tag)";
 "deposit.copy_address" = "复制";
 "deposit.share_address" = "分享";
-"deposit.memo_warning.title" = "重要信息";
-"deposit.memo_warning.description" = "需要填写备注(标签)和地址以确保收到资产。否则您的资金将丢失。";
 
 "deposit.not_active" = "不活动";
 "deposit.not_active.title" = "TRON 未激活";
@@ -851,27 +788,7 @@
 
 "market.time_period.title" = "句号";
 "market.time_period.1d" = "1天";
-"market.time_period.1w" = "1周";
-"market.time_period.2w" = "2周";
-"market.time_period.1m" = "1月";
-"market.time_period.3m" = "3月";
-"market.time_period.6m" = "6月";
-"market.time_period.1y" = "1年";
-"market.time_period.2y" = "2 年";
-"market.time_period.3y" = "3 年";
-"market.time_period.4y" = "4 年";
-"market.time_period.5y" = "5 年";
 "market.time_period.1d.short" = "1天";
-"market.time_period.1w.short" = "1周";
-"market.time_period.2w.short" = "2周";
-"market.time_period.1m.short" = "1个月";
-"market.time_period.3m.short" = "3个月";
-"market.time_period.6m.short" = "6个月";
-"market.time_period.1y.short" = "1年";
-"market.time_period.2y.short" = "2年";
-"market.time_period.3y.short" = "3年";
-"market.time_period.4y.short" = "3年";
-"market.time_period.5y.short" = "5年";
 
 "market.project_has_no_coin" = "此项目没有硬币";
 

@@ -13,7 +13,6 @@
 "button.paste" = "Paste";
 "button.photos" = "Photos";
 "button.resend" = "Resend";
-"button.backup" = "Backup";
 "button.restore" = "Restore";
 "button.copy" = "Copy";
 "button.copy_error" = "Copy Error";
@@ -27,11 +26,8 @@
 "button.save" = "Save";
 "button.send" = "Send";
 "button.sign" = "Sign";
-"button.more" = "Show More";
 "button.i_understand" = "I Understand";
 "button.understood" = "Understood";
-"button.learn_more" = "Learn More";
-"button.unlock" = "Unlock";
 "button.select" = "Select";
 "button.later" = "Later";
 
@@ -88,8 +84,6 @@
 "alert_card.title.critical" = "Warning!";
 "alert_card.title.caution" = "Attention!";
 
-"no_results_found" = "No results found";
-"action.loading" = "loading...";
 "placeholder.search" = "Search";
 
 "status" = "Status";
@@ -120,13 +114,6 @@
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
 
-"auto_lock.immediate" = "Immediate";
-"auto_lock.minute1" = "1 minute";
-"auto_lock.minute5" = "5 minutes";
-"auto_lock.minute15" = "15 minutes";
-"auto_lock.minute30" = "30 minutes";
-"auto_lock.hour1" = "1 hour";
-
 "powered_by" = "Powered by %@";
 
 "filter.all" = "All";
@@ -154,7 +141,6 @@
 "restore.passphrase" = "Passphrase";
 "restore.input.passphrase" = "Passphrase";
 "restore.wallet.passphrase_description" = "Enter the passphrase you used when creating this recovery phrase. Restoring an existing wallet with a new passphrase will generate a brand-new wallet.";
-"restore.passphrase_description" = "This password is used to encrypt backup file of your wallet. It's not related to your Apple iCloud password. It can't be recovered or reset if lost or forgotten.";
 "restore.error.empty_passphrase" = "The passphrase cannot be empty";
 "restore.non_standard_import" = "Non-Standard Import";
 "restore.non_standard_import.description" = "This page provides a special wallet import mechanism to %@ users who have a non-standard wallet. Such wallets might have been created in %@ version 0.27 - 0.28 using a non-English recovery phrase and/or a special character in the wallet passphrase (i.e. diacritic symbol).\n\nIf you're an affected user then your wallet balance will be shown 0 after importing such wallet in version 0.29 or above. This page will enable you to restore access to your non-standard wallet. Once imported you're recommended to create a new wallet (which will be standard compliant) and move funds there.";
@@ -189,9 +175,6 @@
 
 // Coin Settings
 
-"coin_settings.title" = "Blockchain Settings";
-"coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.hybrid" = "Hybrid";
 "sync_mode.from_blockchain" = "%@ Blockchain";
 "blockchain_settings.description" = "Select the address format for the coin.";
@@ -214,8 +197,6 @@
 "recovery_phrase.warning" = "Never share this key with anyone. %@ Wallet support team will never ask for it.";
 "recovery_phrase.tap_to_show" = "Tap to show recovery phrase";
 "recovery_phrase.passphrase" = "Passphrase";
-"recovery_phrase.copy_warning.title" = "Risk of Recovery Phrase copy";
-"recovery_phrase.copy_warning.description" = "As a security measure,we recommend not using copy action on recovery phrase.";
 
 // EVM Private Key
 
@@ -233,8 +214,6 @@
 "monero_private_key.title" = "Monero Private Keys";
 "monero_private_key.tap_to_show" = "Tap to show private key";
 "monero.key_types" = "Type";
-"monero.key_types.spend" = "Spend";
-"monero.key_types.view" = "View";
 
 // Extended Key
 
@@ -262,12 +241,6 @@
 "backup_verify_words.description" = "Select two requested words from your wallet recovery phrase";
 "backup_verify_words.incorrect_word" = "Incorrect Word";
 
-// Backup Verify Passphrase
-
-"backup_verify_passphrase.title" = "Verify";
-"backup_verify_passphrase.description" = "Enter the passphrase";
-"backup_verify_passphrase.incorrect_passphrase" = "Incorrect passphrase";
-
 // Backup Prompt
 
 "backup_prompt.backup_recovery_phrase" = "Backup Recovery Phrase";
@@ -280,32 +253,18 @@
 
 // Backup to iCloud
 
-"backup.cloud.title" = "Backup to iCloud";
-"backup.cloud.description" = "iCloud storage is a third-party cloud storage service provided by Apple. It's important to know that your data will be stored on Apple's servers, not on your personal devices. This means that you are entrusting your data and handing over the security of your information to a third-party service.";
-"backup.cloud.terms.item.1" = "I understand that losing access to my iCloud, will result in loosing access to the backup of a respective wallet.";
-
-"backup.cloud.name.title" = "Backup Name";
-"backup.cloud.name.description" = "Enter name for the backup file.";
-"backup.cloud.name.empty" = "Backup name can't be empty!";
 "backup.cloud.name.error.empty" = "Backup name must be not empty";
 "backup.cloud.name.error.already_exist" = "Backup name already exists!";
 "backup.cloud.name.placeholder" = "Name";
 
-"backup.cloud.password.title" = "Set Password";
-"backup.cloud.password.description" = "Set the unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number, and a special character.";
-"backup.cloud.password.highlighted_description" = "Don't forget this password! It is separate from your Apple iCloud password, and it cannot be recovered or reset.";
 "backup.cloud.password.placeholder" = "Password";
 "backup.cloud.password.confirm.placeholder" = "Confirm";
-"backup.cloud.password.save" = "Save and Backup";
 
 "backup.cloud.password.error.empty_passphrase" = "Password cannot be empty";
-"backup.cloud.password.error.forbidden_symbols" = "Please use only supported symbols: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "backup.cloud.password.error.minimum_requirement" = "At least 8 characters, including one uppercase letter, one lowercase letter, one number, and one symbol";
 "backup.cloud.password.error.invalid_password" = "Incorrect Password";
 "backup.cloud.password.error.invalid_backup" = "Backup is corrupted";
 "backup.cloud.password.confirm.error.doesnt_match" = "Password doesn’t match";
-"backup.cloud.not_available" = "iCloud not Available";
-"backup.cloud.cant_create_file" = "Can't save File to iCloud";
 "backup.cloud.cant_delete_file" = "Can't delete from iCloud";
 "backup.cloud.no_access.title" = "Access iCloud";
 "backup.cloud.no_access.description" = "To create a backup, you need to provide access to iCloud storage.";
@@ -315,17 +274,13 @@
 "error.send.self_transfer" = "Sending to yourself is not supported";
 "error.send_binance.memo_required" = "The receiver requires a non-empty memo in the transfer transaction";
 "error.send_binance.only_digits_allowed" = "Requires the memo to contain only digits";
-"error.send_z_cash.transparent_address" = "%@ doesn't support payments to a transparent address";
 
 // Balance
 
 "balance.title" = "Wallet";
-"balance.tab_bar_item" = "Balance";
 "balance.send" = "Send";
-"balance.withdraw" = "Withdraw";
 "balance.swap" = "Swap";
 "balance.receive" = "Receive";
-"balance.deposit" = "Deposit";
 "balance.chart" = "Chart";
 "balance.scan" = "Scan";
 "balance.copy_address" = "Copy Address";
@@ -342,7 +297,6 @@
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "Blocks Remaining - %@";
 "balance.synced_through" = "until %@";
-"balance.empty.description" = "You haven't added any coins to this wallet.";
 "balance.sort.header" = "Sort by";
 "balance.sort.valueHighToLow" = "Balance";
 "balance.sort.az" = "Name";
@@ -357,9 +311,7 @@
 
 // Token Balance Page
 "balance.token.locked" = "Locked Balance";
-"balance.token.locked.stellar.title" = "Locked Amount";
 "balance.token.locked.stellar.description" = "The Stellar network locks 1 XLM to activate the wallet and 0.5 XLM as a reserve for each token activated in your wallet.";
-"balance.token.locked.stellar.description.currently_locked" = "Currently locked:";
 "balance.token.locked.stellar.description.wallet_activation" = "Wallet activation";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "The sender sent these funds with a spending lock that will expire on the shown date. \n\nNo worries, the received Bitcoins are already yours, but until the lock period expires you cannot spend them on the Bitcoin network.";
@@ -368,19 +320,12 @@
 "balance.token.not_relayed.info.description" = "The transaction holding this amount is broadcasted but not yet accepted by the network";
 "balance.token.transparent" = "Transparent";
 "balance.token.transparent.info.title" = "Transparent Amount";
-"balance.token.transparent.info.item" = "Transparent Amount";
 "balance.token.transparent.info.description" = "You have a ZEC balance held in a transparent address. To use it in Unstoppable, it must be shielded for full privacy.";
 "balance.token.transparent.detected.title" = "Detected Transparent ZEC";
 "balance.token.transparent.detected.description" = "You have a ZEC balance held in a transparent address. To use it in Unstoppable, it must be shielded for full privacy.";
 "balance.token.shield" = "Shield";
 
 "balance.token.receive_address" = "Receive Address";
-"balance.token.staked" = "Staked";
-"balance.token.staked.info.title" = "Staked title";
-"balance.token.staked.info.description" = "Staked Description Text";
-"balance.token.frozen" = "Frozen";
-"balance.token.frozen.info.title" = "Frozen title";
-"balance.token.frozen.info.description" = "Frozen Description Text";
 "balance.token.account.inactive.description" = "Transactions will appear after activation";
 
 // Account switcher
@@ -403,20 +348,14 @@
 "deposit.address_type.unified.description" = "Use for personal and private transfers between wallets.";
 "deposit.address_type.transparent" = "Transparent";
 "deposit.address_type.transparent.description" = "Use for receiving from exchanges or services that don’t support unified addresses.";
-"deposit.address_type.transparent.caution" = "You can receive ZEC to this Transparent address. To send, transfer it to a Shielded one.";
-"deposit.address_type.legacy" = "Legacy";
 
 "deposit.address" = "Address";
-"deposit.your_address" = "Your Address";
 "receive_alert.not_backed_up_description" = "You need to backup %@ before you may receive %@.";
 "receive_alert.any_coins.not_backed_up_description" = "You need to backup %@ before you may receive any coins.";
 "deposit.no_adapter.error" = "Can't provide address";
 
 "deposit.address_format" = "Format";
 "deposit.address_network" = "Network";
-"deposit.qr_code_description" = "Your address for depositing %@";
-"deposit.qr_code_description.watch" = "Watch address of %@";
-"deposit.account" = "Account";
 "deposit.trustline" = "Trustline";
 "deposit.trustline.not_activated" = "Not activated";
 "deposit.activate" = "Activate";
@@ -425,11 +364,8 @@
 "deposit.set_amount" = "Set Amount";
 "deposit.enter_amount" = "Enter Amount";
 
-"deposit.memo" = "Memo (Tag)";
 "deposit.copy_address" = "Copy";
 "deposit.share_address" = "Share";
-"deposit.memo_warning.title" = "Important";
-"deposit.memo_warning.description" = "Both a memo (tag) and the address are needed to ensure that assets are received. Otherwise your funds will be lost.";
 
 "deposit.not_active" = "Not active";
 "deposit.not_active.title" = "TRON Not Activated";
@@ -851,27 +787,7 @@
 
 "market.time_period.title" = "Period";
 "market.time_period.1d" = "1 Day";
-"market.time_period.1w" = "1 Week";
-"market.time_period.2w" = "2 Weeks";
-"market.time_period.1m" = "1 Month";
-"market.time_period.3m" = "3 Months";
-"market.time_period.6m" = "6 Months";
-"market.time_period.1y" = "1 Year";
-"market.time_period.2y" = "2 Years";
-"market.time_period.3y" = "3 Years";
-"market.time_period.4y" = "4 Years";
-"market.time_period.5y" = "5 Years";
 "market.time_period.1d.short" = "1D";
-"market.time_period.1w.short" = "1W";
-"market.time_period.2w.short" = "2W";
-"market.time_period.1m.short" = "1M";
-"market.time_period.3m.short" = "3M";
-"market.time_period.6m.short" = "6M";
-"market.time_period.1y.short" = "1Y";
-"market.time_period.2y.short" = "2Y";
-"market.time_period.3y.short" = "3Y";
-"market.time_period.4y.short" = "4Y";
-"market.time_period.5y.short" = "5Y";
 
 "market.project_has_no_coin" = "This project doesn’t have a coin";
 

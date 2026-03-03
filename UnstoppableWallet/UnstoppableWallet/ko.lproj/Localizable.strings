@@ -12,7 +12,6 @@
 "button.share" = "공유";
 "button.paste" = "불여넣기";
 "button.resend" = "재전송";
-"button.backup" = "백업";
 "button.restore" = "복구";
 "button.copy" = "복사";
 "button.copy_error" = "오류 복사";
@@ -26,11 +25,8 @@
 "button.save" = "저장";
 "button.send" = "전송";
 "button.sign" = "가입";
-"button.more" = "더 보기";
 "button.i_understand" = "이해합니다";
 "button.understood" = "확인";
-"button.learn_more" = "자세히 보기";
-"button.unlock" = "잠금 해제";
 "button.select" = "선택";
 "button.later" = "나중에";
 
@@ -85,8 +81,6 @@
 "alert_card.title.critical" = "경고!";
 "alert_card.title.caution" = "주목!";
 
-"no_results_found" = "검색 결과가 없습니다";
-"action.loading" = "로딩중";
 "placeholder.search" = "검색";
 
 "status" = "상태";
@@ -117,13 +111,6 @@
 "face_id" = "페이스 ID";
 "touch_id" = "터치 ID";
 
-"auto_lock.immediate" = "즉시";
-"auto_lock.minute1" = "1분";
-"auto_lock.minute5" = "5분";
-"auto_lock.minute15" = "15분";
-"auto_lock.minute30" = "30분";
-"auto_lock.hour1" = "1시간";
-
 "powered_by" = "%@ 제공";
 
 "filter.all" = "전체";
@@ -151,7 +138,6 @@
 "restore.passphrase" = "암호문구";
 "restore.input.passphrase" = "암호문구";
 "restore.wallet.passphrase_description" = "이 복구 문구를 생성할 때 사용한 암호를 입력하십시오. 새로운 암호로 기존 지갑을 복원하면 새로운 지갑이 생성됩니다.";
-"restore.passphrase_description" = "이 암호는 지갑의 백업 파일을 암호화하는 데 사용됩니다. 이 암호는 Apple iCloud 암호와는 관련이 없습니다. 만약 분실하거나 잊어버린 경우, 복구하거나 재설정할 수 없습니다.";
 "restore.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
 "restore.non_standard_import" = "비표준 복원";
 "restore.non_standard_import.description" = "이 페이지는 비표준 지갑을 가지고 있는 %@ 사용자를 위한 특별한 지갑 복원 메커니즘을 제공합니다. 일반적으로 이러한 지갑은 %@ 버전 0.27 - 0.28에서 영어가 아닌 니모닉 단어 목록 및/또는 지갑 암호의 특수 문자(예: 분음 부호)를 사용하여 생성되었을 수 있습니다.\n\n영향을 받는 사용자인 경우 버전 0.29로 업데이트하면 지갑 잔액이 0으로 표시됩니다. 이 페이지에서는 비표준 지갑에 대한 액세스를 복원할 수 있습니다. 복원되면 새 지갑(표준 준수)을 만들고 그곳으로 자금을 옮기는 것이 좋습니다.";
@@ -186,9 +172,6 @@
 
 // Coin Settings
 
-"coin_settings.title" = "블록 체인 설정";
-"coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "현금주소(권장)";
 "sync_mode.hybrid" = "하이브리드";
 "sync_mode.from_blockchain" = "블록체인으로 부터";
 "blockchain_settings.description" = "코인의 주소 형식을 선택하세요.";
@@ -211,8 +194,6 @@
 "recovery_phrase.warning" = "복구 문구를 누구와도 공유하지 마십시오. %@ 팀은 복구 문구를 요구하지 않습니다.";
 "recovery_phrase.tap_to_show" = "탭하여 복구 문구 표시";
 "recovery_phrase.passphrase" = "암호문구";
-"recovery_phrase.copy_warning.title" = "복구 문구 복사 위험";
-"recovery_phrase.copy_warning.description" = "보안 조치로 개인 키에 복사 작업을 사용하지 않는 것이 좋습니다.";
 
 // EVM Private Key
 
@@ -230,8 +211,6 @@
 "monero_private_key.title" = "Monero 개인 키";
 "monero_private_key.tap_to_show" = "개인 키 보기";
 "monero.key_types" = "유형";
-"monero.key_types.spend" = "지출";
-"monero.key_types.view" = "조회";
 
 // Extended Key
 
@@ -259,12 +238,6 @@
 "backup_verify_words.description" = "지갑 복구 문구에서 요청한 단어 2개 선택";
 "backup_verify_words.incorrect_word" = "잘못된 단어";
 
-// Backup Verify Passphrase
-
-"backup_verify_passphrase.title" = "확인하기";
-"backup_verify_passphrase.description" = "암호 문구 입력";
-"backup_verify_passphrase.incorrect_passphrase" = "잘못된 암호";
-
 // Backup Prompt
 
 "backup_prompt.backup_recovery_phrase" = "백업용 지갑";
@@ -277,32 +250,19 @@
 
 // Backup to iCloud
 
-"backup.cloud.title" = "iCloud에 백업";
-"backup.cloud.description" = "iCloud 저장소는 Apple에서 제공하는 타사 클라우드 저장소 서비스입니다. 데이터가 개인 기기가 아닌 Apple 서버에 저장된다는 점을 아는 것이 중요합니다. 이것은 귀하가 귀하의 데이터를 위탁하고 귀하의 정보 보안을 제3자 서비스에 넘기고 있음을 의미합니다.";
-"backup.cloud.terms.item.1" = "내 iCloud에 대한 액세스 권한을 상실하면 해당 지갑의 백업에 대한 액세스 권한도 잃게 된다는 점을 이해합니다.";
 
-"backup.cloud.name.title" = "백업 이름";
-"backup.cloud.name.description" = "백업 파일의 이름을 입력하세요.";
-"backup.cloud.name.empty" = "백업 이름은 비워둘 수 없습니다!";
 "backup.cloud.name.error.empty" = "백업 이름은 비워둘 수 없습니다";
 "backup.cloud.name.error.already_exist" = "백업 이름이 이미 존재합니다!";
 "backup.cloud.name.placeholder" = "이름";
 
-"backup.cloud.password.title" = "암호를 설정하세요.";
-"backup.cloud.password.description" = "백업에 대한 잠금 해제 암호를 설정하십시오. 최소 8개의 기호로 구성되어야 하며 소문자, 대문자, 숫자 및 특수 문자가 하나 이상 포함되어야 합니다.";
-"backup.cloud.password.highlighted_description" = "이 비밀번호를 잊지 마세요! Apple iCloud 암호와는 별개이며 복구하거나 재설정할 수 없습니다.";
 "backup.cloud.password.placeholder" = "비밀번호";
 "backup.cloud.password.confirm.placeholder" = "확인";
-"backup.cloud.password.save" = "저장 및 백업";
 
 "backup.cloud.password.error.empty_passphrase" = "비밀번호는 필수 정보입니다.";
-"backup.cloud.password.error.forbidden_symbols" = "지원되는 기호만 사용하세요: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "backup.cloud.password.error.minimum_requirement" = "대문자 1개, 소문자 1개, 숫자 1개, 기호 1개를 포함하여 8자 이상";
 "backup.cloud.password.error.invalid_password" = "잘못된 비밀번호";
 "backup.cloud.password.error.invalid_backup" = "백업이 손상되었습니다";
 "backup.cloud.password.confirm.error.doesnt_match" = "비밀번호가 일치하지 않습니다";
-"backup.cloud.not_available" = "iCloud를 사용할 수 없음";
-"backup.cloud.cant_create_file" = "파일을 iCloud에 저장할 수 없음";
 "backup.cloud.cant_delete_file" = "iCloud에서 삭제할 수 없습니다";
 "backup.cloud.no_access.title" = "아이클라우드 접근하기";
 "backup.cloud.no_access.description" = "iCloud 스토리지에 백업을 만들려면 액세스 권한을 제공해야 합니다.";
@@ -312,17 +272,13 @@
 "error.send.self_transfer" = "자체로 전송이 지원되지 않음";
 "error.send_binance.memo_required" = "수신자는 송금 내역에 메모 기록을 필요로 합니다";
 "error.send_binance.only_digits_allowed" = "메모에는 숫자만 포함하셔야 합니다";
-"error.send_z_cash.transparent_address" = "%@은 투명 주소에 대한 지불을 지원하지 않습니다";
 
 // Balance
 
 "balance.title" = "지갑";
-"balance.tab_bar_item" = "잔액";
 "balance.send" = "전송";
-"balance.withdraw" = "빼다";
 "balance.swap" = "스왑";
 "balance.receive" = "수령";
-"balance.deposit" = "수신";
 "balance.chart" = "차트";
 "balance.scan" = "스캔";
 "balance.copy_address" = "주소 복사";
@@ -339,7 +295,6 @@
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "남은 블록 수 - %@";
 "balance.synced_through" = "%@ 까지";
-"balance.empty.description" = "이 지갑에 코인을 넣지 않았습니다.";
 "balance.sort.header" = "정렬 기준";
 "balance.sort.valueHighToLow" = "잔액";
 "balance.sort.az" = "이름";
@@ -354,9 +309,7 @@
 
 // Token Balance Page
 "balance.token.locked" = "잠김";
-"balance.token.locked.stellar.title" = "잠긴 금액";
 "balance.token.locked.stellar.description" = "Stellar 네트워크는 지갑을 활성화하기 위해 1 XLM을 잠그며, 지갑에서 활성화된 각 토큰마다 0.5 XLM을 예치금으로 잠급니다.";
-"balance.token.locked.stellar.description.currently_locked" = "현재 잠긴 금액:";
 "balance.token.locked.stellar.description.wallet_activation" = "지갑 활성화";
 "balance.token.locked.info.title" = "시간 자물쇠";
 "balance.token.locked.info.description" = "발송자는 이러한 자금들을 표시된 날짜에 만료가 되는 잠금 지출과 함께 보냈습니다.\n\n걱정 하지마십시오, 수신된 비트코인은 이미 귀하의 것입니다 하지만 잠금 기간이 만료될때 까지 비트코인 네트워크에서 사용하실 수 없습니다.";
@@ -365,19 +318,12 @@
 "balance.token.not_relayed.info.description" = "이 금액을 보유한 거래는 방송되었지만 아직 네트워크에서 수락되지 않았습니다.";
 "balance.token.transparent" = "透明";
 "balance.token.transparent.info.title" = "투명 잔액";
-"balance.token.transparent.info.item" = "투명 잔액";
 "balance.token.transparent.info.description" = "투명 주소에 보유 중인 ZEC 잔액이 있습니다. Unstoppable에서 사용하려면 완전한 프라이버시 보호를 위해 보호(Shield) 처리해야 합니다.";
 "balance.token.transparent.detected.title" = "투명 ZEC 감지됨";
 "balance.token.transparent.detected.description" = "투명 주소에 보유 중인 ZEC 잔액이 있습니다. Unstoppable에서 사용하려면 완전한 프라이버시 보호를 위해 보호(Shield) 처리해야 합니다.";
 "balance.token.shield" = "차폐(Shield)";
 
 "balance.token.receive_address" = "수신 주소";
-"balance.token.staked" = "판돈";
-"balance.token.staked.info.title" = "스테이크 타이틀";
-"balance.token.staked.info.description" = "측설 설명 텍스트";
-"balance.token.frozen" = "잠김";
-"balance.token.frozen.info.title" = "겨울왕국 제목";
-"balance.token.frozen.info.description" = "고정된 설명 텍스트";
 "balance.token.account.inactive.description" = "활성화 후 트랜잭션이 표시됩니다";
 
 // Account switcher
@@ -400,20 +346,14 @@
 "deposit.address_type.unified.description" = "지갑 간 개인적이고 프라이빗한 전송에 사용하세요.";
 "deposit.address_type.transparent" = "透明";
 "deposit.address_type.transparent.description" = "통합 주소를 지원하지 않는 거래소나 서비스로부터 수신할 때 사용하세요.";
-"deposit.address_type.transparent.caution" = "이 투명 주소로 ZEC를 수신할 수 있습니다. 전송하려면 보호 주소로 옮기세요.";
-"deposit.address_type.legacy" = "Legacy";
 
 "deposit.address" = "주소";
-"deposit.your_address" = "당신의 주소";
 "receive_alert.not_backed_up_description" = "%@를 백업해야 %@를 받을 수 있습니다.";
 "receive_alert.any_coins.not_backed_up_description" = "코인을 받으려면 %@을(를) 백업해야 합니다.";
 "deposit.no_adapter.error" = "주소를 제공할 수 없습니다.";
 
 "deposit.address_format" = "형식";
 "deposit.address_network" = "회로망";
-"deposit.qr_code_description" = "입금 주소: %@";
-"deposit.qr_code_description.watch" = "%@의 시계 주소";
-"deposit.account" = "계정";
 "deposit.trustline" = "신뢰 라인";
 "deposit.trustline.not_activated" = "미활성화됨";
 "deposit.activate" = "활성화";
@@ -422,11 +362,8 @@
 "deposit.set_amount" = "금액 설정";
 "deposit.enter_amount" = "금액 입력";
 
-"deposit.memo" = "메모(태그)";
 "deposit.copy_address" = "복사";
 "deposit.share_address" = "공유";
-"deposit.memo_warning.title" = "중요";
-"deposit.memo_warning.description" = "자산을 수령하기 위해서는 메모(태그)와 주소 모두가 필요합니다. 그렇지 않으면 자금이 손실될 수 있습니다.";
 
 "deposit.not_active" = "비활성화됨";
 "deposit.not_active.title" = "TRON이 활성화되지 않음";
@@ -849,27 +786,7 @@
 
 "market.time_period.title" = "기간";
 "market.time_period.1d" = "1 일";
-"market.time_period.1w" = "1일주";
-"market.time_period.2w" = "2이주";
-"market.time_period.1m" = "1개월";
-"market.time_period.3m" = "3 개월";
-"market.time_period.6m" = "6 개월";
-"market.time_period.1y" = "일년";
-"market.time_period.2y" = "2 년";
-"market.time_period.3y" = "3년";
-"market.time_period.4y" = "4년";
-"market.time_period.5y" = "5 년";
 "market.time_period.1d.short" = "1하루";
-"market.time_period.1w.short" = "1주일";
-"market.time_period.2w.short" = "2주일";
-"market.time_period.1m.short" = "1개월";
-"market.time_period.3m.short" = "3개월";
-"market.time_period.6m.short" = "6개월";
-"market.time_period.1y.short" = "1년";
-"market.time_period.2y.short" = "2년";
-"market.time_period.3y.short" = "3년";
-"market.time_period.4y.short" = "4년";
-"market.time_period.5y.short" = "5년";
 
 "market.project_has_no_coin" = "이 프로젝트는 코인이 없습니다";
 
