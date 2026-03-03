@@ -99,7 +99,7 @@ extension TronSendHelper {
 
             viewItems.append(
                 .fee(
-                    title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
+                    title: ComponentInformedTitle("fee_settings.network_fee".localized, info: .fee),
                     amountData: .init(appValue: appValue, currencyValue: currencyValue)
                 )
             )
@@ -120,7 +120,7 @@ extension TronSendHelper {
 
                     viewItems.append(
                         .value(
-                            title: SendField.InformedTitle("tron.send.activation_fee".localized, info: info),
+                            title: ComponentInformedTitle("tron.send.activation_fee".localized, info: info),
                             appValue: appValue,
                             currencyValue: currencyValue,
                             formatFull: true

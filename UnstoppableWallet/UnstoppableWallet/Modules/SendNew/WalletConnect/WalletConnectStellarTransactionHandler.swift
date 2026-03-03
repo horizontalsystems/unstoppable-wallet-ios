@@ -226,7 +226,7 @@ extension WalletConnectStellarTransactionHandler {
 
                 let feeSection = SendDataSection([
                     .value(
-                        title: SendField.InformedTitle("send.max_fee".localized, info: infoDescription),
+                        title: ComponentInformedTitle("send.max_fee".localized, info: infoDescription),
                         appValue: AppValue(token: baseToken, value: fee),
                         currencyValue: rates[baseToken.coin.uid].map { CurrencyValue(currency: currency, value: fee * $0) },
                         formatFull: true

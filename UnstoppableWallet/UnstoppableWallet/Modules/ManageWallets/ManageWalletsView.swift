@@ -8,8 +8,11 @@ struct ManageWalletsView: View {
     @Binding var isPresented: Bool
     @FocusState var searchFocused: Bool
 
+    private let restoreSettingsView: RestoreSettingsView
+
     init(account: Account, isPresented: Binding<Bool>) {
-        let service = RestoreSettingsService(manager: Core.shared.restoreSettingsManager)
+        let (service, restoreSettingsView) = RestoreSettingsModule.module(statPage: .coinManager)
+        self.restoreSettingsView = restoreSettingsView
         _viewModel = .init(wrappedValue: ManageWalletsViewModel(account: account, restoreSettingsService: service))
 
         _isPresented = isPresented
@@ -42,18 +45,18 @@ struct ManageWalletsView: View {
                 }
             }
             .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
+                ToolbarItem(placement: .navigationBarTrailing) {
                     Button("button.cancel".localized) {
                         isPresented = false
                     }
                 }
 
                 if viewModel.canAddToken {
-                    ToolbarItem(placement: .primaryAction) {
+                    ToolbarItem(placement: .navigationBarLeading) {
                         Button(action: {
                             openAddToken()
                         }) {
-                            Image(systemName: "plus")
+                            Image("plus")
                         }
                     }
                 }

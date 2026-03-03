@@ -26,6 +26,8 @@ extension View {
 }
 
 extension EdgeInsets {
+    static let zero = EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+
     var inverted: EdgeInsets {
         .init(top: -top, leading: -leading, bottom: -bottom, trailing: -trailing)
     }

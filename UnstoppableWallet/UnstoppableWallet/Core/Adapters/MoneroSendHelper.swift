@@ -55,7 +55,7 @@ class MoneroSendHelper {
 
         return fields + [
             .fee(
-                title: SendField.InformedTitle("fee_settings.network_fee".localized, info: .fee),
+                title: ComponentInformedTitle("fee_settings.network_fee".localized, info: .fee),
                 amountData: .init(appValue: appValue, currencyValue: currencyValue)
             ),
         ]
