@@ -12,7 +12,6 @@
 "button.share" = "Поделиться";
 "button.paste" = "Вставить";
 "button.resend" = "Отправить повторно";
-"button.backup" = "Резервная копия";
 "button.restore" = "Восстановить";
 "button.copy" = "Копировать";
 "button.copy_error" = "Скопировать ошибку";
@@ -26,11 +25,8 @@
 "button.save" = "Сохранить";
 "button.send" = "Отправить";
 "button.sign" = "Подписать";
-"button.more" = "Показать больше";
 "button.i_understand" = "Я понимаю";
 "button.understood" = "Понятно";
-"button.learn_more" = "Подробнее";
-"button.unlock" = "Разблокировать";
 "button.select" = "Выбрать";
 "button.later" = "Позже";
 
@@ -85,8 +81,6 @@
 "alert_card.title.critical" = "Предупреждение!";
 "alert_card.title.caution" = "Внимание!";
 
-"no_results_found" = "Ничего не найдено";
-"action.loading" = "загрузка...";
 "placeholder.search" = "Поиск";
 
 "status" = "Статус";
@@ -117,13 +111,6 @@
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
 
-"auto_lock.immediate" = "Немедленно";
-"auto_lock.minute1" = "1 минута";
-"auto_lock.minute5" = "5 минут";
-"auto_lock.minute15" = "15 минут";
-"auto_lock.minute30" = "30 минут";
-"auto_lock.hour1" = "1 час";
-
 "powered_by" = "Работает на %@";
 
 "filter.all" = "Все";
@@ -153,7 +140,6 @@
 "restore.passphrase" = "Кодовая фраза";
 "restore.input.passphrase" = "Пароль";
 "restore.wallet.passphrase_description" = "Введите кодовую фразу, которую вы использовали при создании этой фразы восстановления. Импорт существующего кошелька с новой кодой фразой создаст совершенно новый кошелек.";
-"restore.passphrase_description" = "Этот пароль используется для шифрования файлов резервной копии вашего кошелька. Он не связан с вашим паролем Apple iCloud. Если вы потеряете или забудете этот пароль, его нельзя будет восстановить или сбросить.";
 "restore.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
 "restore.non_standard_import" = "Нестандартный импорт";
 "restore.non_standard_import.description" = "На этой странице представлен специальный механизм восстановления кошелька для пользователей %@ с нестандартным кошельком. Как правило, такие кошельки могли быть созданы в версиях %@ 0.27–0.28 с использованием неанглоязычного списка мнемонических слов и/или специального символа в парольной фразе кошелька (например, диакритического знака).
@@ -190,9 +176,6 @@
 
 // Coin Settings
 
-"coin_settings.title" = "Настройки блокчейна";
-"coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (рекомендованный)";
 "sync_mode.hybrid" = "Гибрид";
 "sync_mode.from_blockchain" = "Из блокчейна";
 "blockchain_settings.description" = "Выберите формат адреса для токена.";
@@ -215,8 +198,6 @@
 "recovery_phrase.warning" = "Никогда не делитесь этим ключом с кем-либо. Команда поддержки кошелька %@ никогда не будет запрашивать его.";
 "recovery_phrase.tap_to_show" = "Нажмите, чтобы показать фразу восстановления";
 "recovery_phrase.passphrase" = "Кодовая фраза";
-"recovery_phrase.copy_warning.title" = "Риск копирования фразы восстановления";
-"recovery_phrase.copy_warning.description" = "В целях безопасности мы не рекомендуем использовать действие копирования фразы восстановления.";
 
 // EVM Private Key
 
@@ -234,8 +215,6 @@
 "monero_private_key.title" = "Приватные ключи Monero";
 "monero_private_key.tap_to_show" = "Нажмите, чтобы показать приватный ключ";
 "monero.key_types" = "Тип";
-"monero.key_types.spend" = "Ключ расхода (Spend key)";
-"monero.key_types.view" = "Ключ просмотра (View key)";
 
 // Extended Key
 
@@ -263,12 +242,6 @@
 "backup_verify_words.description" = "Выберите два запрошенных слова из вашей фразы восстановления кошелька";
 "backup_verify_words.incorrect_word" = "Неверное слово";
 
-// Backup Verify Passphrase
-
-"backup_verify_passphrase.title" = "Подтвердить";
-"backup_verify_passphrase.description" = "Введите кодовую фразу";
-"backup_verify_passphrase.incorrect_passphrase" = "Неверная кодовая фраза";
-
 // Backup Prompt
 
 "backup_prompt.backup_recovery_phrase" = "Резервная копия";
@@ -281,32 +254,18 @@
 
 // Backup to iCloud
 
-"backup.cloud.title" = "Резерв. копирование в iCloud";
-"backup.cloud.description" = "iCloud - это облачное хранилище, предоставляемое Apple. Важно знать, что ваши данные будут храниться на серверах Apple, а не на ваших личных устройствах. Это означает, что вы доверяете свои данные и передаете безопасность вашей информации стороннему сервису.";
-"backup.cloud.terms.item.1" = "Я понимаю, что закрытие доступа к моему iCloud, приведет к потере доступа к резервной копии соответствующего кошелька.";
-
-"backup.cloud.name.title" = "Имя резервной копии";
-"backup.cloud.name.description" = "Введите имя файла резервной копии.";
-"backup.cloud.name.empty" = "Имя резервной копии не может быть пустым!";
 "backup.cloud.name.error.empty" = "Имя резервной копии не должно быть пустым";
 "backup.cloud.name.error.already_exist" = "Имя резервной копии уже существует!";
 "backup.cloud.name.placeholder" = "Название";
 
-"backup.cloud.password.title" = "Установить пароль";
-"backup.cloud.password.description" = "Установите пароль разблокировки для вашей резервной копии. Пароль должен содержать как минимум 8 символов и включать хотя бы одну строчную букву, заглавную букву, цифру и специальный символ.";
-"backup.cloud.password.highlighted_description" = "Не забудьте этот пароль! Он отличается от вашего пароля для Apple iCloud и не может быть восстановлен или сброшен.";
 "backup.cloud.password.placeholder" = "Пароль";
 "backup.cloud.password.confirm.placeholder" = "Подтвердить";
-"backup.cloud.password.save" = "Сохранить и создать резервную копию";
 
 "backup.cloud.password.error.empty_passphrase" = "Пароль не может быть пустым";
-"backup.cloud.password.error.forbidden_symbols" = "Пожалуйста, используйте только поддерживаемые символы: A-Z a-z 0-9 ' \" ` & / ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "backup.cloud.password.error.minimum_requirement" = "Не менее 8 символов, включая одну заглавную букву, одну строчную букву, одну цифру и один символ";
 "backup.cloud.password.error.invalid_password" = "Неверный пароль";
 "backup.cloud.password.error.invalid_backup" = "Резервная копия повреждена";
 "backup.cloud.password.confirm.error.doesnt_match" = "Пароли не совпадают";
-"backup.cloud.not_available" = "iCloud недоступен";
-"backup.cloud.cant_create_file" = "Не удается сохранить файл в iCloud";
 "backup.cloud.cant_delete_file" = "Не удается удалить из iCloud";
 "backup.cloud.no_access.title" = "Доступ к iCloud";
 "backup.cloud.no_access.description" = "Для создания резервной копии необходимо предоставить доступ к iCloud памяти.";
@@ -316,17 +275,13 @@
 "error.send.self_transfer" = "Отправка самому себе невозможна";
 "error.send_binance.memo_required" = "При отправке транзакции получателю необходимо заполнить поле мемо";
 "error.send_binance.only_digits_allowed" = "Поле мемо должно содержать только цифры";
-"error.send_z_cash.transparent_address" = "%@ не поддерживает платежи на публичный адрес";
 
 // Balance
 
 "balance.title" = "Кошелек";
-"balance.tab_bar_item" = "Баланс";
 "balance.send" = "Отправить";
-"balance.withdraw" = "Вывод средств";
 "balance.swap" = "Обмен";
 "balance.receive" = "Получить";
-"balance.deposit" = "Пополнение";
 "balance.chart" = "График";
 "balance.scan" = "QR-код";
 "balance.copy_address" = "Скопировать адрес";
@@ -343,7 +298,6 @@
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "Осталось блоков - %@";
 "balance.synced_through" = "до %@";
-"balance.empty.description" = "Вы еще не добавили токены в этот кошелек.";
 "balance.sort.header" = "Сортировка";
 "balance.sort.valueHighToLow" = "Баланс";
 "balance.sort.az" = "Название";
@@ -358,9 +312,7 @@
 
 // Token Balance Page
 "balance.token.locked" = "Заблокировано";
-"balance.token.locked.stellar.title" = "Заблокированная сумма";
 "balance.token.locked.stellar.description" = "Сеть Stellar блокирует 1 XLM для активации кошелька и 0,5 XLM в качестве резерва для каждого активированного в кошельке токена.";
-"balance.token.locked.stellar.description.currently_locked" = "В данный момент заблокировано:";
 "balance.token.locked.stellar.description.wallet_activation" = "Активация кошелька:";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "Отправитель отправил эти средства с временной блокировкой, которая истекает в указанную дату.\n\nНе волнуйтесь, полученные биткоины уже принадлежат вам, но до истечения срока блокировки вы не сможете потратить их в сети Bitcoin.";
@@ -369,19 +321,12 @@
 "balance.token.not_relayed.info.description" = "Транзакция, содержащая эту сумму, транслирована, но еще не принята сетью";
 "balance.token.transparent" = "Transparent";
 "balance.token.transparent.info.title" = "Transparent баланс";
-"balance.token.transparent.info.item" = "Transparent баланс";
 "balance.token.transparent.info.description" = "У вас есть ZEC, находящийся на transparent адресе. Чтобы использовать его в Unstoppable, необходимо выполнить shielding для полной приватности.";
 "balance.token.transparent.detected.title" = "Обнаружен Transparent ZEC";
 "balance.token.transparent.detected.description" = "У вас есть ZEC, находящийся на transparent адресе. Чтобы использовать его в Unstoppable, необходимо выполнить shielding для полной приватности.";
 "balance.token.shield" = "Shield";
 
 "balance.token.receive_address" = "Адрес получателя";
-"balance.token.staked" = "Staked";
-"balance.token.staked.info.title" = "Staked title";
-"balance.token.staked.info.description" = "Staked Description Text";
-"balance.token.frozen" = "Frozen";
-"balance.token.frozen.info.title" = "Frozen title";
-"balance.token.frozen.info.description" = "Frozen Description Text";
 "balance.token.account.inactive.description" = "Транзакции появятся после активации";
 
 // Account switcher
@@ -404,20 +349,14 @@
 "deposit.address_type.unified.description" = "Используйте для личных и приватных переводов между кошельками.";
 "deposit.address_type.transparent" = "Transparent";
 "deposit.address_type.transparent.description" = "Используйте для получения от бирж или сервисов, которые не поддерживают унифицированные адреса.";
-"deposit.address_type.transparent.caution" = "Вы можете получать ZEC на этот transparent адрес. Чтобы отправить, переведите средства на shielded-адрес.";
-"deposit.address_type.legacy" = "Legacy";
 
 "deposit.address" = "Адрес";
-"deposit.your_address" = "Ваш адрес";
 "receive_alert.not_backed_up_description" = "Вам нужно сделать резервную копию %@ перед получением %@.";
 "receive_alert.any_coins.not_backed_up_description" = "Вам нужно сделать резервную копию %@ перед тем, как вы сможете получить любые монеты.";
 "deposit.no_adapter.error" = "Не удается предоставить адрес";
 
 "deposit.address_format" = "Формат";
 "deposit.address_network" = "Сеть";
-"deposit.qr_code_description" = "Ваш адрес для депозита %@";
-"deposit.qr_code_description.watch" = "Отслеживаемый адрес %@";
-"deposit.account" = "Аккаунт";
 "deposit.trustline" = "Trustline";
 "deposit.trustline.not_activated" = "Не активировано";
 "deposit.activate" = "Активировать";
@@ -426,11 +365,8 @@
 "deposit.set_amount" = "Установить сумму";
 "deposit.enter_amount" = "Введите сумму";
 
-"deposit.memo" = "Memo (Tag)";
 "deposit.copy_address" = "Копировать";
 "deposit.share_address" = "Поделиться";
-"deposit.memo_warning.title" = "Важно";
-"deposit.memo_warning.description" = "Для получения активов необходимы memo(tag) и адрес. В противном случае Ваши средства будут утеряны.";
 
 "deposit.not_active" = "Не активен";
 "deposit.not_active.title" = "TRON не активирован";
@@ -852,27 +788,7 @@
 
 "market.time_period.title" = "Период";
 "market.time_period.1d" = "1 День";
-"market.time_period.1w" = "1 Неделя";
-"market.time_period.2w" = "2 Недели";
-"market.time_period.1m" = "1 Месяц";
-"market.time_period.3m" = "3 Месяца";
-"market.time_period.6m" = "6 Месяцев";
-"market.time_period.1y" = "1 Год";
-"market.time_period.2y" = "2 Года";
-"market.time_period.3y" = "3 Года";
-"market.time_period.4y" = "4 Года";
-"market.time_period.5y" = "5 Лет";
 "market.time_period.1d.short" = "1Д";
-"market.time_period.1w.short" = "1Н";
-"market.time_period.2w.short" = "2Н";
-"market.time_period.1m.short" = "1M";
-"market.time_period.3m.short" = "3M";
-"market.time_period.6m.short" = "6M";
-"market.time_period.1y.short" = "1Г";
-"market.time_period.2y.short" = "2Г";
-"market.time_period.3y.short" = "3Г";
-"market.time_period.4y.short" = "4Г";
-"market.time_period.5y.short" = "5Г";
 
 "market.project_has_no_coin" = "У этого проекта нет токена";
 

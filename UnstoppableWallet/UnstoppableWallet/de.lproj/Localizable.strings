@@ -12,7 +12,6 @@
 "button.share" = "Teilen";
 "button.paste" = "Einsetzen";
 "button.resend" = "Nochmal senden";
-"button.backup" = "Sicherung";
 "button.restore" = "Wiederherstellen";
 "button.copy" = "Kopieren";
 "button.copy_error" = "Fehler kopieren";
@@ -26,11 +25,8 @@
 "button.save" = "Speichern";
 "button.send" = "Senden";
 "button.sign" = "Signieren";
-"button.more" = "Mehr anzeigen";
 "button.i_understand" = "Ich stimme zu";
 "button.understood" = "Verstanden";
-"button.learn_more" = "Mehr erfahren";
-"button.unlock" = "Entsperren";
 "button.select" = "Auswählen";
 "button.later" = "Später";
 
@@ -85,8 +81,6 @@
 "alert_card.title.critical" = "Warnung!";
 "alert_card.title.caution" = "Achtung!";
 
-"no_results_found" = "Keine Ergebnisse gefunden";
-"action.loading" = "wird geladen ...";
 "placeholder.search" = "Suche";
 
 "status" = "Status";
@@ -117,13 +111,6 @@
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
 
-"auto_lock.immediate" = "Sofort";
-"auto_lock.minute1" = "1 Minute";
-"auto_lock.minute5" = "5 Minuten";
-"auto_lock.minute15" = "15 Minuten";
-"auto_lock.minute30" = "30 Minuten";
-"auto_lock.hour1" = "1 Stunde";
-
 "powered_by" = "Angetrieben von %@";
 
 "filter.all" = "Alle";
@@ -153,7 +140,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "restore.passphrase" = "Passwort";
 "restore.input.passphrase" = "Passwort";
 "restore.wallet.passphrase_description" = "Bitte geben Sie die Passphrase ein, die Sie beim Erstellen dieses Wiederherstellungsphrases verwendet haben. Das Wiederherstellen einer bestehenden Brieftasche mit einer neuen Passphrase generiert eine ganz neue Brieftasche.";
-"restore.passphrase_description" = "Dieses Passwort wird verwendet, um die Sicherungsdatei Ihrer Wallet zu verschlüsseln. Es hat nichts mit Ihrem Apple iCloud-Passwort zu tun. Wenn Sie es vergessen oder verlieren, kann es nicht wiederhergestellt oder zurückgesetzt werden.";
 "restore.error.empty_passphrase" = "Die Passphrase darf nicht leer sein";
 "restore.non_standard_import" = "Nicht standardmäßige Wiederherstellung";
 "restore.non_standard_import.description" = "Diese Seite bietet einen speziellen Wallet-Importmechanismus für Benutzer von %@ die eine nicht standardmäßige Wallet haben. Solche Brieftaschen könnten in %@ Version 0 erstellt worden sein. 7 - 0.28 unter Verwendung einer nicht-englischen Wiederherstellungsphrase und/oder eines Sonderzeichens in der Brieftasche Passphrase (d.h. diakritisches Symbol).\n\nWenn Sie ein betroffener Benutzer sind, wird Ihr Wallet-Guthaben nach dem Import in Version 0.29 oder höher 0 angezeigt. Auf dieser Seite können Sie den Zugriff auf Ihre nicht standardmäßige Brieftasche wiederherstellen. Sobald Sie importiert haben, empfehlen wir Ihnen eine neue Wallet zu erstellen (die standardkonform ist) und Geld dorthin zu verschieben.";
@@ -188,9 +174,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Coin Settings
 
-"coin_settings.title" = "Blockchain Einstellungen";
-"coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (empfohlen)";
 "sync_mode.hybrid" = "Hybrid";
 "sync_mode.from_blockchain" = "Von Blockchain";
 "blockchain_settings.description" = "Wählen Sie das Adressformat für die Coin aus.";
@@ -213,8 +196,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "recovery_phrase.warning" = "Teilen Sie diesen Schlüssel niemals mit niemandem. %@ Wallet-Support-Team wird ihn niemals anfragen.";
 "recovery_phrase.tap_to_show" = "Tippen, um Wiederherstellungsphrase anzuzeigen";
 "recovery_phrase.passphrase" = "Passwort";
-"recovery_phrase.copy_warning.title" = "Risiko der Wiederherstellungs-Phrase-Kopie";
-"recovery_phrase.copy_warning.description" = "Als Sicherheitsmaßnahme empfehlen wir, Kopiermaßnahmen nicht auf Wiederherstellungs-Phrase zu verwenden.";
 
 // EVM Private Key
 
@@ -232,8 +213,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "monero_private_key.title" = "Claves públicas de Monero";
 "monero_private_key.tap_to_show" = "Tippen um privaten Schlüssel anzuzeigen";
 "monero.key_types" = "Tipo";
-"monero.key_types.spend" = "Gastar";
-"monero.key_types.view" = "Ver";
 
 // Extended Key
 
@@ -261,12 +240,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "backup_verify_words.description" = "Wählen Sie zwei angeforderte Wörter aus Ihrer Wallet-Wiederherstellungsphrase";
 "backup_verify_words.incorrect_word" = "Falsches Wort";
 
-// Backup Verify Passphrase
-
-"backup_verify_passphrase.title" = "Prüfen";
-"backup_verify_passphrase.description" = "Geben Sie Ihre Passphrase ein";
-"backup_verify_passphrase.incorrect_passphrase" = "Falsches Passwort";
-
 // Backup Prompt
 
 "backup_prompt.backup_recovery_phrase" = "Wiederherstellungsphrase sichern";
@@ -279,32 +252,18 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Backup to iCloud
 
-"backup.cloud.title" = "Sicherung in iCloud";
-"backup.cloud.description" = "iCloud-Speicher ist ein von Apple bereitgestellter Cloud-Speicherdienst. Es ist wichtig zu wissen, dass Ihre Daten auf Apple-Servern gespeichert werden und nicht auf Ihren persönlichen Geräten. Das bedeutet, dass Sie Ihre Daten anvertrauen und die Sicherheit Ihrer Daten einem Drittanbieter überlassen.";
-"backup.cloud.terms.item.1" = "Ich verstehe, dass der Verlust des Zugriffs auf meine iCloud dazu führen wird, dass auch der Zugriff auf die Sicherung einer entsprechenden Brieftasche verloren geht.";
-
-"backup.cloud.name.title" = "Sicherungsname";
-"backup.cloud.name.description" = "Geben Sie den Namen für die Backup-Datei ein.";
-"backup.cloud.name.empty" = "Sicherungsname darf nicht leer sein!";
 "backup.cloud.name.error.empty" = "Sicherungsname darf nicht leer sein";
 "backup.cloud.name.error.already_exist" = "Sicherungsname existiert bereits!";
 "backup.cloud.name.placeholder" = "Name";
 
-"backup.cloud.password.title" = "Passwort festlegen";
-"backup.cloud.password.description" = "Legen Sie ein Passwort fest, um das Entsperren zu ermöglichen. Das Passwort muss mindestens 8 Zeichen lang sein und einen Kleinbuchstaben, einen Großbuchstaben, eine Zahl und ein Sonderzeichen enthalten.";
-"backup.cloud.password.highlighted_description" = "Vergessen Sie dieses Passwort nicht! Es ist getrennt von Ihrem Apple iCloud-Passwort und kann nicht wiederhergestellt oder zurückgesetzt werden.";
 "backup.cloud.password.placeholder" = "Passwort";
 "backup.cloud.password.confirm.placeholder" = "Bestätigen";
-"backup.cloud.password.save" = "Speichern und sichern";
 
 "backup.cloud.password.error.empty_passphrase" = "Passwort darf nicht leer sein";
-"backup.cloud.password.error.forbidden_symbols" = "Bitte verwende nur unterstützte Symbole: <![CDATA[A-Z a-z 0-9 \' \" ` & / ? ! : ; . , ~ * $ = + - [ ](){} <> \\ _ # @ | % ]]>";
 "backup.cloud.password.error.minimum_requirement" = "Das Passwort muss mindestens 8 Zeichen enthalten, darunter ein Großbuchstabe, ein Kleinbuchstabe, eine Zahl und ein Symbol.";
 "backup.cloud.password.error.invalid_password" = "Falsches Passwort";
 "backup.cloud.password.error.invalid_backup" = "Backup ist beschädigt";
 "backup.cloud.password.confirm.error.doesnt_match" = "Passwort stimmt nicht überein";
-"backup.cloud.not_available" = "iCloud nicht verfügbar";
-"backup.cloud.cant_create_file" = "Die Datei kann nicht in iCloud gespeichert werden";
 "backup.cloud.cant_delete_file" = "Kann nicht von iCloud gelöscht werden";
 "backup.cloud.no_access.title" = "Zugriff auf iCloud";
 "backup.cloud.no_access.description" = "Um ein Backup zu erstellen, müssen Sie Zugriff auf iCloud-Speicher gewähren.";
@@ -314,17 +273,13 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "error.send.self_transfer" = "Sich selbst zu senden wird nicht unterstützt";
 "error.send_binance.memo_required" = "Empfänger benötigt nicht-leeren Vermerk bei Transfer einer Transaktion";
 "error.send_binance.only_digits_allowed" = "Der Vermerk darf nur Zahlen enthalten";
-"error.send_z_cash.transparent_address" = "%@ unterstützt keine Zahlungen an eine transparente Adresse";
 
 // Balance
 
 "balance.title" = "Wallet";
-"balance.tab_bar_item" = "Guthaben";
 "balance.send" = "Senden";
-"balance.withdraw" = "Abheben";
 "balance.swap" = "Swap";
 "balance.receive" = "Empfangen";
-"balance.deposit" = "Anfordern";
 "balance.chart" = "Diagramm";
 "balance.scan" = "QR-Code";
 "balance.copy_address" = "Copiar dirección";
@@ -341,7 +296,6 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "Verbleibende Blöcke – %@";
 "balance.synced_through" = "bis %@";
-"balance.empty.description" = "Sie haben keine Coins zu diesem Wallet hinzugefügt.";
 "balance.sort.header" = "Sortieren nach";
 "balance.sort.valueHighToLow" = "Guthaben";
 "balance.sort.az" = "Name";
@@ -356,9 +310,7 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 
 // Token Balance Page
 "balance.token.locked" = "Gesperrt";
-"balance.token.locked.stellar.title" = "Gesperrter Betrag";
 "balance.token.locked.stellar.description" = "Das Stellar-Netzwerk sperrt 1 XLM zur Aktivierung der Wallet sowie 0,5 XLM als Reserve für jedes in Ihrer Wallet aktivierte Token.";
-"balance.token.locked.stellar.description.currently_locked" = "Derzeit gesperrt:";
 "balance.token.locked.stellar.description.wallet_activation" = "Wallet-Aktivierung";
 "balance.token.locked.info.title" = "TimeLock";
 "balance.token.locked.info.description" = "Der Sender hat dieses Guthaben mit einer Ausgabesperre versehen, die zu dem angezeigten Datum abläuft.\n\nKeine Sorge, die erhaltenen Bitcoin sind bereits Ihre. Die Bitcoins sind nur zeitweise gesperrt, so dass Sie sie erst nach Ablauf der Sperrzeit im Bitcoin-Netzwerk ausgeben können.";
@@ -367,19 +319,12 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "balance.token.not_relayed.info.description" = "Die Transaktion, die diesen Betrag hält, wurde übertragen, aber noch nicht vom Netzwerk akzeptiert";
 "balance.token.transparent" = "Transparente";
 "balance.token.transparent.info.title" = "Transparenter Betrag";
-"balance.token.transparent.info.item" = "Transparenter Betrag";
 "balance.token.transparent.info.description" = "Sie besitzen ein ZEC-Guthaben auf einer transparenten Adresse. Um es in Unstoppable zu verwenden, muss es für vollständige Privatsphäre abgeschirmt werden.";
 "balance.token.transparent.detected.title" = "Transparenter ZEC erkannt";
 "balance.token.transparent.detected.description" = "Sie besitzen ein ZEC-Guthaben auf einer transparenten Adresse. Um es in Unstoppable zu verwenden, muss es für vollständige Privatsphäre abgeschirmt werden.";
 "balance.token.shield" = "Proteger";
 
 "balance.token.receive_address" = "Dirección de recepción";
-"balance.token.staked" = "Absteckung";
-"balance.token.staked.info.title" = "Absteckter Titel";
-"balance.token.staked.info.description" = "Absteckungstext";
-"balance.token.frozen" = "Eingefroren";
-"balance.token.frozen.info.title" = "gefrorener Titel";
-"balance.token.frozen.info.description" = "gefrorener Beschreibungstext";
 "balance.token.account.inactive.description" = "Transaktionen werden nach der Aktivierung angezeigt";
 
 // Account switcher
@@ -402,20 +347,14 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "deposit.address_type.unified.description" = "Verwenden Sie diese Option für persönliche und private Transfers zwischen Wallets.";
 "deposit.address_type.transparent" = "Transparente";
 "deposit.address_type.transparent.description" = "Verwenden Sie diese Option, um Zahlungen von Börsen oder Diensten zu empfangen, die keine vereinheitlichten Adressen unterstützen.";
-"deposit.address_type.transparent.caution" = "Sie können ZEC an diese transparente Adresse empfangen. Zum Senden müssen Sie es jedoch an eine abgeschirmte Adresse übertragen.";
-"deposit.address_type.legacy" = "Legacy";
 
 "deposit.address" = "Adresse";
-"deposit.your_address" = "Deine Adresse";
 "receive_alert.not_backed_up_description" = "Sie müssen %@ sichern, bevor Sie %@ empfangen können.";
 "receive_alert.any_coins.not_backed_up_description" = "Du musst %@ sichern, bevor du Münzen erhalten kannst.";
 "deposit.no_adapter.error" = "Kann keine Adresse angeben";
 
 "deposit.address_format" = "Formato";
 "deposit.address_network" = "Netzwerk";
-"deposit.qr_code_description" = "Ihre Adresse für %@";
-"deposit.qr_code_description.watch" = "Beobachtungsadresse von %@";
-"deposit.account" = "Account";
 "deposit.trustline" = "Trustline";
 "deposit.trustline.not_activated" = "Nicht aktiviert";
 "deposit.activate" = "Aktivieren";
@@ -424,11 +363,8 @@ Gehe zu Einstellungen - > %@ und erlaube Zugriff auf die Kamera.";
 "deposit.set_amount" = "Setze Betrag";
 "deposit.enter_amount" = "Betrag eingeben";
 
-"deposit.memo" = "Memo (Tag)";
 "deposit.copy_address" = "Kopieren";
 "deposit.share_address" = "Teilen";
-"deposit.memo_warning.title" = "Wichtig";
-"deposit.memo_warning.description" = "Sowohl eine Memo (Tag) als auch die Adresse werden benötigt, um sicherzustellen, dass Vermögenswerte empfangen werden. Andernfalls gehen Ihre Gelder verloren.";
 
 "deposit.not_active" = "nicht aktiv";
 "deposit.not_active.title" = "TRON nicht aktiviert";
@@ -851,27 +787,7 @@ Bis die wallet aktiviert ist, können Token empfangen werden, jedoch werden die 
 
 "market.time_period.title" = "Zeitraum";
 "market.time_period.1d" = "1 Tag";
-"market.time_period.1w" = "1 Woche";
-"market.time_period.2w" = "2 Wochen";
-"market.time_period.1m" = "1 Monate";
-"market.time_period.3m" = "3 Monate";
-"market.time_period.6m" = "6 Monate";
-"market.time_period.1y" = "1 Jahr";
-"market.time_period.2y" = "2 Jahre";
-"market.time_period.3y" = "3 Jahre";
-"market.time_period.4y" = "4 Jahre";
-"market.time_period.5y" = "5 Jahre";
 "market.time_period.1d.short" = "1T";
-"market.time_period.1w.short" = "1W";
-"market.time_period.2w.short" = "2W";
-"market.time_period.1m.short" = "1M";
-"market.time_period.3m.short" = "3M";
-"market.time_period.6m.short" = "6M";
-"market.time_period.1y.short" = "1J";
-"market.time_period.2y.short" = "2J";
-"market.time_period.3y.short" = "3J";
-"market.time_period.4y.short" = "4J";
-"market.time_period.5y.short" = "5J";
 
 "market.project_has_no_coin" = "Dieses Projekt hat keine eigene Kryptowährung";
 

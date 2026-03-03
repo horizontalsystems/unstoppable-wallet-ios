@@ -12,7 +12,6 @@
 "button.share" = "Compartir";
 "button.paste" = "Pegar";
 "button.resend" = "Reenviar";
-"button.backup" = "Copia de seguridad";
 "button.restore" = "Restaurar";
 "button.copy" = "Copiar";
 "button.copy_error" = "Copiar error";
@@ -26,11 +25,8 @@
 "button.save" = "Guardar";
 "button.send" = "Enviar";
 "button.sign" = "Firma";
-"button.more" = "Mostrar más";
 "button.i_understand" = "Entiendo";
 "button.understood" = "Entendido";
-"button.learn_more" = "Aprender más";
-"button.unlock" = "Desbloquear";
 "button.select" = "Seleccionar";
 "button.later" = "Más tarde";
 
@@ -85,8 +81,6 @@
 "alert_card.title.critical" = "¡Advertencia!";
 "alert_card.title.caution" = "¡Atención!";
 
-"no_results_found" = "No se han encontrado resultados";
-"action.loading" = "cargando...";
 "placeholder.search" = "Buscar";
 
 "status" = "Estado";
@@ -117,13 +111,6 @@
 "face_id" = "ID de rostro";
 "touch_id" = "Touch ID";
 
-"auto_lock.immediate" = "Inmediato";
-"auto_lock.minute1" = "1 minuto";
-"auto_lock.minute5" = "5 minutos";
-"auto_lock.minute15" = "15 minutos";
-"auto_lock.minute30" = "30 minutos";
-"auto_lock.hour1" = "1 hora";
-
 "powered_by" = "Con tecnología de %@";
 
 "filter.all" = "Todo";
@@ -153,7 +140,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "restore.passphrase" = "Frase de contraseña";
 "restore.input.passphrase" = "Frase de contraseña";
 "restore.wallet.passphrase_description" = "Introduce la contraseña que utilizaste al crear esta frase de recuperación. Restaurar una billetera existente con una nueva contraseña generará una billetera completamente nueva.";
-"restore.passphrase_description" = "Esta contraseña se utiliza para encriptar el archivo de respaldo de tu cartera. No está relacionada con tu contraseña de Apple iCloud. No se puede recuperar ni restablecer si se pierde o se olvida.";
 "restore.error.empty_passphrase" = "La frase no puede estar vacía";
 "restore.non_standard_import" = "Restauración no estándar";
 "restore.non_standard_import.description" = "Esta página proporciona un mecanismo especial de importación de carteras para usuarios de %@ que tienen una cartera no estándar. Dichas carteras podrían haberse creado en la versión %@ 0.27 - 0.28 utilizando una frase de recuperación en un idioma que no es inglés y/o un carácter especial en la frase de contraseña de la cartera (por ejemplo, un símbolo diacrítico).\n\nSi eres un usuario afectado, entonces tu saldo en la cartera se mostrará como 0 después de importar dicha cartera en la versión 0.29 o superior. Esta página te permitirá restaurar el acceso a tu cartera no estándar. Una vez importada, se recomienda crear una nueva cartera (que cumpla con los estándares) y transferir allí los fondos.";
@@ -188,9 +174,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Coin Settings
 
-"coin_settings.title" = "Configuración de Blockchain";
-"coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "Dirección de caja (recomendado)";
 "sync_mode.hybrid" = "Híbrido";
 "sync_mode.from_blockchain" = "Desde Blockchain";
 "blockchain_settings.description" = "Selecciona el formato de dirección para la moneda.";
@@ -213,8 +196,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "recovery_phrase.warning" = "Nunca compartas esta clave con nadie. El equipo de soporte de la cartera %@ nunca la solicitará.";
 "recovery_phrase.tap_to_show" = "Toca para mostrar la frase de recuperación";
 "recovery_phrase.passphrase" = "Frase de contraseña";
-"recovery_phrase.copy_warning.title" = "Copia de Riesgo de Recuperación";
-"recovery_phrase.copy_warning.description" = "Como medida de seguridad recomendamos no utilizar la acción de copia en la clave privada.";
 
 // EVM Private Key
 
@@ -232,8 +213,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "monero_private_key.title" = "Claves privadas de Monero";
 "monero_private_key.tap_to_show" = "Toca para mostrar la clave privada";
 "monero.key_types" = "Tipo";
-"monero.key_types.spend" = "Gastar";
-"monero.key_types.view" = "Ver";
 
 // Extended Key
 
@@ -261,12 +240,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "backup_verify_words.description" = "Seleccione dos palabras solicitadas de su frase de recuperación de cartera";
 "backup_verify_words.incorrect_word" = "Palabra incorrecta";
 
-// Backup Verify Passphrase
-
-"backup_verify_passphrase.title" = "Verificar";
-"backup_verify_passphrase.description" = "Introduzca su frase de contraseña";
-"backup_verify_passphrase.incorrect_passphrase" = "Contraseña incorrecta";
-
 // Backup Prompt
 
 "backup_prompt.backup_recovery_phrase" = "Backup del Monedero";
@@ -279,32 +252,18 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Backup to iCloud
 
-"backup.cloud.title" = "Copia de seguridad en iCloud";
-"backup.cloud.description" = "El almacenamiento en iCloud es un servicio de almacenamiento en la nube de terceros proporcionado por Apple. Es importante tener en cuenta que sus datos se almacenarán en los servidores de Apple, no en sus dispositivos personales. Por lo tanto, está confiando sus datos y entregando la seguridad de su información a un servicio de terceros.";
-"backup.cloud.terms.item.1" = "Entiendo que perder el acceso a mi iCloud, resultará en perder el acceso a la copia de seguridad de una cartera respectiva.";
-
-"backup.cloud.name.title" = "Nombre de copia de seguridad";
-"backup.cloud.name.description" = "Introduzca el nombre del archivo de copia de seguridad.";
-"backup.cloud.name.empty" = "¡El nombre de la copia de seguridad no puede estar vacío!";
 "backup.cloud.name.error.empty" = "El nombre de la copia de seguridad no debe estar vacío";
 "backup.cloud.name.error.already_exist" = "¡El nombre de la copia de seguridad ya existe!";
 "backup.cloud.name.placeholder" = "Nombre";
 
-"backup.cloud.password.title" = "Establecer contraseña";
-"backup.cloud.password.description" = "Establezca la contraseña de desbloqueo para su copia de seguridad. La contraseña debe contener al menos 8 caracteres, incluyendo una letra minúscula, una letra mayúscula, un número y un carácter especial.";
-"backup.cloud.password.highlighted_description" = "¡No olvides esta contraseña! Es independiente de tu contraseña de iCloud de Apple, y no se puede recuperar o restablecer.";
 "backup.cloud.password.placeholder" = "Contraseña";
 "backup.cloud.password.confirm.placeholder" = "Confirmar";
-"backup.cloud.password.save" = "Guardar y hacer una copia de seguridad";
 
 "backup.cloud.password.error.empty_passphrase" = "La contraseña no puede estar vacía";
-"backup.cloud.password.error.forbidden_symbols" = "Utilice solo símbolos admitidos: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "backup.cloud.password.error.minimum_requirement" = "Al menos 8 caracteres, incluyendo una letra mayúscula, una letra minúscula, un número y un símbolo";
 "backup.cloud.password.error.invalid_password" = "Contraseña incorrecta";
 "backup.cloud.password.error.invalid_backup" = "Copia de seguridad corrupta";
 "backup.cloud.password.confirm.error.doesnt_match" = "La contraseña no coincide";
-"backup.cloud.not_available" = "iCloud no disponible";
-"backup.cloud.cant_create_file" = "No se puede guardar el archivo en iCloud";
 "backup.cloud.cant_delete_file" = "No se puede eliminar de iCloud";
 "backup.cloud.no_access.title" = "Acceder a iCloud";
 "backup.cloud.no_access.description" = "Para crear una copia de seguridad, necesita proporcionar acceso al almacenamiento de iCloud.";
@@ -314,17 +273,13 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "error.send.self_transfer" = "Enviarte a vos mismo no está soportado";
 "error.send_binance.memo_required" = "El receptor requiere que el memo no esté vacío en la transacción de transferencia";
 "error.send_binance.only_digits_allowed" = "Es necesario que el memo contenga únicamente dígitos";
-"error.send_z_cash.transparent_address" = "%@ no soporta pagos a una dirección transparente";
 
 // Balance
 
 "balance.title" = "Cartera";
-"balance.tab_bar_item" = "Saldo";
 "balance.send" = "Enviar";
-"balance.withdraw" = "Retirar";
 "balance.swap" = "Permutar";
 "balance.receive" = "Recibir";
-"balance.deposit" = "Recibir";
 "balance.chart" = "Gráfico";
 "balance.scan" = "Escanear";
 "balance.copy_address" = "Copiar dirección";
@@ -341,7 +296,6 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "Bloques restantes - %@";
 "balance.synced_through" = "hasta %@";
-"balance.empty.description" = "No has añadido ninguna moneda a esta cartera.";
 "balance.sort.header" = "Ordenar por";
 "balance.sort.valueHighToLow" = "Saldo";
 "balance.sort.az" = "Nombre";
@@ -356,9 +310,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 // Token Balance Page
 "balance.token.locked" = "Bloqueado";
-"balance.token.locked.stellar.title" = "Monto bloqueado";
 "balance.token.locked.stellar.description" = "La red Stellar bloquea 1 XLM para activar la billetera y 0.5 XLM como reserva por cada token activado en tu billetera.";
-"balance.token.locked.stellar.description.currently_locked" = "Actualmente bloqueado:";
 "balance.token.locked.stellar.description.wallet_activation" = "Activación de la billetera";
 "balance.token.locked.info.title" = "Timelock";
 "balance.token.locked.info.description" = "El remitente envió estos fondos con un bloqueo del gasto que expirará en la fecha mostrada.\n\nNo te preocupes, los Bitcoins recibidos ya son tuyos, pero hasta que el período de bloqueo expire, no puedes gastarlos en la red Bitcoin.";
@@ -367,19 +319,12 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "balance.token.not_relayed.info.description" = "La transacción que contiene esta cantidad ha sido transmitida pero aún no ha sido aceptada por la red";
 "balance.token.transparent" = "Transparente";
 "balance.token.transparent.info.title" = "Monto transparente";
-"balance.token.transparent.info.item" = "Monto transparente";
 "balance.token.transparent.info.description" = "Tienes un saldo de ZEC en una dirección transparente. Para usarlo en Unstoppable, debe ser protegido (shielded) para garantizar total privacidad.";
 "balance.token.transparent.detected.title" = "ZEC transparente detectado";
 "balance.token.transparent.detected.description" = "Tienes un saldo de ZEC en una dirección transparente. Para usarlo en Unstoppable, debe ser protegido (shielded) para garantizar total privacidad.";
 "balance.token.shield" = "Blindado";
 
 "balance.token.receive_address" = "Dirección de recepción";
-"balance.token.staked" = "Llevado";
-"balance.token.staked.info.title" = "Título tomado";
-"balance.token.staked.info.description" = "Texto de descripción tomada";
-"balance.token.frozen" = "Congelados";
-"balance.token.frozen.info.title" = "Título congelado";
-"balance.token.frozen.info.description" = "Texto de descripción congelada";
 "balance.token.account.inactive.description" = "Las transacciones aparecerán después de la activación";
 
 // Account switcher
@@ -402,20 +347,14 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "deposit.address_type.unified.description" = "Usa esta opción para transferencias personales y privadas entre wallets.";
 "deposit.address_type.transparent" = "Transparente";
 "deposit.address_type.transparent.description" = "Usa esta opción para recibir desde exchanges o servicios que no admiten direcciones unificadas.";
-"deposit.address_type.transparent.caution" = "Puedes recibir ZEC en esta dirección transparente. Para enviar, primero transfiérelo a una dirección protegida (shielded).";
-"deposit.address_type.legacy" = "Legacy";
 
 "deposit.address" = "Dirección";
-"deposit.your_address" = "Su dirección";
 "receive_alert.not_backed_up_description" = "Necesita una Copia de seguridad %@ antes de poder recibir %@.";
 "receive_alert.any_coins.not_backed_up_description" = "Necesitas hacer una copia de seguridad de %@ antes de poder recibir cualquier moneda.";
 "deposit.no_adapter.error" = "No se puede proporcionar la dirección";
 
 "deposit.address_format" = "Formatear";
 "deposit.address_network" = "La red";
-"deposit.qr_code_description" = "Tu dirección para depositar %@";
-"deposit.qr_code_description.watch" = "Ver dirección de %@";
-"deposit.account" = "Account";
 "deposit.trustline" = "Trustline";
 "deposit.trustline.not_activated" = "No activada";
 "deposit.activate" = "Activar";
@@ -424,11 +363,8 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 "deposit.set_amount" = "Asignar cantidad";
 "deposit.enter_amount" = "Introducir cantidad";
 
-"deposit.memo" = "Memo (Etiqueta)";
 "deposit.copy_address" = "Copiar";
 "deposit.share_address" = "Compartir";
-"deposit.memo_warning.title" = "Importante";
-"deposit.memo_warning.description" = "Tanto un memo (etiqueta) como la dirección son necesarios para asegurar que los activos sean recibidos. De lo contrario sus fondos se perderán.";
 
 "deposit.not_active" = "inactivo";
 "deposit.not_active.title" = "TRON no activado";
@@ -851,27 +787,7 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 
 "market.time_period.title" = "Period";
 "market.time_period.1d" = "1 Día";
-"market.time_period.1w" = "1 Semana";
-"market.time_period.2w" = "2 Semanas";
-"market.time_period.1m" = "1 Mes";
-"market.time_period.3m" = "3 Meses";
-"market.time_period.6m" = "6 Meses";
-"market.time_period.1y" = "1 Año";
-"market.time_period.2y" = "2 Años";
-"market.time_period.3y" = "3 Años";
-"market.time_period.4y" = "4 Años";
-"market.time_period.5y" = "5 Años";
 "market.time_period.1d.short" = "1D";
-"market.time_period.1w.short" = "1S";
-"market.time_period.2w.short" = "2S";
-"market.time_period.1m.short" = "1M";
-"market.time_period.3m.short" = "3M";
-"market.time_period.6m.short" = "6M";
-"market.time_period.1y.short" = "1A";
-"market.time_period.2y.short" = "2A";
-"market.time_period.3y.short" = "3A";
-"market.time_period.4y.short" = "4A";
-"market.time_period.5y.short" = "5A";
 
 "market.project_has_no_coin" = "Este proyecto no tiene una moneda";
 

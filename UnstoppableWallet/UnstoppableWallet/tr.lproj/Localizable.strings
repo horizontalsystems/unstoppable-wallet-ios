@@ -12,7 +12,6 @@
 "button.share" = "Paylaş";
 "button.paste" = "Yapıştır";
 "button.resend" = "Yeniden Gönder";
-"button.backup" = "Yedekle";
 "button.restore" = "Geri Yükle";
 "button.copy" = "Kopyala";
 "button.copy_error" = "Hata Kopyala";
@@ -26,11 +25,8 @@
 "button.save" = "Kaydet";
 "button.send" = "Gönder";
 "button.sign" = "kaydol";
-"button.more" = "Daha Fazlası";
 "button.i_understand" = "Anlıyorum";
 "button.understood" = "Anlaşıldı";
-"button.learn_more" = "Daha fazla bilgi edin";
-"button.unlock" = "Kilidi Aç";
 "button.select" = "Seç";
 "button.later" = "Sonra";
 
@@ -85,8 +81,6 @@
 "alert_card.title.critical" = "Uyarı!";
 "alert_card.title.caution" = "Dikkat!";
 
-"no_results_found" = "Sonuç bulunamadı";
-"action.loading" = "yükleniyor...";
 "placeholder.search" = "Ara";
 
 "status" = "Durum";
@@ -117,13 +111,6 @@
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
 
-"auto_lock.immediate" = "Hemen";
-"auto_lock.minute1" = "1 dakika";
-"auto_lock.minute5" = "5 dakika";
-"auto_lock.minute15" = "15 dakika";
-"auto_lock.minute30" = "30 dakika";
-"auto_lock.hour1" = "1 saat";
-
 "powered_by" = "%@ tarafından destekleniyor";
 
 "filter.all" = "Hepsi";
@@ -153,7 +140,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "restore.passphrase" = "Parola";
 "restore.input.passphrase" = "Parola";
 "restore.wallet.passphrase_description" = "Bu kurtarma cümlesini oluştururken kullandığınız parolayı girin. Mevcut bir cüzdanı yeni bir parola ile geri yüklemek tamamen yeni bir cüzdan oluşturacaktır.";
-"restore.passphrase_description" = "Bu şifre, cüzdanınızın yedek dosyasını şifrelemek için kullanılır. Apple iCloud parolanızla ilgili değil. Kaybolur veya unutulursa kurtarılamaz veya sıfırlanamaz.";
 "restore.error.empty_passphrase" = "Şifre boş bırakılamaz";
 "restore.non_standard_import" = "Standart Olmayan Yükleme";
 "restore.non_standard_import.description" = "Bu sayfa, standart olmayan bir cüzdanı olan %@ kullanıcıları için özel geri yükleme mekanizması sağlar. Genel olarak, bu tür cüzdanlar, İngilizce olmayan bir anımsatma kelimeleri listesi ve/veya cüzdan şifresinde özel bir karakter (yani aksan simgesi) kullanılarak %@ 0.27 - 0.28 sürümünde oluşturulmuş olabilir.\n\n Bu durumdan etkilenen bir kullanıcıysanız, 0.29 sürümüne güncelledikten sonra cüzdan bakiyeniz 0 olarak görüntülenir. Bu sayfa, standart olmayan cüzdanınıza erişimi geri yüklemenizi sağlayacaktır. Geri yüklendikten sonra, yeni bir cüzdan oluşturmanız (standartlarla uyumlu) ve paranızı oraya taşımanız önerilir.";
@@ -188,9 +174,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Coin Settings
 
-"coin_settings.title" = "Blockchain Ayarları";
-"coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
-"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress (önerilen)";
 "sync_mode.hybrid" = "Hybrid";
 "sync_mode.from_blockchain" = "Blockchain çıkışlı";
 "blockchain_settings.description" = "Coin için adres formatını seçin.";
@@ -213,8 +196,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "recovery_phrase.warning" = "Kurtarma ifadenizi asla kimseyle paylaşmayın. %@ ekip asla kurtarma ifadenizi istemez.";
 "recovery_phrase.tap_to_show" = "Kurtarma ifadesini göstermek için dokunun";
 "recovery_phrase.passphrase" = "Parola";
-"recovery_phrase.copy_warning.title" = "Kurtarma Riski İfadesi kopyası";
-"recovery_phrase.copy_warning.description" = "Bir güvenlik önlemi olarak, kopyalama eylemi kullanmamanızı öneririz.";
 
 // EVM Private Key
 
@@ -232,8 +213,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "monero_private_key.title" = "Monero Özel Anahtarları";
 "monero_private_key.tap_to_show" = "Özel anahtarı göstermek için dokunun";
 "monero.key_types" = "Tür";
-"monero.key_types.spend" = "Harcamaya Yetki";
-"monero.key_types.view" = "Görüntüleme";
 
 // Extended Key
 
@@ -261,12 +240,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "backup_verify_words.description" = "Cüzdan kurtarma ifadenizden istenen iki kelimeyi seçin";
 "backup_verify_words.incorrect_word" = "Yanlış kelime";
 
-// Backup Verify Passphrase
-
-"backup_verify_passphrase.title" = "Doğrula";
-"backup_verify_passphrase.description" = "Parolayı girin";
-"backup_verify_passphrase.incorrect_passphrase" = "Yanlış parola";
-
 // Backup Prompt
 
 "backup_prompt.backup_recovery_phrase" = "Cüzdanı yedekle";
@@ -279,32 +252,18 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Backup to iCloud
 
-"backup.cloud.title" = "iCloud'a yedekle";
-"backup.cloud.description" = "iCloud depolama, Apple tarafından sağlanan bir üçüncü taraf bulut depolama hizmetidir. Verilerinizin kişisel cihazlarınızda değil, Apple'ın sunucularında saklanacağını bilmek önemlidir. Bu, verilerinizi emanet ettiğiniz ve bilgilerinizin güvenliğini üçüncü bir hizmete devrettiğiniz anlamına gelir.";
-"backup.cloud.terms.item.1" = "iCloud'uma erişimi kaybetmenin, ilgili cüzdanın yedeğine erişimi kaybetmeyle sonuçlanacağını anlıyorum.";
-
-"backup.cloud.name.title" = "Yedek Adı";
-"backup.cloud.name.description" = "Yedekleme dosyası için ad girin.";
-"backup.cloud.name.empty" = "Yedek adı boş olamaz!";
 "backup.cloud.name.error.empty" = "Yedekleme adı boş olmamalıdır";
 "backup.cloud.name.error.already_exist" = "Yedek adı zaten var!";
 "backup.cloud.name.placeholder" = "İsim";
 
-"backup.cloud.password.title" = "Şifre Ayarla";
-"backup.cloud.password.description" = "Yedeklemeniz için kilit açma parolasını ayarlayın. En az 8 sembolden oluşmalı ve en az bir küçük harf, büyük harf, sayı ve özel karakter içermelidir.";
-"backup.cloud.password.highlighted_description" = "Bu şifreyi unutmayın! Apple iCloud parolasından farklıdır ve kurtarılamaz veya sıfırlanamaz.";
 "backup.cloud.password.placeholder" = "Şifre";
 "backup.cloud.password.confirm.placeholder" = "Onayla";
-"backup.cloud.password.save" = "Kaydet ve Yedekle";
 
 "backup.cloud.password.error.empty_passphrase" = "Parola boş bırakılamaz";
-"backup.cloud.password.error.forbidden_symbols" = "Lütfen yalnızca desteklenen sembolleri kullanın:  A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "backup.cloud.password.error.minimum_requirement" = "Bir büyük harf, bir küçük harf, bir rakam ve bir sembol dahil olmak üzere en az 8 karakter";
 "backup.cloud.password.error.invalid_password" = "Yanlış parola";
 "backup.cloud.password.error.invalid_backup" = "Yedekleme bozuk";
 "backup.cloud.password.confirm.error.doesnt_match" = "Şifre eşleşmiyor";
-"backup.cloud.not_available" = "iCloud Kullanılamıyor";
-"backup.cloud.cant_create_file" = "Dosya iCloud'a kaydedilemiyor";
 "backup.cloud.cant_delete_file" = "iCloud'dan silinemiyor";
 "backup.cloud.no_access.title" = "iCloud'a erişim";
 "backup.cloud.no_access.description" = "Yedek oluşturmak için, iCloud depolama alanına erişim sağlamanız gerekmektedir.";
@@ -314,17 +273,13 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "error.send.self_transfer" = "Kendine gönderme desteklenmiyor";
 "error.send_binance.memo_required" = "Alıcı, transfer işleminde boş olmayan bir not gerektirmektedir";
 "error.send_binance.only_digits_allowed" = "Notun yalnızca rakam içermesini gerektirir";
-"error.send_z_cash.transparent_address" = "%@, bir transparan adrese yapılan ödemeleri desteklemez";
 
 // Balance
 
 "balance.title" = "Cüzdanı";
-"balance.tab_bar_item" = "Bakiye";
 "balance.send" = "Gönder";
-"balance.withdraw" = "Hesaptan Çek";
 "balance.swap" = "Takas";
 "balance.receive" = "Al";
-"balance.deposit" = "Al";
 "balance.chart" = "Grafik";
 "balance.scan" = "Tara";
 "balance.copy_address" = "Adresi Kopyala";
@@ -341,7 +296,6 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.searching.count" = "bakiye.araması.miktar";
 "balance.remaining" = "Kalan Bloklar - %@";
 "balance.synced_through" = "%@ kadar";
-"balance.empty.description" = "Bu cüzdana hiç jeton eklemediniz.";
 "balance.sort.header" = "Sıralama şekli";
 "balance.sort.valueHighToLow" = "Bakiye";
 "balance.sort.az" = "İsim";
@@ -356,9 +310,7 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 
 // Token Balance Page
 "balance.token.locked" = "Kilitli";
-"balance.token.locked.stellar.title" = "Kilitli Tutar";
 "balance.token.locked.stellar.description" = "Stellar ağı, cüzdanı etkinleştirmek için 1 XLM ve cüzdanınızda etkinleştirilen her token için 0.5 XLM rezerv olarak kilitler.";
-"balance.token.locked.stellar.description.currently_locked" = "Şu anda kilitli olan tutar:";
 "balance.token.locked.stellar.description.wallet_activation" = "Cüzdan aktivasyonu";
 "balance.token.locked.info.title" = "TiemLock";
 "balance.token.locked.info.description" = "Gönderici bu fonları belirtilen tarihte sona erecek şekilde bir harcama kilidiyle gönderdi.\n\nEndişelenmeyin, alınan Bitcoin'ler zaten sizindir ancak kilitleme süresi sona erene kadar bunları Bitcoin ağında harcayamazsınız.";
@@ -367,19 +319,12 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "balance.token.not_relayed.info.description" = "Bu miktarı içeren işlem yayınlandı ancak henüz ağ tarafından kabul edilmedi";
 "balance.token.transparent" = "Şeffaf";
 "balance.token.transparent.info.title" = "Şeffaf Tutar";
-"balance.token.transparent.info.item" = "Şeffaf Tutar";
 "balance.token.transparent.info.description" = "Şeffaf bir adreste tutulan ZEC bakiyeniz var. Unstoppable’da kullanmak için tam gizlilik amacıyla shield edilmesi gerekir.";
 "balance.token.transparent.detected.title" = "Şeffaf ZEC Tespit Edildi";
 "balance.token.transparent.detected.description" = "Şeffaf bir adreste tutulan ZEC bakiyeniz var. Unstoppable’da kullanmak için tam gizlilik amacıyla shield edilmesi gerekir.";
 "balance.token.shield" = "Shield";
 
 "balance.token.receive_address" = "Alım Adresi";
-"balance.token.staked" = "Staked";
-"balance.token.staked.info.title" = "Staked title";
-"balance.token.staked.info.description" = "Staked Description Text";
-"balance.token.frozen" = "Frozen";
-"balance.token.frozen.info.title" = "Frozen Title";
-"balance.token.frozen.info.description" = "Frozen Description Text";
 "balance.token.account.inactive.description" = "Cüzdan etkinleştirildikten sonra işlemler görünecektir.";
 
 // Account switcher
@@ -402,20 +347,14 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "deposit.address_type.unified.description" = "Cüzdanlar arası kişisel ve özel transferler için kullanılır.";
 "deposit.address_type.transparent" = "Şeffaf";
 "deposit.address_type.transparent.description" = "Birleşik adresleri desteklemeyen borsa veya hizmetlerden alım yapmak için kullanılır.";
-"deposit.address_type.transparent.caution" = "Bu Şeffaf adrese ZEC alabilirsiniz. Göndermek için Shielded adrese aktarmanız gerekir.";
-"deposit.address_type.legacy" = "Legacy";
 
 "deposit.address" = "Adres";
-"deposit.your_address" = "Adresiniz";
 "receive_alert.not_backed_up_description" = "%@ almadan önce %@ anahtarlarınızı yedeklemeniz gerekiyor.";
 "receive_alert.any_coins.not_backed_up_description" = "Herhangi bir jeton alabilmeniz için %@'ı yedeklemeniz gerekir.";
 "deposit.no_adapter.error" = "Adres veremiyorum";
 
 "deposit.address_format" = "Biçim";
 "deposit.address_network" = "Ağ";
-"deposit.qr_code_description" = "%@ yatırmak için adresiniz";
-"deposit.qr_code_description.watch" = "%@ adresini izle";
-"deposit.account" = "Account";
 "deposit.trustline" = "Trustline";
 "deposit.trustline.not_activated" = "Aktif değil";
 "deposit.activate" = "Aktiveet";
@@ -424,11 +363,8 @@ Ayarlar - > %@ ekranına giderek kamera erişimine izin verin.";
 "deposit.set_amount" = "Miktarı Ayarla";
 "deposit.enter_amount" = "Miktarı Girin";
 
-"deposit.memo" = "Memo (Tag)";
 "deposit.copy_address" = "Kopyala";
 "deposit.share_address" = "Paylaş";
-"deposit.memo_warning.title" = "Önemli";
-"deposit.memo_warning.description" = "Varlıkların alındığından emin olmak için hem not (etiket) hem de adres gereklidir. Aksi takdirde paranız kaybolacaktır.";
 
 "deposit.not_active" = "aktif değil";
 "deposit.not_active.title" = "TRON Aktif Değil";
@@ -853,27 +789,7 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 
 "market.time_period.title" = "Periyot";
 "market.time_period.1d" = "1 Gün";
-"market.time_period.1w" = "1 Hafta";
-"market.time_period.2w" = "2 Hafta";
-"market.time_period.1m" = "1 Ay";
-"market.time_period.3m" = "3 Ay";
-"market.time_period.6m" = "6 Ay";
-"market.time_period.1y" = "1 Yıl";
-"market.time_period.2y" = "2 Yıl";
-"market.time_period.3y" = "3 Yıl";
-"market.time_period.4y" = "4 Yıl";
-"market.time_period.5y" = "5 Yıl";
 "market.time_period.1d.short" = "1G";
-"market.time_period.1w.short" = "1H";
-"market.time_period.2w.short" = "2H";
-"market.time_period.1m.short" = "1A";
-"market.time_period.3m.short" = "3A";
-"market.time_period.6m.short" = "6A";
-"market.time_period.1y.short" = "1Y";
-"market.time_period.2y.short" = "2Y";
-"market.time_period.3y.short" = "3Y";
-"market.time_period.4y.short" = "4Y";
-"market.time_period.5y.short" = "5Y";
 
 "market.project_has_no_coin" = "Bu proje bir koin içermiyor";
 
