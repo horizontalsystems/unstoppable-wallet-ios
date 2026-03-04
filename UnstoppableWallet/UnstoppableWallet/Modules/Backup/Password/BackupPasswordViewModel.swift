@@ -50,7 +50,7 @@ class BackupPasswordViewModel: ObservableObject {
             password = defaultPassphrase
             confirm = defaultPassphrase
         }
-        
+
         passwordState = .init(destination: destination)
     }
 
@@ -187,20 +187,20 @@ extension BackupPasswordViewModel {
         case idle
         case willSave
         case dontSave
-        
+
         var isInteractive: Bool {
             self != .idle
         }
-        
+
         var initial: Bool {
             self == .idle
         }
-        
+
         init(destination: BackupModule.Destination) {
             self = destination == .files ? .inFiles : .idle
         }
     }
-    
+
     enum ValidationError: Error {
         case invalid
         case emptyKeychainAccount

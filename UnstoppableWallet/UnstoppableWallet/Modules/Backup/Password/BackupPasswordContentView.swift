@@ -33,7 +33,7 @@ struct BackupPasswordContentView: View {
             .autocorrectionDisabled()
             .focused(passwordFocused)
         }
-        .modifier(KeychainHighlight(active: viewModel.passwordState == .willSave ))
+        .modifier(KeychainHighlight(active: viewModel.passwordState == .willSave))
         .modifier(CautionBorder(cautionState: $viewModel.passwordCautionState))
         .modifier(CautionPrompt(cautionState: $viewModel.passwordCautionState))
         .overlay(tapInterceptor)
