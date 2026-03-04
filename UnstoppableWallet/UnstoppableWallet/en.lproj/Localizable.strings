@@ -258,8 +258,8 @@
 "backup.cloud.name.error.invalid_characters" = "Name contains invalid characters";
 "backup.cloud.name.placeholder" = "Name";
 
-"backup.cloud.password.placeholder" = "Password";
-"backup.cloud.password.confirm.placeholder" = "Confirm";
+"backup.cloud.password.placeholder" = "Add Password";
+"backup.cloud.password.confirm.placeholder" = "Confirm Password";
 
 "backup.cloud.password.error.empty_passphrase" = "Password cannot be empty";
 "backup.cloud.password.error.minimum_requirement" = "At least 8 characters, including one uppercase letter, one lowercase letter, one number, and one symbol";
@@ -1485,7 +1485,8 @@
 "backup_app.backup_type.file" = "to Files";
 "backup_app.backup_type.file.description" = "Saving a backup copy file to your local folder.";
 
-"backup_app.backup_list.title" = "Backup File";
+"backup_app.backup_list.title" = "Select Wallets";
+"backup_app.backup_list.description" = "Select the wallets to include in the backup. App data will be backed up automatically.";
 "backup_app.backup_list.description.restore" = "List of contents in the backup file.";
 "backup_app.backup_list.header.wallets" = "Wallets";
 "backup_app.backup_list.header.other" = "Other";
@@ -1513,6 +1514,8 @@
 "backup_app.backup.name.title" = "Backup Name";
 "backup_app.backup.name.description" = "Enter name for the backup file.";
 
+"backup_app.backup.form.title" = "Protect Backup";
+"backup_app.backup.form.description" = "Create a password to protect your backup file.";
 "backup_app.backup.password.title" = "Password";
 "backup_app.backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
 "backup_app.backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";

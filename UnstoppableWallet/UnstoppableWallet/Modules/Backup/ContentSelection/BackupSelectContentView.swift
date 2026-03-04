@@ -16,10 +16,14 @@ struct BackupSelectContentView: View {
             BottomGradientWrapper {
                 ScrollView {
                     VStack(spacing: .margin24) {
+                        ThemeText("backup_app.backup_list.description".localized, style: .subhead)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, .margin16)
+
                         if !contentViewModel.accountItems.isEmpty {
                             walletSection(items: contentViewModel.accountItems)
                         }
-
+                        
                         contentSection(items: contentViewModel.contentItems)
                     }
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
