@@ -626,6 +626,17 @@ class ZcashAdapter {
         let logger = logger
 
         return Future<Void, Error> { promise in
+            let currentStatus = synchronizer.latestState.syncStatus
+
+            if case .stopped = currentStatus {
+                promise(.success(()))
+                return
+            }
+            if case .unprepared = currentStatus {
+                promise(.success(()))
+                return
+            }
+
             var cancellable: AnyCancellable?
             cancellable = synchronizer.stateStream
                 .receive(on: DispatchQueue.main)
@@ -633,39 +644,50 @@ class ZcashAdapter {
                     if case .stopped = state.syncStatus {
                         cancellable?.cancel()
                         cancellable = nil
-
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
-                            do {
-                                let fileManager = FileManager.default
-
-                                let urlsToDelete: [URL] = [
-                                    try? Self.fsBlockDbRootURL(uniqueId: uniqueId, network: network),
-                                    try? Self.generalStorageURL(uniqueId: uniqueId, network: network),
-                                    try? Self.dataDbURL(uniqueId: uniqueId, network: network),
-                                    try? Self.cacheDbURL(uniqueId: uniqueId, network: network),
-                                    try? Self.torDirURL(uniqueId: uniqueId, network: network),
-                                ].compactMap { $0 }
-
-                                for url in urlsToDelete {
-                                    if fileManager.fileExists(atPath: url.path) {
-                                        try fileManager.removeItem(at: url)
-                                        logger?.log(level: .debug, message: "Deleted: \(url.lastPathComponent)")
-                                    }
-                                }
-
-                                promise(.success(()))
-                            } catch {
-                                logger?.log(level: .error, message: "Wipe failed: \(error)")
-                                promise(.failure(error))
-                            }
-                        }
+                        Self.deleteFiles(uniqueId: uniqueId, network: network, logger: logger, promise: promise)
                     }
                 }
         }
-        .flatMap { _ in
+        .flatMap { _ -> AnyPublisher<Void, Error> in
             synchronizer.wipe()
         }
+        .handleEvents(receiveCompletion: { completion in
+            switch completion {
+            case .finished:
+                logger?.log(level: .debug, message: "[ZcashAdapter] wipe: completed successfully")
+            case let .failure(error):
+                logger?.log(level: .error, message: "[ZcashAdapter] wipe: completed with error: \(error)")
+            }
+        })
         .eraseToAnyPublisher()
+    }
+
+    private static func deleteFiles(uniqueId: String, network: ZcashNetwork, logger: HsToolKit.Logger?, promise: @escaping (Result<Void, Error>) -> Void) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            do {
+                let fileManager = FileManager.default
+
+                let urlsToDelete: [URL] = [
+                    try? Self.fsBlockDbRootURL(uniqueId: uniqueId, network: network),
+                    try? Self.generalStorageURL(uniqueId: uniqueId, network: network),
+                    try? Self.dataDbURL(uniqueId: uniqueId, network: network),
+                    try? Self.cacheDbURL(uniqueId: uniqueId, network: network),
+                    try? Self.torDirURL(uniqueId: uniqueId, network: network),
+                ].compactMap { $0 }
+
+                for url in urlsToDelete {
+                    if fileManager.fileExists(atPath: url.path) {
+                        try fileManager.removeItem(at: url)
+                        logger?.log(level: .debug, message: "[ZcashAdapter] Deleted: \(url.lastPathComponent)")
+                    }
+                }
+
+                promise(.success(()))
+            } catch {
+                logger?.log(level: .error, message: "[ZcashAdapter] Delete files failed: \(error)")
+                promise(.failure(error))
+            }
+        }
     }
 
     private func syncZcashBalanceData() {
