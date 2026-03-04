@@ -147,7 +147,7 @@ class BackupViewModel: ObservableObject {
         case .app:
             return .selectContent
         case .wallet:
-            return .disclaimer
+            return .form
         }
     }
 }

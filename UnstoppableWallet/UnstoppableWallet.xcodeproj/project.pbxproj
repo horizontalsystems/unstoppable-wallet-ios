@@ -2007,8 +2007,6 @@
 		6B954B582F444C28008A1A16 /* BackupSelectContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B562F444C27008A1A16 /* BackupSelectContentViewModel.swift */; };
 		6B954B5A2F44505C008A1A16 /* BackupSelectContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B592F445056008A1A16 /* BackupSelectContentView.swift */; };
 		6B954B5B2F44505C008A1A16 /* BackupSelectContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B592F445056008A1A16 /* BackupSelectContentView.swift */; };
-		6B954B5F2F44522C008A1A16 /* BackupDisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B5E2F44522B008A1A16 /* BackupDisclaimerView.swift */; };
-		6B954B602F44522C008A1A16 /* BackupDisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B5E2F44522B008A1A16 /* BackupDisclaimerView.swift */; };
 		6B954B622F4453F2008A1A16 /* BackupNameContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B612F4453E0008A1A16 /* BackupNameContentView.swift */; };
 		6B954B632F4453F2008A1A16 /* BackupNameContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B612F4453E0008A1A16 /* BackupNameContentView.swift */; };
 		6B954B652F44555E008A1A16 /* BackupFormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B954B642F44555D008A1A16 /* BackupFormView.swift */; };
@@ -4708,7 +4706,6 @@
 		6B954B522F444B20008A1A16 /* BackupSelectDestinationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupSelectDestinationView.swift; sourceTree = "<group>"; };
 		6B954B562F444C27008A1A16 /* BackupSelectContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupSelectContentViewModel.swift; sourceTree = "<group>"; };
 		6B954B592F445056008A1A16 /* BackupSelectContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupSelectContentView.swift; sourceTree = "<group>"; };
-		6B954B5E2F44522B008A1A16 /* BackupDisclaimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupDisclaimerView.swift; sourceTree = "<group>"; };
 		6B954B612F4453E0008A1A16 /* BackupNameContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupNameContentView.swift; sourceTree = "<group>"; };
 		6B954B642F44555D008A1A16 /* BackupFormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupFormView.swift; sourceTree = "<group>"; };
 		6B954B6A2F457DF9008A1A16 /* BackupDefaultNameProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackupDefaultNameProvider.swift; sourceTree = "<group>"; };
@@ -8374,7 +8371,6 @@
 				ABC9AB61EA3B39D8BDB1EEDE /* AppBackupProvider.swift */,
 				D34DB1AA2E24E58700DD30D3 /* CloudNotAvailableView.swift */,
 				6BCD530E2A161F4800993F20 /* Manual */,
-				6B954B5D2F445225008A1A16 /* Disclaimer */,
 				6B954B552F444C17008A1A16 /* ContentSelection */,
 				6B954B512F444B19008A1A16 /* Destination */,
 				6B954B462F442FD7008A1A16 /* Password */,
@@ -8426,14 +8422,6 @@
 				6B954B562F444C27008A1A16 /* BackupSelectContentViewModel.swift */,
 			);
 			path = ContentSelection;
-			sourceTree = "<group>";
-		};
-		6B954B5D2F445225008A1A16 /* Disclaimer */ = {
-			isa = PBXGroup;
-			children = (
-				6B954B5E2F44522B008A1A16 /* BackupDisclaimerView.swift */,
-			);
-			path = Disclaimer;
 			sourceTree = "<group>";
 		};
 		6B9563C82F558BC600D9D188 /* BlockchainSelector */ = {
@@ -11750,7 +11738,6 @@
 				11B3516B3978D80735E949B4 /* ReceiveCoinListService.swift in Sources */,
 				11B35B30F84E64131CD41C31 /* ReceiveCoinListViewModel.swift in Sources */,
 				11B352E8A16157B7FCF354A9 /* ReceiveModule.swift in Sources */,
-				6B954B602F44522C008A1A16 /* BackupDisclaimerView.swift in Sources */,
 				D0E6EC692D5B5EB4006563D1 /* BlacklistAddressValidator.swift in Sources */,
 				6B9032C92D1D6FD400F3F5AC /* PurchaseListView.swift in Sources */,
 				D30C4D512D537E7B0082B487 /* RecentAddressStorage.swift in Sources */,
@@ -12834,7 +12821,6 @@
 				58AAAE0E85B0DFB61C94E14D /* BitcoinAddressParserItem.swift in Sources */,
 				1A5645C7334EED7FF57FFD47 /* DashAddressParserItem.swift in Sources */,
 				6BB6E75A2D4218BB00C1EA66 /* PrivacyPolicyViewModel.swift in Sources */,
-				6B954B5F2F44522C008A1A16 /* BackupDisclaimerView.swift in Sources */,
 				1A5643C73BEDA01E4E378BEF /* ZcashAddressParserItem.swift in Sources */,
 				11B35837076F6B350DFA89E7 /* NftDatabaseStorage.swift in Sources */,
 				11B357AE8B51E09D0EB60D87 /* NftPriceRecord.swift in Sources */,

@@ -42,7 +42,7 @@ struct BackupSelectContentView: View {
     }
 
     private func walletSection(items: [BackupModule.AccountItem]) -> some View {
-        ListSection(header: "backup_app.backup_list.header.wallets".localized) {
+        ListSection(header: "backup_app.backup_list.header.wallets".localized, uppercased: false) {
             ForEach(items, id: \.accountId) { item in
                 AccountItemView(
                     item: item,
@@ -56,7 +56,7 @@ struct BackupSelectContentView: View {
     }
 
     private func contentSection(items: [BackupModule.ContentItem]) -> some View {
-        ListSection(header: "backup_app.backup_list.header.wallets".localized) {
+        ListSection(header: "backup_app.backup_list.header.other".localized, uppercased: false) {
             ForEach(items, id: \.id) { item in
                 ContentItemView(item: item)
             }
@@ -65,7 +65,7 @@ struct BackupSelectContentView: View {
 
     private func onNext() {
         viewModel.setSelectedAccountIds(contentViewModel.selectedAccountIds)
-        path.append(BackupModule.Step.disclaimer)
+        path.append(BackupModule.Step.form)
     }
 }
 

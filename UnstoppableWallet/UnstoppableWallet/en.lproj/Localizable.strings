@@ -255,6 +255,7 @@
 
 "backup.cloud.name.error.empty" = "Backup name must be not empty";
 "backup.cloud.name.error.already_exist" = "Backup name already exists!";
+"backup.cloud.name.error.invalid_characters" = "Name contains invalid characters";
 "backup.cloud.name.placeholder" = "Name";
 
 "backup.cloud.password.placeholder" = "Password";
@@ -1476,7 +1477,7 @@
 
 "backup_app.backup_manager.title" = "Backup Manager";
 "backup_app.backup_manager.restore" = "Restore Backup";
-"backup_app.backup_manager.create" = "Create New Backup";
+"backup_app.backup_manager.create" = "Create Backup";
 
 "backup_app.backup_type.title" = "Save Backup";
 "backup_app.backup_type.cloud" = "to iCloud";
@@ -1512,7 +1513,7 @@
 "backup_app.backup.name.title" = "Backup Name";
 "backup_app.backup.name.description" = "Enter name for the backup file.";
 
-"backup_app.backup.password.title" = "Backup Password";
+"backup_app.backup.password.title" = "Password";
 "backup_app.backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
 "backup_app.backup.password.highlighted_description" = "This password is used to encrypt backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
 
@@ -1525,12 +1526,9 @@
 "backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";
 "backup.password.highlighted_description" = "This password is used to encrypt the backup file of your wallet. It can't be recovered or reset if lost or forgotten.";
 
-"backup.password.generate.title.cloud" = "Strong Password";
-"backup.password.generate.title.files" = "Strong Password";
-"backup.password.generate.description.cloud" = "We can generate safety password and save it in Keychain";
-"backup.password.generate.description.files" = "We can generate safety password for you";
-"backup.password.generate.action.cloud" = "Create and Save";
-"backup.password.generate.action.files" = "Create";
+"backup.password.generate.title.cloud" = "Use a Strong Password?";
+"backup.password.generate.description.cloud" = "Protect your encrypted backup with a unique password. It will be saved in the Passwords app.";
+"backup.password.generate.action.cloud" = "Save & Fill";
 "backup.password.generator.error.invalid_length" = "Invalid Password Length (must be >8)";
 "backup.password.generator.error.random_failed" = "Can't generate safety random password";
 "backup.password.keychain.error.encoding" = "Keychain encoding error";

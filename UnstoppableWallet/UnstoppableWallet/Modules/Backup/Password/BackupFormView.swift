@@ -20,7 +20,7 @@ struct BackupFormView: View {
         ThemeView {
             BottomGradientWrapper {
                 ScrollView {
-                    VStack(spacing: .margin32) {
+                    VStack(spacing: .margin12) {
                         BackupNameContentView(viewModel: nameViewModel)
                         BackupPasswordContentView(viewModel: passwordViewModel, passwordFocused: $passwordFocused)
                     }
@@ -52,12 +52,6 @@ struct BackupFormView: View {
         .onReceive(passwordViewModel.showGenerateSheetPublisher) {
             showGenerateSheet()
         }
-        .onReceive(passwordViewModel.focusPasswordPublisher) {
-            passwordFocused = true
-        }
-        .onAppear {
-            passwordViewModel.onAppear()
-        }
     }
 
     private func onTapSave() {
@@ -67,14 +61,12 @@ struct BackupFormView: View {
     }
 
     private func showGenerateSheet() {
-        let destination = viewModel.destination ?? .files
-
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
             BottomSheetView(items: [
-                .title(icon: ThemeImage.cloud, title: destination.passwordTitle),
-                .text(text: destination.passwordDescription),
+                .title(icon: ThemeImage.key, title: "backup.password.generate.title.cloud".localized),
+                .text(text: "backup.password.generate.description.cloud".localized),
                 .buttonGroup(.init(buttons: [
-                    .init(style: .yellow, title: destination.passwordAction) {
+                    .init(style: .gray, title: "backup.password.generate.action.cloud".localized) {
                         do {
                             try passwordViewModel.useGeneratedPassword()
                         } catch {
@@ -86,29 +78,9 @@ struct BackupFormView: View {
             ])
         } onDismiss: {
             passwordViewModel.onGenerateSheetDismissed()
-        }
-    }
-}
-
-private extension BackupModule.Destination {
-    var passwordTitle: String {
-        switch self {
-        case .cloud: return "backup.password.generate.title.cloud".localized
-        case .files: return "backup.password.generate.title.files".localized
-        }
-    }
-
-    var passwordDescription: String {
-        switch self {
-        case .cloud: return "backup.password.generate.description.cloud".localized
-        case .files: return "backup.password.generate.description.files".localized
-        }
-    }
-
-    var passwordAction: String {
-        switch self {
-        case .cloud: return "backup.password.generate.action.cloud".localized
-        case .files: return "backup.password.generate.action.files".localized
+            if passwordViewModel.passwordState != .willSave {
+                passwordFocused = true
+            }
         }
     }
 }
