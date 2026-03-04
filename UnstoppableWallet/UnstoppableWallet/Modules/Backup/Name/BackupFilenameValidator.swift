@@ -8,6 +8,13 @@ class BackupFilenameValidator {
         self.destination = destination
     }
 
+    static func isValidFilename(_ name: String) -> Bool { // use url to check if name allowed for OS
+        guard !name.isEmpty else { return true }
+        let url = URL(fileURLWithPath: NSTemporaryDirectory())
+            .appendingPathComponent(name)
+        return url.lastPathComponent == name
+    }
+
     func validate(name: String) throws {
         let trimmed = name.trimmingCharacters(in: .whitespaces)
 

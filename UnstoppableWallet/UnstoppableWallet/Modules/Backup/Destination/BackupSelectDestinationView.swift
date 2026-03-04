@@ -8,29 +8,9 @@ struct BackupSelectDestinationView: View {
         ScrollableThemeView {
             VStack(spacing: .margin12) {
                 ListSection {
-                    ClickableRow(action: {
-                        selectDestination(.cloud)
-                    }) {
-                        row(
-                            image: "icloud_24",
-                            title: "backup_app.backup_type.cloud".localized,
-                            description: "backup_app.backup_type.cloud.description".localized
-                        )
+                    ForEach(BackupModule.Destination.allCases) { destination in
+                        row(destination: destination)
                     }
-                    .frame(minHeight: 106)
-                }
-
-                ListSection {
-                    ClickableRow(action: {
-                        selectDestination(.files)
-                    }) {
-                        row(
-                            image: "file_24",
-                            title: "backup_app.backup_type.file".localized,
-                            description: "backup_app.backup_type.file.description".localized
-                        )
-                    }
-                    .frame(minHeight: 106)
                 }
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
@@ -44,15 +24,21 @@ struct BackupSelectDestinationView: View {
     }
 
     @ViewBuilder
-    private func row(image: String, title: String, description: String) -> some View {
-        HStack(spacing: .margin16) {
-            Image(image).themeIcon()
-            VStack(spacing: .margin4) {
-                Text(title).themeBody()
-                Text(description).themeSubhead2()
+    private func row(destination: BackupModule.Destination) -> some View {
+        Cell(
+            left: {
+                Image(destination.icon).icon(size: 24)
+            },
+            middle: {
+                MultiText(title: destination.title, subtitle: destination.description)
+            },
+            right: {
+                Image.disclosureIcon
+            },
+            action: {
+                selectDestination(destination)
             }
-        }
-        .padding(EdgeInsets(top: .margin12, leading: 0, bottom: .margin12, trailing: 0))
+        )
     }
 
     private func selectDestination(_ destination: BackupModule.Destination) {
@@ -69,9 +55,38 @@ struct BackupSelectDestinationView: View {
 
         switch viewModel.type {
         case .wallet:
-            path.append(BackupModule.Step.disclaimer)
+            path.append(BackupModule.Step.form)
         case .app:
             path.append(BackupModule.Step.selectContent)
+        }
+    }
+}
+
+extension BackupModule.Destination {
+    var icon: String {
+        switch self {
+        case .cloud:
+            return "cloud"
+        case .files:
+            return "file"
+        }
+    }
+
+    var title: String {
+        switch self {
+        case .cloud:
+            return "backup_app.backup_type.cloud".localized
+        case .files:
+            return "backup_app.backup_type.file".localized
+        }
+    }
+
+    var description: String {
+        switch self {
+        case .cloud:
+            return "backup_app.backup_type.cloud.description".localized
+        case .files:
+            return "backup_app.backup_type.file.description".localized
         }
     }
 }

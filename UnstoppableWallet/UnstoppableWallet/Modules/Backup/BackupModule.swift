@@ -7,15 +7,18 @@ enum BackupModule {
         case app(Set<String>) // selected account ids + settings
     }
 
-    enum Destination {
+    enum Destination: String, CaseIterable, Identifiable {
         case cloud
         case files
+
+        var id: String {
+            rawValue
+        }
     }
 
     enum Step: Hashable {
         case selectDestination // choose cloud/files (shown when destination is nil)
         case selectContent // choose accounts and settings (app only)
-        case disclaimer // warning with terms checkboxes
         case form // enter password and confirm
     }
 

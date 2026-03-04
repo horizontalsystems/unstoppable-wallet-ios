@@ -37,8 +37,10 @@ struct RestoreTypeView: View {
     var body: some View {
         ThemeNavigationStack(path: $path) {
             ScrollableThemeView {
-                ForEach(viewModel.items) {
-                    row(item: $0)
+                ListSection {
+                    ForEach(viewModel.items) {
+                        row(item: $0)
+                    }
                 }
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             }
@@ -127,20 +129,20 @@ struct RestoreTypeView: View {
     }
 
     @ViewBuilder private func row(item: RestoreTypeModule.RestoreType) -> some View {
-        ListSection {
-            Cell(
-                left: {
-                    Image(viewModel.icon(type: item)).icon(size: 24)
-                },
-                middle: {
-                    MultiText(title: viewModel.title(type: item), subtitle: viewModel.description(type: item))
-                },
-                action: {
-                    viewModel.onTap(type: item)
-                }
-            )
-        }
-        .padding(.top, .margin4)
+        Cell(
+            left: {
+                Image(viewModel.icon(type: item)).icon(size: 24)
+            },
+            middle: {
+                MultiText(title: viewModel.title(type: item), subtitle: viewModel.description(type: item))
+            },
+            right: {
+                Image.disclosureIcon
+            },
+            action: {
+                viewModel.onTap(type: item)
+            }
+        )
     }
 
     @ViewBuilder private func showPassphrase(_ source: BackupModule.NamedSource) -> some View {

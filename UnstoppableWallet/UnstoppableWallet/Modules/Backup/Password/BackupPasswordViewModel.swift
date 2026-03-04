@@ -19,7 +19,8 @@ class BackupPasswordViewModel: ObservableObject {
     @Published var confirmCautionState: CautionState = .none
     @Published var secureLock: Bool = true
 
-    private(set) var generatedPassword = false
+    @Published var passwordState: CloudPasswordState
+
     private(set) var shouldSaveToKeychain = false
 
     private let showGenerateSheetSubject = PassthroughSubject<Void, Never>()
@@ -27,9 +28,8 @@ class BackupPasswordViewModel: ObservableObject {
         showGenerateSheetSubject.eraseToAnyPublisher()
     }
 
-    private let focusPasswordSubject = PassthroughSubject<Void, Never>()
-    var focusPasswordPublisher: AnyPublisher<Void, Never> {
-        focusPasswordSubject.eraseToAnyPublisher()
+    var isCloud: Bool {
+        destination == .cloud
     }
 
     var isValid: Bool {
@@ -50,19 +50,19 @@ class BackupPasswordViewModel: ObservableObject {
             password = defaultPassphrase
             confirm = defaultPassphrase
         }
+        
+        passwordState = .init(destination: destination)
     }
 
-    func onAppear() {
-        if destination == .cloud {
+    func onTapPasswordField() {
+        if passwordState == .idle {
             showGenerateSheetSubject.send()
-        } else {
-            focusPasswordSubject.send()
         }
     }
 
     func onGenerateSheetDismissed() {
-        if !generatedPassword {
-            focusPasswordSubject.send()
+        if passwordState.initial {
+            passwordState = .dontSave
         }
     }
 
@@ -70,14 +70,9 @@ class BackupPasswordViewModel: ObservableObject {
         let generated = try BackupPasswordGenerator.generate()
         password = generated
         confirm = generated
-        generatedPassword = true
-
-        switch destination {
-        case .cloud:
-            shouldSaveToKeychain = true
-            secureLock = true
-        case .files: ()
-        }
+        shouldSaveToKeychain = true
+        passwordState = .willSave
+        secureLock = true
     }
 
     func setKeychainAccount(_ account: String) {
@@ -187,6 +182,25 @@ class BackupPasswordViewModel: ObservableObject {
 }
 
 extension BackupPasswordViewModel {
+    enum CloudPasswordState {
+        case inFiles
+        case idle
+        case willSave
+        case dontSave
+        
+        var isInteractive: Bool {
+            self != .idle
+        }
+        
+        var initial: Bool {
+            self == .idle
+        }
+        
+        init(destination: BackupModule.Destination) {
+            self = destination == .files ? .inFiles : .idle
+        }
+    }
+    
     enum ValidationError: Error {
         case invalid
         case emptyKeychainAccount

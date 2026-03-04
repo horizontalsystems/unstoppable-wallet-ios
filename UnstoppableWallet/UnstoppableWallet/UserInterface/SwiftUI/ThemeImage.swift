@@ -79,5 +79,5 @@ extension ThemeImage {
     static let book = ComponentImage("book", size: .iconSize72)
     static let trash = ComponentImage("trash_filled", size: .iconSize72, colorStyle: .red)
     static let shieldOff = ComponentImage("shield_off", size: .iconSize72)
-    static let cloud = ComponentImage("cloud", size: .iconSize72)
+    static let key = ComponentImage("key", size: .iconSize72)
 }
