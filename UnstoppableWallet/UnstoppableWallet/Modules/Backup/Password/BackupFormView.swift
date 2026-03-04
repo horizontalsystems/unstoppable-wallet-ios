@@ -21,9 +21,15 @@ struct BackupFormView: View {
             BottomGradientWrapper {
                 ScrollView {
                     VStack(spacing: .margin12) {
+                        ThemeText("backup_app.backup.form.description".localized, style: .subhead)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .padding(.horizontal, .margin16)
+                            .padding(.bottom, .margin16)
+
                         BackupNameContentView(viewModel: nameViewModel)
                         BackupPasswordContentView(viewModel: passwordViewModel, passwordFocused: $passwordFocused)
                     }
+                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
                 }
             } bottomContent: {
                 Button(action: {
@@ -41,7 +47,7 @@ struct BackupFormView: View {
                 .animation(.default, value: passwordViewModel.processing)
             }
         }
-        .navigationTitle("backup_app.backup.password.title".localized)
+        .navigationTitle("backup_app.backup.form.title".localized)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             Button("button.cancel".localized) {

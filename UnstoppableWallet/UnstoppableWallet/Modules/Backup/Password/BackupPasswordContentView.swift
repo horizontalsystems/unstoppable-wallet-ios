@@ -5,20 +5,19 @@ struct BackupPasswordContentView: View {
     var passwordFocused: FocusState<Bool>.Binding
 
     var body: some View {
-        VStack(spacing: .margin12) {
-            Text("backup_app.backup.password.title".localized)
-                .themeSubhead2()
-                .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
-
-            VStack(spacing: .margin16) {
+        VStack(spacing: .margin16) {
+            ListSection(header: "backup_app.backup.password.title".localized, uppercased: false) {
                 passwordField
-                confirmField
+                    .animation(.default, value: viewModel.secureLock)
             }
-            .animation(.default, value: viewModel.secureLock)
+            .animation(.default, value: viewModel.passwordCautionState)
+
+            ListSection {
+                confirmField
+                    .animation(.default, value: viewModel.secureLock)
+            }
+            .animation(.default, value: viewModel.confirmCautionState)
         }
-        .animation(.default, value: viewModel.passwordCautionState)
-        .animation(.default, value: viewModel.confirmCautionState)
-        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
     }
 
     private var passwordField: some View {
