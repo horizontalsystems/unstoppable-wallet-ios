@@ -77,6 +77,7 @@ class Core {
     let tronAccountManager: TronAccountManager
     let tonKitManager: TonKitManager
     let stellarKitManager: StellarKitManager
+    let zanoKitManager: ZanoKitManager
 
     let restoreSettingsManager: RestoreSettingsManager
     let predefinedBlockchainService: PredefinedBlockchainService
@@ -232,6 +233,8 @@ class Core {
 
         let restoreSettingsStorage = RestoreSettingsStorage(dbPool: dbPool)
         restoreSettingsManager = RestoreSettingsManager(storage: restoreSettingsStorage)
+
+        zanoKitManager = ZanoKitManager(restoreSettingsManager: restoreSettingsManager, walletManager: walletManager)
         predefinedBlockchainService = PredefinedBlockchainService(restoreSettingsManager: restoreSettingsManager)
 
         feeCoinProvider = FeeCoinProvider(marketKit: marketKit)
@@ -288,6 +291,7 @@ class Core {
             tronKitManager: tronKitManager,
             tonKitManager: tonKitManager,
             stellarKitManager: stellarKitManager,
+            zanoKitManager: zanoKitManager,
             restoreSettingsManager: restoreSettingsManager,
             coinManager: coinManager,
             spamWrapper: spamWrapper,
@@ -300,6 +304,7 @@ class Core {
             tronKitManager: tronKitManager,
             tonKitManager: tonKitManager,
             stellarKitManager: stellarKitManager,
+            zanoKitManager: zanoKitManager,
             btcBlockchainManager: btcBlockchainManager,
             moneroNodeManager: moneroNodeManager
         )

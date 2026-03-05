@@ -2,64 +2,124 @@ import Combine
 import Foundation
 import HsToolKit
 import MarketKit
+import RxRelay
 import RxSwift
 import ZanoKit
 
 class ZanoAdapter {
     static let networkType: ZanoKit.NetworkType = .mainnet
     static let confirmationsThreshold = Int(Kit.confirmationsThreshold)
-
-    var coinRate: Decimal { 1_000_000_000_000 } // pow(10, 12)
+    static let zanoRate: Decimal = 1_000_000_000_000 // pow(10, 12)
 
     private let kit: ZanoKit.Kit
-    private let zanoBalanceDataSubject = PublishSubject<ZanoBalanceData>()
-    private let lastBlockUpdatedSubject = PublishSubject<Void>()
-    private let balanceStateSubject = PublishSubject<AdapterState>()
+    private let disposeBag = DisposeBag()
+    private let queue = DispatchQueue(label: "\(AppConfig.label).zano-adapter", qos: .background)
+
+    private let balanceStateRelay: BehaviorRelay<AdapterState>
+    private let balanceDataSubject = PublishSubject<BalanceData>()
     let transactionRecordsSubject = PublishSubject<[ZanoTransactionRecord]>()
     private let depositAddressSubject = PassthroughSubject<DataStatus<DepositAddress>, Never>()
 
-    private(set) var balanceState: AdapterState {
-        didSet {
-            balanceStateSubject.onNext(balanceState)
-            syncing = balanceState.syncing
-        }
-    }
-
-    private(set) var syncing: Bool = true
+    var balanceState: AdapterState { balanceStateRelay.value }
 
     let token: Token
+    let baseToken: Token // same as token for native ZANO; native ZANO token for confidential assets
+    let assetId: String // ZanoAssetId for native ZANO
+    let coinRate: Decimal
     private let transactionSource: TransactionSource
 
-    init(wallet: Wallet, restoreSettings: RestoreSettings, nodeUrl: String) throws {
-        let logger = Core.shared.logger.scoped(with: "ZanoKit")
+    var isNative: Bool { assetId == ZanoAssetId }
 
-        switch wallet.account.type {
-        case let .mnemonic(words, passphrase, _):
-            let creationDate = RestoreHeight.getDate(height: Int64(restoreSettings.birthdayHeight ?? 0))
-            let creationTimestamp = UInt64(creationDate.timeIntervalSince1970)
-            kit = try ZanoKit.Kit(
-                wallet: .bip39(seed: words, passphrase: passphrase, creationTimestamp: creationTimestamp),
-                walletId: wallet.account.id,
-                daemonAddress: nodeUrl,
-                networkType: Self.networkType,
-                reachabilityManager: Core.shared.reachabilityManager,
-                logger: logger,
-                zanoCoreLogLevel: -1
-            )
+    // MARK: – Designated init
 
-        default:
-            throw AdapterError.unsupportedAccount
+    init(kit: ZanoKit.Kit, token: Token, baseToken: Token, assetId: String, coinRate: Decimal, transactionSource: TransactionSource, zanoKitManager: ZanoKitManager) {
+        self.kit = kit
+        self.token = token
+        self.baseToken = baseToken
+        self.assetId = assetId
+        self.coinRate = coinRate
+        self.transactionSource = transactionSource
+
+        balanceStateRelay = BehaviorRelay(value: Self.adapterState(kitState: kit.walletState))
+
+        let scheduler = SerialDispatchQueueScheduler(queue: queue, internalSerialQueueName: "\(AppConfig.label).zano-adapter")
+
+        zanoKitManager.walletStateSubject
+            .observeOn(scheduler)
+            .subscribe(onNext: { [weak self] state in
+                self?.balanceStateRelay.accept(Self.adapterState(kitState: state))
+            })
+            .disposed(by: disposeBag)
+
+        zanoKitManager.balancesSubject
+            .observeOn(scheduler)
+            .subscribe(onNext: { [weak self] balances in
+                guard let self, let info = balances.first(where: { $0.assetId == self.assetId }) else { return }
+                balanceDataSubject.onNext(balanceData(from: info))
+            })
+            .disposed(by: disposeBag)
+
+        zanoKitManager.transactionsSubject
+            .observeOn(scheduler)
+            .subscribe(onNext: { [weak self] transactions in
+                guard let self else { return }
+                let records = transactions.filter { $0.assetId == self.assetId }.map { self.transactionRecord(fromTransaction: $0) }
+                if !records.isEmpty {
+                    transactionRecordsSubject.onNext(records)
+                }
+            })
+            .disposed(by: disposeBag)
+    }
+
+    // MARK: – Convenience inits
+
+    convenience init(kit: ZanoKit.Kit, wallet: Wallet, zanoKitManager: ZanoKitManager) {
+        self.init(
+            kit: kit,
+            token: wallet.token,
+            baseToken: wallet.token,
+            assetId: ZanoAssetId,
+            coinRate: Self.zanoRate,
+            transactionSource: wallet.transactionSource,
+            zanoKitManager: zanoKitManager
+        )
+    }
+
+    convenience init(kit: ZanoKit.Kit, assetId: String, token: Token, baseToken: Token, transactionSource: TransactionSource, zanoKitManager: ZanoKitManager) {
+        self.init(
+            kit: kit,
+            token: token,
+            baseToken: baseToken,
+            assetId: assetId,
+            coinRate: pow(Decimal(10), token.decimals),
+            transactionSource: transactionSource,
+            zanoKitManager: zanoKitManager
+        )
+    }
+
+    // MARK: – Private helpers
+
+    private func balanceData(from info: BalanceInfo) -> BalanceData {
+        BalanceData(
+            total: Decimal(info.total) / coinRate,
+            available: Decimal(info.unlocked) / coinRate
+        )
+    }
+
+    private func currentBalanceData() -> BalanceData {
+        let info: BalanceInfo
+        if isNative {
+            info = kit.nativeBalance
+        } else {
+            info = kit.balance(forAssetId: assetId) ?? BalanceInfo(assetId: assetId, total: 0, unlocked: 0)
         }
-
-        token = wallet.token
-        transactionSource = wallet.transactionSource
-
-        balanceState = .notSynced(error: AppError.unknownError.localizedDescription)
-        kit.delegate = self
+        return balanceData(from: info)
     }
 
     func transactionRecord(fromTransaction transaction: TransactionInfo) -> ZanoTransactionRecord {
         let blockHeight = transaction.blockHeight > 0 ? Int(transaction.blockHeight) : nil
+        let fee = Decimal(transaction.fee) / Self.zanoRate // fee is always in native ZANO
+        let feeToken: Token? = isNative ? nil : baseToken // nil → falls back to token in record init
 
         switch transaction.type {
         case .outgoing, .sentToSelf:
@@ -72,12 +132,13 @@ class ZanoAdapter {
                 blockHeight: blockHeight,
                 confirmationsThreshold: Self.confirmationsThreshold,
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                fee: Decimal(transaction.fee) / coinRate,
+                fee: fee,
                 failed: transaction.isFailed,
                 amount: Decimal(transaction.amount) / coinRate,
                 to: transaction.recipientAddress,
                 sentToSelf: transaction.type == TransactionType.sentToSelf,
-                memo: transaction.memo
+                memo: transaction.memo,
+                feeToken: feeToken
             )
         case .incoming:
             return ZanoIncomingTransactionRecord(
@@ -89,181 +150,85 @@ class ZanoAdapter {
                 blockHeight: blockHeight,
                 confirmationsThreshold: Self.confirmationsThreshold,
                 date: Date(timeIntervalSince1970: Double(transaction.timestamp)),
-                fee: Decimal(transaction.fee) / coinRate,
+                fee: fee,
                 failed: transaction.isFailed,
                 amount: Decimal(transaction.amount) / coinRate,
                 from: nil,
                 to: transaction.recipientAddress,
-                memo: transaction.memo
+                memo: transaction.memo,
+                feeToken: feeToken
             )
         }
     }
 
-    private func zanoBalanceData(balanceInfo: BalanceInfo) -> ZanoBalanceData {
-        ZanoBalanceData(
-            all: Decimal(balanceInfo.total) / coinRate,
-            unlocked: Decimal(balanceInfo.unlocked) / coinRate
-        )
-    }
-
-    private func adapterStateFromKit() -> AdapterState {
-        let state = kit.walletState
-
-        switch state {
+    static func adapterState(kitState: WalletState) -> AdapterState {
+        switch kitState {
         case .connecting:
             return .connecting
-
         case .synced:
             return .synced
-
         case let .syncing(progress, remainingBlockCount):
             return .syncing(progress: min(99, progress), remaining: max(1, remainingBlockCount), lastBlockDate: nil)
-
         case let .notSynced(error):
             return .notSynced(error: error.localizedDescription)
-
         case .idle:
             return .notSynced(error: AppError.noConnection.localizedDescription)
         }
     }
 
-    public var explorerTitle: String {
-        "Zano Explorer"
-    }
+    var explorerTitle: String { "Zano Explorer" }
 
-    public func explorerUrl(transactionHash: String) -> String? {
+    func explorerUrl(transactionHash: String) -> String? {
         "https://explorer.zano.org/transaction/\(transactionHash)"
     }
 
-    public func explorerUrl(address _: String) -> String? {
-        ""
-    }
+    func explorerUrl(address _: String) -> String? { "" }
 }
 
 extension ZanoAdapter: IAdapter {
-    var isMainNet: Bool {
-        true
-    }
+    var isMainNet: Bool { true }
+    var debugInfo: String { "" }
 
-    var debugInfo: String {
-        ""
-    }
+    func start() { /* started by ZanoKitManager */ }
+    func stop() { /* lifecycle managed via deallocation of the kit */ }
+    func refresh() { /* called in AdapterManager */ }
+    func restart() { /* called in AdapterManager */ }
 
-    func start() {
-        kit.start()
-    }
-
-    func stop() {
-        kit.stop()
-    }
-
-    func refresh() {
-        kit.refresh()
-    }
-
-    func restart() {
-        kit.restart()
-    }
-
-    var statusInfo: [(String, Any)] {
-        kit.statusInfo
-    }
-}
-
-extension ZanoAdapter: ZanoKitDelegate {
-    func assetsDidChange(assets _: [AssetInfo]) {
-        // For now, we only handle native ZANO asset
-    }
-
-    func balancesDidChange(balances: [BalanceInfo]) {
-        if let nativeBalance = balances.first(where: { $0.isNative }) {
-            zanoBalanceDataSubject.onNext(zanoBalanceData(balanceInfo: nativeBalance))
-        }
-    }
-
-    func walletStateDidChange(state _: WalletState) {
-        balanceState = adapterStateFromKit()
-        lastBlockUpdatedSubject.onNext(())
-    }
-
-    func transactionsDidChange(transactions: [TransactionInfo]) {
-        let nativeTransactions = transactions.filter(\.isNative)
-        let records = nativeTransactions.map { transactionRecord(fromTransaction: $0) }
-        if !records.isEmpty {
-            transactionRecordsSubject.onNext(records)
-        }
-    }
+    var statusInfo: [(String, Any)] { kit.statusInfo }
 }
 
 extension ZanoAdapter: IBalanceAdapter {
     var balanceStateUpdatedObservable: Observable<AdapterState> {
-        balanceStateSubject.asObservable()
+        balanceStateRelay.asObservable()
     }
 
     var balanceData: BalanceData {
-        zanoBalanceData.balanceData
+        currentBalanceData()
     }
 
     var balanceDataUpdatedObservable: Observable<BalanceData> {
-        zanoBalanceDataSubject.map(\.balanceData).asObservable()
-    }
-}
-
-extension ZanoAdapter {
-    var zanoBalanceData: ZanoBalanceData {
-        zanoBalanceData(balanceInfo: kit.nativeBalance)
-    }
-
-    var zanoBalanceDataObservable: Observable<ZanoBalanceData> {
-        zanoBalanceDataSubject.asObservable()
-    }
-
-    var minimumSendAmount: Decimal {
-        0.0
-    }
-
-    func estimateFee() -> Decimal {
-        let fee = kit.estimateFee(priority: .default)
-        return Decimal(fee) / coinRate
-    }
-
-    func send(to address: String, amount: ZanoSendAmount, memo: String?) throws {
-        _ = try kit.send(to: address, assetId: ZanoAssetId, amount: convertToAtomic(amount: amount), priority: .default, memo: memo)
-    }
-
-    func convertToAtomic(amount: ZanoSendAmount) -> SendAmount {
-        switch amount {
-        case .all:
-            return .all
-        case let .value(value):
-            let coinValue: Decimal = value * coinRate
-            let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: Int16(truncatingIfNeeded: 0), raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
-            let atomicValue = NSDecimalNumber(decimal: coinValue).rounding(accordingToBehavior: handler).intValue
-            return .value(atomicValue)
-        }
+        balanceDataSubject.asObservable()
     }
 }
 
 extension ZanoAdapter: ITransactionsAdapter {
-    func rawTransaction(hash _: String) -> String? {
-        nil
-    }
+    func rawTransaction(hash _: String) -> String? { nil }
+
+    var syncing: Bool { balanceState.syncing }
 
     var lastBlockInfo: LastBlockInfo? {
         LastBlockInfo(height: Int(kit.lastBlockInfo), timestamp: nil)
     }
 
     var syncingObservable: Observable<Void> {
-        balanceStateSubject.map { _ in () }
+        balanceStateRelay.asObservable().map { _ in () }
     }
 
     var lastBlockUpdatedObservable: Observable<Void> {
-        lastBlockUpdatedSubject.asObservable()
+        balanceStateRelay.asObservable().map { _ in () }
     }
 
-    var additionalTokenQueries: [TokenQuery] {
-        []
-    }
+    var additionalTokenQueries: [TokenQuery] { [] }
 
     func transactionsObservable(token _: Token?, filter: TransactionTypeFilter, address _: String?) -> Observable<[TransactionRecord]> {
         transactionRecordsSubject.asObservable()
@@ -290,7 +255,7 @@ extension ZanoAdapter: ITransactionsAdapter {
         default: return Single.just([])
         }
 
-        let transactions = kit.transactions(assetId: ZanoAssetId, fromHash: paginationData, descending: true, type: zanoFilter, limit: limit).map {
+        let transactions = kit.transactions(assetId: assetId, fromHash: paginationData, descending: true, type: zanoFilter, limit: limit).map {
             transactionRecord(fromTransaction: $0)
         }
 
@@ -311,18 +276,29 @@ extension ZanoAdapter: IDepositAdapter {
         depositAddressSubject.eraseToAnyPublisher()
     }
 
-    var usedAddresses: [UsedAddress] {
-        []
-    }
+    var usedAddresses: [UsedAddress] { [] }
 }
 
 extension ZanoAdapter {
-    struct ZanoBalanceData {
-        let all: Decimal
-        let unlocked: Decimal
+    var minimumSendAmount: Decimal { 0.0 }
 
-        var balanceData: BalanceData {
-            BalanceData(total: all, available: unlocked)
+    func estimateFee() -> Decimal {
+        Decimal(kit.estimateFee(priority: .default)) / Self.zanoRate
+    }
+
+    func send(to address: String, amount: ZanoSendAmount, memo: String?) throws {
+        _ = try kit.send(to: address, assetId: assetId, amount: convertToAtomic(amount: amount), priority: .default, memo: memo)
+    }
+
+    func convertToAtomic(amount: ZanoSendAmount) -> SendAmount {
+        switch amount {
+        case .all:
+            return .all
+        case let .value(value):
+            let coinValue: Decimal = value * coinRate
+            let handler = NSDecimalNumberHandler(roundingMode: .plain, scale: Int16(truncatingIfNeeded: 0), raiseOnExactness: false, raiseOnOverflow: false, raiseOnUnderflow: false, raiseOnDivideByZero: false)
+            let atomicValue = NSDecimalNumber(decimal: coinValue).rounding(accordingToBehavior: handler).intValue
+            return .value(atomicValue)
         }
     }
 }

@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0EF9EF6CA1429103327C8781 /* ZanoSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D477E6F2A6CD757BDD59174 /* ZanoSendHelper.swift */; };
 		11B3500AB065E6CA0595FBDE /* AmountTypeSwitchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B359E546B8F1E572E695F4 /* AmountTypeSwitchService.swift */; };
 		11B3500B2BFCC3F83C19BC4C /* SwapApproveConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B356940B04C8486835FDAA /* SwapApproveConfirmationViewController.swift */; };
 		11B3500BC7034A23586A1303 /* BlockchainSettingsModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357F0A42CE7144C82D634 /* BlockchainSettingsModule.swift */; };
@@ -1542,7 +1541,6 @@
 		58AAAFDBA357FC699C07C334 /* AdditionalDataWithErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA8483BC1E85730F04CA3 /* AdditionalDataWithErrorView.swift */; };
 		58AAAFE644C1B236B9714B47 /* CoinSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAAB692B7C326319D186E4 /* CoinSelectViewModel.swift */; };
 		594FF7D51F5F004139220417 /* ZanoAddressParserItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 723984A011A8B0E6B8840181 /* ZanoAddressParserItem.swift */; };
-		59FB5F69645EE8847CA5F398 /* ZanoSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D477E6F2A6CD757BDD59174 /* ZanoSendHelper.swift */; };
 		5E0C0E9AD20F5CEC7EFF1F71 /* ZanoSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663A92D3AC0FEA62E24CC543 /* ZanoSendHandler.swift */; };
 		6B146A972A52A69400648C10 /* ChartIndicatorSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B146A932A52A69400648C10 /* ChartIndicatorSettingsViewController.swift */; };
 		6B146A982A52A69400648C10 /* ChartIndicatorSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B146A932A52A69400648C10 /* ChartIndicatorSettingsViewController.swift */; };
@@ -2239,7 +2237,6 @@
 		6BEF09612E252519004F4514 /* StartScreenAlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BEF095F2E25250B004F4514 /* StartScreenAlertManager.swift */; };
 		6BFA4E032D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA4E022D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift */; };
 		6BFA4E042D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA4E022D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift */; };
-		80D3D247373B963FE67A09BC /* ZanoTransactionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7930D0B4CFB205C33309C2FD /* ZanoTransactionService.swift */; };
 		910051BE2598C16C84F07CA1 /* ZanoPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBC57E9971C82838B865205 /* ZanoPreSendHandler.swift */; };
 		965D6887AD49252B1BD3163A /* ZanoOutgoingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1D515731B6C56C8EEF67D3 /* ZanoOutgoingTransactionRecord.swift */; };
 		96EBA2BCD0C734D3D2EF4360 /* ZanoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1055BE8698DF9E53E2E04C12 /* ZanoAdapter.swift */; };
@@ -2929,6 +2926,8 @@
 		D0DEFF072BD1253C004C9DF0 /* UtxoFeeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF032BD1253B004C9DF0 /* UtxoFeeSettingsView.swift */; };
 		D0DEFF0A2BD1257F004C9DF0 /* UtxoTransactionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF082BD1257E004C9DF0 /* UtxoTransactionService.swift */; };
 		D0DEFF0B2BD1257F004C9DF0 /* UtxoTransactionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0DEFF082BD1257E004C9DF0 /* UtxoTransactionService.swift */; };
+		D0E0FF972F55A213004EDE45 /* ZanoKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E0FF962F55A213004EDE45 /* ZanoKitManager.swift */; };
+		D0E0FF982F55A213004EDE45 /* ZanoKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E0FF962F55A213004EDE45 /* ZanoKitManager.swift */; };
 		D0E5E84F2BE22172005080A4 /* BitcoinSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5E84E2BE22172005080A4 /* BitcoinSendHandler.swift */; };
 		D0E5E8502BE22172005080A4 /* BitcoinSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5E84E2BE22172005080A4 /* BitcoinSendHandler.swift */; };
 		D0E5E8522BE260C8005080A4 /* BitcoinPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D0E5E8512BE260C8005080A4 /* BitcoinPreSendHandler.swift */; };
@@ -3643,7 +3642,6 @@
 		DD0994503860DCEF23462CBA /* ZanoOutgoingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1D515731B6C56C8EEF67D3 /* ZanoOutgoingTransactionRecord.swift */; };
 		DE12379766E4EC2D844C466C /* ZanoIncomingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958963E814F251B1A4E65FD /* ZanoIncomingTransactionRecord.swift */; };
 		F4F0AD0D13BF481A6F45F1BC /* ZanoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1055BE8698DF9E53E2E04C12 /* ZanoAdapter.swift */; };
-		FDE600C8828A11D670930C45 /* ZanoTransactionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7930D0B4CFB205C33309C2FD /* ZanoTransactionService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -4819,8 +4817,6 @@
 		6BEF095F2E25250B004F4514 /* StartScreenAlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartScreenAlertManager.swift; sourceTree = "<group>"; };
 		6BFA4E022D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketAdvancedSearchCategoriesView.swift; sourceTree = "<group>"; };
 		723984A011A8B0E6B8840181 /* ZanoAddressParserItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ZanoAddressParserItem.swift; sourceTree = "<group>"; };
-		7930D0B4CFB205C33309C2FD /* ZanoTransactionService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ZanoTransactionService.swift; sourceTree = "<group>"; };
-		9D477E6F2A6CD757BDD59174 /* ZanoSendHelper.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ZanoSendHelper.swift; sourceTree = "<group>"; };
 		ABC9A021D71EDD24DFB6BA62 /* CoinProChartModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinProChartModule.swift; sourceTree = "<group>"; };
 		ABC9A02C808FCE6082E3F97A /* DebounceTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebounceTextField.swift; sourceTree = "<group>"; };
 		ABC9A03401172C4C65D66764 /* SingleLineFormTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLineFormTextView.swift; sourceTree = "<group>"; };
@@ -5158,6 +5154,7 @@
 		D0DEFF022BD1253B004C9DF0 /* UtxoFeeSettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtxoFeeSettingsViewModel.swift; sourceTree = "<group>"; };
 		D0DEFF032BD1253B004C9DF0 /* UtxoFeeSettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtxoFeeSettingsView.swift; sourceTree = "<group>"; };
 		D0DEFF082BD1257E004C9DF0 /* UtxoTransactionService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UtxoTransactionService.swift; sourceTree = "<group>"; };
+		D0E0FF962F55A213004EDE45 /* ZanoKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZanoKitManager.swift; sourceTree = "<group>"; };
 		D0E5E84E2BE22172005080A4 /* BitcoinSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinSendHandler.swift; sourceTree = "<group>"; };
 		D0E5E8512BE260C8005080A4 /* BitcoinPreSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BitcoinPreSendHandler.swift; sourceTree = "<group>"; };
 		D0E5E8542BE38AA2005080A4 /* TronSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronSendHandler.swift; sourceTree = "<group>"; };
@@ -6123,6 +6120,7 @@
 		11B35480153660045A6CF9AC /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				D0E0FF962F55A213004EDE45 /* ZanoKitManager.swift */,
 				D3FFFCB42F3F3F040051D743 /* AppStateManager.swift */,
 				6BA971BD2ED560C900DEC017 /* Premium */,
 				6B4587532E2F475E008F87E7 /* AmountRoundingManager.swift */,
@@ -7240,7 +7238,6 @@
 				6BCAB39A2F1A114E00820806 /* TronSendHelper.swift */,
 				D092D6402E3117280039BDB4 /* MoneroAdapter.swift */,
 				1055BE8698DF9E53E2E04C12 /* ZanoAdapter.swift */,
-				9D477E6F2A6CD757BDD59174 /* ZanoSendHelper.swift */,
 			);
 			path = Adapters;
 			sourceTree = "<group>";
@@ -9747,7 +9744,6 @@
 				D011A49A2E3B826D004F58DC /* MoneroTransactionService.swift */,
 				663A92D3AC0FEA62E24CC543 /* ZanoSendHandler.swift */,
 				3DBC57E9971C82838B865205 /* ZanoPreSendHandler.swift */,
-				7930D0B4CFB205C33309C2FD /* ZanoTransactionService.swift */,
 			);
 			path = SendNew;
 			sourceTree = "<group>";
@@ -11042,6 +11038,7 @@
 				D30C4D572D55FE980082B487 /* BottomSheetModifier.swift in Sources */,
 				D36287BE2CA3D7B100ADAF3B /* TonConnect+Encodable.swift in Sources */,
 				D3FBC71C2E55E93C001083D8 /* ThorChainMultiSwapProvider.swift in Sources */,
+				D0E0FF972F55A213004EDE45 /* ZanoKitManager.swift in Sources */,
 				58AAA1AAD335F236D130FCBB /* SwapConfirmationModule.swift in Sources */,
 				58AAAA3F2EF03D83A5500228 /* SwapConfirmationViewController.swift in Sources */,
 				58AAA3A6458CB87F359F6366 /* SwapConfirmationAmountCell.swift in Sources */,
@@ -12180,10 +12177,8 @@
 				A4575AABFA440B455B5AABF7 /* ZanoTransactionRecord.swift in Sources */,
 				410022607BA8D068E2DC4C08 /* ZanoIncomingTransactionRecord.swift in Sources */,
 				965D6887AD49252B1BD3163A /* ZanoOutgoingTransactionRecord.swift in Sources */,
-				59FB5F69645EE8847CA5F398 /* ZanoSendHelper.swift in Sources */,
 				127ACB49CA0CF81D83825FBF /* ZanoSendHandler.swift in Sources */,
 				910051BE2598C16C84F07CA1 /* ZanoPreSendHandler.swift in Sources */,
-				FDE600C8828A11D670930C45 /* ZanoTransactionService.swift in Sources */,
 				51B85A28AAD21DA783EDD0C5 /* ZanoAddressParserItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -13035,6 +13030,7 @@
 				11B3541BC8A0EF1066EBA464 /* NonSpamPoolProvider.swift in Sources */,
 				D09C5C632C076C0E00E6909E /* CoinIconView.swift in Sources */,
 				11B3594DD9B54E11190B4CD5 /* PoolProvider.swift in Sources */,
+				D0E0FF982F55A213004EDE45 /* ZanoKitManager.swift in Sources */,
 				11B351E4BD2180A5D6D59F23 /* PoolGroup.swift in Sources */,
 				11B35AC389ACC3E4096EC645 /* PoolGroupFactory.swift in Sources */,
 				11B3595D3E150BF50856A746 /* PoolSource.swift in Sources */,
@@ -13861,10 +13857,8 @@
 				BF7342C069BA3E6F77F492FC /* ZanoTransactionRecord.swift in Sources */,
 				DE12379766E4EC2D844C466C /* ZanoIncomingTransactionRecord.swift in Sources */,
 				DD0994503860DCEF23462CBA /* ZanoOutgoingTransactionRecord.swift in Sources */,
-				0EF9EF6CA1429103327C8781 /* ZanoSendHelper.swift in Sources */,
 				5E0C0E9AD20F5CEC7EFF1F71 /* ZanoSendHandler.swift in Sources */,
 				6B15F4F335AC20854827AFE2 /* ZanoPreSendHandler.swift in Sources */,
-				80D3D247373B963FE67A09BC /* ZanoTransactionService.swift in Sources */,
 				594FF7D51F5F004139220417 /* ZanoAddressParserItem.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -14889,7 +14883,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 3.6.9;
+				version = 3.6.10;
 			};
 		};
 		D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart" */ = {
@@ -15032,8 +15026,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/MoneroKit.Swift";
 			requirement = {
-				branch = zano_support;
-				kind = branch;
+				kind = exactVersion;
+				version = 0.2.2;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

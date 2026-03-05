@@ -6,7 +6,7 @@ class ZanoIncomingTransactionRecord: ZanoTransactionRecord {
     let from: String?
     let to: String?
 
-    init(token: Token, source: TransactionSource, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: Decimal?, failed: Bool, amount: Decimal, from: String?, to: String? = nil, memo: String? = nil) {
+    init(token: Token, source: TransactionSource, uid: String, transactionHash: String, transactionIndex: Int, blockHeight: Int?, confirmationsThreshold: Int?, date: Date, fee: Decimal?, failed: Bool, amount: Decimal, from: String?, to: String? = nil, memo: String? = nil, feeToken: Token? = nil) {
         value = AppValue(token: token, value: amount)
         self.from = from
         self.to = to
@@ -19,7 +19,7 @@ class ZanoIncomingTransactionRecord: ZanoTransactionRecord {
             blockHeight: blockHeight,
             confirmationsThreshold: confirmationsThreshold,
             date: date,
-            fee: fee.flatMap { AppValue(token: token, value: $0) },
+            fee: fee.flatMap { AppValue(token: feeToken ?? token, value: $0) },
             failed: failed,
             memo: memo
         )
