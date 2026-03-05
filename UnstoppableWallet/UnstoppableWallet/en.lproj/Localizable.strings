@@ -422,7 +422,6 @@
 "send.available_balance" = "Available Balance";
 "send.max_button" = "Max";
 "send.next_button" = "Next";
-"send.check_button" = "Check";
 "send.error.invalid" = "Invalid";
 "send.error.invalid_blockchain" = "Invalid Blockchain";
 "send.error.invalid_token" = "Invalid Token";
@@ -447,18 +446,12 @@
 
 "send.confirmation.title" = "Confirm Send";
 "send.confirmation.you_send" = "You Send";
-"send.confirmation.you_receive" = "You Receive";
 "send.confirmation.transfer" = "Transfer";
 "send.confirmation.to" = "To";
-"send.confirmation.from" = "From";
 "send.confirmation.own" = "Own";
 "send.confirmation.contact_name" = "Contact Name";
-"send.confirmation.domain" = "Domain";
-"send.confirmation.address" = "Address";
-"send.confirmation.account" = "Account";
 "send.confirmation.memo" = "Memo";
 "send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "Total";
 "send.confirmation.fee" = "Fee";
 "send.confirmation.time_lock" = "Time Lock";
 "send.confirmation.replace_by_fee" = "Replace by Fee";
@@ -475,16 +468,11 @@
 "send.confirmation.edit_fee" = "Edit Fee";
 "send.confirmation.transaction_nonce" = "Transaction Nonce";
 
-"send.confirmation.sync_failed" = "Sync Failed";
 "send.confirmation.failed_to_fetch_data" = "Failed to fetch data";
 "send.confirmation.refresh" = "Refresh";
 "send.confirmation.refreshing" = "Refreshing";
-"send.confirmation.please_wait" = "Please Wait";
-"send.confirmation.expires_in" = "Expires in %@";
-"send.confirmation.expired" = "Expired";
 "send.confirmation.slide_to_send" = "Slide to Send";
 "send.confirmation.sending" = "Sending";
-"send.confirmation.sent" = "Sent";
 "send.confirmation.unexpected_error" = "Unexpected Error";
 "send.confirmation.unexpected_error.text" = "Something went wrong while sending your transaction. Please try again or copy the error code and contact support.";
 
@@ -494,7 +482,6 @@
 "send.confirmation.slide_to_resend" = "Resend";
 "send.confirmation.slide_to_cancel" = "Cancel Transaction";
 "send.confirmation.resend" = "Resend";
-"send.confirmation.btc_cancel_description" = "This action will attempt to invalidate the previous transaction by resending it as a new transaction sending some amount to self. If the original transaction remains pending when a new one is sent there is a high chance (not guaranteed) that it will be invalidated and replaced. Only one of these two transactions will be included in the blockchain.";
 "send.confirmation.speed_up" = "Speed Up";
 "send.confirmation.cancel" = "Cancel Transaction";
 "send.confirmation.nonce" = "Nonce";
@@ -506,9 +493,7 @@
 "send.amount_error.minimum_amount" = "Minimum amount %@";
 "send.amount_error.minimum_amount.title" = "Minimum amount";
 "send.amount_error.minimum_amount.description" = "Minimum amount must be %@";
-"send.amount_error.min_required_balance" = "Min. required remainder %@";
 "send.amount_warning.coin_needed_for_fee" = "Consider leaving some %@ on balance to be able to pay for future transactions.";
-"send.token.insufficient_fee_alert" = "Transaction fees for transferring %@ (on %@) paid in %@. You need %@.";
 "send.stellar.no_trustline.title" = "No Asset Trustline";
 "send.stellar.no_trustline.description" = "Recipient account does not have established trustline with the asset being sent.";
 
@@ -520,10 +505,6 @@
 "send.fee_settings.fee_error.title" = "Fee Error";
 "send.fee_settings.too_low" = "Fee Rate is too low.";
 "send.fee_settings.fee_rate_unavailable" = "Fee Rate unavailable. Please, check fee rates manually";
-
-"send.stuck_warning" = "Warning! Risk of getting stuck";
-
-"send.lock_time" = "TimeLock";
 
 "send.unspent_outputs" = "UTxOs";
 "send.unspent_outputs.description" = "Manually select UTxO to spend the funds in the balance";
@@ -570,7 +551,6 @@
 "donate.list.get_address" = "Get Donate Address";
 "donate.list.get_address.title" = "Addresses";
 "donate.title" = "Donate %@";
-"donate.no_assets" = "You have no assets to donate.";
 "donate.support.description" = "Together, with your support, we can make this app even better!";
 "donate.support.bottom_description" = "Or select a coin to donate";
 
@@ -581,7 +561,6 @@
 // Swap
 
 "swap.title" = "Swap";
-"swap.no_assets" = "You have no assets to swap.";
 "swap.you_pay" = "You Pay";
 "swap.estimated" = "estimated";
 "swap.balance" = "Balance";
@@ -592,7 +571,6 @@
 "swap.approve.title" = "Swap Approve";
 "swap.approve.description" = "You should grant permission to a smart contract to swap a given token on your behalf. This permission sets the amount that can be used by a smart contract. It doesn't affect your balance but requires a small fee to execute an approval transaction. \n\nWhile it may be done on-demand before each trade, it's cheaper to approve a higher amount in advance for future trades.";
 "swap.approve.amount_error.already_approved" = "You already have an allowance for this amount";
-"swap.approve.not_found" = "Can't approve these tokens";
 "swap.approving_button" = "Approving...";
 "swap.revoking_button" = "Revoking...";
 "swap.not_available_button" = "Balance n/a";
@@ -603,13 +581,7 @@
 "swap.amount_type.coin" = "Coin";
 
 "swap.price" = "Price";
-"swap.buy_price" = "Buy Price";
-"swap.sell_price" = "Sell Price";
-"swap.maximum_paid" = "Maximum Amount";
-"swap.minimum_got" = "Guaranteed Amount";
 "swap.estimate_short" = "(est)";
-"swap.minimum_short" = "(min)";
-"swap.maximum_short" = "(max)";
 
 "swap.rate_not_available" = "Rate not available";
 "swap.select" = "Select";
@@ -725,41 +697,17 @@
 "swap.confirmation.minimum_received.info" = "The minimum amount you will receive after the swap is completed. This amount is guaranteed by the provider and is not affected by price changes during processing.";
 "swap.confirmation.maximum_sent" = "Maximum Sent";
 
-"swap.dex_info.description" = "This exchange service is powered by %@, a decentralized token exchange protocol built on the %@ blockchain. \n\n%@ is fully automated and managed by smart contracts that facilitate token exchanges in a reliable manner without any means to cheat.";
-"swap.dex_info.header_dex_related" = "%@ Related";
 "swap.dex_info.header_allowance" = "Allowance";
 "swap.dex_info.content_allowance" = "The amount an exchange can spend on a user’s behalf when executing token swaps. A proceeding transaction setting sufficient allowance is required before an actual swap transaction can take place.";
 "swap.dex_info.header_price_impact" = "Price Impact";
 "swap.dex_info.content_price_impact" = "The expected price deviation from a shown price typically increases with the swap amount.";
-"swap.dex_info.header_swap_fee" = "Swap Fee";
-"swap.dex_info.content_swap_fee" = "A service fee for the swap action on the platform, shown in the currency the user sells. For most orders, it should be either 0.3 % or 0.6 %.";
-"swap.dex_info.header_guaranteed_amount" = "Guaranteed Amount";
-"swap.dex_info.content_guaranteed_amount" = "The minimum amount a user is going to receive as a result of a swap action.";
-"swap.dex_info.header_maximum_spend" = "Maximum Spend";
-"swap.dex_info.content_maximum_spend" = "The maximum amount a user is going to spend as a result of a swap action.";
-
-"swap.dex_info.header_other" = "Other";
-"swap.dex_info.header_transaction_fee" = "Transaction Fee";
-"swap.dex_info.content_transaction_fee" = "The estimated processing cost of the given transaction on %@ blockchain. %@ related transactions will typically cost more than generic token transfer transactions.";
-"swap.dex_info.header_transaction_speed" = "Transaction Speed";
-"swap.dex_info.content_transaction_speed" = "Transactions with a higher transaction fee will result in faster processing speeds. The opposite is true as well.";
-
-"swap.dex_info.link_button" = "%@ Site";
 
 "swap.maya.shielded_address.error" = "Can't fetch shielded address for Memo (Maya)";
 
 
 // Market
 
-"market.tab_bar_item" = "Markets";
 "market.title" = "Markets";
-"market.category.overview" = "Overview";
-"market.category.posts" = "News";
-"market.category.watchlist" = "Favorites";
-"market.total_market_cap" = "Total M.Cap";
-"market.24h_volume" = "24h Volume";
-"market.defi_cap" = "DeFi Cap";
-"market.defi_tvl" = "TVL in DeFi";
 
 "market.global.market_cap" = "Total Cap";
 "market.global.volume" = "24h Vol.";
@@ -1119,11 +1067,6 @@
 "coin_analytics.indicators.overbought" = "Risky";
 "coin_analytics.period" = "Period";
 "coin_analytics.period.select_title" = "Select Period";
-"coin_analytics.period.1h" = "1 hour";
-"coin_analytics.period.4h" = "4 hours";
-"coin_analytics.period.1d" = "1 day";
-"coin_analytics.period.1w" = "1 week";
-"coin_analytics.period.1m" = "1 month";
 
 "coin_analytics.details" = "Details";
 
@@ -1362,16 +1305,11 @@
 
 "tx_info.title" = "Transaction Info";
 "tx_info.date" = "Date";
-"tx_info.title_approval" = "Swap Approval";
-"tx_info.status.pending" = "Pending";
-"tx_info.status.completed" = "Completed";
-"tx_info.status.failed" = "Failed";
 "tx_info.from_hash" = "From";
 "tx_info.transaction_id" = "ID";
 "tx_info.to_hash" = "To";
 "tx_info.spender" = "Spender";
 "tx_info.contact_name" = "Contact Name";
-"tx_info.button_explorer" = "View on %@";
 "tx_info.rate" = "Historical Rate";
 "tx_info.options.speed_up" = "Speed Up";
 "tx_info.options.cancel" = "Cancel Transaction";
@@ -1399,24 +1337,18 @@
 // Settings
 
 "settings.title" = "Settings";
-"settings.tab_bar_item" = "Settings";
 "settings.manage_accounts" = "Manage Wallets";
 "settings.blockchain_settings" = "Blockchain Settings";
 "settings.backup_manager" = "Backup Manager";
 "settings.security" = "Security";
-"settings.personal_support" = "Personal Support";
 "settings.base_currency" = "Base Currency";
 "settings.language" = "Language";
 "settings.faq" = "FAQ";
-"settings.theme" = "Theme";
 "settings.info_subtitle" = "decentralized app";
-"settings.donate.description" = "Together, with your support, we can make this app even better!";
 "settings.donate.title" = "Donate";
 "settings.rate_us" = "Rate Us";
 "settings.tell_friends" = "Tell Friends";
-"settings.contact_us" = "Contact Us";
 "settings.social_networks.label" = "Join Unstoppables";
-"settings.get_your_tokens" = "Get your tokens";
 "settings.dapp_connection" = "DApp Connection";
 "settings.appearance" = "Appearance";
 
@@ -1436,19 +1368,6 @@
 "manage_wallets.contract_address" = "Contract Address";
 "manage_wallets.derivation_description" = "There are 4 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (oldest)\n- BIP49\n- BIP84 (recommended)\n- BIP86 (newest)\n\nWhile %@ wallet supports all 4, it recommends to use a %@ wallet operating in BIP84 format.";
 "manage_wallets.bitcoin_cash_coin_type_description" = "There are 2 address formats Bitcoin Cash wallets can use to receive incoming payments:\n\n- TYPE 0 (older)\n- TYPE 145 (newer)\n\nWhile %@ wallet supports both of them it recommends using a Bitcoin Cash wallet operating in TYPE 145 format.";
-
-// Settings -> Personal Support
-
-"settings.personal_support.telegram_username.title" = "Account";
-"settings.personal_support.telegram_username.placeholder" = "@username";
-"settings.personal_support.description" = "Enter your Telegram account name to open a personal support chat and we'll send message to you.";
-"settings.personal_support.request" = "Request";
-"settings.personal_support.requested" = "Requested";
-"settings.personal_support.failed" = "Request failed";
-"settings.personal_support.need_subscription" = "This feature only for %@ Wallet premium users. More info in our official site.";
-"settings.personal_support.requested.description" = "You've already requested a private chat, find it on Telegram";
-"settings.personal_support.requested.open_telegram" = "Open Telegram";
-"settings.personal_support.requested.new_request" = "New Request";
 
 // Settings -> Terms
 
@@ -1782,11 +1701,6 @@
 "contacts.settings.lost_synchronization.description" = "iCloud synchronization is lost. Please check that iCloud Storage is enabled on your device.";
 "contacts.settings.merge_disclaimer" = "Your local payment contacts will be merged with ones stored on iCloud.";
 
-"contacts.settings.alert.title" = "iCloud Sync";
-"contacts.settings.alert.description" = "Please check that iCloud Storage is enabled on your device.";
-
-"contacts.settings.alert_error.title" = "iCloud Error";
-
 // Key Types
 
 "chart.time_duration.day" = "24H";
@@ -1892,9 +1806,7 @@
 
 "wallet_connect.title" = "WalletConnect";
 "wallet_connect.error.invalid_url" = "Invalid URL Address";
-"wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Active Wallet";
-"wallet_connect.address" = "Address";
 "wallet_connect.network" = "Network";
 "wallet_connect.list.pending_requests" = "Pending Requests";
 "wallet_connect.main.connect" = "Connect to %@";
@@ -1913,7 +1825,6 @@
 "wallet_connect.main.no_any_supported_chains" = "No any supported chains!";
 "wallet_connect.main.unsupported_chains" = "Some chains are unsupported!";
 "wallet_connect.connect_description" = "By clicking connect, you allow this app to view your public address.";
-"wallet_connect.usage_description" = "You can go to the browser. Do not close this page while interacting in the browser.";
 "wallet_connect.no_connection" = "Failed to establish a connection. Try reconnecting again.";
 "wallet_connect.button_reconnect" = "Reconnect";
 "wallet_connect.button_disconnect" = "Disconnect";
@@ -1938,21 +1849,13 @@
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "No active sessions";
 
-"wallet_connect.list.v1_bottom_text" = "In the first version of WalletConnect, you must go into sessions to see and confirm the request";
 "wallet_connect_list.new_connection" = "New Connection";
-"wallet_connect_list.disconnecting" = "Disconnecting";
 
 "wallet_connect.no_account.description" = "You need to create or import a wallet before you can use WalletConnect.";
 "wallet_connect.unbackuped_account.description" = "You need to backup %@ before you can use WalletConnect";
 
 "wallet_connect.non_supported_account.description" = "Your current wallet type %@ does not support WalletConnect";
 "wallet_connect.non_supported_account.switch" = "Switch";
-
-"wallet_connect.pending_requests_title" = "Pending Requests";
-"wallet_connect.paired_dapps.title" = "Paired dApps";
-"wallet_connect.paired_dapps.cant_disconnect" = "Can't Disconnect";
-"wallet_connect.paired_dapps.disconnect_all" = "Delete All";
-"wallet_connect.pending_requests.nonactive_footer" = "To open a request you must activate the desired wallet";
 
 // Ton Connect
 
@@ -2183,8 +2086,6 @@
 "nft_collections.on_sale" = "On Sale";
 "nft_collections.empty" = "You don’t have any NFTs in your wallet";
 
-"top_nft_collections.title" = "Top NFT Collections";
-"top_nft_collections.description" = "Leading NFT collections by trading volume.";
 
 // Nft Asset
 
@@ -2210,9 +2111,6 @@
 "nft_asset.details.blockchain" = "Blockchain";
 "nft_asset.links" = "Links";
 "nft_asset.links.website" = "Website";
-"nft_asset.options.save_to_photos" = "Save to Photos";
-"nft_asset.options.set_as_watch_face" = "Set as Watch Face";
-"nft_asset.save_to_photos.failed" = "Failed to save NFT image";
 
 // Nft Collection
 
@@ -2231,7 +2129,6 @@
 "nft_collection.overview.24h_volume" = "24h Volume";
 "nft_collection.overview.today_sellers" = "Today's Sellers";
 "nft_collection.overview.floor_price" = "Floor Price";
-"nft_collection.overview.all_time_average" = "All time average";
 "nft_collection.overview.royalty" = "Royalty";
 "nft_collection.overview.inception_date" = "Inception Date";
 
@@ -2239,13 +2136,6 @@
 "nft.activity.empty_list" = "No item activity yet";
 "nft.activity.event_types" = "Event Types";
 "nft.activity.event_type.all" = "All Events";
-"nft.activity.event_type.sale" = "Sale";
-"nft.activity.event_type.transfer" = "Transfer";
-"nft.activity.event_type.mint" = "Mint";
-"nft.activity.event_type.list" = "List";
-"nft.activity.event_type.listCancel" = "List Cancel";
-"nft.activity.event_type.offer" = "Offer";
-"nft.activity.event_type.offerCancel" = "Offer Cancel";
 
 // Subscription Info
 
@@ -2305,14 +2195,6 @@
 "transaction_filter.all_contacts" = "All Contacts";
 "transaction_filter.hide_suspicious_txs" = "Hide Suspicious Txs";
 "transaction_filter.hide_suspicious_txs.description" = "Hides small-value incoming transfers (e.g. USDT below $1.5). These transactions are often used for phishing and address-poisoning attacks.";
-
-// Black Friday
-
-"premium.cell.black_friday.description" = "Upgrade to %@ with our biggest discount of the year";
-"premium.black_friday.discount.save" = "save";
-"purchase.black_friday.period.lifetime" = "lifetime access";
-"purchase.black_friday.period.per_month" = "per month";
-"purchase.black_friday.period.per_year" = "per year";
 
 // Purchases
 
