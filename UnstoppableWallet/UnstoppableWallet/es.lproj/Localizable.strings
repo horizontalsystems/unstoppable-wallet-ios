@@ -421,7 +421,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "send.available_balance" = "Saldo disponible";
 "send.max_button" = "Máx.";
 "send.next_button" = "Siguiente";
-"send.check_button" = "Verificar";
 "send.error.invalid" = "Inválido";
 "send.error.invalid_blockchain" = "Blockchain inválido";
 "send.error.invalid_token" = "Token inválido";
@@ -446,18 +445,12 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 
 "send.confirmation.title" = "Confirmar envío";
 "send.confirmation.you_send" = "Usted envía";
-"send.confirmation.you_receive" = "Recibirás";
 "send.confirmation.transfer" = "Transferencia";
 "send.confirmation.to" = "Para";
-"send.confirmation.from" = "Desde";
 "send.confirmation.own" = "Propio";
 "send.confirmation.contact_name" = "Nombre de contacto";
-"send.confirmation.domain" = "Dominio";
-"send.confirmation.address" = "Dirección";
-"send.confirmation.account" = "Account";
 "send.confirmation.memo" = "Memo";
 "send.confirmation.memo_placeholder" = "Memo";
-"send.confirmation.total" = "Összesen";
 "send.confirmation.fee" = "Comisión";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Reemplazar por tarifa";
@@ -474,16 +467,11 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "send.confirmation.edit_fee" = "Editar comisión";
 "send.confirmation.transaction_nonce" = "Transacción Nonce";
 
-"send.confirmation.sync_failed" = "Error de sincronización";
 "send.confirmation.failed_to_fetch_data" = "Error al obtener los datos";
 "send.confirmation.refresh" = "Actualizar";
 "send.confirmation.refreshing" = "Actualizando";
-"send.confirmation.please_wait" = "Por favor, espere";
-"send.confirmation.expires_in" = "Expira en %@";
-"send.confirmation.expired" = "Expirado";
 "send.confirmation.slide_to_send" = "Deslizar para enviar";
 "send.confirmation.sending" = "Enviar";
-"send.confirmation.sent" = "Enviado";
 "send.confirmation.unexpected_error" = "Error inesperado";
 "send.confirmation.unexpected_error.text" = "Algo salió mal al enviar tu transacción. Inténtalo de nuevo o copia el código de error y contacta con soporte.";
 
@@ -493,7 +481,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "send.confirmation.slide_to_resend" = "Reenviar";
 "send.confirmation.slide_to_cancel" = "Cancelar transacción";
 "send.confirmation.resend" = "Reenviar";
-"send.confirmation.btc_cancel_description" = "Esta acción intentará invalidar la transacción anterior reenviándola como una nueva transacción, enviando una cierta cantidad a sí misma. Si la transacción original permanece pendiente cuando se envía una nueva, hay una alta probabilidad (no garantizada) de que se invalide y se reemplace. Solo una de estas dos transacciones se incluirá en la cadena de bloques.";
 "send.confirmation.speed_up" = "Acelerar";
 "send.confirmation.cancel" = "Cancelar transacción";
 "send.confirmation.nonce" = "Nonce";
@@ -505,9 +492,7 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "send.amount_error.minimum_amount" = "Monto mínimo %@";
 "send.amount_error.minimum_amount.title" = "Monto mínimo";
 "send.amount_error.minimum_amount.description" = "El monto mínimo debe ser %@";
-"send.amount_error.min_required_balance" = "Min. requerido restante %@";
 "send.amount_warning.coin_needed_for_fee" = "Considere dejar algún %@ en el saldo para poder pagar futuras transacciones.";
-"send.token.insufficient_fee_alert" = "Las comisiones de transacción para %@ (%@) pagado en %@. Es necesario %@.";
 "send.stellar.no_trustline.title" = "Sin línea de confianza para el activo";
 "send.stellar.no_trustline.description" = "La cuenta del destinatario no tiene establecida una línea de confianza para el activo enviado.";
 
@@ -519,10 +504,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "send.fee_settings.fee_error.title" = "Error de tarifa";
 "send.fee_settings.too_low" = "La tarifa es demasiado baja.";
 "send.fee_settings.fee_rate_unavailable" = "Tarifa Tasa no disponible. Por favor, consulte las tarifas manualmente";
-
-"send.stuck_warning" = "¡Advertencia! Riesgo de atascarse";
-
-"send.lock_time" = "Timelock";
 
 "send.unspent_outputs" = "UTXOs";
 "send.unspent_outputs.description" = "Seleccione manualmente UTxO para gastar los fondos en el saldo";
@@ -569,7 +550,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "donate.list.get_address" = "Obtener dirección de donación";
 "donate.list.get_address.title" = "Dirección";
 "donate.title" = "Donar %@";
-"donate.no_assets" = "No tiene activos para donar.";
 "donate.support.description" = "¡Junto con tu apoyo, podemos hacer esta aplicación aún mejor!";
 "donate.support.bottom_description" = "O selecciona una moneda para donar";
 
@@ -580,7 +560,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 // Swap
 
 "swap.title" = "Permutar";
-"swap.no_assets" = "No tiene activos para intercambiar.";
 "swap.you_pay" = "Usted paga";
 "swap.estimated" = "estimado";
 "swap.balance" = "Saldo";
@@ -591,7 +570,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "swap.approve.title" = "Aprobación de Swap";
 "swap.approve.description" = "Para intercambiar un token dado en tu nombre debes conceder permiso a un contrato inteligente. Este permiso establece la cantidad que puede ser utilizada por un contrato inteligente. Esto no afecta su saldo, requiere una pequeña comisión para ejecutar la transacción de aprobación.\n\nSi bien se puede hacer bajo demanda antes de cada operación, para nosotros es más barato aprobar una cantidad más alta por adelantado en operaciones futuras.";
 "swap.approve.amount_error.already_approved" = "Usted ya tiene una concesión para esta cantidad";
-"swap.approve.not_found" = "No se pueden aprobar estos tokens";
 "swap.approving_button" = "Aprobando...";
 "swap.revoking_button" = "Revocando...";
 "swap.not_available_button" = "Saldo N/A";
@@ -602,13 +580,7 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "swap.amount_type.coin" = "Moneda";
 
 "swap.price" = "Precio";
-"swap.buy_price" = "Precio de Compra";
-"swap.sell_price" = "Precio de venta";
-"swap.maximum_paid" = "Máximo Pagado";
-"swap.minimum_got" = "Mínimo Obtenido";
 "swap.estimate_short" = "(est)";
-"swap.minimum_short" = "(min)";
-"swap.maximum_short" = "(máx)";
 
 "swap.rate_not_available" = "Tasa no disponible";
 "swap.select" = "Seleccionar";
@@ -724,41 +696,17 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "swap.confirmation.minimum_received.info" = "La cantidad mínima que recibirás una vez completado el swap. Esta cantidad está garantizada por el proveedor y no se ve afectada por cambios de precio durante el procesamiento.";
 "swap.confirmation.maximum_sent" = "Gasto máximo";
 
-"swap.dex_info.description" = "Este servicio de intercambio está impulsado por %@, un intercambio de token descentralizado construido en %@ blockchain.\n\n%@ está completamente automatizado y administrado por contratos inteligentes que facilitan los intercambios de token de una manera conflaible y sin ninguna intención para hacer estafas.";
-"swap.dex_info.header_dex_related" = "%@ Relacionado";
 "swap.dex_info.header_allowance" = "Permiso de acceso";
 "swap.dex_info.content_allowance" = "La cantidad que un intercambio puede gastar en nombre de un usuario al ejecutar intercambios de tokens. Se requiere una transacción previa que establezca una autorización suficiente antes de que pueda tener lugar una transacción de intercambio real.";
 "swap.dex_info.header_price_impact" = "Impacto en el precio";
 "swap.dex_info.content_price_impact" = "Desviación de precio esperada de un valor mostrado, normalmente aumenta con la cantidad de swap.";
-"swap.dex_info.header_swap_fee" = "Tarifa por intercambio";
-"swap.dex_info.content_swap_fee" = "Una tarifa de servicio para la acción de intercambio en la plataforma, mostrada en la moneda que el usuario vende. Para la mayoría de las ordenes debería ser del 0.3% o del 0.6%.";
-"swap.dex_info.header_guaranteed_amount" = "Mínimo Obtenido";
-"swap.dex_info.content_guaranteed_amount" = "La cantidad mínima que un usuario va a recibir como resultado de una acción de intercambio.";
-"swap.dex_info.header_maximum_spend" = "Gasto máximo";
-"swap.dex_info.content_maximum_spend" = "La cantidad máxima que un usuario va a recibir como resultado de una acción de intercambio.";
-
-"swap.dex_info.header_other" = "Otro";
-"swap.dex_info.header_transaction_fee" = "Tarifa de Transacción";
-"swap.dex_info.content_transaction_fee" = "El costo estimado del proceso de la transacción dada en la %@ blockchain. %@ Las Transacciones Relacionadas normalmente costarán más que las transacciones genéricas de de token.";
-"swap.dex_info.header_transaction_speed" = "Velocidad de transacción";
-"swap.dex_info.content_transaction_speed" = "Las transacciones con una tarifa de transacción más alta darán como resultado velocidades de procesamiento más rápidas. Lo opuesto también.";
-
-"swap.dex_info.link_button" = "%@ Sitio";
 
 "swap.maya.shielded_address.error" = "No se puede obtener la dirección protegida para Memo (Maya)";
 
 
 // Market
 
-"market.tab_bar_item" = "Mercados";
 "market.title" = "Mercados";
-"market.category.overview" = "Información General";
-"market.category.posts" = "Noticias";
-"market.category.watchlist" = "Lista de Seguimiento";
-"market.total_market_cap" = "Cap. de mdo. total.";
-"market.24h_volume" = "Volumen de 24 horas";
-"market.defi_cap" = "DeFi Cap";
-"market.defi_tvl" = "TVL en DeFi";
 
 "market.global.market_cap" = "Capitalización Total";
 "market.global.volume" = "Vol. de 24 h";
@@ -1118,11 +1066,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "coin_analytics.indicators.overbought" = "Arriesgado";
 "coin_analytics.period" = "Period";
 "coin_analytics.period.select_title" = "Seleccionar Periodo";
-"coin_analytics.period.1h" = "1 hora";
-"coin_analytics.period.4h" = "4 horas";
-"coin_analytics.period.1d" = "1 día";
-"coin_analytics.period.1w" = "1 semana";
-"coin_analytics.period.1m" = "1 mes";
 
 "coin_analytics.details" = "Detalles";
 
@@ -1361,16 +1304,11 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 
 "tx_info.title" = "Información de la transacción";
 "tx_info.date" = "Fecha";
-"tx_info.title_approval" = "Aprobación de intercambio";
-"tx_info.status.pending" = "Pendiente";
-"tx_info.status.completed" = "Finalizado";
-"tx_info.status.failed" = "Falló";
 "tx_info.from_hash" = "Desde";
 "tx_info.transaction_id" = "Identificación de la transacción";
 "tx_info.to_hash" = "Para";
 "tx_info.spender" = "Gastador";
 "tx_info.contact_name" = "Nombre de contacto";
-"tx_info.button_explorer" = "Ver en %@";
 "tx_info.rate" = "Tasa histórica";
 "tx_info.options.speed_up" = "Acelerar";
 "tx_info.options.cancel" = "Cancelar transacción";
@@ -1398,24 +1336,18 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 // Settings
 
 "settings.title" = "Ajustes";
-"settings.tab_bar_item" = "Ajustes";
 "settings.manage_accounts" = "Gestionar Carteras";
 "settings.blockchain_settings" = "Configuración de Blockchain";
 "settings.backup_manager" = "Gestor de copias de seguridad";
 "settings.security" = "Seguridad";
-"settings.personal_support" = "Soporte personal";
 "settings.base_currency" = "Moneda principal";
 "settings.language" = "Idioma";
 "settings.faq" = "FAQ";
-"settings.theme" = "Tema";
 "settings.info_subtitle" = "app descentralizada";
-"settings.donate.description" = "¡Junto con tu apoyo, podemos hacer esta aplicación aún mejor!";
 "settings.donate.title" = "Donar";
 "settings.rate_us" = "Califícanos";
 "settings.tell_friends" = "Recomendar a un amigo";
-"settings.contact_us" = "Contáctenos";
 "settings.social_networks.label" = "Be Unstoppable";
-"settings.get_your_tokens" = "Get UWT Tokens";
 "settings.dapp_connection" = "Conexión DApp";
 "settings.appearance" = "Apariencia";
 
@@ -1436,19 +1368,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "manage_wallets.derivation_description" = "Hay 4 formatos de dirección comunes que las carteras %@ pueden usar para recibir pagos entrantes:\n\n-BIP44 (el más antiguo)\n-BIP49\n-BIP84 (recomendado)\n-BIP86 (el más nuevo)\n\nAunque la cartera %@ admite los 4 formatos, se recomienda usar una cartera %@ operando en formato BIP84.";
 "manage_wallets.bitcoin_cash_coin_type_description" = "Hay 2 formatos de dirección que las carteras de Bitcoin Cash pueden usar para recibir pagos entrantes:\n\n-TYPE 0 (más antiguo)\n-TYPE 145 (más nuevo)
 \n\nAunque la cartera %@ admite ambos formatos, se recomienda usar una cartera de Bitcoin Cash operando en el formato TYPE 145.";
-
-// Settings -> Personal Support
-
-"settings.personal_support.telegram_username.title" = "Account";
-"settings.personal_support.telegram_username.placeholder" = "@username";
-"settings.personal_support.description" = "Introduzca su nombre de cuenta de Telegram para abrir un chat de soporte personal y le enviaremos un mensaje.";
-"settings.personal_support.request" = "Pedido";
-"settings.personal_support.requested" = "Solicitado";
-"settings.personal_support.failed" = "Error en la solicitud";
-"settings.personal_support.need_subscription" = "Esta función solo está disponible para los usuarios premium de la cartera %@. Más información en nuestro sitio oficial.";
-"settings.personal_support.requested.description" = "Ya has solicitado un chat privado, encuentra en Telegram";
-"settings.personal_support.requested.open_telegram" = "Abrir Telegram";
-"settings.personal_support.requested.new_request" = "Nueva requisición";
 
 // Settings -> Terms
 
@@ -1770,11 +1689,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "contacts.settings.lost_synchronization.description" = "Se ha perdido la sincronización con iCloud. Por favor, comprueba que iCloud está habilitado en tu dispositivo.";
 "contacts.settings.merge_disclaimer" = "Tus contactos de pago locales se combinarán con los almacenados en iCloud.";
 
-"contacts.settings.alert.title" = "Sync de iCloud";
-"contacts.settings.alert.description" = "Por favor, comprueba que iCloud Almacenamiento está habilitado en tu dispositivo.";
-
-"contacts.settings.alert_error.title" = "Error de iCloud";
-
 // Key Types
 
 "chart.time_duration.day" = "24H";
@@ -1880,9 +1794,7 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 
 "wallet_connect.title" = "Walletconnect";
 "wallet_connect.error.invalid_url" = "Dirección URL inválida";
-"wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Active su cartera";
-"wallet_connect.address" = "Dirección";
 "wallet_connect.network" = "La red";
 "wallet_connect.list.pending_requests" = "Solicitudes Pendientes";
 "wallet_connect.main.connect" = "%@에 연결";
@@ -1901,7 +1813,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "wallet_connect.main.no_any_supported_chains" = "¡No hay cadenas compatibles!";
 "wallet_connect.main.unsupported_chains" = "¡Algunas cadenas no son soportadas!";
 "wallet_connect.connect_description" = "Al hacer clic en aprobar, usted puede permitir que esta aplicación vea su dirección pública. Esto es un paso importante de seguridad para proteger sus datos de posibles riesgos de phishing.";
-"wallet_connect.usage_description" = "Puede ir al navegador. No cierre esta página mientras interactúa en el navegador.";
 "wallet_connect.no_connection" = "Error al establecer la conexión. Intenta volver a conectarte.";
 "wallet_connect.button_reconnect" = "Volver a conectar";
 "wallet_connect.button_disconnect" = "Desconectar";
@@ -1926,21 +1837,13 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "wallet_connect_list.title" = "Walletconnect";
 "wallet_connect.list.empty_view_text" = "No hay sesiones activas";
 
-"wallet_connect.list.v1_bottom_text" = "En la primera versión de WalletConnect, usted debe entrar en las sesiones para ver y confirmar la solicitud";
 "wallet_connect_list.new_connection" = "Nueva Conexión";
-"wallet_connect_list.disconnecting" = "Desconectando";
 
 "wallet_connect.no_account.description" = "Necesita crear o importar una cartera antes de poder usar WalletConnect.";
 "wallet_connect.unbackuped_account.description" = "Necesitas hacer una copia de seguridad de %@ antes de poder usar WalletConnect";
 
 "wallet_connect.non_supported_account.description" = "El tipo de cartera actual %@ no es compatible con WalletConnect";
 "wallet_connect.non_supported_account.switch" = "Cambiar";
-
-"wallet_connect.pending_requests_title" = "Solicitudes Pendientes";
-"wallet_connect.paired_dapps.title" = "dApps vinculadas";
-"wallet_connect.paired_dapps.cant_disconnect" = "No se puede desconectar";
-"wallet_connect.paired_dapps.disconnect_all" = "Borrar todo";
-"wallet_connect.pending_requests.nonactive_footer" = "Para abrir una solicitud debe activar la cartera deseada";
 
 // Ton Connect
 
@@ -2171,9 +2074,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "nft_collections.on_sale" = "En venta";
 "nft_collections.empty" = "No tiene un NFT en su cartera";
 
-"top_nft_collections.title" = "Mejores colecciones NFT";
-"top_nft_collections.description" = "Líder de cobranzas NFT por volumen de operación.";
-
 // Nft Asset
 
 "nft_asset.tab.overview" = "Información General";
@@ -2198,8 +2098,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "nft_asset.details.blockchain" = "Blockchain";
 "nft_asset.links" = "Enlaces";
 "nft_asset.links.website" = "Website";
-"nft_asset.options.save_to_photos" = "Guardar a Fotos";
-"nft_asset.options.set_as_watch_face" = "Establecer como Watch Face";
 "nft_asset.save_to_photos.failed" = "Error al guardar la imagen NFT";
 
 // Nft Collection
@@ -2219,7 +2117,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "nft_collection.overview.24h_volume" = "Volumen de 24 horas";
 "nft_collection.overview.today_sellers" = "Súbditos de hoy";
 "nft_collection.overview.floor_price" = "Precio mínimo";
-"nft_collection.overview.all_time_average" = "Promedio de tiempo";
 "nft_collection.overview.royalty" = "Royalty";
 "nft_collection.overview.inception_date" = "Fecha de inicio";
 
@@ -2227,13 +2124,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "nft.activity.empty_list" = "Aún no hay actividad de artículo";
 "nft.activity.event_types" = "Tipos de Evento";
 "nft.activity.event_type.all" = "Todos los eventos";
-"nft.activity.event_type.sale" = "Venta";
-"nft.activity.event_type.transfer" = "Transferencia";
-"nft.activity.event_type.mint" = "Mint";
-"nft.activity.event_type.list" = "Lista";
-"nft.activity.event_type.listCancel" = "Lista Cancelar";
-"nft.activity.event_type.offer" = "Oferta";
-"nft.activity.event_type.offerCancel" = "Cancelar oferta";
 
 // Subscription Info
 
@@ -2293,14 +2183,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "transaction_filter.all_contacts" = "Todos los contactos";
 "transaction_filter.hide_suspicious_txs" = "Ocultar Transacciones Sospechosas";
 "transaction_filter.hide_suspicious_txs.description" = "Oculta transferencias entrantes de bajo valor (por ejemplo, USDT por debajo de $1.5). Estas transacciones se utilizan con frecuencia para ataques de phishing y address-poisoning.";
-
-// Black Friday
-
-"premium.cell.black_friday.description" = "Actualiza a %@ con nuestro mayor descuento del año";
-"premium.black_friday.discount.save" = "ahorrar";
-"purchase.black_friday.period.lifetime" = "acceso de por vida";
-"purchase.black_friday.period.per_month" = "por mes";
-"purchase.black_friday.period.per_year" = "por año";
 
 // Purchases
 

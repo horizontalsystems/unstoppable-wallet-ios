@@ -423,7 +423,6 @@
 "send.available_balance" = "Доступный баланс";
 "send.max_button" = "Макс.";
 "send.next_button" = "Далее";
-"send.check_button" = "Проверка";
 "send.error.invalid" = "Неверно";
 "send.error.invalid_blockchain" = "Недействительный блокчейн";
 "send.error.invalid_token" = "Недействительный токен";
@@ -448,18 +447,13 @@
 
 "send.confirmation.title" = "Подтвердить отправку";
 "send.confirmation.you_send" = "Вы отправляете";
-"send.confirmation.you_receive" = "Вы получите";
 "send.confirmation.transfer" = "Перевод";
 "send.confirmation.to" = "Кому";
-"send.confirmation.from" = "От";
 "send.confirmation.own" = "Свой";
 "send.confirmation.contact_name" = "Имя контакта";
-"send.confirmation.domain" = "Домен";
 "send.confirmation.address" = "Адрес";
-"send.confirmation.account" = "Аккаунт";
 "send.confirmation.memo" = "Мемо";
 "send.confirmation.memo_placeholder" = "Мемо";
-"send.confirmation.total" = "Итого";
 "send.confirmation.fee" = "Комиссия";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Изменить комиссию";
@@ -476,16 +470,11 @@
 "send.confirmation.edit_fee" = "Изменить комиссию";
 "send.confirmation.transaction_nonce" = "Nonce транзакции";
 
-"send.confirmation.sync_failed" = "Ошибка синхронизации";
 "send.confirmation.failed_to_fetch_data" = "Не удалось получить данные";
 "send.confirmation.refresh" = "Обновить";
 "send.confirmation.refreshing" = "Перезагрузка";
-"send.confirmation.please_wait" = "Пожалуйста, подождите";
-"send.confirmation.expires_in" = "Истекает через %@";
-"send.confirmation.expired" = "Истёк";
 "send.confirmation.slide_to_send" = "Проведите для отправки";
 "send.confirmation.sending" = "Отправка";
-"send.confirmation.sent" = "Отправлено";
 "send.confirmation.unexpected_error" = "Непредвиденная ошибка";
 "send.confirmation.unexpected_error.text" = "При отправке транзакции произошла ошибка. Пожалуйста, попробуйте ещё раз или скопируйте код ошибки и обратитесь в службу поддержки.";
 
@@ -495,7 +484,6 @@
 "send.confirmation.slide_to_resend" = "Отправить повторно";
 "send.confirmation.slide_to_cancel" = "Отменить транзакцию";
 "send.confirmation.resend" = "Отправить повторно";
-"send.confirmation.btc_cancel_description" = "Это действие попытается аннулировать предыдущую транзакцию, повторно отправив ее как новую транзакцию, отправляя определенную сумму самому себе. Если оригинальная транзакция остается в ожидании, когда отправляется новая, существует высокая вероятность (но не гарантировано), что она будет аннулирована и заменена. Только одна из этих двух транзакций будет включена в блокчейн.";
 "send.confirmation.speed_up" = "Ускорить";
 "send.confirmation.cancel" = "Отменить транзакцию";
 "send.confirmation.nonce" = "Memo";
@@ -503,13 +491,10 @@
 "send.confirmation.replace_by_fee.disabled" = "Выкл.";
 "send.amount_error.balance" = "Недостаточно средств";
 "send.address_error.own_address" = "Отправка %@ на собственный адрес не разрешена. Пожалуйста, введите другой адрес получателя.";
-"send.amount_error.maximum_amount" = "Макс. сумма %@";
 "send.amount_error.minimum_amount" = "Мин. сумма %@";
 "send.amount_error.minimum_amount.title" = "Минимальная сумма";
 "send.amount_error.minimum_amount.description" = "Минимальная сумма должна быть %@";
-"send.amount_error.min_required_balance" = "Мин. обязательный остаток %@";
 "send.amount_warning.coin_needed_for_fee" = "Рассмотрите возможность оставить %@ на балансе, чтобы иметь возможность оплачивать будущие транзакции.";
-"send.token.insufficient_fee_alert" = "Комиссии за транзакцию %@ (%@) взимаются в %@. Вам нужно %@.";
 "send.stellar.no_trustline.title" = "Нет trustline для актива";
 "send.stellar.no_trustline.description" = "У аккаунта получателя не установлен trustline для отправляемого актива.";
 
@@ -521,10 +506,6 @@
 "send.fee_settings.fee_error.title" = "Ошибка комиссии";
 "send.fee_settings.too_low" = "Ставка комиссии слишком низкая.";
 "send.fee_settings.fee_rate_unavailable" = "Ставка комиссии недоступна. Пожалуйста, проверьте ставки комиссии вручную";
-
-"send.stuck_warning" = "Внимание! Транзакция может застрять в сети";
-
-"send.lock_time" = "TimeLock";
 
 "send.unspent_outputs" = "UTxOs";
 "send.unspent_outputs.description" = "Вручную выбрать UTxO для траты средств";
@@ -571,7 +552,6 @@
 "donate.list.get_address" = "Получить адрес для пожертвования";
 "donate.list.get_address.title" = "Адреса";
 "donate.title" = "Пожертвовать %@";
-"donate.no_assets" = "У вас нет активов для пожертвования.";
 "donate.support.description" = "С вашей поддержкой мы вместе сможем сделать это приложение еще лучше!";
 "donate.support.bottom_description" = "Или выберите монету для пожертвования";
 
@@ -582,7 +562,6 @@
 // Swap
 
 "swap.title" = "Обмен";
-"swap.no_assets" = "У вас нет активов для обмена.";
 "swap.you_pay" = "Вы платите";
 "swap.estimated" = "приблизительно";
 "swap.balance" = "Баланс";
@@ -593,7 +572,6 @@
 "swap.approve.title" = "Разрешение обмена";
 "swap.approve.description" = "Вы должны предоставить разрешение смарт-контракту для обмена заданным токеном от вашего имени. Это разрешение устанавливает сумму, которую может использовать смарт-контракт. Это не влияет на ваш баланс, но требует небольшой комиссии для выполнения транзакции на подтверждение.\n\nХотя это можно сделать по мере необходимости перед каждой сделкой, более дешево предварительно разрешить большую сумму для будущих сделок.";
 "swap.approve.amount_error.already_approved" = "У вас уже есть разрешение на эту сумму";
-"swap.approve.not_found" = "Не удается разрешить эти токены";
 "swap.approving_button" = "Разрешение...";
 "swap.revoking_button" = "Отмена...";
 "swap.not_available_button" = "Баланс n/a";
@@ -604,13 +582,7 @@
 "swap.amount_type.coin" = "Токен";
 
 "swap.price" = "Цена";
-"swap.buy_price" = "Цена покупки";
-"swap.sell_price" = "Цена продажи";
-"swap.maximum_paid" = "Макс. сумма";
-"swap.minimum_got" = "Гарантированная сумма";
 "swap.estimate_short" = "(прим)";
-"swap.minimum_short" = "(мин)";
-"swap.maximum_short" = "(макс)";
 
 "swap.rate_not_available" = "Цена недоступна";
 "swap.select" = "Выбрать";
@@ -725,41 +697,17 @@
 "swap.confirmation.minimum_received.info" = "Минимальная сумма, которую вы получите после завершения обмена. Эта сумма гарантируется провайдером и не зависит от изменения цены во время обработки.";
 "swap.confirmation.maximum_sent" = "Максимальная трата";
 
-"swap.dex_info.description" = "Этот обменный сервис работает при поддержке %@ - децентрализованного протокола обмена токенов, созданного в блокчейне %@.\n\n%@ полностью автоматизирован и управляется смарт-контрактами, которые надежным способом упрощают обмен токенами без осуществления каких-либо махинаций.";
-"swap.dex_info.header_dex_related" = "%@";
 "swap.dex_info.header_allowance" = "Разрешение";
 "swap.dex_info.content_allowance" = "Сумма, которую биржа может потратить от имени пользователя при выполнении обмена токенов. Для осуществления фактической операции обмена необходимо предварительно установить достаточное разрешение для последующей транзакции.";
 "swap.dex_info.header_price_impact" = "Отклонение от рын. цены";
 "swap.dex_info.content_price_impact" = "Ожидаемое отклонение цены от указанной цены, обычно увеличивается при увеличении суммы обмена.";
-"swap.dex_info.header_swap_fee" = "Комиссия за обмен";
-"swap.dex_info.content_swap_fee" = "Плата за услугу обмена на платформе, показана в валюте, в которой продает пользователь. Для большинства заказов составляет или 0,3% или 0,6%.";
-"swap.dex_info.header_guaranteed_amount" = "Гарантированная сумма";
-"swap.dex_info.content_guaranteed_amount" = "Минимальная сумма, которую получит пользователь в результате обмена.";
-"swap.dex_info.header_maximum_spend" = "Максимальная трата";
-"swap.dex_info.content_maximum_spend" = "Максимальная сумма, которую получит пользователь в результате обмена.";
-
-"swap.dex_info.header_other" = "Другое";
-"swap.dex_info.header_transaction_fee" = "Комиссия за транзакцию";
-"swap.dex_info.content_transaction_fee" = "Примерная стоимость услуги по обработке данной транзакции на блокчейне %@. Стоимость транзакций, связанных с %@, обычно выше, чем стоимость транзакций по передаче обычных токенов.";
-"swap.dex_info.header_transaction_speed" = "Скорость транзакции";
-"swap.dex_info.content_transaction_speed" = "Обработка транзакций с более высокой комиссией будет ускорена. Также верно и обратное.";
-
-"swap.dex_info.link_button" = "%@ Сайт";
 
 "swap.maya.shielded_address.error" = "Не удалось получить shielded-адрес для Memo (Maya)";
 
 
 // Market
 
-"market.tab_bar_item" = "Рынки";
 "market.title" = "Рынки";
-"market.category.overview" = "Обзор";
-"market.category.posts" = "Новости";
-"market.category.watchlist" = "Избранное";
-"market.total_market_cap" = "Общая капитализация";
-"market.24h_volume" = "Объем торгов (24ч)";
-"market.defi_cap" = "Капитализация DeFi";
-"market.defi_tvl" = "TVL в DeFi";
 
 "market.global.market_cap" = "Общ. кап.";
 "market.global.volume" = "24ч объем";
@@ -1119,11 +1067,6 @@
 "coin_analytics.indicators.overbought" = "Рискованно";
 "coin_analytics.period" = "Период";
 "coin_analytics.period.select_title" = "Выберите период";
-"coin_analytics.period.1h" = "1 час";
-"coin_analytics.period.4h" = "4 часа";
-"coin_analytics.period.1d" = "1 день";
-"coin_analytics.period.1w" = "1 неделя";
-"coin_analytics.period.1m" = "1 месяц";
 
 "coin_analytics.details" = "Подробности";
 
@@ -1362,16 +1305,11 @@
 
 "tx_info.title" = "Детали транзакции";
 "tx_info.date" = "Дата";
-"tx_info.title_approval" = "Разрешение обмена";
-"tx_info.status.pending" = "В обработке";
-"tx_info.status.completed" = "Завершено";
-"tx_info.status.failed" = "Не удалось";
 "tx_info.from_hash" = "От";
 "tx_info.transaction_id" = "ID";
 "tx_info.to_hash" = "Кому";
 "tx_info.spender" = "Покупатель";
 "tx_info.contact_name" = "Имя контакта";
-"tx_info.button_explorer" = "Просмотреть на %@";
 "tx_info.rate" = "Исторический курс";
 "tx_info.options.speed_up" = "Ускорить";
 "tx_info.options.cancel" = "Отменить транзакцию";
@@ -1399,24 +1337,18 @@
 // Settings
 
 "settings.title" = "Настройки";
-"settings.tab_bar_item" = "Настройки";
 "settings.manage_accounts" = "Кошельки";
 "settings.blockchain_settings" = "Настройки блокчейна";
 "settings.backup_manager" = "Резерв.копирование";
 "settings.security" = "Безопасность";
-"settings.personal_support" = "Персональная поддержка";
 "settings.base_currency" = "Базовая валюта";
 "settings.language" = "Язык";
 "settings.faq" = "FAQ";
-"settings.theme" = "Тема";
 "settings.info_subtitle" = "децентрализованное приложение";
-"settings.donate.description" = "С вашей поддержкой мы вместе сможем сделать это приложение еще лучше!";
 "settings.donate.title" = "Поддержи нас";
 "settings.rate_us" = "Оцените нас";
 "settings.tell_friends" = "Расскажите друзьям";
-"settings.contact_us" = "Свяжитесь с нами";
 "settings.social_networks.label" = "Be Unstoppable";
-"settings.get_your_tokens" = "Get UWT Tokens";
 "settings.dapp_connection" = "Подключение к DApp";
 "settings.appearance" = "Настройки интерфейса";
 
@@ -1436,19 +1368,6 @@
 "manage_wallets.contract_address" = "Адрес контракта";
 "manage_wallets.derivation_description" = "Существует 4 распространенных формата адресов %@ кошельков для получения входящих платежей:\n\n- BIP44 (более старый)\n- BIP49\n- BIP84 (рекомендованный)\n- BIP86 (самый новый)\n\nХотя кошелек %@ поддерживает все четыре формата, рекомендуется использовать %@ кошелек, работающий в формате BIP84.";
 "manage_wallets.bitcoin_cash_coin_type_description" = "Существует 2 формата адресов, которые кошельки Bitcoin Cash могут использовать для приема входящих платежей:\n\n- TYPE 0 (более старый)\n- TYPE 145 (более новый)\n\nХотя кошелек %@ поддерживает оба формата, рекомендуется использовать кошелек Bitcoin Cash, работающий в формате TYPE 145.";
-
-// Settings -> Personal Support
-
-"settings.personal_support.telegram_username.title" = "Аккаунт";
-"settings.personal_support.telegram_username.placeholder" = "@username!";
-"settings.personal_support.description" = "Введите имя аккаунта Telegram, чтобы открыть личный чат поддержки, и мы отправим вам сообщение.";
-"settings.personal_support.request" = "Запрос";
-"settings.personal_support.requested" = "Запрошено";
-"settings.personal_support.failed" = "Ошибка запроса";
-"settings.personal_support.need_subscription" = "Эта функция доступна только для премиум-пользователей %@ Wallet . Дополнительная информация на нашем официальном сайте.";
-"settings.personal_support.requested.description" = "Вы уже запросили приватный чат, найдите его в Telegram";
-"settings.personal_support.requested.open_telegram" = "Открыть Telegram";
-"settings.personal_support.requested.new_request" = "Новый запрос";
 
 // Settings -> Terms
 
@@ -1770,11 +1689,6 @@
 "contacts.settings.lost_synchronization.description" = "Синхронизация iCloud утеряна. Пожалуйста, проверьте, что iCloud Storage включен на вашем устройстве.";
 "contacts.settings.merge_disclaimer" = "Ваши локальные платежные контакты будут объединены с данными, хранящимися в iCloud.";
 
-"contacts.settings.alert.title" = "iCloud синхр.";
-"contacts.settings.alert.description" = "Пожалуйста, убедитесь, что iCloud хранилище включено на вашем устройстве.";
-
-"contacts.settings.alert_error.title" = "Ошибка iCloud";
-
 // Key Types
 
 "chart.time_duration.day" = "24ч";
@@ -1880,9 +1794,7 @@
 
 "wallet_connect.title" = "WalletConnect";
 "wallet_connect.error.invalid_url" = "Неверный URL-адрес";
-"wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Активный кошелек";
-"wallet_connect.address" = "Адрес";
 "wallet_connect.network" = "Сеть";
 "wallet_connect.list.pending_requests" = "Ожидающие запросы";
 "wallet_connect.main.connect" = "Подключиться к %@";
@@ -1901,7 +1813,6 @@
 "wallet_connect.main.no_any_supported_chains" = "Нет поддерживаемых блокчейнов!";
 "wallet_connect.main.unsupported_chains" = "Некоторые блокчейны не поддерживаются!";
 "wallet_connect.connect_description" = "Нажимая \"Подтвердить\", вы разрешаете этому приложению просматривать ваш общедоступный адрес. Это важный шаг для защиты ваших данных от потенциальных рисков фишинга.";
-"wallet_connect.usage_description" = "Вы можете перейти в браузер. Не закрывайте эту страницу во время использования браузера.";
 "wallet_connect.no_connection" = "Не удалось установить соединение. Попробуйте переподключиться снова.";
 "wallet_connect.button_reconnect" = "Повторное подключение";
 "wallet_connect.button_disconnect" = "Отсоединить";
@@ -1926,21 +1837,13 @@
 "wallet_connect_list.title" = "WalletConnect";
 "wallet_connect.list.empty_view_text" = "Нет активных сессий";
 
-"wallet_connect.list.v1_bottom_text" = "В первой версии WalletConnect вы должны войти в сессии, чтобы увидеть и подтвердить запрос.";
 "wallet_connect_list.new_connection" = "Новое соединение";
-"wallet_connect_list.disconnecting" = "Отсоединение";
 
 "wallet_connect.no_account.description" = "Вам нужно создать или импортировать кошелек перед использованием WalletConnect.";
 "wallet_connect.unbackuped_account.description" = "Вам нужно сделать резервную копию %@ перед использованием WalletConnect";
 
 "wallet_connect.non_supported_account.description" = "Ваш текущий тип кошелька %@ не поддерживает WalletConnect";
 "wallet_connect.non_supported_account.switch" = "Перекл.";
-
-"wallet_connect.pending_requests_title" = "Ожидающие запросы";
-"wallet_connect.paired_dapps.title" = "Соединеные dApp";
-"wallet_connect.paired_dapps.cant_disconnect" = "Не удалось отключить";
-"wallet_connect.paired_dapps.disconnect_all" = "Удалить всё";
-"wallet_connect.pending_requests.nonactive_footer" = "Чтобы открыть запрос, необходимо активировать желаемый кошелек";
 
 // Ton Connect
 
@@ -2172,9 +2075,6 @@
 "nft_collections.on_sale" = "В продаже";
 "nft_collections.empty" = "В вашем кошельке нет NFT";
 
-"top_nft_collections.title" = "Топ NFT коллекции";
-"top_nft_collections.description" = "Популярные коллекции NFT по объему торгов.";
-
 // Nft Asset
 
 "nft_asset.tab.overview" = "Обзор";
@@ -2199,8 +2099,6 @@
 "nft_asset.details.blockchain" = "Блокчейн";
 "nft_asset.links" = "Ссылки";
 "nft_asset.links.website" = "Веб-сайт";
-"nft_asset.options.save_to_photos" = "Сохранить в фото";
-"nft_asset.options.set_as_watch_face" = "Установить как Watch Face";
 "nft_asset.save_to_photos.failed" = "Не удалось сохранить NFT-изображение";
 
 // Nft Collection
@@ -2220,7 +2118,6 @@
 "nft_collection.overview.24h_volume" = "Объем торгов (24ч)";
 "nft_collection.overview.today_sellers" = "Продавцы сегодня";
 "nft_collection.overview.floor_price" = "Минимальная цена";
-"nft_collection.overview.all_time_average" = "Среднее за все время";
 "nft_collection.overview.royalty" = "Вознаграждение";
 "nft_collection.overview.inception_date" = "Дата старта";
 
@@ -2228,13 +2125,6 @@
 "nft.activity.empty_list" = "Нет активности";
 "nft.activity.event_types" = "Типы событий";
 "nft.activity.event_type.all" = "Все события";
-"nft.activity.event_type.sale" = "Продажа";
-"nft.activity.event_type.transfer" = "Перевод";
-"nft.activity.event_type.mint" = "Минт";
-"nft.activity.event_type.list" = "Залистить";
-"nft.activity.event_type.listCancel" = "Убрать из листинга";
-"nft.activity.event_type.offer" = "Предложение";
-"nft.activity.event_type.offerCancel" = "Предложение отменено";
 
 // Subscription Info
 
@@ -2294,14 +2184,6 @@
 "transaction_filter.all_contacts" = "Все контакты";
 "transaction_filter.hide_suspicious_txs" = "Скрыть подозрительные транзакции";
 "transaction_filter.hide_suspicious_txs.description" = "Скрывает входящие переводы с небольшой суммой (например, USDT менее $1.5). Такие транзакции часто используются для фишинга и атак с подменой адреса.";
-
-// Black Friday
-
-"premium.cell.black_friday.description" = "Обновитесь до %@ с нашей самой большой скидкой года";
-"premium.black_friday.discount.save" = "экономия";
-"purchase.black_friday.period.lifetime" = "пожизненный доступ";
-"purchase.black_friday.period.per_month" = "в месяц";
-"purchase.black_friday.period.per_year" = "в год";
 
 // Purchases
 

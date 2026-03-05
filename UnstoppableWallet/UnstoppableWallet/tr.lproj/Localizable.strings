@@ -421,7 +421,6 @@ Cüzdan etkinleştirilene kadar token’lar alınabilir, ancak bakiyeler görün
 "send.available_balance" = "Mevcut Bakiye";
 "send.max_button" = "Azami";
 "send.next_button" = "İleri";
-"send.check_button" = "Kontrol etme";
 "send.error.invalid" = "Geçersiz";
 "send.error.invalid_blockchain" = "Geçersiz Blok Zinciri";
 "send.error.invalid_token" = "Geçersiz Jeton";
@@ -446,18 +445,12 @@ Cüzdan etkinleştirilene kadar token’lar alınabilir, ancak bakiyeler görün
 
 "send.confirmation.title" = "Gönderimi Onayla";
 "send.confirmation.you_send" = "Gönderdiğiniz";
-"send.confirmation.you_receive" = "Alacağınız";
 "send.confirmation.transfer" = "Aktar";
 "send.confirmation.to" = "Alan";
-"send.confirmation.from" = "Gönderen";
 "send.confirmation.own" = "Kendi";
 "send.confirmation.contact_name" = "Kişi Adı";
-"send.confirmation.domain" = "Alan adı";
-"send.confirmation.address" = "Adres";
-"send.confirmation.account" = "Account";
 "send.confirmation.memo" = "Not";
 "send.confirmation.memo_placeholder" = "Not";
-"send.confirmation.total" = "Toplam";
 "send.confirmation.fee" = "Ücret";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Ücretle Değiştir";
@@ -474,16 +467,11 @@ Cüzdan etkinleştirilene kadar token’lar alınabilir, ancak bakiyeler görün
 "send.confirmation.edit_fee" = "Ücret Düzenle";
 "send.confirmation.transaction_nonce" = "İşlem Nonce";
 
-"send.confirmation.sync_failed" = "Senkronizasyon Başarısız";
 "send.confirmation.failed_to_fetch_data" = "Veriler alınamadı";
 "send.confirmation.refresh" = "Yenile";
 "send.confirmation.refreshing" = "Yenileniyor";
-"send.confirmation.please_wait" = "Lütfen Bekleyin";
-"send.confirmation.expires_in" = "%@ içinde sona erer";
-"send.confirmation.expired" = "Süresi Dolmuş";
 "send.confirmation.slide_to_send" = "Göndermek için Kaydırın";
 "send.confirmation.sending" = "Gönderiliyor";
-"send.confirmation.sent" = "Gönderildi";
 "send.confirmation.unexpected_error" = "Beklenmeyen hata";
 "send.confirmation.unexpected_error.text" = "İşleminiz gönderilirken bir hata oluştu. Lütfen tekrar deneyin veya hata kodunu kopyalayıp destek ekibiyle iletişime geçin.";
 
@@ -493,7 +481,6 @@ Cüzdan etkinleştirilene kadar token’lar alınabilir, ancak bakiyeler görün
 "send.confirmation.slide_to_resend" = "Yeniden Gönder";
 "send.confirmation.slide_to_cancel" = "İşlemi İptal Et";
 "send.confirmation.resend" = "Yeniden Gönder";
-"send.confirmation.btc_cancel_description" = "Bu işlem, önceki işlemi geçersiz kılmak için onu yeni bir işlem olarak kendine bir miktar göndererek yeniden göndermeyi deneyecektir. Yeni bir işlem gönderildiğinde önceki işlem hala beklemekteyse, bu işlemin geçersiz kılınacağı ve yerine geçeceği yüksek bir olasılık vardır (garanti edilmez). Bu iki işlemden sadece biri blok zincirine dahil edilecektir.";
 "send.confirmation.speed_up" = "Hızlandır";
 "send.confirmation.cancel" = "İşlemi İptal Et";
 "send.confirmation.nonce" = "Nonce";
@@ -505,9 +492,7 @@ Cüzdan etkinleştirilene kadar token’lar alınabilir, ancak bakiyeler görün
 "send.amount_error.minimum_amount" = "Minimum miktar %@";
 "send.amount_error.minimum_amount.title" = "Minimum miktar";
 "send.amount_error.minimum_amount.description" = "Minimum tutar %@ olmalıdır";
-"send.amount_error.min_required_balance" = "Min. gerekli bakiye %@";
 "send.amount_warning.coin_needed_for_fee" = "Gelecekteki işlemler için ödeme yapabilmek için bakiyenizde biraz %@ bırakmayı göz önünde bulundurun.";
-"send.token.insufficient_fee_alert" = "%@ (%@) için ișlem ücreti %@ hesabından ödenir. Asgari %@ gerekiyor.";
 "send.stellar.no_trustline.title" = "Varlık Trustline'ı Yok";
 "send.stellar.no_trustline.description" = "Alıcının hesabında gönderilen varlık için trustline kurulmamış.";
 
@@ -519,10 +504,6 @@ Cüzdan etkinleştirilene kadar token’lar alınabilir, ancak bakiyeler görün
 "send.fee_settings.fee_error.title" = "Ücret Hatası";
 "send.fee_settings.too_low" = "Ücret Oranı çok düşük.";
 "send.fee_settings.fee_rate_unavailable" = "Ücret Oranı mevcut değil. Lütfen ücret oranlarını manuel olarak kontrol edin";
-
-"send.stuck_warning" = "Uyarı! Takılma riski";
-
-"send.lock_time" = "TiemLock";
 
 "send.unspent_outputs" = "UTxOs";
 "send.unspent_outputs.description" = "Bakiyedeki fonları harcamak için UTxO'yu manuel olarak seçin";
@@ -569,7 +550,6 @@ Cüzdan etkinleştirilene kadar token’lar alınabilir, ancak bakiyeler görün
 "donate.list.get_address" = "Bağış Adresini Al";
 "donate.list.get_address.title" = "Adresler";
 "donate.title" = "Bağış yapmak %@";
-"donate.no_assets" = "Bağışlayacak varlığınız yok.";
 "donate.support.description" = "Desteğinizle birlikte bu uygulamayı daha da iyi hale getirebiliriz!";
 "donate.support.bottom_description" = "Ya bağış yapmak için bir coin seçin";
 
@@ -580,7 +560,6 @@ Cüzdan etkinleştirilene kadar token’lar alınabilir, ancak bakiyeler görün
 // Swap
 
 "swap.title" = "Takas";
-"swap.no_assets" = "Takas edilecek varlığınız yok.";
 "swap.you_pay" = "Ödediğiniz";
 "swap.estimated" = "tahmini";
 "swap.balance" = "Bakiye";
@@ -591,7 +570,6 @@ Cüzdan etkinleştirilene kadar token’lar alınabilir, ancak bakiyeler görün
 "swap.approve.title" = "Takas Onayı";
 "swap.approve.description" = "Verilen jetonu sizin adınıza swap yapmak için bir akıllı sözleşmeye izin vermelisiniz. Bu izin, akıllı sözleşme tarafından kullanılabilecek tutarı belirler. Bakiyenizi etkilemez ancak onay işlemini gerçekleştirmek için küçük bir ücret gerekir.\n\nHer alım satımdan önce talep üzerine yapılabilirken, ileriki alım satımlarda bizim için önceden daha yüksek tutarı onaylamanız durumunda çok daha ucuz olur.";
 "swap.approve.amount_error.already_approved" = "Bu miktar için zaten bir ödeneğiniz var";
-"swap.approve.not_found" = "Bu jetonları onaylayamıyorum";
 "swap.approving_button" = "Onaylanıyor...";
 "swap.revoking_button" = "İptal ediliyor...";
 "swap.not_available_button" = "Bakiye N/A";
@@ -602,13 +580,7 @@ Cüzdan etkinleştirilene kadar token’lar alınabilir, ancak bakiyeler görün
 "swap.amount_type.coin" = "Coin";
 
 "swap.price" = "Fiyat";
-"swap.buy_price" = "Alış Fiyatı";
-"swap.sell_price" = "Satış Fiyatı";
-"swap.maximum_paid" = "Maksimum Ödenen";
-"swap.minimum_got" = "Minimum Kazanılan";
 "swap.estimate_short" = "(tah)";
-"swap.minimum_short" = "(dk)";
-"swap.maximum_short" = "(azami)";
 
 "swap.rate_not_available" = "Oran mevcut değil";
 "swap.select" = "Seç";
@@ -624,11 +596,8 @@ Cüzdan etkinleştirilene kadar token’lar alınabilir, ancak bakiyeler görün
 "swap.insufficient_balance" = "Yetersiz Bakiye";
 
 "swap.quotes.providers" = "Sağlayıcılar";
-"swap.quotes.best_price" = "En İyi Fiyat";
 
 "swap.allowance" = "Ödenek";
-"swap.allowance.description" = "Bir takas işlemi gerçekleştirirken bir borsanın bir kullanıcı adına harcayabileceği miktar. Gerçek bir takas işlemi gerçekleşmeden önce yeterli izin belirleyen bir önceki işlem gereklidir.";
-"swap.pending_allowance" = "Bekleyen İzin";
 "swap.approve" = "Onayla";
 "swap.approving" = "Onaylayan";
 "swap.allowance_error" = "İzin Hatası";
@@ -726,41 +695,17 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "swap.confirmation.minimum_received.info" = "Swap tamamlandıktan sonra alacağınız minimum tutar. Bu tutar sağlayıcı tarafından garanti edilir ve işlem sırasında fiyat değişikliklerinden etkilenmez.";
 "swap.confirmation.maximum_sent" = "Maksimum Harcama";
 
-"swap.dex_info.description" = "Bu takas etme hizmeti, %@ blok zinciri üzerine inşa edilmiş ve merkezi olmayan jeton takas etme protokolü olan %@ tarafından desteklenmektedir.\n\n%@, tamamen otomatiktir ve hile yapmadan jeton takaslarını güvenilir bir şekilde kolaylaştıran akıllı sözleşmelerle yönetilir.";
-"swap.dex_info.header_dex_related" = "%@";
 "swap.dex_info.header_allowance" = "Ödenek";
 "swap.dex_info.content_allowance" = "Bir takas işlemi gerçekleştirirken bir borsanın bir kullanıcı adına harcayabileceği miktar. Gerçek bir takas işlemi gerçekleşmeden önce yeterli izin belirleyen bir önceki işlem gereklidir.";
 "swap.dex_info.header_price_impact" = "Fiyat Etkisi";
 "swap.dex_info.content_price_impact" = "Gösterilen bir fiyattan beklenen fiyat sapması tipik olarak takas tutarı ile artar.";
-"swap.dex_info.header_swap_fee" = "Takas Ücreti";
-"swap.dex_info.content_swap_fee" = "Platformdaki takas işlemi için, kullanıcının sattığı para biriminde gösterilen bir hizmet ücreti. Çoğu sipariş için% 0,3 veya% 0,6 olmalıdır.";
-"swap.dex_info.header_guaranteed_amount" = "Minimum Kazanılan";
-"swap.dex_info.content_guaranteed_amount" = "Bir swap işlemi sonucunda bir kullanıcının alacağı minimum tutar.";
-"swap.dex_info.header_maximum_spend" = "Maksimum Harcama";
-"swap.dex_info.content_maximum_spend" = "Bir swap işlemi sonucunda bir kullanıcının harcayacağı maksimum tutar.";
-
-"swap.dex_info.header_other" = "Diğer";
-"swap.dex_info.header_transaction_fee" = "İşlem Ücreti";
-"swap.dex_info.content_transaction_fee" = "%@ blok zincirinde verilen işlemin tahmini işleme maliyeti. %@ bağlantılı işlemler genellikle eşdeğer jeton transfer işlemlerinden daha pahalı olur.";
-"swap.dex_info.header_transaction_speed" = "İşlem hızı";
-"swap.dex_info.content_transaction_speed" = "Daha yüksek işlem ücretli işlemler, daha hızlı işleme hızlarıyla sonuçlanacaktır. Elbette bunun tersi de doğrudur.";
-
-"swap.dex_info.link_button" = "%@ Sitesi";
 
 "swap.maya.shielded_address.error" = "Memo (Maya) için shielded adres alınamadı";
 
 
 // Market
 
-"market.tab_bar_item" = "Marketler";
 "market.title" = "Marketler";
-"market.category.overview" = "İzleme";
-"market.category.posts" = "Haberler";
-"market.category.watchlist" = "İzleme Listesi";
-"market.total_market_cap" = "Total Cap";
-"market.24h_volume" = "24 saat hacim";
-"market.defi_cap" = "DeFi Cap";
-"market.defi_tvl" = "DeFi'de TVL";
 
 "market.global.market_cap" = "Toplam Piyasa Değeri";
 "market.global.volume" = "24s Hacim";
@@ -1120,11 +1065,6 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "coin_analytics.indicators.overbought" = "Riskli";
 "coin_analytics.period" = "Periyot";
 "coin_analytics.period.select_title" = "Periyot Seç";
-"coin_analytics.period.1h" = "1 saat";
-"coin_analytics.period.4h" = "4 saat";
-"coin_analytics.period.1d" = "1 gün";
-"coin_analytics.period.1w" = "1 hafta";
-"coin_analytics.period.1m" = "1 ay";
 
 "coin_analytics.details" = "Ayrıntılar";
 
@@ -1363,16 +1303,11 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 
 "tx_info.title" = "İşlem Bilgileri";
 "tx_info.date" = "Tarih";
-"tx_info.title_approval" = "Swap Onaylama";
-"tx_info.status.pending" = "Bekleyen";
-"tx_info.status.completed" = "Tamamlandı";
-"tx_info.status.failed" = "Başarısız";
 "tx_info.from_hash" = "Gönderen";
 "tx_info.transaction_id" = "İşlem ID'si";
 "tx_info.to_hash" = "Alan";
 "tx_info.spender" = "Harcayan";
 "tx_info.contact_name" = "Kişi Adı";
-"tx_info.button_explorer" = "%@ ile görüntüle";
 "tx_info.rate" = "Geçmiş Kur";
 "tx_info.options.speed_up" = "Hızlandır";
 "tx_info.options.cancel" = "İşlemi İptal Et";
@@ -1400,13 +1335,10 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 // Settings
 
 "settings.title" = "Ayarlar";
-"settings.tab_bar_item" = "Ayarlar";
 "settings.manage_accounts" = "Cüzdanları yönet";
 "settings.blockchain_settings" = "Blockchain Ayarları";
 "settings.backup_manager" = "Yedekleme yöneticisi";
 "settings.security" = "Güvenlik";
-"settings.personal_support" = "Kişisel Destek
-
 
 
 ";
@@ -1441,19 +1373,6 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "manage_wallets.contract_address" = "Sözleşme Adresi";
 "manage_wallets.derivation_description" = "%@ cüzdanlarının gelen ödemeleri almak için kullanabileceği 4 yaygın adres biçimi vardır:\n \n- BIP-44 (eski)\n- BIP-49\n- BIP-84 (önerilen)\n- BIP-86 (en yeni)\n \n%@ cüzdan 4'ünü de desteklerken, BIP-84 formatında çalışan bir %@ cüzdanı kullanmanızı önerir.";
 "manage_wallets.bitcoin_cash_coin_type_description" = "Bitcoin Cash cüzdanlarının gelen ödemeleri almak için kullanabileceği 2 adres formatı vardır: \n \n- TYPE0 (eski) \n- TYPE145 (daha yeni) \n \n%@ cüzdan her ikisini de desteklerken, TYPE145 formatında çalışan bir Bitcoin Cash cüzdanı kullanmanızı önerir.";
-
-// Settings -> Personal Support
-
-"settings.personal_support.telegram_username.title" = "Account";
-"settings.personal_support.telegram_username.placeholder" = "@username";
-"settings.personal_support.description" = "Kişisel destek sohbeti açmak için Telegram hesap adınızı girin ve size mesaj göndereceğiz.";
-"settings.personal_support.request" = "İstek";
-"settings.personal_support.requested" = "Talep Edildi";
-"settings.personal_support.failed" = "Talep Başarısız oldu";
-"settings.personal_support.need_subscription" = "Bu özellik yalnızca %@ Cüzdan premium kullanıcıları içindir. Daha fazla bilgi resmi sitemizde.";
-"settings.personal_support.requested.description" = "Zaten özel bir sohbet talep ettiniz, bunu Telegram'da bulun";
-"settings.personal_support.requested.open_telegram" = "Abrir Telegram";
-"settings.personal_support.requested.new_request" = "Yeni istek";
 
 // Settings -> Terms
 
@@ -1775,11 +1694,6 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "contacts.settings.lost_synchronization.description" = "iCloud senkronizasyonu kayboldu. Lütfen cihazınızda iCloud Storage'ın etkinleştirildiğinden emin olun.";
 "contacts.settings.merge_disclaimer" = "Aygıtta bulunan kişileriniz iCloud'da saklananlarla birleştirilir.";
 
-"contacts.settings.alert.title" = "iCloud Eşitleme";
-"contacts.settings.alert.description" = "Cihazınızda iCloud Saklama Alanı'nın etkin olup olmadığını kontrol edin.";
-
-"contacts.settings.alert_error.title" = "iCloud Hatası";
-
 // Key Types
 
 "chart.time_duration.day" = "24S";
@@ -1885,9 +1799,7 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 
 "wallet_connect.title" = "Wallet Connect";
 "wallet_connect.error.invalid_url" = "Geçersiz URL Adresi";
-"wallet_connect.url" = "URL";
 "wallet_connect.active_account" = "Aktif Cüzdan";
-"wallet_connect.address" = "Adres";
 "wallet_connect.network" = "Ağ";
 "wallet_connect.list.pending_requests" = "Bekleyen Talepler";
 "wallet_connect.main.connect" = "%@’ya bağlan";
@@ -1906,7 +1818,6 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "wallet_connect.main.no_any_supported_chains" = "Desteklenen zincir yok!";
 "wallet_connect.main.unsupported_chains" = "Bazı zincirler desteklenmiyor!";
 "wallet_connect.connect_description" = "Onayla butonunu tıklayarak, bu uygulamanın açık adresinizi görüntülemesine izin vermiş olursunuz. Bu, verilerinizi olası kimlik hırsızlığı risklerinden korumak için önemli bir güvenlik adımıdır.";
-"wallet_connect.usage_description" = "Tarayıcıya gidebilirsiniz. Tarayıcıda etkileşim içindeyken bu sayfayı kapatmayın.";
 "wallet_connect.no_connection" = "Bağlantı kurulamadı. Yeniden bağlanmayı deneyin.";
 "wallet_connect.button_reconnect" = "Yeniden bağlan";
 "wallet_connect.button_disconnect" = "Bağlantıyı Kes";
@@ -1931,21 +1842,13 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "wallet_connect_list.title" = "Wallet Connect";
 "wallet_connect.list.empty_view_text" = "Başka bir aktif oturum yok";
 
-"wallet_connect.list.v1_bottom_text" = "WalletConnect'in ilk sürümünde, talebi görmek ve onaylamak için oturumlara gitmeniz gerekir";
 "wallet_connect_list.new_connection" = "Yeni bağlantı";
-"wallet_connect_list.disconnecting" = "Bağlantı kesiliyor";
 
 "wallet_connect.no_account.description" = "WalletConnect'i kullanmadan önce bir cüzdan oluşturmanız veya içe aktarmanız gerekir.";
 "wallet_connect.unbackuped_account.description" = "WalletConnect'i kullanmadan önce %@ yedeklemeniz gerekir";
 
 "wallet_connect.non_supported_account.description" = "Mevcut cüzdan türünüz %@ WalletConnect'i desteklemiyor";
 "wallet_connect.non_supported_account.switch" = "Değiştir";
-
-"wallet_connect.pending_requests_title" = "Bekleyen Talepler";
-"wallet_connect.paired_dapps.title" = "Eşleştirilmiş dApps";
-"wallet_connect.paired_dapps.cant_disconnect" = "Bağlantı Kesilemiyor";
-"wallet_connect.paired_dapps.disconnect_all" = "Hepsini Sil";
-"wallet_connect.pending_requests.nonactive_footer" = "Bir istek açmak için istenen cüzdanı etkinleştirmelisiniz";
 
 // Ton Connect
 
@@ -2176,9 +2079,6 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "nft_collections.on_sale" = "İndirimde";
 "nft_collections.empty" = "Cüzdanınızda hiç NFT yok";
 
-"top_nft_collections.title" = "En İyi NFT Koleksiyonlar";
-"top_nft_collections.description" = "İşlem hacmine göre önde gelen NFT koleksiyonları.";
-
 // Nft Asset
 
 "nft_asset.tab.overview" = "İzleme";
@@ -2203,8 +2103,6 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "nft_asset.details.blockchain" = "Blockchain";
 "nft_asset.links" = "Bağlantılar";
 "nft_asset.links.website" = "Website";
-"nft_asset.options.save_to_photos" = "Fotoğraflara Kaydet";
-"nft_asset.options.set_as_watch_face" = "İzleme Yüzü olarak ayarla";
 "nft_asset.save_to_photos.failed" = "NFT resmi kaydedilemedi";
 
 // Nft Collection
@@ -2224,7 +2122,6 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "nft_collection.overview.24h_volume" = "24 saat hacim";
 "nft_collection.overview.today_sellers" = "Bugünün Satıcıları";
 "nft_collection.overview.floor_price" = "Taban Fiyatı";
-"nft_collection.overview.all_time_average" = "Tüm Zamanların Ortalaması";
 "nft_collection.overview.royalty" = "Royalty";
 "nft_collection.overview.inception_date" = "Başlangıç ​​tarihi";
 
@@ -2232,13 +2129,6 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "nft.activity.empty_list" = "Henüz öğe etkinliği yok";
 "nft.activity.event_types" = "Etkinlik Türleri";
 "nft.activity.event_type.all" = "Tüm Etkinlikler";
-"nft.activity.event_type.sale" = "İndirim";
-"nft.activity.event_type.transfer" = "Aktar";
-"nft.activity.event_type.mint" = "Mint";
-"nft.activity.event_type.list" = "Liste";
-"nft.activity.event_type.listCancel" = "Liste İptal";
-"nft.activity.event_type.offer" = "Teklif";
-"nft.activity.event_type.offerCancel" = "Teklif İptal";
 
 // Subscription Info
 
@@ -2302,14 +2192,6 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "transaction_filter.all_contacts" = "Tüm Kişiler";
 "transaction_filter.hide_suspicious_txs" = "Şüpheli İşlemleri Gizle";
 "transaction_filter.hide_suspicious_txs.description" = "Küçük tutarlı gelen transferleri gizler (ör. $1.5 altındaki USDT). Bu tür işlemler genellikle phishing ve adres zehirleme (address poisoning) saldırılarında kullanılır.";
-
-// Black Friday
-
-"premium.cell.black_friday.description" = "Yılın en büyük indirimiyle %@ sürümüne yükseltin";
-"premium.black_friday.discount.save" = "tasarruf et";
-"purchase.black_friday.period.lifetime" = "ömür boyu erişim";
-"purchase.black_friday.period.per_month" = "aylık";
-"purchase.black_friday.period.per_year" = "yıllık";
 
 // Purchases
 
