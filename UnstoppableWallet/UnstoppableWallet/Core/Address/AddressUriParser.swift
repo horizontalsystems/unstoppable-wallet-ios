@@ -218,7 +218,7 @@ extension BlockchainType {
         case .zcash: return "zcash"
         case .ethereum: return "ethereum"
         case .tron: return "tron"
-        case .ton: return "toncoin"
+        case .ton: return "ton"
         case .monero: return "monero"
         case .zano: return "zano"
         case .stellar: return "stellar"
