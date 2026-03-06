@@ -20,7 +20,9 @@ enum SendHandlerFactory {
         case let .monero(token, amount, address, memo):
             return MoneroSendHandler.instance(token: token, amount: amount, address: address, memo: memo)
         case let .zano(token, amount, address, memo):
-            return ZanoSendHandler.instance(token: token, amount: amount, address: address, memo: memo)
+            return ZanoSendHandler.instance(token: token, feeToken: token, amount: amount, address: address, memo: memo)
+        case let .zanoAsset(token, baseToken, amount, address, memo):
+            return ZanoSendHandler.instance(token: token, feeToken: baseToken, amount: amount, address: address, memo: memo)
         case let .swap(tokenIn, tokenOut, amountIn, provider):
             return MultiSwapSendHandler.instance(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider)
         case let .walletConnect(request):
@@ -62,7 +64,7 @@ enum SendHandlerFactory {
         }
 
         if let adapter = adapter as? ZanoAdapter {
-            return ZanoPreSendHandler(token: wallet.token, adapter: adapter)
+            return ZanoPreSendHandler(token: wallet.token, baseToken: adapter.baseToken, adapter: adapter)
         }
 
         return nil
