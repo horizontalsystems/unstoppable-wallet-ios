@@ -68,26 +68,10 @@ struct AddressView: View {
                                 .themeListStyle(.bordered)
                             }
                         case .checking, .valid:
-                            ListSection {
-                                VStack(spacing: 0) {
-                                    ForEach(viewModel.issueTypes) { type in
-                                        checkView(title: type.checkTitle, checkDescription: type.description, state: viewModel.checkStates[type] ?? .notAvailable)
-                                    }
-                                }
-                            }
-                            .themeListStyle(.bordered)
-                            .padding(.top, .margin16)
-
-                            let cautions = viewModel.issueTypes.filter { viewModel.checkStates[$0] == .detected }.map(\.caution)
-
-                            if !cautions.isEmpty {
-                                VStack(spacing: .margin16) {
-                                    ForEach(cautions.indices, id: \.self) { index in
-                                        HighlightedTextView(caution: cautions[index])
-                                    }
-                                }
-                                .padding(.top, .margin16)
-                            }
+                            AddressSecurityCheckView(
+                                viewModel: viewModel.securityCheckViewModel,
+                                sourceStatPage: viewModel.destination.sourceStatPage
+                            )
                         }
                     }
                 }
@@ -134,45 +118,6 @@ struct AddressView: View {
                 }
             } else {
                 Text(contact.address).themeBody()
-            }
-        }
-    }
-
-    @ViewBuilder private func checkView(title: String, checkDescription: InfoDescription, state: AddressViewModel.CheckState) -> some View {
-        HStack(spacing: .margin8) {
-            HStack(spacing: .margin8) {
-                Image("star_premium_20").themeIcon(color: .themeJacob)
-                Text(title).textSubhead2()
-            }
-
-            Spacer()
-
-            switch state {
-            case .checking:
-                ProgressView()
-            case .clear:
-                HStack(spacing: .margin8) {
-                    Text("send.address.check.clear".localized).textSubhead2(color: .themeRemus)
-                }
-            case .detected:
-                Text("send.address.check.detected".localized).textSubhead2(color: .themeLucian)
-            case .notAvailable:
-                Text("n/a".localized).textSubhead2()
-            case .locked:
-                Image("lock_20").themeIcon()
-            case .disabled:
-                Text("send.address.check.disabled".localized).textSubhead2(color: .themeLeah)
-            }
-        }
-        .padding(.horizontal, .margin16)
-        .frame(minHeight: 40)
-        .contentShape(Rectangle())
-        .onTapGesture {
-            switch state {
-            case .locked:
-                Coordinator.shared.presentPurchase(premiumFeature: .secureSend, page: viewModel.destination.sourceStatPage, trigger: .addressChecker)
-            default:
-                Coordinator.shared.present(info: checkDescription)
             }
         }
     }

@@ -35,7 +35,7 @@ struct BackupPasswordContentView: View {
         .modifier(KeychainHighlight(active: viewModel.passwordState == .willSave))
         .modifier(CautionBorder(cautionState: $viewModel.passwordCautionState))
         .modifier(CautionPrompt(cautionState: $viewModel.passwordCautionState))
-        .overlay(tapInterceptor)
+        .tapIntercept(active: !viewModel.passwordState.isInteractive) { viewModel.onTapPasswordField() }
     }
 
     private var confirmField: some View {
@@ -52,16 +52,7 @@ struct BackupPasswordContentView: View {
         .modifier(KeychainHighlight(active: viewModel.passwordState == .willSave))
         .modifier(CautionBorder(cautionState: $viewModel.confirmCautionState))
         .modifier(CautionPrompt(cautionState: $viewModel.confirmCautionState))
-        .overlay(tapInterceptor)
-    }
-
-    @ViewBuilder
-    private var tapInterceptor: some View {
-        if !viewModel.passwordState.isInteractive {
-            Color.clear
-                .contentShape(Rectangle())
-                .onTapGesture { viewModel.onTapPasswordField() }
-        }
+        .tapIntercept(active: !viewModel.passwordState.isInteractive) { viewModel.onTapPasswordField() }
     }
 }
 
