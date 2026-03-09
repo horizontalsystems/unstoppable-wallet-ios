@@ -44,7 +44,7 @@ struct ListSection<Content: View>: View {
 
                     VStack(spacing: 0) {
                         switch themeListStyle {
-                        case .lawrence, .bordered, .transparentInline, .blur, .steel10WithCorners:
+                        case .lawrence, .bordered, .borderedPremium, .transparentInline, .blur, .steel10WithCorners:
                             ForEach(children) { child in
                                 child
 
