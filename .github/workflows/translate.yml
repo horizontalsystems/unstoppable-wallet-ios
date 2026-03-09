@@ -1,0 +1,45 @@
+name: Auto Translate Strings
+
+on:
+  pull_request:
+    types: [opened, synchronize]
+    paths:
+      - '**/en.lproj/Localizable.strings'
+
+jobs:
+  translate:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          ref: ${{ github.head_ref }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install anthropic
+
+      - name: Translate new strings
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          GITHUB_BASE_REF: ${{ github.base_ref }}
+        run: python .github/scripts/translate_strings.py
+
+      - name: Commit translations
+        run: |
+          git config user.name "translator[bot]"
+          git config user.email "translator@noreply.github.com"
+          git add '**/*.lproj/Localizable.strings'
+          git diff --staged --quiet && echo "Nothing to commit" || (
+            git commit -m "chore: auto-translate new strings"
+            git push
+          )
