@@ -31,16 +31,37 @@ STRING_PATTERN = re.compile(r'"((?:[^"\\]|\\.)*)"\s*=\s*"((?:[^"\\]|\\.)*)"\s*;'
 def parse_strings(content: str) -> dict[str, str]:
     return {m.group(1): m.group(2) for m in STRING_PATTERN.finditer(content)}
 
-def get_new_strings() -> dict[str, str]:
-    base_ref = os.environ.get("GITHUB_BASE_REF", "master")
-
+def get_strings_at_ref(ref: str) -> dict[str, str]:
+    """Get parsed strings from EN_FILE at a given git ref. Returns empty dict if not found."""
     result = subprocess.run(
-        ["git", "show", f"origin/{base_ref}:{EN_FILE}"],
+        ["git", "show", f"{ref}:{EN_FILE}"],
         capture_output=True,
         text=True,
         encoding="utf-8",
     )
-    base_strings = parse_strings(result.stdout) if result.returncode == 0 else {}
+    return parse_strings(result.stdout) if result.returncode == 0 else {}
+
+def get_previous_ref() -> str:
+    """
+    Return the ref to diff against.
+    - On the first commit of a PR (no HEAD~1), fall back to origin/<base>.
+    - On subsequent pushes, use HEAD~1 so only the latest commit's changes are detected.
+    """
+    # Check whether HEAD~1 exists (i.e. there is a parent commit)
+    result = subprocess.run(
+        ["git", "rev-parse", "--verify", "HEAD~1"],
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode == 0:
+        return "HEAD~1"
+    # Fallback: very first commit — diff against the PR base branch
+    base_ref = os.environ.get("GITHUB_BASE_REF", "master")
+    return f"origin/{base_ref}"
+
+def get_new_strings() -> dict[str, str]:
+    prev_ref = get_previous_ref()
+    base_strings = get_strings_at_ref(prev_ref)
 
     try:
         with open(EN_FILE, encoding="utf-8") as f:
@@ -54,6 +75,18 @@ def get_new_strings() -> dict[str, str]:
         for key, value in current_strings.items()
         if key not in base_strings or base_strings[key] != value
     }
+
+def get_deleted_strings() -> set[str]:
+    prev_ref = get_previous_ref()
+    base_strings = get_strings_at_ref(prev_ref)
+
+    try:
+        with open(EN_FILE, encoding="utf-8") as f:
+            current_strings = parse_strings(f.read())
+    except FileNotFoundError:
+        return set()
+
+    return set(base_strings.keys()) - set(current_strings.keys())
 
 
 def translate_all(new_strings: dict[str, str]) -> dict[str, list[str]]:
@@ -98,25 +131,6 @@ Return ONLY a valid JSON object.
     text = re.sub(r"```json\s*|\s*```", "", message.content[0].text).strip()
 
     return json.loads(text)
-
-def get_deleted_strings() -> set[str]:
-    base_ref = os.environ.get("GITHUB_BASE_REF", "master")
-
-    result = subprocess.run(
-        ["git", "show", f"origin/{base_ref}:{EN_FILE}"],
-        capture_output=True,
-        text=True,
-        encoding="utf-8",
-    )
-    base_strings = parse_strings(result.stdout) if result.returncode == 0 else {}
-
-    try:
-        with open(EN_FILE, encoding="utf-8") as f:
-            current_strings = parse_strings(f.read())
-    except FileNotFoundError:
-        return set()
-
-    return set(base_strings.keys()) - set(current_strings.keys())
 
 def rebuild_translation_file(lang_code: str, translated_lines: list[str], deleted_keys: set[str]) -> None:
     path = STRINGS_FILE.format(lang=lang_code)
