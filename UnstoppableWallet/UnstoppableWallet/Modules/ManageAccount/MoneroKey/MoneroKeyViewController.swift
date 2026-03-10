@@ -114,7 +114,7 @@ extension MoneroKeyViewController: SectionsDataSource {
         var elements = [CellBuilderNew.CellElement]()
         elements.append(.textElement(text: .body(title)))
 
-        elements.append(.textElement(text: .subhead1("monero.key_types.\(value.rawValue)".localized, color: .themeGray), parameters: .allCompression))
+        elements.append(.textElement(text: .subhead1(value.title, color: .themeGray), parameters: .allCompression))
         elements.append(contentsOf: CellBuilderNew.CellElement.accessoryElements(.dropdown))
 
         return CellBuilderNew.row(
