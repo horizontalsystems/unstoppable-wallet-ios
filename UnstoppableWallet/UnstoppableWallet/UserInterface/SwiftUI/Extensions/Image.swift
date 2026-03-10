@@ -39,6 +39,10 @@ extension Image {
         Image("check_1_20").themeIcon(color: .themeJacob)
     }
 
+    static var lockIcon: some View {
+        Image("lock_20").themeIcon(color: .gray)
+    }
+
     static var warningIcon: some View {
         Image("warning_2_20").themeIcon(color: .themeLucian)
     }
@@ -50,5 +54,9 @@ extension Image {
                 "checkbox_diactive",
             size: size
         )
+    }
+
+    static var defenseIcon: CustomStringConvertible {
+        ComponentImage(image: "defense_filled", size: .size20)
     }
 }

@@ -11,11 +11,35 @@ enum AddressSecurityIssueType: CaseIterable, Identifiable {
         self
     }
 
+    var defaultValue: Bool {
+        switch self {
+        case .phishing: return true
+        case .blacklisted: return false
+        case .sanctioned: return false
+        }
+    }
+
+    var storageKey: String {
+        switch self {
+        case .phishing: return "phishing-check"
+        case .blacklisted: return "blacklist-check"
+        case .sanctioned: return "sanction-check"
+        }
+    }
+
     var checkTitle: String {
         switch self {
         case .phishing: return "send.address.phishing_check".localized
         case .blacklisted: return "send.address.blacklist_check".localized
         case .sanctioned: return "send.address.sanction_check".localized
+        }
+    }
+
+    var checkSubtitle: String {
+        switch self {
+        case .phishing: return "send.address.phishing_check.subtitle".localized
+        case .blacklisted: return "send.address.blacklist_check.subtitle".localized
+        case .sanctioned: return "send.address.sanction_check.subtitle".localized
         }
     }
 

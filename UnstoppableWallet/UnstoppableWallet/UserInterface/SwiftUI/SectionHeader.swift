@@ -3,17 +3,20 @@ import SwiftUI
 struct SectionHeader<ImageContent: View>: View {
     private let text: CustomStringConvertible?
     private let imageContent: (() -> ImageContent)?
+    var horizontalInsets: CGFloat
 
-    init(image: CustomStringConvertible?, text: CustomStringConvertible?) where ImageContent == ThemeImage {
+    init(image: CustomStringConvertible?, text: CustomStringConvertible?, horizontalInsets: CGFloat = .margin32) where ImageContent == ThemeImage {
         imageContent = image.map { image in
             { ThemeImage(image, size: .iconSize20) }
         }
         self.text = text
+        self.horizontalInsets = horizontalInsets
     }
 
-    init(image: @escaping () -> ImageContent, text: CustomStringConvertible?) {
+    init(image: @escaping () -> ImageContent, text: CustomStringConvertible?, horizontalInsets: CGFloat = .margin32) {
         imageContent = image
         self.text = text
+        self.horizontalInsets = horizontalInsets
     }
 
     var body: some View {
@@ -26,6 +29,6 @@ struct SectionHeader<ImageContent: View>: View {
 
             Spacer()
         }
-        .padding(EdgeInsets(top: 16, leading: 32, bottom: 12, trailing: 32))
+        .padding(EdgeInsets(top: 16, leading: horizontalInsets, bottom: 12, trailing: horizontalInsets))
     }
 }

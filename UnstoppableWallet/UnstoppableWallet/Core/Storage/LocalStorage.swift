@@ -31,6 +31,8 @@ class LocalStorage {
     private let keyAppStateLastSyncTimestamp = "app-state-last-sync-timestamp"
     private let keyForceEnableSwap = "force-enable-swap"
 
+    private let keyRecipientAddressCheck = "recipient-address-check"
+
     private let userDefaultsStorage: UserDefaultsStorage
 
     init(userDefaultsStorage: UserDefaultsStorage) {
@@ -187,6 +189,20 @@ extension LocalStorage {
     var forceEnableSwap: Bool {
         get { userDefaultsStorage.value(for: keyForceEnableSwap) ?? false }
         set { userDefaultsStorage.set(value: newValue, for: keyForceEnableSwap) }
+    }
+
+    // Send Security
+    var recipientAddressCheckOld: Bool? {
+        get { userDefaultsStorage.value(for: keyRecipientAddressCheck) }
+        set { userDefaultsStorage.set(value: newValue, for: keyRecipientAddressCheck) }
+    }
+
+    func addressSecurityIssue(_ type: AddressSecurityIssueType) -> Bool? {
+        userDefaultsStorage.value(for: type.storageKey)
+    }
+
+    func setAddressSecurityIssue(_ value: Bool, type: AddressSecurityIssueType) {
+        userDefaultsStorage.set(value: value, for: type.storageKey)
     }
 }
 

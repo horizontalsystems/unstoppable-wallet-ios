@@ -377,7 +377,6 @@
 "deposit.stellar.inactive_asset.title" = "Activate Token";
 "deposit.stellar.inactive_asset.description" = "To receive %@, you need to activate the token. The Stellar network requires a trustline to be established for each token. Without it, your wallet cannot receive %@ — the transaction will be rejected and the funds will not be delivered.";
 
-
 "deposit.used_addresses.title" = "Used Addresses";
 "deposit.used_addresses.description" = "%@ addresses change for privacy and security. Below a list of used addresses in this wallet.";
 
@@ -535,14 +534,17 @@
 "send.address.risky.title" = "Risky Address!";
 "send.address.risky.description" = "You are about to send funds to a high-risk address. Proceeding may result in loss of funds or other security risks. By continuing, you accept the potential dangers. Are you sure you want to proceed?";
 "send.address.phishing_check" = "Phishing Check";
+"send.address.phishing_check.subtitle" = "Detects suspicious addresses before confirming the transfer.";
 "send.address.phishing.description" = "Analyzes the provided destination address for potential phishing risks.\n\nClear: No suspicious activity detected.\n\nDetected: It appears that someone may be trying to trick you into sending funds to an incorrect address. Do not proceed unless absolutely certain that the address is correct. Consider sending a small test transaction first.";
 "send.address.phishing.caution.title" = "Phishing Address Detected!";
 "send.address.phishing.caution.description" = "The address you entered may be fraudulent. Scammers often alter the first and last characters. Verify the full address carefully before proceeding to avoid loss.";
 "send.address.sanction_check" = "Sanction Check";
+"send.address.sanction_check.subtitle" = "Verifies whether the address is subject to sanctions restrictions.";
 "send.address.sanction.description" = "Verifies whether the recipient’s address is subject to international sanctions, using data from Chainalysis.com.\n\nClear: No sanctions detected.\n\n Detected: Potential legal risk. Transactions with this address may be restricted or illegal in certain jurisdictions.";
 "send.address.sanction.caution.title" = "Sanctioned Address!";
 "send.address.sanction.caution.description" = "The address you entered is flagged as sanctioned. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
 "send.address.blacklist_check" = "Blacklist Check";
+"send.address.blacklist_check.subtitle" = "Checks the address against fraud and high-risk databases.";
 "send.address.blacklist.description" = "Checks if the destination address is listed on official or unofficial blacklists.\n\nClear: No blacklist flags.\n\nDetected: The address is blacklisted and may be associated with legal or security risks. Proceed with caution. Many crypto exchanges restrict users who deposit or withdraw funds from wallets that have interacted with blacklisted addresses. Keep that in mind.";
 "send.address.blacklist.caution.title" = "Blacklisted Address!";
 "send.address.blacklist.caution.description" = "The address you entered is flagged as blacklisted. Transactions to this address could lead to loss or other risks. Please verify the recipient's details before proceeding.";
@@ -706,7 +708,6 @@
 
 "swap.maya.shielded_address.error" = "Can't fetch shielded address for Memo (Maya)";
 
-
 // Market
 
 "market.title" = "Markets";
@@ -805,7 +806,6 @@
 
 "top_platform.title" = "%@ Ecosystem";
 "top_platform.total_cap" = "Total Cap";
-
 
 "market.search.recent" = "Recent";
 "market.search.popular" = "Popular";
@@ -1251,7 +1251,6 @@
 "chart_indicators.title" = "Indicators";
 "chart_indicators.moving_averages" = "Moving Averages";
 "chart_indicators.oscillators" = "Oscillators";
-
 
 "chart_indicators.settings.period.error" = "Period can’t be more than %d";
 
@@ -2024,7 +2023,6 @@
 "add_monero_node.warning.url_exists" = "Node with this URL already exists";
 "add_monero_node.error.invalid_url" = "The entered URL is invalid. Valid url must have https scheme";
 
-
 // Send Settings
 
 "evm_send_settings.nonce" = "Transaction Nonce";
@@ -2108,7 +2106,6 @@
 "nft_collections.on_sale" = "On Sale";
 "nft_collections.empty" = "You don’t have any NFTs in your wallet";
 
-
 // Nft Asset
 
 "nft_asset.tab.overview" = "Overview";
@@ -2144,7 +2141,6 @@
 "nft_collection.overview.contracts" = "Contracts";
 "nft_collection.overview.links" = "Links";
 "nft_collection.overview.links.website" = "Website";
-
 
 "nft_collection.overview.owners" = "Owners";
 "nft_collection.overview.items" = "Items";
@@ -2338,3 +2334,7 @@
 
 "mev_protection.title" = "MEV Protection";
 "mev_protection.description" = "So-called front-running bots watch every trade, trying to make you overpay. This feature blocks them.";
+
+// Secure Send Bottom Sheet
+"secure_send.bottom_sheet.title" = "Secure Send";
+"secure_send.bottom_sheet.description" = "Choose security checks.";

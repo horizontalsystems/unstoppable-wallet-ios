@@ -4,7 +4,7 @@ import SwiftUI
 
 class MevProtectionHelper {
     var isActive: Bool = false
-    private let localStorage = Core.shared.localStorage
+    private let securityManager = Core.shared.securityManager
 
     func section(tokenIn: Token) -> SendDataSection? {
         guard MerkleTransactionAdapter.allowProtection(blockchainType: tokenIn.blockchainType) else {
@@ -12,7 +12,7 @@ class MevProtectionHelper {
             return nil
         }
 
-        isActive = localStorage.useMevProtection
+        isActive = securityManager.swapProtectionEnabled
 
         let binding = Binding<Bool>(
             get: { [weak self] in
@@ -25,7 +25,7 @@ class MevProtectionHelper {
             set: { [weak self] newValue in
                 let successBlock = { [weak self] in
                     self?.isActive = newValue
-                    self?.localStorage.useMevProtection = newValue
+                    self?.securityManager.setSwapProtection(enabled: newValue)
                 }
 
                 Coordinator.shared.performAfterPurchase(premiumFeature: .swapProtection, page: .swap, trigger: .mevProtection) {

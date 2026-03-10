@@ -39,6 +39,7 @@ class Core {
     let deeplinkStorage: DeeplinkStorage
     let launchScreenManager: LaunchScreenManager
     let appSettingManager: AppSettingManager
+    let securityManager: SecurityManager
     let balanceHiddenManager: BalanceHiddenManager
     let balanceConversionManager: BalanceConversionManager
     let walletButtonHiddenManager: WalletButtonHiddenManager
@@ -166,6 +167,7 @@ class Core {
         deeplinkStorage = DeeplinkStorage()
         launchScreenManager = LaunchScreenManager(userDefaultsStorage: userDefaultsStorage)
         appSettingManager = AppSettingManager(userDefaultsStorage: userDefaultsStorage)
+        securityManager = SecurityManager(localStorage: localStorage)
         balanceHiddenManager = BalanceHiddenManager(userDefaultsStorage: userDefaultsStorage)
         balanceConversionManager = BalanceConversionManager(marketKit: marketKit, userDefaultsStorage: userDefaultsStorage)
         walletButtonHiddenManager = WalletButtonHiddenManager(userDefaultsStorage: userDefaultsStorage)

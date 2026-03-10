@@ -11,6 +11,7 @@
 "button.delete" = "删除";
 "button.share" = "分享";
 "button.paste" = "粘帖";
+"button.photos" = "照片";
 "button.resend" = "重新发送";
 "button.restore" = "恢复";
 "button.copy" = "复制";
@@ -78,6 +79,8 @@
 "alert.unable_to_replace" = "无法替换";
 "alert.already_replaced" = "已经替换";
 
+"alert.fetched_from_keychain" = "从钥匙串获取密码";
+
 "alert_card.title.critical" = "警告!";
 "alert_card.title.caution" = "注意!";
 
@@ -119,9 +122,7 @@
 
 // Access Camera
 
-"access_camera.message" = "%@ 需要访问您的相机以扫描二维码。
-
-前往设置 - > %@ 并允许访问相机。";
+"access_camera.message" = "%@ 需要访问您的相机以扫描二维码。\n\n前往设置 - > %@ 并允许访问相机。";
 "access_camera.not_supported" = "您的设备不支持扫描物品上的代码。请使用带有摄像头的设备。";
 "access_camera.settings" = "设置";
 
@@ -254,6 +255,7 @@
 
 "backup.cloud.name.error.empty" = "备份名称不能为空";
 "backup.cloud.name.error.already_exist" = "备份名称已经存在！";
+"backup.cloud.name.error.invalid_characters" = "名称包含无效字符";
 "backup.cloud.name.placeholder" = "名称";
 
 "backup.cloud.password.placeholder" = "密码";
@@ -325,7 +327,6 @@
 "balance.token.shield" = "屏蔽";
 
 "balance.token.receive_address" = "收款地址";
-"balance.token.staked" = "已关注";
 "balance.token.account.inactive.description" = "激活后将显示交易记录";
 
 // Account switcher
@@ -369,12 +370,10 @@
 
 "deposit.not_active" = "不活动";
 "deposit.not_active.title" = "TRON 未激活";
-"deposit.not_active.tron_description" = "TRON 需要至少 1 TRX 才能完成激活。
-在钱包激活之前，仍可接收 token，但余额可能不会显示。";
+"deposit.not_active.tron_description" = "TRON 需要至少 1 TRX 才能完成激活。\n\n在钱包激活之前，仍可接收 token，但余额可能不会显示。";
 "deposit.not_active.view_address" = "查看我的地址";
 "deposit.stellar.inactive_asset.title" = "啟用代幣";
 "deposit.stellar.inactive_asset.description" = "若要接收 %@，需先激活该代币。Stellar 网络要求为每个代币建立信任线；若未建立，您的钱包将无法接收 %@，交易会被拒绝且资金无法到账。";
-
 
 "deposit.used_addresses.title" = "已使用地址";
 "deposit.used_addresses.description" = "%@ 地址用于隐私和安全。以下是此钱包中已使用的地址列表。";
@@ -488,6 +487,7 @@
 "send.confirmation.method" = "方法";
 "send.confirmation.replace_by_fee.disabled" = "已禁用";
 "send.amount_error.balance" = "余额不足";
+"send.address_error.own_address" = "不允许将 %@ 发送到您自己的地址。请输入其他收款地址。";
 "send.amount_error.maximum_amount" = "最大金额 %@";
 "send.amount_error.minimum_amount" = "最小金额 %@";
 "send.amount_error.minimum_amount.title" = "最小金额";
@@ -532,14 +532,17 @@
 "send.address.risky.title" = "风险地址";
 "send.address.risky.description" = "您即将向高风险地址发送资金。继续操作可能导致资金损失或其他安全风险。继续即表示您接受这些潜在风险。确定要继续吗？";
 "send.address.phishing_check" = "钓鱼检测";
+"send.address.phishing_check.subtitle" = "在确认转账前检测可疑地址。";
 "send.address.phishing.description" = "分析所提供的收款地址是否存在潜在的钓鱼风险。\n\n安全：未发现可疑活动。\n\n已检测到：该地址可能有人试图诱骗您将资金发送到错误地址。除非完全确认地址无误，否则请勿继续。建议您先尝试发送一笔小额测试交易。";
 "send.address.phishing.caution.title" = "已检测到钓鱼地址！";
 "send.address.phishing.caution.description" = "您输入的地址可能存在欺诈风险。骗子常常篡改地址的首尾字符。请在继续之前仔细核对完整地址，以避免资金损失。";
 "send.address.sanction_check" = "制裁检查";
+"send.address.sanction_check.subtitle" = "验证该地址是否受到制裁限制。";
 "send.address.sanction.description" = "核实收款地址是否受到国际制裁，数据来源：Chainalysis.com。\n\n安全：未检测到制裁。\n\n已检测到：存在潜在法律风险。在某些司法管辖区，与该地址的交易可能受限或违法。";
 "send.address.sanction.caution.title" = "受制裁地址！";
 "send.address.sanction.caution.description" = "您输入的地址已被标记为受制裁。向该地址转账可能导致资金损失或其他风险。请在继续之前核实收款人信息。";
 "send.address.blacklist_check" = "黑名单检查";
+"send.address.blacklist_check.subtitle" = "在欺诈和高风险数据库中检查该地址。";
 "send.address.blacklist.description" = "检查目标地址是否被列入官方或非官方黑名单。\n\n安全：未发现黑名单标记。\n\n已检测到：该地址已被列入黑名单，可能涉及法律或安全风险。请谨慎操作。许多交易所会限制与黑名单地址有过往来记录的钱包用户的充值和提现，请注意。";
 "send.address.blacklist.caution.title" = "黑名单地址！";
 "send.address.blacklist.caution.description" = "您输入的地址已被标记为黑名单地址。向该地址转账可能导致资金损失或其他风险。请在继续之前仔细核实收款人信息。";
@@ -581,7 +584,6 @@
 
 "swap.price" = "价格";
 "swap.estimate_short" = "（美国东部时间）";
-
 
 "swap.rate_not_available" = "汇率不可用";
 "swap.select" = "选择";
@@ -704,7 +706,6 @@
 
 "swap.maya.shielded_address.error" = "无法获取用于备注（Memo）的屏蔽地址（Maya）。";
 
-
 // Market
 
 "market.title" = "市场";
@@ -783,7 +784,6 @@
 
 "top_platform.title" = "%@ 星系";
 "top_platform.total_cap" = "总市值";
-
 
 "market.search.recent" = "最近使用";
 "market.search.popular" = "流行";
@@ -1230,7 +1230,6 @@
 "chart_indicators.moving_averages" = "移动平均线";
 "chart_indicators.oscillators" = "震荡指标";
 
-
 "chart_indicators.settings.period.error" = "周期不能超过 %d";
 
 "chart_indicators.settings.ma.description" = "在技术分析中，EMA、SMA和WMA正在移动平均值：\n\nEMA强调最近的价格以便更快的反应。\n一般趋势视图的SMA平均价格数据。\nWMA 通过线性加权最近数据平衡敏感度和噪声减少";
@@ -1405,6 +1404,7 @@
 "backup_app.backup_type.file.description" = "保存备份文件到您的本地文件夹。";
 
 "backup_app.backup_list.title" = "备份文件";
+"backup_app.backup_list.description" = "选择要包含在备份中的钱包。应用数据将自动备份。";
 "backup_app.backup_list.description.restore" = "备份文件中的内容列表。";
 "backup_app.backup_list.header.wallets" = "钱包";
 "backup_app.backup_list.header.other" = "其他";
@@ -1432,6 +1432,8 @@
 "backup_app.backup.name.title" = "备份名称";
 "backup_app.backup.name.description" = "请输入备份文件的名称。";
 
+"backup_app.backup.form.title" = "保护备份";
+"backup_app.backup.form.description" = "创建密码以保护您的备份文件。";
 "backup_app.backup.password.title" = "备份密码";
 "backup_app.backup.password.description" = "为您的备份设置解锁密码。密码长度必须至少为8个字符，并且包含至少一个小写字母、大写字母、数字和特殊字符。";
 "backup_app.backup.password.highlighted_description" = "此密码用于加密您的钱包备份文件。一旦丢失或遗忘，将无法恢复或重置。";
@@ -1444,6 +1446,14 @@
 "backup.password.title" = "备份密码";
 "backup.password.description" = "为您的备份设置解锁密码。密码长度必须至少为8个字符，并且包含至少一个小写字母、大写字母、数字和特殊字符。";
 "backup.password.highlighted_description" = "此密码用于加密您的钱包备份文件。一旦丢失或遗忘，将无法恢复或重置。";
+
+"backup.password.generate.title.cloud" = "使用强密码？";
+"backup.password.generate.description.cloud" = "使用唯一密码保护您的加密备份。密码将保存在\"密码\"应用中。";
+"backup.password.generate.action.cloud" = "保存并填充";
+"backup.password.generator.error.invalid_length" = "密码长度无效（必须大于8位）";
+"backup.password.generator.error.random_failed" = "无法生成安全的随机密码";
+"backup.password.keychain.error.encoding" = "钥匙串编码错误";
+"backup.password.keychain.error.save_failed" = "钥匙串错误！%@";
 
 // Settings -> Security
 
@@ -1605,6 +1615,7 @@
 "appearance.balance_tab" = "余额标签";
 "appearance.amount_rounding" = "金额取整";
 "appearance.amount_rounding.description" = "显示经过取整处理的余额和交易金额。";
+"appearance.send_screen" = "发送界面";
 "appearance.recently_sent" = "最近发送";
 "appearance.recently_sent.description" = "显示该代币最近发送的地址。";
 "appearance.hide_buttons" = "隐藏按钮";
@@ -1990,7 +2001,6 @@
 "add_monero_node.warning.url_exists" = "已存在相同 URL 的节点";
 "add_monero_node.error.invalid_url" = "输入的 URL 无效。有效的 URL 必须使用 https 协议";
 
-
 // Send Settings
 
 "evm_send_settings.nonce" = "交易nonce";
@@ -2098,7 +2108,6 @@
 "nft_asset.details.blockchain" = "Blockchain";
 "nft_asset.links" = "链接";
 "nft_asset.links.website" = "网站";
-"nft_asset.save_to_photos.failed" = "无法保存保存NFT图像";
 
 // Nft Collection
 
@@ -2110,7 +2119,6 @@
 "nft_collection.overview.contracts" = "合约";
 "nft_collection.overview.links" = "链接";
 "nft_collection.overview.links.website" = "网站";
-
 
 "nft_collection.overview.owners" = "所有者";
 "nft_collection.overview.items" = "条目";
@@ -2206,8 +2214,7 @@
 "purchases.secure_send.info" = "检查收款钱包是否存在钓鱼或欺诈风险，并在您向高风险地址转账前发出提醒。";
 "purchases.scam_protection" = "防骗保护";
 "purchases.scam_protection.description" = "在连接到虚假或恶意 dApps 时向您发出警告。";
-"purchases.scam_protection.info" = "在连接前检测伪造或恶意的 dApp，防止钓鱼攻击，保障您的资产安全。
-";
+"purchases.scam_protection.info" = "在连接前检测伪造或恶意的 dApp，防止钓鱼攻击，保障您的资产安全。";
 "purchases.swap_protection" = "兑换保护";
 "purchases.swap_protection.description" = "在兑换过程中防止 bots 和 MEV 攻击。";
 "purchases.swap_protection.info" = "在兑换过程中阻止 bots 和抢跑（front-running）攻击，确保您的交易公平且安全。";
@@ -2305,3 +2312,7 @@
 
 "mev_protection.title" = "MEV 保护";
 "mev_protection.description" = "所谓的「抢跑机器人」会监控每一笔交易，企图让您多付费用。此功能可阻止它们。";
+
+// Secure Send Bottom Sheet
+"secure_send.bottom_sheet.title" = "安全发送";
+"secure_send.bottom_sheet.description" = "选择安全检查项。";

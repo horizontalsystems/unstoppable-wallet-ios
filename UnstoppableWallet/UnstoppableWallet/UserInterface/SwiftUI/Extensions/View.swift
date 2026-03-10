@@ -57,4 +57,16 @@ extension View {
             self
         }
     }
+
+    @ViewBuilder func tapIntercept(active: Bool, action: @escaping () -> Void) -> some View {
+        if active {
+            overlay {
+                Color.clear
+                    .contentShape(Rectangle())
+                    .onTapGesture(perform: action)
+            }
+        } else {
+            self
+        }
+    }
 }
