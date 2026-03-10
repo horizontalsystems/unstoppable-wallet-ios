@@ -1340,8 +1340,6 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 "settings.backup_manager" = "Yedekleme yöneticisi";
 "settings.security" = "Güvenlik";
 
-
-";
 "settings.base_currency" = "Para birimi";
 "settings.language" = "Dil";
 "settings.faq" = "FAQ";
