@@ -532,14 +532,17 @@
 "send.address.risky.title" = "风险地址";
 "send.address.risky.description" = "您即将向高风险地址发送资金。继续操作可能导致资金损失或其他安全风险。继续即表示您接受这些潜在风险。确定要继续吗？";
 "send.address.phishing_check" = "钓鱼检测";
+"send.address.phishing_check.subtitle" = "在确认转账前检测可疑地址。";
 "send.address.phishing.description" = "分析所提供的收款地址是否存在潜在的钓鱼风险。\n\n安全：未发现可疑活动。\n\n已检测到：该地址可能有人试图诱骗您将资金发送到错误地址。除非完全确认地址无误，否则请勿继续。建议您先尝试发送一笔小额测试交易。";
 "send.address.phishing.caution.title" = "已检测到钓鱼地址！";
 "send.address.phishing.caution.description" = "您输入的地址可能存在欺诈风险。骗子常常篡改地址的首尾字符。请在继续之前仔细核对完整地址，以避免资金损失。";
 "send.address.sanction_check" = "制裁检查";
+"send.address.sanction_check.subtitle" = "验证该地址是否受到制裁限制。";
 "send.address.sanction.description" = "核实收款地址是否受到国际制裁，数据来源：Chainalysis.com。\n\n安全：未检测到制裁。\n\n已检测到：存在潜在法律风险。在某些司法管辖区，与该地址的交易可能受限或违法。";
 "send.address.sanction.caution.title" = "受制裁地址！";
 "send.address.sanction.caution.description" = "您输入的地址已被标记为受制裁。向该地址转账可能导致资金损失或其他风险。请在继续之前核实收款人信息。";
 "send.address.blacklist_check" = "黑名单检查";
+"send.address.blacklist_check.subtitle" = "在欺诈和高风险数据库中检查该地址。";
 "send.address.blacklist.description" = "检查目标地址是否被列入官方或非官方黑名单。\n\n安全：未发现黑名单标记。\n\n已检测到：该地址已被列入黑名单，可能涉及法律或安全风险。请谨慎操作。许多交易所会限制与黑名单地址有过往来记录的钱包用户的充值和提现，请注意。";
 "send.address.blacklist.caution.title" = "黑名单地址！";
 "send.address.blacklist.caution.description" = "您输入的地址已被标记为黑名单地址。向该地址转账可能导致资金损失或其他风险。请在继续之前仔细核实收款人信息。";
@@ -2309,3 +2312,7 @@
 
 "mev_protection.title" = "MEV 保护";
 "mev_protection.description" = "所谓的「抢跑机器人」会监控每一笔交易，企图让您多付费用。此功能可阻止它们。";
+
+// Secure Send Bottom Sheet
+"secure_send.bottom_sheet.title" = "安全发送";
+"secure_send.bottom_sheet.description" = "选择安全检查项。";

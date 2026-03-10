@@ -532,14 +532,17 @@
 "send.address.risky.title" = "Riskli Adres!";
 "send.address.risky.description" = "Yüksek riskli bir adrese fon göndermek üzeresiniz. Devam etmek, para kaybına veya diğer güvenlik risklerine yol açabilir. Devam ederek potansiyel tehlikeleri kabul etmiş olursunuz. Devam etmek istediğinizden emin misiniz?";
 "send.address.phishing_check" = "Phishing Check";
+"send.address.phishing_check.subtitle" = "Transferi onaylamadan önce şüpheli adresleri tespit eder.";
 "send.address.phishing.description" = "Girilen hedef adresi olası phishing (oltalama) riskleri açısından analiz eder.\n\nTemiz: Şüpheli bir etkinlik tespit edilmedi.\n\nTespit edildi: Görünüşe göre biri sizi yanlış adrese fon göndermeye ikna etmeye çalışıyor olabilir. Adresin doğruluğundan kesin olarak emin olmadıkça devam etmeyin. Öncelikle küçük bir test işlemi göndermeyi düşünün.";
 "send.address.phishing.caution.title" = "Oltalama Adresi Tespit Edildi!";
 "send.address.phishing.caution.description" = "Girdiğiniz adres sahte olabilir. Dolandırıcılar genellikle ilk ve son karakterleri değiştirirler. Kayıpları önlemek için devam etmeden önce tam adresi dikkatlice doğrulayın.";
 "send.address.sanction_check" = "Sanction Check";
+"send.address.sanction_check.subtitle" = "Adresin yaptırım kısıtlamalarına tabi olup olmadığını doğrular.";
 "send.address.sanction.description" = "Alıcının adresinin uluslararası yaptırımlara tabi olup olmadığını Chainalysis.com verileriyle doğrular.\n\nTemiz: Herhangi bir yaptırım tespit edilmedi.\n\nTespit edildi: Olası yasal risk. Bu adrese yapılan işlemler bazı yargı bölgelerinde kısıtlanabilir veya yasa dışı olabilir.";
 "send.address.sanction.caution.title" = "Yaptırım Uygulanan Adres!";
 "send.address.sanction.caution.description" = "Girdiğiniz adres yaptırım listesine alınmış. Bu adrese yapılacak işlemler kayıp ya da başka risklere yol açabilir. Devam etmeden önce alıcı bilgilerini mutlaka doğrulayın.";
 "send.address.blacklist_check" = "Kara Liste Kontrolü";
+"send.address.blacklist_check.subtitle" = "Adresi dolandırıcılık ve yüksek riskli veri tabanlarında kontrol eder.";
 "send.address.blacklist.description" = "Hedef adresin resmi veya gayriresmî kara listelerde yer alıp almadığını kontrol eder.\n\nTemiz: Kara liste işareti yok.\n\nTespit edildi: Adres kara listede ve yasal veya güvenlik riskleriyle ilişkili olabilir. Dikkatli ilerleyin. Birçok kripto borsası, kara listedeki adreslerle etkileşimde bulunan cüzdanlardan para yatıran veya çeken kullanıcıları kısıtlamaktadır. Bunu aklınızda bulundurun.";
 "send.address.blacklist.caution.title" = "Kara Listeye Alınmış Adres!";
 "send.address.blacklist.caution.description" = "Girdiğiniz adres kara listeye alınmış olarak işaretlenmiştir. Bu adrese yapılan işlemler kayıplara veya diğer risklere yol açabilir. Lütfen devam etmeden önce alıcının bilgilerini doğrulayın.";
@@ -2309,3 +2312,7 @@
 
 "mev_protection.title" = "MEV Koruması";
 "mev_protection.description" = "Sözde front-running botları her işlemi izleyerek sizi fazla ödemeye zorlamaya çalışır. Bu özellik onları engeller.";
+
+// Secure Send Bottom Sheet
+"secure_send.bottom_sheet.title" = "Güvenli Gönderim";
+"secure_send.bottom_sheet.description" = "Güvenlik kontrollerini seçin.";

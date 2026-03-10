@@ -532,14 +532,17 @@
 "send.address.risky.title" = "¡Dirección de alto riesgo!";
 "send.address.risky.description" = "Estás a punto de enviar fondos a una dirección considerada de alto riesgo. Continuar podría resultar en la pérdida de fondos u otros riesgos de seguridad. Al continuar, aceptas los posibles peligros. ¿Seguro que deseas proceder?";
 "send.address.phishing_check" = "Phishing Check";
+"send.address.phishing_check.subtitle" = "Detecta direcciones sospechosas antes de confirmar la transferencia.";
 "send.address.phishing.description" = "Analiza la dirección de destino indicada en busca de posibles riesgos de phishing.\n\nSin alertas: No se detectó actividad sospechosa.\n\nDetectado: Parece que alguien podría estar intentando engañarte para que envíes fondos a una dirección incorrecta. No continúes a menos que tengas absoluta certeza de que la dirección es correcta. Considera enviar primero una transacción de prueba con un monto pequeño.";
 "send.address.phishing.caution.title" = "¡Dirección de Phishing Detectada!";
 "send.address.phishing.caution.description" = "La dirección que ingresaste puede ser fraudulenta. Los estafadores a menudo alteran los primeros y últimos caracteres. Verifica cuidadosamente la dirección completa antes de proceder para evitar pérdidas.";
 "send.address.sanction_check" = "Verificación de sanciones";
+"send.address.sanction_check.subtitle" = "Verifica si la dirección está sujeta a restricciones por sanciones.";
 "send.address.sanction.description" = "Verifica si la dirección del destinatario está sujeta a sanciones internacionales, utilizando datos de Chainalysis.com.\n\nSin alertas: No se detectaron sanciones.\n\nDetectado: Riesgo legal potencial. Las transacciones con esta dirección pueden estar restringidas o ser ilegales en ciertas jurisdicciones.";
 "send.address.sanction.caution.title" = "¡Dirección sancionada!";
 "send.address.sanction.caution.description" = "La dirección que ingresaste está marcada como sancionada. Las transacciones hacia esta dirección podrían ocasionar pérdida de fondos u otros riesgos. Verifica los datos del destinatario antes de continuar.";
 "send.address.blacklist_check" = "Verificación de Lista Negra";
+"send.address.blacklist_check.subtitle" = "Comprueba la dirección en bases de datos de fraude y alto riesgo.";
 "send.address.blacklist.description" = "Verifica si la dirección de destino está incluida en listas negras oficiales o no oficiales.\n\nSin alertas: No hay registros en listas negras.\n\nDetectado: La dirección está en una lista negra y puede estar asociada con riesgos legales o de seguridad. Procede con precaución. Muchas casas de cambio restringen a los usuarios que depositan o retiran fondos desde wallets que han interactuado con direcciones en listas negras. Tenlo en cuenta.";
 "send.address.blacklist.caution.title" = "¡Dirección en lista negra!";
 "send.address.blacklist.caution.description" = "La dirección que ingresaste está marcada como incluida en lista negra. Las transacciones a esta dirección podrían conducir a pérdidas u otros riesgos. Por favor, verifica los detalles del destinatario antes de proceder.";
@@ -2309,3 +2312,7 @@
 
 "mev_protection.title" = "Protección MEV";
 "mev_protection.description" = "Los llamados bots de front-running vigilan cada operación, intentando que pagues de más. Esta función los bloquea.";
+
+// Secure Send Bottom Sheet
+"secure_send.bottom_sheet.title" = "Envío Seguro";
+"secure_send.bottom_sheet.description" = "Elige las verificaciones de seguridad.";

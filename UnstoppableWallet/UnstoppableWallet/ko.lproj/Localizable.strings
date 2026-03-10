@@ -532,14 +532,17 @@
 "send.address.risky.title" = "위험한 주소";
 "send.address.risky.description" = "고위험 주소로 자금을 전송하려고 합니다. 계속 진행하면 자금 손실이나 기타 보안 위험이 발생할 수 있습니다. 진행 시 이러한 위험을 감수하는 것으로 간주됩니다. 정말로 진행하시겠습니까?";
 "send.address.phishing_check" = "피싱 검사";
+"send.address.phishing_check.subtitle" = "전송을 확인하기 전에 의심스러운 주소를 감지합니다.";
 "send.address.phishing.description" = "제공된 수신 주소를 분석하여 피싱 위험을 확인합니다.\n\n안전: 의심스러운 활동이 감지되지 않았습니다.\n\n위험: 누군가가 잘못된 주소로 자금을 전송하도록 속이려는 정황이 보입니다. 주소가 확실히 올바른 경우가 아니면 진행하지 마세요. 먼저 소액 테스트 전송을 고려하세요.";
 "send.address.phishing.caution.title" = "피싱 주소 감지됨!";
 "send.address.phishing.caution.description" = "입력한 주소가 사기성일 수 있습니다. 사기꾼들은 종종 처음과 마지막 문자를 변경합니다. 손실을 방지하기 위해 진행하기 전에 전체 주소를 주의 깊게 확인하세요.";
 "send.address.sanction_check" = "제재 검사";
+"send.address.sanction_check.subtitle" = "해당 주소가 제재 제한 대상인지 확인합니다.";
 "send.address.sanction.description" = "제공된 수신 주소가 국제 제재 대상인지 Chainalysis.com 데이터를 통해 확인합니다.\n\n안전: 제재 기록이 감지되지 않았습니다.\n\n위험: 법적 위험 가능성이 있습니다. 일부 관할 지역에서는 해당 주소로의 거래가 제한되거나 불법일 수 있습니다.";
 "send.address.sanction.caution.title" = "제재 대상 주소!";
 "send.address.sanction.caution.description" = "입력한 주소는 제재 대상으로 표시되었습니다. 이 주소로 거래 시 손실 또는 기타 위험이 발생할 수 있습니다. 진행 전 반드시 수신자 정보를 확인하세요.";
 "send.address.blacklist_check" = "블랙리스트 확인";
+"send.address.blacklist_check.subtitle" = "사기 및 고위험 데이터베이스에서 주소를 확인합니다.";
 "send.address.blacklist.description" = "수신 주소가 공식 또는 비공식 블랙리스트에 포함되어 있는지 확인합니다.\n\n안전: 블랙리스트 기록 없음.\n\n위험: 해당 주소는 블랙리스트에 포함되어 있으며 법적·보안상의 위험과 연관될 수 있습니다. 주의해서 진행하세요. 많은 거래소가 블랙리스트와 연관된 지갑의 입출금을 제한합니다. 이를 유의하세요.";
 "send.address.blacklist.caution.title" = "블랙리스트 주소!";
 "send.address.blacklist.caution.description" = "입력한 주소가 블랙리스트에 등록된 것으로 표시되어 있습니다. 이 주소로의 거래는 손실이나 기타 위험을 초래할 수 있습니다. 수신자 정보를 진행하기 전에 확인하세요.";
@@ -2309,3 +2312,7 @@
 
 "mev_protection.title" = "MEV 보호";
 "mev_protection.description" = "일명 프런트러닝 봇은 모든 거래를 감시하며 사용자가 더 많은 수수료를 내도록 유도합니다. 이 기능은 그런 봇을 차단합니다.";
+
+// Secure Send Bottom Sheet
+"secure_send.bottom_sheet.title" = "보안 전송";
+"secure_send.bottom_sheet.description" = "보안 검사를 선택하세요.";
