@@ -375,7 +375,6 @@
 "deposit.stellar.inactive_asset.title" = "Activate Token";
 "deposit.stellar.inactive_asset.description" = "To receive %@, you need to activate the token. The Stellar network requires a trustline to be established for each token. Without it, your wallet cannot receive %@ — the transaction will be rejected and the funds will not be delivered.";
 
-
 "deposit.used_addresses.title" = "Used Addresses";
 "deposit.used_addresses.description" = "%@ addresses change for privacy and security. Below a list of used addresses in this wallet.";
 
@@ -704,7 +703,6 @@
 
 "swap.maya.shielded_address.error" = "Can't fetch shielded address for Memo (Maya)";
 
-
 // Market
 
 "market.title" = "Markets";
@@ -783,7 +781,6 @@
 
 "top_platform.title" = "%@ Ecosystem";
 "top_platform.total_cap" = "Total Cap";
-
 
 "market.search.recent" = "Recent";
 "market.search.popular" = "Popular";
@@ -1229,7 +1226,6 @@
 "chart_indicators.title" = "Indicators";
 "chart_indicators.moving_averages" = "Moving Averages";
 "chart_indicators.oscillators" = "Oscillators";
-
 
 "chart_indicators.settings.period.error" = "Period can’t be more than %d";
 
@@ -2002,7 +1998,6 @@
 "add_monero_node.warning.url_exists" = "Node with this URL already exists";
 "add_monero_node.error.invalid_url" = "The entered URL is invalid. Valid url must have https scheme";
 
-
 // Send Settings
 
 "evm_send_settings.nonce" = "Transaction Nonce";
@@ -2086,7 +2081,6 @@
 "nft_collections.on_sale" = "On Sale";
 "nft_collections.empty" = "You don’t have any NFTs in your wallet";
 
-
 // Nft Asset
 
 "nft_asset.tab.overview" = "Overview";
@@ -2122,7 +2116,6 @@
 "nft_collection.overview.contracts" = "Contracts";
 "nft_collection.overview.links" = "Links";
 "nft_collection.overview.links.website" = "Website";
-
 
 "nft_collection.overview.owners" = "Owners";
 "nft_collection.overview.items" = "Items";
