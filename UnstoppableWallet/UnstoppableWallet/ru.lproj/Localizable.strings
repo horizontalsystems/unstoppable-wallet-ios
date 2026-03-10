@@ -1839,6 +1839,7 @@
 "wallet_connect.scam_protection.risky" = "Рискованно";
 "wallet_connect.scam_protection.secure" = "Безопасно";
 "wallet_connect.scam_protection.not_available" = "Нет данных";
+"wallet_connect.scam_protection.disabled" = "Отключено";
 "wallet_connect.networks" = "Сети";
 
 "wallet_connect.main.no_any_supported_chains" = "Нет поддерживаемых блокчейнов!";

@@ -1839,6 +1839,7 @@
 "wallet_connect.scam_protection.risky" = "Risqué";
 "wallet_connect.scam_protection.secure" = "Sécurisé";
 "wallet_connect.scam_protection.not_available" = "S. O.";
+"wallet_connect.scam_protection.disabled" = "Désactivé";
 "wallet_connect.networks" = "Réseaux";
 
 "wallet_connect.main.no_any_supported_chains" = "Aucune chaîne prise en charge !";

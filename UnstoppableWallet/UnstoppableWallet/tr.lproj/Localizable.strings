@@ -1839,6 +1839,7 @@
 "wallet_connect.scam_protection.risky" = "Riskli";
 "wallet_connect.scam_protection.secure" = "Güvenli";
 "wallet_connect.scam_protection.not_available" = "N/A";
+"wallet_connect.scam_protection.disabled" = "Devre dışı";
 "wallet_connect.networks" = "Ağlar";
 
 "wallet_connect.main.no_any_supported_chains" = "Desteklenen zincir yok!";
