@@ -1,15 +1,25 @@
 import Foundation
 import MarketKit
+import ZanoKit
+
+protocol ZanoSendable: IBalanceAdapter {
+    func estimateFee() -> Decimal
+    func send(to address: String, amount: ZanoSendAmount, memo: String?) throws
+}
+
+extension ZanoAdapter: ZanoSendable {}
 
 class ZanoSendHandler {
     private let token: Token
-    private let adapter: ZanoAdapter
+    private let feeToken: Token // same as token for native ZANO; native ZANO token for confidential assets
+    private let adapter: ZanoSendable
     private let amount: ZanoSendAmount
     private let address: String
     private let memo: String?
 
-    init(token: Token, adapter: ZanoAdapter, amount: ZanoSendAmount, address: String, memo: String?) {
+    init(token: Token, feeToken: Token, adapter: ZanoSendable, amount: ZanoSendAmount, address: String, memo: String?) {
         self.token = token
+        self.feeToken = feeToken
         self.adapter = adapter
         self.amount = amount
         self.address = address
@@ -19,7 +29,7 @@ class ZanoSendHandler {
 
 extension ZanoSendHandler: ISendHandler {
     var baseToken: MarketKit.Token {
-        token
+        feeToken
     }
 
     var expirationDuration: Int? {
@@ -31,6 +41,7 @@ extension ZanoSendHandler: ISendHandler {
 
         return SendData(
             token: token,
+            feeToken: feeToken,
             amount: amount,
             address: address,
             memo: memo,
@@ -51,14 +62,16 @@ extension ZanoSendHandler: ISendHandler {
 extension ZanoSendHandler {
     class SendData: ISendData {
         let token: Token
+        let feeToken: Token
         let amount: ZanoSendAmount
         let address: String
         let memo: String?
         let transactionError: Error?
         let fee: Decimal?
 
-        init(token: Token, amount: ZanoSendAmount, address: String, memo: String?, transactionError: Error?, fee: Decimal?) {
+        init(token: Token, feeToken: Token, amount: ZanoSendAmount, address: String, memo: String?, transactionError: Error?, fee: Decimal?) {
             self.token = token
+            self.feeToken = feeToken
             self.amount = amount
             self.address = address
             self.memo = memo
@@ -79,7 +92,10 @@ extension ZanoSendHandler {
         }
 
         var rateCoins: [Coin] {
-            [token.coin]
+            if feeToken.coin.uid == token.coin.uid {
+                return [token.coin]
+            }
+            return [token.coin, feeToken.coin]
         }
 
         func cautions(baseToken: Token, currency _: Currency, rates _: [String: Decimal]) -> [CautionNew] {
@@ -87,7 +103,7 @@ extension ZanoSendHandler {
                 return []
             }
 
-            return [ZanoSendHelper.caution(transactionError: transactionError, feeToken: baseToken)]
+            return [ZanoSendHandler.caution(transactionError: transactionError, feeToken: baseToken)]
         }
 
         func feeData(feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
@@ -105,7 +121,9 @@ extension ZanoSendHandler {
             let value: Decimal
             switch amount {
             case let .all(_value):
-                if let fee {
+                // For native ZANO the fee comes from the same balance — subtract it.
+                // For confidential assets the fee is paid in ZANO, so show the full asset amount.
+                if feeToken.coin.uid == token.coin.uid, let fee {
                     value = _value - fee
                 } else {
                     value = _value
@@ -121,8 +139,8 @@ extension ZanoSendHandler {
         }
 
         func sections(baseToken _: Token, currency: Currency, rates: [String: Decimal]) -> [SendDataSection] {
-            let rate = rates[token.coin.uid]
-            let amountData = amountData(amountToken: token, currency: currency, amountTokenRate: rate)
+            let amountRate = rates[token.coin.uid]
+            let amountData = amountData(amountToken: token, currency: currency, amountTokenRate: amountRate)
 
             var sections = [SendDataSection]()
             sections.append(.init([
@@ -143,8 +161,9 @@ extension ZanoSendHandler {
                 fields.append(.simpleValue(title: "send.confirmation.memo".localized, value: memo))
             }
 
+            let feeRate = rates[feeToken.coin.uid]
             sections.append(
-                .init(fields + ZanoSendHelper.feeFields(fee: fee, feeToken: token, currency: currency, feeTokenRate: rate), isMain: false)
+                .init(fields + ZanoSendHandler.feeFields(fee: fee, feeToken: feeToken, currency: currency, feeTokenRate: feeRate), isMain: false)
             )
 
             return sections
@@ -164,17 +183,57 @@ extension ZanoSendHandler {
 }
 
 extension ZanoSendHandler {
-    static func instance(token: Token, amount: ZanoSendAmount, address: String, memo: String?) -> ZanoSendHandler? {
+    static func instance(token: Token, feeToken: Token, amount: ZanoSendAmount, address: String, memo: String?) -> ZanoSendHandler? {
         guard let adapter = Core.shared.adapterManager.adapter(for: token) as? ZanoAdapter else {
             return nil
         }
 
         return ZanoSendHandler(
             token: token,
+            feeToken: feeToken,
             adapter: adapter,
             amount: amount,
             address: address,
             memo: memo
         )
+    }
+}
+
+private extension ZanoSendHandler {
+    static func caution(transactionError: Error, feeToken: Token) -> CautionNew {
+        let title: String
+        let text: String
+
+        if let zanoError = transactionError as? ZanoCoreError {
+            switch zanoError {
+            case let .insufficientFunds(balance):
+                let appValue = AppValue(token: feeToken, value: Decimal(string: balance) ?? 0)
+                let balanceString = appValue.formattedShort()
+                title = "fee_settings.errors.insufficient_balance".localized
+                text = "fee_settings.errors.insufficient_balance.info".localized(balanceString ?? "")
+            default:
+                title = "ethereum_transaction.error.title".localized
+                text = transactionError.convertedError.smartDescription
+            }
+        } else {
+            title = "ethereum_transaction.error.title".localized
+            text = transactionError.convertedError.smartDescription
+        }
+
+        return CautionNew(title: title, text: text, type: .error)
+    }
+
+    static func feeFields(fee: Decimal?, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [SendField] {
+        guard let fee else { return [] }
+
+        let appValue = AppValue(token: feeToken, value: fee)
+        let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: fee * $0) }
+
+        return [
+            .fee(
+                title: ComponentInformedTitle("fee_settings.network_fee".localized, info: .fee),
+                amountData: .init(appValue: appValue, currencyValue: currencyValue)
+            ),
+        ]
     }
 }

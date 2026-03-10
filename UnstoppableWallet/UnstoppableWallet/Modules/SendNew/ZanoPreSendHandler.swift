@@ -7,15 +7,17 @@ import ZanoKit
 
 class ZanoPreSendHandler {
     private let token: Token
-    private let adapter: ZanoAdapter
+    private let baseToken: Token // same as token for native ZANO
+    private let adapter: IBalanceAdapter
 
     private let stateSubject = PassthroughSubject<AdapterState, Never>()
     private let balanceSubject = PassthroughSubject<Decimal, Never>()
 
     private let disposeBag = DisposeBag()
 
-    init(token: Token, adapter: ZanoAdapter) {
+    init(token: Token, baseToken: Token, adapter: IBalanceAdapter) {
         self.token = token
+        self.baseToken = baseToken
         self.adapter = adapter
 
         adapter.balanceStateUpdatedObservable
@@ -65,6 +67,10 @@ extension ZanoPreSendHandler: IPreSendHandler {
             zanoAmount = .all(amount)
         } else {
             zanoAmount = .value(amount)
+        }
+
+        if case .zanoAsset = token.type {
+            return .valid(sendData: .zanoAsset(token: token, baseToken: baseToken, amount: zanoAmount, address: address, memo: memo))
         }
 
         return .valid(sendData: .zano(token: token, amount: zanoAmount, address: address, memo: memo))

@@ -12,6 +12,7 @@ class AdapterManager {
     private let tronKitManager: TronKitManager
     private let tonKitManager: TonKitManager
     private let stellarKitManager: StellarKitManager
+    private let zanoKitManager: ZanoKitManager
     private let moneroNodeManager: MoneroNodeManager
 
     private let adapterDataReadyRelay = PublishRelay<AdapterData>()
@@ -21,7 +22,7 @@ class AdapterManager {
     private var _adapterData = AdapterData(adapterMap: [:], account: nil)
 
     init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager,
-         tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager, btcBlockchainManager: BtcBlockchainManager, moneroNodeManager: MoneroNodeManager)
+         tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager, zanoKitManager: ZanoKitManager, btcBlockchainManager: BtcBlockchainManager, moneroNodeManager: MoneroNodeManager)
     {
         self.adapterFactory = adapterFactory
         self.walletManager = walletManager
@@ -29,6 +30,7 @@ class AdapterManager {
         self.tronKitManager = tronKitManager
         self.tonKitManager = tonKitManager
         self.stellarKitManager = stellarKitManager
+        self.zanoKitManager = zanoKitManager
         self.moneroNodeManager = moneroNodeManager
 
         walletManager.activeWalletDataUpdatedObservable
@@ -152,6 +154,10 @@ extension AdapterManager {
 
     func recreateAdapter(blockchainType: BlockchainType) {
         Task {
+            if blockchainType == .zano {
+                self.zanoKitManager.recreateKit()
+            }
+
             let wallets = queue.sync { _adapterData.adapterMap.keys }
 
             refreshAdapters(wallets: wallets.filter {
@@ -173,6 +179,7 @@ extension AdapterManager {
             self.tronKitManager.tronKitWrapper?.tronKit.refresh()
             self.tonKitManager.tonKit?.sync()
             self.stellarKitManager.stellarKit?.sync()
+            self.zanoKitManager.kit?.refresh()
         }
     }
 
@@ -189,7 +196,7 @@ extension AdapterManager {
             } else if wallet.token.blockchainType == .monero {
                 (self._adapterData.adapterMap[wallet] as? MoneroAdapter)?.restart()
             } else if wallet.token.blockchainType == .zano {
-                (self._adapterData.adapterMap[wallet] as? ZanoAdapter)?.restart()
+                self.zanoKitManager.kit?.restart()
             } else {
                 self._adapterData.adapterMap[wallet]?.refresh()
             }

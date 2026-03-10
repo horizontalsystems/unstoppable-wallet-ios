@@ -170,7 +170,7 @@ extension BlockchainType {
         case .arbitrumOne: return "L2 chain"
         case .zcash: return "ZEC"
         case .monero: return "XMR"
-        case .zano: return "ZANO"
+        case .zano: return "ZANO, confidential assets"
         case .dash: return "DASH"
         case .bitcoinCash: return "BCH (Legacy, CashAddress)"
         case .ecash: return "XEC"

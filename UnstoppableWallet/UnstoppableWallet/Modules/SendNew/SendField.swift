@@ -87,11 +87,9 @@ enum SendField {
         case let .price(title, tokenA, tokenB, amountA, amountB):
             let priceData = FlipRow.TokenPriceData(tokenA: tokenA, tokenB: tokenB, amountA: amountA, amountB: amountB)
             FlipRow(title: title, flipData: priceData)
-
         case let .fee(title, amountData):
             let feeData = FlipRow.TokenFeeData(amountData: amountData)
             FlipRow(title: title, flipData: feeData)
-
         case let .simpleValue(icon, title, value):
             Cell(
                 style: .secondary,
