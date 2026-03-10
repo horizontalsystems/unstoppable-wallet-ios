@@ -228,6 +228,13 @@ struct SecuritySettingsView: View {
                         }
                     }
 
+                toggledRow(title: "purchases.scam_protection".localized, subtitle: "purchases.scam_protection.description".localized, isOn: binding(feature: .scamProtection))
+                    .tapIntercept(active: !viewModel.premiumEnabled) {
+                        Coordinator.shared.performAfterPurchase(premiumFeature: .scamProtection, page: .security, trigger: .getPremium) {
+                            viewModel.set(.scamProtection, enabled: !viewModel.isEnabled(.scamProtection))
+                        }
+                    }
+
                 toggledRow(title: "purchases.swap_protection".localized, subtitle: "purchases.swap_protection.description".localized, isOn: binding(feature: .swapProtection))
                     .tapIntercept(active: !viewModel.premiumEnabled) {
                         Coordinator.shared.performAfterPurchase(premiumFeature: .swapProtection, page: .security, trigger: .getPremium) {

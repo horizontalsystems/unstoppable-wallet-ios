@@ -11,6 +11,9 @@ class SecurityManager {
     // swap settings
     @PostPublished private(set) var swapProtectionEnabled: Bool
 
+    // scam protection
+    @PostPublished private(set) var scamProtectionEnabled: Bool
+
     init(localStorage: LocalStorage) {
         self.localStorage = localStorage
 
@@ -24,6 +27,7 @@ class SecurityManager {
         securityChecks = checks
         secureSendEnabled = checks.values.contains(true)
         swapProtectionEnabled = localStorage.useMevProtection
+        scamProtectionEnabled = localStorage.scamProtection
     }
 
     private static func migrateRecipientAddressCheck(storage: LocalStorage) {
@@ -59,5 +63,10 @@ extension SecurityManager {
     func setSwapProtection(enabled: Bool) {
         swapProtectionEnabled = enabled
         localStorage.useMevProtection = enabled
+    }
+
+    func setScamProtection(enabled: Bool) {
+        scamProtectionEnabled = enabled
+        localStorage.scamProtection = enabled
     }
 }
