@@ -11,7 +11,6 @@
 "button.delete" = "Löschen";
 "button.share" = "Teilen";
 "button.paste" = "Einsetzen";
-"button.photos" = "Fotos";
 "button.resend" = "Nochmal senden";
 "button.restore" = "Wiederherstellen";
 "button.copy" = "Kopieren";
@@ -532,7 +531,7 @@
 "send.address.risky.title" = "Risikoreiche Adresse!";
 "send.address.risky.description" = "Du bist dabei, Gelder an eine risikoreiche Adresse zu senden. Das Fortfahren könnte zum Verlust von Geldern oder anderen Sicherheitsrisiken führen. Durch das Fortfahren akzeptierst du die potenziellen Gefahren. Bist du sicher, dass du fortfahren möchtest?";
 "send.address.phishing_check" = "Phishing-Prüfung";
-"send.address.phishing_check.subtitle" = "Erkennt verdächtige Adressen vor Bestätigung der Überweisung.";
+"send.address.phishing_check.subtitle" = "Erkennt verdächtige Adressen vor der Bestätigung der Überweisung.";
 "send.address.phishing.description" = "Analysiert die angegebene Zieladresse auf potenzielle Phishing-Risiken.\n\nSauber: Keine verdächtigen Aktivitäten erkannt.\n\nErkannt: Es scheint, dass jemand versuchen könnte, dich dazu zu bringen, Gelder an eine falsche Adresse zu senden. Fahre nur fort, wenn du absolut sicher bist, dass die Adresse korrekt ist. Erwäge, zuerst eine kleine Testtransaktion zu senden.";
 "send.address.phishing.caution.title" = "Phishing-Adresse erkannt!";
 "send.address.phishing.caution.description" = "Die eingegebene Adresse könnte betrügerisch sein. Betrüger ändern oft die ersten und letzten Zeichen. Überprüfe die vollständige Adresse sorgfältig, bevor du fortfährst, um Verluste zu vermeiden.";
