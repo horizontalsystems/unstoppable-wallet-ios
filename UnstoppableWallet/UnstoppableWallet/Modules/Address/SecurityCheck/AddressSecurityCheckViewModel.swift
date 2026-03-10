@@ -77,44 +77,37 @@ class AddressSecurityCheckViewModel: ObservableObject {
 
         state = .checking
 
-        Task { [weak self, token] in
-            let results = await Self.performChecks(enabledTypes: enabledTypes, address: address, token: token)
-            await self?.applyResults(results, for: address)
-        }
-    }
+        for type in enabledTypes {
+            let checker = AddressSecurityCheckerFactory.addressSecurityChecker(type: type)
 
-    private static func performChecks(enabledTypes: [AddressSecurityIssueType], address: Address, token: Token) async -> [AddressSecurityIssueType: CheckState] {
-        await withTaskGroup(of: (AddressSecurityIssueType, CheckState).self) { group in
-            for type in enabledTypes {
-                let checker = AddressSecurityCheckerFactory.addressSecurityChecker(type: type)
-
-                group.addTask {
-                    do {
-                        let isClear = try await checker.isClear(address: address, token: token)
-                        return (type, isClear ? .clear : .detected)
-                    } catch {
-                        return (type, .notAvailable)
-                    }
+            Task { [weak self, token] in
+                let result: CheckState
+                do {
+                    let isClear = try await checker.isClear(address: address, token: token)
+                    result = isClear ? .clear : .detected
+                } catch {
+                    result = .notAvailable
                 }
-            }
 
-            var collected = [AddressSecurityIssueType: CheckState]()
-            for await (type, result) in group {
-                collected[type] = result
+                await self?.applyResult(result, type: type, for: address)
             }
-            return collected
         }
     }
 
     @MainActor
-    private func applyResults(_ results: [AddressSecurityIssueType: CheckState], for address: Address) {
+    private func applyResult(_ result: CheckState, type: AddressSecurityIssueType, for address: Address) {
         guard currentAddress?.raw == address.raw else { return }
 
-        var states = checkStates
-        for (type, result) in results {
-            states[type] = result
+        checkStates[type] = result
+        syncCompleted()
+    }
+
+    private func syncCompleted() {
+        for type in issueTypes {
+            if checkStates[type] == .checking {
+                return
+            }
         }
-        checkStates = states
 
         let detectedTypes = issueTypes.filter { checkStates[$0] == .detected }
         state = .completed(detectedTypes: detectedTypes)
