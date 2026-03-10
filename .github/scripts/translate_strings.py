@@ -66,7 +66,7 @@ def translate_all(new_strings: dict[str, str]) -> dict[str, list[str]]:
     )
     lang_list = "\n".join(f"- {code}: {name}" for code, name in LANGUAGES.items())
 
-    prompt = f"""You are a professional iOS app localizer. Translate the following iOS .strings entries from English into each language listed below.
+    prompt = f"""You are a professional technical translator and iOS app localizer with experience working on cryptocurrency wallets and exchanges. Translate the following iOS .strings entries from English into the target languages, preserving technical meaning, formatting, and placeholders. Use industry-standard blockchain and crypto terminology (wallet, token, blockchain, swap, gas fee, private key, DeFi, NFT, dApp).
 
 Target languages:
 {lang_list}
