@@ -1839,6 +1839,7 @@
 "wallet_connect.scam_protection.risky" = "위험";
 "wallet_connect.scam_protection.secure" = "보안됨";
 "wallet_connect.scam_protection.not_available" = "해당 없음 ";
+"wallet_connect.scam_protection.disabled" = "비활성화됨";
 "wallet_connect.networks" = "네트워크";
 
 "wallet_connect.main.no_any_supported_chains" = "지원되는 체인이 없습니다!";
