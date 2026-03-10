@@ -532,14 +532,17 @@
 "send.address.risky.title" = "Adresse à risque !";
 "send.address.risky.description" = "Vous êtes sur le point d’envoyer des fonds à une adresse à haut risque. Poursuivre pourrait entraîner une perte de fonds ou d’autres risques de sécurité. En continuant, vous acceptez les dangers potentiels. Êtes-vous sûr(e) de vouloir continuer ?";
 "send.address.phishing_check" = "Vérification d'hameçonnage";
+"send.address.phishing_check.subtitle" = "Détecte les adresses suspectes avant de confirmer le transfert.";
 "send.address.phishing.description" = "Analyse l’adresse de destination fournie afin de détecter d’éventuels risques de phishing.\n\nAucun risque : aucune activité suspecte détectée.\n\nAlerte : il semble que quelqu’un essaie de vous inciter à envoyer des fonds vers une adresse incorrecte. N’avancez pas sans être absolument certain(e) que l’adresse est correcte. Envisagez d’effectuer d’abord une petite transaction test.";
 "send.address.phishing.caution.title" = "Adresse d'hameçonnage détectée !";
 "send.address.phishing.caution.description" = "L'adresse que vous avez saisie pourrait être frauduleuse. Les escrocs modifient souvent les premiers et derniers caractères. Vérifiez soigneusement l'adresse complète avant de continuer pour éviter toute perte.";
 "send.address.sanction_check" = "Vérification des sanctions";
+"send.address.sanction_check.subtitle" = "Vérifie si l'adresse est soumise à des restrictions de sanctions.";
 "send.address.sanction.description" = "Vérifie si l’adresse du destinataire est soumise à des sanctions internationales, en utilisant les données de Chainalysis.com.\n\nAucun risque : aucune sanction détectée.\n\nAlerte : risque juridique potentiel. Les transactions avec cette adresse peuvent être restreintes ou illégales dans certaines juridictions.";
 "send.address.sanction.caution.title" = "Adresse sanctionnée !";
 "send.address.sanction.caution.description" = "L’adresse saisie est signalée comme sanctionnée. Les transactions vers cette adresse peuvent entraîner une perte ou d’autres risques. Veuillez vérifier les informations du destinataire avant de continuer.";
 "send.address.blacklist_check" = "Vérification Liste Noire";
+"send.address.blacklist_check.subtitle" = "Vérifie l'adresse dans les bases de données de fraude et à haut risque.";
 "send.address.blacklist.description" = "Vérifie si l’adresse de destination figure sur des listes noires officielles ou non officielles.\n\nAucun risque : aucune alerte de liste noire.\n\nAlerte : l’adresse est inscrite sur une liste noire et peut être associée à des risques juridiques ou de sécurité. Avancez avec prudence. De nombreux exchanges crypto restreignent les utilisateurs qui déposent ou retirent des fonds depuis des portefeuilles ayant interagi avec des adresses sur liste noire. Gardez cela à l’esprit.";
 "send.address.blacklist.caution.title" = "Adresse sur liste noire!";
 "send.address.blacklist.caution.description" = "L'adresse que vous avez saisie est signalée comme étant sur liste noire. Les transactions vers cette adresse pourraient entraîner des pertes ou d'autres risques. Veuillez vérifier les informations du destinataire avant de continuer.";
@@ -2309,3 +2312,7 @@
 
 "mev_protection.title" = "Protection MEV";
 "mev_protection.description" = "Les bots de front-running surveillent chaque transaction afin de vous faire payer plus cher. Cette fonctionnalité les bloque.";
+
+// Secure Send Bottom Sheet
+"secure_send.bottom_sheet.title" = "Envoi Sécurisé";
+"secure_send.bottom_sheet.description" = "Choisissez les vérifications de sécurité.";
