@@ -11,6 +11,7 @@
 "button.delete" = "삭제";
 "button.share" = "공유";
 "button.paste" = "불여넣기";
+"button.photos" = "사진";
 "button.resend" = "재전송";
 "button.restore" = "복구";
 "button.copy" = "복사";
@@ -77,6 +78,8 @@
 "alert.rbf_not_Enabled" = "RBF(수수료 변경)가 활성화되지 않았습니다";
 "alert.unable_to_replace" = "교체할 수 없음";
 "alert.already_replaced" = "이미 교체했습니다";
+
+"alert.fetched_from_keychain" = "키체인에서 비밀번호 가져오기";
 
 "alert_card.title.critical" = "경고!";
 "alert_card.title.caution" = "주목!";
@@ -250,9 +253,9 @@
 
 // Backup to iCloud
 
-
 "backup.cloud.name.error.empty" = "백업 이름은 비워둘 수 없습니다";
 "backup.cloud.name.error.already_exist" = "백업 이름이 이미 존재합니다!";
+"backup.cloud.name.error.invalid_characters" = "이름에 유효하지 않은 문자가 포함되어 있습니다";
 "backup.cloud.name.placeholder" = "이름";
 
 "backup.cloud.password.placeholder" = "비밀번호";
@@ -367,12 +370,10 @@
 
 "deposit.not_active" = "비활성화됨";
 "deposit.not_active.title" = "TRON이 활성화되지 않음";
-"deposit.not_active.tron_description" = "TRON을 활성화하려면 최소 1 TRX가 필요합니다.
-지갑이 활성화되기 전까지 토큰을 수신할 수는 있지만, 잔액이 표시되지 않을 수 있습니다.";
+"deposit.not_active.tron_description" = "TRON을 활성화하려면 최소 1 TRX가 필요합니다.\n\n지갑이 활성화되기 전까지 토큰을 수신할 수는 있지만, 잔액이 표시되지 않을 수 있습니다.";
 "deposit.not_active.view_address" = "내 주소 보기";
 "deposit.stellar.inactive_asset.title" = "토큰 활성화";
 "deposit.stellar.inactive_asset.description" = "%@을(를) 수신하려면 해당 토큰을 활성화해야 합니다. Stellar 네트워크는 각 토큰마다 신뢰 라인을 설정해야 하며, 설정되지 않으면 %@을 받을 수 없습니다. 거래는 거부되고 자금은 전달되지 않습니다.";
-
 
 "deposit.used_addresses.title" = "사용된 주소들";
 "deposit.used_addresses.description" = "%@ 주소는 개인 정보 보호와 보안을 위해 변경됩니다. 이 지갑에서 사용된 주소 목록은 아래와 같습니다.";
@@ -702,7 +703,6 @@
 
 "swap.maya.shielded_address.error" = "메모(Maya)에 대한 보호 주소를 가져올 수 없습니다";
 
-
 // Market
 
 "market.title" = "시장";
@@ -781,7 +781,6 @@
 
 "top_platform.title" = "%@ 생태계";
 "top_platform.total_cap" = "시가 총액";
-
 
 "market.search.recent" = "최근";
 "market.search.popular" = "인기있는";
@@ -977,8 +976,7 @@
 "coin_overview.indicators.show" = "표시";
 "coin_overview.indicators.hide" = "숨기기";
 "coin_overview.market_cap" = "총 시가 총액";
-"coin_overview.circulating_supply" = "유통 중
-";
+"coin_overview.circulating_supply" = "유통 중";
 "coin_overview.total_supply" = "총 공급량";
 "coin_overview.diluted_market_cap" = "희석화 시가 총액";
 "coin_overview.genesis_date" = "창립일";
@@ -1229,7 +1227,6 @@
 "chart_indicators.moving_averages" = "이동 평균";
 "chart_indicators.oscillators" = "오실레이터";
 
-
 "chart_indicators.settings.period.error" = "기간은 %d 이상이 될 수 없습니다.";
 
 "chart_indicators.settings.ma.description" = "EMA, SMA 및 WMA는 기술 분석에서 사용되는 이동 평균 지표입니다:\n\nEMA는 더 빠른 반응을 위해 최근 가격을 강조합니다.\nSMA는 일반적인 추세를 파악하기 위해 가격 데이터를 평균화합니다.\nWMA는 최근 데이터에 선형 가중치를 두어 민감도와 잡음 감소를 균형잡히게 조절합니다.";
@@ -1404,6 +1401,7 @@
 "backup_app.backup_type.file.description" = "백업 복사 파일을 로컬 폴더에 저장합니다.";
 
 "backup_app.backup_list.title" = "백업 파일";
+"backup_app.backup_list.description" = "백업에 포함할 지갑을 선택하세요. 앱 데이터는 자동으로 백업됩니다.";
 "backup_app.backup_list.description.restore" = "백업 파일의 내용 목록";
 "backup_app.backup_list.header.wallets" = "지갑";
 "backup_app.backup_list.header.other" = "기타";
@@ -1431,6 +1429,8 @@
 "backup_app.backup.name.title" = "백업 이름";
 "backup_app.backup.name.description" = "백업 파일의 이름을 입력하세요.";
 
+"backup_app.backup.form.title" = "백업 보호";
+"backup_app.backup.form.description" = "백업 파일을 보호할 비밀번호를 생성하세요.";
 "backup_app.backup.password.title" = "백업 비밀번호";
 "backup_app.backup.password.description" = "백업에 대한 잠금 해제 암호를 설정하십시오. 최소 8개의 기호로 구성되어야 하며 소문자, 대문자, 숫자 및 특수 문자가 하나 이상 포함되어야 합니다.";
 "backup_app.backup.password.highlighted_description" = "이 암호는 지갑의 백업 파일을 암호화하는 데 사용됩니다. 암호를 분실하거나 잊어버리면 복구하거나 재설정할 수 없습니다.";
@@ -1443,6 +1443,14 @@
 "backup.password.title" = "백업 비밀번호";
 "backup.password.description" = "백업에 대한 잠금 해제 암호를 설정하십시오. 최소 8개의 기호로 구성되어야 하며 소문자, 대문자, 숫자 및 특수 문자가 하나 이상 포함되어야 합니다.";
 "backup.password.highlighted_description" = "이 암호는 지갑의 백업 파일을 암호화하는 데 사용됩니다. 암호를 분실하거나 잊어버리면 복구하거나 재설정할 수 없습니다.";
+
+"backup.password.generate.title.cloud" = "강력한 비밀번호를 사용하시겠습니까?";
+"backup.password.generate.description.cloud" = "고유한 비밀번호로 암호화된 백업을 보호하세요. 비밀번호 앱에 저장됩니다.";
+"backup.password.generate.action.cloud" = "저장 및 입력";
+"backup.password.generator.error.invalid_length" = "유효하지 않은 비밀번호 길이 (8자 이상이어야 합니다)";
+"backup.password.generator.error.random_failed" = "안전한 무작위 비밀번호를 생성할 수 없습니다";
+"backup.password.keychain.error.encoding" = "키체인 인코딩 오류";
+"backup.password.keychain.error.save_failed" = "키체인 오류! %@";
 
 // Settings -> Security
 
@@ -1604,6 +1612,7 @@
 "appearance.balance_tab" = "잔고 탭";
 "appearance.amount_rounding" = "금액 반올림";
 "appearance.amount_rounding.description" = "잔액 및 트랜잭션 금액을 반올림하여 표시합니다.";
+"appearance.send_screen" = "보내기 화면";
 "appearance.recently_sent" = "최근 전송";
 "appearance.recently_sent.description" = "토큰의 최근 전송 주소를 표시합니다.";
 "appearance.hide_buttons" = "숨김 버튼";
@@ -1703,15 +1712,13 @@
 
 "chart.market_cap" = "총 시가 총액";
 "chart.volume" = "볼륨 (24 시간)";
-"chart.circulation" = "유통 중
-";
+"chart.circulation" = "유통 중";
 "chart.selected.volume" = "거래량";
 
 "chart.market.header" = "시장";
 "chart.market.market_cap" = "총 시가 총액";
 "chart.market.volume" = "볼륨 (24 시간)";
-"chart.market.circulation" = "유통 중
-";
+"chart.market.circulation" = "유통 중";
 "chart.market.total_supply" = "총 공급량";
 
 "chart.performance.week_changes" = "변화 (1주)";
@@ -1991,7 +1998,6 @@
 "add_monero_node.warning.url_exists" = "이 URL의 노드는 이미 존재합니다";
 "add_monero_node.error.invalid_url" = "입력한 URL이 잘못되었습니다. 유효한 URL은 https 스킴을 포함해야 합니다";
 
-
 // Send Settings
 
 "evm_send_settings.nonce" = "트랜잭션 Nonce";
@@ -2099,7 +2105,6 @@
 "nft_asset.details.blockchain" = "블록체인";
 "nft_asset.links" = "링크";
 "nft_asset.links.website" = "웹사이트";
-"nft_asset.save_to_photos.failed" = "NFT 이미지를 저장하지 못했습니다";
 
 // Nft Collection
 
@@ -2111,7 +2116,6 @@
 "nft_collection.overview.contracts" = "계약";
 "nft_collection.overview.links" = "링크";
 "nft_collection.overview.links.website" = "웹사이트";
-
 
 "nft_collection.overview.owners" = "소유자";
 "nft_collection.overview.items" = "항목";

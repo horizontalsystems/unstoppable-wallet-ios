@@ -11,6 +11,7 @@
 "button.delete" = "Supprimer";
 "button.share" = "Partager";
 "button.paste" = "Coller";
+"button.photos" = "Photos";
 "button.resend" = "Réenvoyer";
 "button.restore" = "Restaurer";
 "button.copy" = "Copier";
@@ -78,6 +79,8 @@
 "alert.unable_to_replace" = "Impossible de remplacer";
 "alert.already_replaced" = "Déjà remplacé";
 
+"alert.fetched_from_keychain" = "Obtenir le mot de passe du trousseau";
+
 "alert_card.title.critical" = "Avertissement!";
 "alert_card.title.caution" = "Attention!";
 
@@ -119,9 +122,7 @@
 
 // Access Camera
 
-"access_camera.message" = "%@ a besoin d'accéder à votre caméra pour scanner le code QR.
-
-Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
+"access_camera.message" = "%@ a besoin d'accéder à votre caméra pour scanner le code QR.\n\nAllez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 "access_camera.not_supported" = "Votre appareil ne prend pas en charge la numérisation d'un code depuis un article. Veuillez utiliser un appareil doté d'une caméra.";
 "access_camera.settings" = "Paramètres";
 
@@ -254,6 +255,7 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "backup.cloud.name.error.empty" = "Le nom de sauvegarde ne doit pas être vide";
 "backup.cloud.name.error.already_exist" = "Le nom de sauvegarde existe déjà!";
+"backup.cloud.name.error.invalid_characters" = "Le nom contient des caractères non valides";
 "backup.cloud.name.placeholder" = "Nom";
 
 "backup.cloud.password.placeholder" = "Mot de passe";
@@ -368,12 +370,10 @@ Allez dans Paramètres - > %@ et autorisez l'accès à la caméra.";
 
 "deposit.not_active" = "non actif";
 "deposit.not_active.title" = "TRON non activé";
-"deposit.not_active.tron_description" = "TRON nécessite au moins 1 TRX pour l’activation.
-Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais les soldes peuvent ne pas s’afficher.";
+"deposit.not_active.tron_description" = "TRON nécessite au moins 1 TRX pour l’activation.\n\nTant que le wallet n’est pas activé, les tokens peuvent être reçus, mais les soldes peuvent ne pas s’afficher.";
 "deposit.not_active.view_address" = "Voir mon adresse";
 "deposit.stellar.inactive_asset.title" = "Activer le jeton";
 "deposit.stellar.inactive_asset.description" = "Pour recevoir %@, vous devez activer le jeton. Le réseau Stellar exige qu’une trustline soit établie pour chaque jeton. Sans cela, votre portefeuille ne pourra pas recevoir %@ — la transaction sera rejetée et les fonds ne seront pas crédités.";
-
 
 "deposit.used_addresses.title" = "Adresses utilisées";
 "deposit.used_addresses.description" = "%@ adresses changent pour des raisons de confidentialité et de sécurité. Ci-dessous, une liste des adresses utilisées dans ce portefeuille.";
@@ -504,6 +504,7 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 "send.fee_settings.fee_error.title" = "Erreur de frais";
 "send.fee_settings.too_low" = "Le taux de frais est trop faible.";
 "send.fee_settings.fee_rate_unavailable" = "Taux de frais indisponible. Veuillez vérifier les taux de frais manuellement";
+
 "send.unspent_outputs" = "UTxOs";
 "send.unspent_outputs.description" = "Choisissez manuellement les UTxO à dépenser les fonds du solde";
 "send.unspent_outputs.send_to" = "Envoyer à";
@@ -702,7 +703,6 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 
 "swap.maya.shielded_address.error" = "Impossible d’obtenir l’adresse protégée pour Memo (Maya)";
 
-
 // Market
 
 "market.title" = "Marchés";
@@ -781,7 +781,6 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 
 "top_platform.title" = "Écosystème %@";
 "top_platform.total_cap" = "Cap Totale";
-
 
 "market.search.recent" = "Récent";
 "market.search.popular" = "Populaire";
@@ -1228,7 +1227,6 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 "chart_indicators.moving_averages" = "Moyennes mobiles";
 "chart_indicators.oscillators" = "Oscillateurs";
 
-
 "chart_indicators.settings.period.error" = "La période ne peut pas être supérieure à %d";
 
 "chart_indicators.settings.ma.description" = "L'EMA, SMA et WMA sont des moyennes mobiles utilisées dans l'analyse technique :\n\nEMA souligne les prix récents pour des réactions plus rapides.\nSMA affiche en moyenne les données de prix pour une vue de tendance générale.\nWMA balance la sensibilité et la réduction du bruit en pondération linéaire des données récentes";
@@ -1403,6 +1401,7 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 "backup_app.backup_type.file.description" = "Sauvegarde d'un fichier de copie de sauvegarde dans votre dossier local.";
 
 "backup_app.backup_list.title" = "Fichier de sauvegarde";
+"backup_app.backup_list.description" = "Sélectionnez les portefeuilles à inclure dans la sauvegarde. Les données de l'app seront sauvegardées automatiquement.";
 "backup_app.backup_list.description.restore" = "Liste des contenus dans le fichier de sauvegarde.";
 "backup_app.backup_list.header.wallets" = "Portefeuilles";
 "backup_app.backup_list.header.other" = "Autre";
@@ -1430,6 +1429,8 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 "backup_app.backup.name.title" = "Nom de la sauvegarde";
 "backup_app.backup.name.description" = "Entrez le nom du fichier de sauvegarde.";
 
+"backup_app.backup.form.title" = "Protéger la sauvegarde";
+"backup_app.backup.form.description" = "Créez un mot de passe pour protéger votre fichier de sauvegarde.";
 "backup_app.backup.password.title" = "Mot de passe de la sauvegarde";
 "backup_app.backup.password.description" = "Définissez le mot de passe de déverrouillage de votre sauvegarde. Il doit contenir au moins 8 symboles, y compris une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial.";
 "backup_app.backup.password.highlighted_description" = "Ce mot de passe est utilisé pour chiffrer le fichier de sauvegarde de votre portefeuille. Si vous le perdez ou l'oubliez, il ne pourra pas être récupéré ou réinitialisé.";
@@ -1442,6 +1443,14 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 "backup.password.title" = "Mot de passe de la sauvegarde";
 "backup.password.description" = "Définissez le mot de passe de déverrouillage de votre sauvegarde. Il doit contenir au moins 8 symboles, y compris une lettre minuscule, une lettre majuscule, un chiffre et un caractère spécial.";
 "backup.password.highlighted_description" = "Ce mot de passe est utilisé pour chiffrer le fichier de sauvegarde de votre portefeuille. Si vous le perdez ou l'oubliez, il ne pourra pas être récupéré ou réinitialisé.";
+
+"backup.password.generate.title.cloud" = "Utiliser un mot de passe fort ?";
+"backup.password.generate.description.cloud" = "Protégez votre sauvegarde chiffrée avec un mot de passe unique. Il sera enregistré dans l'app Mots de passe.";
+"backup.password.generate.action.cloud" = "Enregistrer et remplir";
+"backup.password.generator.error.invalid_length" = "Longueur du mot de passe non valide (doit être >8)";
+"backup.password.generator.error.random_failed" = "Impossible de générer un mot de passe aléatoire sécurisé";
+"backup.password.keychain.error.encoding" = "Erreur d'encodage du trousseau";
+"backup.password.keychain.error.save_failed" = "Erreur du trousseau ! %@";
 
 // Settings -> Security
 
@@ -1603,6 +1612,7 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 "appearance.balance_tab" = "Balance Tab";
 "appearance.amount_rounding" = "Arrondi du montant";
 "appearance.amount_rounding.description" = "Afficher les soldes et les montants des transactions arrondis.";
+"appearance.send_screen" = "Écran d'envoi";
 "appearance.recently_sent" = "Envoyés récemment";
 "appearance.recently_sent.description" = "Afficher l’adresse récemment utilisée pour l’envoi de ce jeton.";
 "appearance.hide_buttons" = "Masquer les boutons";
@@ -1988,7 +1998,6 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 "add_monero_node.warning.url_exists" = "Un nœud avec cette URL existe déjà";
 "add_monero_node.error.invalid_url" = "L’URL saisie est invalide. L’URL doit utiliser le protocole https";
 
-
 // Send Settings
 
 "evm_send_settings.nonce" = "Nonce de transaction";
@@ -2096,7 +2105,6 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 "nft_asset.details.blockchain" = "Blockchain";
 "nft_asset.links" = "Liens";
 "nft_asset.links.website" = "Site Web";
-="nft_asset.save_to_photos.failed" = "Échec de la sauvegarde de l'image NFT";
 
 // Nft Collection
 
@@ -2108,7 +2116,6 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 "nft_collection.overview.contracts" = "Contrats";
 "nft_collection.overview.links" = "Liens";
 "nft_collection.overview.links.website" = "Site Web";
-
 
 "nft_collection.overview.owners" = "Propriétaires";
 "nft_collection.overview.items" = "Éléments";

@@ -11,6 +11,7 @@
 "button.delete" = "Eliminar";
 "button.share" = "Compartir";
 "button.paste" = "Pegar";
+"button.photos" = "Fotos";
 "button.resend" = "Reenviar";
 "button.restore" = "Restaurar";
 "button.copy" = "Copiar";
@@ -78,6 +79,8 @@
 "alert.unable_to_replace" = "No se puede reemplazar";
 "alert.already_replaced" = "Ya reemplazado";
 
+"alert.fetched_from_keychain" = "Obtener contraseña del llavero";
+
 "alert_card.title.critical" = "¡Advertencia!";
 "alert_card.title.caution" = "¡Atención!";
 
@@ -119,9 +122,7 @@
 
 // Access Camera
 
-"access_camera.message" = "%@ necesita acceso a tu cámara para escanear el código QR.
-
-Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
+"access_camera.message" = "%@ necesita acceso a tu cámara para escanear el código QR.\n\nIr a Ajustes - > %@ y permitir el acceso a la cámara.";
 "access_camera.not_supported" = "Su dispositivo no es compatible con el escaneo de un código de un artículo. Por favor, use un dispositivo con cámara.";
 "access_camera.settings" = "Ajustes";
 
@@ -254,6 +255,7 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "backup.cloud.name.error.empty" = "El nombre de la copia de seguridad no debe estar vacío";
 "backup.cloud.name.error.already_exist" = "¡El nombre de la copia de seguridad ya existe!";
+"backup.cloud.name.error.invalid_characters" = "El nombre contiene caracteres no válidos";
 "backup.cloud.name.placeholder" = "Nombre";
 
 "backup.cloud.password.placeholder" = "Contraseña";
@@ -368,12 +370,10 @@ Ir a Ajustes - > %@ y permitir el acceso a la cámara.";
 
 "deposit.not_active" = "inactivo";
 "deposit.not_active.title" = "TRON no activado";
-"deposit.not_active.tron_description" = "TRON requiere al menos 1 TRX para la activación.
-Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible que los saldos no se muestren.";
+"deposit.not_active.tron_description" = "TRON requiere al menos 1 TRX para la activación.\n\nHasta que el wallet esté activado, se pueden recibir tokens, pero es posible que los saldos no se muestren.";
 "deposit.not_active.view_address" = "Ver mi dirección";
 "deposit.stellar.inactive_asset.title" = "Activar token";
 "deposit.stellar.inactive_asset.description" = "Para recibir %@, debes activar el token. La red Stellar requiere que se establezca una línea de confianza para cada token. Sin ella, tu billetera no podrá recibir %@ — la transacción será rechazada y los fondos no se entregarán.";
-
 
 "deposit.used_addresses.title" = "Direcciones Utilizadas";
 "deposit.used_addresses.description" = "%@ direcciones cambian por privacidad y seguridad. A continuación, una lista de las direcciones utilizadas en esta billetera.";
@@ -703,7 +703,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 
 "swap.maya.shielded_address.error" = "No se puede obtener la dirección protegida para Memo (Maya)";
 
-
 // Market
 
 "market.title" = "Mercados";
@@ -782,7 +781,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 
 "top_platform.title" = "Ecosistema %@";
 "top_platform.total_cap" = "Capitalización Total";
-
 
 "market.search.recent" = "Reciente";
 "market.search.popular" = "Popular";
@@ -1229,7 +1227,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "chart_indicators.moving_averages" = "Medias móviles";
 "chart_indicators.oscillators" = "Osciladores";
 
-
 "chart_indicators.settings.period.error" = "El período no puede ser mayor que %d";
 
 "chart_indicators.settings.ma.description" = "La EMA, el SMA y la WMA son promedios móviles usados en el análisis técnico:\n\nEMA enfatiza los precios recientes para reacciones más rápidas.\nSMA promedia los datos de precios para una vista general de tendencia.\nWMA equilibra la sensibilidad y la reducción de ruido por ponderación lineal de datos recientes";
@@ -1366,8 +1363,7 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "manage_wallets.search_placeholder" = "Nombre, código o dirección del contrato";
 "manage_wallets.contract_address" = "Dirección del contrato";
 "manage_wallets.derivation_description" = "Hay 4 formatos de dirección comunes que las carteras %@ pueden usar para recibir pagos entrantes:\n\n-BIP44 (el más antiguo)\n-BIP49\n-BIP84 (recomendado)\n-BIP86 (el más nuevo)\n\nAunque la cartera %@ admite los 4 formatos, se recomienda usar una cartera %@ operando en formato BIP84.";
-"manage_wallets.bitcoin_cash_coin_type_description" = "Hay 2 formatos de dirección que las carteras de Bitcoin Cash pueden usar para recibir pagos entrantes:\n\n-TYPE 0 (más antiguo)\n-TYPE 145 (más nuevo)
-\n\nAunque la cartera %@ admite ambos formatos, se recomienda usar una cartera de Bitcoin Cash operando en el formato TYPE 145.";
+"manage_wallets.bitcoin_cash_coin_type_description" = "Hay 2 formatos de dirección que las carteras de Bitcoin Cash pueden usar para recibir pagos entrantes:\n\n-TYPE 0 (más antiguo)\n-TYPE 145 (más nuevo)\n\nAunque la cartera %@ admite ambos formatos, se recomienda usar una cartera de Bitcoin Cash operando en el formato TYPE 145.";
 
 // Settings -> Terms
 
@@ -1405,6 +1401,7 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "backup_app.backup_type.file.description" = "Guardando un archivo de copia de seguridad en su carpeta local.";
 
 "backup_app.backup_list.title" = "Copia de seguridad";
+"backup_app.backup_list.description" = "Selecciona las billeteras para incluir en la copia de seguridad. Los datos de la app se respaldarán automáticamente.";
 "backup_app.backup_list.description.restore" = "Lista de contenidos en el archivo de copia de seguridad.";
 "backup_app.backup_list.header.wallets" = "Carteras";
 "backup_app.backup_list.header.other" = "Otro";
@@ -1432,6 +1429,8 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "backup_app.backup.name.title" = "Nombre de copia de seguridad";
 "backup_app.backup.name.description" = "Introduzca el nombre del archivo de copia de seguridad.";
 
+"backup_app.backup.form.title" = "Proteger copia de seguridad";
+"backup_app.backup.form.description" = "Crea una contraseña para proteger tu archivo de copia de seguridad.";
 "backup_app.backup.password.title" = "Copiar contraseña";
 "backup_app.backup.password.description" = "Establezca la contraseña de desbloqueo para su copia de seguridad. La contraseña debe contener al menos 8 caracteres, incluyendo una letra minúscula, una letra mayúscula, un número y un carácter especial.";
 "backup_app.backup.password.highlighted_description" = "Esta contraseña se utiliza para encriptar el archivo de respaldo de tu cartera. No se puede recuperar ni restablecer si se pierde o se olvida.";
@@ -1444,6 +1443,14 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "backup.password.title" = "Copiar contraseña";
 "backup.password.description" = "Establezca la contraseña de desbloqueo para su copia de seguridad. La contraseña debe contener al menos 8 caracteres, incluyendo una letra minúscula, una letra mayúscula, un número y un carácter especial.";
 "backup.password.highlighted_description" = "Esta contraseña se utiliza para cifrar el archivo de copia de seguridad de su cartera. No se puede recuperar o reiniciar si se pierde u olvida.";
+
+"backup.password.generate.title.cloud" = "¿Usar una contraseña segura?";
+"backup.password.generate.description.cloud" = "Protege tu copia de seguridad cifrada con una contraseña única. Se guardará en la app Contraseñas.";
+"backup.password.generate.action.cloud" = "Guardar y rellenar";
+"backup.password.generator.error.invalid_length" = "Longitud de contraseña no válida (debe ser >8)";
+"backup.password.generator.error.random_failed" = "No se puede generar una contraseña aleatoria segura";
+"backup.password.keychain.error.encoding" = "Error de codificación del llavero";
+"backup.password.keychain.error.save_failed" = "¡Error del llavero! %@";
 
 // Settings -> Security
 
@@ -1605,6 +1612,7 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "appearance.balance_tab" = "Pestaña de saldo";
 "appearance.amount_rounding" = "Redondeo de montos";
 "appearance.amount_rounding.description" = "Mostrar saldos y montos de transacciones redondeados.";
+"appearance.send_screen" = "Pantalla de envío";
 "appearance.recently_sent" = "Enviados recientemente";
 "appearance.recently_sent.description" = "Mostrar la dirección usada recientemente para enviar este token.";
 "appearance.hide_buttons" = "Ocultar Botones";
@@ -1990,7 +1998,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "add_monero_node.warning.url_exists" = "Ya existe un nodo con esta URL";
 "add_monero_node.error.invalid_url" = "La URL ingresada no es válida. La URL debe tener el esquema https";
 
-
 // Send Settings
 
 "evm_send_settings.nonce" = "Transacción Nonce";
@@ -2098,7 +2105,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "nft_asset.details.blockchain" = "Blockchain";
 "nft_asset.links" = "Enlaces";
 "nft_asset.links.website" = "Website";
-"nft_asset.save_to_photos.failed" = "Error al guardar la imagen NFT";
 
 // Nft Collection
 
@@ -2110,7 +2116,6 @@ Hasta que el wallet esté activado, se pueden recibir tokens, pero es posible qu
 "nft_collection.overview.contracts" = "Contratos";
 "nft_collection.overview.links" = "Enlaces";
 "nft_collection.overview.links.website" = "Website";
-
 
 "nft_collection.overview.owners" = "Propietarios";
 "nft_collection.overview.items" = "Elementos";
