@@ -28,21 +28,40 @@ EN_FILE = STRINGS_FILE.format(lang="en")
 
 STRING_PATTERN = re.compile(r'"((?:[^"\\]|\\.)*)"\s*=\s*"((?:[^"\\]|\\.)*)"\s*;')
 
-
 def parse_strings(content: str) -> dict[str, str]:
     return {m.group(1): m.group(2) for m in STRING_PATTERN.finditer(content)}
 
-
-def get_new_strings() -> dict[str, str]:
-    base_ref = os.environ.get("GITHUB_BASE_REF", "master")
-
+def get_strings_at_ref(ref: str) -> dict[str, str]:
+    """Get parsed strings from EN_FILE at a given git ref. Returns empty dict if not found."""
     result = subprocess.run(
-        ["git", "show", f"origin/{base_ref}:{EN_FILE}"],
+        ["git", "show", f"{ref}:{EN_FILE}"],
         capture_output=True,
         text=True,
         encoding="utf-8",
     )
-    base_strings = parse_strings(result.stdout) if result.returncode == 0 else {}
+    return parse_strings(result.stdout) if result.returncode == 0 else {}
+
+def get_previous_ref() -> str:
+    """
+    Return the ref to diff against.
+    - On the first commit of a PR (no HEAD~1), fall back to origin/<base>.
+    - On subsequent pushes, use HEAD~1 so only the latest commit's changes are detected.
+    """
+    # Check whether HEAD~1 exists (i.e. there is a parent commit)
+    result = subprocess.run(
+        ["git", "rev-parse", "--verify", "HEAD~1"],
+        capture_output=True,
+        text=True,
+    )
+    if result.returncode == 0:
+        return "HEAD~1"
+    # Fallback: very first commit — diff against the PR base branch
+    base_ref = os.environ.get("GITHUB_BASE_REF", "master")
+    return f"origin/{base_ref}"
+
+def get_new_strings() -> dict[str, str]:
+    prev_ref = get_previous_ref()
+    base_strings = get_strings_at_ref(prev_ref)
 
     try:
         with open(EN_FILE, encoding="utf-8") as f:
@@ -56,6 +75,18 @@ def get_new_strings() -> dict[str, str]:
         for key, value in current_strings.items()
         if key not in base_strings or base_strings[key] != value
     }
+
+def get_deleted_strings() -> set[str]:
+    prev_ref = get_previous_ref()
+    base_strings = get_strings_at_ref(prev_ref)
+
+    try:
+        with open(EN_FILE, encoding="utf-8") as f:
+            current_strings = parse_strings(f.read())
+    except FileNotFoundError:
+        return set()
+
+    return set(base_strings.keys()) - set(current_strings.keys())
 
 
 def translate_all(new_strings: dict[str, str]) -> dict[str, list[str]]:
@@ -83,7 +114,13 @@ Rules:
   "de": ["\\\"key\\\" = \\\"translation\\\";", ...],
   "es": [...],
   ...
-}}"""
+}}
+
+Return ONLY a valid JSON object.
+- No markdown, no code fences, no explanation.
+- Escape ALL double quotes inside string values as \"
+- Do NOT use curly/smart quotes (" ") anywhere.
+"""
 
     message = client.messages.create(
         model="claude-opus-4-6",
@@ -95,83 +132,48 @@ Rules:
 
     return json.loads(text)
 
-
-def get_en_block_for_new_keys(new_keys: set[str]) -> list[str]:
-    """Extract lines from EN file for new keys, including their preceding comments/blanks."""
-    try:
-        with open(EN_FILE, encoding="utf-8") as f:
-            lines = f.readlines()
-    except FileNotFoundError:
-        return []
-
-    # First, find which line indices contain new keys
-    key_line_indices = set()
-    for i, line in enumerate(lines):
-        m = STRING_PATTERN.match(line.strip())
-        if m and m.group(1) in new_keys:
-            key_line_indices.add(i)
-
-    # For each key line, walk backwards to grab preceding comments/blanks
-    # that belong to its block (stop at another key line)
-    included_indices = set()
-    for ki in key_line_indices:
-        included_indices.add(ki)
-        j = ki - 1
-        while j >= 0:
-            prev = lines[j].strip()
-            if STRING_PATTERN.match(prev):
-                break  # hit another key, stop
-            if prev.startswith("//") or prev == "":
-                included_indices.add(j)
-                j -= 1
-            else:
-                break
-
-    # Return lines in original order
-    return [lines[i] for i in sorted(included_indices)]
-
-def update_strings_file(lang_code: str, translated_lines: list[str], new_keys: set[str]) -> None:
+def rebuild_translation_file(lang_code: str, translated_lines: list[str], deleted_keys: set[str]) -> None:
     path = STRINGS_FILE.format(lang=lang_code)
 
+    # Get all existing translations for this language
+    existing = {}
     try:
         with open(path, encoding="utf-8") as f:
-            lines = f.readlines()
+            for line in f.readlines():
+                m = STRING_PATTERN.match(line.strip())
+                if m:
+                    existing[m.group(1)] = line.strip()
     except FileNotFoundError:
-        lines = []
+        pass
 
-    # Build a map of key -> new translation line
-    updates = {}
+    # Apply new translations on top
     for line in translated_lines:
         m = STRING_PATTERN.match(line.strip())
         if m:
-            updates[m.group(1)] = line.strip()
+            existing[m.group(1)] = line.strip()
 
-    # Rewrite file line by line, replacing only matched key lines
+    # Remove deleted keys
+    for key in deleted_keys:
+        existing.pop(key, None)
+
+    # Read EN file as-is and use it as the exact template
+    try:
+        with open(EN_FILE, encoding="utf-8") as f:
+            en_lines = f.readlines()
+    except FileNotFoundError:
+        return
+
     new_content = []
-    updated_keys = set()
-
-    for line in lines:
+    for line in en_lines:
         m = STRING_PATTERN.match(line.strip())
-        if m and m.group(1) in updates:
+        if m:
             key = m.group(1)
-            new_content.append(updates[key] + "\n")
-            updated_keys.add(key)
+            if key in existing:
+                new_content.append(existing[key] + "\n")
+            # deleted key - skip line entirely
         else:
+            # comment, blank line - copy as-is
             new_content.append(line)
-
-    # Append truly new keys, preserving EN file structure (comments, blank lines)
-    truly_new = {k for k in updates if k not in updated_keys}
-    if truly_new:
-        if new_content and not new_content[-1].endswith("\n"):
-            new_content.append("\n")
-
-        en_block = get_en_block_for_new_keys(truly_new)
-        for line in en_block:
-            m = STRING_PATTERN.match(line.strip())
-            if m and m.group(1) in updates:
-                new_content.append(updates[m.group(1)] + "\n")  # translated line
-            else:
-                new_content.append(line)  # comment or blank line as-is
 
     os.makedirs(os.path.dirname(path), exist_ok=True)
     with open(path, "w", encoding="utf-8") as f:
@@ -182,19 +184,23 @@ def update_strings_file(lang_code: str, translated_lines: list[str], new_keys: s
 def main() -> None:
     print("Checking for new English strings...")
     new_strings = get_new_strings()
+    deleted_keys = get_deleted_strings()
 
-    if not new_strings:
-        print("No new strings found. Nothing to do.")
+    if not new_strings and not deleted_keys:
+        print("No new or deleted strings found. Nothing to do.")
         sys.exit(0)
 
-    print(f"Found {len(new_strings)} new/changed string(s). Translating...")
-    translations = translate_all(new_strings)
-    new_keys = set(new_strings.keys())  # <-- add this
+    if deleted_keys:
+        print(f"Found {len(deleted_keys)} deleted string(s): {', '.join(deleted_keys)}")
+
+    translations = {}
+    if new_strings:
+        print(f"Found {len(new_strings)} new/changed string(s). Translating...")
+        translations = translate_all(new_strings)
 
     print("Writing translations:")
-    for lang_code, lines in translations.items():
-        if lang_code in LANGUAGES:
-            update_strings_file(lang_code, lines, new_keys)  # <-- pass new_keys
+    for lang_code in LANGUAGES:
+        rebuild_translation_file(lang_code, translations.get(lang_code, []), deleted_keys)
 
     print("Done.")
 

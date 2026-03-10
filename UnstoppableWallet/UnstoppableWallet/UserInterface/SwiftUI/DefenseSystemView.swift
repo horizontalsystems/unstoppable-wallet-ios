@@ -12,22 +12,14 @@ struct DefenseSystemView: View {
         VStack(spacing: 16) {
             switch placement {
             case .top:
-                defenseSystem()
+                DefenseSystemHeader()
                 bubble(tailPosition: .top)
             case .bottom:
                 bubble(tailPosition: .bottom)
-                defenseSystem()
+                DefenseSystemHeader()
             }
         }
         .padding(.vertical, 8)
-    }
-
-    @ViewBuilder private func defenseSystem() -> some View {
-        HStack(spacing: 8) {
-            ThemeImage(ComponentImage(image: "defense_filled"), size: 20)
-            ThemeText("Defense System", style: .subhead, colorStyle: .primary)
-            Spacer()
-        }
     }
 
     @ViewBuilder private func bubble(tailPosition: BubbleShape.TailPosition) -> some View {
@@ -113,6 +105,16 @@ struct DefenseSystemView: View {
             case .positive, .negative: return .primary
             case .attention: return .dark
             }
+        }
+    }
+}
+
+struct DefenseSystemHeader: View {
+    var body: some View {
+        HStack(spacing: 8) {
+            ThemeImage(Image.defenseIcon, size: 20)
+            ThemeText("purchases.defense_system".localized, style: .subhead, colorStyle: .primary)
+            Spacer()
         }
     }
 }

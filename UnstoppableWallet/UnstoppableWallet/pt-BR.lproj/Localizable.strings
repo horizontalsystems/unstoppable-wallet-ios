@@ -11,6 +11,7 @@
 "button.delete" = "Deletar";
 "button.share" = "Compartilhar";
 "button.paste" = "Colar";
+"button.photos" = "Fotos";
 "button.resend" = "Enviar novamente";
 "button.restore" = "Restaurar";
 "button.copy" = "Copiar";
@@ -78,6 +79,8 @@
 "alert.unable_to_replace" = "Incapaz de substituir";
 "alert.already_replaced" = "Já substituído";
 
+"alert.fetched_from_keychain" = "Obter Senha das Chaves";
+
 "alert_card.title.critical" = "Aviso!";
 "alert_card.title.caution" = "Atenção!";
 
@@ -119,9 +122,7 @@
 
 // Access Camera
 
-"access_camera.message" = "%@ absolutely needs access to your tremendous camera for scanning that fantastic QR code. Believe me!.
-
-Go to Settings - > %@ and allow access to the camera.";
+"access_camera.message" = "%@ absolutely needs access to your tremendous camera for scanning that fantastic QR code. Believe me!.\n\nGo to Settings - > %@ and allow access to the camera.";
 "access_camera.not_supported" = "Seu dispositivo não suporta a leitura de um código de um item. Por favor, use um dispositivo com câmera.";
 "access_camera.settings" = "Configurações";
 
@@ -254,6 +255,7 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "backup.cloud.name.error.empty" = "Remember, folks, that backup name, it can't be an empty slate. Give it some character!";
 "backup.cloud.name.error.already_exist" = "O nome do backup já existe!";
+"backup.cloud.name.error.invalid_characters" = "O nome contém caracteres inválidos";
 "backup.cloud.name.placeholder" = "Nome";
 
 "backup.cloud.password.placeholder" = "Senha";
@@ -368,13 +370,10 @@ Go to Settings - > %@ and allow access to the camera.";
 
 "deposit.not_active" = "Não ativo";
 "deposit.not_active.title" = "TRON Não Ativado";
-"deposit.not_active.tron_description" = "A TRON requer pelo menos 1 TRX para ativação.
-Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos podem não ser exibidos.
-";
+"deposit.not_active.tron_description" = "A TRON requer pelo menos 1 TRX para ativação.\n\nAté que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos podem não ser exibidos.";
 "deposit.not_active.view_address" = "Ver meu endereço";
 "deposit.stellar.inactive_asset.title" = "Ativar Token";
 "deposit.stellar.inactive_asset.description" = "Para receber %@, você precisa ativar o token. A rede Stellar exige o estabelecimento de uma trustline para cada token. Sem ela, sua carteira não poderá receber %@ — a transação será rejeitada e os fundos não serão entregues.";
-
 
 "deposit.used_addresses.title" = "Endereços Usados";
 "deposit.used_addresses.description" = "O número de endereços %@ muda para privacidade e segurança. Abaixo está uma lista de endereços usados neste carteira.";
@@ -533,14 +532,17 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 "send.address.risky.title" = "Endereço Arriscado!";
 "send.address.risky.description" = "Você está prestes a enviar fundos para um endereço de alto risco. O processo pode resultar em perda ou outros riscos de segurança. Ao continuar, você aceita os perigos potenciais. Tem certeza que deseja continuar?";
 "send.address.phishing_check" = "Verificação de Phishing";
+"send.address.phishing_check.subtitle" = "Detecta endereços suspeitos antes de confirmar a transferência.";
 "send.address.phishing.description" = "Analisa o endereço de destino fornecido para potenciais riscos de phishing.\n\nLimpo: Nenhuma atividade suspeita detectada.\n\nDetectado: Parece que alguém pode estar tentando enganá-lo para enviar fundos para um endereço incorreto. Não prossiga a menos que tenha absoluta certeza de que o endereço está correto. Considere enviar uma pequena transação de teste primeiro.";
 "send.address.phishing.caution.title" = "Endereço de Phishing Detectado!";
 "send.address.phishing.caution.description" = "O endereço que você digitou pode ser fraudulento. Os golpistas frequentemente alteram os primeiros e últimos caracteres. Verifique o endereço completo com atenção antes de prosseguir para evitar perdas.";
 "send.address.sanction_check" = "Verificar Sanções";
+"send.address.sanction_check.subtitle" = "Verifica se o endereço está sujeito a restrições de sanções.";
 "send.address.sanction.description" = "Verifica se o endereço do destinatário está sujeito a sanções internacionais, usando dados do Chainalysis.com.\n\nLimpo: Nenhuma sanção detectada.\n\nDetectado: Possível risco legal. Transações com este endereço podem ser restritas ou ilegais em certas jurisdições.";
 "send.address.sanction.caution.title" = "Endereço Sancionado!";
 "send.address.sanction.caution.description" = "O endereço que você inseriu está sinalizado como sancionado. Transações para este endereço podem levar a perdas ou outros riscos. Verifique os detalhes do destinatário antes de prosseguir.";
 "send.address.blacklist_check" = "Verificar Lista Negra";
+"send.address.blacklist_check.subtitle" = "Verifica o endereço em bancos de dados de fraude e alto risco.";
 "send.address.blacklist.description" = "Verifica se o endereço de destino está listado em listas negras oficiais ou não oficiais.\n\nLimpo: Nenhum sinalizador de lista negra.\n\nDetectado: O endereço está na lista negra e pode estar associado a riscos legais ou de segurança. Prossiga com cautela. Muitas corretoras de criptomoedas restringem usuários que depositam ou retiram fundos de carteiras que interagiram com endereços na lista negra. Tenha isso em mente.";
 "send.address.blacklist.caution.title" = "Endereço na Lista Negra!";
 "send.address.blacklist.caution.description" = "O endereço digitado está marcado na lista negra. As transações para este endereço podem levar a perda ou outros riscos. Por favor, verifique os dados do destinatário antes de prosseguir.";
@@ -704,7 +706,6 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 
 "swap.maya.shielded_address.error" = "Não foi possível obter o endereço blindado para Memo (Maya)";
 
-
 // Market
 
 "market.title" = "Mercados";
@@ -783,7 +784,6 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 
 "top_platform.title" = "%@ Ecossistema";
 "top_platform.total_cap" = "Valor total de mercado";
-
 
 "market.search.recent" = "Recente";
 "market.search.popular" = "Populares";
@@ -1230,7 +1230,6 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 "chart_indicators.moving_averages" = "Média em Movimento";
 "chart_indicators.oscillators" = "Osciladores";
 
-
 "chart_indicators.settings.period.error" = "O período não pode ser maior que %d";
 
 "chart_indicators.settings.ma.description" = "O EMA, SMA e WMA são médias móveis usadas em análise técnica:\n\nEMA enfatiza preços recentes para reações mais rápidas.\nSMA indica dados de preços médios para uma visão geral de tendência.\nSaldos WMA e redução de ruído por ponderação linearmente de dados recentes";
@@ -1405,6 +1404,7 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 "backup_app.backup_type.file.description" = "Salvando um arquivo de cópia de segurança em sua pasta local.";
 
 "backup_app.backup_list.title" = "Arquivo de backup";
+"backup_app.backup_list.description" = "Selecione as carteiras para incluir no backup. Os dados do app serão salvos automaticamente.";
 "backup_app.backup_list.description.restore" = "Lista de conteúdo do arquivo de backup.";
 "backup_app.backup_list.header.wallets" = "Carteiras";
 "backup_app.backup_list.header.other" = "Outros";
@@ -1432,6 +1432,8 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 "backup_app.backup.name.title" = "Nome do Backup";
 "backup_app.backup.name.description" = "Give it a name, folks! This backup file needs an identity. Make it memorable!";
 
+"backup_app.backup.form.title" = "Proteger Backup";
+"backup_app.backup.form.description" = "Crie uma senha para proteger seu arquivo de backup.";
 "backup_app.backup.password.title" = "Fazer Backup da Senha";
 "backup_app.backup.password.description" = "Defina a senha de desbloqueio para o seu backup. Deve consistir de pelo menos 8 símbolos e incluir pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial.";
 "backup_app.backup.password.highlighted_description" = "Esta senha é usada para criptografar o arquivo de backup da sua carteira. Ela não pode ser recuperada ou redefinida se for perdida ou esquecida.";
@@ -1444,6 +1446,14 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 "backup.password.title" = "Fazer Backup da Senha";
 "backup.password.description" = "Defina a senha de desbloqueio para o seu backup. Deve consistir de pelo menos 8 símbolos e incluir pelo menos uma letra minúscula, uma letra maiúscula, um número e um caractere especial.";
 "backup.password.highlighted_description" = "Esta senha é usada para criptografar o arquivo de backup da sua carteira. Ela não pode ser recuperada ou redefinida se for perdida ou esquecida.";
+
+"backup.password.generate.title.cloud" = "Usar uma Senha Forte?";
+"backup.password.generate.description.cloud" = "Proteja seu backup criptografado com uma senha única. Ela será salva no app Senhas.";
+"backup.password.generate.action.cloud" = "Salvar e Preencher";
+"backup.password.generator.error.invalid_length" = "Tamanho de senha inválido (deve ser >8)";
+"backup.password.generator.error.random_failed" = "Não foi possível gerar uma senha aleatória segura";
+"backup.password.keychain.error.encoding" = "Erro de codificação das Chaves";
+"backup.password.keychain.error.save_failed" = "Erro nas Chaves! %@";
 
 // Settings -> Security
 
@@ -1605,6 +1615,7 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 "appearance.balance_tab" = "Aba de Saldo";
 "appearance.amount_rounding" = "Arredondamento de Valores";
 "appearance.amount_rounding.description" = "Exibir saldos e valores de transações arredondados.";
+"appearance.send_screen" = "Tela de Envio";
 "appearance.recently_sent" = "Enviados Recentemente";
 "appearance.recently_sent.description" = "Exibir o endereço recentemente usado para envio do token.";
 "appearance.hide_buttons" = "Ocultar Botões";
@@ -1990,7 +2001,6 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 "add_monero_node.warning.url_exists" = "Já existe um nó com essa URL";
 "add_monero_node.error.invalid_url" = "A URL inserida é inválida. A URL válida deve usar o esquema https";
 
-
 // Send Settings
 
 "evm_send_settings.nonce" = "Nonce de Transação";
@@ -2098,7 +2108,6 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 "nft_asset.details.blockchain" = "Blockchain";
 "nft_asset.links" = "Links";
 "nft_asset.links.website" = "Site";
-"nft_asset.save_to_photos.failed" = "Falha ao salvar a imagem NFT";
 
 // Nft Collection
 
@@ -2110,7 +2119,6 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 "nft_collection.overview.contracts" = "Contratos";
 "nft_collection.overview.links" = "Links";
 "nft_collection.overview.links.website" = "Site";
-
 
 "nft_collection.overview.owners" = "Donos";
 "nft_collection.overview.items" = "Itens";
@@ -2304,3 +2312,7 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 
 "mev_protection.title" = "Proteção MEV";
 "mev_protection.description" = "Os chamados bots de front-running monitoram cada negociação, tentando fazê-lo pagar mais caro. Esse recurso os bloqueia.";
+
+// Secure Send Bottom Sheet
+"secure_send.bottom_sheet.title" = "Envio Seguro";
+"secure_send.bottom_sheet.description" = "Escolha as verificações de segurança.";

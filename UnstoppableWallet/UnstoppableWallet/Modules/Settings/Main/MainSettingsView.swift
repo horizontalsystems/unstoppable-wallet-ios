@@ -94,7 +94,7 @@ struct MainSettingsView: View {
             .padding(EdgeInsets(top: .margin12, leading: 0, bottom: .margin32, trailing: 0))
         }
         .navigationDestination(isPresented: $addressCheckerPresented) {
-            AddressCheckerView()
+            CheckAddressView()
                 .onFirstAppear {
                     stat(page: .settings, event: .open(page: .addressChecker))
                 }
@@ -212,7 +212,7 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func security() -> some View {
         NavigationRow(spacing: .margin8, destination: {
-            SecuritySettingsModule.view()
+            SecuritySettingsView()
                 .onFirstAppear {
                     stat(page: .settings, event: .open(page: .security))
                 }
