@@ -24,6 +24,7 @@ class LocalStorage {
     private let keyAmountRounding = "amount-rounding"
     private let keyRecentlySent = "recently-sent"
     private let keyUseMevProtection = "use-mev-protection"
+    private let keyScamProtection = "scam-protection"
     private let keySwapTermsAccepted = "swap-terms-accepted"
     private let keySwapProvidersLastSyncTimestamp = "swap-providers-last-sync-timestamp"
     private let keyUSwapProviders = "uswap-providers"
@@ -154,16 +155,17 @@ extension LocalStorage {
 
     var useMevProtection: Bool {
         get { userDefaultsStorage.value(for: keyUseMevProtection) ?? false }
-        set {
-            userDefaultsStorage.set(value: newValue, for: keyUseMevProtection)
-        }
+        set { userDefaultsStorage.set(value: newValue, for: keyUseMevProtection) }
+    }
+
+    var scamProtection: Bool {
+        get { userDefaultsStorage.value(for: keyScamProtection) ?? true }
+        set { userDefaultsStorage.set(value: newValue, for: keyScamProtection) }
     }
 
     var swapTermsAccepted: Bool {
         get { userDefaultsStorage.value(for: keySwapTermsAccepted) ?? false }
-        set {
-            userDefaultsStorage.set(value: newValue, for: keySwapTermsAccepted)
-        }
+        set { userDefaultsStorage.set(value: newValue, for: keySwapTermsAccepted) }
     }
 
     var swapProvidersLastSyncTimestamp: TimeInterval? {

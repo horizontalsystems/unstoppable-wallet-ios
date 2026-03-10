@@ -54,6 +54,7 @@ class SecuritySettingsViewModel: ObservableObject {
         featureEnabled = [
             .secureSend: securityManager.secureSendEnabled,
             .swapProtection: securityManager.swapProtectionEnabled,
+            .scamProtection: securityManager.scamProtectionEnabled,
         ]
         premiumEnabled = purchaseManager.hasActivePurchase
 
@@ -80,6 +81,10 @@ class SecuritySettingsViewModel: ObservableObject {
         securityManager.$swapProtectionEnabled
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.featureEnabled[.swapProtection] = $0 }
+            .store(in: &cancellables)
+        securityManager.$scamProtectionEnabled
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.featureEnabled[.scamProtection] = $0 }
             .store(in: &cancellables)
 
         purchaseManager.$activeFeatures
@@ -122,6 +127,8 @@ extension SecuritySettingsViewModel {
         switch feature {
         case .swapProtection:
             securityManager.setSwapProtection(enabled: enabled)
+        case .scamProtection:
+            securityManager.setScamProtection(enabled: enabled)
         default:
             break
         }
