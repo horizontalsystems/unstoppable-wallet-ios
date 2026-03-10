@@ -11,7 +11,7 @@
 "button.delete" = "Deletar";
 "button.share" = "Compartilhar";
 "button.paste" = "Colar";
-"button.photos" = "Fotos";
+"button.gallery" = "Galeria";
 "button.resend" = "Enviar novamente";
 "button.restore" = "Restaurar";
 "button.copy" = "Copiar";
@@ -214,6 +214,8 @@
 "monero_private_key.title" = "Chaves Privadas do Monero";
 "monero_private_key.tap_to_show" = "Give it a tap, folks, and reveal that private key. It's like finding the secret to success!";
 "monero.key_types" = "Tipo";
+"monero.key_types.spend" = "Gasto";
+"monero.key_types.view" = "Visualização";
 
 // Extended Key
 
@@ -223,7 +225,7 @@
 "extended_key.purpose" = "Propósito";
 "extended_key.blockchain" = "Blockchain";
 "extended_key.account" = "Conta";
-"extended_key.account.description" = "Esta é uma configuração para usuários avançados. Se estiver tentando importar uma carteira (através da chave privada estendida) ou uma lista de transações (através da chave pública estendida), você precisa da conta 0.";
+"extended_key.account.description" = "Esta é uma configuração para usuários avançados. Se você está tentando importar uma carteira (via chave privada estendida) ou uma lista de transações (via chave pública estendida), você precisa da conta 0.";
 "extended_key.tap_to_show" = "Get ready for it, folks! A little tap, and you'll see that extended private key. It's like unlocking a world of possibilities!";
 
 // Backup
@@ -737,7 +739,27 @@
 
 "market.time_period.title" = "Período";
 "market.time_period.1d" = "1 Dia";
+"market.time_period.1w" = "1 Semana";
+"market.time_period.2w" = "2 Semanas";
+"market.time_period.1m" = "1 Mês";
+"market.time_period.3m" = "3 Meses";
+"market.time_period.6m" = "6 Meses";
+"market.time_period.1y" = "1 Ano";
+"market.time_period.2y" = "2 Anos";
+"market.time_period.3y" = "3 Anos";
+"market.time_period.4y" = "4 Anos";
+"market.time_period.5y" = "5 Anos";
 "market.time_period.1d.short" = "1D";
+"market.time_period.1w.short" = "1S";
+"market.time_period.2w.short" = "2S";
+"market.time_period.1m.short" = "1M";
+"market.time_period.3m.short" = "3M";
+"market.time_period.6m.short" = "6M";
+"market.time_period.1y.short" = "1A";
+"market.time_period.2y.short" = "2A";
+"market.time_period.3y.short" = "3A";
+"market.time_period.4y.short" = "4A";
+"market.time_period.5y.short" = "5A";
 
 "market.project_has_no_coin" = "Esse projeto não tem uma moeda";
 
@@ -1988,7 +2010,7 @@
 "monero_network.add_new" = "Adicionar novo";
 "monero_network.description" = "Escolha o nó que o app Unstoppable deve usar para sincronizar a(s) carteira(s).";
 "monero_network.settings.title" = "Preferências de Nós";
-"monero_network.settings.description" = "Nó confiável – Quando ativado, a carteira confia no nó selecionado e aceita seus dados sem verificação adicional.\n\nLigado → As transações aparecem como Pendentes imediatamente após o envio (sincronização mais rápida, mas com menor privacidade e maior dependência do nó).\n\nDesligado → As transações aparecem somente após as confirmações da rede (mais lento, mas mais seguro e com maior privacidade).";
+"monero_network.settings.description" = "Nó confiável – Quando ativado, a carteira confia no nó selecionado e aceita seus dados sem verificação adicional. \n\nAtivado → As transações aparecem como Pendentes imediatamente após a transmissão (sincronização mais rápida, mas menor privacidade e maior dependência do nó).\n\nDesativado → As transações aparecem somente após confirmações da rede (mais lento, mas mais seguro e privado).";
 "monero_network.settings.trust" = "Confiar";
 
 // Add RPC Source
@@ -2238,7 +2260,7 @@
 "purchases.token_insights.info" = "Exibe dados detalhados do token - volume, liquidez e tendências. Ajuda você a tomar decisões de investimento mais inteligentes.";
 "purchases.advanced_search" = "Busca Avançada";
 "purchases.advanced_search.description" = "Filtros avançados para uma descoberta de tokens mais inteligente.";
-"purchases.advanced_search.info" = "Encontre tokens usando filtros por volume, rede ou setor. Inclui métricas de atividade em CEX/DEX e listagens.";
+"purchases.advanced_search.info" = "Encontre tokens com filtros por volume, rede ou setor. Inclui métricas de atividade CEX/DEX e listagens.";
 "purchases.trade_signals" = "Acompanhar Tendências";
 "purchases.trade_signals.description" = "Sinais acionáveis para negociações mais confiantes.";
 "purchases.trade_signals.info" = "Envia alertas em tempo real sobre oportunidades de trading. Destaca imediatamente chances de lucro ou riscos de mercado.";

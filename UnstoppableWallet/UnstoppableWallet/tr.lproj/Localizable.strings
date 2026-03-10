@@ -11,7 +11,7 @@
 "button.delete" = "Sil";
 "button.share" = "Paylaş";
 "button.paste" = "Yapıştır";
-"button.photos" = "Fotoğraflar";
+"button.gallery" = "Galeri";
 "button.resend" = "Yeniden Gönder";
 "button.restore" = "Geri Yükle";
 "button.copy" = "Kopyala";
@@ -214,6 +214,8 @@
 "monero_private_key.title" = "Monero Özel Anahtarları";
 "monero_private_key.tap_to_show" = "Özel anahtarı göstermek için dokunun";
 "monero.key_types" = "Tür";
+"monero.key_types.spend" = "Harcama";
+"monero.key_types.view" = "Görüntüleme";
 
 // Extended Key
 
@@ -223,7 +225,7 @@
 "extended_key.purpose" = "Purpose";
 "extended_key.blockchain" = "Blockchain";
 "extended_key.account" = "Account";
-"extended_key.account.description" = "Bu, ileri düzey kullanıcılar için bir ayar. Eğer cüzdanı (genişletilmiş özel anahtar aracılığıyla) veya işlem listesini (genişletilmiş genel anahtar aracılığıyla) içe aktarmaya çalışıyorsanız, hesap 0'a ihtiyacınız var.";
+"extended_key.account.description" = "Bu, ileri düzey kullanıcılar için bir ayardır. Genişletilmiş özel anahtar ile cüzdan veya genişletilmiş genel anahtar ile işlem listesi içe aktarmaya çalışıyorsanız, hesap 0'a ihtiyacınız var.";
 "extended_key.tap_to_show" = "Extended private key göstermek için dokunun";
 
 // Backup
@@ -737,7 +739,27 @@
 
 "market.time_period.title" = "Periyot";
 "market.time_period.1d" = "1 Gün";
+"market.time_period.1w" = "1 Hafta";
+"market.time_period.2w" = "2 Hafta";
+"market.time_period.1m" = "1 Ay";
+"market.time_period.3m" = "3 Ay";
+"market.time_period.6m" = "6 Ay";
+"market.time_period.1y" = "1 Yıl";
+"market.time_period.2y" = "2 Yıl";
+"market.time_period.3y" = "3 Yıl";
+"market.time_period.4y" = "4 Yıl";
+"market.time_period.5y" = "5 Yıl";
 "market.time_period.1d.short" = "1G";
+"market.time_period.1w.short" = "1H";
+"market.time_period.2w.short" = "2H";
+"market.time_period.1m.short" = "1A";
+"market.time_period.3m.short" = "3A";
+"market.time_period.6m.short" = "6A";
+"market.time_period.1y.short" = "1Y";
+"market.time_period.2y.short" = "2Y";
+"market.time_period.3y.short" = "3Y";
+"market.time_period.4y.short" = "4Y";
+"market.time_period.5y.short" = "5Y";
 
 "market.project_has_no_coin" = "Bu proje bir koin içermiyor";
 
@@ -1988,7 +2010,7 @@
 "monero_network.add_new" = "Yeni ekle";
 "monero_network.description" = "Unstoppable uygulamasının cüzdan(lar)ı senkronize etmek için kullanacağı node’u seçin.";
 "monero_network.settings.title" = "Node Tercihleri";
-"monero_network.settings.description" = "Güvenilir node – Etkinleştirildiğinde, cüzdan seçilen node’a güvenir ve verilerini ek doğrulama yapmadan kabul eder.\n\nAçık → İşlemler, yayınlandıktan hemen sonra Beklemede olarak görünür (daha hızlı senkronizasyon, ancak daha düşük gizlilik ve node’a daha fazla bağımlılık).\n\nKapalı → İşlemler yalnızca ağ onaylarından sonra görünür (daha yavaş, ancak daha güvenli ve daha gizli).";
+"monero_network.settings.description" = "Güvenilir düğüm – Etkinleştirildiğinde, cüzdan seçilen düğüme güvenir ve verilerini ek doğrulama olmadan kabul eder. \n\nAçık → İşlemler yayınlandıktan hemen sonra Beklemede olarak görünür (daha hızlı senkronizasyon, ancak daha düşük gizlilik ve düğüme daha fazla bağımlılık).\n\nKapalı → İşlemler yalnızca ağ onaylarından sonra görünür (daha yavaş, ancak daha güvenli ve daha gizli).";
 "monero_network.settings.trust" = "Güven";
 
 // Add RPC Source
@@ -2238,7 +2260,7 @@
 "purchases.token_insights.info" = "Token için ayrıntılı veriler gösterir - hacim, likidite ve trendler. Daha akıllı yatırım kararları almanıza yardımcı olur.";
 "purchases.advanced_search" = "Gelişmiş Arama";
 "purchases.advanced_search.description" = "Daha akıllı token keşfi için güçlü filtreler.";
-"purchases.advanced_search.info" = "Token’ları hacim, ağ veya sektör filtreleriyle bulun. CEX/DEX aktiviteleri ve listelemeler için metrikler içerir.";
+"purchases.advanced_search.info" = "Hacim, zincir veya sektör filtrelerine göre token bulun. CEX/DEX aktivitesi ve listeleme metrikleri içerir.";
 "purchases.trade_signals" = "Sinyaller ve Trendler";
 "purchases.trade_signals.description" = "Daha güvenli ve bilinçli işlem yapmanıza yardımcı olan aksiyon alınabilir sinyaller.";
 "purchases.trade_signals.info" = "Alım-satım fırsatları için gerçek zamanlı bildirimler gönderir. Kâr fırsatlarını veya piyasa risklerini anında vurgular.";
