@@ -2302,3 +2302,10 @@ Tant que le wallet n’est pas activé, les tokens peuvent être reçus, mais le
 
 "mev_protection.title" = "Protection MEV";
 "mev_protection.description" = "Les bots de front-running surveillent chaque transaction afin de vous faire payer plus cher. Cette fonctionnalité les bloque.";
+"send.address.phishing_check.subtitle" = "Détecte les adresses suspectes avant de confirmer le transfert.";
+"send.address.sanction_check.subtitle" = "Vérifie si l'adresse est soumise à des restrictions de sanctions.";
+"send.address.blacklist_check.subtitle" = "Vérifie l'adresse dans les bases de données de fraude et à haut risque.";
+
+// Secure Send Bottom Sheet
+"secure_send.bottom_sheet.title" = "Envoi Sécurisé";
+"secure_send.bottom_sheet.description" = "Choisissez les vérifications de sécurité.";

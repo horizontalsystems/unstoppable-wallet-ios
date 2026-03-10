@@ -2304,3 +2304,10 @@ Até que a wallet seja ativada, os tokens podem ser recebidos, mas os saldos pod
 
 "mev_protection.title" = "Proteção MEV";
 "mev_protection.description" = "Os chamados bots de front-running monitoram cada negociação, tentando fazê-lo pagar mais caro. Esse recurso os bloqueia.";
+"send.address.phishing_check.subtitle" = "Detecta endereços suspeitos antes de confirmar a transferência.";
+"send.address.sanction_check.subtitle" = "Verifica se o endereço está sujeito a restrições de sanções.";
+"send.address.blacklist_check.subtitle" = "Verifica o endereço em bancos de dados de fraude e alto risco.";
+
+// Secure Send Bottom Sheet
+"secure_send.bottom_sheet.title" = "Envio Seguro";
+"secure_send.bottom_sheet.description" = "Escolha as verificações de segurança.";

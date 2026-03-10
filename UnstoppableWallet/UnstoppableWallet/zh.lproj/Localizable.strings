@@ -2305,3 +2305,10 @@
 
 "mev_protection.title" = "MEV 保护";
 "mev_protection.description" = "所谓的「抢跑机器人」会监控每一笔交易，企图让您多付费用。此功能可阻止它们。";
+"send.address.phishing_check.subtitle" = "在确认转账前检测可疑地址。";
+"send.address.sanction_check.subtitle" = "验证该地址是否受到制裁限制。";
+"send.address.blacklist_check.subtitle" = "在欺诈和高风险数据库中核查该地址。";
+
+// Secure Send Bottom Sheet
+"secure_send.bottom_sheet.title" = "安全发送";
+"secure_send.bottom_sheet.description" = "选择安全检查项。";

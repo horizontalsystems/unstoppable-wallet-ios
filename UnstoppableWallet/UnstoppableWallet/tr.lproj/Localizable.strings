@@ -2311,3 +2311,10 @@ Unstoppable, swap sağlayıcılarının davranışlarını veya kararlarını ga
 
 "mev_protection.title" = "MEV Koruması";
 "mev_protection.description" = "Sözde front-running botları her işlemi izleyerek sizi fazla ödemeye zorlamaya çalışır. Bu özellik onları engeller.";
+"send.address.phishing_check.subtitle" = "Transferi onaylamadan önce şüpheli adresleri tespit eder.";
+"send.address.sanction_check.subtitle" = "Adresin yaptırım kısıtlamalarına tabi olup olmadığını doğrular.";
+"send.address.blacklist_check.subtitle" = "Adresi dolandırıcılık ve yüksek riskli veritabanlarında kontrol eder.";
+
+// Secure Send Bottom Sheet
+"secure_send.bottom_sheet.title" = "Güvenli Gönderim";
+"secure_send.bottom_sheet.description" = "Güvenlik kontrollerini seçin.";

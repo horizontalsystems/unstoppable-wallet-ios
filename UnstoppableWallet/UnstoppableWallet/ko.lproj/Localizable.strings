@@ -2305,3 +2305,10 @@
 
 "mev_protection.title" = "MEV 보호";
 "mev_protection.description" = "일명 프런트러닝 봇은 모든 거래를 감시하며 사용자가 더 많은 수수료를 내도록 유도합니다. 이 기능은 그런 봇을 차단합니다.";
+"send.address.phishing_check.subtitle" = "전송을 확인하기 전에 의심스러운 주소를 감지합니다.";
+"send.address.sanction_check.subtitle" = "해당 주소가 제재 제한 대상인지 확인합니다.";
+"send.address.blacklist_check.subtitle" = "사기 및 고위험 데이터베이스에서 주소를 확인합니다.";
+
+// Secure Send Bottom Sheet
+"secure_send.bottom_sheet.title" = "보안 전송";
+"secure_send.bottom_sheet.description" = "보안 검사를 선택하세요.";

@@ -2305,3 +2305,10 @@
 
 "mev_protection.title" = "Защита от MEV";
 "mev_protection.description" = "Так называемые фронт-раннинг-боты отслеживают каждую сделку, стараясь заставить вас переплатить. Эта функция блокирует их.";
+"send.address.phishing_check.subtitle" = "Обнаруживает подозрительные адреса перед подтверждением перевода.";
+"send.address.sanction_check.subtitle" = "Проверяет, подпадает ли адрес под санкционные ограничения.";
+"send.address.blacklist_check.subtitle" = "Проверяет адрес по базам данных мошенничества и высокого риска.";
+
+// Secure Send Bottom Sheet
+"secure_send.bottom_sheet.title" = "Безопасная отправка";
+"secure_send.bottom_sheet.description" = "Выберите проверки безопасности.";
