@@ -11,7 +11,7 @@
 "button.delete" = "Удалить";
 "button.share" = "Поделиться";
 "button.paste" = "Вставить";
-"button.photos" = "Фотографии";
+"button.gallery" = "Галерея";
 "button.resend" = "Отправить повторно";
 "button.restore" = "Восстановить";
 "button.copy" = "Копировать";
@@ -223,7 +223,7 @@
 "extended_key.purpose" = "Назначение";
 "extended_key.blockchain" = "Блокчейн";
 "extended_key.account" = "Аккаунт";
-"extended_key.account.description" = "Это настройка для опытных пользователей. Если вы пытаетесь импортировать кошелек (через расширенный приватный ключ) или список транзакций (через расширенный публичный ключ), вам нужен аккаунт 0.";
+"extended_key.account.description" = "Это настройка для опытных пользователей. Если вы пытаетесь импортировать кошелёк (через расширенный закрытый ключ) или список транзакций (через расширенный открытый ключ), вам необходим аккаунт 0.";
 "extended_key.tap_to_show" = "Нажмите, чтобы показать extended private key";
 
 // Backup
@@ -737,7 +737,27 @@
 
 "market.time_period.title" = "Период";
 "market.time_period.1d" = "1 День";
+"market.time_period.1w" = "1 Неделя";
+"market.time_period.2w" = "2 Недели";
+"market.time_period.1m" = "1 Месяц";
+"market.time_period.3m" = "3 Месяца";
+"market.time_period.6m" = "6 Месяцев";
+"market.time_period.1y" = "1 Год";
+"market.time_period.2y" = "2 Года";
+"market.time_period.3y" = "3 Года";
+"market.time_period.4y" = "4 Года";
+"market.time_period.5y" = "5 Лет";
 "market.time_period.1d.short" = "1Д";
+"market.time_period.1w.short" = "1Н";
+"market.time_period.2w.short" = "2Н";
+"market.time_period.1m.short" = "1М";
+"market.time_period.3m.short" = "3М";
+"market.time_period.6m.short" = "6М";
+"market.time_period.1y.short" = "1Г";
+"market.time_period.2y.short" = "2Г";
+"market.time_period.3y.short" = "3Г";
+"market.time_period.4y.short" = "4Г";
+"market.time_period.5y.short" = "5Л";
 
 "market.project_has_no_coin" = "У этого проекта нет токена";
 
@@ -1988,7 +2008,7 @@
 "monero_network.add_new" = "Добавить новый";
 "monero_network.description" = "Выберите ноду, которую приложение Unstoppable будет использовать для синхронизации кошелька(ов).";
 "monero_network.settings.title" = "Настройки узла";
-"monero_network.settings.description" = "Доверенный узел — при включении кошелёк доверяет выбранному узлу и принимает его данные без дополнительной проверки.\n\nВкл. → Транзакции отображаются как «Ожидающие» сразу после отправки (быстрая синхронизация, но ниже уровень приватности и большее доверие к узлу).\n\nВыкл. → Транзакции отображаются только после подтверждений сети (медленнее, но безопаснее и приватнее).";
+"monero_network.settings.description" = "Доверенная нода – При включении кошелёк доверяет выбранной ноде и принимает её данные без дополнительной проверки. \n\nВкл → Транзакции отображаются как ожидающие сразу после отправки (более быстрая синхронизация, но меньшая конфиденциальность и большая зависимость от ноды).\n\nВыкл → Транзакции отображаются только после подтверждений сети (медленнее, но безопаснее и конфиденциальнее).";
 "monero_network.settings.trust" = "Доверять узлу";
 
 // Add RPC Source
@@ -2238,7 +2258,7 @@
 "purchases.token_insights.info" = "Показывает подробные данные о токене - объём, ликвидность и тренды. Помогает принимать более разумные инвестиционные решения.";
 "purchases.advanced_search" = "Расширенный поиск";
 "purchases.advanced_search.description" = "Расширенные фильтры для удобного поиска токенов.";
-"purchases.advanced_search.info" = "Поиск токенов по объёму, сети и сектору с метриками CEX/DEX.";
+"purchases.advanced_search.info" = "Находите токены с помощью фильтров по объёму, сети или сектору. Включает метрики активности на CEX/DEX и листинги.";
 "purchases.trade_signals" = "Сигналы и тренды";
 "purchases.trade_signals.description" = "Практические сигналы для более уверенной торговли.";
 "purchases.trade_signals.info" = "Уведомления в реальном времени о торговых возможностях и рисках.";
