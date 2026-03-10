@@ -74,7 +74,7 @@ struct ScanQrViewNew: View {
                     ) {
                         HStack(spacing: .margin8) {
                             Image("gallery").renderingMode(.template)
-                            Text("button.photos".localized)
+                            Text("button.gallery".localized)
                         }
                     }
                     .buttonStyle(PrimaryButtonStyle(style: .gray))

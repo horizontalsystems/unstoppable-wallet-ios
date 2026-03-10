@@ -16,7 +16,7 @@ jobs:
       - name: Checkout PR branch
         uses: actions/checkout@v4
         with:
-          fetch-depth: 2
+          fetch-depth: 0
           ref: ${{ github.head_ref }}
           token: ${{ secrets.GITHUB_TOKEN }}
 
@@ -38,7 +38,7 @@ jobs:
         run: |
           git config user.name "translator[bot]"
           git config user.email "translator@noreply.github.com"
-          git add '**/*.lproj/Localizable.strings'
+          git add '**/*.lproj/Localizable.strings' translation_snapshot.json
           git diff --staged --quiet && echo "Nothing to commit" || (
             git commit -m "chore: auto-translate new strings"
             git push

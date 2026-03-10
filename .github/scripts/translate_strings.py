@@ -9,7 +9,7 @@ import re
 import sys
 import json
 import subprocess
-
+import argparse
 import anthropic
 
 LANGUAGES = {
@@ -25,68 +25,53 @@ LANGUAGES = {
 
 STRINGS_FILE = "UnstoppableWallet/UnstoppableWallet/{lang}.lproj/Localizable.strings"
 EN_FILE = STRINGS_FILE.format(lang="en")
+TRANSLATION_SNAPSHOT_FILE = "UnstoppableWallet/UnstoppableWallet/translation_snapshot.json"
 
 STRING_PATTERN = re.compile(r'"((?:[^"\\]|\\.)*)"\s*=\s*"((?:[^"\\]|\\.)*)"\s*;')
 
 def parse_strings(content: str) -> dict[str, str]:
     return {m.group(1): m.group(2) for m in STRING_PATTERN.finditer(content)}
 
-def get_strings_at_ref(ref: str) -> dict[str, str]:
-    """Get parsed strings from EN_FILE at a given git ref. Returns empty dict if not found."""
-    result = subprocess.run(
-        ["git", "show", f"{ref}:{EN_FILE}"],
-        capture_output=True,
-        text=True,
-        encoding="utf-8",
-    )
-    return parse_strings(result.stdout) if result.returncode == 0 else {}
+def load_snapshot() -> dict[str, str]:
+    try:
+        with open(TRANSLATION_SNAPSHOT_FILE, encoding="utf-8") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return {}
 
-def get_previous_ref() -> str:
-    """
-    Return the ref to diff against.
-    - On the first commit of a PR (no HEAD~1), fall back to origin/<base>.
-    - On subsequent pushes, use HEAD~1 so only the latest commit's changes are detected.
-    """
-    # Check whether HEAD~1 exists (i.e. there is a parent commit)
-    result = subprocess.run(
-        ["git", "rev-parse", "--verify", "HEAD~1"],
-        capture_output=True,
-        text=True,
-    )
-    if result.returncode == 0:
-        return "HEAD~1"
-    # Fallback: very first commit — diff against the PR base branch
-    base_ref = os.environ.get("GITHUB_BASE_REF", "master")
-    return f"origin/{base_ref}"
+def save_snapshot(en_strings: dict[str, str]) -> None:
+    os.makedirs(os.path.dirname(TRANSLATION_SNAPSHOT_FILE), exist_ok=True)
+    with open(TRANSLATION_SNAPSHOT_FILE, "w", encoding="utf-8") as f:
+        json.dump(en_strings, f, indent=2, ensure_ascii=False)
 
 def get_new_strings() -> dict[str, str]:
-    prev_ref = get_previous_ref()
-    base_strings = get_strings_at_ref(prev_ref)
-
+    """Return EN keys that are new or whose English value changed since last translation."""
     try:
         with open(EN_FILE, encoding="utf-8") as f:
-            current_strings = parse_strings(f.read())
+            en_strings = parse_strings(f.read())
     except FileNotFoundError:
         print(f"English strings file not found: {EN_FILE}")
         return {}
 
+    snapshot = load_snapshot()
+
     return {
         key: value
-        for key, value in current_strings.items()
-        if key not in base_strings or base_strings[key] != value
+        for key, value in en_strings.items()
+        if key not in snapshot or snapshot[key] != value
     }
 
-def get_deleted_strings() -> set[str]:
-    prev_ref = get_previous_ref()
-    base_strings = get_strings_at_ref(prev_ref)
 
+def get_deleted_strings() -> set[str]:
+    """Return keys that were in the snapshot but are no longer in the EN file."""
     try:
         with open(EN_FILE, encoding="utf-8") as f:
-            current_strings = parse_strings(f.read())
+            en_keys = set(parse_strings(f.read()).keys())
     except FileNotFoundError:
         return set()
 
-    return set(base_strings.keys()) - set(current_strings.keys())
+    snapshot = load_snapshot()
+    return set(snapshot.keys()) - en_keys
 
 
 def translate_all(new_strings: dict[str, str]) -> dict[str, list[str]]:
@@ -135,7 +120,7 @@ Return ONLY a valid JSON object.
 def rebuild_translation_file(lang_code: str, translated_lines: list[str], deleted_keys: set[str]) -> None:
     path = STRINGS_FILE.format(lang=lang_code)
 
-    # Get all existing translations for this language
+    # Load all existing translations for this language
     existing = {}
     try:
         with open(path, encoding="utf-8") as f:
@@ -146,7 +131,7 @@ def rebuild_translation_file(lang_code: str, translated_lines: list[str], delete
     except FileNotFoundError:
         pass
 
-    # Apply new translations on top
+    # Merge in new/updated translations
     for line in translated_lines:
         m = STRING_PATTERN.match(line.strip())
         if m:
@@ -156,7 +141,7 @@ def rebuild_translation_file(lang_code: str, translated_lines: list[str], delete
     for key in deleted_keys:
         existing.pop(key, None)
 
-    # Read EN file as-is and use it as the exact template
+    # Use EN file as structure template (preserves comments and ordering)
     try:
         with open(EN_FILE, encoding="utf-8") as f:
             en_lines = f.readlines()
@@ -170,9 +155,9 @@ def rebuild_translation_file(lang_code: str, translated_lines: list[str], delete
             key = m.group(1)
             if key in existing:
                 new_content.append(existing[key] + "\n")
-            # deleted key - skip line entirely
+            # deleted key — skip line entirely
         else:
-            # comment, blank line - copy as-is
+            # comment or blank line — copy as-is
             new_content.append(line)
 
     os.makedirs(os.path.dirname(path), exist_ok=True)
@@ -182,12 +167,28 @@ def rebuild_translation_file(lang_code: str, translated_lines: list[str], delete
     print(f"  ✓ {lang_code}")
 
 def main() -> None:
-    print("Checking for new English strings...")
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--init", action="store_true",
+                        help="Bootstrap snapshot from current EN file without translating")
+    args = parser.parse_args()
+
+    if args.init:
+        try:
+            with open(EN_FILE, encoding="utf-8") as f:
+                en_strings = parse_strings(f.read())
+            save_snapshot(en_strings)
+            print(f"Snapshot initialized with {len(en_strings)} keys. No translation performed.")
+        except FileNotFoundError:
+            print(f"EN file not found: {EN_FILE}")
+            sys.exit(1)
+        sys.exit(0)
+
+    print("Checking for new/changed English strings...")
     new_strings = get_new_strings()
     deleted_keys = get_deleted_strings()
 
     if not new_strings and not deleted_keys:
-        print("No new or deleted strings found. Nothing to do.")
+        print("No new, changed, or deleted strings found. Nothing to do.")
         sys.exit(0)
 
     if deleted_keys:
@@ -201,6 +202,15 @@ def main() -> None:
     print("Writing translations:")
     for lang_code in LANGUAGES:
         rebuild_translation_file(lang_code, translations.get(lang_code, []), deleted_keys)
+
+    # Update snapshot to reflect the EN values that are now translated
+    try:
+        with open(EN_FILE, encoding="utf-8") as f:
+            en_strings = parse_strings(f.read())
+        save_snapshot(en_strings)
+        print("  ✓ translation_snapshot.json")
+    except FileNotFoundError:
+        print("Warning: could not save snapshot — EN file not found.")
 
     print("Done.")
 
