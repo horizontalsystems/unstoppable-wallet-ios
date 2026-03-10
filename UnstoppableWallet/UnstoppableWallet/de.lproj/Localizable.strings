@@ -11,7 +11,7 @@
 "button.delete" = "Löschen";
 "button.share" = "Teilen";
 "button.paste" = "Einsetzen";
-"button.photos" = "Fotos";
+"button.gallery" = "Galerie";
 "button.resend" = "Nochmal senden";
 "button.restore" = "Wiederherstellen";
 "button.copy" = "Kopieren";
@@ -223,7 +223,7 @@
 "extended_key.purpose" = "Zweck";
 "extended_key.blockchain" = "Blockchain";
 "extended_key.account" = "Account";
-"extended_key.account.description" = "Dies ist eine Einstellung für fortgeschrittene Benutzer. Wenn Sie versuchen, ein Wallet (über einen erweiterten privaten Schlüssel) oder eine Transaktionsliste (über einen erweiterten öffentlichen Schlüssel) zu importieren, benötigen Sie das Konto 0.";
+"extended_key.account.description" = "Dies ist eine Einstellung für fortgeschrittene Benutzer. Wenn Sie versuchen, eine Wallet (über einen erweiterten privaten Schlüssel) oder eine Transaktionsliste (über einen erweiterten öffentlichen Schlüssel) zu importieren, benötigen Sie Konto 0.";
 "extended_key.tap_to_show" = "Zum Anzeigen des erweiterten privaten Schlüssels tippen";
 
 // Backup
@@ -737,7 +737,27 @@
 
 "market.time_period.title" = "Zeitraum";
 "market.time_period.1d" = "1 Tag";
+"market.time_period.1w" = "1 Woche";
+"market.time_period.2w" = "2 Wochen";
+"market.time_period.1m" = "1 Monat";
+"market.time_period.3m" = "3 Monate";
+"market.time_period.6m" = "6 Monate";
+"market.time_period.1y" = "1 Jahr";
+"market.time_period.2y" = "2 Jahre";
+"market.time_period.3y" = "3 Jahre";
+"market.time_period.4y" = "4 Jahre";
+"market.time_period.5y" = "5 Jahre";
 "market.time_period.1d.short" = "1T";
+"market.time_period.1w.short" = "1W";
+"market.time_period.2w.short" = "2W";
+"market.time_period.1m.short" = "1M";
+"market.time_period.3m.short" = "3M";
+"market.time_period.6m.short" = "6M";
+"market.time_period.1y.short" = "1J";
+"market.time_period.2y.short" = "2J";
+"market.time_period.3y.short" = "3J";
+"market.time_period.4y.short" = "4J";
+"market.time_period.5y.short" = "5J";
 
 "market.project_has_no_coin" = "Dieses Projekt hat keine eigene Kryptowährung";
 
@@ -1988,7 +2008,7 @@
 "monero_network.add_new" = "Neu hinzufügen";
 "monero_network.description" = "Wählen Sie den Knoten aus, den die Unstoppable-App zur Synchronisierung der Wallet(s) verwenden soll.";
 "monero_network.settings.title" = "Knoteneinstellungen";
-"monero_network.settings.description" = "Vertrauensknoten – Wenn aktiviert, vertraut die Wallet dem ausgewählten Knoten und akzeptiert dessen Daten ohne zusätzliche Überprüfung.\n\nEin → Transaktionen erscheinen sofort nach dem Senden als „ausstehend“ (schnellere Synchronisierung, jedoch geringere Privatsphäre und stärkere Abhängigkeit vom Knoten).\n\nAus → Transaktionen erscheinen erst nach Netzwerkbestätigungen (langsamer, aber sicherer und mit höherer Privatsphäre).";
+"monero_network.settings.description" = "Vertrauenswürdiger Node – Wenn aktiviert, vertraut die Wallet dem ausgewählten Node und akzeptiert dessen Daten ohne zusätzliche Überprüfung. \n\nEin → Transaktionen erscheinen sofort nach der Übertragung als ausstehend (schnellere Synchronisierung, aber geringere Privatsphäre und größere Abhängigkeit vom Node).\n\nAus → Transaktionen erscheinen erst nach Netzwerkbestätigungen (langsamer, aber sicherer und privater).";
 "monero_network.settings.trust" = "Vertrauen";
 
 // Add RPC Source
@@ -2238,7 +2258,7 @@
 "purchases.token_insights.info" = "Zeigt detaillierte Token-Daten wie Volumen, Liquidität und Trends an. Hilft Ihnen, fundiertere Anlageentscheidungen zu treffen.";
 "purchases.advanced_search" = "Erweiterte Suche";
 "purchases.advanced_search.description" = "Leistungsstarke Filter für eine intelligentere Token-Entdeckung.";
-"purchases.advanced_search.info" = "Finden Sie Tokens mithilfe von Filtern nach Volumen, Chain oder Sektor. Enthält Kennzahlen zu CEX/DEX-Aktivität und Listings.";
+"purchases.advanced_search.info" = "Finden Sie Token mit Filtern nach Volumen, Chain oder Sektor. Enthält Metriken für CEX/DEX-Aktivität und Listings.";
 "purchases.trade_signals" = "Signale und Trends";
 "purchases.trade_signals.description" = "Handlungsrelevante Signale für sichereres Trading.";
 "purchases.trade_signals.info" = "Sendet Echtzeitbenachrichtigungen über Handelsmöglichkeiten und weist sofort auf Gewinnchancen oder Marktrisiken hin.";

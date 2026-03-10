@@ -11,7 +11,7 @@
 "button.delete" = "삭제";
 "button.share" = "공유";
 "button.paste" = "불여넣기";
-"button.photos" = "사진";
+"button.gallery" = "갤러리";
 "button.resend" = "재전송";
 "button.restore" = "복구";
 "button.copy" = "복사";
@@ -223,7 +223,7 @@
 "extended_key.purpose" = "목적";
 "extended_key.blockchain" = "블록체인";
 "extended_key.account" = "계정";
-"extended_key.account.description" = "이 설정은 고급 사용자용입니다. 지갑을 가져오려면 (확장 개인 키를 통해) 또는 거래 목록을 가져오려면 (확장 공개 키를 통해) 계정 0이 필요합니다.";
+"extended_key.account.description" = "이것은 고급 사용자를 위한 설정입니다. 확장 개인 키를 통해 지갑을 가져오거나, 확장 공개 키를 통해 거래 목록을 가져오려면 계정 0이 필요합니다.";
 "extended_key.tap_to_show" = "탭하여 extended private key 표시";
 
 // Backup
@@ -737,7 +737,27 @@
 
 "market.time_period.title" = "기간";
 "market.time_period.1d" = "1 일";
+"market.time_period.1w" = "1주";
+"market.time_period.2w" = "2주";
+"market.time_period.1m" = "1개월";
+"market.time_period.3m" = "3개월";
+"market.time_period.6m" = "6개월";
+"market.time_period.1y" = "1년";
+"market.time_period.2y" = "2년";
+"market.time_period.3y" = "3년";
+"market.time_period.4y" = "4년";
+"market.time_period.5y" = "5년";
 "market.time_period.1d.short" = "1하루";
+"market.time_period.1w.short" = "1주";
+"market.time_period.2w.short" = "2주";
+"market.time_period.1m.short" = "1월";
+"market.time_period.3m.short" = "3월";
+"market.time_period.6m.short" = "6월";
+"market.time_period.1y.short" = "1년";
+"market.time_period.2y.short" = "2년";
+"market.time_period.3y.short" = "3년";
+"market.time_period.4y.short" = "4년";
+"market.time_period.5y.short" = "5년";
 
 "market.project_has_no_coin" = "이 프로젝트는 코인이 없습니다";
 
@@ -1988,7 +2008,7 @@
 "monero_network.add_new" = "신규로 추가";
 "monero_network.description" = "Unstoppable 앱이 지갑 동기화에 사용할 노드를 선택하세요.";
 "monero_network.settings.title" = "노드 설정";
-"monero_network.settings.description" = "신뢰 노드 — 활성화 시, 지갑은 선택된 노드를 신뢰하고 추가 검증 없이 데이터를 수용합니다.\n\n켜짐 → 트랜잭션이 브로드캐스트 직후 대기(Pending) 상태로 표시됩니다. (동기화는 빠르지만, 프라이버시가 약해지고 노드 의존도가 높아짐)\n\n꺼짐 → 트랜잭션은 네트워크 확인 후에만 표시됩니다. (동기화는 느리지만, 더 안전하고 프라이버시 강화)";
+"monero_network.settings.description" = "신뢰 노드 – 활성화하면 지갑은 선택된 노드를 신뢰하고 추가 검증 없이 해당 데이터를 수락합니다. \n\n켜기 → 트랜잭션이 브로드캐스트 직후 대기 중으로 표시됩니다 (더 빠른 동기화, 그러나 프라이버시가 낮고 노드에 대한 의존도가 높음).\n\n끄기 → 트랜잭션이 네트워크 확인 후에만 표시됩니다 (더 느리지만 더 안전하고 프라이버시 보호가 높음).";
 "monero_network.settings.trust" = "신뢰";
 
 // Add RPC Source
@@ -2238,7 +2258,7 @@
 "purchases.token_insights.info" = "거래량, 유동성, 트렌드 등 토큰의 세부 데이터를 보여주어 더 현명한 투자 결정을 내릴 수 있도록 돕습니다.";
 "purchases.advanced_search" = "고급 검색";
 "purchases.advanced_search.description" = "더 스마트한 토큰 탐색을 위한 강력한 필터.";
-"purchases.advanced_search.info" = "거래량, 체인, 섹터별 필터를 사용해 토큰을 찾을 수 있습니다. CEX/DEX 거래 활동과 상장 관련 지표도 포함되어 있습니다.";
+"purchases.advanced_search.info" = "거래량, 체인 또는 섹터별 필터로 토큰을 찾으세요. CEX/DEX 활동 및 상장 메트릭이 포함됩니다.";
 "purchases.trade_signals" = "신호 및 트렌드";
 "purchases.trade_signals.description" = "보다 자신감 있는 거래를 위한 실행 가능한 신호.";
 "purchases.trade_signals.info" = "실시간으로 거래 기회를 알림으로 제공합니다. 수익 가능성이나 시장 위험을 즉시 파악할 수 있습니다.";
