@@ -21,7 +21,7 @@ struct AddressSecurityCheckView: View {
                 if !cautions.isEmpty {
                     VStack(spacing: .margin16) {
                         ForEach(cautions.indices, id: \.self) { index in
-                            HighlightedTextView(caution: cautions[index])
+                            AlertCardView(caution: cautions[index])
                         }
                     }
                     .padding(.top, .margin16)
@@ -54,7 +54,7 @@ struct AddressSecurityCheckView: View {
                 }
             }
         )
-        .onTapGesture {
+        .tapIntercept(active: true) {
             switch state {
             case .locked:
                 Coordinator.shared.presentPurchase(premiumFeature: .secureSend, page: sourceStatPage, trigger: .addressChecker)
