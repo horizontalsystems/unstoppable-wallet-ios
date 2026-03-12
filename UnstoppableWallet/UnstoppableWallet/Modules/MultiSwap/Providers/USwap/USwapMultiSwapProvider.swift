@@ -13,14 +13,15 @@ import TronKit
 import ZcashLightClientKit
 
 class USwapMultiSwapProvider: IMultiSwapProvider {
-    private let assetMapExpiration: TimeInterval = 60 * 60
+    static let baseUrl = "\(AppConfig.swapApiUrl)/v1"
+    static var headers: HTTPHeaders? { AppConfig.uswapApiKey.map { HTTPHeaders([HTTPHeader(name: "x-api-key", value: $0)]) } }
 
-    private let baseUrl = "\(AppConfig.swapApiUrl)/v1"
+    private let assetMapExpiration: TimeInterval = 60 * 60
     private var headers: HTTPHeaders?
 
     private let provider: Provider
     private let networkManager = Core.shared.networkManager
-    // private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
+//    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let adapterManager = Core.shared.adapterManager
     private let swapAssetStorage = Core.shared.swapAssetStorage
@@ -53,12 +54,9 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         "stellar": .stellar,
     ]
 
-    init(provider: Provider, apiKey: String?) {
+    init(provider: Provider) {
         self.provider = provider
-
-        if let apiKey {
-            headers = HTTPHeaders([HTTPHeader(name: "x-api-key", value: apiKey)])
-        }
+        headers = Self.headers
 
         assetMap = (try? swapAssetStorage.swapAssetMap(provider: id, as: String.self)) ?? [:]
         syncAssets()
@@ -82,8 +80,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             return
         }
 
-        Task { [weak self, networkManager, baseUrl, provider, headers] in
-            let response: ProviderResponse = try await networkManager.fetch(url: "\(baseUrl)/tokens", parameters: ["provider": provider.rawValue], headers: headers)
+        Task { [weak self, networkManager, provider, headers] in
+            let response: ProviderResponse = try await networkManager.fetch(url: "\(Self.baseUrl)/tokens", parameters: ["provider": provider.rawValue], headers: headers)
             self?.sync(tokens: response.tokens)
         }
     }
@@ -172,7 +170,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             try await appendAddresses(tokenIn: tokenIn, parameters: &parameters)
         }
 
-        let response: QuoteResponse = try await networkManager.fetch(url: "\(baseUrl)/quote", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
+        let response: QuoteResponse = try await networkManager.fetch(url: "\(Self.baseUrl)/quote", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
 
         guard let quote = response.routes.first else {
             throw SwapError.noRoutes
@@ -328,6 +326,43 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         allowanceHelper.preSwapView(step: step, tokenIn: tokenIn, amount: amount, isPresented: isPresented, onSuccess: onSuccess)
     }
 
+    func track(swap: Swap) async throws -> Swap {
+        let blockchainType = swap.tokenIn.blockchainType
+
+        var parameters: Parameters = [
+            "provider": swap.providerId,
+            "hash": swap.txHash,
+            "toAddress": swap.toAddress,
+        ]
+
+        func set(_ dict: inout Parameters, _ key: String, _ value: Any?) {
+            guard let value else { return }
+            dict[key] = value
+        }
+
+        set(&parameters, "chainId", blockchainTypeMap.first(where: { $0.value == blockchainType })?.key)
+        set(&parameters, "fromAsset", assetMap[swap.tokenIn.tokenQuery.id.lowercased()])
+        set(&parameters, "toAsset", assetMap[swap.tokenOut.tokenQuery.id.lowercased()])
+        set(&parameters, "depositAddress", swap.depositAddress)
+        set(&parameters, "providerSwapId", swap.providerSwapId)
+
+        let response: TrackResponse = try await networkManager.fetch(
+            url: "\(USwapMultiSwapProvider.baseUrl)/track",
+            method: .post,
+            parameters: parameters,
+            headers: USwapMultiSwapProvider.headers
+        )
+
+        var swap = swap
+
+        if let status = Swap.Status(rawValue: response.status) {
+            swap.status = status
+            swap.amountOut = response.toAmount
+        }
+
+        return swap
+    }
+
     private func sendingAddress(token: Token) -> String? {
         guard let adapter = adapterManager.adapter(for: token) as? IDepositAdapter else {
             return nil
@@ -404,7 +439,10 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             estimatedTime: quote.esimatedTime,
             gasPrice: gasPriceData?.userDefined,
             evmFeeData: evmFeeData,
-            nonce: transactionSettings?.nonce
+            nonce: transactionSettings?.nonce,
+            toAddress: quote.destinationAddress,
+            depositAddress: quote.inboundAddress,
+            providerSwapId: quote.providerSwapId
         )
     }
 
@@ -454,6 +492,9 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             estimatedTime: quote.esimatedTime,
             transactionError: transactionError,
             fee: sendInfo?.fee,
+            toAddress: quote.destinationAddress,
+            depositAddress: quote.inboundAddress,
+            providerSwapId: quote.providerSwapId
         )
     }
 
@@ -502,6 +543,9 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             estimatedTime: quote.esimatedTime,
             transactionError: transactionError,
             fee: totalFeeRequired?.decimalValue.decimalValue,
+            toAddress: quote.destinationAddress,
+            depositAddress: quote.inboundAddress,
+            providerSwapId: quote.providerSwapId
         )
     }
 
@@ -565,6 +609,9 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionParam: transactionParam,
             fee: fee,
             transactionError: transactionError,
+            toAddress: quote.destinationAddress,
+            depositAddress: quote.inboundAddress,
+            providerSwapId: quote.providerSwapId
         )
     }
 
@@ -619,7 +666,10 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionData: transactionData,
             token: tokenIn,
             fee: fee,
-            transactionError: transactionError
+            transactionError: transactionError,
+            toAddress: quote.destinationAddress,
+            depositAddress: quote.inboundAddress,
+            providerSwapId: quote.providerSwapId
         )
     }
 
@@ -666,7 +716,10 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             estimatedTime: quote.esimatedTime,
             createdTransaction: transaction,
             fees: fees,
-            transactionError: transactionError
+            transactionError: transactionError,
+            toAddress: quote.destinationAddress,
+            depositAddress: quote.inboundAddress,
+            providerSwapId: quote.providerSwapId
         )
     }
 
@@ -716,7 +769,10 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             token: tokenIn,
             priority: priority,
             fee: fee,
-            transactionError: transactionError
+            transactionError: transactionError,
+            toAddress: quote.destinationAddress,
+            depositAddress: quote.inboundAddress,
+            providerSwapId: quote.providerSwapId
         )
     }
 }
@@ -802,6 +858,7 @@ extension USwapMultiSwapProvider {
     class Quote: ImmutableMappable {
         let expectedBuyAmount: Decimal
         let inboundAddress: String
+        let destinationAddress: String
         let approvalAddress: String?
         let tx: [String: Any]?
         let txExtraAttribute: [String: Any]?
@@ -810,10 +867,12 @@ extension USwapMultiSwapProvider {
         let dustThreshold: Int?
         let providers: [String]?
         let esimatedTime: TimeInterval?
+        let providerSwapId: String?
 
         required init(map: Map) throws {
             expectedBuyAmount = try map.value("expectedBuyAmount", using: Transform.stringToDecimalTransform)
             inboundAddress = try map.value("inboundAddress")
+            destinationAddress = try map.value("destinationAddress")
             approvalAddress = try? map.value("meta.approvalAddress")
             tx = try? map.value("tx")
             txExtraAttribute = try? map.value("txExtraAttribute")
@@ -822,6 +881,17 @@ extension USwapMultiSwapProvider {
             dustThreshold = try? map.value("dustThreshold", using: Transform.stringToIntTransform)
             providers = try? map.value("providers")
             esimatedTime = try? map.value("estimatedTime.total")
+            providerSwapId = try? map.value("providerSwapId")
+        }
+    }
+
+    struct TrackResponse: ImmutableMappable {
+        let status: String
+        let toAmount: Decimal
+
+        init(map: Map) throws {
+            status = try map.value("status")
+            toAmount = try map.value("toAmount", using: Transform.stringToDecimalTransform)
         }
     }
 

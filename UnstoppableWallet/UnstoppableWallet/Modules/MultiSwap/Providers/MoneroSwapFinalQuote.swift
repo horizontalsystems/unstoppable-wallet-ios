@@ -23,7 +23,10 @@ class MoneroSwapFinalQuote: SwapFinalQuote {
         token: Token,
         priority: SendPriority,
         fee: Decimal?,
-        transactionError: Error?
+        transactionError: Error?,
+        toAddress: String,
+        depositAddress: String? = nil,
+        providerSwapId: String? = nil
     ) {
         self.amountIn = amountIn
         self.amount = amount
@@ -33,7 +36,16 @@ class MoneroSwapFinalQuote: SwapFinalQuote {
         self.priority = priority
         self.fee = fee
 
-        super.init(expectedBuyAmount: expectedAmountOut, slippage: slippage, recipient: recipient, estimatedTime: estimatedTime, transactionError: transactionError)
+        super.init(
+            expectedBuyAmount: expectedAmountOut,
+            slippage: slippage,
+            recipient: recipient,
+            estimatedTime: estimatedTime,
+            transactionError: transactionError,
+            toAddress: toAddress,
+            depositAddress: depositAddress,
+            providerSwapId: providerSwapId
+        )
     }
 
     override var feeData: FeeData? {

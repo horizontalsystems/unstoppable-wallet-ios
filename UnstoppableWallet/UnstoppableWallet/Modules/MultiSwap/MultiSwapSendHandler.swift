@@ -13,6 +13,7 @@ class MultiSwapSendHandler {
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let adapterManager = Core.shared.adapterManager
     private let tronKitManager = Core.shared.tronAccountManager.tronKitManager
+    private let swapHistoryManager = Core.shared.swapHistoryManager
     private let mevProtectionHelper = MevProtectionHelper()
 
     let baseToken: Token
@@ -106,6 +107,8 @@ extension MultiSwapSendHandler: ISendHandler {
             throw SendError.invalidData
         }
 
+        var txHash: String?
+
         if let quote = data.quote as? EvmSwapFinalQuote {
             guard let transactionData = quote.transactionData else {
                 throw SendError.invalidTransactionData
@@ -123,13 +126,15 @@ extension MultiSwapSendHandler: ISendHandler {
                 throw SendError.noEvmKitWrapper
             }
 
-            _ = try await evmKitWrapper.send(
+            let fullTransaction = try await evmKitWrapper.send(
                 transactionData: transactionData,
                 gasPrice: gasPrice,
                 gasLimit: gasLimit,
                 privateSend: mevProtectionHelper.isActive,
                 nonce: quote.nonce
             )
+
+            txHash = fullTransaction.transaction.hash.hs.hexString
         } else if let quote = data.quote as? UtxoSwapFinalQuote {
             guard let adapter = adapterManager.adapter(for: tokenIn) as? BitcoinBaseAdapter else {
                 throw SendError.noBitcoinAdapter
@@ -197,6 +202,25 @@ extension MultiSwapSendHandler: ISendHandler {
                 priority: quote.priority,
                 memo: quote.memo
             )
+        }
+
+        if let txHash, let account = accountManager.activeAccount {
+            let swap = Swap(
+                txHash: txHash,
+                accountId: account.id,
+                providerId: provider.id,
+                status: .pending,
+                tokenIn: tokenIn,
+                tokenOut: tokenOut,
+                amountIn: amountIn,
+                amountOut: data.quote.amountOut,
+                toAddress: data.quote.recipient ?? data.quote.toAddress,
+                depositAddress: data.quote.depositAddress,
+                providerSwapId: data.quote.providerSwapId,
+                date: Date()
+            )
+
+            swapHistoryManager.save(swap: swap)
         }
 
         if !walletManager.activeWallets.contains(where: { $0.token == tokenOut }), let activeAccount = accountManager.activeAccount {

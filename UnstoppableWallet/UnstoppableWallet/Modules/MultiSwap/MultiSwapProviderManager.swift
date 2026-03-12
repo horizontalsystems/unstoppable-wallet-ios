@@ -3,7 +3,6 @@ import Foundation
 import HsExtensions
 import HsToolKit
 import ObjectMapper
-import OneInchKit
 
 class MultiSwapProviderManager {
     private let expiration: TimeInterval = 60 * 60
@@ -14,7 +13,7 @@ class MultiSwapProviderManager {
     private let baseUrl = "\(AppConfig.swapApiUrl)/v1"
     private var headers: HTTPHeaders?
 
-    @PostPublished private(set) var providers: [IMultiSwapProvider] = []
+    @PostPublished private(set) var providers: [String] = []
 
     init(localStorage: LocalStorage, networkManager: NetworkManager, apiKey: String?) {
         self.localStorage = localStorage
@@ -24,18 +23,13 @@ class MultiSwapProviderManager {
         if let apiKey {
             headers = HTTPHeaders([HTTPHeader(name: "x-api-key", value: apiKey)])
         }
-    }
 
-    func onCoreInitialization() {
-        syncProviders(uSwapProviderRawValues: localStorage.uSwapProviders.map { $0.components(separatedBy: ",") } ?? [])
+        syncProviders(uSwapProviders: localStorage.uSwapProviders.map { $0.components(separatedBy: ",") } ?? [OneInchMultiSwapProvider.id, ThorChainMultiSwapProvider.id, MayaMultiSwapProvider.id, AllBridgeMultiSwapProvider.id])
         sync()
     }
 
-    private func syncProviders(uSwapProviderRawValues: [String]) {
-        let uSwapProviders = uSwapProviderRawValues.compactMap { USwapMultiSwapProvider.Provider(rawValue: $0) }
-        DispatchQueue.main.asyncAfter(deadline: .now() + .seconds(1)) {
-            self.providers = Self.providers(uSwapProviders: uSwapProviders)
-        }
+    private func syncProviders(uSwapProviders: [String]) {
+        providers = Array(Set([AllBridgeMultiSwapProvider.id] + uSwapProviders))
     }
 
     func sync() {
@@ -49,42 +43,10 @@ class MultiSwapProviderManager {
             let responses: [ProviderResponse] = try await networkManager.fetch(url: "\(baseUrl)/providers", headers: headers)
             let rawValues = responses.map(\.provider)
 
-            self?.syncProviders(uSwapProviderRawValues: rawValues)
+            self?.syncProviders(uSwapProviders: rawValues)
             self?.localStorage.uSwapProviders = rawValues.joined(separator: ",")
             self?.localStorage.swapProvidersLastSyncTimestamp = Date().timeIntervalSince1970
         }
-    }
-}
-
-extension MultiSwapProviderManager {
-    private static func providers(uSwapProviders: [USwapMultiSwapProvider.Provider]) -> [IMultiSwapProvider] {
-        var providers: [IMultiSwapProvider] = [
-            ThorChainMultiSwapProvider(),
-            MayaMultiSwapProvider(),
-            AllBridgeMultiSwapProvider(),
-        ]
-
-        providers.append(contentsOf: uSwapProviders.map { USwapMultiSwapProvider(provider: $0, apiKey: AppConfig.uswapApiKey) })
-
-        // if let kit = try? UniswapKit.Kit.instance() {
-        //     providers.append(UniswapV2MultiSwapProvider(kit: kit))
-        //     providers.append(PancakeV2MultiSwapProvider(kit: kit))
-        //     providers.append(QuickSwapMultiSwapProvider(kit: kit))
-        // }
-
-        // if let kit = try? UniswapKit.KitV3.instance(dexType: .uniswap) {
-        //     providers.append(UniswapV3MultiSwapProvider(kit: kit))
-        // }
-
-        // if let kit = try? UniswapKit.KitV3.instance(dexType: .pancakeSwap) {
-        //     providers.append(PancakeV3MultiSwapProvider(kit: kit))
-        // }
-
-        if let apiKey = AppConfig.oneInchApiKey {
-            providers.append(OneInchMultiSwapProvider(kit: OneInchKit.Kit.instance(apiKey: apiKey)))
-        }
-
-        return providers
     }
 }
 

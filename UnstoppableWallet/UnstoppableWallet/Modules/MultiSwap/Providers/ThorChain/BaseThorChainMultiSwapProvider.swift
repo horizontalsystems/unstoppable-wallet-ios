@@ -117,7 +117,11 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             var evmFeeData: EvmFeeData?
             var transactionError: Error?
 
-            if let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, let gasPriceData {
+            guard let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
+                throw SwapError.noEvmKit
+            }
+
+            if let gasPriceData {
                 do {
                     let _evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPriceData: gasPriceData)
                     evmFeeData = _evmFeeData
@@ -137,16 +141,19 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 estimatedTime: estimatedTime(swapQuote, tokenOut: tokenOut),
                 gasPrice: gasPriceData?.userDefined,
                 evmFeeData: evmFeeData,
-                nonce: transactionSettings?.nonce
+                nonce: transactionSettings?.nonce,
+                toAddress: evmKitWrapper.evmKit.receiveAddress.eip55
             )
         case .bitcoin, .bitcoinCash, .dash, .litecoin:
             var transactionError: Error?
             var sendInfo: SendInfo?
             var params: SendParameters?
 
-            if let satoshiPerByte = transactionSettings?.satoshiPerByte,
-               let adapter = adapterManager.adapter(for: tokenIn) as? BitcoinBaseAdapter
-            {
+            guard let adapter = adapterManager.adapter(for: tokenIn) as? BitcoinBaseAdapter else {
+                throw SwapError.noAdapter
+            }
+
+            if let satoshiPerByte = transactionSettings?.satoshiPerByte {
                 do {
                     let value = adapter.convertToSatoshi(value: amountIn)
                     if let dustThreshold = swapQuote.dustThreshold, value <= dustThreshold {
@@ -176,7 +183,8 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 recipient: recipient,
                 estimatedTime: swapQuote.totalSwapSeconds,
                 transactionError: transactionError,
-                fee: sendInfo?.fee
+                fee: sendInfo?.fee,
+                toAddress: adapter.receiveAddress.address
             )
         default:
             throw SwapError.unsupportedTokenIn
@@ -192,6 +200,10 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
 
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
         allowanceHelper.preSwapView(step: step, tokenIn: tokenIn, amount: amount, isPresented: isPresented, onSuccess: onSuccess)
+    }
+
+    func track(swap: Swap) async throws -> Swap {
+        swap // TODO: implement track
     }
 
     func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil, recipient: String? = nil, params: Parameters? = nil) async throws -> SwapQuote {
@@ -387,7 +399,8 @@ extension BaseThorChainMultiSwapProvider {
         case unsupportedTokenOut
         case noRouterAddress
         case invalidTokenInType
-        case noZcashAdapter
+        case noAdapter
+        case noEvmKit
     }
 }
 

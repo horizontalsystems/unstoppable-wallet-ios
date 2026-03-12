@@ -22,9 +22,14 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
         var evmFeeData: EvmFeeData?
         var transactionError: Error?
 
-        if let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper, let gasPriceData {
+        guard let evmKitWrapper = try evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper else {
+            throw SwapError.noEvmKit
+        }
+
+        let evmKit = evmKitWrapper.evmKit
+
+        if let gasPriceData {
             do {
-                let evmKit = evmKitWrapper.evmKit
                 let transactionData = try transactionData(receiveAddress: evmKit.receiveAddress, chain: evmKit.chain, trade: quote.trade, tradeOptions: quote.tradeOptions)
                 txData = transactionData
                 evmFeeData = try await evmFeeEstimator.estimateFee(evmKitWrapper: evmKitWrapper, transactionData: transactionData, gasPriceData: gasPriceData)
@@ -41,7 +46,8 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
             recipient: quote.tradeOptions.recipient?.eip55,
             gasPrice: gasPriceData?.userDefined,
             evmFeeData: evmFeeData,
-            nonce: transactionSettings?.nonce
+            nonce: transactionSettings?.nonce,
+            toAddress: evmKit.receiveAddress.eip55
         )
     }
 
@@ -94,5 +100,6 @@ extension BaseUniswapMultiSwapProvider {
         case invalidToken
         case noHttpRpcSource
         case invalidTrade
+        case noEvmKit
     }
 }

@@ -17,14 +17,26 @@ class EvmSwapFinalQuote: SwapFinalQuote {
         estimatedTime: TimeInterval? = nil,
         gasPrice: GasPrice?,
         evmFeeData: EvmFeeData?,
-        nonce: Int?
+        nonce: Int?,
+        toAddress: String,
+        depositAddress: String? = nil,
+        providerSwapId: String? = nil
     ) {
         self.transactionData = transactionData
         self.gasPrice = gasPrice
         self.evmFeeData = evmFeeData
         self.nonce = nonce
 
-        super.init(expectedBuyAmount: expectedBuyAmount, slippage: slippage, recipient: recipient, estimatedTime: estimatedTime, transactionError: transactionError)
+        super.init(
+            expectedBuyAmount: expectedBuyAmount,
+            slippage: slippage,
+            recipient: recipient,
+            estimatedTime: estimatedTime,
+            transactionError: transactionError,
+            toAddress: toAddress,
+            depositAddress: depositAddress,
+            providerSwapId: providerSwapId
+        )
     }
 
     override var feeData: FeeData? {

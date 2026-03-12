@@ -73,7 +73,7 @@ extension MainViewModel {
     }
 
     var tabs: [Tab] {
-        (showMarket ? [.markets] : []) + [.wallet, .transactions, .settings]
+        (showMarket ? [.markets] : []) + [.wallet, .swap, .transactions, .settings]
     }
 }
 
