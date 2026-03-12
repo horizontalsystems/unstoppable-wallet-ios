@@ -35,7 +35,6 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     var id: String { fatalError("Must be overridden by subclass") }
     var name: String { fatalError("Must be overridden by subclass") }
     var type: SwapProviderType { fatalError("Must be overridden by subclass") }
-    var aml: Bool { false }
     var icon: String { fatalError("Must be overridden by subclass") }
 
     var syncPublisher: AnyPublisher<Void, Never>? {
@@ -67,10 +66,11 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
 
             return await EvmMultiSwapQuote(
                 expectedBuyAmount: swapQuote.expectedAmountOut,
-                allowanceState: allowanceHelper.allowanceState(spenderAddress: .init(raw: router), token: tokenIn, amount: amountIn)
+                allowanceState: allowanceHelper.allowanceState(spenderAddress: .init(raw: router), token: tokenIn, amount: amountIn),
+                estimatedTime: estimatedTime(swapQuote, tokenOut: tokenOut)
             )
         case .bitcoin, .bitcoinCash, .dash, .litecoin, .zcash:
-            return MultiSwapQuote(expectedBuyAmount: swapQuote.expectedAmountOut)
+            return MultiSwapQuote(expectedBuyAmount: swapQuote.expectedAmountOut, estimatedTime: swapQuote.totalSwapSeconds)
         default:
             throw SwapError.unsupportedTokenIn
         }
@@ -134,7 +134,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 transactionError: transactionError,
                 slippage: slippage,
                 recipient: recipient,
-                estimatedTime: swapQuote.totalSwapSeconds,
+                estimatedTime: estimatedTime(swapQuote, tokenOut: tokenOut),
                 gasPrice: gasPriceData?.userDefined,
                 evmFeeData: evmFeeData,
                 nonce: transactionSettings?.nonce
@@ -181,6 +181,13 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         default:
             throw SwapError.unsupportedTokenIn
         }
+    }
+
+    private func estimatedTime(_ swapQuote: SwapQuote, tokenOut: Token) -> TimeInterval {
+        let inbound = swapQuote.inboundConfirmationSeconds ?? 0
+        let swap = swapQuote.streamingSwapSeconds ?? 6
+        let outbound = (swapQuote.outboundDelaySeconds ?? 6) + (tokenOut.blockchainType.blockTime ?? 6)
+        return inbound + swap + outbound
     }
 
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
@@ -350,6 +357,9 @@ extension BaseThorChainMultiSwapProvider {
         let totalFee: Decimal
 
         let dustThreshold: Int?
+        let inboundConfirmationSeconds: TimeInterval?
+        let outboundDelaySeconds: TimeInterval?
+        let streamingSwapSeconds: TimeInterval?
         let totalSwapSeconds: TimeInterval?
 
         init(map: Map) throws {
@@ -364,6 +374,10 @@ extension BaseThorChainMultiSwapProvider {
             totalFee = try map.value("fees.total", using: Transform.stringToDecimalTransform) / pow(10, 8)
 
             dustThreshold = try? map.value("dust_threshold", using: Transform.stringToIntTransform)
+
+            inboundConfirmationSeconds = try? map.value("inbound_confirmation_seconds")
+            outboundDelaySeconds = try? map.value("outbound_delay_seconds")
+            streamingSwapSeconds = try? map.value("streaming_swap_seconds")
             totalSwapSeconds = try? map.value("total_swap_seconds")
         }
     }

@@ -103,52 +103,6 @@ struct SecuritySettingsView: View {
                 }
 
                 premiumSection()
-
-//                VStack(spacing: 0) {
-//                    PremiumListSectionHeader()
-//
-//                    ListSection {
-//                        if viewModel.isDuressPasscodeSet {
-//                            ClickableRow(action: {
-//                                Coordinator.shared.performAfterPurchase(premiumFeature: .robberyProtection, page: .security, trigger: .robberyProtection) {
-//                                    Coordinator.shared.presentAfterUnlock { isPresented in
-//                                        ThemeNavigationStack { EditPasscodeModule.editDuressPasscodeView(showParentSheet: isPresented) }
-//                                    }
-//                                }
-//                            }) {
-//                                Image("switch_wallet_24").themeIcon(color: .themeJacob)
-//                                Text("settings_security.edit_duress_passcode".localized).themeBody()
-//                            }
-//
-//                            ClickableRow(action: {
-//                                Coordinator.shared.performAfterUnlock {
-//                                    viewModel.removeDuressPasscode()
-//                                }
-//                            }) {
-//                                Image("trash_24").themeIcon(color: .themeLucian)
-//                                Text("settings_security.disable_duress_mode".localized).themeBody(color: .themeLucian)
-//                            }
-//                        } else {
-//                            ClickableRow(action: {
-//                                Coordinator.shared.performAfterPurchase(premiumFeature: .robberyProtection, page: .security, trigger: .robberyProtection) {
-//                                    if viewModel.isPasscodeSet {
-//                                        Coordinator.shared.performAfterUnlock {
-//                                            presentCreateDuressPasscode()
-//                                        }
-//                                    } else {
-//                                        presentCreatePasscode(reason: .duress)
-//                                    }
-//                                }
-//                            }) {
-//                                Image("switch_wallet_24").themeIcon(color: .themeJacob)
-//                                Text("settings_security.enable_duress_mode".localized).themeBody()
-//                            }
-//                        }
-//                    }
-//                    .modifier(ColoredBorder())
-//
-//                    ListSectionFooter(text: "settings_security.duress_mode.description".localized)
-//                }
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }

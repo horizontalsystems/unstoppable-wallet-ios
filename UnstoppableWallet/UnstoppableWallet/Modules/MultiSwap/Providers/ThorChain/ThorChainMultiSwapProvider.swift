@@ -5,7 +5,7 @@ class ThorChainMultiSwapProvider: BaseThorChainMultiSwapProvider {
 
     override var id: String { "thorchain" }
     override var name: String { "THORChain" }
-    override var type: SwapProviderType { .dex }
+    override var type: SwapProviderType { .auto }
     override var icon: String { "swap_provider_thorchain" }
 
     override var affiliate: String? {

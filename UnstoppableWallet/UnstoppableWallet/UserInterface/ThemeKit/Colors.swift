@@ -39,6 +39,7 @@ public extension Color {
     static let themeHelsing = Color("Helsing")
     static let themeJeremy = Color("Jeremy")
     static let themeLaguna = Color("Laguna")
+    static let themeOcean = Color("Ocean")
     static let themeNina = Color("Nina")
     static let themeRaina = Color("Raina")
 

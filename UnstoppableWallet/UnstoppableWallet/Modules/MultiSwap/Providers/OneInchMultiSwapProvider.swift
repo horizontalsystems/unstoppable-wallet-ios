@@ -22,7 +22,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
 
     override var id: String { "1inch" }
     override var name: String { "1Inch" }
-    override var type: SwapProviderType { .dex }
+    override var type: SwapProviderType { .control }
     override var icon: String { "swap_provider_1inch" }
 
     override func supports(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token) -> Bool {
@@ -58,7 +58,8 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
 
         return await EvmMultiSwapQuote(
             expectedBuyAmount: quote.amountOut ?? 0,
-            allowanceState: allowanceState(token: tokenIn, amount: amountIn)
+            allowanceState: allowanceState(token: tokenIn, amount: amountIn),
+            estimatedTime: blockchainType.blockTime
         )
     }
 

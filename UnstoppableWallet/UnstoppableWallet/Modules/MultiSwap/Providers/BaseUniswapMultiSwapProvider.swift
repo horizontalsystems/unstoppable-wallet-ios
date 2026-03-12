@@ -84,6 +84,7 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
             tradeOptions: tradeOptions,
             providerName: name,
             allowanceState: allowanceState(token: tokenIn, amount: amountIn),
+            estimatedTime: blockchainType.blockTime
         )
     }
 }

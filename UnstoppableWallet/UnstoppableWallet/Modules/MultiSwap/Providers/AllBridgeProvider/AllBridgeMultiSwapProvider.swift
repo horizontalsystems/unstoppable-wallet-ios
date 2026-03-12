@@ -77,8 +77,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
 
     var id: String { "allbridge" }
     var name: String { "AllBridge" }
-    var type: SwapProviderType { .dex }
-    var aml: Bool { true }
+    var type: SwapProviderType { .auto }
     var icon: String { "swap_provider_allbridge" }
 
     var syncPublisher: AnyPublisher<Void, Never>? {
@@ -234,6 +233,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         logger?.log(level: .debug, message: "AllBridge: Quote Crosschain: \(crosschain) | amountOut = \(amountOut.description)")
 
         let bridgeAddress = assetIn.bridgeAddress
+        let estimatedTime: TimeInterval? = MultiSwapHelpers.estimate(tokenIn: tokenIn, tokenOut: tokenOut)
 
         if tokenIn.blockchainType.isEvm {
             let router = proxies[bridgeAddress] ?? bridgeAddress
@@ -241,14 +241,14 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
             let state = await allowanceHelper.allowanceState(spenderAddress: .init(raw: router), token: tokenIn, amount: amountIn)
             logger?.log(level: .debug, message: "AllBridge: Allowance = \(state)")
 
-            return EvmMultiSwapQuote(expectedBuyAmount: amountOut, allowanceState: state)
+            return EvmMultiSwapQuote(expectedBuyAmount: amountOut, allowanceState: state, estimatedTime: estimatedTime)
         } else if tokenIn.blockchainType == .tron {
             let state = await allowanceHelper.allowanceState(spenderAddress: .init(raw: bridgeAddress), token: tokenIn, amount: amountIn)
             logger?.log(level: .debug, message: "AllBridge: Allowance = \(state)")
 
-            return EvmMultiSwapQuote(expectedBuyAmount: amountOut, allowanceState: state)
+            return EvmMultiSwapQuote(expectedBuyAmount: amountOut, allowanceState: state, estimatedTime: estimatedTime)
         } else if tokenIn.blockchainType == .stellar {
-            return MultiSwapQuote(expectedBuyAmount: amountOut)
+            return MultiSwapQuote(expectedBuyAmount: amountOut, estimatedTime: estimatedTime)
         }
 
         throw SwapError.unsupportedTokenIn

@@ -291,6 +291,8 @@ class MultiSwapViewModel: ObservableObject {
 
     @Published var priceImpact: Decimal?
 
+    @Published var quoteSortType: QuoteSortType = .bestRate
+
     init(token: Token? = nil) {
         providers = swapProviderManager.providers
         currency = currencyManager.baseCurrency
@@ -572,12 +574,38 @@ extension MultiSwapViewModel {
         internalTokenIn = nil
         internalTokenOut = nil
     }
+
+    var sortedQuotes: [Quote] {
+        switch quoteSortType {
+        case .bestRate:
+            return quotes.sorted { $0.quote.expectedBuyAmount > $1.quote.expectedBuyAmount }
+        case .bestTime:
+            return quotes.sorted {
+                let t0 = $0.quote.estimatedTime ?? .infinity
+                let t1 = $1.quote.estimatedTime ?? .infinity
+                if t0 != t1 { return t0 < t1 }
+                return $0.quote.expectedBuyAmount > $1.quote.expectedBuyAmount
+            }
+        }
+    }
 }
 
 extension MultiSwapViewModel {
     struct Quote {
         let provider: IMultiSwapProvider
         let quote: MultiSwapQuote
+    }
+
+    enum QuoteSortType: CaseIterable {
+        case bestRate
+        case bestTime
+
+        var title: String {
+            switch self {
+            case .bestRate: return "swap.quotes.sort.best_rate".localized
+            case .bestTime: return "swap.quotes.sort.best_time".localized
+            }
+        }
     }
 
     enum PriceImpactLevel {

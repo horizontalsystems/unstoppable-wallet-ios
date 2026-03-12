@@ -13,7 +13,6 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
     var id: String { fatalError("Must be implemented in subclass") }
     var name: String { fatalError("Must be implemented in subclass") }
     var type: SwapProviderType { fatalError("Must be implemented in subclass") }
-    var aml: Bool { true }
     var icon: String { fatalError("Must be implemented in subclass") }
 
     func supports(tokenIn _: Token, tokenOut _: Token) -> Bool {
