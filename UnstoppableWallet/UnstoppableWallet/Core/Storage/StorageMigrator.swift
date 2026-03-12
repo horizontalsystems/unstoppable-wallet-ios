@@ -887,6 +887,30 @@ enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Create SwapRecord 7") { db in
+            try db.drop(table: SwapRecord.databaseTableName)
+
+            try db.create(table: SwapRecord.databaseTableName) { t in
+                t.column(SwapRecord.Columns.txHash.name, .text).notNull().primaryKey(onConflict: .replace)
+                t.column(SwapRecord.Columns.accountId.name, .text).notNull()
+                t.column(SwapRecord.Columns.providerId.name, .text).notNull()
+                t.column(SwapRecord.Columns.status.name, .text).notNull()
+                t.column(SwapRecord.Columns.tokenQueryIdIn.name, .text).notNull()
+                t.column(SwapRecord.Columns.tokenQueryIdOut.name, .text).notNull()
+                t.column(SwapRecord.Columns.amountIn.name, .text).notNull()
+                t.column(SwapRecord.Columns.amountOut.name, .text).notNull()
+                t.column(SwapRecord.Columns.toAddress.name, .text).notNull()
+                t.column(SwapRecord.Columns.depositAddress.name, .text)
+                t.column(SwapRecord.Columns.providerSwapId.name, .text)
+                t.column(SwapRecord.Columns.date.name, .datetime).notNull()
+            }
+        }
+
+        // migrator.registerMigration("Update SwapRecord 1") { db in
+        //     try SwapRecord
+        //         .updateAll(db, SwapRecord.Columns.status.set(to: "pending"))
+        // }
+
         try migrator.migrate(dbPool)
     }
 

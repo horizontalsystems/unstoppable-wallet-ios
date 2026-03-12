@@ -72,9 +72,9 @@ public extension OneInchKit.Kit {
                     allowPartialFill: Bool? = nil,
                     gasLimit: Int? = nil,
                     mainRouteParts: Int? = nil,
-                    parts: Int? = nil) -> Single<Swap>
+                    parts: Int? = nil) -> Single<OneInchKit.Swap>
     {
-        Single<Swap>.create { [weak self] observer in
+        Single<OneInchKit.Swap>.create { [weak self] observer in
             guard let strongSelf = self else {
                 observer(.error(DisposedError()))
                 return Disposables.create()

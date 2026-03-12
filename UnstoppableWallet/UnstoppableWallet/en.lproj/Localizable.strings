@@ -716,6 +716,12 @@
 
 "swap.maya.shielded_address.error" = "Can't fetch shielded address for Memo (Maya)";
 
+// Swap History
+
+"swap_history.title" = "Swap History";
+"swap_history.all" = "All";
+"swap_history.empty" = "You don’t have any pending or past swaps yet.";
+
 // Market
 
 "market.title" = "Markets";

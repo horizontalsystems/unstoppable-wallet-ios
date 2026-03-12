@@ -20,7 +20,7 @@ struct MainView: View {
                         }
 
                         WalletView(viewModel: walletViewModel, path: $path).tag(MainViewModel.Tab.wallet)
-                        // MultiSwapView().tag(MainViewModel.Tab.swap)
+                        MultiSwapView().tag(MainViewModel.Tab.swap)
                         MainTransactionsView(transactionsViewModel: transactionsViewModel).tag(MainViewModel.Tab.transactions)
                         MainSettingsView().tag(MainViewModel.Tab.settings)
                     }
@@ -112,7 +112,15 @@ struct MainView: View {
                 }
             }
         case .swap:
-            ToolbarItem(placement: .navigationBarTrailing) {}
+            ToolbarItem(placement: .primaryAction) {
+                Button(action: {
+                    Coordinator.shared.present { isPresented in
+                        SwapHistoryView(isPresented: isPresented)
+                    }
+                }) {
+                    Image("clock")
+                }
+            }
         case .transactions:
             ToolbarItem(placement: .navigationBarLeading) {
                 if transactionsViewModel.syncing {

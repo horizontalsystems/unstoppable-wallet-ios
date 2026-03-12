@@ -7,11 +7,31 @@ class ZcashSwapFinalQuote: SwapFinalQuote {
     let proposal: Proposal?
     private let fee: Decimal?
 
-    init(expectedBuyAmount: Decimal, proposal: Proposal?, slippage: Decimal, recipient: String?, estimatedTime: TimeInterval? = nil, transactionError: Error?, fee: Decimal?) {
+    init(
+        expectedBuyAmount: Decimal,
+        proposal: Proposal?,
+        slippage: Decimal,
+        recipient: String?,
+        estimatedTime: TimeInterval? = nil,
+        transactionError: Error?,
+        fee: Decimal?,
+        toAddress: String,
+        depositAddress: String? = nil,
+        providerSwapId: String? = nil
+    ) {
         self.proposal = proposal
         self.fee = fee
 
-        super.init(expectedBuyAmount: expectedBuyAmount, slippage: slippage, recipient: recipient, estimatedTime: estimatedTime, transactionError: transactionError)
+        super.init(
+            expectedBuyAmount: expectedBuyAmount,
+            slippage: slippage,
+            recipient: recipient,
+            estimatedTime: estimatedTime,
+            transactionError: transactionError,
+            toAddress: toAddress,
+            depositAddress: depositAddress,
+            providerSwapId: providerSwapId
+        )
     }
 
     override var feeData: FeeData? {

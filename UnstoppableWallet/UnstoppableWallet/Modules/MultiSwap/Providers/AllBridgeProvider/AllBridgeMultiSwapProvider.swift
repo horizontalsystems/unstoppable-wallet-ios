@@ -11,6 +11,8 @@ import SwiftUI
 import TronKit
 
 class AllBridgeMultiSwapProvider: IMultiSwapProvider {
+    static let id = "ALLBRIDGE"
+
     private let assetMapExpiration: TimeInterval = 60 * 60
 
     //    private let baseUrl = "https://allbridge.io/"
@@ -75,7 +77,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         syncAssets()
     }
 
-    var id: String { "allbridge" }
+    var id: String { Self.id }
     var name: String { "AllBridge" }
     var type: SwapProviderType { .auto }
     var icon: String { "swap_provider_allbridge" }
@@ -254,7 +256,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         throw SwapError.unsupportedTokenIn
     }
 
-    private func transactionParameters(tokenIn: Token, tokenOut: Token, recipient: String?, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> Parameters {
+    private func transactionParameters(tokenIn: Token, tokenOut: Token, recipient: String, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> Parameters {
         guard let assetIn = assetMap[tokenIn.tokenQuery.id.lowercased()] else {
             throw SwapError.unsupportedTokenIn
         }
@@ -267,12 +269,11 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
             throw SwapError.invalidAmount
         }
 
-        let sender = try await resolveDestination(recipient: recipient, token: tokenIn)
-        let recipient = try await resolveDestination(recipient: recipient, token: tokenOut)
-
         guard let amountOutMinInt = tokenOut.rawAmount(expectedAmountOutMin) else {
             throw SwapError.invalidAmount
         }
+
+        let sender = try await resolveDestination(recipient: nil, token: tokenIn)
 
         var parameters: Parameters = [
             "amount": amount.description,
@@ -292,7 +293,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         return parameters
     }
 
-    func fetchTransactionData<T: ImmutableMappable>(tokenIn: Token, tokenOut: Token, recipient: String?, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> T {
+    func fetchTransactionData<T: ImmutableMappable>(tokenIn: Token, tokenOut: Token, recipient: String, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> T {
         let parameters = try await transactionParameters(tokenIn: tokenIn, tokenOut: tokenOut, recipient: recipient, crosschain: crosschain, amountIn: amountIn, expectedAmountOutMin: expectedAmountOutMin)
 
         let path = crosschain ? "bridge" : "swap"
@@ -300,7 +301,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         return try await networkManager.fetch(url: "\(baseUrl)/raw/\(path)", parameters: parameters)
     }
 
-    func fetchStellarData(tokenIn: Token, tokenOut: Token, recipient: String?, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> Data {
+    func fetchStellarData(tokenIn: Token, tokenOut: Token, recipient: String, crosschain: Bool, amountIn: Decimal, expectedAmountOutMin: Decimal) async throws -> Data {
         let parameters = try await transactionParameters(tokenIn: tokenIn, tokenOut: tokenOut, recipient: recipient, crosschain: crosschain, amountIn: amountIn, expectedAmountOutMin: expectedAmountOutMin)
 
         let path = crosschain ? "bridge" : "swap"
@@ -312,6 +313,8 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         let crosschain = tokenIn.blockchainType != tokenOut.blockchainType
 
         let amountOut = try await estimateAmountOut(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn)
+
+        let recipient = try await resolveDestination(recipient: recipient, token: tokenOut)
 
         if tokenIn.blockchainType.isEvm {
             let evmResponse: EvmSwapResponse = try await fetchTransactionData(
@@ -361,7 +364,8 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 estimatedTime: crosschain ? nil : blockchainType.blockTime,
                 gasPrice: gasPriceData?.userDefined,
                 evmFeeData: evmFeeData,
-                nonce: transactionSettings?.nonce
+                nonce: transactionSettings?.nonce,
+                toAddress: recipient
             )
         } else if tokenIn.blockchainType == .tron {
             let createdTransaction: TronKit.CreatedTransactionResponse = try await fetchTransactionData(
@@ -406,7 +410,8 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 estimatedTime: crosschain ? nil : BlockchainType.tron.blockTime,
                 createdTransaction: createdTransaction,
                 fees: fees,
-                transactionError: transactionError
+                transactionError: transactionError,
+                toAddress: recipient
             )
         } else if tokenIn.blockchainType == .stellar {
             let transactionEnvelopeData: Data = try await fetchStellarData(
@@ -453,7 +458,8 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 transactionData: .envelope(transactionEnvelope),
                 token: tokenIn,
                 fee: fee,
-                transactionError: transactionError
+                transactionError: transactionError,
+                toAddress: recipient
             )
         }
 
@@ -462,6 +468,10 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
 
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
         allowanceHelper.preSwapView(step: step, tokenIn: tokenIn, amount: amount, isPresented: isPresented, onSuccess: onSuccess)
+    }
+
+    func track(swap: Swap) async throws -> Swap {
+        swap // TODO: implement track
     }
 }
 

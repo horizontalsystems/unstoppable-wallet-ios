@@ -16,14 +16,26 @@ class StellarSwapFinalQuote: SwapFinalQuote {
         transactionData: StellarSendHelper.TransactionData,
         token: Token,
         fee: Decimal?,
-        transactionError: Error?
+        transactionError: Error?,
+        toAddress: String,
+        depositAddress: String? = nil,
+        providerSwapId: String? = nil
     ) {
         self.amountIn = amountIn
         self.transactionData = transactionData
         self.token = token
         self.fee = fee
 
-        super.init(expectedBuyAmount: expectedAmountOut, slippage: slippage, recipient: recipient, estimatedTime: estimatedTime, transactionError: transactionError)
+        super.init(
+            expectedBuyAmount: expectedAmountOut,
+            slippage: slippage,
+            recipient: recipient,
+            estimatedTime: estimatedTime,
+            transactionError: transactionError,
+            toAddress: toAddress,
+            depositAddress: depositAddress,
+            providerSwapId: providerSwapId
+        )
     }
 
     override func caution(transactionError: Error, baseToken: Token) -> CautionNew? {

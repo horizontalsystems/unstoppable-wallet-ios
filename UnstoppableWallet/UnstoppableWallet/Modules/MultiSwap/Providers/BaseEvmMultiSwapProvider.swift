@@ -35,6 +35,10 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         allowanceHelper.preSwapView(step: step, tokenIn: tokenIn, amount: amount, isPresented: isPresented, onSuccess: onSuccess)
     }
 
+    func track(swap _: Swap) async throws -> Swap {
+        fatalError("Must be implemented in subclass")
+    }
+
     func spenderAddress(chain _: Chain) throws -> EvmKit.Address {
         fatalError("Must be implemented in subclass")
     }

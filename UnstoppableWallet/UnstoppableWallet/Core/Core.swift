@@ -9,8 +9,6 @@ class Core {
     static func initApp() throws {
         let core = try Core()
         instance = core
-
-        core.finishInitialize()
     }
 
     static var shared: Core {
@@ -127,6 +125,7 @@ class Core {
 
     let swapAssetStorage: SwapAssetStorage
     let swapProviderManager: MultiSwapProviderManager
+    let swapHistoryManager: SwapHistoryManager
 
     init() throws {
         let databaseURL = try FileManager.default
@@ -432,9 +431,8 @@ class Core {
 
         swapAssetStorage = SwapAssetStorage(dbPool: dbPool)
         swapProviderManager = MultiSwapProviderManager(localStorage: localStorage, networkManager: networkManager, apiKey: AppConfig.uswapApiKey)
-    }
 
-    func finishInitialize() {
-        swapProviderManager.onCoreInitialization()
+        let swapStorage = SwapStorage(dbPool: dbPool, marketKit: marketKit)
+        swapHistoryManager = SwapHistoryManager(accountManager: accountManager, storage: swapStorage)
     }
 }

@@ -16,12 +16,24 @@ class TonSwapFinalQuote: SwapFinalQuote {
         transactionParam: SendTransactionParam,
         fee: Decimal?,
         transactionError: Error?,
+        toAddress: String,
+        depositAddress: String? = nil,
+        providerSwapId: String? = nil
     ) {
         self.amountIn = amountIn
         self.transactionParam = transactionParam
         self.fee = fee
 
-        super.init(expectedBuyAmount: expectedAmountOut, slippage: slippage, recipient: recipient, estimatedTime: estimatedTime, transactionError: transactionError)
+        super.init(
+            expectedBuyAmount: expectedAmountOut,
+            slippage: slippage,
+            recipient: recipient,
+            estimatedTime: estimatedTime,
+            transactionError: transactionError,
+            toAddress: toAddress,
+            depositAddress: depositAddress,
+            providerSwapId: providerSwapId
+        )
     }
 
     override var canSwap: Bool {

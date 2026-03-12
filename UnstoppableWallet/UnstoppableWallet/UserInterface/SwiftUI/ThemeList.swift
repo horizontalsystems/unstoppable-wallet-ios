@@ -103,3 +103,37 @@ struct ListForEach<Content: View, Item: Hashable>: View {
         .listRowSeparator(.hidden)
     }
 }
+
+struct ListForEachIdentifiable<Content: View, Item: Identifiable>: View {
+    private let items: [Item]
+    private let onMove: ((IndexSet, Int) -> Void)?
+    private let itemContent: (Item) -> Content
+
+    init(_ items: [Item], onMove: ((IndexSet, Int) -> Void)? = nil, @ViewBuilder itemContent: @escaping (Item) -> Content) {
+        self.items = items
+        self.onMove = onMove
+        self.itemContent = itemContent
+    }
+
+    var body: some View {
+        ForEach(items) { item in
+            view(item)
+        }
+        .onMove(perform: onMove)
+    }
+
+    @ViewBuilder private func view(_ item: Item) -> some View {
+        VStack(spacing: 0) {
+            if items.first?.id == item.id {
+                HorizontalDivider()
+            }
+
+            itemContent(item)
+
+            HorizontalDivider()
+        }
+        .listRowBackground(Color.clear)
+        .listRowInsets(EdgeInsets())
+        .listRowSeparator(.hidden)
+    }
+}
