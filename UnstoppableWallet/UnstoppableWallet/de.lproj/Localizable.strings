@@ -600,6 +600,16 @@
 
 "swap.quotes.providers" = "Anbieter";
 "swap.quotes.best_price" = "Bester Preis";
+"swap.quotes.sort.title" = "Sortieren nach";
+"swap.quotes.sort.best_rate" = "Bester Kurs";
+"swap.quotes.sort.best_time" = "Schnellste";
+
+"swap.quotes.providers.risk_levels.title" = "Risikostufen der Anbieter";
+"swap.quotes.providers.risk_levels.description" = "Risikostufen zeigen, welche Maßnahmen ein Anbieter während der Ausführung ergreifen kann.";
+"swap.quotes.providers.risk_levels.auto.description" = "Diese Börse nutzt eigene Liquidität und ist datenschutzfreundlich. Transaktionen werden ohne AML-Sperrung verarbeitet.";
+"swap.quotes.providers.risk_levels.flex.description" = "Diese Börse erstattet in der Regel Transaktionen zurück, die AML-Prüfungen nicht bestehen. In seltenen Fällen können Gelder vorübergehend gesperrt werden, wenn eine zusätzliche Verifizierung erforderlich ist.";
+"swap.quotes.providers.risk_levels.control.description" = "Diese Börse sperrt Transaktionen, die AML-Prüfungen nicht bestehen, bis die KYC-/Verifizierungsanforderungen erfüllt sind.";
+
 
 "swap.allowance" = "Vergütung";
 "swap.allowance.description" = "Die Menge, die eine Börse im Namen eines Benutzers für Token-Austausche ausgeben kann. Eine vorhergehende Transaktion, die eine ausreichende Zulage festlegt, ist erforderlich, bevor eine tatsächliche Austauschtransaktion stattfinden kann.";

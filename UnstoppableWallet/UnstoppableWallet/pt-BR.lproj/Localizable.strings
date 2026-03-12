@@ -600,6 +600,16 @@
 
 "swap.quotes.providers" = "Provedores";
 "swap.quotes.best_price" = "Melhor Preço";
+"swap.quotes.sort.title" = "Ordenar por";
+"swap.quotes.sort.best_rate" = "Melhor taxa";
+"swap.quotes.sort.best_time" = "Mais rápido";
+
+"swap.quotes.providers.risk_levels.title" = "Níveis de risco do provedor";
+"swap.quotes.providers.risk_levels.description" = "Os níveis de risco mostram quais ações um provedor pode tomar durante a execução.";
+"swap.quotes.providers.risk_levels.auto.description" = "Esta exchange utiliza sua própria liquidez e é amigável à privacidade. As transações são processadas sem bloqueio AML.";
+"swap.quotes.providers.risk_levels.flex.description" = "Esta exchange geralmente reembolsa transações que não passam nas verificações AML. Em casos raros, os fundos podem ser temporariamente bloqueados se uma verificação adicional for necessária.";
+"swap.quotes.providers.risk_levels.control.description" = "Esta exchange bloqueia transações que não passam nas verificações AML até que os requisitos de KYC/verificação sejam concluídos.";
+
 
 "swap.allowance" = "Preço";
 "swap.allowance.description" = "O montante que uma exchange pode gastar em nome do usuário na execução de trocas simbólicas. É necessária uma margem suficiente para que uma transação de troca efetiva possa ocorrer.";

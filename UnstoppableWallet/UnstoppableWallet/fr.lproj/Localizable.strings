@@ -600,6 +600,16 @@
 
 "swap.quotes.providers" = "Fournisseurs";
 "swap.quotes.best_price" = "Meilleur prix";
+"swap.quotes.sort.title" = "Trier par";
+"swap.quotes.sort.best_rate" = "Meilleur taux";
+"swap.quotes.sort.best_time" = "Plus rapide";
+
+"swap.quotes.providers.risk_levels.title" = "Niveaux de risque des fournisseurs";
+"swap.quotes.providers.risk_levels.description" = "Les niveaux de risque indiquent les actions qu'un fournisseur peut entreprendre lors de l'exécution.";
+"swap.quotes.providers.risk_levels.auto.description" = "Cet exchange utilise sa propre liquidité et respecte la confidentialité. Les transactions sont traitées sans blocage AML.";
+"swap.quotes.providers.risk_levels.flex.description" = "Cet exchange rembourse généralement les transactions qui échouent aux vérifications AML. Dans de rares cas, les fonds peuvent être temporairement bloqués si une vérification supplémentaire est requise.";
+"swap.quotes.providers.risk_levels.control.description" = "Cet exchange bloque les transactions qui échouent aux vérifications AML jusqu'à ce que les exigences KYC/vérification soient remplies.";
+
 
 "swap.allowance" = "Allocation";
 "swap.allowance.description" = "La somme qu'une bourse peut dépenser au nom d'un utilisateur lors de l'exécution d'échanges de jetons. Une transaction de procédure établissant une autorisation suffisante est nécessaire avant qu'une transaction d'échange réelle puisse avoir lieu.";
