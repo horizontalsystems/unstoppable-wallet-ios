@@ -5,6 +5,7 @@ struct BadgeViewNew: View {
     private let change: Int?
     private let mode: Mode
     private let colorStyle: ColorStyle
+    private let onTap: (() -> Void)?
 
     init(_ text: CustomStringConvertible, change: Int? = nil, mode: BadgeViewNew.Mode? = nil, colorStyle: ColorStyle? = nil) {
         if let componentBadge = text as? ComponentBadge {
@@ -12,15 +13,28 @@ struct BadgeViewNew: View {
             self.change = change ?? componentBadge.change
             self.mode = mode ?? componentBadge.mode ?? .solid
             self.colorStyle = colorStyle ?? componentBadge.colorStyle ?? .primary
+            onTap = componentBadge.onTap
         } else {
             self.text = text.description
             self.change = change
             self.mode = mode ?? .solid
             self.colorStyle = colorStyle ?? .primary
+            onTap = nil
         }
     }
 
     var body: some View {
+        if let onTap {
+            Button(action: onTap) {
+                bordered().contentShape(Rectangle())
+            }
+            .buttonStyle(.plain)
+        } else {
+            bordered()
+        }
+    }
+
+    @ViewBuilder func bordered() -> some View {
         switch mode {
         case .solid:
             content().background(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous).fill(Color.themeBlade))
@@ -46,7 +60,8 @@ struct BadgeViewNew: View {
             }
         }
         .padding(.horizontal, .margin6)
-        .padding(.vertical, .margin2)
+        .padding(.top, .heightOneDp)
+        .padding(.bottom, .margin2)
         .clipShape(RoundedRectangle(cornerRadius: .cornerRadius8, style: .continuous))
     }
 }

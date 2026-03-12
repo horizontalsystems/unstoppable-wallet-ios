@@ -2,6 +2,7 @@ import SwiftUI
 
 struct MultiText: View {
     var eyebrow: CustomStringConvertible?
+    var eyebrowBadge: CustomStringConvertible?
     var title: CustomStringConvertible?
     var badge: CustomStringConvertible?
     var subtitleBadge: CustomStringConvertible?
@@ -11,9 +12,15 @@ struct MultiText: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 0) {
-            if let eyebrow {
-                ThemeText(eyebrow, style: .subhead)
-                    .multilineTextAlignment(.leading)
+            HStack(alignment: .top, spacing: .margin8) {
+                if let eyebrow {
+                    ThemeText(eyebrow, style: .subhead)
+                        .multilineTextAlignment(.leading)
+                }
+
+                if let eyebrowBadge {
+                    BadgeViewNew(eyebrowBadge)
+                }
             }
 
             HStack(spacing: .margin8) {

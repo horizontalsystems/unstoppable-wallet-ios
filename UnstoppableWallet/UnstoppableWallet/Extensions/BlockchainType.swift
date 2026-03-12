@@ -255,11 +255,17 @@ extension BlockchainType {
 
     var blockTime: TimeInterval? {
         switch self {
-        case .ethereum: return 15
+        case .ethereum: return 12
         case .binanceSmartChain, .tron: return 3
-        case .polygon, .avalanche, .optimism, .arbitrumOne, .fantom, .base, .zkSync: return 2
-        case .gnosis, .stellar: return 5
-        default: return nil
+        case .polygon, .avalanche, .optimism, .fantom, .base, .zkSync: return 2
+        case .gnosis, .stellar, .ton: return 5
+        case .bitcoin, .bitcoinCash, .ecash: return 600
+        case .dash, .litecoin: return 150
+        case .zcash: return 75
+        case .monero: return 120
+        case .zano: return 60
+        case .arbitrumOne: return 1
+        case .solana, .unsupported: return nil
         }
     }
 }

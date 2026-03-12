@@ -7,12 +7,12 @@ class UniswapMultiSwapQuote: EvmMultiSwapQuote {
     let tradeOptions: TradeOptions
     let providerName: String
 
-    init(trade: Trade, tradeOptions: TradeOptions, providerName: String, allowanceState: MultiSwapAllowanceHelper.AllowanceState) {
+    init(trade: Trade, tradeOptions: TradeOptions, providerName: String, allowanceState: MultiSwapAllowanceHelper.AllowanceState, estimatedTime: TimeInterval? = nil) {
         self.trade = trade
         self.tradeOptions = tradeOptions
         self.providerName = providerName
 
-        super.init(expectedBuyAmount: trade.amountOut ?? 0, allowanceState: allowanceState)
+        super.init(expectedBuyAmount: trade.amountOut ?? 0, allowanceState: allowanceState, estimatedTime: estimatedTime)
     }
 }
 

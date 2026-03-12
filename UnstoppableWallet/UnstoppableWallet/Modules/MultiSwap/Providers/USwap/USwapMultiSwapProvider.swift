@@ -67,7 +67,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     var id: String { provider.rawValue }
     var name: String { provider.title }
     var type: SwapProviderType { provider.type }
-    var aml: Bool { provider.aml }
+
     var requireTerms: Bool { provider.requireTerms }
     var icon: String { provider.icon }
 
@@ -219,10 +219,11 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 )
             }
 
-            return EvmMultiSwapQuote(expectedBuyAmount: quote.expectedBuyAmount, allowanceState: allowanceState)
+            let esimatedTime = quote.esimatedTime ?? MultiSwapHelpers.estimate(tokenIn: tokenIn, tokenOut: tokenOut)
+            return EvmMultiSwapQuote(expectedBuyAmount: quote.expectedBuyAmount, allowanceState: allowanceState, estimatedTime: esimatedTime)
 
         case .bitcoin, .bitcoinCash, .ecash, .litecoin, .dash, .zcash, .monero, .ton, .stellar:
-            return MultiSwapQuote(expectedBuyAmount: quote.expectedBuyAmount)
+            return MultiSwapQuote(expectedBuyAmount: quote.expectedBuyAmount, estimatedTime: quote.esimatedTime)
 
         default:
             throw SwapError.unsupportedTokenIn
@@ -755,15 +756,8 @@ extension USwapMultiSwapProvider {
 
         var type: SwapProviderType {
             switch self {
-            case .near: return .dex
-            case .quickEx, .letsExchange, .stealthex, .swapuz: return .p2p
-            }
-        }
-
-        var aml: Bool {
-            switch self {
-            case .quickEx, .letsExchange, .stealthex: return true
-            default: return false
+            case .swapuz: return .flex
+            case .quickEx, .letsExchange, .stealthex, .near: return .control
             }
         }
 

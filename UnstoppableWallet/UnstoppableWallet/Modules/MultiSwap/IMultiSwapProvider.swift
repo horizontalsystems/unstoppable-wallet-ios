@@ -7,7 +7,6 @@ protocol IMultiSwapProvider {
     var id: String { get }
     var name: String { get }
     var type: SwapProviderType { get }
-    var aml: Bool { get }
     var requireTerms: Bool { get }
     var icon: String { get }
     var syncPublisher: AnyPublisher<Void, Never>? { get }
@@ -32,14 +31,27 @@ extension IMultiSwapProvider {
     }
 }
 
-enum SwapProviderType {
-    case dex
-    case p2p
+enum SwapProviderType: String, CaseIterable, Identifiable {
+    case auto
+    case flex
+    case control
 
     var title: String {
+        rawValue.capitalized(with: .autoupdatingCurrent)
+    }
+
+    var id: String {
+        rawValue
+    }
+
+    var colorStyle: ColorStyle {
         switch self {
-        case .dex: return "DEX"
-        case .p2p: return "P2P"
+        case .auto:
+            return .green
+        case .flex:
+            return .blue
+        case .control:
+            return .yellow
         }
     }
 }

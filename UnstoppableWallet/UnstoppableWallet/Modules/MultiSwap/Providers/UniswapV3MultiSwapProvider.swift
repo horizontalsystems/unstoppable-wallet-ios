@@ -3,7 +3,7 @@ import MarketKit
 class UniswapV3MultiSwapProvider: BaseUniswapV3MultiSwapProvider {
     override var id: String { "uniswap_v3" }
     override var name: String { "Uniswap v.3" }
-    override var type: SwapProviderType { .dex }
+    override var type: SwapProviderType { .auto }
     override var icon: String { "swap_provider_uniswap" }
 
     override func supports(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token) -> Bool {
