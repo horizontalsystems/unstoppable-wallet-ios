@@ -600,6 +600,16 @@
 
 "swap.quotes.providers" = "Proveedores";
 "swap.quotes.best_price" = "Mejor Precio";
+"swap.quotes.sort.title" = "Ordenar por";
+"swap.quotes.sort.best_rate" = "Mejor tasa";
+"swap.quotes.sort.best_time" = "Más rápido";
+
+"swap.quotes.providers.risk_levels.title" = "Niveles de riesgo del proveedor";
+"swap.quotes.providers.risk_levels.description" = "Los niveles de riesgo muestran qué acciones puede tomar un proveedor durante la ejecución.";
+"swap.quotes.providers.risk_levels.auto.description" = "Este exchange utiliza su propia liquidez y respeta la privacidad. Las transacciones se procesan sin bloqueo AML.";
+"swap.quotes.providers.risk_levels.flex.description" = "Este exchange generalmente reembolsa las transacciones que no pasan las verificaciones AML. En casos excepcionales, los fondos pueden ser bloqueados temporalmente si se requiere una verificación adicional.";
+"swap.quotes.providers.risk_levels.control.description" = "Este exchange bloquea las transacciones que no pasan las verificaciones AML hasta que se completen los requisitos de KYC/verificación.";
+
 
 "swap.allowance" = "Permiso de acceso";
 "swap.allowance.description" = "La cantidad que un intercambio puede gastar en nombre de un usuario al ejecutar intercambios de tokens. Se requiere una transacción previa que establezca una autorización suficiente antes de que pueda tener lugar una transacción de intercambio real.";
