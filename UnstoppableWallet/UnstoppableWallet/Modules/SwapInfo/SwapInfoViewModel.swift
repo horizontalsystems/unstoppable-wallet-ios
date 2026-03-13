@@ -14,6 +14,7 @@ class SwapInfoViewModel: ObservableObject {
     private var rates = [RateKey: CurrencyValue]()
 
     @Published var sections = [SendDataSection]()
+    @Published var legs = [Leg]()
 
     init(swap: Swap) {
         self.swap = swap
@@ -30,7 +31,8 @@ class SwapInfoViewModel: ObservableObject {
             }
         }
 
-        buildSections()
+        syncSections()
+        syncLegs()
     }
 
     private func handleUpdated(swap: Swap) {
@@ -39,15 +41,17 @@ class SwapInfoViewModel: ObservableObject {
         }
 
         self.swap = swap
-        buildSections()
+
+        syncSections()
+        syncLegs()
     }
 
     private func handle(rate: (RateKey, CurrencyValue)) {
         rates[rate.0] = rate.1
-        buildSections()
+        syncSections()
     }
 
-    private func buildSections() {
+    private func syncSections() {
         let rateKeyIn = RateKey(token: swap.tokenIn, date: swap.date)
         let rateKeyOut = RateKey(token: swap.tokenOut, date: swap.date)
 
@@ -73,10 +77,7 @@ class SwapInfoViewModel: ObservableObject {
                     title: "swap_info.date".localized,
                     value: DateHelper.instance.formatFullTime(from: swap.date)
                 ),
-                .simpleValue(
-                    title: "swap_info.status".localized,
-                    value: swap.status.title
-                ),
+                .swapStatus(status: swap.status),
                 .recipient(
                     title: "swap_info.recipient".localized,
                     value: swap.toAddress,
@@ -89,5 +90,67 @@ class SwapInfoViewModel: ObservableObject {
         DispatchQueue.main.async {
             self.sections = sections
         }
+    }
+
+    private func syncLegs() {
+        guard let fromAsset = swap.fromAsset, let toAsset = swap.toAsset, let swapLegs = swap.legs else {
+            legs = []
+            return
+        }
+
+        legs = swapLegs.enumerated().map { _, leg in
+            var title = "swap_info.unknown".localized
+
+            if leg.type == "native_send" {
+                if leg.fromAsset == fromAsset {
+                    title = "swap_info.deposit".localized(swap.tokenIn.coin.code)
+                } else if leg.toAsset == toAsset {
+                    title = "swap_info.send".localized(swap.tokenOut.coin.code)
+                }
+            } else if leg.type == "swap" {
+                title = "swap_info.swap".localized
+            }
+
+            return Leg(title: title, status: leg.status, url: explorerUrl(chainId: leg.chainId, hash: leg.txHash))
+        }
+    }
+
+    private func explorerUrl(chainId: String, hash: String) -> String? {
+        switch chainId {
+        case "thorchain-1": return "https://thorchain.net/tx/" + hash
+        case "near": return "https://nearblocks.io/txns/" + hash
+        default: ()
+        }
+
+        guard let blockchainType = USwapMultiSwapProvider.blockchainTypeMap[chainId] else {
+            return nil
+        }
+
+        if blockchainType.isEvm {
+            return Core.shared.evmSyncSourceManager.syncSource(blockchainType: blockchainType).transactionSource.transactionUrl(hash: hash)
+        }
+
+        switch blockchainType {
+        case .bitcoin: return "https://blockchair.com/bitcoin/transaction/" + hash
+        case .bitcoinCash: return "https://blockchair.com/bitcoin-cash/transaction/" + hash
+        case .dash: return "https://blockchair.com/dash/transaction/" + hash
+        case .ecash: return "https://blockchair.com/ecash/transaction/" + hash
+        case .litecoin: return "https://blockchair.com/litecoin/transaction/" + hash
+        case .monero: return "https://blockchair.com/monero/transaction/" + hash
+        case .zcash: return "https://blockchair.com/zcash/transaction/" + hash
+        case .stellar: return "https://stellar.expert/explorer/public/tx/" + hash
+        case .ton: return "https://tonviewer.com/transaction/" + hash
+        case .zano: return "https://explorer.zano.org/transaction/" + hash
+        case .tron: return "https://tronscan.org/#/transaction/" + hash
+        default: return nil
+        }
+    }
+}
+
+extension SwapInfoViewModel {
+    struct Leg {
+        let title: String
+        let status: Swap.Status
+        let url: String?
     }
 }

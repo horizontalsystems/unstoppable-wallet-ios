@@ -887,11 +887,7 @@ enum StorageMigrator {
             }
         }
 
-        migrator.registerMigration("Create SwapRecord 8") { db in
-            if try db.tableExists(SwapRecord.databaseTableName) {
-                try db.drop(table: SwapRecord.databaseTableName)
-            }
-
+        migrator.registerMigration("Create SwapRecord") { db in
             try db.create(table: SwapRecord.databaseTableName) { t in
                 t.column(SwapRecord.Columns.uid.name, .text).notNull().primaryKey(onConflict: .replace)
                 t.column(SwapRecord.Columns.txHash.name, .text)
@@ -906,13 +902,11 @@ enum StorageMigrator {
                 t.column(SwapRecord.Columns.depositAddress.name, .text)
                 t.column(SwapRecord.Columns.providerSwapId.name, .text)
                 t.column(SwapRecord.Columns.date.name, .datetime).notNull()
+                t.column(SwapRecord.Columns.fromAsset.name, .text)
+                t.column(SwapRecord.Columns.toAsset.name, .text)
+                t.column(SwapRecord.Columns.legs.name, .text)
             }
         }
-
-        // migrator.registerMigration("Update SwapRecord 1") { db in
-        //     try SwapRecord
-        //         .updateAll(db, SwapRecord.Columns.status.set(to: "pending"))
-        // }
 
         try migrator.migrate(dbPool)
     }

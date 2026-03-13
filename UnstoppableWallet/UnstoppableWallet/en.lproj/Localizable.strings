@@ -729,6 +729,12 @@
 "swap_info.date" = "Date";
 "swap_info.status" = "Status";
 "swap_info.recipient" = "Recipient";
+"swap_info.view" = "View";
+"swap_info.deposit" = "Deposit %@";
+"swap_info.swap" = "Swap";
+"swap_info.send" = "Send %@";
+"swap_info.refund" = "Refund %@";
+"swap_info.unknown" = "Unknown";
 
 "swap_info.status.not_started" = "Not Started";
 "swap_info.status.pending" = "Pending";

@@ -41,7 +41,19 @@ class SwapStorage {
                 toAddress: record.toAddress,
                 depositAddress: record.depositAddress,
                 providerSwapId: record.providerSwapId,
-                date: record.date
+                date: record.date,
+                fromAsset: record.fromAsset,
+                toAsset: record.toAsset,
+                legs: record.legs?.map { leg in
+                    Swap.Leg(
+                        status: Swap.Status(rawValue: record.status) ?? .unknown,
+                        type: leg.type,
+                        chainId: leg.chainId,
+                        txHash: leg.txHash,
+                        fromAsset: leg.fromAsset,
+                        toAsset: leg.toAsset
+                    )
+                }
             )
         }
     }
@@ -60,7 +72,19 @@ class SwapStorage {
             toAddress: swap.toAddress,
             depositAddress: swap.depositAddress,
             providerSwapId: swap.providerSwapId,
-            date: swap.date
+            date: swap.date,
+            fromAsset: swap.fromAsset,
+            toAsset: swap.toAsset,
+            legs: swap.legs?.map { leg in
+                SwapRecord.Leg(
+                    status: leg.status.rawValue,
+                    type: leg.type,
+                    chainId: leg.chainId,
+                    txHash: leg.txHash,
+                    fromAsset: leg.fromAsset,
+                    toAsset: leg.toAsset
+                )
+            }
         )
     }
 }

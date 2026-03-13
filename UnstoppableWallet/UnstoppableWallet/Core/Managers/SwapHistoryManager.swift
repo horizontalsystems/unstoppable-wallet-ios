@@ -5,6 +5,8 @@ class SwapHistoryManager {
     private let accountManager: AccountManager
     private let storage: SwapStorage
     private var cancellables = Set<AnyCancellable>()
+    private var syncTimer: AnyCancellable?
+    private var isSyncing = false
 
     private let swapUpdateSubject = PassthroughSubject<Swap, Never>()
 
@@ -26,20 +28,39 @@ class SwapHistoryManager {
             return
         }
 
+        var hasStillPendingSwaps = false
+
         for swap in pendingSwaps {
             guard let provider = SwapProviderFactory.provider(id: swap.providerId) else {
                 continue
             }
 
             do {
-                let swap = try await provider.track(swap: swap)
-                try storage.save(swap: swap)
+                let updatedSwap = try await provider.track(swap: swap)
+                try storage.save(swap: updatedSwap)
+                swapUpdateSubject.send(updatedSwap)
 
-                swapUpdateSubject.send(swap)
+                if updatedSwap.isPending {
+                    hasStillPendingSwaps = true
+                }
             } catch {
                 print(error)
+                hasStillPendingSwaps = true
             }
         }
+
+        if hasStillPendingSwaps {
+            scheduleTimer()
+        }
+    }
+
+    private func scheduleTimer() {
+        syncTimer?.cancel()
+        syncTimer = Just(())
+            .delay(for: .seconds(30), scheduler: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.sync()
+            }
     }
 }
 
@@ -49,12 +70,22 @@ extension SwapHistoryManager {
     }
 
     func sync() {
+        guard !isSyncing else {
+            return
+        }
+
+        syncTimer?.cancel()
+        syncTimer = nil
+        isSyncing = true
+
         Task { [weak self] in
             do {
                 try await self?._sync()
             } catch {
                 print(error)
             }
+
+            self?.isSyncing = false
         }
     }
 
@@ -67,6 +98,11 @@ extension SwapHistoryManager {
     }
 
     func save(swap: Swap) {
-        try? storage.save(swap: swap)
+        do {
+            try storage.save(swap: swap)
+            sync()
+        } catch {
+            print(error)
+        }
     }
 }
