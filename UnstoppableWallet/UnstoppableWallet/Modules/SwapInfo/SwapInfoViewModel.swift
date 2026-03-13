@@ -5,14 +5,12 @@ import RxSwift
 
 class SwapInfoViewModel: ObservableObject {
     private let manager = Core.shared.swapHistoryManager
-    private let marketKit = Core.shared.marketKit
-    private let accountManager = Core.shared.accountManager
     private let rateService = HistoricalRateService(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager)
 
-    private let queue = DispatchQueue(label: "\(AppConfig.label).swap-history-view-model", qos: .userInitiated)
+    private var cancellables = Set<AnyCancellable>()
     private let disposeBag = DisposeBag()
 
-    private let swap: Swap
+    private var swap: Swap
     private var rates = [RateKey: CurrencyValue]()
 
     @Published var sections = [SendDataSection]()
@@ -20,6 +18,7 @@ class SwapInfoViewModel: ObservableObject {
     init(swap: Swap) {
         self.swap = swap
 
+        subscribe(&cancellables, manager.swapUpdatePublisher) { [weak self] in self?.handleUpdated(swap: $0) }
         subscribe(disposeBag, rateService.rateUpdatedObservable) { [weak self] in self?.handle(rate: $0) }
 
         for token in [swap.tokenIn, swap.tokenOut] {
@@ -31,6 +30,15 @@ class SwapInfoViewModel: ObservableObject {
             }
         }
 
+        buildSections()
+    }
+
+    private func handleUpdated(swap: Swap) {
+        guard self.swap.uid == swap.uid else {
+            return
+        }
+
+        self.swap = swap
         buildSections()
     }
 

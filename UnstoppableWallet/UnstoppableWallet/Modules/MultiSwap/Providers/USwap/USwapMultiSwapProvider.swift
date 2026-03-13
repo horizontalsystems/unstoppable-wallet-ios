@@ -331,7 +331,6 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
         var parameters: Parameters = [
             "provider": swap.providerId,
-            "hash": swap.txHash,
             "toAddress": swap.toAddress,
         ]
 
@@ -340,27 +339,14 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             dict[key] = value
         }
 
+        set(&parameters, "hash", swap.txHash)
         set(&parameters, "chainId", blockchainTypeMap.first(where: { $0.value == blockchainType })?.key)
         set(&parameters, "fromAsset", assetMap[swap.tokenIn.tokenQuery.id.lowercased()])
         set(&parameters, "toAsset", assetMap[swap.tokenOut.tokenQuery.id.lowercased()])
         set(&parameters, "depositAddress", swap.depositAddress)
         set(&parameters, "providerSwapId", swap.providerSwapId)
 
-        let response: TrackResponse = try await networkManager.fetch(
-            url: "\(USwapMultiSwapProvider.baseUrl)/track",
-            method: .post,
-            parameters: parameters,
-            headers: USwapMultiSwapProvider.headers
-        )
-
-        var swap = swap
-
-        if let status = Swap.Status(rawValue: response.status) {
-            swap.status = status
-            swap.amountOut = response.toAmount
-        }
-
-        return swap
+        return try await Self.track(swap: swap, parameters: parameters, networkManager: networkManager)
     }
 
     private func sendingAddress(token: Token) -> String? {
@@ -774,6 +760,29 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             depositAddress: quote.inboundAddress,
             providerSwapId: quote.providerSwapId
         )
+    }
+}
+
+extension USwapMultiSwapProvider {
+    static func track(swap: Swap, parameters: Parameters, networkManager: NetworkManager) async throws -> Swap {
+        let response: USwapMultiSwapProvider.TrackResponse = try await networkManager.fetch(
+            url: "\(USwapMultiSwapProvider.baseUrl)/track",
+            method: .post,
+            parameters: parameters,
+            headers: USwapMultiSwapProvider.headers
+        )
+
+        var swap = swap
+
+        if let status = Swap.Status(rawValue: response.status) {
+            swap.status = status
+
+            if status == .completed {
+                swap.amountOut = response.toAmount
+            }
+        }
+
+        return swap
     }
 }
 

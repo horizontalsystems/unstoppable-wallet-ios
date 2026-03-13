@@ -4,8 +4,9 @@ import Foundation
 class SwapHistoryManager {
     private let accountManager: AccountManager
     private let storage: SwapStorage
-
     private var cancellables = Set<AnyCancellable>()
+
+    private let swapUpdateSubject = PassthroughSubject<Swap, Never>()
 
     init(accountManager: AccountManager, storage: SwapStorage) {
         self.accountManager = accountManager
@@ -21,8 +22,6 @@ class SwapHistoryManager {
 
         let pendingSwaps = try storage.pendingSwaps(accountId: account.id)
 
-        print("pending: \(pendingSwaps.count)")
-
         guard !pendingSwaps.isEmpty else {
             return
         }
@@ -35,6 +34,8 @@ class SwapHistoryManager {
             do {
                 let swap = try await provider.track(swap: swap)
                 try storage.save(swap: swap)
+
+                swapUpdateSubject.send(swap)
             } catch {
                 print(error)
             }
@@ -43,6 +44,10 @@ class SwapHistoryManager {
 }
 
 extension SwapHistoryManager {
+    var swapUpdatePublisher: AnyPublisher<Swap, Never> {
+        swapUpdateSubject.eraseToAnyPublisher()
+    }
+
     func sync() {
         Task { [weak self] in
             do {

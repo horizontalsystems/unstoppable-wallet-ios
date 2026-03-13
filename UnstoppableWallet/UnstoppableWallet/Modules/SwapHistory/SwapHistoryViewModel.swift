@@ -11,6 +11,7 @@ class SwapHistoryViewModel: ObservableObject {
     private let accountManager = Core.shared.accountManager
     private let rateService = HistoricalRateService(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager)
     private let queue = DispatchQueue(label: "\(AppConfig.label).swap-history-view-model", qos: .userInitiated)
+    private var cancellables = Set<AnyCancellable>()
     private let disposeBag = DisposeBag()
 
     private var __items = [Item]()
@@ -30,8 +31,22 @@ class SwapHistoryViewModel: ObservableObject {
     init() {
         __load()
 
+        subscribe(&cancellables, manager.swapUpdatePublisher) { [weak self] in self?.handleUpdated(swap: $0) }
         subscribe(disposeBag, rateService.ratesChangedObservable) { [weak self] in self?.handleRatesChanged() }
         subscribe(disposeBag, rateService.rateUpdatedObservable) { [weak self] in self?.handle(rate: $0) }
+    }
+
+    private func handleUpdated(swap: Swap) {
+        queue.async {
+            for item in self.__items {
+                if item.swap.uid == swap.uid {
+                    item.swap = swap
+                    item.currencyValueOut = self.currencyValue(amount: swap.amountOut, token: swap.tokenOut, rate: self.rate(token: swap.tokenOut, date: swap.date))
+                    self.__reportItem(item: item)
+                    break
+                }
+            }
+        }
     }
 
     private func handleRatesChanged() {
