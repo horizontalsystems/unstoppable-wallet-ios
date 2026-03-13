@@ -179,18 +179,18 @@ extension Coordinator {
         stat(page: statPage, event: .open(page: .cloudBackup))
     }
 
-    func presentAfterUnlock(@ViewBuilder content: @escaping (Binding<Bool>) -> some View, onDismiss: (() -> Void)? = nil, onPresent: (() -> Void)? = nil) {
-        performAfterUnlock {
+    func presentAfterUnlock(biometryAllowed: Bool = true, @ViewBuilder content: @escaping (Binding<Bool>) -> some View, onDismiss: (() -> Void)? = nil, onPresent: (() -> Void)? = nil) {
+        performAfterUnlock(biometryAllowed: biometryAllowed) {
             Coordinator.shared.present(content: content, onDismiss: onDismiss)
             onPresent?()
         }
     }
 
-    func performAfterUnlock(onUnlock: @escaping () -> Void) {
+    func performAfterUnlock(biometryAllowed: Bool = true, onUnlock: @escaping () -> Void) {
         if Core.shared.passcodeManager.isPasscodeSet {
             Coordinator.shared.present { _ in
                 ThemeNavigationStack {
-                    ModuleUnlockView {
+                    ModuleUnlockView(biometryAllowed: biometryAllowed) {
                         DispatchQueue.main.async {
                             onUnlock()
                         }

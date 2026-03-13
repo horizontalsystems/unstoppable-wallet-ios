@@ -10,6 +10,7 @@ class TransactionsViewModel: ObservableObject {
     private let reachabilityManager = Core.shared.reachabilityManager
     private let balanceHiddenManager = Core.shared.balanceHiddenManager
     private let amountRoundingManager = Core.shared.amountRoundingManager
+    private let securityManger = Core.shared.securityManager
     private let contactLabelService = TransactionsContactLabelService(contactManager: Core.shared.contactManager)
     private let rateService = HistoricalRateService(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager)
     private let nftMetadataService = NftMetadataService(nftMetadataManager: Core.shared.nftMetadataManager)
@@ -35,6 +36,12 @@ class TransactionsViewModel: ObservableObject {
     }
 
     @Published var transactionFilter: TransactionFilter {
+        didSet {
+            syncPoolGroup()
+        }
+    }
+    
+    @Published var spamFilterEnabled: Bool {
         didSet {
             syncPoolGroup()
         }
@@ -83,6 +90,7 @@ class TransactionsViewModel: ObservableObject {
     init(transactionFilter: TransactionFilter = .init()) {
         self.transactionFilter = transactionFilter
         isReachable = reachabilityManager.isReachable
+        spamFilterEnabled = securityManger.spamFilterEnabled
 
         viewItemFactory = TransactionsViewItemFactory(contactLabelService: contactLabelService)
 
@@ -103,6 +111,11 @@ class TransactionsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.isReachable = $0 }
             .store(in: &cancellables)
+        
+        securityManger.$spamFilterEnabled
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.spamFilterEnabled = $0 }
+            .store(in: &cancellables)
 
         __syncPoolGroup()
     }
@@ -110,7 +123,7 @@ class TransactionsViewModel: ObservableObject {
     // Queue protected methods
 
     private func __syncPoolGroup() {
-        __poolGroup = poolGroupFactory.poolGroup(type: poolGroupType, filter: typeFilter, contact: transactionFilter.contact, scamFilterEnabled: transactionFilter.scamFilterEnabled)
+        __poolGroup = poolGroupFactory.poolGroup(type: poolGroupType, filter: typeFilter, contact: transactionFilter.contact, scamFilterEnabled: spamFilterEnabled)
         __initPoolGroup()
     }
 

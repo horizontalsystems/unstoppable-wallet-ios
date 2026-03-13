@@ -25,6 +25,7 @@ class LocalStorage {
     private let keyRecentlySent = "recently-sent"
     private let keyUseMevProtection = "use-mev-protection"
     private let keyScamProtection = "scam-protection"
+    private let keySpamFilterEnabled = "spam-filter"
     private let keySwapTermsAccepted = "swap-terms-accepted"
     private let keySwapProvidersLastSyncTimestamp = "swap-providers-last-sync-timestamp"
     private let keyUSwapProviders = "uswap-providers"
@@ -161,6 +162,11 @@ extension LocalStorage {
     var scamProtection: Bool {
         get { userDefaultsStorage.value(for: keyScamProtection) ?? true }
         set { userDefaultsStorage.set(value: newValue, for: keyScamProtection) }
+    }
+
+    var spamFilterEnabled: Bool {
+        get { userDefaultsStorage.value(for: keySpamFilterEnabled) ?? true }
+        set { userDefaultsStorage.set(value: newValue, for: keySpamFilterEnabled) }
     }
 
     var swapTermsAccepted: Bool {
