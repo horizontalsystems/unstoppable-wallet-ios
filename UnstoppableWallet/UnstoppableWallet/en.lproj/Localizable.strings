@@ -722,6 +722,22 @@
 "swap_history.all" = "All";
 "swap_history.empty" = "You don’t have any pending or past swaps yet.";
 
+// Swap Info
+
+"swap_info.title" = "Swap Info";
+"swap_info.provider" = "Provider";
+"swap_info.date" = "Date";
+"swap_info.status" = "Status";
+"swap_info.recipient" = "Recipient";
+
+"swap_info.status.not_started" = "Not Started";
+"swap_info.status.pending" = "Pending";
+"swap_info.status.swapping" = "Swapping";
+"swap_info.status.completed" = "Completed";
+"swap_info.status.refunded" = "Refunded";
+"swap_info.status.unknown" = "Unknown";
+"swap_info.status.failed" = "Failed";
+
 // Market
 
 "market.title" = "Markets";

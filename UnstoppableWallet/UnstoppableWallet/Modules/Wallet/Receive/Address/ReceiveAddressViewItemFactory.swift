@@ -90,7 +90,7 @@ class ReceiveAddressViewItemFactory {
 
     func actions(item: Item) -> [ReceiveAddressModule.ActionType] {
         guard let item = item as? BaseReceiveAddressService.AssetReceiveAddress else {
-            return [ .share, .copy]
+            return [.share, .copy]
         }
 
         if item.watchAccount {

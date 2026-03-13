@@ -887,11 +887,14 @@ enum StorageMigrator {
             }
         }
 
-        migrator.registerMigration("Create SwapRecord 7") { db in
-            try db.drop(table: SwapRecord.databaseTableName)
+        migrator.registerMigration("Create SwapRecord 8") { db in
+            if try db.tableExists(SwapRecord.databaseTableName) {
+                try db.drop(table: SwapRecord.databaseTableName)
+            }
 
             try db.create(table: SwapRecord.databaseTableName) { t in
-                t.column(SwapRecord.Columns.txHash.name, .text).notNull().primaryKey(onConflict: .replace)
+                t.column(SwapRecord.Columns.uid.name, .text).notNull().primaryKey(onConflict: .replace)
+                t.column(SwapRecord.Columns.txHash.name, .text)
                 t.column(SwapRecord.Columns.accountId.name, .text).notNull()
                 t.column(SwapRecord.Columns.providerId.name, .text).notNull()
                 t.column(SwapRecord.Columns.status.name, .text).notNull()

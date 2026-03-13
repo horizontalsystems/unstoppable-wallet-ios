@@ -86,24 +86,7 @@ struct SendView: View {
             VStack(spacing: .margin16) {
                 let sections = sendData.sections(baseToken: handler.baseToken, currency: viewModel.currency, rates: viewModel.rates)
 
-                if !sections.isEmpty {
-                    ForEach(sections.indices, id: \.self) { sectionIndex in
-                        let section = sections[sectionIndex]
-
-                        if !section.fields.isEmpty {
-                            if section.isList {
-                                ListSection {
-                                    VStack(spacing: 0) {
-                                        fieldList(section: section)
-                                    }
-                                    .padding(.vertical, section.isMain ? 0 : 8)
-                                }
-                            } else {
-                                fieldList(section: section)
-                            }
-                        }
-                    }
-                }
+                sections.sectionViews
 
                 let cautions = viewModel.cautions
 
@@ -117,27 +100,6 @@ struct SendView: View {
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
-    }
-
-    @ViewBuilder private func fieldList(section: SendDataSection) -> some View {
-        ForEach(section.fields.indices, id: \.self) { index in
-            section.fields[index].listRow
-            if section.isFlow, index < (section.fields.count - 1) {
-                flowDivider()
-            }
-        }
-    }
-
-    @ViewBuilder private func flowDivider() -> some View {
-        HorizontalDivider()
-            .overlay(
-                Circle()
-                    .fill(Color.themeLawrence)
-                    .frame(width: 20, height: 20)
-                    .overlay(
-                        ThemeImage("arrow_m_down", size: .iconSize20)
-                    )
-            )
     }
 
     @ViewBuilder private func errorView(error: Error) -> some View {

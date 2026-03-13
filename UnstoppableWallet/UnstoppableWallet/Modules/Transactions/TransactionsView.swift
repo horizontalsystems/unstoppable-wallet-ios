@@ -22,7 +22,6 @@ struct TransactionsView: View {
                 }
             } header: {
                 ThemeText(section.title, style: .subheadSB, colorStyle: .andy)
-                    .textCase(.uppercase)
                     .padding(.horizontal, .margin16)
                     .padding(.top, .margin24)
                     .padding(.bottom, .margin12)
