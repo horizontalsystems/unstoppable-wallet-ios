@@ -716,6 +716,34 @@
 
 "swap.maya.shielded_address.error" = "Не удалось получить shielded-адрес для Memo (Maya)";
 
+// Swap History
+
+"swap_history.title" = "История свопов";
+"swap_history.all" = "Все";
+"swap_history.empty" = "У вас пока нет ожидающих или завершённых свопов.";
+
+// Swap Info
+
+"swap_info.title" = "Информация о свопе";
+"swap_info.provider" = "Провайдер";
+"swap_info.date" = "Дата";
+"swap_info.status" = "Статус";
+"swap_info.recipient" = "Получатель";
+"swap_info.view" = "Просмотр";
+"swap_info.deposit" = "Депозит %@";
+"swap_info.swap" = "Своп";
+"swap_info.send" = "Отправить %@";
+"swap_info.refund" = "Возврат %@";
+"swap_info.unknown" = "Неизвестно";
+
+"swap_info.status.not_started" = "Не начат";
+"swap_info.status.pending" = "В ожидании";
+"swap_info.status.swapping" = "Обмен";
+"swap_info.status.completed" = "Завершён";
+"swap_info.status.refunded" = "Возвращён";
+"swap_info.status.unknown" = "Неизвестно";
+"swap_info.status.failed" = "Ошибка";
+
 // Market
 
 "market.title" = "Рынки";

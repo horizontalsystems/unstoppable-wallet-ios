@@ -716,6 +716,34 @@
 
 "swap.maya.shielded_address.error" = "无法获取用于备注（Memo）的屏蔽地址（Maya）。";
 
+// Swap History
+
+"swap_history.title" = "兑换记录";
+"swap_history.all" = "全部";
+"swap_history.empty" = "您还没有任何待处理或已完成的兑换记录。";
+
+// Swap Info
+
+"swap_info.title" = "兑换详情";
+"swap_info.provider" = "服务商";
+"swap_info.date" = "日期";
+"swap_info.status" = "状态";
+"swap_info.recipient" = "接收方";
+"swap_info.view" = "查看";
+"swap_info.deposit" = "存入 %@";
+"swap_info.swap" = "兑换";
+"swap_info.send" = "发送 %@";
+"swap_info.refund" = "退款 %@";
+"swap_info.unknown" = "未知";
+
+"swap_info.status.not_started" = "未开始";
+"swap_info.status.pending" = "待处理";
+"swap_info.status.swapping" = "兑换中";
+"swap_info.status.completed" = "已完成";
+"swap_info.status.refunded" = "已退款";
+"swap_info.status.unknown" = "未知";
+"swap_info.status.failed" = "失败";
+
 // Market
 
 "market.title" = "市场";

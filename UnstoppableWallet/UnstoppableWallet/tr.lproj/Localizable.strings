@@ -716,6 +716,34 @@
 
 "swap.maya.shielded_address.error" = "Memo (Maya) için shielded adres alınamadı";
 
+// Swap History
+
+"swap_history.title" = "Swap Geçmişi";
+"swap_history.all" = "Tümü";
+"swap_history.empty" = "Henüz bekleyen veya geçmiş bir swap işleminiz yok.";
+
+// Swap Info
+
+"swap_info.title" = "Swap Bilgisi";
+"swap_info.provider" = "Sağlayıcı";
+"swap_info.date" = "Tarih";
+"swap_info.status" = "Durum";
+"swap_info.recipient" = "Alıcı";
+"swap_info.view" = "Görüntüle";
+"swap_info.deposit" = "Yatırma %@";
+"swap_info.swap" = "Swap";
+"swap_info.send" = "Gönder %@";
+"swap_info.refund" = "İade %@";
+"swap_info.unknown" = "Bilinmiyor";
+
+"swap_info.status.not_started" = "Başlamadı";
+"swap_info.status.pending" = "Beklemede";
+"swap_info.status.swapping" = "Takas ediliyor";
+"swap_info.status.completed" = "Tamamlandı";
+"swap_info.status.refunded" = "İade edildi";
+"swap_info.status.unknown" = "Bilinmiyor";
+"swap_info.status.failed" = "Başarısız";
+
 // Market
 
 "market.title" = "Marketler";
