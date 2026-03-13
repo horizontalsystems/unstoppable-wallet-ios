@@ -1492,6 +1492,7 @@
 "settings_security.edit_passcode" = "Code bearbeiten";
 "settings_security.disable_passcode" = "Code deaktivieren";
 "settings_security.auto_lock" = "Auto-Sperren";
+"settings_security.auto_lock.description" = "Sperrt die App automatisch nach einer ausgewählten Zeit.";
 "settings_security.balance_auto_hide" = "Auto-Ausblenden ausgleichen";
 "settings_security.balance_auto_hide.description" = "Bei jedem Öffnen der App wird der Saldo automatisch ausgeblendet, unabhängig von den vorherigen Einstellungen.";
 "settings_security.enable_duress_mode" = "Duress Modus setzen";
@@ -1502,9 +1503,6 @@
 "biometry.off" = "Aus";
 "biometry.manual" = "Manuell";
 "biometry.on" = "Aktiviert";
-"biometry.off.description" = "In allen Fällen deaktiviert";
-"biometry.manual.description" = "Scannen mit dem Knopf";
-"biometry.on.description" = "Automatisches Scannen";
 
 // Create Passcode
 
@@ -2221,7 +2219,7 @@
 "transaction_filter.contact" = "Kontakt";
 "transaction_filter.all_contacts" = "Alle Kontakte";
 "transaction_filter.hide_suspicious_txs" = "Verdächtige Txs ausblenden";
-"transaction_filter.hide_suspicious_txs.description" = "Blendet eingehende Transfers mit geringem Wert aus (z. B. USDT unter 1,5 $). Solche Transaktionen werden häufig für Phishing- und Address-poisoning-Angriffe verwendet.";
+"transaction_filter.hide_suspicious_txs.description" = "Blendet verdächtige kleine Überweisungen aus, die häufig bei Phishing-Angriffen verwendet werden.";
 
 // Purchases
 
