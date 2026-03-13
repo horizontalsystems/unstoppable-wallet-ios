@@ -34,11 +34,20 @@ extension IMultiSwapProvider {
 
 enum SwapProviderType: String, CaseIterable, Identifiable {
     case auto
-    case flex
-    case control
+    case flexible
+    case controlled
 
     var title: String {
-        rawValue.capitalized(with: .autoupdatingCurrent)
+        let text = rawValue.capitalized(with: .autoupdatingCurrent)
+        var icon: String?
+
+//        switch self {
+//        case .auto: icon = "😎"
+//        case .flexible: icon = "🙂"
+//        case .controlled: icon = "🥶"
+//        }
+            
+        return [text, icon].compactMap { $0 }.joined()
     }
 
     var id: String {
@@ -49,9 +58,9 @@ enum SwapProviderType: String, CaseIterable, Identifiable {
         switch self {
         case .auto:
             return .green
-        case .flex:
+        case .flexible:
             return .blue
-        case .control:
+        case .controlled:
             return .yellow
         }
     }
