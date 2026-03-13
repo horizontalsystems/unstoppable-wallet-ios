@@ -5,7 +5,7 @@ struct ModuleUnlockView: View {
 
     @Environment(\.presentationMode) private var presentationMode
 
-    init(biometryAllowed: Bool = false, onUnlock: @escaping () -> Void) {
+    init(biometryAllowed: Bool = true, onUnlock: @escaping () -> Void) {
         _viewModel = StateObject(wrappedValue: ModuleUnlockViewModel(biometryAllowed: biometryAllowed, onUnlock: onUnlock))
     }
 
