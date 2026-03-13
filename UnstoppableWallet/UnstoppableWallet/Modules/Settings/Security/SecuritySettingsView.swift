@@ -8,78 +8,68 @@ struct SecuritySettingsView: View {
             VStack(spacing: .margin32) {
                 ListSection {
                     if viewModel.isPasscodeSet {
-                        ClickableRow(action: {
-                            Coordinator.shared.presentAfterUnlock { isPresented in
-                                ThemeNavigationStack { EditPasscodeModule.editPasscodeView(showParentSheet: isPresented) }
+                        Cell(
+                            middle: {
+                                MultiText(title: "settings_security.edit_passcode".localized)
+                            },
+                            right: {
+                                Image.disclosureIcon
+                            },
+                            action: {
+                                Coordinator.shared.presentAfterUnlock(biometryAllowed: false) { isPresented in
+                                    ThemeNavigationStack { EditPasscodeModule.editPasscodeView(showParentSheet: isPresented) }
+                                }
                             }
-                        }) {
-                            Image("dialpad_alt_2_24").themeIcon(color: .themeJacob)
-                            Text("settings_security.edit_passcode".localized).themeBody(color: .themeJacob)
-                        }
-
-                        ClickableRow(action: {
-                            Coordinator.shared.performAfterUnlock {
-                                viewModel.removePasscode()
+                        )
+                        Cell(
+                            middle: {
+                                MultiText(title: ComponentText(text: "settings_security.disable_passcode".localized, colorStyle: .red))
+                            },
+                            action: {
+                                Coordinator.shared.performAfterUnlock(biometryAllowed: false) {
+                                    viewModel.removePasscode()
+                                }
                             }
-                        }) {
-                            Image("trash_24").themeIcon(color: .themeLucian)
-                            Text("settings_security.disable_passcode".localized).themeBody(color: .themeLucian)
-                        }
+                        )
                     } else {
-                        ClickableRow(action: {
-                            presentCreatePasscode(reason: .regular)
-                        }) {
-                            Image("dialpad_alt_2_24").themeIcon(color: .themeJacob)
-                            Text("settings_security.enable_passcode".localized).themeBody(color: .themeJacob)
-                            Image("warning_2_20").themeIcon(color: .themeLucian)
-                        }
-                    }
-                }
-
-                if viewModel.isPasscodeSet {
-                    ListSection {
-                        NavigationRow(spacing: .margin8, destination: {
-                            AutoLockView(period: $viewModel.autoLockPeriod)
-                        }) {
-                            HStack(spacing: .margin16) {
-                                Image("lock_24").themeIcon()
-                                Text("settings_security.auto_lock".localized).textBody()
+                        Cell(
+                            middle: {
+                                MultiText(title: "settings_security.enable_passcode".localized)
+                            },
+                            right: {
+                                Image.warningIcon
+                            },
+                            action: {
+                                presentCreatePasscode(reason: .regular)
                             }
-
-                            Spacer()
-
-                            Text(viewModel.autoLockPeriod.title).textSubhead1()
-                            Image.disclosureIcon
-                        }
+                        )
                     }
                 }
 
                 if let biometryType = viewModel.biometryType {
                     ListSection {
-                        ClickableRow(spacing: .margin8, action: {
-                            Coordinator.shared.present(type: .alert) { isPresented in
-                                OptionAlertView(
-                                    title: biometryType.title,
-                                    viewItems: BiometryManager.BiometryEnabledType.allCases.map {
-                                        .init(text: $0.title, description: $0.description, selected: $0 == viewModel.biometryEnabledType)
-                                    },
-                                    onSelect: { index in
-                                        viewModel.biometryEnabledType = BiometryManager.BiometryEnabledType.allCases[index]
-                                    },
-                                    isPresented: isPresented
-                                )
+                        Cell(
+                            middle: {
+                                MultiText(title: biometryType.title)
+                            },
+                            right: {
+                                ThemeText(viewModel.biometryEnabledType.title, style: .subheadSB).arrow(style: .dropdown)
+                            },
+                            action: {
+                                Coordinator.shared.present(type: .alert) { isPresented in
+                                    OptionAlertView(
+                                        title: biometryType.title,
+                                        viewItems: BiometryManager.BiometryEnabledType.allCases.map {
+                                            .init(text: $0.title, selected: $0 == viewModel.biometryEnabledType)
+                                        },
+                                        onSelect: { index in
+                                            viewModel.biometryEnabledType = BiometryManager.BiometryEnabledType.allCases[index]
+                                        },
+                                        isPresented: isPresented
+                                    )
+                                }
                             }
-                        }) {
-                            HStack(spacing: .margin16) {
-                                Image(biometryType.iconName)
-                                Text(biometryType.title).textBody()
-                            }
-
-                            Spacer()
-
-                            Text(viewModel.biometryEnabledType.title).textSubhead1(color: viewModel.biometryEnabledType.isEnabled ? .themeLeah : .themeGray)
-                            Image("arrow_small_down_20").themeIcon()
-                        }
+                        )
                         .onChange(of: viewModel.biometryEnabledType) { type in
                             if !viewModel.isPasscodeSet, type.isEnabled {
                                 presentCreatePasscode(reason: .biometry(enabledType: type, type: biometryType))
@@ -87,19 +77,34 @@ struct SecuritySettingsView: View {
                         }
                     }
                 }
-
-                VStack(spacing: 0) {
+                
+                if viewModel.isPasscodeSet {
                     ListSection {
-                        ListRow {
-                            Image("eye_off_24").themeIcon()
-                            Toggle(isOn: $viewModel.balanceAutoHide) {
-                                Text("settings_security.balance_auto_hide".localized).themeBody()
+                        Cell(
+                            middle: {
+                                MultiText(title: "settings_security.auto_lock".localized, subtitle: "settings_security.auto_lock.description".localized)
+                            },
+                            right: {
+                                ThemeText(viewModel.autoLockPeriod.title, style: .subheadSB).arrow(style: .dropdown)
+                            },
+                            action: {
+                                Coordinator.shared.present(type: .alert) { isPresented in
+                                    OptionAlertView(
+                                        title: "settings_security.auto_lock".localized,
+                                        viewItems: AutoLockPeriod.allCases.map { .init(text: $0.title, selected: viewModel.autoLockPeriod == $0) },
+                                        onSelect: { index in
+                                            viewModel.autoLockPeriod = AutoLockPeriod.allCases[index]
+                                        },
+                                        isPresented: isPresented
+                                    )
+                                }
                             }
-                            .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-                        }
-                    }
+                        )
 
-                    ListSectionFooter(text: "settings_security.balance_auto_hide.description".localized)
+                        toggledRow(title: "settings_security.balance_auto_hide".localized, subtitle: "settings_security.balance_auto_hide.description".localized, isOn: $viewModel.balanceAutoHide)
+
+                        toggledRow(title: "transaction_filter.hide_suspicious_txs".localized, subtitle: "transaction_filter.hide_suspicious_txs.description".localized, isOn: $viewModel.spamFilterEnabled)
+                    }
                 }
 
                 premiumSection()
@@ -139,33 +144,6 @@ struct SecuritySettingsView: View {
     private func presentCreateDuressPasscode() {
         Coordinator.shared.present { isPresented in
             ThemeNavigationStack { DuressModeModule.view(showParentSheet: isPresented) }
-        }
-    }
-
-    private struct AutoLockView: View {
-        @Binding var period: AutoLockPeriod
-        @Environment(\.presentationMode) private var presentationMode
-
-        var body: some View {
-            ScrollableThemeView {
-                ListSection {
-                    ForEach(AutoLockPeriod.allCases, id: \.self) { period in
-                        ClickableRow(action: {
-                            self.period = period
-                            presentationMode.wrappedValue.dismiss()
-                        }) {
-                            Text(period.title).themeBody()
-
-                            if self.period == period {
-                                Image.checkIcon
-                            }
-                        }
-                    }
-                }
-                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
-            }
-            .navigationTitle("settings_security.auto_lock".localized)
-            .navigationBarTitleDisplayMode(.inline)
         }
     }
 

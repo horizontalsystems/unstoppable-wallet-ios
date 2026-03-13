@@ -13,6 +13,10 @@ class SecurityManager {
 
     // scam protection
     @PostPublished private(set) var scamProtectionEnabled: Bool
+    
+    // tx filter
+    @PostPublished private(set) var spamFilterEnabled: Bool
+
 
     init(localStorage: LocalStorage) {
         self.localStorage = localStorage
@@ -28,6 +32,7 @@ class SecurityManager {
         secureSendEnabled = checks.values.contains(true)
         swapProtectionEnabled = localStorage.useMevProtection
         scamProtectionEnabled = localStorage.scamProtection
+        spamFilterEnabled = localStorage.spamFilterEnabled
     }
 
     private static func migrateRecipientAddressCheck(storage: LocalStorage) {
@@ -68,5 +73,10 @@ extension SecurityManager {
     func setScamProtection(enabled: Bool) {
         scamProtectionEnabled = enabled
         localStorage.scamProtection = enabled
+    }
+
+    func setSpamFilter(enabled: Bool) {
+        spamFilterEnabled = enabled
+        localStorage.spamFilterEnabled = enabled
     }
 }

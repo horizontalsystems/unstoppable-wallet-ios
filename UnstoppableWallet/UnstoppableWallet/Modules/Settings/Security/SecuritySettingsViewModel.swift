@@ -38,6 +38,12 @@ class SecuritySettingsViewModel: ObservableObject {
         }
     }
 
+    @Published var spamFilterEnabled: Bool {
+        didSet {
+            securityManager.setSpamFilter(enabled: spamFilterEnabled)
+        }
+    }
+
     @Published var featureEnabled: [PremiumFeature: Bool]
     @Published private(set) var premiumEnabled: Bool
 
@@ -50,6 +56,7 @@ class SecuritySettingsViewModel: ObservableObject {
 
         biometryEnabledType = biometryManager.biometryEnabledType
         balanceAutoHide = balanceHiddenManager.balanceAutoHide
+        spamFilterEnabled = securityManager.spamFilterEnabled
 
         featureEnabled = [
             .secureSend: securityManager.secureSendEnabled,
@@ -85,6 +92,10 @@ class SecuritySettingsViewModel: ObservableObject {
         securityManager.$scamProtectionEnabled
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.featureEnabled[.scamProtection] = $0 }
+            .store(in: &cancellables)
+        securityManager.$spamFilterEnabled
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.spamFilterEnabled = $0 }
             .store(in: &cancellables)
 
         purchaseManager.$activeFeatures

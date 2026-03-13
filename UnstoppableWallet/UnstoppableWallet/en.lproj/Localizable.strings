@@ -1492,6 +1492,7 @@
 "settings_security.edit_passcode" = "Edit Passcode";
 "settings_security.disable_passcode" = "Disable Passcode";
 "settings_security.auto_lock" = "Auto-Lock";
+"settings_security.auto_lock.description" = "Automatically locks the app after a selected time.";
 "settings_security.balance_auto_hide" = "Balance Auto Hide";
 "settings_security.balance_auto_hide.description" = "Automatically hides balance every time the app is opened.";
 "settings_security.enable_duress_mode" = "Set Duress Mode";
@@ -1500,11 +1501,8 @@
 "settings_security.duress_mode.description" = "A special mode that protects selected wallets in case of coercion.";
 
 "biometry.off" = "Off";
-"biometry.manual" = "Manual";
+"biometry.manual" = "Manually";
 "biometry.on" = "On";
-"biometry.off.description" = "Disabled in all cases";
-"biometry.manual.description" = "Scanning with the button";
-"biometry.on.description" = "Automatic scanning";
 
 // Create Passcode
 
@@ -2221,7 +2219,7 @@
 "transaction_filter.contact" = "Contact";
 "transaction_filter.all_contacts" = "All Contacts";
 "transaction_filter.hide_suspicious_txs" = "Hide Suspicious Txs";
-"transaction_filter.hide_suspicious_txs.description" = "Hides small-value incoming transfers (e.g. USDT below $1.5). These transactions are often used for phishing and address-poisoning attacks.";
+"transaction_filter.hide_suspicious_txs.description" = "Hides suspicious small transfers often used in phishing attacks.";
 
 // Purchases
 
