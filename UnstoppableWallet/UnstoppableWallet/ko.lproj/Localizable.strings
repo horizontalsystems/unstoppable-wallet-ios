@@ -716,6 +716,34 @@
 
 "swap.maya.shielded_address.error" = "메모(Maya)에 대한 보호 주소를 가져올 수 없습니다";
 
+// Swap History
+
+"swap_history.title" = "스왑 내역";
+"swap_history.all" = "전체";
+"swap_history.empty" = "대기 중이거나 완료된 스왑이 없습니다.";
+
+// Swap Info
+
+"swap_info.title" = "스왑 정보";
+"swap_info.provider" = "제공자";
+"swap_info.date" = "날짜";
+"swap_info.status" = "상태";
+"swap_info.recipient" = "수신자";
+"swap_info.view" = "보기";
+"swap_info.deposit" = "입금 %@";
+"swap_info.swap" = "스왑";
+"swap_info.send" = "전송 %@";
+"swap_info.refund" = "환불 %@";
+"swap_info.unknown" = "알 수 없음";
+
+"swap_info.status.not_started" = "시작되지 않음";
+"swap_info.status.pending" = "대기 중";
+"swap_info.status.swapping" = "스왑 중";
+"swap_info.status.completed" = "완료됨";
+"swap_info.status.refunded" = "환불됨";
+"swap_info.status.unknown" = "알 수 없음";
+"swap_info.status.failed" = "실패";
+
 // Market
 
 "market.title" = "시장";

@@ -716,6 +716,34 @@
 
 "swap.maya.shielded_address.error" = "Abgeschirmte Adresse für Memo (Maya) kann nicht abgerufen werden";
 
+// Swap History
+
+"swap_history.title" = "Swap-Verlauf";
+"swap_history.all" = "Alle";
+"swap_history.empty" = "Sie haben noch keine ausstehenden oder vergangenen Swaps.";
+
+// Swap Info
+
+"swap_info.title" = "Swap-Info";
+"swap_info.provider" = "Anbieter";
+"swap_info.date" = "Datum";
+"swap_info.status" = "Status";
+"swap_info.recipient" = "Empfänger";
+"swap_info.view" = "Anzeigen";
+"swap_info.deposit" = "Einzahlung %@";
+"swap_info.swap" = "Swap";
+"swap_info.send" = "Senden %@";
+"swap_info.refund" = "Rückerstattung %@";
+"swap_info.unknown" = "Unbekannt";
+
+"swap_info.status.not_started" = "Nicht gestartet";
+"swap_info.status.pending" = "Ausstehend";
+"swap_info.status.swapping" = "Wird getauscht";
+"swap_info.status.completed" = "Abgeschlossen";
+"swap_info.status.refunded" = "Erstattet";
+"swap_info.status.unknown" = "Unbekannt";
+"swap_info.status.failed" = "Fehlgeschlagen";
+
 // Market
 
 "market.title" = "Märkte";
