@@ -1492,6 +1492,7 @@
 "settings_security.edit_passcode" = "Editar el código";
 "settings_security.disable_passcode" = "Desactivar bloqueo con código";
 "settings_security.auto_lock" = "Bloqueo automático";
+"settings_security.auto_lock.description" = "Bloquea automáticamente la app después de un tiempo seleccionado.";
 "settings_security.balance_auto_hide" = "Saldo Auto Ocultar";
 "settings_security.balance_auto_hide.description" = "Oculta automáticamente el balance cada vez que se abre la aplicación, independientemente de las preferencias anteriores.";
 "settings_security.enable_duress_mode" = "Establecer modo de Duración";
@@ -1500,11 +1501,8 @@
 "settings_security.duress_mode.description" = "Un modo especializado diseñado para mantener seguras las carteras seleccionadas bajo coacción.";
 
 "biometry.off" = "Apagado";
-"biometry.manual" = "Manual";
+"biometry.manual" = "Manualmente";
 "biometry.on" = "Activado";
-"biometry.off.description" = "Desactivado en todos los casos";
-"biometry.manual.description" = "Escaneo con el botón";
-"biometry.on.description" = "Escaneo automático";
 
 // Create Passcode
 
@@ -2221,7 +2219,7 @@
 "transaction_filter.contact" = "Contacto";
 "transaction_filter.all_contacts" = "Todos los contactos";
 "transaction_filter.hide_suspicious_txs" = "Ocultar Transacciones Sospechosas";
-"transaction_filter.hide_suspicious_txs.description" = "Oculta transferencias entrantes de bajo valor (por ejemplo, USDT por debajo de $1.5). Estas transacciones se utilizan con frecuencia para ataques de phishing y address-poisoning.";
+"transaction_filter.hide_suspicious_txs.description" = "Oculta transferencias pequeñas sospechosas que suelen utilizarse en ataques de phishing.";
 
 // Purchases
 

@@ -1492,6 +1492,7 @@
 "settings_security.edit_passcode" = "비밀번호 변경";
 "settings_security.disable_passcode" = "비밀번호 비활성화";
 "settings_security.auto_lock" = "자동 잠금";
+"settings_security.auto_lock.description" = "선택한 시간이 지나면 앱을 자동으로 잠급니다.";
 "settings_security.balance_auto_hide" = "밸런스 자동 숨기기";
 "settings_security.balance_auto_hide.description" = "앱이 열릴 때마다 잔고를 자동으로 숨깁니다. 이전 설정에 관계없이 적용됩니다.";
 "settings_security.enable_duress_mode" = "긴급 상황 모드 설정";
@@ -1502,9 +1503,6 @@
 "biometry.off" = "끄기";
 "biometry.manual" = "수동";
 "biometry.on" = "켜기";
-"biometry.off.description" = "모든 경우에 비활성화";
-"biometry.manual.description" = "버튼으로 스캔하기";
-"biometry.on.description" = "자동 스캔";
 
 // Create Passcode
 
@@ -2221,7 +2219,7 @@
 "transaction_filter.contact" = "연락처";
 "transaction_filter.all_contacts" = "모든 연락처";
 "transaction_filter.hide_suspicious_txs" = "의심스러운 거래 숨기기";
-"transaction_filter.hide_suspicious_txs.description" = "소액의 수신 트랜잭션(예: $1.5 미만의 USDT)을 숨깁니다. 이러한 트랜잭션은 피싱 및 주소 포이즈닝 공격에 자주 사용됩니다.";
+"transaction_filter.hide_suspicious_txs.description" = "피싱 공격에 자주 사용되는 의심스러운 소액 전송을 숨깁니다.";
 
 // Purchases
 

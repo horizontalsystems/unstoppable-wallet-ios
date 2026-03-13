@@ -1492,6 +1492,7 @@
 "settings_security.edit_passcode" = "编辑密码";
 "settings_security.disable_passcode" = "禁用密码";
 "settings_security.auto_lock" = "自动锁定";
+"settings_security.auto_lock.description" = "在选定的时间后自动锁定应用。";
 "settings_security.balance_auto_hide" = "自动隐藏余额";
 "settings_security.balance_auto_hide.description" = "每次打开应用程序时自动隐藏平衡，不管先前的偏好设置。";
 "settings_security.enable_duress_mode" = "设置压力模式";
@@ -1500,11 +1501,8 @@
 "settings_security.duress_mode.description" = "专用模式用于在胁迫下使选定的钱包安全。";
 
 "biometry.off" = "关";
-"biometry.manual" = "手册";
+"biometry.manual" = "手动";
 "biometry.on" = "开启";
-"biometry.off.description" = "在所有情况下禁用";
-"biometry.manual.description" = "使用按钮扫描";
-"biometry.on.description" = "自动扫描";
 
 // Create Passcode
 
@@ -2221,7 +2219,7 @@
 "transaction_filter.contact" = "联系";
 "transaction_filter.all_contacts" = "所有联系人";
 "transaction_filter.hide_suspicious_txs" = "隐藏可疑Txs";
-"transaction_filter.hide_suspicious_txs.description" = "隐藏小额入账转账（例如低于 $1.5 的 USDT）。此类交易常被用于钓鱼攻击和地址投毒攻击。";
+"transaction_filter.hide_suspicious_txs.description" = "隐藏常用于钓鱼攻击的可疑小额转账。";
 
 // Purchases
 
