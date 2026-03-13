@@ -13,8 +13,8 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     private let assetMapExpiration: TimeInterval = 60 * 60
 
     let networkManager = Core.shared.networkManager
+//    let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
     let adapterManager = Core.shared.adapterManager
-    // let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
     private let swapAssetStorage = Core.shared.swapAssetStorage
     private let allowanceHelper = MultiSwapAllowanceHelper()
@@ -78,6 +78,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
 
     func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote {
         let swapQuote = try await swapQuote(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, slippage: slippage, recipient: recipient)
+        let toAddress = try await resolveDestination(recipient: nil, token: tokenOut)
 
         switch tokenIn.blockchainType {
         case .arbitrumOne, .avalanche, .base, .binanceSmartChain, .ethereum:
@@ -142,7 +143,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 gasPrice: gasPriceData?.userDefined,
                 evmFeeData: evmFeeData,
                 nonce: transactionSettings?.nonce,
-                toAddress: evmKitWrapper.evmKit.receiveAddress.eip55
+                toAddress: toAddress
             )
         case .bitcoin, .bitcoinCash, .dash, .litecoin:
             var transactionError: Error?
@@ -184,7 +185,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
                 estimatedTime: swapQuote.totalSwapSeconds,
                 transactionError: transactionError,
                 fee: sendInfo?.fee,
-                toAddress: adapter.receiveAddress.address
+                toAddress: toAddress
             )
         default:
             throw SwapError.unsupportedTokenIn
@@ -203,7 +204,21 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     }
 
     func track(swap: Swap) async throws -> Swap {
-        swap // TODO: implement track
+        var parameters: Parameters = [
+            "provider": swap.providerId,
+            "toAddress": swap.toAddress,
+        ]
+
+        func set(_ dict: inout Parameters, _ key: String, _ value: Any?) {
+            guard let value else { return }
+            dict[key] = value
+        }
+
+        set(&parameters, "hash", swap.txHash)
+        set(&parameters, "fromAsset", assetMap[swap.tokenIn.tokenQuery.id.lowercased()])
+        set(&parameters, "toAsset", assetMap[swap.tokenOut.tokenQuery.id.lowercased()])
+
+        return try await USwapMultiSwapProvider.track(swap: swap, parameters: parameters, networkManager: networkManager)
     }
 
     func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal? = nil, recipient: String? = nil, params: Parameters? = nil) async throws -> SwapQuote {

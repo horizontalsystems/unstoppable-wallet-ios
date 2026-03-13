@@ -144,21 +144,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
             parameters["hash"] = hash
         }
 
-        let response: USwapMultiSwapProvider.TrackResponse = try await networkManager.fetch(
-            url: "\(USwapMultiSwapProvider.baseUrl)/track",
-            method: .post,
-            parameters: parameters,
-            headers: USwapMultiSwapProvider.headers
-        )
-
-        var swap = swap
-
-        if let status = Swap.Status(rawValue: response.status) {
-            swap.status = status
-            swap.amountOut = response.toAmount
-        }
-
-        return swap
+        return try await USwapMultiSwapProvider.track(swap: swap, parameters: parameters, networkManager: networkManager)
     }
 
     override func spenderAddress(chain: Chain) throws -> EvmKit.Address {
