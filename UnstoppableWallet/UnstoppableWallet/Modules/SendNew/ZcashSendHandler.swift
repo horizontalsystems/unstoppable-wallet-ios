@@ -7,9 +7,9 @@ class ZcashSendHandler {
     private let amount: Decimal
     private let recipient: Recipient
     private let memo: String?
-    private var adapter: ISendZcashAdapter
+    private var adapter: ZcashAdapter
 
-    init(token: Token, amount: Decimal, recipient: Recipient, memo: String?, adapter: ISendZcashAdapter) {
+    init(token: Token, amount: Decimal, recipient: Recipient, memo: String?, adapter: ZcashAdapter) {
         self.token = token
         self.amount = amount
         self.recipient = recipient
@@ -152,7 +152,7 @@ extension ZcashSendHandler {
             return nil
         }
 
-        guard let adapter = Core.shared.adapterManager.adapter(for: token) as? ISendZcashAdapter else {
+        guard let adapter = Core.shared.adapterManager.adapter(for: token) as? ZcashAdapter else {
             return nil
         }
 

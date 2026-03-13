@@ -334,8 +334,8 @@ extension BitcoinBaseAdapter {
         abstractKit.unspentOutputs(filters: filters)
     }
 
-    func send(params: SendParameters) throws {
-        _ = try abstractKit.send(params: params)
+    @discardableResult func send(params: SendParameters) throws -> FullTransaction {
+        try abstractKit.send(params: params)
     }
 
     func sendSingle(params: SendParameters, logger: Logger) -> Single<Void> {

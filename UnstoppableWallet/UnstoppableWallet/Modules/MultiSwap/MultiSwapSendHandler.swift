@@ -144,7 +144,9 @@ extension MultiSwapSendHandler: ISendHandler {
                 throw SendError.noSendParameters
             }
 
-            try adapter.send(params: sendParameters)
+            let fullTransaction = try adapter.send(params: sendParameters)
+
+            txHash = fullTransaction.metaData.transactionHash.hs.hexString
         } else if let quote = data.quote as? ZcashSwapFinalQuote {
             guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
                 throw SendError.noZcashAdapter
@@ -154,7 +156,9 @@ extension MultiSwapSendHandler: ISendHandler {
                 throw SendError.noProposal
             }
 
-            try await adapter.send(proposal: proposal)
+            let hash = try await adapter.send(proposal: proposal)
+
+            txHash = hash
         } else if let quote = data.quote as? TonSwapFinalQuote {
             guard let account = Core.shared.accountManager.activeAccount else {
                 throw SendError.noTonAdapter
@@ -204,8 +208,9 @@ extension MultiSwapSendHandler: ISendHandler {
             )
         }
 
-        if let txHash, let account = accountManager.activeAccount {
+        if let account = accountManager.activeAccount {
             let swap = Swap(
+                uid: UUID().uuidString,
                 txHash: txHash,
                 accountId: account.id,
                 providerId: provider.id,

@@ -1178,7 +1178,7 @@ extension ZcashAdapter: ISendZcashAdapter {
         try await send(proposal: proposal)
     }
 
-    func send(proposal: Proposal) async throws {
+    @discardableResult func send(proposal: Proposal) async throws -> String? {
         guard let spendingKey else {
             throw AppError.ZcashError.noReceiveAddress
         }
@@ -1226,6 +1226,8 @@ extension ZcashAdapter: ISendZcashAdapter {
         }
 
         reSyncPending()
+
+        return txIds.first
     }
 
     func recipient(from stringEncodedAddress: String) -> ZcashLightClientKit.Recipient? {

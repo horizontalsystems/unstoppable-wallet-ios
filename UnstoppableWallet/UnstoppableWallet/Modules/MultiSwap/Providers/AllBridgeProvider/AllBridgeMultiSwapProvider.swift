@@ -12,6 +12,7 @@ import TronKit
 
 class AllBridgeMultiSwapProvider: IMultiSwapProvider {
     static let id = "ALLBRIDGE"
+    static let name = "AllBridge"
 
     private let assetMapExpiration: TimeInterval = 60 * 60
 
@@ -78,7 +79,7 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
     }
 
     var id: String { Self.id }
-    var name: String { "AllBridge" }
+    var name: String { Self.name }
     var type: SwapProviderType { .auto }
     var icon: String { "swap_provider_allbridge" }
 

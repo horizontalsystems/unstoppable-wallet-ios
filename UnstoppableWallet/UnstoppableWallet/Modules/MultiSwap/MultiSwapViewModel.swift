@@ -294,9 +294,7 @@ class MultiSwapViewModel: ObservableObject {
     @Published var quoteSortType: QuoteSortType = .bestRate
 
     init(token: Token? = nil) {
-        let providerFactory = SwapProviderFactory()
-
-        providers = swapProviderManager.providers.compactMap { providerFactory.provider(id: $0) }
+        providers = swapProviderManager.providers.compactMap { SwapProviderFactory.provider(id: $0) }
         currency = currencyManager.baseCurrency
 
         defer {
@@ -312,7 +310,7 @@ class MultiSwapViewModel: ObservableObject {
         swapProviderManager.$providers
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in
-                self?.providers = $0.compactMap { providerFactory.provider(id: $0) }
+                self?.providers = $0.compactMap { SwapProviderFactory.provider(id: $0) }
                 self?.syncValidProviders()
                 self?.syncQuotes(silent: true)
                 self?.subscribeToProviders()

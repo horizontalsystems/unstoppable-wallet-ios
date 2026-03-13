@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import SwiftUI
 
 protocol ISendData {
     var feeData: FeeData? { get }
@@ -20,7 +21,7 @@ extension ISendData {
     }
 }
 
-class SendDataSection {
+struct SendDataSection {
     let fields: [SendField]
     let isMain: Bool
     let isFlow: Bool
@@ -31,5 +32,49 @@ class SendDataSection {
         self.isMain = isMain
         self.isFlow = isFlow
         self.isList = isList
+    }
+
+    @ViewBuilder var fieldList: some View {
+        ForEach(fields.indices, id: \.self) { index in
+            fields[index].listRow
+            if isFlow, index < (fields.count - 1) {
+                flowDivider
+            }
+        }
+    }
+
+    @ViewBuilder private var flowDivider: some View {
+        HorizontalDivider()
+            .overlay(
+                Circle()
+                    .fill(Color.themeLawrence)
+                    .frame(width: 20, height: 20)
+                    .overlay(
+                        ThemeImage("arrow_m_down", size: .iconSize20)
+                    )
+            )
+    }
+}
+
+extension [SendDataSection] {
+    @ViewBuilder var sectionViews: some View {
+        if !isEmpty {
+            ForEach(indices, id: \.self) { sectionIndex in
+                let section = self[sectionIndex]
+
+                if !section.fields.isEmpty {
+                    if section.isList {
+                        ListSection {
+                            VStack(spacing: 0) {
+                                section.fieldList
+                            }
+                            .padding(.vertical, section.isMain ? 0 : 8)
+                        }
+                    } else {
+                        section.fieldList
+                    }
+                }
+            }
+        }
     }
 }

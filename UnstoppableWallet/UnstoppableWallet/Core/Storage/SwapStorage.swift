@@ -29,6 +29,7 @@ class SwapStorage {
             }
 
             return Swap(
+                uid: record.uid,
                 txHash: record.txHash,
                 accountId: record.accountId,
                 providerId: record.providerId,
@@ -47,6 +48,7 @@ class SwapStorage {
 
     private func record(swap: Swap) -> SwapRecord {
         SwapRecord(
+            uid: swap.uid,
             txHash: swap.txHash,
             accountId: swap.accountId,
             providerId: swap.providerId,

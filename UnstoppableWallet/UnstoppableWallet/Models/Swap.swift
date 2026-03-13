@@ -3,7 +3,8 @@ import GRDB
 import MarketKit
 
 struct Swap: Hashable {
-    let txHash: String
+    let uid: String
+    let txHash: String?
     let accountId: String
     let providerId: String
     var status: Status
@@ -28,11 +29,16 @@ struct Swap: Hashable {
         case refunded
         case unknown
         case failed
+
+        var title: String {
+            "swap_info.status.\(rawValue)".localized
+        }
     }
 }
 
 struct SwapRecord: Codable {
-    let txHash: String
+    let uid: String
+    let txHash: String?
     let accountId: String
     let providerId: String
     let status: String
@@ -52,6 +58,7 @@ extension SwapRecord: FetchableRecord, PersistableRecord {
     }
 
     enum Columns {
+        static let uid = Column(CodingKeys.uid)
         static let txHash = Column(CodingKeys.txHash)
         static let accountId = Column(CodingKeys.accountId)
         static let providerId = Column(CodingKeys.providerId)

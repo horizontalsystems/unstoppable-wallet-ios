@@ -1,3 +1,4 @@
+import Alamofire
 import BigInt
 import EvmKit
 import Foundation
@@ -8,6 +9,7 @@ import SwiftUI
 
 class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     static let id = "ONEINCH"
+    static let name = "1Inch"
 
     private let networkManager = Core.shared.networkManager
 //    private let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
@@ -25,7 +27,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     }
 
     override var id: String { Self.id }
-    override var name: String { "1Inch" }
+    override var name: String { Self.name }
     override var type: SwapProviderType { .control }
     override var icon: String { "swap_provider_1inch" }
 
@@ -130,17 +132,22 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
     override func track(swap: Swap) async throws -> Swap {
         let blockchainType = swap.tokenIn.blockchainType
 
+        var parameters: Parameters = try [
+            "provider": swap.providerId,
+            "chainId": String(evmBlockchainManager.chain(blockchainType: blockchainType).id),
+            "fromAsset": address(token: swap.tokenIn).eip55,
+            "toAsset": address(token: swap.tokenOut).eip55,
+            "toAddress": swap.toAddress,
+        ]
+
+        if let hash = swap.txHash {
+            parameters["hash"] = hash
+        }
+
         let response: USwapMultiSwapProvider.TrackResponse = try await networkManager.fetch(
             url: "\(USwapMultiSwapProvider.baseUrl)/track",
             method: .post,
-            parameters: [
-                "provider": swap.providerId,
-                "hash": swap.txHash,
-                "chainId": String(evmBlockchainManager.chain(blockchainType: blockchainType).id),
-                "fromAsset": address(token: swap.tokenIn).eip55,
-                "toAsset": address(token: swap.tokenOut).eip55,
-                "toAddress": swap.toAddress,
-            ],
+            parameters: parameters,
             headers: USwapMultiSwapProvider.headers
         )
 

@@ -1,12 +1,13 @@
 class ThorChainMultiSwapProvider: BaseThorChainMultiSwapProvider {
     static let id = "THORCHAIN"
+    static let name = "THORChain"
 
     override var baseUrl: String {
         "https://thornode.ninerealms.com/thorchain"
     }
 
     override var id: String { Self.id }
-    override var name: String { "THORChain" }
+    override var name: String { Self.name }
     override var type: SwapProviderType { .auto }
     override var icon: String { "swap_provider_thorchain" }
 

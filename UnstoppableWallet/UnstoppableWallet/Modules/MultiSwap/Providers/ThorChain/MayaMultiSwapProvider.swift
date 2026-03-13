@@ -8,6 +8,7 @@ import ZcashLightClientKit
 
 class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
     static let id = "MAYACHAIN"
+    static let name = "Maya Protocol"
 
     private let testNetManager = Core.shared.testNetManager
     private var temporaryDestinationAddresses = [BlockchainType: String]()
@@ -18,7 +19,7 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
     }
 
     override var id: String { Self.id }
-    override var name: String { "Maya Protocol" }
+    override var name: String { Self.name }
     override var type: SwapProviderType { .auto }
     override var icon: String { "swap_provider_maya" }
 

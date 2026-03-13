@@ -127,7 +127,7 @@ class SwapHistoryViewModel: ObservableObject {
 
     private func __reportItem(item: Item) {
         for (sectionIndex, section) in __sections.enumerated() {
-            if let rowIndex = section.viewItems.firstIndex(where: { $0.swap.txHash == item.swap.txHash }) {
+            if let rowIndex = section.viewItems.firstIndex(where: { $0.swap.uid == item.swap.uid }) {
                 __sections[sectionIndex].viewItems[rowIndex] = __viewItem(item: item)
                 break
             }
@@ -209,7 +209,7 @@ extension SwapHistoryViewModel {
     func onDisplay(section: Section, viewItem: ViewItem) {
         queue.async {
             guard let sectionIndex = self.__sections.firstIndex(where: { $0.id == section.id }),
-                  let index = self.__sections[sectionIndex].viewItems.firstIndex(where: { $0.swap.txHash == viewItem.swap.txHash })
+                  let index = self.__sections[sectionIndex].viewItems.firstIndex(where: { $0.swap.uid == viewItem.swap.uid })
             else {
                 return
             }
@@ -241,13 +241,13 @@ extension SwapHistoryViewModel {
         }
     }
 
-    struct Section: Identifiable, Equatable {
+    struct Section: Identifiable {
         let id: Date
         let title: String
         var viewItems: [ViewItem]
     }
 
-    struct ViewItem: Identifiable, Hashable {
+    struct ViewItem: Identifiable {
         var swap: Swap
         let amountIn: String?
         let amountOut: String?
@@ -255,7 +255,7 @@ extension SwapHistoryViewModel {
         var fiatOut: String?
 
         var id: String {
-            swap.txHash
+            swap.uid
         }
     }
 }

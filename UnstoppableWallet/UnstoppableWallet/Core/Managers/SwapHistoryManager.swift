@@ -27,10 +27,8 @@ class SwapHistoryManager {
             return
         }
 
-        let factory = SwapProviderFactory()
-
         for swap in pendingSwaps {
-            guard let provider = factory.provider(id: swap.providerId) else {
+            guard let provider = SwapProviderFactory.provider(id: swap.providerId) else {
                 continue
             }
 
