@@ -28,7 +28,7 @@ class OneInchMultiSwapProvider: BaseEvmMultiSwapProvider {
 
     override var id: String { Self.id }
     override var name: String { Self.name }
-    override var type: SwapProviderType { .control }
+    override var type: SwapProviderType { .controlled }
     override var icon: String { "swap_provider_1inch" }
 
     override func supports(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token) -> Bool {

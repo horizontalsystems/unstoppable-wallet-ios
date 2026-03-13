@@ -808,6 +808,7 @@ extension USwapMultiSwapProvider {
         case letsExchange = "LETSEXCHANGE"
         case stealthex = "STEALTHEX"
         case swapuz = "SWAPUZ"
+        case exolix = "EXOLIX"
 
         var icon: String {
             switch self {
@@ -816,6 +817,7 @@ extension USwapMultiSwapProvider {
             case .letsExchange: return "swap_provider_letsexchange"
             case .stealthex: return "swap_provider_stealthex"
             case .swapuz: return "swap_provider_swapuz"
+            case .exolix: return "swap_provider_exolix"
             }
         }
 
@@ -826,21 +828,19 @@ extension USwapMultiSwapProvider {
             case .letsExchange: return "LetsExchange"
             case .stealthex: return "StealthEX"
             case .swapuz: return "Swapuz"
+            case .exolix: return "Exolix"
             }
         }
 
         var type: SwapProviderType {
             switch self {
-            case .swapuz: return .flex
-            case .quickEx, .letsExchange, .stealthex, .near: return .control
+            case .swapuz, .exolix: return .flexible
+            case .quickEx, .letsExchange, .stealthex, .near: return .controlled
             }
         }
 
         var requireTerms: Bool {
-            switch self {
-            case .quickEx, .letsExchange, .stealthex: return true
-            default: return false
-            }
+            true
         }
     }
 
