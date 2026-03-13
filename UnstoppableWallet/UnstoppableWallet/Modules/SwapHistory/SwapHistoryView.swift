@@ -87,12 +87,7 @@ extension SwapHistoryView {
                 }
                 .frame(maxWidth: .infinity)
 
-                switch viewItem.swap.status {
-                case .completed: ThemeImage("done_e_filled", size: 20, colorStyle: .green)
-                case .failed: ThemeImage("warning_filled", size: 20, colorStyle: .red)
-                case .refunded: ThemeImage("arrow_return", size: 20, colorStyle: .secondary)
-                default: ThemeImage("arrow_m_right", size: 20, colorStyle: .secondary)
-                }
+                viewItem.swap.status.view
 
                 HStack(spacing: 16) {
                     VStack(alignment: .trailing, spacing: 0) {

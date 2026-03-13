@@ -1,6 +1,7 @@
 import Foundation
 import GRDB
 import MarketKit
+import SwiftUI
 
 struct Swap: Hashable {
     let uid: String
@@ -16,6 +17,13 @@ struct Swap: Hashable {
     let depositAddress: String?
     let providerSwapId: String?
     let date: Date
+    var fromAsset: String?
+    var toAsset: String?
+    var legs: [Leg]?
+
+    var isPending: Bool {
+        Self.pendingStatuses.contains(status)
+    }
 
     static var pendingStatuses: [Status] {
         [.notStarted, .pending, .swapping, .unknown]
@@ -33,6 +41,29 @@ struct Swap: Hashable {
         var title: String {
             "swap_info.status.\(rawValue)".localized
         }
+
+        @ViewBuilder var view: some View {
+            switch self {
+            case .completed: ThemeImage("done_e_filled", size: 20, colorStyle: .green)
+            case .failed: ThemeImage("warning_filled", size: 20, colorStyle: .red)
+            case .refunded: ThemeImage("arrow_return", size: 20, colorStyle: .secondary)
+            default: ProgressView(value: 0.55)
+                .progressViewStyle(DeterminiteSpinnerStyle())
+                .frame(width: 20, height: 20)
+                .spinning()
+            }
+        }
+    }
+}
+
+extension Swap {
+    struct Leg: Hashable {
+        let status: Status
+        let type: String
+        let chainId: String
+        let txHash: String
+        let fromAsset: String
+        let toAsset: String
     }
 }
 
@@ -50,6 +81,20 @@ struct SwapRecord: Codable {
     let depositAddress: String?
     let providerSwapId: String?
     let date: Date
+    let fromAsset: String?
+    let toAsset: String?
+    let legs: [Leg]?
+}
+
+extension SwapRecord {
+    struct Leg: Codable {
+        let status: String
+        let type: String
+        let chainId: String
+        let txHash: String
+        let fromAsset: String
+        let toAsset: String
+    }
 }
 
 extension SwapRecord: FetchableRecord, PersistableRecord {
@@ -71,5 +116,8 @@ extension SwapRecord: FetchableRecord, PersistableRecord {
         static let depositAddress = Column(CodingKeys.depositAddress)
         static let providerSwapId = Column(CodingKeys.providerSwapId)
         static let date = Column(CodingKeys.date)
+        static let fromAsset = Column(CodingKeys.fromAsset)
+        static let toAsset = Column(CodingKeys.toAsset)
+        static let legs = Column(CodingKeys.legs)
     }
 }

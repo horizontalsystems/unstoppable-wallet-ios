@@ -17,6 +17,7 @@ enum SendField {
     case fee(title: CustomStringConvertible, amountData: AmountData?)
     case hex(title: String, value: String)
     case mevProtection(isOn: Binding<Bool>)
+    case swapStatus(status: Swap.Status)
 
     @ViewBuilder var listRow: some View {
         switch self {
@@ -170,6 +171,21 @@ enum SendField {
                     }
                 }
             }
+        case let .swapStatus(status):
+            Cell(
+                style: .secondary,
+                middle: {
+                    MiddleTextIcon(text: "swap_info.status".localized)
+                },
+                right: {
+                    HStack(spacing: 12) {
+                        ThemeText(status.title.styled(.primary), style: .subhead)
+                            .multilineTextAlignment(.trailing)
+
+                        status.view
+                    }
+                }
+            )
         }
     }
 

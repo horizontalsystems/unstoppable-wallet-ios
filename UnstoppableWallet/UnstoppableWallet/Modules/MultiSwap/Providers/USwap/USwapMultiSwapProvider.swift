@@ -30,30 +30,6 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     private var assetMap = [String: String]()
     private let syncSubject = PassthroughSubject<Void, Never>()
 
-    private let blockchainTypeMap: [String: BlockchainType] = [
-        "bitcoin": .bitcoin,
-        "bitcoincash": .bitcoinCash,
-        "ecash": .ecash,
-        "litecoin": .litecoin,
-        "dash": .dash,
-        "zcash": .zcash,
-        "monero": .monero,
-        "1": .ethereum,
-        "56": .binanceSmartChain,
-        "137": .polygon,
-        "43114": .avalanche,
-        "10": .optimism,
-        "42161": .arbitrumOne,
-        "100": .gnosis,
-        "250": .fantom,
-        "728126428": .tron,
-        "solana": .solana,
-        "ton": .ton,
-        "8453": .base,
-        "324": .zkSync,
-        "stellar": .stellar,
-    ]
-
     init(provider: Provider) {
         self.provider = provider
         headers = Self.headers
@@ -90,7 +66,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         var assetMap = [String: String]()
 
         for token in tokens {
-            guard let blockchainType = blockchainTypeMap[token.chainId] else {
+            guard let blockchainType = Self.blockchainTypeMap[token.chainId] else {
                 continue
             }
 
@@ -340,7 +316,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         }
 
         set(&parameters, "hash", swap.txHash)
-        set(&parameters, "chainId", blockchainTypeMap.first(where: { $0.value == blockchainType })?.key)
+        set(&parameters, "chainId", Self.blockchainTypeMap.first(where: { $0.value == blockchainType })?.key)
         set(&parameters, "fromAsset", assetMap[swap.tokenIn.tokenQuery.id.lowercased()])
         set(&parameters, "toAsset", assetMap[swap.tokenOut.tokenQuery.id.lowercased()])
         set(&parameters, "depositAddress", swap.depositAddress)
@@ -764,22 +740,56 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 }
 
 extension USwapMultiSwapProvider {
-    static func track(swap: Swap, parameters: Parameters, networkManager: NetworkManager) async throws -> Swap {
+    static let blockchainTypeMap: [String: BlockchainType] = [
+        "bitcoin": .bitcoin,
+        "bitcoincash": .bitcoinCash,
+        "ecash": .ecash,
+        "litecoin": .litecoin,
+        "dash": .dash,
+        "zcash": .zcash,
+        "monero": .monero,
+        "1": .ethereum,
+        "56": .binanceSmartChain,
+        "137": .polygon,
+        "43114": .avalanche,
+        "10": .optimism,
+        "42161": .arbitrumOne,
+        "100": .gnosis,
+        "250": .fantom,
+        "728126428": .tron,
+        "solana": .solana,
+        "ton": .ton,
+        "8453": .base,
+        "324": .zkSync,
+        "stellar": .stellar,
+    ]
+
+    static func track(swap: Swap, parameters: Parameters, networkManager _: NetworkManager, isEvm: Bool = false) async throws -> Swap {
+        let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
         let response: USwapMultiSwapProvider.TrackResponse = try await networkManager.fetch(
-            url: "\(USwapMultiSwapProvider.baseUrl)/track",
+            url: "\(USwapMultiSwapProvider.baseUrl)/track\(isEvm ? "/evm" : "")",
             method: .post,
             parameters: parameters,
             headers: USwapMultiSwapProvider.headers
         )
 
         var swap = swap
+        swap.status = response.status
+        swap.fromAsset = response.fromAsset
+        swap.toAsset = response.toAsset
+        swap.legs = response.legs.map { leg in
+            Swap.Leg(
+                status: Swap.Status(rawValue: leg.status) ?? .unknown,
+                type: leg.type,
+                chainId: leg.chainId,
+                txHash: leg.txHash,
+                fromAsset: leg.fromAsset,
+                toAsset: leg.toAsset
+            )
+        }
 
-        if let status = Swap.Status(rawValue: response.status) {
-            swap.status = status
-
-            if status == .completed {
-                swap.amountOut = response.toAmount
-            }
+        if response.status == .completed {
+            swap.amountOut = response.toAmount
         }
 
         return swap
@@ -895,12 +905,36 @@ extension USwapMultiSwapProvider {
     }
 
     struct TrackResponse: ImmutableMappable {
-        let status: String
+        let status: Swap.Status
+        let fromAsset: String
+        let toAsset: String
         let toAmount: Decimal
+        let legs: [Leg]
 
         init(map: Map) throws {
             status = try map.value("status")
             toAmount = try map.value("toAmount", using: Transform.stringToDecimalTransform)
+            fromAsset = try map.value("fromAsset")
+            toAsset = try map.value("toAsset")
+            legs = try map.value("legs")
+        }
+
+        struct Leg: ImmutableMappable {
+            let status: String
+            let type: String
+            let chainId: String
+            let txHash: String
+            let fromAsset: String
+            let toAsset: String
+
+            init(map: Map) throws {
+                status = try map.value("status")
+                type = try map.value("type")
+                chainId = try map.value("chainId")
+                txHash = try map.value("hash")
+                fromAsset = try map.value("fromAsset")
+                toAsset = try map.value("toAsset")
+            }
         }
     }
 
