@@ -50,18 +50,23 @@ enum SwapProviderType: String, CaseIterable, Identifiable {
         return [text, icon].compactMap { $0 }.joined()
     }
 
-    var id: String {
-        rawValue
+    var icon: String {
+        switch self {
+        case .auto: return "shield_check_filled"
+        case .flexible: return "thumbsup"
+        case .controlled: return "warning_filled"
+        }
     }
 
-    var colorStyle: ColorStyle {
+    var сolorStyle: ColorStyle {
         switch self {
-        case .auto:
-            return .green
-        case .flexible:
-            return .blue
-        case .controlled:
-            return .yellow
+        case .auto: return .green
+        case .flexible: return .primary
+        case .controlled: return .yellow
         }
+    }
+
+    var id: String {
+        rawValue
     }
 }
