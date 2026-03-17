@@ -8,6 +8,12 @@ struct ComponentText: CustomStringConvertible {
     var description: String { text }
 }
 
+struct AttibutedComponentText: CustomStringConvertible {
+    let text: AttributedString
+
+    var description: String { text.description }
+}
+
 struct ComponentBadge: CustomStringConvertible {
     let text: String
     var change: Int?

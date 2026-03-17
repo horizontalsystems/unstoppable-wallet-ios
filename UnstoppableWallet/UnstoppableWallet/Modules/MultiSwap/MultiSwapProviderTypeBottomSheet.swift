@@ -13,7 +13,10 @@ struct MultiSwapProviderTypeBottomSheet: View {
                     ForEach(SwapProviderType.allCases) { type in
                         HStack {
                             VStack(alignment: .leading, spacing: .margin4) {
-                                BadgeViewNew(type.title, mode: .transparent, colorStyle: type.colorStyle)
+                                HStack(spacing: .margin4) {
+                                    ThemeImage(type.icon, size: .iconSize16, colorStyle: type.сolorStyle)
+                                    ThemeText(type.title, style: .captionSB, colorStyle: type.сolorStyle)
+                                }
 
                                 ThemeText("swap.quotes.providers.risk_levels.\(type.rawValue).description".localized, style: .subhead)
                             }

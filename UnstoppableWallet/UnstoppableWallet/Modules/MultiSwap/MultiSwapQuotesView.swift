@@ -24,17 +24,10 @@ struct MultiSwapQuotesView: View {
                                             .frame(width: .iconSize32, height: .iconSize32)
                                     },
                                     middle: {
-                                        MultiText(
-                                            eyebrow: ComponentText(text: quote.provider.name, colorStyle: .primary),
-                                            eyebrowBadge: ComponentBadge(
-                                                text: quote.provider.type.title,
-                                                change: nil,
-                                                mode: .transparent,
-                                                colorStyle: quote.provider.type.colorStyle,
-                                                onTap: { onTapProviderInfo() }
-                                            ),
-                                            description: providerDescription(quote: quote)
-                                        )
+                                        VStack(alignment: .leading, spacing: 3) {
+                                            ThemeText(quote.provider.name, style: .subhead, colorStyle: .primary)
+                                            providerDescriptionView(quote: quote)
+                                        }
                                     },
                                     right: {
                                         RightTextCheckbox(
@@ -114,11 +107,25 @@ struct MultiSwapQuotesView: View {
         return ValueFormatter.instance.formatFull(currency: viewModel.currency, value: quote.quote.expectedBuyAmount * rateOut)
     }
 
-    private func providerDescription(quote: MultiSwapViewModel.Quote) -> String? {
-        // just estimated time for now
-        quote.quote.estimatedTime.map {
-            "~ " + Duration.seconds($0).formatted(.units(allowed: [.hours, .minutes, .seconds], width: .narrow))
+    @ViewBuilder private func providerDescriptionView(quote: MultiSwapViewModel.Quote) -> some View {
+        let type = quote.provider.type
+
+        HStack(alignment: .bottom, spacing: .margin4) {
+            if let estimatedTime = quote.quote.estimatedTime {
+                let timeString = Duration.seconds(estimatedTime).formatted(.units(allowed: [.hours, .minutes, .seconds], width: .narrow))
+
+                ThemeImage("clock_filled", size: .iconSize16, colorStyle: .secondary)
+                ThemeText(timeString, style: .captionSB, colorStyle: .secondary)
+            }
+            Button(action: onTapProviderInfo) {
+                HStack(spacing: .margin4) {
+                    ThemeImage(type.icon, size: .iconSize16, colorStyle: type.сolorStyle)
+                    ThemeText(type.title, style: .captionSB, colorStyle: type.сolorStyle)
+                }
+            }
+            .buttonStyle(.plain)
         }
+        .fixedSize()
     }
 
     private func priceImpact(quote: MultiSwapViewModel.Quote) -> (Decimal, ValueLevel)? {
