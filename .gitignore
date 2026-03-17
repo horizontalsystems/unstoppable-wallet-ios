@@ -21,6 +21,7 @@ Pods/*
 /.irb-history
 /screenshot_*.png
 .build/
+.xcodebuildmcp/
 
 history_bash.txt
 

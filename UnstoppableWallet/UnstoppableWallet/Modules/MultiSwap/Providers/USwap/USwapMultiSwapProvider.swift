@@ -10,6 +10,7 @@ import MoneroKit
 import ObjectMapper
 import SwiftUI
 import TronKit
+import ZanoKit
 import ZcashLightClientKit
 
 class USwapMultiSwapProvider: IMultiSwapProvider {
@@ -97,6 +98,13 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
             case .bitcoin, .bitcoinCash, .ecash, .dash, .zcash, .monero, .stellar:
                 tokenQueries = blockchainType.nativeTokenQueries
+
+            case .zano:
+                if let assetId = token.address, !assetId.isEmpty {
+                    tokenQueries = [TokenQuery(blockchainType: .zano, tokenType: .zanoAsset(id: assetId))]
+                } else {
+                    tokenQueries = blockchainType.nativeTokenQueries
+                }
 
             case .litecoin:
                 let supportedDerivations: [TokenType.Derivation] = [.bip44, .bip49, .bip84]
@@ -196,7 +204,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             let esimatedTime = quote.esimatedTime ?? MultiSwapHelpers.estimate(tokenIn: tokenIn, tokenOut: tokenOut)
             return EvmMultiSwapQuote(expectedBuyAmount: quote.expectedBuyAmount, allowanceState: allowanceState, estimatedTime: esimatedTime)
 
-        case .bitcoin, .bitcoinCash, .ecash, .litecoin, .dash, .zcash, .monero, .ton, .stellar:
+        case .bitcoin, .bitcoinCash, .ecash, .litecoin, .dash, .zcash, .monero, .ton, .stellar, .zano:
             return MultiSwapQuote(expectedBuyAmount: quote.expectedBuyAmount, estimatedTime: quote.esimatedTime)
 
         default:
@@ -292,6 +300,17 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 slippage: slippage,
                 recipient: recipient,
                 priority: transactionSettings?.moneroPriority ?? .default
+            )
+        case .zano:
+            return try await buildZanoConfirmationQuote(
+                tokenIn: tokenIn,
+                tokenOut: tokenOut,
+                amountIn: amountIn,
+                amountOut: amountOut,
+                amountOutMin: amountOutMin,
+                quote: quote,
+                slippage: slippage,
+                recipient: recipient
             )
         default:
             throw SwapError.unsupportedTokenIn
@@ -694,7 +713,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         quote: Quote,
         slippage: Decimal,
         recipient: String?,
-        priority: SendPriority
+        priority: MoneroKit.SendPriority
     ) async throws -> SwapFinalQuote {
         guard let adapter = adapterManager.adapter(for: tokenIn) as? MoneroAdapter else {
             throw SwapError.noMoneroAdapter
@@ -737,6 +756,62 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             providerSwapId: quote.providerSwapId
         )
     }
+
+    private func buildZanoConfirmationQuote(
+        tokenIn: Token,
+        tokenOut _: Token,
+        amountIn: Decimal,
+        amountOut: Decimal,
+        amountOutMin _: Decimal,
+        quote: Quote,
+        slippage: Decimal,
+        recipient: String?
+    ) async throws -> SwapFinalQuote {
+        guard let adapter = adapterManager.adapter(for: tokenIn) as? ZanoAdapter else {
+            throw SwapError.noZanoAdapter
+        }
+
+        let amount: ZanoSendAmount = adapter.balanceData.available == amountIn ? .all(amountIn) : .value(amountIn)
+        var fee: Decimal?
+        var transactionError: Error?
+
+        do {
+            let estimatedFee = adapter.estimateFee()
+            fee = estimatedFee
+
+            if adapter.isNative {
+                if amountIn + estimatedFee > adapter.balanceData.available {
+                    throw ZanoCoreError.insufficientFunds(adapter.balanceData.available.description)
+                }
+            } else {
+                if amountIn > adapter.balanceData.available {
+                    throw ZanoCoreError.insufficientFunds(adapter.balanceData.available.description)
+                }
+                if let nativeAdapter = adapterManager.adapter(for: adapter.baseToken) as? ZanoAdapter,
+                   estimatedFee > nativeAdapter.balanceData.available
+                {
+                    throw ZanoCoreError.insufficientFunds(nativeAdapter.balanceData.available.description)
+                }
+            }
+        } catch {
+            transactionError = error
+        }
+
+        return ZanoSwapFinalQuote(
+            expectedAmountOut: amountOut,
+            recipient: recipient,
+            slippage: slippage,
+            estimatedTime: quote.esimatedTime,
+            amount: amount,
+            address: quote.inboundAddress,
+            memo: quote.memo,
+            fee: fee,
+            transactionError: transactionError,
+            toAddress: quote.destinationAddress,
+            depositAddress: quote.inboundAddress,
+            providerSwapId: quote.providerSwapId
+        )
+    }
 }
 
 extension USwapMultiSwapProvider {
@@ -762,6 +837,7 @@ extension USwapMultiSwapProvider {
         "8453": .base,
         "324": .zkSync,
         "stellar": .stellar,
+        "zano": .zano,
     ]
 
     static func track(swap: Swap, parameters: Parameters, networkManager _: NetworkManager, isEvm: Bool = false) async throws -> Swap {
@@ -948,5 +1024,6 @@ extension USwapMultiSwapProvider {
         case noTonAdapter
         case noStellarAdapter
         case noMoneroAdapter
+        case noZanoAdapter
     }
 }

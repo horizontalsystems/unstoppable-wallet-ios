@@ -4,6 +4,7 @@ import Eip20Kit
 import EvmKit
 import Foundation
 import MarketKit
+import ZanoKit
 
 class MultiSwapSendHandler {
     private let currencyManager = Core.shared.currencyManager
@@ -206,6 +207,12 @@ extension MultiSwapSendHandler: ISendHandler {
                 priority: quote.priority,
                 memo: quote.memo
             )
+        } else if let quote = data.quote as? ZanoSwapFinalQuote {
+            guard let adapter = adapterManager.adapter(for: tokenIn) as? ZanoAdapter else {
+                throw SendError.noZanoAdapter
+            }
+
+            try adapter.send(to: quote.address, amount: quote.amount, memo: quote.memo)
         }
 
         if let account = accountManager.activeAccount {
@@ -376,6 +383,7 @@ extension MultiSwapSendHandler {
         case noSendParameters
         case noZcashAdapter
         case noMoneroAdapter
+        case noZanoAdapter
         case noProposal
         case noTonAdapter
         case noActiveAccount
