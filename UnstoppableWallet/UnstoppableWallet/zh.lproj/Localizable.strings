@@ -607,8 +607,8 @@
 "swap.quotes.providers.risk_levels.title" = "提供商风险等级";
 "swap.quotes.providers.risk_levels.description" = "风险等级显示提供商在执行过程中可能采取的操作。";
 "swap.quotes.providers.risk_levels.auto.description" = "该交易所使用自有流动性，注重隐私保护。交易处理过程中不会进行 AML 拦截。";
-"swap.quotes.providers.risk_levels.flex.description" = "该交易所通常会退还未通过 AML 检查的交易。在极少数情况下，如果需要额外验证，资金可能会被临时冻结。";
-"swap.quotes.providers.risk_levels.control.description" = "该交易所会拦截未通过 AML 检查的交易，直到完成 KYC/身份验证要求。";
+"swap.quotes.providers.risk_levels.flexible.description" = "该交易所通常会退还未通过 AML 检查的交易。在极少数情况下，如果需要额外验证，资金可能会被暂时冻结。";
+"swap.quotes.providers.risk_levels.controlled.description" = "该交易所会冻结未通过 AML 检查的交易，直到完成 KYC/身份验证要求。";
 
 
 "swap.allowance" = "补贴";

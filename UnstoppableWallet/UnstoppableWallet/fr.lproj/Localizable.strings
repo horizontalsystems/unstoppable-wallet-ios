@@ -607,8 +607,8 @@
 "swap.quotes.providers.risk_levels.title" = "Niveaux de risque des fournisseurs";
 "swap.quotes.providers.risk_levels.description" = "Les niveaux de risque indiquent les actions qu'un fournisseur peut entreprendre lors de l'exécution.";
 "swap.quotes.providers.risk_levels.auto.description" = "Cet exchange utilise sa propre liquidité et respecte la confidentialité. Les transactions sont traitées sans blocage AML.";
-"swap.quotes.providers.risk_levels.flex.description" = "Cet exchange rembourse généralement les transactions qui échouent aux vérifications AML. Dans de rares cas, les fonds peuvent être temporairement bloqués si une vérification supplémentaire est requise.";
-"swap.quotes.providers.risk_levels.control.description" = "Cet exchange bloque les transactions qui échouent aux vérifications AML jusqu'à ce que les exigences KYC/vérification soient remplies.";
+"swap.quotes.providers.risk_levels.flexible.description" = "Cet exchange rembourse généralement les transactions qui échouent aux vérifications AML. Dans de rares cas, les fonds peuvent être temporairement bloqués si une vérification supplémentaire est requise.";
+"swap.quotes.providers.risk_levels.controlled.description" = "Cet exchange bloque les transactions qui échouent aux vérifications AML jusqu'à ce que les exigences KYC/vérification soient satisfaites.";
 
 
 "swap.allowance" = "Allocation";

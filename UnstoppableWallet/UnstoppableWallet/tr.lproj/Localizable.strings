@@ -607,8 +607,8 @@
 "swap.quotes.providers.risk_levels.title" = "Sağlayıcı Risk Seviyeleri";
 "swap.quotes.providers.risk_levels.description" = "Risk seviyeleri, bir sağlayıcının işlem sırasında hangi eylemleri gerçekleştirebileceğini gösterir.";
 "swap.quotes.providers.risk_levels.auto.description" = "Bu borsa kendi likiditesini kullanır ve gizlilik dostudur. İşlemler AML engellemesi olmadan gerçekleştirilir.";
-"swap.quotes.providers.risk_levels.flex.description" = "Bu borsa genellikle AML kontrollerini geçemeyen işlemleri iade eder. Nadir durumlarda, ek doğrulama gerekirse fonlar geçici olarak bloke edilebilir.";
-"swap.quotes.providers.risk_levels.control.description" = "Bu borsa, KYC/doğrulama gereksinimleri tamamlanana kadar AML kontrollerini geçemeyen işlemleri engeller.";
+"swap.quotes.providers.risk_levels.flexible.description" = "Bu borsa genellikle AML kontrollerini geçemeyen işlemleri iade eder. Nadir durumlarda, ek doğrulama gerektiğinde fonlar geçici olarak bloke edilebilir.";
+"swap.quotes.providers.risk_levels.controlled.description" = "Bu borsa, KYC/doğrulama gereksinimleri tamamlanana kadar AML kontrollerini geçemeyen işlemleri bloke eder.";
 
 
 "swap.allowance" = "Ödenek";
