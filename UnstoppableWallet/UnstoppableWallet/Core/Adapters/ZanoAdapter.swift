@@ -321,6 +321,15 @@ extension ZanoAdapter {
 
         return Kit.isValid(address: address, networkType: networkType)
     }
+
+    static func address(accountType: AccountType) -> String {
+        switch accountType {
+        case let .mnemonic(words, passphrase, _):
+            return (try? Kit.address(wallet: .bip39(seed: words, passphrase: passphrase, creationTimestamp: 0))) ?? ""
+
+        default: return ""
+        }
+    }
 }
 
 enum ZanoSendAmount {

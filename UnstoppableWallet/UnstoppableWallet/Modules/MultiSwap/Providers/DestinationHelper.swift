@@ -53,6 +53,8 @@ enum DestinationHelper {
             address = try TonKitManager.address(accountType: account.type)
         case .monero:
             address = MoneroAdapter.address(accountType: account.type)
+        case .zano:
+            address = ZanoAdapter.address(accountType: account.type)
         default:
             throw SwapError.noDestinationAddress
         }

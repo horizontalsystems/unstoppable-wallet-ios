@@ -2908,6 +2908,10 @@
 		D092C58E2C12DE810060D915 /* PriceChangeMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D4D2C07020300515664 /* PriceChangeMode.swift */; };
 		D092D6412E31172E0039BDB4 /* MoneroAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092D6402E3117280039BDB4 /* MoneroAdapter.swift */; };
 		D092D6422E31172E0039BDB4 /* MoneroAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092D6402E3117280039BDB4 /* MoneroAdapter.swift */; };
+		D09AEDAA2F69267700D56004 /* ZanoSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AEDA92F69267700D56004 /* ZanoSwapFinalQuote.swift */; };
+		D09AEDAB2F69267700D56004 /* ZanoSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AEDA92F69267700D56004 /* ZanoSwapFinalQuote.swift */; };
+		D09AEDAD2F69272600D56004 /* ZanoSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AEDAC2F69272600D56004 /* ZanoSendHelper.swift */; };
+		D09AEDAE2F69272600D56004 /* ZanoSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AEDAC2F69272600D56004 /* ZanoSendHelper.swift */; };
 		D09C5C632C076C0E00E6909E /* CoinIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09C5C622C076C0E00E6909E /* CoinIconView.swift */; };
 		D09C5C642C076C0E00E6909E /* CoinIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09C5C622C076C0E00E6909E /* CoinIconView.swift */; };
 		D09CDA322F1653770068B1B7 /* MoneroIncomingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09CDA302F1653770068B1B7 /* MoneroIncomingTransactionRecord.swift */; };
@@ -5170,6 +5174,8 @@
 		D09200C1293F21720091981A /* RestoreNonStandardModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RestoreNonStandardModule.swift; sourceTree = "<group>"; };
 		D092C58A2C12DE3D0060D915 /* PriceChangeManager+HsTimePeriod.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "PriceChangeManager+HsTimePeriod.swift"; sourceTree = "<group>"; };
 		D092D6402E3117280039BDB4 /* MoneroAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroAdapter.swift; sourceTree = "<group>"; };
+		D09AEDA92F69267700D56004 /* ZanoSwapFinalQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZanoSwapFinalQuote.swift; sourceTree = "<group>"; };
+		D09AEDAC2F69272600D56004 /* ZanoSendHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZanoSendHelper.swift; sourceTree = "<group>"; };
 		D09C5C622C076C0E00E6909E /* CoinIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinIconView.swift; sourceTree = "<group>"; };
 		D09CDA2F2F1653770068B1B7 /* MoneroTransactionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroTransactionRecord.swift; sourceTree = "<group>"; };
 		D09CDA302F1653770068B1B7 /* MoneroIncomingTransactionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroIncomingTransactionRecord.swift; sourceTree = "<group>"; };
@@ -6694,6 +6700,7 @@
 		11B35733E1033052E6CA46C3 /* Providers */ = {
 			isa = PBXGroup;
 			children = (
+				D09AEDA92F69267700D56004 /* ZanoSwapFinalQuote.swift */,
 				6BDB59D42F0B5F61005FA626 /* MevProtectionHelper.swift */,
 				6BDB59D12F0B5DF1005FA626 /* TronSwapFinalQuote.swift */,
 				6BDB59D72F0B7600005FA626 /* TonSwapFinalQuote.swift */,
@@ -7263,7 +7270,6 @@
 		11B35E1EBCA59D0D1DD9ABCD /* Adapters */ = {
 			isa = PBXGroup;
 			children = (
-				6BDB59E32F14B8EC005FA626 /* MoneroSendHelper.swift */,
 				6BA9718E2ECB3B7B00DEC017 /* Zcash */,
 				D05E96AB2A287155002CCD71 /* Evm */,
 				D023D26F2A25CF18004F65B0 /* Tron */,
@@ -7286,7 +7292,9 @@
 				6BDB59DD2F0F576C005FA626 /* StellarSendHelper.swift */,
 				6BCAB39A2F1A114E00820806 /* TronSendHelper.swift */,
 				D092D6402E3117280039BDB4 /* MoneroAdapter.swift */,
+				6BDB59E32F14B8EC005FA626 /* MoneroSendHelper.swift */,
 				1055BE8698DF9E53E2E04C12 /* ZanoAdapter.swift */,
+				D09AEDAC2F69272600D56004 /* ZanoSendHelper.swift */,
 			);
 			path = Adapters;
 			sourceTree = "<group>";
@@ -11531,6 +11539,7 @@
 				ABC9A266809A701B69765151 /* IntegerAmountInputCell.swift in Sources */,
 				ABC9AE03528F37BF2C3B75DF /* IntegerAmountInputView.swift in Sources */,
 				ABC9A6A792282ACC8DAB62BC /* IntegerFormAmountInputView.swift in Sources */,
+				D09AEDAB2F69267700D56004 /* ZanoSwapFinalQuote.swift in Sources */,
 				11B359BA446B27E6D369B35E /* RestoreModule.swift in Sources */,
 				11B35907781848EB0C20759A /* RestoreViewController.swift in Sources */,
 				6B44BE622EB1C00100257FD7 /* ButtonGroupView.swift in Sources */,
@@ -12222,6 +12231,7 @@
 				6B954B252F3EE47B008A1A16 /* RestorePassphraseView.swift in Sources */,
 				11B353D4BC292465358979D3 /* ValueLevel.swift in Sources */,
 				D3E36B8A2DF6E1EB007F99CA /* WalletTokenViewModel.swift in Sources */,
+				D09AEDAE2F69272600D56004 /* ZanoSendHelper.swift in Sources */,
 				11B350CE805774C98948353C /* SendField.swift in Sources */,
 				11B359BACF4B66607F50944D /* MultiSwapPreSwapStep.swift in Sources */,
 				11B358B7A012C6F4922DC092 /* SendHandlerFactory.swift in Sources */,
@@ -13223,6 +13233,7 @@
 				11B35DC7CD9E62F3B47ECB98 /* LogoHeaderCell.swift in Sources */,
 				11B3516976C6C67E1EFFBD56 /* NftMetadataService.swift in Sources */,
 				11B35210D072735192AD9BC8 /* NftAssetBriefMetadata.swift in Sources */,
+				D09AEDAA2F69267700D56004 /* ZanoSwapFinalQuote.swift in Sources */,
 				ABC9ABA70CEF664E8E01FA7A /* SendNftModule.swift in Sources */,
 				ABC9A8D8709EC2B40D74A97A /* SwapRevokeConfirmationViewController.swift in Sources */,
 				11B355028142F82D805752AF /* NftDoubleCell.swift in Sources */,
@@ -13914,6 +13925,7 @@
 				D38E5E0E2F0CFE020049EB91 /* SwapAssetSyncInfo.swift in Sources */,
 				6B50FDB52EAA20E0004CD0A0 /* ReceiveSettingsListView.swift in Sources */,
 				6BEF09562E12848E004F4514 /* DeepLinkViewManager.swift in Sources */,
+				D09AEDAD2F69272600D56004 /* ZanoSendHelper.swift in Sources */,
 				11B3557AF8D64E9897965526 /* ISendData.swift in Sources */,
 				D3E36B8B2DF6E1EB007F99CA /* WalletTokenViewModel.swift in Sources */,
 				11B3594FF624369050E43F8F /* SendData.swift in Sources */,
@@ -15131,7 +15143,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MoneroKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 0.2.2;
+				version = 0.2.3;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

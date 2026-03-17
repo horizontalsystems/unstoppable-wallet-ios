@@ -77,7 +77,7 @@ struct SecuritySettingsView: View {
                         }
                     }
                 }
-                
+
                 if viewModel.isPasscodeSet {
                     ListSection {
                         Cell(
