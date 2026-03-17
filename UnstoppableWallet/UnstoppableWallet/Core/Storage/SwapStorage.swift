@@ -16,7 +16,7 @@ class SwapStorage {
         let tokenQueries = tokenQueryIds.compactMap { TokenQuery(id: $0) }
 
         let tokens = try marketKit.tokens(queries: tokenQueries)
-        let tokenMap = Dictionary(uniqueKeysWithValues: tokens.map { ($0.tokenQuery.id, $0) })
+        let tokenMap = Dictionary(tokens.map { ($0.tokenQuery.id, $0) }, uniquingKeysWith: { first, _ in first })
 
         return records.compactMap { record in
             guard
