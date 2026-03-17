@@ -607,8 +607,8 @@
 "swap.quotes.providers.risk_levels.title" = "Niveles de riesgo del proveedor";
 "swap.quotes.providers.risk_levels.description" = "Los niveles de riesgo muestran qué acciones puede tomar un proveedor durante la ejecución.";
 "swap.quotes.providers.risk_levels.auto.description" = "Este exchange utiliza su propia liquidez y respeta la privacidad. Las transacciones se procesan sin bloqueo AML.";
-"swap.quotes.providers.risk_levels.flex.description" = "Este exchange generalmente reembolsa las transacciones que no pasan las verificaciones AML. En casos excepcionales, los fondos pueden ser bloqueados temporalmente si se requiere una verificación adicional.";
-"swap.quotes.providers.risk_levels.control.description" = "Este exchange bloquea las transacciones que no pasan las verificaciones AML hasta que se completen los requisitos de KYC/verificación.";
+"swap.quotes.providers.risk_levels.flexible.description" = "Este exchange generalmente reembolsa las transacciones que no pasan las verificaciones AML. En casos excepcionales, los fondos pueden ser bloqueados temporalmente si se requiere una verificación adicional.";
+"swap.quotes.providers.risk_levels.controlled.description" = "Este exchange bloquea las transacciones que no pasan las verificaciones AML hasta que se completen los requisitos de KYC/verificación.";
 
 
 "swap.allowance" = "Permiso de acceso";
