@@ -472,7 +472,48 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
     }
 
     func track(swap: Swap) async throws -> Swap {
-        swap // TODO: implement track
+        guard let txHash = swap.txHash else {
+            logger?.log(level: .debug, message: "AllBridge Track: no txHash, skipping")
+            return swap
+        }
+
+        let chainSymbol = blockchainTypes.first(where: { $0.value == swap.tokenIn.blockchainType })?.key
+
+        guard let chainSymbol else {
+            logger?.log(level: .debug, message: "AllBridge Track: unknown chain for \(swap.tokenIn.blockchainType)")
+            return swap
+        }
+
+        let parameters: Parameters = [
+            "chain": chainSymbol,
+            "txId": txHash,
+        ]
+
+        let response: TransferStatusResponse? = try? await networkManager.fetch(
+            url: "\(baseUrl)/transfer/status",
+            parameters: parameters
+        )
+
+        var swap = swap
+        swap.status = response.map { resolveStatus(response: $0) } ?? .pending
+
+        return swap
+    }
+
+    private func resolveStatus(response: TransferStatusResponse) -> Swap.Status {
+        if response.isSuspended {
+            return .failed
+        }
+
+        if let receive = response.receive {
+            return receive.blockTime != nil ? .completed : .swapping
+        }
+
+        if response.send.confirmations >= response.send.confirmationsNeeded {
+            return .swapping
+        }
+
+        return .pending
     }
 }
 
@@ -574,6 +615,44 @@ extension AllBridgeMultiSwapProvider {
 
         init(map: Map) throws {
             transactionEnvelope = try map.value("from")
+        }
+    }
+
+    struct TransferStatusResponse: ImmutableMappable {
+        let txId: String
+        let sourceChainSymbol: String
+        let destinationChainSymbol: String
+        let signaturesCount: Int
+        let signaturesNeeded: Int
+        let send: BridgeTransaction
+        let receive: BridgeTransaction?
+        let isSuspended: Bool
+
+        init(map: Map) throws {
+            txId = try map.value("txId")
+            sourceChainSymbol = try map.value("sourceChainSymbol")
+            destinationChainSymbol = try map.value("destinationChainSymbol")
+            signaturesCount = try map.value("signaturesCount")
+            signaturesNeeded = try map.value("signaturesNeeded")
+            send = try map.value("send")
+            receive = try? map.value("receive")
+            isSuspended = (try? map.value("isSuspended")) ?? false
+        }
+    }
+
+    struct BridgeTransaction: ImmutableMappable {
+        let txId: String?
+        let hash: String?
+        let confirmations: Int
+        let confirmationsNeeded: Int
+        let blockTime: Int?
+
+        init(map: Map) throws {
+            txId = try? map.value("txId")
+            hash = try? map.value("hash")
+            confirmations = try map.value("confirmations")
+            confirmationsNeeded = try map.value("confirmationsNeeded")
+            blockTime = try? map.value("blockTime")
         }
     }
 }
