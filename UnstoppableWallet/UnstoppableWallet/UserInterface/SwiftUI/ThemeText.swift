@@ -12,6 +12,11 @@ struct ThemeText: View {
             self.style = style
             self.colorStyle = componentText.colorStyle ?? colorStyle ?? style.defaultColorStyle
             self.dimmed = dimmed || componentText.dimmed
+        } else if let componentText = text as? AttibutedComponentText {
+            self.text = .attributed(componentText.text)
+            self.style = style
+            self.colorStyle = colorStyle ?? style.defaultColorStyle
+            self.dimmed = dimmed
         } else {
             self.text = .plain(text.description)
             self.style = style

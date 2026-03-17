@@ -10,7 +10,7 @@ class ZanoAdapter {
     static let networkType: ZanoKit.NetworkType = .mainnet
     static let confirmationsThreshold = Int(Kit.confirmationsThreshold)
     static let zanoRate: Decimal = 1_000_000_000_000 // pow(10, 12)
-    
+
     static let validAddressPrefixes = ["Zx", "aZx", "iZ"]
 
     private let kit: ZanoKit.Kit
@@ -314,7 +314,7 @@ extension ZanoAdapter {
         let hasPrefix = validAddressPrefixes.contains { prefix in
             address.lowercased().hasPrefix(prefix.lowercased())
         }
-        
+
         guard hasPrefix else {
             return false
         }
