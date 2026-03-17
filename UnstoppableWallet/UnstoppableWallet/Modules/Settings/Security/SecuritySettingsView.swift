@@ -77,9 +77,9 @@ struct SecuritySettingsView: View {
                         }
                     }
                 }
-                
-                if viewModel.isPasscodeSet {
-                    ListSection {
+
+                ListSection {
+                    if viewModel.isPasscodeSet {
                         Cell(
                             middle: {
                                 MultiText(title: "settings_security.auto_lock".localized, subtitle: "settings_security.auto_lock.description".localized)
@@ -100,11 +100,10 @@ struct SecuritySettingsView: View {
                                 }
                             }
                         )
-
-                        toggledRow(title: "settings_security.balance_auto_hide".localized, subtitle: "settings_security.balance_auto_hide.description".localized, isOn: $viewModel.balanceAutoHide)
-
-                        toggledRow(title: "transaction_filter.hide_suspicious_txs".localized, subtitle: "transaction_filter.hide_suspicious_txs.description".localized, isOn: $viewModel.spamFilterEnabled)
                     }
+                    toggledRow(title: "settings_security.balance_auto_hide".localized, subtitle: "settings_security.balance_auto_hide.description".localized, isOn: $viewModel.balanceAutoHide)
+
+                    toggledRow(title: "transaction_filter.hide_suspicious_txs".localized, subtitle: "transaction_filter.hide_suspicious_txs.description".localized, isOn: $viewModel.spamFilterEnabled)
                 }
 
                 premiumSection()
