@@ -114,6 +114,13 @@
 "face_id" = "페이스 ID";
 "touch_id" = "터치 ID";
 
+"auto_lock.immediate" = "즉시";
+"auto_lock.minute1" = "1분";
+"auto_lock.minute5" = "5분";
+"auto_lock.minute15" = "15분";
+"auto_lock.minute30" = "30분";
+"auto_lock.hour1" = "1시간";
+
 "powered_by" = "%@ 제공";
 
 "filter.all" = "전체";
@@ -630,7 +637,7 @@
 "swap.high_price_impact" = "높은 가격 영향";
 "swap.recipient" = "수령인";
 "swap.slippage" = "미끄러짐";
-"swap.swapped_time" = "스왑 완료 시간";
+"swap.swapped_time" = "예상 시간";
 "swap.swapped_time.info" = "자금을 수령하기까지의 예상 시간입니다. 네트워크와 제공업체에 따라 스왑 처리 및 트랜잭션 확인에 시간이 걸릴 수 있습니다.";
 
 "swap.affiliate_fee" = "제휴 수수료";
@@ -705,7 +712,7 @@
 "swap.confirmation.impact_too_high" = "%@은 현재 유동성이 매우 낮아 매우 불리한 가격으로 거래되고 있으므로, 이 거래에 대한 스왑 조치를 비활성화했습니다.\n교환을 원하시면 %@ 웹사이트를 사용하십시오.";
 "swap.confirmation.impact_warning" = "중요한 사항입니다! 매우 불리한 가격을 받고 있습니다. 이는 유동성이 극도로 낮기 때문입니다.";
 
-"swap.confirmation.minimum_received" = "최대 지급액";
+"swap.confirmation.minimum_received" = "보장 수량";
 "swap.confirmation.minimum_received.info" = "스왑이 완료된 후 수령하게 되는 최소 금액입니다. 이 금액은 제공업체에 의해 보장되며, 처리 중 발생하는 가격 변동의 영향을 받지 않습니다.";
 "swap.confirmation.maximum_sent" = "최대 속도";
 

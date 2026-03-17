@@ -114,6 +114,13 @@
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
 
+"auto_lock.immediate" = "Sofort";
+"auto_lock.minute1" = "1 Minute";
+"auto_lock.minute5" = "5 Minuten";
+"auto_lock.minute15" = "15 Minuten";
+"auto_lock.minute30" = "30 Minuten";
+"auto_lock.hour1" = "1 Stunde";
+
 "powered_by" = "Angetrieben von %@";
 
 "filter.all" = "Alle";
@@ -630,7 +637,7 @@
 "swap.high_price_impact" = "Hohe Preisbeeinflussung";
 "swap.recipient" = "Empfänger";
 "swap.slippage" = "Preisabweichung";
-"swap.swapped_time" = "Swap Zeit";
+"swap.swapped_time" = "Gesch. Zeit";
 "swap.swapped_time.info" = "Ungefähre Zeit bis zum Erhalt der Gelder. Die Verarbeitung des Swaps und die Transaktionsbestätigungen können je nach Netzwerk und Provider etwas Zeit in Anspruch nehmen.";
 
 "swap.affiliate_fee" = "Affiliate-Gebühr";
@@ -705,7 +712,7 @@
 "swap.confirmation.impact_too_high" = "%@ hat Swap-Aktion für diesen Handel deaktiviert, da du einen extrem ungünstigen Preis bekommst. Dies ist auf extrem niedrige Liquidität zurückzuführen.\nWenn Sie trotzdem wechseln möchten, verwenden Sie stattdessen %@ Webseite.";
 "swap.confirmation.impact_warning" = "Wichtig! Du bekommst einen extrem ungünstigen Preis. Dies ist auf die extrem niedrige Liquidität zurückzuführen.";
 
-"swap.confirmation.minimum_received" = "Mindestens erhalten";
+"swap.confirmation.minimum_received" = "Garantiert";
 "swap.confirmation.minimum_received.info" = "Der Mindestbetrag, den du nach Abschluss des Swaps erhältst. Dieser Betrag wird vom Provider garantiert und ist während der Verarbeitung nicht von Preisänderungen betroffen.";
 "swap.confirmation.maximum_sent" = "Maximale Ausgaben";
 

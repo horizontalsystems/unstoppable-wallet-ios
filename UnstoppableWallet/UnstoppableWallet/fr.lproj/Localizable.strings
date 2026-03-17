@@ -114,6 +114,13 @@
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
 
+"auto_lock.immediate" = "Immédiat";
+"auto_lock.minute1" = "1 minute";
+"auto_lock.minute5" = "5 minutes";
+"auto_lock.minute15" = "15 minutes";
+"auto_lock.minute30" = "30 minutes";
+"auto_lock.hour1" = "1 heure";
+
 "powered_by" = "Alimenté par %@";
 
 "filter.all" = "Tout";
@@ -630,7 +637,7 @@
 "swap.high_price_impact" = "Impact de prix élevé";
 "swap.recipient" = "Destinataire";
 "swap.slippage" = "Glissement";
-"swap.swapped_time" = "Heure du swap";
+"swap.swapped_time" = "Temps est.";
 "swap.swapped_time.info" = "Temps approximatif pour recevoir les fonds. Le traitement du swap et les confirmations de transaction peuvent prendre un certain temps, selon le réseau et le fournisseur.";
 
 "swap.affiliate_fee" = "Frais d'affiliation";
@@ -705,7 +712,7 @@
 "swap.confirmation.impact_too_high" = "%@ a désactivé l'action d'échange pour cet échange parce que vous obtenez un prix extrêmement défavorable. Ceci est dû à une liquidité extrêmement faible.\nSi vous voulez toujours échanger, veuillez utiliser le site Web %@ à la place.";
 "swap.confirmation.impact_warning" = "Important ! Vous avez reçu un prix extrêmement défavorable en raison d'une liquidité extrêmement faible.";
 
-"swap.confirmation.minimum_received" = "Montant minimum reçu";
+"swap.confirmation.minimum_received" = "Garanti";
 "swap.confirmation.minimum_received.info" = "Le montant minimum que vous recevrez une fois le swap terminé. Ce montant est garanti par le fournisseur et n’est pas affecté par les variations de prix pendant le traitement.";
 "swap.confirmation.maximum_sent" = "Dépense maximale";
 

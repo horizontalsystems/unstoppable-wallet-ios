@@ -114,6 +114,13 @@
 "face_id" = "Face ID";
 "touch_id" = "Touch ID";
 
+"auto_lock.immediate" = "立即";
+"auto_lock.minute1" = "1 分钟";
+"auto_lock.minute5" = "5 分钟";
+"auto_lock.minute15" = "15 分钟";
+"auto_lock.minute30" = "30 分钟";
+"auto_lock.hour1" = "1 小时";
+
 "powered_by" = "由 %@ 提供支持";
 
 "filter.all" = "所有";
@@ -630,7 +637,7 @@
 "swap.high_price_impact" = "高价格影响";
 "swap.recipient" = "收款人";
 "swap.slippage" = "滑点";
-"swap.swapped_time" = "兑换时间";
+"swap.swapped_time" = "预计时间";
 "swap.swapped_time.info" = "预计到账时间。兑换处理和交易确认所需时间可能会因网络和服务提供方而有所不同。";
 
 "swap.affiliate_fee" = "联盟费";
@@ -705,7 +712,7 @@
 "swap.confirmation.impact_too_high" = "%@ 已禁用此交易的掉期操作，因为您得到的价格极其不利。 这是由于流动性极低造成的。\n如果您仍想兑换，请使用 %@ 网站。";
 "swap.confirmation.impact_warning" = "重要提示！您正在以极其不利的价格进行交易。这是因为流动性非常低。";
 
-"swap.confirmation.minimum_received" = "最小获取金额";
+"swap.confirmation.minimum_received" = "保证到账";
 "swap.confirmation.minimum_received.info" = "兑换完成后您将收到的最小金额。该金额由服务提供方保证，不受处理过程中价格波动的影响。";
 "swap.confirmation.maximum_sent" = "最大支出";
 
