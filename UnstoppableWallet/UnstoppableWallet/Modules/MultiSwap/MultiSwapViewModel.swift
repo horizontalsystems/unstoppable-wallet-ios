@@ -8,6 +8,7 @@ class MultiSwapViewModel: ObservableObject {
     private let autoRefreshDuration: Double = 20
 
     private var cancellables = Set<AnyCancellable>()
+    private var disposeBag = DisposeBag()
     private var providerCancellables = Set<AnyCancellable>()
     private var quotesTask: AnyTask?
     private var swapTask: AnyTask?
@@ -54,34 +55,7 @@ class MultiSwapViewModel: ObservableObject {
                 rateInCancellable = nil
             }
 
-            balanceDisposeBag = .init()
-
-            if let internalTokenIn,
-               let wallet = walletManager.activeWallets.first(where: { $0.token == internalTokenIn }),
-               let adapter = adapterManager.balanceAdapter(for: wallet)
-            {
-                adapterState = adapter.balanceState
-                availableBalance = adapter.balanceData.available
-
-                adapter.balanceStateUpdatedObservable
-                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                    .observeOn(MainScheduler.instance)
-                    .subscribe { [weak self] state in
-                        self?.adapterState = state
-                    }
-                    .disposed(by: balanceDisposeBag)
-
-                adapter.balanceDataUpdatedObservable
-                    .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-                    .observeOn(MainScheduler.instance)
-                    .subscribe { [weak self] balanceData in
-                        self?.availableBalance = balanceData.available
-                    }
-                    .disposed(by: balanceDisposeBag)
-            } else {
-                adapterState = nil
-                availableBalance = nil
-            }
+            syncAdapter()
         }
     }
 
@@ -97,10 +71,12 @@ class MultiSwapViewModel: ObservableObject {
                 amountIn = nil
             }
 
+            let oldTokenIn = internalTokenIn
+
             internalTokenIn = tokenIn
 
             if internalTokenOut == tokenIn {
-                internalTokenOut = nil
+                internalTokenOut = oldTokenIn
             }
 
             priceFlipped = false
@@ -140,11 +116,13 @@ class MultiSwapViewModel: ObservableObject {
                 return
             }
 
+            let oldTokenOut = internalTokenOut
+
             internalTokenOut = tokenOut
 
             if internalTokenIn == tokenOut {
                 amountIn = nil
-                internalTokenIn = nil
+                internalTokenIn = oldTokenOut
             }
 
             priceFlipped = false
@@ -298,8 +276,8 @@ class MultiSwapViewModel: ObservableObject {
         currency = currencyManager.baseCurrency
 
         defer {
-            internalTokenIn = token
-            internalTokenOut = MultiSwapDefaultTokenResolver.default(for: token)
+            internalTokenIn = token ?? (try? marketKit.token(query: TokenQuery(blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84))))
+            internalTokenOut = MultiSwapDefaultTokenResolver.default(for: token) ?? (try? marketKit.token(query: TokenQuery(blockchainType: .monero, tokenType: .native)))
         }
 
         currencyManager.$baseCurrency
@@ -317,12 +295,45 @@ class MultiSwapViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
+        subscribe(disposeBag, adapterManager.adapterDataReadyObservable) { [weak self] _ in self?.syncAdapter() }
+
         subscribeToProviders()
 
         syncFiatAmountIn()
         syncFiatAmountOut()
 
         swapProviderManager.sync()
+    }
+
+    func syncAdapter() {
+        balanceDisposeBag = .init()
+
+        if let internalTokenIn,
+           let wallet = walletManager.activeWallets.first(where: { $0.token == internalTokenIn }),
+           let adapter = adapterManager.balanceAdapter(for: wallet)
+        {
+            adapterState = adapter.balanceState
+            availableBalance = adapter.balanceData.available
+
+            adapter.balanceStateUpdatedObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .observeOn(MainScheduler.instance)
+                .subscribe { [weak self] state in
+                    self?.adapterState = state
+                }
+                .disposed(by: balanceDisposeBag)
+
+            adapter.balanceDataUpdatedObservable
+                .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
+                .observeOn(MainScheduler.instance)
+                .subscribe { [weak self] balanceData in
+                    self?.availableBalance = balanceData.available
+                }
+                .disposed(by: balanceDisposeBag)
+        } else {
+            adapterState = nil
+            availableBalance = nil
+        }
     }
 
     func subscribeToProviders() {
