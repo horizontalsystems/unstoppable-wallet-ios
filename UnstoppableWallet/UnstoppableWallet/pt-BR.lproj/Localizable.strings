@@ -637,7 +637,7 @@
 "swap.high_price_impact" = "Impacto de preços altos";
 "swap.recipient" = "Destinatário";
 "swap.slippage" = "Slippage";
-"swap.swapped_time" = "Tempo est.";
+"swap.swapped_time" = "Tempo";
 "swap.swapped_time.info" = "Tempo aproximado para receber os fundos. O processamento do swap e as confirmações da transação podem levar algum tempo, dependendo da rede e do provedor.";
 
 "swap.affiliate_fee" = "Taxa de afiliado";

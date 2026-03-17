@@ -637,7 +637,7 @@
 "swap.high_price_impact" = "Yüksek Fiyat Etkisi";
 "swap.recipient" = "Alıcı";
 "swap.slippage" = "Kayma";
-"swap.swapped_time" = "Tah. Süre";
+"swap.swapped_time" = "Tahmini Süre";
 "swap.swapped_time.info" = "Fonların alınması için gereken tahmini süre. Swap işleminin işlenmesi ve işlem onayları, ağ ve sağlayıcıya bağlı olarak zaman alabilir.";
 
 "swap.affiliate_fee" = "Ortaklık Ücreti";

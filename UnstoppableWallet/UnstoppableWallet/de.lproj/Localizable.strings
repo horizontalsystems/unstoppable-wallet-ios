@@ -637,7 +637,7 @@
 "swap.high_price_impact" = "Hohe Preisbeeinflussung";
 "swap.recipient" = "Empfänger";
 "swap.slippage" = "Preisabweichung";
-"swap.swapped_time" = "Gesch. Zeit";
+"swap.swapped_time" = "Zeit";
 "swap.swapped_time.info" = "Ungefähre Zeit bis zum Erhalt der Gelder. Die Verarbeitung des Swaps und die Transaktionsbestätigungen können je nach Netzwerk und Provider etwas Zeit in Anspruch nehmen.";
 
 "swap.affiliate_fee" = "Affiliate-Gebühr";
