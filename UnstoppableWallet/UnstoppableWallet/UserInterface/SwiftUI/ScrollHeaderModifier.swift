@@ -27,7 +27,6 @@ struct ScrollHeaderModifier: ViewModifier {
                     Color.themeTyler.frame(height: max(0, scrollOffset)).frame(maxWidth: .infinity)
                     Spacer()
                 }
-                .ignoresSafeArea()
             }
     }
 }
