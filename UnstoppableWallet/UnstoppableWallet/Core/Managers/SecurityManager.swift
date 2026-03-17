@@ -13,10 +13,9 @@ class SecurityManager {
 
     // scam protection
     @PostPublished private(set) var scamProtectionEnabled: Bool
-    
+
     // tx filter
     @PostPublished private(set) var spamFilterEnabled: Bool
-
 
     init(localStorage: LocalStorage) {
         self.localStorage = localStorage

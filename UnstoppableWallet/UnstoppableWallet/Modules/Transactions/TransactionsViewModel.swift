@@ -40,7 +40,7 @@ class TransactionsViewModel: ObservableObject {
             syncPoolGroup()
         }
     }
-    
+
     @Published var spamFilterEnabled: Bool {
         didSet {
             syncPoolGroup()
@@ -111,7 +111,7 @@ class TransactionsViewModel: ObservableObject {
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.isReachable = $0 }
             .store(in: &cancellables)
-        
+
         securityManger.$spamFilterEnabled
             .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.spamFilterEnabled = $0 }
