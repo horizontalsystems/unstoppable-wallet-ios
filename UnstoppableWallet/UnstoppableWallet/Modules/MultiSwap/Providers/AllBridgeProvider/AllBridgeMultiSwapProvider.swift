@@ -497,6 +497,101 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         var swap = swap
         swap.status = response.map { resolveStatus(response: $0) } ?? .pending
 
+        let tokenFrom = swap.tokenIn.tokenQuery.id.lowercased()
+        let tokenTo = swap.tokenOut.tokenQuery.id.lowercased()
+
+        let fromAsset = assetMap[tokenFrom]?.tokenAddress ?? tokenFrom
+        let toAsset = assetMap[tokenTo]?.tokenAddress ?? tokenTo
+
+        swap.fromAsset = fromAsset
+        swap.toAsset = toAsset
+
+        var legs = [Swap.Leg]()
+
+        let isCrosschain = swap.tokenIn.blockchainType != swap.tokenOut.blockchainType
+
+        let chainIdIn = USwapMultiSwapProvider.blockchainTypeMap.first(where: { $0.value == swap.tokenIn.blockchainType })?.key
+        let chainIdOut = USwapMultiSwapProvider.blockchainTypeMap.first(where: { $0.value == swap.tokenOut.blockchainType })?.key
+
+        let isDepositSuspended = (response?.isSuspended ?? false) && (response?.receive == nil)
+        var isDepositCompleted = false
+        if let depositConf = response?.send.confirmations, let depositConfNeeded = response?.send.confirmationsNeeded {
+            isDepositCompleted = depositConf >= depositConfNeeded
+        }
+
+        if isCrosschain { // Show Deposit/Send for crosschain and only swap for non-crosschain
+            legs.append(
+                .init(
+                    status: isDepositSuspended ? .failed : (isDepositCompleted ? .completed : .pending),
+                    type: USwapMultiSwapProvider.legTypeNativeSend,
+                    chainId: chainIdIn ?? "",
+                    txHash: txHash,
+                    fromAsset: fromAsset,
+                    toAsset: fromAsset
+                )
+            )
+
+            if isDepositSuspended {
+                swap.legs = legs
+                return swap
+            }
+        }
+
+        var isSwappingCompleted = false
+        if response?.receive != nil {
+            isSwappingCompleted = isDepositCompleted
+        }
+
+        if isCrosschain { // show swap status for crosschain
+            legs.append(
+                .init(
+                    status: isSwappingCompleted ? .completed : .swapping,
+                    type: USwapMultiSwapProvider.legTypeSwap,
+                    chainId: "",
+                    txHash: "",
+                    fromAsset: fromAsset,
+                    toAsset: toAsset
+                )
+            )
+        } else { // show only swap leg for non-crosschain
+            legs.append(
+                .init(
+                    status: isDepositSuspended ? .failed : (isSwappingCompleted ? .completed : .swapping),
+                    type: USwapMultiSwapProvider.legTypeSwap,
+                    chainId: chainIdIn ?? "",
+                    txHash: txHash,
+                    fromAsset: fromAsset,
+                    toAsset: toAsset
+                )
+            )
+
+            if isDepositSuspended {
+                swap.legs = legs
+                return swap
+            }
+        }
+
+        if isCrosschain { // add send leg for crosschain
+            let isSendSuspended = (response?.isSuspended ?? false) && (response?.receive != nil)
+
+            var isSendCompleted = false
+            if let receiveConf = response?.receive?.confirmations, let receiveConfNeeded = response?.receive?.confirmationsNeeded {
+                isSendCompleted = receiveConf >= receiveConfNeeded
+            }
+
+            legs.append(
+                .init(
+                    status: isSendSuspended ? .failed : (isSendCompleted ? .completed : .pending),
+                    type: USwapMultiSwapProvider.legTypeNativeSend,
+                    chainId: chainIdOut ?? "",
+                    txHash: response?.receive?.txId ?? "",
+                    fromAsset: toAsset,
+                    toAsset: toAsset
+                )
+            )
+        }
+
+        swap.legs = legs
         return swap
     }
 
