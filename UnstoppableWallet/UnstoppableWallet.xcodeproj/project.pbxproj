@@ -15204,6 +15204,14 @@
 				minimumVersion = 1.9.0;
 			};
 		};
+		A1B2C5A5415080693AB470CA /* XCRemoteSwiftPackageReference "solana-kit-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mNizhurin/solana-kit-ios.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		D3AEB8732DB8FAA200E385C8 /* XCRemoteSwiftPackageReference "StellarKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/StellarKit.Swift";
@@ -15632,6 +15640,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D3ABE2722F73F29B00B72F23 /* XCRemoteSwiftPackageReference "CryptoSwift" */;
 			productName = CryptoSwift;
+		};
+		A1B2C6A772B81EC48C4AB9C9 /* SolanaKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1B2C5A5415080693AB470CA /* XCRemoteSwiftPackageReference "solana-kit-ios" */;
+			productName = SolanaKit;
+		};
+		A1B2C76362D823185955C512 /* SolanaKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1B2C5A5415080693AB470CA /* XCRemoteSwiftPackageReference "solana-kit-ios" */;
+			productName = SolanaKit;
 		};
 		D3AEB8742DB8FAA200E385C8 /* StellarKit */ = {
 			isa = XCSwiftPackageProductDependency;
