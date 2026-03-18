@@ -42,9 +42,11 @@ struct MarketAdvancedSearchResultsView: View {
         .navigationTitle("market.advanced_search_results.title".localized)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("button.close".localized) {
+            ToolbarItem(placement: .primaryAction) {
+                Button(action: {
                     isParentPresented = false
+                }) {
+                    Image("check")
                 }
             }
         }

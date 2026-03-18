@@ -62,19 +62,20 @@ struct UsedAddressesView: View {
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
         .navigationTitle(title)
-        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button("button.done".localized) {
+                Button(action: {
                     if let onDismiss {
                         onDismiss()
                     } else {
                         presentationMode.wrappedValue.dismiss()
                     }
+                }) {
+                    Image("check")
                 }
+                .modifier(ConfirmationButtonStyle())
             }
         }
-        .accentColor(.themeJacob)
     }
 
     private func width(index: Int) -> CGFloat {

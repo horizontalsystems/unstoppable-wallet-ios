@@ -24,11 +24,12 @@ struct MultiSwapRecipientView: View {
                 }
             }
             .navigationTitle("address.title".localized)
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("button.cancel".localized) {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
                         presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image("close")
                     }
                 }
             }

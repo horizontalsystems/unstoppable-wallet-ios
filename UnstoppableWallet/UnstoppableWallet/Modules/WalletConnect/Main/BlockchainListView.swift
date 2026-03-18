@@ -22,11 +22,12 @@ struct BlockchainListView: View {
             }
         }
         .navigationTitle("wallet_connect.networks".localized)
-        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("button.close".localized) {
+            ToolbarItem(placement: .cancellationAction) {
+                Button(action: {
                     presentationMode.wrappedValue.dismiss()
+                }) {
+                    Image("close")
                 }
             }
         }

@@ -52,8 +52,10 @@ struct MarketAdvancedSearchBlockchainsView: View {
             .navigationTitle("market.advanced_search.blockchains".localized)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("button.cancel".localized) {
+                    Button(action: {
                         isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
             }

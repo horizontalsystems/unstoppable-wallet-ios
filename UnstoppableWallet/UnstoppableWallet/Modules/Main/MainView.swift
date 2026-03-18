@@ -61,7 +61,7 @@ struct MainView: View {
     @ToolbarContentBuilder func toolbar() -> some ToolbarContent {
         switch viewModel.selectedTab {
         case .markets:
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .primaryAction) {
                 Button(action: {
                     Coordinator.shared.present { isPresented in
                         MarketAdvancedSearchView(isPresented: isPresented)
@@ -69,13 +69,11 @@ struct MainView: View {
                     stat(page: .markets, event: .open(page: .advancedSearch))
                 }) {
                     Image("manage_2_24")
-                        .renderingMode(.template)
-                        .foregroundColor(.themeGray)
                 }
             }
         case .wallet:
             if walletViewModel.account != nil {
-                ToolbarItem(placement: .navigationBarLeading) {
+                ToolbarItem(placement: .primaryAction) {
                     Button(action: {
                         Coordinator.shared.present { isPresented in
                             ThemeNavigationStack { ManageAccountsView(isPresented: isPresented) }
@@ -87,16 +85,16 @@ struct MainView: View {
                 }
 
                 if walletViewModel.totalItem.state == .syncing {
-                    ToolbarItem(placement: .navigationBarTrailing) {
+                    ToolbarItem(placement: .navigationBarLeading) {
                         ProgressView(value: 0.55)
                             .progressViewStyle(DeterminiteSpinnerStyle())
-                            .frame(width: 20, height: 20)
+                            .frame(size: 24)
                             .spinning()
                     }
                 }
 
                 if walletViewModel.buttonHidden {
-                    ToolbarItem(placement: .navigationBarTrailing) {
+                    ToolbarItem(placement: .navigationBarLeading) {
                         Button(action: {
                             Coordinator.shared.present { isPresented in
                                 ScanQrViewNew(reportAfterDismiss: true, isPresented: isPresented) { text in
@@ -122,13 +120,7 @@ struct MainView: View {
                 }
             }
         case .transactions:
-            ToolbarItem(placement: .navigationBarLeading) {
-                if transactionsViewModel.syncing {
-                    ProgressView()
-                }
-            }
-
-            ToolbarItem(placement: .navigationBarTrailing) {
+            ToolbarItem(placement: .primaryAction) {
                 Button(action: {
                     Coordinator.shared.present { isPresented in
                         TransactionFilterView(transactionsViewModel: transactionsViewModel, isPresented: isPresented)
@@ -136,12 +128,20 @@ struct MainView: View {
                     stat(page: .transactions, event: .open(page: .transactionFilter))
                 }) {
                     Image("manage_2_24")
-                        .themeIcon(color: .themeGray)
                         .modifier(ToolbarBadgeModifier(visible: transactionsViewModel.transactionFilter.hasChanges))
                 }
             }
+
+            ToolbarItem(placement: .navigationBarLeading) {
+                if transactionsViewModel.syncing {
+                    ProgressView(value: 0.55)
+                        .progressViewStyle(DeterminiteSpinnerStyle())
+                        .frame(size: 24)
+                        .spinning()
+                }
+            }
         case .settings:
-            ToolbarItem(placement: .navigationBarTrailing) {}
+            ToolbarItem {}
         }
     }
 
@@ -217,19 +217,14 @@ struct ToolbarBadgeModifier: ViewModifier {
     let visible: Bool
 
     func body(content: Content) -> some View {
-        ZStack {
-            content
-
-            if visible {
-                VStack {
-                    HStack {
-                        Spacer()
-                        Circle().fill(Color.red).frame(width: 8, height: 8)
-                    }
-                    Spacer()
+        content
+            .overlay(alignment: .topTrailing) {
+                if visible {
+                    Circle()
+                        .fill(Color.red)
+                        .frame(width: 8, height: 8)
+                        .offset(x: 3, y: -3)
                 }
             }
-        }
-        .frame(width: 28, height: 28)
     }
 }

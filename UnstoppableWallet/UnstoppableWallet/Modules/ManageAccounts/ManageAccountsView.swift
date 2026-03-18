@@ -69,12 +69,12 @@ struct ManageAccountsView: View {
         }
         .navigationBarTitle("settings_manage_keys.title".localized)
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
+            ToolbarItem(placement: .cancellationAction) {
                 if isPresented {
                     Button(action: {
                         isPresented = false
                     }) {
-                        Text("button.done".localized)
+                        Image("close")
                     }
                 }
             }

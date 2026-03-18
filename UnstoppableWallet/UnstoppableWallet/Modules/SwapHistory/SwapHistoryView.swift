@@ -45,14 +45,18 @@ struct SwapHistoryView: View {
             .navigationTitle("swap_history.title".localized)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("button.close".localized) {
+                    Button(action: {
                         isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
 
                 ToolbarItem(placement: .primaryAction) {
-                    Button("Refresh".localized) {
+                    Button(action: {
                         viewModel.refresh()
+                    }) {
+                        Image("reset")
                     }
                 }
             }

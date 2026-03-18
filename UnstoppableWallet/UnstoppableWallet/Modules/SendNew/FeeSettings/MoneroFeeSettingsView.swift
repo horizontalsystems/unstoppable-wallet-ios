@@ -73,16 +73,20 @@ struct MoneroFeeSettingsView: View {
             .navigationTitle("fee_settings.title".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("button.reset".localized) {
+                ToolbarItem(placement: .primaryAction) {
+                    Button(action: {
                         viewModel.onReset()
+                    }) {
+                        Image("reset")
                     }
-                    .foregroundStyle(viewModel.resetEnabled ? Color.themeJacob : Color.themeGray)
                     .disabled(!viewModel.resetEnabled)
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("button.cancel".localized) {
+
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
                         presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image("close")
                     }
                 }
             }

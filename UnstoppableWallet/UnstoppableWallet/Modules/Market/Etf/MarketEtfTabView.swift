@@ -35,8 +35,10 @@ struct MarketEtfTabView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("button.close".localized) {
+                    Button(action: {
                         isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
             }

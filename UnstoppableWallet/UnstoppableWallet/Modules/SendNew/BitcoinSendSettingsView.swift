@@ -141,21 +141,24 @@ struct BitcoinSendSettingsView: View {
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
         .navigationTitle("fee_settings".localized)
-        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .navigationBarLeading) {
-                Button("button.reset".localized) {
+                Button(action: {
                     viewModel.reset()
+                }) {
+                    Image("reset")
                 }
-                .foregroundStyle(viewModel.resetEnabled ? Color.themeJacob : Color.themeGray)
                 .disabled(!viewModel.resetEnabled)
             }
 
             ToolbarItem(placement: .confirmationAction) {
-                Button("button.done".localized) {
+                Button(action: {
                     onChangeSettings()
                     presentationMode.wrappedValue.dismiss()
+                }) {
+                    Image("check")
                 }
+                .modifier(ConfirmationButtonStyle())
             }
         }
     }

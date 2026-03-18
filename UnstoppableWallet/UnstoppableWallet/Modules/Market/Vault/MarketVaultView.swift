@@ -60,9 +60,11 @@ struct MarketVaultView: View {
             }
             .navigationTitle(viewModel.vault.assetSymbol)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("button.close".localized) {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
                         isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
             }

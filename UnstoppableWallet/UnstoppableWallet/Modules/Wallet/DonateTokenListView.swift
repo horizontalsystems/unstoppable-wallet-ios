@@ -54,6 +54,7 @@ struct DonateTokenListView: View {
                     }
                 }
             }
+            .navigationTitle("donate.list.title".localized)
             .navigationDestination(isPresented: $addressesPresented) {
                 DonateAddressesView()
             }
@@ -71,14 +72,14 @@ struct DonateTokenListView: View {
                 )
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("button.cancel".localized) {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
                         isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
             }
-            .navigationTitle("donate.list.title".localized)
-            .navigationBarTitleDisplayMode(.inline)
         }
     }
 }

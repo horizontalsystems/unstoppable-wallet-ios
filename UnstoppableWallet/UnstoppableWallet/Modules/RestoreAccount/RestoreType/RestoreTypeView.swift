@@ -45,11 +45,12 @@ struct RestoreTypeView: View {
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             }
             .navigationTitle(viewModel.title)
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("button.cancel".localized) {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
                         isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
             }

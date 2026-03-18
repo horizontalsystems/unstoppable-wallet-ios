@@ -79,9 +79,11 @@ struct RestoreFileConfigurationView: View {
         .navigationTitle("backup_app.backup_list.title".localized)
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("button.cancel".localized) {
+            ToolbarItem(placement: .cancellationAction) {
+                Button(action: {
                     isPresented = false
+                }) {
+                    Image("close")
                 }
             }
         }

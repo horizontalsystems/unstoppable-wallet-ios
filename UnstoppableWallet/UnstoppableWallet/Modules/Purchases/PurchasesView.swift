@@ -22,9 +22,11 @@ struct PurchasesView: View {
             .navigationTitle(viewModel.isSubscriptionSuccessful ? "purchases.successful_subscription.title".localized : "purchases.title".localized)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("button.close".localized) {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
                         isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
             }

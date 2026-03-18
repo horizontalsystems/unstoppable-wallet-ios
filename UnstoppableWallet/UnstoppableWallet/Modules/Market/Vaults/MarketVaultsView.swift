@@ -297,9 +297,12 @@ extension MarketVaultsView {
                 .navigationTitle("market.vaults.chains.title".localized)
                 .toolbar {
                     ToolbarItem(placement: .confirmationAction) {
-                        Button("button.done".localized) {
+                        Button(action: {
                             isPresented = false
+                        }) {
+                            Image("check")
                         }
+                        .modifier(ConfirmationButtonStyle())
                     }
                 }
             }

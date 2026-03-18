@@ -43,15 +43,18 @@ struct BaseReceiveAddressView<Content: View>: View {
         .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
-                Button("button.done".localized) {
+                Button(action: {
                     if let onDismiss {
                         onDismiss()
                     } else {
                         presentationMode.wrappedValue.dismiss()
                     }
+                }) {
+                    Image("check")
                 }
+                .modifier(ConfirmationButtonStyle())
             }
         }
-        .accentColor(.themeGray)
+        .accentColor(.themeLeah)
     }
 }

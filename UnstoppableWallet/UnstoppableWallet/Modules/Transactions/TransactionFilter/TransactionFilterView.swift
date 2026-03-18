@@ -88,22 +88,25 @@ struct TransactionFilterView: View {
                 .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             }
             .navigationTitle("transaction_filter.title".localized)
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .navigationBarLeading) {
-                    Button("button.reset".localized) {
+                    Button(action: {
                         viewModel.reset()
+                    }) {
+                        Image("reset")
                     }
                     .disabled(!viewModel.resetEnabled)
                 }
 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("button.done".localized) {
+                    Button(action: {
                         isPresented = false
+                    }) {
+                        Image("check")
                     }
+                    .modifier(ConfirmationButtonStyle())
                 }
             }
         }
-        .accentColor(Color.themeJacob)
     }
 }

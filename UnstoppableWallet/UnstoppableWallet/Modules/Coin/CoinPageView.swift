@@ -57,20 +57,21 @@ struct CoinPageView: View {
             .navigationTitle(viewModel.coin.code)
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("button.close".localized) {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
                         dismiss()
+                    }) {
+                        Image("close")
                     }
                 }
 
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .primaryAction) {
                     Button(action: {
                         viewModel.isFavorite.toggle()
                     }) {
-                        Image(viewModel.isFavorite ? "heart_fill_24" : "heart_24")
-                            .renderingMode(.template)
-                            .foregroundColor(viewModel.isFavorite ? .themeJacob : .themeGray)
+                        Image("heart")
                     }
+                    .modifier(ConfirmationButtonStyle(isActive: viewModel.isFavorite))
                 }
             }
         }

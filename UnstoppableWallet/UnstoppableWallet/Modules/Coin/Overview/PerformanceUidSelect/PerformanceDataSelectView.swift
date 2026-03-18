@@ -87,17 +87,18 @@ struct PerformanceDataSelectView: View {
                     }
                 }
                 .navigationTitle("coin_overview.performance.select_coins.title".localized)
-                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
                     ToolbarItem(placement: .confirmationAction) {
-                        Button("button.done".localized) {
+                        Button(action: {
                             viewModel.setData()
                             isPresented = false
+                        }) {
+                            Image("check")
                         }
+                        .modifier(ConfirmationButtonStyle())
                         .disabled(viewModel.selectedCoins.count != viewModel.coinCount)
                     }
                 }
-                .accentColor(Color.themeJacob)
             }
         }
     }
