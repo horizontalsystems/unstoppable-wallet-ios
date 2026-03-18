@@ -903,7 +903,6 @@
 "market.advanced_search.price_close_to_atl" = "Preis nahe zum ATL";
 
 "market.advanced_search.top" = "Top %d";
-"market.advanced_search.reset_all" = "Zurücksetzen";
 
 "market.advanced_search.less_5_m" = "< 5 Mio";
 "market.advanced_search.less_10_m" = "< 10 Mio";

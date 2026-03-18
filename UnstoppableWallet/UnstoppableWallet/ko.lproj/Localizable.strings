@@ -903,7 +903,6 @@
 "market.advanced_search.price_close_to_atl" = "Price Close to ATL";
 
 "market.advanced_search.top" = "상위 %d";
-"market.advanced_search.reset_all" = "초기화";
 
 "market.advanced_search.less_5_m" = "< 5백만";
 "market.advanced_search.less_10_m" = "< 10백만";

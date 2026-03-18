@@ -710,7 +710,6 @@
   "market.advanced_search.price_close_to_ath": "ATH(All Time High)",
   "market.advanced_search.price_close_to_atl": "ATL(All Time Low)",
   "market.advanced_search.top": "Top %d",
-  "market.advanced_search.reset_all": "Reset",
   "market.advanced_search.less_5_m": "< 5M",
   "market.advanced_search.less_10_m": "< 10M",
   "market.advanced_search.less_50_m": "< 50M",
