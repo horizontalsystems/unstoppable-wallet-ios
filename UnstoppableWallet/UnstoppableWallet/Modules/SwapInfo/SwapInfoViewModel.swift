@@ -101,13 +101,13 @@ class SwapInfoViewModel: ObservableObject {
         legs = swapLegs.enumerated().map { _, leg in
             var title = "swap_info.unknown".localized
 
-            if leg.type == "native_send" {
+            if leg.type == USwapMultiSwapProvider.legTypeNativeSend {
                 if leg.fromAsset == fromAsset {
                     title = "swap_info.deposit".localized(swap.tokenIn.coin.code)
                 } else if leg.toAsset == toAsset {
                     title = "swap_info.send".localized(swap.tokenOut.coin.code)
                 }
-            } else if leg.type == "swap" {
+            } else if leg.type == USwapMultiSwapProvider.legTypeSwap {
                 title = "swap_info.swap".localized
             }
 

@@ -815,6 +815,9 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 }
 
 extension USwapMultiSwapProvider {
+    static let legTypeNativeSend = "native_send"
+    static let legTypeSwap = "swap"
+
     static let blockchainTypeMap: [String: BlockchainType] = [
         "bitcoin": .bitcoin,
         "bitcoincash": .bitcoinCash,
