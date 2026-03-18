@@ -45,11 +45,12 @@ struct MarketWatchlistSignalsView: View {
                 }
             }
             .navigationTitle("market.watchlist.signals".localized)
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("button.cancel".localized) {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
                         isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
             }

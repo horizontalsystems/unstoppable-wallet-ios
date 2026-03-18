@@ -53,8 +53,10 @@ struct MarketTvlView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("button.close".localized) {
+                    Button(action: {
                         presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image("close")
                     }
                 }
             }

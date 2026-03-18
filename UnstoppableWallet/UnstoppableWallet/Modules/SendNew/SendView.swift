@@ -38,7 +38,7 @@ struct SendView: View {
                 let menuItems = menuItems(handler: handler)
 
                 if !menuItems.isEmpty {
-                    ToolbarItem(placement: .navigationBarTrailing) {
+                    ToolbarItem(placement: .primaryAction) {
                         Group {
                             if menuItems.count > 1 {
                                 Menu {
@@ -47,11 +47,11 @@ struct SendView: View {
                                         Button(menuItem.label, action: menuItem.action)
                                     }
                                 } label: {
-                                    Image("manage").renderingMode(.template)
+                                    Image("manage")
                                 }
                             } else {
                                 Button(action: menuItems[0].action) {
-                                    Image("manage").renderingMode(.template)
+                                    Image("manage")
                                 }
                             }
                         }

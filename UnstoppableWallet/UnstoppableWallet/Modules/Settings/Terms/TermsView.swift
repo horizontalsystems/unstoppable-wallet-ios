@@ -36,9 +36,11 @@ struct TermsView: View {
             }
             .navigationTitle("terms.title".localized)
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("button.close".localized) {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
                         isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
             }

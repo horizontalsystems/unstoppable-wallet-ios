@@ -64,9 +64,11 @@ struct MultiSwapApproveView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("button.cancel".localized) {
+            ToolbarItem(placement: .cancellationAction) {
+                Button(action: {
                     isPresented = false
+                }) {
+                    Image("close")
                 }
             }
         }

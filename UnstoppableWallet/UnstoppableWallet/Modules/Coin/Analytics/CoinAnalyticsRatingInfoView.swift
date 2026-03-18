@@ -36,9 +36,11 @@ struct CoinAnalyticsRatingInfoView: View {
                 .padding(.bottom, .margin32)
             }
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("button.close".localized) {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
                         isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
             }

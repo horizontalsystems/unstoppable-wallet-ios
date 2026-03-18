@@ -61,15 +61,17 @@ struct BtcBlockchainSettingsView: View {
         .navigationTitle(viewModel.title)
         .navigationBarTitleDisplayMode(.large)
         .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
+            ToolbarItem(placement: .primaryAction) {
                 KFImage.url(URL(string: viewModel.iconUrl))
                     .resizable()
                     .frame(width: .iconSize24, height: .iconSize24)
             }
 
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("button.cancel".localized) {
+            ToolbarItem(placement: .cancellationAction) {
+                Button(action: {
                     presentationMode.wrappedValue.dismiss()
+                }) {
+                    Image("close")
                 }
             }
         }

@@ -91,17 +91,20 @@ struct MarketAdvancedSearchView: View {
                 }
             }
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("market.advanced_search.reset_all".localized) {
+                ToolbarItem(placement: .primaryAction) {
+                    Button(action: {
                         viewModel.reset()
+                    }) {
+                        Image("reset")
                     }
-                    .foregroundStyle(viewModel.canReset ? Color.themeJacob : Color.themeGray)
                     .disabled(!viewModel.canReset)
                 }
 
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("button.close".localized) {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
                         isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
             }

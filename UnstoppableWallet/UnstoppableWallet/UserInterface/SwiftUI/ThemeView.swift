@@ -148,7 +148,7 @@ struct ThemeNavigationStack<Content: View>: View {
                 }
             }
         }
-        .tint(.themeGray)
+        .tint(.themeLeah)
     }
 }
 
@@ -164,6 +164,26 @@ struct EmptyThemeNavigationStack<Content: View>: View {
         NavigationStack(path: $path) {
             content($path)
         }
-        .tint(.themeGray)
+        .tint(.themeLeah)
+    }
+}
+
+struct ConfirmationButtonStyle: ViewModifier {
+    var isActive: Bool = true
+
+    func body(content: Content) -> some View {
+        if isActive {
+            if #available(iOS 26, *) {
+                content
+                    .buttonStyle(.glassProminent)
+                    .tint(.themeJacob)
+                    .foregroundStyle(Color.themeLawrence)
+            } else {
+                content
+                    .foregroundStyle(Color.themeJacob)
+            }
+        } else {
+            content
+        }
     }
 }

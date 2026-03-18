@@ -44,16 +44,18 @@ struct MarketSectorView: View {
             .navigationTitle(viewModel.sector.name)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("button.close".localized) {
+                    Button(action: {
                         isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
 
-                ToolbarItem(placement: .navigationBarTrailing) {
+                ToolbarItem(placement: .primaryAction) {
                     Button(action: {
                         Coordinator.shared.present(info: .init(title: viewModel.sector.name, description: viewModel.sectorDesctiprion))
                     }) {
-                        Image("information").icon()
+                        Image("information")
                     }
                 }
             }

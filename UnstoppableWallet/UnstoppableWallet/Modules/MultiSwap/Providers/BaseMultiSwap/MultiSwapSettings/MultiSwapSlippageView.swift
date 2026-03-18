@@ -60,18 +60,21 @@ struct MultiSwapSlippageView: View {
             }
             .animation(.default, value: viewModel.slippageCautionState)
             .navigationTitle("swap.advanced_settings.slippage".localized)
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                ToolbarItem(placement: .navigationBarLeading) {
-                    Button("button.reset".localized) {
+                ToolbarItem(placement: .primaryAction) {
+                    Button(action: {
                         viewModel.reset()
+                    }) {
+                        Image("reset")
                     }
                     .disabled(!viewModel.resetEnabled)
                 }
 
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("button.cancel".localized) {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
                         presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image("close")
                     }
                 }
             }

@@ -104,11 +104,12 @@ struct CheckAddressView: View {
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
         }
         .navigationTitle("address.title".localized)
-        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            ToolbarItem(placement: .navigationBarTrailing) {
-                Button("button.close".localized) {
+            ToolbarItem(placement: .cancellationAction) {
+                Button(action: {
                     presentationMode.wrappedValue.dismiss()
+                }) {
+                    Image("close")
                 }
             }
         }

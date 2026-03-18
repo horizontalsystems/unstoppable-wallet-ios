@@ -44,8 +44,10 @@ struct MarketPlatformView: View {
             .navigationTitle("top_platform.title".localized(viewModel.platform.blockchain.name))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("button.close".localized) {
+                    Button(action: {
                         isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
             }

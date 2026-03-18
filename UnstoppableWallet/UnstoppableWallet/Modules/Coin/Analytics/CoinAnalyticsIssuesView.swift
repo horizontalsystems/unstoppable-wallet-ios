@@ -28,10 +28,13 @@ struct CoinAnalyticsIssuesView: View {
                 }
             }
             .navigationTitle(viewItem.blockchain.name)
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
-                Button("button.close".localized) {
-                    isPresented = false
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
+                        isPresented = false
+                    }) {
+                        Image("close")
+                    }
                 }
             }
         }

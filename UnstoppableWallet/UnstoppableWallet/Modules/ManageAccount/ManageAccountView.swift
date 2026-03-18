@@ -167,17 +167,22 @@ struct ManageAccountView: View {
             .navigationTitle(viewModel.account.name)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("button.close".localized) {
+                    Button(action: {
                         isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
 
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("button.save".localized) {
+                    Button(action: {
                         viewModel.save()
                         isPresented = false
                         stat(page: .manageWallet, event: .edit(entity: .walletName))
+                    }) {
+                        Image("check")
                     }
+                    .modifier(ConfirmationButtonStyle())
                     .disabled(viewModel.name.isEmpty || viewModel.account.name == viewModel.name)
                 }
             }

@@ -14,8 +14,10 @@ struct RegularMultiSwapView: View {
             .navigationTitle("swap.title".localized)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("button.cancel".localized) {
+                    Button(action: {
                         presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image("close")
                     }
                 }
             }

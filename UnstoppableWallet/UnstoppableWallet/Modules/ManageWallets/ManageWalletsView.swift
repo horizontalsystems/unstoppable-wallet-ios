@@ -44,15 +44,18 @@ struct ManageWalletsView: View {
                     BottomSearchBar(text: $viewModel.filter, prompt: "placeholder.search".localized, focused: $searchFocused)
                 }
             }
+            .navigationTitle("manage_wallets.title".localized)
             .toolbar {
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    Button("button.cancel".localized) {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
                         isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
 
                 if viewModel.canAddToken {
-                    ToolbarItem(placement: .navigationBarLeading) {
+                    ToolbarItem(placement: .primaryAction) {
                         Button(action: {
                             openAddToken()
                         }) {
@@ -61,7 +64,6 @@ struct ManageWalletsView: View {
                     }
                 }
             }
-            .navigationTitle("manage_wallets.title".localized)
         }
     }
 
