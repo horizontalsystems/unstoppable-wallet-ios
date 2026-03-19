@@ -55,11 +55,9 @@ struct SendTokenListView: View {
                         }
                     }
                 }
-                .safeAreaInset(edge: .bottom) {
-                    BottomSearchBar(text: $searchText, prompt: "placeholder.search".localized, focused: $searchFocused)
-                }
             }
             .navigationTitle("send.send".localized)
+            .searchBar(text: $searchText, prompt: "placeholder.search".localized)
             .navigationDestination(for: Wallet.self) { wallet in
                 SendAddressView(
                     wallet: wallet,

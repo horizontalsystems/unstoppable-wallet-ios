@@ -16,10 +16,6 @@ struct TransactionContactSelectView: View {
     var body: some View {
         ThemeView {
             VStack(spacing: .margin12) {
-                if !viewModel.contacts.isEmpty {
-                    SearchBar(text: $searchText, prompt: "placeholder.search".localized)
-                }
-
                 Text("transaction_filter.description".localized(
                     viewModel.allowedBlockchainsForContact.map(\.name).joined(separator: ", ")
                 ))
@@ -65,6 +61,7 @@ struct TransactionContactSelectView: View {
                 }
             }
             .navigationTitle("contacts.title".localized)
+            .searchBar(text: $searchText, prompt: "placeholder.search".localized)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: {

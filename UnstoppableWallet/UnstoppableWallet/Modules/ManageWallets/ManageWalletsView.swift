@@ -6,7 +6,6 @@ struct ManageWalletsView: View {
 
     @State private var path = NavigationPath()
     @Binding var isPresented: Bool
-    @FocusState var searchFocused: Bool
 
     private let restoreSettingsView: RestoreSettingsView
 
@@ -33,17 +32,15 @@ struct ManageWalletsView: View {
                     )
                 )
                 ScrollableThemeView(style: .list) {
-                    if viewModel.items.isEmpty {
+                    if !viewModel.filter.isEmpty, viewModel.items.isEmpty {
                         PlaceholderViewNew(icon: "warning_filled", subtitle: "manage_wallets.not_found".localized)
                     } else {
                         ManageWalletListView(viewModel: viewModel)
                     }
                 }
-                .safeAreaInset(edge: .bottom) {
-                    BottomSearchBar(text: $viewModel.filter, prompt: "placeholder.search".localized, focused: $searchFocused)
-                }
             }
             .navigationTitle("manage_wallets.title".localized)
+            .searchBar(text: $viewModel.filter, prompt: "placeholder.search".localized)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: {

@@ -5,7 +5,6 @@ struct ReceiveCoinListView: View {
     @StateObject var viewModel: ReceiveCoinListViewModel
 
     @Environment(\.presentationMode) private var presentationMode
-    @FocusState var searchFocused: Bool
 
     @State var path = NavigationPath()
 
@@ -29,15 +28,13 @@ struct ReceiveCoinListView: View {
                         }
                     }
 
-                    if viewModel.viewItems.isEmpty {
+                    if !viewModel.searchText.isEmpty, viewModel.viewItems.isEmpty {
                         PlaceholderViewNew(icon: "warning_filled", subtitle: "alert.not_founded".localized)
                     }
                 }
-                .safeAreaInset(edge: .bottom, spacing: 0) {
-                    BottomSearchBar(text: $viewModel.searchText, prompt: "placeholder.search".localized, focused: $searchFocused)
-                }
             }
             .navigationTitle("balance.receive".localized)
+            .searchBar(text: $viewModel.searchText, prompt: "placeholder.search".localized)
             .navigationDestination(for: FullCoin.self) { fullCoin in
                 ReceiveModule.view(account: viewModel.account, fullCoin: fullCoin, path: $path, onDismiss: {
                     presentationMode.wrappedValue.dismiss()
