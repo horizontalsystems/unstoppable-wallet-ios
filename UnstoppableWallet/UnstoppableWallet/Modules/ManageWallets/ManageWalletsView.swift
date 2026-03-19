@@ -20,20 +20,19 @@ struct ManageWalletsView: View {
 
     var body: some View {
         ThemeNavigationStack(path: $path) {
-            ThemeView(style: .list) {
-                VStack(spacing: 0) {
-                    ScrollableTabHeaderView(
-                        tabs: ["filter.all".localized] + viewModel.blockchains.map(\.name),
-                        currentTabIndex: Binding(
-                            get: {
-                                viewModel.blockchainFilterIndex
-                            },
-                            set: { index in
-                                viewModel.setBlockchainFilter(index: index)
-                            }
-                        )
+            VStack(spacing: 0) {
+                ScrollableTabHeaderView(
+                    tabs: ["filter.all".localized] + viewModel.blockchains.map(\.name),
+                    currentTabIndex: Binding(
+                        get: {
+                            viewModel.blockchainFilterIndex
+                        },
+                        set: { index in
+                            viewModel.setBlockchainFilter(index: index)
+                        }
                     )
-
+                )
+                ScrollableThemeView(style: .list) {
                     if viewModel.items.isEmpty {
                         PlaceholderViewNew(icon: "warning_filled", subtitle: "manage_wallets.not_found".localized)
                     } else {
