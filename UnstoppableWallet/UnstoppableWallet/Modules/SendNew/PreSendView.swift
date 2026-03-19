@@ -79,7 +79,6 @@ struct PreSendView: View {
             .toolbarRole(.editor)
         }
         .navigationTitle(viewModel.title)
-        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 if let handler = viewModel.handler, handler.hasSettings {
@@ -99,7 +98,6 @@ struct PreSendView: View {
             }
         }
         .toolbarRole(.editor)
-        .accentColor(.themeJacob)
     }
 
     @ViewBuilder private func availableBalanceView(value: String?) -> some View {

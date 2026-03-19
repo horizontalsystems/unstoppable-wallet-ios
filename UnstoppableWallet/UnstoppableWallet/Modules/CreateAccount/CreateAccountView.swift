@@ -143,8 +143,10 @@ struct CreateAccountView: View {
             .navigationTitle("create_wallet.title".localized)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("button.cancel".localized) {
+                    Button(action: {
                         isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
 
@@ -152,6 +154,7 @@ struct CreateAccountView: View {
                     Button("create_wallet.create".localized) {
                         createAccount()
                     }
+                    .modifier(ConfirmationButtonStyle())
                 }
             }
         }

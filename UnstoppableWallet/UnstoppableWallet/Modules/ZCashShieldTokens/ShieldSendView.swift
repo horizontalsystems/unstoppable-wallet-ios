@@ -22,9 +22,11 @@ struct ShieldSendView: View {
             }
         }
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button("button.cancel".localized) {
+            ToolbarItem(placement: .cancellationAction) {
+                Button(action: {
                     presentationMode.wrappedValue.dismiss()
+                }) {
+                    Image("close")
                 }
             }
         }

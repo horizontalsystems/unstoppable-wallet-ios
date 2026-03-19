@@ -48,13 +48,6 @@ struct BackupFormView: View {
             }
         }
         .navigationTitle("backup_app.backup.form.title".localized)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            Button("button.cancel".localized) {
-                viewModel.cancel()
-            }
-            .disabled(passwordViewModel.processing)
-        }
         .onReceive(passwordViewModel.showGenerateSheetPublisher) {
             showGenerateSheet()
         }

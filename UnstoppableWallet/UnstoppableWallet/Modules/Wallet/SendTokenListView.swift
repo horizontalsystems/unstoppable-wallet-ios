@@ -59,6 +59,7 @@ struct SendTokenListView: View {
                     BottomSearchBar(text: $searchText, prompt: "placeholder.search".localized, focused: $searchFocused)
                 }
             }
+            .navigationTitle("send.send".localized)
             .navigationDestination(for: Wallet.self) { wallet in
                 SendAddressView(
                     wallet: wallet,
@@ -71,12 +72,13 @@ struct SendTokenListView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("button.cancel".localized) {
+                    Button(action: {
                         isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
             }
-            .navigationTitle("send.send".localized)
         }
     }
 

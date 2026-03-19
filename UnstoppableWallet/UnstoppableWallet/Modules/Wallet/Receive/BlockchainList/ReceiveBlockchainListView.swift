@@ -37,22 +37,9 @@ struct ReceiveBlockhainListView: View {
             }
         }
         .navigationTitle("receive_network_select.title".localized)
-        .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: Token.self) { token in
             ReceiveModule.view(token: token, account: account, path: $path, onDismiss: onDismiss)
         }
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button("button.cancel".localized) {
-                    if let onDismiss {
-                        onDismiss()
-                    } else {
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                }
-            }
-        }
-        .accentColor(.themeGray)
     }
 
     @ViewBuilder private func cell(viewItem: ReceiveBlockchainListViewModel.ViewItem) -> some View {

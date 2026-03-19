@@ -45,22 +45,9 @@ struct ReceiveSettingsListView: View {
             }
         }
         .navigationTitle("receive_address_format_select.title".localized)
-        .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: Wallet.self) { wallet in
             ReceiveAddressModule.instance(wallet: wallet, path: $path, onDismiss: onDismiss)
         }
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button("button.cancel".localized) {
-                    if let onDismiss {
-                        onDismiss()
-                    } else {
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                }
-            }
-        }
-        .accentColor(.themeGray)
     }
 
     @ViewBuilder private func cell(viewItem: ReceiveSettingsViewModel.ViewItem) -> some View {

@@ -54,10 +54,13 @@ struct DuressModeIntroView: View {
             }
         }
         .navigationTitle("enable_duress_mode.intro.title".localized)
-        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            Button("button.cancel".localized) {
-                showParentSheet = false
+            ToolbarItem(placement: .cancellationAction) {
+                Button(action: {
+                    showParentSheet = false
+                }) {
+                    Image("close")
+                }
             }
         }
     }

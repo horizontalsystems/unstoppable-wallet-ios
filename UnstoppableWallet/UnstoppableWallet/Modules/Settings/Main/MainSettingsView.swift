@@ -6,7 +6,6 @@ struct MainSettingsView: View {
     @StateObject var viewModel = MainSettingsViewModel()
 
     @State private var manageWalletsPresented = false
-    @State private var addressCheckerPresented = false
     @State private var walletConnectPresented = false
 
     @StateObject var walletConnectVerificationModel = WalletConnectVerificationModel(
@@ -92,12 +91,6 @@ struct MainSettingsView: View {
                 .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
             }
             .padding(EdgeInsets(top: .margin12, leading: 0, bottom: .margin32, trailing: 0))
-        }
-        .navigationDestination(isPresented: $addressCheckerPresented) {
-            CheckAddressView()
-                .onFirstAppear {
-                    stat(page: .settings, event: .open(page: .addressChecker))
-                }
         }
         .navigationDestination(isPresented: $walletConnectPresented) {
             WalletConnectListView()
@@ -369,7 +362,12 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func addressChecker() -> some View {
         ClickableRow(action: {
-            addressCheckerPresented = true
+            Coordinator.shared.present { isPresented in
+                CheckAddressView(isPresented: isPresented)
+                    .onFirstAppear {
+                        stat(page: .settings, event: .open(page: .addressChecker))
+                    }
+            }
         }) {
             Image("radar_24").themeIcon(color: .themeJacob)
             Text("address_checker.title".localized).themeBody()

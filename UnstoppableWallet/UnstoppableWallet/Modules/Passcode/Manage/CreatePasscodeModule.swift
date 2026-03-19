@@ -19,7 +19,7 @@ enum CreatePasscodeModule {
             passcodeManager: Core.shared.passcodeManager
         )
 
-        return SetPasscodeView(viewModel: viewModel, showParentSheet: showParentSheet)
+        return SetPasscodeView(viewModel: viewModel, showParentSheet: showParentSheet, showClose: false)
     }
 
     enum CreatePasscodeReason: Hashable, Identifiable {

@@ -73,7 +73,6 @@ struct UsedAddressesView: View {
                 }) {
                     Image("check")
                 }
-                .modifier(ConfirmationButtonStyle())
             }
         }
     }
