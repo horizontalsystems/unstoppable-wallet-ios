@@ -513,7 +513,7 @@
 "send.fee_settings.fee_rate_unavailable" = "费用率不可用。请手动检查费率。";
 
 "send.unspent_outputs" = "UTxOs";
-"send.unspent_outputs.description" = "手动选择 UTxO 将资金花在余额中";
+"send.unspent_outputs.description" = "手动选择在交易中花费哪些币。";
 "send.unspent_outputs.send_to" = "发送至";
 "send.unspent_outputs.change" = "更改";
 
@@ -1604,7 +1604,7 @@
 
 "btc_transaction_sort_mode.shuffle" = "随机排序";
 "btc_transaction_sort_mode.shuffle.description" = "随机索引";
-"btc_transaction_sort_mode.bip69" = "Bip69";
+"btc_transaction_sort_mode.bip69" = "确定性";
 "btc_transaction_sort_mode.bip69.description" = "词典索引";
 
 "blockchain_settings.info.restore_source" = "恢复参数";
@@ -2078,6 +2078,7 @@
 "fee_settings.fee_rate" = "费率";
 "fee_settings.fee_rate.description" = "这是击中下2个区块的推荐值";
 "fee_settings.inputs_outputs" = "输入/输出";
+"fee_settings.inputs_outputs.description" = "更改交易输入和输出的结构方式。";
 "fee_settings.transaction_settings" = "交易设置";
 "fee_settings.transaction_settings.description" = "通过更改建构交易的方式使您的比特币交易更难被追踪。";
 "fee_settings.replace_by_fee" = "替换交易";

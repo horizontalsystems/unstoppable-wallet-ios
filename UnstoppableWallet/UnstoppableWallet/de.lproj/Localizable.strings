@@ -513,7 +513,7 @@
 "send.fee_settings.fee_rate_unavailable" = "Gebührensatz nicht verfügbar. Bitte überprüfen Sie die Gebührensätze manuell";
 
 "send.unspent_outputs" = "UTxOs";
-"send.unspent_outputs.description" = "Manuell die UTxO auswählen, um die Mittel im Guthaben auszugeben";
+"send.unspent_outputs.description" = "Wählen Sie manuell aus, welche Coins in der Transaktion ausgegeben werden sollen.";
 "send.unspent_outputs.send_to" = "Senden an";
 "send.unspent_outputs.change" = "Ändern";
 
@@ -1604,7 +1604,7 @@
 
 "btc_transaction_sort_mode.shuffle" = "Zufällig";
 "btc_transaction_sort_mode.shuffle.description" = "Zufällige Indizierung";
-"btc_transaction_sort_mode.bip69" = "BIP69";
+"btc_transaction_sort_mode.bip69" = "Deterministisch";
 "btc_transaction_sort_mode.bip69.description" = "Lexikographische Indizierung";
 
 "blockchain_settings.info.restore_source" = "Parameter wiederherstellen";
@@ -2078,6 +2078,7 @@
 "fee_settings.fee_rate" = "Gebührenrate";
 "fee_settings.fee_rate.description" = "Hier ist der empfohlene Wert, um die nächsten 2 Blöcke zu treffen";
 "fee_settings.inputs_outputs" = "Ein-/Ausgänge";
+"fee_settings.inputs_outputs.description" = "Ändert die Struktur der Transaktions-Inputs und -Outputs.";
 "fee_settings.transaction_settings" = "Transaktionseinstellungen";
 "fee_settings.transaction_settings.description" = "Machen Sie Ihre Bitcoin-Transaktionen schwieriger nachvollziehbar, indem Sie die Transaktionsstruktur verändern.";
 "fee_settings.replace_by_fee" = "Ersetzen durch Gebühr";
