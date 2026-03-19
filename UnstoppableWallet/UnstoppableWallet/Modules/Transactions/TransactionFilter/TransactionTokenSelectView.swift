@@ -14,62 +14,57 @@ struct TransactionTokenSelectView: View {
     }
 
     var body: some View {
-        ThemeView {
-            VStack(spacing: 0) {
-                SearchBar(text: $searchText, prompt: "placeholder.search".localized)
+        ScrollableThemeView {
+            ListSection {
+                ClickableRow(action: {
+                    viewModel.set(currentToken: nil)
+                    isPresented = false
+                }) {
+                    Image("circle_coin_24").themeIcon()
+                    Text("transaction_filter.all_coins").themeBody()
 
-                ScrollableThemeView {
-                    ListSection {
-                        ClickableRow(action: {
-                            viewModel.set(currentToken: nil)
-                            isPresented = false
-                        }) {
-                            Image("circle_coin_24").themeIcon()
-                            Text("transaction_filter.all_coins").themeBody()
-
-                            if viewModel.currentToken == nil {
-                                Image.checkIcon
-                            }
-                        }
-
-                        ForEach(searchResults, id: \.self) { token in
-                            ClickableRow(action: {
-                                viewModel.set(currentToken: token)
-                                isPresented = false
-                            }) {
-                                CoinIconView(coin: token.coin, placeholderImage: token.placeholderImageName)
-
-                                VStack(spacing: 1) {
-                                    HStack(spacing: .margin8) {
-                                        Text(token.coin.code).textBody()
-
-                                        if let badge = token.badge {
-                                            BadgeViewNew(badge)
-                                        }
-                                    }
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-
-                                    Text(token.coin.name).themeSubhead2()
-                                }
-
-                                if viewModel.currentToken == token {
-                                    Image.checkIcon
-                                }
-                            }
-                        }
+                    if viewModel.currentToken == nil {
+                        Image.checkIcon
                     }
-                    .themeListStyle(.transparent)
-                    .padding(.bottom, .margin32)
                 }
-            }
-            .navigationTitle("transaction_filter.coin".localized)
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(action: {
+
+                ForEach(searchResults, id: \.self) { token in
+                    ClickableRow(action: {
+                        viewModel.set(currentToken: token)
                         isPresented = false
                     }) {
-                        Image("close")
+                        CoinIconView(coin: token.coin, placeholderImage: token.placeholderImageName)
+
+                        VStack(spacing: 1) {
+                            HStack(spacing: .margin8) {
+                                Text(token.coin.code).textBody()
+
+                                if let badge = token.badge {
+                                    BadgeViewNew(badge)
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+
+                            Text(token.coin.name).themeSubhead2()
+                        }
+
+                        if viewModel.currentToken == token {
+                            Image.checkIcon
+                        }
                     }
+                }
+            }
+            .themeListStyle(.transparent)
+            .padding(.bottom, .margin32)
+        }
+        .navigationTitle("transaction_filter.coin".localized)
+        .searchBar(text: $searchText, prompt: "placeholder.search".localized)
+        .toolbar {
+            ToolbarItem(placement: .cancellationAction) {
+                Button(action: {
+                    isPresented = false
+                }) {
+                    Image("close")
                 }
             }
         }

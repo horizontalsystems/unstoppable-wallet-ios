@@ -12,43 +12,31 @@ struct MainView: View {
 
     var body: some View {
         ThemeNavigationStack(path: $path) {
-            VStack(spacing: 0) {
-                TabView(selection: $viewModel.selectedTab) {
-                    Group {
-                        if viewModel.showMarket {
-                            MarketView().tag(MainViewModel.Tab.markets)
-                        }
-
-                        WalletView(viewModel: walletViewModel, path: $path).tag(MainViewModel.Tab.wallet)
-                        MultiSwapView().tag(MainViewModel.Tab.swap)
-                        MainTransactionsView(transactionsViewModel: transactionsViewModel).tag(MainViewModel.Tab.transactions)
-                        MainSettingsView().tag(MainViewModel.Tab.settings)
-                    }
-                    .toolbar(.hidden, for: .tabBar)
+            TabView(selection: $viewModel.selectedTab) {
+                if viewModel.showMarket {
+                    MarketView()
+                        .tabItem { Label("", image: "market_filled") }
+                        .tag(MainViewModel.Tab.markets)
+                        .tint(.themeLeah)
                 }
 
-                HStack(spacing: 0) {
-                    ForEach(viewModel.tabs, id: \.self) { tab in
-                        ZStack {
-                            Image(tab.image).icon(colorStyle: viewModel.selectedTab == tab ? .yellow : .secondary)
+                WalletView(viewModel: walletViewModel, path: $path)
+                    .tabItem { Label("", image: "wallet_filled") }
+                    .tag(MainViewModel.Tab.wallet)
+                    .tint(.themeLeah)
 
-                            if tab == MainViewModel.Tab.settings, let badge = badgeViewModel.badge {
-                                BadgeView(badge: badge)
-                                    .offset(x: 12, y: -12)
-                            }
-                        }
-                        .padding(.vertical, .margin16)
-                        .frame(maxWidth: .infinity)
-                        .contentShape(Rectangle())
-                        .onTapGesture {
-                            viewModel.selectedTab = tab
-                        }
-                    }
-                }
-                .padding(.horizontal, .margin16)
-                .background(Color.themeBlade)
+                MultiSwapView()
+                    .tabItem { Label("", image: "swap_filled") }
+                    .tag(MainViewModel.Tab.swap)
+                    .tint(.themeLeah)
+
+                MainSettingsView()
+                    .tabItem { Label("", image: "settings_filled") }
+                    .tag(MainViewModel.Tab.settings)
+                    .badge(badgeViewModel.badge.map { _ in "1" })
+                    .tint(.themeLeah)
             }
-            .ignoresSafeArea(.keyboard)
+            .tint(.themeJacob)
             .navigationDestination(for: Wallet.self) { wallet in
                 WalletTokenModule.view(wallet: wallet)
             }

@@ -20,57 +20,54 @@ struct MultiSwapTokenSelectView: View {
     var body: some View {
         ThemeNavigationStack {
             ThemeView {
-                VStack(spacing: 0) {
-                    SearchBar(text: $viewModel.searchText, prompt: "placeholder.search".localized)
+                ThemeList(viewModel.items, bottomSpacing: .margin16) { item in
+                    ClickableRow(action: {
+                        currentToken = item.token
+                        isPresented = false
+                    }) {
+                        CoinIconView(coin: item.token.coin, placeholderImage: item.token.placeholderImageName)
 
-                    ThemeList(viewModel.items, bottomSpacing: .margin16) { item in
-                        ClickableRow(action: {
-                            currentToken = item.token
-                            isPresented = false
-                        }) {
-                            CoinIconView(coin: item.token.coin, placeholderImage: item.token.placeholderImageName)
+                        VStack(spacing: 1) {
+                            HStack(spacing: .margin8) {
+                                Text(item.token.coin.code).textBody()
 
-                            VStack(spacing: 1) {
-                                HStack(spacing: .margin8) {
-                                    Text(item.token.coin.code).textBody()
-
-                                    if let badge = item.token.badge {
-                                        BadgeViewNew(badge)
-                                    }
-
-                                    if let balance = item.balance {
-                                        Spacer()
-
-                                        Text(balance)
-                                            .textBody()
-                                            .multilineTextAlignment(.trailing)
-                                    }
+                                if let badge = item.token.badge {
+                                    BadgeViewNew(badge)
                                 }
-                                .frame(maxWidth: .infinity, alignment: .leading)
 
-                                HStack(spacing: .margin8) {
-                                    Text(item.token.coin.name).themeSubhead2()
+                                if let balance = item.balance {
+                                    Spacer()
 
-                                    if let fiatBalance = item.fiatBalance {
-                                        Spacer()
+                                    Text(balance)
+                                        .textBody()
+                                        .multilineTextAlignment(.trailing)
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
 
-                                        Text(fiatBalance)
-                                            .textSubhead2()
-                                            .multilineTextAlignment(.trailing)
-                                    }
+                            HStack(spacing: .margin8) {
+                                Text(item.token.coin.name).themeSubhead2()
+
+                                if let fiatBalance = item.fiatBalance {
+                                    Spacer()
+
+                                    Text(fiatBalance)
+                                        .textSubhead2()
+                                        .multilineTextAlignment(.trailing)
                                 }
                             }
                         }
                     }
                 }
-                .navigationTitle(title)
-                .toolbar {
-                    ToolbarItem(placement: .cancellationAction) {
-                        Button(action: {
-                            isPresented = false
-                        }) {
-                            Image("close")
-                        }
+            }
+            .navigationTitle(title)
+            .searchBar(text: $viewModel.searchText, prompt: "placeholder.search".localized)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
+                        isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
             }

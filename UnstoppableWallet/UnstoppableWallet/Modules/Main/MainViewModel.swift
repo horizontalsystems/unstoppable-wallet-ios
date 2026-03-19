@@ -71,10 +71,6 @@ extension MainViewModel {
     var lastCreatedAccount: Account? {
         accountManager.popLastCreatedAccount()
     }
-
-    var tabs: [Tab] {
-        (showMarket ? [.markets] : []) + [.wallet, .swap, .transactions, .settings]
-    }
 }
 
 extension MainViewModel {
@@ -87,16 +83,6 @@ extension MainViewModel {
 
         var id: String {
             rawValue
-        }
-
-        var image: String {
-            switch self {
-            case .markets: return "market_filled"
-            case .wallet: return "wallet_filled"
-            case .swap: return "swap_filled"
-            case .transactions: return "transaction_filled"
-            case .settings: return "settings_filled"
-            }
         }
     }
 }

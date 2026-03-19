@@ -44,17 +44,19 @@ struct MultiSwapView: View {
             } bottomContent: {
                 buttonView()
             } keyboardContent: {
-                AmountAccessoryView(
-                    visible: isInputActive,
-                    hasPercents: viewModel.availableBalance != nil,
-                    onPercent: { percent in
-                        viewModel.setAmountIn(percent: percent)
-                        isInputActive = false
-                    },
-                    onTrash: {
-                        viewModel.clearAmountIn()
-                    }
-                )
+                if isInputActive {
+                    AmountAccessoryView(
+                        visible: isInputActive,
+                        hasPercents: viewModel.availableBalance != nil,
+                        onPercent: { percent in
+                            viewModel.setAmountIn(percent: percent)
+                            isInputActive = false
+                        },
+                        onTrash: {
+                            viewModel.clearAmountIn()
+                        }
+                    )
+                }
             }
             .animation(.easeOut(duration: 0.25), value: isInputActive)
         }
