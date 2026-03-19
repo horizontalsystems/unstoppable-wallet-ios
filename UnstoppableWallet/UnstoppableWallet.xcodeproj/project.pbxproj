@@ -2198,6 +2198,8 @@
 		6BDB59DF2F0F576C005FA626 /* StellarSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59DD2F0F576C005FA626 /* StellarSendHelper.swift */; };
 		6BDB59E12F14B6B8005FA626 /* MoneroSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59E02F14B6B8005FA626 /* MoneroSwapFinalQuote.swift */; };
 		6BDB59E22F14B6B8005FA626 /* MoneroSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59E02F14B6B8005FA626 /* MoneroSwapFinalQuote.swift */; };
+		6BDB59F22F1BB000005FA626 /* SolanaSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59F12F1BB000005FA626 /* SolanaSwapFinalQuote.swift */; };
+		6BDB59F32F1BB000005FA626 /* SolanaSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59F12F1BB000005FA626 /* SolanaSwapFinalQuote.swift */; };
 		6BDB59E42F14B8F1005FA626 /* MoneroSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59E32F14B8EC005FA626 /* MoneroSendHelper.swift */; };
 		6BDB59E52F14B8F1005FA626 /* MoneroSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59E32F14B8EC005FA626 /* MoneroSendHelper.swift */; };
 		6BDB59E72F151A32005FA626 /* ReownRouter in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDB59E62F151A32005FA626 /* ReownRouter */; };
@@ -4859,6 +4861,7 @@
 		6BDB59DA2F0BB195005FA626 /* TonSendHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonSendHelper.swift; sourceTree = "<group>"; };
 		6BDB59DD2F0F576C005FA626 /* StellarSendHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarSendHelper.swift; sourceTree = "<group>"; };
 		6BDB59E02F14B6B8005FA626 /* MoneroSwapFinalQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroSwapFinalQuote.swift; sourceTree = "<group>"; };
+		6BDB59F12F1BB000005FA626 /* SolanaSwapFinalQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaSwapFinalQuote.swift; sourceTree = "<group>"; };
 		6BDB59E32F14B8EC005FA626 /* MoneroSendHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroSendHelper.swift; sourceTree = "<group>"; };
 		6BDB59EE2F15FE93005FA626 /* WCSocketFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCSocketFactory.swift; sourceTree = "<group>"; };
 		6BDB59F12F1BB000005FA626 /* SolanaSwapFinalQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaSwapFinalQuote.swift; sourceTree = "<group>"; };
