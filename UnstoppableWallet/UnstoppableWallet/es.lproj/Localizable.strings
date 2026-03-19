@@ -513,7 +513,7 @@
 "send.fee_settings.fee_rate_unavailable" = "Tarifa Tasa no disponible. Por favor, consulte las tarifas manualmente";
 
 "send.unspent_outputs" = "UTXOs";
-"send.unspent_outputs.description" = "Seleccione manualmente UTxO para gastar los fondos en el saldo";
+"send.unspent_outputs.description" = "Elija manualmente qué monedas gastar en la transacción.";
 "send.unspent_outputs.send_to" = "Enviar a";
 "send.unspent_outputs.change" = "Cambio";
 
@@ -1604,7 +1604,7 @@
 
 "btc_transaction_sort_mode.shuffle" = "Shuffle";
 "btc_transaction_sort_mode.shuffle.description" = "Indexación aleatoria";
-"btc_transaction_sort_mode.bip69" = "BIP69";
+"btc_transaction_sort_mode.bip69" = "Determinista";
 "btc_transaction_sort_mode.bip69.description" = "Indexación Lexicográfica";
 
 "blockchain_settings.info.restore_source" = "Restaurar Fuente";
@@ -2078,6 +2078,7 @@
 "fee_settings.fee_rate" = "Tasa de comisión";
 "fee_settings.fee_rate.description" = "Este es el valor recomendado para golpear los siguientes 2 bloques";
 "fee_settings.inputs_outputs" = "Entradas/Salidas";
+"fee_settings.inputs_outputs.description" = "Cambia cómo se estructuran las entradas y salidas de la transacción.";
 "fee_settings.transaction_settings" = "Ajustes de la transacción";
 "fee_settings.transaction_settings.description" = "Haga que sus transacciones Bitcoin sean más difíciles de rastrear cambiando la forma en que las transacciones están estructuradas.";
 "fee_settings.replace_by_fee" = "Reemplazar por tarifa";

@@ -513,7 +513,7 @@
 "send.fee_settings.fee_rate_unavailable" = "수수료 비율을 사용할 수 없습니다. 수수료 요율을 수동으로 확인하십시오.";
 
 "send.unspent_outputs" = "UTxOs";
-"send.unspent_outputs.description" = "잔액에서 자금을 사용하기 위해 수동으로 UTxO를 선택하세요.";
+"send.unspent_outputs.description" = "거래에서 사용할 코인을 수동으로 선택하세요.";
 "send.unspent_outputs.send_to" = "보내기";
 "send.unspent_outputs.change" = "변경";
 
@@ -1604,7 +1604,7 @@
 
 "btc_transaction_sort_mode.shuffle" = "셔플";
 "btc_transaction_sort_mode.shuffle.description" = "랜덤 인덱싱";
-"btc_transaction_sort_mode.bip69" = "BIP69";
+"btc_transaction_sort_mode.bip69" = "결정론적";
 "btc_transaction_sort_mode.bip69.description" = "사전 색인 작성";
 
 "blockchain_settings.info.restore_source" = "매개 변수 복원";
@@ -2078,6 +2078,7 @@
 "fee_settings.fee_rate" = "수수료율";
 "fee_settings.fee_rate.description" = "다음 2 블록 타격에 대한 권장 값은 다음과 같습니다.";
 "fee_settings.inputs_outputs" = "입력/출력";
+"fee_settings.inputs_outputs.description" = "트랜잭션 입력 및 출력의 구조 방식을 변경합니다.";
 "fee_settings.transaction_settings" = "거래 설정";
 "fee_settings.transaction_settings.description" = "트랜잭션이 구조화되는 방식을 변경하여 Bitcoin 트랜잭션을 추적하기 어렵게 만드십시오.";
 "fee_settings.replace_by_fee" = "수수료로 대체";
