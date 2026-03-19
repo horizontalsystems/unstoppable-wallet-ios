@@ -51,6 +51,10 @@ class ZcashAdapter {
     private var lastBlockHeight: Int = 0
     private(set) var areFundsSpendable: Bool = false
 
+    var spendMode: BalanceAdapterSpendMode {
+        areFundsSpendable ? .allowedWhenSyncing : .fromBalanceState
+    }
+
     @PostPublished var zCashBalanceData: ZcashBalanceData {
         didSet {
             balanceSubject.onNext(zCashBalanceData.balanceData)
