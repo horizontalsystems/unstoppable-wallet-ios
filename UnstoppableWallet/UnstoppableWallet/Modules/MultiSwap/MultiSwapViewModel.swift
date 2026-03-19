@@ -135,6 +135,8 @@ class MultiSwapViewModel: ObservableObject {
     @Published var adapterState: AdapterState?
     @Published var availableBalance: Decimal?
 
+    var spendMode: BalanceAdapterSpendMode
+
     @Published var coinPriceIn: CoinPrice? {
         didSet {
             syncFiatAmountIn()
@@ -274,6 +276,7 @@ class MultiSwapViewModel: ObservableObject {
     init(token: Token? = nil) {
         providers = swapProviderManager.providers.compactMap { SwapProviderFactory.provider(id: $0) }
         currency = currencyManager.baseCurrency
+        spendMode = .fromBalanceState
 
         defer {
             internalTokenIn = token ?? (try? marketKit.token(query: TokenQuery(blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84))))
@@ -318,8 +321,9 @@ class MultiSwapViewModel: ObservableObject {
             adapter.balanceStateUpdatedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
                 .observeOn(MainScheduler.instance)
-                .subscribe { [weak self] state in
+                .subscribe { [weak self, weak adapter] state in
                     self?.adapterState = state
+                    self?.spendMode = adapter?.spendMode ?? .fromBalanceState
                 }
                 .disposed(by: balanceDisposeBag)
 
@@ -333,6 +337,7 @@ class MultiSwapViewModel: ObservableObject {
         } else {
             adapterState = nil
             availableBalance = nil
+            spendMode = .fromBalanceState
         }
     }
 
