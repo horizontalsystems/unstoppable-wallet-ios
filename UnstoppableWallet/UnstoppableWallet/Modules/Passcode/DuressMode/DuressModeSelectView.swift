@@ -47,12 +47,6 @@ struct DuressModeSelectView: View {
             }
         }
         .navigationTitle("enable_duress_mode.select.title".localized)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            Button("button.cancel".localized) {
-                showParentSheet = false
-            }
-        }
     }
 
     private struct AccountRow: View {

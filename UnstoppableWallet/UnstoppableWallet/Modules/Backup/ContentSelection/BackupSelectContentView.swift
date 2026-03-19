@@ -38,11 +38,6 @@ struct BackupSelectContentView: View {
             }
         }
         .navigationTitle("backup_app.backup_list.title".localized)
-        .toolbar {
-            Button("button.cancel".localized) {
-                viewModel.cancel()
-            }
-        }
     }
 
     private func walletSection(items: [BackupModule.AccountItem]) -> some View {

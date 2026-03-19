@@ -3,6 +3,7 @@ import SwiftUI
 struct SetPasscodeView: View {
     @ObservedObject var viewModel: SetPasscodeViewModel
     @Binding var showParentSheet: Bool
+    var showClose: Bool = true
 
     var body: some View {
         ThemeView {
@@ -18,11 +19,16 @@ struct SetPasscodeView: View {
             )
         }
         .navigationTitle(viewModel.title)
-        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
-            Button("button.cancel".localized) {
-                viewModel.onCancel()
-                showParentSheet = false
+            ToolbarItem(placement: .cancellationAction) {
+                if showClose {
+                    Button(action: {
+                        viewModel.onCancel()
+                        showParentSheet = false
+                    }) {
+                        Image("close")
+                    }
+                }
             }
         }
         .onReceive(viewModel.finishSubject) {

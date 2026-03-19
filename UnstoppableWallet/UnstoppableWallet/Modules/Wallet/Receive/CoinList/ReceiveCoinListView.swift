@@ -38,7 +38,6 @@ struct ReceiveCoinListView: View {
                 }
             }
             .navigationTitle("balance.receive".localized)
-            .navigationBarTitleDisplayMode(.inline)
             .navigationDestination(for: FullCoin.self) { fullCoin in
                 ReceiveModule.view(account: viewModel.account, fullCoin: fullCoin, path: $path, onDismiss: {
                     presentationMode.wrappedValue.dismiss()
@@ -46,12 +45,13 @@ struct ReceiveCoinListView: View {
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("button.cancel".localized) {
+                    Button(action: {
                         presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image("close")
                     }
                 }
             }
-            .accentColor(.themeGray)
         }
     }
 

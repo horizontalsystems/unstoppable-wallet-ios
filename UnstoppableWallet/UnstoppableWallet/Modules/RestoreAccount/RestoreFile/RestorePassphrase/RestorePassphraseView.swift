@@ -96,15 +96,5 @@ struct RestorePassphraseView: View {
             onConfiguration(rawBackup)
         }
         .navigationTitle("restore.cloud.password.title".localized)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button(action: {
-                    isPresented = false
-                }) {
-                    Image("close")
-                }
-                .disabled(viewModel.processing)
-            }
-        }
     }
 }

@@ -89,8 +89,10 @@ struct BirthdayInputView: View {
             .navigationTitle(viewModel.initialHeight == nil ? blockchain.name : "birthday_height.title".localized)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("button.cancel".localized) {
+                    Button(action: {
                         presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image("close")
                     }
                 }
             }

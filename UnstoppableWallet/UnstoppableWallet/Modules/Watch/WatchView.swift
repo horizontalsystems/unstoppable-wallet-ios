@@ -76,8 +76,10 @@ struct WatchView: View {
             .navigationTitle("watch_address.title".localized)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("button.cancel".localized) {
+                    Button(action: {
                         isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
 
@@ -85,6 +87,7 @@ struct WatchView: View {
                     Button("watch_address.watch".localized) {
                         proceed()
                     }
+                    .modifier(ConfirmationButtonStyle())
                 }
             }
             .onReceive(viewModel.itemsSubject) { items in

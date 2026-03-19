@@ -66,8 +66,10 @@ struct MarketAdvancedSearchCategoriesView: View {
             .navigationTitle("market.advanced_search.categories".localized)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("button.cancel".localized) {
+                    Button(action: {
                         isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
             }

@@ -78,7 +78,6 @@ struct SendView: View {
 
             UINotificationFeedbackGenerator().notificationOccurred(.error)
         }
-        .accentColor(.themeJacob)
     }
 
     @ViewBuilder private func dataView(sendData: ISendData, handler: ISendHandler) -> some View {

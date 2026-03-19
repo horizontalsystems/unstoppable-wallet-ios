@@ -17,8 +17,12 @@ struct BackupSelectDestinationView: View {
         }
         .navigationTitle("backup_app.backup_type.title".localized)
         .toolbar {
-            Button("button.cancel".localized) {
-                viewModel.cancel()
+            ToolbarItem(placement: .cancellationAction) {
+                Button(action: {
+                    viewModel.cancel()
+                }) {
+                    Image("close")
+                }
             }
         }
     }

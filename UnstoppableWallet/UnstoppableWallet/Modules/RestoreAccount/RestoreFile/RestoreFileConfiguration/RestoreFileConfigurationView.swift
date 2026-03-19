@@ -77,16 +77,6 @@ struct RestoreFileConfigurationView: View {
             }
         }
         .navigationTitle("backup_app.backup_list.title".localized)
-        .navigationBarTitleDisplayMode(.inline)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                Button(action: {
-                    isPresented = false
-                }) {
-                    Image("close")
-                }
-            }
-        }
     }
 
     @ViewBuilder private func section(header: String, items: [BackupModule.AccountItem]) -> some View {

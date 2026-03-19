@@ -1,5 +1,4 @@
 import Combine
-
 import SwiftUI
 
 private let qrSize: CGFloat = 203
@@ -40,7 +39,6 @@ struct BaseReceiveAddressView<Content: View>: View {
             }
         }
         .navigationTitle(viewModel.title)
-        .navigationBarTitleDisplayMode(.inline)
         .toolbar {
             ToolbarItem(placement: .confirmationAction) {
                 Button(action: {
@@ -52,9 +50,7 @@ struct BaseReceiveAddressView<Content: View>: View {
                 }) {
                     Image("check")
                 }
-                .modifier(ConfirmationButtonStyle())
             }
         }
-        .accentColor(.themeLeah)
     }
 }

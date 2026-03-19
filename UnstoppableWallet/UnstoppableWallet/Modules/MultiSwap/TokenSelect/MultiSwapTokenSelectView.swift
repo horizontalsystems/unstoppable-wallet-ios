@@ -64,10 +64,13 @@ struct MultiSwapTokenSelectView: View {
                     }
                 }
                 .navigationTitle(title)
-                .navigationBarTitleDisplayMode(.inline)
                 .toolbar {
-                    Button("button.cancel".localized) {
-                        isPresented = false
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button(action: {
+                            isPresented = false
+                        }) {
+                            Image("close")
+                        }
                     }
                 }
             }

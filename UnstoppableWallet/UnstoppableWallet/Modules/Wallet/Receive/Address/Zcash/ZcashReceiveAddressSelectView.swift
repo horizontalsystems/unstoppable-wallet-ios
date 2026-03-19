@@ -37,22 +37,9 @@ struct ZcashReceiveAddressSelectView: View {
             }
         }
         .navigationTitle("deposit.zcash.title".localized)
-        .navigationBarTitleDisplayMode(.inline)
         .navigationDestination(for: ZcashAdapter.AddressType.self, destination: { addressType in
             destinationView(for: addressType)
         })
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button("button.cancel".localized) {
-                    if let onDismiss {
-                        onDismiss()
-                    } else {
-                        presentationMode.wrappedValue.dismiss()
-                    }
-                }
-            }
-        }
-        .accentColor(.themeGray)
     }
 
     @ViewBuilder private func cell(viewItem: ZcashReceiveAddressSelectViewModel.ViewItem) -> some View {
