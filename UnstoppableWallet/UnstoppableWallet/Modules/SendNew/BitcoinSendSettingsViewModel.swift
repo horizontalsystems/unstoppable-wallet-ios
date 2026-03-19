@@ -71,6 +71,13 @@ extension BitcoinSendSettingsViewModel {
         handler.lockTimeIntervalState
     }
 
+    var lockTimeIntervalTitle: String {
+        if let interval = lockTimeInterval {
+            return HodlerPlugin.LockTimeInterval.title(lockTimeInterval: interval)
+        }
+        return "send.hodler_locktime_off".localized
+    }
+
     func reset() {
         sortMode = handler.defaultSortMode
         rbfEnabled = handler.defaultRbfEnabled

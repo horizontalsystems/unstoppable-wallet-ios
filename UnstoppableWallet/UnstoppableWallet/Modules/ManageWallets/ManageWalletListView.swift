@@ -8,8 +8,10 @@ struct ManageWalletListView: View {
     @Environment(\.openURL) private var openURL
 
     var body: some View {
-        ThemeList(viewModel.items) { item in
-            view(item: item, forceToggleOn: nil)
+        VStack(spacing: 0) {
+            ListForEachIdentifiable(viewModel.items) { item in
+                view(item: item, forceToggleOn: nil)
+            }
         }
     }
 

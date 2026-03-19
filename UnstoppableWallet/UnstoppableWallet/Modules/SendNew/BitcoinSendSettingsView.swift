@@ -6,7 +6,7 @@ struct BitcoinSendSettingsView: View {
     @StateObject var viewModel: BitcoinSendSettingsViewModel
     var onChangeSettings: () -> Void
 
-    @State private var chooseUtxos: Bool = false
+    @State private var path = NavigationPath()
 
     @Environment(\.presentationMode) private var presentationMode
 
@@ -16,83 +16,50 @@ struct BitcoinSendSettingsView: View {
     }
 
     var body: some View {
-        ScrollableThemeView {
-            VStack(spacing: .margin32) {
-                VStack(spacing: 0) {
-                    ListSection {
-                        NavigationRow(
-                            destination: { OutputSelectorView2(handler: viewModel.handler) }
-                        ) {
-                            HStack(spacing: .margin8) {
-                                Text("send.unspent_outputs".localized).textBody()
-
-                                Spacer()
-
-                                HStack(spacing: .margin8) {
-                                    Text(viewModel.utxos).textSubhead1(color: .themeLeah)
-                                    Image("edit2_20").themeIcon(color: .gray)
+        ThemeNavigationStack(path: $path) {
+            ScrollableThemeView {
+                VStack(spacing: .margin32) {
+                    VStack(spacing: 0) {
+                        ListSection {
+                            row(
+                                title: "send.unspent_outputs".localized,
+                                subtitle: "send.unspent_outputs.description".localized,
+                                value: viewModel.utxos,
+                                action: {
+                                    path.append(Route.outputSelector)
                                 }
-                            }
-                        }
-                    }
-                    ListSectionFooter(text: "send.unspent_outputs.description".localized)
-                }
-                VStack(spacing: 0) {
-                    ListSection {
-                        ListRow {
-                            HStack(spacing: .margin8) {
-                                Button(action: {
-                                    Coordinator.shared.present { isPresented in
-                                        InfoView(
-                                            items: [
-                                                .header1(text: "send.transaction_inputs_outputs_info.title".localized),
-                                                .text(text: "send.transaction_inputs_outputs_info.description".localized(AppConfig.appName, AppConfig.appName)),
-                                                .header3(text: "send.transaction_inputs_outputs_info.shuffle.title".localized),
-                                                .text(text: "send.transaction_inputs_outputs_info.shuffle.description".localized),
-                                                .header3(text: "send.transaction_inputs_outputs_info.deterministic.title".localized),
-                                                .text(text: "send.transaction_inputs_outputs_info.deterministic.description".localized),
-                                            ],
+                            )
+
+                            row(
+                                title: "fee_settings.inputs_outputs".localized,
+                                subtitle: "fee_settings.inputs_outputs.description".localized,
+                                value: viewModel.sortMode.title,
+                                action: {
+                                    Coordinator.shared.present(type: .alert) { isPresented in
+                                        OptionAlertView(
+                                            title: "fee_settings.inputs_outputs".localized,
+                                            viewItems: TransactionDataSortMode.allCases.map { .init(text: $0.title, selected: viewModel.sortMode == $0) },
+                                            onSelect: { index in
+                                                viewModel.sortMode = TransactionDataSortMode.allCases[index]
+                                            },
                                             isPresented: isPresented
                                         )
                                     }
-                                }, label: {
-                                    HStack(spacing: .margin8) {
-                                        Text("fee_settings.inputs_outputs".localized).textBody()
-                                        Image("circle_information_20").themeIcon()
-                                    }
-                                })
-
-                                Spacer()
-
-                                Button(action: {
-                                    Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                                        sortModeView(isPresented: isPresented)
-                                    }
-                                }) {
-                                    Text(viewModel.sortMode.title)
                                 }
-                                .buttonStyle(SecondaryButtonStyle(rightAccessory: .dropDown))
-                            }
-                        }
-                    }
-                    ListSectionFooter(text: "fee_settings.transaction_settings.description".localized(viewModel.coinCode))
-                }
-                if viewModel.lockTimeIntervalState != .inactive {
-                    VStack(spacing: 0) {
-                        ListSection {
-                            ListRow {
-                                HStack(spacing: .margin8) {
-                                    Text("fee_settings.time_lock".localized).textBody()
+                            )
 
-                                    Spacer()
-
-                                    Button(action: {
+                            if viewModel.lockTimeIntervalState != .inactive {
+                                row(
+                                    title: "fee_settings.time_lock".localized,
+                                    subtitle: "fee_settings.time_lock.description".localized,
+                                    value: viewModel.lockTimeIntervalTitle,
+                                    action: viewModel.lockTimeIntervalState == .enabled ? {
                                         Coordinator.shared.present(type: .alert) { isPresented in
                                             OptionAlertView(
                                                 title: "fee_settings.time_lock".localized,
-                                                viewItems: [.init(text: "send.hodler_locktime_off".localized)] +
+                                                viewItems: [.init(text: "send.hodler_locktime_off".localized, selected: viewModel.lockTimeInterval == nil)] +
                                                     HodlerPlugin.LockTimeInterval.allCases.map {
-                                                        AlertViewItem(text: HodlerPlugin.LockTimeInterval.title(lockTimeInterval: $0))
+                                                        AlertViewItem(text: HodlerPlugin.LockTimeInterval.title(lockTimeInterval: $0), selected: viewModel.lockTimeInterval == $0)
                                                     },
                                                 onSelect: { index in
                                                     switch index {
@@ -103,99 +70,88 @@ struct BitcoinSendSettingsView: View {
                                                 isPresented: isPresented
                                             )
                                         }
-                                    }) {
-                                        HStack(spacing: .margin8) {
-                                            if viewModel.lockTimeIntervalState == .enabled,
-                                               let interval = viewModel.lockTimeInterval
-                                            {
-                                                Text(HodlerPlugin.LockTimeInterval.title(lockTimeInterval: interval)).textCaption(color: .themeLeah)
-                                            } else {
-                                                Text("send.hodler_locktime_off".localized).textCaption(color: .themeLeah)
-                                            }
-                                        }
-                                    }
-                                    .buttonStyle(SecondaryButtonStyle(rightAccessory: .dropDown))
-                                    .disabled(viewModel.lockTimeIntervalState == .disabled)
-                                }
+                                    } : nil
+                                )
+                            }
+
+                            if viewModel.rbfAllowed {
+                                row(
+                                    title: "fee_settings.replace_by_fee".localized,
+                                    subtitle: "fee_settings.replace_by_fee.description".localized,
+                                    isOn: $viewModel.rbfEnabled
+                                )
                             }
                         }
-
-                        ListSectionFooter(text: "fee_settings.time_lock.description".localized)
                     }
                 }
-                if viewModel.rbfAllowed {
-                    VStack(spacing: 0) {
-                        ListSection {
-                            ListRow {
-                                Toggle(isOn: $viewModel.rbfEnabled) {
-                                    Text("fee_settings.replace_by_fee".localized).themeBody()
-                                }
-                                .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-                            }
-                        }
-
-                        ListSectionFooter(text: "fee_settings.replace_by_fee.description".localized)
+                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+            }
+            .navigationTitle("fee_settings".localized)
+            .navigationDestination(for: Route.self) { route in
+                switch route {
+                case .outputSelector:
+                    OutputSelectorView2(handler: viewModel.handler)
+                }
+            }
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    Button(action: {
+                        viewModel.reset()
+                    }) {
+                        Image("reset")
                     }
+                    .disabled(!viewModel.resetEnabled)
                 }
-            }
-            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
-        }
-        .navigationTitle("fee_settings".localized)
-        .toolbar {
-            ToolbarItem(placement: .navigationBarLeading) {
-                Button(action: {
-                    viewModel.reset()
-                }) {
-                    Image("reset")
-                }
-                .disabled(!viewModel.resetEnabled)
-            }
 
-            ToolbarItem(placement: .confirmationAction) {
-                Button(action: {
-                    onChangeSettings()
-                    presentationMode.wrappedValue.dismiss()
-                }) {
-                    Image("check")
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(action: {
+                        onChangeSettings()
+                        presentationMode.wrappedValue.dismiss()
+                    }) {
+                        Image("check")
+                    }
+                    .modifier(ConfirmationButtonStyle())
                 }
-                .modifier(ConfirmationButtonStyle())
             }
         }
     }
 
-    @ViewBuilder private func sortModeView(isPresented: Binding<Bool>) -> some View {
-        VStack(spacing: 0) {
-            BSTitleView(
-                icon: "arrow_medium_2_up_right_24",
-                title: "fee_settings.transaction_settings".localized
-            )
+    @ViewBuilder private func row(title: String, subtitle: String, value: String, action: (() -> Void)?) -> some View {
+        let enabled = action != nil
 
-            VStack(spacing: 0) {
-                ListSection {
-                    ForEach(TransactionDataSortMode.allCases) { sortMode in
-                        ClickableRow(action: {
-                            if viewModel.sortMode != sortMode {
-                                viewModel.sortMode = sortMode
-                            }
+        Cell(
+            middle: {
+                MultiText(title: title, subtitle: subtitle)
+            },
+            right: {
+                ThemeText(
+                    value,
+                    style: .subheadSB,
+                    colorStyle: enabled ? .primary : .secondary
+                )
+                .arrow(
+                    style: .dropdown,
+                    colorStyle: enabled ? .primary : .secondary
+                )
+            },
+            action: action
+        )
+    }
 
-                            isPresented.wrappedValue = false
-                        }) {
-                            VStack(alignment: .leading, spacing: 1) {
-                                Text(sortMode.title).textBody()
-                                Text(sortMode.description).textSubhead2()
-                            }
-
-                            Spacer()
-
-                            if viewModel.sortMode == sortMode {
-                                Image.checkIcon
-                            }
-                        }
-                    }
-                }
-                .overlay(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).stroke(Color.themeBlade, lineWidth: .heightOneDp))
+    @ViewBuilder private func row(title: String, subtitle: String, isOn: Binding<Bool>) -> some View {
+        Cell(
+            middle: {
+                MultiText(title: title, subtitle: subtitle)
+            },
+            right: {
+                ThemeToggle(isOn: isOn)
             }
-            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin24, trailing: .margin16))
-        }
+        )
+    }
+}
+
+extension BitcoinSendSettingsView {
+    private enum Route: Hashable {
+        case outputSelector
     }
 }

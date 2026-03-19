@@ -543,9 +543,13 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         }
 
         if isCrosschain { // show swap status for crosschain
+            var status: Swap.Status = .notStarted
+            if isDepositCompleted {
+                status = isSwappingCompleted ? .completed : .swapping
+            }
             legs.append(
                 .init(
-                    status: isSwappingCompleted ? .completed : .swapping,
+                    status: status,
                     type: USwapMultiSwapProvider.legTypeSwap,
                     chainId: "",
                     txHash: "",
@@ -579,9 +583,14 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
                 isSendCompleted = receiveConf >= receiveConfNeeded
             }
 
+            var status: Swap.Status = .notStarted
+            if isSwappingCompleted {
+                status = isSendSuspended ? .failed : (isSendCompleted ? .completed : .pending)
+            }
+
             legs.append(
                 .init(
-                    status: isSendSuspended ? .failed : (isSendCompleted ? .completed : .pending),
+                    status: status,
                     type: USwapMultiSwapProvider.legTypeNativeSend,
                     chainId: chainIdOut ?? "",
                     txHash: response?.receive?.txId ?? "",
