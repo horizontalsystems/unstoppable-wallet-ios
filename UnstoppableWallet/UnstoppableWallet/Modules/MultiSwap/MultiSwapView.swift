@@ -272,20 +272,31 @@ struct MultiSwapView: View {
                         viewModel.autoQuoteIfRequired()
                     }
                 }
-            } else if viewModel.shouldShowTerms {
-                Coordinator.shared.present { isPresented in
-                    SwapTermsView(isPresented: isPresented) {
-                        viewModel.onAcceptTerms()
+            } else {
+                viewModel.validateAndProceed(
+                    onSuccess: {
+                        if viewModel.shouldShowTerms {
+                            Coordinator.shared.present { isPresented in
+                                SwapTermsView(isPresented: isPresented) {
+                                    viewModel.onAcceptTerms()
 
-                        DispatchQueue.main.async {
+                                    DispatchQueue.main.async {
+                                        isInputActive = false
+                                        sendPresented = true
+                                    }
+                                }
+                            } onDismiss: {
+                                viewModel.autoQuoteIfRequired()
+                            }
+                        } else {
                             isInputActive = false
                             sendPresented = true
                         }
+                    },
+                    onRiskDetected: {
+                        showRiskBottomSheet()
                     }
-                }
-            } else {
-                isInputActive = false
-                sendPresented = true
+                )
             }
         }
         .disabled(disabled)
@@ -306,11 +317,7 @@ struct MultiSwapView: View {
             Button(action: {
                 viewModel.stopAutoQuoting()
 
-                Coordinator.shared.present { isPresented in
-                    MultiSwapQuotesView(viewModel: viewModel, isPresented: isPresented)
-                } onDismiss: {
-                    viewModel.autoQuoteIfRequired()
-                }
+                showSelectProvider()
             }) {
                 HStack(spacing: 8) {
                     Image(quote.provider.icon)
@@ -318,8 +325,12 @@ struct MultiSwapView: View {
                         .scaledToFit()
                         .cornerRadius(4)
                         .frame(size: 24)
+                        .padding(.trailing, .margin8)
 
-                    ThemeText(quote.provider.name, style: .subhead)
+                    VStack(alignment: .leading, spacing: 3) {
+                        ThemeText(quote.provider.name, style: .subhead, colorStyle: .primary)
+                        quote.provider.type.body()
+                    }
 
                     ThemeImage("arrow_s_down", size: 20)
                 }
@@ -329,7 +340,7 @@ struct MultiSwapView: View {
             Spacer()
 
             if let price = viewModel.price {
-                HStack {
+                VStack(alignment: .trailing, spacing: 3) {
                     ThemeText(price, style: .subheadSB, colorStyle: .primary)
                         .multilineTextAlignment(.trailing)
                         .minimumScaleFactor(0.5)
@@ -339,6 +350,10 @@ struct MultiSwapView: View {
                         .onTapGesture {
                             viewModel.flipPrice()
                         }
+
+                    if let time = quote.quote.estimatedTime {
+                        MultiSwapQuotesView.view(estimatedTime: time)
+                    }
                 }
                 .animation(.easeInOut(duration: 0.15), value: price)
             }
@@ -352,6 +367,36 @@ struct MultiSwapView: View {
         if !cautions.isEmpty {
             ForEach(cautions.indices, id: \.self) { index in
                 AlertCardView(caution: cautions[index])
+            }
+        }
+    }
+
+    private func showRiskBottomSheet() {
+        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+            BottomSheetView(
+                items: [
+                    .title(icon: ThemeImage.error, title: "swap.aml.risk_detected".localized),
+                    .subtitle(text: "swap.aml.risk_description".localized),
+                    .buttonGroup(.init(buttons: [
+                        .init(style: .gray, title: "swap.aml.choose_provider".localized) {
+                            isPresented.wrappedValue = false
+
+                            showSelectProvider()
+                        },
+                    ])),
+                ]
+            )
+        } onDismiss: {
+            viewModel.autoQuoteIfRequired()
+        }
+    }
+
+    private func showSelectProvider() {
+        DispatchQueue.main.async {
+            Coordinator.shared.present { isPresented in
+                MultiSwapQuotesView(viewModel: viewModel, isPresented: isPresented)
+            } onDismiss: {
+                viewModel.autoQuoteIfRequired()
             }
         }
     }
@@ -371,7 +416,10 @@ struct MultiSwapView: View {
         var showProgress = false
         var preSwapStep: MultiSwapPreSwapStep?
 
-        if viewModel.quoting {
+        if viewModel.validatingProvider {
+            title = "swap.proceed_button".localized
+            showProgress = true
+        } else if viewModel.quoting {
             title = "swap.quoting".localized
             showProgress = true
         } else if viewModel.tokenIn == nil {

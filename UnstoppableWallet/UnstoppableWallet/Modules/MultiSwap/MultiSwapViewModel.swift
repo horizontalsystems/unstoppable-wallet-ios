@@ -267,6 +267,7 @@ class MultiSwapViewModel: ObservableObject {
     private var priceFlipped = false
 
     @Published var quoting = false
+    @Published var validatingProvider = false
     private var nextQuoteTime: Double?
 
     @Published var priceImpact: Decimal?
@@ -589,6 +590,29 @@ extension MultiSwapViewModel {
         amountIn = nil
         internalTokenIn = nil
         internalTokenOut = nil
+    }
+
+    func validateAndProceed(onSuccess: @escaping () -> Void, onRiskDetected: @escaping () -> Void) {
+        guard let currentQuote, let tokenIn = internalTokenIn else {
+            return
+        }
+
+        validatingProvider = true
+
+        Task { [weak self, provider = currentQuote.provider] in
+            let trusted = await provider.validateTrustedProvider(tokenIn: tokenIn)
+
+            guard let self else { return }
+            await MainActor.run {
+                self.validatingProvider = false
+
+                if trusted {
+                    onSuccess()
+                } else {
+                    onRiskDetected()
+                }
+            }
+        }
     }
 
     var sortedQuotes: [Quote] {

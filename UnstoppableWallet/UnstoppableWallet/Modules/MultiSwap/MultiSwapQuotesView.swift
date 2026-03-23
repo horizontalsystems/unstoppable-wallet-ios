@@ -115,16 +115,10 @@ struct MultiSwapQuotesView: View {
 
         HStack(alignment: .bottom, spacing: .margin4) {
             if let estimatedTime = quote.quote.estimatedTime {
-                let timeString = Duration.seconds(estimatedTime).formatted(.units(allowed: [.hours, .minutes, .seconds], width: .narrow))
-
-                ThemeImage("clock_filled", size: .iconSize16, colorStyle: .secondary)
-                ThemeText(timeString, style: .captionSB, colorStyle: .secondary)
+                Self.view(estimatedTime: estimatedTime)
             }
             Button(action: onTapProviderInfo) {
-                HStack(spacing: .margin4) {
-                    ThemeImage(type.icon, size: .iconSize16, colorStyle: type.сolorStyle)
-                    ThemeText(type.title, style: .captionSB, colorStyle: type.сolorStyle)
-                }
+                type.body()
             }
             .buttonStyle(.plain)
         }
@@ -152,6 +146,17 @@ struct MultiSwapQuotesView: View {
             return nil
         default:
             return (priceImpact, level.valueLevel)
+        }
+    }
+}
+
+extension MultiSwapQuotesView {
+    @ViewBuilder static func view(estimatedTime: TimeInterval) -> some View {
+        let timeString = Duration.seconds(estimatedTime).formatted(.units(allowed: [.hours, .minutes, .seconds], width: .narrow))
+
+        HStack(spacing: 4) {
+            ThemeImage("clock_filled", size: .iconSize16, colorStyle: .secondary)
+            ThemeText(timeString, style: .captionSB, colorStyle: .secondary)
         }
     }
 }
