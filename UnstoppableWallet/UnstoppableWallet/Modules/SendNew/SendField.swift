@@ -125,23 +125,18 @@ enum SendField {
             }
         case let .mevProtection(isOn):
             VStack(spacing: 0) {
-                HStack(spacing: 6) {
-                    Image("star_filled_16").themeIcon(color: .themeJacob)
-                    Text("subscription.premium.label".localized).themeSubhead1(color: .themeJacob)
-                }
-                .padding(.horizontal, .margin16)
-                .frame(height: .margin32)
-
+                SectionHeader(image: Image.defenseIcon, text: "purchases.swap_protection".localized, horizontalInsets: .margin16)
                 ListSection {
-                    ListRow {
-                        Image("shield_24").themeIcon(color: .themeJacob)
-                        Toggle(isOn: isOn) {
-                            Text("mev_protection.title".localized).themeBody()
+                    Cell(
+                        middle: {
+                            MiddleTextIcon(text: "mev_protection.title".localized)
+                        },
+                        right: {
+                            ThemeToggle(isOn: isOn)
                         }
-                        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-                    }
+                    )
                 }
-                .modifier(ThemeListStyleModifier(themeListStyle: .borderedLawrence, selected: true))
+                .themeListStyle(.bordered)
 
                 ListSectionFooter(text: "mev_protection.description".localized)
             }
