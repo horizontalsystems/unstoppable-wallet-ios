@@ -50,7 +50,7 @@ struct CoinInvestorsView: View {
                                 let fund = investment.funds[index]
 
                                 ClickableRow(spacing: .margin8) {
-                                    UrlManager.open(url: fund.website)
+                                    Coordinator.shared.present(url: fund.website)
                                 } content: {
                                     HStack(spacing: .margin16) {
                                         KFImage.url(URL(string: fund.logoUrl))

@@ -51,7 +51,7 @@ struct MarketPairsView: View {
                     price: pair.price.flatMap { ValueFormatter.instance.formatShort(value: $0, decimalCount: 8, symbol: pair.target) } ?? "n/a".localized,
                     action: {
                         if let tradeUrl = pair.tradeUrl {
-                            UrlManager.open(url: tradeUrl)
+                            Coordinator.shared.present(url: tradeUrl)
                             stat(page: .markets, section: .pairs, event: .open(page: .externalMarketPair))
                         }
                     }

@@ -908,6 +908,12 @@ enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Add recipient to SwapRecord") { db in
+            try db.alter(table: SwapRecord.databaseTableName) { t in
+                t.add(column: SwapRecord.Columns.recipient.name, .text)
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 

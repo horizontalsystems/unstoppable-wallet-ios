@@ -13,6 +13,7 @@ struct Swap: Hashable {
     let tokenOut: Token
     let amountIn: Decimal
     var amountOut: Decimal
+    let recipient: String?
     let toAddress: String
     let depositAddress: String?
     let providerSwapId: String?
@@ -77,6 +78,7 @@ struct SwapRecord: Codable {
     let tokenQueryIdOut: String
     let amountIn: String
     let amountOut: String
+    let recipient: String?
     let toAddress: String
     let depositAddress: String?
     let providerSwapId: String?
@@ -112,6 +114,7 @@ extension SwapRecord: FetchableRecord, PersistableRecord {
         static let tokenQueryIdOut = Column(CodingKeys.tokenQueryIdOut)
         static let amountIn = Column(CodingKeys.amountIn)
         static let amountOut = Column(CodingKeys.amountOut)
+        static let recipient = Column(CodingKeys.recipient)
         static let toAddress = Column(CodingKeys.toAddress)
         static let depositAddress = Column(CodingKeys.depositAddress)
         static let providerSwapId = Column(CodingKeys.providerSwapId)

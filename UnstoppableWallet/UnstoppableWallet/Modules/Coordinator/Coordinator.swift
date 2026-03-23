@@ -202,6 +202,14 @@ extension Coordinator {
         }
     }
 
+    func present(url: String?) {
+        guard let url else {
+            return
+        }
+
+        present(url: URL(string: url))
+    }
+
     func present(url: URL?) {
         guard let url else {
             return

@@ -147,7 +147,7 @@ extension MultiSwapSendHandler: ISendHandler {
 
             let fullTransaction = try adapter.send(params: sendParameters)
 
-            txHash = fullTransaction.metaData.transactionHash.hs.hexString
+            txHash = fullTransaction.header.dataHash.hs.reversedHex
         } else if let quote = data.quote as? ZcashSwapFinalQuote {
             guard let adapter = adapterManager.adapter(for: tokenIn) as? ZcashAdapter else {
                 throw SendError.noZcashAdapter
@@ -226,6 +226,7 @@ extension MultiSwapSendHandler: ISendHandler {
                 tokenOut: tokenOut,
                 amountIn: amountIn,
                 amountOut: data.quote.amountOut,
+                recipient: data.quote.recipient,
                 toAddress: data.quote.recipient ?? data.quote.toAddress,
                 depositAddress: data.quote.depositAddress,
                 providerSwapId: data.quote.providerSwapId,

@@ -42,7 +42,7 @@ struct RecipientRowsView: View {
             },
             right: {
                 if copyable {
-                    RightButtonText(text: viewModel.item.title.shortened, icon: "copy_filled") {
+                    RightButtonText(text: ComponentText(text: viewModel.item.title.shortened, colorStyle: .primary), textStyle: .subhead, icon: "copy_filled") {
                         CopyHelper.copyAndNotify(value: value)
                     }
                 } else {

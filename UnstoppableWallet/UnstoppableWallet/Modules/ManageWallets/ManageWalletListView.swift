@@ -5,8 +5,6 @@ import SwiftUI
 struct ManageWalletListView: View {
     @ObservedObject var viewModel: ManageWalletsViewModel
 
-    @Environment(\.openURL) private var openURL
-
     var body: some View {
         VStack(spacing: 0) {
             ListForEachIdentifiable(viewModel.items) { item in
@@ -137,7 +135,7 @@ struct ManageWalletListView: View {
             return
         }
 
-        openURL(url)
+        Coordinator.shared.present(url: url)
 
         stat(page: .info, event: .open(page: statPage))
     }

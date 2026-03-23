@@ -4,6 +4,7 @@ import SwiftUI
 
 struct MainSettingsView: View {
     @StateObject var viewModel = MainSettingsViewModel()
+    @Environment(\.openURL) var openURL
 
     @State private var manageWalletsPresented = false
     @State private var walletConnectPresented = false
@@ -147,7 +148,14 @@ struct MainSettingsView: View {
         case .miniApp:
             miniAppSlide()
                 .onTapGesture {
-                    UrlManager.open(url: "https://t.me/\(AppConfig.appTokenTelegramAccount)/app")
+                    let appUrl = URL(string: "tg://resolve?domain=\(AppConfig.appTokenTelegramAccount)&startapp")!
+                    let webUrl = URL(string: "https://t.me/\(AppConfig.appTokenTelegramAccount)?startapp")!
+
+                    if UIApplication.shared.canOpenURL(appUrl) {
+                        openURL(appUrl)
+                    } else {
+                        Coordinator.shared.present(url: webUrl)
+                    }
                 }
         }
     }
@@ -350,7 +358,15 @@ struct MainSettingsView: View {
     @ViewBuilder private func vipSupport() -> some View {
         ClickableRow(action: {
             Coordinator.shared.performAfterPurchase(premiumFeature: .prioritySupport, page: .settings, trigger: .vipSupport) {
-                UrlManager.open(url: MainSettingsViewModel.supportLink)
+                let appUrl = URL(string: "tg://message?slug=\(AppConfig.appTelegramSupportSlug)")!
+                let webUrl = URL(string: "https://t.me/m/\(AppConfig.appTelegramSupportSlug)")!
+
+                if UIApplication.shared.canOpenURL(appUrl) {
+                    openURL(appUrl)
+                } else {
+                    Coordinator.shared.present(url: webUrl)
+                }
+
                 stat(page: .settings, event: .open(page: .vipSupport))
             }
         }) {
@@ -450,7 +466,15 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func telegram() -> some View {
         ClickableRow(action: {
-            UrlManager.open(url: "https://t.me/\(AppConfig.appTelegramAccount)")
+            let appUrl = URL(string: "tg://resolve?domain=\(AppConfig.appTelegramAccount)")!
+            let webUrl = URL(string: "https://t.me/\(AppConfig.appTelegramAccount)")!
+
+            if UIApplication.shared.canOpenURL(appUrl) {
+                openURL(appUrl)
+            } else {
+                Coordinator.shared.present(url: webUrl)
+            }
+
             stat(page: .settings, event: .open(page: .externalTelegram))
         }) {
             Image("telegram_24").themeIcon()
@@ -466,7 +490,7 @@ struct MainSettingsView: View {
             if let appUrl = URL(string: "twitter://user?screen_name=\(account)"), UIApplication.shared.canOpenURL(appUrl) {
                 UIApplication.shared.open(appUrl)
             } else {
-                UrlManager.open(url: "https://twitter.com/\(account)")
+                Coordinator.shared.present(url: "https://twitter.com/\(account)")
             }
 
             stat(page: .settings, event: .open(page: .externalTwitter))
@@ -507,7 +531,7 @@ struct MainSettingsView: View {
 
             Image("HS Logo Image")
                 .onTapGesture {
-                    UrlManager.open(url: AppConfig.companyWebPageLink)
+                    Coordinator.shared.present(url: AppConfig.companyWebPageLink)
                     stat(page: .settings, event: .open(page: .externalCompanyWebsite))
                 }
         }

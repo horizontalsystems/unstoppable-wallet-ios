@@ -66,7 +66,7 @@ struct CoinMarketsView: View {
                     verified: viewItem.verified,
                     action: viewItem.tradeUrl.map { tradeUrl in
                         {
-                            UrlManager.open(url: tradeUrl)
+                            Coordinator.shared.present(url: tradeUrl)
                             stat(page: .coinMarkets, event: .open(page: .externalMarketPair))
                         }
                     }

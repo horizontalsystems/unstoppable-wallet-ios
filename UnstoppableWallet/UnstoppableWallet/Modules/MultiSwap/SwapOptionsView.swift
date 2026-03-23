@@ -28,13 +28,13 @@ struct SwapOptionsView: View {
                         },
                         action: {
                             let username = "unstoppable_swap_bot"
-                            let appURL = URL(string: "tg://resolve?domain=\(username)")!
-                            let webURL = URL(string: "https://t.me/\(username)")!
+                            let appUrl = URL(string: "tg://resolve?domain=\(username)")!
+                            let webUrl = URL(string: "https://t.me/\(username)")!
 
-                            if UIApplication.shared.canOpenURL(appURL) {
-                                openURL(appURL)
+                            if UIApplication.shared.canOpenURL(appUrl) {
+                                openURL(appUrl)
                             } else {
-                                openURL(webURL)
+                                Coordinator.shared.present(url: webUrl)
                             }
                         }
                     )
@@ -50,7 +50,7 @@ struct SwapOptionsView: View {
                             ThemeImage("arrow_b_right", size: 20)
                         },
                         action: {
-                            Coordinator.shared.present(url: URL(string: "https://swap.unstoppable.money"))
+                            Coordinator.shared.present(url: "https://swap.unstoppable.money")
                         }
                     )
                 }

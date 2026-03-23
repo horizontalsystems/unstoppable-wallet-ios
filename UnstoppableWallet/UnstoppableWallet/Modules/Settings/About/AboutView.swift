@@ -53,7 +53,7 @@ struct AboutView: View {
 
                 ListSection {
                     ClickableRow(action: {
-                        Coordinator.shared.present(url: URL(string: "https://github.com/\(AppConfig.appGitHubAccount)/\(AppConfig.appGitHubRepository)"))
+                        Coordinator.shared.present(url: "https://github.com/\(AppConfig.appGitHubAccount)/\(AppConfig.appGitHubRepository)")
                         stat(page: .aboutApp, event: .open(page: .externalGithub))
                     }) {
                         Image("github_24").themeIcon()
@@ -62,7 +62,7 @@ struct AboutView: View {
                     }
 
                     ClickableRow(action: {
-                        Coordinator.shared.present(url: URL(string: AppConfig.appWebPageLink))
+                        Coordinator.shared.present(url: AppConfig.appWebPageLink)
                         stat(page: .aboutApp, event: .open(page: .externalWebsite))
                     }) {
                         Image("globe_24").themeIcon()

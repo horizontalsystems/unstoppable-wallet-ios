@@ -5,8 +5,6 @@ struct CoinMajorHoldersView: View {
     @StateObject var viewModel: CoinMajorHoldersViewModel
     @Binding var isPresented: Bool
 
-    @Environment(\.openURL) private var openURL
-
     init(coin: Coin, blockchain: Blockchain, isPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: CoinMajorHoldersViewModel(coin: coin, blockchain: blockchain))
         _isPresented = isPresented
@@ -94,7 +92,7 @@ struct CoinMajorHoldersView: View {
             if let holdersUrl = stateViewItem.holdersUrl, let url = URL(string: holdersUrl) {
                 ListSection {
                     ClickableRow(spacing: .margin8) {
-                        openURL(url)
+                        Coordinator.shared.present(url: url)
                     } content: {
                         Text("coin_analytics.holders.see_all".localized).textBody()
                         Spacer()
