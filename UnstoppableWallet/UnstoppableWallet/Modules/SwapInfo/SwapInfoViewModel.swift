@@ -55,6 +55,28 @@ class SwapInfoViewModel: ObservableObject {
         let rateKeyIn = RateKey(token: swap.tokenIn, date: swap.date)
         let rateKeyOut = RateKey(token: swap.tokenOut, date: swap.date)
 
+        var fields: [SendField] = [
+            .simpleValue(
+                title: "swap_info.provider".localized,
+                value: SwapProviderFactory.providerName(id: swap.providerId) ?? swap.providerId
+            ),
+            .simpleValue(
+                title: "swap_info.date".localized,
+                value: DateHelper.instance.formatFullTime(from: swap.date)
+            ),
+        ]
+
+        if let recipient = swap.recipient {
+            fields.append(
+                .recipient(
+                    title: "swap_info.recipient".localized,
+                    value: recipient,
+                    copyable: true,
+                    blockchainType: swap.tokenOut.blockchainType
+                )
+            )
+        }
+
         let sections: [SendDataSection] = [
             .init([
                 .amount(
@@ -68,23 +90,7 @@ class SwapInfoViewModel: ObservableObject {
                     currencyValue: rates[rateKeyOut].map { CurrencyValue(currency: $0.currency, value: swap.amountOut * $0.value) },
                 ),
             ], isFlow: true),
-            .init([
-                .simpleValue(
-                    title: "swap_info.provider".localized,
-                    value: SwapProviderFactory.providerName(id: swap.providerId) ?? swap.providerId
-                ),
-                .simpleValue(
-                    title: "swap_info.date".localized,
-                    value: DateHelper.instance.formatFullTime(from: swap.date)
-                ),
-                .swapStatus(status: swap.status),
-                .recipient(
-                    title: "swap_info.recipient".localized,
-                    value: swap.toAddress,
-                    copyable: true,
-                    blockchainType: swap.tokenOut.blockchainType
-                ),
-            ], isMain: false),
+            .init(fields, isMain: false),
         ]
 
         DispatchQueue.main.async {

@@ -38,9 +38,7 @@ struct CoinAuditsView: View {
                                     let audit = viewItem.auditViewItems[index]
 
                                     ClickableRow(spacing: .margin8) {
-                                        if let url = audit.reportUrl {
-                                            UrlManager.open(url: url)
-                                        }
+                                        Coordinator.shared.present(url: audit.reportUrl)
                                     } content: {
                                         VStack(alignment: .leading, spacing: 1) {
                                             Text(audit.date).textBody()

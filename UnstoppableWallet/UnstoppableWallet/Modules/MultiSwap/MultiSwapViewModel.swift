@@ -587,8 +587,6 @@ extension MultiSwapViewModel {
 
     func reset() {
         amountIn = nil
-        internalTokenIn = nil
-        internalTokenOut = nil
     }
 
     var sortedQuotes: [Quote] {

@@ -34,7 +34,7 @@ struct PrivacyPolicyView: View {
                                 Image.disclosureIcon
                             },
                             action: {
-                                UrlManager.open(url: AppConfig.nymVpnLink)
+                                Coordinator.shared.present(url: AppConfig.nymVpnLink)
                             }
                         )
                     }

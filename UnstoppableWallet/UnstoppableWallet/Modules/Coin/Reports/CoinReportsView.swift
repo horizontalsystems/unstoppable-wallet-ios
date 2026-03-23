@@ -4,8 +4,6 @@ import SwiftUI
 struct CoinReportsView: View {
     @StateObject var viewModel: CoinReportsViewModel
 
-    @Environment(\.openURL) private var openURL
-
     init(coinUid: String) {
         _viewModel = StateObject(wrappedValue: CoinReportsViewModel(coinUid: coinUid))
     }
@@ -35,9 +33,7 @@ struct CoinReportsView: View {
 
                     ListSection {
                         ClickableRow(padding: EdgeInsets(top: .margin16, leading: .margin16, bottom: .margin16, trailing: .margin16)) {
-                            if let url = URL(string: report.url) {
-                                openURL(url)
-                            }
+                            Coordinator.shared.present(url: report.url)
                         } content: {
                             VStack(alignment: .leading, spacing: .margin12) {
                                 VStack(alignment: .leading, spacing: .margin8) {
