@@ -618,6 +618,7 @@
 "swap.quotes.providers.risk_levels.description" = "Risk levels show what actions a provider may take during execution.";
 "swap.quotes.providers.risk_levels.auto.description" = "This exchange uses its own liquidity and is privacy-friendly. Transactions are processed without AML blocking.";
 "swap.quotes.providers.risk_levels.flexible.description" = "This exchange usually refunds transactions that fail AML checks. In rare cases, funds may be temporarily blocked if additional verification is required.";
+"swap.quotes.providers.risk_levels.preCheck.description" = "Provider does its own address screening before processing the swap. Rejections are rare. Freezes are theoretically possible but highly unlikely.";
 "swap.quotes.providers.risk_levels.controlled.description" = "This exchange blocks transactions that fail AML checks until KYC/verification requirements are completed.";
 
 
@@ -649,6 +650,9 @@
 "swap.total_fee" = "Total Fee";
 
 "swap.aml" = "AML";
+"swap.aml.risk_detected" = "Risk Detected";
+"swap.aml.risk_description" = "Your tokens have passed a preliminary check, and potential risks have been identified. During the swap, your funds may be rejected or restricted. We recommend choosing another provider.";
+"swap.aml.choose_provider" = "Choose Another Provider";
 
 // Swap options
 

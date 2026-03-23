@@ -317,6 +317,35 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
+    func validateTrustedProvider(tokenIn: Token) async -> Bool {
+        guard provider.type == .preCheck else {
+            return true
+        }
+
+        let address: String?
+        if let sending = sendingAddress(token: tokenIn) {
+            address = sending
+        } else {
+            address = try? await DestinationHelper.resolveDestination(token: tokenIn).address
+        }
+
+        guard let address else {
+            return true
+        }
+
+        do {
+            let response: CheckAddressesResponse = try await networkManager.fetch(
+                url: "\(Self.baseUrl)/quote/check-addresses",
+                parameters: ["addresses": address],
+                headers: headers
+            )
+
+            return response.passedAmlCheck ?? true
+        } catch {
+            return true // todo: ignore if our server can't provide result.
+        }
+    }
+
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut _: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView {
         allowanceHelper.preSwapView(step: step, tokenIn: tokenIn, amount: amount, isPresented: isPresented, onSuccess: onSuccess)
     }
@@ -914,7 +943,8 @@ extension USwapMultiSwapProvider {
         var type: SwapProviderType {
             switch self {
             case .swapuz, .exolix: return .flexible
-            case .quickEx, .letsExchange, .stealthex, .near: return .controlled
+            case .letsExchange, .stealthex, .near: return .controlled
+            case .quickEx: return .preCheck
             }
         }
 
@@ -942,6 +972,14 @@ extension USwapMultiSwapProvider {
             chainId = try map.value("chainId")
             address = try? map.value("address")
             identifier = try map.value("identifier")
+        }
+    }
+
+    struct CheckAddressesResponse: ImmutableMappable {
+        let passedAmlCheck: Bool?
+
+        init(map: Map) throws {
+            passedAmlCheck = try? map.value("passedAmlCheck")
         }
     }
 
