@@ -2374,8 +2374,8 @@
 
 // MEV Protection
 
-"mev_protection.title" = "Protección MEV";
-"mev_protection.description" = "Los llamados bots de front-running vigilan cada operación, intentando que pagues de más. Esta función los bloquea.";
+"mev_protection.title" = "MEV";
+"mev_protection.description" = "Activa la protección para asegurar tu swap y evitar perder valor frente a bots.";
 
 // Secure Send Bottom Sheet
 "secure_send.bottom_sheet.title" = "Envío Seguro";

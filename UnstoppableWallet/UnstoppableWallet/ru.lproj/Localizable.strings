@@ -2374,8 +2374,8 @@
 
 // MEV Protection
 
-"mev_protection.title" = "Защита от MEV";
-"mev_protection.description" = "Так называемые фронт-раннинг-боты отслеживают каждую сделку, стараясь заставить вас переплатить. Эта функция блокирует их.";
+"mev_protection.title" = "MEV";
+"mev_protection.description" = "Включите защиту, чтобы обезопасить свой свап и избежать потери средств из-за ботов.";
 
 // Secure Send Bottom Sheet
 "secure_send.bottom_sheet.title" = "Безопасная отправка";
