@@ -130,8 +130,7 @@ struct MarketVaultsView: View {
                         .blur(radius: 5)
 
                         VStack(spacing: .margin24) {
-                            Image("lock_48").themeIcon()
-
+                            Image.lock(size: .iconSize48)
                             Text("market.vaults.premium.description".localized)
                                 .textHeadline2()
                                 .multilineTextAlignment(.center)

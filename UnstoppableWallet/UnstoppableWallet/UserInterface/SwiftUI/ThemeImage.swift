@@ -38,7 +38,9 @@ struct ThemeImage: View {
         case let .icon(name):
             Image(name)
                 .renderingMode(.template)
-                .icon(size: size ?? .size24, colorStyle: colorStyle)
+                .resizable()
+                .foregroundColor(colorStyle.color)
+                .applyFrame(size: size ?? .size24)
         case let .image(name: name, contentMode: contentMode):
             if let size {
                 Image(name)

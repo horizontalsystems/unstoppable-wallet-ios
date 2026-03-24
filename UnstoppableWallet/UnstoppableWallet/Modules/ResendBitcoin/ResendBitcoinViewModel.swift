@@ -112,7 +112,7 @@ class ResendBitcoinViewModel {
             case let item as SendConfirmationLockUntilViewItem:
                 primaryViewItems.append(
                     .value(
-                        iconName: "lock_24",
+                        iconName: "lock_filled",
                         title: "send.confirmation.time_lock".localized,
                         value: item.lockValue,
                         type: .regular

@@ -383,7 +383,7 @@ class TransactionInfoViewController: ThemeViewController {
 
     private func lockInfoRow(rowInfo: RowInfo, lockState: TransactionLockState) -> RowProtocol {
         let id = "lock_info"
-        let image = UIImage(named: lockState.locked ? "lock_24" : "unlock_24")
+        let image = UIImage(named: lockState.locked ? "lock_filled" : "unlock_filled")
         let formattedDate = DateHelper.instance.formatFullTime(from: lockState.date)
 
         if lockState.locked {

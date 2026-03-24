@@ -65,8 +65,7 @@ struct PasscodeView: View {
                         .id(errorText)
                 case let .locked(unlockDate):
                     VStack(spacing: .margin16) {
-                        Image("lock_48")
-                            .foregroundColor(.themeGray)
+                        Image.lock(size: .iconSize48)
                         Text("unlock.disabled_until".localized(DateFormatter.cachedFormatter(format: "\(LanguageHourFormatter.hourFormat):mm:ss").string(from: unlockDate)))
                             .foregroundColor(.themeGray)
                             .font(.themeSubhead2)
