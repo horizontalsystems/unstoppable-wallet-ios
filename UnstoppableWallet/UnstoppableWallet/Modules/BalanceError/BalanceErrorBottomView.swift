@@ -36,10 +36,8 @@ struct BalanceErrorBottomView: View {
 
                     switch sourceType {
                     case let .btc(blockchain):
-                        Coordinator.shared.present { _ in
-                            ThemeNavigationStack {
-                                BtcBlockchainSettingsModule.view(blockchain: blockchain)
-                            }
+                        Coordinator.shared.present { isPresented in
+                            BtcBlockchainSettingsView(blockchain: blockchain, isPresented: isPresented)
                         }
                     case let .evm(blockchain):
                         Coordinator.shared.present { _ in

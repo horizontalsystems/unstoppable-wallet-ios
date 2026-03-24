@@ -1,73 +1,33 @@
 import Combine
+import MarketKit
 
 class BtcBlockchainSettingsViewModel: ObservableObject {
-    private let service: BtcBlockchainSettingsService
+    private let btcBlockchainManager = Core.shared.btcBlockchainManager
 
-    let restoreModes: [BtcRestoreModeViewItem]
+    let blockchain: Blockchain
+    let restoreModes: [BtcRestoreMode]
+    let currentRestoreMode: BtcRestoreMode
 
     @Published var selectedRestoreMode: BtcRestoreMode {
         didSet {
-            saveEnabled = selectedRestoreMode != service.currentRestoreMode
+            saveEnabled = selectedRestoreMode != currentRestoreMode
         }
     }
 
     @Published var saveEnabled = false
 
-    init(service: BtcBlockchainSettingsService) {
-        self.service = service
+    init(blockchain: Blockchain) {
+        self.blockchain = blockchain
 
-        selectedRestoreMode = service.currentRestoreMode
-        restoreModes = service.restoreModes.map { restoreMode in
-            let image: BtcRestoreModeViewItem.Image
-            switch restoreMode {
-            case .blockchair:
-                image = .local(name: "blockchair_32")
-            case .hybrid:
-                image = .local(name: "api_placeholder_32")
-            case .blockchain:
-                image = .remote(url: service.blockchain.type.imageUrl)
-            }
-
-            let description: String
-            switch restoreMode {
-            case .blockchair: description = "btc_restore_mode.blockchair".localized
-            case .hybrid: description = "btc_restore_mode.hybrid".localized
-            case .blockchain: description = "btc_restore_mode.blockchain".localized
-            }
-
-            return BtcRestoreModeViewItem(
-                restoreMode: restoreMode,
-                title: restoreMode.title(blockchain: service.blockchain),
-                description: description,
-                icon: image
-            )
-        }
+        restoreModes = BtcRestoreMode.allCases.filter { blockchain.type.supports(restoreMode: $0) }
+        currentRestoreMode = btcBlockchainManager.restoreMode(blockchainType: blockchain.type)
+        selectedRestoreMode = currentRestoreMode
     }
 }
 
 extension BtcBlockchainSettingsViewModel {
-    var title: String {
-        service.blockchain.name
-    }
-
-    var iconUrl: String {
-        service.blockchain.type.imageUrl
-    }
-
-    func onTapSave() {
-        stat(page: .blockchainSettingsBtc, event: .switchBtcSource(chainUid: service.blockchain.uid, type: selectedRestoreMode))
-        service.save(restoreMode: selectedRestoreMode)
-    }
-}
-
-struct BtcRestoreModeViewItem {
-    let restoreMode: BtcRestoreMode
-    let title: String
-    let description: String
-    let icon: Image
-
-    enum Image {
-        case local(name: String)
-        case remote(url: String)
+    func save() {
+        btcBlockchainManager.save(restoreMode: selectedRestoreMode, blockchainType: blockchain.type)
+        stat(page: .blockchainSettingsBtc, event: .switchBtcSource(chainUid: blockchain.uid, type: selectedRestoreMode))
     }
 }

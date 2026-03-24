@@ -38,8 +38,8 @@ struct BlockchainSettingsView: View {
 
                     stat(page: .blockchainSettings, event: .openBlockchainSettingsEvm(chainUid: item.blockchain.uid))
                 case .btc:
-                    Coordinator.shared.present { _ in
-                        ThemeNavigationStack { BtcBlockchainSettingsModule.view(blockchain: item.blockchain) }
+                    Coordinator.shared.present { isPresented in
+                        BtcBlockchainSettingsView(blockchain: item.blockchain, isPresented: isPresented)
                     }
 
                     stat(page: .blockchainSettings, event: .openBlockchainSettingsBtc(chainUid: item.blockchain.uid))
