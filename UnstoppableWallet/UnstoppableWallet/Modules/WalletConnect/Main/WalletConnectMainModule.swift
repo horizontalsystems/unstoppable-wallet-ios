@@ -174,7 +174,7 @@ extension WalletConnectMainModule {
 
         var protectionIcon: String? {
             switch self {
-            case .deactivated: return "lock"
+            case .deactivated: return "lock_filled"
             case .risky: return "warning_filled"
             case .notAvailable: return nil
             case .secure: return "shield_check_filled"

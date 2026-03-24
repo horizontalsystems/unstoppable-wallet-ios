@@ -68,7 +68,8 @@ struct TransactionsView: View {
                                     }
 
                                     if let locked = viewItem.locked {
-                                        Image(locked ? "lock_20" : "unlock_20").themeIcon()
+                                        ThemeImage(locked ? "lock_filled" : "unlock_filled", size: .iconSize20)
+                                        Image.lock(unlocked: !locked, size: .iconSize20)
                                     }
                                 }
                             }

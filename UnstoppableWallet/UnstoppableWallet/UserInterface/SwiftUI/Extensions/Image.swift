@@ -13,9 +13,8 @@ extension Image {
     }
 
     func icon(size: CGSize, colorStyle: ColorStyle = .secondary) -> some View {
-        resizable()
-            .foregroundColor(colorStyle.color)
-            .frame(width: size.width, height: size.height)
+        foregroundColor(colorStyle.color)
+            .applyFrame(size: size)
     }
 
     func buttonIcon(size: CGFloat = .iconSize24) -> some View {
@@ -40,7 +39,7 @@ extension Image {
     }
 
     static var lockIcon: some View {
-        Image("lock_20").themeIcon(color: .gray)
+        Image("lock_filled").themeIcon(color: .gray)
     }
 
     static var warningIcon: some View {
@@ -54,6 +53,10 @@ extension Image {
                 "checkbox_diactive",
             size: size
         )
+    }
+
+    static func lock(unlocked: Bool = false, size: CGFloat = .iconSize24) -> some View {
+        ThemeImage(unlocked ? "unlock_filled" : "lock_filled", size: size)
     }
 
     static var defenseIcon: CustomStringConvertible {
