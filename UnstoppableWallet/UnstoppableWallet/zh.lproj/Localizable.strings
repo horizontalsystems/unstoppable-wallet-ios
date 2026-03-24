@@ -182,6 +182,9 @@
 
 // Coin Settings
 
+"coin_settings.title" = "区块链设置";
+"coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.hybrid" = "混合型";
 "sync_mode.from_blockchain" = "来自区块链";
 "blockchain_settings.description" = "请选择该币种的地址格式。";
@@ -1431,6 +1434,7 @@
 "manage_wallets.contract_address" = "智能合约地址";
 "manage_wallets.derivation_description" = "有四种常见的地址格式 %@ 钱包可以用来接收收到的付款:\n\n- BIP44 (旧版)\n- BIP49\n- BIP84 (推荐)\n- BIP86 (新版)\n\n而 %@ 钱包支持所有4 它建议使用一个 %@ 钱包以BIP84 格式操作。";
 "manage_wallets.bitcoin_cash_coin_type_description" = "有2种地址格式的比特币现金钱包可以用来接收收到的付款：\n\n- TYPE 0 (旧)\n- TYPE 145 (更新)\n\n虽然 %@ 钱包支持它们，它建议使用TYPE 145 格式的比特币现金钱包。";
+
 
 // Settings -> Terms
 

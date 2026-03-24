@@ -182,6 +182,9 @@
 
 // Coin Settings
 
+"coin_settings.title" = "Configuración de Blockchain";
+"coin_settings.bitcoin_cash_coin_type.title.type0" = "Legacy";
+"coin_settings.bitcoin_cash_coin_type.title.type145" = "CashAddress";
 "sync_mode.hybrid" = "Híbrido";
 "sync_mode.from_blockchain" = "Desde Blockchain";
 "blockchain_settings.description" = "Selecciona el formato de dirección para la moneda.";
@@ -1431,6 +1434,7 @@
 "manage_wallets.contract_address" = "Dirección del contrato";
 "manage_wallets.derivation_description" = "Hay 4 formatos de dirección comunes que las carteras %@ pueden usar para recibir pagos entrantes:\n\n-BIP44 (el más antiguo)\n-BIP49\n-BIP84 (recomendado)\n-BIP86 (el más nuevo)\n\nAunque la cartera %@ admite los 4 formatos, se recomienda usar una cartera %@ operando en formato BIP84.";
 "manage_wallets.bitcoin_cash_coin_type_description" = "Hay 2 formatos de dirección que las carteras de Bitcoin Cash pueden usar para recibir pagos entrantes:\n\n-TYPE 0 (más antiguo)\n-TYPE 145 (más nuevo)\n\nAunque la cartera %@ admite ambos formatos, se recomienda usar una cartera de Bitcoin Cash operando en el formato TYPE 145.";
+
 
 // Settings -> Terms
 
