@@ -44,8 +44,8 @@ struct BlockchainSettingsView: View {
 
                     stat(page: .blockchainSettings, event: .openBlockchainSettingsBtc(chainUid: item.blockchain.uid))
                 case .monero:
-                    Coordinator.shared.present { _ in
-                        MoneroNetworkView(blockchain: item.blockchain).ignoresSafeArea()
+                    Coordinator.shared.present { isPresented in
+                        MoneroNetworkView(blockchain: item.blockchain, isPresented: isPresented)
                     }
 
                     stat(page: .blockchainSettings, event: .openBlockchainSettingsMonero)
