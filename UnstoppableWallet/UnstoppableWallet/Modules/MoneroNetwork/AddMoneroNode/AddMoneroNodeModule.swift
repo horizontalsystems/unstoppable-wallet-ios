@@ -1,6 +1,6 @@
 import Foundation
 import MarketKit
-
+import SwiftUI
 import UIKit
 
 enum AddMoneroNodeModule {
@@ -11,4 +11,14 @@ enum AddMoneroNodeModule {
 
         return ThemeNavigationController(rootViewController: viewController)
     }
+}
+
+struct AddMoneroNodeSheetView: UIViewControllerRepresentable {
+    let blockchainType: BlockchainType
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        AddMoneroNodeModule.viewController(blockchainType: blockchainType)
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

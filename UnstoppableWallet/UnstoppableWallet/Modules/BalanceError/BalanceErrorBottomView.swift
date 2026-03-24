@@ -44,12 +44,12 @@ struct BalanceErrorBottomView: View {
                             EvmNetworkView(blockchain: blockchain, isPresented: isPresented)
                         }
                     case let .monero(blockchain):
-                        Coordinator.shared.present { _ in
-                            MoneroNetworkView(blockchain: blockchain).ignoresSafeArea()
+                        Coordinator.shared.present { isPresented in
+                            MoneroNetworkView(blockchain: blockchain, isPresented: isPresented)
                         }
                     case let .zano(blockchain):
-                        Coordinator.shared.present { _ in
-                            MoneroNetworkView(blockchain: blockchain).ignoresSafeArea()
+                        Coordinator.shared.present { isPresented in
+                            MoneroNetworkView(blockchain: blockchain, isPresented: isPresented)
                         }
                     }
                 }
