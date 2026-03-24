@@ -2374,8 +2374,8 @@
 
 // MEV Protection
 
-"mev_protection.title" = "MEV 보호";
-"mev_protection.description" = "일명 프런트러닝 봇은 모든 거래를 감시하며 사용자가 더 많은 수수료를 내도록 유도합니다. 이 기능은 그런 봇을 차단합니다.";
+"mev_protection.title" = "MEV";
+"mev_protection.description" = "보호 기능을 켜서 스왑을 안전하게 보호하고 봇으로 인한 가치 손실을 방지하세요.";
 
 // Secure Send Bottom Sheet
 "secure_send.bottom_sheet.title" = "보안 전송";

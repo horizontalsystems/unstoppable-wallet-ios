@@ -2374,8 +2374,8 @@
 
 // MEV Protection
 
-"mev_protection.title" = "MEV Koruması";
-"mev_protection.description" = "Sözde front-running botları her işlemi izleyerek sizi fazla ödemeye zorlamaya çalışır. Bu özellik onları engeller.";
+"mev_protection.title" = "MEV";
+"mev_protection.description" = "Swap işleminizi güvence altına almak ve botlara karşı değer kaybını önlemek için korumayı açın.";
 
 // Secure Send Bottom Sheet
 "secure_send.bottom_sheet.title" = "Güvenli Gönderim";

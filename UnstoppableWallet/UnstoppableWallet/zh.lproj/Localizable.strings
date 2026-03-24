@@ -2374,8 +2374,8 @@
 
 // MEV Protection
 
-"mev_protection.title" = "MEV 保护";
-"mev_protection.description" = "所谓的「抢跑机器人」会监控每一笔交易，企图让您多付费用。此功能可阻止它们。";
+"mev_protection.title" = "MEV";
+"mev_protection.description" = "开启保护以确保您的兑换安全，避免被机器人套利造成损失。";
 
 // Secure Send Bottom Sheet
 "secure_send.bottom_sheet.title" = "安全发送";

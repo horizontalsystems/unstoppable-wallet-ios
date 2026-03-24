@@ -1824,8 +1824,8 @@
   "monero.priority.low": "Low",
   "monero.priority.medium": "Medium",
   "monero.priority.high": "High",
-  "mev_protection.title": "MEV Protection",
-  "mev_protection.description": "So-called front-running bots watch every trade, trying to make you overpay. This feature blocks them.",
+  "mev_protection.title": "MEV",
+  "mev_protection.description": "Turn on protection to secure your swap and avoid losing value to bots.",
   "secure_send.bottom_sheet.title": "Secure Send",
   "secure_send.bottom_sheet.description": "Choose security checks."
 }
