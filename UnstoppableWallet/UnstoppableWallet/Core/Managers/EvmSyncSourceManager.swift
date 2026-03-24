@@ -303,10 +303,6 @@ extension EvmSyncSourceManager {
 
         try? evmSyncSourceStorage.save(record: record)
 
-        if let syncSource = customSyncSources(blockchainType: blockchainType).first(where: { $0.rpcSource.url == url }) {
-            saveCurrent(syncSource: syncSource, blockchainType: blockchainType)
-        }
-
         syncSourcesUpdatedRelay.accept(blockchainType)
     }
 

@@ -32,8 +32,8 @@ struct BlockchainSettingsView: View {
             ClickableRow(action: {
                 switch item.type {
                 case .evm:
-                    Coordinator.shared.present { _ in
-                        EvmNetworkView(blockchain: item.blockchain).ignoresSafeArea()
+                    Coordinator.shared.present { isPresented in
+                        EvmNetworkView(blockchain: item.blockchain, isPresented: isPresented)
                     }
 
                     stat(page: .blockchainSettings, event: .openBlockchainSettingsEvm(chainUid: item.blockchain.uid))

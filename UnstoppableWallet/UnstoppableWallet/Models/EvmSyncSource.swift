@@ -1,7 +1,7 @@
 import EvmKit
 import Foundation
 
-class EvmSyncSource {
+class EvmSyncSource: Identifiable {
     let name: String
     let rpcSource: RpcSource
     let transactionSource: EvmKit.TransactionSource
@@ -10,6 +10,10 @@ class EvmSyncSource {
         self.name = name
         self.rpcSource = rpcSource
         self.transactionSource = transactionSource
+    }
+
+    var id: URL {
+        rpcSource.url
     }
 
     var isHttp: Bool {

@@ -73,7 +73,7 @@ struct BtcBlockchainSettingsView: View {
                 ToolbarItem(placement: .primaryAction) {
                     KFImage.url(URL(string: viewModel.blockchain.type.imageUrl))
                         .resizable()
-                        .frame(width: .iconSize24, height: .iconSize24)
+                        .frame(size: 24)
                 }
 
                 ToolbarItem(placement: .cancellationAction) {

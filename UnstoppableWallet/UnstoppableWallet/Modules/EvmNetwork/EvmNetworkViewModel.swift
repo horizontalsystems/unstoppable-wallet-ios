@@ -1,93 +1,67 @@
 import EvmKit
 import Foundation
 import MarketKit
-import RxCocoa
-import RxRelay
 import RxSwift
 
-class EvmNetworkViewModel {
-    private let service: EvmNetworkService
+class EvmNetworkViewModel: ObservableObject {
+    let blockchain: Blockchain
+    private let evmSyncSourceManager = Core.shared.evmSyncSourceManager
     private let disposeBag = DisposeBag()
 
-    private let stateRelay = BehaviorRelay<State>(value: State(defaultViewItems: [], customViewItems: []))
-    private let finishRelay = PublishRelay<Void>()
+    let defaultSources: [EvmSyncSource]
+    @Published var customSources: [EvmSyncSource] = []
 
-    init(service: EvmNetworkService) {
-        self.service = service
-
-        subscribe(disposeBag, service.stateObservable) { [weak self] in self?.sync(state: $0) }
-
-        sync(state: service.state)
-    }
-
-    private func sync(state: EvmNetworkService.State) {
-        let state = State(
-            defaultViewItems: state.defaultItems.map { viewItem(item: $0) },
-            customViewItems: state.customItems.map { viewItem(item: $0) }
-        )
-
-        stateRelay.accept(state)
-    }
-
-    private func viewItem(item: EvmNetworkService.Item) -> ViewItem {
-        ViewItem(
-            name: item.syncSource.name,
-            url: url(rpcSource: item.syncSource.rpcSource)?.absoluteString,
-            selected: item.selected
-        )
-    }
-
-    private func url(rpcSource: RpcSource) -> URL? {
-        switch rpcSource {
-        case let .http(urls, _): return urls.first
-        case let .webSocket(url, _): return url
+    @Published var currentSource: EvmSyncSource {
+        didSet {
+            saveEnabled = selectedSource != currentSource
         }
     }
-}
 
-extension EvmNetworkViewModel {
-    var stateDriver: Driver<State> {
-        stateRelay.asDriver()
+    @Published var selectedSource: EvmSyncSource {
+        didSet {
+            saveEnabled = selectedSource != currentSource
+        }
     }
 
-    var finishSignal: Signal<Void> {
-        finishRelay.asSignal()
+    @Published var saveEnabled = false
+
+    init(blockchain: Blockchain) {
+        self.blockchain = blockchain
+
+        defaultSources = evmSyncSourceManager.defaultSyncSources(blockchainType: blockchain.type)
+
+        let currentSource = evmSyncSourceManager.syncSource(blockchainType: blockchain.type)
+        self.currentSource = currentSource
+        selectedSource = currentSource
+
+        subscribe(disposeBag, evmSyncSourceManager.syncSourcesUpdatedObservable) { [weak self] _ in
+            DispatchQueue.main.async { self?.syncCustomSources() }
+        }
+
+        syncCustomSources()
     }
 
-    var title: String {
-        service.blockchain.name
-    }
-
-    var iconUrl: String {
-        service.blockchain.type.imageUrl
-    }
-
-    var blockchainType: BlockchainType {
-        service.blockchain.type
-    }
-
-    func onSelectDefault(index: Int) {
-        service.setDefault(index: index)
-    }
-
-    func onSelectCustom(index: Int) {
-        service.setCustom(index: index)
-    }
-
-    func onRemoveCustom(index: Int) {
-        service.removeCustom(index: index)
+    private func syncCustomSources() {
+        customSources = evmSyncSourceManager.customSyncSources(blockchainType: blockchain.type)
     }
 }
 
 extension EvmNetworkViewModel {
-    struct State {
-        let defaultViewItems: [ViewItem]
-        let customViewItems: [ViewItem]
+    func remove(syncSource: EvmSyncSource) {
+        evmSyncSourceManager.delete(syncSource: syncSource, blockchainType: blockchain.type)
+        stat(page: .blockchainSettingsEvm, event: .deleteCustomEvmSource(chainUid: blockchain.uid))
+
+        if selectedSource == syncSource {
+            selectedSource = defaultSources[0]
+        }
+
+        currentSource = evmSyncSourceManager.syncSource(blockchainType: blockchain.type)
     }
 
-    struct ViewItem {
-        let name: String
-        let url: String?
-        let selected: Bool
+    func save() {
+        evmSyncSourceManager.saveCurrent(syncSource: selectedSource, blockchainType: blockchain.type)
+
+        let statName = defaultSources.contains(selectedSource) ? selectedSource.name : "custom"
+        stat(page: .blockchainSettingsEvm, event: .switchEvmSource(chainUid: blockchain.uid, name: statName))
     }
 }

@@ -1,6 +1,6 @@
 import Foundation
 import MarketKit
-
+import SwiftUI
 import UIKit
 
 enum AddEvmSyncSourceModule {
@@ -11,4 +11,14 @@ enum AddEvmSyncSourceModule {
 
         return ThemeNavigationController(rootViewController: viewController)
     }
+}
+
+struct AddEvmSyncSourceSheetView: UIViewControllerRepresentable {
+    let blockchainType: BlockchainType
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        AddEvmSyncSourceModule.viewController(blockchainType: blockchainType)
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

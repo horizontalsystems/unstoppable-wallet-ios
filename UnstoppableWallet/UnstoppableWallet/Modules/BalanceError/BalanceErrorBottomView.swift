@@ -40,8 +40,8 @@ struct BalanceErrorBottomView: View {
                             BtcBlockchainSettingsView(blockchain: blockchain, isPresented: isPresented)
                         }
                     case let .evm(blockchain):
-                        Coordinator.shared.present { _ in
-                            EvmNetworkView(blockchain: blockchain).ignoresSafeArea()
+                        Coordinator.shared.present { isPresented in
+                            EvmNetworkView(blockchain: blockchain, isPresented: isPresented)
                         }
                     case let .monero(blockchain):
                         Coordinator.shared.present { _ in
