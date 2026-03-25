@@ -615,6 +615,7 @@
 "swap.quotes.providers.risk_levels.description" = "Risk seviyeleri, bir sağlayıcının işlem sırasında hangi eylemleri gerçekleştirebileceğini gösterir.";
 "swap.quotes.providers.risk_levels.auto.description" = "Bu borsa kendi likiditesini kullanır ve gizlilik dostudur. İşlemler AML engellemesi olmadan gerçekleştirilir.";
 "swap.quotes.providers.risk_levels.flexible.description" = "Bu borsa genellikle AML kontrollerini geçemeyen işlemleri iade eder. Nadir durumlarda, ek doğrulama gerektiğinde fonlar geçici olarak bloke edilebilir.";
+"swap.quotes.providers.risk_levels.preCheck.description" = "Sağlayıcı, swap işlemini gerçekleştirmeden önce kendi adres taramasını yapar. Reddetmeler nadirdir. Dondurma teorik olarak mümkündür ancak oldukça düşük bir ihtimaldir.";
 "swap.quotes.providers.risk_levels.controlled.description" = "Bu borsa, KYC/doğrulama gereksinimleri tamamlanana kadar AML kontrollerini geçemeyen işlemleri bloke eder.";
 
 
@@ -646,6 +647,9 @@
 "swap.total_fee" = "Toplam Ücret";
 
 "swap.aml" = "AML";
+"swap.aml.risk_detected" = "Risk Tespit Edildi";
+"swap.aml.risk_description" = "Tokenlarınız ön kontrolden geçti ve potansiyel riskler tespit edildi. Swap sırasında fonlarınız reddedilebilir veya kısıtlanabilir. Başka bir sağlayıcı seçmenizi öneririz.";
+"swap.aml.choose_provider" = "Başka Bir Sağlayıcı Seçin";
 
 // Swap options
 

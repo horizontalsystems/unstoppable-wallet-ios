@@ -615,6 +615,7 @@
 "swap.quotes.providers.risk_levels.description" = "Os níveis de risco mostram quais ações um provedor pode tomar durante a execução.";
 "swap.quotes.providers.risk_levels.auto.description" = "Esta exchange utiliza sua própria liquidez e é amigável à privacidade. As transações são processadas sem bloqueio AML.";
 "swap.quotes.providers.risk_levels.flexible.description" = "Esta exchange geralmente reembolsa transações que não passam nas verificações AML. Em casos raros, os fundos podem ser temporariamente bloqueados se uma verificação adicional for necessária.";
+"swap.quotes.providers.risk_levels.preCheck.description" = "O provedor realiza sua própria verificação de endereço antes de processar o swap. Rejeições são raras. Congelamentos são teoricamente possíveis, mas muito improváveis.";
 "swap.quotes.providers.risk_levels.controlled.description" = "Esta exchange bloqueia transações que não passam nas verificações AML até que os requisitos de KYC/verificação sejam concluídos.";
 
 
@@ -646,6 +647,9 @@
 "swap.total_fee" = "Total de tarifas";
 
 "swap.aml" = "AML";
+"swap.aml.risk_detected" = "Risco detectado";
+"swap.aml.risk_description" = "Seus tokens passaram por uma verificação preliminar e riscos potenciais foram identificados. Durante o swap, seus fundos podem ser rejeitados ou restringidos. Recomendamos escolher outro provedor.";
+"swap.aml.choose_provider" = "Escolher outro provedor";
 
 // Swap options
 
