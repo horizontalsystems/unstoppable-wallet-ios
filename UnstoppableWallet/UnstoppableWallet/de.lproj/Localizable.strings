@@ -650,9 +650,14 @@
 "swap.total_fee" = "Gesamtgebühr";
 
 "swap.aml" = "AML";
-"swap.aml.risk_detected" = "Risiko erkannt";
-"swap.aml.risk_description" = "Ihre Token haben eine Vorprüfung durchlaufen und potenzielle Risiken wurden identifiziert. Während des Swaps können Ihre Gelder abgelehnt oder eingeschränkt werden. Wir empfehlen, einen anderen Anbieter zu wählen.";
-"swap.aml.choose_provider" = "Anderen Anbieter wählen";
+"swap.aml.risk.title" = "Warnung!";
+"swap.aml.risk.description" = "Für diese Transaktion wurden potenzielle Risiken identifiziert. Während der Verarbeitung können Ihre Mittel abgelehnt oder eingeschränkt werden. Bitte wählen Sie einen anderen Anbieter.";
+"swap.aml.risk.button" = "Anderen Anbieter wählen";
+"swap.aml.undefined.description" = "Die Risikoprüfung für diese Transaktion konnte nicht abgeschlossen werden. Wenn Sie fortfahren, kann dieser Swap während der Verarbeitung Verzögerungen, Ablehnungen oder Einschränkungen erfahren.";
+"swap.aml.undefined.button" = "Mit Risiko fortfahren";
+"swap.aml.connection.title" = "Verbindungsproblem";
+"swap.aml.connection.description" = "Derzeit kann keine Antwort empfangen werden. Bitte versuchen Sie es erneut.";
+"swap.aml.connection.button" = "Erneut versuchen";
 
 // Swap options
 
