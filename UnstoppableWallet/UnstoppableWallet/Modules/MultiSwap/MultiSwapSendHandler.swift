@@ -4,6 +4,7 @@ import Eip20Kit
 import EvmKit
 import Foundation
 import MarketKit
+import SolanaKit
 import ZanoKit
 
 class MultiSwapSendHandler {
@@ -213,6 +214,18 @@ extension MultiSwapSendHandler: ISendHandler {
             }
 
             try adapter.send(to: quote.address, amount: quote.amount, memo: quote.memo)
+        } else if let quote = data.quote as? SolanaSwapFinalQuote {
+            guard let account = accountManager.activeAccount else {
+                throw SendError.noActiveAccount
+            }
+
+            let signer = try SolanaKitManager.signer(accountType: account.type)
+
+            guard let adapter = adapterManager.adapter(for: tokenIn) as? ISendSolanaAdapter else {
+                throw SendError.noSolanaAdapter
+            }
+
+            try await adapter.sendRawTransaction(rawTransaction: quote.rawTransaction, signer: signer)
         }
 
         if let account = accountManager.activeAccount {
@@ -388,6 +401,7 @@ extension MultiSwapSendHandler {
         case noProposal
         case noTonAdapter
         case noActiveAccount
+        case noSolanaAdapter
 
         case unsupportedTokenIn
         case unsupportedTokenOut

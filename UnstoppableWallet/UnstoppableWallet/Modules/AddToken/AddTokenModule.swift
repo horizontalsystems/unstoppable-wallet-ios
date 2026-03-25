@@ -38,6 +38,15 @@ enum AddTokenModule {
             items.append(item)
         }
 
+        if let blockchain = try? Core.shared.marketKit.blockchain(uid: BlockchainType.solana.uid), blockchain.type.supports(accountType: account.type) {
+            let service: IAddTokenBlockchainService = AddSplTokenBlockchainService(
+                blockchain: blockchain,
+                networkManager: Core.shared.networkManager
+            )
+            let item = Item(blockchain: blockchain, service: service)
+            items.append(item)
+        }
+
         guard !items.isEmpty else { return nil }
         return (account, items)
     }

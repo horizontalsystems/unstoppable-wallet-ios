@@ -179,6 +179,8 @@
 	<string>${thorchain_affiliate_bps}</string>
 	<key>TronGridApiKey</key>
 	<string>${trongrid_api_key}</string>
+	<key>SolanaAlchemyApiKey</key>
+	<string>${solana_alchemy_api_key}</string>
 	<key>TwitterBearerToken</key>
 	<string>${twitter_bearer_token}</string>
 	<key>UIAppFonts</key>
@@ -216,5 +218,7 @@
 	<string>${wallet_connect_v2_project_key}</string>
 	<key>USwapApiKey</key>
 	<string>${uswap_api_key}</string>
+	<key>JupiterApiKey</key>
+	<string>${jupiter_api_key}</string>
 </dict>
 </plist>
