@@ -23,6 +23,7 @@ class AppManager {
     private let nftMetadataSyncer: NftMetadataSyncer
     private let tonKitManager: TonKitManager
     private let stellarKitManager: StellarKitManager
+    private let solanaKitManager: SolanaKitManager
 
     private let didBecomeActiveSubjectOld = PublishSubject<Void>()
     private let willEnterForegroundSubjectOld = PublishSubject<Void>()
@@ -39,7 +40,7 @@ class AppManager {
          logRecordManager: LogRecordManager, deeplinkStorage: DeeplinkStorage,
          evmLabelManager: EvmLabelManager, balanceHiddenManager: BalanceHiddenManager, statManager: StatManager,
          nftMetadataSyncer: NftMetadataSyncer, tonKitManager: TonKitManager,
-         stellarKitManager: StellarKitManager)
+         stellarKitManager: StellarKitManager, solanaKitManager: SolanaKitManager)
     {
         self.accountManager = accountManager
         self.walletManager = walletManager
@@ -59,6 +60,7 @@ class AppManager {
         self.nftMetadataSyncer = nftMetadataSyncer
         self.tonKitManager = tonKitManager
         self.stellarKitManager = stellarKitManager
+        self.solanaKitManager = solanaKitManager
     }
 
     private func warmUp() {
@@ -108,6 +110,7 @@ extension AppManager {
 
         tonKitManager.tonKit?.stopListener()
         stellarKitManager.stellarKit?.stopListener()
+        solanaKitManager.solanaKit?.pause()
     }
 
     func willEnterForeground() {
@@ -125,6 +128,8 @@ extension AppManager {
 
         tonKitManager.tonKit?.startListener()
         stellarKitManager.stellarKit?.startListener()
+        solanaKitManager.solanaKit?.resume()
+        solanaKitManager.solanaKit?.refresh()
 
         AppStateManager.instance.syncIfRequired()
 

@@ -2,6 +2,7 @@ import BitcoinCore
 import EvmKit
 import Foundation
 import MarketKit
+import SolanaKit
 import StellarKit
 import TonSwift
 import TronKit
@@ -15,6 +16,7 @@ enum SendData {
     case tron(token: Token, contract: TronKit.Contract)
     case ton(token: Token, amount: Decimal, address: FriendlyAddress, memo: String?)
     case stellar(data: StellarSendData, token: Token, memo: String?)
+    case solana(token: Token, amount: Decimal, address: String, memo: String?)
     case swap(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider)
     case walletConnect(request: WalletConnectRequest)
     case tonConnect(request: TonConnectSendTransactionRequest)

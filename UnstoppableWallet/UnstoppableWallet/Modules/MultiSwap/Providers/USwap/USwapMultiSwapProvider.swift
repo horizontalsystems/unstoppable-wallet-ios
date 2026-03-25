@@ -8,6 +8,7 @@ import HsToolKit
 import MarketKit
 import MoneroKit
 import ObjectMapper
+import SolanaKit
 import SwiftUI
 import TronKit
 import ZanoKit
@@ -96,6 +97,17 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
                 tokenQueries = [TokenQuery(blockchainType: blockchainType, tokenType: tokenType)]
 
+            case .solana:
+                let tokenType: TokenType
+
+                if let address = token.address, !address.isEmpty {
+                    tokenType = .spl(address: address)
+                } else {
+                    tokenType = .native
+                }
+
+                tokenQueries = [TokenQuery(blockchainType: blockchainType, tokenType: tokenType)]
+
             case .bitcoin, .bitcoinCash, .ecash, .dash, .zcash, .monero, .stellar:
                 tokenQueries = blockchainType.nativeTokenQueries
 
@@ -167,7 +179,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         // must provide address for calculate tx-data
         if tokenIn.blockchain.type.isEvm ||
             tokenIn.blockchainType == .tron ||
-            tokenIn.blockchainType == .ton
+            tokenIn.blockchainType == .ton ||
+            tokenIn.blockchainType == .solana
         {
             parameters["sourceAddress"] = try await DestinationHelper.resolveDestination(token: tokenIn).address
         }
@@ -204,8 +217,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             let esimatedTime = quote.esimatedTime ?? MultiSwapHelpers.estimate(tokenIn: tokenIn, tokenOut: tokenOut)
             return EvmMultiSwapQuote(expectedBuyAmount: quote.expectedBuyAmount, allowanceState: allowanceState, estimatedTime: esimatedTime)
 
-        case .bitcoin, .bitcoinCash, .ecash, .litecoin, .dash, .zcash, .monero, .ton, .stellar, .zano:
-            return MultiSwapQuote(expectedBuyAmount: quote.expectedBuyAmount, estimatedTime: quote.esimatedTime)
+        case .bitcoin, .bitcoinCash, .ecash, .litecoin, .dash, .zcash, .monero, .ton, .stellar, .zano, .solana:
+            return MultiSwapQuote(expectedBuyAmount: quote.expectedBuyAmount)
 
         default:
             throw SwapError.unsupportedTokenIn
@@ -303,6 +316,17 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             )
         case .zano:
             return try await buildZanoConfirmationQuote(
+                tokenIn: tokenIn,
+                tokenOut: tokenOut,
+                amountIn: amountIn,
+                amountOut: amountOut,
+                amountOutMin: amountOutMin,
+                quote: quote,
+                slippage: slippage,
+                recipient: recipient
+            )
+        case .solana:
+            return try await buildSolanaConfirmationQuote(
                 tokenIn: tokenIn,
                 tokenOut: tokenOut,
                 amountIn: amountIn,
@@ -839,6 +863,54 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             providerSwapId: quote.providerSwapId
         )
     }
+
+    private func buildSolanaConfirmationQuote(
+        tokenIn: Token,
+        tokenOut _: Token,
+        amountIn: Decimal,
+        amountOut: Decimal,
+        amountOutMin _: Decimal,
+        quote: Quote,
+        slippage: Decimal,
+        recipient: String?
+    ) async throws -> SwapFinalQuote {
+        guard let adapter = adapterManager.adapter(for: tokenIn) as? ISendSolanaAdapter & IBalanceAdapter else {
+            throw SwapError.noSolanaAdapter
+        }
+
+        guard let jsonObject = quote.tx,
+              let txString = jsonObject["tx"] as? String ?? jsonObject["swapTransaction"] as? String,
+              let rawTransaction = Data(base64Encoded: txString)
+        else {
+            throw SwapError.noTransactionData
+        }
+
+        var transactionError: Error?
+        var fee: Decimal?
+
+        do {
+            let estimatedFee = try adapter.estimateFee(rawTransaction: rawTransaction)
+            fee = estimatedFee
+
+            let totalRequired = (tokenIn.type.isNative ? amountIn : 0) + estimatedFee
+            if adapter.balanceData.available < totalRequired {
+                throw SolanaSendHandler.TransactionError.insufficientSolBalance(balance: adapter.balanceData.available)
+            }
+        } catch {
+            transactionError = error
+        }
+
+        return SolanaSwapFinalQuote(
+            rawTransaction: rawTransaction,
+            expectedAmountOut: amountOut,
+            recipient: recipient,
+            slippage: slippage,
+            estimatedTime: quote.esimatedTime,
+            fee: fee,
+            transactionError: transactionError,
+            toAddress: quote.destinationAddress
+        )
+    }
 }
 
 extension USwapMultiSwapProvider {
@@ -1064,5 +1136,6 @@ extension USwapMultiSwapProvider {
         case noStellarAdapter
         case noMoneroAdapter
         case noZanoAdapter
+        case noSolanaAdapter
     }
 }

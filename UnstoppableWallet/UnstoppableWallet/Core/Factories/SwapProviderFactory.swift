@@ -18,6 +18,10 @@ class SwapProviderFactory {
             return AllBridgeMultiSwapProvider()
         }
 
+        if id == JupiterMultiSwapProvider.id {
+            return JupiterMultiSwapProvider()
+        }
+
         if let provider = USwapMultiSwapProvider.Provider(rawValue: id) {
             return USwapMultiSwapProvider(provider: provider)
         }
@@ -30,11 +34,12 @@ class SwapProviderFactory {
             return provider.title
         }
 
-        let names = [
+        let names: [String: String] = [
             OneInchMultiSwapProvider.id: OneInchMultiSwapProvider.name,
             ThorChainMultiSwapProvider.id: ThorChainMultiSwapProvider.name,
             MayaMultiSwapProvider.id: MayaMultiSwapProvider.name,
             AllBridgeMultiSwapProvider.id: AllBridgeMultiSwapProvider.name,
+            JupiterMultiSwapProvider.id: JupiterMultiSwapProvider.name,
         ]
 
         return names[id]

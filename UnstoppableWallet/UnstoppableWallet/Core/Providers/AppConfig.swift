@@ -122,6 +122,10 @@ enum AppConfig {
         ((Bundle.main.object(forInfoDictionaryKey: "TronGridApiKeys") as? String) ?? "").components(separatedBy: ",")
     }
 
+    static var solanaAlchemyApiKey: String? {
+        (Bundle.main.object(forInfoDictionaryKey: "SolanaAlchemyApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
+    }
+
     static var walletConnectV2ProjectKey: String? {
         (Bundle.main.object(forInfoDictionaryKey: "WallectConnectV2ProjectKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
@@ -162,6 +166,10 @@ enum AppConfig {
 
     static var uswapApiKey: String? {
         (Bundle.main.object(forInfoDictionaryKey: "USwapApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
+    }
+
+    static var jupiterApiKey: String? {
+        (Bundle.main.object(forInfoDictionaryKey: "JupiterApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
 
     static var referralAppServerUrl: String {

@@ -13,6 +13,7 @@ class AdapterManager {
     private let tonKitManager: TonKitManager
     private let stellarKitManager: StellarKitManager
     private let zanoKitManager: ZanoKitManager
+    private let solanaKitManager: SolanaKitManager
     private let moneroNodeManager: MoneroNodeManager
     private let zanoNodeManager: ZanoNodeManager
 
@@ -23,7 +24,8 @@ class AdapterManager {
     private var _adapterData = AdapterData(adapterMap: [:], account: nil)
 
     init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager,
-         tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager, zanoKitManager: ZanoKitManager, btcBlockchainManager: BtcBlockchainManager, moneroNodeManager: MoneroNodeManager, zanoNodeManager: ZanoNodeManager)
+         tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager, zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager,
+         btcBlockchainManager: BtcBlockchainManager, moneroNodeManager: MoneroNodeManager, zanoNodeManager: ZanoNodeManager)
     {
         self.adapterFactory = adapterFactory
         self.walletManager = walletManager
@@ -32,6 +34,7 @@ class AdapterManager {
         self.tonKitManager = tonKitManager
         self.stellarKitManager = stellarKitManager
         self.zanoKitManager = zanoKitManager
+        self.solanaKitManager = solanaKitManager
         self.moneroNodeManager = moneroNodeManager
         self.zanoNodeManager = zanoNodeManager
 
@@ -51,6 +54,7 @@ class AdapterManager {
         subscribe(disposeBag, moneroNodeManager.nodeObservable) { [weak self] in self?.recreateAdapter(blockchainType: $0) }
         subscribe(disposeBag, zanoNodeManager.nodeObservable) { [weak self] in self?.recreateAdapter(blockchainType: $0) }
         subscribe(disposeBag, tronKitManager.tronKitUpdatedObservable) { [weak self] in self?.handleUpdatedEvmKit(blockchainType: .tron) }
+        subscribe(disposeBag, solanaKitManager.kitStoppedObservable) { [weak self] in self?.recreateAdapter(blockchainType: .solana) }
     }
 
     private func initAdapters(wallets: [Wallet], account: Account?) {
@@ -182,6 +186,7 @@ extension AdapterManager {
             self.tonKitManager.tonKit?.sync()
             self.stellarKitManager.stellarKit?.sync()
             self.zanoKitManager.kit?.refresh()
+            self.solanaKitManager.solanaKit?.refresh()
         }
     }
 
@@ -195,6 +200,8 @@ extension AdapterManager {
                 self.tonKitManager.tonKit?.sync()
             } else if wallet.token.blockchainType == .stellar {
                 self.stellarKitManager.stellarKit?.sync()
+            } else if wallet.token.blockchainType == .solana {
+                self.solanaKitManager.solanaKit?.refresh()
             } else if wallet.token.blockchainType == .monero {
                 (self._adapterData.adapterMap[wallet] as? MoneroAdapter)?.restart()
             } else if wallet.token.blockchainType == .zano {

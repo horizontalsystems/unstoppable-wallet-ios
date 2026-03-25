@@ -17,6 +17,8 @@ enum SendHandlerFactory {
             return TonSendHandler.instance(token: token, amount: amount, address: address, memo: memo)
         case let .stellar(data, token, memo):
             return StellarSendHandler.instance(data: data, token: token, memo: memo)
+        case let .solana(token, amount, address, memo):
+            return SolanaSendHandler.instance(token: token, amount: amount, address: address, memo: memo)
         case let .monero(token, amount, address, memo):
             return MoneroSendHandler.instance(token: token, amount: amount, address: address, memo: memo)
         case let .zano(token, amount, address, memo):
@@ -53,6 +55,10 @@ enum SendHandlerFactory {
 
         if let adapter = adapter as? ISendTonAdapter & IBalanceAdapter {
             return TonPreSendHandler(token: wallet.token, adapter: adapter)
+        }
+
+        if let adapter = adapter as? ISendSolanaAdapter & IBalanceAdapter {
+            return SolanaPreSendHandler(token: wallet.token, adapter: adapter)
         }
 
         if let adapter = adapter as? StellarAdapter {
