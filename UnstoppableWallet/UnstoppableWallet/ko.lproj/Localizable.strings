@@ -650,9 +650,14 @@
 "swap.total_fee" = "총 수수료";
 
 "swap.aml" = "AML";
-"swap.aml.risk_detected" = "위험 감지됨";
-"swap.aml.risk_description" = "토큰이 사전 검사를 통과했으며 잠재적 위험이 확인되었습니다. 스왑 과정에서 자금이 거부되거나 제한될 수 있습니다. 다른 제공자를 선택하시는 것을 권장합니다.";
-"swap.aml.choose_provider" = "다른 제공자 선택";
+"swap.aml.risk.title" = "경고!";
+"swap.aml.risk.description" = "이 거래에서 잠재적 위험이 확인되었습니다. 처리 중 자금이 거부되거나 제한될 수 있습니다. 다른 제공업체를 선택해 주세요.";
+"swap.aml.risk.button" = "다른 제공업체 선택";
+"swap.aml.undefined.description" = "이 거래에 대한 위험 검사를 완료할 수 없었습니다. 계속 진행하면 이 스왑이 처리 중 지연, 거부 또는 제한이 발생할 수 있습니다.";
+"swap.aml.undefined.button" = "위험을 감수하고 계속";
+"swap.aml.connection.title" = "연결 문제";
+"swap.aml.connection.description" = "현재 응답을 받을 수 없습니다. 다시 시도해 주세요.";
+"swap.aml.connection.button" = "재시도";
 
 // Swap options
 

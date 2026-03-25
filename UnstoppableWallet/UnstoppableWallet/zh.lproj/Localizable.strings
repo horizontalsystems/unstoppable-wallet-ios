@@ -650,9 +650,14 @@
 "swap.total_fee" = "总费用";
 
 "swap.aml" = "反洗钱（AML）";
-"swap.aml.risk_detected" = "检测到风险";
-"swap.aml.risk_description" = "您的代币已通过初步检查，发现了潜在风险。在兑换过程中，您的资金可能会被拒绝或受到限制。我们建议您选择其他提供商。";
-"swap.aml.choose_provider" = "选择其他提供商";
+"swap.aml.risk.title" = "警告！";
+"swap.aml.risk.description" = "此交易已识别出潜在风险。在处理过程中，您的资金可能会被拒绝或受到限制。请选择其他提供商。";
+"swap.aml.risk.button" = "选择其他提供商";
+"swap.aml.undefined.description" = "无法完成此交易的风险检查。如果您继续，此兑换在处理过程中可能会遇到延迟、拒绝或限制。";
+"swap.aml.undefined.button" = "继续并承担风险";
+"swap.aml.connection.title" = "连接问题";
+"swap.aml.connection.description" = "目前无法获取响应，请重试。";
+"swap.aml.connection.button" = "重试";
 
 // Swap options
 

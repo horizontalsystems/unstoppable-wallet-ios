@@ -650,9 +650,14 @@
 "swap.total_fee" = "Toplam Ücret";
 
 "swap.aml" = "AML";
-"swap.aml.risk_detected" = "Risk Tespit Edildi";
-"swap.aml.risk_description" = "Tokenlarınız ön kontrolden geçti ve potansiyel riskler tespit edildi. Swap sırasında fonlarınız reddedilebilir veya kısıtlanabilir. Başka bir sağlayıcı seçmenizi öneririz.";
-"swap.aml.choose_provider" = "Başka Bir Sağlayıcı Seçin";
+"swap.aml.risk.title" = "Uyarı!";
+"swap.aml.risk.description" = "Bu işlem için potansiyel riskler tespit edildi. İşlem sırasında fonlarınız reddedilebilir veya kısıtlanabilir. Lütfen başka bir sağlayıcı seçin.";
+"swap.aml.risk.button" = "Başka Sağlayıcı Seç";
+"swap.aml.undefined.description" = "Bu işlem için risk kontrolü tamamlanamadı. Devam ederseniz, bu takas işlemi sırasında gecikmeler, ret veya kısıtlamalarla karşılaşabilir.";
+"swap.aml.undefined.button" = "Riski Kabul Ederek Devam Et";
+"swap.aml.connection.title" = "Bağlantı Sorunu";
+"swap.aml.connection.description" = "Şu anda yanıt alınamıyor. Lütfen tekrar deneyin.";
+"swap.aml.connection.button" = "Tekrar Dene";
 
 // Swap options
 
