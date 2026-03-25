@@ -760,7 +760,7 @@
 
 // Market
 
-"market.title" = "Marketler";
+"market.title" = "Piyasa";
 
 "market.global.market_cap" = "Toplam Piyasa Değeri";
 "market.global.volume" = "24s Hacim";
@@ -857,6 +857,7 @@
 "top_platform.title" = "%@ Ekosistemi";
 "top_platform.total_cap" = "Toplam Piyasa Değeri";
 
+"market.search.title" = "Ara";
 "market.search.recent" = "Son İşlemler";
 "market.search.popular" = "Popüler";
 
@@ -1679,7 +1680,6 @@
 "appearance.launch_screen.description" = "Uygulamanın varsayılan olarak hangi ekranda açılacağını seçin.";
 "appearance.launch_screen.auto" = "Oto";
 "appearance.launch_screen.balance" = "Bakiye";
-"appearance.launch_screen.market_overview" = "Piyasaya Genel Bakış";
 "appearance.launch_screen.watchlist" = "İzleme Listesi";
 
 "appearance.balance_tab" = "Bakiye Sekmesi";

@@ -857,6 +857,7 @@
 "top_platform.title" = "%@ 星系";
 "top_platform.total_cap" = "总市值";
 
+"market.search.title" = "搜索";
 "market.search.recent" = "最近使用";
 "market.search.popular" = "流行";
 
@@ -1679,7 +1680,6 @@
 "appearance.launch_screen.description" = "选择应用默认打开的界面。";
 "appearance.launch_screen.auto" = "自动";
 "appearance.launch_screen.balance" = "余额";
-"appearance.launch_screen.market_overview" = "行情";
 "appearance.launch_screen.watchlist" = "关注";
 
 "appearance.balance_tab" = "余额标签";
