@@ -20,7 +20,7 @@ class MarketTabViewModel: ObservableObject {
             } else {
                 currentTab = .coins
             }
-        case .balance, .marketOverview:
+        case .balance:
             currentTab = .coins
         case .watchlist:
             currentTab = .watchlist

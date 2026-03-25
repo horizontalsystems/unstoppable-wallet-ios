@@ -3,40 +3,55 @@ import MarketKit
 import SwiftUI
 
 struct MarketSearchView: View {
-    @ObservedObject var viewModel: MarketSearchViewModel
-    @ObservedObject var watchlistViewModel: WatchlistViewModel
+    @StateObject var viewModel = MarketSearchViewModel()
+    @StateObject var watchlistViewModel = WatchlistViewModel(page: .marketSearch)
+
+    @Binding var isPresented: Bool
 
     var body: some View {
-        ThemeView(style: .list) {
-            switch viewModel.state {
-            case let .placeholder(recentFullCoins, popularFullCoins):
-                ThemeList {
-                    if !recentFullCoins.isEmpty {
+        ThemeNavigationStack {
+            ThemeView(style: .list) {
+                switch viewModel.state {
+                case let .placeholder(recentFullCoins, popularFullCoins):
+                    ThemeList {
+                        if !recentFullCoins.isEmpty {
+                            Section {
+                                ListForEach(recentFullCoins) { fullCoin in
+                                    itemContent(fullCoin: fullCoin)
+                                }
+                            } header: {
+                                ThemeListSectionHeader(text: "market.search.recent".localized)
+                            }
+                        }
+
                         Section {
-                            ListForEach(recentFullCoins) { fullCoin in
+                            ListForEach(popularFullCoins) { fullCoin in
                                 itemContent(fullCoin: fullCoin)
                             }
                         } header: {
-                            ThemeListSectionHeader(text: "market.search.recent".localized)
+                            ThemeListSectionHeader(text: "market.search.popular".localized)
                         }
                     }
-
-                    Section {
-                        ListForEach(popularFullCoins) { fullCoin in
-                            itemContent(fullCoin: fullCoin)
+                case let .searchResults(fullCoins):
+                    if fullCoins.isEmpty {
+                        PlaceholderViewNew(icon: "warning_filled", subtitle: "alert.not_founded".localized)
+                    } else {
+                        ThemeList {
+                            ListForEach(fullCoins) { fullCoin in
+                                itemContent(fullCoin: fullCoin)
+                            }
                         }
-                    } header: {
-                        ThemeListSectionHeader(text: "market.search.popular".localized)
                     }
                 }
-            case let .searchResults(fullCoins):
-                if fullCoins.isEmpty {
-                    PlaceholderViewNew(icon: "warning_filled", subtitle: "alert.not_founded".localized)
-                } else {
-                    ThemeList {
-                        ListForEach(fullCoins) { fullCoin in
-                            itemContent(fullCoin: fullCoin)
-                        }
+            }
+            .navigationTitle("market.search.title".localized)
+            .searchBar(text: $viewModel.searchText, prompt: "placeholder.search".localized)
+            .toolbar {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
+                        isPresented = false
+                    }) {
+                        Image("close")
                     }
                 }
             }

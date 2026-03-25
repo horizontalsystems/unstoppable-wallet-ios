@@ -55,7 +55,6 @@ struct CoinPageView: View {
                 }
             }
             .navigationTitle(viewModel.coin.code)
-            .navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: {

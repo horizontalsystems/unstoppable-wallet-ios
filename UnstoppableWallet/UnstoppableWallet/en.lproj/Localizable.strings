@@ -760,7 +760,7 @@
 
 // Market
 
-"market.title" = "Markets";
+"market.title" = "Market";
 
 "market.global.market_cap" = "Total Cap";
 "market.global.volume" = "24h Vol.";
@@ -857,6 +857,7 @@
 "top_platform.title" = "%@ Ecosystem";
 "top_platform.total_cap" = "Total Cap";
 
+"market.search.title" = "Search";
 "market.search.recent" = "Recent";
 "market.search.popular" = "Popular";
 
@@ -1679,7 +1680,6 @@
 "appearance.launch_screen.description" = "Choose which screen the app opens on by default.";
 "appearance.launch_screen.auto" = "Auto";
 "appearance.launch_screen.balance" = "Balance";
-"appearance.launch_screen.market_overview" = "Market Overview";
 "appearance.launch_screen.watchlist" = "Favorites";
 
 "appearance.balance_tab" = "Balance Tab";
