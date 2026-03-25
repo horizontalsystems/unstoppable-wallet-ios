@@ -6,9 +6,6 @@ struct MoneroNetworkView: View {
     @StateObject private var viewModel: MoneroNetworkViewModel
     @Binding private var isPresented: Bool
 
-    @State private var settingsItem: MoneroNetworkViewModel.NodeItem?
-    @State private var addNodePresented = false
-
     init(blockchain: Blockchain, isPresented: Binding<Bool>) {
         _viewModel = .init(wrappedValue: MoneroNetworkViewModel(blockchain: blockchain))
         _isPresented = isPresented
@@ -25,9 +22,7 @@ struct MoneroNetworkView: View {
 
                             ListSection {
                                 ForEach(viewModel.defaultItems) { item in
-                                    nodeCell(item: item) {
-                                        settingsItem = item
-                                    }
+                                    nodeCell(item: item)
                                 }
                             }
 
@@ -40,17 +35,15 @@ struct MoneroNetworkView: View {
 
                                     ListSection {
                                         ForEach(viewModel.customItems) { item in
-                                            nodeCell(item: item) {
-                                                settingsItem = item
-                                            }
-                                            .contextMenu {
-                                                Button {
-                                                    viewModel.removeCustomNode(item)
-                                                } label: {
-                                                    Label("button.delete".localized, image: "trash")
+                                            nodeCell(item: item)
+                                                .contextMenu {
+                                                    Button {
+                                                        viewModel.removeCustomNode(item)
+                                                    } label: {
+                                                        Label("button.delete".localized, image: "trash")
+                                                    }
                                                 }
-                                            }
-                                            .tint(.themeLeah)
+                                                .tint(.themeLeah)
                                         }
                                     }
                                 }
@@ -65,7 +58,10 @@ struct MoneroNetworkView: View {
                                         ThemeText("monero_network.add_new".localized, style: .body, colorStyle: .yellow)
                                     },
                                     action: {
-                                        addNodePresented = true
+                                        Coordinator.shared.present { _ in
+                                            AddMoneroNodeSheetView(blockchainType: viewModel.blockchain.type)
+                                                .ignoresSafeArea()
+                                        }
                                         stat(page: .blockchainSettingsMonero, event: .openBlockchainSettingsMoneroAdd(chainUid: viewModel.blockchain.type.uid))
                                     }
                                 )
@@ -97,20 +93,10 @@ struct MoneroNetworkView: View {
                     }
                 }
             }
-            .sheet(item: $settingsItem) { item in
-                let initialTrusted = item.node.node.url == viewModel.selectedNodeUrl ? viewModel.selectedIsTrusted : item.isTrusted
-                MoneroNetworkNodeSettingsView(name: item.name, isTrusted: initialTrusted) { isTrusted in
-                    viewModel.selectNode(item, isTrusted: isTrusted)
-                }
-            }
-            .sheet(isPresented: $addNodePresented) {
-                AddMoneroNodeSheetView(blockchainType: viewModel.blockchain.type)
-                    .ignoresSafeArea()
-            }
         }
     }
 
-    @ViewBuilder private func nodeCell(item: MoneroNetworkViewModel.NodeItem, action: @escaping () -> Void) -> some View {
+    @ViewBuilder private func nodeCell(item: MoneroNetworkViewModel.NodeItem) -> some View {
         Cell(
             middle: {
                 MultiText(title: item.name, subtitle: item.url)
@@ -120,24 +106,25 @@ struct MoneroNetworkView: View {
                     Image.checkIcon
                 }
             },
-            action: action
+            action: {
+                Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                    let initialTrusted = item.node.node.url == viewModel.selectedNode.node.url ? viewModel.selectedNode.node.isTrusted : item.isTrusted
+                    MoneroNetworkNodeSettingsView(name: item.name, isTrusted: initialTrusted, isPresented: isPresented) { isTrusted in
+                        viewModel.selectNode(item, isTrusted: isTrusted)
+                    }
+                }
+            }
         )
     }
 }
 
 struct MoneroNetworkNodeSettingsView: View {
-    @Environment(\.dismiss) private var dismiss
-
     let name: String
+
+    @State var isTrusted: Bool
+    @Binding var isPresented: Bool
+
     let onDone: (Bool) -> Void
-
-    @State private var isTrusted: Bool
-
-    init(name: String, isTrusted: Bool, onDone: @escaping (Bool) -> Void) {
-        self.name = name
-        self.onDone = onDone
-        _isTrusted = .init(initialValue: isTrusted)
-    }
 
     var body: some View {
         ThemeView(style: .list) {
@@ -163,7 +150,7 @@ struct MoneroNetworkNodeSettingsView: View {
                 BSModule.view(for: .buttonGroup(.init(buttons: [
                     .init(style: .yellow, title: "button.done".localized) {
                         onDone(isTrusted)
-                        dismiss()
+                        isPresented = false
                     },
                 ])))
             }
