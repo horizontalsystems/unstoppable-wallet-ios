@@ -760,7 +760,7 @@
 
 // Market
 
-"market.title" = "시장";
+"market.title" = "마켓";
 
 "market.global.market_cap" = "시가 총액";
 "market.global.volume" = "24h 거래량";
@@ -857,6 +857,7 @@
 "top_platform.title" = "%@ 생태계";
 "top_platform.total_cap" = "시가 총액";
 
+"market.search.title" = "검색";
 "market.search.recent" = "최근";
 "market.search.popular" = "인기있는";
 
@@ -1679,7 +1680,6 @@
 "appearance.launch_screen.description" = "앱이 기본적으로 열릴 화면을 선택하세요.";
 "appearance.launch_screen.auto" = "자동";
 "appearance.launch_screen.balance" = "잔액";
-"appearance.launch_screen.market_overview" = "시장 개요";
 "appearance.launch_screen.watchlist" = "관심 목록";
 
 "appearance.balance_tab" = "잔고 탭";

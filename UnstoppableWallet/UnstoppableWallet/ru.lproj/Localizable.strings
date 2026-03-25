@@ -760,7 +760,7 @@
 
 // Market
 
-"market.title" = "Рынки";
+"market.title" = "Рынок";
 
 "market.global.market_cap" = "Общ. кап.";
 "market.global.volume" = "24ч объем";
@@ -857,6 +857,7 @@
 "top_platform.title" = "%@ Экосистема";
 "top_platform.total_cap" = "Общ. кап.";
 
+"market.search.title" = "Поиск";
 "market.search.recent" = "Недавние";
 "market.search.popular" = "Популярные";
 
@@ -1679,7 +1680,6 @@
 "appearance.launch_screen.description" = "Выберите, какой экран будет открываться в приложении по умолчанию.";
 "appearance.launch_screen.auto" = "По умолчанию";
 "appearance.launch_screen.balance" = "Баланс";
-"appearance.launch_screen.market_overview" = "Обзор рынка";
 "appearance.launch_screen.watchlist" = "Избранное";
 
 "appearance.balance_tab" = "Вкладка баланс";

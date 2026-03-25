@@ -760,7 +760,7 @@
 
 // Market
 
-"market.title" = "Marchés";
+"market.title" = "Marché";
 
 "market.global.market_cap" = "Cap Totale";
 "market.global.volume" = "Vol. 24h";
@@ -857,6 +857,7 @@
 "top_platform.title" = "Écosystème %@";
 "top_platform.total_cap" = "Cap Totale";
 
+"market.search.title" = "Rechercher";
 "market.search.recent" = "Récent";
 "market.search.popular" = "Populaire";
 
@@ -1679,7 +1680,6 @@
 "appearance.launch_screen.description" = "Choisissez l’écran que l’application ouvre par défaut.";
 "appearance.launch_screen.auto" = "Auto";
 "appearance.launch_screen.balance" = "Solde";
-"appearance.launch_screen.market_overview" = "Vue d'ensemble du marché";
 "appearance.launch_screen.watchlist" = "Liste de suivi";
 
 "appearance.balance_tab" = "Balance Tab";
