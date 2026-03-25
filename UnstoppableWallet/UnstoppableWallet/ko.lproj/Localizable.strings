@@ -1486,6 +1486,7 @@
 "backup_app.backup_list.other.contacts.title" = "연락처";
 "backup_app.backup_list.other.custom_evm_sync_sources.title" = "사용자 지정 RPC";
 "backup_app.backup_list.other.custom_monero_nodes.title" = "사용자 지정 Monero 노드";
+"backup_app.backup_list.other.custom_zano_nodes.title" = "사용자 지정 Zano 노드";
 "backup_app.backup_list.other.app_settings.title" = "앱 설정";
 "backup_app.backup_list.other.app_settings.description" = "언어, 통화, 외관...";
 
@@ -2071,6 +2072,16 @@
 "add_monero_node.password" = "비밀번호";
 "add_monero_node.warning.url_exists" = "이 URL의 노드는 이미 존재합니다";
 "add_monero_node.error.invalid_url" = "입력한 URL이 잘못되었습니다. 유효한 URL은 https 스킴을 포함해야 합니다";
+
+"zano_network.node" = "노드";
+"zano_network.added" = "추가됨";
+"zano_network.add_new" = "새로 추가";
+"zano_network.description" = "Unstoppable 앱이 지갑 동기화에 사용할 노드를 선택하세요.";
+
+"add_zano_node.title" = "노드 추가";
+"add_zano_node.node_url" = "노드 URL";
+"add_zano_node.warning.url_exists" = "이 URL을 가진 노드가 이미 존재합니다";
+"add_zano_node.error.invalid_url" = "입력한 URL이 유효하지 않습니다";
 
 // Send Settings
 

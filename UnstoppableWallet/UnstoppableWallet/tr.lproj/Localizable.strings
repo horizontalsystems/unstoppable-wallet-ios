@@ -1486,6 +1486,7 @@
 "backup_app.backup_list.other.contacts.title" = "Kişiler";
 "backup_app.backup_list.other.custom_evm_sync_sources.title" = "Özel RPC";
 "backup_app.backup_list.other.custom_monero_nodes.title" = "Özel Monero Node’ları";
+"backup_app.backup_list.other.custom_zano_nodes.title" = "Özel Zano Düğümleri";
 "backup_app.backup_list.other.app_settings.title" = "Uygulama Ayarları";
 "backup_app.backup_list.other.app_settings.description" = "Dil, Para Birimi, Görünüm ...";
 
@@ -2071,6 +2072,16 @@
 "add_monero_node.password" = "Şifre";
 "add_monero_node.warning.url_exists" = "Bu URL’ye sahip bir node zaten mevcut";
 "add_monero_node.error.invalid_url" = "Girilen URL geçersiz. Geçerli bir URL, https şemasına sahip olmalıdır";
+
+"zano_network.node" = "Düğüm";
+"zano_network.added" = "Eklendi";
+"zano_network.add_new" = "Yeni Ekle";
+"zano_network.description" = "Unstoppable uygulamasının cüzdan(lar)ı senkronize etmek için kullanacağı düğümü seçin.";
+
+"add_zano_node.title" = "Düğüm Ekle";
+"add_zano_node.node_url" = "Düğüm URL'si";
+"add_zano_node.warning.url_exists" = "Bu URL'ye sahip bir düğüm zaten mevcut";
+"add_zano_node.error.invalid_url" = "Girilen URL geçersiz";
 
 // Send Settings
 

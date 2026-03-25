@@ -1486,6 +1486,7 @@
 "backup_app.backup_list.other.contacts.title" = "Контакты";
 "backup_app.backup_list.other.custom_evm_sync_sources.title" = "Пользовательские RPC";
 "backup_app.backup_list.other.custom_monero_nodes.title" = "Пользовательские узлы Monero";
+"backup_app.backup_list.other.custom_zano_nodes.title" = "Пользовательские ноды Zano";
 "backup_app.backup_list.other.app_settings.title" = "Настройки приложения";
 "backup_app.backup_list.other.app_settings.description" = "Язык, валюта, внешний вид ...";
 
@@ -2071,6 +2072,16 @@
 "add_monero_node.password" = "Пароль";
 "add_monero_node.warning.url_exists" = "Нода с таким URL уже существует";
 "add_monero_node.error.invalid_url" = "Введённый URL недействителен. Корректный URL должен использовать схему https";
+
+"zano_network.node" = "Нода";
+"zano_network.added" = "Добавлено";
+"zano_network.add_new" = "Добавить новый";
+"zano_network.description" = "Выберите ноду, которую приложение Unstoppable будет использовать для синхронизации кошелька(ов).";
+
+"add_zano_node.title" = "Добавить ноду";
+"add_zano_node.node_url" = "URL ноды";
+"add_zano_node.warning.url_exists" = "Нода с таким URL уже существует";
+"add_zano_node.error.invalid_url" = "Введённый URL недействителен";
 
 // Send Settings
 

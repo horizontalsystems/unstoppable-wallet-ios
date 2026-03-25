@@ -1486,6 +1486,7 @@
 "backup_app.backup_list.other.contacts.title" = "Contactos";
 "backup_app.backup_list.other.custom_evm_sync_sources.title" = "RPC personalizado";
 "backup_app.backup_list.other.custom_monero_nodes.title" = "사용자 지정 Monero 노드";
+"backup_app.backup_list.other.custom_zano_nodes.title" = "Nodos Zano personalizados";
 "backup_app.backup_list.other.app_settings.title" = "Ajustes de app";
 "backup_app.backup_list.other.app_settings.description" = "Idioma, moneda, Apariencia ...";
 
@@ -2071,6 +2072,16 @@
 "add_monero_node.password" = "Contraseña";
 "add_monero_node.warning.url_exists" = "Ya existe un nodo con esta URL";
 "add_monero_node.error.invalid_url" = "La URL ingresada no es válida. La URL debe tener el esquema https";
+
+"zano_network.node" = "Nodo";
+"zano_network.added" = "Añadido";
+"zano_network.add_new" = "Añadir nuevo";
+"zano_network.description" = "Elija el nodo que la app Unstoppable debe usar para sincronizar la(s) wallet(s).";
+
+"add_zano_node.title" = "Añadir nodo";
+"add_zano_node.node_url" = "URL del nodo";
+"add_zano_node.warning.url_exists" = "Ya existe un nodo con esta URL";
+"add_zano_node.error.invalid_url" = "La URL introducida no es válida";
 
 // Send Settings
 

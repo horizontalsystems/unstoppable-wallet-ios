@@ -1486,6 +1486,7 @@
 "backup_app.backup_list.other.contacts.title" = "联系人";
 "backup_app.backup_list.other.custom_evm_sync_sources.title" = "自定义 RPC";
 "backup_app.backup_list.other.custom_monero_nodes.title" = "自定义 Monero 节点";
+"backup_app.backup_list.other.custom_zano_nodes.title" = "自定义 Zano 节点";
 "backup_app.backup_list.other.app_settings.title" = "应用设置";
 "backup_app.backup_list.other.app_settings.description" = "语言、 货币、 外观...";
 
@@ -2071,6 +2072,16 @@
 "add_monero_node.password" = "密码";
 "add_monero_node.warning.url_exists" = "已存在相同 URL 的节点";
 "add_monero_node.error.invalid_url" = "输入的 URL 无效。有效的 URL 必须使用 https 协议";
+
+"zano_network.node" = "节点";
+"zano_network.added" = "已添加";
+"zano_network.add_new" = "添加新节点";
+"zano_network.description" = "选择 Unstoppable 应用用于同步钱包的节点。";
+
+"add_zano_node.title" = "添加节点";
+"add_zano_node.node_url" = "节点 URL";
+"add_zano_node.warning.url_exists" = "具有此 URL 的节点已存在";
+"add_zano_node.error.invalid_url" = "输入的 URL 无效";
 
 // Send Settings
 
