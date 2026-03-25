@@ -9,7 +9,8 @@ class AppBackupProvider {
     private let walletManager: WalletManager
     private let watchlistManager: WatchlistManager
     private let evmSyncSourceManager: EvmSyncSourceManager
-    private let moneroNodeManager: MoneroNodeManager // TODO: Add monero nodes to backup
+    private let moneroNodeManager: MoneroNodeManager
+    private let zanoNodeManager: ZanoNodeManager
     private let btcBlockchainManager: BtcBlockchainManager
     private let restoreSettingsManager: RestoreSettingsManager
     private let chartRepository: ChartIndicatorsRepository
@@ -32,6 +33,7 @@ class AppBackupProvider {
          watchlistManager: WatchlistManager,
          evmSyncSourceManager: EvmSyncSourceManager,
          moneroNodeManager: MoneroNodeManager,
+         zanoNodeManager: ZanoNodeManager,
          btcBlockchainManager: BtcBlockchainManager,
          restoreSettingsManager: RestoreSettingsManager,
          chartRepository: ChartIndicatorsRepository,
@@ -54,6 +56,7 @@ class AppBackupProvider {
         self.watchlistManager = watchlistManager
         self.evmSyncSourceManager = evmSyncSourceManager
         self.moneroNodeManager = moneroNodeManager
+        self.zanoNodeManager = zanoNodeManager
         self.btcBlockchainManager = btcBlockchainManager
         self.restoreSettingsManager = restoreSettingsManager
         self.chartRepository = chartRepository
@@ -94,10 +97,11 @@ class AppBackupProvider {
             }
     }
 
-    private func settings(evmSyncSources: EvmSyncSourceManager.SyncSourceBackup, moneroNodes: MoneroNodeManager.NodeBackup) -> SettingsBackup {
+    private func settings(evmSyncSources: EvmSyncSourceManager.SyncSourceBackup, moneroNodes: MoneroNodeManager.NodeBackup, zanoNodes: ZanoNodeManager.NodeBackup) -> SettingsBackup {
         SettingsBackup(
             evmSyncSources: evmSyncSources,
             moneroNodes: moneroNodes,
+            zanoNodes: zanoNodes,
             btcModes: btcBlockchainManager.backup,
             remoteContactsSync: localStorage.remoteContactsSync,
             swapProviders: swapProviders,
@@ -133,13 +137,15 @@ class AppBackupProvider {
 
         let syncSources = EvmSyncSourceManager.SyncSourceBackup(selected: evmSyncSourceManager.selectedSources, custom: [])
         let moneroNodes = MoneroNodeManager.NodeBackup(selected: moneroNodeManager.selectedNodes, custom: [])
+        let zanoNodes = ZanoNodeManager.NodeBackup(selected: zanoNodeManager.selectedNodes, custom: [])
         return RawFullBackup(
             accounts: accounts,
             watchlistIds: watchlistManager.coinUids,
             contacts: contactManager.backupContactBook?.contacts ?? [],
-            settings: settings(evmSyncSources: syncSources, moneroNodes: moneroNodes),
+            settings: settings(evmSyncSources: syncSources, moneroNodes: moneroNodes, zanoNodes: zanoNodes),
             customSyncSources: evmSyncSourceManager.customSources,
             customMoneroNodes: moneroNodeManager.customNodeRecords,
+            customZanoNodes: zanoNodeManager.customNodeRecords
         )
     }
 }
@@ -201,6 +207,7 @@ extension AppBackupProvider {
 
         evmSyncSourceManager.restore(selected: raw.settings.evmSyncSources.selected, custom: raw.customSyncSources)
         moneroNodeManager.restore(selected: raw.settings.moneroNodes.selected, custom: raw.customMoneroNodes)
+        zanoNodeManager.restore(selected: raw.settings.zanoNodes.selected, custom: raw.customZanoNodes)
         btcBlockchainManager.restore(backup: raw.settings.btcModes)
         chartRepository.restore(backup: raw.settings.chartIndicators)
         localStorage.restore(backup: raw.settings)
@@ -251,6 +258,7 @@ extension AppBackupProvider {
 
         let customSources = try evmSyncSourceManager.decrypt(sources: fullBackup.settings.evmSyncSources.custom, passphrase: passphrase)
         let customMoneroNodes = try moneroNodeManager.decrypt(nodes: fullBackup.settings.moneroNodes.custom, passphrase: passphrase)
+        let customZanoNodes = zanoNodeManager.decode(nodes: fullBackup.settings.zanoNodes.custom)
 
         return RawFullBackup(
             accounts: wallets,
@@ -258,7 +266,8 @@ extension AppBackupProvider {
             contacts: contacts ?? [],
             settings: fullBackup.settings,
             customSyncSources: customSources,
-            customMoneroNodes: customMoneroNodes
+            customMoneroNodes: customMoneroNodes,
+            customZanoNodes: customZanoNodes
         )
     }
 
@@ -271,9 +280,11 @@ extension AppBackupProvider {
         let contacts = try ContactBookManager.encrypt(contacts: raw.contacts, passphrase: passphrase)
         let customEvmSyncSource = try evmSyncSourceManager.encrypt(sources: raw.customSyncSources, passphrase: passphrase)
         let customMoneroNode = try moneroNodeManager.encrypt(nodes: raw.customMoneroNodes, passphrase: passphrase)
+        let customZanoNode = zanoNodeManager.encode(nodes: raw.customZanoNodes)
         let settingsBackup = settings(
             evmSyncSources: .init(selected: raw.settings.evmSyncSources.selected, custom: customEvmSyncSource),
-            moneroNodes: .init(selected: raw.settings.moneroNodes.selected, custom: customMoneroNode)
+            moneroNodes: .init(selected: raw.settings.moneroNodes.selected, custom: customMoneroNode),
+            zanoNodes: .init(selected: raw.settings.zanoNodes.selected, custom: customZanoNode)
         )
 
         return FullBackup(

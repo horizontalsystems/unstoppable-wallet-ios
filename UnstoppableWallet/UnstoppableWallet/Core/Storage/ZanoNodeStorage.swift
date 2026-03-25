@@ -9,6 +9,12 @@ class ZanoNodeStorage {
 }
 
 extension ZanoNodeStorage {
+    func getAll() throws -> [ZanoNodeRecord] {
+        try dbPool.read { db in
+            try ZanoNodeRecord.fetchAll(db)
+        }
+    }
+
     func records(blockchainTypeUid: String) throws -> [ZanoNodeRecord] {
         try dbPool.read { db in
             try ZanoNodeRecord.filter(ZanoNodeRecord.Columns.blockchainTypeUid == blockchainTypeUid).fetchAll(db)

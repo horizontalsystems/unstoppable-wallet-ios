@@ -110,3 +110,83 @@ extension ZanoNodeManager {
         nodeUpdatedRelay.accept(blockchainType)
     }
 }
+
+extension ZanoNodeManager {
+    var customNodeRecords: [ZanoNodeRecord] {
+        (try? zanoNodeStorage.getAll()) ?? []
+    }
+
+    var selectedNodes: [SelectedNode] {
+        let type = BlockchainType.zano
+        return [
+            SelectedNode(
+                blockchainTypeUid: type.uid,
+                url: node(blockchainType: type).url.absoluteString
+            ),
+        ]
+    }
+}
+
+extension ZanoNodeManager {
+    func encode(nodes: [ZanoNodeRecord]) -> [CustomNode] {
+        nodes.map { node in
+            CustomNode(blockchainTypeUid: node.blockchainTypeUid, url: node.url)
+        }
+    }
+
+    func decode(nodes: [CustomNode]) -> [ZanoNodeRecord] {
+        nodes.map { node in
+            ZanoNodeRecord(blockchainTypeUid: node.blockchainTypeUid, url: node.url)
+        }
+    }
+}
+
+extension ZanoNodeManager {
+    func restore(selected: [SelectedNode], custom: [ZanoNodeRecord]) {
+        var blockchainTypes = Set<BlockchainType>()
+        for node in custom {
+            blockchainTypes.insert(BlockchainType(uid: node.blockchainTypeUid))
+            try? zanoNodeStorage.save(record: node)
+        }
+
+        for node in selected {
+            let blockchainType = BlockchainType(uid: node.blockchainTypeUid)
+            if let zanoNode = allNodes(blockchainType: blockchainType)
+                .first(where: { $0.url.absoluteString == node.url })
+            {
+                saveCurrent(nodeUrl: zanoNode.url, blockchainType: blockchainType)
+            }
+        }
+
+        for blockchainType in blockchainTypes {
+            nodeRelay.accept(blockchainType)
+        }
+    }
+}
+
+extension ZanoNodeManager {
+    struct SelectedNode: Codable {
+        let blockchainTypeUid: String
+        let url: String
+
+        enum CodingKeys: String, CodingKey {
+            case blockchainTypeUid = "blockchain_type_id"
+            case url
+        }
+    }
+
+    struct CustomNode: Codable {
+        let blockchainTypeUid: String
+        let url: String
+
+        enum CodingKeys: String, CodingKey {
+            case blockchainTypeUid = "blockchain_type_id"
+            case url
+        }
+    }
+
+    struct NodeBackup: Codable {
+        let selected: [SelectedNode]
+        let custom: [CustomNode]
+    }
+}
