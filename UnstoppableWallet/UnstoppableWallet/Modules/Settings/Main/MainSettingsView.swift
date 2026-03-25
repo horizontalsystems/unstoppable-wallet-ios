@@ -35,22 +35,27 @@ struct MainSettingsView: View {
                     Spacer().frame(height: .margin32)
 
                     ListSection {
+                        contacts()
+                    }
+
+                    Spacer().frame(height: .margin32)
+
+                    ListSection {
                         appSettings()
                         subscription()
-                        contacts()
                         backupManager()
                     }
 
                     Spacer().frame(height: .margin24)
 
                     VStack(spacing: 0) {
-                        premiumHeader()
+                        SectionHeader(image: Image.premiumIcon, text: ComponentText(text: "subscription.premium.label".localized, colorStyle: .yellow), horizontalInsets: .margin16)
 
                         ListSection {
                             vipSupport()
                             addressChecker()
                         }
-                        .modifier(ThemeListStyleModifier(themeListStyle: .borderedLawrence, selected: true))
+                        .modifier(ThemeListStyleModifier(themeListStyle: .borderedPremium, selected: true))
                     }
 
                     Spacer().frame(height: .margin32)
@@ -184,7 +189,7 @@ struct MainSettingsView: View {
             ManageAccountsView()
         }) {
             HStack(spacing: .margin16) {
-                Image("wallet_24").themeIcon()
+                ThemeImage("wallet", size: .iconSize24)
                 Text("settings.manage_accounts".localized).textBody()
             }
 
@@ -205,7 +210,7 @@ struct MainSettingsView: View {
                     stat(page: .settings, event: .open(page: .blockchainSettings))
                 }
         }) {
-            Image("blocks_24").themeIcon()
+            ThemeImage("box", size: .iconSize24)
             Text("settings.blockchain_settings".localized).themeBody()
             Image.disclosureIcon
         }
@@ -219,7 +224,7 @@ struct MainSettingsView: View {
                 }
         }) {
             HStack(spacing: .margin16) {
-                Image("shield_24").themeIcon()
+                ThemeImage("shield", size: .iconSize24)
                 Text("settings.security".localized).textBody()
             }
 
@@ -240,7 +245,7 @@ struct MainSettingsView: View {
                     stat(page: .settings, event: .open(page: .privacy))
                 }
         }) {
-            Image("lock_24").themeIcon()
+            ThemeImage("lock", size: .iconSize24)
             Text("settings.privacy".localized).themeBody()
             Image.disclosureIcon
         }
@@ -253,7 +258,7 @@ struct MainSettingsView: View {
             }
         } content: {
             HStack(spacing: .margin16) {
-                Image("wallet_connect_24").themeIcon()
+                ThemeImage("link", size: .iconSize24)
                 Text("settings.dapp_connection".localized).textBody()
             }
 
@@ -289,7 +294,7 @@ struct MainSettingsView: View {
                     stat(page: .settings, event: .open(page: .appearance))
                 }
         }) {
-            Image("uw_24").themeIcon()
+            ThemeImage("uw_logo", size: .iconSize24)
             Text("settings.appearance".localized).themeBody()
             Image.disclosureIcon
         }
@@ -302,7 +307,7 @@ struct MainSettingsView: View {
                     stat(page: .settings, event: .open(page: .subscription))
                 }
         }) {
-            Image("star_24").themeIcon()
+            ThemeImage("premium", size: .iconSize24)
             Text("subscription.title".localized).themeBody()
             Image.disclosureIcon
         }
@@ -319,7 +324,7 @@ struct MainSettingsView: View {
             }
         } content: {
             HStack(spacing: .margin16) {
-                Image("user_24").themeIcon()
+                ThemeImage("user", size: .iconSize24)
                 Text("contacts.title".localized).textBody()
             }
 
@@ -340,7 +345,7 @@ struct MainSettingsView: View {
                     stat(page: .settings, event: .open(page: .backupManager))
                 }
         }) {
-            Image("icloud_24").themeIcon()
+            ThemeImage("cloud", size: .iconSize24)
             Text("settings.backup_manager".localized).themeBody()
             Image.disclosureIcon
         }
@@ -348,6 +353,7 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func premiumHeader() -> some View {
         HStack(spacing: 6) {
+            
             Image("star_filled_16").themeIcon(color: .themeJacob)
             Text("subscription.premium.label".localized).themeSubhead1(color: .themeJacob)
         }
@@ -370,7 +376,7 @@ struct MainSettingsView: View {
                 stat(page: .settings, event: .open(page: .vipSupport))
             }
         }) {
-            Image("support_2_24").themeIcon(color: .themeJacob)
+            ThemeImage("support", size: .iconSize24, colorStyle: .yellow)
             Text("purchases.priority_support".localized).themeBody()
             Image.disclosureIcon
         }
@@ -385,7 +391,7 @@ struct MainSettingsView: View {
                     }
             }
         }) {
-            Image("radar_24").themeIcon(color: .themeJacob)
+            ThemeImage("radar", size: .iconSize24, colorStyle: .yellow)
             Text("address_checker.title".localized).themeBody()
             Image.disclosureIcon
         }
@@ -399,7 +405,7 @@ struct MainSettingsView: View {
                 }
         }) {
             HStack(spacing: .margin16) {
-                Image("circle_information_24").themeIcon()
+                ThemeImage("information", size: .iconSize24)
                 Text("settings.about_app.title".localized).textBody()
             }
 
@@ -418,7 +424,7 @@ struct MainSettingsView: View {
             viewModel.rateApp()
             stat(page: .settings, event: .open(page: .rateUs))
         }) {
-            Image("chart_24").themeIcon()
+            ThemeImage("star", size: .iconSize24)
             Text("settings.rate_us".localized).themeBody()
             Image.disclosureIcon
         }
@@ -431,7 +437,7 @@ struct MainSettingsView: View {
             }
             stat(page: .settings, event: .open(page: .tellFriends))
         }) {
-            Image("share_1_24").themeIcon()
+            ThemeImage("arrow_out", size: .iconSize24)
             Text("settings.tell_friends".localized).themeBody()
             Image.disclosureIcon
         }
@@ -446,7 +452,7 @@ struct MainSettingsView: View {
                     stat(page: .settings, event: .open(page: .faq))
                 }
         }) {
-            Image("message_square_24").themeIcon()
+            ThemeImage("message", size: .iconSize24)
             Text("settings.faq".localized).themeBody()
             Image.disclosureIcon
         }
@@ -458,7 +464,7 @@ struct MainSettingsView: View {
                 stat(page: .settings, event: .open(page: .education))
             }
         }) {
-            Image("academy_1_24").themeIcon()
+            ThemeImage("book", size: .iconSize24)
             Text("education.title".localized).themeBody()
             Image.disclosureIcon
         }
@@ -477,7 +483,7 @@ struct MainSettingsView: View {
 
             stat(page: .settings, event: .open(page: .externalTelegram))
         }) {
-            Image("telegram_24").themeIcon()
+            ThemeImage("telegram_logo", size: .iconSize24)
             Text("Telegram").themeBody()
             Image.disclosureIcon
         }
@@ -495,7 +501,7 @@ struct MainSettingsView: View {
 
             stat(page: .settings, event: .open(page: .externalTwitter))
         }) {
-            Image("twitter_24").themeIcon()
+            ThemeImage("x_logo", size: .iconSize24)
             Text("Twitter").themeBody()
             Image.disclosureIcon
         }
