@@ -618,6 +618,7 @@
 "swap.quotes.providers.risk_levels.description" = "风险等级显示提供商在执行过程中可能采取的操作。";
 "swap.quotes.providers.risk_levels.auto.description" = "该交易所使用自有流动性，注重隐私保护。交易处理过程中不会进行 AML 拦截。";
 "swap.quotes.providers.risk_levels.flexible.description" = "该交易所通常会退还未通过 AML 检查的交易。在极少数情况下，如果需要额外验证，资金可能会被暂时冻结。";
+"swap.quotes.providers.risk_levels.preCheck.description" = "提供商在处理兑换之前会自行进行地址筛查。拒绝的情况很少见。冻结理论上可能发生，但可能性极低。";
 "swap.quotes.providers.risk_levels.controlled.description" = "该交易所会冻结未通过 AML 检查的交易，直到完成 KYC/身份验证要求。";
 
 
@@ -649,6 +650,9 @@
 "swap.total_fee" = "总费用";
 
 "swap.aml" = "反洗钱（AML）";
+"swap.aml.risk_detected" = "检测到风险";
+"swap.aml.risk_description" = "您的代币已通过初步检查，发现了潜在风险。在兑换过程中，您的资金可能会被拒绝或受到限制。我们建议您选择其他提供商。";
+"swap.aml.choose_provider" = "选择其他提供商";
 
 // Swap options
 

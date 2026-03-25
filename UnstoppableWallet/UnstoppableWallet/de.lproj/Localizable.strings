@@ -618,6 +618,7 @@
 "swap.quotes.providers.risk_levels.description" = "Risikostufen zeigen, welche Maßnahmen ein Anbieter während der Ausführung ergreifen kann.";
 "swap.quotes.providers.risk_levels.auto.description" = "Diese Börse nutzt eigene Liquidität und ist datenschutzfreundlich. Transaktionen werden ohne AML-Sperrung verarbeitet.";
 "swap.quotes.providers.risk_levels.flexible.description" = "Diese Börse erstattet in der Regel Transaktionen zurück, die AML-Prüfungen nicht bestehen. In seltenen Fällen können Guthaben vorübergehend gesperrt werden, wenn eine zusätzliche Verifizierung erforderlich ist.";
+"swap.quotes.providers.risk_levels.preCheck.description" = "Der Anbieter führt vor der Verarbeitung des Swaps eine eigene Adressprüfung durch. Ablehnungen sind selten. Einfrierungen sind theoretisch möglich, aber sehr unwahrscheinlich.";
 "swap.quotes.providers.risk_levels.controlled.description" = "Diese Börse sperrt Transaktionen, die AML-Prüfungen nicht bestehen, bis die KYC-/Verifizierungsanforderungen erfüllt sind.";
 
 
@@ -649,6 +650,9 @@
 "swap.total_fee" = "Gesamtgebühr";
 
 "swap.aml" = "AML";
+"swap.aml.risk_detected" = "Risiko erkannt";
+"swap.aml.risk_description" = "Ihre Token haben eine Vorprüfung durchlaufen und potenzielle Risiken wurden identifiziert. Während des Swaps können Ihre Gelder abgelehnt oder eingeschränkt werden. Wir empfehlen, einen anderen Anbieter zu wählen.";
+"swap.aml.choose_provider" = "Anderen Anbieter wählen";
 
 // Swap options
 
