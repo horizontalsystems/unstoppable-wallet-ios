@@ -2206,6 +2206,8 @@
 		6BDB59ED2F151A45005FA626 /* ReownWalletKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDB59EC2F151A45005FA626 /* ReownWalletKit */; };
 		6BDB59EF2F15FE98005FA626 /* WCSocketFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59EE2F15FE93005FA626 /* WCSocketFactory.swift */; };
 		6BDB59F02F15FE98005FA626 /* WCSocketFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59EE2F15FE93005FA626 /* WCSocketFactory.swift */; };
+		6BDB59F22F1BB000005FA626 /* SolanaSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59F12F1BB000005FA626 /* SolanaSwapFinalQuote.swift */; };
+		6BDB59F32F1BB000005FA626 /* SolanaSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59F12F1BB000005FA626 /* SolanaSwapFinalQuote.swift */; };
 		6BDDB59C2C1816B500DE9D56 /* TonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDDB59B2C1816B500DE9D56 /* TonKit */; };
 		6BDDB5A12C1AC73D00DE9D56 /* TonKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDDB5A02C1AC73D00DE9D56 /* TonKit */; };
 		6BDFC0832E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDFC0822E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift */; };
@@ -3048,6 +3050,28 @@
 		D33CC43C2F6BF5F900346FB5 /* SearchableModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC43A2F6BF5F400346FB5 /* SearchableModifier.swift */; };
 		D33CC4612F72963E00346FB5 /* EvmNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC4602F72963E00346FB5 /* EvmNetworkView.swift */; };
 		D33CC4622F72963E00346FB5 /* EvmNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC4602F72963E00346FB5 /* EvmNetworkView.swift */; };
+		D33CC43F2F715B1800346FB5 /* SolanaKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC43D2F715B1800346FB5 /* SolanaKitManager.swift */; };
+		D33CC4402F715B1800346FB5 /* SolanaRpcSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC43E2F715B1800346FB5 /* SolanaRpcSourceManager.swift */; };
+		D33CC4412F715B1800346FB5 /* SolanaKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC43D2F715B1800346FB5 /* SolanaKitManager.swift */; };
+		D33CC4422F715B1800346FB5 /* SolanaRpcSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC43E2F715B1800346FB5 /* SolanaRpcSourceManager.swift */; };
+		D33CC4452F715B3600346FB5 /* JupiterMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC4432F715B3600346FB5 /* JupiterMultiSwapProvider.swift */; };
+		D33CC4462F715B3600346FB5 /* JupiterMultiSwapProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC4432F715B3600346FB5 /* JupiterMultiSwapProvider.swift */; };
+		D33CC44B2F715F0000346FB5 /* SplAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC44A2F715F0000346FB5 /* SplAdapter.swift */; };
+		D33CC44C2F715F0000346FB5 /* SolanaTransactionConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC4482F715F0000346FB5 /* SolanaTransactionConverter.swift */; };
+		D33CC44D2F715F0000346FB5 /* SolanaTransactionsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC4492F715F0000346FB5 /* SolanaTransactionsAdapter.swift */; };
+		D33CC44E2F715F0000346FB5 /* SolanaAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC4472F715F0000346FB5 /* SolanaAdapter.swift */; };
+		D33CC44F2F715F0000346FB5 /* SplAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC44A2F715F0000346FB5 /* SplAdapter.swift */; };
+		D33CC4502F715F0000346FB5 /* SolanaTransactionConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC4482F715F0000346FB5 /* SolanaTransactionConverter.swift */; };
+		D33CC4512F715F0000346FB5 /* SolanaTransactionsAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC4492F715F0000346FB5 /* SolanaTransactionsAdapter.swift */; };
+		D33CC4522F715F0000346FB5 /* SolanaAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC4472F715F0000346FB5 /* SolanaAdapter.swift */; };
+		D33CC4542F715F2500346FB5 /* AddSplTokenBlockchainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC4532F715F2500346FB5 /* AddSplTokenBlockchainService.swift */; };
+		D33CC4552F715F2500346FB5 /* AddSplTokenBlockchainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC4532F715F2500346FB5 /* AddSplTokenBlockchainService.swift */; };
+		D33CC4582F715F9300346FB5 /* SolanaTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC4562F715F9300346FB5 /* SolanaTransactionRecord.swift */; };
+		D33CC4592F715F9300346FB5 /* SolanaTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC4562F715F9300346FB5 /* SolanaTransactionRecord.swift */; };
+		D33CC45C2F715FCF00346FB5 /* SolanaSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC45B2F715FCF00346FB5 /* SolanaSendHandler.swift */; };
+		D33CC45D2F715FCF00346FB5 /* SolanaPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC45A2F715FCF00346FB5 /* SolanaPreSendHandler.swift */; };
+		D33CC45E2F715FCF00346FB5 /* SolanaSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC45B2F715FCF00346FB5 /* SolanaSendHandler.swift */; };
+		D33CC45F2F715FCF00346FB5 /* SolanaPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC45A2F715FCF00346FB5 /* SolanaPreSendHandler.swift */; };
 		D3402AEE2BF5D58B003BF6F8 /* WatchlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3402AED2BF5D58B003BF6F8 /* WatchlistViewModel.swift */; };
 		D3402AEF2BF5D58B003BF6F8 /* WatchlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3402AED2BF5D58B003BF6F8 /* WatchlistViewModel.swift */; };
 		D3402AF12BF5D59D003BF6F8 /* WatchlistModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3402AF02BF5D59D003BF6F8 /* WatchlistModifier.swift */; };
@@ -3501,7 +3525,6 @@
 		D3C187BC2907CFC200FE1900 /* Checkpoints in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187BB2907CFC200FE1900 /* Checkpoints */; };
 		D3C187D5290FCF7D00FE1900 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		D3C187DB290FCFBC00FE1900 /* SectionsTableView in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187DA290FCFBC00FE1900 /* SectionsTableView */; };
-		D3C187E4290FD00E00FE1900 /* (null) in Frameworks */ = {isa = PBXBuildFile; };
 		D3C187E8290FD00E00FE1900 /* SectionsTableView in Frameworks */ = {isa = PBXBuildFile; productRef = D3C187E7290FD00E00FE1900 /* SectionsTableView */; };
 		D3C5986E2C1315AF00789D69 /* AttributedStringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C5986D2C1315AF00789D69 /* AttributedStringView.swift */; };
 		D3C5986F2C1315AF00789D69 /* AttributedStringView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3C5986D2C1315AF00789D69 /* AttributedStringView.swift */; };
@@ -4838,6 +4861,7 @@
 		6BDB59E02F14B6B8005FA626 /* MoneroSwapFinalQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroSwapFinalQuote.swift; sourceTree = "<group>"; };
 		6BDB59E32F14B8EC005FA626 /* MoneroSendHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroSendHelper.swift; sourceTree = "<group>"; };
 		6BDB59EE2F15FE93005FA626 /* WCSocketFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCSocketFactory.swift; sourceTree = "<group>"; };
+		6BDB59F12F1BB000005FA626 /* SolanaSwapFinalQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaSwapFinalQuote.swift; sourceTree = "<group>"; };
 		6BDFC0822E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelTransactionJsonRpc.swift; sourceTree = "<group>"; };
 		6BDFC0852E3C8F0700CC28DD /* MerkleGetTransactionByHashJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleGetTransactionByHashJsonRpc.swift; sourceTree = "<group>"; };
 		6BDFC0882E3CDC1300CC28DD /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
@@ -5253,6 +5277,17 @@
 		D3384D502C0703B400515664 /* PriceChangeModeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceChangeModeManager.swift; sourceTree = "<group>"; };
 		D33CC43A2F6BF5F400346FB5 /* SearchableModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableModifier.swift; sourceTree = "<group>"; };
 		D33CC4602F72963E00346FB5 /* EvmNetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvmNetworkView.swift; sourceTree = "<group>"; };
+		D33CC43D2F715B1800346FB5 /* SolanaKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaKitManager.swift; sourceTree = "<group>"; };
+		D33CC43E2F715B1800346FB5 /* SolanaRpcSourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaRpcSourceManager.swift; sourceTree = "<group>"; };
+		D33CC4432F715B3600346FB5 /* JupiterMultiSwapProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JupiterMultiSwapProvider.swift; sourceTree = "<group>"; };
+		D33CC4472F715F0000346FB5 /* SolanaAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaAdapter.swift; sourceTree = "<group>"; };
+		D33CC4482F715F0000346FB5 /* SolanaTransactionConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaTransactionConverter.swift; sourceTree = "<group>"; };
+		D33CC4492F715F0000346FB5 /* SolanaTransactionsAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaTransactionsAdapter.swift; sourceTree = "<group>"; };
+		D33CC44A2F715F0000346FB5 /* SplAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplAdapter.swift; sourceTree = "<group>"; };
+		D33CC4532F715F2500346FB5 /* AddSplTokenBlockchainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddSplTokenBlockchainService.swift; sourceTree = "<group>"; };
+		D33CC4562F715F9300346FB5 /* SolanaTransactionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaTransactionRecord.swift; sourceTree = "<group>"; };
+		D33CC45A2F715FCF00346FB5 /* SolanaPreSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaPreSendHandler.swift; sourceTree = "<group>"; };
+		D33CC45B2F715FCF00346FB5 /* SolanaSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaSendHandler.swift; sourceTree = "<group>"; };
 		D3402AED2BF5D58B003BF6F8 /* WatchlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewModel.swift; sourceTree = "<group>"; };
 		D3402AF02BF5D59D003BF6F8 /* WatchlistModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistModifier.swift; sourceTree = "<group>"; };
 		D3402AF62BF71C11003BF6F8 /* WatchlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistManager.swift; sourceTree = "<group>"; };
@@ -5576,7 +5611,6 @@
 				D3C187B52907A63600FE1900 /* HdWalletKit in Frameworks */,
 				D3604E5928F02B280066C366 /* UniswapKit in Frameworks */,
 				6BDB59E92F151A32005FA626 /* ReownWalletKit in Frameworks */,
-				D3C187E4290FD00E00FE1900 /* (null) in Frameworks */,
 				D3604E9C28F03DC00066C366 /* FeeRateKit in Frameworks */,
 				D339A93F29126D2A00B895BE /* HsCryptoKit in Frameworks */,
 				D08C93B12B91E3B400A7D1D5 /* Hodler in Frameworks */,
@@ -5768,6 +5802,7 @@
 		11B351816FACBB33F9100BFE /* AddToken */ = {
 			isa = PBXGroup;
 			children = (
+				D33CC4532F715F2500346FB5 /* AddSplTokenBlockchainService.swift */,
 				6B9563C82F558BC600D9D188 /* BlockchainSelector */,
 				11B356FFA77A8F6918B13FCA /* AddTokenService.swift */,
 				11B355E8892971578502EF33 /* AddTokenViewModel.swift */,
@@ -6177,6 +6212,8 @@
 		11B35480153660045A6CF9AC /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				D33CC43D2F715B1800346FB5 /* SolanaKitManager.swift */,
+				D33CC43E2F715B1800346FB5 /* SolanaRpcSourceManager.swift */,
 				D3FFFCB42F3F3F040051D743 /* AppStateManager.swift */,
 				6BA971BD2ED560C900DEC017 /* Premium */,
 				6B4587532E2F475E008F87E7 /* AmountRoundingManager.swift */,
@@ -6713,12 +6750,14 @@
 		11B35733E1033052E6CA46C3 /* Providers */ = {
 			isa = PBXGroup;
 			children = (
+				D33CC4442F715B3600346FB5 /* Jupiter */,
 				D09AEDA92F69267700D56004 /* ZanoSwapFinalQuote.swift */,
 				6BDB59D42F0B5F61005FA626 /* MevProtectionHelper.swift */,
 				6BDB59D12F0B5DF1005FA626 /* TronSwapFinalQuote.swift */,
 				6BDB59D72F0B7600005FA626 /* TonSwapFinalQuote.swift */,
 				6BDB59CE2F0B5C53005FA626 /* StellarSwapFinalQuote.swift */,
 				6BDB59E02F14B6B8005FA626 /* MoneroSwapFinalQuote.swift */,
+				6BDB59F12F1BB000005FA626 /* SolanaSwapFinalQuote.swift */,
 				D38E5DF22EF964190049EB91 /* ZcashSwapFinalQuote.swift */,
 				D38E5E012F03F2800049EB91 /* UtxoSwapFinalQuote.swift */,
 				D38E5DEF2EF91CC60049EB91 /* MultiSwapQuote.swift */,
@@ -7284,6 +7323,10 @@
 		11B35E1EBCA59D0D1DD9ABCD /* Adapters */ = {
 			isa = PBXGroup;
 			children = (
+				D33CC4472F715F0000346FB5 /* SolanaAdapter.swift */,
+				D33CC4482F715F0000346FB5 /* SolanaTransactionConverter.swift */,
+				D33CC4492F715F0000346FB5 /* SolanaTransactionsAdapter.swift */,
+				D33CC44A2F715F0000346FB5 /* SplAdapter.swift */,
 				6BA9718E2ECB3B7B00DEC017 /* Zcash */,
 				D05E96AB2A287155002CCD71 /* Evm */,
 				D023D26F2A25CF18004F65B0 /* Tron */,
@@ -9519,6 +9562,7 @@
 		D008CA58267C8DB300001E0A /* TransactionRecords */ = {
 			isa = PBXGroup;
 			children = (
+				D33CC4572F715F9300346FB5 /* Solana */,
 				D09CDA2E2F16536C0068B1B7 /* Monero */,
 				ACB425C49A72E939C654C51C /* Zano */,
 				6BEA17752DE5B9D500BF73DD /* Zcash */,
@@ -9800,6 +9844,8 @@
 		D311DA1A2BCD28C10013DB8F /* SendNew */ = {
 			isa = PBXGroup;
 			children = (
+				D33CC45A2F715FCF00346FB5 /* SolanaPreSendHandler.swift */,
+				D33CC45B2F715FCF00346FB5 /* SolanaSendHandler.swift */,
 				6B93AFAB2E5EF33800A55120 /* WalletConnect */,
 				D0B462F12B5A470F0027815D /* FeeSettings */,
 				D38E5DF82EFEA0F20049EB91 /* TransactionNonceView.swift */,
@@ -9938,6 +9984,22 @@
 				D3384D232BFF0CD100515664 /* MarketVolumeViewModel.swift */,
 			);
 			path = Volume;
+			sourceTree = "<group>";
+		};
+		D33CC4442F715B3600346FB5 /* Jupiter */ = {
+			isa = PBXGroup;
+			children = (
+				D33CC4432F715B3600346FB5 /* JupiterMultiSwapProvider.swift */,
+			);
+			path = Jupiter;
+			sourceTree = "<group>";
+		};
+		D33CC4572F715F9300346FB5 /* Solana */ = {
+			isa = PBXGroup;
+			children = (
+				D33CC4562F715F9300346FB5 /* SolanaTransactionRecord.swift */,
+			);
+			path = Solana;
 			sourceTree = "<group>";
 		};
 		D34637F92DDDD68800187698 /* AddressChecker */ = {
@@ -10670,6 +10732,7 @@
 				6B45874E2E290298008F87E7 /* MarketEtfViewModelFactory.swift in Sources */,
 				D3840593218317DF007D50AD /* BitcoinAdapter.swift in Sources */,
 				D384059A218317DF007D50AD /* KeyboardObservingViewController.swift in Sources */,
+				D33CC4552F715F2500346FB5 /* AddSplTokenBlockchainService.swift in Sources */,
 				D09200C9293F21720091981A /* RestoreNonStandardModule.swift in Sources */,
 				D38405A1218317DF007D50AD /* Date.swift in Sources */,
 				D38405A2218317DF007D50AD /* UIAlertController.swift in Sources */,
@@ -10705,6 +10768,8 @@
 				6B146A982A52A69400648C10 /* ChartIndicatorSettingsViewController.swift in Sources */,
 				1A564975B127F4EA2FCF61EB /* BitcoinBaseAdapter.swift in Sources */,
 				1A56475828E9121D78E02D67 /* BitcoinCashAdapter.swift in Sources */,
+				D33CC43F2F715B1800346FB5 /* SolanaKitManager.swift in Sources */,
+				D33CC4402F715B1800346FB5 /* SolanaRpcSourceManager.swift in Sources */,
 				11B352E00B6E0DF4F6D42486 /* DashAdapter.swift in Sources */,
 				6BEA177B2DE8319D00BF73DD /* ShieldSendView.swift in Sources */,
 				11B359F074038D1507C23747 /* EnabledWallet.swift in Sources */,
@@ -11085,6 +11150,10 @@
 				D011A49B2E3B8276004F58DC /* MoneroTransactionService.swift in Sources */,
 				1A56404471A7270782D6619F /* AppVersion_v_0_20.swift in Sources */,
 				1A564D86E3D7E200D9B81592 /* AppVersionStorage.swift in Sources */,
+				D33CC44F2F715F0000346FB5 /* SplAdapter.swift in Sources */,
+				D33CC4502F715F0000346FB5 /* SolanaTransactionConverter.swift in Sources */,
+				D33CC4512F715F0000346FB5 /* SolanaTransactionsAdapter.swift in Sources */,
+				D33CC4522F715F0000346FB5 /* SolanaAdapter.swift in Sources */,
 				11B35E165D6681B849F9A934 /* TextFieldStackView.swift in Sources */,
 				11B3560586CBAB617211F003 /* Caution.swift in Sources */,
 				11B359413C92A83580A130B3 /* MnemonicInputCell.swift in Sources */,
@@ -11098,6 +11167,8 @@
 				58AAAEDDF791C28174360A15 /* MetricChartFactory.swift in Sources */,
 				58AAA4B64068280C684EE5C1 /* MetricChartModule.swift in Sources */,
 				6BB14F7C2C05FBAD00E879B2 /* MarketTvlViewModel.swift in Sources */,
+				D33CC45E2F715FCF00346FB5 /* SolanaSendHandler.swift in Sources */,
+				D33CC45F2F715FCF00346FB5 /* SolanaPreSendHandler.swift in Sources */,
 				58AAA48ED47FD19F368385FA /* MetricChartViewController.swift in Sources */,
 				6B954B302F42F117008A1A16 /* ZcashSendHelper.swift in Sources */,
 				D3E36BEB2E0A8488007F99CA /* ManageAccountsView.swift in Sources */,
@@ -11167,6 +11238,7 @@
 				6BA8D2402D5B0D1B0093D5C2 /* MarketSectorView.swift in Sources */,
 				2FA5DEC4C3A9705DA2A1B6C5 /* BitcoinIncomingTransactionRecord.swift in Sources */,
 				2FA5DA8B816A4B089A4F01AF /* BitcoinOutgoingTransactionRecord.swift in Sources */,
+				D33CC4452F715B3600346FB5 /* JupiterMultiSwapProvider.swift in Sources */,
 				6BBB92A82D0D18AF00112409 /* RoundedCorner.swift in Sources */,
 				D0F132A52B6B98F500C7310E /* RbfViewModel.swift in Sources */,
 				6B504F762F765BB20064DA67 /* TronPrivateKeyViewController.swift in Sources */,
@@ -11876,6 +11948,7 @@
 				11B35434C09F1E3818DC857B /* ReceiveDerivationViewModel.swift in Sources */,
 				6BBE19112F306E9200B9E67D /* OutgoingAddress.swift in Sources */,
 				11B3580ABF4CD61826D0FCBB /* ReceiveBitcoinCashCoinTypeViewModel.swift in Sources */,
+				D33CC4592F715F9300346FB5 /* SolanaTransactionRecord.swift in Sources */,
 				11B35CFE221F95141FAEB880 /* CoinProvider.swift in Sources */,
 				11B3516B3978D80735E949B4 /* ReceiveCoinListService.swift in Sources */,
 				11B35B30F84E64131CD41C31 /* ReceiveCoinListViewModel.swift in Sources */,
@@ -12022,6 +12095,7 @@
 				6B6E13F72DEDABDE007F4A39 /* HUDViewPresenter.swift in Sources */,
 				6B6E13F82DEDABDE007F4A39 /* HUDActivityView.swift in Sources */,
 				6BDB59E22F14B6B8005FA626 /* MoneroSwapFinalQuote.swift in Sources */,
+				6BDB59F22F1BB000005FA626 /* SolanaSwapFinalQuote.swift in Sources */,
 				6B6E13F92DEDABDE007F4A39 /* HUDKeyboardHelper.swift in Sources */,
 				D3E36BC62E0145AE007F99CA /* WalletListItemView.swift in Sources */,
 				6B6E13FA2DEDABDE007F4A39 /* NativeProgressView.swift in Sources */,
@@ -12365,6 +12439,7 @@
 				6B45874F2E290298008F87E7 /* MarketEtfViewModelFactory.swift in Sources */,
 				D384068921831B3D007D50AD /* KeyboardObservingViewController.swift in Sources */,
 				D384069021831B3D007D50AD /* Date.swift in Sources */,
+				D33CC4542F715F2500346FB5 /* AddSplTokenBlockchainService.swift in Sources */,
 				D09200C8293F21720091981A /* RestoreNonStandardModule.swift in Sources */,
 				D384069121831B3D007D50AD /* UIAlertController.swift in Sources */,
 				D384069421831B3D007D50AD /* DateHelper.swift in Sources */,
@@ -12400,6 +12475,8 @@
 				D38E5DDB2EF54D390049EB91 /* USwapMultiSwapProvider.swift in Sources */,
 				1A56491DC545ED4F8A6E6D40 /* Decimal.swift in Sources */,
 				1A5648D075682B17EFE9CBB6 /* AddressUri.swift in Sources */,
+				D33CC4412F715B1800346FB5 /* SolanaKitManager.swift in Sources */,
+				D33CC4422F715B1800346FB5 /* SolanaRpcSourceManager.swift in Sources */,
 				6B9032CB2D1D72F300F3F5AC /* PurchaseListViewModel.swift in Sources */,
 				1A564D2917CF5C38C84C031B /* BitcoinBaseAdapter.swift in Sources */,
 				1A564C11B7785DCEA2472065 /* BitcoinCashAdapter.swift in Sources */,
@@ -12689,6 +12766,7 @@
 				6B1D8D202DE98F2600A52B01 /* LightTheme.swift in Sources */,
 				6BCAB3C82F2864DE00820806 /* OutgoingPoisoningFilter.swift in Sources */,
 				6BDB59E12F14B6B8005FA626 /* MoneroSwapFinalQuote.swift in Sources */,
+				6BDB59F32F1BB000005FA626 /* SolanaSwapFinalQuote.swift in Sources */,
 				6B1D8D212DE98F2600A52B01 /* ThemeManager.swift in Sources */,
 				6B1D8D222DE98F2600A52B01 /* DarkTheme.swift in Sources */,
 				6B69A9BD2EEC2EF600127DBB /* ManageWalletsTokenFetcher.swift in Sources */,
@@ -12772,6 +12850,10 @@
 				D011A49C2E3B8276004F58DC /* MoneroTransactionService.swift in Sources */,
 				6B50FDB12EA8EE35004CD0A0 /* ReceiveBlockchainListViewModel.swift in Sources */,
 				1A5645D6AC7D344E6D3D0CAF /* AppVersion_v_0_20.swift in Sources */,
+				D33CC44B2F715F0000346FB5 /* SplAdapter.swift in Sources */,
+				D33CC44C2F715F0000346FB5 /* SolanaTransactionConverter.swift in Sources */,
+				D33CC44D2F715F0000346FB5 /* SolanaTransactionsAdapter.swift in Sources */,
+				D33CC44E2F715F0000346FB5 /* SolanaAdapter.swift in Sources */,
 				1A564699CFB7CCE8BD3E5245 /* AppVersionStorage.swift in Sources */,
 				6B954B492F442FE3008A1A16 /* BackupPasswordViewModel.swift in Sources */,
 				11B35C59583AFCDFD828B9D1 /* TextFieldStackView.swift in Sources */,
@@ -12785,6 +12867,8 @@
 				D3AFAAF32E45FE4A004AB074 /* Diff.swift in Sources */,
 				58AAADEACD5A3912F199A0AD /* MetricChartViewModel.swift in Sources */,
 				58AAAD10078FF803A3C27F7C /* MetricChartService.swift in Sources */,
+				D33CC45C2F715FCF00346FB5 /* SolanaSendHandler.swift in Sources */,
+				D33CC45D2F715FCF00346FB5 /* SolanaPreSendHandler.swift in Sources */,
 				58AAAFD1F07293D4691F2294 /* MetricChartFactory.swift in Sources */,
 				58AAAAE64799E5DD40D4C54A /* MetricChartModule.swift in Sources */,
 				6BCAB3F32F2B7A6700820806 /* ScannedTransaction.swift in Sources */,
@@ -12854,6 +12938,7 @@
 				2FA5D7A5F46AA14B704A0E91 /* BitcoinOutgoingTransactionRecord.swift in Sources */,
 				6B7EB8262D0D11E900783F66 /* RoundedCorner.swift in Sources */,
 				2FA5D9ACFE04A94BF156FAD6 /* BitcoinTransactionRecord.swift in Sources */,
+				D33CC4462F715B3600346FB5 /* JupiterMultiSwapProvider.swift in Sources */,
 				2FA5DA0DBBA1904CEF51F5F2 /* ContractCallTransactionRecord.swift in Sources */,
 				D0F132A42B6B98F500C7310E /* RbfViewModel.swift in Sources */,
 				2FA5D0588EFCA934B4CAC162 /* ContractCreationTransactionRecord.swift in Sources */,
@@ -13570,6 +13655,7 @@
 				D34D3DDD2DBF9B7E005C9ACC /* StellarPreSendHandler.swift in Sources */,
 				D36287B82CA2D17F00ADAF3B /* TonConnectConfig.swift in Sources */,
 				D311DA1F2BD115240013DB8F /* MarketGlobalViewModel.swift in Sources */,
+				D33CC4582F715F9300346FB5 /* SolanaTransactionRecord.swift in Sources */,
 				11B350153FC4894DAFCDB06F /* EnabledWallet_v_0_34.swift in Sources */,
 				11B35F4294930802EC8C9CEA /* ReceiveAddressModule.swift in Sources */,
 				11B3550C46C5811A7540A934 /* BaseReceiveAddressService.swift in Sources */,
@@ -14958,6 +15044,14 @@
 				version = 4.2.0;
 			};
 		};
+		A1B2C5A5415080693AB470CA /* XCRemoteSwiftPackageReference "solana-kit-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mNizhurin/solana-kit-ios.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
 		D023D2612A249E59004F65B0 /* XCRemoteSwiftPackageReference "TronKit.Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/TronKit.Swift.git";
@@ -15108,14 +15202,6 @@
 			requirement = {
 				kind = upToNextMajorVersion;
 				minimumVersion = 1.9.0;
-			};
-		};
-		A1B2C5A5415080693AB470CA /* XCRemoteSwiftPackageReference "solana-kit-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mNizhurin/solana-kit-ios.git";
-			requirement = {
-				branch = master;
-				kind = branch;
 			};
 		};
 		D3AEB8732DB8FAA200E385C8 /* XCRemoteSwiftPackageReference "StellarKit" */ = {
@@ -15343,6 +15429,16 @@
 			isa = XCSwiftPackageProductDependency;
 			productName = TonKit;
 		};
+		A1B2C6A772B81EC48C4AB9C9 /* SolanaKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1B2C5A5415080693AB470CA /* XCRemoteSwiftPackageReference "solana-kit-ios" */;
+			productName = SolanaKit;
+		};
+		A1B2C76362D823185955C512 /* SolanaKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A1B2C5A5415080693AB470CA /* XCRemoteSwiftPackageReference "solana-kit-ios" */;
+			productName = SolanaKit;
+		};
 		D023D2622A249E59004F65B0 /* TronKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D023D2612A249E59004F65B0 /* XCRemoteSwiftPackageReference "TronKit.Swift" */;
@@ -15536,16 +15632,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D3ABE2722F73F29B00B72F23 /* XCRemoteSwiftPackageReference "CryptoSwift" */;
 			productName = CryptoSwift;
-		};
-		A1B2C6A772B81EC48C4AB9C9 /* SolanaKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A1B2C5A5415080693AB470CA /* XCRemoteSwiftPackageReference "solana-kit-ios" */;
-			productName = SolanaKit;
-		};
-		A1B2C76362D823185955C512 /* SolanaKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A1B2C5A5415080693AB470CA /* XCRemoteSwiftPackageReference "solana-kit-ios" */;
-			productName = SolanaKit;
 		};
 		D3AEB8742DB8FAA200E385C8 /* StellarKit */ = {
 			isa = XCSwiftPackageProductDependency;

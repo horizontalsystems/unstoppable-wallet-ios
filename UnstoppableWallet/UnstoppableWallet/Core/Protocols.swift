@@ -7,6 +7,7 @@ import GRDB
 import HsToolKit
 import MarketKit
 import RxSwift
+import SolanaKit
 import TonKit
 import TonSwift
 import TronKit
@@ -138,6 +139,14 @@ protocol ISendTronAdapter {
 
 protocol ISendTonAdapter {
     func transferData(recipient: FriendlyAddress, amount: TonAdapter.SendAmount, comment: String?) throws -> TransferData
+}
+
+protocol ISendSolanaAdapter {
+    func sendSol(toAddress: String, amount: Decimal, signer: SolanaKit.Signer) async throws
+    func sendSpl(mintAddress: String, toAddress: String, amount: Decimal, decimals: Int, signer: SolanaKit.Signer) async throws
+    func sendRawTransaction(rawTransaction: Data, signer: SolanaKit.Signer) async throws
+    func estimateFee(rawTransaction: Data) throws -> Decimal
+    var fee: Decimal { get }
 }
 
 protocol IAllowanceAdapter {

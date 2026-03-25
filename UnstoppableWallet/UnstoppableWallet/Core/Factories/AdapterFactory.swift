@@ -14,6 +14,7 @@ class AdapterFactory {
     private let tonKitManager: TonKitManager
     private let stellarKitManager: StellarKitManager
     private let zanoKitManager: ZanoKitManager
+    private let solanaKitManager: SolanaKitManager
     private let restoreSettingsManager: RestoreSettingsManager
     private let coinManager: CoinManager
     private let spamWrapper: SpamWrapper
@@ -21,7 +22,8 @@ class AdapterFactory {
 
     init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager,
          btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager,
-         zanoKitManager: ZanoKitManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager, spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager)
+         zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager,
+         spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager)
     {
         self.evmBlockchainManager = evmBlockchainManager
         self.evmSyncSourceManager = evmSyncSourceManager
@@ -31,6 +33,7 @@ class AdapterFactory {
         self.tonKitManager = tonKitManager
         self.stellarKitManager = stellarKitManager
         self.zanoKitManager = zanoKitManager
+        self.solanaKitManager = solanaKitManager
         self.restoreSettingsManager = restoreSettingsManager
         self.coinManager = coinManager
         self.spamWrapper = spamWrapper
@@ -154,6 +157,16 @@ extension AdapterFactory {
         return nil
     }
 
+    func solanaTransactionsAdapter(transactionSource: TransactionSource) -> ITransactionsAdapter? {
+        let query = TokenQuery(blockchainType: .solana, tokenType: .native)
+
+        if let solanaKit = solanaKitManager.solanaKit, let baseToken = try? coinManager.token(query: query) {
+            return SolanaTransactionsAdapter(solanaKit: solanaKit, source: transactionSource, baseToken: baseToken, coinManager: coinManager)
+        }
+
+        return nil
+    }
+
     func adapter(wallet: Wallet) -> IAdapter? {
         switch (wallet.token.type, wallet.token.blockchain.type) {
         case (.derived, .bitcoin):
@@ -235,6 +248,16 @@ extension AdapterFactory {
         case let (.stellar(code, issuer), .stellar):
             if let stellarKit = try? stellarKitManager.stellarKit(account: wallet.account) {
                 return StellarAdapter(stellarKit: stellarKit, asset: .asset(code: code, issuer: issuer))
+            }
+
+        case (.native, .solana):
+            if let solanaKit = try? solanaKitManager.solanaKit(account: wallet.account) {
+                return SolanaAdapter(solanaKit: solanaKit)
+            }
+
+        case let (.spl(mintAddress), .solana):
+            if let solanaKit = try? solanaKitManager.solanaKit(account: wallet.account) {
+                return SplAdapter(solanaKit: solanaKit, mintAddress: mintAddress)
             }
 
         default: ()
