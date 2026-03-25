@@ -52,11 +52,11 @@ struct MainView: View {
             ToolbarItem(placement: .primaryAction) {
                 Button(action: {
                     Coordinator.shared.present { isPresented in
-                        MarketAdvancedSearchView(isPresented: isPresented)
+                        MarketSearchView(isPresented: isPresented)
                     }
-                    stat(page: .markets, event: .open(page: .advancedSearch))
+                    stat(page: .markets, event: .open(page: .marketSearch))
                 }) {
-                    Image("manage_2_24")
+                    Image("search")
                 }
             }
         case .wallet:

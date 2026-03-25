@@ -77,7 +77,7 @@ struct MarketCoinsView: View {
 
     @ViewBuilder private func list(marketInfos: [MarketInfo]) -> some View {
         ScrollViewReader { proxy in
-            ThemeList(marketInfos) { marketInfo in
+            ThemeList(marketInfos, bottomSpacing: 16) { marketInfo in
                 let coin = marketInfo.fullCoin.coin
 
                 cell(

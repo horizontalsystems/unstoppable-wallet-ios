@@ -61,7 +61,7 @@ class MainViewModel: ObservableObject {
             return .wallet
         case .balance:
             return .wallet
-        case .marketOverview, .watchlist:
+        case .watchlist:
             return .markets
         }
     }

@@ -74,21 +74,11 @@ enum MarketModule {
     enum Tab: String, CaseIterable {
         case coins
         case watchlist
-        case vaults
-        case sectors
-        case news
-        case platforms
-        case pairs
 
         var title: String {
             switch self {
             case .coins: return "market.tab.coins".localized
             case .watchlist: return "market.tab.watchlist".localized
-            case .vaults: return "market.tab.vaults".localized
-            case .sectors: return "market.tab.sectors".localized
-            case .news: return "market.tab.news".localized
-            case .platforms: return "market.tab.platforms".localized
-            case .pairs: return "market.tab.pairs".localized
             }
         }
     }
