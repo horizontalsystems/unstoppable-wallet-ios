@@ -342,7 +342,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
             return response.passedAmlCheck ?? true
         } catch {
-            return true // todo: ignore if our server can't provide result.
+            return true // TODO: ignore if our server can't provide result.
         }
     }
 
