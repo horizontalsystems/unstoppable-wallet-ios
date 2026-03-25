@@ -1486,6 +1486,7 @@
 "backup_app.backup_list.other.contacts.title" = "Contacts";
 "backup_app.backup_list.other.custom_evm_sync_sources.title" = "RPC personnalisé";
 "backup_app.backup_list.other.custom_monero_nodes.title" = "Nœuds Monero personnalisés";
+"backup_app.backup_list.other.custom_zano_nodes.title" = "Nœuds Zano personnalisés";
 "backup_app.backup_list.other.app_settings.title" = "Paramètres de l'application";
 "backup_app.backup_list.other.app_settings.description" = "Langue, Devise, Apparence ...";
 
@@ -2071,6 +2072,16 @@
 "add_monero_node.password" = "Mot de passe";
 "add_monero_node.warning.url_exists" = "Un nœud avec cette URL existe déjà";
 "add_monero_node.error.invalid_url" = "L’URL saisie est invalide. L’URL doit utiliser le protocole https";
+
+"zano_network.node" = "Nœud";
+"zano_network.added" = "Ajouté";
+"zano_network.add_new" = "Ajouter nouveau";
+"zano_network.description" = "Choisissez le nœud que l'application Unstoppable doit utiliser pour synchroniser le(s) portefeuille(s).";
+
+"add_zano_node.title" = "Ajouter un nœud";
+"add_zano_node.node_url" = "URL du nœud";
+"add_zano_node.warning.url_exists" = "Un nœud avec cette URL existe déjà";
+"add_zano_node.error.invalid_url" = "L'URL saisie est invalide";
 
 // Send Settings
 
