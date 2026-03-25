@@ -1,5 +1,4 @@
 import CommonCrypto
-
 import CryptoSwift
 import Foundation
 import HsCryptoKit

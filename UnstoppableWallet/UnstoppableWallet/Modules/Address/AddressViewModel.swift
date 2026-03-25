@@ -91,8 +91,8 @@ class AddressViewModel: ObservableObject {
             ()
         case .checking:
             state = .checking
-        case let .completed(detectedTypes):
-            state = .valid(resolvedAddress: ResolvedAddress(address: address, issueTypes: detectedTypes))
+        case let .completed(address, detectedTypes):
+            state = .valid(resolvedAddress: ResolvedAddress(address: address.raw, issueTypes: detectedTypes))
         }
     }
 }

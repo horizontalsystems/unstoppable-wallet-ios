@@ -60,7 +60,7 @@ class AddressSecurityCheckViewModel: ObservableObject {
             if hasEnabledChecks {
                 check(address: address)
             } else {
-                state = .completed(detectedTypes: [])
+                state = .completed(address: address, detectedTypes: [])
             }
         } else {
             var states = [AddressSecurityIssueType: CheckState]()
@@ -68,7 +68,7 @@ class AddressSecurityCheckViewModel: ObservableObject {
                 states[type] = .locked
             }
             checkStates = states
-            state = .completed(detectedTypes: [])
+            state = .completed(address: address, detectedTypes: [])
         }
     }
 
@@ -99,10 +99,10 @@ class AddressSecurityCheckViewModel: ObservableObject {
         guard currentAddress?.raw == address.raw else { return }
 
         checkStates[type] = result
-        syncCompleted()
+        syncCompleted(address: address)
     }
 
-    private func syncCompleted() {
+    private func syncCompleted(address: Address) {
         for type in issueTypes {
             if checkStates[type] == .checking {
                 return
@@ -110,7 +110,7 @@ class AddressSecurityCheckViewModel: ObservableObject {
         }
 
         let detectedTypes = issueTypes.filter { checkStates[$0] == .detected }
-        state = .completed(detectedTypes: detectedTypes)
+        state = .completed(address: address, detectedTypes: detectedTypes)
     }
 
     private var currentAddress: Address?
@@ -125,7 +125,7 @@ extension AddressSecurityCheckViewModel {
     enum State {
         case idle
         case checking
-        case completed(detectedTypes: [AddressSecurityIssueType])
+        case completed(address: Address, detectedTypes: [AddressSecurityIssueType])
     }
 
     enum CheckState {
