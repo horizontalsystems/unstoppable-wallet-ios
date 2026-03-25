@@ -10,13 +10,15 @@ struct AddressViewNew: View {
     @Binding var text: String
     @Binding var result: AddressInput.Result
     @Binding var borderColor: Color
+    @Binding var foregroundColor: Color
 
-    init(initial: AddressInput.Initial, text: Binding<String>, result: Binding<AddressInput.Result>, parserFilter: AddressParserFactory.ParserFilter?, borderColor: Binding<Color>) {
+    init(initial: AddressInput.Initial, text: Binding<String>, result: Binding<AddressInput.Result>, parserFilter: AddressParserFactory.ParserFilter?, borderColor: Binding<Color>, foregroundColor: Binding<Color> = .constant(.themeLeah)) {
         _viewModel = StateObject(wrappedValue: AddressViewModelNew(initial: initial, parserFilter: parserFilter))
 
         _text = text
         _result = result
         _borderColor = borderColor
+        _foregroundColor = foregroundColor
     }
 
     var body: some View {
@@ -46,10 +48,9 @@ struct AddressViewNew: View {
                         }
                     }
                     .font(.themeBody)
-                    .tint(.themeInputFieldTintColor)
+                    .foregroundStyle(foregroundColor)
                     .autocorrectionDisabled()
                     .autocapitalization(.none)
-                    .modifier(RightChecking(state: $viewModel.checkingState))
                 },
                 showDelete: .init(get: { !viewModel.text.isEmpty }, set: { _ in }),
                 items: viewModel.shortcuts,

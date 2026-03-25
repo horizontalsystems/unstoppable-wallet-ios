@@ -375,7 +375,7 @@ struct MultiSwapView: View {
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
             BottomSheetView(
                 items: [
-                    .title(icon: ThemeImage.error, title: "swap.aml.risk_detected".localized),
+                    .title(icon: ThemeImage.warning, title: "swap.aml.risk_detected".localized),
                     .subtitle(text: "swap.aml.risk_description".localized),
                     .buttonGroup(.init(buttons: [
                         .init(style: .gray, title: "swap.aml.choose_provider".localized) {

@@ -6,6 +6,7 @@ struct AddressView: View {
     @StateObject var viewModel: AddressViewModel
     private let buttonTitle: String
     private let mustChangeAddress: Bool
+    @State private var foregroundColor: Color = .themeLeah
     private let onFinish: (ResolvedAddress?) -> Void
 
     @Environment(\.presentationMode) private var presentationMode
@@ -39,7 +40,8 @@ struct AddressView: View {
                         text: $viewModel.address,
                         result: $viewModel.addressResult,
                         parserFilter: parserFilter,
-                        borderColor: Binding(get: { borderColor }, set: { _ in })
+                        borderColor: Binding(get: { borderColor }, set: { _ in }),
+                        foregroundColor: $foregroundColor
                     )
                     .focused($isInputActive)
                     .padding(.bottom, .margin12)
@@ -79,6 +81,13 @@ struct AddressView: View {
             }
             .onTapGesture {
                 isInputActive = false
+            }
+            .onChange(of: viewModel.state) { state in
+                if case let .valid(resolvedAddress) = state, !resolvedAddress.issueTypes.isEmpty {
+                    foregroundColor = .themeLucian
+                } else {
+                    foregroundColor = .themeLeah
+                }
             }
         } bottomContent: {
             let (title, disabled, showProgress) = buttonState()

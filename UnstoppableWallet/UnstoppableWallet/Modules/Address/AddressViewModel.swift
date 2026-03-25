@@ -98,7 +98,7 @@ class AddressViewModel: ObservableObject {
 }
 
 extension AddressViewModel {
-    enum State {
+    enum State: Equatable {
         case empty
         case invalid(CautionNew?)
         case checking
