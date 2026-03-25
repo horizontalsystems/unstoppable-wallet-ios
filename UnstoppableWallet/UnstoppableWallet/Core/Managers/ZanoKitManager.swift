@@ -6,6 +6,7 @@ import ZanoKit
 class ZanoKitManager {
     private let restoreSettingsManager: RestoreSettingsManager
     private let walletManager: WalletManager
+    private let zanoNodeManager: ZanoNodeManager
 
     private weak var _kit: ZanoKit.Kit?
     private(set) var currentAccount: Account?
@@ -17,9 +18,10 @@ class ZanoKitManager {
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).zano-kit-manager", qos: .userInitiated)
 
-    init(restoreSettingsManager: RestoreSettingsManager, walletManager: WalletManager) {
+    init(restoreSettingsManager: RestoreSettingsManager, walletManager: WalletManager, zanoNodeManager: ZanoNodeManager) {
         self.restoreSettingsManager = restoreSettingsManager
         self.walletManager = walletManager
+        self.zanoNodeManager = zanoNodeManager
     }
 
     private func _kit(account: Account) throws -> ZanoKit.Kit {
@@ -38,7 +40,7 @@ class ZanoKitManager {
             let kit = try ZanoKit.Kit(
                 wallet: .bip39(seed: words, passphrase: passphrase, creationTimestamp: creationTimestamp),
                 walletId: account.id,
-                daemonAddress: "http://37.27.100.59:10500",
+                daemonAddress: zanoNodeManager.node(blockchainType: .zano).url.absoluteString,
                 networkType: ZanoAdapter.networkType,
                 reachabilityManager: Core.shared.reachabilityManager,
                 logger: logger,

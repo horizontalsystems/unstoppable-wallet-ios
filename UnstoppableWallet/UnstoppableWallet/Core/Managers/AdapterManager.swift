@@ -14,6 +14,7 @@ class AdapterManager {
     private let stellarKitManager: StellarKitManager
     private let zanoKitManager: ZanoKitManager
     private let moneroNodeManager: MoneroNodeManager
+    private let zanoNodeManager: ZanoNodeManager
 
     private let adapterDataReadyRelay = PublishRelay<AdapterData>()
 
@@ -22,7 +23,7 @@ class AdapterManager {
     private var _adapterData = AdapterData(adapterMap: [:], account: nil)
 
     init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager,
-         tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager, zanoKitManager: ZanoKitManager, btcBlockchainManager: BtcBlockchainManager, moneroNodeManager: MoneroNodeManager)
+         tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager, zanoKitManager: ZanoKitManager, btcBlockchainManager: BtcBlockchainManager, moneroNodeManager: MoneroNodeManager, zanoNodeManager: ZanoNodeManager)
     {
         self.adapterFactory = adapterFactory
         self.walletManager = walletManager
@@ -32,6 +33,7 @@ class AdapterManager {
         self.stellarKitManager = stellarKitManager
         self.zanoKitManager = zanoKitManager
         self.moneroNodeManager = moneroNodeManager
+        self.zanoNodeManager = zanoNodeManager
 
         walletManager.activeWalletDataUpdatedObservable
             .observeOn(SerialDispatchQueueScheduler(qos: .userInitiated))
@@ -47,6 +49,7 @@ class AdapterManager {
         }
         subscribe(disposeBag, btcBlockchainManager.restoreModeUpdatedObservable) { [weak self] in self?.handleUpdatedRestoreMode(blockchainType: $0) }
         subscribe(disposeBag, moneroNodeManager.nodeObservable) { [weak self] in self?.recreateAdapter(blockchainType: $0) }
+        subscribe(disposeBag, zanoNodeManager.nodeObservable) { [weak self] in self?.recreateAdapter(blockchainType: $0) }
     }
 
     private func initAdapters(wallets: [Wallet], account: Account?) {

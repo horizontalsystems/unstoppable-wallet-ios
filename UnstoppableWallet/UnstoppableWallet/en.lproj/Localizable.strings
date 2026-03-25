@@ -2072,6 +2072,16 @@
 "add_monero_node.warning.url_exists" = "Node with this URL already exists";
 "add_monero_node.error.invalid_url" = "The entered URL is invalid. Valid url must have https scheme";
 
+"zano_network.node" = "Node";
+"zano_network.added" = "Added";
+"zano_network.add_new" = "Add New";
+"zano_network.description" = "Choose the node Unstoppable app should use for synchronizing wallet(s).";
+
+"add_zano_node.title" = "Add Node";
+"add_zano_node.node_url" = "Node URL";
+"add_zano_node.warning.url_exists" = "Node with this URL already exists";
+"add_zano_node.error.invalid_url" = "The entered URL is invalid";
+
 // Send Settings
 
 "evm_send_settings.nonce" = "Transaction Nonce";

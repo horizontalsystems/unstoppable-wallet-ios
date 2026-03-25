@@ -1120,6 +1120,7 @@
 		11B35FFD159D864F6D914F08 /* AppearanceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B357511F8F17D8221B64E2 /* AppearanceView.swift */; };
 		11B35FFE6FBDA949184E2BF2 /* AmountInputViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35F2BE131B969BBEABDB9 /* AmountInputViewModel.swift */; };
 		127ACB49CA0CF81D83825FBF /* ZanoSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 663A92D3AC0FEA62E24CC543 /* ZanoSendHandler.swift */; };
+		18719AB098224204A11ECCE1 /* AddZanoNodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE85F92F68CD4B05AD95B87C /* AddZanoNodeViewModel.swift */; };
 		1A564032D3C011BCAA7D44A8 /* DeepLinkStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564DEB9782FF55EFFD8CCA /* DeepLinkStorage.swift */; };
 		1A56404471A7270782D6619F /* AppVersion_v_0_20.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A5646C5FEE5A60A658B0180 /* AppVersion_v_0_20.swift */; };
 		1A564058DB366C810AC3C47A /* TitledHighlightedDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1A564CB28708314AE0A69424 /* TitledHighlightedDescriptionView.swift */; };
@@ -1340,6 +1341,8 @@
 		2FA5DF7570C7D9E33922CB03 /* FeeRateService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D96AE7C5E97B6E609CA5 /* FeeRateService.swift */; };
 		2FA5DF8F364E6B5BED14C0B4 /* SendSettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D0F4DBA8FC1F917AA95B /* SendSettingsViewController.swift */; };
 		2FA5DFD5AFFA720FA28CCD6A /* TransactionInfoViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2FA5D299198FEF01FB5D06DE /* TransactionInfoViewItemFactory.swift */; };
+		37C3668A309246EA855D55B2 /* AddZanoNodeViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = FE85F92F68CD4B05AD95B87C /* AddZanoNodeViewModel.swift */; };
+		37D693E5D6D3415889F6B326 /* ZanoNodeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1DD6B72BE14FC9B76E61E5 /* ZanoNodeRecord.swift */; };
 		3A73FC69258B1AD100FE4D34 /* MarketModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA3173853A16B2433AEC0 /* MarketModule.swift */; };
 		3A73FC6A258B1AD200FE4D34 /* MarketModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58AAA3173853A16B2433AEC0 /* MarketModule.swift */; };
 		3C7B99D3D6AE0B1C0D8E5F09 /* UrlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94F32F315F4F753D89AD /* UrlManager.swift */; };
@@ -1347,6 +1350,7 @@
 		3C7B9BFD8EA7360907306675 /* UrlManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B94F32F315F4F753D89AD /* UrlManager.swift */; };
 		3C7B9F51D15FBB02710E5EEB /* WelcomeScreenViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C7B956E27165EB2D682C2D7 /* WelcomeScreenViewController.swift */; };
 		410022607BA8D068E2DC4C08 /* ZanoIncomingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958963E814F251B1A4E65FD /* ZanoIncomingTransactionRecord.swift */; };
+		44F6D710FAE24A2FA9688214 /* ZanoNodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0740130157408C9E4010DA /* ZanoNodeManager.swift */; };
 		500F1D1127AA87BC002AA419 /* AlignedCollectionViewFlowLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 500F1D1027AA87BC002AA419 /* AlignedCollectionViewFlowLayout */; };
 		500F1D1327AA87D1002AA419 /* AlignedCollectionViewFlowLayout in Frameworks */ = {isa = PBXBuildFile; productRef = 500F1D1227AA87D1002AA419 /* AlignedCollectionViewFlowLayout */; };
 		5039F972269C5A9B004711B8 /* ReleaseNotesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5039F971269C5A9A004711B8 /* ReleaseNotesViewController.swift */; };
@@ -2233,10 +2237,15 @@
 		6BFA4E042D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFA4E022D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift */; };
 		6BFCC5502F5A8B6C00A35D43 /* AddressSecurityTypeContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFCC54F2F5A8B5600A35D43 /* AddressSecurityTypeContentView.swift */; };
 		6BFCC5512F5A8B6C00A35D43 /* AddressSecurityTypeContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BFCC54F2F5A8B5600A35D43 /* AddressSecurityTypeContentView.swift */; };
+		753C5F226CA644558B12297C /* AddZanoNodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32526152B4224F78BC46B82E /* AddZanoNodeService.swift */; };
+		80ACFD8453054A31B107DCF5 /* ZanoNetworkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B43EE420D81460597DAA573 /* ZanoNetworkViewModel.swift */; };
+		81D1660639384C25AAE9C301 /* ZanoNetworkViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4B43EE420D81460597DAA573 /* ZanoNetworkViewModel.swift */; };
 		910051BE2598C16C84F07CA1 /* ZanoPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DBC57E9971C82838B865205 /* ZanoPreSendHandler.swift */; };
 		965D6887AD49252B1BD3163A /* ZanoOutgoingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1D515731B6C56C8EEF67D3 /* ZanoOutgoingTransactionRecord.swift */; };
 		96EBA2BCD0C734D3D2EF4360 /* ZanoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1055BE8698DF9E53E2E04C12 /* ZanoAdapter.swift */; };
+		9B886F8423624870BB00B44E /* AddZanoNodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D69FD79246B4E7198F03C48 /* AddZanoNodeViewController.swift */; };
 		A4575AABFA440B455B5AABF7 /* ZanoTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D438F620F9B7D5251B1EAC0 /* ZanoTransactionRecord.swift */; };
+		AA334820644E4842AB344CF8 /* AddZanoNodeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6068DC2F870E45DE86CB1792 /* AddZanoNodeModule.swift */; };
 		ABC9A001F335B695CD066218 /* NftAssetModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD35D41AEEBD38AA08B5 /* NftAssetModule.swift */; };
 		ABC9A00DA1F4148859D9D1AB /* Eip1559FeeSettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ABCA9E26E2B6A5E0D43E /* Eip1559FeeSettingsView.swift */; };
 		ABC9A0248195A85CA00D6A13 /* ImageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A7FC41B9F98871246E0E /* ImageCell.swift */; };
@@ -2714,7 +2723,11 @@
 		ABC9AFFCAC47238A626A97C3 /* MultiSwapSlippageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9ADCE6C6975672E185951 /* MultiSwapSlippageView.swift */; };
 		ABC9AFFD730AC3274811DA61 /* ContactBookContactViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A8A353E491AAD3EDA120 /* ContactBookContactViewController.swift */; };
 		ABC9AFFE5C166606FD561A21 /* WCSendEthereumTransactionRequestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9A363B3AD4E8759B29FB0 /* WCSendEthereumTransactionRequestService.swift */; };
+		AD5B09A4C296491F8EB7A287 /* AddZanoNodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D69FD79246B4E7198F03C48 /* AddZanoNodeViewController.swift */; };
+		BB92493FCA7E49F7B07EA5FC /* ZanoNodeStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF2362F7424C8CB3F8AE1F /* ZanoNodeStorage.swift */; };
+		BBD4A47EEB2F41BA81F3E037 /* ZanoNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D6EA9DEBB74A7DBE6D0515 /* ZanoNetworkView.swift */; };
 		BF7342C069BA3E6F77F492FC /* ZanoTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D438F620F9B7D5251B1EAC0 /* ZanoTransactionRecord.swift */; };
+		CB821B27FAE54D59A573D730 /* ZanoNodeStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4DF2362F7424C8CB3F8AE1F /* ZanoNodeStorage.swift */; };
 		D00267B92A57E6CE00D6B2D5 /* ResendPastInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00267B82A57E6CE00D6B2D5 /* ResendPastInputCell.swift */; };
 		D00267BA2A57E6CE00D6B2D5 /* ResendPastInputCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00267B82A57E6CE00D6B2D5 /* ResendPastInputCell.swift */; };
 		D00267BC2A57E72700D6B2D5 /* ResendPasteInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D00267BB2A57E72700D6B2D5 /* ResendPasteInputView.swift */; };
@@ -2878,6 +2891,7 @@
 		D092C58E2C12DE810060D915 /* PriceChangeMode.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D4D2C07020300515664 /* PriceChangeMode.swift */; };
 		D092D6412E31172E0039BDB4 /* MoneroAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092D6402E3117280039BDB4 /* MoneroAdapter.swift */; };
 		D092D6422E31172E0039BDB4 /* MoneroAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = D092D6402E3117280039BDB4 /* MoneroAdapter.swift */; };
+		D099B8D8C8644DB2A8EA3840 /* AddZanoNodeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6068DC2F870E45DE86CB1792 /* AddZanoNodeModule.swift */; };
 		D09AEDAA2F69267700D56004 /* ZanoSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AEDA92F69267700D56004 /* ZanoSwapFinalQuote.swift */; };
 		D09AEDAB2F69267700D56004 /* ZanoSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AEDA92F69267700D56004 /* ZanoSwapFinalQuote.swift */; };
 		D09AEDAD2F69272600D56004 /* ZanoSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = D09AEDAC2F69272600D56004 /* ZanoSendHelper.swift */; };
@@ -3341,6 +3355,7 @@
 		D38E5E092F0CE2740049EB91 /* SwapAsset.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38E5E072F0CE2740049EB91 /* SwapAsset.swift */; };
 		D38E5E0E2F0CFE020049EB91 /* SwapAssetSyncInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38E5E0D2F0CFE020049EB91 /* SwapAssetSyncInfo.swift */; };
 		D38E5E0F2F0CFE020049EB91 /* SwapAssetSyncInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = D38E5E0D2F0CFE020049EB91 /* SwapAssetSyncInfo.swift */; };
+		D3905155EF8643A9A9FF2360 /* ZanoNodeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = FF0740130157408C9E4010DA /* ZanoNodeManager.swift */; };
 		D3948EF22ADA846400FAE566 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3948EF12ADA846400FAE566 /* WidgetKit.framework */; };
 		D3948EF42ADA846400FAE566 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3948EF32ADA846400FAE566 /* SwiftUI.framework */; };
 		D3948EF72ADA846400FAE566 /* AppWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3948EF62ADA846400FAE566 /* AppWidgetBundle.swift */; };
@@ -3645,9 +3660,12 @@
 		D3FFFCB62F3F3F090051D743 /* AppStateManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FFFCB42F3F3F040051D743 /* AppStateManager.swift */; };
 		D3FFFCB82F3F45CD0051D743 /* SwapOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FFFCB72F3F45C70051D743 /* SwapOptionsView.swift */; };
 		D3FFFCB92F3F45CD0051D743 /* SwapOptionsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FFFCB72F3F45C70051D743 /* SwapOptionsView.swift */; };
+		D720694F595A42EBB90F2CFF /* AddZanoNodeService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 32526152B4224F78BC46B82E /* AddZanoNodeService.swift */; };
 		DD0994503860DCEF23462CBA /* ZanoOutgoingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1D515731B6C56C8EEF67D3 /* ZanoOutgoingTransactionRecord.swift */; };
 		DE12379766E4EC2D844C466C /* ZanoIncomingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2958963E814F251B1A4E65FD /* ZanoIncomingTransactionRecord.swift */; };
 		F4F0AD0D13BF481A6F45F1BC /* ZanoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1055BE8698DF9E53E2E04C12 /* ZanoAdapter.swift */; };
+		F544EF551A5D4ADB8ADE7AFD /* ZanoNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4D6EA9DEBB74A7DBE6D0515 /* ZanoNetworkView.swift */; };
+		F8BE0F347BE44435AAF298AB /* ZanoNodeRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D1DD6B72BE14FC9B76E61E5 /* ZanoNodeRecord.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -4350,6 +4368,7 @@
 		1A564FF31C5E879781A2D5E0 /* TraitsCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TraitsCell.swift; sourceTree = "<group>"; };
 		1D438F620F9B7D5251B1EAC0 /* ZanoTransactionRecord.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZanoTransactionRecord.swift; path = Zano/ZanoTransactionRecord.swift; sourceTree = "<group>"; };
 		2958963E814F251B1A4E65FD /* ZanoIncomingTransactionRecord.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZanoIncomingTransactionRecord.swift; path = Zano/ZanoIncomingTransactionRecord.swift; sourceTree = "<group>"; };
+		2D1DD6B72BE14FC9B76E61E5 /* ZanoNodeRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZanoNodeRecord.swift; sourceTree = "<group>"; };
 		2FA5D02D8F5C2AE32C6FF923 /* KitCleaner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KitCleaner.swift; sourceTree = "<group>"; };
 		2FA5D0F4DBA8FC1F917AA95B /* SendSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SendSettingsViewController.swift; sourceTree = "<group>"; };
 		2FA5D18B213209DFBB374FE1 /* TimeLockDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeLockDataSource.swift; sourceTree = "<group>"; };
@@ -4409,9 +4428,12 @@
 		2FA5DEDF215D171796AA34FE /* Eip1559EvmFeeViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Eip1559EvmFeeViewModel.swift; sourceTree = "<group>"; };
 		2FA5DF48D44BB409FB94CED9 /* UnknownSwapTransactionRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnknownSwapTransactionRecord.swift; sourceTree = "<group>"; };
 		2FA5DFE7C4A198C235B2EAB5 /* TransactionAdapterManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionAdapterManager.swift; sourceTree = "<group>"; };
+		32526152B4224F78BC46B82E /* AddZanoNodeService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddZanoNodeService.swift; sourceTree = "<group>"; };
 		3C7B94F32F315F4F753D89AD /* UrlManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UrlManager.swift; sourceTree = "<group>"; };
 		3C7B956E27165EB2D682C2D7 /* WelcomeScreenViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WelcomeScreenViewController.swift; sourceTree = "<group>"; };
 		3DBC57E9971C82838B865205 /* ZanoPreSendHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ZanoPreSendHandler.swift; sourceTree = "<group>"; };
+		4B43EE420D81460597DAA573 /* ZanoNetworkViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZanoNetworkViewModel.swift; sourceTree = "<group>"; };
+		4D69FD79246B4E7198F03C48 /* AddZanoNodeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddZanoNodeViewController.swift; sourceTree = "<group>"; };
 		5039F971269C5A9A004711B8 /* ReleaseNotesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReleaseNotesViewController.swift; sourceTree = "<group>"; };
 		50A83FBE213FCB4B008A5F4B /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Localizable.strings; sourceTree = "<group>"; };
 		50AB06AD2158E2EE00A01E4A /* LocalAuthentication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LocalAuthentication.framework; path = System/Library/Frameworks/LocalAuthentication.framework; sourceTree = SDKROOT; };
@@ -4509,6 +4531,7 @@
 		58AAAFBDA192A490C33DBB95 /* UITextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UITextView.swift; sourceTree = "<group>"; };
 		58AAAFF25BF263B5EC4188F7 /* SwapDeadlineViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SwapDeadlineViewModel.swift; sourceTree = "<group>"; };
 		58AAAFF6E494F623AD62AF95 /* UniswapSettingsService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniswapSettingsService.swift; sourceTree = "<group>"; };
+		6068DC2F870E45DE86CB1792 /* AddZanoNodeModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddZanoNodeModule.swift; sourceTree = "<group>"; };
 		663A92D3AC0FEA62E24CC543 /* ZanoSendHandler.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ZanoSendHandler.swift; sourceTree = "<group>"; };
 		6B146A932A52A69400648C10 /* ChartIndicatorSettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartIndicatorSettingsViewController.swift; sourceTree = "<group>"; };
 		6B146A952A52A69400648C10 /* ChartIndicatorSettingsModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartIndicatorSettingsModule.swift; sourceTree = "<group>"; };
@@ -4818,6 +4841,7 @@
 		6BFA4E022D26B58A0044567A /* MarketAdvancedSearchCategoriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketAdvancedSearchCategoriesView.swift; sourceTree = "<group>"; };
 		6BFCC54F2F5A8B5600A35D43 /* AddressSecurityTypeContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddressSecurityTypeContentView.swift; sourceTree = "<group>"; };
 		723984A011A8B0E6B8840181 /* ZanoAddressParserItem.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = ZanoAddressParserItem.swift; sourceTree = "<group>"; };
+		A4D6EA9DEBB74A7DBE6D0515 /* ZanoNetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZanoNetworkView.swift; sourceTree = "<group>"; };
 		ABC9A021D71EDD24DFB6BA62 /* CoinProChartModule.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoinProChartModule.swift; sourceTree = "<group>"; };
 		ABC9A02C808FCE6082E3F97A /* DebounceTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DebounceTextField.swift; sourceTree = "<group>"; };
 		ABC9A03401172C4C65D66764 /* SingleLineFormTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleLineFormTextView.swift; sourceTree = "<group>"; };
@@ -5482,6 +5506,9 @@
 		D3FFFCB42F3F3F040051D743 /* AppStateManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStateManager.swift; sourceTree = "<group>"; };
 		D3FFFCB72F3F45C70051D743 /* SwapOptionsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwapOptionsView.swift; sourceTree = "<group>"; };
 		DD1D515731B6C56C8EEF67D3 /* ZanoOutgoingTransactionRecord.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ZanoOutgoingTransactionRecord.swift; path = Zano/ZanoOutgoingTransactionRecord.swift; sourceTree = "<group>"; };
+		F4DF2362F7424C8CB3F8AE1F /* ZanoNodeStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZanoNodeStorage.swift; sourceTree = "<group>"; };
+		FE85F92F68CD4B05AD95B87C /* AddZanoNodeViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddZanoNodeViewModel.swift; sourceTree = "<group>"; };
+		FF0740130157408C9E4010DA /* ZanoNodeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZanoNodeManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -6126,7 +6153,6 @@
 		11B35480153660045A6CF9AC /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				D0E0FF962F55A213004EDE45 /* ZanoKitManager.swift */,
 				D3FFFCB42F3F3F040051D743 /* AppStateManager.swift */,
 				6BA971BD2ED560C900DEC017 /* Premium */,
 				6B4587532E2F475E008F87E7 /* AmountRoundingManager.swift */,
@@ -6158,6 +6184,8 @@
 				1A564580B3F739DAC59C623F /* DeepLinkManager.swift */,
 				11B35D9C2409FD9060974F67 /* EvmSyncSourceManager.swift */,
 				D0709C022E507F600012C0E7 /* MoneroNodesManager.swift */,
+				FF0740130157408C9E4010DA /* ZanoNodeManager.swift */,
+				D0E0FF962F55A213004EDE45 /* ZanoKitManager.swift */,
 				2FA5DFE7C4A198C235B2EAB5 /* TransactionAdapterManager.swift */,
 				11B352D547F1BB38D2AD6AD5 /* WalletManager.swift */,
 				11B359C5AF7EE92A5756CCFF /* CoinManager.swift */,
@@ -6284,6 +6312,7 @@
 				58AAAF31DFE7985A05D0FD64 /* MetricChart */,
 				11B354A8CDEDDE93B3C354FE /* EvmNetwork */,
 				D0709C172E50A9180012C0E7 /* MoneroNetwork */,
+				6E0CC944EC1243B6AEE0C4FA /* ZanoNetwork */,
 				58AAA1C57EF90D7B94C6ED2D /* Swap */,
 				58AAA1EF2C6D61338F6DF12E /* SwapSettings */,
 				58AAA8CDAF16B76AE70B0DD2 /* SwapSelectProvider */,
@@ -6537,6 +6566,7 @@
 				11B359E32AEEE37347E255C4 /* NftAssetBriefMetadata.swift */,
 				11B35B56F5C8138085588EE5 /* EvmSyncSourceRecord.swift */,
 				D0709C082E507FCD0012C0E7 /* MoneroNodeRecord.swift */,
+				2D1DD6B72BE14FC9B76E61E5 /* ZanoNodeRecord.swift */,
 				11B35758E84DE8577A481571 /* NftContractMetadata.swift */,
 				11B3586E4CACC415DC6404C7 /* TokenProtocol.swift */,
 				ABC9AEAD18F73D4FBE05783D /* Contact.swift */,
@@ -6718,6 +6748,7 @@
 				11B35999E6C5518115365410 /* RestoreStateStorage.swift */,
 				11B3564E87C69B2989E6A3D2 /* EvmSyncSourceStorage.swift */,
 				D0709C052E507FAC0012C0E7 /* MoneroNodeStorage.swift */,
+				F4DF2362F7424C8CB3F8AE1F /* ZanoNodeStorage.swift */,
 				11B35A6DE18A1E6E837DFB21 /* ContactBookManager.swift */,
 				11B35B2E73D0FA19CBC3B674 /* SharedLocalStorage.swift */,
 				11B35BFA410F267D3A9B8E43 /* KeychainStorage.swift */,
@@ -8664,6 +8695,16 @@
 			path = AllBridgeProvider;
 			sourceTree = "<group>";
 		};
+		6E0CC944EC1243B6AEE0C4FA /* ZanoNetwork */ = {
+			isa = PBXGroup;
+			children = (
+				AAE2F4F002644F72BA3667D7 /* AddZanoNode */,
+				A4D6EA9DEBB74A7DBE6D0515 /* ZanoNetworkView.swift */,
+				4B43EE420D81460597DAA573 /* ZanoNetworkViewModel.swift */,
+			);
+			path = ZanoNetwork;
+			sourceTree = "<group>";
+		};
 		95AD93BB0A2D5F5C4A435252 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -8674,6 +8715,17 @@
 				D3948F092ADA887300FAE566 /* Intents.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		AAE2F4F002644F72BA3667D7 /* AddZanoNode */ = {
+			isa = PBXGroup;
+			children = (
+				6068DC2F870E45DE86CB1792 /* AddZanoNodeModule.swift */,
+				32526152B4224F78BC46B82E /* AddZanoNodeService.swift */,
+				4D69FD79246B4E7198F03C48 /* AddZanoNodeViewController.swift */,
+				FE85F92F68CD4B05AD95B87C /* AddZanoNodeViewModel.swift */,
+			);
+			path = AddZanoNode;
 			sourceTree = "<group>";
 		};
 		ABC9A00652057A589ADBB684 /* Eip721 */ = {
@@ -10838,6 +10890,15 @@
 				D0709C1D2E50A9180012C0E7 /* AddMoneroNodeModule.swift in Sources */,
 				D0709C1E2E50A9180012C0E7 /* MoneroNetworkViewModel.swift in Sources */,
 				D0709C1F2E50A9180012C0E7 /* AddMoneroNodeViewModel.swift in Sources */,
+				37D693E5D6D3415889F6B326 /* ZanoNodeRecord.swift in Sources */,
+				CB821B27FAE54D59A573D730 /* ZanoNodeStorage.swift in Sources */,
+				D3905155EF8643A9A9FF2360 /* ZanoNodeManager.swift in Sources */,
+				BBD4A47EEB2F41BA81F3E037 /* ZanoNetworkView.swift in Sources */,
+				80ACFD8453054A31B107DCF5 /* ZanoNetworkViewModel.swift in Sources */,
+				AA334820644E4842AB344CF8 /* AddZanoNodeModule.swift in Sources */,
+				D720694F595A42EBB90F2CFF /* AddZanoNodeService.swift in Sources */,
+				18719AB098224204A11ECCE1 /* AddZanoNodeViewModel.swift in Sources */,
+				AD5B09A4C296491F8EB7A287 /* AddZanoNodeViewController.swift in Sources */,
 				D3E36B9D2DF9831B007F99CA /* ZcashWalletTokenViewModel.swift in Sources */,
 				11B3518B594ECB199242C5CB /* InputView.swift in Sources */,
 				11B351FF652F0F7BCEB682A9 /* InputCell.swift in Sources */,
@@ -12860,6 +12921,15 @@
 				D316BB992F28915600D37755 /* BirthdayInputView.swift in Sources */,
 				D0709C262E50A9180012C0E7 /* MoneroNetworkViewModel.swift in Sources */,
 				D0709C272E50A9180012C0E7 /* AddMoneroNodeViewModel.swift in Sources */,
+				F8BE0F347BE44435AAF298AB /* ZanoNodeRecord.swift in Sources */,
+				BB92493FCA7E49F7B07EA5FC /* ZanoNodeStorage.swift in Sources */,
+				44F6D710FAE24A2FA9688214 /* ZanoNodeManager.swift in Sources */,
+				F544EF551A5D4ADB8ADE7AFD /* ZanoNetworkView.swift in Sources */,
+				81D1660639384C25AAE9C301 /* ZanoNetworkViewModel.swift in Sources */,
+				D099B8D8C8644DB2A8EA3840 /* AddZanoNodeModule.swift in Sources */,
+				753C5F226CA644558B12297C /* AddZanoNodeService.swift in Sources */,
+				37C3668A309246EA855D55B2 /* AddZanoNodeViewModel.swift in Sources */,
+				9B886F8423624870BB00B44E /* AddZanoNodeViewController.swift in Sources */,
 				D092C58B2C12DE3D0060D915 /* PriceChangeManager+HsTimePeriod.swift in Sources */,
 				2FA5D7E8805931F9F566668E /* SendEvmCautionsFactory.swift in Sources */,
 				2FA5D5189F8BE0AD6E10BA6B /* FeeCell.swift in Sources */,
