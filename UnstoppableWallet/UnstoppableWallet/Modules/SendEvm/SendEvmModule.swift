@@ -5,11 +5,9 @@ import UIKit
 enum SendEvmModule {
     static func viewController(token: Token, mode: PreSendViewModel.Mode, adapter: ISendEthereumAdapter) -> UIViewController {
         let evmAddressParserItem = EvmAddressParser()
-        let udnAddressParserItem = UdnAddressParserItem.item(rawAddressParserItem: evmAddressParserItem, coinCode: token.coin.code, token: token)
 
         let addressParserChain = AddressParserChain()
             .append(handler: evmAddressParserItem)
-            .append(handler: udnAddressParserItem)
 
         if let httpSyncSource = Core.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
            let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: evmAddressParserItem)

@@ -40,10 +40,8 @@ enum SendModule {
 
         // Address
         let bitcoinParserItem = BitcoinAddressParserItem(blockchainType: token.blockchainType, parserType: .adapter(adapter))
-        let udnAddressParserItem = UdnAddressParserItem.item(rawAddressParserItem: bitcoinParserItem, coinCode: token.coin.code, token: token)
         let addressParserChain = AddressParserChain()
             .append(handler: bitcoinParserItem)
-            .append(handler: udnAddressParserItem)
 
         if let httpSyncSource = Core.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
            let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: bitcoinParserItem)

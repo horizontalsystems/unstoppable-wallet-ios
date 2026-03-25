@@ -30,7 +30,6 @@ extension StellarSendHandler: ISendHandler {
         var fee: Decimal?
         var transactionError: Error?
         var operations: [stellarsdk.Operation]?
-        let stellarBalance = stellarKit.account?.assetBalanceMap[.native]?.balance ?? 0
 
         var data = data
 

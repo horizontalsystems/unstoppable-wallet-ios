@@ -292,7 +292,6 @@ extension WalletListViewModel: IWalletServiceDelegate {
                 return
             }
 
-            let oldState = self.__items[index].caution
             self.__items[index].caution = caution
 
             self._reportItems()

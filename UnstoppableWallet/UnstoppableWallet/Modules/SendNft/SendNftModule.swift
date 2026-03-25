@@ -5,11 +5,9 @@ import UIKit
 enum SendNftModule {
     private static func addressService(blockchainType: BlockchainType) -> AddressService {
         let evmAddressParserItem = EvmAddressParser()
-        let udnAddressParserItem = UdnAddressParserItem.item(rawAddressParserItem: evmAddressParserItem, blockchainType: blockchainType)
 
         let addressParserChain = AddressParserChain()
             .append(handler: evmAddressParserItem)
-            .append(handler: udnAddressParserItem)
 
         if let httpSyncSource = Core.shared.evmSyncSourceManager.httpSyncSource(blockchainType: .ethereum),
            let ensAddressParserItem = EnsAddressParserItem(rpcSource: httpSyncSource.rpcSource, rawAddressParserItem: evmAddressParserItem)
