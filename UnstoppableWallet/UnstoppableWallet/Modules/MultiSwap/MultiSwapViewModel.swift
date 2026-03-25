@@ -590,24 +590,49 @@ extension MultiSwapViewModel {
         amountIn = nil
     }
 
-    func validateAndProceed(onSuccess: @escaping () -> Void, onRiskDetected: @escaping () -> Void) {
+    func validateAndProceed(onSuccess: @escaping () -> Void, onRiskDetected: @escaping (AmlRiskResult) -> Void) {
         guard let currentQuote, let tokenIn = internalTokenIn else {
+            return
+        }
+
+        if let debuggingResult = localStorage.debuggingAmlCheckResult {
+            onRiskDetected(debuggingResult)
             return
         }
 
         validatingProvider = true
 
         Task { [weak self, provider = currentQuote.provider] in
-            let trusted = await provider.validateTrustedProvider(tokenIn: tokenIn)
+            let hasNetworkError: Bool
+            let trusted: Bool?
+
+            do {
+                trusted = try await provider.validateTrustedProvider(tokenIn: tokenIn)
+                hasNetworkError = false
+            } catch {
+                trusted = nil
+                hasNetworkError = true
+            }
 
             guard let self else { return }
+
             await MainActor.run {
                 self.validatingProvider = false
+
+                guard !hasNetworkError else {
+                    onRiskDetected(.networkError)
+                    return
+                }
+
+                guard let trusted else {
+                    onRiskDetected(.unprocessed)
+                    return
+                }
 
                 if trusted {
                     onSuccess()
                 } else {
-                    onRiskDetected()
+                    onRiskDetected(.dirty)
                 }
             }
         }
@@ -673,6 +698,42 @@ extension MultiSwapViewModel {
             case .negligible, .low: return .regular
             case .normal: return .warning
             case .warning, .forbidden: return .error
+            }
+        }
+    }
+
+    enum AmlRiskResult: String, CaseIterable {
+        case dirty
+        case unprocessed
+        case networkError
+
+        var title: String {
+            switch self {
+            case .dirty, .unprocessed: return "swap.aml.risk.title".localized
+            case .networkError: return "swap.aml.connection.title".localized
+            }
+        }
+
+        var description: String {
+            switch self {
+            case .dirty: return "swap.aml.risk.description".localized
+            case .unprocessed: return "swap.aml.undefined.description".localized
+            case .networkError: return "swap.aml.connection.description".localized
+            }
+        }
+
+        var buttonTitle: String {
+            switch self {
+            case .dirty: return "swap.aml.risk.button".localized
+            case .unprocessed: return "swap.aml.undefined.button".localized
+            case .networkError: return "swap.aml.connection.button".localized
+            }
+        }
+
+        var icon: ComponentImage {
+            switch self {
+            case .dirty, .networkError: return ThemeImage.error
+            case .unprocessed: return ThemeImage.warning
             }
         }
     }

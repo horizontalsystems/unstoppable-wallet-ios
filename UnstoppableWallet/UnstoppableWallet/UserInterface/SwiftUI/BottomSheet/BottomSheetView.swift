@@ -18,6 +18,12 @@ enum BSModule {
                 .multilineTextAlignment(.center)
                 .padding(.horizontal, .margin32)
                 .padding(.bottom, .margin16)
+        case let .subhead2(text):
+            ThemeText(text, style: .subhead)
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, .margin32)
+                .padding(.top, .margin16)
+                .padding(.bottom, .margin24)
         case let .text(text):
             ThemeText(text, style: .body, colorStyle: .secondary)
                 .multilineTextAlignment(.center)
@@ -86,6 +92,7 @@ extension BSModule {
         case imagedTitle(image: CustomStringConvertible?, title: CustomStringConvertible?, isPresented: Binding<Bool>?)
         case title2(text: CustomStringConvertible)
         case subtitle(text: CustomStringConvertible)
+        case subhead2(text: CustomStringConvertible)
         case text(text: CustomStringConvertible)
         case footer(text: CustomStringConvertible)
         case highlightedDescription(text: String, type: AlertCardView.CardType, style: AlertCardView.Style)

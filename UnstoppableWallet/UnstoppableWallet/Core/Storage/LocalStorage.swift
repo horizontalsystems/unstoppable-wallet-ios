@@ -35,6 +35,8 @@ class LocalStorage {
 
     private let keyRecipientAddressCheck = "recipient-address-check"
 
+    private let keyDebuggingAmlCheckResult = "debugging-aml-check-result"
+
     private let userDefaultsStorage: UserDefaultsStorage
 
     init(userDefaultsStorage: UserDefaultsStorage) {
@@ -203,6 +205,16 @@ extension LocalStorage {
     var recipientAddressCheckOld: Bool? {
         get { userDefaultsStorage.value(for: keyRecipientAddressCheck) }
         set { userDefaultsStorage.set(value: newValue, for: keyRecipientAddressCheck) }
+    }
+
+    var debuggingAmlCheckResult: MultiSwapViewModel.AmlRiskResult? {
+        get {
+            let raw: String? = userDefaultsStorage.value(for: keyDebuggingAmlCheckResult)
+            return raw.flatMap { MultiSwapViewModel.AmlRiskResult(rawValue: $0) }
+        }
+        set {
+            userDefaultsStorage.set(value: newValue?.rawValue, for: keyDebuggingAmlCheckResult)
+        }
     }
 
     func addressSecurityIssue(_ type: AddressSecurityIssueType) -> Bool? {
