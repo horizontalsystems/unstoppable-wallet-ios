@@ -6,8 +6,6 @@ struct ZanoNetworkView: View {
     @StateObject private var viewModel: ZanoNetworkViewModel
     @Binding private var isPresented: Bool
 
-    @State private var addNodePresented = false
-
     init(blockchain: Blockchain, isPresented: Binding<Bool>) {
         _viewModel = .init(wrappedValue: ZanoNetworkViewModel(blockchain: blockchain))
         _isPresented = isPresented
@@ -64,7 +62,10 @@ struct ZanoNetworkView: View {
                                         ThemeText("zano_network.add_new".localized, style: .body, colorStyle: .yellow)
                                     },
                                     action: {
-                                        addNodePresented = true
+                                        Coordinator.shared.present { _ in
+                                            AddZanoNodeSheetView(blockchainType: viewModel.blockchain.type)
+                                                .ignoresSafeArea()
+                                        }
                                         stat(page: .blockchainSettingsZano, event: .openBlockchainSettingsZanoAdd(chainUid: viewModel.blockchain.type.uid))
                                     }
                                 )
@@ -95,10 +96,6 @@ struct ZanoNetworkView: View {
                         Image("close")
                     }
                 }
-            }
-            .sheet(isPresented: $addNodePresented) {
-                AddZanoNodeSheetView(blockchainType: viewModel.blockchain.type)
-                    .ignoresSafeArea()
             }
         }
     }

@@ -6,8 +6,6 @@ struct EvmNetworkView: View {
     @StateObject private var viewModel: EvmNetworkViewModel
     @Binding private var isPresented: Bool
 
-    @State private var addSourcePresented = false
-
     init(blockchain: Blockchain, isPresented: Binding<Bool>) {
         _viewModel = .init(wrappedValue: EvmNetworkViewModel(blockchain: blockchain))
         _isPresented = isPresented
@@ -60,7 +58,10 @@ struct EvmNetworkView: View {
                                         ThemeText("evm_network.add_new".localized, style: .body, colorStyle: .yellow)
                                     },
                                     action: {
-                                        addSourcePresented = true
+                                        Coordinator.shared.present { _ in
+                                            AddEvmSyncSourceSheetView(blockchainType: viewModel.blockchain.type)
+                                                .ignoresSafeArea()
+                                        }
                                         stat(page: .blockchainSettingsEvm, event: .openBlockchainSettingsEvmAdd(chainUid: viewModel.blockchain.type.uid))
                                     }
                                 )
@@ -91,10 +92,6 @@ struct EvmNetworkView: View {
                         Image("close")
                     }
                 }
-            }
-            .sheet(isPresented: $addSourcePresented) {
-                AddEvmSyncSourceSheetView(blockchainType: viewModel.blockchain.type)
-                    .ignoresSafeArea()
             }
         }
     }

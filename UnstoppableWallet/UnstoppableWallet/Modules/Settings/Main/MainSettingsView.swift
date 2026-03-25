@@ -353,7 +353,6 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func premiumHeader() -> some View {
         HStack(spacing: 6) {
-            
             Image("star_filled_16").themeIcon(color: .themeJacob)
             Text("subscription.premium.label".localized).themeSubhead1(color: .themeJacob)
         }
