@@ -31,6 +31,8 @@ class MainSettingsViewModel: ObservableObject {
     @Published var slides: [Slide] = [.premium, .miniApp]
     @Published var introductoryOffer: String?
 
+    @Published var debu: String?
+
     let showTestSwitchers: Bool
 
     @Published var forceEnableSwap: Bool {
@@ -60,12 +62,19 @@ class MainSettingsViewModel: ObservableObject {
         }
     }
 
+    @Published var debuggingAmlResult: MultiSwapViewModel.AmlRiskResult? {
+        didSet {
+            localStorage.debuggingAmlCheckResult = debuggingAmlResult
+        }
+    }
+
     init() {
         showTestSwitchers = Bundle.main.object(forInfoDictionaryKey: "ShowTestNetSwitcher") as? String == "true"
         forceEnableSwap = localStorage.forceEnableSwap
         emulatePurchase = localStorage.emulatePurchase
         testNetEnabled = testNetManager.testNetEnabled
         mayaStagenetEnabled = testNetManager.mayaStagenetEnabled
+        debuggingAmlResult = localStorage.debuggingAmlCheckResult
 
         subscribe(MainScheduler.instance, disposeBag, backupManager.allBackedUpObservable) { [weak self] _ in self?.syncManageWalletsAlert() }
         subscribe(MainScheduler.instance, disposeBag, walletConnectSessionManager.sessionsObservable) { [weak self] _ in self?.syncWalletConnectSessionCount() }

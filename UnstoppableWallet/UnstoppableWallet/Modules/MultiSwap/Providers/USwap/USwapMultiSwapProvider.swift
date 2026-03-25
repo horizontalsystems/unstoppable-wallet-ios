@@ -317,7 +317,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    func validateTrustedProvider(tokenIn: Token) async -> Bool {
+    func validateTrustedProvider(tokenIn: Token) async throws -> Bool? {
         guard provider.type == .preCheck else {
             return true
         }
@@ -340,9 +340,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 headers: headers
             )
 
-            return response.passedAmlCheck ?? true
-        } catch {
-            return true // TODO: ignore if our server can't provide result.
+            return response.passedAmlCheck
         }
     }
 

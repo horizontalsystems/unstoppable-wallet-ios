@@ -650,9 +650,14 @@
 "swap.total_fee" = "Total Fee";
 
 "swap.aml" = "AML";
-"swap.aml.risk_detected" = "Risk Detected";
-"swap.aml.risk_description" = "Your tokens have passed a preliminary check, and potential risks have been identified. During the swap, your funds may be rejected or restricted. We recommend choosing another provider.";
-"swap.aml.choose_provider" = "Choose Another Provider";
+"swap.aml.risk.title" = "Alert!";
+"swap.aml.risk.description" = "Potential risks were identified for this transaction. During processing, your funds may be rejected or restricted. Please choose another provider.";
+"swap.aml.risk.button" = "Choose Another Provider";
+"swap.aml.undefined.description" = "We couldn’t complete the risk check for this transaction. If you continue, this swap may encounter delays, rejection, or restrictions during processing.";
+"swap.aml.undefined.button" = "Continue with Risk";
+"swap.aml.connection.title" = "Connection Issue";
+"swap.aml.connection.description" = "Unable to get a response right now. Please try again.";
+"swap.aml.connection.button" = "Retry";
 
 // Swap options
 

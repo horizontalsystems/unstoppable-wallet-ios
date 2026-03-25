@@ -571,6 +571,51 @@ struct MainSettingsView: View {
                 }
                 .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
             }
+
+            row(
+                title: "AML checking result".localized,
+                subtitle: "Oerride checking result from serer".localized,
+                value: viewModel.debuggingAmlResult?.rawValue ?? "clear",
+                action: {
+                    Coordinator.shared.present(type: .alert) { isPresented in
+                        OptionAlertView(
+                            title: "AML Result".localized,
+                            viewItems: [.init(text: "clear".localized, selected: viewModel.debuggingAmlResult == nil)] +
+                                MultiSwapViewModel.AmlRiskResult.allCases.map {
+                                    AlertViewItem(text: $0.rawValue, selected: viewModel.debuggingAmlResult == $0)
+                                },
+                            onSelect: { index in
+                                switch index {
+                                case 0: viewModel.debuggingAmlResult = nil
+                                default: viewModel.debuggingAmlResult = MultiSwapViewModel.AmlRiskResult.allCases[index - 1]
+                                }
+                            },
+                            isPresented: isPresented
+                        )
+                    }
+                }
+            )
         }
+    }
+
+    @ViewBuilder private func row(title: String, subtitle: String, value: String, action: (() -> Void)?) -> some View {
+        let enabled = action != nil
+        Cell(
+            middle: {
+                MultiText(title: title, subtitle: subtitle)
+            },
+            right: {
+                ThemeText(
+                    value,
+                    style: .subheadSB,
+                    colorStyle: enabled ? .primary : .secondary
+                )
+                .arrow(
+                    style: .dropdown,
+                    colorStyle: enabled ? .primary : .secondary
+                )
+            },
+            action: action
+        )
     }
 }

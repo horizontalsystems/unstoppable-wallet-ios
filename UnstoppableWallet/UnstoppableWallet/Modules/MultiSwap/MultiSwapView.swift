@@ -249,57 +249,41 @@ struct MultiSwapView: View {
         let (title, style, disabled, showProgress, preSwapStep) = buttonState()
 
         ThemeButton(text: title, spinner: showProgress, style: style) {
-            viewModel.stopAutoQuoting()
-
-            if let preSwapStep {
-                if let currentQuote = viewModel.currentQuote,
-                   let tokenIn = viewModel.tokenIn,
-                   let tokenOut = viewModel.tokenOut,
-                   let amount = viewModel.amountIn
-                {
-                    Coordinator.shared.present { isPresented in
-                        currentQuote.provider.preSwapView(
-                            step: preSwapStep,
-                            tokenIn: tokenIn,
-                            tokenOut: tokenOut,
-                            amount: amount,
-                            isPresented: isPresented
-                        ) {
-                            viewModel.syncQuotes()
-                        }
-
-                    } onDismiss: {
-                        viewModel.autoQuoteIfRequired()
-                    }
-                }
-            } else {
-                viewModel.validateAndProceed(
-                    onSuccess: {
-                        if viewModel.shouldShowTerms {
-                            Coordinator.shared.present { isPresented in
-                                SwapTermsView(isPresented: isPresented) {
-                                    viewModel.onAcceptTerms()
-
-                                    DispatchQueue.main.async {
-                                        isInputActive = false
-                                        sendPresented = true
-                                    }
-                                }
-                            } onDismiss: {
-                                viewModel.autoQuoteIfRequired()
-                            }
-                        } else {
-                            isInputActive = false
-                            sendPresented = true
-                        }
-                    },
-                    onRiskDetected: {
-                        showRiskBottomSheet()
-                    }
-                )
-            }
+            validatePreSwapSteps(preSwapStep)
         }
         .disabled(disabled)
+    }
+
+    private func validatePreSwapSteps(_ preSwapStep: MultiSwapPreSwapStep?) {
+        viewModel.stopAutoQuoting()
+
+        if let preSwapStep {
+            if let currentQuote = viewModel.currentQuote,
+               let tokenIn = viewModel.tokenIn,
+               let tokenOut = viewModel.tokenOut,
+               let amount = viewModel.amountIn
+            {
+                Coordinator.shared.present { isPresented in
+                    currentQuote.provider.preSwapView(
+                        step: preSwapStep,
+                        tokenIn: tokenIn,
+                        tokenOut: tokenOut,
+                        amount: amount,
+                        isPresented: isPresented
+                    ) {
+                        viewModel.syncQuotes()
+                    }
+
+                } onDismiss: {
+                    viewModel.autoQuoteIfRequired()
+                }
+            }
+        } else {
+            viewModel.validateAndProceed(
+                onSuccess: { showSwap() },
+                onRiskDetected: { result in showRiskBottomSheet(result) }
+            )
+        }
     }
 
     @ViewBuilder private func availableBalanceView(value: String?) -> some View {
@@ -371,23 +355,55 @@ struct MultiSwapView: View {
         }
     }
 
-    private func showRiskBottomSheet() {
+    private func showSwap() {
+        if viewModel.shouldShowTerms {
+            Coordinator.shared.present { isPresented in
+                SwapTermsView(isPresented: isPresented) {
+                    viewModel.onAcceptTerms()
+
+                    DispatchQueue.main.async {
+                        isInputActive = false
+                        sendPresented = true
+                    }
+                }
+            } onDismiss: {
+                viewModel.autoQuoteIfRequired()
+            }
+        } else {
+            isInputActive = false
+            sendPresented = true
+        }
+    }
+
+    private func showRiskBottomSheet(_ result: MultiSwapViewModel.AmlRiskResult) {
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
             BottomSheetView(
                 items: [
-                    .title(icon: ThemeImage.warning, title: "swap.aml.risk_detected".localized),
-                    .subtitle(text: "swap.aml.risk_description".localized),
+                    .title(icon: result.icon, title: result.title),
+                    .subhead2(text: result.description),
                     .buttonGroup(.init(buttons: [
-                        .init(style: .gray, title: "swap.aml.choose_provider".localized) {
+                        .init(style: .gray, title: result.buttonTitle) {
                             isPresented.wrappedValue = false
 
-                            showSelectProvider()
+                            onTapResult(result)
                         },
                     ])),
                 ]
             )
         } onDismiss: {
             viewModel.autoQuoteIfRequired()
+        }
+    }
+
+    private func onTapResult(_ result: MultiSwapViewModel.AmlRiskResult) {
+        switch result {
+        case .dirty: showSelectProvider()
+        case .unprocessed: showSwap()
+        case .networkError:
+            viewModel.validateAndProceed(
+                onSuccess: { showSwap() },
+                onRiskDetected: { result in showRiskBottomSheet(result) }
+            )
         }
     }
 
