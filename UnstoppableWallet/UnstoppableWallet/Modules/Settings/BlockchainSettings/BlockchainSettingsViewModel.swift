@@ -9,22 +9,25 @@ class BlockchainSettingsViewModel: ObservableObject {
     private let evmBlockchainManager: EvmBlockchainManager
     private let evmSyncSourceManager: EvmSyncSourceManager
     private let moneroNodeManager: MoneroNodeManager
+    private let zanoNodeManager: ZanoNodeManager
     private let marketKit: MarketKit.Kit
     private let disposeBag = DisposeBag()
 
     @Published var evmItems: [Item] = []
     @Published var btcItems: [Item] = []
 
-    init(btcBlockchainManager: BtcBlockchainManager, evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, marketKit: MarketKit.Kit) {
+    init(btcBlockchainManager: BtcBlockchainManager, evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, zanoNodeManager: ZanoNodeManager, marketKit: MarketKit.Kit) {
         self.btcBlockchainManager = btcBlockchainManager
         self.evmBlockchainManager = evmBlockchainManager
         self.evmSyncSourceManager = evmSyncSourceManager
         self.moneroNodeManager = moneroNodeManager
+        self.zanoNodeManager = zanoNodeManager
         self.marketKit = marketKit
 
         subscribe(MainScheduler.instance, disposeBag, btcBlockchainManager.restoreModeUpdatedObservable) { [weak self] _ in self?.syncBtcItems() }
         subscribe(MainScheduler.instance, disposeBag, evmSyncSourceManager.syncSourceObservable) { [weak self] _ in self?.syncEvmItems() }
         subscribe(MainScheduler.instance, disposeBag, moneroNodeManager.nodeObservable) { [weak self] _ in self?.syncBtcItems() }
+        subscribe(MainScheduler.instance, disposeBag, zanoNodeManager.nodeObservable) { [weak self] _ in self?.syncBtcItems() }
 
         syncBtcItems()
         syncEvmItems()
@@ -40,6 +43,11 @@ class BlockchainSettingsViewModel: ObservableObject {
         if let blockchain = try? marketKit.blockchain(uid: BlockchainType.monero.uid) {
             let moneroNode = moneroNodeManager.node(blockchainType: .monero)
             items.append(.init(blockchain: blockchain, type: .monero(node: moneroNode)))
+        }
+
+        if let blockchain = try? marketKit.blockchain(uid: BlockchainType.zano.uid) {
+            let zanoNode = zanoNodeManager.node(blockchainType: .zano)
+            items.append(.init(blockchain: blockchain, type: .zano(node: zanoNode)))
         }
 
         btcItems = items.sorted { $0.blockchain.type.order < $1.blockchain.type.order }
@@ -65,6 +73,7 @@ extension BlockchainSettingsViewModel {
             case let .evm(syncSource): return syncSource.name
             case let .btc(restoreMode): return restoreMode.title(blockchain: blockchain)
             case let .monero(node): return node.name
+            case let .zano(node): return node.name
             }
         }
     }
@@ -73,5 +82,6 @@ extension BlockchainSettingsViewModel {
         case evm(syncSource: EvmSyncSource)
         case btc(restoreMode: BtcRestoreMode)
         case monero(node: MoneroNode)
+        case zano(node: ZanoNode)
     }
 }

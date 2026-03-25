@@ -9,6 +9,7 @@ class AppStatusViewModel: ObservableObject {
     private let adapterManager = Core.shared.adapterManager
     private let logRecordManager = Core.shared.logRecordManager
     private let evmBlockchainManager = Core.shared.evmBlockchainManager
+    private let zanoKitManager = Core.shared.zanoKitManager
     private let marketKit = Core.shared.marketKit
 
     private let dateFormatter = DateFormatter()
@@ -86,7 +87,7 @@ class AppStatusViewModel: ObservableObject {
             let blockchain = wallet.token.blockchain
 
             switch blockchain.type {
-            case .bitcoin, .bitcoinCash, .ecash, .litecoin, .dash, .zcash, .ton, .monero, .zano:
+            case .bitcoin, .bitcoinCash, .ecash, .litecoin, .dash, .zcash, .ton, .monero:
                 if let adapter = adapterManager.adapter(for: wallet) {
                     blockchainBlocks.append(block(blockchain: blockchain.name, statusInfo: adapter.statusInfo))
                 }
@@ -99,6 +100,10 @@ class AppStatusViewModel: ObservableObject {
             if let evmKitWrapper = try? evmBlockchainManager.evmKitManager(blockchainType: blockchain.type).evmKitWrapper {
                 blockchainBlocks.append(block(blockchain: blockchain.name, statusInfo: evmKitWrapper.evmKit.statusInfo()))
             }
+        }
+
+        if let kit = zanoKitManager.kit {
+            blockchainBlocks.append(block(blockchain: "Zano", statusInfo: kit.statusInfo))
         }
 
         if !blockchainBlocks.isEmpty {

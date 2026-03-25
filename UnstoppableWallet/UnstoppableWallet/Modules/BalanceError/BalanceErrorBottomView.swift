@@ -49,7 +49,7 @@ struct BalanceErrorBottomView: View {
                         }
                     case let .zano(blockchain):
                         Coordinator.shared.present { isPresented in
-                            MoneroNetworkView(blockchain: blockchain, isPresented: isPresented)
+                            ZanoNetworkView(blockchain: blockchain, isPresented: isPresented)
                         }
                     }
                 }

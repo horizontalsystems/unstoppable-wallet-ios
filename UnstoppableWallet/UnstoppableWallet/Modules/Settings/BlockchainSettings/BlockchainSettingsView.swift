@@ -49,6 +49,12 @@ struct BlockchainSettingsView: View {
                     }
 
                     stat(page: .blockchainSettings, event: .openBlockchainSettingsMonero)
+                case .zano:
+                    Coordinator.shared.present { isPresented in
+                        ZanoNetworkView(blockchain: item.blockchain, isPresented: isPresented)
+                    }
+
+                    stat(page: .blockchainSettings, event: .openBlockchainSettingsZano)
                 }
 
             }) {

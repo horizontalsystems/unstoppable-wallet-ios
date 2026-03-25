@@ -914,6 +914,15 @@ enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Create ZanoNodeRecord") { db in
+            try db.create(table: ZanoNodeRecord.databaseTableName) { t in
+                t.column(ZanoNodeRecord.Columns.blockchainTypeUid.name, .text).notNull()
+                t.column(ZanoNodeRecord.Columns.url.name, .text).notNull()
+
+                t.primaryKey([ZanoNodeRecord.Columns.blockchainTypeUid.name, ZanoNodeRecord.Columns.url.name], onConflict: .replace)
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 

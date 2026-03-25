@@ -70,6 +70,7 @@ class Core {
     let btcBlockchainManager: BtcBlockchainManager
     let evmSyncSourceManager: EvmSyncSourceManager
     let moneroNodeManager: MoneroNodeManager
+    let zanoNodeManager: ZanoNodeManager
     let restoreStateManager: RestoreStateManager
     let evmBlockchainManager: EvmBlockchainManager
     let evmLabelManager: EvmLabelManager
@@ -215,6 +216,9 @@ class Core {
         let moneroNodeStorage = MoneroNodeStorage(dbPool: dbPool)
         moneroNodeManager = MoneroNodeManager(blockchainSettingsStorage: blockchainSettingsStorage, moneroNodeStorage: moneroNodeStorage)
 
+        let zanoNodeStorage = ZanoNodeStorage(dbPool: dbPool)
+        zanoNodeManager = ZanoNodeManager(blockchainSettingsStorage: blockchainSettingsStorage, zanoNodeStorage: zanoNodeStorage)
+
         let restoreStateStorage = RestoreStateStorage(dbPool: dbPool)
         restoreStateManager = RestoreStateManager(storage: restoreStateStorage)
 
@@ -235,7 +239,7 @@ class Core {
         let restoreSettingsStorage = RestoreSettingsStorage(dbPool: dbPool)
         restoreSettingsManager = RestoreSettingsManager(storage: restoreSettingsStorage)
 
-        zanoKitManager = ZanoKitManager(restoreSettingsManager: restoreSettingsManager, walletManager: walletManager)
+        zanoKitManager = ZanoKitManager(restoreSettingsManager: restoreSettingsManager, walletManager: walletManager, zanoNodeManager: zanoNodeManager)
         predefinedBlockchainService = PredefinedBlockchainService(restoreSettingsManager: restoreSettingsManager)
 
         feeCoinProvider = FeeCoinProvider(marketKit: marketKit)
@@ -307,7 +311,8 @@ class Core {
             stellarKitManager: stellarKitManager,
             zanoKitManager: zanoKitManager,
             btcBlockchainManager: btcBlockchainManager,
-            moneroNodeManager: moneroNodeManager
+            moneroNodeManager: moneroNodeManager,
+            zanoNodeManager: zanoNodeManager
         )
         transactionAdapterManager = TransactionAdapterManager(
             adapterManager: adapterManager,
