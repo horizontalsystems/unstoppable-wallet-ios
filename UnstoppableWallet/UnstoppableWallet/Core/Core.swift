@@ -330,6 +330,7 @@ class Core {
             watchlistManager: watchlistManager,
             evmSyncSourceManager: evmSyncSourceManager,
             moneroNodeManager: moneroNodeManager,
+            zanoNodeManager: zanoNodeManager,
             btcBlockchainManager: btcBlockchainManager,
             restoreSettingsManager: restoreSettingsManager,
             chartRepository: chartRepository,

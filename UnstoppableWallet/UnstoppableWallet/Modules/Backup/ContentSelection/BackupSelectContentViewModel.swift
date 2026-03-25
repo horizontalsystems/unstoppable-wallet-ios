@@ -7,6 +7,7 @@ class BackupSelectContentViewModel: ObservableObject {
     private let watchlistManager = Core.shared.watchlistManager
     private let evmSyncSourceManager = Core.shared.evmSyncSourceManager
     private let moneroNodeManager = Core.shared.moneroNodeManager
+    private let zanoNodeManager = Core.shared.zanoNodeManager
     private let cloudBackupManager = Core.shared.cloudBackupManager
 
     @Published var accountItems: [BackupModule.AccountItem] = []
@@ -87,6 +88,14 @@ class BackupSelectContentViewModel: ObservableObject {
             items.append(BackupModule.ContentItem(
                 title: "backup_app.backup_list.other.custom_monero_nodes.title".localized,
                 value: customMoneroNodes.description
+            ))
+        }
+
+        let customZanoNodes = zanoNodeManager.customNodeRecords.count
+        if customZanoNodes > 0 {
+            items.append(BackupModule.ContentItem(
+                title: "backup_app.backup_list.other.custom_zano_nodes.title".localized,
+                value: customZanoNodes.description
             ))
         }
 

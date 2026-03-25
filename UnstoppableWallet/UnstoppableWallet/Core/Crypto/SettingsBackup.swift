@@ -4,6 +4,7 @@ import Foundation
 class SettingsBackup: Codable {
     let evmSyncSources: EvmSyncSourceManager.SyncSourceBackup
     var moneroNodes: MoneroNodeManager.NodeBackup
+    var zanoNodes: ZanoNodeManager.NodeBackup
     let btcModes: [BtcBlockchainManager.BtcRestoreModeBackup]
 
     let remoteContactsSync: Bool?
@@ -26,6 +27,7 @@ class SettingsBackup: Codable {
     enum CodingKeys: String, CodingKey {
         case evmSyncSources = "evm_sync_sources"
         case moneroNodes = "monero_nodes"
+        case zanoNodes = "zano_nodes"
         case btcModes = "btc_modes"
         case remoteContactsSync = "contacts_sync"
         case swapProviders = "swap_providers"
@@ -47,6 +49,7 @@ class SettingsBackup: Codable {
     init(
         evmSyncSources: EvmSyncSourceManager.SyncSourceBackup,
         moneroNodes: MoneroNodeManager.NodeBackup,
+        zanoNodes: ZanoNodeManager.NodeBackup,
         btcModes: [BtcBlockchainManager.BtcRestoreModeBackup],
         remoteContactsSync: Bool?,
         swapProviders: [DefaultProvider],
@@ -66,6 +69,7 @@ class SettingsBackup: Codable {
     ) {
         self.evmSyncSources = evmSyncSources
         self.moneroNodes = moneroNodes
+        self.zanoNodes = zanoNodes
         self.btcModes = btcModes
         self.remoteContactsSync = remoteContactsSync
         self.swapProviders = swapProviders
@@ -88,6 +92,7 @@ class SettingsBackup: Codable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         evmSyncSources = try container.decode(EvmSyncSourceManager.SyncSourceBackup.self, forKey: .evmSyncSources)
         moneroNodes = (try? container.decode(MoneroNodeManager.NodeBackup.self, forKey: .moneroNodes)) ?? .init(selected: [], custom: [])
+        zanoNodes = (try? container.decode(ZanoNodeManager.NodeBackup.self, forKey: .zanoNodes)) ?? .init(selected: [], custom: [])
         btcModes = try container.decode([BtcBlockchainManager.BtcRestoreModeBackup].self, forKey: .btcModes)
         remoteContactsSync = try? container.decode(Bool.self, forKey: .remoteContactsSync)
         swapProviders = (try? container.decode([DefaultProvider].self, forKey: .swapProviders)) ?? []

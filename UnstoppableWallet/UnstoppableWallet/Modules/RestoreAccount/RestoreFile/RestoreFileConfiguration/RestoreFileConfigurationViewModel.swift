@@ -63,11 +63,12 @@ extension RestoreFileConfigurationViewModel {
             watchlistCount: rawBackup.watchlistIds.count,
             contactAddressCount: contactAddressCount,
             customEvmSyncSources: rawBackup.customSyncSources.count,
-            customMoneroNodes: rawBackup.customMoneroNodes.count
+            customMoneroNodes: rawBackup.customMoneroNodes.count,
+            customZanoNodes: rawBackup.customZanoNodes.count
         )
     }
 
-    private func items(watchAccountCount: Int, watchlistCount: Int, contactAddressCount: Int, customEvmSyncSources: Int, customMoneroNodes: Int) -> [BackupModule.ContentItem] {
+    private func items(watchAccountCount: Int, watchlistCount: Int, contactAddressCount: Int, customEvmSyncSources: Int, customMoneroNodes: Int, customZanoNodes: Int) -> [BackupModule.ContentItem] {
         var items = [BackupModule.ContentItem]()
 
         if watchAccountCount != 0 {
@@ -101,6 +102,12 @@ extension RestoreFileConfigurationViewModel {
             items.append(.init(
                 title: "backup_app.backup_list.other.custom_monero_nodes.title".localized,
                 value: customMoneroNodes.description
+            ))
+        }
+        if customZanoNodes != 0 {
+            items.append(.init(
+                title: "backup_app.backup_list.other.custom_zano_nodes.title".localized,
+                value: customZanoNodes.description
             ))
         }
         items.append(.init(
