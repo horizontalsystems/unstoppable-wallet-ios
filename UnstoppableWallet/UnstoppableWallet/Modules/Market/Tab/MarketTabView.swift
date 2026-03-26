@@ -11,8 +11,8 @@ struct MarketTabView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            TabHeaderView(
-                tabs: MarketModule.Tab.allCases.map(\.title),
+            ScrollableTabHeaderView(
+                tabs: MarketModule.Tab.allCases.map { .init(title: $0.title, highlighted: false) },
                 currentTabIndex: Binding(
                     get: {
                         MarketModule.Tab.allCases.firstIndex(of: viewModel.currentTab) ?? 0
