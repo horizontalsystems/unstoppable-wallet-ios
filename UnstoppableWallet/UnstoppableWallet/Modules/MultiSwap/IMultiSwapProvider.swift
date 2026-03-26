@@ -14,7 +14,7 @@ protocol IMultiSwapProvider {
     func supports(tokenIn: Token, tokenOut: Token) -> Bool
     func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote
     func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote
-    func validateTrustedProvider(tokenIn: Token) async throws -> Bool?
+    func validateTrustedProvider(tokenIn: Token, amountIn: Decimal) async throws -> Bool?
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView
     func track(swap: Swap) async throws -> Swap
 }
@@ -32,9 +32,8 @@ extension IMultiSwapProvider {
         true
     }
 
-    func validateTrustedProvider(tokenIn _: Token) async -> Bool? {
+    func validateTrustedProvider(tokenIn _: Token, amountIn _: Decimal) async -> Bool? {
         if let result = Core.instance?.localStorage.debuggingAmlCheckResult {
-            print("RES = \(result)")
             return result == .dirty ? false : nil
         }
         return true

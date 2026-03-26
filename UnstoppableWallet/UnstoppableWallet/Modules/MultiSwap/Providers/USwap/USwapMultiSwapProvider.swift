@@ -317,30 +317,30 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         }
     }
 
-    func validateTrustedProvider(tokenIn: Token) async throws -> Bool? {
+    func validateTrustedProvider(tokenIn: Token, amountIn: Decimal) async throws -> Bool? {
         guard provider.type == .preCheck else {
             return true
         }
 
-        let address: String?
-        if let sending = sendingAddress(token: tokenIn) {
-            address = sending
-        } else {
-            address = try? await DestinationHelper.resolveDestination(token: tokenIn).address
-        }
+        let addresses = await DestinationHelper.sourceAddresses(
+            token: tokenIn, amountIn: amountIn, destinationAddress: nil
+        )
 
-        guard let address else {
+        guard !addresses.isEmpty else {
             return true
         }
 
         do {
             let response: CheckAddressesResponse = try await networkManager.fetch(
                 url: "\(Self.baseUrl)/quote/check-addresses",
-                parameters: ["addresses": address],
+                parameters: ["addresses": addresses.joined(separator: ",")],
                 headers: headers
             )
 
             return response.passedAmlCheck
+        } catch {
+            print("Error: \(error)")
+            throw error
         }
     }
 

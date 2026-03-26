@@ -1,3 +1,5 @@
+import BitcoinCore
+import Foundation
 import MarketKit
 
 enum DestinationHelper {
@@ -60,6 +62,46 @@ enum DestinationHelper {
         }
 
         return .init(address: address, type: .nonExisting)
+    }
+
+    static func sourceAddresses(token: Token, amountIn: Decimal, destinationAddress: String?) async -> [String] {
+        let adapterManager = Core.shared.adapterManager
+
+        // UTXO chains: select the UTXOs that will actually cover amountIn
+        if let adapter = adapterManager.adapter(for: token) as? ISendBitcoinAdapter {
+            return await utxoSourceAddresses(adapter: adapter, token: token, amountIn: amountIn, destinationAddress: destinationAddress)
+        }
+
+        // Non-UTXO chains: return the single deposit/receive address
+        if let adapter = adapterManager.adapter(for: token) as? IDepositAdapter {
+            return [adapter.receiveAddress.address]
+        }
+
+        return []
+    }
+
+    private static func utxoSourceAddresses(adapter: ISendBitcoinAdapter, token: Token, amountIn: Decimal, destinationAddress: String?) async -> [String] {
+        let feeRate: Int
+        if let provider = Core.shared.feeRateProviderFactory.provider(blockchainType: token.blockchainType) {
+            feeRate = await (try? provider.feeRates().recommended) ?? 1
+        } else {
+            feeRate = 1
+        }
+
+        let satoshiAmount = adapter.convertToSatoshi(value: amountIn)
+
+        let params = SendParameters(
+            address: destinationAddress,
+            value: satoshiAmount,
+            feeRate: feeRate
+        )
+
+        guard let sendInfo = try? adapter.sendInfo(params: params) else {
+            return []
+        }
+
+        let addresses = sendInfo.unspentOutputs.compactMap(\.address)
+        return Array(Set(addresses))
     }
 }
 
