@@ -20,8 +20,10 @@ class MultiSwapViewModel: ObservableObject {
 
     private var providers: [IMultiSwapProvider]
     private let swapProviderManager = Core.shared.swapProviderManager
+    private let swapHistoryManager = Core.shared.swapHistoryManager
     private let currencyManager = Core.shared.currencyManager
     private let marketKit = Core.shared.marketKit
+    private let accountManager = Core.shared.accountManager
     private let walletManager = Core.shared.walletManager
     private let adapterManager = Core.shared.adapterManager
     private let localStorage = Core.shared.localStorage
@@ -280,8 +282,7 @@ class MultiSwapViewModel: ObservableObject {
         spendMode = .fromBalanceState
 
         defer {
-            internalTokenIn = token ?? (try? marketKit.token(query: TokenQuery(blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84))))
-            internalTokenOut = MultiSwapDefaultTokenResolver.default(for: token) ?? (try? marketKit.token(query: TokenQuery(blockchainType: .monero, tokenType: .native)))
+            syncDefaultTokens(token: token)
         }
 
         currencyManager.$baseCurrency
@@ -299,6 +300,11 @@ class MultiSwapViewModel: ObservableObject {
             }
             .store(in: &cancellables)
 
+        accountManager.activeAccountPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.syncDefaultTokens() }
+            .store(in: &cancellables)
+
         subscribe(disposeBag, adapterManager.adapterDataReadyObservable) { [weak self] _ in self?.syncAdapter() }
 
         subscribeToProviders()
@@ -309,7 +315,23 @@ class MultiSwapViewModel: ObservableObject {
         swapProviderManager.sync()
     }
 
-    func syncAdapter() {
+    private func syncDefaultTokens(token: Token? = nil) {
+        let bitcoin = try? marketKit.token(query: TokenQuery(blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84)))
+        let monero = try? marketKit.token(query: TokenQuery(blockchainType: .monero, tokenType: .native))
+
+        if let token {
+            internalTokenIn = token
+            internalTokenOut = MultiSwapDefaultTokenResolver.default(for: token) ?? (token.blockchainType == .bitcoin ? monero : bitcoin)
+        } else if let account = accountManager.activeAccount, let lastSwap = swapHistoryManager.lastSwap(accountId: account.id) {
+            internalTokenIn = lastSwap.tokenIn
+            internalTokenOut = lastSwap.tokenOut
+        } else {
+            internalTokenIn = bitcoin
+            internalTokenOut = monero
+        }
+    }
+
+    private func syncAdapter() {
         balanceDisposeBag = .init()
 
         if let internalTokenIn,

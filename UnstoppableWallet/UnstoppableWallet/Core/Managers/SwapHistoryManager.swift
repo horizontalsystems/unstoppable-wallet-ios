@@ -89,6 +89,10 @@ extension SwapHistoryManager {
         }
     }
 
+    func lastSwap(accountId: String) -> Swap? {
+        try? storage.lastSwap(accountId: accountId)
+    }
+
     func swaps(accountId: String, from: Date? = nil, limit: Int) -> [Swap] {
         do {
             return try storage.swaps(accountId: accountId, from: from, limit: limit)
