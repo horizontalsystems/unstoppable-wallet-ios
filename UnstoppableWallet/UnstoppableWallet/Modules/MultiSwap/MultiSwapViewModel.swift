@@ -601,13 +601,14 @@ extension MultiSwapViewModel {
         }
 
         validatingProvider = true
+        let amountIn = amountIn ?? 0
 
         Task { [weak self, provider = currentQuote.provider] in
             let hasNetworkError: Bool
             let trusted: Bool?
 
             do {
-                trusted = try await provider.validateTrustedProvider(tokenIn: tokenIn)
+                trusted = try await provider.validateTrustedProvider(tokenIn: tokenIn, amountIn: amountIn)
                 hasNetworkError = false
             } catch {
                 trusted = nil
