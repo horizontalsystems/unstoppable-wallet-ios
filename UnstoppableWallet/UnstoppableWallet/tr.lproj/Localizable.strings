@@ -141,7 +141,7 @@
 "restore.restore_type.mnemonic" = "Kurtarma cümlesi";
 "restore.restore_type.private_key" = "Gizli Anahtar";
 "restore.mnemonic.placeholder" = "12, 15, 18, 21 veya 24 kelime girin";
-"restore.private_key.placeholder" = "EVM Özel Anahtarını, BIP32 Root Key veya Account Extended Private Key girin";
+"restore.private_key.placeholder" = "EVM veya TRON Özel Anahtarı, Stellar Gizli Anahtarı, BIP32 Kök Anahtarı veya Hesap Genişletilmiş Özel Anahtarını girin";
 "restore.private_key.invalid_key" = "Geçersiz Anahtar";
 "restore_error.mnemonic_word_count" = "Hatalı sözcük sayısı. 12-24 arası sözcük olmalıdır. Girilen: %@";
 "restore.checksum_error" = "Geçersiz sağlama toplamı";
@@ -155,6 +155,13 @@
 "restore.error.non_standard.description" = "Bu standart olmayan bir cüzdandır. \n\nDAHA FAZLA BİLGİ ALMAK İÇİN TIKLAYIN";
 
 "restore.error.non_standard.link" = "Daha fazla bilgi için tıklayın";
+
+"restore.select_key_type" = "Ağ Seçin";
+"restore.select_key_type.evm" = "EVM Ağları";
+"restore.select_key_type.evm.description" = "Ethereum, Arbitrum, Optimism ...";
+"restore.select_key_type.trc" = "TRON";
+"restore.select_key_type.trc.description" = "Yalnızca TRON Ağı.";
+
 
 // Restore Type
 
@@ -212,6 +219,9 @@
 
 "evm_private_key.title" = "EVM Özel anahtar";
 "evm_private_key.tap_to_show" = "Özel anahtarı göstermek için dokunun";
+
+"tron_private_key.title" = "Tron Özel Anahtarı";
+"tron_private_key.tap_to_show" = "Özel anahtarı görmek için dokunun";
 
 // Stellar Secret Key
 
@@ -2015,6 +2025,8 @@
 "private_keys.title" = "Özel Anahtar";
 "private_keys.evm_private_key" = "EVM Özel anahtar";
 "private_keys.evm_private_key.description" = "Bu cüzdan, EVM tabanlı ağlardaki (ör. Ethereum, BNB Smart Chain, Polygon, Avalanche) varlıklar üzerinde tam kontrol sağlar.";
+"private_keys.tron_private_key" = "Tron Özel Anahtarı";
+"private_keys.tron_private_key.description" = "Bu cüzdandaki Tron ağındaki varlıklar üzerinde tam kontrol sağlar.";
 "private_keys.stellar_secret_key" = "Stellar Gizli Anahtarı";
 "private_keys.stellar_secret_key.description" = "Bu cüzdan, Stellar ağındaki varlıklar üzerinde tam kontrol sağlar.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
