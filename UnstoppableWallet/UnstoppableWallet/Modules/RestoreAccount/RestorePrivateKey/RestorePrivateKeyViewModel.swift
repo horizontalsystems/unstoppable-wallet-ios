@@ -28,7 +28,7 @@ extension RestorePrivateKeyViewModel {
 }
 
 extension RestorePrivateKeyViewModel: IRestoreSubViewModel {
-    func resolveAccountType() -> AccountType? {
+    func resolveAccountTypes() -> [AccountType]? {
         cautionRelay.accept(nil)
 
         do {

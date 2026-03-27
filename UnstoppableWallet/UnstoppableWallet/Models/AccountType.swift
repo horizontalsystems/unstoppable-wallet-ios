@@ -9,6 +9,7 @@ import TronKit
 enum AccountType: Identifiable {
     case mnemonic(words: [String], salt: String, bip39Compliant: Bool)
     case evmPrivateKey(data: Data)
+    case trcPrivateKey(data: Data)
     case stellarSecretKey(secretSeed: String)
     case evmAddress(address: EvmKit.Address)
     case tronAddress(address: TronKit.Address)
@@ -47,6 +48,8 @@ enum AccountType: Identifiable {
 
             privateData = description.data(using: .utf8) ?? Data() // always non-null
         case let .evmPrivateKey(data):
+            privateData = data
+        case let .trcPrivateKey(data):
             privateData = data
         case let .stellarSecretKey(secretSeed):
             privateData = secretSeed.hs.data
@@ -137,7 +140,7 @@ enum AccountType: Identifiable {
             case (.stellar, .native), (.stellar, .stellar): return true
             default: return false
             }
-        case .tronAddress:
+        case .trcPrivateKey, .tronAddress:
             switch (token.blockchainType, token.type) {
             case (.tron, .native), (.tron, .eip20): return true
             default: return false
@@ -156,7 +159,7 @@ enum AccountType: Identifiable {
 
     var canAddTokens: Bool {
         switch self {
-        case .mnemonic, .evmPrivateKey: return true
+        case .mnemonic, .evmPrivateKey, .trcPrivateKey: return true
         default: return false
         }
     }
@@ -182,6 +185,8 @@ enum AccountType: Identifiable {
             return salt.isEmpty ? "manage_accounts.n_words".localized(count) : "manage_accounts.n_words_with_passphrase".localized(count)
         case .evmPrivateKey:
             return "EVM Private Key"
+        case .trcPrivateKey:
+            return "TRC Private Key"
         case .stellarSecretKey:
             return "Stellar Secret Key"
         case .evmAddress:
@@ -220,6 +225,8 @@ enum AccountType: Identifiable {
             return salt.isEmpty ? "mnemonic_\(count)" : "mnemonic_with_passphrase_\(count)"
         case .evmPrivateKey:
             return "evm_private_key"
+        case .trcPrivateKey:
+            return "trc_private_key"
         case .stellarSecretKey:
             return "stellar_secret_key"
         case .evmAddress:
@@ -289,9 +296,24 @@ enum AccountType: Identifiable {
                 return nil
             }
 
-            return try? Signer.address(seed: mnemonicSeed, chain: chain)
+            return try? EvmKit.Signer.address(seed: mnemonicSeed, chain: chain)
         case let .evmPrivateKey(data):
-            return Signer.address(privateKey: data)
+            return EvmKit.Signer.address(privateKey: data)
+        default:
+            return nil
+        }
+    }
+
+    var tronAddress: TronKit.Address? {
+        switch self {
+        case .mnemonic:
+            guard let mnemonicSeed else {
+                return nil
+            }
+
+            return try? TronKit.Signer.address(seed: mnemonicSeed)
+        case let .trcPrivateKey(data):
+            return try? TronKit.Signer.address(privateKey: data)
         default:
             return nil
         }
@@ -343,6 +365,8 @@ extension AccountType {
             return AccountType.mnemonic(words: words, salt: salt, bip39Compliant: bip39Compliant)
         case .evmPrivateKey:
             return AccountType.evmPrivateKey(data: uniqueId)
+        case .trcPrivateKey:
+            return AccountType.trcPrivateKey(data: uniqueId)
         case .stellarSecretKey:
             return AccountType.stellarSecretKey(secretSeed: string)
         case .hdExtendedKey:
@@ -392,6 +416,7 @@ extension AccountType {
     enum Abstract: String, Codable {
         case mnemonic
         case evmPrivateKey = "private_key"
+        case trcPrivateKey = "trc_private_key"
         case stellarSecretKey = "stellar_secret_key"
         case evmAddress = "evm_address"
         case tronAddress = "tron_address"
@@ -405,6 +430,7 @@ extension AccountType {
             switch type {
             case .mnemonic: self = .mnemonic
             case .evmPrivateKey: self = .evmPrivateKey
+            case .trcPrivateKey: self = .trcPrivateKey
             case .stellarSecretKey: self = .stellarSecretKey
             case .evmAddress: self = .evmAddress
             case .tronAddress: self = .tronAddress
@@ -424,6 +450,8 @@ extension AccountType: Hashable {
         case (let .mnemonic(lhsWords, lhsSalt, lhsBip39Compliant), let .mnemonic(rhsWords, rhsSalt, rhsBip39Compliant)):
             return lhsWords == rhsWords && lhsSalt == rhsSalt && lhsBip39Compliant == rhsBip39Compliant
         case let (.evmPrivateKey(lhsData), .evmPrivateKey(rhsData)):
+            return lhsData == rhsData
+        case let (.trcPrivateKey(lhsData), .trcPrivateKey(rhsData)):
             return lhsData == rhsData
         case let (.stellarSecretKey(lhsSecretSeed), .stellarSecretKey(rhsSecretSeed)):
             return lhsSecretSeed == rhsSecretSeed
@@ -454,6 +482,9 @@ extension AccountType: Hashable {
             hasher.combine(bip39Compliant)
         case let .evmPrivateKey(data):
             hasher.combine("evmPrivateKey")
+            hasher.combine(data)
+        case let .trcPrivateKey(data):
+            hasher.combine("trcPrivateKey")
             hasher.combine(data)
         case let .stellarSecretKey(secretSeed):
             hasher.combine("stellarSecretKey")

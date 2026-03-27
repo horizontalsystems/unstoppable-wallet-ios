@@ -2,14 +2,17 @@ import EvmKit
 import Foundation
 import HdWalletKit
 import stellarsdk
+import TronKit
 
 class RestorePrivateKeyService {
-    func accountType(text: String) throws -> AccountType {
+    func accountType(text: String) throws -> [AccountType] {
         let text = text.trimmingCharacters(in: .whitespaces)
 
         guard !text.isEmpty else {
             throw RestoreError.emptyText
         }
+
+        var accountTypes = [AccountType]()
 
         do {
             let extendedKey = try HDExtendedKey(extendedKey: text)
@@ -18,7 +21,7 @@ class RestorePrivateKeyService {
             case .private:
                 switch extendedKey.derivedType {
                 case .master, .account:
-                    return .hdExtendedKey(key: extendedKey)
+                    accountTypes.append(.hdExtendedKey(key: extendedKey))
                 default:
                     throw RestoreError.notSupportedDerivedType
                 }
@@ -28,14 +31,23 @@ class RestorePrivateKeyService {
         } catch {}
 
         do {
-            let privateKey = try Signer.privateKey(string: text)
-            return .evmPrivateKey(data: privateKey)
+            let privateKey = try EvmKit.Signer.privateKey(string: text)
+            accountTypes.append(.evmPrivateKey(data: privateKey))
+        } catch {}
+
+        do {
+            let privateKey = try TronKit.Signer.privateKey(string: text)
+            accountTypes.append(.trcPrivateKey(data: privateKey))
         } catch {}
 
         do {
             _ = try KeyPair(secretSeed: text)
-            return .stellarSecretKey(secretSeed: text)
+            accountTypes.append(.stellarSecretKey(secretSeed: text))
         } catch {}
+
+        if !accountTypes.isEmpty {
+            return accountTypes
+        }
 
         throw RestoreError.noValidKey
     }

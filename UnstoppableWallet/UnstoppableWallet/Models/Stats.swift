@@ -58,6 +58,7 @@ enum StatPage: String {
     case education
     case evmAddress = "evm_address"
     case evmPrivateKey = "evm_private_key"
+    case tronPrivateKey = "tron_private_key"
     case exportFull = "export_full"
     case exportFullToCloud = "export_full_to_cloud"
     case exportFullToFiles = "export_full_to_files"
@@ -603,6 +604,7 @@ enum StatEntity: String {
     case derivation
     case evmAddress = "evm_address"
     case evmPrivateKey = "evm_private_key"
+    case tronPrivateKey = "tron_private_key"
     case key
     case viewKey = "view_key"
     case height

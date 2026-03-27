@@ -139,7 +139,7 @@ extension RestoreMnemonicViewModel {
 }
 
 extension RestoreMnemonicViewModel: IRestoreSubViewModel {
-    func resolveAccountType() -> AccountType? {
+    func resolveAccountTypes() -> [AccountType]? {
         mnemonicCautionRelay.accept(nil)
         passphraseCautionRelay.accept(nil)
 
@@ -149,7 +149,8 @@ extension RestoreMnemonicViewModel: IRestoreSubViewModel {
         }
 
         do {
-            return try service.accountType(words: service.items.map(\.word))
+            let accountType = try service.accountType(words: service.items.map(\.word))
+            return [accountType]
         } catch let RestoreMnemonicService.ErrorList.errors(errors) {
             for error in errors {
                 if case RestoreMnemonicService.RestoreError.emptyPassphrase = error {

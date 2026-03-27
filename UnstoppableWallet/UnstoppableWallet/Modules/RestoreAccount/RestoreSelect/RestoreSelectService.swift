@@ -80,7 +80,7 @@ class RestoreSelectService {
             let tokenQueries = BlockchainType.supported.map(\.nativeTokenQueries).flatMap { $0 }
             let allTokens = try marketKit.tokens(queries: tokenQueries)
 
-            tokens = allTokens.filter { accountType.supports(token: $0) }
+            tokens = allTokens.filter { token in accountType.supports(token: token) }
         } catch {
             // todo
         }

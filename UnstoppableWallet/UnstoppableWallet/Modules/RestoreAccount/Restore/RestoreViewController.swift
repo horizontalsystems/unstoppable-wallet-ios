@@ -156,7 +156,7 @@ class RestoreViewController: KeyboardAwareViewController {
             self?.restoreType = restoreType
             self?.tableView.reload()
         }
-        subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openSelectCoins(accountName: $0, accountType: $1) }
+        subscribe(disposeBag, viewModel.proceedSignal) { [weak self] in self?.openSelectCoins(accountName: $0, accountTypes: $1) }
         subscribe(disposeBag, mnemonicViewModel.possibleWordsDriver) { [weak self] in
             self?.hintView.set(words: $0)
             self?.syncHintView()
@@ -235,8 +235,19 @@ class RestoreViewController: KeyboardAwareViewController {
         mnemonicInputCell.set(text: text)
     }
 
-    private func openSelectCoins(accountName: String, accountType: AccountType) {
-        let viewController = RestoreSelectModule.viewController(accountName: accountName, accountType: accountType, statPage: advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey, onRestore: onRestore)
+    private func openSelectCoins(accountName: String, accountTypes: [AccountType]) {
+        let statPage: StatPage = advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey
+
+        guard !accountTypes.isEmpty else { return }
+
+        if accountTypes.count == 1, let accountType = accountTypes.first {
+            let viewController = RestoreSelectModule.viewController(accountName: accountName, accountType: accountType, statPage: statPage, onRestore: onRestore)
+            navigationController?.pushViewController(viewController, animated: true)
+            return
+        }
+
+        let viewModel = AccountTypeSelectViewModel(accountName: accountName, accountTypes: accountTypes)
+        let viewController = AccountTypeSelectViewController(viewModel: viewModel, accountName: accountName, statPage: statPage, showCloseButton: false, onRestore: onRestore)
         navigationController?.pushViewController(viewController, animated: true)
     }
 

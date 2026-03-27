@@ -42,6 +42,7 @@ class PrivateKeysViewController: ThemeViewController {
 
         subscribe(disposeBag, viewModel.openUnlockSignal) { [weak self] in self?.openUnlock() }
         subscribe(disposeBag, viewModel.openEvmPrivateKeySignal) { [weak self] in self?.openEvmPrivateKey(accountType: $0) }
+        subscribe(disposeBag, viewModel.openTronPrivateKeySignal) { [weak self] in self?.openTronPrivateKey(accountType: $0) }
         subscribe(disposeBag, viewModel.openStellarSecretKeySignal) { [weak self] in self?.openStellarSecretKey(accountType: $0) }
         subscribe(disposeBag, viewModel.openBip32RootKeySignal) { [weak self] in self?.openBip32RootKey(accountType: $0) }
         subscribe(disposeBag, viewModel.openAccountExtendedPrivateKeySignal) { [weak self] in self?.openAccountExtendedPrivateKey(accountType: $0) }
@@ -74,6 +75,15 @@ class PrivateKeysViewController: ThemeViewController {
 
         navigationController?.pushViewController(viewController, animated: true)
         stat(page: .privateKeys, event: .open(page: .evmPrivateKey))
+    }
+
+    private func openTronPrivateKey(accountType: AccountType) {
+        guard let viewController = TronPrivateKeyModule.viewController(accountType: accountType) else {
+            return
+        }
+
+        navigationController?.pushViewController(viewController, animated: true)
+        stat(page: .privateKeys, event: .open(page: .tronPrivateKey))
     }
 
     private func openStellarSecretKey(accountType: AccountType) {
@@ -130,6 +140,26 @@ extension PrivateKeysViewController: SectionsDataSource {
                             isLast: true
                         ) { [weak self] in
                             self?.viewModel.onTapEvmPrivateKey()
+                        },
+                    ]
+                )
+            )
+        }
+
+        if viewModel.showTronPrivateKey {
+            sections.append(
+                Section(
+                    id: "tron-private-key",
+                    footerState: tableView.sectionFooter(text: "private_keys.tron_private_key.description".localized),
+                    rows: [
+                        tableView.universalRow48(
+                            id: "tron-private-key",
+                            title: .body("private_keys.tron_private_key".localized),
+                            accessoryType: .disclosure,
+                            isFirst: true,
+                            isLast: true
+                        ) { [weak self] in
+                            self?.viewModel.onTapTronPrivateKey()
                         },
                     ]
                 )

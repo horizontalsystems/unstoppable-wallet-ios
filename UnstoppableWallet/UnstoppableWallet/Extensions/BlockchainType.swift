@@ -130,6 +130,11 @@ extension BlockchainType {
                 return true
             default: return false
             }
+        case .trcPrivateKey:
+            switch self {
+            case .tron: return true
+            default: return false
+            }
         case .stellarSecretKey, .stellarAccount:
             return self == .stellar
         case .tronAddress:

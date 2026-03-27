@@ -36,6 +36,9 @@ class TronKitManager {
             }
             address = try Signer.address(seed: seed)
             signer = try Signer.instance(seed: seed)
+        case let .trcPrivateKey(data):
+            address = try Signer.address(privateKey: data)
+            signer = try Signer.instance(privateKey: data)
         case let .tronAddress(value):
             address = value
         default:
