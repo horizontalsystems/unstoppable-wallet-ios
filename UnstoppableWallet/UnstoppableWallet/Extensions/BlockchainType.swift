@@ -27,6 +27,7 @@ extension BlockchainType {
         .tron,
         .ton,
         .stellar,
+        .solana,
     ]
 
     func placeholderImageName(tokenProtocol: TokenProtocol?) -> String {
@@ -53,6 +54,7 @@ extension BlockchainType {
         let blockchainTypes: [BlockchainType] = [
             .bitcoin,
             .ethereum,
+            .solana,
             .monero,
             .tron,
             .zcash,
@@ -183,6 +185,7 @@ extension BlockchainType {
         case .tron: return "TRX, TRC20 tokens"
         case .ton: return "TON"
         case .stellar: return "Stellar"
+        case .solana: return "SOL, SPL tokens"
         default: return ""
         }
     }

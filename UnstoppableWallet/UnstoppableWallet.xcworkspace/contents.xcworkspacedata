@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "absolute:/Users/ant013/Ios/HorizontalSystems/solana-kit-ios">
+   </FileRef>
+   <FileRef
       location = "container:UnstoppableWallet.xcodeproj">
    </FileRef>
 </Workspace>

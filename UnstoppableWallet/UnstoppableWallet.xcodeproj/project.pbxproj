@@ -1729,6 +1729,10 @@
 		6B504F7E2F768B540064DA67 /* EvmTypeSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B504F7C2F768B490064DA67 /* EvmTypeSelectViewController.swift */; };
 		6B504F802F7693510064DA67 /* AccountTypeSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B504F7F2F7693510064DA67 /* AccountTypeSelectViewModel.swift */; };
 		6B504F812F7693510064DA67 /* AccountTypeSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B504F7F2F7693510064DA67 /* AccountTypeSelectViewModel.swift */; };
+		6B504F672F75539C0064DA67 /* SolanaAddressParserItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B504F662F75539C0064DA67 /* SolanaAddressParserItem.swift */; };
+		6B504F682F75539C0064DA67 /* SolanaAddressParserItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B504F662F75539C0064DA67 /* SolanaAddressParserItem.swift */; };
+		6B504F6B2F764FC20064DA67 /* SolanaKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6B504F6A2F764FC20064DA67 /* SolanaKit */; };
+		6B504F6D2F764FC90064DA67 /* SolanaKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6B504F6C2F764FC90064DA67 /* SolanaKit */; };
 		6B50FD9F2EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B50FD9E2EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift */; };
 		6B50FDA02EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B50FD9E2EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift */; };
 		6B50FDA42EA8C269004CD0A0 /* ReceiveCoinListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B50FDA32EA8C265004CD0A0 /* ReceiveCoinListView.swift */; };
@@ -4619,6 +4623,7 @@
 		6B504F782F765BBD0064DA67 /* TronPrivateKeyModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronPrivateKeyModule.swift; sourceTree = "<group>"; };
 		6B504F7C2F768B490064DA67 /* EvmTypeSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvmTypeSelectViewController.swift; sourceTree = "<group>"; };
 		6B504F7F2F7693510064DA67 /* AccountTypeSelectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTypeSelectViewModel.swift; sourceTree = "<group>"; };
+		6B504F662F75539C0064DA67 /* SolanaAddressParserItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaAddressParserItem.swift; sourceTree = "<group>"; };
 		6B50FD9E2EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZCashReceiveAddressViewItemFactory.swift; sourceTree = "<group>"; };
 		6B50FDA32EA8C265004CD0A0 /* ReceiveCoinListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiveCoinListView.swift; sourceTree = "<group>"; };
 		6B50FDAC2EA8EE27004CD0A0 /* ReceiveBlockchainListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiveBlockchainListView.swift; sourceTree = "<group>"; };
@@ -5559,6 +5564,7 @@
 				D3604E8E28F03DBF0066C366 /* LitecoinKit in Frameworks */,
 				D3AF5A8F29FFD87400C1399E /* RxCocoa in Frameworks */,
 				D0EC34DD2A4450D200BB308B /* HCaptcha in Frameworks */,
+				6B504F6B2F764FC20064DA67 /* SolanaKit in Frameworks */,
 				6B6E14262DEDB57B007F4A39 /* Kingfisher in Frameworks */,
 				D38405B9218317DF007D50AD /* AVFoundation.framework in Frameworks */,
 				D3604E5B28F02B280066C366 /* OneInchKit in Frameworks */,
@@ -5607,6 +5613,7 @@
 				D3604E6628F02D9A0066C366 /* BitcoinKit in Frameworks */,
 				D3604E7F28F03C1D0066C366 /* Chart in Frameworks */,
 				D3AF5A8D29FFD85800C1399E /* RxSwift in Frameworks */,
+				6B504F6D2F764FC90064DA67 /* SolanaKit in Frameworks */,
 				D3604E6C28F02E3F0066C366 /* LitecoinKit in Frameworks */,
 				D38406A821831B3D007D50AD /* AVFoundation.framework in Frameworks */,
 				D3604E5328F02B150066C366 /* OneInchKit in Frameworks */,
@@ -7735,6 +7742,7 @@
 				ABC9A896A83640B618328FE1 /* EnsAddressParserItem.swift */,
 				D023D2662A24BBC6004F65B0 /* TronAddressParser.swift */,
 				11B35C6DF4DEE25B8B4B2E28 /* TonAddressParserItem.swift */,
+				6B504F662F75539C0064DA67 /* SolanaAddressParserItem.swift */,
 				D3AEB8882DBA63E800E385C8 /* StellarAddressParserItem.swift */,
 			);
 			path = Address;
@@ -10288,6 +10296,7 @@
 				6BDB59E62F151A32005FA626 /* ReownRouter */,
 				6BDB59E82F151A32005FA626 /* ReownWalletKit */,
 				D3ABE2732F73F29B00B72F23 /* CryptoSwift */,
+				6B504F6A2F764FC20064DA67 /* SolanaKit */,
 			);
 			productName = Wallet;
 			productReference = D38405CE218317DF007D50AD /* Unstoppable D.app */;
@@ -10349,6 +10358,7 @@
 				6BDB59EA2F151A45005FA626 /* ReownRouter */,
 				6BDB59EC2F151A45005FA626 /* ReownWalletKit */,
 				D3ABE2752F73F2D500B72F23 /* CryptoSwift */,
+				6B504F6C2F764FC90064DA67 /* SolanaKit */,
 			);
 			productName = Wallet;
 			productReference = D38406BE21831B3D007D50AD /* Unstoppable.app */;
@@ -10524,6 +10534,7 @@
 				6BD7663E2EA0DF2B008DDEA7 /* XCRemoteSwiftPackageReference "ZcashLightClientKit" */,
 				D3F0E0012F50A1A100F0E001 /* XCRemoteSwiftPackageReference "MoneroKit" */,
 				D3ABE2722F73F29B00B72F23 /* XCRemoteSwiftPackageReference "CryptoSwift" */,
+				6B504F692F764BB20064DA67 /* XCRemoteSwiftPackageReference "solana-kit-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
@@ -12130,6 +12141,7 @@
 				ABC9A192B0E531E1B2E4FF3F /* WCSendEthereumTransactionRequestViewModel.swift in Sources */,
 				ABC9AF231709386971D1A7AA /* WCSignMessageRequestViewModel.swift in Sources */,
 				ABC9A45C4CF0128410051774 /* WCSignMessageRequestModule.swift in Sources */,
+				6B504F682F75539C0064DA67 /* SolanaAddressParserItem.swift in Sources */,
 				ABC9A6C1F0B51698A7BC0B2A /* WCSignMessageRequestService.swift in Sources */,
 				D06A171C2BA1B1BC0081E312 /* FeeSettingsViewHelper.swift in Sources */,
 				ABC9AACB5CF2190A3D7C39AE /* WCSignMessageRequestViewController.swift in Sources */,
@@ -13824,6 +13836,7 @@
 				ABC9A6F265D51BD94CB43209 /* WCWalletHandler.swift in Sources */,
 				ABC9A41B8484D568EEAD72AE /* WalletConnectChain.swift in Sources */,
 				ABC9A82C93C9E266D1AFD1C3 /* WalletConnectTransaction.swift in Sources */,
+				6B504F672F75539C0064DA67 /* SolanaAddressParserItem.swift in Sources */,
 				6B954B4D2F443230008A1A16 /* BackupService.swift in Sources */,
 				ABC9A43B0EDD9BB6291F2E46 /* WCRequestPayload.swift in Sources */,
 				6BD766482EA25669008DDEA7 /* ZcashReceiveAddressSelectView.swift in Sources */,
@@ -14874,6 +14887,14 @@
 				version = 3.1.5;
 			};
 		};
+		6B504F692F764BB20064DA67 /* XCRemoteSwiftPackageReference "solana-kit-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/solana-kit-ios.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		6B55461F2A6E73190054B524 /* XCRemoteSwiftPackageReference "UIExtensions" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/UIExtensions.Swift";
@@ -15230,6 +15251,14 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D3C187D9290FCFBC00FE1900 /* XCRemoteSwiftPackageReference "SectionsTableView" */;
 			productName = SectionsTableView;
+		};
+		6B504F6A2F764FC20064DA67 /* SolanaKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SolanaKit;
+		};
+		6B504F6C2F764FC90064DA67 /* SolanaKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = SolanaKit;
 		};
 		6B55E33A2AF26D6400616B60 /* Starscream */ = {
 			isa = XCSwiftPackageProductDependency;
