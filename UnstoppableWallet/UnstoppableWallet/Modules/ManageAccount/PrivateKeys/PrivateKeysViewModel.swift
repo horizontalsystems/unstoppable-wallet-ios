@@ -11,6 +11,7 @@ class PrivateKeysViewModel {
     private let openStellarSecretKeyRelay = PublishRelay<AccountType>()
     private let openBip32RootKeyRelay = PublishRelay<AccountType>()
     private let openAccountExtendedPrivateKeyRelay = PublishRelay<AccountType>()
+    private let openTronPrivateKeyRelay = PublishRelay<AccountType>()
     private let openMoneroPrivateKeyRelay = PublishRelay<AccountType>()
 
     private var unlockRequest: UnlockRequest = .evmPrivateKey
@@ -41,12 +42,20 @@ extension PrivateKeysViewModel {
         openAccountExtendedPrivateKeyRelay.asSignal()
     }
 
+    var openTronPrivateKeySignal: Signal<AccountType> {
+        openTronPrivateKeyRelay.asSignal()
+    }
+
     var openMoneroPrivateKeySignal: Signal<AccountType> {
         openMoneroPrivateKeyRelay.asSignal()
     }
 
     var showEvmPrivateKey: Bool {
         service.evmPrivateKeySupported
+    }
+
+    var showTronPrivateKey: Bool {
+        service.trcPrivateKeySupported
     }
 
     var showStellarSecretKey: Bool {
@@ -68,6 +77,7 @@ extension PrivateKeysViewModel {
     func onUnlock() {
         switch unlockRequest {
         case .evmPrivateKey: openEvmPrivateKeyRelay.accept(service.accountType)
+        case .trcPrivateKey: openTronPrivateKeyRelay.accept(service.accountType)
         case .stellarSecretKey: openStellarSecretKeyRelay.accept(service.accountType)
         case .bip32RootKey: openBip32RootKeyRelay.accept(service.accountType)
         case .accountExtendedPrivateKey: openAccountExtendedPrivateKeyRelay.accept(service.accountType)
@@ -81,6 +91,15 @@ extension PrivateKeysViewModel {
             openUnlockRelay.accept(())
         } else {
             openEvmPrivateKeyRelay.accept(service.accountType)
+        }
+    }
+
+    func onTapTronPrivateKey() {
+        if service.isPasscodeSet {
+            unlockRequest = .trcPrivateKey
+            openUnlockRelay.accept(())
+        } else {
+            openTronPrivateKeyRelay.accept(service.accountType)
         }
     }
 
@@ -124,6 +143,7 @@ extension PrivateKeysViewModel {
 extension PrivateKeysViewModel {
     enum UnlockRequest {
         case evmPrivateKey
+        case trcPrivateKey
         case stellarSecretKey
         case bip32RootKey
         case accountExtendedPrivateKey

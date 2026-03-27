@@ -46,7 +46,7 @@ extension ManageAccountViewModel {
 
     var privateKeysVisible: Bool {
         switch account.type {
-        case .mnemonic, .evmPrivateKey, .stellarSecretKey: return true
+        case .mnemonic, .evmPrivateKey, .trcPrivateKey, .stellarSecretKey: return true
         case let .hdExtendedKey(key):
             switch key {
             case .private: return true
@@ -58,7 +58,7 @@ extension ManageAccountViewModel {
 
     var publicKeysVisible: Bool {
         switch account.type {
-        case .mnemonic, .evmPrivateKey, .hdExtendedKey: return true
+        case .mnemonic, .evmPrivateKey, .trcPrivateKey, .hdExtendedKey: return true
         default: return false
         }
     }

@@ -4,7 +4,7 @@ import RxRelay
 import RxSwift
 
 protocol IRestoreSubViewModel: AnyObject {
-    func resolveAccountType() -> AccountType?
+    func resolveAccountTypes() -> [AccountType]?
     func clear()
 }
 
@@ -14,7 +14,7 @@ class RestoreViewModel {
     private let privateKeyViewModel: IRestoreSubViewModel
 
     private let restoreTypeRelay = BehaviorRelay<RestoreType>(value: .mnemonic)
-    private let proceedRelay = PublishRelay<(String, AccountType)>()
+    private let proceedRelay = PublishRelay<(String, [AccountType])>()
 
     init(service: RestoreService, mnemonicViewModel: IRestoreSubViewModel, privateKeyViewModel: IRestoreSubViewModel) {
         self.service = service
@@ -35,7 +35,7 @@ extension RestoreViewModel {
         restoreTypeRelay.asDriver()
     }
 
-    var proceedSignal: Signal<(String, AccountType)> {
+    var proceedSignal: Signal<(String, [AccountType])> {
         proceedRelay.asSignal()
     }
 
@@ -57,8 +57,8 @@ extension RestoreViewModel {
     }
 
     func onTapProceed() {
-        if let accountType = subViewModel.resolveAccountType() {
-            proceedRelay.accept((service.resolvedName, accountType))
+        if let accountTypes = subViewModel.resolveAccountTypes() {
+            proceedRelay.accept((service.resolvedName, accountTypes))
         }
     }
 }

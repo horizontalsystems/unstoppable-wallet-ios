@@ -24,6 +24,13 @@ extension PrivateKeysService {
         }
     }
 
+    var trcPrivateKeySupported: Bool {
+        switch account.type {
+        case .mnemonic, .trcPrivateKey: return true
+        default: return false
+        }
+    }
+
     var stellarSecretKeySupported: Bool {
         switch account.type {
         case .mnemonic, .stellarSecretKey: return true

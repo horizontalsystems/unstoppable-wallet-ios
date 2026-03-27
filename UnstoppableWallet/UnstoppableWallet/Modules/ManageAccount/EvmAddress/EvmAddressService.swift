@@ -15,7 +15,7 @@ class EvmAddressService {
             }
             self.address = address
         case let .evmPrivateKey(data):
-            address = Signer.address(privateKey: data).eip55
+            address = EvmKit.Signer.address(privateKey: data).eip55
         case let .evmAddress(address):
             self.address = address.eip55
         default:

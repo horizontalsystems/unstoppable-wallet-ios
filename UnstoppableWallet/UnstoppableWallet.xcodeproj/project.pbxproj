@@ -1717,6 +1717,18 @@
 		6B4587522E2F44AB008F87E7 /* CurrencyValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4587502E2F44A2008F87E7 /* CurrencyValueFormatter.swift */; };
 		6B4587542E2F476D008F87E7 /* AmountRoundingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4587532E2F475E008F87E7 /* AmountRoundingManager.swift */; };
 		6B4587552E2F476D008F87E7 /* AmountRoundingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B4587532E2F475E008F87E7 /* AmountRoundingManager.swift */; };
+		6B504F702F765B770064DA67 /* TronPrivateKeyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B504F6F2F765B770064DA67 /* TronPrivateKeyService.swift */; };
+		6B504F712F765B770064DA67 /* TronPrivateKeyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B504F6F2F765B770064DA67 /* TronPrivateKeyService.swift */; };
+		6B504F732F765B920064DA67 /* TronPrivateKeyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B504F722F765B920064DA67 /* TronPrivateKeyViewModel.swift */; };
+		6B504F742F765B920064DA67 /* TronPrivateKeyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B504F722F765B920064DA67 /* TronPrivateKeyViewModel.swift */; };
+		6B504F762F765BB20064DA67 /* TronPrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B504F752F765BB20064DA67 /* TronPrivateKeyViewController.swift */; };
+		6B504F772F765BB20064DA67 /* TronPrivateKeyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B504F752F765BB20064DA67 /* TronPrivateKeyViewController.swift */; };
+		6B504F792F765BBD0064DA67 /* TronPrivateKeyModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B504F782F765BBD0064DA67 /* TronPrivateKeyModule.swift */; };
+		6B504F7A2F765BBD0064DA67 /* TronPrivateKeyModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B504F782F765BBD0064DA67 /* TronPrivateKeyModule.swift */; };
+		6B504F7D2F768B540064DA67 /* EvmTypeSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B504F7C2F768B490064DA67 /* EvmTypeSelectViewController.swift */; };
+		6B504F7E2F768B540064DA67 /* EvmTypeSelectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B504F7C2F768B490064DA67 /* EvmTypeSelectViewController.swift */; };
+		6B504F802F7693510064DA67 /* AccountTypeSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B504F7F2F7693510064DA67 /* AccountTypeSelectViewModel.swift */; };
+		6B504F812F7693510064DA67 /* AccountTypeSelectViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B504F7F2F7693510064DA67 /* AccountTypeSelectViewModel.swift */; };
 		6B50FD9F2EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B50FD9E2EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift */; };
 		6B50FDA02EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B50FD9E2EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift */; };
 		6B50FDA42EA8C269004CD0A0 /* ReceiveCoinListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B50FDA32EA8C265004CD0A0 /* ReceiveCoinListView.swift */; };
@@ -4601,6 +4613,12 @@
 		6B45874D2E290296008F87E7 /* MarketEtfViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MarketEtfViewModelFactory.swift; sourceTree = "<group>"; };
 		6B4587502E2F44A2008F87E7 /* CurrencyValueFormatter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrencyValueFormatter.swift; sourceTree = "<group>"; };
 		6B4587532E2F475E008F87E7 /* AmountRoundingManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AmountRoundingManager.swift; sourceTree = "<group>"; };
+		6B504F6F2F765B770064DA67 /* TronPrivateKeyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronPrivateKeyService.swift; sourceTree = "<group>"; };
+		6B504F722F765B920064DA67 /* TronPrivateKeyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronPrivateKeyViewModel.swift; sourceTree = "<group>"; };
+		6B504F752F765BB20064DA67 /* TronPrivateKeyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronPrivateKeyViewController.swift; sourceTree = "<group>"; };
+		6B504F782F765BBD0064DA67 /* TronPrivateKeyModule.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TronPrivateKeyModule.swift; sourceTree = "<group>"; };
+		6B504F7C2F768B490064DA67 /* EvmTypeSelectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvmTypeSelectViewController.swift; sourceTree = "<group>"; };
+		6B504F7F2F7693510064DA67 /* AccountTypeSelectViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountTypeSelectViewModel.swift; sourceTree = "<group>"; };
 		6B50FD9E2EA8A09F004CD0A0 /* ZCashReceiveAddressViewItemFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ZCashReceiveAddressViewItemFactory.swift; sourceTree = "<group>"; };
 		6B50FDA32EA8C265004CD0A0 /* ReceiveCoinListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiveCoinListView.swift; sourceTree = "<group>"; };
 		6B50FDAC2EA8EE27004CD0A0 /* ReceiveBlockchainListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReceiveBlockchainListView.swift; sourceTree = "<group>"; };
@@ -5958,6 +5976,7 @@
 		11B3537337963E192F823FF5 /* UserInterface */ = {
 			isa = PBXGroup;
 			children = (
+				6B504F7B2F768B2C0064DA67 /* EvmTypedSelector */,
 				6B4587502E2F44A2008F87E7 /* CurrencyValueFormatter.swift */,
 				6B6E13C62DEDABBB007F4A39 /* HUD */,
 				6B1D8D242DE9D9AF00A52B01 /* ComponentKit */,
@@ -6335,6 +6354,7 @@
 				11B35E2F913B2546A041D0AE /* NoPasscode */,
 				11B35B779976BD7D47FFD40C /* MultiSwap */,
 				D0118E462B7C99F700D55CE6 /* ResendBitcoin */,
+				6B504F6E2F765B560064DA67 /* TronPrivateKey */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -8151,6 +8171,26 @@
 				6B44BE572EB1A50500257FD7 /* SelectorGroupViewModel.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		6B504F6E2F765B560064DA67 /* TronPrivateKey */ = {
+			isa = PBXGroup;
+			children = (
+				6B504F6F2F765B770064DA67 /* TronPrivateKeyService.swift */,
+				6B504F722F765B920064DA67 /* TronPrivateKeyViewModel.swift */,
+				6B504F752F765BB20064DA67 /* TronPrivateKeyViewController.swift */,
+				6B504F782F765BBD0064DA67 /* TronPrivateKeyModule.swift */,
+			);
+			path = TronPrivateKey;
+			sourceTree = "<group>";
+		};
+		6B504F7B2F768B2C0064DA67 /* EvmTypedSelector */ = {
+			isa = PBXGroup;
+			children = (
+				6B504F7C2F768B490064DA67 /* EvmTypeSelectViewController.swift */,
+				6B504F7F2F7693510064DA67 /* AccountTypeSelectViewModel.swift */,
+			);
+			path = EvmTypedSelector;
 			sourceTree = "<group>";
 		};
 		6B50FDA92EA8ED70004CD0A0 /* CoinList */ = {
@@ -10859,6 +10899,7 @@
 				D3AFAAFC2E45FF06004AB074 /* ThemeText.swift in Sources */,
 				11B3533FFB85258ED5A90401 /* FormValidatedView.swift in Sources */,
 				11B352210BEEE91481291D4C /* FormCautionView.swift in Sources */,
+				6B504F732F765B920064DA67 /* TronPrivateKeyViewModel.swift in Sources */,
 				D37046712F1123BF00C990BE /* BubbleView.swift in Sources */,
 				D3AFAB142E460328004AB074 /* CellButtonStyle.swift in Sources */,
 				D3AFAB092E45FF76004AB074 /* RightMultiText.swift in Sources */,
@@ -10903,6 +10944,7 @@
 				11B35E57C6406D2249A23E6F /* SendEvmTransactionService.swift in Sources */,
 				11B352AB213E0F3C147EAEE9 /* SendEvmTransactionViewController.swift in Sources */,
 				D06669032A31B559004B048D /* TronRecipientAddressViewModel.swift in Sources */,
+				6B504F7A2F765BBD0064DA67 /* TronPrivateKeyModule.swift in Sources */,
 				6BFCC5502F5A8B6C00A35D43 /* AddressSecurityTypeContentView.swift in Sources */,
 				11B350B7D3DDBEE4F5B6E914 /* SendEvmTransactionViewModel.swift in Sources */,
 				11B354A6D78AA69DC3B8E496 /* SwapApproveConfirmationViewController.swift in Sources */,
@@ -11109,6 +11151,7 @@
 				2FA5DA8B816A4B089A4F01AF /* BitcoinOutgoingTransactionRecord.swift in Sources */,
 				6BBB92A82D0D18AF00112409 /* RoundedCorner.swift in Sources */,
 				D0F132A52B6B98F500C7310E /* RbfViewModel.swift in Sources */,
+				6B504F762F765BB20064DA67 /* TronPrivateKeyViewController.swift in Sources */,
 				2FA5DF5CF3AAC5AC79F18818 /* BitcoinTransactionRecord.swift in Sources */,
 				2FA5DBACDF09BE11FB7C40A7 /* ContractCallTransactionRecord.swift in Sources */,
 				2FA5D6BF7186A35B9A086231 /* ContractCreationTransactionRecord.swift in Sources */,
@@ -11480,6 +11523,7 @@
 				6B5A13F62DF93DED006E609C /* PerformanceDataSelectViewModel.swift in Sources */,
 				6BCAB3F52F2C58A100820806 /* ScannedTransactionStorage.swift in Sources */,
 				11B35DBD3329CD28158E4D6A /* NftHeaderViewModel.swift in Sources */,
+				6B504F802F7693510064DA67 /* AccountTypeSelectViewModel.swift in Sources */,
 				11B35B36FB559CDEB1B496EC /* NftHeaderView.swift in Sources */,
 				11B358F2CD17616038016E59 /* NftRecord.swift in Sources */,
 				D3C5987B2C1867D200789D69 /* CoinProChartView.swift in Sources */,
@@ -11761,6 +11805,7 @@
 				6B954B632F4453F2008A1A16 /* BackupNameContentView.swift in Sources */,
 				ABC9A3C13073DDFABF8C0679 /* CloudRestoreBackupListViewModel.swift in Sources */,
 				ABC9A8A74C527C4E01EBB8A5 /* CloudRestoreBackupListModule.swift in Sources */,
+				6B504F7E2F768B540064DA67 /* EvmTypeSelectViewController.swift in Sources */,
 				ABC9A712F6389F5C2B0D63E3 /* CloudRestoreBackupService.swift in Sources */,
 				ABC9A07518E5769122DFEAC2 /* RestoreCloudViewController.swift in Sources */,
 				11B351B0C0F37424A3840737 /* ContactBookManager.swift in Sources */,
@@ -12243,6 +12288,7 @@
 				11B3587280273E0804CA84F2 /* Stats.swift in Sources */,
 				6B93AFD62E66C46C00A55120 /* WalletInfoView.swift in Sources */,
 				ABC9AC8F6F1BD574DB5BAA20 /* RecipientRowsView.swift in Sources */,
+				6B504F712F765B770064DA67 /* TronPrivateKeyService.swift in Sources */,
 				ABC9AEC906C313583DBECCCA /* RecipientRowsViewModel.swift in Sources */,
 				6B5D851F2EA793E500F13E2C /* StellarReceiveAddressViewItemFactory.swift in Sources */,
 				ABC9A835B49A7BF85F87454D /* AlertButtonTintColor.swift in Sources */,
@@ -12547,6 +12593,7 @@
 				11B3550424326606B055D7E5 /* AboutModule.swift in Sources */,
 				D0A980AF2B60E73F00127AF4 /* LegacyFeeSettingsView.swift in Sources */,
 				11B35959AAF414186CE39698 /* AddTokenViewModel.swift in Sources */,
+				6B504F742F765B920064DA67 /* TronPrivateKeyViewModel.swift in Sources */,
 				11B35A90F19DE20ABE21F423 /* AddTokenService.swift in Sources */,
 				11B35FAB3263E489CB9017FC /* AddTokenViewController.swift in Sources */,
 				58AAA203CEB400A883379822 /* DownloadService.swift in Sources */,
@@ -12591,6 +12638,7 @@
 				11B35953404F5C8903DDA70D /* RecipientAddressCautionCell.swift in Sources */,
 				D37046732F1123D900C990BE /* DefenseSystemView.swift in Sources */,
 				11B357F22958C3AB3818F20A /* AmountInputCell.swift in Sources */,
+				6B504F792F765BBD0064DA67 /* TronPrivateKeyModule.swift in Sources */,
 				11B35D05FF90E999110698C0 /* RecipientAddressInputCell.swift in Sources */,
 				11B35FFE6FBDA949184E2BF2 /* AmountInputViewModel.swift in Sources */,
 				11B35DC140F10F631B61581E /* SendEvmConfirmationModule.swift in Sources */,
@@ -12797,6 +12845,7 @@
 				6BA971C02ED560D800DEC017 /* PremiumFeature.swift in Sources */,
 				D36287BF2CA3D7B100ADAF3B /* TonConnect+Encodable.swift in Sources */,
 				6BCAB3F02F2B5EEB00820806 /* Map.swift in Sources */,
+				6B504F772F765BB20064DA67 /* TronPrivateKeyViewController.swift in Sources */,
 				D37D3B742F3AF83200CAC23A /* SwapStorage.swift in Sources */,
 				58AAA926E1D95F61CA06EFB8 /* SwapConfirmationModule.swift in Sources */,
 				58AAA1152EEEBC93FCC3CAAC /* SwapConfirmationViewController.swift in Sources */,
@@ -13168,6 +13217,7 @@
 				11B35066480B6EB9F124EBC0 /* ExtendedKeyService.swift in Sources */,
 				6B4587542E2F476D008F87E7 /* AmountRoundingManager.swift in Sources */,
 				D3E36BC02E003892007F99CA /* WalletListViewModel.swift in Sources */,
+				6B504F812F7693510064DA67 /* AccountTypeSelectViewModel.swift in Sources */,
 				11B359601D8967EEE00B5991 /* BackupMnemonicWordsCell.swift in Sources */,
 				D3402AF12BF5D59D003BF6F8 /* WatchlistModifier.swift in Sources */,
 				11B3590E40C88ADD16DEEABB /* BackupMnemonicWordCell.swift in Sources */,
@@ -13449,6 +13499,7 @@
 				ABC9AB6EB596E2F8B15D00E4 /* CipherParams.swift in Sources */,
 				ABC9AF9C828BEBB740468204 /* WalletBackup.swift in Sources */,
 				ABC9A7EACB2FA65355C2BA4E /* AppBackupProvider.swift in Sources */,
+				6B504F7D2F768B540064DA67 /* EvmTypeSelectViewController.swift in Sources */,
 				D02447D92C09FA5200A04BBC /* CoinTreasuriesView.swift in Sources */,
 				ABC9AF5B0B1D5FE002288AE1 /* FileStorage.swift in Sources */,
 				6BDB59DE2F0F576C005FA626 /* StellarSendHelper.swift in Sources */,
@@ -13931,6 +13982,7 @@
 				11B35B1875DF852DE471C511 /* Stats.swift in Sources */,
 				ABC9A28FF8184EDA95751080 /* RecipientRowsView.swift in Sources */,
 				6B93AFD52E66C46C00A55120 /* WalletInfoView.swift in Sources */,
+				6B504F702F765B770064DA67 /* TronPrivateKeyService.swift in Sources */,
 				ABC9A6537ACEB9AF1CCF9D8C /* RecipientRowsViewModel.swift in Sources */,
 				ABC9A190E478402B48410FCC /* AlertButtonTintColor.swift in Sources */,
 				6B5D85202EA793E500F13E2C /* StellarReceiveAddressViewItemFactory.swift in Sources */,
