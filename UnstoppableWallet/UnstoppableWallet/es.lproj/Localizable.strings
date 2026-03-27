@@ -141,7 +141,7 @@
 "restore.restore_type.mnemonic" = "Frase de Recuperación";
 "restore.restore_type.private_key" = "Clave privada";
 "restore.mnemonic.placeholder" = "Introduzca 12, 15, 18, 21 o 24 palabras";
-"restore.private_key.placeholder" = "Introduzca la clave privada EVM, BIP32 Root Key o Account Extended Private Key";
+"restore.private_key.placeholder" = "Ingrese la clave privada de EVM o TRON, la clave secreta de Stellar, la clave raíz BIP32 o la clave privada extendida de cuenta";
 "restore.private_key.invalid_key" = "Clave no válida";
 "restore_error.mnemonic_word_count" = "Número de palabras erróneas. Debe tener entre 12 y 24 palabras. Has ingresado: %@";
 "restore.checksum_error" = "Suma de verificación inválida";
@@ -155,6 +155,13 @@
 "restore.error.non_standard.description" = "Esta es una cartera no estándar. \n\nCLICK PARA CONTRAR MÁS INFO";
 
 "restore.error.non_standard.link" = "Haz clic para obtener más información";
+
+"restore.select_key_type" = "Seleccionar red";
+"restore.select_key_type.evm" = "Redes EVM";
+"restore.select_key_type.evm.description" = "Ethereum, Arbitrum, Optimism ...";
+"restore.select_key_type.trc" = "TRON";
+"restore.select_key_type.trc.description" = "Solo red TRON.";
+
 
 // Restore Type
 
@@ -212,6 +219,9 @@
 
 "evm_private_key.title" = "Clave Privada EVM";
 "evm_private_key.tap_to_show" = "Toca para mostrar la clave privada";
+
+"tron_private_key.title" = "Clave privada de Tron";
+"tron_private_key.tap_to_show" = "Toca para mostrar la clave privada";
 
 // Stellar Secret Key
 
@@ -2015,6 +2025,8 @@
 "private_keys.title" = "Claves privadas";
 "private_keys.evm_private_key" = "Clave Privada EVM";
 "private_keys.evm_private_key.description" = "Concede control total sobre los activos en redes basadas en EVM (por ejemplo, Ethereum, BNB Smart Chain, Polygon, Avalanche) dentro de esta wallet.";
+"private_keys.tron_private_key" = "Clave privada de Tron";
+"private_keys.tron_private_key.description" = "Otorga control total sobre los activos en la red Tron dentro de esta wallet.";
 "private_keys.stellar_secret_key" = "Clave secreta de Stellar";
 "private_keys.stellar_secret_key.description" = "Concede control total sobre los activos en la red Stellar dentro de esta wallet.";
 "private_keys.bip32_root_key" = "BIP32 Root Key";

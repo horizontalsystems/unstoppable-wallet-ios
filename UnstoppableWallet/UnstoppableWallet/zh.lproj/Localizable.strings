@@ -141,7 +141,7 @@
 "restore.restore_type.mnemonic" = "恢复码";
 "restore.restore_type.private_key" = "私钥";
 "restore.mnemonic.placeholder" = "输入12、15、18、21或24个单词";
-"restore.private_key.placeholder" = "輸入 EVM 私鑰、BIP32 Root Key 或  Account Extended Private Key";
+"restore.private_key.placeholder" = "输入 EVM 或 TRON 私钥、Stellar 密钥、BIP32 根密钥或账户扩展私钥";
 "restore.private_key.invalid_key" = "错误密钥";
 "restore_error.mnemonic_word_count" = "错误的单词数。它必须介于12到24个单词之间。您输入了： %@";
 "restore.checksum_error" = "校验和无效";
@@ -155,6 +155,13 @@
 "restore.error.non_standard.description" = "这是一个不符合标准的钱包。 详情请阅读下文。\n\n点击获取更多信息";
 
 "restore.error.non_standard.link" = "点击获取更多信息";
+
+"restore.select_key_type" = "选择网络";
+"restore.select_key_type.evm" = "EVM 网络";
+"restore.select_key_type.evm.description" = "Ethereum、Arbitrum、Optimism ...";
+"restore.select_key_type.trc" = "TRON";
+"restore.select_key_type.trc.description" = "仅限 TRON 网络。";
+
 
 // Restore Type
 
@@ -212,6 +219,9 @@
 
 "evm_private_key.title" = "EVM 私钥";
 "evm_private_key.tap_to_show" = "点击显示私钥";
+
+"tron_private_key.title" = "Tron 私钥";
+"tron_private_key.tap_to_show" = "点击显示私钥";
 
 // Stellar Secret Key
 
@@ -2015,6 +2025,8 @@
 "private_keys.title" = "私钥";
 "private_keys.evm_private_key" = "EVM 私钥";
 "private_keys.evm_private_key.description" = "授予对本钱包中基于 EVM 网络（如以太坊、BNB 智能链、Polygon、Avalanche）资产的完全控制权。";
+"private_keys.tron_private_key" = "Tron 私钥";
+"private_keys.tron_private_key.description" = "授予对此钱包中 Tron 网络资产的完全控制权。";
 "private_keys.stellar_secret_key" = "Stellar 私钥";
 "private_keys.stellar_secret_key.description" = "授予对本钱包中 Stellar 网络资产的完全控制权。";
 "private_keys.bip32_root_key" = "BIP32 Root Key";
