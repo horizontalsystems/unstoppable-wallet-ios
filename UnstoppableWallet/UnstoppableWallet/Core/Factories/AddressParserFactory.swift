@@ -86,7 +86,8 @@ enum AddressParserFactory {
             let zcashParserItem = ZcashAddressParserItem(parserType: .validator(validator), addressType: addressType)
 
             return [zcashParserItem]
-        case .solana: return []
+        case .solana:
+            return [SolanaAddressParserItem()]
         case .ton:
             return [TonAddressParserItem()]
         case .stellar:
