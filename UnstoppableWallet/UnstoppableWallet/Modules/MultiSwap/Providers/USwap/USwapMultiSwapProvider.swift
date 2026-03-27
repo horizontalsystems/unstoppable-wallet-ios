@@ -940,8 +940,8 @@ extension USwapMultiSwapProvider {
 
         var type: SwapProviderType {
             switch self {
-            case .swapuz, .exolix: return .flexible
-            case .letsExchange, .stealthex, .near: return .controlled
+            case .swapuz: return .flexible
+            case .letsExchange, .stealthex, .near, .exolix: return .controlled
             case .quickEx: return .preCheck
             }
         }
