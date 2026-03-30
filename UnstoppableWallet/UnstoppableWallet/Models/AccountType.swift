@@ -226,7 +226,7 @@ enum AccountType: Identifiable {
         case .evmPrivateKey:
             return "evm_private_key"
         case .trcPrivateKey:
-            return "trc_private_key"
+            return "tron_private_key"
         case .stellarSecretKey:
             return "stellar_secret_key"
         case .evmAddress:
@@ -416,7 +416,7 @@ extension AccountType {
     enum Abstract: String, Codable {
         case mnemonic
         case evmPrivateKey = "private_key"
-        case trcPrivateKey = "trc_private_key"
+        case trcPrivateKey = "tron_private_key"
         case stellarSecretKey = "stellar_secret_key"
         case evmAddress = "evm_address"
         case tronAddress = "tron_address"
