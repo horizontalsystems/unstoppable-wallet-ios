@@ -2198,8 +2198,6 @@
 		6BDB59DF2F0F576C005FA626 /* StellarSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59DD2F0F576C005FA626 /* StellarSendHelper.swift */; };
 		6BDB59E12F14B6B8005FA626 /* MoneroSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59E02F14B6B8005FA626 /* MoneroSwapFinalQuote.swift */; };
 		6BDB59E22F14B6B8005FA626 /* MoneroSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59E02F14B6B8005FA626 /* MoneroSwapFinalQuote.swift */; };
-		6BDB59F22F1BB000005FA626 /* SolanaSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59F12F1BB000005FA626 /* SolanaSwapFinalQuote.swift */; };
-		6BDB59F32F1BB000005FA626 /* SolanaSwapFinalQuote.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59F12F1BB000005FA626 /* SolanaSwapFinalQuote.swift */; };
 		6BDB59E42F14B8F1005FA626 /* MoneroSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59E32F14B8EC005FA626 /* MoneroSendHelper.swift */; };
 		6BDB59E52F14B8F1005FA626 /* MoneroSendHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDB59E32F14B8EC005FA626 /* MoneroSendHelper.swift */; };
 		6BDB59E72F151A32005FA626 /* ReownRouter in Frameworks */ = {isa = PBXBuildFile; productRef = 6BDB59E62F151A32005FA626 /* ReownRouter */; };
@@ -2260,6 +2258,8 @@
 		965D6887AD49252B1BD3163A /* ZanoOutgoingTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DD1D515731B6C56C8EEF67D3 /* ZanoOutgoingTransactionRecord.swift */; };
 		96EBA2BCD0C734D3D2EF4360 /* ZanoAdapter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1055BE8698DF9E53E2E04C12 /* ZanoAdapter.swift */; };
 		9B886F8423624870BB00B44E /* AddZanoNodeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D69FD79246B4E7198F03C48 /* AddZanoNodeViewController.swift */; };
+		A1B2C3A262044C0161AFA072 /* SolanaKit in Frameworks */ = {isa = PBXBuildFile; productRef = A1B2C6A772B81EC48C4AB9C9 /* SolanaKit */; };
+		A1B2C4BA90F7690F873777E7 /* SolanaKit in Frameworks */ = {isa = PBXBuildFile; productRef = A1B2C76362D823185955C512 /* SolanaKit */; };
 		A4575AABFA440B455B5AABF7 /* ZanoTransactionRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1D438F620F9B7D5251B1EAC0 /* ZanoTransactionRecord.swift */; };
 		AA334820644E4842AB344CF8 /* AddZanoNodeModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6068DC2F870E45DE86CB1792 /* AddZanoNodeModule.swift */; };
 		ABC9A001F335B695CD066218 /* NftAssetModule.swift in Sources */ = {isa = PBXBuildFile; fileRef = ABC9AD35D41AEEBD38AA08B5 /* NftAssetModule.swift */; };
@@ -3050,8 +3050,6 @@
 		D339A93F29126D2A00B895BE /* HsCryptoKit in Frameworks */ = {isa = PBXBuildFile; productRef = D339A93E29126D2A00B895BE /* HsCryptoKit */; };
 		D33CC43B2F6BF5F900346FB5 /* SearchableModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC43A2F6BF5F400346FB5 /* SearchableModifier.swift */; };
 		D33CC43C2F6BF5F900346FB5 /* SearchableModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC43A2F6BF5F400346FB5 /* SearchableModifier.swift */; };
-		D33CC4612F72963E00346FB5 /* EvmNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC4602F72963E00346FB5 /* EvmNetworkView.swift */; };
-		D33CC4622F72963E00346FB5 /* EvmNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC4602F72963E00346FB5 /* EvmNetworkView.swift */; };
 		D33CC43F2F715B1800346FB5 /* SolanaKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC43D2F715B1800346FB5 /* SolanaKitManager.swift */; };
 		D33CC4402F715B1800346FB5 /* SolanaRpcSourceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC43E2F715B1800346FB5 /* SolanaRpcSourceManager.swift */; };
 		D33CC4412F715B1800346FB5 /* SolanaKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC43D2F715B1800346FB5 /* SolanaKitManager.swift */; };
@@ -3074,6 +3072,8 @@
 		D33CC45D2F715FCF00346FB5 /* SolanaPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC45A2F715FCF00346FB5 /* SolanaPreSendHandler.swift */; };
 		D33CC45E2F715FCF00346FB5 /* SolanaSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC45B2F715FCF00346FB5 /* SolanaSendHandler.swift */; };
 		D33CC45F2F715FCF00346FB5 /* SolanaPreSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC45A2F715FCF00346FB5 /* SolanaPreSendHandler.swift */; };
+		D33CC4612F72963E00346FB5 /* EvmNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC4602F72963E00346FB5 /* EvmNetworkView.swift */; };
+		D33CC4622F72963E00346FB5 /* EvmNetworkView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D33CC4602F72963E00346FB5 /* EvmNetworkView.swift */; };
 		D3402AEE2BF5D58B003BF6F8 /* WatchlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3402AED2BF5D58B003BF6F8 /* WatchlistViewModel.swift */; };
 		D3402AEF2BF5D58B003BF6F8 /* WatchlistViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3402AED2BF5D58B003BF6F8 /* WatchlistViewModel.swift */; };
 		D3402AF12BF5D59D003BF6F8 /* WatchlistModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3402AF02BF5D59D003BF6F8 /* WatchlistModifier.swift */; };
@@ -3422,8 +3422,6 @@
 		D3A87D5D2C8EFB1A00F6F619 /* EvmAccountRestoreState.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3A87D5B2C8EFB1A00F6F619 /* EvmAccountRestoreState.swift */; };
 		D3ABE2742F73F29B00B72F23 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D3ABE2732F73F29B00B72F23 /* CryptoSwift */; };
 		D3ABE2762F73F2D500B72F23 /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D3ABE2752F73F2D500B72F23 /* CryptoSwift */; };
-		A1B2C3A262044C0161AFA072 /* SolanaKit in Frameworks */ = {isa = PBXBuildFile; productRef = A1B2C6A772B81EC48C4AB9C9 /* SolanaKit */; };
-		A1B2C4BA90F7690F873777E7 /* SolanaKit in Frameworks */ = {isa = PBXBuildFile; productRef = A1B2C76362D823185955C512 /* SolanaKit */; };
 		D3AEB8752DB8FAA200E385C8 /* StellarKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3AEB8742DB8FAA200E385C8 /* StellarKit */; };
 		D3AEB8772DB8FAB600E385C8 /* StellarKit in Frameworks */ = {isa = PBXBuildFile; productRef = D3AEB8762DB8FAB600E385C8 /* StellarKit */; };
 		D3AEB8792DB8FB8A00E385C8 /* StellarKitManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3AEB8782DB8FB8A00E385C8 /* StellarKitManager.swift */; };
@@ -4861,7 +4859,6 @@
 		6BDB59DA2F0BB195005FA626 /* TonSendHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TonSendHelper.swift; sourceTree = "<group>"; };
 		6BDB59DD2F0F576C005FA626 /* StellarSendHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarSendHelper.swift; sourceTree = "<group>"; };
 		6BDB59E02F14B6B8005FA626 /* MoneroSwapFinalQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroSwapFinalQuote.swift; sourceTree = "<group>"; };
-		6BDB59F12F1BB000005FA626 /* SolanaSwapFinalQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaSwapFinalQuote.swift; sourceTree = "<group>"; };
 		6BDB59E32F14B8EC005FA626 /* MoneroSendHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroSendHelper.swift; sourceTree = "<group>"; };
 		6BDB59EE2F15FE93005FA626 /* WCSocketFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCSocketFactory.swift; sourceTree = "<group>"; };
 		6BDB59F12F1BB000005FA626 /* SolanaSwapFinalQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaSwapFinalQuote.swift; sourceTree = "<group>"; };
@@ -5279,7 +5276,6 @@
 		D3384D4D2C07020300515664 /* PriceChangeMode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceChangeMode.swift; sourceTree = "<group>"; };
 		D3384D502C0703B400515664 /* PriceChangeModeManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PriceChangeModeManager.swift; sourceTree = "<group>"; };
 		D33CC43A2F6BF5F400346FB5 /* SearchableModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchableModifier.swift; sourceTree = "<group>"; };
-		D33CC4602F72963E00346FB5 /* EvmNetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvmNetworkView.swift; sourceTree = "<group>"; };
 		D33CC43D2F715B1800346FB5 /* SolanaKitManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaKitManager.swift; sourceTree = "<group>"; };
 		D33CC43E2F715B1800346FB5 /* SolanaRpcSourceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaRpcSourceManager.swift; sourceTree = "<group>"; };
 		D33CC4432F715B3600346FB5 /* JupiterMultiSwapProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JupiterMultiSwapProvider.swift; sourceTree = "<group>"; };
@@ -5291,6 +5287,7 @@
 		D33CC4562F715F9300346FB5 /* SolanaTransactionRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaTransactionRecord.swift; sourceTree = "<group>"; };
 		D33CC45A2F715FCF00346FB5 /* SolanaPreSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaPreSendHandler.swift; sourceTree = "<group>"; };
 		D33CC45B2F715FCF00346FB5 /* SolanaSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaSendHandler.swift; sourceTree = "<group>"; };
+		D33CC4602F72963E00346FB5 /* EvmNetworkView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvmNetworkView.swift; sourceTree = "<group>"; };
 		D3402AED2BF5D58B003BF6F8 /* WatchlistViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistViewModel.swift; sourceTree = "<group>"; };
 		D3402AF02BF5D59D003BF6F8 /* WatchlistModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistModifier.swift; sourceTree = "<group>"; };
 		D3402AF62BF71C11003BF6F8 /* WatchlistManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchlistManager.swift; sourceTree = "<group>"; };
@@ -15207,14 +15204,6 @@
 				minimumVersion = 1.9.0;
 			};
 		};
-		A1B2C5A5415080693AB470CA /* XCRemoteSwiftPackageReference "solana-kit-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mNizhurin/solana-kit-ios.git";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		D3AEB8732DB8FAA200E385C8 /* XCRemoteSwiftPackageReference "StellarKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/StellarKit.Swift";
@@ -15643,16 +15632,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = D3ABE2722F73F29B00B72F23 /* XCRemoteSwiftPackageReference "CryptoSwift" */;
 			productName = CryptoSwift;
-		};
-		A1B2C6A772B81EC48C4AB9C9 /* SolanaKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A1B2C5A5415080693AB470CA /* XCRemoteSwiftPackageReference "solana-kit-ios" */;
-			productName = SolanaKit;
-		};
-		A1B2C76362D823185955C512 /* SolanaKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A1B2C5A5415080693AB470CA /* XCRemoteSwiftPackageReference "solana-kit-ios" */;
-			productName = SolanaKit;
 		};
 		D3AEB8742DB8FAA200E385C8 /* StellarKit */ = {
 			isa = XCSwiftPackageProductDependency;

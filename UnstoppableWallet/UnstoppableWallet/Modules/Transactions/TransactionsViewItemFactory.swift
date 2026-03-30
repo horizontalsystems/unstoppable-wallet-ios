@@ -603,6 +603,37 @@ class TransactionsViewItemFactory {
                 locked = lockState.locked
             }
 
+        case let record as SolanaIncomingTransactionRecord:
+            iconType = singleValueIconType(source: record.source, kind: record.value.kind)
+            title = "transactions.receive".localized
+            subTitle = record.from.flatMap { "transactions.from".localized(mapped(address: $0, blockchainType: item.record.source.blockchainType)) } ?? ""
+
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value), type: type(value: record.value, .incoming))
+
+            if let currencyValue = item.currencyValue {
+                secondaryValue = TransactionsViewModel.Value(text: currencyString(from: currencyValue), type: .secondary)
+            }
+
+        case let record as SolanaOutgoingTransactionRecord:
+            iconType = singleValueIconType(source: record.source, kind: record.value.kind, nftMetadata: item.nftMetadata)
+            title = "transactions.send".localized
+            subTitle = record.to.flatMap { "transactions.to".localized(mapped(address: $0, blockchainType: item.record.source.blockchainType)) } ?? ""
+
+            primaryValue = TransactionsViewModel.Value(text: coinString(from: record.value, signType: record.sentToSelf ? .never : .always), type: type(value: record.value, condition: record.sentToSelf, .neutral, .outgoing))
+            secondaryValue = singleValueSecondaryValue(value: record.value, currencyValue: item.currencyValue, nftMetadata: item.nftMetadata)
+
+            sentToSelf = record.sentToSelf
+
+        case let record as SolanaUnknownTransactionRecord:
+            let incomingValues = record.incomingTransfers.map(\.value)
+            let outgoingValues = record.outgoingTransfers.map(\.value)
+
+            iconType = self.iconType(source: record.source, incomingValues: incomingValues, outgoingValues: outgoingValues, nftMetadata: item.nftMetadata)
+            title = "transactions.unknown_transaction.title".localized
+            subTitle = "transactions.unknown_transaction.description".localized()
+
+            (primaryValue, secondaryValue) = values(incomingValues: incomingValues, outgoingValues: outgoingValues, currencyValue: item.currencyValue, nftMetadata: item.nftMetadata)
+
         default:
             iconType = .localIcon(imageName: item.record.source.blockchainType.iconPlain32)
             title = "transactions.unknown_transaction.title".localized

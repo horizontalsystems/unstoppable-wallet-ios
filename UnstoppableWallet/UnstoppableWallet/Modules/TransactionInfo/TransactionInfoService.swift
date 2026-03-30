@@ -89,6 +89,13 @@ class TransactionInfoService {
             default: ()
             }
             tokens.append(tx.fee?.token)
+        case let tx as SolanaIncomingTransactionRecord: tokens.append(tx.value.token)
+        case let tx as SolanaOutgoingTransactionRecord:
+            tokens.append(tx.fee?.token)
+            tokens.append(tx.value.token)
+        case let tx as SolanaUnknownTransactionRecord:
+            tokens.append(contentsOf: tx.incomingTransfers.map(\.value.token))
+            tokens.append(contentsOf: tx.outgoingTransfers.map(\.value.token))
         case let tx as ZcashShieldingTransactionRecord: tokens.append(tx.value.token)
         default: ()
         }

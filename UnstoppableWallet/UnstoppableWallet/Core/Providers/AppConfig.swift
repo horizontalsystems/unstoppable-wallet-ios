@@ -126,6 +126,10 @@ enum AppConfig {
         (Bundle.main.object(forInfoDictionaryKey: "SolanaAlchemyApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
 
+    static var solanaRpcAuth: String? {
+        (Bundle.main.object(forInfoDictionaryKey: "SolanaRpcAuth") as? String).flatMap { $0.isEmpty ? nil : $0 }
+    }
+
     static var walletConnectV2ProjectKey: String? {
         (Bundle.main.object(forInfoDictionaryKey: "WallectConnectV2ProjectKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
