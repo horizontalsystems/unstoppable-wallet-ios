@@ -15,6 +15,7 @@ swap_api_url = https:/$()/swap-api.unstoppable.money
 hs_provider_api_key =
 trongrid_api_keys =
 solana_alchemy_api_key =
+solana_rpc_auth =
 wallet_connect_v2_project_key =
 shared_cloud_container_id = iCloud.io.horizontalsystems.bank-wallet.shared
 private_cloud_container_id = iCloud.io.horizontalsystems.bank-wallet

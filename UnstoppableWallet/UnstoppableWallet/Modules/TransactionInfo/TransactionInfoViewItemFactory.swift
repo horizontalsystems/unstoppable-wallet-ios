@@ -724,6 +724,29 @@ class TransactionInfoViewItemFactory {
                 feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(appValue: fee, rate: _rate(fee.coin)))
             }
 
+        case let record as SolanaIncomingTransactionRecord:
+            sections.append(.init(receiveSection(source: record.source, appValue: record.value, from: record.from, rates: item.rates, balanceHidden: balanceHidden)))
+
+        case let record as SolanaOutgoingTransactionRecord:
+            sections.append(.init(sendSection(source: record.source, appValue: record.value, to: record.to, rates: item.rates, nftMetadata: item.nftMetadata, sentToSelf: record.sentToSelf, balanceHidden: balanceHidden)))
+
+            if record.sentToSelf {
+                sections.append(.init([.sentToSelf]))
+            }
+
+            if let fee = record.fee {
+                feeViewItem = .fee(title: "tx_info.fee".localized, value: feeString(appValue: fee, rate: _rate(fee.coin)))
+            }
+
+        case let record as SolanaUnknownTransactionRecord:
+            for transfer in record.outgoingTransfers {
+                sections.append(.init(sendSection(source: record.source, appValue: transfer.value, to: transfer.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden)))
+            }
+
+            for transfer in record.incomingTransfers {
+                sections.append(.init(receiveSection(source: record.source, appValue: transfer.value, from: transfer.address, rates: item.rates, nftMetadata: item.nftMetadata, balanceHidden: balanceHidden)))
+            }
+
         default: ()
         }
 
