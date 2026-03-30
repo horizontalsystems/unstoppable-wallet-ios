@@ -7,9 +7,11 @@ struct MarketSearchView: View {
     @StateObject var watchlistViewModel = WatchlistViewModel(page: .marketSearch)
 
     @Binding var isPresented: Bool
+    @State private var path = NavigationPath()
+    @State private var advancedSearchPresented = false
 
     var body: some View {
-        ThemeNavigationStack {
+        ThemeNavigationStack(path: $path) {
             ThemeView(style: .list) {
                 switch viewModel.state {
                 case let .placeholder(recentFullCoins, popularFullCoins):
@@ -46,7 +48,18 @@ struct MarketSearchView: View {
             }
             .navigationTitle("market.search.title".localized)
             .searchBar(text: $viewModel.searchText, prompt: "placeholder.search".localized)
+            .navigationDestination(isPresented: $advancedSearchPresented) {
+                MarketAdvancedSearchView(isParentPresented: $isPresented)
+            }
             .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button(action: {
+                        advancedSearchPresented = true
+                    }) {
+                        Image("manage")
+                    }
+                }
+
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: {
                         isPresented = false

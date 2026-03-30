@@ -4,8 +4,16 @@ struct SearchableModifier: ViewModifier {
     @Binding var text: String
     let prompt: String
 
+    @FocusState private var focused: Bool
+
     func body(content: Content) -> some View {
-        if #available(iOS 17.1, *) {
+        if #available(iOS 18.0, *) {
+            content
+                .searchable(text: $text, prompt: prompt)
+                .searchFocused($focused)
+                .searchPresentationToolbarBehavior(.avoidHidingContent)
+                .onAppear { focused = true }
+        } else if #available(iOS 17.1, *) {
             content
                 .searchable(text: $text, prompt: prompt)
                 .searchPresentationToolbarBehavior(.avoidHidingContent)

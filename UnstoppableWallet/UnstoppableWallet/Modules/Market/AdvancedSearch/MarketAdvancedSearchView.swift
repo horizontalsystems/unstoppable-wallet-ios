@@ -2,111 +2,101 @@ import MarketKit
 import SwiftUI
 
 struct MarketAdvancedSearchView: View {
-    @StateObject var viewModel = MarketAdvancedSearchViewModel()
-    @Binding var isPresented: Bool
+    @StateObject private var viewModel = MarketAdvancedSearchViewModel()
+    @Binding var isParentPresented: Bool
 
-    @State var resultsPresented = false
+    @State private var resultsPresented = false
 
     var body: some View {
-        ThemeNavigationStack {
-            ThemeView {
-                BottomGradientWrapper {
-                    ScrollView {
-                        VStack(spacing: .margin24) {
+        ThemeView {
+            BottomGradientWrapper {
+                ScrollView {
+                    VStack(spacing: .margin24) {
+                        ListSection {
+                            topRow()
+                            volumeRow()
+                            blockchainsRow()
+                        }
+
+                        VStack(spacing: 0) {
+                            PremiumListSectionHeader()
                             ListSection {
-                                topRow()
-                                volumeRow()
-                                blockchainsRow()
+                                categoriesRow()
                             }
-
-                            VStack(spacing: 0) {
-                                PremiumListSectionHeader()
-                                ListSection {
-                                    categoriesRow()
-                                }
-                                .modifier(ColoredBorder())
-                            }
-
-                            VStack(spacing: 0) {
-                                ListSection {
-                                    priceChangeRow()
-                                    pricePeriodRow()
-                                    signalRow()
-                                    priceCloseToRow()
-                                }
-                                .modifier(ColoredBorder())
-                            }
-
-                            VStack(spacing: 0) {
-                                ListSection {
-                                    premiumRow(outperformedBtcRow(), statPremiumKey: .outperformedBtc)
-                                    premiumRow(outperformedEthRow(), statPremiumKey: .outperformedEth)
-                                    premiumRow(outperformedBnbRow(), statPremiumKey: .outperformedBnb)
-                                    premiumRow(outperformedSp500Row(), statPremiumKey: .outperformedSp500)
-                                    premiumRow(outperformedGoldRow(), statPremiumKey: .outperformedGold)
-                                }
-                                .modifier(ColoredBorder())
-                            }
-
-                            VStack(spacing: 0) {
-                                ListSection {
-                                    premiumRow(goodCexVolumeRow(), statPremiumKey: .goodCexVolume)
-                                    premiumRow(goodDexVolumeRow(), statPremiumKey: .goodDexVolume)
-                                    premiumRow(goodDistributionRow(), statPremiumKey: .goodDistribution)
-                                    premiumRow(listedOnTopExchangesRow(), statPremiumKey: .listedOnTopExchanges)
-                                }
-                                .modifier(ColoredBorder())
-                            }
+                            .modifier(ColoredBorder())
                         }
-                        .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+
+                        VStack(spacing: 0) {
+                            ListSection {
+                                priceChangeRow()
+                                pricePeriodRow()
+                                signalRow()
+                                priceCloseToRow()
+                            }
+                            .modifier(ColoredBorder())
+                        }
+
+                        VStack(spacing: 0) {
+                            ListSection {
+                                premiumRow(outperformedBtcRow(), statPremiumKey: .outperformedBtc)
+                                premiumRow(outperformedEthRow(), statPremiumKey: .outperformedEth)
+                                premiumRow(outperformedBnbRow(), statPremiumKey: .outperformedBnb)
+                                premiumRow(outperformedSp500Row(), statPremiumKey: .outperformedSp500)
+                                premiumRow(outperformedGoldRow(), statPremiumKey: .outperformedGold)
+                            }
+                            .modifier(ColoredBorder())
+                        }
+
+                        VStack(spacing: 0) {
+                            ListSection {
+                                premiumRow(goodCexVolumeRow(), statPremiumKey: .goodCexVolume)
+                                premiumRow(goodDexVolumeRow(), statPremiumKey: .goodDexVolume)
+                                premiumRow(goodDistributionRow(), statPremiumKey: .goodDistribution)
+                                premiumRow(listedOnTopExchangesRow(), statPremiumKey: .listedOnTopExchanges)
+                            }
+                            .modifier(ColoredBorder())
+                        }
                     }
-                } bottomContent: {
-                    switch viewModel.state {
-                    case .loading:
-                        Button {} label: { ProgressView() }
-                            .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                            .disabled(true)
-                    case let .loaded(marketInfos):
-                        Button {
-                            resultsPresented = true
-                        } label: {
-                            Text(marketInfos.isEmpty ? "market.advanced_search.empty_results".localized : "\("market.advanced_search.show_results".localized): \(marketInfos.count)")
-                        }
+                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+                }
+            } bottomContent: {
+                switch viewModel.state {
+                case .loading:
+                    Button {} label: { ProgressView() }
                         .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                        .disabled(marketInfos.isEmpty)
-                    case .failed:
-                        Button {
-                            viewModel.syncMarketInfos()
-                        } label: {
-                            Text("market.advanced_search.retry".localized)
-                        }
-                        .buttonStyle(PrimaryButtonStyle(style: .gray))
+                        .disabled(true)
+                case let .loaded(marketInfos):
+                    Button {
+                        resultsPresented = true
+                    } label: {
+                        Text(marketInfos.isEmpty ? "market.advanced_search.empty_results".localized : "\("market.advanced_search.show_results".localized): \(marketInfos.count)")
                     }
+                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                    .disabled(marketInfos.isEmpty)
+                case .failed:
+                    Button {
+                        viewModel.syncMarketInfos()
+                    } label: {
+                        Text("market.advanced_search.retry".localized)
+                    }
+                    .buttonStyle(PrimaryButtonStyle(style: .gray))
                 }
             }
-            .navigationTitle("market.advanced_search.title".localized)
-            .navigationDestination(isPresented: $resultsPresented) {
-                if case let .loaded(marketInfos) = viewModel.state {
-                    MarketAdvancedSearchResultsView(marketInfos: marketInfos, timePeriod: viewModel.priceChangePeriod, isParentPresented: $isPresented)
-                }
+        }
+        .navigationTitle("market.advanced_search.title".localized)
+        .navigationDestination(isPresented: $resultsPresented) {
+            if case let .loaded(marketInfos) = viewModel.state {
+                MarketAdvancedSearchResultsView(marketInfos: marketInfos, timePeriod: viewModel.priceChangePeriod, isParentPresented: $isParentPresented)
             }
-            .toolbar {
-                ToolbarItem(placement: .primaryAction) {
-                    Button(action: {
-                        viewModel.reset()
-                    }) {
-                        Image("reset")
-                    }
-                    .disabled(!viewModel.canReset)
+        }
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button(action: {
+                    viewModel.reset()
+                }) {
+                    Image("reset")
                 }
-
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(action: {
-                        isPresented = false
-                    }) {
-                        Image("close")
-                    }
-                }
+                .disabled(!viewModel.canReset)
             }
         }
     }
