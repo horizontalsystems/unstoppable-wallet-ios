@@ -9,7 +9,6 @@ class BlockchainSettingsStorage {
     private let keyEvmSyncSource = "evm-sync-source"
     private let keyMoneroNode = "monero-node"
     private let keyZanoNode = "zano-node"
-
     init(storage: BlockchainSettingRecordStorage) {
         self.storage = storage
     }

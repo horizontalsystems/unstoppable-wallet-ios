@@ -230,7 +230,7 @@ class Core {
         let syncerStateStorage = SyncerStateStorage(dbPool: dbPool)
         evmLabelManager = EvmLabelManager(provider: hsLabelProvider, storage: evmLabelStorage, syncerStateStorage: syncerStateStorage)
 
-        let tronKitManager = TronKitManager(testNetManager: testNetManager)
+        let tronKitManager = TronKitManager(testNetManager: testNetManager, evmSyncSourceManager: evmSyncSourceManager)
         tronAccountManager = TronAccountManager(accountManager: accountManager, walletManager: walletManager, marketKit: marketKit, tronKitManager: tronKitManager, restoreStateManager: restoreStateManager)
 
         tonKitManager = TonKitManager(restoreStateManager: restoreStateManager, marketKit: marketKit, walletManager: walletManager)

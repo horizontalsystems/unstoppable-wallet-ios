@@ -65,11 +65,11 @@ class TronTransactionsAdapter: BaseTronAdapter {
 
 extension TronTransactionsAdapter: ITransactionsAdapter {
     var syncing: Bool {
-        tronKit.syncState.syncing
+        tronKit.transactionsSyncState.syncing
     }
 
     var syncingObservable: Observable<Void> {
-        tronKit.syncStatePublisher.asObservable().map { _ in () }
+        tronKit.transactionsSyncStatePublisher.asObservable().map { _ in () }
     }
 
     var explorerTitle: String {

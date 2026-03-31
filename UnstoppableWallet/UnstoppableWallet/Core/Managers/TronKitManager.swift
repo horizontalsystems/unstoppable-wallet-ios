@@ -8,16 +8,47 @@ import TronKit
 class TronKitManager {
     private let disposeBag = DisposeBag()
     private let testNetManager: TestNetManager
+    private let evmSyncSourceManager: EvmSyncSourceManager
 
     private weak var _tronKitWrapper: TronKitWrapper?
 
     private let tronKitCreatedRelay = PublishRelay<Void>()
+    private let tronKitUpdatedRelay = PublishRelay<Void>()
     private var currentAccount: Account?
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).tron-kit-manager", qos: .userInitiated)
 
-    init(testNetManager: TestNetManager) {
+    init(testNetManager: TestNetManager, evmSyncSourceManager: EvmSyncSourceManager) {
         self.testNetManager = testNetManager
+        self.evmSyncSourceManager = evmSyncSourceManager
+
+        subscribe(disposeBag, evmSyncSourceManager.syncSourceObservable) { [weak self] blockchainType in
+            self?.handleUpdatedSyncSource(blockchainType: blockchainType)
+        }
+    }
+
+    private func handleUpdatedSyncSource(blockchainType: BlockchainType) {
+        guard blockchainType == .tron else { return }
+        queue.sync {
+            guard _tronKitWrapper != nil else { return }
+            _tronKitWrapper = nil
+            tronKitUpdatedRelay.accept(())
+        }
+    }
+
+    private func rpcSource(network: Network, syncSource: EvmSyncSource) -> TronKit.RpcSource {
+        if syncSource.rpcSource.url.absoluteString.contains("trongrid") {
+            return .tronGrid(network: network, apiKey: AppConfig.tronGridApiKey)
+        }
+
+        let auth: String?
+        if case let .http(_, a) = syncSource.rpcSource {
+            auth = a
+        } else {
+            auth = nil
+        }
+
+        return TronKit.RpcSource(urls: [syncSource.rpcSource.url], apiKey: nil, auth: auth)
     }
 
     private func _tronKitWrapper(account: Account) throws -> TronKitWrapper {
@@ -44,12 +75,13 @@ class TronKitManager {
         default:
             throw AdapterError.unsupportedAccount
         }
-
+        let syncSource = evmSyncSourceManager.syncSource(blockchainType: .tron)
         let tronKit = try TronKit.Kit.instance(
             address: address,
             network: network,
             walletId: account.id,
-            apiKey: AppConfig.tronGridApiKey,
+            rpcSource: rpcSource(network: network, syncSource: syncSource),
+            transactionSource: .tronGrid(network: network, apiKey: AppConfig.tronGridApiKey),
             minLogLevel: .error
         )
 
@@ -69,6 +101,10 @@ class TronKitManager {
 extension TronKitManager {
     var tronKitCreatedObservable: Observable<Void> {
         tronKitCreatedRelay.asObservable()
+    }
+
+    var tronKitUpdatedObservable: Observable<Void> {
+        tronKitUpdatedRelay.asObservable()
     }
 
     var tronKitWrapper: TronKitWrapper? {

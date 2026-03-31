@@ -18,6 +18,9 @@ struct BlockchainSettingsView: View {
                     ForEach(viewModel.evmItems, id: \.blockchain.uid) { item in
                         ItemView(item: item)
                     }
+                    if let tronItem = viewModel.tronItem {
+                        ItemView(item: tronItem)
+                    }
                 }
             }
             .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
