@@ -28,11 +28,12 @@ extension AddEvmSyncSourceService {
     }
 
     func save() throws {
-        guard let url = URL(string: urlString), let scheme = url.scheme else {
+        guard let url = URL(string: urlString), let scheme = url.scheme, url.host != nil else {
             throw UrlError.invalid
         }
 
-        guard ["https", "wss"].contains(scheme) else {
+        let validSchemes: [String] = blockchainType == .tron ? ["http", "https"] : ["https", "wss"]
+        guard validSchemes.contains(scheme) else {
             throw UrlError.invalid
         }
 

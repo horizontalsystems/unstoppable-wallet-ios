@@ -44,12 +44,13 @@ class AdapterManager {
 
         for blockchain in evmBlockchainManager.allBlockchains {
             if let manager = try? evmBlockchainManager.evmKitManager(blockchainType: blockchain.type) {
-                subscribe(disposeBag, manager.evmKitUpdatedObservable) { [weak self] in self?.handleUpdatedEvmKit(blockchain: blockchain) }
+                subscribe(disposeBag, manager.evmKitUpdatedObservable) { [weak self] in self?.handleUpdatedEvmKit(blockchainType: blockchain.type) }
             }
         }
         subscribe(disposeBag, btcBlockchainManager.restoreModeUpdatedObservable) { [weak self] in self?.handleUpdatedRestoreMode(blockchainType: $0) }
         subscribe(disposeBag, moneroNodeManager.nodeObservable) { [weak self] in self?.recreateAdapter(blockchainType: $0) }
         subscribe(disposeBag, zanoNodeManager.nodeObservable) { [weak self] in self?.recreateAdapter(blockchainType: $0) }
+        subscribe(disposeBag, tronKitManager.tronKitUpdatedObservable) { [weak self] in self?.handleUpdatedEvmKit(blockchainType: .tron) }
     }
 
     private func initAdapters(wallets: [Wallet], account: Account?) {
@@ -92,11 +93,9 @@ class AdapterManager {
         }
     }
 
-    private func handleUpdatedEvmKit(blockchain: Blockchain) {
+    private func handleUpdatedEvmKit(blockchainType: BlockchainType) {
         let wallets = queue.sync { _adapterData.adapterMap.keys }
-        refreshAdapters(wallets: wallets.filter { wallet in
-            wallet.token.blockchain == blockchain
-        })
+        refreshAdapters(wallets: wallets.filter { $0.token.blockchainType == blockchainType })
     }
 
     private func handleUpdatedRestoreMode(blockchainType: BlockchainType) {

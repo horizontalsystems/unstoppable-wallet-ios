@@ -15,6 +15,7 @@ class BlockchainSettingsViewModel: ObservableObject {
 
     @Published var evmItems: [Item] = []
     @Published var btcItems: [Item] = []
+    @Published var tronItem: Item?
 
     init(btcBlockchainManager: BtcBlockchainManager, evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, zanoNodeManager: ZanoNodeManager, marketKit: MarketKit.Kit) {
         self.btcBlockchainManager = btcBlockchainManager
@@ -25,12 +26,19 @@ class BlockchainSettingsViewModel: ObservableObject {
         self.marketKit = marketKit
 
         subscribe(MainScheduler.instance, disposeBag, btcBlockchainManager.restoreModeUpdatedObservable) { [weak self] _ in self?.syncBtcItems() }
-        subscribe(MainScheduler.instance, disposeBag, evmSyncSourceManager.syncSourceObservable) { [weak self] _ in self?.syncEvmItems() }
+        subscribe(MainScheduler.instance, disposeBag, evmSyncSourceManager.syncSourceObservable) { [weak self] blockchainType in
+            if blockchainType == .tron {
+                self?.syncTronItem()
+            } else {
+                self?.syncEvmItems()
+            }
+        }
         subscribe(MainScheduler.instance, disposeBag, moneroNodeManager.nodeObservable) { [weak self] _ in self?.syncBtcItems() }
         subscribe(MainScheduler.instance, disposeBag, zanoNodeManager.nodeObservable) { [weak self] _ in self?.syncBtcItems() }
 
         syncBtcItems()
         syncEvmItems()
+        syncTronItem()
     }
 
     private func syncBtcItems() {
@@ -60,6 +68,12 @@ class BlockchainSettingsViewModel: ObservableObject {
                 return Item(blockchain: blockchain, type: .evm(syncSource: syncSource))
             }
             .sorted { $0.blockchain.type.order < $1.blockchain.type.order }
+    }
+
+    private func syncTronItem() {
+        guard let blockchain = try? marketKit.blockchain(uid: BlockchainType.tron.uid) else { return }
+        let syncSource = evmSyncSourceManager.syncSource(blockchainType: .tron)
+        tronItem = Item(blockchain: blockchain, type: .evm(syncSource: syncSource))
     }
 }
 

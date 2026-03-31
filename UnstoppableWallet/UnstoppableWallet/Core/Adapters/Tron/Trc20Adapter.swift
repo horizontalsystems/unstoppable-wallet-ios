@@ -22,6 +22,8 @@ class Trc20Adapter: BaseTronAdapter {
         )
 
         super.init(tronKitWrapper: tronKitWrapper, decimals: wallet.decimals)
+
+        tronKitWrapper.tronKit.watchTrc20(contractAddress: self.contractAddress)
     }
 
     func approveTrc20TriggerSmartContract(spenderAddress: Address, amount: BigUInt) throws -> TriggerSmartContract {
