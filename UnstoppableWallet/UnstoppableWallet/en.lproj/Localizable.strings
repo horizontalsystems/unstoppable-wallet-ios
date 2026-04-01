@@ -2015,6 +2015,8 @@
 "public_keys.title" = "Public Keys";
 "public_keys.evm_address" = "EVM Address";
 "public_keys.evm_address.description" = "Allows read-only monitoring of wallets holding assets on Ethereum, Binance Smart Chain and other EVM-based blockchains.";
+"public_keys.tron_address" = "TRON Address";
+"public_keys.tron_address.description" = "Allows read-only monitoring of wallets holding assets on TRON blockchain.";
 "public_keys.account_extended_public_key" = "Account Extended Public Key";
 "public_keys.account_extended_public_key.description" = "Allows read-only monitoring of wallets holding Bitcoin and other UTXO-based crypto (i.e. Litecoin, Bitcoin Cash, Dash, etc.).";
 "public_keys.monero_public_key" = "Monero Public Keys";
@@ -2039,6 +2041,7 @@
 // Manage Account -> EVM Address
 
 "evm_address.title" = "EVM Address";
+"tron_address.title" = "TRON Address";
 
 // Birthday Height
 

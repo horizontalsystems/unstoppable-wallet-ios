@@ -17,6 +17,10 @@ extension PublicKeysViewModel {
         service.evmAddressSupported
     }
 
+    var showTronAddress: Bool {
+        service.tronAddressSupported
+    }
+
     var showAccountExtendedPublicKey: Bool {
         service.accountExtendedPublicKeySupported
     }
