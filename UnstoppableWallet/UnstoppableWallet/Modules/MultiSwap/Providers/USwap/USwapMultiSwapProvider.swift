@@ -36,8 +36,10 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         self.provider = provider
         headers = Self.headers
 
-        assetMap = (try? swapAssetStorage.swapAssetMap(provider: id, as: String.self)) ?? [:]
-        syncAssets()
+        if !provider.isEvm {
+            assetMap = (try? swapAssetStorage.swapAssetMap(provider: id, as: String.self)) ?? [:]
+            syncAssets()
+        }
     }
 
     var id: String { provider.rawValue }
@@ -142,11 +144,11 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     }
 
     private func swapQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String? = nil, dry: Bool = true) async throws -> Quote {
-        guard let assetIn = assetMap[tokenIn.tokenQuery.id.lowercased()] else {
+        guard let assetIn = asset(token: tokenIn) else {
             throw SwapError.unsupportedTokenIn
         }
 
-        guard let assetOut = assetMap[tokenOut.tokenQuery.id.lowercased()] else {
+        guard let assetOut = asset(token: tokenOut) else {
             throw SwapError.unsupportedTokenOut
         }
 
@@ -162,6 +164,10 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             "dry": dry,
         ]
 
+        if let chainId = Self.blockchainTypeMap.first(where: { $0.value == tokenIn.blockchainType })?.key {
+            parameters["chainId"] = chainId
+        }
+
         if !dry {
             try await appendAddresses(tokenIn: tokenIn, parameters: &parameters)
         }
@@ -173,6 +179,18 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         }
 
         return quote
+    }
+
+    private func asset(token: Token) -> String? {
+        if provider.isEvm {
+            switch token.type {
+            case .native: return "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+            case let .eip20(address): return address
+            default: return nil
+            }
+        } else {
+            return assetMap[token.tokenQuery.id.lowercased()]
+        }
     }
 
     private func appendAddresses(tokenIn: Token, parameters: inout [String: Any]) async throws {
@@ -194,9 +212,15 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     }
 
     func supports(tokenIn: Token, tokenOut: Token) -> Bool {
-        print("Find support for : \(tokenIn)")
-        print("Founded: \(assetMap[tokenIn.tokenQuery.id.lowercased()] != nil && assetMap[tokenOut.tokenQuery.id.lowercased()] != nil)")
-        return assetMap[tokenIn.tokenQuery.id.lowercased()] != nil && assetMap[tokenOut.tokenQuery.id.lowercased()] != nil
+        guard asset(token: tokenIn) != nil, asset(token: tokenOut) != nil else {
+            return false
+        }
+
+        if provider.isEvm {
+            return tokenIn.blockchainType == tokenOut.blockchainType
+        } else {
+            return true
+        }
     }
 
     func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote {
@@ -389,8 +413,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
         set(&parameters, "hash", swap.txHash)
         set(&parameters, "chainId", Self.blockchainTypeMap.first(where: { $0.value == blockchainType })?.key)
-        set(&parameters, "fromAsset", assetMap[swap.tokenIn.tokenQuery.id.lowercased()])
-        set(&parameters, "toAsset", assetMap[swap.tokenOut.tokenQuery.id.lowercased()])
+        set(&parameters, "fromAsset", asset(token: swap.tokenIn))
+        set(&parameters, "toAsset", asset(token: swap.tokenOut))
         set(&parameters, "depositAddress", swap.depositAddress)
         set(&parameters, "providerSwapId", swap.providerSwapId)
 
@@ -990,6 +1014,7 @@ extension USwapMultiSwapProvider {
         case stealthex = "STEALTHEX"
         case swapuz = "SWAPUZ"
         case exolix = "EXOLIX"
+        case barter = "BARTER"
 
         var icon: String {
             switch self {
@@ -999,6 +1024,7 @@ extension USwapMultiSwapProvider {
             case .stealthex: return "swap_provider_stealthex"
             case .swapuz: return "swap_provider_swapuz"
             case .exolix: return "swap_provider_exolix"
+            case .barter: return "swap_provider_barter"
             }
         }
 
@@ -1010,19 +1036,27 @@ extension USwapMultiSwapProvider {
             case .stealthex: return "StealthEX"
             case .swapuz: return "Swapuz"
             case .exolix: return "Exolix"
+            case .barter: return "Barter"
             }
         }
 
         var type: SwapProviderType {
             switch self {
             case .swapuz: return .flexible
-            case .letsExchange, .stealthex, .near, .exolix: return .controlled
+            case .letsExchange, .stealthex, .near, .exolix, .barter: return .controlled
             case .quickEx: return .preCheck
             }
         }
 
         var requireTerms: Bool {
             true
+        }
+
+        var isEvm: Bool {
+            switch self {
+            case .barter: return true
+            default: return false
+            }
         }
     }
 
