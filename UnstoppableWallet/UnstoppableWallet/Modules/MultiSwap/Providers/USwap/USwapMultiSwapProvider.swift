@@ -107,7 +107,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 }
 
                 tokenQueries = [TokenQuery(blockchainType: blockchainType, tokenType: tokenType)]
-
+                print(tokenQueries)
             case .bitcoin, .bitcoinCash, .ecash, .dash, .zcash, .monero, .stellar:
                 tokenQueries = blockchainType.nativeTokenQueries
 
@@ -194,7 +194,9 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     }
 
     func supports(tokenIn: Token, tokenOut: Token) -> Bool {
-        assetMap[tokenIn.tokenQuery.id.lowercased()] != nil && assetMap[tokenOut.tokenQuery.id.lowercased()] != nil
+        print("Find support for : \(tokenIn)")
+        print("Founded: \(assetMap[tokenIn.tokenQuery.id.lowercased()] != nil && assetMap[tokenOut.tokenQuery.id.lowercased()] != nil)")
+        return assetMap[tokenIn.tokenQuery.id.lowercased()] != nil && assetMap[tokenOut.tokenQuery.id.lowercased()] != nil
     }
 
     func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote {
@@ -421,7 +423,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         recipient: String?,
         transactionSettings: TransactionSettings?
     ) async throws -> SwapFinalQuote {
-        guard let jsonObject = quote.tx else {
+        guard let jsonObject = quote.tx as? [String: Any] else {
             throw SwapError.noTransactionData
         }
 
@@ -715,7 +717,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         slippage: Decimal,
         recipient: String?
     ) async throws -> SwapFinalQuote {
-        guard let jsonObject = quote.tx else {
+        guard let jsonObject = quote.tx as? [String: Any] else {
             throw SwapError.noTransactionData
         }
 
@@ -878,8 +880,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             throw SwapError.noSolanaAdapter
         }
 
-        guard let jsonObject = quote.tx,
-              let txString = jsonObject["tx"] as? String ?? jsonObject["swapTransaction"] as? String,
+        guard let txString = quote.tx as? String,
               let rawTransaction = Data(base64Encoded: txString)
         else {
             throw SwapError.noTransactionData
@@ -908,7 +909,9 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             estimatedTime: quote.esimatedTime,
             fee: fee,
             transactionError: transactionError,
-            toAddress: quote.destinationAddress
+            toAddress: quote.destinationAddress,
+            depositAddress: quote.inboundAddress,
+            providerSwapId: quote.providerSwapId
         )
     }
 }
@@ -1066,7 +1069,7 @@ extension USwapMultiSwapProvider {
         let inboundAddress: String
         let destinationAddress: String
         let approvalAddress: String?
-        let tx: [String: Any]?
+        let tx: Any?
         let txExtraAttribute: [String: Any]?
         let memo: String?
         let shieldedMemoAddress: String?

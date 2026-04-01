@@ -104,18 +104,18 @@ extension SplAdapter: ISendSolanaAdapter {
         SolanaKit.Kit.fee
     }
 
-    func sendSol(toAddress: String, amount: Decimal, signer: SolanaKit.Signer) async throws {
+    func sendSol(toAddress: String, amount: Decimal, signer: SolanaKit.Signer) async throws -> FullTransaction {
         let lamports = SolanaAdapter.lamports(from: amount)
-        _ = try await solanaKit.sendSol(toAddress: toAddress, amount: lamports, signer: signer)
+        return try await solanaKit.sendSol(toAddress: toAddress, amount: lamports, signer: signer)
     }
 
-    func sendSpl(mintAddress: String, toAddress: String, amount: Decimal, decimals: Int, signer: SolanaKit.Signer) async throws {
+    func sendSpl(mintAddress: String, toAddress: String, amount: Decimal, decimals: Int, signer: SolanaKit.Signer) async throws -> FullTransaction {
         let rawAmount = SolanaAdapter.rawAmount(from: amount, decimals: decimals)
-        _ = try await solanaKit.sendSpl(mintAddress: mintAddress, toAddress: toAddress, amount: rawAmount, signer: signer)
+        return try await solanaKit.sendSpl(mintAddress: mintAddress, toAddress: toAddress, amount: rawAmount, signer: signer)
     }
 
-    func sendRawTransaction(rawTransaction: Data, signer: SolanaKit.Signer) async throws {
-        _ = try await solanaKit.sendRawTransaction(rawTransaction: rawTransaction, signer: signer)
+    func sendRawTransaction(rawTransaction: Data, signer: SolanaKit.Signer) async throws -> FullTransaction {
+        try await solanaKit.sendRawTransaction(rawTransaction: rawTransaction, signer: signer)
     }
 
     func estimateFee(rawTransaction: Data) throws -> Decimal {

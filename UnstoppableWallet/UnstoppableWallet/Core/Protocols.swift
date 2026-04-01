@@ -142,9 +142,9 @@ protocol ISendTonAdapter {
 }
 
 protocol ISendSolanaAdapter {
-    func sendSol(toAddress: String, amount: Decimal, signer: SolanaKit.Signer) async throws
-    func sendSpl(mintAddress: String, toAddress: String, amount: Decimal, decimals: Int, signer: SolanaKit.Signer) async throws
-    func sendRawTransaction(rawTransaction: Data, signer: SolanaKit.Signer) async throws
+    func sendSol(toAddress: String, amount: Decimal, signer: SolanaKit.Signer) async throws -> SolanaKit.FullTransaction
+    func sendSpl(mintAddress: String, toAddress: String, amount: Decimal, decimals: Int, signer: SolanaKit.Signer) async throws -> SolanaKit.FullTransaction
+    func sendRawTransaction(rawTransaction: Data, signer: SolanaKit.Signer) async throws -> SolanaKit.FullTransaction
     func estimateFee(rawTransaction: Data) throws -> Decimal
     var fee: Decimal { get }
 }

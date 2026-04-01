@@ -123,7 +123,9 @@ class JupiterMultiSwapProvider: IMultiSwapProvider {
             slippage: slippage,
             fee: fee,
             transactionError: transactionError,
-            toAddress: kit.address
+            toAddress: kit.address,
+            depositAddress: nil,
+            providerSwapId: Self.id,
         )
     }
 

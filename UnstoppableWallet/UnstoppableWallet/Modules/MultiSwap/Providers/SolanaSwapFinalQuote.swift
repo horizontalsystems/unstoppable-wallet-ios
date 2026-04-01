@@ -13,12 +13,14 @@ class SolanaSwapFinalQuote: SwapFinalQuote {
         estimatedTime: TimeInterval? = nil,
         fee: Decimal?,
         transactionError: Error?,
-        toAddress: String
+        toAddress: String,
+        depositAddress: String?,
+        providerSwapId: String?
     ) {
         self.rawTransaction = rawTransaction
         self.fee = fee
 
-        super.init(expectedBuyAmount: expectedAmountOut, slippage: slippage, recipient: recipient, estimatedTime: estimatedTime, transactionError: transactionError, toAddress: toAddress)
+        super.init(expectedBuyAmount: expectedAmountOut, slippage: slippage, recipient: recipient, estimatedTime: estimatedTime, transactionError: transactionError, toAddress: toAddress, depositAddress: depositAddress, providerSwapId: providerSwapId)
     }
 
     override var canSwap: Bool {

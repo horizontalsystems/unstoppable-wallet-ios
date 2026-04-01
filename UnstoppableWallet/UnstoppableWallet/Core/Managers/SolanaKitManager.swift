@@ -62,7 +62,8 @@ class SolanaKitManager {
             address: addressString,
             rpcSource: rpcSourceManager.rpcSource,
             auth: AppConfig.solanaRpcAuth,
-            walletId: account.id
+            walletId: account.id,
+            minLogLevel: .error
         )
 
         kit.start()
