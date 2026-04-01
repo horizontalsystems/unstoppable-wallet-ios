@@ -225,7 +225,8 @@ extension MultiSwapSendHandler: ISendHandler {
                 throw SendError.noSolanaAdapter
             }
 
-            try await adapter.sendRawTransaction(rawTransaction: quote.rawTransaction, signer: signer)
+            let fullTransaction = try await adapter.sendRawTransaction(rawTransaction: quote.rawTransaction, signer: signer)
+            txHash = fullTransaction.transaction.hash
         }
 
         if let account = accountManager.activeAccount {

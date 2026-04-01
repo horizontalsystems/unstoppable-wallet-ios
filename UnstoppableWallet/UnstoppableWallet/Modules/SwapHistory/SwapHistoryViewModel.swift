@@ -91,7 +91,6 @@ class SwapHistoryViewModel: ObservableObject {
         }
 
         let swaps = manager.swaps(accountId: account.id, from: __items.last?.swap.date, limit: Self.pageLimit)
-
         let newItems = swaps.map { swap in
             Item(
                 swap: swap,
