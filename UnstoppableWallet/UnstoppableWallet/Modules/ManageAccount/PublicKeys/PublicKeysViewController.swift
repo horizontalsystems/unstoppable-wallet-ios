@@ -50,7 +50,16 @@ class PublicKeysViewController: ThemeViewController {
     }
 
     private func openEvmAddress() {
-        guard let viewController = EvmAddressModule.viewController(accountType: viewModel.accountType) else {
+        guard let viewController = PublicAddressModule.evmViewController(accountType: viewModel.accountType) else {
+            return
+        }
+
+        navigationController?.pushViewController(viewController, animated: true)
+        stat(page: .publicKeys, event: .open(page: .evmAddress))
+    }
+
+    private func openTronAddress() {
+        guard let viewController = PublicAddressModule.tronViewController(accountType: viewModel.accountType) else {
             return
         }
 
@@ -97,6 +106,26 @@ extension PublicKeysViewController: SectionsDataSource {
                             isLast: true
                         ) { [weak self] in
                             self?.openEvmAddress()
+                        },
+                    ]
+                )
+            )
+        }
+
+        if viewModel.showTronAddress {
+            sections.append(
+                Section(
+                    id: "tron-address",
+                    footerState: tableView.sectionFooter(text: "public_keys.tron_address.description".localized),
+                    rows: [
+                        tableView.universalRow48(
+                            id: "tron-address",
+                            title: .body("public_keys.tron_address".localized),
+                            accessoryType: .disclosure,
+                            isFirst: true,
+                            isLast: true
+                        ) { [weak self] in
+                            self?.openTronAddress()
                         },
                     ]
                 )

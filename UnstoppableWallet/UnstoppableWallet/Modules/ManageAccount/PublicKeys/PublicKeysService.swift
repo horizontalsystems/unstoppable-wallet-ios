@@ -18,6 +18,13 @@ extension PublicKeysService {
         }
     }
 
+    var tronAddressSupported: Bool {
+        switch account.type {
+        case .mnemonic, .trcPrivateKey, .tronAddress: return true
+        default: return false
+        }
+    }
+
     var accountExtendedPublicKeySupported: Bool {
         switch account.type {
         case .mnemonic, .hdExtendedKey: return true

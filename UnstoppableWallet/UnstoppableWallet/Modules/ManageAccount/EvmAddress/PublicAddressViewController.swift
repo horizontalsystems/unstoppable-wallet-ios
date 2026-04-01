@@ -4,13 +4,15 @@ import SnapKit
 
 import UIKit
 
-class EvmAddressViewController: ThemeViewController {
-    private let viewModel: EvmAddressViewModel
+class PublicAddressViewController: ThemeViewController {
+    private let viewModel: PublicAddressViewModel
+    private let accountType: PublicAddressModule.AbstractAccountType
 
     private let tableView = SectionsTableView(style: .grouped)
 
-    init(viewModel: EvmAddressViewModel) {
+    init(viewModel: PublicAddressViewModel, accountType: PublicAddressModule.AbstractAccountType) {
         self.viewModel = viewModel
+        self.accountType = accountType
 
         super.init()
     }
@@ -23,10 +25,9 @@ class EvmAddressViewController: ThemeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "evm_address.title".localized
+        title = accountType.title
 
         navigationItem.largeTitleDisplayMode = .never
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "circle_information_24"), style: .plain, target: self, action: #selector(onTapInfo))
 
         view.addSubview(tableView)
         tableView.snp.makeConstraints { maker in
@@ -52,16 +53,6 @@ class EvmAddressViewController: ThemeViewController {
         tableView.buildSections()
     }
 
-    @objc private func onTapInfo() {
-        guard let url = FaqUrlHelper.privateKeysUrl else {
-            return
-        }
-
-        let module = MarkdownModule.viewController(url: url, handleRelativeUrl: false)
-        present(ThemeNavigationController(rootViewController: module), animated: true)
-        stat(page: .evmAddress, event: .open(page: .info))
-    }
-
     @objc private func onTapCopy() {
         UIPasteboard.general.string = viewModel.address
         HudHelper.instance.show(banner: .copied)
@@ -69,7 +60,7 @@ class EvmAddressViewController: ThemeViewController {
     }
 }
 
-extension EvmAddressViewController: SectionsDataSource {
+extension PublicAddressViewController: SectionsDataSource {
     func buildSections() -> [SectionProtocol] {
         let address = viewModel.address
 
@@ -110,5 +101,14 @@ extension EvmAddressViewController: SectionsDataSource {
                 ]
             ),
         ]
+    }
+}
+
+extension PublicAddressModule.AbstractAccountType {
+    var title: String {
+        switch self {
+        case .evm: return "evm_address.title".localized
+        case .tron: return "tron_address.title".localized
+        }
     }
 }
