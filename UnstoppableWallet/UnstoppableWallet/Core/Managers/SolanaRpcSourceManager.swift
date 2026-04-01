@@ -17,8 +17,9 @@ class SolanaRpcSourceManager {
 
     var allRpcSources: [SolanaKit.RpcSource] {
         var sources = [SolanaKit.RpcSource]()
-        if let apiKey = AppConfig.solanaAlchemyApiKey {
-            sources.append(.alchemy(apiKey: apiKey))
+        let apiKeys = AppConfig.solanaAlchemyApiKeys
+        if !apiKeys.isEmpty {
+            sources.append(.alchemy(apiKeys: apiKeys))
         }
         sources.append(.mainnetBeta())
         return sources

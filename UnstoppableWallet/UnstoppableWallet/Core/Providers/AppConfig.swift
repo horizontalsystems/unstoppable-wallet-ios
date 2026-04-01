@@ -126,6 +126,13 @@ enum AppConfig {
         (Bundle.main.object(forInfoDictionaryKey: "SolanaAlchemyApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
 
+    static var solanaAlchemyApiKeys: [String] {
+        ((Bundle.main.object(forInfoDictionaryKey: "SolanaAlchemyApiKey") as? String) ?? "")
+            .components(separatedBy: ",")
+            .map { $0.trimmingCharacters(in: .whitespaces) }
+            .filter { !$0.isEmpty }
+    }
+
     static var solanaRpcAuth: String? {
         (Bundle.main.object(forInfoDictionaryKey: "SolanaRpcAuth") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
