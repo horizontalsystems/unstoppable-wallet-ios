@@ -38,7 +38,7 @@ class TronKitManager {
 
     private func rpcSource(network: Network, syncSource: EvmSyncSource) -> TronKit.RpcSource {
         if syncSource.rpcSource.url.absoluteString.contains("trongrid") {
-            return .tronGrid(network: network, apiKey: AppConfig.tronGridApiKey)
+            return .tronGrid(network: network, apiKeys: AppConfig.tronGridApiKeys)
         }
 
         let auth: String?
@@ -48,7 +48,7 @@ class TronKitManager {
             auth = nil
         }
 
-        return TronKit.RpcSource(urls: [syncSource.rpcSource.url], apiKey: nil, auth: auth)
+        return TronKit.RpcSource(urls: [syncSource.rpcSource.url], apiKeys: [], auth: auth)
     }
 
     private func _tronKitWrapper(account: Account) throws -> TronKitWrapper {
@@ -81,7 +81,7 @@ class TronKitManager {
             network: network,
             walletId: account.id,
             rpcSource: rpcSource(network: network, syncSource: syncSource),
-            transactionSource: .tronGrid(network: network, apiKey: AppConfig.tronGridApiKey),
+            transactionSource: .tronGrid(network: network, apiKeys: AppConfig.tronGridApiKeys),
             minLogLevel: .error
         )
 

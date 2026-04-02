@@ -177,8 +177,8 @@
 	<string>${thorchain_affiliate}</string>
 	<key>ThorchainAffiliateBps</key>
 	<string>${thorchain_affiliate_bps}</string>
-	<key>TronGridApiKey</key>
-	<string>${trongrid_api_key}</string>
+	<key>TronGridApiKeys</key>
+	<string>${trongrid_api_keys}</string>
 	<key>TwitterBearerToken</key>
 	<string>${twitter_bearer_token}</string>
 	<key>UIAppFonts</key>

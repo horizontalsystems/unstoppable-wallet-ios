@@ -228,7 +228,7 @@ extension EvmSyncSourceManager {
                 return [
                     EvmSyncSource(
                         name: "TronGrid",
-                        rpcSource: .http(urls: [URL(string: "https://nile.trongrid.io/")!], auth: AppConfig.tronGridApiKey),
+                        rpcSource: .http(urls: [URL(string: "https://nile.trongrid.io/")!], auth: AppConfig.tronGridApiKeys.first),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                     ),
                 ]
@@ -236,12 +236,12 @@ extension EvmSyncSourceManager {
                 return [
                     EvmSyncSource(
                         name: "TronGrid",
-                        rpcSource: .http(urls: [URL(string: "https://api.trongrid.io/")!], auth: AppConfig.tronGridApiKey),
+                        rpcSource: .http(urls: [URL(string: "https://api.trongrid.io/")!], auth: AppConfig.tronGridApiKeys.first),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                     ),
                     EvmSyncSource(
                         name: "Pocket Network",
-                        rpcSource: .http(urls: [URL(string: "https://tron.api.pocket.network")!], auth: AppConfig.tronGridApiKey),
+                        rpcSource: .http(urls: [URL(string: "https://tron.api.pocket.network")!], auth: AppConfig.tronGridApiKeys.first),
                         transactionSource: defaultTransactionSource(blockchainType: blockchainType)
                     ),
                 ]
