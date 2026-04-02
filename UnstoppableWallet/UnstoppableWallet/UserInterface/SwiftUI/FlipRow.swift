@@ -9,8 +9,16 @@ protocol IFlippedData {
 struct FlipRow: View {
     let title: CustomStringConvertible
     let flipData: IFlippedData
+    let initialFlipped: Bool
 
     @State private var flipped = false
+
+    init(title: CustomStringConvertible, flipData: IFlippedData, initialFlipped: Bool = false) {
+        self.title = title
+        self.flipData = flipData
+        self.initialFlipped = initialFlipped
+        _flipped = State(initialValue: initialFlipped)
+    }
 
     var body: some View {
         if let text = flipData.text(flipped: flipped) {

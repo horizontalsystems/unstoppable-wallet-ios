@@ -241,6 +241,16 @@ class RestoreViewController: KeyboardAwareViewController {
         guard !accountTypes.isEmpty else { return }
 
         if accountTypes.count == 1, let accountType = accountTypes.first {
+            let supportedTokens = RestoreSelectModule.supportedTokens(accountType: accountType)
+            let blockchains = Set(supportedTokens.map(\.blockchain))
+
+            if blockchains.count == 1, let token = supportedTokens.first, token.blockchainType.restoreSettingTypes.isEmpty {
+                RestoreSelectModule.restoreSingleBlockchain(accountName: accountName, accountType: accountType, token: token)
+                stat(page: statPage, event: .importWallet(walletType: accountType.statDescription))
+                onRestore()
+                return
+            }
+
             let viewController = RestoreSelectModule.viewController(accountName: accountName, accountType: accountType, statPage: statPage, onRestore: onRestore)
             navigationController?.pushViewController(viewController, animated: true)
             return

@@ -2,9 +2,6 @@ import Combine
 import MarketKit
 
 class AccountTypeSelectViewModel {
-    private let marketKit = Core.shared.marketKit
-    private let accountFactory = Core.shared.accountFactory
-    private let accountManager = Core.shared.accountManager
     private let accountName: String
     let items: [ViewItem]
 
@@ -39,20 +36,10 @@ class AccountTypeSelectViewModel {
     }
 
     private func restore(_ accountType: AccountType) {
-        let account = accountFactory.account(
-            type: accountType,
-            origin: .restored,
-            backedUp: true,
-            fileBackedUp: false,
-            name: accountName
-        )
-        accountManager.save(account: account)
+        let supportedTokens = RestoreSelectModule.supportedTokens(accountType: accountType)
 
-        let tokenQuery = TokenQuery(blockchainType: .tron, tokenType: .native)
-        if let token = try? Core.shared.marketKit.token(query: tokenQuery) {
-            Core.shared.restoreStateManager.setShouldRestore(account: account, blockchainType: .tron)
-            let wallet = Wallet(token: token, account: account)
-            Core.shared.walletManager.save(wallets: [wallet])
+        if let token = supportedTokens.first {
+            RestoreSelectModule.restoreSingleBlockchain(accountName: accountName, accountType: accountType, token: token)
         }
 
         onSuccessSubject.send(accountType)
