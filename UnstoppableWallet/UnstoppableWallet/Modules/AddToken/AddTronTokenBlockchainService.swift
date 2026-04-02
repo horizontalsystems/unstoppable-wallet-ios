@@ -38,12 +38,12 @@ extension AddTronTokenBlockchainService: IAddTokenBlockchainService {
         }
 
         let tokenQuery = tokenQuery(reference: reference)
-        let apiKey = AppConfig.tronGridApiKey
+        let apiKeys = AppConfig.tronGridApiKeys
 
         do {
-            async let name = Trc20DataProvider.fetchName(networkManager: networkManager, network: network, apiKey: apiKey, contractAddress: address)
-            async let symbol = Trc20DataProvider.fetchSymbol(networkManager: networkManager, network: network, apiKey: apiKey, contractAddress: address)
-            async let decimals = Trc20DataProvider.fetchDecimals(networkManager: networkManager, network: network, apiKey: apiKey, contractAddress: address)
+            async let name = Trc20DataProvider.fetchName(networkManager: networkManager, network: network, apiKeys: apiKeys, contractAddress: address)
+            async let symbol = Trc20DataProvider.fetchSymbol(networkManager: networkManager, network: network, apiKeys: apiKeys, contractAddress: address)
+            async let decimals = Trc20DataProvider.fetchDecimals(networkManager: networkManager, network: network, apiKeys: apiKeys, contractAddress: address)
 
             return try await Token(
                 coin: Coin(uid: tokenQuery.customCoinUid, name: name, code: symbol),
