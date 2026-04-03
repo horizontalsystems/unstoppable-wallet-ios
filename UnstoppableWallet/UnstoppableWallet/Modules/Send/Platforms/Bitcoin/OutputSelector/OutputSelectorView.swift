@@ -32,7 +32,7 @@ struct OutputSelectorView: View {
                                 output(viewItem: viewItem)
                             }
                         }
-                        .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
+                        .padding(.padding16)
                     }
                     .animation(.easeInOut, value: viewModel.changeViewItem)
                     .padding(EdgeInsets(top: .margin12, leading: 0, bottom: .margin32, trailing: 0))

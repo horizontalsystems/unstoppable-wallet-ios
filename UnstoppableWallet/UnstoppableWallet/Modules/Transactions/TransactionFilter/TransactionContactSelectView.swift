@@ -20,7 +20,7 @@ struct TransactionContactSelectView: View {
                     viewModel.allowedBlockchainsForContact.map(\.name).joined(separator: ", ")
                 ))
                 .themeSubhead2()
-                .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
+                .padding(.padding16)
 
                 if !viewModel.contacts.isEmpty {
                     ScrollableThemeView {

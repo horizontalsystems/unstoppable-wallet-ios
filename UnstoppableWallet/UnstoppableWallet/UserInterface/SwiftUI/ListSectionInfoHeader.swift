@@ -15,7 +15,7 @@ struct ListSectionInfoHeader: View {
                 }
             }
             .frame(height: .margin32)
-            .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
+            .padding(.padding16)
 
             Spacer()
         }

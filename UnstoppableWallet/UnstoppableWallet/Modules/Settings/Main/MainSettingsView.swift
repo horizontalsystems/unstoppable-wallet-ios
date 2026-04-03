@@ -94,7 +94,7 @@ struct MainSettingsView: View {
                         testSwitchersSection()
                     }
                 }
-                .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
+                .padding(.padding16)
             }
             .padding(EdgeInsets(top: .margin12, leading: 0, bottom: .margin32, trailing: 0))
         }
@@ -383,11 +383,13 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func addressChecker() -> some View {
         ClickableRow(action: {
-            Coordinator.shared.present { isPresented in
-                CheckAddressView(isPresented: isPresented)
-                    .onFirstAppear {
-                        stat(page: .settings, event: .open(page: .addressChecker))
-                    }
+            Coordinator.shared.performAfterPurchase(premiumFeature: .scamProtection, page: .settings, trigger: .vipSupport) {
+                Coordinator.shared.present { isPresented in
+                    CheckAddressView(isPresented: isPresented)
+                        .onFirstAppear {
+                            stat(page: .settings, event: .open(page: .addressChecker))
+                        }
+                }
             }
         }) {
             ThemeImage("radar", size: .iconSize24, colorStyle: .yellow)

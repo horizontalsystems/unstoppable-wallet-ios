@@ -6,13 +6,15 @@ struct BackupPasswordContentView: View {
 
     var body: some View {
         VStack(spacing: .margin16) {
-            ListSection(header: "backup_app.backup.password.title".localized, uppercased: false) {
+            VStack(spacing: 0) {
+                ListSectionHeader(text: "backup_app.backup.password.title".localized, uppercased: false, insets: .zero)
+
                 passwordField
                     .animation(.default, value: viewModel.secureLock)
             }
             .animation(.default, value: viewModel.passwordCautionState)
 
-            ListSection {
+            VStack(spacing: 0) {
                 confirmField
                     .animation(.default, value: viewModel.secureLock)
             }

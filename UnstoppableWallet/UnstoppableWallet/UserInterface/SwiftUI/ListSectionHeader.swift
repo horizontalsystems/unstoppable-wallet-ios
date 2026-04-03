@@ -4,18 +4,20 @@ struct ListSectionHeader: View {
     private let text: String
     private let uppercased: Bool
     private let color: Color
+    private let insets: EdgeInsets
 
-    init(text: String, uppercased: Bool = true, color: Color = .themeGray) {
+    init(text: String, uppercased: Bool = true, color: Color = .themeGray, insets: EdgeInsets = .padding16) {
         self.text = text
         self.uppercased = uppercased
         self.color = color
+        self.insets = insets
     }
 
     var body: some View {
         Text(uppercased ? text.uppercased() : text)
             .themeSubhead1(color: color)
             .frame(height: .margin32)
-            .padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
+            .padding(insets)
     }
 }
 

@@ -27,6 +27,7 @@ extension View {
 
 extension EdgeInsets {
     static let zero = EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
+    static let padding16 = EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16)
 
     var inverted: EdgeInsets {
         .init(top: -top, leading: -leading, bottom: -bottom, trailing: -trailing)
