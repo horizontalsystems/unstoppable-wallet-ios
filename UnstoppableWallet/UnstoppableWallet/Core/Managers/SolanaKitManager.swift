@@ -61,7 +61,7 @@ class SolanaKitManager {
         let kit = try SolanaKit.Kit.instance(
             address: addressString,
             rpcSource: rpcSourceManager.rpcSource,
-            auth: AppConfig.solanaRpcAuth,
+            auth: nil,
             walletId: account.id,
             minLogLevel: .error
         )

@@ -18,9 +18,9 @@ class SwapProviderFactory {
             return AllBridgeMultiSwapProvider()
         }
 
-        if id == JupiterMultiSwapProvider.id {
-            return JupiterMultiSwapProvider()
-        }
+//        if id == JupiterMultiSwapProvider.id {
+//            return JupiterMultiSwapProvider()
+//        }
 
         if let provider = USwapMultiSwapProvider.Provider(rawValue: id) {
             return USwapMultiSwapProvider(provider: provider)
@@ -39,7 +39,7 @@ class SwapProviderFactory {
             ThorChainMultiSwapProvider.id: ThorChainMultiSwapProvider.name,
             MayaMultiSwapProvider.id: MayaMultiSwapProvider.name,
             AllBridgeMultiSwapProvider.id: AllBridgeMultiSwapProvider.name,
-            JupiterMultiSwapProvider.id: JupiterMultiSwapProvider.name,
+//            JupiterMultiSwapProvider.id: JupiterMultiSwapProvider.name,
         ]
 
         return names[id]
