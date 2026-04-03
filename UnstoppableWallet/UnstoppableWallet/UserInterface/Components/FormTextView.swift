@@ -50,6 +50,7 @@ class FormTextView: UIView, IFormTextView {
         textView.font = textViewFont
         textView.textContainer.lineFragmentPadding = 0
         textView.backgroundColor = .clear
+        textView.textContentType = .init(rawValue: "")
         textView.isScrollEnabled = false
 
         addSubview(placeholderLabel)

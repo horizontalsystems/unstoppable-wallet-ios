@@ -3,6 +3,7 @@ import SwiftUI
 struct SearchableModifier: ViewModifier {
     @Binding var text: String
     let prompt: String
+    let autoFocus: Bool
 
     @FocusState private var focused: Bool
 
@@ -12,7 +13,7 @@ struct SearchableModifier: ViewModifier {
                 .searchable(text: $text, prompt: prompt)
                 .searchFocused($focused)
                 .searchPresentationToolbarBehavior(.avoidHidingContent)
-                .onAppear { focused = true }
+                .onAppear { focused = autoFocus }
         } else if #available(iOS 17.1, *) {
             content
                 .searchable(text: $text, prompt: prompt)
@@ -25,8 +26,8 @@ struct SearchableModifier: ViewModifier {
 }
 
 extension View {
-    func searchBar(text: Binding<String>, prompt: String) -> some View {
-        modifier(SearchableModifier(text: text, prompt: prompt))
+    func searchBar(text: Binding<String>, prompt: String, autoFocus: Bool = false) -> some View {
+        modifier(SearchableModifier(text: text, prompt: prompt, autoFocus: autoFocus))
     }
 }
 
