@@ -1883,6 +1883,9 @@
 "add_token.jetton_master_not_found" = "在 %@ 区块链中找不到杰顿大师";
 "add_token.input_placeholder.contract_address" = "智能合约地址";
 "add_token.input_placeholder.jetton_master_address" = "Jetton Master 地址";
+"add_token.input_placeholder.mint_address" = "代币铸造地址";
+"add_token.invalid_mint_address" = "无效的 Solana 地址";
+"add_token.mint_address_not_found" = "在 %@ 区块链中未找到该代币";
 "add_token.coin_name" = "代币图片";
 "add_token.symbol" = "标志";
 "add_token.decimals" = "小数";

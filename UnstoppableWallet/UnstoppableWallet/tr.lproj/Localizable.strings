@@ -1883,6 +1883,9 @@
 "add_token.jetton_master_not_found" = "Jetton Master %@ blockchain'inde bulunamadı";
 "add_token.input_placeholder.contract_address" = "Sözleşme Adresi";
 "add_token.input_placeholder.jetton_master_address" = "Jetton Ana Adresi";
+"add_token.input_placeholder.mint_address" = "Token Mint Adresi";
+"add_token.invalid_mint_address" = "Geçersiz Solana adresi";
+"add_token.mint_address_not_found" = "%@ blok zincirinde token bulunamadı";
 "add_token.coin_name" = "Kripto Para Adı";
 "add_token.symbol" = "Sembol";
 "add_token.decimals" = "Ondalıklar";

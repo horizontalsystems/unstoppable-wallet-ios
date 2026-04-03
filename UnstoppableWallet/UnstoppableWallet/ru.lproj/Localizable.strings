@@ -1883,6 +1883,9 @@
 "add_token.jetton_master_not_found" = "Jetton Master не найден в блокчейне %@";
 "add_token.input_placeholder.contract_address" = "Адрес контракта";
 "add_token.input_placeholder.jetton_master_address" = "Jetton Master адрес";
+"add_token.input_placeholder.mint_address" = "Mint-адрес токена";
+"add_token.invalid_mint_address" = "Недействительный адрес Solana";
+"add_token.mint_address_not_found" = "Токен не найден в блокчейне %@";
 "add_token.coin_name" = "Название токена";
 "add_token.symbol" = "Символ";
 "add_token.decimals" = "Десятичные знаки";

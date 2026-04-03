@@ -1883,6 +1883,9 @@
 "add_token.jetton_master_not_found" = "Jetton Master não encontrado na blockchain %@";
 "add_token.input_placeholder.contract_address" = "Endereço do Contrato";
 "add_token.input_placeholder.jetton_master_address" = "Endereço do Mestre Jetton";
+"add_token.input_placeholder.mint_address" = "Endereço Mint do token";
+"add_token.invalid_mint_address" = "Endereço Solana inválido";
+"add_token.mint_address_not_found" = "Token não encontrado na blockchain %@";
 "add_token.coin_name" = "Nome da Moeda";
 "add_token.symbol" = "Símbolo";
 "add_token.decimals" = "Decimais";
