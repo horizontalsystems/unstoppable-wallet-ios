@@ -47,7 +47,7 @@ struct MarketSearchView: View {
                 }
             }
             .navigationTitle("market.search.title".localized)
-            .searchBar(text: $viewModel.searchText, prompt: "placeholder.search".localized)
+            .searchBar(text: $viewModel.searchText, prompt: "placeholder.search".localized, autoFocus: true)
             .navigationDestination(isPresented: $advancedSearchPresented) {
                 MarketAdvancedSearchView(isParentPresented: $isPresented)
             }
