@@ -15,7 +15,7 @@ struct UsedAddressesView: View {
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin12) {
-                Text(description).textSubhead2().padding(EdgeInsets(top: 0, leading: .margin16, bottom: 0, trailing: .margin16))
+                Text(description).textSubhead2().padding(.padding16)
 
                 if hasChangeAddresses {
                     TabHeaderView(
