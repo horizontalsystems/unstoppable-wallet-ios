@@ -3,6 +3,7 @@ import SnapKit
 import UIKit
 
 class SingleLineFormTextView: UIView, IFormTextView {
+    private static let secureSymbol = "*"
     private var textViewFont: UIFont = .body
 
     private let wrapperView = UIView()
@@ -13,6 +14,9 @@ class SingleLineFormTextView: UIView, IFormTextView {
     var onChangeText: ((String?) -> Void)?
     var onChangeEditing: ((Bool) -> Void)?
     var isValidText: ((String) -> Bool)?
+
+    private var maskedMode = false
+    private var realText = ""
 
     var textFieldInset: UIEdgeInsets = .zero
     var prefix: String? {
@@ -51,6 +55,8 @@ class SingleLineFormTextView: UIView, IFormTextView {
         textField.textColor = .themeLeah
         textField.font = textViewFont
         textField.backgroundColor = .clear
+        textField.textContentType = .init(rawValue: "")
+        textField.autocorrectionType = .no
 
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
 
@@ -77,10 +83,17 @@ class SingleLineFormTextView: UIView, IFormTextView {
     }
 
     private func syncPlaceholder() {
-        placeholderLabel.isHidden = !((textField.text ?? "").isEmpty)
+        if maskedMode {
+            placeholderLabel.isHidden = !realText.isEmpty
+        } else {
+            placeholderLabel.isHidden = !((textField.text ?? "").isEmpty)
+        }
     }
 
     @objc private func textFieldDidChange() {
+        if maskedMode {
+            return
+        }
         onChangeText?(textField.text?.stripping(prefix: prefix))
         syncPlaceholder()
     }
@@ -89,10 +102,18 @@ class SingleLineFormTextView: UIView, IFormTextView {
 extension SingleLineFormTextView {
     var text: String? {
         get {
-            textField.text?.stripping(prefix: prefix)
+            if maskedMode {
+                return realText
+            }
+            return textField.text?.stripping(prefix: prefix)
         }
         set {
-            textField.text = [prefix, newValue].compactMap { $0 }.joined()
+            if maskedMode {
+                realText = newValue ?? ""
+                textField.text = String(repeating: Self.secureSymbol, count: realText.count)
+            } else {
+                textField.text = [prefix, newValue].compactMap { $0 }.joined()
+            }
             syncPlaceholder()
         }
     }
@@ -130,13 +151,20 @@ extension SingleLineFormTextView {
     }
 
     var isSecureTextEntry: Bool {
-        get { textField.isSecureTextEntry }
+        get { maskedMode }
         set {
-            textField.isSecureTextEntry = newValue
+            maskedMode = newValue
+            textField.isSecureTextEntry = false
+            textField.textContentType = .init(rawValue: "")
             if newValue {
-                textField.textContentType = .oneTimeCode
                 textField.clearButtonMode = .never
+                realText = textField.text?.stripping(prefix: prefix) ?? ""
+                textField.text = String(repeating: Self.secureSymbol, count: realText.count)
+            } else {
+                textField.text = [prefix, realText].compactMap { $0 }.joined()
+                realText = ""
             }
+            syncPlaceholder()
         }
     }
 
@@ -186,6 +214,36 @@ extension SingleLineFormTextView: UITextFieldDelegate {
     }
 
     public func textField(_ textView: UITextField, shouldChangeCharactersIn range: NSRange, replacementString text: String) -> Bool {
+        if maskedMode {
+            let nsRealText = realText as NSString
+
+            if range.location + range.length > nsRealText.length {
+                return false
+            }
+
+            let newRealText = nsRealText.replacingCharacters(in: range, with: text)
+
+            if !text.isEmpty, !newRealText.isEmpty {
+                let isValid = isValidText?(newRealText) ?? true
+                if !isValid {
+                    textView.shakeView()
+                    return false
+                }
+            }
+
+            realText = newRealText
+            textView.text = String(repeating: Self.secureSymbol, count: realText.count)
+
+            let newCursorPosition = range.location + text.count
+            if let pos = textView.position(from: textView.beginningOfDocument, offset: newCursorPosition) {
+                textView.selectedTextRange = textView.textRange(from: pos, to: pos)
+            }
+
+            onChangeText?(realText)
+            syncPlaceholder()
+            return false
+        }
+
         let newText = ((textView.text ?? "") as NSString).replacingCharacters(in: range, with: text)
 
         if let prefix { // avoid delete prefix if it was set

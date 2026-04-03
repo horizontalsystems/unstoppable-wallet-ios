@@ -19,6 +19,7 @@ class TextFieldStackView: UIView {
         textField.font = .body
         textField.textColor = .themeLeah
         textField.clearButtonMode = .whileEditing
+        textField.textContentType = .init(rawValue: "")
 
         textField.delegate = self
         textField.addTarget(self, action: #selector(textFieldDidChange), for: .editingChanged)
