@@ -29,7 +29,7 @@ class MultiSwapProviderManager {
     }
 
     private func syncProviders(uSwapProviders: [String]) {
-        providers = Array(Set([AllBridgeMultiSwapProvider.id, JupiterMultiSwapProvider.id] + uSwapProviders))
+        providers = Array(Set([AllBridgeMultiSwapProvider.id/*, JupiterMultiSwapProvider.id*/] + uSwapProviders))
     }
 
     func sync() {
