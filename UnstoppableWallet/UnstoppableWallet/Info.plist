@@ -177,8 +177,8 @@
 	<string>${thorchain_affiliate}</string>
 	<key>ThorchainAffiliateBps</key>
 	<string>${thorchain_affiliate_bps}</string>
-	<key>SolanaAlchemyApiKey</key>
-	<string>${solana_alchemy_api_key}</string>
+	<key>SolanaAlchemyApiKeys</key>
+	<string>${solana_alchemy_api_keys}</string>
 	<key>TronGridApiKeys</key>
 	<string>${trongrid_api_keys}</string>
 	<key>SolanaRpcAuth</key>
