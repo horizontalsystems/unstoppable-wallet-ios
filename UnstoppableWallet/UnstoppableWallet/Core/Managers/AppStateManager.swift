@@ -1,5 +1,6 @@
 import Alamofire
 import Foundation
+import HsExtensions
 import HsToolKit
 import ObjectMapper
 
@@ -11,7 +12,7 @@ class AppStateManager {
     private let localStorage = LocalStorage(userDefaultsStorage: UserDefaultsStorage())
     private let networkManager = NetworkManager()
 
-    private(set) var swapEnabled: Bool
+    @PostPublished private(set) var swapEnabled: Bool
 
     init() {
         swapEnabled = localStorage.swapEnabled
