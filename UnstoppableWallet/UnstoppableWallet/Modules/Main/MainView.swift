@@ -25,10 +25,12 @@ struct MainView: View {
                     .tag(MainViewModel.Tab.wallet)
                     .tint(.themeLeah)
 
-                MultiSwapView()
-                    .tabItem { Label("", image: "swap_filled") }
-                    .tag(MainViewModel.Tab.swap)
-                    .tint(.themeLeah)
+                if viewModel.showSwap {
+                    MultiSwapView()
+                        .tabItem { Label("", image: "swap_filled") }
+                        .tag(MainViewModel.Tab.swap)
+                        .tint(.themeLeah)
+                }
 
                 MainSettingsView()
                     .tabItem { Label("", image: "settings_filled") }
