@@ -1,9 +1,11 @@
+import Alamofire
 import EvmKit
 import Foundation
 import MarketKit
 import UniswapKit
 
 class BaseUniswapV3MultiSwapProvider: BaseUniswapMultiSwapProvider {
+    private let networkManager = Core.shared.networkManager
     private let kit: UniswapKit.KitV3
 
     init(kit: UniswapKit.KitV3) {
@@ -13,7 +15,7 @@ class BaseUniswapV3MultiSwapProvider: BaseUniswapMultiSwapProvider {
     }
 
     override func spenderAddress(chain: Chain) throws -> EvmKit.Address {
-        kit.routerAddress(chain: chain)
+        try kit.routerAddress(chain: chain)
     }
 
     override func kitToken(chain: Chain, token: MarketKit.Token) throws -> UniswapKit.Token {
@@ -35,5 +37,35 @@ class BaseUniswapV3MultiSwapProvider: BaseUniswapMultiSwapProvider {
         }
 
         return try kit.transactionData(receiveAddress: receiveAddress, chain: chain, bestTrade: bestTrade, tradeOptions: tradeOptions)
+    }
+
+    override func track(swap: Swap) async throws -> Swap {
+        let blockchainType = swap.tokenIn.blockchainType
+
+        var parameters: Parameters = [
+            "provider": swap.providerId,
+            "toAddress": swap.toAddress,
+        ]
+
+        func set(_ dict: inout Parameters, _ key: String, _ value: Any?) {
+            guard let value else { return }
+            dict[key] = value
+        }
+
+        set(&parameters, "hash", swap.txHash)
+        set(&parameters, "chainId", USwapMultiSwapProvider.blockchainTypeMap.first(where: { $0.value == blockchainType })?.key)
+        set(&parameters, "fromAsset", evmAsset(token: swap.tokenIn))
+        set(&parameters, "toAsset", evmAsset(token: swap.tokenOut))
+        set(&parameters, "providerSwapId", swap.providerSwapId)
+
+        return try await USwapMultiSwapProvider.track(swap: swap, parameters: parameters, networkManager: networkManager, isEvm: true)
+    }
+
+    private func evmAsset(token: MarketKit.Token) -> String? {
+        switch token.type {
+        case .native: return "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+        case let .eip20(address): return address
+        default: return nil
+        }
     }
 }

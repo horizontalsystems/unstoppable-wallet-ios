@@ -24,12 +24,12 @@ class MultiSwapProviderManager {
             headers = HTTPHeaders([HTTPHeader(name: "x-api-key", value: apiKey)])
         }
 
-        syncProviders(uSwapProviders: localStorage.uSwapProviders.map { $0.components(separatedBy: ",") } ?? [OneInchMultiSwapProvider.id, ThorChainMultiSwapProvider.id, MayaMultiSwapProvider.id, AllBridgeMultiSwapProvider.id])
+        syncProviders(uSwapProviders: localStorage.uSwapProviders.map { $0.components(separatedBy: ",") } ?? [OneInchMultiSwapProvider.id, UniswapV3MultiSwapProvider.id, PancakeV3MultiSwapProvider.id, ThorChainMultiSwapProvider.id, MayaMultiSwapProvider.id, AllBridgeMultiSwapProvider.id])
         sync()
     }
 
     private func syncProviders(uSwapProviders: [String]) {
-        providers = Array(Set([AllBridgeMultiSwapProvider.id/*, JupiterMultiSwapProvider.id*/] + uSwapProviders))
+        providers = Array(Set([AllBridgeMultiSwapProvider.id, UniswapV3MultiSwapProvider.id, PancakeV3MultiSwapProvider.id] + uSwapProviders))
     }
 
     func sync() {

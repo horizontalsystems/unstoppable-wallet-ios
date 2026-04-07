@@ -1,8 +1,11 @@
 import MarketKit
 
 class PancakeV3MultiSwapProvider: BaseUniswapV3MultiSwapProvider {
-    override var id: String { "pancake_v3" }
-    override var name: String { "PancakeSwap v.3" }
+    static let id = "PANCAKESWAP"
+    static let name = "PancakeSwap v.3"
+    override var id: String { Self.id }
+    override var name: String { Self.name }
+
     override var type: SwapProviderType { .auto }
     override var icon: String { "swap_provider_pancake" }
 
@@ -12,7 +15,7 @@ class PancakeV3MultiSwapProvider: BaseUniswapV3MultiSwapProvider {
         }
 
         switch tokenIn.blockchainType {
-        case .ethereum, .binanceSmartChain, .base, .zkSync: return true
+        case .ethereum, .binanceSmartChain, .zkSync: return true
         default: return false
         }
     }

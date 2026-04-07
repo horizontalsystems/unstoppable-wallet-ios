@@ -154,9 +154,9 @@ class UniswapV3TradeService: ISwapSettingProvider {
             } catch {
                 var convertedError = error
 
-                if case UniswapKit.KitV3.TradeError.tradeNotFound = error {
-                    let wethAddressString = uniswapProvider.wethAddress.hex
-
+                if case UniswapKit.KitV3.TradeError.tradeNotFound = error,
+                   let wethAddressString = try? uniswapProvider.wethAddress().hex
+                {
                     if case .native = tokenIn.type, case let .eip20(address) = tokenOut.type, address == wethAddressString {
                         convertedError = UniswapModule.TradeError.wrapUnwrapNotAllowed
                     }

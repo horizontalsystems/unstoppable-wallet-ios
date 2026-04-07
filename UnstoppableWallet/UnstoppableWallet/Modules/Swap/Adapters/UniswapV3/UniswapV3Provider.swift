@@ -24,12 +24,12 @@ class UniswapV3Provider {
 }
 
 extension UniswapV3Provider {
-    var routerAddress: EvmKit.Address {
-        swapKit.routerAddress(chain: evmKit.chain)
+    func routerAddress() throws -> EvmKit.Address {
+        try swapKit.routerAddress(chain: evmKit.chain)
     }
 
-    var wethAddress: EvmKit.Address {
-        try! swapKit.etherToken(chain: evmKit.chain).address
+    func wethAddress() throws -> EvmKit.Address {
+        try swapKit.etherToken(chain: evmKit.chain).address
     }
 
     func bestTrade(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token, amount: Decimal, tradeType: TradeType, tradeOptions: TradeOptions) async throws -> TradeDataV3 {

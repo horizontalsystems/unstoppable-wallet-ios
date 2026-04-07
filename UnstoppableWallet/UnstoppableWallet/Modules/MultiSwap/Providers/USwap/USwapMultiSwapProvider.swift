@@ -993,8 +993,8 @@ extension USwapMultiSwapProvider {
             )
         }
 
-        if response.status == .completed {
-            swap.amountOut = response.toAmount
+        if response.status == .completed, let toAmount = response.toAmount {
+            swap.amountOut = toAmount
         }
 
         return swap
@@ -1132,12 +1132,12 @@ extension USwapMultiSwapProvider {
         let status: Swap.Status
         let fromAsset: String
         let toAsset: String
-        let toAmount: Decimal
+        let toAmount: Decimal?
         let legs: [Leg]
 
         init(map: Map) throws {
             status = try map.value("status")
-            toAmount = try map.value("toAmount", using: Transform.stringToDecimalTransform)
+            toAmount = try? map.value("toAmount", using: Transform.stringToDecimalTransform)
             fromAsset = try map.value("fromAsset")
             toAsset = try map.value("toAsset")
             legs = try map.value("legs")

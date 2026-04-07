@@ -74,7 +74,10 @@ class BaseUniswapMultiSwapProvider: BaseEvmMultiSwapProvider {
             throw SwapError.noHttpRpcSource
         }
 
-        let kitRecipient = try recipient.map { try EvmKit.Address(hex: $0) }
+        var kitRecipient: EvmKit.Address?
+        if let recipient, let evmAddress = try? EvmKit.Address(hex: recipient) {
+            kitRecipient = evmAddress
+        }
 
         let tradeOptions = TradeOptions(
             allowedSlippage: slippage,
