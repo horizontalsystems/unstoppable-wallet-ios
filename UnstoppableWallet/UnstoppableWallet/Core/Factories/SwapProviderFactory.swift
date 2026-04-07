@@ -1,4 +1,5 @@
 import OneInchKit
+import UniswapKit
 
 class SwapProviderFactory {
     static func provider(id: String) -> IMultiSwapProvider? {
@@ -18,9 +19,13 @@ class SwapProviderFactory {
             return AllBridgeMultiSwapProvider()
         }
 
-//        if id == JupiterMultiSwapProvider.id {
-//            return JupiterMultiSwapProvider()
-//        }
+        if id == UniswapV3MultiSwapProvider.id, let kit = try? UniswapKit.KitV3.instance(dexType: .uniswap) {
+            return UniswapV3MultiSwapProvider(kit: kit)
+        }
+
+        if id == PancakeV3MultiSwapProvider.id, let kit = try? UniswapKit.KitV3.instance(dexType: .pancakeSwap) {
+            return PancakeV3MultiSwapProvider(kit: kit)
+        }
 
         if let provider = USwapMultiSwapProvider.Provider(rawValue: id) {
             return USwapMultiSwapProvider(provider: provider)
@@ -39,7 +44,8 @@ class SwapProviderFactory {
             ThorChainMultiSwapProvider.id: ThorChainMultiSwapProvider.name,
             MayaMultiSwapProvider.id: MayaMultiSwapProvider.name,
             AllBridgeMultiSwapProvider.id: AllBridgeMultiSwapProvider.name,
-//            JupiterMultiSwapProvider.id: JupiterMultiSwapProvider.name,
+            UniswapV3MultiSwapProvider.id: UniswapV3MultiSwapProvider.name,
+            PancakeV3MultiSwapProvider.id: PancakeV3MultiSwapProvider.name,
         ]
 
         return names[id]

@@ -1,8 +1,11 @@
 import MarketKit
 
 class UniswapV3MultiSwapProvider: BaseUniswapV3MultiSwapProvider {
-    override var id: String { "uniswap_v3" }
-    override var name: String { "Uniswap v.3" }
+    static let id = "UNISWAP_V3"
+    static let name = "Uniswap v.3"
+    override var id: String { Self.id }
+    override var name: String { Self.name }
+
     override var type: SwapProviderType { .auto }
     override var icon: String { "swap_provider_uniswap" }
 
@@ -12,7 +15,7 @@ class UniswapV3MultiSwapProvider: BaseUniswapV3MultiSwapProvider {
         }
 
         switch tokenIn.blockchainType {
-        case .ethereum, .binanceSmartChain, .polygon, .arbitrumOne, .base, .zkSync: return true
+        case .ethereum, .polygon, .optimism, .arbitrumOne, .binanceSmartChain, .base, .zkSync: return true
         default: return false
         }
     }

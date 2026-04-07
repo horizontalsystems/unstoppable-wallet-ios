@@ -21,18 +21,22 @@ class UniswapV3Module {
 
         let uniswapRepository = UniswapV3Provider(swapKit: swapKit, evmKit: evmKit, rpcSource: rpcSource)
 
+        guard let routerAddress = try? uniswapRepository.routerAddress() else {
+            return nil
+        }
+
         tradeService = UniswapV3TradeService(
             uniswapProvider: uniswapRepository,
             state: dataSourceState,
             evmKit: evmKit
         )
         allowanceService = SwapAllowanceService(
-            spenderAddress: uniswapRepository.routerAddress,
+            spenderAddress: routerAddress,
             adapterManager: Core.shared.adapterManager,
             evmKit: evmKit
         )
         pendingAllowanceService = SwapPendingAllowanceService(
-            spenderAddress: uniswapRepository.routerAddress,
+            spenderAddress: routerAddress,
             adapterManager: Core.shared.adapterManager,
             allowanceService: allowanceService
         )
