@@ -10,6 +10,7 @@ class SecuritySettingsViewModel: ObservableObject {
     private let balanceHiddenManager = Core.shared.balanceHiddenManager
     private let securityManager = Core.shared.securityManager
     private let purchaseManager = Core.shared.purchaseManager
+    private let appStateManager = AppStateManager.instance
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -46,6 +47,7 @@ class SecuritySettingsViewModel: ObservableObject {
 
     @Published var featureEnabled: [PremiumFeature: Bool]
     @Published private(set) var premiumEnabled: Bool
+    @Published private(set) var swapEnabled: Bool
 
     init() {
         currentPasscodeLevel = passcodeManager.currentPasscodeLevel
@@ -64,6 +66,7 @@ class SecuritySettingsViewModel: ObservableObject {
             .scamProtection: securityManager.scamProtectionEnabled,
         ]
         premiumEnabled = purchaseManager.hasActivePurchase
+        swapEnabled = appStateManager.swapEnabled
 
         passcodeManager.$currentPasscodeLevel
             .sink { [weak self] in self?.currentPasscodeLevel = $0 }
@@ -104,6 +107,10 @@ class SecuritySettingsViewModel: ObservableObject {
                 guard let self else { return }
                 premiumEnabled = premiumFeatures.allSatisfy { features.contains($0) }
             }
+            .store(in: &cancellables)
+        appStateManager.$swapEnabled
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.swapEnabled = $0 }
             .store(in: &cancellables)
     }
 

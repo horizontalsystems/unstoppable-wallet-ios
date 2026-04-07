@@ -8,10 +8,13 @@ class MainViewModel: ObservableObject {
     private let launchScreenManager = Core.shared.launchScreenManager
     private let userDefaultsStorage = Core.shared.userDefaultsStorage
     private let accountManager = Core.shared.accountManager
+    private let appStateManager = AppStateManager.instance
 
+    private var cancellables = Set<AnyCancellable>()
     private let disposeBag = DisposeBag()
 
     @Published private(set) var showMarket: Bool
+    @Published private(set) var showSwap: Bool
 
     @Published var selectedTab: Tab = .wallet {
         didSet {
@@ -39,11 +42,17 @@ class MainViewModel: ObservableObject {
 
     init() {
         showMarket = launchScreenManager.showMarket
+        showSwap = appStateManager.swapEnabled
 
         launchScreenManager.showMarketObservable
             .observeOn(MainScheduler.instance)
             .subscribe(onNext: { [weak self] in self?.showMarket = $0 })
             .disposed(by: disposeBag)
+
+        appStateManager.$swapEnabled
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.showSwap = $0 }
+            .store(in: &cancellables)
 
         selectedTab = initialTab
     }
