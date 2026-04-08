@@ -169,10 +169,14 @@
 "restore_type.recovery.title" = "de Frase de Recuperación";
 "restore_type.cloud.title" = "desde iCloud";
 "restore_type.file.title" = "del archivo";
+"restore_type.passkey.title" = "Desde Passkey";
+"restore_type.watch.title" = "Wallet de observación";
 
 "restore_type.recovery.description" = "Importe utilizando la frase de recuperación o la clave privada.";
 "restore_type.cloud.description" = "Importar desde un archivo de copia de seguridad en su llavero.";
 "restore_type.file.description" = "Importar un archivo de copia de seguridad de su carpeta local.";
+"restore_type.passkey.description" = "Restaura tu wallet usando tu dispositivo y cuenta de iCloud.";
+"restore_type.watch.description" = "Visualiza una wallet por dirección sin acceso a los fondos.";
 
 // Restore Cloud
 
@@ -314,6 +318,8 @@
 "balance.stopped" = "Detenido";
 "balance.downloading_sapling" = "Descargando...";
 "balance.watch_wallet" = "Wallet de solo visualización";
+
+"balance.add_wallet" = "Añadir wallet";
 
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "Bloques restantes - %@";
@@ -1985,12 +1991,6 @@
 "status_info.failed.title" = "Falló";
 "status_info.failed.content" = "La transacción no se procesó y no hubo transferencia de valor. Dependiendo de la razón del fracaso, algunas transacciones fallidas pueden consumir comisiones de transacción. Las transacciones que fueron reemplazadas o canceladas por otra transacción no consumen comisiones de transacción y también aparecerán como fallidas. La aplicación %@ no puede mostrar la razón de las transacciones fallidas, pero los usuarios son capaces de buscarlo ellos mismos en un explorador público de bloques i. e. etherscan.io.";
 
-// Onboarding
-
-"onboarding.balance.create" = "Cartera nueva";
-"onboarding.balance.import" = "Importar Cartera";
-"onboarding.balance.watch" = "Wallet de solo visualización";
-
 // Manage Accounts
 
 "manage_accounts.n_words" = "%@ palabras";
@@ -2420,5 +2420,22 @@
 "mev_protection.description" = "Activa la protección para asegurar tu swap y evitar perder valor frente a bots.";
 
 // Secure Send Bottom Sheet
+
 "secure_send.bottom_sheet.title" = "Envío Seguro";
 "secure_send.bottom_sheet.description" = "Elige las verificaciones de seguridad.";
+
+// Add Wallet
+
+"add_wallet.title" = "Añadir wallet";
+"add_wallet.new_wallet" = "Nueva wallet";
+"add_wallet.new_wallet.description" = "Crea una nueva wallet para comenzar o añade una nueva.";
+"add_wallet.existing_wallet" = "Wallet existente";
+"add_wallet.existing_wallet.description" = "Importa tu wallet si ya tienes una para seguir usándola.";
+
+// New Wallet
+
+"new_wallet.title" = "Nueva wallet";
+"new_wallet.standard" = "Estándar";
+"new_wallet.standard.description" = "Crea una wallet con una frase de recuperación para control total y flexibilidad.";
+"new_wallet.passkey" = "Passkey";
+"new_wallet.passkey.description" = "Crea una wallet protegida por tu dispositivo e iCloud para un acceso fácil.";

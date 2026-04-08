@@ -169,10 +169,14 @@
 "restore_type.recovery.title" = "Kurtarma İfadesinden";
 "restore_type.cloud.title" = "iCloud'dan";
 "restore_type.file.title" = "Dosyadan";
+"restore_type.passkey.title" = "Passkey ile";
+"restore_type.watch.title" = "İzleme Cüzdanı";
 
 "restore_type.recovery.description" = "Kurtarma ifadesini veya özel anahtarı kullanarak içe aktarın.";
 "restore_type.cloud.description" = "Anahtar zincirinizdeki bir yedek dosyadan içe aktarın.";
 "restore_type.file.description" = "Yerel klasörünüzden bir yedek dosyası içe aktarın.";
+"restore_type.passkey.description" = "Cüzdanınızı cihazınız ve iCloud hesabınızı kullanarak geri yükleyin.";
+"restore_type.watch.description" = "Fonlara erişim olmadan bir cüzdanı adresle görüntüleyin.";
 
 // Restore Cloud
 
@@ -314,6 +318,8 @@
 "balance.stopped" = "Durduruldu";
 "balance.downloading_sapling" = "İndiriliyor…";
 "balance.watch_wallet" = "Cüzdan İzle";
+
+"balance.add_wallet" = "Cüzdan Ekle";
 
 "balance.searching.count" = "bakiye.araması.miktar";
 "balance.remaining" = "Kalan Bloklar - %@";
@@ -1985,12 +1991,6 @@
 "status_info.failed.title" = "Başarısız";
 "status_info.failed.content" = "İşlem gerçekleşmedi ve herhangi bir değer transferi yapılmadı. Başarısız olma nedenine bağlı olarak, bazı başarısız işlemler, işlem ücreti tüketebilir. Başka bir işlemle değiştirilen veya iptal edilen işlemler, işlem ücretini tüketmez ve başarısız olarak görüntülenir. %@ uygulaması başarısız işlemlerin nedenini gösteremez, ancak kullanıcılar bunu örneğin etherscan.io gibi herkese açık bir blok gezgininde kendileri arayabilirler.";
 
-// Onboarding
-
-"onboarding.balance.create" = "Yeni Cüzdan";
-"onboarding.balance.import" = "Cuzdan Yükle";
-"onboarding.balance.watch" = "Cüzdan İzle";
-
 // Manage Accounts
 
 "manage_accounts.n_words" = "%@ kelime";
@@ -2420,5 +2420,22 @@
 "mev_protection.description" = "Swap işleminizi güvence altına almak ve botlara karşı değer kaybını önlemek için korumayı açın.";
 
 // Secure Send Bottom Sheet
+
 "secure_send.bottom_sheet.title" = "Güvenli Gönderim";
 "secure_send.bottom_sheet.description" = "Güvenlik kontrollerini seçin.";
+
+// Add Wallet
+
+"add_wallet.title" = "Cüzdan Ekle";
+"add_wallet.new_wallet" = "Yeni Cüzdan";
+"add_wallet.new_wallet.description" = "Başlamak için yeni bir cüzdan oluşturun veya yeni bir tane ekleyin.";
+"add_wallet.existing_wallet" = "Mevcut Cüzdan";
+"add_wallet.existing_wallet.description" = "Zaten bir cüzdanınız varsa kullanmaya devam etmek için içe aktarın.";
+
+// New Wallet
+
+"new_wallet.title" = "Yeni Cüzdan";
+"new_wallet.standard" = "Standart";
+"new_wallet.standard.description" = "Tam kontrol ve esneklik için kurtarma ifadesiyle bir cüzdan oluşturun.";
+"new_wallet.passkey" = "Passkey";
+"new_wallet.passkey.description" = "Kolay erişim için cihazınız ve iCloud tarafından korunan bir cüzdan oluşturun.";

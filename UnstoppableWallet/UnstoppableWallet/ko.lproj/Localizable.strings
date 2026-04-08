@@ -169,10 +169,14 @@
 "restore_type.recovery.title" = "복구 문구에서";
 "restore_type.cloud.title" = "아이클라우드에서";
 "restore_type.file.title" = "파일에서";
+"restore_type.passkey.title" = "패스키로 복원";
+"restore_type.watch.title" = "관찰 지갑";
 
 "restore_type.recovery.description" = "이 문구는 복구 문구 또는 개인 키를 사용하여 가져올 수 있습니다.";
 "restore_type.cloud.description" = "키체인의 백업 파일에서 가져옵니다.";
 "restore_type.file.description" = "로컬 폴더에서 백업 파일을 가져오십시오.";
+"restore_type.passkey.description" = "기기와 iCloud 계정을 사용하여 지갑을 복원합니다.";
+"restore_type.watch.description" = "자금 접근 없이 주소로 지갑을 조회합니다.";
 
 // Restore Cloud
 
@@ -314,6 +318,8 @@
 "balance.stopped" = "은행 정지";
 "balance.downloading_sapling" = "다운로드 중...";
 "balance.watch_wallet" = "조회 전용 지갑";
+
+"balance.add_wallet" = "지갑 추가";
 
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "남은 블록 수 - %@";
@@ -1985,12 +1991,6 @@
 "status_info.failed.title" = "실패";
 "status_info.failed.content" = "거래가 처리되지 않았으며 가치 이전이 발생하지 않았습니다. 실패 원인에 따라 일부 실패한 거래는 거래 수수료를 소모할 수 있습니다. 다른 거래로 대체되거나 취소된 거래는 거래 수수료를 소비하지 않으며 실패한 것으로 표시됩니다. %@ 앱은 거래 실패의 원인을 표시할 수 없지만 사용자는 etherscan.io와 같은 공개 블록 탐색기에서 직접 찾을 수 있습니다.";
 
-// Onboarding
-
-"onboarding.balance.create" = "새 지갑";
-"onboarding.balance.import" = "다음에서 복원하기";
-"onboarding.balance.watch" = "조회 전용 지갑";
-
 // Manage Accounts
 
 "manage_accounts.n_words" = "%@ 단어";
@@ -2420,5 +2420,22 @@
 "mev_protection.description" = "보호 기능을 켜서 스왑을 안전하게 보호하고 봇으로 인한 가치 손실을 방지하세요.";
 
 // Secure Send Bottom Sheet
+
 "secure_send.bottom_sheet.title" = "보안 전송";
 "secure_send.bottom_sheet.description" = "보안 검사를 선택하세요.";
+
+// Add Wallet
+
+"add_wallet.title" = "지갑 추가";
+"add_wallet.new_wallet" = "새 지갑";
+"add_wallet.new_wallet.description" = "새 지갑을 생성하여 시작하거나 새 지갑을 추가하세요.";
+"add_wallet.existing_wallet" = "기존 지갑";
+"add_wallet.existing_wallet.description" = "이미 지갑이 있다면 가져와서 계속 사용하세요.";
+
+// New Wallet
+
+"new_wallet.title" = "새 지갑";
+"new_wallet.standard" = "표준";
+"new_wallet.standard.description" = "완전한 제어와 유연성을 위해 복구 문구로 지갑을 생성합니다.";
+"new_wallet.passkey" = "패스키";
+"new_wallet.passkey.description" = "간편한 접근을 위해 기기와 iCloud로 보호되는 지갑을 생성합니다.";

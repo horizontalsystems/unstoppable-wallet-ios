@@ -169,10 +169,14 @@
 "restore_type.recovery.title" = "da Frase de Recuperação";
 "restore_type.cloud.title" = "do iCloud";
 "restore_type.file.title" = "de Arquivos";
+"restore_type.passkey.title" = "Via Passkey";
+"restore_type.watch.title" = "Carteira de observação";
 
 "restore_type.recovery.description" = "Import like a pro! Recovery phrase or private key, you choose. It's your call, folks!";
 "restore_type.cloud.description" = "Import straight from your keychain, folks. It's like having the keys to the kingdom right at your fingertips!";
 "restore_type.file.description" = "Importar um arquivo de backup da sua pasta local.";
+"restore_type.passkey.description" = "Restaure sua carteira usando seu dispositivo e conta do iCloud.";
+"restore_type.watch.description" = "Visualize uma carteira por endereço sem acesso aos fundos.";
 
 // Restore Cloud
 
@@ -314,6 +318,8 @@
 "balance.stopped" = "Parado";
 "balance.downloading_sapling" = "Baixando...";
 "balance.watch_wallet" = "Monitorar Carteira";
+
+"balance.add_wallet" = "Adicionar carteira";
 
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "Blocos Restantes – %@";
@@ -1985,12 +1991,6 @@
 "status_info.failed.title" = "Falhou";
 "status_info.failed.content" = "A transação não foi processada e nenhuma transferência de valor ocorreu. Dependendo da razão de falha, algumas transações falhadas podem consumir taxas de transação. As transações que foram substituídas ou canceladas por outra transação não consomem taxas de transação e também aparecerão como falha. O app %@ é incapaz de mostrar o motivo de falhas nas transações, mas os usuários são capazes de procurar isso em um explorador público de blocos. . etherscan.io.";
 
-// Onboarding
-
-"onboarding.balance.create" = "Nova Carteira";
-"onboarding.balance.import" = "Importar carteira";
-"onboarding.balance.watch" = "Monitorar Carteira";
-
 // Manage Accounts
 
 "manage_accounts.n_words" = "%@ palavras";
@@ -2420,5 +2420,22 @@
 "mev_protection.description" = "Ative a proteção para proteger seu swap e evitar perda de valor para bots.";
 
 // Secure Send Bottom Sheet
+
 "secure_send.bottom_sheet.title" = "Envio Seguro";
 "secure_send.bottom_sheet.description" = "Escolha as verificações de segurança.";
+
+// Add Wallet
+
+"add_wallet.title" = "Adicionar carteira";
+"add_wallet.new_wallet" = "Nova carteira";
+"add_wallet.new_wallet.description" = "Crie uma nova carteira para começar ou adicione uma nova.";
+"add_wallet.existing_wallet" = "Carteira existente";
+"add_wallet.existing_wallet.description" = "Importe sua carteira se já tiver uma para continuar usando.";
+
+// New Wallet
+
+"new_wallet.title" = "Nova carteira";
+"new_wallet.standard" = "Padrão";
+"new_wallet.standard.description" = "Crie uma carteira com uma frase de recuperação para controle total e flexibilidade.";
+"new_wallet.passkey" = "Passkey";
+"new_wallet.passkey.description" = "Crie uma carteira protegida pelo seu dispositivo e iCloud para acesso fácil.";
