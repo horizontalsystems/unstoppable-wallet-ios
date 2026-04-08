@@ -2,16 +2,14 @@ import Combine
 import Foundation
 
 class CloudRestoreBackupListViewModel: ObservableObject {
-    private let service: CloudRestoreBackupService
+    private let service = CloudRestoreBackupService()
     private var cancellables = Set<AnyCancellable>()
 
     @Published private(set) var walletViewItems: WalletViewItems = .empty
     @Published private(set) var fullBackupViewItems: [BackupViewItem] = []
     private let restoreSubject = PassthroughSubject<BackupModule.NamedSource, Never>()
 
-    init(service: CloudRestoreBackupService) {
-        self.service = service
-
+    init() {
         service.$oneWalletItems
             .sink { [weak self] in self?.sync(items: $0) }
             .store(in: &cancellables)

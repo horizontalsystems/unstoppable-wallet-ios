@@ -2,8 +2,8 @@ import Combine
 import Foundation
 
 class CloudRestoreBackupService {
-    private let cloudAccountBackupManager: CloudBackupManager
-    private let accountManager: AccountManager
+    private let cloudAccountBackupManager = Core.shared.cloudBackupManager
+    private let accountManager = Core.shared.accountManager
 
     private var cancellables = Set<AnyCancellable>()
 
@@ -11,10 +11,7 @@ class CloudRestoreBackupService {
     @Published var oneWalletItems = [WalletItem]()
     @Published var fullBackupItems = [AppItem]()
 
-    init(cloudAccountBackupManager: CloudBackupManager, accountManager: AccountManager) {
-        self.cloudAccountBackupManager = cloudAccountBackupManager
-        self.accountManager = accountManager
-
+    init() {
         cloudAccountBackupManager.$oneWalletItems
             .sink { [weak self] in
                 self?.sync(backups: $0)

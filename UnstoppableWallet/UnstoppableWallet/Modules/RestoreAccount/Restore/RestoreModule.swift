@@ -1,4 +1,4 @@
-
+import SwiftUI
 import UIKit
 
 enum RestoreModule {
@@ -22,4 +22,14 @@ enum RestoreModule {
 
         return viewController
     }
+}
+
+struct RestoreViewWrapper: UIViewControllerRepresentable {
+    let onRestore: () -> Void
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        RestoreModule.viewController(onRestore: onRestore)
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

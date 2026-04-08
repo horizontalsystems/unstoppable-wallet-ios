@@ -2,11 +2,9 @@ import SwiftUI
 
 struct RestoreFileConfigurationView: View {
     @StateObject private var viewModel: RestoreFileConfigurationViewModel
-    @Binding var isPresented: Bool
+    @Binding var isParentPresented: Bool
 
-    private let onRestore: () -> Void
-
-    init(rawBackup: RawFullBackup, statPage: StatPage, isPresented: Binding<Bool>, onRestore: @escaping () -> Void) {
+    init(rawBackup: RawFullBackup, isParentPresented: Binding<Bool>, statPage: StatPage) {
         _viewModel = StateObject(wrappedValue: RestoreFileConfigurationViewModel(
             cloudBackupManager: Core.shared.cloudBackupManager,
             appBackupProvider: Core.shared.appBackupProvider,
@@ -14,8 +12,7 @@ struct RestoreFileConfigurationView: View {
             statPage: statPage,
             rawBackup: rawBackup
         ))
-        _isPresented = isPresented
-        self.onRestore = onRestore
+        _isParentPresented = isParentPresented
     }
 
     var body: some View {
@@ -73,7 +70,7 @@ struct RestoreFileConfigurationView: View {
         .onReceive(viewModel.finishedPublisher) { success in
             if success {
                 HudHelper.instance.show(banner: .done)
-                onRestore()
+                isParentPresented = false
             }
         }
         .navigationTitle("backup_app.backup_list.title".localized)

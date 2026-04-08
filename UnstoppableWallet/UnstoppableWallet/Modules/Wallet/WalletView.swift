@@ -43,28 +43,11 @@ struct WalletView: View {
             } else {
                 ThemeView {
                     PlaceholderViewNew(icon: "wallet_add", layoutType: .middle) {
-                        VStack(spacing: .margin12) {
-                            ThemeButton(text: "onboarding.balance.create".localized) {
-                                Coordinator.shared.presentAfterAcceptTerms { isPresented in
-                                    CreateAccountView(isPresented: isPresented)
-                                } onPresent: {
-                                    stat(page: .balance, event: .open(page: .newWallet))
+                        ThemeButton(text: "balance.add_wallet".localized) {
+                            Coordinator.shared.presentAfterAcceptTerms { isPresented in
+                                ThemeNavigationStack {
+                                    AddWalletView(isParentPresented: isPresented, showClose: true)
                                 }
-                            }
-
-                            ThemeButton(text: "onboarding.balance.import".localized, style: .secondary) {
-                                Coordinator.shared.presentAfterAcceptTerms { isPresented in
-                                    RestoreTypeView(type: .wallet, isPresented: isPresented)
-                                } onPresent: {
-                                    stat(page: .balance, event: .open(page: .importWallet))
-                                }
-                            }
-
-                            ThemeButton(text: "onboarding.balance.watch".localized, style: .secondary, mode: .transparent) {
-                                Coordinator.shared.present { isPresented in
-                                    WatchView(isPresented: isPresented)
-                                }
-                                stat(page: .balance, event: .open(page: .watchWallet))
                             }
                         }
                     }

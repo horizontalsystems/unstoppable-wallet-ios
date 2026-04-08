@@ -2,165 +2,138 @@ import SwiftUI
 import UIKit
 
 struct RestoreTypeView: View {
+    @StateObject private var viewModel = RestoreTypeViewModel()
+
     let type: BackupModule.Source.Abstract
-    var onRestore: (() -> Void)? = nil
-    @Binding var isPresented: Bool
+    @Binding var isParentPresented: Bool
 
-    @StateObject private var viewModel: RestoreTypeViewModel
-    @State private var path = NavigationPath()
     @State private var showFilePicker = false
-    @State private var namedSource: BackupModule.NamedSource?
-    @State private var selectCoinsAccount: Account?
-    @State private var fileConfigRawBackup: RawFullBackup?
+    @State private var source: BackupModule.NamedSource?
+    @State private var passphrasePresented = false
 
-    private enum Route: Hashable {
-        case recoveryOrPrivateKey
-        case cloudRestore
-        case passphrase
-        case selectCoins
-        case fileConfiguration
-    }
+    @State private var recoveryPhrasePresented = false
+    @State private var cloudPresented = false
+    @State private var watchPresented = false
 
-    init(type: BackupModule.Source.Abstract, onRestore: (() -> Void)? = nil, isPresented: Binding<Bool>) {
-        self.type = type
-        self.onRestore = onRestore
-
-        _isPresented = isPresented
-        _viewModel = StateObject(wrappedValue:
-            RestoreTypeViewModel(
-                cloudAccountBackupManager: Core.shared.cloudBackupManager,
-                sourceType: type
-            )
-        )
-    }
+    @State private var passkeyLogin: RestoreTypeViewModel.PasskeyLogin?
+    @State private var restoreSelectPresented = false
 
     var body: some View {
-        ThemeNavigationStack(path: $path) {
-            ScrollableThemeView {
-                ListSection {
-                    ForEach(viewModel.items) {
-                        row(item: $0)
-                    }
+        ScrollableThemeView {
+            ListSection {
+                ForEach(restoreTypes) {
+                    row(restoreType: $0)
                 }
-                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
             }
-            .navigationTitle(viewModel.title)
-            .toolbar {
+            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+        }
+        .navigationTitle(title)
+        .toolbar {
+            if type == .full {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: {
-                        isPresented = false
+                        isParentPresented = false
                     }) {
                         Image("close")
                     }
                 }
             }
-            .navigationDestination(for: Route.self) { route in
-                switch route {
-                case .recoveryOrPrivateKey:
-
-                    // import passphrase or private key form
-                    RestoreViewWrapper(onRestore: handleRestore)
-                        .ignoresSafeArea()
-                        .navigationTitle("restore.title".localized)
-                case .cloudRestore:
-
-                    // show cloud list view
-                    CloudRestoreBackupListView(isPresented: $isPresented, path: $path, onSelectBackup: { source in
-                        namedSource = source
-                        path.append(Route.passphrase)
-                    })
-                case .passphrase:
-
-                    // after picked url from files or select in cloud show passphrase
-                    if let source = namedSource {
-                        showPassphrase(source)
-                    }
-                case .selectCoins:
-
-                    // show select coins for account(after import wallet from files or cloud)
-                    if let account = selectCoinsAccount {
-                        RestoreSelectWrapper(account: account, statPage: passphraseStatPage, onRestore: handleRestore)
-                            .ignoresSafeArea()
-                            .navigationTitle("restore.title".localized)
-                    }
-                case .fileConfiguration:
-
-                    // show all wallets & configurations after import fullBackup from files or cloud)
-                    if let rawBackup = fileConfigRawBackup {
-                        RestoreFileConfigurationView(rawBackup: rawBackup, statPage: passphraseStatPage, isPresented: $isPresented, onRestore: handleRestore)
-                    }
-                }
+        }
+        .navigationDestination(isPresented: $recoveryPhrasePresented) {
+            RestoreViewWrapper(onRestore: { isParentPresented = false })
+                .ignoresSafeArea()
+                .navigationTitle("restore.title".localized)
+        }
+        .navigationDestination(isPresented: $cloudPresented) {
+            CloudRestoreBackupListView(isParentPresented: $isParentPresented, statPage: statPage)
+        }
+        .navigationDestination(isPresented: $watchPresented) {
+            WatchView(isParentPresented: $isParentPresented)
+        }
+        .navigationDestination(isPresented: $passphrasePresented) {
+            if let source {
+                RestorePassphraseView(
+                    item: source,
+                    isParentPresented: $isParentPresented,
+                    statPage: statPage,
+                )
+            }
+        }
+        .navigationDestination(isPresented: $restoreSelectPresented) {
+            if let passkeyLogin {
+                RestoreCoinsView(
+                    accountName: passkeyLogin.accountName,
+                    accountType: passkeyLogin.accountType,
+                    statPage: statPage,
+                    onRestore: { isParentPresented = false }
+                )
             }
         }
         .fileImporter(isPresented: $showFilePicker, allowedContentTypes: [.json]) { result in
             if case let .success(url) = result {
-                viewModel.didPick(url: url, destination: .files)
+                do {
+                    source = try RestoreFileHelper.parse(url: url, destination: .files)
+                    passphrasePresented = true
+                } catch {
+                    HudHelper.instance.show(banner: .error(string: "alert.cant_recognize".localized))
+                }
             }
-        }
-        .onReceive(viewModel.showModulePublisher) { type in
-            let isWallet = viewModel.sourceType == .wallet
-            switch type {
-            // tap on 'import passphrase' just open import-wallet
-            case .recoveryOrPrivateKey:
-                stat(page: .importWallet, event: .open(page: .importWalletFromKey))
-                path.append(Route.recoveryOrPrivateKey)
-
-            // tap on iCloud: open list of iCloud backups
-            case .cloudRestore:
-                stat(page: isWallet ? .importWallet : .importFull, event: .open(page: isWallet ? .importWalletFromCloud : .importFullFromCloud))
-                path.append(Route.cloudRestore)
-
-            // tap on fileRestore - open standart ios file picker
-            case .fileRestore:
-                stat(page: isWallet ? .importWallet : .importFull, event: .open(page: isWallet ? .importWalletFromFiles : .importFullFromFiles))
-                showFilePicker = true
-            }
-        }
-        .onReceive(viewModel.showCloudNotAvailablePublisher) {
-            showCloudNotAvailable()
-        }
-        .onReceive(viewModel.showWrongFilePublisher) {
-            HudHelper.instance.show(banner: .error(string: "alert.cant_recognize".localized))
-        }
-        // after pick file we need open input-passphrase for json file
-        .onReceive(viewModel.showRestoreBackupPublisher) { source in
-            namedSource = source
-            path.append(Route.passphrase)
         }
     }
 
-    @ViewBuilder private func row(item: RestoreTypeModule.RestoreType) -> some View {
+    @ViewBuilder private func row(restoreType: RestoreType) -> some View {
         Cell(
             left: {
-                Image(viewModel.icon(type: item)).icon(size: 24)
+                ThemeImage(restoreType.icon, size: 24)
             },
             middle: {
-                MultiText(title: viewModel.title(type: item), subtitle: viewModel.description(type: item))
+                MultiText(title: restoreType.title, subtitle: restoreType.description)
             },
             right: {
                 Image.disclosureIcon
             },
             action: {
-                viewModel.onTap(type: item)
+                handleSelect(restoreType: restoreType)
             }
         )
     }
 
-    @ViewBuilder private func showPassphrase(_ source: BackupModule.NamedSource) -> some View {
-        RestorePassphraseView(
-            item: source,
-            statPage: passphraseStatPage,
-            isPresented: $isPresented,
-            onSelectCoins: { account in
-                selectCoinsAccount = account
-                path.append(Route.selectCoins)
-            },
-            onConfiguration: { rawBackup in
-                fileConfigRawBackup = rawBackup
-                path.append(Route.fileConfiguration)
-            },
-            onRestore: handleRestore
-        )
+    private func handleSelect(restoreType: RestoreType) {
+        let isWallet = type == .wallet
+
+        switch restoreType {
+        case .recoveryOrPrivateKey:
+            recoveryPhrasePresented = true
+            stat(page: .importWallet, event: .open(page: .importWalletFromKey))
+        case .cloudRestore:
+            if viewModel.isCloudAvailable {
+                cloudPresented = true
+                stat(page: isWallet ? .importWallet : .importFull, event: .open(page: isWallet ? .importWalletFromCloud : .importFullFromCloud))
+            } else {
+                showCloudNotAvailable()
+            }
+        case .fileRestore:
+            showFilePicker = true
+            stat(page: isWallet ? .importWallet : .importFull, event: .open(page: isWallet ? .importWalletFromFiles : .importFullFromFiles))
+        case .passkey:
+            Task {
+                do {
+                    let login = try await viewModel.loginPasskey()
+
+                    DispatchQueue.main.async {
+                        passkeyLogin = login
+                        restoreSelectPresented = true
+                    }
+                } catch {
+                    DispatchQueue.main.async {
+                        HudHelper.instance.show(banner: .error(string: error.smartDescription))
+                    }
+                }
+            }
+        case .watch:
+            watchPresented = true
+            stat(page: isWallet ? .importWallet : .importFull, event: .open(page: .watchWallet))
+        }
     }
 
     private func showCloudNotAvailable() {
@@ -179,43 +152,75 @@ struct RestoreTypeView: View {
         }
     }
 
-    private var handleRestore: () -> Void {
-        if let onRestore {
-            return onRestore
+    private var statPage: StatPage {
+        type == .wallet ? .importWalletFromFiles : .importFullFromFiles
+    }
+
+    private var title: String {
+        switch type {
+        case .wallet: return "restore.title".localized
+        case .full: return "backup_app.restore_type.title".localized
         }
-        return { isPresented = false }
     }
 
-    private var passphraseStatPage: StatPage {
-        viewModel.sourceType == .wallet ? .importWalletFromFiles : .importFullFromFiles
+    private var restoreTypes: [RestoreType] {
+        switch type {
+        case .wallet: return [.recoveryOrPrivateKey, .cloudRestore, .passkey, .fileRestore, .watch]
+        case .full: return [.cloudRestore, .fileRestore]
+        }
     }
 }
 
-private struct RestoreViewWrapper: UIViewControllerRepresentable {
-    let onRestore: () -> Void
+extension RestoreTypeView {
+    private enum RestoreType: String, Identifiable {
+        case recoveryOrPrivateKey
+        case cloudRestore
+        case fileRestore
+        case passkey
+        case watch
 
-    func makeUIViewController(context _: Context) -> UIViewController {
-        RestoreModule.viewController(onRestore: onRestore)
+        var id: String {
+            rawValue
+        }
+
+        var title: String {
+            switch self {
+            case .recoveryOrPrivateKey: return "restore_type.recovery.title".localized
+            case .cloudRestore: return "restore_type.cloud.title".localized
+            case .fileRestore: return "restore_type.file.title".localized
+            case .passkey: return "restore_type.passkey.title".localized
+            case .watch: return "restore_type.watch.title".localized
+            }
+        }
+
+        var description: String {
+            switch self {
+            case .recoveryOrPrivateKey: return "restore_type.recovery.description".localized
+            case .cloudRestore: return "restore_type.cloud.description".localized
+            case .fileRestore: return "restore_type.file.description".localized
+            case .passkey: return "restore_type.passkey.description".localized
+            case .watch: return "restore_type.watch.description".localized
+            }
+        }
+
+        var icon: String {
+            switch self {
+            case .recoveryOrPrivateKey: return "pen"
+            case .cloudRestore: return "cloud"
+            case .fileRestore: return "file"
+            case .passkey: return "face_id"
+            case .watch: return "eye_on"
+            }
+        }
     }
-
-    func updateUIViewController(_: UIViewController, context _: Context) {}
 }
 
-private struct RestoreSelectWrapper: UIViewControllerRepresentable {
-    let account: Account
-    let statPage: StatPage
-    let onRestore: () -> Void
+struct FullRestoreTypeView: View {
+    @Binding var isPresented: Bool
 
-    func makeUIViewController(context _: Context) -> UIViewController {
-        RestoreSelectModule.viewController(
-            accountName: account.name,
-            accountType: account.type,
-            statPage: statPage,
-            isManualBackedUp: account.backedUp,
-            isFileBackedUp: account.fileBackedUp,
-            onRestore: onRestore
-        )
+    var body: some View {
+        ThemeNavigationStack {
+            RestoreTypeView(type: .full, isParentPresented: $isPresented)
+        }
     }
-
-    func updateUIViewController(_: UIViewController, context _: Context) {}
 }

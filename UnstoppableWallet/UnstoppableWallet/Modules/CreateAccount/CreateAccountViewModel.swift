@@ -10,7 +10,9 @@ class CreateAccountViewModel: ObservableObject {
     private let walletManager = Core.shared.walletManager
     private let marketKit = Core.shared.marketKit
     private let predefinedBlockchainService = Core.shared.predefinedBlockchainService
+    private let passkeyManager = PasskeyManager()
 
+    let walletType: WalletType
     let defaultAccountName: String
 
     @Published var name: String = ""
@@ -21,7 +23,8 @@ class CreateAccountViewModel: ObservableObject {
     @Published var passphrase = ""
     @Published var passphraseConfirmation = ""
 
-    init() {
+    init(walletType: WalletType) {
+        self.walletType = walletType
         defaultAccountName = accountFactory.nextAccountName
     }
 
@@ -45,6 +48,33 @@ class CreateAccountViewModel: ObservableObject {
 
         walletManager.save(wallets: wallets)
     }
+
+    private var resolvedName: String {
+        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmedName.isEmpty ? defaultAccountName : trimmedName
+    }
+
+    private func createAccount(words: [String], statPage: StatPage) -> Account {
+        let accountType: AccountType = .mnemonic(words: words, salt: passphrase, bip39Compliant: true)
+
+        let account = accountFactory.account(
+            type: accountType,
+            origin: .created,
+            backedUp: false,
+            fileBackedUp: false,
+            name: resolvedName
+        )
+
+        accountManager.save(account: account)
+
+        try? activateDefaultWallets(account: account)
+
+        accountManager.set(lastCreatedAccount: account)
+
+        stat(page: statPage, event: .createWallet(walletType: accountType.statDescription))
+
+        return account
+    }
 }
 
 extension CreateAccountViewModel {
@@ -60,33 +90,25 @@ extension CreateAccountViewModel {
         }
 
         let wordCount = advanced ? wordCount : Self.defaultWordCount
-
         let words = try Mnemonic.generate(wordCount: wordCount, language: .english)
-        let accountType: AccountType = .mnemonic(words: words, salt: passphrase, bip39Compliant: true)
 
-        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        return createAccount(words: words, statPage: advanced ? .newWalletAdvanced : .newWallet)
+    }
 
-        let account = accountFactory.account(
-            type: accountType,
-            origin: .created,
-            backedUp: false,
-            fileBackedUp: false,
-            name: trimmedName.isEmpty ? defaultAccountName : trimmedName
-        )
+    func createPasskeyAccount() async throws -> Account {
+        try await passkeyManager.create(name: resolvedName)
+        let passkey = try await passkeyManager.login()
 
-        accountManager.save(account: account)
-
-        try? activateDefaultWallets(account: account)
-
-        accountManager.set(lastCreatedAccount: account)
-
-        stat(page: advanced ? .newWalletAdvanced : .newWallet, event: .createWallet(walletType: accountType.statDescription))
-
-        return account
+        return createAccount(words: passkey.mnemonic, statPage: .newWalletPasskey)
     }
 }
 
 extension CreateAccountViewModel {
+    enum WalletType {
+        case regular
+        case passkey
+    }
+
     enum CreateError: Error {
         case emptyPassphrase
         case invalidConfirmation

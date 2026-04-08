@@ -24,7 +24,6 @@ struct MainSettingsView: View {
 
                 VStack(spacing: 0) {
                     ListSection {
-                        manageWallets()
                         blockchainSettings()
                         security()
                         privacy()
@@ -182,25 +181,6 @@ struct MainSettingsView: View {
             .padding(EdgeInsets(top: .margin16, leading: .margin16, bottom: .margin16, trailing: 185))
         }
         .background(Color.themeDarker)
-    }
-
-    @ViewBuilder private func manageWallets() -> some View {
-        NavigationRow(spacing: .margin8, destination: {
-            ManageAccountsView()
-        }) {
-            HStack(spacing: .margin16) {
-                ThemeImage("wallet", size: .iconSize24)
-                Text("settings.manage_accounts".localized).textBody()
-            }
-
-            Spacer()
-
-            if viewModel.manageWalletsAlert {
-                Image.warningIcon
-            }
-
-            Image.disclosureIcon
-        }
     }
 
     @ViewBuilder private func blockchainSettings() -> some View {

@@ -2,81 +2,56 @@ import SwiftUI
 
 struct ManageAccountsView: View {
     @StateObject private var viewModel = ManageAccountsViewModel()
+    @Binding var isPresented: Bool
 
-    @Binding private var isPresented: Bool
-
-    init(isPresented: Binding<Bool>? = nil) {
-        _isPresented = isPresented ?? .constant(false)
-    }
+    @State private var addWalletPresented = false
 
     var body: some View {
-        ScrollableThemeView {
-            VStack(spacing: .margin24) {
-                if !viewModel.regularItems.isEmpty {
-                    ListSection {
-                        ForEach(viewModel.regularItems, id: \.account) { item in
-                            itemView(item: item, watch: false)
+        ThemeNavigationStack {
+            ScrollableThemeView {
+                VStack(spacing: .margin24) {
+                    if !viewModel.regularItems.isEmpty {
+                        ListSection {
+                            ForEach(viewModel.regularItems, id: \.account) { item in
+                                itemView(item: item, watch: false)
+                            }
+                        }
+                    }
+
+                    if !viewModel.watchItems.isEmpty {
+                        ListSection {
+                            ForEach(viewModel.watchItems, id: \.account) { item in
+                                itemView(item: item, watch: true)
+                            }
                         }
                     }
                 }
-
-                if !viewModel.watchItems.isEmpty {
-                    ListSection {
-                        ForEach(viewModel.watchItems, id: \.account) { item in
-                            itemView(item: item, watch: true)
+                .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+            }
+            .navigationBarTitle("settings_manage_keys.title".localized)
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button(action: {
+                        Coordinator.shared.performAfterAcceptTerms {
+                            addWalletPresented = true
                         }
+                    }) {
+                        Image("wallet_add")
                     }
                 }
 
-                ListSection {
-                    ClickableRow(action: {
-                        let onCreate = isPresented ? { isPresented = false } : nil
-                        Coordinator.shared.presentAfterAcceptTerms { isPresented in
-                            CreateAccountView(isPresented: isPresented, onCreate: onCreate)
-                        } onPresent: {
-                            stat(page: .manageWallets, event: .open(page: .newWallet))
+                ToolbarItem(placement: .cancellationAction) {
+                    if isPresented {
+                        Button(action: {
+                            isPresented = false
+                        }) {
+                            Image("close")
                         }
-                    }) {
-                        Image("plus_24").themeIcon(color: .themeJacob)
-                        Text("onboarding.balance.create".localized).themeBody(color: .themeJacob)
-                    }
-
-                    ClickableRow(action: {
-                        let onRestore = isPresented ? { isPresented = false } : nil
-                        Coordinator.shared.presentAfterAcceptTerms { isPresented in
-                            RestoreTypeView(type: .wallet, onRestore: onRestore, isPresented: isPresented)
-                        } onPresent: {
-                            stat(page: .manageWallets, event: .open(page: .importWallet))
-                        }
-                    }) {
-                        Image("download_24").themeIcon(color: .themeJacob)
-                        Text("onboarding.balance.import".localized).themeBody(color: .themeJacob)
-                    }
-
-                    ClickableRow(action: {
-                        let onWatch = isPresented ? { isPresented = false } : nil
-                        Coordinator.shared.present { isPresented in
-                            WatchView(isPresented: isPresented, onWatch: onWatch)
-                        }
-                        stat(page: .manageWallets, event: .open(page: .watchWallet))
-                    }) {
-                        Image("binocule_24").themeIcon(color: .themeJacob)
-                        Text("onboarding.balance.watch".localized).themeBody(color: .themeJacob)
                     }
                 }
             }
-            .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
-        }
-        .navigationBarTitle("settings_manage_keys.title".localized)
-        .toolbar {
-            ToolbarItem(placement: .cancellationAction) {
-                if isPresented {
-                    Button(action: {
-                        isPresented = false
-                    }) {
-                        Image("close")
-                    }
-                }
+            .navigationDestination(isPresented: $addWalletPresented) {
+                AddWalletView(isParentPresented: $isPresented)
             }
         }
     }

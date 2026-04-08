@@ -1,6 +1,7 @@
 import HdWalletKit
 import MarketKit
 import RxSwift
+import SwiftUI
 import UIKit
 
 enum RestoreSelectModule {
@@ -51,4 +52,26 @@ enum RestoreSelectModule {
             onRestore: onRestore
         )
     }
+}
+
+struct RestoreSelectWrapper: UIViewControllerRepresentable {
+    let accountName: String
+    let accountType: AccountType
+    let statPage: StatPage
+    var isManualBackedUp: Bool = true
+    var isFileBackedUp: Bool = false
+    let onRestore: () -> Void
+
+    func makeUIViewController(context _: Context) -> UIViewController {
+        RestoreSelectModule.viewController(
+            accountName: accountName,
+            accountType: accountType,
+            statPage: statPage,
+            isManualBackedUp: isManualBackedUp,
+            isFileBackedUp: isFileBackedUp,
+            onRestore: onRestore
+        )
+    }
+
+    func updateUIViewController(_: UIViewController, context _: Context) {}
 }
