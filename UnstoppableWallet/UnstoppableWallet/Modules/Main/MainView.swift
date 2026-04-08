@@ -66,7 +66,7 @@ struct MainView: View {
                 ToolbarItem(placement: .primaryAction) {
                     Button(action: {
                         Coordinator.shared.present { isPresented in
-                            ThemeNavigationStack { ManageAccountsView(isPresented: isPresented) }
+                            ManageAccountsView(isPresented: isPresented)
                         }
                         stat(page: .balance, event: .open(page: .manageWallets))
                     }) {

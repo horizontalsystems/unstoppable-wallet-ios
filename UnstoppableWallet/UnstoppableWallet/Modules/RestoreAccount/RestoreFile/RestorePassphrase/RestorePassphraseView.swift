@@ -2,30 +2,25 @@ import SwiftUI
 
 struct RestorePassphraseView: View {
     @StateObject private var viewModel: RestorePassphraseViewModel
-    @Binding var isPresented: Bool
-
+    @Binding private var isParentPresented: Bool
     private let statPage: StatPage
-    private let onSelectCoins: (Account) -> Void
-    private let onConfiguration: (RawFullBackup) -> Void
-    private let onRestore: () -> Void
 
     @State private var secureLock = true
     @FocusState private var focused: Bool
 
+    @State private var restoreSelectAccount: Account?
+    @State private var restoreSelectPresented = false
+    @State private var rawBackup: RawFullBackup?
+    @State private var configurationPresented = false
+
     init(
         item: BackupModule.NamedSource,
+        isParentPresented: Binding<Bool>,
         statPage: StatPage,
-        isPresented: Binding<Bool>,
-        onSelectCoins: @escaping (Account) -> Void,
-        onConfiguration: @escaping (RawFullBackup) -> Void,
-        onRestore: @escaping () -> Void
     ) {
         _viewModel = StateObject(wrappedValue: RestorePassphraseViewModel(restoredBackup: item))
-        _isPresented = isPresented
+        _isParentPresented = isParentPresented
         self.statPage = statPage
-        self.onSelectCoins = onSelectCoins
-        self.onConfiguration = onConfiguration
-        self.onRestore = onRestore
     }
 
     var body: some View {
@@ -69,6 +64,26 @@ struct RestorePassphraseView: View {
                 .animation(.default, value: viewModel.processing)
             }
         }
+        .navigationTitle("restore.cloud.password.title".localized)
+        .navigationDestination(isPresented: $restoreSelectPresented) {
+            if let restoreSelectAccount {
+                RestoreSelectWrapper(
+                    accountName: restoreSelectAccount.name,
+                    accountType: restoreSelectAccount.type,
+                    statPage: statPage,
+                    isManualBackedUp: restoreSelectAccount.backedUp,
+                    isFileBackedUp: restoreSelectAccount.fileBackedUp,
+                    onRestore: { isParentPresented = false }
+                )
+                .ignoresSafeArea()
+                .navigationTitle("restore.title".localized)
+            }
+        }
+        .navigationDestination(isPresented: $configurationPresented) {
+            if let rawBackup {
+                RestoreFileConfigurationView(rawBackup: rawBackup, isParentPresented: $isParentPresented, statPage: statPage)
+            }
+        }
         .onAppear {
             viewModel.onAppear()
         }
@@ -87,14 +102,15 @@ struct RestorePassphraseView: View {
         .onReceive(viewModel.successPublisher) { accountType in
             HudHelper.instance.show(banner: .imported)
             stat(page: statPage, event: .importWallet(walletType: accountType.statDescription))
-            onRestore()
+            isParentPresented = false
         }
         .onReceive(viewModel.openSelectCoinsPublisher) { account in
-            onSelectCoins(account)
+            restoreSelectAccount = account
+            restoreSelectPresented = true
         }
         .onReceive(viewModel.openConfigurationPublisher) { rawBackup in
-            onConfiguration(rawBackup)
+            self.rawBackup = rawBackup
+            configurationPresented = true
         }
-        .navigationTitle("restore.cloud.password.title".localized)
     }
 }

@@ -110,6 +110,7 @@ enum StatPage: String {
     case news
     case newWallet = "new_wallet"
     case newWalletAdvanced = "new_wallet_advanced"
+    case newWalletPasskey = "new_wallet_passkey"
     case performance = "performance_selector"
     case privacy
     case privateKeys = "private_keys"

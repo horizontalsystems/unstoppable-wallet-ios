@@ -2,26 +2,12 @@ import Combine
 import SwiftUI
 
 struct CloudRestoreBackupListView: View {
-    @StateObject private var viewModel: CloudRestoreBackupListViewModel
-    @Binding private var isPresented: Bool
-    @Binding private var path: NavigationPath
+    @StateObject private var viewModel = CloudRestoreBackupListViewModel()
+    @Binding var isParentPresented: Bool
+    let statPage: StatPage
 
-    private let onSelectBackup: (BackupModule.NamedSource) -> Void
-
-    init(isPresented: Binding<Bool>, path: Binding<NavigationPath>, onSelectBackup: @escaping (BackupModule.NamedSource) -> Void) {
-        _isPresented = isPresented
-        _path = path
-        self.onSelectBackup = onSelectBackup
-
-        _viewModel = StateObject(wrappedValue:
-            CloudRestoreBackupListViewModel(service:
-                CloudRestoreBackupService(
-                    cloudAccountBackupManager: Core.shared.cloudBackupManager,
-                    accountManager: Core.shared.accountManager
-                )
-            )
-        )
-    }
+    @State private var source: BackupModule.NamedSource?
+    @State private var passphrasePresented = false
 
     var body: some View {
         Group {
@@ -58,8 +44,18 @@ struct CloudRestoreBackupListView: View {
             }
         }
         .navigationTitle("restore.cloud.title".localized)
-        .onReceive(viewModel.restorePublisher) { item in
-            onSelectBackup(item)
+        .navigationDestination(isPresented: $passphrasePresented) {
+            if let source {
+                RestorePassphraseView(
+                    item: source,
+                    isParentPresented: $isParentPresented,
+                    statPage: statPage,
+                )
+            }
+        }
+        .onReceive(viewModel.restorePublisher) { source in
+            self.source = source
+            passphrasePresented = true
         }
         .onReceive(viewModel.deleteItemCompletedPublisher) { successful in
             if successful {
