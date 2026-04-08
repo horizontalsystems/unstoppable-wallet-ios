@@ -169,10 +169,14 @@
 "restore_type.recovery.title" = "von Wiederherstellungsphrase";
 "restore_type.cloud.title" = "von iCloud";
 "restore_type.file.title" = "aus Dateien";
+"restore_type.passkey.title" = "Über Passkey";
+"restore_type.watch.title" = "Watch-Wallet";
 
 "restore_type.recovery.description" = "Importieren Sie mithilfe der Wiederherstellungsphrase oder des privaten Schlüssels.";
 "restore_type.cloud.description" = "Importieren Sie aus einer Sicherungsdatei in Ihrem Schlüsselbund.";
 "restore_type.file.description" = "Importieren Sie eine Sicherungsdatei aus Ihrem lokalen Ordner.";
+"restore_type.passkey.description" = "Stelle deine Wallet mit deinem Gerät und iCloud-Konto wieder her.";
+"restore_type.watch.description" = "Sieh dir eine Wallet per Adresse an, ohne Zugriff auf die Guthaben.";
 
 // Restore Cloud
 
@@ -314,6 +318,8 @@
 "balance.stopped" = "Stoppen";
 "balance.downloading_sapling" = "Wird heruntergeladen...";
 "balance.watch_wallet" = "Wallet de solo visualización";
+
+"balance.add_wallet" = "Wallet hinzufügen";
 
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "Verbleibende Blöcke – %@";
@@ -1985,12 +1991,6 @@
 "status_info.failed.title" = "Fehlgeschlagen";
 "status_info.failed.content" = "Die Transaktion wurde nicht verarbeitet und es wurde kein Werttransfer durchgeführt. Abhängig vom Grund des Scheiterns können einige fehlgeschlagene Transaktionen Transaktionsgebühren kosten. Transaktionen, die durch eine andere Transaktion ersetzt oder abgebrochen wurden, verbrauchen keine Transaktionsgebühren und erscheinen auch als fehlgeschlagen. Die %@ App kann den Grund für fehlgeschlagene Transaktionen nicht anzeigen. aber Benutzer können es selbst auf einem öffentlichen Block-Explorer i. e. etherscan.io.";
 
-// Onboarding
-
-"onboarding.balance.create" = "Neues Wallet";
-"onboarding.balance.import" = "Wallet importieren";
-"onboarding.balance.watch" = "Wallet de solo visualización";
-
 // Manage Accounts
 
 "manage_accounts.n_words" = "%@ Wörter";
@@ -2420,5 +2420,22 @@
 "mev_protection.description" = "Aktiviere den Schutz, um deinen Swap abzusichern und Wertverluste durch Bots zu vermeiden.";
 
 // Secure Send Bottom Sheet
+
 "secure_send.bottom_sheet.title" = "Sicheres Senden";
 "secure_send.bottom_sheet.description" = "Sicherheitsprüfungen auswählen.";
+
+// Add Wallet
+
+"add_wallet.title" = "Wallet hinzufügen";
+"add_wallet.new_wallet" = "Neue Wallet";
+"add_wallet.new_wallet.description" = "Erstelle eine neue Wallet, um loszulegen oder eine weitere hinzuzufügen.";
+"add_wallet.existing_wallet" = "Vorhandene Wallet";
+"add_wallet.existing_wallet.description" = "Importiere deine Wallet, wenn du bereits eine hast, um sie weiter zu nutzen.";
+
+// New Wallet
+
+"new_wallet.title" = "Neue Wallet";
+"new_wallet.standard" = "Standard";
+"new_wallet.standard.description" = "Erstelle eine Wallet mit einer Wiederherstellungsphrase für volle Kontrolle und Flexibilität.";
+"new_wallet.passkey" = "Passkey";
+"new_wallet.passkey.description" = "Erstelle eine Wallet, die durch dein Gerät und iCloud für einfachen Zugriff gesichert ist.";

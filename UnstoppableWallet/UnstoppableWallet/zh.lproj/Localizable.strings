@@ -169,10 +169,14 @@
 "restore_type.recovery.title" = "恢复短语";
 "restore_type.cloud.title" = "来自 iCloud";
 "restore_type.file.title" = "从文件";
+"restore_type.passkey.title" = "通过 Passkey";
+"restore_type.watch.title" = "观察钱包";
 
 "restore_type.recovery.description" = "使用恢复短语或私钥导入。";
 "restore_type.cloud.description" = "从您的密钥链备份文件中导入。";
 "restore_type.file.description" = "从本地文件夹导入备份文件。";
+"restore_type.passkey.description" = "使用您的设备和 iCloud 账户恢复钱包。";
+"restore_type.watch.description" = "通过地址查看钱包，无需访问资金。";
 
 // Restore Cloud
 
@@ -314,6 +318,8 @@
 "balance.stopped" = "已停止";
 "balance.downloading_sapling" = "正在下载...";
 "balance.watch_wallet" = "观察地址";
+
+"balance.add_wallet" = "添加钱包";
 
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "剩余区块数 - %@";
@@ -1985,12 +1991,6 @@
 "status_info.failed.title" = "失败";
 "status_info.failed.content" = "交易没有得到处理，也没有进行价值转移，根据失败的原因，有些失败的交易可能会耗费交易费用。 被另一笔交易替换或取消的交易不会消耗交易费用，也会出现为失败。 %@ 应用程序无法显示交易失败的原因。 但用户可以在公共区块探索者i上看到它。 。etherscan.io。";
 
-// Onboarding
-
-"onboarding.balance.create" = "新钱包";
-"onboarding.balance.import" = "恢复自";
-"onboarding.balance.watch" = "观察地址";
-
 // Manage Accounts
 
 "manage_accounts.n_words" = "%@ 个单词";
@@ -2420,5 +2420,22 @@
 "mev_protection.description" = "开启保护以确保您的兑换安全，避免被机器人套利造成损失。";
 
 // Secure Send Bottom Sheet
+
 "secure_send.bottom_sheet.title" = "安全发送";
 "secure_send.bottom_sheet.description" = "选择安全检查项。";
+
+// Add Wallet
+
+"add_wallet.title" = "添加钱包";
+"add_wallet.new_wallet" = "新钱包";
+"add_wallet.new_wallet.description" = "创建一个新钱包以开始使用，或添加一个新钱包。";
+"add_wallet.existing_wallet" = "已有钱包";
+"add_wallet.existing_wallet.description" = "如果您已有钱包，请导入以继续使用。";
+
+// New Wallet
+
+"new_wallet.title" = "新钱包";
+"new_wallet.standard" = "标准";
+"new_wallet.standard.description" = "使用助记词创建钱包，获得完全控制权和灵活性。";
+"new_wallet.passkey" = "Passkey";
+"new_wallet.passkey.description" = "创建由您的设备和 iCloud 保护的钱包，轻松访问。";
