@@ -34,10 +34,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
 
         let filter = searchText.trimmingCharacters(in: .whitespaces)
 
-        guard let account = accountManager.activeAccount else {
-            items = []
-            return
-        }
+        let account = accountManager.activeAccount
 
         syncTask = Task { [weak self, marketKit, walletManager, adapterManager, currencyManager, token] in
             let wallets = walletManager.activeWallets
@@ -100,7 +97,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                             .flatMap { $0 }
 
                         let suggestedTokens = tokens
-                            .filter { account.type.supports(token: $0) && !resultTokens.contains($0) }
+                            .filter { (account?.type.supports(token: $0) ?? true) && !resultTokens.contains($0) }
                             .sorted { lhsToken, rhsToken in
                                 let lhsRank = lhsToken.coin.marketCapRank ?? Int.max
                                 let rhsRank = rhsToken.coin.marketCapRank ?? Int.max
@@ -120,7 +117,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                     }
 
                     let tokenQueries: [TokenQuery]
-                    if case .hdExtendedKey = account.type {
+                    if case .hdExtendedKey = account?.type {
                         tokenQueries = BtcBlockchainManager.blockchainTypes.map(\.nativeTokenQueries).flatMap { $0 }
                     } else {
                         tokenQueries = BlockchainType.supported.map(\.defaultTokenQuery)
@@ -129,7 +126,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                     let tokens = try marketKit.tokens(queries: tokenQueries)
 
                     let featuredTokens = tokens
-                        .filter { account.type.supports(token: $0) && !resultTokens.contains($0) }
+                        .filter { (account?.type.supports(token: $0) ?? true) && !resultTokens.contains($0) }
                         .sorted { lhsToken, rhsToken in
                             if lhsToken.blockchainType.order != rhsToken.blockchainType.order {
                                 return lhsToken.blockchainType.order < rhsToken.blockchainType.order
@@ -144,7 +141,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                     let tokens = try marketKit.tokens(reference: address)
 
                     resultTokens = tokens
-                        .filter { account.type.supports(token: $0) }
+                        .filter { (account?.type.supports(token: $0) ?? true) }
                         .sorted { lhsToken, rhsToken in
                             let lhsEnabled = balances[lhsToken] != nil
                             let rhsEnabled = balances[rhsToken] != nil
@@ -164,7 +161,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                     let tokens = allFullCoins.map(\.tokens).flatMap { $0 }
 
                     resultTokens = tokens
-                        .filter { account.type.supports(token: $0) }
+                        .filter { (account?.type.supports(token: $0) ?? true) }
                         .sorted { lhsToken, rhsToken in
                             let lhsEnabled = balances[lhsToken] != nil
                             let rhsEnabled = balances[rhsToken] != nil
