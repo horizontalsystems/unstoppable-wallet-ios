@@ -6,10 +6,14 @@ struct ManageWalletListView: View {
     @ObservedObject var viewModel: ManageWalletsViewModel
 
     var body: some View {
-        VStack(spacing: 0) {
-            ListForEachIdentifiable(viewModel.items) { item in
-                view(item: item, forceToggleOn: nil)
+        ScrollViewReader { proxy in
+            ThemeList {
+                ListForEachIdentifiable(viewModel.items) { item in
+                    view(item: item, forceToggleOn: nil)
+                }
             }
+            .onChange(of: viewModel.filter) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
+            .onChange(of: viewModel.blockchainFilterIndex) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
         }
     }
 
