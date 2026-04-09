@@ -56,4 +56,20 @@ enum Comparators {
             rhs.range(of: filter, options: [.caseInsensitive, .anchored]) != nil
         )
     }
+
+    static func filterRelevance(
+        lhsCode: String, lhsName: String,
+        rhsCode: String, rhsName: String,
+        filter: String
+    ) -> ComparisonResult {
+        guard !filter.isEmpty else { return .orderedSame }
+
+        let exact = exactMatch(lhsCode, rhsCode, filter: filter)
+        if exact != .orderedSame { return exact }
+
+        let prefixCode = prefixMatch(lhsCode, rhsCode, filter: filter)
+        if prefixCode != .orderedSame { return prefixCode }
+
+        return prefixMatch(lhsName, rhsName, filter: filter)
+    }
 }
