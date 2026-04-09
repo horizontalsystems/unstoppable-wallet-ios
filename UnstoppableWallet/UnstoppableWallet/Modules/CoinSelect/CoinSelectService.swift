@@ -82,52 +82,20 @@ class CoinSelectService {
 
         let allItems = walletItems + coinItems
 
-        items = allItems.sorted { lhsItem, rhsItem in
-            if let lhsBalance = lhsItem.balance, let rhsBalance = rhsItem.balance, lhsBalance != rhsBalance {
-                return lhsBalance > rhsBalance
+        let context = TokenSortContext()
+        context.filter = filter
+        context.enabledTokens = Set(walletItems.map(\.token))
+        for item in walletItems {
+            if let balance = item.balance {
+                context.balances[item.token] = balance
             }
-
-            let lhsHasBalance = lhsItem.balance != nil
-            let rhsHasBalance = rhsItem.balance != nil
-
-            if lhsHasBalance != rhsHasBalance {
-                return lhsHasBalance
-            }
-
-            if !filter.isEmpty {
-                let filter = filter.lowercased()
-
-                let lhsExactCode = lhsItem.token.coin.code.lowercased() == filter
-                let rhsExactCode = rhsItem.token.coin.code.lowercased() == filter
-
-                if lhsExactCode != rhsExactCode {
-                    return lhsExactCode
-                }
-
-                let lhsStartsWithCode = lhsItem.token.coin.code.lowercased().starts(with: filter)
-                let rhsStartsWithCode = rhsItem.token.coin.code.lowercased().starts(with: filter)
-
-                if lhsStartsWithCode != rhsStartsWithCode {
-                    return lhsStartsWithCode
-                }
-
-                let lhsStartsWithName = lhsItem.token.coin.name.lowercased().starts(with: filter)
-                let rhsStartsWithName = rhsItem.token.coin.name.lowercased().starts(with: filter)
-
-                if lhsStartsWithName != rhsStartsWithName {
-                    return lhsStartsWithName
-                }
-            }
-
-            let lhsMarketCapRank = lhsItem.token.coin.marketCapRank ?? Int.max
-            let rhsMarketCapRank = rhsItem.token.coin.marketCapRank ?? Int.max
-
-            if lhsMarketCapRank != rhsMarketCapRank {
-                return lhsMarketCapRank < rhsMarketCapRank
-            }
-
-            return lhsItem.token.coin.name.lowercased() < rhsItem.token.coin.name.lowercased()
         }
+
+        let criteria: [SortCriterion] = filter.isEmpty
+            ? [.balanceDescending, .enabled, .marketCapRank, .nameAscending]
+            : [.balanceDescending, .enabled, .filterRelevance, .marketCapRank, .nameAscending]
+
+        items = allItems.sorted(by: criteria, context: context)
     }
 }
 
@@ -152,5 +120,13 @@ extension CoinSelectService {
         let token: Token
         let balance: Decimal?
         let rate: Decimal?
+    }
+}
+
+extension CoinSelectService.Item: IComposableSortable {
+    typealias Context = TokenSortContext
+
+    static func compare(_ lhs: CoinSelectService.Item, _ rhs: CoinSelectService.Item, by criterion: SortCriterion, context: TokenSortContext) -> ComparisonResult {
+        Token.compare(lhs.token, rhs.token, by: criterion, context: context)
     }
 }
