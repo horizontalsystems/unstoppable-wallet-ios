@@ -1965,6 +1965,10 @@
 		6B9359A92F877A4F0062E6C8 /* SortCriterion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93599F2F877A4F0062E6C8 /* SortCriterion.swift */; };
 		6B9359AB2F877D8E0062E6C8 /* IComposableSortable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9359AA2F877D8E0062E6C8 /* IComposableSortable.swift */; };
 		6B9359AC2F877D8E0062E6C8 /* IComposableSortable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9359AA2F877D8E0062E6C8 /* IComposableSortable.swift */; };
+		6B9359B42F879F2D0062E6C8 /* CoinSortable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9359B32F879F2D0062E6C8 /* CoinSortable.swift */; };
+		6B9359B52F879F2D0062E6C8 /* CoinSortable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9359B32F879F2D0062E6C8 /* CoinSortable.swift */; };
+		6B9359B72F87A5620062E6C8 /* SortingDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9359B62F87A5620062E6C8 /* SortingDiagnostics.swift */; };
+		6B9359B82F87A5620062E6C8 /* SortingDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9359B62F87A5620062E6C8 /* SortingDiagnostics.swift */; };
 		6B93AF992E5D901000A55120 /* StellarProposalHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AF982E5D900600A55120 /* StellarProposalHandler.swift */; };
 		6B93AF9A2E5D901000A55120 /* StellarProposalHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AF982E5D900600A55120 /* StellarProposalHandler.swift */; };
 		6B93AF9D2E5D928200A55120 /* WCStellarTransactionPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AF9C2E5D927A00A55120 /* WCStellarTransactionPayload.swift */; };
@@ -4762,6 +4766,8 @@
 		6B93599E2F877A4F0062E6C8 /* SortContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortContext.swift; sourceTree = "<group>"; };
 		6B93599F2F877A4F0062E6C8 /* SortCriterion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortCriterion.swift; sourceTree = "<group>"; };
 		6B9359AA2F877D8E0062E6C8 /* IComposableSortable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IComposableSortable.swift; sourceTree = "<group>"; };
+		6B9359B32F879F2D0062E6C8 /* CoinSortable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoinSortable.swift; sourceTree = "<group>"; };
+		6B9359B62F87A5620062E6C8 /* SortingDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortingDiagnostics.swift; sourceTree = "<group>"; };
 		6B93AF982E5D900600A55120 /* StellarProposalHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarProposalHandler.swift; sourceTree = "<group>"; };
 		6B93AF9C2E5D927A00A55120 /* WCStellarTransactionPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCStellarTransactionPayload.swift; sourceTree = "<group>"; };
 		6B93AF9F2E5D92EF00A55120 /* WCStellarTransactionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCStellarTransactionHandler.swift; sourceTree = "<group>"; };
@@ -8488,10 +8494,12 @@
 		6B9359A02F877A4F0062E6C8 /* Sorting */ = {
 			isa = PBXGroup;
 			children = (
+				6B9359B32F879F2D0062E6C8 /* CoinSortable.swift */,
 				6B9359AA2F877D8E0062E6C8 /* IComposableSortable.swift */,
 				6B93599C2F877A4F0062E6C8 /* Comparators.swift */,
 				6B93599E2F877A4F0062E6C8 /* SortContext.swift */,
 				6B93599F2F877A4F0062E6C8 /* SortCriterion.swift */,
+				6B9359B62F87A5620062E6C8 /* SortingDiagnostics.swift */,
 			);
 			path = Sorting;
 			sourceTree = "<group>";
@@ -11158,6 +11166,7 @@
 				11B3534EF58DAC9E15DC49A5 /* BackupVerifyWordsViewController.swift in Sources */,
 				11B35E08C957B79CF373E9FB /* BackupVerifyWordsModule.swift in Sources */,
 				11B35F79E8B3DED443D2825A /* BottomMultiSelectorViewController.swift in Sources */,
+				6B9359B52F879F2D0062E6C8 /* CoinSortable.swift in Sources */,
 				11B35CB50F9904708B827F9F /* CoinToggleViewModel.swift in Sources */,
 				D36DE0DC272FD887000BC916 /* OneInchTradeService.swift in Sources */,
 				11B3542A74C72C4CE03C727B /* CoinToggleViewController.swift in Sources */,
@@ -12261,6 +12270,7 @@
 				ABC9A436F7B4A40DED7F9164 /* WCEthereumTransactionPayload.swift in Sources */,
 				ABC9A4F144A81832F29C1216 /* WCWalletPayload.swift in Sources */,
 				ABC9A60C112A25A070D40C1C /* WCWalletHandler.swift in Sources */,
+				6B9359B72F87A5620062E6C8 /* SortingDiagnostics.swift in Sources */,
 				ABC9A784C59999B2F7D2DEAF /* WalletConnectChain.swift in Sources */,
 				ABC9A48C20CE22D9BAF528F3 /* WalletConnectTransaction.swift in Sources */,
 				ABC9A6904E4DAE4C34EAEAE7 /* WCRequestPayload.swift in Sources */,
@@ -12874,6 +12884,7 @@
 				11B3597E4CCEF19A8E4D1222 /* BottomMultiSelectorViewController.swift in Sources */,
 				6BA971CE2ED582D800DEC017 /* PremiumHeaderView.swift in Sources */,
 				6B5FD7D92E42169600FEF510 /* DestinationHelper.swift in Sources */,
+				6B9359B42F879F2D0062E6C8 /* CoinSortable.swift in Sources */,
 				11B358F1E7C72C1F42EC456F /* CoinToggleViewModel.swift in Sources */,
 				11B358492715766BFBB4E720 /* CoinToggleViewController.swift in Sources */,
 				11B3524401E294D8A919186E /* EnabledWallet_v_0_20.swift in Sources */,
@@ -13977,6 +13988,7 @@
 				ABC9A2969ACF7FD0801043FE /* Encodable.swift in Sources */,
 				ABC9A932AD114A779BF4EC16 /* Eip155RequestFactory.swift in Sources */,
 				ABC9AC5C5D51D703D7867211 /* WalletConnectRequestHandler.swift in Sources */,
+				6B9359B82F87A5620062E6C8 /* SortingDiagnostics.swift in Sources */,
 				D38E5DF02EF91CC60049EB91 /* MultiSwapQuote.swift in Sources */,
 				ABC9AD900F508E6A1FD96662 /* WCEthereumTransactionHandler.swift in Sources */,
 				6B44BE582EB1A51000257FD7 /* SelectorGroupViewModel.swift in Sources */,

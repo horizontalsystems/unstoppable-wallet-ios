@@ -6,12 +6,7 @@ enum SortCriterion {
 
     // Context-dependent
     case sameBlockchainFirst
-
-    // Filter-based (require context.filter)
-    case codeExact
-    case codePrefix
-    case nameExact
-    case namePrefix
+    case filterRelevance
 
     // Value
     case fiatBalanceDescending
