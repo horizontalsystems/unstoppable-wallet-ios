@@ -170,10 +170,24 @@ extension FullCoin: IComposableSortable {
                 context.fiatValues[rhs.coin.uid] != nil
             )
 
+        // Disambiguator for multiple FullCoins sharing the same coin.code (e.g. ZEC native on
+        // Zcash, ZEC BEP20 on BSC, ZEC wrapped on Solana are often three distinct Coin uids
+        // with identical code). The one containing at least one native-type token wins.
+        // Returns .orderedSame when codes differ or both sides contain (or lack) a native token.
+        case .codeNativeFirst:
+            if lhs.coin.code != rhs.coin.code { return .orderedSame }
+            let lhsHasNative = lhs.tokens.contains {
+                if case .native = $0.type { return true } else { return false }
+            }
+            let rhsHasNative = rhs.tokens.contains {
+                if case .native = $0.type { return true } else { return false }
+            }
+            return Comparators.booleanFirst(lhsHasNative, rhsHasNative)
+
         // Genuinely inapplicable for FullCoin: a coin aggregates multiple tokens with potentially
         // different badges, token types, and blockchain affinities, so there is no canonical value
         // to sort by.
-        case .badge, .tokenTypeOrder, .sameBlockchainFirst, .codeNativeFirst:
+        case .badge, .tokenTypeOrder, .sameBlockchainFirst:
             return .orderedSame
 
         // Not exposed for FullCoin: per-token balance fields live outside this context and the
