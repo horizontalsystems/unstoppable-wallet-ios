@@ -1,41 +1,18 @@
 import Foundation
 
 class WalletSorter {
-    private let descending: (ISortableWalletItem, ISortableWalletItem) -> Bool = { lhsItem, rhsItem in
-        let lhsBalance = lhsItem.balance
-        let rhsBalance = rhsItem.balance
-        let lhsHasPrice = lhsItem.priceItem != nil
-        let rhsHasPrice = rhsItem.priceItem != nil
-
-        if lhsHasPrice == rhsHasPrice {
-            guard let lhsPrice = lhsItem.priceItem?.price.value, let rhsPrice = rhsItem.priceItem?.price.value else {
-                return lhsBalance > rhsBalance
-            }
-            return lhsBalance * lhsPrice > rhsBalance * rhsPrice
-        }
-
-        return lhsHasPrice
+    func sort<Item: ISortableWalletItem>(items: [Item], sortType: SortType) -> [Item] {
+        items.sorted(by: criteria(for: sortType))
     }
 
-    func sort<Item: ISortableWalletItem>(items: [Item], sortType: SortType) -> [Item] {
+    private func criteria(for sortType: SortType) -> [SortCriterion] {
         switch sortType {
         case .balance:
-            let nonZeroItems = items.filter { !$0.balance.isZero }
-            let zeroItems = items.filter(\.balance.isZero)
-
-            return nonZeroItems.sorted(by: descending) + zeroItems.sorted(by: descending)
+            return [.nonZeroBalanceFirst, .hasPriceFirst, .fiatBalanceDescending, .balanceDescending]
         case .name:
-            return items.sorted { lhsItem, rhsItem in
-                lhsItem.name.caseInsensitiveCompare(rhsItem.name) == .orderedAscending
-            }
+            return [.nameAscending]
         case .percentGrowth:
-            return items.sorted { lhsItem, rhsItem in
-                guard let lhsDiff = lhsItem.diff, let rhsDiff = rhsItem.diff else {
-                    return lhsItem.diff != nil
-                }
-
-                return lhsDiff > rhsDiff
-            }
+            return [.percentGrowthDescending]
         }
     }
 }
