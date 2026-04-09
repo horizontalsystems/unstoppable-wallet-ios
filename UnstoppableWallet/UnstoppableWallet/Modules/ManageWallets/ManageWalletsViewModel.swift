@@ -8,7 +8,6 @@ class ManageWalletsViewModel: ObservableObject {
     private let restoreSettingsService: RestoreSettingsService
 
     private let tokenFetcher = ManageWalletsTokenFetcher()
-    private let tokenSorter = ManageWalletsTokenSorter()
     private let tokenInfoProvider: ManageWalletsTokenInfoProvider
 
     private var tokens = [Token]()
@@ -90,9 +89,16 @@ class ManageWalletsViewModel: ObservableObject {
             preferredTokens: enabledTokens,
             allowedBlockchainTypes: blockchainFilter.map { [$0.type] }
         )
-        let sorted = tokenSorter.sorted(fetched, filter: filter, preferredTokens: enabledTokens)
 
-        tokens = sorted
+        let context = TokenSortContext()
+        context.filter = filter
+        context.enabledTokens = Set(enabledTokens)
+
+        let criteria: [SortCriterion] = filter.isEmpty
+            ? [.enabled, .blockchainOrder, .badge]
+            : [.enabled, .filterRelevance, .blockchainOrder, .badge]
+
+        tokens = fetched.sorted(by: criteria, context: context)
         reloadItems(initial: initial)
     }
 
