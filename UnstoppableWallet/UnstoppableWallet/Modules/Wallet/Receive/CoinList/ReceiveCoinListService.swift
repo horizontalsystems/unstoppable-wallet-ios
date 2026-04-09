@@ -26,11 +26,40 @@ class ReceiveCoinListService {
         let coins = provider.fetch(filter: filter)
 
         if filter.isEmpty, !coins.isEmpty {
-            let sorted = CoinSorter.sort(coins, accountType: accountType, options: [.fiatValue, .blockchain, .name])
+            let (balances, coinPrices) = collectActiveBalancesAndPrices(for: coins)
+            let context = FullCoinSortContext(
+                coins: coins,
+                balances: balances,
+                coinPrices: coinPrices,
+                accountType: accountType
+            )
+            let sorted = coins.sorted(
+                by: [.fiatBalanceDescending, .blockchainOrder, .nameAscending],
+                context: context
+            )
             update(coins: sorted)
         } else {
             update(coins: coins)
         }
+    }
+
+    private func collectActiveBalancesAndPrices(for coins: [FullCoin]) -> (balances: [Token: Decimal], coinPrices: [String: Decimal]) {
+        let eligibleTokens = coins.flatMap { $0.tokens.filter { accountType.supports(token: $0) } }
+        let coinUids = Array(Set(eligibleTokens.map(\.coin.uid)))
+
+        let currency = Core.shared.currencyManager.baseCurrency
+        let coinPriceMap = Core.shared.marketKit.coinPriceMap(coinUids: coinUids, currencyCode: currency.code)
+        let coinPrices: [String: Decimal] = coinPriceMap.compactMapValues { $0.expired ? nil : $0.value }
+
+        let activeWallets = Core.shared.walletManager.activeWallets
+        var balances: [Token: Decimal] = [:]
+        for wallet in activeWallets {
+            if let adapter = Core.shared.adapterManager.adapter(for: wallet) as? IBalanceAdapter {
+                balances[wallet.token] = adapter.balanceData.available
+            }
+        }
+
+        return (balances, coinPrices)
     }
 
     private func update(coins: [FullCoin]) {
