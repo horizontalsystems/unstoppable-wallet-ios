@@ -22,16 +22,10 @@ class TransactionTokenSelectViewModel: ObservableObject {
 
         try? tokens.append(contentsOf: marketKit.tokens(queries: tokenQueries))
 
-        self.tokens = tokens.removeDuplicates().sorted { lhsToken, rhsToken in
-            let lhsName = lhsToken.coin.name.lowercased()
-            let rhsName = rhsToken.coin.name.lowercased()
-
-            if lhsName != rhsName {
-                return lhsName < rhsName
-            }
-
-            return lhsToken.badge ?? "" < rhsToken.badge ?? ""
-        }
+        self.tokens = tokens.removeDuplicates().sorted(
+            by: [.nameAscending, .badge],
+            context: TokenSortContext()
+        )
     }
 
     var currentToken: Token? {
