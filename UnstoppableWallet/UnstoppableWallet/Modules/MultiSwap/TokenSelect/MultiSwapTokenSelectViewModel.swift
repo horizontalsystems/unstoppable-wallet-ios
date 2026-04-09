@@ -55,38 +55,17 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                 }
             }
 
+            let context = TokenSortContext(balances: balances, fiatBalances: fiatBalances)
+            context.filter = filter
+            context.enabledTokens = Set(wallets.map(\.token))
+            context.referenceToken = token
+
             do {
                 if filter.isEmpty {
-                    let enabledTokens = wallets
-                        .map(\.token)
-                        .sorted { lhsToken, rhsToken in
-                            if let token {
-                                let lhsSameBlockchain = lhsToken.blockchainType == token.blockchainType
-                                let rhsSameBlockchain = rhsToken.blockchainType == token.blockchainType
-
-                                if lhsSameBlockchain != rhsSameBlockchain {
-                                    return lhsSameBlockchain
-                                }
-                            }
-
-                            let lhsFiatBalance = fiatBalances[lhsToken] ?? 0
-                            let rhsFiatBalance = fiatBalances[rhsToken] ?? 0
-
-                            if lhsFiatBalance != rhsFiatBalance {
-                                return lhsFiatBalance > rhsFiatBalance
-                            }
-
-                            if lhsToken.coin.code != rhsToken.coin.code {
-                                return lhsToken.coin.code < rhsToken.coin.code
-                            }
-
-                            if lhsToken.blockchainType.order != rhsToken.blockchainType.order {
-                                return lhsToken.blockchainType.order < rhsToken.blockchainType.order
-                            }
-
-                            return lhsToken.badge ?? "" < rhsToken.badge ?? ""
-                        }
-
+                    let enabledTokens = wallets.map(\.token).sorted(
+                        by: [.sameBlockchainFirst, .fiatBalanceDescending, .codeAscending, .blockchainOrder, .badge],
+                        context: context
+                    )
                     resultTokens.append(contentsOf: enabledTokens)
 
                     if let token {
@@ -98,20 +77,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
 
                         let suggestedTokens = tokens
                             .filter { (account?.type.supports(token: $0) ?? true) && !resultTokens.contains($0) }
-                            .sorted { lhsToken, rhsToken in
-                                let lhsRank = lhsToken.coin.marketCapRank ?? Int.max
-                                let rhsRank = rhsToken.coin.marketCapRank ?? Int.max
-
-                                if lhsRank != rhsRank {
-                                    return lhsRank < rhsRank
-                                }
-
-                                if lhsToken.blockchainType.order != rhsToken.blockchainType.order {
-                                    return lhsToken.blockchainType.order < rhsToken.blockchainType.order
-                                }
-
-                                return lhsToken.badge ?? "" < rhsToken.badge ?? ""
-                            }
+                            .sorted(by: [.marketCapRank, .blockchainOrder, .badge], context: context)
 
                         resultTokens.append(contentsOf: suggestedTokens)
                     }
@@ -127,13 +93,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
 
                     let featuredTokens = tokens
                         .filter { (account?.type.supports(token: $0) ?? true) && !resultTokens.contains($0) }
-                        .sorted { lhsToken, rhsToken in
-                            if lhsToken.blockchainType.order != rhsToken.blockchainType.order {
-                                return lhsToken.blockchainType.order < rhsToken.blockchainType.order
-                            }
-
-                            return lhsToken.badge ?? "" < rhsToken.badge ?? ""
-                        }
+                        .sorted(by: [.blockchainOrder, .badge], context: context)
 
                     resultTokens.append(contentsOf: featuredTokens)
                 } else if let ethAddress = try? EvmKit.Address(hex: filter) {
@@ -142,63 +102,14 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
 
                     resultTokens = tokens
                         .filter { (account?.type.supports(token: $0) ?? true) }
-                        .sorted { lhsToken, rhsToken in
-                            let lhsEnabled = balances[lhsToken] != nil
-                            let rhsEnabled = balances[rhsToken] != nil
-
-                            if lhsEnabled != rhsEnabled {
-                                return lhsEnabled
-                            }
-
-                            if lhsToken.blockchainType.order != rhsToken.blockchainType.order {
-                                return lhsToken.blockchainType.order < rhsToken.blockchainType.order
-                            }
-
-                            return lhsToken.badge ?? "" < rhsToken.badge ?? ""
-                        }
+                        .sorted(by: [.enabled, .blockchainOrder, .badge], context: context)
                 } else {
                     let allFullCoins = try marketKit.fullCoins(filter: filter, limit: 100)
                     let tokens = allFullCoins.map(\.tokens).flatMap { $0 }
 
                     resultTokens = tokens
                         .filter { (account?.type.supports(token: $0) ?? true) }
-                        .sorted { lhsToken, rhsToken in
-                            let lhsEnabled = balances[lhsToken] != nil
-                            let rhsEnabled = balances[rhsToken] != nil
-
-                            if lhsEnabled != rhsEnabled {
-                                return lhsEnabled
-                            }
-
-                            let filter = filter.lowercased()
-
-                            let lhsExactCode = lhsToken.coin.code.lowercased() == filter
-                            let rhsExactCode = rhsToken.coin.code.lowercased() == filter
-
-                            if lhsExactCode != rhsExactCode {
-                                return lhsExactCode
-                            }
-
-                            let lhsStartsWithCode = lhsToken.coin.code.lowercased().starts(with: filter)
-                            let rhsStartsWithCode = rhsToken.coin.code.lowercased().starts(with: filter)
-
-                            if lhsStartsWithCode != rhsStartsWithCode {
-                                return lhsStartsWithCode
-                            }
-
-                            let lhsStartsWithName = lhsToken.coin.name.lowercased().starts(with: filter)
-                            let rhsStartsWithName = rhsToken.coin.name.lowercased().starts(with: filter)
-
-                            if lhsStartsWithName != rhsStartsWithName {
-                                return lhsStartsWithName
-                            }
-
-                            if lhsToken.blockchainType.order != rhsToken.blockchainType.order {
-                                return lhsToken.blockchainType.order < rhsToken.blockchainType.order
-                            }
-
-                            return lhsToken.badge ?? "" < rhsToken.badge ?? ""
-                        }
+                        .sorted(by: [.enabled, .filterRelevance, .blockchainOrder, .badge], context: context)
                 }
             } catch {}
 
