@@ -1957,6 +1957,14 @@
 		6B9359962F862EDB0062E6C8 /* RestoreCoinsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9359942F862EDB0062E6C8 /* RestoreCoinsViewModel.swift */; };
 		6B9359972F862EDB0062E6C8 /* RestoreCoinsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9359932F862EDB0062E6C8 /* RestoreCoinsView.swift */; };
 		6B9359982F862EDB0062E6C8 /* RestoreCoinsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9359942F862EDB0062E6C8 /* RestoreCoinsViewModel.swift */; };
+		6B9359A32F877A4F0062E6C8 /* Comparators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93599C2F877A4F0062E6C8 /* Comparators.swift */; };
+		6B9359A42F877A4F0062E6C8 /* SortContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93599E2F877A4F0062E6C8 /* SortContext.swift */; };
+		6B9359A52F877A4F0062E6C8 /* SortCriterion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93599F2F877A4F0062E6C8 /* SortCriterion.swift */; };
+		6B9359A72F877A4F0062E6C8 /* Comparators.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93599C2F877A4F0062E6C8 /* Comparators.swift */; };
+		6B9359A82F877A4F0062E6C8 /* SortContext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93599E2F877A4F0062E6C8 /* SortContext.swift */; };
+		6B9359A92F877A4F0062E6C8 /* SortCriterion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93599F2F877A4F0062E6C8 /* SortCriterion.swift */; };
+		6B9359AB2F877D8E0062E6C8 /* IComposableSortable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9359AA2F877D8E0062E6C8 /* IComposableSortable.swift */; };
+		6B9359AC2F877D8E0062E6C8 /* IComposableSortable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B9359AA2F877D8E0062E6C8 /* IComposableSortable.swift */; };
 		6B93AF992E5D901000A55120 /* StellarProposalHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AF982E5D900600A55120 /* StellarProposalHandler.swift */; };
 		6B93AF9A2E5D901000A55120 /* StellarProposalHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AF982E5D900600A55120 /* StellarProposalHandler.swift */; };
 		6B93AF9D2E5D928200A55120 /* WCStellarTransactionPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B93AF9C2E5D927A00A55120 /* WCStellarTransactionPayload.swift */; };
@@ -4750,6 +4758,10 @@
 		6B9032CD2D2125E800F3F5AC /* PremiumListSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PremiumListSectionHeader.swift; sourceTree = "<group>"; };
 		6B9359932F862EDB0062E6C8 /* RestoreCoinsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreCoinsView.swift; sourceTree = "<group>"; };
 		6B9359942F862EDB0062E6C8 /* RestoreCoinsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreCoinsViewModel.swift; sourceTree = "<group>"; };
+		6B93599C2F877A4F0062E6C8 /* Comparators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Comparators.swift; sourceTree = "<group>"; };
+		6B93599E2F877A4F0062E6C8 /* SortContext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortContext.swift; sourceTree = "<group>"; };
+		6B93599F2F877A4F0062E6C8 /* SortCriterion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SortCriterion.swift; sourceTree = "<group>"; };
+		6B9359AA2F877D8E0062E6C8 /* IComposableSortable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IComposableSortable.swift; sourceTree = "<group>"; };
 		6B93AF982E5D900600A55120 /* StellarProposalHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StellarProposalHandler.swift; sourceTree = "<group>"; };
 		6B93AF9C2E5D927A00A55120 /* WCStellarTransactionPayload.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCStellarTransactionPayload.swift; sourceTree = "<group>"; };
 		6B93AF9F2E5D92EF00A55120 /* WCStellarTransactionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCStellarTransactionHandler.swift; sourceTree = "<group>"; };
@@ -6334,6 +6346,7 @@
 		11B354AB3C3435F2D5F39EE6 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				6B9359A12F877A4F0062E6C8 /* Shared */,
 				D3B343EC2F62BBF900EE0119 /* SwapInfo */,
 				D37D3B682F3A01E800CAC23A /* SwapHistory */,
 				D34DB1A02E1BEBE300DD30D3 /* Coordinator */,
@@ -8470,6 +8483,25 @@
 				6B9032CA2D1D72F300F3F5AC /* PurchaseListViewModel.swift */,
 			);
 			path = PurchaseList;
+			sourceTree = "<group>";
+		};
+		6B9359A02F877A4F0062E6C8 /* Sorting */ = {
+			isa = PBXGroup;
+			children = (
+				6B9359AA2F877D8E0062E6C8 /* IComposableSortable.swift */,
+				6B93599C2F877A4F0062E6C8 /* Comparators.swift */,
+				6B93599E2F877A4F0062E6C8 /* SortContext.swift */,
+				6B93599F2F877A4F0062E6C8 /* SortCriterion.swift */,
+			);
+			path = Sorting;
+			sourceTree = "<group>";
+		};
+		6B9359A12F877A4F0062E6C8 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				6B9359A02F877A4F0062E6C8 /* Sorting */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 		6B93AF9B2E5D924E00A55120 /* Stellar */ = {
@@ -10929,6 +10961,7 @@
 				D05E96982A262149002CCD71 /* TronTransactionRecord.swift in Sources */,
 				D36DE0C7272FD864000BC916 /* UniswapViewModel.swift in Sources */,
 				6B2907282AF0CB8A006157D6 /* WidgetCoinAppShowModule.swift in Sources */,
+				6B9359AC2F877D8E0062E6C8 /* IComposableSortable.swift in Sources */,
 				D38E5DF72EFA64770049EB91 /* RightTextCheckbox.swift in Sources */,
 				58AAA9B29938CA65FA3CB3F0 /* AdditionalDataView.swift in Sources */,
 				2FA5D0C39052BB3698B95876 /* LogRecord.swift in Sources */,
@@ -12373,6 +12406,9 @@
 				6B954B252F3EE47B008A1A16 /* RestorePassphraseView.swift in Sources */,
 				11B353D4BC292465358979D3 /* ValueLevel.swift in Sources */,
 				D3E36B8A2DF6E1EB007F99CA /* WalletTokenViewModel.swift in Sources */,
+				6B9359A32F877A4F0062E6C8 /* Comparators.swift in Sources */,
+				6B9359A42F877A4F0062E6C8 /* SortContext.swift in Sources */,
+				6B9359A52F877A4F0062E6C8 /* SortCriterion.swift in Sources */,
 				D09AEDAE2F69272600D56004 /* ZanoSendHelper.swift in Sources */,
 				11B350CE805774C98948353C /* SendField.swift in Sources */,
 				11B359BACF4B66607F50944D /* MultiSwapPreSwapStep.swift in Sources */,
@@ -12641,6 +12677,7 @@
 				D3AEB87C2DB8FE7A00E385C8 /* StellarAdapter.swift in Sources */,
 				11B35F4A3EAF8D2C66E8D6E5 /* MarkdownVisitor.swift in Sources */,
 				11B3511B03A70BEA48637907 /* MarkdownListItemCell.swift in Sources */,
+				6B9359AB2F877D8E0062E6C8 /* IComposableSortable.swift in Sources */,
 				6B954B3D2F442C6A008A1A16 /* BackupViewModel.swift in Sources */,
 				11B358B90E2D1A8832637F34 /* MarkdownBlockQuoteCell.swift in Sources */,
 				11B3539B3634BF7B3B1B9061 /* DescriptionCell.swift in Sources */,
@@ -14085,6 +14122,9 @@
 				D38E5E0E2F0CFE020049EB91 /* SwapAssetSyncInfo.swift in Sources */,
 				6B50FDB52EAA20E0004CD0A0 /* ReceiveSettingsListView.swift in Sources */,
 				6BEF09562E12848E004F4514 /* DeepLinkViewManager.swift in Sources */,
+				6B9359A72F877A4F0062E6C8 /* Comparators.swift in Sources */,
+				6B9359A82F877A4F0062E6C8 /* SortContext.swift in Sources */,
+				6B9359A92F877A4F0062E6C8 /* SortCriterion.swift in Sources */,
 				D09AEDAD2F69272600D56004 /* ZanoSendHelper.swift in Sources */,
 				11B3557AF8D64E9897965526 /* ISendData.swift in Sources */,
 				D3E36B8B2DF6E1EB007F99CA /* WalletTokenViewModel.swift in Sources */,
