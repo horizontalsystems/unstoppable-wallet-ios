@@ -1835,8 +1835,6 @@
 		6B62231F2F500C1800972532 /* ScanQrViewNew.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B62231D2F500C1000972532 /* ScanQrViewNew.swift */; };
 		6B67F0F22D1C06F2003452DC /* SuccessfulSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B67F0F12D1C06F2003452DC /* SuccessfulSubscriptionView.swift */; };
 		6B67F0F32D1C06F2003452DC /* SuccessfulSubscriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B67F0F12D1C06F2003452DC /* SuccessfulSubscriptionView.swift */; };
-		6B6962DD2EEFC0F90070179F /* ManageWalletsTokenSorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6962DC2EEFC0F70070179F /* ManageWalletsTokenSorter.swift */; };
-		6B6962DE2EEFC0F90070179F /* ManageWalletsTokenSorter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6962DC2EEFC0F70070179F /* ManageWalletsTokenSorter.swift */; };
 		6B6962E02EEFC2B40070179F /* ManageWalletsTokenInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6962DF2EEFC2B20070179F /* ManageWalletsTokenInfoProvider.swift */; };
 		6B6962E12EEFC2B40070179F /* ManageWalletsTokenInfoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6962DF2EEFC2B20070179F /* ManageWalletsTokenInfoProvider.swift */; };
 		6B6962E32EF39EDF0070179F /* ManageWalletListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B6962E22EF39ECA0070179F /* ManageWalletListView.swift */; };
@@ -10999,7 +10997,6 @@
 				58AAAAE261DEB08128441641 /* AmountDecimalParser.swift in Sources */,
 				11B35DDFAF0532881A4F68B0 /* AdditionalDataCellNew.swift in Sources */,
 				D011A48C2E3A551A004F58DC /* MoneroAddressParserItem.swift in Sources */,
-				6B6962DD2EEFC0F90070179F /* ManageWalletsTokenSorter.swift in Sources */,
 				11B35D93B238BA992173E123 /* StackViewCell.swift in Sources */,
 				1A5643CFF5657C9C6B7DBA19 /* ThemeSearchViewController.swift in Sources */,
 				D05E96942A261DC1002CCD71 /* TronTransactionConverter.swift in Sources */,
@@ -12663,7 +12660,6 @@
 				6BA971C92ED5809100DEC017 /* PremiumFeaturesListView.swift in Sources */,
 				11B358C1D982EAC4F0A308ED /* MarkdownViewController.swift in Sources */,
 				11B35B3821C6CCB647B98F9A /* MarkdownService.swift in Sources */,
-				6B6962DE2EEFC0F90070179F /* ManageWalletsTokenSorter.swift in Sources */,
 				11B35711E8B592D0B88C9CC1 /* Error.swift in Sources */,
 				D36DE0CC272FD864000BC916 /* UniswapTradeService.swift in Sources */,
 				1A56481FC0EAFA9FC32E1E21 /* ScanQrViewController.swift in Sources */,
