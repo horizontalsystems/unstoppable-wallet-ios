@@ -34,12 +34,16 @@ class ReceiveCoinListService {
                 accountType: accountType
             )
             let sorted = coins.sorted(
-                by: [.fiatBalanceDescending, .blockchainOrder, .nameAscending],
+                by: [.fiatBalanceDescending, .codeNativeFirst, .blockchainOrder, .nameAscending],
                 context: context
             )
             update(coins: sorted)
         } else {
-            update(coins: coins)
+            // Filter is active: keep marketKit's relevance order, but float native variants of
+            // same-code coins to the top (.codeNativeFirst is the only criterion that fires here;
+            // all other criteria are orderedSame so the relative order is preserved by stable sort).
+            let sorted = coins.sorted(by: [.codeNativeFirst], context: FullCoinSortContext())
+            update(coins: sorted)
         }
     }
 

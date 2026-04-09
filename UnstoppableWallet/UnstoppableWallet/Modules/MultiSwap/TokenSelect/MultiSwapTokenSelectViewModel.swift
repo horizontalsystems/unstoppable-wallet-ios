@@ -63,7 +63,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
             do {
                 if filter.isEmpty {
                     let enabledTokens = wallets.map(\.token).sorted(
-                        by: [.sameBlockchainFirst, .fiatBalanceDescending, .codeAscending, .blockchainOrder, .badge],
+                        by: [.sameBlockchainFirst, .fiatBalanceDescending, .codeAscending, .codeNativeFirst, .blockchainOrder, .badge],
                         context: context
                     )
                     resultTokens.append(contentsOf: enabledTokens)
@@ -77,7 +77,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
 
                         let suggestedTokens = tokens
                             .filter { (account?.type.supports(token: $0) ?? true) && !resultTokens.contains($0) }
-                            .sorted(by: [.marketCapRank, .blockchainOrder, .badge], context: context)
+                            .sorted(by: [.marketCapRank, .codeNativeFirst, .blockchainOrder, .badge], context: context)
 
                         resultTokens.append(contentsOf: suggestedTokens)
                     }
@@ -93,7 +93,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
 
                     let featuredTokens = tokens
                         .filter { (account?.type.supports(token: $0) ?? true) && !resultTokens.contains($0) }
-                        .sorted(by: [.blockchainOrder, .badge], context: context)
+                        .sorted(by: [.codeNativeFirst, .blockchainOrder, .badge], context: context)
 
                     resultTokens.append(contentsOf: featuredTokens)
                 } else if let ethAddress = try? EvmKit.Address(hex: filter) {
@@ -102,14 +102,14 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
 
                     resultTokens = tokens
                         .filter { (account?.type.supports(token: $0) ?? true) }
-                        .sorted(by: [.enabled, .blockchainOrder, .badge], context: context)
+                        .sorted(by: [.enabled, .codeNativeFirst, .blockchainOrder, .badge], context: context)
                 } else {
                     let allFullCoins = try marketKit.fullCoins(filter: filter, limit: 100)
                     let tokens = allFullCoins.map(\.tokens).flatMap { $0 }
 
                     resultTokens = tokens
                         .filter { (account?.type.supports(token: $0) ?? true) }
-                        .sorted(by: [.enabled, .filterRelevance, .blockchainOrder, .badge], context: context)
+                        .sorted(by: [.enabled, .filterRelevance, .codeNativeFirst, .blockchainOrder, .badge], context: context)
                 }
             } catch {}
 
