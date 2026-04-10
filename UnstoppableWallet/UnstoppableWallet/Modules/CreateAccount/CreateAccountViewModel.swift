@@ -96,8 +96,8 @@ extension CreateAccountViewModel {
     }
 
     func createPasskeyAccount() async throws -> Account {
-        try await passkeyManager.create(name: resolvedName)
-        let passkey = try await passkeyManager.login()
+        let credentialID = try await passkeyManager.create(name: resolvedName)
+        let passkey = try await passkeyManager.loginWith(credentialID: credentialID)
 
         return createAccount(words: passkey.mnemonic, statPage: .newWalletPasskey)
     }
