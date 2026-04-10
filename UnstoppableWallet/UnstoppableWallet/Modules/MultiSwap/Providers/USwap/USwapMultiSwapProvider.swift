@@ -969,8 +969,7 @@ extension USwapMultiSwapProvider {
         "zano": .zano,
     ]
 
-    static func track(swap: Swap, parameters: Parameters, networkManager _: NetworkManager, isEvm: Bool = false) async throws -> Swap {
-        let networkManager = NetworkManager(logger: Logger(minLogLevel: .debug))
+    static func track(swap: Swap, parameters: Parameters, networkManager: NetworkManager, isEvm: Bool = false) async throws -> Swap {
         let response: USwapMultiSwapProvider.TrackResponse = try await networkManager.fetch(
             url: "\(USwapMultiSwapProvider.baseUrl)/track\(isEvm ? "/evm" : "")",
             method: .post,
