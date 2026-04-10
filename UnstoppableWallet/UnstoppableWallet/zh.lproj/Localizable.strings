@@ -167,16 +167,12 @@
 
 "restore_type.title" = "恢复自";
 "restore_type.recovery.title" = "恢复短语";
-"restore_type.cloud.title" = "来自 iCloud";
-"restore_type.file.title" = "从文件";
 "restore_type.passkey.title" = "通过 Passkey";
-"restore_type.watch.title" = "观察钱包";
+"restore_type.backup.title" = "从备份恢复";
 
 "restore_type.recovery.description" = "使用恢复短语或私钥导入。";
-"restore_type.cloud.description" = "从您的密钥链备份文件中导入。";
-"restore_type.file.description" = "从本地文件夹导入备份文件。";
 "restore_type.passkey.description" = "使用您的设备和 iCloud 账户恢复钱包。";
-"restore_type.watch.description" = "通过地址查看钱包，无需访问资金。";
+"restore_type.backup.description" = "从 iCloud 或文件备份中导入";
 
 // Restore Cloud
 
@@ -2431,6 +2427,8 @@
 "add_wallet.new_wallet.description" = "创建一个新钱包以开始使用，或添加一个新钱包。";
 "add_wallet.existing_wallet" = "已有钱包";
 "add_wallet.existing_wallet.description" = "如果您已有钱包，请导入以继续使用。";
+"add_wallet.watch_wallet" = "仅观察钱包";
+"add_wallet.watch_wallet.description" = "通过地址查看钱包，无法访问资金。";
 
 // New Wallet
 
