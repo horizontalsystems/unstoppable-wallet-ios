@@ -1,7 +1,7 @@
 import Combine
 import Foundation
 
-class CloudRestoreBackupListViewModel: ObservableObject {
+class RestoreBackupListViewModel: ObservableObject {
     private let service = CloudRestoreBackupService()
     private var cancellables = Set<AnyCancellable>()
 
@@ -48,7 +48,7 @@ class CloudRestoreBackupListViewModel: ObservableObject {
     }
 }
 
-extension CloudRestoreBackupListViewModel {
+extension RestoreBackupListViewModel {
     var restorePublisher: AnyPublisher<BackupModule.NamedSource, Never> {
         restoreSubject.eraseToAnyPublisher()
     }
@@ -72,7 +72,7 @@ extension CloudRestoreBackupListViewModel {
     }
 }
 
-extension CloudRestoreBackupListViewModel {
+extension RestoreBackupListViewModel {
     enum BackupType {
         case wallet
         case full

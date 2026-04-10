@@ -53,11 +53,6 @@ enum BackupModule {
         case wallet(WalletBackup)
         case full(FullBackup)
 
-        enum Abstract {
-            case wallet
-            case full
-        }
-
         var id: String {
             switch self {
             case let .wallet(backup): return backup.id

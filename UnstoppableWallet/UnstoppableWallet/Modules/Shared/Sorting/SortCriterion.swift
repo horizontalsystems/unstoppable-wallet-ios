@@ -47,7 +47,6 @@ extension SortCriterion {
     static let tokenByBlockchain: [SortCriterion] = [.enabled, .codeNativeFirst, .blockchainOrder, .badge]
     static let tokenFilteredByBlockchain: [SortCriterion] = [.enabled, .filterRelevance, .codeNativeFirst, .blockchainOrder, .badge]
 
-    
     // Legacy Transactions Screen
     static let transactionToken: [SortCriterion] = [.nameAscending, .codeNativeFirst, .badge]
 
