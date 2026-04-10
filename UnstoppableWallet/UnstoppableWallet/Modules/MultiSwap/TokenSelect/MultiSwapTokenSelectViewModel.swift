@@ -76,7 +76,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                             .flatMap { $0 }
 
                         let suggestedTokens = tokens
-                            .filter { account.type.supports(token: $0) && !resultTokens.contains($0) }
+                            .filter { (account?.type.supports(token: $0) ?? true) && !resultTokens.contains($0) }
                             .sorted(by: SortCriterion.swapSuggested, context: context)
 
                         resultTokens.append(contentsOf: suggestedTokens)
@@ -92,7 +92,7 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                     let tokens = try marketKit.tokens(queries: tokenQueries)
 
                     let featuredTokens = tokens
-                        .filter { account.type.supports(token: $0) && !resultTokens.contains($0) }
+                        .filter { (account?.type.supports(token: $0) ?? true) && !resultTokens.contains($0) }
                         .sorted(by: SortCriterion.swapFeatured, context: context)
 
                     resultTokens.append(contentsOf: featuredTokens)
@@ -101,14 +101,14 @@ class MultiSwapTokenSelectViewModel: ObservableObject {
                     let tokens = try marketKit.tokens(reference: address)
 
                     resultTokens = tokens
-                        .filter { account.type.supports(token: $0) }
+                        .filter { (account?.type.supports(token: $0) ?? true) }
                         .sorted(by: SortCriterion.tokenByBlockchain, context: context)
                 } else {
                     let allFullCoins = try marketKit.fullCoins(filter: filter, limit: 100)
                     let tokens = allFullCoins.map(\.tokens).flatMap { $0 }
 
                     resultTokens = tokens
-                        .filter { account.type.supports(token: $0) }
+                        .filter { (account?.type.supports(token: $0) ?? true) }
                         .sorted(by: SortCriterion.tokenFilteredByBlockchain, context: context)
                 }
             } catch {}
