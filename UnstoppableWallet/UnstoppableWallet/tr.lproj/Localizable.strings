@@ -167,16 +167,12 @@
 
 "restore_type.title" = "Cuzdan Yükle";
 "restore_type.recovery.title" = "Kurtarma İfadesinden";
-"restore_type.cloud.title" = "iCloud'dan";
-"restore_type.file.title" = "Dosyadan";
 "restore_type.passkey.title" = "Passkey ile";
-"restore_type.watch.title" = "İzleme Cüzdanı";
+"restore_type.backup.title" = "Yedekten";
 
 "restore_type.recovery.description" = "Kurtarma ifadesini veya özel anahtarı kullanarak içe aktarın.";
-"restore_type.cloud.description" = "Anahtar zincirinizdeki bir yedek dosyadan içe aktarın.";
-"restore_type.file.description" = "Yerel klasörünüzden bir yedek dosyası içe aktarın.";
 "restore_type.passkey.description" = "Cüzdanınızı cihazınız ve iCloud hesabınızı kullanarak geri yükleyin.";
-"restore_type.watch.description" = "Fonlara erişim olmadan bir cüzdanı adresle görüntüleyin.";
+"restore_type.backup.description" = "iCloud veya dosyadan yedek içe aktar";
 
 // Restore Cloud
 
@@ -2431,6 +2427,8 @@
 "add_wallet.new_wallet.description" = "Başlamak için yeni bir cüzdan oluşturun veya yeni bir tane ekleyin.";
 "add_wallet.existing_wallet" = "Mevcut Cüzdan";
 "add_wallet.existing_wallet.description" = "Zaten bir cüzdanınız varsa kullanmaya devam etmek için içe aktarın.";
+"add_wallet.watch_wallet" = "Salt Okunur Cüzdan";
+"add_wallet.watch_wallet.description" = "Fonlara erişim olmadan bir cüzdanı adresle görüntüleyin.";
 
 // New Wallet
 

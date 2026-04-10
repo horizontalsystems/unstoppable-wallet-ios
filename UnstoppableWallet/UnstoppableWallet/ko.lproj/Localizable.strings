@@ -167,16 +167,12 @@
 
 "restore_type.title" = "다음에서 복원하기";
 "restore_type.recovery.title" = "복구 문구에서";
-"restore_type.cloud.title" = "아이클라우드에서";
-"restore_type.file.title" = "파일에서";
 "restore_type.passkey.title" = "패스키로 복원";
-"restore_type.watch.title" = "관찰 지갑";
+"restore_type.backup.title" = "백업에서";
 
 "restore_type.recovery.description" = "이 문구는 복구 문구 또는 개인 키를 사용하여 가져올 수 있습니다.";
-"restore_type.cloud.description" = "키체인의 백업 파일에서 가져옵니다.";
-"restore_type.file.description" = "로컬 폴더에서 백업 파일을 가져오십시오.";
 "restore_type.passkey.description" = "기기와 iCloud 계정을 사용하여 지갑을 복원합니다.";
-"restore_type.watch.description" = "자금 접근 없이 주소로 지갑을 조회합니다.";
+"restore_type.backup.description" = "iCloud 또는 파일에서 백업을 가져옵니다";
 
 // Restore Cloud
 
@@ -2431,6 +2427,8 @@
 "add_wallet.new_wallet.description" = "새 지갑을 생성하여 시작하거나 새 지갑을 추가하세요.";
 "add_wallet.existing_wallet" = "기존 지갑";
 "add_wallet.existing_wallet.description" = "이미 지갑이 있다면 가져와서 계속 사용하세요.";
+"add_wallet.watch_wallet" = "조회 전용 지갑";
+"add_wallet.watch_wallet.description" = "자금에 대한 접근 없이 주소로 지갑을 조회합니다.";
 
 // New Wallet
 

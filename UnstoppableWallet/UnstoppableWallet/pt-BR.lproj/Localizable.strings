@@ -167,16 +167,12 @@
 
 "restore_type.title" = "Importar carteira";
 "restore_type.recovery.title" = "da Frase de Recuperação";
-"restore_type.cloud.title" = "do iCloud";
-"restore_type.file.title" = "de Arquivos";
 "restore_type.passkey.title" = "Via Passkey";
-"restore_type.watch.title" = "Carteira de observação";
+"restore_type.backup.title" = "do Backup";
 
 "restore_type.recovery.description" = "Import like a pro! Recovery phrase or private key, you choose. It's your call, folks!";
-"restore_type.cloud.description" = "Import straight from your keychain, folks. It's like having the keys to the kingdom right at your fingertips!";
-"restore_type.file.description" = "Importar um arquivo de backup da sua pasta local.";
 "restore_type.passkey.description" = "Restaure sua carteira usando seu dispositivo e conta do iCloud.";
-"restore_type.watch.description" = "Visualize uma carteira por endereço sem acesso aos fundos.";
+"restore_type.backup.description" = "Importar de um backup do iCloud ou arquivo";
 
 // Restore Cloud
 
@@ -2431,6 +2427,8 @@
 "add_wallet.new_wallet.description" = "Crie uma nova carteira para começar ou adicione uma nova.";
 "add_wallet.existing_wallet" = "Carteira existente";
 "add_wallet.existing_wallet.description" = "Importe sua carteira se já tiver uma para continuar usando.";
+"add_wallet.watch_wallet" = "Carteira somente leitura";
+"add_wallet.watch_wallet.description" = "Visualize uma carteira pelo endereço sem acesso aos fundos.";
 
 // New Wallet
 
