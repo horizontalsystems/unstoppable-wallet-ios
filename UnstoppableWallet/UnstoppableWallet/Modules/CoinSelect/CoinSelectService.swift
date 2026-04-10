@@ -91,9 +91,9 @@ class CoinSelectService {
             }
         }
 
-        let criteria: [SortCriterion] = filter.isEmpty
-            ? [.balanceDescending, .enabled, .marketCapRank, .nameAscending]
-            : [.balanceDescending, .enabled, .filterRelevance, .marketCapRank, .nameAscending]
+        let criteria = filter.isEmpty
+            ? SortCriterion.coinSelect
+            : SortCriterion.coinSelectFiltered
 
         items = allItems.sorted(by: criteria, context: context)
     }

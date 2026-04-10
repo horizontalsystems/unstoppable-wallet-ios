@@ -23,7 +23,7 @@ class TransactionTokenSelectViewModel: ObservableObject {
         try? tokens.append(contentsOf: marketKit.tokens(queries: tokenQueries))
 
         self.tokens = tokens.removeDuplicates().sorted(
-            by: [.nameAscending, .codeNativeFirst, .badge],
+            by: SortCriterion.transactionToken,
             context: TokenSortContext()
         )
     }
