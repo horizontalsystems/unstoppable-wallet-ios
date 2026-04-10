@@ -40,8 +40,8 @@ struct ManageAccountsView: View {
                     }
                 }
 
-                ToolbarItem(placement: .cancellationAction) {
-                    if isPresented {
+                if isPresented {
+                    ToolbarItem(placement: .cancellationAction) {
                         Button(action: {
                             isPresented = false
                         }) {
