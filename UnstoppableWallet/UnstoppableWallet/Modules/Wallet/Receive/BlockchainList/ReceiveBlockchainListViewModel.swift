@@ -16,7 +16,7 @@ extension ReceiveBlockchainListViewModel {
     var viewItems: [ReceiveBlockchainListViewModel.ViewItem] {
         let tokens = fullCoin.tokens
             .filter { accountType.supports(token: $0) }
-            .sorted(by: [.tokenTypeOrder, .blockchainOrder], context: TokenSortContext())
+            .sorted(by: SortCriterion.blockchainList, context: TokenSortContext())
 
         return tokens.map {
             .init(

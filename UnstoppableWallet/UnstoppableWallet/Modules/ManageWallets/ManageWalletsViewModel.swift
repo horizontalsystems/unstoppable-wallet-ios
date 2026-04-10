@@ -94,9 +94,9 @@ class ManageWalletsViewModel: ObservableObject {
         context.filter = filter
         context.enabledTokens = Set(enabledTokens)
 
-        let criteria: [SortCriterion] = filter.isEmpty
-            ? [.enabled, .codeNativeFirst, .blockchainOrder, .badge]
-            : [.enabled, .filterRelevance, .codeNativeFirst, .blockchainOrder, .badge]
+        let criteria = filter.isEmpty
+            ? SortCriterion.tokenByBlockchain
+            : SortCriterion.tokenFilteredByBlockchain
 
         tokens = fetched.sorted(by: criteria, context: context)
         reloadItems(initial: initial)

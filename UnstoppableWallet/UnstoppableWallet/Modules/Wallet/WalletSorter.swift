@@ -8,11 +8,11 @@ class WalletSorter {
     private func criteria(for sortType: SortType) -> [SortCriterion] {
         switch sortType {
         case .balance:
-            return [.nonZeroBalanceFirst, .hasPriceFirst, .fiatBalanceDescending, .balanceDescending]
+            return SortCriterion.walletBalance
         case .name:
-            return [.nameAscending]
+            return SortCriterion.walletName
         case .percentGrowth:
-            return [.percentGrowthDescending]
+            return SortCriterion.walletPercentGrowth
         }
     }
 }
