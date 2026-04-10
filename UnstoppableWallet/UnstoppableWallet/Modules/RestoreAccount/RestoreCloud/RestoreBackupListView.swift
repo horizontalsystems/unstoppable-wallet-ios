@@ -1,10 +1,12 @@
 import Combine
 import SwiftUI
 
-struct CloudRestoreBackupListView: View {
-    @StateObject private var viewModel = CloudRestoreBackupListViewModel()
+struct RestoreBackupListView: View {
+    @StateObject private var viewModel = RestoreBackupListViewModel()
     @Binding var isParentPresented: Bool
-    let statPage: StatPage
+    var showClose = false
+
+    @State private var filePickerPresented = false
 
     @State private var source: BackupModule.NamedSource?
     @State private var passphrasePresented = false
@@ -46,11 +48,36 @@ struct CloudRestoreBackupListView: View {
         .navigationTitle("restore.cloud.title".localized)
         .navigationDestination(isPresented: $passphrasePresented) {
             if let source {
-                RestorePassphraseView(
-                    item: source,
-                    isParentPresented: $isParentPresented,
-                    statPage: statPage,
-                )
+                RestorePassphraseView(item: source, isParentPresented: $isParentPresented)
+            }
+        }
+        .toolbar {
+            ToolbarItem(placement: .primaryAction) {
+                Button(action: {
+                    filePickerPresented = true
+                }) {
+                    Image("arrow_in")
+                }
+            }
+
+            if showClose {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
+                        isParentPresented = false
+                    }) {
+                        Image("close")
+                    }
+                }
+            }
+        }
+        .fileImporter(isPresented: $filePickerPresented, allowedContentTypes: [.json]) { result in
+            if case let .success(url) = result {
+                do {
+                    source = try RestoreFileHelper.parse(url: url, destination: .files)
+                    passphrasePresented = true
+                } catch {
+                    HudHelper.instance.show(banner: .error(string: "alert.cant_recognize".localized))
+                }
             }
         }
         .onReceive(viewModel.restorePublisher) { source in
@@ -67,7 +94,7 @@ struct CloudRestoreBackupListView: View {
         }
     }
 
-    @ViewBuilder private func section(header: String, items: [CloudRestoreBackupListViewModel.BackupViewItem]) -> some View {
+    @ViewBuilder private func section(header: String, items: [RestoreBackupListViewModel.BackupViewItem]) -> some View {
         ListSection(header: header) {
             ForEach(items, id: \.uniqueId) {
                 item in row(item: item)
@@ -75,7 +102,7 @@ struct CloudRestoreBackupListView: View {
         }
     }
 
-    @ViewBuilder private func row(item: CloudRestoreBackupListViewModel.BackupViewItem) -> some View {
+    @ViewBuilder private func row(item: RestoreBackupListViewModel.BackupViewItem) -> some View {
         Cell(
             middle: {
                 MultiText(title: item.name, subtitle: item.description)

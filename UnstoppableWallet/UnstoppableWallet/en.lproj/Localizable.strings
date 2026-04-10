@@ -167,16 +167,12 @@
 
 "restore_type.title" = "Import Wallet";
 "restore_type.recovery.title" = "from Recovery Phrase";
-"restore_type.cloud.title" = "from iCloud";
-"restore_type.file.title" = "from Files";
 "restore_type.passkey.title" = "from Passkey";
-"restore_type.watch.title" = "Watch Wallet";
+"restore_type.backup.title" = "from Backup";
 
 "restore_type.recovery.description" = "Import a wallet using a recovery phrase or a private key.";
-"restore_type.cloud.description" = "Import from a backup file in your keychain.";
-"restore_type.file.description" = "Import a backup file from your local folder.";
 "restore_type.passkey.description" = "Restore your wallet using your device and iCloud account.";
-"restore_type.watch.description" = "View a wallet by address without access to funds.";
+"restore_type.backup.description" = "Import from a backup from iCloud or file";
 
 // Restore Cloud
 
@@ -2431,6 +2427,8 @@
 "add_wallet.new_wallet.description" = "Create a new wallet to get started or add a new one.";
 "add_wallet.existing_wallet" = "Existing Wallet";
 "add_wallet.existing_wallet.description" = "Import your wallet if you already have one to continue using it.";
+"add_wallet.watch_wallet" = "View-Only Wallet";
+"add_wallet.watch_wallet.description" = "View a wallet by address without access to funds.";
 
 // New Wallet
 

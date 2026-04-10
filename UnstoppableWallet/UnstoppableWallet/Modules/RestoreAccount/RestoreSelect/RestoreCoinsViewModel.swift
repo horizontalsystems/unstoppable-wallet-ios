@@ -5,7 +5,6 @@ import SwiftUI
 class RestoreCoinsViewModel: ObservableObject {
     private let accountName: String
     private let accountType: AccountType
-    private let statPage: StatPage
     private let isManualBackedUp: Bool
     private let isFileBackedUp: Bool
 
@@ -29,13 +28,11 @@ class RestoreCoinsViewModel: ObservableObject {
     init(
         accountName: String,
         accountType: AccountType,
-        statPage: StatPage,
         isManualBackedUp: Bool = true,
         isFileBackedUp: Bool = false
     ) {
         self.accountName = accountName
         self.accountType = accountType
-        self.statPage = statPage
         self.isManualBackedUp = isManualBackedUp
         self.isFileBackedUp = isFileBackedUp
 
@@ -141,7 +138,7 @@ extension RestoreCoinsViewModel {
         let wallets = enabledTokens.map { Wallet(token: $0, account: account) }
         walletManager.save(wallets: wallets)
 
-        stat(page: statPage, event: .importWallet(walletType: accountType.statDescription))
+        stat(page: .importWallet, event: .importWallet(walletType: accountType.statDescription))
         HudHelper.instance.show(banner: .imported)
         onRestore()
     }

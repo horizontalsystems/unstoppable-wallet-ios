@@ -10,7 +10,6 @@ struct RestoreCoinsView: View {
     init(
         accountName: String,
         accountType: AccountType,
-        statPage: StatPage,
         isManualBackedUp: Bool = true,
         isFileBackedUp: Bool = false,
         onRestore: @escaping () -> Void
@@ -18,7 +17,6 @@ struct RestoreCoinsView: View {
         _viewModel = StateObject(wrappedValue: RestoreCoinsViewModel(
             accountName: accountName,
             accountType: accountType,
-            statPage: statPage,
             isManualBackedUp: isManualBackedUp,
             isFileBackedUp: isFileBackedUp
         ))

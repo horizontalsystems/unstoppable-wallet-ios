@@ -3,7 +3,6 @@ import SwiftUI
 struct RestorePassphraseView: View {
     @StateObject private var viewModel: RestorePassphraseViewModel
     @Binding private var isParentPresented: Bool
-    private let statPage: StatPage
 
     @State private var secureLock = true
     @FocusState private var focused: Bool
@@ -15,12 +14,10 @@ struct RestorePassphraseView: View {
 
     init(
         item: BackupModule.NamedSource,
-        isParentPresented: Binding<Bool>,
-        statPage: StatPage,
+        isParentPresented: Binding<Bool>
     ) {
         _viewModel = StateObject(wrappedValue: RestorePassphraseViewModel(restoredBackup: item))
         _isParentPresented = isParentPresented
-        self.statPage = statPage
     }
 
     var body: some View {
@@ -70,7 +67,7 @@ struct RestorePassphraseView: View {
                 RestoreSelectWrapper(
                     accountName: restoreSelectAccount.name,
                     accountType: restoreSelectAccount.type,
-                    statPage: statPage,
+                    statPage: .importWallet,
                     isManualBackedUp: restoreSelectAccount.backedUp,
                     isFileBackedUp: restoreSelectAccount.fileBackedUp,
                     onRestore: { isParentPresented = false }
@@ -81,7 +78,7 @@ struct RestorePassphraseView: View {
         }
         .navigationDestination(isPresented: $configurationPresented) {
             if let rawBackup {
-                RestoreFileConfigurationView(rawBackup: rawBackup, isParentPresented: $isParentPresented, statPage: statPage)
+                RestoreFileConfigurationView(rawBackup: rawBackup, isParentPresented: $isParentPresented, statPage: .importWallet)
             }
         }
         .onAppear {
@@ -101,7 +98,7 @@ struct RestorePassphraseView: View {
         }
         .onReceive(viewModel.successPublisher) { accountType in
             HudHelper.instance.show(banner: .imported)
-            stat(page: statPage, event: .importWallet(walletType: accountType.statDescription))
+            stat(page: .importWallet, event: .importWallet(walletType: accountType.statDescription))
             isParentPresented = false
         }
         .onReceive(viewModel.openSelectCoinsPublisher) { account in

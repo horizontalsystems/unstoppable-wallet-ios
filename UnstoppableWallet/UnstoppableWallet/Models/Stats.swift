@@ -6,6 +6,7 @@ enum StatPage: String {
     case accountExtendedPublicKey = "account_extended_public_key"
     case addressChecker = "address_checker"
     case addToken = "add_token"
+    case addWallet = "add_wallet"
     case advancedSearch = "advanced_search"
     case advancedSearchResults = "advanced_search_results"
     case appStatus = "app_status"

@@ -6,6 +6,7 @@ struct AddWalletView: View {
 
     @State private var newWalletPresented = false
     @State private var existingWalletPresented = false
+    @State private var watchPresented = false
 
     var body: some View {
         ScrollableThemeView {
@@ -16,6 +17,11 @@ struct AddWalletView: View {
 
                 row(icon: "arrow_in", title: "add_wallet.existing_wallet".localized, description: "add_wallet.existing_wallet.description".localized) {
                     existingWalletPresented = true
+                }
+
+                row(icon: "eye_on", title: "add_wallet.watch_wallet".localized, description: "add_wallet.watch_wallet.description".localized) {
+                    watchPresented = true
+                    stat(page: .addWallet, event: .open(page: .watchWallet))
                 }
             }
             .padding(EdgeInsets(top: 12, leading: 16, bottom: 32, trailing: 16))
@@ -32,12 +38,14 @@ struct AddWalletView: View {
                 }
             }
         }
-
+        .navigationDestination(isPresented: $watchPresented) {
+            WatchView(isParentPresented: $isParentPresented)
+        }
         .navigationDestination(isPresented: $newWalletPresented) {
             NewWalletView(isParentPresented: $isParentPresented)
         }
         .navigationDestination(isPresented: $existingWalletPresented) {
-            RestoreTypeView(type: .wallet, isParentPresented: $isParentPresented)
+            RestoreTypeView(isParentPresented: $isParentPresented)
         }
     }
 
