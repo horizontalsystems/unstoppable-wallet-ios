@@ -97,6 +97,38 @@ class AppBackupProvider {
             }
     }
 
+    private func defaultSettings(evmSyncSources: EvmSyncSourceManager.SyncSourceBackup, moneroNodes: MoneroNodeManager.NodeBackup, zanoNodes: ZanoNodeManager.NodeBackup) -> SettingsBackup {
+        SettingsBackup(
+            evmSyncSources: evmSyncSources,
+            moneroNodes: moneroNodes,
+            zanoNodes: zanoNodes,
+            btcModes: [],
+            remoteContactsSync: nil,
+            swapProviders: [],
+            chartIndicators: .init(
+                ma: [
+                    .init(period: 9, type: "ema", enabled: false),
+                    .init(period: 25, type: "ema", enabled: false),
+                    .init(period: 50, type: "ema", enabled: false),
+                ],
+                rsi: [.init(period: 12, enabled: false)],
+                macd: [.init(slow: 26, fast: 12, signal: 9, enabled: false)]
+            ),
+            indicatorsShown: true,
+            currentLanguage: "en",
+            baseCurrency: "USD",
+            mode: .system,
+            showMarketTab: true,
+            priceChangeMode: .hour24,
+            launchScreen: .auto,
+            conversionTokenQueryId: nil,
+            balanceHideButtons: false,
+            balancePrimaryValue: .coin,
+            balanceAutoHide: false,
+            appIcon: "Main"
+        )
+    }
+
     private func settings(evmSyncSources: EvmSyncSourceManager.SyncSourceBackup, moneroNodes: MoneroNodeManager.NodeBackup, zanoNodes: ZanoNodeManager.NodeBackup) -> SettingsBackup {
         SettingsBackup(
             evmSyncSources: evmSyncSources,
@@ -130,22 +162,44 @@ class AppBackupProvider {
         }
     }
 
-    func fullBackup(accountIds: [String]) -> RawFullBackup {
+    func fullBackup(accountIds: [String], sections: Set<BackupSection> = Set(BackupSection.allCases)) -> RawFullBackup {
         let accounts = accountIds
             .compactMap { accountManager.account(id: $0) }
             .compactMap { RawWalletBackup(account: $0, enabledWallets: enabledWallets(account: $0)) }
 
-        let syncSources = EvmSyncSourceManager.SyncSourceBackup(selected: evmSyncSourceManager.selectedSources, custom: [])
-        let moneroNodes = MoneroNodeManager.NodeBackup(selected: moneroNodeManager.selectedNodes, custom: [])
-        let zanoNodes = ZanoNodeManager.NodeBackup(selected: zanoNodeManager.selectedNodes, custom: [])
+        let includeCustomRpc = sections.contains(.customRpc)
+        let includePreferences = sections.contains(.preferences)
+
+        let syncSources: EvmSyncSourceManager.SyncSourceBackup
+        let moneroNodeBackup: MoneroNodeManager.NodeBackup
+        let zanoNodeBackup: ZanoNodeManager.NodeBackup
+
+        if includeCustomRpc {
+            syncSources = EvmSyncSourceManager.SyncSourceBackup(selected: evmSyncSourceManager.selectedSources, custom: [])
+            moneroNodeBackup = MoneroNodeManager.NodeBackup(selected: moneroNodeManager.selectedNodes, custom: [])
+            zanoNodeBackup = ZanoNodeManager.NodeBackup(selected: zanoNodeManager.selectedNodes, custom: [])
+        } else {
+            syncSources = .init(selected: [], custom: [])
+            moneroNodeBackup = .init(selected: [], custom: [])
+            zanoNodeBackup = .init(selected: [], custom: [])
+        }
+
+        let settingsBackup: SettingsBackup
+        if includePreferences {
+            settingsBackup = settings(evmSyncSources: syncSources, moneroNodes: moneroNodeBackup, zanoNodes: zanoNodeBackup)
+        } else {
+            settingsBackup = defaultSettings(evmSyncSources: syncSources, moneroNodes: moneroNodeBackup, zanoNodes: zanoNodeBackup)
+        }
+
         return RawFullBackup(
             accounts: accounts,
-            watchlistIds: watchlistManager.coinUids,
-            contacts: contactManager.backupContactBook?.contacts ?? [],
-            settings: settings(evmSyncSources: syncSources, moneroNodes: moneroNodes, zanoNodes: zanoNodes),
-            customSyncSources: evmSyncSourceManager.customSources,
-            customMoneroNodes: moneroNodeManager.customNodeRecords,
-            customZanoNodes: zanoNodeManager.customNodeRecords
+            watchlistIds: sections.contains(.favourites) ? watchlistManager.coinUids : [],
+            contacts: sections.contains(.contacts) ? (contactManager.backupContactBook?.contacts ?? []) : [],
+            settings: settingsBackup,
+            customSyncSources: includeCustomRpc ? evmSyncSourceManager.customSources : [],
+            customMoneroNodes: includeCustomRpc ? moneroNodeManager.customNodeRecords : [],
+            customZanoNodes: includeCustomRpc ? zanoNodeManager.customNodeRecords : [],
+            sections: sections
         )
     }
 }
@@ -195,39 +249,47 @@ extension AppBackupProvider {
         }
     }
 
-    func restore(raw: RawFullBackup) {
+    func restore(raw: RawFullBackup, sections: Set<BackupSection> = Set(BackupSection.allCases)) {
         for wallet in raw.accounts {
             restore(raws: [wallet])
         }
-        watchlistManager.add(coinUids: raw.watchlistIds)
 
-        if !raw.contacts.isEmpty {
+        if sections.contains(.favourites) {
+            watchlistManager.add(coinUids: raw.watchlistIds)
+        }
+
+        if sections.contains(.contacts), !raw.contacts.isEmpty {
             try? contactManager.restore(contacts: raw.contacts, mergePolitics: .replace)
         }
 
-        evmSyncSourceManager.restore(selected: raw.settings.evmSyncSources.selected, custom: raw.customSyncSources)
-        moneroNodeManager.restore(selected: raw.settings.moneroNodes.selected, custom: raw.customMoneroNodes)
-        zanoNodeManager.restore(selected: raw.settings.zanoNodes.selected, custom: raw.customZanoNodes)
-        btcBlockchainManager.restore(backup: raw.settings.btcModes)
-        chartRepository.restore(backup: raw.settings.chartIndicators)
-        localStorage.restore(backup: raw.settings)
-        languageManager.currentLanguage = raw.settings.currentLanguage
-        if let currency = currencyManager.currencies.first(where: { $0.code == raw.settings.baseCurrency }) {
-            currencyManager.baseCurrency = currency
+        if sections.contains(.customRpc) {
+            evmSyncSourceManager.restore(selected: raw.settings.evmSyncSources.selected, custom: raw.customSyncSources)
+            moneroNodeManager.restore(selected: raw.settings.moneroNodes.selected, custom: raw.customMoneroNodes)
+            zanoNodeManager.restore(selected: raw.settings.zanoNodes.selected, custom: raw.customZanoNodes)
         }
 
-        themeManager.themeMode = raw.settings.mode
-        launchScreenManager.showMarket = raw.settings.showMarketTab
-        launchScreenManager.launchScreen = raw.settings.launchScreen
-        priceChangeModeManager.priceChangeMode = raw.settings.priceChangeMode
-        appSettingManager.balancePrimaryValue = raw.settings.balancePrimaryValue
+        if sections.contains(.preferences) {
+            btcBlockchainManager.restore(backup: raw.settings.btcModes)
+            chartRepository.restore(backup: raw.settings.chartIndicators)
+            localStorage.restore(backup: raw.settings)
+            languageManager.currentLanguage = raw.settings.currentLanguage
+            if let currency = currencyManager.currencies.first(where: { $0.code == raw.settings.baseCurrency }) {
+                currencyManager.baseCurrency = currency
+            }
 
-        walletButtonHiddenManager.buttonHidden = raw.settings.balanceHideButtons
-        balanceConversionManager.set(tokenQueryId: raw.settings.conversionTokenQueryId)
-        balanceHiddenManager.set(balanceAutoHide: raw.settings.balanceAutoHide)
-        let appIcon = AppIconManager.allAppIcons.first { $0.title == raw.settings.appIcon } ?? .main
-        if appIconManager.appIcon != appIcon {
-            appIconManager.appIcon = appIcon
+            themeManager.themeMode = raw.settings.mode
+            launchScreenManager.showMarket = raw.settings.showMarketTab
+            launchScreenManager.launchScreen = raw.settings.launchScreen
+            priceChangeModeManager.priceChangeMode = raw.settings.priceChangeMode
+            appSettingManager.balancePrimaryValue = raw.settings.balancePrimaryValue
+
+            walletButtonHiddenManager.buttonHidden = raw.settings.balanceHideButtons
+            balanceConversionManager.set(tokenQueryId: raw.settings.conversionTokenQueryId)
+            balanceHiddenManager.set(balanceAutoHide: raw.settings.balanceAutoHide)
+            let appIcon = AppIconManager.allAppIcons.first { $0.title == raw.settings.appIcon } ?? .main
+            if appIconManager.appIcon != appIcon {
+                appIconManager.appIcon = appIcon
+            }
         }
     }
 }
@@ -267,11 +329,12 @@ extension AppBackupProvider {
             settings: fullBackup.settings,
             customSyncSources: customSources,
             customMoneroNodes: customMoneroNodes,
-            customZanoNodes: customZanoNodes
+            customZanoNodes: customZanoNodes,
+            sections: fullBackup.sections
         )
     }
 
-    func encrypt(raw: RawFullBackup, passphrase: String) throws -> FullBackup {
+    func encrypt(raw: RawFullBackup, passphrase: String, sections: Set<BackupSection>? = nil) throws -> FullBackup {
         let wallets = try raw.accounts.map {
             let walletBackup = try Self.encrypt(account: $0.account, wallets: $0.enabledWallets, passphrase: passphrase)
             return CloudRestoreBackupListModule.RestoredBackup(name: $0.account.name, walletBackup: walletBackup)
@@ -281,7 +344,7 @@ extension AppBackupProvider {
         let customEvmSyncSource = try evmSyncSourceManager.encrypt(sources: raw.customSyncSources, passphrase: passphrase)
         let customMoneroNode = try moneroNodeManager.encrypt(nodes: raw.customMoneroNodes, passphrase: passphrase)
         let customZanoNode = zanoNodeManager.encode(nodes: raw.customZanoNodes)
-        let settingsBackup = settings(
+        let settingsBackup = raw.settings.withEncryptedCustom(
             evmSyncSources: .init(selected: raw.settings.evmSyncSources.selected, custom: customEvmSyncSource),
             moneroNodes: .init(selected: raw.settings.moneroNodes.selected, custom: customMoneroNode),
             zanoNodes: .init(selected: raw.settings.zanoNodes.selected, custom: customZanoNode)
@@ -293,6 +356,7 @@ extension AppBackupProvider {
             watchlistIds: raw.watchlistIds,
             contacts: contacts,
             settings: settingsBackup,
+            sections: sections,
             version: AppBackupProvider.version,
             timestamp: Date().timeIntervalSince1970.rounded()
         )
@@ -319,16 +383,5 @@ extension AppBackupProvider {
     enum CodingError: Error {
         case invalidPassword
         case emptyParameters
-    }
-
-    enum Field {
-        static func all(ids: [String]) -> [Self] {
-            [.accounts(ids: ids), .watchlist, .contacts, .settings]
-        }
-
-        case accounts(ids: [String])
-        case watchlist
-        case contacts
-        case settings
     }
 }

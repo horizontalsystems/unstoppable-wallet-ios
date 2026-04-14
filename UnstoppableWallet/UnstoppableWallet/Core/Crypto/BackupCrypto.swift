@@ -1,8 +1,6 @@
 import Foundation
 
 class BackupCrypto: Codable {
-    static var defaultBackup = KdfParams(dklen: 32, n: 16384, p: 4, r: 8, salt: AppConfig.backupSalt)
-
     let cipher: String
     let cipherParams: CipherParams
     let cipherText: String

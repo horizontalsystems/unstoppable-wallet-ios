@@ -110,6 +110,34 @@ class SettingsBackup: Codable {
         balanceAutoHide = try container.decode(Bool.self, forKey: .balanceAutoHide)
         appIcon = try container.decode(String.self, forKey: .appIcon)
     }
+
+    func withEncryptedCustom(
+        evmSyncSources: EvmSyncSourceManager.SyncSourceBackup,
+        moneroNodes: MoneroNodeManager.NodeBackup,
+        zanoNodes: ZanoNodeManager.NodeBackup
+    ) -> SettingsBackup {
+        SettingsBackup(
+            evmSyncSources: evmSyncSources,
+            moneroNodes: moneroNodes,
+            zanoNodes: zanoNodes,
+            btcModes: btcModes,
+            remoteContactsSync: remoteContactsSync,
+            swapProviders: swapProviders,
+            chartIndicators: chartIndicators,
+            indicatorsShown: indicatorsShown,
+            currentLanguage: currentLanguage,
+            baseCurrency: baseCurrency,
+            mode: mode,
+            showMarketTab: showMarketTab,
+            priceChangeMode: priceChangeMode,
+            launchScreen: launchScreen,
+            conversionTokenQueryId: conversionTokenQueryId,
+            balanceHideButtons: balanceHideButtons,
+            balancePrimaryValue: balancePrimaryValue,
+            balanceAutoHide: balanceAutoHide,
+            appIcon: appIcon
+        )
+    }
 }
 
 extension SettingsBackup {

@@ -128,7 +128,7 @@ extension RestoreFileConfigurationViewModel {
 
     func restore() {
         stat(page: statPage, event: .importFull)
-        appBackupProvider.restore(raw: rawBackup)
+        appBackupProvider.restore(raw: rawBackup, sections: rawBackup.sections ?? Set(BackupSection.allCases))
         finishedSubject.send(true)
     }
 
