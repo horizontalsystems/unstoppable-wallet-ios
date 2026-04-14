@@ -174,14 +174,14 @@ extension CloudBackupManager {
         }
     }
 
-    private func data(accountIds: [String], passphrase: String) throws -> Data {
-        let rawBackup = appBackupProvider.fullBackup(accountIds: accountIds)
-        let backup = try appBackupProvider.encrypt(raw: rawBackup, passphrase: passphrase)
+    private func data(accountIds: [String], passphrase: String, sections: Set<BackupSection> = Set(BackupSection.allCases)) throws -> Data {
+        let rawBackup = appBackupProvider.fullBackup(accountIds: accountIds, sections: sections)
+        let backup = try appBackupProvider.encrypt(raw: rawBackup, passphrase: passphrase, sections: sections)
         return try JSONEncoder().encode(backup)
     }
 
-    func file(accountIds: [String], passphrase: String, name: String) throws -> URL {
-        let data = try data(accountIds: accountIds, passphrase: passphrase)
+    func file(accountIds: [String], passphrase: String, name: String, sections: Set<BackupSection> = Set(BackupSection.allCases)) throws -> URL {
+        let data = try data(accountIds: accountIds, passphrase: passphrase, sections: sections)
 
         // save book to temporary file
         guard let temporaryFileUrl = ContactBookManager.localUrl?.appendingPathComponent(name + ".json") else {
@@ -206,9 +206,9 @@ extension CloudBackupManager {
         return temporaryFileUrl
     }
 
-    func save(accountIds: [String], passphrase: String, name: String) throws {
+    func save(accountIds: [String], passphrase: String, name: String, sections: Set<BackupSection> = Set(BackupSection.allCases)) throws {
         do {
-            let encoded = try data(accountIds: accountIds, passphrase: passphrase)
+            let encoded = try data(accountIds: accountIds, passphrase: passphrase, sections: sections)
             try save(encoded: encoded, name: name)
         } catch {
             logger?.log(level: .debug, message: "CloudAccountManager.downloadItems, can't save \(name). Because: \(error)")

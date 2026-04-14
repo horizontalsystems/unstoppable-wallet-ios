@@ -6,6 +6,7 @@ struct FullBackup {
     let watchlistIds: [String]
     let contacts: BackupCrypto?
     let settings: SettingsBackup
+    let sections: Set<BackupSection>?
     let version: Int
     let timestamp: TimeInterval?
 }
@@ -17,6 +18,7 @@ extension FullBackup: Codable {
         case watchlistIds = "watchlist"
         case contacts
         case settings
+        case sections
         case version
         case timestamp
     }
@@ -33,6 +35,7 @@ extension FullBackup: Codable {
         watchlistIds = (try? container.decode([String].self, forKey: .watchlistIds)) ?? []
         contacts = try? container.decode(BackupCrypto.self, forKey: .contacts)
         settings = try container.decode(SettingsBackup.self, forKey: .settings)
+        sections = try? container.decode(Set<BackupSection>.self, forKey: .sections)
         version = try container.decode(Int.self, forKey: .version)
         timestamp = try? container.decode(TimeInterval.self, forKey: .timestamp)
     }
@@ -44,6 +47,7 @@ extension FullBackup: Codable {
         if !watchlistIds.isEmpty { try container.encode(watchlistIds, forKey: .watchlistIds) }
         if let contacts { try container.encode(contacts, forKey: .contacts) }
         try container.encode(settings, forKey: .settings)
+        if let sections { try container.encode(sections, forKey: .sections) }
         try container.encode(version, forKey: .version)
         try? container.encode(timestamp, forKey: .timestamp)
     }
