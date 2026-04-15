@@ -249,8 +249,15 @@ extension AppBackupProvider {
         }
     }
 
-    func restore(raw: RawFullBackup, sections: Set<BackupSection> = Set(BackupSection.allCases)) {
-        for wallet in raw.accounts {
+    func restore(raw: RawFullBackup, accountIds: Set<String>? = nil, sections: Set<BackupSection> = Set(BackupSection.allCases)) {
+        let accountsToRestore: [RawWalletBackup]
+        if let accountIds {
+            accountsToRestore = raw.accounts.filter { accountIds.contains($0.account.id) }
+        } else {
+            accountsToRestore = raw.accounts
+        }
+
+        for wallet in accountsToRestore {
             restore(raws: [wallet])
         }
 

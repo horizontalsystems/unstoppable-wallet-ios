@@ -6,129 +6,112 @@ class RestoreFileConfigurationViewModel: ObservableObject {
     private let appBackupProvider: AppBackupProvider
     private let contactBookManager: ContactBookManager
     private let rawBackup: RawFullBackup
+    private let backupName: String
 
     private let showMergeAlertSubject = PassthroughSubject<Void, Never>()
     private let finishedSubject = PassthroughSubject<Bool, Never>()
 
     let statPage: StatPage
+    let walletItems: [BackupModule.WalletItem]
+    let dataItems: [BackupModule.DataItem]
 
-    init(cloudBackupManager: CloudBackupManager, appBackupProvider: AppBackupProvider, contactBookManager: ContactBookManager, statPage: StatPage, rawBackup: RawFullBackup) {
+    @Published var selectedWalletIds: Set<String>
+    @Published var selectedDataSections: Set<BackupSection>
+
+    init(cloudBackupManager: CloudBackupManager, appBackupProvider: AppBackupProvider, contactBookManager: ContactBookManager, statPage: StatPage, rawBackup: RawFullBackup, backupName: String) {
         self.cloudBackupManager = cloudBackupManager
         self.appBackupProvider = appBackupProvider
         self.contactBookManager = contactBookManager
         self.statPage = statPage
         self.rawBackup = rawBackup
+        self.backupName = backupName
+
+        walletItems = Self.buildWalletItems(rawBackup: rawBackup)
+        dataItems = Self.buildDataItems(rawBackup: rawBackup)
+
+        selectedWalletIds = Set(walletItems.map(\.accountId))
+        selectedDataSections = Set(dataItems.map(\.section))
     }
 
-    private func item(account: Account) -> BackupModule.AccountItem {
-        var alertSubtitle: String?
-        let hasAlertDescription = !(account.backedUp || cloudBackupManager.backedUp(uniqueId: account.type.uniqueId()))
-        if account.nonStandard {
-            alertSubtitle = "manage_accounts.migration_required".localized
-        } else if hasAlertDescription {
-            alertSubtitle = "manage_accounts.backup_required".localized
+    private static func buildWalletItems(rawBackup: RawFullBackup) -> [BackupModule.WalletItem] {
+        let sorted = rawBackup.accounts.sorted { $0.account.name.lowercased() < $1.account.name.lowercased() }
+        let regular = sorted.filter { !$0.account.watchAccount }
+        let watch = sorted.filter(\.account.watchAccount)
+
+        return (regular + watch).map { raw in
+            BackupModule.WalletItem(
+                accountId: raw.account.id,
+                name: raw.account.name,
+                subtitle: raw.account.type.detailedDescription,
+                isWatch: raw.account.watchAccount,
+                cautionType: nil
+            )
+        }
+    }
+
+    private static func buildDataItems(rawBackup: RawFullBackup) -> [BackupModule.DataItem] {
+        let sections = rawBackup.sections ?? Set(BackupSection.allCases)
+        var items: [BackupModule.DataItem] = []
+
+        if sections.contains(.contacts), !rawBackup.contacts.isEmpty {
+            items.append(.init(
+                section: .contacts,
+                title: "backup_content.data.contacts.title".localized,
+                subtitle: "backup_content.data.contacts.subtitle".localized(rawBackup.contacts.count)
+            ))
         }
 
-        let showAlert = alertSubtitle != nil || account.nonRecommended
+        if sections.contains(.favourites), !rawBackup.watchlistIds.isEmpty {
+            items.append(.init(
+                section: .favourites,
+                title: "backup_content.data.favorites.title".localized,
+                subtitle: "backup_content.data.favorites.subtitle".localized(rawBackup.watchlistIds.count)
+            ))
+        }
 
-        let cautionType: CautionType? = showAlert ? .error : .none
-        let description = alertSubtitle ?? account.type.detailedDescription
+        if sections.contains(.customRpc) {
+            let rpcCount = rawBackup.customSyncSources.count
+                + rawBackup.customMoneroNodes.count
+                + rawBackup.customZanoNodes.count
+            if rpcCount > 0 {
+                items.append(.init(
+                    section: .customRpc,
+                    title: "backup_content.data.custom_rpc.title".localized,
+                    subtitle: "backup_content.data.custom_rpc.subtitle".localized(rpcCount)
+                ))
+            }
+        }
 
-        return BackupModule.AccountItem(
-            accountId: account.id,
-            name: account.name,
-            description: description,
-            cautionType: cautionType
-        )
+        if sections.contains(.preferences) {
+            items.append(.init(
+                section: .preferences,
+                title: "backup_content.data.preferences.title".localized,
+                subtitle: "backup_content.data.preferences.subtitle".localized
+            ))
+        }
+
+        return items
     }
 }
 
 extension RestoreFileConfigurationViewModel {
-    var accountItems: [BackupModule.AccountItem] {
-        rawBackup
-            .accounts
-            .filter { !$0.account.watchAccount }
-            .sorted { wallet, wallet2 in wallet.account.name.lowercased() < wallet2.account.name.lowercased() }
-            .map { item(account: $0.account) }
-    }
-
-    var otherItems: [BackupModule.ContentItem] {
-        let contactAddressCount = rawBackup.contacts.count
-        let watchAccounts = rawBackup
-            .accounts
-            .filter(\.account.watchAccount)
-
-        return items(
-            watchAccountCount: watchAccounts.count,
-            watchlistCount: rawBackup.watchlistIds.count,
-            contactAddressCount: contactAddressCount,
-            customEvmSyncSources: rawBackup.customSyncSources.count,
-            customMoneroNodes: rawBackup.customMoneroNodes.count,
-            customZanoNodes: rawBackup.customZanoNodes.count
-        )
-    }
-
-    private func items(watchAccountCount: Int, watchlistCount: Int, contactAddressCount: Int, customEvmSyncSources: Int, customMoneroNodes: Int, customZanoNodes: Int) -> [BackupModule.ContentItem] {
-        var items = [BackupModule.ContentItem]()
-
-        if watchAccountCount != 0 {
-            items.append(.init(
-                title: "backup_app.backup_list.other.watch_account.title".localized,
-                value: watchAccountCount.description
-            ))
-        }
-
-        if watchlistCount != 0 {
-            items.append(.init(
-                title: "backup_app.backup_list.other.watchlist.title".localized,
-                value: watchlistCount.description
-            ))
-        }
-
-        if contactAddressCount != 0 {
-            items.append(.init(
-                title: "backup_app.backup_list.other.contacts.title".localized,
-                value: contactAddressCount.description
-            ))
-        }
-
-        if customEvmSyncSources != 0 {
-            items.append(.init(
-                title: "backup_app.backup_list.other.custom_evm_sync_sources.title".localized,
-                value: customEvmSyncSources.description
-            ))
-        }
-        if customMoneroNodes != 0 {
-            items.append(.init(
-                title: "backup_app.backup_list.other.custom_monero_nodes.title".localized,
-                value: customMoneroNodes.description
-            ))
-        }
-        if customZanoNodes != 0 {
-            items.append(.init(
-                title: "backup_app.backup_list.other.custom_zano_nodes.title".localized,
-                value: customZanoNodes.description
-            ))
-        }
-        items.append(.init(
-            title: "backup_app.backup_list.other.app_settings.title".localized,
-            description: "backup_app.backup_list.other.app_settings.description".localized
-        ))
-
-        return items
-    }
+    var backupTitle: String { backupName }
 
     func onTapRestore() {
-        if contactBookManager.state.data?.contacts.isEmpty ?? true {
-            restore()
-        } else {
+        if selectedDataSections.contains(.contacts), !(contactBookManager.state.data?.contacts.isEmpty ?? true) {
             showMergeAlertSubject.send()
+        } else {
+            restore()
         }
     }
 
     func restore() {
         stat(page: statPage, event: .importFull)
-        appBackupProvider.restore(raw: rawBackup, sections: rawBackup.sections ?? Set(BackupSection.allCases))
+        appBackupProvider.restore(
+            raw: rawBackup,
+            accountIds: selectedWalletIds,
+            sections: selectedDataSections
+        )
         finishedSubject.send(true)
     }
 

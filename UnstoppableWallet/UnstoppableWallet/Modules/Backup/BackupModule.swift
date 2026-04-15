@@ -31,22 +31,22 @@ enum BackupModule {
         case accountNotFound
     }
 
-    // backups data
-    struct AccountItem: Identifiable {
+    struct WalletItem: Identifiable, Hashable {
         let accountId: String
         let name: String
-        let description: String
+        let subtitle: String
+        let isWatch: Bool
         let cautionType: CautionType?
 
         var id: String { accountId }
     }
 
-    struct ContentItem: Identifiable {
+    struct DataItem: Identifiable, Hashable {
+        let section: BackupSection
         let title: String
-        var value: String?
-        var description: String?
+        let subtitle: String
 
-        var id: String { title }
+        var id: BackupSection { section }
     }
 
     enum Source {
@@ -86,7 +86,7 @@ extension BackupModule {
 
     static func backupApp(isPresented: Binding<Bool>) -> some View {
         let accountManager = Core.shared.accountManager
-        let accountIds = Set(accountManager.accounts.filter { !$0.watchAccount }.map(\.id))
+        let accountIds = Set(accountManager.accounts.map(\.id))
 
         return BackupView(
             type: .app(accountIds),

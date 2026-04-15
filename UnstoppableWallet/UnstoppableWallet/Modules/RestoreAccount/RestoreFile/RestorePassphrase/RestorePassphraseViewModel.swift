@@ -135,7 +135,7 @@ extension RestorePassphraseViewModel {
     var buttonTitle: String {
         switch restoredBackup.source {
         case .wallet: return "button.import".localized
-        case .full: return "button.continue".localized
+        case .full: return "button.next".localized
         }
     }
 

@@ -10,108 +10,96 @@ class BackupSelectContentViewModel: ObservableObject {
     private let zanoNodeManager = Core.shared.zanoNodeManager
     private let cloudBackupManager = Core.shared.cloudBackupManager
 
-    @Published var accountItems: [BackupModule.AccountItem] = []
-    @Published var contentItems: [BackupModule.ContentItem] = []
-    @Published var selectedAccountIds: Set<String>
+    let walletItems: [BackupModule.WalletItem]
+    let dataItems: [BackupModule.DataItem]
+
+    @Published var selectedWalletIds: Set<String>
+    @Published var selectedDataSections: Set<BackupSection>
 
     init(selectedAccountIds: Set<String>) {
-        self.selectedAccountIds = selectedAccountIds
+        walletItems = Self.buildWalletItems(
+            accountManager: accountManager,
+            cloudBackupManager: cloudBackupManager
+        )
+        dataItems = Self.buildDataItems(
+            contactManager: contactManager,
+            watchlistManager: watchlistManager,
+            evmSyncSourceManager: evmSyncSourceManager,
+            moneroNodeManager: moneroNodeManager,
+            zanoNodeManager: zanoNodeManager
+        )
 
-        accountItems = buildAccountItems()
-        contentItems = buildContentItems()
+        selectedWalletIds = selectedAccountIds.intersection(Set(walletItems.map(\.accountId)))
+        selectedDataSections = Set(dataItems.map(\.section))
     }
 
-    private func buildAccountItems() -> [BackupModule.AccountItem] {
-        accountManager.accounts
-            .filter { !$0.watchAccount }
-            .sorted { $0.name.lowercased() < $1.name.lowercased() }
-            .map { account in
-                var cautionType: CautionType?
-                let description: String
+    private static func buildWalletItems(accountManager: AccountManager, cloudBackupManager: CloudBackupManager) -> [BackupModule.WalletItem] {
+        let all = accountManager.accounts.sorted { $0.name.lowercased() < $1.name.lowercased() }
+        let regular = all.filter { !$0.watchAccount }
+        let watch = all.filter(\.watchAccount)
 
-                if account.nonStandard {
-                    cautionType = .error
-                    description = "manage_accounts.migration_required".localized
-                } else if !(account.backedUp || cloudBackupManager.backedUp(uniqueId: account.type.uniqueId())) {
-                    cautionType = .error
-                    description = "manage_accounts.backup_required".localized
-                } else {
-                    description = account.type.detailedDescription
-                }
-
-                return BackupModule.AccountItem(
-                    accountId: account.id,
-                    name: account.name,
-                    description: description,
-                    cautionType: cautionType
-                )
+        return (regular + watch).map { account in
+            var cautionType: CautionType?
+            if account.nonStandard {
+                cautionType = .error
+            } else if !(account.backedUp || cloudBackupManager.backedUp(uniqueId: account.type.uniqueId())) {
+                cautionType = .error
             }
+
+            return BackupModule.WalletItem(
+                accountId: account.id,
+                name: account.name,
+                subtitle: account.type.detailedDescription,
+                isWatch: account.watchAccount,
+                cautionType: cautionType
+            )
+        }
     }
 
-    private func buildContentItems() -> [BackupModule.ContentItem] {
-        var items: [BackupModule.ContentItem] = []
-
-        let watchAccountCount = accountManager.accounts.filter(\.watchAccount).count
-        if watchAccountCount > 0 {
-            items.append(BackupModule.ContentItem(
-                title: "backup_app.backup_list.other.watch_account.title".localized,
-                value: watchAccountCount.description
-            ))
-        }
-
-        let watchlistCount = watchlistManager.coinUids.count
-        if watchlistCount > 0 {
-            items.append(BackupModule.ContentItem(
-                title: "backup_app.backup_list.other.watchlist.title".localized,
-                value: watchlistCount.description
-            ))
-        }
+    private static func buildDataItems(
+        contactManager: ContactBookManager,
+        watchlistManager: WatchlistManager,
+        evmSyncSourceManager: EvmSyncSourceManager,
+        moneroNodeManager: MoneroNodeManager,
+        zanoNodeManager: ZanoNodeManager
+    ) -> [BackupModule.DataItem] {
+        var items: [BackupModule.DataItem] = []
 
         let contactsCount = contactManager.all?.count ?? 0
         if contactsCount > 0 {
-            items.append(BackupModule.ContentItem(
-                title: "backup_app.backup_list.other.contacts.title".localized,
-                value: contactsCount.description
+            items.append(.init(
+                section: .contacts,
+                title: "backup_content.data.contacts.title".localized,
+                subtitle: "backup_content.data.contacts.subtitle".localized(contactsCount)
             ))
         }
 
-        let customEvmSyncSources = evmSyncSourceManager.customSyncSources(blockchainType: nil).count
-        if customEvmSyncSources > 0 {
-            items.append(BackupModule.ContentItem(
-                title: "backup_app.backup_list.other.custom_evm_sync_sources.title".localized,
-                value: customEvmSyncSources.description
+        let favoritesCount = watchlistManager.coinUids.count
+        if favoritesCount > 0 {
+            items.append(.init(
+                section: .favourites,
+                title: "backup_content.data.favorites.title".localized,
+                subtitle: "backup_content.data.favorites.subtitle".localized(favoritesCount)
             ))
         }
 
-        let customMoneroNodes = moneroNodeManager.customNodes(blockchainType: nil).count
-        if customMoneroNodes > 0 {
-            items.append(BackupModule.ContentItem(
-                title: "backup_app.backup_list.other.custom_monero_nodes.title".localized,
-                value: customMoneroNodes.description
+        let rpcCount = evmSyncSourceManager.customSyncSources(blockchainType: nil).count
+            + moneroNodeManager.customNodes(blockchainType: nil).count
+            + zanoNodeManager.customNodeRecords.count
+        if rpcCount > 0 {
+            items.append(.init(
+                section: .customRpc,
+                title: "backup_content.data.custom_rpc.title".localized,
+                subtitle: "backup_content.data.custom_rpc.subtitle".localized(rpcCount)
             ))
         }
 
-        let customZanoNodes = zanoNodeManager.customNodeRecords.count
-        if customZanoNodes > 0 {
-            items.append(BackupModule.ContentItem(
-                title: "backup_app.backup_list.other.custom_zano_nodes.title".localized,
-                value: customZanoNodes.description
-            ))
-        }
-
-        items.append(BackupModule.ContentItem(
-            title: "backup_app.backup_list.other.app_settings.title".localized,
-            description: "backup_app.backup_list.other.app_settings.description".localized
+        items.append(.init(
+            section: .preferences,
+            title: "backup_content.data.preferences.title".localized,
+            subtitle: "backup_content.data.preferences.subtitle".localized
         ))
 
         return items
-    }
-
-    func toggle(accountId: String) {
-        if selectedAccountIds.contains(accountId) {
-            selectedAccountIds.remove(accountId)
-        } else {
-            selectedAccountIds.insert(accountId)
-        }
     }
 }

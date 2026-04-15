@@ -111,6 +111,33 @@ class SettingsBackup: Codable {
         appIcon = try container.decode(String.self, forKey: .appIcon)
     }
 
+    func encode(to encoder: Encoder) throws {
+        var container = encoder.container(keyedBy: CodingKeys.self)
+        try container.encode(evmSyncSources, forKey: .evmSyncSources)
+        try container.encode(moneroNodes, forKey: .moneroNodes)
+        try container.encode(zanoNodes, forKey: .zanoNodes)
+        try container.encode(btcModes, forKey: .btcModes)
+        try container.encodeIfPresent(remoteContactsSync, forKey: .remoteContactsSync)
+        try container.encode(swapProviders, forKey: .swapProviders)
+        try container.encode(chartIndicators, forKey: .chartIndicators)
+        try container.encode(indicatorsShown, forKey: .indicatorsShown)
+        try container.encode(currentLanguage, forKey: .currentLanguage)
+        try container.encode(baseCurrency, forKey: .baseCurrency)
+        try container.encode(mode, forKey: .mode)
+        try container.encode(showMarketTab, forKey: .showMarketTab)
+        try container.encode(priceChangeMode, forKey: .priceChangeMode)
+        try container.encode(launchScreen, forKey: .launchScreen)
+        if let conversionTokenQueryId {
+            try container.encode(conversionTokenQueryId, forKey: .conversionTokenQueryId)
+        } else {
+            try container.encodeNil(forKey: .conversionTokenQueryId)
+        }
+        try container.encode(balanceHideButtons, forKey: .balanceHideButtons)
+        try container.encode(balancePrimaryValue, forKey: .balancePrimaryValue)
+        try container.encode(balanceAutoHide, forKey: .balanceAutoHide)
+        try container.encode(appIcon, forKey: .appIcon)
+    }
+
     func withEncryptedCustom(
         evmSyncSources: EvmSyncSourceManager.SyncSourceBackup,
         moneroNodes: MoneroNodeManager.NodeBackup,

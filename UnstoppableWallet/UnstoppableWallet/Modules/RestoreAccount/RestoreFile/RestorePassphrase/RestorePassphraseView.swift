@@ -25,8 +25,11 @@ struct RestorePassphraseView: View {
             BottomGradientWrapper {
                 ScrollView {
                     VStack(spacing: .margin32) {
-                        Text("restore.cloud.password.description".localized)
-                            .themeSubhead2()
+                        HStack {
+                            ThemeText("restore.cloud.password.description".localized, style: .subhead)
+                            Spacer()
+                        }
+                        .padding(.horizontal, .margin16)
 
                         InputTextRow {
                             InputTextView(
@@ -61,7 +64,7 @@ struct RestorePassphraseView: View {
                 .animation(.default, value: viewModel.processing)
             }
         }
-        .navigationTitle("restore.cloud.password.title".localized)
+        .navigationTitle(viewModel.restoredBackup.name)
         .navigationDestination(isPresented: $restoreSelectPresented) {
             if let restoreSelectAccount {
                 RestoreSelectWrapper(
@@ -78,7 +81,12 @@ struct RestorePassphraseView: View {
         }
         .navigationDestination(isPresented: $configurationPresented) {
             if let rawBackup {
-                RestoreFileConfigurationView(rawBackup: rawBackup, isParentPresented: $isParentPresented, statPage: .importWallet)
+                RestoreFileConfigurationView(
+                    rawBackup: rawBackup,
+                    backupName: viewModel.restoredBackup.name,
+                    isParentPresented: $isParentPresented,
+                    statPage: .importWallet
+                )
             }
         }
         .onAppear {

@@ -9,6 +9,7 @@
 "button.import" = "Import";
 "button.next" = "Next";
 "button.delete" = "Delete";
+"button.replace" = "Replace";
 "button.share" = "Share";
 "button.paste" = "Paste";
 "button.gallery" = "Gallery";
@@ -165,7 +166,6 @@
 
 // Restore Type
 
-"restore_type.title" = "Import Wallet";
 "restore_type.recovery.title" = "from Recovery Phrase";
 "restore_type.passkey.title" = "from Passkey";
 "restore_type.backup.title" = "from Backup";
@@ -176,16 +176,13 @@
 
 // Restore Cloud
 
-"restore.cloud.title" = "Select Backup";
-"restore.cloud.description" = "Select the backup file that you want to restore.";
+"restore.cloud.title" = "Backups";
+"restore.cloud.description" = "Choose a backup to restore your wallet, or import one from Files on your device.";
 "restore.cloud.empty" = "No backups found.";
-"restore.cloud.wallets" = "Wallet backups";
-"restore.cloud.imported" = "Imported wallets";
-"restore.cloud.app_backups" = "App backups";
+"restore.cloud.full" = "Full";
 
-"restore.cloud.password.title" = "Enter Password";
 "restore.cloud.password.placeholder" = "Backup Password";
-"restore.cloud.password.description" = "Enter the password to import your backup";
+"restore.cloud.password.description" = "Enter the password for this backup file to restore your data.";
 
 // Coin Settings
 
@@ -1493,19 +1490,26 @@
 "backup_app.backup_type.file" = "to Files";
 "backup_app.backup_type.file.description" = "Saving a backup copy file to your local folder.";
 
-"backup_app.backup_list.title" = "Select Wallets";
-"backup_app.backup_list.description" = "Select the wallets to include in the backup. App data will be backed up automatically.";
-"backup_app.backup_list.description.restore" = "List of contents in the backup file.";
-"backup_app.backup_list.header.wallets" = "Wallets";
-"backup_app.backup_list.header.other" = "Other";
-"backup_app.backup_list.other.watch_account.title" = "Watch Wallets";
-"backup_app.backup_list.other.watchlist.title" = "Favorites";
-"backup_app.backup_list.other.contacts.title" = "Contacts";
-"backup_app.backup_list.other.custom_evm_sync_sources.title" = "Custom RPC";
-"backup_app.backup_list.other.custom_monero_nodes.title" = "Custom Monero Nodes";
-"backup_app.backup_list.other.custom_zano_nodes.title" = "Custom Zano Nodes";
-"backup_app.backup_list.other.app_settings.title" = "App Settings";
-"backup_app.backup_list.other.app_settings.description" = "Language, Currency, Appearance ...";
+// Backup Content Selection
+
+"backup_content.title.create" = "Create Backup";
+"backup_content.description.backup" = "Choose what to include in your backup. You can back up all or selected items.";
+"backup_content.description.restore" = "Choose what to restore. You can restore everything or only selected items.";
+
+"backup_content.header.wallets" = "Wallets";
+"backup_content.header.data" = "Data";
+
+"backup_content.data.contacts.title" = "Contacts";
+"backup_content.data.contacts.subtitle" = "%d saved addresses";
+
+"backup_content.data.favorites.title" = "Favorites";
+"backup_content.data.favorites.subtitle" = "%d assets";
+
+"backup_content.data.custom_rpc.title" = "Custom RPC";
+"backup_content.data.custom_rpc.subtitle" = "%d networks";
+
+"backup_content.data.preferences.title" = "Preferences";
+"backup_content.data.preferences.subtitle" = "Language, Currency, Appearance...";
 
 "backup_app.backup.disclaimer.cloud.title" = "Backup to iCloud";
 "backup_app.backup.disclaimer.cloud.description" = "iCloud is a cloud storage service provided by Apple. It's important to know that your backup data will be stored on Apple's servers.";
@@ -1531,8 +1535,7 @@
 
 "backup_app.restore_type.title" = "Restore";
 
-"backup_app.restore.notice.description" = "This action will overwrite your local payment contacts as well as its iCloud copy (if there is one)";
-"backup_app.restore.notice.merge" = "Replace";
+"backup_app.restore.notice.description" = "Saved contacts will be replaced with data from the backup.";
 
 "backup.password.title" = "Backup Password";
 "backup.password.description" = "Set unlock password for your backup. It must consist of at least 8 symbols and include at least one lowercase letter, uppercase letter, number and a special character.";

@@ -13,9 +13,7 @@ struct RestoreBackupListView: View {
 
     var body: some View {
         Group {
-            let isEmpty = viewModel.walletViewItems.isEmpty && viewModel.fullBackupViewItems.isEmpty
-
-            if isEmpty {
+            if viewModel.viewItems.isEmpty {
                 ThemeView(style: .list) {
                     PlaceholderViewNew(
                         icon: "no_internet_48", subtitle: "restore.cloud.empty".localized
@@ -28,17 +26,12 @@ struct RestoreBackupListView: View {
                             ThemeText("restore.cloud.description".localized, style: .subhead)
                             Spacer()
                         }
+                        .padding(.horizontal, .margin16)
 
-                        if !viewModel.walletViewItems.notImported.isEmpty {
-                            section(header: "restore.cloud.wallets".localized, items: viewModel.walletViewItems.notImported)
-                        }
-
-                        if !viewModel.walletViewItems.imported.isEmpty {
-                            section(header: "restore.cloud.imported".localized, items: viewModel.walletViewItems.imported)
-                        }
-
-                        if !viewModel.fullBackupViewItems.isEmpty {
-                            section(header: "restore.cloud.app_backups".localized, items: viewModel.fullBackupViewItems)
+                        ListSection {
+                            ForEach(viewModel.viewItems, id: \.uniqueId) { item in
+                                row(item: item)
+                            }
                         }
                     }
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
@@ -94,21 +87,21 @@ struct RestoreBackupListView: View {
         }
     }
 
-    @ViewBuilder private func section(header: String, items: [RestoreBackupListViewModel.BackupViewItem]) -> some View {
-        ListSection(header: header) {
-            ForEach(items, id: \.uniqueId) {
-                item in row(item: item)
-            }
-        }
-    }
-
     @ViewBuilder private func row(item: RestoreBackupListViewModel.BackupViewItem) -> some View {
         Cell(
             middle: {
-                MultiText(title: item.name, subtitle: item.description)
+                MultiText(
+                    title: item.name,
+                    badge: item.isFull ? "restore.cloud.full".localized : nil,
+                    subtitle: item.description
+                )
             },
             right: {
-                Image.disclosureIcon
+                if let walletCount = item.walletCount {
+                    RightTextIcon(text: String(walletCount), icon: "arrow_b_right")
+                } else {
+                    Image.disclosureIcon
+                }
             },
             action: {
                 viewModel.didTap(id: item.uniqueId)
