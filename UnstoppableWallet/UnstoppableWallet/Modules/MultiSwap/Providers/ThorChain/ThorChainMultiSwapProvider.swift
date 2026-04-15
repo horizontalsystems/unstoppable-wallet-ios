@@ -3,7 +3,7 @@ class ThorChainMultiSwapProvider: BaseThorChainMultiSwapProvider {
     static let name = "THORChain"
 
     override var baseUrl: String {
-        "https://thornode.ninerealms.com/thorchain"
+        "https://gateway.liquify.com/chain/thorchain_api/thorchain"
     }
 
     override var id: String { Self.id }
