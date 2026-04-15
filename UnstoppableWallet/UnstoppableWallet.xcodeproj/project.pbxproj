@@ -14332,7 +14332,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.48;
+				MARKETING_VERSION = 0.48.1;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
@@ -14403,7 +14403,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.48;
+				MARKETING_VERSION = 0.48.1;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
@@ -14935,7 +14935,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/TronKit.Swift.git";
 			requirement = {
 				kind = exactVersion;
-				version = 1.4.0;
+				version = 1.4.1;
 			};
 		};
 		D08C93AD2B91E37E00A7D1D5 /* XCRemoteSwiftPackageReference "Hodler" */ = {
