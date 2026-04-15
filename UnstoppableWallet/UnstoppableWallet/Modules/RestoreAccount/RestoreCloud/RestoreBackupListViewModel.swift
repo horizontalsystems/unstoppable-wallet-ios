@@ -5,46 +5,30 @@ class RestoreBackupListViewModel: ObservableObject {
     private let service = CloudRestoreBackupService()
     private var cancellables = Set<AnyCancellable>()
 
-    @Published private(set) var walletViewItems: WalletViewItems = .empty
-    @Published private(set) var fullBackupViewItems: [BackupViewItem] = []
+    @Published private(set) var viewItems: [BackupViewItem] = []
     private let restoreSubject = PassthroughSubject<BackupModule.NamedSource, Never>()
 
     init() {
         service.$oneWalletItems
-            .sink { [weak self] in self?.sync(items: $0) }
-            .store(in: &cancellables)
-
-        service.$fullBackupItems
-            .sink { [weak self] in self?.sync(items: $0) }
-            .store(in: &cancellables)
-
-        sync(items: service.oneWalletItems)
-        sync(items: service.fullBackupItems)
-    }
-
-    private func sync(items: [CloudRestoreBackupService.WalletItem]) {
-        var imported = [BackupViewItem]()
-        var notImported = [BackupViewItem]()
-
-        for item in items {
-            let viewItem = viewItem(item: item)
-            if item.imported {
-                imported.append(viewItem)
-            } else {
-                notImported.append(viewItem)
+            .combineLatest(service.$fullBackupItems)
+            .sink { [weak self] wallets, fullBackups in
+                self?.sync(walletItems: wallets, fullBackupItems: fullBackups)
             }
-        }
+            .store(in: &cancellables)
 
-        walletViewItems = .init(notImported: notImported, imported: imported)
+        sync(walletItems: service.oneWalletItems, fullBackupItems: service.fullBackupItems)
     }
 
-    private func sync(items: [CloudRestoreBackupService.AppItem]) {
-        fullBackupViewItems = items.map { viewItem(item: $0) }
+    private func sync(walletItems: [CloudRestoreBackupService.WalletItem], fullBackupItems: [CloudRestoreBackupService.AppItem]) {
+        let wallets = walletItems.map { viewItem(item: $0, walletCount: nil) }
+        let fulls = fullBackupItems.map { viewItem(item: $0, walletCount: $0.backup.wallets.count) }
+
+        viewItems = (wallets + fulls).sorted { ($0.timestamp ?? 0) > ($1.timestamp ?? 0) }
     }
 
-    private func viewItem(item: CloudRestoreBackupService.Item) -> BackupViewItem {
+    private func viewItem(item: CloudRestoreBackupService.Item, walletCount: Int?) -> BackupViewItem {
         let description = item.timestamp.map { DateHelper.instance.formatFullTime(from: Date(timeIntervalSince1970: $0)) } ?? "----"
-        return BackupViewItem(uniqueId: item.id, name: item.name, description: description)
+        return BackupViewItem(uniqueId: item.id, name: item.name, description: description, walletCount: walletCount, timestamp: item.timestamp)
     }
 }
 
@@ -73,25 +57,13 @@ extension RestoreBackupListViewModel {
 }
 
 extension RestoreBackupListViewModel {
-    enum BackupType {
-        case wallet
-        case full
-    }
-
     struct BackupViewItem: Hashable {
         let uniqueId: String
         let name: String
         let description: String
-    }
+        let walletCount: Int?
+        let timestamp: TimeInterval?
 
-    struct WalletViewItems {
-        static var empty = WalletViewItems(notImported: [], imported: [])
-
-        let notImported: [BackupViewItem]
-        let imported: [BackupViewItem]
-
-        var isEmpty: Bool {
-            notImported.isEmpty && imported.isEmpty
-        }
+        var isFull: Bool { walletCount != nil }
     }
 }

@@ -12,95 +12,19 @@ struct BackupSelectContentView: View {
     }
 
     var body: some View {
-        ThemeView {
-            BottomGradientWrapper {
-                ScrollView {
-                    VStack(spacing: .margin24) {
-                        ThemeText("backup_app.backup_list.description".localized, style: .subhead)
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.horizontal, .margin16)
-
-                        if !contentViewModel.accountItems.isEmpty {
-                            walletSection(items: contentViewModel.accountItems)
-                        }
-
-                        contentSection(items: contentViewModel.contentItems)
-                    }
-                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
-                }
-            } bottomContent: {
-                Button(action: {
-                    onNext()
-                }) {
-                    Text("button.next".localized)
-                }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
-            }
-        }
-        .navigationTitle("backup_app.backup_list.title".localized)
-    }
-
-    private func walletSection(items: [BackupModule.AccountItem]) -> some View {
-        ListSection(header: "backup_app.backup_list.header.wallets".localized, uppercased: false) {
-            ForEach(items, id: \.accountId) { item in
-                AccountItemView(
-                    item: item,
-                    isSelected: contentViewModel.selectedAccountIds.contains(item.accountId),
-                    onToggle: {
-                        contentViewModel.toggle(accountId: $0.accountId)
-                    }
-                )
-            }
-        }
-    }
-
-    private func contentSection(items: [BackupModule.ContentItem]) -> some View {
-        ListSection(header: "backup_app.backup_list.header.other".localized, uppercased: false) {
-            ForEach(items, id: \.id) { item in
-                ContentItemView(item: item)
-            }
-        }
-    }
-
-    private func onNext() {
-        viewModel.setSelectedAccountIds(contentViewModel.selectedAccountIds)
-        path.append(BackupModule.Step.form)
-    }
-}
-
-struct AccountItemView: View {
-    let item: BackupModule.AccountItem
-    let isSelected: Bool
-    let onToggle: (BackupModule.AccountItem) -> Void
-
-    var body: some View {
-        Cell(
-            middle: {
-                MultiText(title: item.name, subtitle: ComponentText(text: item.description, colorStyle: item.cautionType?.colorStyle))
-            },
-            right: {
-                Image.checkbox(active: isSelected)
-            },
-            action: {
-                onToggle(item)
+        BackupContentListView(
+            description: "backup_content.description.backup".localized,
+            walletItems: contentViewModel.walletItems,
+            dataItems: contentViewModel.dataItems,
+            selectedWalletIds: $contentViewModel.selectedWalletIds,
+            selectedDataSections: $contentViewModel.selectedDataSections,
+            buttonTitle: "button.next".localized,
+            onAction: {
+                viewModel.setSelectedAccountIds(contentViewModel.selectedWalletIds)
+                viewModel.setSelectedDataSections(contentViewModel.selectedDataSections)
+                path.append(BackupModule.Step.form)
             }
         )
-    }
-}
-
-struct ContentItemView: View {
-    let item: BackupModule.ContentItem
-
-    var body: some View {
-        Cell(
-            middle: {
-                MultiText(title: item.title, subtitle: item.description)
-            },
-            right: {
-                if let value = item.value {
-                    RightTextIcon(text: ComponentText(text: value, colorStyle: .secondary))
-                }
-            }
-        )
+        .navigationTitle("backup_content.title.create".localized)
     }
 }

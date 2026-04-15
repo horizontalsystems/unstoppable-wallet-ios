@@ -1,7 +1,7 @@
 import Foundation
 
 protocol IBackupService {
-    func save(type: BackupModule.BackupType, name: String, password: String) async throws -> BackupModule.BackupResult
+    func save(type: BackupModule.BackupType, name: String, password: String, sections: Set<BackupSection>) async throws -> BackupModule.BackupResult
 }
 
 enum BackupServiceFactory {
@@ -17,7 +17,7 @@ class CloudBackupService: IBackupService {
     private let cloudBackupManager = Core.shared.cloudBackupManager
     private let accountManager = Core.shared.accountManager
 
-    func save(type: BackupModule.BackupType, name: String, password: String) async throws -> BackupModule.BackupResult {
+    func save(type: BackupModule.BackupType, name: String, password: String, sections: Set<BackupSection>) async throws -> BackupModule.BackupResult {
         switch type {
         case let .wallet(accountId):
             guard let account = accountManager.account(id: accountId) else {
@@ -26,7 +26,7 @@ class CloudBackupService: IBackupService {
             try cloudBackupManager.save(account: account, passphrase: password, name: name)
 
         case let .app(accountIds):
-            try cloudBackupManager.save(accountIds: Array(accountIds), passphrase: password, name: name)
+            try cloudBackupManager.save(accountIds: Array(accountIds), passphrase: password, name: name, sections: sections)
         }
 
         return .saved
@@ -37,7 +37,7 @@ class FileBackupService: IBackupService {
     private let cloudBackupManager = Core.shared.cloudBackupManager
     private let accountManager = Core.shared.accountManager
 
-    func save(type: BackupModule.BackupType, name: String, password: String) async throws -> BackupModule.BackupResult {
+    func save(type: BackupModule.BackupType, name: String, password: String, sections: Set<BackupSection>) async throws -> BackupModule.BackupResult {
         let url: URL
 
         switch type {
@@ -48,7 +48,7 @@ class FileBackupService: IBackupService {
             url = try cloudBackupManager.file(account: account, passphrase: password, name: name)
 
         case let .app(accountIds):
-            url = try cloudBackupManager.file(accountIds: Array(accountIds), passphrase: password, name: name)
+            url = try cloudBackupManager.file(accountIds: Array(accountIds), passphrase: password, name: name, sections: sections)
         }
 
         return .share(url)

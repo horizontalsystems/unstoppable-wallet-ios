@@ -5,7 +5,7 @@ struct SectionHeader<ImageContent: View>: View {
     private let imageContent: (() -> ImageContent)?
     var horizontalInsets: CGFloat
 
-    init(image: CustomStringConvertible?, text: CustomStringConvertible?, horizontalInsets: CGFloat = .margin32) where ImageContent == ThemeImage {
+    init(image: CustomStringConvertible? = nil, text: CustomStringConvertible?, horizontalInsets: CGFloat = .margin32) where ImageContent == ThemeImage {
         imageContent = image.map { image in
             { ThemeImage(image, size: .iconSize20) }
         }

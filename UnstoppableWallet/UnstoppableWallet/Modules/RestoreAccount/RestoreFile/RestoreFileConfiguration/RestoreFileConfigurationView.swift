@@ -4,58 +4,39 @@ struct RestoreFileConfigurationView: View {
     @StateObject private var viewModel: RestoreFileConfigurationViewModel
     @Binding var isParentPresented: Bool
 
-    init(rawBackup: RawFullBackup, isParentPresented: Binding<Bool>, statPage: StatPage) {
+    init(rawBackup: RawFullBackup, backupName: String, isParentPresented: Binding<Bool>, statPage: StatPage) {
         _viewModel = StateObject(wrappedValue: RestoreFileConfigurationViewModel(
             cloudBackupManager: Core.shared.cloudBackupManager,
             appBackupProvider: Core.shared.appBackupProvider,
             contactBookManager: Core.shared.contactManager,
             statPage: statPage,
-            rawBackup: rawBackup
+            rawBackup: rawBackup,
+            backupName: backupName
         ))
         _isParentPresented = isParentPresented
     }
 
     var body: some View {
-        ThemeView {
-            BottomGradientWrapper {
-                ScrollView {
-                    VStack(spacing: .margin24) {
-                        HStack {
-                            ThemeText("backup_app.backup_list.description.restore".localized, style: .subhead)
-                            Spacer()
-                        }
-
-                        if !viewModel.accountItems.isEmpty {
-                            section(header: "backup_app.backup_list.header.wallets".localized, items: viewModel.accountItems)
-                        }
-
-                        if !viewModel.otherItems.isEmpty {
-                            ListSection(header: "backup_app.backup_list.header.other".localized) {
-                                ForEach(viewModel.otherItems) { item in
-                                    row(title: item.title, subtitle: item.description)
-                                }
-                            }
-                        }
-                    }
-                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
-                }
-            } bottomContent: {
-                Button(action: {
-                    viewModel.onTapRestore()
-                }) {
-                    Text("button.restore".localized)
-                }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
+        BackupContentListView(
+            description: "backup_content.description.restore".localized,
+            walletItems: viewModel.walletItems,
+            dataItems: viewModel.dataItems,
+            selectedWalletIds: $viewModel.selectedWalletIds,
+            selectedDataSections: $viewModel.selectedDataSections,
+            buttonTitle: "button.restore".localized,
+            onAction: {
+                viewModel.onTapRestore()
             }
-        }
+        )
+        .navigationTitle(viewModel.backupTitle)
         .onReceive(viewModel.showMergeAlertPublisher) {
             Coordinator.shared.present(type: .bottomSheet) { sheetPresented in
                 BottomSheetView(
                     items: [
-                        .title(icon: ThemeImage.warning, title: "alert.notice".localized),
-                        .warning(text: "backup_app.restore.notice.description".localized),
+                        .title(icon: ThemeImage.warning, title: "alert_card.title.caution".localized),
+                        .text(text: "backup_app.restore.notice.description".localized),
                         .buttonGroup(.init(buttons: [
-                            .init(style: .red, title: "backup_app.restore.notice.merge".localized) {
+                            .init(style: .gray, title: "button.replace".localized) {
                                 sheetPresented.wrappedValue = false
                                 viewModel.restore()
                             },
@@ -73,25 +54,5 @@ struct RestoreFileConfigurationView: View {
                 isParentPresented = false
             }
         }
-        .navigationTitle("backup_app.backup_list.title".localized)
-    }
-
-    @ViewBuilder private func section(header: String, items: [BackupModule.AccountItem]) -> some View {
-        ListSection(header: header) {
-            ForEach(items, id: \.accountId) {
-                item in row(
-                    title: item.name,
-                    subtitle: ComponentText(text: item.description, colorStyle: item.cautionType?.colorStyle)
-                )
-            }
-        }
-    }
-
-    @ViewBuilder private func row(title: CustomStringConvertible, subtitle: CustomStringConvertible?) -> some View {
-        Cell(
-            middle: {
-                MultiText(title: title, subtitle: subtitle)
-            },
-        )
     }
 }

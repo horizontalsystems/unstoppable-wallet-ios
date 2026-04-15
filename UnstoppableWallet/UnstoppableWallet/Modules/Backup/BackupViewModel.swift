@@ -9,6 +9,7 @@ class BackupViewModel: ObservableObject {
 
     @Published var destination: BackupModule.Destination?
     @Published var selectedAccountIds: Set<String>
+    @Published var selectedDataSections: Set<BackupSection> = Set(BackupSection.allCases)
     @Published var processing: Bool = false
     @Published private(set) var cloudAvailable: Bool
 
@@ -75,6 +76,10 @@ class BackupViewModel: ObservableObject {
         selectedAccountIds = ids
     }
 
+    func setSelectedDataSections(_ sections: Set<BackupSection>) {
+        selectedDataSections = sections
+    }
+
     func setName(_ name: String) {
         self.name = name
     }
@@ -93,7 +98,12 @@ class BackupViewModel: ObservableObject {
         guard let destination else { return }
 
         let service = BackupServiceFactory.create(destination: destination)
-        let result = try await service.save(type: currentBackupType, name: name, password: password)
+        let result = try await service.save(
+            type: currentBackupType,
+            name: name,
+            password: password,
+            sections: selectedDataSections
+        )
 
         await MainActor.run {
             switch result {
