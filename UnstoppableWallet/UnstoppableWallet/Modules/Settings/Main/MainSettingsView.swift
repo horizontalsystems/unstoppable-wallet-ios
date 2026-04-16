@@ -6,7 +6,6 @@ struct MainSettingsView: View {
     @StateObject var viewModel = MainSettingsViewModel()
     @Environment(\.openURL) var openURL
 
-    @State private var manageWalletsPresented = false
     @State private var walletConnectPresented = false
 
     @StateObject var walletConnectVerificationModel = WalletConnectVerificationModel(
@@ -185,12 +184,12 @@ struct MainSettingsView: View {
     }
 
     @ViewBuilder private func manageWallets() -> some View {
-        ClickableRow(spacing: .margin8) {
-            Coordinator.shared.present { isPresented in
-                ManageAccountsView(isPresented: isPresented)
-            }
-            stat(page: .settings, event: .open(page: .manageWallets))
-        } content: {
+        NavigationRow(spacing: .margin8, destination: {
+            ManageAccountsView(isPresented: .constant(false))
+                .onFirstAppear {
+                    stat(page: .settings, event: .open(page: .manageWallets))
+                }
+        }) {
             HStack(spacing: .margin16) {
                 ThemeImage("wallet", size: .iconSize24)
                 Text("settings.manage_accounts".localized).textBody()
