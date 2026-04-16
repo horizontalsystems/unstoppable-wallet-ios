@@ -21,13 +21,7 @@ struct TransactionsView: View {
                     }
                 }
             } header: {
-                ThemeText(section.title, style: .subheadSB, colorStyle: .andy)
-                    .padding(.horizontal, .margin16)
-                    .padding(.top, .margin24)
-                    .padding(.bottom, .margin12)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .background(Color.themeLawrence)
-                    .listRowInsets(EdgeInsets())
+                ThemeListSectionHeader(text: section.title)
             }
         }
     }
