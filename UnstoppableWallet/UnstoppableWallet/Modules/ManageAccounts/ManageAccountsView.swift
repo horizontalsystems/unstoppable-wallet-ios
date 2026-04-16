@@ -11,26 +11,21 @@ struct ManageAccountsView: View {
             Group {
                 if !viewModel.hasAccounts {
                     ThemeView(style: .list) {
-                        PlaceholderViewNew(icon: "not_found_48", subtitle: "manage_wallets.empty".localized)
+                        PlaceholderViewNew(icon: "wallet_remove", subtitle: "manage_wallets.empty".localized)
                     }
                 } else {
                     ThemeView(style: .list) {
-                        if viewModel.hasFilters {
-                            ScrollableTabHeaderView(
-                                tabs: viewModel.availableFilters.map(\.title),
-                                currentTabIndex: Binding(
-                                    get: { viewModel.accountFilterIndex },
-                                    set: { index in viewModel.setAccountFilter(index: index) }
-                                )
-                            )
-                        }
-                        if viewModel.items.isEmpty {
+                        if viewModel.sections.isEmpty {
                             PlaceholderViewNew(icon: "warning_filled", subtitle: "manage_accounts.not_found".localized)
                         } else {
                             ThemeList(bottomSpacing: .margin16) {
-                                Section {
-                                    ListForEach(viewModel.items) { item in
-                                        itemView(item: item)
+                                ForEach(viewModel.sections) { section in
+                                    Section {
+                                        ListForEach(section.items) { item in
+                                            itemView(item: item)
+                                        }
+                                    } header: {
+                                        ThemeListSectionHeader(text: section.title)
                                     }
                                 }
                             }

@@ -62,7 +62,7 @@ struct ThemeListSectionHeader: View {
     let text: String
 
     var body: some View {
-        ThemeText(text, style: .subheadSB, colorStyle: .secondary)
+        ThemeText(text, style: .subheadSB, colorStyle: .andy)
             .padding(EdgeInsets(top: .margin24, leading: .margin16, bottom: .margin12, trailing: .margin16))
             .frame(maxWidth: .infinity, alignment: .leading)
             .listRowInsets(EdgeInsets())

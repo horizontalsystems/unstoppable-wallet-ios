@@ -28,13 +28,7 @@ struct SwapHistoryView: View {
                                         }
                                     }
                                 } header: {
-                                    ThemeText(section.title, style: .subheadSB, colorStyle: .andy)
-                                        .padding(.horizontal, 16)
-                                        .padding(.top, 24)
-                                        .padding(.bottom, 12)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .background(Color.themeLawrence)
-                                        .listRowInsets(EdgeInsets())
+                                    ThemeListSectionHeader(text: section.title)
                                 }
                             }
                         }
