@@ -4,6 +4,7 @@ import UIKit
 struct RestoreTypeView: View {
     @StateObject private var viewModel = RestoreTypeViewModel()
     @Binding var isParentPresented: Bool
+    var showClose: Bool = false
 
     @State private var recoveryPhrasePresented = false
     @State private var backupPresented = false
@@ -36,6 +37,17 @@ struct RestoreTypeView: View {
                     accountType: passkeyLogin.accountType,
                     onRestore: { isParentPresented = false }
                 )
+            }
+        }
+        .toolbar {
+            if showClose {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
+                        isParentPresented = false
+                    }) {
+                        Image("close")
+                    }
+                }
             }
         }
     }

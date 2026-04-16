@@ -3,6 +3,7 @@ import SwiftUI
 struct WatchView: View {
     @StateObject private var viewModel = WatchViewModel()
     @Binding var isParentPresented: Bool
+    var showClose: Bool = false
 
     @FocusState private var focusedField: Field?
 
@@ -75,11 +76,14 @@ struct WatchView: View {
         }
         .navigationTitle("watch_address.title".localized)
         .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button("watch_address.watch".localized) {
-                    proceed()
+            if showClose {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
+                        isParentPresented = false
+                    }) {
+                        Image("close")
+                    }
                 }
-                .modifier(ConfirmationButtonStyle())
             }
         }
         .navigationDestination(isPresented: $selectPresented) {

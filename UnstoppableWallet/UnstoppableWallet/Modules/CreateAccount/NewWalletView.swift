@@ -2,6 +2,7 @@ import SwiftUI
 
 struct NewWalletView: View {
     @Binding var isParentPresented: Bool
+    var showClose: Bool = false
 
     @State private var standardWalletPresented = false
     @State private var passkeyWalletPresented = false
@@ -20,6 +21,17 @@ struct NewWalletView: View {
             .padding(EdgeInsets(top: 12, leading: 16, bottom: 32, trailing: 16))
         }
         .navigationTitle("new_wallet.title".localized)
+        .toolbar {
+            if showClose {
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(action: {
+                        isParentPresented = false
+                    }) {
+                        Image("close")
+                    }
+                }
+            }
+        }
         .navigationDestination(isPresented: $standardWalletPresented) {
             CreateAccountView(walletType: .regular, isParentPresented: $isParentPresented)
         }

@@ -53,7 +53,7 @@ struct SwapTermsView: View {
     @ViewBuilder private func cell(item: Item) -> some View {
         Cell(
             left: {
-                checkboxImage(isSelected: acceptedItems.contains(item))
+                Image.checkbox(active: acceptedItems.contains(item))
             },
             middle: {
                 VStack(alignment: .leading, spacing: 0) {
@@ -72,10 +72,6 @@ struct SwapTermsView: View {
                 }
             }
         }
-    }
-
-    @ViewBuilder private func checkboxImage(isSelected: Bool) -> some View {
-        ThemeImage(isSelected ? "checkbox_circle_on" : "checkbox_circle_off", size: 24, colorStyle: isSelected ? .yellow : .andy)
     }
 }
 

@@ -10,20 +10,14 @@ struct AddWalletView: View {
 
     var body: some View {
         ScrollableThemeView {
-            ListSection {
-                row(icon: "plus", title: "add_wallet.new_wallet".localized, description: "add_wallet.new_wallet.description".localized) {
-                    newWalletPresented = true
-                }
-
-                row(icon: "arrow_in", title: "add_wallet.existing_wallet".localized, description: "add_wallet.existing_wallet.description".localized) {
-                    existingWalletPresented = true
-                }
-
-                row(icon: "eye_on", title: "add_wallet.watch_wallet".localized, description: "add_wallet.watch_wallet.description".localized) {
+            AddWalletRowsView(
+                onNewWallet: { newWalletPresented = true },
+                onExistingWallet: { existingWalletPresented = true },
+                onWatchWallet: {
                     watchPresented = true
                     stat(page: .addWallet, event: .open(page: .watchWallet))
                 }
-            }
+            )
             .padding(EdgeInsets(top: 12, leading: 16, bottom: 32, trailing: 16))
         }
         .navigationTitle("add_wallet.title".localized)
@@ -47,20 +41,5 @@ struct AddWalletView: View {
         .navigationDestination(isPresented: $existingWalletPresented) {
             RestoreTypeView(isParentPresented: $isParentPresented)
         }
-    }
-
-    @ViewBuilder private func row(icon: String, title: String, description: String, action: @escaping () -> Void) -> some View {
-        Cell(
-            left: {
-                ThemeImage(icon, size: 24)
-            },
-            middle: {
-                MultiText(title: title, subtitle: description)
-            },
-            right: {
-                Image.disclosureIcon
-            },
-            action: action
-        )
     }
 }

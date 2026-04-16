@@ -46,12 +46,11 @@ extension Image {
         Image("warning_2_20").themeIcon(color: .themeLucian)
     }
 
-    static func checkbox(active: Bool, size: CGFloat = .margin24) -> some View {
+    static func checkbox(active: Bool, size: CGFloat = .iconSize24, colorStyle: ColorStyle = .yellow) -> some View {
         ThemeImage(
-            active ?
-                ComponentImage(image: "checkbox_active", size: CGSize(width: size, height: size)) :
-                "checkbox_diactive",
-            size: size
+            active ? "checkbox_circle_on" : "checkbox_circle_off",
+            size: size,
+            colorStyle: active ? colorStyle : .andy
         )
     }
 

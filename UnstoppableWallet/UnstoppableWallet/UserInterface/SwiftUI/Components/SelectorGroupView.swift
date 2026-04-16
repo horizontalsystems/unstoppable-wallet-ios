@@ -69,7 +69,7 @@ struct SelectorGroupView: View {
                 Cell(
                     style: .secondary,
                     left: {
-                        checkboxImage(isSelected: isSelected)
+                        Image.checkbox(active: isSelected)
                     },
                     middle: {
                         MultiText(subtitle: item.description)
@@ -82,7 +82,7 @@ struct SelectorGroupView: View {
                         MultiText(title: item.text, subtitle: item.description)
                     },
                     right: {
-                        checkboxImage(isSelected: isSelected)
+                        Image.checkbox(active: isSelected)
                     }
                 )
             }
@@ -93,11 +93,5 @@ struct SelectorGroupView: View {
                 viewModel.toggleSelection(item.id, in: group)
             }
         }
-    }
-
-    @ViewBuilder
-    private func checkboxImage(isSelected: Bool) -> some View {
-        Image(isSelected ? "checkbox_circle_on" : "checkbox_circle_off")
-            .icon(size: .iconSize24, colorStyle: isSelected ? .yellow : .andy)
     }
 }
