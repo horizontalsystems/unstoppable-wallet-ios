@@ -44,7 +44,8 @@ struct WalletView: View {
                 ThemeView {
                     PlaceholderWrapperViewNew {
                         VStack(spacing: .margin24) {
-                            Image("wallet_add").icon(size: .iconSize72)
+                            Image("wallet_add").icon(size: .iconSize72).padding(16)
+
                             AddWalletRowsView(
                                 onNewWallet: {
                                     Coordinator.shared.presentAfterAcceptTerms { isPresented in

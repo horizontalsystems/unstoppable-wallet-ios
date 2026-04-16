@@ -39,7 +39,15 @@ struct ManageAccountsView: View {
                 ToolbarItem(placement: .primaryAction) {
                     Button(action: {
                         Coordinator.shared.performAfterAcceptTerms {
-                            addWalletPresented = true
+                            if isPresented {
+                                addWalletPresented = true
+                            } else {
+                                Coordinator.shared.present { isPresented in
+                                    ThemeNavigationStack {
+                                        AddWalletView(isParentPresented: isPresented, showClose: true)
+                                    }
+                                }
+                            }
                         }
                     }) {
                         Image("wallet_add")
