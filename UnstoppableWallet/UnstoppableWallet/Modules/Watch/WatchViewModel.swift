@@ -19,8 +19,6 @@ class WatchViewModel: ObservableObject {
     private let addressParserChain = AddressParserChain()
     private var disposeBag = DisposeBag()
 
-    let defaultAccountName: String
-
     @Published var state = State.notReady {
         didSet {
             switch state {
@@ -34,7 +32,12 @@ class WatchViewModel: ObservableObject {
         }
     }
 
-    @Published var name: String
+    @Published var name: String {
+        didSet {
+            watchEnabled = !resolvedName.isEmpty
+        }
+    }
+
     @Published var text = AppConfig.defaultWatchAddress ?? "" {
         didSet {
             guard !syncingTextWithAddress, text != oldValue else {
@@ -71,6 +74,8 @@ class WatchViewModel: ObservableObject {
 
     @Published var viewKeyCaution: CautionState = .none
 
+    @Published var watchEnabled = true
+
     var birthdayHeight: Int?
 
     private var syncingTextWithAddress: Bool = false
@@ -93,8 +98,7 @@ class WatchViewModel: ObservableObject {
     let successSubject = PassthroughSubject<Void, Never>()
 
     init() {
-        defaultAccountName = accountFactory.nextWatchAccountName
-        name = defaultAccountName
+        name = accountFactory.generatedAccountName
 
         addressParserChain.append(handlers:
             AddressParserFactory.parserChainHandlers(blockchainType: .ethereum, withEns: true)
@@ -306,6 +310,10 @@ class WatchViewModel: ObservableObject {
         viewKeyCaution = .none
         birthdayHeight = nil
     }
+
+    private var resolvedName: String {
+        name.trimmingCharacters(in: .whitespacesAndNewlines)
+    }
 }
 
 extension WatchViewModel {
@@ -315,6 +323,10 @@ extension WatchViewModel {
         }
 
         return nil
+    }
+
+    func refreshName() {
+        name = accountFactory.generatedAccountName
     }
 
     func onProceed() {
@@ -336,9 +348,7 @@ extension WatchViewModel {
             return
         }
 
-        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        let accountName = trimmedName.isEmpty ? defaultAccountName : trimmedName
-        let account = accountFactory.watchAccount(type: accountType, name: accountName)
+        let account = accountFactory.watchAccount(type: accountType, name: resolvedName)
 
         accountManager.save(account: account)
 
