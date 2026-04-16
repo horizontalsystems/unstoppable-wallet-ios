@@ -13,18 +13,24 @@ class CreateAccountViewModel: ObservableObject {
     private let passkeyManager = PasskeyManager()
 
     let walletType: WalletType
-    let defaultAccountName: String
 
-    @Published var name: String = ""
+    @Published var name: String {
+        didSet {
+            createEnabled = !resolvedName.isEmpty
+        }
+    }
+
     @Published var advanced = false
     @Published var wordCount: Mnemonic.WordCount = CreateAccountViewModel.defaultWordCount
 
     @Published var passphrase = ""
     @Published var passphraseConfirmation = ""
 
+    @Published var createEnabled = true
+
     init(walletType: WalletType) {
         self.walletType = walletType
-        defaultAccountName = accountFactory.nextAccountName
+        name = accountFactory.generatedAccountName
     }
 
     private func activateDefaultWallets(account: Account) throws {
@@ -49,8 +55,7 @@ class CreateAccountViewModel: ObservableObject {
     }
 
     private var resolvedName: String {
-        let trimmedName = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        return trimmedName.isEmpty ? defaultAccountName : trimmedName
+        name.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     private func createAccount(words: [String], salt: String, isPasskey: Bool, statPage: StatPage) -> Account {
@@ -77,6 +82,10 @@ class CreateAccountViewModel: ObservableObject {
 }
 
 extension CreateAccountViewModel {
+    func refreshName() {
+        name = accountFactory.generatedAccountName
+    }
+
     func createAccount() throws -> Account {
         let salt: String
         if advanced, !passphrase.isEmpty || !passphraseConfirmation.isEmpty {

@@ -19,13 +19,20 @@ struct WatchView: View {
                             ListSectionHeader(text: "watch_address.name".localized)
 
                             InputTextRow {
-                                InputTextView(
-                                    placeholder: viewModel.defaultAccountName,
-                                    text: $viewModel.name
+                                ShortcutButtonsView(
+                                    content: {
+                                        InputTextView(text: $viewModel.name)
+                                            .autocapitalization(.words)
+                                            .autocorrectionDisabled()
+                                            .focused($focusedField, equals: .name)
+                                    },
+                                    showDelete: .init(get: { false }, set: { _ in }),
+                                    items: [.icon("swap_e")],
+                                    onTap: { _ in
+                                        viewModel.refreshName()
+                                    },
+                                    onTapDelete: {}
                                 )
-                                .autocapitalization(.words)
-                                .autocorrectionDisabled()
-                                .focused($focusedField, equals: .name)
                             }
                         }
 
@@ -72,6 +79,7 @@ struct WatchView: View {
                 ThemeButton(text: "watch_address.watch".localized) {
                     proceed()
                 }
+                .disabled(!viewModel.watchEnabled)
             }
         }
         .navigationTitle("watch_address.title".localized)

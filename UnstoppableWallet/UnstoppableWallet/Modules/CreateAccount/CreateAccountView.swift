@@ -28,15 +28,22 @@ struct CreateAccountView: View {
                             ListSectionHeader(text: "create_wallet.name".localized, uppercased: false)
 
                             InputTextRow {
-                                InputTextView(
-                                    placeholder: viewModel.defaultAccountName,
-                                    text: $viewModel.name
-                                )
-                                .autocapitalization(.words)
-                                .autocorrectionDisabled()
-                                .focused($focusedField, equals: .name)
+                                ShortcutButtonsView(
+                                    content: {
+                                            InputTextView(text: $viewModel.name)
+                                                .autocapitalization(.words)
+                                                .autocorrectionDisabled()
+                                                .focused($focusedField, equals: .name)
+                                        },
+                                        showDelete: .init(get: { false }, set: { _ in }),
+                                        items: [.icon("swap_e")],
+                                        onTap: { _ in
+                                            viewModel.refreshName()
+                                        },
+                                        onTapDelete: {}
+                                    )
+                                }
                             }
-                        }
 
                         switch viewModel.walletType {
                         case .regular:
@@ -134,6 +141,7 @@ struct CreateAccountView: View {
                     Text("create_wallet.create".localized)
                 }
                 .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                .disabled(!viewModel.createEnabled)
             }
         }
         .onChange(of: viewModel.passphrase) { _ in clearCautions() }
