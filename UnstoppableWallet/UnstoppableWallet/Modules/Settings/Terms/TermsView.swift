@@ -74,7 +74,7 @@ struct TermsView: View {
     }
 
     @ViewBuilder private func rowContent(term: TermsManager.Term, checked: Bool) -> some View {
-        Image(checked ? "checkbox_active_24" : "checkbox_diactive_24")
+        Image.checkbox(active: checked)
         Text(term.localizedKey.localized)
             .themeSubhead2(color: .themeLeah)
     }

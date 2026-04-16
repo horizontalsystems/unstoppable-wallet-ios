@@ -42,13 +42,34 @@ struct WalletView: View {
                 }
             } else {
                 ThemeView {
-                    PlaceholderViewNew(icon: "wallet_add", layoutType: .middle) {
-                        ThemeButton(text: "balance.add_wallet".localized) {
-                            Coordinator.shared.presentAfterAcceptTerms { isPresented in
-                                ThemeNavigationStack {
-                                    AddWalletView(isParentPresented: isPresented, showClose: true)
+                    PlaceholderWrapperViewNew {
+                        VStack(spacing: .margin24) {
+                            Image("wallet_add").icon(size: .iconSize72)
+                            AddWalletRowsView(
+                                onNewWallet: {
+                                    Coordinator.shared.presentAfterAcceptTerms { isPresented in
+                                        ThemeNavigationStack {
+                                            NewWalletView(isParentPresented: isPresented, showClose: true)
+                                        }
+                                    }
+                                },
+                                onExistingWallet: {
+                                    Coordinator.shared.presentAfterAcceptTerms { isPresented in
+                                        ThemeNavigationStack {
+                                            RestoreTypeView(isParentPresented: isPresented, showClose: true)
+                                        }
+                                    }
+                                },
+                                onWatchWallet: {
+                                    Coordinator.shared.presentAfterAcceptTerms { isPresented in
+                                        ThemeNavigationStack {
+                                            WatchView(isParentPresented: isPresented, showClose: true)
+                                        }
+                                    }
+                                    stat(page: .addWallet, event: .open(page: .watchWallet))
                                 }
-                            }
+                            )
+                            .padding(.horizontal, .margin16)
                         }
                     }
                 }
@@ -94,7 +115,7 @@ struct WalletView: View {
                         RightButtonText(text: address.shortened, icon: "copy_filled") {
                             CopyHelper.copyAndNotify(value: address)
                         }
-                    },
+                    }
                 )
             } else if !viewModel.buttonHidden {
                 let buttons = viewModel.buttons

@@ -41,13 +41,7 @@ struct RightTextCheckbox: View {
                 }
             }
 
-            if checked {
-                ThemeImage("checkbox_circle_on", size: 20, colorStyle: .yellow)
-            } else {
-                Circle()
-                    .strokeBorder(Color.themeAndy, lineWidth: 1)
-                    .frame(size: 20)
-            }
+            Image.checkbox(active: checked, size: 20)
         }
     }
 }

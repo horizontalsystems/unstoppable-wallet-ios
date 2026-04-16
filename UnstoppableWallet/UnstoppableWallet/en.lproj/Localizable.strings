@@ -125,6 +125,9 @@
 "powered_by" = "Powered by %@";
 
 "filter.all" = "All";
+"filter.mnemonic" = "Mnemonic";
+"filter.private_key" = "Private Key";
+"filter.watch" = "Watch";
 
 "not_activated" = "Not Activated";
 
@@ -172,7 +175,7 @@
 
 "restore_type.recovery.description" = "Import a wallet using a recovery phrase or a private key.";
 "restore_type.passkey.description" = "Restore your wallet using your device and iCloud account.";
-"restore_type.backup.description" = "Import from a backup from iCloud or file";
+"restore_type.backup.description" = "Restore your wallet using a backup file from your device or cloud.";
 
 // Restore Cloud
 
@@ -311,6 +314,7 @@
 "balance.stopped" = "Stopped";
 "balance.downloading_sapling" = "Downloading...";
 "balance.watch_wallet" = "Watch Wallet";
+"balance.watch_wallet.typed" = "%@ Watch Wallet";
 
 "balance.add_wallet" = "Add Wallet";
 
@@ -1449,6 +1453,8 @@
 
 "manage_wallets.title" = "Coin Manager";
 "manage_wallets.not_found" = "No results found. Try to add token manually.";
+"manage_wallets.empty" = "No Active Wallets";
+"manage_accounts.not_found" = "No results found.";
 "manage_wallets.search_placeholder" = "Name, code or contract address";
 "manage_wallets.contract_address" = "Contract Address";
 "manage_wallets.derivation_description" = "There are 4 common address formats %@ wallets can use to receive incoming payments:\n\n- BIP44 (oldest)\n- BIP49\n- BIP84 (recommended)\n- BIP86 (newest)\n\nWhile %@ wallet supports all 4, it recommends to use a %@ wallet operating in BIP84 format.";
@@ -1841,6 +1847,25 @@
 "create_wallet.error.empty_passphrase" = "Passphrase cannot be empty";
 "create_wallet.error.forbidden_symbols" = "Please use only supported symbols:A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
 "create_wallet.error.invalid_confirmation" = "Passphrase confirmation does not match";
+
+// Passkey Wallet Terms
+
+"passkey_terms.title" = "Passkey Wallet Terms";
+"passkey_terms.description" = "This wallet is secured by your device and iCloud account, with access provided via Face ID or fingerprint without using a recovery phrase.";
+
+"passkey_terms.device_icloud.title" = "Device & iCloud dependency";
+"passkey_terms.device_icloud.description" = "Access depends on your Apple ID and device security. Losing iCloud access may result in permanent loss.";
+
+"passkey_terms.recovery_seed.title" = "Recovery and seed phrase";
+"passkey_terms.recovery_seed.description" = "Created without entering a recovery phrase. The recovery phrase is available in settings for backup.";
+
+"passkey_terms.cross_platform.title" = "Limited cross-platform access";
+"passkey_terms.cross_platform.description" = "This wallet may not be accessible on non-Apple devices. Access depends on system support.";
+
+"passkey_terms.responsibility.title" = "Responsibility";
+"passkey_terms.responsibility.description" = "You are responsible for access to your device and iCloud. Unstoppable cannot recover this wallet if access is lost.";
+
+"passkey_terms.button" = "I Understand and Continue";
 
 // Restore Select
 

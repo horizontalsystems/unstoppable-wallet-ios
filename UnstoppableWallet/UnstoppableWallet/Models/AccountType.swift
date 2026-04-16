@@ -287,7 +287,27 @@ enum AccountType: Identifiable {
     }
 
     var detailedDescription: String {
-        watchAddress?.shortened ?? description
+        if let watchTypeName {
+            return "balance.watch_wallet.typed".localized(watchTypeName)
+        }
+        return description
+    }
+
+    private var watchTypeName: String? {
+        switch self {
+        case .evmAddress: return "EVM"
+        case .tronAddress: return "TRON"
+        case .tonAddress: return "TON"
+        case .stellarAccount: return "Stellar"
+        case let .hdExtendedKey(key):
+            switch key {
+            case .public: return "HD"
+            default: return nil
+            }
+        case .btcAddress: return "BTC"
+        case .moneroWatchAccount: return "Monero"
+        default: return nil
+        }
     }
 
     func evmAddress(chain: Chain) -> EvmKit.Address? {

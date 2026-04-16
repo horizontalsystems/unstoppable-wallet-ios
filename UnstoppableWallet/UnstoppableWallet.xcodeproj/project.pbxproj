@@ -2241,6 +2241,8 @@
 		6BE57E812E33A0A6003C4C01 /* MerkleTransactionHash.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57E7F2E33A0A6003C4C01 /* MerkleTransactionHash.swift */; };
 		6BE57E832E3739E0003C4C01 /* MerkleTransactionHashManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57E822E3739D8003C4C01 /* MerkleTransactionHashManager.swift */; };
 		6BE57E842E3739E0003C4C01 /* MerkleTransactionHashManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE57E822E3739D8003C4C01 /* MerkleTransactionHashManager.swift */; };
+		6BE716DA2F8F944600C8752D /* AddWalletRowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE716D92F8F944200C8752D /* AddWalletRowsView.swift */; };
+		6BE716DB2F8F944600C8752D /* AddWalletRowsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE716D92F8F944200C8752D /* AddWalletRowsView.swift */; };
 		6BE8A07B2ADE2F8D0012DE7F /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE8A07A2ADE2F8D0012DE7F /* Currency.swift */; };
 		6BE8A07C2ADE2F8D0012DE7F /* Currency.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE8A07A2ADE2F8D0012DE7F /* Currency.swift */; };
 		6BE8A07E2ADE2F950012DE7F /* CurrencyValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE8A07D2ADE2F950012DE7F /* CurrencyValue.swift */; };
@@ -4896,6 +4898,7 @@
 		6BE57E7C2E339D4A003C4C01 /* MerkleTransactionSyncer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleTransactionSyncer.swift; sourceTree = "<group>"; };
 		6BE57E7F2E33A0A6003C4C01 /* MerkleTransactionHash.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleTransactionHash.swift; sourceTree = "<group>"; };
 		6BE57E822E3739D8003C4C01 /* MerkleTransactionHashManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleTransactionHashManager.swift; sourceTree = "<group>"; };
+		6BE716D92F8F944200C8752D /* AddWalletRowsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWalletRowsView.swift; sourceTree = "<group>"; };
 		6BE8A07A2ADE2F8D0012DE7F /* Currency.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Currency.swift; sourceTree = "<group>"; };
 		6BE8A07D2ADE2F950012DE7F /* CurrencyValue.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyValue.swift; sourceTree = "<group>"; };
 		6BE8A0802ADE2FAB0012DE7F /* CurrencyManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CurrencyManager.swift; sourceTree = "<group>"; };
@@ -6911,6 +6914,7 @@
 		11B3581D97669C8038485FAE /* CreateAccount */ = {
 			isa = PBXGroup;
 			children = (
+				6BE716D92F8F944200C8752D /* AddWalletRowsView.swift */,
 				D3FB73DB2F83B941005AB013 /* AddWalletView.swift */,
 				D3FB73DE2F83BC34005AB013 /* NewWalletView.swift */,
 				D3E36BE62E097768007F99CA /* CreateAccountViewModel.swift */,
@@ -12426,6 +12430,7 @@
 				11B356FFD93EA8213591FCD5 /* TransactionSettings.swift in Sources */,
 				6BA971BF2ED560D800DEC017 /* PremiumFeature.swift in Sources */,
 				11B3507DDB28D87FF9B6146E /* EvmFeeData.swift in Sources */,
+				6BE716DB2F8F944600C8752D /* AddWalletRowsView.swift in Sources */,
 				11B351354518B4193A672044 /* EvmFeeEstimator.swift in Sources */,
 				ABC9A07B88375991F5749391 /* SlideButton.swift in Sources */,
 				ABC9A4DE73BE3055DD97343B /* ShimmerEffect.swift in Sources */,
@@ -14142,6 +14147,7 @@
 				11B35B177527D30099B67C91 /* FeeData.swift in Sources */,
 				11B356E18BF849BA6D15BE73 /* ITransactionService.swift in Sources */,
 				11B3545D4765792A91CF5817 /* EvmTransactionService.swift in Sources */,
+				6BE716DA2F8F944600C8752D /* AddWalletRowsView.swift in Sources */,
 				11B35BEDD1017EA9EDA7F2FB /* TransactionServiceFactory.swift in Sources */,
 				11B3566FB55E128CD6F22DAE /* TransactionSettings.swift in Sources */,
 				11B352B9206C86492CDDC9A7 /* EvmFeeData.swift in Sources */,
