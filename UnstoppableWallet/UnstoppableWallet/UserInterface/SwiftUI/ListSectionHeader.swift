@@ -14,10 +14,13 @@ struct ListSectionHeader: View {
     }
 
     var body: some View {
-        Text(uppercased ? text.uppercased() : text)
-            .themeSubhead1(color: color)
-            .frame(height: .margin32)
-            .padding(insets)
+        HStack {
+            ThemeText(uppercased ? text.uppercased() : text, style: .subhead)
+                .padding(.bottom, .margin12)
+
+            Spacer()
+        }
+        .padding(insets)
     }
 }
 
