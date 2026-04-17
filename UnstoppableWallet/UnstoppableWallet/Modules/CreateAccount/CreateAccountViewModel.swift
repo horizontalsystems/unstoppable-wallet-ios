@@ -18,7 +18,6 @@ class CreateAccountViewModel: ObservableObject {
     @Published var name: String = ""
     @Published var advanced = false
     @Published var wordCount: Mnemonic.WordCount = CreateAccountViewModel.defaultWordCount
-    @Published var passphraseEnabled = false
 
     @Published var passphrase = ""
     @Published var passphraseConfirmation = ""
@@ -54,13 +53,13 @@ class CreateAccountViewModel: ObservableObject {
         return trimmedName.isEmpty ? defaultAccountName : trimmedName
     }
 
-    private func createAccount(words: [String], statPage: StatPage) -> Account {
-        let accountType: AccountType = .mnemonic(words: words, salt: passphrase, bip39Compliant: true)
+    private func createAccount(words: [String], salt: String, isPasskey: Bool, statPage: StatPage) -> Account {
+        let accountType: AccountType = .mnemonic(words: words, salt: salt, bip39Compliant: true)
 
         let account = accountFactory.account(
             type: accountType,
             origin: .created,
-            backedUp: false,
+            backedUp: isPasskey,
             fileBackedUp: false,
             name: resolvedName
         )
@@ -79,7 +78,8 @@ class CreateAccountViewModel: ObservableObject {
 
 extension CreateAccountViewModel {
     func createAccount() throws -> Account {
-        if passphraseEnabled {
+        let salt: String
+        if advanced, !passphrase.isEmpty || !passphraseConfirmation.isEmpty {
             guard !passphrase.isEmpty else {
                 throw CreateError.emptyPassphrase
             }
@@ -87,19 +87,23 @@ extension CreateAccountViewModel {
             guard passphrase == passphraseConfirmation else {
                 throw CreateError.invalidConfirmation
             }
+
+            salt = passphrase
+        } else {
+            salt = ""
         }
 
         let wordCount = advanced ? wordCount : Self.defaultWordCount
         let words = try Mnemonic.generate(wordCount: wordCount, language: .english)
 
-        return createAccount(words: words, statPage: advanced ? .newWalletAdvanced : .newWallet)
+        return createAccount(words: words, salt: salt, isPasskey: false, statPage: advanced ? .newWalletAdvanced : .newWallet)
     }
 
     func createPasskeyAccount() async throws -> Account {
         let credentialID = try await passkeyManager.create(name: resolvedName)
         let passkey = try await passkeyManager.loginWith(credentialID: credentialID)
 
-        return createAccount(words: passkey.mnemonic, statPage: .newWalletPasskey)
+        return createAccount(words: passkey.mnemonic, salt: "", isPasskey: true, statPage: .newWalletPasskey)
     }
 }
 

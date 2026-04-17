@@ -76,7 +76,7 @@ extension InputTextView {
             Button(action: {
                 secured.wrappedValue.toggle()
             }) {
-                Image(secured.wrappedValue ? "eye_off_20" : "eye_20").themeIcon()
+                ThemeImage(secured.wrappedValue ? "eye_off_20" : "eye_20", size: .iconSize20, colorStyle: .primary)
             }
         }
     }

@@ -10,7 +10,6 @@ struct CreateAccountView: View {
     @State private var secureLock = true
     @State private var passphraseCaution: CautionState = .none
     @State private var passphraseConfirmationCaution: CautionState = .none
-    @State private var passkeyTermsPresented = false
 
     @FocusState private var focusedField: Field?
 
@@ -26,7 +25,7 @@ struct CreateAccountView: View {
                 ScrollView {
                     VStack(spacing: .margin24) {
                         VStack(spacing: 0) {
-                            ListSectionHeader(text: "create_wallet.name".localized)
+                            ListSectionHeader(text: "create_wallet.name".localized, uppercased: false)
 
                             InputTextRow {
                                 InputTextView(
@@ -52,84 +51,74 @@ struct CreateAccountView: View {
 
                             if viewModel.advanced {
                                 ListSection {
-                                    ClickableRow(spacing: .margin8, action: {
-                                        Coordinator.shared.present(type: .alert) { isPresented in
-                                            OptionAlertView(
-                                                title: "create_wallet.phrase_count".localized,
-                                                viewItems: Mnemonic.WordCount.allCases.map {
-                                                    .init(text: title(wordCount: $0), selected: $0 == viewModel.wordCount)
-                                                },
-                                                onSelect: { index in
-                                                    viewModel.wordCount = Mnemonic.WordCount.allCases[index]
-                                                },
-                                                isPresented: isPresented
+                                    Cell(
+                                        middle: {
+                                            MultiText(subtitle: "create_wallet.phrase_count".localized)
+                                        },
+                                        right: {
+                                            ThemeText(
+                                                "create_wallet.n_words".localized("\(viewModel.wordCount.rawValue)"),
+                                                style: .subheadSB
+                                            ).arrow(style: .dropdown)
+                                        },
+                                        action: {
+                                            Coordinator.shared.present(type: .alert) { isPresented in
+                                                OptionAlertView(
+                                                    title: "create_wallet.phrase_count".localized,
+                                                    viewItems: Mnemonic.WordCount.allCases.map {
+                                                        .init(text: title(wordCount: $0), selected: $0 == viewModel.wordCount)
+                                                    },
+                                                    onSelect: { index in
+                                                        viewModel.wordCount = Mnemonic.WordCount.allCases[index]
+                                                    },
+                                                    isPresented: isPresented
+                                                )
+                                            }
+                                        }
+                                    )
+                                }
+
+                                VStack(spacing: 0) {
+                                    ListSectionHeader(text: "create_wallet.passphrase_optional".localized, uppercased: false)
+
+                                    VStack(spacing: .margin16) {
+                                        InputTextRow {
+                                            InputTextView(
+                                                placeholder: "create_wallet.input.add_passphrase".localized,
+                                                text: $viewModel.passphrase,
+                                                isValidText: { text in PassphraseValidator.validate(text: text) }
                                             )
+                                            .secure($secureLock)
+                                            .autocapitalization(.none)
+                                            .autocorrectionDisabled()
+                                            .focused($focusedField, equals: .passphrase)
                                         }
-                                    }) {
-                                        HStack(spacing: .margin16) {
-                                            Image("key_24")
-                                            Text("create_wallet.phrase_count".localized).textBody()
+                                        .modifier(CautionBorder(cautionState: $passphraseCaution))
+                                        .modifier(CautionPrompt(cautionState: $passphraseCaution))
+
+                                        InputTextRow {
+                                            InputTextView(
+                                                placeholder: "create_wallet.input.confirm".localized,
+                                                text: $viewModel.passphraseConfirmation,
+                                                isValidText: { text in PassphraseValidator.validate(text: text) }
+                                            )
+                                            .secure($secureLock)
+                                            .autocapitalization(.none)
+                                            .autocorrectionDisabled()
+                                            .focused($focusedField, equals: .passphraseConfirmation)
                                         }
-
-                                        Spacer()
-
-                                        Text("create_wallet.n_words".localized("\(viewModel.wordCount.rawValue)")).textSubhead1()
-                                        Image("arrow_small_down_20").themeIcon()
+                                        .modifier(CautionBorder(cautionState: $passphraseConfirmationCaution))
+                                        .modifier(CautionPrompt(cautionState: $passphraseConfirmationCaution))
                                     }
-                                }
+                                    .animation(.default, value: secureLock)
 
-                                ListSection {
-                                    ListRow {
-                                        Image("key_phrase_24").themeIcon()
-                                        Toggle(isOn: $viewModel.passphraseEnabled) {
-                                            Text("create_wallet.passphrase".localized).themeBody()
-                                        }
-                                        .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-                                    }
-                                }
-
-                                if viewModel.passphraseEnabled {
-                                    VStack(spacing: 0) {
-                                        VStack(spacing: .margin16) {
-                                            InputTextRow {
-                                                InputTextView(
-                                                    placeholder: "create_wallet.input.passphrase".localized,
-                                                    text: $viewModel.passphrase,
-                                                    isValidText: { text in PassphraseValidator.validate(text: text) }
-                                                )
-                                                .secure($secureLock)
-                                                .autocapitalization(.none)
-                                                .autocorrectionDisabled()
-                                                .focused($focusedField, equals: .passphrase)
-                                            }
-                                            .modifier(CautionBorder(cautionState: $passphraseCaution))
-                                            .modifier(CautionPrompt(cautionState: $passphraseCaution))
-
-                                            InputTextRow {
-                                                InputTextView(
-                                                    placeholder: "create_wallet.input.confirm".localized,
-                                                    text: $viewModel.passphraseConfirmation,
-                                                    isValidText: { text in PassphraseValidator.validate(text: text) }
-                                                )
-                                                .secure($secureLock)
-                                                .autocapitalization(.none)
-                                                .autocorrectionDisabled()
-                                                .focused($focusedField, equals: .passphraseConfirmation)
-                                            }
-                                            .modifier(CautionBorder(cautionState: $passphraseConfirmationCaution))
-                                            .modifier(CautionPrompt(cautionState: $passphraseConfirmationCaution))
-                                        }
-                                        .animation(.default, value: secureLock)
-
-                                        ListSectionFooter(text: "create_wallet.passphrase_description".localized)
-                                    }
+                                    ListSectionFooter(text: "create_wallet.passphrase_description".localized)
                                 }
                             }
                         case .passkey: EmptyView()
                         }
                     }
                     .animation(.default, value: viewModel.advanced)
-                    .animation(.default, value: viewModel.passphraseEnabled)
                     .animation(.default, value: viewModel.wordCount)
                     .animation(.default, value: passphraseCaution)
                     .animation(.default, value: passphraseConfirmationCaution)
@@ -150,12 +139,6 @@ struct CreateAccountView: View {
         .onChange(of: viewModel.passphrase) { _ in clearCautions() }
         .onChange(of: viewModel.passphraseConfirmation) { _ in clearCautions() }
         .navigationTitle("create_wallet.title".localized)
-        .navigationDestination(isPresented: $passkeyTermsPresented) {
-            PasskeyTermsView(onAccept: {
-                passkeyTermsPresented = false
-                proceedCreate()
-            })
-        }
     }
 
     private func title(wordCount: Mnemonic.WordCount) -> String {
@@ -173,15 +156,6 @@ struct CreateAccountView: View {
     private func createAccount() {
         focusedField = nil
 
-        if viewModel.walletType == .passkey, !Core.shared.termsManager.passkeyTermsAccepted {
-            passkeyTermsPresented = true
-            return
-        }
-
-        proceedCreate()
-    }
-
-    private func proceedCreate() {
         Task {
             do {
                 let account: Account
@@ -235,9 +209,10 @@ extension CreateAccountView {
 }
 
 struct PasskeyTermsView: View {
-    let onAccept: () -> Void
+    @Binding var isParentPresented: Bool
 
     @State private var checkedIds = Set<String>()
+    @State private var createAccountPresented = false
 
     private let terms = PasskeyTermsView.Term.allCases
 
@@ -245,17 +220,9 @@ struct PasskeyTermsView: View {
         ThemeView {
             BottomGradientWrapper {
                 ScrollView {
-                    VStack(spacing: .margin24) {
-                        HStack {
-                            ThemeText("passkey_terms.description".localized, style: .subhead)
-                            Spacer()
-                        }
-                        .padding(.horizontal, .margin16)
-
-                        ListSection {
-                            ForEach(terms, id: \.id) { term in
-                                row(term: term, checked: checkedIds.contains(term.id))
-                            }
+                    ListSection {
+                        ForEach(terms, id: \.id) { term in
+                            row(term: term, checked: checkedIds.contains(term.id))
                         }
                     }
                     .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
@@ -263,7 +230,7 @@ struct PasskeyTermsView: View {
             } bottomContent: {
                 Button(action: {
                     Core.shared.termsManager.setPasskeyTermsAccepted()
-                    onAccept()
+                    createAccountPresented = true
                 }) {
                     Text("passkey_terms.button".localized)
                 }
@@ -272,6 +239,9 @@ struct PasskeyTermsView: View {
             }
         }
         .navigationTitle("passkey_terms.title".localized)
+        .navigationDestination(isPresented: $createAccountPresented) {
+            CreateAccountView(walletType: .passkey, isParentPresented: $isParentPresented)
+        }
     }
 
     @ViewBuilder private func row(term: Term, checked: Bool) -> some View {
@@ -300,7 +270,6 @@ struct PasskeyTermsView: View {
 extension PasskeyTermsView {
     enum Term: String, CaseIterable {
         case deviceIcloud
-        case recoverySeed
         case crossPlatform
         case responsibility
 
@@ -309,7 +278,6 @@ extension PasskeyTermsView {
         var title: String {
             switch self {
             case .deviceIcloud: return "passkey_terms.device_icloud.title".localized
-            case .recoverySeed: return "passkey_terms.recovery_seed.title".localized
             case .crossPlatform: return "passkey_terms.cross_platform.title".localized
             case .responsibility: return "passkey_terms.responsibility.title".localized
             }
@@ -318,7 +286,6 @@ extension PasskeyTermsView {
         var description: String {
             switch self {
             case .deviceIcloud: return "passkey_terms.device_icloud.description".localized
-            case .recoverySeed: return "passkey_terms.recovery_seed.description".localized
             case .crossPlatform: return "passkey_terms.cross_platform.description".localized
             case .responsibility: return "passkey_terms.responsibility.description".localized
             }

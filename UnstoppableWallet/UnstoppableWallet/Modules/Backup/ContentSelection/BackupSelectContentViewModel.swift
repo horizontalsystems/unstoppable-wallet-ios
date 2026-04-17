@@ -40,16 +40,24 @@ class BackupSelectContentViewModel: ObservableObject {
 
         return (regular + watch).map { account in
             var cautionType: CautionType?
-            if account.nonStandard {
+            let subtitle: String
+
+            if account.watchAccount {
+                subtitle = account.type.detailedDescription
+            } else if account.nonStandard {
                 cautionType = .error
+                subtitle = "manage_accounts.migration_required".localized
             } else if !(account.backedUp || cloudBackupManager.backedUp(uniqueId: account.type.uniqueId())) {
                 cautionType = .error
+                subtitle = "manage_accounts.backup_required".localized
+            } else {
+                subtitle = account.type.detailedDescription
             }
 
             return BackupModule.WalletItem(
                 accountId: account.id,
                 name: account.name,
-                subtitle: account.type.detailedDescription,
+                subtitle: subtitle,
                 isWatch: account.watchAccount,
                 cautionType: cautionType
             )

@@ -6,8 +6,14 @@ struct BackupManagerView: View {
             VStack(spacing: .margin24) {
                 ListSection {
                     Cell(
+                        left: {
+                            ThemeImage("arrow_in", size: 24)
+                        },
                         middle: {
-                            MultiText(title: "backup_app.backup_manager.restore".localized)
+                            MultiText(
+                                title: "backup_app.backup_manager.restore".localized,
+                                subtitle: "backup_app.backup_manager.restore.description".localized
+                            )
                         },
                         right: {
                             Image.disclosureIcon
@@ -23,8 +29,14 @@ struct BackupManagerView: View {
                         }
                     )
                     Cell(
+                        left: {
+                            ThemeImage("list", size: 24)
+                        },
                         middle: {
-                            MultiText(title: "backup_app.backup_manager.create".localized)
+                            MultiText(
+                                title: "backup_app.backup_manager.create".localized,
+                                subtitle: "backup_app.backup_manager.create.description".localized
+                            )
                         },
                         right: {
                             Image.disclosureIcon

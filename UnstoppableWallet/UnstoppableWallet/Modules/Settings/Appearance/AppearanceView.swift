@@ -72,7 +72,7 @@ struct AppearanceView: View {
                 }
 
                 VStack(spacing: 0) {
-                    ListSectionHeader(text: "appearance.markets_tab".localized)
+                    ListSectionHeader(text: "appearance.markets_tab".localized, uppercased: false)
                     ListSection {
                         Cell(
                             middle: {
@@ -132,7 +132,7 @@ struct AppearanceView: View {
                 }
 
                 VStack(spacing: 0) {
-                    ListSectionHeader(text: "appearance.balance_tab".localized)
+                    ListSectionHeader(text: "appearance.balance_tab".localized, uppercased: false)
 
                     ListSection {
                         Cell(
@@ -175,7 +175,7 @@ struct AppearanceView: View {
                 }
 
                 VStack(spacing: 0) {
-                    ListSectionHeader(text: "appearance.send_screen".localized)
+                    ListSectionHeader(text: "appearance.send_screen".localized, uppercased: false)
                     ListSection {
                         Cell(
                             middle: {
@@ -189,7 +189,7 @@ struct AppearanceView: View {
                 }
 
                 VStack(spacing: 0) {
-                    ListSectionHeader(text: "appearance.app_icon".localized)
+                    ListSectionHeader(text: "appearance.app_icon".localized, uppercased: false)
                     ListSection {
                         LazyVGrid(columns: [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())], spacing: .margin16) {
                             ForEach(AppIconManager.allAppIcons, id: \.self) { appIcon in

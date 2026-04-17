@@ -24,7 +24,7 @@ struct RestorePassphraseView: View {
         ThemeView {
             BottomGradientWrapper {
                 ScrollView {
-                    VStack(spacing: .margin32) {
+                    VStack(spacing: .margin24) {
                         HStack {
                             ThemeText("restore.cloud.password.description".localized, style: .subhead)
                             Spacer()

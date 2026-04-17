@@ -19,6 +19,7 @@ struct BackupContentListView: View {
                             Spacer()
                         }
                         .padding(.horizontal, .margin16)
+                        .padding(.bottom, .margin12)
 
                         if !walletItems.isEmpty {
                             ListSection(header: "backup_content.header.wallets".localized, uppercased: false) {
