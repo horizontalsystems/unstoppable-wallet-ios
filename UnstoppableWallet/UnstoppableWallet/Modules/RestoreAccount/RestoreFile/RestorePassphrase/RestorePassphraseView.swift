@@ -67,16 +67,13 @@ struct RestorePassphraseView: View {
         .navigationTitle(viewModel.restoredBackup.name)
         .navigationDestination(isPresented: $restoreSelectPresented) {
             if let restoreSelectAccount {
-                RestoreSelectWrapper(
+                RestoreCoinsView(
                     accountName: restoreSelectAccount.name,
                     accountType: restoreSelectAccount.type,
-                    statPage: .importWallet,
                     isManualBackedUp: restoreSelectAccount.backedUp,
                     isFileBackedUp: restoreSelectAccount.fileBackedUp,
-                    onRestore: { isParentPresented = false }
+                    isParentPresented: $isParentPresented
                 )
-                .ignoresSafeArea()
-                .navigationTitle("restore.title".localized)
             }
         }
         .navigationDestination(isPresented: $configurationPresented) {

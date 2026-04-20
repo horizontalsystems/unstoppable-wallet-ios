@@ -32,7 +32,7 @@ class RestoreMnemonicViewModel: ObservableObject {
     @Published var advanced = false
     @Published var buttonEnabled = true
 
-    private let proceedSubject = PassthroughSubject<(String, [AccountType]), Never>()
+    private let proceedSubject = PassthroughSubject<(String, AccountType), Never>()
     private let replaceWordSubject = PassthroughSubject<(NSRange, String), Never>()
     private let clearPassphraseSubject = PassthroughSubject<Void, Never>()
 
@@ -133,7 +133,7 @@ class RestoreMnemonicViewModel: ObservableObject {
 // MARK: - Public interface
 
 extension RestoreMnemonicViewModel {
-    var proceedPublisher: AnyPublisher<(String, [AccountType]), Never> { proceedSubject.eraseToAnyPublisher() }
+    var proceedPublisher: AnyPublisher<(String, AccountType), Never> { proceedSubject.eraseToAnyPublisher() }
     var replaceWordPublisher: AnyPublisher<(NSRange, String), Never> { replaceWordSubject.eraseToAnyPublisher() }
     var clearPassphrasePublisher: AnyPublisher<Void, Never> { clearPassphraseSubject.eraseToAnyPublisher() }
 
@@ -203,7 +203,7 @@ extension RestoreMnemonicViewModel {
 
         do {
             let accountType = try resolveAccountType(words: mnemonicItems.map(\.word))
-            proceedSubject.send((resolvedName, [accountType]))
+            proceedSubject.send((resolvedName, accountType))
         } catch let ErrorList.errors(errors) {
             for error in errors {
                 if case RestoreError.emptyPassphrase = error {
