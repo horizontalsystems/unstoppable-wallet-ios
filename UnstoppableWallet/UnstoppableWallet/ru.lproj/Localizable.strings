@@ -9,6 +9,7 @@
 "button.import" = "Импорт";
 "button.next" = "Далее";
 "button.delete" = "Удалить";
+"button.replace" = "Заменить";
 "button.share" = "Поделиться";
 "button.paste" = "Вставить";
 "button.gallery" = "Галерея";
@@ -165,27 +166,23 @@
 
 // Restore Type
 
-"restore_type.title" = "Импорт кошелька";
 "restore_type.recovery.title" = "Фраза восстановления";
 "restore_type.passkey.title" = "Через Passkey";
 "restore_type.backup.title" = "из резервной копии";
 
 "restore_type.recovery.description" = "Импорт с помощью фразы восстановления или приватного ключа.";
 "restore_type.passkey.description" = "Восстановите кошелёк с помощью устройства и учётной записи iCloud.";
-"restore_type.backup.description" = "Импорт из резервной копии iCloud или файла";
+"restore_type.backup.description" = "Восстановите кошелёк из файла резервной копии на вашем устройстве или в облаке.";
 
 // Restore Cloud
 
-"restore.cloud.title" = "Выберите резервную копию";
-"restore.cloud.description" = "Выберите файл резервной копии, который вы хотите восстановить.";
+"restore.cloud.title" = "Резервные копии";
+"restore.cloud.description" = "Выберите резервную копию для восстановления кошелька или импортируйте её из Файлов на вашем устройстве.";
 "restore.cloud.empty" = "Резервные копии не найдены.";
-"restore.cloud.wallets" = "Резервные копии кошелька";
-"restore.cloud.imported" = "Импортированные кошельки";
-"restore.cloud.app_backups" = "Резервные копии приложений";
+"restore.cloud.full" = "Полная";
 
-"restore.cloud.password.title" = "Введите пароль";
 "restore.cloud.password.placeholder" = "Пароль резервной копии";
-"restore.cloud.password.description" = "Введите пароль для импорта резервной копии";
+"restore.cloud.password.description" = "Введите пароль для этого файла резервной копии, чтобы восстановить данные.";
 
 // Coin Settings
 
@@ -314,6 +311,7 @@
 "balance.stopped" = "Остановлено";
 "balance.downloading_sapling" = "Загрузка...";
 "balance.watch_wallet" = "Просмотр кошелька";
+"balance.watch_wallet.typed" = "%@ кошелёк наблюдения";
 
 "balance.add_wallet" = "Добавить кошелёк";
 
@@ -1452,6 +1450,8 @@
 
 "manage_wallets.title" = "Токены";
 "manage_wallets.not_found" = "Ничего не найдено. Попробуйте добавить токен вручную.";
+"manage_wallets.empty" = "Нет активных кошельков";
+"manage_accounts.not_found" = "Результаты не найдены.";
 "manage_wallets.search_placeholder" = "Имя, код или адрес контракта";
 "manage_wallets.contract_address" = "Адрес контракта";
 "manage_wallets.derivation_description" = "Существует 4 распространенных формата адресов %@ кошельков для получения входящих платежей:\n\n- BIP44 (более старый)\n- BIP49\n- BIP84 (рекомендованный)\n- BIP86 (самый новый)\n\nХотя кошелек %@ поддерживает все четыре формата, рекомендуется использовать %@ кошелек, работающий в формате BIP84.";
@@ -1485,27 +1485,36 @@
 
 "backup_app.backup_manager.title" = "Резерв.копирование";
 "backup_app.backup_manager.restore" = "Восстановить резервную копию";
+"backup_app.backup_manager.restore.description" = "Восстановите кошелёк и данные приложения из файла резервной копии.";
 "backup_app.backup_manager.create" = "Создать новую резерв. копию";
+"backup_app.backup_manager.create.description" = "Создайте файл резервной копии ваших кошельков и данных приложения.";
 
 "backup_app.backup_type.title" = "Сохранить резервную копию";
 "backup_app.backup_type.cloud" = "в iCloud";
-"backup_app.backup_type.cloud.description" = "Сохранение файла резервной копии в вашем keychain.";
+"backup_app.backup_type.cloud.description" = "Сохраните файл резервной копии в хранилище iCloud.";
 "backup_app.backup_type.file" = "в файлы";
 "backup_app.backup_type.file.description" = "Сохранение файла резервной копии в локальную папку.";
 
-"backup_app.backup_list.title" = "Файл резервной копии";
-"backup_app.backup_list.description" = "Выберите кошельки для включения в резервную копию. Данные приложения будут сохранены автоматически.";
-"backup_app.backup_list.description.restore" = "Список содержимого в файле резервной копии.";
-"backup_app.backup_list.header.wallets" = "Кошельки";
-"backup_app.backup_list.header.other" = "Другое";
-"backup_app.backup_list.other.watch_account.title" = "Просмотр кошелька";
-"backup_app.backup_list.other.watchlist.title" = "Избранное";
-"backup_app.backup_list.other.contacts.title" = "Контакты";
-"backup_app.backup_list.other.custom_evm_sync_sources.title" = "Пользовательские RPC";
-"backup_app.backup_list.other.custom_monero_nodes.title" = "Пользовательские узлы Monero";
-"backup_app.backup_list.other.custom_zano_nodes.title" = "Пользовательские ноды Zano";
-"backup_app.backup_list.other.app_settings.title" = "Настройки приложения";
-"backup_app.backup_list.other.app_settings.description" = "Язык, валюта, внешний вид ...";
+// Backup Content Selection
+
+"backup_content.title.create" = "Создать резервную копию";
+"backup_content.description.backup" = "Выберите, что включить в резервную копию. Вы можете сохранить все или только выбранные элементы.";
+"backup_content.description.restore" = "Выберите, что восстановить. Вы можете восстановить всё или только выбранные элементы.";
+
+"backup_content.header.wallets" = "Кошельки";
+"backup_content.header.data" = "Данные";
+
+"backup_content.data.contacts.title" = "Контакты";
+"backup_content.data.contacts.subtitle" = "%d сохранённых адресов";
+
+"backup_content.data.favorites.title" = "Избранное";
+"backup_content.data.favorites.subtitle" = "%d активов";
+
+"backup_content.data.custom_rpc.title" = "Пользовательский RPC";
+"backup_content.data.custom_rpc.subtitle" = "%d сетей";
+
+"backup_content.data.preferences.title" = "Настройки";
+"backup_content.data.preferences.subtitle" = "Язык, Валюта, Оформление...";
 
 "backup_app.backup.disclaimer.cloud.title" = "Резерв. копирование в iCloud";
 "backup_app.backup.disclaimer.cloud.description" = "iCloud - это облачный сервис для хранения данных, предоставляемый компанией Apple. Важно знать, что ваши данные резервной копии будут сохранены на серверах Apple.";
@@ -1531,8 +1540,7 @@
 
 "backup_app.restore_type.title" = "Восстановить";
 
-"backup_app.restore.notice.description" = "Это действие перезапишет ваши локальные контакты для платежей, а также копию в iCloud (если таковая имеется)";
-"backup_app.restore.notice.merge" = "Заменить";
+"backup_app.restore.notice.description" = "Сохранённые контакты будут заменены данными из резервной копии.";
 
 "backup.password.title" = "Пароль резервной копии";
 "backup.password.description" = "Установите пароль разблокировки для вашей резервной копии. Пароль должен содержать как минимум 8 символов и включать хотя бы одну строчную букву, заглавную букву, цифру и специальный символ.";
@@ -1832,12 +1840,28 @@
 "create_wallet.n_words" = "%@ слов";
 "create_wallet.word_list" = "Список слов";
 "create_wallet.passphrase" = "Кодовая фраза";
-"create_wallet.input.passphrase" = "Кодовая фраза";
+"create_wallet.passphrase_optional" = "Пароль-фраза (необязательно)";
+"create_wallet.input.passphrase" = "Добавить пароль-фразу";
 "create_wallet.input.confirm" = "Подтвердить";
-"create_wallet.passphrase_description" = "Think of passphrases as your wallet's secret handshake. If you ever need to bring back a lost wallet, you'll need the recovery phrase and this passphrase. Plus, with just one mnemonic, you can unlock a bunch of multi-coin wallets with different passphrases. Neat, right?";
+"create_wallet.passphrase_description" = "Добавляет дополнительную защиту вашему кошельку. Требуется вместе с фразой восстановления для восстановления доступа.";
 "create_wallet.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
 "create_wallet.error.forbidden_symbols" = "Hold on there, cowboy! Let's stick to the symbols we know and love::A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
-"create_wallet.error.invalid_confirmation" = "Hmm, your passphrase confirmations aren't matching. Let's try that again.";
+"create_wallet.error.invalid_confirmation" = "Пароль-фраза не совпадает";
+
+// Passkey Wallet Terms
+
+"passkey_terms.title" = "Условия Passkey-кошелька";
+
+"passkey_terms.device_icloud.title" = "Зависимость от устройства и iCloud";
+"passkey_terms.device_icloud.description" = "Для доступа требуется ваше устройство и iCloud. Потеря доступа может привести к потере средств.";
+
+"passkey_terms.cross_platform.title" = "Ограниченный кросс-платформенный доступ";
+"passkey_terms.cross_platform.description" = "Может не работать на устройствах, отличных от Apple.";
+
+"passkey_terms.responsibility.title" = "Ответственность";
+"passkey_terms.responsibility.description" = "Вы несёте ответственность за доступ к своему устройству и iCloud. Unstoppable не сможет восстановить этот кошелёк в случае потери доступа.";
+
+"passkey_terms.button" = "Я понимаю и продолжаю";
 
 // Restore Select
 

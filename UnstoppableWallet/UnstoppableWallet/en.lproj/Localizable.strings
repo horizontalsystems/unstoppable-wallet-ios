@@ -125,9 +125,6 @@
 "powered_by" = "Powered by %@";
 
 "filter.all" = "All";
-"filter.mnemonic" = "Mnemonic";
-"filter.private_key" = "Private Key";
-"filter.watch" = "Watch";
 
 "not_activated" = "Not Activated";
 

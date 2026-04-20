@@ -9,6 +9,7 @@
 "button.import" = "복구";
 "button.next" = "다음";
 "button.delete" = "삭제";
+"button.replace" = "교체";
 "button.share" = "공유";
 "button.paste" = "불여넣기";
 "button.gallery" = "갤러리";
@@ -165,27 +166,23 @@
 
 // Restore Type
 
-"restore_type.title" = "다음에서 복원하기";
 "restore_type.recovery.title" = "복구 문구에서";
 "restore_type.passkey.title" = "패스키로 복원";
 "restore_type.backup.title" = "백업에서";
 
 "restore_type.recovery.description" = "이 문구는 복구 문구 또는 개인 키를 사용하여 가져올 수 있습니다.";
 "restore_type.passkey.description" = "기기와 iCloud 계정을 사용하여 지갑을 복원합니다.";
-"restore_type.backup.description" = "iCloud 또는 파일에서 백업을 가져옵니다";
+"restore_type.backup.description" = "기기 또는 클라우드의 백업 파일을 사용하여 지갑을 복원하세요.";
 
 // Restore Cloud
 
-"restore.cloud.title" = "백업 선택";
-"restore.cloud.description" = "복원하려는 백업 파일을 선택하세요.";
+"restore.cloud.title" = "백업";
+"restore.cloud.description" = "지갑을 복원할 백업을 선택하거나, 기기의 파일에서 가져오세요.";
 "restore.cloud.empty" = "백업이 없습니다.";
-"restore.cloud.wallets" = "지갑 백업";
-"restore.cloud.imported" = "수입 지갑";
-"restore.cloud.app_backups" = "앱 백업";
+"restore.cloud.full" = "전체";
 
-"restore.cloud.password.title" = "암호를 입력하세요";
 "restore.cloud.password.placeholder" = "백업 비밀번호";
-"restore.cloud.password.description" = "백업을 가져오기 위해 비밀번호를 입력하세요";
+"restore.cloud.password.description" = "이 백업 파일의 비밀번호를 입력하여 데이터를 복원하세요.";
 
 // Coin Settings
 
@@ -314,6 +311,7 @@
 "balance.stopped" = "은행 정지";
 "balance.downloading_sapling" = "다운로드 중...";
 "balance.watch_wallet" = "조회 전용 지갑";
+"balance.watch_wallet.typed" = "%@ 감시 지갑";
 
 "balance.add_wallet" = "지갑 추가";
 
@@ -1452,6 +1450,8 @@
 
 "manage_wallets.title" = "지갑";
 "manage_wallets.not_found" = "검색 결과가 없습니다. 토큰을 수동으로 추가해 보십시오.";
+"manage_wallets.empty" = "활성 지갑 없음";
+"manage_accounts.not_found" = "결과를 찾을 수 없습니다.";
 "manage_wallets.search_placeholder" = "이름, 코드 또는 계약 주소";
 "manage_wallets.contract_address" = "계약 주소";
 "manage_wallets.derivation_description" = "%@ 지갑이 입금을 받는 데 사용할 수 있는 4가지 일반적인 주소 형식이 있습니다.\n\n- BIP44(이전)\n- BIP49\n- BIP84(추천)\n- BIP86(최신)\n\n%@ 지갑은 이 4가지 모두를 지원합니다. BIP84 형식으로 작동하는 %@ 지갑을 사용하는 것이 좋습니다.";
@@ -1485,27 +1485,36 @@
 
 "backup_app.backup_manager.title" = "백업 관리자";
 "backup_app.backup_manager.restore" = "백업 복원";
+"backup_app.backup_manager.restore.description" = "백업 파일에서 지갑과 앱 데이터를 복원하세요.";
 "backup_app.backup_manager.create" = "새로운 백업 생성";
+"backup_app.backup_manager.create.description" = "지갑과 앱 데이터의 백업 파일을 생성하세요.";
 
 "backup_app.backup_type.title" = "백업 저장";
 "backup_app.backup_type.cloud" = "iCloud로";
-"backup_app.backup_type.cloud.description" = "백업 복사 파일을 키체인에 저장합니다.";
+"backup_app.backup_type.cloud.description" = "iCloud 저장소에 백업 파일을 저장하세요.";
 "backup_app.backup_type.file" = "파일로 저장";
 "backup_app.backup_type.file.description" = "백업 복사 파일을 로컬 폴더에 저장합니다.";
 
-"backup_app.backup_list.title" = "백업 파일";
-"backup_app.backup_list.description" = "백업에 포함할 지갑을 선택하세요. 앱 데이터는 자동으로 백업됩니다.";
-"backup_app.backup_list.description.restore" = "백업 파일의 내용 목록";
-"backup_app.backup_list.header.wallets" = "지갑";
-"backup_app.backup_list.header.other" = "기타";
-"backup_app.backup_list.other.watch_account.title" = "관찰 주소";
-"backup_app.backup_list.other.watchlist.title" = "관심 목록";
-"backup_app.backup_list.other.contacts.title" = "연락처";
-"backup_app.backup_list.other.custom_evm_sync_sources.title" = "사용자 지정 RPC";
-"backup_app.backup_list.other.custom_monero_nodes.title" = "사용자 지정 Monero 노드";
-"backup_app.backup_list.other.custom_zano_nodes.title" = "사용자 지정 Zano 노드";
-"backup_app.backup_list.other.app_settings.title" = "앱 설정";
-"backup_app.backup_list.other.app_settings.description" = "언어, 통화, 외관...";
+// Backup Content Selection
+
+"backup_content.title.create" = "백업 생성";
+"backup_content.description.backup" = "백업에 포함할 항목을 선택하세요. 전체 또는 선택한 항목만 백업할 수 있습니다.";
+"backup_content.description.restore" = "복원할 항목을 선택하세요. 전체 또는 선택한 항목만 복원할 수 있습니다.";
+
+"backup_content.header.wallets" = "지갑";
+"backup_content.header.data" = "데이터";
+
+"backup_content.data.contacts.title" = "연락처";
+"backup_content.data.contacts.subtitle" = "저장된 주소 %d개";
+
+"backup_content.data.favorites.title" = "즐겨찾기";
+"backup_content.data.favorites.subtitle" = "자산 %d개";
+
+"backup_content.data.custom_rpc.title" = "커스텀 RPC";
+"backup_content.data.custom_rpc.subtitle" = "네트워크 %d개";
+
+"backup_content.data.preferences.title" = "환경설정";
+"backup_content.data.preferences.subtitle" = "언어, 통화, 외관...";
 
 "backup_app.backup.disclaimer.cloud.title" = "iCloud에 백업";
 "backup_app.backup.disclaimer.cloud.description" = "iCloud는 Apple에서 제공하는 클라우드 저장소 서비스입니다. 귀하의 백";
@@ -1531,8 +1540,7 @@
 
 "backup_app.restore_type.title" = "복구";
 
-"backup_app.restore.notice.description" = "이 작업은 로컬 결제 연락처와 iCloud 복사본(있는 경우)을 덮어씁니다.";
-"backup_app.restore.notice.merge" = "위젯 변경";
+"backup_app.restore.notice.description" = "저장된 연락처가 백업 데이터로 대체됩니다.";
 
 "backup.password.title" = "백업 비밀번호";
 "backup.password.description" = "백업에 대한 잠금 해제 암호를 설정하십시오. 최소 8개의 기호로 구성되어야 하며 소문자, 대문자, 숫자 및 특수 문자가 하나 이상 포함되어야 합니다.";
@@ -1832,12 +1840,28 @@
 "create_wallet.n_words" = "%@ 단어";
 "create_wallet.word_list" = "단어 목록";
 "create_wallet.passphrase" = "암호문구";
-"create_wallet.input.passphrase" = "암호문구";
+"create_wallet.passphrase_optional" = "패스프레이즈 (선택사항)";
+"create_wallet.input.passphrase" = "패스프레이즈 추가";
 "create_wallet.input.confirm" = "확인";
-"create_wallet.passphrase_description" = "암호는 지갑에 대한 추가 보안 계층을 추가합니다. 이러한 지갑을 복원하려면 사용자는 니모닉과 암호가 모두 필요했습니다.\n\n암호는 또한 사용자가 하나의 니모닉을 사용하지만 다른 암호를 사용하여 여러 코인 지갑을 쉽게 가질 수 있도록 합니다.";
+"create_wallet.passphrase_description" = "지갑에 추가 보호를 제공합니다. 접근 복원 시 복구 문구와 함께 필요합니다.";
 "create_wallet.error.empty_passphrase" = "암호 문구는 필수 입력 사항입니다";
 "create_wallet.error.forbidden_symbols" = "지원되는 기호만 사용하세요: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
-"create_wallet.error.invalid_confirmation" = "암호 확인이 일치하지 않습니다";
+"create_wallet.error.invalid_confirmation" = "패스프레이즈가 일치하지 않습니다";
+
+// Passkey Wallet Terms
+
+"passkey_terms.title" = "Passkey 지갑 이용약관";
+
+"passkey_terms.device_icloud.title" = "기기 및 iCloud 의존성";
+"passkey_terms.device_icloud.description" = "접근하려면 기기와 iCloud가 필요합니다. 접근 권한을 잃으면 자금 손실이 발생할 수 있습니다.";
+
+"passkey_terms.cross_platform.title" = "제한된 크로스 플랫폼 접근";
+"passkey_terms.cross_platform.description" = "Apple 이외의 기기에서는 작동하지 않을 수 있습니다.";
+
+"passkey_terms.responsibility.title" = "책임";
+"passkey_terms.responsibility.description" = "기기 및 iCloud 접근에 대한 책임은 사용자에게 있습니다. 접근 권한을 잃을 경우 Unstoppable은 이 지갑을 복구할 수 없습니다.";
+
+"passkey_terms.button" = "이해했으며 계속합니다";
 
 // Restore Select
 
