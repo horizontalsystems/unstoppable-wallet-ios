@@ -113,7 +113,7 @@ extension RestoreCoinsViewModel {
         )
     }
 
-    func restore(onRestore: @escaping () -> Void) {
+    func restore() {
         let account = accountFactory.account(
             type: accountType,
             origin: .restored,
@@ -127,10 +127,6 @@ extension RestoreCoinsViewModel {
             restoreSettingsManager.save(settings: settings, account: account, blockchainType: token.blockchainType)
         }
 
-        guard !enabledTokens.isEmpty else {
-            return
-        }
-
         for blockchainType in Set(enabledTokens.map(\.blockchainType)) {
             restoreStateManager.setShouldRestore(account: account, blockchainType: blockchainType)
         }
@@ -139,8 +135,6 @@ extension RestoreCoinsViewModel {
         walletManager.save(wallets: wallets)
 
         stat(page: .importWallet, event: .importWallet(walletType: accountType.statDescription))
-        HudHelper.instance.show(banner: .imported)
-        onRestore()
     }
 }
 
