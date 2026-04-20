@@ -7,6 +7,7 @@ struct RestoreTypeView: View {
     var showClose: Bool = false
 
     @State private var recoveryPhrasePresented = false
+    @State private var privateKeyPresented = false
     @State private var backupPresented = false
 
     @State private var passkeyLogin: RestoreTypeViewModel.PasskeyLogin?
@@ -23,9 +24,10 @@ struct RestoreTypeView: View {
         }
         .navigationTitle("restore.title".localized)
         .navigationDestination(isPresented: $recoveryPhrasePresented) {
-            RestoreViewWrapper(onRestore: { isParentPresented = false })
-                .ignoresSafeArea()
-                .navigationTitle("restore.title".localized)
+            RestoreMnemonicView(isParentPresented: $isParentPresented)
+        }
+        .navigationDestination(isPresented: $privateKeyPresented) {
+            RestorePrivateKeyView(isParentPresented: $isParentPresented)
         }
         .navigationDestination(isPresented: $backupPresented) {
             RestoreBackupListView(isParentPresented: $isParentPresented)
@@ -35,7 +37,7 @@ struct RestoreTypeView: View {
                 RestoreCoinsView(
                     accountName: passkeyLogin.accountName,
                     accountType: passkeyLogin.accountType,
-                    onRestore: { isParentPresented = false }
+                    isParentPresented: $isParentPresented
                 )
             }
         }
@@ -71,8 +73,11 @@ struct RestoreTypeView: View {
 
     private func handleSelect(restoreType: RestoreType) {
         switch restoreType {
-        case .recoveryOrPrivateKey:
+        case .recoveryPhrase:
             recoveryPhrasePresented = true
+            stat(page: .importWallet, event: .open(page: .importWalletFromKey))
+        case .privateKey:
+            privateKeyPresented = true
             stat(page: .importWallet, event: .open(page: .importWalletFromKey))
         case .passkey:
             Task {
@@ -94,34 +99,14 @@ struct RestoreTypeView: View {
             }
         case .backup:
             backupPresented = true
-            // if viewModel.isCloudAvailable {
-            //     stat(page: isWallet ? .importWallet : .importFull, event: .open(page: isWallet ? .importWalletFromCloud : .importFullFromCloud))
-            // } else {
-            //     showCloudNotAvailable()
-            // }
         }
     }
-
-    // private func showCloudNotAvailable() {
-    //     Coordinator.shared.present(type: .bottomSheet) { isPresented in
-    //         BottomSheetView(
-    //             items: [
-    //                 .title(icon: ComponentImage("icloud_24", size: .iconSize72, colorStyle: .yellow), title: "backup.cloud.no_access.title".localized),
-    //                 .warning(text: "backup.cloud.no_access.description".localized),
-    //                 .buttonGroup(.init(buttons: [
-    //                     .init(style: .yellow, title: "button.ok".localized) {
-    //                         isPresented.wrappedValue = false
-    //                     },
-    //                 ])),
-    //             ]
-    //         )
-    //     }
-    // }
 }
 
 extension RestoreTypeView {
     private enum RestoreType: String, Identifiable, CaseIterable {
-        case recoveryOrPrivateKey
+        case recoveryPhrase
+        case privateKey
         case passkey
         case backup
 
@@ -131,7 +116,8 @@ extension RestoreTypeView {
 
         var title: String {
             switch self {
-            case .recoveryOrPrivateKey: return "restore_type.recovery.title".localized
+            case .recoveryPhrase: return "restore_type.recovery.title".localized
+            case .privateKey: return "restore_type.private_key.title".localized
             case .passkey: return "restore_type.passkey.title".localized
             case .backup: return "restore_type.backup.title".localized
             }
@@ -139,7 +125,8 @@ extension RestoreTypeView {
 
         var description: String {
             switch self {
-            case .recoveryOrPrivateKey: return "restore_type.recovery.description".localized
+            case .recoveryPhrase: return "restore_type.recovery.description".localized
+            case .privateKey: return "restore_type.private_key.description".localized
             case .passkey: return "restore_type.passkey.description".localized
             case .backup: return "restore_type.backup.description".localized
             }
@@ -147,7 +134,8 @@ extension RestoreTypeView {
 
         var icon: String {
             switch self {
-            case .recoveryOrPrivateKey: return "pen"
+            case .recoveryPhrase: return "pen"
+            case .privateKey: return "key_24"
             case .passkey: return "face_id"
             case .backup: return "cloud"
             }

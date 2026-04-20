@@ -6,7 +6,6 @@ import UIKit
 class TextInputCell: UITableViewCell {
     private static let minimalTextHeight: CGFloat = 64
 
-    private let horizontalMargin: CGFloat = .margin16
     private let textViewEdgeInsets = UIEdgeInsets(top: .margin12, left: .margin12, bottom: .margin48, right: .margin12)
     let textViewFont: UIFont = .body
     let textViewTextColor: UIColor = .themeLeah
@@ -46,7 +45,7 @@ class TextInputCell: UITableViewCell {
 
         contentView.addSubview(textView)
         textView.snp.makeConstraints { maker in
-            maker.leading.trailing.equalToSuperview().inset(horizontalMargin)
+            maker.leading.trailing.equalToSuperview()
             maker.top.bottom.equalToSuperview()
         }
 
@@ -181,7 +180,7 @@ class TextInputCell: UITableViewCell {
     }
 
     func cellHeight(containerWidth: CGFloat) -> CGFloat {
-        let textWidth = containerWidth - 2 * horizontalMargin - textViewEdgeInsets.width - 2 * textView.textContainer.lineFragmentPadding
+        let textWidth = containerWidth - textViewEdgeInsets.width - 2 * textView.textContainer.lineFragmentPadding
         let textHeight = textForHeight.height(forContainerWidth: textWidth, font: textViewFont)
         return max(Self.minimalTextHeight, textHeight) + textViewEdgeInsets.height
     }

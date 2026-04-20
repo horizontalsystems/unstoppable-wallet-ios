@@ -4,15 +4,14 @@ import SwiftUI
 
 struct RestoreCoinsView: View {
     @StateObject private var viewModel: RestoreCoinsViewModel
-
-    private let onRestore: () -> Void
+    @Binding private var isParentPresented: Bool
 
     init(
         accountName: String,
         accountType: AccountType,
         isManualBackedUp: Bool = true,
         isFileBackedUp: Bool = false,
-        onRestore: @escaping () -> Void
+        isParentPresented: Binding<Bool>
     ) {
         _viewModel = StateObject(wrappedValue: RestoreCoinsViewModel(
             accountName: accountName,
@@ -20,7 +19,7 @@ struct RestoreCoinsView: View {
             isManualBackedUp: isManualBackedUp,
             isFileBackedUp: isFileBackedUp
         ))
-        self.onRestore = onRestore
+        _isParentPresented = isParentPresented
     }
 
     var body: some View {
@@ -35,7 +34,10 @@ struct RestoreCoinsView: View {
         .toolbar {
             ToolbarItem(placement: .primaryAction) {
                 Button("button.import".localized) {
-                    viewModel.restore(onRestore: onRestore)
+                    viewModel.restore()
+
+                    HudHelper.instance.show(banner: .imported)
+                    isParentPresented = false
                 }
                 .disabled(!viewModel.canRestore)
                 .tint(.themeJacob)

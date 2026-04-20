@@ -1,107 +1,150 @@
+import Combine
 import Foundation
 import HdWalletKit
-import RxCocoa
-import RxRelay
-import RxSwift
 
-class RestoreMnemonicViewModel {
-    private let service: RestoreMnemonicService
-    private let disposeBag = DisposeBag()
+class RestoreMnemonicViewModel: ObservableObject {
+    private let accountFactory = Core.shared.accountFactory
 
-    private let possibleWordsRelay = BehaviorRelay<[String]>(value: [])
-    private let invalidRangesRelay = BehaviorRelay<[NSRange]>(value: [])
-    private let replaceWordRelay = PublishRelay<(NSRange, String)>()
+    // MARK: - Mnemonic state
 
-    private let mnemonicCautionRelay = BehaviorRelay<Caution?>(value: nil)
-    private let wordListLanguageRelay = BehaviorRelay<String>(value: "")
-    private let passphraseCautionRelay = BehaviorRelay<Caution?>(value: nil)
-    private let clearInputsRelay = PublishRelay<Void>()
-
+    private var wordList: [String] = Mnemonic.wordList(for: .english).map(String.init)
+    private let regex = try! NSRegularExpression(pattern: "\\S+")
+    private var mnemonicItems: [WordItem] = []
+    private var selectedLanguage: Mnemonic.Language = .english
+    private var passphrase: String = ""
     private var cursorOffset = 0
 
-    init(service: RestoreMnemonicService) {
-        self.service = service
+    // MARK: - Published
 
-        subscribe(disposeBag, service.wordListLanguageObservable) { [weak self] in self?.sync(wordListLanguage: $0) }
-        sync(wordListLanguage: service.wordListLanguage)
+    @Published var name: String
+    @Published var possibleWords: [String] = []
+    @Published var invalidRanges: [NSRange] = []
+    @Published var mnemonicCaution: CautionState = .none
+    @Published var passphraseEnabled = false
+    @Published var wordListLanguage: String = ""
+    @Published var passphraseCaution: CautionState = .none
+
+    private let proceedSubject = PassthroughSubject<(String, [AccountType]), Never>()
+    private let replaceWordSubject = PassthroughSubject<(NSRange, String), Never>()
+    private let clearPassphraseSubject = PassthroughSubject<Void, Never>()
+
+    init() {
+        name = accountFactory.nextAccountName
+        wordListLanguage = displayName(language: selectedLanguage)
     }
 
-    private func sync(wordListLanguage: Mnemonic.Language) {
-        wordListLanguageRelay.accept(service.displayName(wordList: wordListLanguage))
-    }
+    // MARK: - Private helpers
 
-    private func clearInputs() {
-        clearInputsRelay.accept(())
-        clearCautions()
-
-        service.passphrase = ""
-    }
-
-    private func clearCautions() {
-        if passphraseCautionRelay.value != nil {
-            passphraseCautionRelay.accept(nil)
+    private func languageCode(for language: Mnemonic.Language) -> String {
+        switch language {
+        case .english: return "en"
+        case .japanese: return "ja"
+        case .korean: return "ko"
+        case .spanish: return "es"
+        case .simplifiedChinese: return "zh-Hans"
+        case .traditionalChinese: return "zh-Hant"
+        case .french: return "fr"
+        case .italian: return "it"
+        case .czech: return "cs"
+        case .portuguese: return "pt"
         }
     }
 
-    private func hasCursor(item: RestoreMnemonicService.WordItem) -> Bool {
+    private func displayName(language: Mnemonic.Language) -> String {
+        LanguageManager.shared.displayName(language: languageCode(for: language)) ?? "\(language)"
+    }
+
+    private func syncMnemonicItems(text: String) {
+        let matches = regex.matches(in: text, range: NSRange(location: 0, length: (text as NSString).length))
+
+        mnemonicItems = matches.compactMap { match in
+            guard let range = Range(match.range, in: text) else { return nil }
+            let word = String(text[range]).lowercased()
+            let type: WordItemType
+
+            if wordList.contains(word) {
+                type = .correct
+            } else if wordList.contains(where: { $0.hasPrefix(word) }) {
+                type = .correctPrefix
+            } else {
+                type = .incorrect
+            }
+
+            return WordItem(word: word, range: match.range, type: type)
+        }
+    }
+
+    private func possibleMnemonicWords(string: String) -> [String] {
+        wordList.filter { $0.hasPrefix(string) }
+    }
+
+    private func hasCursor(item: WordItem) -> Bool {
         cursorOffset >= item.range.lowerBound && cursorOffset <= item.range.upperBound
     }
 
-    private var cursorItem: RestoreMnemonicService.WordItem? {
-        service.items.first { hasCursor(item: $0) }
+    private var cursorItem: WordItem? {
+        mnemonicItems.first { hasCursor(item: $0) }
+    }
+
+    private func clearInputs() {
+        clearPassphraseSubject.send()
+        passphraseCaution = .none
+        passphrase = ""
+    }
+
+    private var resolvedName: String {
+        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? accountFactory.nextAccountName : trimmed
+    }
+
+    private func resolveAccountType(words: [String]) throws -> AccountType {
+        var errors = [Error]()
+        if passphraseEnabled, passphrase.isEmpty {
+            errors.append(RestoreError.emptyPassphrase)
+        }
+        do {
+            try Mnemonic.validate(words: words)
+        } catch {
+            errors.append(error)
+        }
+        guard errors.isEmpty else {
+            throw ErrorList.errors(errors)
+        }
+        return .mnemonic(
+            words: words.map(\.decomposedStringWithCompatibilityMapping),
+            salt: passphrase.decomposedStringWithCompatibilityMapping,
+            bip39Compliant: true
+        )
     }
 }
 
+// MARK: - Public interface
+
 extension RestoreMnemonicViewModel {
-    var possibleWordsDriver: Driver<[String]> {
-        possibleWordsRelay.asDriver()
-    }
-
-    var invalidRangesDriver: Driver<[NSRange]> {
-        invalidRangesRelay.asDriver()
-    }
-
-    var replaceWordSignal: Signal<(NSRange, String)> {
-        replaceWordRelay.asSignal()
-    }
-
-    var inputsVisibleDriver: Driver<Bool> {
-        service.passphraseEnabledObservable.asDriver(onErrorJustReturn: false)
-    }
-
-    var mnemonicCautionDriver: Driver<Caution?> {
-        mnemonicCautionRelay.asDriver()
-    }
-
-    var passphraseCautionDriver: Driver<Caution?> {
-        passphraseCautionRelay.asDriver()
-    }
-
-    var clearInputsSignal: Signal<Void> {
-        clearInputsRelay.asSignal()
-    }
+    var proceedPublisher: AnyPublisher<(String, [AccountType]), Never> { proceedSubject.eraseToAnyPublisher() }
+    var replaceWordPublisher: AnyPublisher<(NSRange, String), Never> { replaceWordSubject.eraseToAnyPublisher() }
+    var clearPassphrasePublisher: AnyPublisher<Void, Never> { clearPassphraseSubject.eraseToAnyPublisher() }
 
     var wordListViewItems: [AlertViewItem] {
-        Mnemonic.Language.allCases.map { wordList in
-            AlertViewItem(text: service.displayName(wordList: wordList), selected: wordList == service.wordListLanguage)
+        Mnemonic.Language.allCases.map { language in
+            AlertViewItem(text: displayName(language: language), selected: language == selectedLanguage)
         }
     }
 
-    var wordListLanguageDriver: Driver<String> {
-        wordListLanguageRelay.asDriver()
-    }
-
     func onSelectWordList(index: Int) {
-        service.set(wordListLanguage: Mnemonic.Language.allCases[index])
+        let language = Mnemonic.Language.allCases[index]
+        selectedLanguage = language
+        wordList = Mnemonic.wordList(for: language).map(String.init)
+        wordListLanguage = displayName(language: language)
     }
 
     func onChange(text: String, cursorOffset: Int) {
         self.cursorOffset = cursorOffset
-        service.syncItems(text: text)
+        syncMnemonicItems(text: text)
 
-        mnemonicCautionRelay.accept(nil)
+        mnemonicCaution = .none
 
-        let nonCursorInvalidItems = service.items.filter { item in
+        let nonCursorInvalidItems = mnemonicItems.filter { item in
             switch item.type {
             case .correct: return false
             case .incorrect: return true
@@ -109,61 +152,74 @@ extension RestoreMnemonicViewModel {
             }
         }
 
-        invalidRangesRelay.accept(nonCursorInvalidItems.map(\.range))
+        invalidRanges = nonCursorInvalidItems.map(\.range)
 
         if let cursorItem {
-            let possibleWords = service.possibleWords(string: cursorItem.word)
-            possibleWordsRelay.accept(possibleWords)
+            possibleWords = possibleMnemonicWords(string: cursorItem.word)
         } else {
-            possibleWordsRelay.accept([])
+            possibleWords = []
         }
     }
 
     func onSelect(word: String) {
-        guard let cursorItem else {
-            return
-        }
-
-        replaceWordRelay.accept((cursorItem.range, word))
+        guard let cursorItem else { return }
+        replaceWordSubject.send((cursorItem.range, word))
     }
 
     func onTogglePassphrase(isOn: Bool) {
-        service.set(passphraseEnabled: isOn)
+        passphraseEnabled = isOn
         clearInputs()
     }
 
     func onChange(passphrase: String) {
-        service.passphrase = passphrase
-        clearCautions()
+        self.passphrase = passphrase
+        passphraseCaution = .none
     }
-}
 
-extension RestoreMnemonicViewModel: IRestoreSubViewModel {
-    func resolveAccountTypes() -> [AccountType]? {
-        mnemonicCautionRelay.accept(nil)
-        passphraseCautionRelay.accept(nil)
+    func onTapProceed() {
+        mnemonicCaution = .none
+        passphraseCaution = .none
 
-        guard service.items.allSatisfy({ $0.type == .correct }) else {
-            invalidRangesRelay.accept(service.items.filter { $0.type != .correct }.map(\.range))
-            return nil
+        guard mnemonicItems.allSatisfy({ $0.type == .correct }) else {
+            invalidRanges = mnemonicItems.filter { $0.type != .correct }.map(\.range)
+            return
         }
 
         do {
-            let accountType = try service.accountType(words: service.items.map(\.word))
-            return [accountType]
-        } catch let RestoreMnemonicService.ErrorList.errors(errors) {
+            let accountType = try resolveAccountType(words: mnemonicItems.map(\.word))
+            proceedSubject.send((resolvedName, [accountType]))
+        } catch let ErrorList.errors(errors) {
             for error in errors {
-                if case RestoreMnemonicService.RestoreError.emptyPassphrase = error {
-                    passphraseCautionRelay.accept(Caution(text: "restore.error.empty_passphrase".localized, type: .error))
+                if case RestoreError.emptyPassphrase = error {
+                    passphraseCaution = .caution(Caution(text: "restore.error.empty_passphrase".localized, type: .error))
                 } else {
-                    mnemonicCautionRelay.accept(Caution(text: error.convertedError.smartDescription, type: .error))
+                    mnemonicCaution = .caution(Caution(text: error.convertedError.smartDescription, type: .error))
                 }
             }
-            return nil
-        } catch {
-            return nil
-        }
+        } catch {}
+    }
+}
+
+// MARK: - Types
+
+extension RestoreMnemonicViewModel {
+    enum WordItemType {
+        case correct
+        case incorrect
+        case correctPrefix
     }
 
-    func clear() {}
+    struct WordItem {
+        let word: String
+        let range: NSRange
+        let type: WordItemType
+    }
+
+    enum RestoreError: Error {
+        case emptyPassphrase
+    }
+
+    enum ErrorList: Error {
+        case errors([Error])
+    }
 }
