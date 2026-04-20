@@ -12,7 +12,6 @@ struct RestoreMnemonicView: View {
     @State private var mnemonicHeightTrigger = false
 
     @State private var restoreCoinsData: RestoreCoinsData?
-    @State private var accountTypeSelectData: AccountTypeSelectData?
 
     @FocusState private var focusedField: Field?
 
@@ -61,22 +60,8 @@ struct RestoreMnemonicView: View {
                 RestoreCoinsView(accountName: data.name, accountType: data.accountType, isParentPresented: $isParentPresented)
             }
         }
-        .navigationDestination(isPresented: Binding(
-            get: { accountTypeSelectData != nil },
-            set: { if !$0 { accountTypeSelectData = nil } }
-        )) {
-            if let data = accountTypeSelectData {
-                AccountTypeSelectWrapper(
-                    accountName: data.name,
-                    accountTypes: data.accountTypes,
-                    statPage: viewModel.advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey,
-                    onRestore: { isParentPresented = false }
-                )
-                .ignoresSafeArea()
-            }
-        }
-        .onReceive(viewModel.proceedPublisher) { name, accountTypes in
-            handleProceed(name: name, accountTypes: accountTypes)
+        .onReceive(viewModel.proceedPublisher) { name, accountType in
+            handleProceed(name: name, accountType: accountType)
         }
         .onReceive(viewModel.clearPassphrasePublisher) {
             passphrase = ""
@@ -229,50 +214,21 @@ struct RestoreMnemonicView: View {
 
     // MARK: - Navigation
 
-    private func handleProceed(name: String, accountTypes: [AccountType]) {
+    private func handleProceed(name: String, accountType: AccountType) {
         let statPage: StatPage = viewModel.advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey
 
-        guard !accountTypes.isEmpty else { return }
+        let supportedTokens = RestoreHelper.supportedTokens(accountType: accountType)
+        let blockchains = Set(supportedTokens.map(\.blockchain))
 
-        if accountTypes.count == 1, let accountType = accountTypes.first {
-            let supportedTokens = RestoreSelectModule.supportedTokens(accountType: accountType)
-            let blockchains = Set(supportedTokens.map(\.blockchain))
-
-            if blockchains.count == 1, let token = supportedTokens.first, token.blockchainType.restoreSettingTypes.isEmpty {
-                RestoreSelectModule.restoreSingleBlockchain(accountName: name, accountType: accountType, token: token)
-                stat(page: statPage, event: .importWallet(walletType: accountType.statDescription))
-                isParentPresented = false
-                return
-            }
-
-            restoreCoinsData = RestoreCoinsData(name: name, accountType: accountType)
+        if blockchains.count == 1, let token = supportedTokens.first, token.blockchainType.restoreSettingTypes.isEmpty {
+            RestoreHelper.restoreSingleBlockchain(accountName: name, accountType: accountType, token: token)
+            stat(page: statPage, event: .importWallet(walletType: accountType.statDescription))
+            isParentPresented = false
             return
         }
 
-        accountTypeSelectData = AccountTypeSelectData(name: name, accountTypes: accountTypes)
+        restoreCoinsData = RestoreCoinsData(name: name, accountType: accountType)
     }
-}
-
-// MARK: - AccountTypeSelectWrapper
-
-private struct AccountTypeSelectWrapper: UIViewControllerRepresentable {
-    let accountName: String
-    let accountTypes: [AccountType]
-    let statPage: StatPage
-    let onRestore: () -> Void
-
-    func makeUIViewController(context _: Context) -> UIViewController {
-        let viewModel = AccountTypeSelectViewModel(accountName: accountName, accountTypes: accountTypes)
-        return AccountTypeSelectViewController(
-            viewModel: viewModel,
-            accountName: accountName,
-            statPage: statPage,
-            showCloseButton: false,
-            onRestore: onRestore
-        )
-    }
-
-    func updateUIViewController(_: UIViewController, context _: Context) {}
 }
 
 // MARK: - Supporting Types

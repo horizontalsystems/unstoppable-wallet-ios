@@ -52,13 +52,11 @@ struct RestorePrivateKeyView: View {
             set: { if !$0 { accountTypeSelectData = nil } }
         )) {
             if let data = accountTypeSelectData {
-                AccountTypeSelectWrapper(
+                AccountTypeSelectView(
                     accountName: data.name,
                     accountTypes: data.accountTypes,
-                    statPage: .importWalletFromKey,
-                    onRestore: { isParentPresented = false }
+                    isParentPresented: $isParentPresented
                 )
-                .ignoresSafeArea()
             }
         }
         .onReceive(viewModel.proceedSubject) { name, accountTypes in
@@ -116,11 +114,11 @@ struct RestorePrivateKeyView: View {
         guard !accountTypes.isEmpty else { return }
 
         if accountTypes.count == 1, let accountType = accountTypes.first {
-            let supportedTokens = RestoreSelectModule.supportedTokens(accountType: accountType)
+            let supportedTokens = RestoreHelper.supportedTokens(accountType: accountType)
             let blockchains = Set(supportedTokens.map(\.blockchain))
 
             if blockchains.count == 1, let token = supportedTokens.first, token.blockchainType.restoreSettingTypes.isEmpty {
-                RestoreSelectModule.restoreSingleBlockchain(accountName: name, accountType: accountType, token: token)
+                RestoreHelper.restoreSingleBlockchain(accountName: name, accountType: accountType, token: token)
                 stat(page: .importWalletFromKey, event: .importWallet(walletType: accountType.statDescription))
                 isParentPresented = false
                 return
@@ -132,28 +130,6 @@ struct RestorePrivateKeyView: View {
 
         accountTypeSelectData = AccountTypeSelectData(name: name, accountTypes: accountTypes)
     }
-}
-
-// MARK: - AccountTypeSelectWrapper
-
-private struct AccountTypeSelectWrapper: UIViewControllerRepresentable {
-    let accountName: String
-    let accountTypes: [AccountType]
-    let statPage: StatPage
-    let onRestore: () -> Void
-
-    func makeUIViewController(context _: Context) -> UIViewController {
-        let viewModel = AccountTypeSelectViewModel(accountName: accountName, accountTypes: accountTypes)
-        return AccountTypeSelectViewController(
-            viewModel: viewModel,
-            accountName: accountName,
-            statPage: statPage,
-            showCloseButton: false,
-            onRestore: onRestore
-        )
-    }
-
-    func updateUIViewController(_: UIViewController, context _: Context) {}
 }
 
 // MARK: - Supporting Types
