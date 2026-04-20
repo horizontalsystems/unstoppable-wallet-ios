@@ -84,6 +84,9 @@ struct RestoreTypeView: View {
                         restoreSelectPresented = true
                     }
                 } catch {
+                    if case PasskeyManager.PasskeyError.userCanceled = error {
+                        return
+                    }
                     DispatchQueue.main.async {
                         HudHelper.instance.show(banner: .error(string: error.smartDescription))
                     }
