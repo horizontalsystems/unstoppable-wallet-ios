@@ -20,13 +20,6 @@ extension AccountFactory {
         return "\(adjective) \(noun)"
     }
 
-    var nextAccountName: String {
-        let nonWatchAccounts = accountManager.accounts.filter { !$0.watchAccount }
-        let order = nonWatchAccounts.count + 1
-
-        return "Wallet \(order)"
-    }
-
     func account(type: AccountType, origin: AccountOrigin, backedUp: Bool, fileBackedUp: Bool, name: String) -> Account {
         Account(
             id: UUID().uuidString,

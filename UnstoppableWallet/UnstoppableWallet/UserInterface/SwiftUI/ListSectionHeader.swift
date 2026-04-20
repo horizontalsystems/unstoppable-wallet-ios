@@ -15,7 +15,7 @@ struct ListSectionHeader: View {
 
     var body: some View {
         HStack {
-            ThemeText(uppercased ? text.uppercased() : text, style: .subhead)
+            ThemeText(uppercased ? text.uppercased() : text, style: .subheadSB)
                 .padding(.bottom, .margin12)
 
             Spacer()

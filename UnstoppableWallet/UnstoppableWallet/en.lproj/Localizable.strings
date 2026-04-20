@@ -140,9 +140,7 @@
 "restore.advanced" = "Advanced";
 "restore.show_advanced_options" = "Show Advanced Options";
 "restore.hide_advanced_options" = "Hide Advanced Options";
-"restore.import_by" = "Import By";
-"restore.restore_type.mnemonic" = "Recovery Phrase";
-"restore.restore_type.private_key" = "Private Key";
+"restore.suggestions" = "Word suggestions will appear here";
 "restore.mnemonic.placeholder" = "Enter Recovery Phrase";
 "restore.private_key.placeholder" = "Enter EVM or TRON Private Key, Stellar Secret Key, BIP32 Root Key or Account Extended Private Key";
 "restore.private_key.invalid_key" = "Invalid Key";
@@ -1833,7 +1831,7 @@
 // Create Wallet
 
 "create_wallet.title" = "New Wallet";
-"create_wallet.name" = "Name";
+"create_wallet.name" = "Wallet Name";
 "create_wallet.advanced_setup" = "Advanced";
 "create_wallet.create" = "Create";
 "create_wallet.advanced" = "Advanced";
@@ -2185,7 +2183,7 @@
 // Watch Address
 
 "watch_address.title" = "Watch Wallet";
-"watch_address.name" = "Name";
+"watch_address.name" = "Wallet Name";
 "watch_address.watch" = "Watch";
 "watch_address.address" = "Address";
 "watch_address.error.not_supported" = "Address format is not supported";

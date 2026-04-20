@@ -11,7 +11,6 @@ struct RestoreMnemonicView: View {
     @State private var isEnteringMnemonic = false
     @State private var mnemonicHeightTrigger = false
 
-    @State private var advanced = false
     @State private var restoreCoinsData: RestoreCoinsData?
     @State private var accountTypeSelectData: AccountTypeSelectData?
 
@@ -31,28 +30,24 @@ struct RestoreMnemonicView: View {
                         mnemonicSection
                         advancedToggleButton
                     }
-                    .padding(EdgeInsets(top: 12, leading: 16, bottom: 32, trailing: 16))
+                    .padding(EdgeInsets(top: 24, leading: 16, bottom: 32, trailing: 16))
                     .animation(.default, value: viewModel.passphraseEnabled)
                     .animation(.default, value: viewModel.mnemonicCaution)
                     .animation(.default, value: viewModel.passphraseCaution)
                     .animation(.default, value: isEnteringMnemonic)
-                    .animation(.default, value: advanced)
+                    .animation(.default, value: viewModel.advanced)
                 }
                 .onTapGesture {
                     focusedField = nil
                 }
             } bottomContent: {
-                VStack(spacing: 12) {
-                    Button(action: {
-                        focusedField = nil
-                        viewModel.onTapProceed()
-                    }) {
-                        Text("button.next".localized)
-                    }
-                    .buttonStyle(PrimaryButtonStyle(style: .yellow))
+                ThemeButton(text: "button.next".localized) {
+                    focusedField = nil
+                    viewModel.onTapProceed()
                 }
+                .disabled(!viewModel.buttonEnabled)
             } keyboardContent: {
-                if isEnteringMnemonic, !viewModel.possibleWords.isEmpty {
+                if isEnteringMnemonic {
                     mnemonicHintRow
                 }
             }
@@ -74,7 +69,7 @@ struct RestoreMnemonicView: View {
                 AccountTypeSelectWrapper(
                     accountName: data.name,
                     accountTypes: data.accountTypes,
-                    statPage: advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey,
+                    statPage: viewModel.advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey,
                     onRestore: { isParentPresented = false }
                 )
                 .ignoresSafeArea()
@@ -92,13 +87,24 @@ struct RestoreMnemonicView: View {
 
     private var nameSection: some View {
         VStack(spacing: 0) {
-            ListSectionHeader(text: "create_wallet.name".localized)
+            ListSectionHeader(text: "create_wallet.name".localized, uppercased: false)
 
             InputTextRow {
-                InputTextView(text: $viewModel.name)
-                    .autocapitalization(.words)
-                    .autocorrectionDisabled()
-                    .focused($focusedField, equals: .name)
+                ShortcutButtonsView(
+                    content: {
+                        InputTextView(text: $viewModel.name)
+                            .autocapitalization(.words)
+                            .autocorrectionDisabled()
+                            .focused($focusedField, equals: .name)
+                    },
+                    showDelete: .init(get: { false }, set: { _ in }),
+                    items: [.icon("swap_e")],
+                    onTap: { _ in
+                        viewModel.refreshName()
+                    },
+                    onTapDelete: {}
+                )
+                .padding(.vertical, -5) // TODO: remove this
             }
         }
     }
@@ -109,7 +115,7 @@ struct RestoreMnemonicView: View {
     private var mnemonicSection: some View {
         VStack(spacing: 0) {
             MnemonicInputCellWrapper(
-                statPage: advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey,
+                statPage: viewModel.advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey,
                 placeholder: "restore.mnemonic.placeholder".localized,
                 invalidRanges: $viewModel.invalidRanges,
                 cautionType: viewModel.mnemonicCaution.caution?.type,
@@ -131,7 +137,7 @@ struct RestoreMnemonicView: View {
             }
         }
 
-        if advanced {
+        if viewModel.advanced {
             ListSection {
                 ClickableRow(action: {
                     Coordinator.shared.present(type: .alert) { isPresented in
@@ -163,28 +169,28 @@ struct RestoreMnemonicView: View {
                     .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
                 }
             }
-        }
 
-        if viewModel.passphraseEnabled {
-            VStack(spacing: 0) {
-                InputTextRow {
-                    InputTextView(
-                        placeholder: "restore.input.passphrase".localized,
-                        text: $passphrase,
-                        isValidText: { PassphraseValidator.validate(text: $0) }
-                    )
-                    .secure($passphraseSecureLock)
-                    .autocapitalization(.none)
-                    .autocorrectionDisabled()
-                    .focused($focusedField, equals: .passphrase)
-                }
-                .modifier(CautionBorder(cautionState: $viewModel.passphraseCaution))
-                .modifier(CautionPrompt(cautionState: $viewModel.passphraseCaution))
-                .onChange(of: passphrase) {
-                    viewModel.onChange(passphrase: $0)
-                }
+            if viewModel.passphraseEnabled {
+                VStack(spacing: 0) {
+                    InputTextRow {
+                        InputTextView(
+                            placeholder: "restore.input.passphrase".localized,
+                            text: $passphrase,
+                            isValidText: { PassphraseValidator.validate(text: $0) }
+                        )
+                        .secure($passphraseSecureLock)
+                        .autocapitalization(.none)
+                        .autocorrectionDisabled()
+                        .focused($focusedField, equals: .passphrase)
+                    }
+                    .modifier(CautionBorder(cautionState: $viewModel.passphraseCaution))
+                    .modifier(CautionPrompt(cautionState: $viewModel.passphraseCaution))
+                    .onChange(of: passphrase) {
+                        viewModel.onChange(passphrase: $0)
+                    }
 
-                ListSectionFooter(text: "restore.wallet.passphrase_description".localized)
+                    ListSectionFooter(text: "restore.wallet.passphrase_description".localized)
+                }
             }
         }
     }
@@ -192,39 +198,39 @@ struct RestoreMnemonicView: View {
     // MARK: - Advanced Toggle
 
     private var advancedToggleButton: some View {
-        Button(action: {
-            advanced.toggle()
-        }) {
-            Text(advanced ? "restore.hide_advanced_options".localized : "restore.show_advanced_options".localized)
+        ThemeButton(text: viewModel.advanced ? "restore.hide_advanced_options".localized : "restore.show_advanced_options".localized, style: .secondary, mode: .transparent, size: .small) {
+            viewModel.advanced.toggle()
         }
-        .buttonStyle(SecondaryButtonStyle(style: .transparent))
     }
 
     // MARK: - Hint Row
 
-    private var mnemonicHintRow: some View {
-        ScrollView(.horizontal, showsIndicators: false) {
-            HStack(spacing: 8) {
-                ForEach(viewModel.possibleWords, id: \.self) { word in
-                    Button(word) {
-                        viewModel.onSelect(word: word)
-                    }
-                    .font(.themeSubhead1)
-                    .foregroundColor(.themeLeah)
-                    .padding(.horizontal, 12)
-                    .padding(.vertical, 8)
-                    .background(Color.themeBlade)
-                    .cornerRadius(.cornerRadius8)
-                }
+    @ViewBuilder private var mnemonicHintRow: some View {
+        if viewModel.possibleWords.isEmpty {
+            VStack {
+                ThemeText("restore.suggestions".localized, style: .caption)
             }
-            .padding(.vertical, 8)
+            .frame(height: ThemeButton.Size.small.size)
+            .padding(.bottom, 8)
+        } else {
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(spacing: 8) {
+                    ForEach(viewModel.possibleWords, id: \.self) { word in
+                        ThemeButton(text: word, style: .secondary, size: .small) {
+                            viewModel.onSelect(word: word)
+                        }
+                    }
+                }
+                .padding(.bottom, 8)
+                .padding(.horizontal, 16)
+            }
         }
     }
 
     // MARK: - Navigation
 
     private func handleProceed(name: String, accountTypes: [AccountType]) {
-        let statPage: StatPage = advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey
+        let statPage: StatPage = viewModel.advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey
 
         guard !accountTypes.isEmpty else { return }
 
