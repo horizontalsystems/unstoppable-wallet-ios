@@ -7,6 +7,7 @@ class PasskeyManager: NSObject {
 
     private var assertionContinuation: CheckedContinuation<PrfOutput, Error>?
     private var registrationContinuation: CheckedContinuation<Data, Error>?
+    private var isCrossDeviceAssertion: Bool = false
 
     private func generateChallenge() -> Data {
         var bytes = [UInt8](repeating: 0, count: 32)
@@ -62,16 +63,14 @@ class PasskeyManager: NSObject {
             ]
         }
 
+        isCrossDeviceAssertion = credentialID == nil
+
         let prfOutput = try await withCheckedThrowingContinuation { continuation in
             assertionContinuation = continuation
             let controller = ASAuthorizationController(authorizationRequests: [request])
             controller.delegate = self
             controller.presentationContextProvider = self
-            if credentialID != nil {
-                controller.performRequests()
-            } else {
-                controller.performRequests(options: .preferImmediatelyAvailableCredentials)
-            }
+            controller.performRequests()
         }
 
         let name = prfOutput.userId.components(separatedBy: "::").first ?? ""
@@ -108,7 +107,8 @@ extension PasskeyManager: ASAuthorizationControllerDelegate {
         }
 
         guard let prfAssertionOutput = credential.prf else {
-            assertionContinuation?.resume(throwing: PasskeyError.prfNotSupported)
+            let error: PasskeyError = isCrossDeviceAssertion ? .prfNotSupportedRemote : .prfNotSupported
+            assertionContinuation?.resume(throwing: error)
             assertionContinuation = nil
             return
         }
@@ -124,21 +124,32 @@ extension PasskeyManager: ASAuthorizationControllerDelegate {
         controller _: ASAuthorizationController,
         didCompleteWithError error: Error
     ) {
-        let walletError: PasskeyError
-
-        if let authError = error as? ASAuthorizationError {
-            switch authError.code.rawValue {
-            case 1001: walletError = .noCredentials
-            default: walletError = .authenticationFailed
-            }
-        } else {
-            walletError = .authenticationFailed
-        }
+        let walletError = Self.map(error: error)
 
         registrationContinuation?.resume(throwing: walletError)
         registrationContinuation = nil
         assertionContinuation?.resume(throwing: walletError)
         assertionContinuation = nil
+    }
+
+    private static func map(error: Error) -> PasskeyError {
+        guard let authError = error as? ASAuthorizationError else {
+            return .authenticationFailed
+        }
+
+        switch authError.code {
+        case .canceled:
+            return .userCanceled
+        case .notInteractive:
+            return .noCredentials
+        case .failed:
+            let nsError = error as NSError
+            let reason = nsError.userInfo[NSLocalizedFailureReasonErrorKey] as? String ?? "nil"
+            print("PasskeyManager failed (1004): \(nsError.localizedDescription) | reason=\(reason)")
+            return .authenticationFailed
+        default:
+            return .authenticationFailed
+        }
     }
 }
 
@@ -159,6 +170,7 @@ extension PasskeyManager {
 
     enum PasskeyError: Error, LocalizedError {
         case prfNotSupported
+        case prfNotSupportedRemote
         case authenticationFailed
         case userCanceled
         case noCredentials
@@ -168,6 +180,7 @@ extension PasskeyManager {
         var errorDescription: String? {
             switch self {
             case .prfNotSupported: return "This device requires iOS 18 or later for passkey wallet login."
+            case .prfNotSupportedRemote: return "The device you scanned from doesn't support PRF."
             case .authenticationFailed: return "Authentication failed. Please try again."
             case .userCanceled: return "Authentication was canceled."
             case .noCredentials: return "No credentials found."

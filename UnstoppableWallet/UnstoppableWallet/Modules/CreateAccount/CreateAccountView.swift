@@ -191,6 +191,8 @@ struct CreateAccountView: View {
                         passphraseCaution = .caution(Caution(text: "create_wallet.error.empty_passphrase".localized, type: .error))
                     } else if case CreateAccountViewModel.CreateError.invalidConfirmation = error {
                         passphraseConfirmationCaution = .caution(Caution(text: "create_wallet.error.invalid_confirmation".localized, type: .error))
+                    } else if case PasskeyManager.PasskeyError.userCanceled = error {
+                        return
                     } else {
                         HudHelper.instance.show(banner: .error(string: error.smartDescription))
                     }
