@@ -16,7 +16,12 @@ class RestoreMnemonicViewModel: ObservableObject {
 
     // MARK: - Published
 
-    @Published var name: String
+    @Published var name: String {
+        didSet {
+            buttonEnabled = !resolvedName.isEmpty
+        }
+    }
+
     @Published var possibleWords: [String] = []
     @Published var invalidRanges: [NSRange] = []
     @Published var mnemonicCaution: CautionState = .none
@@ -24,12 +29,15 @@ class RestoreMnemonicViewModel: ObservableObject {
     @Published var wordListLanguage: String = ""
     @Published var passphraseCaution: CautionState = .none
 
+    @Published var advanced = false
+    @Published var buttonEnabled = true
+
     private let proceedSubject = PassthroughSubject<(String, [AccountType]), Never>()
     private let replaceWordSubject = PassthroughSubject<(NSRange, String), Never>()
     private let clearPassphraseSubject = PassthroughSubject<Void, Never>()
 
     init() {
-        name = accountFactory.nextAccountName
+        name = accountFactory.generatedAccountName
         wordListLanguage = displayName(language: selectedLanguage)
     }
 
@@ -93,23 +101,27 @@ class RestoreMnemonicViewModel: ObservableObject {
     }
 
     private var resolvedName: String {
-        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        return trimmed.isEmpty ? accountFactory.nextAccountName : trimmed
+        name.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     private func resolveAccountType(words: [String]) throws -> AccountType {
         var errors = [Error]()
-        if passphraseEnabled, passphrase.isEmpty {
+        let passphrase = advanced ? passphrase : ""
+
+        if advanced, passphraseEnabled, passphrase.isEmpty {
             errors.append(RestoreError.emptyPassphrase)
         }
+
         do {
             try Mnemonic.validate(words: words)
         } catch {
             errors.append(error)
         }
+
         guard errors.isEmpty else {
             throw ErrorList.errors(errors)
         }
+
         return .mnemonic(
             words: words.map(\.decomposedStringWithCompatibilityMapping),
             salt: passphrase.decomposedStringWithCompatibilityMapping,
@@ -129,6 +141,10 @@ extension RestoreMnemonicViewModel {
         Mnemonic.Language.allCases.map { language in
             AlertViewItem(text: displayName(language: language), selected: language == selectedLanguage)
         }
+    }
+
+    func refreshName() {
+        name = accountFactory.generatedAccountName
     }
 
     func onSelectWordList(index: Int) {

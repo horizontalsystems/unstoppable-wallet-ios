@@ -140,12 +140,13 @@ struct CautionPrompt: ViewModifier {
     @Binding var cautionState: CautionState
 
     func body(content: Content) -> some View {
-        VStack {
+        VStack(spacing: 8) {
             content
 
             if let caution = cautionState.caution {
                 Text(caution.text)
                     .themeCaption(color: cautionState.color)
+                    .padding(.horizontal, 16)
             }
         }
     }

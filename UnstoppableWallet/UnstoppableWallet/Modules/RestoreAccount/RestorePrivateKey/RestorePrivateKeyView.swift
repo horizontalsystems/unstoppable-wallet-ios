@@ -10,6 +10,8 @@ struct RestorePrivateKeyView: View {
     @State private var restoreCoinsData: RestoreCoinsData?
     @State private var accountTypeSelectData: AccountTypeSelectData?
 
+    @FocusState private var focusedField: Field?
+
     init(isParentPresented: Binding<Bool>) {
         _viewModel = StateObject(wrappedValue: RestorePrivateKeyViewModel())
         _isParentPresented = isParentPresented
@@ -23,16 +25,17 @@ struct RestorePrivateKeyView: View {
                         nameSection
                         privateKeySection
                     }
-                    .padding(EdgeInsets(top: 12, leading: 16, bottom: 32, trailing: 16))
+                    .padding(EdgeInsets(top: 24, leading: 16, bottom: 32, trailing: 16))
                     .animation(.default, value: viewModel.privateKeyCaution)
                 }
-            } bottomContent: {
-                Button(action: {
-                    viewModel.onTapProceed()
-                }) {
-                    Text("button.next".localized)
+                .onTapGesture {
+                    focusedField = nil
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
+            } bottomContent: {
+                ThemeButton(text: "button.next".localized) {
+                    viewModel.onTapProceed()
+                }
+                .disabled(!viewModel.buttonEnabled)
             }
         }
         .navigationTitle("restore.title".localized)
@@ -67,12 +70,24 @@ struct RestorePrivateKeyView: View {
 
     private var nameSection: some View {
         VStack(spacing: 0) {
-            ListSectionHeader(text: "create_wallet.name".localized)
+            ListSectionHeader(text: "create_wallet.name".localized, uppercased: false)
 
             InputTextRow {
-                InputTextView(text: $viewModel.name)
-                    .autocapitalization(.words)
-                    .autocorrectionDisabled()
+                ShortcutButtonsView(
+                    content: {
+                        InputTextView(text: $viewModel.name)
+                            .autocapitalization(.words)
+                            .autocorrectionDisabled()
+                            .focused($focusedField, equals: .name)
+                    },
+                    showDelete: .init(get: { false }, set: { _ in }),
+                    items: [.icon("swap_e")],
+                    onTap: { _ in
+                        viewModel.refreshName()
+                    },
+                    onTapDelete: {}
+                )
+                .padding(.vertical, -5) // TODO: remove this
             }
         }
     }
@@ -89,6 +104,7 @@ struct RestorePrivateKeyView: View {
             .onChange(of: privateKeyText) {
                 viewModel.onChange(privateKey: $0)
             }
+            .focused($focusedField, equals: .key)
             .modifier(CautionBorder(cautionState: $viewModel.privateKeyCaution))
             .modifier(CautionPrompt(cautionState: $viewModel.privateKeyCaution))
         }
@@ -143,6 +159,11 @@ private struct AccountTypeSelectWrapper: UIViewControllerRepresentable {
 // MARK: - Supporting Types
 
 extension RestorePrivateKeyView {
+    enum Field {
+        case name
+        case key
+    }
+
     struct RestoreCoinsData {
         let name: String
         let accountType: AccountType

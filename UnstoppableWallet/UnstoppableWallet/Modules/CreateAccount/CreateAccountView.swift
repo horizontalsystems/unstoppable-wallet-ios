@@ -23,27 +23,28 @@ struct CreateAccountView: View {
         ThemeView {
             BottomGradientWrapper {
                 ScrollView {
-                    VStack(spacing: .margin24) {
+                    VStack(spacing: 24) {
                         VStack(spacing: 0) {
                             ListSectionHeader(text: "create_wallet.name".localized, uppercased: false)
 
                             InputTextRow {
                                 ShortcutButtonsView(
                                     content: {
-                                            InputTextView(text: $viewModel.name)
-                                                .autocapitalization(.words)
-                                                .autocorrectionDisabled()
-                                                .focused($focusedField, equals: .name)
-                                        },
-                                        showDelete: .init(get: { false }, set: { _ in }),
-                                        items: [.icon("swap_e")],
-                                        onTap: { _ in
-                                            viewModel.refreshName()
-                                        },
-                                        onTapDelete: {}
-                                    )
-                                }
+                                        InputTextView(text: $viewModel.name)
+                                            .autocapitalization(.words)
+                                            .autocorrectionDisabled()
+                                            .focused($focusedField, equals: .name)
+                                    },
+                                    showDelete: .init(get: { false }, set: { _ in }),
+                                    items: [.icon("swap_e")],
+                                    onTap: { _ in
+                                        viewModel.refreshName()
+                                    },
+                                    onTapDelete: {}
+                                )
+                                .padding(.vertical, -5) // TODO: remove this
                             }
+                        }
 
                         switch viewModel.walletType {
                         case .regular:
@@ -88,10 +89,10 @@ struct CreateAccountView: View {
                                 VStack(spacing: 0) {
                                     ListSectionHeader(text: "create_wallet.passphrase_optional".localized, uppercased: false)
 
-                                    VStack(spacing: .margin16) {
+                                    VStack(spacing: 16) {
                                         InputTextRow {
                                             InputTextView(
-                                                placeholder: "create_wallet.input.add_passphrase".localized,
+                                                placeholder: "create_wallet.input.passphrase".localized,
                                                 text: $viewModel.passphrase,
                                                 isValidText: { text in PassphraseValidator.validate(text: text) }
                                             )
@@ -129,18 +130,15 @@ struct CreateAccountView: View {
                     .animation(.default, value: viewModel.wordCount)
                     .animation(.default, value: passphraseCaution)
                     .animation(.default, value: passphraseConfirmationCaution)
-                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+                    .padding(EdgeInsets(top: 24, leading: 16, bottom: 32, trailing: 16))
                 }
                 .onTapGesture {
                     focusedField = nil
                 }
             } bottomContent: {
-                Button(action: {
+                ThemeButton(text: "create_wallet.create".localized) {
                     createAccount()
-                }) {
-                    Text("create_wallet.create".localized)
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 .disabled(!viewModel.createEnabled)
             }
         }
@@ -235,16 +233,13 @@ struct PasskeyTermsView: View {
                             row(term: term, checked: checkedIds.contains(term.id))
                         }
                     }
-                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+                    .padding(EdgeInsets(top: 12, leading: 16, bottom: 32, trailing: 16))
                 }
             } bottomContent: {
-                Button(action: {
+                ThemeButton(text: "passkey_terms.button".localized) {
                     Core.shared.termsManager.setPasskeyTermsAccepted()
                     createAccountPresented = true
-                }) {
-                    Text("passkey_terms.button".localized)
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .yellow))
                 .disabled(checkedIds.count < terms.count)
             }
         }

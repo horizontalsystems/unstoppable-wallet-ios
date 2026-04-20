@@ -9,31 +9,25 @@ import TronKit
 class RestorePrivateKeyViewModel: ObservableObject {
     private let accountFactory = Core.shared.accountFactory
 
-    @Published var name: String
+    @Published var name: String {
+        didSet {
+            buttonEnabled = !resolvedName.isEmpty
+        }
+    }
+
     @Published var privateKeyCaution: CautionState = .none
+    @Published var buttonEnabled = true
 
     let proceedSubject = PassthroughSubject<(String, [AccountType]), Never>()
 
     private var text = ""
 
     init() {
-        name = accountFactory.nextAccountName
+        name = accountFactory.generatedAccountName
     }
 
     private var resolvedName: String {
-        let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
-        return trimmed.isEmpty ? accountFactory.nextAccountName : trimmed
-    }
-
-    func onChange(privateKey: String) {
-        text = privateKey
-        privateKeyCaution = .none
-    }
-
-    func onTapProceed() {
-        if let accountTypes = resolveAccountTypes() {
-            proceedSubject.send((resolvedName, accountTypes))
-        }
+        name.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     private func resolveAccountTypes() -> [AccountType]? {
@@ -92,6 +86,23 @@ class RestorePrivateKeyViewModel: ObservableObject {
         }
 
         throw RestoreError.noValidKey
+    }
+}
+
+extension RestorePrivateKeyViewModel {
+    func refreshName() {
+        name = accountFactory.generatedAccountName
+    }
+
+    func onChange(privateKey: String) {
+        text = privateKey
+        privateKeyCaution = .none
+    }
+
+    func onTapProceed() {
+        if let accountTypes = resolveAccountTypes() {
+            proceedSubject.send((resolvedName, accountTypes))
+        }
     }
 }
 

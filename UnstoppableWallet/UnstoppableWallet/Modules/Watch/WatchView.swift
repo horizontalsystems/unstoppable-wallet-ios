@@ -14,9 +14,9 @@ struct WatchView: View {
         ThemeView {
             BottomGradientWrapper {
                 ScrollView {
-                    VStack(spacing: .margin24) {
+                    VStack(spacing: 24) {
                         VStack(spacing: 0) {
-                            ListSectionHeader(text: "watch_address.name".localized)
+                            ListSectionHeader(text: "watch_address.name".localized, uppercased: false)
 
                             InputTextRow {
                                 ShortcutButtonsView(
@@ -33,6 +33,7 @@ struct WatchView: View {
                                     },
                                     onTapDelete: {}
                                 )
+                                .padding(.vertical, -5) // TODO: remove this
                             }
                         }
 
@@ -70,7 +71,7 @@ struct WatchView: View {
                     }
                     .animation(.default, value: viewModel.text)
                     .animation(.default, value: viewModel.textCaution)
-                    .padding(EdgeInsets(top: .margin12, leading: .margin16, bottom: .margin32, trailing: .margin16))
+                    .padding(EdgeInsets(top: 24, leading: 16, bottom: 32, trailing: 16))
                 }
                 .onTapGesture {
                     focusedField = nil
