@@ -9,6 +9,7 @@
 "button.import" = "恢复";
 "button.next" = "下一步";
 "button.delete" = "删除";
+"button.replace" = "替换";
 "button.share" = "分享";
 "button.paste" = "粘帖";
 "button.gallery" = "相册";
@@ -165,27 +166,23 @@
 
 // Restore Type
 
-"restore_type.title" = "恢复自";
 "restore_type.recovery.title" = "恢复短语";
 "restore_type.passkey.title" = "通过 Passkey";
 "restore_type.backup.title" = "从备份恢复";
 
 "restore_type.recovery.description" = "使用恢复短语或私钥导入。";
 "restore_type.passkey.description" = "使用您的设备和 iCloud 账户恢复钱包。";
-"restore_type.backup.description" = "从 iCloud 或文件备份中导入";
+"restore_type.backup.description" = "使用设备或云端的备份文件恢复您的钱包。";
 
 // Restore Cloud
 
-"restore.cloud.title" = "选择备份";
-"restore.cloud.description" = "选择您想要恢复的备份文件。";
+"restore.cloud.title" = "备份";
+"restore.cloud.description" = "选择一个备份来恢复您的钱包，或从设备上的文件中导入。";
 "restore.cloud.empty" = "未找到备份。";
-"restore.cloud.wallets" = "钱包备份";
-"restore.cloud.imported" = "导入钱包";
-"restore.cloud.app_backups" = "应用备份";
+"restore.cloud.full" = "完整";
 
-"restore.cloud.password.title" = "请输入密码";
 "restore.cloud.password.placeholder" = "备份密码";
-"restore.cloud.password.description" = "输入密码以导入您的备份";
+"restore.cloud.password.description" = "输入此备份文件的密码以恢复您的数据。";
 
 // Coin Settings
 
@@ -314,6 +311,7 @@
 "balance.stopped" = "已停止";
 "balance.downloading_sapling" = "正在下载...";
 "balance.watch_wallet" = "观察地址";
+"balance.watch_wallet.typed" = "%@ 观察钱包";
 
 "balance.add_wallet" = "添加钱包";
 
@@ -1452,6 +1450,8 @@
 
 "manage_wallets.title" = "钱包";
 "manage_wallets.not_found" = "未找到任何结果。请尝试手动添加令牌。";
+"manage_wallets.empty" = "没有活跃钱包";
+"manage_accounts.not_found" = "未找到结果。";
 "manage_wallets.search_placeholder" = "姓名、代码或合同地址";
 "manage_wallets.contract_address" = "智能合约地址";
 "manage_wallets.derivation_description" = "有四种常见的地址格式 %@ 钱包可以用来接收收到的付款:\n\n- BIP44 (旧版)\n- BIP49\n- BIP84 (推荐)\n- BIP86 (新版)\n\n而 %@ 钱包支持所有4 它建议使用一个 %@ 钱包以BIP84 格式操作。";
@@ -1485,27 +1485,36 @@
 
 "backup_app.backup_manager.title" = "备份管理器";
 "backup_app.backup_manager.restore" = "还原备份";
+"backup_app.backup_manager.restore.description" = "从备份文件恢复您的钱包和应用数据。";
 "backup_app.backup_manager.create" = "创建新备份";
+"backup_app.backup_manager.create.description" = "创建钱包和应用数据的备份文件。";
 
 "backup_app.backup_type.title" = "保存备份";
 "backup_app.backup_type.cloud" = "到 iCloud";
-"backup_app.backup_type.cloud.description" = "在您的密钥链中保存备份拷贝文件。";
+"backup_app.backup_type.cloud.description" = "将备份文件保存到您的 iCloud 存储空间。";
 "backup_app.backup_type.file" = "到文件";
 "backup_app.backup_type.file.description" = "保存备份文件到您的本地文件夹。";
 
-"backup_app.backup_list.title" = "备份文件";
-"backup_app.backup_list.description" = "选择要包含在备份中的钱包。应用数据将自动备份。";
-"backup_app.backup_list.description.restore" = "备份文件中的内容列表。";
-"backup_app.backup_list.header.wallets" = "钱包";
-"backup_app.backup_list.header.other" = "其他";
-"backup_app.backup_list.other.watch_account.title" = "观察地址";
-"backup_app.backup_list.other.watchlist.title" = "关注";
-"backup_app.backup_list.other.contacts.title" = "联系人";
-"backup_app.backup_list.other.custom_evm_sync_sources.title" = "自定义 RPC";
-"backup_app.backup_list.other.custom_monero_nodes.title" = "自定义 Monero 节点";
-"backup_app.backup_list.other.custom_zano_nodes.title" = "自定义 Zano 节点";
-"backup_app.backup_list.other.app_settings.title" = "应用设置";
-"backup_app.backup_list.other.app_settings.description" = "语言、 货币、 外观...";
+// Backup Content Selection
+
+"backup_content.title.create" = "创建备份";
+"backup_content.description.backup" = "选择要包含在备份中的内容。您可以备份全部或选定的项目。";
+"backup_content.description.restore" = "选择要恢复的内容。您可以恢复全部或仅选定的项目。";
+
+"backup_content.header.wallets" = "钱包";
+"backup_content.header.data" = "数据";
+
+"backup_content.data.contacts.title" = "联系人";
+"backup_content.data.contacts.subtitle" = "%d 个已保存地址";
+
+"backup_content.data.favorites.title" = "收藏";
+"backup_content.data.favorites.subtitle" = "%d 个资产";
+
+"backup_content.data.custom_rpc.title" = "自定义 RPC";
+"backup_content.data.custom_rpc.subtitle" = "%d 个网络";
+
+"backup_content.data.preferences.title" = "偏好设置";
+"backup_content.data.preferences.subtitle" = "语言、货币、外观...";
 
 "backup_app.backup.disclaimer.cloud.title" = "备份到iCloud";
 "backup_app.backup.disclaimer.cloud.description" = "iCloud 是苹果提供的云存储服务。知道您的备份数据将保存在苹果服务器上是很重要的。";
@@ -1531,8 +1540,7 @@
 
 "backup_app.restore_type.title" = "恢复";
 
-"backup_app.restore.notice.description" = "此操作将覆盖您的本地付款联系人以及它的 iCloud 副本（如有）。";
-"backup_app.restore.notice.merge" = "替换";
+"backup_app.restore.notice.description" = "已保存的联系人将被备份中的数据替换。";
 
 "backup.password.title" = "备份密码";
 "backup.password.description" = "为您的备份设置解锁密码。密码长度必须至少为8个字符，并且包含至少一个小写字母、大写字母、数字和特殊字符。";
@@ -1832,12 +1840,28 @@
 "create_wallet.n_words" = "%@ 个单词";
 "create_wallet.word_list" = "字符列表";
 "create_wallet.passphrase" = "密码";
-"create_wallet.input.passphrase" = "密码";
+"create_wallet.passphrase_optional" = "密码短语（可选）";
+"create_wallet.input.passphrase" = "添加密码短语";
 "create_wallet.input.confirm" = "确认";
-"create_wallet.passphrase_description" = "密码为钱包添加一个额外的安全层。要恢复这个钱包，用户既需要密码，也需要密码。\n\n密码也使得用户可以轻松地使用单一的密钥但不同的密码来拥有许多多币钱包。";
+"create_wallet.passphrase_description" = "为您的钱包增加额外保护。恢复访问时需要与助记词一起使用。";
 "create_wallet.error.empty_passphrase" = "密码不能为空";
 "create_wallet.error.forbidden_symbols" = "请只使用支持的符号：A-Z a-z 0-9 ' \" & / ? , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
-"create_wallet.error.invalid_confirmation" = "确认密码不匹配";
+"create_wallet.error.invalid_confirmation" = "密码短语不匹配";
+
+// Passkey Wallet Terms
+
+"passkey_terms.title" = "Passkey 钱包条款";
+
+"passkey_terms.device_icloud.title" = "设备与 iCloud 依赖";
+"passkey_terms.device_icloud.description" = "访问需要您的设备和 iCloud。失去访问权限可能导致资金损失。";
+
+"passkey_terms.cross_platform.title" = "有限的跨平台访问";
+"passkey_terms.cross_platform.description" = "可能无法在非 Apple 设备上使用。";
+
+"passkey_terms.responsibility.title" = "责任";
+"passkey_terms.responsibility.description" = "您需对设备和 iCloud 的访问负责。如果访问丢失，Unstoppable 无法恢复此钱包。";
+
+"passkey_terms.button" = "我已了解并继续";
 
 // Restore Select
 

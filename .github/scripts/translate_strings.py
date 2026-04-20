@@ -107,13 +107,25 @@ Return ONLY a valid JSON object.
 - Do NOT use curly/smart quotes (" ") anywhere.
 """
 
-    message = client.messages.create(
+    text_parts = []
+    with client.messages.stream(
         model="claude-opus-4-6",
-        max_tokens=8192,
+        max_tokens=32000,
         messages=[{"role": "user", "content": prompt}],
-    )
+    ) as stream:
+        for chunk in stream.text_stream:
+            text_parts.append(chunk)
 
-    text = re.sub(r"```json\s*|\s*```", "", message.content[0].text).strip()
+    final = stream.get_final_message()
+    print(f"stop_reason={final.stop_reason}, output_tokens={final.usage.output_tokens}")
+
+    raw = "".join(text_parts)
+    text = re.sub(r"```json\s*|\s*```", "", raw).strip()
+
+    if final.stop_reason == "max_tokens":
+        with open("/tmp/translate_raw.txt", "w", encoding="utf-8") as f:
+            f.write(raw)
+        raise RuntimeError(f"Response truncated at {final.usage.output_tokens} tokens — saved to /tmp/translate_raw.txt")
 
     return json.loads(text)
 

@@ -9,6 +9,7 @@
 "button.import" = "Geri Yükle";
 "button.next" = "İleri";
 "button.delete" = "Sil";
+"button.replace" = "Değiştir";
 "button.share" = "Paylaş";
 "button.paste" = "Yapıştır";
 "button.gallery" = "Galeri";
@@ -165,27 +166,23 @@
 
 // Restore Type
 
-"restore_type.title" = "Cuzdan Yükle";
 "restore_type.recovery.title" = "Kurtarma İfadesinden";
 "restore_type.passkey.title" = "Passkey ile";
 "restore_type.backup.title" = "Yedekten";
 
 "restore_type.recovery.description" = "Kurtarma ifadesini veya özel anahtarı kullanarak içe aktarın.";
 "restore_type.passkey.description" = "Cüzdanınızı cihazınız ve iCloud hesabınızı kullanarak geri yükleyin.";
-"restore_type.backup.description" = "iCloud veya dosyadan yedek içe aktar";
+"restore_type.backup.description" = "Cihazınızdaki veya buluttaki bir yedekleme dosyasını kullanarak cüzdanınızı geri yükleyin.";
 
 // Restore Cloud
 
-"restore.cloud.title" = "Yedekleme Seç";
-"restore.cloud.description" = "Geri yüklemek istediğiniz yedekleme dosyasını seçin";
+"restore.cloud.title" = "Yedeklemeler";
+"restore.cloud.description" = "Cüzdanınızı geri yüklemek için bir yedek seçin veya cihazınızdaki Dosyalar'dan bir tane içe aktarın.";
 "restore.cloud.empty" = "Yedek bulunamadı.";
-"restore.cloud.wallets" = "Cüzdan Yedekleri";
-"restore.cloud.imported" = "Ithal cüzdanlar";
-"restore.cloud.app_backups" = "Uygulama Yedekleri";
+"restore.cloud.full" = "Tam";
 
-"restore.cloud.password.title" = "Parolanı Gir";
 "restore.cloud.password.placeholder" = "Yedek Şifre";
-"restore.cloud.password.description" = "Yedeğinizi içe aktarmak için şifreyi girin";
+"restore.cloud.password.description" = "Verilerinizi geri yüklemek için bu yedekleme dosyasının şifresini girin.";
 
 // Coin Settings
 
@@ -314,6 +311,7 @@
 "balance.stopped" = "Durduruldu";
 "balance.downloading_sapling" = "İndiriliyor…";
 "balance.watch_wallet" = "Cüzdan İzle";
+"balance.watch_wallet.typed" = "%@ İzleme Cüzdanı";
 
 "balance.add_wallet" = "Cüzdan Ekle";
 
@@ -1452,6 +1450,8 @@
 
 "manage_wallets.title" = "Cüzdanlar";
 "manage_wallets.not_found" = "Sonuç bulunamadı. Belirteci manuel olarak eklemeyi deneyin.";
+"manage_wallets.empty" = "Aktif Cüzdan Yok";
+"manage_accounts.not_found" = "Sonuç bulunamadı.";
 "manage_wallets.search_placeholder" = "Ad, kod veya sözleşme adresi";
 "manage_wallets.contract_address" = "Sözleşme Adresi";
 "manage_wallets.derivation_description" = "%@ cüzdanlarının gelen ödemeleri almak için kullanabileceği 4 yaygın adres biçimi vardır:\n \n- BIP-44 (eski)\n- BIP-49\n- BIP-84 (önerilen)\n- BIP-86 (en yeni)\n \n%@ cüzdan 4'ünü de desteklerken, BIP-84 formatında çalışan bir %@ cüzdanı kullanmanızı önerir.";
@@ -1485,27 +1485,36 @@
 
 "backup_app.backup_manager.title" = "Yedekleme yöneticisi";
 "backup_app.backup_manager.restore" = "Yedeği Geri Yükle";
+"backup_app.backup_manager.restore.description" = "Cüzdanınızı ve uygulama verilerinizi bir yedekleme dosyasından geri yükleyin.";
 "backup_app.backup_manager.create" = "Yeni Yedek Oluştur";
+"backup_app.backup_manager.create.description" = "Cüzdanlarınızın ve uygulama verilerinizin bir yedekleme dosyasını oluşturun.";
 
 "backup_app.backup_type.title" = "Yedeği kaydet";
 "backup_app.backup_type.cloud" = "iCloud'a";
-"backup_app.backup_type.cloud.description" = "Anahtar zincirinizde bir yedek kopya dosyasını kaydetme.";
+"backup_app.backup_type.cloud.description" = "iCloud depolama alanınıza bir yedekleme dosyası kaydedin.";
 "backup_app.backup_type.file" = "Dosyalara";
 "backup_app.backup_type.file.description" = "Bir yedek kopya dosyasını yerel klasörünüze kaydetme.";
 
-"backup_app.backup_list.title" = "Yedek Dosyası";
-"backup_app.backup_list.description" = "Yedeklemeye dahil edilecek cüzdanları seçin. Uygulama verileri otomatik olarak yedeklenecektir.";
-"backup_app.backup_list.description.restore" = "Yedek dosyasındaki içeriklerin listesi.";
-"backup_app.backup_list.header.wallets" = "Cüzdanlar";
-"backup_app.backup_list.header.other" = "Diğer";
-"backup_app.backup_list.other.watch_account.title" = "Cüzdan İzle";
-"backup_app.backup_list.other.watchlist.title" = "İzleme Listesi";
-"backup_app.backup_list.other.contacts.title" = "Kişiler";
-"backup_app.backup_list.other.custom_evm_sync_sources.title" = "Özel RPC";
-"backup_app.backup_list.other.custom_monero_nodes.title" = "Özel Monero Node’ları";
-"backup_app.backup_list.other.custom_zano_nodes.title" = "Özel Zano Düğümleri";
-"backup_app.backup_list.other.app_settings.title" = "Uygulama Ayarları";
-"backup_app.backup_list.other.app_settings.description" = "Dil, Para Birimi, Görünüm ...";
+// Backup Content Selection
+
+"backup_content.title.create" = "Yedek Oluştur";
+"backup_content.description.backup" = "Yedeğinize neleri dahil edeceğinizi seçin. Tümünü veya yalnızca seçili öğeleri yedekleyebilirsiniz.";
+"backup_content.description.restore" = "Neleri geri yükleyeceğinizi seçin. Tümünü veya yalnızca seçili öğeleri geri yükleyebilirsiniz.";
+
+"backup_content.header.wallets" = "Cüzdanlar";
+"backup_content.header.data" = "Veriler";
+
+"backup_content.data.contacts.title" = "Kişiler";
+"backup_content.data.contacts.subtitle" = "%d kayıtlı adres";
+
+"backup_content.data.favorites.title" = "Favoriler";
+"backup_content.data.favorites.subtitle" = "%d varlık";
+
+"backup_content.data.custom_rpc.title" = "Özel RPC";
+"backup_content.data.custom_rpc.subtitle" = "%d ağ";
+
+"backup_content.data.preferences.title" = "Tercihler";
+"backup_content.data.preferences.subtitle" = "Dil, Para Birimi, Görünüm...";
 
 "backup_app.backup.disclaimer.cloud.title" = "iCloud'a yedekle";
 "backup_app.backup.disclaimer.cloud.description" = "iCloud, Apple tarafından sağlanan bir bulut depolama hizmetidir. Yedek verilerinizin Apple'ın sunucularında saklanacağını bilmek önemlidir.";
@@ -1531,8 +1540,7 @@
 
 "backup_app.restore_type.title" = "Geri Yükle";
 
-"backup_app.restore.notice.description" = "Bu işlem, cihazdaki ödeme kişilerinizin yanı sıra iCloud kopyasının (varsa) üzerine yazacaktır.";
-"backup_app.restore.notice.merge" = "Değiştir";
+"backup_app.restore.notice.description" = "Kayıtlı kişiler, yedekteki verilerle değiştirilecektir.";
 
 "backup.password.title" = "Yedek Şifre";
 "backup.password.description" = "Yedeklemeniz için kilit açma parolasını ayarlayın. En az 8 sembolden oluşmalı ve en az bir küçük harf, büyük harf, sayı ve özel karakter içermelidir.";
@@ -1832,12 +1840,28 @@
 "create_wallet.n_words" = "%@ kelime";
 "create_wallet.word_list" = "Kelime Listesi";
 "create_wallet.passphrase" = "Parola";
-"create_wallet.input.passphrase" = "Parola";
+"create_wallet.passphrase_optional" = "Parola (isteğe bağlı)";
+"create_wallet.input.passphrase" = "Parola Ekle";
 "create_wallet.input.confirm" = "Onayla";
-"create_wallet.passphrase_description" = "Parolalar, cüzdanlar için ek bir güvenlik katmanı ekler. Bir cüzdanı geri yüklemek için bir kullanıcı hem anımsatıcı hem de bir parola gerektiriyordu.\n\n\nParolalar, kullanıcıların tek bir anımsatıcı ancak farklı bir parola kullanarak çok paralı cüzdanlara sahip olmalarını da kolaylaştırır.";
+"create_wallet.passphrase_description" = "Cüzdanınıza ekstra koruma sağlar. Erişimi geri yüklemek için kurtarma ifadenizle birlikte gereklidir.";
 "create_wallet.error.empty_passphrase" = "Parola boş olamaz";
 "create_wallet.error.forbidden_symbols" = "Lütfen yalnızca desteklenen sembolleri kullanın:  A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
-"create_wallet.error.invalid_confirmation" = "Parola onayı eşleşmiyor";
+"create_wallet.error.invalid_confirmation" = "Parola eşleşmiyor";
+
+// Passkey Wallet Terms
+
+"passkey_terms.title" = "Passkey Cüzdan Koşulları";
+
+"passkey_terms.device_icloud.title" = "Cihaz ve iCloud bağımlılığı";
+"passkey_terms.device_icloud.description" = "Erişim, cihazınızı ve iCloud'u gerektirir. Erişimi kaybetmek, fonların kaybına neden olabilir.";
+
+"passkey_terms.cross_platform.title" = "Sınırlı platformlar arası erişim";
+"passkey_terms.cross_platform.description" = "Apple dışı cihazlarda çalışmayabilir.";
+
+"passkey_terms.responsibility.title" = "Sorumluluk";
+"passkey_terms.responsibility.description" = "Cihazınıza ve iCloud'a erişimden siz sorumlusunuz. Erişim kaybedilirse Unstoppable bu cüzdanı kurtaramaz.";
+
+"passkey_terms.button" = "Anlıyorum ve Devam Et";
 
 // Restore Select
 

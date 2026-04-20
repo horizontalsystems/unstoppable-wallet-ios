@@ -9,6 +9,7 @@
 "button.import" = "Importar";
 "button.next" = "Siguiente";
 "button.delete" = "Eliminar";
+"button.replace" = "Reemplazar";
 "button.share" = "Compartir";
 "button.paste" = "Pegar";
 "button.gallery" = "Galería";
@@ -165,27 +166,23 @@
 
 // Restore Type
 
-"restore_type.title" = "Importar Cartera";
 "restore_type.recovery.title" = "de Frase de Recuperación";
 "restore_type.passkey.title" = "Desde Passkey";
 "restore_type.backup.title" = "desde copia de seguridad";
 
 "restore_type.recovery.description" = "Importe utilizando la frase de recuperación o la clave privada.";
 "restore_type.passkey.description" = "Restaura tu wallet usando tu dispositivo y cuenta de iCloud.";
-"restore_type.backup.description" = "Importar desde una copia de seguridad de iCloud o archivo";
+"restore_type.backup.description" = "Restaura tu wallet usando un archivo de respaldo de tu dispositivo o la nube.";
 
 // Restore Cloud
 
-"restore.cloud.title" = "Seleccionar copia de seguridad";
-"restore.cloud.description" = "Seleccione el archivo de copia de seguridad que desea restaurar.";
+"restore.cloud.title" = "Respaldos";
+"restore.cloud.description" = "Elige un respaldo para restaurar tu wallet, o importa uno desde Archivos en tu dispositivo.";
 "restore.cloud.empty" = "No se encontraron copias de seguridad.";
-"restore.cloud.wallets" = "Copia de seguridad de la cartera";
-"restore.cloud.imported" = "Carteras importadas";
-"restore.cloud.app_backups" = "Copias de seguridad de aplicaciones";
+"restore.cloud.full" = "Completo";
 
-"restore.cloud.password.title" = "Introduzca contraseña";
 "restore.cloud.password.placeholder" = "Copiar contraseña";
-"restore.cloud.password.description" = "Ingrese la contraseña para importar su copia de seguridad";
+"restore.cloud.password.description" = "Ingresa la contraseña de este archivo de respaldo para restaurar tus datos.";
 
 // Coin Settings
 
@@ -314,6 +311,7 @@
 "balance.stopped" = "Detenido";
 "balance.downloading_sapling" = "Descargando...";
 "balance.watch_wallet" = "Wallet de solo visualización";
+"balance.watch_wallet.typed" = "Wallet de observación %@";
 
 "balance.add_wallet" = "Añadir wallet";
 
@@ -1452,6 +1450,8 @@
 
 "manage_wallets.title" = "Carteras";
 "manage_wallets.not_found" = "No se han encontrado resultados. Intente añadir el token manualmente.";
+"manage_wallets.empty" = "Sin wallets activos";
+"manage_accounts.not_found" = "No se encontraron resultados.";
 "manage_wallets.search_placeholder" = "Nombre, código o dirección del contrato";
 "manage_wallets.contract_address" = "Dirección del contrato";
 "manage_wallets.derivation_description" = "Hay 4 formatos de dirección comunes que las carteras %@ pueden usar para recibir pagos entrantes:\n\n-BIP44 (el más antiguo)\n-BIP49\n-BIP84 (recomendado)\n-BIP86 (el más nuevo)\n\nAunque la cartera %@ admite los 4 formatos, se recomienda usar una cartera %@ operando en formato BIP84.";
@@ -1485,27 +1485,36 @@
 
 "backup_app.backup_manager.title" = "Gestor de copias de seguridad";
 "backup_app.backup_manager.restore" = "Restaurar copia de seguridad";
+"backup_app.backup_manager.restore.description" = "Restaura tu wallet y los datos de la app desde un archivo de respaldo.";
 "backup_app.backup_manager.create" = "Crear nueva copia de seguridad";
+"backup_app.backup_manager.create.description" = "Crea un archivo de respaldo de tus wallets y datos de la app.";
 
 "backup_app.backup_type.title" = "Guardar copia de seguridad";
 "backup_app.backup_type.cloud" = "A iCloud";
-"backup_app.backup_type.cloud.description" = "Guardando un archivo de copia de seguridad en el llavero.";
+"backup_app.backup_type.cloud.description" = "Guarda un archivo de respaldo en tu almacenamiento de iCloud.";
 "backup_app.backup_type.file" = "a archivos";
 "backup_app.backup_type.file.description" = "Guardando un archivo de copia de seguridad en su carpeta local.";
 
-"backup_app.backup_list.title" = "Copia de seguridad";
-"backup_app.backup_list.description" = "Selecciona las billeteras para incluir en la copia de seguridad. Los datos de la app se respaldarán automáticamente.";
-"backup_app.backup_list.description.restore" = "Lista de contenidos en el archivo de copia de seguridad.";
-"backup_app.backup_list.header.wallets" = "Carteras";
-"backup_app.backup_list.header.other" = "Otro";
-"backup_app.backup_list.other.watch_account.title" = "Ver carteras";
-"backup_app.backup_list.other.watchlist.title" = "Lista de Seguimiento";
-"backup_app.backup_list.other.contacts.title" = "Contactos";
-"backup_app.backup_list.other.custom_evm_sync_sources.title" = "RPC personalizado";
-"backup_app.backup_list.other.custom_monero_nodes.title" = "사용자 지정 Monero 노드";
-"backup_app.backup_list.other.custom_zano_nodes.title" = "Nodos Zano personalizados";
-"backup_app.backup_list.other.app_settings.title" = "Ajustes de app";
-"backup_app.backup_list.other.app_settings.description" = "Idioma, moneda, Apariencia ...";
+// Backup Content Selection
+
+"backup_content.title.create" = "Crear respaldo";
+"backup_content.description.backup" = "Elige qué incluir en tu respaldo. Puedes respaldar todos o solo los elementos seleccionados.";
+"backup_content.description.restore" = "Elige qué restaurar. Puedes restaurar todo o solo los elementos seleccionados.";
+
+"backup_content.header.wallets" = "Wallets";
+"backup_content.header.data" = "Datos";
+
+"backup_content.data.contacts.title" = "Contactos";
+"backup_content.data.contacts.subtitle" = "%d direcciones guardadas";
+
+"backup_content.data.favorites.title" = "Favoritos";
+"backup_content.data.favorites.subtitle" = "%d activos";
+
+"backup_content.data.custom_rpc.title" = "RPC personalizado";
+"backup_content.data.custom_rpc.subtitle" = "%d redes";
+
+"backup_content.data.preferences.title" = "Preferencias";
+"backup_content.data.preferences.subtitle" = "Idioma, Moneda, Apariencia...";
 
 "backup_app.backup.disclaimer.cloud.title" = "Copia de seguridad en iCloud";
 "backup_app.backup.disclaimer.cloud.description" = "iCloud es un servicio de almacenamiento en la nube proporcionado por Apple. Es importante saber que los datos de la copia de seguridad se almacenarán en los servidores de Apple.";
@@ -1531,8 +1540,7 @@
 
 "backup_app.restore_type.title" = "Restaurar";
 
-"backup_app.restore.notice.description" = "Esta acción sobrescribirá sus contactos de pago locales, así como su copia de iCloud (si hay una)";
-"backup_app.restore.notice.merge" = "Reemplazar";
+"backup_app.restore.notice.description" = "Los contactos guardados serán reemplazados con los datos del respaldo.";
 
 "backup.password.title" = "Copiar contraseña";
 "backup.password.description" = "Establezca la contraseña de desbloqueo para su copia de seguridad. La contraseña debe contener al menos 8 caracteres, incluyendo una letra minúscula, una letra mayúscula, un número y un carácter especial.";
@@ -1832,12 +1840,28 @@
 "create_wallet.n_words" = "%@ palabras";
 "create_wallet.word_list" = "Lista de palabras";
 "create_wallet.passphrase" = "Frase de contraseña";
-"create_wallet.input.passphrase" = "Frase de contraseña";
+"create_wallet.passphrase_optional" = "Frase de contraseña (opcional)";
+"create_wallet.input.passphrase" = "Agregar frase de contraseña";
 "create_wallet.input.confirm" = "Confirmar";
-"create_wallet.passphrase_description" = "Las frases de contraseña añaden una capa de seguridad adicional para las carteras. Para restaurar dicha cartera, un usuario necesita tanto una frase de recuperación como una frase de contraseña.\n\nLas frases de contraseña también facilitan a los usuarios tener muchas carteras multi-moneda usando una sola mnemotécnica, pero con diferentes contraseñas.";
+"create_wallet.passphrase_description" = "Añade protección extra a tu wallet. Se requiere junto con tu frase de recuperación para restaurar el acceso.";
 "create_wallet.error.empty_passphrase" = "La frase de contraseña no puede estar vacía";
 "create_wallet.error.forbidden_symbols" = "Utilice solo símbolos admitidos: A-Z a-z 0-9 ' \" ` & / ? ! : ; . , ~ * $ = + - [ ] ( ) { } < > \\ _ # @ | %";
-"create_wallet.error.invalid_confirmation" = "La confirmación de la frase de contraseña no coincide";
+"create_wallet.error.invalid_confirmation" = "La frase de contraseña no coincide";
+
+// Passkey Wallet Terms
+
+"passkey_terms.title" = "Términos del Wallet con Passkey";
+
+"passkey_terms.device_icloud.title" = "Dependencia del dispositivo e iCloud";
+"passkey_terms.device_icloud.description" = "El acceso requiere tu dispositivo e iCloud. Perder el acceso puede resultar en la pérdida de fondos.";
+
+"passkey_terms.cross_platform.title" = "Acceso multiplataforma limitado";
+"passkey_terms.cross_platform.description" = "Puede no funcionar en dispositivos que no sean Apple.";
+
+"passkey_terms.responsibility.title" = "Responsabilidad";
+"passkey_terms.responsibility.description" = "Eres responsable del acceso a tu dispositivo e iCloud. Unstoppable no puede recuperar este wallet si se pierde el acceso.";
+
+"passkey_terms.button" = "Entiendo y continuar";
 
 // Restore Select
 
