@@ -25,16 +25,13 @@ class RestoreMnemonicViewModel: ObservableObject {
     @Published var possibleWords: [String] = []
     @Published var invalidRanges: [NSRange] = []
     @Published var mnemonicCaution: CautionState = .none
-    @Published var passphraseEnabled = false
     @Published var wordListLanguage: String = ""
-    @Published var passphraseCaution: CautionState = .none
 
     @Published var advanced = false
     @Published var buttonEnabled = true
 
     private let proceedSubject = PassthroughSubject<(String, AccountType), Never>()
     private let replaceWordSubject = PassthroughSubject<(NSRange, String), Never>()
-    private let clearPassphraseSubject = PassthroughSubject<Void, Never>()
 
     init() {
         name = accountFactory.generatedAccountName
@@ -94,33 +91,14 @@ class RestoreMnemonicViewModel: ObservableObject {
         mnemonicItems.first { hasCursor(item: $0) }
     }
 
-    private func clearInputs() {
-        clearPassphraseSubject.send()
-        passphraseCaution = .none
-        passphrase = ""
-    }
-
     private var resolvedName: String {
         name.trimmingCharacters(in: .whitespacesAndNewlines)
     }
 
     private func resolveAccountType(words: [String]) throws -> AccountType {
-        var errors = [Error]()
         let passphrase = advanced ? passphrase : ""
 
-        if advanced, passphraseEnabled, passphrase.isEmpty {
-            errors.append(RestoreError.emptyPassphrase)
-        }
-
-        do {
-            try Mnemonic.validate(words: words)
-        } catch {
-            errors.append(error)
-        }
-
-        guard errors.isEmpty else {
-            throw ErrorList.errors(errors)
-        }
+        try Mnemonic.validate(words: words)
 
         return .mnemonic(
             words: words.map(\.decomposedStringWithCompatibilityMapping),
@@ -135,7 +113,6 @@ class RestoreMnemonicViewModel: ObservableObject {
 extension RestoreMnemonicViewModel {
     var proceedPublisher: AnyPublisher<(String, AccountType), Never> { proceedSubject.eraseToAnyPublisher() }
     var replaceWordPublisher: AnyPublisher<(NSRange, String), Never> { replaceWordSubject.eraseToAnyPublisher() }
-    var clearPassphrasePublisher: AnyPublisher<Void, Never> { clearPassphraseSubject.eraseToAnyPublisher() }
 
     var wordListViewItems: [AlertViewItem] {
         Mnemonic.Language.allCases.map { language in
@@ -182,19 +159,12 @@ extension RestoreMnemonicViewModel {
         replaceWordSubject.send((cursorItem.range, word))
     }
 
-    func onTogglePassphrase(isOn: Bool) {
-        passphraseEnabled = isOn
-        clearInputs()
-    }
-
     func onChange(passphrase: String) {
         self.passphrase = passphrase
-        passphraseCaution = .none
     }
 
     func onTapProceed() {
         mnemonicCaution = .none
-        passphraseCaution = .none
 
         guard mnemonicItems.allSatisfy({ $0.type == .correct }) else {
             invalidRanges = mnemonicItems.filter { $0.type != .correct }.map(\.range)
@@ -204,15 +174,9 @@ extension RestoreMnemonicViewModel {
         do {
             let accountType = try resolveAccountType(words: mnemonicItems.map(\.word))
             proceedSubject.send((resolvedName, accountType))
-        } catch let ErrorList.errors(errors) {
-            for error in errors {
-                if case RestoreError.emptyPassphrase = error {
-                    passphraseCaution = .caution(Caution(text: "restore.error.empty_passphrase".localized, type: .error))
-                } else {
-                    mnemonicCaution = .caution(Caution(text: error.convertedError.smartDescription, type: .error))
-                }
-            }
-        } catch {}
+        } catch {
+            mnemonicCaution = .caution(Caution(text: error.convertedError.smartDescription, type: .error))
+        }
     }
 }
 
@@ -229,13 +193,5 @@ extension RestoreMnemonicViewModel {
         let word: String
         let range: NSRange
         let type: WordItemType
-    }
-
-    enum RestoreError: Error {
-        case emptyPassphrase
-    }
-
-    enum ErrorList: Error {
-        case errors([Error])
     }
 }

@@ -51,7 +51,7 @@ struct CreateAccountView: View {
                             ListSection {
                                 ListRow {
                                     Toggle(isOn: $viewModel.advanced) {
-                                        Text("create_wallet.advanced".localized).themeBody()
+                                        Text("create_wallet.advanced_options".localized).themeBody()
                                     }
                                     .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
                                 }

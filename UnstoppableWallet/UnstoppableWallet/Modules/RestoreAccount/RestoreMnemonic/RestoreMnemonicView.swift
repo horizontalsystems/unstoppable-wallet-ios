@@ -27,12 +27,14 @@ struct RestoreMnemonicView: View {
                     VStack(spacing: 24) {
                         nameSection
                         mnemonicSection
-                        advancedToggleButton
+                        advancedToggleSection
+
+                        if viewModel.advanced {
+                            advancedContent
+                        }
                     }
                     .padding(EdgeInsets(top: 24, leading: 16, bottom: 32, trailing: 16))
-                    .animation(.default, value: viewModel.passphraseEnabled)
                     .animation(.default, value: viewModel.mnemonicCaution)
-                    .animation(.default, value: viewModel.passphraseCaution)
                     .animation(.default, value: isEnteringMnemonic)
                     .animation(.default, value: viewModel.advanced)
                 }
@@ -62,9 +64,6 @@ struct RestoreMnemonicView: View {
         }
         .onReceive(viewModel.proceedPublisher) { name, accountType in
             handleProceed(name: name, accountType: accountType)
-        }
-        .onReceive(viewModel.clearPassphrasePublisher) {
-            passphrase = ""
         }
     }
 
@@ -96,7 +95,6 @@ struct RestoreMnemonicView: View {
 
     // MARK: - Mnemonic Section
 
-    @ViewBuilder
     private var mnemonicSection: some View {
         VStack(spacing: 0) {
             MnemonicInputCellWrapper(
@@ -121,70 +119,71 @@ struct RestoreMnemonicView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
-
-        if viewModel.advanced {
-            ListSection {
-                ClickableRow(action: {
-                    Coordinator.shared.present(type: .alert) { isPresented in
-                        OptionAlertView(
-                            title: "create_wallet.word_list".localized,
-                            viewItems: viewModel.wordListViewItems,
-                            onSelect: { index in
-                                viewModel.onSelectWordList(index: index)
-                            },
-                            isPresented: isPresented
-                        )
-                    }
-                }) {
-                    Image("globe_24").themeIcon()
-                    Text("create_wallet.word_list".localized).textBody()
-                    Spacer()
-                    Text(viewModel.wordListLanguage).textSubhead1()
-                    Image("arrow_small_down_20").themeIcon()
-                }
-
-                ListRow {
-                    Image("key_phrase_24").themeIcon()
-                    Toggle(isOn: Binding(
-                        get: { viewModel.passphraseEnabled },
-                        set: { viewModel.onTogglePassphrase(isOn: $0) }
-                    )) {
-                        Text("restore.passphrase".localized).themeBody()
-                    }
-                    .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
-                }
-            }
-
-            if viewModel.passphraseEnabled {
-                VStack(spacing: 0) {
-                    InputTextRow {
-                        InputTextView(
-                            placeholder: "restore.input.passphrase".localized,
-                            text: $passphrase,
-                            isValidText: { PassphraseValidator.validate(text: $0) }
-                        )
-                        .secure($passphraseSecureLock)
-                        .autocapitalization(.none)
-                        .autocorrectionDisabled()
-                        .focused($focusedField, equals: .passphrase)
-                    }
-                    .modifier(CautionBorder(cautionState: $viewModel.passphraseCaution))
-                    .modifier(CautionPrompt(cautionState: $viewModel.passphraseCaution))
-                    .onChange(of: passphrase) {
-                        viewModel.onChange(passphrase: $0)
-                    }
-
-                    ListSectionFooter(text: "restore.wallet.passphrase_description".localized)
-                }
-            }
-        }
     }
 
     // MARK: - Advanced Toggle
 
-    private var advancedToggleButton: some View {
-        ThemeButton(text: viewModel.advanced ? "restore.hide_advanced_options".localized : "restore.show_advanced_options".localized, style: .secondary, mode: .transparent, size: .small) {
-            viewModel.advanced.toggle()
+    private var advancedToggleSection: some View {
+        ListSection {
+            Cell(
+                middle: {
+                    MultiText(title: "create_wallet.advanced_options".localized)
+                },
+                right: {
+                    ThemeToggle(isOn: $viewModel.advanced)
+                }
+            )
+        }
+    }
+
+    // MARK: - Advanced Content
+
+    private var advancedContent: some View {
+        VStack(spacing: 24) {
+            ListSection {
+                Cell(
+                    middle: {
+                        MultiText(subtitle: "create_wallet.word_list".localized)
+                    },
+                    right: {
+                        ThemeText(
+                            viewModel.wordListLanguage,
+                            style: .subheadSB
+                        ).arrow(style: .dropdown)
+                    },
+                    action: {
+                        Coordinator.shared.present(type: .alert) { isPresented in
+                            OptionAlertView(
+                                title: "create_wallet.word_list".localized,
+                                viewItems: viewModel.wordListViewItems,
+                                onSelect: { index in
+                                    viewModel.onSelectWordList(index: index)
+                                },
+                                isPresented: isPresented
+                            )
+                        }
+                    }
+                )
+            }
+
+            VStack(spacing: 0) {
+                InputTextRow {
+                    InputTextView(
+                        placeholder: "restore.input.passphrase".localized,
+                        text: $passphrase,
+                        isValidText: { PassphraseValidator.validate(text: $0) }
+                    )
+                    .secure($passphraseSecureLock)
+                    .autocapitalization(.none)
+                    .autocorrectionDisabled()
+                    .focused($focusedField, equals: .passphrase)
+                }
+                .onChange(of: passphrase) {
+                    viewModel.onChange(passphrase: $0)
+                }
+
+                ListSectionFooter(text: "restore.wallet.passphrase_description".localized)
+            }
         }
     }
 
