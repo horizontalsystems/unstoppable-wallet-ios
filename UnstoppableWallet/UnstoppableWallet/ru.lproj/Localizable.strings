@@ -1862,6 +1862,7 @@
 // Restore Select
 
 "restore_select.title" = "Выберите блокчейны";
+"restore_select.description" = "Выберите блокчейны, которые вы хотите восстановить.";
 
 // Lock Info
 

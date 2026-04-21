@@ -1862,6 +1862,7 @@
 // Restore Select
 
 "restore_select.title" = "블록체인 선택";
+"restore_select.description" = "복원하려는 블록체인을 선택하세요.";
 
 // Lock Info
 

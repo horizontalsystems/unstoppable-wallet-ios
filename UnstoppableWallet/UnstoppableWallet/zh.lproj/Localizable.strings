@@ -1862,6 +1862,7 @@
 // Restore Select
 
 "restore_select.title" = "选择区块链";
+"restore_select.description" = "选择您要恢复的区块链。";
 
 // Lock Info
 
