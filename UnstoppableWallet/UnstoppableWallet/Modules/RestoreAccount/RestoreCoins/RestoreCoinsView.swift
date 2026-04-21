@@ -24,25 +24,37 @@ struct RestoreCoinsView: View {
 
     var body: some View {
         ThemeView(style: .list) {
-            ThemeList(bottomSpacing: 16) {
-                ListForEach(viewModel.items) { item in
-                    cell(item: item)
+            BottomGradientWrapper(gradientColor: .themeLawrence) {
+                ScrollView {
+                    VStack(spacing: 0) {
+                        ThemeText("restore_select.description".localized, style: .subhead)
+                            .padding(.horizontal, 32)
+                            .padding(.bottom, 32)
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .background(Color.themeTyler)
+                            .themeListTopView()
+
+                        ListSection {
+                            ForEach(viewModel.items) { item in
+                                cell(item: item)
+                            }
+                        }
+                        .themeListStyle(.transparent)
+                    }
+                    .padding(EdgeInsets(top: 12, leading: 0, bottom: 32, trailing: 0))
                 }
-            }
-        }
-        .navigationTitle("restore_select.title".localized)
-        .toolbar {
-            ToolbarItem(placement: .primaryAction) {
-                Button("button.import".localized) {
+                .themeListScrollHeader()
+            } bottomContent: {
+                ThemeButton(text: "button.restore".localized) {
                     viewModel.restore()
 
                     HudHelper.instance.show(banner: .imported)
                     isParentPresented = false
                 }
                 .disabled(!viewModel.canRestore)
-                .tint(.themeJacob)
             }
         }
+        .navigationTitle("restore_select.title".localized)
     }
 
     @ViewBuilder private func cell(item: RestoreCoinsViewModel.Item) -> some View {
