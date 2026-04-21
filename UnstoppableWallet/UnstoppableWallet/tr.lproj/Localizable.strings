@@ -138,20 +138,14 @@
 
 "restore.title" = "Cuzdan Yükle";
 "restore.advanced" = "İleri düzey";
-"restore.import_by" = "Yükleme seç";
-"restore.restore_type.mnemonic" = "Kurtarma cümlesi";
-"restore.restore_type.private_key" = "Gizli Anahtar";
+"restore.suggestions" = "Kelime önerileri burada görünecek";
 "restore.mnemonic.placeholder" = "12, 15, 18, 21 veya 24 kelime girin";
 "restore.private_key.placeholder" = "EVM veya TRON Özel Anahtarı, Stellar Gizli Anahtarı, BIP32 Kök Anahtarı veya Hesap Genişletilmiş Özel Anahtarını girin";
 "restore.private_key.invalid_key" = "Geçersiz Anahtar";
 "restore_error.mnemonic_word_count" = "Hatalı sözcük sayısı. 12-24 arası sözcük olmalıdır. Girilen: %@";
 "restore.checksum_error" = "Geçersiz sağlama toplamı";
-"restore.passphrase" = "Parola";
-"restore.input.passphrase" = "Parola";
+"restore.input.passphrase" = "Parola (isteğe bağlı)";
 "restore.wallet.passphrase_description" = "Bu kurtarma cümlesini oluştururken kullandığınız parolayı girin. Mevcut bir cüzdanı yeni bir parola ile geri yüklemek tamamen yeni bir cüzdan oluşturacaktır.";
-"restore.error.empty_passphrase" = "Şifre boş bırakılamaz";
-"restore.non_standard_import" = "Standart Olmayan Yükleme";
-"restore.non_standard_import.description" = "Bu sayfa, standart olmayan bir cüzdanı olan %@ kullanıcıları için özel geri yükleme mekanizması sağlar. Genel olarak, bu tür cüzdanlar, İngilizce olmayan bir anımsatma kelimeleri listesi ve/veya cüzdan şifresinde özel bir karakter (yani aksan simgesi) kullanılarak %@ 0.27 - 0.28 sürümünde oluşturulmuş olabilir.\n\n Bu durumdan etkilenen bir kullanıcıysanız, 0.29 sürümüne güncelledikten sonra cüzdan bakiyeniz 0 olarak görüntülenir. Bu sayfa, standart olmayan cüzdanınıza erişimi geri yüklemenizi sağlayacaktır. Geri yüklendikten sonra, yeni bir cüzdan oluşturmanız (standartlarla uyumlu) ve paranızı oraya taşımanız önerilir.";
 "restore.warning.non_recommended.description" = "Bu cüzdan, gizli sözcükler listesinde ve/veya bir şifrede standart olmayan bir karakter kullanıyor gibi görünüyor. Bir bakiye veya işlem göremiyorsanız lütfen bilgi için aşağıya bakınız.\n\nDAHA FAZLA BİLGİ ALMAK İÇİN TIKLAYINIZ";
 "restore.error.non_standard.description" = "Bu standart olmayan bir cüzdandır. \n\nDAHA FAZLA BİLGİ ALMAK İÇİN TIKLAYIN";
 
@@ -167,10 +161,12 @@
 // Restore Type
 
 "restore_type.recovery.title" = "Kurtarma İfadesinden";
+"restore_type.private_key.title" = "Özel Anahtardan";
 "restore_type.passkey.title" = "Passkey ile";
 "restore_type.backup.title" = "Yedekten";
 
-"restore_type.recovery.description" = "Kurtarma ifadesini veya özel anahtarı kullanarak içe aktarın.";
+"restore_type.recovery.description" = "Kurtarma ifadesi kullanarak bir cüzdan içe aktarın.";
+"restore_type.private_key.description" = "Özel anahtar kullanarak bir cüzdan içe aktarın.";
 "restore_type.passkey.description" = "Cüzdanınızı cihazınız ve iCloud hesabınızı kullanarak geri yükleyin.";
 "restore_type.backup.description" = "Cihazınızdaki veya buluttaki bir yedekleme dosyasını kullanarak cüzdanınızı geri yükleyin.";
 
@@ -1831,10 +1827,10 @@
 // Create Wallet
 
 "create_wallet.title" = "Yeni Cüzdan";
-"create_wallet.name" = "İsim";
+"create_wallet.name" = "Cüzdan Adı";
 "create_wallet.advanced_setup" = "İleri düzey";
 "create_wallet.create" = "Oluştur";
-"create_wallet.advanced" = "İleri düzey";
+"create_wallet.advanced_options" = "Gelişmiş Seçenekler";
 "create_wallet.phrase_count" = "Kurtarma cümlesi";
 "create_wallet.12_words" = "12 kelimeler (Tavsiye edilen)";
 "create_wallet.n_words" = "%@ kelime";
@@ -2183,7 +2179,7 @@
 // Watch Address
 
 "watch_address.title" = "Cüzdan İzle";
-"watch_address.name" = "İsim";
+"watch_address.name" = "Cüzdan Adı";
 "watch_address.watch" = "İzle";
 "watch_address.address" = "Adres";
 "watch_address.error.not_supported" = "Adres formatı desteklenmiyor";

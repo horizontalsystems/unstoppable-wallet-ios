@@ -138,20 +138,14 @@
 
 "restore.title" = "Импорт кошелька";
 "restore.advanced" = "Доп. настройки";
-"restore.import_by" = "Импорт по";
-"restore.restore_type.mnemonic" = "Фраза восстановления";
-"restore.restore_type.private_key" = "Приватный ключ";
+"restore.suggestions" = "Здесь появятся предложения слов";
 "restore.mnemonic.placeholder" = "Введите фразу восстановления";
 "restore.private_key.placeholder" = "Введите приватный ключ EVM или TRON, секретный ключ Stellar, корневой ключ BIP32 или расширенный приватный ключ аккаунта";
 "restore.private_key.invalid_key" = "Неверный ключ";
 "restore_error.mnemonic_word_count" = "Неверное количество слов. Должно быть от 12 до 24 слов. Вы ввели: %@";
 "restore.checksum_error" = "Неверная контрольная сумма";
-"restore.passphrase" = "Кодовая фраза";
-"restore.input.passphrase" = "Пароль";
+"restore.input.passphrase" = "Кодовая фраза (необязательно)";
 "restore.wallet.passphrase_description" = "Введите кодовую фразу, которую вы использовали при создании этой фразы восстановления. Импорт существующего кошелька с новой кодой фразой создаст совершенно новый кошелек.";
-"restore.error.empty_passphrase" = "Поле для кодовой фразы не может быть пустым";
-"restore.non_standard_import" = "Нестандартный импорт";
-"restore.non_standard_import.description" = "На этой странице представлен специальный механизм восстановления кошелька для пользователей %@ с нестандартным кошельком. Как правило, такие кошельки могли быть созданы в версиях %@ 0.27–0.28 с использованием неанглоязычного списка мнемонических слов и/или специального символа в парольной фразе кошелька (например, диакритического знака).\n\nЕсли вы являетесь затронутым пользователем, то баланс вашего кошелька будет отображаться как 0 после восстановления такого кошелька в версии 0.29 или выше.Эта страница позволит вам восстановить доступ к вашему нестандартному кошельку. После восстановления рекомендуется создать новый кошелек (который будет соответствовать стандарту) и перевести туда средства.";
 "restore.warning.non_recommended.description" = "Похоже, этот кошелек использует нестандартный символ в списке мнемонических слов и/или парольной фразе. Если вы не видите баланс или транзакции, пожалуйста, прочтите подробности ниже.\n\nПОЖАЛУЙСТА НАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ";
 "restore.error.non_standard.description" = "Это нестандартный кошелек.\n\nНАЖМИТЕ, ЧТОБЫ ПОЛУЧИТЬ БОЛЬШЕ ИНФОРМАЦИИ";
 
@@ -167,10 +161,12 @@
 // Restore Type
 
 "restore_type.recovery.title" = "Фраза восстановления";
+"restore_type.private_key.title" = "из Приватного Ключа";
 "restore_type.passkey.title" = "Через Passkey";
 "restore_type.backup.title" = "из резервной копии";
 
-"restore_type.recovery.description" = "Импорт с помощью фразы восстановления или приватного ключа.";
+"restore_type.recovery.description" = "Импортировать кошелёк с помощью фразы восстановления.";
+"restore_type.private_key.description" = "Импортировать кошелёк с помощью приватного ключа.";
 "restore_type.passkey.description" = "Восстановите кошелёк с помощью устройства и учётной записи iCloud.";
 "restore_type.backup.description" = "Восстановите кошелёк из файла резервной копии на вашем устройстве или в облаке.";
 
@@ -1831,10 +1827,10 @@
 // Create Wallet
 
 "create_wallet.title" = "Новый кошелек";
-"create_wallet.name" = "Название";
+"create_wallet.name" = "Имя кошелька";
 "create_wallet.advanced_setup" = "Доп. настройки";
 "create_wallet.create" = "Создать";
-"create_wallet.advanced" = "Доп. настройки";
+"create_wallet.advanced_options" = "Расширенные настройки";
 "create_wallet.phrase_count" = "Фраза восстановления";
 "create_wallet.12_words" = "12 слов (рекомендуется)";
 "create_wallet.n_words" = "%@ слов";
@@ -2183,7 +2179,7 @@
 // Watch Address
 
 "watch_address.title" = "Просмотр кошелька";
-"watch_address.name" = "Название";
+"watch_address.name" = "Имя кошелька";
 "watch_address.watch" = "Смотреть";
 "watch_address.address" = "Адрес";
 "watch_address.error.not_supported" = "Формат адреса не поддерживается";

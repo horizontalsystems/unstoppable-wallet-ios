@@ -138,20 +138,14 @@
 
 "restore.title" = "Importer le porte-monnaie";
 "restore.advanced" = "Avancé";
-"restore.import_by" = "Importer par";
-"restore.restore_type.mnemonic" = "Phrase de récupération";
-"restore.restore_type.private_key" = "Clé privée";
+"restore.suggestions" = "Les suggestions de mots apparaîtront ici";
 "restore.mnemonic.placeholder" = "Entrez 12, 15, 18, 21 ou 24 mots";
 "restore.private_key.placeholder" = "Entrez la clé privée EVM ou TRON, la clé secrète Stellar, la clé racine BIP32 ou la clé privée étendue de compte";
 "restore.private_key.invalid_key" = "Clé invalide";
 "restore_error.mnemonic_word_count" = "Nombre de mots incorrect. Il doit être compris entre 12 et 24 mots. Vous en avez saisi : %@";
 "restore.checksum_error" = "Somme de contrôle invalide";
-"restore.passphrase" = "Phrase d'authentification";
-"restore.input.passphrase" = "Phrase d'authentification";
+"restore.input.passphrase" = "Phrase secrète (optionnel)";
 "restore.wallet.passphrase_description" = "Entrez la phrase d'authentification que vous avez utilisée pour créer cette phrase mnémonique.";
-"restore.error.empty_passphrase" = "La phrase d'authentification ne peut pas être une valeur vide";
-"restore.non_standard_import" = "Restauration non-standard";
-"restore.non_standard_import.description" = "Sur cette page, vous trouverez un mécanisme spécial de restauration de portefeuille pour les utilisateurs %@ dont le portefeuille n'est pas standard. En général, de tels portefeuilles ont été créés dans la version 0.27 - 0.28 %@ en utilisant une liste de mots mnémoniques non-anglais et/ou un caractère spécial dans la phrase de passe du portefeuille (c'est-à-dire un symbole diacritique).\n\nSi vous êtes un utilisateur concerné, le solde de votre portefeuille sera affiché à 0 après la restauration de ce portefeuille dans la version 0.29 ou supérieure. Grâce à cette page, vous pourrez restaurer l'accès à votre portefeuille non-standard. Une fois la restauration effectuée, il est conseillé de créer un nouveau portefeuille (qui sera conforme aux normes) et d'y transférer vos fonds.";
 "restore.warning.non_recommended.description" = "Ce portefeuille semble utiliser un caractère non-standard dans sa liste de mots secrets et/ou dans une phrase de passe. Si vous ne voyez pas de solde ou de transactions, veuillez vous reporter aux informations ci-dessous. \n\nCLIQUEZ POUR OBTENIR PLUS D'INFOS";
 "restore.error.non_standard.description" = "Ce portefeuille n'est pas conforme aux normes.\n\nCLIQUEZ POUR OBTENIR PLUS D'INFOS";
 
@@ -167,10 +161,12 @@
 // Restore Type
 
 "restore_type.recovery.title" = "Voir la phase de récupération";
+"restore_type.private_key.title" = "depuis une Clé Privée";
 "restore_type.passkey.title" = "Depuis Passkey";
 "restore_type.backup.title" = "depuis une sauvegarde";
 
-"restore_type.recovery.description" = "Importer à l'aide de la phrase de récupération ou de la clé privée.";
+"restore_type.recovery.description" = "Importer un wallet à l'aide d'une phrase de récupération.";
+"restore_type.private_key.description" = "Importer un wallet à l'aide d'une clé privée.";
 "restore_type.passkey.description" = "Restaurez votre wallet à l'aide de votre appareil et de votre compte iCloud.";
 "restore_type.backup.description" = "Restaurez votre wallet à l'aide d'un fichier de sauvegarde depuis votre appareil ou le cloud.";
 
@@ -1831,10 +1827,10 @@
 // Create Wallet
 
 "create_wallet.title" = "Nouveau porte-monnaie";
-"create_wallet.name" = "Nom";
+"create_wallet.name" = "Nom du Wallet";
 "create_wallet.advanced_setup" = "Avancé";
 "create_wallet.create" = "Créer";
-"create_wallet.advanced" = "Avancé";
+"create_wallet.advanced_options" = "Options Avancées";
 "create_wallet.phrase_count" = "Phrase de récupération";
 "create_wallet.12_words" = "12 mots (recommandé)";
 "create_wallet.n_words" = "%@ mots";
@@ -2183,7 +2179,7 @@
 // Watch Address
 
 "watch_address.title" = "Regarder les portefeuilles";
-"watch_address.name" = "Nom";
+"watch_address.name" = "Nom du Wallet";
 "watch_address.watch" = "Suivi";
 "watch_address.address" = "Adresses";
 "watch_address.error.not_supported" = "Le format de l'adresse n'est pas pris en charge";
