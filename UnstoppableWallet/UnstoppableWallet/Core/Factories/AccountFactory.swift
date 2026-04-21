@@ -11,13 +11,8 @@ class AccountFactory {
 
 extension AccountFactory {
     var generatedAccountName: String {
-        let adjectiveIndex = Int.random(in: 1 ... 100)
-        let nounIndex = Int.random(in: 1 ... 100)
-
-        let adjective = "wallet_name.adjective.\(adjectiveIndex)".localized
-        let noun = "wallet_name.noun.\(nounIndex)".localized
-
-        return "\(adjective) \(noun)"
+        let index = Int.random(in: 1 ... 100)
+        return "wallet_name.\(index)".localized
     }
 
     func account(type: AccountType, origin: AccountOrigin, backedUp: Bool, fileBackedUp: Bool, name: String) -> Account {
