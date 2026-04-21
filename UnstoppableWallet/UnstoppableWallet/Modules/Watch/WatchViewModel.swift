@@ -382,8 +382,8 @@ extension WatchViewModel {
 
         var title: String {
             switch self {
-            case .blockchains: return "watch_address.choose_blockchain".localized
-            case .coins: return "watch_address.choose_coin".localized
+            case .blockchains: return "watch_address.choose_blockchains".localized
+            case .coins: return "watch_address.choose_coins".localized
             }
         }
     }

@@ -2188,8 +2188,8 @@
 "watch_address.error.non_public_key" = "Watching by private key is not allowed";
 "watch_address.error.not_supported_derived_type" = "Derived type is not supported";
 "watch_address.watch_data.placeholder" = "Paste your address (EVM, Tron, TON, Stellar, Monero, BTC, LTC, BCH, Dash) or XPUB";
-"watch_address.choose_blockchain" = "Choose Blockchain";
-"watch_address.choose_coin" = "Choose Coin";
+"watch_address.choose_blockchains" = "Choose Blockchains";
+"watch_address.choose_coins" = "Choose Coins";
 "watch_address.view_key.placeholder" = "Private View Key";
 "watch_address.view_key.error.required" = "Private View Key is required to watch Monero wallets.";
 "watch_address.view_key.error.invalid" = "Invalid View Key";
