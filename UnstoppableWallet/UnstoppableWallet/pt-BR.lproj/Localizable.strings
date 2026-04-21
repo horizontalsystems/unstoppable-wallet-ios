@@ -138,20 +138,14 @@
 
 "restore.title" = "Importar carteira";
 "restore.advanced" = "Avançado";
-"restore.import_by" = "Importar por";
-"restore.restore_type.mnemonic" = "Frase de Recuperação";
-"restore.restore_type.private_key" = "Chave Privada";
+"restore.suggestions" = "Sugestões de palavras aparecerão aqui";
 "restore.mnemonic.placeholder" = "Insira 12, 15, 18, 21 ou 24 palavras";
 "restore.private_key.placeholder" = "Insira a chave privada EVM ou TRON, a chave secreta Stellar, a chave raiz BIP32 ou a chave privada estendida da conta";
 "restore.private_key.invalid_key" = "Chave Inválida";
 "restore_error.mnemonic_word_count" = "Hey, you, %@! You're off the mark. You need between 12 and 24 words, no less, no more. Let's get it right!";
 "restore.checksum_error" = "Soma de Verificação Inválida";
-"restore.passphrase" = "Senha";
-"restore.input.passphrase" = "Senha";
+"restore.input.passphrase" = "Frase secreta (opcional)";
 "restore.wallet.passphrase_description" = "Digite a senha que você usou ao criar esta frase mnemônica.";
-"restore.error.empty_passphrase" = "Folks, we can't have an empty passphrase here, okay?";
-"restore.non_standard_import" = "Restauração Não-Padrão";
-"restore.non_standard_import.description" = "Esta página fornece um mecanismo de importação de carteira especial para usuários %@ que têm uma carteira não padrão. Tais carteiras podem ter sido criadas na versão %@ do 0. 7 - 0,28 usando uma frase de recuperação não inglesa e/ou um caractere especial na senha da carteira (ou seja, símbolo diacrítico).\n\nSe você é afetado com o seu saldo de carteira será mostrado 0 após importar tal carteira na versão 0.29 ou superior. Esta página permitirá que você restaure o acesso à sua carteira não padrão. Uma vez importado, recomenda-se criar uma nova carteira (que será compatível com o padrão) e mover fundos para lá.";
 "restore.warning.non_recommended.description" = "Esta carteira parece usar um caractere não padrão em sua lista de palavras secretas e/ou uma frase secreta.  Se você não ver um saldo ou transações, leia abaixo para obter detalhes.\n\nCLIQUE PARA OBTER MAIS INFORMAÇÕES";
 "restore.error.non_standard.description" = "Esta é uma carteira não padrão. \n\nCLIQUE PARA OBTER MAIS INFORMAÇÕES";
 
@@ -167,10 +161,12 @@
 // Restore Type
 
 "restore_type.recovery.title" = "da Frase de Recuperação";
+"restore_type.private_key.title" = "da Chave Privada";
 "restore_type.passkey.title" = "Via Passkey";
 "restore_type.backup.title" = "do Backup";
 
-"restore_type.recovery.description" = "Import like a pro! Recovery phrase or private key, you choose. It's your call, folks!";
+"restore_type.recovery.description" = "Importar uma carteira usando uma frase de recuperação.";
+"restore_type.private_key.description" = "Importar uma carteira usando uma chave privada.";
 "restore_type.passkey.description" = "Restaure sua carteira usando seu dispositivo e conta do iCloud.";
 "restore_type.backup.description" = "Restaure sua wallet usando um arquivo de backup do seu dispositivo ou da nuvem.";
 
@@ -1831,10 +1827,10 @@
 // Create Wallet
 
 "create_wallet.title" = "Nova Carteira";
-"create_wallet.name" = "Nome";
+"create_wallet.name" = "Nome da Carteira";
 "create_wallet.advanced_setup" = "Avançado";
 "create_wallet.create" = "Criar";
-"create_wallet.advanced" = "Avançado";
+"create_wallet.advanced_options" = "Opções Avançadas";
 "create_wallet.phrase_count" = "Frase de Recuperação";
 "create_wallet.12_words" = "12 palavras (recomendado)";
 "create_wallet.n_words" = "%@ palavras";
@@ -2183,7 +2179,7 @@
 // Watch Address
 
 "watch_address.title" = "Monitorar Carteira";
-"watch_address.name" = "Nome";
+"watch_address.name" = "Nome da Carteira";
 "watch_address.watch" = "Ver";
 "watch_address.address" = "Endereço";
 "watch_address.error.not_supported" = "Formato de endereço não suportado";

@@ -138,20 +138,14 @@
 
 "restore.title" = "Wallet importieren";
 "restore.advanced" = "Erweitert";
-"restore.import_by" = "Importieren von";
-"restore.restore_type.mnemonic" = "Wiederherstellungsphrase";
-"restore.restore_type.private_key" = "Privater Schlüssel";
+"restore.suggestions" = "Wortvorschläge werden hier angezeigt";
 "restore.mnemonic.placeholder" = "12, 15, 18, 21 oder 24 Wörter eingeben";
 "restore.private_key.placeholder" = "EVM- oder TRON-Private-Key, Stellar Secret Key, BIP32 Root Key oder Account Extended Private Key eingeben";
 "restore.private_key.invalid_key" = "Ungültiger Schlüssel";
 "restore_error.mnemonic_word_count" = "Falsche Wortzahl. Sie muss zwischen 12 und 24 Wörtern liegen. Sie haben eingegeben: %@";
 "restore.checksum_error" = "Ungültige Prüfsumme";
-"restore.passphrase" = "Passwort";
-"restore.input.passphrase" = "Passwort";
+"restore.input.passphrase" = "Passphrase (optional)";
 "restore.wallet.passphrase_description" = "Bitte geben Sie die Passphrase ein, die Sie beim Erstellen dieses Wiederherstellungsphrases verwendet haben. Das Wiederherstellen einer bestehenden Brieftasche mit einer neuen Passphrase generiert eine ganz neue Brieftasche.";
-"restore.error.empty_passphrase" = "Die Passphrase darf nicht leer sein";
-"restore.non_standard_import" = "Nicht standardmäßige Wiederherstellung";
-"restore.non_standard_import.description" = "Diese Seite bietet einen speziellen Wallet-Importmechanismus für Benutzer von %@ die eine nicht standardmäßige Wallet haben. Solche Brieftaschen könnten in %@ Version 0 erstellt worden sein. 7 - 0.28 unter Verwendung einer nicht-englischen Wiederherstellungsphrase und/oder eines Sonderzeichens in der Brieftasche Passphrase (d.h. diakritisches Symbol).\n\nWenn Sie ein betroffener Benutzer sind, wird Ihr Wallet-Guthaben nach dem Import in Version 0.29 oder höher 0 angezeigt. Auf dieser Seite können Sie den Zugriff auf Ihre nicht standardmäßige Brieftasche wiederherstellen. Sobald Sie importiert haben, empfehlen wir Ihnen eine neue Wallet zu erstellen (die standardkonform ist) und Geld dorthin zu verschieben.";
 "restore.warning.non_recommended.description" = "Diese Brieftasche scheint ein nicht standardmäßiges Zeichen in ihrer geheimen Wortliste und/oder einer Passphrase zu verwenden. Wenn Sie kein Guthaben oder Transaktionen sehen, lesen Sie bitte unten für Details.\n\nKLICKEN, UM WEITERE INFORMATIONEN ZU ERHALTEN";
 "restore.error.non_standard.description" = "Dies ist eine nicht standardmäßige Wallet. \n\nKLICKEN SIE MEHR INFO";
 
@@ -167,10 +161,12 @@
 // Restore Type
 
 "restore_type.recovery.title" = "von Wiederherstellungsphrase";
+"restore_type.private_key.title" = "aus Private Key";
 "restore_type.passkey.title" = "Über Passkey";
 "restore_type.backup.title" = "aus Backup";
 
-"restore_type.recovery.description" = "Importieren Sie mithilfe der Wiederherstellungsphrase oder des privaten Schlüssels.";
+"restore_type.recovery.description" = "Wallet mit einer Wiederherstellungsphrase importieren.";
+"restore_type.private_key.description" = "Wallet mit einem Private Key importieren.";
 "restore_type.passkey.description" = "Stelle deine Wallet mit deinem Gerät und iCloud-Konto wieder her.";
 "restore_type.backup.description" = "Stellen Sie Ihr Wallet mithilfe einer Sicherungsdatei von Ihrem Gerät oder der Cloud wieder her.";
 
@@ -1831,10 +1827,10 @@
 // Create Wallet
 
 "create_wallet.title" = "Neues Wallet";
-"create_wallet.name" = "Name";
+"create_wallet.name" = "Wallet-Name";
 "create_wallet.advanced_setup" = "Erweitert";
 "create_wallet.create" = "Erstellen";
-"create_wallet.advanced" = "Erweitert";
+"create_wallet.advanced_options" = "Erweiterte Optionen";
 "create_wallet.phrase_count" = "Wiederherstellungsphrase";
 "create_wallet.12_words" = "12 Wörter (empfohlen)";
 "create_wallet.n_words" = "%@ Wörter";
@@ -2183,7 +2179,7 @@
 // Watch Address
 
 "watch_address.title" = "Wallet de solo visualización";
-"watch_address.name" = "Name";
+"watch_address.name" = "Wallet-Name";
 "watch_address.watch" = "Beobachten";
 "watch_address.address" = "Adresse";
 "watch_address.error.not_supported" = "Adressformat wird nicht unterstützt";

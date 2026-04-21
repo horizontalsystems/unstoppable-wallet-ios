@@ -138,20 +138,14 @@
 
 "restore.title" = "Importar Cartera";
 "restore.advanced" = "Avanzado";
-"restore.import_by" = "Importar por";
-"restore.restore_type.mnemonic" = "Frase de Recuperación";
-"restore.restore_type.private_key" = "Clave privada";
+"restore.suggestions" = "Las sugerencias de palabras aparecerán aquí";
 "restore.mnemonic.placeholder" = "Introduzca 12, 15, 18, 21 o 24 palabras";
 "restore.private_key.placeholder" = "Ingrese la clave privada de EVM o TRON, la clave secreta de Stellar, la clave raíz BIP32 o la clave privada extendida de cuenta";
 "restore.private_key.invalid_key" = "Clave no válida";
 "restore_error.mnemonic_word_count" = "Número de palabras erróneas. Debe tener entre 12 y 24 palabras. Has ingresado: %@";
 "restore.checksum_error" = "Suma de verificación inválida";
-"restore.passphrase" = "Frase de contraseña";
-"restore.input.passphrase" = "Frase de contraseña";
+"restore.input.passphrase" = "Frase de contraseña (opcional)";
 "restore.wallet.passphrase_description" = "Introduce la contraseña que utilizaste al crear esta frase de recuperación. Restaurar una billetera existente con una nueva contraseña generará una billetera completamente nueva.";
-"restore.error.empty_passphrase" = "La frase no puede estar vacía";
-"restore.non_standard_import" = "Restauración no estándar";
-"restore.non_standard_import.description" = "Esta página proporciona un mecanismo especial de importación de carteras para usuarios de %@ que tienen una cartera no estándar. Dichas carteras podrían haberse creado en la versión %@ 0.27 - 0.28 utilizando una frase de recuperación en un idioma que no es inglés y/o un carácter especial en la frase de contraseña de la cartera (por ejemplo, un símbolo diacrítico).\n\nSi eres un usuario afectado, entonces tu saldo en la cartera se mostrará como 0 después de importar dicha cartera en la versión 0.29 o superior. Esta página te permitirá restaurar el acceso a tu cartera no estándar. Una vez importada, se recomienda crear una nueva cartera (que cumpla con los estándares) y transferir allí los fondos.";
 "restore.warning.non_recommended.description" = "Parece que esta cartera utiliza un carácter no estándar en su frase de recuperación y/o contraseña. Si no ves un saldo o transacciones, por favor lee abajo para más detalles. \n\nHAGA CLIC PARA OBTENER MÁS INFORMACIÓN";
 "restore.error.non_standard.description" = "Esta es una cartera no estándar. \n\nCLICK PARA CONTRAR MÁS INFO";
 
@@ -167,10 +161,12 @@
 // Restore Type
 
 "restore_type.recovery.title" = "de Frase de Recuperación";
+"restore_type.private_key.title" = "desde Clave Privada";
 "restore_type.passkey.title" = "Desde Passkey";
 "restore_type.backup.title" = "desde copia de seguridad";
 
-"restore_type.recovery.description" = "Importe utilizando la frase de recuperación o la clave privada.";
+"restore_type.recovery.description" = "Importar un wallet usando una frase de recuperación.";
+"restore_type.private_key.description" = "Importar un wallet usando una clave privada.";
 "restore_type.passkey.description" = "Restaura tu wallet usando tu dispositivo y cuenta de iCloud.";
 "restore_type.backup.description" = "Restaura tu wallet usando un archivo de respaldo de tu dispositivo o la nube.";
 
@@ -1831,10 +1827,10 @@
 // Create Wallet
 
 "create_wallet.title" = "Cartera nueva";
-"create_wallet.name" = "Nombre";
+"create_wallet.name" = "Nombre del Wallet";
 "create_wallet.advanced_setup" = "Avanzado";
 "create_wallet.create" = "Crear";
-"create_wallet.advanced" = "Avanzado";
+"create_wallet.advanced_options" = "Opciones Avanzadas";
 "create_wallet.phrase_count" = "Frase de Recuperación";
 "create_wallet.12_words" = "12 palabras (recomendado)";
 "create_wallet.n_words" = "%@ palabras";
@@ -2183,7 +2179,7 @@
 // Watch Address
 
 "watch_address.title" = "Wallet de solo visualización";
-"watch_address.name" = "Nombre";
+"watch_address.name" = "Nombre del Wallet";
 "watch_address.watch" = "Ver";
 "watch_address.address" = "Dirección";
 "watch_address.error.not_supported" = "El formato de dirección no está soportado";
