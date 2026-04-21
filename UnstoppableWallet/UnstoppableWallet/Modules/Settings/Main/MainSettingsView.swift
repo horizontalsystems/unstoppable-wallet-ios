@@ -185,7 +185,7 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func manageWallets() -> some View {
         NavigationRow(spacing: .margin8, destination: {
-            ManageAccountsView(isPresented: .constant(false))
+            ManageAccountsView(parentPresented: nil)
                 .onFirstAppear {
                     stat(page: .settings, event: .open(page: .manageWallets))
                 }

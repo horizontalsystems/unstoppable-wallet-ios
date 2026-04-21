@@ -49,7 +49,7 @@ struct BalanceCoinIconView: View {
                             .spinning()
 
                         if let progress {
-                            ThemeText(progress.description + "%", style: .captionSB, colorStyle: .primary).opacity(0.75)
+                            ThemeText(progress.description + "%", style: .captionSB, colorStyle: .primary)
                         }
                     }
                 default:

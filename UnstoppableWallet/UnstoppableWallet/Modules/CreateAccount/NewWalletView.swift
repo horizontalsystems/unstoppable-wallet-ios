@@ -1,7 +1,8 @@
 import SwiftUI
 
 struct NewWalletView: View {
-    @Binding var isParentPresented: Bool
+    @Binding var isPresented: Bool
+    var parentPresented: Binding<Bool>?
     var showClose: Bool = false
 
     @State private var standardWalletPresented = false
@@ -30,7 +31,7 @@ struct NewWalletView: View {
             if showClose {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: {
-                        isParentPresented = false
+                        isPresented = false
                     }) {
                         Image("close")
                     }
@@ -38,13 +39,13 @@ struct NewWalletView: View {
             }
         }
         .navigationDestination(isPresented: $standardWalletPresented) {
-            CreateAccountView(walletType: .regular, isParentPresented: $isParentPresented)
+            CreateAccountView(walletType: .regular, isPresented: parentPresented ?? $isPresented)
         }
         .navigationDestination(isPresented: $passkeyWalletPresented) {
-            CreateAccountView(walletType: .passkey, isParentPresented: $isParentPresented)
+            CreateAccountView(walletType: .passkey, isPresented: parentPresented ?? $isPresented)
         }
         .navigationDestination(isPresented: $passkeyTermsPresented) {
-            PasskeyTermsView(isParentPresented: $isParentPresented)
+            PasskeyTermsView(isPresented: parentPresented ?? $isPresented)
         }
     }
 

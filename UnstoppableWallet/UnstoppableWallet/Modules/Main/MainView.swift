@@ -12,33 +12,35 @@ struct MainView: View {
 
     var body: some View {
         ThemeNavigationStack(path: $path) {
-            TabView(selection: $viewModel.selectedTab) {
-                if viewModel.showMarket {
-                    MarketView()
-                        .tabItem { Label("", image: "market_filled") }
-                        .tag(MainViewModel.Tab.markets)
+            Group { // navigationDestination must be bound on Group or Stack
+                TabView(selection: $viewModel.selectedTab) {
+                    if viewModel.showMarket {
+                        MarketView()
+                            .tabItem { Label("", image: "market_filled") }
+                            .tag(MainViewModel.Tab.markets)
+                            .tint(.themeLeah)
+                    }
+
+                    WalletView(viewModel: walletViewModel, path: $path)
+                        .tabItem { Label("", image: "wallet_filled") }
+                        .tag(MainViewModel.Tab.wallet)
+                        .tint(.themeLeah)
+
+                    if viewModel.showSwap {
+                        MultiSwapView()
+                            .tabItem { Label("", image: "swap_filled") }
+                            .tag(MainViewModel.Tab.swap)
+                            .tint(.themeLeah)
+                    }
+
+                    MainSettingsView()
+                        .tabItem { Label("", image: "settings_filled") }
+                        .tag(MainViewModel.Tab.settings)
+                        .badge(badgeViewModel.badge.map { _ in "1" })
                         .tint(.themeLeah)
                 }
-
-                WalletView(viewModel: walletViewModel, path: $path)
-                    .tabItem { Label("", image: "wallet_filled") }
-                    .tag(MainViewModel.Tab.wallet)
-                    .tint(.themeLeah)
-
-                if viewModel.showSwap {
-                    MultiSwapView()
-                        .tabItem { Label("", image: "swap_filled") }
-                        .tag(MainViewModel.Tab.swap)
-                        .tint(.themeLeah)
-                }
-
-                MainSettingsView()
-                    .tabItem { Label("", image: "settings_filled") }
-                    .tag(MainViewModel.Tab.settings)
-                    .badge(badgeViewModel.badge.map { _ in "1" })
-                    .tint(.themeLeah)
+                .tint(.themeJacob)
             }
-            .tint(.themeJacob)
             .navigationDestination(for: Wallet.self) { wallet in
                 WalletTokenModule.view(wallet: wallet)
             }
@@ -66,7 +68,7 @@ struct MainView: View {
                 ToolbarItem(placement: .primaryAction) {
                     Button(action: {
                         Coordinator.shared.present { isPresented in
-                            ManageAccountsView(isPresented: isPresented)
+                            ManageAccountsView(parentPresented: isPresented)
                         }
                         stat(page: .balance, event: .open(page: .manageWallets))
                     }) {

@@ -3,7 +3,8 @@ import UIKit
 
 struct RestoreTypeView: View {
     @StateObject private var viewModel = RestoreTypeViewModel()
-    @Binding var isParentPresented: Bool
+    @Binding var isPresented: Bool
+    var parentPresented: Binding<Bool>?
     var showClose: Bool = false
 
     @State private var recoveryPhrasePresented = false
@@ -24,20 +25,20 @@ struct RestoreTypeView: View {
         }
         .navigationTitle("restore.title".localized)
         .navigationDestination(isPresented: $recoveryPhrasePresented) {
-            RestoreMnemonicView(isParentPresented: $isParentPresented)
+            RestoreMnemonicView(isParentPresented: parentPresented ?? $isPresented)
         }
         .navigationDestination(isPresented: $privateKeyPresented) {
-            RestorePrivateKeyView(isParentPresented: $isParentPresented)
+            RestorePrivateKeyView(isParentPresented: parentPresented ?? $isPresented)
         }
         .navigationDestination(isPresented: $backupPresented) {
-            RestoreBackupListView(isParentPresented: $isParentPresented)
+            RestoreBackupListView(isParentPresented: parentPresented ?? $isPresented)
         }
         .navigationDestination(isPresented: $restoreSelectPresented) {
             if let passkeyLogin {
                 RestoreCoinsView(
                     accountName: passkeyLogin.accountName,
                     accountType: passkeyLogin.accountType,
-                    isParentPresented: $isParentPresented
+                    isParentPresented: parentPresented ?? $isPresented
                 )
             }
         }
@@ -45,7 +46,7 @@ struct RestoreTypeView: View {
             if showClose {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: {
-                        isParentPresented = false
+                        isPresented = false
                     }) {
                         Image("close")
                     }
