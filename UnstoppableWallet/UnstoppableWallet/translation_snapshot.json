@@ -1440,6 +1440,7 @@
   "passkey_terms.responsibility.description": "You are responsible for access to your device and iCloud. Unstoppable cannot recover this wallet if access is lost.",
   "passkey_terms.button": "I Understand and Continue",
   "restore_select.title": "Choose Blockchains",
+  "restore_select.description": "Select the blockchains you want to restore.",
   "lock_info.title": "TimeLock",
   "lock_info.text": "The sender sent these funds with a spending lock that will expire on the shown date. \\n\\nNo worries, the received Bitcoins are already yours, but until the lock period expires you cannot spend them on the Bitcoin network.",
   "double_spend_info.title": "Double Spend",

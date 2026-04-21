@@ -1862,6 +1862,7 @@
 // Restore Select
 
 "restore_select.title" = "Blockchain Seç";
+"restore_select.description" = "Geri yüklemek istediğiniz blok zincirlerini seçin.";
 
 // Lock Info
 

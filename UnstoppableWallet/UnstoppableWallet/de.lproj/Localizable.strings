@@ -1862,6 +1862,7 @@
 // Restore Select
 
 "restore_select.title" = "Blockchains auswählen";
+"restore_select.description" = "Wählen Sie die Blockchains aus, die Sie wiederherstellen möchten.";
 
 // Lock Info
 
