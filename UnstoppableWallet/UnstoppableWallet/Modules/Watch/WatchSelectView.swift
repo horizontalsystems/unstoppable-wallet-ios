@@ -9,10 +9,10 @@ struct WatchSelectView: View {
 
     var body: some View {
         ThemeView(style: .list) {
-            BottomGradientWrapper {
+            BottomGradientWrapper(gradientColor: .themeLawrence) {
                 switch items {
                 case let .blockchains(blockchains):
-                    ThemeList(blockchains) { blockchain in
+                    ThemeList(blockchains, bottomSpacing: 16) { blockchain in
                         Cell(
                             left: {
                                 KFImage.url(URL(string: blockchain.type.imageUrl))
@@ -48,7 +48,7 @@ struct WatchSelectView: View {
                         )
                     }
                 case let .coins(tokens):
-                    ThemeList(tokens) { token in
+                    ThemeList(tokens, bottomSpacing: 16) { token in
                         Cell(
                             left: {
                                 CoinIconView(coin: token.coin)
@@ -89,13 +89,5 @@ struct WatchSelectView: View {
             }
         }
         .navigationTitle(items.title)
-        .toolbar {
-            ToolbarItem(placement: .confirmationAction) {
-                Button("watch_address.watch".localized) {
-                    onSelect(Array(enabledUids))
-                }
-                .disabled(enabledUids.isEmpty)
-            }
-        }
     }
 }
