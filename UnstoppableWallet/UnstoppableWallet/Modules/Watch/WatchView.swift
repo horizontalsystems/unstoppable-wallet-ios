@@ -2,7 +2,8 @@ import SwiftUI
 
 struct WatchView: View {
     @StateObject private var viewModel = WatchViewModel()
-    @Binding var isParentPresented: Bool
+    @Binding var isPresented: Bool
+    var parentPresented: Binding<Bool>?
     var showClose: Bool = false
 
     @FocusState private var focusedField: Field?
@@ -88,7 +89,7 @@ struct WatchView: View {
             if showClose {
                 ToolbarItem(placement: .cancellationAction) {
                     Button(action: {
-                        isParentPresented = false
+                        isPresented = false
                     }) {
                         Image("close")
                     }
@@ -108,7 +109,7 @@ struct WatchView: View {
         }
         .onReceive(viewModel.successSubject) {
             HudHelper.instance.show(banner: .walletAdded)
-            isParentPresented = false
+            (parentPresented ?? $isPresented).wrappedValue = false
         }
     }
 

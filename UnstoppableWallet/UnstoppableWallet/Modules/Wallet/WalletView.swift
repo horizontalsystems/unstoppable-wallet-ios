@@ -50,21 +50,21 @@ struct WalletView: View {
                                 onNewWallet: {
                                     Coordinator.shared.presentAfterAcceptTerms { isPresented in
                                         ThemeNavigationStack {
-                                            NewWalletView(isParentPresented: isPresented, showClose: true)
+                                            NewWalletView(isPresented: isPresented, showClose: true)
                                         }
                                     }
                                 },
                                 onExistingWallet: {
                                     Coordinator.shared.presentAfterAcceptTerms { isPresented in
                                         ThemeNavigationStack {
-                                            RestoreTypeView(isParentPresented: isPresented, showClose: true)
+                                            RestoreTypeView(isPresented: isPresented, showClose: true)
                                         }
                                     }
                                 },
                                 onWatchWallet: {
                                     Coordinator.shared.presentAfterAcceptTerms { isPresented in
                                         ThemeNavigationStack {
-                                            WatchView(isParentPresented: isPresented, showClose: true)
+                                            WatchView(isPresented: isPresented, showClose: true)
                                         }
                                     }
                                     stat(page: .addWallet, event: .open(page: .watchWallet))

@@ -3668,8 +3668,6 @@
 		D3F9B0382BE3B5AA009FFA95 /* WalletConnectSendView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B0362BE3B5AA009FFA95 /* WalletConnectSendView.swift */; };
 		D3F9B03A2BE3BB36009FFA95 /* WalletConnectSendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B0392BE3BB36009FFA95 /* WalletConnectSendViewModel.swift */; };
 		D3F9B03B2BE3BB36009FFA95 /* WalletConnectSendViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3F9B0392BE3BB36009FFA95 /* WalletConnectSendViewModel.swift */; };
-		D3FB73DC2F83B945005AB013 /* AddWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FB73DB2F83B941005AB013 /* AddWalletView.swift */; };
-		D3FB73DD2F83B945005AB013 /* AddWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FB73DB2F83B941005AB013 /* AddWalletView.swift */; };
 		D3FB73DF2F83BC34005AB013 /* NewWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FB73DE2F83BC34005AB013 /* NewWalletView.swift */; };
 		D3FB73E02F83BC34005AB013 /* NewWalletView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FB73DE2F83BC34005AB013 /* NewWalletView.swift */; };
 		D3FBC70E2E533F78001083D8 /* WatchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3FBC70D2E533F74001083D8 /* WatchView.swift */; };
@@ -5538,7 +5536,6 @@
 		D3F9B0332BE3B3A7009FFA95 /* EvmDecorator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvmDecorator.swift; sourceTree = "<group>"; };
 		D3F9B0362BE3B5AA009FFA95 /* WalletConnectSendView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectSendView.swift; sourceTree = "<group>"; };
 		D3F9B0392BE3BB36009FFA95 /* WalletConnectSendViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletConnectSendViewModel.swift; sourceTree = "<group>"; };
-		D3FB73DB2F83B941005AB013 /* AddWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWalletView.swift; sourceTree = "<group>"; };
 		D3FB73DE2F83BC34005AB013 /* NewWalletView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWalletView.swift; sourceTree = "<group>"; };
 		D3FBC70D2E533F74001083D8 /* WatchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchView.swift; sourceTree = "<group>"; };
 		D3FBC7102E534C0D001083D8 /* WatchSelectView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WatchSelectView.swift; sourceTree = "<group>"; };
@@ -6872,7 +6869,6 @@
 			isa = PBXGroup;
 			children = (
 				6BE716D92F8F944200C8752D /* AddWalletRowsView.swift */,
-				D3FB73DB2F83B941005AB013 /* AddWalletView.swift */,
 				D3FB73DE2F83BC34005AB013 /* NewWalletView.swift */,
 				D3E36BE62E097768007F99CA /* CreateAccountViewModel.swift */,
 				D3E36BE32E09775A007F99CA /* CreateAccountView.swift */,
@@ -10668,7 +10664,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3FB73DC2F83B945005AB013 /* AddWalletView.swift in Sources */,
 				6B5D851D2EA77DD900F13E2C /* StellarReceiveAddressView.swift in Sources */,
 				D38404E4218317DF007D50AD /* AppDelegate.swift in Sources */,
 				D3840502218317DF007D50AD /* Protocols.swift in Sources */,
@@ -12371,7 +12366,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D3FB73DD2F83B945005AB013 /* AddWalletView.swift in Sources */,
 				6B5D851A2EA77DD900F13E2C /* StellarReceiveAddressView.swift in Sources */,
 				D38405D321831B3D007D50AD /* AppDelegate.swift in Sources */,
 				D36DE0FC272FD92F000BC916 /* SwapSelectProviderService.swift in Sources */,
