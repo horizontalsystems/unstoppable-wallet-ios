@@ -2188,8 +2188,8 @@
 "watch_address.error.non_public_key" = "No se permite la visualización por clave privada";
 "watch_address.error.not_supported_derived_type" = "El tipo derivado no está soportado";
 "watch_address.watch_data.placeholder" = "Pega tu dirección pública o clave XPUB";
-"watch_address.choose_blockchain" = "Elegir Blockchain";
-"watch_address.choose_coin" = "Elegir moneda";
+"watch_address.choose_blockchains" = "Elegir blockchains";
+"watch_address.choose_coins" = "Elegir monedas";
 "watch_address.view_key.placeholder" = "Clave de vista privada";
 "watch_address.view_key.error.required" = "Se requiere una clave de vista privada para visualizar wallets de Monero.";
 "watch_address.view_key.error.invalid" = "Clave de vista no válida";

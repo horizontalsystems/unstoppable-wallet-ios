@@ -2188,8 +2188,8 @@
 "watch_address.error.non_public_key" = "Özel anahtarla izlemeye izin verilmiyor";
 "watch_address.error.not_supported_derived_type" = "Türetilmiş tür desteklenmiyor";
 "watch_address.watch_data.placeholder" = "Genel adresinizi veya XPUB anahtarınızı yapıştırın";
-"watch_address.choose_blockchain" = "Blockchain Seç";
-"watch_address.choose_coin" = "Kripto Parayı Seç";
+"watch_address.choose_blockchains" = "Blok zincirlerini seç";
+"watch_address.choose_coins" = "Coinleri seç";
 "watch_address.view_key.placeholder" = "Özel Görüntüleme Anahtarı";
 "watch_address.view_key.error.required" = "Monero cüzdanlarını görüntülemek için Özel Görüntüleme Anahtarı gereklidir.";
 "watch_address.view_key.error.invalid" = "Geçersiz Görüntüleme Anahtarı";

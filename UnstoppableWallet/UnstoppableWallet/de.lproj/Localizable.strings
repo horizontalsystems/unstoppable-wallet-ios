@@ -2188,8 +2188,8 @@
 "watch_address.error.non_public_key" = "Das Beobachten mit privatem Schlüssel ist nicht erlaubt";
 "watch_address.error.not_supported_derived_type" = "Abgeleiteter Typ wird nicht unterstützt";
 "watch_address.watch_data.placeholder" = "Fügen Sie Ihre öffentliche Adresse oder Ihren XPUB ein";
-"watch_address.choose_blockchain" = "Blockchain auswählen";
-"watch_address.choose_coin" = "Coins auswählen";
+"watch_address.choose_blockchains" = "Blockchains auswählen";
+"watch_address.choose_coins" = "Coins auswählen";
 "watch_address.view_key.placeholder" = "Privater View-Key";
 "watch_address.view_key.error.required" = "Ein privater View-Key ist erforderlich, um Monero-Wallets anzuzeigen.";
 "watch_address.view_key.error.invalid" = "Ungültiger View-Key";
