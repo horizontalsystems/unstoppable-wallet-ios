@@ -1847,6 +1847,8 @@
 		D33D6B1F2F98F5BF00E16ADA /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D33D63A22F98DD5D00E16ADA /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D33D6B222F98F5C900E16ADA /* IntentExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D33D63B32F98DD6A00E16ADA /* IntentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D35C2EA92F9A164400D186CF /* AppFlavor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35C2EA82F9A163F00D186CF /* AppFlavor.swift */; };
+		D35C2EAB2F9A2BB200D186CF /* AppFlavor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35C2EA82F9A163F00D186CF /* AppFlavor.swift */; };
+		D35C2EAC2F9A2C2F00D186CF /* AppFlavor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35C2EA82F9A163F00D186CF /* AppFlavor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -8553,6 +8555,7 @@
 				D33D634B2F98DD5D00E16ADA /* SingleCoinPriceProvider.swift in Sources */,
 				D33D634C2F98DD5D00E16ADA /* Currency.swift in Sources */,
 				D33D634D2F98DD5D00E16ADA /* StackComponent.swift in Sources */,
+				D35C2EAB2F9A2BB200D186CF /* AppFlavor.swift in Sources */,
 				D33D634E2F98DD5D00E16ADA /* CurrencyManager.swift in Sources */,
 				D33D634F2F98DD5D00E16ADA /* SharedLocalStorage.swift in Sources */,
 				D33D63502F98DD5D00E16ADA /* TappablePadding.swift in Sources */,
@@ -8626,6 +8629,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D35C2EAC2F9A2C2F00D186CF /* AppFlavor.swift in Sources */,
 				D33D63A82F98DD6A00E16ADA /* IntentHandler.swift in Sources */,
 				D33D63A92F98DD6A00E16ADA /* ApiProvider.swift in Sources */,
 				D33D63AA2F98DD6A00E16ADA /* AppWidget.intentdefinition in Sources */,
