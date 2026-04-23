@@ -3,9 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>HsProviderApiKey</key>
-	<string>$(hs_provider_api_key)</string>
-	<key>MarketApiUrl</key>
-	<string>${market_api_url}</string>
+	<string>$(HS_PROVIDER_API_KEY)</string>
 	<key>NSExtension</key>
 	<dict>
 		<key>NSExtensionPointIdentifier</key>

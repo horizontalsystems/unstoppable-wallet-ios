@@ -9,7 +9,7 @@ struct CoinPriceListEntry: TimelineEntry {
     let items: [CoinItem]
 }
 
-struct CoinItem {
+struct CoinItem: Identifiable {
     let uid: String
     let icon: Image?
     let code: String
@@ -18,6 +18,10 @@ struct CoinItem {
     let price: String
     let priceChange: String
     let priceChangeType: PriceChangeType
+
+    var id: String {
+        uid
+    }
 
     static func stub(index: Int) -> CoinItem {
         CoinItem(

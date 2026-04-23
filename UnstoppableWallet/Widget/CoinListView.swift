@@ -72,7 +72,7 @@ struct CoinListView: View {
     @ViewBuilder private func list(verticalPadding: CGFloat, rowBuilder: @escaping (CoinItem) -> some View) -> some View {
         GeometryReader { proxy in
             ListSection {
-                ForEach(items, id: \.uid) { item in
+                ForEach(items) { item in
                     Link(destination: URL(string: "unstoppable.money://coin/\(item.uid)")!) {
                         rowBuilder(item)
                             .padding(.horizontal, .margin16)

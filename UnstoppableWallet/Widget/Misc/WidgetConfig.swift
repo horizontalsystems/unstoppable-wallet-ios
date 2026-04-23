@@ -3,7 +3,7 @@ import UIKit
 
 enum WidgetConfig {
     static var marketApiUrl: String {
-        (Bundle.main.object(forInfoDictionaryKey: "MarketApiUrl") as? String) ?? ""
+        AppFlavor.config.marketApiUrl
     }
 
     static var hsProviderApiKey: String? {
