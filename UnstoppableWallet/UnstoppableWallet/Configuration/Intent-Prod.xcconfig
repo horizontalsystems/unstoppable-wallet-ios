@@ -1,0 +1,3 @@
+PRODUCT_BUNDLE_IDENTIFIER = io.horizontalsystems.bank-wallet.intent
+PROVISIONING_PROFILE_SPECIFIER[config=Debug-Prod] = match Development io.horizontalsystems.bank-wallet.intent
+PROVISIONING_PROFILE_SPECIFIER[config=Release-Prod] = match AppStore io.horizontalsystems.bank-wallet.intent
