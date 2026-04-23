@@ -8,72 +8,67 @@ APPLE_KEY_ID = ENV["APPLE_KEY_ID"]
 APPLE_KEY_CONTENT = ENV["APPLE_KEY_CONTENT"]
 GIT_AUTHORIZATION = ENV["GIT_AUTHORIZATION"]
 
-XCCONFIG_DEV_ARBISCAN_API_KEYS = ENV["XCCONFIG_DEV_ARBISCAN_API_KEYS"]
-XCCONFIG_DEV_BASESCAN_API_KEYS = ENV["XCCONFIG_DEV_BASESCAN_API_KEYS"]
-XCCONFIG_DEV_BSCSCAN_API_KEYS = ENV["XCCONFIG_DEV_BSCSCAN_API_KEYS"]
-XCCONFIG_DEV_CHAINALYSIS_API_KEY = ENV["XCCONFIG_DEV_CHAINALYSIS_API_KEY"]
-XCCONFIG_DEV_MERKLE_API_PATH = ENV["XCCONFIG_DEV_MERKLE_API_PATH"]
-XCCONFIG_DEV_DEFIYIELD_API_KEY = ENV["XCCONFIG_DEV_DEFIYIELD_API_KEY"]
-XCCONFIG_DEV_ETHERSCAN_API_KEYS = ENV["XCCONFIG_DEV_ETHERSCAN_API_KEYS"]
-XCCONFIG_DEV_ERA_ZKSYNC_API_KEYS = ENV["XCCONFIG_DEV_ERA_ZKSYNC_API_KEYS"]
-XCCONFIG_DEV_FTMSCAN_API_KEYS = ENV["XCCONFIG_DEV_FTMSCAN_API_KEYS"]
-XCCONFIG_DEV_GNOSISSCAN_API_KEYS = ENV["XCCONFIG_DEV_GNOSISSCAN_API_KEYS"]
-XCCONFIG_DEV_HASHDIT_API_KEY = ENV["XCCONFIG_DEV_HASHDIT_API_KEY"]
-XCCONFIG_DEV_HS_PROVIDER_API_KEY = ENV["XCCONFIG_DEV_HS_PROVIDER_API_KEY"]
-XCCONFIG_DEV_MAYA_AFFILIATE = ENV["XCCONFIG_DEV_MAYA_AFFILIATE"]
-XCCONFIG_DEV_MAYA_AFFILIATE_BPS = ENV["XCCONFIG_DEV_MAYA_AFFILIATE_BPS"]
-XCCONFIG_DEV_ONE_INCH_API_KEY = ENV["XCCONFIG_DEV_ONE_INCH_API_KEY"]
-XCCONFIG_DEV_ONE_INCH_COMMISSION = ENV["XCCONFIG_DEV_ONE_INCH_COMMISSION"]
-XCCONFIG_DEV_ONE_INCH_COMMISSION_ADDRESS = ENV["XCCONFIG_DEV_ONE_INCH_COMMISSION_ADDRESS"]
-XCCONFIG_DEV_OPEN_SEA_API_KEY = ENV["XCCONFIG_DEV_OPEN_SEA_API_KEY"]
-XCCONFIG_DEV_OPTIMISM_ETHERSCAN_API_KEYS = ENV["XCCONFIG_DEV_OPTIMISM_ETHERSCAN_API_KEYS"]
-XCCONFIG_DEV_POLYGONSCAN_API_KEYS = ENV["XCCONFIG_DEV_POLYGONSCAN_API_KEYS"]
-XCCONFIG_DEV_REFERRAL_APP_SERVER_URL = ENV["XCCONFIG_DEV_REFERRAL_APP_SERVER_URL"]
-XCCONFIG_DEV_SNOWTRACE_API_KEYS = ENV["XCCONFIG_DEV_SNOWTRACE_API_KEYS"]
-XCCONFIG_DEV_THORCHAIN_AFFILIATE = ENV["XCCONFIG_DEV_THORCHAIN_AFFILIATE"]
-XCCONFIG_DEV_THORCHAIN_AFFILIATE_BPS = ENV["XCCONFIG_DEV_THORCHAIN_AFFILIATE_BPS"]
-XCCONFIG_DEV_TRONGRID_API_KEYS = ENV["XCCONFIG_DEV_TRONGRID_API_KEYS"]
-XCCONFIG_DEV_SOLANA_ALCHEMY_API_KEYS = ENV["XCCONFIG_DEV_SOLANA_ALCHEMY_API_KEYS"]
-XCCONFIG_DEV_TWITTER_BEARER_TOKEN = ENV["XCCONFIG_DEV_TWITTER_BEARER_TOKEN"]
-XCCONFIG_DEV_UNSTOPPABLE_DOMAINS_API_KEY = ENV["XCCONFIG_DEV_UNSTOPPABLE_DOMAINS_API_KEY"]
-XCCONFIG_DEV_USWAP_API_KEY = ENV["XCCONFIG_DEV_USWAP_API_KEY"]
-XCCONFIG_DEV_WALLET_CONNECT_V2_PROJECT_KEY = ENV["XCCONFIG_DEV_WALLET_CONNECT_V2_PROJECT_KEY"]
+TEAM_ID = "HC4MCAXJ66"
 
-XCCONFIG_PROD_ARBISCAN_API_KEYS = ENV["XCCONFIG_PROD_ARBISCAN_API_KEYS"]
-XCCONFIG_PROD_BASESCAN_API_KEYS = ENV["XCCONFIG_PROD_BASESCAN_API_KEYS"]
-XCCONFIG_PROD_BSCSCAN_API_KEYS = ENV["XCCONFIG_PROD_BSCSCAN_API_KEYS"]
-XCCONFIG_PROD_CHAINALYSIS_API_KEY = ENV["XCCONFIG_PROD_CHAINALYSIS_API_KEY"]
-XCCONFIG_PROD_MERKLE_API_PATH = ENV["XCCONFIG_PROD_MERKLE_API_PATH"]
-XCCONFIG_PROD_DEFIYIELD_API_KEY = ENV["XCCONFIG_PROD_DEFIYIELD_API_KEY"]
-XCCONFIG_PROD_ETHERSCAN_API_KEYS = ENV["XCCONFIG_PROD_ETHERSCAN_API_KEYS"]
-XCCONFIG_PROD_ERA_ZKSYNC_API_KEYS = ENV["XCCONFIG_PROD_ERA_ZKSYNC_API_KEYS"]
-XCCONFIG_PROD_FTMSCAN_API_KEYS = ENV["XCCONFIG_PROD_FTMSCAN_API_KEYS"]
-XCCONFIG_PROD_GNOSISSCAN_API_KEYS = ENV["XCCONFIG_PROD_GNOSISSCAN_API_KEYS"]
-XCCONFIG_PROD_HASHDIT_API_KEY = ENV["XCCONFIG_PROD_HASHDIT_API_KEY"]
-XCCONFIG_PROD_HS_PROVIDER_API_KEY = ENV["XCCONFIG_PROD_HS_PROVIDER_API_KEY"]
-XCCONFIG_PROD_MAYA_AFFILIATE = ENV["XCCONFIG_PROD_MAYA_AFFILIATE"]
-XCCONFIG_PROD_MAYA_AFFILIATE_BPS = ENV["XCCONFIG_PROD_MAYA_AFFILIATE_BPS"]
-XCCONFIG_PROD_ONE_INCH_API_KEY = ENV["XCCONFIG_PROD_ONE_INCH_API_KEY"]
-XCCONFIG_PROD_ONE_INCH_COMMISSION = ENV["XCCONFIG_PROD_ONE_INCH_COMMISSION"]
-XCCONFIG_PROD_ONE_INCH_COMMISSION_ADDRESS = ENV["XCCONFIG_PROD_ONE_INCH_COMMISSION_ADDRESS"]
-XCCONFIG_PROD_OPEN_SEA_API_KEY = ENV["XCCONFIG_PROD_OPEN_SEA_API_KEY"]
-XCCONFIG_PROD_OPTIMISM_ETHERSCAN_API_KEYS = ENV["XCCONFIG_PROD_OPTIMISM_ETHERSCAN_API_KEYS"]
-XCCONFIG_PROD_POLYGONSCAN_API_KEYS = ENV["XCCONFIG_PROD_POLYGONSCAN_API_KEYS"]
-XCCONFIG_PROD_REFERRAL_APP_SERVER_URL = ENV["XCCONFIG_PROD_REFERRAL_APP_SERVER_URL"]
-XCCONFIG_PROD_SNOWTRACE_API_KEYS = ENV["XCCONFIG_PROD_SNOWTRACE_API_KEYS"]
-XCCONFIG_PROD_THORCHAIN_AFFILIATE = ENV["XCCONFIG_PROD_THORCHAIN_AFFILIATE"]
-XCCONFIG_PROD_THORCHAIN_AFFILIATE_BPS = ENV["XCCONFIG_PROD_THORCHAIN_AFFILIATE_BPS"]
-XCCONFIG_PROD_TRONGRID_API_KEYS = ENV["XCCONFIG_PROD_TRONGRID_API_KEYS"]
-XCCONFIG_PROD_SOLANA_ALCHEMY_API_KEYS = ENV["XCCONFIG_PROD_SOLANA_ALCHEMY_API_KEYS"]
-XCCONFIG_PROD_TWITTER_BEARER_TOKEN = ENV["XCCONFIG_PROD_TWITTER_BEARER_TOKEN"]
-XCCONFIG_PROD_UNSTOPPABLE_DOMAINS_API_KEY = ENV["XCCONFIG_PROD_UNSTOPPABLE_DOMAINS_API_KEY"]
-XCCONFIG_PROD_USWAP_API_KEY = ENV["XCCONFIG_PROD_USWAP_API_KEY"]
-XCCONFIG_PROD_WALLET_CONNECT_V2_PROJECT_KEY = ENV["XCCONFIG_PROD_WALLET_CONNECT_V2_PROJECT_KEY"]
+BASE_APP_ID = "io.horizontalsystems.bank-wallet"
+
+PROD_APP_IDS = [
+  BASE_APP_ID,
+  "#{BASE_APP_ID}.widget",
+  "#{BASE_APP_ID}.intent"
+].freeze
+
+DEV_APP_IDS = [
+  "#{BASE_APP_ID}.dev",
+  "#{BASE_APP_ID}.dev.widget",
+  "#{BASE_APP_ID}.dev.intent"
+].freeze
+
+ALL_APP_IDS = (PROD_APP_IDS + DEV_APP_IDS).freeze
+
+MATCH_TYPE_PROFILE_NAMES = {
+  'development' => 'Development',
+  'adhoc'       => 'AdHoc',
+  'appstore'    => 'AppStore'
+}.freeze
+
+XCCONFIG_KEYS = [
+  'ARBISCAN_API_KEYS',
+  'BASESCAN_API_KEYS',
+  'BSCSCAN_API_KEYS',
+  'CHAINALYSIS_API_KEY',
+  'DEFIYIELD_API_KEY',
+  'ERA_ZKSYNC_API_KEYS',
+  'ETHERSCAN_API_KEYS',
+  'FTMSCAN_API_KEYS',
+  'GNOSISSCAN_API_KEYS',
+  'HASHDIT_API_KEY',
+  'HS_PROVIDER_API_KEY',
+  'JUPITER_API_KEY',
+  'MERKLE_API_PATH',
+  'ONE_INCH_API_KEY',
+  'OPEN_SEA_API_KEY',
+  'OPTIMISM_ETHERSCAN_API_KEYS',
+  'POLYGONSCAN_API_KEYS',
+  'REFERRAL_APP_SERVER_URL',
+  'SNOWTRACE_API_KEYS',
+  'SOLANA_ALCHEMY_API_KEYS',
+  'TRONGRID_API_KEYS',
+  'TWITTER_BEARER_TOKEN',
+  'UNSTOPPABLE_DOMAINS_API_KEY',
+  'USWAP_API_KEY',
+  'WALLET_CONNECT_V2_PROJECT_KEY',
+
+  'MAYA_AFFILIATE',
+  'MAYA_AFFILIATE_BPS',
+  'ONE_INCH_COMMISSION',
+  'ONE_INCH_COMMISSION_ADDRESS',
+  'THORCHAIN_AFFILIATE',
+  'THORCHAIN_AFFILIATE_BPS'
+].freeze
 
 def delete_temp_keychain(name)
-  delete_keychain(
-    name: name
-  ) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
+  delete_keychain(name: name) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
 end
 
 def create_temp_keychain(name, password)
@@ -90,6 +85,14 @@ def ensure_temp_keychain(name, password)
   create_temp_keychain(name, password)
 end
 
+def with_temp_keychain
+  name = TEMP_KEYCHAIN_USER
+  ensure_temp_keychain(name, TEMP_KEYCHAIN_PASSWORD)
+  yield name
+ensure
+  delete_temp_keychain(name) if name
+end
+
 def app_store_api_key
   app_store_connect_api_key(
     key_id: APPLE_KEY_ID,
@@ -100,25 +103,22 @@ def app_store_api_key
   )
 end
 
-def update_dev_xcconfig(name, new_value)
+def update_xcconfig(name, new_value)
   update_xcconfig_value(
-    path: './UnstoppableWallet/UnstoppableWallet/Configuration/Development.xcconfig',
+    path: './UnstoppableWallet/UnstoppableWallet/Configuration/Config.xcconfig',
     name: name,
     value: new_value
   )
 end
 
-def update_prod_xcconfig(name, new_value)
-  update_xcconfig_value(
-    path: './UnstoppableWallet/UnstoppableWallet/Configuration/Production.xcconfig',
-    name: name,
-    value: new_value
-  )
+def apply_xcconfig
+  XCCONFIG_KEYS.each do |key|
+    update_xcconfig(key.downcase, ENV["XCCONFIG_#{key}"])
+  end
 end
 
 def prepare_environment
-  sh("cp ../UnstoppableWallet/UnstoppableWallet/Configuration/Development.template.xcconfig ../UnstoppableWallet/UnstoppableWallet/Configuration/Development.xcconfig")
-  sh("cp ../UnstoppableWallet/UnstoppableWallet/Configuration/Production.template.xcconfig ../UnstoppableWallet/UnstoppableWallet/Configuration/Production.xcconfig")
+  sh("cp ../UnstoppableWallet/UnstoppableWallet/Configuration/Config.template.xcconfig ../UnstoppableWallet/UnstoppableWallet/Configuration/Config.xcconfig")
 
   increment_build_number(
     build_number: ENV['BUILD_NUMBER'],
@@ -126,213 +126,106 @@ def prepare_environment
   )
 end
 
-def apply_dev_xcconfig
-  update_dev_xcconfig('arbiscan_api_keys', XCCONFIG_DEV_ARBISCAN_API_KEYS)
-  update_dev_xcconfig('basescan_api_keys', XCCONFIG_DEV_BASESCAN_API_KEYS)
-  update_dev_xcconfig('bscscan_api_keys', XCCONFIG_DEV_BSCSCAN_API_KEYS)
-  update_dev_xcconfig('chainalysis_api_key', XCCONFIG_DEV_CHAINALYSIS_API_KEY)
-  update_dev_xcconfig('merkle_api_path', XCCONFIG_DEV_MERKLE_API_PATH)
-  update_dev_xcconfig('defiyield_api_key', XCCONFIG_DEV_DEFIYIELD_API_KEY)
-  update_dev_xcconfig('etherscan_api_keys', XCCONFIG_DEV_ETHERSCAN_API_KEYS)
-  update_dev_xcconfig('era_zksync_api_keys', XCCONFIG_DEV_ERA_ZKSYNC_API_KEYS)
-  update_dev_xcconfig('ftmscan_api_keys', XCCONFIG_DEV_FTMSCAN_API_KEYS)
-  update_dev_xcconfig('gnosisscan_api_keys', XCCONFIG_DEV_GNOSISSCAN_API_KEYS)
-  update_dev_xcconfig('hashdit_api_key', XCCONFIG_DEV_HASHDIT_API_KEY)
-  update_dev_xcconfig('hs_provider_api_key', XCCONFIG_DEV_HS_PROVIDER_API_KEY)
-  update_dev_xcconfig('maya_affiliate', XCCONFIG_DEV_MAYA_AFFILIATE)
-  update_dev_xcconfig('maya_affiliate_bps', XCCONFIG_DEV_MAYA_AFFILIATE_BPS)
-  update_dev_xcconfig('one_inch_api_key', XCCONFIG_DEV_ONE_INCH_API_KEY)
-  update_dev_xcconfig('one_inch_commission', XCCONFIG_DEV_ONE_INCH_COMMISSION)
-  update_dev_xcconfig('one_inch_commission_address', XCCONFIG_DEV_ONE_INCH_COMMISSION_ADDRESS)
-  update_dev_xcconfig('open_sea_api_key', XCCONFIG_DEV_OPEN_SEA_API_KEY)
-  update_dev_xcconfig('optimism_etherscan_api_keys', XCCONFIG_DEV_OPTIMISM_ETHERSCAN_API_KEYS)
-  update_dev_xcconfig('polygonscan_api_keys', XCCONFIG_DEV_POLYGONSCAN_API_KEYS)
-  update_dev_xcconfig('referral_app_server_url', XCCONFIG_DEV_REFERRAL_APP_SERVER_URL)
-  update_dev_xcconfig('snowtrace_api_keys', XCCONFIG_DEV_SNOWTRACE_API_KEYS)
-  update_dev_xcconfig('thorchain_affiliate', XCCONFIG_DEV_THORCHAIN_AFFILIATE)
-  update_dev_xcconfig('thorchain_affiliate_bps', XCCONFIG_DEV_THORCHAIN_AFFILIATE_BPS)
-  update_dev_xcconfig('trongrid_api_keys', XCCONFIG_DEV_TRONGRID_API_KEYS)
-  update_dev_xcconfig('solana_alchemy_api_keys', XCCONFIG_DEV_SOLANA_ALCHEMY_API_KEYS)
-  update_dev_xcconfig('twitter_bearer_token', XCCONFIG_DEV_TWITTER_BEARER_TOKEN)
-  update_dev_xcconfig('unstoppable_domains_api_key', XCCONFIG_DEV_UNSTOPPABLE_DOMAINS_API_KEY)
-  update_dev_xcconfig('uswap_api_key', XCCONFIG_DEV_USWAP_API_KEY)
-  update_dev_xcconfig('wallet_connect_v2_project_key', XCCONFIG_DEV_WALLET_CONNECT_V2_PROJECT_KEY)
+def provisioning_profiles_for(app_ids, match_type)
+  profile_name = MATCH_TYPE_PROFILE_NAMES.fetch(match_type)
+  app_ids.map { |id| [id, "match #{profile_name} #{id}"] }.to_h
 end
 
-def apply_prod_xcconfig
-  update_prod_xcconfig('arbiscan_api_keys', XCCONFIG_PROD_ARBISCAN_API_KEYS)
-  update_prod_xcconfig('basescan_api_keys', XCCONFIG_PROD_BASESCAN_API_KEYS)
-  update_prod_xcconfig('bscscan_api_keys', XCCONFIG_PROD_BSCSCAN_API_KEYS)
-  update_prod_xcconfig('chainalysis_api_key', XCCONFIG_PROD_CHAINALYSIS_API_KEY)
-  update_prod_xcconfig('merkle_api_path', XCCONFIG_PROD_MERKLE_API_PATH)
-  update_prod_xcconfig('defiyield_api_key', XCCONFIG_PROD_DEFIYIELD_API_KEY)
-  update_prod_xcconfig('etherscan_api_keys', XCCONFIG_PROD_ETHERSCAN_API_KEYS)
-  update_prod_xcconfig('era_zksync_api_keys', XCCONFIG_PROD_ERA_ZKSYNC_API_KEYS)
-  update_prod_xcconfig('ftmscan_api_keys', XCCONFIG_PROD_FTMSCAN_API_KEYS)
-  update_prod_xcconfig('gnosisscan_api_keys', XCCONFIG_PROD_GNOSISSCAN_API_KEYS)
-  update_prod_xcconfig('hashdit_api_key', XCCONFIG_PROD_HASHDIT_API_KEY)
-  update_prod_xcconfig('hs_provider_api_key', XCCONFIG_PROD_HS_PROVIDER_API_KEY)
-  update_prod_xcconfig('maya_affiliate', XCCONFIG_PROD_MAYA_AFFILIATE)
-  update_prod_xcconfig('maya_affiliate_bps', XCCONFIG_PROD_MAYA_AFFILIATE_BPS)
-  update_prod_xcconfig('one_inch_api_key', XCCONFIG_PROD_ONE_INCH_API_KEY)
-  update_prod_xcconfig('one_inch_commission', XCCONFIG_PROD_ONE_INCH_COMMISSION)
-  update_prod_xcconfig('one_inch_commission_address', XCCONFIG_PROD_ONE_INCH_COMMISSION_ADDRESS)
-  update_prod_xcconfig('open_sea_api_key', XCCONFIG_PROD_OPEN_SEA_API_KEY)
-  update_prod_xcconfig('optimism_etherscan_api_keys', XCCONFIG_PROD_OPTIMISM_ETHERSCAN_API_KEYS)
-  update_prod_xcconfig('polygonscan_api_keys', XCCONFIG_PROD_POLYGONSCAN_API_KEYS)
-  update_prod_xcconfig('referral_app_server_url', XCCONFIG_PROD_REFERRAL_APP_SERVER_URL)
-  update_prod_xcconfig('snowtrace_api_keys', XCCONFIG_PROD_SNOWTRACE_API_KEYS)
-  update_prod_xcconfig('thorchain_affiliate', XCCONFIG_PROD_THORCHAIN_AFFILIATE)
-  update_prod_xcconfig('thorchain_affiliate_bps', XCCONFIG_PROD_THORCHAIN_AFFILIATE_BPS)
-  update_prod_xcconfig('trongrid_api_keys', XCCONFIG_PROD_TRONGRID_API_KEYS)
-  update_prod_xcconfig('solana_alchemy_api_keys', XCCONFIG_PROD_SOLANA_ALCHEMY_API_KEYS)
-  update_prod_xcconfig('twitter_bearer_token', XCCONFIG_PROD_TWITTER_BEARER_TOKEN)
-  update_prod_xcconfig('unstoppable_domains_api_key', XCCONFIG_PROD_UNSTOPPABLE_DOMAINS_API_KEY)
-  update_prod_xcconfig('uswap_api_key', XCCONFIG_PROD_USWAP_API_KEY)
-  update_prod_xcconfig('wallet_connect_v2_project_key', XCCONFIG_PROD_WALLET_CONNECT_V2_PROJECT_KEY)
+def build_and_sign(match_type:, export_method:, app_ids:, scheme:, icloud_env:, keychain_name:)
+  prepare_environment
+  apply_xcconfig
+
+  match(
+    type: match_type,
+    app_identifier: app_ids,
+    git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
+    readonly: true,
+    keychain_name: keychain_name,
+    keychain_password: TEMP_KEYCHAIN_PASSWORD,
+    api_key: app_store_api_key
+  )
+
+  gym(
+    workspace: "UnstoppableWallet/UnstoppableWallet.xcworkspace",
+    scheme: scheme,
+    export_method: export_method,
+    clean: true,
+    include_symbols: true,
+    export_options: {
+      compileBitcode: false,
+      provisioningProfiles: provisioning_profiles_for(app_ids, match_type),
+      iCloudContainerEnvironment: icloud_env
+    }
+  )
 end
 
 platform :ios do
-
   lane :dev do
-    keychain_name = TEMP_KEYCHAIN_USER
-    keychain_password = TEMP_KEYCHAIN_PASSWORD
-    ensure_temp_keychain(keychain_name, keychain_password)
+    with_temp_keychain do |keychain_name|
+      build_and_sign(
+        match_type: 'adhoc',
+        export_method: 'ad-hoc',
+        app_ids: DEV_APP_IDS,
+        scheme: 'App-Dev',
+        icloud_env: 'Development',
+        keychain_name: keychain_name
+      )
 
-    api_key = app_store_api_key
-
-    prepare_environment
-    apply_dev_xcconfig
-
-    match(
-      type: 'adhoc',
-      app_identifier: ["io.horizontalsystems.bank-wallet.dev", "io.horizontalsystems.bank-wallet.dev.widget", "io.horizontalsystems.bank-wallet.dev.intent"],
-      git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
-      readonly: true,
-      keychain_name: keychain_name,
-      keychain_password: keychain_password,
-      api_key: api_key
-    )
-
-    gym(
-      workspace: "UnstoppableWallet/UnstoppableWallet.xcworkspace",
-      scheme: "Development",
-      export_method: "ad-hoc",
-      clean: true,
-      include_symbols: true,
-      export_options: {
-        compileBitcode: false,
-        provisioningProfiles: {
-            "io.horizontalsystems.bank-wallet.dev" => "match AdHoc io.horizontalsystems.bank-wallet.dev",
-            "io.horizontalsystems.bank-wallet.dev.widget" => "match AdHoc io.horizontalsystems.bank-wallet.dev.widget",
-            "io.horizontalsystems.bank-wallet.dev.intent" => "match AdHoc io.horizontalsystems.bank-wallet.dev.intent"
-        },
-        iCloudContainerEnvironment: "Development"
-      }
-    )
-
-    firebase_app_distribution(
-      app: "1:407994911754:ios:8bdd4910f96ecaee69e3f3",
-      groups: "dev-testers",
-      release_notes: last_git_commit[:message],
-      service_credentials_json_data: ENV["FIREBASE_CREDENTIALS"],
-    )
-
-    delete_temp_keychain(keychain_name)
+      firebase_app_distribution(
+        app: "1:407994911754:ios:8bdd4910f96ecaee69e3f3",
+        groups: "dev-testers",
+        release_notes: last_git_commit[:message],
+        service_credentials_json_data: ENV["FIREBASE_CREDENTIALS"]
+      )
+    end
   end
 
   lane :release do
-    keychain_name = TEMP_KEYCHAIN_USER
-    keychain_password = TEMP_KEYCHAIN_PASSWORD
-    ensure_temp_keychain(keychain_name, keychain_password)
+    with_temp_keychain do |keychain_name|
+      build_and_sign(
+        match_type: 'appstore',
+        export_method: 'app-store',
+        app_ids: PROD_APP_IDS,
+        scheme: 'App-Prod',
+        icloud_env: 'Production',
+        keychain_name: keychain_name
+      )
 
-    api_key = app_store_api_key
-
-    prepare_environment
-    apply_prod_xcconfig
-
-    match(
-      type: 'appstore',
-      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.intent"],
-      git_basic_authorization: Base64.strict_encode64(GIT_AUTHORIZATION),
-      readonly: true,
-      keychain_name: keychain_name,
-      keychain_password: keychain_password,
-      api_key: api_key
-    )
-
-    gym(
-      workspace: "UnstoppableWallet/UnstoppableWallet.xcworkspace",
-      scheme: "Production",
-      export_method: "app-store",
-      clean: true,
-      include_symbols: true,
-      export_options: {
-        compileBitcode: false,
-        provisioningProfiles: {
-            "io.horizontalsystems.bank-wallet" => "match AppStore io.horizontalsystems.bank-wallet",
-            "io.horizontalsystems.bank-wallet.widget" => "match AppStore io.horizontalsystems.bank-wallet.widget",
-            "io.horizontalsystems.bank-wallet.intent" => "match AppStore io.horizontalsystems.bank-wallet.intent"
-        },
-        iCloudContainerEnvironment: "Production"
-      }
-    )
-
-    pilot(
-      apple_id: "#{APP_ID}",
-      app_identifier: "io.horizontalsystems.bank-wallet",
-      skip_waiting_for_build_processing: true,
-      skip_submission: true,
-      distribute_external: false,
-      notify_external_testers: false
-    )
-
-    delete_temp_keychain(keychain_name)
+      pilot(
+        apple_id: APP_ID,
+        app_identifier: BASE_APP_ID,
+        skip_waiting_for_build_processing: true,
+        skip_submission: true,
+        distribute_external: false,
+        notify_external_testers: false
+      )
+    end
   end
 
   lane :match_readonly do
-    match(
-      type: "development",
-      readonly: true,
-      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.dev.widget", "io.horizontalsystems.bank-wallet.intent", "io.horizontalsystems.bank-wallet.dev.intent"]
-    )
+    %w[development adhoc].each do |type|
+      match(type: type, readonly: true, app_identifier: ALL_APP_IDS)
+    end
 
-    match(
-      type: "adhoc",
-      readonly: true,
-      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.dev.widget", "io.horizontalsystems.bank-wallet.intent", "io.horizontalsystems.bank-wallet.dev.intent"]
-    )
-
-    match(
-      type: "appstore",
-      readonly: true,
-      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.intent"]
-    )
+    match(type: 'appstore', readonly: true, app_identifier: PROD_APP_IDS)
   end
 
   lane :match_generate do |options|
-    match(
-      type: "development",
-      username: options[:username],
-      team_id: "HC4MCAXJ66",
-      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.dev.widget", "io.horizontalsystems.bank-wallet.intent", "io.horizontalsystems.bank-wallet.dev.intent"],
-      force_for_new_devices: true
-    )
+    %w[development adhoc].each do |type|
+      match(
+        type: type,
+        username: options[:username],
+        team_id: TEAM_ID,
+        app_identifier: ALL_APP_IDS,
+        force_for_new_devices: true
+      )
+    end
 
     match(
-      type: "adhoc",
+      type: 'appstore',
       username: options[:username],
-      team_id: "HC4MCAXJ66",
-      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.dev", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.dev.widget", "io.horizontalsystems.bank-wallet.intent", "io.horizontalsystems.bank-wallet.dev.intent"],
-      force_for_new_devices: true
-    )
-
-    match(
-      type: "appstore",
-      username: options[:username],
-      team_id: "HC4MCAXJ66",
-      app_identifier: ["io.horizontalsystems.bank-wallet", "io.horizontalsystems.bank-wallet.widget", "io.horizontalsystems.bank-wallet.intent"]
+      team_id: TEAM_ID,
+      app_identifier: PROD_APP_IDS
     )
   end
-
 end

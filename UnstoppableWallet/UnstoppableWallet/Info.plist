@@ -3,11 +3,11 @@
 <plist version="1.0">
 <dict>
 	<key>ArbiscanApiKeys</key>
-	<string>${arbiscan_api_keys}</string>
+	<string>${ARBISCAN_API_KEYS}</string>
 	<key>BasescanApiKeys</key>
-	<string>${basescan_api_keys}</string>
+	<string>${BASESCAN_API_KEYS}</string>
 	<key>BscscanApiKeys</key>
-	<string>${bscscan_api_keys}</string>
+	<string>${BSCSCAN_API_KEYS}</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleExecutable</key>
@@ -16,6 +16,8 @@
 	<string>$(PRODUCT_BUNDLE_IDENTIFIER)</string>
 	<key>CFBundleInfoDictionaryVersion</key>
 	<string>6.0</string>
+	<key>CFBundleDisplayName</key>
+	<string>$(APP_DISPLAY_NAME)</string>
 	<key>CFBundleName</key>
 	<string>$(PRODUCT_NAME)</string>
 	<key>CFBundlePackageType</key>
@@ -24,84 +26,84 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleURLTypes</key>
 	<array>
-        <dict>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-            <key>CFBundleURLName</key>
-            <string>io.horizontalsystems.bank-wallet</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>unstoppable.money</string>
-            </array>
-        </dict>
-        <dict>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-            <key>CFBundleURLName</key>
-            <string>toncoin.deeplink</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>ton</string>
-            </array>
-        </dict>
-        <dict>
-            <key>CFBundleTypeRole</key>
-            <string>Editor</string>
-            <key>CFBundleURLName</key>
-            <string>crypto.deeplinks</string>
-            <key>CFBundleURLSchemes</key>
-            <array>
-                <string>ethereum</string>
-                <string>bitcoin</string>
-                <string>litecoin</string>
-                <string>bitcoincash</string>
-                <string>ecash</string>
-                <string>tron</string>
-                <string>cosmos</string>
-                <string>dogecoin</string>
-                <string>xrpl</string>
-                <string>solana</string>
-                <string>near</string>
-                <string>zcash</string>
-                <string>monero</string>
-                <string>thorchain</string>
-                <string>maya</string>
-                <string>stellar</string>
-            </array>
-        </dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>io.horizontalsystems.bank-wallet</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>unstoppable.money</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>toncoin.deeplink</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>ton</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLName</key>
+			<string>crypto.deeplinks</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>ethereum</string>
+				<string>bitcoin</string>
+				<string>litecoin</string>
+				<string>bitcoincash</string>
+				<string>ecash</string>
+				<string>tron</string>
+				<string>cosmos</string>
+				<string>dogecoin</string>
+				<string>xrpl</string>
+				<string>solana</string>
+				<string>near</string>
+				<string>zcash</string>
+				<string>monero</string>
+				<string>thorchain</string>
+				<string>maya</string>
+				<string>stellar</string>
+			</array>
+		</dict>
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>ChainalysisApiKey</key>
-	<string>${chainalysis_api_key}</string>
+	<string>${CHAINALYSIS_API_KEY}</string>
 	<key>MerkleApiPath</key>
-	<string>${merkle_api_path}</string>
+	<string>${MERKLE_API_PATH}</string>
 	<key>DefaultPassphrase</key>
-	<string>${default_passphrase}</string>
+	<string>${DEFAULT_PASSPHRASE}</string>
 	<key>DefaultWatchAddress</key>
-	<string>${default_watch_address}</string>
+	<string>${DEFAULT_WATCH_ADDRESS}</string>
 	<key>DefaultWords</key>
-	<string>${default_words}</string>
+	<string>${DEFAULT_WORDS}</string>
 	<key>DefiYieldApiKey</key>
-	<string>$(defiyield_api_key)</string>
+	<string>$(DEFIYIELD_API_KEY)</string>
 	<key>EraZkSyncApiKeys</key>
-	<string>${era_zksync_api_keys}</string>
+	<string>${ERA_ZKSYNC_API_KEYS}</string>
 	<key>EtherscanApiKeys</key>
-	<string>${etherscan_api_keys}</string>
+	<string>${ETHERSCAN_API_KEYS}</string>
 	<key>FtmscanApiKeys</key>
-	<string>${ftmscan_api_keys}</string>
+	<string>${FTMSCAN_API_KEYS}</string>
 	<key>GnosisscanApiKeys</key>
-	<string>${gnosisscan_api_keys}</string>
+	<string>${GNOSISSCAN_API_KEYS}</string>
 	<key>HashDitApiKey</key>
-	<string>${hashdit_api_key}</string>
+	<string>${HASHDIT_API_KEY}</string>
 	<key>HsProviderApiKey</key>
-	<string>$(hs_provider_api_key)</string>
+	<string>$(HS_PROVIDER_API_KEY)</string>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>MayaAffiliate</key>
-	<string>${maya_affiliate}</string>
+	<string>${MAYA_AFFILIATE}</string>
 	<key>MayaAffiliateBps</key>
-	<string>${maya_affiliate_bps}</string>
+	<string>${MAYA_AFFILIATE_BPS}</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>googlechrome</string>
@@ -111,10 +113,6 @@
 	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
-	<key>MarketApiUrl</key>
-	<string>${market_api_url}</string>
-	<key>SwapApiUrl</key>
-	<string>${swap_api_url}</string>
 	<key>NSCameraUsageDescription</key>
 	<string>We need access to camera to scan QR codes.</string>
 	<key>NSFaceIDUsageDescription</key>
@@ -150,39 +148,29 @@
 		<string>SingleCoinPriceIntent</string>
 	</array>
 	<key>OneInchApiKey</key>
-	<string>${one_inch_api_key}</string>
+	<string>${ONE_INCH_API_KEY}</string>
 	<key>OneInchCommission</key>
-	<string>${one_inch_commission}</string>
+	<string>${ONE_INCH_COMMISSION}</string>
 	<key>OneInchCommissionAddress</key>
-	<string>${one_inch_commission_address}</string>
+	<string>${ONE_INCH_COMMISSION_ADDRESS}</string>
 	<key>OpenSeaApiKey</key>
-	<string>${open_sea_api_key}</string>
+	<string>${OPEN_SEA_API_KEY}</string>
 	<key>OptimismEtherscanApiKeys</key>
-	<string>${optimism_etherscan_api_keys}</string>
+	<string>${OPTIMISM_ETHERSCAN_API_KEYS}</string>
 	<key>PolygonscanApiKeys</key>
-	<string>${polygonscan_api_keys}</string>
-	<key>PrivateCloudContainerId</key>
-	<string>${private_cloud_container_id}</string>
-	<key>ReferralAppServerUrl</key>
-	<string>${referral_app_server_url}</string>
-	<key>SharedCloudContainerId</key>
-	<string>${shared_cloud_container_id}</string>
-	<key>ShowBuildNumber</key>
-	<string>${ShowBuildNumber}</string>
-	<key>ShowTestNetSwitcher</key>
-	<string>${ShowTestNetSwitcher}</string>
+	<string>${POLYGONSCAN_API_KEYS}</string>
 	<key>SnowtraceApiKeys</key>
-	<string>${snowtrace_api_keys}</string>
+	<string>${SNOWTRACE_API_KEYS}</string>
 	<key>ThorchainAffiliate</key>
-	<string>${thorchain_affiliate}</string>
+	<string>${THORCHAIN_AFFILIATE}</string>
 	<key>ThorchainAffiliateBps</key>
-	<string>${thorchain_affiliate_bps}</string>
+	<string>${THORCHAIN_AFFILIATE_BPS}</string>
 	<key>SolanaAlchemyApiKeys</key>
-	<string>${solana_alchemy_api_keys}</string>
+	<string>${SOLANA_ALCHEMY_API_KEYS}</string>
 	<key>TronGridApiKeys</key>
-	<string>${trongrid_api_keys}</string>
+	<string>${TRONGRID_API_KEYS}</string>
 	<key>TwitterBearerToken</key>
-	<string>${twitter_bearer_token}</string>
+	<string>${TWITTER_BEARER_TOKEN}</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>Manrope-Medium.ttf</string>
@@ -213,12 +201,12 @@
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
 	<key>UnstoppableDomainsApiKey</key>
-	<string>${unstoppable_domains_api_key}</string>
+	<string>${UNSTOPPABLE_DOMAINS_API_KEY}</string>
 	<key>WallectConnectV2ProjectKey</key>
-	<string>${wallet_connect_v2_project_key}</string>
+	<string>${WALLET_CONNECT_V2_PROJECT_KEY}</string>
 	<key>USwapApiKey</key>
-	<string>${uswap_api_key}</string>
+	<string>${USWAP_API_KEY}</string>
 	<key>JupiterApiKey</key>
-	<string>${jupiter_api_key}</string>
+	<string>${JUPITER_API_KEY}</string>
 </dict>
 </plist>

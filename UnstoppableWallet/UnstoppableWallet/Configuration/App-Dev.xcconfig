@@ -1,0 +1,8 @@
+#include "Config.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER = io.horizontalsystems.bank-wallet.dev
+APP_DISPLAY_NAME = Unstoppable D
+CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Development.entitlements
+PROVISIONING_PROFILE_SPECIFIER[config=Debug-Dev] = match Development io.horizontalsystems.bank-wallet.dev
+PROVISIONING_PROFILE_SPECIFIER[config=Release-Dev] = match AdHoc io.horizontalsystems.bank-wallet.dev
+ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDev

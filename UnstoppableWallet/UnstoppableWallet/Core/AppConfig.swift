@@ -62,12 +62,20 @@ enum AppConfig {
         (Bundle.main.object(forInfoDictionaryKey: "CFBundleName") as? String) ?? ""
     }
 
+    static var showBuildNumber: Bool {
+        AppFlavor.config.showBuildNumber
+    }
+
+    static var showTestSwitchers: Bool {
+        AppFlavor.config.showTestSwitchers
+    }
+
     static var marketApiUrl: String {
-        (Bundle.main.object(forInfoDictionaryKey: "MarketApiUrl") as? String) ?? ""
+        AppFlavor.config.marketApiUrl
     }
 
     static var swapApiUrl: String {
-        (Bundle.main.object(forInfoDictionaryKey: "SwapApiUrl") as? String) ?? ""
+        AppFlavor.config.swapApiUrl
     }
 
     static var etherscanKeys: [String] {
@@ -177,7 +185,7 @@ enum AppConfig {
     }
 
     static var referralAppServerUrl: String {
-        (Bundle.main.object(forInfoDictionaryKey: "ReferralAppServerUrl") as? String) ?? ""
+        AppFlavor.config.referralAppServerUrl
     }
 
     static var defaultWords: String {
@@ -193,11 +201,11 @@ enum AppConfig {
     }
 
     static var sharedCloudContainer: String? {
-        Bundle.main.object(forInfoDictionaryKey: "SharedCloudContainerId") as? String
+        AppFlavor.config.sharedCloudContainerId
     }
 
     static var privateCloudContainer: String? {
-        Bundle.main.object(forInfoDictionaryKey: "PrivateCloudContainerId") as? String
+        AppFlavor.config.privateCloudContainerId
     }
 
     static var openSeaApiKey: String {

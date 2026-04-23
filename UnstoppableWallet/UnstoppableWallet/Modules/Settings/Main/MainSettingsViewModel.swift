@@ -69,7 +69,7 @@ class MainSettingsViewModel: ObservableObject {
     }
 
     init() {
-        showTestSwitchers = Bundle.main.object(forInfoDictionaryKey: "ShowTestNetSwitcher") as? String == "true"
+        showTestSwitchers = AppConfig.showTestSwitchers
         forceEnableSwap = localStorage.forceEnableSwap
         emulatePurchase = localStorage.emulatePurchase
         testNetEnabled = testNetManager.testNetEnabled

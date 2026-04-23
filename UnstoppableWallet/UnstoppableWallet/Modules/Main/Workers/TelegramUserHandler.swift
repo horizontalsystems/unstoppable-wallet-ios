@@ -20,7 +20,7 @@ extension TelegramUserHandler: IEventHandler {
                 throw EventHandler.HandleError.noSuitableHandler
             }
             let urlString = "\(baseUrl)/v1/tasks/registerApp?userId=\(userId)&referralCode=\(referralCode)"
-            print("Requesting: \(urlString)")
+
             guard let url = URL(string: urlString) else {
                 throw EventHandler.HandleError.noSuitableHandler
             }

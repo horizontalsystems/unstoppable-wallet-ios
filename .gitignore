@@ -35,8 +35,7 @@ fastlane/README.md
 
 GeneratedMocks.swift
 
-Development.xcconfig
-Production.xcconfig
+Config.xcconfig
 
 # SPM
 
