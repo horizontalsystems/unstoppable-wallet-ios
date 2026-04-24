@@ -24,6 +24,10 @@
 		6BDBD3772F9B44D500440BE0 /* UserOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3602F9B44D500440BE0 /* UserOperation.swift */; };
 		6BDBD3782F9B44D500440BE0 /* BarzFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3562F9B44D500440BE0 /* BarzFactory.swift */; };
 		6BDBD3792F9B44D500440BE0 /* UserOperationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3642F9B44D500440BE0 /* UserOperationRequest.swift */; };
+		6BDBD3892F9B7C4100440BE0 /* PasskeyCborReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3862F9B7C4100440BE0 /* PasskeyCborReader.swift */; };
+		6BDBD38A2F9B7C4100440BE0 /* SmartAccountPasskeyManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3872F9B7C4100440BE0 /* SmartAccountPasskeyManager.swift */; };
+		6BDBD38B2F9B7C4100440BE0 /* PasskeyAttestationDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3852F9B7C4100440BE0 /* PasskeyAttestationDecoder.swift */; };
+		6BDBD38F2F9B833000440BE0 /* PasskeyAuthorizationRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD38E2F9B833000440BE0 /* PasskeyAuthorizationRequester.swift */; };
 		D33D63472F98DD5D00E16ADA /* AppWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3948EF62ADA846400FAE566 /* AppWidgetBundle.swift */; };
 		D33D63482F98DD5D00E16ADA /* SingleCoinPriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CFAA2B156E439EB18B3 /* SingleCoinPriceView.swift */; };
 		D33D63492F98DD5D00E16ADA /* PriceChangeModeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D502C0703B400515664 /* PriceChangeModeManager.swift */; };
@@ -3012,6 +3016,10 @@
 		6BDBD3632F9B44D500440BE0 /* UserOperationReceipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOperationReceipt.swift; sourceTree = "<group>"; };
 		6BDBD3642F9B44D500440BE0 /* UserOperationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOperationRequest.swift; sourceTree = "<group>"; };
 		6BDBD3652F9B44D500440BE0 /* WebAuthnSignature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebAuthnSignature.swift; sourceTree = "<group>"; };
+		6BDBD3852F9B7C4100440BE0 /* PasskeyAttestationDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasskeyAttestationDecoder.swift; sourceTree = "<group>"; };
+		6BDBD3862F9B7C4100440BE0 /* PasskeyCborReader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasskeyCborReader.swift; sourceTree = "<group>"; };
+		6BDBD3872F9B7C4100440BE0 /* SmartAccountPasskeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartAccountPasskeyManager.swift; sourceTree = "<group>"; };
+		6BDBD38E2F9B833000440BE0 /* PasskeyAuthorizationRequester.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasskeyAuthorizationRequester.swift; sourceTree = "<group>"; };
 		6BDFC0822E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelTransactionJsonRpc.swift; sourceTree = "<group>"; };
 		6BDFC0852E3C8F0700CC28DD /* MerkleGetTransactionByHashJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleGetTransactionByHashJsonRpc.swift; sourceTree = "<group>"; };
 		6BDFC0882E3CDC1300CC28DD /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
@@ -6859,9 +6867,21 @@
 			children = (
 				6BDBD35A2F9B44D500440BE0 /* Contracts */,
 				6BDBD35C2F9B44D500440BE0 /* Errors */,
+				6BDBD3882F9B7C4100440BE0 /* Managers */,
 				6BDBD3662F9B44D500440BE0 /* Types */,
 			);
 			path = Abstraction;
+			sourceTree = "<group>";
+		};
+		6BDBD3882F9B7C4100440BE0 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+				6BDBD38E2F9B833000440BE0 /* PasskeyAuthorizationRequester.swift */,
+				6BDBD3852F9B7C4100440BE0 /* PasskeyAttestationDecoder.swift */,
+				6BDBD3862F9B7C4100440BE0 /* PasskeyCborReader.swift */,
+				6BDBD3872F9B7C4100440BE0 /* SmartAccountPasskeyManager.swift */,
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 		6BE57E752E339CB5003C4C01 /* Merkle */ = {
@@ -8896,6 +8916,7 @@
 				D33D647D2F98F2CF00E16ADA /* Decimal.swift in Sources */,
 				D33D647E2F98F2CF00E16ADA /* AddressUri.swift in Sources */,
 				D33D647F2F98F2CF00E16ADA /* SolanaKitManager.swift in Sources */,
+				6BDBD38F2F9B833000440BE0 /* PasskeyAuthorizationRequester.swift in Sources */,
 				D33D64802F98F2CF00E16ADA /* SolanaRpcSourceManager.swift in Sources */,
 				D33D64812F98F2CF00E16ADA /* PurchaseListViewModel.swift in Sources */,
 				D33D64822F98F2CF00E16ADA /* BitcoinBaseAdapter.swift in Sources */,
@@ -10262,6 +10283,9 @@
 				D33D69C02F98F2CF00E16ADA /* BackupRequiredView.swift in Sources */,
 				D33D69C12F98F2CF00E16ADA /* InteractiveDismiss.swift in Sources */,
 				D33D69C22F98F2CF00E16ADA /* SecondaryButtonStyle.swift in Sources */,
+				6BDBD3892F9B7C4100440BE0 /* PasskeyCborReader.swift in Sources */,
+				6BDBD38A2F9B7C4100440BE0 /* SmartAccountPasskeyManager.swift in Sources */,
+				6BDBD38B2F9B7C4100440BE0 /* PasskeyAttestationDecoder.swift in Sources */,
 				D33D69C32F98F2CF00E16ADA /* SecondaryCircleButtonStyle.swift in Sources */,
 				D33D69C42F98F2CF00E16ADA /* CoordinatorViewModifier.swift in Sources */,
 				D33D69C52F98F2CF00E16ADA /* EnabledWalletCache_v_0_36.swift in Sources */,
