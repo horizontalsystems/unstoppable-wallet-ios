@@ -7,6 +7,23 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6BDBD3692F9B44D500440BE0 /* EntryPointVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD35D2F9B44D500440BE0 /* EntryPointVersion.swift */; };
+		6BDBD36A2F9B44D500440BE0 /* ChainAddresses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3572F9B44D500440BE0 /* ChainAddresses.swift */; };
+		6BDBD36B2F9B44D500440BE0 /* PaymasterAndData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD35F2F9B44D500440BE0 /* PaymasterAndData.swift */; };
+		6BDBD36C2F9B44D500440BE0 /* UserOperationGasEstimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3622F9B44D500440BE0 /* UserOperationGasEstimate.swift */; };
+		6BDBD36D2F9B44D500440BE0 /* UserOperationCallData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3612F9B44D500440BE0 /* UserOperationCallData.swift */; };
+		6BDBD36E2F9B44D500440BE0 /* AbstractionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD35B2F9B44D500440BE0 /* AbstractionError.swift */; };
+		6BDBD36F2F9B44D500440BE0 /* EntryPointV06.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3582F9B44D500440BE0 /* EntryPointV06.swift */; };
+		6BDBD3702F9B44D500440BE0 /* PackedUserOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD35E2F9B44D500440BE0 /* PackedUserOperation.swift */; };
+		6BDBD3712F9B44D500440BE0 /* AbiEncoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3532F9B44D500440BE0 /* AbiEncoder.swift */; };
+		6BDBD3722F9B44D500440BE0 /* WebAuthnSignature.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3652F9B44D500440BE0 /* WebAuthnSignature.swift */; };
+		6BDBD3732F9B44D500440BE0 /* AccountFacet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3542F9B44D500440BE0 /* AccountFacet.swift */; };
+		6BDBD3742F9B44D500440BE0 /* BarzAddressResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3552F9B44D500440BE0 /* BarzAddressResolver.swift */; };
+		6BDBD3752F9B44D500440BE0 /* UserOperationReceipt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3632F9B44D500440BE0 /* UserOperationReceipt.swift */; };
+		6BDBD3762F9B44D500440BE0 /* Secp256r1VerificationFacet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3592F9B44D500440BE0 /* Secp256r1VerificationFacet.swift */; };
+		6BDBD3772F9B44D500440BE0 /* UserOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3602F9B44D500440BE0 /* UserOperation.swift */; };
+		6BDBD3782F9B44D500440BE0 /* BarzFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3562F9B44D500440BE0 /* BarzFactory.swift */; };
+		6BDBD3792F9B44D500440BE0 /* UserOperationRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3642F9B44D500440BE0 /* UserOperationRequest.swift */; };
 		D33D63472F98DD5D00E16ADA /* AppWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3948EF62ADA846400FAE566 /* AppWidgetBundle.swift */; };
 		D33D63482F98DD5D00E16ADA /* SingleCoinPriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CFAA2B156E439EB18B3 /* SingleCoinPriceView.swift */; };
 		D33D63492F98DD5D00E16ADA /* PriceChangeModeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D502C0703B400515664 /* PriceChangeModeManager.swift */; };
@@ -2978,6 +2995,23 @@
 		6BDB59E32F14B8EC005FA626 /* MoneroSendHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroSendHelper.swift; sourceTree = "<group>"; };
 		6BDB59EE2F15FE93005FA626 /* WCSocketFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WCSocketFactory.swift; sourceTree = "<group>"; };
 		6BDB59F12F1BB000005FA626 /* SolanaSwapFinalQuote.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SolanaSwapFinalQuote.swift; sourceTree = "<group>"; };
+		6BDBD3532F9B44D500440BE0 /* AbiEncoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbiEncoder.swift; sourceTree = "<group>"; };
+		6BDBD3542F9B44D500440BE0 /* AccountFacet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountFacet.swift; sourceTree = "<group>"; };
+		6BDBD3552F9B44D500440BE0 /* BarzAddressResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarzAddressResolver.swift; sourceTree = "<group>"; };
+		6BDBD3562F9B44D500440BE0 /* BarzFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarzFactory.swift; sourceTree = "<group>"; };
+		6BDBD3572F9B44D500440BE0 /* ChainAddresses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainAddresses.swift; sourceTree = "<group>"; };
+		6BDBD3582F9B44D500440BE0 /* EntryPointV06.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryPointV06.swift; sourceTree = "<group>"; };
+		6BDBD3592F9B44D500440BE0 /* Secp256r1VerificationFacet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secp256r1VerificationFacet.swift; sourceTree = "<group>"; };
+		6BDBD35B2F9B44D500440BE0 /* AbstractionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AbstractionError.swift; sourceTree = "<group>"; };
+		6BDBD35D2F9B44D500440BE0 /* EntryPointVersion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EntryPointVersion.swift; sourceTree = "<group>"; };
+		6BDBD35E2F9B44D500440BE0 /* PackedUserOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PackedUserOperation.swift; sourceTree = "<group>"; };
+		6BDBD35F2F9B44D500440BE0 /* PaymasterAndData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PaymasterAndData.swift; sourceTree = "<group>"; };
+		6BDBD3602F9B44D500440BE0 /* UserOperation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOperation.swift; sourceTree = "<group>"; };
+		6BDBD3612F9B44D500440BE0 /* UserOperationCallData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOperationCallData.swift; sourceTree = "<group>"; };
+		6BDBD3622F9B44D500440BE0 /* UserOperationGasEstimate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOperationGasEstimate.swift; sourceTree = "<group>"; };
+		6BDBD3632F9B44D500440BE0 /* UserOperationReceipt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOperationReceipt.swift; sourceTree = "<group>"; };
+		6BDBD3642F9B44D500440BE0 /* UserOperationRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserOperationRequest.swift; sourceTree = "<group>"; };
+		6BDBD3652F9B44D500440BE0 /* WebAuthnSignature.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebAuthnSignature.swift; sourceTree = "<group>"; };
 		6BDFC0822E39EFEE00CC28DD /* CancelTransactionJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CancelTransactionJsonRpc.swift; sourceTree = "<group>"; };
 		6BDFC0852E3C8F0700CC28DD /* MerkleGetTransactionByHashJsonRpc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleGetTransactionByHashJsonRpc.swift; sourceTree = "<group>"; };
 		6BDFC0882E3CDC1300CC28DD /* SubscriptionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubscriptionView.swift; sourceTree = "<group>"; };
@@ -4258,6 +4292,7 @@
 		11B3546BA60E06900F58BA94 /* Core */ = {
 			isa = PBXGroup;
 			children = (
+				6BDBD3682F9B44D500440BE0 /* Abstraction */,
 				11B35E1EBCA59D0D1DD9ABCD /* Adapters */,
 				11B35B0445A038D808DEE829 /* Providers */,
 				11B35703146B7401E5D5170E /* Factories */,
@@ -6781,6 +6816,54 @@
 			path = Base;
 			sourceTree = "<group>";
 		};
+		6BDBD35A2F9B44D500440BE0 /* Contracts */ = {
+			isa = PBXGroup;
+			children = (
+				6BDBD3532F9B44D500440BE0 /* AbiEncoder.swift */,
+				6BDBD3542F9B44D500440BE0 /* AccountFacet.swift */,
+				6BDBD3552F9B44D500440BE0 /* BarzAddressResolver.swift */,
+				6BDBD3562F9B44D500440BE0 /* BarzFactory.swift */,
+				6BDBD3572F9B44D500440BE0 /* ChainAddresses.swift */,
+				6BDBD3582F9B44D500440BE0 /* EntryPointV06.swift */,
+				6BDBD3592F9B44D500440BE0 /* Secp256r1VerificationFacet.swift */,
+			);
+			path = Contracts;
+			sourceTree = "<group>";
+		};
+		6BDBD35C2F9B44D500440BE0 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				6BDBD35B2F9B44D500440BE0 /* AbstractionError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		6BDBD3662F9B44D500440BE0 /* Types */ = {
+			isa = PBXGroup;
+			children = (
+				6BDBD35D2F9B44D500440BE0 /* EntryPointVersion.swift */,
+				6BDBD35E2F9B44D500440BE0 /* PackedUserOperation.swift */,
+				6BDBD35F2F9B44D500440BE0 /* PaymasterAndData.swift */,
+				6BDBD3602F9B44D500440BE0 /* UserOperation.swift */,
+				6BDBD3612F9B44D500440BE0 /* UserOperationCallData.swift */,
+				6BDBD3622F9B44D500440BE0 /* UserOperationGasEstimate.swift */,
+				6BDBD3632F9B44D500440BE0 /* UserOperationReceipt.swift */,
+				6BDBD3642F9B44D500440BE0 /* UserOperationRequest.swift */,
+				6BDBD3652F9B44D500440BE0 /* WebAuthnSignature.swift */,
+			);
+			path = Types;
+			sourceTree = "<group>";
+		};
+		6BDBD3682F9B44D500440BE0 /* Abstraction */ = {
+			isa = PBXGroup;
+			children = (
+				6BDBD35A2F9B44D500440BE0 /* Contracts */,
+				6BDBD35C2F9B44D500440BE0 /* Errors */,
+				6BDBD3662F9B44D500440BE0 /* Types */,
+			);
+			path = Abstraction;
+			sourceTree = "<group>";
+		};
 		6BE57E752E339CB5003C4C01 /* Merkle */ = {
 			isa = PBXGroup;
 			children = (
@@ -8954,6 +9037,23 @@
 				D33D650A2F98F2CF00E16ADA /* PrimaryButtonCell.swift in Sources */,
 				D33D650B2F98F2CF00E16ADA /* HighlightedDescriptionCell.swift in Sources */,
 				D33D650C2F98F2CF00E16ADA /* MarkdownImageTitleCell.swift in Sources */,
+				6BDBD3692F9B44D500440BE0 /* EntryPointVersion.swift in Sources */,
+				6BDBD36A2F9B44D500440BE0 /* ChainAddresses.swift in Sources */,
+				6BDBD36B2F9B44D500440BE0 /* PaymasterAndData.swift in Sources */,
+				6BDBD36C2F9B44D500440BE0 /* UserOperationGasEstimate.swift in Sources */,
+				6BDBD36D2F9B44D500440BE0 /* UserOperationCallData.swift in Sources */,
+				6BDBD36E2F9B44D500440BE0 /* AbstractionError.swift in Sources */,
+				6BDBD36F2F9B44D500440BE0 /* EntryPointV06.swift in Sources */,
+				6BDBD3702F9B44D500440BE0 /* PackedUserOperation.swift in Sources */,
+				6BDBD3712F9B44D500440BE0 /* AbiEncoder.swift in Sources */,
+				6BDBD3722F9B44D500440BE0 /* WebAuthnSignature.swift in Sources */,
+				6BDBD3732F9B44D500440BE0 /* AccountFacet.swift in Sources */,
+				6BDBD3742F9B44D500440BE0 /* BarzAddressResolver.swift in Sources */,
+				6BDBD3752F9B44D500440BE0 /* UserOperationReceipt.swift in Sources */,
+				6BDBD3762F9B44D500440BE0 /* Secp256r1VerificationFacet.swift in Sources */,
+				6BDBD3772F9B44D500440BE0 /* UserOperation.swift in Sources */,
+				6BDBD3782F9B44D500440BE0 /* BarzFactory.swift in Sources */,
+				6BDBD3792F9B44D500440BE0 /* UserOperationRequest.swift in Sources */,
 				D33D650D2F98F2CF00E16ADA /* StellarAdapter.swift in Sources */,
 				D33D650E2F98F2CF00E16ADA /* MarkdownVisitor.swift in Sources */,
 				D33D650F2F98F2CF00E16ADA /* MarkdownListItemCell.swift in Sources */,

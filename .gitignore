@@ -42,6 +42,7 @@ Config.xcconfig
 Package.resolved
 .swiftpm
 buildServer.json
+.sourcekit-lsp/
 
 # Claude
 
