@@ -39,7 +39,7 @@ extension SmartAccountDeploymentRecordStorage {
     }
 
     func updateDeployed(id: String, isDeployed: Bool) throws {
-        try dbPool.write { db in
+        _ = try dbPool.write { db in
             try SmartAccountDeploymentRecord
                 .filter(SmartAccountDeploymentRecord.Columns.id == id)
                 .updateAll(db, SmartAccountDeploymentRecord.Columns.isDeployed.set(to: isDeployed))
@@ -47,7 +47,7 @@ extension SmartAccountDeploymentRecordStorage {
     }
 
     func delete(id: String) throws {
-        try dbPool.write { db in
+        _ = try dbPool.write { db in
             try SmartAccountDeploymentRecord
                 .filter(SmartAccountDeploymentRecord.Columns.id == id)
                 .deleteAll(db)
@@ -55,7 +55,7 @@ extension SmartAccountDeploymentRecordStorage {
     }
 
     func deleteAll(profileId: String) throws {
-        try dbPool.write { db in
+        _ = try dbPool.write { db in
             try SmartAccountDeploymentRecord
                 .filter(SmartAccountDeploymentRecord.Columns.profileId == profileId)
                 .deleteAll(db)
@@ -63,7 +63,7 @@ extension SmartAccountDeploymentRecordStorage {
     }
 
     func clear() throws {
-        try dbPool.write { db in
+        _ = try dbPool.write { db in
             try SmartAccountDeploymentRecord.deleteAll(db)
         }
     }

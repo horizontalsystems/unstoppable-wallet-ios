@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6B94D8B02F9BAEAA0042CCD6 /* SmartAccountDeployment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B94D8AE2F9BAEAA0042CCD6 /* SmartAccountDeployment.swift */; };
+		6B94D8B12F9BAEAA0042CCD6 /* SmartAccountProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B94D8AF2F9BAEAA0042CCD6 /* SmartAccountProfile.swift */; };
+		6B94D8B32F9BAEB30042CCD6 /* SmartAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B94D8B22F9BAEB30042CCD6 /* SmartAccountManager.swift */; };
 		6BDBD3692F9B44D500440BE0 /* EntryPointVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD35D2F9B44D500440BE0 /* EntryPointVersion.swift */; };
 		6BDBD36A2F9B44D500440BE0 /* ChainAddresses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3572F9B44D500440BE0 /* ChainAddresses.swift */; };
 		6BDBD36B2F9B44D500440BE0 /* PaymasterAndData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD35F2F9B44D500440BE0 /* PaymasterAndData.swift */; };
@@ -2892,6 +2895,9 @@
 		6B93AFD12E656B2B00A55120 /* ContractAddressValidatorChain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContractAddressValidatorChain.swift; sourceTree = "<group>"; };
 		6B93AFD42E66C46100A55120 /* WalletInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalletInfoView.swift; sourceTree = "<group>"; };
 		6B93AFD72E67138700A55120 /* ViewWithTransactionList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewWithTransactionList.swift; sourceTree = "<group>"; };
+		6B94D8AE2F9BAEAA0042CCD6 /* SmartAccountDeployment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartAccountDeployment.swift; sourceTree = "<group>"; };
+		6B94D8AF2F9BAEAA0042CCD6 /* SmartAccountProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartAccountProfile.swift; sourceTree = "<group>"; };
+		6B94D8B22F9BAEB30042CCD6 /* SmartAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartAccountManager.swift; sourceTree = "<group>"; };
 		6B954B202F3C8EAA008A1A16 /* RestoreBackupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreBackupListView.swift; sourceTree = "<group>"; };
 		6B954B232F3EE47B008A1A16 /* RestorePassphraseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePassphraseView.swift; sourceTree = "<group>"; };
 		6B954B262F3F1580008A1A16 /* RestoreTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreTypeView.swift; sourceTree = "<group>"; };
@@ -6892,6 +6898,7 @@
 		6BDBD3882F9B7C4100440BE0 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				6B94D8B22F9BAEB30042CCD6 /* SmartAccountManager.swift */,
 				6BDBD38E2F9B833000440BE0 /* PasskeyAuthorizationRequester.swift */,
 				6BDBD3852F9B7C4100440BE0 /* PasskeyAttestationDecoder.swift */,
 				6BDBD3862F9B7C4100440BE0 /* PasskeyCborReader.swift */,
@@ -6903,6 +6910,8 @@
 		6BDBD3AE2F9B974600440BE0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6B94D8AE2F9BAEAA0042CCD6 /* SmartAccountDeployment.swift */,
+				6B94D8AF2F9BAEAA0042CCD6 /* SmartAccountProfile.swift */,
 				6BDBD3AB2F9B974600440BE0 /* PendingUserOperationRecord.swift */,
 				6BDBD3AC2F9B974600440BE0 /* SmartAccountDeploymentRecord.swift */,
 				6BDBD3AD2F9B974600440BE0 /* SmartAccountProfileRecord.swift */,
@@ -9625,6 +9634,8 @@
 				D33D670B2F98F2CF00E16ADA /* SectionsTableView.swift in Sources */,
 				D33D670C2F98F2CF00E16ADA /* EnabledWalletStorage.swift in Sources */,
 				D33D670D2F98F2CF00E16ADA /* AddJettonBlockchainService.swift in Sources */,
+				6B94D8B02F9BAEAA0042CCD6 /* SmartAccountDeployment.swift in Sources */,
+				6B94D8B12F9BAEAA0042CCD6 /* SmartAccountProfile.swift in Sources */,
 				D33D670E2F98F2CF00E16ADA /* ReceiveBlockchainListView.swift in Sources */,
 				D33D670F2F98F2CF00E16ADA /* AccountRecordStorage.swift in Sources */,
 				D33D67102F98F2CF00E16ADA /* MarketSearchViewModel.swift in Sources */,
@@ -9721,6 +9732,7 @@
 				D33D676B2F98F2CF00E16ADA /* MarketCardValueView.swift in Sources */,
 				D33D676C2F98F2CF00E16ADA /* TonConnectErrorView.swift in Sources */,
 				D33D676D2F98F2CF00E16ADA /* MainTransactionsView.swift in Sources */,
+				6B94D8B32F9BAEB30042CCD6 /* SmartAccountManager.swift in Sources */,
 				D33D676E2F98F2CF00E16ADA /* BackupSelectContentView.swift in Sources */,
 				D33D676F2F98F2CF00E16ADA /* MainViewModel.swift in Sources */,
 				D33D67702F98F2CF00E16ADA /* Array.swift in Sources */,
