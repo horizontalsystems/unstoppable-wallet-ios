@@ -4,6 +4,10 @@
 <dict>
 	<key>ArbiscanApiKeys</key>
 	<string>${ARBISCAN_API_KEYS}</string>
+	<key>SharedCloudContainerId</key>
+	<string>${SHARED_CLOUD_CONTAINER_ID}</string>
+	<key>PrivateCloudContainerId</key>
+	<string>${PRIVATE_CLOUD_CONTAINER_ID}</string>
 	<key>BasescanApiKeys</key>
 	<string>${BASESCAN_API_KEYS}</string>
 	<key>BscscanApiKeys</key>

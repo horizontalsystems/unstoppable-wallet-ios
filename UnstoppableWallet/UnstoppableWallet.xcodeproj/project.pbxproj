@@ -1843,12 +1843,16 @@
 		D33D6B102F98F2CF00E16ADA /* Manrope-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6B5A13D62DF0414B006E609C /* Manrope-SemiBold.ttf */; };
 		D33D6B112F98F2CF00E16ADA /* Manrope-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 6B5A13D42DF0414B006E609C /* Manrope-Medium.ttf */; };
 		D33D6B122F98F2CF00E16ADA /* AppIconAlternate.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D368F5662844F2C400F79777 /* AppIconAlternate.xcassets */; };
-		D33D6B132F98F2CF00E16ADA /* WidgetProd.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 11B35DDE879F1628BB2CE523 /* WidgetProd.entitlements */; };
+		D33D6B132F98F2CF00E16ADA /* Widget-Prod.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = 11B35DDE879F1628BB2CE523 /* Widget-Prod.entitlements */; };
 		D33D6B1F2F98F5BF00E16ADA /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D33D63A22F98DD5D00E16ADA /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D33D6B222F98F5C900E16ADA /* IntentExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D33D63B32F98DD6A00E16ADA /* IntentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D35C2EA92F9A164400D186CF /* AppFlavor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35C2EA82F9A163F00D186CF /* AppFlavor.swift */; };
 		D35C2EAB2F9A2BB200D186CF /* AppFlavor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35C2EA82F9A163F00D186CF /* AppFlavor.swift */; };
 		D35C2EAC2F9A2C2F00D186CF /* AppFlavor.swift in Sources */ = {isa = PBXBuildFile; fileRef = D35C2EA82F9A163F00D186CF /* AppFlavor.swift */; };
+		D35C2EC32F9A491A00D186CF /* Widget-Stable-Prod.entitlements in Resources */ = {isa = PBXBuildFile; fileRef = D35C2EC22F9A491A00D186CF /* Widget-Stable-Prod.entitlements */; };
+		D39BA7E42F9A521D005461CB /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39BA7E32F9A521D005461CB /* AppEnvironment.swift */; };
+		D39BA7E52F9A521D005461CB /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39BA7E32F9A521D005461CB /* AppEnvironment.swift */; };
+		D39BA7E62F9A521D005461CB /* AppEnvironment.swift in Sources */ = {isa = PBXBuildFile; fileRef = D39BA7E32F9A521D005461CB /* AppEnvironment.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2151,7 +2155,7 @@
 		11B35758E84DE8577A481571 /* NftContractMetadata.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftContractMetadata.swift; sourceTree = "<group>"; };
 		11B35759E226171A4969E66E /* FaqUrlHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FaqUrlHelper.swift; sourceTree = "<group>"; };
 		11B35763ED14419B9EE4C6F9 /* EnabledWalletStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnabledWalletStorage.swift; sourceTree = "<group>"; };
-		11B3576749FE2A61E6347F99 /* WidgetDev.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = WidgetDev.entitlements; sourceTree = "<group>"; };
+		11B3576749FE2A61E6347F99 /* Widget-Dev.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Widget-Dev.entitlements"; sourceTree = "<group>"; };
 		11B3576F224007FD4154EBE8 /* LockoutManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LockoutManager.swift; sourceTree = "<group>"; };
 		11B3576FCFC9394BA37975FC /* BackupVerifyWordsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BackupVerifyWordsViewModel.swift; sourceTree = "<group>"; };
 		11B357736B8C29DF38F5DCBA /* AlertViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AlertViewController.swift; sourceTree = "<group>"; };
@@ -2381,7 +2385,7 @@
 		11B35DBDADDA8D4F9D88C7AA /* RecipientAddressInputCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RecipientAddressInputCell.swift; sourceTree = "<group>"; };
 		11B35DC72F0D8DBBCCE2F988 /* MarkdownVisitor.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownVisitor.swift; sourceTree = "<group>"; };
 		11B35DDC338BFE2832C07360 /* TransactionTokenSelectView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TransactionTokenSelectView.swift; sourceTree = "<group>"; };
-		11B35DDE879F1628BB2CE523 /* WidgetProd.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = WidgetProd.entitlements; sourceTree = "<group>"; };
+		11B35DDE879F1628BB2CE523 /* Widget-Prod.entitlements */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.entitlements; path = "Widget-Prod.entitlements"; sourceTree = "<group>"; };
 		11B35DE76BBABD8F0914A0D2 /* NftActivityViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NftActivityViewModel.swift; sourceTree = "<group>"; };
 		11B35DE812F995B07C8F0B01 /* ChartUiView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartUiView.swift; sourceTree = "<group>"; };
 		11B35DF08505C3A7CB1BBBB4 /* MarkdownViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MarkdownViewController.swift; sourceTree = "<group>"; };
@@ -2574,8 +2578,8 @@
 		50AB06B6215A269200A01E4A /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		50AB06B8215A269700A01E4A /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		50AB06B9215A269900A01E4A /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		50D05F9A249A228C0067D28F /* Development.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Development.entitlements; sourceTree = "<group>"; };
-		50D05F9B249A22950067D28F /* Production.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Production.entitlements; sourceTree = "<group>"; };
+		50D05F9A249A228C0067D28F /* App-Dev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "App-Dev.entitlements"; sourceTree = "<group>"; };
+		50D05F9B249A22950067D28F /* App-Prod.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "App-Prod.entitlements"; sourceTree = "<group>"; };
 		50E2A266214A67B400C51413 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
 		50EED18F218822E200E200AD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		50EED190218822E200E200AD /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -3442,6 +3446,16 @@
 		D350DDC92AE27E4A00CF1989 /* tr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = tr; path = tr.lproj/AppWidget.strings; sourceTree = "<group>"; };
 		D350DDCA2AE2818A00CF1989 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; name = Base; path = Base.lproj/AppWidget.intentdefinition; sourceTree = "<group>"; };
 		D35C2EA82F9A163F00D186CF /* AppFlavor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppFlavor.swift; sourceTree = "<group>"; };
+		D35C2EBD2F9A47C200D186CF /* App-Stable-Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "App-Stable-Dev.xcconfig"; sourceTree = "<group>"; };
+		D35C2EBE2F9A47CF00D186CF /* App-Stable-Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "App-Stable-Prod.xcconfig"; sourceTree = "<group>"; };
+		D35C2EBF2F9A48FE00D186CF /* App-Stable-Prod.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "App-Stable-Prod.entitlements"; sourceTree = "<group>"; };
+		D35C2EC02F9A490800D186CF /* App-Stable-Dev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "App-Stable-Dev.entitlements"; sourceTree = "<group>"; };
+		D35C2EC12F9A491300D186CF /* Widget-Stable-Dev.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Widget-Stable-Dev.entitlements"; sourceTree = "<group>"; };
+		D35C2EC22F9A491A00D186CF /* Widget-Stable-Prod.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Widget-Stable-Prod.entitlements"; sourceTree = "<group>"; };
+		D35C2EC42F9A497C00D186CF /* Widget-Stable-Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Widget-Stable-Dev.xcconfig"; sourceTree = "<group>"; };
+		D35C2EC52F9A498500D186CF /* Widget-Stable-Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Widget-Stable-Prod.xcconfig"; sourceTree = "<group>"; };
+		D35C2EC62F9A498E00D186CF /* Intent-Stable-Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Intent-Stable-Dev.xcconfig"; sourceTree = "<group>"; };
+		D35C2EC72F9A499800D186CF /* Intent-Stable-Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = "Intent-Stable-Prod.xcconfig"; sourceTree = "<group>"; };
 		D3617A6C2F28D9D900CB8F90 /* BirthdayPickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BirthdayPickerView.swift; sourceTree = "<group>"; };
 		D3617A752F28F45D00CB8F90 /* MoneroWalletTokenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroWalletTokenViewModel.swift; sourceTree = "<group>"; };
 		D3617A762F28F45D00CB8F90 /* MoneroWalletTokenView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoneroWalletTokenView.swift; sourceTree = "<group>"; };
@@ -3537,6 +3551,7 @@
 		D3948F092ADA887300FAE566 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		D3948F1C2ADA88D900FAE566 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
 		D3948F1E2ADA88D900FAE566 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D39BA7E32F9A521D005461CB /* AppEnvironment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppEnvironment.swift; sourceTree = "<group>"; };
 		D3A12E922CC8C5AC008D5F99 /* EducationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationView.swift; sourceTree = "<group>"; };
 		D3A12E952CC8C5B6008D5F99 /* EducationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EducationViewModel.swift; sourceTree = "<group>"; };
 		D3A580872BE4DAA2003953F4 /* EvmSendData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvmSendData.swift; sourceTree = "<group>"; };
@@ -4220,7 +4235,6 @@
 		11B3546BA60E06900F58BA94 /* Core */ = {
 			isa = PBXGroup;
 			children = (
-				D35C2EA82F9A163F00D186CF /* AppFlavor.swift */,
 				11B35E1EBCA59D0D1DD9ABCD /* Adapters */,
 				11B35B0445A038D808DEE829 /* Providers */,
 				11B35703146B7401E5D5170E /* Factories */,
@@ -4230,6 +4244,8 @@
 				58AAA3E6E0C24ACD0ECFC877 /* Fiat */,
 				58AAA0C31F14444C22ACF393 /* Address */,
 				1A5646D49060C3EFF06D0479 /* Core.swift */,
+				D35C2EA82F9A163F00D186CF /* AppFlavor.swift */,
+				D39BA7E32F9A521D005461CB /* AppEnvironment.swift */,
 				11B35A5DE20DD6DD486FAFC0 /* Protocols.swift */,
 				58AAA8B7E47FF3B010851E58 /* Global.swift */,
 				11B3586FDC91E3742847B7E0 /* AppConfig.swift */,
@@ -5701,18 +5717,10 @@
 		5026FFF321C3CA280023EEA2 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
-				D33D5C072F98DCC600E16ADA /* App-Dev.xcconfig */,
-				D33D5C082F98DCCF00E16ADA /* App-Prod.xcconfig */,
-				D33D5C0A2F98DCEA00E16ADA /* Widget-Dev.xcconfig */,
-				D33D5C0B2F98DCF500E16ADA /* Widget-Prod.xcconfig */,
-				D33D5C0D2F98DD0600E16ADA /* Intent-Dev.xcconfig */,
-				D33D5C0E2F98DD0C00E16ADA /* Intent-Prod.xcconfig */,
-				50D05F9B249A22950067D28F /* Production.entitlements */,
-				50D05F9A249A228C0067D28F /* Development.entitlements */,
+				D35C2EC82F9A49AB00D186CF /* App */,
+				D35C2EC92F9A49B400D186CF /* Stable */,
 				1A5641679DC88BE355F0F3A0 /* Config.template.xcconfig */,
 				1A56433D5D39CCA995F97777 /* Config.xcconfig */,
-				11B3576749FE2A61E6347F99 /* WidgetDev.entitlements */,
-				11B35DDE879F1628BB2CE523 /* WidgetProd.entitlements */,
 			);
 			path = Configuration;
 			sourceTree = "<group>";
@@ -8049,6 +8057,40 @@
 			path = Coordinator;
 			sourceTree = "<group>";
 		};
+		D35C2EC82F9A49AB00D186CF /* App */ = {
+			isa = PBXGroup;
+			children = (
+				D33D5C072F98DCC600E16ADA /* App-Dev.xcconfig */,
+				D33D5C082F98DCCF00E16ADA /* App-Prod.xcconfig */,
+				D33D5C0A2F98DCEA00E16ADA /* Widget-Dev.xcconfig */,
+				D33D5C0B2F98DCF500E16ADA /* Widget-Prod.xcconfig */,
+				D33D5C0D2F98DD0600E16ADA /* Intent-Dev.xcconfig */,
+				D33D5C0E2F98DD0C00E16ADA /* Intent-Prod.xcconfig */,
+				50D05F9B249A22950067D28F /* App-Prod.entitlements */,
+				50D05F9A249A228C0067D28F /* App-Dev.entitlements */,
+				11B3576749FE2A61E6347F99 /* Widget-Dev.entitlements */,
+				11B35DDE879F1628BB2CE523 /* Widget-Prod.entitlements */,
+			);
+			path = App;
+			sourceTree = "<group>";
+		};
+		D35C2EC92F9A49B400D186CF /* Stable */ = {
+			isa = PBXGroup;
+			children = (
+				D35C2EBD2F9A47C200D186CF /* App-Stable-Dev.xcconfig */,
+				D35C2EBE2F9A47CF00D186CF /* App-Stable-Prod.xcconfig */,
+				D35C2EC42F9A497C00D186CF /* Widget-Stable-Dev.xcconfig */,
+				D35C2EC52F9A498500D186CF /* Widget-Stable-Prod.xcconfig */,
+				D35C2EC62F9A498E00D186CF /* Intent-Stable-Dev.xcconfig */,
+				D35C2EC72F9A499800D186CF /* Intent-Stable-Prod.xcconfig */,
+				D35C2EBF2F9A48FE00D186CF /* App-Stable-Prod.entitlements */,
+				D35C2EC02F9A490800D186CF /* App-Stable-Dev.entitlements */,
+				D35C2EC12F9A491300D186CF /* Widget-Stable-Dev.entitlements */,
+				D35C2EC22F9A491A00D186CF /* Widget-Stable-Prod.entitlements */,
+			);
+			path = Stable;
+			sourceTree = "<group>";
+		};
 		D362879D2CA2B32900ADAF3B /* TonConnect */ = {
 			isa = PBXGroup;
 			children = (
@@ -8533,11 +8575,12 @@
 				D33D6B0B2F98F2CF00E16ADA /* InfoPlist.strings in Resources */,
 				D33D6B0D2F98F2CF00E16ADA /* Localizable.strings in Resources */,
 				D33D6B0E2F98F2CF00E16ADA /* Assets.xcassets in Resources */,
+				D35C2EC32F9A491A00D186CF /* Widget-Stable-Prod.entitlements in Resources */,
 				D33D6B0F2F98F2CF00E16ADA /* Manrope-Regular.ttf in Resources */,
 				D33D6B102F98F2CF00E16ADA /* Manrope-SemiBold.ttf in Resources */,
 				D33D6B112F98F2CF00E16ADA /* Manrope-Medium.ttf in Resources */,
 				D33D6B122F98F2CF00E16ADA /* AppIconAlternate.xcassets in Resources */,
-				D33D6B132F98F2CF00E16ADA /* WidgetProd.entitlements in Resources */,
+				D33D6B132F98F2CF00E16ADA /* Widget-Prod.entitlements in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -8570,6 +8613,7 @@
 				D33D63592F98DD5D00E16ADA /* CoinListView.swift in Sources */,
 				D33D635A2F98DD5D00E16ADA /* WatchlistTimePeriod.swift in Sources */,
 				D33D635B2F98DD5D00E16ADA /* CoinPriceListEntry.swift in Sources */,
+				D39BA7E52F9A521D005461CB /* AppEnvironment.swift in Sources */,
 				D33D635C2F98DD5D00E16ADA /* ImageComponent.swift in Sources */,
 				D33D635D2F98DD5D00E16ADA /* WatchlistEntry.swift in Sources */,
 				D33D635E2F98DD5D00E16ADA /* CoinPriceListProvider.swift in Sources */,
@@ -8630,6 +8674,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D35C2EAC2F9A2C2F00D186CF /* AppFlavor.swift in Sources */,
+				D39BA7E62F9A521D005461CB /* AppEnvironment.swift in Sources */,
 				D33D63A82F98DD6A00E16ADA /* IntentHandler.swift in Sources */,
 				D33D63A92F98DD6A00E16ADA /* ApiProvider.swift in Sources */,
 				D33D63AA2F98DD6A00E16ADA /* AppWidget.intentdefinition in Sources */,
@@ -9893,6 +9938,7 @@
 				D33D691F2F98F2CF00E16ADA /* ReceiveModule.swift in Sources */,
 				D33D69202F98F2CF00E16ADA /* RightMultiText.swift in Sources */,
 				D33D69212F98F2CF00E16ADA /* PurchaseListView.swift in Sources */,
+				D39BA7E42F9A521D005461CB /* AppEnvironment.swift in Sources */,
 				D33D69222F98F2CF00E16ADA /* RecentAddressStorage.swift in Sources */,
 				D33D69232F98F2CF00E16ADA /* SpamModule.swift in Sources */,
 				D33D69242F98F2CF00E16ADA /* BlockchainTokensView.swift in Sources */,
@@ -10938,6 +10984,536 @@
 			};
 			name = "Release-Prod";
 		};
+		D35C2EAD2F9A475700D186CF /* Debug-Stable-Dev */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIconDark AppIconMono AppIconPunk AppIcon1874 AppIcon8ball AppIconPepe AppIconIvfun AppIconDoge AppIconGigaChad AppIconPlFlag AppIconYesChad AppIconYS AppIconZcash AppIconMonero";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = HC4MCAXJ66;
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = UnstoppableWallet/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.49;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV STABLE";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				Sandbox = true;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = "Debug-Stable-Dev";
+		};
+		D35C2EAE2F9A475700D186CF /* Debug-Stable-Dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D35C2EBD2F9A47C200D186CF /* App-Stable-Dev.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = Unstoppable;
+			};
+			name = "Debug-Stable-Dev";
+		};
+		D35C2EAF2F9A475700D186CF /* Debug-Stable-Dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D35C2EC42F9A497C00D186CF /* Widget-Stable-Dev.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Widget;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = "Debug-Stable-Dev";
+		};
+		D35C2EB02F9A475700D186CF /* Debug-Stable-Dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D35C2EC62F9A498E00D186CF /* Intent-Stable-Dev.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IntentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = IntentExtension;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_MODULE_NAME = IntentExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = "Debug-Stable-Dev";
+		};
+		D35C2EB12F9A477B00D186CF /* Debug-Stable-Prod */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIconDark AppIconMono AppIconPunk AppIcon1874 AppIcon8ball AppIconPepe AppIconIvfun AppIconDoge AppIconGigaChad AppIconPlFlag AppIconYesChad AppIconYS AppIconZcash AppIconMonero";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = HC4MCAXJ66;
+				ENABLE_BITCODE = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = UnstoppableWallet/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.49;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG PROD STABLE";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				Sandbox = true;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = "Debug-Stable-Prod";
+		};
+		D35C2EB22F9A477B00D186CF /* Debug-Stable-Prod */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D35C2EBE2F9A47CF00D186CF /* App-Stable-Prod.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = Unstoppable;
+			};
+			name = "Debug-Stable-Prod";
+		};
+		D35C2EB32F9A477B00D186CF /* Debug-Stable-Prod */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D35C2EC52F9A498500D186CF /* Widget-Stable-Prod.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Widget;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = "Debug-Stable-Prod";
+		};
+		D35C2EB42F9A477B00D186CF /* Debug-Stable-Prod */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D35C2EC72F9A499800D186CF /* Intent-Stable-Prod.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IntentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = IntentExtension;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				PRODUCT_MODULE_NAME = IntentExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = "Debug-Stable-Prod";
+		};
+		D35C2EB52F9A478800D186CF /* Release-Stable-Dev */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIconDark AppIconMono AppIconPunk AppIcon1874 AppIcon8ball AppIconPepe AppIconIvfun AppIconDoge AppIconGigaChad AppIconPlFlag AppIconYesChad AppIconYS AppIconZcash AppIconMonero";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = HC4MCAXJ66;
+				ENABLE_BITCODE = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = UnstoppableWallet/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.49;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEV STABLE";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				Sandbox = false;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = "Release-Stable-Dev";
+		};
+		D35C2EB62F9A478800D186CF /* Release-Stable-Dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D35C2EBD2F9A47C200D186CF /* App-Stable-Dev.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = Unstoppable;
+			};
+			name = "Release-Stable-Dev";
+		};
+		D35C2EB72F9A478800D186CF /* Release-Stable-Dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D35C2EC42F9A497C00D186CF /* Widget-Stable-Dev.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Widget;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = "Release-Stable-Dev";
+		};
+		D35C2EB82F9A478800D186CF /* Release-Stable-Dev */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D35C2EC62F9A498E00D186CF /* Intent-Stable-Dev.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IntentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = IntentExtension;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_FAST_MATH = YES;
+				PRODUCT_MODULE_NAME = IntentExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = "Release-Stable-Dev";
+		};
+		D35C2EB92F9A479400D186CF /* Release-Stable-Prod */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIconDark AppIconMono AppIconPunk AppIcon1874 AppIcon8ball AppIconPepe AppIconIvfun AppIconDoge AppIconGigaChad AppIconPlFlag AppIconYesChad AppIconYS AppIconZcash AppIconMonero";
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				CODE_SIGN_STYLE = Manual;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = HC4MCAXJ66;
+				ENABLE_BITCODE = NO;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				INFOPLIST_FILE = UnstoppableWallet/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.49;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "PROD STABLE";
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+				Sandbox = false;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = "Release-Stable-Prod";
+		};
+		D35C2EBA2F9A479400D186CF /* Release-Stable-Prod */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D35C2EBE2F9A47CF00D186CF /* App-Stable-Prod.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = Unstoppable;
+			};
+			name = "Release-Stable-Prod";
+		};
+		D35C2EBB2F9A479400D186CF /* Release-Stable-Prod */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D35C2EC52F9A498500D186CF /* Widget-Stable-Prod.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Widget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = Widget;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = "Release-Stable-Prod";
+		};
+		D35C2EBC2F9A479400D186CF /* Release-Stable-Prod */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = D35C2EC72F9A499800D186CF /* Intent-Stable-Prod.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = IntentExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = IntentExtension;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_FAST_MATH = YES;
+				PRODUCT_MODULE_NAME = IntentExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+			};
+			name = "Release-Stable-Prod";
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -10945,9 +11521,13 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D33D63B52F98DE0800E16ADA /* Debug-Dev */,
+				D35C2EAD2F9A475700D186CF /* Debug-Stable-Dev */,
 				D33D63DD2F98DE6800E16ADA /* Debug-Prod */,
+				D35C2EB12F9A477B00D186CF /* Debug-Stable-Prod */,
 				D33D63BF2F98DE1200E16ADA /* Release-Dev */,
+				D35C2EB52F9A478800D186CF /* Release-Stable-Dev */,
 				D33D63E72F98DE6E00E16ADA /* Release-Prod */,
+				D35C2EB92F9A479400D186CF /* Release-Stable-Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Debug-Dev";
@@ -10956,9 +11536,13 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D33D63BD2F98DE0800E16ADA /* Debug-Dev */,
+				D35C2EAF2F9A475700D186CF /* Debug-Stable-Dev */,
 				D33D63E52F98DE6800E16ADA /* Debug-Prod */,
+				D35C2EB32F9A477B00D186CF /* Debug-Stable-Prod */,
 				D33D63C72F98DE1200E16ADA /* Release-Dev */,
+				D35C2EB72F9A478800D186CF /* Release-Stable-Dev */,
 				D33D63EF2F98DE6E00E16ADA /* Release-Prod */,
+				D35C2EBB2F9A479400D186CF /* Release-Stable-Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Debug-Dev";
@@ -10967,9 +11551,13 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D33D63BE2F98DE0800E16ADA /* Debug-Dev */,
+				D35C2EB02F9A475700D186CF /* Debug-Stable-Dev */,
 				D33D63E62F98DE6800E16ADA /* Debug-Prod */,
+				D35C2EB42F9A477B00D186CF /* Debug-Stable-Prod */,
 				D33D63C82F98DE1200E16ADA /* Release-Dev */,
+				D35C2EB82F9A478800D186CF /* Release-Stable-Dev */,
 				D33D63F02F98DE6E00E16ADA /* Release-Prod */,
+				D35C2EBC2F9A479400D186CF /* Release-Stable-Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Debug-Dev";
@@ -10978,9 +11566,13 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D33D6B192F98F2CF00E16ADA /* Debug-Dev */,
+				D35C2EAE2F9A475700D186CF /* Debug-Stable-Dev */,
 				D33D6B1A2F98F2CF00E16ADA /* Debug-Prod */,
+				D35C2EB22F9A477B00D186CF /* Debug-Stable-Prod */,
 				D33D6B1B2F98F2CF00E16ADA /* Release-Dev */,
+				D35C2EB62F9A478800D186CF /* Release-Stable-Dev */,
 				D33D6B1C2F98F2CF00E16ADA /* Release-Prod */,
+				D35C2EBA2F9A479400D186CF /* Release-Stable-Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Debug-Dev";
