@@ -477,6 +477,7 @@ extension AccountType {
         init(_ type: AccountType) {
             switch type {
             case .mnemonic: self = .mnemonic
+            // TODO: before Part 9 (Create AA-wallet UI) — hide backup entry points for passkey (ManageAccountView iCloud row, BackupSelectContentViewModel "regular" filter) or replace preconditionFailure with throws. Currently crashes if any backup flow reaches a passkeyOwned account.
             case .passkeyOwned: preconditionFailure("passkeyOwned backup/restore is not implemented yet")
             case .evmPrivateKey: self = .evmPrivateKey
             case .trcPrivateKey: self = .trcPrivateKey
