@@ -164,6 +164,7 @@ extension MoneroAdapter: IAdapter {
 
     func start() {
         kit.start()
+        balanceState = adapterStateFromKit()
     }
 
     func stop() {
