@@ -1,8 +1,11 @@
-#include "Config.xcconfig"
+#include "../Config.xcconfig"
 
 PRODUCT_BUNDLE_IDENTIFIER = io.horizontalsystems.bank-wallet.dev
 APP_DISPLAY_NAME = Unstoppable D
-CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Development.entitlements
+CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/App/App-Dev.entitlements
 PROVISIONING_PROFILE_SPECIFIER[config=Debug-Dev] = match Development io.horizontalsystems.bank-wallet.dev
 PROVISIONING_PROFILE_SPECIFIER[config=Release-Dev] = match AdHoc io.horizontalsystems.bank-wallet.dev
 ASSETCATALOG_COMPILER_APPICON_NAME = AppIconDev
+
+SHARED_CLOUD_CONTAINER_ID = iCloud.io.horizontalsystems.bank-wallet.shared.dev
+PRIVATE_CLOUD_CONTAINER_ID = iCloud.io.horizontalsystems.bank-wallet.dev

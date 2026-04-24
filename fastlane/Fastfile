@@ -1,6 +1,7 @@
 default_platform(:ios)
 
 APP_ID = ENV["APP_ID"]
+STABLE_APP_ID = ENV["STABLE_APP_ID"]
 TEMP_KEYCHAIN_USER = ENV["TEMP_KEYCHAIN_USER"]
 TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
 APPLE_ISSUER_ID = ENV["APPLE_ISSUER_ID"]
@@ -11,6 +12,7 @@ GIT_AUTHORIZATION = ENV["GIT_AUTHORIZATION"]
 TEAM_ID = "HC4MCAXJ66"
 
 BASE_APP_ID = "io.horizontalsystems.bank-wallet"
+STABLE_BASE_APP_ID = "io.horizontalsystems.stable"
 
 PROD_APP_IDS = [
   BASE_APP_ID,
@@ -24,7 +26,19 @@ DEV_APP_IDS = [
   "#{BASE_APP_ID}.dev.intent"
 ].freeze
 
-ALL_APP_IDS = (PROD_APP_IDS + DEV_APP_IDS).freeze
+STABLE_PROD_APP_IDS = [
+  STABLE_BASE_APP_ID,
+  "#{STABLE_BASE_APP_ID}.widget",
+  "#{STABLE_BASE_APP_ID}.intent"
+].freeze
+
+STABLE_DEV_APP_IDS = [
+  "#{STABLE_BASE_APP_ID}.dev",
+  "#{STABLE_BASE_APP_ID}.dev.widget",
+  "#{STABLE_BASE_APP_ID}.dev.intent"
+].freeze
+
+ALL_APP_IDS = (PROD_APP_IDS + DEV_APP_IDS + STABLE_PROD_APP_IDS + STABLE_DEV_APP_IDS).freeze
 
 MATCH_TYPE_PROFILE_NAMES = {
   'development' => 'Development',
@@ -201,12 +215,54 @@ platform :ios do
     end
   end
 
+  lane :dev_stable do
+    with_temp_keychain do |keychain_name|
+      build_and_sign(
+        match_type: 'adhoc',
+        export_method: 'ad-hoc',
+        app_ids: STABLE_DEV_APP_IDS,
+        scheme: 'App-Stable-Dev',
+        icloud_env: 'Development',
+        keychain_name: keychain_name
+      )
+
+      firebase_app_distribution(
+        app: "1:407994911754:ios:87c194a99fd04dc269e3f3",
+        groups: "dev-testers",
+        release_notes: last_git_commit[:message],
+        service_credentials_json_data: ENV["FIREBASE_CREDENTIALS"]
+      )
+    end
+  end
+
+  lane :release_stable do
+    with_temp_keychain do |keychain_name|
+      build_and_sign(
+        match_type: 'appstore',
+        export_method: 'app-store',
+        app_ids: STABLE_PROD_APP_IDS,
+        scheme: 'App-Stable-Prod',
+        icloud_env: 'Production',
+        keychain_name: keychain_name
+      )
+
+      pilot(
+        apple_id: STABLE_APP_ID,
+        app_identifier: STABLE_BASE_APP_ID,
+        skip_waiting_for_build_processing: true,
+        skip_submission: true,
+        distribute_external: false,
+        notify_external_testers: false
+      )
+    end
+  end
+
   lane :match_readonly do
     %w[development adhoc].each do |type|
       match(type: type, readonly: true, app_identifier: ALL_APP_IDS)
     end
 
-    match(type: 'appstore', readonly: true, app_identifier: PROD_APP_IDS)
+    match(type: 'appstore', readonly: true, app_identifier: PROD_APP_IDS + STABLE_PROD_APP_IDS)
   end
 
   lane :match_generate do |options|
@@ -224,7 +280,7 @@ platform :ios do
       type: 'appstore',
       username: options[:username],
       team_id: TEAM_ID,
-      app_identifier: PROD_APP_IDS
+      app_identifier: PROD_APP_IDS + STABLE_PROD_APP_IDS
     )
   end
 end

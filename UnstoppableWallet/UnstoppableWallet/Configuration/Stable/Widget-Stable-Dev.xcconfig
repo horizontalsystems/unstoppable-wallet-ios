@@ -1,0 +1,6 @@
+#include "../Config.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER = io.horizontalsystems.stable.dev.widget
+CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Stable/Widget-Stable-Dev.entitlements
+PROVISIONING_PROFILE_SPECIFIER[config=Debug-Stable-Dev] = match Development io.horizontalsystems.stable.dev.widget
+PROVISIONING_PROFILE_SPECIFIER[config=Release-Stable-Dev] = match AdHoc io.horizontalsystems.stable.dev.widget

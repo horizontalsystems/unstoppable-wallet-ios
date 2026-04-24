@@ -1,0 +1,3 @@
+PRODUCT_BUNDLE_IDENTIFIER = io.horizontalsystems.stable.dev.intent
+PROVISIONING_PROFILE_SPECIFIER[config=Debug-Stable-Dev] = match Development io.horizontalsystems.stable.dev.intent
+PROVISIONING_PROFILE_SPECIFIER[config=Release-Stable-Dev] = match AdHoc io.horizontalsystems.stable.dev.intent

@@ -1,0 +1,11 @@
+#include "../Config.xcconfig"
+
+PRODUCT_BUNDLE_IDENTIFIER = io.horizontalsystems.stable
+APP_DISPLAY_NAME = Stable
+CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/Stable/App-Stable-Prod.entitlements
+PROVISIONING_PROFILE_SPECIFIER[config=Debug-Stable-Prod] = match Development io.horizontalsystems.stable
+PROVISIONING_PROFILE_SPECIFIER[config=Release-Stable-Prod] = match AppStore io.horizontalsystems.stable
+ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon
+
+SHARED_CLOUD_CONTAINER_ID = iCloud.io.horizontalsystems.stable.shared
+PRIVATE_CLOUD_CONTAINER_ID = iCloud.io.horizontalsystems.stable

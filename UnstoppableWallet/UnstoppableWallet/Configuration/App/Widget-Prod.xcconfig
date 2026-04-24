@@ -1,6 +1,6 @@
-#include "Config.xcconfig"
+#include "../Config.xcconfig"
 
 PRODUCT_BUNDLE_IDENTIFIER = io.horizontalsystems.bank-wallet.widget
-CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/WidgetProd.entitlements
+CODE_SIGN_ENTITLEMENTS = UnstoppableWallet/Configuration/App/Widget-Prod.entitlements
 PROVISIONING_PROFILE_SPECIFIER[config=Debug-Prod] = match Development io.horizontalsystems.bank-wallet.widget
 PROVISIONING_PROFILE_SPECIFIER[config=Release-Prod] = match AppStore io.horizontalsystems.bank-wallet.widget

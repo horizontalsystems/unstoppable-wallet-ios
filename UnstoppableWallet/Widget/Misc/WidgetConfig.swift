@@ -3,7 +3,7 @@ import UIKit
 
 enum WidgetConfig {
     static var marketApiUrl: String {
-        AppFlavor.config.marketApiUrl
+        AppEnvironment.config.marketApiUrl
     }
 
     static var hsProviderApiKey: String? {
