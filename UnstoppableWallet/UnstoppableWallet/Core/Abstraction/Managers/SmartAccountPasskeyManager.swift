@@ -35,9 +35,11 @@ class SmartAccountPasskeyManager: NSObject {
             name: name,
             userID: Data("\(name)::\(UUID().uuidString)".utf8) // new UUID per call — intentional (no overwrite semantics).
         )
-        // .direct strongly requests authData-bearing attestation object. Apple platform authenticator
-        // typically complies, but nil is still handled as AAError.missingAttestation at runtime.
-        request.attestationPreference = .direct
+        // attestationPreference stays at default (.none). Apple platform authenticator rejects
+        // .direct with "Passkeys do not support attestation." (AuthorizationError 1004), and with
+        // .none still returns a rawAttestationObject containing authData with fmt="none" and an
+        // empty attStmt — which is all we need for COSE key extraction. nil is still handled at
+        // runtime as AAError.missingAttestation defensively.
 
         return try await withCheckedThrowingContinuation { continuation in
             registrationContinuation = continuation
@@ -135,6 +137,10 @@ extension SmartAccountPasskeyManager: ASAuthorizationControllerDelegate {
         controller _: ASAuthorizationController,
         didCompleteWithError error: Error
     ) {
+        #if DEBUG
+            let nsError = error as NSError
+            print("[SmartAccountPasskey] didCompleteWithError: \(nsError.domain) code=\(nsError.code) desc=\(nsError.localizedDescription) reason=\(nsError.userInfo[NSLocalizedFailureReasonErrorKey] ?? "nil") userInfo=\(nsError.userInfo)")
+        #endif
         finishAny(with: Self.map(error: error))
     }
 
