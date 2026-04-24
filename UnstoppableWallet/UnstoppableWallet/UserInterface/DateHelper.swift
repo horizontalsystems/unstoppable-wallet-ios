@@ -1,4 +1,4 @@
-import UIKit
+import Foundation
 
 class DateHelper {
     static let instance = DateHelper()
