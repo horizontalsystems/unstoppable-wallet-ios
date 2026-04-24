@@ -6,9 +6,6 @@ class SmartAccountProfileRecord: Record {
     let accountId: String
     let address: String
     let implementationVersion: String
-    let verificationFacet: String
-    let factoryAddress: String
-    let entryPoint: String
     let ownerPublicKeyX: String
     let ownerPublicKeyY: String
     let salt: String
@@ -19,9 +16,6 @@ class SmartAccountProfileRecord: Record {
         accountId: String,
         address: String,
         implementationVersion: String,
-        verificationFacet: String,
-        factoryAddress: String,
-        entryPoint: String,
         ownerPublicKeyX: String,
         ownerPublicKeyY: String,
         salt: String,
@@ -31,9 +25,6 @@ class SmartAccountProfileRecord: Record {
         self.accountId = accountId
         self.address = address
         self.implementationVersion = implementationVersion
-        self.verificationFacet = verificationFacet
-        self.factoryAddress = factoryAddress
-        self.entryPoint = entryPoint
         self.ownerPublicKeyX = ownerPublicKeyX
         self.ownerPublicKeyY = ownerPublicKeyY
         self.salt = salt
@@ -47,8 +38,8 @@ class SmartAccountProfileRecord: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case id, accountId, address, implementationVersion, verificationFacet,
-             factoryAddress, entryPoint, ownerPublicKeyX, ownerPublicKeyY, salt, createdAt
+        case id, accountId, address, implementationVersion,
+             ownerPublicKeyX, ownerPublicKeyY, salt, createdAt
     }
 
     required init(row: Row) throws {
@@ -56,9 +47,6 @@ class SmartAccountProfileRecord: Record {
         accountId = row[Columns.accountId]
         address = row[Columns.address]
         implementationVersion = row[Columns.implementationVersion]
-        verificationFacet = row[Columns.verificationFacet]
-        factoryAddress = row[Columns.factoryAddress]
-        entryPoint = row[Columns.entryPoint]
         ownerPublicKeyX = row[Columns.ownerPublicKeyX]
         ownerPublicKeyY = row[Columns.ownerPublicKeyY]
         salt = row[Columns.salt]
@@ -72,9 +60,6 @@ class SmartAccountProfileRecord: Record {
         container[Columns.accountId] = accountId
         container[Columns.address] = address
         container[Columns.implementationVersion] = implementationVersion
-        container[Columns.verificationFacet] = verificationFacet
-        container[Columns.factoryAddress] = factoryAddress
-        container[Columns.entryPoint] = entryPoint
         container[Columns.ownerPublicKeyX] = ownerPublicKeyX
         container[Columns.ownerPublicKeyY] = ownerPublicKeyY
         container[Columns.salt] = salt
