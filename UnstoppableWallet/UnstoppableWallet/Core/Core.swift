@@ -57,6 +57,7 @@ class Core {
     let subscriptionManager: SubscriptionManager
 
     let accountManager: AccountManager
+    let smartAccountManager: SmartAccountManager
     let accountRestoreWarningManager: AccountRestoreWarningManager
     let accountFactory: AccountFactory
     let backupManager: BackupManager
@@ -131,9 +132,9 @@ class Core {
     let swapHistoryManager: SwapHistoryManager
 
     init() throws {
-        let databaseURL = try FileManager.default
+        let databaseDirectoryURL = try FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
-            .appendingPathComponent("bank.sqlite")
+        let databaseURL = databaseDirectoryURL.appendingPathComponent("bank.sqlite")
         let dbPool = try DatabasePool(path: databaseURL.path)
 
         let logRecordStorage = LogRecordStorage(dbPool: dbPool)
@@ -193,6 +194,7 @@ class Core {
         let accountStorage = AccountStorage(keychainStorage: keychainStorage, storage: accountRecordStorage)
         let activeAccountStorage = ActiveAccountStorage(dbPool: dbPool)
         accountManager = AccountManager(passcodeManager: passcodeManager, accountStorage: accountStorage, activeAccountStorage: activeAccountStorage)
+        smartAccountManager = try SmartAccountManager(accountManager: accountManager, databaseDirectoryUrl: databaseDirectoryURL)
         accountRestoreWarningManager = AccountRestoreWarningManager(accountManager: accountManager, userDefaultsStorage: userDefaultsStorage)
         accountFactory = AccountFactory(accountManager: accountManager)
         backupManager = BackupManager(accountManager: accountManager)

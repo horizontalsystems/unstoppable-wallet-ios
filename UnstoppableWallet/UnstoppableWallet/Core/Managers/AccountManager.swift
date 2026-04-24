@@ -92,6 +92,14 @@ extension AccountManager {
         storage.accounts
     }
 
+    // TODO: temporary — added for SmartAccountManager startup orphan repair (Part 7). Either move the
+    // repair logic inside storage (direct allAccounts access there), or stop exposing smart-accounts
+    // via AccountManager entirely so smart accounts live only behind SmartAccountManager. Remove this
+    // getter once one of those refactors lands.
+    var allAccounts: [Account] {
+        storage.allAccounts
+    }
+
     func account(id: String) -> Account? {
         storage.account(id: id)
     }
