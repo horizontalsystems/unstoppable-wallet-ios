@@ -1013,6 +1013,7 @@ extension USwapMultiSwapProvider {
         case stealthex = "STEALTHEX"
         case swapuz = "SWAPUZ"
         case exolix = "EXOLIX"
+        case cce = "CCE"
         case barter = "BARTER"
 
         var icon: String {
@@ -1023,6 +1024,7 @@ extension USwapMultiSwapProvider {
             case .stealthex: return "swap_provider_stealthex"
             case .swapuz: return "swap_provider_swapuz"
             case .exolix: return "swap_provider_exolix"
+            case .cce: return "swap_provider_cce"
             case .barter: return "swap_provider_barter"
             }
         }
@@ -1035,14 +1037,15 @@ extension USwapMultiSwapProvider {
             case .stealthex: return "StealthEX"
             case .swapuz: return "Swapuz"
             case .exolix: return "Exolix"
+            case .cce: return "CCE Cash"
             case .barter: return "Barter"
             }
         }
 
         var type: SwapProviderType {
             switch self {
-            case .swapuz: return .flexible
-            case .letsExchange, .stealthex, .near, .exolix, .barter: return .controlled
+            case .swapuz, .exolix, .cce: return .flexible
+            case .letsExchange, .stealthex, .near, .barter: return .controlled
             case .quickEx: return .preCheck
             }
         }
