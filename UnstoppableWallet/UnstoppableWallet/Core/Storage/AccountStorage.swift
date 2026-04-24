@@ -39,6 +39,15 @@ class AccountStorage {
             )
 
             type = .mnemonic(words: words, salt: salt, bip39Compliant: compliant)
+        case .passkeyOwned:
+            guard let credentialID = recoverData(id: id, typeName: typeName, keyName: .words),
+                  let publicKeyX = recoverData(id: id, typeName: typeName, keyName: .salt),
+                  let publicKeyY = recoverData(id: id, typeName: typeName, keyName: .data)
+            else {
+                return nil
+            }
+
+            type = .passkeyOwned(credentialID: credentialID, publicKeyX: publicKeyX, publicKeyY: publicKeyY)
         case .evmPrivateKey:
             guard let data = recoverData(id: id, typeName: typeName, keyName: .data) else {
                 return nil
@@ -139,6 +148,12 @@ class AccountStorage {
             wordsKey = try store(stringArray: words, id: id, typeName: typeName, keyName: .words)
             saltKey = try store(salt, id: id, typeName: typeName, keyName: .salt)
             bip39Compliant = compliant
+        case let .passkeyOwned(credentialID, publicKeyX, publicKeyY):
+            typeName = .passkeyOwned
+            // These values are public account metadata and can be moved out of keychain later if we want watch-like storage.
+            wordsKey = try store(data: credentialID, id: id, typeName: typeName, keyName: .words)
+            saltKey = try store(data: publicKeyX, id: id, typeName: typeName, keyName: .salt)
+            dataKey = try store(data: publicKeyY, id: id, typeName: typeName, keyName: .data)
         case let .evmPrivateKey(data):
             typeName = .evmPrivateKey
             dataKey = try store(data: data, id: id, typeName: typeName, keyName: .data)
@@ -196,6 +211,10 @@ class AccountStorage {
         case .mnemonic:
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .words))
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .salt))
+        case .passkeyOwned:
+            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .passkeyOwned, keyName: .words))
+            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .passkeyOwned, keyName: .salt))
+            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .passkeyOwned, keyName: .data))
         case .evmPrivateKey:
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .evmPrivateKey, keyName: .data))
         case .trcPrivateKey:
@@ -292,6 +311,7 @@ extension AccountStorage {
 extension AccountStorage {
     private enum TypeName: String {
         case mnemonic
+        case passkeyOwned
         case evmPrivateKey
         case trcPrivateKey
         case stellarSecretKey
