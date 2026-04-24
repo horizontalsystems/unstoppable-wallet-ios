@@ -8,6 +8,7 @@ import TronKit
 
 enum AccountType: Identifiable {
     case mnemonic(words: [String], salt: String, bip39Compliant: Bool)
+    case passkeyOwned(credentialID: Data, publicKeyX: Data, publicKeyY: Data)
     case evmPrivateKey(data: Data)
     case trcPrivateKey(data: Data)
     case stellarSecretKey(secretSeed: String)
@@ -47,6 +48,8 @@ enum AccountType: Identifiable {
             }
 
             privateData = description.data(using: .utf8) ?? Data() // always non-null
+        case let .passkeyOwned(credentialID, publicKeyX, publicKeyY):
+            privateData = credentialID + publicKeyX + publicKeyY
         case let .evmPrivateKey(data):
             privateData = data
         case let .trcPrivateKey(data):
@@ -122,6 +125,17 @@ enum AccountType: Identifiable {
             default:
                 return false
             }
+        case .passkeyOwned:
+            guard case let .eip20(address) = token.type else {
+                return false
+            }
+
+            switch (token.blockchainType, address.lowercased()) {
+            case (.ethereum, "0xdac17f958d2ee523a2206206994597c13d831ec7"): return true
+            case (.ethereum, "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"): return true
+            case (.binanceSmartChain, "0x55d398326f99059ff775485246999027b3197955"): return true
+            default: return false
+            }
         case .evmPrivateKey, .evmAddress:
             switch (token.blockchainType, token.type) {
             case (.ethereum, .native), (.ethereum, .eip20): return true
@@ -184,6 +198,8 @@ enum AccountType: Identifiable {
         case let .mnemonic(words, salt, _):
             let count = "\(words.count)"
             return salt.isEmpty ? "manage_accounts.n_words".localized(count) : "manage_accounts.n_words_with_passphrase".localized(count)
+        case .passkeyOwned:
+            return "Smart Wallet"
         case .evmPrivateKey:
             return "EVM Private Key"
         case .trcPrivateKey:
@@ -224,6 +240,8 @@ enum AccountType: Identifiable {
         case let .mnemonic(words, salt, _):
             let count = "\(words.count)"
             return salt.isEmpty ? "mnemonic_\(count)" : "mnemonic_with_passphrase_\(count)"
+        case .passkeyOwned:
+            return "passkey_owned"
         case .evmPrivateKey:
             return "evm_private_key"
         case .trcPrivateKey:
@@ -261,6 +279,8 @@ enum AccountType: Identifiable {
 
     var watchAddress: String? {
         switch self {
+        case .passkeyOwned:
+            return nil
         case let .evmAddress(address):
             return address.eip55
         case let .tronAddress(address):
@@ -318,6 +338,8 @@ enum AccountType: Identifiable {
             }
 
             return try? EvmKit.Signer.address(seed: mnemonicSeed, chain: chain)
+        case .passkeyOwned:
+            return nil
         case let .evmPrivateKey(data):
             return EvmKit.Signer.address(privateKey: data)
         default:
@@ -333,6 +355,8 @@ enum AccountType: Identifiable {
             }
 
             return try? TronKit.Signer.address(seed: mnemonicSeed)
+        case .passkeyOwned:
+            return nil
         case let .trcPrivateKey(data):
             return try? TronKit.Signer.address(privateKey: data)
         default:
@@ -354,6 +378,8 @@ enum AccountType: Identifiable {
             }
 
             return try? EvmKit.Kit.sign(message: message, privateKey: privateKey, isLegacy: isLegacy)
+        case .passkeyOwned:
+            return nil
         case let .evmPrivateKey(data):
             return try? EvmKit.Kit.sign(message: message, privateKey: data, isLegacy: isLegacy)
         default:
@@ -439,6 +465,7 @@ extension AccountType {
         case evmPrivateKey = "private_key"
         case trcPrivateKey = "tron_private_key"
         case stellarSecretKey = "stellar_secret_key"
+        // TODO(v3): add `passkeyOwned = "passkey_owned"` when backup/restore support is implemented.
         case evmAddress = "evm_address"
         case tronAddress = "tron_address"
         case tonAddress = "ton_address"
@@ -450,6 +477,7 @@ extension AccountType {
         init(_ type: AccountType) {
             switch type {
             case .mnemonic: self = .mnemonic
+            case .passkeyOwned: preconditionFailure("passkeyOwned backup/restore is not implemented yet")
             case .evmPrivateKey: self = .evmPrivateKey
             case .trcPrivateKey: self = .trcPrivateKey
             case .stellarSecretKey: self = .stellarSecretKey
@@ -470,6 +498,8 @@ extension AccountType: Hashable {
         switch (lhs, rhs) {
         case (let .mnemonic(lhsWords, lhsSalt, lhsBip39Compliant), let .mnemonic(rhsWords, rhsSalt, rhsBip39Compliant)):
             return lhsWords == rhsWords && lhsSalt == rhsSalt && lhsBip39Compliant == rhsBip39Compliant
+        case let (.passkeyOwned(lhsCredentialID, lhsPublicKeyX, lhsPublicKeyY), .passkeyOwned(rhsCredentialID, rhsPublicKeyX, rhsPublicKeyY)):
+            return lhsCredentialID == rhsCredentialID && lhsPublicKeyX == rhsPublicKeyX && lhsPublicKeyY == rhsPublicKeyY
         case let (.evmPrivateKey(lhsData), .evmPrivateKey(rhsData)):
             return lhsData == rhsData
         case let (.trcPrivateKey(lhsData), .trcPrivateKey(rhsData)):
@@ -501,6 +531,11 @@ extension AccountType: Hashable {
             hasher.combine(words)
             hasher.combine(salt)
             hasher.combine(bip39Compliant)
+        case let .passkeyOwned(credentialID, publicKeyX, publicKeyY):
+            hasher.combine("passkeyOwned")
+            hasher.combine(credentialID)
+            hasher.combine(publicKeyX)
+            hasher.combine(publicKeyY)
         case let .evmPrivateKey(data):
             hasher.combine("evmPrivateKey")
             hasher.combine(data)

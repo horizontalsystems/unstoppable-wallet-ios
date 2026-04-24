@@ -13,7 +13,7 @@ extension PublicKeysService {
 
     var evmAddressSupported: Bool {
         switch account.type {
-        case .mnemonic, .evmPrivateKey, .evmAddress: return true
+        case .mnemonic, .passkeyOwned, .evmPrivateKey, .evmAddress: return true
         default: return false
         }
     }

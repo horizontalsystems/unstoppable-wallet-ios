@@ -116,6 +116,13 @@ extension BlockchainType {
         switch accountType {
         case .mnemonic:
             return true
+        case .passkeyOwned:
+            switch self {
+            case .ethereum, .binanceSmartChain:
+                return true
+            default:
+                return false
+            }
         case let .hdExtendedKey(key):
             switch self {
             case .bitcoin: return key.coinTypes.contains(where: { $0 == .bitcoin })

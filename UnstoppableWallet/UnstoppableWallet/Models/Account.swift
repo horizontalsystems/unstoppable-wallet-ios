@@ -23,6 +23,8 @@ class Account: Identifiable {
         switch type {
         case .evmAddress, .tronAddress, .tonAddress, .stellarAccount, .btcAddress, .moneroWatchAccount:
             return true
+        case .passkeyOwned:
+            return false
         case let .hdExtendedKey(key):
             switch key {
             case .public: return true

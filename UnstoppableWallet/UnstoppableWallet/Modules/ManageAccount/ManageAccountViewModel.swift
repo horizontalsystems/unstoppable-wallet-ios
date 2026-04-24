@@ -58,7 +58,7 @@ extension ManageAccountViewModel {
 
     var publicKeysVisible: Bool {
         switch account.type {
-        case .mnemonic, .evmPrivateKey, .trcPrivateKey, .hdExtendedKey: return true
+        case .mnemonic, .passkeyOwned, .evmPrivateKey, .trcPrivateKey, .hdExtendedKey: return true
         default: return false
         }
     }
