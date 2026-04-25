@@ -12,6 +12,14 @@ enum BarzAddressResolver {
         case unsupportedChain
     }
 
+    static func blockchainType(chain: EvmKit.Chain) -> BlockchainType? {
+        switch chain.id {
+        case EvmKit.Chain.ethereum.id: return .ethereum
+        case EvmKit.Chain.binanceSmartChain.id: return .binanceSmartChain
+        default: return nil
+        }
+    }
+
     static func resolveLocally(
         publicKeyX: Data,
         publicKeyY: Data,

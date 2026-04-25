@@ -11,7 +11,7 @@ class AccountManager {
     private let accountUpdatedSubject = PassthroughSubject<Account, Never>()
     private let accountDeletedSubject = PassthroughSubject<Account, Never>()
 
-    private var lastCreatedAccount: Account?
+    private(set) var lastCreatedAccount: Account?
 
     @PostPublished var lostAccountRecords: [AccountRecord]?
 

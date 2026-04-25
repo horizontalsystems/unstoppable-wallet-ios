@@ -338,8 +338,15 @@ enum AccountType: Identifiable {
             }
 
             return try? EvmKit.Signer.address(seed: mnemonicSeed, chain: chain)
-        case .passkeyOwned:
-            return nil
+        case let .passkeyOwned(_, publicKeyX, publicKeyY):
+            guard let blockchainType = BarzAddressResolver.blockchainType(chain: chain) else {
+                return nil
+            }
+            return try? BarzAddressResolver.resolveLocally(
+                publicKeyX: publicKeyX,
+                publicKeyY: publicKeyY,
+                blockchainType: blockchainType
+            )
         case let .evmPrivateKey(data):
             return EvmKit.Signer.address(privateKey: data)
         default:
