@@ -2,6 +2,15 @@ import MarketKit
 
 enum TransactionServiceFactory {
     static func transactionService(baseToken: Token, initialTransactionSettings: InitialTransactionSettings?) -> ITransactionService? {
+        let activeAccount = Core.shared.accountManager.activeAccount
+
+        if let activeAccount, case .passkeyOwned = activeAccount.type,
+           EvmBlockchainManager.blockchainTypes.contains(baseToken.blockchainType),
+           let aaService = AaTransactionService(blockchainType: baseToken.blockchainType, account: activeAccount, initialTransactionSettings: initialTransactionSettings)
+        {
+            return aaService
+        }
+
         if EvmBlockchainManager.blockchainTypes.contains(baseToken.blockchainType),
            let evmKit = try? Core.shared.evmBlockchainManager.evmKitManager(blockchainType: baseToken.blockchainType).evmKitWrapper?.evmKit,
            let transactionService = EvmTransactionService(blockchainType: baseToken.blockchainType, evmKit: evmKit, initialTransactionSettings: initialTransactionSettings)

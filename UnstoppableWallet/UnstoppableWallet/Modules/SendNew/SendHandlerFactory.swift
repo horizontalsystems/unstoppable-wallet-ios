@@ -3,7 +3,11 @@ import MarketKit
 enum SendHandlerFactory {
     static func handler(sendData: SendData) -> ISendHandler? {
         switch sendData {
-        case let .evm(blockchainType, transactionData, _):
+        case let .evm(blockchainType, transactionData, token):
+            let activeAccount = Core.shared.accountManager.activeAccount
+            if let activeAccount, case .passkeyOwned = activeAccount.type {
+                return AaSendHandler.instance(blockchainType: blockchainType, transactionData: transactionData, token: token, account: activeAccount)
+            }
             return EvmSendHandler.instance(blockchainType: blockchainType, transactionData: transactionData)
         case let .bitcoin(token, params):
             return BitcoinSendHandler.instance(token: token, params: params)

@@ -16,6 +16,9 @@
 		6B94D8C92F9CD94C0042CCD6 /* PimlicoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B94D8C72F9CD94C0042CCD6 /* PimlicoProvider.swift */; };
 		6B94D8CA2F9CD94C0042CCD6 /* PasskeyUserOpSigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B94D8C62F9CD94C0042CCD6 /* PasskeyUserOpSigner.swift */; };
 		6B94D8CB2F9CD94C0042CCD6 /* AaSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B94D8C52F9CD94C0042CCD6 /* AaSender.swift */; };
+		6B94D8CF2F9CF63D0042CCD6 /* AaTransactionService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B94D8CE2F9CF63D0042CCD6 /* AaTransactionService.swift */; };
+		6B94D8D02F9CF63D0042CCD6 /* AaSendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B94D8CC2F9CF63D0042CCD6 /* AaSendData.swift */; };
+		6B94D8D12F9CF63D0042CCD6 /* AaSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B94D8CD2F9CF63D0042CCD6 /* AaSendHandler.swift */; };
 		6BDBD3692F9B44D500440BE0 /* EntryPointVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD35D2F9B44D500440BE0 /* EntryPointVersion.swift */; };
 		6BDBD36A2F9B44D500440BE0 /* ChainAddresses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3572F9B44D500440BE0 /* ChainAddresses.swift */; };
 		6BDBD36B2F9B44D500440BE0 /* PaymasterAndData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD35F2F9B44D500440BE0 /* PaymasterAndData.swift */; };
@@ -2910,6 +2913,9 @@
 		6B94D8C52F9CD94C0042CCD6 /* AaSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AaSender.swift; sourceTree = "<group>"; };
 		6B94D8C62F9CD94C0042CCD6 /* PasskeyUserOpSigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasskeyUserOpSigner.swift; sourceTree = "<group>"; };
 		6B94D8C72F9CD94C0042CCD6 /* PimlicoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PimlicoProvider.swift; sourceTree = "<group>"; };
+		6B94D8CC2F9CF63D0042CCD6 /* AaSendData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AaSendData.swift; sourceTree = "<group>"; };
+		6B94D8CD2F9CF63D0042CCD6 /* AaSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AaSendHandler.swift; sourceTree = "<group>"; };
+		6B94D8CE2F9CF63D0042CCD6 /* AaTransactionService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AaTransactionService.swift; sourceTree = "<group>"; };
 		6B954B202F3C8EAA008A1A16 /* RestoreBackupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreBackupListView.swift; sourceTree = "<group>"; };
 		6B954B232F3EE47B008A1A16 /* RestorePassphraseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePassphraseView.swift; sourceTree = "<group>"; };
 		6B954B262F3F1580008A1A16 /* RestoreTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreTypeView.swift; sourceTree = "<group>"; };
@@ -6636,6 +6642,9 @@
 		6B94D8C82F9CD94C0042CCD6 /* Send */ = {
 			isa = PBXGroup;
 			children = (
+				6B94D8CC2F9CF63D0042CCD6 /* AaSendData.swift */,
+				6B94D8CD2F9CF63D0042CCD6 /* AaSendHandler.swift */,
+				6B94D8CE2F9CF63D0042CCD6 /* AaTransactionService.swift */,
 				6B94D8C52F9CD94C0042CCD6 /* AaSender.swift */,
 				6B94D8C62F9CD94C0042CCD6 /* PasskeyUserOpSigner.swift */,
 				6B94D8C72F9CD94C0042CCD6 /* PimlicoProvider.swift */,
@@ -9848,6 +9857,9 @@
 				D33D67AA2F98F2CF00E16ADA /* InputSecondaryCircleButtonWrapperView.swift in Sources */,
 				D33D67AB2F98F2CF00E16ADA /* RecoveryPhraseModule.swift in Sources */,
 				D33D67AC2F98F2CF00E16ADA /* WalletView.swift in Sources */,
+				6B94D8CF2F9CF63D0042CCD6 /* AaTransactionService.swift in Sources */,
+				6B94D8D02F9CF63D0042CCD6 /* AaSendData.swift in Sources */,
+				6B94D8D12F9CF63D0042CCD6 /* AaSendHandler.swift in Sources */,
 				D33D67AD2F98F2CF00E16ADA /* WatchView.swift in Sources */,
 				D33D67AE2F98F2CF00E16ADA /* RecoveryPhraseViewController.swift in Sources */,
 				D33D67AF2F98F2CF00E16ADA /* RecoveryPhraseViewModel.swift in Sources */,
