@@ -163,7 +163,9 @@
 	<string>${OPTIMISM_ETHERSCAN_API_KEYS}</string>
     <key>PimlicoApiKey</key>
     <string>${PIMLICO_API_KEY}</string>
-	<key>PolygonscanApiKeys</key>
+    <key>PimlicoSponsorshipPolicyId</key>
+    <string>$(PIMLICO_SPONSORSHIP_POLICY_ID)</string>
+    <key>PolygonscanApiKeys</key>
 	<string>${POLYGONSCAN_API_KEYS}</string>
 	<key>SnowtraceApiKeys</key>
 	<string>${SNOWTRACE_API_KEYS}</string>

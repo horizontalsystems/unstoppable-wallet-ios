@@ -17,10 +17,11 @@ class PimlicoProvider {
     private let networkManager: NetworkManager
     private let blockchainType: BlockchainType
     private let entryPoint: EvmKit.Address
+    private let sponsorshipPolicyId: String?
     private let url: URL
     private let headers: HTTPHeaders
 
-    init(networkManager: NetworkManager, blockchainType: BlockchainType, entryPoint: EvmKit.Address, apiKey: String) throws {
+    init(networkManager: NetworkManager, blockchainType: BlockchainType, entryPoint: EvmKit.Address, apiKey: String, sponsorshipPolicyId: String?) throws {
         guard let chain = try? Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType) else {
             throw ProviderError.unsupportedChain
         }
@@ -31,6 +32,7 @@ class PimlicoProvider {
         self.networkManager = networkManager
         self.blockchainType = blockchainType
         self.entryPoint = entryPoint
+        self.sponsorshipPolicyId = sponsorshipPolicyId
         self.url = url
         headers = HTTPHeaders([HTTPHeader(name: "Content-Type", value: "application/json")])
     }
@@ -89,7 +91,9 @@ extension PimlicoProvider {
         var context: [String: Any] = [:]
         switch mode {
         case .verifying:
-            break
+            if let sponsorshipPolicyId {
+                context["sponsorshipPolicyId"] = sponsorshipPolicyId
+            }
         case let .erc20(token):
             context["token"] = token.eip55
         }
