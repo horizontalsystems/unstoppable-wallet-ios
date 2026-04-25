@@ -2458,6 +2458,8 @@
 "new_wallet.standard.description" = "Create a wallet with a recovery phrase for full control and flexibility.";
 "new_wallet.passkey" = "Passkey";
 "new_wallet.passkey.description" = "Create a wallet secured by your device and iCloud for easy access.";
+"new_wallet.smart_account" = "Smart Account";
+"new_wallet.smart_account.description" = "Passkey-backed wallet with gas sponsorship.";
 
 // Wallet Names
 
