@@ -18,6 +18,7 @@ class AaSender {
     private let codeProvider: EvmCodeProvider
     private let passkeyManager: SmartAccountPasskeyManager
     private let smartAccountManager: SmartAccountManager
+    private let decorator = EvmDecorator()
 
     init(
         blockchainType: BlockchainType,
@@ -153,6 +154,13 @@ extension AaSender {
 
         let userOpHash = PackedUserOperation.hash(userOp: finalUserOp, entryPoint: entryPoint, chainId: chainId)
 
+        let transactionDecoration = evmKit.decorate(transactionData: transactionData)
+        let decoration = decorator.decorate(
+            baseToken: baseToken,
+            transactionData: transactionData,
+            transactionDecoration: transactionDecoration
+        )
+
         return PreparedUserOp(
             userOp: finalUserOp,
             userOpHash: userOpHash,
@@ -160,7 +168,8 @@ extension AaSender {
             gasEstimate: gasEstimate,
             gasPrices: resolvedGas,
             paymasterMode: paymasterMode,
-            baseToken: baseToken
+            baseToken: baseToken,
+            decoration: decoration
         )
     }
 
@@ -218,6 +227,7 @@ struct PreparedUserOp {
     let gasPrices: PimlicoProvider.GasPrices.Tier
     let paymasterMode: PimlicoProvider.PaymasterMode
     let baseToken: Token
+    let decoration: EvmDecoration
 }
 
 // MARK: - Private helpers

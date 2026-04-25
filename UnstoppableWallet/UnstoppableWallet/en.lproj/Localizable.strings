@@ -468,6 +468,9 @@
 "send.confirmation.memo" = "Memo";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.fee" = "Fee";
+"send.confirmation.fee_sponsored" = "Sponsored";
+"send.confirmation.fee_paid_in" = "Paid in %@";
+"send.confirmation.aa_first_deploy" = "First transaction will deploy the smart account contract.";
 "send.confirmation.time_lock" = "Time Lock";
 "send.confirmation.replace_by_fee" = "Replace by Fee";
 "send.confirmation.replaced_transactions" = "Replaced Transactions";
