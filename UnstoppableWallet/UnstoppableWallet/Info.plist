@@ -161,6 +161,8 @@
 	<string>${OPEN_SEA_API_KEY}</string>
 	<key>OptimismEtherscanApiKeys</key>
 	<string>${OPTIMISM_ETHERSCAN_API_KEYS}</string>
+    <key>PimlicoApiKey</key>
+    <string>${PIMLICO_API_KEY}</string>
 	<key>PolygonscanApiKeys</key>
 	<string>${POLYGONSCAN_API_KEYS}</string>
 	<key>SnowtraceApiKeys</key>

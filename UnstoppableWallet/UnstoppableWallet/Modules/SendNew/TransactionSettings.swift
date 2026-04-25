@@ -1,3 +1,4 @@
+import BigInt
 import EvmKit
 import MoneroKit
 
@@ -5,6 +6,7 @@ enum TransactionSettings {
     case evm(gasPriceData: GasPriceData, nonce: Int?)
     case bitcoin(satoshiPerByte: Int)
     case monero(priority: MoneroKit.SendPriority)
+    case aa(maxFeePerGas: BigUInt, maxPriorityFeePerGas: BigUInt, nonce: BigUInt)
 
     var gasPriceData: GasPriceData? {
         switch self {

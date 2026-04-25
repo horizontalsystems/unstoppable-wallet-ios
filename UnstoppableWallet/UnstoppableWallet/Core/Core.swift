@@ -58,6 +58,7 @@ class Core {
 
     let accountManager: AccountManager
     let smartAccountManager: SmartAccountManager
+    let smartAccountPasskeyManager: SmartAccountPasskeyManager
     let accountRestoreWarningManager: AccountRestoreWarningManager
     let accountFactory: AccountFactory
     let backupManager: BackupManager
@@ -195,6 +196,7 @@ class Core {
         let activeAccountStorage = ActiveAccountStorage(dbPool: dbPool)
         accountManager = AccountManager(passcodeManager: passcodeManager, accountStorage: accountStorage, activeAccountStorage: activeAccountStorage)
         smartAccountManager = try SmartAccountManager(accountManager: accountManager, databaseDirectoryUrl: databaseDirectoryURL)
+        smartAccountPasskeyManager = SmartAccountPasskeyManager()
         accountRestoreWarningManager = AccountRestoreWarningManager(accountManager: accountManager, userDefaultsStorage: userDefaultsStorage)
         accountFactory = AccountFactory(accountManager: accountManager)
         backupManager = BackupManager(accountManager: accountManager)

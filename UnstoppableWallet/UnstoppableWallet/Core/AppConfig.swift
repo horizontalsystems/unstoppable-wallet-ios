@@ -150,6 +150,10 @@ enum AppConfig {
         (Bundle.main.object(forInfoDictionaryKey: "OneInchApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
 
+    static var pimlicoApiKey: String? {
+        (Bundle.main.object(forInfoDictionaryKey: "PimlicoApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
+    }
+
     static var oneInchCommissionAddress: String? {
         (Bundle.main.object(forInfoDictionaryKey: "OneInchCommissionAddress") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }

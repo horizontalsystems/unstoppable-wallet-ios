@@ -90,7 +90,7 @@ extension Eip20Adapter: IApproveDataProvider {
         let address = try EvmKit.Address(hex: spenderAddress.raw)
         let transactionData = eip20Kit.approveTransactionData(spenderAddress: address, amount: amount)
 
-        return .evm(blockchainType: token.blockchainType, transactionData: transactionData)
+        return .evm(blockchainType: token.blockchainType, transactionData: transactionData, token: token)
     }
 }
 
