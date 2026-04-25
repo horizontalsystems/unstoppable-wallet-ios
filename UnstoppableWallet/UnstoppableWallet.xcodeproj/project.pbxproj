@@ -12,6 +12,10 @@
 		6B94D8B32F9BAEB30042CCD6 /* SmartAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B94D8B22F9BAEB30042CCD6 /* SmartAccountManager.swift */; };
 		6B94D8BC2F9BC3C00042CCD6 /* CreateSmartAccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B94D8BA2F9BC3C00042CCD6 /* CreateSmartAccountService.swift */; };
 		6B94D8BF2F9BC4500042CCD6 /* StablecoinRegistry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B94D8BD2F9BC4500042CCD6 /* StablecoinRegistry.swift */; };
+		6B94D8C42F9CD9430042CCD6 /* EvmCodeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B94D8C22F9CD9430042CCD6 /* EvmCodeProvider.swift */; };
+		6B94D8C92F9CD94C0042CCD6 /* PimlicoProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B94D8C72F9CD94C0042CCD6 /* PimlicoProvider.swift */; };
+		6B94D8CA2F9CD94C0042CCD6 /* PasskeyUserOpSigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B94D8C62F9CD94C0042CCD6 /* PasskeyUserOpSigner.swift */; };
+		6B94D8CB2F9CD94C0042CCD6 /* AaSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B94D8C52F9CD94C0042CCD6 /* AaSender.swift */; };
 		6BDBD3692F9B44D500440BE0 /* EntryPointVersion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD35D2F9B44D500440BE0 /* EntryPointVersion.swift */; };
 		6BDBD36A2F9B44D500440BE0 /* ChainAddresses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD3572F9B44D500440BE0 /* ChainAddresses.swift */; };
 		6BDBD36B2F9B44D500440BE0 /* PaymasterAndData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BDBD35F2F9B44D500440BE0 /* PaymasterAndData.swift */; };
@@ -2902,6 +2906,10 @@
 		6B94D8B22F9BAEB30042CCD6 /* SmartAccountManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartAccountManager.swift; sourceTree = "<group>"; };
 		6B94D8BA2F9BC3C00042CCD6 /* CreateSmartAccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateSmartAccountService.swift; sourceTree = "<group>"; };
 		6B94D8BD2F9BC4500042CCD6 /* StablecoinRegistry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StablecoinRegistry.swift; sourceTree = "<group>"; };
+		6B94D8C22F9CD9430042CCD6 /* EvmCodeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EvmCodeProvider.swift; sourceTree = "<group>"; };
+		6B94D8C52F9CD94C0042CCD6 /* AaSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AaSender.swift; sourceTree = "<group>"; };
+		6B94D8C62F9CD94C0042CCD6 /* PasskeyUserOpSigner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PasskeyUserOpSigner.swift; sourceTree = "<group>"; };
+		6B94D8C72F9CD94C0042CCD6 /* PimlicoProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PimlicoProvider.swift; sourceTree = "<group>"; };
 		6B954B202F3C8EAA008A1A16 /* RestoreBackupListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreBackupListView.swift; sourceTree = "<group>"; };
 		6B954B232F3EE47B008A1A16 /* RestorePassphraseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestorePassphraseView.swift; sourceTree = "<group>"; };
 		6B954B262F3F1580008A1A16 /* RestoreTypeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestoreTypeView.swift; sourceTree = "<group>"; };
@@ -6617,6 +6625,24 @@
 			path = Config;
 			sourceTree = "<group>";
 		};
+		6B94D8C32F9CD9430042CCD6 /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				6B94D8C22F9CD9430042CCD6 /* EvmCodeProvider.swift */,
+			);
+			path = Providers;
+			sourceTree = "<group>";
+		};
+		6B94D8C82F9CD94C0042CCD6 /* Send */ = {
+			isa = PBXGroup;
+			children = (
+				6B94D8C52F9CD94C0042CCD6 /* AaSender.swift */,
+				6B94D8C62F9CD94C0042CCD6 /* PasskeyUserOpSigner.swift */,
+				6B94D8C72F9CD94C0042CCD6 /* PimlicoProvider.swift */,
+			);
+			path = Send;
+			sourceTree = "<group>";
+		};
 		6B954B372F441F33008A1A16 /* Backup */ = {
 			isa = PBXGroup;
 			children = (
@@ -6908,6 +6934,8 @@
 			children = (
 				6B94D8BE2F9BC4500042CCD6 /* Config */,
 				6BDBD3AE2F9B974600440BE0 /* Models */,
+				6B94D8C32F9CD9430042CCD6 /* Providers */,
+				6B94D8C82F9CD94C0042CCD6 /* Send */,
 				6BDBD3B32F9B974600440BE0 /* Storage */,
 				6BDBD35A2F9B44D500440BE0 /* Contracts */,
 				6BDBD35C2F9B44D500440BE0 /* Errors */,
@@ -10001,6 +10029,9 @@
 				D33D685E2F98F2CF00E16ADA /* EvmFeeService.swift in Sources */,
 				D33D685F2F98F2CF00E16ADA /* EvmFeeViewItemFactory.swift in Sources */,
 				D33D68602F98F2CF00E16ADA /* EvmRollupGasDataService.swift in Sources */,
+				6B94D8C92F9CD94C0042CCD6 /* PimlicoProvider.swift in Sources */,
+				6B94D8CA2F9CD94C0042CCD6 /* PasskeyUserOpSigner.swift in Sources */,
+				6B94D8CB2F9CD94C0042CCD6 /* AaSender.swift in Sources */,
 				D33D68612F98F2CF00E16ADA /* MarketPlatformViewModel.swift in Sources */,
 				D33D68622F98F2CF00E16ADA /* StellarAddressParserItem.swift in Sources */,
 				D33D68632F98F2CF00E16ADA /* NonceDataSource.swift in Sources */,
@@ -10433,6 +10464,7 @@
 				D33D6A0A2F98F2CF00E16ADA /* Passkey.swift in Sources */,
 				D33D6A0B2F98F2CF00E16ADA /* KeychainStorage.swift in Sources */,
 				D33D6A0C2F98F2CF00E16ADA /* UserDefaultsStorage.swift in Sources */,
+				6B94D8C42F9CD9430042CCD6 /* EvmCodeProvider.swift in Sources */,
 				D33D6A0D2F98F2CF00E16ADA /* PasscodeLockState.swift in Sources */,
 				D33D6A0E2F98F2CF00E16ADA /* EvmAccountRestoreState.swift in Sources */,
 				D33D6A0F2F98F2CF00E16ADA /* NoPasscodeViewController.swift in Sources */,
