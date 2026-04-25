@@ -75,8 +75,14 @@ extension AaSendHandler {
             return nil
         }
 
-        guard let pimlicoProvider = try? PimlicoProvider(networkManager: core.networkManager, blockchainType: blockchainType, entryPoint: entryPoint, apiKey: apiKey),
-              let codeProvider = try? EvmCodeProvider(networkManager: core.networkManager, blockchainType: blockchainType, rpcSource: httpSyncSource.rpcSource)
+        guard let pimlicoProvider = try? PimlicoProvider(
+            networkManager: core.networkManager,
+            blockchainType: blockchainType,
+            entryPoint: entryPoint,
+            apiKey: apiKey,
+            sponsorshipPolicyId: AppConfig.pimlicoSponsorshipPolicyId
+        ),
+            let codeProvider = try? EvmCodeProvider(networkManager: core.networkManager, blockchainType: blockchainType, rpcSource: httpSyncSource.rpcSource)
         else {
             return nil
         }

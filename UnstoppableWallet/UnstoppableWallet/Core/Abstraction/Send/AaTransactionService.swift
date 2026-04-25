@@ -25,7 +25,13 @@ class AaTransactionService {
               let evmKitWrapper = try? core.evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper(account: account, blockchainType: blockchainType),
               let entryPoint = ChainAddresses.aa(for: blockchainType)?.entryPoint,
               let apiKey = AppConfig.pimlicoApiKey,
-              let pimlicoProvider = try? PimlicoProvider(networkManager: core.networkManager, blockchainType: blockchainType, entryPoint: entryPoint, apiKey: apiKey),
+              let pimlicoProvider = try? PimlicoProvider(
+                  networkManager: core.networkManager,
+                  blockchainType: blockchainType,
+                  entryPoint: entryPoint,
+                  apiKey: apiKey,
+                  sponsorshipPolicyId: AppConfig.pimlicoSponsorshipPolicyId
+              ),
               let sender = account.type.evmAddress(chain: chain)
         else {
             return nil

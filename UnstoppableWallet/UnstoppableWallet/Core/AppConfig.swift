@@ -154,6 +154,10 @@ enum AppConfig {
         (Bundle.main.object(forInfoDictionaryKey: "PimlicoApiKey") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
 
+    static var pimlicoSponsorshipPolicyId: String? {
+        (Bundle.main.object(forInfoDictionaryKey: "PimlicoSponsorshipPolicyId") as? String).flatMap { $0.isEmpty ? nil : $0 }
+    }
+
     static var oneInchCommissionAddress: String? {
         (Bundle.main.object(forInfoDictionaryKey: "OneInchCommissionAddress") as? String).flatMap { $0.isEmpty ? nil : $0 }
     }
