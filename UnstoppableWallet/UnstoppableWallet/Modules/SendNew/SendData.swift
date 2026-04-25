@@ -9,7 +9,7 @@ import TronKit
 import ZcashLightClientKit
 
 enum SendData {
-    case evm(blockchainType: BlockchainType, transactionData: TransactionData)
+    case evm(blockchainType: BlockchainType, transactionData: TransactionData, token: Token)
     case bitcoin(token: Token, params: SendParameters)
     case zcash(amount: Decimal, recipient: Recipient, memo: String?)
     case zcashShield(amount: Decimal, recipient: Recipient?, memo: String?)

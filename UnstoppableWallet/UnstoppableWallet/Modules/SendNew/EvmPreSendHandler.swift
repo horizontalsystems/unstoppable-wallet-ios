@@ -62,6 +62,6 @@ extension EvmPreSendHandler: IPreSendHandler {
 
         let transactionData = adapter.transactionData(amount: evmAmount, address: evmAddress)
 
-        return .valid(sendData: .evm(blockchainType: token.blockchainType, transactionData: transactionData))
+        return .valid(sendData: .evm(blockchainType: token.blockchainType, transactionData: transactionData, token: token))
     }
 }

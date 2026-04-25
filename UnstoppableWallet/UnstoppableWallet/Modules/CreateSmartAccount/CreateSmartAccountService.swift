@@ -21,7 +21,7 @@ class CreateSmartAccountService {
         accountManager: AccountManager,
         smartAccountManager: SmartAccountManager,
         activateDefaultWallets: @escaping (Account) -> Void,
-        passkeyRegistering: SmartAccountPasskeyRegistering = SmartAccountPasskeyManager()
+        passkeyRegistering: SmartAccountPasskeyRegistering = Core.shared.smartAccountPasskeyManager
     ) {
         self.accountFactory = accountFactory
         self.accountManager = accountManager

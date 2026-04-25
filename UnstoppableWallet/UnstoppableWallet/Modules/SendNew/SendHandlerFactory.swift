@@ -3,7 +3,7 @@ import MarketKit
 enum SendHandlerFactory {
     static func handler(sendData: SendData) -> ISendHandler? {
         switch sendData {
-        case let .evm(blockchainType, transactionData):
+        case let .evm(blockchainType, transactionData, _):
             return EvmSendHandler.instance(blockchainType: blockchainType, transactionData: transactionData)
         case let .bitcoin(token, params):
             return BitcoinSendHandler.instance(token: token, params: params)
