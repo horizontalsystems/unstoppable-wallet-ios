@@ -65,10 +65,12 @@ struct MainView: View {
             }
         case .wallet:
             if walletViewModel.account != nil {
-                // DEV-TEST: Part 4 passkey QA — revert this button to ManageAccountsView presentation before Part 9 lands.
                 ToolbarItem(placement: .primaryAction) {
                     Button(action: {
-                        Task { await runPasskeyDevTest() }
+                        Coordinator.shared.present { isPresented in
+                            ManageAccountsView(parentPresented: isPresented)
+                        }
+                        stat(page: .balance, event: .open(page: .manageWallets))
                     }) {
                         Image("wallet_change")
                     }
@@ -147,31 +149,6 @@ struct MainView: View {
             return "transactions.title".localized
         case .settings:
             return "settings.title".localized
-        }
-    }
-
-    // DEV-TEST: Part 4 passkey QA. Triggers WebAuthn registration, parses attestation,
-    // computes Barz counterfactual address. Remove together with the toolbar button override.
-    private func runPasskeyDevTest() async {
-        let manager = SmartAccountPasskeyManager()
-        do {
-            let reg = try await manager.register(name: "dev-test-\(Int(Date().timeIntervalSince1970))")
-            let address = try BarzAddressResolver.resolveLocally(
-                publicKeyX: reg.publicKeyX,
-                publicKeyY: reg.publicKeyY,
-                blockchainType: .ethereum
-            )
-            print("""
-            [Passkey dev test] OK
-              credentialID: \(reg.credentialID.hs.hex)
-              X (\(reg.publicKeyX.count) bytes): \(reg.publicKeyX.hs.hex)
-              Y (\(reg.publicKeyY.count) bytes): \(reg.publicKeyY.hs.hex)
-              AA address: \(address.eip55)
-            """)
-            HudHelper.instance.show(banner: .success(string: "AA: \(address.eip55.prefix(10))..."))
-        } catch {
-            print("[Passkey dev test] FAIL: \(error)")
-            HudHelper.instance.show(banner: .error(string: error.localizedDescription))
         }
     }
 }

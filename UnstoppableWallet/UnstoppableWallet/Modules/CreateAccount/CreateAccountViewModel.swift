@@ -11,6 +11,18 @@ class CreateAccountViewModel: ObservableObject {
     private let marketKit = Core.shared.marketKit
     private let predefinedBlockchainService = Core.shared.predefinedBlockchainService
     private let passkeyManager = PasskeyManager()
+    private lazy var smartAccountService: CreateSmartAccountService = {
+        let core = Core.shared
+        return CreateSmartAccountService(
+            accountFactory: core.accountFactory,
+            accountManager: core.accountManager,
+            smartAccountManager: core.smartAccountManager,
+            activateDefaultWallets: CreateSmartAccountService.defaultActivator(
+                marketKit: core.marketKit,
+                walletManager: core.walletManager
+            )
+        )
+    }()
 
     let walletType: WalletType
 
@@ -114,12 +126,17 @@ extension CreateAccountViewModel {
 
         return createAccount(words: passkey.mnemonic, salt: "", isPasskey: true, statPage: .newWalletPasskey)
     }
+
+    func createSmartAccount() async throws -> Account {
+        try await smartAccountService.create(name: resolvedName)
+    }
 }
 
 extension CreateAccountViewModel {
     enum WalletType {
         case regular
         case passkey
+        case smartAccount
     }
 
     enum CreateError: Error {

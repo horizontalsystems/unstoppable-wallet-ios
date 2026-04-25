@@ -123,7 +123,7 @@ struct CreateAccountView: View {
                                     ListSectionFooter(text: "create_wallet.passphrase_description".localized)
                                 }
                             }
-                        case .passkey: EmptyView()
+                        case .passkey, .smartAccount: EmptyView()
                         }
                     }
                     .animation(.default, value: viewModel.advanced)
@@ -179,6 +179,15 @@ struct CreateAccountView: View {
                     await MainActor.run { handleError(error) }
                 }
             }
+        case .smartAccount:
+            Task {
+                do {
+                    let account = try await viewModel.createSmartAccount()
+                    await MainActor.run { handleSuccess(account: account) }
+                } catch {
+                    await MainActor.run { handleError(error) }
+                }
+            }
         }
     }
 
@@ -205,6 +214,8 @@ struct CreateAccountView: View {
             passphraseConfirmationCaution = .caution(Caution(text: "create_wallet.error.invalid_confirmation".localized, type: .error))
         } else if case PasskeyManager.PasskeyError.userCanceled = error {
             return
+        } else if case SmartAccountPasskeyManager.AAError.userCanceled = error {
+            return
         } else {
             HudHelper.instance.show(banner: .error(string: error.smartDescription))
         }
@@ -221,6 +232,7 @@ extension CreateAccountView {
 
 struct PasskeyTermsView: View {
     @Binding var isPresented: Bool
+    var walletType: CreateAccountViewModel.WalletType = .passkey
     var onCreate: (() -> Void)?
 
     @State private var checkedIds = Set<String>()
@@ -249,7 +261,7 @@ struct PasskeyTermsView: View {
         }
         .navigationTitle("passkey_terms.title".localized)
         .navigationDestination(isPresented: $createAccountPresented) {
-            CreateAccountView(walletType: .passkey, isPresented: $isPresented, onCreate: onCreate)
+            CreateAccountView(walletType: walletType, isPresented: $isPresented, onCreate: onCreate)
         }
     }
 
