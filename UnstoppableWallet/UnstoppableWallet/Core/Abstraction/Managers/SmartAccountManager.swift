@@ -131,6 +131,14 @@ extension SmartAccountManager {
     }
 }
 
+// MARK: - Pending UserOperation operations
+
+extension SmartAccountManager {
+    func savePendingOperation(record: PendingUserOperationRecord) throws {
+        try pendingOpStorage.save(record: record)
+    }
+}
+
 // MARK: - Lifecycle / admin
 
 extension SmartAccountManager {
