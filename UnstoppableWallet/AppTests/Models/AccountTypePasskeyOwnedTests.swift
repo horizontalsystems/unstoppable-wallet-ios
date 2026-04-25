@@ -38,11 +38,24 @@ struct AccountTypePasskeyOwnedTests {
         #expect(accountType.supportsWalletConnect == false)
         #expect(accountType.supportsTonConnect == false)
         #expect(accountType.watchAddress == nil)
-        #expect(accountType.evmAddress(chain: .ethereum) == nil)
         #expect(accountType.tronAddress == nil)
         #expect(accountType.sign(message: Data([0x01])) == nil)
         #expect(accountType.description == "Smart Wallet")
         #expect(accountType.statDescription == "passkey_owned")
+    }
+
+    @Test
+    func evmAddressDerivesBarzCounterfactualOnSupportedChains() throws {
+        let accountType = AccountType.passkeyOwned(
+            credentialID: Data([0x01, 0x02, 0x03]),
+            publicKeyX: Data(repeating: 0x11, count: 32),
+            publicKeyY: Data(repeating: 0x22, count: 32)
+        )
+
+        let expected = try EvmKit.Address(hex: "0x9eab247c9c7406b1bb38a972730ce18c40046d30")
+        #expect(accountType.evmAddress(chain: .ethereum) == expected)
+        #expect(accountType.evmAddress(chain: .binanceSmartChain) == expected)
+        #expect(accountType.evmAddress(chain: .polygon) == nil)
     }
 
     @Test

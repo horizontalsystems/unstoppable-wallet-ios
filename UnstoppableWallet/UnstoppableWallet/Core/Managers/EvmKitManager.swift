@@ -69,6 +69,11 @@ class EvmKitManager {
             signer = Signer.instance(privateKey: data, chain: chain)
         case let .evmAddress(value):
             address = value
+        case .passkeyOwned:
+            guard let resolved = account.type.evmAddress(chain: chain) else {
+                throw AdapterError.unsupportedAccount
+            }
+            address = resolved
         default:
             throw AdapterError.unsupportedAccount
         }
