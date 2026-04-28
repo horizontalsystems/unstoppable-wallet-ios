@@ -74,6 +74,5 @@ extension AaTransactionService: ITransactionService {
         recommendedGasPrice = g.standard
         nextNonce = try EntryPointV06.decodeGetNonce(n)
 
-        updateSubject.send()
     }
 }

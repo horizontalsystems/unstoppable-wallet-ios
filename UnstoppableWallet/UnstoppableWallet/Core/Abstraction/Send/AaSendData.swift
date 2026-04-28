@@ -47,7 +47,7 @@ class AaSendData: ISendData {
         ))
 
         if prepared.isFreshDeployment {
-            fields.append(.note(iconName: "info_24", title: "send.confirmation.aa_first_deploy".localized))
+            fields.append(.note(iconName: nil, title: "send.confirmation.aa_first_deploy".localized))
         }
 
         return [flow, .init(fields, isMain: false)].compactMap { $0 }
