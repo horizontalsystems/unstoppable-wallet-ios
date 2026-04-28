@@ -74,5 +74,9 @@ extension AaTransactionService: ITransactionService {
         recommendedGasPrice = g.standard
         nextNonce = try EntryPointV06.decodeGetNonce(n)
 
+        // Do NOT call updateSubject.send() here — SendViewModel subscribes to updatePublisher
+        // and re-runs sync() on every emission, which would cause an infinite loop. v1 has no
+        // user setters, so updateSubject stays silent. v2 will emit only from set(gasPrice:)
+        // / set(nonce:) like EvmTransactionService does.
     }
 }
