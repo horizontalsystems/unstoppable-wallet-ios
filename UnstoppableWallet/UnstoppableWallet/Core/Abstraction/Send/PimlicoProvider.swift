@@ -47,6 +47,8 @@ extension PimlicoProvider {
     }
 
     /// Submits a signed UserOp to the bundler. Returns the userOpHash echoed by the bundler.
+    /// Uses raw JSON dict parsing because the result is a plain hex string, not a JSON object —
+    /// ImmutableMappable can't unwrap a string at the `result` field.
     func sendUserOperation(userOp: UserOperation) async throws -> Data {
         let envelope: [String: Any] = [
             "jsonrpc": "2.0",
@@ -115,6 +117,9 @@ extension PimlicoProvider {
         return try response.prices()
     }
 
+    /// Returns ERC-20 paymaster quote data used by Pimlico's singleton paymaster.
+    /// Useful for debugging token charge calculations:
+    ///   getCostInToken(actualGasCost, postOpGas, actualUserOpFeePerGas, exchangeRate)
     func getTokenQuotes(tokens: [EvmKit.Address]) async throws -> [TokenQuote] {
         guard let chain = try? Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType) else {
             throw ProviderError.unsupportedChain
@@ -164,6 +169,9 @@ extension PimlicoProvider {
         return try response.paymasterAndDataValue()
     }
 
+    /// Returns the FINAL paymasterAndData with real paymaster signature, ready for submission.
+    /// Must be called after gas estimation (gas values now final) — userOpHash is then computed
+    /// over the userOp containing this real paymasterAndData, signed with passkey, submitted.
     func getPaymasterData(userOp: UserOperation, mode: PaymasterMode) async throws -> Data {
         guard let chain = try? Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType) else {
             throw ProviderError.unsupportedChain

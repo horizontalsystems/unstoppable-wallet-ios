@@ -92,8 +92,11 @@ extension AaSender {
         print("[AaSender] initCode bytes=\(initCode.count) (fresh=\(isFreshDeployment))")
 
         // For fresh deployment we pre-query an ERC-20 paymaster stub to learn the paymaster
-        // address, so our executeBatch's approve target is correct. Then we re-query under
-        // verifyingPaymaster mode to get sponsored paymasterAndData.
+        // address, so our executeBatch's approve target is correct. Final paymasterAndData is
+        // also fetched in ERC-20 mode — Pimlico Singleton sets preFundInToken=0, allowance is
+        // established by the approve() in callData, postOp pulls payment from sender. If postOp
+        // reverts (e.g. balance drained mid-flight), the deficit is auto-charged to our Pimlico
+        // balance off-chain.
         let paymasterAddress: EvmKit.Address?
         let callData: Data
         if isFreshDeployment {
@@ -120,6 +123,10 @@ extension AaSender {
             let userCall = UserOperationCallData(target: transactionData.to, value: transactionData.value, data: transactionData.input)
             callData = AccountFacet.encodeExecuteBatch(calls: [approveCall, userCall])
         } else {
+            // TODO: if account is already deployed but `tokenAddress` was never approved to the
+            // paymaster (e.g. first deploy approved USDT, user now sends USDC), the ERC-20 paymaster
+            // will fail validation due to zero allowance. Detect this (allowance < expectedMaxCost
+            // or simply missing) and prepend an approve(MAX) call to executeBatch in that case.
             paymasterAddress = nil
             callData = AccountFacet.encodeExecute(target: transactionData.to, value: transactionData.value, data: transactionData.input)
         }
@@ -158,6 +165,8 @@ extension AaSender {
         print("[AaSender] estimated fee → \(totalGas) gas × \(Self.gwei(resolvedGas.maxFeePerGas)) gwei = \(totalFeeWei) wei (≈ \(Self.eth(totalFeeWei)))")
         await logPimlicoTokenQuote(tokenAddress: tokenAddress, token: baseToken, gasEstimate: gasEstimate, gasPrices: resolvedGas)
 
+        // Replace stub paymasterAndData with the REAL signed paymasterAndData. Required before
+        // userOpHash/sign/submit — bundler rejects the stub signature on submission (ERC-7677).
         let userOpForPaymasterData = makeUserOp(
             sender: sender,
             nonce: resolvedNonce,
@@ -280,6 +289,8 @@ private extension AaSender {
         let scale = BigUInt(10).power(18)
         let whole = wei / scale
         let frac = wei % scale
+        // BigUInt.description always produces non-negative digits; Int conversion may truncate
+        // for very large values, so format via string padding instead.
         let fracString = String(repeating: "0", count: 18 - String(frac).count) + String(frac)
         return "\(whole).\(fracString) ETH"
     }
@@ -449,6 +460,11 @@ private extension AaSender {
     }
 
     static func parseErc20PaymasterAndData(_ data: Data) -> ParsedErc20PaymasterAndData? {
+        // Pimlico SingletonPaymaster v0.6 layout:
+        // paymaster(20) | mode+allowAllBundlers(1) | erc20Config
+        // erc20Config = flags(1) | validUntil(6) | validAfter(6) | token(20)
+        //             | postOpGas(16) | exchangeRate(32) | paymasterValidationGasLimit(16)
+        //             | treasury(20) | optional preFund/constantFee/recipient | signature(64/65)
         guard data.count >= 20 + 1 + 117 else {
             return nil
         }
