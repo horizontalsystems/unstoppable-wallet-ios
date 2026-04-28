@@ -48,11 +48,50 @@ extension PimlicoProvider {
 
     /// Submits a signed UserOp to the bundler. Returns the userOpHash echoed by the bundler.
     func sendUserOperation(userOp: UserOperation) async throws -> Data {
-        let response: HexResponse = try await rpcCall(
-            method: "eth_sendUserOperation",
-            params: [Self.serialize(userOp: userOp), entryPoint.eip55]
+        let envelope: [String: Any] = [
+            "jsonrpc": "2.0",
+            "id": 1,
+            "method": "eth_sendUserOperation",
+            "params": [Self.serialize(userOp: userOp), entryPoint.eip55],
+        ]
+
+        let started = Date()
+        print("[PimlicoProvider] → eth_sendUserOperation chain=\(blockchainType.uid)")
+
+        let json: Any = try await networkManager.fetchJson(
+            url: url,
+            method: .post,
+            parameters: envelope,
+            encoding: JSONEncoding.default,
+            headers: headers
         )
-        return try response.dataValue()
+
+        let elapsedMs = Int(Date().timeIntervalSince(started) * 1000)
+
+        guard let dict = json as? [String: Any] else {
+            print("[PimlicoProvider] ← eth_sendUserOperation ERROR not a JSON object (\(elapsedMs)ms) raw=\(json)")
+            throw ProviderError.malformedResponse(field: "envelope")
+        }
+
+        if let errorDict = dict["error"] as? [String: Any] {
+            let code = errorDict["code"] as? Int ?? -32099
+            let message = (errorDict["message"] as? String) ?? "unknown"
+            print("[PimlicoProvider] ← eth_sendUserOperation ERROR code=\(code) message=\(message) (\(elapsedMs)ms) raw=\(dict)")
+            throw ProviderError.rpc(code: code, message: message)
+        }
+
+        guard let resultStr = dict["result"] as? String else {
+            print("[PimlicoProvider] ← eth_sendUserOperation ERROR no result/string (\(elapsedMs)ms) raw=\(dict)")
+            throw ProviderError.rpc(code: -32099, message: "no result")
+        }
+
+        guard let data = resultStr.hs.hexData else {
+            print("[PimlicoProvider] ← eth_sendUserOperation ERROR malformed hex result=\(resultStr) (\(elapsedMs)ms)")
+            throw ProviderError.malformedResponse(field: "userOpHash hex")
+        }
+
+        print("[PimlicoProvider] ← eth_sendUserOperation OK (\(elapsedMs)ms)")
+        return data
     }
 
     /// Estimates the three gas dimensions for a UserOp (call, verification, preVerification).
@@ -74,6 +113,22 @@ extension PimlicoProvider {
             params: []
         )
         return try response.prices()
+    }
+
+    func getTokenQuotes(tokens: [EvmKit.Address]) async throws -> [TokenQuote] {
+        guard let chain = try? Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType) else {
+            throw ProviderError.unsupportedChain
+        }
+
+        let response: TokenQuotesResponse = try await rpcCall(
+            method: "pimlico_getTokenQuotes",
+            params: [
+                ["tokens": tokens.map(\.eip55)],
+                entryPoint.eip55,
+                "0x" + String(chain.id, radix: 16),
+            ]
+        )
+        return try response.quotes()
     }
 
     /// Builds paymasterAndData for the given UserOp.
@@ -108,6 +163,32 @@ extension PimlicoProvider {
         let response: PaymasterStubResponse = try await rpcCall(method: "pm_getPaymasterStubData", params: params)
         return try response.paymasterAndDataValue()
     }
+
+    func getPaymasterData(userOp: UserOperation, mode: PaymasterMode) async throws -> Data {
+        guard let chain = try? Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType) else {
+            throw ProviderError.unsupportedChain
+        }
+
+        var context: [String: Any] = [:]
+        switch mode {
+        case .verifying:
+            if let sponsorshipPolicyId {
+                context["sponsorshipPolicyId"] = sponsorshipPolicyId
+            }
+        case let .erc20(token):
+            context["token"] = token.eip55
+        }
+
+        let params: [Any] = [
+            Self.serialize(userOp: userOp),
+            entryPoint.eip55,
+            "0x" + String(chain.id, radix: 16),
+            context,
+        ]
+
+        let response: PaymasterStubResponse = try await rpcCall(method: "pm_getPaymasterData", params: params)
+        return try response.paymasterAndDataValue()
+    }
 }
 
 // MARK: - Public types
@@ -140,6 +221,16 @@ extension PimlicoProvider {
         }
     }
 
+    struct TokenQuote: Equatable {
+        let paymaster: EvmKit.Address
+        let token: EvmKit.Address
+        let postOpGas: BigUInt
+        let exchangeRate: BigUInt
+        let exchangeRateNativeToUsd: BigUInt
+        let balanceSlot: String
+        let allowanceSlot: String
+    }
+
     enum ProviderError: Error {
         case unsupportedChain
         case invalidURL
@@ -159,6 +250,9 @@ extension PimlicoProvider {
             "params": params,
         ]
 
+        let started = Date()
+        print("[PimlicoProvider] → \(method) chain=\(blockchainType.uid)")
+
         let response: RpcEnvelope<T> = try await networkManager.fetch(
             url: url,
             method: .post,
@@ -167,14 +261,19 @@ extension PimlicoProvider {
             headers: headers
         )
 
+        let elapsedMs = Int(Date().timeIntervalSince(started) * 1000)
+
         if let error = response.error {
+            print("[PimlicoProvider] ← \(method) ERROR code=\(error.code) message=\(error.message) (\(elapsedMs)ms)")
             throw ProviderError.rpc(code: error.code, message: error.message)
         }
 
         guard let result = response.result else {
+            print("[PimlicoProvider] ← \(method) ERROR no result (\(elapsedMs)ms)")
             throw ProviderError.rpc(code: -32099, message: "no result")
         }
 
+        print("[PimlicoProvider] ← \(method) OK (\(elapsedMs)ms)")
         return result
     }
 
@@ -329,5 +428,61 @@ private struct PaymasterStubResponse: ImmutableMappable {
             throw PimlicoProvider.ProviderError.malformedResponse(field: "paymasterAndData")
         }
         return data
+    }
+}
+
+private struct TokenQuotesResponse: ImmutableMappable {
+    let quotesPayload: [TokenQuotePayload]
+
+    init(map: Map) throws {
+        quotesPayload = try map.value("quotes")
+    }
+
+    func quotes() throws -> [PimlicoProvider.TokenQuote] {
+        try quotesPayload.map { try $0.quote() }
+    }
+
+    struct TokenQuotePayload: ImmutableMappable {
+        let paymaster: String
+        let token: String
+        let postOpGas: String
+        let exchangeRate: String
+        let exchangeRateNativeToUsd: String
+        let balanceSlot: String
+        let allowanceSlot: String
+
+        init(map: Map) throws {
+            paymaster = try map.value("paymaster")
+            token = try map.value("token")
+            postOpGas = try map.value("postOpGas")
+            exchangeRate = try map.value("exchangeRate")
+            exchangeRateNativeToUsd = try map.value("exchangeRateNativeToUsd")
+            balanceSlot = try map.value("balanceSlot")
+            allowanceSlot = try map.value("allowanceSlot")
+        }
+
+        func quote() throws -> PimlicoProvider.TokenQuote {
+            guard let postOpGas = Self.bigUInt(from: postOpGas),
+                  let exchangeRate = Self.bigUInt(from: exchangeRate),
+                  let exchangeRateNativeToUsd = Self.bigUInt(from: exchangeRateNativeToUsd)
+            else {
+                throw PimlicoProvider.ProviderError.malformedResponse(field: "tokenQuote")
+            }
+
+            return try PimlicoProvider.TokenQuote(
+                paymaster: EvmKit.Address(hex: paymaster),
+                token: EvmKit.Address(hex: token),
+                postOpGas: postOpGas,
+                exchangeRate: exchangeRate,
+                exchangeRateNativeToUsd: exchangeRateNativeToUsd,
+                balanceSlot: balanceSlot,
+                allowanceSlot: allowanceSlot
+            )
+        }
+
+        private static func bigUInt(from hex: String) -> BigUInt? {
+            let trimmed = hex.hasPrefix("0x") ? String(hex.dropFirst(2)) : hex
+            return BigUInt(trimmed, radix: 16)
+        }
     }
 }
