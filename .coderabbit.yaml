@@ -1,0 +1,69 @@
+reviews:
+  profile: "chill"
+  high_level_summary: true
+  poem: false
+  review_status: true
+
+  auto_review:
+    enabled: true
+    drafts: false
+    base_branches:
+      - "^version/.*"
+    ignore_title_keywords:
+      - "WIP"
+      - "DO NOT REVIEW"
+      - "chore: auto-translate"
+
+  path_filters:
+    - "!**/*.pbxproj"
+    - "!**/*.xcscheme"
+    - "!**/Package.resolved"
+    - "!**/Pods/**"
+    - "!**/*.generated.swift"
+    - "!**/*.strings"
+    - "!**/*.xcassets/**"
+    - "!**/.build/**"
+
+  path_instructions:
+    - path: "**/*.swift"
+      instructions: |
+        This is an iOS crypto wallet. Review priorities, in order:
+
+        1. Secret material (mnemonic, private key, seed, passphrase) must
+           never reach logs, analytics, UserDefaults, plist files, or any
+           persisted storage other than Keychain. Clipboard copy is allowed
+           only as an explicit user action from a sensitive-data screen,
+           ideally with a confirmation step and routed through the app's
+           centralized clipboard helper. Flag any path where a secret-looking
+           value crosses a forbidden boundary — even if the variable is
+           renamed through several function calls.
+
+        2. Architecture (from CLAUDE.md): modal presentation goes through
+           Coordinator.shared — flag direct .sheet / .fullScreenCover /
+           UIKit present in SwiftUI views. Mutations of @Published from
+           Task { ... } must be routed through @MainActor methods.
+
+        3. Navigation: push navigation uses NavigationPath +
+           navigationDestination(for:). Flag .navigationDestination(isPresented:)
+           with optional @State.
+
+  tools:
+    gitleaks:
+      enabled: true
+    semgrep:
+      enabled: true
+    ast-grep:
+      essential_rules: true
+    swiftlint:
+      enabled: false
+
+chat:
+  auto_reply: true
+
+knowledge_base:
+  learnings:
+    scope: "auto"
+  opt_out: false
+  code_guidelines:
+    filePatterns:
+      - "docs/CRYPTO_GUIDELINES.md"

@@ -1,0 +1,201 @@
+rules:
+  - id: swift-secret-flow-to-logs
+    mode: taint
+    pattern-sources:
+      - patterns:
+          - pattern: $SECRET
+          - metavariable-regex:
+              metavariable: $SECRET
+              regex: '(?i)(mnemonic|mnemonicSeed|mnemonicWords|privateKey|privKey|signingKey|passphrase|recoveryPhrase|wif|seed|xprv|secret)'
+    pattern-sinks:
+      - patterns:
+          - pattern: print($DATA)
+          - focus-metavariable: $DATA
+      - patterns:
+          - pattern: debugPrint($DATA)
+          - focus-metavariable: $DATA
+      - pattern: NSLog(...)
+      - pattern: os_log(...)
+      - patterns:
+          - pattern: $LOGGER.log($DATA)
+          - focus-metavariable: $DATA
+      - patterns:
+          - pattern: $LOGGER.debug($DATA)
+          - focus-metavariable: $DATA
+      - patterns:
+          - pattern: $LOGGER.info($DATA)
+          - focus-metavariable: $DATA
+      - patterns:
+          - pattern: $LOGGER.notice($DATA)
+          - focus-metavariable: $DATA
+      - patterns:
+          - pattern: $LOGGER.error($DATA)
+          - focus-metavariable: $DATA
+      - patterns:
+          - pattern: $LOGGER.fault($DATA)
+          - focus-metavariable: $DATA
+    message: |
+      Secret-looking data flows into a logging sink. Mnemonic/private-key
+      material must not reach logs, crash output, or telemetry.
+    languages: [swift]
+    severity: ERROR
+
+  - id: swift-secret-flow-to-telemetry
+    mode: taint
+    pattern-sources:
+      - patterns:
+          - pattern: $SECRET
+          - metavariable-regex:
+              metavariable: $SECRET
+              regex: '(?i)(mnemonic|mnemonicSeed|mnemonicWords|privateKey|privKey|signingKey|passphrase|recoveryPhrase|wif|seed|xprv|secret)'
+    pattern-sinks:
+      - patterns:
+          - pattern: Crashlytics.crashlytics().log($DATA)
+          - focus-metavariable: $DATA
+      - patterns:
+          - pattern: "Crashlytics.crashlytics().setCustomValue($DATA, forKey: ...)"
+          - focus-metavariable: $DATA
+      - patterns:
+          - pattern: "Analytics.logEvent(..., parameters: $DATA)"
+          - focus-metavariable: $DATA
+      - patterns:
+          - pattern: "FirebaseAnalytics.Analytics.logEvent(..., parameters: $DATA)"
+          - focus-metavariable: $DATA
+      - patterns:
+          - pattern: Amplitude.instance().logEvent($DATA)
+          - focus-metavariable: $DATA
+      - patterns:
+          - pattern: "AppMetrica.reportEvent(..., parameters: $DATA)"
+          - focus-metavariable: $DATA
+      - patterns:
+          - pattern: "SentrySDK.capture(message: $DATA)"
+          - focus-metavariable: $DATA
+    message: |
+      Secret-looking data flows into analytics or crash-reporting telemetry.
+      Do not send mnemonic/private-key material to third-party services.
+    languages: [swift]
+    severity: ERROR
+
+  - id: swift-secret-flow-to-userdefaults
+    mode: taint
+    pattern-sources:
+      - patterns:
+          - pattern: $SECRET
+          - metavariable-regex:
+              metavariable: $SECRET
+              regex: '(?i)(mnemonic|mnemonicSeed|mnemonicWords|privateKey|privKey|signingKey|passphrase|recoveryPhrase|wif|seed|xprv|secret)'
+    pattern-sinks:
+      - patterns:
+          - pattern: "UserDefaults.standard.set($DATA, forKey: ...)"
+          - focus-metavariable: $DATA
+      - patterns:
+          - pattern: "UserDefaults.standard.setValue($DATA, forKey: ...)"
+          - focus-metavariable: $DATA
+      - patterns:
+          - pattern: "$DEFAULTS.set($DATA, forKey: ...)"
+          - focus-metavariable: $DATA
+      - patterns:
+          - pattern: "$DEFAULTS.setValue($DATA, forKey: ...)"
+          - focus-metavariable: $DATA
+    message: |
+      Secret-looking data flows into UserDefaults/plist-style storage. Use
+      Keychain for secret material.
+    languages: [swift]
+    severity: ERROR
+
+  - id: swift-secret-flow-to-file-write
+    mode: taint
+    pattern-sources:
+      - patterns:
+          - pattern: $SECRET
+          - metavariable-regex:
+              metavariable: $SECRET
+              regex: '(?i)(mnemonic|mnemonicSeed|mnemonicWords|privateKey|privKey|signingKey|passphrase|recoveryPhrase|wif|seed|xprv|secret)'
+    pattern-sinks:
+      - patterns:
+          - pattern: "$DATA.write(to: ...)"
+          - focus-metavariable: $DATA
+      - patterns:
+          - pattern: "try $DATA.write(to: ...)"
+          - focus-metavariable: $DATA
+      - patterns:
+          - pattern: "try? $DATA.write(to: ...)"
+          - focus-metavariable: $DATA
+    message: |
+      Secret-looking data flows into a file write. Secret material must not be
+      persisted to plain files.
+    languages: [swift]
+    severity: ERROR
+    paths:
+      exclude:
+        - "**/Core/Managers/CloudBackupManager.swift"
+
+  - id: swift-direct-clipboard-write
+    pattern-either:
+      - pattern: UIPasteboard.general.string = $X
+      - pattern: UIPasteboard.general.strings = $X
+    paths:
+      exclude:
+        - "**/Core/Managers/PasteboardManager.swift"
+        - "**/Modules/BottomSheet/BottomSheetModule.swift"
+        - "**/Modules/ExtendedKey/ExtendedKeyViewController.swift"
+        - "**/Modules/ManageAccount/EvmAddress/PublicAddressViewController.swift"
+    message: |
+      Direct clipboard writes should go through the centralized pasteboard
+      helper so copy UX, confirmation, and future auto-clear logic stay in one
+      place. If this is intentional, route it via PasteboardManager/CopyHelper.
+    languages: [swift]
+    severity: WARNING
+
+  - id: swift-weak-randomness-in-crypto
+    pattern-either:
+      - pattern: arc4random()
+      - pattern: arc4random_uniform(...)
+      - pattern: "Int.random(in: ...)"
+      - pattern: "Double.random(in: ...)"
+      - pattern: "Float.random(in: ...)"
+      - pattern: Bool.random()
+      - pattern: $ARRAY.randomElement()
+      - pattern: drand48()
+      - pattern: GKARC4RandomSource()
+    paths:
+      include:
+        - "**/Core/Crypto/**"
+        - "**/*Mnemonic*.swift"
+        - "**/*PrivateKey*.swift"
+        - "**/*Signer*.swift"
+        - "**/*Signing*.swift"
+    message: |
+      Non-cryptographic randomness in a crypto-related path. Use
+      SecRandomCopyBytes or CryptoKit primitives.
+    languages: [swift]
+    severity: ERROR
+
+  - id: swift-hardcoded-mnemonic-like-phrase
+    pattern-regex: '"[a-z]+(?: [a-z]+){11,}"'
+    message: |
+      Hardcoded mnemonic-like phrase detected: 12+ English words in a single
+      string literal. Do not commit seed phrases or wallet recovery material.
+    languages: [swift]
+    severity: ERROR
+
+  - id: swift-hardcoded-encoded-secret-like-string
+    patterns:
+      - pattern-regex: '"(?=[A-Za-z0-9_+/=-]{64,}")(?:[^"]*[A-Za-z])(?:[^"]*[0-9])[^"]*"'
+      - pattern-not-regex: '"0x[0-9a-fA-F]{16,}"'
+      - pattern-not-regex: '"[0-9a-fA-F]{24,}"'
+      - pattern-not-regex: '"(?:application|text|image|audio|video)/[^"]+"'
+      - pattern-not-regex: '"https?://[^"]+"'
+      - pattern-not-regex: '"[A-Za-z_]+/[A-Za-z0-9.+_-]+"'
+    paths:
+      exclude:
+        - "**/*Tests.swift"
+        - "**/AppTests/**"
+        - "**/UnstoppableWalletTests/**"
+        - "**/Core/AppConfig.swift"
+    message: |
+      Hardcoded encoded-secret-like string detected: a long single-token
+      literal with mixed letters and digits. This is often an API key, token,
+      or encoded secret and should be reviewed.
+    languages: [swift]
+    severity: WARNING
