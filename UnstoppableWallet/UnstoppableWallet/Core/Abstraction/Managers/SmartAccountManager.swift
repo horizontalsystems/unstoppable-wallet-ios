@@ -47,7 +47,7 @@ class SmartAccountManager {
 
 extension SmartAccountManager {
     func createProfile(account: Account) throws -> SmartAccountProfile {
-        guard case let .passkeyOwned(_, publicKeyX, publicKeyY) = account.type else {
+        guard case let .passkeyOwned(_, publicKeyX, publicKeyY, _) = account.type else {
             throw SmartAccountError.invalidAccountType
         }
 

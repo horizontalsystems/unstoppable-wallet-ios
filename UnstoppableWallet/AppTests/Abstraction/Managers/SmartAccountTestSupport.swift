@@ -66,7 +66,7 @@ struct SmartAccountTestEnvironment {
             id: id,
             level: 0,
             name: name,
-            type: .passkeyOwned(credentialID: credentialID, publicKeyX: publicKeyX, publicKeyY: publicKeyY),
+            type: .passkeyOwned(credentialID: credentialID, publicKeyX: publicKeyX, publicKeyY: publicKeyY, curve: .secp256r1),
             origin: .created,
             backedUp: true,
             fileBackedUp: false
