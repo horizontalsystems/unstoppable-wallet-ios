@@ -42,7 +42,8 @@ extension CreateSmartAccountService {
             type: .passkeyOwned(
                 credentialID: registration.credentialID,
                 publicKeyX: registration.publicKeyX,
-                publicKeyY: registration.publicKeyY
+                publicKeyY: registration.publicKeyY,
+                curve: .secp256r1
             ),
             origin: .created,
             backedUp: true,

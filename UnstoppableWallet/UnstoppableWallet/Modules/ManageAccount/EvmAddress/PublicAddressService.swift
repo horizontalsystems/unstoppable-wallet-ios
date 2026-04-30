@@ -23,15 +23,24 @@ class EvmAddressService: IPublicAddressService {
             address = EvmKit.Signer.address(privateKey: data).eip55
         case let .evmAddress(address):
             self.address = address.eip55
-        case let .passkeyOwned(_, publicKeyX, publicKeyY):
-            guard let address = try? BarzAddressResolver.resolveLocally(
-                publicKeyX: publicKeyX,
-                publicKeyY: publicKeyY,
-                blockchainType: .ethereum
-            ) else {
-                return nil
+        case let .passkeyOwned(_, publicKeyX, publicKeyY, curve):
+            let resolved: EvmKit.Address?
+            switch curve {
+            case .secp256r1:
+                resolved = try? BarzAddressResolver.resolveLocally(
+                    publicKeyX: publicKeyX,
+                    publicKeyY: publicKeyY,
+                    blockchainType: .ethereum
+                )
+            case .secp256k1:
+                resolved = try? BarzAddressResolver.resolveLocallySecp256k1(
+                    publicKeyX: publicKeyX,
+                    publicKeyY: publicKeyY,
+                    blockchainType: .ethereum
+                )
             }
-            self.address = address.eip55
+            guard let resolved else { return nil }
+            address = resolved.eip55
         default:
             return nil
         }

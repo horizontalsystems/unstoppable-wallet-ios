@@ -7,8 +7,13 @@ import MarketKit
 import TronKit
 
 enum AccountType: Identifiable {
+    enum PasskeyCurve: String {
+        case secp256r1
+        case secp256k1
+    }
+
     case mnemonic(words: [String], salt: String, bip39Compliant: Bool)
-    case passkeyOwned(credentialID: Data, publicKeyX: Data, publicKeyY: Data)
+    case passkeyOwned(credentialID: Data, publicKeyX: Data, publicKeyY: Data, curve: PasskeyCurve)
     case evmPrivateKey(data: Data)
     case trcPrivateKey(data: Data)
     case stellarSecretKey(secretSeed: String)
@@ -48,8 +53,8 @@ enum AccountType: Identifiable {
             }
 
             privateData = description.data(using: .utf8) ?? Data() // always non-null
-        case let .passkeyOwned(credentialID, publicKeyX, publicKeyY):
-            privateData = credentialID + publicKeyX + publicKeyY
+        case let .passkeyOwned(credentialID, publicKeyX, publicKeyY, curve):
+            privateData = credentialID + publicKeyX + publicKeyY + Data(curve.rawValue.utf8)
         case let .evmPrivateKey(data):
             privateData = data
         case let .trcPrivateKey(data):
@@ -338,15 +343,24 @@ enum AccountType: Identifiable {
             }
 
             return try? EvmKit.Signer.address(seed: mnemonicSeed, chain: chain)
-        case let .passkeyOwned(_, publicKeyX, publicKeyY):
+        case let .passkeyOwned(_, publicKeyX, publicKeyY, curve):
             guard let blockchainType = BarzAddressResolver.blockchainType(chain: chain) else {
                 return nil
             }
-            return try? BarzAddressResolver.resolveLocally(
-                publicKeyX: publicKeyX,
-                publicKeyY: publicKeyY,
-                blockchainType: blockchainType
-            )
+            switch curve {
+            case .secp256r1:
+                return try? BarzAddressResolver.resolveLocally(
+                    publicKeyX: publicKeyX,
+                    publicKeyY: publicKeyY,
+                    blockchainType: blockchainType
+                )
+            case .secp256k1:
+                return try? BarzAddressResolver.resolveLocallySecp256k1(
+                    publicKeyX: publicKeyX,
+                    publicKeyY: publicKeyY,
+                    blockchainType: blockchainType
+                )
+            }
         case let .evmPrivateKey(data):
             return EvmKit.Signer.address(privateKey: data)
         default:
@@ -506,8 +520,8 @@ extension AccountType: Hashable {
         switch (lhs, rhs) {
         case (let .mnemonic(lhsWords, lhsSalt, lhsBip39Compliant), let .mnemonic(rhsWords, rhsSalt, rhsBip39Compliant)):
             return lhsWords == rhsWords && lhsSalt == rhsSalt && lhsBip39Compliant == rhsBip39Compliant
-        case let (.passkeyOwned(lhsCredentialID, lhsPublicKeyX, lhsPublicKeyY), .passkeyOwned(rhsCredentialID, rhsPublicKeyX, rhsPublicKeyY)):
-            return lhsCredentialID == rhsCredentialID && lhsPublicKeyX == rhsPublicKeyX && lhsPublicKeyY == rhsPublicKeyY
+        case let (.passkeyOwned(lhsCredentialID, lhsPublicKeyX, lhsPublicKeyY, lhsCurve), .passkeyOwned(rhsCredentialID, rhsPublicKeyX, rhsPublicKeyY, rhsCurve)):
+            return lhsCredentialID == rhsCredentialID && lhsPublicKeyX == rhsPublicKeyX && lhsPublicKeyY == rhsPublicKeyY && lhsCurve == rhsCurve
         case let (.evmPrivateKey(lhsData), .evmPrivateKey(rhsData)):
             return lhsData == rhsData
         case let (.trcPrivateKey(lhsData), .trcPrivateKey(rhsData)):
@@ -539,11 +553,12 @@ extension AccountType: Hashable {
             hasher.combine(words)
             hasher.combine(salt)
             hasher.combine(bip39Compliant)
-        case let .passkeyOwned(credentialID, publicKeyX, publicKeyY):
+        case let .passkeyOwned(credentialID, publicKeyX, publicKeyY, curve):
             hasher.combine("passkeyOwned")
             hasher.combine(credentialID)
             hasher.combine(publicKeyX)
             hasher.combine(publicKeyY)
+            hasher.combine(curve.rawValue)
         case let .evmPrivateKey(data):
             hasher.combine("evmPrivateKey")
             hasher.combine(data)

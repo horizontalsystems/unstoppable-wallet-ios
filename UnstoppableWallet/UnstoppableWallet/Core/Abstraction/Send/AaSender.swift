@@ -233,7 +233,7 @@ extension AaSender {
 
     /// Sign via passkey, submit via bundler, archive record. Returns userOpHash echoed by bundler.
     func submit(account: Account, prepared: PreparedUserOp) async throws -> Data {
-        guard case let .passkeyOwned(credentialID, _, _) = account.type else {
+        guard case let .passkeyOwned(credentialID, _, _, _) = account.type else {
             throw SenderError.notPasskeyAccount
         }
 
@@ -320,7 +320,7 @@ private extension AaSender {
     }
 
     func passkeyKeyPair(from account: Account) -> (publicKeyX: Data, publicKeyY: Data)? {
-        guard case let .passkeyOwned(_, publicKeyX, publicKeyY) = account.type else {
+        guard case let .passkeyOwned(_, publicKeyX, publicKeyY, _) = account.type else {
             return nil
         }
         return (publicKeyX, publicKeyY)
