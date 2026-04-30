@@ -1,6 +1,7 @@
 import BigInt
 import EvmKit
 import Foundation
+import HsCryptoKit
 
 enum BarzFactory {
     enum DecodeError: Error {
@@ -57,6 +58,20 @@ enum BarzFactory {
         data += x
         data += y
         return data
+    }
+
+    /// Encodes a secp256k1 owner for Barz `createAccount` as a 20-byte EOA address.
+    ///
+    /// Barz `Secp256k1VerificationFacet.isValidKeyType` accepts both 20-byte address
+    /// and 65-byte uncompressed pubkey. We use 20-byte to match the canonical Trust
+    /// Smart Account derivation in Pimlico permissionless.js (`toTrustSmartAccount`),
+    /// keeping our counterfactual addresses interoperable with the standard preset.
+    static func encodeSecp256k1Owner(x: Data, y: Data) throws -> Data {
+        guard x.count == 32, y.count == 32 else {
+            throw PublicKeyError.invalidCoordinateLength
+        }
+
+        return Data(Crypto.sha3(x + y).suffix(20))
     }
 
     static func buildInitCode(
