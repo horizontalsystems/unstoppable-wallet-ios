@@ -83,7 +83,8 @@ struct CreateSmartAccountServiceTests {
         let service = try makeService(env: env)
 
         let account = try await service.create(name: "Alice")
-        let profile = try #requiretry (env.smartAccountManager.profile(accountId: account.id))
+        let optionalProfile = try env.smartAccountManager.profile(accountId: account.id)
+        let profile = try #require(optionalProfile)
 
         #expect(profile.implementationVersion == "barz_v1_ecdsa")
     }
@@ -122,7 +123,8 @@ struct CreateSmartAccountServiceTests {
             curve: .secp256k1,
             blockchainType: .ethereum
         )
-        let profile = try #requiretry (env.smartAccountManager.profile(accountId: account.id))
+        let optionalProfile = try env.smartAccountManager.profile(accountId: account.id)
+        let profile = try #require(optionalProfile)
         #expect(profile.address == expectedAddress)
     }
 
