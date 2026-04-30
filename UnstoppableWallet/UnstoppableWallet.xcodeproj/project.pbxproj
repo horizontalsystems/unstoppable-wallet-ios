@@ -15,6 +15,8 @@
 		6B3CFEEB2FA34A7F00445225 /* PasskeyCborReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3CFEE12FA34A7F00445225 /* PasskeyCborReader.swift */; };
 		6B3CFEEC2FA34A7F00445225 /* PasskeyAttestationDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3CFEDF2FA34A7F00445225 /* PasskeyAttestationDecoder.swift */; };
 		6B3CFEED2FA34A7F00445225 /* PasskeyAuthorizationRequester.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3CFEE02FA34A7F00445225 /* PasskeyAuthorizationRequester.swift */; };
+		6B3CFEF12FA37FDB00445225 /* SendScenarioDetector.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3CFEF02FA37FDB00445225 /* SendScenarioDetector.swift */; };
+		6B3CFEF32FA37FEC00445225 /* AaSendFeeBreakdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3CFEF22FA37FEC00445225 /* AaSendFeeBreakdown.swift */; };
 		6B94D8B02F9BAEAA0042CCD6 /* SmartAccountDeployment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B94D8AE2F9BAEAA0042CCD6 /* SmartAccountDeployment.swift */; };
 		6B94D8B12F9BAEAA0042CCD6 /* SmartAccountProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B94D8AF2F9BAEAA0042CCD6 /* SmartAccountProfile.swift */; };
 		6B94D8B32F9BAEB30042CCD6 /* SmartAccountManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B94D8B22F9BAEB30042CCD6 /* SmartAccountManager.swift */; };
@@ -2787,6 +2789,8 @@
 		6B3CFEE32FA34A7F00445225 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		6B3CFEE42FA34A7F00445225 /* Secp256r1VerificationFacet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Secp256r1VerificationFacet.swift; sourceTree = "<group>"; };
 		6B3CFEE52FA34A7F00445225 /* SmartAccountPasskeyManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmartAccountPasskeyManager.swift; sourceTree = "<group>"; };
+		6B3CFEF02FA37FDB00445225 /* SendScenarioDetector.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SendScenarioDetector.swift; sourceTree = "<group>"; };
+		6B3CFEF22FA37FEC00445225 /* AaSendFeeBreakdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AaSendFeeBreakdown.swift; sourceTree = "<group>"; };
 		6B44BE572EB1A50500257FD7 /* SelectorGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectorGroupViewModel.swift; sourceTree = "<group>"; };
 		6B44BE5D2EB1BC0A00257FD7 /* SelectorGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectorGroupView.swift; sourceTree = "<group>"; };
 		6B44BE602EB1BFFC00257FD7 /* ButtonGroupView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonGroupView.swift; sourceTree = "<group>"; };
@@ -6660,6 +6664,7 @@
 		6B94D8C82F9CD94C0042CCD6 /* Send */ = {
 			isa = PBXGroup;
 			children = (
+				6B3CFEF02FA37FDB00445225 /* SendScenarioDetector.swift */,
 				6B3CFEDD2FA347F500445225 /* EcdsaUserOpSigner.swift */,
 				6B94D8CC2F9CF63D0042CCD6 /* AaSendData.swift */,
 				6B94D8CD2F9CF63D0042CCD6 /* AaSendHandler.swift */,
@@ -6983,6 +6988,7 @@
 		6BDBD3AE2F9B974600440BE0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6B3CFEF22FA37FEC00445225 /* AaSendFeeBreakdown.swift */,
 				6B94D8AE2F9BAEAA0042CCD6 /* SmartAccountDeployment.swift */,
 				6B94D8AF2F9BAEAA0042CCD6 /* SmartAccountProfile.swift */,
 				6BDBD3AB2F9B974600440BE0 /* PendingUserOperationRecord.swift */,
@@ -8986,6 +8992,7 @@
 				D33D644B2F98F2CF00E16ADA /* Core.swift in Sources */,
 				D33D644C2F98F2CF00E16ADA /* TronReceiveAddressViewModel.swift in Sources */,
 				D33D644D2F98F2CF00E16ADA /* CoverManager.swift in Sources */,
+				6B3CFEF12FA37FDB00445225 /* SendScenarioDetector.swift in Sources */,
 				D33D644E2F98F2CF00E16ADA /* FlipRow.swift in Sources */,
 				D33D644F2F98F2CF00E16ADA /* LanguageManager.swift in Sources */,
 				D33D64502F98F2CF00E16ADA /* LocalStorage.swift in Sources */,
@@ -9778,6 +9785,7 @@
 				D33D67492F98F2CF00E16ADA /* PremiumFeaturesInfoBottomSheetView.swift in Sources */,
 				D33D674A2F98F2CF00E16ADA /* EducationViewModel.swift in Sources */,
 				D33D674B2F98F2CF00E16ADA /* TonKitManager.swift in Sources */,
+				6B3CFEF32FA37FEC00445225 /* AaSendFeeBreakdown.swift in Sources */,
 				D33D674C2F98F2CF00E16ADA /* SendMemoInputService.swift in Sources */,
 				D33D674D2F98F2CF00E16ADA /* SendZcashFactory.swift in Sources */,
 				D33D674E2F98F2CF00E16ADA /* SendZcashService.swift in Sources */,
