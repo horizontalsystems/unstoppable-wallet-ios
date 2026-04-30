@@ -8,6 +8,7 @@ enum ChainAddresses {
         let entryPoint: EvmKit.Address
         let barzFactory: EvmKit.Address
         let secp256r1VerificationFacet: EvmKit.Address
+        let secp256k1VerificationFacet: EvmKit.Address
     }
 
     static let barzFactory = try! EvmKit.Address(hex: "0x729c310186a57833f622630a16d13f710b83272a")
@@ -16,16 +17,26 @@ enum ChainAddresses {
     static let barzFacetRegistry = try! EvmKit.Address(hex: "0xafcb70e6e9514e2a15b23a01d2a9b9f7a34f2c33")
     static let barzDefaultFallback = try! EvmKit.Address(hex: "0x2e7f1dae1f3799d20f5c31befdc7a620f664728d")
     static let secp256r1VerificationFacet = try! EvmKit.Address(hex: "0xeE1AF8E967eC04C84711842796A5E714D2FD33e6")
+    static let secp256k1VerificationFacetEthereum = try! EvmKit.Address(hex: "0x58Cb9Abe27fcd6f72354E98Cf5cc46BEAA2182DF")
+    static let secp256k1VerificationFacetBsc = try! EvmKit.Address(hex: "0x81b9E3689390C7e74cF526594A105Dea21a8cdD5")
 
     static let barzCreationCode = barzCreationCodeHex.hs.hexData!
 
     static func aa(for blockchainType: BlockchainType) -> Aa? {
         switch blockchainType {
-        case .ethereum, .binanceSmartChain:
+        case .ethereum:
             return Aa(
                 entryPoint: entryPointV06,
                 barzFactory: barzFactory,
-                secp256r1VerificationFacet: secp256r1VerificationFacet
+                secp256r1VerificationFacet: secp256r1VerificationFacet,
+                secp256k1VerificationFacet: secp256k1VerificationFacetEthereum
+            )
+        case .binanceSmartChain:
+            return Aa(
+                entryPoint: entryPointV06,
+                barzFactory: barzFactory,
+                secp256r1VerificationFacet: secp256r1VerificationFacet,
+                secp256k1VerificationFacet: secp256k1VerificationFacetBsc
             )
         default:
             return nil
