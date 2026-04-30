@@ -87,49 +87,69 @@ extension AaSender {
             print("[AaSender] gasPrices → pim_getUserOperationGasPrice.standard maxFeePerGas=\(resolvedGas.maxFeePerGas) (\(Self.gwei(resolvedGas.maxFeePerGas)) gwei) maxPriorityFeePerGas=\(resolvedGas.maxPriorityFeePerGas) (\(Self.gwei(resolvedGas.maxPriorityFeePerGas)) gwei)")
         }
 
-        let isFreshDeployment = !isDeployed
-        let initCode = isFreshDeployment ? buildInitCode(publicKeyX: publicKeyX, publicKeyY: publicKeyY, curve: curve) : Data()
-        print("[AaSender] initCode bytes=\(initCode.count) (fresh=\(isFreshDeployment), curve=\(curve.rawValue))")
+        // Decide which UserOp shape to build via SendScenarioDetector. Three branches:
+        //   .freshDeploy      — AA not yet deployed; initCode + executeBatch[approve, userTx]
+        //   .approvedSend     — AA deployed, sendToken approved to paymaster; execute(userTx)
+        //   .approveAndSend   — AA deployed, allowance below threshold; executeBatch[approve, userTx]
+        // The third branch fixes the "sent token differs from deploy-approved token" pathology:
+        // without it Pimlico ERC-20 paymaster reverts at validation -> retry blowup -> double-charge.
+        let scenarioDetector = SendScenarioDetector(
+            fetchPaymasterAddress: { token, _ in
+                let probeUserOp = self.makeUserOp(
+                    sender: sender,
+                    nonce: resolvedNonce,
+                    initCode: Data(),
+                    callData: AccountFacet.encodeExecute(target: transactionData.to, value: transactionData.value, data: transactionData.input),
+                    gas: PimlicoProvider.GasEstimate(callGasLimit: 0, verificationGasLimit: 0, preVerificationGas: 0),
+                    gasPrices: resolvedGas,
+                    paymasterAndData: Data()
+                )
+                let stub = try await self.pimlicoProvider.getPaymasterStubData(userOp: probeUserOp, mode: .erc20(token: token))
+                return try Self.extractPaymasterAddress(from: stub)
+            },
+            fetchIsDeployed: { _, _ in isDeployed },
+            fetchAllowance: { _, spender, token, _ in
+                let eip20Kit = try Eip20Kit.Kit.instance(evmKit: self.evmKit, contractAddress: token)
+                return try await eip20Kit.allowance(spenderAddress: spender, defaultBlockParameter: .latest)
+            }
+        )
 
-        // For fresh deployment we pre-query an ERC-20 paymaster stub to learn the paymaster
-        // address, so our executeBatch's approve target is correct. Final paymasterAndData is
-        // also fetched in ERC-20 mode — Pimlico Singleton sets preFundInToken=0, allowance is
-        // established by the approve() in callData, postOp pulls payment from sender. If postOp
-        // reverts (e.g. balance drained mid-flight), the deficit is auto-charged to our Pimlico
-        // balance off-chain.
-        let paymasterAddress: EvmKit.Address?
+        let scenario = try await scenarioDetector.detect(
+            accountAddress: sender,
+            blockchainType: blockchainType,
+            sendToken: tokenAddress
+        )
+        let stubPaymasterAddress = scenario.paymaster
+        print("[AaSender] scenario=\(scenario) paymaster=\(stubPaymasterAddress.eip55)")
+
+        let isFreshDeployment: Bool
+        let initCode: Data
         let callData: Data
-        if isFreshDeployment {
-            let probeUserOp = makeUserOp(
-                sender: sender,
-                nonce: resolvedNonce,
-                initCode: initCode,
-                callData: AccountFacet.encodeExecute(target: transactionData.to, value: transactionData.value, data: transactionData.input),
-                gas: PimlicoProvider.GasEstimate(callGasLimit: 0, verificationGasLimit: 0, preVerificationGas: 0),
-                gasPrices: resolvedGas,
-                paymasterAndData: Data()
+        switch scenario {
+        case .freshDeploy:
+            isFreshDeployment = true
+            initCode = buildInitCode(publicKeyX: publicKeyX, publicKeyY: publicKeyY, curve: curve)
+            callData = try AccountFacet.encodeExecuteBatch(calls: [
+                buildApproveCall(token: tokenAddress, spender: stubPaymasterAddress),
+                buildUserCall(transactionData: transactionData),
+            ])
+        case .approvedSend:
+            isFreshDeployment = false
+            initCode = Data()
+            callData = AccountFacet.encodeExecute(
+                target: transactionData.to,
+                value: transactionData.value,
+                data: transactionData.input
             )
-            let erc20Stub = try await pimlicoProvider.getPaymasterStubData(userOp: probeUserOp, mode: .erc20(token: tokenAddress))
-            paymasterAddress = try Self.extractPaymasterAddress(from: erc20Stub)
-            print("[AaSender] paymaster lookup (erc20 stub) → paymaster=\(paymasterAddress!.eip55) (paymasterAndData bytes=\(erc20Stub.count))")
-
-            // TODO: revisit approve amount strategy — currently infinity (memory: project_aa_paymaster_approval_todo).
-            let eip20Kit = try Eip20Kit.Kit.instance(evmKit: evmKit, contractAddress: tokenAddress)
-            let approveTxData = eip20Kit.approveTransactionData(
-                spenderAddress: paymasterAddress!,
-                amount: BigUInt(2).power(256) - 1
-            )
-            let approveCall = UserOperationCallData(target: tokenAddress, value: 0, data: approveTxData.input)
-            let userCall = UserOperationCallData(target: transactionData.to, value: transactionData.value, data: transactionData.input)
-            callData = AccountFacet.encodeExecuteBatch(calls: [approveCall, userCall])
-        } else {
-            // TODO: if account is already deployed but `tokenAddress` was never approved to the
-            // paymaster (e.g. first deploy approved USDT, user now sends USDC), the ERC-20 paymaster
-            // will fail validation due to zero allowance. Detect this (allowance < expectedMaxCost
-            // or simply missing) and prepend an approve(MAX) call to executeBatch in that case.
-            paymasterAddress = nil
-            callData = AccountFacet.encodeExecute(target: transactionData.to, value: transactionData.value, data: transactionData.input)
+        case .approveAndSend:
+            isFreshDeployment = false
+            initCode = Data()
+            callData = try AccountFacet.encodeExecuteBatch(calls: [
+                buildApproveCall(token: tokenAddress, spender: stubPaymasterAddress),
+                buildUserCall(transactionData: transactionData),
+            ])
         }
+        print("[AaSender] initCode bytes=\(initCode.count) callData bytes=\(callData.count) curve=\(curve.rawValue)")
 
         let dummySignature = Self.dummySignature(curve: curve)
 
@@ -189,11 +209,9 @@ extension AaSender {
         // response. If we approved (or planned to approve) one paymaster but the final
         // UserOp references a different one, validation reverts on chain → retry blowup
         // → double-charge. Abort here instead of letting that pathology hit the user.
-        if let stubPaymasterAddress = paymasterAddress {
-            let finalPaymasterAddress = try Self.extractPaymasterAddress(from: realPaymasterAndData)
-            guard finalPaymasterAddress == stubPaymasterAddress else {
-                throw SenderError.paymasterAddressChanged(stub: stubPaymasterAddress, final: finalPaymasterAddress)
-            }
+        let finalPaymasterAddress = try Self.extractPaymasterAddress(from: realPaymasterAndData)
+        guard finalPaymasterAddress == stubPaymasterAddress else {
+            throw SenderError.paymasterAddressChanged(stub: stubPaymasterAddress, final: finalPaymasterAddress)
         }
 
         let finalUserOp = makeUserOp(
@@ -406,6 +424,21 @@ private extension AaSender {
             owner: owner,
             salt: 0
         )
+    }
+
+    /// TODO: revisit approve amount strategy — currently infinity
+    /// (memory: project_aa_paymaster_approval_todo).
+    func buildApproveCall(token: EvmKit.Address, spender: EvmKit.Address) throws -> UserOperationCallData {
+        let eip20Kit = try Eip20Kit.Kit.instance(evmKit: evmKit, contractAddress: token)
+        let approveTxData = eip20Kit.approveTransactionData(
+            spenderAddress: spender,
+            amount: BigUInt(2).power(256) - 1
+        )
+        return UserOperationCallData(target: token, value: 0, data: approveTxData.input)
+    }
+
+    func buildUserCall(transactionData: TransactionData) -> UserOperationCallData {
+        UserOperationCallData(target: transactionData.to, value: transactionData.value, data: transactionData.input)
     }
 
     func makeUserOp(
