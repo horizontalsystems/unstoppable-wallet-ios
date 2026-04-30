@@ -1,11 +1,28 @@
+import EvmKit
 import Foundation
+import HdWalletKit
+import HsCryptoKit
 import MarketKit
 
-protocol SmartAccountPasskeyRegistering {
-    func register(name: String) async throws -> SmartAccountPasskeyManager.Registration
+/// Returned by SmartAccountPasskeyRegistering.register. Carries the new passkey's
+/// credentialID together with the PRF-derived mnemonic that the service uses to
+/// derive a secp256k1 EOA owner for the Barz Smart Account.
+struct SmartAccountPasskeyRegistration: Equatable {
+    let credentialID: Data
+    let mnemonic: [String]
 }
 
-extension SmartAccountPasskeyManager: SmartAccountPasskeyRegistering {}
+protocol SmartAccountPasskeyRegistering {
+    func register(name: String) async throws -> SmartAccountPasskeyRegistration
+}
+
+extension PasskeyManager: SmartAccountPasskeyRegistering {
+    func register(name: String) async throws -> SmartAccountPasskeyRegistration {
+        let credentialID = try await create(name: name)
+        let passkey = try await loginWith(credentialID: credentialID)
+        return SmartAccountPasskeyRegistration(credentialID: credentialID, mnemonic: passkey.mnemonic)
+    }
+}
 
 class CreateSmartAccountService {
     private static let v1BlockchainTypes: [BlockchainType] = [.ethereum, .binanceSmartChain]
@@ -21,7 +38,7 @@ class CreateSmartAccountService {
         accountManager: AccountManager,
         smartAccountManager: SmartAccountManager,
         activateDefaultWallets: @escaping (Account) -> Void,
-        passkeyRegistering: SmartAccountPasskeyRegistering = Core.shared.smartAccountPasskeyManager
+        passkeyRegistering: SmartAccountPasskeyRegistering = PasskeyManager()
     ) {
         self.accountFactory = accountFactory
         self.accountManager = accountManager
@@ -38,12 +55,23 @@ extension CreateSmartAccountService {
 
         let registration = try await passkeyRegistering.register(name: trimmed)
 
+        // Derive secp256k1 owner pubkey halves from the PRF-derived mnemonic via
+        // BIP44 m/44'/60'/0'/0/0. PrivKey lives only in this scope; only the
+        // public X and Y are persisted (in AccountType.passkeyOwned).
+        guard let seed = Mnemonic.seed(mnemonic: registration.mnemonic, passphrase: "") else {
+            throw CreateError.seedDerivationFailed
+        }
+        let privateKey = try Signer.privateKey(seed: seed, chain: .ethereum)
+        let pubkey = Crypto.publicKey(privateKey: privateKey, compressed: false)
+        let publicKeyX = Data(pubkey.dropFirst().prefix(32))
+        let publicKeyY = Data(pubkey.dropFirst().suffix(32))
+
         let account = accountFactory.account(
             type: .passkeyOwned(
                 credentialID: registration.credentialID,
-                publicKeyX: registration.publicKeyX,
-                publicKeyY: registration.publicKeyY,
-                curve: .secp256r1
+                publicKeyX: publicKeyX,
+                publicKeyY: publicKeyY,
+                curve: .secp256k1
             ),
             origin: .created,
             backedUp: true,
@@ -95,5 +123,6 @@ extension CreateSmartAccountService {
 extension CreateSmartAccountService {
     enum CreateError: Error {
         case emptyName
+        case seedDerivationFailed
     }
 }

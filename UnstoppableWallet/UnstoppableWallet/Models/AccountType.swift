@@ -10,6 +10,16 @@ enum AccountType: Identifiable {
     enum PasskeyCurve: String {
         case secp256r1
         case secp256k1
+
+        /// SmartAccountProfile.implementationVersion tag for this curve.
+        /// Records written before the curve flag existed default to .secp256r1
+        /// → "barz_v1_0_0". New v1 accounts use .secp256k1 → "barz_v1_ecdsa".
+        var implementationVersion: String {
+            switch self {
+            case .secp256r1: return "barz_v1_0_0"
+            case .secp256k1: return "barz_v1_ecdsa"
+            }
+        }
     }
 
     case mnemonic(words: [String], salt: String, bip39Compliant: Bool)
