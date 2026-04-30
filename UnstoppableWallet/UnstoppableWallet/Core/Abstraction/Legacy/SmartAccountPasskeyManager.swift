@@ -1,3 +1,11 @@
+// Legacy — passkey-native AA (P-256 / FCL_ELLIPTIC_ZZ).
+// Frozen 2026-04-30: no new accounts of this type are created.
+// Existing AccountType.passkeyOwned records (zero in user DB after
+// manual drain 2026-04-29) read through this code path.
+//
+// TODO-A: delete this Legacy/ folder when strategic decision to drop
+// passkey-AA support permanently is made.
+
 import AuthenticationServices
 import Foundation
 import UIKit

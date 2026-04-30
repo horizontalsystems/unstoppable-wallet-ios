@@ -1,3 +1,9 @@
+// Legacy — passkey-native AA (P-256 / FCL_ELLIPTIC_ZZ).
+// Frozen 2026-04-30: no new accounts of this type are created.
+// AaSender still calls sign(...) until PR-A6 wires EcdsaUserOpSigner.signViaPasskey.
+// TODO-A: delete this Legacy/ folder when strategic decision to drop
+// passkey-AA support permanently is made.
+
 import CryptoKit
 import Foundation
 
