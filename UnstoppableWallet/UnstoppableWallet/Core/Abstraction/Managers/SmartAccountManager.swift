@@ -47,7 +47,7 @@ class SmartAccountManager {
 
 extension SmartAccountManager {
     func createProfile(account: Account) throws -> SmartAccountProfile {
-        guard case let .passkeyOwned(_, publicKeyX, publicKeyY, _) = account.type else {
+        guard case let .passkeyOwned(_, publicKeyX, publicKeyY, curve) = account.type else {
             throw SmartAccountError.invalidAccountType
         }
 
@@ -62,6 +62,7 @@ extension SmartAccountManager {
         let address = try BarzAddressResolver.resolveLocally(
             publicKeyX: publicKeyX,
             publicKeyY: publicKeyY,
+            curve: curve,
             blockchainType: .ethereum
         )
 
