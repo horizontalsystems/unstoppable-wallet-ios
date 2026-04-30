@@ -70,7 +70,7 @@ extension SmartAccountManager {
             id: UUID().uuidString,
             accountId: account.id,
             address: address,
-            implementationVersion: "barz_v1_0_0",
+            implementationVersion: curve.implementationVersion,
             ownerPublicKeyX: publicKeyX,
             ownerPublicKeyY: publicKeyY,
             salt: 0,

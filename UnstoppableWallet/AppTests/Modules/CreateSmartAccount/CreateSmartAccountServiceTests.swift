@@ -1,5 +1,7 @@
 import EvmKit
 import Foundation
+import HdWalletKit
+import HsCryptoKit
 import MarketKit
 import Testing
 @testable import Unstoppable
@@ -60,20 +62,68 @@ struct CreateSmartAccountServiceTests {
         #expect(deploymentChains == Set([.ethereum, .binanceSmartChain]))
     }
 
-    @Test func createProducesStableAaAddress() async throws {
+    /// Smart Account v1 stores the mnemonic-derived secp256k1 owner pubkey halves
+    /// in AccountType.passkeyOwned with curve = .secp256k1. PrivKey is not persisted.
+    @Test func createPersistsSecp256k1AccountType() async throws {
         let env = try SmartAccountTestEnvironment()
-        let passkey = FakePasskeyRegistering.returning(
-            publicKeyX: Data(repeating: 0x11, count: 32),
-            publicKeyY: Data(repeating: 0x22, count: 32)
-        )
+        let service = try makeService(env: env)
+
+        let account = try await service.create(name: "Alice")
+
+        guard case let .passkeyOwned(_, _, _, curve) = account.type else {
+            Issue.record("expected .passkeyOwned, got \(account.type)")
+            return
+        }
+        #expect(curve == .secp256k1)
+    }
+
+    /// Profile's implementationVersion reflects the curve used at creation.
+    @Test func createTagsProfileWithBarzV1EcdsaImplementationVersion() async throws {
+        let env = try SmartAccountTestEnvironment()
+        let service = try makeService(env: env)
+
+        let account = try await service.create(name: "Alice")
+        let profile = try #requiretry (env.smartAccountManager.profile(accountId: account.id))
+
+        #expect(profile.implementationVersion == "barz_v1_ecdsa")
+    }
+
+    /// For the canonical hardhat test mnemonic at m/44'/60'/0'/0/0 the EOA owner
+    /// is 0xf39Fd6e5...92266 (verified Q1). The service must derive the secp256k1
+    /// pubkey halves consistently; profile.address is the BarzAddressResolver
+    /// result for that EOA on Mainnet.
+    @Test func createDerivesOwnerFromHardhatMnemonic() async throws {
+        let env = try SmartAccountTestEnvironment()
+        let mnemonic = [
+            "test", "test", "test", "test", "test", "test",
+            "test", "test", "test", "test", "test", "junk",
+        ]
+        let passkey = FakePasskeyRegistering.returning(mnemonic: mnemonic)
         let service = try makeService(env: env, passkey: passkey)
 
         let account = try await service.create(name: "Alice")
 
-        let lookup = try env.smartAccountManager.profile(accountId: account.id)
-        let profile = try #require(lookup)
-        let expected = try EvmKit.Address(hex: "0x9eab247c9c7406b1bb38a972730ce18c40046d30")
-        #expect(profile.address == expected)
+        let seed = try #require(Mnemonic.seed(mnemonic: mnemonic, passphrase: ""))
+        let privateKey = try Signer.privateKey(seed: seed, chain: .ethereum)
+        let expectedEoa = try EvmKit.Address(hex: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
+        #expect(Signer.address(privateKey: privateKey) == expectedEoa)
+
+        guard case let .passkeyOwned(_, x, y, _) = account.type else {
+            Issue.record("expected .passkeyOwned, got \(account.type)")
+            return
+        }
+        let pubkey = Crypto.publicKey(privateKey: privateKey, compressed: false)
+        #expect(x == Data(pubkey.dropFirst().prefix(32)))
+        #expect(y == Data(pubkey.dropFirst().suffix(32)))
+
+        let expectedAddress = try BarzAddressResolver.resolveLocally(
+            publicKeyX: x,
+            publicKeyY: y,
+            curve: .secp256k1,
+            blockchainType: .ethereum
+        )
+        let profile = try #requiretry (env.smartAccountManager.profile(accountId: account.id))
+        #expect(profile.address == expectedAddress)
     }
 
     @Test func createSetsLastCreatedAccount() async throws {
@@ -116,25 +166,26 @@ struct CreateSmartAccountServiceTests {
 }
 
 private struct FakePasskeyRegistering: SmartAccountPasskeyRegistering {
-    let result: Result<SmartAccountPasskeyManager.Registration, Error>
+    let result: Result<SmartAccountPasskeyRegistration, Error>
 
-    func register(name _: String) async throws -> SmartAccountPasskeyManager.Registration {
+    func register(name _: String) async throws -> SmartAccountPasskeyRegistration {
         try result.get()
     }
 
     static var defaultOk: FakePasskeyRegistering {
-        returning(
-            publicKeyX: Data(repeating: 0x11, count: 32),
-            publicKeyY: Data(repeating: 0x22, count: 32)
-        )
+        // Hardhat test mnemonic — well-known fixture across the EVM tooling ecosystem.
+        // Yields EOA 0xf39Fd6e5...92266 at m/44'/60'/0'/0/0.
+        returning(mnemonic: [
+            "test", "test", "test", "test", "test", "test",
+            "test", "test", "test", "test", "test", "junk",
+        ])
     }
 
-    static func returning(publicKeyX: Data, publicKeyY: Data) -> FakePasskeyRegistering {
+    static func returning(mnemonic: [String]) -> FakePasskeyRegistering {
         FakePasskeyRegistering(result: .success(
-            SmartAccountPasskeyManager.Registration(
+            SmartAccountPasskeyRegistration(
                 credentialID: Data(repeating: 0xCC, count: 16),
-                publicKeyX: publicKeyX,
-                publicKeyY: publicKeyY
+                mnemonic: mnemonic
             )
         ))
     }
