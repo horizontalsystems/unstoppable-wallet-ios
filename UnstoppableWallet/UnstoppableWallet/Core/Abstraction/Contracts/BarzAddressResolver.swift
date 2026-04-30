@@ -23,33 +23,7 @@ enum BarzAddressResolver {
     static func resolveLocally(
         publicKeyX: Data,
         publicKeyY: Data,
-        blockchainType: BlockchainType,
-        salt: BigUInt = 0
-    ) throws -> EvmKit.Address {
-        guard ChainAddresses.aa(for: blockchainType) != nil else {
-            throw ResolveError.unsupportedChain
-        }
-
-        let owner = try BarzFactory.encodeSecp256r1PublicKey(x: publicKeyX, y: publicKeyY)
-        let constructorArgs = AbiEncoder.encode(
-            arguments: [
-                .address(ChainAddresses.barzAccountFacet),
-                .address(ChainAddresses.secp256r1VerificationFacet),
-                .address(ChainAddresses.entryPointV06),
-                .address(ChainAddresses.barzFacetRegistry),
-                .address(ChainAddresses.barzDefaultFallback),
-                .bytes(owner),
-            ]
-        )
-        let initCodeHash = Crypto.sha3(ChainAddresses.barzCreationCode + constructorArgs)
-        let create2Input = Data([0xFF]) + ChainAddresses.barzFactory.raw + pad32(value: salt) + initCodeHash
-
-        return EvmKit.Address(raw: Crypto.sha3(create2Input).suffix(20))
-    }
-
-    static func resolveLocallySecp256k1(
-        publicKeyX: Data,
-        publicKeyY: Data,
+        curve: AccountType.PasskeyCurve,
         blockchainType: BlockchainType,
         salt: BigUInt = 0
     ) throws -> EvmKit.Address {
@@ -57,11 +31,12 @@ enum BarzAddressResolver {
             throw ResolveError.unsupportedChain
         }
 
-        let owner = try BarzFactory.encodeSecp256k1Owner(x: publicKeyX, y: publicKeyY)
+        let (owner, verificationFacet) = try ownerAndFacet(curve: curve, x: publicKeyX, y: publicKeyY, aa: aa)
+
         let constructorArgs = AbiEncoder.encode(
             arguments: [
                 .address(ChainAddresses.barzAccountFacet),
-                .address(aa.secp256k1VerificationFacet),
+                .address(verificationFacet),
                 .address(ChainAddresses.entryPointV06),
                 .address(ChainAddresses.barzFacetRegistry),
                 .address(ChainAddresses.barzDefaultFallback),
@@ -77,6 +52,7 @@ enum BarzAddressResolver {
     static func resolveViaFactory(
         publicKeyX: Data,
         publicKeyY: Data,
+        curve: AccountType.PasskeyCurve,
         blockchainType: BlockchainType,
         salt: BigUInt = 0,
         call: Call
@@ -85,9 +61,10 @@ enum BarzAddressResolver {
             throw ResolveError.unsupportedChain
         }
 
-        let owner = try BarzFactory.encodeSecp256r1PublicKey(x: publicKeyX, y: publicKeyY)
+        let (owner, verificationFacet) = try ownerAndFacet(curve: curve, x: publicKeyX, y: publicKeyY, aa: aa)
+
         let data = BarzFactory.encodeGetAddress(
-            verificationFacet: aa.secp256r1VerificationFacet,
+            verificationFacet: verificationFacet,
             owner: owner,
             salt: salt
         )
@@ -99,6 +76,7 @@ enum BarzAddressResolver {
     static func resolveViaFactory(
         publicKeyX: Data,
         publicKeyY: Data,
+        curve: AccountType.PasskeyCurve,
         blockchainType: BlockchainType,
         networkManager: NetworkManager,
         rpcSource: RpcSource,
@@ -107,6 +85,7 @@ enum BarzAddressResolver {
         try await resolveViaFactory(
             publicKeyX: publicKeyX,
             publicKeyY: publicKeyY,
+            curve: curve,
             blockchainType: blockchainType,
             salt: salt,
             call: { contractAddress, data in
@@ -121,51 +100,27 @@ enum BarzAddressResolver {
         )
     }
 
-    static func resolveViaFactorySecp256k1(
-        publicKeyX: Data,
-        publicKeyY: Data,
-        blockchainType: BlockchainType,
-        salt: BigUInt = 0,
-        call: Call
-    ) async throws -> EvmKit.Address {
-        guard let aa = ChainAddresses.aa(for: blockchainType) else {
-            throw ResolveError.unsupportedChain
+    /// Both curves enter the same CREATE2 bytecode template; only the owner
+    /// encoding and the verification facet address differ. Centralized here
+    /// so resolveLocally / resolveViaFactory don't duplicate the dispatch.
+    private static func ownerAndFacet(
+        curve: AccountType.PasskeyCurve,
+        x: Data,
+        y: Data,
+        aa: ChainAddresses.Aa
+    ) throws -> (owner: Data, facet: EvmKit.Address) {
+        switch curve {
+        case .secp256r1:
+            return try (
+                BarzFactory.encodeSecp256r1PublicKey(x: x, y: y),
+                aa.secp256r1VerificationFacet
+            )
+        case .secp256k1:
+            return try (
+                BarzFactory.encodeSecp256k1Owner(x: x, y: y),
+                aa.secp256k1VerificationFacet
+            )
         }
-
-        let owner = try BarzFactory.encodeSecp256k1Owner(x: publicKeyX, y: publicKeyY)
-        let data = BarzFactory.encodeGetAddress(
-            verificationFacet: aa.secp256k1VerificationFacet,
-            owner: owner,
-            salt: salt
-        )
-        let response = try await call(aa.barzFactory, data)
-
-        return try BarzFactory.decodeGetAddress(response)
-    }
-
-    static func resolveViaFactorySecp256k1(
-        publicKeyX: Data,
-        publicKeyY: Data,
-        blockchainType: BlockchainType,
-        networkManager: NetworkManager,
-        rpcSource: RpcSource,
-        salt: BigUInt = 0
-    ) async throws -> EvmKit.Address {
-        try await resolveViaFactorySecp256k1(
-            publicKeyX: publicKeyX,
-            publicKeyY: publicKeyY,
-            blockchainType: blockchainType,
-            salt: salt,
-            call: { contractAddress, data in
-                try await EvmKit.Kit.call(
-                    networkManager: networkManager,
-                    rpcSource: rpcSource,
-                    contractAddress: contractAddress,
-                    data: data,
-                    defaultBlockParameter: .latest
-                )
-            }
-        )
     }
 
     private static func pad32(value: BigUInt) -> Data {

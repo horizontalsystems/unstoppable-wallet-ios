@@ -347,20 +347,12 @@ enum AccountType: Identifiable {
             guard let blockchainType = BarzAddressResolver.blockchainType(chain: chain) else {
                 return nil
             }
-            switch curve {
-            case .secp256r1:
-                return try? BarzAddressResolver.resolveLocally(
-                    publicKeyX: publicKeyX,
-                    publicKeyY: publicKeyY,
-                    blockchainType: blockchainType
-                )
-            case .secp256k1:
-                return try? BarzAddressResolver.resolveLocallySecp256k1(
-                    publicKeyX: publicKeyX,
-                    publicKeyY: publicKeyY,
-                    blockchainType: blockchainType
-                )
-            }
+            return try? BarzAddressResolver.resolveLocally(
+                publicKeyX: publicKeyX,
+                publicKeyY: publicKeyY,
+                curve: curve,
+                blockchainType: blockchainType
+            )
         case let .evmPrivateKey(data):
             return EvmKit.Signer.address(privateKey: data)
         default:

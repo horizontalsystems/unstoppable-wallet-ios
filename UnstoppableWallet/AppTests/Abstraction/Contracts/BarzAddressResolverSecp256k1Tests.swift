@@ -8,7 +8,7 @@ import MarketKit
 @testable import Unstoppable
 import XCTest
 
-/// Tests for BarzAddressResolver secp256k1 sibling methods.
+/// Tests for BarzAddressResolver with curve = .secp256k1.
 ///
 /// Structural + mocked tests run in CI (always green).
 /// Live Q2/Q3 verification (local CREATE2 vs on-chain factory.getAddress) is
@@ -23,14 +23,16 @@ final class BarzAddressResolverSecp256k1Tests: XCTestCase {
     // MARK: - Structural
 
     func testResolveLocallyIsDeterministicForSameInput() throws {
-        let address1 = try BarzAddressResolver.resolveLocallySecp256k1(
+        let address1 = try BarzAddressResolver.resolveLocally(
             publicKeyX: testX,
             publicKeyY: testY,
+            curve: .secp256k1,
             blockchainType: .ethereum
         )
-        let address2 = try BarzAddressResolver.resolveLocallySecp256k1(
+        let address2 = try BarzAddressResolver.resolveLocally(
             publicKeyX: testX,
             publicKeyY: testY,
+            curve: .secp256k1,
             blockchainType: .ethereum
         )
 
@@ -41,14 +43,16 @@ final class BarzAddressResolverSecp256k1Tests: XCTestCase {
     /// (vs 65-byte uncompressed pubkey for secp256r1). Both differences enter the CREATE2
     /// bytecode hash, so addresses MUST differ for the same X/Y.
     func testResolveLocallyDiffersFromSecp256r1ForSameXY() throws {
-        let secp256k1 = try BarzAddressResolver.resolveLocallySecp256k1(
+        let secp256k1 = try BarzAddressResolver.resolveLocally(
             publicKeyX: testX,
             publicKeyY: testY,
+            curve: .secp256k1,
             blockchainType: .ethereum
         )
         let secp256r1 = try BarzAddressResolver.resolveLocally(
             publicKeyX: testX,
             publicKeyY: testY,
+            curve: .secp256r1,
             blockchainType: .ethereum
         )
 
@@ -60,14 +64,16 @@ final class BarzAddressResolverSecp256k1Tests: XCTestCase {
     /// the CREATE2 bytecode hash via constructor args, AA addresses MUST differ
     /// between Mainnet and BSC for the same owner.
     func testResolveLocallyDiffersBetweenMainnetAndBsc() throws {
-        let mainnet = try BarzAddressResolver.resolveLocallySecp256k1(
+        let mainnet = try BarzAddressResolver.resolveLocally(
             publicKeyX: testX,
             publicKeyY: testY,
+            curve: .secp256k1,
             blockchainType: .ethereum
         )
-        let bsc = try BarzAddressResolver.resolveLocallySecp256k1(
+        let bsc = try BarzAddressResolver.resolveLocally(
             publicKeyX: testX,
             publicKeyY: testY,
+            curve: .secp256k1,
             blockchainType: .binanceSmartChain
         )
 
@@ -76,9 +82,10 @@ final class BarzAddressResolverSecp256k1Tests: XCTestCase {
 
     func testResolveLocallyUnsupportedChainThrows() {
         XCTAssertThrowsError(
-            try BarzAddressResolver.resolveLocallySecp256k1(
+            try BarzAddressResolver.resolveLocally(
                 publicKeyX: testX,
                 publicKeyY: testY,
+                curve: .secp256k1,
                 blockchainType: .polygon
             )
         )
@@ -86,14 +93,15 @@ final class BarzAddressResolverSecp256k1Tests: XCTestCase {
 
     // MARK: - Mocked wire encoding
 
-    /// Verifies that resolveViaFactorySecp256k1 sends the correct calldata to BarzFactory.getAddress
-    /// on Mainnet — including the Mainnet-specific Secp256k1VerificationFacet address.
+    /// Verifies that resolveViaFactory with curve=.secp256k1 sends the correct calldata
+    /// to BarzFactory.getAddress on Mainnet — including the Mainnet-specific facet address.
     func testResolveViaFactorySecp256k1_usesEthereumFacetInCallData() async throws {
         let mainnetFacetHex = "58cb9abe27fcd6f72354e98cf5cc46beaa2182df"
 
-        let address = try await BarzAddressResolver.resolveViaFactorySecp256k1(
+        let address = try await BarzAddressResolver.resolveViaFactory(
             publicKeyX: testX,
             publicKeyY: testY,
+            curve: .secp256k1,
             blockchainType: .ethereum,
             salt: 0,
             call: { contractAddress, data in
@@ -112,9 +120,10 @@ final class BarzAddressResolverSecp256k1Tests: XCTestCase {
     func testResolveViaFactorySecp256k1_usesBscFacetInCallData() async throws {
         let bscFacetHex = "81b9e3689390c7e74cf526594a105dea21a8cdd5"
 
-        _ = try await BarzAddressResolver.resolveViaFactorySecp256k1(
+        _ = try await BarzAddressResolver.resolveViaFactory(
             publicKeyX: testX,
             publicKeyY: testY,
+            curve: .secp256k1,
             blockchainType: .binanceSmartChain,
             salt: 0,
             call: { _, data in
@@ -140,14 +149,16 @@ final class BarzAddressResolverSecp256k1Tests: XCTestCase {
 
         let (X, Y) = try Self.hardhatPubkeyHalves()
 
-        let local = try BarzAddressResolver.resolveLocallySecp256k1(
+        let local = try BarzAddressResolver.resolveLocally(
             publicKeyX: X,
             publicKeyY: Y,
+            curve: .secp256k1,
             blockchainType: .ethereum
         )
-        let onChain = try await BarzAddressResolver.resolveViaFactorySecp256k1(
+        let onChain = try await BarzAddressResolver.resolveViaFactory(
             publicKeyX: X,
             publicKeyY: Y,
+            curve: .secp256k1,
             blockchainType: .ethereum,
             networkManager: NetworkManager(),
             rpcSource: .http(urls: [URL(string: "https://ethereum-rpc.publicnode.com")!], auth: nil)
@@ -166,14 +177,16 @@ final class BarzAddressResolverSecp256k1Tests: XCTestCase {
 
         let (X, Y) = try Self.hardhatPubkeyHalves()
 
-        let local = try BarzAddressResolver.resolveLocallySecp256k1(
+        let local = try BarzAddressResolver.resolveLocally(
             publicKeyX: X,
             publicKeyY: Y,
+            curve: .secp256k1,
             blockchainType: .binanceSmartChain
         )
-        let onChain = try await BarzAddressResolver.resolveViaFactorySecp256k1(
+        let onChain = try await BarzAddressResolver.resolveViaFactory(
             publicKeyX: X,
             publicKeyY: Y,
+            curve: .secp256k1,
             blockchainType: .binanceSmartChain,
             networkManager: NetworkManager(),
             rpcSource: .binanceSmartChainHttp()

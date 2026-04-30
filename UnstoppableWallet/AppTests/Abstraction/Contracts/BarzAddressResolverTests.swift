@@ -10,6 +10,7 @@ final class BarzAddressResolverTests: XCTestCase {
         let address = try BarzAddressResolver.resolveLocally(
             publicKeyX: Data(repeating: 0x11, count: 32),
             publicKeyY: Data(repeating: 0x22, count: 32),
+            curve: .secp256r1,
             blockchainType: .ethereum
         )
 
@@ -20,6 +21,7 @@ final class BarzAddressResolverTests: XCTestCase {
         let address = try await BarzAddressResolver.resolveViaFactory(
             publicKeyX: Data(repeating: 0x11, count: 32),
             publicKeyY: Data(repeating: 0x22, count: 32),
+            curve: .secp256r1,
             blockchainType: .ethereum,
             salt: 0,
             call: { contractAddress, data in
@@ -40,6 +42,7 @@ final class BarzAddressResolverTests: XCTestCase {
             try BarzAddressResolver.resolveLocally(
                 publicKeyX: Data(repeating: 0x11, count: 32),
                 publicKeyY: Data(repeating: 0x22, count: 32),
+                curve: .secp256r1,
                 blockchainType: .polygon
             )
         )
