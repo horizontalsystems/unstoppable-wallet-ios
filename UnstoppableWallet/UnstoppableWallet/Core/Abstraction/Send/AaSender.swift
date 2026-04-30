@@ -159,11 +159,28 @@ extension AaSender {
             signature: Secp256r1VerificationFacet.dummySignature()
         )
         let gasEstimate = try await pimlicoProvider.estimateUserOperationGas(userOp: estimateUserOp)
-        let totalGas = gasEstimate.callGasLimit + gasEstimate.verificationGasLimit + gasEstimate.preVerificationGas
+        // Mainnet secp256r1 verification runs via FCL_ELLIPTIC_ZZ Solidity fallback
+        // (precompile 0x02 SHA-256 + 0x05 modexp + Solidity arithmetic). Real cost
+        // ~500-600k gas, Pimlico estimator returns ~160k. Observed:
+        //   x1 (161k) -> OOG at SUB (after ~100k spent in facet)
+        //   x2 (322k) -> OOG at ADDMOD (after ~287k spent in facet)
+        // Hence hard floor 700k + x4 multiplier to cover AccountFacet diamond hops
+        // (~30k overhead to facet) + the FCL crunch itself. callGas/preVerification:
+        // estimator is accurate.
+        let scaledVerification = gasEstimate.verificationGasLimit * 4
+        let verificationFloor: BigUInt = 700_000
+        let bufferedVerification = max(scaledVerification, verificationFloor)
+        let bufferedGasEstimate = PimlicoProvider.GasEstimate(
+            callGasLimit: gasEstimate.callGasLimit,
+            verificationGasLimit: bufferedVerification,
+            preVerificationGas: gasEstimate.preVerificationGas
+        )
+        let totalGas = bufferedGasEstimate.callGasLimit + bufferedGasEstimate.verificationGasLimit + bufferedGasEstimate.preVerificationGas
         let totalFeeWei = totalGas * resolvedGas.maxFeePerGas
-        print("[AaSender] eth_estimateUserOperationGas → callGasLimit=\(gasEstimate.callGasLimit) verificationGasLimit=\(gasEstimate.verificationGasLimit) preVerificationGas=\(gasEstimate.preVerificationGas) total=\(totalGas)")
+        print("[AaSender] eth_estimateUserOperationGas → raw callGasLimit=\(gasEstimate.callGasLimit) verificationGasLimit=\(gasEstimate.verificationGasLimit) preVerificationGas=\(gasEstimate.preVerificationGas)")
+        print("[AaSender] buffered → callGasLimit=\(bufferedGasEstimate.callGasLimit) verificationGasLimit=\(bufferedGasEstimate.verificationGasLimit) preVerificationGas=\(bufferedGasEstimate.preVerificationGas) total=\(totalGas)")
         print("[AaSender] estimated fee → \(totalGas) gas × \(Self.gwei(resolvedGas.maxFeePerGas)) gwei = \(totalFeeWei) wei (≈ \(Self.eth(totalFeeWei)))")
-        await logPimlicoTokenQuote(tokenAddress: tokenAddress, token: baseToken, gasEstimate: gasEstimate, gasPrices: resolvedGas)
+        await logPimlicoTokenQuote(tokenAddress: tokenAddress, token: baseToken, gasEstimate: bufferedGasEstimate, gasPrices: resolvedGas)
 
         // Replace stub paymasterAndData with the REAL signed paymasterAndData. Required before
         // userOpHash/sign/submit — bundler rejects the stub signature on submission (ERC-7677).
@@ -172,7 +189,7 @@ extension AaSender {
             nonce: resolvedNonce,
             initCode: initCode,
             callData: callData,
-            gas: gasEstimate,
+            gas: bufferedGasEstimate,
             gasPrices: resolvedGas,
             paymasterAndData: paymasterAndData,
             signature: Secp256r1VerificationFacet.dummySignature()
@@ -186,7 +203,7 @@ extension AaSender {
             nonce: resolvedNonce,
             initCode: initCode,
             callData: callData,
-            gas: gasEstimate,
+            gas: bufferedGasEstimate,
             gasPrices: resolvedGas,
             paymasterAndData: realPaymasterAndData,
             signature: Data()
@@ -206,7 +223,7 @@ extension AaSender {
             userOp: finalUserOp,
             userOpHash: userOpHash,
             isFreshDeployment: isFreshDeployment,
-            gasEstimate: gasEstimate,
+            gasEstimate: bufferedGasEstimate,
             gasPrices: resolvedGas,
             paymasterMode: paymasterMode,
             baseToken: baseToken,
