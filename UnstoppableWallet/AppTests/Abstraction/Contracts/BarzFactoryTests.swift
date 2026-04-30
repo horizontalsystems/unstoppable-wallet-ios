@@ -1,4 +1,6 @@
 import EvmKit
+import HdWalletKit
+import HsCryptoKit
 import HsExtensions
 @testable import Unstoppable
 import XCTest
@@ -43,6 +45,45 @@ final class BarzFactoryTests: XCTestCase {
         )
 
         XCTAssertEqual(publicKey, ownerPublicKey())
+    }
+
+    /// encodeSecp256k1Owner(x:y:) derives 20-byte EOA address from the secp256k1
+    /// uncompressed public key halves. Cross-check: hardhat test mnemonic at
+    /// m/44'/60'/0'/0/0 yields EOA 0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266.
+    /// The encoded owner must equal Signer.address(privateKey:) for the same key.
+    func testEncodeSecp256k1Owner_matchesSignerAddress() throws {
+        let mnemonic = [
+            "test", "test", "test", "test", "test", "test",
+            "test", "test", "test", "test", "test", "junk",
+        ]
+        let seed = try XCTUnwrap(Mnemonic.seed(mnemonic: mnemonic, passphrase: ""))
+        let privateKey = try Signer.privateKey(seed: seed, chain: .ethereum)
+
+        let pubkey = Crypto.publicKey(privateKey: privateKey, compressed: false)
+        XCTAssertEqual(pubkey.count, 65, "uncompressed secp256k1 pubkey must be 65 bytes")
+        XCTAssertEqual(pubkey.first, 0x04, "uncompressed prefix")
+
+        let X = Data(pubkey.dropFirst().prefix(32))
+        let Y = Data(pubkey.dropFirst().suffix(32))
+
+        let encoded = try BarzFactory.encodeSecp256k1Owner(x: X, y: Y)
+
+        XCTAssertEqual(encoded.count, 20, "encoded owner must be 20-byte EOA address")
+        XCTAssertEqual(EvmKit.Address(raw: encoded), Signer.address(privateKey: privateKey))
+        XCTAssertEqual(
+            EvmKit.Address(raw: encoded),
+            try EvmKit.Address(hex: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"),
+            "Hardhat account #0 EOA expected"
+        )
+    }
+
+    func testEncodeSecp256k1Owner_throwsOnInvalidCoordinateLength() {
+        XCTAssertThrowsError(
+            try BarzFactory.encodeSecp256k1Owner(x: Data(repeating: 0x11, count: 31), y: Data(repeating: 0x22, count: 32))
+        )
+        XCTAssertThrowsError(
+            try BarzFactory.encodeSecp256k1Owner(x: Data(repeating: 0x11, count: 32), y: Data(repeating: 0x22, count: 31))
+        )
     }
 
     func testBuildInitCode() {
