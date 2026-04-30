@@ -16,7 +16,7 @@ class AaSender {
     private let evmKit: EvmKit.Kit
     private let pimlicoProvider: PimlicoProvider
     private let codeProvider: EvmCodeProvider
-    private let passkeyManager: SmartAccountPasskeyManager
+    private let passkeyManager: PasskeyManager
     private let smartAccountManager: SmartAccountManager
     private let decorator = EvmDecorator()
 
@@ -27,7 +27,7 @@ class AaSender {
         evmKit: EvmKit.Kit,
         pimlicoProvider: PimlicoProvider,
         codeProvider: EvmCodeProvider,
-        passkeyManager: SmartAccountPasskeyManager,
+        passkeyManager: PasskeyManager,
         smartAccountManager: SmartAccountManager
     ) {
         self.blockchainType = blockchainType
@@ -54,7 +54,7 @@ extension AaSender {
         gasPrices: PimlicoProvider.GasPrices.Tier? = nil,
         nonce: BigUInt? = nil
     ) async throws -> PreparedUserOp {
-        guard let (publicKeyX, publicKeyY) = passkeyKeyPair(from: account) else {
+        guard let (publicKeyX, publicKeyY, curve) = passkeyOwner(from: account) else {
             throw SenderError.notPasskeyAccount
         }
 
@@ -88,8 +88,8 @@ extension AaSender {
         }
 
         let isFreshDeployment = !isDeployed
-        let initCode = isFreshDeployment ? buildInitCode(publicKeyX: publicKeyX, publicKeyY: publicKeyY) : Data()
-        print("[AaSender] initCode bytes=\(initCode.count) (fresh=\(isFreshDeployment))")
+        let initCode = isFreshDeployment ? buildInitCode(publicKeyX: publicKeyX, publicKeyY: publicKeyY, curve: curve) : Data()
+        print("[AaSender] initCode bytes=\(initCode.count) (fresh=\(isFreshDeployment), curve=\(curve.rawValue))")
 
         // For fresh deployment we pre-query an ERC-20 paymaster stub to learn the paymaster
         // address, so our executeBatch's approve target is correct. Final paymasterAndData is
@@ -131,6 +131,8 @@ extension AaSender {
             callData = AccountFacet.encodeExecute(target: transactionData.to, value: transactionData.value, data: transactionData.input)
         }
 
+        let dummySignature = Self.dummySignature(curve: curve)
+
         // Stub UserOp for paymaster + gas estimation: dummy signature gives realistic verification cost.
         let stubUserOp = makeUserOp(
             sender: sender,
@@ -140,7 +142,7 @@ extension AaSender {
             gas: PimlicoProvider.GasEstimate(callGasLimit: 0, verificationGasLimit: 0, preVerificationGas: 0),
             gasPrices: resolvedGas,
             paymasterAndData: Data(),
-            signature: Secp256r1VerificationFacet.dummySignature()
+            signature: dummySignature
         )
 
         let paymasterMode: PimlicoProvider.PaymasterMode = .erc20(token: tokenAddress)
@@ -156,25 +158,10 @@ extension AaSender {
             gas: PimlicoProvider.GasEstimate(callGasLimit: 0, verificationGasLimit: 0, preVerificationGas: 0),
             gasPrices: resolvedGas,
             paymasterAndData: paymasterAndData,
-            signature: Secp256r1VerificationFacet.dummySignature()
+            signature: dummySignature
         )
         let gasEstimate = try await pimlicoProvider.estimateUserOperationGas(userOp: estimateUserOp)
-        // Mainnet secp256r1 verification runs via FCL_ELLIPTIC_ZZ Solidity fallback
-        // (precompile 0x02 SHA-256 + 0x05 modexp + Solidity arithmetic). Real cost
-        // ~500-600k gas, Pimlico estimator returns ~160k. Observed:
-        //   x1 (161k) -> OOG at SUB (after ~100k spent in facet)
-        //   x2 (322k) -> OOG at ADDMOD (after ~287k spent in facet)
-        // Hence hard floor 700k + x4 multiplier to cover AccountFacet diamond hops
-        // (~30k overhead to facet) + the FCL crunch itself. callGas/preVerification:
-        // estimator is accurate.
-        let scaledVerification = gasEstimate.verificationGasLimit * 4
-        let verificationFloor: BigUInt = 700_000
-        let bufferedVerification = max(scaledVerification, verificationFloor)
-        let bufferedGasEstimate = PimlicoProvider.GasEstimate(
-            callGasLimit: gasEstimate.callGasLimit,
-            verificationGasLimit: bufferedVerification,
-            preVerificationGas: gasEstimate.preVerificationGas
-        )
+        let bufferedGasEstimate = Self.bufferGasEstimate(gasEstimate, curve: curve)
         let totalGas = bufferedGasEstimate.callGasLimit + bufferedGasEstimate.verificationGasLimit + bufferedGasEstimate.preVerificationGas
         let totalFeeWei = totalGas * resolvedGas.maxFeePerGas
         print("[AaSender] eth_estimateUserOperationGas → raw callGasLimit=\(gasEstimate.callGasLimit) verificationGasLimit=\(gasEstimate.verificationGasLimit) preVerificationGas=\(gasEstimate.preVerificationGas)")
@@ -192,11 +179,22 @@ extension AaSender {
             gas: bufferedGasEstimate,
             gasPrices: resolvedGas,
             paymasterAndData: paymasterAndData,
-            signature: Secp256r1VerificationFacet.dummySignature()
+            signature: dummySignature
         )
         let realPaymasterAndData = try await pimlicoProvider.getPaymasterData(userOp: userOpForPaymasterData, mode: paymasterMode)
         print("[AaSender] pm_getPaymasterData → real paymasterAndData bytes=\(realPaymasterAndData.count)")
         logPaymasterAndData(realPaymasterAndData, token: baseToken)
+
+        // F4 invariant: Pimlico can theoretically rotate paymaster between stub and final
+        // response. If we approved (or planned to approve) one paymaster but the final
+        // UserOp references a different one, validation reverts on chain → retry blowup
+        // → double-charge. Abort here instead of letting that pathology hit the user.
+        if let stubPaymasterAddress = paymasterAddress {
+            let finalPaymasterAddress = try Self.extractPaymasterAddress(from: realPaymasterAndData)
+            guard finalPaymasterAddress == stubPaymasterAddress else {
+                throw SenderError.paymasterAddressChanged(stub: stubPaymasterAddress, final: finalPaymasterAddress)
+            }
+        }
 
         let finalUserOp = makeUserOp(
             sender: sender,
@@ -233,17 +231,32 @@ extension AaSender {
 
     /// Sign via passkey, submit via bundler, archive record. Returns userOpHash echoed by bundler.
     func submit(account: Account, prepared: PreparedUserOp) async throws -> Data {
-        guard case let .passkeyOwned(credentialID, _, _, _) = account.type else {
+        guard case let .passkeyOwned(credentialID, _, _, curve) = account.type else {
             throw SenderError.notPasskeyAccount
         }
 
-        print("[AaSender] submit → userOpHash=\(prepared.userOpHash.hs.hex) prompting passkey…")
+        guard let chain = try? Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType) else {
+            throw SenderError.unsupportedChain
+        }
 
-        let signatureBytes = try await PasskeyUserOpSigner.sign(
-            userOpHash: prepared.userOpHash,
-            credentialID: credentialID,
-            passkeyManager: passkeyManager
-        )
+        print("[AaSender] submit → userOpHash=\(prepared.userOpHash.hs.hex) curve=\(curve.rawValue) prompting passkey…")
+
+        let signatureBytes: Data
+        switch curve {
+        case .secp256k1:
+            signatureBytes = try await EcdsaUserOpSigner.signViaPasskey(
+                credentialID: credentialID,
+                userOpHash: prepared.userOpHash,
+                passkeyManager: passkeyManager,
+                chain: chain
+            )
+        case .secp256r1:
+            // Legacy P-256 path. Zero accounts in user DB after manual drain 2026-04-29
+            // and CreateSmartAccountService now creates only .secp256k1, so this branch
+            // is effectively dead. Throw rather than attempt a WebAuthn signature with
+            // the wrong PasskeyManager type.
+            throw SenderError.legacyCurveNotSupported
+        }
         print("[AaSender] signature ready (bytes=\(signatureBytes.count))")
 
         let signedUserOp = UserOperation(
@@ -279,6 +292,8 @@ extension AaSender {
         case profileMissing
         case deploymentMissing
         case malformedPaymasterStub
+        case paymasterAddressChanged(stub: EvmKit.Address, final: EvmKit.Address)
+        case legacyCurveNotSupported
     }
 }
 
@@ -319,11 +334,11 @@ private extension AaSender {
         return address
     }
 
-    func passkeyKeyPair(from account: Account) -> (publicKeyX: Data, publicKeyY: Data)? {
-        guard case let .passkeyOwned(_, publicKeyX, publicKeyY, _) = account.type else {
+    func passkeyOwner(from account: Account) -> (publicKeyX: Data, publicKeyY: Data, curve: AccountType.PasskeyCurve)? {
+        guard case let .passkeyOwned(_, publicKeyX, publicKeyY, curve) = account.type else {
             return nil
         }
-        return (publicKeyX, publicKeyY)
+        return (publicKeyX, publicKeyY, curve)
     }
 
     func fetchNonce(sender: EvmKit.Address) async throws -> BigUInt {
@@ -369,11 +384,25 @@ private extension AaSender {
         }
     }
 
-    func buildInitCode(publicKeyX: Data, publicKeyY: Data) -> Data {
-        let owner = (try? BarzFactory.encodeSecp256r1PublicKey(x: publicKeyX, y: publicKeyY)) ?? Data()
+    func buildInitCode(publicKeyX: Data, publicKeyY: Data, curve: AccountType.PasskeyCurve) -> Data {
+        guard let aa = ChainAddresses.aa(for: blockchainType) else {
+            return Data()
+        }
+
+        let owner: Data
+        let verificationFacet: EvmKit.Address
+        switch curve {
+        case .secp256r1:
+            owner = (try? BarzFactory.encodeSecp256r1PublicKey(x: publicKeyX, y: publicKeyY)) ?? Data()
+            verificationFacet = aa.secp256r1VerificationFacet
+        case .secp256k1:
+            owner = (try? BarzFactory.encodeSecp256k1Owner(x: publicKeyX, y: publicKeyY)) ?? Data()
+            verificationFacet = aa.secp256k1VerificationFacet
+        }
+
         return BarzFactory.buildInitCode(
             factory: ChainAddresses.barzFactory,
-            verificationFacet: ChainAddresses.secp256r1VerificationFacet,
+            verificationFacet: verificationFacet,
             owner: owner,
             salt: 0
         )
@@ -410,6 +439,38 @@ private extension AaSender {
             throw SenderError.malformedPaymasterStub
         }
         return EvmKit.Address(raw: paymasterAndData.prefix(20))
+    }
+
+    static func dummySignature(curve: AccountType.PasskeyCurve) -> Data {
+        switch curve {
+        case .secp256k1:
+            return EcdsaUserOpSigner.dummySignature()
+        case .secp256r1:
+            return Secp256r1VerificationFacet.dummySignature()
+        }
+    }
+
+    /// Buffers verificationGasLimit. Pimlico estimator is accurate for callGas and
+    /// preVerification but tight on verification. The buffer protects against:
+    ///  - secp256r1: FCL_ELLIPTIC_ZZ Solidity P-256 verification on Mainnet costs
+    ///    ~500-600k gas. Hard floor 700k + x4 multiplier observed empirically
+    ///    (vGL=161k → OOG at SUB; vGL=322k → OOG at ADDMOD; vGL=700k succeeds).
+    ///  - secp256k1: ecrecover precompile is ~3k gas, deterministic. Modest 1.3x
+    ///    safety margin is enough.
+    static func bufferGasEstimate(_ estimate: PimlicoProvider.GasEstimate, curve: AccountType.PasskeyCurve) -> PimlicoProvider.GasEstimate {
+        let bufferedVerification: BigUInt
+        switch curve {
+        case .secp256r1:
+            let scaled = estimate.verificationGasLimit * 4
+            bufferedVerification = max(scaled, BigUInt(700_000))
+        case .secp256k1:
+            bufferedVerification = estimate.verificationGasLimit * 13 / 10
+        }
+        return PimlicoProvider.GasEstimate(
+            callGasLimit: estimate.callGasLimit,
+            verificationGasLimit: bufferedVerification,
+            preVerificationGas: estimate.preVerificationGas
+        )
     }
 
     func logPaymasterAndData(_ paymasterAndData: Data, token: Token) {

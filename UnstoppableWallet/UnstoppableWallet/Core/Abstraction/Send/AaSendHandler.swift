@@ -94,7 +94,7 @@ extension AaSendHandler {
             evmKit: evmKit,
             pimlicoProvider: pimlicoProvider,
             codeProvider: codeProvider,
-            passkeyManager: core.smartAccountPasskeyManager,
+            passkeyManager: PasskeyManager(),
             smartAccountManager: core.smartAccountManager
         )
 
