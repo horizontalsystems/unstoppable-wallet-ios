@@ -23,9 +23,9 @@ extension Eip155RequestFactory {
             throw WalletConnectRequest.CreationError.invalidChain
         }
 
-        guard let address = try? WalletConnectManager.evmAddress(
+        guard let address = try? AccountAddress.evmAddress(
             account: account,
-            chain: try evmBlockchainManager.chain(blockchainType: blockchain.type)
+            blockchainType: blockchain.type
         )
         else {
             throw WalletConnectRequest.CreationError.cantCreateAddress

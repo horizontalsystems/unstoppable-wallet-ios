@@ -2,28 +2,29 @@ import BigInt
 import EvmKit
 import Foundation
 import HsExtensions
+import MarketKit
 
 struct SmartAccountProfile: Equatable, Hashable {
     let id: String
     let accountId: String
-    let address: EvmKit.Address
     let implementationVersion: String
     let ownerPublicKeyX: Data
     let ownerPublicKeyY: Data
+    let curve: SignatureCurve
     let salt: BigUInt
     let createdAt: TimeInterval
 }
 
 extension SmartAccountProfile {
     init(record: SmartAccountProfileRecord) throws {
-        guard let address = try? EvmKit.Address(hex: record.address) else {
-            throw ConversionError.invalidAddress(field: "address")
-        }
         guard let x = record.ownerPublicKeyX.hs.hexData else {
             throw ConversionError.invalidHex(field: "ownerPublicKeyX")
         }
         guard let y = record.ownerPublicKeyY.hs.hexData else {
             throw ConversionError.invalidHex(field: "ownerPublicKeyY")
+        }
+        guard let curve = SignatureCurve(rawValue: record.curve) else {
+            throw ConversionError.invalidCurve(field: "curve")
         }
         guard let salt = BigUInt(record.salt) else {
             throw ConversionError.invalidBigUInt(field: "salt")
@@ -32,10 +33,10 @@ extension SmartAccountProfile {
         self.init(
             id: record.id,
             accountId: record.accountId,
-            address: address,
             implementationVersion: record.implementationVersion,
             ownerPublicKeyX: x,
             ownerPublicKeyY: y,
+            curve: curve,
             salt: salt,
             createdAt: record.createdAt
         )
@@ -45,18 +46,28 @@ extension SmartAccountProfile {
         SmartAccountProfileRecord(
             id: id,
             accountId: accountId,
-            address: address.eip55,
             implementationVersion: implementationVersion,
             ownerPublicKeyX: ownerPublicKeyX.hs.hex,
             ownerPublicKeyY: ownerPublicKeyY.hs.hex,
+            curve: curve.rawValue,
             salt: String(salt),
             createdAt: createdAt
         )
     }
 
+    func address(blockchainType: BlockchainType) throws -> EvmKit.Address {
+        try BarzAddressResolver.resolveLocally(
+            publicKeyX: ownerPublicKeyX,
+            publicKeyY: ownerPublicKeyY,
+            curve: curve,
+            blockchainType: blockchainType,
+            salt: salt
+        )
+    }
+
     enum ConversionError: Error, Equatable {
-        case invalidAddress(field: String)
         case invalidHex(field: String)
+        case invalidCurve(field: String)
         case invalidBigUInt(field: String)
     }
 }

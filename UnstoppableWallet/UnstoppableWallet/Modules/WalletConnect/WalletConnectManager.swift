@@ -76,19 +76,6 @@ extension WalletConnectManager {
 }
 
 extension WalletConnectManager {
-    static func evmAddress(account: Account, chain: Chain) throws -> EvmKit.Address {
-        if let mnemonicSeed = account.type.mnemonicSeed {
-            return try Signer.address(seed: mnemonicSeed, chain: chain)
-        }
-        if case let .evmPrivateKey(data) = account.type {
-            return Signer.address(privateKey: data)
-        }
-        if case let .evmAddress(address) = account.type {
-            return address
-        }
-        throw AdapterError.unsupportedAccount
-    }
-
     static func stellarAddress(account: Account) throws -> String {
         try StellarKitManager.accountId(accountType: account.type)
     }

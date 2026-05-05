@@ -186,12 +186,6 @@ class TronAccountManager {
 }
 
 extension TronAccountManager {
-    func address(type: AccountType) throws -> String {
-        try tronKitManager.address(type: type)
-    }
-}
-
-extension TronAccountManager {
     struct TokenInfo {
         let type: TokenType
         let coinName: String

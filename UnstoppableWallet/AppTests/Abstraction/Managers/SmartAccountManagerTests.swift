@@ -30,32 +30,35 @@ struct SmartAccountManagerTests {
         )
 
         #expect(throws: SmartAccountManager.SmartAccountError.invalidAccountType) {
-            _ = try env.smartAccountManager.createProfile(account: nonPasskey)
+            _ = try env.smartAccountManager.createProfile(
+                account: nonPasskey,
+                ownerPublicKeyX: Data(repeating: 0x11, count: 32),
+                ownerPublicKeyY: Data(repeating: 0x22, count: 32),
+                curve: .secp256r1
+            )
         }
     }
 
     @Test func createProfileComputesCorrectAddress() throws {
         let env = try SmartAccountTestEnvironment()
-        let account = env.makePasskeyAccount(
-            publicKeyX: Data(repeating: 0x11, count: 32),
-            publicKeyY: Data(repeating: 0x22, count: 32)
-        )
+        let account = env.makePasskeyAccount()
 
-        let profile = try env.smartAccountManager.createProfile(account: account)
+        let profile = try env.createProfile(account: account)
 
         let expected = try EvmKit.Address(hex: "0x9eab247c9c7406b1bb38a972730ce18c40046d30")
-        #expect(profile.address == expected)
+        #expecttry (profile.address(blockchainType: .ethereum) == expected)
         #expect(profile.implementationVersion == "barz_v1_0_0")
         #expect(profile.ownerPublicKeyX == Data(repeating: 0x11, count: 32))
         #expect(profile.ownerPublicKeyY == Data(repeating: 0x22, count: 32))
+        #expect(profile.curve == .secp256r1)
     }
 
     @Test func createProfileIsIdempotentForSameAccount() throws {
         let env = try SmartAccountTestEnvironment()
         let account = env.makePasskeyAccount()
 
-        let first = try env.smartAccountManager.createProfile(account: account)
-        let second = try env.smartAccountManager.createProfile(account: account)
+        let first = try env.createProfile(account: account)
+        let second = try env.createProfile(account: account)
 
         #expect(first.id == second.id)
         let all = try env.smartAccountManager.profiles()
@@ -65,27 +68,23 @@ struct SmartAccountManagerTests {
     @Test func createProfileDetectsPubkeyMismatch() throws {
         let env = try SmartAccountTestEnvironment()
         let accountId = UUID().uuidString
-        let first = env.makePasskeyAccount(
-            id: accountId,
-            publicKeyX: Data(repeating: 0x11, count: 32),
-            publicKeyY: Data(repeating: 0x22, count: 32)
-        )
-        let collided = env.makePasskeyAccount(
-            id: accountId,
-            publicKeyX: Data(repeating: 0xAA, count: 32),
-            publicKeyY: Data(repeating: 0xBB, count: 32)
-        )
+        let first = env.makePasskeyAccount(id: accountId)
+        let collided = env.makePasskeyAccount(id: accountId)
 
-        _ = try env.smartAccountManager.createProfile(account: first)
+        _ = try env.createProfile(account: first)
 
         #expect(throws: SmartAccountManager.SmartAccountError.pubkeyMismatch) {
-            _ = try env.smartAccountManager.createProfile(account: collided)
+            _ = try env.createProfile(
+                account: collided,
+                publicKeyX: Data(repeating: 0xAA, count: 32),
+                publicKeyY: Data(repeating: 0xBB, count: 32)
+            )
         }
     }
 
     @Test func createDeploymentIsIdempotent() throws {
         let env = try SmartAccountTestEnvironment()
-        let profile = try env.smartAccountManager.createProfile(account: env.makePasskeyAccount())
+        let profile = try env.createProfile(account: env.makePasskeyAccount())
 
         let first = try env.smartAccountManager.createDeployment(profile: profile, blockchainType: .ethereum)
         let second = try env.smartAccountManager.createDeployment(profile: profile, blockchainType: .ethereum)
@@ -98,7 +97,7 @@ struct SmartAccountManagerTests {
     @Test func queryMethodsReturnDomainTypes() throws {
         let env = try SmartAccountTestEnvironment()
         let account = env.makePasskeyAccount()
-        let profile = try env.smartAccountManager.createProfile(account: account)
+        let profile = try env.createProfile(account: account)
         _ = try env.smartAccountManager.createDeployment(profile: profile, blockchainType: .ethereum)
         _ = try env.smartAccountManager.createDeployment(profile: profile, blockchainType: .binanceSmartChain)
 
@@ -116,7 +115,7 @@ struct SmartAccountManagerTests {
 
     @Test func updateDeployedFlipsFlag() throws {
         let env = try SmartAccountTestEnvironment()
-        let profile = try env.smartAccountManager.createProfile(account: env.makePasskeyAccount())
+        let profile = try env.createProfile(account: env.makePasskeyAccount())
         let deployment = try env.smartAccountManager.createDeployment(profile: profile, blockchainType: .ethereum)
         #expect(deployment.isDeployed == false)
 
@@ -131,7 +130,7 @@ struct SmartAccountManagerTests {
         let account = env.makePasskeyAccount()
         env.accountManager.save(account: account) // persist в bank.sqlite
 
-        let profile = try env.smartAccountManager.createProfile(account: account)
+        let profile = try env.createProfile(account: account)
         _ = try env.smartAccountManager.createDeployment(profile: profile, blockchainType: .ethereum)
         _ = try env.smartAccountManager.createDeployment(profile: profile, blockchainType: .binanceSmartChain)
 
@@ -147,7 +146,7 @@ struct SmartAccountManagerTests {
     @Test func startupOrphanRepairRemovesProfileWithoutAccount() throws {
         let env = try SmartAccountTestEnvironment()
         let orphanAccount = env.makePasskeyAccount() // NOT saved into accountManager
-        let profile = try env.smartAccountManager.createProfile(account: orphanAccount)
+        let profile = try env.createProfile(account: orphanAccount)
         let preRepair = try env.smartAccountManager.profile(id: profile.id)
         #expect(preRepair != nil)
 
@@ -165,7 +164,7 @@ struct SmartAccountManagerTests {
         let env = try SmartAccountTestEnvironment()
         let account = env.makePasskeyAccount()
         env.accountManager.save(account: account)
-        let profile = try env.smartAccountManager.createProfile(account: account)
+        let profile = try env.createProfile(account: account)
         _ = try env.smartAccountManager.createDeployment(profile: profile, blockchainType: .ethereum)
         _ = try env.smartAccountManager.createDeployment(profile: profile, blockchainType: .binanceSmartChain)
 

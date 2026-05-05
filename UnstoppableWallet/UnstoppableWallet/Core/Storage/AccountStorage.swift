@@ -40,19 +40,11 @@ class AccountStorage {
 
             type = .mnemonic(words: words, salt: salt, bip39Compliant: compliant)
         case .passkeyOwned:
-            guard let credentialID = recoverData(id: id, typeName: typeName, keyName: .words),
-                  let publicKeyX = recoverData(id: id, typeName: typeName, keyName: .salt),
-                  let publicKeyY = recoverData(id: id, typeName: typeName, keyName: .data)
-            else {
+            guard let credentialID = recoverData(id: id, typeName: typeName, keyName: .credentialID) else {
                 return nil
             }
 
-            // Default to .secp256r1 for legacy records written before the curve field
-            // existed. Zero such records currently (passkey-AA accounts drained 2026-04-29).
-            let curveString: String? = recover(id: id, typeName: typeName, keyName: .passkeyCurve)
-            let curve = curveString.flatMap(AccountType.PasskeyCurve.init(rawValue:)) ?? .secp256r1
-
-            type = .passkeyOwned(credentialID: credentialID, publicKeyX: publicKeyX, publicKeyY: publicKeyY, curve: curve)
+            type = .passkeyOwned(credentialID: credentialID)
         case .evmPrivateKey:
             guard let data = recoverData(id: id, typeName: typeName, keyName: .data) else {
                 return nil
@@ -153,13 +145,9 @@ class AccountStorage {
             wordsKey = try store(stringArray: words, id: id, typeName: typeName, keyName: .words)
             saltKey = try store(salt, id: id, typeName: typeName, keyName: .salt)
             bip39Compliant = compliant
-        case let .passkeyOwned(credentialID, publicKeyX, publicKeyY, curve):
+        case let .passkeyOwned(credentialID):
             typeName = .passkeyOwned
-            // These values are public account metadata and can be moved out of keychain later if we want watch-like storage.
-            wordsKey = try store(data: credentialID, id: id, typeName: typeName, keyName: .words)
-            saltKey = try store(data: publicKeyX, id: id, typeName: typeName, keyName: .salt)
-            dataKey = try store(data: publicKeyY, id: id, typeName: typeName, keyName: .data)
-            _ = try store(curve.rawValue, id: id, typeName: typeName, keyName: .passkeyCurve)
+            dataKey = try store(data: credentialID, id: id, typeName: typeName, keyName: .credentialID)
         case let .evmPrivateKey(data):
             typeName = .evmPrivateKey
             dataKey = try store(data: data, id: id, typeName: typeName, keyName: .data)
@@ -218,10 +206,7 @@ class AccountStorage {
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .words))
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .mnemonic, keyName: .salt))
         case .passkeyOwned:
-            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .passkeyOwned, keyName: .words))
-            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .passkeyOwned, keyName: .salt))
-            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .passkeyOwned, keyName: .data))
-            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .passkeyOwned, keyName: .passkeyCurve))
+            try keychainStorage.removeValue(for: secureKey(id: id, typeName: .passkeyOwned, keyName: .credentialID))
         case .evmPrivateKey:
             try keychainStorage.removeValue(for: secureKey(id: id, typeName: .evmPrivateKey, keyName: .data))
         case .trcPrivateKey:
@@ -335,6 +320,6 @@ extension AccountStorage {
         case words
         case salt
         case data
-        case passkeyCurve
+        case credentialID
     }
 }

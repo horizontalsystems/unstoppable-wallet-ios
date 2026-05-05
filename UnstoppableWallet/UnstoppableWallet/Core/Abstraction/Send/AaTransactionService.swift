@@ -32,7 +32,8 @@ class AaTransactionService {
                   apiKey: apiKey,
                   sponsorshipPolicyId: AppConfig.pimlicoSponsorshipPolicyId
               ),
-              let sender = account.type.evmAddress(chain: chain)
+              let profile = try? core.smartAccountManager.profile(accountId: account.id),
+              let sender = try? profile.address(blockchainType: blockchainType)
         else {
             return nil
         }

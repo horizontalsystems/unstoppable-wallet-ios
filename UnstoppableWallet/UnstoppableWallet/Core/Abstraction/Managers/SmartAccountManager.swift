@@ -16,6 +16,7 @@ class SmartAccountManager {
     private let profileStorage: SmartAccountProfileRecordStorage
     private let deploymentStorage: SmartAccountDeploymentRecordStorage
     private let pendingOpStorage: PendingUserOperationRecordStorage
+    private let gasFreeProfileStorage: GasFreeProfileRecordStorage
     private var cancellables = Set<AnyCancellable>()
 
     init(accountManager: AccountManager, databaseDirectoryUrl: URL) throws {
@@ -28,6 +29,7 @@ class SmartAccountManager {
         profileStorage = SmartAccountProfileRecordStorage(dbPool: dbPool)
         deploymentStorage = SmartAccountDeploymentRecordStorage(dbPool: dbPool)
         pendingOpStorage = PendingUserOperationRecordStorage(dbPool: dbPool)
+        gasFreeProfileStorage = GasFreeProfileRecordStorage(dbPool: dbPool)
 
         do {
             try repairOrphanedProfiles()
@@ -37,7 +39,11 @@ class SmartAccountManager {
 
         accountManager.accountDeletedPublisher
             .sink { [weak self] account in
-                try? self?.handleAccountDeleted(account: account)
+                do {
+                    try self?.handleAccountDeleted(account: account)
+                } catch {
+                    print("[SmartAccountManager] account-deleted cleanup failed for \(account.id): \(error) — orphan will be cleaned by startup repair")
+                }
             }
             .store(in: &cancellables)
     }
@@ -46,33 +52,34 @@ class SmartAccountManager {
 // MARK: - Profile operations
 
 extension SmartAccountManager {
-    func createProfile(account: Account) throws -> SmartAccountProfile {
-        guard case let .passkeyOwned(_, publicKeyX, publicKeyY, curve) = account.type else {
+    func createProfile(
+        account: Account,
+        ownerPublicKeyX: Data,
+        ownerPublicKeyY: Data,
+        curve: SignatureCurve
+    ) throws -> SmartAccountProfile {
+        guard case .passkeyOwned = account.type else {
             throw SmartAccountError.invalidAccountType
         }
 
         if let existingRecord = try profileStorage.profile(accountId: account.id) {
             let existing = try SmartAccountProfile(record: existingRecord)
-            guard existing.ownerPublicKeyX == publicKeyX, existing.ownerPublicKeyY == publicKeyY else {
+            guard existing.ownerPublicKeyX == ownerPublicKeyX,
+                  existing.ownerPublicKeyY == ownerPublicKeyY,
+                  existing.curve == curve
+            else {
                 throw SmartAccountError.pubkeyMismatch
             }
             return existing
         }
 
-        let address = try BarzAddressResolver.resolveLocally(
-            publicKeyX: publicKeyX,
-            publicKeyY: publicKeyY,
-            curve: curve,
-            blockchainType: .ethereum
-        )
-
         let profile = SmartAccountProfile(
             id: UUID().uuidString,
             accountId: account.id,
-            address: address,
             implementationVersion: curve.implementationVersion,
-            ownerPublicKeyX: publicKeyX,
-            ownerPublicKeyY: publicKeyY,
+            ownerPublicKeyX: ownerPublicKeyX,
+            ownerPublicKeyY: ownerPublicKeyY,
+            curve: curve,
             salt: 0,
             createdAt: Date().timeIntervalSince1970
         )
@@ -140,12 +147,21 @@ extension SmartAccountManager {
     }
 }
 
+// MARK: - GasFree operations
+
+extension SmartAccountManager {
+    func gasFreeProfile(accountId: String) throws -> GasFreeProfileRecord? {
+        try gasFreeProfileStorage.profile(accountId: accountId)
+    }
+}
+
 // MARK: - Lifecycle / admin
 
 extension SmartAccountManager {
     func clearAll() throws {
         // FK cascade kills deployments + pendingOps.
         try profileStorage.clear()
+        try gasFreeProfileStorage.deleteAll()
     }
 }
 
@@ -170,6 +186,7 @@ private extension SmartAccountManager {
 
     func handleAccountDeleted(account: Account) throws {
         try profileStorage.delete(accountId: account.id)
+        try gasFreeProfileStorage.delete(accountId: account.id)
     }
 }
 

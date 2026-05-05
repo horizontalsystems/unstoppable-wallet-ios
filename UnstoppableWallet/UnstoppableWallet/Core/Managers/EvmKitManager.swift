@@ -54,7 +54,7 @@ class EvmKitManager {
 
         let syncSource = syncSourceManager.syncSource(blockchainType: blockchainType)
 
-        let address: EvmKit.Address
+        let address = try AccountAddress.evmAddress(account: account, blockchainType: blockchainType)
         var signer: Signer?
 
         switch account.type {
@@ -62,18 +62,11 @@ class EvmKitManager {
             guard let seed = account.type.mnemonicSeed else {
                 throw KitWrapperError.mnemonicNoSeed
             }
-            address = try Signer.address(seed: seed, chain: chain)
             signer = try Signer.instance(seed: seed, chain: chain)
         case let .evmPrivateKey(data):
-            address = Signer.address(privateKey: data)
             signer = Signer.instance(privateKey: data, chain: chain)
-        case let .evmAddress(value):
-            address = value
-        case .passkeyOwned:
-            guard let resolved = account.type.evmAddress(chain: chain) else {
-                throw AdapterError.unsupportedAccount
-            }
-            address = resolved
+        case .evmAddress, .passkeyOwned:
+            ()
         default:
             throw AdapterError.unsupportedAccount
         }

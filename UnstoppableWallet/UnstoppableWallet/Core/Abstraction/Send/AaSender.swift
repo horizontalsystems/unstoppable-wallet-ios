@@ -54,14 +54,14 @@ extension AaSender {
         gasPrices: PimlicoProvider.GasPrices.Tier? = nil,
         nonce: BigUInt? = nil
     ) async throws -> PreparedUserOp {
-        guard let (publicKeyX, publicKeyY, curve) = passkeyOwner(from: account) else {
-            throw SenderError.notPasskeyAccount
-        }
-
         guard let chain = try? Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType) else {
             throw SenderError.unsupportedChain
         }
-        let sender = try Self.resolveSender(account: account, chain: chain)
+        let profile = try smartAccountProfile(account: account)
+        let publicKeyX = profile.ownerPublicKeyX
+        let publicKeyY = profile.ownerPublicKeyY
+        let curve = profile.curve
+        let sender = try profile.address(blockchainType: blockchainType)
 
         print("[AaSender] prepare → chain=\(blockchainType.uid) chainId=\(chain.id) sender=\(sender.eip55) token=\(tokenAddress.eip55)")
         print("[AaSender] tx → to=\(transactionData.to.eip55) value=\(transactionData.value) inputBytes=\(transactionData.input.count)")
@@ -110,7 +110,11 @@ extension AaSender {
             fetchIsDeployed: { _, _ in isDeployed },
             fetchAllowance: { _, spender, token, _ in
                 let eip20Kit = try Eip20Kit.Kit.instance(evmKit: self.evmKit, contractAddress: token)
-                return try await eip20Kit.allowance(spenderAddress: spender, defaultBlockParameter: .latest)
+                let allowanceString = try await eip20Kit.allowance(spenderAddress: spender, defaultBlockParameter: .latest)
+                guard let allowance = BigUInt(allowanceString) else {
+                    throw SenderError.malformedAllowance
+                }
+                return allowance
             }
         )
 
@@ -151,35 +155,33 @@ extension AaSender {
         }
         print("[AaSender] initCode bytes=\(initCode.count) callData bytes=\(callData.count) curve=\(curve.rawValue)")
 
-        let dummySignature = Self.dummySignature(curve: curve)
-
         // Stub UserOp for paymaster + gas estimation: dummy signature gives realistic verification cost.
-        let stubUserOp = makeUserOp(
+        let unsignedStubUserOp = makeUserOp(
             sender: sender,
             nonce: resolvedNonce,
             initCode: initCode,
             callData: callData,
             gas: PimlicoProvider.GasEstimate(callGasLimit: 0, verificationGasLimit: 0, preVerificationGas: 0),
             gasPrices: resolvedGas,
-            paymasterAndData: Data(),
-            signature: dummySignature
+            paymasterAndData: Data()
         )
+        let stubUserOp = try withDummySignature(unsignedStubUserOp, curve: curve, chain: chain)
 
         let paymasterMode: PimlicoProvider.PaymasterMode = .erc20(token: tokenAddress)
         print("[AaSender] paymasterMode=erc20 (user-paid, Pimlico-balance fallback on postOp revert) fresh=\(isFreshDeployment) callData bytes=\(callData.count)")
         let paymasterAndData = try await pimlicoProvider.getPaymasterStubData(userOp: stubUserOp, mode: paymasterMode)
         print("[AaSender] pm_getPaymasterStubData → paymasterAndData bytes=\(paymasterAndData.count)")
 
-        let estimateUserOp = makeUserOp(
+        let unsignedEstimateUserOp = makeUserOp(
             sender: sender,
             nonce: resolvedNonce,
             initCode: initCode,
             callData: callData,
             gas: PimlicoProvider.GasEstimate(callGasLimit: 0, verificationGasLimit: 0, preVerificationGas: 0),
             gasPrices: resolvedGas,
-            paymasterAndData: paymasterAndData,
-            signature: dummySignature
+            paymasterAndData: paymasterAndData
         )
+        let estimateUserOp = try withDummySignature(unsignedEstimateUserOp, curve: curve, chain: chain)
         let gasEstimate = try await pimlicoProvider.estimateUserOperationGas(userOp: estimateUserOp)
         let bufferedGasEstimate = Self.bufferGasEstimate(gasEstimate, curve: curve)
         let totalGas = bufferedGasEstimate.callGasLimit + bufferedGasEstimate.verificationGasLimit + bufferedGasEstimate.preVerificationGas
@@ -191,16 +193,16 @@ extension AaSender {
 
         // Replace stub paymasterAndData with the REAL signed paymasterAndData. Required before
         // userOpHash/sign/submit — bundler rejects the stub signature on submission (ERC-7677).
-        let userOpForPaymasterData = makeUserOp(
+        let unsignedUserOpForPaymasterData = makeUserOp(
             sender: sender,
             nonce: resolvedNonce,
             initCode: initCode,
             callData: callData,
             gas: bufferedGasEstimate,
             gasPrices: resolvedGas,
-            paymasterAndData: paymasterAndData,
-            signature: dummySignature
+            paymasterAndData: paymasterAndData
         )
+        let userOpForPaymasterData = try withDummySignature(unsignedUserOpForPaymasterData, curve: curve, chain: chain)
         let realPaymasterAndData = try await pimlicoProvider.getPaymasterData(userOp: userOpForPaymasterData, mode: paymasterMode)
         print("[AaSender] pm_getPaymasterData → real paymasterAndData bytes=\(realPaymasterAndData.count)")
         logPaymasterAndData(realPaymasterAndData, token: baseToken)
@@ -243,13 +245,14 @@ extension AaSender {
             gasPrices: resolvedGas,
             paymasterMode: paymasterMode,
             baseToken: baseToken,
+            curve: curve,
             decoration: decoration
         )
     }
 
     /// Sign via passkey, submit via bundler, archive record. Returns userOpHash echoed by bundler.
     func submit(account: Account, prepared: PreparedUserOp) async throws -> Data {
-        guard case let .passkeyOwned(credentialID, _, _, curve) = account.type else {
+        guard case let .passkeyOwned(credentialID) = account.type else {
             throw SenderError.notPasskeyAccount
         }
 
@@ -257,10 +260,10 @@ extension AaSender {
             throw SenderError.unsupportedChain
         }
 
-        print("[AaSender] submit → userOpHash=\(prepared.userOpHash.hs.hex) curve=\(curve.rawValue) prompting passkey…")
+        print("[AaSender] submit → userOpHash=\(prepared.userOpHash.hs.hex) curve=\(prepared.curve.rawValue) prompting passkey…")
 
         let signatureBytes: Data
-        switch curve {
+        switch prepared.curve {
         case .secp256k1:
             signatureBytes = try await EcdsaUserOpSigner.signViaPasskey(
                 credentialID: credentialID,
@@ -312,18 +315,8 @@ extension AaSender {
         case malformedPaymasterStub
         case paymasterAddressChanged(stub: EvmKit.Address, final: EvmKit.Address)
         case legacyCurveNotSupported
+        case malformedAllowance
     }
-}
-
-struct PreparedUserOp {
-    let userOp: UserOperation
-    let userOpHash: Data
-    let isFreshDeployment: Bool
-    let gasEstimate: PimlicoProvider.GasEstimate
-    let gasPrices: PimlicoProvider.GasPrices.Tier
-    let paymasterMode: PimlicoProvider.PaymasterMode
-    let baseToken: Token
-    let decoration: EvmDecoration
 }
 
 // MARK: - Private helpers
@@ -345,18 +338,14 @@ private extension AaSender {
         return "\(whole).\(fracString) ETH"
     }
 
-    static func resolveSender(account: Account, chain: Chain) throws -> EvmKit.Address {
-        guard let address = account.type.evmAddress(chain: chain) else {
-            throw SenderError.unsupportedChain
+    func smartAccountProfile(account: Account) throws -> SmartAccountProfile {
+        guard case .passkeyOwned = account.type else {
+            throw SenderError.notPasskeyAccount
         }
-        return address
-    }
-
-    func passkeyOwner(from account: Account) -> (publicKeyX: Data, publicKeyY: Data, curve: AccountType.PasskeyCurve)? {
-        guard case let .passkeyOwned(_, publicKeyX, publicKeyY, curve) = account.type else {
-            return nil
+        guard let profile = try smartAccountManager.profile(accountId: account.id) else {
+            throw SenderError.profileMissing
         }
-        return (publicKeyX, publicKeyY, curve)
+        return profile
     }
 
     func fetchNonce(sender: EvmKit.Address) async throws -> BigUInt {
@@ -402,7 +391,7 @@ private extension AaSender {
         }
     }
 
-    func buildInitCode(publicKeyX: Data, publicKeyY: Data, curve: AccountType.PasskeyCurve) -> Data {
+    func buildInitCode(publicKeyX: Data, publicKeyY: Data, curve: SignatureCurve) -> Data {
         guard let aa = ChainAddresses.aa(for: blockchainType) else {
             return Data()
         }
@@ -474,13 +463,17 @@ private extension AaSender {
         return EvmKit.Address(raw: paymasterAndData.prefix(20))
     }
 
-    static func dummySignature(curve: AccountType.PasskeyCurve) -> Data {
+    func withDummySignature(_ userOp: UserOperation, curve: SignatureCurve, chain: EvmKit.Chain) throws -> UserOperation {
+        let signature: Data
         switch curve {
         case .secp256k1:
-            return EcdsaUserOpSigner.dummySignature()
+            let userOpHash = PackedUserOperation.hash(userOp: userOp, entryPoint: entryPoint, chainId: chainId)
+            signature = try EcdsaUserOpSigner.dummySignature(userOpHash: userOpHash, chain: chain)
         case .secp256r1:
-            return Secp256r1VerificationFacet.dummySignature()
+            signature = Secp256r1VerificationFacet.dummySignature()
         }
+
+        return userOp.withSignature(signature)
     }
 
     /// Buffers verificationGasLimit. Pimlico estimator is accurate for callGas and
@@ -490,7 +483,7 @@ private extension AaSender {
     ///    (vGL=161k → OOG at SUB; vGL=322k → OOG at ADDMOD; vGL=700k succeeds).
     ///  - secp256k1: ecrecover precompile is ~3k gas, deterministic. Modest 1.3x
     ///    safety margin is enough.
-    static func bufferGasEstimate(_ estimate: PimlicoProvider.GasEstimate, curve: AccountType.PasskeyCurve) -> PimlicoProvider.GasEstimate {
+    static func bufferGasEstimate(_ estimate: PimlicoProvider.GasEstimate, curve: SignatureCurve) -> PimlicoProvider.GasEstimate {
         let bufferedVerification: BigUInt
         switch curve {
         case .secp256r1:
@@ -507,7 +500,7 @@ private extension AaSender {
     }
 
     func logPaymasterAndData(_ paymasterAndData: Data, token: Token) {
-        guard let parsed = Self.parseErc20PaymasterAndData(paymasterAndData) else {
+        guard let parsed = Erc20PaymasterAndData.parse(paymasterAndData) else {
             print("[AaSender] paymasterAndData.parse → unsupported/invalid bytes=\(paymasterAndData.count)")
             return
         }
@@ -532,141 +525,13 @@ private extension AaSender {
             txHash: nil,
             status: "pending",
             submittedAt: Date().timeIntervalSince1970,
-            lastPolledAt: nil,
-            bundlerUrl: pimlicoProvider.bundlerUrl
+            lastPolledAt: nil
         )
         try smartAccountManager.savePendingOperation(record: record)
     }
 }
 
 private extension AaSender {
-    struct ParsedErc20PaymasterAndData {
-        let paymaster: EvmKit.Address
-        let combinedByte: UInt8
-        let mode: UInt8
-        let allowAllBundlers: Bool
-        let erc20Flags: UInt8
-        let constantFeePresent: Bool
-        let recipientPresent: Bool
-        let preFundPresent: Bool
-        let validUntil: BigUInt
-        let validAfter: BigUInt
-        let token: EvmKit.Address
-        let postOpGas: BigUInt
-        let exchangeRate: BigUInt
-        let paymasterValidationGasLimit: BigUInt
-        let treasury: EvmKit.Address
-        let preFundInToken: BigUInt
-        let constantFee: BigUInt
-        let recipient: EvmKit.Address?
-        let signatureBytes: Int
-
-        var modeName: String {
-            switch mode {
-            case 0: return "verifying"
-            case 1: return "erc20"
-            default: return "unknown(\(mode))"
-            }
-        }
-    }
-
-    static func parseErc20PaymasterAndData(_ data: Data) -> ParsedErc20PaymasterAndData? {
-        // Pimlico SingletonPaymaster v0.6 layout:
-        // paymaster(20) | mode+allowAllBundlers(1) | erc20Config
-        // erc20Config = flags(1) | validUntil(6) | validAfter(6) | token(20)
-        //             | postOpGas(16) | exchangeRate(32) | paymasterValidationGasLimit(16)
-        //             | treasury(20) | optional preFund/constantFee/recipient | signature(64/65)
-        guard data.count >= 20 + 1 + 117 else {
-            return nil
-        }
-
-        let paymaster = EvmKit.Address(raw: data.subdata(in: 0 ..< 20))
-        let combinedByte = data[20]
-        let mode = combinedByte >> 1
-        let allowAllBundlers = (combinedByte & 0x01) != 0
-        guard mode == 1 else {
-            return nil
-        }
-
-        var offset = 21
-        let erc20Flags = data[offset]
-        let constantFeePresent = (erc20Flags & 0x01) != 0
-        let recipientPresent = (erc20Flags & 0x02) != 0
-        let preFundPresent = (erc20Flags & 0x04) != 0
-        offset += 1
-
-        guard data.count >= offset + 6 + 6 + 20 + 16 + 32 + 16 + 20 else {
-            return nil
-        }
-
-        let validUntil = uint(data: data.subdata(in: offset ..< offset + 6))
-        offset += 6
-        let validAfter = uint(data: data.subdata(in: offset ..< offset + 6))
-        offset += 6
-        let token = EvmKit.Address(raw: data.subdata(in: offset ..< offset + 20))
-        offset += 20
-        let postOpGas = uint(data: data.subdata(in: offset ..< offset + 16))
-        offset += 16
-        let exchangeRate = uint(data: data.subdata(in: offset ..< offset + 32))
-        offset += 32
-        let paymasterValidationGasLimit = uint(data: data.subdata(in: offset ..< offset + 16))
-        offset += 16
-        let treasury = EvmKit.Address(raw: data.subdata(in: offset ..< offset + 20))
-        offset += 20
-
-        var preFundInToken = BigUInt(0)
-        if preFundPresent {
-            guard data.count >= offset + 16 else { return nil }
-            preFundInToken = uint(data: data.subdata(in: offset ..< offset + 16))
-            offset += 16
-        }
-
-        var constantFee = BigUInt(0)
-        if constantFeePresent {
-            guard data.count >= offset + 16 else { return nil }
-            constantFee = uint(data: data.subdata(in: offset ..< offset + 16))
-            offset += 16
-        }
-
-        var recipient: EvmKit.Address?
-        if recipientPresent {
-            guard data.count >= offset + 20 else { return nil }
-            recipient = EvmKit.Address(raw: data.subdata(in: offset ..< offset + 20))
-            offset += 20
-        }
-
-        let signatureBytes = data.count - offset
-        guard signatureBytes == 64 || signatureBytes == 65 else {
-            return nil
-        }
-
-        return ParsedErc20PaymasterAndData(
-            paymaster: paymaster,
-            combinedByte: combinedByte,
-            mode: mode,
-            allowAllBundlers: allowAllBundlers,
-            erc20Flags: erc20Flags,
-            constantFeePresent: constantFeePresent,
-            recipientPresent: recipientPresent,
-            preFundPresent: preFundPresent,
-            validUntil: validUntil,
-            validAfter: validAfter,
-            token: token,
-            postOpGas: postOpGas,
-            exchangeRate: exchangeRate,
-            paymasterValidationGasLimit: paymasterValidationGasLimit,
-            treasury: treasury,
-            preFundInToken: preFundInToken,
-            constantFee: constantFee,
-            recipient: recipient,
-            signatureBytes: signatureBytes
-        )
-    }
-
-    static func uint(data: Data) -> BigUInt {
-        BigUInt(data.hs.hex, radix: 16) ?? 0
-    }
-
     static func costInToken(
         gasCostWei: BigUInt,
         postOpGas: BigUInt,

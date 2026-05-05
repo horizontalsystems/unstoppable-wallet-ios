@@ -1,8 +1,8 @@
 import UIKit
 
 enum PublicAddressModule {
-    static func evmViewController(accountType: AccountType) -> UIViewController? {
-        guard let service = EvmAddressService(accountType: accountType, evmBlockchainManager: Core.shared.evmBlockchainManager) else {
+    static func evmViewController(account: Account) -> UIViewController? {
+        guard let service = EvmAddressService(account: account) else {
             return nil
         }
 
@@ -10,8 +10,8 @@ enum PublicAddressModule {
         return PublicAddressViewController(viewModel: viewModel, accountType: .evm)
     }
 
-    static func tronViewController(accountType: AccountType) -> UIViewController? {
-        guard let service = TronAddressService(accountType: accountType) else {
+    static func tronViewController(account: Account) -> UIViewController? {
+        guard let service = TronAddressService(account: account) else {
             return nil
         }
 

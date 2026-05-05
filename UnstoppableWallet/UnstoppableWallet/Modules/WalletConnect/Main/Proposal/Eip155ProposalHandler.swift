@@ -36,8 +36,7 @@ class Eip155ProposalHandler {
                 continue
             }
 
-            guard let chain = try? evmBlockchainManager.chain(blockchainType: evmBlockchain.type),
-                  let address = try? WalletConnectManager.evmAddress(account: account, chain: chain)
+            guard let address = try? AccountAddress.evmAddress(account: account, blockchainType: evmBlockchain.type)
             else {
                 // can't get address for chain
                 continue

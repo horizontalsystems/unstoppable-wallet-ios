@@ -20,6 +20,7 @@ class PimlicoProvider {
     private let sponsorshipPolicyId: String?
     private let url: URL
     private let headers: HTTPHeaders
+    private let chainIdHex: String
 
     init(networkManager: NetworkManager, blockchainType: BlockchainType, entryPoint: EvmKit.Address, apiKey: String, sponsorshipPolicyId: String?) throws {
         guard let chain = try? Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType) else {
@@ -35,17 +36,13 @@ class PimlicoProvider {
         self.sponsorshipPolicyId = sponsorshipPolicyId
         self.url = url
         headers = HTTPHeaders([HTTPHeader(name: "Content-Type", value: "application/json")])
+        chainIdHex = "0x" + String(chain.id, radix: 16)
     }
 }
 
 // MARK: - Public RPC methods
 
 extension PimlicoProvider {
-    var bundlerUrl: String {
-        // Returned for archival in PendingUserOperationRecord.bundlerUrl.
-        url.absoluteString
-    }
-
     /// Submits a signed UserOp to the bundler. Returns the userOpHash echoed by the bundler.
     /// Uses raw JSON dict parsing because the result is a plain hex string, not a JSON object —
     /// ImmutableMappable can't unwrap a string at the `result` field.
@@ -121,16 +118,12 @@ extension PimlicoProvider {
     /// Useful for debugging token charge calculations:
     ///   getCostInToken(actualGasCost, postOpGas, actualUserOpFeePerGas, exchangeRate)
     func getTokenQuotes(tokens: [EvmKit.Address]) async throws -> [TokenQuote] {
-        guard let chain = try? Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType) else {
-            throw ProviderError.unsupportedChain
-        }
-
         let response: TokenQuotesResponse = try await rpcCall(
             method: "pimlico_getTokenQuotes",
             params: [
                 ["tokens": tokens.map(\.eip55)],
                 entryPoint.eip55,
-                "0x" + String(chain.id, radix: 16),
+                chainIdHex,
             ]
         )
         return try response.quotes()
@@ -144,10 +137,6 @@ extension PimlicoProvider {
         // Current envelope follows ERC-7677 (pm_getPaymasterStubData) with Pimlico extensions:
         //   params: [userOp, entryPoint, chainIdHex, context]
         //   context: {} for verifying, {"token": "0x..."} for erc20.
-        guard let chain = try? Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType) else {
-            throw ProviderError.unsupportedChain
-        }
-
         var context: [String: Any] = [:]
         switch mode {
         case .verifying:
@@ -161,7 +150,7 @@ extension PimlicoProvider {
         let params: [Any] = [
             Self.serialize(userOp: userOp),
             entryPoint.eip55,
-            "0x" + String(chain.id, radix: 16),
+            chainIdHex,
             context,
         ]
 
@@ -173,10 +162,6 @@ extension PimlicoProvider {
     /// Must be called after gas estimation (gas values now final) — userOpHash is then computed
     /// over the userOp containing this real paymasterAndData, signed with passkey, submitted.
     func getPaymasterData(userOp: UserOperation, mode: PaymasterMode) async throws -> Data {
-        guard let chain = try? Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType) else {
-            throw ProviderError.unsupportedChain
-        }
-
         var context: [String: Any] = [:]
         switch mode {
         case .verifying:
@@ -190,7 +175,7 @@ extension PimlicoProvider {
         let params: [Any] = [
             Self.serialize(userOp: userOp),
             entryPoint.eip55,
-            "0x" + String(chain.id, radix: 16),
+            chainIdHex,
             context,
         ]
 

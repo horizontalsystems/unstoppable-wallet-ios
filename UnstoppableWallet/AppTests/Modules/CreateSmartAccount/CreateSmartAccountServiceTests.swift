@@ -62,19 +62,19 @@ struct CreateSmartAccountServiceTests {
         #expect(deploymentChains == Set([.ethereum, .binanceSmartChain]))
     }
 
-    /// Smart Account v1 stores the mnemonic-derived secp256k1 owner pubkey halves
-    /// in AccountType.passkeyOwned with curve = .secp256k1. PrivKey is not persisted.
-    @Test func createPersistsSecp256k1AccountType() async throws {
+    /// Account identity stores only credentialID. Mnemonic-derived owner pubkey
+    /// is persisted in account_abstraction_profiles.
+    @Test func createPersistsCredentialOnlyAccountType() async throws {
         let env = try SmartAccountTestEnvironment()
         let service = try makeService(env: env)
 
         let account = try await service.create(name: "Alice")
 
-        guard case let .passkeyOwned(_, _, _, curve) = account.type else {
+        guard case let .passkeyOwned(credentialID) = account.type else {
             Issue.record("expected .passkeyOwned, got \(account.type)")
             return
         }
-        #expect(curve == .secp256k1)
+        #expect(credentialID == Data(repeating: 0xCC, count: 16))
     }
 
     /// Profile's implementationVersion reflects the curve used at creation.
@@ -87,6 +87,7 @@ struct CreateSmartAccountServiceTests {
         let profile = try #require(optionalProfile)
 
         #expect(profile.implementationVersion == "barz_v1_ecdsa")
+        #expect(profile.curve == .secp256k1)
     }
 
     /// For the canonical hardhat test mnemonic at m/44'/60'/0'/0/0 the EOA owner
@@ -109,13 +110,16 @@ struct CreateSmartAccountServiceTests {
         let expectedEoa = try EvmKit.Address(hex: "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266")
         #expect(Signer.address(privateKey: privateKey) == expectedEoa)
 
-        guard case let .passkeyOwned(_, x, y, _) = account.type else {
-            Issue.record("expected .passkeyOwned, got \(account.type)")
-            return
-        }
         let pubkey = Crypto.publicKey(privateKey: privateKey, compressed: false)
+        let x = Data(pubkey.dropFirst().prefix(32))
+        let y = Data(pubkey.dropFirst().suffix(32))
+
+        let optionalProfile = try env.smartAccountManager.profile(accountId: account.id)
+        let profile = try #require(optionalProfile)
         #expect(x == Data(pubkey.dropFirst().prefix(32)))
         #expect(y == Data(pubkey.dropFirst().suffix(32)))
+        #expect(profile.ownerPublicKeyX == x)
+        #expect(profile.ownerPublicKeyY == y)
 
         let expectedAddress = try BarzAddressResolver.resolveLocally(
             publicKeyX: x,
@@ -123,9 +127,7 @@ struct CreateSmartAccountServiceTests {
             curve: .secp256k1,
             blockchainType: .ethereum
         )
-        let optionalProfile = try env.smartAccountManager.profile(accountId: account.id)
-        let profile = try #require(optionalProfile)
-        #expect(profile.address == expectedAddress)
+        #expecttry (profile.address(blockchainType: .ethereum) == expectedAddress)
     }
 
     @Test func createSetsLastCreatedAccount() async throws {
