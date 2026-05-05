@@ -3,6 +3,7 @@ import Foundation
 import HdWalletKit
 import HsCryptoKit
 import MarketKit
+import TronKit
 
 /// Returned by SmartAccountPasskeyRegistering.register. Carries the new passkey's
 /// credentialID together with the PRF-derived mnemonic that the service uses to
@@ -66,6 +67,13 @@ extension CreateSmartAccountService {
         let publicKeyX = Data(pubkey.dropFirst().prefix(32))
         let publicKeyY = Data(pubkey.dropFirst().suffix(32))
 
+        // Tron EOA controller for the GasFree wallet. Same secp256k1 privkey is reused —
+        // non-standard BIP44 path (m/44'/60' instead of canonical m/44'/195' for Tron) is
+        // intentional for passkey-only accounts: single PRF mnemonic, no external-wallet
+        // export surface, single key compromise == both AA + GasFree compromise (inherent
+        // property of passkey-only architecture).
+        let controllerAddress = try TronKit.Signer.address(privateKey: privateKey)
+
         let account = accountFactory.account(
             type: .passkeyOwned(
                 credentialID: registration.credentialID
@@ -87,6 +95,10 @@ extension CreateSmartAccountService {
         for blockchainType in Self.v1BlockchainTypes {
             _ = try smartAccountManager.createDeployment(profile: profile, blockchainType: blockchainType)
         }
+
+        // GasFree profile lives in aa.sqlite alongside SmartAccountProfile (no on-chain
+        // deployment yet — the BeaconProxy is created lazily on first GasFree submitTransfer).
+        _ = try smartAccountManager.createGasFreeProfile(account: account, controllerAddress: controllerAddress)
 
         // Account last (bank.sqlite).
         accountManager.save(account: account)

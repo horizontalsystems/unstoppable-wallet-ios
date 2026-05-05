@@ -60,6 +60,12 @@ struct CreateSmartAccountServiceTests {
         let deployments = try env.smartAccountManager.deployments(profileId: profile.id)
         let deploymentChains = Set(deployments.map(\.blockchainType))
         #expect(deploymentChains == Set([.ethereum, .binanceSmartChain, .base]))
+
+        let fetchedProfile = try env.smartAccountManager.gasFreeProfile(accountId: account.id)
+        let gasFreeProfile = try #require(fetchedProfile)
+        #expect(gasFreeProfile.implementationVersion == "gasfree_v1_0_0")
+        #expect(gasFreeProfile.verifyingContract == GasFreeChainAddresses.mainnetFactory)
+        #expect(gasFreeProfile.providerId == GasFreeChainAddresses.mainnetServiceProvider)
     }
 
     /// Account identity stores only credentialID. Mnemonic-derived owner pubkey
