@@ -130,12 +130,7 @@ enum AccountType: Identifiable {
                 return false
             }
 
-            switch (token.blockchainType, address.lowercased()) {
-            case (.ethereum, "0xdac17f958d2ee523a2206206994597c13d831ec7"): return true
-            case (.ethereum, "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48"): return true
-            case (.binanceSmartChain, "0x55d398326f99059ff775485246999027b3197955"): return true
-            default: return false
-            }
+            return StablecoinRegistry.supports(blockchainType: token.blockchainType, tokenAddress: address)
         case .evmPrivateKey, .evmAddress:
             switch (token.blockchainType, token.type) {
             case (.ethereum, .native), (.ethereum, .eip20): return true

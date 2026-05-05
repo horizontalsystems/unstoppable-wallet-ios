@@ -38,6 +38,15 @@ enum ChainAddresses {
                 secp256r1VerificationFacet: secp256r1VerificationFacet,
                 secp256k1VerificationFacet: secp256k1VerificationFacetBsc
             )
+        case .base:
+            // Base shares the BSC Secp256k1VerificationFacet bytecode/address — same CREATE2
+            // deployer + salt + bytecode → same address. Eth uses a different (older) variant.
+            return Aa(
+                entryPoint: entryPointV06,
+                barzFactory: barzFactory,
+                secp256r1VerificationFacet: secp256r1VerificationFacet,
+                secp256k1VerificationFacet: secp256k1VerificationFacetBsc
+            )
         default:
             return nil
         }

@@ -59,7 +59,7 @@ struct CreateSmartAccountServiceTests {
 
         let deployments = try env.smartAccountManager.deployments(profileId: profile.id)
         let deploymentChains = Set(deployments.map(\.blockchainType))
-        #expect(deploymentChains == Set([.ethereum, .binanceSmartChain]))
+        #expect(deploymentChains == Set([.ethereum, .binanceSmartChain, .base]))
     }
 
     /// Account identity stores only credentialID. Mnemonic-derived owner pubkey
