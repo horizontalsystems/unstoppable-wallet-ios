@@ -127,7 +127,8 @@ struct CreateSmartAccountServiceTests {
             curve: .secp256k1,
             blockchainType: .ethereum
         )
-        #expecttry (profile.address(blockchainType: .ethereum) == expectedAddress)
+        let actualAddress = try profile.address(blockchainType: .ethereum)
+        #expect(actualAddress == expectedAddress)
     }
 
     @Test func createSetsLastCreatedAccount() async throws {

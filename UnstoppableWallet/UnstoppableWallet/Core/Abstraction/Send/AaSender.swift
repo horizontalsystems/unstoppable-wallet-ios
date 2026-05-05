@@ -16,6 +16,7 @@ class AaSender {
     private let evmKit: EvmKit.Kit
     private let pimlicoProvider: PimlicoProvider
     private let codeProvider: EvmCodeProvider
+    private let simulateHandleOpProvider: SimulateHandleOpProvider
     private let passkeyManager: PasskeyManager
     private let smartAccountManager: SmartAccountManager
     private let decorator = EvmDecorator()
@@ -27,6 +28,7 @@ class AaSender {
         evmKit: EvmKit.Kit,
         pimlicoProvider: PimlicoProvider,
         codeProvider: EvmCodeProvider,
+        simulateHandleOpProvider: SimulateHandleOpProvider,
         passkeyManager: PasskeyManager,
         smartAccountManager: SmartAccountManager
     ) {
@@ -36,6 +38,7 @@ class AaSender {
         self.evmKit = evmKit
         self.pimlicoProvider = pimlicoProvider
         self.codeProvider = codeProvider
+        self.simulateHandleOpProvider = simulateHandleOpProvider
         self.passkeyManager = passkeyManager
         self.smartAccountManager = smartAccountManager
     }
@@ -129,9 +132,11 @@ extension AaSender {
         let isFreshDeployment: Bool
         let initCode: Data
         let callData: Data
+        let feeScenario: AaSendFeeBreakdown.Scenario
         switch scenario {
         case .freshDeploy:
             isFreshDeployment = true
+            feeScenario = .freshDeploy
             initCode = buildInitCode(publicKeyX: publicKeyX, publicKeyY: publicKeyY, curve: curve)
             callData = try AccountFacet.encodeExecuteBatch(calls: [
                 buildApproveCall(token: tokenAddress, spender: stubPaymasterAddress),
@@ -139,6 +144,7 @@ extension AaSender {
             ])
         case .approvedSend:
             isFreshDeployment = false
+            feeScenario = .approvedSend
             initCode = Data()
             callData = AccountFacet.encodeExecute(
                 target: transactionData.to,
@@ -147,6 +153,7 @@ extension AaSender {
             )
         case .approveAndSend:
             isFreshDeployment = false
+            feeScenario = .approveAndSend
             initCode = Data()
             callData = try AccountFacet.encodeExecuteBatch(calls: [
                 buildApproveCall(token: tokenAddress, spender: stubPaymasterAddress),
@@ -189,7 +196,6 @@ extension AaSender {
         print("[AaSender] eth_estimateUserOperationGas → raw callGasLimit=\(gasEstimate.callGasLimit) verificationGasLimit=\(gasEstimate.verificationGasLimit) preVerificationGas=\(gasEstimate.preVerificationGas)")
         print("[AaSender] buffered → callGasLimit=\(bufferedGasEstimate.callGasLimit) verificationGasLimit=\(bufferedGasEstimate.verificationGasLimit) preVerificationGas=\(bufferedGasEstimate.preVerificationGas) total=\(totalGas)")
         print("[AaSender] estimated fee → \(totalGas) gas × \(Self.gwei(resolvedGas.maxFeePerGas)) gwei = \(totalFeeWei) wei (≈ \(Self.eth(totalFeeWei)))")
-        await logPimlicoTokenQuote(tokenAddress: tokenAddress, token: baseToken, gasEstimate: bufferedGasEstimate, gasPrices: resolvedGas)
 
         // Replace stub paymasterAndData with the REAL signed paymasterAndData. Required before
         // userOpHash/sign/submit — bundler rejects the stub signature on submission (ERC-7677).
@@ -205,16 +211,45 @@ extension AaSender {
         let userOpForPaymasterData = try withDummySignature(unsignedUserOpForPaymasterData, curve: curve, chain: chain)
         let realPaymasterAndData = try await pimlicoProvider.getPaymasterData(userOp: userOpForPaymasterData, mode: paymasterMode)
         print("[AaSender] pm_getPaymasterData → real paymasterAndData bytes=\(realPaymasterAndData.count)")
-        logPaymasterAndData(realPaymasterAndData, token: baseToken)
+        guard let parsedPaymaster = Erc20PaymasterAndData.parse(realPaymasterAndData) else {
+            print("[AaSender] paymasterAndData.parse → unsupported/invalid bytes=\(realPaymasterAndData.count)")
+            throw SenderError.malformedPaymasterStub
+        }
+        logPaymasterAndData(parsedPaymaster, token: baseToken)
 
         // F4 invariant: Pimlico can theoretically rotate paymaster between stub and final
         // response. If we approved (or planned to approve) one paymaster but the final
         // UserOp references a different one, validation reverts on chain → retry blowup
         // → double-charge. Abort here instead of letting that pathology hit the user.
-        let finalPaymasterAddress = try Self.extractPaymasterAddress(from: realPaymasterAndData)
-        guard finalPaymasterAddress == stubPaymasterAddress else {
-            throw SenderError.paymasterAddressChanged(stub: stubPaymasterAddress, final: finalPaymasterAddress)
+        guard parsedPaymaster.paymaster == stubPaymasterAddress else {
+            throw SenderError.paymasterAddressChanged(stub: stubPaymasterAddress, final: parsedPaymaster.paymaster)
         }
+
+        // EntryPoint.simulateHandleOp on the final-shape UserOp gives a realistic `paid`
+        // (actualGasCost in wei) — the bundler's eth_estimateUserOperationGas only returns
+        // gas LIMITS with safety margins (~2x overshoot). Used for the user-facing estimate.
+        let unsignedSimulationUserOp = makeUserOp(
+            sender: sender,
+            nonce: resolvedNonce,
+            initCode: initCode,
+            callData: callData,
+            gas: bufferedGasEstimate,
+            gasPrices: resolvedGas,
+            paymasterAndData: realPaymasterAndData
+        )
+        let simulationUserOp = try withDummySignature(unsignedSimulationUserOp, curve: curve, chain: chain)
+        let simulation = try await simulateHandleOpProvider.simulate(userOp: simulationUserOp)
+        let estimatedFeeWei = simulation.paid + parsedPaymaster.postOpGas * resolvedGas.maxFeePerGas
+        print("[AaSender] simulateHandleOp → preOpGas=\(simulation.preOpGas) paid=\(simulation.paid) wei (≈ \(Self.eth(simulation.paid))); +postOpTail=\(parsedPaymaster.postOpGas)×maxFee → estimated=\(estimatedFeeWei) wei (≈ \(Self.eth(estimatedFeeWei)))")
+
+        let feeBreakdown = AaFeeCalculator.breakdown(
+            paidWei: simulation.paid,
+            postOpGas: parsedPaymaster.postOpGas,
+            bufferedGas: bufferedGasEstimate,
+            gasPrices: resolvedGas,
+            exchangeRate: parsedPaymaster.exchangeRate,
+            scenario: feeScenario
+        )
 
         let finalUserOp = makeUserOp(
             sender: sender,
@@ -246,7 +281,8 @@ extension AaSender {
             paymasterMode: paymasterMode,
             baseToken: baseToken,
             curve: curve,
-            decoration: decoration
+            decoration: decoration,
+            feeBreakdown: feeBreakdown
         )
     }
 
@@ -358,39 +394,6 @@ private extension AaSender {
         try await pimlicoProvider.getUserOperationGasPrice().standard
     }
 
-    func logPimlicoTokenQuote(
-        tokenAddress: EvmKit.Address,
-        token: Token,
-        gasEstimate: PimlicoProvider.GasEstimate,
-        gasPrices: PimlicoProvider.GasPrices.Tier
-    ) async {
-        do {
-            let quotes = try await pimlicoProvider.getTokenQuotes(tokens: [tokenAddress])
-            guard let quote = quotes.first(where: { $0.token.eip55.lowercased() == tokenAddress.eip55.lowercased() }) ?? quotes.first else {
-                print("[AaSender] pimlico_getTokenQuotes → no quote for token=\(tokenAddress.eip55)")
-                return
-            }
-
-            let requiredGas = gasEstimate.callGasLimit + gasEstimate.verificationGasLimit * 3 + gasEstimate.preVerificationGas
-            let requiredPrefundWei = requiredGas * gasPrices.maxFeePerGas
-            let maxCostInToken = Self.costInToken(
-                gasCostWei: requiredPrefundWei,
-                postOpGas: 0,
-                actualUserOpFeePerGas: 0,
-                exchangeRate: quote.exchangeRate
-            )
-            let uiGas = gasEstimate.callGasLimit + gasEstimate.verificationGasLimit + gasEstimate.preVerificationGas
-            let uiFeeWei = uiGas * gasPrices.maxFeePerGas
-
-            print("[AaSender] pimlico_getTokenQuotes → paymaster=\(quote.paymaster.eip55) token=\(quote.token.eip55) postOpGas=\(quote.postOpGas) exchangeRate=\(quote.exchangeRate) (\(Self.tokenAmount(quote.exchangeRate, decimals: token.decimals)) \(token.coin.code)/ETH) nativeUsd=\(quote.exchangeRateNativeToUsd) (\(Self.tokenAmount(quote.exchangeRateNativeToUsd, decimals: 6)) USD/ETH) balanceSlot=\(quote.balanceSlot) allowanceSlot=\(quote.allowanceSlot)")
-            print("[AaSender] pimlico token cap → requiredGas=call+\(3)×verification+pre=\(requiredGas) prefundWei=\(requiredPrefundWei) (≈ \(Self.eth(requiredPrefundWei))) maxCostInToken=\(maxCostInToken) raw (≈ \(Self.tokenAmount(maxCostInToken, decimals: token.decimals)) \(token.coin.code)); cap/allowance only, not charged upfront when preFundInToken=0")
-            print("[AaSender] fee display upper-bound → uiGas=call+verification+pre=\(uiGas) × maxFee=\(Self.gwei(gasPrices.maxFeePerGas)) gwei = \(uiFeeWei) wei (≈ \(Self.eth(uiFeeWei)))")
-            print("[AaSender] postOp formula → tokenCharge = (EntryPoint.actualGasCost + postOpGas×actualUserOpFeePerGas) × exchangeRate / 1e18")
-        } catch {
-            print("[AaSender] pimlico_getTokenQuotes → failed: \(error)")
-        }
-    }
-
     func buildInitCode(publicKeyX: Data, publicKeyY: Data, curve: SignatureCurve) -> Data {
         guard let aa = ChainAddresses.aa(for: blockchainType) else {
             return Data()
@@ -499,12 +502,7 @@ private extension AaSender {
         )
     }
 
-    func logPaymasterAndData(_ paymasterAndData: Data, token: Token) {
-        guard let parsed = Erc20PaymasterAndData.parse(paymasterAndData) else {
-            print("[AaSender] paymasterAndData.parse → unsupported/invalid bytes=\(paymasterAndData.count)")
-            return
-        }
-
+    func logPaymasterAndData(_ parsed: Erc20PaymasterAndData.Parsed, token: Token) {
         print("[AaSender] paymasterAndData.parse → paymaster=\(parsed.paymaster.eip55) combined=0x\(String(format: "%02x", parsed.combinedByte)) mode=\(parsed.modeName) allowAllBundlers=\(parsed.allowAllBundlers) erc20Flags=0x\(String(format: "%02x", parsed.erc20Flags)) constantFeePresent=\(parsed.constantFeePresent) recipientPresent=\(parsed.recipientPresent) preFundPresent=\(parsed.preFundPresent) signatureBytes=\(parsed.signatureBytes)")
         print("[AaSender] paymasterAndData.erc20 → token=\(parsed.token.eip55) treasury=\(parsed.treasury.eip55) validAfter=\(parsed.validAfter) validUntil=\(parsed.validUntil) postOpGas=\(parsed.postOpGas) exchangeRate=\(parsed.exchangeRate) (≈ \(Self.tokenAmount(parsed.exchangeRate, decimals: token.decimals)) \(token.coin.code)/ETH) paymasterValidationGasLimit=\(parsed.paymasterValidationGasLimit)")
         print("[AaSender] paymasterAndData.charge → preFundInToken=\(parsed.preFundInToken) raw (≈ \(Self.tokenAmount(parsed.preFundInToken, decimals: token.decimals)) \(token.coin.code)) constantFee=\(parsed.constantFee) raw (≈ \(Self.tokenAmount(parsed.constantFee, decimals: token.decimals)) \(token.coin.code)) recipient=\(parsed.recipient?.eip55 ?? "nil"); postOp transferFrom will charge actual cost")
@@ -532,15 +530,6 @@ private extension AaSender {
 }
 
 private extension AaSender {
-    static func costInToken(
-        gasCostWei: BigUInt,
-        postOpGas: BigUInt,
-        actualUserOpFeePerGas: BigUInt,
-        exchangeRate: BigUInt
-    ) -> BigUInt {
-        ((gasCostWei + postOpGas * actualUserOpFeePerGas) * exchangeRate) / BigUInt(10).power(18)
-    }
-
     static func tokenAmount(_ rawAmount: BigUInt, decimals: Int) -> String {
         (Decimal(bigUInt: rawAmount, decimals: decimals) ?? 0).description
     }

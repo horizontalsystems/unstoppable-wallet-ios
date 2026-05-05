@@ -471,6 +471,10 @@
 "send.confirmation.fee_sponsored" = "Sponsored";
 "send.confirmation.fee_paid_in" = "Paid in %@";
 "send.confirmation.aa_first_deploy" = "First transaction will deploy the smart account contract.";
+"send.fee.estimated" = "Network fee";
+"send.fee.max_required" = "Max required";
+"send.fee.includes_activation_approval" = "Includes one-time wallet activation and paymaster approval";
+"send.fee.includes_approval" = "Includes paymaster approval";
 "send.confirmation.time_lock" = "Time Lock";
 "send.confirmation.replace_by_fee" = "Replace by Fee";
 "send.confirmation.replaced_transactions" = "Replaced Transactions";

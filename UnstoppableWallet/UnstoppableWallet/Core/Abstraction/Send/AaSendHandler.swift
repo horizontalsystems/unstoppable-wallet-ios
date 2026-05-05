@@ -82,7 +82,8 @@ extension AaSendHandler {
             apiKey: apiKey,
             sponsorshipPolicyId: AppConfig.pimlicoSponsorshipPolicyId
         ),
-            let codeProvider = try? EvmCodeProvider(networkManager: core.networkManager, blockchainType: blockchainType, rpcSource: httpSyncSource.rpcSource)
+            let codeProvider = try? EvmCodeProvider(networkManager: core.networkManager, blockchainType: blockchainType, rpcSource: httpSyncSource.rpcSource),
+            let simulateHandleOpProvider = try? SimulateHandleOpProvider(networkManager: core.networkManager, entryPoint: entryPoint, rpcSource: httpSyncSource.rpcSource)
         else {
             return nil
         }
@@ -94,6 +95,7 @@ extension AaSendHandler {
             evmKit: evmKit,
             pimlicoProvider: pimlicoProvider,
             codeProvider: codeProvider,
+            simulateHandleOpProvider: simulateHandleOpProvider,
             passkeyManager: PasskeyManager(),
             smartAccountManager: core.smartAccountManager
         )

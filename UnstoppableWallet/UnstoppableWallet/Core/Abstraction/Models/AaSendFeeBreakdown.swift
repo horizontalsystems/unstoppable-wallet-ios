@@ -1,11 +1,15 @@
 import BigInt
 import Foundation
 
-/// Fee breakdown displayed in AA send UI. Carries the base fee in token units
-/// (e.g. USDT 6-decimal smallest unit) plus qualifier flags so the View can
-/// append "incl. activation + approval" without re-deriving from the scenario.
-struct AaSendFeeBreakdown {
-    let baseFeeInToken: BigUInt
-    let includesActivation: Bool
-    let includesApproval: Bool
+struct AaSendFeeBreakdown: Equatable {
+    let estimatedFeeInToken: BigUInt
+    let requiredPrefundInToken: BigUInt
+    let exchangeRate: BigUInt
+    let scenario: Scenario
+
+    enum Scenario: Equatable {
+        case approvedSend
+        case approveAndSend
+        case freshDeploy
+    }
 }

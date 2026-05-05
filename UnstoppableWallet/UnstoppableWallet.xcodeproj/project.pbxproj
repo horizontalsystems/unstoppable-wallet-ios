@@ -54,6 +54,8 @@
 		6BE1D7192FA9BEBA00190518 /* Erc20PaymasterAndData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D7172FA9BEBA00190518 /* Erc20PaymasterAndData.swift */; };
 		6BE1D71A2FA9BEBA00190518 /* PreparedUserOp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D7182FA9BEBA00190518 /* PreparedUserOp.swift */; };
 		6BE1D71C2FA9C20B00190518 /* SignatureCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D71B2FA9C20B00190518 /* SignatureCurve.swift */; };
+		6BE1D9C32FA9CEE700190518 /* AaFeeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9C22FA9CEE700190518 /* AaFeeCalculator.swift */; };
+		6BE1D9C52FA9DC0D00190518 /* SimulateHandleOpProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9C42FA9DC0D00190518 /* SimulateHandleOpProvider.swift */; };
 		D33D63472F98DD5D00E16ADA /* AppWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3948EF62ADA846400FAE566 /* AppWidgetBundle.swift */; };
 		D33D63482F98DD5D00E16ADA /* SingleCoinPriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CFAA2B156E439EB18B3 /* SingleCoinPriceView.swift */; };
 		D33D63492F98DD5D00E16ADA /* PriceChangeModeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D502C0703B400515664 /* PriceChangeModeManager.swift */; };
@@ -3075,6 +3077,8 @@
 		6BE1D7172FA9BEBA00190518 /* Erc20PaymasterAndData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Erc20PaymasterAndData.swift; sourceTree = "<group>"; };
 		6BE1D7182FA9BEBA00190518 /* PreparedUserOp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparedUserOp.swift; sourceTree = "<group>"; };
 		6BE1D71B2FA9C20B00190518 /* SignatureCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignatureCurve.swift; sourceTree = "<group>"; };
+		6BE1D9C22FA9CEE700190518 /* AaFeeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AaFeeCalculator.swift; sourceTree = "<group>"; };
+		6BE1D9C42FA9DC0D00190518 /* SimulateHandleOpProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulateHandleOpProvider.swift; sourceTree = "<group>"; };
 		6BE57E722E339C32003C4C01 /* MerkleTransactionAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleTransactionAdapter.swift; sourceTree = "<group>"; };
 		6BE57E762E339D17003C4C01 /* MerkleRpcBlockchain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleRpcBlockchain.swift; sourceTree = "<group>"; };
 		6BE57E772E339D17003C4C01 /* MerlkeTransactionHashStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerlkeTransactionHashStorage.swift; sourceTree = "<group>"; };
@@ -6663,6 +6667,7 @@
 		6B94D8C32F9CD9430042CCD6 /* Providers */ = {
 			isa = PBXGroup;
 			children = (
+				6BE1D9C42FA9DC0D00190518 /* SimulateHandleOpProvider.swift */,
 				6B94D8C22F9CD9430042CCD6 /* EvmCodeProvider.swift */,
 			);
 			path = Providers;
@@ -6671,6 +6676,7 @@
 		6B94D8C82F9CD94C0042CCD6 /* Send */ = {
 			isa = PBXGroup;
 			children = (
+				6BE1D9C22FA9CEE700190518 /* AaFeeCalculator.swift */,
 				6BE1D7172FA9BEBA00190518 /* Erc20PaymasterAndData.swift */,
 				6BE1D7182FA9BEBA00190518 /* PreparedUserOp.swift */,
 				6B3CFEF02FA37FDB00445225 /* SendScenarioDetector.swift */,
@@ -9150,6 +9156,7 @@
 				D33D64E72F98F2CF00E16ADA /* AlertRouter.swift in Sources */,
 				D33D64E82F98F2CF00E16ADA /* SubscriptionView.swift in Sources */,
 				D33D64E92F98F2CF00E16ADA /* BottomSheetTitleView.swift in Sources */,
+				6BE1D9C32FA9CEE700190518 /* AaFeeCalculator.swift in Sources */,
 				D33D64EA2F98F2CF00E16ADA /* AppError.swift in Sources */,
 				D33D64EB2F98F2CF00E16ADA /* SwapSelectProviderModule.swift in Sources */,
 				D33D64EC2F98F2CF00E16ADA /* TonConnectConnectView.swift in Sources */,
@@ -10587,6 +10594,7 @@
 				D33D6A5B2F98F2CF00E16ADA /* TonAdapter.swift in Sources */,
 				D33D6A5C2F98F2CF00E16ADA /* MarketAdvancedSearchResultsView.swift in Sources */,
 				D33D6A5D2F98F2CF00E16ADA /* TonTransactionRecord.swift in Sources */,
+				6BE1D9C52FA9DC0D00190518 /* SimulateHandleOpProvider.swift in Sources */,
 				D33D6A5E2F98F2CF00E16ADA /* InputRowModifier.swift in Sources */,
 				D33D6A5F2F98F2CF00E16ADA /* PreSendView.swift in Sources */,
 				D33D6A602F98F2CF00E16ADA /* PreSendViewModel.swift in Sources */,
