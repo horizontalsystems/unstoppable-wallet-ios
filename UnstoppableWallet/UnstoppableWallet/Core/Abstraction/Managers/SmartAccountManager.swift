@@ -4,6 +4,7 @@ import EvmKit
 import Foundation
 import GRDB
 import MarketKit
+import TronKit
 
 // Central orchestrator of AA-wallet lifecycle. Owns aa.sqlite DatabasePool, runs migrator,
 // subscribes to AccountManager.accountDeletedPublisher for cascade cleanup, performs
@@ -150,8 +151,43 @@ extension SmartAccountManager {
 // MARK: - GasFree operations
 
 extension SmartAccountManager {
-    func gasFreeProfile(accountId: String) throws -> GasFreeProfileRecord? {
-        try gasFreeProfileStorage.profile(accountId: accountId)
+    func gasFreeProfile(accountId: String) throws -> GasFreeProfile? {
+        guard let record = try gasFreeProfileStorage.profile(accountId: accountId) else {
+            return nil
+        }
+        return try GasFreeProfile(record: record)
+    }
+
+    /// Idempotent: returns existing profile if already created (controllerAddress must match);
+    /// otherwise derives `gasFreeAddress` locally and saves a new record. v1 hardcodes the
+    /// mainnet service provider + verifying contract from `GasFreeChainAddresses`.
+    func createGasFreeProfile(account: Account, controllerAddress: TronKit.Address) throws -> GasFreeProfile {
+        guard case .passkeyOwned = account.type else {
+            throw SmartAccountError.invalidAccountType
+        }
+
+        if let existing = try gasFreeProfile(accountId: account.id) {
+            guard existing.controllerAddress == controllerAddress else {
+                throw SmartAccountError.controllerMismatch
+            }
+            return existing
+        }
+
+        let gasFreeAddress = try GasFreeAddressResolver.resolveLocally(userAddress: controllerAddress)
+
+        let profile = GasFreeProfile(
+            accountId: account.id,
+            controllerAddress: controllerAddress,
+            gasFreeAddress: gasFreeAddress,
+            providerId: GasFreeChainAddresses.mainnetServiceProvider,
+            verifyingContract: GasFreeChainAddresses.mainnetFactory,
+            implementationVersion: GasFreeChainAddresses.v1ImplementationVersion,
+            createdAt: Date().timeIntervalSince1970,
+            lastVerifiedAt: nil
+        )
+
+        try gasFreeProfileStorage.save(record: profile.toRecord())
+        return profile
     }
 }
 
@@ -194,5 +230,6 @@ extension SmartAccountManager {
     enum SmartAccountError: Error, Equatable {
         case invalidAccountType
         case pubkeyMismatch
+        case controllerMismatch
     }
 }

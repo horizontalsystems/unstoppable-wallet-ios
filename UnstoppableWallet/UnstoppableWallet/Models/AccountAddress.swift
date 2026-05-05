@@ -44,10 +44,13 @@ enum AccountAddress {
             return address
 
         case .passkeyOwned:
+            // TODO: make this async and create the GasFree profile on demand when missing
+            // (e.g. after account restore where the profile didn't carry over). For now
+            // we throw; the profile is only ever populated by CreateSmartAccountService.
             guard let profile = try Core.shared.smartAccountManager.gasFreeProfile(accountId: account.id) else {
                 throw AdapterError.unsupportedAccount
             }
-            return try TronKit.Address(address: profile.gasFreeAddress)
+            return profile.gasFreeAddress
 
         default:
             throw AdapterError.unsupportedAccount

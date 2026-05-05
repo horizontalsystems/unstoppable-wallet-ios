@@ -13,6 +13,11 @@ enum GasFreeChainAddresses {
 
     static let mainnetFactory = try! TronKit.Address(address: "TFFAMQLZybALaLb4uxHA9RBE7pxhUAjF3U")
     static let mainnetBeacon = try! TronKit.Address(address: "TSP9UW6FQhT76XD2jWA6ipGMx3yGbjDffP")
+    // TODO: Phase 0.5: confirm the production mainnet service provider against open.gasfree.io
+    // /api/v1/address/{user}.providerId. Value below is the canonical address used in
+    // gasfree-sdk-swift tests; production may differ.
+    static let mainnetServiceProvider = try! TronKit.Address(address: "TLntW9Z59LYY5KEi9cmwk3PKjQga828ird")
+    static let v1ImplementationVersion = "gasfree_v1_0_0"
 
     static let mainnetCreationCode = mainnetCreationCodeHex.hs.hexData!
 

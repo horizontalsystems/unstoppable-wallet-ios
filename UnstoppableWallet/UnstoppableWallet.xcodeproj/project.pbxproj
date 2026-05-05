@@ -58,6 +58,7 @@
 		6BE1D9C52FA9DC0D00190518 /* SimulateHandleOpProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9C42FA9DC0D00190518 /* SimulateHandleOpProvider.swift */; };
 		6BE1D9CC2FAA137200190518 /* GasFreeChainAddresses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9CB2FAA137200190518 /* GasFreeChainAddresses.swift */; };
 		6BE1D9CE2FAA138100190518 /* GasFreeAddressResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9CD2FAA138100190518 /* GasFreeAddressResolver.swift */; };
+		6BE1D9D32FAA1C1A00190518 /* GasFreeProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9D22FAA1C1A00190518 /* GasFreeProfile.swift */; };
 		D33D63472F98DD5D00E16ADA /* AppWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3948EF62ADA846400FAE566 /* AppWidgetBundle.swift */; };
 		D33D63482F98DD5D00E16ADA /* SingleCoinPriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CFAA2B156E439EB18B3 /* SingleCoinPriceView.swift */; };
 		D33D63492F98DD5D00E16ADA /* PriceChangeModeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D502C0703B400515664 /* PriceChangeModeManager.swift */; };
@@ -3083,6 +3084,7 @@
 		6BE1D9C42FA9DC0D00190518 /* SimulateHandleOpProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulateHandleOpProvider.swift; sourceTree = "<group>"; };
 		6BE1D9CB2FAA137200190518 /* GasFreeChainAddresses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasFreeChainAddresses.swift; sourceTree = "<group>"; };
 		6BE1D9CD2FAA138100190518 /* GasFreeAddressResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasFreeAddressResolver.swift; sourceTree = "<group>"; };
+		6BE1D9D22FAA1C1A00190518 /* GasFreeProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasFreeProfile.swift; sourceTree = "<group>"; };
 		6BE57E722E339C32003C4C01 /* MerkleTransactionAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleTransactionAdapter.swift; sourceTree = "<group>"; };
 		6BE57E762E339D17003C4C01 /* MerkleRpcBlockchain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleRpcBlockchain.swift; sourceTree = "<group>"; };
 		6BE57E772E339D17003C4C01 /* MerlkeTransactionHashStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerlkeTransactionHashStorage.swift; sourceTree = "<group>"; };
@@ -7000,6 +7002,7 @@
 		6BDBD3AE2F9B974600440BE0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6BE1D9D22FAA1C1A00190518 /* GasFreeProfile.swift */,
 				6BE1D71B2FA9C20B00190518 /* SignatureCurve.swift */,
 				6B3CFEF22FA37FEC00445225 /* AaSendFeeBreakdown.swift */,
 				6B94D8AE2F9BAEAA0042CCD6 /* SmartAccountDeployment.swift */,
@@ -9883,6 +9886,7 @@
 				D33D67952F98F2CF00E16ADA /* AccountWarningView.swift in Sources */,
 				D33D67962F98F2CF00E16ADA /* PseudoAccessoryView.swift in Sources */,
 				D33D67972F98F2CF00E16ADA /* NftAssetOverviewService.swift in Sources */,
+				6BE1D9D32FAA1C1A00190518 /* GasFreeProfile.swift in Sources */,
 				D33D67982F98F2CF00E16ADA /* NftAssetOverviewViewModel.swift in Sources */,
 				D33D67992F98F2CF00E16ADA /* RecentlySentManager.swift in Sources */,
 				D33D679A2F98F2CF00E16ADA /* PromoCodeBottomSheetView.swift in Sources */,
