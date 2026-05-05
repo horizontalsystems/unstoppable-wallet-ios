@@ -11,4 +11,5 @@ struct PreparedUserOp {
     let baseToken: Token
     let curve: SignatureCurve
     let decoration: EvmDecoration
+    let feeBreakdown: AaSendFeeBreakdown
 }

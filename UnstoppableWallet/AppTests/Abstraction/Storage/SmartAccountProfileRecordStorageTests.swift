@@ -123,7 +123,8 @@ struct SmartAccountProfileRecordStorageTests {
         try env.gasFreeProfileStorage.save(record: original)
         try env.gasFreeProfileStorage.save(record: updated)
 
-        let restored = try #requiretry (env.gasFreeProfileStorage.profile(accountId: "account-gasfree"))
+        let fetched = try env.gasFreeProfileStorage.profile(accountId: "account-gasfree")
+        let restored = try #require(fetched)
 
         #expect(restored.accountId == updated.accountId)
         #expect(restored.controllerAddress == updated.controllerAddress)

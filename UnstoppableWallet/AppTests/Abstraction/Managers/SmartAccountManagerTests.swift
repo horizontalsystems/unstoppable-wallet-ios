@@ -46,7 +46,8 @@ struct SmartAccountManagerTests {
         let profile = try env.createProfile(account: account)
 
         let expected = try EvmKit.Address(hex: "0x9eab247c9c7406b1bb38a972730ce18c40046d30")
-        #expecttry (profile.address(blockchainType: .ethereum) == expected)
+        let actual = try profile.address(blockchainType: .ethereum)
+        #expect(actual == expected)
         #expect(profile.implementationVersion == "barz_v1_0_0")
         #expect(profile.ownerPublicKeyX == Data(repeating: 0x11, count: 32))
         #expect(profile.ownerPublicKeyY == Data(repeating: 0x22, count: 32))

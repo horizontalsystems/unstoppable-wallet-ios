@@ -1,3 +1,4 @@
+import BigInt
 import EvmKit
 import Foundation
 import MarketKit
@@ -14,8 +15,8 @@ class AaSendData: ISendData {
 
     var feeData: FeeData? {
         // v1: nil suppresses the "Edit Fee" menu item in SendView (FeeSettingsViewFactory has
-        // no AA case yet; non-nil here would surface a dangling action). Fee mode is shown as
-        // a row in `sections(...)` instead.
+        // no AA case yet; non-nil here would surface a dangling action). Fee rows are emitted
+        // in `sections(...)` instead.
         nil
     }
 
@@ -38,18 +39,39 @@ class AaSendData: ISendData {
         let flow = prepared.decoration.flowSection(baseToken: baseToken, currency: currency, rates: rates)
         var fields = prepared.decoration.fields(baseToken: baseToken, currency: currency, rates: rates)
 
-        let feeValue = prepared.paymasterMode.isSponsored
-            ? "send.confirmation.fee_sponsored".localized
-            : "send.confirmation.fee_paid_in".localized(baseToken.coin.code)
-        fields.append(.simpleValue(
-            title: "send.network_fee".localized,
-            value: feeValue
+        let breakdown = prepared.feeBreakdown
+        let feeTokenRate = rates[baseToken.coin.uid]
+
+        fields.append(.fee(
+            title: ComponentInformedTitle("send.fee.estimated".localized, info: .fee),
+            amountData: amountData(rawTokenAmount: breakdown.estimatedFeeInToken, baseToken: baseToken, currency: currency, feeTokenRate: feeTokenRate)
         ))
 
-        if prepared.isFreshDeployment {
-            fields.append(.note(iconName: nil, title: "send.confirmation.aa_first_deploy".localized))
+        fields.append(.fee(
+            title: ComponentInformedTitle("send.fee.max_required".localized, info: .fee),
+            amountData: amountData(rawTokenAmount: breakdown.requiredPrefundInToken, baseToken: baseToken, currency: currency, feeTokenRate: feeTokenRate)
+        ))
+
+        switch breakdown.scenario {
+        case .freshDeploy:
+            fields.append(.note(iconName: nil, title: "send.fee.includes_activation_approval".localized))
+        case .approveAndSend:
+            fields.append(.note(iconName: nil, title: "send.fee.includes_approval".localized))
+        case .approvedSend:
+            ()
         }
 
         return [flow, .init(fields, isMain: false)].compactMap { $0 }
+    }
+
+    private func amountData(rawTokenAmount: BigUInt, baseToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {
+        guard let amount = Decimal(bigUInt: rawTokenAmount, decimals: baseToken.decimals) else {
+            return nil
+        }
+
+        let appValue = AppValue(token: baseToken, value: amount)
+        let currencyValue = feeTokenRate.map { CurrencyValue(currency: currency, value: amount * $0) }
+
+        return AmountData(appValue: appValue, currencyValue: currencyValue)
     }
 }
