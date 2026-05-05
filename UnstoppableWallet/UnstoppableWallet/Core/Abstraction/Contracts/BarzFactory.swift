@@ -20,7 +20,7 @@ enum BarzFactory {
         AbiEncoder.encodeFunction(
             signature: "createAccount(address,bytes,uint256)",
             arguments: [
-                .address(verificationFacet),
+                .address(verificationFacet.raw),
                 .bytes(owner),
                 .uint(salt),
             ]
@@ -35,7 +35,7 @@ enum BarzFactory {
         AbiEncoder.encodeFunction(
             signature: "getAddress(address,bytes,uint256)",
             arguments: [
-                .address(verificationFacet),
+                .address(verificationFacet.raw),
                 .bytes(owner),
                 .uint(salt),
             ]

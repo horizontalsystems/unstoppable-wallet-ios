@@ -56,6 +56,8 @@
 		6BE1D71C2FA9C20B00190518 /* SignatureCurve.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D71B2FA9C20B00190518 /* SignatureCurve.swift */; };
 		6BE1D9C32FA9CEE700190518 /* AaFeeCalculator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9C22FA9CEE700190518 /* AaFeeCalculator.swift */; };
 		6BE1D9C52FA9DC0D00190518 /* SimulateHandleOpProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9C42FA9DC0D00190518 /* SimulateHandleOpProvider.swift */; };
+		6BE1D9CC2FAA137200190518 /* GasFreeChainAddresses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9CB2FAA137200190518 /* GasFreeChainAddresses.swift */; };
+		6BE1D9CE2FAA138100190518 /* GasFreeAddressResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9CD2FAA138100190518 /* GasFreeAddressResolver.swift */; };
 		D33D63472F98DD5D00E16ADA /* AppWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3948EF62ADA846400FAE566 /* AppWidgetBundle.swift */; };
 		D33D63482F98DD5D00E16ADA /* SingleCoinPriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CFAA2B156E439EB18B3 /* SingleCoinPriceView.swift */; };
 		D33D63492F98DD5D00E16ADA /* PriceChangeModeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D502C0703B400515664 /* PriceChangeModeManager.swift */; };
@@ -3079,6 +3081,8 @@
 		6BE1D71B2FA9C20B00190518 /* SignatureCurve.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignatureCurve.swift; sourceTree = "<group>"; };
 		6BE1D9C22FA9CEE700190518 /* AaFeeCalculator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AaFeeCalculator.swift; sourceTree = "<group>"; };
 		6BE1D9C42FA9DC0D00190518 /* SimulateHandleOpProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulateHandleOpProvider.swift; sourceTree = "<group>"; };
+		6BE1D9CB2FAA137200190518 /* GasFreeChainAddresses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasFreeChainAddresses.swift; sourceTree = "<group>"; };
+		6BE1D9CD2FAA138100190518 /* GasFreeAddressResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasFreeAddressResolver.swift; sourceTree = "<group>"; };
 		6BE57E722E339C32003C4C01 /* MerkleTransactionAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleTransactionAdapter.swift; sourceTree = "<group>"; };
 		6BE57E762E339D17003C4C01 /* MerkleRpcBlockchain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleRpcBlockchain.swift; sourceTree = "<group>"; };
 		6BE57E772E339D17003C4C01 /* MerlkeTransactionHashStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerlkeTransactionHashStorage.swift; sourceTree = "<group>"; };
@@ -6659,6 +6663,7 @@
 		6B94D8BE2F9BC4500042CCD6 /* Config */ = {
 			isa = PBXGroup;
 			children = (
+				6BE1D9CB2FAA137200190518 /* GasFreeChainAddresses.swift */,
 				6B94D8BD2F9BC4500042CCD6 /* StablecoinRegistry.swift */,
 			);
 			path = Config;
@@ -6941,6 +6946,7 @@
 		6BDBD35A2F9B44D500440BE0 /* Contracts */ = {
 			isa = PBXGroup;
 			children = (
+				6BE1D9CD2FAA138100190518 /* GasFreeAddressResolver.swift */,
 				6BDBD3532F9B44D500440BE0 /* AbiEncoder.swift */,
 				6BDBD3542F9B44D500440BE0 /* AccountFacet.swift */,
 				6BDBD3552F9B44D500440BE0 /* BarzAddressResolver.swift */,
@@ -9257,6 +9263,7 @@
 				D33D65332F98F2CF00E16ADA /* EvmIncomingTransactionRecord.swift in Sources */,
 				D33D65342F98F2CF00E16ADA /* UtxoTransactionService.swift in Sources */,
 				D33D65352F98F2CF00E16ADA /* CoinService.swift in Sources */,
+				6BE1D9CE2FAA138100190518 /* GasFreeAddressResolver.swift in Sources */,
 				D33D65362F98F2CF00E16ADA /* SendEthereumErrorCell.swift in Sources */,
 				D33D65372F98F2CF00E16ADA /* AmountDecimalParser.swift in Sources */,
 				D33D65382F98F2CF00E16ADA /* AdditionalDataCellNew.swift in Sources */,
@@ -9270,6 +9277,7 @@
 				D33D65402F98F2CF00E16ADA /* CustomStringConvertible.swift in Sources */,
 				D33D65412F98F2CF00E16ADA /* FaqModule.swift in Sources */,
 				D33D65422F98F2CF00E16ADA /* MoneroNodeStorage.swift in Sources */,
+				6BE1D9CC2FAA137200190518 /* GasFreeChainAddresses.swift in Sources */,
 				D33D65432F98F2CF00E16ADA /* FaqRepository.swift in Sources */,
 				D33D65442F98F2CF00E16ADA /* FaqViewController.swift in Sources */,
 				D33D65452F98F2CF00E16ADA /* CoinAnalyticsRatingInfoView.swift in Sources */,

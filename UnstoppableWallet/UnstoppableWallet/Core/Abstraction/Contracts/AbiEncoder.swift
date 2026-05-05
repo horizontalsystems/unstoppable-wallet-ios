@@ -1,12 +1,14 @@
 import BigInt
-import EvmKit
 import Foundation
 import HsCryptoKit
 
 // Part 2 uses a local encoder because EvmKit's encode path is not reliable for our dynamic ABI payloads.
+//
+// Chain-agnostic: addresses come in as raw 20-byte `Data`. EVM callers pass
+// `someEvmAddress.raw`; Tron callers pass `someTronAddress.nonPrefixed`.
 enum AbiEncoder {
     enum Value {
-        case address(EvmKit.Address)
+        case address(Data) // raw 20 bytes
         case uint(BigUInt)
         case bytes(Data)
         case string(String)
@@ -40,7 +42,7 @@ enum AbiEncoder {
     private static func encodeValue(_ value: Value) -> Data {
         switch value {
         case let .address(address):
-            return pad32(address.raw)
+            return pad32(address)
         case let .uint(number):
             return pad32(number.serialize())
         case let .bytes(data):
@@ -98,7 +100,7 @@ enum AbiEncoder {
         return data + head + tail
     }
 
-    private static func pad32(_ bytes: Data) -> Data {
+    static func pad32(_ bytes: Data) -> Data {
         Data(repeating: 0, count: max(0, 32 - bytes.count)) + bytes
     }
 

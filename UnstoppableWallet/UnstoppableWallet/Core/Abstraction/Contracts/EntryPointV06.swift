@@ -30,7 +30,7 @@ enum EntryPointV06 {
         AbiEncoder.encodeFunction(
             signature: "getNonce(address,uint192)",
             arguments: [
-                .address(sender),
+                .address(sender.raw),
                 .uint(key),
             ]
         )
@@ -62,7 +62,7 @@ enum EntryPointV06 {
             signature: "handleOps((address,uint256,bytes,bytes,uint256,uint256,uint256,uint256,uint256,bytes,bytes)[],address)",
             arguments: [
                 .array(ops.map { .tuple(userOperationValues($0)) }),
-                .address(beneficiary),
+                .address(beneficiary.raw),
             ]
         )
     }
@@ -72,7 +72,7 @@ enum EntryPointV06 {
             signature: "simulateHandleOp((address,uint256,bytes,bytes,uint256,uint256,uint256,uint256,uint256,bytes,bytes),address,bytes)",
             arguments: [
                 .tuple(userOperationValues(userOp)),
-                .address(target),
+                .address(target.raw),
                 .bytes(targetCallData),
             ]
         )
@@ -116,7 +116,7 @@ enum EntryPointV06 {
 
     private static func userOperationValues(_ userOp: UserOperation) -> [AbiEncoder.Value] {
         [
-            .address(userOp.sender),
+            .address(userOp.sender.raw),
             .uint(userOp.nonce),
             .bytes(userOp.initCode),
             .bytes(userOp.callData),
