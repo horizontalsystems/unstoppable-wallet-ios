@@ -25,7 +25,7 @@ extension PasskeyManager: SmartAccountPasskeyRegistering {
 }
 
 class CreateSmartAccountService {
-    private static let v1BlockchainTypes: [BlockchainType] = [.ethereum, .binanceSmartChain]
+    private static let v1BlockchainTypes: [BlockchainType] = [.ethereum, .binanceSmartChain, .base]
 
     private let accountFactory: AccountFactory
     private let accountManager: AccountManager
