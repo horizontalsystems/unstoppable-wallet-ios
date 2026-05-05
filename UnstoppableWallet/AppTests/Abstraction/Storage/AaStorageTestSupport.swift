@@ -7,6 +7,7 @@ struct AaStorageTestEnvironment {
     let profileStorage: SmartAccountProfileRecordStorage
     let deploymentStorage: SmartAccountDeploymentRecordStorage
     let pendingOpStorage: PendingUserOperationRecordStorage
+    let gasFreeProfileStorage: GasFreeProfileRecordStorage
 
     init() throws {
         let dbURL = FileManager.default.temporaryDirectory
@@ -18,6 +19,7 @@ struct AaStorageTestEnvironment {
         profileStorage = SmartAccountProfileRecordStorage(dbPool: pool)
         deploymentStorage = SmartAccountDeploymentRecordStorage(dbPool: pool)
         pendingOpStorage = PendingUserOperationRecordStorage(dbPool: pool)
+        gasFreeProfileStorage = GasFreeProfileRecordStorage(dbPool: pool)
     }
 
     func makeProfile(
@@ -27,12 +29,26 @@ struct AaStorageTestEnvironment {
         SmartAccountProfileRecord(
             id: id,
             accountId: accountId,
-            address: "0x9eab247c9c7406b1bb38a972730ce18c40046d30",
             implementationVersion: "barz_v1_0_0",
             ownerPublicKeyX: String(repeating: "11", count: 32),
             ownerPublicKeyY: String(repeating: "22", count: 32),
+            curve: "secp256r1",
             salt: "0",
             createdAt: 1_700_000_000
+        )
+    }
+
+    func makeGasFreeProfile(
+        accountId: String = UUID().uuidString
+    ) -> GasFreeProfileRecord {
+        GasFreeProfileRecord(
+            accountId: accountId,
+            controllerAddress: "TGzz8gjYiYRqpfmDwnLxfgPuLVNmpCswVp",
+            gasFreeAddress: "TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj",
+            providerId: "open.gasfree.io",
+            verifyingContract: "TGXQF4Q6m9cQ4Qfq7gZQhQ7Jf7aS7m3nX4",
+            createdAt: 1_700_000_000,
+            lastVerifiedAt: 1_700_000_010
         )
     }
 
@@ -65,8 +81,7 @@ struct AaStorageTestEnvironment {
             txHash: nil,
             status: status,
             submittedAt: 1_700_000_000,
-            lastPolledAt: nil,
-            bundlerUrl: "https://api.pimlico.io/v1/1/rpc?apikey=test"
+            lastPolledAt: nil
         )
     }
 }

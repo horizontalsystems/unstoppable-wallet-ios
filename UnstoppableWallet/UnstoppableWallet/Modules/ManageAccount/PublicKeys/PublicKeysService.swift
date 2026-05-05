@@ -7,6 +7,10 @@ class PublicKeysService {
 }
 
 extension PublicKeysService {
+    var currentAccount: Account {
+        account
+    }
+
     var accountType: AccountType {
         account.type
     }
@@ -19,10 +23,7 @@ extension PublicKeysService {
     }
 
     var tronAddressSupported: Bool {
-        switch account.type {
-        case .mnemonic, .trcPrivateKey, .tronAddress: return true
-        default: return false
-        }
+        (try? AccountAddress.tronAddress(account: account)) != nil
     }
 
     var accountExtendedPublicKeySupported: Bool {

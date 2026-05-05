@@ -57,7 +57,7 @@ class TronKitManager {
         }
 
         let network: Network = testNetManager.testNetEnabled ? .nileTestnet : .mainNet
-        let address: TronKit.Address
+        let address = try AccountAddress.tronAddress(account: account)
         var signer: Signer?
 
         switch account.type {
@@ -65,13 +65,11 @@ class TronKitManager {
             guard let seed = account.type.mnemonicSeed else {
                 throw KitWrapperError.mnemonicNoSeed
             }
-            address = try Signer.address(seed: seed)
             signer = try Signer.instance(seed: seed)
         case let .trcPrivateKey(data):
-            address = try Signer.address(privateKey: data)
             signer = try Signer.instance(privateKey: data)
-        case let .tronAddress(value):
-            address = value
+        case .tronAddress:
+            ()
         default:
             throw AdapterError.unsupportedAccount
         }
@@ -116,17 +114,6 @@ extension TronKitManager {
     func tronKitWrapper(account: Account) throws -> TronKitWrapper {
         try queue.sync {
             try _tronKitWrapper(account: account)
-        }
-    }
-
-    func address(type: AccountType) throws -> String {
-        switch type {
-        case let .tronAddress(address: address): return address.base58
-        default:
-            guard let seed = type.mnemonicSeed else {
-                throw KitWrapperError.mnemonicNoSeed
-            }
-            return try Signer.address(seed: seed).base58
         }
     }
 }

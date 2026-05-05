@@ -20,7 +20,6 @@ struct PendingUserOperationRecordStorageTests {
         #expect(restored.status == original.status)
         #expect(restored.submittedAt == original.submittedAt)
         #expect(restored.lastPolledAt == original.lastPolledAt)
-        #expect(restored.bundlerUrl == original.bundlerUrl)
     }
 
     @Test func pendingByStatusFilter() throws {

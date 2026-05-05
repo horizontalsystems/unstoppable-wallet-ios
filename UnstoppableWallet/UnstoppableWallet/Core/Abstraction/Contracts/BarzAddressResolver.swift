@@ -23,7 +23,7 @@ enum BarzAddressResolver {
     static func resolveLocally(
         publicKeyX: Data,
         publicKeyY: Data,
-        curve: AccountType.PasskeyCurve,
+        curve: SignatureCurve,
         blockchainType: BlockchainType,
         salt: BigUInt = 0
     ) throws -> EvmKit.Address {
@@ -52,7 +52,7 @@ enum BarzAddressResolver {
     static func resolveViaFactory(
         publicKeyX: Data,
         publicKeyY: Data,
-        curve: AccountType.PasskeyCurve,
+        curve: SignatureCurve,
         blockchainType: BlockchainType,
         salt: BigUInt = 0,
         call: Call
@@ -76,7 +76,7 @@ enum BarzAddressResolver {
     static func resolveViaFactory(
         publicKeyX: Data,
         publicKeyY: Data,
-        curve: AccountType.PasskeyCurve,
+        curve: SignatureCurve,
         blockchainType: BlockchainType,
         networkManager: NetworkManager,
         rpcSource: RpcSource,
@@ -104,7 +104,7 @@ enum BarzAddressResolver {
     /// encoding and the verification facet address differ. Centralized here
     /// so resolveLocally / resolveViaFactory don't duplicate the dispatch.
     private static func ownerAndFacet(
-        curve: AccountType.PasskeyCurve,
+        curve: SignatureCurve,
         x: Data,
         y: Data,
         aa: ChainAddresses.Aa

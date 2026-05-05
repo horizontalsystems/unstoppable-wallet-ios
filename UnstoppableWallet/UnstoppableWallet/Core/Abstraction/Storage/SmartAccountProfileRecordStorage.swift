@@ -59,3 +59,41 @@ extension SmartAccountProfileRecordStorage {
         }
     }
 }
+
+class GasFreeProfileRecordStorage {
+    private let dbPool: DatabasePool
+
+    init(dbPool: DatabasePool) {
+        self.dbPool = dbPool
+    }
+}
+
+extension GasFreeProfileRecordStorage {
+    func profile(accountId: String) throws -> GasFreeProfileRecord? {
+        try dbPool.read { db in
+            try GasFreeProfileRecord
+                .filter(GasFreeProfileRecord.Columns.accountId == accountId)
+                .fetchOne(db)
+        }
+    }
+
+    func save(record: GasFreeProfileRecord) throws {
+        try dbPool.write { db in
+            try record.save(db)
+        }
+    }
+
+    func delete(accountId: String) throws {
+        try dbPool.write { db in
+            try GasFreeProfileRecord
+                .filter(GasFreeProfileRecord.Columns.accountId == accountId)
+                .deleteAll(db)
+        }
+    }
+
+    func deleteAll() throws {
+        try dbPool.write { db in
+            try GasFreeProfileRecord.deleteAll(db)
+        }
+    }
+}

@@ -10,10 +10,7 @@ struct AccountTypePasskeyOwnedTests {
     @Test
     func supportsOnlyConfirmedV1Tokens() {
         let accountType = AccountType.passkeyOwned(
-            credentialID: Data([0x01, 0x02, 0x03]),
-            publicKeyX: Data(repeating: 0x11, count: 32),
-            publicKeyY: Data(repeating: 0x22, count: 32),
-            curve: .secp256r1
+            credentialID: Data([0x01, 0x02, 0x03])
         )
 
         #expect(accountType.supports(token: token(code: "USDT", blockchainType: .ethereum, tokenType: .eip20(address: "0xdAC17F958D2ee523a2206206994597C13D831ec7"))))
@@ -29,10 +26,7 @@ struct AccountTypePasskeyOwnedTests {
     @Test
     func exposesPasskeySpecificFlags() {
         let accountType = AccountType.passkeyOwned(
-            credentialID: Data([0x01, 0x02, 0x03]),
-            publicKeyX: Data(repeating: 0x11, count: 32),
-            publicKeyY: Data(repeating: 0x22, count: 32),
-            curve: .secp256r1
+            credentialID: Data([0x01, 0x02, 0x03])
         )
 
         #expect(accountType.mnemonicSeed == nil)
@@ -40,45 +34,9 @@ struct AccountTypePasskeyOwnedTests {
         #expect(accountType.supportsWalletConnect == false)
         #expect(accountType.supportsTonConnect == false)
         #expect(accountType.watchAddress == nil)
-        #expect(accountType.tronAddress == nil)
         #expect(accountType.sign(message: Data([0x01])) == nil)
         #expect(accountType.description == "Smart Wallet")
         #expect(accountType.statDescription == "passkey_owned")
-    }
-
-    @Test
-    func evmAddressDerivesBarzCounterfactualOnSupportedChains() throws {
-        let accountType = AccountType.passkeyOwned(
-            credentialID: Data([0x01, 0x02, 0x03]),
-            publicKeyX: Data(repeating: 0x11, count: 32),
-            publicKeyY: Data(repeating: 0x22, count: 32),
-            curve: .secp256r1
-        )
-
-        let expected = try EvmKit.Address(hex: "0x9eab247c9c7406b1bb38a972730ce18c40046d30")
-        #expect(accountType.evmAddress(chain: .ethereum) == expected)
-        #expect(accountType.evmAddress(chain: .binanceSmartChain) == expected)
-        #expect(accountType.evmAddress(chain: .polygon) == nil)
-    }
-
-    /// secp256k1 path produces different counterfactual addresses on Mainnet vs BSC
-    /// because the verification facet is deployed at different addresses on each chain
-    /// and enters the CREATE2 bytecode hash via constructor args.
-    @Test
-    func evmAddressSecp256k1DiffersBetweenMainnetAndBsc() {
-        let accountType = AccountType.passkeyOwned(
-            credentialID: Data([0x01, 0x02, 0x03]),
-            publicKeyX: Data(repeating: 0x11, count: 32),
-            publicKeyY: Data(repeating: 0x22, count: 32),
-            curve: .secp256k1
-        )
-
-        let mainnet = accountType.evmAddress(chain: .ethereum)
-        let bsc = accountType.evmAddress(chain: .binanceSmartChain)
-
-        #expect(mainnet != nil)
-        #expect(bsc != nil)
-        #expect(mainnet != bsc)
     }
 
     @Test
@@ -89,10 +47,7 @@ struct AccountTypePasskeyOwnedTests {
             level: 3,
             name: "Passkey Wallet",
             type: .passkeyOwned(
-                credentialID: Data([0x01, 0x02, 0x03, 0x04]),
-                publicKeyX: Data(repeating: 0x11, count: 32),
-                publicKeyY: Data(repeating: 0x22, count: 32),
-                curve: .secp256r1
+                credentialID: Data([0x01, 0x02, 0x03, 0x04])
             ),
             origin: .created,
             backedUp: false,
@@ -115,41 +70,6 @@ struct AccountTypePasskeyOwnedTests {
         #expect(restored.type == account.type)
     }
 
-    /// Verifies that the curve field roundtrips through Keychain storage for the
-    /// secp256k1 case (v1 default). Equality on AccountType includes curve, so
-    /// restored.type == account.type only passes if the curve was persisted and
-    /// recovered correctly.
-    @Test
-    func accountStorageRoundTripsPasskeyOwnedSecp256k1Curve() throws {
-        let environment = try StorageTestEnvironment()
-        let account = Account(
-            id: UUID().uuidString,
-            level: 0,
-            name: "Smart Account",
-            type: .passkeyOwned(
-                credentialID: Data([0xAA, 0xBB, 0xCC]),
-                publicKeyX: Data(repeating: 0x33, count: 32),
-                publicKeyY: Data(repeating: 0x44, count: 32),
-                curve: .secp256k1
-            ),
-            origin: .created,
-            backedUp: true,
-            fileBackedUp: false
-        )
-
-        environment.accountStorage.save(account: account)
-
-        let (accounts, _) = environment.accountStorage.allAccounts
-        let restored = try #require(accounts.first)
-
-        #expect(restored.type == account.type)
-        if case let .passkeyOwned(_, _, _, curve) = restored.type {
-            #expect(curve == .secp256k1)
-        } else {
-            Issue.record("expected .passkeyOwned, got \(restored.type)")
-        }
-    }
-
     private func token(code: String, blockchainType: BlockchainType, tokenType: TokenType) -> Token {
         Token(
             coin: Coin(uid: "\(blockchainType.uid)-\(code.lowercased())", name: code, code: code),
@@ -162,10 +82,12 @@ struct AccountTypePasskeyOwnedTests {
 
 private struct StorageTestEnvironment {
     let accountStorage: AccountStorage
+    let keychainStorage: KeychainStorage
+    let recordStorage: AccountRecordStorage
 
     init() throws {
         let logger = Logger(minLogLevel: .error)
-        let keychainStorage = KeychainStorage(service: "account-storage-tests-\(UUID().uuidString)", logger: logger)
+        keychainStorage = KeychainStorage(service: "account-storage-tests-\(UUID().uuidString)", logger: logger)
         let dbURL = FileManager.default.temporaryDirectory.appendingPathComponent("account-storage-tests-\(UUID().uuidString).sqlite")
         let dbPool = try DatabasePool(path: dbURL.path)
 
@@ -185,7 +107,7 @@ private struct StorageTestEnvironment {
             }
         }
 
-        let recordStorage = AccountRecordStorage(dbPool: dbPool)
+        recordStorage = AccountRecordStorage(dbPool: dbPool)
         accountStorage = AccountStorage(keychainStorage: keychainStorage, storage: recordStorage)
     }
 }

@@ -42,7 +42,7 @@ class TonEventConverter {
         }
     }
 
-    private func format(address: AccountAddress) -> String {
+    private func format(address: TonKit.AccountAddress) -> String {
         address.address.toString(testOnly: TonKitManager.isTestNet, bounceable: !address.isWallet)
     }
 

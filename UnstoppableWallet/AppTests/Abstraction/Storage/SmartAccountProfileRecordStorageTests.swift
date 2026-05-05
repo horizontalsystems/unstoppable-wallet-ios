@@ -15,10 +15,10 @@ struct SmartAccountProfileRecordStorageTests {
 
         #expect(restored.id == original.id)
         #expect(restored.accountId == original.accountId)
-        #expect(restored.address == original.address)
         #expect(restored.implementationVersion == original.implementationVersion)
         #expect(restored.ownerPublicKeyX == original.ownerPublicKeyX)
         #expect(restored.ownerPublicKeyY == original.ownerPublicKeyY)
+        #expect(restored.curve == original.curve)
         #expect(restored.salt == original.salt)
         #expect(restored.createdAt == original.createdAt)
     }
@@ -105,5 +105,32 @@ struct SmartAccountProfileRecordStorageTests {
         #expect(throws: (any Error).self) {
             try env.profileStorage.save(record: second)
         }
+    }
+
+    @Test func gasFreeProfileSaveRoundTrip() throws {
+        let env = try AaStorageTestEnvironment()
+        let original = env.makeGasFreeProfile(accountId: "account-gasfree")
+        let updated = GasFreeProfileRecord(
+            accountId: "account-gasfree",
+            controllerAddress: original.controllerAddress,
+            gasFreeAddress: "TYw8QmxE9gZ8Uj7PzX9pU7VfFq8M4B9x2p",
+            providerId: original.providerId,
+            verifyingContract: original.verifyingContract,
+            createdAt: original.createdAt,
+            lastVerifiedAt: 1_700_000_020
+        )
+
+        try env.gasFreeProfileStorage.save(record: original)
+        try env.gasFreeProfileStorage.save(record: updated)
+
+        let restored = try #requiretry (env.gasFreeProfileStorage.profile(accountId: "account-gasfree"))
+
+        #expect(restored.accountId == updated.accountId)
+        #expect(restored.controllerAddress == updated.controllerAddress)
+        #expect(restored.gasFreeAddress == updated.gasFreeAddress)
+        #expect(restored.providerId == updated.providerId)
+        #expect(restored.verifyingContract == updated.verifyingContract)
+        #expect(restored.createdAt == updated.createdAt)
+        #expect(restored.lastVerifiedAt == updated.lastVerifiedAt)
     }
 }

@@ -58,18 +58,30 @@ struct SmartAccountTestEnvironment {
     func makePasskeyAccount(
         id: String = UUID().uuidString,
         name: String = "test",
-        credentialID: Data = Data(repeating: 0xCC, count: 16),
-        publicKeyX: Data = Data(repeating: 0x11, count: 32),
-        publicKeyY: Data = Data(repeating: 0x22, count: 32)
+        credentialID: Data = Data(repeating: 0xCC, count: 16)
     ) -> Account {
         Account(
             id: id,
             level: 0,
             name: name,
-            type: .passkeyOwned(credentialID: credentialID, publicKeyX: publicKeyX, publicKeyY: publicKeyY, curve: .secp256r1),
+            type: .passkeyOwned(credentialID: credentialID),
             origin: .created,
             backedUp: true,
             fileBackedUp: false
+        )
+    }
+
+    func createProfile(
+        account: Account,
+        publicKeyX: Data = Data(repeating: 0x11, count: 32),
+        publicKeyY: Data = Data(repeating: 0x22, count: 32),
+        curve: SignatureCurve = .secp256r1
+    ) throws -> SmartAccountProfile {
+        try smartAccountManager.createProfile(
+            account: account,
+            ownerPublicKeyX: publicKeyX,
+            ownerPublicKeyY: publicKeyY,
+            curve: curve
         )
     }
 }

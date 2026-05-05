@@ -5,14 +5,7 @@ import MarketKit
 
 /// Determines which UserOp shape to build for an AA send by checking whether
 /// the AA account is deployed and whether the sendToken is already approved
-/// to the paymaster.
-///
-/// Allowance cache is in-memory, per app session, NOT persisted. On cache miss
-/// the detector queries `eip20.allowance(owner, spender)` on chain. Cache is
-/// updated only as a side-effect of detect() reading the live value — there is
-/// no markApproved API. This keeps the strategy self-correcting: if a previous
-/// approve UserOp reverted, on-chain allowance is still 0 and the next detect
-/// correctly returns .approveAndSend.
+/// to the paymaster. Always queries on-chain — fresh per call.
 ///
 /// Dependencies are injected as closures so the detector can be unit-tested
 /// without protocol-mocking.
@@ -22,16 +15,14 @@ class SendScenarioDetector {
     typealias FetchAllowance = (_ owner: EvmKit.Address, _ spender: EvmKit.Address, _ token: EvmKit.Address, _ blockchainType: BlockchainType) async throws -> BigUInt
 
     /// Any non-trivial allowance value is treated as MAX-approve. We always
-    /// approve(MAX), so a cached value above 2^255 means the approve has
-    /// landed on chain. Tighter thresholds (e.g. per-tx max cost) are not
-    /// needed because the paymaster takes only the actual gas amount in postOp.
+    /// approve(MAX), so a value above 2^255 means the approve has landed on
+    /// chain. Tighter thresholds (e.g. per-tx max cost) are not needed because
+    /// the paymaster takes only the actual gas amount in postOp.
     private static let safetyThreshold = BigUInt(2).power(255)
 
     private let fetchPaymasterAddress: FetchPaymasterAddress
     private let fetchIsDeployed: FetchIsDeployed
     private let fetchAllowance: FetchAllowance
-
-    private var allowanceCache: [CacheKey: BigUInt] = [:]
 
     init(
         fetchPaymasterAddress: @escaping FetchPaymasterAddress,
@@ -55,20 +46,7 @@ class SendScenarioDetector {
             return .freshDeploy(paymaster: paymasterAddress)
         }
 
-        let key = CacheKey(
-            account: accountAddress,
-            blockchainType: blockchainType,
-            token: sendToken,
-            paymaster: paymasterAddress
-        )
-
-        if let cached = allowanceCache[key], cached >= Self.safetyThreshold {
-            return .approvedSend(paymaster: paymasterAddress)
-        }
-
         let allowance = try await fetchAllowance(accountAddress, paymasterAddress, sendToken, blockchainType)
-        allowanceCache[key] = allowance
-
         return allowance >= Self.safetyThreshold
             ? .approvedSend(paymaster: paymasterAddress)
             : .approveAndSend(paymaster: paymasterAddress)
@@ -95,12 +73,5 @@ extension SendScenarioDetector {
             case .approvedSend: return false
             }
         }
-    }
-
-    fileprivate struct CacheKey: Hashable {
-        let account: EvmKit.Address
-        let blockchainType: BlockchainType
-        let token: EvmKit.Address
-        let paymaster: EvmKit.Address
     }
 }

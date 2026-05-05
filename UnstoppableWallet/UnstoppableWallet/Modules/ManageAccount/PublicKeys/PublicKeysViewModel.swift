@@ -9,6 +9,10 @@ class PublicKeysViewModel {
 }
 
 extension PublicKeysViewModel {
+    var account: Account {
+        service.currentAccount
+    }
+
     var accountType: AccountType {
         service.accountType
     }

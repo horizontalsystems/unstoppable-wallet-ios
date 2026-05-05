@@ -2,25 +2,22 @@
 
 ERC-4337 Account Abstraction primitives and Barz-specific adapters for unstoppable-wallet-ios.
 
-## Scope
+## Layout
 
-- `Types/` — UserOperation (EntryPoint v0.6 format), PackedUserOperation (userOpHash calculation), supporting structs, WebAuthnSignature.
-- `Errors/` — module-wide error types.
-- `Contracts/` *(added in Part 2)* — ABI wrappers for EntryPoint v0.6, BarzFactory, AccountFacet, Secp256r1VerificationFacet. Static ABI may use `EvmKit.ContractMethod`; dynamic ABI uses a small local helper encoder inside the module.
-- `Contracts/BarzAddressResolver` *(Part 6)* — local `CREATE2` resolver with optional network-backed verification via `BarzFactory.getAddress(...)`.
-- `Adapters/` *(Phase 4)* — versioned `ISmartContractAdapter` protocol + `BarzV1Adapter`.
-- `Bundler/` *(Phase 4)* — JSON-RPC client.
-- `Paymaster/` *(Phase 4)* — ERC-7677 Pimlico service.
-- `UserOperation/` *(Phase 5)* — Builder / Hasher / Signer / Sender / Poller.
-- `Signers/` *(Phase 5)* — `IEvmSigner` + `PasskeySigner`.
-- `Executors/` *(Phase 5)* — `IEvmExecutor` + `SmartAccountExecutor`.
+- `Config/` — static registries (e.g. stablecoin lists).
+- `Contracts/` — ABI wrappers: `EntryPointV06`, `BarzFactory`, `AccountFacet`, `BarzAddressResolver` (CREATE2), `ChainAddresses`, `AbiEncoder`. Static ABI uses `EvmKit.ContractMethod`; dynamic cases use the local `AbiEncoder`.
+- `Legacy/` — passkey/secp256r1 path frozen for v1 (deferred to v3): `PasskeyAttestationDecoder`, `PasskeyCborReader`, `PasskeyAuthorizationRequester`, `PasskeyUserOpSigner`, `Secp256r1VerificationFacet`, `SmartAccountPasskeyManager`. Live curve dispatch in `BarzAddressResolver` / `AaSender` still references this.
+- `Managers/` — `SmartAccountManager` (profile + deployment + pending op CRUD against `aa.sqlite`).
+- `Models/` — domain types: `SmartAccountProfile`, `SmartAccountDeployment`, `PendingUserOperationRecord`, `AaSendFeeBreakdown`.
+- `Providers/` — `EvmCodeProvider` (eth_getCode wrapper).
+- `Send/` — pipeline: `AaSender` (orchestration), `AaSendHandler`, `AaTransactionService`, `AaSendData`, `EcdsaUserOpSigner`, `PimlicoProvider` (bundler + paymaster RPC), `SendScenarioDetector`, `Erc20PaymasterAndData` (paymaster wire-format parser), `PreparedUserOp`.
+- `Storage/` — GRDB record storages backed by `aa.sqlite`; `AaStorageMigrator` owns schema.
+- `Types/` — `UserOperation`, `PackedUserOperation` (userOpHash), `EntryPointVersion`, `WebAuthnSignature`, `UserOperationCallData`, `UserOperationReceipt`.
 
 ## Design rules
 
-- **No `Core.shared`** inside the module. All dependencies are injected via init.
-- **No `web3swift` imports** — ABI encoding relies on `EvmKit` primitives plus a small local helper encoder for dynamic ABI cases.
-- **Protocol-first** — cross-module boundaries go through protocols; concrete types live in single files.
-- **Versioned adapters** — contract-specific code is isolated in `Adapters/`; the executor does not know about Barz directly.
+- **No `web3swift` imports** — ABI encoding relies on `EvmKit` primitives plus the local `AbiEncoder` for dynamic ABI cases.
+- **AA storages throw** — records under `aa.sqlite` propagate errors. Legacy `bank.sqlite` storages keep their `try!` pattern; do not mix the styles.
 
 ## v1 targets
 

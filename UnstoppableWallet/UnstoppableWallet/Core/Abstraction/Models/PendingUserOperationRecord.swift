@@ -9,7 +9,6 @@ class PendingUserOperationRecord: Record {
     let status: String
     let submittedAt: TimeInterval
     let lastPolledAt: TimeInterval?
-    let bundlerUrl: String
 
     init(
         userOpHash: String,
@@ -18,8 +17,7 @@ class PendingUserOperationRecord: Record {
         txHash: String?,
         status: String,
         submittedAt: TimeInterval,
-        lastPolledAt: TimeInterval?,
-        bundlerUrl: String
+        lastPolledAt: TimeInterval?
     ) {
         self.userOpHash = userOpHash
         self.deploymentId = deploymentId
@@ -28,7 +26,6 @@ class PendingUserOperationRecord: Record {
         self.status = status
         self.submittedAt = submittedAt
         self.lastPolledAt = lastPolledAt
-        self.bundlerUrl = bundlerUrl
 
         super.init()
     }
@@ -39,7 +36,7 @@ class PendingUserOperationRecord: Record {
 
     enum Columns: String, ColumnExpression {
         case userOpHash, deploymentId, implementationVersion, txHash,
-             status, submittedAt, lastPolledAt, bundlerUrl
+             status, submittedAt, lastPolledAt
     }
 
     required init(row: Row) throws {
@@ -50,7 +47,6 @@ class PendingUserOperationRecord: Record {
         status = row[Columns.status]
         submittedAt = row[Columns.submittedAt]
         lastPolledAt = row[Columns.lastPolledAt]
-        bundlerUrl = row[Columns.bundlerUrl]
 
         try super.init(row: row)
     }
@@ -63,6 +59,5 @@ class PendingUserOperationRecord: Record {
         container[Columns.status] = status
         container[Columns.submittedAt] = submittedAt
         container[Columns.lastPolledAt] = lastPolledAt
-        container[Columns.bundlerUrl] = bundlerUrl
     }
 }

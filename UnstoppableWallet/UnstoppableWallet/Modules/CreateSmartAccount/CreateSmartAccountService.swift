@@ -57,7 +57,7 @@ extension CreateSmartAccountService {
 
         // Derive secp256k1 owner pubkey halves from the PRF-derived mnemonic via
         // BIP44 m/44'/60'/0'/0/0. PrivKey lives only in this scope; only the
-        // public X and Y are persisted (in AccountType.passkeyOwned).
+        // public X and Y are persisted in account_abstraction_profiles.
         guard let seed = Mnemonic.seed(mnemonic: registration.mnemonic, passphrase: "") else {
             throw CreateError.seedDerivationFailed
         }
@@ -68,10 +68,7 @@ extension CreateSmartAccountService {
 
         let account = accountFactory.account(
             type: .passkeyOwned(
-                credentialID: registration.credentialID,
-                publicKeyX: publicKeyX,
-                publicKeyY: publicKeyY,
-                curve: .secp256k1
+                credentialID: registration.credentialID
             ),
             origin: .created,
             backedUp: true,
@@ -80,7 +77,12 @@ extension CreateSmartAccountService {
         )
 
         // Profile first (aa.sqlite). If anything below fails, startup repair removes orphan.
-        let profile = try smartAccountManager.createProfile(account: account)
+        let profile = try smartAccountManager.createProfile(
+            account: account,
+            ownerPublicKeyX: publicKeyX,
+            ownerPublicKeyY: publicKeyY,
+            curve: .secp256k1
+        )
 
         for blockchainType in Self.v1BlockchainTypes {
             _ = try smartAccountManager.createDeployment(profile: profile, blockchainType: blockchainType)

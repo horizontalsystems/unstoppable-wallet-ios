@@ -1,4 +1,5 @@
 import BitcoinCore
+import EvmKit
 import Foundation
 import MarketKit
 
@@ -20,10 +21,7 @@ enum DestinationHelper {
         }
 
         if blockchainType.isEvm {
-            let chain = try Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType)
-            guard let address = account.type.evmAddress(chain: chain) else {
-                throw SwapError.noDestinationAddress
-            }
+            let address = try AccountAddress.evmAddress(account: account, blockchainType: blockchainType)
 
             return .init(address: address.eip55, type: .existing)
         }
@@ -45,7 +43,7 @@ enum DestinationHelper {
         case .litecoin:
             address = try LitecoinAdapter.firstAddress(accountType: account.type, tokenType: token.type)
         case .tron:
-            address = try Core.shared.tronAccountManager.address(type: account.type)
+            address = try AccountAddress.tronAddress(account: account).base58
         case .stellar:
             address = try StellarKitManager.accountId(accountType: account.type)
         case .zcash:

@@ -7,23 +7,8 @@ import MarketKit
 import TronKit
 
 enum AccountType: Identifiable {
-    enum PasskeyCurve: String {
-        case secp256r1
-        case secp256k1
-
-        /// SmartAccountProfile.implementationVersion tag for this curve.
-        /// Records written before the curve flag existed default to .secp256r1
-        /// → "barz_v1_0_0". New v1 accounts use .secp256k1 → "barz_v1_ecdsa".
-        var implementationVersion: String {
-            switch self {
-            case .secp256r1: return "barz_v1_0_0"
-            case .secp256k1: return "barz_v1_ecdsa"
-            }
-        }
-    }
-
     case mnemonic(words: [String], salt: String, bip39Compliant: Bool)
-    case passkeyOwned(credentialID: Data, publicKeyX: Data, publicKeyY: Data, curve: PasskeyCurve)
+    case passkeyOwned(credentialID: Data)
     case evmPrivateKey(data: Data)
     case trcPrivateKey(data: Data)
     case stellarSecretKey(secretSeed: String)
@@ -63,8 +48,8 @@ enum AccountType: Identifiable {
             }
 
             privateData = description.data(using: .utf8) ?? Data() // always non-null
-        case let .passkeyOwned(credentialID, publicKeyX, publicKeyY, curve):
-            privateData = credentialID + publicKeyX + publicKeyY + Data(curve.rawValue.utf8)
+        case let .passkeyOwned(credentialID):
+            privateData = credentialID
         case let .evmPrivateKey(data):
             privateData = data
         case let .trcPrivateKey(data):
@@ -345,48 +330,6 @@ enum AccountType: Identifiable {
         }
     }
 
-    func evmAddress(chain: Chain) -> EvmKit.Address? {
-        switch self {
-        case .mnemonic:
-            guard let mnemonicSeed else {
-                return nil
-            }
-
-            return try? EvmKit.Signer.address(seed: mnemonicSeed, chain: chain)
-        case let .passkeyOwned(_, publicKeyX, publicKeyY, curve):
-            guard let blockchainType = BarzAddressResolver.blockchainType(chain: chain) else {
-                return nil
-            }
-            return try? BarzAddressResolver.resolveLocally(
-                publicKeyX: publicKeyX,
-                publicKeyY: publicKeyY,
-                curve: curve,
-                blockchainType: blockchainType
-            )
-        case let .evmPrivateKey(data):
-            return EvmKit.Signer.address(privateKey: data)
-        default:
-            return nil
-        }
-    }
-
-    var tronAddress: TronKit.Address? {
-        switch self {
-        case .mnemonic:
-            guard let mnemonicSeed else {
-                return nil
-            }
-
-            return try? TronKit.Signer.address(seed: mnemonicSeed)
-        case .passkeyOwned:
-            return nil
-        case let .trcPrivateKey(data):
-            return try? TronKit.Signer.address(privateKey: data)
-        default:
-            return nil
-        }
-    }
-
     func sign(message: Data, isLegacy: Bool = false) -> Data? {
         switch self {
         case .mnemonic:
@@ -522,8 +465,8 @@ extension AccountType: Hashable {
         switch (lhs, rhs) {
         case (let .mnemonic(lhsWords, lhsSalt, lhsBip39Compliant), let .mnemonic(rhsWords, rhsSalt, rhsBip39Compliant)):
             return lhsWords == rhsWords && lhsSalt == rhsSalt && lhsBip39Compliant == rhsBip39Compliant
-        case let (.passkeyOwned(lhsCredentialID, lhsPublicKeyX, lhsPublicKeyY, lhsCurve), .passkeyOwned(rhsCredentialID, rhsPublicKeyX, rhsPublicKeyY, rhsCurve)):
-            return lhsCredentialID == rhsCredentialID && lhsPublicKeyX == rhsPublicKeyX && lhsPublicKeyY == rhsPublicKeyY && lhsCurve == rhsCurve
+        case let (.passkeyOwned(lhsCredentialID), .passkeyOwned(rhsCredentialID)):
+            return lhsCredentialID == rhsCredentialID
         case let (.evmPrivateKey(lhsData), .evmPrivateKey(rhsData)):
             return lhsData == rhsData
         case let (.trcPrivateKey(lhsData), .trcPrivateKey(rhsData)):
@@ -555,12 +498,9 @@ extension AccountType: Hashable {
             hasher.combine(words)
             hasher.combine(salt)
             hasher.combine(bip39Compliant)
-        case let .passkeyOwned(credentialID, publicKeyX, publicKeyY, curve):
+        case let .passkeyOwned(credentialID):
             hasher.combine("passkeyOwned")
             hasher.combine(credentialID)
-            hasher.combine(publicKeyX)
-            hasher.combine(publicKeyY)
-            hasher.combine(curve.rawValue)
         case let .evmPrivateKey(data):
             hasher.combine("evmPrivateKey")
             hasher.combine(data)

@@ -13,7 +13,10 @@ import HdWalletKit
 enum EcdsaUserOpSigner {
     enum SigningError: Error {
         case seedDerivationFailed
+        case invalidUserOpHash
     }
+
+    private static let estimationDummyPrivateKey = Data(repeating: 0, count: 31) + Data([0x01])
 
     /// Triggers Face ID, fetches passkey-derived mnemonic via PRF, derives secp256k1
     /// privKey, signs the UserOp hash, and returns the 65-byte signature.
@@ -29,14 +32,31 @@ enum EcdsaUserOpSigner {
         }
         let privateKey = try Signer.privateKey(seed: seed, chain: chain)
         let signer = Signer.instance(privateKey: privateKey, chain: chain)
-        return try signer.signed(message: userOpHash, isLegacy: false)
+        return try normalizeRecoveryId(signer.signed(message: userOpHash, isLegacy: false))
     }
 
-    /// 65 bytes of zeros. Valid format for gas estimation — `ecrecover` returns a
-    /// garbage address that the facet rejects, but ECDSA verification gas profile
-    /// is independent of signature values. Replaces the legacy ~388-byte WebAuthn
-    /// dummy (`Secp256r1VerificationFacet.dummySignature()`) and frees up calldata gas.
-    static func dummySignature() -> Data {
-        Data(repeating: 0, count: 65)
+    /// Recoverable 65-byte ECDSA signature for gas estimation.
+    ///
+    /// Barz Secp256k1VerificationFacet calls OpenZeppelin ECDSA.recover during
+    /// validation. An all-zero signature reverts before the account can return
+    /// signature-failed validation data, so Pimlico reports AA23. A deterministic
+    /// dummy-key signature is structurally valid and keeps validation non-reverting.
+    static func dummySignature(userOpHash: Data, chain: EvmKit.Chain) throws -> Data {
+        guard userOpHash.count == 32 else {
+            throw SigningError.invalidUserOpHash
+        }
+
+        let signer = Signer.instance(privateKey: estimationDummyPrivateKey, chain: chain)
+        return try normalizeRecoveryId(signer.signed(message: userOpHash, isLegacy: false))
+    }
+
+    private static func normalizeRecoveryId(_ signature: Data) -> Data {
+        guard signature.count == 65, let recoveryId = signature.last, recoveryId < 2 else {
+            return signature
+        }
+
+        var normalized = signature
+        normalized[64] = recoveryId + 27
+        return normalized
     }
 }

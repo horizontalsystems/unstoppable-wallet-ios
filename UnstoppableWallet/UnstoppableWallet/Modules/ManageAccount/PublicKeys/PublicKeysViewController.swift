@@ -50,7 +50,7 @@ class PublicKeysViewController: ThemeViewController {
     }
 
     private func openEvmAddress() {
-        guard let viewController = PublicAddressModule.evmViewController(accountType: viewModel.accountType) else {
+        guard let viewController = PublicAddressModule.evmViewController(account: viewModel.account) else {
             return
         }
 
@@ -59,7 +59,7 @@ class PublicKeysViewController: ThemeViewController {
     }
 
     private func openTronAddress() {
-        guard let viewController = PublicAddressModule.tronViewController(accountType: viewModel.accountType) else {
+        guard let viewController = PublicAddressModule.tronViewController(account: viewModel.account) else {
             return
         }
 

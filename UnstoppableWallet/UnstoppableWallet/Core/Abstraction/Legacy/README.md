@@ -8,7 +8,7 @@ No new code instantiates these classes. Existing
 2026-04-29) read through these code paths only until PR-A5 / PR-A6
 remove the remaining call sites.
 
-Discriminator after PR-A3 lands: `AccountType.PasskeyCurve == .secp256r1`.
+Discriminator after PR-A3 lands: `SignatureCurve == .secp256r1`.
 
 ## TODO-A
 
