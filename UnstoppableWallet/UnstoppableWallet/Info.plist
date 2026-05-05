@@ -96,6 +96,10 @@
 	<string>${ETHERSCAN_API_KEYS}</string>
 	<key>FtmscanApiKeys</key>
 	<string>${FTMSCAN_API_KEYS}</string>
+    <key>GasFreeApiKey</key>
+    <string>${GASFREE_API_KEY}</string>
+    <key>GasFreeApiSecret</key>
+    <string>${GASFREE_API_SECRET}</string>
 	<key>GnosisscanApiKeys</key>
 	<string>${GNOSISSCAN_API_KEYS}</string>
 	<key>HashDitApiKey</key>
