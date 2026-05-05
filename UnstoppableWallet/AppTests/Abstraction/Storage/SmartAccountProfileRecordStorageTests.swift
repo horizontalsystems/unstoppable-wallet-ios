@@ -116,6 +116,7 @@ struct SmartAccountProfileRecordStorageTests {
             gasFreeAddress: "TYw8QmxE9gZ8Uj7PzX9pU7VfFq8M4B9x2p",
             providerId: original.providerId,
             verifyingContract: original.verifyingContract,
+            implementationVersion: original.implementationVersion,
             createdAt: original.createdAt,
             lastVerifiedAt: 1_700_000_020
         )

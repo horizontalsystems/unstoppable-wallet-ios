@@ -47,6 +47,7 @@ struct AaStorageTestEnvironment {
             gasFreeAddress: "TXLAQ63Xg1NAzckPwKHvzw7CSEmLMEqcdj",
             providerId: "open.gasfree.io",
             verifyingContract: "TGXQF4Q6m9cQ4Qfq7gZQhQ7Jf7aS7m3nX4",
+            implementationVersion: "gasfree_v1_0_0",
             createdAt: 1_700_000_000,
             lastVerifiedAt: 1_700_000_010
         )

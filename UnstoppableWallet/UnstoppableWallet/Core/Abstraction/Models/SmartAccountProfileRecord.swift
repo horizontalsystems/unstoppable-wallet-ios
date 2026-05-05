@@ -73,6 +73,7 @@ class GasFreeProfileRecord: Record {
     let gasFreeAddress: String
     let providerId: String
     let verifyingContract: String
+    let implementationVersion: String
     let createdAt: TimeInterval
     let lastVerifiedAt: TimeInterval?
 
@@ -82,6 +83,7 @@ class GasFreeProfileRecord: Record {
         gasFreeAddress: String,
         providerId: String,
         verifyingContract: String,
+        implementationVersion: String,
         createdAt: TimeInterval,
         lastVerifiedAt: TimeInterval?
     ) {
@@ -90,6 +92,7 @@ class GasFreeProfileRecord: Record {
         self.gasFreeAddress = gasFreeAddress
         self.providerId = providerId
         self.verifyingContract = verifyingContract
+        self.implementationVersion = implementationVersion
         self.createdAt = createdAt
         self.lastVerifiedAt = lastVerifiedAt
 
@@ -101,7 +104,7 @@ class GasFreeProfileRecord: Record {
     }
 
     enum Columns: String, ColumnExpression {
-        case accountId, controllerAddress, gasFreeAddress, providerId, verifyingContract, createdAt, lastVerifiedAt
+        case accountId, controllerAddress, gasFreeAddress, providerId, verifyingContract, implementationVersion, createdAt, lastVerifiedAt
     }
 
     required init(row: Row) throws {
@@ -110,6 +113,7 @@ class GasFreeProfileRecord: Record {
         gasFreeAddress = row[Columns.gasFreeAddress]
         providerId = row[Columns.providerId]
         verifyingContract = row[Columns.verifyingContract]
+        implementationVersion = row[Columns.implementationVersion]
         createdAt = row[Columns.createdAt]
         lastVerifiedAt = row[Columns.lastVerifiedAt]
 
@@ -122,6 +126,7 @@ class GasFreeProfileRecord: Record {
         container[Columns.gasFreeAddress] = gasFreeAddress
         container[Columns.providerId] = providerId
         container[Columns.verifyingContract] = verifyingContract
+        container[Columns.implementationVersion] = implementationVersion
         container[Columns.createdAt] = createdAt
         container[Columns.lastVerifiedAt] = lastVerifiedAt
     }

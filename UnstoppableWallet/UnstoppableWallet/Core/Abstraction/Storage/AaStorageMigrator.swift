@@ -140,6 +140,7 @@ enum AaStorageMigrator {
                 t.column(GasFreeProfileRecord.Columns.gasFreeAddress.name, .text).notNull()
                 t.column(GasFreeProfileRecord.Columns.providerId.name, .text).notNull()
                 t.column(GasFreeProfileRecord.Columns.verifyingContract.name, .text).notNull()
+                t.column(GasFreeProfileRecord.Columns.implementationVersion.name, .text).notNull()
                 t.column(GasFreeProfileRecord.Columns.createdAt.name, .double).notNull()
                 t.column(GasFreeProfileRecord.Columns.lastVerifiedAt.name, .double)
             }
