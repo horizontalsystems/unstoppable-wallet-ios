@@ -71,30 +71,13 @@ public enum PackedUserOperation {
         return data
     }
 
-    // MARK: - Padding helpers
+    // MARK: - Padding helpers (typed overloads delegate to `AbiEncoder.pad32`).
 
-    /// Left-pads an Ethereum address (20 bytes) to a 32-byte slot.
     private static func pad32(address: EvmKit.Address) -> Data {
-        pad32(bytes: address.raw)
+        AbiEncoder.pad32(address.raw)
     }
 
-    /// Encodes a BigUInt as a 32-byte big-endian value.
     private static func pad32(value: BigUInt) -> Data {
-        pad32(bytes: value.serialize())
-    }
-
-    /// Left-pads raw bytes to 32 bytes. Truncation is a programmer error
-    /// (all expected inputs fit in a slot), so we assert in debug.
-    private static func pad32(bytes: Data) -> Data {
-        if bytes.count == slotSize {
-            return bytes
-        }
-        assert(bytes.count <= slotSize, "value does not fit in 32-byte slot")
-        if bytes.count > slotSize {
-            return bytes.suffix(slotSize)
-        }
-        var padded = Data(repeating: 0, count: slotSize - bytes.count)
-        padded.append(bytes)
-        return padded
+        AbiEncoder.pad32(value.serialize())
     }
 }

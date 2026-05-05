@@ -35,16 +35,16 @@ enum BarzAddressResolver {
 
         let constructorArgs = AbiEncoder.encode(
             arguments: [
-                .address(ChainAddresses.barzAccountFacet),
-                .address(verificationFacet),
-                .address(ChainAddresses.entryPointV06),
-                .address(ChainAddresses.barzFacetRegistry),
-                .address(ChainAddresses.barzDefaultFallback),
+                .address(ChainAddresses.barzAccountFacet.raw),
+                .address(verificationFacet.raw),
+                .address(ChainAddresses.entryPointV06.raw),
+                .address(ChainAddresses.barzFacetRegistry.raw),
+                .address(ChainAddresses.barzDefaultFallback.raw),
                 .bytes(owner),
             ]
         )
         let initCodeHash = Crypto.sha3(ChainAddresses.barzCreationCode + constructorArgs)
-        let create2Input = Data([0xFF]) + ChainAddresses.barzFactory.raw + pad32(value: salt) + initCodeHash
+        let create2Input = Data([0xFF]) + ChainAddresses.barzFactory.raw + AbiEncoder.pad32(salt.serialize()) + initCodeHash
 
         return EvmKit.Address(raw: Crypto.sha3(create2Input).suffix(20))
     }
@@ -121,10 +121,5 @@ enum BarzAddressResolver {
                 aa.secp256k1VerificationFacet
             )
         }
-    }
-
-    private static func pad32(value: BigUInt) -> Data {
-        let bytes = value.serialize()
-        return Data(repeating: 0, count: max(0, 32 - bytes.count)) + bytes
     }
 }
