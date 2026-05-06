@@ -98,6 +98,23 @@ struct RestoreTypeView: View {
                     }
                 }
             }
+        case .passkeySmartAccount:
+            Task {
+                do {
+                    _ = try await viewModel.restoreSmartAccount()
+
+                    DispatchQueue.main.async {
+                        (parentPresented ?? $isPresented).wrappedValue = false
+                    }
+                } catch {
+                    if case PasskeyManager.PasskeyError.userCanceled = error {
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        HudHelper.instance.show(banner: .error(string: error.smartDescription))
+                    }
+                }
+            }
         case .backup:
             backupPresented = true
         }
@@ -109,6 +126,7 @@ extension RestoreTypeView {
         case recoveryPhrase
         case privateKey
         case passkey
+        case passkeySmartAccount
         case backup
 
         var id: String {
@@ -120,6 +138,7 @@ extension RestoreTypeView {
             case .recoveryPhrase: return "restore_type.recovery.title".localized
             case .privateKey: return "restore_type.private_key.title".localized
             case .passkey: return "restore_type.passkey.title".localized
+            case .passkeySmartAccount: return "restore_type.passkey_smart.title".localized
             case .backup: return "restore_type.backup.title".localized
             }
         }
@@ -129,6 +148,7 @@ extension RestoreTypeView {
             case .recoveryPhrase: return "restore_type.recovery.description".localized
             case .privateKey: return "restore_type.private_key.description".localized
             case .passkey: return "restore_type.passkey.description".localized
+            case .passkeySmartAccount: return "restore_type.passkey_smart.description".localized
             case .backup: return "restore_type.backup.description".localized
             }
         }
@@ -138,6 +158,7 @@ extension RestoreTypeView {
             case .recoveryPhrase: return "pen"
             case .privateKey: return "key_24"
             case .passkey: return "face_id"
+            case .passkeySmartAccount: return "face_id"
             case .backup: return "cloud"
             }
         }

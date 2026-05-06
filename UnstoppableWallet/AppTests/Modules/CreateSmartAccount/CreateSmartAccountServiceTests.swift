@@ -32,7 +32,7 @@ struct CreateSmartAccountServiceTests {
 
     @Test func createRejectsPasskeyFailure() async throws {
         let env = try SmartAccountTestEnvironment()
-        let failing = FakePasskeyRegistering.failing(with: StubError.failed)
+        let failing = FakePasskeyProviding.failing(with: StubError.failed)
         let service = try makeService(env: env, passkey: failing)
 
         await #expect(throws: StubError.failed) {
@@ -106,7 +106,7 @@ struct CreateSmartAccountServiceTests {
             "test", "test", "test", "test", "test", "test",
             "test", "test", "test", "test", "test", "junk",
         ]
-        let passkey = FakePasskeyRegistering.returning(mnemonic: mnemonic)
+        let passkey = FakePasskeyProviding.returning(mnemonic: mnemonic)
         let service = try makeService(env: env, passkey: passkey)
 
         let account = try await service.create(name: "Alice")
@@ -162,7 +162,7 @@ struct CreateSmartAccountServiceTests {
 
     private func makeService(
         env: SmartAccountTestEnvironment,
-        passkey: SmartAccountPasskeyRegistering? = nil,
+        passkey: SmartAccountPasskeyProviding? = nil,
         activator: @escaping (Account) -> Void = { _ in }
     ) throws -> CreateSmartAccountService {
         let accountFactory = AccountFactory(accountManager: env.accountManager)
@@ -171,19 +171,23 @@ struct CreateSmartAccountServiceTests {
             accountManager: env.accountManager,
             smartAccountManager: env.smartAccountManager,
             activateDefaultWallets: activator,
-            passkeyRegistering: passkey ?? FakePasskeyRegistering.defaultOk
+            passkeyProvider: passkey ?? FakePasskeyProviding.defaultOk
         )
     }
 }
 
-private struct FakePasskeyRegistering: SmartAccountPasskeyRegistering {
+private struct FakePasskeyProviding: SmartAccountPasskeyProviding {
     let result: Result<SmartAccountPasskeyRegistration, Error>
 
     func register(name _: String) async throws -> SmartAccountPasskeyRegistration {
         try result.get()
     }
 
-    static var defaultOk: FakePasskeyRegistering {
+    func restore() async throws -> SmartAccountPasskeyRegistration {
+        try result.get()
+    }
+
+    static var defaultOk: FakePasskeyProviding {
         // Hardhat test mnemonic — well-known fixture across the EVM tooling ecosystem.
         // Yields EOA 0xf39Fd6e5...92266 at m/44'/60'/0'/0/0.
         returning(mnemonic: [
@@ -192,17 +196,18 @@ private struct FakePasskeyRegistering: SmartAccountPasskeyRegistering {
         ])
     }
 
-    static func returning(mnemonic: [String]) -> FakePasskeyRegistering {
-        FakePasskeyRegistering(result: .success(
+    static func returning(mnemonic: [String]) -> FakePasskeyProviding {
+        FakePasskeyProviding(result: .success(
             SmartAccountPasskeyRegistration(
                 credentialID: Data(repeating: 0xCC, count: 16),
-                mnemonic: mnemonic
+                mnemonic: mnemonic,
+                name: "Alice"
             )
         ))
     }
 
-    static func failing(with error: Error) -> FakePasskeyRegistering {
-        FakePasskeyRegistering(result: .failure(error))
+    static func failing(with error: Error) -> FakePasskeyProviding {
+        FakePasskeyProviding(result: .failure(error))
     }
 }
 

@@ -163,11 +163,13 @@
 "restore_type.recovery.title" = "from Recovery Phrase";
 "restore_type.private_key.title" = "from Private Key";
 "restore_type.passkey.title" = "from Passkey";
+"restore_type.passkey_smart.title" = "from Passkey (Smart Account)";
 "restore_type.backup.title" = "from Backup";
 
 "restore_type.recovery.description" = "Import a wallet using a recovery phrase.";
 "restore_type.private_key.description" = "Import a wallet using a private key.";
 "restore_type.passkey.description" = "Restore your wallet using your device and iCloud account.";
+"restore_type.passkey_smart.description" = "Restore a Smart Account wallet from your passkey.";
 "restore_type.backup.description" = "Restore your wallet using a backup file from your device or cloud.";
 
 // Restore Cloud
