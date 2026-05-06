@@ -94,6 +94,7 @@ enum StatPage: String {
     case importWalletFromKey = "import_wallet_from_key"
     case importWalletFromKeyAdvanced = "import_wallet_from_key_advanced"
     case importWalletNonStandard = "import_wallet_non_standard"
+    case importWalletPasskey = "import_wallet_passkey"
     case indicators
     case info
     case language

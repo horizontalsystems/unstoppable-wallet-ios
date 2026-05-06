@@ -5,23 +5,30 @@ import HsCryptoKit
 import MarketKit
 import TronKit
 
-/// Returned by SmartAccountPasskeyRegistering.register. Carries the new passkey's
-/// credentialID together with the PRF-derived mnemonic that the service uses to
-/// derive a secp256k1 EOA owner for the Barz Smart Account.
+/// Carries a passkey's credentialID together with the PRF-derived mnemonic that the
+/// service uses to derive a secp256k1 EOA owner for the Barz Smart Account.
+/// Produced both by registration (new passkey) and assertion (existing passkey).
 struct SmartAccountPasskeyRegistration: Equatable {
     let credentialID: Data
     let mnemonic: [String]
+    let name: String
 }
 
-protocol SmartAccountPasskeyRegistering {
+protocol SmartAccountPasskeyProviding {
     func register(name: String) async throws -> SmartAccountPasskeyRegistration
+    func restore() async throws -> SmartAccountPasskeyRegistration
 }
 
-extension PasskeyManager: SmartAccountPasskeyRegistering {
+extension PasskeyManager: SmartAccountPasskeyProviding {
     func register(name: String) async throws -> SmartAccountPasskeyRegistration {
         let credentialID = try await create(name: name)
         let passkey = try await loginWith(credentialID: credentialID)
-        return SmartAccountPasskeyRegistration(credentialID: credentialID, mnemonic: passkey.mnemonic)
+        return SmartAccountPasskeyRegistration(credentialID: credentialID, mnemonic: passkey.mnemonic, name: name)
+    }
+
+    func restore() async throws -> SmartAccountPasskeyRegistration {
+        let passkey = try await login()
+        return SmartAccountPasskeyRegistration(credentialID: passkey.credentialID, mnemonic: passkey.mnemonic, name: passkey.name)
     }
 }
 
@@ -32,20 +39,20 @@ class CreateSmartAccountService {
     private let accountManager: AccountManager
     private let smartAccountManager: SmartAccountManager
     private let activateDefaultWallets: (Account) -> Void
-    private let passkeyRegistering: SmartAccountPasskeyRegistering
+    private let passkeyProvider: SmartAccountPasskeyProviding
 
     init(
         accountFactory: AccountFactory,
         accountManager: AccountManager,
         smartAccountManager: SmartAccountManager,
         activateDefaultWallets: @escaping (Account) -> Void,
-        passkeyRegistering: SmartAccountPasskeyRegistering = PasskeyManager()
+        passkeyProvider: SmartAccountPasskeyProviding = PasskeyManager()
     ) {
         self.accountFactory = accountFactory
         self.accountManager = accountManager
         self.smartAccountManager = smartAccountManager
         self.activateDefaultWallets = activateDefaultWallets
-        self.passkeyRegistering = passkeyRegistering
+        self.passkeyProvider = passkeyProvider
     }
 }
 
@@ -54,25 +61,27 @@ extension CreateSmartAccountService {
         let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { throw CreateError.emptyName }
 
-        let registration = try await passkeyRegistering.register(name: trimmed)
+        let registration = try await passkeyProvider.register(name: trimmed)
+        return try provision(registration: registration, name: trimmed, statPage: .newWalletPasskey) { .createWallet(walletType: $0) }
+    }
 
-        // Derive secp256k1 owner pubkey halves from the PRF-derived mnemonic via
-        // BIP44 m/44'/60'/0'/0/0. PrivKey lives only in this scope; only the
-        // public X and Y are persisted in account_abstraction_profiles.
+    func restore() async throws -> Account {
+        let registration = try await passkeyProvider.restore()
+        let trimmed = registration.name.trimmingCharacters(in: .whitespacesAndNewlines)
+        guard !trimmed.isEmpty else { throw CreateError.emptyName }
+
+        return try provision(registration: registration, name: trimmed, statPage: .importWalletPasskey) { .importWallet(walletType: $0) }
+    }
+
+    private func provision(
+        registration: SmartAccountPasskeyRegistration,
+        name: String,
+        statPage: StatPage,
+        statEvent: (String) -> StatEvent
+    ) throws -> Account {
         guard let seed = Mnemonic.seed(mnemonic: registration.mnemonic, passphrase: "") else {
             throw CreateError.seedDerivationFailed
         }
-        let privateKey = try Signer.privateKey(seed: seed, chain: .ethereum)
-        let pubkey = Crypto.publicKey(privateKey: privateKey, compressed: false)
-        let publicKeyX = Data(pubkey.dropFirst().prefix(32))
-        let publicKeyY = Data(pubkey.dropFirst().suffix(32))
-
-        // Tron EOA controller for the GasFree wallet. Same secp256k1 privkey is reused —
-        // non-standard BIP44 path (m/44'/60' instead of canonical m/44'/195' for Tron) is
-        // intentional for passkey-only accounts: single PRF mnemonic, no external-wallet
-        // export surface, single key compromise == both AA + GasFree compromise (inherent
-        // property of passkey-only architecture).
-        let controllerAddress = try TronKit.Signer.address(privateKey: privateKey)
 
         let account = accountFactory.account(
             type: .passkeyOwned(
@@ -81,24 +90,12 @@ extension CreateSmartAccountService {
             origin: .created,
             backedUp: true,
             fileBackedUp: false,
-            name: trimmed
+            name: name
         )
 
-        // Profile first (aa.sqlite). If anything below fails, startup repair removes orphan.
-        let profile = try smartAccountManager.createProfile(
-            account: account,
-            ownerPublicKeyX: publicKeyX,
-            ownerPublicKeyY: publicKeyY,
-            curve: .secp256k1
-        )
-
-        for blockchainType in Self.v1BlockchainTypes {
-            _ = try smartAccountManager.createDeployment(profile: profile, blockchainType: blockchainType)
-        }
-
-        // GasFree profile lives in aa.sqlite alongside SmartAccountProfile (no on-chain
-        // deployment yet — the BeaconProxy is created lazily on first GasFree submitTransfer).
-        _ = try smartAccountManager.createGasFreeProfile(account: account, controllerAddress: controllerAddress)
+        // aa.sqlite first. If anything below fails, startup repair removes orphan.
+        try createAccountAbstractionProfiles(seed: seed, account: account)
+        try createGasFreeProfile(seed: seed, account: account)
 
         // Account last (bank.sqlite).
         accountManager.save(account: account)
@@ -110,9 +107,40 @@ extension CreateSmartAccountService {
 
         accountManager.set(lastCreatedAccount: account)
 
-        stat(page: .newWalletPasskey, event: .createWallet(walletType: account.type.statDescription))
+        stat(page: statPage, event: statEvent(account.type.statDescription))
 
         return account
+    }
+
+    /// Derives the EVM owner key via canonical EVM BIP44 m/44'/60'/0'/0/0 and persists
+    /// the AA profile + per-chain deployment records. PrivKey lives only in this scope;
+    /// only the public X/Y halves are stored in account_abstraction_profiles.
+    private func createAccountAbstractionProfiles(seed: Data, account: Account) throws {
+        let evmPrivateKey = try Signer.privateKey(seed: seed, chain: .ethereum)
+        let pubkey = Crypto.publicKey(privateKey: evmPrivateKey, compressed: false)
+        let publicKeyX = Data(pubkey.dropFirst().prefix(32))
+        let publicKeyY = Data(pubkey.dropFirst().suffix(32))
+
+        let profile = try smartAccountManager.createProfile(
+            account: account,
+            ownerPublicKeyX: publicKeyX,
+            ownerPublicKeyY: publicKeyY,
+            curve: .secp256k1
+        )
+
+        for blockchainType in Self.v1BlockchainTypes {
+            _ = try smartAccountManager.createDeployment(profile: profile, blockchainType: blockchainType)
+        }
+    }
+
+    /// Derives the Tron controller key via canonical Tron BIP44 m/44'/195'/0'/0/0 and
+    /// persists the GasFree profile in aa.sqlite. No on-chain deployment yet — the
+    /// BeaconProxy is created lazily on first GasFree submitTransfer.
+    private func createGasFreeProfile(seed: Data, account: Account) throws {
+        let tronPrivateKey = try TronKit.Signer.privateKey(seed: seed)
+        let controllerAddress = try TronKit.Signer.address(privateKey: tronPrivateKey)
+
+        _ = try smartAccountManager.createGasFreeProfile(account: account, controllerAddress: controllerAddress)
     }
 }
 

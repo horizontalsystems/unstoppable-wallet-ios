@@ -75,7 +75,7 @@ class PasskeyManager: NSObject {
 
         let name = prfOutput.userId.components(separatedBy: "::").first ?? ""
         let mnemonic = Mnemonic.generate(entropy: prfOutput.data)
-        return .init(name: name, mnemonic: mnemonic)
+        return .init(credentialID: prfOutput.credentialID, name: name, mnemonic: mnemonic)
     }
 }
 
@@ -116,7 +116,7 @@ extension PasskeyManager: ASAuthorizationControllerDelegate {
         let userId = String(data: credential.userID, encoding: .utf8)
         let prfOutput = prfAssertionOutput.first.withUnsafeBytes { Data($0) }
 
-        assertionContinuation?.resume(returning: PrfOutput(userId: userId ?? "", data: prfOutput))
+        assertionContinuation?.resume(returning: PrfOutput(credentialID: credential.credentialID, userId: userId ?? "", data: prfOutput))
         assertionContinuation = nil
     }
 
@@ -164,6 +164,7 @@ extension PasskeyManager: ASAuthorizationControllerPresentationContextProviding 
 
 extension PasskeyManager {
     private struct PrfOutput {
+        let credentialID: Data
         let userId: String
         let data: Data
     }

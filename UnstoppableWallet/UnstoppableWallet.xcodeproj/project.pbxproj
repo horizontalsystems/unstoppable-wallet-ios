@@ -60,6 +60,8 @@
 		6BE1D9CE2FAA138100190518 /* GasFreeAddressResolver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9CD2FAA138100190518 /* GasFreeAddressResolver.swift */; };
 		6BE1D9D32FAA1C1A00190518 /* GasFreeProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9D22FAA1C1A00190518 /* GasFreeProfile.swift */; };
 		6BE1D9D72FAA6ED700190518 /* GasFreeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9D62FAA6ED700190518 /* GasFreeProvider.swift */; };
+		6BE1D9DD2FAAE12700190518 /* PermitTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9DC2FAAE12700190518 /* PermitTransfer.swift */; };
+		6BE1D9DF2FAAE13E00190518 /* GasFreeTip712Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9DE2FAAE13E00190518 /* GasFreeTip712Signer.swift */; };
 		D33D63472F98DD5D00E16ADA /* AppWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3948EF62ADA846400FAE566 /* AppWidgetBundle.swift */; };
 		D33D63482F98DD5D00E16ADA /* SingleCoinPriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CFAA2B156E439EB18B3 /* SingleCoinPriceView.swift */; };
 		D33D63492F98DD5D00E16ADA /* PriceChangeModeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D502C0703B400515664 /* PriceChangeModeManager.swift */; };
@@ -3087,6 +3089,8 @@
 		6BE1D9CD2FAA138100190518 /* GasFreeAddressResolver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasFreeAddressResolver.swift; sourceTree = "<group>"; };
 		6BE1D9D22FAA1C1A00190518 /* GasFreeProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasFreeProfile.swift; sourceTree = "<group>"; };
 		6BE1D9D62FAA6ED700190518 /* GasFreeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasFreeProvider.swift; sourceTree = "<group>"; };
+		6BE1D9DC2FAAE12700190518 /* PermitTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermitTransfer.swift; sourceTree = "<group>"; };
+		6BE1D9DE2FAAE13E00190518 /* GasFreeTip712Signer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasFreeTip712Signer.swift; sourceTree = "<group>"; };
 		6BE57E722E339C32003C4C01 /* MerkleTransactionAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleTransactionAdapter.swift; sourceTree = "<group>"; };
 		6BE57E762E339D17003C4C01 /* MerkleRpcBlockchain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleRpcBlockchain.swift; sourceTree = "<group>"; };
 		6BE57E772E339D17003C4C01 /* MerlkeTransactionHashStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerlkeTransactionHashStorage.swift; sourceTree = "<group>"; };
@@ -6685,6 +6689,7 @@
 		6B94D8C82F9CD94C0042CCD6 /* Send */ = {
 			isa = PBXGroup;
 			children = (
+				6BE1D9DE2FAAE13E00190518 /* GasFreeTip712Signer.swift */,
 				6BE1D9D62FAA6ED700190518 /* GasFreeProvider.swift */,
 				6BE1D9C22FA9CEE700190518 /* AaFeeCalculator.swift */,
 				6BE1D7172FA9BEBA00190518 /* Erc20PaymasterAndData.swift */,
@@ -6965,6 +6970,7 @@
 		6BDBD3662F9B44D500440BE0 /* Types */ = {
 			isa = PBXGroup;
 			children = (
+				6BE1D9DC2FAAE12700190518 /* PermitTransfer.swift */,
 				6BDBD35D2F9B44D500440BE0 /* EntryPointVersion.swift */,
 				6BDBD35E2F9B44D500440BE0 /* PackedUserOperation.swift */,
 				6BDBD35F2F9B44D500440BE0 /* PaymasterAndData.swift */,
@@ -10166,6 +10172,7 @@
 				D33D68A32F98F2CF00E16ADA /* BaseReceiveAddressView.swift in Sources */,
 				D33D68A42F98F2CF00E16ADA /* ContactBookAddressService.swift in Sources */,
 				D33D68A52F98F2CF00E16ADA /* BackupManualService.swift in Sources */,
+				6BE1D9DF2FAAE13E00190518 /* GasFreeTip712Signer.swift in Sources */,
 				D33D68A62F98F2CF00E16ADA /* BackupKeychainService.swift in Sources */,
 				D33D68A72F98F2CF00E16ADA /* FileManager.swift in Sources */,
 				D33D68A82F98F2CF00E16ADA /* ContactBookSettingsService.swift in Sources */,
@@ -10259,6 +10266,7 @@
 				D33D69002F98F2CF00E16ADA /* ManageBarButtonView.swift in Sources */,
 				D33D69012F98F2CF00E16ADA /* BottomGradientHolder.swift in Sources */,
 				D33D69022F98F2CF00E16ADA /* SubscriptionInfoViewController.swift in Sources */,
+				6BE1D9DD2FAAE12700190518 /* PermitTransfer.swift in Sources */,
 				D33D69032F98F2CF00E16ADA /* AmountData.swift in Sources */,
 				D33D69042F98F2CF00E16ADA /* TappablePadding.swift in Sources */,
 				D33D69052F98F2CF00E16ADA /* RightTextCheckbox.swift in Sources */,
