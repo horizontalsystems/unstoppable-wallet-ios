@@ -163,11 +163,16 @@
 "restore_type.recovery.title" = "恢复短语";
 "restore_type.private_key.title" = "通过私钥导入";
 "restore_type.passkey.title" = "通过 Passkey";
+"restore_type.passkey_smart.title" = "从 Passkey（智能账户）";
+"send.fee.transfer" = "转账手续费";
+"send.fee.activation" = "激活费用";
+"send.fee.includes_activation" = "首次发送将在链上激活 GasFree 钱包。";
 "restore_type.backup.title" = "从备份恢复";
 
 "restore_type.recovery.description" = "使用恢复短语导入钱包。";
 "restore_type.private_key.description" = "使用私钥导入钱包。";
 "restore_type.passkey.description" = "使用您的设备和 iCloud 账户恢复钱包。";
+"restore_type.passkey_smart.description" = "通过 Passkey 恢复智能账户钱包。";
 "restore_type.backup.description" = "使用设备或云端的备份文件恢复您的钱包。";
 
 // Restore Cloud
@@ -468,6 +473,13 @@
 "send.confirmation.memo" = "备忘录";
 "send.confirmation.memo_placeholder" = "备忘录";
 "send.confirmation.fee" = "费用";
+"send.confirmation.fee_sponsored" = "已赞助";
+"send.confirmation.fee_paid_in" = "以 %@ 支付";
+"send.confirmation.aa_first_deploy" = "首次交易将部署智能账户合约。";
+"send.fee.estimated" = "网络手续费";
+"send.fee.max_required" = "最大所需";
+"send.fee.includes_activation_approval" = "包含一次性钱包激活和 Paymaster 授权";
+"send.fee.includes_approval" = "包含 Paymaster 授权";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "替换交易";
 "send.confirmation.replaced_transactions" = "已替换的交易";
@@ -2458,6 +2470,8 @@
 "new_wallet.standard.description" = "使用助记词创建钱包，获得完全控制权和灵活性。";
 "new_wallet.passkey" = "Passkey";
 "new_wallet.passkey.description" = "创建由您的设备和 iCloud 保护的钱包，轻松访问。";
+"new_wallet.smart_account" = "智能账户";
+"new_wallet.smart_account.description" = "基于 Passkey 的钱包，支持 Gas 赞助。";
 
 // Wallet Names
 

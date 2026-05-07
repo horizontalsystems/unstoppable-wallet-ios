@@ -163,11 +163,16 @@
 "restore_type.recovery.title" = "Kurtarma İfadesinden";
 "restore_type.private_key.title" = "Özel Anahtardan";
 "restore_type.passkey.title" = "Passkey ile";
+"restore_type.passkey_smart.title" = "Passkey'den (Smart Account)";
+"send.fee.transfer" = "Transfer Ücreti";
+"send.fee.activation" = "Aktivasyon Ücreti";
+"send.fee.includes_activation" = "İlk gönderim, GasFree cüzdanını zincir üzerinde etkinleştirir.";
 "restore_type.backup.title" = "Yedekten";
 
 "restore_type.recovery.description" = "Kurtarma ifadesi kullanarak bir cüzdan içe aktarın.";
 "restore_type.private_key.description" = "Özel anahtar kullanarak bir cüzdan içe aktarın.";
 "restore_type.passkey.description" = "Cüzdanınızı cihazınız ve iCloud hesabınızı kullanarak geri yükleyin.";
+"restore_type.passkey_smart.description" = "Passkey'inizden bir Smart Account cüzdanını geri yükleyin.";
 "restore_type.backup.description" = "Cihazınızdaki veya buluttaki bir yedekleme dosyasını kullanarak cüzdanınızı geri yükleyin.";
 
 // Restore Cloud
@@ -468,6 +473,13 @@
 "send.confirmation.memo" = "Not";
 "send.confirmation.memo_placeholder" = "Not";
 "send.confirmation.fee" = "Ücret";
+"send.confirmation.fee_sponsored" = "Sponsorlu";
+"send.confirmation.fee_paid_in" = "%@ ile ödendi";
+"send.confirmation.aa_first_deploy" = "İlk işlem, akıllı hesap sözleşmesini deploy edecektir.";
+"send.fee.estimated" = "Ağ ücreti";
+"send.fee.max_required" = "Maksimum gerekli";
+"send.fee.includes_activation_approval" = "Tek seferlik cüzdan aktivasyonu ve paymaster onayı dahildir";
+"send.fee.includes_approval" = "Paymaster onayı dahildir";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Ücretle Değiştir";
 "send.confirmation.replaced_transactions" = "Değiştirilmiş İşlemler";
@@ -2458,6 +2470,8 @@
 "new_wallet.standard.description" = "Tam kontrol ve esneklik için kurtarma ifadesiyle bir cüzdan oluşturun.";
 "new_wallet.passkey" = "Passkey";
 "new_wallet.passkey.description" = "Kolay erişim için cihazınız ve iCloud tarafından korunan bir cüzdan oluşturun.";
+"new_wallet.smart_account" = "Smart Account";
+"new_wallet.smart_account.description" = "Gas sponsorluğu ile passkey destekli cüzdan.";
 
 // Wallet Names
 

@@ -163,11 +163,16 @@
 "restore_type.recovery.title" = "복구 문구에서";
 "restore_type.private_key.title" = "프라이빗 키에서";
 "restore_type.passkey.title" = "패스키로 복원";
+"restore_type.passkey_smart.title" = "패스키에서 복원 (스마트 계정)";
+"send.fee.transfer" = "전송 수수료";
+"send.fee.activation" = "활성화 수수료";
+"send.fee.includes_activation" = "첫 번째 전송 시 GasFree 지갑이 온체인에서 활성화됩니다.";
 "restore_type.backup.title" = "백업에서";
 
 "restore_type.recovery.description" = "복구 문구를 사용하여 지갑을 가져옵니다.";
 "restore_type.private_key.description" = "프라이빗 키를 사용하여 지갑을 가져옵니다.";
 "restore_type.passkey.description" = "기기와 iCloud 계정을 사용하여 지갑을 복원합니다.";
+"restore_type.passkey_smart.description" = "패스키를 사용하여 스마트 계정 지갑을 복원합니다.";
 "restore_type.backup.description" = "기기 또는 클라우드의 백업 파일을 사용하여 지갑을 복원하세요.";
 
 // Restore Cloud
@@ -468,6 +473,13 @@
 "send.confirmation.memo" = "Memo";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.fee" = "수수료";
+"send.confirmation.fee_sponsored" = "스폰서됨";
+"send.confirmation.fee_paid_in" = "%@(으)로 지불";
+"send.confirmation.aa_first_deploy" = "첫 번째 트랜잭션에서 스마트 계정 컨트랙트가 배포됩니다.";
+"send.fee.estimated" = "네트워크 수수료";
+"send.fee.max_required" = "최대 필요량";
+"send.fee.includes_activation_approval" = "일회성 지갑 활성화 및 페이마스터 승인 포함";
+"send.fee.includes_approval" = "페이마스터 승인 포함";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "수수료로 대체";
 "send.confirmation.replaced_transactions" = "대체된 거래";
@@ -2458,6 +2470,8 @@
 "new_wallet.standard.description" = "완전한 제어와 유연성을 위해 복구 문구로 지갑을 생성합니다.";
 "new_wallet.passkey" = "패스키";
 "new_wallet.passkey.description" = "간편한 접근을 위해 기기와 iCloud로 보호되는 지갑을 생성합니다.";
+"new_wallet.smart_account" = "스마트 계정";
+"new_wallet.smart_account.description" = "가스 스폰서십을 지원하는 패스키 기반 지갑.";
 
 // Wallet Names
 

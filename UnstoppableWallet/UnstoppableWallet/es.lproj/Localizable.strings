@@ -163,11 +163,16 @@
 "restore_type.recovery.title" = "de Frase de Recuperación";
 "restore_type.private_key.title" = "desde Clave Privada";
 "restore_type.passkey.title" = "Desde Passkey";
+"restore_type.passkey_smart.title" = "desde Passkey (Smart Account)";
+"send.fee.transfer" = "Comisión de transferencia";
+"send.fee.activation" = "Comisión de activación";
+"send.fee.includes_activation" = "El primer envío activa la wallet GasFree en la cadena.";
 "restore_type.backup.title" = "desde copia de seguridad";
 
 "restore_type.recovery.description" = "Importar un wallet usando una frase de recuperación.";
 "restore_type.private_key.description" = "Importar un wallet usando una clave privada.";
 "restore_type.passkey.description" = "Restaura tu wallet usando tu dispositivo y cuenta de iCloud.";
+"restore_type.passkey_smart.description" = "Restaura una wallet Smart Account desde tu passkey.";
 "restore_type.backup.description" = "Restaura tu wallet usando un archivo de respaldo de tu dispositivo o la nube.";
 
 // Restore Cloud
@@ -468,6 +473,13 @@
 "send.confirmation.memo" = "Memo";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.fee" = "Comisión";
+"send.confirmation.fee_sponsored" = "Patrocinado";
+"send.confirmation.fee_paid_in" = "Pagado en %@";
+"send.confirmation.aa_first_deploy" = "La primera transacción desplegará el contrato de la cuenta inteligente.";
+"send.fee.estimated" = "Comisión de red";
+"send.fee.max_required" = "Máximo requerido";
+"send.fee.includes_activation_approval" = "Incluye activación única de la wallet y aprobación del paymaster";
+"send.fee.includes_approval" = "Incluye aprobación del paymaster";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Reemplazar por tarifa";
 "send.confirmation.replaced_transactions" = "Transacciones Reemplazadas";
@@ -2458,6 +2470,8 @@
 "new_wallet.standard.description" = "Crea una wallet con una frase de recuperación para control total y flexibilidad.";
 "new_wallet.passkey" = "Passkey";
 "new_wallet.passkey.description" = "Crea una wallet protegida por tu dispositivo e iCloud para un acceso fácil.";
+"new_wallet.smart_account" = "Smart Account";
+"new_wallet.smart_account.description" = "Wallet respaldada por passkey con patrocinio de gas.";
 
 // Wallet Names
 
