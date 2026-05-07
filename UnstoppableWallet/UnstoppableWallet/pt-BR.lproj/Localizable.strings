@@ -163,11 +163,16 @@
 "restore_type.recovery.title" = "da Frase de Recuperação";
 "restore_type.private_key.title" = "da Chave Privada";
 "restore_type.passkey.title" = "Via Passkey";
+"restore_type.passkey_smart.title" = "de Passkey (Smart Account)";
+"send.fee.transfer" = "Taxa de transferência";
+"send.fee.activation" = "Taxa de ativação";
+"send.fee.includes_activation" = "O primeiro envio ativa a carteira GasFree on-chain.";
 "restore_type.backup.title" = "do Backup";
 
 "restore_type.recovery.description" = "Importar uma carteira usando uma frase de recuperação.";
 "restore_type.private_key.description" = "Importar uma carteira usando uma chave privada.";
 "restore_type.passkey.description" = "Restaure sua carteira usando seu dispositivo e conta do iCloud.";
+"restore_type.passkey_smart.description" = "Restaure uma carteira Smart Account a partir da sua passkey.";
 "restore_type.backup.description" = "Restaure sua wallet usando um arquivo de backup do seu dispositivo ou da nuvem.";
 
 // Restore Cloud
@@ -468,6 +473,13 @@
 "send.confirmation.memo" = "Memo";
 "send.confirmation.memo_placeholder" = "Memo";
 "send.confirmation.fee" = "Taxa";
+"send.confirmation.fee_sponsored" = "Patrocinado";
+"send.confirmation.fee_paid_in" = "Pago em %@";
+"send.confirmation.aa_first_deploy" = "A primeira transação fará o deploy do contrato da conta inteligente.";
+"send.fee.estimated" = "Taxa de rede";
+"send.fee.max_required" = "Máximo necessário";
+"send.fee.includes_activation_approval" = "Inclui ativação única da carteira e aprovação do paymaster";
+"send.fee.includes_approval" = "Inclui aprovação do paymaster";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Substituir pela taxa";
 "send.confirmation.replaced_transactions" = "Transações Substituídas";
@@ -2458,6 +2470,8 @@
 "new_wallet.standard.description" = "Crie uma carteira com uma frase de recuperação para controle total e flexibilidade.";
 "new_wallet.passkey" = "Passkey";
 "new_wallet.passkey.description" = "Crie uma carteira protegida pelo seu dispositivo e iCloud para acesso fácil.";
+"new_wallet.smart_account" = "Smart Account";
+"new_wallet.smart_account.description" = "Carteira com passkey e patrocínio de gas.";
 
 // Wallet Names
 

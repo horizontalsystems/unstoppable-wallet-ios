@@ -163,11 +163,16 @@
 "restore_type.recovery.title" = "Фраза восстановления";
 "restore_type.private_key.title" = "из Приватного Ключа";
 "restore_type.passkey.title" = "Через Passkey";
+"restore_type.passkey_smart.title" = "из Passkey (Smart Account)";
+"send.fee.transfer" = "Комиссия за перевод";
+"send.fee.activation" = "Комиссия за активацию";
+"send.fee.includes_activation" = "Первая отправка активирует кошелёк GasFree в сети.";
 "restore_type.backup.title" = "из резервной копии";
 
 "restore_type.recovery.description" = "Импортировать кошелёк с помощью фразы восстановления.";
 "restore_type.private_key.description" = "Импортировать кошелёк с помощью приватного ключа.";
 "restore_type.passkey.description" = "Восстановите кошелёк с помощью устройства и учётной записи iCloud.";
+"restore_type.passkey_smart.description" = "Восстановите кошелёк Smart Account с помощью вашего passkey.";
 "restore_type.backup.description" = "Восстановите кошелёк из файла резервной копии на вашем устройстве или в облаке.";
 
 // Restore Cloud
@@ -468,6 +473,13 @@
 "send.confirmation.memo" = "Мемо";
 "send.confirmation.memo_placeholder" = "Мемо";
 "send.confirmation.fee" = "Комиссия";
+"send.confirmation.fee_sponsored" = "Спонсировано";
+"send.confirmation.fee_paid_in" = "Оплачено в %@";
+"send.confirmation.aa_first_deploy" = "Первая транзакция развернёт контракт смарт-аккаунта.";
+"send.fee.estimated" = "Сетевая комиссия";
+"send.fee.max_required" = "Максимально необходимо";
+"send.fee.includes_activation_approval" = "Включает разовую активацию кошелька и одобрение paymaster";
+"send.fee.includes_approval" = "Включает одобрение paymaster";
 "send.confirmation.time_lock" = "TimeLock";
 "send.confirmation.replace_by_fee" = "Изменить комиссию";
 "send.confirmation.replaced_transactions" = "Замененные транзакции";
@@ -2458,6 +2470,8 @@
 "new_wallet.standard.description" = "Создайте кошелёк с фразой восстановления для полного контроля и гибкости.";
 "new_wallet.passkey" = "Passkey";
 "new_wallet.passkey.description" = "Создайте кошелёк, защищённый вашим устройством и iCloud, для удобного доступа.";
+"new_wallet.smart_account" = "Smart Account";
+"new_wallet.smart_account.description" = "Кошелёк на основе passkey со спонсированием газа.";
 
 // Wallet Names
 
