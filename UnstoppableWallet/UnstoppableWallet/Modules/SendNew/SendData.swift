@@ -1,3 +1,4 @@
+import BigInt
 import BitcoinCore
 import EvmKit
 import Foundation
@@ -14,6 +15,7 @@ enum SendData {
     case zcash(amount: Decimal, recipient: Recipient, memo: String?)
     case zcashShield(amount: Decimal, recipient: Recipient?, memo: String?)
     case tron(token: Token, contract: TronKit.Contract)
+    case tronGasFree(token: Token, receiver: TronKit.Address, value: BigUInt)
     case ton(token: Token, amount: Decimal, address: FriendlyAddress, memo: String?)
     case stellar(data: StellarSendData, token: Token, memo: String?)
     case solana(token: Token, amount: Decimal, address: String, memo: String?)

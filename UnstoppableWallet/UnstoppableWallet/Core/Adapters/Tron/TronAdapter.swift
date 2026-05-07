@@ -54,13 +54,11 @@ extension TronAdapter: IBalanceAdapter {
     }
 
     var caution: CautionNew? {
-        balanceCaution(active: tronKit.accountActive)
+        balanceCaution(active: effectiveAccountActive)
     }
 
     var cautionUpdatedObservable: Observable<CautionNew?> {
-        tronKitWrapper.tronKit.accountActivePublisher.asObservable().map { [weak self] in
-            self?.balanceCaution(active: $0)
-        }
+        effectiveAccountActivePublisher.map { [weak self] in self?.balanceCaution(active: $0) }
     }
 }
 

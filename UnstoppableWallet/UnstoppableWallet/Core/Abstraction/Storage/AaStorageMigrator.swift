@@ -144,6 +144,24 @@ enum AaStorageMigrator {
                 t.column(GasFreeProfileRecord.Columns.createdAt.name, .double).notNull()
                 t.column(GasFreeProfileRecord.Columns.lastVerifiedAt.name, .double)
             }
+
+            try db.create(table: PendingGasFreeTransferRecord.databaseTableName) { t in
+                t.column(PendingGasFreeTransferRecord.Columns.traceId.name, .text).notNull().primaryKey()
+                t.column(PendingGasFreeTransferRecord.Columns.accountId.name, .text).notNull()
+                    .references(GasFreeProfileRecord.databaseTableName, onDelete: .cascade)
+                t.column(PendingGasFreeTransferRecord.Columns.token.name, .text).notNull()
+                t.column(PendingGasFreeTransferRecord.Columns.value.name, .text).notNull()
+                t.column(PendingGasFreeTransferRecord.Columns.receiver.name, .text).notNull()
+                t.column(PendingGasFreeTransferRecord.Columns.txnHash.name, .text)
+                t.column(PendingGasFreeTransferRecord.Columns.status.name, .text).notNull()
+                t.column(PendingGasFreeTransferRecord.Columns.submittedAt.name, .double).notNull()
+                t.column(PendingGasFreeTransferRecord.Columns.lastPolledAt.name, .double)
+            }
+            try db.create(
+                index: "idx_pending_gas_free_transfers_status",
+                on: PendingGasFreeTransferRecord.databaseTableName,
+                columns: [PendingGasFreeTransferRecord.Columns.status.name]
+            )
         }
 
         try migrator.migrate(dbPool)

@@ -82,21 +82,21 @@ extension GasFreeProvider {
 
 private extension GasFreeProvider {
     func get(apiPath: String) async throws -> [String: Any] {
-        try await rpcCall(method: "GET", apiPath: apiPath, body: nil)
+        try await request(method: .get, apiPath: apiPath, body: nil)
     }
 
     func post(apiPath: String, body: [String: Any]) async throws -> [String: Any] {
-        try await rpcCall(method: "POST", apiPath: apiPath, body: body)
+        try await request(method: .post, apiPath: apiPath, body: body)
     }
 
-    func rpcCall(method: String, apiPath: String, body: [String: Any]?) async throws -> [String: Any] {
+    func request(method: HTTPMethod, apiPath: String, body: [String: Any]?) async throws -> [String: Any] {
         guard let url = URL(string: Self.mainnetBaseURL + apiPath) else {
             throw ProviderError.invalidURL
         }
 
         let timestamp = Int(Date().timeIntervalSince1970)
         let fullPath = Self.mainnetSignaturePathPrefix + apiPath
-        let signature = Self.computeSignature(method: method, fullPath: fullPath, timestamp: timestamp, apiSecret: apiSecret)
+        let signature = Self.computeSignature(method: method.rawValue, fullPath: fullPath, timestamp: timestamp, apiSecret: apiSecret)
 
         let headers = HTTPHeaders([
             HTTPHeader(name: "Content-Type", value: "application/json"),
@@ -105,26 +105,26 @@ private extension GasFreeProvider {
         ])
 
         let started = Date()
-        print("[GasFreeProvider] → \(method) \(apiPath)")
+        print("[GasFreeProvider] → \(method.rawValue) \(apiPath)")
 
         let json: Any
         do {
             json = try await networkManager.fetchJson(
                 url: url,
-                method: method == "POST" ? .post : .get,
+                method: method,
                 parameters: body ?? [:],
-                encoding: JSONEncoding.default,
+                encoding: method == .post ? JSONEncoding.default : URLEncoding.default,
                 headers: headers
             )
         } catch {
-            print("[GasFreeProvider] ← \(method) \(apiPath) network error: \(error)")
+            print("[GasFreeProvider] ← \(method.rawValue) \(apiPath) network error: \(error)")
             throw error
         }
 
         let elapsedMs = Int(Date().timeIntervalSince(started) * 1000)
 
         guard let dict = json as? [String: Any] else {
-            print("[GasFreeProvider] ← \(method) \(apiPath) ERROR not a JSON object (\(elapsedMs)ms)")
+            print("[GasFreeProvider] ← \(method.rawValue) \(apiPath) ERROR not a JSON object (\(elapsedMs)ms)")
             throw ProviderError.malformedResponse(field: "envelope")
         }
 
@@ -132,16 +132,16 @@ private extension GasFreeProvider {
         if code != 200 {
             let reason = dict["reason"] as? String ?? "unknown"
             let message = dict["message"] as? String ?? ""
-            print("[GasFreeProvider] ← \(method) \(apiPath) ERROR code=\(code) reason=\(reason) message=\(message) (\(elapsedMs)ms)")
+            print("[GasFreeProvider] ← \(method.rawValue) \(apiPath) ERROR code=\(code) reason=\(reason) message=\(message) (\(elapsedMs)ms)")
             throw ProviderError.api(code: code, reason: reason, message: message)
         }
 
         guard let data = dict["data"] as? [String: Any] else {
-            print("[GasFreeProvider] ← \(method) \(apiPath) ERROR missing data (\(elapsedMs)ms)")
+            print("[GasFreeProvider] ← \(method.rawValue) \(apiPath) ERROR missing data (\(elapsedMs)ms)")
             throw ProviderError.malformedResponse(field: "data")
         }
 
-        print("[GasFreeProvider] ← \(method) \(apiPath) OK (\(elapsedMs)ms)")
+        print("[GasFreeProvider] ← \(method.rawValue) \(apiPath) OK (\(elapsedMs)ms)")
         return data
     }
 }
@@ -237,6 +237,8 @@ extension GasFreeProvider {
             self.accountAddress = accountAddress
             self.gasFreeAddress = gasFreeAddress
             active = json["active"] as? Bool ?? false
+            let rawNonce = json["nonce"]
+            print("[GasFreeProvider] AccountInfo.nonce raw=\(String(describing: rawNonce)) type=\(type(of: rawNonce as Any))") // probe — remove after verifying type
             nonce = (json["nonce"] as? NSNumber)?.int64Value ?? 0
             allowSubmit = json["allowSubmit"] as? Bool ?? false
 
@@ -289,7 +291,7 @@ extension GasFreeProvider {
 
     struct TransferStatus: Equatable {
         let id: String
-        let state: String
+        let state: GasFreeTransferState
         let txnHash: String?
         let txnState: String?
 
@@ -298,7 +300,7 @@ extension GasFreeProvider {
                 throw ProviderError.malformedResponse(field: "id")
             }
             self.id = id
-            state = json["state"] as? String ?? ""
+            state = GasFreeTransferState(rawString: (json["state"] as? String) ?? "")
             txnHash = json["txnHash"] as? String
             txnState = json["txnState"] as? String
         }
