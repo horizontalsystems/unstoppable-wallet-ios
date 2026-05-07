@@ -6,22 +6,6 @@
       parallelizeBuildables = "YES"
       buildImplicitDependencies = "YES"
       buildArchitectures = "Automatic">
-      <BuildActionEntries>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D33D63F12F98F2CF00E16ADA"
-               BuildableName = "Unstoppable.app"
-               BlueprintName = "App"
-               ReferencedContainer = "container:UnstoppableWallet.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
-      </BuildActionEntries>
    </BuildAction>
    <TestAction
       buildConfiguration = "Debug-Dev"
@@ -60,7 +44,7 @@
             BlueprintIdentifier = "D33D63F12F98F2CF00E16ADA"
             BuildableName = "Unstoppable.app"
             BlueprintName = "App"
-            ReferencedContainer = "container:UnstoppableWallet.xcodeproj">
+            ReferencedContainer = "container:Unstoppable.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -70,16 +54,6 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <BuildableProductRunnable
-         runnableDebuggingMode = "0">
-         <BuildableReference
-            BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D33D63F12F98F2CF00E16ADA"
-            BuildableName = "Unstoppable.app"
-            BlueprintName = "App"
-            ReferencedContainer = "container:UnstoppableWallet.xcodeproj">
-         </BuildableReference>
-      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug-Dev">

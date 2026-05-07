@@ -23,7 +23,7 @@ More at [https://unstoppable.money](https://unstoppable.money)
 
 1. `git clone git@github.com:horizontalsystems/unstoppable-wallet-ios.git`
 
-2. You need to have `Config.xcconfig` configuration file in `UnstoppableWallet/UnstoppableWallet/Configuration`.
+2. You need to have `Config.xcconfig` configuration file in `Unstoppable/Unstoppable/Configuration`.
 You can use sample configuration in `Config.template.xcconfig` file.
 
 3. Open in Xcode and run.

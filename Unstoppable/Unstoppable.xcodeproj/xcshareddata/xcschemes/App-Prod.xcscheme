@@ -18,7 +18,7 @@
                BlueprintIdentifier = "D33D63F12F98F2CF00E16ADA"
                BuildableName = "Unstoppable.app"
                BlueprintName = "App"
-               ReferencedContainer = "container:UnstoppableWallet.xcodeproj">
+               ReferencedContainer = "container:Unstoppable.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -38,7 +38,7 @@
                BlueprintIdentifier = "D39BA7EA2F9B3D48005461CB"
                BuildableName = "AppTests.xctest"
                BlueprintName = "AppTests"
-               ReferencedContainer = "container:UnstoppableWallet.xcodeproj">
+               ReferencedContainer = "container:Unstoppable.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -60,7 +60,7 @@
             BlueprintIdentifier = "D33D63F12F98F2CF00E16ADA"
             BuildableName = "Unstoppable.app"
             BlueprintName = "App"
-            ReferencedContainer = "container:UnstoppableWallet.xcodeproj">
+            ReferencedContainer = "container:Unstoppable.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -77,7 +77,7 @@
             BlueprintIdentifier = "D33D63F12F98F2CF00E16ADA"
             BuildableName = "Unstoppable.app"
             BlueprintName = "App"
-            ReferencedContainer = "container:UnstoppableWallet.xcodeproj">
+            ReferencedContainer = "container:Unstoppable.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
