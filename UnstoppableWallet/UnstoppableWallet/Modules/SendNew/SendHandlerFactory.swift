@@ -17,6 +17,9 @@ enum SendHandlerFactory {
             return ShieldSendHandler.instance(amount: amount, recipient: recipient, memo: memo)
         case let .tron(token, contract):
             return TronSendHandler.instance(token: token, contract: contract)
+        case let .tronGasFree(token, receiver, value):
+            guard let activeAccount = Core.shared.accountManager.activeAccount else { return nil }
+            return GasFreeSendHandler.instance(token: token, receiver: receiver, value: value, account: activeAccount)
         case let .ton(token, amount, address, memo):
             return TonSendHandler.instance(token: token, amount: amount, address: address, memo: memo)
         case let .stellar(data, token, memo):

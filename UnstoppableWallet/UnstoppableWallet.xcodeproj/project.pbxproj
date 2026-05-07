@@ -62,6 +62,16 @@
 		6BE1D9D72FAA6ED700190518 /* GasFreeProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9D62FAA6ED700190518 /* GasFreeProvider.swift */; };
 		6BE1D9DD2FAAE12700190518 /* PermitTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9DC2FAAE12700190518 /* PermitTransfer.swift */; };
 		6BE1D9DF2FAAE13E00190518 /* GasFreeTip712Signer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9DE2FAAE13E00190518 /* GasFreeTip712Signer.swift */; };
+		6BE1D9E12FAB328000190518 /* GasFreeSendHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9E02FAB328000190518 /* GasFreeSendHandler.swift */; };
+		6BE1D9E52FAB32C200190518 /* GasFreeSendData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9E22FAB32C200190518 /* GasFreeSendData.swift */; };
+		6BE1D9E62FAB32C200190518 /* PreparedGasFreeTransfer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9E42FAB32C200190518 /* PreparedGasFreeTransfer.swift */; };
+		6BE1D9E72FAB32C200190518 /* GasFreeSender.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9E32FAB32C200190518 /* GasFreeSender.swift */; };
+		6BE1D9E92FAB32CF00190518 /* PendingGasFreeTransferRecordStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9E82FAB32CF00190518 /* PendingGasFreeTransferRecordStorage.swift */; };
+		6BE1D9EC2FAB32E800190518 /* GasFreeSendFeeBreakdown.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9EA2FAB32E800190518 /* GasFreeSendFeeBreakdown.swift */; };
+		6BE1D9ED2FAB32E800190518 /* PendingGasFreeTransferRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9EB2FAB32E800190518 /* PendingGasFreeTransferRecord.swift */; };
+		6BE1D9F02FAB60EF00190518 /* GasFreeArchiver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9EE2FAB60EF00190518 /* GasFreeArchiver.swift */; };
+		6BE1D9F12FAB60EF00190518 /* GasFreeMessageBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9EF2FAB60EF00190518 /* GasFreeMessageBuilder.swift */; };
+		6BE1D9F32FAB612D00190518 /* GasFreeTransferState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6BE1D9F22FAB612D00190518 /* GasFreeTransferState.swift */; };
 		D33D63472F98DD5D00E16ADA /* AppWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3948EF62ADA846400FAE566 /* AppWidgetBundle.swift */; };
 		D33D63482F98DD5D00E16ADA /* SingleCoinPriceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11B35CFAA2B156E439EB18B3 /* SingleCoinPriceView.swift */; };
 		D33D63492F98DD5D00E16ADA /* PriceChangeModeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D3384D502C0703B400515664 /* PriceChangeModeManager.swift */; };
@@ -3091,6 +3101,16 @@
 		6BE1D9D62FAA6ED700190518 /* GasFreeProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasFreeProvider.swift; sourceTree = "<group>"; };
 		6BE1D9DC2FAAE12700190518 /* PermitTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PermitTransfer.swift; sourceTree = "<group>"; };
 		6BE1D9DE2FAAE13E00190518 /* GasFreeTip712Signer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasFreeTip712Signer.swift; sourceTree = "<group>"; };
+		6BE1D9E02FAB328000190518 /* GasFreeSendHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasFreeSendHandler.swift; sourceTree = "<group>"; };
+		6BE1D9E22FAB32C200190518 /* GasFreeSendData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasFreeSendData.swift; sourceTree = "<group>"; };
+		6BE1D9E32FAB32C200190518 /* GasFreeSender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasFreeSender.swift; sourceTree = "<group>"; };
+		6BE1D9E42FAB32C200190518 /* PreparedGasFreeTransfer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreparedGasFreeTransfer.swift; sourceTree = "<group>"; };
+		6BE1D9E82FAB32CF00190518 /* PendingGasFreeTransferRecordStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingGasFreeTransferRecordStorage.swift; sourceTree = "<group>"; };
+		6BE1D9EA2FAB32E800190518 /* GasFreeSendFeeBreakdown.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasFreeSendFeeBreakdown.swift; sourceTree = "<group>"; };
+		6BE1D9EB2FAB32E800190518 /* PendingGasFreeTransferRecord.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingGasFreeTransferRecord.swift; sourceTree = "<group>"; };
+		6BE1D9EE2FAB60EF00190518 /* GasFreeArchiver.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasFreeArchiver.swift; sourceTree = "<group>"; };
+		6BE1D9EF2FAB60EF00190518 /* GasFreeMessageBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasFreeMessageBuilder.swift; sourceTree = "<group>"; };
+		6BE1D9F22FAB612D00190518 /* GasFreeTransferState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GasFreeTransferState.swift; sourceTree = "<group>"; };
 		6BE57E722E339C32003C4C01 /* MerkleTransactionAdapter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleTransactionAdapter.swift; sourceTree = "<group>"; };
 		6BE57E762E339D17003C4C01 /* MerkleRpcBlockchain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerkleRpcBlockchain.swift; sourceTree = "<group>"; };
 		6BE57E772E339D17003C4C01 /* MerlkeTransactionHashStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MerlkeTransactionHashStorage.swift; sourceTree = "<group>"; };
@@ -6689,6 +6709,12 @@
 		6B94D8C82F9CD94C0042CCD6 /* Send */ = {
 			isa = PBXGroup;
 			children = (
+				6BE1D9EE2FAB60EF00190518 /* GasFreeArchiver.swift */,
+				6BE1D9EF2FAB60EF00190518 /* GasFreeMessageBuilder.swift */,
+				6BE1D9E22FAB32C200190518 /* GasFreeSendData.swift */,
+				6BE1D9E32FAB32C200190518 /* GasFreeSender.swift */,
+				6BE1D9E42FAB32C200190518 /* PreparedGasFreeTransfer.swift */,
+				6BE1D9E02FAB328000190518 /* GasFreeSendHandler.swift */,
 				6BE1D9DE2FAAE13E00190518 /* GasFreeTip712Signer.swift */,
 				6BE1D9D62FAA6ED700190518 /* GasFreeProvider.swift */,
 				6BE1D9C22FA9CEE700190518 /* AaFeeCalculator.swift */,
@@ -7011,6 +7037,9 @@
 		6BDBD3AE2F9B974600440BE0 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				6BE1D9F22FAB612D00190518 /* GasFreeTransferState.swift */,
+				6BE1D9EA2FAB32E800190518 /* GasFreeSendFeeBreakdown.swift */,
+				6BE1D9EB2FAB32E800190518 /* PendingGasFreeTransferRecord.swift */,
 				6BE1D9D22FAA1C1A00190518 /* GasFreeProfile.swift */,
 				6BE1D71B2FA9C20B00190518 /* SignatureCurve.swift */,
 				6B3CFEF22FA37FEC00445225 /* AaSendFeeBreakdown.swift */,
@@ -7026,6 +7055,7 @@
 		6BDBD3B32F9B974600440BE0 /* Storage */ = {
 			isa = PBXGroup;
 			children = (
+				6BE1D9E82FAB32CF00190518 /* PendingGasFreeTransferRecordStorage.swift */,
 				6BDBD3AF2F9B974600440BE0 /* AaStorageMigrator.swift */,
 				6BDBD3B02F9B974600440BE0 /* PendingUserOperationRecordStorage.swift */,
 				6BDBD3B12F9B974600440BE0 /* SmartAccountDeploymentRecordStorage.swift */,
@@ -9074,6 +9104,9 @@
 				D33D64832F98F2CF00E16ADA /* BitcoinCashAdapter.swift in Sources */,
 				D33D64842F98F2CF00E16ADA /* ChartIndicatorSettingsViewController.swift in Sources */,
 				D33D64852F98F2CF00E16ADA /* DashAdapter.swift in Sources */,
+				6BE1D9E52FAB32C200190518 /* GasFreeSendData.swift in Sources */,
+				6BE1D9E62FAB32C200190518 /* PreparedGasFreeTransfer.swift in Sources */,
+				6BE1D9E72FAB32C200190518 /* GasFreeSender.swift in Sources */,
 				D33D64862F98F2CF00E16ADA /* EnabledWallet.swift in Sources */,
 				D33D64872F98F2CF00E16ADA /* ShieldSendView.swift in Sources */,
 				D33D64882F98F2CF00E16ADA /* Account.swift in Sources */,
@@ -9357,6 +9390,7 @@
 				D33D65832F98F2CF00E16ADA /* AmountInputViewModel.swift in Sources */,
 				D33D65842F98F2CF00E16ADA /* SendEvmConfirmationModule.swift in Sources */,
 				D33D65852F98F2CF00E16ADA /* SendEvmViewController.swift in Sources */,
+				6BE1D9F32FAB612D00190518 /* GasFreeTransferState.swift in Sources */,
 				D33D65862F98F2CF00E16ADA /* SendEvmService.swift in Sources */,
 				D33D65872F98F2CF00E16ADA /* SendEvmViewModel.swift in Sources */,
 				D33D65882F98F2CF00E16ADA /* MarketGlobalView.swift in Sources */,
@@ -9558,6 +9592,8 @@
 				D33D664B2F98F2CF00E16ADA /* EvmTransactionConverter.swift in Sources */,
 				D33D664C2F98F2CF00E16ADA /* BottomSheetModifier.swift in Sources */,
 				D33D664D2F98F2CF00E16ADA /* TonSwapFinalQuote.swift in Sources */,
+				6BE1D9F02FAB60EF00190518 /* GasFreeArchiver.swift in Sources */,
+				6BE1D9F12FAB60EF00190518 /* GasFreeMessageBuilder.swift in Sources */,
 				D33D664E2F98F2CF00E16ADA /* PremiumFeature.swift in Sources */,
 				D33D664F2F98F2CF00E16ADA /* TonConnect+Encodable.swift in Sources */,
 				D33D66502F98F2CF00E16ADA /* Map.swift in Sources */,
@@ -10258,6 +10294,7 @@
 				D33D68F82F98F2CF00E16ADA /* ChartIndicatorsModule.swift in Sources */,
 				D33D68F92F98F2CF00E16ADA /* ChartIndicatorSettingsViewModel.swift in Sources */,
 				D33D68FA2F98F2CF00E16ADA /* InputIntegerSection.swift in Sources */,
+				6BE1D9E12FAB328000190518 /* GasFreeSendHandler.swift in Sources */,
 				D33D68FB2F98F2CF00E16ADA /* IndicatorDataSource.swift in Sources */,
 				D33D68FC2F98F2CF00E16ADA /* MaIndicatorDataSource.swift in Sources */,
 				D33D68FD2F98F2CF00E16ADA /* RsiIndicatorDataSource.swift in Sources */,
@@ -10585,6 +10622,7 @@
 				D33D6A3B2F98F2CF00E16ADA /* UtxoSwapFinalQuote.swift in Sources */,
 				D33D6A3C2F98F2CF00E16ADA /* SyncErrorView.swift in Sources */,
 				D33D6A3D2F98F2CF00E16ADA /* PriceChangeMode.swift in Sources */,
+				6BE1D9E92FAB32CF00190518 /* PendingGasFreeTransferRecordStorage.swift in Sources */,
 				D33D6A3E2F98F2CF00E16ADA /* ActionSheetExtensions.swift in Sources */,
 				D33D6A3F2F98F2CF00E16ADA /* BaseAnimation.swift in Sources */,
 				D33D6A402F98F2CF00E16ADA /* AlphaDismissAnimation.swift in Sources */,
@@ -10603,6 +10641,8 @@
 				D33D6A4D2F98F2CF00E16ADA /* ActionSheetTapView.swift in Sources */,
 				D33D6A4E2F98F2CF00E16ADA /* ActionSheetConfiguration.swift in Sources */,
 				D33D6A4F2F98F2CF00E16ADA /* ActionSheetControllerNew.swift in Sources */,
+				6BE1D9EC2FAB32E800190518 /* GasFreeSendFeeBreakdown.swift in Sources */,
+				6BE1D9ED2FAB32E800190518 /* PendingGasFreeTransferRecord.swift in Sources */,
 				D33D6A502F98F2CF00E16ADA /* BadgeViewNew.swift in Sources */,
 				D33D6A512F98F2CF00E16ADA /* BaseCurrencySettingsViewModel.swift in Sources */,
 				D33D6A522F98F2CF00E16ADA /* MarketWatchlistSignalsView.swift in Sources */,
@@ -12645,8 +12685,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/TronKit.Swift.git";
 			requirement = {
-				kind = exactVersion;
-				version = 1.4.0;
+				kind = revision;
+				revision = 388d41e99a97a4f1501e52e404478bba5976cdfe;
 			};
 		};
 		D08C93AD2B91E37E00A7D1D5 /* XCRemoteSwiftPackageReference "Hodler" */ = {

@@ -64,6 +64,12 @@ extension TronPreSendHandler: IPreSendHandler {
             return .invalid(cautions: [CautionNew(title: "send.address.invalid_address".localized, text: "send.address_error.own_address".localized(token.coin.code), type: .error)])
         }
 
+        if let activeAccount = Core.shared.accountManager.activeAccount,
+           SmartAccountManager.canUseGasFree(account: activeAccount, token: token)
+        {
+            return .valid(sendData: .tronGasFree(token: token, receiver: tronAddress, value: amountBigUInt))
+        }
+
         let contract = adapter.contract(amount: amountBigUInt, address: tronAddress, memo: memo)
 
         return .valid(sendData: .tron(token: token, contract: contract))

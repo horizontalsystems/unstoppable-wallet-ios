@@ -70,22 +70,32 @@ class TronKitManager {
             signer = try Signer.instance(privateKey: data)
         case .tronAddress:
             ()
+        case .passkeyOwned:
+            // Watch-mode: address comes from GasFreeProfile (see AccountAddress.tronAddress).
+            // Sends go via GasFree submitTransfer, not TronKit.send — signer stays nil.
+            ()
         default:
             throw AdapterError.unsupportedAccount
         }
         let syncSource = evmSyncSourceManager.syncSource(blockchainType: .tron)
+        let gaslessAccount = SmartAccountManager.isGasTokenPayment(account.type)
         let tronKit = try TronKit.Kit.instance(
             address: address,
             network: network,
             walletId: account.id,
             rpcSource: rpcSource(network: network, syncSource: syncSource),
             transactionSource: .tronGrid(network: network, apiKeys: AppConfig.tronGridApiKeys),
-            minLogLevel: .error
+            minLogLevel: .error,
+            gaslessAccount: gaslessAccount
         )
 
         tronKit.start()
 
-        let wrapper = TronKitWrapper(tronKit: tronKit, signer: signer)
+        let wrapper = TronKitWrapper(
+            tronKit: tronKit,
+            signer: signer,
+            gasTokenPayment: gaslessAccount
+        )
 
         _tronKitWrapper = wrapper
         currentAccount = account
@@ -121,10 +131,15 @@ extension TronKitManager {
 class TronKitWrapper {
     let tronKit: TronKit.Kit
     let signer: Signer?
+    /// True when this wrapper serves a gas-token-payment account (currently passkey-AA / GasFree).
+    /// UI uses it to bypass on-chain `accountActive == false` cosmetic ("not activated") for accounts
+    /// whose wallet is a CREATE2 BeaconProxy not yet deployed on chain.
+    let gasTokenPayment: Bool
 
-    init(tronKit: TronKit.Kit, signer: Signer?) {
+    init(tronKit: TronKit.Kit, signer: Signer?, gasTokenPayment: Bool) {
         self.tronKit = tronKit
         self.signer = signer
+        self.gasTokenPayment = gasTokenPayment
     }
 
     func send(contract: Contract, feeLimit: Int?) async throws {

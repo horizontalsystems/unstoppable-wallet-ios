@@ -8,12 +8,14 @@ class TronWalletTokenViewModel: ObservableObject {
 
     private var hasAppeared = false
     private let watchAccount: Bool
+    private let gasTokenPayment: Bool
     @Published var accountActive: Bool
 
     init(tronKit: TronKit.Kit, wallet: Wallet) {
         self.tronKit = tronKit
         watchAccount = wallet.account.watchAccount
-        accountActive = tronKit.accountActive
+        gasTokenPayment = SmartAccountManager.isGasTokenPayment(wallet.account.type)
+        accountActive = tronKit.accountActive || gasTokenPayment
 
         tronKit.trxBalancePublisher
             .receive(on: DispatchQueue.main)
@@ -22,7 +24,7 @@ class TronWalletTokenViewModel: ObservableObject {
     }
 
     private func sync() {
-        let newAccountActive = tronKit.accountActive
+        let newAccountActive = tronKit.accountActive || gasTokenPayment
 
         if newAccountActive != accountActive {
             accountActive = newAccountActive

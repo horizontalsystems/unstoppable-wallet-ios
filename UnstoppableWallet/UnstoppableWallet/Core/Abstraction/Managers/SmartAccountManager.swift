@@ -18,6 +18,7 @@ class SmartAccountManager {
     private let deploymentStorage: SmartAccountDeploymentRecordStorage
     private let pendingOpStorage: PendingUserOperationRecordStorage
     private let gasFreeProfileStorage: GasFreeProfileRecordStorage
+    private let pendingGasFreeStorage: PendingGasFreeTransferRecordStorage
     private var cancellables = Set<AnyCancellable>()
 
     init(accountManager: AccountManager, databaseDirectoryUrl: URL) throws {
@@ -31,6 +32,7 @@ class SmartAccountManager {
         deploymentStorage = SmartAccountDeploymentRecordStorage(dbPool: dbPool)
         pendingOpStorage = PendingUserOperationRecordStorage(dbPool: dbPool)
         gasFreeProfileStorage = GasFreeProfileRecordStorage(dbPool: dbPool)
+        pendingGasFreeStorage = PendingGasFreeTransferRecordStorage(dbPool: dbPool)
 
         do {
             try repairOrphanedProfiles()
@@ -148,6 +150,26 @@ extension SmartAccountManager {
     }
 }
 
+// MARK: - Pending GasFree transfers
+
+extension SmartAccountManager {
+    func savePendingGasFreeTransfer(record: PendingGasFreeTransferRecord) throws {
+        try pendingGasFreeStorage.save(record: record)
+    }
+
+    func pendingGasFreeTransfers(status: String) throws -> [PendingGasFreeTransferRecord] {
+        try pendingGasFreeStorage.transfers(status: status)
+    }
+
+    func updatePendingGasFreeTransfer(traceId: String, status: String, txnHash: String?, lastPolledAt: TimeInterval?) throws {
+        try pendingGasFreeStorage.update(traceId: traceId, status: status, txnHash: txnHash, lastPolledAt: lastPolledAt)
+    }
+
+    func deletePendingGasFreeTransfer(traceId: String) throws {
+        try pendingGasFreeStorage.delete(traceId: traceId)
+    }
+}
+
 // MARK: - GasFree operations
 
 extension SmartAccountManager {
@@ -223,6 +245,31 @@ private extension SmartAccountManager {
     func handleAccountDeleted(account: Account) throws {
         try profileStorage.delete(accountId: account.id)
         try gasFreeProfileStorage.delete(accountId: account.id)
+    }
+}
+
+extension SmartAccountManager {
+    /// True when the account is funded by a paymaster / gas-token mechanism (ERC-4337 Barz on EVM,
+    /// GasFree on Tron). Such accounts don't require holding the chain's native gas token to send.
+    /// `.passkeyOwned` is the only AccountType this initiative provisions; the predicate is kept
+    /// in the Abstraction module so this entire concern stays portable to other projects.
+    static func isGasTokenPayment(_ accountType: AccountType) -> Bool {
+        if case .passkeyOwned = accountType { return true }
+        return false
+    }
+
+    /// Single-call routing predicate for the Send-flow: a (account, token) pair is eligible for
+    /// the GasFree (Tron) send-pipeline. Encapsulates the AND of "account uses gas-token payment"
+    /// and "token is a registered v1 stablecoin on Tron" so callers in `Modules/SendNew/` ask one
+    /// question instead of composing AA-specific predicates themselves.
+    static func canUseGasFree(account: Account, token: Token) -> Bool {
+        guard isGasTokenPayment(account.type),
+              token.blockchainType == .tron,
+              case let .eip20(tokenHex) = token.type
+        else {
+            return false
+        }
+        return StablecoinRegistry.supports(blockchainType: .tron, tokenAddress: tokenHex)
     }
 }
 

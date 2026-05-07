@@ -164,6 +164,9 @@
 "restore_type.private_key.title" = "from Private Key";
 "restore_type.passkey.title" = "from Passkey";
 "restore_type.passkey_smart.title" = "from Passkey (Smart Account)";
+"send.fee.transfer" = "Transfer Fee";
+"send.fee.activation" = "Activation Fee";
+"send.fee.includes_activation" = "First send activates the GasFree wallet on-chain.";
 "restore_type.backup.title" = "from Backup";
 
 "restore_type.recovery.description" = "Import a wallet using a recovery phrase.";

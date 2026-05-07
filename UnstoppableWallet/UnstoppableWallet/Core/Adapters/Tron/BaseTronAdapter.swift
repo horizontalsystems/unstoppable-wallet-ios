@@ -19,6 +19,20 @@ class BaseTronAdapter {
         tronKitWrapper.tronKit
     }
 
+    /// `true` for on-chain-active accounts AND for gas-token-payment accounts (passkey-AA / GasFree)
+    /// whose wallet may not be on-chain yet but still semantically usable for receive/send via the
+    /// abstraction layer. Use this for UI activation cues, not raw `tronKit.accountActive`.
+    var effectiveAccountActive: Bool {
+        tronKit.accountActive || tronKitWrapper.gasTokenPayment
+    }
+
+    /// Single source for `effectiveAccountActive` updates. Subclasses' `cautionUpdatedObservable`
+    /// and any UI-facing publisher should subscribe to this rather than re-deriving the OR.
+    var effectiveAccountActivePublisher: Observable<Bool> {
+        let gasTokenPayment = tronKitWrapper.gasTokenPayment
+        return tronKit.accountActivePublisher.asObservable().map { $0 || gasTokenPayment }
+    }
+
     func balanceDecimal(kitBalance: BigUInt?, decimals: Int) -> Decimal {
         guard let kitBalance else {
             return 0
@@ -86,7 +100,7 @@ extension BaseTronAdapter: IDepositAdapter {
     var receiveAddress: DepositAddress {
         ActivatedDepositAddress(
             receiveAddress: tronKit.receiveAddress.base58,
-            isActive: tronKit.accountActive
+            isActive: effectiveAccountActive
         )
     }
 }
