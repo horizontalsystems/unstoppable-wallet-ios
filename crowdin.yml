@@ -1,5 +1,0 @@
-files:
-  - source: /**/en.lproj/*.strings
-    translation: /**/%two_letters_code%.lproj/%original_file_name%
-  - source: /**/fastlane/metadata/en-US/*.txt
-    translation: /**/fastlane/metadata/%two_letters_code%/%original_file_name%
