@@ -23,7 +23,11 @@ struct MnemonicInputCellWrapper: UIViewRepresentable {
         cell.contentView.backgroundColor = .clear
         cell.set(placeholderText: placeholder)
 
-        cell.onChangeMnemonicText = onChangeMnemonicText
+        cell.onChangeMnemonicText = { text, cursorOffset in
+            DispatchQueue.main.async {
+                onChangeMnemonicText(text, cursorOffset)
+            }
+        }
         cell.onChangeEntering = { [weak cell] in
             guard let cell else { return }
             onChangeEntering(cell.entering)

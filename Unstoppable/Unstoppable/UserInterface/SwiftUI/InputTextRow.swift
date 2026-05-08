@@ -18,6 +18,6 @@ struct InputTextRow<Content: View>: View {
         .padding(EdgeInsets(top: vertical, leading: .margin16, bottom: vertical, trailing: .margin16))
         .background(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).fill(Color.themeLawrence))
         .overlay(RoundedRectangle(cornerRadius: .cornerRadius12, style: .continuous).stroke(borderColor, lineWidth: .heightOneDp))
-        .frame(minHeight: .heightSingleLineCell)
+        .frame(minHeight: .heightInputCell)
     }
 }

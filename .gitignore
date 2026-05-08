@@ -47,3 +47,9 @@ buildServer.json
 # Claude
 
 .claude
+/.codebase-memory/
+/.playwright-mcp/
+/.serena/
+/.venv-translate/
+/CLAUDE.md
+/docs/

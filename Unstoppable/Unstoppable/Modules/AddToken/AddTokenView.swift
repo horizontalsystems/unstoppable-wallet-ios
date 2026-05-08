@@ -71,27 +71,28 @@ struct AddTokenView: View {
     private var inputSection: some View {
         VStack(spacing: 0) {
             InputTextRow {
-                ShortcutButtonsView(
-                    content: {
-                        TextField(
-                            viewModel.placeholder,
-                            text: $viewModel.reference,
-                            axis: .vertical
-                        )
-                        .lineLimit(1 ... 3)
-                        .font(.themeBody)
-                        .tint(.themeInputFieldTintColor)
-                        .autocorrectionDisabled()
-                        .autocapitalization(.none)
-                        .modifier(RightChecking(state: checkingStateBinding))
-                    },
-                    showDelete: .init(get: { !viewModel.reference.isEmpty }, set: { _ in }),
-                    items: [.icon("scan"), .text("button.paste".localized)],
-                    onTap: onTap,
-                    onTapDelete: {
-                        viewModel.reference = ""
-                    }
-                )
+                PrimarySizedHStack {
+                    TextField(
+                        viewModel.placeholder,
+                        text: $viewModel.reference,
+                        axis: .vertical
+                    )
+                    .lineLimit(1 ... 3)
+                    .font(.themeBody)
+                    .tint(.themeInputFieldTintColor)
+                    .autocorrectionDisabled()
+                    .autocapitalization(.none)
+                    .modifier(RightChecking(state: checkingStateBinding))
+                } trailing: {
+                    ShortcutButtonsView(
+                        showDelete: .init(get: { !viewModel.reference.isEmpty }, set: { _ in }),
+                        items: [.icon("scan"), .text("button.paste".localized)],
+                        onTap: onTap,
+                        onTapDelete: {
+                            viewModel.reference = ""
+                        }
+                    )
+                }
             }
             .modifier(CautionBorder(cautionState: cautionStateBinding))
             .modifier(CautionPrompt(cautionState: cautionStateBinding))

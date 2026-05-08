@@ -28,21 +28,21 @@ struct CreateAccountView: View {
                             ListSectionHeader(text: "create_wallet.name".localized, uppercased: false)
 
                             InputTextRow {
-                                ShortcutButtonsView(
-                                    content: {
-                                        InputTextView(text: $viewModel.name)
-                                            .autocapitalization(.words)
-                                            .autocorrectionDisabled()
-                                            .focused($focusedField, equals: .name)
-                                    },
-                                    showDelete: .init(get: { false }, set: { _ in }),
-                                    items: [.icon("swap_e")],
-                                    onTap: { _ in
-                                        viewModel.refreshName()
-                                    },
-                                    onTapDelete: {}
-                                )
-                                .padding(.vertical, -5) // TODO: remove this
+                                PrimarySizedHStack {
+                                    InputTextView(text: $viewModel.name)
+                                        .autocapitalization(.words)
+                                        .autocorrectionDisabled()
+                                        .focused($focusedField, equals: .name)
+                                } trailing: {
+                                    ShortcutButtonsView(
+                                        showDelete: .constant(false),
+                                        items: [.icon("swap_e")],
+                                        onTap: { _ in
+                                            viewModel.refreshName()
+                                        },
+                                        onTapDelete: {}
+                                    )
+                                }
                             }
                         }
 

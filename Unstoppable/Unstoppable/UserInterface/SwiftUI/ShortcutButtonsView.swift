@@ -1,8 +1,6 @@
 import SwiftUI
 
-struct ShortcutButtonsView<Content: View>: View {
-    @ViewBuilder let content: Content
-
+struct ShortcutButtonsView: View {
     @Binding var showDelete: Bool
     let items: [ShortCutButtonType]
     let onTap: (Int) -> Void
@@ -10,8 +8,6 @@ struct ShortcutButtonsView<Content: View>: View {
 
     var body: some View {
         HStack(spacing: .margin8) {
-            content
-
             if showDelete {
                 IconButton(icon: "trash", style: .secondary, size: .small) {
                     onTapDelete()

@@ -206,7 +206,6 @@
 				"Configuration/App/Widget-Dev.xcconfig",
 				"Configuration/App/Widget-Prod.xcconfig",
 				Configuration/Config.template.xcconfig,
-				Configuration/Config.xcconfig,
 				"Configuration/Stable/App-Stable-Dev.xcconfig",
 				"Configuration/Stable/App-Stable-Prod.xcconfig",
 				"Configuration/Stable/Intent-Stable-Dev.xcconfig",
