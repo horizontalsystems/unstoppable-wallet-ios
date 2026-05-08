@@ -137,7 +137,6 @@
 		D352520F2FAC9B590013335E /* Exceptions for "Unstoppable" folder in "WidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Colors.xcassets,
 				Core/AppEnvironment.swift,
 				Core/AppFlavor.swift,
 				Core/Managers/CurrencyManager.swift,
@@ -145,9 +144,6 @@
 				Core/Managers/PriceChangeModeManager.swift,
 				Core/Managers/WatchlistManager.swift,
 				Core/Storage/SharedLocalStorage.swift,
-				"Fonts/Manrope-Medium.ttf",
-				"Fonts/Manrope-Regular.ttf",
-				"Fonts/Manrope-SemiBold.ttf",
 				Models/Currency.swift,
 				Models/PriceChangeMode.swift,
 				Models/WatchlistSortBy.swift,
@@ -219,9 +215,9 @@
 				"Configuration/Stable/Widget-Stable-Prod.xcconfig",
 				Core/Abstraction/Legacy/README.md,
 				Core/Abstraction/README.md,
-				Info.plist,
-				translation_snapshot.json,
-				Unstoppable.storekit,
+				Resources/Strings/translation_snapshot.json,
+				Supporting/Info.plist,
+				Supporting/Unstoppable.storekit,
 			);
 			target = D33D63F12F98F2CF00E16ADA /* App */;
 		};
@@ -800,7 +796,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Unstoppable/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -924,7 +919,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Unstoppable/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1053,7 +1047,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Unstoppable/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1177,7 +1170,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Unstoppable/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1254,6 +1246,7 @@
 			baseConfigurationReferenceAnchor = D39BC3322FAC6F5C005461CB /* Unstoppable */;
 			baseConfigurationReferenceRelativePath = "Configuration/App/App-Dev.xcconfig";
 			buildSettings = {
+				INFOPLIST_FILE = Unstoppable/Supporting/Info.plist;
 				PRODUCT_NAME = Unstoppable;
 			};
 			name = "Debug-Dev";
@@ -1263,6 +1256,7 @@
 			baseConfigurationReferenceAnchor = D39BC3322FAC6F5C005461CB /* Unstoppable */;
 			baseConfigurationReferenceRelativePath = "Configuration/App/App-Prod.xcconfig";
 			buildSettings = {
+				INFOPLIST_FILE = Unstoppable/Supporting/Info.plist;
 				PRODUCT_NAME = Unstoppable;
 			};
 			name = "Debug-Prod";
@@ -1272,6 +1266,7 @@
 			baseConfigurationReferenceAnchor = D39BC3322FAC6F5C005461CB /* Unstoppable */;
 			baseConfigurationReferenceRelativePath = "Configuration/App/App-Dev.xcconfig";
 			buildSettings = {
+				INFOPLIST_FILE = Unstoppable/Supporting/Info.plist;
 				PRODUCT_NAME = Unstoppable;
 			};
 			name = "Release-Dev";
@@ -1281,6 +1276,7 @@
 			baseConfigurationReferenceAnchor = D39BC3322FAC6F5C005461CB /* Unstoppable */;
 			baseConfigurationReferenceRelativePath = "Configuration/App/App-Prod.xcconfig";
 			buildSettings = {
+				INFOPLIST_FILE = Unstoppable/Supporting/Info.plist;
 				PRODUCT_NAME = Unstoppable;
 			};
 			name = "Release-Prod";
@@ -1342,7 +1338,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Unstoppable/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1365,6 +1360,7 @@
 			baseConfigurationReferenceAnchor = D39BC3322FAC6F5C005461CB /* Unstoppable */;
 			baseConfigurationReferenceRelativePath = "Configuration/Stable/App-Stable-Dev.xcconfig";
 			buildSettings = {
+				INFOPLIST_FILE = Unstoppable/Supporting/Info.plist;
 				PRODUCT_NAME = Unstoppable;
 			};
 			name = "Debug-Stable-Dev";
@@ -1481,7 +1477,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Unstoppable/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1504,6 +1499,7 @@
 			baseConfigurationReferenceAnchor = D39BC3322FAC6F5C005461CB /* Unstoppable */;
 			baseConfigurationReferenceRelativePath = "Configuration/Stable/App-Stable-Prod.xcconfig";
 			buildSettings = {
+				INFOPLIST_FILE = Unstoppable/Supporting/Info.plist;
 				PRODUCT_NAME = Unstoppable;
 			};
 			name = "Debug-Stable-Prod";
@@ -1614,7 +1610,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Unstoppable/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1638,6 +1633,7 @@
 			baseConfigurationReferenceAnchor = D39BC3322FAC6F5C005461CB /* Unstoppable */;
 			baseConfigurationReferenceRelativePath = "Configuration/Stable/App-Stable-Dev.xcconfig";
 			buildSettings = {
+				INFOPLIST_FILE = Unstoppable/Supporting/Info.plist;
 				PRODUCT_NAME = Unstoppable;
 			};
 			name = "Release-Stable-Dev";
@@ -1746,7 +1742,6 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				INFOPLIST_FILE = Unstoppable/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1770,6 +1765,7 @@
 			baseConfigurationReferenceAnchor = D39BC3322FAC6F5C005461CB /* Unstoppable */;
 			baseConfigurationReferenceRelativePath = "Configuration/Stable/App-Stable-Prod.xcconfig";
 			buildSettings = {
+				INFOPLIST_FILE = Unstoppable/Supporting/Info.plist;
 				PRODUCT_NAME = Unstoppable;
 			};
 			name = "Release-Stable-Prod";
