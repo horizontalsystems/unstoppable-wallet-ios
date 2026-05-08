@@ -23,9 +23,9 @@ LANGUAGES = {
     "zh": "Chinese (Simplified)",
 }
 
-STRINGS_FILE = "Unstoppable/Unstoppable/{lang}.lproj/Localizable.strings"
+STRINGS_FILE = "Unstoppable/Unstoppable/Resources/Strings/{lang}.lproj/Localizable.strings"
 EN_FILE = STRINGS_FILE.format(lang="en")
-TRANSLATION_SNAPSHOT_FILE = "Unstoppable/Unstoppable/translation_snapshot.json"
+TRANSLATION_SNAPSHOT_FILE = "Unstoppable/Unstoppable/Resources/Strings/translation_snapshot.json"
 
 STRING_PATTERN = re.compile(r'"((?:[^"\\]|\\.)*)"\s*=\s*"((?:[^"\\]|\\.)*)"\s*;')
 
