@@ -3,6 +3,7 @@ import HsToolKit
 import MarketKit
 import RxRelay
 import RxSwift
+import WalletCore
 import ZcashLightClientKit
 
 class SendZcashService {
