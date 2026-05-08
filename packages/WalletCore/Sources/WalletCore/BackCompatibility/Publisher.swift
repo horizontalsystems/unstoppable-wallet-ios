@@ -1,7 +1,7 @@
 import Combine
 import RxSwift
 
-extension Publisher {
+public extension Publisher {
     /// Returns an Observable<Output> representing the underlying
     /// Publisher. Upon subscription, the Publisher's sink pushes
     /// events into the Observable. Upon disposing of the subscription,

@@ -59,6 +59,8 @@
 		D33D6B072F98F2CF00E16ADA /* Hodler in Frameworks */ = {isa = PBXBuildFile; productRef = D33D642A2F98F2CF00E16ADA /* Hodler */; };
 		D33D6B1F2F98F5BF00E16ADA /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D33D63A22F98DD5D00E16ADA /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D33D6B222F98F5C900E16ADA /* IntentExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D33D63B32F98DD6A00E16ADA /* IntentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D35EEEE92FB1B5B700E9E863 /* WalletCore in Frameworks */ = {isa = PBXBuildFile; productRef = D35EEEE82FB1B5B700E9E863 /* WalletCore */; };
+		D3C9F7482FADF57B00C7916F /* AppWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D3E161E02FADAB4E006A73DD /* AppWidget.intentdefinition */; };
 		D3E161E12FADAB4E006A73DD /* AppWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D3E161E02FADAB4E006A73DD /* AppWidget.intentdefinition */; };
 /* End PBXBuildFile section */
 
@@ -148,6 +150,7 @@
 				Models/PriceChangeMode.swift,
 				Models/WatchlistSortBy.swift,
 				Models/WatchlistTimePeriod.swift,
+				Resources/Colors.xcassets,
 				UserInterface/ComponentKit/Cells/EmptyCell.swift,
 				UserInterface/ComponentKit/Cells/HeaderFooter/TopDescriptionHeaderFooterView.swift,
 				UserInterface/ComponentKit/Cells/HeaderFooter/TopDescriptionView.swift,
@@ -250,6 +253,13 @@
 			);
 			target = D33D63F12F98F2CF00E16ADA /* App */;
 		};
+		D3C9F7472FADF52500C7916F /* Exceptions for "Intents" folder in "IntentExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = D33D63A42F98DD6A00E16ADA /* IntentExtension */;
+		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -280,6 +290,9 @@
 		};
 		D39BCABA2FAC703F005461CB /* Intents */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				D3C9F7472FADF52500C7916F /* Exceptions for "Intents" folder in "IntentExtension" target */,
+			);
 			path = Intents;
 			sourceTree = "<group>";
 		};
@@ -325,6 +338,7 @@
 				D33D6AE72F98F2CF00E16ADA /* CryptoSwift in Frameworks */,
 				D33D6AE82F98F2CF00E16ADA /* TonConnectAPI in Frameworks */,
 				D33D6AE92F98F2CF00E16ADA /* BitcoinCashKit in Frameworks */,
+				D35EEEE92FB1B5B700E9E863 /* WalletCore in Frameworks */,
 				D33D6AEA2F98F2CF00E16ADA /* Checkpoints in Frameworks */,
 				D33D6AEB2F98F2CF00E16ADA /* ECashKit in Frameworks */,
 				D33D6AEC2F98F2CF00E16ADA /* NftKit in Frameworks */,
@@ -453,6 +467,9 @@
 			);
 			dependencies = (
 			);
+			fileSystemSynchronizedGroups = (
+				D39BCABA2FAC703F005461CB /* Intents */,
+			);
 			name = IntentExtension;
 			packageProductDependencies = (
 				D33D63A52F98DD6A00E16ADA /* HsToolKit */,
@@ -521,6 +538,7 @@
 				D33D643A2F98F2CF00E16ADA /* ReownWalletKit */,
 				D33D643B2F98F2CF00E16ADA /* CryptoSwift */,
 				D33D643D2F98F2CF00E16ADA /* SolanaKit */,
+				D35EEEE82FB1B5B700E9E863 /* WalletCore */,
 			);
 			productName = Wallet;
 			productReference = D33D6B1D2F98F2CF00E16ADA /* Unstoppable.app */;
@@ -681,6 +699,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3C9F7482FADF57B00C7916F /* AppWidget.intentdefinition in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3329,6 +3348,10 @@
 		D33D643D2F98F2CF00E16ADA /* SolanaKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SolanaKit;
+		};
+		D35EEEE82FB1B5B700E9E863 /* WalletCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = WalletCore;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

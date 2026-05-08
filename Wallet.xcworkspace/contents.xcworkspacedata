@@ -4,4 +4,7 @@
    <FileRef
       location = "container:Unstoppable/Unstoppable.xcodeproj">
    </FileRef>
+   <FileRef
+      location = "group:packages/WalletCore">
+   </FileRef>
 </Workspace>

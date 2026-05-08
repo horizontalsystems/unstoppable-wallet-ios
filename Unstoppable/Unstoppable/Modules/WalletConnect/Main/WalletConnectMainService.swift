@@ -6,6 +6,7 @@ import RxRelay
 import RxSwift
 import WalletConnectSign
 import WalletConnectUtils
+import WalletCore
 
 class WalletConnectMainService {
     private let disposeBag = DisposeBag()

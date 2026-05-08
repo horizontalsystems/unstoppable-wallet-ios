@@ -138,6 +138,7 @@ struct CoinListView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(width: .iconSize32, height: .iconSize32)
+                .clipShape(Circle())
         } else {
             Circle()
                 .fill(Color.themeGray)

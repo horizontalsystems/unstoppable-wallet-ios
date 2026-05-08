@@ -1,5 +1,6 @@
 import HsToolKit
 import RxSwift
+import WalletCore
 
 class ReachabilityService {
     private let reachabilityManager: IReachabilityManager
