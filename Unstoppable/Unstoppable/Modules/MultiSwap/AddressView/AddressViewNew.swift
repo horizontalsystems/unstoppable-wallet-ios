@@ -23,43 +23,44 @@ struct AddressViewNew: View {
 
     var body: some View {
         InputTextRow(vertical: .margin8, borderColor: $borderColor) {
-            ShortcutButtonsView(
-                content: {
-                    textField(
-                        placeholder: placeholder,
-                        text: $viewModel.text
-                    )
-                    .onAppear {
-                        viewModel.text = text
-                    }
-                    .onChange(of: text) { newText in
-                        if newText != viewModel.text {
-                            viewModel.text = newText
-                        }
-                    }
-                    .onChange(of: viewModel.text) { newText in
-                        if newText != text {
-                            text = newText
-                        }
-                    }
-                    .onChange(of: viewModel.result) { newResult in
-                        if newResult != result {
-                            result = newResult
-                        }
-                    }
-                    .font(.themeBody)
-                    .foregroundStyle(foregroundColor)
-                    .autocorrectionDisabled()
-                    .autocapitalization(.none)
-                },
-                showDelete: .init(get: { !viewModel.text.isEmpty }, set: { _ in }),
-                items: viewModel.shortcuts,
-                onTap: {
-                    viewModel.onTap(index: $0)
-                }, onTapDelete: {
-                    viewModel.onTapDelete()
+            PrimarySizedHStack {
+                textField(
+                    placeholder: placeholder,
+                    text: $viewModel.text
+                )
+                .onAppear {
+                    viewModel.text = text
                 }
-            )
+                .onChange(of: text) { newText in
+                    if newText != viewModel.text {
+                        viewModel.text = newText
+                    }
+                }
+                .onChange(of: viewModel.text) { newText in
+                    if newText != text {
+                        text = newText
+                    }
+                }
+                .onChange(of: viewModel.result) { newResult in
+                    if newResult != result {
+                        result = newResult
+                    }
+                }
+                .font(.themeBody)
+                .foregroundStyle(foregroundColor)
+                .autocorrectionDisabled()
+                .autocapitalization(.none)
+            } trailing: {
+                ShortcutButtonsView(
+                    showDelete: .init(get: { !viewModel.text.isEmpty }, set: { _ in }),
+                    items: viewModel.shortcuts,
+                    onTap: {
+                        viewModel.onTap(index: $0)
+                    }, onTapDelete: {
+                        viewModel.onTapDelete()
+                    }
+                )
+            }
         }
     }
 

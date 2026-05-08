@@ -26,40 +26,41 @@ struct BirthdayInputView: View {
 
                             VStack(spacing: 8) {
                                 InputTextRow {
-                                    ShortcutButtonsView(
-                                        content: {
-                                            InputTextView(
-                                                placeholder: viewModel.placeholder,
-                                                text: $viewModel.heightString
-                                            )
-                                            .keyboardType(.numberPad)
-                                            .autocorrectionDisabled()
-                                            .focused($inputFocused)
-                                        },
-                                        showDelete: .init(get: { !viewModel.heightString.isEmpty }, set: { _ in }),
-                                        items: [.icon("date"), .text("button.paste".localized)],
-                                        onTap: { index in
-                                            switch index {
-                                            case 0:
-                                                Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                                                    BirthdayPickerView(
-                                                        date: viewModel.defaultDate,
-                                                        startDate: viewModel.startDate,
-                                                        isPresented: isPresented
-                                                    ) { date in
-                                                        viewModel.handle(date: date)
+                                    PrimarySizedHStack {
+                                        InputTextView(
+                                            placeholder: viewModel.placeholder,
+                                            text: $viewModel.heightString
+                                        )
+                                        .keyboardType(.numberPad)
+                                        .autocorrectionDisabled()
+                                        .focused($inputFocused)
+                                    } trailing: {
+                                        ShortcutButtonsView(
+                                            showDelete: .init(get: { !viewModel.heightString.isEmpty }, set: { _ in }),
+                                            items: [.icon("date"), .text("button.paste".localized)],
+                                            onTap: { index in
+                                                switch index {
+                                                case 0:
+                                                    Coordinator.shared.present(type: .bottomSheet) { isPresented in
+                                                        BirthdayPickerView(
+                                                            date: viewModel.defaultDate,
+                                                            startDate: viewModel.startDate,
+                                                            isPresented: isPresented
+                                                        ) { date in
+                                                            viewModel.handle(date: date)
+                                                        }
                                                     }
+                                                case 1:
+                                                    if let string = UIPasteboard.general.string {
+                                                        viewModel.heightString = string.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: .whitespacesAndNewlines)
+                                                    }
+                                                default: ()
                                                 }
-                                            case 1:
-                                                if let string = UIPasteboard.general.string {
-                                                    viewModel.heightString = string.replacingOccurrences(of: "\n", with: " ").trimmingCharacters(in: .whitespacesAndNewlines)
-                                                }
-                                            default: ()
+                                            }, onTapDelete: {
+                                                viewModel.heightString = ""
                                             }
-                                        }, onTapDelete: {
-                                            viewModel.heightString = ""
-                                        }
-                                    )
+                                        )
+                                    }
                                 }
 
                                 HStack {
