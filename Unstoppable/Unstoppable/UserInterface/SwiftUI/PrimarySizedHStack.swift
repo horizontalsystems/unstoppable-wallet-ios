@@ -15,12 +15,8 @@ struct PrimarySizedHStack<Primary: View, Trailing: View>: View {
         PrimarySizedHStackLayout(spacing: spacing) {
             primary
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .background(Color.yellow.opacity(0.35))
-                .overlay(Rectangle().stroke(Color.yellow, lineWidth: 1))
 
             trailing
-                .background(Color.blue.opacity(0.35))
-                .overlay(Rectangle().stroke(Color.blue, lineWidth: 1))
         }
     }
 }
