@@ -2,7 +2,10 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "container:Unstoppable/Unstoppable.xcodeproj">
+      location = "group:Unstoppable/Unstoppable.xcodeproj">
+   </FileRef>
+   <FileRef
+      location = "group:Stable/Stable.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:packages/WalletCore">

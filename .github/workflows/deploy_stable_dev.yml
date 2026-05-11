@@ -1,10 +1,10 @@
-name: Deploy Dev to AppCenter
+name: Deploy Stable Dev to AppCenter
 
 on:
   push:
     branches: [ version/* ]
     paths:
-      - 'Unstoppable/**'
+      - 'Stable/**'
       - 'packages/**'
   workflow_dispatch:
 
@@ -42,7 +42,7 @@ jobs:
       - name: Run Fastlane (build, upload to AppCenter)
         uses: maierj/fastlane-action@v3.1.0
         with:
-          lane: dev
+          lane: dev_stable
         env:
           FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT: 120
           BUILD_NUMBER: ${{ github.run_number }}
