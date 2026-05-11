@@ -1,4 +1,4 @@
-name: Deploy Stable Dev to AppCenter
+name: Deploy Stable to Firebase
 
 on:
   push:
@@ -29,9 +29,7 @@ jobs:
           bundler-cache: true
 
       - name: Setup Rust and Cargo
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
+        uses: dtolnay/rust-toolchain@stable
 
       - name: Install Lipo via Cargo
         run: cargo install cargo-lipo
