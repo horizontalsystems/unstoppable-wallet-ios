@@ -1,4 +1,4 @@
-name: Deploy Stable Production to TestFlight
+name: Deploy Stable to TestFlight
 
 on:
   push:
@@ -26,9 +26,7 @@ jobs:
           bundler-cache: true
 
       - name: Setup Rust and Cargo
-        uses: actions-rs/toolchain@v1
-        with:
-          toolchain: stable
+        uses: dtolnay/rust-toolchain@stable
 
       - name: Install Lipo via Cargo
         run: cargo install cargo-lipo
