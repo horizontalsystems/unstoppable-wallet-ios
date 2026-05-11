@@ -15,16 +15,16 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D33D63F12F98F2CF00E16ADA"
-               BuildableName = "Unstoppable.app"
+               BlueprintIdentifier = "D35E0F532FB1D02C00E9E863"
+               BuildableName = "Stable D.app"
                BlueprintName = "App"
-               ReferencedContainer = "container:Unstoppable.xcodeproj">
+               ReferencedContainer = "container:Stable.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
-      buildConfiguration = "Debug-Stable-Dev"
+      buildConfiguration = "Debug-Dev"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
@@ -35,16 +35,16 @@
             parallelizable = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D39BA7EA2F9B3D48005461CB"
+               BlueprintIdentifier = "D35E0F6E2FB1D4AA00E9E863"
                BuildableName = "AppTests.xctest"
                BlueprintName = "AppTests"
-               ReferencedContainer = "container:Unstoppable.xcodeproj">
+               ReferencedContainer = "container:Stable.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug-Stable-Dev"
+      buildConfiguration = "Debug-Dev"
       selectedDebuggerIdentifier = ""
       selectedLauncherIdentifier = "Xcode.IDEFoundation.Launcher.PosixSpawn"
       launchStyle = "0"
@@ -57,15 +57,15 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D33D63F12F98F2CF00E16ADA"
-            BuildableName = "Unstoppable.app"
+            BlueprintIdentifier = "D35E0F532FB1D02C00E9E863"
+            BuildableName = "Stable D.app"
             BlueprintName = "App"
-            ReferencedContainer = "container:Unstoppable.xcodeproj">
+            ReferencedContainer = "container:Stable.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
    <ProfileAction
-      buildConfiguration = "Release-Stable-Dev"
+      buildConfiguration = "Release-Dev"
       shouldUseLaunchSchemeArgsEnv = "YES"
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
@@ -74,18 +74,18 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "D33D63F12F98F2CF00E16ADA"
-            BuildableName = "Unstoppable.app"
+            BlueprintIdentifier = "D35E0F532FB1D02C00E9E863"
+            BuildableName = "Stable D.app"
             BlueprintName = "App"
-            ReferencedContainer = "container:Unstoppable.xcodeproj">
+            ReferencedContainer = "container:Stable.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
-      buildConfiguration = "Debug-Stable-Dev">
+      buildConfiguration = "Debug-Dev">
    </AnalyzeAction>
    <ArchiveAction
-      buildConfiguration = "Release-Stable-Dev"
+      buildConfiguration = "Release-Dev"
       revealArchiveInOrganizer = "YES">
    </ArchiveAction>
 </Scheme>

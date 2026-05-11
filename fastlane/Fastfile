@@ -27,15 +27,11 @@ DEV_APP_IDS = [
 ].freeze
 
 STABLE_PROD_APP_IDS = [
-  STABLE_BASE_APP_ID,
-  "#{STABLE_BASE_APP_ID}.widget",
-  "#{STABLE_BASE_APP_ID}.intent"
+  STABLE_BASE_APP_ID
 ].freeze
 
 STABLE_DEV_APP_IDS = [
-  "#{STABLE_BASE_APP_ID}.dev",
-  "#{STABLE_BASE_APP_ID}.dev.widget",
-  "#{STABLE_BASE_APP_ID}.dev.intent"
+  "#{STABLE_BASE_APP_ID}.dev"
 ].freeze
 
 ALL_APP_IDS = (PROD_APP_IDS + DEV_APP_IDS + STABLE_PROD_APP_IDS + STABLE_DEV_APP_IDS).freeze
@@ -116,26 +112,27 @@ def app_store_api_key
   )
 end
 
-def update_xcconfig(name, new_value)
+def update_xcconfig(path, name, new_value)
   update_xcconfig_value(
-    path: './Unstoppable/Unstoppable/Configuration/Config.xcconfig',
+    path: path,
     name: name,
     value: new_value
   )
 end
 
-def apply_xcconfig
+def apply_xcconfig(xcconfig_path)
   XCCONFIG_KEYS.each do |key|
-    update_xcconfig(key, ENV["XCCONFIG_#{key}"])
+    update_xcconfig(xcconfig_path, key, ENV["XCCONFIG_#{key}"])
   end
 end
 
-def prepare_environment
-  sh("cp ../Unstoppable/Unstoppable/Configuration/Config.template.xcconfig ../Unstoppable/Unstoppable/Configuration/Config.xcconfig")
+def prepare_environment(xcodeproj:, xcconfig_path:)
+  template_path = xcconfig_path.sub(/Config\.xcconfig\z/, 'Config.template.xcconfig')
+  sh("cp ../#{template_path} ../#{xcconfig_path}")
 
   increment_build_number(
     build_number: ENV['BUILD_NUMBER'],
-    xcodeproj: "./Unstoppable/Unstoppable.xcodeproj"
+    xcodeproj: xcodeproj
   )
 end
 
@@ -144,9 +141,9 @@ def provisioning_profiles_for(app_ids, match_type)
   app_ids.map { |id| [id, "match #{profile_name} #{id}"] }.to_h
 end
 
-def build_and_sign(match_type:, export_method:, app_ids:, scheme:, icloud_env:, keychain_name:)
-  prepare_environment
-  apply_xcconfig
+def build_and_sign(match_type:, export_method:, app_ids:, scheme:, xcodeproj:, xcconfig_path:, keychain_name:, icloud_env: nil)
+  prepare_environment(xcodeproj: xcodeproj, xcconfig_path: xcconfig_path)
+  apply_xcconfig(xcconfig_path)
 
   match(
     type: match_type,
@@ -158,17 +155,19 @@ def build_and_sign(match_type:, export_method:, app_ids:, scheme:, icloud_env:, 
     api_key: app_store_api_key
   )
 
+  export_options = {
+    compileBitcode: false,
+    provisioningProfiles: provisioning_profiles_for(app_ids, match_type)
+  }
+  export_options[:iCloudContainerEnvironment] = icloud_env if icloud_env
+
   gym(
     workspace: "Wallet.xcworkspace",
     scheme: scheme,
     export_method: export_method,
     clean: true,
     include_symbols: true,
-    export_options: {
-      compileBitcode: false,
-      provisioningProfiles: provisioning_profiles_for(app_ids, match_type),
-      iCloudContainerEnvironment: icloud_env
-    }
+    export_options: export_options
   )
 end
 
@@ -179,7 +178,9 @@ platform :ios do
         match_type: 'adhoc',
         export_method: 'ad-hoc',
         app_ids: DEV_APP_IDS,
-        scheme: 'App-Dev',
+        scheme: 'Unstoppable-Dev',
+        xcodeproj: './Unstoppable/Unstoppable.xcodeproj',
+        xcconfig_path: 'Unstoppable/Unstoppable/Configuration/Config.xcconfig',
         icloud_env: 'Development',
         keychain_name: keychain_name
       )
@@ -199,7 +200,9 @@ platform :ios do
         match_type: 'appstore',
         export_method: 'app-store',
         app_ids: PROD_APP_IDS,
-        scheme: 'App-Prod',
+        scheme: 'Unstoppable-Prod',
+        xcodeproj: './Unstoppable/Unstoppable.xcodeproj',
+        xcconfig_path: 'Unstoppable/Unstoppable/Configuration/Config.xcconfig',
         icloud_env: 'Production',
         keychain_name: keychain_name
       )
@@ -221,8 +224,9 @@ platform :ios do
         match_type: 'adhoc',
         export_method: 'ad-hoc',
         app_ids: STABLE_DEV_APP_IDS,
-        scheme: 'App-Stable-Dev',
-        icloud_env: 'Development',
+        scheme: 'Stable-Dev',
+        xcodeproj: './Stable/Stable.xcodeproj',
+        xcconfig_path: 'Stable/Stable/Configuration/Config.xcconfig',
         keychain_name: keychain_name
       )
 
@@ -241,8 +245,9 @@ platform :ios do
         match_type: 'appstore',
         export_method: 'app-store',
         app_ids: STABLE_PROD_APP_IDS,
-        scheme: 'App-Stable-Prod',
-        icloud_env: 'Production',
+        scheme: 'Stable-Prod',
+        xcodeproj: './Stable/Stable.xcodeproj',
+        xcconfig_path: 'Stable/Stable/Configuration/Config.xcconfig',
         keychain_name: keychain_name
       )
 
