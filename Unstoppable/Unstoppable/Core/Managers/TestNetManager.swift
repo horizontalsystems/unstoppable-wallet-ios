@@ -1,5 +1,6 @@
 import Foundation
 import HsExtensions
+import WalletCore
 
 class TestNetManager {
     private let keyTestNetEnabled = "test-net-enabled"

@@ -1,5 +1,6 @@
 import RxRelay
 import RxSwift
+import WalletCore
 
 class AmountTypeSwitchService {
     private let amountTypeKey = "amount-type-switch-service-amount-type"

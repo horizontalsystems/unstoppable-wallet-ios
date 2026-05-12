@@ -1,5 +1,6 @@
 import RxRelay
 import RxSwift
+import WalletCore
 
 class LaunchScreenManager {
     private let keyLaunchScreen = "launch-screen"

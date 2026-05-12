@@ -1,5 +1,6 @@
 import HsExtensions
 import MarketKit
+import WalletCore
 
 class BalanceConversionManager {
     private let tokenQueries = [

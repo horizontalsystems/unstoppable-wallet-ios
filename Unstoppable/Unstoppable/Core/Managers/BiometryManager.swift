@@ -1,6 +1,7 @@
 import Combine
 import HsExtensions
 import LocalAuthentication
+import WalletCore
 
 class BiometryManager {
     private let biometricOnKey = "biometric_on_key"

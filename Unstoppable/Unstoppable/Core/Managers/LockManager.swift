@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import HsExtensions
 import SwiftUI
+import WalletCore
 
 class LockManager {
     private let lastExitDateKey = "last_exit_date_key"

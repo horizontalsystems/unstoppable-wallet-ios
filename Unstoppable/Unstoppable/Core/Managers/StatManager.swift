@@ -3,6 +3,7 @@ import Combine
 import Foundation
 import HsToolKit
 import MarketKit
+import WalletCore
 
 func stat(page: StatPage, section: StatSection? = nil, event: StatEvent) {
     // print("PAGE: \(page)\(section.map { ", SECTION: \($0)" } ?? ""), event: \(event.name)\(event.params.map { ", PARAMS: \($0)" } ?? "")")

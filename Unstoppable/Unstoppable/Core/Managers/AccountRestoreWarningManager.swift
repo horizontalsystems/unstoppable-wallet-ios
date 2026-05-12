@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import WalletCore
 
 class AccountRestoreWarningManager {
     private static let keyAccountWarningPrefix = "wallet-ignore-non-recommended"

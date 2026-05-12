@@ -3,6 +3,7 @@ import Foundation
 import HsExtensions
 import HsToolKit
 import ObjectMapper
+import WalletCore
 
 class AppStateManager {
     static let instance = AppStateManager()

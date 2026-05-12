@@ -1,5 +1,6 @@
 import RxRelay
 import RxSwift
+import WalletCore
 
 class WalletButtonHiddenManager {
     private let keyButtonHidden = "wallet-button-hidden"
