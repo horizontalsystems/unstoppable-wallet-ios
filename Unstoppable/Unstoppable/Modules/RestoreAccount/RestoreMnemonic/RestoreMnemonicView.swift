@@ -10,6 +10,7 @@ struct RestoreMnemonicView: View {
     @State private var passphraseSecureLock = true
     @State private var isEnteringMnemonic = false
     @State private var mnemonicHeightTrigger = false
+    @State private var isMnemonicFocused = false
 
     @State private var restoreCoinsData: RestoreCoinsData?
 
@@ -44,6 +45,7 @@ struct RestoreMnemonicView: View {
             } bottomContent: {
                 ThemeButton(text: "button.next".localized) {
                     focusedField = nil
+                    isMnemonicFocused = false
                     viewModel.onTapProceed()
                 }
                 .disabled(!viewModel.buttonEnabled)
@@ -61,6 +63,9 @@ struct RestoreMnemonicView: View {
             if let data = restoreCoinsData {
                 RestoreCoinsView(accountName: data.name, accountType: data.accountType, isParentPresented: $isParentPresented)
             }
+        }
+        .onFirstAppear {
+            isMnemonicFocused = true
         }
         .onReceive(viewModel.proceedPublisher) { name, accountType in
             handleProceed(name: name, accountType: accountType)
@@ -104,6 +109,7 @@ struct RestoreMnemonicView: View {
                 cautionType: viewModel.mnemonicCaution.caution?.type,
                 replaceWordPublisher: viewModel.replaceWordPublisher,
                 heightTrigger: $mnemonicHeightTrigger,
+                isFocused: $isMnemonicFocused,
                 onChangeMnemonicText: { text, cursorOffset in
                     viewModel.onChange(text: text, cursorOffset: cursorOffset)
                 },

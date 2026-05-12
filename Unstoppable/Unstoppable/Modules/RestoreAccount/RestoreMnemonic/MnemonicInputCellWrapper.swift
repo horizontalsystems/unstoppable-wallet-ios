@@ -2,12 +2,15 @@ import Combine
 import SwiftUI
 
 struct MnemonicInputCellWrapper: UIViewRepresentable {
+    private static let appearDuration: TimeInterval = 0.5
+
     let statPage: StatPage
     let placeholder: String
     @Binding var invalidRanges: [NSRange]
     let cautionType: CautionType?
     let replaceWordPublisher: AnyPublisher<(NSRange, String), Never>
     @Binding var heightTrigger: Bool
+    @Binding var isFocused: Bool
     let onChangeMnemonicText: (String, Int) -> Void
     let onChangeEntering: (Bool) -> Void
 
@@ -55,9 +58,23 @@ struct MnemonicInputCellWrapper: UIViewRepresentable {
         return cell
     }
 
-    func updateUIView(_ uiView: MnemonicInputCell, context _: Context) {
+    func updateUIView(_ uiView: MnemonicInputCell, context: Context) {
         uiView.set(invalidRanges: invalidRanges)
         uiView.set(cautionType: cautionType)
+
+        let coord = context.coordinator
+        guard isFocused != coord.lastIsFocused else { return }
+        coord.lastIsFocused = isFocused
+
+        if isFocused {
+            let delay: TimeInterval = coord.didFirstFocus ? 0 : Self.appearDuration
+            coord.didFirstFocus = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + delay) { [weak uiView] in
+                _ = uiView?.becomeFirstResponder()
+            }
+        } else {
+            uiView.endEditing(true)
+        }
     }
 
     func sizeThatFits(_ proposal: ProposedViewSize, uiView: MnemonicInputCell, context _: Context) -> CGSize? {
@@ -68,6 +85,8 @@ struct MnemonicInputCellWrapper: UIViewRepresentable {
 
     class Coordinator {
         var cancellable: AnyCancellable?
+        var didFirstFocus = false
+        var lastIsFocused = false
     }
 }
 
