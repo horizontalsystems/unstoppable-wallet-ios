@@ -40,12 +40,11 @@ struct RestoreMnemonicView: View {
                     .animation(.default, value: viewModel.advanced)
                 }
                 .onTapGesture {
-                    focusedField = nil
+                    dismissKeyboard()
                 }
             } bottomContent: {
                 ThemeButton(text: "button.next".localized) {
-                    focusedField = nil
-                    isMnemonicFocused = false
+                    dismissKeyboard()
                     viewModel.onTapProceed()
                 }
                 .disabled(!viewModel.buttonEnabled)
@@ -218,6 +217,12 @@ struct RestoreMnemonicView: View {
     }
 
     // MARK: - Navigation
+
+    private func dismissKeyboard() {
+        focusedField = nil
+        isMnemonicFocused = false
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+    }
 
     private func handleProceed(name: String, accountType: AccountType) {
         let statPage: StatPage = viewModel.advanced ? .importWalletFromKeyAdvanced : .importWalletFromKey
