@@ -1,6 +1,7 @@
 import Combine
 import HsExtensions
 import MarketKit
+import WalletCore
 
 class PerformanceDataManager {
     private let keyPerformanceCoinUids = "market-performance-coin-uids"

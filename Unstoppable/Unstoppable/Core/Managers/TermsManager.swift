@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import HsExtensions
+import WalletCore
 
 class TermsManager {
     private static let keyTermsAccepted = "key_terms_accepted"

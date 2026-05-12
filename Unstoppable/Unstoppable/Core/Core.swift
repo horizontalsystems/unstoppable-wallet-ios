@@ -2,6 +2,7 @@ import Foundation
 import GRDB
 import HsToolKit
 import MarketKit
+import WalletCore
 
 class Core {
     static var instance: Core?

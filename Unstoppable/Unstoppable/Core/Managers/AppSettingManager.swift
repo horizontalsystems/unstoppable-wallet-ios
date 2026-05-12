@@ -1,6 +1,7 @@
 import Combine
 import RxRelay
 import RxSwift
+import WalletCore
 
 class AppSettingManager {
     private static let keyBalancePrimaryValue = "balance-primary-value"

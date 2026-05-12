@@ -2,6 +2,7 @@ import Foundation
 import HsExtensions
 import HsToolKit
 import MarketKit
+import WalletCore
 
 class SubscriptionManager {
     private let keyAuthToken = "subscription-auth-token"

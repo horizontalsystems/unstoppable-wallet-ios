@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import WalletCore
 
 class LocalStorage {
     private let agreementAcceptedKey = "i_understand_key"

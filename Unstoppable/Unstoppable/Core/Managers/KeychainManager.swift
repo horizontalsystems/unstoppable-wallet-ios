@@ -1,3 +1,5 @@
+import WalletCore
+
 class KeychainManager {
     private let keyDidLaunchOnce = "did_launch_once_key"
 
