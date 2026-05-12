@@ -9,6 +9,7 @@ struct InputTextView: View {
 
     @Environment(\.isEnabled) private var isEnabled
     @Binding var secured: Bool
+    var secureToggleEnabled = false
 
     @State var shake = false
     var shakeOnInvalid = true
@@ -35,13 +36,13 @@ struct InputTextView: View {
 
     @ViewBuilder
     func editView() -> some View {
-        if secured {
-            SecureField(
-                placeholder,
-                text: text
+        if secureToggleEnabled {
+            MaskedInputTextFieldView(
+                placeholder: placeholder,
+                text: text,
+                secured: $secured,
+                isEnabled: isEnabled
             )
-            .textContentType(.oneTimeCode) // the only way to disable strong password suggestions
-            .accentColor(.themeYellow)
             .frame(height: 20) // TODO: How to remove this? (When change from Secure to TextField it's change height)
         } else {
             if #available(iOS 16.0, *), multiline {
@@ -69,6 +70,7 @@ extension InputTextView {
     func secure(_ secured: Binding<Bool>) -> some View {
         var selfView = self
         selfView._secured = secured
+        selfView.secureToggleEnabled = true
 
         return HStack(spacing: .margin16) {
             selfView
