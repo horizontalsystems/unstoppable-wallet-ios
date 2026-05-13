@@ -1,5 +1,6 @@
 import Combine
 import HsExtensions
+import WalletCore
 
 class PasscodeManager {
     private let separator = "|"

@@ -5,6 +5,7 @@ import HsToolKit
 import MarketKit
 import Testing
 @testable import Unstoppable
+import WalletCore
 
 struct AccountTypePasskeyOwnedTests {
     @Test

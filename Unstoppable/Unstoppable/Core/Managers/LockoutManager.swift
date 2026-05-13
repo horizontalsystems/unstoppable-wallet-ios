@@ -1,5 +1,6 @@
 import Foundation
 import HsExtensions
+import WalletCore
 
 class LockoutManager {
     private let maxAttempts = 5

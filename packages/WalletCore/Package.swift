@@ -8,6 +8,7 @@ let package = Package(
     ],
     products: [
         .library(name: "WalletCore", targets: ["WalletCore"]),
+        .library(name: "UserInterface", targets: ["UserInterface"]),
     ],
     dependencies: [
         .package(url: "https://github.com/horizontalsystems/BitcoinCashKit.Swift", exact: "3.0.1"),
@@ -48,11 +49,16 @@ let package = Package(
                 .product(name: "Eip20Kit", package: "Eip20Kit.Swift"),
                 .product(name: "EvmKit", package: "EvmKit.Swift"),
                 .product(name: "HsToolKit", package: "HsToolKit.Swift"),
+                .product(name: "KeychainAccess", package: "KeychainAccess"),
                 .product(name: "NftKit", package: "NftKit.Swift"),
                 .product(name: "OneInchKit", package: "OneInchKit.Swift"),
                 .product(name: "RxSwift", package: "RxSwift"),
                 .product(name: "ObjectMapper", package: "ObjectMapper"),
             ]
+        ),
+        .target(
+            name: "UserInterface",
+            dependencies: []
         ),
     ]
 )

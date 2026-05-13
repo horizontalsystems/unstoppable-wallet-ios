@@ -2,6 +2,7 @@ import Foundation
 import GRDB
 import HsToolKit
 @testable import Unstoppable
+import WalletCore
 
 struct SmartAccountTestEnvironment {
     let tempDir: URL

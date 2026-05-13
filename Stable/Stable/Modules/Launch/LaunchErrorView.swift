@@ -9,25 +9,21 @@ struct LaunchErrorView: View {
 
     var body: some View {
         ThemeView {
-            VStack(spacing: .margin32) {
-                Image("attention_48").themeIcon()
+            VStack(spacing: 32) {
+                ThemeImage("warning", size: 48)
 
-                Text("launch.failed_to_launch".localized)
-                    .textBody(color: .themeGray)
+                ThemeText(key: "launch.failed_to_launch", style: .body, color: .themeGray)
                     .multilineTextAlignment(.center)
 
-                Button(action: {
+                ThemeButton(text: "launch.failed_to_launch.report") {
                     if MFMailComposeViewController.canSendMail() {
                         mailPresented = true
                     } else {
                         CopyHelper.copyAndNotify(value: errorString)
                     }
-                }) {
-                    Text("launch.failed_to_launch.report".localized)
                 }
-                .buttonStyle(PrimaryButtonStyle(style: .gray))
             }
-            .padding(.horizontal, .margin48)
+            .padding(.horizontal, 48)
         }
         .sheet(isPresented: $mailPresented) {
             MailView(

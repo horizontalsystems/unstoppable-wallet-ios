@@ -1,4 +1,5 @@
 import EvmKit
+import WalletCore
 
 class ProFeaturesStorage {
     private let keychainStorage: KeychainStorage
