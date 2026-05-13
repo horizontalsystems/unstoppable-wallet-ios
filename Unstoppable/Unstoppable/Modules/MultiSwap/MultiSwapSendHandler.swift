@@ -99,7 +99,7 @@ extension MultiSwapSendHandler: ISendHandler {
             transactionSettings: transactionSettings
         )
 
-        let otherSections: [SendDataSection] = [mevProtectionHelper.section(tokenIn: tokenIn)].compactMap { $0 }
+        let otherSections = provider.mevProtectionAllowed(tokenIn: tokenIn, tokenOut: tokenOut) ? [mevProtectionHelper.section()] : []
 
         return SendData(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, quote: quote, otherSections: otherSections)
     }
@@ -132,7 +132,7 @@ extension MultiSwapSendHandler: ISendHandler {
                 transactionData: transactionData,
                 gasPrice: gasPrice,
                 gasLimit: gasLimit,
-                privateSend: mevProtectionHelper.isActive,
+                privateSend: provider.mevProtectionAllowed(tokenIn: tokenIn, tokenOut: tokenOut) && mevProtectionHelper.isActive,
                 nonce: quote.nonce
             )
 

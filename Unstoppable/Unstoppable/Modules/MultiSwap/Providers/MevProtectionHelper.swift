@@ -6,12 +6,7 @@ class MevProtectionHelper {
     var isActive: Bool = false
     private let securityManager = Core.shared.securityManager
 
-    func section(tokenIn: Token) -> SendDataSection? {
-        guard MerkleTransactionAdapter.allowProtection(blockchainType: tokenIn.blockchainType) else {
-            isActive = false
-            return nil
-        }
-
+    func section() -> SendDataSection {
         isActive = securityManager.swapProtectionEnabled
 
         let binding = Binding<Bool>(
@@ -34,7 +29,7 @@ class MevProtectionHelper {
             }
         )
 
-        return .init([
+        return SendDataSection([
             .mevProtection(isOn: binding),
         ], isList: false)
     }
