@@ -19,6 +19,10 @@ class BaseEvmMultiSwapProvider: IMultiSwapProvider {
         fatalError("Must be implemented in subclass")
     }
 
+    func mevProtectionAllowed(tokenIn: Token, tokenOut: Token) -> Bool {
+        MerkleTransactionAdapter.allowProtection(blockchainTypeIn: tokenIn.blockchainType, blockchainTypeOut: tokenOut.blockchainType)
+    }
+
     func quote(tokenIn _: Token, tokenOut _: Token, amountIn _: Decimal) async throws -> MultiSwapQuote {
         fatalError("Must be implemented in subclass")
     }
