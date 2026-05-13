@@ -50,9 +50,10 @@ let package = Package(
                 .product(name: "HsCryptoKit", package: "HsCryptoKit.Swift"),
                 .product(name: "HsToolKit", package: "HsToolKit.Swift"),
                 .product(name: "KeychainAccess", package: "KeychainAccess"),
+                .product(name: "MarketKit", package: "MarketKit.Swift"),
+                .product(name: "NftKit", package: "NftKit.Swift"),
                 .product(name: "OneInchKit", package: "OneInchKit.Swift"),
                 .product(name: "ObjectMapper", package: "ObjectMapper"),
-                .product(name: "NftKit", package: "NftKit.Swift"),
                 .product(name: "RxSwift", package: "RxSwift"),
             ]
         ),

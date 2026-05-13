@@ -5,15 +5,7 @@ struct AppView: View {
 
     var body: some View {
         ZStack {
-            ThemeView {
-                VStack {
-                    ThemeText("Main View", style: .title1)
-                    ThemeButton(text: "back to intro") {
-                        introShown = false
-                    }
-                }
-                .padding(.horizontal, 24)
-            }
+            SetupWalletView()
 
             if !introShown {
                 IntroView {
