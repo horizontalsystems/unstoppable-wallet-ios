@@ -99,8 +99,8 @@ extension MerkleTransactionAdapter {
         (transaction.extra[protectedKey] as? Bool) ?? false
     }
 
-    static func allowProtection(blockchainType: BlockchainType) -> Bool {
-        guard let chain = try? Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType) else {
+    static func allowProtection(blockchainTypeIn: BlockchainType, blockchainTypeOut: BlockchainType) -> Bool {
+        guard blockchainTypeIn == blockchainTypeOut, let chain = try? Core.shared.evmBlockchainManager.chain(blockchainType: blockchainTypeIn) else {
             return false
         }
 

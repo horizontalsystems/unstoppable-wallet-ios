@@ -91,6 +91,10 @@ class AllBridgeMultiSwapProvider: IMultiSwapProvider {
         tokenIn.blockchainType == tokenOut.blockchainType
     }
 
+    func mevProtectionAllowed(tokenIn: Token, tokenOut: Token) -> Bool {
+        MerkleTransactionAdapter.allowProtection(blockchainTypeIn: tokenIn.blockchainType, blockchainTypeOut: tokenOut.blockchainType)
+    }
+
     private func syncAssets() {
         let lastSyncTimetamp = try? swapAssetStorage.lastSyncTimetamp(provider: id)
 
