@@ -6,7 +6,7 @@ public extension Font {
         case .regular: return Font.custom("Manrope-Regular", size: size)
         case .medium: return Font.custom("Manrope-Medium", size: size)
         case .semibold: return Font.custom("Manrope-SemiBold", size: size)
-        default: fatalError("Can't provide other weight for Manrope!")
+        default: return .system(size: size, weight: weight)
         }
     }
 }
