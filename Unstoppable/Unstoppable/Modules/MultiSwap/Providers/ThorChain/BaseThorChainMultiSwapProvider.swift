@@ -49,6 +49,8 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
         nil
     }
 
+    var streamingInterval: Int { 1 }
+
     func supports(tokenIn: Token, tokenOut: Token) -> Bool {
         assetMap[tokenIn.tokenQuery.id.lowercased()] != nil && assetMap[tokenOut.tokenQuery.id.lowercased()] != nil
     }
@@ -238,7 +240,7 @@ class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
             "to_asset": assetOut,
             "amount": amount.description,
             "destination": destination,
-            "streaming_interval": 1,
+            "streaming_interval": streamingInterval,
             "streaming_quantity": 0,
         ]
 
