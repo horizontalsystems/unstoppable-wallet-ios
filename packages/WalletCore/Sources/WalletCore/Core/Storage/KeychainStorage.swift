@@ -2,17 +2,17 @@ import Foundation
 import HsToolKit
 import KeychainAccess
 
-class KeychainStorage {
+public class KeychainStorage {
     private let keychain: Keychain
     private let logger: Logger
 
-    init(service: String, logger: Logger) {
+    public init(service: String, logger: Logger) {
         keychain = Keychain(service: service).accessibility(.whenPasscodeSetThisDeviceOnly)
         self.logger = logger
     }
 }
 
-extension KeychainStorage {
+public extension KeychainStorage {
     func value<T: LosslessStringConvertible>(for key: String) -> T? {
         do {
             let result = try keychain.getString(key)

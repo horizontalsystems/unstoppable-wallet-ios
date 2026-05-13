@@ -3,6 +3,7 @@ import Foundation
 import HdWalletKit
 import MarketKit
 import TronKit
+import WalletCore
 
 class AccountStorage {
     private let keychainStorage: KeychainStorage

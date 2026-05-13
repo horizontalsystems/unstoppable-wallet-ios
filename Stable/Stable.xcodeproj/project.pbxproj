@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		D3424CD02FB344D300A92B6A /* UserInterface in Frameworks */ = {isa = PBXBuildFile; productRef = D3424CCF2FB344D300A92B6A /* UserInterface */; };
+		D3424CD52FB3557C00A92B6A /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D3424CD42FB3557C00A92B6A /* Kingfisher */; };
 		D35E0F6A2FB1D3B500E9E863 /* WalletCore in Frameworks */ = {isa = PBXBuildFile; productRef = D35E0F692FB1D3B500E9E863 /* WalletCore */; };
 /* End PBXBuildFile section */
 
@@ -43,7 +45,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D3424CD52FB3557C00A92B6A /* Kingfisher in Frameworks */,
 				D35E0F6A2FB1D3B500E9E863 /* WalletCore in Frameworks */,
+				D3424CD02FB344D300A92B6A /* UserInterface in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -104,6 +108,8 @@
 			name = App;
 			packageProductDependencies = (
 				D35E0F692FB1D3B500E9E863 /* WalletCore */,
+				D3424CCF2FB344D300A92B6A /* UserInterface */,
+				D3424CD42FB3557C00A92B6A /* Kingfisher */,
 			);
 			productName = Stable;
 			productReference = D35E0F542FB1D02C00E9E863 /* Stable D.app */;
@@ -160,6 +166,9 @@
 			);
 			mainGroup = D35E0F4B2FB1D02C00E9E863;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				D3424CD32FB3557C00A92B6A /* XCRemoteSwiftPackageReference "Kingfisher" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D35E0F552FB1D02C00E9E863 /* Products */;
 			projectDirPath = "";
@@ -277,6 +286,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -338,6 +348,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -513,6 +524,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -627,6 +639,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_EMIT_LOC_STRINGS = YES;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -724,7 +737,27 @@
 		};
 /* End XCConfigurationList section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		D3424CD32FB3557C00A92B6A /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 8.9.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
+		D3424CCF2FB344D300A92B6A /* UserInterface */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UserInterface;
+		};
+		D3424CD42FB3557C00A92B6A /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D3424CD32FB3557C00A92B6A /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
+		};
 		D35E0F692FB1D3B500E9E863 /* WalletCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WalletCore;

@@ -59,6 +59,7 @@
 		D33D6B072F98F2CF00E16ADA /* Hodler in Frameworks */ = {isa = PBXBuildFile; productRef = D33D642A2F98F2CF00E16ADA /* Hodler */; };
 		D33D6B1F2F98F5BF00E16ADA /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D33D63A22F98DD5D00E16ADA /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D33D6B222F98F5C900E16ADA /* IntentExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D33D63B32F98DD6A00E16ADA /* IntentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D3424CD22FB344DB00A92B6A /* UserInterface in Frameworks */ = {isa = PBXBuildFile; productRef = D3424CD12FB344DB00A92B6A /* UserInterface */; };
 		D35EEEE92FB1B5B700E9E863 /* WalletCore in Frameworks */ = {isa = PBXBuildFile; productRef = D35EEEE82FB1B5B700E9E863 /* WalletCore */; };
 		D3C9F7482FADF57B00C7916F /* AppWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D3E161E02FADAB4E006A73DD /* AppWidget.intentdefinition */; };
 		D3E161E12FADAB4E006A73DD /* AppWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D3E161E02FADAB4E006A73DD /* AppWidget.intentdefinition */; };
@@ -336,6 +337,7 @@
 				D33D6AEA2F98F2CF00E16ADA /* Checkpoints in Frameworks */,
 				D33D6AEB2F98F2CF00E16ADA /* ECashKit in Frameworks */,
 				D33D6AEC2F98F2CF00E16ADA /* NftKit in Frameworks */,
+				D3424CD22FB344DB00A92B6A /* UserInterface in Frameworks */,
 				D33D6AED2F98F2CF00E16ADA /* LocalAuthentication.framework in Frameworks */,
 				D33D6AEE2F98F2CF00E16ADA /* TonKit in Frameworks */,
 				D33D6AEF2F98F2CF00E16ADA /* Down in Frameworks */,
@@ -533,6 +535,7 @@
 				D33D643B2F98F2CF00E16ADA /* CryptoSwift */,
 				D33D643D2F98F2CF00E16ADA /* SolanaKit */,
 				D35EEEE82FB1B5B700E9E863 /* WalletCore */,
+				D3424CD12FB344DB00A92B6A /* UserInterface */,
 			);
 			productName = Wallet;
 			productReference = D33D6B1D2F98F2CF00E16ADA /* Unstoppable.app */;
@@ -2496,6 +2499,10 @@
 		D33D643D2F98F2CF00E16ADA /* SolanaKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = SolanaKit;
+		};
+		D3424CD12FB344DB00A92B6A /* UserInterface */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = UserInterface;
 		};
 		D35EEEE82FB1B5B700E9E863 /* WalletCore */ = {
 			isa = XCSwiftPackageProductDependency;
