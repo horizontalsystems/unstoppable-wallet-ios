@@ -22,7 +22,7 @@ struct AddressViewNew: View {
     }
 
     var body: some View {
-        InputTextRow(vertical: .margin8, borderColor: $borderColor) {
+        InputTextRow(borderColor: $borderColor) {
             PrimarySizedHStack {
                 textField(
                     placeholder: placeholder,
