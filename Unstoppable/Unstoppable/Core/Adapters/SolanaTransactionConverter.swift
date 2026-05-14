@@ -64,9 +64,9 @@ class SolanaTransactionConverter {
             }
 
             if tokenTransfer.incoming {
-                incomingTransfers.append(SolanaTransactionRecord.Transfer(address: nil, value: appValue))
+                incomingTransfers.append(SolanaTransactionRecord.Transfer(address: transaction.from, value: appValue))
             } else {
-                outgoingTransfers.append(SolanaTransactionRecord.Transfer(address: nil, value: appValue))
+                outgoingTransfers.append(SolanaTransactionRecord.Transfer(address: transaction.to, value: appValue))
             }
         }
 

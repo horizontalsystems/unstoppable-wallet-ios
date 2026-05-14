@@ -617,7 +617,6 @@
 				D3C187B12907A60700FE1900 /* XCRemoteSwiftPackageReference "HdWalletKit" */,
 				D3C187B82907CFAB00FE1900 /* XCRemoteSwiftPackageReference "Checkpoints" */,
 				D3C187D9290FCFBC00FE1900 /* XCRemoteSwiftPackageReference "SectionsTableView" */,
-				D339A93B29126D0E00B895BE /* XCRemoteSwiftPackageReference "HsCryptoKit" */,
 				6B423FD22913785800EE5E70 /* XCRemoteSwiftPackageReference "BitcoinCore" */,
 				6BDA29A929D6EA9B003847ED /* XCRemoteSwiftPackageReference "ECashKit.Swift" */,
 				6BDA29AE29D6F934003847ED /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */,
@@ -637,7 +636,7 @@
 				6BD7663E2EA0DF2B008DDEA7 /* XCRemoteSwiftPackageReference "ZcashLightClientKit" */,
 				D3F0E0012F50A1A100F0E001 /* XCRemoteSwiftPackageReference "MoneroKit" */,
 				D3ABE2722F73F29B00B72F23 /* XCRemoteSwiftPackageReference "CryptoSwift" */,
-				6B504F692F764BB20064DA67 /* XCRemoteSwiftPackageReference "solana-kit-ios" */,
+				6BE8C4E92FB5D2420093F363 /* XCRemoteSwiftPackageReference "solana-kit-ios" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
@@ -1674,14 +1673,6 @@
 				version = 3.1.5;
 			};
 		};
-		6B504F692F764BB20064DA67 /* XCRemoteSwiftPackageReference "solana-kit-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/solana-kit-ios.git";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.0;
-			};
-		};
 		6B55461F2A6E73190054B524 /* XCRemoteSwiftPackageReference "UIExtensions" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/UIExtensions.Swift";
@@ -1730,6 +1721,14 @@
 				version = 1.2.1;
 			};
 		};
+		6BE8C4E92FB5D2420093F363 /* XCRemoteSwiftPackageReference "solana-kit-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/horizontalsystems/solana-kit-ios.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.2;
+			};
+		};
 		6BF66DD82BA1A73300963242 /* XCRemoteSwiftPackageReference "ObjectMapper" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/tristanhimmelman/ObjectMapper/";
@@ -1760,14 +1759,6 @@
 			requirement = {
 				kind = exactVersion;
 				version = 1.0.0;
-			};
-		};
-		D339A93B29126D0E00B895BE /* XCRemoteSwiftPackageReference "HsCryptoKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/HsCryptoKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 1.3.1;
 			};
 		};
 		D33D633D2F98DD5D00E16ADA /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */ = {

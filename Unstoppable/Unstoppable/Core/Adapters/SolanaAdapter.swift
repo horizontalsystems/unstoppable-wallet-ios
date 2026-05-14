@@ -130,7 +130,11 @@ extension SolanaAdapter {
         switch kitSyncState {
         case .syncing: return .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
         case .synced: return .synced
-        case let .notSynced(error): return .notSynced(error: error.localizedDescription)
+        case let .notSynced(error):
+            if let syncError = error as? SolanaKit.SyncError, case .notStarted = syncError {
+                return .syncing(progress: nil, remaining: nil, lastBlockDate: nil)
+            }
+            return .notSynced(error: error.localizedDescription)
         }
     }
 }
