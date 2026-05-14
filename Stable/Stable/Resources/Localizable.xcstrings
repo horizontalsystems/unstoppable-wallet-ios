@@ -31,6 +31,46 @@
         }
       }
     },
+    "new_wallet.create_button" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Create Wallet"
+          }
+        }
+      }
+    },
+    "new_wallet.terms_agreement" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "By continuing, I agree to the [Terms of Use](terms) and\nconsent to the [Privacy Policy](policy)"
+          }
+        }
+      }
+    },
+    "new_wallet.title" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "New Wallet"
+          }
+        }
+      }
+    },
+    "new_wallet.wallet_name_label" : {
+      "localizations" : {
+        "en" : {
+          "stringUnit" : {
+            "state" : "translated",
+            "value" : "Wallet Name"
+          }
+        }
+      }
+    },
     "setup_wallet.new_wallet" : {
       "localizations" : {
         "en" : {
