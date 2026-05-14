@@ -24,7 +24,7 @@ struct MultiSwapSlippageView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.horizontal, 16)
 
-                            InputTextRow(vertical: .margin8) {
+                            InputTextRow {
                                 StepChangeButtonsView(
                                     content: {
                                         InputTextView(

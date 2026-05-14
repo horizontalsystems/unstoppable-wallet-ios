@@ -51,7 +51,7 @@ extension SolanaPreSendHandler: IPreSendHandler {
     }
 
     func hasMemo(address _: String?) -> Bool {
-        true
+        false
     }
 
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
