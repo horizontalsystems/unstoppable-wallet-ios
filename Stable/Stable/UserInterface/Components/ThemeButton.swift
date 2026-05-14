@@ -41,7 +41,7 @@ struct ThemeButton: View {
             configuration.label
                 .frame(maxWidth: size == .medium ? .infinity : nil)
                 .padding(.horizontal, 16)
-                .frame(height: size.height)
+                .frame(height: size.size)
                 .foregroundColor(ThemeButton.foregroundColor(style: style, mode: mode, size: size, isEnabled: isEnabled))
                 .background(ThemeButton.backgroundColor(style: style, mode: mode, size: size, isEnabled: isEnabled))
                 .clipShape(RoundedRectangle(cornerRadius: size.cornerRadius, style: .continuous))
@@ -73,7 +73,7 @@ extension ThemeButton {
             }
         }
 
-        var height: CGFloat {
+        var size: CGFloat {
             switch self {
             case .medium: return 56
             case .small: return 32
