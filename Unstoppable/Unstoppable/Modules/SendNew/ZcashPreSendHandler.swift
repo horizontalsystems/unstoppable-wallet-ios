@@ -32,12 +32,11 @@ class ZcashPreSendHandler {
     }
 
     private func sync(state: AdapterState) {
-        if adapter.areFundsSpendable {
-            stateSubject.send(.synced)
-            return
-        }
+        stateSubject.send(sendState(state))
+    }
 
-        stateSubject.send(state)
+    private func sendState(_ state: AdapterState) -> AdapterState {
+        state.syncing && adapter.areFundsSpendable ? .synced : state
     }
 
     private func updateBalanceSubject(balanceData: BalanceData) {
@@ -49,7 +48,7 @@ class ZcashPreSendHandler {
 
 extension ZcashPreSendHandler: IPreSendHandler {
     var state: AdapterState {
-        adapter.balanceState
+        sendState(adapter.balanceState)
     }
 
     var statePublisher: AnyPublisher<AdapterState, Never> {

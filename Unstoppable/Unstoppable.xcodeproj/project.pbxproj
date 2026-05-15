@@ -1692,8 +1692,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/ZcashLightClientKit";
 			requirement = {
-				kind = revision;
-				revision = f186d017a2d33d50f0276c10adf8b544484acfe6;
+				branch = master;
+				kind = branch;
 			};
 		};
 		6BDA29A929D6EA9B003847ED /* XCRemoteSwiftPackageReference "ECashKit.Swift" */ = {
