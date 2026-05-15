@@ -32,6 +32,25 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     private var assetMap = [String: String]()
     private let syncSubject = PassthroughSubject<Void, Never>()
 
+    // Exolix's shielded Zcash route. Internal routing detail — the app always quotes
+    // ZEC.ZEC and lets the server expand it into this shielded variant.
+    private static let zcashShieldedAsset = "ZEC.ZECSHIELDED"
+
+    // Caches for the destination addresses produced by `resolveDestinations`. When no adapter
+    // for `tokenOut` is enabled the helpers fall back to deriving an address from the active
+    // account, which is expensive (each call spins up a fresh Zcash synchronizer to read the
+    // unified + transparent addresses). These dicts keep the derived addresses around so
+    // repeated dry quotes don't re-derive them. Kept as two dicts because ZEC needs both
+    // the transparent (primary) and the unified address from the same wallet.
+    private var temporaryDestinationAddresses = [BlockchainType: String]()         // primary (transparent for ZEC)
+    private var temporaryUnifiedDestinationAddresses = [BlockchainType: String]()  // unified (ZEC only)
+
+    // Some provider+tokenOut pairs fan a dry quote into multiple routes (currently: Exolix
+    // returns both transparent and shielded ZEC). The dry call picks one and remembers it
+    // here so the confirmation (non-dry) call re-quotes exactly that same route.
+    // See `supportsAlternateRouteSelection(for:)` and docs/knowledge ZEC_SWAP_ADDRESS_SUPPORT.
+    private var selectedAlternateRoute: (buyAsset: String, destinationAddress: String)?
+
     init(provider: Provider) {
         self.provider = provider
         headers = Self.headers
@@ -70,6 +89,13 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         var assetMap = [String: String]()
 
         for token in tokens {
+            // ZEC.ZECSHIELDED is an internal Exolix routing variant. The app always quotes
+            // ZEC.ZEC and lets the server expand it into the shielded route, so skip it here
+            // to keep the Zcash native token mapping deterministic.
+            if token.identifier == Self.zcashShieldedAsset {
+                continue
+            }
+
             guard let blockchainType = Self.blockchainTypeMap[token.chainId] else {
                 continue
             }
@@ -109,7 +135,6 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 }
 
                 tokenQueries = [TokenQuery(blockchainType: blockchainType, tokenType: tokenType)]
-                print(tokenQueries)
             case .bitcoin, .bitcoinCash, .ecash, .dash, .zcash, .monero, .stellar:
                 tokenQueries = blockchainType.nativeTokenQueries
 
@@ -152,17 +177,28 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             throw SwapError.unsupportedTokenOut
         }
 
-        let destination = try await resolveDestination(recipient: recipient, token: tokenOut)
+        let destinations = try await resolveDestinations(recipient: recipient, token: tokenOut)
+        let (buyAsset, destination) = resolveQuoteSelection(
+            dry: dry,
+            recipient: recipient,
+            tokenOut: tokenOut,
+            defaultBuyAsset: assetOut,
+            defaultDestination: destinations.primary
+        )
 
         var parameters: [String: Any] = [
             "sellAsset": assetIn,
-            "buyAsset": assetOut,
+            "buyAsset": buyAsset,
             "sellAmount": amountIn.description,
             "slippage": slippage,
             "destinationAddress": destination,
             "providers": [provider.rawValue],
             "dry": dry,
         ]
+
+        if let unified = destinations.unified {
+            parameters["destinationAddressUnified"] = unified
+        }
 
         if let chainId = Self.blockchainTypeMap.first(where: { $0.value == tokenIn.blockchainType })?.key {
             parameters["chainId"] = chainId
@@ -174,11 +210,90 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
 
         let response: QuoteResponse = try await networkManager.fetch(url: "\(Self.baseUrl)/quote", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
 
-        guard let quote = response.routes.first else {
+        return try pickRoute(from: response.routes, dry: dry, tokenOut: tokenOut, fallbackBuyAsset: assetOut)
+    }
+
+    // Resolves the destination(s) we send to the server. Returns the primary destination
+    // always; the `unified` variant is filled only for ZEC out so providers that can deliver
+    // into the shielded pool (Mayachain, Exolix) get to route there. When the user picked an
+    // explicit recipient there's no alternate — only `primary`. Both addresses are cached
+    // when derived from the account (no adapter active) to avoid re-running the expensive
+    // Zcash address derivation on every dry quote.
+    private func resolveDestinations(recipient: String?, token: Token) async throws -> (primary: String, unified: String?) {
+        // Primary destination (transparent for ZEC, native otherwise).
+        let primary: String
+        if let recipient {
+            primary = recipient
+        } else {
+            let temporary = temporaryDestinationAddresses[token.blockchainType]
+                .map { DestinationHelper.Destination(address: $0, type: .nonExisting) }
+            let resolved = try await DestinationHelper.resolveDestination(token: token, temporary: temporary)
+            if resolved.type == .nonExisting {
+                temporaryDestinationAddresses[token.blockchainType] = resolved.address
+            }
+            primary = resolved.address
+        }
+
+        guard token.blockchainType == .zcash, recipient == nil else {
+            return (primary, nil)
+        }
+
+        // Unified destination — ZEC out only, cached separately from `primary`.
+        let temporaryUnified = temporaryUnifiedDestinationAddresses[token.blockchainType]
+            .map { DestinationHelper.Destination(address: $0, type: .nonExisting) }
+        let unified = try await DestinationHelper.resolveDestinationUnified(token: token, temporary: temporaryUnified)
+        if unified.type == .nonExisting {
+            temporaryUnifiedDestinationAddresses[token.blockchainType] = unified.address
+        }
+
+        return (primary, unified.address)
+    }
+
+    // When a dry quote previously fanned out into multiple routes, the confirmation (non-dry)
+    // quote must re-request the exact (buyAsset, destination) the dry call settled on.
+    // Otherwise fall through to the defaults. An explicit recipient overrides any selection.
+    private func resolveQuoteSelection(
+        dry: Bool,
+        recipient: String?,
+        tokenOut: Token,
+        defaultBuyAsset: String,
+        defaultDestination: String
+    ) -> (buyAsset: String, destination: String) {
+        guard !dry, recipient == nil, supportsAlternateRouteSelection(for: tokenOut),
+              let selectedAlternateRoute
+        else {
+            return (defaultBuyAsset, defaultDestination)
+        }
+        return (selectedAlternateRoute.buyAsset, selectedAlternateRoute.destinationAddress)
+    }
+
+    private func pickRoute(from routes: [Quote], dry: Bool, tokenOut: Token, fallbackBuyAsset: String) throws -> Quote {
+        guard dry, supportsAlternateRouteSelection(for: tokenOut) else {
+            guard let quote = routes.first else { throw SwapError.noRoutes }
+            return quote
+        }
+
+        // Exolix's ZEC dry quote can carry both the transparent and shielded routes. Pick the
+        // better-priced one — preferring shielded on a tie, for privacy — and remember it so
+        // the confirmation quote replays the same route.
+        guard let quote = routes.max(by: { lhs, rhs in
+            if lhs.expectedBuyAmount != rhs.expectedBuyAmount {
+                return lhs.expectedBuyAmount < rhs.expectedBuyAmount
+            }
+            return lhs.buyAsset != Self.zcashShieldedAsset && rhs.buyAsset == Self.zcashShieldedAsset
+        }) else {
             throw SwapError.noRoutes
         }
 
+        selectedAlternateRoute = (buyAsset: quote.buyAsset ?? fallbackBuyAsset, destinationAddress: quote.destinationAddress)
         return quote
+    }
+
+    // Single source of truth for which (provider, tokenOut) pairs fan a dry quote into
+    // multiple routes. Today only Exolix's ZEC pair does; extend here if another provider
+    // grows a similar split.
+    private func supportsAlternateRouteSelection(for tokenOut: Token) -> Bool {
+        provider == .exolix && tokenOut.blockchainType == .zcash
     }
 
     private func asset(token: Token) -> String? {
@@ -203,11 +318,10 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             parameters["sourceAddress"] = try await DestinationHelper.resolveDestination(token: tokenIn).address
         }
 
-        // must provide public address for zcash if needed. For all other states provide deposit address.
-        if tokenIn.blockchain.type == .zcash, provider == .stealthex || provider == .quickEx {
-            parameters["refundAddress"] = try await DestinationHelper.resolveDestination(token: tokenIn).address
-        } else {
+        if tokenIn.blockchain.type == .zcash, provider == .exolix {
             parameters["refundAddress"] = sendingAddress(token: tokenIn)
+        } else {
+            parameters["refundAddress"] = try await DestinationHelper.resolveDestination(token: tokenIn).address
         }
     }
 
@@ -428,15 +542,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         return adapter.receiveAddress.address
     }
 
-    func resolveDestination(recipient: String?, token: Token) async throws -> String {
-        if let recipient {
-            return recipient
-        }
-
-        return try await DestinationHelper.resolveDestination(token: token).address
-    }
-
-    private func buildEvmConfirmationQuote(
+private func buildEvmConfirmationQuote(
         tokenIn: Token,
         tokenOut _: Token,
         amountIn _: Decimal,
@@ -1102,6 +1208,7 @@ extension USwapMultiSwapProvider {
 
     class Quote: ImmutableMappable {
         let expectedBuyAmount: Decimal
+        let buyAsset: String?
         let inboundAddress: String
         let destinationAddress: String
         let approvalAddress: String?
@@ -1116,6 +1223,7 @@ extension USwapMultiSwapProvider {
 
         required init(map: Map) throws {
             expectedBuyAmount = try map.value("expectedBuyAmount", using: Transform.stringToDecimalTransform)
+            buyAsset = try? map.value("buyAsset")
             inboundAddress = try map.value("inboundAddress")
             destinationAddress = try map.value("destinationAddress")
             approvalAddress = try? map.value("meta.approvalAddress")
