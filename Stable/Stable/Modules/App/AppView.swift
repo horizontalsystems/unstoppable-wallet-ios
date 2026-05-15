@@ -9,7 +9,7 @@ struct AppView: View {
 
     init() {
         let introShown = UserDefaults.standard.bool(forKey: Self.introShownKey)
-        _state = State(initialValue: introShown ? .setupWallet : .intro)
+        _state = State(initialValue: introShown ? .main : .intro)
     }
 
     var body: some View {
@@ -22,6 +22,8 @@ struct AppView: View {
                 }
             case .setupWallet:
                 SetupWalletView()
+            case .main:
+                MainView()
             }
         }
         .animation(.default, value: state)
@@ -32,5 +34,6 @@ extension AppView {
     enum ViewState {
         case intro
         case setupWallet
+        case main
     }
 }

@@ -91,6 +91,9 @@
         }
       }
     },
+    "Main" : {
+
+    },
     "new_wallet.create_button" : {
       "localizations" : {
         "en" : {
