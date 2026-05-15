@@ -632,12 +632,11 @@
 "swap.quotes.sort.best_rate" = "Meilleur taux";
 "swap.quotes.sort.best_time" = "Plus rapide";
 
-"swap.quotes.providers.risk_levels.title" = "Niveaux de risque des fournisseurs";
-"swap.quotes.providers.risk_levels.description" = "Les niveaux de risque indiquent les actions qu'un fournisseur peut entreprendre lors de l'exécution.";
-"swap.quotes.providers.risk_levels.auto.description" = "Cet exchange utilise sa propre liquidité et respecte la confidentialité. Les transactions sont traitées sans blocage AML.";
-"swap.quotes.providers.risk_levels.flexible.description" = "Cet exchange rembourse généralement les transactions qui échouent aux vérifications AML. Dans de rares cas, les fonds peuvent être temporairement bloqués si une vérification supplémentaire est requise.";
-"swap.quotes.providers.risk_levels.preCheck.description" = "Le fournisseur effectue sa propre vérification d'adresse avant de traiter le swap. Les rejets sont rares. Les gels sont théoriquement possibles mais très improbables.";
-"swap.quotes.providers.risk_levels.controlled.description" = "Cet exchange bloque les transactions qui échouent aux vérifications AML jusqu'à ce que les exigences KYC/vérification soient satisfaites.";
+"swap.quotes.providers.risk_levels.title" = "Score du fournisseur";
+"swap.quotes.providers.risk_levels.description" = "Ces niveaux indiquent comment les fournisseurs gèrent les swaps et les vérifications de transactions.";
+"swap.quotes.providers.risk_levels.excellent.description" = "Exécution directe on-chain. Aucune vérification ni gel par le fournisseur. Remboursements automatiques en cas d'échec du swap.";
+"swap.quotes.providers.risk_levels.good.description" = "Le fournisseur vérifie automatiquement les transactions avant leur finalisation. Si des problèmes sont détectés, le swap est rejeté et les fonds sont remboursés.";
+"swap.quotes.providers.risk_levels.fair.description" = "Une vérification supplémentaire peut être requise pour certaines transactions. Si des problèmes sont détectés, les fonds sont généralement remboursés automatiquement.";
 
 
 "swap.allowance" = "Allocation";
