@@ -366,7 +366,7 @@
 "deposit.receive_coin" = "수신%@";
 "deposit.zcash.title" = "주소 유형";
 "deposit.zcash.header" = "Zcash 수신 방식을 선택하세요.";
-"deposit.address_type.unified" = "통합 주소";
+"deposit.address_type.unified" = "차폐됨";
 "deposit.address_type.unified.description" = "지갑 간 개인적이고 프라이빗한 전송에 사용하세요.";
 "deposit.address_type.transparent" = "透明";
 "deposit.address_type.transparent.description" = "통합 주소를 지원하지 않는 거래소나 서비스로부터 수신할 때 사용하세요.";

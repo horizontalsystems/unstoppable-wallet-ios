@@ -366,7 +366,7 @@
 "deposit.receive_coin" = "%@ Anfordern ";
 "deposit.zcash.title" = "Adresstyp";
 "deposit.zcash.header" = "Wählen Sie, wie Sie Zcash empfangen möchten.";
-"deposit.address_type.unified" = "Vereinheitlicht";
+"deposit.address_type.unified" = "Geschützt";
 "deposit.address_type.unified.description" = "Verwenden Sie diese Option für persönliche und private Transfers zwischen Wallets.";
 "deposit.address_type.transparent" = "Transparente";
 "deposit.address_type.transparent.description" = "Verwenden Sie diese Option, um Zahlungen von Börsen oder Diensten zu empfangen, die keine vereinheitlichten Adressen unterstützen.";

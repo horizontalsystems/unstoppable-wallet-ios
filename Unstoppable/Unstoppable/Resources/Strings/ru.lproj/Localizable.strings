@@ -366,7 +366,7 @@
 "deposit.receive_coin" = "Получить %@";
 "deposit.zcash.title" = "Тип адреса";
 "deposit.zcash.header" = "Выберите, как вы хотите получать Zcash.";
-"deposit.address_type.unified" = "Unified";
+"deposit.address_type.unified" = "Защищённый";
 "deposit.address_type.unified.description" = "Используйте для личных и приватных переводов между кошельками.";
 "deposit.address_type.transparent" = "Transparent";
 "deposit.address_type.transparent.description" = "Используйте для получения от бирж или сервисов, которые не поддерживают унифицированные адреса.";

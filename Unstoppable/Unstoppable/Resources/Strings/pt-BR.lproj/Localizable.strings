@@ -366,7 +366,7 @@
 "deposit.receive_coin" = "Receber %@";
 "deposit.zcash.title" = "Tipo de Endereço";
 "deposit.zcash.header" = "Escolha como deseja receber Zcash.";
-"deposit.address_type.unified" = "Unified";
+"deposit.address_type.unified" = "Blindado";
 "deposit.address_type.unified.description" = "Use para transferências pessoais e privadas entre carteiras.";
 "deposit.address_type.transparent" = "Transparente";
 "deposit.address_type.transparent.description" = "Use para receber de exchanges ou serviços que não oferecem suporte a endereços unificados.";

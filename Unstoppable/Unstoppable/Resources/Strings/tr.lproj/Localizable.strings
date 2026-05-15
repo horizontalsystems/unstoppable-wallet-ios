@@ -366,7 +366,7 @@
 "deposit.receive_coin" = "%@ al";
 "deposit.zcash.title" = "Adres Türü";
 "deposit.zcash.header" = "Zcash’i nasıl almak istediğinizi seçin.";
-"deposit.address_type.unified" = "Birleşik";
+"deposit.address_type.unified" = "Korumalı";
 "deposit.address_type.unified.description" = "Cüzdanlar arası kişisel ve özel transferler için kullanılır.";
 "deposit.address_type.transparent" = "Şeffaf";
 "deposit.address_type.transparent.description" = "Birleşik adresleri desteklemeyen borsa veya hizmetlerden alım yapmak için kullanılır.";

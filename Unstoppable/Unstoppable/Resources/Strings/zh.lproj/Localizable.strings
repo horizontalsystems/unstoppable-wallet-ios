@@ -366,7 +366,7 @@
 "deposit.receive_coin" = "收到%@";
 "deposit.zcash.title" = "地址类型";
 "deposit.zcash.header" = "请选择您希望接收 Zcash 的方式。";
-"deposit.address_type.unified" = "Unified";
+"deposit.address_type.unified" = "隐蔽";
 "deposit.address_type.unified.description" = "适用于钱包之间的个人和隐私转账。";
 "deposit.address_type.transparent" = "透明";
 "deposit.address_type.transparent.description" = "适用于从不支持统一地址的交易所或服务接收资金。";
