@@ -4,6 +4,25 @@ import Foundation
 import MarketKit
 
 enum DestinationHelper {
+    static func resolveDestinationUnified(token: Token, temporary: Destination? = nil) async throws -> Destination {
+        if let adapter = Core.shared.adapterManager.adapter(for: token) as? ZcashAdapter,
+           let uAddress = adapter.uAddress?.stringEncoded
+        {
+            return .init(address: uAddress, type: .existing)
+        }
+
+        if let temporary {
+            return temporary
+        }
+
+        guard let account = Core.shared.accountManager.activeAccount else {
+            throw SwapError.noActiveAccount
+        }
+
+        let address = try await ZcashAdapter.firstAddress(accountType: account.type, addressType: .shielded)
+        return .init(address: address, type: .nonExisting)
+    }
+
     static func resolveDestination(token: Token, temporary: Destination? = nil) async throws -> Destination {
         let blockchainType = token.blockchainType
 
