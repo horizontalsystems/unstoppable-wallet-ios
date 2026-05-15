@@ -12,7 +12,7 @@ struct MainView: View {
 
     var body: some View {
         ThemeNavigationStack(path: $path) {
-            Group { // navigationDestination must be bound on Group or Stack
+            ZStack {
                 TabView(selection: $viewModel.selectedTab) {
                     if viewModel.showMarket {
                         MarketView()
@@ -41,8 +41,11 @@ struct MainView: View {
                 }
                 .tint(.themeJacob)
             }
-            .navigationDestination(for: Wallet.self) { wallet in
-                WalletTokenModule.view(wallet: wallet)
+            .navigationDestination(for: Route.self) { route in
+                switch route {
+                case let .walletToken(wallet):
+                    WalletTokenModule.view(wallet: wallet)
+                }
             }
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
@@ -154,6 +157,10 @@ struct MainView: View {
 }
 
 extension MainView {
+    enum Route: Hashable {
+        case walletToken(Wallet)
+    }
+
     struct BadgeView: View {
         private let emptyBadgeSize: CGFloat = 10
         @State private var textHeight: CGFloat = 0
