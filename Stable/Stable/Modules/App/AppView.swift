@@ -1,17 +1,36 @@
 import SwiftUI
 
 struct AppView: View {
-    @AppStorage("introShown") private var introShown = false
+    private static let introShownKey = "introShown"
+
+    @AppStorage(Self.introShownKey) private var introShown = false
+
+    @State private var state: ViewState
+
+    init() {
+        let introShown = UserDefaults.standard.bool(forKey: Self.introShownKey)
+        _state = State(initialValue: introShown ? .setupWallet : .intro)
+    }
 
     var body: some View {
         ZStack {
-            SetupWalletView()
-
-            if !introShown {
+            switch state {
+            case .intro:
                 IntroView {
                     introShown = true
+                    state = .setupWallet
                 }
+            case .setupWallet:
+                SetupWalletView()
             }
         }
+        .animation(.default, value: state)
+    }
+}
+
+extension AppView {
+    enum ViewState {
+        case intro
+        case setupWallet
     }
 }
