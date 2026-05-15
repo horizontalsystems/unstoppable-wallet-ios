@@ -134,9 +134,19 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         if let recipient {
             return recipient
         }
+
         // use temporary address, to avoid muptiply create address without existing Adapter for token
         let temporaryDestination = temporaryDestinationAddresses[token.blockchainType].map { DestinationHelper.Destination(address: $0, type: .nonExisting) }
-        let destination = try await DestinationHelper.resolveDestination(token: token, temporary: temporaryDestination)
+
+        // Maya delivers ZEC directly to unified/sapling/orchard receivers via its transparent
+        // vault, so for ZEC out we resolve the wallet's unified address. Every other tokenOut
+        // goes through the generic destination helper.
+        let destination: DestinationHelper.Destination
+        if token.blockchainType == .zcash {
+            destination = try await DestinationHelper.resolveDestinationUnified(token: token, temporary: temporaryDestination)
+        } else {
+            destination = try await DestinationHelper.resolveDestination(token: token, temporary: temporaryDestination)
+        }
 
         // if token not enabled, just save first address to avoid repeatly getter.
         if destination.type == .nonExisting {
