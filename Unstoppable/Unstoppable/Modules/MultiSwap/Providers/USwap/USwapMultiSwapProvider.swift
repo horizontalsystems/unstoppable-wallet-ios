@@ -45,8 +45,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         let blockchainType: BlockchainType
     }
 
-    private var temporaryDestinationAddresses = [DestinationCacheKey: String]()         // primary (transparent for ZEC)
-    private var temporaryUnifiedDestinationAddresses = [DestinationCacheKey: String]()  // unified (ZEC only)
+    private var temporaryDestinationAddresses = [DestinationCacheKey: String]() // primary (transparent for ZEC)
+    private var temporaryUnifiedDestinationAddresses = [DestinationCacheKey: String]() // unified (ZEC only)
 
     // Some provider+tokenOut pairs fan a dry quote into multiple routes (currently: Exolix
     // returns both transparent and shielded ZEC). The dry call picks one and remembers it
@@ -138,6 +138,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
                 }
 
                 tokenQueries = [TokenQuery(blockchainType: blockchainType, tokenType: tokenType)]
+
             case .bitcoin, .bitcoinCash, .ecash, .dash, .zcash, .monero, .stellar:
                 tokenQueries = blockchainType.nativeTokenQueries
 
@@ -549,7 +550,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         return adapter.receiveAddress.address
     }
 
-private func buildEvmConfirmationQuote(
+    private func buildEvmConfirmationQuote(
         tokenIn: Token,
         tokenOut _: Token,
         amountIn _: Decimal,
