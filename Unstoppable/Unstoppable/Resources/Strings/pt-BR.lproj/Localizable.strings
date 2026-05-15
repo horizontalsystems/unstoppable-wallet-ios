@@ -632,12 +632,11 @@
 "swap.quotes.sort.best_rate" = "Melhor taxa";
 "swap.quotes.sort.best_time" = "Mais rápido";
 
-"swap.quotes.providers.risk_levels.title" = "Níveis de risco do provedor";
-"swap.quotes.providers.risk_levels.description" = "Os níveis de risco mostram quais ações um provedor pode tomar durante a execução.";
-"swap.quotes.providers.risk_levels.auto.description" = "Esta exchange utiliza sua própria liquidez e é amigável à privacidade. As transações são processadas sem bloqueio AML.";
-"swap.quotes.providers.risk_levels.flexible.description" = "Esta exchange geralmente reembolsa transações que não passam nas verificações AML. Em casos raros, os fundos podem ser temporariamente bloqueados se uma verificação adicional for necessária.";
-"swap.quotes.providers.risk_levels.preCheck.description" = "O provedor realiza sua própria verificação de endereço antes de processar o swap. Rejeições são raras. Congelamentos são teoricamente possíveis, mas muito improváveis.";
-"swap.quotes.providers.risk_levels.controlled.description" = "Esta exchange bloqueia transações que não passam nas verificações AML até que os requisitos de KYC/verificação sejam concluídos.";
+"swap.quotes.providers.risk_levels.title" = "Pontuação do provedor";
+"swap.quotes.providers.risk_levels.description" = "Esses níveis mostram como os provedores lidam com swaps e verificações de transações.";
+"swap.quotes.providers.risk_levels.excellent.description" = "Execução direta on-chain. Sem verificações ou bloqueios do provedor. Reembolsos automáticos se o swap falhar.";
+"swap.quotes.providers.risk_levels.good.description" = "O provedor verifica as transações automaticamente antes da conclusão. Se problemas forem detectados, o swap é rejeitado e os fundos são reembolsados.";
+"swap.quotes.providers.risk_levels.fair.description" = "Verificação adicional pode ser necessária para algumas transações. Se problemas forem detectados, os fundos geralmente são reembolsados automaticamente.";
 
 
 "swap.allowance" = "Preço";

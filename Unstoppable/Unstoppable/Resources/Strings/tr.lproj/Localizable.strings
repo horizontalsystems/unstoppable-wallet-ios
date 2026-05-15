@@ -632,12 +632,11 @@
 "swap.quotes.sort.best_rate" = "En İyi Oran";
 "swap.quotes.sort.best_time" = "En Hızlı";
 
-"swap.quotes.providers.risk_levels.title" = "Sağlayıcı Risk Seviyeleri";
-"swap.quotes.providers.risk_levels.description" = "Risk seviyeleri, bir sağlayıcının işlem sırasında hangi eylemleri gerçekleştirebileceğini gösterir.";
-"swap.quotes.providers.risk_levels.auto.description" = "Bu borsa kendi likiditesini kullanır ve gizlilik dostudur. İşlemler AML engellemesi olmadan gerçekleştirilir.";
-"swap.quotes.providers.risk_levels.flexible.description" = "Bu borsa genellikle AML kontrollerini geçemeyen işlemleri iade eder. Nadir durumlarda, ek doğrulama gerektiğinde fonlar geçici olarak bloke edilebilir.";
-"swap.quotes.providers.risk_levels.preCheck.description" = "Sağlayıcı, swap işlemini gerçekleştirmeden önce kendi adres taramasını yapar. Reddetmeler nadirdir. Dondurma teorik olarak mümkündür ancak oldukça düşük bir ihtimaldir.";
-"swap.quotes.providers.risk_levels.controlled.description" = "Bu borsa, KYC/doğrulama gereksinimleri tamamlanana kadar AML kontrollerini geçemeyen işlemleri bloke eder.";
+"swap.quotes.providers.risk_levels.title" = "Sağlayıcı Puanı";
+"swap.quotes.providers.risk_levels.description" = "Bu seviyeler, sağlayıcıların swap işlemlerini ve işlem kontrollerini nasıl yönettiğini gösterir.";
+"swap.quotes.providers.risk_levels.excellent.description" = "Doğrudan zincir üstü (on-chain) yürütme. Sağlayıcı kontrolü veya dondurma yok. Swap başarısız olursa otomatik geri ödeme.";
+"swap.quotes.providers.risk_levels.good.description" = "Sağlayıcı, tamamlanmadan önce işlemleri otomatik olarak kontrol eder. Sorun tespit edilirse swap reddedilir ve fonlar iade edilir.";
+"swap.quotes.providers.risk_levels.fair.description" = "Bazı işlemler için ek doğrulama gerekebilir. Sorun tespit edilirse fonlar genellikle otomatik olarak iade edilir.";
 
 
 "swap.allowance" = "Ödenek";

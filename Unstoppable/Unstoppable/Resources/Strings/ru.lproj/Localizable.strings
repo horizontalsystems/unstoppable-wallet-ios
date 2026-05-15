@@ -632,12 +632,11 @@
 "swap.quotes.sort.best_rate" = "Лучший курс";
 "swap.quotes.sort.best_time" = "Самый быстрый";
 
-"swap.quotes.providers.risk_levels.title" = "Уровни риска провайдеров";
-"swap.quotes.providers.risk_levels.description" = "Уровни риска показывают, какие действия провайдер может предпринять в процессе выполнения.";
-"swap.quotes.providers.risk_levels.auto.description" = "Эта биржа использует собственную ликвидность и обеспечивает конфиденциальность. Транзакции обрабатываются без AML-блокировки.";
-"swap.quotes.providers.risk_levels.flexible.description" = "Эта биржа обычно возвращает средства по транзакциям, не прошедшим проверку AML. В редких случаях средства могут быть временно заблокированы, если потребуется дополнительная верификация.";
-"swap.quotes.providers.risk_levels.preCheck.description" = "Провайдер выполняет собственную проверку адреса перед обработкой свапа. Отклонения редки. Заморозка теоретически возможна, но крайне маловероятна.";
-"swap.quotes.providers.risk_levels.controlled.description" = "Эта биржа блокирует транзакции, не прошедшие проверку AML, до выполнения требований KYC/верификации.";
+"swap.quotes.providers.risk_levels.title" = "Оценка провайдера";
+"swap.quotes.providers.risk_levels.description" = "Эти уровни показывают, как провайдеры обрабатывают свопы и проверки транзакций.";
+"swap.quotes.providers.risk_levels.excellent.description" = "Прямое исполнение в блокчейне. Без проверок и заморозок со стороны провайдера. Автоматический возврат средств при неудачном свопе.";
+"swap.quotes.providers.risk_levels.good.description" = "Провайдер автоматически проверяет транзакции перед завершением. При обнаружении проблем своп отклоняется, а средства возвращаются.";
+"swap.quotes.providers.risk_levels.fair.description" = "Для некоторых транзакций может потребоваться дополнительная проверка. При обнаружении проблем средства, как правило, возвращаются автоматически.";
 
 
 "swap.allowance" = "Разрешение";
