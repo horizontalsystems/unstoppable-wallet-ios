@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import MarketKit
 import SwiftUI
+import UserInterface
 
 class Coordinator: ObservableObject {
     static let shared = Coordinator()
@@ -218,7 +219,7 @@ extension Coordinator {
         }
 
         present { _ in
-            SFSafariView(url: url).ignoresSafeArea()
+            SafariView(url: url).ignoresSafeArea()
         }
     }
 
