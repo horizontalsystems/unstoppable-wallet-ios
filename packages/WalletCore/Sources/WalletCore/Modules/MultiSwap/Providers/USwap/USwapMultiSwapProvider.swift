@@ -40,10 +40,13 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     // for `tokenOut` is enabled the helpers fall back to deriving an address from the active
     // account, which is expensive (each call spins up a fresh Zcash synchronizer to read the
     // unified + transparent addresses). These dicts keep the derived addresses around so
-    // repeated dry quotes don't re-derive them. Kept as two dicts because ZEC needs both
-    // the transparent (primary) and the unified address from the same wallet.
-    private var temporaryDestinationAddresses = [BlockchainType: String]()         // primary (transparent for ZEC)
-    private var temporaryUnifiedDestinationAddresses = [BlockchainType: String]()  // unified (ZEC only)
+    private struct DestinationCacheKey: Hashable {
+        let accountId: String
+        let blockchainType: BlockchainType
+    }
+
+    private var temporaryDestinationAddresses = [DestinationCacheKey: String]()         // primary (transparent for ZEC)
+    private var temporaryUnifiedDestinationAddresses = [DestinationCacheKey: String]()  // unified (ZEC only)
 
     // Some provider+tokenOut pairs fan a dry quote into multiple routes (currently: Exolix
     // returns both transparent and shielded ZEC). The dry call picks one and remembers it
@@ -220,16 +223,20 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     // when derived from the account (no adapter active) to avoid re-running the expensive
     // Zcash address derivation on every dry quote.
     private func resolveDestinations(recipient: String?, token: Token) async throws -> (primary: String, unified: String?) {
+        let cacheKey = Core.shared.accountManager.activeAccount.map {
+            DestinationCacheKey(accountId: $0.id, blockchainType: token.blockchainType)
+        }
+
         // Primary destination (transparent for ZEC, native otherwise).
         let primary: String
         if let recipient {
             primary = recipient
         } else {
-            let temporary = temporaryDestinationAddresses[token.blockchainType]
+            let temporary = cacheKey.flatMap { temporaryDestinationAddresses[$0] }
                 .map { DestinationHelper.Destination(address: $0, type: .nonExisting) }
             let resolved = try await DestinationHelper.resolveDestination(token: token, temporary: temporary)
-            if resolved.type == .nonExisting {
-                temporaryDestinationAddresses[token.blockchainType] = resolved.address
+            if resolved.type == .nonExisting, let cacheKey {
+                temporaryDestinationAddresses[cacheKey] = resolved.address
             }
             primary = resolved.address
         }
@@ -239,11 +246,11 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         }
 
         // Unified destination — ZEC out only, cached separately from `primary`.
-        let temporaryUnified = temporaryUnifiedDestinationAddresses[token.blockchainType]
+        let temporaryUnified = cacheKey.flatMap { temporaryUnifiedDestinationAddresses[$0] }
             .map { DestinationHelper.Destination(address: $0, type: .nonExisting) }
         let unified = try await DestinationHelper.resolveDestinationUnified(token: token, temporary: temporaryUnified)
-        if unified.type == .nonExisting {
-            temporaryUnifiedDestinationAddresses[token.blockchainType] = unified.address
+        if unified.type == .nonExisting, let cacheKey {
+            temporaryUnifiedDestinationAddresses[cacheKey] = unified.address
         }
 
         return (primary, unified.address)
