@@ -34,7 +34,6 @@ let package = Package(
         .package(url: "https://github.com/horizontalsystems/TonKit.Swift", exact: "1.2.1"),
         .package(url: "https://github.com/horizontalsystems/TronKit.Swift.git", exact: "1.4.0"),
         .package(url: "https://github.com/horizontalsystems/UniswapKit.Swift", exact: "3.2.0"),
-        .package(url: "https://github.com/horizontalsystems/ZcashLightClientKit", revision: "f186d017a2d33d50f0276c10adf8b544484acfe6"),
         .package(url: "https://github.com/kishikawakatsumi/KeychainAccess.git", from: "4.0.0"),
         .package(url: "https://github.com/krzyzanowskim/CryptoSwift", from: "1.9.0"),
         .package(url: "https://github.com/ReactiveX/RxSwift.git", from: "5.1.3"),
