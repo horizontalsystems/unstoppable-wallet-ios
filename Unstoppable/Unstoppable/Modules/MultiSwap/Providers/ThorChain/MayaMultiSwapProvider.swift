@@ -11,7 +11,13 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
     static let name = "Maya Protocol"
 
     private let testNetManager = Core.shared.testNetManager
-    private var temporaryDestinationAddresses = [BlockchainType: String]()
+
+    private struct DestinationCacheKey: Hashable {
+        let accountId: String
+        let blockchainType: BlockchainType
+    }
+
+    private var temporaryDestinationAddresses = [DestinationCacheKey: String]()
 
     override var baseUrl: String {
         let stagenet = testNetManager.mayaStagenetEnabled ? "stagenet." : ""
@@ -135,8 +141,15 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
             return recipient
         }
 
+        // Cache key is (account, chain). When no account is active we skip the cache; the
+        // helpers will throw downstream.
+        let cacheKey = Core.shared.accountManager.activeAccount.map {
+            DestinationCacheKey(accountId: $0.id, blockchainType: token.blockchainType)
+        }
+
         // use temporary address, to avoid muptiply create address without existing Adapter for token
-        let temporaryDestination = temporaryDestinationAddresses[token.blockchainType].map { DestinationHelper.Destination(address: $0, type: .nonExisting) }
+        let temporaryDestination = cacheKey.flatMap { temporaryDestinationAddresses[$0] }
+            .map { DestinationHelper.Destination(address: $0, type: .nonExisting) }
 
         // Maya delivers ZEC directly to unified/sapling/orchard receivers via its transparent
         // vault, so for ZEC out we resolve the wallet's unified address. Every other tokenOut
@@ -149,8 +162,8 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
         }
 
         // if token not enabled, just save first address to avoid repeatly getter.
-        if destination.type == .nonExisting {
-            temporaryDestinationAddresses[token.blockchainType] = destination.address
+        if destination.type == .nonExisting, let cacheKey {
+            temporaryDestinationAddresses[cacheKey] = destination.address
         }
 
         return destination.address
