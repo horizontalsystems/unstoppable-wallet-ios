@@ -46,10 +46,9 @@ extension IMultiSwapProvider {
 }
 
 enum SwapProviderType: String, CaseIterable, Identifiable {
-    case auto
-    case flexible
-    case controlled
-    case preCheck
+    case excellent
+    case good
+    case fair
 
     var title: String {
         rawValue.capitalized(with: .autoupdatingCurrent)
@@ -57,19 +56,17 @@ enum SwapProviderType: String, CaseIterable, Identifiable {
 
     var icon: String {
         switch self {
-        case .auto: return "shield_check_filled"
-        case .flexible: return "thumbsup"
-        case .controlled: return "warning_filled"
-        case .preCheck: return "radar"
+        case .excellent: return "star_filled"
+        case .good: return "shield_check_filled"
+        case .fair: return "thumbsup"
         }
     }
 
     var сolorStyle: ColorStyle {
         switch self {
-        case .auto: return .green
-        case .flexible: return .blue
-        case .controlled: return .yellow
-        case .preCheck: return .primary
+        case .excellent: return .green
+        case .good: return .blue
+        case .fair: return .yellow
         }
     }
 

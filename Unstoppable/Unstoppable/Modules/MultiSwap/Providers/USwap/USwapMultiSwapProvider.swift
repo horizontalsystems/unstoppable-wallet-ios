@@ -489,7 +489,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
     }
 
     func validateTrustedProvider(tokenIn: Token, amountIn: Decimal) async throws -> Bool? {
-        guard provider.type == .preCheck else {
+        guard provider == .quickEx else {
             return true
         }
 
@@ -1157,9 +1157,9 @@ extension USwapMultiSwapProvider {
 
         var type: SwapProviderType {
             switch self {
-            case .swapuz, .exolix, .cce: return .flexible
-            case .letsExchange, .stealthex, .near, .barter: return .controlled
-            case .quickEx: return .preCheck
+            case .barter: return .excellent
+            case .quickEx, .exolix, .swapuz, .letsExchange, .cce: return .good
+            case .stealthex, .near: return .fair
             }
         }
 

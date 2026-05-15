@@ -12,7 +12,7 @@ class JupiterMultiSwapProvider: IMultiSwapProvider {
 
     var id: String { Self.id }
     var name: String { Self.name }
-    var type: SwapProviderType { .auto }
+    var type: SwapProviderType { .excellent }
     var aml: Bool { false }
     var icon: String { "swap_provider_jupiter" }
 
