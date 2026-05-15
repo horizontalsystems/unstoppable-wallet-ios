@@ -340,6 +340,7 @@ class MultiSwapViewModel: ObservableObject {
         {
             adapterState = adapter.balanceState
             availableBalance = adapter.balanceData.available
+            spendMode = adapter.spendMode
 
             adapter.balanceStateUpdatedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
