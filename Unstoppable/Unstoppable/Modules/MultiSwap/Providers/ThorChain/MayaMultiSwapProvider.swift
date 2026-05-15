@@ -26,7 +26,7 @@ class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {
 
     override var id: String { Self.id }
     override var name: String { Self.name }
-    override var type: SwapProviderType { .auto }
+    override var type: SwapProviderType { .excellent }
     override var icon: String { "swap_provider_maya" }
 
     override var affiliate: String? {

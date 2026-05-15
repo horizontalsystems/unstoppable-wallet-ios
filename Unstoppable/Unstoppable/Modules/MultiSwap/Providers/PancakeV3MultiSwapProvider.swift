@@ -6,7 +6,7 @@ class PancakeV3MultiSwapProvider: BaseUniswapV3MultiSwapProvider {
     override var id: String { Self.id }
     override var name: String { Self.name }
 
-    override var type: SwapProviderType { .auto }
+    override var type: SwapProviderType { .excellent }
     override var icon: String { "swap_provider_pancake" }
 
     override func supports(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token) -> Bool {

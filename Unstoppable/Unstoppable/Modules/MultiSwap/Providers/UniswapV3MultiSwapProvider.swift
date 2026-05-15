@@ -6,7 +6,7 @@ class UniswapV3MultiSwapProvider: BaseUniswapV3MultiSwapProvider {
     override var id: String { Self.id }
     override var name: String { Self.name }
 
-    override var type: SwapProviderType { .auto }
+    override var type: SwapProviderType { .excellent }
     override var icon: String { "swap_provider_uniswap" }
 
     override func supports(tokenIn: MarketKit.Token, tokenOut: MarketKit.Token) -> Bool {
