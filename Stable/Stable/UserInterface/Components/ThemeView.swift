@@ -1,11 +1,14 @@
 import SwiftUI
 
 struct ThemeView<Content: View>: View {
+    var style: Style = .regular
     @ViewBuilder let content: Content
 
     var body: some View {
         ZStack {
             Color.themeTyler.ignoresSafeArea()
+
+            decoration
 
             VStack(spacing: 0) {
                 Rectangle()
@@ -16,8 +19,46 @@ struct ThemeView<Content: View>: View {
                 content
             }
         }
-        .toolbarBackground(.hidden, for: .navigationBar)
+        .toolbarBackground(Color.themeLime, for: .navigationBar)
+        .toolbarBackground(.visible, for: .navigationBar)
         .navigationBarTitleDisplayMode(.inline)
+    }
+
+    @ViewBuilder private var decoration: some View {
+        switch style {
+        case .regular:
+            EmptyView()
+        case .topGradient:
+            GeometryReader { proxy in
+                LinearGradient(
+                    colors: [Color.themeLime, Color.themeLime.opacity(0)],
+                    startPoint: .top,
+                    endPoint: .bottom
+                )
+                .frame(height: proxy.size.height * 0.4)
+                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .top)
+            }
+            .allowsHitTesting(false)
+        case .bottomGradient:
+            GeometryReader { proxy in
+                Circle()
+                    .fill(Color.themeLime.opacity(0.2))
+                    .frame(width: 650, height: 650)
+                    .blur(radius: 100)
+                    .position(x: proxy.size.width / 2, y: proxy.size.height + 125)
+            }
+            .ignoresSafeArea()
+            .clipped()
+            .allowsHitTesting(false)
+        }
+    }
+}
+
+extension ThemeView {
+    enum Style {
+        case regular
+        case topGradient
+        case bottomGradient
     }
 }
 
