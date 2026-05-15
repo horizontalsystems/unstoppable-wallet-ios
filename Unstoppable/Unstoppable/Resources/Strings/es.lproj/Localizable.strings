@@ -632,12 +632,11 @@
 "swap.quotes.sort.best_rate" = "Mejor tasa";
 "swap.quotes.sort.best_time" = "Más rápido";
 
-"swap.quotes.providers.risk_levels.title" = "Niveles de riesgo del proveedor";
-"swap.quotes.providers.risk_levels.description" = "Los niveles de riesgo muestran qué acciones puede tomar un proveedor durante la ejecución.";
-"swap.quotes.providers.risk_levels.auto.description" = "Este exchange utiliza su propia liquidez y respeta la privacidad. Las transacciones se procesan sin bloqueo AML.";
-"swap.quotes.providers.risk_levels.flexible.description" = "Este exchange generalmente reembolsa las transacciones que no pasan las verificaciones AML. En casos excepcionales, los fondos pueden ser bloqueados temporalmente si se requiere una verificación adicional.";
-"swap.quotes.providers.risk_levels.preCheck.description" = "El proveedor realiza su propia verificación de direcciones antes de procesar el swap. Los rechazos son poco frecuentes. Los bloqueos son teóricamente posibles, pero muy improbables.";
-"swap.quotes.providers.risk_levels.controlled.description" = "Este exchange bloquea las transacciones que no pasan las verificaciones AML hasta que se completen los requisitos de KYC/verificación.";
+"swap.quotes.providers.risk_levels.title" = "Puntuación del proveedor";
+"swap.quotes.providers.risk_levels.description" = "Estos niveles muestran cómo los proveedores gestionan los swaps y las verificaciones de transacciones.";
+"swap.quotes.providers.risk_levels.excellent.description" = "Ejecución directa on-chain. Sin verificaciones ni bloqueos del proveedor. Reembolsos automáticos si el swap falla.";
+"swap.quotes.providers.risk_levels.good.description" = "El proveedor verifica las transacciones automáticamente antes de completarlas. Si se detectan problemas, el swap se rechaza y los fondos se reembolsan.";
+"swap.quotes.providers.risk_levels.fair.description" = "Puede requerirse una verificación adicional para algunas transacciones. Si se detectan problemas, los fondos generalmente se reembolsan automáticamente.";
 
 
 "swap.allowance" = "Permiso de acceso";

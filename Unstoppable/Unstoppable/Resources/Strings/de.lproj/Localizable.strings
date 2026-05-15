@@ -632,12 +632,11 @@
 "swap.quotes.sort.best_rate" = "Bester Kurs";
 "swap.quotes.sort.best_time" = "Schnellste";
 
-"swap.quotes.providers.risk_levels.title" = "Risikostufen der Anbieter";
-"swap.quotes.providers.risk_levels.description" = "Risikostufen zeigen, welche Maßnahmen ein Anbieter während der Ausführung ergreifen kann.";
-"swap.quotes.providers.risk_levels.auto.description" = "Diese Börse nutzt eigene Liquidität und ist datenschutzfreundlich. Transaktionen werden ohne AML-Sperrung verarbeitet.";
-"swap.quotes.providers.risk_levels.flexible.description" = "Diese Börse erstattet in der Regel Transaktionen zurück, die AML-Prüfungen nicht bestehen. In seltenen Fällen können Guthaben vorübergehend gesperrt werden, wenn eine zusätzliche Verifizierung erforderlich ist.";
-"swap.quotes.providers.risk_levels.preCheck.description" = "Der Anbieter führt vor der Verarbeitung des Swaps eine eigene Adressprüfung durch. Ablehnungen sind selten. Einfrierungen sind theoretisch möglich, aber sehr unwahrscheinlich.";
-"swap.quotes.providers.risk_levels.controlled.description" = "Diese Börse sperrt Transaktionen, die AML-Prüfungen nicht bestehen, bis die KYC-/Verifizierungsanforderungen erfüllt sind.";
+"swap.quotes.providers.risk_levels.title" = "Anbieterbewertung";
+"swap.quotes.providers.risk_levels.description" = "Diese Stufen zeigen, wie Anbieter Swaps und Transaktionsprüfungen handhaben.";
+"swap.quotes.providers.risk_levels.excellent.description" = "Direkte On-Chain-Ausführung. Keine Anbieterprüfungen oder Sperrungen. Automatische Rückerstattung bei fehlgeschlagenem Swap.";
+"swap.quotes.providers.risk_levels.good.description" = "Der Anbieter prüft Transaktionen vor Abschluss automatisch. Bei erkannten Problemen wird der Swap abgelehnt und die Mittel werden zurückerstattet.";
+"swap.quotes.providers.risk_levels.fair.description" = "Für einige Transaktionen kann eine zusätzliche Verifizierung erforderlich sein. Bei erkannten Problemen werden die Mittel in der Regel automatisch zurückerstattet.";
 
 
 "swap.allowance" = "Vergütung";
