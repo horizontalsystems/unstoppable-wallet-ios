@@ -9,7 +9,7 @@ struct AppView: View {
 
     init() {
         let introShown = UserDefaults.standard.bool(forKey: Self.introShownKey)
-        _state = State(initialValue: introShown ? .main : .intro)
+        _state = State(initialValue: introShown ? .setupWallet : .intro)
     }
 
     var body: some View {

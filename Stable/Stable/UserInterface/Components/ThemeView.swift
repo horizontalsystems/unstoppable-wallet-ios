@@ -19,8 +19,7 @@ struct ThemeView<Content: View>: View {
                 content
             }
         }
-        .toolbarBackground(Color.themeLime, for: .navigationBar)
-        .toolbarBackground(.visible, for: .navigationBar)
+        .toolbarBackground(.hidden, for: .navigationBar)
         .navigationBarTitleDisplayMode(.inline)
     }
 

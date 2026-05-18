@@ -32,7 +32,7 @@ struct IntroView: View {
                                     Spacer()
 
                                     VStack(spacing: 12) {
-                                        ThemeText(key: slide.title, style: .title3)
+                                        ThemeText(key: slide.title, style: .title3B)
                                             .multilineTextAlignment(.center)
 
                                         ThemeText(key: slide.subtitle, style: .subhead, color: .themeGray)

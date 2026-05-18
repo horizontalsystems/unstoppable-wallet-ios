@@ -10,7 +10,7 @@ struct NewWalletView: View {
     var body: some View {
         ThemeView {
             VStack(alignment: .leading, spacing: 0) {
-                ThemeText(key: "new_wallet.title", style: .title3)
+                ThemeText(key: "new_wallet.title", style: .title3B)
                     .padding(.top, 12)
                     .padding(.bottom, 16)
                     .padding(.horizontal, 8)
