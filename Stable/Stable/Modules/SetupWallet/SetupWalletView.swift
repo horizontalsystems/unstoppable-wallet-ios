@@ -8,7 +8,7 @@ struct SetupWalletView: View {
             ThemeView {
                 VStack(alignment: .leading, spacing: 0) {
                     VStack(alignment: .leading, spacing: 3) {
-                        ThemeText(key: "setup_wallet.title", style: .title3)
+                        ThemeText(key: "setup_wallet.title", style: .title3B)
                         ThemeText(key: "setup_wallet.subtitle", style: .subhead, color: .themeGray)
                     }
                     .padding(.horizontal, 8)
