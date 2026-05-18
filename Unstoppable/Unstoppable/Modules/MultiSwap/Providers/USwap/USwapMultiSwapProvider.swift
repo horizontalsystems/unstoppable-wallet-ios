@@ -366,7 +366,8 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             return EvmMultiSwapQuote(expectedBuyAmount: quote.expectedBuyAmount, allowanceState: allowanceState, estimatedTime: esimatedTime)
 
         case .bitcoin, .bitcoinCash, .ecash, .litecoin, .dash, .zcash, .monero, .ton, .stellar, .zano, .solana:
-            return MultiSwapQuote(expectedBuyAmount: quote.expectedBuyAmount)
+            let estimatedTime = quote.esimatedTime ?? MultiSwapHelpers.estimate(tokenIn: tokenIn, tokenOut: tokenOut)
+            return MultiSwapQuote(expectedBuyAmount: quote.expectedBuyAmount, estimatedTime: estimatedTime)
 
         default:
             throw SwapError.unsupportedTokenIn
