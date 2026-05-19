@@ -8,8 +8,8 @@ public enum AutoLockPeriod: String, CaseIterable {
     case minute30
     case hour1
 
-    public var title: String {
-        "auto_lock.\(rawValue)".localized
+    public var title: LocalizedStringResource {
+        .package("auto_lock.\(rawValue)")
     }
 
     public var period: TimeInterval {

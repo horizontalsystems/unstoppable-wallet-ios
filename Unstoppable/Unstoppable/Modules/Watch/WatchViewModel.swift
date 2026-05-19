@@ -99,7 +99,7 @@ class WatchViewModel: ObservableObject {
     let successSubject = PassthroughSubject<Void, Never>()
 
     init() {
-        name = accountFactory.generatedAccountName
+        name = String(localized: accountFactory.generatedAccountName)
 
         addressParserChain.append(handlers:
             AddressParserFactory.parserChainHandlers(blockchainType: .ethereum, withEns: true)
@@ -327,7 +327,7 @@ extension WatchViewModel {
     }
 
     func refreshName() {
-        name = accountFactory.generatedAccountName
+        name = String(localized: accountFactory.generatedAccountName)
     }
 
     func onProceed() {

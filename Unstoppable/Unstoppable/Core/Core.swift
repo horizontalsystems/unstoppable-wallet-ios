@@ -165,9 +165,10 @@ class Core {
         passcodeManager = PasscodeManager(biometryManager: biometryManager, keychainStorage: keychainStorage)
         lockManager = LockManager(
             passcodeManager: passcodeManager,
-            userDefaultsStorage: userDefaultsStorage,
-            lockScreenViewControllerProvider: { UIHostingController(rootView: AppUnlockView()) }
-        )
+            userDefaultsStorage: userDefaultsStorage
+        ) {
+            AppUnlockView()
+        }
         lockoutManager = LockoutManager(keychainStorage: keychainStorage)
         coverManager = CoverManager(lockManager: lockManager)
         keychainManager = KeychainManager(storage: keychainStorage, userDefaultsStorage: userDefaultsStorage)

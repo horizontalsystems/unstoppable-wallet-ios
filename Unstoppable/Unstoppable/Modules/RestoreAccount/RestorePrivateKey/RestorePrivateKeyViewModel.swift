@@ -24,7 +24,7 @@ class RestorePrivateKeyViewModel: ObservableObject {
     private var text = ""
 
     init() {
-        name = accountFactory.generatedAccountName
+        name = String(localized: accountFactory.generatedAccountName)
     }
 
     private var resolvedName: String {
@@ -92,7 +92,7 @@ class RestorePrivateKeyViewModel: ObservableObject {
 
 extension RestorePrivateKeyViewModel {
     func refreshName() {
-        name = accountFactory.generatedAccountName
+        name = String(localized: accountFactory.generatedAccountName)
     }
 
     func onChange(privateKey: String) {

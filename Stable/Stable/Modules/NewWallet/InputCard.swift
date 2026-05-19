@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct InputCard: View {
-    let title: LocalizedStringKey
+    let title: LocalizedStringResource
     @Binding var text: String
     var customButton: CustomButton? = nil
     var focus: FocusState<Bool>.Binding

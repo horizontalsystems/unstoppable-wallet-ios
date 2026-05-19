@@ -9,9 +9,9 @@ public class AccountFactory {
 }
 
 public extension AccountFactory {
-    var generatedAccountName: String {
+    var generatedAccountName: LocalizedStringResource {
         let index = Int.random(in: 1 ... 100)
-        return "wallet_name.\(index)".localized
+        return .package("wallet_name.\(index)")
     }
 
     func account(type: AccountType, origin: AccountOrigin, backedUp: Bool, fileBackedUp: Bool, name: String) -> Account {

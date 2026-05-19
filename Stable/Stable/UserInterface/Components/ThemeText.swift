@@ -27,7 +27,7 @@ struct ThemeText: View {
         self.color = color ?? .themeLeah
     }
 
-    init(key: LocalizedStringKey, style: TextStyle, color: Color? = nil) {
+    init(key: LocalizedStringResource, style: TextStyle, color: Color? = nil) {
         text = .localized(key)
         self.style = style
         self.color = color ?? .themeLeah
@@ -54,7 +54,7 @@ struct ThemeText: View {
 
 extension ThemeText {
     enum TextType: Equatable {
-        case localized(LocalizedStringKey)
+        case localized(LocalizedStringResource)
         case plain(String)
         case attributed(AttributedString)
     }

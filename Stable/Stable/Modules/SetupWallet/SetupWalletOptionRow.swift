@@ -2,8 +2,8 @@ import SwiftUI
 
 struct SetupWalletOptionRow: View {
     let icon: String
-    let title: LocalizedStringKey
-    let subtitle: LocalizedStringKey
+    let title: LocalizedStringResource
+    let subtitle: LocalizedStringResource
     let action: () -> Void
 
     var body: some View {
