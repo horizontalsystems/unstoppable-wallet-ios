@@ -109,6 +109,8 @@ public class Core {
     let tonConnectManager: TonConnectManager
     let spamWrapper: SpamWrapper
 
+    let openCryptoPayManager: OpenCryptoPayManager
+
     let purchaseManager: PurchaseManager
 
     let recentAddressStorage: RecentAddressStorage
@@ -427,11 +429,19 @@ public class Core {
         let telegramUserHandler = TelegramUserHandler(marketKit: marketKit)
         // let tonConnectHandler = TonConnectEventHandler(tonConnectManager: tonConnectManager)
 
+        openCryptoPayManager = OpenCryptoPayManager(
+            provider: OpenCryptoPayProvider(networkManager: networkManager),
+            walletManager: walletManager,
+            accountManager: accountManager
+        )
+        let openCryptoPayHandler = OpenCryptoPayEventHandler(openCryptoPayManager: openCryptoPayManager)
+
         appEventHandler.append(handler: walletConnectHandler)
         // eventHandler.append(handler: tonConnectHandler)
         appEventHandler.append(handler: widgetCoinHandler)
         appEventHandler.append(handler: sendAddressHandler)
         appEventHandler.append(handler: telegramUserHandler)
+        appEventHandler.append(handler: openCryptoPayHandler)
 
         appManager = AppManager(
             widgetRefresher: widgetRefresher,

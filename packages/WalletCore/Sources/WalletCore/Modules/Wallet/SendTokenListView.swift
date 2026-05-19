@@ -10,11 +10,14 @@ struct SendTokenListView: View {
 
     @Binding var isPresented: Bool
 
+    private let onPrepare: ((Wallet) async throws -> SendTokenListViewModel.SendOptions)?
+
     @FocusState var searchFocused: Bool
 
-    init(options: SendTokenListViewModel.SendOptions = .init(), isPresented: Binding<Bool>) {
+    init(options: SendTokenListViewModel.SendOptions = .init(), isPresented: Binding<Bool>, onPrepare: ((Wallet) async throws -> SendTokenListViewModel.SendOptions)? = nil) {
         _viewModel = .init(wrappedValue: SendTokenListViewModel(options: options))
         _isPresented = isPresented
+        self.onPrepare = onPrepare
     }
 
     var body: some View {
@@ -47,8 +50,7 @@ struct SendTokenListView: View {
                     } else {
                         ThemeList(items) { item in
                             WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, amountRounding: viewModel.amountRounding, subtitleMode: .coinName, isReachable: viewModel.isReachable) {
-                                path.append(item.wallet)
-                                stat(page: .sendTokenList, event: .openSend(token: item.wallet.token))
+                                select(wallet: item.wallet)
                             } failedAction: {
                                 Coordinator.shared.presentBalanceError(wallet: item.wallet, state: item.state)
                             }
@@ -58,15 +60,18 @@ struct SendTokenListView: View {
             }
             .navigationTitle("send.send".localized)
             .searchBar(text: $searchText, prompt: "placeholder.search".localized)
-            .navigationDestination(for: Wallet.self) { wallet in
-                SendAddressView(
-                    wallet: wallet,
-                    address: viewModel.options.address,
-                    amount: viewModel.options.amount?.humanReadable(decimals: wallet.token.decimals),
-                    memo: viewModel.options.memo,
-                    path: $path,
-                    isPresented: $isPresented
-                )
+            .navigationDestination(for: Route.self) { route in
+                switch route {
+                case let .send(wallet, options):
+                    SendAddressView(
+                        wallet: wallet,
+                        address: options.address,
+                        amount: options.amount?.humanReadable(decimals: wallet.token.decimals),
+                        memo: options.memo,
+                        path: $path,
+                        isPresented: $isPresented
+                    )
+                }
             }
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
@@ -77,6 +82,20 @@ struct SendTokenListView: View {
                     }
                 }
             }
+        }
+    }
+
+    private func select(wallet: Wallet) {
+        stat(page: .sendTokenList, event: .openSend(token: wallet.token))
+
+        guard let onPrepare else {
+            path.append(Route.send(wallet, viewModel.options))
+            return
+        }
+
+        Task { @MainActor in
+            guard let prepared = try? await onPrepare(wallet) else { return }
+            path.append(Route.send(wallet, prepared))
         }
     }
 
@@ -102,5 +121,11 @@ struct SendTokenListView: View {
 
     var blockchains: [Blockchain] {
         Array(Set(viewModel.itemsWithOptions.map(\.wallet.token.blockchain))).sorted { $0.type.order < $1.type.order }
+    }
+}
+
+extension SendTokenListView {
+    enum Route: Hashable {
+        case send(Wallet, SendTokenListViewModel.SendOptions)
     }
 }

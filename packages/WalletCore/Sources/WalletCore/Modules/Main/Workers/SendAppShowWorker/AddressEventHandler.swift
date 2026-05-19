@@ -58,8 +58,7 @@ class AddressEventHandler {
             address: uri.address,
             amount: uri.amount,
             memo: uri.memo
-        )
-        )
+        ))
     }
 }
 
