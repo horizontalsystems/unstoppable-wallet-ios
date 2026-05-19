@@ -64,6 +64,7 @@
 "alert.connected" = "Connected";
 "alert.enabling" = "Enabling";
 "alert.enabled_coins" = "Enabled %@ more coins";
+"alert.preparing" = "Preparing";
 "alert.sending" = "Sending";
 "alert.sent" = "Sent";
 "alert.swapping" = "Swapping";
