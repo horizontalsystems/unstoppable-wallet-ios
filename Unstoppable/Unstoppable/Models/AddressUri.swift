@@ -71,7 +71,7 @@ extension AddressUri {
         }
     }
 
-    enum Amount {
+    enum Amount: Hashable {
         case points(Decimal) // lamports, satoshi, wei
         case decimals(Decimal) // human readable
 
