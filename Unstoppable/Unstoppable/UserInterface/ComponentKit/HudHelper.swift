@@ -92,6 +92,7 @@ extension HudHelper {
         case waitingForSession
         case enabling
         case enabled(coins: Int)
+        case preparing
         case sending
         case sent
         case swapping
@@ -129,6 +130,7 @@ extension HudHelper {
             case .connectedWalletConnect: image = UIImage(named: "circle_check_24")
             case .enabling: image = UIImage(named: "arrow_medium_2_down_24")
             case .enabled: image = UIImage(named: "circle_check_24")
+            case .preparing: image = UIImage(named: "arrow_medium_2_up_right_24")
             case .sending, .sent: image = UIImage(named: "arrow_medium_2_up_right_24")
             case .swapping, .swapped: image = UIImage(named: "arrow_swap_2_24")
             case .approving, .approved, .revoking, .revoked: image = UIImage(named: "unordered_24")
@@ -144,7 +146,7 @@ extension HudHelper {
             case .addedToWatchlist, .alreadyAddedToWallet, .notSupportedYet, .sent, .swapped, .approved, .revoked, .attention: return .themeJacob
             case .removedFromWallet, .removedFromWatchlist, .deleted, .noInternet, .disconnectedWalletConnect, .error: return .themeLucian
             case .addedToWallet, .copied, .saved, .savedToCloud, .done, .restored, .created, .imported, .walletAdded, .enabled, .success, .connectedWalletConnect, .passwordFromKeychain: return .themeRemus
-            case .waitingForSession, .disconnectingWalletConnect, .enabling, .sending, .swapping, .approving, .revoking: return .themeGray
+            case .waitingForSession, .disconnectingWalletConnect, .enabling, .preparing, .sending, .swapping, .approving, .revoking: return .themeGray
             }
         }
 
@@ -173,6 +175,7 @@ extension HudHelper {
             case .connectedWalletConnect: return "alert.connected".localized
             case .enabling: return "alert.enabling".localized
             case let .enabled(count): return "alert.enabled_coins".localized(count)
+            case .preparing: return "alert.preparing".localized
             case .sending: return "alert.sending".localized
             case .sent: return "alert.sent".localized
             case .swapping: return "alert.swapping".localized
@@ -189,21 +192,21 @@ extension HudHelper {
 
         var showingTime: TimeInterval? {
             switch self {
-            case .waitingForSession, .disconnectingWalletConnect, .sending, .enabling: return nil
+            case .waitingForSession, .disconnectingWalletConnect, .preparing, .sending, .enabling: return nil
             default: return 2
             }
         }
 
         var isLoading: Bool {
             switch self {
-            case .waitingForSession, .disconnectingWalletConnect, .enabling, .sending, .swapping, .approving, .revoking: return true
+            case .waitingForSession, .disconnectingWalletConnect, .enabling, .preparing, .sending, .swapping, .approving, .revoking: return true
             default: return false
             }
         }
 
         var isUserInteractionEnabled: Bool {
             switch self {
-            case .disconnectingWalletConnect, .enabling, .sending: return false
+            case .disconnectingWalletConnect, .enabling, .preparing, .sending: return false
             default: return true
             }
         }

@@ -72,6 +72,11 @@ extension DeepLinkManager {
             return
         }
 
+        if let ocp = OpenCryptoPayUrl.detect(text: url.absoluteString) {
+            newSchemeSubject.send(.openCryptoPay(url: ocp))
+            return
+        }
+
         let encoded = url.absoluteString.removingPercentEncoding ?? url.absoluteString
         if let uri = try? addressUriParser.parse(url: encoded) {
             newSchemeSubject.send(.transfer(addressUri: uri))
@@ -93,5 +98,6 @@ extension DeepLinkManager {
         case coin(uid: String)
         case transfer(addressUri: AddressUri)
         case referral(telegramUserId: String, referralCode: String)
+        case openCryptoPay(url: URL)
     }
 }

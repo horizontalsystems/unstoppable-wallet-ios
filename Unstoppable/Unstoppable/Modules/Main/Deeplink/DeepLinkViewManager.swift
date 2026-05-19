@@ -57,6 +57,10 @@ class DeepLinkViewManager {
             Coordinator.shared.present { isPresented in
                 SendTokenListView(options: options, isPresented: isPresented)
             }
+        case let .cryptoPaySendPage(payload):
+            Coordinator.shared.present { isPresented in
+                CryptoPaySendTokenListView(options: payload.options, prepare: payload.resolver, isPresented: isPresented)
+            }
         case let .walletConnectHandleUrl(url):
             walletConnectVerificationModel.handle { [weak self] in
                 self?.handleWalletConnect(url: url)
