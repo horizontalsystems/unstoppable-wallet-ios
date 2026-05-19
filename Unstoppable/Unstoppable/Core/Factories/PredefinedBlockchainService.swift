@@ -1,4 +1,5 @@
 import MarketKit
+import WalletCore
 
 class PredefinedBlockchainService {
     private let restoreSettingsManager: RestoreSettingsManager

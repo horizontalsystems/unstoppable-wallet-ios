@@ -1,4 +1,5 @@
 import Combine
+import WalletCore
 
 class AppUnlockViewModel: BaseUnlockViewModel {
     private let lockManager = Core.shared.lockManager

@@ -5,6 +5,7 @@ import KeychainAccess
 import MarketKit
 import RxCocoa
 import RxSwift
+import WalletCore
 
 enum StorageMigrator {
     static func migrate(dbPool: DatabasePool, localStorage: LocalStorage) throws {

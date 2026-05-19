@@ -1,6 +1,7 @@
 import Foundation
 import MarketKit
 import RxSwift
+import WalletCore
 
 protocol IWalletServiceDelegate: AnyObject {
     func didUpdateWallets(walletService: WalletService)

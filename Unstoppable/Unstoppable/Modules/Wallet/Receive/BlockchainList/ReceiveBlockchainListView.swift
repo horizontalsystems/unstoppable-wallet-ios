@@ -1,5 +1,6 @@
 import MarketKit
 import SwiftUI
+import WalletCore
 
 struct ReceiveBlockhainListView: View {
     @StateObject var viewModel: ReceiveBlockchainListViewModel

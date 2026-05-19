@@ -1,6 +1,7 @@
 import Foundation
 import StellarKit
 import WalletConnectSign
+import WalletCore
 
 class StellarProposalHandler {
     static let namespace = "stellar"
@@ -13,10 +14,10 @@ class StellarProposalHandler {
     ]
 
     private let stellarKitManager: StellarKitManager
-    private let account: Account
+    private let account: WalletCore.Account
     private let supportedMethods: [String]
 
-    init(stellarKitManager: StellarKitManager, account: Account, supportedMethods: [String]) {
+    init(stellarKitManager: StellarKitManager, account: WalletCore.Account, supportedMethods: [String]) {
         self.stellarKitManager = stellarKitManager
         self.account = account
         self.supportedMethods = supportedMethods

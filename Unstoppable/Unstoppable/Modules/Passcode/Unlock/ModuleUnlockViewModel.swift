@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import WalletCore
 
 class ModuleUnlockViewModel: BaseUnlockViewModel {
     private let onUnlock: () -> Void

@@ -1,4 +1,5 @@
 import MoneroKit
+import WalletCore
 
 class MoneroWatchWalletParser {
     func parseAndValidate(address: Address, viewKey: String, forceRequiredFields: Bool) -> (WatchViewModel.State, CautionState) {

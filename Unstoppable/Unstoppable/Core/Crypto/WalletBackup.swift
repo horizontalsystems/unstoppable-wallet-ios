@@ -1,4 +1,5 @@
 import Foundation
+import WalletCore
 
 class WalletBackup: Codable {
     let crypto: BackupCrypto

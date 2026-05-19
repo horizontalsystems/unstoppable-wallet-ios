@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import WalletCore
 
 class WalletConnectVerificationModel: ObservableObject {
     private let accountManager: AccountManager

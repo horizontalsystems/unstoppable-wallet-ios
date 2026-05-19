@@ -4,6 +4,7 @@ import HdWalletKit
 import LitecoinKit
 import MarketKit
 import RxSwift
+import WalletCore
 
 class LitecoinAdapter: BitcoinBaseAdapter {
     private static let networkType: LitecoinKit.Kit.NetworkType = .mainNet

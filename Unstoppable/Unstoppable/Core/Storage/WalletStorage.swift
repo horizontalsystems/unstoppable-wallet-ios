@@ -1,5 +1,6 @@
 import MarketKit
 import RxSwift
+import WalletCore
 
 class WalletStorage {
     private let marketKit: MarketKit.Kit

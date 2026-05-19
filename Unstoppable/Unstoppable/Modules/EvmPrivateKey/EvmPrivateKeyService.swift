@@ -1,5 +1,6 @@
 import EvmKit
 import HsExtensions
+import WalletCore
 
 class EvmPrivateKeyService {
     let privateKey: String

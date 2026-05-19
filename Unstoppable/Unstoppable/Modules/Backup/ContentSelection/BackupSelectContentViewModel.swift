@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import WalletCore
 
 class BackupSelectContentViewModel: ObservableObject {
     private let accountManager = Core.shared.accountManager

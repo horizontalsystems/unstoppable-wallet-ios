@@ -3,6 +3,7 @@ import Foundation
 import MarketKit
 import SwiftUI
 import WalletConnectSign
+import WalletCore
 
 class DeepLinkViewManager {
     private var cancellables = Set<AnyCancellable>()

@@ -1,6 +1,7 @@
 import Combine
 import MarketKit
 import SwiftUI
+import WalletCore
 
 class RestoreCoinsViewModel: ObservableObject {
     private let accountName: String

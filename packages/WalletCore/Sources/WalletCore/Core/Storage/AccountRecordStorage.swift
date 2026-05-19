@@ -1,14 +1,14 @@
 import GRDB
 
-class AccountRecordStorage {
+public class AccountRecordStorage {
     private let dbPool: DatabasePool
 
-    init(dbPool: DatabasePool) {
+    public init(dbPool: DatabasePool) {
         self.dbPool = dbPool
     }
 }
 
-extension AccountRecordStorage {
+public extension AccountRecordStorage {
     var all: [AccountRecord] {
         try! dbPool.read { db in
             try AccountRecord.fetchAll(db)

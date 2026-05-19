@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import RxSwift
 import WalletConnectSign
+import WalletCore
 
 class WalletConnectEventHandlerService {
     private var disposeBag = DisposeBag()
@@ -36,7 +37,7 @@ class WalletConnectEventHandlerService {
 }
 
 extension WalletConnectEventHandlerService {
-    var activeAccount: Account? {
+    var activeAccount: WalletCore.Account? {
         accountManager.activeAccount
     }
 

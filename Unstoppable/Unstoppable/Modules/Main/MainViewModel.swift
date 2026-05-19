@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import RxSwift
+import WalletCore
 
 class MainViewModel: ObservableObject {
     private let keyTab = "main-tab"

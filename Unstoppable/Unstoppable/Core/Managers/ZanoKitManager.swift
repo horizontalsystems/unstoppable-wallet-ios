@@ -1,6 +1,7 @@
 import Foundation
 import MarketKit
 import RxSwift
+import WalletCore
 import ZanoKit
 
 class ZanoKitManager {

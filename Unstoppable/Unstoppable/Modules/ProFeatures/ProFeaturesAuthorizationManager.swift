@@ -6,6 +6,7 @@ import RxCocoa
 import RxRelay
 import RxSwift
 import UIKit
+import WalletCore
 
 class ProFeaturesAuthorizationManager {
     static let contractAddress = try! EvmKit.Address(hex: "0x495f947276749ce646f68ac8c248420045cb7b5e")

@@ -1,6 +1,7 @@
 import RxSwift
 import SectionsTableView
 import SnapKit
+import WalletCore
 
 import UIKit
 

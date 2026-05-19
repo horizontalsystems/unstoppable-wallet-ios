@@ -5,6 +5,7 @@ import HsToolKit
 import MarketKit
 import MoneroKit
 import RxSwift
+import WalletCore
 
 class MoneroAdapter {
     static let networkType: MoneroKit.NetworkType = .mainnet

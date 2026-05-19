@@ -1,18 +1,17 @@
 import Foundation
 import HsExtensions
-import WalletCore
 
-class LockoutManager {
+public class LockoutManager {
     private let maxAttempts = 5
 
     private let unlockAttemptsKey = "unlock_attempts_keychain_key"
     private let unlockUptimeKey = "unlock_uptime_keychain_key"
     private let lastKnownUptimeKey = "last_known_uptime_keychain_key"
 
-    private var keychainStorage: KeychainStorage
+    private let keychainStorage: KeychainStorage
     private var timer: Timer?
 
-    @PostPublished private(set) var lockoutState: LockoutState = .unlocked(attemptsLeft: 0, maxAttempts: 0)
+    @PostPublished public private(set) var lockoutState: LockoutState = .unlocked(attemptsLeft: 0, maxAttempts: 0)
 
     private var unlockAttempts: Int {
         didSet {
@@ -32,7 +31,7 @@ class LockoutManager {
         }
     }
 
-    init(keychainStorage: KeychainStorage) {
+    public init(keychainStorage: KeychainStorage) {
         self.keychainStorage = keychainStorage
 
         unlockAttempts = keychainStorage.value(for: unlockAttemptsKey) ?? 0
@@ -82,15 +81,19 @@ extension LockoutManager {
                 lastKnownUptime = uptime
 
                 lockoutState = .locked(unlockDate: Date().addingTimeInterval(timeRemaining))
-                timer = Timer.scheduledTimer(withTimeInterval: timeRemaining, repeats: false) { [weak self] _ in
+                let timer = Timer(timeInterval: timeRemaining, repeats: false) { [weak self] _ in
                     self?.syncState()
                 }
+                RunLoop.main.add(timer, forMode: .common)
+                self.timer = timer
             } else {
                 lockoutState = .unlocked(attemptsLeft: 1, maxAttempts: maxAttempts)
             }
         }
     }
+}
 
+public extension LockoutManager {
     func didUnlock() {
         unlockAttempts = 0
         syncState()
@@ -107,18 +110,18 @@ extension LockoutManager {
     }
 }
 
-enum LockoutState {
+public enum LockoutState {
     case unlocked(attemptsLeft: Int, maxAttempts: Int)
     case locked(unlockDate: Date)
 
-    var isLocked: Bool {
+    public var isLocked: Bool {
         switch self {
         case .unlocked: return false
         case .locked: return true
         }
     }
 
-    var isAttempted: Bool {
+    public var isAttempted: Bool {
         switch self {
         case let .unlocked(attemptsLeft, maxAttempts): return attemptsLeft != maxAttempts
         case .locked: return true

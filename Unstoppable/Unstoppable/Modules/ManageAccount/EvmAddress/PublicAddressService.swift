@@ -1,6 +1,7 @@
 import EvmKit
 import HsExtensions
 import TronKit
+import WalletCore
 
 protocol IPublicAddressService {
     var address: String { get }

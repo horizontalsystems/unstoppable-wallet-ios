@@ -4,6 +4,7 @@ import HsToolKit
 import MarketKit
 import RxRelay
 import RxSwift
+import WalletCore
 import ZanoKit
 
 class ZanoAdapter {

@@ -1,5 +1,6 @@
 import Combine
 import UIKit
+import WalletCore
 
 class SetPasscodeViewModel: ObservableObject {
     let passcodeLength = 6

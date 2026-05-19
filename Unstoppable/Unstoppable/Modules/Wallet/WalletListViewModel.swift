@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import MarketKit
 import RxSwift
+import WalletCore
 
 class WalletListViewModel: ObservableObject {
     private let keySortType = "wallet-sort-type"

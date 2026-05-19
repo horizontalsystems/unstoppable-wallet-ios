@@ -9,6 +9,7 @@ import MarketKit
 import OneInchKit
 import RxSwift
 import UniswapKit
+import WalletCore
 
 class EvmAccountManager {
     private let blockchainType: BlockchainType

@@ -1,6 +1,7 @@
 import MarketKit
 import SwiftUI
 import UIKit
+import WalletCore
 
 enum ReceiveModule {
     @ViewBuilder static func view(account: Account, fullCoin: FullCoin, path: Binding<NavigationPath>, onDismiss: (() -> Void)?) -> some View {

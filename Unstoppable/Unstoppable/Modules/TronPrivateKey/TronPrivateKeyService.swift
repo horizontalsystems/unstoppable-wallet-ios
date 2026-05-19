@@ -1,5 +1,6 @@
 import HsExtensions
 import TronKit
+import WalletCore
 
 class TronPrivateKeyService {
     let privateKey: String

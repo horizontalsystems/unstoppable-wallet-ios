@@ -2,6 +2,7 @@ import HsToolKit
 import MarketKit
 import RxSwift
 import TronKit
+import WalletCore
 
 class TronAccountManager {
     private let blockchainType: BlockchainType = .tron

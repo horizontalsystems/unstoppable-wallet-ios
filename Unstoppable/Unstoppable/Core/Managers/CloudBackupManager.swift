@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import HsExtensions
 import HsToolKit
+import WalletCore
 
 class CloudBackupManager {
     private static let batchingInterval: TimeInterval = 1

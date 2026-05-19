@@ -3,6 +3,7 @@ import SectionsTableView
 import SnapKit
 import SwiftUI
 import UIKit
+import WalletCore
 
 class BackupManualViewController: ThemeViewController {
     private let viewModel: BackupManualViewModel

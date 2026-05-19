@@ -1,4 +1,5 @@
 import Combine
+import WalletCore
 
 class RestoreTypeViewModel: ObservableObject {
     private let cloudAccountBackupManager = Core.shared.cloudBackupManager

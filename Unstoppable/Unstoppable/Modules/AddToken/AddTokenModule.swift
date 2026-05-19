@@ -1,6 +1,7 @@
 import EvmKit
 import Foundation
 import MarketKit
+import WalletCore
 
 enum AddTokenModule {
     static func items() -> (Account, [Item])? {

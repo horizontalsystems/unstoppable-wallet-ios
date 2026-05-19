@@ -2,6 +2,7 @@ import Foundation
 import GRDB
 import HsToolKit
 import MarketKit
+import SwiftUI
 import WalletCore
 
 class Core {
@@ -162,7 +163,11 @@ class Core {
         appIconManager = AppIconManager()
         biometryManager = BiometryManager(userDefaultsStorage: userDefaultsStorage)
         passcodeManager = PasscodeManager(biometryManager: biometryManager, keychainStorage: keychainStorage)
-        lockManager = LockManager(passcodeManager: passcodeManager, userDefaultsStorage: userDefaultsStorage)
+        lockManager = LockManager(
+            passcodeManager: passcodeManager,
+            userDefaultsStorage: userDefaultsStorage,
+            lockScreenViewControllerProvider: { UIHostingController(rootView: AppUnlockView()) }
+        )
         lockoutManager = LockoutManager(keychainStorage: keychainStorage)
         coverManager = CoverManager(lockManager: lockManager)
         keychainManager = KeychainManager(storage: keychainStorage, userDefaultsStorage: userDefaultsStorage)

@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import RxSwift
 import UIKit
+import WalletCore
 import WidgetKit
 
 class AppManager {

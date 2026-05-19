@@ -1,6 +1,7 @@
 import Combine
 import MarketKit
 import SwiftUI
+import WalletCore
 
 struct RestorePrivateKeyView: View {
     @StateObject private var viewModel: RestorePrivateKeyViewModel

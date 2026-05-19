@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import WalletCore
 
 class TonConnectConnectViewModel: ObservableObject {
     private let parameters: TonConnectParameters

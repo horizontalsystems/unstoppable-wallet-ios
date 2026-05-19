@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct RestorePassphraseView: View {
     @StateObject private var viewModel: RestorePassphraseViewModel

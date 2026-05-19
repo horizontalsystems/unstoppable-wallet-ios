@@ -3,13 +3,12 @@ import Foundation
 import HdWalletKit
 import MarketKit
 import TronKit
-import WalletCore
 
-class AccountStorage {
+public class AccountStorage {
     private let keychainStorage: KeychainStorage
     private let storage: AccountRecordStorage
 
-    init(keychainStorage: KeychainStorage, storage: AccountRecordStorage) {
+    public init(keychainStorage: KeychainStorage, storage: AccountRecordStorage) {
         self.keychainStorage = keychainStorage
         self.storage = storage
     }
@@ -75,7 +74,11 @@ class AccountStorage {
                 return nil
             }
 
-            type = .tronAddress(address: try! TronKit.Address(raw: data))
+            guard let address = try? TronKit.Address(raw: data) else {
+                return nil
+            }
+
+            type = .tronAddress(address: address)
         case .tonAddress:
             guard let address = record.dataKey else {
                 return nil
@@ -265,7 +268,7 @@ class AccountStorage {
     }
 }
 
-extension AccountStorage {
+public extension AccountStorage {
     var allAccounts: ([Account], [AccountRecord]) {
         var accounts = [Account]()
         var lostAccountRecords = [AccountRecord]()

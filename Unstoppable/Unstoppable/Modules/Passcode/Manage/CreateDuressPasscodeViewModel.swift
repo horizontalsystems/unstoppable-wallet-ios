@@ -1,4 +1,5 @@
 import Combine
+import WalletCore
 
 class CreateDuressPasscodeViewModel: SetPasscodeViewModel {
     private let accountIds: [String]

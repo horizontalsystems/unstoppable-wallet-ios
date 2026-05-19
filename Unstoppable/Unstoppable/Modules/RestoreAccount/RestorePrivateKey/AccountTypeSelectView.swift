@@ -1,5 +1,6 @@
 import MarketKit
 import SwiftUI
+import WalletCore
 
 struct AccountTypeSelectView: View {
     let accountName: String

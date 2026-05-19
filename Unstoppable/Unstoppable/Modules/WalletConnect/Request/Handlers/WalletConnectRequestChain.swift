@@ -1,6 +1,7 @@
 import Foundation
 import UIKit
 import WalletConnectSign
+import WalletCore
 
 protocol IWalletConnectRequestHandler {
     var namespace: String { get }

@@ -1,5 +1,6 @@
 import Foundation
 import WalletConnectSign
+import WalletCore
 
 class ProposalValidator {
     static func separateByNamespace(blockchains: [WalletConnectMainModule.BlockchainProposal]) -> [String: [WalletConnectMainModule.BlockchainProposal]] {

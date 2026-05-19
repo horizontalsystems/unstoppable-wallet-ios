@@ -1,5 +1,6 @@
 import Foundation
 import WalletConnectSign
+import WalletCore
 
 class Eip155RequestFactory {
     let evmBlockchainManager: EvmBlockchainManager

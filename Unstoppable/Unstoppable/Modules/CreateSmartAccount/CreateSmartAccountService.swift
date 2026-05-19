@@ -4,6 +4,7 @@ import HdWalletKit
 import HsCryptoKit
 import MarketKit
 import TronKit
+import WalletCore
 
 /// Carries a passkey's credentialID together with the PRF-derived mnemonic that the
 /// service uses to derive a secp256k1 EOA owner for the Barz Smart Account.

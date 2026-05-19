@@ -1,5 +1,6 @@
 import HdWalletKit
 import SwiftUI
+import WalletCore
 
 struct CreateAccountView: View {
     @StateObject private var viewModel: CreateAccountViewModel

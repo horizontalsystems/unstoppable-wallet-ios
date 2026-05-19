@@ -1,4 +1,5 @@
 import stellarsdk
+import WalletCore
 
 class StellarSecretKeyViewModel {
     let secretKey: String

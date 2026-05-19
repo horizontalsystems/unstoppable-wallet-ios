@@ -2,6 +2,7 @@ import Combine
 import HsExtensions
 import LocalAuthentication
 import UIKit
+import WalletCore
 
 class BaseUnlockViewModel: ObservableObject {
     let passcodeLength = 6
@@ -48,18 +49,21 @@ class BaseUnlockViewModel: ObservableObject {
         lockoutState = lockoutManager.lockoutState
 
         biometryManager.$biometryType
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.biometryType = $0
                 self?.syncBiometryType()
             }
             .store(in: &cancellables)
         biometryManager.$biometryEnabledType
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.biometryEnabledType = $0
                 self?.syncBiometryType()
             }
             .store(in: &cancellables)
         lockoutManager.$lockoutState
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in
                 self?.lockoutState = $0
                 self?.syncBiometryType()

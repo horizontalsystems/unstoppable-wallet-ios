@@ -2,6 +2,7 @@ import Foundation
 import MarketKit
 import RxRelay
 import RxSwift
+import WalletCore
 
 class AdapterManager {
     private let disposeBag = DisposeBag()

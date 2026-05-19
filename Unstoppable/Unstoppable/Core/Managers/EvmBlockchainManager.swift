@@ -2,6 +2,7 @@ import EvmKit
 import Foundation
 import HsToolKit
 import MarketKit
+import WalletCore
 
 class EvmBlockchainManager {
     static let blockchainTypes: [BlockchainType] = [

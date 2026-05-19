@@ -1,19 +1,19 @@
 import GRDB
 
-class AccountRecord: Record {
-    let id: String
-    let level: Int
-    let name: String
-    let type: String
-    let origin: String
-    let backedUp: Bool
-    let fileBackedUp: Bool
-    var wordsKey: String?
-    var saltKey: String?
-    var dataKey: String?
-    var bip39Compliant: Bool?
+public class AccountRecord: Record {
+    public let id: String
+    public let level: Int
+    public let name: String
+    public let type: String
+    public let origin: String
+    public let backedUp: Bool
+    public let fileBackedUp: Bool
+    public var wordsKey: String?
+    public var saltKey: String?
+    public var dataKey: String?
+    public var bip39Compliant: Bool?
 
-    init(id: String, level: Int, name: String, type: String, origin: String, backedUp: Bool, fileBackedUp: Bool, wordsKey: String?, saltKey: String?, dataKey: String?, bip39Compliant: Bool?) {
+    public init(id: String, level: Int, name: String, type: String, origin: String, backedUp: Bool, fileBackedUp: Bool, wordsKey: String?, saltKey: String?, dataKey: String?, bip39Compliant: Bool?) {
         self.id = id
         self.level = level
         self.name = name
@@ -29,15 +29,15 @@ class AccountRecord: Record {
         super.init()
     }
 
-    override class var databaseTableName: String {
+    override public class var databaseTableName: String {
         "account_records"
     }
 
-    enum Columns: String, ColumnExpression {
+    public enum Columns: String, ColumnExpression {
         case id, level, name, type, origin, backedUp, fileBackedUp, wordsKey, saltKey, dataKey, bip39Compliant
     }
 
-    required init(row: Row) throws {
+    public required init(row: Row) throws {
         id = row[Columns.id]
         level = row[Columns.level]
         name = row[Columns.name]
@@ -53,7 +53,7 @@ class AccountRecord: Record {
         try super.init(row: row)
     }
 
-    override func encode(to container: inout PersistenceContainer) {
+    override public func encode(to container: inout PersistenceContainer) {
         container[Columns.id] = id
         container[Columns.level] = level
         container[Columns.name] = name

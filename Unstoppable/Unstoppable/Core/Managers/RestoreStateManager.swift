@@ -1,4 +1,5 @@
 import MarketKit
+import WalletCore
 
 class RestoreStateManager {
     private let storage: RestoreStateStorage

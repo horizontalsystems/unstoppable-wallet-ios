@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import WalletCore
 
 class SwapHistoryManager {
     private let accountManager: AccountManager

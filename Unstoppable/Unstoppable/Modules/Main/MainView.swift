@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct MainView: View {
     @StateObject var viewModel = MainViewModel()

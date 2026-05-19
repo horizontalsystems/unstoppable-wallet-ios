@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import WalletCore
 
 class CoinProvider {
     private let marketKit: MarketKit.Kit

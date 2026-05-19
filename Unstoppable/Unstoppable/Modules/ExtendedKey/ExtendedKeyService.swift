@@ -6,6 +6,7 @@ import HdWalletKit
 import LitecoinKit
 import RxRelay
 import RxSwift
+import WalletCore
 
 class ExtendedKeyService {
     let mode: ExtendedKeyModule.Mode

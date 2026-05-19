@@ -3,6 +3,7 @@ import EvmKit
 import Foundation
 import ReownWalletKit
 import StellarKit
+import WalletCore
 
 class WalletConnectManager {
     private let timeOut = 5
@@ -76,7 +77,7 @@ extension WalletConnectManager {
 }
 
 extension WalletConnectManager {
-    static func stellarAddress(account: Account) throws -> String {
+    static func stellarAddress(account: WalletCore.Account) throws -> String {
         try StellarKitManager.accountId(accountType: account.type)
     }
 }

@@ -1,4 +1,5 @@
 import MarketKit
+import WalletCore
 
 enum RestoreHelper {
     static func supportedTokens(accountType: AccountType) -> [Token] {

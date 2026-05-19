@@ -8,6 +8,7 @@ import MarketKit
 import RxRelay
 import RxSwift
 import UIKit
+import WalletCore
 import ZcashLightClientKit
 
 class ZcashAdapter {

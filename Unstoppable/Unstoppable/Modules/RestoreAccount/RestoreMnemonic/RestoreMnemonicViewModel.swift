@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import HdWalletKit
+import WalletCore
 
 class RestoreMnemonicViewModel: ObservableObject {
     private let accountFactory = Core.shared.accountFactory

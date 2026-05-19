@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MarketKit
+import WalletCore
 
 class AddTokenViewModel: ObservableObject {
     private let account: Account

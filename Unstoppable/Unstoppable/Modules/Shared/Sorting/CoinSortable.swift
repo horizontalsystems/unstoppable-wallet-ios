@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import WalletCore
 
 // Marker protocol for types that carry a Coin. Enables sharing coin-level
 // comparison logic between Token and FullCoin.

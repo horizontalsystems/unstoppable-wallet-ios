@@ -1,8 +1,7 @@
 import Combine
 import HsExtensions
-import WalletCore
 
-class PasscodeManager {
+public class PasscodeManager {
     private let separator = "|"
     private let passcodeKey = "pin_keychain_key"
 
@@ -11,11 +10,11 @@ class PasscodeManager {
 
     private var passcodes = [String]()
 
-    @DistinctPublished private(set) var currentPasscodeLevel: Int
-    @DistinctPublished private(set) var isPasscodeSet = false
-    @DistinctPublished private(set) var isDuressPasscodeSet = false
+    @DistinctPublished public private(set) var currentPasscodeLevel: Int
+    @DistinctPublished public private(set) var isPasscodeSet = false
+    @DistinctPublished public private(set) var isDuressPasscodeSet = false
 
-    init(biometryManager: BiometryManager, keychainStorage: KeychainStorage) {
+    public init(biometryManager: BiometryManager, keychainStorage: KeychainStorage) {
         self.biometryManager = biometryManager
         self.keychainStorage = keychainStorage
 
@@ -44,7 +43,7 @@ class PasscodeManager {
     }
 }
 
-extension PasscodeManager {
+public extension PasscodeManager {
     func isValid(passcode: String) -> Bool {
         passcodes[currentPasscodeLevel] == passcode
     }

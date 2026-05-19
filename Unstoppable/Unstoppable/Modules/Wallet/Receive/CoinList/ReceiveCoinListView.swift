@@ -1,5 +1,6 @@
 import MarketKit
 import SwiftUI
+import WalletCore
 
 struct ReceiveCoinListView: View {
     @StateObject var viewModel: ReceiveCoinListViewModel

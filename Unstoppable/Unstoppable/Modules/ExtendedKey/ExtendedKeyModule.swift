@@ -1,5 +1,6 @@
 
 import UIKit
+import WalletCore
 
 enum ExtendedKeyModule {
     static func viewController(mode: Mode, accountType: AccountType) -> UIViewController {

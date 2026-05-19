@@ -1,6 +1,7 @@
 import RxCocoa
 import RxRelay
 import RxSwift
+import WalletCore
 
 class MoneroKeyViewModel {
     private let spendKey: String

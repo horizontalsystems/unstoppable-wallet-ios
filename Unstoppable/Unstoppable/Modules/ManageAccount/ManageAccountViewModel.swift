@@ -1,4 +1,5 @@
 import Combine
+import WalletCore
 
 class ManageAccountViewModel: ObservableObject {
     private let accountManager = Core.shared.accountManager

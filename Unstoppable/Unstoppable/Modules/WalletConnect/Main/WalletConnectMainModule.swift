@@ -1,13 +1,14 @@
 import MarketKit
 import RxSwift
 import SwiftUI
+import WalletCore
 
 import UIKit
 import WalletConnectSign
 import WalletConnectUtils
 
 enum WalletConnectMainModule {
-    static func viewController(account: Account, session: WalletConnectSign.Session? = nil, proposal: WalletConnectSign.Session.Proposal? = nil, sourceViewController: UIViewController?, viaPushing: Bool = false) -> UIViewController {
+    static func viewController(account: WalletCore.Account, session: WalletConnectSign.Session? = nil, proposal: WalletConnectSign.Session.Proposal? = nil, sourceViewController: UIViewController?, viaPushing: Bool = false) -> UIViewController {
         let service = Core.shared.walletConnectSessionManager.service
 
         let chain = ProposalChain()
@@ -59,7 +60,7 @@ enum WalletConnectMainModule {
 struct WalletConnectMainView: UIViewControllerRepresentable {
     typealias UIViewControllerType = UIViewController
 
-    let account: Account
+    let account: WalletCore.Account
     let session: WalletConnectSign.Session?
     let proposal: WalletConnectSign.Session.Proposal?
 
