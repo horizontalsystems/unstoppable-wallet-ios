@@ -1,5 +1,6 @@
 import Foundation
 import WalletConnectSign
+import WalletCore
 
 class Eip155ProposalHandler {
     static let namespace = "eip155"
@@ -13,10 +14,10 @@ class Eip155ProposalHandler {
     ]
 
     private let evmBlockchainManager: EvmBlockchainManager
-    private let account: Account
+    private let account: WalletCore.Account
     private let supportedMethods: [String]
 
-    init(evmBlockchainManager: EvmBlockchainManager, account: Account, supportedMethods: [String]) {
+    init(evmBlockchainManager: EvmBlockchainManager, account: WalletCore.Account, supportedMethods: [String]) {
         self.evmBlockchainManager = evmBlockchainManager
         self.account = account
         self.supportedMethods = supportedMethods

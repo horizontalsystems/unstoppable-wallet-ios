@@ -1,6 +1,7 @@
 import MarketKit
 import RxSwift
 import UIKit
+import WalletCore
 
 enum CloudRestoreBackupListModule {
     struct RestoredBackup: Codable {

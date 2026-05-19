@@ -1,6 +1,7 @@
 import Combine
 import HdWalletKit
 import MarketKit
+import WalletCore
 
 class CreateAccountViewModel: ObservableObject {
     private static let defaultWordCount: Mnemonic.WordCount = .twelve

@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import WalletCore
 
 class TonConnectListViewModel: ObservableObject {
     private let tonConnectManager = Core.shared.tonConnectManager

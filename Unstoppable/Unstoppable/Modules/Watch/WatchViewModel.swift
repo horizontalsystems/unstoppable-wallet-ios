@@ -6,6 +6,7 @@ import MarketKit
 import RxSwift
 import TronKit
 import UIKit
+import WalletCore
 
 class WatchViewModel: ObservableObject {
     private let accountManager = Core.shared.accountManager

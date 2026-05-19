@@ -1,4 +1,5 @@
 import MarketKit
+import WalletCore
 
 struct Wallet {
     let token: Token

@@ -1,6 +1,7 @@
 import Foundation
 import HsExtensions
 import MarketKit
+import WalletCore
 
 class ReceiveCoinListService {
     private let provider: CoinProvider

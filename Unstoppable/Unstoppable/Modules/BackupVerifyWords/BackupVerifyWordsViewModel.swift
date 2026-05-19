@@ -1,6 +1,7 @@
 import RxCocoa
 import RxRelay
 import RxSwift
+import WalletCore
 
 class BackupVerifyWordsViewModel {
     private let service: BackupVerifyWordsService

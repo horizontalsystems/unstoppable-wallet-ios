@@ -5,6 +5,7 @@ import HsCryptoKit
 import MarketKit
 import Testing
 @testable import Unstoppable
+import WalletCore
 
 struct CreateSmartAccountServiceTests {
     @Test func createRejectsEmptyName() async throws {

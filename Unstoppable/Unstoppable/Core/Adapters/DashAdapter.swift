@@ -5,6 +5,7 @@ import HdWalletKit
 import HsToolKit
 import MarketKit
 import RxSwift
+import WalletCore
 
 class DashAdapter: BitcoinBaseAdapter {
     static let networkType: DashKit.Kit.NetworkType = .mainNet

@@ -7,7 +7,7 @@ import RxSwift
 extension Kit {
     struct DisposedError: Error {}
 
-    public var nftBalancesObservable: Observable<[NftBalance]> {
+    var nftBalancesObservable: Observable<[NftBalance]> {
         nftBalancesPublisher.asObservable()
     }
 }

@@ -1,3 +1,5 @@
+import WalletCore
+
 class RecoveryPhraseService {
     let words: [String]
     let salt: String

@@ -2,6 +2,7 @@ import BigInt
 import EvmKit
 import Foundation
 import MarketKit
+import WalletCore
 
 class AaSendHandler {
     let baseToken: Token

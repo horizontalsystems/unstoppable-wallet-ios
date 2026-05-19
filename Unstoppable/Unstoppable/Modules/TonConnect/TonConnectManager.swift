@@ -7,6 +7,7 @@ import StreamURLSessionTransport
 import TonConnectAPI
 import TonSwift
 import TweetNacl
+import WalletCore
 
 class TonConnectManager {
     private let apiClient: TonConnectAPI.Client

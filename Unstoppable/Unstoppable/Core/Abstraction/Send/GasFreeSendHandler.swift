@@ -2,6 +2,7 @@ import BigInt
 import Foundation
 import MarketKit
 import TronKit
+import WalletCore
 
 class GasFreeSendHandler {
     let baseToken: Token

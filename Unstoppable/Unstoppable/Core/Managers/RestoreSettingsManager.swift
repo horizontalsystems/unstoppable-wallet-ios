@@ -1,6 +1,7 @@
 import Foundation
 import MarketKit
 import MoneroKit
+import WalletCore
 import ZanoKit
 import ZcashLightClientKit
 
@@ -27,7 +28,7 @@ extension RestoreSettingsManager {
         return settings
     }
 
-    func accountSettingsInfo(account: Account) -> [(BlockchainType, RestoreSettingType, String)] {
+    func accountSettingsInfo(account: WalletCore.Account) -> [(BlockchainType, RestoreSettingType, String)] {
         let records = storage.restoreSettings(accountId: account.id)
 
         return records.compactMap { record in
@@ -40,7 +41,7 @@ extension RestoreSettingsManager {
         }
     }
 
-    func save(settings: RestoreSettings, account: Account, blockchainType: BlockchainType) {
+    func save(settings: RestoreSettings, account: WalletCore.Account, blockchainType: BlockchainType) {
         let records = settings.map { type, value in
             RestoreSettingRecord(accountId: account.id, blockchainUid: blockchainType.uid, key: type.rawValue, value: value)
         }

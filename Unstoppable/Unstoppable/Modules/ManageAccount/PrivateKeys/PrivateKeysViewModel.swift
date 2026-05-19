@@ -2,6 +2,7 @@ import Foundation
 import RxCocoa
 import RxRelay
 import RxSwift
+import WalletCore
 
 class PrivateKeysViewModel {
     private let service: PrivateKeysService

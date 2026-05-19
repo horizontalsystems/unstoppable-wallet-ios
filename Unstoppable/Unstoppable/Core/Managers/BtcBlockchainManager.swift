@@ -2,6 +2,7 @@ import BitcoinCore
 import MarketKit
 import RxRelay
 import RxSwift
+import WalletCore
 
 class BtcBlockchainManager {
     static let blockchainTypes: [BlockchainType] = [

@@ -1,14 +1,14 @@
 import GRDB
 
-class ActiveAccountStorage {
+public class ActiveAccountStorage {
     private let dbPool: DatabasePool
 
-    init(dbPool: DatabasePool) {
+    public init(dbPool: DatabasePool) {
         self.dbPool = dbPool
     }
 }
 
-extension ActiveAccountStorage {
+public extension ActiveAccountStorage {
     func activeAccountId(level: Int) -> String? {
         try? dbPool.read { db in
             try ActiveAccount.filter(ActiveAccount.Columns.level == level).fetchOne(db)?.accountId

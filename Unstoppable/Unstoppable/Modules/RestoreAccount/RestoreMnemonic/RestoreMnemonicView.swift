@@ -1,6 +1,7 @@
 import Combine
 import MarketKit
 import SwiftUI
+import WalletCore
 
 struct RestoreMnemonicView: View {
     @StateObject private var viewModel: RestoreMnemonicViewModel

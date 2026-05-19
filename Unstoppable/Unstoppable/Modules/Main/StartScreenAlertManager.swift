@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import WalletCore
 
 class StartScreenAlertManager {
     private var cancellables = Set<AnyCancellable>()

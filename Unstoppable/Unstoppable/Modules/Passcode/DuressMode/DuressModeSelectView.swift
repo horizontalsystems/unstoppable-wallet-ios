@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct DuressModeSelectView: View {
     @ObservedObject var viewModel: DuressModeViewModel

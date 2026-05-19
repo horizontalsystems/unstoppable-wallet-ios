@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct BackupRequiredView: View {
     let account: Account

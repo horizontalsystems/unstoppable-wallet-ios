@@ -1,4 +1,5 @@
 import HsToolKit
+import WalletCore
 
 struct WalletServiceFactory {
     private let adapterManager = Core.shared.adapterManager

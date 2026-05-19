@@ -1,24 +1,7 @@
 import HdWalletKit
+import WalletCore
 
-class Account: Identifiable {
-    let id: String
-    var level: Int
-    var name: String
-    let type: AccountType
-    let origin: AccountOrigin
-    var backedUp: Bool
-    var fileBackedUp: Bool
-
-    init(id: String, level: Int, name: String, type: AccountType, origin: AccountOrigin, backedUp: Bool, fileBackedUp: Bool) {
-        self.id = id
-        self.level = level
-        self.name = name
-        self.type = type
-        self.origin = origin
-        self.backedUp = backedUp
-        self.fileBackedUp = fileBackedUp
-    }
-
+extension Account {
     var watchAccount: Bool {
         switch type {
         case .evmAddress, .tronAddress, .tonAddress, .stellarAccount, .btcAddress, .moneroWatchAccount:
@@ -57,19 +40,4 @@ class Account: Identifiable {
         default: return false
         }
     }
-}
-
-extension Account: Hashable {
-    public static func == (lhs: Account, rhs: Account) -> Bool {
-        lhs.id == rhs.id
-    }
-
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(id)
-    }
-}
-
-enum AccountOrigin: String {
-    case created
-    case restored
 }

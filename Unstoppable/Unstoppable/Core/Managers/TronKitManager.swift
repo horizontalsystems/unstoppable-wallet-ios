@@ -4,6 +4,7 @@ import MarketKit
 import RxRelay
 import RxSwift
 import TronKit
+import WalletCore
 
 class TronKitManager {
     private let disposeBag = DisposeBag()

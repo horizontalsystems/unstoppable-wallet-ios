@@ -3,6 +3,7 @@ import Foundation
 import MarketKit
 import SwiftUI
 import UserInterface
+import WalletCore
 
 class Coordinator: ObservableObject {
     static let shared = Coordinator()

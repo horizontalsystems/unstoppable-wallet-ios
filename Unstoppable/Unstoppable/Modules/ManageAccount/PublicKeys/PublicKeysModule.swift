@@ -1,5 +1,6 @@
 import SwiftUI
 import UIKit
+import WalletCore
 
 enum PublicKeysModule {
     static func viewController(account: Account) -> UIViewController {

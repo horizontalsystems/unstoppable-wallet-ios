@@ -5,6 +5,7 @@ import Foundation
 import GRDB
 import MarketKit
 import TronKit
+import WalletCore
 
 // Central orchestrator of AA-wallet lifecycle. Owns aa.sqlite DatabasePool, runs migrator,
 // subscribes to AccountManager.accountDeletedPublisher for cascade cleanup, performs

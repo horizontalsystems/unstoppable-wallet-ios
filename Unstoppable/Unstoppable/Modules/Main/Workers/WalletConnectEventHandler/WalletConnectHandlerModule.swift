@@ -1,4 +1,5 @@
 import UIKit
+import WalletCore
 
 enum WalletConnectHandlerModule {
     static func handler(

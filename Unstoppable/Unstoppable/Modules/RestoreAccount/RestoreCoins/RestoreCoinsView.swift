@@ -1,6 +1,7 @@
 import Kingfisher
 import MarketKit
 import SwiftUI
+import WalletCore
 
 struct RestoreCoinsView: View {
     @StateObject private var viewModel: RestoreCoinsViewModel

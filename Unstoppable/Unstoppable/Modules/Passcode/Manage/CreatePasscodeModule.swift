@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 enum CreatePasscodeModule {
     static func createPasscodeView(reason: CreatePasscodeReason, showParentSheet: Binding<Bool>, onCreate: @escaping () -> Void, onCancel: @escaping () -> Void) -> some View {

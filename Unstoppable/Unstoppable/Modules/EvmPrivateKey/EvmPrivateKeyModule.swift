@@ -1,5 +1,6 @@
 
 import UIKit
+import WalletCore
 
 enum EvmPrivateKeyModule {
     static func viewController(accountType: AccountType) -> UIViewController? {

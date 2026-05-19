@@ -1,4 +1,5 @@
 import Combine
+import WalletCore
 
 class EnabledWalletCacheManager {
     private let storage: EnabledWalletCacheStorage

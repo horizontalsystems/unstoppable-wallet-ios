@@ -1,5 +1,6 @@
 import Combine
 import MarketKit
+import WalletCore
 
 class RestoreSettingsService {
     private let manager: RestoreSettingsManager

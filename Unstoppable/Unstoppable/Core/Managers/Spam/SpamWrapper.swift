@@ -1,4 +1,5 @@
 import HsToolKit
+import WalletCore
 
 class SpamWrapper {
     /// Total score >= 7: definite spam (.spam decision)

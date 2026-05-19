@@ -1,3 +1,5 @@
+import WalletCore
+
 class PublicKeysService {
     private let account: Account
 

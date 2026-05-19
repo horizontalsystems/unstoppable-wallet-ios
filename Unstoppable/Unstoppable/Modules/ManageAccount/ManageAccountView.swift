@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct ManageAccountView: View {
     @StateObject private var viewModel: ManageAccountViewModel

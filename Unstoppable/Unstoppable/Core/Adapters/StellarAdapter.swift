@@ -4,6 +4,7 @@ import Foundation
 import RxSwift
 import StellarKit
 import stellarsdk
+import WalletCore
 
 class StellarAdapter {
     static let maxValue = Decimal(Int64.max) / 10_000_000

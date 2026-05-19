@@ -3,6 +3,7 @@ import MarketKit
 import NftKit
 import SwiftUI
 import UIKit
+import WalletCore
 
 extension BlockchainType {
     static let supported: [BlockchainType] = [

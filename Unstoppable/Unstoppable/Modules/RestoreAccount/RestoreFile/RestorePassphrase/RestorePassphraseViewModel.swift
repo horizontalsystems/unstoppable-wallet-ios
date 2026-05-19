@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import HsExtensions
+import WalletCore
 
 class RestorePassphraseViewModel: ObservableObject {
     private let appBackupProvider = Core.shared.appBackupProvider

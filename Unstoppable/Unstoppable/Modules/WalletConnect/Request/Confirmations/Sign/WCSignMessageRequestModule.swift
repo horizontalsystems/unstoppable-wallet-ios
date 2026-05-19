@@ -1,6 +1,7 @@
 import EvmKit
 import SwiftUI
 import UIKit
+import WalletCore
 
 enum WCSignMessageRequestModule {
     static func viewController(request: WalletConnectRequest) -> UIViewController? {

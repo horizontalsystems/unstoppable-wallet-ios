@@ -5,6 +5,7 @@ import MarketKit
 import RxRelay
 import RxSwift
 import SolanaKit
+import WalletCore
 
 class SolanaKitManager {
     private let rpcSourceManager: SolanaRpcSourceManager

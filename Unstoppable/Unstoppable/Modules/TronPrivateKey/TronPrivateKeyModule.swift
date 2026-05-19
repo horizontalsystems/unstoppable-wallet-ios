@@ -1,4 +1,5 @@
 import UIKit
+import WalletCore
 
 enum TronPrivateKeyModule {
     static func viewController(accountType: AccountType) -> UIViewController? {

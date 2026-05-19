@@ -4,6 +4,7 @@ import HdWalletKit
 import MarketKit
 import StellarKit
 import stellarsdk
+import WalletCore
 
 class StellarKitManager {
     private let restoreStateManager: RestoreStateManager
@@ -12,7 +13,7 @@ class StellarKitManager {
     private var addedAssetCancellable: AnyCancellable?
 
     private weak var _stellarKit: StellarKit.Kit?
-    private var currentAccount: Account?
+    private var currentAccount: WalletCore.Account?
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).stellar-kit-manager", qos: .userInitiated)
 
@@ -22,7 +23,7 @@ class StellarKitManager {
         self.marketKit = marketKit
     }
 
-    private func _stellarKit(account: Account) throws -> StellarKit.Kit {
+    private func _stellarKit(account: WalletCore.Account) throws -> StellarKit.Kit {
         if let _stellarKit, let currentAccount, currentAccount == account {
             return _stellarKit
         }
@@ -47,7 +48,7 @@ class StellarKitManager {
         return stellarKit
     }
 
-    private func subscribe(stellarKit: StellarKit.Kit, account: Account) {
+    private func subscribe(stellarKit: StellarKit.Kit, account: WalletCore.Account) {
         addedAssetCancellable = stellarKit.addedAssetPublisher
             .sink { [weak self, restoreStateManager] assets in
                 let restoreState = restoreStateManager.restoreState(account: account, blockchainType: .stellar)
@@ -64,7 +65,7 @@ class StellarKitManager {
             }
     }
 
-    private func handle(assets: [StellarKit.Asset], account: Account) {
+    private func handle(assets: [StellarKit.Asset], account: WalletCore.Account) {
         // print("HANDLE ASSETS: \(assets.map(\.code))")
 
         guard !assets.isEmpty else {
@@ -100,7 +101,7 @@ extension StellarKitManager {
         queue.sync { _stellarKit }
     }
 
-    func stellarKit(account: Account) throws -> StellarKit.Kit {
+    func stellarKit(account: WalletCore.Account) throws -> StellarKit.Kit {
         try queue.sync { try _stellarKit(account: account) }
     }
 

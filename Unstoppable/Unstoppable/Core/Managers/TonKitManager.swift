@@ -5,6 +5,7 @@ import MarketKit
 import TonKit
 import TonSwift
 import TweetNacl
+import WalletCore
 
 class TonKitManager {
     private let restoreStateManager: RestoreStateManager
@@ -14,7 +15,7 @@ class TonKitManager {
     private var eventCancellable: AnyCancellable?
 
     private weak var _tonKit: TonKit.Kit?
-    private var currentAccount: Account?
+    private var currentAccount: WalletCore.Account?
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).ton-kit-manager", qos: .userInitiated)
 
@@ -24,7 +25,7 @@ class TonKitManager {
         self.marketKit = marketKit
     }
 
-    private func _tonKit(account: Account) throws -> TonKit.Kit {
+    private func _tonKit(account: WalletCore.Account) throws -> TonKit.Kit {
         if let _tonKit, let currentAccount, currentAccount == account {
             return _tonKit
         }
@@ -60,7 +61,7 @@ class TonKitManager {
         return tonKit
     }
 
-    private func subscribe(tonKit: TonKit.Kit, account: Account) {
+    private func subscribe(tonKit: TonKit.Kit, account: WalletCore.Account) {
         let restoreState = restoreStateManager.restoreState(account: account, blockchainType: .ton)
 
         // print("RESTORE STATE: shouldRestore: \(restoreState.shouldRestore), initialRestored: \(restoreState.initialRestored)")
@@ -83,7 +84,7 @@ class TonKitManager {
             .sink { [weak self] in self?.handle(events: $0.events, initial: $0.initial, address: address, account: account) }
     }
 
-    private func handle(events: [Event], initial: Bool, address: TonSwift.Address, account: Account) {
+    private func handle(events: [Event], initial: Bool, address: TonSwift.Address, account: WalletCore.Account) {
         guard !initial else {
             // print("ignore initial events: \(events.count)")
             return
@@ -116,7 +117,7 @@ class TonKitManager {
         handle(jettons: Array(jettons), account: account)
     }
 
-    private func handle(jettons: [Jetton], account: Account) {
+    private func handle(jettons: [Jetton], account: WalletCore.Account) {
         // print("HANDLE JETTONS: \(jettons.map { $0.name })")
 
         guard !jettons.isEmpty else {
@@ -153,7 +154,7 @@ extension TonKitManager {
         queue.sync { _tonKit }
     }
 
-    func tonKit(account: Account) throws -> TonKit.Kit {
+    func tonKit(account: WalletCore.Account) throws -> TonKit.Kit {
         try queue.sync { try _tonKit(account: account) }
     }
 }

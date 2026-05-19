@@ -1,4 +1,5 @@
 import Foundation
+import WalletCore
 
 /// Persists a submitted GasFree transfer as a `PendingGasFreeTransferRecord`.
 /// One concern, one method — Sender stays a thin orchestrator.

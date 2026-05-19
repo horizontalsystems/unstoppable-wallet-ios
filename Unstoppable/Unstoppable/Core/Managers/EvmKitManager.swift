@@ -9,6 +9,7 @@ import OneInchKit
 import RxRelay
 import RxSwift
 import UniswapKit
+import WalletCore
 
 class EvmKitManager {
     let chain: Chain

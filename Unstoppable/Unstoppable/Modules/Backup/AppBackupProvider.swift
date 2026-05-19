@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import WalletCore
 
 class AppBackupProvider {
     private static let version = 2

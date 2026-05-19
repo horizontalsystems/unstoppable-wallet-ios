@@ -1,4 +1,5 @@
 import Combine
+import WalletCore
 
 class DuressModeViewModel: ObservableObject {
     private let biometryManager: BiometryManager

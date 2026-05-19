@@ -1,15 +1,14 @@
-import EvmKit
 import Foundation
 
-class AccountFactory {
+public class AccountFactory {
     private let accountManager: AccountManager
 
-    init(accountManager: AccountManager) {
+    public init(accountManager: AccountManager) {
         self.accountManager = accountManager
     }
 }
 
-extension AccountFactory {
+public extension AccountFactory {
     var generatedAccountName: String {
         let index = Int.random(in: 1 ... 100)
         return "wallet_name.\(index)".localized

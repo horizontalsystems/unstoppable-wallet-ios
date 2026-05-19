@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import WalletCore
 
 class AppViewModel: ObservableObject {
     private let passcodeLockManager = Core.shared.passcodeLockManager

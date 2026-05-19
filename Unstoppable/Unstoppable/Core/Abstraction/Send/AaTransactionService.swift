@@ -4,6 +4,7 @@ import EvmKit
 import Foundation
 import HsToolKit
 import MarketKit
+import WalletCore
 
 class AaTransactionService {
     private let blockchainType: BlockchainType

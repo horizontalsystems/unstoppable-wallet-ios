@@ -1,6 +1,6 @@
 import Foundation
 
-enum AutoLockPeriod: String, CaseIterable {
+public enum AutoLockPeriod: String, CaseIterable {
     case immediate
     case minute1
     case minute5
@@ -8,11 +8,11 @@ enum AutoLockPeriod: String, CaseIterable {
     case minute30
     case hour1
 
-    var title: String {
+    public var title: String {
         "auto_lock.\(rawValue)".localized
     }
 
-    var period: TimeInterval {
+    public var period: TimeInterval {
         switch self {
         case .immediate: return 0
         case .minute1: return 60

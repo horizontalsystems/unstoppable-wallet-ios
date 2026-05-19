@@ -4,6 +4,7 @@ import GRDB
 import MarketKit
 import Testing
 @testable import Unstoppable
+import WalletCore
 
 struct SmartAccountManagerTests {
     @Test func initCreatesAaSqliteAndRunsMigrations() throws {

@@ -1,7 +1,7 @@
 import Combine
 import HsExtensions
 
-class AccountManager {
+public class AccountManager {
     private let passcodeManager: PasscodeManager
     private let storage: AccountCachedStorage
     private var cancellables = Set<AnyCancellable>()
@@ -11,11 +11,11 @@ class AccountManager {
     private let accountUpdatedSubject = PassthroughSubject<Account, Never>()
     private let accountDeletedSubject = PassthroughSubject<Account, Never>()
 
-    private(set) var lastCreatedAccount: Account?
+    public private(set) var lastCreatedAccount: Account?
 
-    @PostPublished var lostAccountRecords: [AccountRecord]?
+    @PostPublished public var lostAccountRecords: [AccountRecord]?
 
-    init(passcodeManager: PasscodeManager, accountStorage: AccountStorage, activeAccountStorage: ActiveAccountStorage) {
+    public init(passcodeManager: PasscodeManager, accountStorage: AccountStorage, activeAccountStorage: ActiveAccountStorage) {
         self.passcodeManager = passcodeManager
 
         storage = AccountCachedStorage(level: passcodeManager.currentPasscodeLevel, accountStorage: accountStorage, activeAccountStorage: activeAccountStorage)
@@ -54,7 +54,7 @@ class AccountManager {
     }
 }
 
-extension AccountManager {
+public extension AccountManager {
     var activeAccountPublisher: AnyPublisher<Account?, Never> {
         activeAccountSubject.eraseToAnyPublisher()
     }

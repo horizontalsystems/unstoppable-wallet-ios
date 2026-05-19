@@ -1,4 +1,5 @@
 import UIKit
+import WalletCore
 
 enum PublicAddressModule {
     static func evmViewController(account: Account) -> UIViewController? {

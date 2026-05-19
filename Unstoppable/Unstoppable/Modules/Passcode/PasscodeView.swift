@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct PasscodeView: View {
     let maxDigits: Int

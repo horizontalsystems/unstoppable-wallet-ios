@@ -4,6 +4,7 @@ import EvmKit
 import Foundation
 import HsExtensions
 import MarketKit
+import WalletCore
 
 // Orchestrates AA send: reads on-chain state, calls Pimlico for gas + paymaster, signs via passkey,
 // submits the UserOperation, archives a PendingUserOperationRecord.

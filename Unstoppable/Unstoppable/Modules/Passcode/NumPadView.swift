@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct NumPadView: View {
     @Binding var digits: [Int]

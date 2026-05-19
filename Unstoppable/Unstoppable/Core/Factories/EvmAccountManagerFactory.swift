@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import WalletCore
 
 class EvmAccountManagerFactory {
     private let accountManager: AccountManager

@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import WalletCore
 
 class SecuritySettingsViewModel: ObservableObject {
     var premiumFeatures: [PremiumFeature] = PremiumCategory.defenseSystem.features
@@ -69,18 +70,23 @@ class SecuritySettingsViewModel: ObservableObject {
         swapEnabled = appStateManager.swapEnabled
 
         passcodeManager.$currentPasscodeLevel
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.currentPasscodeLevel = $0 }
             .store(in: &cancellables)
         passcodeManager.$isPasscodeSet
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.isPasscodeSet = $0 }
             .store(in: &cancellables)
         passcodeManager.$isDuressPasscodeSet
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.isDuressPasscodeSet = $0 }
             .store(in: &cancellables)
         biometryManager.$biometryType
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.biometryType = $0 }
             .store(in: &cancellables)
         biometryManager.$biometryEnabledType
+            .receive(on: DispatchQueue.main)
             .sink { [weak self] in self?.biometryEnabledType = $0 }
             .store(in: &cancellables)
 

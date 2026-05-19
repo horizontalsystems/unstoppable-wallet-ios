@@ -3,6 +3,7 @@ import BitcoinKit
 import HdWalletKit
 import MarketKit
 import RxSwift
+import WalletCore
 
 class BitcoinAdapter: BitcoinBaseAdapter {
     private static let networkType: BitcoinKit.Kit.NetworkType = .mainNet

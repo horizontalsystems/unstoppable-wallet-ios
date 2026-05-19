@@ -1,5 +1,6 @@
 import Foundation
 import WalletConnectSign
+import WalletCore
 
 class StellarRequestFactory {
     let stellarKitManager: StellarKitManager

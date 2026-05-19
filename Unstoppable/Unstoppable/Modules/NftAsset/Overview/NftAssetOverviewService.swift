@@ -3,6 +3,7 @@ import Kingfisher
 import MarketKit
 import RxRelay
 import RxSwift
+import WalletCore
 
 class NftAssetOverviewService {
     let providerCollectionUid: String

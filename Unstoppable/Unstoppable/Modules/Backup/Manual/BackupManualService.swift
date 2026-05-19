@@ -1,3 +1,5 @@
+import WalletCore
+
 class BackupManualService {
     let account: Account
     let words: [String]

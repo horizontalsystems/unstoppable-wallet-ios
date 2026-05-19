@@ -1,11 +1,11 @@
 import HsExtensions
 import LocalAuthentication
 
-class PasscodeLockManager {
+public class PasscodeLockManager {
     private let accountManager: AccountManager
-    private let walletManager: WalletManager
+    private let walletManager: PasscodeLockWalletProvider
 
-    @DistinctPublished private(set) var state: PasscodeLockState = .passcodeSet {
+    @DistinctPublished public private(set) var state: PasscodeLockState = .passcodeSet {
         didSet {
             switch state {
             case .passcodeNotSet: onSecureStorageInvalidation()
@@ -14,7 +14,7 @@ class PasscodeLockManager {
         }
     }
 
-    init(accountManager: AccountManager, walletManager: WalletManager) {
+    public init(accountManager: AccountManager, walletManager: PasscodeLockWalletProvider) {
         self.accountManager = accountManager
         self.walletManager = walletManager
 
@@ -44,7 +44,7 @@ class PasscodeLockManager {
     }
 }
 
-extension PasscodeLockManager {
+public extension PasscodeLockManager {
     func handleForeground() {
         state = resolveState()
     }

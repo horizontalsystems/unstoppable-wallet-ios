@@ -3,6 +3,7 @@ import MarketKit
 import ReownWalletKit
 import RxCocoa
 import RxSwift
+import WalletCore
 
 class WalletConnectSessionManager {
     private let disposeBag = DisposeBag()
@@ -46,13 +47,13 @@ class WalletConnectSessionManager {
         syncSessions()
     }
 
-    private func handleDeleted(account: Account) {
+    private func handleDeleted(account: WalletCore.Account) {
         storage.deleteSessions(accountId: account.id)
         syncSessions()
         syncPendingRequest()
     }
 
-    private func handle(activeAccount _: Account?) {
+    private func handle(activeAccount _: WalletCore.Account?) {
         syncSessions()
         syncPendingRequest()
     }

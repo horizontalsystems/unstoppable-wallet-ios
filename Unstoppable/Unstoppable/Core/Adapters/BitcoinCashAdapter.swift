@@ -3,6 +3,7 @@ import BitcoinCore
 import HdWalletKit
 import MarketKit
 import RxSwift
+import WalletCore
 
 class BitcoinCashAdapter: BitcoinBaseAdapter {
     private let bitcoinCashKit: BitcoinCashKit.Kit

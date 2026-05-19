@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import WalletCore
 
 class AccountWarningViewModel: ObservableObject {
     private let accountManager = Core.shared.accountManager

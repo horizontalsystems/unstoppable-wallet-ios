@@ -1,4 +1,5 @@
 import Combine
+import WalletCore
 
 class CreatePasscodeViewModel: SetPasscodeViewModel {
     private let reason: CreatePasscodeModule.CreatePasscodeReason

@@ -1,4 +1,5 @@
 import Foundation
+import WalletCore
 
 class PublicKeysViewModel {
     private let service: PublicKeysService

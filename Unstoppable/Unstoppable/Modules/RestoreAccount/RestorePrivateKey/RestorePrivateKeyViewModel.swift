@@ -5,6 +5,7 @@ import HdWalletKit
 import MarketKit
 import stellarsdk
 import TronKit
+import WalletCore
 
 class RestorePrivateKeyViewModel: ObservableObject {
     private let accountFactory = Core.shared.accountFactory

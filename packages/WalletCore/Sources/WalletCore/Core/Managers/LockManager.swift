@@ -1,19 +1,19 @@
 import Combine
 import Foundation
 import HsExtensions
-import SwiftUI
-import WalletCore
+import UIKit
 
-class LockManager {
+public class LockManager {
     private let lastExitDateKey = "last_exit_date_key"
     private let autoLockPeriodKey = "auto-lock-period"
 
     private let passcodeManager: PasscodeManager
     private let userDefaultsStorage: UserDefaultsStorage
+    private let lockScreenViewControllerProvider: () -> UIViewController
 
-    @DistinctPublished private(set) var isLocked: Bool
+    @DistinctPublished public private(set) var isLocked: Bool
 
-    var windowScene: UIWindowScene? {
+    public var windowScene: UIWindowScene? {
         didSet {
             lock()
         }
@@ -21,15 +21,16 @@ class LockManager {
 
     private var window: UIWindow?
 
-    var autoLockPeriod: AutoLockPeriod {
+    public var autoLockPeriod: AutoLockPeriod {
         didSet {
             userDefaultsStorage.set(value: autoLockPeriod.rawValue, for: autoLockPeriodKey)
         }
     }
 
-    init(passcodeManager: PasscodeManager, userDefaultsStorage: UserDefaultsStorage) {
+    public init(passcodeManager: PasscodeManager, userDefaultsStorage: UserDefaultsStorage, lockScreenViewControllerProvider: @escaping () -> UIViewController) {
         self.passcodeManager = passcodeManager
         self.userDefaultsStorage = userDefaultsStorage
+        self.lockScreenViewControllerProvider = lockScreenViewControllerProvider
 
         isLocked = passcodeManager.isPasscodeSet
         let autoLockPeriodRaw: String? = userDefaultsStorage.value(for: autoLockPeriodKey)
@@ -37,7 +38,7 @@ class LockManager {
     }
 }
 
-extension LockManager {
+public extension LockManager {
     func didEnterBackground() {
         guard !isLocked else {
             return
@@ -61,6 +62,22 @@ extension LockManager {
         lock()
     }
 
+    func unlock() {
+        isLocked = false
+
+        guard window != nil else {
+            return
+        }
+
+        UIView.animate(withDuration: 0.15, animations: {
+            self.window?.alpha = 0
+        }) { _ in
+            self.window = nil
+        }
+    }
+}
+
+extension LockManager {
     private func lock() {
         guard passcodeManager.isPasscodeSet else {
             return
@@ -76,23 +93,8 @@ extension LockManager {
         window.windowLevel = UIWindow.Level.alert - 1
         window.isHidden = false
 
-        let hostingController = UIHostingController(rootView: AppUnlockView())
-        window.rootViewController = hostingController
+        window.rootViewController = lockScreenViewControllerProvider()
 
         self.window = window
-    }
-
-    func unlock() {
-        isLocked = false
-
-        guard window != nil else {
-            return
-        }
-
-        UIView.animate(withDuration: 0.15, animations: {
-            self.window?.alpha = 0
-        }) { _ in
-            self.window = nil
-        }
     }
 }

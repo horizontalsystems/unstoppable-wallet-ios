@@ -1,3 +1,5 @@
+import WalletCore
+
 class BackupManualViewModel {
     private let service: BackupManualService
 

@@ -1,6 +1,7 @@
 import EvmKit
 import Foundation
 import MarketKit
+import WalletCore
 
 struct ManageWalletsTokenFetcher {
     private let marketKit = Core.shared.marketKit

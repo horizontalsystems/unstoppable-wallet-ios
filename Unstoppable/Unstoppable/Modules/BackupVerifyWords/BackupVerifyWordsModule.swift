@@ -1,4 +1,5 @@
 import UIKit
+import WalletCore
 
 enum BackupVerifyWordsModule {
     static func viewController(account: Account, onComplete: (() -> Void)? = nil) -> UIViewController? {

@@ -1,4 +1,5 @@
 import Foundation
+import WalletCore
 
 class KitCleaner {
     private let accountManager: AccountManager

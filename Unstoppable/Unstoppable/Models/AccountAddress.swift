@@ -1,6 +1,7 @@
 import EvmKit
 import MarketKit
 import TronKit
+import WalletCore
 
 enum AccountAddress {
     static func evmAddress(account: Account, blockchainType: BlockchainType) throws -> EvmKit.Address {

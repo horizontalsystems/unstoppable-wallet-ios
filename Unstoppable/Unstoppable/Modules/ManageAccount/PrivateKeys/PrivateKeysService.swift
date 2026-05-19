@@ -1,3 +1,5 @@
+import WalletCore
+
 class PrivateKeysService {
     private let account: Account
     private let passcodeManager: PasscodeManager

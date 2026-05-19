@@ -4,6 +4,7 @@ import Foundation
 import HsExtensions
 import HsToolKit
 import MarketKit
+import WalletCore
 
 class ActivateSubscriptionService {
     private let marketKit: MarketKit.Kit

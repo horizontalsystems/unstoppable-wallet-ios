@@ -2,6 +2,7 @@ import Combine
 import HsExtensions
 import RxRelay
 import RxSwift
+import WalletCore
 
 class BackupManager {
     private let accountManager: AccountManager

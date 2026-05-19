@@ -2,6 +2,7 @@ import BigInt
 import Foundation
 import MarketKit
 import TronKit
+import WalletCore
 
 // Orchestrates GasFree send: fetches account state, asks `GasFreeMessageBuilder` to assemble
 // the TIP-712 message, signs via passkey, posts SubmitTransferRequest, hands archive to

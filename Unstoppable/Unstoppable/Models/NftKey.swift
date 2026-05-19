@@ -1,4 +1,5 @@
 import MarketKit
+import WalletCore
 
 struct NftKey: Hashable {
     let account: Account
