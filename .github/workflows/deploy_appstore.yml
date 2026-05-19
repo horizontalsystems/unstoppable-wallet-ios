@@ -1,4 +1,4 @@
-name: Deploy Unstoppable to TestFlight
+name: Deploy to TestFlight
 
 on:
   push:

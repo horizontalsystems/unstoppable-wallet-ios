@@ -5,9 +5,6 @@
       location = "group:Unstoppable/Unstoppable.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:Stable/Stable.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:packages/WalletCore">
    </FileRef>
 </Workspace>
