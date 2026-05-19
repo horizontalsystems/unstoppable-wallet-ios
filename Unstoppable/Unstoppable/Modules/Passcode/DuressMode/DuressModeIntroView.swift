@@ -16,10 +16,11 @@ struct DuressModeIntroView: View {
                             ListSectionHeader(text: "enable_duress_mode.intro.notes".localized)
                             ListSection {
                                 if let biometryType = viewModel.biometryType {
+                                    let biometryTitle = String(localized: biometryType.title)
                                     InfoRow(
                                         icon: Image(biometryType.iconName),
-                                        title: biometryType.title,
-                                        description: "enable_duress_mode.intro.biometrics.description".localized(biometryType.title, biometryType.title)
+                                        title: biometryTitle,
+                                        description: "enable_duress_mode.intro.biometrics.description".localized(biometryTitle, biometryTitle)
                                     )
                                 }
 

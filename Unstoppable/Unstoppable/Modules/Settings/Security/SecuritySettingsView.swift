@@ -51,17 +51,17 @@ struct SecuritySettingsView: View {
                     ListSection {
                         Cell(
                             middle: {
-                                MultiText(title: biometryType.title)
+                                MultiText(title: String(localized: biometryType.title))
                             },
                             right: {
-                                ThemeText(viewModel.biometryEnabledType.title, style: .subheadSB).arrow(style: .dropdown)
+                                ThemeText(String(localized: viewModel.biometryEnabledType.title), style: .subheadSB).arrow(style: .dropdown)
                             },
                             action: {
                                 Coordinator.shared.present(type: .alert) { isPresented in
                                     OptionAlertView(
-                                        title: biometryType.title,
+                                        title: String(localized: biometryType.title),
                                         viewItems: BiometryManager.BiometryEnabledType.allCases.map {
-                                            .init(text: $0.title, selected: $0 == viewModel.biometryEnabledType)
+                                            .init(text: String(localized: $0.title), selected: $0 == viewModel.biometryEnabledType)
                                         },
                                         onSelect: { index in
                                             viewModel.biometryEnabledType = BiometryManager.BiometryEnabledType.allCases[index]
@@ -86,13 +86,13 @@ struct SecuritySettingsView: View {
                                 MultiText(title: "settings_security.auto_lock".localized, subtitle: "settings_security.auto_lock.description".localized)
                             },
                             right: {
-                                ThemeText(viewModel.autoLockPeriod.title, style: .subheadSB).arrow(style: .dropdown)
+                                ThemeText(String(localized: viewModel.autoLockPeriod.title), style: .subheadSB).arrow(style: .dropdown)
                             },
                             action: {
                                 Coordinator.shared.present(type: .alert) { isPresented in
                                     OptionAlertView(
                                         title: "settings_security.auto_lock".localized,
-                                        viewItems: AutoLockPeriod.allCases.map { .init(text: $0.title, selected: viewModel.autoLockPeriod == $0) },
+                                        viewItems: AutoLockPeriod.allCases.map { .init(text: String(localized: $0.title), selected: viewModel.autoLockPeriod == $0) },
                                         onSelect: { index in
                                             viewModel.autoLockPeriod = AutoLockPeriod.allCases[index]
                                         },

@@ -43,7 +43,7 @@ class CreateAccountViewModel: ObservableObject {
 
     init(walletType: WalletType) {
         self.walletType = walletType
-        name = accountFactory.generatedAccountName
+        name = String(localized: accountFactory.generatedAccountName)
     }
 
     private func activateDefaultWallets(account: Account) throws {
@@ -96,7 +96,7 @@ class CreateAccountViewModel: ObservableObject {
 
 extension CreateAccountViewModel {
     func refreshName() {
-        name = accountFactory.generatedAccountName
+        name = String(localized: accountFactory.generatedAccountName)
     }
 
     func createAccount() throws -> Account {

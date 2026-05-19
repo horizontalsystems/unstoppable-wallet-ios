@@ -93,8 +93,8 @@ struct IntroView: View {
 extension IntroView {
     struct Slide: Identifiable {
         let id = UUID()
-        let title: LocalizedStringKey
-        let subtitle: LocalizedStringKey
+        let title: LocalizedStringResource
+        let subtitle: LocalizedStringResource
         let image: String
     }
 }

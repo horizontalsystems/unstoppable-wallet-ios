@@ -1,11 +1,13 @@
+import Foundation
+
 public enum BiometryType {
     case faceId
     case touchId
 
-    public var title: String {
+    public var title: LocalizedStringResource {
         switch self {
-        case .faceId: return "face_id".localized
-        case .touchId: return "touch_id".localized
+        case .faceId: return .package("face_id")
+        case .touchId: return .package("touch_id")
         }
     }
 

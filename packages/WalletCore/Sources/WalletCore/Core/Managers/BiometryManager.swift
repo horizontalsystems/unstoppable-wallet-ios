@@ -62,11 +62,11 @@ public extension BiometryManager {
             self == .on
         }
 
-        public var title: String {
+        public var title: LocalizedStringResource {
             switch self {
-            case .off: return "biometry.off".localized
-            case .manual: return "biometry.manual".localized
-            case .on: return "biometry.on".localized
+            case .off: return .package("biometry.off")
+            case .manual: return .package("biometry.manual")
+            case .on: return .package("biometry.on")
             }
         }
     }

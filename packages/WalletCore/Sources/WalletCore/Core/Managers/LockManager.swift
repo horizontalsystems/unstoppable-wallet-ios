@@ -1,7 +1,7 @@
 import Combine
 import Foundation
 import HsExtensions
-import UIKit
+import SwiftUI
 
 public class LockManager {
     private let lastExitDateKey = "last_exit_date_key"
@@ -9,7 +9,7 @@ public class LockManager {
 
     private let passcodeManager: PasscodeManager
     private let userDefaultsStorage: UserDefaultsStorage
-    private let lockScreenViewControllerProvider: () -> UIViewController
+    private let lockScreenViewProvider: () -> AnyView
 
     @DistinctPublished public private(set) var isLocked: Bool
 
@@ -27,10 +27,14 @@ public class LockManager {
         }
     }
 
-    public init(passcodeManager: PasscodeManager, userDefaultsStorage: UserDefaultsStorage, lockScreenViewControllerProvider: @escaping () -> UIViewController) {
+    public init(
+        passcodeManager: PasscodeManager,
+        userDefaultsStorage: UserDefaultsStorage,
+        @ViewBuilder lockScreenView: @escaping () -> some View
+    ) {
         self.passcodeManager = passcodeManager
         self.userDefaultsStorage = userDefaultsStorage
-        self.lockScreenViewControllerProvider = lockScreenViewControllerProvider
+        lockScreenViewProvider = { AnyView(lockScreenView()) }
 
         isLocked = passcodeManager.isPasscodeSet
         let autoLockPeriodRaw: String? = userDefaultsStorage.value(for: autoLockPeriodKey)
@@ -93,7 +97,7 @@ extension LockManager {
         window.windowLevel = UIWindow.Level.alert - 1
         window.isHidden = false
 
-        window.rootViewController = lockScreenViewControllerProvider()
+        window.rootViewController = UIHostingController(rootView: lockScreenViewProvider())
 
         self.window = window
     }

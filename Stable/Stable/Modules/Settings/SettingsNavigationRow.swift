@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SettingsNavigationRow: View {
-    let title: LocalizedStringKey
+    let title: LocalizedStringResource
     let action: () -> Void
 
     var body: some View {

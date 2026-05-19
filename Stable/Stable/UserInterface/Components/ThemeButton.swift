@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ThemeButton: View {
-    let text: LocalizedStringKey
+    let text: LocalizedStringResource
     var icon: String? = nil
     var spinner: Bool = false
     var style: ThemeButton.Style = .primary

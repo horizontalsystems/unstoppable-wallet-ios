@@ -31,7 +31,7 @@ enum CreatePasscodeModule {
         var description: String {
             switch self {
             case .regular: return "create_passcode.description".localized
-            case let .biometry(_, type): return "create_passcode.description.biometry".localized(type.title)
+            case let .biometry(_, type): return "create_passcode.description.biometry".localized(String(localized: type.title))
             case .duress: return "create_passcode.description.duress_mode".localized
             }
         }

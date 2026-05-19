@@ -35,7 +35,7 @@ class RestoreMnemonicViewModel: ObservableObject {
     private let replaceWordSubject = PassthroughSubject<(NSRange, String), Never>()
 
     init() {
-        name = accountFactory.generatedAccountName
+        name = String(localized: accountFactory.generatedAccountName)
         wordListLanguage = displayName(language: selectedLanguage)
     }
 
@@ -122,7 +122,7 @@ extension RestoreMnemonicViewModel {
     }
 
     func refreshName() {
-        name = accountFactory.generatedAccountName
+        name = String(localized: accountFactory.generatedAccountName)
     }
 
     func onSelectWordList(index: Int) {
