@@ -1,11 +1,8 @@
-name: Deploy Unstoppable to Firebase
+name: Deploy to Firebase
 
 on:
   push:
     branches: [ version/* ]
-    paths:
-      - 'Unstoppable/**'
-      - 'packages/**'
   workflow_dispatch:
 
 jobs:
