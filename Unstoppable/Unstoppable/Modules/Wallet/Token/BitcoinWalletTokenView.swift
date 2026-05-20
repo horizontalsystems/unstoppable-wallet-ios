@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct BitcoinWalletTokenView: View {
     @StateObject var viewModel: BitcoinWalletTokenViewModel

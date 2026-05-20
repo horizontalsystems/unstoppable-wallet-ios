@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct TronReceiveAddressView: View {
     @StateObject var viewModel: TronReceiveAddressViewModel

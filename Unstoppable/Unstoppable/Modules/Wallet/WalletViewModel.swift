@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import MarketKit
 import RxSwift
+import WalletCore
 
 class WalletViewModel: WalletListViewModel {
     private let balanceConversionManager = Core.shared.balanceConversionManager

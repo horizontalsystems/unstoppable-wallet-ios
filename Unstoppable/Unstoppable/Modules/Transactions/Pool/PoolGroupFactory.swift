@@ -1,6 +1,7 @@
 import Foundation
 import MarketKit
 import RxSwift
+import WalletCore
 
 class PoolGroupFactory {
     private func providers(poolGroupType: PoolGroupType, filter: TransactionTypeFilter, contact: Contact?) -> [PoolProvider] {

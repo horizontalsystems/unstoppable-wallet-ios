@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct StellarReceiveAddressView: View {
     @StateObject var viewModel: StellarReceiveAddressViewModel

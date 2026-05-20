@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import WalletCore
 
 protocol IAddTokenBlockchainService {
     var placeholder: String { get }

@@ -1,12 +1,15 @@
+import Combine
 import Foundation
 import MarketKit
 import RxRelay
 import RxSwift
+import WalletCore
 
 class NftAdapterManager {
     private let walletManager: WalletManager
     private let evmBlockchainManager: EvmBlockchainManager
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let adaptersUpdatedRelay = PublishRelay<[NftKey: INftAdapter]>()
     private var _adapterMap = [NftKey: INftAdapter]()
@@ -17,12 +20,12 @@ class NftAdapterManager {
         self.walletManager = walletManager
         self.evmBlockchainManager = evmBlockchainManager
 
-        walletManager.activeWalletDataUpdatedObservable
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe(onNext: { [weak self] walletData in
+        walletManager.activeWalletDataUpdatedPublisher
+            .receive(on: DispatchQueue.global(qos: .userInitiated))
+            .sink { [weak self] walletData in
                 self?.handleAdaptersReady(wallets: walletData.wallets)
-            })
-            .disposed(by: disposeBag)
+            }
+            .store(in: &cancellables)
 
         _initAdapters(wallets: walletManager.activeWallets)
     }

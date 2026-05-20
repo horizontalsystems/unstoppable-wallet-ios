@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import MarketKit
 import SwiftUI
+import WalletCore
 
 protocol ICurrentAddressProvider {
     var address: String? { get }

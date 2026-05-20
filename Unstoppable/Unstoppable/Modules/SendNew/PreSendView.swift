@@ -1,5 +1,6 @@
 import Kingfisher
 import SwiftUI
+import WalletCore
 
 struct PreSendView: View {
     @StateObject var viewModel: PreSendViewModel

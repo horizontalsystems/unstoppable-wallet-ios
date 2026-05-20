@@ -1,5 +1,6 @@
 import Foundation
 import StoreKit
+import WalletCore
 
 class RateAppManager {
     private let minLaunchCount = 5

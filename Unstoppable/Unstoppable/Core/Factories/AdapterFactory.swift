@@ -4,6 +4,7 @@ import MarketKit
 import RxRelay
 import RxSwift
 import StellarKit
+import WalletCore
 
 class AdapterFactory {
     private let evmBlockchainManager: EvmBlockchainManager

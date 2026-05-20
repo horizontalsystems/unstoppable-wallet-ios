@@ -1,14 +1,14 @@
 import GRDB
 
-class EnabledWalletStorage {
+public class EnabledWalletStorage {
     private let dbPool: DatabasePool
 
-    init(dbPool: DatabasePool) {
+    public init(dbPool: DatabasePool) {
         self.dbPool = dbPool
     }
 }
 
-extension EnabledWalletStorage {
+public extension EnabledWalletStorage {
     func allWallets() throws -> [EnabledWallet] {
         try dbPool.read { db in
             try EnabledWallet.fetchAll(db)

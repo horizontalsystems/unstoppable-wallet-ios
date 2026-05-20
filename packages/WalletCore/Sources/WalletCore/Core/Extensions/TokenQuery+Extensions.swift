@@ -1,6 +1,6 @@
 import MarketKit
 
-extension TokenQuery {
+public extension TokenQuery {
     var customCoinUid: String {
         "custom-\(id)"
     }

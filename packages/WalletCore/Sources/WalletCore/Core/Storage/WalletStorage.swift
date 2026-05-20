@@ -1,12 +1,10 @@
 import MarketKit
-import RxSwift
-import WalletCore
 
-class WalletStorage {
+public class WalletStorage {
     private let marketKit: MarketKit.Kit
     private let storage: EnabledWalletStorage
 
-    init(marketKit: MarketKit.Kit, storage: EnabledWalletStorage) {
+    public init(marketKit: MarketKit.Kit, storage: EnabledWalletStorage) {
         self.marketKit = marketKit
         self.storage = storage
     }
@@ -23,7 +21,7 @@ class WalletStorage {
     }
 }
 
-extension WalletStorage {
+public extension WalletStorage {
     func wallets(account: Account) throws -> [Wallet] {
         let enabledWallets = try storage.enabledWallets(accountId: account.id)
 
@@ -33,7 +31,7 @@ extension WalletStorage {
         let blockchainUids = queries.map(\.blockchainType.uid)
         let blockchains = try marketKit.blockchains(uids: blockchainUids)
 
-        return enabledWallets.compactMap { enabledWallet in
+        return enabledWallets.compactMap { enabledWallet -> Wallet? in
             guard let tokenQuery = TokenQuery(id: enabledWallet.tokenQueryId) else {
                 return nil
             }

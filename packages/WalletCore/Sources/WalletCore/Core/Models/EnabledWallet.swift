@@ -1,16 +1,16 @@
 import GRDB
 import MarketKit
 
-class EnabledWallet: Record {
-    let tokenQueryId: String
-    let accountId: String
+public class EnabledWallet: Record {
+    public let tokenQueryId: String
+    public let accountId: String
 
-    let coinName: String?
-    let coinCode: String?
-    let coinImage: String?
-    let tokenDecimals: Int?
+    public let coinName: String?
+    public let coinCode: String?
+    public let coinImage: String?
+    public let tokenDecimals: Int?
 
-    init(tokenQueryId: String, accountId: String, coinName: String? = nil, coinCode: String? = nil, coinImage: String? = nil, tokenDecimals: Int? = nil) {
+    public init(tokenQueryId: String, accountId: String, coinName: String? = nil, coinCode: String? = nil, coinImage: String? = nil, tokenDecimals: Int? = nil) {
         self.tokenQueryId = tokenQueryId
         self.accountId = accountId
         self.coinName = coinName
@@ -21,15 +21,15 @@ class EnabledWallet: Record {
         super.init()
     }
 
-    override class var databaseTableName: String {
+    override public class var databaseTableName: String {
         "enabled_wallets"
     }
 
-    enum Columns: String, ColumnExpression {
+    public enum Columns: String, ColumnExpression {
         case tokenQueryId, accountId, coinName, coinCode, coinImage, tokenDecimals
     }
 
-    required init(row: Row) throws {
+    public required init(row: Row) throws {
         tokenQueryId = row[Columns.tokenQueryId]
         accountId = row[Columns.accountId]
         coinName = row[Columns.coinName]
@@ -40,7 +40,7 @@ class EnabledWallet: Record {
         try super.init(row: row)
     }
 
-    override func encode(to container: inout PersistenceContainer) {
+    override public func encode(to container: inout PersistenceContainer) {
         container[Columns.tokenQueryId] = tokenQueryId
         container[Columns.accountId] = accountId
         container[Columns.coinName] = coinName

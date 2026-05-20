@@ -1,6 +1,7 @@
 import MarketKit
 import MessageUI
 import SwiftUI
+import WalletCore
 
 struct BalanceErrorBottomView: View {
     @StateObject var viewModel: BalanceErrorBottomViewModel

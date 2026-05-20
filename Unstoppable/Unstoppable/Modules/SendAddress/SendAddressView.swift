@@ -1,5 +1,6 @@
 
 import SwiftUI
+import WalletCore
 
 struct SendAddressView: View {
     private let wallet: Wallet

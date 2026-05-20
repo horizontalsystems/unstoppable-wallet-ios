@@ -1,6 +1,7 @@
 import Foundation
 
 import MarketKit
+import WalletCore
 
 class ReceiveSettingsViewModel: ObservableObject {
     let wallets: [Wallet]

@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import WalletCore
 
 class MoneroWalletTokenViewModel: ObservableObject {
     private let adapterManager = Core.shared.adapterManager

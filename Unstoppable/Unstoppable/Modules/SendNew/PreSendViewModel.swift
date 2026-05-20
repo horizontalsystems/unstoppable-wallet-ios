@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MarketKit
+import WalletCore
 
 class PreSendViewModel: ObservableObject {
     private let wallet: Wallet

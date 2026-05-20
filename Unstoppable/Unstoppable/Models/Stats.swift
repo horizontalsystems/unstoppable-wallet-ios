@@ -1,4 +1,5 @@
 import MarketKit
+import WalletCore
 
 enum StatPage: String {
     case aboutApp = "about_app"

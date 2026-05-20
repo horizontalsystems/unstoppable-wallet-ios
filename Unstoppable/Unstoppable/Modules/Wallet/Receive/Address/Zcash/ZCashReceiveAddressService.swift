@@ -1,3 +1,4 @@
+import WalletCore
 import ZcashLightClientKit
 
 class ZCashReceiveAddressService: BaseReceiveAddressService {

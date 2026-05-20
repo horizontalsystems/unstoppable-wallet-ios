@@ -3,7 +3,7 @@ import LocalAuthentication
 
 public class PasscodeLockManager {
     private let accountManager: AccountManager
-    private let walletManager: PasscodeLockWalletProvider
+    private let walletManager: WalletManager
 
     @DistinctPublished public private(set) var state: PasscodeLockState = .passcodeSet {
         didSet {
@@ -14,7 +14,7 @@ public class PasscodeLockManager {
         }
     }
 
-    public init(accountManager: AccountManager, walletManager: PasscodeLockWalletProvider) {
+    public init(accountManager: AccountManager, walletManager: WalletManager) {
         self.accountManager = accountManager
         self.walletManager = walletManager
 

@@ -1,6 +1,7 @@
 import Foundation
 import SwiftUI
 import UIKit
+import WalletCore
 
 enum ReceiveAddressModule {
     struct ErrorItem: Error {

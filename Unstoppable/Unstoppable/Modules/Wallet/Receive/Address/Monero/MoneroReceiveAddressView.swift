@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct MoneroReceiveAddressView: View {
     @StateObject var viewModel: MoneroReceiveAddressViewModel

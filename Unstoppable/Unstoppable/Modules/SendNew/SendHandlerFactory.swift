@@ -1,4 +1,5 @@
 import MarketKit
+import WalletCore
 
 enum SendHandlerFactory {
     static func handler(sendData: SendData) -> ISendHandler? {
