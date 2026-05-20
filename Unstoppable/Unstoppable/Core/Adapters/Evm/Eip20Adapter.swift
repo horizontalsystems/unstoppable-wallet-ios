@@ -5,6 +5,7 @@ import Foundation
 import HsToolKit
 import MarketKit
 import RxSwift
+import WalletCore
 
 class Eip20Adapter: BaseEvmAdapter {
     private static let approveConfirmationsThreshold: Int? = nil

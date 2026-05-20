@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import RxSwift
+import WalletCore
 
 class ZcashWalletTokenViewModel: ObservableObject {
     private let balanceHiddenManager = Core.shared.balanceHiddenManager

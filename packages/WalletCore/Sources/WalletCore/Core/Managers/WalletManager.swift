@@ -1,23 +1,19 @@
 import Combine
 import Foundation
 import MarketKit
-import RxRelay
-import RxSwift
-import WalletCore
 
-class WalletManager {
+public class WalletManager {
     private let accountManager: AccountManager
     private let storage: WalletStorage
     private var cancellables = Set<AnyCancellable>()
 
-    private let activeWalletDataRelay = PublishRelay<WalletData>()
     private let activeWalletDataSubject = PassthroughSubject<WalletData, Never>()
 
-    private let queue = DispatchQueue(label: "\(AppConfig.label).wallet_manager", qos: .userInitiated)
+    private let queue = DispatchQueue(label: "WalletCore.wallet_manager", qos: .userInitiated)
 
     private var cachedActiveWalletData = WalletData(wallets: [], account: nil)
 
-    init(accountManager: AccountManager, storage: WalletStorage) {
+    public init(accountManager: AccountManager, storage: WalletStorage) {
         self.accountManager = accountManager
         self.storage = storage
 
@@ -51,7 +47,6 @@ class WalletManager {
             cachedActiveWalletData = WalletData(wallets: [], account: nil)
         }
 
-        activeWalletDataRelay.accept(cachedActiveWalletData)
         activeWalletDataSubject.send(cachedActiveWalletData)
     }
 
@@ -60,17 +55,13 @@ class WalletManager {
     }
 }
 
-extension WalletManager {
+public extension WalletManager {
     var activeWalletData: WalletData {
         queue.sync { cachedActiveWalletData }
     }
 
     var activeWallets: [Wallet] {
         activeWalletData.wallets
-    }
-
-    var activeWalletDataUpdatedObservable: Observable<WalletData> {
-        activeWalletDataRelay.asObservable()
     }
 
     var activeWalletDataUpdatedPublisher: AnyPublisher<WalletData, Never> {
@@ -113,9 +104,14 @@ extension WalletManager {
     }
 }
 
-extension WalletManager {
+public extension WalletManager {
     struct WalletData {
-        let wallets: [Wallet]
-        let account: Account?
+        public let wallets: [Wallet]
+        public let account: Account?
+
+        public init(wallets: [Wallet], account: Account?) {
+            self.wallets = wallets
+            self.account = account
+        }
     }
 }

@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct HDReceiveAddressView: View {
     @StateObject var viewModel: HDReceiveAddressViewModel

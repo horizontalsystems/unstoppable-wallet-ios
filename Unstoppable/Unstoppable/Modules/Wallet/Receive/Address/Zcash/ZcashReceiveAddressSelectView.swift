@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct ZcashReceiveAddressSelectView: View {
     @StateObject var viewModel: ZcashReceiveAddressSelectViewModel

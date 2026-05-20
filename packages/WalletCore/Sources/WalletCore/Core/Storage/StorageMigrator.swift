@@ -31,6 +31,19 @@ public enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("walletCore.createEnabledWallet") { db in
+            try db.create(table: EnabledWallet.databaseTableName) { t in
+                t.column(EnabledWallet.Columns.tokenQueryId.name, .text).notNull()
+                t.column(EnabledWallet.Columns.accountId.name, .text).notNull()
+                t.column(EnabledWallet.Columns.coinName.name, .text)
+                t.column(EnabledWallet.Columns.coinCode.name, .text)
+                t.column(EnabledWallet.Columns.coinImage.name, .text)
+                t.column(EnabledWallet.Columns.tokenDecimals.name, .integer)
+
+                t.primaryKey([EnabledWallet.Columns.tokenQueryId.name, EnabledWallet.Columns.accountId.name], onConflict: .replace)
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 }

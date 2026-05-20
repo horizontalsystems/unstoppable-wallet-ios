@@ -1,9 +1,8 @@
 import Combine
-
 import Foundation
 import HsExtensions
 import MarketKit
-import RxSwift
+import WalletCore
 
 class CoinOverviewViewModel: ObservableObject {
     private let coinUid: String
@@ -15,7 +14,6 @@ class CoinOverviewViewModel: ObservableObject {
 
     private var tasks = Set<AnyTask>()
     private var cancellables: [AnyCancellable] = []
-    private var disposeBag = DisposeBag()
 
     @Published private(set) var state: State = .loading
     @Published private(set) var walletData: WalletManager.WalletData
@@ -25,10 +23,10 @@ class CoinOverviewViewModel: ObservableObject {
 
         walletData = walletManager.activeWalletData
 
-        walletManager.activeWalletDataUpdatedObservable
-            .observeOn(MainScheduler.instance)
-            .subscribe(onNext: { [weak self] in self?.walletData = $0 })
-            .disposed(by: disposeBag)
+        walletManager.activeWalletDataUpdatedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.walletData = $0 }
+            .store(in: &cancellables)
 
         performanceDataManager
             .updatedPublisher

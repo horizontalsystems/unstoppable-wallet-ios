@@ -1,4 +1,5 @@
 import MarketKit
+import WalletCore
 
 class ReceiveBitcoinCashCoinTypeViewModel: ReceiveSettingsViewModel {
     override var viewItems: [ReceiveSettingsViewModel.ViewItem] {

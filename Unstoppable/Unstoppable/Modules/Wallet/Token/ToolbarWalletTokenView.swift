@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct ToolbarWalletTokenView<Content: View>: View {
     let wallet: Wallet

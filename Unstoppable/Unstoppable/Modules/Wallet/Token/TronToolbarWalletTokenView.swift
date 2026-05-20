@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct TronToolbarWalletTokenView<Content: View>: View {
     let wallet: Wallet

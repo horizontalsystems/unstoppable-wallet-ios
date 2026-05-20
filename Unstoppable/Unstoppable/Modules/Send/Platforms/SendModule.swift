@@ -1,6 +1,7 @@
 import MarketKit
 import RxCocoa
 import UIKit
+import WalletCore
 
 protocol ITitledCautionViewModel {
     var cautionDriver: Driver<TitledCaution?> { get }

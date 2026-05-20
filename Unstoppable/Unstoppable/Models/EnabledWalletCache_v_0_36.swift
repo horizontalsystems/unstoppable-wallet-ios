@@ -1,5 +1,6 @@
 import Foundation
 import GRDB
+import WalletCore
 
 class EnabledWalletCache_v_0_36: Record {
     let tokenQueryId: String

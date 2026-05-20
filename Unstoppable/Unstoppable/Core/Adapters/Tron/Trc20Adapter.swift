@@ -4,6 +4,7 @@ import HsToolKit
 import MarketKit
 import RxSwift
 import TronKit
+import WalletCore
 
 class Trc20Adapter: BaseTronAdapter {
     private let contractAddress: TronKit.Address

@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct BaseWalletTokenView<Content: View>: View {
     @StateObject var viewModel: WalletTokenViewModel

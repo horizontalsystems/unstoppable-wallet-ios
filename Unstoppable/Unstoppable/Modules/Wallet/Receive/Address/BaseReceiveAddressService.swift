@@ -4,6 +4,7 @@ import HsExtensions
 import MarketKit
 import RxCocoa
 import RxSwift
+import WalletCore
 
 class BaseReceiveAddressService {
     private let adapterManager = Core.shared.adapterManager

@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct DonateTokenListView: View {
     @StateObject private var viewModel: SendTokenListViewModel

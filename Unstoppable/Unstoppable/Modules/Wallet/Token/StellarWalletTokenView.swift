@@ -1,5 +1,6 @@
 import StellarKit
 import SwiftUI
+import WalletCore
 
 struct StellarWalletTokenView: View {
     @StateObject var viewModel: StellarWalletTokenViewModel

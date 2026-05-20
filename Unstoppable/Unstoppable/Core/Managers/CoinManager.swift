@@ -1,6 +1,7 @@
 import MarketKit
 import RxRelay
 import RxSwift
+import WalletCore
 
 class CoinManager {
     private let marketKit: Kit

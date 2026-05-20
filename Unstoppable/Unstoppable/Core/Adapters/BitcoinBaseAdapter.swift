@@ -5,6 +5,7 @@ import Hodler
 import HsToolKit
 import MarketKit
 import RxSwift
+import WalletCore
 
 class BitcoinBaseAdapter {
     static let confirmationsThreshold = 1 // Number of confirmations for coins in transaction to be available for spending

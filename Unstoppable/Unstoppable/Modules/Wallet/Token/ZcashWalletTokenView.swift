@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct ZcashWalletTokenView: View {
     @StateObject var viewModel: ZcashWalletTokenViewModel

@@ -5,6 +5,7 @@ import EvmKit
 import Foundation
 import MarketKit
 import SolanaKit
+import WalletCore
 import ZanoKit
 
 class MultiSwapSendHandler {

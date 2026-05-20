@@ -1,6 +1,6 @@
+import Combine
 import Foundation
 import MarketKit
-import RxSwift
 import WalletCore
 
 protocol IWalletServiceDelegate: AnyObject {
@@ -18,7 +18,7 @@ class WalletService {
     private let walletManager: WalletManager
     private let allowedBlockchainTypes: [BlockchainType]?
     private let allowedTokenTypes: [TokenType]?
-    private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     weak var delegate: IWalletServiceDelegate?
 
@@ -29,13 +29,15 @@ class WalletService {
         self.allowedBlockchainTypes = allowedBlockchainTypes
         self.allowedTokenTypes = allowedTokenTypes
 
-        subscribe(disposeBag, walletManager.activeWalletDataUpdatedObservable) { [weak self] walletData in
-            guard walletData.account == self?.account else {
-                return
-            }
+        walletManager.activeWalletDataUpdatedPublisher
+            .sink { [weak self] walletData in
+                guard walletData.account == self?.account else {
+                    return
+                }
 
-            self?.handleUpdated(wallets: walletData.wallets)
-        }
+                self?.handleUpdated(wallets: walletData.wallets)
+            }
+            .store(in: &cancellables)
     }
 
     private func filtered(_ wallets: [Wallet]) -> [Wallet] {

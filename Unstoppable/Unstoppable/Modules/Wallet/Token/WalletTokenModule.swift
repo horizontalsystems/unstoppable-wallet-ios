@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 enum WalletTokenModule {
     @ViewBuilder static func view(wallet: Wallet) -> some View {

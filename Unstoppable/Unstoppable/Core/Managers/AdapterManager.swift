@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import MarketKit
 import RxRelay
@@ -6,6 +7,7 @@ import WalletCore
 
 class AdapterManager {
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let adapterFactory: AdapterFactory
     private let walletManager: WalletManager
@@ -39,12 +41,12 @@ class AdapterManager {
         self.moneroNodeManager = moneroNodeManager
         self.zanoNodeManager = zanoNodeManager
 
-        walletManager.activeWalletDataUpdatedObservable
-            .observeOn(SerialDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe(onNext: { [weak self] walletData in
+        walletManager.activeWalletDataUpdatedPublisher
+            .receive(on: queue)
+            .sink { [weak self] walletData in
                 self?.initAdapters(wallets: walletData.wallets, account: walletData.account)
-            })
-            .disposed(by: disposeBag)
+            }
+            .store(in: &cancellables)
 
         for blockchain in evmBlockchainManager.allBlockchains {
             if let manager = try? evmBlockchainManager.evmKitManager(blockchainType: blockchain.type) {

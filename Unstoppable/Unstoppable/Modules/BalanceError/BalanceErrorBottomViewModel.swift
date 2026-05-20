@@ -1,5 +1,6 @@
 import Combine
 import MarketKit
+import WalletCore
 
 class BalanceErrorBottomViewModel: ObservableObject {
     private let adapterManager = Core.shared.adapterManager
