@@ -25,6 +25,7 @@ enum SendData {
     case monero(token: Token, amount: MoneroSendAmount, address: String, memo: String?)
     case zano(token: Token, amount: ZanoSendAmount, address: String, memo: String?)
     case zanoAsset(token: Token, baseToken: Token, amount: ZanoSendAmount, address: String, memo: String?)
+    indirect case openCryptoPay(payment: OpenCryptoPayPayment, entry: OpenCryptoPayPayment.Entry, inner: SendData)
 }
 
 enum StellarSendData {

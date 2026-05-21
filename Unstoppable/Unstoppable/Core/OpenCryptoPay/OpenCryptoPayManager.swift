@@ -2,34 +2,18 @@ import Foundation
 import MarketKit
 
 class OpenCryptoPayManager {
-    private static let methodToBlockchainType: [String: BlockchainType] = [
-        "Bitcoin": .bitcoin,
-        "Ethereum": .ethereum,
-        "BinanceSmartChain": .binanceSmartChain,
-        "Polygon": .polygon,
-        "Arbitrum": .arbitrumOne,
-        "Optimism": .optimism,
-        "Base": .base,
-        "Tron": .tron,
-        "Solana": .solana,
-        "Ton": .ton,
-        "Stellar": .stellar,
-    ]
-
-    private let provider: OpenCryptoPayProvider
+    let provider: OpenCryptoPayProvider
+    let broadcasterFactory: OpenCryptoPayBroadcasterFactory
     private let walletManager: WalletManager
     private let accountManager: AccountManager
 
     private var currentTask: Task<OpenCryptoPayPayment, Swift.Error>?
 
-    static func blockchainType(forMethod method: String) -> BlockchainType? {
-        methodToBlockchainType[method]
-    }
-
-    init(provider: OpenCryptoPayProvider, walletManager: WalletManager, accountManager: AccountManager) {
+    init(provider: OpenCryptoPayProvider, walletManager: WalletManager, accountManager: AccountManager, broadcasterFactory: OpenCryptoPayBroadcasterFactory) {
         self.provider = provider
         self.walletManager = walletManager
         self.accountManager = accountManager
+        self.broadcasterFactory = broadcasterFactory
     }
 
     func startPayment(url: URL) async throws -> OpenCryptoPayPayment {
@@ -54,8 +38,7 @@ class OpenCryptoPayManager {
         }
     }
 
-    /// Resolver used by OpenCryptoPayEventHandler. Hides provider from outside; enforces account + wallet guards.
-    func resolve(wallet: Wallet, against payment: OpenCryptoPayPayment) async throws -> SendTokenListViewModel.SendOptions {
+    func resolve(wallet: Wallet, against payment: OpenCryptoPayPayment) async throws -> SendData {
         guard accountManager.activeAccount?.id == payment.capturedAccountId else {
             throw OpenCryptoPayManager.Error.accountChanged
         }
@@ -65,13 +48,29 @@ class OpenCryptoPayManager {
         guard let entry = payment.entry(for: wallet) else {
             throw OpenCryptoPayManager.Error.chainMismatch
         }
+
         let txDetails = try await provider.fetchTransactionDetails(
             callback: payment.callback,
             quoteId: payment.quoteId,
             method: entry.method,
             asset: entry.asset
         )
-        return try OpenCryptoPayPayment.Validator.validate(txDetails: txDetails, against: payment, wallet: wallet)
+        let options = try OpenCryptoPayPayment.Validator.validate(txDetails: txDetails, against: payment, wallet: wallet)
+
+        guard let address = options.address else {
+            throw OpenCryptoPayManager.Error.malformedTxUri
+        }
+        let resolvedAddress = ResolvedAddress(address: address, issueTypes: [])
+        guard let preSend = SendHandlerFactory.preSendHandler(wallet: wallet, address: resolvedAddress) else {
+            throw OpenCryptoPayManager.Error.malformedTxUri
+        }
+
+        let amount = options.amount?.humanReadable(decimals: wallet.token.decimals) ?? 0
+        let result = preSend.sendData(amount: amount, address: address, memo: options.memo)
+        guard case let .valid(inner) = result else {
+            throw OpenCryptoPayManager.Error.malformedTxUri
+        }
+        return .openCryptoPay(payment: payment, entry: entry, inner: inner)
     }
 
     private func fetchAndBuild(url: URL) async throws -> OpenCryptoPayPayment {
@@ -86,7 +85,7 @@ class OpenCryptoPayManager {
         var entries: [OpenCryptoPayPayment.Entry] = []
 
         for transferAmount in response.transferAmounts where transferAmount.available {
-            guard let chain = Self.blockchainType(forMethod: transferAmount.method) else {
+            guard let chain = broadcasterFactory.supportedChains[transferAmount.method] else {
                 continue
             }
 

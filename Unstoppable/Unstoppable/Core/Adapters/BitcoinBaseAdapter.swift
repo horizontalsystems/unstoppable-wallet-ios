@@ -339,6 +339,10 @@ extension BitcoinBaseAdapter {
         try abstractKit.send(params: params)
     }
 
+    func signedRawHex(params: SendParameters) throws -> Data {
+        try abstractKit.createRawTransaction(params: params)
+    }
+
     func sendSingle(params: SendParameters, logger: Logger) -> Single<Void> {
         Single.create { [weak self] observer in
             do {

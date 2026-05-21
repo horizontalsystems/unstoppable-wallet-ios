@@ -5,19 +5,7 @@ class OpenCryptoPayProvider {
     private let networkManager: NetworkManager
     private let decoder: JSONDecoder = {
         let decoder = JSONDecoder()
-        // Server returns ISO-8601 with milliseconds ("2025-07-16T01:20:06.476Z").
-        // .iso8601 rejects fractional seconds, so accept both shapes.
-        let withMs = ISO8601DateFormatter()
-        withMs.formatOptions = [.withInternetDateTime, .withFractionalSeconds]
-        let plain = ISO8601DateFormatter()
-        plain.formatOptions = [.withInternetDateTime]
-        decoder.dateDecodingStrategy = .custom { dec in
-            let s = try dec.singleValueContainer().decode(String.self)
-            if let d = withMs.date(from: s) { return d }
-            if let d = plain.date(from: s) { return d }
-            throw try DecodingError.dataCorruptedError(in: dec.singleValueContainer(),
-                                                       debugDescription: "Invalid ISO-8601 date: \(s)")
-        }
+        decoder.dateDecodingStrategy = .iso8601Flexible
         return decoder
     }()
 
@@ -30,21 +18,47 @@ class OpenCryptoPayProvider {
     }
 
     func fetchTransactionDetails(callback: URL, quoteId: String, method: String, asset: String) async throws -> Models.TransactionDetails {
-        guard var components = URLComponents(url: callback, resolvingAgainstBaseURL: false) else {
-            throw OpenCryptoPayManager.Error.malformedTxUri
-        }
-        var items = components.queryItems ?? []
-        items.append(contentsOf: [
-            URLQueryItem(name: "quote", value: quoteId),
-            URLQueryItem(name: "method", value: method),
-            URLQueryItem(name: "asset", value: asset),
-        ])
-        components.queryItems = items
-        guard let url = components.url else {
-            throw OpenCryptoPayManager.Error.malformedTxUri
-        }
-        return try await networkManager.fetch(url: url, decoder: decoder)
+        let parameters: [String: Any] = [
+            "quote": quoteId,
+            "method": method,
+            "asset": asset,
+        ]
+        return try await networkManager.fetch(url: callback, parameters: parameters, decoder: decoder)
     }
+
+    func submitProof(callback: URL, quote: String, method: String, proof: OpenCryptoPayProof) async throws {
+        let txUrl = try Self.submissionUrl(from: callback)
+
+        var parameters: [String: Any] = ["quote": quote, "method": method]
+        switch proof {
+        case let .hex(hex): parameters["hex"] = hex
+        case let .tx(hash): parameters["tx"] = hash
+        }
+
+        // 2xx — payment confirmed. Body is irrelevant.
+        let _: EmptySubmissionResponse = try await networkManager.fetch(url: txUrl, parameters: parameters)
+    }
+
+    // Swap first `/cb/` segment for `/tx/`, keep everything else.
+    static func submissionUrl(from callback: URL) throws -> URL {
+        guard var urlComponents = URLComponents(url: callback, resolvingAgainstBaseURL: false) else {
+            throw OpenCryptoPayManager.Error.malformedTxUri
+        }
+        guard let cbRange = urlComponents.path.range(of: "/cb/") else {
+            throw OpenCryptoPayManager.Error.malformedTxUri
+        }
+        urlComponents.path = urlComponents.path.replacingCharacters(in: cbRange, with: "/tx/")
+
+        guard let url = urlComponents.url else {
+            throw OpenCryptoPayManager.Error.malformedTxUri
+        }
+
+        return url
+    }
+}
+
+private struct EmptySubmissionResponse: Decodable {
+    init(from _: Decoder) {}
 }
 
 extension OpenCryptoPayProvider {

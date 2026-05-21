@@ -4,7 +4,8 @@ import ZanoKit
 
 protocol ZanoSendable: IBalanceAdapter {
     func estimateFee() -> Decimal
-    func send(to address: String, amount: ZanoSendAmount, memo: String?) throws
+    @discardableResult
+    func send(to address: String, amount: ZanoSendAmount, memo: String?) throws -> String
 }
 
 extension ZanoAdapter: ZanoSendable {}
