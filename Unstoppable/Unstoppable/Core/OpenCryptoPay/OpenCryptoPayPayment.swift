@@ -36,7 +36,7 @@ extension OpenCryptoPayPayment {
             .blockchainUid, .tokenUid,
         ]
         private static let blacklistedUriParams: Set<String> = [
-            "data", "function", "to", "address", "uint256", "gas", "gaslimit", "gasprice",
+            "data", "to", "gas", "gaslimit", "gasprice",
         ]
 
         static func validateSession(_ payment: OpenCryptoPayPayment) throws {
@@ -61,6 +61,8 @@ extension OpenCryptoPayPayment {
             let uri: AddressUri
             do {
                 uri = try parser.parse(url: txDetails.uri)
+            } catch AddressUriParser.ParseError.invalidBlockchainType, AddressUriParser.ParseError.invalidTokenType {
+                throw OpenCryptoPayManager.Error.chainMismatch
             } catch {
                 throw OpenCryptoPayManager.Error.malformedTxUri
             }
@@ -93,7 +95,7 @@ extension OpenCryptoPayPayment {
                     throw OpenCryptoPayManager.Error.chainMismatch
                 }
             }
-            guard let blockchain = OpenCryptoPayManager.blockchainType(forMethod: txDetails.blockchain) else {
+            guard let blockchain = Core.shared.openCryptoPayManager.broadcasterFactory.supportedChains[txDetails.blockchain] else {
                 throw OpenCryptoPayManager.Error.chainMismatch
             }
             if blockchain != wallet.token.blockchainType {

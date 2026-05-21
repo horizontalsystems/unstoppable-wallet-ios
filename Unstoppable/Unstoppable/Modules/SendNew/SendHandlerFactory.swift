@@ -39,6 +39,8 @@ enum SendHandlerFactory {
             return WalletConnectSendHandler.instance(request: request)
         case let .tonConnect(request):
             return try? TonConnectSendHandler.instance(request: request)
+        case let .openCryptoPay(payment, entry, inner):
+            return OpenCryptoPaySendHandlerFactory.handler(payment: payment, entry: entry, inner: inner)
         }
     }
 

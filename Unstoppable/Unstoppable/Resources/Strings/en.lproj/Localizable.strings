@@ -2458,3 +2458,13 @@
 "new_wallet.passkey.description" = "Create a wallet secured by your device and iCloud for easy access.";
 "new_wallet.smart_account" = "Smart Account";
 "new_wallet.smart_account.description" = "Passkey-backed wallet with gas sponsorship.";
+
+"open_crypto_pay.error.invalid_url" = "This payment link is not recognized.";
+"open_crypto_pay.error.invalid_lnurl" = "The payment data is malformed.";
+"open_crypto_pay.error.no_supported_method" = "No matching wallet for this merchant.";
+"open_crypto_pay.error.quote_expired" = "The quote has expired. Rescan the QR code.";
+"open_crypto_pay.error.malformed_tx_uri" = "Payment details are malformed.";
+"open_crypto_pay.error.amount_mismatch" = "Amount differs from the original quote. Please rescan.";
+"open_crypto_pay.error.unsupported_parameter" = "This payment contains unsupported parameters and was blocked for safety.";
+"open_crypto_pay.error.chain_mismatch" = "Blockchain mismatch in payment details.";
+"open_crypto_pay.error.account_changed" = "Active account or wallet changed. Please rescan.";

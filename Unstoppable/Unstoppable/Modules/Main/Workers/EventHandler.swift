@@ -134,7 +134,7 @@ extension EventHandler.HandleError: LocalizedError {
 extension EventHandler {
     struct CryptoPaySendPayload {
         let options: SendTokenListViewModel.SendOptions
-        let resolver: (Wallet) async throws -> SendTokenListViewModel.SendOptions
+        let resolver: (Wallet) async throws -> SendData
     }
 
     struct TonConnectParams: Identifiable {
