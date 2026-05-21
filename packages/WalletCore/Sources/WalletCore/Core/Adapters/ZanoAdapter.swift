@@ -288,8 +288,9 @@ extension ZanoAdapter {
         Decimal(kit.estimateFee(priority: .default)) / Self.zanoRate
     }
 
-    func send(to address: String, amount: ZanoSendAmount, memo: String?) throws {
-        _ = try kit.send(to: address, assetId: assetId, amount: convertToAtomic(amount: amount), priority: .default, memo: memo)
+    @discardableResult
+    func send(to address: String, amount: ZanoSendAmount, memo: String?) throws -> String {
+        try kit.send(to: address, assetId: assetId, amount: convertToAtomic(amount: amount), priority: .default, memo: memo)
     }
 
     func convertToAtomic(amount: ZanoSendAmount) -> SendAmount {

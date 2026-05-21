@@ -429,10 +429,13 @@ public class Core {
         let telegramUserHandler = TelegramUserHandler(marketKit: marketKit)
         // let tonConnectHandler = TonConnectEventHandler(tonConnectManager: tonConnectManager)
 
+        let openCryptoPayBroadcasterFactory = OpenCryptoPayBroadcasterFactory.unstoppable
+
         openCryptoPayManager = OpenCryptoPayManager(
             provider: OpenCryptoPayProvider(networkManager: networkManager),
             walletManager: walletManager,
-            accountManager: accountManager
+            accountManager: accountManager,
+            broadcasterFactory: openCryptoPayBroadcasterFactory
         )
         let openCryptoPayHandler = OpenCryptoPayEventHandler(openCryptoPayManager: openCryptoPayManager)
 

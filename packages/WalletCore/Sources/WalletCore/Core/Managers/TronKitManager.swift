@@ -142,7 +142,8 @@ class TronKitWrapper {
         self.gasTokenPayment = gasTokenPayment
     }
 
-    func send(contract: Contract, feeLimit: Int?) async throws {
+    @discardableResult
+    func send(contract: Contract, feeLimit: Int?) async throws -> CreatedTransactionResponse {
         guard let signer else {
             throw SignerError.signerNotSupported
         }
