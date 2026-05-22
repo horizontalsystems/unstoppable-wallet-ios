@@ -1,23 +1,27 @@
 import MarketKit
 import SwiftUI
+import WalletCore
 
 // Reusable wallet picker; caller owns the navigation.
 struct WalletPickerView: View {
     @ObservedObject var viewModel: SendTokenListViewModel
     @Binding var searchText: String
-    @Binding var blockchain: Blockchain?
+    @Binding var blockchainFilter: SendTokenListViewModel.BlockchainFilter?
 
     let onSelect: (Wallet) -> Void
     let onFailed: ((Wallet, AdapterState) -> Void)?
 
     var body: some View {
-        ThemeView(style: .list) {
-            VStack(spacing: 0) {
+        VStack(spacing: 0) {
+            if let filter = blockchainFilter {
+                let blockchains = viewModel.availableBlockchains
                 ScrollableTabHeaderView(
                     tabs: ["filter.all".localized] + blockchains.map(\.name),
                     currentTabIndex: Binding(
                         get: {
-                            if let blockchain, let index = blockchains.firstIndex(of: blockchain) {
+                            if let blockchain = filter.blockchain,
+                               let index = blockchains.firstIndex(of: blockchain)
+                            {
                                 return index + 1
                             } else {
                                 return 0
@@ -25,57 +29,36 @@ struct WalletPickerView: View {
                         },
                         set: { index in
                             if index == 0 {
-                                blockchain = nil
+                                blockchainFilter = .all
                             } else {
-                                blockchain = blockchains[index - 1]
+                                blockchainFilter = .blockchain(blockchains[index - 1])
                             }
                         }
                     )
                 )
+            }
 
-                let items = filteredItems
-                if items.isEmpty {
-                    PlaceholderViewNew(icon: "warning_filled", subtitle: "alert.not_founded".localized)
-                } else {
-                    ThemeList(items) { item in
-                        WalletListItemView(
-                            item: item,
-                            balancePrimaryValue: viewModel.balancePrimaryValue,
-                            balanceHidden: viewModel.balanceHidden,
-                            amountRounding: viewModel.amountRounding,
-                            subtitleMode: .coinName,
-                            isReachable: viewModel.isReachable
-                        ) {
-                            onSelect(item.wallet)
-                        } failedAction: {
-                            onFailed?(item.wallet, item.state)
-                        }
+            switch viewModel.itemState(searchText: searchText, blockchainFilter: blockchainFilter) {
+            case .loading:
+                VStack { ProgressView() }.frame(maxHeight: .infinity)
+            case .empty:
+                PlaceholderViewNew(icon: "warning_filled", subtitle: "alert.not_founded".localized)
+            case let .loaded(items):
+                ThemeList(items) { item in
+                    WalletListItemView(
+                        item: item,
+                        balancePrimaryValue: viewModel.balancePrimaryValue,
+                        balanceHidden: viewModel.balanceHidden,
+                        amountRounding: viewModel.amountRounding,
+                        subtitleMode: .coinName,
+                        isReachable: viewModel.isReachable
+                    ) {
+                        onSelect(item.wallet)
+                    } failedAction: {
+                        onFailed?(item.wallet, item.state)
                     }
                 }
             }
         }
-    }
-
-    private var filteredItems: [WalletListViewModel.Item] {
-        let text = searchText.trimmingCharacters(in: .whitespaces)
-
-        let items: [WalletListViewModel.Item]
-        if text.isEmpty {
-            items = viewModel.itemsWithOptions
-        } else {
-            items = viewModel.itemsWithOptions.filter { item in
-                item.wallet.token.coin.name.localizedCaseInsensitiveContains(text) || item.wallet.token.coin.code.localizedCaseInsensitiveContains(text)
-            }
-        }
-
-        if let blockchain {
-            return items.filter { $0.wallet.token.blockchainType == blockchain.type }
-        } else {
-            return items
-        }
-    }
-
-    private var blockchains: [Blockchain] {
-        Array(Set(viewModel.itemsWithOptions.map(\.wallet.token.blockchain))).sorted { $0.type.order < $1.type.order }
     }
 }

@@ -17,7 +17,7 @@ enum OpenCryptoPayBroadcastError: Error {
     case noWrapper
     case noSigner
     case missingField(String)
-    case multipleTransactions
+    case missingTxId
 }
 
 // Self-registration: each broadcaster declares supported methods + how to build itself.

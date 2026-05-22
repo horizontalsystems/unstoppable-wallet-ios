@@ -4,11 +4,6 @@ import MarketKit
 
 class OpenCryptoPayEventHandler {
     private let signalSubject = PassthroughSubject<EventHandlerSignal, Never>()
-    private let openCryptoPayManager: OpenCryptoPayManager
-
-    init(openCryptoPayManager: OpenCryptoPayManager) {
-        self.openCryptoPayManager = openCryptoPayManager
-    }
 }
 
 extension OpenCryptoPayEventHandler: IEventHandler {
@@ -34,14 +29,6 @@ extension OpenCryptoPayEventHandler: IEventHandler {
             throw EventHandler.HandleError.noSuitableHandler
         }
 
-        let payment = try await openCryptoPayManager.startPayment(url: url)
-
-        let options = SendTokenListViewModel.SendOptions(
-            tokens: payment.entries.map(\.token)
-        )
-
-        signalSubject.send(.cryptoPaySendPage(.init(options: options) { [openCryptoPayManager] wallet in
-            try await openCryptoPayManager.resolve(wallet: wallet, against: payment)
-        }))
+        signalSubject.send(.cryptoPaySendPage(url))
     }
 }

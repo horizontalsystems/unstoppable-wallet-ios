@@ -17,6 +17,7 @@ enum SendField {
     case fee(title: CustomStringConvertible, amountData: AmountData?)
     case hex(title: String, value: String)
     case mevProtection(isOn: Binding<Bool>)
+    case timer(title: CustomStringConvertible, expirationDate: Date)
 
     @ViewBuilder var listRow: some View {
         switch self {
@@ -28,7 +29,7 @@ enum SendField {
                 middle: {
                     MultiText(
                         eyebrow: ComponentText(text: token.coin.code, colorStyle: .primary),
-                        subtitle: token.fullBadge,
+                        subtitle: token.fullBadge
                     )
                 },
                 right: {
@@ -123,6 +124,8 @@ enum SendField {
                 }
                 .buttonStyle(SecondaryCircleButtonStyle(style: .default))
             }
+        case let .timer(title, expirationDate):
+            ExpirationTimerCell(title: title, expirationDate: expirationDate)
         case let .mevProtection(isOn):
             VStack(spacing: 0) {
                 SectionHeader(image: Image.defenseIcon, text: "purchases.swap_protection".localized, horizontalInsets: .margin16)
