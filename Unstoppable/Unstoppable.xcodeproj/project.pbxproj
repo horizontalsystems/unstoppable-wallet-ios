@@ -2172,7 +2172,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/MoneroKit.Swift";
 			requirement = {
 				kind = exactVersion;
-				version = 0.2.7;
+				version = 0.2.8;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
