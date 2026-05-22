@@ -64,6 +64,7 @@
 "alert.connected" = "已连接";
 "alert.enabling" = "正在启用";
 "alert.enabled_coins" = "启用了 %@ 多硬币";
+"alert.preparing" = "准备中";
 "alert.sending" = "发送中";
 "alert.sent" = "已发送";
 "alert.swapping" = "交易";
@@ -2457,3 +2458,18 @@
 "new_wallet.passkey.description" = "创建由您的设备和 iCloud 保护的钱包，轻松访问。";
 "new_wallet.smart_account" = "智能账户";
 "new_wallet.smart_account.description" = "基于 Passkey 的钱包，支持 Gas 赞助。";
+
+"open_crypto_pay.error.invalid_url" = "无法识别此付款链接。";
+"open_crypto_pay.error.invalid_lnurl" = "付款数据格式错误。";
+"open_crypto_pay.error.no_supported_method" = "没有与该商户匹配的钱包。";
+"open_crypto_pay.error.quote_expired" = "报价已过期。请重新扫描二维码。";
+"open_crypto_pay.error.malformed_tx_uri" = "付款详情格式错误。";
+"open_crypto_pay.error.amount_mismatch" = "金额与原始报价不符。请重新扫描。";
+"open_crypto_pay.error.unsupported_parameter" = "此付款包含不受支持的参数，已被安全拦截。";
+"open_crypto_pay.error.chain_mismatch" = "付款详情中的区块链不匹配。";
+"open_crypto_pay.error.account_changed" = "活跃账户或钱包已更改。请重新扫描。";
+"open_crypto_pay.token_list.description" = "选择您要用于支付的代币";
+"open_crypto_pay.merchant.name" = "商户";
+"open_crypto_pay.merchant.url" = "URL";
+"open_crypto_pay.expires_in" = "剩余时间";
+"open_crypto_pay.button.expired" = "报价已过期";

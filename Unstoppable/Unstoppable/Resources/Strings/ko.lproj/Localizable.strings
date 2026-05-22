@@ -64,6 +64,7 @@
 "alert.connected" = "연결됨";
 "alert.enabling" = "활성화 중";
 "alert.enabled_coins" = "활성화된 %@ 더 많은 코인";
+"alert.preparing" = "준비 중";
 "alert.sending" = "전송중";
 "alert.sent" = "전송됨";
 "alert.swapping" = "스와핑";
@@ -2457,3 +2458,18 @@
 "new_wallet.passkey.description" = "간편한 접근을 위해 기기와 iCloud로 보호되는 지갑을 생성합니다.";
 "new_wallet.smart_account" = "스마트 계정";
 "new_wallet.smart_account.description" = "가스 스폰서십을 지원하는 패스키 기반 지갑.";
+
+"open_crypto_pay.error.invalid_url" = "이 결제 링크를 인식할 수 없습니다.";
+"open_crypto_pay.error.invalid_lnurl" = "결제 데이터가 올바르지 않습니다.";
+"open_crypto_pay.error.no_supported_method" = "이 가맹점에 맞는 지갑이 없습니다.";
+"open_crypto_pay.error.quote_expired" = "견적이 만료되었습니다. QR 코드를 다시 스캔하세요.";
+"open_crypto_pay.error.malformed_tx_uri" = "결제 세부 정보가 올바르지 않습니다.";
+"open_crypto_pay.error.amount_mismatch" = "금액이 원래 견적과 다릅니다. 다시 스캔해 주세요.";
+"open_crypto_pay.error.unsupported_parameter" = "이 결제에 지원되지 않는 매개변수가 포함되어 있어 안전을 위해 차단되었습니다.";
+"open_crypto_pay.error.chain_mismatch" = "결제 세부 정보에 블록체인 불일치가 있습니다.";
+"open_crypto_pay.error.account_changed" = "활성 계정 또는 지갑이 변경되었습니다. 다시 스캔해 주세요.";
+"open_crypto_pay.token_list.description" = "결제에 사용할 토큰을 선택하세요";
+"open_crypto_pay.merchant.name" = "가맹점";
+"open_crypto_pay.merchant.url" = "URL";
+"open_crypto_pay.expires_in" = "만료까지";
+"open_crypto_pay.button.expired" = "견적 만료됨";

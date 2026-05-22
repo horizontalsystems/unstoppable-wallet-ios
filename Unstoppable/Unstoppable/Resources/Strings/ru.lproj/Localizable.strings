@@ -64,6 +64,7 @@
 "alert.connected" = "Подключено";
 "alert.enabling" = "Идет активация";
 "alert.enabled_coins" = "Включено ещё %@ монет";
+"alert.preparing" = "Подготовка";
 "alert.sending" = "Отправка";
 "alert.sent" = "Отправлено";
 "alert.swapping" = "Обмен";
@@ -2457,3 +2458,18 @@
 "new_wallet.passkey.description" = "Создайте кошелёк, защищённый вашим устройством и iCloud, для удобного доступа.";
 "new_wallet.smart_account" = "Smart Account";
 "new_wallet.smart_account.description" = "Кошелёк на основе passkey со спонсированием газа.";
+
+"open_crypto_pay.error.invalid_url" = "Эта платёжная ссылка не распознана.";
+"open_crypto_pay.error.invalid_lnurl" = "Платёжные данные имеют неверный формат.";
+"open_crypto_pay.error.no_supported_method" = "Нет подходящего кошелька для этого продавца.";
+"open_crypto_pay.error.quote_expired" = "Срок действия котировки истёк. Отсканируйте QR-код повторно.";
+"open_crypto_pay.error.malformed_tx_uri" = "Платёжные реквизиты имеют неверный формат.";
+"open_crypto_pay.error.amount_mismatch" = "Сумма отличается от исходной котировки. Пожалуйста, отсканируйте повторно.";
+"open_crypto_pay.error.unsupported_parameter" = "Этот платёж содержит неподдерживаемые параметры и был заблокирован в целях безопасности.";
+"open_crypto_pay.error.chain_mismatch" = "Несоответствие блокчейна в платёжных реквизитах.";
+"open_crypto_pay.error.account_changed" = "Активный аккаунт или кошелёк изменился. Пожалуйста, отсканируйте повторно.";
+"open_crypto_pay.token_list.description" = "Выберите токен, который хотите использовать для оплаты";
+"open_crypto_pay.merchant.name" = "Продавец";
+"open_crypto_pay.merchant.url" = "URL";
+"open_crypto_pay.expires_in" = "Истекает через";
+"open_crypto_pay.button.expired" = "Котировка истекла";

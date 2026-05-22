@@ -64,6 +64,7 @@
 "alert.connected" = "Bağlandı";
 "alert.enabling" = "Etkinleştiriliyor";
 "alert.enabled_coins" = "%@ daha fazla jeton etkinleştirildi";
+"alert.preparing" = "Hazırlanıyor";
 "alert.sending" = "Gönderiliyor";
 "alert.sent" = "Gönderildi";
 "alert.swapping" = "Takas";
@@ -2457,3 +2458,18 @@
 "new_wallet.passkey.description" = "Kolay erişim için cihazınız ve iCloud tarafından korunan bir cüzdan oluşturun.";
 "new_wallet.smart_account" = "Smart Account";
 "new_wallet.smart_account.description" = "Gas sponsorluğu ile passkey destekli cüzdan.";
+
+"open_crypto_pay.error.invalid_url" = "Bu ödeme bağlantısı tanınmıyor.";
+"open_crypto_pay.error.invalid_lnurl" = "Ödeme verileri hatalı biçimde.";
+"open_crypto_pay.error.no_supported_method" = "Bu satıcı için uygun cüzdan bulunamadı.";
+"open_crypto_pay.error.quote_expired" = "Teklifin süresi doldu. QR kodunu tekrar tarayın.";
+"open_crypto_pay.error.malformed_tx_uri" = "Ödeme bilgileri hatalı biçimde.";
+"open_crypto_pay.error.amount_mismatch" = "Tutar, orijinal tekliften farklı. Lütfen tekrar tarayın.";
+"open_crypto_pay.error.unsupported_parameter" = "Bu ödeme desteklenmeyen parametreler içeriyor ve güvenlik nedeniyle engellendi.";
+"open_crypto_pay.error.chain_mismatch" = "Ödeme bilgilerinde blockchain uyumsuzluğu.";
+"open_crypto_pay.error.account_changed" = "Aktif hesap veya cüzdan değişti. Lütfen tekrar tarayın.";
+"open_crypto_pay.token_list.description" = "Ödeme için kullanmak istediğiniz token'ı seçin";
+"open_crypto_pay.merchant.name" = "Satıcı";
+"open_crypto_pay.merchant.url" = "URL";
+"open_crypto_pay.expires_in" = "Kalan Süre";
+"open_crypto_pay.button.expired" = "Teklif süresi doldu";
