@@ -33,6 +33,9 @@ struct RegularSendView: View {
                                 onSuccess()
                             }
                         )
+                    } else if let title = sendViewModel.sendData?.customSendButtonTitle {
+                        ThemeButton(text: title, style: .secondary) {}
+                            .disabled(true)
                     } else {
                         ThemeButton(text: "send.confirmation.refresh".localized, style: .secondary) {
                             sendViewModel.sync()

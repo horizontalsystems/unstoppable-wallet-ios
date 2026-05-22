@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import WalletCore
 
 struct OpenCryptoPayPayment: Equatable {
     let quoteId: String

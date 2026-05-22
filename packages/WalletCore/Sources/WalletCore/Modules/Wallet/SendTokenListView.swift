@@ -6,7 +6,7 @@ struct SendTokenListView: View {
 
     @State private var path = NavigationPath()
     @State private var searchText = ""
-    @State private var blockchain: Blockchain?
+    @State private var blockchainFilter: SendTokenListViewModel.BlockchainFilter? = .all
 
     @Binding var isPresented: Bool
 
@@ -20,38 +20,40 @@ struct SendTokenListView: View {
 
     var body: some View {
         ThemeNavigationStack(path: $path) {
-            WalletPickerView(
-                viewModel: viewModel,
-                searchText: $searchText,
-                blockchain: $blockchain,
-                onSelect: { wallet in
-                    select(wallet: wallet)
-                },
-                onFailed: { wallet, state in
-                    Coordinator.shared.presentBalanceError(wallet: wallet, state: state)
+            ThemeView(style: .list) {
+                WalletPickerView(
+                    viewModel: viewModel,
+                    searchText: $searchText,
+                    blockchainFilter: $blockchainFilter,
+                    onSelect: { wallet in
+                        select(wallet: wallet)
+                    },
+                    onFailed: { wallet, state in
+                        Coordinator.shared.presentBalanceError(wallet: wallet, state: state)
+                    }
+                )
+                .navigationTitle("send.send".localized)
+                .searchBar(text: $searchText, prompt: "placeholder.search".localized)
+                .navigationDestination(for: Route.self) { route in
+                    switch route {
+                    case let .send(wallet, options):
+                        SendAddressView(
+                            wallet: wallet,
+                            address: options.address,
+                            amount: options.amount?.humanReadable(decimals: wallet.token.decimals),
+                            memo: options.memo,
+                            path: $path,
+                            isPresented: $isPresented
+                        )
+                    }
                 }
-            )
-            .navigationTitle("send.send".localized)
-            .searchBar(text: $searchText, prompt: "placeholder.search".localized)
-            .navigationDestination(for: Route.self) { route in
-                switch route {
-                case let .send(wallet, options):
-                    SendAddressView(
-                        wallet: wallet,
-                        address: options.address,
-                        amount: options.amount?.humanReadable(decimals: wallet.token.decimals),
-                        memo: options.memo,
-                        path: $path,
-                        isPresented: $isPresented
-                    )
-                }
-            }
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button(action: {
-                        isPresented = false
-                    }) {
-                        Image("close")
+                .toolbar {
+                    ToolbarItem(placement: .cancellationAction) {
+                        Button(action: {
+                            isPresented = false
+                        }) {
+                            Image("close")
+                        }
                     }
                 }
             }

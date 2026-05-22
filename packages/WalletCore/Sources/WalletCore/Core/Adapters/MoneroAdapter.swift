@@ -244,8 +244,8 @@ extension MoneroAdapter {
         return Decimal(fee) / coinRate
     }
 
-    func send(to address: String, amount: MoneroSendAmount, priority: MoneroKit.SendPriority, memo: String?) throws {
-        _ = try kit.send(to: address, amount: convertToPiconero(amount: amount), priority: priority, memo: memo)
+    @discardableResult func send(to address: String, amount: MoneroSendAmount, priority: MoneroKit.SendPriority, memo: String?) throws -> [String] {
+        try kit.send(to: address, amount: convertToPiconero(amount: amount), priority: priority, memo: memo)
     }
 
     func convertToPiconero(amount: MoneroSendAmount) -> SendAmount {

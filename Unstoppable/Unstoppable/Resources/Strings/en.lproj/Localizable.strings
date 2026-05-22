@@ -2585,3 +2585,8 @@
 "open_crypto_pay.error.unsupported_parameter" = "This payment contains unsupported parameters and was blocked for safety.";
 "open_crypto_pay.error.chain_mismatch" = "Blockchain mismatch in payment details.";
 "open_crypto_pay.error.account_changed" = "Active account or wallet changed. Please rescan.";
+"open_crypto_pay.token_list.description" = "Choose the token you want to use for payment";
+"open_crypto_pay.merchant.name" = "Merchant";
+"open_crypto_pay.merchant.url" = "URL";
+"open_crypto_pay.expires_in" = "Expires In";
+"open_crypto_pay.button.expired" = "Quote expired";

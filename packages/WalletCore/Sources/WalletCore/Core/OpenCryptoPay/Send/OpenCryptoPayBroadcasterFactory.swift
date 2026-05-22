@@ -36,6 +36,7 @@ extension OpenCryptoPayBroadcasterFactory {
             BitcoinHexBroadcaster.self,
             SolanaHashBroadcaster.self,
             ZanoHashBroadcaster.self,
+            MoneroHashBroadcaster.self,
         ])
         return factory
     }

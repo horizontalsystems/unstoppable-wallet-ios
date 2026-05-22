@@ -437,7 +437,7 @@ public class Core {
             accountManager: accountManager,
             broadcasterFactory: openCryptoPayBroadcasterFactory
         )
-        let openCryptoPayHandler = OpenCryptoPayEventHandler(openCryptoPayManager: openCryptoPayManager)
+        let openCryptoPayHandler = OpenCryptoPayEventHandler()
 
         appEventHandler.append(handler: walletConnectHandler)
         // eventHandler.append(handler: tonConnectHandler)

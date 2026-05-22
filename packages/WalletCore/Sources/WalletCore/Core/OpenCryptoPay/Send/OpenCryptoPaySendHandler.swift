@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MarketKit
+import WalletCore
 
 // Decorator: broadcasts via per-chain broadcaster, then submits proof to OCP /tx.
 class OpenCryptoPaySendHandler {
@@ -11,6 +12,9 @@ class OpenCryptoPaySendHandler {
     private let submitter: OpenCryptoPaySubmitter
     private let accountManager: AccountManager
     private let walletManager: WalletManager
+
+    private let refreshSubject = PassthroughSubject<Void, Never>()
+    private var expirationTimer: Timer?
 
     // Type A: signed-hex + expired quote = burned EOA nonce.
     private let quoteExpiryGuardSeconds: TimeInterval = 30
@@ -30,6 +34,20 @@ class OpenCryptoPaySendHandler {
         self.submitter = submitter
         self.accountManager = accountManager
         self.walletManager = walletManager
+
+        scheduleExpirationRefresh()
+    }
+
+    deinit {
+        expirationTimer?.invalidate()
+    }
+
+    private func scheduleExpirationRefresh() {
+        let interval = payment.quoteExpirationDate.timeIntervalSinceNow
+        guard interval > 0 else { return }
+        expirationTimer = Timer.scheduledTimer(withTimeInterval: interval, repeats: false) { [weak self] _ in
+            self?.refreshSubject.send()
+        }
     }
 }
 
@@ -39,11 +57,20 @@ extension OpenCryptoPaySendHandler: ISendHandler {
     var expirationDuration: Int? { innerHandler.expirationDuration }
     var initialTransactionSettings: InitialTransactionSettings? { innerHandler.initialTransactionSettings }
     var menuItems: [SendMenuItem] { innerHandler.menuItems }
-    var refreshPublisher: AnyPublisher<Void, Never>? { innerHandler.refreshPublisher }
+    var refreshPublisher: AnyPublisher<Void, Never>? {
+        let own = refreshSubject.eraseToAnyPublisher()
+        guard let inner = innerHandler.refreshPublisher else { return own }
+        return inner.merge(with: own).eraseToAnyPublisher()
+    }
 
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
         let inner = try await innerHandler.sendData(transactionSettings: transactionSettings)
-        return OpenCryptoPaySendData(inner: inner, recipient: payment.recipient)
+        return OpenCryptoPaySendData(
+            inner: inner,
+            recipient: payment.recipient,
+            expirationDate: payment.quoteExpirationDate,
+            isExpired: Date() >= payment.quoteExpirationDate
+        )
     }
 
     func send(data: ISendData) async throws {
