@@ -64,6 +64,7 @@
 "alert.connected" = "Connecté";
 "alert.enabling" = "Activation";
 "alert.enabled_coins" = "%@ pièces supplémentaires activées";
+"alert.preparing" = "Préparation";
 "alert.sending" = "En attente";
 "alert.sent" = "Envoyée";
 "alert.swapping" = "Échange";
@@ -2457,3 +2458,18 @@
 "new_wallet.passkey.description" = "Créez un wallet sécurisé par votre appareil et iCloud pour un accès facile.";
 "new_wallet.smart_account" = "Smart Account";
 "new_wallet.smart_account.description" = "Portefeuille sécurisé par passkey avec sponsoring des frais de gas.";
+
+"open_crypto_pay.error.invalid_url" = "Ce lien de paiement n'est pas reconnu.";
+"open_crypto_pay.error.invalid_lnurl" = "Les données de paiement sont mal formées.";
+"open_crypto_pay.error.no_supported_method" = "Aucun wallet compatible pour ce commerçant.";
+"open_crypto_pay.error.quote_expired" = "Le devis a expiré. Veuillez rescanner le code QR.";
+"open_crypto_pay.error.malformed_tx_uri" = "Les détails du paiement sont mal formés.";
+"open_crypto_pay.error.amount_mismatch" = "Le montant diffère du devis original. Veuillez rescanner.";
+"open_crypto_pay.error.unsupported_parameter" = "Ce paiement contient des paramètres non pris en charge et a été bloqué par sécurité.";
+"open_crypto_pay.error.chain_mismatch" = "Incohérence de blockchain dans les détails du paiement.";
+"open_crypto_pay.error.account_changed" = "Le compte ou le wallet actif a changé. Veuillez rescanner.";
+"open_crypto_pay.token_list.description" = "Choisissez le token que vous souhaitez utiliser pour le paiement";
+"open_crypto_pay.merchant.name" = "Commerçant";
+"open_crypto_pay.merchant.url" = "URL";
+"open_crypto_pay.expires_in" = "Expire dans";
+"open_crypto_pay.button.expired" = "Devis expiré";
