@@ -23,7 +23,7 @@ let package = Package(
         .package(url: "https://github.com/horizontalsystems/OneInchKit.Swift", exact: "3.0.4"),
         .package(url: "https://github.com/tristanhimmelman/ObjectMapper", exact: "4.2.0"),
         .package(url: "https://github.com/ReactiveX/RxSwift.git", from: "5.1.3"),
-        .package(url: "https://github.com/horizontalsystems/TronKit.Swift.git", exact: "1.5.0"),
+        .package(url: "https://github.com/horizontalsystems/TronKit.Swift.git", exact: "1.5.1"),
     ],
     targets: [
         .target(
