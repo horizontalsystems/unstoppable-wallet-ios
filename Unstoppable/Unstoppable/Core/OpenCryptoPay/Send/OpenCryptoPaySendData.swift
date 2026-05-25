@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import WalletCore
 
 // Prepends merchant info to inner SendData. NB: recipient name/website are unauthenticated — display only.
 class OpenCryptoPaySendData: ISendData {
