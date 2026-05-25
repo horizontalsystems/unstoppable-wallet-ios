@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import WalletCore
 
 class MoneroTransactionRecord: TransactionRecord {
     let fee: AppValue?

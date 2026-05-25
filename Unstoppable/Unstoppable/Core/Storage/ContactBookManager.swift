@@ -6,6 +6,7 @@ import MarketKit
 import ObjectMapper
 import RxRelay
 import RxSwift
+import WalletCore
 
 class ContactBookManager {
     private static let batchingInterval: TimeInterval = 1

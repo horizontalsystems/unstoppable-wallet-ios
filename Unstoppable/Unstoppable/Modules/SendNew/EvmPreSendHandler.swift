@@ -4,6 +4,7 @@ import EvmKit
 import Foundation
 import MarketKit
 import RxSwift
+import WalletCore
 
 class EvmPreSendHandler {
     private let token: Token

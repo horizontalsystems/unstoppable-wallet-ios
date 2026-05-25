@@ -2,6 +2,7 @@ import Combine
 import MarketKit
 import RxCocoa
 import RxSwift
+import WalletCore
 
 class TransactionInfoViewModel {
     private let disposeBag = DisposeBag()

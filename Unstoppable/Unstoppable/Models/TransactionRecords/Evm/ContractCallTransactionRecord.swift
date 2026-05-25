@@ -1,6 +1,7 @@
 import EvmKit
 import Foundation
 import MarketKit
+import WalletCore
 
 class ContractCallTransactionRecord: EvmTransactionRecord {
     let contractAddress: String
@@ -8,7 +9,7 @@ class ContractCallTransactionRecord: EvmTransactionRecord {
     let incomingEvents: [TransferEvent]
     let outgoingEvents: [TransferEvent]
 
-    init(source: TransactionSource, transaction: Transaction, baseToken: Token,
+    init(source: WalletCore.TransactionSource, transaction: Transaction, baseToken: Token,
          contractAddress: String, method: String?, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent], protected: Bool)
     {
         self.contractAddress = contractAddress
@@ -23,7 +24,7 @@ class ContractCallTransactionRecord: EvmTransactionRecord {
         combined(incomingEvents: incomingEvents, outgoingEvents: outgoingEvents)
     }
 
-    override var mainValue: AppValue? {
+    private var mainAppValue: AppValue? {
         let (incomingValues, outgoingValues) = combinedValues
 
         if incomingValues.count == 1, outgoingValues.isEmpty {
@@ -33,5 +34,13 @@ class ContractCallTransactionRecord: EvmTransactionRecord {
         } else {
             return nil
         }
+    }
+
+    override var mainToken: MarketKit.Token? {
+        mainAppValue?.token
+    }
+
+    override var mainValue: Decimal? {
+        mainAppValue?.value
     }
 }

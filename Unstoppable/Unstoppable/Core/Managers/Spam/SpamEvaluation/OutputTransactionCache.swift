@@ -1,6 +1,7 @@
 import Foundation
 import HsToolKit
 import MarketKit
+import WalletCore
 
 /// In-memory cache backed by DB storage.
 /// All writes go to both DB and memory.

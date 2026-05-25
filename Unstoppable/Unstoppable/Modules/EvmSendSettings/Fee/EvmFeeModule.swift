@@ -4,6 +4,7 @@ import RxCocoa
 import RxSwift
 
 import UIKit
+import WalletCore
 
 enum EvmFeeModule {
     private static let surchargePercent: Double = 10

@@ -16,6 +16,13 @@ public struct Wallet {
     public var decimals: Int {
         token.decimals
     }
+
+    public var transactionSource: TransactionSource {
+        TransactionSource(
+            blockchainType: token.blockchainType,
+            meta: token.type.meta
+        )
+    }
 }
 
 extension Wallet: Identifiable {

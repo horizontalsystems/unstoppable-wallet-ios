@@ -4,6 +4,7 @@ import Foundation
 import MarketKit
 import RxSwift
 import StellarKit
+import WalletCore
 
 class StellarTransactionAdapter {
     private let stellarKit: StellarKit.Kit

@@ -3,6 +3,7 @@ import EvmKit
 import Foundation
 import MarketKit
 import SwiftUI
+import WalletCore
 
 class AaSendData: ISendData {
     let prepared: PreparedUserOp

@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import WalletCore
 
 class MoneroReceiveAddressViewModel: BaseReceiveAddressViewModel {
     private var cancellables = Set<AnyCancellable>()

@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import HsExtensions
 import MarketKit
+import WalletCore
 
 class SendViewModel: ObservableObject {
     private let autoRefreshDuration: Double = 20

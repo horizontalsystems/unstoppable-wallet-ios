@@ -1,5 +1,6 @@
 import Combine
 import Foundation
+import WalletCore
 
 class HDReceiveAddressViewModel: BaseReceiveAddressViewModel {
     private var cancellables = Set<AnyCancellable>()

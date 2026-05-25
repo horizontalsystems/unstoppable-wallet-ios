@@ -4,6 +4,7 @@ import HsToolKit
 import MarketKit
 import RxSwift
 import TronKit
+import WalletCore
 
 class TronTransactionsAdapter: BaseTronAdapter {
     static let decimal = 6
@@ -12,7 +13,7 @@ class TronTransactionsAdapter: BaseTronAdapter {
     private let spamWrapper: SpamWrapper
     private let spamManager: SpamManager?
 
-    init(tronKitWrapper: TronKitWrapper, source: TransactionSource, baseToken: MarketKit.Token, coinManager: CoinManager, spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager) {
+    init(tronKitWrapper: TronKitWrapper, source: WalletCore.TransactionSource, baseToken: MarketKit.Token, coinManager: CoinManager, spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager) {
         self.spamWrapper = spamWrapper
         spamManager = spamWrapper.spamManager(source: source)
 

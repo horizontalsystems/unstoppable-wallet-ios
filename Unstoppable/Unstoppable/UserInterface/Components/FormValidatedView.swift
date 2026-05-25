@@ -1,6 +1,7 @@
 import SnapKit
 
 import UIKit
+import WalletCore
 
 class FormValidatedView: UIView {
     private let wrapperView = UIView()

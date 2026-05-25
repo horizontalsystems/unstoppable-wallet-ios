@@ -5,6 +5,7 @@ import HsExtensions
 import RxCocoa
 import RxSwift
 import TronKit
+import WalletCore
 
 class SendTronConfirmationService {
     private var tasks = Set<AnyTask>()

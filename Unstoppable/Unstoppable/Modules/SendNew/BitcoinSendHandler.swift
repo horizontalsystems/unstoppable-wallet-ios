@@ -2,6 +2,7 @@ import BitcoinCore
 import Foundation
 import Hodler
 import MarketKit
+import WalletCore
 
 class BitcoinSendHandler {
     private let token: Token

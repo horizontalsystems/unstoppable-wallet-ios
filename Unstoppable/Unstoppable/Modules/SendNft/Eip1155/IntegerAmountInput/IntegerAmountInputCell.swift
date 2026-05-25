@@ -1,6 +1,7 @@
 import SnapKit
 
 import UIKit
+import WalletCore
 
 class IntegerAmountInputCell: UITableViewCell {
     private let formValidatedView: FormValidatedView

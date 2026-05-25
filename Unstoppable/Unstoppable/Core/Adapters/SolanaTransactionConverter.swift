@@ -1,6 +1,7 @@
 import Foundation
 import MarketKit
 import SolanaKit
+import WalletCore
 
 class SolanaTransactionConverter {
     private let userAddress: String

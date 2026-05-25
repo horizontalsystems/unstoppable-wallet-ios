@@ -3,6 +3,7 @@ import EvmKit
 import MarketKit
 import RxRelay
 import RxSwift
+import WalletCore
 
 class EvmFeeService {
     let gasPriceService: IGasPriceService

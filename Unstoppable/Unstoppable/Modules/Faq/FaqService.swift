@@ -1,6 +1,7 @@
 import Foundation
 import HsToolKit
 import RxSwift
+import WalletCore
 
 class FaqService {
     private let repository: FaqRepository

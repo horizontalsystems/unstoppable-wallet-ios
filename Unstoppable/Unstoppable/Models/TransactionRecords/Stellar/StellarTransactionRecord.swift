@@ -1,6 +1,7 @@
 import Foundation
 import MarketKit
 import StellarKit
+import WalletCore
 
 class StellarTransactionRecord: TransactionRecord, TransferEventsProvider {
     let operation: TxOperation
@@ -30,7 +31,7 @@ class StellarTransactionRecord: TransactionRecord, TransferEventsProvider {
         operation.transactionSuccessful ? .completed : .failed
     }
 
-    override var mainValue: AppValue? {
+    private var mainAppValue: AppValue? {
         switch type {
         case let .accountCreated(startingBalance, _): return startingBalance
         case let .accountFunded(startingBalance, _): return startingBalance
@@ -39,6 +40,14 @@ class StellarTransactionRecord: TransactionRecord, TransferEventsProvider {
         case let .changeTrust(value, _, _, _): return value
         default: return nil
         }
+    }
+
+    override var mainToken: MarketKit.Token? {
+        mainAppValue?.token
+    }
+
+    override var mainValue: Decimal? {
+        mainAppValue?.value
     }
 
     var transferEvents: TransferEvents {

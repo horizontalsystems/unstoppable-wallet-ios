@@ -1,6 +1,7 @@
 import EvmKit
 import Foundation
 import MarketKit
+import WalletCore
 
 class EvmTransactionRecord: TransactionRecord {
     let transaction: Transaction
@@ -8,7 +9,7 @@ class EvmTransactionRecord: TransactionRecord {
     let protected: Bool
     let fee: AppValue?
 
-    init(source: TransactionSource, transaction: Transaction, baseToken: Token, ownTransaction: Bool, protected: Bool, spam: Bool = false) {
+    init(source: WalletCore.TransactionSource, transaction: Transaction, baseToken: Token, ownTransaction: Bool, protected: Bool, spam: Bool = false) {
         self.transaction = transaction
         let txHash = transaction.hash.hs.hexString
         self.ownTransaction = ownTransaction

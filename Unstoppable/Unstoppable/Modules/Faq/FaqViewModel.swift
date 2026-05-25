@@ -1,6 +1,7 @@
 import Foundation
 import RxCocoa
 import RxSwift
+import WalletCore
 
 class FaqViewModel {
     private let disposeBag = DisposeBag()

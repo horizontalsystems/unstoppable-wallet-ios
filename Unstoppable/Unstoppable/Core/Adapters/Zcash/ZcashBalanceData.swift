@@ -1,5 +1,6 @@
 import Foundation
 import GRDB
+import WalletCore
 
 class ZcashBalanceData: Record, Equatable {
     static func empty(id: String) -> ZcashBalanceData {

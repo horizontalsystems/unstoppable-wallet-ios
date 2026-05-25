@@ -3,6 +3,7 @@ import Foundation
 import MarketKit
 import SwiftUI
 import TronKit
+import WalletCore
 
 class GasFreeSendData: ISendData {
     let prepared: PreparedGasFreeTransfer

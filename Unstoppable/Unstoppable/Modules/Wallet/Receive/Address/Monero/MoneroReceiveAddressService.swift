@@ -1,3 +1,5 @@
+import WalletCore
+
 class MoneroReceiveAddressService: BaseReceiveAddressService {
     var moneroAdapter: MoneroAdapter? { super.adapter as? MoneroAdapter }
 

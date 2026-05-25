@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import RxSwift
 import SolanaKit
+import WalletCore
 
 class SolanaAdapter {
     private let solanaKit: SolanaKit.Kit

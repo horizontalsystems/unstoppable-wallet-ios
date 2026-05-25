@@ -1,5 +1,6 @@
 import Combine
 import SwiftUI
+import WalletCore
 
 struct MnemonicInputCellWrapper: UIViewRepresentable {
     private static let appearDuration: TimeInterval = 0.5

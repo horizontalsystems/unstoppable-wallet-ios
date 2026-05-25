@@ -1,4 +1,5 @@
 import Foundation
+import WalletCore
 
 class MultiSwapQuote {
     let expectedBuyAmount: Decimal

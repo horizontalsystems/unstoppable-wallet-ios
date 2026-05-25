@@ -1,6 +1,7 @@
 import Combine
 import MarketKit
 import SwiftUI
+import WalletCore
 
 protocol ITransactionService {
     var transactionSettings: TransactionSettings? { get }

@@ -1,6 +1,7 @@
 import EvmKit
 import RxCocoa
 import RxSwift
+import WalletCore
 
 class NonceService {
     private var disposeBag = DisposeBag()

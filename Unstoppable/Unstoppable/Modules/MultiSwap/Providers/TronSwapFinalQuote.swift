@@ -3,6 +3,7 @@ import EvmKit
 import Foundation
 import MarketKit
 import TronKit
+import WalletCore
 
 class TronSwapFinalQuote: SwapFinalQuote {
     private let amountIn: Decimal

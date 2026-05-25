@@ -5,6 +5,7 @@ import MarketKit
 import RxCocoa
 import RxSwift
 import UIKit
+import WalletCore
 
 protocol IChartPointFetcher {
     var points: DataStatus<[ChartPoint]> { get }

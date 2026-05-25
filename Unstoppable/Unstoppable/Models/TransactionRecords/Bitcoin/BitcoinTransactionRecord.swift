@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import WalletCore
 
 class BitcoinTransactionRecord: TransactionRecord {
     let lockInfo: TransactionLockInfo?
@@ -42,16 +43,5 @@ class BitcoinTransactionRecord: TransactionRecord {
         }
 
         return TransactionLockState(locked: locked, date: lockInfo.lockedUntil)
-    }
-}
-
-struct TransactionLockState {
-    let locked: Bool
-    let date: Date
-}
-
-extension TransactionLockState: Equatable {
-    public static func == (lhs: TransactionLockState, rhs: TransactionLockState) -> Bool {
-        lhs.locked == rhs.locked && lhs.date == rhs.date
     }
 }

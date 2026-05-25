@@ -1,6 +1,7 @@
 import Foundation
 import RxRelay
 import RxSwift
+import WalletCore
 
 class NonSpamPoolProvider {
     private let poolProvider: IPoolProvider

@@ -1,12 +1,13 @@
 import Foundation
 import MarketKit
 import TronKit
+import WalletCore
 
 class TronExternalContractCallTransactionRecord: TronTransactionRecord, TransferEventsProvider {
     let incomingEvents: [TransferEvent]
     let outgoingEvents: [TransferEvent]
 
-    init(source: TransactionSource, transaction: Transaction, baseToken: Token, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent], spam: Bool = false) {
+    init(source: WalletCore.TransactionSource, transaction: Transaction, baseToken: Token, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent], spam: Bool = false) {
         self.incomingEvents = incomingEvents
         self.outgoingEvents = outgoingEvents
 
@@ -17,7 +18,7 @@ class TronExternalContractCallTransactionRecord: TronTransactionRecord, Transfer
         combined(incomingEvents: incomingEvents, outgoingEvents: outgoingEvents)
     }
 
-    override var mainValue: AppValue? {
+    private var mainAppValue: AppValue? {
         let (incomingValues, outgoingValues) = combinedValues
 
         if incomingValues.count == 1, outgoingValues.isEmpty {
@@ -27,6 +28,14 @@ class TronExternalContractCallTransactionRecord: TronTransactionRecord, Transfer
         } else {
             return nil
         }
+    }
+
+    override var mainToken: MarketKit.Token? {
+        mainAppValue?.token
+    }
+
+    override var mainValue: Decimal? {
+        mainAppValue?.value
     }
 
     var transferEvents: TransferEvents {

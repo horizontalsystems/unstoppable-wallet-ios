@@ -1,6 +1,7 @@
 import SnapKit
 
 import UIKit
+import WalletCore
 
 class PasswordInputCell: UITableViewCell {
     private let passwordInputView = PasswordInputView()

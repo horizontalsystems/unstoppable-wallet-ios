@@ -4,6 +4,7 @@ import MarketKit
 import RxSwift
 import TonKit
 import TonSwift
+import WalletCore
 
 class TonPreSendHandler {
     private let token: Token

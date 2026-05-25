@@ -3,6 +3,7 @@ import Foundation
 import MarketKit
 import StellarKit
 import stellarsdk
+import WalletCore
 
 class WalletConnectStellarTransactionHandler {
     private let request: WalletConnectRequest

@@ -1,6 +1,7 @@
 import EvmKit
 import Foundation
 import MarketKit
+import WalletCore
 
 class TransactionInfoViewItemFactory {
     private let zeroAddress = "0x0000000000000000000000000000000000000000"
@@ -17,7 +18,7 @@ class TransactionInfoViewItemFactory {
         self.contactLabelService = contactLabelService
     }
 
-    private func amount(source: TransactionSource, title: String, subtitle: String?, appValue: AppValue, rate: CurrencyValue?, type: AmountType, balanceHidden: Bool) -> TransactionInfoModule.ViewItem {
+    private func amount(source: WalletCore.TransactionSource, title: String, subtitle: String?, appValue: AppValue, rate: CurrencyValue?, type: AmountType, balanceHidden: Bool) -> TransactionInfoModule.ViewItem {
         let iconUrl = appValue.coin?.imageUrl
         let iconAlternativeUrl = appValue.coin?.image
         let iconPlaceholderImageName = source.blockchainType.placeholderImageName(tokenProtocol: appValue.tokenProtocol)
@@ -57,7 +58,7 @@ class TransactionInfoViewItemFactory {
         }
     }
 
-    private func nftAmount(source _: TransactionSource, appValue: AppValue, type: AmountType, metadata: NftAssetBriefMetadata?, balanceHidden: Bool) -> TransactionInfoModule.ViewItem {
+    private func nftAmount(source _: WalletCore.TransactionSource, appValue: AppValue, type: AmountType, metadata: NftAssetBriefMetadata?, balanceHidden: Bool) -> TransactionInfoModule.ViewItem {
         .nftAmount(
             iconUrl: metadata?.previewImageUrl,
             iconPlaceholderImageName: "placeholder_nft_32",
@@ -140,7 +141,7 @@ class TransactionInfoViewItemFactory {
         }
     }
 
-    private func sendSection(source: TransactionSource, appValue: AppValue, to: String?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:], sentToSelf: Bool = false, balanceHidden: Bool) -> [TransactionInfoModule.ViewItem] {
+    private func sendSection(source: WalletCore.TransactionSource, appValue: AppValue, to: String?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:], sentToSelf: Bool = false, balanceHidden: Bool) -> [TransactionInfoModule.ViewItem] {
         var viewItems = [TransactionInfoModule.ViewItem]()
 
         let burn = to == zeroAddress
@@ -210,7 +211,7 @@ class TransactionInfoViewItemFactory {
         return condition ? trueType : (falseType ?? trueType)
     }
 
-    private func receiveSection(source: TransactionSource, appValue: AppValue, from: String?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:], to: String? = nil, memo: String? = nil, status: TransactionStatus? = nil, balanceHidden: Bool) -> [TransactionInfoModule.ViewItem] {
+    private func receiveSection(source: WalletCore.TransactionSource, appValue: AppValue, from: String?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:], to: String? = nil, memo: String? = nil, status: TransactionStatus? = nil, balanceHidden: Bool) -> [TransactionInfoModule.ViewItem] {
         var viewItems = [TransactionInfoModule.ViewItem]()
 
         let mint = from == zeroAddress

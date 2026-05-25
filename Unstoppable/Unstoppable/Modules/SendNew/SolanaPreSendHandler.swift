@@ -3,6 +3,7 @@ import Foundation
 import MarketKit
 import RxSwift
 import SolanaKit
+import WalletCore
 
 class SolanaPreSendHandler {
     private let token: Token

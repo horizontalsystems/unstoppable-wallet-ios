@@ -1,6 +1,7 @@
 import SnapKit
 
 import UIKit
+import WalletCore
 
 class ShortcutInputCell: UITableViewCell {
     private let formValidatedView: FormValidatedView

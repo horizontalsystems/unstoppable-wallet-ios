@@ -6,16 +6,17 @@ import MarketKit
 import NftKit
 import OneInchKit
 import UniswapKit
+import WalletCore
 
 class EvmTransactionConverter {
     private let coinManager: CoinManager
     private let blockchainType: BlockchainType
     private let userAddress: EvmKit.Address
     private let evmLabelManager: EvmLabelManager
-    private let source: TransactionSource
+    private let source: WalletCore.TransactionSource
     private let baseToken: MarketKit.Token
 
-    init(source: TransactionSource, baseToken: MarketKit.Token, coinManager: CoinManager, blockchainType: BlockchainType, userAddress: EvmKit.Address, evmLabelManager: EvmLabelManager) {
+    init(source: WalletCore.TransactionSource, baseToken: MarketKit.Token, coinManager: CoinManager, blockchainType: BlockchainType, userAddress: EvmKit.Address, evmLabelManager: EvmLabelManager) {
         self.coinManager = coinManager
         self.blockchainType = blockchainType
         self.userAddress = userAddress

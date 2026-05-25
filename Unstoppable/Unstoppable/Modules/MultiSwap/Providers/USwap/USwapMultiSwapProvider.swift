@@ -11,6 +11,7 @@ import ObjectMapper
 import SolanaKit
 import SwiftUI
 import TronKit
+import WalletCore
 import ZanoKit
 import ZcashLightClientKit
 

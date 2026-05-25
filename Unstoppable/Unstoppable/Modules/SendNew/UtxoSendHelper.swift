@@ -1,6 +1,7 @@
 import BitcoinCore
 import Foundation
 import MarketKit
+import WalletCore
 
 class UtxoSendHelper {
     static func amountData(fee: Decimal?, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AmountData? {

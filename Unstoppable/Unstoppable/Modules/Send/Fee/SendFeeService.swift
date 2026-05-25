@@ -3,6 +3,7 @@ import MarketKit
 import RxCocoa
 import RxRelay
 import RxSwift
+import WalletCore
 
 class SendFeeService {
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "\(AppConfig.label).send-fee-service")

@@ -1,4 +1,5 @@
 import Foundation
+import WalletCore
 
 class EvmMultiSwapQuote: MultiSwapQuote {
     let allowanceState: MultiSwapAllowanceHelper.AllowanceState

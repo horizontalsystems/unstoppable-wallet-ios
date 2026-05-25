@@ -3,6 +3,7 @@ import Foundation
 import RxCocoa
 import RxRelay
 import RxSwift
+import WalletCore
 
 class Eip1559EvmFeeViewModel {
     private let disposeBag = DisposeBag()

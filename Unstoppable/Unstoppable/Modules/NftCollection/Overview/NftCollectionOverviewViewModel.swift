@@ -4,6 +4,7 @@ import MarketKit
 import RxCocoa
 import RxRelay
 import RxSwift
+import WalletCore
 
 class NftCollectionOverviewViewModel {
     private let service: NftCollectionOverviewService

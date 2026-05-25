@@ -2,6 +2,7 @@ import Combine
 import RxCocoa
 import RxRelay
 import RxSwift
+import WalletCore
 
 class SendFeeViewModel: ObservableObject {
     private let disposeBag = DisposeBag()

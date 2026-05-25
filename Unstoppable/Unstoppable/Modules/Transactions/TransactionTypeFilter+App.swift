@@ -1,8 +1,8 @@
-enum TransactionTypeFilter: String {
-    case all, incoming, outgoing, swap, approve
+import WalletCore
 
+extension TransactionTypeFilter {
     static var allCases: [TransactionTypeFilter] {
-        [all, incoming, outgoing] + (AppStateManager.instance.swapEnabled ? [swap] : []) + [approve]
+        [.all, .incoming, .outgoing] + (AppStateManager.instance.swapEnabled ? [.swap] : []) + [.approve]
     }
 
     var title: String {

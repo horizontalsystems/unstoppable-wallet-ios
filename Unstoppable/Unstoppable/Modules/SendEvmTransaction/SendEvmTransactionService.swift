@@ -7,6 +7,7 @@ import OneInchKit
 import RxCocoa
 import RxSwift
 import UniswapKit
+import WalletCore
 
 protocol ISendEvmTransactionService {
     var state: SendEvmTransactionService.State { get }

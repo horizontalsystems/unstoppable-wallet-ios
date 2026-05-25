@@ -1,6 +1,7 @@
 import Foundation
 import MarketKit
 import MoneroKit
+import WalletCore
 
 class MoneroSendHandler {
     private let token: Token

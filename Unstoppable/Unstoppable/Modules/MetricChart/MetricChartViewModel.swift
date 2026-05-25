@@ -5,6 +5,7 @@ import MarketKit
 import RxCocoa
 import RxRelay
 import RxSwift
+import WalletCore
 
 class MetricChartViewModel: ObservableObject {
     private let service: MetricChartService

@@ -1,6 +1,7 @@
 import SnapKit
 
 import UIKit
+import WalletCore
 
 class AddressInputCell: UITableViewCell {
     private let addressInputView = AddressInputView()

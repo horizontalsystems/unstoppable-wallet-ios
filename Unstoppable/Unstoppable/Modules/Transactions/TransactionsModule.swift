@@ -1,4 +1,5 @@
 import MarketKit
+import WalletCore
 
 struct TransactionItem: Comparable {
     var record: TransactionRecord

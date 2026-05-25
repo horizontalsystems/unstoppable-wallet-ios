@@ -6,13 +6,14 @@ import MarketKit
 import RxRelay
 import RxSwift
 import UniswapKit
+import WalletCore
 
 class UniswapV3Service {
     let dex: SwapModule.Dex
     private let tradeService: UniswapV3TradeService
     private let allowanceService: SwapAllowanceService
     private let pendingAllowanceService: SwapPendingAllowanceService
-    private let adapterManager: AdapterManager
+    private let adapterManager: AppAdapterManager
 
     private let disposeBag = DisposeBag()
 
@@ -51,7 +52,7 @@ class UniswapV3Service {
 
     private let scheduler = SerialDispatchQueueScheduler(qos: .userInitiated, internalSerialQueueName: "\(AppConfig.label).swap_service")
 
-    init(dex: SwapModule.Dex, tradeService: UniswapV3TradeService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, adapterManager: AdapterManager) {
+    init(dex: SwapModule.Dex, tradeService: UniswapV3TradeService, allowanceService: SwapAllowanceService, pendingAllowanceService: SwapPendingAllowanceService, adapterManager: AppAdapterManager) {
         self.dex = dex
         self.tradeService = tradeService
         self.allowanceService = allowanceService

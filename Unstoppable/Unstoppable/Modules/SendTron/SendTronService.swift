@@ -5,6 +5,7 @@ import MarketKit
 import RxRelay
 import RxSwift
 import TronKit
+import WalletCore
 
 class SendTronService {
     let sendToken: Token

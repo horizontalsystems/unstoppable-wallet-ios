@@ -4,6 +4,7 @@ import EvmKit
 import HsToolKit
 import RxSwift
 import UniswapKit
+import WalletCore
 
 class EvmAdapter: BaseEvmAdapter {
     static let decimals = 18

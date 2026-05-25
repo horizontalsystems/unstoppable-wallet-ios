@@ -2,6 +2,7 @@ import Foundation
 import MarketKit
 import StellarKit
 import stellarsdk
+import WalletCore
 
 class StellarSendHandler {
     private let stellarKit: StellarKit.Kit

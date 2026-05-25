@@ -1,5 +1,6 @@
 import RxCocoa
 import RxSwift
+import WalletCore
 
 class EvmSendSettingsViewModel {
     let service: EvmSendSettingsService

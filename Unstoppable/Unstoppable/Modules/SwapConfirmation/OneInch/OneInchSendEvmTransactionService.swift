@@ -6,6 +6,7 @@ import OneInchKit
 import RxCocoa
 import RxSwift
 import UniswapKit
+import WalletCore
 
 class OneInchSendEvmTransactionService {
     private let disposeBag = DisposeBag()

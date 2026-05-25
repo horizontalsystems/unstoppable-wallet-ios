@@ -3,6 +3,7 @@ import EvmKit
 import HsToolKit
 import MarketKit
 import SwiftUI
+import WalletCore
 
 class EvmTransactionService {
     private static let tipsSafeRangeBounds = RangeBounds(lower: .factor(0.9), upper: .factor(1.5))

@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import WalletCore
 
 class ZanoIncomingTransactionRecord: ZanoTransactionRecord {
     let value: AppValue
@@ -25,7 +26,11 @@ class ZanoIncomingTransactionRecord: ZanoTransactionRecord {
         )
     }
 
-    override var mainValue: AppValue? {
-        value
+    override var mainToken: MarketKit.Token? {
+        value.token
+    }
+
+    override var mainValue: Decimal? {
+        value.value
     }
 }

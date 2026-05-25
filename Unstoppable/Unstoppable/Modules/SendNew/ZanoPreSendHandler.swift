@@ -3,6 +3,7 @@ import Foundation
 import MarketKit
 import RxSwift
 import SwiftUI
+import WalletCore
 import ZanoKit
 
 class ZanoPreSendHandler {

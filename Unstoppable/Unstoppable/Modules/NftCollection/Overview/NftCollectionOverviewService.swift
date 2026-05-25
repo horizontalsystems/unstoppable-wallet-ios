@@ -1,6 +1,7 @@
 import MarketKit
 import RxRelay
 import RxSwift
+import WalletCore
 
 class NftCollectionOverviewService {
     let blockchainType: BlockchainType

@@ -1,12 +1,13 @@
 import EvmKit
 import Foundation
 import MarketKit
+import WalletCore
 
 class ExternalContractCallTransactionRecord: EvmTransactionRecord, TransferEventsProvider {
     let incomingEvents: [TransferEvent]
     let outgoingEvents: [TransferEvent]
 
-    init(source: TransactionSource, transaction: Transaction, baseToken: Token, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent], spam: Bool = false, protected: Bool) {
+    init(source: WalletCore.TransactionSource, transaction: Transaction, baseToken: Token, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent], spam: Bool = false, protected: Bool) {
         self.incomingEvents = incomingEvents
         self.outgoingEvents = outgoingEvents
 
@@ -17,7 +18,7 @@ class ExternalContractCallTransactionRecord: EvmTransactionRecord, TransferEvent
         combined(incomingEvents: incomingEvents, outgoingEvents: outgoingEvents)
     }
 
-    override var mainValue: AppValue? {
+    private var mainAppValue: AppValue? {
         let (incomingValues, outgoingValues) = combinedValues
 
         if incomingValues.count == 1, outgoingValues.isEmpty {
@@ -27,6 +28,14 @@ class ExternalContractCallTransactionRecord: EvmTransactionRecord, TransferEvent
         } else {
             return nil
         }
+    }
+
+    override var mainToken: MarketKit.Token? {
+        mainAppValue?.token
+    }
+
+    override var mainValue: Decimal? {
+        mainAppValue?.value
     }
 
     var transferEvents: TransferEvents {

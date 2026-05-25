@@ -1,6 +1,7 @@
 import EvmKit
 import Foundation
 import MarketKit
+import WalletCore
 
 class EvmSendHelper {
     static func feeFields(evmFeeData: EvmFeeData?, gasPrice: GasPrice?, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> [SendField] {

@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct MainTransactionsView: View {
     @ObservedObject var transactionsViewModel: TransactionsViewModel

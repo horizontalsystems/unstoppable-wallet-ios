@@ -1,5 +1,6 @@
 import MarketKit
 import UIKit
+import WalletCore
 
 class TransactionsViewItemFactory {
     private let evmLabelManager = Core.shared.evmLabelManager

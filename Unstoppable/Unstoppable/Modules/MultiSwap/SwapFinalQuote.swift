@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import WalletCore
 
 class SwapFinalQuote {
     private let expectedBuyAmount: Decimal

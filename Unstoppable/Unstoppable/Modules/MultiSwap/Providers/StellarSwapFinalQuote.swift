@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import WalletCore
 
 class StellarSwapFinalQuote: SwapFinalQuote {
     private let amountIn: Decimal

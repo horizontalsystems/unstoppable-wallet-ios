@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct HighlightedTextView: View {
     private let title: String?

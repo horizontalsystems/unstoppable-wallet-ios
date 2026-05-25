@@ -3,6 +3,7 @@ import Foundation
 import MarketKit
 import RxSwift
 import SolanaKit
+import WalletCore
 
 class SolanaTransactionsAdapter {
     private let solanaKit: SolanaKit.Kit

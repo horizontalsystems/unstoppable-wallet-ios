@@ -1,4 +1,5 @@
 import MarketKit
+import WalletCore
 
 extension HsTimePeriod {
     var statPeriod: StatPeriod {

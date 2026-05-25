@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import WalletCore
 
 class BitcoinOutgoingTransactionRecord: BitcoinTransactionRecord {
     let value: AppValue
@@ -33,7 +34,11 @@ class BitcoinOutgoingTransactionRecord: BitcoinTransactionRecord {
         )
     }
 
-    override var mainValue: AppValue? {
-        value
+    override var mainToken: MarketKit.Token? {
+        value.token
+    }
+
+    override var mainValue: Decimal? {
+        value.value
     }
 }

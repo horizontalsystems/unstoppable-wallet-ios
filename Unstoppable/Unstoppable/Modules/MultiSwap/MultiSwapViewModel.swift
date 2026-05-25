@@ -3,6 +3,7 @@ import Foundation
 import HsExtensions
 import MarketKit
 import RxSwift
+import WalletCore
 
 class MultiSwapViewModel: ObservableObject {
     private let autoRefreshDuration: Double = 20
@@ -305,7 +306,10 @@ class MultiSwapViewModel: ObservableObject {
             .sink { [weak self] _ in self?.syncDefaultTokens() }
             .store(in: &cancellables)
 
-        subscribe(disposeBag, adapterManager.adapterDataReadyObservable) { [weak self] _ in self?.syncAdapter() }
+        adapterManager.adapterDataReadyPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] _ in self?.syncAdapter() }
+            .store(in: &cancellables)
 
         subscribeToProviders()
 
