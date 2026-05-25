@@ -1,13 +1,14 @@
 import EvmKit
 import Foundation
 import MarketKit
+import WalletCore
 
 class UnknownSwapTransactionRecord: EvmTransactionRecord {
     let exchangeAddress: String
     let valueIn: AppValue?
     let valueOut: AppValue?
 
-    init(source: TransactionSource, transaction: Transaction, baseToken: Token, exchangeAddress: String, valueIn: AppValue?, valueOut: AppValue?, protected: Bool) {
+    init(source: WalletCore.TransactionSource, transaction: Transaction, baseToken: Token, exchangeAddress: String, valueIn: AppValue?, valueOut: AppValue?, protected: Bool) {
         self.exchangeAddress = exchangeAddress
         self.valueIn = valueIn
         self.valueOut = valueOut

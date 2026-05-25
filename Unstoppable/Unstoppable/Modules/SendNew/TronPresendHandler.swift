@@ -4,6 +4,7 @@ import Foundation
 import MarketKit
 import RxSwift
 import TronKit
+import WalletCore
 
 class TronPreSendHandler {
     private let token: Token

@@ -484,21 +484,13 @@ extension BitcoinBaseAdapter {
     }
 }
 
-class DepositAddress {
-    let address: String
-
-    init(_ receiveAddress: String) {
-        address = receiveAddress
-    }
-}
-
-public struct UsedAddress: Hashable {
+struct UsedAddress: Hashable {
     let index: Int
     let address: String
     let explorerUrl: URL?
     let transactionsCount: Int?
 
-    public func hash(into hasher: inout Hasher) {
+    func hash(into hasher: inout Hasher) {
         hasher.combine(index)
         hasher.combine(address)
         hasher.combine(explorerUrl?.absoluteString)

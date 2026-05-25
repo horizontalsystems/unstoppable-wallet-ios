@@ -1,6 +1,7 @@
 import EvmKit
 import Foundation
 import MarketKit
+import WalletCore
 
 class SwapTransactionRecord: EvmTransactionRecord {
     let exchangeAddress: String
@@ -8,7 +9,7 @@ class SwapTransactionRecord: EvmTransactionRecord {
     let amountOut: Amount?
     let recipient: String?
 
-    init(source: TransactionSource, transaction: Transaction, baseToken: Token, exchangeAddress: String, amountIn: Amount, amountOut: Amount?, recipient: String?, protected: Bool) {
+    init(source: WalletCore.TransactionSource, transaction: Transaction, baseToken: Token, exchangeAddress: String, amountIn: Amount, amountOut: Amount?, recipient: String?, protected: Bool) {
         self.exchangeAddress = exchangeAddress
         self.amountIn = amountIn
         self.amountOut = amountOut

@@ -6,7 +6,7 @@ import RxSwift
 import StellarKit
 import WalletCore
 
-class AdapterFactory {
+class AdapterFactory: IAdapterFactory {
     private let evmBlockchainManager: EvmBlockchainManager
     private let evmSyncSourceManager: EvmSyncSourceManager
     private let moneroNodeManager: MoneroNodeManager
@@ -97,10 +97,8 @@ class AdapterFactory {
             evmLabelManager: evmLabelManager
         )
     }
-}
 
-extension AdapterFactory {
-    func evmTransactionsAdapter(transactionSource: TransactionSource) -> ITransactionsAdapter? {
+    private func evmTransactionsAdapter(transactionSource: WalletCore.TransactionSource) -> ITransactionsAdapter? {
         let blockchainType = transactionSource.blockchainType
 
         if let evmKitWrapper = try? evmBlockchainManager.evmKitManager(blockchainType: blockchainType).evmKitWrapper,
@@ -121,7 +119,7 @@ extension AdapterFactory {
         return nil
     }
 
-    func tronTransactionsAdapter(transactionSource: TransactionSource) -> ITransactionsAdapter? {
+    private func tronTransactionsAdapter(transactionSource: WalletCore.TransactionSource) -> ITransactionsAdapter? {
         let query = TokenQuery(blockchainType: .tron, tokenType: .native)
 
         if let tronKitWrapper = tronKitManager.tronKitWrapper, let baseToken = try? coinManager.token(query: query) {
@@ -138,7 +136,7 @@ extension AdapterFactory {
         return nil
     }
 
-    func tonTransactionAdapter(transactionSource: TransactionSource) -> ITransactionsAdapter? {
+    private func tonTransactionAdapter(transactionSource: WalletCore.TransactionSource) -> ITransactionsAdapter? {
         let query = TokenQuery(blockchainType: .ton, tokenType: .native)
 
         if let tonKit = tonKitManager.tonKit, let baseToken = try? coinManager.token(query: query) {
@@ -148,7 +146,7 @@ extension AdapterFactory {
         return nil
     }
 
-    func stellarTransactionAdapter(transactionSource: TransactionSource) -> ITransactionsAdapter? {
+    private func stellarTransactionAdapter(transactionSource: WalletCore.TransactionSource) -> ITransactionsAdapter? {
         let query = TokenQuery(blockchainType: .stellar, tokenType: .native)
 
         if let stellarKit = stellarKitManager.stellarKit, let baseToken = try? coinManager.token(query: query) {
@@ -158,7 +156,7 @@ extension AdapterFactory {
         return nil
     }
 
-    func solanaTransactionsAdapter(transactionSource: TransactionSource) -> ITransactionsAdapter? {
+    private func solanaTransactionsAdapter(transactionSource: WalletCore.TransactionSource) -> ITransactionsAdapter? {
         let query = TokenQuery(blockchainType: .solana, tokenType: .native)
 
         if let solanaKit = solanaKitManager.solanaKit, let baseToken = try? coinManager.token(query: query) {
@@ -166,6 +164,24 @@ extension AdapterFactory {
         }
 
         return nil
+    }
+}
+
+extension AdapterFactory {
+    func transactionsAdapter(transactionSource: WalletCore.TransactionSource) -> ITransactionsAdapter? {
+        if evmBlockchainManager.allBlockchains.contains(where: { $0.type == transactionSource.blockchainType }) {
+            return evmTransactionsAdapter(transactionSource: transactionSource)
+        } else if transactionSource.blockchainType == .tron {
+            return tronTransactionsAdapter(transactionSource: transactionSource)
+        } else if transactionSource.blockchainType == .ton {
+            return tonTransactionAdapter(transactionSource: transactionSource)
+        } else if transactionSource.blockchainType == .stellar {
+            return stellarTransactionAdapter(transactionSource: transactionSource)
+        } else if transactionSource.blockchainType == .solana {
+            return solanaTransactionsAdapter(transactionSource: transactionSource)
+        } else {
+            return nil
+        }
     }
 
     func adapter(wallet: Wallet) -> IAdapter? {

@@ -1,6 +1,7 @@
 import Foundation
 import RxRelay
 import RxSwift
+import WalletCore
 
 class Pool {
     private let provider: IPoolProvider

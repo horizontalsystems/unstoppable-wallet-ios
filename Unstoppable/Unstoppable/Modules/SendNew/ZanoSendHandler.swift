@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import WalletCore
 import ZanoKit
 
 protocol ZanoSendable: IBalanceAdapter {

@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import SwiftUI
+import WalletCore
 
 class TronReceiveAddressViewModel: BaseReceiveAddressViewModel {
     private var cancellables = Set<AnyCancellable>()

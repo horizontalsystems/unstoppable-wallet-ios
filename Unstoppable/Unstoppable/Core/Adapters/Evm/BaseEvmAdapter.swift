@@ -3,6 +3,7 @@ import EvmKit
 import Foundation
 import HsToolKit
 import RxSwift
+import WalletCore
 
 class BaseEvmAdapter {
     static let confirmationsThreshold = 12

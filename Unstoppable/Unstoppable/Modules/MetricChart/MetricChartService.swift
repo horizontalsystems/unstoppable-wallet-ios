@@ -2,6 +2,7 @@ import Combine
 import HsExtensions
 import MarketKit
 import UIKit
+import WalletCore
 
 class MetricChartService {
     private var tasks = Set<AnyTask>()

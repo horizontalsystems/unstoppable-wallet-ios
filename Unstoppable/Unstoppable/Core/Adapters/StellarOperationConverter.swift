@@ -1,6 +1,7 @@
 import Foundation
 import MarketKit
 import StellarKit
+import WalletCore
 
 class StellarOperationConverter {
     private let accountId: String

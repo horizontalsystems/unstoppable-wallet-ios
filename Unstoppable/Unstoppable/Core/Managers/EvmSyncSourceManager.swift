@@ -3,6 +3,7 @@ import Foundation
 import MarketKit
 import RxRelay
 import RxSwift
+import WalletCore
 
 class EvmSyncSourceManager {
     private let testNetManager: TestNetManager

@@ -3,6 +3,7 @@ import EvmKit
 import Foundation
 import MarketKit
 import SwiftUI
+import WalletCore
 
 class UtxoFeeSettingsViewModel: ObservableObject {
     private let service: UtxoTransactionService

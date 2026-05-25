@@ -6,6 +6,7 @@ import Hodler
 import MarketKit
 import RxSwift
 import SwiftUI
+import WalletCore
 
 class BitcoinPreSendHandler {
     let token: Token

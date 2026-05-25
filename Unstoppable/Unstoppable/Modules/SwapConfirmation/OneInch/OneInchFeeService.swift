@@ -5,6 +5,7 @@ import MarketKit
 import OneInchKit
 import RxRelay
 import RxSwift
+import WalletCore
 
 struct OneInchSwapParameters: Equatable {
     let tokenFrom: MarketKit.Token

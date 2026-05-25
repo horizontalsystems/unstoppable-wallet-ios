@@ -2,6 +2,7 @@ import Foundation
 import MarketKit
 import RxRelay
 import RxSwift
+import WalletCore
 
 protocol IPoolProvider {
     var syncing: Bool { get }

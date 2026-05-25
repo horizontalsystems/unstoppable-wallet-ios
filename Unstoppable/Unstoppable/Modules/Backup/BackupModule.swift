@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import WalletCore
 
 enum BackupModule {
     enum BackupType {

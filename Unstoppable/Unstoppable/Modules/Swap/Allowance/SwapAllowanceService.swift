@@ -4,10 +4,11 @@ import Foundation
 import MarketKit
 import RxRelay
 import RxSwift
+import WalletCore
 
 class SwapAllowanceService {
     private let spenderAddress: EvmKit.Address
-    private let adapterManager: AdapterManager
+    private let adapterManager: AppAdapterManager
 
     private var token: Token?
 
@@ -23,7 +24,7 @@ class SwapAllowanceService {
         }
     }
 
-    init(spenderAddress: EvmKit.Address, adapterManager: AdapterManager, evmKit: EvmKit.Kit) {
+    init(spenderAddress: EvmKit.Address, adapterManager: AppAdapterManager, evmKit: EvmKit.Kit) {
         self.spenderAddress = spenderAddress
         self.adapterManager = adapterManager
 

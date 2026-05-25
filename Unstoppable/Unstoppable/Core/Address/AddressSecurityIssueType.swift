@@ -1,4 +1,5 @@
 import MarketKit
+import WalletCore
 
 private let fishingBlockchainSupports = EvmBlockchainManager.blockchainTypes + [.stellar, .tron]
 

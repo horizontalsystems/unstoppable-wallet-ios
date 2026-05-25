@@ -2,6 +2,7 @@ import BitcoinCore
 import EvmKit
 import Foundation
 import MarketKit
+import WalletCore
 
 enum DestinationHelper {
     static func resolveDestinationUnified(token: Token, temporary: Destination? = nil) async throws -> Destination {

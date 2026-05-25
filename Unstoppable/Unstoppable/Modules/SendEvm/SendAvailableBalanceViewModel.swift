@@ -2,6 +2,7 @@ import BigInt
 import Foundation
 import RxCocoa
 import RxSwift
+import WalletCore
 
 protocol IAvailableBalanceService: AnyObject {
     var availableBalance: DataStatus<Decimal> { get }

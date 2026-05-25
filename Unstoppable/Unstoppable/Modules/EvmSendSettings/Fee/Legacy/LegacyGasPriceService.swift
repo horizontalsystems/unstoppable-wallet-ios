@@ -4,6 +4,7 @@ import Foundation
 import MarketKit
 import RxCocoa
 import RxSwift
+import WalletCore
 
 class LegacyGasPriceService {
     private static let gasPriceSafeRangeBounds = RangeBounds(lower: .factor(0.9), upper: .factor(1.5))

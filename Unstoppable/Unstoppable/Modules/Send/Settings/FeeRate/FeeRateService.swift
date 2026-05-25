@@ -2,6 +2,7 @@ import HsExtensions
 import RxCocoa
 import RxRelay
 import RxSwift
+import WalletCore
 
 class FeeRateService {
     private var tasks = Set<AnyTask>()

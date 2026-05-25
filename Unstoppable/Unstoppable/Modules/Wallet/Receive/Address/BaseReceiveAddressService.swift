@@ -26,9 +26,10 @@ class BaseReceiveAddressService {
     init(wallet: Wallet) {
         self.wallet = wallet
 
-        subscribe(disposeBag, adapterManager.adapterDataReadyObservable) { [weak self] adapterData in
-            self?.sync(adapterData: adapterData)
-        }
+        adapterManager.adapterDataReadyPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.sync(adapterData: $0) }
+            .store(in: &cancellables)
 
         sync(adapterData: adapterManager.adapterData)
     }

@@ -4,6 +4,7 @@ import Foundation
 import RxSwift
 import TonKit
 import TonSwift
+import WalletCore
 
 class TonAdapter {
     private static let decimals = 9

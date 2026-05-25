@@ -2,6 +2,7 @@ import Foundation
 import MarketKit
 import StellarKit
 import stellarsdk
+import WalletCore
 
 class StellarSendHelper {
     static func preparePayment(

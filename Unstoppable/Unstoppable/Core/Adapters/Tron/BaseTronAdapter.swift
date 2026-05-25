@@ -3,6 +3,7 @@ import Foundation
 import HsToolKit
 import RxSwift
 import TronKit
+import WalletCore
 
 class BaseTronAdapter {
     static let confirmationsThreshold = 18

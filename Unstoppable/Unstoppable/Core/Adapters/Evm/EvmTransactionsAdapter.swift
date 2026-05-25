@@ -6,6 +6,7 @@ import HsToolKit
 import MarketKit
 import RxSwift
 import UniswapKit
+import WalletCore
 
 class EvmTransactionsAdapter: BaseEvmAdapter {
     static let decimal = 18
@@ -14,7 +15,7 @@ class EvmTransactionsAdapter: BaseEvmAdapter {
     private let transactionConverter: EvmTransactionConverter
     private let spamManager: SpamManager?
 
-    init(evmKitWrapper: EvmKitWrapper, source: TransactionSource, baseToken: MarketKit.Token, evmTransactionSource: EvmKit.TransactionSource, coinManager: CoinManager, spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager) {
+    init(evmKitWrapper: EvmKitWrapper, source: WalletCore.TransactionSource, baseToken: MarketKit.Token, evmTransactionSource: EvmKit.TransactionSource, coinManager: CoinManager, spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager) {
         self.evmTransactionSource = evmTransactionSource
         spamManager = spamWrapper.spamManager(source: source)
 

@@ -8,7 +8,7 @@ import WidgetKit
 class AppManager {
     private let accountManager: AccountManager
     private let walletManager: WalletManager
-    private let adapterManager: AdapterManager
+    private let adapterManager: AppAdapterManager
     private let lockManager: LockManager
     private let keychainManager: KeychainManager
     private let passcodeLockManager: PasscodeLockManager
@@ -34,7 +34,7 @@ class AppManager {
     private let didEnterBackgroundSubject = PassthroughSubject<Void, Never>()
     private let willEnterForegroundSubject = PassthroughSubject<Void, Never>()
 
-    init(accountManager: AccountManager, walletManager: WalletManager, adapterManager: AdapterManager, lockManager: LockManager,
+    init(accountManager: AccountManager, walletManager: WalletManager, adapterManager: AppAdapterManager, lockManager: LockManager,
          keychainManager: KeychainManager, passcodeLockManager: PasscodeLockManager,
          kitCleaner: KitCleaner, coverManager: CoverManager,
          appVersionManager: AppVersionManager, rateAppManager: RateAppManager,

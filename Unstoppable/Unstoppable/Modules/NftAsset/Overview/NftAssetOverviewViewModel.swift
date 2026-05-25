@@ -3,6 +3,7 @@ import MarketKit
 import RxCocoa
 import RxRelay
 import RxSwift
+import WalletCore
 
 class NftAssetOverviewViewModel {
     private let service: NftAssetOverviewService

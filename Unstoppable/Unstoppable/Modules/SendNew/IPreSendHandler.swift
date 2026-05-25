@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import SwiftUI
+import WalletCore
 
 protocol IPreSendHandler {
     func title(_ code: String) -> String

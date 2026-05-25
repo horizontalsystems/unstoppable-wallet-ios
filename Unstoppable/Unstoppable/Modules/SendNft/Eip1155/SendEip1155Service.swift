@@ -6,6 +6,7 @@ import MarketKit
 import RxRelay
 import RxSwift
 import UIKit
+import WalletCore
 
 class SendEip1155Service {
     let nftUid: NftUid

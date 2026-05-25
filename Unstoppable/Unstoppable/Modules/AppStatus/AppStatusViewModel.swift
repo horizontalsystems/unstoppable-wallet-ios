@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import WalletCore
 
 class AppStatusViewModel: ObservableObject {
     private let systemInfoManager = Core.shared.systemInfoManager

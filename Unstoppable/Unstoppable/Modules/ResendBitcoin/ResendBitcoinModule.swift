@@ -1,5 +1,6 @@
 import BitcoinCore
 import UIKit
+import WalletCore
 
 enum ResendBitcoinModule {
     private static func replacementInfo(adapter: BitcoinBaseAdapter, transactionHash: String, type: ResendTransactionType) -> (Int, Range<Int>)? {

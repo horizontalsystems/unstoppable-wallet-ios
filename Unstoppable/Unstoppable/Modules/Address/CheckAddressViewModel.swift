@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MarketKit
+import WalletCore
 
 class CheckAddressViewModel: ObservableObject {
     private static let coinUids = ["tether", "usd-coin", "paypal-usd"]

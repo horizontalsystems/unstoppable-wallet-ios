@@ -1,3 +1,4 @@
+import Combine
 import Foundation
 import RxRelay
 import RxSwift
@@ -14,27 +15,26 @@ class WalletAdapterService {
     weak var delegate: IWalletAdapterServiceDelegate?
 
     private let account: Account
-    private let adapterManager: AdapterManager
-    private let disposeBag = DisposeBag()
+    private let adapterManager: AppAdapterManager
+    private var cancellables = Set<AnyCancellable>()
     private var adaptersDisposeBag = DisposeBag()
 
     private var adapterMap: [Wallet: IBalanceAdapter] = [:]
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).wallet-adapter-service", qos: .userInitiated)
 
-    init(account: Account, adapterManager: AdapterManager) {
+    init(account: Account, adapterManager: AppAdapterManager) {
         self.account = account
         self.adapterManager = adapterManager
 
-        adapterManager.adapterDataReadyObservable
-            .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
-            .subscribe(onNext: { [weak self] adapterData in
+        adapterManager.adapterDataReadyPublisher
+            .sink { [weak self] adapterData in
                 guard adapterData.account == self?.account else {
                     return
                 }
                 self?.handleAdaptersReady(adapterMap: adapterData.adapterMap)
-            })
-            .disposed(by: disposeBag)
+            }
+            .store(in: &cancellables)
 
         adapterMap = adapterManager.adapterData.adapterMap.compactMapValues { $0 as? IBalanceAdapter }
         subscribeToAdapters()

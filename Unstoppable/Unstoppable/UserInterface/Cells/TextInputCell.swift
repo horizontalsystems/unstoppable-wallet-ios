@@ -2,6 +2,7 @@
 import SnapKit
 
 import UIKit
+import WalletCore
 
 class TextInputCell: UITableViewCell {
     private static let minimalTextHeight: CGFloat = 64

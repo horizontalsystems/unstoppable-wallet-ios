@@ -3,6 +3,7 @@ import Foundation
 import MarketKit
 import RxSwift
 import StellarKit
+import WalletCore
 
 class StellarPreSendHandler {
     private let token: Token

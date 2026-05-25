@@ -2,6 +2,7 @@ import EvmKit
 import Foundation
 import RxRelay
 import RxSwift
+import WalletCore
 
 class Eip1559GasPriceService {
     private static let tipsSafeRangeBounds = RangeBounds(lower: .factor(0.9), upper: .factor(1.5))

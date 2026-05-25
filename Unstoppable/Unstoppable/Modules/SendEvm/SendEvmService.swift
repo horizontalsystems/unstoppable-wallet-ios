@@ -5,6 +5,7 @@ import HsExtensions
 import MarketKit
 import RxRelay
 import RxSwift
+import WalletCore
 
 class SendEvmService {
     let sendToken: Token

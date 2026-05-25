@@ -2,6 +2,7 @@ import Foundation
 import MarketKit
 import TonKit
 import TonSwift
+import WalletCore
 
 class TonTransactionRecord: TransactionRecord {
     let lt: Int64
@@ -33,7 +34,7 @@ class TonTransactionRecord: TransactionRecord {
         inProgress ? .pending : .completed
     }
 
-    override var mainValue: AppValue? {
+    private var mainAppValue: AppValue? {
         if actions.count == 1, let action = actions.first {
             switch action.type {
             case let .send(value, _, _, _): return value
@@ -46,6 +47,14 @@ class TonTransactionRecord: TransactionRecord {
         }
 
         return nil
+    }
+
+    override var mainToken: MarketKit.Token? {
+        mainAppValue?.token
+    }
+
+    override var mainValue: Decimal? {
+        mainAppValue?.value
     }
 }
 

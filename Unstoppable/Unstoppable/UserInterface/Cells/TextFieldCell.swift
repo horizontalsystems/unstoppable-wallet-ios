@@ -1,6 +1,7 @@
 import SnapKit
 
 import UIKit
+import WalletCore
 
 class TextFieldCell: UITableViewCell {
     private let wrapperView = UIView()

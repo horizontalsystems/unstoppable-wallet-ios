@@ -5,6 +5,7 @@ import SafariServices
 import SectionsTableView
 
 import UIKit
+import WalletCore
 
 class TransactionInfoViewController: ThemeViewController {
     private let disposeBag = DisposeBag()

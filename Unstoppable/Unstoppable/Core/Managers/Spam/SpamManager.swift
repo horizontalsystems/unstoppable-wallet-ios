@@ -1,6 +1,7 @@
 import Foundation
 import HsToolKit
 import MarketKit
+import WalletCore
 
 /// Per-adapter spam manager with serial queue processing.
 ///

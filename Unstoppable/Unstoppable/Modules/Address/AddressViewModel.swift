@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MarketKit
+import WalletCore
 
 class AddressViewModel: ObservableObject {
     private let recentlySentManager = Core.shared.recentlySentManager

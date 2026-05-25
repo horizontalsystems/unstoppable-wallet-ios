@@ -2,6 +2,7 @@ import BigInt
 import HsToolKit
 import RxSwift
 import TronKit
+import WalletCore
 
 class TronAdapter: BaseTronAdapter {
     static let decimals = 6

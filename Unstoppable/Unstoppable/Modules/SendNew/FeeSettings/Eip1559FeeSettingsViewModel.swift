@@ -2,6 +2,7 @@ import EvmKit
 import Foundation
 import MarketKit
 import SwiftUI
+import WalletCore
 
 class Eip1559FeeSettingsViewModel: ObservableObject {
     private let service: EvmTransactionService

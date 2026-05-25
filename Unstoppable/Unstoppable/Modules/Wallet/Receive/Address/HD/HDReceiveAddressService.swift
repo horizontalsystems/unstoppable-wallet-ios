@@ -1,3 +1,5 @@
+import WalletCore
+
 class HDReceiveAddressService: BaseReceiveAddressService {
     var hdAdapter: IHDDepositAdapter? { super.adapter as? IHDDepositAdapter }
 

@@ -1,6 +1,7 @@
 import BitcoinCore
 import Foundation
 import MarketKit
+import WalletCore
 import ZcashLightClientKit
 
 class ZcashSwapFinalQuote: SwapFinalQuote {

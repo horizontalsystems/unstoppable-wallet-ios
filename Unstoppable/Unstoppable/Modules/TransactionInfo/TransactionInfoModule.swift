@@ -1,6 +1,7 @@
 import MarketKit
 import SwiftUI
 import UIKit
+import WalletCore
 
 enum TransactionInfoModule {
     static func instance(transactionRecord: TransactionRecord) -> UIViewController? {

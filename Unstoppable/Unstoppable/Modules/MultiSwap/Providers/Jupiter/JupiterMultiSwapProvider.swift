@@ -2,6 +2,7 @@ import Foundation
 import MarketKit
 import SolanaKit
 import SwiftUI
+import WalletCore
 
 class JupiterMultiSwapProvider: IMultiSwapProvider {
     static let id = "jupiter"

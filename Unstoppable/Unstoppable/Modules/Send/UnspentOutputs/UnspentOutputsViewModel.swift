@@ -1,5 +1,6 @@
 import Combine
 import RxSwift
+import WalletCore
 
 class UnspentOutputsViewModel {
     private let sendInfoService: ISendInfoValueService

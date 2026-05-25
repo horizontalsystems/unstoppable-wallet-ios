@@ -2,6 +2,7 @@ import EvmKit
 import Foundation
 import MarketKit
 import SwiftUI
+import WalletCore
 
 class MultiSwapAllowanceHelper {
     private let adapterManager = Core.shared.adapterManager

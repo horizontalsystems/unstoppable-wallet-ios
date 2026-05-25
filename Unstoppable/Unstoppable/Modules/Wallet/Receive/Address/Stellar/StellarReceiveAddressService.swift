@@ -1,3 +1,5 @@
+import WalletCore
+
 class StellarReceiveAddressService: BaseReceiveAddressService {
     var stellarAdapter: StellarAdapter? { super.adapter as? StellarAdapter }
 

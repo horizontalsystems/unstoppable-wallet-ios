@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import WalletCore
 
 class MoneroOutgoingTransactionRecord: MoneroTransactionRecord {
     let value: AppValue
@@ -27,7 +28,11 @@ class MoneroOutgoingTransactionRecord: MoneroTransactionRecord {
         )
     }
 
-    override var mainValue: AppValue? {
-        value
+    override var mainToken: MarketKit.Token? {
+        value.token
+    }
+
+    override var mainValue: Decimal? {
+        value.value
     }
 }

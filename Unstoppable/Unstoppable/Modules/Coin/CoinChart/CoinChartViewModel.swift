@@ -5,6 +5,7 @@ import MarketKit
 import RxCocoa
 import RxRelay
 import RxSwift
+import WalletCore
 
 class CoinChartViewModel: ObservableObject {
     let service: CoinChartService

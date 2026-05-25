@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct UsedAddressesView: View {
     let coinName: String

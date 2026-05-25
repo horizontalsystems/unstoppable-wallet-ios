@@ -1,5 +1,6 @@
 import EvmKit
 import Foundation
+import WalletCore
 
 class EvmSyncSource: Identifiable {
     let name: String

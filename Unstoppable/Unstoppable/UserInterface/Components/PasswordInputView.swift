@@ -2,6 +2,7 @@
 import SnapKit
 
 import UIKit
+import WalletCore
 
 class PasswordInputView: UIView {
     private let formValidatedView: FormValidatedView

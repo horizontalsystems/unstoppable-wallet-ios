@@ -1,6 +1,7 @@
 import Foundation
 import MarketKit
 import SwiftUI
+import WalletCore
 
 protocol ISendData {
     var feeData: FeeData? { get }

@@ -3,6 +3,7 @@ import Foundation
 import MarketKit
 import TonKit
 import TonSwift
+import WalletCore
 
 class TonConnectSendHandler {
     private let tonConnectManager = Core.shared.tonConnectManager

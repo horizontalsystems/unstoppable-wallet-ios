@@ -5,6 +5,7 @@ import HsToolKit
 import RxCocoa
 import RxRelay
 import RxSwift
+import WalletCore
 
 protocol ISendInfoValueService: AnyObject {
     var unspentOutputs: [UnspentOutputInfo] { get }

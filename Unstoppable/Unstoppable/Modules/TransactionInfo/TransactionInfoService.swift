@@ -1,6 +1,7 @@
 import EvmKit
 import MarketKit
 import RxSwift
+import WalletCore
 
 class TransactionInfoService {
     private let disposeBag = DisposeBag()

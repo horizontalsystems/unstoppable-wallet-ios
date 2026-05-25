@@ -1,6 +1,7 @@
 import Foundation
 import MarketKit
 import TronKit
+import WalletCore
 
 class TronTransactionRecord: TransactionRecord {
     let transaction: Transaction
@@ -8,7 +9,7 @@ class TronTransactionRecord: TransactionRecord {
     let ownTransaction: Bool
     let fee: AppValue?
 
-    init(source: TransactionSource, transaction: Transaction, baseToken: Token, ownTransaction: Bool, spam: Bool = false) {
+    init(source: WalletCore.TransactionSource, transaction: Transaction, baseToken: Token, ownTransaction: Bool, spam: Bool = false) {
         self.transaction = transaction
         confirmed = transaction.confirmed
         let txHash = transaction.hash.hs.hex

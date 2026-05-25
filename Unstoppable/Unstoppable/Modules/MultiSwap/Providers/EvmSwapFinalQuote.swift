@@ -1,6 +1,7 @@
 import EvmKit
 import Foundation
 import MarketKit
+import WalletCore
 
 class EvmSwapFinalQuote: SwapFinalQuote {
     let transactionData: TransactionData?

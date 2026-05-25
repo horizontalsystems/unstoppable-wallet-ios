@@ -1,6 +1,7 @@
 import BitcoinCore
 import Foundation
 import MarketKit
+import WalletCore
 
 class UtxoSwapFinalQuote: SwapFinalQuote {
     let sendParameters: SendParameters?

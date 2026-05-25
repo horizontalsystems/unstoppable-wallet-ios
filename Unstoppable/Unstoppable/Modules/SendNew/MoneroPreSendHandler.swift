@@ -4,6 +4,7 @@ import MarketKit
 import MoneroKit
 import RxSwift
 import SwiftUI
+import WalletCore
 
 class MoneroPreSendHandler {
     private let token: Token

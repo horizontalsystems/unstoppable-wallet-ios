@@ -1,3 +1,5 @@
+import WalletCore
+
 class TronReceiveAddressService: BaseReceiveAddressService {
     var tronAdapter: TronAdapter? { super.adapter as? TronAdapter }
 

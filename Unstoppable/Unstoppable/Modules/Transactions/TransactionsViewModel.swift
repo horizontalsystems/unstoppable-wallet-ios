@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import RxSwift
+import WalletCore
 
 class TransactionsViewModel: ObservableObject {
     private static let pageLimit = 20
@@ -94,7 +95,10 @@ class TransactionsViewModel: ObservableObject {
 
         viewItemFactory = TransactionsViewItemFactory(contactLabelService: contactLabelService)
 
-        subscribe(disposeBag, adapterManager.adaptersReadyObservable) { [weak self] _ in self?.syncPoolGroup() }
+        adapterManager.adaptersReadyPublisher
+            .sink { [weak self] _ in self?.syncPoolGroup() }
+            .store(in: &cancellables)
+
         subscribe(disposeBag, rateService.ratesChangedObservable) { [weak self] in self?.handleRatesChanged() }
         subscribe(disposeBag, rateService.rateUpdatedObservable) { [weak self] in self?.handle(rate: $0) }
         subscribe(disposeBag, nftMetadataService.assetsBriefMetadataObservable) { [weak self] in self?.handle(assetsBriefMetadata: $0) }
@@ -370,7 +374,7 @@ class TransactionsViewModel: ObservableObject {
     }
 
     private func rateKey(record: TransactionRecord) -> RateKey? {
-        guard let token = record.mainValue?.token else {
+        guard let token = record.mainToken else {
             return nil
         }
 
@@ -382,7 +386,7 @@ class TransactionsViewModel: ObservableObject {
             return nil
         }
 
-        return CurrencyValue(currency: rate.currency, value: mainValue.value * rate.value)
+        return CurrencyValue(currency: rate.currency, value: mainValue * rate.value)
     }
 
     private func nftMetadata(transactionRecord: TransactionRecord, allMetadata: [NftUid: NftAssetBriefMetadata]) -> [NftUid: NftAssetBriefMetadata] {

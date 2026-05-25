@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import WalletCore
 
 class ZcashShieldingTransactionRecord: BitcoinTransactionRecord {
     let value: AppValue
@@ -29,8 +30,12 @@ class ZcashShieldingTransactionRecord: BitcoinTransactionRecord {
         )
     }
 
-    override var mainValue: AppValue? {
-        value
+    override var mainToken: MarketKit.Token? {
+        value.token
+    }
+
+    override var mainValue: Decimal? {
+        value.value
     }
 
     enum Direction {

@@ -79,6 +79,7 @@ class Core {
     let evmBlockchainManager: EvmBlockchainManager
     let evmLabelManager: EvmLabelManager
     let tronAccountManager: TronAccountManager
+    let tronKitManager: TronKitManager
     let tonKitManager: TonKitManager
     let stellarKitManager: StellarKitManager
     let zanoKitManager: ZanoKitManager
@@ -99,8 +100,8 @@ class Core {
     let walletConnectManager: WalletConnectManager
     let walletConnectSessionManager: WalletConnectSessionManager
 
-    let adapterManager: AdapterManager
-    let transactionAdapterManager: TransactionAdapterManager
+    let adapterManager: AppAdapterManager
+    let transactionAdapterManager: AppTransactionAdapterManager
     let rateAppManager: RateAppManager
 
     let appBackupProvider: AppBackupProvider
@@ -245,7 +246,7 @@ class Core {
         let syncerStateStorage = SyncerStateStorage(dbPool: dbPool)
         evmLabelManager = EvmLabelManager(provider: hsLabelProvider, storage: evmLabelStorage, syncerStateStorage: syncerStateStorage)
 
-        let tronKitManager = TronKitManager(testNetManager: testNetManager, evmSyncSourceManager: evmSyncSourceManager)
+        tronKitManager = TronKitManager(testNetManager: testNetManager, evmSyncSourceManager: evmSyncSourceManager)
         tronAccountManager = TronAccountManager(accountManager: accountManager, walletManager: walletManager, marketKit: marketKit, tronKitManager: tronKitManager, restoreStateManager: restoreStateManager)
 
         tonKitManager = TonKitManager(restoreStateManager: restoreStateManager, marketKit: marketKit, walletManager: walletManager)
@@ -329,23 +330,26 @@ class Core {
             spamWrapper: spamWrapper,
             evmLabelManager: evmLabelManager
         )
-        adapterManager = AdapterManager(
+        let adapterEngine = AdapterManager(
             adapterFactory: adapterFactory,
-            walletManager: walletManager,
+            walletManager: walletManager
+        )
+        adapterManager = AppAdapterManager(
+            engine: adapterEngine,
             evmBlockchainManager: evmBlockchainManager,
+            btcBlockchainManager: btcBlockchainManager,
             tronKitManager: tronKitManager,
             tonKitManager: tonKitManager,
             stellarKitManager: stellarKitManager,
             zanoKitManager: zanoKitManager,
             solanaKitManager: solanaKitManager,
-            btcBlockchainManager: btcBlockchainManager,
             moneroNodeManager: moneroNodeManager,
             zanoNodeManager: zanoNodeManager
         )
-        transactionAdapterManager = TransactionAdapterManager(
-            adapterManager: adapterManager,
-            evmBlockchainManager: evmBlockchainManager,
-            adapterFactory: adapterFactory
+        let transactionEngine = TransactionAdapterManager(adapterFactory: adapterFactory)
+        transactionAdapterManager = AppTransactionAdapterManager(
+            engine: transactionEngine,
+            appAdapterManager: adapterManager
         )
 
         rateAppManager = RateAppManager(walletManager: walletManager, adapterManager: adapterManager, localStorage: localStorage)

@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import WalletCore
 
 class OutputTransactionFactory {
     /// Returns outgoing addresses from record.

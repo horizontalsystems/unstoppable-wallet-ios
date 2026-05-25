@@ -1,6 +1,7 @@
 import Foundation
 import MarketKit
 import TonKit
+import WalletCore
 
 class TonSwapFinalQuote: SwapFinalQuote {
     private let amountIn: Decimal

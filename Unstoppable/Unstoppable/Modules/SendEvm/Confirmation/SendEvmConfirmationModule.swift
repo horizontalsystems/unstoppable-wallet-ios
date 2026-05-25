@@ -4,6 +4,7 @@ import HsExtensions
 import MarketKit
 
 import UIKit
+import WalletCore
 
 struct SendEvmData {
     let transactionData: TransactionData

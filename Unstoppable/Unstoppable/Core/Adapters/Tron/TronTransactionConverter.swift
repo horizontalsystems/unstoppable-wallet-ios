@@ -2,15 +2,16 @@ import BigInt
 import Foundation
 import MarketKit
 import TronKit
+import WalletCore
 
 class TronTransactionConverter {
     private let coinManager: CoinManager
     private let tronKitWrapper: TronKitWrapper
     private let evmLabelManager: EvmLabelManager
-    private let source: TransactionSource
+    private let source: WalletCore.TransactionSource
     private let baseToken: MarketKit.Token
 
-    init(source: TransactionSource, baseToken: MarketKit.Token, coinManager: CoinManager, tronKitWrapper: TronKitWrapper, evmLabelManager: EvmLabelManager) {
+    init(source: WalletCore.TransactionSource, baseToken: MarketKit.Token, coinManager: CoinManager, tronKitWrapper: TronKitWrapper, evmLabelManager: EvmLabelManager) {
         self.coinManager = coinManager
         self.tronKitWrapper = tronKitWrapper
         self.evmLabelManager = evmLabelManager

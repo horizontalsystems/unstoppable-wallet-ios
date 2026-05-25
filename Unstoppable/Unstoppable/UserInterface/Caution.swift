@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 enum CautionState: Equatable {
     case none
@@ -60,10 +61,7 @@ struct Caution: Equatable, Hashable {
     }
 }
 
-enum CautionType: Equatable, Hashable {
-    case error
-    case warning
-
+extension CautionType {
     var labelColor: UIColor {
         switch self {
         case .error: return .themeLucian
@@ -82,13 +80,6 @@ enum CautionType: Equatable, Hashable {
         switch self {
         case .error: return .red
         case .warning: return .yellow
-        }
-    }
-
-    static func == (lhs: CautionType, rhs: CautionType) -> Bool {
-        switch (lhs, rhs) {
-        case (.error, .error), (.warning, .warning): return true
-        default: return false
         }
     }
 }
@@ -118,17 +109,5 @@ class CancellableTitledCaution: TitledCaution {
         self.cancellable = cancellable
 
         super.init(title: title, text: text, type: type)
-    }
-}
-
-struct CautionNew: Equatable, Hashable {
-    let title: String?
-    let text: String
-    let type: CautionType
-
-    init(title: String? = nil, text: String, type: CautionType) {
-        self.title = title
-        self.text = text
-        self.type = type
     }
 }

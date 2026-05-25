@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct AlertCardView: View {
     static let defaultIcon = "warning_filled"

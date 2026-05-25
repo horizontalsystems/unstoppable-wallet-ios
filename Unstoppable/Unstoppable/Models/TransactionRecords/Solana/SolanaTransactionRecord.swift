@@ -1,6 +1,7 @@
 import Foundation
 import MarketKit
 import SolanaKit
+import WalletCore
 
 class SolanaTransactionRecord: TransactionRecord {
     let fee: AppValue?
@@ -52,8 +53,12 @@ class SolanaIncomingTransactionRecord: SolanaTransactionRecord {
         super.init(transaction: transaction, baseToken: baseToken, source: source)
     }
 
-    override var mainValue: AppValue? {
-        value
+    override var mainToken: MarketKit.Token? {
+        value.token
+    }
+
+    override var mainValue: Decimal? {
+        value.value
     }
 }
 
@@ -69,8 +74,12 @@ class SolanaOutgoingTransactionRecord: SolanaTransactionRecord {
         super.init(transaction: transaction, baseToken: baseToken, source: source)
     }
 
-    override var mainValue: AppValue? {
-        value
+    override var mainToken: MarketKit.Token? {
+        value.token
+    }
+
+    override var mainValue: Decimal? {
+        value.value
     }
 }
 

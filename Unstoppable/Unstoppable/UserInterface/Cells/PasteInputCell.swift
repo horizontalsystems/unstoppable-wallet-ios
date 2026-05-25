@@ -1,6 +1,7 @@
 import SnapKit
 
 import UIKit
+import WalletCore
 
 class PasteInputCell: UITableViewCell {
     private let pasteInputView = PasteInputView()

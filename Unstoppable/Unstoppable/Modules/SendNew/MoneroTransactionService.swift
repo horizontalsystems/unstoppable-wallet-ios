@@ -2,6 +2,7 @@ import Combine
 import MarketKit
 import MoneroKit
 import SwiftUI
+import WalletCore
 
 class MoneroTransactionService {
     private let adapter: MoneroAdapter

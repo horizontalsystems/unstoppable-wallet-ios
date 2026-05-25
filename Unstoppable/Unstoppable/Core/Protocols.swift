@@ -13,93 +13,15 @@ import TonSwift
 import TronKit
 import UIKit
 import UniswapKit
+import WalletCore
 import ZcashLightClientKit
-
-protocol IBaseAdapter: AnyObject {
-    var isMainNet: Bool { get }
-}
-
-protocol IAdapter: AnyObject {
-    func start()
-    func stop()
-    func refresh()
-
-    var statusInfo: [(String, Any)] { get }
-    var debugInfo: String { get }
-}
-
-protocol IBalanceAdapter: IBaseAdapter {
-    var balanceState: AdapterState { get }
-    var balanceStateUpdatedObservable: Observable<AdapterState> { get }
-    var spendMode: BalanceAdapterSpendMode { get }
-    var balanceData: BalanceData { get }
-    var balanceDataUpdatedObservable: Observable<BalanceData> { get }
-    var caution: CautionNew? { get }
-    var cautionUpdatedObservable: Observable<CautionNew?> { get }
-}
-
-extension IBalanceAdapter {
-    var caution: CautionNew? {
-        nil
-    }
-
-    var cautionUpdatedObservable: Observable<CautionNew?> {
-        .just(nil)
-    }
-
-    var spendMode: BalanceAdapterSpendMode {
-        .fromBalanceState
-    }
-}
-
-enum BalanceAdapterSpendMode {
-    case fromBalanceState
-    case allowedWhenSyncing
-
-    func spendAllowed(state: AdapterState) -> Bool {
-        switch self {
-        case .fromBalanceState:
-            state.isSynced
-        case .allowedWhenSyncing:
-            state.isSynced || state.syncing
-        }
-    }
-}
-
-protocol IDepositAdapter: IBaseAdapter {
-    var receiveAddress: DepositAddress { get }
-    var receiveAddressStatus: DataStatus<DepositAddress> { get }
-    var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> { get }
-}
 
 protocol IHDDepositAdapter: IDepositAdapter {
     func usedAddresses(change: Bool) -> [UsedAddress]
 }
 
 extension IDepositAdapter {
-    var receiveAddressStatus: DataStatus<DepositAddress> {
-        .completed(receiveAddress)
-    }
-
-    var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {
-        Just(receiveAddressStatus).eraseToAnyPublisher()
-    }
-
     func usedAddresses(change _: Bool) -> [UsedAddress] { [] }
-}
-
-protocol ITransactionsAdapter {
-    var syncing: Bool { get }
-    var syncingObservable: Observable<Void> { get }
-    var lastBlockInfo: LastBlockInfo? { get }
-    var lastBlockUpdatedObservable: Observable<Void> { get }
-    var explorerTitle: String { get }
-    var additionalTokenQueries: [TokenQuery] { get }
-    func explorerUrl(transactionHash: String) -> String?
-    func transactionsObservable(token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?) -> Observable<[TransactionRecord]>
-    func transactionsSingle(paginationData: String?, token: MarketKit.Token?, filter: TransactionTypeFilter, address: String?, limit: Int) -> Single<[TransactionRecord]>
-    func allTransactionsAfter(paginationData: String?) -> Single<[TransactionRecord]>
-    func rawTransaction(hash: String) -> String?
 }
 
 protocol ISendBitcoinAdapter {

@@ -45,7 +45,7 @@ class ZcashWalletTokenViewModel: ObservableObject {
 
         self.birthdayHeight = birthdayHeight
 
-        adapterManager.recreateAdapter(blockchainType: blockchainType)
+        adapterManager.reloadAdapters(forBlockchainType: blockchainType)
     }
 }
 

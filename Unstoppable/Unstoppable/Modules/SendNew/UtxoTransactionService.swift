@@ -2,6 +2,7 @@ import BitcoinCore
 import Combine
 import MarketKit
 import SwiftUI
+import WalletCore
 
 class UtxoTransactionService {
     private let blockchainType: BlockchainType

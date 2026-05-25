@@ -1,6 +1,7 @@
 import SnapKit
 
 import UIKit
+import WalletCore
 
 class InputView: UIView {
     static let cornerRadius: CGFloat = .cornerRadius12

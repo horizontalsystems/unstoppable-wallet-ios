@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct WalletListItemView: View, Equatable {
     let item: WalletListViewModel.Item

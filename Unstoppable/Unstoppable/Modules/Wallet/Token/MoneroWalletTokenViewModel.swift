@@ -23,6 +23,6 @@ extension MoneroWalletTokenViewModel {
         restoreSettingsService.set(birthdayHeight: String(birthdayHeight), account: wallet.account, blokcchainType: blockchainType)
         self.birthdayHeight = birthdayHeight
 
-        adapterManager.recreateAdapter(blockchainType: blockchainType)
+        adapterManager.reloadAdapters(forBlockchainType: blockchainType)
     }
 }

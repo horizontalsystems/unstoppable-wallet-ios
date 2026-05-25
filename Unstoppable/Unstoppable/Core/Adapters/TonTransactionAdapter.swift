@@ -5,6 +5,7 @@ import MarketKit
 import RxSwift
 import TonKit
 import TonSwift
+import WalletCore
 
 class TonTransactionAdapter {
     private let tonKit: TonKit.Kit

@@ -1,6 +1,7 @@
 import Foundation
 import RxCocoa
 import RxSwift
+import WalletCore
 
 class NonceViewModel {
     private let disposeBag = DisposeBag()
