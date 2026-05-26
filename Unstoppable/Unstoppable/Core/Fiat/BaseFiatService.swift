@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import MarketKit
 import RxSwift
+import WalletCore
 
 class BaseFiatService {
     private var disposeBag = DisposeBag()
@@ -14,7 +15,7 @@ class BaseFiatService {
 
     private var price: Decimal?
 
-    private var appValueKind: AppValue.Kind?
+    private var appValueKind: (any IAppValue)?
     var token: Token? { appValueKind?.token }
 
     private let updatedSubject = PassthroughSubject<Void, Never>()
@@ -64,25 +65,22 @@ class BaseFiatService {
 
 extension BaseFiatService {
     func set(token: Token?) {
-        set(appValueKind: token.flatMap { .token(token: $0) })
+        set(appValueKind: token.flatMap { TokenAppValue(token: $0) })
     }
 
-    func set(appValueKind: AppValue.Kind?) {
+    func set(appValueKind: (any IAppValue)?) {
         self.appValueKind = appValueKind
 
         cancellables = Set()
         var fetching = true
 
         if let appValueKind {
-            switch appValueKind {
-            case let .token(token):
+            if let tokenKind = appValueKind as? TokenAppValue, let token = tokenKind.token {
                 fetchRate(coin: token.coin, subscribe: !token.isCustom)
-            default:
-                if let coin = appValueKind.coin {
-                    fetchRate(coin: coin, subscribe: false)
-                } else {
-                    fetching = false
-                }
+            } else if let coin = appValueKind.coin {
+                fetchRate(coin: coin, subscribe: false)
+            } else {
+                fetching = false
             }
         } else {
             fetching = false

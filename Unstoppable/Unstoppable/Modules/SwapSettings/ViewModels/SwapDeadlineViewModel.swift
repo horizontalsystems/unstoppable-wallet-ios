@@ -2,6 +2,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 import UniswapKit
+import WalletCore
 
 class SwapDeadlineViewModel {
     private let disposeBag = DisposeBag()

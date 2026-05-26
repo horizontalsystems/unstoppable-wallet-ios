@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import WalletCore
 
 struct DiffText: View {
     private let diff: Diff?

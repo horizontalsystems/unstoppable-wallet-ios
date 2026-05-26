@@ -41,11 +41,11 @@ class TronTransactionRecord: TransactionRecord {
         var resultOutgoing = [AppValue]()
 
         for value in values {
-            if (resultIncoming + resultOutgoing).contains(where: { value.kind == $0.kind }) {
+            if (resultIncoming + resultOutgoing).contains(where: { value.kind.isSameKind(as: $0.kind) }) {
                 continue
             }
 
-            let sameTypeValues = values.filter { value.kind == $0.kind }
+            let sameTypeValues = values.filter { value.kind.isSameKind(as: $0.kind) }
             let totalValue = sameTypeValues.map(\.value).reduce(0, +)
             let resultValue = AppValue(kind: value.kind, value: totalValue)
 

@@ -1,4 +1,5 @@
 import Foundation
+import WalletCore
 
 class PurchaseProductItemFactory {
     func item(product: PurchaseManager.ProductData, offerWasUsed: Bool, monthlyPrice: Decimal?) -> Item? {

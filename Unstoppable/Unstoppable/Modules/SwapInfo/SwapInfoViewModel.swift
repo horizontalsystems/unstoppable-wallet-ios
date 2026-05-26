@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import MarketKit
 import RxSwift
+import WalletCore
 
 class SwapInfoViewModel: ObservableObject {
     private let manager = Core.shared.swapHistoryManager

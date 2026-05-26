@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 extension Coin {
     var image: Image? {

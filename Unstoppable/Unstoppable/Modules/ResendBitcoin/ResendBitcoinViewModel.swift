@@ -3,6 +3,7 @@ import Foundation
 import MarketKit
 import RxCocoa
 import RxSwift
+import WalletCore
 
 class ResendBitcoinViewModel {
     private let queue = DispatchQueue(label: "\(AppConfig.label).resend_bitcoin_view_model", qos: .userInitiated)

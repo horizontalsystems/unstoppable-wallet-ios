@@ -1,6 +1,7 @@
 import MarketKit
 import MoneroKit
 import SwiftUI
+import WalletCore
 
 struct MoneroFeeSettingsView: View {
     @StateObject private var viewModel: MoneroFeeSettingsViewModel

@@ -1,6 +1,7 @@
 import HsToolKit
 import MarketKit
 import UIKit
+import WalletCore
 
 class SendZcashFactory: BaseSendFactory {
     private let service: SendZcashService

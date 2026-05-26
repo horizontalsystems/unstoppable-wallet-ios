@@ -2,6 +2,7 @@ import EvmKit
 import Foundation
 import MarketKit
 import SwiftUI
+import WalletCore
 
 struct MultiSwapApproveView: View {
     @StateObject private var viewModel: MultiSwapApproveViewModel

@@ -2,6 +2,7 @@ import Foundation
 import MarketKit
 import RxCocoa
 import RxSwift
+import WalletCore
 
 class CoinSelectViewModel {
     private let service: CoinSelectService

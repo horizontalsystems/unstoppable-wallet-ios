@@ -1,16 +1,16 @@
 import Foundation
 
-struct CurrencyValue: Hashable {
-    let currency: Currency
-    let value: Decimal
+public struct CurrencyValue: Hashable {
+    public let currency: Currency
+    public let value: Decimal
 
-    init(currency: Currency, value: Decimal) {
+    public init(currency: Currency, value: Decimal) {
         self.currency = currency
         self.value = value
     }
 }
 
-extension CurrencyValue {
+public extension CurrencyValue {
     var formattedFull: String? {
         ValueFormatter.instance.formatFull(currencyValue: self)
     }

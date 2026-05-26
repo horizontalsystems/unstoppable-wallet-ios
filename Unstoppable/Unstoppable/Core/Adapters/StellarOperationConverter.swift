@@ -20,7 +20,7 @@ class StellarOperationConverter {
         AppValue(kind: assetKind(asset: asset), value: value)
     }
 
-    private func assetKind(asset: Asset) -> AppValue.Kind {
+    private func assetKind(asset: Asset) -> any IAppValue {
         let tokenType: TokenType
 
         switch asset {
@@ -31,9 +31,9 @@ class StellarOperationConverter {
         let query = TokenQuery(blockchainType: .stellar, tokenType: tokenType)
 
         if let token = try? coinManager.token(query: query) {
-            return .token(token: token)
+            return TokenAppValue(token: token)
         } else {
-            return .stellar(asset: asset)
+            return StellarAppValue(asset: asset)
         }
     }
 

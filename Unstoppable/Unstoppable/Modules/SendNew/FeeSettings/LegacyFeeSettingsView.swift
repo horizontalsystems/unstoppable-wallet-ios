@@ -1,6 +1,7 @@
 import Foundation
 import MarketKit
 import SwiftUI
+import WalletCore
 
 struct LegacyFeeSettingsView: View {
     @StateObject private var viewModel: LegacyFeeSettingsViewModel

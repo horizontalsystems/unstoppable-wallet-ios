@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct WalletTokenTopView<Content: View>: View {
     @ObservedObject var viewModel: WalletTokenViewModel

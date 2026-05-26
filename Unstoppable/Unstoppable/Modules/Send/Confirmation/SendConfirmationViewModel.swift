@@ -2,6 +2,7 @@ import MarketKit
 import RxCocoa
 import RxRelay
 import RxSwift
+import WalletCore
 
 class SendConfirmationViewModel {
     private let disposeBag = DisposeBag()

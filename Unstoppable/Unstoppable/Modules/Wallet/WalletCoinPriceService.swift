@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MarketKit
+import WalletCore
 
 protocol IWalletCoinPriceServiceDelegate: AnyObject {
     func didUpdate(itemsMap: [String: WalletCoinPriceService.Item]?)

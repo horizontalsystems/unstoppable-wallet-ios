@@ -4,6 +4,7 @@ import HsExtensions
 import MarketKit
 import RxRelay
 import RxSwift
+import WalletCore
 
 class HistoricalRateService {
     private let marketKit: MarketKit.Kit

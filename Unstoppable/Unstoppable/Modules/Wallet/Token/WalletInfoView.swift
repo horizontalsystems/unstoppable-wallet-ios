@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import WalletCore
 
 enum WalletInfoView {
     @ViewBuilder static func infoView(title: String, value: ValueFormatStyle, action: (() -> Void)?) -> some View {

@@ -46,32 +46,28 @@ class TransactionsViewItemFactory {
     }
 
     private func singleValueSecondaryValue(value: AppValue, currencyValue: CurrencyValue?, nftMetadata: [NftUid: NftAssetBriefMetadata]) -> TransactionsViewModel.Value? {
-        switch value.kind {
-        case let .nft(nftUid, tokenName, _):
-            let text = nftMetadata[nftUid]?.name ?? tokenName.map { "\($0) #\(nftUid.tokenId)" } ?? "#\(nftUid.tokenId)"
+        if let nft = value.kind as? NftAppValue {
+            let text = nftMetadata[nft.nftUidValue]?.name ?? nft.tokenName.map { "\($0) #\(nft.nftUidValue.tokenId)" } ?? "#\(nft.nftUidValue.tokenId)"
             return TransactionsViewModel.Value(text: text, type: .secondary)
-        default:
-            return currencyValue.map { TransactionsViewModel.Value(text: currencyString(from: $0), type: .secondary) }
         }
+        return currencyValue.map { TransactionsViewModel.Value(text: currencyString(from: $0), type: .secondary) }
     }
 
-    private func singleValueIconType(source: TransactionSource, kind: AppValue.Kind, nftMetadata: [NftUid: NftAssetBriefMetadata] = [:]) -> TransactionsViewModel.IconType {
-        switch kind {
-        case let .nft(nftUid, _, _):
+    private func singleValueIconType(source: TransactionSource, kind: any IAppValue, nftMetadata: [NftUid: NftAssetBriefMetadata] = [:]) -> TransactionsViewModel.IconType {
+        if let nft = kind as? NftAppValue {
             return .icon(
-                url: nftMetadata[nftUid]?.previewImageUrl,
+                url: nftMetadata[nft.nftUidValue]?.previewImageUrl,
                 alternativeUrl: nil,
                 placeholderImageName: "placeholder_nft_32",
                 type: .squircle
             )
-        default:
-            return .icon(
-                url: kind.coin?.imageUrl,
-                alternativeUrl: kind.coin?.image,
-                placeholderImageName: source.blockchainType.placeholderImageName(tokenProtocol: kind.tokenProtocol),
-                type: .circle
-            )
         }
+        return .icon(
+            url: kind.coin?.imageUrl,
+            alternativeUrl: kind.coin?.image,
+            placeholderImageName: source.blockchainType.placeholderImageName(tokenProtocol: kind.tokenProtocol),
+            type: .circle
+        )
     }
 
     private func doubleValueIconType(source: TransactionSource, primaryValue: AppValue?, secondaryValue: AppValue?, nftMetadata: [NftUid: NftAssetBriefMetadata] = [:]) -> TransactionsViewModel.IconType {
@@ -85,12 +81,11 @@ class TransactionsViewItemFactory {
         let backPlaceholder: String
 
         if let primaryValue {
-            switch primaryValue.kind {
-            case let .nft(nftUid, _, _):
+            if let nft = primaryValue.kind as? NftAppValue {
                 frontType = .squircle
-                frontUrl = nftMetadata[nftUid]?.previewImageUrl
+                frontUrl = nftMetadata[nft.nftUidValue]?.previewImageUrl
                 frontPlaceholder = "placeholder_nft_32"
-            default:
+            } else {
                 frontType = .circle
                 frontUrl = primaryValue.coin?.imageUrl
                 frontAlternativeUrl = primaryValue.coin?.image
@@ -103,12 +98,11 @@ class TransactionsViewItemFactory {
         }
 
         if let secondaryValue {
-            switch secondaryValue.kind {
-            case let .nft(nftUid, _, _):
+            if let nft = secondaryValue.kind as? NftAppValue {
                 backType = .squircle
-                backUrl = nftMetadata[nftUid]?.previewImageUrl
+                backUrl = nftMetadata[nft.nftUidValue]?.previewImageUrl
                 backPlaceholder = "placeholder_nft_32"
-            default:
+            } else {
                 backType = .circle
                 backUrl = secondaryValue.coin?.imageUrl
                 backAlternativeUrl = secondaryValue.coin?.image

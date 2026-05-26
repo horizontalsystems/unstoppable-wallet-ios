@@ -1,6 +1,7 @@
 import BigInt
 import Foundation
 import MarketKit
+import WalletCore
 
 extension Token {
     var protocolName: String? {

@@ -2,6 +2,7 @@ import Charts
 import Kingfisher
 import MarketKit
 import SwiftUI
+import WalletCore
 
 struct MarketMarketCapView: View {
     @StateObject var viewModel: MarketMarketCapViewModel

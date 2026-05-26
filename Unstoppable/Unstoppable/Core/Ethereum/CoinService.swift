@@ -2,6 +2,7 @@ import BigInt
 import Foundation
 import HsExtensions
 import MarketKit
+import WalletCore
 
 protocol ICoinService {
     var rate: CurrencyValue? { get }

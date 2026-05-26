@@ -1,9 +1,10 @@
 import BigInt
 import Foundation
+import HsExtensions
 
 private let max256ByteNumber = BigUInt("ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff".hs.hexData!)
 
-extension Decimal {
+public extension Decimal {
     init?(bigUInt: BigUInt, decimals: Int) {
         guard let significand = Decimal(string: bigUInt.description) else {
             return nil

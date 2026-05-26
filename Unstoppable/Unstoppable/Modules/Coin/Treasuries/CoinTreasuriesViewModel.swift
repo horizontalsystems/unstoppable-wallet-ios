@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import HsExtensions
 import MarketKit
+import WalletCore
 
 class CoinTreasuriesViewModel: ObservableObject {
     private let coin: Coin

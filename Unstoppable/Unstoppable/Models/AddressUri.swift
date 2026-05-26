@@ -1,5 +1,6 @@
 import Foundation
 import MarketKit
+import WalletCore
 
 struct AddressUri: Equatable {
     let scheme: String

@@ -2,6 +2,7 @@ import Chart
 import Combine
 import Foundation
 import MarketKit
+import WalletCore
 
 class MarketEtfFetcher {
     private let marketKit: MarketKit.Kit

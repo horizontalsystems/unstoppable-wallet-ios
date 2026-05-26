@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MarketKit
+import WalletCore
 
 class TopPlatformMarketCapFetcher {
     private static let defaultPeriodTypes = [HsTimePeriod.week1, .month1, .month3].periodTypes

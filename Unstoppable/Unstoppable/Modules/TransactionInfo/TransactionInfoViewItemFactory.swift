@@ -131,14 +131,13 @@ class TransactionInfoViewItemFactory {
     }
 
     private func fullBadge(appValue: AppValue) -> String? {
-        switch appValue.kind {
-        case let .token(token):
-            return token.fullBadge
-        case let .eip20Token(tokenName, _, _):
-            return tokenName
-        default:
-            return nil
+        if let token = appValue.kind as? TokenAppValue {
+            return token.token?.fullBadge
         }
+        if let eip = appValue.kind as? Eip20TokenAppValue {
+            return eip.tokenName
+        }
+        return nil
     }
 
     private func sendSection(source: WalletCore.TransactionSource, appValue: AppValue, to: String?, rates: [Coin: CurrencyValue], nftMetadata: [NftUid: NftAssetBriefMetadata] = [:], sentToSelf: Bool = false, balanceHidden: Bool) -> [TransactionInfoModule.ViewItem] {
@@ -147,14 +146,13 @@ class TransactionInfoViewItemFactory {
         let burn = to == zeroAddress
         var rateViewItem: TransactionInfoModule.ViewItem?
 
-        switch appValue.kind {
-        case let .nft(nftUid, tokenName, _):
+        if let nft = appValue.kind as? NftAppValue {
             viewItems.append(
                 .actionTitle(
                     iconName: burn ? "flame_24" : "arrow_medium_2_up_right_24",
                     iconDimmed: true,
                     title: burn ? "transactions.burn".localized : "transactions.send".localized,
-                    subTitle: nftMetadata[nftUid]?.name ?? tokenName.map { "\($0) #\(nftUid.tokenId)" } ?? "#\(nftUid.tokenId)"
+                    subTitle: nftMetadata[nft.nftUidValue]?.name ?? nft.tokenName.map { "\($0) #\(nft.nftUidValue.tokenId)" } ?? "#\(nft.nftUidValue.tokenId)"
                 )
             )
 
@@ -163,11 +161,11 @@ class TransactionInfoViewItemFactory {
                     source: source,
                     appValue: appValue,
                     type: type(appValue: appValue, condition: sentToSelf, .neutral, .outgoing),
-                    metadata: nftMetadata[nftUid],
+                    metadata: nftMetadata[nft.nftUidValue],
                     balanceHidden: balanceHidden
                 )
             )
-        default:
+        } else {
             let rate = appValue.coin.flatMap { rates[$0] }
 
             viewItems.append(
@@ -217,14 +215,13 @@ class TransactionInfoViewItemFactory {
         let mint = from == zeroAddress
         var rateViewItem: TransactionInfoModule.ViewItem?
 
-        switch appValue.kind {
-        case let .nft(nftUid, tokenName, _):
+        if let nft = appValue.kind as? NftAppValue {
             viewItems.append(
                 .actionTitle(
                     iconName: "arrow_medium_2_down_left_24",
                     iconDimmed: true,
                     title: mint ? "transactions.mint".localized : "transactions.receive".localized,
-                    subTitle: nftMetadata[nftUid]?.name ?? tokenName.map { "\($0) #\(nftUid.tokenId)" } ?? "#\(nftUid.tokenId)"
+                    subTitle: nftMetadata[nft.nftUidValue]?.name ?? nft.tokenName.map { "\($0) #\(nft.nftUidValue.tokenId)" } ?? "#\(nft.nftUidValue.tokenId)"
                 )
             )
             viewItems.append(
@@ -232,11 +229,11 @@ class TransactionInfoViewItemFactory {
                     source: source,
                     appValue: appValue,
                     type: type(appValue: appValue, .incoming),
-                    metadata: nftMetadata[nftUid],
+                    metadata: nftMetadata[nft.nftUidValue],
                     balanceHidden: balanceHidden
                 )
             )
-        default:
+        } else {
             let rate = appValue.coin.flatMap { rates[$0] }
 
             viewItems.append(

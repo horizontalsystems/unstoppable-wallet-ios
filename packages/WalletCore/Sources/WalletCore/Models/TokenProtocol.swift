@@ -1,4 +1,4 @@
-enum TokenProtocol {
+public enum TokenProtocol {
     case native
     case eip20
     case spl

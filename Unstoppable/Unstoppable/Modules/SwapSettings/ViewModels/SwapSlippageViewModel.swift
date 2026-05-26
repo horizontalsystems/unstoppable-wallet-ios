@@ -2,6 +2,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 import UniswapKit
+import WalletCore
 
 protocol ISlippageService {
     var slippageChangeObservable: Observable<Void> { get }

@@ -4,6 +4,7 @@ import Hodler
 import HsExtensions
 import HsToolKit
 import MarketKit
+import WalletCore
 
 class ResendBitcoinService {
     private var tasks = Set<AnyTask>()

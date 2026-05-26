@@ -109,6 +109,6 @@ struct ZcashWalletTokenView: View {
     private func infoAmount(value: Decimal) -> WalletInfoView.ValueFormatStyle {
         viewModel.balanceHidden
             ? .hiddenAmount
-            : .fullAmount(.init(kind: .token(token: viewModel.wallet.token), value: value))
+            : .fullAmount(.init(token: viewModel.wallet.token, value: value))
     }
 }

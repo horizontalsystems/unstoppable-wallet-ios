@@ -1,4 +1,5 @@
 import SwiftUI
+import WalletCore
 
 struct MultiSwapQuotesView: View {
     @ObservedObject var viewModel: MultiSwapViewModel

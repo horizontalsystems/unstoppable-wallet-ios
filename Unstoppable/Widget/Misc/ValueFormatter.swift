@@ -1,4 +1,5 @@
 import Foundation
+import WalletCore
 
 enum ValueFormatter {
     private static let rawFormatter: NumberFormatter = {

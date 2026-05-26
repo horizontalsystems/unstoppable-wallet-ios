@@ -1,6 +1,7 @@
 import Foundation
 import MarketKit
 import SwiftUI
+import WalletCore
 
 extension TechnicalAdvice {
     var mainAdvice: String {

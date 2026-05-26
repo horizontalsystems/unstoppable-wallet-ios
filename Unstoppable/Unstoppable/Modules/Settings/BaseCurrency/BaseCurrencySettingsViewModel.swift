@@ -1,4 +1,5 @@
 import Combine
+import WalletCore
 
 class BaseCurrencySettingsViewModel: ObservableObject {
     private static let popularCurrencyCodes = ["USD", "EUR", "GBP", "JPY"]

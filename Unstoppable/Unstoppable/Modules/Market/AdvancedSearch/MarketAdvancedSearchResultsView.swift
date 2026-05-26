@@ -1,6 +1,7 @@
 import Kingfisher
 import MarketKit
 import SwiftUI
+import WalletCore
 
 struct MarketAdvancedSearchResultsView: View {
     @StateObject var viewModel: MarketAdvancedSearchResultsViewModel

@@ -1,5 +1,6 @@
 import SnapKit
 import UIKit
+import WalletCore
 
 class DiffLabel: UILabel {
     override init(frame: CGRect) {
