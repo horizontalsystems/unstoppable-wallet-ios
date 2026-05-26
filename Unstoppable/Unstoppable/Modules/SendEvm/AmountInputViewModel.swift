@@ -2,6 +2,7 @@ import Foundation
 import MarketKit
 import RxCocoa
 import RxSwift
+import WalletCore
 
 protocol IAmountInputService {
     var amount: Decimal { get }

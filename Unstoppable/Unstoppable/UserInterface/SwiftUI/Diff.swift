@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import WalletCore
 
 enum Diff {
     case percent(value: Decimal)

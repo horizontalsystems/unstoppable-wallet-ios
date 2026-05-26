@@ -1,4 +1,5 @@
 import Foundation
+import WalletCore
 
 class ReceiveAddressViewItemFactory {
     typealias Item = ReceiveAddress

@@ -3,6 +3,7 @@ import Foundation
 import RxCocoa
 import RxSwift
 import UniswapKit
+import WalletCore
 
 class OneInchViewModel {
     private let disposeBag = DisposeBag()

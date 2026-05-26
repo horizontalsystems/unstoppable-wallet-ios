@@ -3,6 +3,7 @@ import EvmKit
 import Foundation
 import RxCocoa
 import RxSwift
+import WalletCore
 
 class SwapApproveViewModel {
     private let maxCoinDecimals = 8

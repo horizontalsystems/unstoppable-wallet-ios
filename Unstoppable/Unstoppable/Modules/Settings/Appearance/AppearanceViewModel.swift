@@ -1,6 +1,7 @@
 import Combine
 import MarketKit
 import SwiftUI
+import WalletCore
 
 class AppearanceViewModel: ObservableObject {
     private let themeManager = Core.shared.themeManager

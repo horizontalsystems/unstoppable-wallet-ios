@@ -2,6 +2,7 @@ import EvmKit
 import Foundation
 import MarketKit
 import SwiftUI
+import WalletCore
 
 class FeeSettingsViewHelper {
     func feeAmount(gasPrice: GasPrice?, evmFeeData: EvmFeeData, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> (FeeSettings.FeeValue, FeeSettings.FeeValue?, FeeSettings.FeeValue) {

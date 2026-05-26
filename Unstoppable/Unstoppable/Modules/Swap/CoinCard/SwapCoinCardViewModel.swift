@@ -3,6 +3,7 @@ import MarketKit
 import RxCocoa
 import RxSwift
 import UniswapKit
+import WalletCore
 
 class SwapCoinCardViewModel {
     private let coinCardService: ISwapCoinCardService

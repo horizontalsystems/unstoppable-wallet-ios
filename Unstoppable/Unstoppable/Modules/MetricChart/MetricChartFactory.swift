@@ -1,6 +1,7 @@
 import Chart
 import Foundation
 import MarketKit
+import WalletCore
 
 protocol IMetricChartFactory {
     func convert(itemData: MetricChartModule.ItemData, valueType: MetricChartModule.ValueType) -> ChartModule.ViewItem?

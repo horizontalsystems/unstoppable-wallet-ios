@@ -2,6 +2,7 @@ import HsToolKit
 import MarketKit
 import SwiftUI
 import UIKit
+import WalletCore
 
 protocol ISendConfirmationFactory {
     func confirmationViewController() throws -> UIViewController

@@ -1,5 +1,6 @@
 import MarketKit
 import SwiftUI
+import WalletCore
 
 struct MarketGlobalView: View {
     @ObservedObject var viewModel: MarketGlobalViewModel

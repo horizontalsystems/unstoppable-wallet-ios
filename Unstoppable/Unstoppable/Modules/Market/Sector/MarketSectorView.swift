@@ -1,6 +1,7 @@
 import Kingfisher
 import MarketKit
 import SwiftUI
+import WalletCore
 
 struct MarketSectorView: View {
     @StateObject var viewModel: MarketSectorViewModel

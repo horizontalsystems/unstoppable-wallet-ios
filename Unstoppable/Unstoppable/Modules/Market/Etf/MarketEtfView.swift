@@ -1,6 +1,7 @@
 import Kingfisher
 import MarketKit
 import SwiftUI
+import WalletCore
 
 struct MarketEtfView: View {
     @ObservedObject var viewModel: MarketEtfViewModel

@@ -2,6 +2,7 @@ import Foundation
 import Kingfisher
 import MarketKit
 import SwiftUI
+import WalletCore
 
 enum SendField {
     case amount(token: Token, appValueType: AppValueType, currencyValue: CurrencyValue?)

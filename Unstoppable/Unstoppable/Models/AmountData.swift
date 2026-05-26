@@ -2,6 +2,7 @@ import HsToolKit
 import MarketKit
 import RxSwift
 import UIKit
+import WalletCore
 
 enum AmountInfo {
     case appValue(appValue: AppValue)

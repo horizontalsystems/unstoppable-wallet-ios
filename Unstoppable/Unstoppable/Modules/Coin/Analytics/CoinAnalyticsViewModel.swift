@@ -3,6 +3,7 @@ import Combine
 import Foundation
 import HsExtensions
 import MarketKit
+import WalletCore
 
 class CoinAnalyticsViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()

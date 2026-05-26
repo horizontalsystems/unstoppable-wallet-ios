@@ -1,6 +1,7 @@
 import Kingfisher
 import MarketKit
 import SwiftUI
+import WalletCore
 
 struct MarketSectorsView: View {
     private let coinCount = 3

@@ -81,6 +81,6 @@ struct StellarWalletTokenView: View {
     private func lockedValue(lockInfo: StellarWalletTokenViewModel.LockInfo) -> WalletInfoView.ValueFormatStyle {
         viewModel.balanceHidden
             ? .hiddenAmount
-            : .fullAmount(.init(kind: .token(token: wallet.token), value: lockInfo.amount))
+            : .fullAmount(.init(token: wallet.token, value: lockInfo.amount))
     }
 }

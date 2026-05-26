@@ -1,4 +1,5 @@
 import Foundation
+import WalletCore
 
 struct FeeViewItem {
     let initialValue: Float

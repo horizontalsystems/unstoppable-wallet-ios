@@ -4,6 +4,7 @@ import HsToolKit
 import RxCocoa
 import RxSwift
 import UniswapKit
+import WalletCore
 
 class UniswapV3ViewModel {
     private let disposeBag = DisposeBag()

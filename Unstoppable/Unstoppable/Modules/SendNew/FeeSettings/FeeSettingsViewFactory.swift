@@ -1,5 +1,6 @@
 import MarketKit
 import SwiftUI
+import WalletCore
 
 class FeeSettingsViewFactory {
     static func createSettingsView(transactionService: ITransactionService, feeData: FeeData, feeToken: Token, currency: Currency, feeTokenRate: Decimal?) -> AnyView? {

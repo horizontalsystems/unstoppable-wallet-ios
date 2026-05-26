@@ -1,24 +1,11 @@
 import MarketKit
+import WalletCore
 
 extension TokenType {
     var isNative: Bool {
         switch self {
         case .native, .derived, .addressType: return true
         default: return false
-        }
-    }
-
-    var tokenProtocol: TokenProtocol {
-        switch self {
-        case .native: return .native
-        case .derived: return .native
-        case .addressType: return .native
-        case .eip20: return .eip20
-        case .spl: return .spl
-        case .jetton: return .jetton
-        case .stellar: return .stellar
-        case .zanoAsset: return .zanoAsset
-        case .unsupported: return .unsupported
         }
     }
 

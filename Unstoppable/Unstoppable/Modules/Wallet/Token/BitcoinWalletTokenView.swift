@@ -59,6 +59,6 @@ struct BitcoinWalletTokenView: View {
     private func infoAmount(value: Decimal) -> WalletInfoView.ValueFormatStyle {
         viewModel.balanceHidden
             ? .hiddenAmount
-            : .fullAmount(.init(kind: .token(token: wallet.token), value: value))
+            : .fullAmount(.init(token: wallet.token, value: value))
     }
 }

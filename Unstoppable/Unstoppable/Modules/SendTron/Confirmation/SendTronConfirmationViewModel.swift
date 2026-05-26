@@ -5,6 +5,7 @@ import MarketKit
 import RxCocoa
 import RxSwift
 import TronKit
+import WalletCore
 
 class SendTronConfirmationViewModel {
     private let disposeBag = DisposeBag()

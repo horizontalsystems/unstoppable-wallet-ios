@@ -1,6 +1,7 @@
 import Chart
 import Foundation
 import MarketKit
+import WalletCore
 
 class MarketVaultChartFactory {
     private static let noChangesLimitPercent: Decimal = 0.2

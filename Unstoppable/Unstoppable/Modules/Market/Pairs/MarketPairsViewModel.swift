@@ -2,6 +2,7 @@ import Combine
 import Foundation
 import HsExtensions
 import MarketKit
+import WalletCore
 
 class MarketPairsViewModel: ObservableObject {
     private let marketKit = Core.shared.marketKit

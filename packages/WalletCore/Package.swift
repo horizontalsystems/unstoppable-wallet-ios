@@ -11,6 +11,7 @@ let package = Package(
         .library(name: "UserInterface", targets: ["UserInterface"]),
     ],
     dependencies: [
+        .package(url: "https://github.com/attaswift/BigInt.git", exact: "5.3.0"),
         .package(url: "https://github.com/horizontalsystems/Eip20Kit.Swift", exact: "2.0.4"),
         .package(url: "https://github.com/horizontalsystems/EvmKit.Swift", exact: "2.4.4"),
         .package(url: "https://github.com/groue/GRDB.swift.git", exact: "6.29.3"),
@@ -29,6 +30,7 @@ let package = Package(
         .target(
             name: "WalletCore",
             dependencies: [
+                .product(name: "BigInt", package: "BigInt"),
                 .product(name: "Eip20Kit", package: "Eip20Kit.Swift"),
                 .product(name: "EvmKit", package: "EvmKit.Swift"),
                 .product(name: "GRDB", package: "GRDB.swift"),

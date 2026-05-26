@@ -2,6 +2,7 @@ import Kingfisher
 import MarketKit
 import SectionsTableView
 import UIKit
+import WalletCore
 
 enum CellComponent {
     static func actionTitleRow(tableView: SectionsTableView, rowInfo: RowInfo, iconName: String?, iconDimmed: Bool, title: String, value: String) -> RowProtocol {

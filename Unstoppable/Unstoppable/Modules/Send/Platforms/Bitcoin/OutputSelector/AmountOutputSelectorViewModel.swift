@@ -1,5 +1,6 @@
 import Combine
 import RxSwift
+import WalletCore
 
 class AmountOutputSelectorViewModel: ObservableObject {
     let disposeBag = DisposeBag()

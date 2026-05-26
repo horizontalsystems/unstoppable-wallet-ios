@@ -63,6 +63,7 @@
 		D35EEEE92FB1B5B700E9E863 /* WalletCore in Frameworks */ = {isa = PBXBuildFile; productRef = D35EEEE82FB1B5B700E9E863 /* WalletCore */; };
 		D3C9F7482FADF57B00C7916F /* AppWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D3E161E02FADAB4E006A73DD /* AppWidget.intentdefinition */; };
 		D3E161E12FADAB4E006A73DD /* AppWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D3E161E02FADAB4E006A73DD /* AppWidget.intentdefinition */; };
+		D3FE0A011A000000C0000001 /* WalletCore in Frameworks */ = {isa = PBXBuildFile; productRef = D35EEEE82FB1B5B700E9E863 /* WalletCore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -147,7 +148,6 @@
 				Core/Managers/PriceChangeModeManager.swift,
 				Core/Managers/WatchlistManager.swift,
 				Core/Storage/SharedLocalStorage.swift,
-				Models/Currency.swift,
 				Models/PriceChangeMode.swift,
 				Models/WatchlistSortBy.swift,
 				Models/WatchlistTimePeriod.swift,
@@ -305,6 +305,7 @@
 				D33D63952F98DD5D00E16ADA /* WidgetKit.framework in Frameworks */,
 				D33D63962F98DD5D00E16ADA /* HsToolKit in Frameworks */,
 				D33D63972F98DD5D00E16ADA /* SnapKit in Frameworks */,
+				D3FE0A011A000000C0000001 /* WalletCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -446,6 +447,7 @@
 				D33D63402F98DD5D00E16ADA /* SnapKit */,
 				D33D63422F98DD5D00E16ADA /* UIExtensions */,
 				D33D63442F98DD5D00E16ADA /* SectionsTableView */,
+				D35EEEE82FB1B5B700E9E863 /* WalletCore */,
 			);
 			productName = WidgetExtension;
 			productReference = D33D63A22F98DD5D00E16ADA /* WidgetExtension.appex */;

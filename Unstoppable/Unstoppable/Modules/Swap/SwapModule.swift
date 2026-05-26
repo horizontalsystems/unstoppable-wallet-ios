@@ -3,7 +3,7 @@ import MarketKit
 import RxCocoa
 import RxSwift
 import SectionsTableView
-
+import WalletCore
 import UIKit
 import UniswapKit
 

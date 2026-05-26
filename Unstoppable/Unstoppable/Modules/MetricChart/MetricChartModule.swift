@@ -2,6 +2,7 @@ import Chart
 import Combine
 import MarketKit
 import UIKit
+import WalletCore
 
 protocol IMetricChartFetcher {
     var valueType: MetricChartModule.ValueType { get }

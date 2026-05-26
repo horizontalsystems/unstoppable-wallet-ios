@@ -1,5 +1,6 @@
 import Foundation
 import HsToolKit
+import WalletCore
 
 final class OutgoingPoisoningFilter: SpamFilter {
     var identifier: String { "zero_value_poisoning" }
@@ -21,10 +22,7 @@ final class OutgoingPoisoningFilter: SpamFilter {
 
         // if somebody transfer from your wallet some token, which you don't add as wallet (like phising token) mark it spam
         if transaction.events.outgoing.contains(where: { event in
-            switch event.value.kind {
-            case .raw, .eip20Token: return true
-            default: return false
-            }
+            event.value.kind is RawAppValue || event.value.kind is Eip20TokenAppValue
         }) {
             return .spam
         }

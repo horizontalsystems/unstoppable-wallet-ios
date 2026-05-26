@@ -1,6 +1,7 @@
 import Combine
 import Foundation
 import MarketKit
+import WalletCore
 
 class SectorMarketCapFetcher {
     private static let defaultPeriodTypes = [HsTimePeriod.day1, .week1, .month1]

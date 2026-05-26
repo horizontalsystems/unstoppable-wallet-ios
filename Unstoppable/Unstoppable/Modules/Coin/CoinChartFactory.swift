@@ -2,6 +2,7 @@ import Chart
 import Foundation
 import MarketKit
 import UIKit
+import WalletCore
 
 class CoinChartFactory {
     private let dateFormatter = DateFormatter()

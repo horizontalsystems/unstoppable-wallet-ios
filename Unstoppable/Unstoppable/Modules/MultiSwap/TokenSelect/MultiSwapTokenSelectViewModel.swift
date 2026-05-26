@@ -3,6 +3,7 @@ import EvmKit
 import Foundation
 import HsExtensions
 import MarketKit
+import WalletCore
 
 class MultiSwapTokenSelectViewModel: ObservableObject {
     private var syncTask: AnyTask?

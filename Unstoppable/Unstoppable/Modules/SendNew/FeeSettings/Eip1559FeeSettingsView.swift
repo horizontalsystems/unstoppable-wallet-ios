@@ -1,6 +1,7 @@
 import Foundation
 import MarketKit
 import SwiftUI
+import WalletCore
 
 struct Eip1559FeeSettingsView: View {
     @StateObject private var viewModel: Eip1559FeeSettingsViewModel

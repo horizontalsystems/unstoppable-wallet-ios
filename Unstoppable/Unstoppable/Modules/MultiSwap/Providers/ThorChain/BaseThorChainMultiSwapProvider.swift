@@ -8,6 +8,7 @@ import HsToolKit
 import MarketKit
 import ObjectMapper
 import SwiftUI
+import WalletCore
 
 class BaseThorChainMultiSwapProvider: IMultiSwapProvider {
     private let assetMapExpiration: TimeInterval = 60 * 60

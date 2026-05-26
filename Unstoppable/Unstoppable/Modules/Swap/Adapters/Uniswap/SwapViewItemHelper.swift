@@ -1,6 +1,7 @@
 import Foundation
 import MarketKit
 import UniswapKit
+import WalletCore
 
 class SwapViewItemHelper {
     func sortedPrices(executionPrice: Decimal?, invertedPrice: Decimal?, tokenIn: MarketKit.Token?, tokenOut: MarketKit.Token?) -> (String, String)? {

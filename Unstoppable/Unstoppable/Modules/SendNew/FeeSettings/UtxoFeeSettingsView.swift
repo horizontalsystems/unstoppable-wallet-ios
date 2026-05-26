@@ -1,6 +1,7 @@
 import BitcoinCore
 import MarketKit
 import SwiftUI
+import WalletCore
 
 struct UtxoFeeSettingsView: View {
     @StateObject private var viewModel: UtxoFeeSettingsViewModel

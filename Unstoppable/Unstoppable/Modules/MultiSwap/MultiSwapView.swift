@@ -2,6 +2,7 @@ import Foundation
 import Kingfisher
 import MarketKit
 import SwiftUI
+import WalletCore
 
 struct MultiSwapView: View {
     @StateObject var viewModel: MultiSwapViewModel

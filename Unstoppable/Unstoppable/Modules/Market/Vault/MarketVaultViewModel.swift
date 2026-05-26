@@ -1,5 +1,6 @@
 import Combine
 import MarketKit
+import WalletCore
 
 class MarketVaultViewModel: ObservableObject {
     private let currencyManager = Core.shared.currencyManager

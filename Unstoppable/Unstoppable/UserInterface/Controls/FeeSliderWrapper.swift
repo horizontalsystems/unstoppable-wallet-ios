@@ -1,4 +1,5 @@
 import UIKit
+import WalletCore
 
 class FeeSliderWrapper: UIView {
     private let slider = FeeSlider()

@@ -1,10 +1,10 @@
 import Foundation
 
-class ValueFormatter {
-    static let instance = ValueFormatter()
+public final class ValueFormatter {
+    public static let instance = ValueFormatter()
 
-    private let rawFormatterQueue = DispatchQueue(label: "\(AppConfig.label).value-formatter.raw-formatter", qos: .userInitiated)
-    private let currencyFormatterQueue = DispatchQueue(label: "\(AppConfig.label).value-formatter.currency-formatter", qos: .userInitiated)
+    private let rawFormatterQueue = DispatchQueue(label: "io.horizontalsystems.wallet-core.value-formatter.raw-formatter", qos: .userInitiated)
+    private let currencyFormatterQueue = DispatchQueue(label: "io.horizontalsystems.wallet-core.value-formatter.currency-formatter", qos: .userInitiated)
 
     private let rawFormatter: NumberFormatter = {
         let formatter = NumberFormatter()
@@ -53,9 +53,9 @@ class ValueFormatter {
         pow(10, power) - (pow(10, power - 3) / 2)
     }
 
-    private func transformedShort(value: Decimal, maxDigits: Int = Int.max) -> (value: Decimal, digits: Int, suffix: String?, tooSmall: Bool) {
+    private func transformedShort(value: Decimal, maxDigits: Int = Int.max) -> (value: Decimal, digits: Int, suffix: Suffix?, tooSmall: Bool) {
         var value = abs(value)
-        var suffix: String?
+        var suffix: Suffix?
         let digits: Int
         var tooSmall = false
 
@@ -89,23 +89,23 @@ class ValueFormatter {
 
         case 19999.5 ..< edge(6):
             (digits, value) = digitsAndValue(value: value, basePow: 3)
-            suffix = "number.thousand"
+            suffix = .thousand
 
         case edge(6) ..< edge(9):
             (digits, value) = digitsAndValue(value: value, basePow: 6)
-            suffix = "number.million"
+            suffix = .million
 
         case edge(9) ..< edge(12):
             (digits, value) = digitsAndValue(value: value, basePow: 9)
-            suffix = "number.billion"
+            suffix = .billion
 
         case edge(12) ..< edge(15):
             (digits, value) = digitsAndValue(value: value, basePow: 12)
-            suffix = "number.trillion"
+            suffix = .trillion
 
         default:
             (digits, value) = digitsAndValue(value: value, basePow: 15)
-            suffix = "number.quadrillion"
+            suffix = .quadrillion
         }
 
         return (value: value, digits: digits, suffix: suffix, tooSmall: tooSmall)
@@ -142,11 +142,16 @@ class ValueFormatter {
         return (value: value, digits: max(digits, minDigits))
     }
 
-    private func decorated(string: String, suffix: String? = nil, symbol: String? = nil, signType: SignType = .never, signValue: Decimal, tooSmall: Bool = false) -> String {
+    private func localizedSuffix(_ suffix: Suffix, value: String) -> String {
+        let format = Bundle.module.localizedString(forKey: "number.\(suffix.rawValue)", value: nil, table: nil)
+        return String(format: format, value)
+    }
+
+    private func decorated(string: String, suffix: Suffix? = nil, symbol: String? = nil, signType: SignType = .never, signValue: Decimal, tooSmall: Bool = false) -> String {
         var string = string
 
         if let suffix {
-            string = suffix.localized(string)
+            string = localizedSuffix(suffix, value: string)
         }
 
         if let symbol {
@@ -170,7 +175,7 @@ class ValueFormatter {
         return string
     }
 
-    private func formattedCurrency(value: Decimal, digits: Int, code: String, symbol: String, suffix: String? = nil) -> String? {
+    private func formattedCurrency(value: Decimal, digits: Int, code: String, symbol: String, suffix: Suffix? = nil) -> String? {
         let pattern: String? = currencyFormatterQueue.sync {
             currencyFormatter.currencyCode = code
             currencyFormatter.currencySymbol = symbol
@@ -195,7 +200,7 @@ class ValueFormatter {
     }
 }
 
-extension ValueFormatter {
+public extension ValueFormatter {
     func formatWith(rounding: Bool, currencyValue: CurrencyValue) -> String? {
         if rounding {
             return formatShort(currencyValue: currencyValue)
@@ -297,10 +302,18 @@ extension ValueFormatter {
     }
 }
 
-extension ValueFormatter {
+public extension ValueFormatter {
     enum SignType {
         case never
         case auto
         case always
+    }
+
+    enum Suffix: String {
+        case thousand
+        case million
+        case billion
+        case trillion
+        case quadrillion
     }
 }

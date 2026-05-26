@@ -1,6 +1,7 @@
 import Kingfisher
 import MarketKit
 import SwiftUI
+import WalletCore
 
 struct CoinOverviewView: View {
     @ObservedObject var viewModel: CoinOverviewViewModel

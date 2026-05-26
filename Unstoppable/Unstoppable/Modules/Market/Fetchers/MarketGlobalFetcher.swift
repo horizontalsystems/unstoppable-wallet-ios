@@ -1,6 +1,7 @@
 import Chart
 import Foundation
 import MarketKit
+import WalletCore
 
 class MarketGlobalFetcher {
     private let marketKit: MarketKit.Kit

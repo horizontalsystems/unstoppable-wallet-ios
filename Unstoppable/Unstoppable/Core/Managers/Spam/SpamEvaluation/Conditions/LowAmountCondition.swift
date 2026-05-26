@@ -1,5 +1,6 @@
 import Foundation
 import HsToolKit
+import WalletCore
 
 class LowAmountCondition: SpamCondition {
     var identifier: String { "low_amount" }
@@ -48,14 +49,13 @@ class LowAmountCondition: SpamCondition {
     }
 
     private func evaluateEvent(_ event: TransferEvent) -> Int {
-        switch event.value.kind {
-        case .nft:
+        if event.value.kind is NftAppValue {
             return event.value.value > 0 ? 0 : riskScore
-        case .raw, .eip20Token:
-            return spamScore
-        default:
-            return evaluateWithLimits(code: event.value.code, value: event.value.value)
         }
+        if event.value.kind is RawAppValue || event.value.kind is Eip20TokenAppValue {
+            return spamScore
+        }
+        return evaluateWithLimits(code: event.value.code, value: event.value.value)
     }
 
     private func evaluateWithLimits(code: String, value: Decimal) -> Int {

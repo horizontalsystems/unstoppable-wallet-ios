@@ -1,3 +1,5 @@
+import WalletCore
+
 class CurrencyValueFormatter {
     private let amountRoundingManager: AmountRoundingManager
 

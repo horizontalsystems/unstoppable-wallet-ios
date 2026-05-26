@@ -4,6 +4,7 @@ import Foundation
 import MarketKit
 import ObjectMapper
 import SwiftUI
+import WalletCore
 import ZcashLightClientKit
 
 class MayaMultiSwapProvider: BaseThorChainMultiSwapProvider {

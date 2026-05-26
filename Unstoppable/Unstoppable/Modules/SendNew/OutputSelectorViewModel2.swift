@@ -2,6 +2,7 @@ import BitcoinCore
 import Combine
 import Foundation
 import MarketKit
+import WalletCore
 
 class OutputSelectorViewModel2: ObservableObject {
     private var rateCancellable: AnyCancellable?

@@ -2,6 +2,7 @@ import BigInt
 import EvmKit
 import Foundation
 import MarketKit
+import WalletCore
 
 struct EvmFeeData {
     let gasLimit: Int
