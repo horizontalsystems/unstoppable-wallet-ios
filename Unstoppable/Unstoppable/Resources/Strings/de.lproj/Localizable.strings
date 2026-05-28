@@ -1975,7 +1975,6 @@
 "wallet_connect_list.new_connection" = "Neue Verbindung";
 
 "wallet_connect.no_account.description" = "Sie müssen eine Wallet erstellen oder importieren bevor Sie WalletConnect verwenden können.";
-"wallet_connect.unbackuped_account.description" = "Sie müssen %@ sichern bevor Sie WalletConnect verwenden können";
 
 "wallet_connect.non_supported_account.description" = "Ihr aktueller Wallet-Typ %@ unterstützt WalletConnect nicht";
 "wallet_connect.non_supported_account.switch" = "Wechseln";

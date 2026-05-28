@@ -1975,7 +1975,6 @@
 "wallet_connect_list.new_connection" = "새로운 연결";
 
 "wallet_connect.no_account.description" = "WalletConnect를 사용하려면 먼저 지갑을 생성하거나 가져와야 합니다.";
-"wallet_connect.unbackuped_account.description" = "WalletConnect를 사용하려면 %@을(를) 백업해야 합니다.";
 
 "wallet_connect.non_supported_account.description" = "현재 지갑 유형 %@은(는) WalletConnect를 지원하지 않습니다.";
 "wallet_connect.non_supported_account.switch" = "전환";
