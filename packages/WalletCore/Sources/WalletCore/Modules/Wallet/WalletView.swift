@@ -207,10 +207,6 @@ struct WalletView: View {
     }
 
     private func copyAddressIfBackedUp(address: String) {
-        guard viewModel.verifyBackedUp() else {
-            return
-        }
-
         CopyHelper.copyAndNotify(value: address)
     }
 
