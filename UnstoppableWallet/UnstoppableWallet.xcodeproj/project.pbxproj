@@ -14895,7 +14895,7 @@
 			repositoryURL = "https://github.com/horizontalsystems/ZcashLightClientKit";
 			requirement = {
 				kind = revision;
-				revision = f186d017a2d33d50f0276c10adf8b544484acfe6;
+				revision = 8881b297ac91ffafc5083267955e32872dfe0e00;
 			};
 		};
 		6BDA29A929D6EA9B003847ED /* XCRemoteSwiftPackageReference "ECashKit.Swift" */ = {
