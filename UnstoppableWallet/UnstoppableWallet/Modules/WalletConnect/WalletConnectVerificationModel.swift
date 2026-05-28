@@ -23,19 +23,6 @@ class WalletConnectVerificationModel: ObservableObject {
             return
         }
 
-        if !activeAccount.backedUp, !cloudBackupManager.backedUp(uniqueId: activeAccount.type.uniqueId()) {
-            Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                BackupRequiredView.prompt(
-                    account: activeAccount,
-                    description: "wallet_connect.unbackuped_account.description".localized(activeAccount.name),
-                    isPresented: isPresented
-                )
-            }
-
-            stat(page: .walletConnect, event: .open(page: .backupRequired))
-            return
-        }
-
         onSuccess()
     }
 
