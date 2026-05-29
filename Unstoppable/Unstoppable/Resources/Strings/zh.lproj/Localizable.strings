@@ -629,6 +629,9 @@
 "swap.quotes.providers.risk_levels.good.description" = "提供商在交易完成前自动进行审查。如果检测到问题，兑换将被拒绝并退还资金。";
 "swap.quotes.providers.risk_levels.fair.description" = "部分交易可能需要额外验证。如果检测到问题，资金通常会自动退还。";
 
+"swap.provider.score" = "供应商评分";
+"swap.provider.swap_time" = "兑换时间";
+
 
 "swap.allowance" = "补贴";
 "swap.allowance.description" = "当执行令牌交换时，交易所可以代表用户花费的金额。 在进行实际互换交易之前，需要先确定足够的备抵。";
