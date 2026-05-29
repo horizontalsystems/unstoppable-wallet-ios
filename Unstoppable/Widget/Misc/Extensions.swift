@@ -45,3 +45,42 @@ extension Coin {
         }
     }
 }
+
+extension CGFloat {
+    static let heightOnePixel: CGFloat = 1 / UIScreen.main.scale
+}
+
+extension Color {
+    static let themeLeah = Color("Leah")
+    static let themeGray = Color("Gray")
+    static let themeBlade = Color("Blade")
+    static let themeRemus = Color("Remus")
+    static let themeLucian = Color("Lucian")
+}
+
+extension Font {
+    static func manRopeFont(size: CGFloat, weight: Font.Weight) -> Font {
+        switch weight {
+        case .regular: return Font.custom("Manrope-Regular", size: size)
+        case .medium: return Font.custom("Manrope-Medium", size: size)
+        case .semibold: return Font.custom("Manrope-SemiBold", size: size)
+        default: fatalError("Can't provide other weight for Manrope!")
+        }
+    }
+
+    // static let themeTitle1: Font = .manRopeFont(size: 38, weight: .semibold)
+    // static let themeTitle2: Font = .manRopeFont(size: 36, weight: .medium)
+    // static let themeTitle2R: Font = .manRopeFont(size: 32, weight: .regular)
+    // static let themeTitle3: Font = .manRopeFont(size: 24, weight: .semibold)
+    static let themeHeadline1: Font = .manRopeFont(size: 20, weight: .semibold)
+    // static let themeHeadline2: Font = .manRopeFont(size: 16, weight: .semibold)
+    // static let themeBody: Font = .manRopeFont(size: 16, weight: .medium)
+    static let themeSubhead1: Font = .manRopeFont(size: 14, weight: .medium)
+    // static let themeSubhead1I: Font = .manRopeFont(size: 14, weight: .medium).italic()
+    static let themeSubhead2: Font = .manRopeFont(size: 14, weight: .regular)
+    static let themeCaption: Font = .manRopeFont(size: 12, weight: .regular)
+    // static let themeCaptionSB: Font = .manRopeFont(size: 12, weight: .semibold)
+    // static let themeMicro: Font = .manRopeFont(size: 10, weight: .regular)
+    static let themeMicroSB: Font = .manRopeFont(size: 10, weight: .semibold)
+}
+

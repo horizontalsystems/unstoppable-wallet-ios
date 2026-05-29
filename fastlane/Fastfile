@@ -1,7 +1,6 @@
 default_platform(:ios)
 
 APP_ID = ENV["APP_ID"]
-STABLE_APP_ID = ENV["STABLE_APP_ID"]
 TEMP_KEYCHAIN_USER = ENV["TEMP_KEYCHAIN_USER"]
 TEMP_KEYCHAIN_PASSWORD = ENV["TEMP_KEYCHAIN_PASSWORD"]
 APPLE_ISSUER_ID = ENV["APPLE_ISSUER_ID"]
@@ -11,8 +10,11 @@ GIT_AUTHORIZATION = ENV["GIT_AUTHORIZATION"]
 
 TEAM_ID = "HC4MCAXJ66"
 
+WORKSPACE = "Wallet.xcworkspace"
+XCODEPROJ = "./Unstoppable/Unstoppable.xcodeproj"
+XCCONFIG_PATH = "Unstoppable/Unstoppable/Configuration/Config.xcconfig"
+
 BASE_APP_ID = "io.horizontalsystems.bank-wallet"
-STABLE_BASE_APP_ID = "io.horizontalsystems.stable"
 
 PROD_APP_IDS = [
   BASE_APP_ID,
@@ -26,19 +28,7 @@ DEV_APP_IDS = [
   "#{BASE_APP_ID}.dev.intent"
 ].freeze
 
-STABLE_PROD_APP_IDS = [
-  STABLE_BASE_APP_ID,
-  "#{STABLE_BASE_APP_ID}.widget",
-  "#{STABLE_BASE_APP_ID}.intent"
-].freeze
-
-STABLE_DEV_APP_IDS = [
-  "#{STABLE_BASE_APP_ID}.dev",
-  "#{STABLE_BASE_APP_ID}.dev.widget",
-  "#{STABLE_BASE_APP_ID}.dev.intent"
-].freeze
-
-ALL_APP_IDS = (PROD_APP_IDS + DEV_APP_IDS + STABLE_PROD_APP_IDS + STABLE_DEV_APP_IDS).freeze
+ALL_APP_IDS = (PROD_APP_IDS + DEV_APP_IDS).freeze
 
 MATCH_TYPE_PROFILE_NAMES = {
   'development' => 'Development',
@@ -46,64 +36,51 @@ MATCH_TYPE_PROFILE_NAMES = {
   'appstore'    => 'AppStore'
 }.freeze
 
-XCCONFIG_KEYS = [
-  'ARBISCAN_API_KEYS',
-  'BASESCAN_API_KEYS',
-  'BSCSCAN_API_KEYS',
-  'CHAINALYSIS_API_KEY',
-  'DEFIYIELD_API_KEY',
-  'ERA_ZKSYNC_API_KEYS',
-  'ETHERSCAN_API_KEYS',
-  'FTMSCAN_API_KEYS',
-  'GNOSISSCAN_API_KEYS',
-  'HASHDIT_API_KEY',
-  'HS_PROVIDER_API_KEY',
-  'JUPITER_API_KEY',
-  'MERKLE_API_PATH',
-  'ONE_INCH_API_KEY',
-  'OPEN_SEA_API_KEY',
-  'OPTIMISM_ETHERSCAN_API_KEYS',
-  'POLYGONSCAN_API_KEYS',
-  'SNOWTRACE_API_KEYS',
-  'SOLANA_ALCHEMY_API_KEYS',
-  'TRONGRID_API_KEYS',
-  'TWITTER_BEARER_TOKEN',
-  'UNSTOPPABLE_DOMAINS_API_KEY',
-  'USWAP_API_KEY',
-  'WALLET_CONNECT_V2_PROJECT_KEY',
+XCCONFIG_KEYS = %w[
+  ARBISCAN_API_KEYS
+  BASESCAN_API_KEYS
+  BSCSCAN_API_KEYS
+  CHAINALYSIS_API_KEY
+  DEFIYIELD_API_KEY
+  ERA_ZKSYNC_API_KEYS
+  ETHERSCAN_API_KEYS
+  FTMSCAN_API_KEYS
+  GNOSISSCAN_API_KEYS
+  HASHDIT_API_KEY
+  HS_PROVIDER_API_KEY
+  JUPITER_API_KEY
+  MERKLE_API_PATH
+  ONE_INCH_API_KEY
+  OPEN_SEA_API_KEY
+  OPTIMISM_ETHERSCAN_API_KEYS
+  POLYGONSCAN_API_KEYS
+  SNOWTRACE_API_KEYS
+  SOLANA_ALCHEMY_API_KEYS
+  TRONGRID_API_KEYS
+  TWITTER_BEARER_TOKEN
+  UNSTOPPABLE_DOMAINS_API_KEY
+  USWAP_API_KEY
+  WALLET_CONNECT_V2_PROJECT_KEY
 
-  'MAYA_AFFILIATE',
-  'MAYA_AFFILIATE_BPS',
-  'ONE_INCH_COMMISSION',
-  'ONE_INCH_COMMISSION_ADDRESS',
-  'THORCHAIN_AFFILIATE',
-  'THORCHAIN_AFFILIATE_BPS'
+  MAYA_AFFILIATE
+  MAYA_AFFILIATE_BPS
+  ONE_INCH_COMMISSION
+  ONE_INCH_COMMISSION_ADDRESS
+  THORCHAIN_AFFILIATE
+  THORCHAIN_AFFILIATE_BPS
 ].freeze
-
-def delete_temp_keychain(name)
-  delete_keychain(name: name) if File.exist? File.expand_path("~/Library/Keychains/#{name}-db")
-end
-
-def create_temp_keychain(name, password)
-  create_keychain(
-    name: name,
-    password: password,
-    unlock: false,
-    timeout: 0
-  )
-end
-
-def ensure_temp_keychain(name, password)
-  delete_temp_keychain(name)
-  create_temp_keychain(name, password)
-end
 
 def with_temp_keychain
   name = TEMP_KEYCHAIN_USER
-  ensure_temp_keychain(name, TEMP_KEYCHAIN_PASSWORD)
+  delete_temp_keychain(name)
+  create_keychain(name: name, password: TEMP_KEYCHAIN_PASSWORD, unlock: false, timeout: 0)
   yield name
 ensure
   delete_temp_keychain(name) if name
+end
+
+def delete_temp_keychain(name)
+  delete_keychain(name: name) if File.exist?(File.expand_path("~/Library/Keychains/#{name}-db"))
 end
 
 def app_store_api_key
@@ -116,27 +93,13 @@ def app_store_api_key
   )
 end
 
-def update_xcconfig(name, new_value)
-  update_xcconfig_value(
-    path: './Unstoppable/Unstoppable/Configuration/Config.xcconfig',
-    name: name,
-    value: new_value
-  )
-end
-
 def apply_xcconfig
+  template_path = XCCONFIG_PATH.sub(/Config\.xcconfig\z/, 'Config.template.xcconfig')
+  sh("cp ../#{template_path} ../#{XCCONFIG_PATH}")
+
   XCCONFIG_KEYS.each do |key|
-    update_xcconfig(key, ENV["XCCONFIG_#{key}"])
+    update_xcconfig_value(path: XCCONFIG_PATH, name: key, value: ENV["XCCONFIG_#{key}"])
   end
-end
-
-def prepare_environment
-  sh("cp ../Unstoppable/Unstoppable/Configuration/Config.template.xcconfig ../Unstoppable/Unstoppable/Configuration/Config.xcconfig")
-
-  increment_build_number(
-    build_number: ENV['BUILD_NUMBER'],
-    xcodeproj: "./Unstoppable/Unstoppable.xcodeproj"
-  )
 end
 
 def provisioning_profiles_for(app_ids, match_type)
@@ -144,9 +107,9 @@ def provisioning_profiles_for(app_ids, match_type)
   app_ids.map { |id| [id, "match #{profile_name} #{id}"] }.to_h
 end
 
-def build_and_sign(match_type:, export_method:, app_ids:, scheme:, icloud_env:, keychain_name:)
-  prepare_environment
+def build_and_sign(match_type:, export_method:, app_ids:, scheme:, keychain_name:, icloud_env:)
   apply_xcconfig
+  increment_build_number(build_number: ENV['BUILD_NUMBER'], xcodeproj: XCODEPROJ)
 
   match(
     type: match_type,
@@ -159,17 +122,22 @@ def build_and_sign(match_type:, export_method:, app_ids:, scheme:, icloud_env:, 
   )
 
   gym(
-    workspace: "Wallet.xcworkspace",
+    workspace: WORKSPACE,
     scheme: scheme,
     export_method: export_method,
     clean: true,
     include_symbols: true,
     export_options: {
       compileBitcode: false,
-      provisioningProfiles: provisioning_profiles_for(app_ids, match_type),
-      iCloudContainerEnvironment: icloud_env
+      iCloudContainerEnvironment: icloud_env,
+      provisioningProfiles: provisioning_profiles_for(app_ids, match_type)
     }
   )
+end
+
+def run_match(type:, options: {})
+  app_ids = type == 'appstore' ? PROD_APP_IDS : ALL_APP_IDS
+  match(app_identifier: app_ids, type: type, **options)
 end
 
 platform :ios do
@@ -179,7 +147,7 @@ platform :ios do
         match_type: 'adhoc',
         export_method: 'ad-hoc',
         app_ids: DEV_APP_IDS,
-        scheme: 'App-Dev',
+        scheme: 'Development',
         icloud_env: 'Development',
         keychain_name: keychain_name
       )
@@ -199,7 +167,7 @@ platform :ios do
         match_type: 'appstore',
         export_method: 'app-store',
         app_ids: PROD_APP_IDS,
-        scheme: 'App-Prod',
+        scheme: 'Production',
         icloud_env: 'Production',
         keychain_name: keychain_name
       )
@@ -215,72 +183,19 @@ platform :ios do
     end
   end
 
-  lane :dev_stable do
-    with_temp_keychain do |keychain_name|
-      build_and_sign(
-        match_type: 'adhoc',
-        export_method: 'ad-hoc',
-        app_ids: STABLE_DEV_APP_IDS,
-        scheme: 'App-Stable-Dev',
-        icloud_env: 'Development',
-        keychain_name: keychain_name
-      )
-
-      firebase_app_distribution(
-        app: "1:407994911754:ios:87c194a99fd04dc269e3f3",
-        groups: "dev-testers",
-        release_notes: last_git_commit[:message],
-        service_credentials_json_data: ENV["FIREBASE_CREDENTIALS"]
-      )
-    end
-  end
-
-  lane :release_stable do
-    with_temp_keychain do |keychain_name|
-      build_and_sign(
-        match_type: 'appstore',
-        export_method: 'app-store',
-        app_ids: STABLE_PROD_APP_IDS,
-        scheme: 'App-Stable-Prod',
-        icloud_env: 'Production',
-        keychain_name: keychain_name
-      )
-
-      pilot(
-        apple_id: STABLE_APP_ID,
-        app_identifier: STABLE_BASE_APP_ID,
-        skip_waiting_for_build_processing: true,
-        skip_submission: true,
-        distribute_external: false,
-        notify_external_testers: false
-      )
-    end
-  end
-
   lane :match_readonly do
-    %w[development adhoc].each do |type|
-      match(type: type, readonly: true, app_identifier: ALL_APP_IDS)
+    %w[development adhoc appstore].each do |type|
+      run_match(type: type, options: { readonly: true })
     end
-
-    match(type: 'appstore', readonly: true, app_identifier: PROD_APP_IDS + STABLE_PROD_APP_IDS)
   end
 
   lane :match_generate do |options|
+    base = { username: options[:username], team_id: TEAM_ID }
+
     %w[development adhoc].each do |type|
-      match(
-        type: type,
-        username: options[:username],
-        team_id: TEAM_ID,
-        app_identifier: ALL_APP_IDS,
-        force_for_new_devices: true
-      )
+      run_match(type: type, options: base.merge(force_for_new_devices: true))
     end
 
-    match(
-      type: 'appstore',
-      username: options[:username],
-      team_id: TEAM_ID,
-      app_identifier: PROD_APP_IDS + STABLE_PROD_APP_IDS
-    )
+    run_match(type: 'appstore', options: base)
   end
 end

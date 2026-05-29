@@ -1,5 +1,6 @@
 import Foundation
 import SwiftUI
+import WalletCore
 
 class AppSceneDelegate: NSObject, UIWindowSceneDelegate {
     private var backgroundTask: UIBackgroundTaskIdentifier = .invalid

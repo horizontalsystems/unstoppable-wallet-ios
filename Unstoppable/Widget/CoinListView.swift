@@ -19,8 +19,8 @@ struct CoinListView: View {
     }
 
     @ViewBuilder private func smallView() -> some View {
-        list(verticalPadding: .margin4) { item in
-            HStack(spacing: .margin8) {
+        list(verticalPadding: 4) { item in
+            HStack(spacing: 8) {
                 icon(image: item.icon)
 
                 VStack(spacing: 1) {
@@ -38,14 +38,14 @@ struct CoinListView: View {
     }
 
     @ViewBuilder private func mediumView() -> some View {
-        list(verticalPadding: .margin4) { item in
+        list(verticalPadding: 4) { item in
             row(item: item)
         }
     }
 
     @ViewBuilder private func largeView() -> some View {
         VStack(spacing: 0) {
-            HStack(spacing: .margin16) {
+            HStack(spacing: 16) {
                 Text(title)
                     .lineLimit(1)
                     .font(.themeSubhead1)
@@ -58,7 +58,7 @@ struct CoinListView: View {
                     .font(.themeSubhead2)
                     .foregroundColor(.themeGray)
             }
-            .padding(.margin16)
+            .padding(16)
 
             HorizontalDivider()
 
@@ -66,7 +66,7 @@ struct CoinListView: View {
                 row(item: item)
             }
         }
-        .padding(.vertical, .margin4)
+        .padding(.vertical, 4)
     }
 
     @ViewBuilder private func list(verticalPadding: CGFloat, rowBuilder: @escaping (CoinItem) -> some View) -> some View {
@@ -75,7 +75,7 @@ struct CoinListView: View {
                 ForEach(items) { item in
                     Link(destination: URL(string: "unstoppable.money://coin/\(item.uid)")!) {
                         rowBuilder(item)
-                            .padding(.horizontal, .margin16)
+                            .padding(.horizontal, 16)
                             .frame(maxHeight: .infinity)
                             .frame(maxHeight: proxy.size.height / CGFloat(maxItemCount))
                     }
@@ -86,18 +86,17 @@ struct CoinListView: View {
                     Spacer()
                 }
             }
-            .themeListStyle(.transparentInline)
         }
         .frame(maxHeight: .infinity)
         .padding(.vertical, verticalPadding)
     }
 
     @ViewBuilder private func row(item: CoinItem) -> some View {
-        HStack(spacing: .margin16) {
+        HStack(spacing: 16) {
             icon(image: item.icon)
 
             VStack(spacing: 1) {
-                HStack(spacing: .margin16) {
+                HStack(spacing: 16) {
                     Text(item.code.uppercased())
                         .font(.themeSubhead1)
                         .foregroundColor(.themeLeah)
@@ -109,10 +108,10 @@ struct CoinListView: View {
                         .foregroundColor(.themeLeah)
                 }
 
-                HStack(spacing: .margin16) {
-                    HStack(spacing: .margin4) {
+                HStack(spacing: 16) {
+                    HStack(spacing: 4) {
                         if let rank = item.rank {
-                            BadgeViewNew(rank)
+                            BadgeView(text: rank)
                         }
 
                         if let marketCap = item.marketCap {
@@ -137,12 +136,12 @@ struct CoinListView: View {
             image
                 .resizable()
                 .scaledToFit()
-                .frame(width: .iconSize32, height: .iconSize32)
+                .frame(width: 32, height: 32)
                 .clipShape(Circle())
         } else {
             Circle()
                 .fill(Color.themeGray)
-                .frame(width: .iconSize32, height: .iconSize32)
+                .frame(width: 32, height: 32)
         }
     }
 }

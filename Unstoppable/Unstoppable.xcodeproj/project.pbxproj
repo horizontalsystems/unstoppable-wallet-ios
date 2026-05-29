@@ -7,59 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		D33D63912F98DD5D00E16ADA /* UIExtensions in Frameworks */ = {isa = PBXBuildFile; productRef = D33D63422F98DD5D00E16ADA /* UIExtensions */; };
-		D33D63922F98DD5D00E16ADA /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D33D633E2F98DD5D00E16ADA /* Kingfisher */; };
 		D33D63932F98DD5D00E16ADA /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3948EF32ADA846400FAE566 /* SwiftUI.framework */; };
-		D33D63942F98DD5D00E16ADA /* SectionsTableView in Frameworks */ = {isa = PBXBuildFile; productRef = D33D63442F98DD5D00E16ADA /* SectionsTableView */; };
 		D33D63952F98DD5D00E16ADA /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3948EF12ADA846400FAE566 /* WidgetKit.framework */; };
-		D33D63962F98DD5D00E16ADA /* HsToolKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D633C2F98DD5D00E16ADA /* HsToolKit */; };
-		D33D63972F98DD5D00E16ADA /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D63402F98DD5D00E16ADA /* SnapKit */; };
-		D33D63AD2F98DD6A00E16ADA /* HsToolKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D63A52F98DD6A00E16ADA /* HsToolKit */; };
 		D33D63AE2F98DD6A00E16ADA /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3948F092ADA887300FAE566 /* Intents.framework */; };
-		D33D6ADE2F98F2CF00E16ADA /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64202F98F2CF00E16ADA /* RxRelay */; };
-		D33D6ADF2F98F2CF00E16ADA /* SectionsTableView in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64182F98F2CF00E16ADA /* SectionsTableView */; };
-		D33D6AE02F98F2CF00E16ADA /* Starscream in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64282F98F2CF00E16ADA /* Starscream */; };
-		D33D6AE12F98F2CF00E16ADA /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64312F98F2CF00E16ADA /* Kingfisher */; };
-		D33D6AE22F98F2CF00E16ADA /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = D33D641E2F98F2CF00E16ADA /* RxCocoa */; };
-		D33D6AE32F98F2CF00E16ADA /* AlignedCollectionViewFlowLayout in Frameworks */ = {isa = PBXBuildFile; productRef = D33D63F82F98F2CF00E16ADA /* AlignedCollectionViewFlowLayout */; };
-		D33D6AE42F98F2CF00E16ADA /* StellarKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D642D2F98F2CF00E16ADA /* StellarKit */; };
-		D33D6AE52F98F2CF00E16ADA /* MoneroKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64352F98F2CF00E16ADA /* MoneroKit */; };
-		D33D6AE62F98F2CF00E16ADA /* ZanoKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64372F98F2CF00E16ADA /* ZanoKit */; };
-		D33D6AE72F98F2CF00E16ADA /* CryptoSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D33D643B2F98F2CF00E16ADA /* CryptoSwift */; };
-		D33D6AE82F98F2CF00E16ADA /* TonConnectAPI in Frameworks */ = {isa = PBXBuildFile; productRef = D33D642F2F98F2CF00E16ADA /* TonConnectAPI */; };
-		D33D6AE92F98F2CF00E16ADA /* BitcoinCashKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64082F98F2CF00E16ADA /* BitcoinCashKit */; };
-		D33D6AEA2F98F2CF00E16ADA /* Checkpoints in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64162F98F2CF00E16ADA /* Checkpoints */; };
-		D33D6AEB2F98F2CF00E16ADA /* ECashKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D641C2F98F2CF00E16ADA /* ECashKit */; };
-		D33D6AEC2F98F2CF00E16ADA /* NftKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64002F98F2CF00E16ADA /* NftKit */; };
 		D33D6AED2F98F2CF00E16ADA /* LocalAuthentication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 50AB06AD2158E2EE00A01E4A /* LocalAuthentication.framework */; };
-		D33D6AEE2F98F2CF00E16ADA /* TonKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D642C2F98F2CF00E16ADA /* TonKit */; };
-		D33D6AEF2F98F2CF00E16ADA /* Down in Frameworks */ = {isa = PBXBuildFile; productRef = D33D63F62F98F2CF00E16ADA /* Down */; };
-		D33D6AF02F98F2CF00E16ADA /* Eip20Kit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D63FE2F98F2CF00E16ADA /* Eip20Kit */; };
-		D33D6AF12F98F2CF00E16ADA /* EvmKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D63FC2F98F2CF00E16ADA /* EvmKit */; };
-		D33D6AF22F98F2CF00E16ADA /* ZcashLightClientKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64332F98F2CF00E16ADA /* ZcashLightClientKit */; };
-		D33D6AF32F98F2CF00E16ADA /* ReownRouter in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64382F98F2CF00E16ADA /* ReownRouter */; };
-		D33D6AF42F98F2CF00E16ADA /* HCaptcha in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64242F98F2CF00E16ADA /* HCaptcha */; };
-		D33D6AF52F98F2CF00E16ADA /* MarketKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D640C2F98F2CF00E16ADA /* MarketKit */; };
-		D33D6AF62F98F2CF00E16ADA /* KeychainAccess in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64262F98F2CF00E16ADA /* KeychainAccess */; };
-		D33D6AF72F98F2CF00E16ADA /* CollectionViewCenteredFlowLayout in Frameworks */ = {isa = PBXBuildFile; productRef = D33D63FA2F98F2CF00E16ADA /* CollectionViewCenteredFlowLayout */; };
-		D33D6AF82F98F2CF00E16ADA /* BitcoinKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64062F98F2CF00E16ADA /* BitcoinKit */; };
-		D33D6AF92F98F2CF00E16ADA /* Chart in Frameworks */ = {isa = PBXBuildFile; productRef = D33D640E2F98F2CF00E16ADA /* Chart */; };
-		D33D6AFA2F98F2CF00E16ADA /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64212F98F2CF00E16ADA /* RxSwift */; };
-		D33D6AFB2F98F2CF00E16ADA /* SolanaKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D643D2F98F2CF00E16ADA /* SolanaKit */; };
-		D33D6AFC2F98F2CF00E16ADA /* LitecoinKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D640A2F98F2CF00E16ADA /* LitecoinKit */; };
 		D33D6AFD2F98F2CF00E16ADA /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D3373D9420BEC7B30082BC4A /* AVFoundation.framework */; };
-		D33D6AFE2F98F2CF00E16ADA /* OneInchKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64042F98F2CF00E16ADA /* OneInchKit */; };
-		D33D6AFF2F98F2CF00E16ADA /* DashKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64122F98F2CF00E16ADA /* DashKit */; };
-		D33D6B002F98F2CF00E16ADA /* HdWalletKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64142F98F2CF00E16ADA /* HdWalletKit */; };
-		D33D6B012F98F2CF00E16ADA /* UniswapKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64022F98F2CF00E16ADA /* UniswapKit */; };
-		D33D6B022F98F2CF00E16ADA /* TronKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64222F98F2CF00E16ADA /* TronKit */; };
-		D33D6B042F98F2CF00E16ADA /* FeeRateKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D64102F98F2CF00E16ADA /* FeeRateKit */; };
-		D33D6B052F98F2CF00E16ADA /* HsCryptoKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D641A2F98F2CF00E16ADA /* HsCryptoKit */; };
-		D33D6B062F98F2CF00E16ADA /* ReownWalletKit in Frameworks */ = {isa = PBXBuildFile; productRef = D33D643A2F98F2CF00E16ADA /* ReownWalletKit */; };
-		D33D6B072F98F2CF00E16ADA /* Hodler in Frameworks */ = {isa = PBXBuildFile; productRef = D33D642A2F98F2CF00E16ADA /* Hodler */; };
 		D33D6B1F2F98F5BF00E16ADA /* WidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D33D63A22F98DD5D00E16ADA /* WidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		D33D6B222F98F5C900E16ADA /* IntentExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D33D63B32F98DD6A00E16ADA /* IntentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		D35EEEE92FB1B5B700E9E863 /* WalletCore in Frameworks */ = {isa = PBXBuildFile; productRef = D35EEEE82FB1B5B700E9E863 /* WalletCore */; };
+		D368E5BD2FC991E500487B08 /* WalletCore in Frameworks */ = {isa = PBXBuildFile; productRef = D368E5BC2FC991E500487B08 /* WalletCore */; };
+		D368E5C02FC9966B00487B08 /* HsToolKit in Frameworks */ = {isa = PBXBuildFile; productRef = D368E5BF2FC9966B00487B08 /* HsToolKit */; };
+		D368E5C22FC9967500487B08 /* HsToolKit in Frameworks */ = {isa = PBXBuildFile; productRef = D368E5C12FC9967500487B08 /* HsToolKit */; };
 		D3C9F7482FADF57B00C7916F /* AppWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D3E161E02FADAB4E006A73DD /* AppWidget.intentdefinition */; };
 		D3E161E12FADAB4E006A73DD /* AppWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D3E161E02FADAB4E006A73DD /* AppWidget.intentdefinition */; };
 /* End PBXBuildFile section */
@@ -139,63 +96,7 @@
 		D352520F2FAC9B590013335E /* Exceptions for "Unstoppable" folder in "WidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
-				Core/AppEnvironment.swift,
-				Core/AppFlavor.swift,
-				Core/Managers/CurrencyManager.swift,
-				Core/Managers/LanguageManager.swift,
-				Core/Managers/PriceChangeModeManager.swift,
-				Core/Managers/WatchlistManager.swift,
-				Core/Storage/SharedLocalStorage.swift,
-				Models/Currency.swift,
-				Models/PriceChangeMode.swift,
-				Models/WatchlistSortBy.swift,
-				Models/WatchlistTimePeriod.swift,
 				Resources/Colors.xcassets,
-				UserInterface/ComponentKit/Cells/EmptyCell.swift,
-				UserInterface/ComponentKit/Cells/HeaderFooter/TopDescriptionHeaderFooterView.swift,
-				UserInterface/ComponentKit/Cells/HeaderFooter/TopDescriptionView.swift,
-				UserInterface/ComponentKit/Cells/Views/BadgeView.swift,
-				UserInterface/ComponentKit/Cells/Views/CardView.swift,
-				UserInterface/ComponentKit/ComponentKit.swift,
-				UserInterface/ComponentKit/Components/BadgeComponent.swift,
-				UserInterface/ComponentKit/Components/BorderedView/BorderedView.swift,
-				UserInterface/ComponentKit/Components/BorderedView/ContinuousCornerPath.swift,
-				UserInterface/ComponentKit/Components/BorderedView/CornerPath.swift,
-				UserInterface/ComponentKit/Components/ImageComponent.swift,
-				UserInterface/ComponentKit/Components/StackComponent.swift,
-				UserInterface/ComponentKit/Components/SwitchComponent.swift,
-				UserInterface/ComponentKit/Components/TextButtonComponent.swift,
-				UserInterface/ComponentKit/Components/TextComponent.swift,
-				UserInterface/Extensions/Color.swift,
-				UserInterface/Extensions/UIButton.swift,
-				UserInterface/Extensions/UIImageView.swift,
-				UserInterface/Extensions/UIRectEdge.swift,
-				UserInterface/Extensions/UIView.swift,
-				UserInterface/SwiftUI/BadgeViewNew.swift,
-				UserInterface/SwiftUI/ColorStyle.swift,
-				UserInterface/SwiftUI/Component.swift,
-				UserInterface/SwiftUI/Extensions/Text.swift,
-				UserInterface/SwiftUI/HorizontalDivider.swift,
-				UserInterface/SwiftUI/ListSection.swift,
-				UserInterface/SwiftUI/ListSectionFooter.swift,
-				UserInterface/SwiftUI/ListSectionHeader.swift,
-				UserInterface/SwiftUI/RoundedCorner.swift,
-				UserInterface/SwiftUI/TappablePadding.swift,
-				UserInterface/SwiftUI/TextStyle.swift,
-				UserInterface/SwiftUI/ThemeListStyle.swift,
-				UserInterface/SwiftUI/ThemeText.swift,
-				UserInterface/ThemeKit/Colors.swift,
-				UserInterface/ThemeKit/Controllers.swift,
-				UserInterface/ThemeKit/Fonts.swift,
-				UserInterface/ThemeKit/Margins.swift,
-				UserInterface/ThemeKit/Styles.swift,
-				UserInterface/ThemeKit/Themes/DarkTheme.swift,
-				UserInterface/ThemeKit/Themes/ITheme.swift,
-				UserInterface/ThemeKit/Themes/LightTheme.swift,
-				UserInterface/ThemeKit/Themes/SystemTheme.swift,
-				UserInterface/ThemeKit/Themes/ThemeManager.swift,
-				UserInterface/ThemeKit/ThemeWindow.swift,
-				UserInterface/ThemeKit/UIKeyboardAppearance.swift,
 			);
 			target = D33D633B2F98DD5D00E16ADA /* WidgetExtension */;
 		};
@@ -210,26 +111,11 @@
 				"Configuration/App/Widget-Prod.xcconfig",
 				Configuration/Config.template.xcconfig,
 				Configuration/Config.xcconfig,
-				"Configuration/Stable/App-Stable-Dev.xcconfig",
-				"Configuration/Stable/App-Stable-Prod.xcconfig",
-				"Configuration/Stable/Intent-Stable-Dev.xcconfig",
-				"Configuration/Stable/Intent-Stable-Prod.xcconfig",
-				"Configuration/Stable/Widget-Stable-Dev.xcconfig",
-				"Configuration/Stable/Widget-Stable-Prod.xcconfig",
-				Core/Abstraction/Legacy/README.md,
-				Core/Abstraction/README.md,
 				Resources/Strings/translation_snapshot.json,
 				Supporting/Info.plist,
 				Supporting/Unstoppable.storekit,
 			);
 			target = D33D63F12F98F2CF00E16ADA /* App */;
-		};
-		D352728A2FAC9D180013335E /* Exceptions for "Unstoppable" folder in "IntentExtension" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				Core/AppEnvironment.swift,
-			);
-			target = D33D63A42F98DD6A00E16ADA /* IntentExtension */;
 		};
 		D39BCAB42FAC7039005461CB /* Exceptions for "Widget" folder in "WidgetExtension" target */ = {
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
@@ -242,6 +128,7 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				Misc/ApiProvider.swift,
+				Misc/AppEnvironment.swift,
 				Misc/WidgetConfig.swift,
 			);
 			target = D33D63A42F98DD6A00E16ADA /* IntentExtension */;
@@ -273,7 +160,6 @@
 			exceptions = (
 				D352624C2FAC9C560013335E /* Exceptions for "Unstoppable" folder in "App" target */,
 				D352520F2FAC9B590013335E /* Exceptions for "Unstoppable" folder in "WidgetExtension" target */,
-				D352728A2FAC9D180013335E /* Exceptions for "Unstoppable" folder in "IntentExtension" target */,
 			);
 			path = Unstoppable;
 			sourceTree = "<group>";
@@ -303,13 +189,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D33D63912F98DD5D00E16ADA /* UIExtensions in Frameworks */,
-				D33D63922F98DD5D00E16ADA /* Kingfisher in Frameworks */,
 				D33D63932F98DD5D00E16ADA /* SwiftUI.framework in Frameworks */,
-				D33D63942F98DD5D00E16ADA /* SectionsTableView in Frameworks */,
 				D33D63952F98DD5D00E16ADA /* WidgetKit.framework in Frameworks */,
-				D33D63962F98DD5D00E16ADA /* HsToolKit in Frameworks */,
-				D33D63972F98DD5D00E16ADA /* SnapKit in Frameworks */,
+				D368E5C02FC9966B00487B08 /* HsToolKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -317,7 +199,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D33D63AD2F98DD6A00E16ADA /* HsToolKit in Frameworks */,
+				D368E5C22FC9967500487B08 /* HsToolKit in Frameworks */,
 				D33D63AE2F98DD6A00E16ADA /* Intents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -326,48 +208,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D33D6ADE2F98F2CF00E16ADA /* RxRelay in Frameworks */,
-				D33D6ADF2F98F2CF00E16ADA /* SectionsTableView in Frameworks */,
-				D33D6AE02F98F2CF00E16ADA /* Starscream in Frameworks */,
-				D33D6AE12F98F2CF00E16ADA /* Kingfisher in Frameworks */,
-				D33D6AE22F98F2CF00E16ADA /* RxCocoa in Frameworks */,
-				D33D6AE32F98F2CF00E16ADA /* AlignedCollectionViewFlowLayout in Frameworks */,
-				D33D6AE42F98F2CF00E16ADA /* StellarKit in Frameworks */,
-				D33D6AE52F98F2CF00E16ADA /* MoneroKit in Frameworks */,
-				D33D6AE62F98F2CF00E16ADA /* ZanoKit in Frameworks */,
-				D33D6AE72F98F2CF00E16ADA /* CryptoSwift in Frameworks */,
-				D33D6AE82F98F2CF00E16ADA /* TonConnectAPI in Frameworks */,
-				D33D6AE92F98F2CF00E16ADA /* BitcoinCashKit in Frameworks */,
-				D35EEEE92FB1B5B700E9E863 /* WalletCore in Frameworks */,
-				D33D6AEA2F98F2CF00E16ADA /* Checkpoints in Frameworks */,
-				D33D6AEB2F98F2CF00E16ADA /* ECashKit in Frameworks */,
-				D33D6AEC2F98F2CF00E16ADA /* NftKit in Frameworks */,
+				D368E5BD2FC991E500487B08 /* WalletCore in Frameworks */,
 				D33D6AED2F98F2CF00E16ADA /* LocalAuthentication.framework in Frameworks */,
-				D33D6AEE2F98F2CF00E16ADA /* TonKit in Frameworks */,
-				D33D6AEF2F98F2CF00E16ADA /* Down in Frameworks */,
-				D33D6AF02F98F2CF00E16ADA /* Eip20Kit in Frameworks */,
-				D33D6AF12F98F2CF00E16ADA /* EvmKit in Frameworks */,
-				D33D6AF22F98F2CF00E16ADA /* ZcashLightClientKit in Frameworks */,
-				D33D6AF32F98F2CF00E16ADA /* ReownRouter in Frameworks */,
-				D33D6AF42F98F2CF00E16ADA /* HCaptcha in Frameworks */,
-				D33D6AF52F98F2CF00E16ADA /* MarketKit in Frameworks */,
-				D33D6AF62F98F2CF00E16ADA /* KeychainAccess in Frameworks */,
-				D33D6AF72F98F2CF00E16ADA /* CollectionViewCenteredFlowLayout in Frameworks */,
-				D33D6AF82F98F2CF00E16ADA /* BitcoinKit in Frameworks */,
-				D33D6AF92F98F2CF00E16ADA /* Chart in Frameworks */,
-				D33D6AFA2F98F2CF00E16ADA /* RxSwift in Frameworks */,
-				D33D6AFB2F98F2CF00E16ADA /* SolanaKit in Frameworks */,
-				D33D6AFC2F98F2CF00E16ADA /* LitecoinKit in Frameworks */,
 				D33D6AFD2F98F2CF00E16ADA /* AVFoundation.framework in Frameworks */,
-				D33D6AFE2F98F2CF00E16ADA /* OneInchKit in Frameworks */,
-				D33D6AFF2F98F2CF00E16ADA /* DashKit in Frameworks */,
-				D33D6B002F98F2CF00E16ADA /* HdWalletKit in Frameworks */,
-				D33D6B012F98F2CF00E16ADA /* UniswapKit in Frameworks */,
-				D33D6B022F98F2CF00E16ADA /* TronKit in Frameworks */,
-				D33D6B042F98F2CF00E16ADA /* FeeRateKit in Frameworks */,
-				D33D6B052F98F2CF00E16ADA /* HsCryptoKit in Frameworks */,
-				D33D6B062F98F2CF00E16ADA /* ReownWalletKit in Frameworks */,
-				D33D6B072F98F2CF00E16ADA /* Hodler in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -445,11 +288,7 @@
 			);
 			name = WidgetExtension;
 			packageProductDependencies = (
-				D33D633C2F98DD5D00E16ADA /* HsToolKit */,
-				D33D633E2F98DD5D00E16ADA /* Kingfisher */,
-				D33D63402F98DD5D00E16ADA /* SnapKit */,
-				D33D63422F98DD5D00E16ADA /* UIExtensions */,
-				D33D63442F98DD5D00E16ADA /* SectionsTableView */,
+				D368E5BF2FC9966B00487B08 /* HsToolKit */,
 			);
 			productName = WidgetExtension;
 			productReference = D33D63A22F98DD5D00E16ADA /* WidgetExtension.appex */;
@@ -472,7 +311,7 @@
 			);
 			name = IntentExtension;
 			packageProductDependencies = (
-				D33D63A52F98DD6A00E16ADA /* HsToolKit */,
+				D368E5C12FC9967500487B08 /* HsToolKit */,
 			);
 			productName = IntentExtension;
 			productReference = D33D63B32F98DD6A00E16ADA /* IntentExtension.appex */;
@@ -499,46 +338,7 @@
 			);
 			name = App;
 			packageProductDependencies = (
-				D33D63F62F98F2CF00E16ADA /* Down */,
-				D33D63F82F98F2CF00E16ADA /* AlignedCollectionViewFlowLayout */,
-				D33D63FA2F98F2CF00E16ADA /* CollectionViewCenteredFlowLayout */,
-				D33D63FC2F98F2CF00E16ADA /* EvmKit */,
-				D33D63FE2F98F2CF00E16ADA /* Eip20Kit */,
-				D33D64002F98F2CF00E16ADA /* NftKit */,
-				D33D64022F98F2CF00E16ADA /* UniswapKit */,
-				D33D64042F98F2CF00E16ADA /* OneInchKit */,
-				D33D64062F98F2CF00E16ADA /* BitcoinKit */,
-				D33D64082F98F2CF00E16ADA /* BitcoinCashKit */,
-				D33D640A2F98F2CF00E16ADA /* LitecoinKit */,
-				D33D640C2F98F2CF00E16ADA /* MarketKit */,
-				D33D640E2F98F2CF00E16ADA /* Chart */,
-				D33D64102F98F2CF00E16ADA /* FeeRateKit */,
-				D33D64122F98F2CF00E16ADA /* DashKit */,
-				D33D64142F98F2CF00E16ADA /* HdWalletKit */,
-				D33D64162F98F2CF00E16ADA /* Checkpoints */,
-				D33D64182F98F2CF00E16ADA /* SectionsTableView */,
-				D33D641A2F98F2CF00E16ADA /* HsCryptoKit */,
-				D33D641C2F98F2CF00E16ADA /* ECashKit */,
-				D33D641E2F98F2CF00E16ADA /* RxCocoa */,
-				D33D64202F98F2CF00E16ADA /* RxRelay */,
-				D33D64212F98F2CF00E16ADA /* RxSwift */,
-				D33D64222F98F2CF00E16ADA /* TronKit */,
-				D33D64242F98F2CF00E16ADA /* HCaptcha */,
-				D33D64262F98F2CF00E16ADA /* KeychainAccess */,
-				D33D64282F98F2CF00E16ADA /* Starscream */,
-				D33D642A2F98F2CF00E16ADA /* Hodler */,
-				D33D642C2F98F2CF00E16ADA /* TonKit */,
-				D33D642D2F98F2CF00E16ADA /* StellarKit */,
-				D33D642F2F98F2CF00E16ADA /* TonConnectAPI */,
-				D33D64312F98F2CF00E16ADA /* Kingfisher */,
-				D33D64332F98F2CF00E16ADA /* ZcashLightClientKit */,
-				D33D64352F98F2CF00E16ADA /* MoneroKit */,
-				D33D64372F98F2CF00E16ADA /* ZanoKit */,
-				D33D64382F98F2CF00E16ADA /* ReownRouter */,
-				D33D643A2F98F2CF00E16ADA /* ReownWalletKit */,
-				D33D643B2F98F2CF00E16ADA /* CryptoSwift */,
-				D33D643D2F98F2CF00E16ADA /* SolanaKit */,
-				D35EEEE82FB1B5B700E9E863 /* WalletCore */,
+				D368E5BC2FC991E500487B08 /* WalletCore */,
 			);
 			productName = Wallet;
 			productReference = D33D6B1D2F98F2CF00E16ADA /* Unstoppable.app */;
@@ -601,46 +401,7 @@
 			);
 			mainGroup = D3285F3920BD158E00644076;
 			packageReferences = (
-				D3BF1E5A274BC29D00229A00 /* XCRemoteSwiftPackageReference "Down" */,
-				500F1D0F27AA87BC002AA419 /* XCRemoteSwiftPackageReference "AlignedCollectionViewFlowLayout" */,
-				D36E0C2828D084AB00B622B9 /* XCRemoteSwiftPackageReference "CollectionViewCenteredFlowLayout" */,
-				D3604E4128F02A020066C366 /* XCRemoteSwiftPackageReference "EvmKit" */,
-				D3604E4828F02A8B0066C366 /* XCRemoteSwiftPackageReference "Eip20Kit" */,
-				D3604E4B28F02AB40066C366 /* XCRemoteSwiftPackageReference "NftKit" */,
-				D3604E4E28F02AE60066C366 /* XCRemoteSwiftPackageReference "UniswapKit" */,
-				D3604E5128F02B150066C366 /* XCRemoteSwiftPackageReference "OneInchKit" */,
-				D3604E6428F02D9A0066C366 /* XCRemoteSwiftPackageReference "BitcoinKit" */,
-				D3604E6728F02DF30066C366 /* XCRemoteSwiftPackageReference "BitcoinCashKit" */,
-				D3604E6A28F02E3F0066C366 /* XCRemoteSwiftPackageReference "LitecoinKit" */,
-				D3604E6E28F03AC70066C366 /* XCRemoteSwiftPackageReference "MarketKit" */,
-				D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart" */,
-				D3604E8028F03C6B0066C366 /* XCRemoteSwiftPackageReference "FeeRateKit" */,
-				D3604E8628F03D9E0066C366 /* XCRemoteSwiftPackageReference "DashKit" */,
-				D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "reown-swift" */,
-				D3C187B12907A60700FE1900 /* XCRemoteSwiftPackageReference "HdWalletKit" */,
-				D3C187B82907CFAB00FE1900 /* XCRemoteSwiftPackageReference "Checkpoints" */,
-				D3C187D9290FCFBC00FE1900 /* XCRemoteSwiftPackageReference "SectionsTableView" */,
-				D339A93B29126D0E00B895BE /* XCRemoteSwiftPackageReference "HsCryptoKit" */,
-				6B423FD22913785800EE5E70 /* XCRemoteSwiftPackageReference "BitcoinCore" */,
-				6BDA29A929D6EA9B003847ED /* XCRemoteSwiftPackageReference "ECashKit.Swift" */,
-				6BDA29AE29D6F934003847ED /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */,
-				D3AF5A8729FFD85800C1399E /* XCRemoteSwiftPackageReference "RxSwift" */,
-				D023D2612A249E59004F65B0 /* XCRemoteSwiftPackageReference "TronKit.Swift" */,
-				D0EC34D92A4450B100BB308B /* XCRemoteSwiftPackageReference "HCaptcha-ios-sdk" */,
-				6B55461F2A6E73190054B524 /* XCRemoteSwiftPackageReference "UIExtensions" */,
-				D3E323C62AE7B8E400F73914 /* XCRemoteSwiftPackageReference "KeychainAccess" */,
-				6B55E3392AF26D6400616B60 /* XCRemoteSwiftPackageReference "Starscream" */,
-				D08C93AD2B91E37E00A7D1D5 /* XCRemoteSwiftPackageReference "Hodler" */,
-				6BF66DD82BA1A73300963242 /* XCRemoteSwiftPackageReference "ObjectMapper" */,
-				6BDDB59F2C1AC73200DE9D56 /* XCRemoteSwiftPackageReference "TonKit" */,
-				D3AEB8732DB8FAA200E385C8 /* XCRemoteSwiftPackageReference "StellarKit" */,
-				D3DDFA322DDF2D02003CADDF /* XCRemoteSwiftPackageReference "TonConnectAPI" */,
-				6B1D8DF42DEACFA200A52B01 /* XCRemoteSwiftPackageReference "SnapKit" */,
-				6B1D8DF62DEAD10900A52B01 /* XCRemoteSwiftPackageReference "Kingfisher" */,
-				6BD7663E2EA0DF2B008DDEA7 /* XCRemoteSwiftPackageReference "ZcashLightClientKit" */,
-				D3F0E0012F50A1A100F0E001 /* XCRemoteSwiftPackageReference "MoneroKit" */,
-				D3ABE2722F73F29B00B72F23 /* XCRemoteSwiftPackageReference "CryptoSwift" */,
-				6B504F692F764BB20064DA67 /* XCRemoteSwiftPackageReference "solana-kit-ios" */,
+				D368E5BE2FC9966B00487B08 /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D3285F4320BD158E00644076 /* Products */;
@@ -1300,548 +1061,6 @@
 			};
 			name = "Release-Prod";
 		};
-		D35C2EAD2F9A475700D186CF /* Debug-Stable-Dev */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIconDark AppIconMono AppIconPunk AppIcon1874 AppIcon8ball AppIconPepe AppIconIvfun AppIconDoge AppIconGigaChad AppIconPlFlag AppIconYesChad AppIconYS AppIconZcash AppIconMonero";
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = HC4MCAXJ66;
-				ENABLE_BITCODE = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 0.49;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG DEV STABLE";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				Sandbox = true;
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = "Debug-Stable-Dev";
-		};
-		D35C2EAE2F9A475700D186CF /* Debug-Stable-Dev */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = D39BC3322FAC6F5C005461CB /* Unstoppable */;
-			baseConfigurationReferenceRelativePath = "Configuration/Stable/App-Stable-Dev.xcconfig";
-			buildSettings = {
-				INFOPLIST_FILE = Unstoppable/Supporting/Info.plist;
-				PRODUCT_NAME = Unstoppable;
-			};
-			name = "Debug-Stable-Dev";
-		};
-		D35C2EAF2F9A475700D186CF /* Debug-Stable-Dev */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = D39BC3322FAC6F5C005461CB /* Unstoppable */;
-			baseConfigurationReferenceRelativePath = "Configuration/Stable/Widget-Stable-Dev.xcconfig";
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Widget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Widget;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-			};
-			name = "Debug-Stable-Dev";
-		};
-		D35C2EB02F9A475700D186CF /* Debug-Stable-Dev */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = D39BC3322FAC6F5C005461CB /* Unstoppable */;
-			baseConfigurationReferenceRelativePath = "Configuration/Stable/Intent-Stable-Dev.xcconfig";
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Intents/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = IntentExtension;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_MODULE_NAME = IntentExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-			};
-			name = "Debug-Stable-Dev";
-		};
-		D35C2EB12F9A477B00D186CF /* Debug-Stable-Prod */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIconDark AppIconMono AppIconPunk AppIcon1874 AppIcon8ball AppIconPepe AppIconIvfun AppIconDoge AppIconGigaChad AppIconPlFlag AppIconYesChad AppIconYS AppIconZcash AppIconMonero";
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
-				CODE_SIGN_STYLE = Manual;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = HC4MCAXJ66;
-				ENABLE_BITCODE = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 0.49;
-				MTL_ENABLE_DEBUG_INFO = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG PROD STABLE";
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 5.0;
-				Sandbox = true;
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = "Debug-Stable-Prod";
-		};
-		D35C2EB22F9A477B00D186CF /* Debug-Stable-Prod */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = D39BC3322FAC6F5C005461CB /* Unstoppable */;
-			baseConfigurationReferenceRelativePath = "Configuration/Stable/App-Stable-Prod.xcconfig";
-			buildSettings = {
-				INFOPLIST_FILE = Unstoppable/Supporting/Info.plist;
-				PRODUCT_NAME = Unstoppable;
-			};
-			name = "Debug-Stable-Prod";
-		};
-		D35C2EB32F9A477B00D186CF /* Debug-Stable-Prod */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = D39BC3322FAC6F5C005461CB /* Unstoppable */;
-			baseConfigurationReferenceRelativePath = "Configuration/Stable/Widget-Stable-Prod.xcconfig";
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Widget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Widget;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-			};
-			name = "Debug-Stable-Prod";
-		};
-		D35C2EB42F9A477B00D186CF /* Debug-Stable-Prod */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = D39BC3322FAC6F5C005461CB /* Unstoppable */;
-			baseConfigurationReferenceRelativePath = "Configuration/Stable/Intent-Stable-Prod.xcconfig";
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Intents/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = IntentExtension;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				PRODUCT_MODULE_NAME = IntentExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-			};
-			name = "Debug-Stable-Prod";
-		};
-		D35C2EB52F9A478800D186CF /* Release-Stable-Dev */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIconDark AppIconMono AppIconPunk AppIcon1874 AppIcon8ball AppIconPepe AppIconIvfun AppIconDoge AppIconGigaChad AppIconPlFlag AppIconYesChad AppIconYS AppIconZcash AppIconMonero";
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = HC4MCAXJ66;
-				ENABLE_BITCODE = NO;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 0.49;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEV STABLE";
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 5.0;
-				Sandbox = false;
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = "Release-Stable-Dev";
-		};
-		D35C2EB62F9A478800D186CF /* Release-Stable-Dev */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = D39BC3322FAC6F5C005461CB /* Unstoppable */;
-			baseConfigurationReferenceRelativePath = "Configuration/Stable/App-Stable-Dev.xcconfig";
-			buildSettings = {
-				INFOPLIST_FILE = Unstoppable/Supporting/Info.plist;
-				PRODUCT_NAME = Unstoppable;
-			};
-			name = "Release-Stable-Dev";
-		};
-		D35C2EB72F9A478800D186CF /* Release-Stable-Dev */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = D39BC3322FAC6F5C005461CB /* Unstoppable */;
-			baseConfigurationReferenceRelativePath = "Configuration/Stable/Widget-Stable-Dev.xcconfig";
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Widget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Widget;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-			};
-			name = "Release-Stable-Dev";
-		};
-		D35C2EB82F9A478800D186CF /* Release-Stable-Dev */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = D39BC3322FAC6F5C005461CB /* Unstoppable */;
-			baseConfigurationReferenceRelativePath = "Configuration/Stable/Intent-Stable-Dev.xcconfig";
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Intents/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = IntentExtension;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MTL_FAST_MATH = YES;
-				PRODUCT_MODULE_NAME = IntentExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-			};
-			name = "Release-Stable-Dev";
-		};
-		D35C2EB92F9A479400D186CF /* Release-Stable-Prod */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ASSETCATALOG_COMPILER_ALTERNATE_APPICON_NAMES = "AppIconDark AppIconMono AppIconPunk AppIcon1874 AppIcon8ball AppIconPepe AppIconIvfun AppIconDoge AppIconGigaChad AppIconPlFlag AppIconYesChad AppIconYS AppIconZcash AppIconMonero";
-				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
-				CLANG_CXX_LIBRARY = "libc++";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				CODE_SIGN_STYLE = Manual;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = HC4MCAXJ66;
-				ENABLE_BITCODE = NO;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu11;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
-				MARKETING_VERSION = 0.49;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				SDKROOT = iphoneos;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "PROD STABLE";
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
-				SWIFT_VERSION = 5.0;
-				Sandbox = false;
-				VALIDATE_PRODUCT = YES;
-				VERSIONING_SYSTEM = "apple-generic";
-			};
-			name = "Release-Stable-Prod";
-		};
-		D35C2EBA2F9A479400D186CF /* Release-Stable-Prod */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = D39BC3322FAC6F5C005461CB /* Unstoppable */;
-			baseConfigurationReferenceRelativePath = "Configuration/Stable/App-Stable-Prod.xcconfig";
-			buildSettings = {
-				INFOPLIST_FILE = Unstoppable/Supporting/Info.plist;
-				PRODUCT_NAME = Unstoppable;
-			};
-			name = "Release-Stable-Prod";
-		};
-		D35C2EBB2F9A479400D186CF /* Release-Stable-Prod */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = D39BC3322FAC6F5C005461CB /* Unstoppable */;
-			baseConfigurationReferenceRelativePath = "Configuration/Stable/Widget-Stable-Prod.xcconfig";
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
-				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Widget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = Widget;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MTL_FAST_MATH = YES;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-			};
-			name = "Release-Stable-Prod";
-		};
-		D35C2EBC2F9A479400D186CF /* Release-Stable-Prod */ = {
-			isa = XCBuildConfiguration;
-			baseConfigurationReferenceAnchor = D39BC3322FAC6F5C005461CB /* Unstoppable */;
-			baseConfigurationReferenceRelativePath = "Configuration/Stable/Intent-Stable-Prod.xcconfig";
-			buildSettings = {
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = Intents/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = IntentExtension;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MTL_FAST_MATH = YES;
-				PRODUCT_MODULE_NAME = IntentExtension;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-			};
-			name = "Release-Stable-Prod";
-		};
 		D39BA7F22F9B3D48005461CB /* Debug-Dev */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1915,80 +1134,6 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Unstoppable.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Unstoppable";
 			};
 			name = "Debug-Dev";
-		};
-		D39BA7F32F9B3D48005461CB /* Debug-Stable-Dev */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = HC4MCAXJ66;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = io.horizontalsystems.AppTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Unstoppable.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Unstoppable";
-			};
-			name = "Debug-Stable-Dev";
 		};
 		D39BA7F42F9B3D48005461CB /* Debug-Prod */ = {
 			isa = XCBuildConfiguration;
@@ -2064,80 +1209,6 @@
 			};
 			name = "Debug-Prod";
 		};
-		D39BA7F52F9B3D48005461CB /* Debug-Stable-Prod */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = HC4MCAXJ66;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"DEBUG=1",
-					"$(inherited)",
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
-				MTL_FAST_MATH = YES;
-				ONLY_ACTIVE_ARCH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = io.horizontalsystems.AppTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Unstoppable.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Unstoppable";
-			};
-			name = "Debug-Stable-Prod";
-		};
 		D39BA7F62F9B3D48005461CB /* Release-Dev */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -2205,74 +1276,6 @@
 				VALIDATE_PRODUCT = YES;
 			};
 			name = "Release-Dev";
-		};
-		D39BA7F72F9B3D48005461CB /* Release-Stable-Dev */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = HC4MCAXJ66;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = io.horizontalsystems.AppTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Unstoppable.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Unstoppable";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Release-Stable-Dev";
 		};
 		D39BA7F82F9B3D48005461CB /* Release-Prod */ = {
 			isa = XCBuildConfiguration;
@@ -2342,74 +1345,6 @@
 			};
 			name = "Release-Prod";
 		};
-		D39BA7F92F9B3D48005461CB /* Release-Stable-Prod */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_SEARCH_USER_PATHS = NO;
-				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_ANALYZER_NONNULL = YES;
-				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CLANG_ENABLE_MODULES = YES;
-				CLANG_ENABLE_OBJC_ARC = YES;
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
-				CLANG_WARN_BOOL_CONVERSION = YES;
-				CLANG_WARN_COMMA = YES;
-				CLANG_WARN_CONSTANT_CONVERSION = YES;
-				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
-				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
-				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
-				CLANG_WARN_EMPTY_BODY = YES;
-				CLANG_WARN_ENUM_CONVERSION = YES;
-				CLANG_WARN_INFINITE_RECURSION = YES;
-				CLANG_WARN_INT_CONVERSION = YES;
-				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
-				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
-				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
-				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
-				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
-				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
-				CLANG_WARN_STRICT_PROTOTYPES = YES;
-				CLANG_WARN_SUSPICIOUS_MOVE = YES;
-				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
-				CLANG_WARN_UNREACHABLE_CODE = YES;
-				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_STYLE = Automatic;
-				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = HC4MCAXJ66;
-				ENABLE_NS_ASSERTIONS = NO;
-				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GCC_NO_COMMON_BLOCKS = YES;
-				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
-				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
-				GCC_WARN_UNDECLARED_SELECTOR = YES;
-				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
-				GCC_WARN_UNUSED_FUNCTION = YES;
-				GCC_WARN_UNUSED_VARIABLE = YES;
-				GENERATE_INFOPLIST_FILE = YES;
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				MTL_ENABLE_DEBUG_INFO = NO;
-				MTL_FAST_MATH = YES;
-				PRODUCT_BUNDLE_IDENTIFIER = io.horizontalsystems.AppTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SDKROOT = iphoneos;
-				STRING_CATALOG_GENERATE_SYMBOLS = NO;
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Unstoppable.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Unstoppable";
-				VALIDATE_PRODUCT = YES;
-			};
-			name = "Release-Stable-Prod";
-		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -2417,13 +1352,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D33D63B52F98DE0800E16ADA /* Debug-Dev */,
-				D35C2EAD2F9A475700D186CF /* Debug-Stable-Dev */,
 				D33D63DD2F98DE6800E16ADA /* Debug-Prod */,
-				D35C2EB12F9A477B00D186CF /* Debug-Stable-Prod */,
 				D33D63BF2F98DE1200E16ADA /* Release-Dev */,
-				D35C2EB52F9A478800D186CF /* Release-Stable-Dev */,
 				D33D63E72F98DE6E00E16ADA /* Release-Prod */,
-				D35C2EB92F9A479400D186CF /* Release-Stable-Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Debug-Dev";
@@ -2432,13 +1363,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D33D63BD2F98DE0800E16ADA /* Debug-Dev */,
-				D35C2EAF2F9A475700D186CF /* Debug-Stable-Dev */,
 				D33D63E52F98DE6800E16ADA /* Debug-Prod */,
-				D35C2EB32F9A477B00D186CF /* Debug-Stable-Prod */,
 				D33D63C72F98DE1200E16ADA /* Release-Dev */,
-				D35C2EB72F9A478800D186CF /* Release-Stable-Dev */,
 				D33D63EF2F98DE6E00E16ADA /* Release-Prod */,
-				D35C2EBB2F9A479400D186CF /* Release-Stable-Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Debug-Dev";
@@ -2447,13 +1374,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D33D63BE2F98DE0800E16ADA /* Debug-Dev */,
-				D35C2EB02F9A475700D186CF /* Debug-Stable-Dev */,
 				D33D63E62F98DE6800E16ADA /* Debug-Prod */,
-				D35C2EB42F9A477B00D186CF /* Debug-Stable-Prod */,
 				D33D63C82F98DE1200E16ADA /* Release-Dev */,
-				D35C2EB82F9A478800D186CF /* Release-Stable-Dev */,
 				D33D63F02F98DE6E00E16ADA /* Release-Prod */,
-				D35C2EBC2F9A479400D186CF /* Release-Stable-Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Debug-Dev";
@@ -2462,13 +1385,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D33D6B192F98F2CF00E16ADA /* Debug-Dev */,
-				D35C2EAE2F9A475700D186CF /* Debug-Stable-Dev */,
 				D33D6B1A2F98F2CF00E16ADA /* Debug-Prod */,
-				D35C2EB22F9A477B00D186CF /* Debug-Stable-Prod */,
 				D33D6B1B2F98F2CF00E16ADA /* Release-Dev */,
-				D35C2EB62F9A478800D186CF /* Release-Stable-Dev */,
 				D33D6B1C2F98F2CF00E16ADA /* Release-Prod */,
-				D35C2EBA2F9A479400D186CF /* Release-Stable-Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Debug-Dev";
@@ -2477,13 +1396,9 @@
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				D39BA7F22F9B3D48005461CB /* Debug-Dev */,
-				D39BA7F32F9B3D48005461CB /* Debug-Stable-Dev */,
 				D39BA7F42F9B3D48005461CB /* Debug-Prod */,
-				D39BA7F52F9B3D48005461CB /* Debug-Stable-Prod */,
 				D39BA7F62F9B3D48005461CB /* Release-Dev */,
-				D39BA7F72F9B3D48005461CB /* Release-Stable-Dev */,
 				D39BA7F82F9B3D48005461CB /* Release-Prod */,
-				D39BA7F92F9B3D48005461CB /* Release-Stable-Prod */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = "Debug-Dev";
@@ -2491,79 +1406,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		500F1D0F27AA87BC002AA419 /* XCRemoteSwiftPackageReference "AlignedCollectionViewFlowLayout" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mischa-hildebrand/AlignedCollectionViewFlowLayout";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-		6B1D8DF42DEACFA200A52B01 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.7.1;
-			};
-		};
-		6B1D8DF62DEAD10900A52B01 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 8.6.2;
-			};
-		};
-		6B423FD22913785800EE5E70 /* XCRemoteSwiftPackageReference "BitcoinCore" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/BitcoinCore.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 3.1.5;
-			};
-		};
-		6B504F692F764BB20064DA67 /* XCRemoteSwiftPackageReference "solana-kit-ios" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/solana-kit-ios.git";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.0;
-			};
-		};
-		6B55461F2A6E73190054B524 /* XCRemoteSwiftPackageReference "UIExtensions" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/UIExtensions.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.2;
-			};
-		};
-		6B55E3392AF26D6400616B60 /* XCRemoteSwiftPackageReference "Starscream" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/daltoniam/Starscream";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.1.2;
-			};
-		};
-		6BD7663E2EA0DF2B008DDEA7 /* XCRemoteSwiftPackageReference "ZcashLightClientKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/ZcashLightClientKit";
-			requirement = {
-				kind = revision;
-				revision = f186d017a2d33d50f0276c10adf8b544484acfe6;
-			};
-		};
-		6BDA29A929D6EA9B003847ED /* XCRemoteSwiftPackageReference "ECashKit.Swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/ECashKit.Swift.git";
-			requirement = {
-				kind = exactVersion;
-				version = 3.0.2;
-			};
-		};
-		6BDA29AE29D6F934003847ED /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */ = {
+		D368E5BE2FC9966B00487B08 /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/horizontalsystems/HsToolKit.Swift.git";
 			requirement = {
@@ -2571,787 +1414,22 @@
 				version = 2.0.5;
 			};
 		};
-		6BDDB59F2C1AC73200DE9D56 /* XCRemoteSwiftPackageReference "TonKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/TonKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 1.2.1;
-			};
-		};
-		6BF66DD82BA1A73300963242 /* XCRemoteSwiftPackageReference "ObjectMapper" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/tristanhimmelman/ObjectMapper/";
-			requirement = {
-				kind = exactVersion;
-				version = 4.2.0;
-			};
-		};
-		D023D2612A249E59004F65B0 /* XCRemoteSwiftPackageReference "TronKit.Swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/TronKit.Swift.git";
-			requirement = {
-				kind = revision;
-				revision = 388d41e99a97a4f1501e52e404478bba5976cdfe;
-			};
-		};
-		D08C93AD2B91E37E00A7D1D5 /* XCRemoteSwiftPackageReference "Hodler" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/Hodler.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 2.0.3;
-			};
-		};
-		D0EC34D92A4450B100BB308B /* XCRemoteSwiftPackageReference "HCaptcha-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/HCaptcha-ios-sdk.git";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.0;
-			};
-		};
-		D339A93B29126D0E00B895BE /* XCRemoteSwiftPackageReference "HsCryptoKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/HsCryptoKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 1.3.1;
-			};
-		};
-		D33D633D2F98DD5D00E16ADA /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/HsToolKit.Swift.git";
-			requirement = {
-				kind = exactVersion;
-				version = 2.0.4;
-			};
-		};
-		D33D633F2F98DD5D00E16ADA /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 8.6.2;
-			};
-		};
-		D33D63412F98DD5D00E16ADA /* XCRemoteSwiftPackageReference "SnapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.7.1;
-			};
-		};
-		D33D63432F98DD5D00E16ADA /* XCRemoteSwiftPackageReference "UIExtensions" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/UIExtensions.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.2;
-			};
-		};
-		D33D63452F98DD5D00E16ADA /* XCRemoteSwiftPackageReference "SectionsTableView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/SectionsTableView.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.0;
-			};
-		};
-		D33D63A62F98DD6A00E16ADA /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/HsToolKit.Swift.git";
-			requirement = {
-				kind = exactVersion;
-				version = 2.0.4;
-			};
-		};
-		D33D63F72F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "Down" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/johnxnguyen/Down";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.11.0;
-			};
-		};
-		D33D63F92F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "AlignedCollectionViewFlowLayout" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/mischa-hildebrand/AlignedCollectionViewFlowLayout";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
-		D33D63FB2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "CollectionViewCenteredFlowLayout" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Coeur/CollectionViewCenteredFlowLayout";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.4;
-			};
-		};
-		D33D63FD2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "EvmKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/EvmKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 2.4.4;
-			};
-		};
-		D33D63FF2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "Eip20Kit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/Eip20Kit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 2.0.4;
-			};
-		};
-		D33D64012F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "NftKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/NftKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 2.0.2;
-			};
-		};
-		D33D64032F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "UniswapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/UniswapKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 3.2.0;
-			};
-		};
-		D33D64052F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "OneInchKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/OneInchKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 3.0.4;
-			};
-		};
-		D33D64072F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "BitcoinKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/BitcoinKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 3.0.0;
-			};
-		};
-		D33D64092F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "BitcoinCashKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/BitcoinCashKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 3.0.1;
-			};
-		};
-		D33D640B2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "LitecoinKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/LitecoinKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 3.0.1;
-			};
-		};
-		D33D640D2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "MarketKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 3.6.11;
-			};
-		};
-		D33D640F2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "Chart" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/Chart.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 3.0.2;
-			};
-		};
-		D33D64112F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "FeeRateKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/FeeRateKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 2.1.1;
-			};
-		};
-		D33D64132F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "DashKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/DashKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 3.1.0;
-			};
-		};
-		D33D64152F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "HdWalletKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/HdWalletKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 1.3.1;
-			};
-		};
-		D33D64172F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "Checkpoints" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/Checkpoints";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.28;
-			};
-		};
-		D33D64192F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "SectionsTableView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/SectionsTableView.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.0;
-			};
-		};
-		D33D641B2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "HsCryptoKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/HsCryptoKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 1.3.1;
-			};
-		};
-		D33D641D2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "ECashKit.Swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/ECashKit.Swift.git";
-			requirement = {
-				kind = exactVersion;
-				version = 3.0.2;
-			};
-		};
-		D33D641F2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "RxSwift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.1.3;
-			};
-		};
-		D33D64232F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "TronKit.Swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/TronKit.Swift.git";
-			requirement = {
-				kind = exactVersion;
-				version = 1.4.0;
-			};
-		};
-		D33D64252F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "HCaptcha-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/HCaptcha-ios-sdk.git";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.0;
-			};
-		};
-		D33D64272F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
-			};
-		};
-		D33D64292F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "Starscream" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/daltoniam/Starscream";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.1.2;
-			};
-		};
-		D33D642B2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "Hodler" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/Hodler.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 2.0.3;
-			};
-		};
-		D33D642E2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "StellarKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/StellarKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 1.2.0;
-			};
-		};
-		D33D64302F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "TonConnectAPI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/TonConnectAPI";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.0;
-			};
-		};
-		D33D64322F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 8.6.2;
-			};
-		};
-		D33D64342F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "ZcashLightClientKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/ZcashLightClientKit";
-			requirement = {
-				kind = revision;
-				revision = f186d017a2d33d50f0276c10adf8b544484acfe6;
-			};
-		};
-		D33D64362F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "MoneroKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/MoneroKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 0.2.6;
-			};
-		};
-		D33D64392F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "reown-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/reown-com/reown-swift";
-			requirement = {
-				kind = exactVersion;
-				version = 2.0.0;
-			};
-		};
-		D33D643C2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "CryptoSwift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/krzyzanowskim/CryptoSwift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.9.0;
-			};
-		};
-		D3604E4128F02A020066C366 /* XCRemoteSwiftPackageReference "EvmKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/EvmKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 2.4.4;
-			};
-		};
-		D3604E4828F02A8B0066C366 /* XCRemoteSwiftPackageReference "Eip20Kit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/Eip20Kit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 2.0.4;
-			};
-		};
-		D3604E4B28F02AB40066C366 /* XCRemoteSwiftPackageReference "NftKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/NftKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 2.0.2;
-			};
-		};
-		D3604E4E28F02AE60066C366 /* XCRemoteSwiftPackageReference "UniswapKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/UniswapKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 3.2.0;
-			};
-		};
-		D3604E5128F02B150066C366 /* XCRemoteSwiftPackageReference "OneInchKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/OneInchKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 3.0.4;
-			};
-		};
-		D3604E6428F02D9A0066C366 /* XCRemoteSwiftPackageReference "BitcoinKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/BitcoinKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 3.0.1;
-			};
-		};
-		D3604E6728F02DF30066C366 /* XCRemoteSwiftPackageReference "BitcoinCashKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/BitcoinCashKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 3.0.1;
-			};
-		};
-		D3604E6A28F02E3F0066C366 /* XCRemoteSwiftPackageReference "LitecoinKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/LitecoinKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 3.0.2;
-			};
-		};
-		D3604E6E28F03AC70066C366 /* XCRemoteSwiftPackageReference "MarketKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/MarketKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 3.6.11;
-			};
-		};
-		D3604E7D28F03C1D0066C366 /* XCRemoteSwiftPackageReference "Chart" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/Chart.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 3.0.2;
-			};
-		};
-		D3604E8028F03C6B0066C366 /* XCRemoteSwiftPackageReference "FeeRateKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/FeeRateKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 2.1.1;
-			};
-		};
-		D3604E8628F03D9E0066C366 /* XCRemoteSwiftPackageReference "DashKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/DashKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 3.1.0;
-			};
-		};
-		D36E0C2828D084AB00B622B9 /* XCRemoteSwiftPackageReference "CollectionViewCenteredFlowLayout" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/Coeur/CollectionViewCenteredFlowLayout";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.0.4;
-			};
-		};
-		D3993DAA28F42549008720FB /* XCRemoteSwiftPackageReference "reown-swift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/reown-com/reown-swift";
-			requirement = {
-				kind = exactVersion;
-				version = 2.0.0;
-			};
-		};
-		D3ABE2722F73F29B00B72F23 /* XCRemoteSwiftPackageReference "CryptoSwift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/krzyzanowskim/CryptoSwift";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 1.9.0;
-			};
-		};
-		D3AEB8732DB8FAA200E385C8 /* XCRemoteSwiftPackageReference "StellarKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/StellarKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 1.2.0;
-			};
-		};
-		D3AF5A8729FFD85800C1399E /* XCRemoteSwiftPackageReference "RxSwift" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ReactiveX/RxSwift.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 5.1.3;
-			};
-		};
-		D3BF1E5A274BC29D00229A00 /* XCRemoteSwiftPackageReference "Down" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/johnxnguyen/Down";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 0.11.0;
-			};
-		};
-		D3C187B12907A60700FE1900 /* XCRemoteSwiftPackageReference "HdWalletKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/HdWalletKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 1.3.1;
-			};
-		};
-		D3C187B82907CFAB00FE1900 /* XCRemoteSwiftPackageReference "Checkpoints" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/Checkpoints";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.28;
-			};
-		};
-		D3C187D9290FCFBC00FE1900 /* XCRemoteSwiftPackageReference "SectionsTableView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/SectionsTableView.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.0;
-			};
-		};
-		D3DDFA322DDF2D02003CADDF /* XCRemoteSwiftPackageReference "TonConnectAPI" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/TonConnectAPI";
-			requirement = {
-				kind = exactVersion;
-				version = 1.0.0;
-			};
-		};
-		D3E323C62AE7B8E400F73914 /* XCRemoteSwiftPackageReference "KeychainAccess" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kishikawakatsumi/KeychainAccess.git";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 4.0.0;
-			};
-		};
-		D3F0E0012F50A1A100F0E001 /* XCRemoteSwiftPackageReference "MoneroKit" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/horizontalsystems/MoneroKit.Swift";
-			requirement = {
-				kind = exactVersion;
-				version = 0.2.7;
-			};
-		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		D33D633C2F98DD5D00E16ADA /* HsToolKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D633D2F98DD5D00E16ADA /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */;
-			productName = HsToolKit;
-		};
-		D33D633E2F98DD5D00E16ADA /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D633F2F98DD5D00E16ADA /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
-		};
-		D33D63402F98DD5D00E16ADA /* SnapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D63412F98DD5D00E16ADA /* XCRemoteSwiftPackageReference "SnapKit" */;
-			productName = SnapKit;
-		};
-		D33D63422F98DD5D00E16ADA /* UIExtensions */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D63432F98DD5D00E16ADA /* XCRemoteSwiftPackageReference "UIExtensions" */;
-			productName = UIExtensions;
-		};
-		D33D63442F98DD5D00E16ADA /* SectionsTableView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D63452F98DD5D00E16ADA /* XCRemoteSwiftPackageReference "SectionsTableView" */;
-			productName = SectionsTableView;
-		};
-		D33D63A52F98DD6A00E16ADA /* HsToolKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D63A62F98DD6A00E16ADA /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */;
-			productName = HsToolKit;
-		};
-		D33D63F62F98F2CF00E16ADA /* Down */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D63F72F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "Down" */;
-			productName = Down;
-		};
-		D33D63F82F98F2CF00E16ADA /* AlignedCollectionViewFlowLayout */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D63F92F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "AlignedCollectionViewFlowLayout" */;
-			productName = AlignedCollectionViewFlowLayout;
-		};
-		D33D63FA2F98F2CF00E16ADA /* CollectionViewCenteredFlowLayout */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D63FB2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "CollectionViewCenteredFlowLayout" */;
-			productName = CollectionViewCenteredFlowLayout;
-		};
-		D33D63FC2F98F2CF00E16ADA /* EvmKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D63FD2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "EvmKit" */;
-			productName = EvmKit;
-		};
-		D33D63FE2F98F2CF00E16ADA /* Eip20Kit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D63FF2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "Eip20Kit" */;
-			productName = Eip20Kit;
-		};
-		D33D64002F98F2CF00E16ADA /* NftKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64012F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "NftKit" */;
-			productName = NftKit;
-		};
-		D33D64022F98F2CF00E16ADA /* UniswapKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64032F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "UniswapKit" */;
-			productName = UniswapKit;
-		};
-		D33D64042F98F2CF00E16ADA /* OneInchKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64052F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "OneInchKit" */;
-			productName = OneInchKit;
-		};
-		D33D64062F98F2CF00E16ADA /* BitcoinKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64072F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "BitcoinKit" */;
-			productName = BitcoinKit;
-		};
-		D33D64082F98F2CF00E16ADA /* BitcoinCashKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64092F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "BitcoinCashKit" */;
-			productName = BitcoinCashKit;
-		};
-		D33D640A2F98F2CF00E16ADA /* LitecoinKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D640B2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "LitecoinKit" */;
-			productName = LitecoinKit;
-		};
-		D33D640C2F98F2CF00E16ADA /* MarketKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D640D2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "MarketKit" */;
-			productName = MarketKit;
-		};
-		D33D640E2F98F2CF00E16ADA /* Chart */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D640F2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "Chart" */;
-			productName = Chart;
-		};
-		D33D64102F98F2CF00E16ADA /* FeeRateKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64112F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "FeeRateKit" */;
-			productName = FeeRateKit;
-		};
-		D33D64122F98F2CF00E16ADA /* DashKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64132F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "DashKit" */;
-			productName = DashKit;
-		};
-		D33D64142F98F2CF00E16ADA /* HdWalletKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64152F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "HdWalletKit" */;
-			productName = HdWalletKit;
-		};
-		D33D64162F98F2CF00E16ADA /* Checkpoints */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64172F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "Checkpoints" */;
-			productName = Checkpoints;
-		};
-		D33D64182F98F2CF00E16ADA /* SectionsTableView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64192F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "SectionsTableView" */;
-			productName = SectionsTableView;
-		};
-		D33D641A2F98F2CF00E16ADA /* HsCryptoKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D641B2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "HsCryptoKit" */;
-			productName = HsCryptoKit;
-		};
-		D33D641C2F98F2CF00E16ADA /* ECashKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D641D2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "ECashKit.Swift" */;
-			productName = ECashKit;
-		};
-		D33D641E2F98F2CF00E16ADA /* RxCocoa */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D641F2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxCocoa;
-		};
-		D33D64202F98F2CF00E16ADA /* RxRelay */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D641F2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxRelay;
-		};
-		D33D64212F98F2CF00E16ADA /* RxSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D641F2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxSwift;
-		};
-		D33D64222F98F2CF00E16ADA /* TronKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64232F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "TronKit.Swift" */;
-			productName = TronKit;
-		};
-		D33D64242F98F2CF00E16ADA /* HCaptcha */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64252F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "HCaptcha-ios-sdk" */;
-			productName = HCaptcha;
-		};
-		D33D64262F98F2CF00E16ADA /* KeychainAccess */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64272F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "KeychainAccess" */;
-			productName = KeychainAccess;
-		};
-		D33D64282F98F2CF00E16ADA /* Starscream */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64292F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "Starscream" */;
-			productName = Starscream;
-		};
-		D33D642A2F98F2CF00E16ADA /* Hodler */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D642B2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "Hodler" */;
-			productName = Hodler;
-		};
-		D33D642C2F98F2CF00E16ADA /* TonKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = TonKit;
-		};
-		D33D642D2F98F2CF00E16ADA /* StellarKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D642E2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "StellarKit" */;
-			productName = StellarKit;
-		};
-		D33D642F2F98F2CF00E16ADA /* TonConnectAPI */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64302F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "TonConnectAPI" */;
-			productName = TonConnectAPI;
-		};
-		D33D64312F98F2CF00E16ADA /* Kingfisher */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64322F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "Kingfisher" */;
-			productName = Kingfisher;
-		};
-		D33D64332F98F2CF00E16ADA /* ZcashLightClientKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64342F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "ZcashLightClientKit" */;
-			productName = ZcashLightClientKit;
-		};
-		D33D64352F98F2CF00E16ADA /* MoneroKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64362F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "MoneroKit" */;
-			productName = MoneroKit;
-		};
-		D33D64372F98F2CF00E16ADA /* ZanoKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64362F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "MoneroKit" */;
-			productName = ZanoKit;
-		};
-		D33D64382F98F2CF00E16ADA /* ReownRouter */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64392F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "reown-swift" */;
-			productName = ReownRouter;
-		};
-		D33D643A2F98F2CF00E16ADA /* ReownWalletKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D64392F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "reown-swift" */;
-			productName = ReownWalletKit;
-		};
-		D33D643B2F98F2CF00E16ADA /* CryptoSwift */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = D33D643C2F98F2CF00E16ADA /* XCRemoteSwiftPackageReference "CryptoSwift" */;
-			productName = CryptoSwift;
-		};
-		D33D643D2F98F2CF00E16ADA /* SolanaKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = SolanaKit;
-		};
-		D35EEEE82FB1B5B700E9E863 /* WalletCore */ = {
+		D368E5BC2FC991E500487B08 /* WalletCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = WalletCore;
+		};
+		D368E5BF2FC9966B00487B08 /* HsToolKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D368E5BE2FC9966B00487B08 /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */;
+			productName = HsToolKit;
+		};
+		D368E5C12FC9967500487B08 /* HsToolKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D368E5BE2FC9966B00487B08 /* XCRemoteSwiftPackageReference "HsToolKit.Swift" */;
+			productName = HsToolKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

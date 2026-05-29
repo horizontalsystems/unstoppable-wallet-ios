@@ -5,17 +5,17 @@ struct SingleCoinPriceView: View {
     var entry: SingleCoinPriceProvider.Entry
 
     var body: some View {
-        VStack(alignment: .leading, spacing: .margin8) {
-            HStack(spacing: .margin8) {
+        VStack(alignment: .leading, spacing: 8) {
+            HStack(spacing: 8) {
                 if let coinIcon = entry.icon {
                     coinIcon
                         .resizable()
                         .scaledToFit()
-                        .frame(width: .iconSize32, height: .iconSize32)
+                        .frame(width: 32, height: 32)
                 } else {
                     Circle()
                         .fill(Color.themeGray)
-                        .frame(width: .iconSize32, height: .iconSize32)
+                        .frame(width: 32, height: 32)
                 }
 
                 Text(entry.code.uppercased())
@@ -61,7 +61,7 @@ struct SingleCoinPriceView: View {
                     .foregroundColor(.themeLeah)
             }
         }
-        .padding(.margin16)
+        .padding(16)
         .widgetURL(URL(string: "unstoppable.money://coin/\(entry.uid)")!)
     }
 }
