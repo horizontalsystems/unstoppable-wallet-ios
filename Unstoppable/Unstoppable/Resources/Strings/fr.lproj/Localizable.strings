@@ -638,6 +638,9 @@
 "swap.quotes.providers.risk_levels.good.description" = "Le fournisseur vérifie automatiquement les transactions avant leur finalisation. Si des problèmes sont détectés, le swap est rejeté et les fonds sont remboursés.";
 "swap.quotes.providers.risk_levels.fair.description" = "Une vérification supplémentaire peut être requise pour certaines transactions. Si des problèmes sont détectés, les fonds sont généralement remboursés automatiquement.";
 
+"swap.provider.score" = "Score du fournisseur";
+"swap.provider.swap_time" = "Temps de swap";
+
 
 "swap.allowance" = "Allocation";
 "swap.allowance.description" = "La somme qu'une bourse peut dépenser au nom d'un utilisateur lors de l'exécution d'échanges de jetons. Une transaction de procédure établissant une autorisation suffisante est nécessaire avant qu'une transaction d'échange réelle puisse avoir lieu.";

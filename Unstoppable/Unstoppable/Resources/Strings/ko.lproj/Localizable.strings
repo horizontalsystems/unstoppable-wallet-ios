@@ -638,6 +638,9 @@
 "swap.quotes.providers.risk_levels.good.description" = "제공자가 완료 전에 자동으로 거래를 확인합니다. 문제가 감지되면 스왑이 거부되고 자금이 환불됩니다.";
 "swap.quotes.providers.risk_levels.fair.description" = "일부 거래에 대해 추가 인증이 필요할 수 있습니다. 문제가 감지되면 일반적으로 자금이 자동으로 환불됩니다.";
 
+"swap.provider.score" = "공급자 점수";
+"swap.provider.swap_time" = "스왑 시간";
+
 
 "swap.allowance" = "허용량";
 "swap.allowance.description" = "토큰 스왑을 실행할 때 거래소가 사용자 대신 소비할 수 있는 금액입니다. 실제 스왑 거래가 발생하기 전에 충분한 할당을 설정하는 이전 거래가 필요합니다.";

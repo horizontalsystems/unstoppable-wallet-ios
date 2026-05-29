@@ -638,6 +638,9 @@
 "swap.quotes.providers.risk_levels.good.description" = "El proveedor verifica las transacciones automáticamente antes de completarlas. Si se detectan problemas, el swap se rechaza y los fondos se reembolsan.";
 "swap.quotes.providers.risk_levels.fair.description" = "Puede requerirse una verificación adicional para algunas transacciones. Si se detectan problemas, los fondos generalmente se reembolsan automáticamente.";
 
+"swap.provider.score" = "Puntuación del proveedor";
+"swap.provider.swap_time" = "Tiempo de swap";
+
 
 "swap.allowance" = "Permiso de acceso";
 "swap.allowance.description" = "La cantidad que un intercambio puede gastar en nombre de un usuario al ejecutar intercambios de tokens. Se requiere una transacción previa que establezca una autorización suficiente antes de que pueda tener lugar una transacción de intercambio real.";

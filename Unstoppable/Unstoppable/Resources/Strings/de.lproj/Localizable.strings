@@ -638,6 +638,9 @@
 "swap.quotes.providers.risk_levels.good.description" = "Der Anbieter prüft Transaktionen vor Abschluss automatisch. Bei erkannten Problemen wird der Swap abgelehnt und die Mittel werden zurückerstattet.";
 "swap.quotes.providers.risk_levels.fair.description" = "Für einige Transaktionen kann eine zusätzliche Verifizierung erforderlich sein. Bei erkannten Problemen werden die Mittel in der Regel automatisch zurückerstattet.";
 
+"swap.provider.score" = "Anbieterbewertung";
+"swap.provider.swap_time" = "Swap-Zeit";
+
 
 "swap.allowance" = "Vergütung";
 "swap.allowance.description" = "Die Menge, die eine Börse im Namen eines Benutzers für Token-Austausche ausgeben kann. Eine vorhergehende Transaktion, die eine ausreichende Zulage festlegt, ist erforderlich, bevor eine tatsächliche Austauschtransaktion stattfinden kann.";
