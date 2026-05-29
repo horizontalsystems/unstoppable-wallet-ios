@@ -512,11 +512,12 @@ class MultiSwapViewModel: ObservableObject {
             }
 
             let quotes = optionalQuotes.compactMap { $0 }.sorted { $0.quote.expectedBuyAmount > $1.quote.expectedBuyAmount }
+            let decorated = Self.decorated(quotes: quotes)
 
             if !Task.isCancelled {
-                await MainActor.run { [weak self, quotes] in
+                await MainActor.run { [weak self, decorated] in
                     self?.quoting = false
-                    self?.quotes = quotes
+                    self?.quotes = decorated
                 }
             }
         }
@@ -685,6 +686,25 @@ extension MultiSwapViewModel {
     struct Quote {
         let provider: IMultiSwapProvider
         let quote: MultiSwapQuote
+        let timeState: SwapTimeState?
+    }
+
+    enum SwapTimeState {
+        case neutral(TimeInterval)
+        case attention(TimeInterval)
+
+        var time: TimeInterval {
+            switch self {
+            case let .neutral(t), let .attention(t): return t
+            }
+        }
+
+        var colorStyle: ColorStyle {
+            switch self {
+            case .neutral: return .secondary
+            case .attention: return .yellow
+            }
+        }
     }
 
     enum QuoteSortType: CaseIterable {
@@ -770,5 +790,50 @@ extension MultiSwapViewModel {
 enum PriceImpact {
     static func display(value: Decimal) -> String {
         "-\(abs(value).rounded(decimal: 2).description)%"
+    }
+}
+
+extension MultiSwapViewModel.Quote {
+    init(provider: IMultiSwapProvider, quote: MultiSwapQuote) {
+        self.init(provider: provider, quote: quote, timeState: nil)
+    }
+}
+
+extension MultiSwapViewModel {
+    private static let timeWarningThreshold: TimeInterval = 30 * 60
+    private static let timeWarningRatio: Double = 2
+
+    private static func decorated(quotes: [Quote]) -> [Quote] {
+        let times = quotes.compactMap { quote -> TimeInterval? in
+            guard let time = quote.quote.estimatedTime, time > 0 else { return nil }
+            return time
+        }
+        let baseline: TimeInterval? = times.count >= 2 ? times.min() : nil
+
+        return quotes.map { item in
+            Quote(
+                provider: item.provider,
+                quote: item.quote,
+                timeState: timeState(for: item.quote.estimatedTime, baseline: baseline)
+            )
+        }
+    }
+
+    private static func timeState(for time: TimeInterval?, baseline: TimeInterval?) -> SwapTimeState? {
+        if let warning = warningTime(for: time, baseline: baseline) {
+            return .attention(warning)
+        }
+        if let time, time > 0 {
+            return .neutral(time)
+        }
+        return nil
+    }
+
+    // internal visibility intentional: pure function covered by unit tests via @testable import.
+    // baseline == nil means no comparison context — single-provider rule (absolute threshold only).
+    static func warningTime(for time: TimeInterval?, baseline: TimeInterval?) -> TimeInterval? {
+        guard let time, time > 0, time > timeWarningThreshold else { return nil }
+        guard let baseline, baseline > 0 else { return time }
+        return time >= baseline * timeWarningRatio ? time : nil
     }
 }
