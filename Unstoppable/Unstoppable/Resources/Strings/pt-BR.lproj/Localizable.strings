@@ -629,6 +629,9 @@
 "swap.quotes.providers.risk_levels.good.description" = "O provedor verifica as transações automaticamente antes da conclusão. Se problemas forem detectados, o swap é rejeitado e os fundos são reembolsados.";
 "swap.quotes.providers.risk_levels.fair.description" = "Verificação adicional pode ser necessária para algumas transações. Se problemas forem detectados, os fundos geralmente são reembolsados automaticamente.";
 
+"swap.provider.score" = "Pontuação do provedor";
+"swap.provider.swap_time" = "Tempo de swap";
+
 
 "swap.allowance" = "Preço";
 "swap.allowance.description" = "O montante que uma exchange pode gastar em nome do usuário na execução de trocas simbólicas. É necessária uma margem suficiente para que uma transação de troca efetiva possa ocorrer.";

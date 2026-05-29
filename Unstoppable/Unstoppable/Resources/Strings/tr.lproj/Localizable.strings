@@ -629,6 +629,9 @@
 "swap.quotes.providers.risk_levels.good.description" = "Sağlayıcı, tamamlanmadan önce işlemleri otomatik olarak kontrol eder. Sorun tespit edilirse swap reddedilir ve fonlar iade edilir.";
 "swap.quotes.providers.risk_levels.fair.description" = "Bazı işlemler için ek doğrulama gerekebilir. Sorun tespit edilirse fonlar genellikle otomatik olarak iade edilir.";
 
+"swap.provider.score" = "Sağlayıcı Puanı";
+"swap.provider.swap_time" = "Swap süresi";
+
 
 "swap.allowance" = "Ödenek";
 "swap.allowance.description" = "İzin, borsanın takas işlemleri için sizin adınıza kullanmasına izin verdiğiniz miktardır. Takas yapmadan önce, öncelikle bir izin işlemini onaylamanız gerekir.";
