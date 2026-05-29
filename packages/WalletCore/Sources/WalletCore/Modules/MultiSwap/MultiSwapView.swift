@@ -25,7 +25,7 @@ struct MultiSwapView: View {
                                 .themeListTopView()
 
                             if let currentQuote = viewModel.currentQuote {
-                                quoteView(quote: currentQuote)
+                                quoteList(quote: currentQuote)
                             } else {
                                 availableBalanceView(value: balanceValue())
                             }
@@ -296,53 +296,58 @@ struct MultiSwapView: View {
         .padding(16)
     }
 
-    @ViewBuilder private func quoteView(quote: MultiSwapViewModel.Quote) -> some View {
-        HStack(spacing: 4) {
-            Button(action: {
-                viewModel.stopAutoQuoting()
+    @ViewBuilder private func quoteList(quote: MultiSwapViewModel.Quote) -> some View {
+        VStack(spacing: 0) {
+            Cell(
+                style: .secondary,
+                middle: {
+                    RightButtonText(text: ComponentText(text: quote.provider.name, colorStyle: .primary), textStyle: .subhead, icon: "arrow_s_down") {
+                        viewModel.stopAutoQuoting()
 
-                showSelectProvider()
-            }) {
-                HStack(spacing: 8) {
-                    Image(quote.provider.icon)
-                        .resizable()
-                        .scaledToFit()
-                        .cornerRadius(4)
-                        .frame(size: 24)
-                        .padding(.trailing, .margin8)
-
-                    VStack(alignment: .leading, spacing: 3) {
-                        ThemeText(quote.provider.name, style: .subhead, colorStyle: .primary)
-                        quote.provider.type.body()
+                        showSelectProvider()
                     }
-
-                    ThemeImage("arrow_s_down", size: 20)
-                }
-            }
-            .layoutPriority(1)
-
-            Spacer()
-
-            if let price = viewModel.price {
-                VStack(alignment: .trailing, spacing: 3) {
-                    ThemeText(price, style: .subheadSB, colorStyle: .primary)
-                        .multilineTextAlignment(.trailing)
-                        .minimumScaleFactor(0.5)
-                        .lineLimit(1)
-                        .id(price)
-                        .transition(.opacity)
-                        .onTapGesture {
-                            viewModel.flipPrice()
+                },
+                right: {
+                    if let price = viewModel.price {
+                        VStack(alignment: .trailing, spacing: 3) {
+                            ThemeText(price, style: .subheadSB, colorStyle: .primary)
+                                .multilineTextAlignment(.trailing)
+                                .minimumScaleFactor(0.5)
+                                .lineLimit(1)
+                                .id(price)
+                                .transition(.opacity)
+                                .onTapGesture {
+                                    viewModel.flipPrice()
+                                }
                         }
-
-                    if let time = quote.quote.estimatedTime {
-                        MultiSwapQuotesView.view(estimatedTime: time)
+                        .animation(.easeInOut(duration: 0.15), value: price)
                     }
                 }
-                .animation(.easeInOut(duration: 0.15), value: price)
+            )
+
+            Cell(
+                style: .secondary,
+                middle: {
+                    RightButtonText(text: ComponentText(text: "swap.provider.score".localized, colorStyle: .secondary), textStyle: .subhead, icon: "information", iconColorStyle: .secondary) {
+                        onTapProviderInfo()
+                    }
+                }, right: {
+                    MultiSwapQuotesView.view(type: quote.provider.type)
+                }
+            )
+
+            if case let .attention(warningTime) = quote.timeState {
+                Cell(
+                    style: .secondary,
+                    middle: {
+                        MiddleTextIcon(text: "swap.provider.swap_time".localized)
+                    }, right: {
+                        MultiSwapQuotesView.view(estimatedTime: warningTime)
+                    }
+                )
             }
         }
-        .padding(16)
+        .padding(.vertical, 8)
     }
 
     @ViewBuilder private func quoteCautionsView(quote: MultiSwapViewModel.Quote) -> some View {
@@ -414,6 +419,12 @@ struct MultiSwapView: View {
             } onDismiss: {
                 viewModel.autoQuoteIfRequired()
             }
+        }
+    }
+
+    private func onTapProviderInfo() {
+        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+            MultiSwapProviderTypeBottomSheet(isPresented: isPresented)
         }
     }
 
