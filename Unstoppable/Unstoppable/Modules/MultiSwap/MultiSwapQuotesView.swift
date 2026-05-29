@@ -115,11 +115,11 @@ struct MultiSwapQuotesView: View {
         let type = quote.provider.type
 
         HStack(alignment: .bottom, spacing: .margin4) {
-            if let estimatedTime = quote.quote.estimatedTime {
-                Self.view(estimatedTime: estimatedTime)
+            if let timeState = quote.timeState {
+                Self.view(estimatedTime: timeState.time, colorStyle: timeState.colorStyle, style: .captionSB, iconFirst: true)
             }
             Button(action: onTapProviderInfo) {
-                type.body()
+                Self.view(type: type, style: .captionSB, iconFirst: true)
             }
             .buttonStyle(.plain)
         }
@@ -152,12 +152,38 @@ struct MultiSwapQuotesView: View {
 }
 
 extension MultiSwapQuotesView {
-    @ViewBuilder static func view(estimatedTime: TimeInterval) -> some View {
+    enum Style {
+        case subheadSB
+        case captionSB
+
+        var hMargin: CGFloat { self == .subheadSB ? 8 : 4 }
+        var iconSize: CGFloat { self == .subheadSB ? .iconSize20 : .iconSize16 }
+        var textStyle: TextStyle { self == .subheadSB ? .subheadSB : .captionSB }
+    }
+
+    @ViewBuilder static func view(estimatedTime: TimeInterval, colorStyle: ColorStyle = .yellow, style: Style = .subheadSB, iconFirst: Bool = false) -> some View {
         let timeString = Duration.seconds(estimatedTime).formatted(.units(allowed: [.hours, .minutes, .seconds], width: .narrow))
 
-        HStack(spacing: 4) {
-            ThemeImage("clock_filled", size: .iconSize16, colorStyle: .secondary)
-            ThemeText(timeString, style: .captionSB, colorStyle: .secondary)
+        HStack(spacing: style.hMargin) {
+            if iconFirst {
+                ThemeImage("clock_filled", size: style.iconSize, colorStyle: colorStyle)
+                ThemeText(timeString, style: style.textStyle, colorStyle: colorStyle)
+            } else {
+                ThemeText(timeString, style: style.textStyle, colorStyle: colorStyle)
+                ThemeImage("clock_filled", size: style.iconSize, colorStyle: colorStyle)
+            }
+        }
+    }
+
+    @ViewBuilder static func view(type: SwapProviderType, style: Style = .subheadSB, iconFirst: Bool = false) -> some View {
+        HStack(spacing: style.hMargin) {
+            if iconFirst {
+                ThemeImage(type.icon, size: style.iconSize, colorStyle: type.сolorStyle)
+                ThemeText(type.title, style: style.textStyle, colorStyle: type.сolorStyle)
+            } else {
+                ThemeText(type.title, style: style.textStyle, colorStyle: type.сolorStyle)
+                ThemeImage(type.icon, size: style.iconSize, colorStyle: type.сolorStyle)
+            }
         }
     }
 }

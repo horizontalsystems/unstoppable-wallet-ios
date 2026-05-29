@@ -73,11 +73,4 @@ enum SwapProviderType: String, CaseIterable, Identifiable {
     var id: String {
         rawValue
     }
-
-    @ViewBuilder func body() -> some View {
-        HStack(spacing: .margin4) {
-            ThemeImage(icon, size: .iconSize16, colorStyle: сolorStyle)
-            ThemeText(title, style: .captionSB, colorStyle: сolorStyle)
-        }
-    }
 }
