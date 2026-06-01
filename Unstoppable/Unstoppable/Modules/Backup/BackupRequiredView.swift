@@ -16,7 +16,7 @@ struct BackupRequiredView: View {
                 .title(icon: ThemeImage.warning, title: title),
                 .text(text: description),
                 .buttonGroup(.init(buttons: [
-                    .init(style: .gray, title: "backup_prompt.backup_manual".localized, icon: "edit_24") {
+                    .init(style: .yellow, title: "backup_prompt.backup_manual".localized, icon: "edit_24") {
                         isPresented = false
 
                         Coordinator.shared.present { _ in
@@ -24,10 +24,13 @@ struct BackupRequiredView: View {
                         }
                         stat(page: statPage, event: .open(page: .manualBackup))
                     },
-                    .init(style: .transparent, title: "backup_prompt.backup_cloud".localized, icon: "icloud_24") {
+                    .init(style: .gray, title: "backup_prompt.backup_cloud".localized, icon: "icloud_24") {
                         isPresented = false
 
                         Coordinator.shared.presentWalletBackup(account: account, statPage: statPage)
+                    },
+                    .init(style: .transparent, title: cancelText) {
+                        isPresented = false
                     },
                 ])),
             ],
@@ -41,17 +44,6 @@ struct BackupRequiredView: View {
             description: "backup_prompt.warning".localized,
             cancelText: "backup_prompt.later".localized,
             statPage: .backupPromptAfterCreate,
-            isPresented: isPresented
-        )
-    }
-
-    static func prompt(account: Account, description: String, isPresented: Binding<Bool>) -> BackupRequiredView {
-        BackupRequiredView(
-            account: account,
-            title: "backup_prompt.backup_required".localized,
-            description: description,
-            cancelText: "button.cancel".localized,
-            statPage: .backupRequired,
             isPresented: isPresented
         )
     }

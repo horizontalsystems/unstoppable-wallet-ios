@@ -1965,7 +1965,6 @@
 "wallet_connect_list.new_connection" = "Yeni bağlantı";
 
 "wallet_connect.no_account.description" = "WalletConnect'i kullanmadan önce bir cüzdan oluşturmanız veya içe aktarmanız gerekir.";
-"wallet_connect.unbackuped_account.description" = "WalletConnect'i kullanmadan önce %@ yedeklemeniz gerekir";
 
 "wallet_connect.non_supported_account.description" = "Mevcut cüzdan türünüz %@ WalletConnect'i desteklemiyor";
 "wallet_connect.non_supported_account.switch" = "Değiştir";

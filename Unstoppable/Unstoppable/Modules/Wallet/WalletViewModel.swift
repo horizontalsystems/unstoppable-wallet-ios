@@ -112,19 +112,6 @@ extension WalletViewModel {
         appStateManager.swapEnabled
     }
 
-    func verifyBackedUp() -> Bool {
-        guard let account else {
-            return false
-        }
-
-        let backedUp = account.backedUp || cloudBackupManager.backedUp(uniqueId: account.type.uniqueId())
-        if !backedUp {
-            showBackupBottomSheet()
-        }
-
-        return backedUp
-    }
-
     func onAppear() {
         rateAppManager.onBalancePageAppear()
     }
@@ -141,28 +128,8 @@ extension WalletViewModel {
         balanceConversionManager.toggleConversionToken()
     }
 
-    func showBackupBottomSheet() {
-        guard let account else {
-            return
-        }
-
-        Coordinator.shared.present(type: .bottomSheet) { isPresented in
-            BackupRequiredView.prompt(
-                account: account,
-                description: "receive_alert.any_coins.not_backed_up_description".localized(account.name),
-                isPresented: isPresented
-            )
-        }
-
-        stat(page: .balance, event: .open(page: .backupRequired))
-    }
-
     func onTapReceive() {
         guard let account else {
-            return
-        }
-
-        guard verifyBackedUp() else {
             return
         }
 

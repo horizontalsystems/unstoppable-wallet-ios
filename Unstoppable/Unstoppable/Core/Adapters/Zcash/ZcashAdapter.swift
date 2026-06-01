@@ -22,8 +22,6 @@ class ZcashAdapter {
     private let token: Token
     private let transactionSource: TransactionSource
 
-    private let saplingDownloader = DownloadService(queueLabel: "io.SaplingDownloader")
-
     private let synchronizer: Synchronizer
     private let zCashAdapterStorage: ZcashAdapterStorage
 
@@ -113,7 +111,7 @@ class ZcashAdapter {
         uniqueId = wallet.account.id
 
         var existingMode: WalletInitMode?
-        if let dbUrl = try? Self.spendParamsURL(uniqueId: uniqueId),
+        if let dbUrl = try? Self.dataDbURL(uniqueId: uniqueId, network: network),
            Self.exist(url: dbUrl)
         {
             existingMode = .existingWallet
@@ -158,12 +156,6 @@ class ZcashAdapter {
             .sink(receiveValue: { [weak self] event in self?.sync(event: event) })
             .store(in: &cancellables)
 
-        saplingDownloader
-            .$state
-            .sink(receiveValue: { [weak self] in self?.downloaderStatusUpdated(state: $0) })
-            .store(in: &cancellables)
-
-        // subscribe on background and events from sapling downloader
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
 
@@ -260,25 +252,14 @@ class ZcashAdapter {
             return
         }
 
-        if saplingDataExist() {
-            logger?.log(level: .debug, message: "Start syncing kit!")
-            syncMain()
-        }
+        // Sapling parameters are downloaded by the SDK on demand
+        // (conditionally during sync when balance > 0, and just-in-time before any spend).
+        logger?.log(level: .debug, message: "Start syncing kit!")
+        syncMain()
     }
 
     @objc private func didEnterBackground(_: Notification) {
         stop()
-    }
-
-    private func downloaderStatusUpdated(state: DownloadService.State) {
-        switch state {
-        case .idle:
-            ()
-        case .success:
-            syncMain()
-        case let .inProgress(progress):
-            self.state = .downloadingSapling(progress: Int(progress * 100))
-        }
     }
 
     private func sync(state: SynchronizerState) {
@@ -536,36 +517,6 @@ class ZcashAdapter {
         }
     }
 
-    private static var cloudSpendParamsURL: URL? {
-        URL(string: ZcashSDK.cloudParameterURL + ZcashSDK.spendParamFilename)
-    }
-
-    private static var cloudOutputParamsURL: URL? {
-        URL(string: ZcashSDK.cloudParameterURL + ZcashSDK.outputParamFilename)
-    }
-
-    private func saplingDataExist() -> Bool {
-        var isExist = true
-
-        if let cloudSpendParamsURL = Self.cloudOutputParamsURL,
-           let destinationURL = try? Self.outputParamsURL(uniqueId: uniqueId),
-           !DownloadService.existing(url: destinationURL)
-        {
-            isExist = false
-            saplingDownloader.download(source: cloudSpendParamsURL, destination: destinationURL)
-        }
-
-        if let cloudSpendParamsURL = Self.cloudSpendParamsURL,
-           let destinationURL = try? Self.spendParamsURL(uniqueId: uniqueId),
-           !DownloadService.existing(url: destinationURL)
-        {
-            isExist = false
-            saplingDownloader.download(source: cloudSpendParamsURL, destination: destinationURL)
-        }
-
-        return isExist
-    }
-
     func fixPendingTransactionsIfNeeded(completion: (() -> Void)? = nil) {
         // check if we need to perform the fix or leave
         // get all the pending transactions
@@ -795,7 +746,12 @@ extension ZcashAdapter {
     }
 
     static func initializer(network: ZcashNetwork, uniqueId: String) throws -> Initializer {
-        try Initializer(
+        // One-time cleanup: promote any pre-existing per-wallet sapling params
+        // ("sapling-{spend,output}_<uniqueId>.params") to the shared, wallet-agnostic
+        // location so existing users don't have to re-download ~51MB.
+        migrateSharedSaplingParamsIfNeeded()
+
+        return try Initializer(
             cacheDbURL: nil,
             fsBlockDbRoot: fsBlockDbRootURL(uniqueId: uniqueId, network: network),
             generalStorageURL: generalStorageURL(uniqueId: uniqueId, network: network),
@@ -803,8 +759,8 @@ extension ZcashAdapter {
             torDirURL: torDirURL(uniqueId: uniqueId, network: network),
             endpoint: LightWalletEndpoint(address: endPoint, port: 443, secure: true, streamingCallTimeoutInMillis: 10 * 60 * 60 * 1000),
             network: network,
-            spendParamsURL: spendParamsURL(uniqueId: uniqueId),
-            outputParamsURL: outputParamsURL(uniqueId: uniqueId),
+            spendParamsURL: spendParamsURL(),
+            outputParamsURL: outputParamsURL(),
             saplingParamsSourceURL: SaplingParamsSourceURL.default,
             alias: .custom(uniqueId),
             loggingPolicy: .noLogging,
@@ -856,19 +812,56 @@ extension ZcashAdapter {
         try dataDirectoryUrl().appendingPathComponent(network.constants.defaultDbNamePrefix + uniqueId + ZcashSDK.defaultTorDirName, isDirectory: true)
     }
 
-    private static func spendParamsURL(uniqueId: String) throws -> URL {
-        try dataDirectoryUrl().appendingPathComponent("sapling-spend_\(uniqueId).params")
+    // Sapling parameters are identical across all wallets, so they live in a single shared
+    // location (no per-wallet suffix). The SDK downloads and SHA1-validates them on demand;
+    // we just hand it the destination path.
+    static let spendParamsFilename = "sapling-spend.params"
+    static let outputParamsFilename = "sapling-output.params"
+
+    private static func spendParamsURL() throws -> URL {
+        try dataDirectoryUrl().appendingPathComponent(spendParamsFilename)
     }
 
-    private static func outputParamsURL(uniqueId: String) throws -> URL {
-        try dataDirectoryUrl().appendingPathComponent("sapling-output_\(uniqueId).params")
+    private static func outputParamsURL() throws -> URL {
+        try dataDirectoryUrl().appendingPathComponent(outputParamsFilename)
+    }
+
+    private static func migrateSharedSaplingParamsIfNeeded() {
+        let fileManager = FileManager.default
+        guard let dir = try? dataDirectoryUrl(),
+              let files = try? fileManager.contentsOfDirectory(atPath: dir.path)
+        else { return }
+
+        for (legacyPrefix, sharedName) in [
+            ("sapling-spend_", spendParamsFilename),
+            ("sapling-output_", outputParamsFilename),
+        ] {
+            let legacy = files.filter { $0.hasPrefix(legacyPrefix) && $0.hasSuffix(".params") }
+            guard !legacy.isEmpty else { continue }
+
+            let sharedURL = dir.appendingPathComponent(sharedName)
+            if !fileManager.fileExists(atPath: sharedURL.path), let first = legacy.first {
+                // Promote one legacy copy to the shared location; SDK will SHA1-validate it.
+                try? fileManager.moveItem(at: dir.appendingPathComponent(first), to: sharedURL)
+            }
+            // Remove any remaining per-wallet copies (including the one we just moved if move failed).
+            let remaining = (try? fileManager.contentsOfDirectory(atPath: dir.path)) ?? []
+            for filename in remaining where filename.hasPrefix(legacyPrefix) && filename.hasSuffix(".params") {
+                try? fileManager.removeItem(at: dir.appendingPathComponent(filename))
+            }
+        }
     }
 
     public static func clear(except excludedWalletIds: [String]) throws {
         let fileManager = FileManager.default
         let fileUrls = try fileManager.contentsOfDirectory(at: dataDirectoryUrl(), includingPropertiesForKeys: nil)
 
+        let preservedFilenames: Set<String> = [spendParamsFilename, outputParamsFilename]
+
         for filename in fileUrls {
+            if preservedFilenames.contains(filename.lastPathComponent) {
+                continue
+            }
             if !excludedWalletIds.contains(where: { filename.lastPathComponent.contains($0) }) {
                 try fileManager.removeItem(at: filename)
             }
@@ -1288,7 +1281,6 @@ enum ZCashAdapterState: Equatable {
     case preparing
     case synced
     case syncing(progress: Int?, remaining: Int?, lastBlockDate: Date?)
-    case downloadingSapling(progress: Int)
     case notSynced(error: Error)
 
     public static func == (lhs: ZCashAdapterState, rhs: ZCashAdapterState) -> Bool {
@@ -1297,7 +1289,6 @@ enum ZCashAdapterState: Equatable {
         case (.preparing, .preparing): return true
         case (.synced, .synced): return true
         case let (.syncing(lProgress, lRemaining, lLastBlockDate), .syncing(rProgress, rRemaining, rLastBlockDate)): return lProgress == rProgress && lRemaining == rRemaining && lLastBlockDate == rLastBlockDate
-        case let (.downloadingSapling(lProgress), .downloadingSapling(rProgress)): return lProgress == rProgress
         case (.notSynced, .notSynced): return true
         default: return false
         }
@@ -1309,8 +1300,6 @@ enum ZCashAdapterState: Equatable {
         case .preparing: return .customSyncing(main: "Preparing...", secondary: nil, progress: nil)
         case .synced: return .synced
         case let .syncing(progress, remaining, lastDate): return .syncing(progress: progress, remaining: remaining, lastBlockDate: lastDate)
-        case let .downloadingSapling(progress):
-            return .customSyncing(main: "balance.downloading_sapling".localized, secondary: nil, progress: progress)
         case let .notSynced(error): return .notSynced(error: error.localizedDescription)
         }
     }
@@ -1321,7 +1310,6 @@ enum ZCashAdapterState: Equatable {
         case .preparing: return "Preparing..."
         case .synced: return "Synced"
         case let .syncing(progress, _, lastDate): return "Syncing: progress = \(progress?.description ?? "N/A"), lastBlockDate: \(lastDate?.description ?? "N/A")"
-        case let .downloadingSapling(progress): return "downloadingSapling: progress = \(progress)"
         case let .notSynced(error): return "Not synced \(error.localizedDescription)"
         }
     }

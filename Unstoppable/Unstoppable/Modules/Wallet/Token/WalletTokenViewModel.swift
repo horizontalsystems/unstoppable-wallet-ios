@@ -150,27 +150,13 @@ extension WalletTokenViewModel {
     }
 
     func onTapReceive() {
-        if wallet.account.backedUp || cloudBackupManager.backedUp(uniqueId: wallet.account.type.uniqueId()) {
-            Coordinator.shared.present { [wallet] _ in
-                EmptyThemeNavigationStack { path in
-                    ReceiveAddressModule.instance(wallet: wallet, path: path)
-                }
+        Coordinator.shared.present { [wallet] _ in
+            EmptyThemeNavigationStack { path in
+                ReceiveAddressModule.instance(wallet: wallet, path: path)
             }
-
-            stat(page: .tokenPage, event: .openReceive(token: wallet.token))
-        } else {
-            let wallet = wallet
-
-            Coordinator.shared.present(type: .bottomSheet) { isPresented in
-                BackupRequiredView.prompt(
-                    account: wallet.account,
-                    description: "receive_alert.not_backed_up_description".localized(wallet.account.name, wallet.coin.name),
-                    isPresented: isPresented
-                )
-            }
-
-            stat(page: .tokenPage, event: .open(page: .backupRequired))
         }
+
+        stat(page: .tokenPage, event: .openReceive(token: wallet.token))
     }
 
     func onTapAmount() {

@@ -11,7 +11,7 @@ class KitCleaner {
 
 extension KitCleaner {
     func clear() {
-        let accountIds = accountManager.accounts.map(\.id)
+        let accountIds = accountManager.allAccounts.map(\.id)
 
         DispatchQueue.global(qos: .background).async {
             try? BitcoinAdapter.clear(except: accountIds)
