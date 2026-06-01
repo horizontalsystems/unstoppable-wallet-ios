@@ -17,7 +17,7 @@ enum SendModule {
         switch adapter {
         case let adapter as ISendBitcoinAdapter:
             return SendModule.viewController(token: token, mode: mode, adapter: adapter)
-        case let adapter as ISendZcashAdapter:
+        case let adapter as ZcashAdapter:
             return SendModule.viewController(token: token, mode: mode, adapter: adapter)
         case let adapter as ISendTronAdapter:
             return SendTronModule.viewController(token: token, mode: mode, adapter: adapter)
@@ -164,7 +164,7 @@ enum SendModule {
         return viewController
     }
 
-    private static func viewController(token: Token, mode: PreSendViewModel.Mode, adapter: ISendZcashAdapter) -> UIViewController? {
+    private static func viewController(token: Token, mode: PreSendViewModel.Mode, adapter: ZcashAdapter) -> UIViewController? {
         let switchService = AmountTypeSwitchService(userDefaultsStorage: Core.shared.userDefaultsStorage)
         let coinService = CoinService(token: token, currencyManager: Core.shared.currencyManager, marketKit: Core.shared.marketKit)
         let fiatService = FiatService(switchService: switchService, currencyManager: Core.shared.currencyManager, marketKit: Core.shared.marketKit, amount: mode.amount ?? 0)

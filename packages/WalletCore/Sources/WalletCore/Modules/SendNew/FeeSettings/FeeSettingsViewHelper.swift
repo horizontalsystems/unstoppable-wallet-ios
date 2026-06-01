@@ -75,7 +75,7 @@ class FeeSettingsViewHelper {
     }
 
     @ViewBuilder func inputNumberWithSteps(placeholder: String = "", text: Binding<String>, cautionState: Binding<FieldCautionState>, onTap: @escaping (StepChangeButtonsViewDirection) -> Void) -> some View {
-        InputTextRow(vertical: .margin8) {
+        InputTextRow {
             StepChangeButtonsView(content: {
                 InputTextView(
                     placeholder: placeholder,

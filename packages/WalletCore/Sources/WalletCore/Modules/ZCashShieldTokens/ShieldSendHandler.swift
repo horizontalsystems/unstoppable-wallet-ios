@@ -23,10 +23,16 @@ extension ShieldSendHandler: ISendHandler {
         token
     }
 
-    func sendData(transactionSettings _: TransactionSettings?) async throws -> ISendData {
+    func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
         let memoText = memo.flatMap { try? Memo(string: $0) }
+        let zip317MarginalFee = transactionSettings?.zcashZip317MarginalFee ?? ZcashAdapter.defaultZip317MarginalFee
 
-        guard let proposal = try await adapter.shieldProposal(threshold: ZcashAdapter.minimalThreshold, address: recipient, memo: memoText) else {
+        guard let proposal = try await adapter.shieldProposal(
+            threshold: ZcashAdapter.minimalThreshold,
+            address: recipient,
+            memo: memoText,
+            zip317MarginalFee: zip317MarginalFee
+        ) else {
             throw SendError.cantCreateProposal
         }
 
@@ -42,7 +48,8 @@ extension ShieldSendHandler: ISendHandler {
             recipient: recipient,
             memo: memo,
             transactionError: transactionError,
-            proposal: proposal
+            proposal: proposal,
+            zip317MarginalFee: zip317MarginalFee
         )
     }
 
@@ -51,7 +58,7 @@ extension ShieldSendHandler: ISendHandler {
             throw SendError.invalidData
         }
 
-        try await adapter.send(proposal: data.proposal)
+        try await adapter.send(proposal: data.proposal, zip317MarginalFee: data.zip317MarginalFee)
     }
 }
 
@@ -70,18 +77,20 @@ extension ShieldSendHandler {
         let memo: String?
         var transactionError: Error?
         let proposal: Proposal
+        let zip317MarginalFee: Zatoshi
 
-        init(token: Token, amount: Decimal, recipient: Recipient?, memo: String?, transactionError: Error?, proposal: Proposal) {
+        init(token: Token, amount: Decimal, recipient: Recipient?, memo: String?, transactionError: Error?, proposal: Proposal, zip317MarginalFee: Zatoshi) {
             self.token = token
             self.amount = amount
             self.recipient = recipient
             self.memo = memo
             self.transactionError = transactionError
             self.proposal = proposal
+            self.zip317MarginalFee = zip317MarginalFee
         }
 
         var feeData: FeeData? {
-            nil
+            .zcash(fee: proposal.totalFeeRequired().decimalValue.decimalValue)
         }
 
         var canSend: Bool {

@@ -796,6 +796,16 @@ class TransactionInfoViewItemFactory {
             ], footer: "tx_info.resend_description".localized))
         }
 
+        if actionEnabled,
+           record.source.blockchainType == .zcash,
+           let zcashRecord = record as? ZcashOutgoingTransactionRecord,
+           zcashRecord.isResendable
+        {
+            sections.append(.init([
+                .option(option: .zcashResend),
+            ]))
+        }
+
         sections.append(.init([
             .explorer(title: "tx_info.view_on".localized(item.explorerTitle), url: item.explorerUrl),
         ]))

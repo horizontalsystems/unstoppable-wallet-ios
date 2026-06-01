@@ -23,6 +23,7 @@ enum TransactionInfoModule {
 extension TransactionInfoModule {
     enum Option {
         case resend(type: ResendTransactionType)
+        case zcashResend
     }
 
     enum ViewItem {

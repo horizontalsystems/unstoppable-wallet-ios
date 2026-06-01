@@ -8,7 +8,7 @@ enum FeeData {
     case bitcoin(params: SendParameters)
     case monero(amount: MoneroSendAmount, address: String)
     case tron(fees: [Fee])
-    case zcash(fee: Decimal)
+    case zcash(fee: Decimal?)
     case aa(amount: Decimal, token: Token, sponsored: Bool)
 
     var gasLimit: Int? {

@@ -78,6 +78,7 @@ class SolanaKitManager {
 
     private func subscribe(solanaKit: SolanaKit.Kit, account: Account) {
         tokenAccountCancellable = solanaKit.fungibleTokenAccountsPublisher
+            .receive(on: DispatchQueue.global(qos: .userInitiated))
             .sink { [weak self, restoreStateManager] tokenAccounts in
                 let restoreState = restoreStateManager.restoreState(account: account, blockchainType: .solana)
 
