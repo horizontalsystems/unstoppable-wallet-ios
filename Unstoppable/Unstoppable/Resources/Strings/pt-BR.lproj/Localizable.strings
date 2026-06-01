@@ -64,6 +64,7 @@
 "alert.connected" = "Conectado";
 "alert.enabling" = "Ativando";
 "alert.enabled_coins" = "Moedas a mais ativadas %@";
+"alert.preparing" = "Preparando";
 "alert.sending" = "Enviando";
 "alert.sent" = "Enviado";
 "alert.swapping" = "Trocando";
@@ -2160,6 +2161,8 @@
 
 "fee_settings.network_fee" = "Taxa";
 "fee_settings.network_fee.info" = "O custo estimado do envio de determinada transação na rede.";
+"fee_settings.zcash_marginal_fee" = "Taxa marginal";
+"fee_settings.zcash_marginal_fee.info" = "A taxa marginal é a quantidade de zatoshi paga por cada saída utilizada pela transação.\n\nSe a carteira usar muitas saídas pequenas, a taxa de rede total será maior.";
 "fee_settings.l1_fee" = "Taxa L1";
 "fee_settings.l1_fee.info" = "O custo estimado do envio de uma determinada transação na rede da camada 1.";
 "fee_settings.gas_limit" = "Limite de gás";
@@ -2180,6 +2183,9 @@
 "fee_settings.errors.insufficient_balance.info" = "O saldo atual de %@ está abaixo do valor necessário para processar a transação, incluindo taxa de transação.";
 "fee_settings.errors.low_max_fee" = "Taxa baixa";
 "fee_settings.errors.low_max_fee.info" = "A taxa de transação definida é insuficiente para processar esta transação agora.";
+"fee_settings.errors.invalid_value" = "Valor inválido";
+"fee_settings.errors.zcash_marginal_fee_too_low" = "O valor da taxa é muito baixo.";
+"fee_settings.errors.zcash_marginal_fee_too_high" = "O valor da taxa é muito alto.";
 "fee_settings.errors.nonce_already_in_block" = "Não é possível substituir a transação.";
 "fee_settings.errors.replacement_transaction_underpriced" = "Taxa baixa para transação substituída";
 "fee_settings.errors.transaction_underpriced" = "Taxa baixa para transação";
@@ -2576,3 +2582,18 @@
 "wallet_name.98" = "🦚 Real Pool";
 "wallet_name.99" = "🐯 Onça Pintada";
 "wallet_name.100" = "🍎 Maçã Mercado";
+
+"open_crypto_pay.error.invalid_url" = "Este link de pagamento não é reconhecido.";
+"open_crypto_pay.error.invalid_lnurl" = "Os dados de pagamento estão malformados.";
+"open_crypto_pay.error.no_supported_method" = "Nenhuma carteira compatível para este comerciante.";
+"open_crypto_pay.error.quote_expired" = "A cotação expirou. Escaneie o código QR novamente.";
+"open_crypto_pay.error.malformed_tx_uri" = "Os detalhes do pagamento estão malformados.";
+"open_crypto_pay.error.amount_mismatch" = "O valor difere da cotação original. Por favor, escaneie novamente.";
+"open_crypto_pay.error.unsupported_parameter" = "Este pagamento contém parâmetros não suportados e foi bloqueado por segurança.";
+"open_crypto_pay.error.chain_mismatch" = "Incompatibilidade de blockchain nos detalhes do pagamento.";
+"open_crypto_pay.error.account_changed" = "A conta ou carteira ativa foi alterada. Por favor, escaneie novamente.";
+"open_crypto_pay.token_list.description" = "Escolha o token que deseja usar para o pagamento";
+"open_crypto_pay.merchant.name" = "Comerciante";
+"open_crypto_pay.merchant.url" = "URL";
+"open_crypto_pay.expires_in" = "Expira em";
+"open_crypto_pay.button.expired" = "Cotação expirada";

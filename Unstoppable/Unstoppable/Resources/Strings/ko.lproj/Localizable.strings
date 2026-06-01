@@ -64,6 +64,7 @@
 "alert.connected" = "연결됨";
 "alert.enabling" = "활성화 중";
 "alert.enabled_coins" = "활성화된 %@ 더 많은 코인";
+"alert.preparing" = "준비 중";
 "alert.sending" = "전송중";
 "alert.sent" = "전송됨";
 "alert.swapping" = "스와핑";
@@ -2160,6 +2161,8 @@
 
 "fee_settings.network_fee" = "수수료";
 "fee_settings.network_fee.info" = "네트워크에서 주어진 거래를 보내는 데 예상되는 비용.";
+"fee_settings.zcash_marginal_fee" = "한계 수수료";
+"fee_settings.zcash_marginal_fee.info" = "한계 수수료는 트랜잭션에서 사용되는 각 출력(output)에 대해 지불하는 자토시(zatoshi) 금액입니다.\n\n지갑이 많은 소액 출력을 사용하면 총 네트워크 수수료가 더 높아집니다.";
 "fee_settings.l1_fee" = "L1 수수료";
 "fee_settings.l1_fee.info" = "계층 1 네트워크에서 특정 거래를 전송하는 예상 비용.";
 "fee_settings.gas_limit" = "Gas Limit";
@@ -2180,6 +2183,9 @@
 "fee_settings.errors.insufficient_balance.info" = "현재 %@ 잔액은 거래 수수료를 포함하여이 거래를 처리하는 데 필요한 금액보다 적습니다.";
 "fee_settings.errors.low_max_fee" = "적은 수수료";
 "fee_settings.errors.low_max_fee.info" = "설정된 거래 수수료 금액이 현재 이 거래를 처리하기에 충분하지 않습니다.";
+"fee_settings.errors.invalid_value" = "잘못된 값";
+"fee_settings.errors.zcash_marginal_fee_too_low" = "수수료 값이 너무 낮습니다.";
+"fee_settings.errors.zcash_marginal_fee_too_high" = "수수료 값이 너무 높습니다.";
 "fee_settings.errors.nonce_already_in_block" = "트랜잭션을 대체할 수 없습니다.";
 "fee_settings.errors.replacement_transaction_underpriced" = "교체 거래에 대한 낮은 수수료";
 "fee_settings.errors.transaction_underpriced" = "낮은 거래 수수료";
@@ -2576,3 +2582,18 @@
 "wallet_name.98" = "🌴 대나무 코인";
 "wallet_name.99" = "🦚 학 포트폴리오";
 "wallet_name.100" = "🎵 판굿 마이너";
+
+"open_crypto_pay.error.invalid_url" = "이 결제 링크는 인식되지 않습니다.";
+"open_crypto_pay.error.invalid_lnurl" = "결제 데이터가 올바르지 않습니다.";
+"open_crypto_pay.error.no_supported_method" = "이 가맹점에 맞는 지갑이 없습니다.";
+"open_crypto_pay.error.quote_expired" = "견적이 만료되었습니다. QR 코드를 다시 스캔하세요.";
+"open_crypto_pay.error.malformed_tx_uri" = "결제 세부 정보가 올바르지 않습니다.";
+"open_crypto_pay.error.amount_mismatch" = "금액이 원래 견적과 다릅니다. 다시 스캔해 주세요.";
+"open_crypto_pay.error.unsupported_parameter" = "이 결제에 지원되지 않는 매개변수가 포함되어 있어 안전을 위해 차단되었습니다.";
+"open_crypto_pay.error.chain_mismatch" = "결제 세부 정보에서 블록체인이 일치하지 않습니다.";
+"open_crypto_pay.error.account_changed" = "활성 계정 또는 지갑이 변경되었습니다. 다시 스캔해 주세요.";
+"open_crypto_pay.token_list.description" = "결제에 사용할 토큰을 선택하세요";
+"open_crypto_pay.merchant.name" = "가맹점";
+"open_crypto_pay.merchant.url" = "URL";
+"open_crypto_pay.expires_in" = "만료까지";
+"open_crypto_pay.button.expired" = "견적 만료됨";
