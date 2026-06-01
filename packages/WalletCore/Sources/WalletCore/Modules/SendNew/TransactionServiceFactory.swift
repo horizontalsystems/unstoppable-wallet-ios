@@ -1,7 +1,7 @@
 import MarketKit
 
 enum TransactionServiceFactory {
-    static func transactionService(baseToken: Token, initialTransactionSettings: InitialTransactionSettings?) -> ITransactionService? {
+    static func transactionService(sendData: SendData, baseToken: Token, initialTransactionSettings: InitialTransactionSettings?) -> ITransactionService? {
         let activeAccount = Core.shared.accountManager.activeAccount
 
         if let activeAccount, case .passkeyOwned = activeAccount.type,
@@ -24,6 +24,19 @@ enum TransactionServiceFactory {
 
         if baseToken.blockchainType == .monero, let adapter = Core.shared.adapterManager.adapter(for: baseToken) as? MoneroAdapter {
             return MoneroTransactionService(adapter: adapter)
+        }
+
+        if baseToken.blockchainType == .zcash {
+            switch sendData {
+            case let .zcash(amount, recipient, memo),
+                 let .zcashResend(amount, recipient, memo, _):
+                return ZcashTransactionService(
+                    token: baseToken,
+                    proposalRequest: .transfer(amount: amount, recipient: recipient, memo: memo),
+                    initialTransactionSettings: initialTransactionSettings
+                )
+            default: ()
+            }
         }
 
         return nil

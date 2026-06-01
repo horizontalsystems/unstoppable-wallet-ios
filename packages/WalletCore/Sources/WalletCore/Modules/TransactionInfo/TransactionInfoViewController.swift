@@ -99,6 +99,16 @@ class TransactionInfoViewController: ThemeViewController {
         }
     }
 
+    private func openZcashResend() {
+        do {
+            try ZcashResendModule.present(adapter: adapter, transactionRecord: viewModel.transactionRecord) {
+                HudHelper.instance.show(banner: .sent)
+            }
+        } catch {
+            HudHelper.instance.show(banner: .error(string: error.localizedDescription))
+        }
+    }
+
     private func open(coin: Coin) {
         let viewController = CoinPageView(coin: coin).toViewController()
         present(viewController, animated: true)
@@ -189,12 +199,20 @@ class TransactionInfoViewController: ThemeViewController {
             action = { [weak self] in
                 self?.openResend(type: type)
             }
+        case .zcashResend:
+            image = UIImage(named: "arrow_medium_2_up_24")
+            title = "button.resend".localized
+            color = .themeJacob
+
+            action = { [weak self] in
+                self?.openZcashResend()
+            }
         }
 
         return CellBuilderNew.row(
             rootElement: .hStack([
                 .imageElement(image: .local(image?.withTintColor(color)), size: .image24),
-                .textElement(text: .body(title)),
+                .textElement(text: .body(title, color: color)),
             ]),
             tableView: tableView,
             id: "option-\(rowInfo.index)",

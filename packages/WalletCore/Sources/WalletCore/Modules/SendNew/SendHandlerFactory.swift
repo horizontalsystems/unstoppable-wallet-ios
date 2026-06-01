@@ -13,6 +13,8 @@ enum SendHandlerFactory {
             return BitcoinSendHandler.instance(token: token, params: params)
         case let .zcash(amount, recipient, memo):
             return ZcashSendHandler.instance(amount: amount, recipient: recipient, memo: memo)
+        case let .zcashResend(amount, recipient, memo, initialTransactionSettings):
+            return ZcashSendHandler.instance(amount: amount, recipient: recipient, memo: memo, initialTransactionSettings: initialTransactionSettings)
         case let .zcashShield(amount, recipient, memo):
             return ShieldSendHandler.instance(amount: amount, recipient: recipient, memo: memo)
         case let .tron(token, contract):
@@ -54,7 +56,7 @@ enum SendHandlerFactory {
             return BitcoinPreSendHandler(token: wallet.token, address: address, adapter: adapter)
         }
 
-        if let adapter = adapter as? ISendZcashAdapter & IBalanceAdapter {
+        if let adapter = adapter as? ZcashAdapter {
             return ZcashPreSendHandler(token: wallet.token, adapter: adapter)
         }
 

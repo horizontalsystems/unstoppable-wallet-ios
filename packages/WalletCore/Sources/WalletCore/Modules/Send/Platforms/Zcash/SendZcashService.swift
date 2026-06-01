@@ -17,7 +17,7 @@ class SendZcashService {
     private let amountCautionService: SendAmountCautionService
     private let addressService: AddressService
     private let memoService: SendMemoInputService
-    private let adapter: ISendZcashAdapter
+    private let adapter: ZcashAdapter
 
     private let stateRelay = PublishRelay<SendBaseService.State>()
     private(set) var state: SendBaseService.State = .notReady {
@@ -33,7 +33,7 @@ class SendZcashService {
         }
     }
 
-    init(amountService: IAmountInputService, amountCautionService: SendAmountCautionService, addressService: AddressService, memoService: SendMemoInputService, adapter: ISendZcashAdapter, reachabilityManager: IReachabilityManager, token: Token, mode: PreSendViewModel.Mode) {
+    init(amountService: IAmountInputService, amountCautionService: SendAmountCautionService, addressService: AddressService, memoService: SendMemoInputService, adapter: ZcashAdapter, reachabilityManager: IReachabilityManager, token: Token, mode: PreSendViewModel.Mode) {
         self.amountService = amountService
         self.amountCautionService = amountCautionService
         self.addressService = addressService

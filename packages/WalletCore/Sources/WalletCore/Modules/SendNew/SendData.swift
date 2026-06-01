@@ -13,6 +13,7 @@ enum SendData {
     case evm(blockchainType: BlockchainType, transactionData: TransactionData, token: Token)
     case bitcoin(token: Token, params: SendParameters)
     case zcash(amount: Decimal, recipient: Recipient, memo: String?)
+    case zcashResend(amount: Decimal, recipient: Recipient, memo: String?, initialTransactionSettings: InitialTransactionSettings)
     case zcashShield(amount: Decimal, recipient: Recipient?, memo: String?)
     case tron(token: Token, contract: TronKit.Contract)
     case tronGasFree(token: Token, receiver: TronKit.Address, value: BigUInt)

@@ -7,14 +7,16 @@ class ZcashSendHandler {
     private let amount: Decimal
     private let recipient: Recipient
     private let memo: String?
+    let initialTransactionSettings: InitialTransactionSettings?
     private var adapter: ZcashAdapter
 
-    init(token: Token, amount: Decimal, recipient: Recipient, memo: String?, adapter: ZcashAdapter) {
+    init(token: Token, amount: Decimal, recipient: Recipient, memo: String?, adapter: ZcashAdapter, initialTransactionSettings: InitialTransactionSettings? = nil) {
         self.token = token
         self.amount = amount
         self.recipient = recipient
         self.memo = memo
         self.adapter = adapter
+        self.initialTransactionSettings = initialTransactionSettings
     }
 }
 
@@ -23,13 +25,19 @@ extension ZcashSendHandler: ISendHandler {
         token
     }
 
-    func sendData(transactionSettings _: TransactionSettings?) async throws -> ISendData {
+    func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
         let memoText = memo.flatMap { try? Memo(string: $0) }
+        let zip317MarginalFee = transactionSettings?.zcashZip317MarginalFee ?? ZcashAdapter.defaultZip317MarginalFee
 
         var transactionError: Error?
         var proposal: Proposal?
         do {
-            proposal = try await adapter.sendProposal(amount: amount, address: recipient, memo: memoText)
+            proposal = try await adapter.sendProposal(
+                amount: amount,
+                address: recipient,
+                memo: memoText,
+                zip317MarginalFee: zip317MarginalFee
+            )
         } catch {
             transactionError = error
         }
@@ -40,7 +48,8 @@ extension ZcashSendHandler: ISendHandler {
             recipient: recipient,
             memo: memo,
             transactionError: transactionError,
-            proposal: proposal
+            proposal: proposal,
+            zip317MarginalFee: zip317MarginalFee
         )
     }
 
@@ -49,7 +58,7 @@ extension ZcashSendHandler: ISendHandler {
             throw SendError.invalidData
         }
 
-        try await adapter.send(proposal: proposal)
+        try await adapter.send(proposal: proposal, zip317MarginalFee: data.zip317MarginalFee)
     }
 }
 
@@ -61,22 +70,24 @@ extension ZcashSendHandler {
         let memo: String?
         var transactionError: Error?
         let proposal: Proposal?
+        let zip317MarginalFee: Zatoshi
 
-        init(token: Token, amount: Decimal, recipient: Recipient, memo: String?, transactionError: Error?, proposal: Proposal?) {
+        init(token: Token, amount: Decimal, recipient: Recipient, memo: String?, transactionError: Error?, proposal: Proposal?, zip317MarginalFee: Zatoshi) {
             self.token = token
             self.amount = amount
             self.recipient = recipient
             self.memo = memo
             self.transactionError = transactionError
             self.proposal = proposal
+            self.zip317MarginalFee = zip317MarginalFee
         }
 
         var feeData: FeeData? {
-            nil
+            .zcash(fee: proposal?.totalFeeRequired().decimalValue.decimalValue)
         }
 
         var canSend: Bool {
-            transactionError == nil
+            proposal != nil && transactionError == nil
         }
 
         var rateCoins: [Coin] {
@@ -147,7 +158,7 @@ extension ZcashSendHandler {
 }
 
 extension ZcashSendHandler {
-    static func instance(amount: Decimal, recipient: Recipient, memo: String?) -> ZcashSendHandler? {
+    static func instance(amount: Decimal, recipient: Recipient, memo: String?, initialTransactionSettings: InitialTransactionSettings? = nil) -> ZcashSendHandler? {
         guard let token = try? Core.shared.coinManager.token(query: .init(blockchainType: .zcash, tokenType: .native)) else {
             return nil
         }
@@ -161,7 +172,8 @@ extension ZcashSendHandler {
             amount: amount,
             recipient: recipient,
             memo: memo,
-            adapter: adapter
+            adapter: adapter,
+            initialTransactionSettings: initialTransactionSettings
         )
     }
 }

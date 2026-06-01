@@ -5,14 +5,14 @@ import RxSwift
 
 class ZcashPreSendHandler {
     private let token: Token
-    private let adapter: ISendZcashAdapter & IBalanceAdapter
+    private let adapter: ZcashAdapter
 
     private let stateSubject = PassthroughSubject<AdapterState, Never>()
     private let balanceSubject = PassthroughSubject<Decimal, Never>()
 
     private let disposeBag = DisposeBag()
 
-    init(token: Token, adapter: ISendZcashAdapter & IBalanceAdapter) {
+    init(token: Token, adapter: ZcashAdapter) {
         self.token = token
         self.adapter = adapter
 

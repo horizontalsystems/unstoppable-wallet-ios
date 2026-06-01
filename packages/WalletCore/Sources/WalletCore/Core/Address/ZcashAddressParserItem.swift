@@ -58,7 +58,7 @@ extension ZcashAddressParserItem: IAddressParserItem {
 
 extension ZcashAddressParserItem {
     enum ParserType {
-        case adapter(ISendZcashAdapter)
+        case adapter(ZcashAdapter)
         case validator(ZcashAddressValidator)
     }
 
