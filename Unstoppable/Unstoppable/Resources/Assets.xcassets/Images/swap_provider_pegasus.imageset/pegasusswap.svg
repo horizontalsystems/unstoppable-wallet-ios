@@ -1,5 +1,5 @@
 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-<rect width="32" height="32" fill="#41356C"/>
+<rect width="32" height="32" fill="black"/>
 <mask id="mask0_26434_7148" style="mask-type:luminance" maskUnits="userSpaceOnUse" x="4" y="5" width="24" height="22">
 <path d="M27.7142 5H4.28564V27H27.7142V5Z" fill="white"/>
 </mask>
