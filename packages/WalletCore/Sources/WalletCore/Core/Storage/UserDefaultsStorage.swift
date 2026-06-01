@@ -1,11 +1,13 @@
 import Foundation
 
-class UserDefaultsStorage {
-    func value<T>(for key: String) -> T? {
+public class UserDefaultsStorage {
+    public init() {}
+
+    public func value<T>(for key: String) -> T? {
         UserDefaults.standard.value(forKey: key) as? T
     }
 
-    func set(value: (some Any)?, for key: String) {
+    public func set(value: (some Any)?, for key: String) {
         if let value {
             UserDefaults.standard.set(value, forKey: key)
         } else {

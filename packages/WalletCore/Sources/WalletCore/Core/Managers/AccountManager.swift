@@ -1,7 +1,7 @@
 import Combine
 import HsExtensions
 
-class AccountManager {
+public class AccountManager {
     private let passcodeManager: PasscodeManager
     private let storage: AccountCachedStorage
     private var cancellables = Set<AnyCancellable>()
@@ -15,7 +15,7 @@ class AccountManager {
 
     @PostPublished var lostAccountRecords: [AccountRecord]?
 
-    init(passcodeManager: PasscodeManager, accountStorage: AccountStorage, activeAccountStorage: ActiveAccountStorage) {
+    public init(passcodeManager: PasscodeManager, accountStorage: AccountStorage, activeAccountStorage: ActiveAccountStorage) {
         self.passcodeManager = passcodeManager
 
         storage = AccountCachedStorage(level: passcodeManager.currentPasscodeLevel, accountStorage: accountStorage, activeAccountStorage: activeAccountStorage)
@@ -55,11 +55,11 @@ class AccountManager {
 }
 
 extension AccountManager {
-    var activeAccountPublisher: AnyPublisher<Account?, Never> {
+    public var activeAccountPublisher: AnyPublisher<Account?, Never> {
         activeAccountSubject.eraseToAnyPublisher()
     }
 
-    var accountsPublisher: AnyPublisher<[Account], Never> {
+    public var accountsPublisher: AnyPublisher<[Account], Never> {
         accountsSubject.eraseToAnyPublisher()
     }
 
@@ -75,11 +75,11 @@ extension AccountManager {
         passcodeManager.currentPasscodeLevel
     }
 
-    var activeAccount: Account? {
+    public var activeAccount: Account? {
         storage.activeAccount
     }
 
-    func set(activeAccountId: String?) {
+    public func set(activeAccountId: String?) {
         guard storage.activeAccount?.id != activeAccountId else {
             return
         }
@@ -92,7 +92,7 @@ extension AccountManager {
         storage.allAccounts
     }
 
-    var accounts: [Account] {
+    public var accounts: [Account] {
         storage.accounts
     }
 
@@ -126,7 +126,7 @@ extension AccountManager {
         }
     }
 
-    func delete(account: Account) {
+    public func delete(account: Account) {
         storage.delete(account: account)
 
         accountsSubject.send(storage.accounts)

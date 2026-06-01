@@ -12,7 +12,7 @@ import TronKit
 //
 // Threading contract: public API called from main thread. Subscriber callback runs on
 // whatever queue AccountManager emits on (today: main) — GRDB DatabasePool is thread-safe.
-class SmartAccountManager {
+public class SmartAccountManager {
     private let accountManager: AccountManager
     private let profileStorage: SmartAccountProfileRecordStorage
     private let deploymentStorage: SmartAccountDeploymentRecordStorage
@@ -21,7 +21,7 @@ class SmartAccountManager {
     private let pendingGasFreeStorage: PendingGasFreeTransferRecordStorage
     private var cancellables = Set<AnyCancellable>()
 
-    init(accountManager: AccountManager, databaseDirectoryUrl: URL) throws {
+    public init(accountManager: AccountManager, databaseDirectoryUrl: URL) throws {
         let dbUrl = databaseDirectoryUrl.appendingPathComponent("aa.sqlite")
         let dbPool = try DatabasePool(path: dbUrl.path)
 

@@ -2,7 +2,7 @@ import Combine
 import HsExtensions
 import LocalAuthentication
 
-class BiometryManager {
+public class BiometryManager {
     private let biometricOnKey = "biometric_on_key"
     private let biometricEnabledTypeKey = "biometric_enabled_type_key"
 
@@ -16,7 +16,7 @@ class BiometryManager {
         }
     }
 
-    init(userDefaultsStorage: UserDefaultsStorage) {
+    public init(userDefaultsStorage: UserDefaultsStorage) {
         self.userDefaultsStorage = userDefaultsStorage
 
         if let earlyBiometricOn: Bool = userDefaultsStorage.value(for: biometricOnKey) {

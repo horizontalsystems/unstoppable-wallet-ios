@@ -1,7 +1,7 @@
 import Combine
 import HsExtensions
 
-class PasscodeManager {
+public class PasscodeManager {
     private let separator = "|"
     private let passcodeKey = "pin_keychain_key"
 
@@ -14,7 +14,7 @@ class PasscodeManager {
     @DistinctPublished private(set) var isPasscodeSet = false
     @DistinctPublished private(set) var isDuressPasscodeSet = false
 
-    init(biometryManager: BiometryManager, keychainStorage: KeychainStorage) {
+    public init(biometryManager: BiometryManager, keychainStorage: KeychainStorage) {
         self.biometryManager = biometryManager
         self.keychainStorage = keychainStorage
 

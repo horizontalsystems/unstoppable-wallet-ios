@@ -218,7 +218,7 @@ extension Coordinator {
         }
 
         present { _ in
-            SFSafariView(url: url).ignoresSafeArea()
+            SafariView(url: url).ignoresSafeArea()
         }
     }
 

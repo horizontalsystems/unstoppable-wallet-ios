@@ -2,7 +2,7 @@ import AuthenticationServices
 import Foundation
 import HdWalletKit
 
-class PasskeyManager: NSObject {
+public class PasskeyManager: NSObject {
     private let relyingParty = "unstoppable.money"
 
     private var assertionContinuation: CheckedContinuation<PrfOutput, Error>?
@@ -80,7 +80,7 @@ class PasskeyManager: NSObject {
 }
 
 extension PasskeyManager: ASAuthorizationControllerDelegate {
-    func authorizationController(
+    public func authorizationController(
         controller _: ASAuthorizationController,
         didCompleteWithAuthorization authorization: ASAuthorization
     ) {
@@ -120,7 +120,7 @@ extension PasskeyManager: ASAuthorizationControllerDelegate {
         assertionContinuation = nil
     }
 
-    func authorizationController(
+    public func authorizationController(
         controller _: ASAuthorizationController,
         didCompleteWithError error: Error
     ) {
@@ -154,7 +154,7 @@ extension PasskeyManager: ASAuthorizationControllerDelegate {
 }
 
 extension PasskeyManager: ASAuthorizationControllerPresentationContextProviding {
-    func presentationAnchor(for _: ASAuthorizationController) -> ASPresentationAnchor {
+    public func presentationAnchor(for _: ASAuthorizationController) -> ASPresentationAnchor {
         UIApplication.shared.connectedScenes
             .compactMap { $0 as? UIWindowScene }
             .flatMap(\.windows)

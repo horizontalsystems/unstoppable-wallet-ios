@@ -71,8 +71,8 @@ public class AppManager {
     }
 }
 
-extension AppManager {
-    public func didFinishLaunching() {
+public extension AppManager {
+    func didFinishLaunching() {
         warmUp()
 
         keychainManager.handleLaunch()
@@ -87,14 +87,14 @@ extension AppManager {
         statManager.sendStats()
     }
 
-    public func willResignActive() {
+    func willResignActive() {
         willResignActiveSubject.send()
 
         coverManager.willResignActive()
         rateAppManager.onResignActive()
     }
 
-    public func didBecomeActive() {
+    func didBecomeActive() {
         didBecomeActiveSubject.send()
         didBecomeActiveSubjectOld.onNext(())
 
@@ -103,7 +103,7 @@ extension AppManager {
         logRecordManager.onBecomeActive()
     }
 
-    public func didEnterBackground() {
+    func didEnterBackground() {
         didEnterBackgroundSubject.send()
 
         lockManager.didEnterBackground()
@@ -114,7 +114,7 @@ extension AppManager {
         solanaKitManager.solanaKit?.pause()
     }
 
-    public func willEnterForeground() {
+    func willEnterForeground() {
         willEnterForegroundSubject.send()
         willEnterForegroundSubjectOld.onNext(())
 
@@ -137,7 +137,7 @@ extension AppManager {
         widgetRefresher?.refreshAll()
     }
 
-    func didReceive(url: URL) {
+    internal func didReceive(url: URL) {
         deeplinkStorage.deepLinkUrl = url
     }
 }

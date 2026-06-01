@@ -1,11 +1,11 @@
 import MarketKit
 import RxSwift
 
-class WalletStorage {
+public class WalletStorage {
     private let marketKit: MarketKit.Kit
     private let storage: EnabledWalletStorage
 
-    init(marketKit: MarketKit.Kit, storage: EnabledWalletStorage) {
+    public init(marketKit: MarketKit.Kit, storage: EnabledWalletStorage) {
         self.marketKit = marketKit
         self.storage = storage
     }

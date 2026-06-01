@@ -6,8 +6,8 @@ import MarketKit
 import RxCocoa
 import RxSwift
 
-enum StorageMigrator {
-    static func migrate(dbPool: DatabasePool, localStorage: LocalStorage) throws {
+public enum StorageMigrator {
+    public static func migrate(dbPool: DatabasePool, localStorage: LocalStorage) throws {
         var migrator = DatabaseMigrator()
 
         migrator.registerMigration("createAccountRecordsTable") { db in

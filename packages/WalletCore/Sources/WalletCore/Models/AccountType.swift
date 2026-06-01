@@ -6,7 +6,7 @@ import HdWalletKit
 import MarketKit
 import TronKit
 
-enum AccountType: Identifiable {
+public enum AccountType: Identifiable {
     case mnemonic(words: [String], salt: String, bip39Compliant: Bool)
     case passkeyOwned(credentialID: Data)
     case evmPrivateKey(data: Data)
@@ -20,7 +20,7 @@ enum AccountType: Identifiable {
     case btcAddress(address: String, blockchainType: BlockchainType, tokenType: TokenType)
     case moneroWatchAccount(address: String, viewKey: String)
 
-    var id: Self {
+    public var id: Self {
         self
     }
 

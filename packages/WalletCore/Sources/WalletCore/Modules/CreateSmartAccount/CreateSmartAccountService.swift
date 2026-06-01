@@ -8,31 +8,31 @@ import TronKit
 /// Carries a passkey's credentialID together with the PRF-derived mnemonic that the
 /// service uses to derive a secp256k1 EOA owner for the Barz Smart Account.
 /// Produced both by registration (new passkey) and assertion (existing passkey).
-struct SmartAccountPasskeyRegistration: Equatable {
+public struct SmartAccountPasskeyRegistration: Equatable {
     let credentialID: Data
     let mnemonic: [String]
     let name: String
 }
 
-protocol SmartAccountPasskeyProviding {
+public protocol SmartAccountPasskeyProviding {
     func register(name: String) async throws -> SmartAccountPasskeyRegistration
     func restore() async throws -> SmartAccountPasskeyRegistration
 }
 
 extension PasskeyManager: SmartAccountPasskeyProviding {
-    func register(name: String) async throws -> SmartAccountPasskeyRegistration {
+    public func register(name: String) async throws -> SmartAccountPasskeyRegistration {
         let credentialID = try await create(name: name)
         let passkey = try await loginWith(credentialID: credentialID)
         return SmartAccountPasskeyRegistration(credentialID: credentialID, mnemonic: passkey.mnemonic, name: name)
     }
 
-    func restore() async throws -> SmartAccountPasskeyRegistration {
+    public func restore() async throws -> SmartAccountPasskeyRegistration {
         let passkey = try await login()
         return SmartAccountPasskeyRegistration(credentialID: passkey.credentialID, mnemonic: passkey.mnemonic, name: passkey.name)
     }
 }
 
-class CreateSmartAccountService {
+public class CreateSmartAccountService {
     private static let v1BlockchainTypes: [BlockchainType] = [.ethereum, .binanceSmartChain, .base]
 
     private let accountFactory: AccountFactory
@@ -41,7 +41,7 @@ class CreateSmartAccountService {
     private let activateDefaultWallets: (Account) -> Void
     private let passkeyProvider: SmartAccountPasskeyProviding
 
-    init(
+    public init(
         accountFactory: AccountFactory,
         accountManager: AccountManager,
         smartAccountManager: SmartAccountManager,
@@ -57,7 +57,7 @@ class CreateSmartAccountService {
 }
 
 extension CreateSmartAccountService {
-    func create(name: String) async throws -> Account {
+    public func create(name: String) async throws -> Account {
         let trimmed = name.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { throw CreateError.emptyName }
 
@@ -65,7 +65,7 @@ extension CreateSmartAccountService {
         return try provision(registration: registration, name: trimmed, statPage: .newWalletPasskey) { .createWallet(walletType: $0) }
     }
 
-    func restore() async throws -> Account {
+    public func restore() async throws -> Account {
         let registration = try await passkeyProvider.restore()
         let trimmed = registration.name.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmed.isEmpty else { throw CreateError.emptyName }
@@ -144,7 +144,7 @@ extension CreateSmartAccountService {
     }
 }
 
-extension CreateSmartAccountService {
+public extension CreateSmartAccountService {
     // Default production activation closure. Call-sites (Part 9 VM) use this with Core.shared deps.
     static func defaultActivator(
         marketKit: MarketKit.Kit,
