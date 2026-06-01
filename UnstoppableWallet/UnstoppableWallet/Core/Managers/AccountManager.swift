@@ -88,6 +88,10 @@ extension AccountManager {
         activeAccountSubject.send(storage.activeAccount)
     }
 
+    var allAccounts: [Account] {
+        storage.allAccounts
+    }
+
     var accounts: [Account] {
         storage.accounts
     }
