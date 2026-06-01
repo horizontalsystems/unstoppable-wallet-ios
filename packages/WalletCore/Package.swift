@@ -33,7 +33,7 @@ let package = Package(
         .package(url: "https://github.com/onevcat/Kingfisher.git", from: "8.6.2"),
         .package(url: "https://github.com/horizontalsystems/LitecoinKit.Swift", exact: "3.0.2"),
         .package(url: "https://github.com/horizontalsystems/MarketKit.Swift", exact: "3.6.11"),
-        .package(url: "https://github.com/horizontalsystems/MoneroKit.Swift", exact: "0.2.7"),
+        .package(url: "https://github.com/horizontalsystems/MoneroKit.Swift", exact: "0.2.8"),
         .package(url: "https://github.com/horizontalsystems/NftKit.Swift", exact: "2.0.2"),
         .package(url: "https://github.com/tristanhimmelman/ObjectMapper", exact: "4.2.0"),
         .package(url: "https://github.com/horizontalsystems/OneInchKit.Swift", exact: "3.0.4"),
@@ -46,10 +46,10 @@ let package = Package(
         .package(url: "https://github.com/horizontalsystems/StellarKit.Swift", exact: "1.2.0"),
         .package(url: "https://github.com/horizontalsystems/TonConnectAPI", exact: "1.0.0"),
         .package(url: "https://github.com/horizontalsystems/TonKit.Swift", exact: "1.2.1"),
-        .package(url: "https://github.com/horizontalsystems/TronKit.Swift.git", revision: "388d41e99a97a4f1501e52e404478bba5976cdfe"),
+        .package(url: "https://github.com/horizontalsystems/TronKit.Swift.git", exact: "1.5.1"),
         .package(url: "https://github.com/horizontalsystems/UIExtensions.Swift", exact: "1.0.2"),
         .package(url: "https://github.com/horizontalsystems/UniswapKit.Swift", exact: "3.2.0"),
-        .package(url: "https://github.com/horizontalsystems/ZcashLightClientKit", revision: "f186d017a2d33d50f0276c10adf8b544484acfe6"),
+        .package(url: "https://github.com/horizontalsystems/ZcashLightClientKit", branch: "master"),
     ],
     targets: [
         .target(
