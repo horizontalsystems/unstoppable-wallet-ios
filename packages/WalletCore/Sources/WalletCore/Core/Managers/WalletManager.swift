@@ -4,7 +4,7 @@ import MarketKit
 import RxRelay
 import RxSwift
 
-class WalletManager {
+public class WalletManager {
     private let accountManager: AccountManager
     private let storage: WalletStorage
     private var cancellables = Set<AnyCancellable>()
@@ -16,7 +16,7 @@ class WalletManager {
 
     private var cachedActiveWalletData = WalletData(wallets: [], account: nil)
 
-    init(accountManager: AccountManager, storage: WalletStorage) {
+    public init(accountManager: AccountManager, storage: WalletStorage) {
         self.accountManager = accountManager
         self.storage = storage
 

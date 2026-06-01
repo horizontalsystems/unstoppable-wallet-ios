@@ -83,4 +83,3 @@ extension Font {
     // static let themeMicro: Font = .manRopeFont(size: 10, weight: .regular)
     static let themeMicroSB: Font = .manRopeFont(size: 10, weight: .semibold)
 }
-

@@ -1,7 +1,7 @@
 import Foundation
 import MarketKit
 
-class LocalStorage {
+public class LocalStorage {
     private let agreementAcceptedKey = "i_understand_key"
     private let biometricOnKey = "biometric_on_key"
     private let lastExitDateKey = "last_exit_date_key"
@@ -39,7 +39,7 @@ class LocalStorage {
 
     private let userDefaultsStorage: UserDefaultsStorage
 
-    init(userDefaultsStorage: UserDefaultsStorage) {
+    public init(userDefaultsStorage: UserDefaultsStorage) {
         self.userDefaultsStorage = userDefaultsStorage
     }
 }

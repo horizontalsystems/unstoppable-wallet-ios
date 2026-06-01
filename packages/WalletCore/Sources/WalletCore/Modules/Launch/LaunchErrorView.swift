@@ -5,7 +5,7 @@ public struct LaunchErrorView: View {
     private let error: Error
 
     @State private var mailPresented = false
-    
+
     public init(error: Error) {
         self.error = error
     }

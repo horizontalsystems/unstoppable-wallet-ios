@@ -2,7 +2,7 @@ import SwiftUI
 
 public struct AppView: View {
     @StateObject var viewModel = AppViewModel()
-    
+
     public init() {}
 
     public var body: some View {

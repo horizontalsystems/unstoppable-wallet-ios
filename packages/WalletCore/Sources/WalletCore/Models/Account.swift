@@ -1,15 +1,15 @@
 import HdWalletKit
 
-class Account: Identifiable {
-    let id: String
+public class Account: Identifiable {
+    public let id: String
     var level: Int
-    var name: String
+    public var name: String
     let type: AccountType
     let origin: AccountOrigin
     var backedUp: Bool
     var fileBackedUp: Bool
 
-    init(id: String, level: Int, name: String, type: AccountType, origin: AccountOrigin, backedUp: Bool, fileBackedUp: Bool) {
+    public init(id: String, level: Int, name: String, type: AccountType, origin: AccountOrigin, backedUp: Bool, fileBackedUp: Bool) {
         self.id = id
         self.level = level
         self.name = name
@@ -69,7 +69,7 @@ extension Account: Hashable {
     }
 }
 
-enum AccountOrigin: String {
+public enum AccountOrigin: String {
     case created
     case restored
 }

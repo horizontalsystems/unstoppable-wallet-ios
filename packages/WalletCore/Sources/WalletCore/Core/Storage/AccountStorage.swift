@@ -4,11 +4,11 @@ import HdWalletKit
 import MarketKit
 import TronKit
 
-class AccountStorage {
+public class AccountStorage {
     private let keychainStorage: KeychainStorage
     private let storage: AccountRecordStorage
 
-    init(keychainStorage: KeychainStorage, storage: AccountRecordStorage) {
+    public init(keychainStorage: KeychainStorage, storage: AccountRecordStorage) {
         self.keychainStorage = keychainStorage
         self.storage = storage
     }
