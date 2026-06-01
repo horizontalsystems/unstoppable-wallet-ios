@@ -64,6 +64,7 @@
 "alert.connected" = "Подключено";
 "alert.enabling" = "Идет активация";
 "alert.enabled_coins" = "Включено ещё %@ монет";
+"alert.preparing" = "Подготовка";
 "alert.sending" = "Отправка";
 "alert.sent" = "Отправлено";
 "alert.swapping" = "Обмен";
@@ -2160,6 +2161,8 @@
 
 "fee_settings.network_fee" = "Комиссия";
 "fee_settings.network_fee.info" = "Ориентировочная стоимость отправки данной транзакции по сети.";
+"fee_settings.zcash_marginal_fee" = "Предельная комиссия";
+"fee_settings.zcash_marginal_fee.info" = "Предельная комиссия — это сумма в затоши, уплачиваемая за каждый выход, используемый транзакцией.\n\nЕсли кошелёк использует много мелких выходов, общая сетевая комиссия будет выше.";
 "fee_settings.l1_fee" = "L1 комиссия";
 "fee_settings.l1_fee.info" = "Оценочная стоимость отправки указанной транзакции по сети уровня 1.";
 "fee_settings.gas_limit" = "Gas Limit";
@@ -2180,6 +2183,9 @@
 "fee_settings.errors.insufficient_balance.info" = "Текущий баланс %@ ниже суммы, необходимой для обработки этой транзакции, включая комиссию за транзакцию.";
 "fee_settings.errors.low_max_fee" = "Низкая комиссия";
 "fee_settings.errors.low_max_fee.info" = "Установленная сумма комиссии недостаточно для обработки этой транзакции.";
+"fee_settings.errors.invalid_value" = "Недопустимое значение";
+"fee_settings.errors.zcash_marginal_fee_too_low" = "Значение комиссии слишком низкое.";
+"fee_settings.errors.zcash_marginal_fee_too_high" = "Значение комиссии слишком высокое.";
 "fee_settings.errors.nonce_already_in_block" = "Не удается заменить транзакцию.";
 "fee_settings.errors.replacement_transaction_underpriced" = "Низкая комиссия на замену транзакции";
 "fee_settings.errors.transaction_underpriced" = "Низкая комиссия за транзакцию";
@@ -2576,3 +2582,18 @@
 "wallet_name.98" = "🍎 Антоновский Маркет";
 "wallet_name.99" = "🏔️ Кавказский Капитал";
 "wallet_name.100" = "🌙 Месячный Рубль";
+
+"open_crypto_pay.error.invalid_url" = "Эта платёжная ссылка не распознана.";
+"open_crypto_pay.error.invalid_lnurl" = "Платёжные данные имеют неверный формат.";
+"open_crypto_pay.error.no_supported_method" = "Нет подходящего кошелька для этого продавца.";
+"open_crypto_pay.error.quote_expired" = "Срок котировки истёк. Отсканируйте QR-код повторно.";
+"open_crypto_pay.error.malformed_tx_uri" = "Данные платежа имеют неверный формат.";
+"open_crypto_pay.error.amount_mismatch" = "Сумма отличается от исходной котировки. Пожалуйста, отсканируйте повторно.";
+"open_crypto_pay.error.unsupported_parameter" = "Этот платёж содержит неподдерживаемые параметры и был заблокирован в целях безопасности.";
+"open_crypto_pay.error.chain_mismatch" = "Несоответствие блокчейна в данных платежа.";
+"open_crypto_pay.error.account_changed" = "Активный аккаунт или кошелёк изменился. Пожалуйста, отсканируйте повторно.";
+"open_crypto_pay.token_list.description" = "Выберите токен, который хотите использовать для оплаты";
+"open_crypto_pay.merchant.name" = "Продавец";
+"open_crypto_pay.merchant.url" = "URL";
+"open_crypto_pay.expires_in" = "Истекает через";
+"open_crypto_pay.button.expired" = "Котировка истекла";
