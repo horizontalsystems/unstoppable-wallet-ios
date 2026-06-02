@@ -1,9 +1,9 @@
 import MarketKit
 
-class RestoreStateManager {
+public class RestoreStateManager {
     private let storage: RestoreStateStorage
 
-    init(storage: RestoreStateStorage) {
+    public init(storage: RestoreStateStorage) {
         self.storage = storage
     }
 }

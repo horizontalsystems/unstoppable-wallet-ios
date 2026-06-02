@@ -1,6 +1,5 @@
 import Foundation
 import MarketKit
-import WalletCore
 
 class OpenCryptoPayManager {
     let provider: OpenCryptoPayProvider

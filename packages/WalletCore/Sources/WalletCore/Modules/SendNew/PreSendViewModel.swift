@@ -2,7 +2,7 @@ import Combine
 import Foundation
 import MarketKit
 
-class PreSendViewModel: ObservableObject {
+public class PreSendViewModel: ObservableObject {
     private let wallet: Wallet
     let resolvedAddress: ResolvedAddress
     private let currencyManager = Core.shared.currencyManager
@@ -15,12 +15,16 @@ class PreSendViewModel: ObservableObject {
 
     @Published var currency: Currency
 
-    var amount: Decimal? {
+    public var amount: Decimal? {
         didSet {
             syncFiatAmount()
             syncSendData()
 
-            let amount = decimalParser.parseAnyDecimal(from: amountString)
+            var amount = decimalParser.parseAnyDecimal(from: amountString)
+
+            if amount == 0 {
+                amount = nil
+            }
 
             if amount != self.amount {
                 amountString = self.amount?.description ?? ""
@@ -28,7 +32,7 @@ class PreSendViewModel: ObservableObject {
         }
     }
 
-    @Published var amountString: String = "" {
+    @Published public var amountString: String = "" {
         didSet {
             var amount = decimalParser.parseAnyDecimal(from: amountString)
 
@@ -78,8 +82,8 @@ class PreSendViewModel: ObservableObject {
         }
     }
 
-    @Published var adapterState: AdapterState?
-    @Published var availableBalance: Decimal?
+    @Published public private(set) var adapterState: AdapterState?
+    @Published public private(set) var availableBalance: Decimal?
     @Published var hasMemo = false
 
     private var enteringFiat = false
@@ -91,10 +95,10 @@ class PreSendViewModel: ObservableObject {
     }
 
     var handler: IPreSendHandler?
-    @Published var sendData: ExtendedSendData?
+    @Published public private(set) var sendData: ExtendedSendData?
     @Published var cautions = [CautionNew]()
 
-    init(wallet: Wallet, handler: IPreSendHandler?, resolvedAddress: ResolvedAddress, amount: Decimal?, memo: String?) {
+    public init(wallet: Wallet, handler: IPreSendHandler?, resolvedAddress: ResolvedAddress, amount: Decimal?, memo: String?) {
         self.wallet = wallet
         self.handler = handler
         self.resolvedAddress = resolvedAddress
@@ -181,16 +185,16 @@ class PreSendViewModel: ObservableObject {
     }
 }
 
-extension PreSendViewModel {
+public extension PreSendViewModel {
     var token: Token {
         wallet.token
     }
 
-    var title: String {
+    internal var title: String {
         handler?.title(token.coin.code) ?? "send.send".localized
     }
 
-    func syncSendData() {
+    internal func syncSendData() {
         guard let amount else {
             sendData = nil
             return
@@ -233,14 +237,14 @@ extension PreSendViewModel {
 
     func clearAmountIn() {
         enteringFiat = false
-        amount = nil
+        amountString = ""
     }
 }
 
 extension PreSendViewModel {
-    struct ExtendedSendData {
-        let sendData: SendData
-        let address: String?
+    public struct ExtendedSendData {
+        public let sendData: SendData
+        public let address: String?
     }
 
     // TODO: remove this, not needed for new send

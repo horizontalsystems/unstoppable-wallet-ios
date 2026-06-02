@@ -376,7 +376,7 @@ extension MoneroAdapter {
     }
 }
 
-enum MoneroSendAmount {
+public enum MoneroSendAmount {
     case value(Decimal)
     case all(Decimal)
 

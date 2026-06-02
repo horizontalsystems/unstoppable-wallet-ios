@@ -483,10 +483,10 @@ extension BitcoinBaseAdapter {
     }
 }
 
-class DepositAddress {
-    let address: String
+public class DepositAddress {
+    public let address: String
 
-    init(_ receiveAddress: String) {
+    public init(_ receiveAddress: String) {
         address = receiveAddress
     }
 }

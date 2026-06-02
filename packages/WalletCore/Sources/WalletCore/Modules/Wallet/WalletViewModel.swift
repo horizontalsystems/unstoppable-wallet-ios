@@ -3,19 +3,18 @@ import Foundation
 import MarketKit
 import RxSwift
 
-class WalletViewModel: WalletListViewModel {
+public class WalletViewModel: WalletListViewModel {
     private let balanceConversionManager = Core.shared.balanceConversionManager
     private let walletButtonHiddenManager = Core.shared.walletButtonHiddenManager
-    private let cloudBackupManager = Core.shared.cloudBackupManager
     private let appManager = Core.shared.appManager
     private let eventHandler = Core.shared.appEventHandler
     private let rateAppManager = Core.shared.rateAppManager
     private let appStateManager = AppStateManager.instance
 
     @Published private(set) var buttonHidden: Bool
-    @Published private(set) var totalItem: TotalItem
+    @Published public private(set) var totalItem: TotalItem
 
-    override init() {
+    override public init() {
         buttonHidden = walletButtonHiddenManager.buttonHidden
         totalItem = .init(currencyValue: .init(currency: .init(code: "", symbol: "", decimal: 0), value: 0), state: .synced, convertedValue: nil, convertedValueExpired: false)
 
@@ -157,8 +156,8 @@ extension WalletViewModel {
 }
 
 extension WalletViewModel {
-    struct TotalItem {
-        let currencyValue: CurrencyValue
+    public struct TotalItem {
+        public let currencyValue: CurrencyValue
         let state: ValueState
         let convertedValue: AppValue?
         let convertedValueExpired: Bool

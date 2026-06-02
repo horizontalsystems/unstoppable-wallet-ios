@@ -3,7 +3,6 @@ import Foundation
 import MarketKit
 import SwiftUI
 import WalletConnectSign
-import WalletCore
 
 protocol IEventHandler {
     var signal: AnyPublisher<EventHandlerSignal, Never> { get }

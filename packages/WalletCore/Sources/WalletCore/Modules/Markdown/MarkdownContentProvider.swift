@@ -2,7 +2,6 @@ import Alamofire
 import Foundation
 import HsToolKit
 import RxSwift
-import WalletCore
 
 protocol IMarkdownContentProvider {
     var contentSingle: Single<String> { get }

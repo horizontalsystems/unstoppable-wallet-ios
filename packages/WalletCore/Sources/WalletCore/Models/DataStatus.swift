@@ -1,12 +1,12 @@
 import Foundation
 import RxCocoa
 
-enum DataStatus<T> {
+public enum DataStatus<T> {
     case loading
     case failed(Error)
     case completed(T)
 
-    init(data: T?) {
+    public init(data: T?) {
         if let data {
             self = .completed(data)
         } else {

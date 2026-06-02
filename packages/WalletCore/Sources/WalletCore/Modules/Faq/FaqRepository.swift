@@ -1,7 +1,6 @@
 import HsToolKit
 import RxRelay
 import RxSwift
-import WalletCore
 
 class FaqRepository {
     private let disposeBag = DisposeBag()

@@ -6,7 +6,7 @@ import TonKit
 import TonSwift
 import TweetNacl
 
-class TonKitManager {
+public class TonKitManager {
     private let restoreStateManager: RestoreStateManager
     private let marketKit: MarketKit.Kit
     private let walletManager: WalletManager
@@ -18,7 +18,7 @@ class TonKitManager {
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).ton-kit-manager", qos: .userInitiated)
 
-    init(restoreStateManager: RestoreStateManager, marketKit: MarketKit.Kit, walletManager: WalletManager) {
+    public init(restoreStateManager: RestoreStateManager, marketKit: MarketKit.Kit, walletManager: WalletManager) {
         self.restoreStateManager = restoreStateManager
         self.walletManager = walletManager
         self.marketKit = marketKit

@@ -4,7 +4,7 @@ import MarketKit
 import RxRelay
 import RxSwift
 
-class EvmSyncSourceManager {
+public class EvmSyncSourceManager {
     private let testNetManager: TestNetManager
     private let blockchainSettingsStorage: BlockchainSettingsStorage
     private let evmSyncSourceStorage: EvmSyncSourceStorage
@@ -12,7 +12,7 @@ class EvmSyncSourceManager {
     private let syncSourceRelay = PublishRelay<BlockchainType>()
     private let syncSourcesUpdatedRelay = PublishRelay<BlockchainType>()
 
-    init(testNetManager: TestNetManager, blockchainSettingsStorage: BlockchainSettingsStorage, evmSyncSourceStorage: EvmSyncSourceStorage) {
+    public init(testNetManager: TestNetManager, blockchainSettingsStorage: BlockchainSettingsStorage, evmSyncSourceStorage: EvmSyncSourceStorage) {
         self.testNetManager = testNetManager
         self.blockchainSettingsStorage = blockchainSettingsStorage
         self.evmSyncSourceStorage = evmSyncSourceStorage

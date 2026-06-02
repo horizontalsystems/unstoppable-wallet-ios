@@ -1,8 +1,8 @@
 import Foundation
 
-struct BalanceData: Hashable {
-    let total: Decimal
-    let available: Decimal
+public struct BalanceData: Hashable {
+    public let total: Decimal
+    public let available: Decimal
 
     init(balance: Decimal) {
         total = balance

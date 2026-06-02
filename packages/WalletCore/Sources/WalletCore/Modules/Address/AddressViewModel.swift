@@ -2,7 +2,7 @@ import Combine
 import Foundation
 import MarketKit
 
-class AddressViewModel: ObservableObject {
+public class AddressViewModel: ObservableObject {
     private let recentlySentManager = Core.shared.recentlySentManager
 
     let token: Token
@@ -13,16 +13,16 @@ class AddressViewModel: ObservableObject {
     let securityCheckViewModel: AddressSecurityCheckViewModel
     private var cancellables = Set<AnyCancellable>()
 
-    @Published var address: String = ""
-    @Published var addressResult: AddressInput.Result = .idle {
+    @Published public var address: String = ""
+    @Published public var addressResult: AddressInput.Result = .idle {
         didSet {
             syncAddressState()
         }
     }
 
-    @Published private(set) var state: State = .empty
+    @Published public private(set) var state: State = .empty
 
-    init(token: Token, destination: AddressViewModel.Destination, address: String?) {
+    public init(token: Token, destination: AddressViewModel.Destination, address: String?) {
         self.token = token
         self.destination = destination
         initialAddress = address ?? ""
@@ -97,7 +97,7 @@ class AddressViewModel: ObservableObject {
     }
 }
 
-extension AddressViewModel {
+public extension AddressViewModel {
     enum State: Equatable {
         case empty
         case invalid(CautionNew?)
@@ -117,7 +117,7 @@ extension AddressViewModel {
         }
     }
 
-    struct Contact: Identifiable {
+    internal struct Contact: Identifiable {
         let uid: String
         let name: String?
         let address: String

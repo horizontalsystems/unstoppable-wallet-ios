@@ -3,7 +3,7 @@ import MarketKit
 import RxRelay
 import RxSwift
 
-class AdapterManager {
+public class AdapterManager {
     private enum ZcashEndpointValidationError: Error {
         case noActiveAdapter
         case unavailable
@@ -29,9 +29,9 @@ class AdapterManager {
     private let initAdaptersQueue = DispatchQueue(label: "\(AppConfig.label).adapter_manager.init_adapters", qos: .userInitiated)
     private var _adapterData = AdapterData(adapterMap: [:], account: nil)
 
-    init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager,
-         tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager, zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager,
-         btcBlockchainManager: BtcBlockchainManager, moneroNodeManager: MoneroNodeManager, zanoNodeManager: ZanoNodeManager, zcashNodeManager: ZcashNodeManager)
+    public init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager,
+                tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager, zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager,
+                btcBlockchainManager: BtcBlockchainManager, moneroNodeManager: MoneroNodeManager, zanoNodeManager: ZanoNodeManager, zcashNodeManager: ZcashNodeManager)
     {
         self.adapterFactory = adapterFactory
         self.walletManager = walletManager
@@ -196,11 +196,11 @@ extension AdapterManager {
         }
     }
 
-    func balanceAdapter(for wallet: Wallet) -> IBalanceAdapter? {
+    public func balanceAdapter(for wallet: Wallet) -> IBalanceAdapter? {
         queue.sync { _adapterData.adapterMap[wallet] as? IBalanceAdapter }
     }
 
-    func depositAdapter(for wallet: Wallet) -> IDepositAdapter? {
+    public func depositAdapter(for wallet: Wallet) -> IDepositAdapter? {
         queue.sync { _adapterData.adapterMap[wallet] as? IDepositAdapter }
     }
 

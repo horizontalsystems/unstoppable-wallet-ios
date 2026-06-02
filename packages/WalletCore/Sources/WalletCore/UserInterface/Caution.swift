@@ -60,7 +60,7 @@ struct Caution: Equatable, Hashable {
     }
 }
 
-enum CautionType: Equatable, Hashable {
+public enum CautionType: Equatable, Hashable {
     case error
     case warning
 
@@ -85,7 +85,7 @@ enum CautionType: Equatable, Hashable {
         }
     }
 
-    static func == (lhs: CautionType, rhs: CautionType) -> Bool {
+    public static func == (lhs: CautionType, rhs: CautionType) -> Bool {
         switch (lhs, rhs) {
         case (.error, .error), (.warning, .warning): return true
         default: return false
@@ -121,12 +121,12 @@ class CancellableTitledCaution: TitledCaution {
     }
 }
 
-struct CautionNew: Equatable, Hashable {
-    let title: String?
-    let text: String
-    let type: CautionType
+public struct CautionNew: Equatable, Hashable {
+    public let title: String?
+    public let text: String
+    public let type: CautionType
 
-    init(title: String? = nil, text: String, type: CautionType) {
+    public init(title: String? = nil, text: String, type: CautionType) {
         self.title = title
         self.text = text
         self.type = type

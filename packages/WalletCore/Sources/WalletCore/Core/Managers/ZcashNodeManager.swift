@@ -3,14 +3,14 @@ import MarketKit
 import RxRelay
 import RxSwift
 
-class ZcashNodeManager {
+public class ZcashNodeManager {
     private let blockchainSettingsStorage: BlockchainSettingsStorage
     private let zcashNodeStorage: ZcashNodeStorage
 
     private let nodeRelay = PublishRelay<BlockchainType>()
     private let nodeUpdatedRelay = PublishRelay<BlockchainType>()
 
-    init(blockchainSettingsStorage: BlockchainSettingsStorage, zcashNodeStorage: ZcashNodeStorage) {
+    public init(blockchainSettingsStorage: BlockchainSettingsStorage, zcashNodeStorage: ZcashNodeStorage) {
         self.blockchainSettingsStorage = blockchainSettingsStorage
         self.zcashNodeStorage = zcashNodeStorage
     }

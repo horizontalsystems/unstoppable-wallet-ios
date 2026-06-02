@@ -3,7 +3,7 @@ import Foundation
 import HsExtensions
 import MarketKit
 
-class SendViewModel: ObservableObject {
+public class SendViewModel: ObservableObject {
     private let autoRefreshDuration: Double = 20
 
     private let currencyManager = Core.shared.currencyManager
@@ -16,15 +16,15 @@ class SendViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     private var timer: Timer?
 
-    let handler: ISendHandler?
+    public let handler: ISendHandler?
     let transactionService: ITransactionService?
-    let currency: Currency
+    public let currency: Currency
 
     private let address: String?
 
-    @Published var rates = [String: Decimal]()
+    @Published public var rates = [String: Decimal]()
 
-    @Published var sendData: ISendData?
+    @Published public var sendData: ISendData?
     @Published var sending = false
     @Published var transactionSettingsModified = false
 
@@ -32,7 +32,7 @@ class SendViewModel: ObservableObject {
 
     private let errorSubject = PassthroughSubject<String, Never>()
 
-    @Published var state: State = .syncing {
+    @Published public var state: State = .syncing {
         didSet {
             timer?.invalidate()
             nextRefreshTime = nil
@@ -48,7 +48,7 @@ class SendViewModel: ObservableObject {
         }
     }
 
-    init(sendData: SendData, address: String? = nil) {
+    public init(sendData: SendData, address: String? = nil) {
         handler = SendHandlerFactory.handler(sendData: sendData)
         currency = currencyManager.baseCurrency
         self.address = address
@@ -97,7 +97,7 @@ class SendViewModel: ObservableObject {
         return cautions
     }
 
-    var canSend: Bool {
+    public var canSend: Bool {
         guard let sendData, sendData.canSend else {
             return false
         }
@@ -131,16 +131,16 @@ class SendViewModel: ObservableObject {
     }
 }
 
-extension SendViewModel {
+public extension SendViewModel {
     var errorPublisher: AnyPublisher<String, Never> {
         errorSubject.eraseToAnyPublisher()
     }
 
-    func stopAutoQuoting() {
+    internal func stopAutoQuoting() {
         timer?.invalidate()
     }
 
-    func autoQuoteIfRequired() {
+    internal func autoQuoteIfRequired() {
         guard !state.isSyncing, let nextRefreshTime else {
             return
         }
@@ -221,19 +221,19 @@ extension SendViewModel {
 }
 
 extension SendViewModel {
-    enum State {
+    public enum State {
         case syncing
         case success
         case failed(error: Error)
 
-        var isSyncing: Bool {
+        public var isSyncing: Bool {
             switch self {
             case .syncing: return true
             default: return false
             }
         }
 
-        var isSuccess: Bool {
+        public var isSuccess: Bool {
             switch self {
             case .success: return true
             default: return false

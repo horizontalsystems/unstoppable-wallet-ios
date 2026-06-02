@@ -3,7 +3,7 @@ import MarketKit
 import RxRelay
 import RxSwift
 
-class BtcBlockchainManager {
+public class BtcBlockchainManager {
     static let blockchainTypes: [BlockchainType] = [
         .bitcoin,
         .bitcoinCash,
@@ -25,7 +25,7 @@ class BtcBlockchainManager {
 
     let allBlockchains: [Blockchain]
 
-    init(marketKit: MarketKit.Kit, storage: BlockchainSettingsStorage) {
+    public init(marketKit: MarketKit.Kit, storage: BlockchainSettingsStorage) {
         self.marketKit = marketKit
         self.storage = storage
 

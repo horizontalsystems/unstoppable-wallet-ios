@@ -8,14 +8,14 @@ struct ZanoNode: Equatable {
     let url: URL
 }
 
-class ZanoNodeManager {
+public class ZanoNodeManager {
     private let blockchainSettingsStorage: BlockchainSettingsStorage
     private let zanoNodeStorage: ZanoNodeStorage
 
     private let nodeRelay = PublishRelay<BlockchainType>()
     private let nodeUpdatedRelay = PublishRelay<BlockchainType>()
 
-    init(blockchainSettingsStorage: BlockchainSettingsStorage, zanoNodeStorage: ZanoNodeStorage) {
+    public init(blockchainSettingsStorage: BlockchainSettingsStorage, zanoNodeStorage: ZanoNodeStorage) {
         self.blockchainSettingsStorage = blockchainSettingsStorage
         self.zanoNodeStorage = zanoNodeStorage
     }

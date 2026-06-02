@@ -2,7 +2,7 @@ import Foundation
 import MarketKit
 import SwiftUI
 
-protocol ISendData {
+public protocol ISendData {
     var feeData: FeeData? { get }
     var canSend: Bool { get }
     var rateCoins: [Coin] { get }
@@ -21,13 +21,13 @@ extension ISendData {
     }
 }
 
-struct SendDataSection {
-    let fields: [SendField]
-    let isMain: Bool
-    let isFlow: Bool
-    let isList: Bool
+public struct SendDataSection {
+    public let fields: [SendField]
+    public let isMain: Bool
+    public let isFlow: Bool
+    public let isList: Bool
 
-    init(_ fields: [SendField], isMain: Bool = true, isFlow: Bool = false, isList: Bool = true) {
+    public init(_ fields: [SendField], isMain: Bool = true, isFlow: Bool = false, isList: Bool = true) {
         self.fields = fields
         self.isMain = isMain
         self.isFlow = isFlow

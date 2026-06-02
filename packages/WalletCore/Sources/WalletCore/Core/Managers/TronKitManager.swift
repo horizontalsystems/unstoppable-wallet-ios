@@ -5,7 +5,7 @@ import RxRelay
 import RxSwift
 import TronKit
 
-class TronKitManager {
+public class TronKitManager {
     private let disposeBag = DisposeBag()
     private let testNetManager: TestNetManager
     private let evmSyncSourceManager: EvmSyncSourceManager
@@ -18,7 +18,7 @@ class TronKitManager {
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).tron-kit-manager", qos: .userInitiated)
 
-    init(testNetManager: TestNetManager, evmSyncSourceManager: EvmSyncSourceManager) {
+    public init(testNetManager: TestNetManager, evmSyncSourceManager: EvmSyncSourceManager) {
         self.testNetManager = testNetManager
         self.evmSyncSourceManager = evmSyncSourceManager
 

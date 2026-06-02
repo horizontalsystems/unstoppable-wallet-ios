@@ -1,6 +1,6 @@
 import Foundation
 
-class ContactBookHelper {
+public class ContactBookHelper {
     // Merge contacts with replace older contacts by newer
     func mergeNewer(lhs: [Contact], rhs: [Contact]) -> [Contact] {
         let left = Set(lhs)

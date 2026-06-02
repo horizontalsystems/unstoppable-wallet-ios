@@ -1,6 +1,6 @@
 import Foundation
 
-class MultiSwapQuote {
+public class MultiSwapQuote {
     let expectedBuyAmount: Decimal
     let estimatedTime: TimeInterval?
 

@@ -60,11 +60,11 @@ public class WalletManager {
 }
 
 extension WalletManager {
-    var activeWalletData: WalletData {
+    public var activeWalletData: WalletData {
         queue.sync { cachedActiveWalletData }
     }
 
-    var activeWallets: [Wallet] {
+    public var activeWallets: [Wallet] {
         activeWalletData.wallets
     }
 
@@ -112,9 +112,9 @@ extension WalletManager {
     }
 }
 
-extension WalletManager {
+public extension WalletManager {
     struct WalletData {
-        let wallets: [Wallet]
-        let account: Account?
+        public let wallets: [Wallet]
+        public let account: Account?
     }
 }

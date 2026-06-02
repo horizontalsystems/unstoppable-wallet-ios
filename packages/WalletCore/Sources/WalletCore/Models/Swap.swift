@@ -3,7 +3,7 @@ import GRDB
 import MarketKit
 import SwiftUI
 
-struct Swap: Hashable {
+public struct Swap: Hashable {
     let uid: String
     let txHash: String?
     let accountId: String

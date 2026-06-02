@@ -2,7 +2,7 @@ import EvmKit
 import Foundation
 import RxSwift
 
-class EvmLabelManager {
+public class EvmLabelManager {
     private let keyMethodLabelsTimestamp = "evm-label-manager-method-labels-timestamp"
     private let keyAddressLabelsTimestamp = "evm-label-manager-address-labels-timestamp"
 
@@ -11,7 +11,7 @@ class EvmLabelManager {
     private let syncerStateStorage: SyncerStateStorage
     private let disposeBag = DisposeBag()
 
-    init(provider: HsLabelProvider, storage: EvmLabelStorage, syncerStateStorage: SyncerStateStorage) {
+    public init(provider: HsLabelProvider, storage: EvmLabelStorage, syncerStateStorage: SyncerStateStorage) {
         self.provider = provider
         self.storage = storage
         self.syncerStateStorage = syncerStateStorage

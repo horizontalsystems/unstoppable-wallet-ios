@@ -1,12 +1,18 @@
 import SwiftUI
 import UIKit
 
-struct ActivityView: View {
+public struct ActivityView: View {
     let activityItems: [Any]
     var applicationActivities: [UIActivity]? = nil
     var completionWithItemsHandler: UIActivityViewController.CompletionWithItemsHandler? = nil
 
-    var body: some View {
+    public init(activityItems: [Any], applicationActivities: [UIActivity]? = nil, completionWithItemsHandler: UIActivityViewController.CompletionWithItemsHandler? = nil) {
+        self.activityItems = activityItems
+        self.applicationActivities = applicationActivities
+        self.completionWithItemsHandler = completionWithItemsHandler
+    }
+
+    public var body: some View {
         ActivityViewInternal(activityItems: activityItems, applicationActivities: applicationActivities, completionWithItemsHandler: completionWithItemsHandler)
             .presentationDetents([.medium, .large])
     }

@@ -1,7 +1,7 @@
 import RxRelay
 import RxSwift
 
-class BalanceHiddenManager {
+public class BalanceHiddenManager {
     static let placeholder = "* * *"
     private let keyBalanceHidden = "wallet-balance-hidden"
     private let keyBalanceAutoHide = "wallet-balance-auto-hide"
@@ -17,7 +17,7 @@ class BalanceHiddenManager {
 
     private(set) var balanceAutoHide: Bool
 
-    init(userDefaultsStorage: UserDefaultsStorage) {
+    public init(userDefaultsStorage: UserDefaultsStorage) {
         self.userDefaultsStorage = userDefaultsStorage
 
         if let balanceHidden: Bool = userDefaultsStorage.value(for: keyBalanceHidden) {
@@ -60,7 +60,7 @@ extension BalanceHiddenManager {
         }
     }
 
-    func didEnterBackground() {
+    public func didEnterBackground() {
         if balanceAutoHide {
             set(balanceHidden: true)
         }

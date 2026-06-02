@@ -1,14 +1,14 @@
 import Foundation
 
-class KitCleaner {
+public class KitCleaner {
     private let accountManager: AccountManager
 
-    init(accountManager: AccountManager) {
+    public init(accountManager: AccountManager) {
         self.accountManager = accountManager
     }
 }
 
-extension KitCleaner {
+public extension KitCleaner {
     func clear() {
         let accountIds = accountManager.allAccounts.map(\.id)
 

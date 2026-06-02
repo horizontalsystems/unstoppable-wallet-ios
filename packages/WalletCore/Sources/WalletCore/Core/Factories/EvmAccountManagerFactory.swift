@@ -1,13 +1,13 @@
 import Foundation
 import MarketKit
 
-class EvmAccountManagerFactory {
+public class EvmAccountManagerFactory {
     private let accountManager: AccountManager
     private let walletManager: WalletManager
     private let restoreStateManager: RestoreStateManager
     private let marketKit: MarketKit.Kit
 
-    init(accountManager: AccountManager, walletManager: WalletManager, restoreStateManager: RestoreStateManager, marketKit: MarketKit.Kit) {
+    public init(accountManager: AccountManager, walletManager: WalletManager, restoreStateManager: RestoreStateManager, marketKit: MarketKit.Kit) {
         self.accountManager = accountManager
         self.walletManager = walletManager
         self.restoreStateManager = restoreStateManager

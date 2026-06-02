@@ -3,7 +3,7 @@ import Foundation
 import MarketKit
 import SwiftUI
 
-protocol IMultiSwapProvider {
+public protocol IMultiSwapProvider {
     var id: String { get }
     var name: String { get }
     var type: SwapProviderType { get }
@@ -45,7 +45,7 @@ extension IMultiSwapProvider {
     }
 }
 
-enum SwapProviderType: String, CaseIterable, Identifiable {
+public enum SwapProviderType: String, CaseIterable, Identifiable {
     case excellent
     case good
     case fair
@@ -70,7 +70,7 @@ enum SwapProviderType: String, CaseIterable, Identifiable {
         }
     }
 
-    var id: String {
+    public var id: String {
         rawValue
     }
 }

@@ -1,20 +1,24 @@
 import AVFoundation
 import SwiftUI
 
-struct QrCameraPreviewNew: UIViewRepresentable {
-    let session: AVCaptureSession
+public struct QrCameraPreviewNew: UIViewRepresentable {
+    private let session: AVCaptureSession
 
-    func makeUIView(context _: Context) -> QrCameraPreviewUIView {
+    public init(session: AVCaptureSession) {
+        self.session = session
+    }
+
+    public func makeUIView(context _: Context) -> QrCameraPreviewUIView {
         QrCameraPreviewUIView(session: session)
     }
 
-    func updateUIView(_: QrCameraPreviewUIView, context _: Context) {}
+    public func updateUIView(_: QrCameraPreviewUIView, context _: Context) {}
 }
 
-class QrCameraPreviewUIView: UIView {
+public class QrCameraPreviewUIView: UIView {
     private let previewLayer: AVCaptureVideoPreviewLayer
 
-    init(session: AVCaptureSession) {
+    public init(session: AVCaptureSession) {
         previewLayer = AVCaptureVideoPreviewLayer(session: session)
         super.init(frame: .zero)
 
@@ -23,11 +27,11 @@ class QrCameraPreviewUIView: UIView {
     }
 
     @available(*, unavailable)
-    required init?(coder _: NSCoder) {
+    public required init?(coder _: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
 
-    override func layoutSubviews() {
+    override public func layoutSubviews() {
         super.layoutSubviews()
         previewLayer.frame = bounds
     }

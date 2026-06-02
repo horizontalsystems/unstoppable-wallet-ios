@@ -3,7 +3,7 @@ import MarketKit
 import RxSwift
 import ZanoKit
 
-class ZanoKitManager {
+public class ZanoKitManager {
     private let restoreSettingsManager: RestoreSettingsManager
     private let walletManager: WalletManager
     private let zanoNodeManager: ZanoNodeManager
@@ -18,7 +18,7 @@ class ZanoKitManager {
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).zano-kit-manager", qos: .userInitiated)
 
-    init(restoreSettingsManager: RestoreSettingsManager, walletManager: WalletManager, zanoNodeManager: ZanoNodeManager) {
+    public init(restoreSettingsManager: RestoreSettingsManager, walletManager: WalletManager, zanoNodeManager: ZanoNodeManager) {
         self.restoreSettingsManager = restoreSettingsManager
         self.walletManager = walletManager
         self.zanoNodeManager = zanoNodeManager
@@ -101,26 +101,26 @@ extension ZanoKitManager {
 }
 
 extension ZanoKitManager: ZanoKitDelegate {
-    func assetsDidChange(assets: [AssetInfo]) {
+    public func assetsDidChange(assets: [AssetInfo]) {
         queue.async {
             self.assetsSubject.onNext(assets)
             self.handle(assets: assets)
         }
     }
 
-    func balancesDidChange(balances: [BalanceInfo]) {
+    public func balancesDidChange(balances: [BalanceInfo]) {
         queue.async {
             self.balancesSubject.onNext(balances)
         }
     }
 
-    func transactionsDidChange(transactions: [TransactionInfo]) {
+    public func transactionsDidChange(transactions: [TransactionInfo]) {
         queue.async {
             self.transactionsSubject.onNext(transactions)
         }
     }
 
-    func walletStateDidChange(state: WalletState) {
+    public func walletStateDidChange(state: WalletState) {
         queue.async {
             self.walletStateSubject.onNext(state)
         }

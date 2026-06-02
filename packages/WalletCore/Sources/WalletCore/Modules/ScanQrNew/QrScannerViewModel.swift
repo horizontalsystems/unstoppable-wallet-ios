@@ -2,24 +2,24 @@ import Combine
 import PhotosUI
 import SwiftUI
 
-class ScanQrViewModelNew: ObservableObject {
+public class ScanQrViewModelNew: ObservableObject {
     private let cameraManager = QrCameraManagerNew()
-    private(set) var didFetch: ((String) -> Void)?
+    public private(set) var didFetch: ((String) -> Void)?
     private let resultSubject = PassthroughSubject<String, Never>()
     private var cancellables = Set<AnyCancellable>()
 
-    @Published var cameraPermissionDenied = false
-    @Published var pickerItem: PhotosPickerItem?
+    @Published public var cameraPermissionDenied = false
+    @Published public var pickerItem: PhotosPickerItem?
 
-    var session: AVCaptureSession {
+    public var session: AVCaptureSession {
         cameraManager.session
     }
 
-    var resultPublisher: AnyPublisher<String, Never> {
+    public var resultPublisher: AnyPublisher<String, Never> {
         resultSubject.eraseToAnyPublisher()
     }
 
-    init(didFetch: ((String) -> Void)?) {
+    public init(didFetch: ((String) -> Void)?) {
         self.didFetch = didFetch
 
         cameraManager.scannedPublisher
@@ -44,7 +44,7 @@ class ScanQrViewModelNew: ObservableObject {
             .store(in: &cancellables)
     }
 
-    func requestCameraAccess() {
+    public func requestCameraAccess() {
         PermissionsHelper.performWithCameraPermission { [weak self] granted in
             if granted {
                 self?.cameraManager.configure()
@@ -61,11 +61,11 @@ class ScanQrViewModelNew: ObservableObject {
         cameraManager.start()
     }
 
-    func stopSession() {
+    public func stopSession() {
         cameraManager.stop()
     }
 
-    func onPaste() {
+    public func onPaste() {
         handleResult(UIPasteboard.general.string ?? "")
     }
 

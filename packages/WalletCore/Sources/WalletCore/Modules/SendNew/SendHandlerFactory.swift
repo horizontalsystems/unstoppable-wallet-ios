@@ -1,6 +1,6 @@
 import MarketKit
 
-enum SendHandlerFactory {
+public enum SendHandlerFactory {
     static func handler(sendData: SendData) -> ISendHandler? {
         switch sendData {
         case let .evm(blockchainType, transactionData, token):
@@ -45,7 +45,7 @@ enum SendHandlerFactory {
         }
     }
 
-    static func preSendHandler(wallet: Wallet, address: ResolvedAddress) -> IPreSendHandler? {
+    public static func preSendHandler(wallet: Wallet, address: ResolvedAddress) -> IPreSendHandler? {
         let adapter = Core.shared.adapterManager.adapter(for: wallet)
 
         if let adapter = adapter as? ISendEthereumAdapter & IBalanceAdapter {

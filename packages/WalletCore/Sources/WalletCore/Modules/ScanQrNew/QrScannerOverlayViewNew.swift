@@ -1,26 +1,29 @@
 import SwiftUI
 import UIExtensions
 
-struct QrScannerOverlayViewNew: View {
-    let sideMargin: CGFloat
-    let bottomInset: CGFloat
+public struct QrScannerOverlayViewNew: View {
+    private let sideMargin: CGFloat
+    private let cornerRadius: CGFloat
 
-    var body: some View {
+    public init(sideMargin: CGFloat, cornerRadius: CGFloat = .cornerRadius8) {
+        self.sideMargin = sideMargin
+        self.cornerRadius = cornerRadius
+    }
+
+    public var body: some View {
         GeometryReader { geometry in
             let maskSize = geometry.size.width - sideMargin * 2
-            let bottomPadding = geometry.safeAreaInsets.bottom + bottomInset
-            let containerHeight = geometry.size.height - bottomPadding
-            let verticalMargin = (containerHeight - maskSize) / 2
+            let verticalMargin = (geometry.size.height - maskSize) / 2
             let holeRect = CGRect(x: sideMargin, y: verticalMargin, width: maskSize, height: maskSize)
 
-            QrBlurOverlay(holeRect: holeRect)
-                .ignoresSafeArea()
+            QrBlurOverlay(holeRect: holeRect, cornerRadius: cornerRadius)
         }
     }
 }
 
 private struct QrBlurOverlay: UIViewRepresentable {
     let holeRect: CGRect
+    let cornerRadius: CGFloat
     @Environment(\.colorScheme) var colorScheme
 
     func makeUIView(context _: Context) -> UIView {
@@ -41,7 +44,7 @@ private struct QrBlurOverlay: UIViewRepresentable {
             guard !bounds.isEmpty else { return }
 
             let fullPath = UIBezierPath(rect: bounds)
-            let holePath = UIBezierPath(roundedRect: holeRect, cornerRadius: .cornerRadius8)
+            let holePath = UIBezierPath(roundedRect: holeRect, cornerRadius: cornerRadius)
             fullPath.append(holePath)
             fullPath.usesEvenOddFillRule = true
 

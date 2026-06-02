@@ -6,7 +6,7 @@ import MarketKit
 public class Core {
     static var instance: Core?
 
-    public static func initApp(widgetRefresher: IWidgetRefresher?) throws {
+    public static func initApp(widgetRefresher: IWidgetRefresher? = nil) throws {
         let core = try Core(widgetRefresher: widgetRefresher)
         instance = core
     }
@@ -17,7 +17,7 @@ public class Core {
 
     let marketKit: MarketKit.Kit
 
-    let userDefaultsStorage: UserDefaultsStorage
+    public let userDefaultsStorage: UserDefaultsStorage
     let localStorage: LocalStorage
     let keychainStorage: KeychainStorage
 
@@ -56,14 +56,14 @@ public class Core {
     let contactManager: ContactBookManager
     let subscriptionManager: SubscriptionManager
 
-    let accountManager: AccountManager
+    public let accountManager: AccountManager
     let smartAccountManager: SmartAccountManager
     let smartAccountPasskeyManager: SmartAccountPasskeyManager
     let accountRestoreWarningManager: AccountRestoreWarningManager
-    let accountFactory: AccountFactory
+    public let accountFactory: AccountFactory
     let backupManager: BackupManager
     let enabledWalletCacheManager: EnabledWalletCacheManager
-    let walletManager: WalletManager
+    public let walletManager: WalletManager
     let coinManager: CoinManager
     let passcodeLockManager: PasscodeLockManager
     let amountRoundingManager: AmountRoundingManager
@@ -98,7 +98,7 @@ public class Core {
     let walletConnectManager: WalletConnectManager
     let walletConnectSessionManager: WalletConnectSessionManager
 
-    let adapterManager: AdapterManager
+    public let adapterManager: AdapterManager
     let transactionAdapterManager: TransactionAdapterManager
     let rateAppManager: RateAppManager
 
@@ -136,6 +136,8 @@ public class Core {
     let swapAssetStorage: SwapAssetStorage
     let swapProviderManager: MultiSwapProviderManager
     let swapHistoryManager: SwapHistoryManager
+
+    public let smartAccountService: CreateSmartAccountService
 
     init(widgetRefresher: IWidgetRefresher?) throws {
         let databaseDirectoryURL = try FileManager.default
@@ -489,5 +491,13 @@ public class Core {
 
         let swapStorage = SwapStorage(dbPool: dbPool, marketKit: marketKit)
         swapHistoryManager = SwapHistoryManager(accountManager: accountManager, storage: swapStorage)
+
+        let walletActivator = CreateSmartAccountService.defaultActivator(marketKit: marketKit, walletManager: walletManager)
+        smartAccountService = CreateSmartAccountService(
+            accountFactory: accountFactory,
+            accountManager: accountManager,
+            smartAccountManager: smartAccountManager,
+            activateDefaultWallets: walletActivator
+        )
     }
 }

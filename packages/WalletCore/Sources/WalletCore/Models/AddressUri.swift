@@ -1,7 +1,7 @@
 import Foundation
 import MarketKit
 
-struct AddressUri: Equatable {
+public struct AddressUri: Equatable {
     let scheme: String
     var address: String = ""
 
@@ -33,7 +33,7 @@ struct AddressUri: Equatable {
         value(field: .memo) ?? value(field: .txDescription)
     }
 
-    static func == (lhs: AddressUri, rhs: AddressUri) -> Bool {
+    public static func == (lhs: AddressUri, rhs: AddressUri) -> Bool {
         lhs.address == rhs.address &&
             lhs.parameters == rhs.parameters &&
             lhs.unhandledParameters == rhs.unhandledParameters

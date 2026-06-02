@@ -4,8 +4,8 @@ import HsExtensions
 import HsToolKit
 import ObjectMapper
 
-class AppStateManager {
-    static let instance = AppStateManager()
+public class AppStateManager {
+    public static let instance = AppStateManager()
 
     private let syncInterval: TimeInterval = 60 * 60
 

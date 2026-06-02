@@ -1068,17 +1068,17 @@ extension ZcashAdapter: IBalanceAdapter {
 }
 
 extension ZcashAdapter: IDepositAdapter {
-    var receiveAddress: DepositAddress {
+    public var receiveAddress: DepositAddress {
         .init(uAddress?.stringEncoded ?? "n/a".localized)
     }
 
-    var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {
+    public var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> {
         depositAddressSubject.eraseToAnyPublisher()
     }
 }
 
 extension ZcashAdapter {
-    enum AddressType {
+    public enum AddressType {
         case shielded
         case transparent
     }

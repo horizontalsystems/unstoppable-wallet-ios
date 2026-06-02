@@ -1,9 +1,9 @@
 import GRDB
 
-class RestoreSettingsStorage {
+public class RestoreSettingsStorage {
     private let dbPool: DatabasePool
 
-    init(dbPool: DatabasePool) {
+    public init(dbPool: DatabasePool) {
         self.dbPool = dbPool
     }
 }

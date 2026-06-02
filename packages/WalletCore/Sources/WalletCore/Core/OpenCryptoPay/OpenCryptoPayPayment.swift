@@ -1,8 +1,7 @@
 import Foundation
 import MarketKit
-import WalletCore
 
-struct OpenCryptoPayPayment: Equatable {
+public struct OpenCryptoPayPayment: Equatable {
     let id: String
     let quoteId: String
     let quoteExpirationDate: Date
@@ -11,8 +10,8 @@ struct OpenCryptoPayPayment: Equatable {
     let entries: [Entry]
     let capturedAccountId: String
 
-    struct Entry: Equatable, Identifiable {
-        let id: String
+    public struct Entry: Equatable, Identifiable {
+        public let id: String
         let method: String
         let blockchainType: BlockchainType
         let asset: String

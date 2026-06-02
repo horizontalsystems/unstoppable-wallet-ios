@@ -3,7 +3,7 @@ import Foundation
 import HsToolKit
 import MarketKit
 
-class EvmBlockchainManager {
+public class EvmBlockchainManager {
     static let blockchainTypes: [BlockchainType] = [
         .ethereum,
         .binanceSmartChain,
@@ -29,7 +29,7 @@ class EvmBlockchainManager {
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).evm_blockchain_manager", qos: .userInitiated)
 
-    init(syncSourceManager: EvmSyncSourceManager, testNetManager: TestNetManager, marketKit: MarketKit.Kit, accountManagerFactory: EvmAccountManagerFactory) {
+    public init(syncSourceManager: EvmSyncSourceManager, testNetManager: TestNetManager, marketKit: MarketKit.Kit, accountManagerFactory: EvmAccountManagerFactory) {
         self.syncSourceManager = syncSourceManager
         self.testNetManager = testNetManager
         self.marketKit = marketKit

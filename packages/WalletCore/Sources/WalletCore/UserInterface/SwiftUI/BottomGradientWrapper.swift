@@ -1,12 +1,12 @@
 import SwiftUI
 
-struct BottomGradientWrapper<Content: View, BottomContent: View, KeyboardContent: View>: View {
+public struct BottomGradientWrapper<Content: View, BottomContent: View, KeyboardContent: View>: View {
     private let gradientColor: Color
     private let content: Content
     private let bottomContent: BottomContent
     private let keyboardContent: KeyboardContent
 
-    init(
+    public init(
         gradientColor: Color = .themeTyler,
         @ViewBuilder content: () -> Content,
         @ViewBuilder bottomContent: () -> BottomContent,
@@ -18,7 +18,7 @@ struct BottomGradientWrapper<Content: View, BottomContent: View, KeyboardContent
         self.keyboardContent = keyboardContent()
     }
 
-    var body: some View {
+    public var body: some View {
         VStack(spacing: 0) {
             content
                 .overlay(alignment: .bottom) {
