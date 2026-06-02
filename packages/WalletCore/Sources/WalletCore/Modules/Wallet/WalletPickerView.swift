@@ -1,6 +1,5 @@
 import MarketKit
 import SwiftUI
-import WalletCore
 
 // Reusable wallet picker; caller owns the navigation.
 struct WalletPickerView: View {

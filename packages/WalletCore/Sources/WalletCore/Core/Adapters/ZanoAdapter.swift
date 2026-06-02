@@ -333,7 +333,7 @@ extension ZanoAdapter {
     }
 }
 
-enum ZanoSendAmount {
+public enum ZanoSendAmount {
     case value(Decimal)
     case all(Decimal)
 

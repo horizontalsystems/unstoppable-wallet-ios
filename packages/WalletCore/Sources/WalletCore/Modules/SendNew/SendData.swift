@@ -9,7 +9,7 @@ import TonSwift
 import TronKit
 import ZcashLightClientKit
 
-enum SendData {
+public enum SendData {
     case evm(blockchainType: BlockchainType, transactionData: TransactionData, token: Token)
     case bitcoin(token: Token, params: SendParameters)
     case zcash(amount: Decimal, recipient: Recipient, memo: String?)
@@ -29,7 +29,7 @@ enum SendData {
     indirect case openCryptoPay(payment: OpenCryptoPayPayment, entry: OpenCryptoPayPayment.Entry, inner: SendData)
 }
 
-enum StellarSendData {
+public enum StellarSendData {
     case payment(asset: Asset, amount: Decimal, accountId: String)
     case changeTrust(asset: Asset, limit: Decimal)
 }

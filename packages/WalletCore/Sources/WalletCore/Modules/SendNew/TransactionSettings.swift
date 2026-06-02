@@ -3,7 +3,7 @@ import EvmKit
 import MoneroKit
 import ZcashLightClientKit
 
-enum TransactionSettings {
+public enum TransactionSettings {
     case evm(gasPriceData: GasPriceData, nonce: Int?)
     case bitcoin(satoshiPerByte: Int)
     case monero(priority: MoneroKit.SendPriority)

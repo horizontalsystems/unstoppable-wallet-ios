@@ -1,7 +1,7 @@
 import Combine
 import MarketKit
 
-protocol ISendHandler {
+public protocol ISendHandler {
     var baseToken: Token { get }
     var syncingText: String? { get }
     var expirationDuration: Int? { get }
@@ -20,7 +20,7 @@ extension ISendHandler {
     var refreshPublisher: AnyPublisher<Void, Never>? { nil }
 }
 
-struct SendMenuItem {
+public struct SendMenuItem {
     let label: String
     let action: () -> Void
 }

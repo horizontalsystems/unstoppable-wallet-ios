@@ -59,7 +59,7 @@ struct BalanceCoinIconView: View {
     }
 }
 
-struct CoinIconView: View {
+public struct CoinIconView: View {
     let coin: Coin?
     let placeholderImage: String?
 
@@ -68,12 +68,12 @@ struct CoinIconView: View {
         self.placeholderImage = placeholderImage
     }
 
-    init(token: Token) {
+    public init(token: Token) {
         coin = token.coin
         placeholderImage = token.placeholderImageName
     }
 
-    var body: some View {
+    public var body: some View {
         IconView(url: coin?.imageUrl, alternativeUrl: coin?.image, placeholderImage: placeholderImage, type: .circle)
     }
 }

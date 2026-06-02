@@ -3,7 +3,6 @@ import HsToolKit
 import MarketKit
 import RxRelay
 import RxSwift
-import WalletCore
 
 class SendBitcoinService {
     private let disposeBag = DisposeBag()

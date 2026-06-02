@@ -1,7 +1,6 @@
 import Combine
 import Foundation
 import MarketKit
-import WalletCore
 
 class CryptoPaySendTokenListViewModel: ObservableObject {
     private let openCryptoPayManager = Core.shared.openCryptoPay.manager

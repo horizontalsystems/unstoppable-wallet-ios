@@ -1,9 +1,9 @@
 import GRDB
 
-class SyncerStateStorage {
+public class SyncerStateStorage {
     private let dbPool: DatabasePool
 
-    init(dbPool: DatabasePool) {
+    public init(dbPool: DatabasePool) {
         self.dbPool = dbPool
     }
 }

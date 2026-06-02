@@ -6,7 +6,7 @@ import RxRelay
 import RxSwift
 import SolanaKit
 
-class SolanaKitManager {
+public class SolanaKitManager {
     private let rpcSourceManager: SolanaRpcSourceManager
     private let restoreStateManager: RestoreStateManager
     private let marketKit: MarketKit.Kit
@@ -21,7 +21,7 @@ class SolanaKitManager {
     private let queue = DispatchQueue(label: "\(AppConfig.label).solana-kit-manager", qos: .userInitiated)
     private let kitStoppedRelay = PublishRelay<Void>()
 
-    init(rpcSourceManager: SolanaRpcSourceManager, restoreStateManager: RestoreStateManager, marketKit: MarketKit.Kit, walletManager: WalletManager) {
+    public init(rpcSourceManager: SolanaRpcSourceManager, restoreStateManager: RestoreStateManager, marketKit: MarketKit.Kit, walletManager: WalletManager) {
         self.rpcSourceManager = rpcSourceManager
         self.restoreStateManager = restoreStateManager
         self.marketKit = marketKit

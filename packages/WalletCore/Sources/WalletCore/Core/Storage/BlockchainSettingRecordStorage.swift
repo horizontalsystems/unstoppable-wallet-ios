@@ -1,10 +1,10 @@
 import Foundation
 import GRDB
 
-class BlockchainSettingRecordStorage {
+public class BlockchainSettingRecordStorage {
     private let dbPool: DatabasePool
 
-    init(dbPool: DatabasePool) throws {
+    public init(dbPool: DatabasePool) throws {
         self.dbPool = dbPool
     }
 }

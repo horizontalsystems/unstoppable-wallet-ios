@@ -4,7 +4,7 @@ import HsExtensions
 import MarketKit
 import RxSwift
 
-class MultiSwapViewModel: ObservableObject {
+public class MultiSwapViewModel: ObservableObject {
     private let autoRefreshDuration: Double = 20
 
     private var cancellables = Set<AnyCancellable>()
@@ -33,7 +33,7 @@ class MultiSwapViewModel: ObservableObject {
 
     private var enteringFiat = false
 
-    @Published var validProviders = [IMultiSwapProvider]()
+    @Published public var validProviders = [IMultiSwapProvider]()
 
     private var internalTokenIn: Token? {
         didSet {
@@ -61,7 +61,7 @@ class MultiSwapViewModel: ObservableObject {
         }
     }
 
-    @Published var tokenIn: Token? {
+    @Published public var tokenIn: Token? {
         didSet {
             guard internalTokenIn != tokenIn else {
                 return
@@ -112,7 +112,7 @@ class MultiSwapViewModel: ObservableObject {
         }
     }
 
-    @Published var tokenOut: Token? {
+    @Published public var tokenOut: Token? {
         didSet {
             guard internalTokenOut != tokenOut else {
                 return
@@ -134,8 +134,8 @@ class MultiSwapViewModel: ObservableObject {
         }
     }
 
-    @Published var adapterState: AdapterState?
-    @Published var availableBalance: Decimal?
+    @Published public var adapterState: AdapterState?
+    @Published public var availableBalance: Decimal?
 
     var spendMode: BalanceAdapterSpendMode
 
@@ -151,7 +151,7 @@ class MultiSwapViewModel: ObservableObject {
         }
     }
 
-    var amountIn: Decimal? {
+    public var amountIn: Decimal? {
         didSet {
             internalUserSelectedProviderId = nil
 
@@ -166,7 +166,7 @@ class MultiSwapViewModel: ObservableObject {
         }
     }
 
-    @Published var amountString: String = "" {
+    @Published public var amountString: String = "" {
         didSet {
             let amount = decimalParser.parseAnyDecimal(from: amountString)
 
@@ -206,7 +206,7 @@ class MultiSwapViewModel: ObservableObject {
         }
     }
 
-    @Published var currentQuote: Quote? {
+    @Published public var currentQuote: Quote? {
         didSet {
             amountOutString = currentQuote?.quote.expectedBuyAmount.description
             syncFiatAmountOut()
@@ -258,7 +258,7 @@ class MultiSwapViewModel: ObservableObject {
         }
     }
 
-    @Published var amountOutString: String?
+    @Published public var amountOutString: String?
     @Published var fiatAmountOut: Decimal? {
         didSet {
             syncPriceImpact()
@@ -268,21 +268,21 @@ class MultiSwapViewModel: ObservableObject {
     @Published var price: String?
     private var priceFlipped = false
 
-    @Published var quoting = false
-    @Published var validatingProvider = false
+    @Published public var quoting = false
+    @Published public var validatingProvider = false
     private var nextQuoteTime: Double?
 
     @Published var priceImpact: Decimal?
 
     @Published var quoteSortType: QuoteSortType = .bestRate
 
-    init(token: Token? = nil) {
+    public init(token: Token? = nil, autoResolveTokenOut: Bool = true) {
         providers = swapProviderManager.providers.compactMap { SwapProviderFactory.provider(id: $0) }
         currency = currencyManager.baseCurrency
         spendMode = .fromBalanceState
 
         defer {
-            syncDefaultTokens(token: token)
+            syncDefaultTokens(token: token, autoResolveTokenOut: autoResolveTokenOut)
         }
 
         currencyManager.$baseCurrency
@@ -315,13 +315,13 @@ class MultiSwapViewModel: ObservableObject {
         swapProviderManager.sync()
     }
 
-    private func syncDefaultTokens(token: Token? = nil) {
+    private func syncDefaultTokens(token: Token? = nil, autoResolveTokenOut: Bool = true) {
         let bitcoin = try? marketKit.token(query: TokenQuery(blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84)))
         let monero = try? marketKit.token(query: TokenQuery(blockchainType: .monero, tokenType: .native))
 
         if let token {
             internalTokenIn = token
-            internalTokenOut = MultiSwapDefaultTokenResolver.default(for: token) ?? (token.blockchainType == .bitcoin ? monero : bitcoin)
+            internalTokenOut = autoResolveTokenOut ? MultiSwapDefaultTokenResolver.default(for: token) ?? (token.blockchainType == .bitcoin ? monero : bitcoin) : nil
         } else if let account = accountManager.activeAccount, let lastSwap = swapHistoryManager.lastSwap(accountId: account.id) {
             internalTokenIn = lastSwap.tokenIn
             internalTokenOut = lastSwap.tokenOut
@@ -541,8 +541,8 @@ class MultiSwapViewModel: ObservableObject {
     }
 }
 
-extension MultiSwapViewModel {
-    var shouldShowTerms: Bool {
+public extension MultiSwapViewModel {
+    internal var shouldShowTerms: Bool {
         guard let currentQuote else {
             return false
         }
@@ -550,7 +550,7 @@ extension MultiSwapViewModel {
         return currentQuote.provider.requireTerms && !localStorage.swapTermsAccepted
     }
 
-    func onAcceptTerms() {
+    internal func onAcceptTerms() {
         localStorage.swapTermsAccepted = true
     }
 
@@ -569,7 +569,7 @@ extension MultiSwapViewModel {
         }
     }
 
-    func flipPrice() {
+    internal func flipPrice() {
         priceFlipped.toggle()
         syncPrice()
     }
@@ -614,7 +614,7 @@ extension MultiSwapViewModel {
         amountIn = nil
     }
 
-    func validateAndProceed(onSuccess: @escaping () -> Void, onRiskDetected: @escaping (AmlRiskResult) -> Void) {
+    internal func validateAndProceed(onSuccess: @escaping () -> Void, onRiskDetected: @escaping (AmlRiskResult) -> Void) {
         guard let currentQuote, let tokenIn = internalTokenIn else {
             return
         }
@@ -663,7 +663,7 @@ extension MultiSwapViewModel {
         }
     }
 
-    var sortedQuotes: [Quote] {
+    internal var sortedQuotes: [Quote] {
         switch quoteSortType {
         case .bestRate:
             return quotes.sorted { $0.quote.expectedBuyAmount > $1.quote.expectedBuyAmount }
@@ -679,9 +679,9 @@ extension MultiSwapViewModel {
 }
 
 extension MultiSwapViewModel {
-    struct Quote {
-        let provider: IMultiSwapProvider
-        let quote: MultiSwapQuote
+    public struct Quote {
+        public let provider: IMultiSwapProvider
+        public let quote: MultiSwapQuote
         let timeState: SwapTimeState?
     }
 

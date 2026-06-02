@@ -4,10 +4,10 @@ import MoneroKit
 import ZanoKit
 import ZcashLightClientKit
 
-class RestoreSettingsManager {
+public class RestoreSettingsManager {
     private let storage: RestoreSettingsStorage
 
-    init(storage: RestoreSettingsStorage) {
+    public init(storage: RestoreSettingsStorage) {
         self.storage = storage
     }
 }

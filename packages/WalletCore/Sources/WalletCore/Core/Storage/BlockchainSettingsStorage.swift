@@ -1,6 +1,6 @@
 import MarketKit
 
-class BlockchainSettingsStorage {
+public class BlockchainSettingsStorage {
     private let storage: BlockchainSettingRecordStorage
 
     private let keyBtcRestore = "btc-restore"
@@ -10,7 +10,8 @@ class BlockchainSettingsStorage {
     private let keyMoneroNode = "monero-node"
     private let keyZanoNode = "zano-node"
     private let keyZcashNode = "zcash-node"
-    init(storage: BlockchainSettingRecordStorage) {
+
+    public init(storage: BlockchainSettingRecordStorage) {
         self.storage = storage
     }
 }

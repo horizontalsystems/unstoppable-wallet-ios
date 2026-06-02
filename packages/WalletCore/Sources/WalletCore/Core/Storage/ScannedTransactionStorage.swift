@@ -1,10 +1,10 @@
 import Foundation
 import GRDB
 
-class ScannedTransactionStorage {
+public class ScannedTransactionStorage {
     private let dbPool: DatabasePool
 
-    init(dbPool: DatabasePool) throws {
+    public init(dbPool: DatabasePool) throws {
         self.dbPool = dbPool
         try migrator.migrate(dbPool)
     }

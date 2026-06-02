@@ -3,12 +3,12 @@ import EvmKit
 import Foundation
 import MarketKit
 
-struct EvmFeeData {
-    let gasLimit: Int
-    let surchargedGasLimit: Int
-    let l1Fee: BigUInt?
+public struct EvmFeeData {
+    public let gasLimit: Int
+    public let surchargedGasLimit: Int
+    public let l1Fee: BigUInt?
 
-    init(gasLimit: Int, surchargedGasLimit: Int, l1Fee: BigUInt? = nil) {
+    public init(gasLimit: Int, surchargedGasLimit: Int, l1Fee: BigUInt? = nil) {
         self.gasLimit = gasLimit
         self.surchargedGasLimit = surchargedGasLimit
         self.l1Fee = l1Fee

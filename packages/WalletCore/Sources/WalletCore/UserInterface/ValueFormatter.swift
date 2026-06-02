@@ -1,7 +1,7 @@
 import Foundation
 
-class ValueFormatter {
-    static let instance = ValueFormatter()
+public class ValueFormatter {
+    public static let instance = ValueFormatter()
 
     private let rawFormatterQueue = DispatchQueue(label: "\(AppConfig.label).value-formatter.raw-formatter", qos: .userInitiated)
     private let currencyFormatterQueue = DispatchQueue(label: "\(AppConfig.label).value-formatter.currency-formatter", qos: .userInitiated)
@@ -195,7 +195,7 @@ class ValueFormatter {
     }
 }
 
-extension ValueFormatter {
+public extension ValueFormatter {
     func formatWith(rounding: Bool, currencyValue: CurrencyValue) -> String? {
         if rounding {
             return formatShort(currencyValue: currencyValue)
@@ -255,8 +255,8 @@ extension ValueFormatter {
         return decorated(string: string, symbol: symbol, signType: signType, signValue: value)
     }
 
-    func formatShort(currency: Currency, value: Decimal, signType: SignType = .never) -> String? {
-        let (transformedValue, digits, suffix, tooSmall) = transformedShort(value: value)
+    func formatShort(currency: Currency, value: Decimal, maxDigits: Int = Int.max, signType: SignType = .never) -> String? {
+        let (transformedValue, digits, suffix, tooSmall) = transformedShort(value: value, maxDigits: maxDigits)
 
         guard let string = formattedCurrency(value: transformedValue, digits: digits, code: currency.code, symbol: currency.symbol, suffix: suffix) else {
             return nil
@@ -265,8 +265,8 @@ extension ValueFormatter {
         return decorated(string: string, signType: signType, signValue: value, tooSmall: tooSmall)
     }
 
-    func formatShort(currencyValue: CurrencyValue, signType: SignType = .never) -> String? {
-        formatShort(currency: currencyValue.currency, value: currencyValue.value, signType: signType)
+    func formatShort(currencyValue: CurrencyValue, maxDigits: Int = Int.max, signType: SignType = .never) -> String? {
+        formatShort(currency: currencyValue.currency, value: currencyValue.value, maxDigits: maxDigits, signType: signType)
     }
 
     func formatFull(currency: Currency, value: Decimal, signType: SignType = .never) -> String? {
@@ -297,7 +297,7 @@ extension ValueFormatter {
     }
 }
 
-extension ValueFormatter {
+public extension ValueFormatter {
     enum SignType {
         case never
         case auto

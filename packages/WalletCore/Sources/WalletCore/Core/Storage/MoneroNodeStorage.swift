@@ -1,9 +1,9 @@
 import GRDB
 
-class MoneroNodeStorage {
+public class MoneroNodeStorage {
     private let dbPool: DatabasePool
 
-    init(dbPool: DatabasePool) {
+    public init(dbPool: DatabasePool) {
         self.dbPool = dbPool
     }
 }

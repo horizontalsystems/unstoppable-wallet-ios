@@ -3,7 +3,7 @@ import Foundation
 import MarketKit
 import RxSwift
 
-class WalletListViewModel: ObservableObject {
+public class WalletListViewModel: ObservableObject {
     private let keySortType = "wallet-sort-type"
 
     private let walletServiceFactory = WalletServiceFactory()
@@ -21,7 +21,7 @@ class WalletListViewModel: ObservableObject {
     let disposeBag = DisposeBag()
     var cancellables = Set<AnyCancellable>()
 
-    @Published private(set) var account: Account?
+    @Published public private(set) var account: Account?
     @Published private(set) var balancePrimaryValue: BalancePrimaryValue
     @Published private(set) var balanceHidden: Bool
     @Published private(set) var amountRounding: Bool
@@ -33,7 +33,7 @@ class WalletListViewModel: ObservableObject {
         }
     }
 
-    @Published private(set) var items: [Item] = []
+    @Published public private(set) var items: [Item] = []
     @Published private(set) var isReachable: Bool = true
 
     var walletService: WalletService?
@@ -41,7 +41,7 @@ class WalletListViewModel: ObservableObject {
     var __items: [Item] = []
     let queue = DispatchQueue(label: "\(AppConfig.label).wallet-list-view-model", qos: .userInitiated)
 
-    init() {
+    public init() {
         if let rawValue: String = userDefaultsStorage.value(for: keySortType), let sortType = WalletSorter.SortType(rawValue: rawValue) {
             self.sortType = sortType
         } else {
@@ -327,16 +327,20 @@ extension WalletListViewModel: IWalletCoinPriceServiceDelegate {
     }
 }
 
-extension WalletListViewModel {
-    struct Item: Hashable, ISortableWalletItem {
-        let wallet: Wallet
+public extension WalletListViewModel {
+    struct Item: Identifiable, Hashable, ISortableWalletItem {
+        public let wallet: Wallet
         var isMainNet: Bool
         var balanceData: BalanceData
         var caution: CautionNew?
         var state: AdapterState
         var priceItem: WalletCoinPriceService.Item?
 
-        var balance: Decimal {
+        public var id: String {
+            wallet.id
+        }
+
+        public var balance: Decimal {
             balanceData.available
         }
 

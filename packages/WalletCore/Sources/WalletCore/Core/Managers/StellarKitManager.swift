@@ -5,7 +5,7 @@ import MarketKit
 import StellarKit
 import stellarsdk
 
-class StellarKitManager {
+public class StellarKitManager {
     private let restoreStateManager: RestoreStateManager
     private let marketKit: MarketKit.Kit
     private let walletManager: WalletManager
@@ -16,7 +16,7 @@ class StellarKitManager {
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).stellar-kit-manager", qos: .userInitiated)
 
-    init(restoreStateManager: RestoreStateManager, marketKit: MarketKit.Kit, walletManager: WalletManager) {
+    public init(restoreStateManager: RestoreStateManager, marketKit: MarketKit.Kit, walletManager: WalletManager) {
         self.restoreStateManager = restoreStateManager
         self.walletManager = walletManager
         self.marketKit = marketKit

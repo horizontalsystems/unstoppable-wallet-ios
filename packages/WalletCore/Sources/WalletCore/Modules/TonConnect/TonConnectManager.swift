@@ -339,7 +339,7 @@ private extension String {
     static let returnDeepLink = "ret"
 }
 
-struct TonConnectSendTransactionRequest {
+public struct TonConnectSendTransactionRequest {
     let id: String
     let param: SendTransactionParam
     let app: TonConnectApp

@@ -1,15 +1,15 @@
 import MarketKit
 
-struct Wallet {
-    let token: Token
-    let account: Account
+public struct Wallet {
+    public let token: Token
+    public let account: Account
 
     init(token: Token, account: Account) {
         self.token = token
         self.account = account
     }
 
-    var coin: Coin {
+    public var coin: Coin {
         token.coin
     }
 
@@ -34,7 +34,7 @@ struct Wallet {
 }
 
 extension Wallet: Identifiable {
-    var id: String {
+    public var id: String {
         token.coin.uid + token.blockchainType.uid + token.type.id
     }
 }

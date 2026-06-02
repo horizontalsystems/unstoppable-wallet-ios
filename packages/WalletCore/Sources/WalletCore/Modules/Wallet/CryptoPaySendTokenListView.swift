@@ -1,6 +1,5 @@
 import MarketKit
 import SwiftUI
-import WalletCore
 
 struct CryptoPaySendTokenListView: View {
     @StateObject private var viewModel: CryptoPaySendTokenListViewModel

@@ -3,7 +3,7 @@ import Foundation
 import MarketKit
 
 extension Token {
-    var protocolName: String? {
+    public var protocolName: String? {
         switch type {
         case .native:
             switch blockchainType {

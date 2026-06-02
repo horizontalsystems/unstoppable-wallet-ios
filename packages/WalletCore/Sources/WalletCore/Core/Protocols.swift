@@ -20,7 +20,7 @@ public protocol IWidgetRefresher {
     func refreshWatchlist()
 }
 
-protocol IBaseAdapter: AnyObject {
+public protocol IBaseAdapter: AnyObject {
     var isMainNet: Bool { get }
 }
 
@@ -33,7 +33,7 @@ protocol IAdapter: AnyObject {
     var debugInfo: String { get }
 }
 
-protocol IBalanceAdapter: IBaseAdapter {
+public protocol IBalanceAdapter: IBaseAdapter {
     var balanceState: AdapterState { get }
     var balanceStateUpdatedObservable: Observable<AdapterState> { get }
     var spendMode: BalanceAdapterSpendMode { get }
@@ -57,7 +57,7 @@ extension IBalanceAdapter {
     }
 }
 
-enum BalanceAdapterSpendMode {
+public enum BalanceAdapterSpendMode {
     case fromBalanceState
     case allowedWhenSyncing
 
@@ -71,7 +71,7 @@ enum BalanceAdapterSpendMode {
     }
 }
 
-protocol IDepositAdapter: IBaseAdapter {
+public protocol IDepositAdapter: IBaseAdapter {
     var receiveAddress: DepositAddress { get }
     var receiveAddressStatus: DataStatus<DepositAddress> { get }
     var receiveAddressPublisher: AnyPublisher<DataStatus<DepositAddress>, Never> { get }

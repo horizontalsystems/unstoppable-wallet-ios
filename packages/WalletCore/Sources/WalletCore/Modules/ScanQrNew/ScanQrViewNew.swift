@@ -21,7 +21,7 @@ struct ScanQrViewNew: View {
                 QrCameraPreviewNew(session: viewModel.session)
                     .ignoresSafeArea()
 
-                QrScannerOverlayViewNew(sideMargin: .margin24, bottomInset: bottomInset)
+                QrScannerOverlayViewNew(sideMargin: .margin24)
 
                 if viewModel.cameraPermissionDenied {
                     permissionDeniedView
@@ -110,12 +110,5 @@ struct ScanQrViewNew: View {
             .buttonStyle(PrimaryButtonStyle(style: .transparent))
         }
         .padding(.horizontal, .margin32)
-    }
-
-    private var bottomInset: CGFloat {
-        guard options.contains(.picker) || options.contains(.paste) else {
-            return 0
-        }
-        return PrimaryButton.height
     }
 }

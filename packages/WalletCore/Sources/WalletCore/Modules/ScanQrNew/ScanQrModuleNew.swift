@@ -1,10 +1,14 @@
 import SwiftUI
 
-enum ScanQrModuleNew {
-    struct Options: OptionSet {
-        let rawValue: Int
+public enum ScanQrModuleNew {
+    public struct Options: OptionSet {
+        public init(rawValue: Int) {
+            self.rawValue = rawValue
+        }
 
-        static let paste = Options(rawValue: 1 << 0)
-        static let picker = Options(rawValue: 1 << 1)
+        public let rawValue: Int
+
+        public static let paste = Options(rawValue: 1 << 0)
+        public static let picker = Options(rawValue: 1 << 1)
     }
 }

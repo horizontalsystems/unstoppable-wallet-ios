@@ -2,11 +2,11 @@ import MarketKit
 import RxRelay
 import RxSwift
 
-class CoinManager {
+public class CoinManager {
     private let marketKit: Kit
     private let walletManager: WalletManager
 
-    init(marketKit: Kit, walletManager: WalletManager) {
+    public init(marketKit: Kit, walletManager: WalletManager) {
         self.marketKit = marketKit
         self.walletManager = walletManager
     }

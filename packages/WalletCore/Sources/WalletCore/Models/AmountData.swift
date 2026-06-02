@@ -31,9 +31,9 @@ enum AmountInfo {
     }
 }
 
-struct AmountData {
-    let appValue: AppValue
-    let currencyValue: CurrencyValue?
+public struct AmountData {
+    public let appValue: AppValue
+    public let currencyValue: CurrencyValue?
 
     var formattedFull: String {
         var parts = [String]()

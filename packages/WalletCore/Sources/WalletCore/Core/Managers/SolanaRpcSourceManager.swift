@@ -4,13 +4,13 @@ import RxRelay
 import RxSwift
 import SolanaKit
 
-class SolanaRpcSourceManager {
+public class SolanaRpcSourceManager {
     private let blockchainSettingsStorage: BlockchainSettingsStorage
     private let marketKit: MarketKit.Kit
 
     private let rpcSourceRelay = PublishRelay<Void>()
 
-    init(blockchainSettingsStorage: BlockchainSettingsStorage, marketKit: MarketKit.Kit) {
+    public init(blockchainSettingsStorage: BlockchainSettingsStorage, marketKit: MarketKit.Kit) {
         self.blockchainSettingsStorage = blockchainSettingsStorage
         self.marketKit = marketKit
     }

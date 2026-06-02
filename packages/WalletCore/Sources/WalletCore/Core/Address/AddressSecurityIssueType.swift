@@ -2,12 +2,12 @@ import MarketKit
 
 private let fishingBlockchainSupports = EvmBlockchainManager.blockchainTypes + [.stellar, .tron]
 
-enum AddressSecurityIssueType: CaseIterable, Identifiable {
+public enum AddressSecurityIssueType: CaseIterable, Identifiable {
     case phishing
     case blacklisted
     case sanctioned
 
-    var id: Self {
+    public var id: Self {
         self
     }
 
@@ -72,7 +72,7 @@ enum AddressSecurityIssueType: CaseIterable, Identifiable {
     }
 }
 
-struct ResolvedAddress: Hashable {
-    let address: String
-    let issueTypes: [AddressSecurityIssueType]
+public struct ResolvedAddress: Hashable {
+    public let address: String
+    public let issueTypes: [AddressSecurityIssueType]
 }

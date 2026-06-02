@@ -1,7 +1,7 @@
 import HsExtensions
 import LocalAuthentication
 
-class PasscodeLockManager {
+public class PasscodeLockManager {
     private let accountManager: AccountManager
     private let walletManager: WalletManager
 
@@ -14,7 +14,7 @@ class PasscodeLockManager {
         }
     }
 
-    init(accountManager: AccountManager, walletManager: WalletManager) {
+    public init(accountManager: AccountManager, walletManager: WalletManager) {
         self.accountManager = accountManager
         self.walletManager = walletManager
 

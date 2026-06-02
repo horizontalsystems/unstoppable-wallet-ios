@@ -3,7 +3,7 @@ import Kingfisher
 import MarketKit
 import SwiftUI
 
-enum SendField {
+public enum SendField {
     case amount(token: Token, appValueType: AppValueType, currencyValue: CurrencyValue?)
     case value(title: CustomStringConvertible, appValue: AppValue?, currencyValue: CurrencyValue?, formatFull: Bool)
     case doubleValue(title: String, description: InfoDescription?, value1: String, value2: String?)
@@ -171,7 +171,7 @@ enum SendField {
         }
     }
 
-    enum AppValueType {
+    public enum AppValueType {
         case regular(appValue: AppValue)
         case infinity(code: String)
         case withoutAmount(code: String)
@@ -184,11 +184,11 @@ enum SendField {
             }
         }
 
-        func formattedFull(showCode: Bool = true) -> String? {
+        public func formattedFull(showCode: Bool = true) -> String? {
             formatted(full: true, showCode: showCode)
         }
 
-        var formattedShort: String? {
+        public var formattedShort: String? {
             formatted(full: false)
         }
     }

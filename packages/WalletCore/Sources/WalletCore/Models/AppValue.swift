@@ -3,7 +3,7 @@ import MarketKit
 import StellarKit
 import TonKit
 
-struct AppValue {
+public struct AppValue {
     let kind: Kind
     let value: Decimal
 
@@ -134,7 +134,7 @@ struct AppValue {
         return formattedFull(signType: signType)
     }
 
-    func formattedFull(signType: ValueFormatter.SignType = .never, showCode: Bool = true) -> String? {
+    public func formattedFull(signType: ValueFormatter.SignType = .never, showCode: Bool = true) -> String? {
         switch kind {
         case let .token(token): return ValueFormatter.instance.formatFull(value: value, decimalCount: token.decimals, symbol: showCode ? code : nil, signType: signType)
         case let .coin(_, decimals): return ValueFormatter.instance.formatFull(value: value, decimalCount: decimals, symbol: showCode ? code : nil, signType: signType)
@@ -146,7 +146,7 @@ struct AppValue {
         }
     }
 
-    func formattedShort(signType: ValueFormatter.SignType = .never) -> String? {
+    public func formattedShort(signType: ValueFormatter.SignType = .never) -> String? {
         switch kind {
         case let .token(token): return ValueFormatter.instance.formatShort(value: value, decimalCount: token.decimals, symbol: code, signType: signType)
         case let .coin(_, decimals): return ValueFormatter.instance.formatShort(value: value, decimalCount: decimals, symbol: code, signType: signType)
@@ -210,7 +210,7 @@ extension AppValue {
 }
 
 extension AppValue: Equatable {
-    static func == (lhs: AppValue, rhs: AppValue) -> Bool {
+    public static func == (lhs: AppValue, rhs: AppValue) -> Bool {
         lhs.kind == rhs.kind && lhs.value == rhs.value
     }
 }

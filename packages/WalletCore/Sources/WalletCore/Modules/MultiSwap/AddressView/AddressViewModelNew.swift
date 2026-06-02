@@ -4,7 +4,7 @@ import RxSwift
 import SwiftUI
 import UIKit
 
-class AddressViewModelNew: ObservableObject {
+public class AddressViewModelNew: ObservableObject {
     private var addressParserDisposeBag = DisposeBag()
 
     private var addressUriParser: AddressUriParser
@@ -16,14 +16,14 @@ class AddressViewModelNew: ObservableObject {
 
     private var expectedTextValue: String? = nil
 
-    @Published var text: String = "" {
+    @Published public var text: String = "" {
         didSet {
             if text == oldValue { return }
             sync()
         }
     }
 
-    @Published var result: AddressInput.Result = .idle {
+    @Published public var result: AddressInput.Result = .idle {
         didSet {
             if result == oldValue { return }
             syncCheckingState()
@@ -31,6 +31,10 @@ class AddressViewModelNew: ObservableObject {
     }
 
     @Published var checkingState: RightChecking.State = .idle
+
+    public convenience init(initial: AddressInput.Initial) {
+        self.init(initial: initial, parserFilter: nil)
+    }
 
     init(initial: AddressInput.Initial, parserFilter: AddressParserFactory.ParserFilter?) {
         addressUriParser = AddressParserFactory.parser(blockchainType: initial.blockchainType, tokenType: nil)
@@ -174,33 +178,33 @@ extension AddressViewModelNew: ContactBookSelectorDelegate {
     }
 }
 
-enum AddressInput {
-    struct Initial {
-        let blockchainType: BlockchainType?
-        let showContacts: Bool
+public enum AddressInput {
+    public struct Initial {
+        public let blockchainType: BlockchainType?
+        public let showContacts: Bool
 
-        init(blockchainType: BlockchainType? = nil, showContacts: Bool) {
+        public init(blockchainType: BlockchainType? = nil, showContacts: Bool = false) {
             self.blockchainType = blockchainType
             self.showContacts = showContacts
         }
     }
 
-    struct Success: Equatable {
-        let address: Address
-        let uri: AddressUri?
+    public struct Success: Equatable {
+        public let address: Address
+        public let uri: AddressUri?
     }
 
-    struct Failure: Equatable {
-        let text: String
-        let error: Error
+    public struct Failure: Equatable {
+        public let text: String
+        public let error: Error
 
-        static func == (lhs: Failure, rhs: Failure) -> Bool {
+        public static func == (lhs: Failure, rhs: Failure) -> Bool {
             lhs.text == rhs.text &&
                 lhs.error.localizedDescription == rhs.error.localizedDescription
         }
     }
 
-    enum Result: Equatable {
+    public enum Result: Equatable {
         case idle
         case loading(String)
         case valid(Success)

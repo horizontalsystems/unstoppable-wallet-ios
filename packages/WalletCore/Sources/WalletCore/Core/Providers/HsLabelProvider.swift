@@ -4,12 +4,12 @@ import HsToolKit
 import ObjectMapper
 import RxSwift
 
-class HsLabelProvider {
+public class HsLabelProvider {
     private let networkManager: NetworkManager
     private let apiUrl = AppConfig.marketApiUrl
     private let headers: HTTPHeaders?
 
-    init(networkManager: NetworkManager) {
+    public init(networkManager: NetworkManager) {
         self.networkManager = networkManager
         headers = AppConfig.hsProviderApiKey.flatMap { HTTPHeaders([HTTPHeader(name: "apikey", value: $0)]) }
     }

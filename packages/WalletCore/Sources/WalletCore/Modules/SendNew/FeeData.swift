@@ -3,7 +3,7 @@ import Foundation
 import MarketKit
 import TronKit
 
-enum FeeData {
+public enum FeeData {
     case evm(evmFeeData: EvmFeeData)
     case bitcoin(params: SendParameters)
     case monero(amount: MoneroSendAmount, address: String)

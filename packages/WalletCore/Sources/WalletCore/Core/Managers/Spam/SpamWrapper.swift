@@ -1,6 +1,6 @@
 import HsToolKit
 
-class SpamWrapper {
+public class SpamWrapper {
     /// Total score >= 7: definite spam (.spam decision)
     private static let spamThreshold: Int = 7
     /// Total score >= 3 but < 7: likely spam (.suspicious decision)
@@ -25,7 +25,7 @@ class SpamWrapper {
     private let accountManager: AccountManager
     private let logger: Logger?
 
-    init(storage: ScannedTransactionStorage, contactBookManager: ContactBookManager, accountManager: AccountManager, logger _: Logger? = nil) {
+    public init(storage: ScannedTransactionStorage, contactBookManager: ContactBookManager, accountManager: AccountManager, logger _: Logger? = nil) {
         self.storage = storage
         self.contactBookManager = contactBookManager
         self.accountManager = accountManager

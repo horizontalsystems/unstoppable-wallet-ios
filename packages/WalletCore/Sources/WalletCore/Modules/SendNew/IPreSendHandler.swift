@@ -2,7 +2,7 @@ import Combine
 import Foundation
 import SwiftUI
 
-protocol IPreSendHandler {
+public protocol IPreSendHandler {
     func title(_ code: String) -> String
     var hasSettings: Bool { get }
     var state: AdapterState { get }
@@ -42,7 +42,7 @@ extension IPreSendHandler {
     }
 }
 
-enum SendDataResult {
+public enum SendDataResult {
     case valid(sendData: SendData)
     case invalid(cautions: [CautionNew])
 }

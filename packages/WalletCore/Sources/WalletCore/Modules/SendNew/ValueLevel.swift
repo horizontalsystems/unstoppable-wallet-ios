@@ -1,4 +1,4 @@
-enum ValueLevel {
+public enum ValueLevel {
     case regular
     case warning
     case error

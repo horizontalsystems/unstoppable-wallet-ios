@@ -7,7 +7,7 @@ import ObjectMapper
 import RxRelay
 import RxSwift
 
-class ContactBookManager {
+public class ContactBookManager {
     private static let batchingInterval: TimeInterval = 1
     static let filename = "Contacts.json"
 
@@ -68,7 +68,7 @@ class ContactBookManager {
         }
     }
 
-    init(localStorage: LocalStorage, ubiquityContainerIdentifier: String?, helper: ContactBookHelper, logger: Logger? = nil) {
+    public init(localStorage: LocalStorage, ubiquityContainerIdentifier: String?, helper: ContactBookHelper, logger: Logger? = nil) {
         self.ubiquityContainerIdentifier = ubiquityContainerIdentifier
 
         logger?.debug("=C-MANAGER> INIT")

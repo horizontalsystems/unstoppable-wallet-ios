@@ -5,7 +5,7 @@ import RxRelay
 import RxSwift
 import StellarKit
 
-class AdapterFactory {
+public class AdapterFactory {
     private let evmBlockchainManager: EvmBlockchainManager
     private let evmSyncSourceManager: EvmSyncSourceManager
     private let moneroNodeManager: MoneroNodeManager
@@ -21,10 +21,10 @@ class AdapterFactory {
     private let spamWrapper: SpamWrapper
     private let evmLabelManager: EvmLabelManager
 
-    init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, zcashNodeManager: ZcashNodeManager,
-         btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager,
-         zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager,
-         spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager)
+    public init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, zcashNodeManager: ZcashNodeManager,
+                btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager,
+                zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager,
+                spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager)
     {
         self.evmBlockchainManager = evmBlockchainManager
         self.evmSyncSourceManager = evmSyncSourceManager

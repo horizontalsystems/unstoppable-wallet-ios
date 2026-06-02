@@ -1,7 +1,7 @@
 import Foundation
 import HsExtensions
 
-class TestNetManager {
+public class TestNetManager {
     private let keyTestNetEnabled = "test-net-enabled"
     private let keyMayaStagenetEnabled = "maya-stage-net-enabled"
 
@@ -10,7 +10,7 @@ class TestNetManager {
     @PostPublished private(set) var testNetEnabled: Bool
     @PostPublished private(set) var mayaStagenetEnabled: Bool
 
-    init(userDefaultsStorage: UserDefaultsStorage) {
+    public init(userDefaultsStorage: UserDefaultsStorage) {
         self.userDefaultsStorage = userDefaultsStorage
 
         testNetEnabled = userDefaultsStorage.value(for: keyTestNetEnabled) ?? false

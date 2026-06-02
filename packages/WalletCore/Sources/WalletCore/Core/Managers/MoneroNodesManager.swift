@@ -4,14 +4,14 @@ import MoneroKit
 import RxRelay
 import RxSwift
 
-class MoneroNodeManager {
+public class MoneroNodeManager {
     private let blockchainSettingsStorage: BlockchainSettingsStorage
     private let moneroNodeStorage: MoneroNodeStorage
 
     private let nodeRelay = PublishRelay<BlockchainType>()
     private let nodeUpdatedRelay = PublishRelay<BlockchainType>()
 
-    init(blockchainSettingsStorage: BlockchainSettingsStorage, moneroNodeStorage: MoneroNodeStorage) {
+    public init(blockchainSettingsStorage: BlockchainSettingsStorage, moneroNodeStorage: MoneroNodeStorage) {
         self.blockchainSettingsStorage = blockchainSettingsStorage
         self.moneroNodeStorage = moneroNodeStorage
     }

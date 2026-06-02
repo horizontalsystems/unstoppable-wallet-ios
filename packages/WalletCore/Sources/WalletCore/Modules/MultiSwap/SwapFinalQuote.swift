@@ -1,7 +1,7 @@
 import Foundation
 import MarketKit
 
-class SwapFinalQuote {
+public class SwapFinalQuote {
     private let expectedBuyAmount: Decimal
     private let slippage: Decimal?
     let recipient: String?
@@ -12,7 +12,7 @@ class SwapFinalQuote {
     let depositAddress: String?
     let providerSwapId: String?
 
-    init(
+    public init(
         expectedBuyAmount: Decimal,
         slippage: Decimal?,
         recipient: String?,
