@@ -13,7 +13,7 @@ import ZcashLightClientKit
 class ZcashAdapter {
     static let minimalThreshold: Decimal = 0.0004 // minimal transparent balance to shielding
 
-    private static let endPoint = "zec.rocks" // "lightwalletd.electriccoin.co"
+    private static let endPoint = "us.zec.stardust.rest" // ZODL NU6.2 endpoint; was "zec.rocks" (Zebra zr3 degraded GetSubtreeRoots during NU6.2 rollout)
     private let queue = DispatchQueue(label: "\(AppConfig.label).zcash-adapter", qos: .userInitiated)
 
     private var cancellables: [AnyCancellable] = []
