@@ -1,16 +1,17 @@
 import EvmKit
 import Foundation
+import HsCryptoKit
 import MarketKit
 
 // Type A: signs RLP locally, returns hex; OCP server broadcasts.
-class EvmHexBroadcaster: OpenCryptoPayBroadcaster {
+class EvmHexBroadcaster: IOpenCryptoPayBroadcaster {
     private let blockchainType: BlockchainType
 
     init(blockchainType: BlockchainType) {
         self.blockchainType = blockchainType
     }
 
-    func broadcast(data: ISendData) async throws -> OpenCryptoPayProof {
+    func broadcast(data: ISendData) async throws -> OpenCryptoPayBroadcastResult {
         guard let evmData = data as? EvmSendData else {
             throw OpenCryptoPayBroadcastError.dataMismatch
         }
@@ -42,11 +43,12 @@ class EvmHexBroadcaster: OpenCryptoPayBroadcaster {
             signature: signature,
             chainId: wrapper.evmKit.chain.id
         )
-        return .hex(encoded.hs.hexString)
+        let transactionHash = Crypto.sha3(encoded).hs.hexString
+        return .init(proof: .hex(encoded.hs.hexString), transactionHash: transactionHash)
     }
 }
 
-extension EvmHexBroadcaster: OpenCryptoPayBroadcasterType {
+extension EvmHexBroadcaster: IOpenCryptoPayBroadcasterType {
     static let supportedChains: [String: BlockchainType] = [
         "Ethereum": .ethereum,
         "BinanceSmartChain": .binanceSmartChain,
@@ -56,7 +58,7 @@ extension EvmHexBroadcaster: OpenCryptoPayBroadcasterType {
         "Base": .base,
     ]
 
-    static func make(method: String, token _: Token) -> OpenCryptoPayBroadcaster? {
+    static func make(method: String, token _: Token) -> IOpenCryptoPayBroadcaster? {
         guard let blockchainType = supportedChains[method] else { return nil }
         return EvmHexBroadcaster(blockchainType: blockchainType)
     }

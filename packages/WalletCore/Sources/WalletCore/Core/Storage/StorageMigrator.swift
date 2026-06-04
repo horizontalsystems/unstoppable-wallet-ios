@@ -923,6 +923,24 @@ public enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("opencryptopay_v1_create_payments") { db in
+            try db.create(table: OpenCryptoPayPaymentRecord.databaseTableName) { t in
+                t.column(OpenCryptoPayPaymentRecord.Columns.accountId.name, .text).notNull()
+                t.column(OpenCryptoPayPaymentRecord.Columns.transactionHash.name, .text).notNull()
+                t.column(OpenCryptoPayPaymentRecord.Columns.paymentId.name, .text).notNull()
+                t.column(OpenCryptoPayPaymentRecord.Columns.quoteId.name, .text).notNull()
+                t.column(OpenCryptoPayPaymentRecord.Columns.callback.name, .text).notNull()
+                t.column(OpenCryptoPayPaymentRecord.Columns.method.name, .text).notNull()
+                t.column(OpenCryptoPayPaymentRecord.Columns.merchant.name, .text)
+                t.column(OpenCryptoPayPaymentRecord.Columns.createdAt.name, .double).notNull()
+                t.column(OpenCryptoPayPaymentRecord.Columns.proofSubmittedAt.name, .double)
+                t.column(OpenCryptoPayPaymentRecord.Columns.proofFailedAt.name, .double)
+                t.column(OpenCryptoPayPaymentRecord.Columns.lastAttemptedAt.name, .double)
+
+                t.primaryKey([OpenCryptoPayPaymentRecord.Columns.accountId.name, OpenCryptoPayPaymentRecord.Columns.transactionHash.name], onConflict: .ignore)
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 

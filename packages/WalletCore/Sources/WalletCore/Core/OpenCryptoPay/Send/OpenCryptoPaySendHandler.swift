@@ -1,15 +1,16 @@
 import Combine
 import Foundation
 import MarketKit
-import WalletCore
 
 // Decorator: broadcasts via per-chain broadcaster, then submits proof to OCP /tx.
 class OpenCryptoPaySendHandler {
     private let payment: OpenCryptoPayPayment
     private let entry: OpenCryptoPayPayment.Entry
     private let innerHandler: ISendHandler
-    private let broadcaster: OpenCryptoPayBroadcaster
+    private let broadcaster: IOpenCryptoPayBroadcaster
     private let submitter: OpenCryptoPaySubmitter
+    private let paymentManager: OpenCryptoPayPaymentManager
+    private let proofWorkerProvider: OpenCryptoPayProofWorkerProvider
     private let accountManager: AccountManager
     private let walletManager: WalletManager
 
@@ -22,16 +23,20 @@ class OpenCryptoPaySendHandler {
     init(payment: OpenCryptoPayPayment,
          entry: OpenCryptoPayPayment.Entry,
          innerHandler: ISendHandler,
-         broadcaster: OpenCryptoPayBroadcaster,
+         broadcaster: IOpenCryptoPayBroadcaster,
          submitter: OpenCryptoPaySubmitter,
+         paymentManager: OpenCryptoPayPaymentManager,
          accountManager: AccountManager = Core.shared.accountManager,
-         walletManager: WalletManager = Core.shared.walletManager)
+         walletManager: WalletManager = Core.shared.walletManager,
+         proofWorkerProvider: OpenCryptoPayProofWorkerProvider = Core.shared.openCryptoPay.proofWorkerProvider)
     {
         self.payment = payment
         self.entry = entry
         self.innerHandler = innerHandler
         self.broadcaster = broadcaster
         self.submitter = submitter
+        self.paymentManager = paymentManager
+        self.proofWorkerProvider = proofWorkerProvider
         self.accountManager = accountManager
         self.walletManager = walletManager
 
@@ -79,21 +84,28 @@ extension OpenCryptoPaySendHandler: ISendHandler {
         }
         try preSendGuards()
 
-        let proof = try await broadcaster.broadcast(data: ocpData.inner)
+        let accountId = payment.capturedAccountId
+        let result = try await broadcaster.broadcast(data: ocpData.inner)
+
+        guard let hash = result.transactionHash else {
+            // No txHash (Bitcoin pre-kit) — can't persist/retry. Best-effort one-shot submit.
+            try? await submitter.submit(callback: payment.callback, quote: payment.quoteId, method: entry.method, proof: result.proof)
+            return
+        }
 
         do {
-            try await submitter.submit(
-                callback: payment.callback,
-                quote: payment.quoteId,
-                method: entry.method,
-                proof: proof
-            )
+            // First proof attempt by the submitter itself (one-shot, inline).
+            try await submitter.submit(callback: payment.callback, quote: payment.quoteId, method: entry.method, proof: result.proof)
+            paymentManager.save(transactionHash: hash, accountId: accountId, payment: payment, entry: entry, submitted: true)
         } catch {
-            // Type B: tx on chain but merchant didn't ack — surface txHash for manual recovery.
-            if case let .tx(hash) = proof {
-                throw SendError.submitFailedAfterBroadcast(txHash: hash, underlying: error)
+            if OpenCryptoPaySubmitError.isTerminal(error) {
+                paymentManager.save(transactionHash: hash, accountId: accountId, payment: payment, entry: entry, submitted: false, proofFailed: true)
+            } else {
+                guard let record = paymentManager.save(transactionHash: hash, accountId: accountId, payment: payment, entry: entry, submitted: false) else {
+                    throw SendError.proofPersistFailed
+                }
+                proofWorkerProvider.schedule(record: record)
             }
-            throw error
         }
     }
 
@@ -114,15 +126,12 @@ extension OpenCryptoPaySendHandler: ISendHandler {
 extension OpenCryptoPaySendHandler {
     enum SendError: LocalizedError {
         case invalidData
-        // Broadcast OK, submit failed; txHash is on-chain.
-        case submitFailedAfterBroadcast(txHash: String, underlying: Error)
+        case proofPersistFailed
 
         var errorDescription: String? {
             switch self {
             case .invalidData: return "open_crypto_pay.error.invalid_data".localized
-            case let .submitFailedAfterBroadcast(txHash, _):
-                let prefix = String(txHash.prefix(10))
-                return "open_crypto_pay.error.submit_failed_after_broadcast".localized(prefix)
+            case .proofPersistFailed: return "open_crypto_pay.error.proof_persist_failed".localized
             }
         }
     }

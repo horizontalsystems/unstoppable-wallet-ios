@@ -2,14 +2,14 @@ import Foundation
 import MarketKit
 
 // Type B: broadcasts via MoneroKit, returns txID.
-class MoneroHashBroadcaster: OpenCryptoPayBroadcaster {
+class MoneroHashBroadcaster: IOpenCryptoPayBroadcaster {
     private let token: Token
 
     init(token: Token) {
         self.token = token
     }
 
-    func broadcast(data: ISendData) async throws -> OpenCryptoPayProof {
+    func broadcast(data: ISendData) async throws -> OpenCryptoPayBroadcastResult {
         guard let moneroData = data as? MoneroSendHandler.SendData else {
             throw OpenCryptoPayBroadcastError.dataMismatch
         }
@@ -25,14 +25,14 @@ class MoneroHashBroadcaster: OpenCryptoPayBroadcaster {
         guard let hash = hashes.first else {
             throw OpenCryptoPayBroadcastError.missingTxId
         }
-        return .tx(hash)
+        return .init(proof: .tx(hash), transactionHash: hash)
     }
 }
 
-extension MoneroHashBroadcaster: OpenCryptoPayBroadcasterType {
+extension MoneroHashBroadcaster: IOpenCryptoPayBroadcasterType {
     static let supportedChains: [String: BlockchainType] = ["Monero": .monero]
 
-    static func make(method: String, token: Token) -> OpenCryptoPayBroadcaster? {
+    static func make(method: String, token: Token) -> IOpenCryptoPayBroadcaster? {
         guard supportedChains.keys.contains(method) else { return nil }
         return MoneroHashBroadcaster(token: token)
     }

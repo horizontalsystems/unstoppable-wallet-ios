@@ -12,7 +12,7 @@ enum TransactionInfoModule {
 
         let service = TransactionInfoService(transactionRecord: transactionRecord, adapter: adapter, currencyManager: Core.shared.currencyManager, rateService: rateService, nftMetadataService: nftMetadataService, balanceHiddenManager: Core.shared.balanceHiddenManager)
         let contactLabelService = ContactLabelService(contactManager: Core.shared.contactManager, blockchainType: transactionRecord.source.blockchainType)
-        let factory = TransactionInfoViewItemFactory(evmLabelManager: Core.shared.evmLabelManager, contactLabelService: contactLabelService, actionEnabled: transactionRecord.source.blockchainType.resendable)
+        let factory = TransactionInfoViewItemFactory(evmLabelManager: Core.shared.evmLabelManager, contactLabelService: contactLabelService, actionEnabled: transactionRecord.source.blockchainType.resendable, extraProviderFactory: Core.shared.transactionInfoExtraFactory)
         let viewModel = TransactionInfoViewModel(service: service, factory: factory, contactLabelService: contactLabelService)
         let viewController = TransactionInfoViewController(adapter: adapter, viewModel: viewModel, pageTitle: "tx_info.title".localized, urlManager: UrlManager(inApp: true))
 
@@ -49,6 +49,7 @@ extension TransactionInfoModule {
         case memo(text: String)
         case txSecretKey(text: String)
         case service(value: String)
+        case value(title: String, value: String)
         case explorer(title: String, url: String?)
         case warning(text: String)
     }

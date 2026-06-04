@@ -146,7 +146,7 @@ extension WalletViewModel {
         walletService?.refresh()
         coinPriceService.refresh()
 
-        try? await Task.sleep(nanoseconds: 1_000_000_000)
+        try? await Task.sleep(seconds: 1)
     }
 
     func process(scanned: String) {

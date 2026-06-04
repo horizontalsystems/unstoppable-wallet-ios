@@ -70,7 +70,7 @@ class PurchaseBottomSheetViewModel: ObservableObject {
             await self?.update(state: .loading)
 
             do {
-                try await Task.sleep(nanoseconds: 5_000_000_000)
+                try await Task.sleep(seconds: 5)
 
                 if !Task.isCancelled {
                     await self?.update(state: .idle)

@@ -3,6 +3,7 @@ import MarketKit
 import WalletCore
 
 struct OpenCryptoPayPayment: Equatable {
+    let id: String
     let quoteId: String
     let quoteExpirationDate: Date
     let callback: URL
@@ -96,7 +97,7 @@ extension OpenCryptoPayPayment {
                     throw OpenCryptoPayManager.Error.chainMismatch
                 }
             }
-            guard let blockchain = Core.shared.openCryptoPayManager.broadcasterFactory.supportedChains[txDetails.blockchain] else {
+            guard let blockchain = Core.shared.openCryptoPay.manager.broadcasterFactory.supportedChains[txDetails.blockchain] else {
                 throw OpenCryptoPayManager.Error.chainMismatch
             }
             if blockchain != wallet.token.blockchainType {

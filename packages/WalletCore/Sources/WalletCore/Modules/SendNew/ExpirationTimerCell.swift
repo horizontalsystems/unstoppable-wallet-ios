@@ -44,37 +44,17 @@ class ExpirationTimerViewModel: ObservableObject {
         text = Self.format(remaining: remaining)
 
         guard remaining > 0 else {
-            print("[timer] tick remaining=0 → stop (expired)")
             return
         }
 
-        // Align next tick to wall clock: snap to next minute boundary while > 60s, else 1s.
-        let nextInterval: TimeInterval
-        if remaining > 60 {
-            let secondsInMinute = remaining % 60
-            nextInterval = TimeInterval(secondsInMinute == 0 ? 60 : secondsInMinute)
-        } else {
-            nextInterval = 1
-        }
-
-        print("[timer] tick remaining=\(remaining)s text=\(text.text) next=\(nextInterval)s")
-
         timer?.invalidate()
-        timer = Timer.scheduledTimer(withTimeInterval: nextInterval, repeats: false) { [weak self] _ in
+        timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { [weak self] _ in
             self?.tick()
         }
     }
 
     static func format(remaining: Int) -> ComponentText {
-        if remaining == 0 {
-            return ComponentText(text: "0s", colorStyle: .red)
-        }
-        if remaining < 60 {
-            return ComponentText(text: "\(remaining)s", colorStyle: .yellow)
-        }
-        let hours = remaining / 3600
-        let minutes = (remaining % 3600) / 60
-        let text = hours > 0 ? "\(hours)h \(minutes)m" : "\(minutes)m"
-        return ComponentText(text: text, colorStyle: .yellow)
+        let text = Duration.seconds(remaining).formatted(.units(allowed: [.hours, .minutes, .seconds], width: .narrow))
+        return ComponentText(text: text, colorStyle: remaining == 0 ? .red : .yellow)
     }
 }

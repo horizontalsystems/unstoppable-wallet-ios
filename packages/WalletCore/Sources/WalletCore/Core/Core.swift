@@ -109,7 +109,9 @@ public class Core {
     let tonConnectManager: TonConnectManager
     let spamWrapper: SpamWrapper
 
-    let openCryptoPayManager: OpenCryptoPayManager
+    let openCryptoPay: OpenCryptoPayModule
+    let transactionInfoExtraFactory: TransactionInfoExtraFactory
+    let appWorkerRegistry: AppWorkerRegistry
 
     let purchaseManager: PurchaseManager
 
@@ -429,14 +431,17 @@ public class Core {
         let telegramUserHandler = TelegramUserHandler(marketKit: marketKit)
         // let tonConnectHandler = TonConnectEventHandler(tonConnectManager: tonConnectManager)
 
-        let openCryptoPayBroadcasterFactory = OpenCryptoPayBroadcasterFactory.unstoppable
-
-        openCryptoPayManager = OpenCryptoPayManager(
-            provider: OpenCryptoPayProvider(networkManager: networkManager),
+        openCryptoPay = OpenCryptoPayModule(
+            dbPool: dbPool,
+            networkManager: networkManager,
             walletManager: walletManager,
             accountManager: accountManager,
-            broadcasterFactory: openCryptoPayBroadcasterFactory
+            logger: logger
         )
+
+        transactionInfoExtraFactory = TransactionInfoExtraFactory()
+        transactionInfoExtraFactory.register(OpenCryptoPayTransactionInfoProvider(manager: openCryptoPay.paymentManager, accountManager: accountManager))
+
         let openCryptoPayHandler = OpenCryptoPayEventHandler()
 
         appEventHandler.append(handler: walletConnectHandler)
@@ -468,6 +473,9 @@ public class Core {
             stellarKitManager: stellarKitManager,
             solanaKitManager: solanaKitManager
         )
+
+        appWorkerRegistry = AppWorkerRegistry(appManager: appManager)
+        appWorkerRegistry.register(provider: openCryptoPay.proofWorkerProvider)
 
         swapAssetStorage = SwapAssetStorage(dbPool: dbPool)
         swapProviderManager = MultiSwapProviderManager(localStorage: localStorage, networkManager: networkManager, apiKey: AppConfig.uswapApiKey)

@@ -3,8 +3,8 @@ import MarketKit
 import SolanaKit
 
 // Type B: broadcasts via SolanaKit, returns tx hash.
-class SolanaHashBroadcaster: OpenCryptoPayBroadcaster {
-    func broadcast(data: ISendData) async throws -> OpenCryptoPayProof {
+class SolanaHashBroadcaster: IOpenCryptoPayBroadcaster {
+    func broadcast(data: ISendData) async throws -> OpenCryptoPayBroadcastResult {
         guard let solData = data as? SolanaSendHandler.SendData else {
             throw OpenCryptoPayBroadcastError.dataMismatch
         }
@@ -32,14 +32,15 @@ class SolanaHashBroadcaster: OpenCryptoPayBroadcaster {
                 signer: signer
             )
         }
-        return .tx(fullTransaction.transaction.hash)
+        let transactionHash = fullTransaction.transaction.hash
+        return .init(proof: .tx(transactionHash), transactionHash: transactionHash)
     }
 }
 
-extension SolanaHashBroadcaster: OpenCryptoPayBroadcasterType {
+extension SolanaHashBroadcaster: IOpenCryptoPayBroadcasterType {
     static let supportedChains: [String: BlockchainType] = ["Solana": .solana]
 
-    static func make(method: String, token _: Token) -> OpenCryptoPayBroadcaster? {
+    static func make(method: String, token _: Token) -> IOpenCryptoPayBroadcaster? {
         guard supportedChains.keys.contains(method) else { return nil }
         return SolanaHashBroadcaster()
     }
