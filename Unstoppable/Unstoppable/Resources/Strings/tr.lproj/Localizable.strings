@@ -2592,8 +2592,16 @@
 "open_crypto_pay.error.unsupported_parameter" = "Bu ödeme desteklenmeyen parametreler içeriyor ve güvenlik için engellendi.";
 "open_crypto_pay.error.chain_mismatch" = "Ödeme ayrıntılarında blokzincir uyuşmazlığı.";
 "open_crypto_pay.error.account_changed" = "Aktif hesap veya cüzdan değişti. Lütfen yeniden tarayın.";
+"open_crypto_pay.error.proof_persist_failed" = "Ödeme yeniden deneme için kaydedilemedi. Lütfen tekrar deneyin.";
 "open_crypto_pay.token_list.description" = "Ödeme için kullanmak istediğiniz token'ı seçin";
 "open_crypto_pay.merchant.name" = "Satıcı";
 "open_crypto_pay.merchant.url" = "URL";
 "open_crypto_pay.expires_in" = "Süre Bitimine";
 "open_crypto_pay.button.expired" = "Teklifin süresi doldu";
+"open_crypto_pay.tx_info.merchant" = "Satıcı";
+"open_crypto_pay.tx_info.payment_id" = "Ödeme ID";
+"open_crypto_pay.tx_info.quote_id" = "Teklif ID";
+"open_crypto_pay.tx_info.proof_status" = "Kanıt Durumu";
+"open_crypto_pay.tx_info.proof_status.submitted" = "Gönderildi";
+"open_crypto_pay.tx_info.proof_status.pending" = "Beklemede";
+"open_crypto_pay.tx_info.proof_status.reconciliation" = "Mutabakat gerekli";

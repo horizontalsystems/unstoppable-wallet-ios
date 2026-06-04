@@ -2592,8 +2592,16 @@
 "open_crypto_pay.error.unsupported_parameter" = "Este pago contiene parámetros no compatibles y fue bloqueado por seguridad.";
 "open_crypto_pay.error.chain_mismatch" = "Discrepancia de blockchain en los detalles del pago.";
 "open_crypto_pay.error.account_changed" = "La cuenta o wallet activo ha cambiado. Por favor, escanee de nuevo.";
+"open_crypto_pay.error.proof_persist_failed" = "No se pudo guardar el pago para reintentarlo. Por favor, inténtalo de nuevo.";
 "open_crypto_pay.token_list.description" = "Elija el token que desea usar para el pago";
 "open_crypto_pay.merchant.name" = "Comercio";
 "open_crypto_pay.merchant.url" = "URL";
 "open_crypto_pay.expires_in" = "Expira en";
 "open_crypto_pay.button.expired" = "Cotización expirada";
+"open_crypto_pay.tx_info.merchant" = "Comerciante";
+"open_crypto_pay.tx_info.payment_id" = "ID de pago";
+"open_crypto_pay.tx_info.quote_id" = "ID de cotización";
+"open_crypto_pay.tx_info.proof_status" = "Estado del comprobante";
+"open_crypto_pay.tx_info.proof_status.submitted" = "Enviado";
+"open_crypto_pay.tx_info.proof_status.pending" = "Pendiente";
+"open_crypto_pay.tx_info.proof_status.reconciliation" = "Reconciliación necesaria";

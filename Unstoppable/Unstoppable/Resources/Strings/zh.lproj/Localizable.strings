@@ -2592,8 +2592,16 @@
 "open_crypto_pay.error.unsupported_parameter" = "此支付包含不受支持的参数，已出于安全原因被拦截。";
 "open_crypto_pay.error.chain_mismatch" = "支付详情中的区块链不匹配。";
 "open_crypto_pay.error.account_changed" = "当前账户或钱包已更改。请重新扫描。";
+"open_crypto_pay.error.proof_persist_failed" = "无法保存付款以进行重试。请重试。";
 "open_crypto_pay.token_list.description" = "选择您要用于支付的代币";
 "open_crypto_pay.merchant.name" = "商户";
 "open_crypto_pay.merchant.url" = "URL";
 "open_crypto_pay.expires_in" = "过期时间";
 "open_crypto_pay.button.expired" = "报价已过期";
+"open_crypto_pay.tx_info.merchant" = "商户";
+"open_crypto_pay.tx_info.payment_id" = "付款 ID";
+"open_crypto_pay.tx_info.quote_id" = "报价 ID";
+"open_crypto_pay.tx_info.proof_status" = "证明状态";
+"open_crypto_pay.tx_info.proof_status.submitted" = "已提交";
+"open_crypto_pay.tx_info.proof_status.pending" = "待处理";
+"open_crypto_pay.tx_info.proof_status.reconciliation" = "需要对账";
