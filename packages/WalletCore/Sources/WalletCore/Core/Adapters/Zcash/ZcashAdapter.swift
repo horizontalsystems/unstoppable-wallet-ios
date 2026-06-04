@@ -12,8 +12,10 @@ import ZcashLightClientKit
 
 class ZcashAdapter {
     static let minimalThreshold: Decimal = 0.0004 // minimal transparent balance to shielding
-    static let defaultZip317MarginalFee = ZcashSDK.defaultZip317MarginalFee
-    static let zip317MarginalFeeRange = (defaultZip317MarginalFee.amount) ... (defaultZip317MarginalFee.amount * 6)
+
+    //  static let defaultZip317MarginalFee = ZcashSDK.defaultZip317MarginalFee // ZCASH_MARGINAL_FEE
+
+//    static let zip317MarginalFeeRange = (defaultZip317MarginalFee.amount) ... (defaultZip317MarginalFee.amount * 6)
     static let defaultTxExpiryHeightDelta: UInt32 = 10
 
     private static let endPoint = "us.zec.stardust.rest" // ZODL NU6.2 endpoint; was "zec.rocks" (Zebra zr3 degraded GetSubtreeRoots during NU6.2 rollout)
@@ -1045,8 +1047,8 @@ extension ZcashAdapter {
     func sendProposal(
         amount: Decimal,
         address: Recipient,
-        memo: Memo?,
-        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
+        memo: Memo?
+//        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
     ) async throws -> Proposal {
         guard let accountId else {
             throw AppError.ZcashError.noAccountId
@@ -1059,8 +1061,8 @@ extension ZcashAdapter {
                 accountUUID: accountId,
                 recipient: address,
                 amount: amountInZatoshi,
-                memo: memo,
-                zip317MarginalFee: zip317MarginalFee
+                memo: memo
+//                zip317MarginalFee: zip317MarginalFee
             )
         } catch {
             throw ZcashSendHelper.converted(error)
@@ -1068,8 +1070,8 @@ extension ZcashAdapter {
     }
 
     func sendProposal(
-        outputs: [TransferOutput],
-        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
+        outputs: [TransferOutput]
+//        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
     ) async throws -> Proposal {
         guard let accountId else {
             throw AppError.ZcashError.noAccountId
@@ -1080,8 +1082,8 @@ extension ZcashAdapter {
         do {
             return try await synchronizer.proposefulfillingPaymentURI(
                 paymentURI,
-                accountUUID: accountId,
-                zip317MarginalFee: zip317MarginalFee
+                accountUUID: accountId
+//                zip317MarginalFee: zip317MarginalFee
             )
         } catch {
             throw ZcashSendHelper.converted(error)
@@ -1130,8 +1132,8 @@ extension ZcashAdapter {
     func shieldProposal(
         threshold: Decimal,
         address: Recipient?,
-        memo: Memo?,
-        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
+        memo: Memo?
+//        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
     ) async throws -> Proposal? {
         guard let accountId else {
             throw AppError.ZcashError.noAccountId
@@ -1151,8 +1153,8 @@ extension ZcashAdapter {
             accountUUID: accountId,
             shieldingThreshold: amountInZatoshi,
             memo: requiredMemo,
-            transparentReceiver: transparentAddress,
-            zip317MarginalFee: zip317MarginalFee
+            transparentReceiver: transparentAddress
+//            zip317MarginalFee: zip317MarginalFee
         )
     }
 
@@ -1177,8 +1179,8 @@ extension ZcashAdapter {
     func sendSingle(
         amount: Decimal,
         address: Recipient,
-        memo: Memo?,
-        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
+        memo: Memo?
+//        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
     ) -> Single<Void> {
         guard let accountId else {
             return .error(AppError.ZcashError.noAccountId)
@@ -1190,14 +1192,14 @@ extension ZcashAdapter {
                     guard let proposal = try await self?.synchronizer.proposeTransfer(
                         accountUUID: accountId,
                         recipient: address,
-                        amount: Zatoshi.from(decimal: amount), memo: memo,
-                        zip317MarginalFee: zip317MarginalFee
+                        amount: Zatoshi.from(decimal: amount), memo: memo
+//                        zip317MarginalFee: zip317MarginalFee
                     ) else {
                         observer(.error(AppError.unknownError))
                         return
                     }
 
-                    try await self?.send(proposal: proposal, zip317MarginalFee: zip317MarginalFee)
+                    try await self?.send(proposal: proposal /* , zip317MarginalFee: zip317MarginalFee */ )
                     observer(.success(()))
                 } catch {
                     observer(.error(error))
@@ -1210,16 +1212,16 @@ extension ZcashAdapter {
     func send(
         amount: Decimal,
         address: Recipient,
-        memo: Memo?,
-        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
+        memo: Memo?
+//        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
     ) async throws {
-        let proposal = try await sendProposal(amount: amount, address: address, memo: memo, zip317MarginalFee: zip317MarginalFee)
-        try await send(proposal: proposal, zip317MarginalFee: zip317MarginalFee)
+        let proposal = try await sendProposal(amount: amount, address: address, memo: memo /* , zip317MarginalFee: zip317MarginalFee */ )
+        try await send(proposal: proposal /* , zip317MarginalFee: zip317MarginalFee */ )
     }
 
     @discardableResult func send(
-        proposal: Proposal,
-        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
+        proposal: Proposal
+//        zip317MarginalFee: Zatoshi = ZcashAdapter.defaultZip317MarginalFee
     ) async throws -> String? {
         guard let spendingKey else {
             throw AppError.ZcashError.noReceiveAddress
@@ -1228,9 +1230,9 @@ extension ZcashAdapter {
         let expiryHeightDelta = Self.defaultTxExpiryHeightDelta
         let stream = try await synchronizer.createProposedTransactions(
             proposal: proposal,
-            spendingKey: spendingKey,
-            expiryHeightDelta: expiryHeightDelta,
-            zip317MarginalFee: zip317MarginalFee
+            spendingKey: spendingKey
+//            expiryHeightDelta: expiryHeightDelta
+//            zip317MarginalFee: zip317MarginalFee
         )
 
         let transactionCount = proposal.transactionCount()

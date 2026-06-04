@@ -49,7 +49,7 @@ let package = Package(
         .package(url: "https://github.com/horizontalsystems/TronKit.Swift.git", exact: "1.5.1"),
         .package(url: "https://github.com/horizontalsystems/UIExtensions.Swift", exact: "1.0.2"),
         .package(url: "https://github.com/horizontalsystems/UniswapKit.Swift", exact: "3.2.0"),
-        .package(url: "https://github.com/horizontalsystems/ZcashLightClientKit", branch: "master"),
+        .package(url: "https://github.com/horizontalsystems/ZcashLightClientKit", revision: "e6c757a555ccbc8b05dc25a77d393d45a6094832"),
     ],
     targets: [
         .target(

@@ -23,15 +23,15 @@ extension ShieldSendHandler: ISendHandler {
         token
     }
 
-    func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
+    func sendData(transactionSettings _: TransactionSettings?) async throws -> ISendData {
         let memoText = memo.flatMap { try? Memo(string: $0) }
-        let zip317MarginalFee = transactionSettings?.zcashZip317MarginalFee ?? ZcashAdapter.defaultZip317MarginalFee
+//        let zip317MarginalFee = transactionSettings?.zcashZip317MarginalFee ?? ZcashAdapter.defaultZip317MarginalFee
 
         guard let proposal = try await adapter.shieldProposal(
             threshold: ZcashAdapter.minimalThreshold,
             address: recipient,
-            memo: memoText,
-            zip317MarginalFee: zip317MarginalFee
+            memo: memoText
+//            zip317MarginalFee: zip317MarginalFee
         ) else {
             throw SendError.cantCreateProposal
         }
@@ -48,8 +48,8 @@ extension ShieldSendHandler: ISendHandler {
             recipient: recipient,
             memo: memo,
             transactionError: transactionError,
-            proposal: proposal,
-            zip317MarginalFee: zip317MarginalFee
+            proposal: proposal
+//            zip317MarginalFee: zip317MarginalFee
         )
     }
 
@@ -58,7 +58,7 @@ extension ShieldSendHandler: ISendHandler {
             throw SendError.invalidData
         }
 
-        try await adapter.send(proposal: data.proposal, zip317MarginalFee: data.zip317MarginalFee)
+        try await adapter.send(proposal: data.proposal /* , zip317MarginalFee: data.zip317MarginalFee */ )
     }
 }
 
@@ -77,16 +77,16 @@ extension ShieldSendHandler {
         let memo: String?
         var transactionError: Error?
         let proposal: Proposal
-        let zip317MarginalFee: Zatoshi
+//        let zip317MarginalFee: Zatoshi
 
-        init(token: Token, amount: Decimal, recipient: Recipient?, memo: String?, transactionError: Error?, proposal: Proposal, zip317MarginalFee: Zatoshi) {
+        init(token: Token, amount: Decimal, recipient: Recipient?, memo: String?, transactionError: Error?, proposal: Proposal, /* zip317MarginalFee: Zatoshi */ ) {
             self.token = token
             self.amount = amount
             self.recipient = recipient
             self.memo = memo
             self.transactionError = transactionError
             self.proposal = proposal
-            self.zip317MarginalFee = zip317MarginalFee
+//            self.zip317MarginalFee = zip317MarginalFee
         }
 
         var feeData: FeeData? {

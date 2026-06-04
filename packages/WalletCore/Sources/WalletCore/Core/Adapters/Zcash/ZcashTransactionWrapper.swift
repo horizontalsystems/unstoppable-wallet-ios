@@ -39,9 +39,9 @@ class ZcashTransactionWrapper {
         let sdkState = tx.getState(for: lastBlockHeight)
         failed = sdkState == .expired
         if failed, tx.minedHeight == nil {
-            timestamp = tx.createdAt ?? tx.blockTime ?? Date().timeIntervalSince1970
+            timestamp = /* tx.createdAt ?? */ tx.blockTime ?? Date().timeIntervalSince1970
         } else {
-            timestamp = tx.blockTime ?? tx.createdAt ?? Date().timeIntervalSince1970 // need this to update pending transactions and shows on transaction tab
+            timestamp = tx.blockTime /* ?? tx.createdAt*/ ?? Date().timeIntervalSince1970 // need this to update pending transactions and shows on transaction tab
         }
         totalSpent = tx.totalSpent
         totalReceived = tx.totalReceived
