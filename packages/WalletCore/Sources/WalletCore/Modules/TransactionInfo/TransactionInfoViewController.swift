@@ -569,6 +569,8 @@ class TransactionInfoViewController: ThemeViewController {
             return multiLineValueRow(rowInfo: rowInfo, id: "tx_secret_key", title: "tx_info.tx_secret_key".localized, value: value, copyable: true)
         case let .service(value):
             return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: nil, title: "tx_info.service".localized, value: value)
+        case let .value(title, value):
+            return CellComponent.valueRow(tableView: tableView, rowInfo: rowInfo, iconName: nil, title: title, value: value)
         case let .explorer(title, url):
             return explorerRow(rowInfo: rowInfo, title: title, url: url)
         case let .warning(text):

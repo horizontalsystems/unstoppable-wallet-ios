@@ -478,7 +478,7 @@ class MultiSwapViewModel: ObservableObject {
                             }
 
                             let timeoutTask = Task {
-                                try await Task.sleep(nanoseconds: 5_000_000_000)
+                                try await Task.sleep(seconds: 5)
                                 quoteTask.cancel()
                             }
 

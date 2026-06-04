@@ -3,13 +3,13 @@ import MarketKit
 
 // Registry of OCP broadcasters; each app registers only what it ships.
 class OpenCryptoPayBroadcasterFactory {
-    private var types: [OpenCryptoPayBroadcasterType.Type] = []
+    private var types: [IOpenCryptoPayBroadcasterType.Type] = []
 
-    func register(_ type: OpenCryptoPayBroadcasterType.Type) {
+    func register(_ type: IOpenCryptoPayBroadcasterType.Type) {
         types.append(type)
     }
 
-    func register(_ types: [OpenCryptoPayBroadcasterType.Type]) {
+    func register(_ types: [IOpenCryptoPayBroadcasterType.Type]) {
         for type in types {
             self.types.append(type)
         }
@@ -22,7 +22,7 @@ class OpenCryptoPayBroadcasterFactory {
         }
     }
 
-    func make(method: String, token: Token) -> OpenCryptoPayBroadcaster? {
+    func make(method: String, token: Token) -> IOpenCryptoPayBroadcaster? {
         types.lazy.compactMap { $0.make(method: method, token: token) }.first
     }
 }

@@ -6,9 +6,14 @@ enum OpenCryptoPayProof {
     case tx(String) // Type B — we already broadcasted.
 }
 
+struct OpenCryptoPayBroadcastResult {
+    let proof: OpenCryptoPayProof
+    let transactionHash: String?
+}
+
 // Type A signs locally without broadcasting; Type B broadcasts and returns hash.
-protocol OpenCryptoPayBroadcaster {
-    func broadcast(data: ISendData) async throws -> OpenCryptoPayProof
+protocol IOpenCryptoPayBroadcaster {
+    func broadcast(data: ISendData) async throws -> OpenCryptoPayBroadcastResult
 }
 
 enum OpenCryptoPayBroadcastError: Error {
@@ -21,7 +26,7 @@ enum OpenCryptoPayBroadcastError: Error {
 }
 
 // Self-registration: each broadcaster declares supported methods + how to build itself.
-protocol OpenCryptoPayBroadcasterType {
+protocol IOpenCryptoPayBroadcasterType {
     static var supportedChains: [String: BlockchainType] { get }
-    static func make(method: String, token: Token) -> OpenCryptoPayBroadcaster?
+    static func make(method: String, token: Token) -> IOpenCryptoPayBroadcaster?
 }

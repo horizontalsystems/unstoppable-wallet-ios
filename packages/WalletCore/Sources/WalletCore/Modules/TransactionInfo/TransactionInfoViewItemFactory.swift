@@ -1,3 +1,4 @@
+import Combine
 import EvmKit
 import Foundation
 import MarketKit
@@ -7,14 +8,20 @@ class TransactionInfoViewItemFactory {
 
     private let evmLabelManager: EvmLabelManager
     private let contactLabelService: ContactLabelService
+    private let extraProviderFactory: TransactionInfoExtraFactory
 
     private let actionEnabled: Bool
     var priceReversed = false
 
-    init(evmLabelManager: EvmLabelManager, contactLabelService: ContactLabelService, actionEnabled: Bool) {
+    init(evmLabelManager: EvmLabelManager, contactLabelService: ContactLabelService, actionEnabled: Bool, extraProviderFactory: TransactionInfoExtraFactory) {
         self.evmLabelManager = evmLabelManager
         self.actionEnabled = actionEnabled
         self.contactLabelService = contactLabelService
+        self.extraProviderFactory = extraProviderFactory
+    }
+
+    var updatedPublisher: AnyPublisher<Void, Never> {
+        extraProviderFactory.updatedPublisher
     }
 
     private func amount(source: TransactionSource, title: String, subtitle: String?, appValue: AppValue, rate: CurrencyValue?, type: AmountType, balanceHidden: Bool) -> TransactionInfoModule.ViewItem {
@@ -805,6 +812,8 @@ class TransactionInfoViewItemFactory {
                 .option(option: .zcashResend),
             ]))
         }
+
+        sections.append(contentsOf: extraProviderFactory.sections(item: item))
 
         sections.append(.init([
             .explorer(title: "tx_info.view_on".localized(item.explorerTitle), url: item.explorerUrl),

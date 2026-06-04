@@ -4,7 +4,7 @@ import MarketKit
 import WalletCore
 
 class CryptoPaySendTokenListViewModel: ObservableObject {
-    private let openCryptoPayManager = Core.shared.openCryptoPayManager
+    private let openCryptoPayManager = Core.shared.openCryptoPay.manager
 
     @Published var state: State = .loading
     private let url: URL

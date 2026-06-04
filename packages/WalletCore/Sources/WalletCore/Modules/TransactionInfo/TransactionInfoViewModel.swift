@@ -1,10 +1,12 @@
 import Combine
+import Foundation
 import MarketKit
 import RxCocoa
 import RxSwift
 
 class TransactionInfoViewModel {
     private let disposeBag = DisposeBag()
+    private var cancellables = Set<AnyCancellable>()
 
     private let service: TransactionInfoService
     private let factory: TransactionInfoViewItemFactory
@@ -20,6 +22,11 @@ class TransactionInfoViewModel {
         subscribe(disposeBag, service.transactionItemUpdatedObserver) { [weak self] in self?.updateTransactionItem(item: $0) }
         subscribe(disposeBag, contactLabelService.stateObservable) { [weak self] _ in self?.reSyncServiceItem() }
         subscribe(disposeBag, service.balanceHiddenObservable) { [weak self] _ in self?.reSyncServiceItem() }
+
+        factory.updatedPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.reSyncServiceItem() }
+            .store(in: &cancellables)
     }
 
     private func reSyncServiceItem() {
