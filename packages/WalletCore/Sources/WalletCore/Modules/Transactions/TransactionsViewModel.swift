@@ -436,6 +436,10 @@ class TransactionsViewModel: ObservableObject {
 }
 
 extension TransactionsViewModel {
+    var filterChanged: Bool {
+        transactionFilter.hasChanges || !spamFilterEnabled
+    }
+
     var transactionListStatus: TransactionListStatus {
         if sections.isEmpty {
             if !isReachable {

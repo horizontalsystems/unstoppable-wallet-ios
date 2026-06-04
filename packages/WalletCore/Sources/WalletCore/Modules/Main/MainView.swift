@@ -71,6 +71,17 @@ struct MainView: View {
                 ToolbarItem(placement: .primaryAction) {
                     Button(action: {
                         Coordinator.shared.present { isPresented in
+                            MainTransactionsView(transactionsViewModel: transactionsViewModel, isPresented: isPresented)
+                        }
+                        stat(page: .transactions, event: .open(page: .transactions))
+                    }) {
+                        Image("clock")
+                    }
+                }
+
+                ToolbarItem(placement: .primaryAction) {
+                    Button(action: {
+                        Coordinator.shared.present { isPresented in
                             ManageAccountsView(parentPresented: isPresented)
                         }
                         stat(page: .balance, event: .open(page: .manageWallets))
@@ -123,7 +134,7 @@ struct MainView: View {
                     stat(page: .transactions, event: .open(page: .transactionFilter))
                 }) {
                     Image("manage_2_24")
-                        .modifier(ToolbarBadgeModifier(visible: transactionsViewModel.transactionFilter.hasChanges))
+                        .modifier(ToolbarBadgeModifier(visible: transactionsViewModel.filterChanged))
                 }
             }
 
