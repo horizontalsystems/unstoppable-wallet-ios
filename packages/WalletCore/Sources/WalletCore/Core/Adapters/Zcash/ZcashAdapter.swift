@@ -16,7 +16,7 @@ class ZcashAdapter {
     static let zip317MarginalFeeRange = (defaultZip317MarginalFee.amount) ... (defaultZip317MarginalFee.amount * 6)
     static let defaultTxExpiryHeightDelta: UInt32 = 10
 
-    private static let endPoint = "zec.rocks" // "lightwalletd.electriccoin.co"
+    private static let endPoint = "us.zec.stardust.rest" // ZODL NU6.2 endpoint; was "zec.rocks" (Zebra zr3 degraded GetSubtreeRoots during NU6.2 rollout)
     private let queue = DispatchQueue(label: "\(AppConfig.label).zcash-adapter", qos: .userInitiated)
 
     private var cancellables: [AnyCancellable] = []
