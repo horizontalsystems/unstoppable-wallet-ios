@@ -3,6 +3,7 @@ import MarketKit
 
 class TransactionFilterViewModel: ObservableObject {
     private let transactionsViewModel: TransactionsViewModel
+    private let securityManager = Core.shared.securityManager
     private var cancellables = Set<AnyCancellable>()
 
     @Published var blockchain: Blockchain?
@@ -18,16 +19,24 @@ class TransactionFilterViewModel: ObservableObject {
         blockchain = transactionsViewModel.transactionFilter.blockchain
         token = transactionsViewModel.transactionFilter.token
         contact = transactionsViewModel.transactionFilter.contact
-        scamFilterEnabled = transactionsViewModel.transactionFilter.scamFilterEnabled
-        resetEnabled = transactionsViewModel.transactionFilter.hasChanges
+        scamFilterEnabled = transactionsViewModel.spamFilterEnabled
+        resetEnabled = transactionsViewModel.filterChanged
 
         transactionsViewModel.$transactionFilter
             .sink { [weak self] filter in
-                self?.blockchain = filter.blockchain
-                self?.token = filter.token
-                self?.contact = filter.contact
-                self?.scamFilterEnabled = filter.scamFilterEnabled
-                self?.resetEnabled = filter.hasChanges
+                guard let self else { return }
+                blockchain = filter.blockchain
+                token = filter.token
+                contact = filter.contact
+                resetEnabled = filter.hasChanges || !transactionsViewModel.spamFilterEnabled
+            }
+            .store(in: &cancellables)
+
+        transactionsViewModel.$spamFilterEnabled
+            .sink { [weak self] enabled in
+                guard let self else { return }
+                scamFilterEnabled = enabled
+                resetEnabled = transactionsViewModel.transactionFilter.hasChanges || !enabled
             }
             .store(in: &cancellables)
     }
@@ -45,10 +54,11 @@ class TransactionFilterViewModel: ObservableObject {
     }
 
     func set(scamFilterEnabled: Bool) {
-        transactionsViewModel.transactionFilter.scamFilterEnabled = scamFilterEnabled
+        securityManager.setSpamFilter(enabled: scamFilterEnabled)
     }
 
     func reset() {
         transactionsViewModel.transactionFilter.reset()
+        securityManager.setSpamFilter(enabled: true)
     }
 }
