@@ -2592,8 +2592,16 @@
 "open_crypto_pay.error.unsupported_parameter" = "이 결제에 지원되지 않는 매개변수가 포함되어 있어 안전을 위해 차단되었습니다.";
 "open_crypto_pay.error.chain_mismatch" = "결제 세부 정보에서 블록체인이 일치하지 않습니다.";
 "open_crypto_pay.error.account_changed" = "활성 계정 또는 지갑이 변경되었습니다. 다시 스캔해 주세요.";
+"open_crypto_pay.error.proof_persist_failed" = "재시도를 위한 결제 저장에 실패했습니다. 다시 시도해 주세요.";
 "open_crypto_pay.token_list.description" = "결제에 사용할 토큰을 선택하세요";
 "open_crypto_pay.merchant.name" = "가맹점";
 "open_crypto_pay.merchant.url" = "URL";
 "open_crypto_pay.expires_in" = "만료까지";
 "open_crypto_pay.button.expired" = "견적 만료됨";
+"open_crypto_pay.tx_info.merchant" = "가맹점";
+"open_crypto_pay.tx_info.payment_id" = "결제 ID";
+"open_crypto_pay.tx_info.quote_id" = "견적 ID";
+"open_crypto_pay.tx_info.proof_status" = "증명 상태";
+"open_crypto_pay.tx_info.proof_status.submitted" = "제출됨";
+"open_crypto_pay.tx_info.proof_status.pending" = "대기 중";
+"open_crypto_pay.tx_info.proof_status.reconciliation" = "조정 필요";

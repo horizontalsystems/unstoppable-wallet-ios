@@ -2592,8 +2592,16 @@
 "open_crypto_pay.error.unsupported_parameter" = "Diese Zahlung enthält nicht unterstützte Parameter und wurde aus Sicherheitsgründen blockiert.";
 "open_crypto_pay.error.chain_mismatch" = "Blockchain-Abweichung in den Zahlungsdetails.";
 "open_crypto_pay.error.account_changed" = "Aktives Konto oder Wallet wurde geändert. Bitte erneut scannen.";
+"open_crypto_pay.error.proof_persist_failed" = "Die Zahlung konnte nicht zum erneuten Versuch gespeichert werden. Bitte versuchen Sie es erneut.";
 "open_crypto_pay.token_list.description" = "Wählen Sie den Token, den Sie für die Zahlung verwenden möchten";
 "open_crypto_pay.merchant.name" = "Händler";
 "open_crypto_pay.merchant.url" = "URL";
 "open_crypto_pay.expires_in" = "Läuft ab in";
 "open_crypto_pay.button.expired" = "Angebot abgelaufen";
+"open_crypto_pay.tx_info.merchant" = "Händler";
+"open_crypto_pay.tx_info.payment_id" = "Zahlungs-ID";
+"open_crypto_pay.tx_info.quote_id" = "Angebots-ID";
+"open_crypto_pay.tx_info.proof_status" = "Nachweisstatus";
+"open_crypto_pay.tx_info.proof_status.submitted" = "Eingereicht";
+"open_crypto_pay.tx_info.proof_status.pending" = "Ausstehend";
+"open_crypto_pay.tx_info.proof_status.reconciliation" = "Abgleich erforderlich";
