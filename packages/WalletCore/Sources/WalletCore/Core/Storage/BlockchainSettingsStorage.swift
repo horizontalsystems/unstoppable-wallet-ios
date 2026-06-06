@@ -9,6 +9,7 @@ class BlockchainSettingsStorage {
     private let keyEvmSyncSource = "evm-sync-source"
     private let keyMoneroNode = "monero-node"
     private let keyZanoNode = "zano-node"
+    private let keyZcashNode = "zcash-node"
     init(storage: BlockchainSettingRecordStorage) {
         self.storage = storage
     }
@@ -75,6 +76,15 @@ extension BlockchainSettingsStorage {
 
     func save(zanoNodeUrl: String, blockchainType: BlockchainType) {
         let record = BlockchainSettingRecord(blockchainUid: blockchainType.uid, key: keyZanoNode, value: zanoNodeUrl)
+        try? storage.save(record: record)
+    }
+
+    func zcashNodeUrl(blockchainType: BlockchainType) -> String? {
+        try? storage.record(blockchainUid: blockchainType.uid, key: keyZcashNode).map(\.value)
+    }
+
+    func save(zcashNodeUrl: String, blockchainType: BlockchainType) {
+        let record = BlockchainSettingRecord(blockchainUid: blockchainType.uid, key: keyZcashNode, value: zcashNodeUrl)
         try? storage.save(record: record)
     }
 }

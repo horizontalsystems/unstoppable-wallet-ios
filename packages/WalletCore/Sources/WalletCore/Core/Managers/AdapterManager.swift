@@ -16,6 +16,7 @@ class AdapterManager {
     private let solanaKitManager: SolanaKitManager
     private let moneroNodeManager: MoneroNodeManager
     private let zanoNodeManager: ZanoNodeManager
+    private let zcashNodeManager: ZcashNodeManager
 
     private let adapterDataReadyRelay = PublishRelay<AdapterData>()
 
@@ -25,7 +26,7 @@ class AdapterManager {
 
     init(adapterFactory: AdapterFactory, walletManager: WalletManager, evmBlockchainManager: EvmBlockchainManager,
          tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager, zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager,
-         btcBlockchainManager: BtcBlockchainManager, moneroNodeManager: MoneroNodeManager, zanoNodeManager: ZanoNodeManager)
+         btcBlockchainManager: BtcBlockchainManager, moneroNodeManager: MoneroNodeManager, zanoNodeManager: ZanoNodeManager, zcashNodeManager: ZcashNodeManager)
     {
         self.adapterFactory = adapterFactory
         self.walletManager = walletManager
@@ -37,6 +38,7 @@ class AdapterManager {
         self.solanaKitManager = solanaKitManager
         self.moneroNodeManager = moneroNodeManager
         self.zanoNodeManager = zanoNodeManager
+        self.zcashNodeManager = zcashNodeManager
 
         walletManager.activeWalletDataUpdatedObservable
             .observeOn(SerialDispatchQueueScheduler(qos: .userInitiated))
@@ -53,6 +55,7 @@ class AdapterManager {
         subscribe(disposeBag, btcBlockchainManager.restoreModeUpdatedObservable) { [weak self] in self?.handleUpdatedRestoreMode(blockchainType: $0) }
         subscribe(disposeBag, moneroNodeManager.nodeObservable) { [weak self] in self?.recreateAdapter(blockchainType: $0) }
         subscribe(disposeBag, zanoNodeManager.nodeObservable) { [weak self] in self?.recreateAdapter(blockchainType: $0) }
+        subscribe(disposeBag, zcashNodeManager.nodeObservable) { [weak self] in self?.handleZcashEndpointChange(blockchainType: $0) }
         subscribe(disposeBag, tronKitManager.tronKitUpdatedObservable) { [weak self] in self?.handleUpdatedEvmKit(blockchainType: .tron) }
         subscribe(disposeBag, solanaKitManager.kitStoppedObservable) { [weak self] in self?.recreateAdapter(blockchainType: .solana) }
     }
@@ -108,6 +111,44 @@ class AdapterManager {
         refreshAdapters(wallets: wallets.filter {
             $0.token.blockchain.type == blockchainType && $0.account.origin == .restored
         })
+    }
+
+    // Zcash changes the lightwalletd endpoint in place (synchronizer.switchTo), not by recreating the
+    // adapter over the same local DB (which would report synced from cache). switchTo validates the
+    // server and throws on failure; on failure we revert the stored selection to the endpoint actually
+    // applied so the UI stays in sync with reality.
+    private func handleZcashEndpointChange(blockchainType: BlockchainType) {
+        guard blockchainType == .zcash else { return }
+
+        let endpoint = ZcashAdapter.endpoint(url: zcashNodeManager.node(blockchainType: .zcash).url)
+
+        let adapters = queue.sync {
+            _adapterData.adapterMap.compactMap { wallet, adapter in
+                wallet.token.blockchainType == .zcash ? adapter as? ZcashAdapter : nil
+            }
+        }
+
+        guard !adapters.isEmpty else { return }
+
+        Task { [weak self] in
+            for adapter in adapters {
+                do {
+                    try await adapter.switchEndpoint(endpoint)
+                } catch {
+                    self?.revertZcashSelection(to: adapter)
+                }
+            }
+        }
+    }
+
+    private func revertZcashSelection(to adapter: ZcashAdapter) {
+        guard let appliedURL = adapter.currentEndpointURL,
+              let node = zcashNodeManager.allNodes(blockchainType: .zcash).first(where: { $0.url == appliedURL })
+        else {
+            return
+        }
+
+        zcashNodeManager.setCurrent(node: node, blockchainType: .zcash)
     }
 
     private func refreshAdapters(wallets: [Wallet]) {

@@ -8,6 +8,7 @@ enum BlockchainSettingsModule {
             evmSyncSourceManager: Core.shared.evmSyncSourceManager,
             moneroNodeManager: Core.shared.moneroNodeManager,
             zanoNodeManager: Core.shared.zanoNodeManager,
+            zcashNodeManager: Core.shared.zcashNodeManager,
             marketKit: Core.shared.marketKit
         )
         return BlockchainSettingsView(viewModel: viewModel)

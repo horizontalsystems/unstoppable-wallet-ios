@@ -73,6 +73,7 @@ class RestoreFileConfigurationViewModel: ObservableObject {
             let rpcCount = rawBackup.customSyncSources.count
                 + rawBackup.customMoneroNodes.count
                 + rawBackup.customZanoNodes.count
+                + rawBackup.customZcashNodes.count
             if rpcCount > 0 {
                 items.append(.init(
                     section: .customRpc,

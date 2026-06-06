@@ -9,6 +9,7 @@ class AdapterFactory {
     private let evmBlockchainManager: EvmBlockchainManager
     private let evmSyncSourceManager: EvmSyncSourceManager
     private let moneroNodeManager: MoneroNodeManager
+    private let zcashNodeManager: ZcashNodeManager
     private let btcBlockchainManager: BtcBlockchainManager
     private let tronKitManager: TronKitManager
     private let tonKitManager: TonKitManager
@@ -20,7 +21,7 @@ class AdapterFactory {
     private let spamWrapper: SpamWrapper
     private let evmLabelManager: EvmLabelManager
 
-    init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager,
+    init(evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, zcashNodeManager: ZcashNodeManager,
          btcBlockchainManager: BtcBlockchainManager, tronKitManager: TronKitManager, tonKitManager: TonKitManager, stellarKitManager: StellarKitManager,
          zanoKitManager: ZanoKitManager, solanaKitManager: SolanaKitManager, restoreSettingsManager: RestoreSettingsManager, coinManager: CoinManager,
          spamWrapper: SpamWrapper, evmLabelManager: EvmLabelManager)
@@ -28,6 +29,7 @@ class AdapterFactory {
         self.evmBlockchainManager = evmBlockchainManager
         self.evmSyncSourceManager = evmSyncSourceManager
         self.moneroNodeManager = moneroNodeManager
+        self.zcashNodeManager = zcashNodeManager
         self.btcBlockchainManager = btcBlockchainManager
         self.tronKitManager = tronKitManager
         self.tonKitManager = tonKitManager
@@ -191,7 +193,8 @@ extension AdapterFactory {
 
         case (.native, .zcash):
             let restoreSettings = restoreSettingsManager.settings(accountId: wallet.account.id, blockchainType: .zcash)
-            return try? ZcashAdapter(wallet: wallet, restoreSettings: restoreSettings)
+            let zcashEndpoint = ZcashAdapter.endpoint(url: zcashNodeManager.node(blockchainType: .zcash).url)
+            return try? ZcashAdapter(wallet: wallet, restoreSettings: restoreSettings, endpoint: zcashEndpoint)
 
         case (.native, .monero):
             let restoreSettings = restoreSettingsManager.settings(accountId: wallet.account.id, blockchainType: .monero)

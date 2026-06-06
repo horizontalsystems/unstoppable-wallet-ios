@@ -73,6 +73,7 @@ public class Core {
     let evmSyncSourceManager: EvmSyncSourceManager
     let moneroNodeManager: MoneroNodeManager
     let zanoNodeManager: ZanoNodeManager
+    let zcashNodeManager: ZcashNodeManager
     let restoreStateManager: RestoreStateManager
     let evmBlockchainManager: EvmBlockchainManager
     let evmLabelManager: EvmLabelManager
@@ -229,6 +230,9 @@ public class Core {
         let zanoNodeStorage = ZanoNodeStorage(dbPool: dbPool)
         zanoNodeManager = ZanoNodeManager(blockchainSettingsStorage: blockchainSettingsStorage, zanoNodeStorage: zanoNodeStorage)
 
+        let zcashNodeStorage = ZcashNodeStorage(dbPool: dbPool)
+        zcashNodeManager = ZcashNodeManager(blockchainSettingsStorage: blockchainSettingsStorage, zcashNodeStorage: zcashNodeStorage)
+
         let restoreStateStorage = RestoreStateStorage(dbPool: dbPool)
         restoreStateManager = RestoreStateManager(storage: restoreStateStorage)
 
@@ -313,6 +317,7 @@ public class Core {
             evmBlockchainManager: evmBlockchainManager,
             evmSyncSourceManager: evmSyncSourceManager,
             moneroNodeManager: moneroNodeManager,
+            zcashNodeManager: zcashNodeManager,
             btcBlockchainManager: btcBlockchainManager,
             tronKitManager: tronKitManager,
             tonKitManager: tonKitManager,
@@ -335,7 +340,8 @@ public class Core {
             solanaKitManager: solanaKitManager,
             btcBlockchainManager: btcBlockchainManager,
             moneroNodeManager: moneroNodeManager,
-            zanoNodeManager: zanoNodeManager
+            zanoNodeManager: zanoNodeManager,
+            zcashNodeManager: zcashNodeManager
         )
         transactionAdapterManager = TransactionAdapterManager(
             adapterManager: adapterManager,
@@ -354,6 +360,7 @@ public class Core {
             evmSyncSourceManager: evmSyncSourceManager,
             moneroNodeManager: moneroNodeManager,
             zanoNodeManager: zanoNodeManager,
+            zcashNodeManager: zcashNodeManager,
             btcBlockchainManager: btcBlockchainManager,
             restoreSettingsManager: restoreSettingsManager,
             chartRepository: chartRepository,

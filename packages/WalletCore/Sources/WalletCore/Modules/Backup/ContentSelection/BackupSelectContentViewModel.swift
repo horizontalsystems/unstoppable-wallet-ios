@@ -8,6 +8,7 @@ class BackupSelectContentViewModel: ObservableObject {
     private let evmSyncSourceManager = Core.shared.evmSyncSourceManager
     private let moneroNodeManager = Core.shared.moneroNodeManager
     private let zanoNodeManager = Core.shared.zanoNodeManager
+    private let zcashNodeManager = Core.shared.zcashNodeManager
     private let cloudBackupManager = Core.shared.cloudBackupManager
 
     let walletItems: [BackupModule.WalletItem]
@@ -26,7 +27,8 @@ class BackupSelectContentViewModel: ObservableObject {
             watchlistManager: watchlistManager,
             evmSyncSourceManager: evmSyncSourceManager,
             moneroNodeManager: moneroNodeManager,
-            zanoNodeManager: zanoNodeManager
+            zanoNodeManager: zanoNodeManager,
+            zcashNodeManager: zcashNodeManager
         )
 
         selectedWalletIds = selectedAccountIds.intersection(Set(walletItems.map(\.accountId)))
@@ -69,7 +71,8 @@ class BackupSelectContentViewModel: ObservableObject {
         watchlistManager: WatchlistManager,
         evmSyncSourceManager: EvmSyncSourceManager,
         moneroNodeManager: MoneroNodeManager,
-        zanoNodeManager: ZanoNodeManager
+        zanoNodeManager: ZanoNodeManager,
+        zcashNodeManager: ZcashNodeManager
     ) -> [BackupModule.DataItem] {
         var items: [BackupModule.DataItem] = []
 
@@ -94,6 +97,7 @@ class BackupSelectContentViewModel: ObservableObject {
         let rpcCount = evmSyncSourceManager.customSyncSources(blockchainType: nil).count
             + moneroNodeManager.customNodes(blockchainType: nil).count
             + zanoNodeManager.customNodeRecords.count
+            + zcashNodeManager.customNodeRecords.count
         if rpcCount > 0 {
             items.append(.init(
                 section: .customRpc,
