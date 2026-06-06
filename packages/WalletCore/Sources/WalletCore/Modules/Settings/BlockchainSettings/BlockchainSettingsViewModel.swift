@@ -10,6 +10,7 @@ class BlockchainSettingsViewModel: ObservableObject {
     private let evmSyncSourceManager: EvmSyncSourceManager
     private let moneroNodeManager: MoneroNodeManager
     private let zanoNodeManager: ZanoNodeManager
+    private let zcashNodeManager: ZcashNodeManager
     private let marketKit: MarketKit.Kit
     private let disposeBag = DisposeBag()
 
@@ -17,12 +18,13 @@ class BlockchainSettingsViewModel: ObservableObject {
     @Published var btcItems: [Item] = []
     @Published var tronItem: Item?
 
-    init(btcBlockchainManager: BtcBlockchainManager, evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, zanoNodeManager: ZanoNodeManager, marketKit: MarketKit.Kit) {
+    init(btcBlockchainManager: BtcBlockchainManager, evmBlockchainManager: EvmBlockchainManager, evmSyncSourceManager: EvmSyncSourceManager, moneroNodeManager: MoneroNodeManager, zanoNodeManager: ZanoNodeManager, zcashNodeManager: ZcashNodeManager, marketKit: MarketKit.Kit) {
         self.btcBlockchainManager = btcBlockchainManager
         self.evmBlockchainManager = evmBlockchainManager
         self.evmSyncSourceManager = evmSyncSourceManager
         self.moneroNodeManager = moneroNodeManager
         self.zanoNodeManager = zanoNodeManager
+        self.zcashNodeManager = zcashNodeManager
         self.marketKit = marketKit
 
         subscribe(MainScheduler.instance, disposeBag, btcBlockchainManager.restoreModeUpdatedObservable) { [weak self] _ in self?.syncBtcItems() }
@@ -35,6 +37,7 @@ class BlockchainSettingsViewModel: ObservableObject {
         }
         subscribe(MainScheduler.instance, disposeBag, moneroNodeManager.nodeObservable) { [weak self] _ in self?.syncBtcItems() }
         subscribe(MainScheduler.instance, disposeBag, zanoNodeManager.nodeObservable) { [weak self] _ in self?.syncBtcItems() }
+        subscribe(MainScheduler.instance, disposeBag, zcashNodeManager.nodeObservable) { [weak self] _ in self?.syncBtcItems() }
 
         syncBtcItems()
         syncEvmItems()
@@ -56,6 +59,11 @@ class BlockchainSettingsViewModel: ObservableObject {
         if let blockchain = try? marketKit.blockchain(uid: BlockchainType.zano.uid) {
             let zanoNode = zanoNodeManager.node(blockchainType: .zano)
             items.append(.init(blockchain: blockchain, type: .zano(node: zanoNode)))
+        }
+
+        if let blockchain = try? marketKit.blockchain(uid: BlockchainType.zcash.uid) {
+            let zcashNode = zcashNodeManager.node(blockchainType: .zcash)
+            items.append(.init(blockchain: blockchain, type: .zcash(node: zcashNode)))
         }
 
         btcItems = items.sorted { $0.blockchain.type.order < $1.blockchain.type.order }
@@ -88,6 +96,7 @@ extension BlockchainSettingsViewModel {
             case let .btc(restoreMode): return restoreMode.title(blockchain: blockchain)
             case let .monero(node): return node.name
             case let .zano(node): return node.name
+            case let .zcash(node): return node.name
             }
         }
     }
@@ -97,5 +106,6 @@ extension BlockchainSettingsViewModel {
         case btc(restoreMode: BtcRestoreMode)
         case monero(node: MoneroNode)
         case zano(node: ZanoNode)
+        case zcash(node: ZcashNode)
     }
 }

@@ -58,6 +58,12 @@ struct BlockchainSettingsView: View {
                     }
 
                     stat(page: .blockchainSettings, event: .openBlockchainSettingsZano)
+                case .zcash:
+                    Coordinator.shared.present { isPresented in
+                        ZcashNetworkView(blockchain: item.blockchain, isPresented: isPresented)
+                    }
+
+                    stat(page: .blockchainSettings, event: .openBlockchainSettingsZcash)
                 }
 
             }) {

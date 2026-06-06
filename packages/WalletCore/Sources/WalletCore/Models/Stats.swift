@@ -26,6 +26,8 @@ enum StatPage: String {
     case blockchainSettingsMoneroAdd = "blockchain_settings_monero_add"
     case blockchainSettingsZano = "blockchain_settings_zano"
     case blockchainSettingsZanoAdd = "blockchain_settings_zano_add"
+    case blockchainSettingsZcash = "blockchain_settings_zcash"
+    case blockchainSettingsZcashAdd = "blockchain_settings_zcash_add"
     case blockchainSettingsTron = "blockchain_settings_tron"
     case blockchainSettingsTronAdd = "blockchain_settings_tron_add"
     case checkAddress = "check_address"
@@ -190,6 +192,7 @@ enum StatEvent {
     case addEvmSource(chainUid: String)
     case addMoneroNode(chainUid: String)
     case addZanoNode(chainUid: String)
+    case addZcashNode(chainUid: String)
     case addTronRpcSource(chainUid: String)
     case addToken(token: Token)
     case addToWallet
@@ -207,6 +210,7 @@ enum StatEvent {
     case deleteCustomEvmSource(chainUid: String)
     case deleteCustomMoneroNode(chainUid: String)
     case deleteCustomZanoNode(chainUid: String)
+    case deleteCustomZcashNode(chainUid: String)
     case deleteCustomTronRpcSource(chainUid: String)
     case disableToken(token: Token)
     case edit(entity: StatEntity)
@@ -221,10 +225,12 @@ enum StatEvent {
     case openBlockchainSettingsEvm(chainUid: String)
     case openBlockchainSettingsMonero
     case openBlockchainSettingsZano
+    case openBlockchainSettingsZcash
     case openBlockchainSettingsTron
     case openBlockchainSettingsEvmAdd(chainUid: String)
     case openBlockchainSettingsMoneroAdd(chainUid: String)
     case openBlockchainSettingsZanoAdd(chainUid: String)
+    case openBlockchainSettingsZcashAdd(chainUid: String)
     case openBlockchainSettingsTronAdd(chainUid: String)
     case openCategory(categoryUid: String)
     case openCoin(coinUid: String)
@@ -265,6 +271,7 @@ enum StatEvent {
     case switchField(field: StatField)
     case switchMoneroNode(chainUid: String, name: String)
     case switchZanoNode(chainUid: String, name: String)
+    case switchZcashNode(chainUid: String, name: String)
     case switchTronRpcSource(chainUid: String, name: String)
     case switchMarketTypeFilter(type: String)
     case switchFilterType(type: String)
@@ -291,6 +298,7 @@ enum StatEvent {
         case .addEvmSource: return "add_evm_source"
         case .addMoneroNode: return "add_monero_node"
         case .addZanoNode: return "add_zano_node"
+        case .addZcashNode: return "add_zcash_node"
         case .addTronRpcSource: return "add_tron_rpc_source"
         case .addToWallet: return "add_to_wallet"
         case .addToWatchlist: return "add_to_watchlist"
@@ -306,6 +314,7 @@ enum StatEvent {
         case .deleteCustomEvmSource: return "delete_custom_evm_source"
         case .deleteCustomMoneroNode: return "delete_custom_monero_node"
         case .deleteCustomZanoNode: return "delete_custom_zano_node"
+        case .deleteCustomZcashNode: return "delete_custom_zcash_node"
         case .deleteCustomTronRpcSource: return "delete_custom_tron_rpc_source"
         case .disableToken: return "disable_token"
         case .disconnect: return "disconnect"
@@ -316,8 +325,8 @@ enum StatEvent {
         case .importFull: return "import_full"
         case .importWallet: return "import_wallet"
         case .open, .openCategory, .openCoin, .openPlatform, .openReceive, .openResend, .openSector, .openSend, .openSendTokenList, .openTokenPage,
-             .openBlockchainSettingsBtc, .openBlockchainSettingsEvm, .openBlockchainSettingsMonero, .openBlockchainSettingsZano, .openBlockchainSettingsTron,
-             .openBlockchainSettingsEvmAdd, .openBlockchainSettingsMoneroAdd, .openBlockchainSettingsZanoAdd, .openBlockchainSettingsTronAdd: return "open_page"
+             .openBlockchainSettingsBtc, .openBlockchainSettingsEvm, .openBlockchainSettingsMonero, .openBlockchainSettingsZano, .openBlockchainSettingsZcash, .openBlockchainSettingsTron,
+             .openBlockchainSettingsEvmAdd, .openBlockchainSettingsMoneroAdd, .openBlockchainSettingsZanoAdd, .openBlockchainSettingsZcashAdd, .openBlockchainSettingsTronAdd: return "open_page"
         case .openPremium: return "open_premium_from"
         case .openTokenInfo: return "open_token_info"
         case .paste: return "paste"
@@ -350,6 +359,7 @@ enum StatEvent {
         case .switchEvmSource: return "switch_evm_source"
         case .switchMoneroNode: return "switch_monero_node"
         case .switchZanoNode: return "switch_zano_node"
+        case .switchZcashNode: return "switch_zcash_node"
         case .switchTronRpcSource: return "switch_tron_rpc_source"
         case .switchField: return "switch_field"
         case .switchFilterType: return "switch_filter_type"
@@ -398,6 +408,7 @@ enum StatEvent {
         case let .openBlockchainSettingsEvm(chainUid: chainUid): return [.page: StatPage.blockchainSettingsEvm.rawValue, .chainUid: chainUid]
         case .openBlockchainSettingsMonero: return [.page: StatPage.blockchainSettingsMonero.rawValue]
         case .openBlockchainSettingsZano: return [.page: StatPage.blockchainSettingsZano.rawValue]
+        case .openBlockchainSettingsZcash: return [.page: StatPage.blockchainSettingsZcash.rawValue]
         case .openBlockchainSettingsTron: return [.page: StatPage.blockchainSettingsTron.rawValue]
         case let .openBlockchainSettingsEvmAdd(chainUid: chainUid): return [.page: StatPage.blockchainSettingsEvmAdd.rawValue, .chainUid: chainUid]
         case let .openCategory(categoryUid): return [.page: StatPage.coinCategory.rawValue, .categoryUid: categoryUid]

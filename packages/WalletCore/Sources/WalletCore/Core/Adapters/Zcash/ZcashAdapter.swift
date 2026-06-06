@@ -18,7 +18,12 @@ class ZcashAdapter {
 //    static let zip317MarginalFeeRange = (defaultZip317MarginalFee.amount) ... (defaultZip317MarginalFee.amount * 6)
     static let defaultTxExpiryHeightDelta: UInt32 = 10
 
-    private static let endPoint = "us.zec.stardust.rest" // ZODL NU6.2 endpoint; was "zec.rocks" (Zebra zr3 degraded GetSubtreeRoots during NU6.2 rollout)
+    static let defaultEndpoint = LightWalletEndpoint(address: "zec.rocks", port: 443, secure: true, streamingCallTimeoutInMillis: 10 * 60 * 60 * 1000)
+
+    static func endpoint(url: URL) -> LightWalletEndpoint {
+        LightWalletEndpoint(address: url.host ?? "zec.rocks", port: url.port ?? 443, secure: url.scheme != "http", streamingCallTimeoutInMillis: 10 * 60 * 60 * 1000)
+    }
+
     private let queue = DispatchQueue(label: "\(AppConfig.label).zcash-adapter", qos: .userInitiated)
 
     private var cancellables: [AnyCancellable] = []
@@ -43,6 +48,7 @@ class ZcashAdapter {
     private var logger: HsToolKit.Logger?
 
     private(set) var network: ZcashNetwork
+    private(set) var currentEndpoint: LightWalletEndpoint
 
     private let lastBlockUpdatedSubject = PublishSubject<Void>()
     private let balanceStateSubject = PublishSubject<AdapterState>()
@@ -100,7 +106,7 @@ class ZcashAdapter {
 
     private(set) var syncing: Bool = true
 
-    init(wallet: Wallet, restoreSettings: RestoreSettings) throws {
+    init(wallet: Wallet, restoreSettings: RestoreSettings, endpoint: LightWalletEndpoint) throws {
         logger = Core.shared.logger.scoped(with: "ZCashKit")
 //        logger = HsToolKit.Logger(minLogLevel: .debug)
 
@@ -110,6 +116,7 @@ class ZcashAdapter {
 
         network = ZcashNetworkBuilder.network(for: .mainnet)
 
+        currentEndpoint = endpoint
         token = wallet.token
         transactionSource = wallet.transactionSource
         uniqueId = wallet.account.id
@@ -144,7 +151,7 @@ class ZcashAdapter {
         zCashAdapterStorage = try ZcashAdapterStorage(dbPool: dbPool)
         zCashBalanceData = try zCashAdapterStorage.balanceData(id: uniqueId) ?? .empty(id: uniqueId)
 
-        let initializer = try ZcashAdapter.initializer(network: network, uniqueId: uniqueId)
+        let initializer = try ZcashAdapter.initializer(network: network, uniqueId: uniqueId, endpoint: endpoint)
         synchronizer = SDKSynchronizer(initializer: initializer)
         // subscribe on sync states
         synchronizer
@@ -161,6 +168,32 @@ class ZcashAdapter {
             .store(in: &cancellables)
 
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
+    }
+
+    // URL form of the currently applied endpoint, used by AdapterManager to revert the stored selection on failure.
+    var currentEndpointURL: URL? {
+        URL(string: "\(currentEndpoint.secure ? "https" : "http")://\(currentEndpoint.host):\(currentEndpoint.port)")
+    }
+
+    // In-place lightwalletd endpoint switch driven by AdapterManager. The SDK validates the server
+    // (ValidateServerAction: getInfo + chain/network/sapling/branch checks) and throws for an
+    // unreachable/wrong endpoint; on failure the previous working endpoint is restored and the error
+    // is rethrown so the caller can revert the stored selection (keeping UI in sync with reality).
+    func switchEndpoint(_ endpoint: LightWalletEndpoint) async throws {
+        guard endpoint.host != currentEndpoint.host || endpoint.port != currentEndpoint.port || endpoint.secure != currentEndpoint.secure else {
+            return
+        }
+
+        do {
+            try await synchronizer.switchTo(endpoint: endpoint)
+            currentEndpoint = endpoint
+            startSynchronizer()
+        } catch {
+            logger?.log(level: .error, message: "Failed to switch endpoint to \(endpoint.host):\(endpoint.port): \(error)")
+            try? await synchronizer.switchTo(endpoint: currentEndpoint)
+            startSynchronizer()
+            throw error
+        }
     }
 
     private func prepare(seedData: [UInt8], walletBirthday: BlockHeight, for initMode: WalletInitMode) {
@@ -751,7 +784,7 @@ extension ZcashAdapter {
         BlockHeight.ofLatestCheckpoint(network: network)
     }
 
-    static func initializer(network: ZcashNetwork, uniqueId: String) throws -> Initializer {
+    static func initializer(network: ZcashNetwork, uniqueId: String, endpoint: LightWalletEndpoint = defaultEndpoint) throws -> Initializer {
         // One-time cleanup: promote any pre-existing per-wallet sapling params
         // ("sapling-{spend,output}_<uniqueId>.params") to the shared, wallet-agnostic
         // location so existing users don't have to re-download ~51MB.
@@ -763,7 +796,7 @@ extension ZcashAdapter {
             generalStorageURL: generalStorageURL(uniqueId: uniqueId, network: network),
             dataDbURL: dataDbURL(uniqueId: uniqueId, network: network),
             torDirURL: torDirURL(uniqueId: uniqueId, network: network),
-            endpoint: LightWalletEndpoint(address: endPoint, port: 443, secure: true, streamingCallTimeoutInMillis: 10 * 60 * 60 * 1000),
+            endpoint: endpoint,
             network: network,
             spendParamsURL: spendParamsURL(),
             outputParamsURL: outputParamsURL(),

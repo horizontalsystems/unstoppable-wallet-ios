@@ -941,6 +941,15 @@ public enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Create ZcashNodeRecord") { db in
+            try db.create(table: ZcashNodeRecord.databaseTableName) { t in
+                t.column(ZcashNodeRecord.Columns.blockchainTypeUid.name, .text).notNull()
+                t.column(ZcashNodeRecord.Columns.url.name, .text).notNull()
+
+                t.primaryKey([ZcashNodeRecord.Columns.blockchainTypeUid.name, ZcashNodeRecord.Columns.url.name], onConflict: .replace)
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 

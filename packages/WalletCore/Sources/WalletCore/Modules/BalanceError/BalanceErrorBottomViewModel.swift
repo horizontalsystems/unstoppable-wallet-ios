@@ -22,6 +22,8 @@ class BalanceErrorBottomViewModel: ObservableObject {
             sourceType = .monero(blockchain: wallet.token.blockchain)
         } else if wallet.token.blockchainType == .zano {
             sourceType = .zano(blockchain: wallet.token.blockchain)
+        } else if wallet.token.blockchainType == .zcash {
+            sourceType = .zcash(blockchain: wallet.token.blockchain)
         }
 
         item = Item(wallet: wallet, error: error, sourceType: sourceType)
@@ -48,5 +50,6 @@ extension BalanceErrorBottomViewModel {
         case evm(blockchain: Blockchain)
         case monero(blockchain: Blockchain)
         case zano(blockchain: Blockchain)
+        case zcash(blockchain: Blockchain)
     }
 }
