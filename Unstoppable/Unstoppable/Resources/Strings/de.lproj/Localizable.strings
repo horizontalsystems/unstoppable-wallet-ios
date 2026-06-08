@@ -2137,6 +2137,17 @@
 "add_zano_node.warning.url_exists" = "Ein Node mit dieser URL existiert bereits";
 "add_zano_node.error.invalid_url" = "Die eingegebene URL ist ungültig";
 
+"zcash_network.node" = "Server";
+"zcash_network.added" = "Hinzugefügt";
+"zcash_network.add_new" = "Neu hinzufügen";
+"zcash_network.description" = "Wählen Sie den Lightwallet-Server, den die Unstoppable-App zur Synchronisierung der Wallet(s) verwenden soll.";
+
+"add_zcash_node.title" = "Server hinzufügen";
+"add_zcash_node.description" = "Geben Sie die Adresse des lightwalletd-Servers ein (Host oder Host:Port).";
+"add_zcash_node.node_url" = "Serveradresse";
+"add_zcash_node.warning.url_exists" = "Ein Server mit dieser Adresse existiert bereits";
+"add_zcash_node.error.invalid_url" = "Die eingegebene Adresse ist ungültig. Verwenden Sie Host oder Host:Port";
+
 // Send Settings
 
 "evm_send_settings.nonce" = "Transaktion Nonce";

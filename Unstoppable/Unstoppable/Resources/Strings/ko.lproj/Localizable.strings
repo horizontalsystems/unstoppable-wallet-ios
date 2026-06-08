@@ -2137,6 +2137,17 @@
 "add_zano_node.warning.url_exists" = "이 URL을 가진 노드가 이미 존재합니다";
 "add_zano_node.error.invalid_url" = "입력한 URL이 유효하지 않습니다";
 
+"zcash_network.node" = "서버";
+"zcash_network.added" = "추가됨";
+"zcash_network.add_new" = "새로 추가";
+"zcash_network.description" = "Unstoppable 앱이 지갑 동기화에 사용할 라이트월렛 서버를 선택하세요.";
+
+"add_zcash_node.title" = "서버 추가";
+"add_zcash_node.description" = "lightwalletd 서버 주소를 입력하세요 (호스트 또는 호스트:포트).";
+"add_zcash_node.node_url" = "서버 주소";
+"add_zcash_node.warning.url_exists" = "이 주소의 서버가 이미 존재합니다";
+"add_zcash_node.error.invalid_url" = "입력한 주소가 유효하지 않습니다. 호스트 또는 호스트:포트를 사용하세요";
+
 // Send Settings
 
 "evm_send_settings.nonce" = "트랜잭션 Nonce";
