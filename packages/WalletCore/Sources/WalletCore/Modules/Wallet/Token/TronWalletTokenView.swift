@@ -11,13 +11,22 @@ struct TronWalletTokenView: View {
     }
 
     var body: some View {
-        TronToolbarWalletTokenView(wallet: wallet, tronWalletViewModel: viewModel) { walletTokenViewModel, transactionsViewModel in
+        TronToolbarWalletTokenView(wallet: wallet) { walletTokenViewModel, transactionsViewModel in
             let transactionListStatus = viewModel.accountActive ? transactionsViewModel.transactionListStatus : .inactiveWallet
 
             ViewWithTransactionList(
                 transactionListStatus: transactionListStatus,
                 content: {
-                    WalletTokenTopView(viewModel: walletTokenViewModel).themeListTopView()
+                    WalletTokenTopView(
+                        viewModel: walletTokenViewModel,
+                        status: {
+                            TronWalletTokenHeaderStatusView(viewModel: walletTokenViewModel, tronViewModel: viewModel)
+                        },
+                        content: {
+                            EmptyView()
+                        }
+                    )
+                    .themeListTopView()
                 },
                 transactionList: {
                     TransactionsView(viewModel: transactionsViewModel, statPage: .tokenPage)

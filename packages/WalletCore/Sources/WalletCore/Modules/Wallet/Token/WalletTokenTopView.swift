@@ -1,14 +1,17 @@
 import SwiftUI
 
-struct WalletTokenTopView<Content: View>: View {
+struct WalletTokenTopView<Content: View, Status: View>: View {
     @ObservedObject var viewModel: WalletTokenViewModel
+    let status: () -> Status
     let content: () -> Content
 
     init(
         viewModel: WalletTokenViewModel,
-        @ViewBuilder content: @escaping () -> Content = { EmptyView() }
+        @ViewBuilder status: @escaping () -> Status,
+        @ViewBuilder content: @escaping () -> Content
     ) {
         self.viewModel = viewModel
+        self.status = status
         self.content = content
     }
 
@@ -23,7 +26,11 @@ struct WalletTokenTopView<Content: View>: View {
                         HapticGenerator.instance.notification(.feedback(.soft))
                     }
 
-                ThemeText(secondaryValue, style: .body, colorStyle: .secondary)
+                PrimarySizedHStack(spacing: .margin8) {
+                    ThemeText(secondaryValue, style: .body, colorStyle: .secondary)
+                } trailing: {
+                    status()
+                }
             }
             .padding(.horizontal, 16)
 
@@ -162,5 +169,25 @@ struct WalletTokenTopView<Content: View>: View {
 
             return "----"
         }
+    }
+}
+
+extension WalletTokenTopView where Content == EmptyView, Status == WalletTokenHeaderStatusView {
+    init(viewModel: WalletTokenViewModel) {
+        self.init(
+            viewModel: viewModel,
+            status: { WalletTokenHeaderStatusView(viewModel: viewModel) },
+            content: { EmptyView() }
+        )
+    }
+}
+
+extension WalletTokenTopView where Status == WalletTokenHeaderStatusView {
+    init(viewModel: WalletTokenViewModel, @ViewBuilder content: @escaping () -> Content) {
+        self.init(
+            viewModel: viewModel,
+            status: { WalletTokenHeaderStatusView(viewModel: viewModel) },
+            content: content
+        )
     }
 }
