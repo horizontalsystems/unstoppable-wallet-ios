@@ -2137,6 +2137,17 @@
 "add_zano_node.warning.url_exists" = "具有此 URL 的节点已存在";
 "add_zano_node.error.invalid_url" = "输入的 URL 无效";
 
+"zcash_network.node" = "服务器";
+"zcash_network.added" = "已添加";
+"zcash_network.add_new" = "添加新服务器";
+"zcash_network.description" = "选择 Unstoppable 应用用于同步钱包的轻钱包服务器。";
+
+"add_zcash_node.title" = "添加服务器";
+"add_zcash_node.description" = "输入 lightwalletd 服务器地址（主机或主机:端口）。";
+"add_zcash_node.node_url" = "服务器地址";
+"add_zcash_node.warning.url_exists" = "该地址的服务器已存在";
+"add_zcash_node.error.invalid_url" = "输入的地址无效。请使用主机或主机:端口格式";
+
 // Send Settings
 
 "evm_send_settings.nonce" = "交易nonce";

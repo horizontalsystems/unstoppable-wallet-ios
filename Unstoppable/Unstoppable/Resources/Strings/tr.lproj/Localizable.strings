@@ -2137,6 +2137,17 @@
 "add_zano_node.warning.url_exists" = "Bu URL'ye sahip bir düğüm zaten mevcut";
 "add_zano_node.error.invalid_url" = "Girilen URL geçersiz";
 
+"zcash_network.node" = "Sunucu";
+"zcash_network.added" = "Eklendi";
+"zcash_network.add_new" = "Yeni Ekle";
+"zcash_network.description" = "Unstoppable uygulamasının cüzdan(ları) senkronize etmek için kullanacağı lightwallet sunucusunu seçin.";
+
+"add_zcash_node.title" = "Sunucu Ekle";
+"add_zcash_node.description" = "lightwalletd sunucu adresini girin (ana bilgisayar veya ana bilgisayar:port).";
+"add_zcash_node.node_url" = "Sunucu Adresi";
+"add_zcash_node.warning.url_exists" = "Bu adrese sahip bir sunucu zaten mevcut";
+"add_zcash_node.error.invalid_url" = "Girilen adres geçersiz. Ana bilgisayar veya ana bilgisayar:port kullanın";
+
 // Send Settings
 
 "evm_send_settings.nonce" = "İşlem Nonce";
