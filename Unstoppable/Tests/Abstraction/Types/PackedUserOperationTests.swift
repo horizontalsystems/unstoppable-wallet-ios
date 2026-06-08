@@ -3,6 +3,7 @@ import EvmKit
 import HsCryptoKit
 import HsExtensions
 @testable import Unstoppable
+@testable import WalletCore
 import XCTest
 
 /// Tests for userOpHash computation (EntryPoint v0.6).

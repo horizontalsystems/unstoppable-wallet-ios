@@ -3,6 +3,7 @@ import HdWalletKit
 import HsCryptoKit
 import HsExtensions
 @testable import Unstoppable
+@testable import WalletCore
 import XCTest
 
 final class BarzFactoryTests: XCTestCase {

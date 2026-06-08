@@ -1,6 +1,7 @@
 import Testing
 import TronKit
 @testable import Unstoppable
+@testable import WalletCore
 
 struct GasFreeAddressResolverTests {
     @Test func mainnetVectorMatchesUpstreamSDK() throws {

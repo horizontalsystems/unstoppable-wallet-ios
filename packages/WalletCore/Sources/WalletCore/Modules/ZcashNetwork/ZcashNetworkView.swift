@@ -73,10 +73,16 @@ struct ZcashNetworkView: View {
                         viewModel.save()
                         isPresented = false
                     }) {
-                        Text("button.save".localized)
+                        HStack(spacing: .margin8) {
+                            if viewModel.processing {
+                                ProgressView().progressViewStyle(.circular)
+                            }
+                            Text("button.save".localized)
+                        }
                     }
                     .buttonStyle(PrimaryButtonStyle(style: .yellow))
-                    .disabled(!viewModel.saveEnabled)
+                    .disabled(!viewModel.saveEnabled || viewModel.processing)
+                    .animation(.default, value: viewModel.processing)
                 }
             }
             .navigationTitle(viewModel.blockchain.name)
@@ -91,6 +97,9 @@ struct ZcashNetworkView: View {
                         Image("close")
                     }
                 }
+            }
+            .onReceive(viewModel.errorPublisher) { error in
+                HudHelper.instance.show(banner: .error(string: error))
             }
         }
     }

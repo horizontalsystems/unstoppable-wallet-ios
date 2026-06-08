@@ -2,6 +2,7 @@ import HsExtensions
 import Testing
 import TronKit
 @testable import Unstoppable
+@testable import WalletCore
 
 struct PermitTransferHashTests {
     @Test func mainnetHashMatchesUpstreamSDK() throws {

@@ -1,6 +1,7 @@
 import BigInt
 import EvmKit
 @testable import Unstoppable
+@testable import WalletCore
 import XCTest
 
 /// Tests that `UserOperation -> UserOperationRequest -> UserOperation` preserves all fields.

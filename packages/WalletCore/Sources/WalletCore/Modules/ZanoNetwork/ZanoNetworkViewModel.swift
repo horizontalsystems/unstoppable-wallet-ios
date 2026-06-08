@@ -19,8 +19,9 @@ class ZanoNetworkViewModel: ObservableObject {
 
         selectedNodeUrl = zanoNodeManager.node(blockchainType: blockchain.type).url
 
-        subscribe(disposeBag, zanoNodeManager.nodesUpdatedObservable) { [weak self] _ in
-            DispatchQueue.main.async { self?.handleNodesUpdated() }
+        subscribe(disposeBag, zanoNodeManager.nodesUpdatedObservable) { [weak self] blockchainType in
+            guard let self, blockchainType == self.blockchain.type else { return }
+            DispatchQueue.main.async { [weak self] in self?.handleNodesUpdated() }
         }
 
         syncItems()

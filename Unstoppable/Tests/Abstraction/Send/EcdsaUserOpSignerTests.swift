@@ -2,6 +2,7 @@ import EvmKit
 import HsCryptoKit
 import HsExtensions
 @testable import Unstoppable
+@testable import WalletCore
 import XCTest
 
 /// EcdsaUserOpSigner.signViaPasskey requires interactive Face ID and is exercised

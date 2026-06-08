@@ -18,7 +18,7 @@ class ZcashAdapter {
 //    static let zip317MarginalFeeRange = (defaultZip317MarginalFee.amount) ... (defaultZip317MarginalFee.amount * 6)
     static let defaultTxExpiryHeightDelta: UInt32 = 10
 
-    static let defaultEndpoint = LightWalletEndpoint(address: "zec.rocks", port: 443, secure: true, streamingCallTimeoutInMillis: 10 * 60 * 60 * 1000)
+    static let defaultEndpoint = endpoint(url: ZcashNode.defaultNodes[0].url)
 
     static func endpoint(url: URL) -> LightWalletEndpoint {
         LightWalletEndpoint(address: url.host ?? "zec.rocks", port: url.port ?? 443, secure: url.scheme != "http", streamingCallTimeoutInMillis: 10 * 60 * 60 * 1000)
@@ -170,15 +170,25 @@ class ZcashAdapter {
         NotificationCenter.default.addObserver(self, selector: #selector(didEnterBackground), name: UIApplication.didEnterBackgroundNotification, object: nil)
     }
 
-    // URL form of the currently applied endpoint, used by AdapterManager to revert the stored selection on failure.
+    // Used by AdapterManager to revert the stored selection on switch failure.
     var currentEndpointURL: URL? {
         URL(string: "\(currentEndpoint.secure ? "https" : "http")://\(currentEndpoint.host):\(currentEndpoint.port)")
     }
 
-    // In-place lightwalletd endpoint switch driven by AdapterManager. The SDK validates the server
-    // (ValidateServerAction: getInfo + chain/network/sapling/branch checks) and throws for an
-    // unreachable/wrong endpoint; on failure the previous working endpoint is restored and the error
-    // is rethrown so the caller can revert the stored selection (keeping UI in sync with reality).
+    func isEndpointAvailable(_ endpoint: LightWalletEndpoint) async -> Bool {
+        let endpoints = await synchronizer.evaluateBestOf(
+            endpoints: [endpoint],
+            fetchThresholdSeconds: 20,
+            nBlocksToFetch: 1,
+            kServers: 1,
+            network: .mainnet
+        )
+
+        return endpoints.contains {
+            $0.host == endpoint.host && $0.port == endpoint.port && $0.secure == endpoint.secure
+        }
+    }
+
     func switchEndpoint(_ endpoint: LightWalletEndpoint) async throws {
         guard endpoint.host != currentEndpoint.host || endpoint.port != currentEndpoint.port || endpoint.secure != currentEndpoint.secure else {
             return

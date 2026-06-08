@@ -2,6 +2,7 @@ import AuthenticationServices
 import Foundation
 import Testing
 @testable import Unstoppable
+@testable import WalletCore
 
 struct SmartAccountPasskeyManagerTests {
     @Test func registerRejectsReentryWhileInFlight() async throws {

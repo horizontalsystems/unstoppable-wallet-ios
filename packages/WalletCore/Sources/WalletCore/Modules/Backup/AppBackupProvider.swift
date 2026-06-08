@@ -100,12 +100,12 @@ class AppBackupProvider {
             }
     }
 
-    private func defaultSettings(evmSyncSources: EvmSyncSourceManager.SyncSourceBackup, moneroNodes: MoneroNodeManager.NodeBackup, zanoNodes: ZanoNodeManager.NodeBackup, zcashNodes: ZcashNodeManager.NodeBackup) -> SettingsBackup {
+    private func defaultSettings(evmSyncSources: EvmSyncSourceManager.SyncSourceBackup, moneroNodes: MoneroNodeManager.NodeBackup, zanoNodes: ZanoNodeManager.NodeBackup, zcashEndpoints: ZcashNodeManager.NodeBackup) -> SettingsBackup {
         SettingsBackup(
             evmSyncSources: evmSyncSources,
             moneroNodes: moneroNodes,
             zanoNodes: zanoNodes,
-            zcashNodes: zcashNodes,
+            zcashEndpoints: zcashEndpoints,
             btcModes: [],
             remoteContactsSync: nil,
             swapProviders: [],
@@ -133,12 +133,12 @@ class AppBackupProvider {
         )
     }
 
-    private func settings(evmSyncSources: EvmSyncSourceManager.SyncSourceBackup, moneroNodes: MoneroNodeManager.NodeBackup, zanoNodes: ZanoNodeManager.NodeBackup, zcashNodes: ZcashNodeManager.NodeBackup) -> SettingsBackup {
+    private func settings(evmSyncSources: EvmSyncSourceManager.SyncSourceBackup, moneroNodes: MoneroNodeManager.NodeBackup, zanoNodes: ZanoNodeManager.NodeBackup, zcashEndpoints: ZcashNodeManager.NodeBackup) -> SettingsBackup {
         SettingsBackup(
             evmSyncSources: evmSyncSources,
             moneroNodes: moneroNodes,
             zanoNodes: zanoNodes,
-            zcashNodes: zcashNodes,
+            zcashEndpoints: zcashEndpoints,
             btcModes: btcBlockchainManager.backup,
             remoteContactsSync: localStorage.remoteContactsSync,
             swapProviders: swapProviders,
@@ -194,9 +194,9 @@ class AppBackupProvider {
 
         let settingsBackup: SettingsBackup
         if includePreferences {
-            settingsBackup = settings(evmSyncSources: syncSources, moneroNodes: moneroNodeBackup, zanoNodes: zanoNodeBackup, zcashNodes: zcashNodeBackup)
+            settingsBackup = settings(evmSyncSources: syncSources, moneroNodes: moneroNodeBackup, zanoNodes: zanoNodeBackup, zcashEndpoints: zcashNodeBackup)
         } else {
-            settingsBackup = defaultSettings(evmSyncSources: syncSources, moneroNodes: moneroNodeBackup, zanoNodes: zanoNodeBackup, zcashNodes: zcashNodeBackup)
+            settingsBackup = defaultSettings(evmSyncSources: syncSources, moneroNodes: moneroNodeBackup, zanoNodes: zanoNodeBackup, zcashEndpoints: zcashNodeBackup)
         }
 
         return RawFullBackup(
@@ -282,7 +282,7 @@ extension AppBackupProvider {
             evmSyncSourceManager.restore(selected: raw.settings.evmSyncSources.selected, custom: raw.customSyncSources)
             moneroNodeManager.restore(selected: raw.settings.moneroNodes.selected, custom: raw.customMoneroNodes)
             zanoNodeManager.restore(selected: raw.settings.zanoNodes.selected, custom: raw.customZanoNodes)
-            zcashNodeManager.restore(selected: raw.settings.zcashNodes.selected, custom: raw.customZcashNodes)
+            zcashNodeManager.restore(selected: raw.settings.zcashEndpoints.selected, custom: raw.customZcashNodes)
         }
 
         if sections.contains(.preferences) {
@@ -338,7 +338,7 @@ extension AppBackupProvider {
         let customSources = try evmSyncSourceManager.decrypt(sources: fullBackup.settings.evmSyncSources.custom, passphrase: passphrase)
         let customMoneroNodes = try moneroNodeManager.decrypt(nodes: fullBackup.settings.moneroNodes.custom, passphrase: passphrase)
         let customZanoNodes = zanoNodeManager.decode(nodes: fullBackup.settings.zanoNodes.custom)
-        let customZcashNodes = zcashNodeManager.decode(nodes: fullBackup.settings.zcashNodes.custom)
+        let customZcashNodes = zcashNodeManager.decode(nodes: fullBackup.settings.zcashEndpoints.custom)
 
         return RawFullBackup(
             accounts: wallets,
@@ -368,7 +368,7 @@ extension AppBackupProvider {
             evmSyncSources: .init(selected: raw.settings.evmSyncSources.selected, custom: customEvmSyncSource),
             moneroNodes: .init(selected: raw.settings.moneroNodes.selected, custom: customMoneroNode),
             zanoNodes: .init(selected: raw.settings.zanoNodes.selected, custom: customZanoNode),
-            zcashNodes: .init(selected: raw.settings.zcashNodes.selected, custom: customZcashNode)
+            zcashEndpoints: .init(selected: raw.settings.zcashEndpoints.selected, custom: customZcashNode)
         )
 
         return FullBackup(

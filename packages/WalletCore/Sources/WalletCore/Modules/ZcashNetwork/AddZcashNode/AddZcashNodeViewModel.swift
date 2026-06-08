@@ -29,16 +29,32 @@ class AddZcashNodeViewModel: ObservableObject {
     func onTapAdd() {
         var urlString = address.trimmingCharacters(in: .whitespacesAndNewlines)
 
-        // Bare host[:port] is assumed to be a TLS lightwalletd; a pasted https://… URL is parsed as-is.
         if !urlString.isEmpty, !urlString.contains("://") {
             urlString = "https://" + urlString
         }
 
-        // Canonicalize to scheme://host:port (lowercased, explicit port) so node identity, dedup, and the
-        // AdapterManager revert lookup all compare byte-stably regardless of how the user typed the address.
-        guard let parsed = URL(string: urlString), let scheme = parsed.scheme, let host = parsed.host, !host.isEmpty,
-              let url = URL(string: "\(scheme.lowercased())://\(host.lowercased()):\(parsed.port ?? 443)")
+        guard let parsed = URLComponents(string: urlString),
+              let scheme = parsed.scheme?.lowercased(), ["http", "https"].contains(scheme),
+              let host = parsed.host?.lowercased(), !host.isEmpty,
+              parsed.user == nil, parsed.password == nil,
+              parsed.path.isEmpty || parsed.path == "/",
+              parsed.query == nil, parsed.fragment == nil
         else {
+            cautionState = .caution(Caution(text: "add_zcash_node.error.invalid_url".localized, type: .error))
+            return
+        }
+        let port = parsed.port ?? 443
+        guard (1 ... 65_535).contains(port) else {
+            cautionState = .caution(Caution(text: "add_zcash_node.error.invalid_url".localized, type: .error))
+            return
+        }
+
+        var components = URLComponents()
+        components.scheme = scheme
+        components.host = host
+        components.port = port
+
+        guard let url = components.url else {
             cautionState = .caution(Caution(text: "add_zcash_node.error.invalid_url".localized, type: .error))
             return
         }
@@ -48,8 +64,12 @@ class AddZcashNodeViewModel: ObservableObject {
             return
         }
 
-        stat(page: .blockchainSettingsZcashAdd, event: .addZcashNode(chainUid: blockchainType.uid))
-        zcashNodeManager.addNew(blockchainType: blockchainType, url: url)
-        finishSubject.send()
+        do {
+            try zcashNodeManager.addNew(blockchainType: blockchainType, url: url)
+            stat(page: .blockchainSettingsZcashAdd, event: .addZcashNode(chainUid: blockchainType.uid))
+            finishSubject.send()
+        } catch {
+            cautionState = .caution(Caution(text: error.localizedDescription, type: .error))
+        }
     }
 }

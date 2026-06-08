@@ -1,6 +1,7 @@
 import Foundation
 import Testing
 @testable import Unstoppable
+@testable import WalletCore
 
 struct GasFreeTip712SignerTests {
     private let privateKey = Data(repeating: 0x42, count: 32)

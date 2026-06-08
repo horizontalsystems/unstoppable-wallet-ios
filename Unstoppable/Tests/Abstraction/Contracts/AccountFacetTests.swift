@@ -2,6 +2,7 @@ import BigInt
 import EvmKit
 import HsExtensions
 @testable import Unstoppable
+@testable import WalletCore
 import XCTest
 
 final class AccountFacetTests: XCTestCase {

@@ -1,6 +1,7 @@
 import Foundation
 import Testing
 @testable import Unstoppable
+@testable import WalletCore
 
 struct MultiSwapWarningTimeTests {
     private typealias VM = MultiSwapViewModel

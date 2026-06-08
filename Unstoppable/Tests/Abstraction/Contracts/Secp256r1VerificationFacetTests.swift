@@ -1,5 +1,6 @@
 import HsExtensions
 @testable import Unstoppable
+@testable import WalletCore
 import XCTest
 
 final class Secp256r1VerificationFacetTests: XCTestCase {
