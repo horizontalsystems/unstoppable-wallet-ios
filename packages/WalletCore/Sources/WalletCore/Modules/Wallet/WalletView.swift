@@ -238,6 +238,11 @@ struct WalletView: View {
 
             if !viewModel.isReachable {
                 ThemeText("alert.no_internet".localized, style: .subheadSB, colorStyle: .red)
+            } else if viewModel.totalItem.state == .syncing {
+                ProgressView(value: 0.6)
+                    .progressViewStyle(DeterminiteSpinnerStyle())
+                    .frame(size: 20)
+                    .spinning()
             }
         }
     }

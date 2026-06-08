@@ -68,18 +68,23 @@ struct MainView: View {
             }
         case .wallet:
             if walletViewModel.account != nil {
-                ToolbarItem(placement: .primaryAction) {
-                    Button(action: {
-                        Coordinator.shared.present { isPresented in
-                            MainTransactionsView(transactionsViewModel: transactionsViewModel, isPresented: isPresented)
+                if walletViewModel.buttonHidden {
+                    ToolbarItemGroup(placement: .primaryAction) {
+                        Button(action: onTapScan) {
+                            Image("scan")
                         }
-                        stat(page: .transactions, event: .open(page: .transactions))
-                    }) {
-                        Image("clock")
+                    }
+
+                    if #available(iOS 26, *) {
+                        ToolbarSpacer(.fixed, placement: .primaryAction)
                     }
                 }
 
-                ToolbarItem(placement: .primaryAction) {
+                ToolbarItemGroup(placement: .primaryAction) {
+                    Button(action: onTapHistory) {
+                        Image("clock")
+                    }
+
                     Button(action: {
                         Coordinator.shared.present { isPresented in
                             ManageAccountsView(parentPresented: isPresented)
@@ -90,30 +95,6 @@ struct MainView: View {
                     }
                 }
 
-                if walletViewModel.totalItem.state == .syncing {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        ProgressView(value: 0.55)
-                            .progressViewStyle(DeterminiteSpinnerStyle())
-                            .frame(size: 24)
-                            .spinning()
-                    }
-                }
-
-                if walletViewModel.buttonHidden {
-                    ToolbarItem(placement: .navigationBarLeading) {
-                        Button(action: {
-                            Coordinator.shared.present { isPresented in
-                                ScanQrViewNew(reportAfterDismiss: true, isPresented: isPresented) { text in
-                                    walletViewModel.process(scanned: text)
-                                }
-                                .ignoresSafeArea()
-                            }
-                            stat(page: .balance, event: .open(page: .scanQrCode))
-                        }) {
-                            Image("scan")
-                        }
-                    }
-                }
             }
         case .swap:
             ToolbarItem(placement: .primaryAction) {
@@ -149,6 +130,23 @@ struct MainView: View {
         case .settings:
             ToolbarItem {}
         }
+    }
+
+    private func onTapScan() {
+        Coordinator.shared.present { isPresented in
+            ScanQrViewNew(reportAfterDismiss: true, isPresented: isPresented) { text in
+                walletViewModel.process(scanned: text)
+            }
+            .ignoresSafeArea()
+        }
+        stat(page: .balance, event: .open(page: .scanQrCode))
+    }
+
+    private func onTapHistory() {
+        Coordinator.shared.present { isPresented in
+            MainTransactionsView(transactionsViewModel: transactionsViewModel, isPresented: isPresented)
+        }
+        stat(page: .transactions, event: .open(page: .transactions))
     }
 
     var title: String {

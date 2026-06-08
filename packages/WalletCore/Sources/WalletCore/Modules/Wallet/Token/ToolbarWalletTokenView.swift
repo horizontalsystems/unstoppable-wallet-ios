@@ -13,7 +13,7 @@ struct ToolbarWalletTokenView<Content: View>: View {
         BaseWalletTokenView(wallet: wallet) { viewModel, transactionsViewModel in
             content(viewModel, transactionsViewModel)
                 .toolbar {
-                    if WalletTokenToolbarItems.hasToolbarStatus(viewModel: viewModel) {
+                    if WalletTokenToolbarItems.hasToolbarItems(viewModel: viewModel) {
                         ToolbarItem(placement: .topBarTrailing) {
                             HStack(spacing: 8) {
                                 WalletTokenToolbarItems(viewModel: viewModel)
@@ -28,33 +28,11 @@ struct ToolbarWalletTokenView<Content: View>: View {
 struct WalletTokenToolbarItems: View {
     @ObservedObject var viewModel: WalletTokenViewModel
 
-    // must be changed with items logic
-    static func hasToolbarStatus(viewModel: WalletTokenViewModel) -> Bool {
-        switch viewModel.state {
-        case .notSynced: return viewModel.isReachable
-        case .syncing, .customSyncing: return true
-        default: return viewModel.wallet.account.watchAccount
-        }
+    static func hasToolbarItems(viewModel: WalletTokenViewModel) -> Bool {
+        viewModel.wallet.account.watchAccount
     }
 
     var body: some View {
-        switch viewModel.state {
-        case .notSynced:
-            if viewModel.isReachable {
-                Button(action: {
-                    Coordinator.shared.presentBalanceError(wallet: viewModel.wallet, state: viewModel.state)
-                }) {
-                    Image("warning_filled").icon(colorStyle: .red)
-                }
-            }
-        case let .syncing(progress, _, _), let .customSyncing(_, _, progress):
-            ProgressView(value: max(0.1, Float(progress ?? 10) / 100))
-                .progressViewStyle(DeterminiteSpinnerStyle())
-                .frame(width: 20, height: 20)
-                .spinning()
-        default: EmptyView()
-        }
-
         if viewModel.wallet.account.watchAccount {
             Button(action: {
                 Coordinator.shared.presentCoinPage(coin: viewModel.wallet.coin, page: .tokenPage)
