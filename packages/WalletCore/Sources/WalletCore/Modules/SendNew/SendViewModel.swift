@@ -9,6 +9,7 @@ class SendViewModel: ObservableObject {
     private let currencyManager = Core.shared.currencyManager
     private let marketKit = Core.shared.marketKit
     private let recentAddressStorage = Core.shared.recentAddressStorage
+    private let appManager = Core.shared.appManager
 
     private var syncTask: AnyTask?
     private var ratesCancellable: AnyCancellable?
@@ -71,6 +72,16 @@ class SendViewModel: ObservableObject {
             .sink { [weak self] in
                 self?.sync()
             }
+            .store(in: &cancellables)
+
+        appManager.didEnterBackgroundPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.stopAutoQuoting() }
+            .store(in: &cancellables)
+
+        appManager.willEnterForegroundPublisher
+            .receive(on: DispatchQueue.main)
+            .sink { [weak self] in self?.autoQuoteIfRequired() }
             .store(in: &cancellables)
 
         sync()

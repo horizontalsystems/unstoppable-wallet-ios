@@ -60,6 +60,12 @@ struct SendView: View {
                 }
             }
         }
+        .onAppear {
+            viewModel.autoQuoteIfRequired()
+        }
+        .onDisappear {
+            viewModel.stopAutoQuoting()
+        }
         .onReceive(viewModel.errorPublisher) { error in
             Coordinator.shared.present(type: .bottomSheet) { isPresented in
                 BottomSheetView(
