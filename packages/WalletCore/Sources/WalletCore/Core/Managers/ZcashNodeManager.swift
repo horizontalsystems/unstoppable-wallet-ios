@@ -23,17 +23,7 @@ class ZcashNodeManager {
     private func defaultNodes(blockchainType: BlockchainType) -> [ZcashNode] {
         switch blockchainType {
         case .zcash:
-            return [
-                ZcashNode(name: "zec.rocks", url: URL(string: "https://zec.rocks:443")!),
-                ZcashNode(name: "na.zec.rocks", url: URL(string: "https://na.zec.rocks:443")!),
-                ZcashNode(name: "sa.zec.rocks", url: URL(string: "https://sa.zec.rocks:443")!),
-                ZcashNode(name: "eu.zec.rocks", url: URL(string: "https://eu.zec.rocks:443")!),
-                ZcashNode(name: "ap.zec.rocks", url: URL(string: "https://ap.zec.rocks:443")!),
-                ZcashNode(name: "us.zec.stardust.rest", url: URL(string: "https://us.zec.stardust.rest:443")!),
-                ZcashNode(name: "eu.zec.stardust.rest", url: URL(string: "https://eu.zec.stardust.rest:443")!),
-                ZcashNode(name: "eu2.zec.stardust.rest", url: URL(string: "https://eu2.zec.stardust.rest:443")!),
-                ZcashNode(name: "jp.zec.stardust.rest", url: URL(string: "https://jp.zec.stardust.rest:443")!),
-            ]
+            return ZcashNode.defaultNodes
         default:
             return []
         }
@@ -53,8 +43,30 @@ extension ZcashNodeManager {
         do {
             let records = try zcashNodeStorage.records(blockchainTypeUid: blockchainType.uid)
             return records.compactMap { record in
-                guard let url = URL(string: record.url) else { return nil }
-                return ZcashNode(name: url.host ?? "", url: url)
+                guard let parsed = URLComponents(string: record.url),
+                      let scheme = parsed.scheme?.lowercased(), ["http", "https"].contains(scheme),
+                      let host = parsed.host?.lowercased(), !host.isEmpty,
+                      parsed.user == nil, parsed.password == nil,
+                      parsed.path.isEmpty || parsed.path == "/",
+                      parsed.query == nil, parsed.fragment == nil
+                else {
+                    return nil
+                }
+                let port = parsed.port ?? 443
+                guard (1 ... 65_535).contains(port) else {
+                    return nil
+                }
+
+                var components = URLComponents()
+                components.scheme = scheme
+                components.host = host
+                components.port = port
+
+                guard let url = components.url else {
+                    return nil
+                }
+
+                return ZcashNode(name: host, url: url)
             }
         } catch {
             return []
@@ -93,16 +105,16 @@ extension ZcashNodeManager {
         saveCurrent(nodeUrl: node.url, blockchainType: blockchainType)
     }
 
-    func addNew(blockchainType: BlockchainType, url: URL) {
+    func addNew(blockchainType: BlockchainType, url: URL) throws {
         let record = ZcashNodeRecord(blockchainTypeUid: blockchainType.uid, url: url.absoluteString)
-        try? zcashNodeStorage.save(record: record)
+        try zcashNodeStorage.save(record: record)
 
         nodeUpdatedRelay.accept(blockchainType)
     }
 
-    func delete(node: ZcashNode, blockchainType: BlockchainType) {
+    func delete(node: ZcashNode, blockchainType: BlockchainType) throws {
         let isCurrent = self.node(blockchainType: blockchainType) == node
-        try? zcashNodeStorage.delete(blockchainTypeUid: blockchainType.uid, url: node.url.absoluteString)
+        try zcashNodeStorage.delete(blockchainTypeUid: blockchainType.uid, url: node.url.absoluteString)
 
         if isCurrent {
             nodeRelay.accept(blockchainType)

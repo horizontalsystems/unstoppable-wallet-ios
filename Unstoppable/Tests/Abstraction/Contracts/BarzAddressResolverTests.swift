@@ -3,6 +3,7 @@ import EvmKit
 import HsExtensions
 import MarketKit
 @testable import Unstoppable
+@testable import WalletCore
 import XCTest
 
 final class BarzAddressResolverTests: XCTestCase {

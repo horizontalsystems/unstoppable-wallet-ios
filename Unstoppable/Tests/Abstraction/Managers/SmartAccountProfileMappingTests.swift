@@ -4,6 +4,7 @@ import Foundation
 import MarketKit
 import Testing
 @testable import Unstoppable
+@testable import WalletCore
 
 struct SmartAccountProfileMappingTests {
     @Test func profileRoundTripThroughRecord() throws {

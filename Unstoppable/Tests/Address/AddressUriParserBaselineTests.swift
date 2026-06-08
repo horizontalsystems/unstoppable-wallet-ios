@@ -2,6 +2,7 @@ import Foundation
 import MarketKit
 import Testing
 @testable import Unstoppable
+@testable import WalletCore
 
 struct AddressUriParserBaselineTests {
     private let anyParser = AddressUriParser(blockchainType: nil, tokenType: nil)

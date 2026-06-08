@@ -1,6 +1,7 @@
 import BigInt
 import Testing
 @testable import Unstoppable
+@testable import WalletCore
 
 struct AaFeeCalculatorTests {
     @Test

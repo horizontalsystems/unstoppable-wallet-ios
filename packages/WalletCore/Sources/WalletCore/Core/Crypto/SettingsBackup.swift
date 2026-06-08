@@ -5,7 +5,7 @@ class SettingsBackup: Codable {
     let evmSyncSources: EvmSyncSourceManager.SyncSourceBackup
     var moneroNodes: MoneroNodeManager.NodeBackup
     var zanoNodes: ZanoNodeManager.NodeBackup
-    var zcashNodes: ZcashNodeManager.NodeBackup
+    var zcashEndpoints: ZcashNodeManager.NodeBackup
     let btcModes: [BtcBlockchainManager.BtcRestoreModeBackup]
 
     let remoteContactsSync: Bool?
@@ -29,7 +29,7 @@ class SettingsBackup: Codable {
         case evmSyncSources = "evm_sync_sources"
         case moneroNodes = "monero_nodes"
         case zanoNodes = "zano_nodes"
-        case zcashNodes = "zcash_nodes"
+        case zcashEndpoints = "zcash_endpoints"
         case btcModes = "btc_modes"
         case remoteContactsSync = "contacts_sync"
         case swapProviders = "swap_providers"
@@ -52,7 +52,7 @@ class SettingsBackup: Codable {
         evmSyncSources: EvmSyncSourceManager.SyncSourceBackup,
         moneroNodes: MoneroNodeManager.NodeBackup,
         zanoNodes: ZanoNodeManager.NodeBackup,
-        zcashNodes: ZcashNodeManager.NodeBackup,
+        zcashEndpoints: ZcashNodeManager.NodeBackup,
         btcModes: [BtcBlockchainManager.BtcRestoreModeBackup],
         remoteContactsSync: Bool?,
         swapProviders: [DefaultProvider],
@@ -73,7 +73,7 @@ class SettingsBackup: Codable {
         self.evmSyncSources = evmSyncSources
         self.moneroNodes = moneroNodes
         self.zanoNodes = zanoNodes
-        self.zcashNodes = zcashNodes
+        self.zcashEndpoints = zcashEndpoints
         self.btcModes = btcModes
         self.remoteContactsSync = remoteContactsSync
         self.swapProviders = swapProviders
@@ -97,7 +97,7 @@ class SettingsBackup: Codable {
         evmSyncSources = try container.decode(EvmSyncSourceManager.SyncSourceBackup.self, forKey: .evmSyncSources)
         moneroNodes = (try? container.decode(MoneroNodeManager.NodeBackup.self, forKey: .moneroNodes)) ?? .init(selected: [], custom: [])
         zanoNodes = (try? container.decode(ZanoNodeManager.NodeBackup.self, forKey: .zanoNodes)) ?? .init(selected: [], custom: [])
-        zcashNodes = (try? container.decode(ZcashNodeManager.NodeBackup.self, forKey: .zcashNodes)) ?? .init(selected: [], custom: [])
+        zcashEndpoints = (try? container.decode(ZcashNodeManager.NodeBackup.self, forKey: .zcashEndpoints)) ?? .init(selected: [], custom: [])
         btcModes = try container.decode([BtcBlockchainManager.BtcRestoreModeBackup].self, forKey: .btcModes)
         remoteContactsSync = try? container.decode(Bool.self, forKey: .remoteContactsSync)
         swapProviders = (try? container.decode([DefaultProvider].self, forKey: .swapProviders)) ?? []
@@ -121,7 +121,7 @@ class SettingsBackup: Codable {
         try container.encode(evmSyncSources, forKey: .evmSyncSources)
         try container.encode(moneroNodes, forKey: .moneroNodes)
         try container.encode(zanoNodes, forKey: .zanoNodes)
-        try container.encode(zcashNodes, forKey: .zcashNodes)
+        try container.encode(zcashEndpoints, forKey: .zcashEndpoints)
         try container.encode(btcModes, forKey: .btcModes)
         try container.encodeIfPresent(remoteContactsSync, forKey: .remoteContactsSync)
         try container.encode(swapProviders, forKey: .swapProviders)
@@ -148,13 +148,13 @@ class SettingsBackup: Codable {
         evmSyncSources: EvmSyncSourceManager.SyncSourceBackup,
         moneroNodes: MoneroNodeManager.NodeBackup,
         zanoNodes: ZanoNodeManager.NodeBackup,
-        zcashNodes: ZcashNodeManager.NodeBackup
+        zcashEndpoints: ZcashNodeManager.NodeBackup
     ) -> SettingsBackup {
         SettingsBackup(
             evmSyncSources: evmSyncSources,
             moneroNodes: moneroNodes,
             zanoNodes: zanoNodes,
-            zcashNodes: zcashNodes,
+            zcashEndpoints: zcashEndpoints,
             btcModes: btcModes,
             remoteContactsSync: remoteContactsSync,
             swapProviders: swapProviders,

@@ -20,8 +20,9 @@ class MoneroNetworkViewModel: ObservableObject {
 
         selectedNode = moneroNodeManager.node(blockchainType: blockchain.type)
 
-        subscribe(disposeBag, moneroNodeManager.nodesUpdatedObservable) { [weak self] _ in
-            DispatchQueue.main.async { self?.handleNodesUpdated() }
+        subscribe(disposeBag, moneroNodeManager.nodesUpdatedObservable) { [weak self] blockchainType in
+            guard let self, blockchainType == self.blockchain.type else { return }
+            DispatchQueue.main.async { [weak self] in self?.handleNodesUpdated() }
         }
 
         syncItems()

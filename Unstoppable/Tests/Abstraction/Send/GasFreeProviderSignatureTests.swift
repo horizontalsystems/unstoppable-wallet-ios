@@ -1,5 +1,6 @@
 import Testing
 @testable import Unstoppable
+@testable import WalletCore
 
 struct GasFreeProviderSignatureTests {
     // Reference vector computed independently via Python:

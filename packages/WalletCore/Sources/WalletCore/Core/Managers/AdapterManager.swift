@@ -4,6 +4,11 @@ import RxRelay
 import RxSwift
 
 class AdapterManager {
+    private enum ZcashEndpointValidationError: Error {
+        case noActiveAdapter
+        case unavailable
+    }
+
     private let disposeBag = DisposeBag()
 
     private let adapterFactory: AdapterFactory
@@ -210,6 +215,24 @@ extension AdapterManager {
             refreshAdapters(wallets: wallets.filter {
                 $0.token.blockchain.type == blockchainType
             })
+        }
+    }
+
+    func validateZcashEndpoint(_ url: URL) async throws {
+        let endpoint = ZcashAdapter.endpoint(url: url)
+
+        let adapter = queue.sync {
+            _adapterData.adapterMap.compactMap { wallet, adapter in
+                wallet.token.blockchainType == .zcash ? adapter as? ZcashAdapter : nil
+            }.first
+        }
+
+        guard let adapter else {
+            throw ZcashEndpointValidationError.noActiveAdapter
+        }
+
+        guard await adapter.isEndpointAvailable(endpoint) else {
+            throw ZcashEndpointValidationError.unavailable
         }
     }
 

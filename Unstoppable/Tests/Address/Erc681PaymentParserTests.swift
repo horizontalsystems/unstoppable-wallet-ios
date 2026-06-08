@@ -2,6 +2,7 @@ import Foundation
 import MarketKit
 import Testing
 @testable import Unstoppable
+@testable import WalletCore
 
 struct Erc681PaymentParserTests {
     private let anyParser = AddressUriParser(blockchainType: nil, tokenType: nil)

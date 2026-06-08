@@ -2,6 +2,7 @@ import BigInt
 import EvmKit
 import MarketKit
 @testable import Unstoppable
+@testable import WalletCore
 import XCTest
 
 final class SendScenarioDetectorTests: XCTestCase {

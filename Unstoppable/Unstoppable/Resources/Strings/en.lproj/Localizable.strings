@@ -2140,7 +2140,7 @@
 "zcash_network.node" = "Server";
 "zcash_network.added" = "Added";
 "zcash_network.add_new" = "Add New";
-"zcash_network.description" = "Choose the lightwalletd server Unstoppable app should use for synchronizing wallet(s).";
+"zcash_network.description" = "Choose the lightwallet server Unstoppable app should use for synchronizing wallet(s).";
 
 "add_zcash_node.title" = "Add Server";
 "add_zcash_node.description" = "Enter the lightwalletd server address (host or host:port).";

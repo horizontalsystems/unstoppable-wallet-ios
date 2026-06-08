@@ -6,6 +6,7 @@ import HsExtensions
 import HsToolKit
 import MarketKit
 @testable import Unstoppable
+@testable import WalletCore
 import XCTest
 
 /// Tests for BarzAddressResolver with curve = .secp256k1.

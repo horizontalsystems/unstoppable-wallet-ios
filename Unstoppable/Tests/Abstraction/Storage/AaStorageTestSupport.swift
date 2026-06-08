@@ -1,6 +1,7 @@
 import Foundation
 import GRDB
 @testable import Unstoppable
+@testable import WalletCore
 
 struct AaStorageTestEnvironment {
     let dbPool: DatabasePool

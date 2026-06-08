@@ -2,6 +2,7 @@ import Foundation
 import GRDB
 import Testing
 @testable import Unstoppable
+@testable import WalletCore
 
 struct SmartAccountProfileRecordStorageTests {
     @Test func saveRoundTrip() throws {

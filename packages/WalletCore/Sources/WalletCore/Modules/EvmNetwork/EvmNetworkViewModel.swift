@@ -34,8 +34,9 @@ class EvmNetworkViewModel: ObservableObject {
         self.currentSource = currentSource
         selectedSource = currentSource
 
-        subscribe(disposeBag, evmSyncSourceManager.syncSourcesUpdatedObservable) { [weak self] _ in
-            DispatchQueue.main.async { self?.syncCustomSources() }
+        subscribe(disposeBag, evmSyncSourceManager.syncSourcesUpdatedObservable) { [weak self] blockchainType in
+            guard let self, blockchainType == self.blockchain.type else { return }
+            DispatchQueue.main.async { [weak self] in self?.syncCustomSources() }
         }
 
         syncCustomSources()

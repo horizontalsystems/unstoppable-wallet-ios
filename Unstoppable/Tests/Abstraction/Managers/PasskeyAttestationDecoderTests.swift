@@ -1,6 +1,7 @@
 import Foundation
 import Testing
 @testable import Unstoppable
+@testable import WalletCore
 
 struct PasskeyAttestationDecoderTests {
     @Test func decodesValidSyntheticFixture() throws {
