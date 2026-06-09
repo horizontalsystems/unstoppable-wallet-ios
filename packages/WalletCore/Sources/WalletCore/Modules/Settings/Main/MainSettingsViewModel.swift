@@ -28,7 +28,7 @@ class MainSettingsViewModel: ObservableObject {
     @Published var securityAlert: Bool = false
     @Published var aboutAlert: Bool = false
     @Published var iCloudUnavailable: Bool = false
-    @Published var slides: [Slide] = [.premium, .miniApp]
+    @Published var slides: [Slide] = [.premium]
     @Published var introductoryOffer: String?
 
     @Published var debu: String?
@@ -113,7 +113,7 @@ class MainSettingsViewModel: ObservableObject {
     }
 
     private func syncSlides() {
-        var slides: [Slide] = [.miniApp]
+        var slides: [Slide] = []
 
         if !purchaseManager.hasActivePurchase {
             slides.insert(.premium, at: 0)
@@ -167,6 +167,5 @@ extension MainSettingsViewModel {
 
     enum Slide {
         case premium
-        case miniApp
     }
 }

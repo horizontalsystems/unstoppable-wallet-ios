@@ -94,7 +94,6 @@ struct MainView: View {
                         Image("wallet_change")
                     }
                 }
-
             }
         case .swap:
             ToolbarItem(placement: .primaryAction) {
