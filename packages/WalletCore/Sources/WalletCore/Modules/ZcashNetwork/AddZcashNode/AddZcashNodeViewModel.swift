@@ -44,7 +44,7 @@ class AddZcashNodeViewModel: ObservableObject {
             return
         }
         let port = parsed.port ?? 443
-        guard (1 ... 65_535).contains(port) else {
+        guard (1 ... 65535).contains(port) else {
             cautionState = .caution(Caution(text: "add_zcash_node.error.invalid_url".localized, type: .error))
             return
         }

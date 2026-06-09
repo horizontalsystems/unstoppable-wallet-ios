@@ -19,7 +19,9 @@ struct MainSettingsView: View {
     var body: some View {
         ScrollableThemeView {
             VStack(spacing: .margin12) {
-                slider()
+                if !viewModel.slides.isEmpty {
+                    slider()
+                }
 
                 VStack(spacing: 0) {
                     ListSection {
@@ -109,6 +111,7 @@ struct MainSettingsView: View {
 
     @ViewBuilder private func slider() -> some View {
         VStack(spacing: 0) {
+            let hasIndicators = viewModel.slides.count > 1
             TabView(selection: $currentSlideIndex) {
                 ForEach(0 ..< viewModel.slides.count, id: \.self) { index in
                     ZStack {
@@ -122,15 +125,18 @@ struct MainSettingsView: View {
             }
             .frame(height: 130)
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
+            .padding(.bottom, hasIndicators ? 0 : 12)
 
-            HStack(spacing: .margin4) {
-                ForEach(0 ..< viewModel.slides.count, id: \.self) { index in
-                    Capsule()
-                        .fill(currentSlideIndex == index ? Color.themeJacob : Color.themeBlade)
-                        .frame(width: 20, height: 4)
+            if hasIndicators { // show indicator only when has more than 1 banner.
+                HStack(spacing: .margin4) {
+                    ForEach(0 ..< viewModel.slides.count, id: \.self) { index in
+                        Capsule()
+                            .fill(currentSlideIndex == index ? Color.themeJacob : Color.themeBlade)
+                            .frame(width: 20, height: 4)
+                    }
                 }
+                .frame(height: .margin32)
             }
-            .frame(height: .margin32)
         }
         .onAppear {
             guard !isFirstAppear else {
@@ -149,38 +155,7 @@ struct MainSettingsView: View {
                 .onTapGesture {
                     Coordinator.shared.presentPurchase(page: .settings, trigger: .banner)
                 }
-        case .miniApp:
-            miniAppSlide()
-                .onTapGesture {
-                    let appUrl = URL(string: "tg://resolve?domain=\(AppConfig.appTokenTelegramAccount)&startapp")!
-                    let webUrl = URL(string: "https://t.me/\(AppConfig.appTokenTelegramAccount)?startapp")!
-
-                    if UIApplication.shared.canOpenURL(appUrl) {
-                        openURL(appUrl)
-                    } else {
-                        Coordinator.shared.present(url: webUrl)
-                    }
-                }
         }
-    }
-
-    @ViewBuilder private func miniAppSlide() -> some View {
-        ZStack(alignment: .trailing) {
-            GeometryReader { geometry in
-                Image("banner_mini_app")
-                    .clipped()
-                    .frame(width: geometry.size.width, alignment: .trailing)
-            }
-
-            VStack(alignment: .leading, spacing: .margin4) {
-                Text("mini_app.cell.title".localized).textHeadline1(color: .themeYellow)
-                Spacer(minLength: 0)
-                Text("mini_app.cell.description".localized).textSubhead1(color: .themeLight)
-            }
-            .frame(maxWidth: .infinity, alignment: .leading)
-            .padding(EdgeInsets(top: .margin16, leading: .margin16, bottom: .margin16, trailing: 185))
-        }
-        .background(Color.themeDarker)
     }
 
     @ViewBuilder private func manageWallets() -> some View {

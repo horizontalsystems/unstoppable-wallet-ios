@@ -53,7 +53,7 @@ extension ZcashNodeManager {
                     return nil
                 }
                 let port = parsed.port ?? 443
-                guard (1 ... 65_535).contains(port) else {
+                guard (1 ... 65535).contains(port) else {
                     return nil
                 }
 
