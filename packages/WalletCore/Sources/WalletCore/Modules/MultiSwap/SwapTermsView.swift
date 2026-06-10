@@ -16,15 +16,9 @@ struct SwapTermsView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                                 .padding(.horizontal, 16)
 
-                            VStack(spacing: 12) {
-                                ListSection {
-                                    cell(item: .riskOfRestrictions)
-                                    cell(item: .userResponsibility)
-                                }
-
-                                ThemeText("swap.terms.footer".localized, style: .subhead)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .padding(.horizontal, 16)
+                            ListSection {
+                                cell(item: .riskOfRestrictions)
+                                cell(item: .userResponsibility)
                             }
                         }
                         .padding(EdgeInsets(top: 12, leading: 16, bottom: 32, trailing: 16))
@@ -59,6 +53,14 @@ struct SwapTermsView: View {
                 VStack(alignment: .leading, spacing: 0) {
                     ThemeText(item.title, style: .subhead, colorStyle: .primary)
                     ThemeText(item.description, style: .subhead)
+                        .environment(\.openURL, OpenURLAction { url in
+                            guard url == Item.providerInfoUrl else {
+                                return .systemAction
+                            }
+
+                            onTapProviderInfo()
+                            return .handled
+                        })
                 }
             },
         )
@@ -105,20 +107,30 @@ extension SwapTermsView {
             var result = AttributedString("")
 
             if !components[0].isEmpty { result.append(textPart(string: components[0])) }
-            result.append(textPart(string: "(\("swap.aml".localized))", color: .themeJacob))
+            result.append(textPart(string: "swap.quotes.providers.risk_levels.title".localized, color: .themeJacob, url: Self.providerInfoUrl))
             if !components[1].isEmpty { result.append(textPart(string: components[1])) }
 
             return result
         }
 
-        private func textPart(string: String, color: Color? = nil) -> AttributedString {
+        static let providerInfoUrl = URL(string: "unstoppable://swap-provider-info")!
+
+        private func textPart(string: String, color: Color? = nil, url: URL? = nil) -> AttributedString {
             var part = AttributedString(string)
 
             if let color {
                 part.foregroundColor = color
+                part.underlineStyle = .single
             }
+            part.link = url
 
             return part
+        }
+    }
+    
+    private func onTapProviderInfo() {
+        Coordinator.shared.present(type: .bottomSheet) { isPresented in
+            MultiSwapProviderTypeBottomSheet(isPresented: isPresented)
         }
     }
 }

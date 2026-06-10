@@ -16,26 +16,17 @@ struct MultiSwapQuotesView: View {
                                 }
 
                                 Cell(
-                                    left: {
-                                        Image(quote.provider.icon)
-                                            .resizable()
-                                            .scaledToFit()
-                                            .cornerRadius(6)
-                                            .frame(width: .iconSize32, height: .iconSize32)
-                                    },
                                     middle: {
-                                        VStack(alignment: .leading, spacing: 3) {
-                                            ThemeText(quote.provider.name, style: .subhead, colorStyle: .primary)
-                                            providerDescriptionView(quote: quote)
-                                        }
-                                    },
-                                    right: {
-                                        RightTextCheckbox(
+                                        TextCheckbox(
                                             subheadSB: quoteCoinValue(quote: quote).map { ComponentText(text: $0, colorStyle: .primary) },
                                             description: quoteCurrencyValue(quote: quote),
                                             description2: priceImpact(quote: quote).map { ComponentText(text: "(\($0.0.rounded(decimal: 2).description)%)", colorStyle: $0.1.colorStyle) },
-                                            checked: quote.provider.id == viewModel.currentQuote?.provider.id
+                                            checked: quote.provider.id == viewModel.currentQuote?.provider.id,
+                                            alignment: .leading
                                         )
+                                    },
+                                    right: {
+                                        providerDescriptionView(quote: quote)
                                     },
                                     action: {
                                         viewModel.userSelectedProviderId = quote.provider.id
@@ -113,14 +104,14 @@ struct MultiSwapQuotesView: View {
     @ViewBuilder private func providerDescriptionView(quote: MultiSwapViewModel.Quote) -> some View {
         let type = quote.provider.type
 
-        HStack(alignment: .bottom, spacing: .margin4) {
-            if let timeState = quote.timeState {
-                Self.view(estimatedTime: timeState.time, colorStyle: timeState.colorStyle, style: .captionSB, iconFirst: true)
-            }
+        VStack(alignment: .trailing, spacing: 1) {
             Button(action: onTapProviderInfo) {
-                Self.view(type: type, style: .captionSB, iconFirst: true)
+                Self.view(type: type, style: .subheadSB, iconFirst: false)
             }
             .buttonStyle(.plain)
+            if let timeState = quote.timeState {
+                Self.view(estimatedTime: timeState.time, colorStyle: timeState.colorStyle, style: .subheadSB, showIcon: false)
+            }
         }
         .fixedSize()
     }
@@ -160,16 +151,20 @@ extension MultiSwapQuotesView {
         var textStyle: TextStyle { self == .subheadSB ? .subheadSB : .captionSB }
     }
 
-    @ViewBuilder static func view(estimatedTime: TimeInterval, colorStyle: ColorStyle = .yellow, style: Style = .subheadSB, iconFirst: Bool = false) -> some View {
+    @ViewBuilder static func view(estimatedTime: TimeInterval, colorStyle: ColorStyle = .yellow, style: Style = .subheadSB, iconFirst: Bool = false, showIcon: Bool = true) -> some View {
         let timeString = Duration.seconds(estimatedTime).formatted(.units(allowed: [.hours, .minutes, .seconds], width: .narrow))
 
         HStack(spacing: style.hMargin) {
             if iconFirst {
-                ThemeImage("clock_filled", size: style.iconSize, colorStyle: colorStyle)
+                if showIcon {
+                    ThemeImage("clock_filled", size: style.iconSize, colorStyle: colorStyle)
+                }
                 ThemeText(timeString, style: style.textStyle, colorStyle: colorStyle)
             } else {
                 ThemeText(timeString, style: style.textStyle, colorStyle: colorStyle)
-                ThemeImage("clock_filled", size: style.iconSize, colorStyle: colorStyle)
+                if showIcon {
+                    ThemeImage("clock_filled", size: style.iconSize, colorStyle: colorStyle)
+                }
             }
         }
     }
