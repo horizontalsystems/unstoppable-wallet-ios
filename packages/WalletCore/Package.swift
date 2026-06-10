@@ -3,6 +3,7 @@ import PackageDescription
 
 let package = Package(
     name: "WalletCore",
+    defaultLocalization: "en",
     platforms: [
         .iOS(.v16),
     ],
@@ -99,6 +100,9 @@ let package = Package(
                 .product(name: "UIExtensions", package: "UIExtensions.Swift"),
                 .product(name: "UniswapKit", package: "UniswapKit.Swift"),
                 .product(name: "ZcashLightClientKit", package: "ZcashLightClientKit"),
+            ],
+            resources: [
+                .process("Resources/Localizable.xcstrings"),
             ]
         ),
     ]
