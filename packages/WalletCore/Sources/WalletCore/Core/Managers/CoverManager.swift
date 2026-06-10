@@ -2,6 +2,7 @@ import SwiftUI
 
 public class CoverManager {
     public var windowScene: UIWindowScene?
+    public var coverViewProvider: () -> AnyView = { AnyView(CoverView()) }
     private var window: UIWindow?
 
     private let lockManager: LockManager
@@ -20,7 +21,7 @@ public class CoverManager {
         window.isHidden = false
         window.alpha = 0
 
-        let hostingController = UIHostingController(rootView: CoverView())
+        let hostingController = UIHostingController(rootView: coverViewProvider())
         window.rootViewController = hostingController
 
         UIView.animate(withDuration: 0.15) {
