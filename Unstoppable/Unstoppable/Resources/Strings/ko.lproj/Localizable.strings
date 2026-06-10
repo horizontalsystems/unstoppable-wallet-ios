@@ -775,6 +775,14 @@
 "swap_info.send" = "전송 %@";
 "swap_info.refund" = "환불 %@";
 "swap_info.unknown" = "알 수 없음";
+"swap_info.request_refund" = "환불 요청";
+"swap_info.request_refund.description" = "환불 요청 세부 정보를 복사하고 스왑 제공업체에 연락하여 환불을 요청하세요.";
+"swap_info.swap_id" = "스왑 ID";
+"swap_info.amount" = "금액";
+"swap_info.refund_address" = "환불 주소";
+"swap_info.copy_details" = "세부 정보 복사";
+"swap_info.swap_stopped_by_provider" = "제공업체에 의해 스왑 중단됨";
+"swap_info.swap_stopped_by_provider.description" = "입금이 수신되었지만 제공업체가 스왑을 완료할 수 없었습니다. 아래에서 환불을 요청하여 자금을 돌려받으세요.";
 
 "swap_info.status.not_started" = "시작되지 않음";
 "swap_info.status.pending" = "대기 중";
@@ -783,6 +791,7 @@
 "swap_info.status.refunded" = "환불됨";
 "swap_info.status.unknown" = "알 수 없음";
 "swap_info.status.failed" = "실패";
+"swap_info.status.action_required" = "조치 필요";
 
 // Market
 

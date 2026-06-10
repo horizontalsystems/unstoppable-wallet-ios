@@ -775,6 +775,14 @@
 "swap_info.send" = "Gönder %@";
 "swap_info.refund" = "İade %@";
 "swap_info.unknown" = "Bilinmiyor";
+"swap_info.request_refund" = "İade Talep Et";
+"swap_info.request_refund.description" = "İade talebi ayrıntılarını kopyalayın ve iade talep etmek için swap sağlayıcısıyla iletişime geçin.";
+"swap_info.swap_id" = "Swap ID";
+"swap_info.amount" = "Tutar";
+"swap_info.refund_address" = "İade Adresi";
+"swap_info.copy_details" = "Ayrıntıları Kopyala";
+"swap_info.swap_stopped_by_provider" = "Swap Sağlayıcı Tarafından Durduruldu";
+"swap_info.swap_stopped_by_provider.description" = "Yatırmanız alındı, ancak sağlayıcı swap işlemini tamamlayamadı. Fonlarınızı geri almak için aşağıdan iade talep edin.";
 
 "swap_info.status.not_started" = "Başlamadı";
 "swap_info.status.pending" = "Beklemede";
@@ -783,6 +791,7 @@
 "swap_info.status.refunded" = "İade edildi";
 "swap_info.status.unknown" = "Bilinmiyor";
 "swap_info.status.failed" = "Başarısız";
+"swap_info.status.action_required" = "İşlem Gerekli";
 
 // Market
 

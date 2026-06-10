@@ -775,6 +775,14 @@
 "swap_info.send" = "Envoyer %@";
 "swap_info.refund" = "Remboursement %@";
 "swap_info.unknown" = "Inconnu";
+"swap_info.request_refund" = "Demander un remboursement";
+"swap_info.request_refund.description" = "Copiez les détails de la demande de remboursement et contactez le fournisseur de swap pour demander un remboursement.";
+"swap_info.swap_id" = "ID du Swap";
+"swap_info.amount" = "Montant";
+"swap_info.refund_address" = "Adresse de remboursement";
+"swap_info.copy_details" = "Copier les détails";
+"swap_info.swap_stopped_by_provider" = "Swap arrêté par le fournisseur";
+"swap_info.swap_stopped_by_provider.description" = "Votre dépôt a été reçu, mais le fournisseur n'a pas pu finaliser le swap. Demandez un remboursement ci-dessous pour récupérer vos fonds.";
 
 "swap_info.status.not_started" = "Non démarré";
 "swap_info.status.pending" = "En attente";
@@ -783,6 +791,7 @@
 "swap_info.status.refunded" = "Remboursé";
 "swap_info.status.unknown" = "Inconnu";
 "swap_info.status.failed" = "Échoué";
+"swap_info.status.action_required" = "Action requise";
 
 // Market
 

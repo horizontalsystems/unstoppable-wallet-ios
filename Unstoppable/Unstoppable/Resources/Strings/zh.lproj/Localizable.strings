@@ -775,6 +775,14 @@
 "swap_info.send" = "发送 %@";
 "swap_info.refund" = "退款 %@";
 "swap_info.unknown" = "未知";
+"swap_info.request_refund" = "申请退款";
+"swap_info.request_refund.description" = "复制退款请求详情并联系兑换提供商申请退款。";
+"swap_info.swap_id" = "兑换 ID";
+"swap_info.amount" = "金额";
+"swap_info.refund_address" = "退款地址";
+"swap_info.copy_details" = "复制详情";
+"swap_info.swap_stopped_by_provider" = "兑换已被提供商停止";
+"swap_info.swap_stopped_by_provider.description" = "您的存款已收到，但提供商无法完成兑换。请在下方申请退款以取回您的资金。";
 
 "swap_info.status.not_started" = "未开始";
 "swap_info.status.pending" = "待处理";
@@ -783,6 +791,7 @@
 "swap_info.status.refunded" = "已退款";
 "swap_info.status.unknown" = "未知";
 "swap_info.status.failed" = "失败";
+"swap_info.status.action_required" = "需要操作";
 
 // Market
 

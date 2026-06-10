@@ -775,6 +775,14 @@
 "swap_info.send" = "Senden %@";
 "swap_info.refund" = "Rückerstattung %@";
 "swap_info.unknown" = "Unbekannt";
+"swap_info.request_refund" = "Rückerstattung anfordern";
+"swap_info.request_refund.description" = "Kopiere die Details der Rückerstattungsanfrage und kontaktiere den Swap-Anbieter, um eine Rückerstattung anzufordern.";
+"swap_info.swap_id" = "Swap-ID";
+"swap_info.amount" = "Betrag";
+"swap_info.refund_address" = "Rückerstattungsadresse";
+"swap_info.copy_details" = "Details kopieren";
+"swap_info.swap_stopped_by_provider" = "Swap vom Anbieter gestoppt";
+"swap_info.swap_stopped_by_provider.description" = "Deine Einzahlung wurde empfangen, aber der Anbieter konnte den Swap nicht abschließen. Fordere unten eine Rückerstattung an, um deine Mittel zurückzuerhalten.";
 
 "swap_info.status.not_started" = "Nicht gestartet";
 "swap_info.status.pending" = "Ausstehend";
@@ -783,6 +791,7 @@
 "swap_info.status.refunded" = "Erstattet";
 "swap_info.status.unknown" = "Unbekannt";
 "swap_info.status.failed" = "Fehlgeschlagen";
+"swap_info.status.action_required" = "Handlung erforderlich";
 
 // Market
 
