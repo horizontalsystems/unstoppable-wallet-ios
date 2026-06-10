@@ -14,7 +14,7 @@ public protocol IMultiSwapProvider {
     func supports(tokenIn: Token, tokenOut: Token) -> Bool
     func mevProtectionAllowed(tokenIn: Token, tokenOut: Token) -> Bool
     func quote(tokenIn: Token, tokenOut: Token, amountIn: Decimal) async throws -> MultiSwapQuote
-    func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote
+    func confirmationQuote(multiSwapQuote: MultiSwapQuote, tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings: TransactionSettings?) async throws -> SwapFinalQuote
     func validateTrustedProvider(tokenIn: Token, amountIn: Decimal) async throws -> Bool?
     func preSwapView(step: MultiSwapPreSwapStep, tokenIn: Token, tokenOut: Token, amount: Decimal, isPresented: Binding<Bool>, onSuccess: @escaping () -> Void) -> AnyView
     func track(swap: Swap) async throws -> Swap
