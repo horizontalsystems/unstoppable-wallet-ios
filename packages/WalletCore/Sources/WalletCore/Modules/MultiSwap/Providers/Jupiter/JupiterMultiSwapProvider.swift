@@ -63,7 +63,7 @@ class JupiterMultiSwapProvider: IMultiSwapProvider {
         return MultiSwapQuote(expectedBuyAmount: expectedAmountOut)
     }
 
-    func confirmationQuote(tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings _: TransactionSettings?) async throws -> SwapFinalQuote {
+    func confirmationQuote(multiSwapQuote _: MultiSwapQuote, tokenIn: Token, tokenOut: Token, amountIn: Decimal, slippage: Decimal, recipient: String?, transactionSettings _: TransactionSettings?) async throws -> SwapFinalQuote {
         guard let kit = solanaKitManager.solanaKit else {
             throw SwapError.noSolanaKit
         }

@@ -34,8 +34,8 @@ public enum SendHandlerFactory {
             return ZanoSendHandler.instance(token: token, feeToken: token, amount: amount, address: address, memo: memo)
         case let .zanoAsset(token, baseToken, amount, address, memo):
             return ZanoSendHandler.instance(token: token, feeToken: baseToken, amount: amount, address: address, memo: memo)
-        case let .swap(tokenIn, tokenOut, amountIn, provider):
-            return MultiSwapSendHandler.instance(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider)
+        case let .swap(tokenIn, tokenOut, amountIn, provider, multiSwapQuote):
+            return MultiSwapSendHandler.instance(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider, multiSwapQuote: multiSwapQuote)
         case let .walletConnect(request):
             return WalletConnectSendHandler.instance(request: request)
         case let .tonConnect(request):

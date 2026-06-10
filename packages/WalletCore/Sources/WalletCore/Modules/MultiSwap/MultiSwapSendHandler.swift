@@ -23,18 +23,23 @@ class MultiSwapSendHandler {
     let tokenOut: Token
     let amountIn: Decimal
     let provider: IMultiSwapProvider
+    // The dry-quote `MultiSwapQuote` the caller picked on the quotes screen. Passed back to
+    // `provider.confirmationQuote(...)` so the provider can replay any per-quote routing state
+    // (today: USwap's alternate-route selection for Exolix ZEC).
+    let multiSwapQuote: MultiSwapQuote
 
     private var slippage = MultiSwapSlippage.default
     private var recipient: String?
 
     private let refreshSubject = PassthroughSubject<Void, Never>()
 
-    init(baseToken: Token, tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider) {
+    init(baseToken: Token, tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider, multiSwapQuote: MultiSwapQuote) {
         self.baseToken = baseToken
         self.tokenIn = tokenIn
         self.tokenOut = tokenOut
         self.amountIn = amountIn
         self.provider = provider
+        self.multiSwapQuote = multiSwapQuote
     }
 }
 
@@ -91,6 +96,7 @@ extension MultiSwapSendHandler: ISendHandler {
 
     func sendData(transactionSettings: TransactionSettings?) async throws -> ISendData {
         let quote = try await provider.confirmationQuote(
+            multiSwapQuote: multiSwapQuote,
             tokenIn: tokenIn,
             tokenOut: tokenOut,
             amountIn: amountIn,
@@ -418,7 +424,7 @@ extension MultiSwapSendHandler {
 }
 
 extension MultiSwapSendHandler {
-    static func instance(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider) -> MultiSwapSendHandler? {
+    static func instance(tokenIn: Token, tokenOut: Token, amountIn: Decimal, provider: IMultiSwapProvider, multiSwapQuote: MultiSwapQuote) -> MultiSwapSendHandler? {
         let baseToken: Token?
 
         switch tokenIn.type {
@@ -434,6 +440,6 @@ extension MultiSwapSendHandler {
             return nil
         }
 
-        return MultiSwapSendHandler(baseToken: baseToken, tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider)
+        return MultiSwapSendHandler(baseToken: baseToken, tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider, multiSwapQuote: multiSwapQuote)
     }
 }

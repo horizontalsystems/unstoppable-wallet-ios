@@ -77,6 +77,7 @@ struct MultiSwapView: View {
                     tokenOut: tokenOut,
                     amountIn: amountIn,
                     provider: currentQuote.provider,
+                    multiSwapQuote: currentQuote.quote,
                     onFinish: onFinish ?? {
                         viewModel.reset()
                         sendPresented = false
