@@ -301,7 +301,7 @@ struct MultiSwapView: View {
             Cell(
                 style: .secondary,
                 middle: {
-                    RightButtonText(text: ComponentText(text: quote.provider.name, colorStyle: .primary), textStyle: .subhead, icon: "arrow_s_down") {
+                    RightButtonText(text: ComponentText(text: "swap.route".localized, colorStyle: .primary), textStyle: .subhead, icon: "arrow_s_down") {
                         viewModel.stopAutoQuoting()
 
                         showSelectProvider()
