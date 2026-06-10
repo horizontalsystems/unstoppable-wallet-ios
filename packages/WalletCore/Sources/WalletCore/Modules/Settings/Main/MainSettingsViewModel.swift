@@ -42,6 +42,12 @@ class MainSettingsViewModel: ObservableObject {
         }
     }
 
+    @Published var simulateFailSwap: SimulateFailSwapMode {
+        didSet {
+            localStorage.simulateFailSwap = simulateFailSwap
+        }
+    }
+
     @Published var emulatePurchase: Bool {
         didSet {
             localStorage.emulatePurchase = emulatePurchase
@@ -71,6 +77,7 @@ class MainSettingsViewModel: ObservableObject {
     init() {
         showTestSwitchers = AppConfig.showTestSwitchers
         forceEnableSwap = localStorage.forceEnableSwap
+        simulateFailSwap = localStorage.simulateFailSwap
         emulatePurchase = localStorage.emulatePurchase
         testNetEnabled = testNetManager.testNetEnabled
         mayaStagenetEnabled = testNetManager.mayaStagenetEnabled

@@ -44,7 +44,7 @@ extension ZcashNodeManager {
             let records = try zcashNodeStorage.records(blockchainTypeUid: blockchainType.uid)
             return records.compactMap { record in
                 guard let parsed = URLComponents(string: record.url),
-                      let scheme = parsed.scheme?.lowercased(), ["http", "https"].contains(scheme),
+                      let scheme = parsed.scheme?.lowercased(), [ /* "http", */ "https"].contains(scheme), // disable http:
                       let host = parsed.host?.lowercased(), !host.isEmpty,
                       parsed.user == nil, parsed.password == nil,
                       parsed.path.isEmpty || parsed.path == "/",

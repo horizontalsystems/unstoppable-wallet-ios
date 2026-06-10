@@ -244,10 +244,13 @@ extension MultiSwapSendHandler: ISendHandler {
                 toAddress: data.quote.recipient ?? data.quote.toAddress,
                 depositAddress: data.quote.depositAddress,
                 providerSwapId: data.quote.providerSwapId,
+                sourceAddress: nil,
+                refundAddress: data.quote.refundAddress,
                 date: Date(),
                 fromAsset: nil,
                 toAsset: nil,
-                legs: nil
+                legs: nil,
+                pauseReason: nil
             )
 
             swapHistoryManager.save(swap: swap)

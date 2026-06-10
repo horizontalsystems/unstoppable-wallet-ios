@@ -18,7 +18,7 @@ struct SwapHistoryView: View {
                                 Section {
                                     ListForEachIdentifiable(section.viewItems) { viewItem in
                                         Button(action: {
-                                            path.append(viewItem.swap)
+                                            path.append(viewModel.correctedSwap(viewItem.swap))
                                         }) {
                                             ItemView(viewItem: viewItem)
                                         }

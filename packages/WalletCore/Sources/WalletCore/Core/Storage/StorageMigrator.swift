@@ -950,6 +950,14 @@ public enum StorageMigrator {
             }
         }
 
+        migrator.registerMigration("Add refund support fields to SwapRecord") { db in
+            try db.alter(table: SwapRecord.databaseTableName) { t in
+                t.add(column: SwapRecord.Columns.sourceAddress.name, .text)
+                t.add(column: SwapRecord.Columns.refundAddress.name, .text)
+                t.add(column: SwapRecord.Columns.pauseReason.name, .text)
+            }
+        }
+
         try migrator.migrate(dbPool)
     }
 

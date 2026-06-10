@@ -530,6 +530,26 @@ struct MainSettingsView: View {
                 .toggleStyle(SwitchToggleStyle(tint: .themeYellow))
             }
 
+            row(
+                title: "Simulate Fail Swap",
+                subtitle: "none / server / local",
+                value: viewModel.simulateFailSwap.rawValue,
+                action: {
+                    Coordinator.shared.present(type: .alert) { isPresented in
+                        OptionAlertView(
+                            title: "Simulate Fail Swap",
+                            viewItems: SimulateFailSwapMode.allCases.map {
+                                AlertViewItem(text: $0.rawValue, selected: viewModel.simulateFailSwap == $0)
+                            },
+                            onSelect: { index in
+                                viewModel.simulateFailSwap = SimulateFailSwapMode.allCases[index]
+                            },
+                            isPresented: isPresented
+                        )
+                    }
+                }
+            )
+
             ListRow {
                 Toggle(isOn: $viewModel.emulatePurchase) {
                     Text("Emulate Purchase").themeBody()

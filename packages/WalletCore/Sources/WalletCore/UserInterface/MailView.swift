@@ -3,11 +3,13 @@ import SwiftUI
 
 public struct MailView: UIViewControllerRepresentable {
     private let recipient: String
+    private let subject: String?
     private let body: String
     @Binding private var isPresented: Bool
 
-    public init(recipient: String, body: String, isPresented: Binding<Bool>) {
+    public init(recipient: String, subject: String? = nil, body: String, isPresented: Binding<Bool>) {
         self.recipient = recipient
+        self.subject = subject
         self.body = body
         _isPresented = isPresented
     }
@@ -32,6 +34,9 @@ public struct MailView: UIViewControllerRepresentable {
         let viewController = MFMailComposeViewController()
         viewController.mailComposeDelegate = context.coordinator
         viewController.setToRecipients([recipient])
+        if let subject {
+            viewController.setSubject(subject)
+        }
         viewController.setMessageBody(body, isHTML: false)
         return viewController
     }
