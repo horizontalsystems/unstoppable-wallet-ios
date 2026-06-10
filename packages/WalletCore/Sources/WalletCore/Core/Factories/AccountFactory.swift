@@ -12,7 +12,7 @@ public class AccountFactory {
 public extension AccountFactory {
     var generatedAccountName: String {
         let index = Int.random(in: 1 ... 100)
-        return "wallet_name.\(index)".localized
+        return NSLocalizedString("wallet_name.\(index)", bundle: .module, comment: "")
     }
 
     func account(type: AccountType, origin: AccountOrigin, backedUp: Bool, fileBackedUp: Bool, name: String) -> Account {
