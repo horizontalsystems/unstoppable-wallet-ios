@@ -32,6 +32,7 @@ public class LocalStorage {
     private let keySwapEnabled = "swap_enabled"
     private let keyAppStateLastSyncTimestamp = "app-state-last-sync-timestamp"
     private let keyForceEnableSwap = "force-enable-swap"
+    private let keySimulateFailSwap = "simulate-fail-swap"
 
     private let keyRecipientAddressCheck = "recipient-address-check"
 
@@ -42,6 +43,12 @@ public class LocalStorage {
     public init(userDefaultsStorage: UserDefaultsStorage) {
         self.userDefaultsStorage = userDefaultsStorage
     }
+}
+
+enum SimulateFailSwapMode: String, CaseIterable {
+    case none
+    case server
+    case local
 }
 
 extension LocalStorage {
@@ -199,6 +206,16 @@ extension LocalStorage {
     var forceEnableSwap: Bool {
         get { userDefaultsStorage.value(for: keyForceEnableSwap) ?? false }
         set { userDefaultsStorage.set(value: newValue, for: keyForceEnableSwap) }
+    }
+
+    var simulateFailSwap: SimulateFailSwapMode {
+        get {
+            let raw: String? = userDefaultsStorage.value(for: keySimulateFailSwap)
+            return raw.flatMap { SimulateFailSwapMode(rawValue: $0) } ?? .none
+        }
+        set {
+            userDefaultsStorage.set(value: newValue.rawValue, for: keySimulateFailSwap)
+        }
     }
 
     // Send Security

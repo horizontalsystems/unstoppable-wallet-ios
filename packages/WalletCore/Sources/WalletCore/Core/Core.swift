@@ -135,6 +135,7 @@ public class Core {
 
     let swapAssetStorage: SwapAssetStorage
     let swapProviderManager: MultiSwapProviderManager
+    let swapProviderInfoManager: SwapProviderInfoManager
     let swapHistoryManager: SwapHistoryManager
 
     public let smartAccountService: CreateSmartAccountService
@@ -488,6 +489,7 @@ public class Core {
 
         swapAssetStorage = SwapAssetStorage(dbPool: dbPool)
         swapProviderManager = MultiSwapProviderManager(localStorage: localStorage, networkManager: networkManager, apiKey: AppConfig.uswapApiKey)
+        swapProviderInfoManager = SwapProviderInfoManager(networkManager: networkManager, apiKey: AppConfig.uswapApiKey)
 
         let swapStorage = SwapStorage(dbPool: dbPool, marketKit: marketKit)
         swapHistoryManager = SwapHistoryManager(accountManager: accountManager, storage: swapStorage)

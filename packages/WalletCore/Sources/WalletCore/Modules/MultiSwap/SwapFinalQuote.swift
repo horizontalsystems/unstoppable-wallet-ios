@@ -11,6 +11,7 @@ public class SwapFinalQuote {
     let toAddress: String
     let depositAddress: String?
     let providerSwapId: String?
+    var refundAddress: String?
 
     public init(
         expectedBuyAmount: Decimal,
@@ -20,7 +21,8 @@ public class SwapFinalQuote {
         transactionError: Error?,
         toAddress: String,
         depositAddress: String? = nil,
-        providerSwapId: String? = nil
+        providerSwapId: String? = nil,
+        refundAddress: String? = nil
     ) {
         self.expectedBuyAmount = expectedBuyAmount
         self.slippage = slippage
@@ -30,6 +32,7 @@ public class SwapFinalQuote {
         self.toAddress = toAddress
         self.depositAddress = depositAddress
         self.providerSwapId = providerSwapId
+        self.refundAddress = refundAddress
     }
 
     var amountOut: Decimal {

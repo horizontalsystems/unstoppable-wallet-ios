@@ -5,12 +5,15 @@ import RxSwift
 
 class SwapInfoViewModel: ObservableObject {
     private let manager = Core.shared.swapHistoryManager
+    private let providerInfoManager = Core.shared.swapProviderInfoManager
+    private let reachabilityManager = Core.shared.reachabilityManager
     private let rateService = HistoricalRateService(marketKit: Core.shared.marketKit, currencyManager: Core.shared.currencyManager)
 
     private var cancellables = Set<AnyCancellable>()
     private let disposeBag = DisposeBag()
 
-    private var swap: Swap
+    @Published private(set) var swap: Swap
+    @Published private(set) var requestRefundLoading = false
     private var rates = [RateKey: CurrencyValue]()
 
     @Published var sections = [SendDataSection]()
@@ -40,10 +43,12 @@ class SwapInfoViewModel: ObservableObject {
             return
         }
 
-        self.swap = swap
+        DispatchQueue.main.async {
+            self.swap = swap
 
-        syncSections()
-        syncLegs()
+            self.syncSections()
+            self.syncLegs()
+        }
     }
 
     private func handle(rate: (RateKey, CurrencyValue)) {
@@ -100,7 +105,16 @@ class SwapInfoViewModel: ObservableObject {
 
     private func syncLegs() {
         guard let fromAsset = swap.fromAsset, let toAsset = swap.toAsset, let swapLegs = swap.legs else {
-            legs = []
+            if swap.status == .actionRequired {
+                legs = actionRequiredLegs(existingLegs: [])
+            } else {
+                legs = []
+            }
+            return
+        }
+
+        if swap.status == .actionRequired {
+            legs = actionRequiredLegs(existingLegs: swapLegs)
             return
         }
 
@@ -119,6 +133,38 @@ class SwapInfoViewModel: ObservableObject {
 
             return Leg(title: title, status: leg.status, url: explorerUrl(chainId: leg.chainId, hash: leg.txHash))
         }
+    }
+
+    private func actionRequiredLegs(existingLegs: [Swap.Leg]) -> [Leg] {
+        if isSingleChain {
+            return [
+                Leg(
+                    title: "swap_info.swap".localized,
+                    status: .failed,
+                    url: existingLegs.first.map { explorerUrl(chainId: $0.chainId, hash: $0.txHash) } ?? nil
+                ),
+            ]
+        }
+
+        let depositLeg = existingLegs.first { $0.type == USwapMultiSwapProvider.legTypeNativeSend && $0.fromAsset == swap.fromAsset }
+        let swapLeg = existingLegs.first { $0.type == USwapMultiSwapProvider.legTypeSwap }
+
+        return [
+            Leg(
+                title: "swap_info.deposit".localized(swap.tokenIn.coin.code),
+                status: .completed,
+                url: depositLeg.map { explorerUrl(chainId: $0.chainId, hash: $0.txHash) } ?? nil
+            ),
+            Leg(
+                title: "swap_info.swap".localized,
+                status: .failed,
+                url: swapLeg.map { explorerUrl(chainId: $0.chainId, hash: $0.txHash) } ?? nil
+            ),
+        ]
+    }
+
+    private var isSingleChain: Bool {
+        swap.tokenIn.blockchainType == swap.tokenOut.blockchainType
     }
 
     private func explorerUrl(chainId: String, hash: String) -> String? {
@@ -149,6 +195,33 @@ class SwapInfoViewModel: ObservableObject {
         case .zano: return "https://explorer.zano.org/transaction/" + hash
         case .tron: return "https://tronscan.org/#/transaction/" + hash
         default: return nil
+        }
+    }
+
+    @MainActor func preloadRefundContacts() async {
+        if providerInfoManager.hasCache {
+            return
+        }
+
+        guard reachabilityManager.isReachable else {
+            return
+        }
+
+        requestRefundLoading = true
+
+        defer {
+            requestRefundLoading = false
+        }
+
+        await preloadRefundContacts(timeout: 6)
+    }
+
+    private func preloadRefundContacts(timeout: TimeInterval) async {
+        providerInfoManager.startPreload()
+
+        let startedAt = Date()
+        while !providerInfoManager.hasCache, Date().timeIntervalSince(startedAt) < timeout {
+            try? await Task.sleep(seconds: 0.1)
         }
     }
 }

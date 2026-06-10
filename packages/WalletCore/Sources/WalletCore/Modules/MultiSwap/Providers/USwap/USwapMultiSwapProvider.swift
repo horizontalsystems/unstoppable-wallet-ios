@@ -200,21 +200,25 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             "dry": dry,
         ]
 
-        if let unified = destinations.unified {
-            parameters["destinationAddressUnified"] = unified
-        }
+        parameters.appendNotNil(key: "destinationAddressUnified", destinations.unified)
 
         if let chainId = Self.blockchainTypeMap.first(where: { $0.value == tokenIn.blockchainType })?.key {
             parameters["chainId"] = chainId
         }
 
+        var refund: String?
         if !dry {
-            try await appendAddresses(tokenIn: tokenIn, parameters: &parameters)
+            refund = try await refundAddress(tokenIn: tokenIn)
+
+            parameters.appendNotNil(key: "refundAddress", refund)
+            parameters.appendNotNil(key: "sourceAddress", try await quoteSourceAddress(tokenIn: tokenIn))
         }
 
         let response: QuoteResponse = try await networkManager.fetch(url: "\(Self.baseUrl)/quote", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
 
-        return try pickRoute(from: response.routes, dry: dry, tokenOut: tokenOut, fallbackBuyAsset: assetOut)
+        let quote = try pickRoute(from: response.routes, dry: dry, tokenOut: tokenOut, fallbackBuyAsset: assetOut)
+        quote.refundAddress = refund
+        return quote
     }
 
     // Resolves the destination(s) we send to the server. Returns the primary destination
@@ -315,22 +319,25 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             return assetMap[token.tokenQuery.id.lowercased()]
         }
     }
+    private func refundAddress(tokenIn: Token) async throws -> String? {
+        if tokenIn.blockchain.type == .zcash, provider == .exolix {
+            return sendingAddress(token: tokenIn)
+        } else {
+            return try await DestinationHelper.resolveDestination(token: tokenIn).address
+        }
+    }
 
-    private func appendAddresses(tokenIn: Token, parameters: inout [String: Any]) async throws {
+    private func quoteSourceAddress(tokenIn: Token) async throws -> String? {
         // must provide address for calculate tx-data
         if tokenIn.blockchain.type.isEvm ||
             tokenIn.blockchainType == .tron ||
             tokenIn.blockchainType == .ton ||
             tokenIn.blockchainType == .solana
         {
-            parameters["sourceAddress"] = try await DestinationHelper.resolveDestination(token: tokenIn).address
+            return try await DestinationHelper.resolveDestination(token: tokenIn).address
         }
 
-        if tokenIn.blockchain.type == .zcash, provider == .exolix {
-            parameters["refundAddress"] = sendingAddress(token: tokenIn)
-        } else {
-            parameters["refundAddress"] = try await DestinationHelper.resolveDestination(token: tokenIn).address
-        }
+        return nil
     }
 
     func supports(tokenIn: Token, tokenOut: Token) -> Bool {
@@ -540,7 +547,6 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
         set(&parameters, "toAsset", asset(token: swap.tokenOut))
         set(&parameters, "depositAddress", swap.depositAddress)
         set(&parameters, "providerSwapId", swap.providerSwapId)
-
         return try await Self.track(swap: swap, parameters: parameters, networkManager: networkManager)
     }
 
@@ -549,6 +555,11 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             return nil
         }
         return adapter.receiveAddress.address
+    }
+
+    private func withRefundAddress(_ finalQuote: SwapFinalQuote, quote: Quote) -> SwapFinalQuote {
+        finalQuote.refundAddress = quote.refundAddress
+        return finalQuote
     }
 
     private func buildEvmConfirmationQuote(
@@ -603,7 +614,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             }
         }
 
-        return EvmSwapFinalQuote(
+        return withRefundAddress(EvmSwapFinalQuote(
             expectedBuyAmount: quote.expectedBuyAmount,
             transactionData: transactionData,
             transactionError: transactionError,
@@ -616,7 +627,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             toAddress: quote.destinationAddress,
             depositAddress: quote.inboundAddress,
             providerSwapId: quote.providerSwapId
-        )
+        ), quote: quote)
     }
 
     private func buildBtcConfirmationQuote(
@@ -657,7 +668,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             }
         }
 
-        return UtxoSwapFinalQuote(
+        return withRefundAddress(UtxoSwapFinalQuote(
             expectedBuyAmount: quote.expectedBuyAmount,
             sendParameters: params,
             slippage: slippage,
@@ -668,7 +679,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             toAddress: quote.destinationAddress,
             depositAddress: quote.inboundAddress,
             providerSwapId: quote.providerSwapId
-        )
+        ), quote: quote)
     }
 
     private func buildZcashConfirmationQuote(
@@ -708,7 +719,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError = error
         }
 
-        return ZcashSwapFinalQuote(
+        return withRefundAddress(ZcashSwapFinalQuote(
             expectedBuyAmount: amountOut,
             proposal: proposal,
             slippage: slippage,
@@ -719,7 +730,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             toAddress: quote.destinationAddress,
             depositAddress: quote.inboundAddress,
             providerSwapId: quote.providerSwapId
-        )
+        ), quote: quote)
     }
 
     private func buildTonConfirmationQuote(
@@ -773,7 +784,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError = error
         }
 
-        return TonSwapFinalQuote(
+        return withRefundAddress(TonSwapFinalQuote(
             amountIn: amountIn,
             expectedAmountOut: amountOut,
             recipient: recipient,
@@ -785,7 +796,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             toAddress: quote.destinationAddress,
             depositAddress: quote.inboundAddress,
             providerSwapId: quote.providerSwapId
-        )
+        ), quote: quote)
     }
 
     private func buildStellarConfirmationQuote(
@@ -830,7 +841,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError = error
         }
 
-        return StellarSwapFinalQuote(
+        return withRefundAddress(StellarSwapFinalQuote(
             amountIn: amountIn,
             expectedAmountOut: amountOut,
             recipient: recipient,
@@ -843,7 +854,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             toAddress: quote.destinationAddress,
             depositAddress: quote.inboundAddress,
             providerSwapId: quote.providerSwapId
-        )
+        ), quote: quote)
     }
 
     private func buildTronConfirmationQuote(
@@ -881,7 +892,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             }
         }
 
-        return TronSwapFinalQuote(
+        return withRefundAddress(TronSwapFinalQuote(
             amountIn: amountIn,
             expectedAmountOut: amountOut,
             recipient: recipient,
@@ -893,7 +904,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             toAddress: quote.destinationAddress,
             depositAddress: quote.inboundAddress,
             providerSwapId: quote.providerSwapId
-        )
+        ), quote: quote)
     }
 
     private func buildMoneroConfirmationQuote(
@@ -930,7 +941,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError = error
         }
 
-        return MoneroSwapFinalQuote(
+        return withRefundAddress(MoneroSwapFinalQuote(
             amountIn: amountIn,
             expectedAmountOut: amountOut,
             recipient: recipient,
@@ -946,7 +957,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             toAddress: quote.destinationAddress,
             depositAddress: quote.inboundAddress,
             providerSwapId: quote.providerSwapId
-        )
+        ), quote: quote)
     }
 
     private func buildZanoConfirmationQuote(
@@ -989,7 +1000,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError = error
         }
 
-        return ZanoSwapFinalQuote(
+        return withRefundAddress(ZanoSwapFinalQuote(
             expectedAmountOut: amountOut,
             recipient: recipient,
             slippage: slippage,
@@ -1002,7 +1013,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             toAddress: quote.destinationAddress,
             depositAddress: quote.inboundAddress,
             providerSwapId: quote.providerSwapId
-        )
+        ), quote: quote)
     }
 
     private func buildSolanaConfirmationQuote(
@@ -1040,7 +1051,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             transactionError = error
         }
 
-        return SolanaSwapFinalQuote(
+        return withRefundAddress(SolanaSwapFinalQuote(
             rawTransaction: rawTransaction,
             expectedAmountOut: amountOut,
             recipient: recipient,
@@ -1051,7 +1062,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             toAddress: quote.destinationAddress,
             depositAddress: quote.inboundAddress,
             providerSwapId: quote.providerSwapId
-        )
+        ), quote: quote)
     }
 }
 
@@ -1085,10 +1096,16 @@ extension USwapMultiSwapProvider {
     ]
 
     static func track(swap: Swap, parameters: Parameters, networkManager: NetworkManager, isEvm: Bool = false) async throws -> Swap {
+        var parameters = parameters
+        if AppConfig.showTestSwitchers, Core.shared.localStorage.simulateFailSwap == .server {
+            parameters["testActionRequired"] = true
+        }
+
         let response: USwapMultiSwapProvider.TrackResponse = try await networkManager.fetch(
             url: "\(USwapMultiSwapProvider.baseUrl)/track\(isEvm ? "/evm" : "")",
             method: .post,
             parameters: parameters,
+            encoding: JSONEncoding.default,
             headers: USwapMultiSwapProvider.headers
         )
 
@@ -1096,6 +1113,7 @@ extension USwapMultiSwapProvider {
         swap.status = response.status
         swap.fromAsset = response.fromAsset
         swap.toAsset = response.toAsset
+        swap.pauseReason = response.status == .actionRequired ? response.pauseReason : nil
         swap.legs = response.legs.map { leg in
             Swap.Leg(
                 status: Swap.Status(rawValue: leg.status) ?? .unknown,
@@ -1235,6 +1253,7 @@ extension USwapMultiSwapProvider {
         let providers: [String]?
         let esimatedTime: TimeInterval?
         let providerSwapId: String?
+        var refundAddress: String?
 
         required init(map: Map) throws {
             expectedBuyAmount = try map.value("expectedBuyAmount", using: Transform.stringToDecimalTransform)
@@ -1259,13 +1278,18 @@ extension USwapMultiSwapProvider {
         let toAsset: String
         let toAmount: Decimal?
         let legs: [Leg]
+        let provider: String?
+        let pauseReason: String?
 
         init(map: Map) throws {
-            status = try map.value("status")
+            let rawStatus: String = try map.value("status")
+            status = Swap.Status(rawValue: rawStatus) ?? .unknown
             toAmount = try? map.value("toAmount", using: Transform.stringToDecimalTransform)
             fromAsset = try map.value("fromAsset")
             toAsset = try map.value("toAsset")
             legs = try map.value("legs")
+            provider = try? map.value("meta.provider")
+            pauseReason = try? map.value("meta.pauseReason")
         }
 
         struct Leg: ImmutableMappable {
@@ -1280,7 +1304,7 @@ extension USwapMultiSwapProvider {
                 status = try map.value("status")
                 type = try map.value("type")
                 chainId = try map.value("chainId")
-                txHash = try map.value("hash")
+                txHash = (try? map.value("hash")) ?? ""
                 fromAsset = try map.value("fromAsset")
                 toAsset = try map.value("toAsset")
             }

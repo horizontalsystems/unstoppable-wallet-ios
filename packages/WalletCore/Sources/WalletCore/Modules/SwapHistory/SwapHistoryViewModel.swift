@@ -220,6 +220,14 @@ extension SwapHistoryViewModel {
         manager.sync()
     }
 
+    func correctedSwap(_ swap: Swap) -> Swap {
+        guard AppConfig.showTestSwitchers, Core.shared.localStorage.simulateFailSwap == .local else {
+            return swap
+        }
+
+        return CoreDebugStubs.trackActionRequiredSwap(from: swap)
+    }
+
     func onDisplay(section: Section, viewItem: ViewItem) {
         queue.async {
             guard let sectionIndex = self.__sections.firstIndex(where: { $0.id == section.id }),

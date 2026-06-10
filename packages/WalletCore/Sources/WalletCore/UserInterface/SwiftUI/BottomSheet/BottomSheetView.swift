@@ -52,6 +52,8 @@ enum BSModule {
                     views[index]
                 }
             }
+        case let .custom(view):
+            view
         case let .buttonGroup(group):
             ButtonGroupView(group: group)
         }
@@ -70,7 +72,7 @@ enum BSModule {
                 .stroke(Color.themeBlade, lineWidth: .heightOneDp)
         )
         .padding(.horizontal, .margin16)
-        .padding(.vertical, .margin8)
+        .padding(.top, .margin8)
     }
 
     private static func listView(item: ListItem) -> some View {
@@ -98,6 +100,7 @@ extension BSModule {
         case highlightedDescription(text: String, type: AlertCardView.CardType, style: AlertCardView.Style)
         case list(items: [ListItem])
         case customList(views: [AnyView])
+        case custom(view: AnyView)
         case buttonGroup(ButtonGroupViewModel.ButtonGroup)
 
         static func title(icon: CustomStringConvertible? = nil, title: CustomStringConvertible) -> Self {

@@ -17,17 +17,20 @@ public struct Swap: Hashable {
     let toAddress: String
     let depositAddress: String?
     let providerSwapId: String?
+    let sourceAddress: String?
+    let refundAddress: String?
     let date: Date
     var fromAsset: String?
     var toAsset: String?
     var legs: [Leg]?
+    var pauseReason: String?
 
     var isPending: Bool {
         Self.pendingStatuses.contains(status)
     }
 
     static var pendingStatuses: [Status] {
-        [.notStarted, .pending, .swapping, .unknown]
+        [.notStarted, .pending, .swapping, .unknown, .actionRequired]
     }
 
     enum Status: String {
@@ -38,6 +41,7 @@ public struct Swap: Hashable {
         case refunded
         case unknown
         case failed
+        case actionRequired = "action_required"
 
         var title: String {
             "swap_info.status.\(rawValue)".localized
@@ -46,7 +50,7 @@ public struct Swap: Hashable {
         @ViewBuilder var view: some View {
             switch self {
             case .completed: ThemeImage("done_e_filled", size: 20, colorStyle: .green)
-            case .failed: ThemeImage("warning_filled", size: 20, colorStyle: .red)
+            case .failed, .actionRequired: ThemeImage("warning_filled", size: 20, colorStyle: .red)
             case .refunded: ThemeImage("arrow_return", size: 20, colorStyle: .secondary)
             default: ProgressView(value: 0.55)
                 .progressViewStyle(DeterminiteSpinnerStyle())
@@ -82,10 +86,13 @@ struct SwapRecord: Codable {
     let toAddress: String
     let depositAddress: String?
     let providerSwapId: String?
+    let sourceAddress: String?
+    let refundAddress: String?
     let date: Date
     let fromAsset: String?
     let toAsset: String?
     let legs: [Leg]?
+    let pauseReason: String?
 }
 
 extension SwapRecord {
@@ -118,9 +125,12 @@ extension SwapRecord: FetchableRecord, PersistableRecord {
         static let toAddress = Column(CodingKeys.toAddress)
         static let depositAddress = Column(CodingKeys.depositAddress)
         static let providerSwapId = Column(CodingKeys.providerSwapId)
+        static let sourceAddress = Column(CodingKeys.sourceAddress)
+        static let refundAddress = Column(CodingKeys.refundAddress)
         static let date = Column(CodingKeys.date)
         static let fromAsset = Column(CodingKeys.fromAsset)
         static let toAsset = Column(CodingKeys.toAsset)
         static let legs = Column(CodingKeys.legs)
+        static let pauseReason = Column(CodingKeys.pauseReason)
     }
 }
