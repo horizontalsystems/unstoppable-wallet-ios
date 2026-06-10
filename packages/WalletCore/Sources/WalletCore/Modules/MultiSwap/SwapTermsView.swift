@@ -127,7 +127,7 @@ extension SwapTermsView {
             return part
         }
     }
-    
+
     private func onTapProviderInfo() {
         Coordinator.shared.present(type: .bottomSheet) { isPresented in
             MultiSwapProviderTypeBottomSheet(isPresented: isPresented)

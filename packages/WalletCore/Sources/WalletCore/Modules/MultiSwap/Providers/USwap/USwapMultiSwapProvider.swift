@@ -211,7 +211,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             refund = try await refundAddress(tokenIn: tokenIn)
 
             parameters.appendNotNil(key: "refundAddress", refund)
-            parameters.appendNotNil(key: "sourceAddress", try await quoteSourceAddress(tokenIn: tokenIn))
+            try await parameters.appendNotNil(key: "sourceAddress", quoteSourceAddress(tokenIn: tokenIn))
         }
 
         let response: QuoteResponse = try await networkManager.fetch(url: "\(Self.baseUrl)/quote", method: .post, parameters: parameters, encoding: JSONEncoding.default, headers: headers)
@@ -319,6 +319,7 @@ class USwapMultiSwapProvider: IMultiSwapProvider {
             return assetMap[token.tokenQuery.id.lowercased()]
         }
     }
+
     private func refundAddress(tokenIn: Token) async throws -> String? {
         if tokenIn.blockchain.type == .zcash, provider == .exolix {
             return sendingAddress(token: tokenIn)
