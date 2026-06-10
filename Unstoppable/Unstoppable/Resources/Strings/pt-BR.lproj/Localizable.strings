@@ -775,6 +775,14 @@
 "swap_info.send" = "Enviar %@";
 "swap_info.refund" = "Reembolso %@";
 "swap_info.unknown" = "Desconhecido";
+"swap_info.request_refund" = "Solicitar reembolso";
+"swap_info.request_refund.description" = "Copie os detalhes da solicitação de reembolso e entre em contato com o provedor de swap para solicitar um reembolso.";
+"swap_info.swap_id" = "ID do Swap";
+"swap_info.amount" = "Valor";
+"swap_info.refund_address" = "Endereço de reembolso";
+"swap_info.copy_details" = "Copiar detalhes";
+"swap_info.swap_stopped_by_provider" = "Swap interrompido pelo provedor";
+"swap_info.swap_stopped_by_provider.description" = "Seu depósito foi recebido, mas o provedor não conseguiu concluir o swap. Solicite um reembolso abaixo para recuperar seus fundos.";
 
 "swap_info.status.not_started" = "Não iniciado";
 "swap_info.status.pending" = "Pendente";
@@ -783,6 +791,7 @@
 "swap_info.status.refunded" = "Reembolsado";
 "swap_info.status.unknown" = "Desconhecido";
 "swap_info.status.failed" = "Falhou";
+"swap_info.status.action_required" = "Ação necessária";
 
 // Market
 

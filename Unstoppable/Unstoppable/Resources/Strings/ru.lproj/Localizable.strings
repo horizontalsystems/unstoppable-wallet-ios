@@ -775,6 +775,14 @@
 "swap_info.send" = "Отправить %@";
 "swap_info.refund" = "Возврат %@";
 "swap_info.unknown" = "Неизвестно";
+"swap_info.request_refund" = "Запросить возврат";
+"swap_info.request_refund.description" = "Скопируйте данные запроса на возврат и свяжитесь с провайдером обмена для запроса возврата средств.";
+"swap_info.swap_id" = "ID обмена";
+"swap_info.amount" = "Сумма";
+"swap_info.refund_address" = "Адрес возврата";
+"swap_info.copy_details" = "Скопировать данные";
+"swap_info.swap_stopped_by_provider" = "Обмен остановлен провайдером";
+"swap_info.swap_stopped_by_provider.description" = "Ваш депозит был получен, но провайдер не смог завершить обмен. Запросите возврат средств ниже, чтобы вернуть свои средства.";
 
 "swap_info.status.not_started" = "Не начат";
 "swap_info.status.pending" = "В ожидании";
@@ -783,6 +791,7 @@
 "swap_info.status.refunded" = "Возвращён";
 "swap_info.status.unknown" = "Неизвестно";
 "swap_info.status.failed" = "Ошибка";
+"swap_info.status.action_required" = "Требуется действие";
 
 // Market
 
