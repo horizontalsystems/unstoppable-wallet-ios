@@ -81,6 +81,18 @@ def translate_all(new_strings: dict[str, str]) -> dict[str, list[str]]:
         f'"{k}" = "{v}";' for k, v in new_strings.items()
     )
     lang_list = "\n".join(f"- {code}: {name}" for code, name in LANGUAGES.items())
+    output_schema = {
+        "type": "object",
+        "properties": {
+            code: {
+                "type": "array",
+                "items": {"type": "string"},
+            }
+            for code in LANGUAGES
+        },
+        "required": list(LANGUAGES.keys()),
+        "additionalProperties": False,
+    }
 
     prompt = f"""You are a professional technical translator and iOS app localizer with experience working on cryptocurrency wallets and exchanges. Translate the following iOS .strings entries from English into the target languages, preserving technical meaning, formatting, and placeholders. Use industry-standard blockchain and crypto terminology (wallet, token, blockchain, swap, gas fee, private key, DeFi, NFT, dApp).
 
@@ -112,6 +124,12 @@ Return ONLY a valid JSON object.
         model="claude-opus-4-6",
         max_tokens=32000,
         messages=[{"role": "user", "content": prompt}],
+        output_config={
+            "format": {
+                "type": "json_schema",
+                "schema": output_schema,
+            }
+        },
     ) as stream:
         for chunk in stream.text_stream:
             text_parts.append(chunk)
