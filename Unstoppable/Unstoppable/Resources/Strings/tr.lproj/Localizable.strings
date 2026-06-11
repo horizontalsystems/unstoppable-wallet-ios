@@ -31,6 +31,7 @@
 "button.understood" = "Anlaşıldı";
 "button.select" = "Seç";
 "button.later" = "Sonra";
+"button.test" = "Test";
 
 "alert" = "Uyarı";
 "alert.copied" = "Kopyalandı";
@@ -615,11 +616,12 @@
 "swap.estimate_short" = "(tah)";
 
 "swap.rate_not_available" = "Oran mevcut değil";
+"swap.route" = "Rota";
 "swap.select" = "Seç";
 "swap.quoting" = "Alıntı";
 "swap.select_token_in" = "Girdi olarak jeton seçin";
 "swap.select_token_out" = "Çıktı olarak jeton seçin";
-"swap.no_providers" = "Sağlayıcı Yok";
+"swap.no_providers" = "Rota Yok";
 "swap.enter_amount" = "Miktarı Girin";
 "swap.no_quotes" = "Teklif Yok";
 "swap.token_not_enabled" = "Jeton Etkin Değil";
@@ -627,19 +629,19 @@
 "swap.token_not_synced" = "Jeton Senkronize Edilmedi";
 "swap.insufficient_balance" = "Yetersiz Bakiye";
 
-"swap.quotes.providers" = "Sağlayıcılar";
+"swap.quotes.providers" = "Rotalar";
 "swap.quotes.best_price" = "En İyi Fiyat";
 "swap.quotes.sort.title" = "Sırala";
 "swap.quotes.sort.best_rate" = "En İyi Oran";
 "swap.quotes.sort.best_time" = "En Hızlı";
 
-"swap.quotes.providers.risk_levels.title" = "Sağlayıcı Puanı";
-"swap.quotes.providers.risk_levels.description" = "Bu seviyeler, sağlayıcıların swap işlemlerini ve işlem kontrollerini nasıl yönettiğini gösterir.";
-"swap.quotes.providers.risk_levels.excellent.description" = "Doğrudan zincir üstü (on-chain) yürütme. Sağlayıcı kontrolü veya dondurma yok. Swap başarısız olursa otomatik geri ödeme.";
-"swap.quotes.providers.risk_levels.good.description" = "Sağlayıcı, tamamlanmadan önce işlemleri otomatik olarak kontrol eder. Sorun tespit edilirse swap reddedilir ve fonlar iade edilir.";
-"swap.quotes.providers.risk_levels.fair.description" = "Bazı işlemler için ek doğrulama gerekebilir. Sorun tespit edilirse fonlar genellikle otomatik olarak iade edilir.";
+"swap.quotes.providers.risk_levels.title" = "Rota Puanı";
+"swap.quotes.providers.risk_levels.description" = "Bu puanlar, her rotanın takasları ve işlem kontrollerini nasıl yönettiğini gösterir.";
+"swap.quotes.providers.risk_levels.excellent.description" = "Doğrudan zincir üstü yürütme. Kontrol veya dondurma yok. Takas başarısız olursa otomatik iade.";
+"swap.quotes.providers.risk_levels.good.description" = "İşlemler tamamlanmadan önce otomatik olarak kontrol edilir. Bir sorun tespit edilirse takas reddedilir ve fonlar iade edilir.";
+"swap.quotes.providers.risk_levels.fair.description" = "Bazı işlemler ek doğrulama gerektirebilir. Bir sorun tespit edilirse fonlar genellikle otomatik olarak iade edilir.";
 
-"swap.provider.score" = "Sağlayıcı Puanı";
+"swap.provider.score" = "Rota Puanı";
 "swap.provider.swap_time" = "Swap süresi";
 
 
@@ -688,12 +690,11 @@
 // Swap Terms
 
 "swap.terms.title" = "Swap Koşulları";
-"swap.terms.description" = "Unstoppable, rekabetçi oranlar ve geniş varlık desteği sunmak için birden fazla merkeziyetsiz (DEX) ve merkezi swap sağlayıcısını bir araya getirir.";
+"swap.terms.description" = "Devam etmek için lütfen her maddeye onayınızı verin.";
 "swap.terms.risk_of_restrictions" = "Kısıtlama riski";
-"swap.terms.risk_of_restrictions.description" = "Bazı DEX olmayan swap sağlayıcılarının %@ oranında işlem taraması (transaction screening) uyguladığını anlıyorum.\n\nBu tür sağlayıcılar swap işlemlerini reddedebilir (ve fonları iade edebilir) veya nadir durumlarda (CSAM ve terörizm ile ilişkili işlemler gibi) fonları dondurarak KYC bilgileri talep edebilir.";
+"swap.terms.risk_of_restrictions.description" = "Bazı rotalar takasları reddedebilir veya fonlarınıza erişimi kısıtlayabilir. Bir rota seçmeden önce %@ kontrol edin.";
 "swap.terms.user_responsibility" = "Kullanıcı sorumluluğu";
-"swap.terms.user_responsibility.description" = "DEX olmayan sağlayıcıları kullanmanın ek riskler içerdiğini ve bu risklerin tamamen benim sorumluluğumda olduğunu anlıyorum.\n\nUnstoppable, swap sağlayıcılarının davranışlarını veya kararlarını garanti edemez.";
-"swap.terms.footer" = "Her zaman kendi gereksinimlerinize ve risk toleransınıza uygun bir swap sağlayıcısı seçin.";
+"swap.terms.user_responsibility.description" = "Olası riskleri inceledim ve rota seçimimin sorumluluğunu kabul ediyorum.";
 
 // Swap Advanced Settings
 
@@ -765,7 +766,7 @@
 // Swap Info
 
 "swap_info.title" = "Swap Bilgisi";
-"swap_info.provider" = "Sağlayıcı";
+"swap_info.provider" = "Rota";
 "swap_info.date" = "Tarih";
 "swap_info.status" = "Durum";
 "swap_info.recipient" = "Alıcı";
@@ -776,13 +777,13 @@
 "swap_info.refund" = "İade %@";
 "swap_info.unknown" = "Bilinmiyor";
 "swap_info.request_refund" = "İade Talep Et";
-"swap_info.request_refund.description" = "İade talebi ayrıntılarını kopyalayın ve iade talep etmek için swap sağlayıcısıyla iletişime geçin.";
+"swap_info.request_refund.description" = "İade talebi ayrıntılarını kopyalayın ve iade talep etmek için takas rotasıyla iletişime geçin.";
 "swap_info.swap_id" = "Swap ID";
 "swap_info.amount" = "Tutar";
 "swap_info.refund_address" = "İade Adresi";
 "swap_info.copy_details" = "Ayrıntıları Kopyala";
-"swap_info.swap_stopped_by_provider" = "Swap Sağlayıcı Tarafından Durduruldu";
-"swap_info.swap_stopped_by_provider.description" = "Yatırmanız alındı, ancak sağlayıcı swap işlemini tamamlayamadı. Fonlarınızı geri almak için aşağıdan iade talep edin.";
+"swap_info.swap_stopped_by_provider" = "Takas Rota Tarafından Durduruldu";
+"swap_info.swap_stopped_by_provider.description" = "Yatırmanız alındı ancak rota takası tamamlayamadı. Fonlarınızı geri almak için aşağıdan iade talep edin.";
 
 "swap_info.status.not_started" = "Başlamadı";
 "swap_info.status.pending" = "Beklemede";
@@ -2388,7 +2389,7 @@
 "purchases.advanced_controls" = "Gelişmiş Kontroller";
 "purchases.swap_control" = "Swap Kontrolü";
 "purchases.swap_control.description" = "Swap işlemlerinin nasıl ve nerede gerçekleştirileceğini kontrol etmenizi sağlayan gelişmiş ayarlar.";
-"purchases.swap_control.info" = "Varsayılan olarak mevcut en iyi teklifi seçeriz. Premium ile farklı bir sağlayıcı seçebilirsiniz.";
+"purchases.swap_control.info" = "Varsayılan olarak mevcut en iyi teklifi seçiyoruz. Premium ile farklı bir rota seçebilirsiniz.";
 "purchases.priority_support" = "Öncelikli destek";
 "purchases.priority_support.description" = "Destek ekibimize doğrudan erişim.";
 "purchases.priority_support.info" = "Öncelikli destek ekibimize doğrudan erişim sağlar. Unstoppable ekibinden hızlı ve kişisel destek alırsınız.";

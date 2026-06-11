@@ -31,6 +31,7 @@
 "button.understood" = "明白";
 "button.select" = "选择";
 "button.later" = "稍后";
+"button.test" = "测试";
 
 "alert" = "警报";
 "alert.copied" = "已复制";
@@ -615,11 +616,12 @@
 "swap.estimate_short" = "（美国东部时间）";
 
 "swap.rate_not_available" = "汇率不可用";
+"swap.route" = "路由";
 "swap.select" = "选择";
 "swap.quoting" = "引述";
 "swap.select_token_in" = "选择代币输入";
 "swap.select_token_out" = "选择代币输出";
-"swap.no_providers" = "没有提供者";
+"swap.no_providers" = "无可用路由";
 "swap.enter_amount" = "输入金额";
 "swap.no_quotes" = "没有报价";
 "swap.token_not_enabled" = "代币未启用";
@@ -627,19 +629,19 @@
 "swap.token_not_synced" = "代币未同步";
 "swap.insufficient_balance" = "可用额度不足";
 
-"swap.quotes.providers" = "服务提供商";
+"swap.quotes.providers" = "路由";
 "swap.quotes.best_price" = "最优价格";
 "swap.quotes.sort.title" = "排序方式";
 "swap.quotes.sort.best_rate" = "最佳汇率";
 "swap.quotes.sort.best_time" = "最快速度";
 
-"swap.quotes.providers.risk_levels.title" = "提供商评分";
-"swap.quotes.providers.risk_levels.description" = "这些等级展示了提供商如何处理兑换和交易审查。";
-"swap.quotes.providers.risk_levels.excellent.description" = "直接链上执行。无提供商审查或冻结。兑换失败时自动退款。";
-"swap.quotes.providers.risk_levels.good.description" = "提供商在交易完成前自动进行审查。如果检测到问题，兑换将被拒绝并退还资金。";
-"swap.quotes.providers.risk_levels.fair.description" = "部分交易可能需要额外验证。如果检测到问题，资金通常会自动退还。";
+"swap.quotes.providers.risk_levels.title" = "路由评分";
+"swap.quotes.providers.risk_levels.description" = "这些评分显示了每条路由处理兑换和交易检查的方式。";
+"swap.quotes.providers.risk_levels.excellent.description" = "直接链上执行。无检查或冻结。兑换失败时自动退款。";
+"swap.quotes.providers.risk_levels.good.description" = "交易在完成前会自动检查。如发现问题，兑换将被拒绝并退还资金。";
+"swap.quotes.providers.risk_levels.fair.description" = "部分交易可能需要额外验证。如发现问题，资金通常会自动退还。";
 
-"swap.provider.score" = "供应商评分";
+"swap.provider.score" = "路由评分";
 "swap.provider.swap_time" = "兑换时间";
 
 
@@ -688,12 +690,11 @@
 // Swap Terms
 
 "swap.terms.title" = "兑换条款";
-"swap.terms.description" = "Unstoppable 聚合多个去中心化（DEX）和中心化的兑换服务提供方，以提供更具竞争力的汇率和更广泛的资产支持。";
+"swap.terms.description" = "要继续，请确认您同意每一项条款。";
 "swap.terms.risk_of_restrictions" = "限制风险";
-"swap.terms.risk_of_restrictions.description" = "我理解，部分非 DEX 的兑换服务提供方会进行交易筛查 %@。此类提供方可能会拒绝（并退款）兑换交易，或在极少数情况下（如 CSAM 和恐怖主义相关情形）冻结资金并要求提供 KYC 数据。";
+"swap.terms.risk_of_restrictions.description" = "某些路由可能会拒绝兑换或限制您的资金访问。请在选择路由前查看 %@。";
 "swap.terms.user_responsibility" = "用户责任";
-"swap.terms.user_responsibility.description" = "我理解，使用非 DEX 提供方会引入额外风险，且这些风险由我自行承担。Unstoppable 无法保证任何提供方的行为。";
-"swap.terms.footer" = "请始终选择符合您自身需求的兑换服务提供方。";
+"swap.terms.user_responsibility.description" = "我已审阅可能的风险，并对我的路由选择承担责任。";
 
 // Swap Advanced Settings
 
@@ -765,7 +766,7 @@
 // Swap Info
 
 "swap_info.title" = "兑换详情";
-"swap_info.provider" = "服务商";
+"swap_info.provider" = "路由";
 "swap_info.date" = "日期";
 "swap_info.status" = "状态";
 "swap_info.recipient" = "接收方";
@@ -776,13 +777,13 @@
 "swap_info.refund" = "退款 %@";
 "swap_info.unknown" = "未知";
 "swap_info.request_refund" = "申请退款";
-"swap_info.request_refund.description" = "复制退款请求详情并联系兑换提供商申请退款。";
+"swap_info.request_refund.description" = "复制退款请求详情并联系兑换路由以申请退款。";
 "swap_info.swap_id" = "兑换 ID";
 "swap_info.amount" = "金额";
 "swap_info.refund_address" = "退款地址";
 "swap_info.copy_details" = "复制详情";
-"swap_info.swap_stopped_by_provider" = "兑换已被提供商停止";
-"swap_info.swap_stopped_by_provider.description" = "您的存款已收到，但提供商无法完成兑换。请在下方申请退款以取回您的资金。";
+"swap_info.swap_stopped_by_provider" = "兑换被路由中止";
+"swap_info.swap_stopped_by_provider.description" = "您的存款已收到，但路由无法完成兑换。请在下方申请退款以取回您的资金。";
 
 "swap_info.status.not_started" = "未开始";
 "swap_info.status.pending" = "待处理";
@@ -2388,7 +2389,7 @@
 "purchases.advanced_controls" = "高级控制";
 "purchases.swap_control" = "兑换控制";
 "purchases.swap_control.description" = "用于控制兑换如何以及通过何处执行的高级设置。";
-"purchases.swap_control.info" = "默认情况下，我们会选择当前可用的最佳报价。使用 Premium 后，您可以选择其他提供方。";
+"purchases.swap_control.info" = "默认情况下，我们会选择最佳可用报价。使用 Premium，您可以选择不同的路由。";
 "purchases.priority_support" = "优先支持";
 "purchases.priority_support.description" = "直接联系支持团队。";
 "purchases.priority_support.info" = "为您提供优先级支持的直接通道，获得来自 Unstoppable 团队快速且个性化的帮助。";
