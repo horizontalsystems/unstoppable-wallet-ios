@@ -22,6 +22,7 @@ struct ScanQrViewNew: View {
                     .ignoresSafeArea()
 
                 QrScannerOverlayViewNew(sideMargin: .margin24)
+                    .ignoresSafeArea()
 
                 if viewModel.cameraPermissionDenied {
                     permissionDeniedView
