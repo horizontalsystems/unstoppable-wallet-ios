@@ -635,8 +635,8 @@
 "swap.quotes.sort.best_time" = "Fastest";
 
 "swap.quotes.providers.risk_levels.title" = "Route Score";
-"swap.quotes.providers.risk_levels.description" = "These levels show how routes handle swaps and transaction checks.";
-"swap.quotes.providers.risk_levels.excellent.description" = "Direct on-chain execution. No route checks or freezes. Automatic refunds if swap fails.";
+"swap.quotes.providers.risk_levels.description" = "These scores show how each route handles swaps and transaction checks.";
+"swap.quotes.providers.risk_levels.excellent.description" = "Direct on-chain execution. No checks or freezes. Automatic refund if the swap fails.";
 "swap.quotes.providers.risk_levels.good.description" = "Transactions are checked automatically before completion. If an issue is found, the swap is rejected and funds are refunded.";
 "swap.quotes.providers.risk_levels.fair.description" = "Some transactions may need extra verification. If an issue is found, funds are usually refunded automatically.";
 
@@ -691,7 +691,7 @@
 "swap.terms.title" = "Swap Terms";
 "swap.terms.description" = "To continue, please confirm your agreement with each item.";
 "swap.terms.risk_of_restrictions" = "Risk of restrictions";
-"swap.terms.risk_of_restrictions.description" = "Some routes may reject swaps or restrict access to your funds. Check the %@ before choosing a route.";
+"swap.terms.risk_of_restrictions.description" = "Some routes may reject swaps or restrict access to your funds. Check the %@ before choosing a route.";
 "swap.terms.user_responsibility" = "User responsibility";
 "swap.terms.user_responsibility.description" = "I have reviewed the possible risks and accept responsibility for my choice of route.";
 
