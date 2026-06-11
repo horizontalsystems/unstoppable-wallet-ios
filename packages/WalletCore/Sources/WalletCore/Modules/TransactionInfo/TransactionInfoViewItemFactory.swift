@@ -803,15 +803,15 @@ class TransactionInfoViewItemFactory {
             ], footer: "tx_info.resend_description".localized))
         }
 
-//        if actionEnabled,
-//           record.source.blockchainType == .zcash,
-//           let zcashRecord = record as? ZcashOutgoingTransactionRecord,
-//           zcashRecord.isResendable
-//        {
-//            sections.append(.init([
-//                .option(option: .zcashResend),
-//            ]))
-//        }
+        if actionEnabled,
+           record.source.blockchainType == .zcash,
+           let zcashRecord = record as? ZcashOutgoingTransactionRecord,
+           zcashRecord.isResendable
+        {
+            sections.append(.init([
+                .option(option: .zcashResend),
+            ]))
+        }
 
         sections.append(contentsOf: extraProviderFactory.sections(item: item))
 

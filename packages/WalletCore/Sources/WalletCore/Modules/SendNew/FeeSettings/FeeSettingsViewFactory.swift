@@ -53,18 +53,18 @@ class FeeSettingsViewFactory {
 
                 return AnyView(view)
             }
-//        case let service as ZcashTransactionService:
-//            if case let .zcash(fee) = feeData {
-//                let view = ZcashFeeSettingsView(
-//                    service: service,
-//                    fee: fee,
-//                    feeToken: feeToken,
-//                    currency: currency,
-//                    feeTokenRate: feeTokenRate
-//                )
-//
-//                return AnyView(view)
-//            }
+        case let service as ZcashTransactionService:
+            if case let .zcash(fee) = feeData {
+                let view = ZcashFeeSettingsView(
+                    service: service,
+                    fee: fee,
+                    feeToken: feeToken,
+                    currency: currency,
+                    feeTokenRate: feeTokenRate
+                )
+
+                return AnyView(view)
+            }
         default: ()
         }
 

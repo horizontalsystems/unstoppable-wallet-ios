@@ -99,15 +99,15 @@ class TransactionInfoViewController: ThemeViewController {
         }
     }
 
-//    private func openZcashResend() {
-//        do {
-//            try ZcashResendModule.present(adapter: adapter, transactionRecord: viewModel.transactionRecord) {
-//                HudHelper.instance.show(banner: .sent)
-//            }
-//        } catch {
-//            HudHelper.instance.show(banner: .error(string: error.localizedDescription))
-//        }
-//    }
+    private func openZcashResend() {
+        do {
+            try ZcashResendModule.present(adapter: adapter, transactionRecord: viewModel.transactionRecord) {
+                HudHelper.instance.show(banner: .sent)
+            }
+        } catch {
+            HudHelper.instance.show(banner: .error(string: error.localizedDescription))
+        }
+    }
 
     private func open(coin: Coin) {
         let viewController = CoinPageView(coin: coin).toViewController()
@@ -199,14 +199,14 @@ class TransactionInfoViewController: ThemeViewController {
             action = { [weak self] in
                 self?.openResend(type: type)
             }
-//        case .zcashResend:
-//            image = UIImage(named: "arrow_medium_2_up_24")
-//            title = "button.resend".localized
-//            color = .themeJacob
-//
-//            action = { [weak self] in
-//                self?.openZcashResend()
-//            }
+        case .zcashResend:
+            image = UIImage(named: "arrow_medium_2_up_24")
+            title = "button.resend".localized
+            color = .themeJacob
+
+            action = { [weak self] in
+                self?.openZcashResend()
+            }
         }
 
         return CellBuilderNew.row(
