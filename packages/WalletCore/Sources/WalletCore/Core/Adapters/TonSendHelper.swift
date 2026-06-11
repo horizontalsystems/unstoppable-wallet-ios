@@ -17,30 +17,6 @@ class TonSendHelper {
     ) throws -> TransferData {
         let address = try contract.address()
 
-        for (index, message) in param.messages.enumerated() {
-            if let payload = message.payload {
-                do {
-                    let cell = try TonSwift.Cell.fromBase64(src: payload)
-
-                    print(
-                        "TonSwapDebug ios msg[\(index)] payloadLen=\(payload.count) " +
-                            "rootBits=\(cell.bits.length) rootRefs=\(cell.refs.count)"
-                    )
-
-                    for (refIndex, ref) in cell.refs.enumerated() {
-                        print(
-                            "TonSwapDebug ios msg[\(index)] ref[\(refIndex)] " +
-                                "bits=\(ref.bits.length) refs=\(ref.refs.count)"
-                        )
-                    }
-                } catch {
-                    print("TonSwapDebug ios msg[\(index)] payload decode error=\(error)")
-                }
-            } else {
-                print("TonSwapDebug ios msg[\(index)] payload=nil")
-            }
-        }
-
         let payloads = param.messages.map { message in
             TonKit.Kit.Payload(
                 value: BigInt(integerLiteral: message.amount),
