@@ -9,6 +9,8 @@ struct MultiSwapQuotesView: View {
             ThemeView(style: .list) {
                 ThemeList {
                     Section {
+                        let isDebug = AppConfig.showTestSwitchers
+
                         ForEach(viewModel.sortedQuotes, id: \.provider.id) { (quote: MultiSwapViewModel.Quote) in
                             VStack(spacing: 0) {
                                 if quote.provider.id == viewModel.sortedQuotes.first?.provider.id {
@@ -18,7 +20,8 @@ struct MultiSwapQuotesView: View {
                                 Cell(
                                     middle: {
                                         TextCheckbox(
-                                            subheadSB: quoteCoinValue(quote: quote).map { ComponentText(text: $0, colorStyle: .primary) },
+                                            title: isDebug ? quote.provider.name : nil,
+                                            subhead: quoteCoinValue(quote: quote).map { ComponentText(text: $0, colorStyle: .primary) },
                                             description: quoteCurrencyValue(quote: quote),
                                             description2: priceImpact(quote: quote).map { ComponentText(text: "(\($0.0.rounded(decimal: 2).description)%)", colorStyle: $0.1.colorStyle) },
                                             checked: quote.provider.id == viewModel.currentQuote?.provider.id,
