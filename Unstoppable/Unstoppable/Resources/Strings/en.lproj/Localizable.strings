@@ -31,6 +31,7 @@
 "button.understood" = "Understood";
 "button.select" = "Select";
 "button.later" = "Later";
+"button.test" = "Test";
 
 "alert" = "Alert";
 "alert.copied" = "Copied";
