@@ -47,6 +47,13 @@ public struct Swap: Hashable {
             "swap_info.status.\(rawValue)".localized
         }
 
+        var isExpected: Bool {
+            switch self {
+            case .notStarted, .pending, .swapping, .completed: true
+            default: false
+            }
+        }
+
         @ViewBuilder var view: some View {
             switch self {
             case .completed: ThemeImage("done_e_filled", size: 20, colorStyle: .green)

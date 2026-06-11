@@ -37,12 +37,12 @@ struct TextCheckbox: View {
                 if description != nil || description2 != nil {
                     HStack(spacing: 4) {
                         if let description {
-                            ThemeText(description, style: .captionSB)
+                            ThemeText(description, style: .subhead)
                                 .multilineTextAlignment(textAligment)
                         }
 
                         if let description2 {
-                            ThemeText(description2, style: .captionSB)
+                            ThemeText(description2, style: .subhead)
                                 .multilineTextAlignment(textAligment)
                         }
                     }

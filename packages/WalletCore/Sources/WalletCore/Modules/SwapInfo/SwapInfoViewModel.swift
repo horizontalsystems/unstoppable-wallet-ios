@@ -60,16 +60,22 @@ class SwapInfoViewModel: ObservableObject {
         let rateKeyIn = RateKey(token: swap.tokenIn, date: swap.date)
         let rateKeyOut = RateKey(token: swap.tokenOut, date: swap.date)
 
-        var fields: [SendField] = [
-            .simpleValue(
-                title: "swap_info.provider".localized,
-                value: SwapProviderFactory.providerName(id: swap.providerId) ?? swap.providerId
-            ),
+        var fields: [SendField] = []
+        if !swap.status.isExpected {
+            fields.append(
+                .simpleValue(
+                    title: "swap_info.provider".localized,
+                    value: SwapProviderFactory.providerName(id: swap.providerId) ?? swap.providerId
+                )
+            )
+        }
+
+        fields.append(
             .simpleValue(
                 title: "swap_info.date".localized,
                 value: DateHelper.instance.formatFullTime(from: swap.date)
-            ),
-        ]
+            )
+        )
 
         if let recipient = swap.recipient {
             fields.append(
