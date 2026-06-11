@@ -31,6 +31,7 @@
 "button.understood" = "Понятно";
 "button.select" = "Выбрать";
 "button.later" = "Позже";
+"button.test" = "Тест";
 
 "alert" = "Предупреждение";
 "alert.copied" = "Скопировано";
@@ -615,11 +616,12 @@
 "swap.estimate_short" = "(прим)";
 
 "swap.rate_not_available" = "Цена недоступна";
+"swap.route" = "Маршрут";
 "swap.select" = "Выбрать";
 "swap.quoting" = "Котировка";
 "swap.select_token_in" = "Выберите токен для обмена";
 "swap.select_token_out" = "Выберите токен для получения";
-"swap.no_providers" = "Нет провайдеров";
+"swap.no_providers" = "Нет маршрутов";
 "swap.enter_amount" = "Введите сумму";
 "swap.no_quotes" = "Нет предложений";
 "swap.token_not_enabled" = "Токен не включен";
@@ -627,19 +629,19 @@
 "swap.token_not_synced" = "Токен не синхронизирован";
 "swap.insufficient_balance" = "Недостаточный баланс";
 
-"swap.quotes.providers" = "Провайдеры";
+"swap.quotes.providers" = "Маршруты";
 "swap.quotes.best_price" = "Лучшая цена";
 "swap.quotes.sort.title" = "Сортировка";
 "swap.quotes.sort.best_rate" = "Лучший курс";
 "swap.quotes.sort.best_time" = "Самый быстрый";
 
-"swap.quotes.providers.risk_levels.title" = "Оценка провайдера";
-"swap.quotes.providers.risk_levels.description" = "Эти уровни показывают, как провайдеры обрабатывают свопы и проверки транзакций.";
-"swap.quotes.providers.risk_levels.excellent.description" = "Прямое исполнение в блокчейне. Без проверок и заморозок со стороны провайдера. Автоматический возврат средств при неудачном свопе.";
-"swap.quotes.providers.risk_levels.good.description" = "Провайдер автоматически проверяет транзакции перед завершением. При обнаружении проблем своп отклоняется, а средства возвращаются.";
-"swap.quotes.providers.risk_levels.fair.description" = "Для некоторых транзакций может потребоваться дополнительная проверка. При обнаружении проблем средства, как правило, возвращаются автоматически.";
+"swap.quotes.providers.risk_levels.title" = "Оценка маршрута";
+"swap.quotes.providers.risk_levels.description" = "Эти оценки показывают, как каждый маршрут обрабатывает свопы и проверки транзакций.";
+"swap.quotes.providers.risk_levels.excellent.description" = "Прямое исполнение в блокчейне. Без проверок и заморозок. Автоматический возврат средств при неудачном свопе.";
+"swap.quotes.providers.risk_levels.good.description" = "Транзакции автоматически проверяются перед завершением. При обнаружении проблемы своп отклоняется, а средства возвращаются.";
+"swap.quotes.providers.risk_levels.fair.description" = "Некоторые транзакции могут потребовать дополнительной верификации. При обнаружении проблемы средства, как правило, возвращаются автоматически.";
 
-"swap.provider.score" = "Рейтинг провайдера";
+"swap.provider.score" = "Оценка маршрута";
 "swap.provider.swap_time" = "Время свапа";
 
 
@@ -688,12 +690,11 @@
 // Swap Terms
 
 "swap.terms.title" = "Условия обмена";
-"swap.terms.description" = "Unstoppable агрегирует несколько децентрализованных (DEX) и централизованных swap-провайдеров, чтобы предлагать конкурентные курсы и широкий выбор поддерживаемых активов.";
+"swap.terms.description" = "Чтобы продолжить, подтвердите согласие с каждым пунктом.";
 "swap.terms.risk_of_restrictions" = "Риск ограничений";
-"swap.terms.risk_of_restrictions.description" = "Я понимаю, что некоторые обменные сервисы, не являющиеся децентрализованными, проводят проверку транзакций %@. Такие сервисы могут отклонить операцию обмена (с возвратом средств) или, в редких случаях, связанных с тяжёлыми нарушениями закона, заморозить средства и запросить подтверждение личности.";
+"swap.terms.risk_of_restrictions.description" = "Некоторые маршруты могут отклонять свопы или ограничивать доступ к вашим средствам. Ознакомьтесь с %@ перед выбором маршрута.";
 "swap.terms.user_responsibility" = "Ответственность пользователя";
-"swap.terms.user_responsibility.description" = "Я понимаю, что использование недецентрализованных обменных сервисов связано с дополнительными рисками, и осознаю, что ответственность за эти риски лежит на мне. Unstoppable не может гарантировать действия таких сервисов.";
-"swap.terms.footer" = "Всегда выбирайте провайдера обмена, который соответствует вашим требованиям.";
+"swap.terms.user_responsibility.description" = "Я ознакомился с возможными рисками и принимаю ответственность за выбор маршрута.";
 
 // Swap Advanced Settings
 
@@ -765,7 +766,7 @@
 // Swap Info
 
 "swap_info.title" = "Информация о свопе";
-"swap_info.provider" = "Провайдер";
+"swap_info.provider" = "Маршрут";
 "swap_info.date" = "Дата";
 "swap_info.status" = "Статус";
 "swap_info.recipient" = "Получатель";
@@ -776,13 +777,13 @@
 "swap_info.refund" = "Возврат %@";
 "swap_info.unknown" = "Неизвестно";
 "swap_info.request_refund" = "Запросить возврат";
-"swap_info.request_refund.description" = "Скопируйте данные запроса на возврат и свяжитесь с провайдером обмена для запроса возврата средств.";
+"swap_info.request_refund.description" = "Скопируйте данные запроса на возврат и свяжитесь с маршрутом свопа для запроса возврата средств.";
 "swap_info.swap_id" = "ID обмена";
 "swap_info.amount" = "Сумма";
 "swap_info.refund_address" = "Адрес возврата";
 "swap_info.copy_details" = "Скопировать данные";
-"swap_info.swap_stopped_by_provider" = "Обмен остановлен провайдером";
-"swap_info.swap_stopped_by_provider.description" = "Ваш депозит был получен, но провайдер не смог завершить обмен. Запросите возврат средств ниже, чтобы вернуть свои средства.";
+"swap_info.swap_stopped_by_provider" = "Своп остановлен маршрутом";
+"swap_info.swap_stopped_by_provider.description" = "Ваш депозит получен, но маршрут не смог завершить своп. Запросите возврат средств ниже.";
 
 "swap_info.status.not_started" = "Не начат";
 "swap_info.status.pending" = "В ожидании";
@@ -2388,7 +2389,7 @@
 "purchases.advanced_controls" = "Расширенные настройки";
 "purchases.swap_control" = "Управление обменом";
 "purchases.swap_control.description" = "Расширенные настройки для управления тем, как и где выполняются swap-операции.";
-"purchases.swap_control.info" = "По умолчанию мы выбираем лучшее доступное предложение. С Premium вы можете выбрать другого провайдера.";
+"purchases.swap_control.info" = "По умолчанию мы выбираем лучшее доступное предложение. С Premium вы можете выбрать другой маршрут.";
 "purchases.priority_support" = "Поддержка Premium";
 "purchases.priority_support.description" = "Прямой доступ к нашей службе поддержки.";
 "purchases.priority_support.info" = "Прямой доступ к приоритетной поддержке от команды Unstoppable.";

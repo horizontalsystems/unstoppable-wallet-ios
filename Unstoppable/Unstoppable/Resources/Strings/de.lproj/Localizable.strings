@@ -31,6 +31,7 @@
 "button.understood" = "Verstanden";
 "button.select" = "Auswählen";
 "button.later" = "Später";
+"button.test" = "Test";
 
 "alert" = "Alarm";
 "alert.copied" = "Kopiert";
@@ -615,11 +616,12 @@
 "swap.estimate_short" = "(geschätzt)";
 
 "swap.rate_not_available" = "Rate nicht verfügbar";
+"swap.route" = "Route";
 "swap.select" = "Auswählen";
 "swap.quoting" = "Preisangeboten";
 "swap.select_token_in" = "Token auswählen";
 "swap.select_token_out" = "Token auswählen";
-"swap.no_providers" = "Keine Anbieter";
+"swap.no_providers" = "Keine Routen";
 "swap.enter_amount" = "Betrag eingeben";
 "swap.no_quotes" = "Keine Angebote";
 "swap.token_not_enabled" = "Token nicht aktiviert";
@@ -627,19 +629,19 @@
 "swap.token_not_synced" = "Token nicht synchronisiert";
 "swap.insufficient_balance" = "Unzureichendes Guthaben";
 
-"swap.quotes.providers" = "Anbieter";
+"swap.quotes.providers" = "Routen";
 "swap.quotes.best_price" = "Bester Preis";
 "swap.quotes.sort.title" = "Sortieren nach";
 "swap.quotes.sort.best_rate" = "Bester Kurs";
 "swap.quotes.sort.best_time" = "Schnellste";
 
-"swap.quotes.providers.risk_levels.title" = "Anbieterbewertung";
-"swap.quotes.providers.risk_levels.description" = "Diese Stufen zeigen, wie Anbieter Swaps und Transaktionsprüfungen handhaben.";
-"swap.quotes.providers.risk_levels.excellent.description" = "Direkte On-Chain-Ausführung. Keine Anbieterprüfungen oder Sperrungen. Automatische Rückerstattung bei fehlgeschlagenem Swap.";
-"swap.quotes.providers.risk_levels.good.description" = "Der Anbieter prüft Transaktionen vor Abschluss automatisch. Bei erkannten Problemen wird der Swap abgelehnt und die Mittel werden zurückerstattet.";
-"swap.quotes.providers.risk_levels.fair.description" = "Für einige Transaktionen kann eine zusätzliche Verifizierung erforderlich sein. Bei erkannten Problemen werden die Mittel in der Regel automatisch zurückerstattet.";
+"swap.quotes.providers.risk_levels.title" = "Routenbewertung";
+"swap.quotes.providers.risk_levels.description" = "Diese Bewertungen zeigen, wie jede Route Swaps und Transaktionsprüfungen handhabt.";
+"swap.quotes.providers.risk_levels.excellent.description" = "Direkte On-Chain-Ausführung. Keine Prüfungen oder Sperrungen. Automatische Rückerstattung bei fehlgeschlagenem Swap.";
+"swap.quotes.providers.risk_levels.good.description" = "Transaktionen werden vor Abschluss automatisch geprüft. Wird ein Problem festgestellt, wird der Swap abgelehnt und die Mittel zurückerstattet.";
+"swap.quotes.providers.risk_levels.fair.description" = "Einige Transaktionen erfordern möglicherweise eine zusätzliche Verifizierung. Wird ein Problem festgestellt, werden die Mittel in der Regel automatisch zurückerstattet.";
 
-"swap.provider.score" = "Anbieterbewertung";
+"swap.provider.score" = "Routenbewertung";
 "swap.provider.swap_time" = "Swap-Zeit";
 
 
@@ -688,12 +690,11 @@
 // Swap Terms
 
 "swap.terms.title" = "Swap-Bedingungen";
-"swap.terms.description" = "Unstoppable bündelt mehrere dezentrale (DEX) und zentrale Swap-Provider, um wettbewerbsfähige Kurse und eine breite Asset-Unterstützung anzubieten.";
+"swap.terms.description" = "Um fortzufahren, bestätigen Sie bitte Ihre Zustimmung zu jedem Punkt.";
 "swap.terms.risk_of_restrictions" = "Risiko von Einschränkungen";
-"swap.terms.risk_of_restrictions.description" = "Ich verstehe, dass einige nicht-DEX-Swap-Provider eine Transaktionsprüfung %@ anwenden. Solche Provider können Swaps ablehnen (und zurückerstatten) oder in seltenen Fällen (CSAM und Terrorismus) Gelder einfrieren und KYC-Daten anfordern.";
+"swap.terms.risk_of_restrictions.description" = "Einige Routen können Swaps ablehnen oder den Zugang zu Ihren Mitteln einschränken. Prüfen Sie die %@ bevor Sie eine Route wählen.";
 "swap.terms.user_responsibility" = "Risiko von Einschränkungen";
-"swap.terms.user_responsibility.description" = "Ich verstehe, dass die Nutzung von nicht-DEX-Providern zusätzliche Risiken mit sich bringt und dass diese Risiken in meiner Verantwortung liegen. Unstoppable kann das Verhalten der Provider nicht garantieren.";
-"swap.terms.footer" = "Wähle immer einen Swap-Provider, der deinen Anforderungen entspricht.";
+"swap.terms.user_responsibility.description" = "Ich habe die möglichen Risiken geprüft und übernehme die Verantwortung für meine Routenwahl.";
 
 // Swap Advanced Settings
 
@@ -765,7 +766,7 @@
 // Swap Info
 
 "swap_info.title" = "Swap-Info";
-"swap_info.provider" = "Anbieter";
+"swap_info.provider" = "Route";
 "swap_info.date" = "Datum";
 "swap_info.status" = "Status";
 "swap_info.recipient" = "Empfänger";
@@ -776,13 +777,13 @@
 "swap_info.refund" = "Rückerstattung %@";
 "swap_info.unknown" = "Unbekannt";
 "swap_info.request_refund" = "Rückerstattung anfordern";
-"swap_info.request_refund.description" = "Kopiere die Details der Rückerstattungsanfrage und kontaktiere den Swap-Anbieter, um eine Rückerstattung anzufordern.";
+"swap_info.request_refund.description" = "Kopieren Sie die Details des Rückerstattungsantrags und kontaktieren Sie die Swap-Route, um eine Rückerstattung anzufordern.";
 "swap_info.swap_id" = "Swap-ID";
 "swap_info.amount" = "Betrag";
 "swap_info.refund_address" = "Rückerstattungsadresse";
 "swap_info.copy_details" = "Details kopieren";
-"swap_info.swap_stopped_by_provider" = "Swap vom Anbieter gestoppt";
-"swap_info.swap_stopped_by_provider.description" = "Deine Einzahlung wurde empfangen, aber der Anbieter konnte den Swap nicht abschließen. Fordere unten eine Rückerstattung an, um deine Mittel zurückzuerhalten.";
+"swap_info.swap_stopped_by_provider" = "Swap von Route gestoppt";
+"swap_info.swap_stopped_by_provider.description" = "Ihre Einzahlung wurde empfangen, aber die Route konnte den Swap nicht abschließen. Fordern Sie unten eine Rückerstattung an, um Ihre Mittel zurückzuerhalten.";
 
 "swap_info.status.not_started" = "Nicht gestartet";
 "swap_info.status.pending" = "Ausstehend";
@@ -2388,7 +2389,7 @@
 "purchases.advanced_controls" = "Erweiterte Steuerungen";
 "purchases.swap_control" = "Swap Control";
 "purchases.swap_control.description" = "Erweiterte Einstellungen zur Steuerung, wie und wo Swaps ausgeführt werden.";
-"purchases.swap_control.info" = "Standardmäßig wählen wir das bestverfügbare Angebot aus. Mit Premium kannst du einen anderen Provider auswählen.";
+"purchases.swap_control.info" = "Standardmäßig wählen wir das beste verfügbare Angebot. Mit Premium können Sie eine andere Route wählen.";
 "purchases.priority_support" = "Prioritäts-Support";
 "purchases.priority_support.description" = "Direkter Zugang zu unserem Support-Team.";
 "purchases.priority_support.info" = "Ermöglicht dir direkten Zugang zum Priority Support. Erhalte schnelle, persönliche Unterstützung vom Unstoppable-Team.";

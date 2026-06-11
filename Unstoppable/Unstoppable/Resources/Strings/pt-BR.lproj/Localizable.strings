@@ -31,6 +31,7 @@
 "button.understood" = "Entendido";
 "button.select" = "Selecionar";
 "button.later" = "Mais tarde";
+"button.test" = "Teste";
 
 "alert" = "Alerta";
 "alert.copied" = "Copiado";
@@ -615,11 +616,12 @@
 "swap.estimate_short" = "(est)";
 
 "swap.rate_not_available" = "Taxa não disponível";
+"swap.route" = "Rota";
 "swap.select" = "Selecionar";
 "swap.quoting" = "Cotação";
 "swap.select_token_in" = "Selecionar Token em";
 "swap.select_token_out" = "Selecionar Token de Saída";
-"swap.no_providers" = "Sem provedores";
+"swap.no_providers" = "Sem rotas";
 "swap.enter_amount" = "Inserir Quantidade";
 "swap.no_quotes" = "Sem ofertas";
 "swap.token_not_enabled" = "Token não ativado";
@@ -627,19 +629,19 @@
 "swap.token_not_synced" = "Token não sincronizado";
 "swap.insufficient_balance" = "Saldo insuficiente";
 
-"swap.quotes.providers" = "Provedores";
+"swap.quotes.providers" = "Rotas";
 "swap.quotes.best_price" = "Melhor Preço";
 "swap.quotes.sort.title" = "Ordenar por";
 "swap.quotes.sort.best_rate" = "Melhor taxa";
 "swap.quotes.sort.best_time" = "Mais rápido";
 
-"swap.quotes.providers.risk_levels.title" = "Pontuação do provedor";
-"swap.quotes.providers.risk_levels.description" = "Esses níveis mostram como os provedores lidam com swaps e verificações de transações.";
-"swap.quotes.providers.risk_levels.excellent.description" = "Execução direta on-chain. Sem verificações ou bloqueios do provedor. Reembolsos automáticos se o swap falhar.";
-"swap.quotes.providers.risk_levels.good.description" = "O provedor verifica as transações automaticamente antes da conclusão. Se problemas forem detectados, o swap é rejeitado e os fundos são reembolsados.";
-"swap.quotes.providers.risk_levels.fair.description" = "Verificação adicional pode ser necessária para algumas transações. Se problemas forem detectados, os fundos geralmente são reembolsados automaticamente.";
+"swap.quotes.providers.risk_levels.title" = "Pontuação da rota";
+"swap.quotes.providers.risk_levels.description" = "Essas pontuações mostram como cada rota lida com swaps e verificações de transações.";
+"swap.quotes.providers.risk_levels.excellent.description" = "Execução direta on-chain. Sem verificações ou bloqueios. Reembolso automático se o swap falhar.";
+"swap.quotes.providers.risk_levels.good.description" = "As transações são verificadas automaticamente antes da conclusão. Se um problema for encontrado, o swap é rejeitado e os fundos são reembolsados.";
+"swap.quotes.providers.risk_levels.fair.description" = "Algumas transações podem precisar de verificação adicional. Se um problema for encontrado, os fundos geralmente são reembolsados automaticamente.";
 
-"swap.provider.score" = "Pontuação do provedor";
+"swap.provider.score" = "Pontuação da rota";
 "swap.provider.swap_time" = "Tempo de swap";
 
 
@@ -688,12 +690,11 @@
 // Swap Terms
 
 "swap.terms.title" = "Termos de Swap";
-"swap.terms.description" = "A Unstoppable agrega vários provedores de swap descentralizados (DEX) e centralizados para oferecer taxas competitivas e amplo suporte a ativos.";
+"swap.terms.description" = "Para continuar, confirme sua concordância com cada item.";
 "swap.terms.risk_of_restrictions" = "Risco de restrições";
-"swap.terms.risk_of_restrictions.description" = "Entendo que alguns provedores de swap não DEX aplicam triagem de transações %@. Esses provedores podem rejeitar (e reembolsar) swaps ou, em casos raros (CSAM e terrorismo), congelar fundos e solicitar dados de KYC.";
+"swap.terms.risk_of_restrictions.description" = "Algumas rotas podem rejeitar swaps ou restringir o acesso aos seus fundos. Verifique o %@ antes de escolher uma rota.";
 "swap.terms.user_responsibility" = "Responsabilidade do usuário";
-"swap.terms.user_responsibility.description" = "Entendo que o uso de provedores não DEX introduz riscos adicionais e que esses riscos são de minha responsabilidade. A Unstoppable não pode garantir o comportamento dos provedores.";
-"swap.terms.footer" = "Sempre escolha um provedor de swap que esteja alinhado às suas necessidades.";
+"swap.terms.user_responsibility.description" = "Eu revisei os possíveis riscos e aceito a responsabilidade pela minha escolha de rota.";
 
 // Swap Advanced Settings
 
@@ -765,7 +766,7 @@
 // Swap Info
 
 "swap_info.title" = "Informações do Swap";
-"swap_info.provider" = "Provedor";
+"swap_info.provider" = "Rota";
 "swap_info.date" = "Data";
 "swap_info.status" = "Status";
 "swap_info.recipient" = "Destinatário";
@@ -776,13 +777,13 @@
 "swap_info.refund" = "Reembolso %@";
 "swap_info.unknown" = "Desconhecido";
 "swap_info.request_refund" = "Solicitar reembolso";
-"swap_info.request_refund.description" = "Copie os detalhes da solicitação de reembolso e entre em contato com o provedor de swap para solicitar um reembolso.";
+"swap_info.request_refund.description" = "Copie os detalhes da solicitação de reembolso e entre em contato com a rota de swap para solicitar um reembolso.";
 "swap_info.swap_id" = "ID do Swap";
 "swap_info.amount" = "Valor";
 "swap_info.refund_address" = "Endereço de reembolso";
 "swap_info.copy_details" = "Copiar detalhes";
-"swap_info.swap_stopped_by_provider" = "Swap interrompido pelo provedor";
-"swap_info.swap_stopped_by_provider.description" = "Seu depósito foi recebido, mas o provedor não conseguiu concluir o swap. Solicite um reembolso abaixo para recuperar seus fundos.";
+"swap_info.swap_stopped_by_provider" = "Swap interrompido pela rota";
+"swap_info.swap_stopped_by_provider.description" = "Seu depósito foi recebido, mas a rota não conseguiu concluir o swap. Solicite um reembolso abaixo para recuperar seus fundos.";
 
 "swap_info.status.not_started" = "Não iniciado";
 "swap_info.status.pending" = "Pendente";
@@ -2388,7 +2389,7 @@
 "purchases.advanced_controls" = "Controles Avançados";
 "purchases.swap_control" = "Controle de Swap";
 "purchases.swap_control.description" = "Configurações avançadas para controlar como e onde os swaps são executados.";
-"purchases.swap_control.info" = "Por padrão, selecionamos a melhor oferta disponível. Com o Premium, você pode escolher um provedor diferente.";
+"purchases.swap_control.info" = "Por padrão, selecionamos a melhor oferta disponível. Com o Premium, você pode escolher uma rota diferente.";
 "purchases.priority_support" = "Suporte prioritário";
 "purchases.priority_support.description" = "Acesso direto à nossa equipe de suporte.";
 "purchases.priority_support.info" = "Oferece acesso direto ao suporte prioritário. Receba ajuda rápida e personalizada da equipe da Unstoppable.";

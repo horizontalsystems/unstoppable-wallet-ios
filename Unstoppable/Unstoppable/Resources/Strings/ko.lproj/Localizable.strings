@@ -31,6 +31,7 @@
 "button.understood" = "확인";
 "button.select" = "선택";
 "button.later" = "나중에";
+"button.test" = "테스트";
 
 "alert" = "알림";
 "alert.copied" = "복사됨";
@@ -615,11 +616,12 @@
 "swap.estimate_short" = "(추정)";
 
 "swap.rate_not_available" = "가격이 제공되지 않습니다";
+"swap.route" = "경로";
 "swap.select" = "선택";
 "swap.quoting" = "견적";
 "swap.select_token_in" = "토큰 인 선택";
 "swap.select_token_out" = "토큰 아웃 선택";
-"swap.no_providers" = "제공자 없음";
+"swap.no_providers" = "경로 없음";
 "swap.enter_amount" = "금액 입력";
 "swap.no_quotes" = "제안이 없습니다";
 "swap.token_not_enabled" = "토큰 활성화되지 않음";
@@ -627,19 +629,19 @@
 "swap.token_not_synced" = "토큰 동기화되지 않음";
 "swap.insufficient_balance" = "잔액 부족";
 
-"swap.quotes.providers" = "제공자";
+"swap.quotes.providers" = "경로";
 "swap.quotes.best_price" = "최상의 가격";
 "swap.quotes.sort.title" = "정렬 기준";
 "swap.quotes.sort.best_rate" = "최적 환율";
 "swap.quotes.sort.best_time" = "가장 빠른";
 
-"swap.quotes.providers.risk_levels.title" = "제공자 점수";
-"swap.quotes.providers.risk_levels.description" = "이 등급은 제공자가 스왑 및 거래 확인을 처리하는 방식을 나타냅니다.";
-"swap.quotes.providers.risk_levels.excellent.description" = "온체인 직접 실행. 제공자 확인이나 동결 없음. 스왑 실패 시 자동 환불.";
-"swap.quotes.providers.risk_levels.good.description" = "제공자가 완료 전에 자동으로 거래를 확인합니다. 문제가 감지되면 스왑이 거부되고 자금이 환불됩니다.";
-"swap.quotes.providers.risk_levels.fair.description" = "일부 거래에 대해 추가 인증이 필요할 수 있습니다. 문제가 감지되면 일반적으로 자금이 자동으로 환불됩니다.";
+"swap.quotes.providers.risk_levels.title" = "경로 점수";
+"swap.quotes.providers.risk_levels.description" = "이 점수는 각 경로가 스왑 및 거래 검사를 처리하는 방식을 보여줍니다.";
+"swap.quotes.providers.risk_levels.excellent.description" = "온체인 직접 실행. 검사나 동결 없음. 스왑 실패 시 자동 환불.";
+"swap.quotes.providers.risk_levels.good.description" = "거래 완료 전에 자동으로 검사됩니다. 문제가 발견되면 스왑이 거부되고 자금이 환불됩니다.";
+"swap.quotes.providers.risk_levels.fair.description" = "일부 거래는 추가 인증이 필요할 수 있습니다. 문제가 발견되면 일반적으로 자금이 자동으로 환불됩니다.";
 
-"swap.provider.score" = "공급자 점수";
+"swap.provider.score" = "경로 점수";
 "swap.provider.swap_time" = "스왑 시간";
 
 
@@ -688,12 +690,11 @@
 // Swap Terms
 
 "swap.terms.title" = "스왑 약관";
-"swap.terms.description" = "Unstoppable은 경쟁력 있는 환율과 폭넓은 자산 지원을 제공하기 위해 여러 탈중앙화(DEX) 및 중앙화 스왑 제공업체를 통합합니다.";
+"swap.terms.description" = "계속하려면 각 항목에 대한 동의를 확인해 주세요.";
 "swap.terms.risk_of_restrictions" = "제한 위험";
-"swap.terms.risk_of_restrictions.description" = "일부 비-DEX 스왑 제공업체는 트랜잭션 스크리닝 %@을 적용한다는 점을 이해합니다. 이러한 제공업체는 스왑을 거부(및 환불)할 수 있으며, 드문 경우(CSAM 및 테러리즘)에는 자금을 동결하고 KYC 데이터를 요청할 수 있습니다.";
+"swap.terms.risk_of_restrictions.description" = "일부 경로는 스왑을 거부하거나 자금 접근을 제한할 수 있습니다. 경로를 선택하기 전에 %@을(를) 확인하세요.";
 "swap.terms.user_responsibility" = "사용자 책임";
-"swap.terms.user_responsibility.description" = "비-DEX 제공업체를 사용하는 것은 추가적인 위험을 수반하며, 이러한 위험은 전적으로 본인의 책임임을 이해합니다. Unstoppable은 제공업체의 행위를 보장할 수 없습니다.";
-"swap.terms.footer" = "항상 자신의 요구사항에 부합하는 스왑 제공업체를 선택하세요.";
+"swap.terms.user_responsibility.description" = "가능한 위험을 검토했으며 경로 선택에 대한 책임을 수락합니다.";
 
 // Swap Advanced Settings
 
@@ -765,7 +766,7 @@
 // Swap Info
 
 "swap_info.title" = "스왑 정보";
-"swap_info.provider" = "제공자";
+"swap_info.provider" = "경로";
 "swap_info.date" = "날짜";
 "swap_info.status" = "상태";
 "swap_info.recipient" = "수신자";
@@ -776,13 +777,13 @@
 "swap_info.refund" = "환불 %@";
 "swap_info.unknown" = "알 수 없음";
 "swap_info.request_refund" = "환불 요청";
-"swap_info.request_refund.description" = "환불 요청 세부 정보를 복사하고 스왑 제공업체에 연락하여 환불을 요청하세요.";
+"swap_info.request_refund.description" = "환불 요청 세부 정보를 복사하고 스왑 경로에 연락하여 환불을 요청하세요.";
 "swap_info.swap_id" = "스왑 ID";
 "swap_info.amount" = "금액";
 "swap_info.refund_address" = "환불 주소";
 "swap_info.copy_details" = "세부 정보 복사";
-"swap_info.swap_stopped_by_provider" = "제공업체에 의해 스왑 중단됨";
-"swap_info.swap_stopped_by_provider.description" = "입금이 수신되었지만 제공업체가 스왑을 완료할 수 없었습니다. 아래에서 환불을 요청하여 자금을 돌려받으세요.";
+"swap_info.swap_stopped_by_provider" = "경로에 의해 스왑 중단됨";
+"swap_info.swap_stopped_by_provider.description" = "입금이 수신되었지만 경로에서 스왑을 완료할 수 없었습니다. 아래에서 환불을 요청하여 자금을 돌려받으세요.";
 
 "swap_info.status.not_started" = "시작되지 않음";
 "swap_info.status.pending" = "대기 중";
@@ -2388,7 +2389,7 @@
 "purchases.advanced_controls" = "고급 제어";
 "purchases.swap_control" = "스왑 제어";
 "purchases.swap_control.description" = "스왑이 실행되는 방식과 위치를 제어하기 위한 고급 설정입니다.";
-"purchases.swap_control.info" = "기본적으로 가장 유리한 제안을 자동으로 선택합니다. Premium을 사용하면 다른 제공업체를 선택할 수 있습니다.";
+"purchases.swap_control.info" = "기본적으로 최적의 오퍼를 선택합니다. 프리미엄을 사용하면 다른 경로를 선택할 수 있습니다.";
 "purchases.priority_support" = "우선 지원";
 "purchases.priority_support.description" = "지원팀에 직접 접근할 수 있습니다.";
 "purchases.priority_support.info" = "우선 지원에 직접 접근할 수 있습니다. Unstoppable 팀으로부터 빠르고 개인화된 도움을 받으세요.";
