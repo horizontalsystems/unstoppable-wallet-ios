@@ -30,6 +30,7 @@ public class MultiSwapViewModel: ObservableObject {
     private let decimalParser = AmountDecimalParser()
 
     @Published var currency: Currency
+    private let customDecimals: Int?
 
     private var enteringFiat = false
 
@@ -276,10 +277,11 @@ public class MultiSwapViewModel: ObservableObject {
 
     @Published var quoteSortType: QuoteSortType = .bestRate
 
-    public init(token: Token? = nil, autoResolveTokenOut: Bool = true) {
+    public init(token: Token? = nil, autoResolveTokenOut: Bool = true, customDecimals: Int? = nil) {
         providers = swapProviderManager.providers.compactMap { SwapProviderFactory.provider(id: $0) }
         currency = currencyManager.baseCurrency
         spendMode = .fromBalanceState
+        self.customDecimals = customDecimals
 
         defer {
             syncDefaultTokens(token: token, autoResolveTokenOut: autoResolveTokenOut)
@@ -581,7 +583,7 @@ public extension MultiSwapViewModel {
 
         enteringFiat = false
 
-        amountIn = (availableBalance * Decimal(percent) / 100).rounded(decimal: tokenIn.decimals)
+        amountIn = (availableBalance * Decimal(percent) / 100).rounded(decimal: customDecimals ?? tokenIn.decimals)
     }
 
     func clearAmountIn() {

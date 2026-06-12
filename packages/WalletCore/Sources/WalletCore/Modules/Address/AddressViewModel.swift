@@ -66,7 +66,7 @@ public class AddressViewModel: ObservableObject {
             state = .empty
             securityCheckViewModel.check(address: nil)
         case .loading:
-            state = .invalid(nil)
+            state = .checking
             securityCheckViewModel.check(address: nil)
         case .invalid:
             state = .invalid(nil)
