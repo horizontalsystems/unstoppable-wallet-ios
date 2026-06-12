@@ -4,7 +4,7 @@ struct WalletView: View {
     @ObservedObject var viewModel: WalletViewModel
     @StateObject var accountWarningViewModel = AccountWarningViewModel(ignoreType: .always)
 
-    @Binding var path: NavigationPath
+    @Binding var selectedWallet: Wallet?
 
     var body: some View {
         Group {
@@ -139,7 +139,7 @@ struct WalletView: View {
     @ViewBuilder private func itemsView() -> some View {
         ListForEach(viewModel.items) { item in
             WalletListItemView(item: item, balancePrimaryValue: viewModel.balancePrimaryValue, balanceHidden: viewModel.balanceHidden, amountRounding: viewModel.amountRounding, subtitleMode: .price, isReachable: viewModel.isReachable) {
-                path.append(MainView.Route.walletToken(item.wallet))
+                selectedWallet = item.wallet
             } failedAction: {
                 Coordinator.shared.presentBalanceError(wallet: item.wallet, state: item.state)
             }

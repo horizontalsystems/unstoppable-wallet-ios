@@ -5,13 +5,16 @@ struct MainView: View {
     @StateObject var badgeViewModel = MainBadgeViewModel()
     @StateObject var walletViewModel = WalletViewModel()
     @StateObject var transactionsViewModel = TransactionsViewModel()
+    @StateObject var multiSwapViewModel = MultiSwapViewModel()
 
-    @State private var path = NavigationPath()
+    @State private var selectedWallet: Wallet?
+    @State private var swapSendPresented = false
+    @State private var walletConnectPresented = false
 
     @State private var backupAccount: Account?
 
     var body: some View {
-        ThemeNavigationStack(path: $path) {
+        ThemeNavigationStack {
             ZStack {
                 TabView(selection: $viewModel.selectedTab) {
                     if viewModel.showMarket {
@@ -21,19 +24,19 @@ struct MainView: View {
                             .tint(.themeLeah)
                     }
 
-                    WalletView(viewModel: walletViewModel, path: $path)
+                    WalletView(viewModel: walletViewModel, selectedWallet: $selectedWallet)
                         .tabItem { Label("", image: "wallet_filled") }
                         .tag(MainViewModel.Tab.wallet)
                         .tint(.themeLeah)
 
                     if viewModel.showSwap {
-                        MultiSwapView()
+                        MultiSwapView(viewModel: multiSwapViewModel, sendPresented: $swapSendPresented)
                             .tabItem { Label("", image: "swap_filled") }
                             .tag(MainViewModel.Tab.swap)
                             .tint(.themeLeah)
                     }
 
-                    MainSettingsView()
+                    MainSettingsView(walletConnectPresented: $walletConnectPresented)
                         .tabItem { Label("", image: "settings_filled") }
                         .tag(MainViewModel.Tab.settings)
                         .badge(badgeViewModel.badge.map { _ in "1" })
@@ -41,11 +44,22 @@ struct MainView: View {
                 }
                 .tint(.themeJacob)
             }
-            .navigationDestination(for: Route.self) { route in
-                switch route {
-                case let .walletToken(wallet):
-                    WalletTokenModule.view(wallet: wallet)
+            .navigationDestination(item: $selectedWallet) { wallet in
+                WalletTokenModule.view(wallet: wallet)
+            }
+            .navigationDestination(isPresented: $swapSendPresented) {
+                MultiSwapSendDestinationView(viewModel: multiSwapViewModel) {
+                    multiSwapViewModel.reset()
+                    swapSendPresented = false
                 }
+            }
+            .navigationDestination(isPresented: $walletConnectPresented) {
+                WalletConnectListView()
+                    .navigationTitle("wallet_connect_list.title".localized)
+                    .ignoresSafeArea()
+                    .onFirstAppear {
+                        stat(page: .settings, event: .open(page: .walletConnect))
+                    }
             }
             .navigationTitle(title)
             .navigationBarTitleDisplayMode(.inline)
@@ -165,10 +179,6 @@ struct MainView: View {
 }
 
 extension MainView {
-    enum Route: Hashable {
-        case walletToken(Wallet)
-    }
-
     struct BadgeView: View {
         private let emptyBadgeSize: CGFloat = 10
         @State private var textHeight: CGFloat = 0

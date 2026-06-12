@@ -4,16 +4,10 @@ import MarketKit
 import SwiftUI
 
 struct MultiSwapView: View {
-    @StateObject var viewModel: MultiSwapViewModel
-    private let onFinish: (() -> Void)?
+    @ObservedObject var viewModel: MultiSwapViewModel
+    @Binding var sendPresented: Bool
 
-    @State private var sendPresented = false
     @FocusState var isInputActive: Bool
-
-    init(token: Token? = nil, onFinish: (() -> Void)? = nil) {
-        _viewModel = StateObject(wrappedValue: MultiSwapViewModel(token: token))
-        self.onFinish = onFinish
-    }
 
     var body: some View {
         ThemeView(style: .list) {
@@ -65,25 +59,6 @@ struct MultiSwapView: View {
         }
         .onDisappear {
             viewModel.stopAutoQuoting()
-        }
-        .navigationDestination(isPresented: $sendPresented) {
-            if let tokenIn = viewModel.tokenIn,
-               let tokenOut = viewModel.tokenOut,
-               let amountIn = viewModel.amountIn,
-               let currentQuote = viewModel.currentQuote
-            {
-                MultiSwapSendView(
-                    tokenIn: tokenIn,
-                    tokenOut: tokenOut,
-                    amountIn: amountIn,
-                    provider: currentQuote.provider,
-                    multiSwapQuote: currentQuote.quote,
-                    onFinish: onFinish ?? {
-                        viewModel.reset()
-                        sendPresented = false
-                    }
-                )
-            }
         }
     }
 
@@ -481,5 +456,27 @@ struct MultiSwapView: View {
         }
 
         return (title, style, disabled, showProgress, preSwapStep)
+    }
+}
+
+struct MultiSwapSendDestinationView: View {
+    @ObservedObject var viewModel: MultiSwapViewModel
+    let onFinish: () -> Void
+
+    var body: some View {
+        if let tokenIn = viewModel.tokenIn,
+           let tokenOut = viewModel.tokenOut,
+           let amountIn = viewModel.amountIn,
+           let currentQuote = viewModel.currentQuote
+        {
+            MultiSwapSendView(
+                tokenIn: tokenIn,
+                tokenOut: tokenOut,
+                amountIn: amountIn,
+                provider: currentQuote.provider,
+                multiSwapQuote: currentQuote.quote,
+                onFinish: onFinish
+            )
+        }
     }
 }
