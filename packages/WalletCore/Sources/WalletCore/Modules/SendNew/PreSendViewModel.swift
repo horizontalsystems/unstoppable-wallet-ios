@@ -14,6 +14,7 @@ public class PreSendViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
 
     @Published var currency: Currency
+    private let customDecimals: Int?
 
     public var amount: Decimal? {
         didSet {
@@ -98,10 +99,11 @@ public class PreSendViewModel: ObservableObject {
     @Published public private(set) var sendData: ExtendedSendData?
     @Published var cautions = [CautionNew]()
 
-    public init(wallet: Wallet, handler: IPreSendHandler?, resolvedAddress: ResolvedAddress, amount: Decimal?, memo: String?) {
+    public init(wallet: Wallet, handler: IPreSendHandler?, resolvedAddress: ResolvedAddress, amount: Decimal?, memo: String?, customDecimals: Int? = nil) {
         self.wallet = wallet
         self.handler = handler
         self.resolvedAddress = resolvedAddress
+        self.customDecimals = customDecimals
 
         currency = currencyManager.baseCurrency
 
@@ -232,7 +234,7 @@ public extension PreSendViewModel {
 
         enteringFiat = false
 
-        amount = (availableBalance * Decimal(percent) / 100).rounded(decimal: token.decimals)
+        amount = (availableBalance * Decimal(percent) / 100).rounded(decimal: customDecimals ?? token.decimals)
     }
 
     func clearAmountIn() {
