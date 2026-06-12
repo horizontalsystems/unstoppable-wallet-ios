@@ -93,14 +93,6 @@ extension SolanaTransactionsAdapter: ITransactionsAdapter {
 
         let incoming = incomingFilter(filter: filter)
 
-        // For unsupported filter types (.swap, .approve), return empty
-        if case .swap = filter {
-            return Observable.just([])
-        }
-        if case .approve = filter {
-            return Observable.just([])
-        }
-
         let publisher: AnyPublisher<[FullTransaction], Never>
 
         if let token {
