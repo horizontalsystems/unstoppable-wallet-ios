@@ -5,7 +5,7 @@ let package = Package(
     name: "WalletCore",
     defaultLocalization: "en",
     platforms: [
-        .iOS(.v16),
+        .iOS(.v17),
     ],
     products: [
         .library(name: "WalletCore", targets: ["WalletCore"]),

@@ -6,7 +6,7 @@ struct MainSettingsView: View {
     @StateObject var viewModel = MainSettingsViewModel()
     @Environment(\.openURL) var openURL
 
-    @State private var walletConnectPresented = false
+    @Binding var walletConnectPresented: Bool
 
     @StateObject var walletConnectVerificationModel = WalletConnectVerificationModel(
         accountManager: Core.shared.accountManager,
@@ -98,14 +98,6 @@ struct MainSettingsView: View {
                 .padding(.padding16)
             }
             .padding(EdgeInsets(top: .margin12, leading: 0, bottom: .margin32, trailing: 0))
-        }
-        .navigationDestination(isPresented: $walletConnectPresented) {
-            WalletConnectListView()
-                .navigationTitle("wallet_connect_list.title".localized)
-                .ignoresSafeArea()
-                .onFirstAppear {
-                    stat(page: .settings, event: .open(page: .walletConnect))
-                }
         }
     }
 
