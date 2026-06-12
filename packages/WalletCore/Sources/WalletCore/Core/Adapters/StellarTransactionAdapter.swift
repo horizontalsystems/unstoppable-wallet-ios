@@ -63,8 +63,6 @@ class StellarTransactionAdapter {
         case .all: ()
         case .incoming: type = .incoming
         case .outgoing: type = .outgoing
-        case .swap: type = .swap
-        case .approve: type = .unsupported
         }
 
         if let address {

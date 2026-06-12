@@ -55,8 +55,6 @@ class TronTransactionsAdapter: BaseTronAdapter {
         case .all: ()
         case .incoming: type = .incoming
         case .outgoing: type = .outgoing
-        case .swap: type = .swap
-        case .approve: type = .approve
         }
 
         return TransactionTagQuery(type: type, protocol: `protocol`, contractAddress: contractAddress, address: address)

@@ -51,8 +51,6 @@ class TonTransactionAdapter {
         case .all: ()
         case .incoming: type = .incoming
         case .outgoing: type = .outgoing
-        case .swap: type = .swap
-        case .approve: type = .unsupported
         }
 
         let address = address.flatMap { try? TonSwift.Address.parse($0) }
