@@ -2,10 +2,6 @@ import SnapKit
 import UIExtensions
 import UIKit
 
-protocol IHeightAwareView {
-    var height: CGFloat { get }
-}
-
 class BottomGradientHolder: GradientView {
     static let defaultStackViewInsets = UIEdgeInsets(top: .margin16 + .margin24, left: 0, bottom: .margin16, right: 0)
     let stackView = UIStackView()

@@ -3,9 +3,3 @@ public enum ButtonState {
     case disabled
     case hidden
 }
-
-enum AsyncActionButtonState {
-    case enabled
-    case disabled
-    case spinner
-}

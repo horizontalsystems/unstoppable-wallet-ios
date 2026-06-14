@@ -7,7 +7,3 @@ class HUDStatusViewTheme {
     static let imageBottomPadding: CGFloat = 16
     static let titleBottomPadding: CGFloat = 2
 }
-
-class HUDProgressViewTheme {
-    static let insets: UIEdgeInsets = .init(top: 16, left: 16, bottom: 16, right: 16)
-}
