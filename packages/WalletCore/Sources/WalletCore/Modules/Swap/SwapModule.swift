@@ -43,18 +43,7 @@ protocol ISwapDataSource: AnyObject {
     func viewDidAppear()
 }
 
-enum SwapModule {
-    static func viewController(tokenFrom: MarketKit.Token? = nil) -> UIViewController? {
-        let swapDexManager = SwapProviderManager(localStorage: Core.shared.localStorage, evmBlockchainManager: Core.shared.evmBlockchainManager, tokenFrom: tokenFrom)
-
-        let viewModel = SwapViewModel(dexManager: swapDexManager)
-        let viewController = SwapViewController(
-            viewModel: viewModel,
-            dataSourceManager: swapDexManager
-        )
-        return viewController
-    }
-}
+enum SwapModule {}
 
 extension SwapModule {
     private static let addressesForRevoke = ["0xdac17f958d2ee523a2206206994597c13d831ec7"]
