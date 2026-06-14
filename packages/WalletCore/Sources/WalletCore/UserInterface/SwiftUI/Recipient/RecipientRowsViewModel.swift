@@ -42,12 +42,6 @@ extension RecipientRowsViewModel {
 }
 
 extension RecipientRowsViewModel {
-    enum AddAddressType: String, Identifiable {
-        case create, add
-
-        var id: String { rawValue }
-    }
-
     enum Item {
         case raw(address: String)
         case label(String, address: String)

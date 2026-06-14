@@ -152,15 +152,3 @@ public struct InfoDescription: Identifiable {
         title + description
     }
 }
-
-class BottomSheetWrapperView: UIHostingController<BottomSheetView> {
-    init(items: [BSModule.Item], id: String = "ID") {
-        let view = BottomSheetView(items: items, id: id)
-        super.init(rootView: view)
-    }
-
-    @available(*, unavailable)
-    @MainActor dynamic required init?(coder _: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
