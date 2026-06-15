@@ -33,7 +33,7 @@ struct SendTokenListView: View {
                     }
                 )
                 .navigationTitle("send.send".localized)
-                .searchBar(text: $searchText, prompt: "placeholder.search".localized)
+                .searchBar(text: $searchText, prompt: "placeholder.search".localized, isActive: !viewModel.noTokens)
                 .navigationDestination(for: Route.self) { route in
                     switch route {
                     case let .send(wallet, options):

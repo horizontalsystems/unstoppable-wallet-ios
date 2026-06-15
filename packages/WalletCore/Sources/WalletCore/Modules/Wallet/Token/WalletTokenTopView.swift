@@ -106,13 +106,10 @@ struct WalletTokenTopView<Content: View, Status: View>: View {
         }
 
         var colorStyle: ColorStyle = .primary
-        var dimmed = false
 
         switch viewModel.state {
-        case .synced:
+        case .synced, .connecting, .syncing, .customSyncing:
             ()
-        case .connecting, .syncing, .customSyncing:
-            dimmed = true
         case .notSynced, .stopped:
             if viewModel.isReachable {
                 colorStyle = .secondary
@@ -120,7 +117,7 @@ struct WalletTokenTopView<Content: View, Status: View>: View {
         }
 
         if let formatted = ValueFormatter.instance.formatFull(value: viewModel.balanceData.total, decimalCount: viewModel.wallet.decimals, symbol: viewModel.wallet.coin.code) {
-            return ComponentText(text: formatted, colorStyle: colorStyle, dimmed: dimmed)
+            return ComponentText(text: formatted, colorStyle: colorStyle, dimmed: false)
         }
 
         return "----"
@@ -164,7 +161,7 @@ struct WalletTokenTopView<Content: View, Status: View>: View {
             let currencyValue = CurrencyValue(currency: price.currency, value: viewModel.balanceData.total * price.value)
 
             if let formatted = ValueFormatter.instance.formatFull(currencyValue: currencyValue) {
-                return ComponentText(text: formatted, dimmed: priceItem.expired)
+                return ComponentText(text: formatted, dimmed: false)
             }
 
             return "----"

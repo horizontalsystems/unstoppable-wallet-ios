@@ -40,7 +40,7 @@ class SendTokenListViewModel: WalletListViewModel {
 
     func itemState(searchText: String, blockchainFilter: BlockchainFilter?) -> ItemState {
         if items.isEmpty {
-            return .loading
+            return noTokens ? .noTokens : .loading
         }
 
         let text = searchText.trimmingCharacters(in: .whitespaces)
@@ -72,6 +72,7 @@ class SendTokenListViewModel: WalletListViewModel {
 extension SendTokenListViewModel {
     enum ItemState {
         case loading
+        case noTokens
         case empty
         case loaded([WalletListViewModel.Item])
     }

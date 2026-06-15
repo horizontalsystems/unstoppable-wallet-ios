@@ -11,8 +11,17 @@ struct WalletPickerView: View {
     let onFailed: ((Wallet, AdapterState) -> Void)?
 
     var body: some View {
-        VStack(spacing: 0) {
-            if let filter = blockchainFilter {
+        let itemState = viewModel.itemState(searchText: searchText, blockchainFilter: blockchainFilter)
+
+        let showFilter: Bool
+        if case .noTokens = itemState {
+            showFilter = false
+        } else {
+            showFilter = true
+        }
+
+        return VStack(spacing: 0) {
+            if showFilter, let filter = blockchainFilter {
                 let blockchains = viewModel.availableBlockchains
                 ScrollableTabHeaderView(
                     tabs: ["filter.all".localized] + blockchains.map(\.name),
@@ -37,9 +46,11 @@ struct WalletPickerView: View {
                 )
             }
 
-            switch viewModel.itemState(searchText: searchText, blockchainFilter: blockchainFilter) {
+            switch itemState {
             case .loading:
                 VStack { ProgressView() }.frame(maxHeight: .infinity)
+            case .noTokens:
+                PlaceholderViewNew(icon: "wallet_in", subtitle: "balance.no_tokens".localized)
             case .empty:
                 PlaceholderViewNew(icon: "warning_filled", subtitle: "alert.not_founded".localized)
             case let .loaded(items):
