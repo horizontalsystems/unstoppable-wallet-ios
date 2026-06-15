@@ -317,6 +317,7 @@
 "balance.watch_wallet.typed" = "Wallet d'observation %@";
 
 "balance.add_wallet" = "Ajouter un wallet";
+"balance.no_tokens" = "Aucun token ici. Ajoutez-en un pour commencer.";
 
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "Blocs restants - %@";

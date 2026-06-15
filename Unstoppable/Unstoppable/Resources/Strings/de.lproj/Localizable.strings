@@ -317,6 +317,7 @@
 "balance.watch_wallet.typed" = "%@ Watch-Wallet";
 
 "balance.add_wallet" = "Wallet hinzufügen";
+"balance.no_tokens" = "Keine Token vorhanden. Fügen Sie einen hinzu, um zu beginnen.";
 
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "Verbleibende Blöcke – %@";

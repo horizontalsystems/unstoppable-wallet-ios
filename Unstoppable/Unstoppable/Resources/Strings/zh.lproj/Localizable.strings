@@ -317,6 +317,7 @@
 "balance.watch_wallet.typed" = "%@ 观察钱包";
 
 "balance.add_wallet" = "添加钱包";
+"balance.no_tokens" = "这里没有代币。添加一个以开始。";
 
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "剩余区块数 - %@";

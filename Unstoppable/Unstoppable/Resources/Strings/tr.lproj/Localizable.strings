@@ -317,6 +317,7 @@
 "balance.watch_wallet.typed" = "%@ İzleme Cüzdanı";
 
 "balance.add_wallet" = "Cüzdan Ekle";
+"balance.no_tokens" = "Burada token yok. Başlamak için bir tane ekleyin.";
 
 "balance.searching.count" = "bakiye.araması.miktar";
 "balance.remaining" = "Kalan Bloklar - %@";
