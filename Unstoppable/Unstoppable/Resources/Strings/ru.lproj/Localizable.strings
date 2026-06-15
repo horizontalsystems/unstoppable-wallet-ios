@@ -317,6 +317,7 @@
 "balance.watch_wallet.typed" = "%@ кошелёк наблюдения";
 
 "balance.add_wallet" = "Добавить кошелёк";
+"balance.no_tokens" = "Здесь нет токенов. Добавьте один, чтобы начать.";
 
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "Осталось блоков - %@";

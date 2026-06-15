@@ -317,6 +317,7 @@
 "balance.watch_wallet.typed" = "%@ 감시 지갑";
 
 "balance.add_wallet" = "지갑 추가";
+"balance.no_tokens" = "토큰이 없습니다. 하나를 추가하여 시작하세요.";
 
 "balance.searching.count" = "%@ tx";
 "balance.remaining" = "남은 블록 수 - %@";
