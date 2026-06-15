@@ -112,7 +112,7 @@ private struct LoadedTokenList: View {
                 }
             )
         }
-        .searchBar(text: $searchText, prompt: "placeholder.search".localized)
+        .searchBar(text: $searchText, prompt: "placeholder.search".localized, isActive: !pickerViewModel.noTokens)
     }
 
     private func select(wallet: Wallet) {

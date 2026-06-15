@@ -139,14 +139,14 @@ struct WalletListItemView: View, Equatable {
         }
     }
 
-    private func coinValue(value: Decimal, decimalCount: Int, symbol: String? = nil, state: AdapterState, expanded _: Bool = false) -> CustomStringConvertible {
+    private func coinValue(value: Decimal, decimalCount: Int, symbol: String? = nil, state _: AdapterState, expanded _: Bool = false) -> CustomStringConvertible {
         ComponentText(
             text: ValueFormatter.instance.formatWith(rounding: amountRounding, value: value, decimalCount: decimalCount, symbol: symbol) ?? String.placeholder,
-            dimmed: (state != .synced) && isReachable
+            dimmed: false
         )
     }
 
-    private func currencyValue(value: Decimal, state: AdapterState, priceItem: WalletCoinPriceService.Item?, expanded _: Bool = false) -> CustomStringConvertible {
+    private func currencyValue(value: Decimal, state _: AdapterState, priceItem: WalletCoinPriceService.Item?, expanded _: Bool = false) -> CustomStringConvertible {
         guard let priceItem else {
             return ComponentText(text: String.placeholder, dimmed: true)
         }
@@ -156,7 +156,7 @@ struct WalletListItemView: View, Equatable {
 
         return ComponentText(
             text: ValueFormatter.instance.formatWith(rounding: amountRounding, currencyValue: currencyValue) ?? String.placeholder,
-            dimmed: (state != .synced && isReachable) || priceItem.expired
+            dimmed: false
         )
     }
 

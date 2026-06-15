@@ -51,15 +51,6 @@ struct MainTransactionsView: View {
                             .modifier(ToolbarBadgeModifier(visible: transactionsViewModel.filterChanged))
                     }
                 }
-
-                ToolbarItem(placement: .topBarTrailing) {
-                    if transactionsViewModel.syncing {
-                        ProgressView(value: 0.55)
-                            .progressViewStyle(DeterminiteSpinnerStyle())
-                            .frame(size: 24)
-                            .spinning()
-                    }
-                }
             }
         }
     }

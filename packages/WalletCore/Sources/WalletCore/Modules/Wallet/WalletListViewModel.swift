@@ -11,6 +11,7 @@ public class WalletListViewModel: ObservableObject {
     private let sorter = WalletSorter()
     let balanceHiddenManager = Core.shared.balanceHiddenManager
     let accountManager = Core.shared.accountManager
+    private let walletManager = Core.shared.walletManager
     private let reachabilityManager = Core.shared.reachabilityManager
     private let userDefaultsStorage = Core.shared.userDefaultsStorage
     private let cacheManager = Core.shared.enabledWalletCacheManager
@@ -34,6 +35,7 @@ public class WalletListViewModel: ObservableObject {
     }
 
     @Published public private(set) var items: [Item] = []
+    @Published public private(set) var noTokens: Bool = false
     @Published private(set) var isReachable: Bool = true
 
     var walletService: WalletService?
@@ -121,8 +123,18 @@ public class WalletListViewModel: ObservableObject {
     }
 
     private func _reportItems() {
+        _syncNoTokens()
+
         DispatchQueue.main.async { [__items] in
             self.items = __items
+        }
+    }
+
+    private func _syncNoTokens() {
+        let value = account.map { walletManager.activeWalletData.account?.id == $0.id && __items.isEmpty } ?? false
+
+        DispatchQueue.main.async {
+            self.noTokens = value
         }
     }
 

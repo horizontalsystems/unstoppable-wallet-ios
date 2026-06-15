@@ -49,12 +49,6 @@ class CreateAccountViewModel: ObservableObject {
         let tokenQueries = [
             TokenQuery(blockchainType: .bitcoin, tokenType: .derived(derivation: .bip84)), // TODO: make derivation supports accountType
             TokenQuery(blockchainType: .ethereum, tokenType: .native),
-            TokenQuery(blockchainType: .monero, tokenType: .native),
-            TokenQuery(blockchainType: .tron, tokenType: .native),
-            TokenQuery(blockchainType: .zcash, tokenType: .native),
-            TokenQuery(blockchainType: .binanceSmartChain, tokenType: .native),
-            TokenQuery(blockchainType: .ethereum, tokenType: .eip20(address: "0xdac17f958d2ee523a2206206994597c13d831ec7")), // USDT
-            TokenQuery(blockchainType: .tron, tokenType: .eip20(address: "TR7NHqjeKQxGTCi8q8ZY4pL8otSzgjLj6t")), // USDT
         ]
 
         var wallets = [Wallet]()

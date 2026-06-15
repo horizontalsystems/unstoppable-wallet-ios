@@ -137,7 +137,7 @@ extension ManageAccountsView {
 
         @ViewBuilder private func destination(isPresented: Binding<Bool>, parentPresented: Binding<Bool>?) -> some View {
             switch self {
-            case .newWallet: NewWalletView(isPresented: isPresented, parentPresented: parentPresented, showClose: true)
+            case .newWallet: NewWalletTypeView(isPresented: isPresented, parentPresented: parentPresented, showClose: true)
             case .existingWallet: RestoreTypeView(isPresented: isPresented, parentPresented: parentPresented, showClose: true)
             case .watchWallet: WatchView(isPresented: isPresented, parentPresented: parentPresented, showClose: true)
             }

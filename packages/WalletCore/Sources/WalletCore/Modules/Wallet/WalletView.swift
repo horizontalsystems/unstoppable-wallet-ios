@@ -9,36 +9,10 @@ struct WalletView: View {
     var body: some View {
         Group {
             if let account = viewModel.account {
-                ThemeView(style: .list) {
-                    ScrollViewReader { proxy in
-                        ThemeList(bottomSpacing: .margin16) {
-                            topView(account: account)
-                                .listRowBackground(Color.themeTyler)
-                                .listRowInsets(EdgeInsets())
-                                .listRowSeparator(.hidden)
-                                .themeListTopView()
-
-                            AccountWarningView(viewModel: accountWarningViewModel)
-                                .listRowBackground(Color.themeTyler)
-                                .listRowInsets(EdgeInsets())
-                                .listRowSeparator(.hidden)
-                                .padding(.horizontal, .margin16)
-                                .padding(.top, .margin8)
-                                .padding(.bottom, .margin12)
-
-                            Section {
-                                itemsView()
-                            } header: {
-                                headerView(account: account)
-                            }
-                        }
-                        .animation(.default, value: accountWarningViewModel.item)
-                        .refreshable {
-                            await viewModel.refresh()
-                        }
-                        .onChange(of: viewModel.sortType) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
-                        .themeListScrollHeader()
-                    }
+                if viewModel.noTokens {
+                    emptyView(account: account)
+                } else {
+                    listView(account: account)
                 }
             } else {
                 ThemeView {
@@ -50,7 +24,7 @@ struct WalletView: View {
                                 onNewWallet: {
                                     Coordinator.shared.presentAfterAcceptTerms { isPresented in
                                         ThemeNavigationStack {
-                                            NewWalletView(isPresented: isPresented, showClose: true)
+                                            NewWalletTypeView(isPresented: isPresented, showClose: true)
                                         }
                                     }
                                 },
@@ -81,6 +55,52 @@ struct WalletView: View {
         }
         .onDisappear {
             viewModel.onDisappear()
+        }
+    }
+
+    @ViewBuilder private func listView(account: Account) -> some View {
+        ThemeView(style: .list) {
+            ScrollViewReader { proxy in
+                ThemeList(bottomSpacing: .margin16) {
+                    topView(account: account)
+                        .listRowBackground(Color.themeTyler)
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
+                        .themeListTopView()
+
+                    AccountWarningView(viewModel: accountWarningViewModel)
+                        .listRowBackground(Color.themeTyler)
+                        .listRowInsets(EdgeInsets())
+                        .listRowSeparator(.hidden)
+                        .padding(.horizontal, .margin16)
+                        .padding(.top, .margin8)
+                        .padding(.bottom, .margin12)
+
+                    Section {
+                        itemsView()
+                    } header: {
+                        headerView(account: account)
+                    }
+
+                    VStack {
+                        ThemeButton(text: "button.add".localized, icon: "plus", spinner: false, style: .secondary, mode: .solid, size: .small) {
+                            onTapManage()
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                    .listRowBackground(Color.clear)
+                    .listRowInsets(EdgeInsets())
+                    .listRowSeparator(.hidden)
+                    .padding(.horizontal, .margin16)
+                    .padding(.top, .margin24)
+                }
+                .animation(.default, value: accountWarningViewModel.item)
+                .refreshable {
+                    await viewModel.refresh()
+                }
+                .onChange(of: viewModel.sortType) { _ in withAnimation { proxy.scrollTo(THEME_LIST_TOP_VIEW_ID) } }
+                .themeListScrollHeader()
+            }
         }
     }
 
@@ -132,6 +152,21 @@ struct WalletView: View {
                 }
                 .padding(.bottom, 24)
                 .padding(.horizontal, 16)
+            }
+        }
+    }
+
+    @ViewBuilder private func emptyView(account: Account) -> some View {
+        ThemeView {
+            VStack(spacing: 0) {
+                topView(account: account)
+
+                PlaceholderViewNew(icon: "wallet_in", subtitle: "balance.no_tokens".localized) {
+                    ThemeButton(text: "add_token.title".localized, mode: .transparent, size: .small) {
+                        onTapManage()
+                    }
+                }
+                .background(Color.themeLawrence)
             }
         }
     }
@@ -226,12 +261,7 @@ struct WalletView: View {
             }
 
             IconButton(icon: "manage", style: .secondary, size: .small) {
-                if let account = viewModel.account {
-                    Coordinator.shared.present { isPresented in
-                        ManageWalletsView(account: account, isPresented: isPresented).ignoresSafeArea()
-                    }
-                    stat(page: .balance, event: .open(page: .coinManager))
-                }
+                onTapManage()
             }
 
             Spacer()
@@ -244,6 +274,15 @@ struct WalletView: View {
                     .frame(size: 20)
                     .spinning()
             }
+        }
+    }
+
+    private func onTapManage() {
+        if let account = viewModel.account {
+            Coordinator.shared.present { isPresented in
+                ManageWalletsView(account: account, isPresented: isPresented).ignoresSafeArea()
+            }
+            stat(page: .balance, event: .open(page: .coinManager))
         }
     }
 
@@ -295,7 +334,8 @@ struct WalletView: View {
             case .expired:
                 colorStyle = .secondary
             case .syncing:
-                dimmed = true
+                ()
+//                dimmed = true     // remove dimmed state for now
             }
         }
 
@@ -310,15 +350,15 @@ struct WalletView: View {
         if viewModel.balanceHidden {
             return " "
         }
-
-        var dimmed = false
-        if viewModel.totalItem.state == .syncing {
-            dimmed = true
-        }
+//
+//        var dimmed = false
+//        if viewModel.totalItem.state == .syncing {
+//            dimmed = true
+//        }
 
         return ComponentText(
             text: viewModel.totalItem.convertedValue.flatMap { $0.formattedWith(rounding: viewModel.amountRounding) }.map { "≈ \($0)" } ?? String.placeholder,
-            dimmed: dimmed
+            dimmed: false
         )
     }
 }
