@@ -2,7 +2,7 @@ import Combine
 import Foundation
 import RxSwift
 
-class TransactionsViewModel: ObservableObject {
+public class TransactionsViewModel: ObservableObject {
     private static let pageLimit = 20
 
     private let walletManager = Core.shared.walletManager
@@ -23,7 +23,7 @@ class TransactionsViewModel: ObservableObject {
 
     @Published private(set) var syncing: Bool = false
     @Published private(set) var isReachable: Bool = true
-    @Published private(set) var sections: [Section] = []
+    @Published public private(set) var sections: [Section] = []
 
     @Published var typeFilter: TransactionTypeFilter = .all {
         didSet {
@@ -87,7 +87,7 @@ class TransactionsViewModel: ObservableObject {
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).transactions-view-model", qos: .userInitiated)
 
-    init(transactionFilter: TransactionFilter = .init()) {
+    public init(transactionFilter: TransactionFilter = .init()) {
         self.transactionFilter = transactionFilter
         isReachable = reachabilityManager.isReachable
         spamFilterEnabled = securityManger.spamFilterEnabled
@@ -452,7 +452,7 @@ extension TransactionsViewModel {
         }
     }
 
-    func record(id: String) -> TransactionRecord? {
+    public func record(id: String) -> TransactionRecord? {
         queue.sync {
             __items.first(where: { $0.record.uid == id })?.record
         }
@@ -474,7 +474,7 @@ extension TransactionsViewModel {
         }
     }
 
-    func onDisplay(section: Section, viewItem: ViewItem) {
+    public func onDisplay(section: Section, viewItem: ViewItem) {
         queue.async {
             guard let sectionIndex = self.__sections.firstIndex(where: { $0.id == section.id }),
                   let index = self.__sections[sectionIndex].viewItems.firstIndex(where: { $0.id == viewItem.id })
@@ -496,8 +496,8 @@ extension TransactionsViewModel {
     }
 }
 
-extension TransactionsViewModel {
-    class Item {
+public extension TransactionsViewModel {
+    internal class Item {
         var transactionItem: TransactionItem
         var nftMetadata: [NftUid: NftAssetBriefMetadata]
         var currencyValue: CurrencyValue?
@@ -514,24 +514,24 @@ extension TransactionsViewModel {
     }
 
     struct Section: Identifiable, Equatable {
-        let id: Date
-        let title: String
-        var viewItems: [ViewItem]
+        public let id: Date
+        public let title: String
+        public var viewItems: [ViewItem]
     }
 
     struct ViewItem: Hashable {
-        var id: String
-        let date: Date
-        let iconType: IconType
-        var progress: Float?
-        var title: String
-        let subTitle: String
-        let primaryValue: Value?
-        let secondaryValue: Value?
-        let doubleSpend: Bool
-        let sentToSelf: Bool
-        let locked: Bool?
-        let spam: Bool
+        public var id: String
+        public let date: Date
+        public let iconType: IconType
+        public var progress: Float?
+        public var title: String
+        public let subTitle: String
+        public let primaryValue: Value?
+        public let secondaryValue: Value?
+        public let doubleSpend: Bool
+        public let sentToSelf: Bool
+        public let locked: Bool?
+        public let spam: Bool
     }
 
     enum IconType: Hashable {
@@ -542,8 +542,8 @@ extension TransactionsViewModel {
     }
 
     struct Value: Hashable {
-        let text: String
-        let type: ValueType
+        public let text: String
+        public let type: ValueType
     }
 
     enum ValueType {
