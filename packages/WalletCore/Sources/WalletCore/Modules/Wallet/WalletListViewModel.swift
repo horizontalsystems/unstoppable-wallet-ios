@@ -24,7 +24,7 @@ public class WalletListViewModel: ObservableObject {
 
     @Published public private(set) var account: Account?
     @Published private(set) var balancePrimaryValue: BalancePrimaryValue
-    @Published private(set) var balanceHidden: Bool
+    @Published public private(set) var balanceHidden: Bool
     @Published private(set) var amountRounding: Bool
 
     @Published var sortType: WalletSorter.SortType {

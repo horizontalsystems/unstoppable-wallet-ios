@@ -118,7 +118,7 @@ extension WalletViewModel {
         rateAppManager.onBalancePageDisappear()
     }
 
-    func onTapAmount() {
+    public func onTapAmount() {
         balanceHiddenManager.toggleBalanceHidden()
     }
 

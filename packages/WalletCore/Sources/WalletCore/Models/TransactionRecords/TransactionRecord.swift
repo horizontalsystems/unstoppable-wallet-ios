@@ -1,7 +1,7 @@
 import Foundation
 import MarketKit
 
-class TransactionRecord {
+public class TransactionRecord {
     let source: TransactionSource
     let uid: String
     let transactionHash: String
@@ -55,7 +55,7 @@ class TransactionRecord {
 }
 
 extension TransactionRecord: Identifiable {
-    var id: String {
+    public var id: String {
         uid
     }
 }

@@ -78,14 +78,14 @@ public struct CoinIconView: View {
     }
 }
 
-struct IconView: View {
+public struct IconView: View {
     let url: String?
     let alternativeUrl: String?
     let placeholderImage: String?
     let type: IconType
     let size: CGFloat
 
-    init(url: String?, alternativeUrl: String? = nil, placeholderImage: String? = nil, type: IconType = .circle, size: CGFloat = .iconSize32) {
+    public init(url: String?, alternativeUrl: String? = nil, placeholderImage: String? = nil, type: IconType = .circle, size: CGFloat = .iconSize32) {
         self.url = url
         self.alternativeUrl = alternativeUrl
         self.placeholderImage = placeholderImage
@@ -93,7 +93,7 @@ struct IconView: View {
         self.size = size
     }
 
-    var body: some View {
+    public var body: some View {
         if let alternativeUrl, let alternativeURL = URL(string: alternativeUrl) {
             if ImageCache.default.isCached(forKey: alternativeUrl) {
                 icon(url: alternativeURL)
@@ -127,11 +127,11 @@ struct IconView: View {
             }
     }
 
-    enum IconType: Shape {
+    public enum IconType: Shape {
         case circle
         case squircle
 
-        func path(in rect: CGRect) -> Path {
+        public func path(in rect: CGRect) -> Path {
             switch self {
             case .circle:
                 return Circle().path(in: rect)

@@ -14,18 +14,18 @@ struct TransactionItem: Comparable {
     }
 }
 
-struct TransactionFilter: Equatable {
+public struct TransactionFilter: Equatable {
     private(set) var blockchain: Blockchain?
     private(set) var token: Token?
     var contact: Contact?
 
-    init() {
+    public init() {
         blockchain = nil
         token = nil
         contact = nil
     }
 
-    init(token: Token) {
+    public init(token: Token) {
         blockchain = token.blockchain
         self.token = token
         contact = nil
