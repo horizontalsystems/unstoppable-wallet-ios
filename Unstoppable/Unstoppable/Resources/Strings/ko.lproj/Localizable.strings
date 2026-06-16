@@ -2496,9 +2496,9 @@
 
 "new_wallet.title" = "새 지갑";
 "new_wallet.standard" = "표준";
-"new_wallet.standard.description" = "완전한 제어와 유연성을 위해 복구 문구로 지갑을 생성합니다.";
+"new_wallet.standard.description" = "수동 백업이 필요한 복구 문구가 포함된 지갑입니다.";
 "new_wallet.passkey" = "패스키";
-"new_wallet.passkey.description" = "간편한 접근을 위해 기기와 iCloud로 보호되는 지갑을 생성합니다.";
+"new_wallet.passkey.description" = "복구 문구가 기기 및 iCloud에 의해 저장되고 보호되는 지갑입니다.";
 "new_wallet.smart_account" = "스마트 계정";
 "new_wallet.smart_account.description" = "가스 스폰서십을 지원하는 패스키 기반 지갑.";
 
