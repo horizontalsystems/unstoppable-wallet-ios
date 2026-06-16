@@ -2,11 +2,13 @@ import Eip20Kit
 import EvmKit
 import MarketKit
 
-struct EvmDecorator {
+public struct EvmDecorator {
     private let coinManager = Core.shared.coinManager
     private let evmLabelManager = Core.shared.evmLabelManager
 
-    func decorate(baseToken: Token, transactionData: TransactionData, transactionDecoration: TransactionDecoration?) -> EvmDecoration {
+    public init() {}
+
+    public func decorate(baseToken: Token, transactionData: TransactionData, transactionDecoration: TransactionDecoration?) -> EvmDecoration {
         var type: EvmDecoration.`Type`?
         var customSendButtonTitle: String?
 

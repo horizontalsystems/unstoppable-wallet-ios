@@ -2,58 +2,35 @@ import EvmKit
 import MarketKit
 import TronKit
 
-enum AccountAddress {
+public enum AccountAddress {
+    private static var providers: [IAccountAddressProvider] = [AccountAddressProvider()]
+
+    public static func register(_ provider: IAccountAddressProvider) {
+        providers.insert(provider, at: 0)
+    }
+
     static func evmAddress(account: Account, blockchainType: BlockchainType) throws -> EvmKit.Address {
-        switch account.type {
-        case .mnemonic:
-            guard let seed = account.type.mnemonicSeed else {
-                throw AdapterError.unsupportedAccount
+        for provider in providers {
+            if let address = try provider.evmAddress(account: account, blockchainType: blockchainType) {
+                return address
             }
-            let chain = try Core.shared.evmBlockchainManager.chain(blockchainType: blockchainType)
-            return try EvmKit.Signer.address(seed: seed, chain: chain)
-
-        case let .evmPrivateKey(data):
-            return EvmKit.Signer.address(privateKey: data)
-
-        case let .evmAddress(address):
-            return address
-
-        case .passkeyOwned:
-            guard let profile = try Core.shared.smartAccountManager.profile(accountId: account.id) else {
-                throw AdapterError.unsupportedAccount
-            }
-            return try profile.address(blockchainType: blockchainType)
-
-        default:
-            throw AdapterError.unsupportedAccount
         }
+
+        throw AdapterError.unsupportedAccount
     }
 
     static func tronAddress(account: Account) throws -> TronKit.Address {
-        switch account.type {
-        case .mnemonic:
-            guard let seed = account.type.mnemonicSeed else {
-                throw AdapterError.unsupportedAccount
+        for provider in providers {
+            if let address = try provider.tronAddress(account: account) {
+                return address
             }
-            return try TronKit.Signer.address(seed: seed)
-
-        case let .trcPrivateKey(data):
-            return try TronKit.Signer.address(privateKey: data)
-
-        case let .tronAddress(address):
-            return address
-
-        case .passkeyOwned:
-            // TODO: make this async and create the GasFree profile on demand when missing
-            // (e.g. after account restore where the profile didn't carry over). For now
-            // we throw; the profile is only ever populated by CreateSmartAccountService.
-            guard let profile = try Core.shared.smartAccountManager.gasFreeProfile(accountId: account.id) else {
-                throw AdapterError.unsupportedAccount
-            }
-            return profile.gasFreeAddress
-
-        default:
-            throw AdapterError.unsupportedAccount
         }
+
+        throw AdapterError.unsupportedAccount
     }
+}
+
+public protocol IAccountAddressProvider {
+    func evmAddress(account: Account, blockchainType: BlockchainType) throws -> EvmKit.Address?
+    func tronAddress(account: Account) throws -> TronKit.Address?
 }

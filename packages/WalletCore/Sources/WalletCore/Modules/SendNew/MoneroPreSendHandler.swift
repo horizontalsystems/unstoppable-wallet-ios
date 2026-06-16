@@ -5,7 +5,12 @@ import MoneroKit
 import RxSwift
 import SwiftUI
 
-class MoneroPreSendHandler {
+class MoneroPreSendHandler: PreSendHandler {
+    override class func instance(wallet: Wallet, address _: ResolvedAddress) -> IPreSendHandler? {
+        guard let adapter = Core.shared.adapterManager.adapter(for: wallet) as? MoneroAdapter else { return nil }
+        return MoneroPreSendHandler(token: wallet.token, adapter: adapter)
+    }
+
     private let token: Token
     private let adapter: MoneroAdapter
 

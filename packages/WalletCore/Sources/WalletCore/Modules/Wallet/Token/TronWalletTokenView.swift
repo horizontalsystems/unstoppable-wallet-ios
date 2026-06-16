@@ -6,7 +6,7 @@ struct TronWalletTokenView: View {
     private let wallet: Wallet
 
     init(wallet: Wallet, adapter: BaseTronAdapter) {
-        _viewModel = StateObject(wrappedValue: TronWalletTokenViewModel(tronKit: adapter.tronKit, wallet: wallet))
+        _viewModel = StateObject(wrappedValue: TronWalletTokenViewModel(adapter: adapter, wallet: wallet))
         self.wallet = wallet
     }
 

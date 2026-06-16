@@ -2,11 +2,11 @@ import EvmKit
 import Foundation
 import MarketKit
 
-struct EvmDecoration {
+public struct EvmDecoration {
     let type: Type
     let customSendButtonTitle: String?
 
-    var rateCoins: [Coin] {
+    public var rateCoins: [Coin] {
         switch type {
         case let .outgoingEip20(_, _, token): return [token.coin]
         case let .approveEip20(_, _, token): return [token.coin]
@@ -14,7 +14,7 @@ struct EvmDecoration {
         }
     }
 
-    func flowSection(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> SendDataSection? {
+    public func flowSection(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> SendDataSection? {
         switch type {
         case let .outgoingEvm(to, value):
             return outgoingFlow(token: baseToken, to: to, value: value, currency: currency, rates: rates)
@@ -27,7 +27,7 @@ struct EvmDecoration {
         }
     }
 
-    func fields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
+    public func fields(baseToken: Token, currency: Currency, rates: [String: Decimal]) -> [SendField] {
         switch type {
         case .outgoingEvm, .outgoingEip20:
             return []

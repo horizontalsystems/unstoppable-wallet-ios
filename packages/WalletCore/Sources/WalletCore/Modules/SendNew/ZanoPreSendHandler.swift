@@ -5,7 +5,12 @@ import RxSwift
 import SwiftUI
 import ZanoKit
 
-class ZanoPreSendHandler {
+class ZanoPreSendHandler: PreSendHandler {
+    override class func instance(wallet: Wallet, address _: ResolvedAddress) -> IPreSendHandler? {
+        guard let adapter = Core.shared.adapterManager.adapter(for: wallet) as? ZanoAdapter else { return nil }
+        return ZanoPreSendHandler(token: wallet.token, baseToken: adapter.baseToken, adapter: adapter)
+    }
+
     private let token: Token
     private let baseToken: Token // same as token for native ZANO
     private let adapter: IBalanceAdapter

@@ -5,16 +5,21 @@ import MarketKit
 import RxSwift
 import TronKit
 
-class TronPreSendHandler {
-    private let token: Token
+open class TronPreSendHandler: PreSendHandler {
+    public let token: Token
     private let adapter: ISendTronAdapter & IBalanceAdapter
+
+    open override class func instance(wallet: Wallet, address _: ResolvedAddress) -> IPreSendHandler? {
+        guard let adapter = Core.shared.adapterManager.adapter(for: wallet) as? ISendTronAdapter & IBalanceAdapter else { return nil }
+        return TronPreSendHandler(token: wallet.token, adapter: adapter)
+    }
 
     private let stateSubject = PassthroughSubject<AdapterState, Never>()
     private let balanceSubject = PassthroughSubject<Decimal, Never>()
 
     private let disposeBag = DisposeBag()
 
-    init(token: Token, adapter: ISendTronAdapter & IBalanceAdapter) {
+    public init(token: Token, adapter: ISendTronAdapter & IBalanceAdapter) {
         self.token = token
         self.adapter = adapter
 
@@ -31,6 +36,11 @@ class TronPreSendHandler {
                 self?.balanceSubject.send(balanceData.available)
             }
             .disposed(by: disposeBag)
+    }
+
+    open func makeSendData(amountBigUInt: BigUInt, tronAddress: TronKit.Address, memo: String?) -> SendData {
+        let contract = adapter.contract(amount: amountBigUInt, address: tronAddress, memo: memo)
+        return .tron(token: token, contract: contract)
     }
 }
 
@@ -64,14 +74,6 @@ extension TronPreSendHandler: IPreSendHandler {
             return .invalid(cautions: [CautionNew(title: "send.address.invalid_address".localized, text: "send.address_error.own_address".localized(token.coin.code), type: .error)])
         }
 
-        if let activeAccount = Core.shared.accountManager.activeAccount,
-           SmartAccountManager.canUseGasFree(account: activeAccount, token: token)
-        {
-            return .valid(sendData: .tronGasFree(token: token, receiver: tronAddress, value: amountBigUInt))
-        }
-
-        let contract = adapter.contract(amount: amountBigUInt, address: tronAddress, memo: memo)
-
-        return .valid(sendData: .tron(token: token, contract: contract))
+        return .valid(sendData: makeSendData(amountBigUInt: amountBigUInt, tronAddress: tronAddress, memo: memo))
     }
 }

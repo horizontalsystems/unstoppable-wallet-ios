@@ -1,9 +1,9 @@
 import EvmKit
 import Foundation
 
-class EvmSyncSource: Identifiable {
+public class EvmSyncSource: Identifiable {
     let name: String
-    let rpcSource: RpcSource
+    public let rpcSource: RpcSource
     let transactionSource: EvmKit.TransactionSource
 
     init(name: String, rpcSource: RpcSource, transactionSource: EvmKit.TransactionSource) {
@@ -12,7 +12,7 @@ class EvmSyncSource: Identifiable {
         self.transactionSource = transactionSource
     }
 
-    var id: URL {
+    public var id: URL {
         rpcSource.url
     }
 
@@ -25,7 +25,7 @@ class EvmSyncSource: Identifiable {
 }
 
 extension EvmSyncSource: Equatable {
-    static func == (lhs: EvmSyncSource, rhs: EvmSyncSource) -> Bool {
+    public static func == (lhs: EvmSyncSource, rhs: EvmSyncSource) -> Bool {
         lhs.rpcSource.url == rhs.rpcSource.url
     }
 }

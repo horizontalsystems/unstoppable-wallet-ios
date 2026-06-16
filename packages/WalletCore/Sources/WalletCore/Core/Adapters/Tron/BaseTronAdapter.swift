@@ -1,4 +1,5 @@
 import BigInt
+import Combine
 import Foundation
 import HsToolKit
 import RxSwift
@@ -28,9 +29,9 @@ class BaseTronAdapter {
 
     /// Single source for `effectiveAccountActive` updates. Subclasses' `cautionUpdatedObservable`
     /// and any UI-facing publisher should subscribe to this rather than re-deriving the OR.
-    var effectiveAccountActivePublisher: Observable<Bool> {
+    var effectiveAccountActivePublisher: AnyPublisher<Bool, Never> {
         let gasTokenPayment = tronKitWrapper.gasTokenPayment
-        return tronKit.accountActivePublisher.asObservable().map { $0 || gasTokenPayment }
+        return tronKit.accountActivePublisher.map { $0 || gasTokenPayment }.eraseToAnyPublisher()
     }
 
     func balanceDecimal(kitBalance: BigUInt?, decimals: Int) -> Decimal {

@@ -13,11 +13,11 @@ public protocol ISendHandler {
 }
 
 extension ISendHandler {
-    var syncingText: String? { nil }
-    var expirationDuration: Int? { nil }
-    var initialTransactionSettings: InitialTransactionSettings? { nil }
-    var menuItems: [SendMenuItem] { [] }
-    var refreshPublisher: AnyPublisher<Void, Never>? { nil }
+    public var syncingText: String? { nil }
+    public var expirationDuration: Int? { nil }
+    public var initialTransactionSettings: InitialTransactionSettings? { nil }
+    public var menuItems: [SendMenuItem] { [] }
+    public var refreshPublisher: AnyPublisher<Void, Never>? { nil }
 }
 
 public struct SendMenuItem {

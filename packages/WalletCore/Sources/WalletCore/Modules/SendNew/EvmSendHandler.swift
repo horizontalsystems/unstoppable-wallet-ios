@@ -3,7 +3,7 @@ import Foundation
 import MarketKit
 import SwiftUI
 
-class EvmSendHandler {
+class EvmSendHandler: SendHandler {
     let baseToken: Token
     private let transactionData: TransactionData
     private let evmKitWrapper: EvmKitWrapper
@@ -14,6 +14,11 @@ class EvmSendHandler {
         self.baseToken = baseToken
         self.transactionData = transactionData
         self.evmKitWrapper = evmKitWrapper
+    }
+
+    override class func instance(sendData: SendData) -> ISendHandler? {
+        guard case let .evm(blockchainType, transactionData, _) = sendData else { return nil }
+        return instance(blockchainType: blockchainType, transactionData: transactionData)
     }
 }
 

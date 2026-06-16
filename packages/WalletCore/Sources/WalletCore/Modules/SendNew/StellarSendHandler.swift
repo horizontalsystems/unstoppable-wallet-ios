@@ -3,7 +3,11 @@ import MarketKit
 import StellarKit
 import stellarsdk
 
-class StellarSendHandler {
+class StellarSendHandler: SendHandler {
+    override class func instance(sendData: SendData) -> ISendHandler? {
+        guard case let .stellar(data, token, memo) = sendData else { return nil }
+        return instance(data: data, token: token, memo: memo)
+    }
     private let stellarKit: StellarKit.Kit
     private let keyPair: KeyPair
     private let token: Token

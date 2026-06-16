@@ -3,7 +3,12 @@ import Foundation
 import MarketKit
 import RxSwift
 
-class ZcashPreSendHandler {
+class ZcashPreSendHandler: PreSendHandler {
+    override class func instance(wallet: Wallet, address _: ResolvedAddress) -> IPreSendHandler? {
+        guard let adapter = Core.shared.adapterManager.adapter(for: wallet) as? ZcashAdapter else { return nil }
+        return ZcashPreSendHandler(token: wallet.token, adapter: adapter)
+    }
+
     private let token: Token
     private let adapter: ZcashAdapter
 

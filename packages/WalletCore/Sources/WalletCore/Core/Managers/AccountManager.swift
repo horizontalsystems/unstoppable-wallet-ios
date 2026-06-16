@@ -67,7 +67,7 @@ extension AccountManager {
         accountUpdatedSubject.eraseToAnyPublisher()
     }
 
-    var accountDeletedPublisher: AnyPublisher<Account, Never> {
+    public var accountDeletedPublisher: AnyPublisher<Account, Never> {
         accountDeletedSubject.eraseToAnyPublisher()
     }
 
@@ -88,7 +88,7 @@ extension AccountManager {
         activeAccountSubject.send(storage.activeAccount)
     }
 
-    var allAccounts: [Account] {
+    public var allAccounts: [Account] {
         storage.allAccounts
     }
 

@@ -1,4 +1,4 @@
-enum AdapterError: Error {
+public enum AdapterError: Error {
     case wrongParameters
     case unsupportedAccount
 }

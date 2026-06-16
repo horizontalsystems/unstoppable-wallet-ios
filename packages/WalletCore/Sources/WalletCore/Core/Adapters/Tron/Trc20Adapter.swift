@@ -73,7 +73,7 @@ extension Trc20Adapter: IBalanceAdapter {
     }
 
     var cautionUpdatedObservable: Observable<CautionNew?> {
-        effectiveAccountActivePublisher.map { [weak self] in self?.balanceCaution(active: $0) }
+        effectiveAccountActivePublisher.asObservable().map { [weak self] in self?.balanceCaution(active: $0) }
     }
 }
 

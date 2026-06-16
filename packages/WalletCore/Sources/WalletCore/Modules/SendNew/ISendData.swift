@@ -12,7 +12,7 @@ public protocol ISendData {
 }
 
 extension ISendData {
-    var customSendButtonTitle: String? {
+    public var customSendButtonTitle: String? {
         nil
     }
 
