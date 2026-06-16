@@ -2496,9 +2496,9 @@
 
 "new_wallet.title" = "Новый кошелёк";
 "new_wallet.standard" = "Стандартный";
-"new_wallet.standard.description" = "Создайте кошелёк с фразой восстановления для полного контроля и гибкости.";
+"new_wallet.standard.description" = "Кошелёк с фразой восстановления, требующей ручного резервного копирования.";
 "new_wallet.passkey" = "Passkey";
-"new_wallet.passkey.description" = "Создайте кошелёк, защищённый вашим устройством и iCloud, для удобного доступа.";
+"new_wallet.passkey.description" = "Кошелёк с фразой восстановления, сохранённой и защищённой вашим устройством и iCloud.";
 "new_wallet.smart_account" = "Smart Account";
 "new_wallet.smart_account.description" = "Кошелёк на основе passkey со спонсированием газа.";
 

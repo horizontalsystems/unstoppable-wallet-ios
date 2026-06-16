@@ -2496,9 +2496,9 @@
 
 "new_wallet.title" = "Neue Wallet";
 "new_wallet.standard" = "Standard";
-"new_wallet.standard.description" = "Erstelle eine Wallet mit einer Wiederherstellungsphrase für volle Kontrolle und Flexibilität.";
+"new_wallet.standard.description" = "Ein Wallet mit einer Wiederherstellungsphrase, die manuell gesichert werden muss.";
 "new_wallet.passkey" = "Passkey";
-"new_wallet.passkey.description" = "Erstelle eine Wallet, die durch dein Gerät und iCloud für einfachen Zugriff gesichert ist.";
+"new_wallet.passkey.description" = "Ein Wallet mit einer Wiederherstellungsphrase, die von Ihrem Gerät und iCloud gespeichert und geschützt wird.";
 "new_wallet.smart_account" = "Smart Account";
 "new_wallet.smart_account.description" = "Passkey-gesichertes Wallet mit Gas-Sponsoring.";
 

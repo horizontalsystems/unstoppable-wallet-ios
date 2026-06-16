@@ -2496,9 +2496,9 @@
 
 "new_wallet.title" = "新钱包";
 "new_wallet.standard" = "标准";
-"new_wallet.standard.description" = "使用助记词创建钱包，获得完全控制权和灵活性。";
+"new_wallet.standard.description" = "带有恢复短语的钱包，需要手动备份。";
 "new_wallet.passkey" = "Passkey";
-"new_wallet.passkey.description" = "创建由您的设备和 iCloud 保护的钱包，轻松访问。";
+"new_wallet.passkey.description" = "带有恢复短语的钱包，由您的设备和 iCloud 保存并保护。";
 "new_wallet.smart_account" = "智能账户";
 "new_wallet.smart_account.description" = "基于 Passkey 的钱包，支持 Gas 赞助。";
 

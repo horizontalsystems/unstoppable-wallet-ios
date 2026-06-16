@@ -2496,9 +2496,9 @@
 
 "new_wallet.title" = "Yeni Cüzdan";
 "new_wallet.standard" = "Standart";
-"new_wallet.standard.description" = "Tam kontrol ve esneklik için kurtarma ifadesiyle bir cüzdan oluşturun.";
+"new_wallet.standard.description" = "Manuel yedekleme gerektiren bir kurtarma ifadesine sahip cüzdan.";
 "new_wallet.passkey" = "Passkey";
-"new_wallet.passkey.description" = "Kolay erişim için cihazınız ve iCloud tarafından korunan bir cüzdan oluşturun.";
+"new_wallet.passkey.description" = "Kurtarma ifadesi cihazınız ve iCloud tarafından kaydedilen ve korunan bir cüzdan.";
 "new_wallet.smart_account" = "Smart Account";
 "new_wallet.smart_account.description" = "Gas sponsorluğu ile passkey destekli cüzdan.";
 
