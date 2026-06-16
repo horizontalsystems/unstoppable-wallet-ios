@@ -66,7 +66,7 @@ extension BlockchainType {
             .optimism,
             .stellar,
             .dash,
-            .litecoin
+            .litecoin,
             .bitcoinCash,
             .avalanche,
             .ton,
