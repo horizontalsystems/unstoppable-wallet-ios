@@ -9,6 +9,10 @@ public class Core {
     public static func initApp(widgetRefresher: IWidgetRefresher? = nil) throws {
         let core = try Core(widgetRefresher: widgetRefresher)
         instance = core
+
+        SendHandlerFactory.unstoppableHandlers.forEach { SendHandlerFactory.register($0) }
+        SendHandlerFactory.unstoppablePreSendHandlers.forEach { SendHandlerFactory.register($0) }
+        TransactionServiceFactory.unstoppableTransactionServices.forEach { TransactionServiceFactory.register($0) }
     }
 
     public static var shared: Core {
@@ -17,6 +21,7 @@ public class Core {
 
     let marketKit: MarketKit.Kit
 
+    public let databaseDirectoryURL: URL
     public let userDefaultsStorage: UserDefaultsStorage
     let localStorage: LocalStorage
     let keychainStorage: KeychainStorage
@@ -50,15 +55,13 @@ public class Core {
     let logger: Logger
 
     let currencyManager: CurrencyManager
-    let networkManager: NetworkManager
+    public let networkManager: NetworkManager
     let termsManager: TermsManager
     let watchlistManager: WatchlistManager
     let contactManager: ContactBookManager
     let subscriptionManager: SubscriptionManager
 
     public let accountManager: AccountManager
-    let smartAccountManager: SmartAccountManager
-    let smartAccountPasskeyManager: SmartAccountPasskeyManager
     let accountRestoreWarningManager: AccountRestoreWarningManager
     public let accountFactory: AccountFactory
     let backupManager: BackupManager
@@ -70,14 +73,14 @@ public class Core {
     let recentlySentManager: RecentlySentManager
 
     let btcBlockchainManager: BtcBlockchainManager
-    let evmSyncSourceManager: EvmSyncSourceManager
+    public let evmSyncSourceManager: EvmSyncSourceManager
     let moneroNodeManager: MoneroNodeManager
     let zanoNodeManager: ZanoNodeManager
     let zcashNodeManager: ZcashNodeManager
     let restoreStateManager: RestoreStateManager
-    let evmBlockchainManager: EvmBlockchainManager
+    public let evmBlockchainManager: EvmBlockchainManager
     let evmLabelManager: EvmLabelManager
-    let tronAccountManager: TronAccountManager
+    public let tronAccountManager: TronAccountManager
     let tonKitManager: TonKitManager
     let stellarKitManager: StellarKitManager
     let zanoKitManager: ZanoKitManager
@@ -141,7 +144,7 @@ public class Core {
     public let smartAccountService: CreateSmartAccountService
 
     init(widgetRefresher: IWidgetRefresher?) throws {
-        let databaseDirectoryURL = try FileManager.default
+        databaseDirectoryURL = try FileManager.default
             .url(for: .applicationSupportDirectory, in: .userDomainMask, appropriateFor: nil, create: true)
         let databaseURL = databaseDirectoryURL.appendingPathComponent("bank.sqlite")
         let dbPool = try DatabasePool(path: databaseURL.path)
@@ -203,8 +206,6 @@ public class Core {
         let accountStorage = AccountStorage(keychainStorage: keychainStorage, storage: accountRecordStorage)
         let activeAccountStorage = ActiveAccountStorage(dbPool: dbPool)
         accountManager = AccountManager(passcodeManager: passcodeManager, accountStorage: accountStorage, activeAccountStorage: activeAccountStorage)
-        smartAccountManager = try SmartAccountManager(accountManager: accountManager, databaseDirectoryUrl: databaseDirectoryURL)
-        smartAccountPasskeyManager = SmartAccountPasskeyManager()
         accountRestoreWarningManager = AccountRestoreWarningManager(accountManager: accountManager, userDefaultsStorage: userDefaultsStorage)
         accountFactory = AccountFactory(accountManager: accountManager)
         backupManager = BackupManager(accountManager: accountManager)

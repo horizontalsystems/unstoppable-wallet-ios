@@ -1,89 +1,78 @@
 import MarketKit
 
 public enum SendHandlerFactory {
+    private static var providers: [SendHandler.Type] = []
+    private static var preSendProviders: [PreSendHandler.Type] = []
+
+    public static func register(_ provider: SendHandler.Type) {
+        providers.append(provider)
+    }
+
+    public static func register(_ provider: PreSendHandler.Type) {
+        preSendProviders.append(provider)
+    }
+
+    public static func prepend(_ provider: SendHandler.Type) {
+        providers.insert(provider, at: 0)
+    }
+
+    public static func prepend(_ provider: PreSendHandler.Type) {
+        preSendProviders.insert(provider, at: 0)
+    }
+
     static func handler(sendData: SendData) -> ISendHandler? {
-        switch sendData {
-        case let .evm(blockchainType, transactionData, token):
-            let activeAccount = Core.shared.accountManager.activeAccount
-            if let activeAccount, case .passkeyOwned = activeAccount.type {
-                return AaSendHandler.instance(blockchainType: blockchainType, transactionData: transactionData, token: token, account: activeAccount)
+        for provider in providers {
+            if let handler = provider.instance(sendData: sendData) {
+                return handler
             }
-            return EvmSendHandler.instance(blockchainType: blockchainType, transactionData: transactionData)
-        case let .bitcoin(token, params):
-            return BitcoinSendHandler.instance(token: token, params: params)
-        case let .zcash(amount, recipient, memo):
-            return ZcashSendHandler.instance(amount: amount, recipient: recipient, memo: memo)
-        case let .zcashResend(amount, recipient, memo, initialTransactionSettings):
-            return ZcashSendHandler.instance(amount: amount, recipient: recipient, memo: memo, initialTransactionSettings: initialTransactionSettings)
-        case let .zcashShield(amount, recipient, memo):
-            return ShieldSendHandler.instance(amount: amount, recipient: recipient, memo: memo)
-        case let .tron(token, contract):
-            return TronSendHandler.instance(token: token, contract: contract)
-        case let .tronGasFree(token, receiver, value):
-            guard let activeAccount = Core.shared.accountManager.activeAccount else { return nil }
-            return GasFreeSendHandler.instance(token: token, receiver: receiver, value: value, account: activeAccount)
-        case let .ton(token, amount, address, memo):
-            return TonSendHandler.instance(token: token, amount: amount, address: address, memo: memo)
-        case let .stellar(data, token, memo):
-            return StellarSendHandler.instance(data: data, token: token, memo: memo)
-        case let .solana(token, amount, address, memo):
-            return SolanaSendHandler.instance(token: token, amount: amount, address: address, memo: memo)
-        case let .monero(token, amount, address, memo):
-            return MoneroSendHandler.instance(token: token, amount: amount, address: address, memo: memo)
-        case let .zano(token, amount, address, memo):
-            return ZanoSendHandler.instance(token: token, feeToken: token, amount: amount, address: address, memo: memo)
-        case let .zanoAsset(token, baseToken, amount, address, memo):
-            return ZanoSendHandler.instance(token: token, feeToken: baseToken, amount: amount, address: address, memo: memo)
-        case let .swap(tokenIn, tokenOut, amountIn, provider, multiSwapQuote):
-            return MultiSwapSendHandler.instance(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider, multiSwapQuote: multiSwapQuote)
+        }
+
+        switch sendData {
         case let .walletConnect(request):
             return WalletConnectSendHandler.instance(request: request)
-        case let .tonConnect(request):
-            return try? TonConnectSendHandler.instance(request: request)
         case let .openCryptoPay(payment, entry, inner):
             return OpenCryptoPaySendHandlerFactory.handler(payment: payment, entry: entry, inner: inner)
+        default:
+            return nil
         }
     }
 
     public static func preSendHandler(wallet: Wallet, address: ResolvedAddress) -> IPreSendHandler? {
-        let adapter = Core.shared.adapterManager.adapter(for: wallet)
-
-        if let adapter = adapter as? ISendEthereumAdapter & IBalanceAdapter {
-            return EvmPreSendHandler(token: wallet.token, adapter: adapter)
-        }
-
-        if let adapter = adapter as? BitcoinBaseAdapter {
-            return BitcoinPreSendHandler(token: wallet.token, address: address, adapter: adapter)
-        }
-
-        if let adapter = adapter as? ZcashAdapter {
-            return ZcashPreSendHandler(token: wallet.token, adapter: adapter)
-        }
-
-        if let adapter = adapter as? ISendTronAdapter & IBalanceAdapter {
-            return TronPreSendHandler(token: wallet.token, adapter: adapter)
-        }
-
-        if let adapter = adapter as? ISendTonAdapter & IBalanceAdapter {
-            return TonPreSendHandler(token: wallet.token, adapter: adapter)
-        }
-
-        if let adapter = adapter as? ISendSolanaAdapter & IBalanceAdapter {
-            return SolanaPreSendHandler(token: wallet.token, adapter: adapter)
-        }
-
-        if let adapter = adapter as? StellarAdapter {
-            return StellarPreSendHandler(token: wallet.token, adapter: adapter)
-        }
-
-        if let adapter = adapter as? MoneroAdapter {
-            return MoneroPreSendHandler(token: wallet.token, adapter: adapter)
-        }
-
-        if let adapter = adapter as? ZanoAdapter {
-            return ZanoPreSendHandler(token: wallet.token, baseToken: adapter.baseToken, adapter: adapter)
+        for provider in preSendProviders {
+            if let handler = provider.instance(wallet: wallet, address: address) {
+                return handler
+            }
         }
 
         return nil
     }
+}
+
+extension SendHandlerFactory {
+    public static let unstoppableHandlers: [SendHandler.Type] = [
+        EvmSendHandler.self,
+        BitcoinSendHandler.self,
+        ZcashSendHandler.self,
+        ShieldSendHandler.self,
+        TronSendHandler.self,
+        TonSendHandler.self,
+        StellarSendHandler.self,
+        SolanaSendHandler.self,
+        MoneroSendHandler.self,
+        ZanoSendHandler.self,
+        MultiSwapSendHandler.self,
+        TonConnectSendHandler.self,
+    ]
+
+    public static let unstoppablePreSendHandlers: [PreSendHandler.Type] = [
+        EvmPreSendHandler.self,
+        BitcoinPreSendHandler.self,
+        ZcashPreSendHandler.self,
+        TronPreSendHandler.self,
+        TonPreSendHandler.self,
+        SolanaPreSendHandler.self,
+        StellarPreSendHandler.self,
+        MoneroPreSendHandler.self,
+        ZanoPreSendHandler.self,
+    ]
 }

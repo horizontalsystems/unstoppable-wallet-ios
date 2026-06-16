@@ -3,12 +3,12 @@ import MarketKit
 import RxSwift
 import TronKit
 
-class TronAccountManager {
+public class TronAccountManager {
     private let blockchainType: BlockchainType = .tron
     private let accountManager: AccountManager
     private let walletManager: WalletManager
     private let marketKit: MarketKit.Kit
-    let tronKitManager: TronKitManager
+    public let tronKitManager: TronKitManager
     private let restoreStateManager: RestoreStateManager
 
     private let disposeBag = DisposeBag()

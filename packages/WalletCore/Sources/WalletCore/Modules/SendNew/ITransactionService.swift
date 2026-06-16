@@ -2,7 +2,7 @@ import Combine
 import MarketKit
 import SwiftUI
 
-protocol ITransactionService {
+public protocol ITransactionService {
     var transactionSettings: TransactionSettings? { get }
     var modified: Bool { get }
     var cautions: [CautionNew] { get }

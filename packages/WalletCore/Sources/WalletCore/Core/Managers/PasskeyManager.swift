@@ -35,7 +35,7 @@ public class PasskeyManager: NSObject {
         }
     }
 
-    func loginWith(credentialID: Data) async throws -> Passkey {
+    public func loginWith(credentialID: Data) async throws -> Passkey {
         try await assert(credentialID: credentialID)
     }
 

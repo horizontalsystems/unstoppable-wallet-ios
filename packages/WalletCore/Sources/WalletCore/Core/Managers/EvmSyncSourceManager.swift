@@ -301,7 +301,7 @@ extension EvmSyncSourceManager {
         return syncSources[0]
     }
 
-    func httpSyncSource(blockchainType: BlockchainType) -> EvmSyncSource? {
+    public func httpSyncSource(blockchainType: BlockchainType) -> EvmSyncSource? {
         let syncSources = allSyncSources(blockchainType: blockchainType)
 
         if let urlString = blockchainSettingsStorage.evmSyncSourceUrl(blockchainType: blockchainType),

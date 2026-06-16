@@ -6,6 +6,8 @@ import RxSwift
 import TronKit
 
 public class TronKitManager {
+    public var gaslessAccountProvider: IGaslessAccountProvider = TronKitManager.unstoppableGaslessAccountProvider
+
     private let disposeBag = DisposeBag()
     private let testNetManager: TestNetManager
     private let evmSyncSourceManager: EvmSyncSourceManager
@@ -78,7 +80,7 @@ public class TronKitManager {
             throw AdapterError.unsupportedAccount
         }
         let syncSource = evmSyncSourceManager.syncSource(blockchainType: .tron)
-        let gaslessAccount = SmartAccountManager.isGasTokenPayment(account.type)
+        let gaslessAccount = gaslessAccountProvider.gasless(account: account)
         let tronKit = try TronKit.Kit.instance(
             address: address,
             network: network,
@@ -169,5 +171,19 @@ extension TronKitManager {
 extension TronKitWrapper {
     enum SignerError: Error {
         case signerNotSupported
+    }
+}
+
+public protocol IGaslessAccountProvider {
+    func gasless(account: Account) -> Bool
+}
+
+extension TronKitManager {
+    public static var unstoppableGaslessAccountProvider: IGaslessAccountProvider = UnstoppableGaslessAccountProvider()
+}
+
+class UnstoppableGaslessAccountProvider: IGaslessAccountProvider {
+    func gasless(account _: Account) -> Bool {
+        false
     }
 }

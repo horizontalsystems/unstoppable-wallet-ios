@@ -12,7 +12,7 @@ public struct AppValue {
         self.value = value
     }
 
-    init(token: Token, value: Decimal) {
+    public init(token: Token, value: Decimal) {
         kind = .token(token: token)
         self.value = value
     }

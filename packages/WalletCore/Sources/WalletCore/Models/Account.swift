@@ -4,7 +4,7 @@ public class Account: Identifiable {
     public let id: String
     var level: Int
     public var name: String
-    let type: AccountType
+    public let type: AccountType
     let origin: AccountOrigin
     var backedUp: Bool
     var fileBackedUp: Bool

@@ -3,7 +3,13 @@ import MarketKit
 import MoneroKit
 import SwiftUI
 
-class MoneroTransactionService {
+class MoneroTransactionService: TransactionService {
+    override class func instance(sendData: SendData, baseToken: Token, initialTransactionSettings: InitialTransactionSettings?) -> ITransactionService? {
+        guard baseToken.blockchainType == .monero,
+              let adapter = Core.shared.adapterManager.adapter(for: baseToken) as? MoneroAdapter
+        else { return nil }
+        return MoneroTransactionService(adapter: adapter)
+    }
     private let adapter: MoneroAdapter
 
     private(set) var priority: MoneroKit.SendPriority = .default

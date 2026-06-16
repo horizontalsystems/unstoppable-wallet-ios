@@ -7,7 +7,12 @@ import MarketKit
 import RxSwift
 import SwiftUI
 
-class BitcoinPreSendHandler {
+class BitcoinPreSendHandler: PreSendHandler {
+    override class func instance(wallet: Wallet, address: ResolvedAddress) -> IPreSendHandler? {
+        guard let adapter = Core.shared.adapterManager.adapter(for: wallet) as? BitcoinBaseAdapter else { return nil }
+        return BitcoinPreSendHandler(token: wallet.token, address: address, adapter: adapter)
+    }
+
     let token: Token
     let defaultSortMode: TransactionDataSortMode
     let defaultRbfEnabled: Bool

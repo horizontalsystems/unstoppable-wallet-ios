@@ -3,7 +3,11 @@ import Foundation
 import Hodler
 import MarketKit
 
-class BitcoinSendHandler {
+class BitcoinSendHandler: SendHandler {
+    override class func instance(sendData: SendData) -> ISendHandler? {
+        guard case let .bitcoin(token, params) = sendData else { return nil }
+        return instance(token: token, params: params)
+    }
     private let token: Token
     private var params: SendParameters
     private var adapter: BitcoinBaseAdapter

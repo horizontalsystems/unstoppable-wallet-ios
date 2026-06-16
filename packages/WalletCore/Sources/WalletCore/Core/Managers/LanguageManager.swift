@@ -64,7 +64,7 @@ extension LanguageManager {
     }
 }
 
-extension String {
+public extension String {
     var localized: String {
         LanguageManager.shared.localize(string: self, bundle: Bundle.main)
     }

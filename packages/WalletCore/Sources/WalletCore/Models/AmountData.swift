@@ -35,6 +35,11 @@ public struct AmountData {
     public let appValue: AppValue
     public let currencyValue: CurrencyValue?
 
+    public init(appValue: AppValue, currencyValue: CurrencyValue?) {
+        self.appValue = appValue
+        self.currencyValue = currencyValue
+    }
+
     var formattedFull: String {
         var parts = [String]()
 

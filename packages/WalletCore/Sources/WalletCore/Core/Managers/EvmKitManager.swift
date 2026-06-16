@@ -10,7 +10,7 @@ import RxRelay
 import RxSwift
 import UniswapKit
 
-class EvmKitManager {
+public class EvmKitManager {
     let chain: Chain
     private let syncSourceManager: EvmSyncSourceManager
     private let disposeBag = DisposeBag()
@@ -158,16 +158,16 @@ extension EvmKitManager {
         }
     }
 
-    func evmKitWrapper(account: Account, blockchainType: BlockchainType) throws -> EvmKitWrapper {
+    public func evmKitWrapper(account: Account, blockchainType: BlockchainType) throws -> EvmKitWrapper {
         try queue.sync {
             try _evmKitWrapper(account: account, blockchainType: blockchainType)
         }
     }
 }
 
-class EvmKitWrapper {
+public class EvmKitWrapper {
     let blockchainType: BlockchainType
-    let evmKit: EvmKit.Kit
+    public let evmKit: EvmKit.Kit
     let nftKit: NftKit.Kit?
     let merkleTransactionAdapter: MerkleTransactionAdapter?
     let signer: Signer?

@@ -76,7 +76,7 @@ extension EvmBlockchainManager {
         blockchain(chainId: chainId).flatMap { try? chain(blockchainType: $0.type) }
     }
 
-    func chain(blockchainType: BlockchainType) throws -> Chain {
+    public func chain(blockchainType: BlockchainType) throws -> Chain {
         switch blockchainType {
         case .ethereum:
             if testNetManager.testNetEnabled {
@@ -117,7 +117,7 @@ extension EvmBlockchainManager {
         return try? marketKit.token(query: query)
     }
 
-    func evmKitManager(blockchainType: BlockchainType) throws -> EvmKitManager {
+    public func evmKitManager(blockchainType: BlockchainType) throws -> EvmKitManager {
         try evmManagers(blockchainType: blockchainType).0
     }
 

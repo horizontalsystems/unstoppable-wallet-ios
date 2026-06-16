@@ -143,7 +143,7 @@ struct BottomSheetView: View {
 }
 
 public struct InfoDescription: Identifiable {
-    static var fee = InfoDescription(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized)
+    public static var fee = InfoDescription(title: "fee_settings.network_fee".localized, description: "fee_settings.network_fee.info".localized)
 
     let title: String
     let description: String

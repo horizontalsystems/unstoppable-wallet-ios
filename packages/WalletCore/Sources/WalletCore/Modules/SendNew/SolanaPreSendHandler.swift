@@ -4,7 +4,12 @@ import MarketKit
 import RxSwift
 import SolanaKit
 
-class SolanaPreSendHandler {
+class SolanaPreSendHandler: PreSendHandler {
+    override class func instance(wallet: Wallet, address _: ResolvedAddress) -> IPreSendHandler? {
+        guard let adapter = Core.shared.adapterManager.adapter(for: wallet) as? ISendSolanaAdapter & IBalanceAdapter else { return nil }
+        return SolanaPreSendHandler(token: wallet.token, adapter: adapter)
+    }
+
     private let token: Token
     private let adapter: ISendSolanaAdapter & IBalanceAdapter
 

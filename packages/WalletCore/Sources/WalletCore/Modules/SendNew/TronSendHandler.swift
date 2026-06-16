@@ -3,7 +3,11 @@ import Foundation
 import MarketKit
 import TronKit
 
-class TronSendHandler {
+class TronSendHandler: SendHandler {
+    override class func instance(sendData: SendData) -> ISendHandler? {
+        guard case let .tron(token, contract) = sendData else { return nil }
+        return instance(token: token, contract: contract)
+    }
     let baseToken: Token
     private let token: Token
     private let contract: Contract

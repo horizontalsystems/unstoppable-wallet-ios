@@ -1,34 +1,22 @@
 import Combine
 import Foundation
-import TronKit
+import MarketKit
 
 class TronWalletTokenViewModel: ObservableObject {
-    private let tronKit: TronKit.Kit
     private var cancellables = Set<AnyCancellable>()
 
     private var hasAppeared = false
     private let watchAccount: Bool
-    private let gasTokenPayment: Bool
     @Published var accountActive: Bool
 
-    init(tronKit: TronKit.Kit, wallet: Wallet) {
-        self.tronKit = tronKit
+    init(adapter: BaseTronAdapter, wallet: Wallet) {
         watchAccount = wallet.account.watchAccount
-        gasTokenPayment = SmartAccountManager.isGasTokenPayment(wallet.account.type)
-        accountActive = tronKit.accountActive || gasTokenPayment
+        accountActive = adapter.effectiveAccountActive
 
-        tronKit.trxBalancePublisher
+        adapter.effectiveAccountActivePublisher
             .receive(on: DispatchQueue.main)
-            .sink { [weak self] _ in self?.sync() }
+            .sink { [weak self] active in self?.accountActive = active }
             .store(in: &cancellables)
-    }
-
-    private func sync() {
-        let newAccountActive = tronKit.accountActive || gasTokenPayment
-
-        if newAccountActive != accountActive {
-            accountActive = newAccountActive
-        }
     }
 
     func onFirstAppear() {
@@ -56,7 +44,7 @@ class TronWalletTokenViewModel: ObservableObject {
                                 self?.showAddressView()
                             }),
                         ])),
-                    ],
+                    ]
                 )
             }
         }

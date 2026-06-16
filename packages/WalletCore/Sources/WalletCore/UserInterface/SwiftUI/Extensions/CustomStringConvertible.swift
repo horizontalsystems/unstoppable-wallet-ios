@@ -1,12 +1,12 @@
 import SwiftUI
 
-struct ComponentInformedTitle: CustomStringConvertible {
+public struct ComponentInformedTitle: CustomStringConvertible {
     let title: String
     let info: InfoDescription
 
-    var description: String { title }
+    public var description: String { title }
 
-    init(_ title: String, info: InfoDescription) {
+    public init(_ title: String, info: InfoDescription) {
         self.title = title
         self.info = info
     }
