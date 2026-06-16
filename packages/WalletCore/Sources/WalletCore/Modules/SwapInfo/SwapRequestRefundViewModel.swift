@@ -1,6 +1,5 @@
 import Combine
 import Foundation
-import MessageUI
 import SwiftUI
 import UIKit
 
@@ -36,12 +35,19 @@ class SwapRequestRefundViewModel: ObservableObject {
     func open(contactLink: SwapRequestRefundBuilder.ContactLink) {
         switch contactLink.type {
         case .email:
-            guard !MFMailComposeViewController.canSendMail(),
-                  let url = SwapRequestRefundBuilder.mailtoURL(email: contactLink.rawValue, subject: details.emailSubject, body: details.emailBody)
-            else {
+            let fallbackText = SwapRequestRefundBuilder.shareText(email: contactLink.rawValue, subject: details.emailSubject, body: details.emailBody)
+
+            guard let url = SwapRequestRefundBuilder.mailtoURL(email: contactLink.rawValue, subject: details.emailSubject, body: details.emailBody) else {
+                Coordinator.shared.present { _ in ActivityView(activityItems: [fallbackText]) }
                 return
             }
-            Coordinator.shared.present(url: url)
+
+            UIApplication.shared.open(url, options: [:]) { opened in
+                guard !opened else {
+                    return
+                }
+                Coordinator.shared.present { _ in ActivityView(activityItems: [fallbackText]) }
+            }
 
         case .telegram:
             copyBody()
@@ -165,6 +171,15 @@ enum SwapRequestRefundBuilder {
             URLQueryItem(name: "body", value: body),
         ]
         return components.url
+    }
+
+    static func shareText(email: String, subject: String, body: String) -> String {
+        """
+        To: \(email)
+        Subject: \(subject)
+
+        \(body)
+        """
     }
 
     static func copyBody(_ body: String) {
