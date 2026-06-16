@@ -54,26 +54,27 @@ extension BlockchainType {
         let blockchainTypes: [BlockchainType] = [
             .bitcoin,
             .ethereum,
-            .solana,
             .monero,
-            .tron,
             .zcash,
-            .dash,
             .zano,
-            .litecoin,
             .binanceSmartChain,
-            .polygon,
+            .solana,
+            .tron,
             .base,
+            .polygon,
             .arbitrumOne,
             .optimism,
-            .avalanche,
             .stellar,
-            .gnosis,
-            .zkSync,
-            .ton,
+            .dash,
+            .litecoin
             .bitcoinCash,
-            .fantom,
+            .avalanche,
+            .ton,
             .ecash,
+            .zkSync,
+            .gnosis,
+            .fantom,
+
         ]
 
         return blockchainTypes.firstIndex(of: self) ?? Int.max
