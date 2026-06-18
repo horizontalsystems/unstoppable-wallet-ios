@@ -3,7 +3,7 @@ import MarketKit
 import ZcashLightClientKit
 
 class ZcashSendHandler: SendHandler {
-    override class func instance(sendData: SendData) -> ISendHandler? {
+    override class func instance(sendData: WalletCore.SendData) -> ISendHandler? {
         switch sendData {
         case let .zcash(amount, recipient, memo):
             return instance(amount: amount, recipient: recipient, memo: memo)
@@ -13,6 +13,7 @@ class ZcashSendHandler: SendHandler {
             return nil
         }
     }
+
     private let token: Token
     private let amount: Decimal
     private let recipient: Recipient

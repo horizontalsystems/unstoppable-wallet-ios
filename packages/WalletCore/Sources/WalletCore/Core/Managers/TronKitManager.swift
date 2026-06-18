@@ -130,7 +130,7 @@ extension TronKitManager {
     }
 }
 
-class TronKitWrapper {
+public class TronKitWrapper {
     let tronKit: TronKit.Kit
     let signer: Signer?
     /// True when this wrapper serves a gas-token-payment account (currently passkey-AA / GasFree).
@@ -178,8 +178,8 @@ public protocol IGaslessAccountProvider {
     func gasless(account: Account) -> Bool
 }
 
-extension TronKitManager {
-    public static var unstoppableGaslessAccountProvider: IGaslessAccountProvider = UnstoppableGaslessAccountProvider()
+public extension TronKitManager {
+    static var unstoppableGaslessAccountProvider: IGaslessAccountProvider = UnstoppableGaslessAccountProvider()
 }
 
 class UnstoppableGaslessAccountProvider: IGaslessAccountProvider {

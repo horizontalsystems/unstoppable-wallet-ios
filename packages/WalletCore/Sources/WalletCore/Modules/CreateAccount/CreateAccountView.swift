@@ -123,7 +123,7 @@ struct CreateAccountView: View {
                                     ListSectionFooter(text: "create_wallet.passphrase_description".localized)
                                 }
                             }
-                        case .passkey, .smartAccount: EmptyView()
+                        case .passkey: EmptyView()
                         }
                     }
                     .animation(.default, value: viewModel.advanced)
@@ -179,15 +179,6 @@ struct CreateAccountView: View {
                     await MainActor.run { handleError(error) }
                 }
             }
-        case .smartAccount:
-            Task {
-                do {
-                    let account = try await viewModel.createSmartAccount()
-                    await MainActor.run { handleSuccess(account: account) }
-                } catch {
-                    await MainActor.run { handleError(error) }
-                }
-            }
         }
     }
 
@@ -213,8 +204,6 @@ struct CreateAccountView: View {
         } else if case CreateAccountViewModel.CreateError.invalidConfirmation = error {
             passphraseConfirmationCaution = .caution(Caution(text: "create_wallet.error.invalid_confirmation".localized, type: .error))
         } else if case PasskeyManager.PasskeyError.userCanceled = error {
-            return
-        } else if case SmartAccountPasskeyManager.AAError.userCanceled = error {
             return
         } else {
             HudHelper.instance.show(banner: .error(string: error.smartDescription))

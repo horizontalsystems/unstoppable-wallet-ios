@@ -25,6 +25,8 @@ class ZanoPreSendHandler: PreSendHandler {
         self.baseToken = baseToken
         self.adapter = adapter
 
+        super.init()
+
         adapter.balanceStateUpdatedObservable
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe { [weak self] state in

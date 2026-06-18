@@ -19,7 +19,7 @@ public class Core {
         instance!
     }
 
-    let marketKit: MarketKit.Kit
+    public let marketKit: MarketKit.Kit
 
     public let databaseDirectoryURL: URL
     public let userDefaultsStorage: UserDefaultsStorage
@@ -141,7 +141,7 @@ public class Core {
     let swapProviderInfoManager: SwapProviderInfoManager
     let swapHistoryManager: SwapHistoryManager
 
-    public let smartAccountService: CreateSmartAccountService
+    public let createPasskeyAccountService: CreatePasskeyAccountService
 
     init(widgetRefresher: IWidgetRefresher?) throws {
         databaseDirectoryURL = try FileManager.default
@@ -495,12 +495,10 @@ public class Core {
         let swapStorage = SwapStorage(dbPool: dbPool, marketKit: marketKit)
         swapHistoryManager = SwapHistoryManager(accountManager: accountManager, storage: swapStorage)
 
-        let walletActivator = CreateSmartAccountService.defaultActivator(marketKit: marketKit, walletManager: walletManager)
-        smartAccountService = CreateSmartAccountService(
+        createPasskeyAccountService = CreatePasskeyAccountService(
             accountFactory: accountFactory,
             accountManager: accountManager,
-            smartAccountManager: smartAccountManager,
-            activateDefaultWallets: walletActivator
+            walletManager: walletManager
         )
     }
 }

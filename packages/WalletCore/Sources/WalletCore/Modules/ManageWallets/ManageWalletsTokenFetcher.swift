@@ -9,11 +9,6 @@ struct ManageWalletsTokenFetcher {
         switch account.type {
         case .hdExtendedKey:
             return BtcBlockchainManager.blockchainTypes.flatMap(\.nativeTokenQueries)
-        case .passkeyOwned:
-            // Passkey AA accounts only support stablecoins from the registry. Falling back to
-            // `BlockchainType.supported.defaultTokenQuery` would yield natives (ETH/BNB/etc),
-            // which AccountType.supports filters out → empty Manage Wallets screen.
-            return StablecoinRegistry.v1TokenQueries
         default:
             return BlockchainType.supported.map(\.defaultTokenQuery)
         }

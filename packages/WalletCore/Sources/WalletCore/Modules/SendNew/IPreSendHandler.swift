@@ -16,7 +16,7 @@ public protocol IPreSendHandler {
     func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult
 }
 
-extension IPreSendHandler {
+public extension IPreSendHandler {
     func title(_ code: String) -> String {
         "send.title".localized(code)
     }

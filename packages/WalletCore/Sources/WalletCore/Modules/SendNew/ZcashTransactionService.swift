@@ -13,6 +13,7 @@ class ZcashTransactionService: TransactionService {
             return nil
         }
     }
+
     enum ProposalRequest {
         case transfer(amount: Decimal, recipient: Recipient, memo: String?)
         case shield(amount: Decimal, recipient: Recipient?, memo: String?)
@@ -37,6 +38,8 @@ class ZcashTransactionService: TransactionService {
         if case let .some(.zcash(zip317MarginalFee)) = initialTransactionSettings {
             self.zip317MarginalFee = zip317MarginalFee
         }
+
+        super.init()
 
         validate()
     }

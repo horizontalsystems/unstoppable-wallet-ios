@@ -11,7 +11,7 @@ protocol ZanoSendable: IBalanceAdapter {
 extension ZanoAdapter: ZanoSendable {}
 
 class ZanoSendHandler: SendHandler {
-    override class func instance(sendData: SendData) -> ISendHandler? {
+    override class func instance(sendData: WalletCore.SendData) -> ISendHandler? {
         switch sendData {
         case let .zano(token, amount, address, memo):
             return instance(token: token, feeToken: token, amount: amount, address: address, memo: memo)
@@ -21,6 +21,7 @@ class ZanoSendHandler: SendHandler {
             return nil
         }
     }
+
     private let token: Token
     private let feeToken: Token // same as token for native ZANO; native ZANO token for confidential assets
     private let adapter: ZanoSendable

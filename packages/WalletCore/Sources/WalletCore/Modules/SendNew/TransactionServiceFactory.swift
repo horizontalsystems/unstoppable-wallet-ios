@@ -22,8 +22,8 @@ public enum TransactionServiceFactory {
     }
 }
 
-extension TransactionServiceFactory {
-    public static let unstoppableTransactionServices: [TransactionService.Type] = [
+public extension TransactionServiceFactory {
+    static let unstoppableTransactionServices: [TransactionService.Type] = [
         EvmTransactionService.self,
         UtxoTransactionService.self,
         MoneroTransactionService.self,
