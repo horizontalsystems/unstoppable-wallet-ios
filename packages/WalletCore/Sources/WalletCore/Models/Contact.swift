@@ -42,7 +42,7 @@ extension [ContactAddress] {
     }
 }
 
-class Contact: Codable, ImmutableMappable, Hashable, Equatable {
+public class Contact: Codable, ImmutableMappable, Hashable, Equatable {
     let uid: String
     let modifiedAt: TimeInterval
     let name: String
@@ -55,25 +55,25 @@ class Contact: Codable, ImmutableMappable, Hashable, Equatable {
         self.addresses = addresses
     }
 
-    required init(map: Map) throws {
+    public required init(map: Map) throws {
         uid = try map.value("uid")
         modifiedAt = try map.value("modified_at")
         name = try map.value("name")
         addresses = try map.value("addresses")
     }
 
-    func mapping(map: Map) {
+    public func mapping(map: Map) {
         uid >>> map["uid"]
         modifiedAt >>> map["modified_at"]
         name >>> map["name"]
         addresses >>> map["addresses"]
     }
 
-    static func == (lhs: Contact, rhs: Contact) -> Bool {
+    public static func == (lhs: Contact, rhs: Contact) -> Bool {
         lhs.uid == rhs.uid
     }
 
-    func hash(into hasher: inout Hasher) {
+    public func hash(into hasher: inout Hasher) {
         hasher.combine(uid)
     }
 

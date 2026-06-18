@@ -2,7 +2,7 @@ import Foundation
 import RxRelay
 import RxSwift
 
-class Pool {
+public class Pool {
     private let provider: IPoolProvider
     private let disposeBag = DisposeBag()
 
@@ -15,7 +15,7 @@ class Pool {
 
     private let queue = DispatchQueue(label: "\(AppConfig.label).pool", qos: .userInitiated)
 
-    init(provider: IPoolProvider) {
+    public init(provider: IPoolProvider) {
         self.provider = provider
 
         provider.recordsObservable()

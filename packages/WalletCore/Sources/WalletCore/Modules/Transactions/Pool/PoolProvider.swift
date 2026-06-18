@@ -3,7 +3,7 @@ import MarketKit
 import RxRelay
 import RxSwift
 
-protocol IPoolProvider {
+public protocol IPoolProvider {
     var syncing: Bool { get }
     var syncingObservable: Observable<Bool> { get }
     var lastBlockInfo: LastBlockInfo? { get }

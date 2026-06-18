@@ -45,9 +45,9 @@ class BitcoinTransactionRecord: TransactionRecord {
     }
 }
 
-struct TransactionLockState {
-    let locked: Bool
-    let date: Date
+public struct TransactionLockState {
+    public let locked: Bool
+    public let date: Date
 }
 
 extension TransactionLockState: Equatable {

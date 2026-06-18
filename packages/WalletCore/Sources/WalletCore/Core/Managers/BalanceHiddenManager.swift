@@ -9,7 +9,7 @@ public class BalanceHiddenManager {
     private let userDefaultsStorage: UserDefaultsStorage
 
     private let balanceHiddenRelay = PublishRelay<Bool>()
-    private(set) var balanceHidden: Bool {
+    public private(set) var balanceHidden: Bool {
         didSet {
             balanceHiddenRelay.accept(balanceHidden)
         }
@@ -43,7 +43,7 @@ public class BalanceHiddenManager {
 }
 
 extension BalanceHiddenManager {
-    var balanceHiddenObservable: Observable<Bool> {
+    public var balanceHiddenObservable: Observable<Bool> {
         balanceHiddenRelay.asObservable()
     }
 

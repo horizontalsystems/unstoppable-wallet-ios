@@ -2,12 +2,12 @@ import Foundation
 import RxRelay
 import RxSwift
 
-class PoolGroup {
+public class PoolGroup {
     private let pools: [Pool]
     private let disposeBag = DisposeBag()
 
     private let syncingRelay = PublishRelay<Bool>()
-    private(set) var syncing = false {
+    public private(set) var syncing = false {
         didSet {
             if oldValue != syncing {
                 syncingRelay.accept(syncing)
@@ -15,7 +15,7 @@ class PoolGroup {
         }
     }
 
-    init(pools: [Pool]) {
+    public init(pools: [Pool]) {
         self.pools = pools
 
         Observable.merge(pools.map(\.syncingObservable))
@@ -40,7 +40,7 @@ class PoolGroup {
     }
 }
 
-extension PoolGroup {
+public extension PoolGroup {
     var syncingObservable: Observable<Bool> {
         syncingRelay.asObservable()
     }

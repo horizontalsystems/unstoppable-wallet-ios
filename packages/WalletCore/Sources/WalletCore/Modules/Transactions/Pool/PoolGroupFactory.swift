@@ -2,7 +2,9 @@ import Foundation
 import MarketKit
 import RxSwift
 
-class PoolGroupFactory {
+public class PoolGroupFactory {
+    public init() {}
+
     private func providers(poolGroupType: PoolGroupType, filter: TransactionTypeFilter, contact: Contact?) -> [PoolProvider] {
         switch poolGroupType {
         case let .all(wallets):
@@ -107,7 +109,7 @@ class PoolGroupFactory {
     }
 }
 
-extension PoolGroupFactory {
+public extension PoolGroupFactory {
     func poolGroup(type: PoolGroupType, filter: TransactionTypeFilter, contact: Contact?, scamFilterEnabled: Bool) -> PoolGroup {
         let providers = providers(poolGroupType: type, filter: filter, contact: contact)
         let pools = providers.map { poolProvider in
@@ -117,7 +119,7 @@ extension PoolGroupFactory {
     }
 }
 
-extension PoolGroupFactory {
+public extension PoolGroupFactory {
     enum PoolGroupType {
         case all(wallets: [Wallet])
         case blockchain(blockchainType: BlockchainType, wallets: [Wallet])

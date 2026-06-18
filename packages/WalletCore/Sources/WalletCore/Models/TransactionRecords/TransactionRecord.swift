@@ -3,12 +3,12 @@ import MarketKit
 
 public class TransactionRecord {
     let source: TransactionSource
-    let uid: String
+    public let uid: String
     let transactionHash: String
     let transactionIndex: Int
     let blockHeight: Int?
     let confirmationsThreshold: Int?
-    let date: Date
+    public let date: Date
     let failed: Bool
 
     var spam: Bool
@@ -78,20 +78,20 @@ extension TransactionRecord: Comparable {
     }
 }
 
-enum TransactionStatus {
+public enum TransactionStatus {
     case failed
     case pending
     case processing(progress: Double)
     case completed
 
-    var isPendingOrProcessing: Bool {
+    public var isPendingOrProcessing: Bool {
         switch self {
         case .pending, .processing: return true
         default: return false
         }
     }
 
-    var isPending: Bool {
+    public var isPending: Bool {
         switch self {
         case .pending: return true
         default: return false

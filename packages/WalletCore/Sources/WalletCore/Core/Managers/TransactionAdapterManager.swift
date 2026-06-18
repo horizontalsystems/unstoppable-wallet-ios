@@ -2,7 +2,7 @@ import Foundation
 import RxRelay
 import RxSwift
 
-class TransactionAdapterManager {
+public class TransactionAdapterManager {
     private let disposeBag = DisposeBag()
 
     private let adapterManager: AdapterManager
@@ -14,7 +14,7 @@ class TransactionAdapterManager {
     private let queue = DispatchQueue(label: "\(AppConfig.label).transactions_adapter_manager", qos: .userInitiated)
     private var _adapterMap = [TransactionSource: ITransactionsAdapter]()
 
-    init(adapterManager: AdapterManager, evmBlockchainManager: EvmBlockchainManager, adapterFactory: AdapterFactory) {
+    public init(adapterManager: AdapterManager, evmBlockchainManager: EvmBlockchainManager, adapterFactory: AdapterFactory) {
         self.adapterManager = adapterManager
         self.evmBlockchainManager = evmBlockchainManager
         self.adapterFactory = adapterFactory
@@ -70,7 +70,7 @@ extension TransactionAdapterManager {
         queue.sync { _adapterMap }
     }
 
-    var adaptersReadyObservable: Observable<Void> {
+    public var adaptersReadyObservable: Observable<Void> {
         adaptersReadyRelay.asObservable()
     }
 

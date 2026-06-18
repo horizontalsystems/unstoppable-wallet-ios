@@ -1,4 +1,4 @@
-enum TransactionTypeFilter: String {
+public enum TransactionTypeFilter: String {
     case all, incoming, outgoing
 
     static var allCases: [TransactionTypeFilter] {

@@ -1,11 +1,11 @@
 import Foundation
 
-class DateHelper {
-    static let instance = DateHelper()
+public class DateHelper {
+    public static let instance = DateHelper()
 
     private let planeFormatter = DateFormatter()
 
-    func formatTransactionDate(from date: Date) -> String {
+    public func formatTransactionDate(from date: Date) -> String {
         let correctDate = min(date, Date())
         let isThisYear = Calendar.current.isDate(correctDate, equalTo: Date(), toGranularity: .year)
         let format = isThisYear ? "MMM d" : "yyyy MMM d"
