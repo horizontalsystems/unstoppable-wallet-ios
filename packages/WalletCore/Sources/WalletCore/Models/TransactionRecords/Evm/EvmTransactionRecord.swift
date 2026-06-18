@@ -2,7 +2,7 @@ import EvmKit
 import Foundation
 import MarketKit
 
-class EvmTransactionRecord: TransactionRecord {
+public class EvmTransactionRecord: TransactionRecord {
     let transaction: Transaction
     let ownTransaction: Bool
     let protected: Bool

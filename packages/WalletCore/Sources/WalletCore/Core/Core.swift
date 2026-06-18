@@ -38,7 +38,7 @@ public class Core {
     let launchScreenManager: LaunchScreenManager
     let appSettingManager: AppSettingManager
     let securityManager: SecurityManager
-    let balanceHiddenManager: BalanceHiddenManager
+    public let balanceHiddenManager: BalanceHiddenManager
     let balanceConversionManager: BalanceConversionManager
     let walletButtonHiddenManager: WalletButtonHiddenManager
     let priceChangeModeManager: PriceChangeModeManager
@@ -99,7 +99,7 @@ public class Core {
     let walletConnectSessionManager: WalletConnectSessionManager
 
     public let adapterManager: AdapterManager
-    let transactionAdapterManager: TransactionAdapterManager
+    public let transactionAdapterManager: TransactionAdapterManager
     let rateAppManager: RateAppManager
 
     let appBackupProvider: AppBackupProvider

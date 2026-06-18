@@ -2,9 +2,9 @@ import EvmKit
 import Foundation
 import MarketKit
 
-class ExternalContractCallTransactionRecord: EvmTransactionRecord, TransferEventsProvider {
-    let incomingEvents: [TransferEvent]
-    let outgoingEvents: [TransferEvent]
+public class ExternalContractCallTransactionRecord: EvmTransactionRecord, TransferEventsProvider {
+    public let incomingEvents: [TransferEvent]
+    public let outgoingEvents: [TransferEvent]
 
     init(source: TransactionSource, transaction: Transaction, baseToken: Token, incomingEvents: [TransferEvent], outgoingEvents: [TransferEvent], spam: Bool = false, protected: Bool) {
         self.incomingEvents = incomingEvents
@@ -13,11 +13,11 @@ class ExternalContractCallTransactionRecord: EvmTransactionRecord, TransferEvent
         super.init(source: source, transaction: transaction, baseToken: baseToken, ownTransaction: false, protected: protected, spam: spam)
     }
 
-    var combinedValues: ([AppValue], [AppValue]) {
+    public var combinedValues: ([AppValue], [AppValue]) {
         combined(incomingEvents: incomingEvents, outgoingEvents: outgoingEvents)
     }
 
-    override var mainValue: AppValue? {
+    override public var mainValue: AppValue? {
         let (incomingValues, outgoingValues) = combinedValues
 
         if incomingValues.count == 1, outgoingValues.isEmpty {
@@ -29,7 +29,7 @@ class ExternalContractCallTransactionRecord: EvmTransactionRecord, TransferEvent
         }
     }
 
-    var transferEvents: TransferEvents {
+    public var transferEvents: TransferEvents {
         .init(incoming: incomingEvents, outgoing: outgoingEvents)
     }
 }

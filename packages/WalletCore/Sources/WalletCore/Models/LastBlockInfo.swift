@@ -1,4 +1,4 @@
-struct LastBlockInfo {
-    let height: Int
-    let timestamp: Int?
+public struct LastBlockInfo {
+    public let height: Int
+    public let timestamp: Int?
 }
