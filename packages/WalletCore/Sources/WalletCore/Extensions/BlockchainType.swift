@@ -74,7 +74,6 @@ extension BlockchainType {
             .zkSync,
             .gnosis,
             .fantom,
-
         ]
 
         return blockchainTypes.firstIndex(of: self) ?? Int.max

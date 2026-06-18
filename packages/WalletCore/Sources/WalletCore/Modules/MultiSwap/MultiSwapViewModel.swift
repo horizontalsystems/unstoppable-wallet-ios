@@ -340,9 +340,15 @@ public class MultiSwapViewModel: ObservableObject {
            let wallet = walletManager.activeWallets.first(where: { $0.token == internalTokenIn }),
            let adapter = adapterManager.balanceAdapter(for: wallet)
         {
-            adapterState = adapter.balanceState
-            availableBalance = adapter.balanceData.available
-            spendMode = adapter.spendMode
+            let balanceState = adapter.balanceState
+            let balance = adapter.balanceData.available
+            let mode = adapter.spendMode
+
+            DispatchQueue.main.async { [weak self] in
+                self?.adapterState = balanceState
+                self?.availableBalance = balance
+                self?.spendMode = mode
+            }
 
             adapter.balanceStateUpdatedObservable
                 .subscribeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
@@ -361,9 +367,11 @@ public class MultiSwapViewModel: ObservableObject {
                 }
                 .disposed(by: balanceDisposeBag)
         } else {
-            adapterState = nil
-            availableBalance = nil
-            spendMode = .fromBalanceState
+            DispatchQueue.main.async { [weak self] in
+                self?.adapterState = nil
+                self?.availableBalance = nil
+                self?.spendMode = .fromBalanceState
+            }
         }
     }
 
