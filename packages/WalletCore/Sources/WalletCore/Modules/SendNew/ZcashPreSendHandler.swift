@@ -21,6 +21,8 @@ class ZcashPreSendHandler: PreSendHandler {
         self.token = token
         self.adapter = adapter
 
+        super.init()
+
         adapter.balanceStateUpdatedObservable
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe { [weak self] in

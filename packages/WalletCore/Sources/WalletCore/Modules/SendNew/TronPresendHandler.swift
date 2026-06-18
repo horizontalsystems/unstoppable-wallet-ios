@@ -9,7 +9,7 @@ open class TronPreSendHandler: PreSendHandler {
     public let token: Token
     private let adapter: ISendTronAdapter & IBalanceAdapter
 
-    open override class func instance(wallet: Wallet, address _: ResolvedAddress) -> IPreSendHandler? {
+    override open class func instance(wallet: Wallet, address _: ResolvedAddress) -> IPreSendHandler? {
         guard let adapter = Core.shared.adapterManager.adapter(for: wallet) as? ISendTronAdapter & IBalanceAdapter else { return nil }
         return TronPreSendHandler(token: wallet.token, adapter: adapter)
     }
@@ -22,6 +22,8 @@ open class TronPreSendHandler: PreSendHandler {
     public init(token: Token, adapter: ISendTronAdapter & IBalanceAdapter) {
         self.token = token
         self.adapter = adapter
+
+        super.init()
 
         adapter.balanceStateUpdatedObservable
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
@@ -45,23 +47,23 @@ open class TronPreSendHandler: PreSendHandler {
 }
 
 extension TronPreSendHandler: IPreSendHandler {
-    var state: AdapterState {
+    public var state: AdapterState {
         adapter.balanceState
     }
 
-    var statePublisher: AnyPublisher<AdapterState, Never> {
+    public var statePublisher: AnyPublisher<AdapterState, Never> {
         stateSubject.eraseToAnyPublisher()
     }
 
-    var balance: Decimal {
+    public var balance: Decimal {
         adapter.balanceData.available
     }
 
-    var balancePublisher: AnyPublisher<Decimal, Never> {
+    public var balancePublisher: AnyPublisher<Decimal, Never> {
         balanceSubject.eraseToAnyPublisher()
     }
 
-    func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
+    public func sendData(amount: Decimal, address: String, memo: String?) -> SendDataResult {
         guard let amountBigUInt = BigUInt(amount.hs.roundedString(decimal: token.decimals)) else {
             return .invalid(cautions: [])
         }

@@ -8,10 +8,11 @@ import SolanaKit
 import ZanoKit
 
 class MultiSwapSendHandler: SendHandler {
-    override class func instance(sendData: SendData) -> ISendHandler? {
+    override class func instance(sendData: WalletCore.SendData) -> ISendHandler? {
         guard case let .swap(tokenIn, tokenOut, amountIn, provider, multiSwapQuote) = sendData else { return nil }
         return instance(tokenIn: tokenIn, tokenOut: tokenOut, amountIn: amountIn, provider: provider, multiSwapQuote: multiSwapQuote)
     }
+
     private let currencyManager = Core.shared.currencyManager
     private let marketKit = Core.shared.marketKit
     private let accountManager = Core.shared.accountManager

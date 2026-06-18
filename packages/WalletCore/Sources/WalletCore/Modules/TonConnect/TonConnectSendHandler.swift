@@ -5,10 +5,11 @@ import TonKit
 import TonSwift
 
 class TonConnectSendHandler: SendHandler {
-    override class func instance(sendData: SendData) -> ISendHandler? {
+    override class func instance(sendData: WalletCore.SendData) -> ISendHandler? {
         guard case let .tonConnect(request) = sendData else { return nil }
         return try? instance(request: request)
     }
+
     private let tonConnectManager = Core.shared.tonConnectManager
     private let request: TonConnectSendTransactionRequest
     private let transferData: TransferData

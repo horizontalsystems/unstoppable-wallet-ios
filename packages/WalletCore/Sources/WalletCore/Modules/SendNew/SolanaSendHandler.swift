@@ -3,10 +3,11 @@ import MarketKit
 import SolanaKit
 
 class SolanaSendHandler: SendHandler {
-    override class func instance(sendData: SendData) -> ISendHandler? {
+    override class func instance(sendData: WalletCore.SendData) -> ISendHandler? {
         guard case let .solana(token, amount, address, memo) = sendData else { return nil }
         return instance(token: token, amount: amount, address: address, memo: memo)
     }
+
     private let solanaKit: SolanaKit.Kit
     private let signer: SolanaKit.Signer
     private let token: Token

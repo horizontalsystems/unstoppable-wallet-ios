@@ -12,12 +12,12 @@ public protocol ISendHandler {
     func send(data: ISendData) async throws
 }
 
-extension ISendHandler {
-    public var syncingText: String? { nil }
-    public var expirationDuration: Int? { nil }
-    public var initialTransactionSettings: InitialTransactionSettings? { nil }
-    public var menuItems: [SendMenuItem] { [] }
-    public var refreshPublisher: AnyPublisher<Void, Never>? { nil }
+public extension ISendHandler {
+    var syncingText: String? { nil }
+    var expirationDuration: Int? { nil }
+    var initialTransactionSettings: InitialTransactionSettings? { nil }
+    var menuItems: [SendMenuItem] { [] }
+    var refreshPublisher: AnyPublisher<Void, Never>? { nil }
 }
 
 public struct SendMenuItem {

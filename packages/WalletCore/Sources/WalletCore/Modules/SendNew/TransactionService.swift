@@ -1,5 +1,7 @@
 import MarketKit
 
 open class TransactionService {
-    open class func instance(sendData: SendData, baseToken: Token, initialTransactionSettings: InitialTransactionSettings?) -> ITransactionService? { nil }
+    public init() {}
+
+    open class func instance(sendData _: SendData, baseToken _: Token, initialTransactionSettings _: InitialTransactionSettings?) -> ITransactionService? { nil }
 }

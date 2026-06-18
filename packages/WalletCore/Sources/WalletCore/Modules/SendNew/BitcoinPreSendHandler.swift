@@ -95,6 +95,8 @@ class BitcoinPreSendHandler: PreSendHandler {
             lockTimeIntervalState = isLegacyAddress ? .enabled : .disabled
         }
 
+        super.init()
+
         adapter.balanceStateUpdatedObservable
             .observeOn(ConcurrentDispatchQueueScheduler(qos: .userInitiated))
             .subscribe { [weak self] state in

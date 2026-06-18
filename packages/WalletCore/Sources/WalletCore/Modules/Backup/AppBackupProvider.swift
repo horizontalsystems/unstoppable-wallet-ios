@@ -384,6 +384,12 @@ extension AppBackupProvider {
     }
 
     static func encrypt(account: Account, wallets: [WalletBackup.EnabledWallet], passphrase: String) throws -> WalletBackup {
+        // Passkey/AA accounts aren't portable-backup-able (device-bound credential + separate aa.sqlite);
+        // the UI must not offer backup for them. Data-layer guard (moved off AccountType.Abstract).
+        if case .passkeyOwned = account.type {
+            throw CodingError.unsupportedAccountType
+        }
+
         let message = account.type.uniqueId(hashed: false)
         let crypto = try BackupCrypto.encrypt(data: message, passphrase: passphrase)
 
@@ -404,5 +410,6 @@ extension AppBackupProvider {
     enum CodingError: Error {
         case invalidPassword
         case emptyParameters
+        case unsupportedAccountType
     }
 }

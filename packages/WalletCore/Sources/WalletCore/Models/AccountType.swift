@@ -126,11 +126,7 @@ public enum AccountType: Identifiable {
                 return false
             }
         case .passkeyOwned:
-            guard case let .eip20(address) = token.type else {
-                return false
-            }
-
-            return StablecoinRegistry.supports(blockchainType: token.blockchainType, tokenAddress: address)
+            return AccountTokenSupport.supports(accountType: self, token: token) ?? false
         case .evmPrivateKey, .evmAddress:
             switch (token.blockchainType, token.type) {
             case (.ethereum, .native), (.ethereum, .eip20): return true
@@ -377,6 +373,8 @@ extension AccountType {
             return AccountType.trcPrivateKey(data: uniqueId)
         case .stellarSecretKey:
             return AccountType.stellarSecretKey(secretSeed: string)
+        case .passkeyOwned:
+            return nil // device-bound passkey + separate aa.sqlite: not restorable from a portable backup
         case .hdExtendedKey:
             do {
                 return try AccountType.hdExtendedKey(key: HDExtendedKey(data: uniqueId))
@@ -421,12 +419,12 @@ extension AccountType {
         }
     }
 
-    enum Abstract: String, Codable {
+    public enum Abstract: String, Codable {
         case mnemonic
         case evmPrivateKey = "private_key"
         case trcPrivateKey = "tron_private_key"
         case stellarSecretKey = "stellar_secret_key"
-        // TODO(v3): add `passkeyOwned = "passkey_owned"` when backup/restore support is implemented.
+        case passkeyOwned = "passkey_owned"
         case evmAddress = "evm_address"
         case tronAddress = "tron_address"
         case tonAddress = "ton_address"
@@ -438,8 +436,7 @@ extension AccountType {
         init(_ type: AccountType) {
             switch type {
             case .mnemonic: self = .mnemonic
-            // TODO: before Part 9 (Create AA-wallet UI) — hide backup entry points for passkey (ManageAccountView iCloud row, BackupSelectContentViewModel "regular" filter) or replace preconditionFailure with throws. Currently crashes if any backup flow reaches a passkeyOwned account.
-            case .passkeyOwned: preconditionFailure("passkeyOwned backup/restore is not implemented yet")
+            case .passkeyOwned: self = .passkeyOwned
             case .evmPrivateKey: self = .evmPrivateKey
             case .trcPrivateKey: self = .trcPrivateKey
             case .stellarSecretKey: self = .stellarSecretKey

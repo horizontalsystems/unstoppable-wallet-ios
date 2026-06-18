@@ -48,8 +48,8 @@ public enum SendHandlerFactory {
     }
 }
 
-extension SendHandlerFactory {
-    public static let unstoppableHandlers: [SendHandler.Type] = [
+public extension SendHandlerFactory {
+    static let unstoppableHandlers: [SendHandler.Type] = [
         EvmSendHandler.self,
         BitcoinSendHandler.self,
         ZcashSendHandler.self,
@@ -64,7 +64,7 @@ extension SendHandlerFactory {
         TonConnectSendHandler.self,
     ]
 
-    public static let unstoppablePreSendHandlers: [PreSendHandler.Type] = [
+    static let unstoppablePreSendHandlers: [PreSendHandler.Type] = [
         EvmPreSendHandler.self,
         BitcoinPreSendHandler.self,
         ZcashPreSendHandler.self,

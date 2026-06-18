@@ -182,11 +182,11 @@ extension AdapterManager {
         adapterDataReadyRelay.asObservable()
     }
 
-    func adapter(for wallet: Wallet) -> IAdapter? {
+    public func adapter(for wallet: Wallet) -> IAdapter? {
         queue.sync { _adapterData.adapterMap[wallet] }
     }
 
-    func adapter(for token: Token) -> IAdapter? {
+    public func adapter(for token: Token) -> IAdapter? {
         queue.sync {
             guard let wallet = walletManager.activeWallets.first(where: { $0.token == token }) else {
                 return nil

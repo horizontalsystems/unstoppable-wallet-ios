@@ -5,10 +5,11 @@ import TonKit
 import TonSwift
 
 class TonSendHandler: SendHandler {
-    override class func instance(sendData: SendData) -> ISendHandler? {
+    override class func instance(sendData: WalletCore.SendData) -> ISendHandler? {
         guard case let .ton(token, amount, address, memo) = sendData else { return nil }
         return instance(token: token, amount: amount, address: address, memo: memo)
     }
+
     private let tonKit: TonKit.Kit
     private let contract: WalletContract
     private let secretKey: Data

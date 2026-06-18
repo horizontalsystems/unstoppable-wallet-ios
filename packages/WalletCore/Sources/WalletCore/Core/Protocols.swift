@@ -24,7 +24,7 @@ public protocol IBaseAdapter: AnyObject {
     var isMainNet: Bool { get }
 }
 
-protocol IAdapter: AnyObject {
+public protocol IAdapter: AnyObject {
     func start()
     func stop()
     func refresh()
@@ -135,7 +135,7 @@ protocol ISendEthereumAdapter {
     func transactionData(amount: BigUInt, address: EvmKit.Address) -> TransactionData
 }
 
-protocol ISendTronAdapter {
+public protocol ISendTronAdapter {
     var tronKitWrapper: TronKitWrapper { get }
     var balanceData: BalanceData { get }
     func contract(amount: BigUInt, address: TronKit.Address, memo: String?) -> TronKit.Contract
