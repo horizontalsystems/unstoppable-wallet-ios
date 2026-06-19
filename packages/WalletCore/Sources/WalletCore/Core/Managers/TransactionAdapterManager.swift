@@ -65,12 +65,12 @@ public class TransactionAdapterManager {
     }
 }
 
-extension TransactionAdapterManager {
-    var adapterMap: [TransactionSource: ITransactionsAdapter] {
+public extension TransactionAdapterManager {
+    internal var adapterMap: [TransactionSource: ITransactionsAdapter] {
         queue.sync { _adapterMap }
     }
 
-    public var adaptersReadyObservable: Observable<Void> {
+    var adaptersReadyObservable: Observable<Void> {
         adaptersReadyRelay.asObservable()
     }
 

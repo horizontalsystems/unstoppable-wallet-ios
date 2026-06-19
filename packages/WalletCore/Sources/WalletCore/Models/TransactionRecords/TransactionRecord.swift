@@ -2,9 +2,9 @@ import Foundation
 import MarketKit
 
 public class TransactionRecord {
-    let source: TransactionSource
+    public let source: TransactionSource
     public let uid: String
-    let transactionHash: String
+    public let transactionHash: String
     let transactionIndex: Int
     let blockHeight: Int?
     let confirmationsThreshold: Int?
@@ -28,7 +28,7 @@ public class TransactionRecord {
         self.paginationRaw = paginationRaw ?? transactionHash
     }
 
-    func status(lastBlockHeight: Int?) -> TransactionStatus {
+    public func status(lastBlockHeight: Int?) -> TransactionStatus {
         if failed {
             return .failed
         } else if let blockHeight, let lastBlockHeight {
@@ -57,6 +57,12 @@ public class TransactionRecord {
 extension TransactionRecord: Identifiable {
     public var id: String {
         uid
+    }
+}
+
+extension TransactionRecord: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(uid)
     }
 }
 

@@ -93,7 +93,7 @@ extension IDepositAdapter {
     func usedAddresses(change _: Bool) -> [UsedAddress] { [] }
 }
 
-protocol ITransactionsAdapter {
+public protocol ITransactionsAdapter {
     var syncing: Bool { get }
     var syncingObservable: Observable<Void> { get }
     var lastBlockInfo: LastBlockInfo? { get }
