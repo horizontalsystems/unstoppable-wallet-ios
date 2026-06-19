@@ -5,7 +5,7 @@ import TonKit
 
 public struct AppValue {
     let kind: Kind
-    let value: Decimal
+    public let value: Decimal
 
     init(kind: Kind, value: Decimal) {
         self.kind = kind

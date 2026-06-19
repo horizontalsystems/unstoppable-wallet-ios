@@ -28,7 +28,7 @@ public class DateHelper {
         timeOnly().string(from: date)
     }
 
-    func formatFullTime(from date: Date) -> String {
+    public func formatFullTime(from date: Date) -> String {
         let formatter = DateFormatter.cachedFormatter(format: "MMM d, yyyy, \(LanguageHourFormatter.hourFormat):mm")
         return formatter.string(from: date)
     }
