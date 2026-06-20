@@ -6,7 +6,7 @@ public class PasskeyManager: NSObject {
     private let relyingParty = "unstoppable.money"
 
     private var assertionContinuation: CheckedContinuation<PrfOutput, Error>?
-    private var registrationContinuation: CheckedContinuation<Data, Error>?
+    private var registrationContinuation: CheckedContinuation<Registration, Error>?
     private var isCrossDeviceAssertion: Bool = false
 
     private func generateChallenge() -> Data {
@@ -15,7 +15,13 @@ public class PasskeyManager: NSObject {
         return Data(bytes)
     }
 
+    // Convenience returning just the credentialID, so existing callers are unchanged.
+    // Use `register` when the full registration result (incl. attestation) is needed.
     func create(name: String) async throws -> Data {
+        try await register(name: name).credentialID
+    }
+
+    func register(name: String) async throws -> Registration {
         let provider = ASAuthorizationPlatformPublicKeyCredentialProvider(
             relyingPartyIdentifier: relyingParty
         )
@@ -26,7 +32,7 @@ public class PasskeyManager: NSObject {
             userID: Data("\(name)::\(UUID().uuidString)".utf8)
         )
 
-        return try await withCheckedThrowingContinuation { (c: CheckedContinuation<Data, Error>) in
+        return try await withCheckedThrowingContinuation { (c: CheckedContinuation<Registration, Error>) in
             registrationContinuation = c
             let controller = ASAuthorizationController(authorizationRequests: [request])
             controller.delegate = self
@@ -87,7 +93,9 @@ extension PasskeyManager: ASAuthorizationControllerDelegate {
         if let reg = authorization.credential
             as? ASAuthorizationPlatformPublicKeyCredentialRegistration
         {
-            registrationContinuation?.resume(returning: reg.credentialID)
+            // Keep the raw attestation (it carries the credential's public key) alongside credentialID,
+            // so a provisioner that needs the public key can read it. The attestation is opaque here.
+            registrationContinuation?.resume(returning: Registration(credentialID: reg.credentialID, attestationObject: reg.rawAttestationObject))
             registrationContinuation = nil
             return
         }
@@ -163,6 +171,13 @@ extension PasskeyManager: ASAuthorizationControllerPresentationContextProviding 
 }
 
 extension PasskeyManager {
+    // Result of a passkey registration: the credentialID plus the raw WebAuthn attestation (it embeds
+    // the credential's public key). `attestationObject` is nil if the authenticator returned none.
+    struct Registration {
+        let credentialID: Data
+        let attestationObject: Data?
+    }
+
     private struct PrfOutput {
         let credentialID: Data
         let userId: String
