@@ -2,7 +2,7 @@ import Foundation
 import MarketKit
 import TronKit
 
-class TronTransactionRecord: TransactionRecord {
+public class TronTransactionRecord: TransactionRecord {
     let transaction: Transaction
     let confirmed: Bool
     let ownTransaction: Bool
@@ -58,7 +58,7 @@ class TronTransactionRecord: TransactionRecord {
         return (resultIncoming, resultOutgoing)
     }
 
-    override func status(lastBlockHeight _: Int?) -> TransactionStatus {
+    override public func status(lastBlockHeight _: Int?) -> TransactionStatus {
         if failed {
             return .failed
         }

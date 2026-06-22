@@ -209,7 +209,7 @@ public class MultiSwapViewModel: ObservableObject {
 
     @Published public var currentQuote: Quote? {
         didSet {
-            amountOutString = currentQuote?.quote.expectedBuyAmount.description
+            amountOut = currentQuote?.quote.expectedBuyAmount
             syncFiatAmountOut()
             syncPrice()
         }
@@ -259,7 +259,7 @@ public class MultiSwapViewModel: ObservableObject {
         }
     }
 
-    @Published public var amountOutString: String?
+    @Published public var amountOut: Decimal?
     @Published var fiatAmountOut: Decimal? {
         didSet {
             syncPriceImpact()

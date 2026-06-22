@@ -87,7 +87,7 @@ public class SendViewModel: ObservableObject {
         sync()
     }
 
-    var cautions: [CautionNew] {
+    public var cautions: [CautionNew] {
         var cautions = transactionService?.cautions ?? []
 
         if let sendData, let baseToken = handler?.baseToken {
