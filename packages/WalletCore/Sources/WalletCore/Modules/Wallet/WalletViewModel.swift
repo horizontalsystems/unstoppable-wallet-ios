@@ -141,7 +141,7 @@ extension WalletViewModel {
         walletService?.disable(wallet: wallet)
     }
 
-    func refresh() async {
+    public func refresh() async {
         walletService?.refresh()
         coinPriceService.refresh()
 
