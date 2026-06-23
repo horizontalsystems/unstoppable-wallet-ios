@@ -184,7 +184,7 @@ extension PasskeyManager {
         let data: Data
     }
 
-    enum PasskeyError: Error, LocalizedError {
+    public enum PasskeyError: Error, LocalizedError {
         case prfNotSupported
         case prfNotSupportedRemote
         case authenticationFailed
@@ -193,7 +193,7 @@ extension PasskeyManager {
         case noWalletsFound
         case passkeyLost
 
-        var errorDescription: String? {
+        public var errorDescription: String? {
             switch self {
             case .prfNotSupported: return "This device requires iOS 18 or later for passkey wallet login."
             case .prfNotSupportedRemote: return "The device you scanned from doesn't support PRF."
