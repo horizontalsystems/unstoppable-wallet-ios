@@ -2,7 +2,7 @@ import Combine
 
 class RestoreTypeViewModel: ObservableObject {
     private let cloudAccountBackupManager = Core.shared.cloudBackupManager
-    private let passkeyManager = PasskeyManager()
+    private let passkeyManager = PasskeyManager(domain: AppConfig.passkeyDomain)
 
     var isCloudAvailable: Bool {
         cloudAccountBackupManager.isAvailable
