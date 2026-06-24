@@ -10,6 +10,10 @@ enum AppConfig {
     static let reportEmail = "support.unstoppable@protonmail.com"
     static let companyWebPageLink = "https://horizontalsystems.io"
     static let appWebPageLink = "https://unstoppable.money"
+
+    // Relying-party domain (WebAuthn RP ID) for passkey wallets in this app. Passed explicitly to every
+    // PasskeyManager — see Stable's AppConfig.passkeyDomain for the stable app's value.
+    static let passkeyDomain = "unstoppable.money"
     static let analyticsLink = "https://unstoppable.money/analytics"
     static let privacyPolicyLink = "https://unstoppable.money/privacy-policy"
     static let appleTermsOfServiceLink = "https://www.apple.com/legal/internet-services/itunes/dev/stdeula"

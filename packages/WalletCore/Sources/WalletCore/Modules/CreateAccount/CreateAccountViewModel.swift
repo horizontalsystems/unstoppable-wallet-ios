@@ -10,7 +10,7 @@ class CreateAccountViewModel: ObservableObject {
     private let walletManager = Core.shared.walletManager
     private let marketKit = Core.shared.marketKit
     private let predefinedBlockchainService = Core.shared.predefinedBlockchainService
-    private let passkeyManager = PasskeyManager()
+    private let passkeyManager = PasskeyManager(domain: AppConfig.passkeyDomain)
 
     let walletType: WalletType
 
